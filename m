@@ -2,180 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B654EC433EF
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 13:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8EC6C433EF
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 14:05:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236785AbiAENXc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 08:23:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55484 "EHLO
+        id S240530AbiAEOFV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 09:05:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236846AbiAENX2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 08:23:28 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A774C061761
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 05:23:28 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id o3so24800745wrh.10
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 05:23:27 -0800 (PST)
+        with ESMTP id S237035AbiAEOFU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 09:05:20 -0500
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41010C061761
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 06:05:20 -0800 (PST)
+Received: by mail-io1-xd2d.google.com with SMTP id p65so48600272iof.3
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 06:05:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jrtc27.com; s=gmail.jrtc27.user;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=+8LjvRsOEVIOzxbWwmcKlMH7kUDvExtkugu5HN3e9zM=;
-        b=ArFDBoc3dv7c9jIjdKgItko4JghubRgSVrMve+Ql8mpcUjxkBr2AHZcMLGTBAdbslf
-         VF8tMcfl8H5ONhxEwgkhlIPr85dVk3DegPJ/gVqCfDvFwcoWRusadQBw0QUMKfuV1act
-         ruzcUH9DuNweqpUrZzrNnailYMLkawDNBnvr1aMHf/oYBDtATxswNpgHQ3oVVktnisoB
-         U8i1fkfzL1OU4D3s/4ay2k4xoU9TZ/QUOGaZkoxQFFj5n5P+NZ6TYL8UyzqO3R/KqnCP
-         hO/IyzyiGlZh5RkFs04QyjlaUFhmngZu4IFSVke4wmqciUoEI4drl805YA0eaYgLeb22
-         z9nA==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=nUQPQ07Fz0CEo20W3b6CzfWQ7kZi/rdjcZYDm4+1sSU=;
+        b=Bok9LR7mBEMrK1ZwKtS1t7l6ii6ssmbsKpvSLBrIOU+Y5mrbVEbvf/fEMqAvDt9Vbi
+         yHz2/7kTwFRZjSjpuSuLA67qJ7MjNeG7cbsgQZcRT2FxeK9xSUWtG2s6TRuSnlZrD088
+         vbrbOs75RsOKDVngZ8T+UKRQuP0Ppo3+ju9PRrksFyVN7lFu/ZNek2V+Q2ilJDrVGynF
+         RZDy6ktnliKH5LgbAEunlZIYvNO9opFto/i4zH4yamRRe/u+tcJkh/6ZfMR7ksTX+g1g
+         jCxMKewiTJnR8jhhwsYBqvNvyv1H3eiUeO+1kGSbh73os1cZq0wmDPIdfEvUfl+dioCB
+         E6zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=+8LjvRsOEVIOzxbWwmcKlMH7kUDvExtkugu5HN3e9zM=;
-        b=VBzSNlo5X9/XFZOSd/kRlfVwmM9WmranaIWXShiHF9OgF18KmiFnj5RpmWG/lcnc9g
-         5LDEKStMIA5IrnsUqyVzgiPtI29+BTA6+7Y1fXXU5u8mtqR3i2YUpI7qh4pkXXZ6gNdA
-         YxvblUpjIosYF8rMSTwtkjjZya6c/OQRYVnaZA7MmY+ekePiSCPLcht7UfG9iwICfegL
-         0nxk8DEiBVcgrES2SSUIOGq6G6z6FXjaNuim4e4N/orrmC0J6r8IZRKv7+PiGT11KGHv
-         dj/H3gla9mFlLFuluFZWCYZyg3+s+YsTOWw5WYmmQRFYeufz5K076mALOUpfhgBxMygq
-         3/jA==
-X-Gm-Message-State: AOAM532NGNUZy0xJTZMG2hNut8NjNDdlC7uMxIJsLa4ssuuJjrh3Uqki
-        8aZex+8SR+O64vVILoO4syyTdA==
-X-Google-Smtp-Source: ABdhPJywIbMTXerNrS951gFIP7VC+DAvbNYp3JlDXePUczKow7SCpf/02EcozUpzmXSSz2up7LHigQ==
-X-Received: by 2002:adf:fbcd:: with SMTP id d13mr35304717wrs.170.1641389006604;
-        Wed, 05 Jan 2022 05:23:26 -0800 (PST)
-Received: from Jessicas-MacBook-Pro.local (global-5-141.nat-2.net.cam.ac.uk. [131.111.5.141])
-        by smtp.gmail.com with ESMTPSA id n12sm2864501wmq.30.2022.01.05.05.23.26
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 05 Jan 2022 05:23:26 -0800 (PST)
-Received: by Jessicas-MacBook-Pro.local (Postfix, from userid 501)
-        id 16E97B2013DD; Wed,  5 Jan 2022 13:23:26 +0000 (GMT)
-From:   Jessica Clarke <jrtc27@jrtc27.com>
-To:     git@vger.kernel.org
-Cc:     Jessica Clarke <jrtc27@jrtc27.com>
-Subject: [PATCH] Properly align memory allocations and temporary buffers
-Date:   Wed,  5 Jan 2022 13:23:24 +0000
-Message-Id: <20220105132324.6651-1-jrtc27@jrtc27.com>
-X-Mailer: git-send-email 2.33.1
+        bh=nUQPQ07Fz0CEo20W3b6CzfWQ7kZi/rdjcZYDm4+1sSU=;
+        b=H2FnrgsPx9gYjSts8qRo+IqVYxoXwmIqCSA7KM/mzH2MeBfjCb7NDNfmyTe+D1TpZx
+         CYLVnRCcil+zRABwVJV5MWvAcF9OijCrZuh+fnWzhnmUbE2JXDWBCl2DN20OcWbaqG1F
+         HYt9GUyz8XwiCPTBCyNSOGhBaKcpnj1aYTouuWQEb+mgXBcQgcHGH1prDcdrsLveDNJz
+         S93pcYmalOgZNnswiYlMDucs+2MN+0HhFYKw7VSfNYO2tPLq5tHNerqNO6XeQuyDcsEj
+         EoGLFCQdNhO9cj33XtIemwwC04YQuC/hqUiDKjp5+AZPUgsMZgdCvRfb0k+EWsTUovYS
+         frnA==
+X-Gm-Message-State: AOAM531idX79avo7MMf8XY+yZv3s3w9YHYhupRkOygYAQzQvPLA7fOQ9
+        Hx7gb6ljGkVryWqtQv2PAOs=
+X-Google-Smtp-Source: ABdhPJxVEsJ0I8W7zZ4CGDagQpvR3qREAUSNxqI08ujspXIJa/eoBKt0banCGXokN72ESCLgos7+Iw==
+X-Received: by 2002:a05:6638:1302:: with SMTP id r2mr23877614jad.37.1641391519671;
+        Wed, 05 Jan 2022 06:05:19 -0800 (PST)
+Received: from [192.168.86.121] (097-087-102-211.res.spectrum.com. [97.87.102.211])
+        by smtp.gmail.com with ESMTPSA id v23sm25727990ioj.4.2022.01.05.06.05.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 05 Jan 2022 06:05:19 -0800 (PST)
+Message-ID: <52d638fc-e7e7-1b0a-482b-cff7c9500b92@gmail.com>
+Date:   Wed, 5 Jan 2022 08:05:17 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.0
+Subject: Re: [PATCH v2 1/2] sparse-checkout: custom tab completion tests
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        johannes.schindelin@gmail.com
+References: <pull.1108.git.1640824351.gitgitgadget@gmail.com>
+ <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com>
+ <955fcab00528464b5450bd22b45c89ffc2283e39.1640892413.git.gitgitgadget@gmail.com>
+ <CABPp-BGdr54XgCXw8k1xRCgkwBtDonyODS3O+_nS_QY3SOEFGQ@mail.gmail.com>
+ <xmqqy240l8l1.fsf@gitster.g> <d65bf6bf-8f60-31c2-7d01-e57ea6f4a5e3@gmail.com>
+ <CABPp-BGSVzEwk83EzhPn3+5jOt5q6=CQ2W_Uz6GfUR=2=AhgNg@mail.gmail.com>
+From:   Lessley Dennington <lessleydennington@gmail.com>
+In-Reply-To: <CABPp-BGSVzEwk83EzhPn3+5jOt5q6=CQ2W_Uz6GfUR=2=AhgNg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently git_qsort_s allocates a buffer on the stack that has no
-alignment, and mem_pool_alloc assumes uintmax_t's size is adequate
-alignment for any type.
 
-On CHERI, and thus Arm's Morello prototype, pointers are implemented as
-hardware capabilities which, as well as having a normal integer address,
-have additional bounds, permissions and other metadata in a second word,
-so on a 64-bit architecture they are 128-bit quantities, including their
-alignment requirements. Despite being 128-bit, their integer component
-is still only a 64-bit field, so uintmax_t remains 64-bit, and therefore
-uintmax_t does not sufficiently align an allocation.
 
-Moreover, these capabilities have an additional "129th" tag bit, which
-tracks the validity of the capability and is cleared on any invalid
-operation that doesn't trap (e.g. partially overwriting a capability
-will invalidate it) which, combined with the architecture's strict
-checks on capability manipulation instructions, ensures it is
-architecturally impossible to construct a capability that gives more
-rights than those you were given in the first place. To store these tag
-bits, each capability sized and aligned word in memory gains a single
-tag bit that is stored in unaddressable (to the processor) memory. This
-means that it is impossible to store a capability at an unaligned
-address: a normal load or store of a capability will always take an
-alignment fault even if the (micro)architecture supports unaligned
-loads/stores for other data types, and a memcpy will, if the destination
-is not appropriately aligned, copy the byte representation but lose the
-tag, meaning that if it is eventually copied back and loaded from an
-aligned location any attempt to dereference it will trap with a tag
-fault. Thus, even char buffers that are memcpy'ed to or from must be
-properly aligned on CHERI architectures if they are to hold pointers.
+On 1/4/22 2:25 PM, Elijah Newren wrote:
+> On Tue, Jan 4, 2022 at 11:26 AM Lessley Dennington
+> <lessleydennington@gmail.com> wrote:
+>>
+>>
+>>
+>> On 12/31/21 4:20 PM, Junio C Hamano wrote:
+>>> Elijah Newren <newren@gmail.com> writes:
+>>>
+>>>> Second, and this item is unrelated to your series but your comment
+>>>> made me realize it....sparse-checkout unfortunately ignores prefix and
+>>>> creates a bad .git/info/sparse-checkout file.  For example:
+>>>> ...
+>>>> I think the loss of the current working directory will be fixed by the
+>>>> en/keep-cwd directory (currently in next and marked for merging to
+>>>> master), but the fact that the wrong paths end up in the
+>>>> sparse-checkout file is unfortunate.  It basically means that the
+>>>> `set` and `add` subcommands of `sparse-checkout` can only be safely
+>>>> run from the toplevel directory.
+>>>
+>>> You made it sound as if this is a fundamental limitation, but it
+>>> sounds more like a bug that needs to be fixed (outside the
+>>> completion series, of course) to me.
+>>>
+>> I can file a bug report if that's the correct way to proceed.
+> 
+> We don't really have a bug tracker.
+> 
+> We often just file an email, and add additional searchable strings
+> (e.g. #leftoverbits, though that doesn't apply here), and then search
+> via https://lore.kernel.org/git/.
+> 
+> There is 'git bugreport', but it just generates an email to send to
+> the mailing list...but we already have the emails in this thread.
+> 
+> There is https://bugs.chromium.org/p/git/issues/list, which is used by
+> a few folks, but I suspect I'm the only one who has looked at it that
+> touches sparse-checkout related stuff.
+> 
+> There is https://github.com/git-for-windows/git/issues, but this isn't
+> Windows specific.  (Sometimes they'll track stuff that isn't windows
+> specific, but I've seen Dscho close out issues after being reported to
+> this list.)
+> 
+> I've also kept private files with lists of things to work on.  Doesn't
+> help anyone else track it.  (Which is why I'll sometimes use one of
+> the two above trackers instead.)
+> 
+> ...not sure if that helps, but that's the basic state of our "bug tracking".
 
-Address both of these by introducing a new git_max_align type put in a
-union with the on-stack buffer to force its alignment, as well as a new
-GIT_MAX_ALIGNMENT macro whose value is the alignment of git_max_align
-that gets used for mem_pool_alloc. As well as making the code work on
-CHERI, the former change likely also improves performance on some
-architectures by making memcpy faster (either because it can use larger
-block sizes or because the microarchitecture has inefficient unaligned
-accesses).
+This is actually great context - thanks for providing! I'll go with the
+email strategy for visibility and will base my format off [1].
 
-Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
----
- compat/qsort_s.c  | 11 +++++++----
- git-compat-util.h | 11 +++++++++++
- mem-pool.c        |  6 +++---
- 3 files changed, 21 insertions(+), 7 deletions(-)
-
-diff --git a/compat/qsort_s.c b/compat/qsort_s.c
-index 52d1f0a73d..1ccdb87451 100644
---- a/compat/qsort_s.c
-+++ b/compat/qsort_s.c
-@@ -49,16 +49,19 @@ int git_qsort_s(void *b, size_t n, size_t s,
- 		int (*cmp)(const void *, const void *, void *), void *ctx)
- {
- 	const size_t size = st_mult(n, s);
--	char buf[1024];
-+	union {
-+		char buf[1024];
-+		git_max_align align;
-+	} u;
- 
- 	if (!n)
- 		return 0;
- 	if (!b || !cmp)
- 		return -1;
- 
--	if (size < sizeof(buf)) {
--		/* The temporary array fits on the small on-stack buffer. */
--		msort_with_tmp(b, n, s, cmp, buf, ctx);
-+	if (size < sizeof(u.buf)) {
-+		/* The temporary array fits in the small on-stack buffer. */
-+		msort_with_tmp(b, n, s, cmp, u.buf, ctx);
- 	} else {
- 		/* It's somewhat large, so malloc it.  */
- 		char *tmp = xmalloc(size);
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 5fa54a7afe..28581a45c5 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -274,6 +274,17 @@ typedef unsigned long uintptr_t;
- #define _ALL_SOURCE 1
- #endif
- 
-+typedef union {
-+	uintmax_t max_align_uintmax;
-+	void *max_align_pointer;
-+} git_max_align;
-+
-+typedef struct {
-+	char unalign;
-+	git_max_align aligned;
-+} git_max_alignment;
-+#define GIT_MAX_ALIGNMENT offsetof(git_max_alignment, aligned)
-+
- /* used on Mac OS X */
- #ifdef PRECOMPOSE_UNICODE
- #include "compat/precompose_utf8.h"
-diff --git a/mem-pool.c b/mem-pool.c
-index ccdcad2e3d..748eff925a 100644
---- a/mem-pool.c
-+++ b/mem-pool.c
-@@ -69,9 +69,9 @@ void *mem_pool_alloc(struct mem_pool *pool, size_t len)
- 	struct mp_block *p = NULL;
- 	void *r;
- 
--	/* round up to a 'uintmax_t' alignment */
--	if (len & (sizeof(uintmax_t) - 1))
--		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
-+	/* round up to a 'GIT_MAX_ALIGNMENT' alignment */
-+	if (len & (GIT_MAX_ALIGNMENT - 1))
-+		len += GIT_MAX_ALIGNMENT - (len & (GIT_MAX_ALIGNMENT - 1));
- 
- 	if (pool->mp_block &&
- 	    pool->mp_block->end - pool->mp_block->next_free >= len)
--- 
-2.33.1
-
+[1]: 
+https://lore.kernel.org/git/CABceR4bZmtC4rCwgxZ1BBYZP69VOUca1f_moJoP989vTUZWu9Q@mail.gmail.com/
