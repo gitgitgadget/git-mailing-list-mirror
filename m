@@ -2,104 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AC5EC433EF
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 22:36:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1FB4C433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 22:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245090AbiAEWf6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 17:35:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40644 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245076AbiAEWfy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 17:35:54 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B118EC061245
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 14:35:53 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id o6so2273758edc.4
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 14:35:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xEfjC3GAGo8I9DMpJMlogVs32qRShDS2/EEgLwlFmTo=;
-        b=C5X8mocwNDdtXwq49LinADU3JNFwx20SrgmJyn8QTI/xd85fOZWZs0RMsvU4BMbZv5
-         8vdpOAbbi8FbHBUbG+5+TA7Ul199Z5xmqD+mD+sR6h8G09lNYEU92DupT75Bu5rB70Fx
-         H7O0shMKlZswgMf0EUroqhmv9B1y+OuGL+IjZUzUTacJHasbkI5k1yADEDJFDaMJGSn2
-         fTFeDVgke2ZEcjtxmjGsIWE/J4UPxdxArz/fuH0DVB19nEMcda+2/97kjh9byezDzPpu
-         O+Zv7hBj86kWsuIycE6xqwUcTl+VVi/ei6PUYNT9hw36mKmyWmtyLQiXRYDyaTHxckz7
-         ABjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xEfjC3GAGo8I9DMpJMlogVs32qRShDS2/EEgLwlFmTo=;
-        b=PDkhR4PyPSnNGJJ4ZV5Ptr8pJAGVum/vesFSxB1Xxj6yox4K2Wi7T8fSSmfYLYfyEw
-         iy9ym8bpNe7nJINuNB1tn6HBT6rOW8kPeEGfsyvt2AtfLsCtPnV5SQR865bBePAR6LUr
-         mL8HwGL60aKpJ4WeGBRIOEzj/v5AvZmUdoGuZtRg1BP7KeS/qOe+LWFlpiq2YsdBZj4A
-         YiRfJkRD/on1VYHD1WlIi4DKOhwNETQYHRIUOgINO7wuY9xKHgBuPWHZPg5qwpvD7MIa
-         r2vsf/TLxOXJHmgaaqP75nsAM9dVeUjwpfxAKNUJhKjUYQd5k/i0FjfwpRtG7sGUlA8H
-         FNJw==
-X-Gm-Message-State: AOAM531atRUUuqP7f5t+bi4XFdJ6iX7fBSZoX23nSQKJZQkUl6ymbsJ8
-        PogzSwf1XA87w3PDklisb4XK1rKHFUXTBkHMqBM=
-X-Google-Smtp-Source: ABdhPJwCn4qHOWOUnOGqw1UKNvpmPjABUg8khV84YIW7QmYnvNI1gOduz7NGh3H/gHW9kj2EsEdDt1o29XOygRHuG50=
-X-Received: by 2002:a17:907:9808:: with SMTP id ji8mr45467341ejc.476.1641422152240;
- Wed, 05 Jan 2022 14:35:52 -0800 (PST)
+        id S245116AbiAEWis (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 17:38:48 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60176 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245110AbiAEWiq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 17:38:46 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E7A7100B24;
+        Wed,  5 Jan 2022 17:38:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4ESs1LepoIDtwHhDswIGFjIGcnoC2b2nWpHRJe
+        HGq3Y=; b=KshmTN2ZoII4bWmBQMQqBRMnRCPI1n31Mm+iXaFbc3DAixEOXtE8Du
+        KgZ8upUlQfv0Y5A2ONMdwtSDHxioTHBqX6/UPRmCG3GU2wTiGuiQF65qKsSaqszr
+        qlQ14k2dYb9FzjOGCimNjLWuVPRF0a9aAkRAUKShrQDorCKuDMXh0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 82DD7100B23;
+        Wed,  5 Jan 2022 17:38:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DF41A100B22;
+        Wed,  5 Jan 2022 17:38:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lessley Dennington <lessleydennington@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: Bug report - sparse-checkout ignores prefix when run in
+ subdirectories
+References: <29f0410e-6dfa-2e86-394d-b1fb735e7608@gmail.com>
+Date:   Wed, 05 Jan 2022 14:38:43 -0800
+In-Reply-To: <29f0410e-6dfa-2e86-394d-b1fb735e7608@gmail.com> (Lessley
+        Dennington's message of "Wed, 5 Jan 2022 14:13:22 -0600")
+Message-ID: <xmqqsfu1g64s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com>
- <pull.1114.v2.git.git.1641403655.gitgitgadget@gmail.com> <xmqq8rvuhr6q.fsf@gitster.g>
-In-Reply-To: <xmqq8rvuhr6q.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 5 Jan 2022 14:35:41 -0800
-Message-ID: <CABPp-BFHqu6J2TFAwVzBBznhWBi0ESq+hYoytCPXhrYw1d0JAg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] RFC: Server side merges (no ref updating, no
- commit creating, no touching worktree or index)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3D8B6548-6E78-11EC-9453-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 5, 2022 at 12:18 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > This series introduces a new option to git-merge-tree: --real (best name I
-> > could come up with). This new option is designed to allow a server-side
-> > "real" merge (or allow folks client-side to do merges with branches they
-> > don't even have checked out).
->
-> Finally.  merge-tree was added by Linus mostly as a demonstration of
-> idea to trick other developers into enhancing it to implement a full
-> merge that does not need to touch the index or the working tree, but
-> everybody failed to be enticed by it so far. It is true that it can
-> be used server-side, but I do not think that is what we want to sell
-> it as (after all, receiving a push, merging it to the history in the
-> central repository, and checking the result out to the working tree,
-> would be a good "server-side" operation to have, but it can be done
-> today without this series).  The selling point would rather be it is
-> done mostly in-core, without touching working tree or the index file,
-> no?
+Lessley Dennington <lessleydennington@gmail.com> writes:
 
-You're probably right about how we try to sell it as a project to
-external folks, but I was focused instead on selling it to reviewers
-within the project.
+> Hello everyone! See the following bug report pertaining to sparse-checkout
+> when run outside top-level directories.
 
-"Server side merge" was the name of the topic at the Git Summit and
-lots of folks had interesting comments back then, so I was hoping to
-grab people's attention with a phrase they would have seen previously
-and commented on.
+In a bug report it is fine, but "outside top-level" usually means
+above the top-level of the working tree.  Here, I think you meant
+running in a subdirectory of the top-level.
 
-Further, the folks I know of who have experience trying to do an
-in-core merge are folks who operate on the server side (using libgit2
-instead of git, which they have some gripes with).  I wanted their
-experience and views in the review and wanted to make sure it met
-their needs, and tried to highlight that to lure them into responding
-and reviewing.
+Perhaps something along this line?
 
-> Exciting ;-).
+ builtin/sparse-checkout.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Thanks.  :-)
+diff --git c/builtin/sparse-checkout.c w/builtin/sparse-checkout.c
+index 45e838d8f8..4e5efbb85e 100644
+--- c/builtin/sparse-checkout.c
++++ w/builtin/sparse-checkout.c
+@@ -753,6 +753,16 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+ 	if (!core_sparse_checkout_cone && argc == 0) {
+ 		argv = default_patterns;
+ 		argc = default_patterns_nr;
++	} else if (argc && prefix && *prefix) {
++		/* 
++		 * The args are not pathspecs, so unfortunately we
++		 * cannot imitate how cmd_add() uses parse_pathspec().
++		 */
++		int i;
++		int prefix_len = strlen(prefix);
++
++		for (i = 0; i < argc; i++)
++			argv[i] = prefix_path(prefix, prefix_len, argv[i]);
+ 	}
+ 
+ 	return modify_pattern_list(argc, argv, set_opts.use_stdin, REPLACE);
