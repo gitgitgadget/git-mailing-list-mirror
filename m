@@ -2,155 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B563C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 11:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71AC3C433EF
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 13:09:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233494AbiAELVX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 06:21:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55500 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239648AbiAELVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 06:21:19 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6137C061761
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 03:21:18 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id j18so82255159wrd.2
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 03:21:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=iTWAfALBuFk2QvUt+hN0qgaxsDSKJPIfkse7PWYJM1k=;
-        b=bJJhKtH6mhifdDgbeGrnq6KTOik/cmE/hNm9u467kOuo7fF88N7Yy3sEIUipezWwjw
-         pyOZjvOb20a3ff8XtkDI6IRkWm8vce/qgH4RRUOkpl/65mu2nOhQ3vj8PlxWSDEMxHw2
-         /nxn0yCvUh3bRrt9TECas3FiLKoObQkkn0I7jg3AaqYuoVgYXPSL4pGE72jRgbXbkfci
-         hCiTRyjxF4utqr3iwT/g0g/1J5lY3mTCz1NVWMaYk0n4QwOhw0XRLwXPxHIVm23EqR+6
-         WmyAwMo/0pY6KFpEDMrDsx1xqEXPh6EHWoaCGQyw/RVZB8VpFV1UpVK2AHePjGZ3UfEi
-         9y8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=iTWAfALBuFk2QvUt+hN0qgaxsDSKJPIfkse7PWYJM1k=;
-        b=b0ZlN4cRN6HaLnMaaG4KIJtcK1lJ0sJJmhRJdfgREom8uMw5TrMZZZilzaNKiXJ3Cp
-         mcD7RzhEHQLe953VVkPZSkYVvwqtI0OFaulyaJwCl0xEcd9tgvuE76fNcZImxQZHZhFT
-         5J6yDV2VW+6mTJG+/5w4is/cO3zCMfejtDUO43RcrJnS+097bqjITenHWNbRIA7A2Q5H
-         VeE2Ec9wND0TG4EYqz6IIMrwSzJQ2Mr4tsBAveg0Bg3CiXUno0AYin7E52DhKWxfd96M
-         jf+z6OmXuBvAhljjtWDYN/8ncgwAcVqAZC+MKzuR+mZv85rSOiSXvwg+u/tYaNMOHgam
-         CSvg==
-X-Gm-Message-State: AOAM533UDyCFYwTSU9f/iKmO5vpb9PHxpQele/YKHbZKwM9bMHw+W7jw
-        jt+ROfr8lCOoOkyUqB3ZD/KZoVyX8Ak=
-X-Google-Smtp-Source: ABdhPJw/+GHPwi8Vrt4W8lDyl+PYoK61Pw0C94JnbSxgEa9sLedDJkfXkMQAtwq6x1qNSTexyWP++Q==
-X-Received: by 2002:a5d:6da3:: with SMTP id u3mr43494096wrs.712.1641381677503;
-        Wed, 05 Jan 2022 03:21:17 -0800 (PST)
-Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id c2sm45446842wri.50.2022.01.05.03.21.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Jan 2022 03:21:17 -0800 (PST)
-Message-ID: <9e36813e-2573-35c9-442c-f5a06fa6a739@gmail.com>
-Date:   Wed, 5 Jan 2022 11:21:16 +0000
+        id S236840AbiAENJa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 08:09:30 -0500
+Received: from mout.gmx.net ([212.227.17.20]:37549 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232983AbiAENJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 08:09:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1641388147;
+        bh=oukwfgHaW28K3ZCkoUBnW81hSbVSMXcXTMnY/VoMU1A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=PNFbBhkJE2otqrU3Kv2bXfScTZpuDe+3oDXPu1JWdPSIzFa+zn3bsmOGV1g8sKpfA
+         b3JQB2E5VR0/hiFzwW4rBHyOIZpZDkCZA7hTe35MHX5wdaKzM5cF6aoh75kD8v0/2j
+         +Ha0Zs3ueUsUgdY0Cshv7qsb27H71SyafkQPnp24=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.29.215.148] ([89.1.212.167]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M5fIQ-1n3QHB0t9G-007ENz; Wed, 05
+ Jan 2022 14:09:07 +0100
+Date:   Wed, 5 Jan 2022 14:09:03 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Teng Long <dyroneteng@gmail.com>
+cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>, peff@peff.net,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v8 8/8] ls-tree.c: introduce "--format" option
+In-Reply-To: <CADMgQSSjoxqzBDyGXiNC4wHqYGK7z4O0SG0zai85D-DtDHem=w@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201051348050.7076@tvgsbejvaqbjf.bet>
+References: <cover.1641043500.git.dyroneteng@gmail.com> <e0add802fbbabde7e7b3743127b2d4047f1ce760.1641043500.git.dyroneteng@gmail.com> <nycvar.QRO.7.76.6.2201041533540.7076@tvgsbejvaqbjf.bet>
+ <CADMgQSSjoxqzBDyGXiNC4wHqYGK7z4O0SG0zai85D-DtDHem=w@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.3.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/1] builtin/pull.c: use config value of autostash
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>
-Cc:     git@vger.kernel.org, Tilman Vogel <tilman.vogel@web.de>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-References: <20220104214522.10692-1-johncai86@gmail.com>
- <20220104214522.10692-2-johncai86@gmail.com> <xmqqbl0r9l0l.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqbl0r9l0l.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:SDFJDFeLc6HJyn/zzzsWmsjlYQEP2DTOdymZwyBObwQ3Q7s4oqI
+ aoK7n1+8a1WegLuEpTv/zrJ4sRa/2HqpannbSTs+2YXIWD/RyP37DuZ066LVNpiaP+gkdDp
+ mj5FBLpGupxvIgE6Zf+A+lNd/BRzZ5nBwOyfakOtMXn3WwO513SqTi5wjg32mlzc2BT8Fgo
+ iHMDG7CaQpp8USrTuv2Tw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WnWDNqqMwBc=:AdeEkjaqpQLfAZhIO9sMGo
+ FCeQmAugNa7kk4xZsBXkhJ5WoduP2uknhvMAXHfocQReuyvPXoZf+osOBROOUghJVvkKSYIaR
+ RcPQeWwPOMWQCya65D6kYqw2/hho0FV7arRE6+YY3RdQT+2ax+1h00DTFcNvYI4lca9gTR7pL
+ gr2fJYtkz+ndvWguFIPWBSRPZvvrIDwPKVEgRGLL781o5hRpR/N9Hd18zpQ/Ly9KNY5hdLMXB
+ OCeIyD/n+aacFG347rCShn0Qz7kyQcyHKF+68NSOJcRww/hvGX3heQIKyaLge/ZdWA32zfi+B
+ h4kbwL3z/bpWAfwBLDJgieAiwTBVB3eTYpKEMMUjPb9NNQOsoZvj8IvX0giaWGVcFAzc/VNDI
+ hbS400pKtGC86dCA1CoGQQhWuulKj63zlyis1OVFOpRzdhVXJecW8fkrfGumDEVw1wGCSFRkF
+ a/nUIi3CMmb7Vzq/q/D45oA2OeMIiEJeGEm/9jnz8vhsSDQJSt9bDU4hr8RI+o0UaWycigBim
+ m4UwsSd70tc3no7SmyAWZuSX0UngigP9+6T2KrPre4nGNLmu01p7FMYnGNiJdq2TJycVc+HFF
+ B9cKXIhsTI3dzWRK57bCZVvviI39GiTY4wuSGg9hhyEUNgZy7IVxlZF0I9L2hos8E8Rm9kT7E
+ q6jqEpLKxcG7s2jLBVka7tHYVtc3+VNzWq3P75pkGq36Z1W960yqXB1W0TPQNnwsSOsMbBumJ
+ aSRXxLGuIvarK9DazcSEJwAh59InOWGG/4HQdzqb+Y+iHOIH4eu2YE7aj1p4nwx98+k61HqkQ
+ S9ALGn/TF1nqONB7FkFdsPyPc4NEVfGcJZm2kJcpr0u0eok6KGvBVIM/qXl9YSwh4AalUK8xP
+ RMLU+e8yabjsZlqaKe3+ctQfAVVyqXWsK8bXUfd2GE2apA9URDEvv9i2yhEHWodqTLbR8HwZB
+ QyLBvNrUYWNr0E+2Tt0ALkZ+O36kdVVKgGMt/JF8UsBYOWmbrX1e+W1muchI9o/nJ3obmjlk2
+ CKlysetezoNDElBn6aw9gMWd9p8Q9uyIknAu7UhdqvXZcRGcEMk8kpFrFeN0Q1UAW+OqqUzmS
+ lI7pf+tFHnP1WI=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John and Junio
+Hi Teng,
 
-On 04/01/2022 22:46, Junio C Hamano wrote:
-> John Cai <johncai86@gmail.com> writes:
-> 
->> diff --git a/builtin/pull.c b/builtin/pull.c
->> index 100cbf9fb8..fb700c2d39 100644
->> --- a/builtin/pull.c
->> +++ b/builtin/pull.c
->> @@ -86,7 +86,8 @@ static char *opt_ff;
->>   static char *opt_verify_signatures;
->>   static char *opt_verify;
->>   static int opt_autostash = -1;
->> -static int config_autostash;
->> +static int rebase_autostash = 0;
->> +static int cfg_rebase_autostash;
-> 
-> Do not explicitly initialize statics to '0' (or NULL for that matter).
-> 
-> But more importantly, I have a feeling that you are making a piece
-> of code that is already hard to read impossible to follow by adding
-> yet another variable.
-> 
->> diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
->> index 66cfcb09c5..28f551db8e 100755
->> --- a/t/t5521-pull-options.sh
->> +++ b/t/t5521-pull-options.sh
->> @@ -251,5 +251,56 @@ test_expect_success 'git pull --no-verify --verify passed to merge' '
->>   	test_commit -C src two &&
->>   	test_must_fail git -C dst pull --no-ff --no-verify --verify
->>   '
->> +test_expect_success 'git pull --rebase --autostash succeeds on ff' '
-> 
-> Missing blank line between tests.
-> 
-> 
-> I thought that the root cause of the problem is that run_merge() is
-> called even when rebase was asked for (either via pull.rebase=true
-> configuration or "pull --rebase" option), when the other side is a
-> descendant of HEAD.  The basic idea behind that behaviour may be
-> sound (i.e. if we do not have any of our own development on top of
-> their history, rebase vs merge shouldn't make any difference while
-> fast-forwarding HEAD to their history), except that rebase vs merge
-> look at different configuration variables.
-> 
-> I wonder if the following two-liner patch is a simpler fix that is
-> easier to understand.  run_merge() decides if we should pass the
-> "--[no-]autostash" option based on the value of opt_autostash, and
-> we know the value of rebase.autostash in config_autostash variable.
-> 
-> It appears to pass all four tests your patch adds.
+On Wed, 5 Jan 2022, Teng Long wrote:
 
-I think this is a better approach - it's simpler and it is clear that we 
-only use rebase.autostash when a rebase was requested.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > This, along with two other similar instances, triggers the
+> > `static-analysis` job in the CI failure of `seen`. The suggested diff =
+is:
+>
+> The second and third I will optimize in the next patch.
+>
+> The first one. Actually I am a little puzzled from this :
+>
+> > -               strbuf_addf(line, "%7s", "-");
+> > +               strbuf_addstr(line, "-");
+>
+> > But I think that the first hunk indicates a deeper issue, as `%7s`
+> > probably meant to pad the dash to seven dashes (which that format won'=
+t
+> > accomplish, but `strbuf_addchars()` would)?
+>
+> "strbuf_addf(line, "%7s", "-");" here is used to align the columns
+> with a width of seven chars, not repeat one DASH to seven.
 
-Best Wishes
+Ah. I misremembered and thought that `"% 7s"` would do that, but you're
+correct. See below for more on this.
 
-Phillip
+But first, I wonder why the test suite passes with the `strbuf_addstr()`
+call... Is this line not covered by any test case?
 
->   builtin/pull.c | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git c/builtin/pull.c w/builtin/pull.c
-> index 100cbf9fb8..d459a91a64 100644
-> --- c/builtin/pull.c
-> +++ w/builtin/pull.c
-> @@ -1133,7 +1133,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
->   			die(_("cannot rebase with locally recorded submodule modifications"));
->   
->   		if (can_ff) {
-> -			/* we can fast-forward this without invoking rebase */
-> +			/*
-> +			 * We can fast-forward without invoking
-> +			 * rebase, by calling run_merge().  But we
-> +			 * have to allow rebase.autostash=true to kick
-> +			 * in.
-> +			 */
-> +			if (opt_autostash < 0)
-> +				opt_autostash = config_autostash;
->   			opt_ff = "--ff-only";
->   			ret = run_merge();
->   		} else {
-> 
+About the `%7s` thing: The most obvious resolution is to use `"      -"`
+with `strbuf_addstr()`. And I would argue that this is the best
+resolution.
 
+If you disagree (and want to spin up a full `sprintf()` every time, just
+to add those six space characters), feel free to integrate the following
+into your patch series:
+
+=2D- snip --
+=46rom a390fcf7eec261c7f0e341bda79f2b1f326d151e Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Wed, 5 Jan 2022 14:02:19 +0100
+Subject: [PATCH] cocci: allow padding with `strbuf_addf()`
+
+A convenient way to pad strings is to use something like
+`strbuf_addf(&buf, "%20s", "Hello, world!")`.
+
+However, the Coccinelle rule that forbids a format `"%s"` with a
+constant string argument cast too wide a net, and also forbade such
+padding.
+
+Let's be a bit stricter in that Coccinelle rule.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+=2D--
+ contrib/coccinelle/strbuf.cocci | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.c=
+occi
+index d9ada69b432..2d6e0f58fc8 100644
+=2D-- a/contrib/coccinelle/strbuf.cocci
++++ b/contrib/coccinelle/strbuf.cocci
+@@ -44,7 +44,7 @@ struct strbuf *SBP;
+
+ @@
+ expression E1, E2;
+-format F =3D~ "s";
++format F =3D~ "^s$";
+ @@
+ - strbuf_addf(E1, "%@F@", E2);
+ + strbuf_addstr(E1, E2);
+=2D-
+2.33.0.windows.2
+=2D- snap --
+
+Ciao,
+Dscho
+
+>
+> A little weird about the fix recommendation of  "strbuf_addstr(line, "-"=
+);" ,
+> because it will only add a single DASH here.
+>
+> It's the identical result which compares to the "master"[1]  I think wit=
+h the
+> current codes and I tested the "strbuf_addf()" simply and it seems to wo=
+rk
+> fine.
+>
+> [1] https://github.com/git/git/blob/master/builtin/ls-tree.c#L106
