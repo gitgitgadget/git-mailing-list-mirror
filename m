@@ -2,42 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00F46C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 14:07:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46B0FC433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 14:14:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236902AbiAEOHN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 09:07:13 -0500
-Received: from mail-mw2nam10on2048.outbound.protection.outlook.com ([40.107.94.48]:32334
-        "EHLO NAM10-MW2-obe.outbound.protection.outlook.com"
+        id S240591AbiAEOOp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 09:14:45 -0500
+Received: from mail-dm6nam10on2040.outbound.protection.outlook.com ([40.107.93.40]:31201
+        "EHLO NAM10-DM6-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S240559AbiAEOHM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 09:07:12 -0500
+        id S237013AbiAEOOp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 09:14:45 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RRuuvguBRBFT0UTR+S7r+kjx3p3fTe4lsim7IyiM+jj6VtM/xFhHvvDaTMoJyjrHb9PCq5EUvdxKvAFKssiHR0j+fwabIXclBOHM+b/6AWmN8y1ELNSY0rYKjnlF9SXydCvi5ywwDipi82jlFY4ijQTzeT5kwE110Xe0hfjkST8DB1wvcql7L4lbcTp/dZKf7c9cKYrk/s1VfkP7aVNOfN+JDsHZUfdjif7RSDEfnbvBstungIoSo8b3dsIQP6EStdJ4daw24+oIF9e3NfrvJyKySAryIL1tQ1osFXzAvQv0GiLtp6FC7IWzdYvI3ar8AZPjDNFxsZays86lgQ+8ZQ==
+ b=KtUN7a0vXLIOmbTZaNhU/JarcwTm1DxuZ7zJ0YVo30WvUUcq1Yds0Sw502UGTTHN4brSVamw+UiYkkSx38rng2JJcUW73O0jSfl70Q4/S6rT0Jj2AHUhDg2GGg2ZIJxxzoWkj4QwCLXk68NsFJqSK0Yoc6r5CugGoQnqFN6N0vj07gGRHP5gYu6B1k8eQP1FTWsIigERVyp7s+dsPNBlBkKM7Km7oYX/zvFAeLyyuZ6Z4DGiaqO0UUhQ1+UTQOcfwoknttwqde9czRtBrrtaJotPlTEvXmFPDi0B8LZfTg6AhMEEvyqh+tY71DNyF7xd0rnuRpnTqeeQliuTD66zIg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qhecZS6BqdvARjH263NeHK6T8pYZx4HycV10soS8Mn0=;
- b=KvcCIMWBXrGe5p6R0NPPRXit0dkK+eJCJNy8zlslYKbORr4G/QieZxClyexOVhzXTxhHFUiuAUECPwaqH9N8xYZ3zTUdEQoTQd8+BVR5Am0F+TwD/7vttVAVzQfW2ZTnQRkH3Oj9/SAHz1fpTuLTE3NkTRq8Z5L21P6UhS9hXWcfnoxVCdVDqaMoHH6djn7BYP1ORYH6T4VAW0TK4v3y0uXi15B9o9XWi2PyeOJnI5ESws+mnM3VkvUDAZ2+nfy4qRfYGs1Ir/7vHpac+u8y/sAxZjZGoKZg75uV9N1nQcv38QBYi+/5/JS6dtPP9fZNcRbxN2sNOnG/4jxuEHCrig==
+ bh=QkJFjkn5gljmp3at5a+XADuKEjouC5JVK/JWSegjTXU=;
+ b=eH5FedOHHV6ltVnE7sul/YPSesxkmPiv0teyQ43e/3G0Ibv0Y4am8e5d32K+1S79P6tJSimPUzJe4W9rU8r3qb/Jz3w3jvTMy9MJMI2IdzGENrdk4Edk6MpYqfSunHwTY0whJ/hTcGK2Z3sKGQODixHrz8a5CHSvxN46rvgFouu+zj3jjaybFvxZPvespwdkCGuFPrB5FqWbhmA6hgmLnVLQlR4DwzV2HPQr+2rJsvFbL05uqVRYfzx1eLrzVzoXXZvpDKC7nMFzv6g6rO7TqDEr3f+C1bIbC63qOQUIE38i4JxVpb0mJ7Ff3Y16B81yxluhe+7h+u8m/YQEzBh7+A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qhecZS6BqdvARjH263NeHK6T8pYZx4HycV10soS8Mn0=;
- b=DadUhqY6njcuhOJXilTBaDLF0vYhyIYomywGl9xEuZ3JMOBlIIW21WHkr/I/ynIZldZr1rmopl45tgW8iWcANCZ86PQWP1Z/4fTuZeOnzKkwtqf5o+gYPLOJksBsPowwe7MdSus7Op2hih4p/Xba8T/5bfgxANM26bG3tSaDUX01OCmEfY4HhXyW9ZYmG5jQNIRcAPYoyPWs9a7FPU0gRStwDOaqwZdZvtQNHBolY8tsLcneNlYIP1hAjRakxDR4R/IE5nS2VhDrvBbVc1bJhhLoDscJh7DeXUbyIflTepDxcAsi58E2OVEoZzW6dl+C3FX12P/2CSHXpZDUd5Ge+w==
+ bh=QkJFjkn5gljmp3at5a+XADuKEjouC5JVK/JWSegjTXU=;
+ b=LEd3LwfBVBU2bXItoEbs1gYXi8ymuTD8d2Nzjt4CD3VVGwbXUvpsF4iJFtEqR5KqqtIVxkJu50Dyl95RtL2xT8XpnrU3HWNygJArKz+NoYh/cvRVhesUdFpemU2r5NZgJY2//dp9v8vpmSRYdaftXgzWyGNoLqJ8wsxKht3sn/EsRcwNaxY+hwtO7+FrHwOwtjVrHWvJXOtTthcAJanEeW+yknImEnSbA+sN/5tMXqoyR5nOtMH623C8cxeZgMPdEyKux9tOCS4igSjSMVkgowCawDC2wRCidFqPmbI8HhsM5jyMRK3tOC/4TGte1wi3x5GZXTPDN1U2s3DlnyLlEg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
- by MN2PR12MB4424.namprd12.prod.outlook.com (2603:10b6:208:26a::7) with
+ by MN2PR12MB4437.namprd12.prod.outlook.com (2603:10b6:208:26f::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4844.15; Wed, 5 Jan
- 2022 14:07:10 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4867.9; Wed, 5 Jan
+ 2022 14:14:43 +0000
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::516f:3a1f:4951:ebd6]) by BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::516f:3a1f:4951:ebd6%5]) with mapi id 15.20.4844.016; Wed, 5 Jan 2022
- 14:07:10 +0000
+ 14:14:43 +0000
 From:   Joel Holdsworth <jholdsworth@nvidia.com>
 To:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
         Junio C Hamano <gitster@pobox.com>
@@ -49,113 +49,112 @@ Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
         Ben Keene <seraphire@gmail.com>,
         Andrew Oakley <andrew@adoakley.name>,
         Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH] git-p4: don't allow cloning into non-empty directories
-Date:   Wed,  5 Jan 2022 14:06:31 +0000
-Message-Id: <20220105140631.48252-1-jholdsworth@nvidia.com>
+Subject: [PATCH] git-p4: fixed instantiation of CalledProcessError
+Date:   Wed,  5 Jan 2022 14:14:27 +0000
+Message-Id: <20220105141427.48861-1-jholdsworth@nvidia.com>
 X-Mailer: git-send-email 2.34.1
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: PR0P264CA0264.FRAP264.PROD.OUTLOOK.COM (2603:10a6:100::36)
- To BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
+X-ClientProxiedBy: AS8PR07CA0036.eurprd07.prod.outlook.com
+ (2603:10a6:20b:459::14) To BL0PR12MB4849.namprd12.prod.outlook.com
+ (2603:10b6:208:1c2::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: cc80fbfb-5ed6-4062-f5fc-08d9d054aa66
-X-MS-TrafficTypeDiagnostic: MN2PR12MB4424:EE_
-X-Microsoft-Antispam-PRVS: <MN2PR12MB44240EA18D34D60F499368FBC84B9@MN2PR12MB4424.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:569;
+X-MS-Office365-Filtering-Correlation-Id: aa82b7a3-0e00-45d9-006a-08d9d055b864
+X-MS-TrafficTypeDiagnostic: MN2PR12MB4437:EE_
+X-Microsoft-Antispam-PRVS: <MN2PR12MB4437A235257D2563F425CA14C84B9@MN2PR12MB4437.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:82;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: ALg6eG95WXZMpYyLJ+xzZ7nf+RA1+AxZQpXs98UjfUEKa0e2W6sk28Cnq5Lu89Ues+cZVxVZncWZLbTOFX2UhLrJYp14l90DtChhNzkFvhU2wZnOdc26HXicHywpBhbhv8ZGzM5dZojgq/u4CFzEX5papncrQtRw1oGY+aYCtT+sQkwoyHjiTHAHc47nNKXcASqTIMfxbJfrQRjK+wkIP0k4OkYEtfy1X91i+cjSgDPhn8me+0AzImZD5qvMCj4Ir5WXKaPRFp3OHlI/kS1FiN4r/EUC0F/FsoDjuVw8fOJA4q0KHay8zUn5gh5bhfboSjYvJp3PHQuLYAPa84LW8EeS15Boi4EQaWaKVqlOxzwfoXY+x/w3/WVNrA3YtKcj18lfFVQ7uhPV7kQk585yiPGCb/4AB99l2xRlYWrxq3HOSZG7GU873IzVcqtQ1kielThWkEnRg6r9qIEVwyF9LVx8zD4XeW6YSF/KSsAxSqlmCGM5HE7wVN8tgdXN7ugkWE412tqOIEbxJxLlvC0Kso5u2LwBp0dOyMfEq9o6rFwKAyhJeMZtci1P17DBKjZnTgwMgkrhuCaH8OASYeZK/Ap2yft6acVYaunvAJ81K8lubv9rMsh2jab+RYxqh4A+YvaAEMi5YFh19TdsQBv2S1eZ7wAteNIP18Ux2nm3xc7IuxjdWmHX7ANNl4mfMiC09dXwNxz6rYO86ykY5+oKHw==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(2906002)(8676002)(6512007)(4326008)(55236004)(186003)(6506007)(86362001)(83380400001)(7416002)(36756003)(38350700002)(1076003)(66476007)(26005)(5660300002)(107886003)(6486002)(52116002)(66946007)(316002)(54906003)(38100700002)(2616005)(110136005)(6666004)(66556008)(8936002)(508600001);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: ldZaZFcIi1CbYNuvgYzmMPAPPCwrn+YXjpMndDBfNQjyyPfo7cZe4+yP8J117LqLxBUxIuPGbYJWxrrXr4k5tEQdAm+fP6zF+5lDjXY1ZwwevvLpl8kcwCBNQ+qzolcCE8zp8LV2UBwnqYCCaAdojTA9UEObjfK3qKpVt5Bfwz+W/WSvKhj/jYq2MeVdWJPJbAJZt4ZnpDAp+edoW3AWpoBvHWs7xNzOhBcW7PONgRehKQKfGf6DhzOqPOMP/XkYCuvu78H7Mz9PxvAUu2Tw68wo93Q/xkvHMHWq3x1yvD6lKqT5m3WZ1FgqwKrZgurn0YIARvEiR6Z1BW5j4SqplX3Fu1SdOii3+aMrQOY4GItF3L/PyUwkqkT75Cq307aimrQWhtKtDiaymF7cvO+65Ovcdr7r9hBwnuNdTFVSnBlyQjyEKaua0A1dSHqHUAj6mivKIJ5ADMcWSJXgM9BlpIZPWm6jooLMMmT+2ix3s5RNi9MEkVrhOrNtCVa/M/lfY/6x61fuYS1DKV/vlIbErWlyt6srt8T9msYxLdpPwQNREIiQ0RaND1WvsokxGUXWN7Cv3sgi13464Aej5jjnZqD1T50GJ8ydJBleCEsJHb5XYb3e7o79tvJlZlMY7BvaWo2JHfjjTmEVzPwCSTIlIwJJQrpwdxQHh5xi7V8njYT/GD6J2qC5uyRU0UnFVUv0xoufnHeJ6c4HYL7j2KmAIA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(316002)(38100700002)(38350700002)(8936002)(55236004)(6506007)(6512007)(66946007)(2616005)(107886003)(66476007)(26005)(6486002)(86362001)(186003)(66556008)(4326008)(5660300002)(54906003)(2906002)(508600001)(7416002)(36756003)(83380400001)(6666004)(52116002)(1076003)(8676002)(110136005);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?qnsDWX1HXU+cLd/25XgYvikC9kW2OMMuEpQuSgAHzTRVuKYOvF7KDfSAYW3j?=
- =?us-ascii?Q?vhsL7S/M8ublWRVKtd7V+3ZrayUKHwCFf4M1MqzZssyjpVWK3Lev58NDNJrf?=
- =?us-ascii?Q?6dlmshbwTMme6GL9hbN6Lf0kKUjFEDFw4dSV5P057eXTnwbx+VzIckHlyLGh?=
- =?us-ascii?Q?BJn82jLM0gGCuIqmRq9OSC1+Tw/d4Ne9MZ/z6qgKYnlstQIIgdcgeTbWz4+7?=
- =?us-ascii?Q?msE1+X/n2nhO9i+UVXP5658CG01CVLrBHuW79FV+pbC/IYMf7ZAYtcvCOlzE?=
- =?us-ascii?Q?uEMODZAr1V3/7HJpji8VoM8v+iH9hY7QoLyKgCg0trbzpX+xjmKZfobN/fcR?=
- =?us-ascii?Q?/UuZ76m0CHseRhTP/K1r6RynfUXEFnF0zkgfh1oAf4DclJyXLPIhPJbX+9Aq?=
- =?us-ascii?Q?s2CDjXCjLMKiROk8mhqZiIbvRHGxjV3n3VTuyPOUj1isoF820cvfDBOw9Wq9?=
- =?us-ascii?Q?0b9R5MLqI8kkXJ87yFIvrnK6yAp8iY5IC5PevEy7iGPIhnRsTb6p2NdShlQp?=
- =?us-ascii?Q?Ol3WqWIOURrihC8IxGt6l6xWycTx8O0zZQEwyk3JxzlUwrr5vhK94/OwJNEs?=
- =?us-ascii?Q?stqLNs8uJy8IeKPUJIw4ozWDuo7KU2mFokhL4IJRj6jiYiHlxar1jwijXKDJ?=
- =?us-ascii?Q?kQP8HXHmQlkcBnQJLHSrCii0pjZhsnuD/ebBWkshORkstdOcTVksISVSyYFD?=
- =?us-ascii?Q?IXUfzR9zizJoSga8nrTbY2CJvBOI38GpnGYa5rNSdhl2R/10nFHgNH3o/TmX?=
- =?us-ascii?Q?5BMRsEbVOX0THHwGXYDQHzVybapw1hrKpjJw6AjGzgFbl9u6FBgv8ZEDVd5n?=
- =?us-ascii?Q?NWJfTzP7daZvcOmn+GX9sZsW1gm370VLSxq4lDtYiXgeUSj/9ezBdQP/dTEp?=
- =?us-ascii?Q?3GGgXFZvCfDhdbFqOTqxL+SnZ5EFKYkA/D2Mz3kN55kZLSFzx8iuC4HAazOE?=
- =?us-ascii?Q?W27iP2hCCJEwF9AW1otM2W+JJ/gA2dOeMwHP0jwBWredE7O5XXMQB8obRS19?=
- =?us-ascii?Q?A3dxaxv99WrNNJpFJzEZ+LQGBuQQrJkYdGfmFIjctxs1nibqtzGGriuFqse+?=
- =?us-ascii?Q?C9ixRyNFQrnXAbe8Pw0BmuG8mQeP5a/bqIHyf4wT24PHhB+dMxiv5MupXSVg?=
- =?us-ascii?Q?7YhS6HWsHBnz1EWxrtyGltp7eOcBI8K1MvQtJPHhF0Bn338bZmlPYcT0/s5z?=
- =?us-ascii?Q?NGgMOuyZeYXwUsxNY096KZn+6gIEfsVpIvKYQYfGQZ0CGaDBYu7a8N/1yCw9?=
- =?us-ascii?Q?s5HPnAncYMuXSFKyVVG1xtxnVGNUbAOdmNc799IzhzS47fDPqYmVxgL+mXO5?=
- =?us-ascii?Q?aCBLfaffaiRWOmpTpjtXKvGCQtfalXRvZonfZ1stY7722FIMFEd92zMbLoj/?=
- =?us-ascii?Q?T2qFR+HCfQlQ8d8h074G1zXS5Cts+rBZ126yB4gKfb0OsBXERIwuG3/OSEJe?=
- =?us-ascii?Q?iThyjuZHCRSSx9zMOCVAKusFgVIWUJDoRsoYpkyW0Lu2yzis++K/1GXKDwI8?=
- =?us-ascii?Q?l2RUUARXGx7VUpiTYfYYx+adk8arEKkjfmxKqi1ecJs+jVkgL5SdvMqpCU0w?=
- =?us-ascii?Q?de7I6yfaC5DTg9qedK/X5P8r7CLK1jbjU+wT5qfQPw83vCL+slunQ07w+mKo?=
- =?us-ascii?Q?GIB2P5C++iPt3+aElGLaFLM=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?hTvwC+Zn+g2ShHDPwcZTy2eXJXq00kEKP4XlGovNYOKiX+Cy2K5WNvZV0aco?=
+ =?us-ascii?Q?5VLPQ4HHJ58zdMKNYne0PlTXefx5igsRfB5ougaFyhNYu5vru9n3lxXJFjFI?=
+ =?us-ascii?Q?xQySnKNk4hTQIYIUSxxjzu2ajwbWYR3LpPE+8qP/XHznRnliC+Jwfnq5MCgs?=
+ =?us-ascii?Q?CQv5/huEh3l3IWLReNZ1sz3D3/BxOI5nsFB2WRLjpJFUEZGMIpamMH4kvltp?=
+ =?us-ascii?Q?FEFvad9pjJO9A5arQW41VN4oNeBxUdwLzufslsTZWuDm9I+7eCokhecqfOUJ?=
+ =?us-ascii?Q?5ubuO2XcoJBC99Fma0G2/IZtP/mjMxVEVemZNSXe2l47yw9W5hMQ6OTRDy4i?=
+ =?us-ascii?Q?2fRecmq8t1JWhmYNsIol5476uc2EhUThll/dLZqEqRjifjUd8W7K9DCu7FNJ?=
+ =?us-ascii?Q?rfhKtlCImcLBA/AV5FUTJtWxNzzAuAV9Daug+HMw1QfC30OpN7+2KN0ZdUeF?=
+ =?us-ascii?Q?Llel09/ivQzUtsr1V5Dn/j4G5NiFZ9b/PwrV6g0KIuiGUfHOYXoXT6NjtFK/?=
+ =?us-ascii?Q?0x+VfrdxGqf8LLdnzHvLNyZ3Y8ZBoMr3uDCpO0gSCQuKa/ObdUF2+l21f6OB?=
+ =?us-ascii?Q?Xf/zhIzjWD/9MBPN2k0Lj6wrKyOerSmDe/nTH6gffBAIy92KaCDAQl6xF71A?=
+ =?us-ascii?Q?/tpGt8WVbA1PZX03YFUKTgV/PqmTAXIHBd/G9lOrpxcuNZwRKsj2sZ+F8TI8?=
+ =?us-ascii?Q?3/eUbWS6a4V/AYzLUO6C4c0fym1To+cQC3NFXba1716AfEeAL5m0iAUFsAKO?=
+ =?us-ascii?Q?PjwvVnaxKGtGfiAugEFYHIVTiiaFS5gKVNZi3F1G8GGZTwTIivFzveQzpFgS?=
+ =?us-ascii?Q?kt3Hgcjhhl7CNgaMx6zs6q1P0npgf5ME4T7L3Dym+TviwcbdgcED4Qxm0WLS?=
+ =?us-ascii?Q?sViZ++L1tvjuJyPSAew9Ta4s4Jwjle8JjLS+trmcASSRV3AAJjSpN2nHa6EI?=
+ =?us-ascii?Q?dAywJq24UfQsElIb52VwlmLaGLwg3ZF7WjLLpWObpfVhyo8p7/Fi0gb0gBWn?=
+ =?us-ascii?Q?ggNlrPsfKaRjUE1gLOXum5q1YsbrAseALGCXES2pqx8zS6tFhpIPGOpKcunR?=
+ =?us-ascii?Q?eO2YCK4meUxhuW0Y85ZW6KNfdYqeG0515Gs37qeOPlfZflLVivSlLlKh/Rnk?=
+ =?us-ascii?Q?H0C86N7lI4thyn5bfPMlK1x5tbGpSvoLUxJUQ/nLNEmWSnc2JiK2ewoWAQAF?=
+ =?us-ascii?Q?gBrZb5AlZOf6OUmPJawTdeG1eLbTaQPjmUt4ZPJPb4U2hcCqs1AzdiZrqL9X?=
+ =?us-ascii?Q?ejzieaUO4codSQbpHEDX7V2El9VHW+1WylUVDB+TqAkZTiotrBMWpu2eNAq5?=
+ =?us-ascii?Q?SJ4TC9+dNJcog5gOJgCkp+cUtHymBQOb9RhyO6apIzOJNY0uuIYsdhusi7IE?=
+ =?us-ascii?Q?LkMFqTUJG6rfE+ChXUdslB5MrOmVEsHEIWk4rg2VYcPczBYbyDJFOyB7BbSV?=
+ =?us-ascii?Q?4upsaHDvIFULscK3lCsV/ngbnhqHXAIs9qzrjVt/4B1+EN3K+WQfkRE8gwcJ?=
+ =?us-ascii?Q?p6Rrl+dh0JDtuudPjZieuE9JeE8p9hnEL9qDPA2xcriGCyb+Q+ty1+qiGx59?=
+ =?us-ascii?Q?oHDudMVa/M2OIoXMTQaFzbbP/bkwFEIgUh0WeRhe7imSQ0akNPogBCxnCm26?=
+ =?us-ascii?Q?AGMtSHNnF90pPDlEzWXuemU=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cc80fbfb-5ed6-4062-f5fc-08d9d054aa66
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa82b7a3-0e00-45d9-006a-08d9d055b864
 X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jan 2022 14:07:10.6058
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jan 2022 14:14:43.7275
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: H/ijCIRGS/xrMszegfE9K9XJ7y7Gze1XqnxBdq+TrfCgoqbwx4tpZlKvRHGN7wv828cuURMn+a+1soK6XjVUnQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4424
+X-MS-Exchange-CrossTenant-UserPrincipalName: hQg42pZ3jPxPhix8S/Fn0+HGhlB6lsbfF+Z/14rPVQ+vY7nncX75RrHeUERF46zGAUgqdzIuql2L1/oOJpR12w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4437
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, git-p4 would allow users to clone a Perforce repository into
-a pre-existing git repository. When attempting this, git-p4 would
-download the Perforce commits (a time consuming process), and would fail
-at the end during the final git fast-import with a cryptic error
-message.
+CalledProcessError is an exception class from the subprocess namespace.
+When raising this exception, git-p4 would instantiate CalledProcessError
+objects without properly referencing the subprocess namespace causing
+the script to fail.
 
-This was easy to do inadvertently when running the same git-p4 clone
-command more than once.
-
-This patch changes the behaviour of git-p4.py so that it matches that
-of git itself: disallowing all clones into non-empty directories.
-
-Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
+This patch resolves the issue by replacing CalledProcessError with
+subprocess.CalledProcessError.
 ---
- git-p4.py | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ git-p4.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index cb37545455..e15fbe1486 100755
+index cb37545455..ab3822696c 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -4099,12 +4099,19 @@ def run(self, args):
-         if not self.cloneDestination:
-             self.cloneDestination = self.defaultDestination(args)
+@@ -406,7 +406,7 @@ def system(cmd, ignore_error=False):
+         sys.stderr.write("executing %s\n" % str(cmd))
+     retcode = subprocess.call(cmd, shell=expand)
+     if retcode and not ignore_error:
+-        raise CalledProcessError(retcode, cmd)
++        raise subprocess.CalledProcessError(retcode, cmd)
  
--        print("Importing from %s into %s" % (', '.join(depotPaths), self.cloneDestination))
--
--        if not os.path.exists(self.cloneDestination):
-+        if os.path.exists(self.cloneDestination):
-+            if (not os.path.isdir(self.cloneDestination) or
-+                os.listdir(self.cloneDestination)):
-+                die(
-+                    "fatal: destination path '{}' already exists and is not "
-+                    "an empty directory.".format(self.cloneDestination))
-+        else:
-             os.makedirs(self.cloneDestination)
-         chdir(self.cloneDestination)
+     return retcode
  
-+        print("Importing from {} into {}".format(
-+            ', '.join(depotPaths), self.cloneDestination))
-+
-         init_cmd = [ "git", "init" ]
-         if self.cloneBare:
+@@ -416,7 +416,7 @@ def p4_system(cmd):
+     expand = not isinstance(real_cmd, list)
+     retcode = subprocess.call(real_cmd, shell=expand)
+     if retcode:
+-        raise CalledProcessError(retcode, real_cmd)
++        raise subprocess.CalledProcessError(retcode, real_cmd)
+ 
+ def die_bad_access(s):
+     die("failure accessing depot: {0}".format(s.rstrip()))
+@@ -4110,7 +4110,7 @@ def run(self, args):
              init_cmd.append("--bare")
+         retcode = subprocess.call(init_cmd)
+         if retcode:
+-            raise CalledProcessError(retcode, init_cmd)
++            raise subprocess.CalledProcessError(retcode, init_cmd)
+ 
+         if not P4Sync.run(self, depotPaths):
+             return False
 -- 
 2.34.1
 
