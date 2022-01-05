@@ -2,83 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1CBAC433EF
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 19:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BE4CC433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 19:26:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243430AbiAETRv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 14:17:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51930 "EHLO
+        id S243504AbiAET03 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 14:26:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243408AbiAETRu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 14:17:50 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77FF4C061245
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 11:17:50 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id j21so398482edt.9
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 11:17:50 -0800 (PST)
+        with ESMTP id S243475AbiAET0Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 14:26:24 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5568AC061245
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 11:26:24 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id g191-20020a1c9dc8000000b0032fbf912885so11093wme.4
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 11:26:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IaPg2Sqg4ajVTdbI8NNV4s2+jbSI8yKLwMG854OKx8s=;
-        b=WmJ5xOQrxb7D6cUrC6N/aNmJqd6OdTHAfBRrNYpD0ZlODFY4oHpNCCvrgXo7qDiNS/
-         u9aeel8adDMaRXF0lDI0eyyqa230xNlZkzhMkOehhtP+GXE20sh7TeNEjabXDMzrO93w
-         wiRJDcQQHsT8o7LpVCXw7oOFdMuAuTXZ6mOFshqqInN5p6p2AkI98fd39jK1vwr6mEB6
-         3rL2EbnlthOzazWNoiT0FiZd2OtRNo0kXL6CWrIU4HEfAM9iJkQ6isqdROpyRV4gR/pW
-         p54lBFrgukQ3dkQoMI1tIMynZxGnPP4Uto3lcerlhLOAw63BvXcYNSMJNvLJRY/bjz+Z
-         dMag==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=qsPVaLB6dfkAopYl2Wh9yINdPnpSi/hhVdBeUJ6TIZU=;
+        b=apnbRN4njAJ3ld1gauTtA51UgRgq3ANXNXLsgHaMQm2M5ravUz9+Quihoe+jxn96zn
+         igfqhzseMees7vIR8hHqQJZMndYRK/QFGGkZDRfsGCQi1y/10NflgjIGMkSS37gHvzUs
+         espuhX6XB6Su0lcylEvBFpHO6NWqcLQuVqKwNSdOJjvdNprIFy48QcP5QFOBsLKw0Tra
+         lWWb/YCBn0e0nX9l6GLWEDzgNQ1rrX6X8woBNgAj8uZdiZLOToLnynMd3TQglZH3LxVx
+         qbfSBGS9lvrmw53EvukN9QpbNaldVWiHR13JHsWcLt37vxPgvWr1dVqQ955r6iRUgt4v
+         PLoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IaPg2Sqg4ajVTdbI8NNV4s2+jbSI8yKLwMG854OKx8s=;
-        b=SlWN530lO3tdFiloT6I7DkomHd92NnQKvrENit2FaTxSm51Tm4aLt51V1Q0UwQOy9i
-         5aQOVl+rcvAGVk5yET74z2HKpLv2UZ+STDM8i+BU0B2fKpYxnyOXJgJt3QyiPp0J++5F
-         /NXrNmQh+8j0cKMjIPTHvX7el3uEneM/9Psx9TkcrD7c7tdWexORubBqcAr4VN9YVwu2
-         eNEFXbdbC/gj90+idwrA3uKAQhn3ceY/7jgakQUUuNYqbkM2evRcHsOASA51jJSWWs1y
-         +NeH81UqevGfqgdZnctP093VIngq8TBgvYdqAm8F4OkJaWbvy1ccdQPetYbNVBJmEU5p
-         CAyw==
-X-Gm-Message-State: AOAM530VRHmDOUzybWwPmeu9A+Tc5TTtq8DDeSlD1WOsZzB5ymhxABoS
-        VxCXja3Rm3Y/MgchQnu5cypOXuFzGe2aG2/zMUE=
-X-Google-Smtp-Source: ABdhPJzF+mi4Ptyic64ubHRVihG+HEK+BwycOYvCSEWbWpx1tlpmo4ntpVqB9k/WXAadnq3hutmruB3A5884kwt8Hiw=
-X-Received: by 2002:a17:907:60c8:: with SMTP id hv8mr43351194ejc.192.1641410269074;
- Wed, 05 Jan 2022 11:17:49 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=qsPVaLB6dfkAopYl2Wh9yINdPnpSi/hhVdBeUJ6TIZU=;
+        b=0he9/h1y/ggDvrPyWsI05v+FTtzR0Ow/JA8pulTwpv0npOJMVZvTTZjAvUi2k0auth
+         r/e8NsHwTwVOw0LwXJF2inzhXklLm9PdC4KOjtbv1ngiSq51+UcjHuepw6iRMQssJehb
+         aknBmNcAiiW4Uc3j+syIPyht7xdWLY3mXlea1mVeQpfMkohTWINzG30HOOMVEyl6JXxT
+         2MiFmgLgprBL2YfXMCyhmhj5tpVDVJmLnP1yToM4uyiXxeMH94MQU6/HOVxrTBBO3SVE
+         7ZQZCX2wN6Lxxu4sOiVOi4vakPDoq81JVaHekBqkdnT+3oSdU2pfwcXlTgmjxCG10TPE
+         R9wQ==
+X-Gm-Message-State: AOAM530J9uV5EIpSDpMNdJkqArIP9vk+IU86HmfI+CIqNtn3Qd1BhwRu
+        565pPFYmsSp1TKrl33wDL1a6LClgkRQ=
+X-Google-Smtp-Source: ABdhPJw+Ca4hjgXzO0WEdj/1tW1KBQke/DodUKDLjEXUaLzGa6tfazaCorGVmVM6amk4U4SSPZQFug==
+X-Received: by 2002:a05:600c:1da5:: with SMTP id p37mr4228790wms.59.1641410782847;
+        Wed, 05 Jan 2022 11:26:22 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c18sm3319622wrn.81.2022.01.05.11.26.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Jan 2022 11:26:22 -0800 (PST)
+Message-Id: <pull.1111.git.1641410782015.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 05 Jan 2022 19:26:21 +0000
+Subject: [PATCH] submodule.h: use a named enum for RECURSE_SUBMODULES_*
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com>
- <pull.1114.v2.git.git.1641403655.gitgitgadget@gmail.com> <01364bb020ee2836016ec0e8eafa2261fb7800ab.1641403655.git.gitgitgadget@gmail.com>
- <ed528125-a2bb-9445-80c5-8c2994ef0d56@ramsayjones.plus.com>
-In-Reply-To: <ed528125-a2bb-9445-80c5-8c2994ef0d56@ramsayjones.plus.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 5 Jan 2022 11:17:38 -0800
-Message-ID: <CABPp-BGL8OeGY_tDXYbMELBnvzZgR445xiK8nGnn_Fo2cn3AAw@mail.gmail.com>
-Subject: Re: [PATCH v2 8/8] merge-tree: provide an easy way to access which
- files have conflicts
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Glen Choo <chooglen@google.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 5, 2022 at 11:09 AM Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
->
-> On 05/01/2022 17:27, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > Callers of `git merge-tree --real` might want an easy way to determine
-> > which files conflicted.  While they could potentially use the --messages
-> > option and parse the resulting messages written to that file, those
-> > messages are not meant to be machine readable.  Provide a simpler
-> > mechanism of having the user specify --unmerged-list=$FILENAME, and then
->
-> s/unmerged-list/conflicted-list/
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-Indeed.  I had noticed after v1 that I had a mixture of using both
-"unmerged" and "conflicted" to refer to the same thing, and tried to
-fix it by always using the latter term.  Unfortunately, I missed
-updating this commit message.  Thanks for pointing it out; will fix.
+Using a named enum allows casting an integer to the enum type in both
+GDB and LLDB:
+
+    (gdb) p (enum diff_submodule_format) options->submodule_format
+    $1 = DIFF_SUBMODULE_LOG
+
+    (lldb) p (diff_submodule_format) options->submodule_format
+    (diff_submodule_format) $1 = DIFF_SUBMODULE_LOG
+
+In LLDB, it's also required to cast in the reversed direction, i.e.
+cast an enum constant into its corresponding integer:
+
+    (lldb) p (int) diff_submodule_format::DIFF_SUBMODULE_SHORT
+    (int) $0 = 0
+
+Name the enum listing the different RECURSE_SUBMODULES_* modes, to make
+debugging easier.
+
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+    submodule.h: use a named enum for RECURSE_SUBMODULES_*
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1111%2Fphil-blain%2Fsubmodule-recurse-enum-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1111/phil-blain/submodule-recurse-enum-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1111
+
+ submodule.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/submodule.h b/submodule.h
+index 6bd2c99fd99..55cf6f01d0c 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -13,7 +13,7 @@ struct repository;
+ struct string_list;
+ struct strbuf;
+ 
+-enum {
++enum submodule_recurse_mode {
+ 	RECURSE_SUBMODULES_ONLY = -5,
+ 	RECURSE_SUBMODULES_CHECK = -4,
+ 	RECURSE_SUBMODULES_ERROR = -3,
+
+base-commit: 2ae0a9cb8298185a94e5998086f380a355dd8907
+-- 
+gitgitgadget
