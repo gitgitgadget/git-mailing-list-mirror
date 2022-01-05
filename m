@@ -2,212 +2,278 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D8A2C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 17:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E371C433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 17:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242247AbiAER14 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 12:27:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54646 "EHLO
+        id S242286AbiAERaH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 12:30:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242217AbiAER1o (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 12:27:44 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24607C061245
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 09:27:44 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id v123so92422wme.2
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 09:27:44 -0800 (PST)
+        with ESMTP id S242235AbiAER3t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 12:29:49 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E6C0C061245
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 09:29:48 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id j21so164800527edt.9
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 09:29:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=JJXql95jnPmZtiZfmd+4qqg+IOMqUYchmPiA6893R2U=;
-        b=G/51VbYteMMo3JBrV/DCa64deeR53J0OuvlcoS/dXrMlIcSlHNDHrUh1b3rKH8TB6x
-         83VJm8KS/3fpH92GUiiOVV2mOZ1M3/N4h+2Jky+Iw/vHg7yLCPApx0RQ2+RM0Gok91qd
-         49BvTdY6fSh2mdGCVyKfNPENQbaYogLXO9R+Z3Pl5a/HR3oLk4YZb8xeSi9eoPPcgww2
-         OASD/O+hpm9oAw3ObvA19An5R1V0UVpQVzx+gQ8gZmnpZnAksHlyE+OM8tHTTLYbWaw0
-         qGiCniYPMeI87dmt4rpeSNEUbE7tB1y2leAELudq1jOf+tfyPibpFLLSek56Paz8ChXR
-         0JNg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IUfw+Ix9kOOTDpokzRdeq9QhzlJl+xmNgjsb7pe9NoY=;
+        b=NjFH2+yngW5BN9M/XiFZGdBelzc/pkuHQmkqXuayL/3IBRBl7hAMeHQ1Q2aJvm7qJC
+         qEjTKiHsHuDoyJpIp81nUV6JuBjgw9QYBw4IeF4l0LGkkFwxAyn0J+JhTKo61iT9s+4w
+         6EAQXhJXWvKQAOMurih3vrkL/IagV4NeWmBdAFY1vhZEHzNG0rn5JBDNvE5VjPrMGxpl
+         As/b4q+9pbaeKiSCgHkHptDH/ufFlFwQN43MlDRaiTCqB1m2rSTqKUx13mqz20QVujDu
+         THYN8FtbfuA2z1s/LbCd+RacNa+NM4BdfBuvSIhD9N+YpQNM1ffe1xFOS+ibzE4iGPZm
+         gmlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JJXql95jnPmZtiZfmd+4qqg+IOMqUYchmPiA6893R2U=;
-        b=T8BZeORuOxBocVFf1fpyUZCb+CbdnmmRnoslytnrILX7S3cclha6PGaHtY+5g1HTLD
-         rLaWcG3Btg6HTTiNPdG5sdgM3wtMR/431ZcEWx67j7UE378DnKee9K9SqrpapRzkUF77
-         7pauXWR5Sa4TSNb2ypGQYipLQSgz/48kaL3G1shR1o2LBXcirRjO7rHIb76s/lJip0jR
-         W6H1MSPD3fYQmDOffYligy7UKm4xMtr3aHcKKJsLEhxqIhrAKm8+G2z5bi+H8OCMWSob
-         nyO/aRe98Ku8AzpWV9klKysxfuYZatW+EZ28TLo81PVJKBIkTLeTM0R3VxZ1oYSxH7GC
-         0oag==
-X-Gm-Message-State: AOAM532NT6bHlOPigQh6KJHDsbhVjx05mWFQ/uPft3ALC044iKEFvYiR
-        pOgG0aDi1N56UuQA0c1+G5YCQKt2fxo=
-X-Google-Smtp-Source: ABdhPJyhQDmmV4nQILEFrmoX/3n5ghli+L1u/LCPJdwKu44uwz27fVIvon5KWVcDwCjSCeeOpEeKNA==
-X-Received: by 2002:a05:600c:4f13:: with SMTP id l19mr3781711wmq.152.1641403662516;
-        Wed, 05 Jan 2022 09:27:42 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a24sm3068886wmj.8.2022.01.05.09.27.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jan 2022 09:27:42 -0800 (PST)
-Message-Id: <01364bb020ee2836016ec0e8eafa2261fb7800ab.1641403655.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1114.v2.git.git.1641403655.gitgitgadget@gmail.com>
-References: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com>
-        <pull.1114.v2.git.git.1641403655.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 05 Jan 2022 17:27:35 +0000
-Subject: [PATCH v2 8/8] merge-tree: provide an easy way to access which files
- have conflicts
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IUfw+Ix9kOOTDpokzRdeq9QhzlJl+xmNgjsb7pe9NoY=;
+        b=XL051IxWqKSlsY1Er7dtAQbfyut9q1dciwSmsFP4jwm9iH+7iqbiVRKV8T/tS3FzpS
+         DPy6JcEeDygIjD+yiL2eJjZ4Hq4iNJIjql64dEIRmWTXsyiZyqwT6XaONAjYMqFkvw9/
+         jVBAS1BMtCOiyHgZb5tTd6FHKXQGjPp8aS8DfYXRmU9d63nQ1y+YzK3H673/boGm0sCG
+         3KGFcHzySRPmIiVQNc30VFlSb2rqlNDtQhm3XcUEAMq0BpXwMSEi5HHjcu+yqdUo8B/C
+         0PU7vES5Oix2pHHnfGXFEAAqGm+pYNWjFaFPYKRuvE7xcIT+zh2ZkFr21Y3HkAhpxCg8
+         KBzw==
+X-Gm-Message-State: AOAM530+V2kjw8/1ZdtZ5vOeJTYDDUMTJxyWLcwpMUqIRvroLDm+Mb6a
+        Ar8RbfaUrzN00jEgrGfKwjOwxqqziABE0hTC1xs=
+X-Google-Smtp-Source: ABdhPJxXARRnqzxMwxkih7QySnb/nunwJvw+d+9bBBbV2fN4WWqy2sG6y8EdsO6i7P1OU9v/MfgS+0+++vK6wWpTVGs=
+X-Received: by 2002:a50:da48:: with SMTP id a8mr52494552edk.146.1641403786694;
+ Wed, 05 Jan 2022 09:29:46 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
+References: <20220105163324.73369-1-chriscool@tuxfamily.org> <20220105163324.73369-3-chriscool@tuxfamily.org>
+In-Reply-To: <20220105163324.73369-3-chriscool@tuxfamily.org>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 5 Jan 2022 09:29:35 -0800
+Message-ID: <CABPp-BFGh=aNbtz7PDfH+JK13Hazb+EggLy8XDWqu0wAP=hmuw@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] merge-ort: add t/t4310-merge-tree-ort.sh
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Wed, Jan 5, 2022 at 8:33 AM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> This adds a few tests for the new merge-tree-ort command. They have
+> been copy-pasted from t4300-merge-tree.sh, and then the expected
+> output has been adjusted.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  t/t4310-merge-tree-ort.sh | 162 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 162 insertions(+)
+>  create mode 100755 t/t4310-merge-tree-ort.sh
+>
+> diff --git a/t/t4310-merge-tree-ort.sh b/t/t4310-merge-tree-ort.sh
+> new file mode 100755
+> index 0000000000..9a54508e82
+> --- /dev/null
+> +++ b/t/t4310-merge-tree-ort.sh
+> @@ -0,0 +1,162 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2010 Will Palmer
+> +# Copyright (c) 2021 Christian Couder
+> +#
+> +
+> +test_description='git merge-tree-ort'
+> +
+> +TEST_PASSES_SANITIZE_LEAK=true
+> +. ./test-lib.sh
+> +
+> +test_expect_success setup '
+> +       test_commit "initial" "initial-file" "initial"
+> +'
+> +
+> +test_expect_success 'file add A, !B' '
+> +       git reset --hard initial &&
+> +       test_commit "add-a-not-b" "ONE" "AAA" &&
+> +       git merge-tree-ort initial initial add-a-not-b >actual &&
+> +       cat >expected <<EXPECTED &&
+> +result tree: ee38e20a5c0e1698539ac99d55616079a04fce26
 
-Callers of `git merge-tree --real` might want an easy way to determine
-which files conflicted.  While they could potentially use the --messages
-option and parse the resulting messages written to that file, those
-messages are not meant to be machine readable.  Provide a simpler
-mechanism of having the user specify --unmerged-list=$FILENAME, and then
-write a NUL-separated list of unmerged filenames to the specified file.
+So the tests only work on sha1?  My tests in
+https://lore.kernel.org/git/pull.1114.git.git.1640927044.gitgitgadget@gmail.com/
+are sha256 compatible.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-merge-tree.txt |  6 ++++--
- builtin/merge-tree.c             | 16 ++++++++++++++++
- merge-ort.c                      | 13 +++++++++++++
- merge-ort.h                      |  3 +++
- t/t4301-merge-tree-real.sh       |  9 +++++++++
- 5 files changed, 45 insertions(+), 2 deletions(-)
+> +clean: 1
+> +diff with branch1:
+> +:000000 100644 0000000 43d5a8e A       ONE
+> +
+> +diff --git a/ONE b/ONE
+> +new file mode 100644
+> +index 0000000..43d5a8e
+> +--- /dev/null
+> ++++ b/ONE
+> +@@ -0,0 +1 @@
+> ++AAA
 
-diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-index 4d5857b390b..542cea1a1a8 100644
---- a/Documentation/git-merge-tree.txt
-+++ b/Documentation/git-merge-tree.txt
-@@ -9,7 +9,7 @@ git-merge-tree - Perform merge without touching index or working tree
- SYNOPSIS
- --------
- [verse]
--'git merge-tree' --real [--messages=<file>] <branch1> <branch2>
-+'git merge-tree' --real [--messages=<file>] [--conflicted-list=<file>] <branch1> <branch2>
- 'git merge-tree' <base-tree> <branch1> <branch2>
- 
- DESCRIPTION
-@@ -23,7 +23,9 @@ will be `0`, and if the merge has conflicts, the exit status will be
- `1`.  The output will consist solely of the resulting toplevel tree
- (which may have files including conflict markers).  With `--messages`,
- it will write any informational messages (such as "Auto-merging
--<path>" and conflict notices) to the given file.
-+<path>" and conflict notices) to the given file.  With
-+`--conflicted-list`, it will write a list of unmerged files, one per
-+line, to the given file.
- 
- The second form is meant for backward compatibility and will only do a
- trival merge.  It reads three tree-ish, and outputs trivial merge
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 46b746b6b7c..4ae34da98b1 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -391,6 +391,7 @@ static int trivial_merge(const char *base,
- struct merge_tree_options {
- 	int real;
- 	char *messages_file;
-+	char *conflicted_file;
- };
- 
- static int real_merge(struct merge_tree_options *o,
-@@ -450,6 +451,19 @@ static int real_merge(struct merge_tree_options *o,
- 		merge_display_update_messages(&opt, &result, fp);
- 		fclose(fp);
- 	}
-+	if (o->conflicted_file) {
-+		struct string_list conflicted_files = STRING_LIST_INIT_NODUP;
-+		FILE *fp = xfopen(o->conflicted_file, "w");
-+		int i;
-+
-+		merge_get_conflicted_files(&result, &conflicted_files);
-+		for (i = 0; i < conflicted_files.nr; i++) {
-+			fprintf(fp, "%s", conflicted_files.items[i].string);
-+			fputc('\0', fp);
-+		}
-+		fclose(fp);
-+		string_list_clear(&conflicted_files, 0);
-+	}
- 	printf("%s\n", oid_to_hex(&result.tree->object.oid));
- 
- 	merge_finalize(&opt, &result);
-@@ -472,6 +486,8 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 			 N_("do a real merge instead of a trivial merge")),
- 		OPT_STRING(0, "messages", &o.messages_file, N_("file"),
- 			   N_("filename to write informational/conflict messages to")),
-+		OPT_STRING(0, "conflicted-list", &o.conflicted_file, N_("file"),
-+			   N_("filename to write list of unmerged files")),
- 		OPT_END()
- 	};
- 
-diff --git a/merge-ort.c b/merge-ort.c
-index 86eebf39166..3d6dd1b234c 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -4234,6 +4234,19 @@ void merge_display_update_messages(struct merge_options *opt,
- 	trace2_region_leave("merge", "display messages", opt->repo);
- }
- 
-+void merge_get_conflicted_files(struct merge_result *result,
-+				struct string_list *conflicted_files)
-+{
-+	struct hashmap_iter iter;
-+	struct strmap_entry *e;
-+	struct merge_options_internal *opti = result->priv;
-+
-+	strmap_for_each_entry(&opti->conflicted, &iter, e) {
-+		string_list_append(conflicted_files, e->key);
-+	}
-+	string_list_sort(conflicted_files);
-+}
-+
- void merge_switch_to_result(struct merge_options *opt,
- 			    struct tree *head,
- 			    struct merge_result *result,
-diff --git a/merge-ort.h b/merge-ort.h
-index 55819a57da8..165cef6616f 100644
---- a/merge-ort.h
-+++ b/merge-ort.h
-@@ -79,6 +79,9 @@ void merge_display_update_messages(struct merge_options *opt,
- 				   struct merge_result *result,
- 				   FILE *stream);
- 
-+void merge_get_conflicted_files(struct merge_result *result,
-+				struct string_list *conflicted_files);
-+
- /* Do needed cleanup when not calling merge_switch_to_result() */
- void merge_finalize(struct merge_options *opt,
- 		    struct merge_result *result);
-diff --git a/t/t4301-merge-tree-real.sh b/t/t4301-merge-tree-real.sh
-index 5f3f27f504d..ec7bd8efd06 100755
---- a/t/t4301-merge-tree-real.sh
-+++ b/t/t4301-merge-tree-real.sh
-@@ -96,4 +96,13 @@ test_expect_success '--messages gives us the conflict notices and such' '
- 	test_cmp expect MSG_FILE
- '
- 
-+test_expect_success '--messages gives us the conflict notices and such' '
-+	test_must_fail git merge-tree --real --conflicted-list=UNMERGED side1 side2 &&
-+
-+	cat UNMERGED | tr "\0" "\n" >actual &&
-+	test_write_lines greeting whatever~side1 >expect &&
-+
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-gitgitgadget
+Oh, this isn't just a --raw diff, but both a raw and full diff?  I
+missed that reading over the previous patch.  This seems potentially
+*extremely* expensive for big repos; dramatically more so than the
+merge portion of the operation.  (Any files modified on just one side
+can be trivially merged without looking at the contents.  In fact,
+directories only modified on one side can usually be trivially merged
+without looking at the contents.  But merges are going to modify lots
+of files relative to either of the two sides and especially relative
+to the merge base, and doing a full diff is going to have to crack
+open every one of those files -- multiple times since you do it
+against the base as well -- to show this output).  I don't think this
+is what you want.
+
+> +diff with branch2:
+> +diff with base:
+> +:000000 100644 0000000 43d5a8e A       ONE
+> +
+> +diff --git a/ONE b/ONE
+> +new file mode 100644
+> +index 0000000..43d5a8e
+> +--- /dev/null
+> ++++ b/ONE
+> +@@ -0,0 +1 @@
+> ++AAA
+> +EXPECTED
+> +
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'file add !A, B' '
+> +       git reset --hard initial &&
+> +       test_commit "add-not-a-b" "ONE" "AAA" &&
+> +       git merge-tree-ort initial add-not-a-b initial >actual &&
+> +       cat >expected <<EXPECTED &&
+> +result tree: ee38e20a5c0e1698539ac99d55616079a04fce26
+> +clean: 1
+> +diff with branch1:
+> +diff with branch2:
+> +:000000 100644 0000000 43d5a8e A       ONE
+> +
+> +diff --git a/ONE b/ONE
+> +new file mode 100644
+> +index 0000000..43d5a8e
+> +--- /dev/null
+> ++++ b/ONE
+> +@@ -0,0 +1 @@
+> ++AAA
+> +diff with base:
+> +:000000 100644 0000000 43d5a8e A       ONE
+> +
+> +diff --git a/ONE b/ONE
+> +new file mode 100644
+> +index 0000000..43d5a8e
+> +--- /dev/null
+> ++++ b/ONE
+> +@@ -0,0 +1 @@
+> ++AAA
+> +EXPECTED
+> +
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'file add A, B (same)' '
+> +       git reset --hard initial &&
+> +       test_commit "add-a-b-same-A" "ONE" "AAA" &&
+> +       git reset --hard initial &&
+> +       test_commit "add-a-b-same-B" "ONE" "AAA" &&
+> +       git merge-tree-ort initial add-a-b-same-A add-a-b-same-B >actual &&
+> +       cat >expected <<EXPECTED &&
+> +result tree: ee38e20a5c0e1698539ac99d55616079a04fce26
+> +clean: 1
+> +diff with branch1:
+> +diff with branch2:
+> +diff with base:
+> +:000000 100644 0000000 43d5a8e A       ONE
+> +
+> +diff --git a/ONE b/ONE
+> +new file mode 100644
+> +index 0000000..43d5a8e
+> +--- /dev/null
+> ++++ b/ONE
+> +@@ -0,0 +1 @@
+> ++AAA
+> +EXPECTED
+> +
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'file add A, B (different)' '
+> +       git reset --hard initial &&
+> +       test_commit "add-a-b-diff-A" "ONE" "AAA" &&
+> +       git reset --hard initial &&
+> +       test_commit "add-a-b-diff-B" "ONE" "BBB" &&
+> +       git merge-tree-ort initial add-a-b-diff-A add-a-b-diff-B >actual &&
+> +       cat >expected <<EXPECTED &&
+> +result tree: 3aa938e8cc8be73c81cbaf629ea55a16e7c39319
+> +clean: 0
+> +diff with branch1:
+> +:100644 100644 43d5a8e 1e462bc M       ONE
+> +
+> +diff --git a/ONE b/ONE
+> +index 43d5a8e..1e462bc 100644
+> +--- a/ONE
+> ++++ b/ONE
+> +@@ -1 +1,5 @@
+> ++<<<<<<< add-a-b-diff-A
+> + AAA
+> ++=======
+> ++BBB
+> ++>>>>>>> add-a-b-diff-B
+> +diff with branch2:
+> +:100644 100644 ba62923 1e462bc M       ONE
+> +
+> +diff --git a/ONE b/ONE
+> +index ba62923..1e462bc 100644
+> +--- a/ONE
+> ++++ b/ONE
+> +@@ -1 +1,5 @@
+> ++<<<<<<< add-a-b-diff-A
+> ++AAA
+> ++=======
+> + BBB
+> ++>>>>>>> add-a-b-diff-B
+> +diff with base:
+> +:000000 100644 0000000 1e462bc A       ONE
+> +
+> +diff --git a/ONE b/ONE
+> +new file mode 100644
+> +index 0000000..1e462bc
+> +--- /dev/null
+> ++++ b/ONE
+> +@@ -0,0 +1,5 @@
+> ++<<<<<<< add-a-b-diff-A
+> ++AAA
+> ++=======
+> ++BBB
+> ++>>>>>>> add-a-b-diff-B
+> +EXPECTED
+> +
+> +       test_cmp expected actual
+> +'
+> +
+> +test_done
+> --
+
+I've focused a bit on the things that I didn't care as much for, but
+the usage of the merge-ort API was solid and there are pieces here
+that look quite simliar to what I'd expect...and in fact, to what I
+also implemented.  Perhaps there are multiple things I also overlooked
+in my implementation of this idea; would be great to get your comments
+on that, over at [1].
+
+And, as a heads up, as noted at [2], I'm also working on the
+server-side cherry-pick/rebase.
+
+
+[1] https://lore.kernel.org/git/pull.1114.v2.git.git.1641403655.gitgitgadget@gmail.com/
+[2] https://lore.kernel.org/git/CABPp-BHpK8hPsiuHoYsf5D_rjcGLSW-_faL3ODoh56pG_2Luwg@mail.gmail.com/
