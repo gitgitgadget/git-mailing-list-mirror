@@ -2,64 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D04EC433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 03:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A84E9C433EF
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 03:58:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237231AbiAEDkS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Jan 2022 22:40:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36714 "EHLO
+        id S237280AbiAED6g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Jan 2022 22:58:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236054AbiAEDkS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jan 2022 22:40:18 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FB00C061761
-        for <git@vger.kernel.org>; Tue,  4 Jan 2022 19:40:18 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id a1so36232260qtx.11
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 19:40:18 -0800 (PST)
+        with ESMTP id S230284AbiAED6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jan 2022 22:58:35 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F351AC061761
+        for <git@vger.kernel.org>; Tue,  4 Jan 2022 19:58:34 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id r139so36113989qke.9
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 19:58:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=NGg0xsq8Wqz0yqkGUQsNY+fYebxmF0N+8VJ/2OFl6rE=;
-        b=nszi0ZUNr2T+AnJImCsLtKwAB+VJANRzU1Y9qawc6wynvVkaNcRZ6FFNMWryUZbgd0
-         TYD+OhIMvKHhNjzmgf6KOgLIPTMMqwF5D2bMBSzZRJs92xYNK6BYY4mfSUO6iDEn1bXg
-         140LSqnKsUbMUH2sYTmDiW0iXRB5iRRQziLzOjAJ44/JZRqf3jzEn+3XPYuS+AnrgZDc
-         bsy/xusWjuRb82ZCO1FpkDtp0mjdUjM9cMGda+DJKXuDzL1Wf052P3Dy4EshU9q3k9Qq
-         LAE1VzAaXjpOyyHSxlZR+Rin23d9yULoV3wyF7fYtgJTix9CLunZ5EVhCdDDSYRwY+hr
-         Kp4Q==
+        bh=kiL9pSCUCjJSNCMWFe9U6vI5VPnxXiz5ztriNj5DI2c=;
+        b=RS634C5mLs7Vp5Cqy8a0IXVrMFzEJ+F5uizVsiOnejv6eMzgv7X4A4YBLTXIi1uOQx
+         AE8i+MUn3bsPGzjnzMZc4DfFK2gNwJQDATEH2IeRULVUMPUn5vhp3xHuitlJaJjDQuG5
+         cuUzZRgHRRDiptGrYP8dpeiIjmnqqq9uXdzTd1OZIGgwygwkgeNcwXVOdt+uu7T+Bjmz
+         uMwitboIvPRGwP3tPJNQQ79zId8CahebQwhszPRs+WOaO/ipIx9ZI7pgUUcff5mrCygs
+         EM1ECqSTc1h6EvbWD1ZVX3n5zawLjyLNL9upx7RKKb1EOHhRIqE5q/GoxBmbuC6eyL/E
+         jlww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=NGg0xsq8Wqz0yqkGUQsNY+fYebxmF0N+8VJ/2OFl6rE=;
-        b=flUHLgKZ9OOjsNCxc62AZph4/5eUArKDKVXKpOcgy/K4DUCFzEXLUBFisJ0vOXNGxH
-         bVQM2pj7DQ/tU54XP/KB62Zvpyanlqlvyq3UeKVmlrg1WAWao/NOLvhkguBQhSBw6CmA
-         kPif7U7NlxQpG+T+DAHNNW/jtRbuAG97Fpbc4l/ximFYmo1w0ijuIuzwRd5u92tK7lAj
-         NNXgHoKFoJHwbw5x9CseHTbbFJwSfTxsoXYSSkOKXjt8atUArskjPQ3qewioNjTnWZ6+
-         R68IgCEsw5rZye45umN5zzZ3qzLf8QndqdgG+bwCQ49pcTdftSjqCxpHbffFIGoDHkdY
-         u3tw==
-X-Gm-Message-State: AOAM531LLIx3OoyMQjK8KBhlSmpGkXd5URg1W30TSpbo5JAZkSim3hA2
-        UYqVisyHv/K4npJIIQjOAAcjlwGqD/4=
-X-Google-Smtp-Source: ABdhPJzucp6WJYwlxMTqkqdQ8NXP34GYhUuPfBsivNDQoSJ9v3AMogs/FsrTEwogn1UJ8x7w/1uzYw==
-X-Received: by 2002:ac8:5946:: with SMTP id 6mr46274974qtz.373.1641354017142;
-        Tue, 04 Jan 2022 19:40:17 -0800 (PST)
+        bh=kiL9pSCUCjJSNCMWFe9U6vI5VPnxXiz5ztriNj5DI2c=;
+        b=ZUEt390iVnaMFXDNScpURcmSmCmI/sDDSKNhX2EF2dpHv2nbhb/jw18HzV/jtao0bN
+         zMB3rF48C2QrJRlON7Bzxmt3ImI8tHaV59U/MGscP0sWTy2SqN+CudY62voLBEizFYzO
+         s/eD67gzF8bhkC+8NbR6LV4rWb5Mg3zj0v7F3yBO9a3k8If5+Cq6NeTwMrZDpjDT2X3V
+         MSyc+Q7GIg7vdxKrbsrYGn3VhesZw9cPtwI8oUnipf0q2PizvWPkaP50pYpjsJlMeEBt
+         J8j2fAYXYh/MWNtybUEDKSw9fWoI2CU0btauzTvpAW31gJFtyxzIDQe/At35wFd51WQ6
+         gV1g==
+X-Gm-Message-State: AOAM531objHsCjU/I8up/zrh+BVLNodkOtM/OtW8NfwMOr+0W5edeK8B
+        H6Fj8GZuuGppF2bsRGox1sG9ud81mio=
+X-Google-Smtp-Source: ABdhPJxLcBbAnWGoS+VkL+Og0geI3DQLRiQBnS9ycB8BBK4FOweRUtNKXYZVdKrYVopkH413UNEh3A==
+X-Received: by 2002:a37:6586:: with SMTP id z128mr37496662qkb.73.1641355114127;
+        Tue, 04 Jan 2022 19:58:34 -0800 (PST)
 Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id t11sm31458246qkm.96.2022.01.04.19.40.16
+        by smtp.gmail.com with ESMTPSA id u28sm25894096qke.12.2022.01.04.19.58.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Jan 2022 19:40:16 -0800 (PST)
+        Tue, 04 Jan 2022 19:58:33 -0800 (PST)
 Subject: Re: [PATCH 1/1] builtin/pull.c: use config value of autostash
-To:     John Cai <johncai86@gmail.com>, git@vger.kernel.org
-Cc:     Tilman Vogel <tilman.vogel@web.de>
+To:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>
+Cc:     git@vger.kernel.org, Tilman Vogel <tilman.vogel@web.de>
 References: <20220104214522.10692-1-johncai86@gmail.com>
- <20220104214522.10692-2-johncai86@gmail.com>
+ <20220104214522.10692-2-johncai86@gmail.com> <xmqqbl0r9l0l.fsf@gitster.g>
 From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <fe0b7337-3005-d09c-a3b6-65a100799676@gmail.com>
-Date:   Tue, 4 Jan 2022 22:40:15 -0500
+Message-ID: <4fe0e850-1c30-da70-5535-e2a4105ba734@gmail.com>
+Date:   Tue, 4 Jan 2022 22:58:32 -0500
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <20220104214522.10692-2-johncai86@gmail.com>
+In-Reply-To: <xmqqbl0r9l0l.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: fr
 Content-Transfer-Encoding: 8bit
@@ -67,147 +67,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John,
+Hi Junio,
 
-Le 2022-01-04 à 16:45, John Cai a écrit :
-> A bug in pull.c causes merge and rebase functions to ignore
-> rebase.autostash if it is only set in the config.
-
-The reported bug only affects fast-forwards as far as I understand, so I
-don't think "merge and rebase" is the best wording here. Also, 'functions' is
-not super clear. The actual functions in the code are 'run_rebase'
-and 'run_merge', if that is what you are referring to. If you
-mean the different underlying "modes" of 'git pull', I'd phrase
-it more like "the underlying 'merge' or 'rebase' invocations"
-or something like that - but again, only the underlying 'git merge'
-is affected, and only for fast-forwards.
-
+Le 2022-01-04 à 17:46, Junio C Hamano a écrit :
 > 
-> There are a couple of different scenarios that we need to be mindful of:
-> 1. --autostash passed in through command line
-> $ git pull --autostash
-> merge/rebase should get --autostashed passed through
+> I wonder if the following two-liner patch is a simpler fix that is
+> easier to understand.  run_merge() decides if we should pass the
+> "--[no-]autostash" option based on the value of opt_autostash, and
+> we know the value of rebase.autostash in config_autostash variable.
 > 
-> 2. --rebase passed in, rebase.autostash set in config
-> $ git config rebase.autostash true
-> $ git pull --rebase
+> It appears to pass all four tests your patch adds.
 > 
-> merge/rebase should get --autostash from config
+>   builtin/pull.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 > 
-> 3. --no-autostash passed in
-> $ git pull --no-autostash
-> --no-autostash should be passed into merge/rebase
+> diff --git c/builtin/pull.c w/builtin/pull.c
+> index 100cbf9fb8..d459a91a64 100644
+> --- c/builtin/pull.c
+> +++ w/builtin/pull.c
+> @@ -1133,7 +1133,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+>   			die(_("cannot rebase with locally recorded submodule modifications"));
+>   
+>   		if (can_ff) {
+> -			/* we can fast-forward this without invoking rebase */
+> +			/*
+> +			 * We can fast-forward without invoking
+> +			 * rebase, by calling run_merge().  But we
+> +			 * have to allow rebase.autostash=true to kick
+> +			 * in.
+> +			 */
+> +			if (opt_autostash < 0)
+> +				opt_autostash = config_autostash;
+>   			opt_ff = "--ff-only";
+>   			ret = run_merge();
+>   		} else {
 > 
-> 4. rebase.autostash set but --rebase not used
-> 
-> $ git config rebase.autostash true
-> $ git pull
-> --autostash should not be passed into merge but not rebase
 
-Usually we start the commit message by a description of the current behaviour,
-so in the case of a bugfix like here, a description of the exact behaviour
-that triggers the bug. As Tilman reported, this only affects fast-forwards,
-so that should be mentioned in your commit message.
-While what you wrote is not wrong per se (although I'm not sure what you meant
-with point 4), almost all of the behaviour is
-correct, apart from the (rebase + ff) case, so I would focus on that.
+We already have a quite useless 'int autostash' local variable in cmd_pull
+a few lines up, so an equivalent fix, I think, would be the following:
 
-> 
-> This change adjusts variable names to make it more clear which autostash
-> setting it is modifying, and ensures --autostash is passed into the
-> merge/rebase where appropriate.
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 1cfaf9f343..9f8a8dd716 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -1036,14 +1036,13 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+  		oidclr(&orig_head);
+  
+  	if (opt_rebase) {
+-		int autostash = config_autostash;
+-		if (opt_autostash != -1)
+-			autostash = opt_autostash;
++		if (opt_autostash == -1)
++			opt_autostash = config_autostash;
+  
+  		if (is_null_oid(&orig_head) && !is_cache_unborn())
+  			die(_("Updating an unborn branch with changes added to the index."));
+  
+-		if (!autostash)
++		if (!opt_autostash)
+  			require_clean_work_tree(the_repository,
+  				N_("pull with rebase"),
+  				_("please commit or stash them."), 1, 0);
 
-As Junio already pointed out, I'm not sure the changes you propose
-are really clearer... I agree that adding yet another variable is unneeded.
-
-> 
-> Reported-by: "Tilman Vogel" <tilman.vogel@web.de>
-> Co-authored-by: "Philippe Blain" <levraiphilippeblain@gmail.com>
-
-As I remarked in the other thread, I'd prefer if you remove that trailer.
-
-> Signed-Off-by: "John Cai" <johncai86@gmail.com>
-> ---
->   builtin/pull.c          | 15 ++++++------
->   t/t5521-pull-options.sh | 51 +++++++++++++++++++++++++++++++++++++++++
-
-The existing tests for 'git pull --autostash' are in t5520, so I think it
-might make more sense to add any new tests there instead of t5521.
-
-> diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
-> index 66cfcb09c5..28f551db8e 100755
-> --- a/t/t5521-pull-options.sh
-> +++ b/t/t5521-pull-options.sh
-> @@ -251,5 +251,56 @@ test_expect_success 'git pull --no-verify --verify passed to merge' '
->   	test_commit -C src two &&
->   	test_must_fail git -C dst pull --no-ff --no-verify --verify
->   '
-> +test_expect_success 'git pull --rebase --autostash succeeds on ff' '
-> +	test_when_finished "rm -fr src dst actual" &&
-> +	git init src &&
-> +	test_commit -C src "initial" file "content" &&
-> +	git clone src dst &&
-> +	test_commit -C src --printf "more_content" file "more content\ncontent\n" &&
-> +	echo "dirty" >>dst/file &&
-> +	git -C dst pull --rebase --autostash >actual 2>&1 &&
-> +	grep -q "Fast-forward" actual &&
-> +	grep -q "Applied autostash." actual
-> +'
-
-This seems to test the same thing as  t5520's "--rebase --autostash fast forward",
-so I don't think it's necessary to add this one.
-
-> +
-> +test_expect_success 'git pull --rebase with rebase.autostash succeeds on ff' '
-> +	test_when_finished "rm -fr src dst actual" &&
-> +	git init src &&
-> +	test_commit -C src "initial" file "content" &&
-> +	git clone src dst &&
-> +	test_commit -C src --printf "more_content" file "more content\ncontent\n" &&
-> +	echo "dirty" >>dst/file &&
-> +	test_config -C dst rebase.autostash true &&
-> +	git -C dst pull --rebase  >actual 2>&1 &&
-> +	grep -q "Fast-forward" actual &&
-> +	grep -q "Applied autostash." actual
-> +'
-
-OK, this is the actual test that was failing.
-
-> +
-> +test_expect_success 'git pull --rebase --autostash succeeds on non-ff' '
-> +	test_when_finished "rm -fr src dst actual" &&
-> +	git init src &&
-> +	test_commit -C src "initial" file "content" &&
-> +	git clone src dst &&
-> +	test_commit -C src --printf "src_content" file "src content\ncontent\n" &&
-> +	test_commit -C dst --append "dst_content" file "dst content" &&
-> +	echo "dirty" >>dst/file &&
-> +	git -C dst pull --rebase --autostash >actual 2>&1 &&
-> +	grep -q "Successfully rebased and updated refs/heads/main." actual &&
-> +	grep -q "Applied autostash." actual
-> +'
-
-This seems to test the same thing as t5520's "pull --rebase --autostash & rebase.autostash unset"
-
-> +
-> +test_expect_success 'git pull --rebase with rebase.autostash succeeds on non-ff' '
-> +	test_when_finished "rm -fr src dst actual" &&
-> +	git init src &&
-> +	test_commit -C src "initial" file "content" &&
-> +	git clone src dst &&
-> +	test_commit -C src --printf "src_content" file "src content\ncontent\n" &&
-> +	test_commit -C dst --append "dst_content" file "dst content" &&
-> +	echo "dirty" >>dst/file &&
-> +	test_config -C dst rebase.autostash true &&
-> +	git -C dst pull --rebase >actual 2>&1 &&
-> +	grep -q "Successfully rebased and updated refs/heads/main." actual &&
-> +	grep -q "Applied autostash." actual
-> +'
-
-This seems to test the same thing as t5520's
-"pull --rebase succeeds with dirty working directory and rebase.autostash set".
-
-
-Thanks for working on this ! :)
-
+Thanks,
 Philippe.
