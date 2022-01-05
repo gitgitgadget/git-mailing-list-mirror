@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 110A9C433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 20:02:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D281C433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 20:02:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243841AbiAEUCn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 15:02:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33874 "EHLO
+        id S243857AbiAEUCt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 15:02:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243804AbiAEUCc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 15:02:32 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45A50C061212
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 12:02:31 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id c66so371322wma.5
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 12:02:31 -0800 (PST)
+        with ESMTP id S243798AbiAEUCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 15:02:33 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC24AC061245
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 12:02:32 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id h23so510913wrc.1
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 12:02:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=6B3Wz5JTSb7Z5RBwq2lLEIjujXvQYK+iJjyySfyByyA=;
-        b=R2S1btn2AjRK7b1/RCoQFj2/8o8eCav368+PvOCozgy03ji1L+NHhMS75nj7jRVZI9
-         Fop1alnUkNRcByV8jWIIofNIpORrKJDMn/Cc1s9lyG+dEMUvJfLUKL0CeFK1auZLkW9G
-         i9zF3uhkydsFYR78e43oyrVEzP1lvpqtg9iTXzkF7BkPcuk/s+55rSANcU5LMMllDHBr
-         lkMhf1ZX2RucsdXjhGqppwJ/B7X7V62ViuD862NUYuZJoAiotEFiDrnadGwOd9T+eCIp
-         XAk6pdBdxUaBDH9+UJV43K1v1WtbugIfa+38NtBUlhb+pUpRCH8IIEW5uPIIYPCppnvE
-         YznQ==
+        bh=JIocY6VcxAOywLFzw0OnVpMN7lpFCNvRMkP6pq4asjc=;
+        b=Qd8sGl5XzC+Mi3kQ+eR0WT7wwgFYp+2YQhBHLRvFOC1ob+KmT4PhdrDXUX2kycYmPD
+         3oUAMkAVHLBf0NmT5wfWWG2ZzMWCynC81Z1hXM1qkaA0A91g6ugjPNaiFx75vf4L4hiv
+         dOfrbUPbZ7m47zhJKkq7pE5QA+Dc2JpgYn+gejnp16Rs9CenqPGEMA2+AK0ZbtP9z1ex
+         +Ke2zH1w4Dql2rtl+Fyr0cxhAEbJtUHQ7zKrLMF1AD9bB1bLy3FWzZFS9EdM4Ig1M0QY
+         5naN9kVMUluM7sacce6kR/iZpWUTuK7zWC9R33RwIn9O+cxxPrQ7aXaSLQqdY3XKoAow
+         dtdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=6B3Wz5JTSb7Z5RBwq2lLEIjujXvQYK+iJjyySfyByyA=;
-        b=K8G3iLl+vX0sCJjonuFlJN8teDOtSVuJWE11bvAhsxajm29TcyLTHaE9aFDqwHEuMn
-         OqKrvkRU64OPp/PBrw/3V3Jgo7coXGbbjvwGyx3B5TbLmT0R5o7dT++0RjQ/59GlwOqA
-         U4FTma4Gkv1SPrcBKYaiFu3EADNDTlwI78t1O+zf/ndkaz9YoATqFh/F8pbFvEor7Olf
-         so0InflOYSw0YXZ866VYNSNgc3oru2ATvifmPeSd9AAJ5ybMZijhQwM4XaytpjUeZ+c9
-         3x9uEvf4iowYKCWPz1E5mDX231XY/yicvNJ8luOBH5aP30v2p6nAOLVA0quyCKn5zVJp
-         XQuQ==
-X-Gm-Message-State: AOAM533IiSyVcJI92Ts+KF9l+z0358KHOZLI2BpMF4WI7tsBBrdyrVDf
-        DwZ6H61fwPI+dUSREVAoVkDeLOxna9g=
-X-Google-Smtp-Source: ABdhPJytWiU6JZ+cLBMhOntRtTBZuXcCqIHyQ+gs/bSs5YX2zMGnFwdkgDCltGBg2XaHvLNQzS2C2g==
-X-Received: by 2002:a7b:c3c5:: with SMTP id t5mr4202095wmj.168.1641412949720;
-        Wed, 05 Jan 2022 12:02:29 -0800 (PST)
+        bh=JIocY6VcxAOywLFzw0OnVpMN7lpFCNvRMkP6pq4asjc=;
+        b=5/E2j2nzbLvsFM2k/agwjztQFpQJ74SMYFkrbfy1/Oot6avwcfvkc3XEZ7GcSOf8dK
+         t6r3BbqYU2cVbry0AS98jUCP13ajdeFjmk0ywpcJOGzvxXvvd+WoXnm8rIVahtoG9ueW
+         1A+iqB9SDya6yZRP4HXSfEkbh0R7VsoNC3cxFCI6AMb1oTt94/11IGZK15F689wGfqUC
+         HzkgqEQXYzf/9hcTlIi3hnE/rbKPe8SYUoyVjTl+QpWY4VPCm+rWza4svIp/wOOor9LO
+         JKiWcYDmmXoKxngVdb9eGP/yLPri+VJJEaxyO2wqmLaZhoLsUiAvWl+HYt46nLzjif1q
+         2P1g==
+X-Gm-Message-State: AOAM531PGTxnCEZ9/VW7rORdiLKeBfaBJquwYxzPMNpNrOPzSVz/l0tF
+        G7Y+D1WmakzFMGjX7JGr/LRfHzrW7nU=
+X-Google-Smtp-Source: ABdhPJzq5i8JuvLBAeOtKpTsQxU8VgBy5cx39Ef2Wy1XFDnzrH763SK3ESmfAf7tDuceDVydxTtdZw==
+X-Received: by 2002:a5d:6312:: with SMTP id i18mr46642937wru.475.1641412951303;
+        Wed, 05 Jan 2022 12:02:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m35sm7469973wms.1.2022.01.05.12.02.29
+        by smtp.gmail.com with ESMTPSA id t25sm981085wmj.26.2022.01.05.12.02.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jan 2022 12:02:29 -0800 (PST)
-Message-Id: <ad58bc8d8a989af335f271c00a55805d9a7f7d82.1641412945.git.gitgitgadget@gmail.com>
+        Wed, 05 Jan 2022 12:02:30 -0800 (PST)
+Message-Id: <08f5471aeaa9c14a340f5876a161144da0a34dc9.1641412945.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1088.v5.git.1641412944.gitgitgadget@gmail.com>
 References: <pull.1088.v4.git.1641143745.gitgitgadget@gmail.com>
         <pull.1088.v5.git.1641412944.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Wed, 05 Jan 2022 20:02:18 +0000
-Subject: [PATCH v5 05/11] i18n: tag.c factorize i18n strings
+Date:   Wed, 05 Jan 2022 20:02:20 +0000
+Subject: [PATCH v5 07/11] i18n: factorize "no directory given for --foo"
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,50 +73,40 @@ From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- builtin/tag.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ git.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index dfdcfd37956..8f372a41078 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -483,6 +483,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 	int ret = 0;
-+	const char *only_in_list = NULL;
- 
- 	setup_ref_filter_porcelain_msg();
- 
-@@ -542,15 +543,19 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		goto cleanup;
- 	}
- 	if (filter.lines != -1)
--		die(_("-n option is only allowed in list mode"));
--	if (filter.with_commit)
--		die(_("--contains option is only allowed in list mode"));
--	if (filter.no_commit)
--		die(_("--no-contains option is only allowed in list mode"));
--	if (filter.points_at.nr)
--		die(_("--points-at option is only allowed in list mode"));
--	if (filter.reachable_from || filter.unreachable_from)
--		die(_("--merged and --no-merged options are only allowed in list mode"));
-+		only_in_list = "-n";
-+	else if (filter.with_commit)
-+		only_in_list = "--contains";
-+	else if (filter.no_commit)
-+		only_in_list = "--no-contains";
-+	else if (filter.points_at.nr)
-+		only_in_list = "--points-at";
-+	else if (filter.reachable_from)
-+		only_in_list = "--merged";
-+	else if  (filter.unreachable_from)
-+		only_in_list = "--no-merged";
-+	if (only_in_list)
-+		die(_("the '%s' option is only allowed in list mode"), only_in_list);
- 	if (cmdmode == 'd') {
- 		ret = delete_tags(argv);
- 		goto cleanup;
+diff --git a/git.c b/git.c
+index 7edafd8ecff..edda922ce6d 100644
+--- a/git.c
++++ b/git.c
+@@ -185,7 +185,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				*envchanged = 1;
+ 		} else if (!strcmp(cmd, "--git-dir")) {
+ 			if (*argc < 2) {
+-				fprintf(stderr, _("no directory given for --git-dir\n" ));
++				fprintf(stderr, _("no directory given for '%s' option\n" ), "--git-dir");
+ 				usage(git_usage_string);
+ 			}
+ 			setenv(GIT_DIR_ENVIRONMENT, (*argv)[1], 1);
+@@ -213,7 +213,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				*envchanged = 1;
+ 		} else if (!strcmp(cmd, "--work-tree")) {
+ 			if (*argc < 2) {
+-				fprintf(stderr, _("no directory given for --work-tree\n" ));
++				fprintf(stderr, _("no directory given for '%s' option\n" ), "--work-tree");
+ 				usage(git_usage_string);
+ 			}
+ 			setenv(GIT_WORK_TREE_ENVIRONMENT, (*argv)[1], 1);
+@@ -297,7 +297,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 				*envchanged = 1;
+ 		} else if (!strcmp(cmd, "-C")) {
+ 			if (*argc < 2) {
+-				fprintf(stderr, _("no directory given for -C\n" ));
++				fprintf(stderr, _("no directory given for '%s' option\n" ), "-C");
+ 				usage(git_usage_string);
+ 			}
+ 			if ((*argv)[1][0]) {
 -- 
 gitgitgadget
 
