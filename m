@@ -2,62 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AE1CC433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 06:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B25AC433EF
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 07:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231468AbiAEGRK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 01:17:10 -0500
-Received: from mail-pg1-f178.google.com ([209.85.215.178]:41703 "EHLO
-        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231144AbiAEGQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 01:16:06 -0500
-Received: by mail-pg1-f178.google.com with SMTP id f8so24627513pgf.8
-        for <git@vger.kernel.org>; Tue, 04 Jan 2022 22:16:06 -0800 (PST)
+        id S237935AbiAEHKN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 02:10:13 -0500
+Received: from mail-pj1-f54.google.com ([209.85.216.54]:45008 "EHLO
+        mail-pj1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229593AbiAEHKM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 02:10:12 -0500
+Received: by mail-pj1-f54.google.com with SMTP id n30-20020a17090a5aa100b001b2b6509685so5527173pji.3
+        for <git@vger.kernel.org>; Tue, 04 Jan 2022 23:10:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=J1mKV7jqsAwt0ItICtE+ccfncgcSXxGFGmm6lzeo8c4=;
-        b=hLzAUY9RrSkPhSHdw+XuxYSfo8MnS+2M8WvOy/oGLHtm/mQVweTg5IGnAkFZGS3X82
-         5e18rERThMJvBahCQVOOSj6KPgub7xig3jV1Q2qmhgNwh9QMZwd1LErxc+w8UHqq3HuX
-         zMioSjxNZpKLQ9TBjBuACx/rX56wjV4928WCcvjSMwY5qS4rfVN2hq/QUsL30CftKI63
-         cT6kps1ItkWlvnJIdXJX4EIc/Ob/NgDocauR4s58+XRMrYxxkvZLLfmyAcP5UaLwDNvF
-         T3/qxiYn6dTQRGukpTC74AsHlerGYnYoNRMm1+sOHZz+7JwozSpyZMt+6b8WVXUt0kN1
-         k4JQ==
-X-Gm-Message-State: AOAM531Sc3JeeKkXTx6yDxCHKBI8DblxhuK+n0XidaUM2dlJFR9eZaoH
-        bmKpbZ6M7xZ4P6gowbszs+qaft4IdwnDZffJW8z3QF2yNSJU1w==
-X-Google-Smtp-Source: ABdhPJylqXVCS8rVzyqcJ7GcvCnyz4h2JfnOpjZ7gj9oxSmNaNvf82WBFtDyeK/aJeXf2e0WOR2+SM25GcKB3Ge5Y00=
-X-Received: by 2002:a63:395:: with SMTP id 143mr47320037pgd.181.1641363365808;
- Tue, 04 Jan 2022 22:16:05 -0800 (PST)
+        bh=9upj+0j92M/A8Oh9KW3wyYLfC06otABPiKSCQM6EzpQ=;
+        b=zFAumMVabmVs5ziuAL6wm0yQdMoshqAmi7xpl6kyXiPaxjSaRhXz+CEftuiXla/noO
+         yHuFdZQOZFp3BN6mCLOOCAxo3PjZHEFz3prX3DxL8YjFJIa63FwhuLYNlXvgtL1sYlQA
+         I2WwNG+55JQoRkHIAKAvMlUxaGRl5TPWG7wxdITn61alkWkvgN/A+d/CTwpxVEeQEsOv
+         xncYXRVk2CbiroUVfmgvND+bWQaPG7T3NPZlH+olqKFDsqZj1zJQkw1ipT6g5haB7Fq0
+         DVDSI+Dbs7rNoXypY4zEgmdgQisw+VB/W8LZcD2CYDEQ4C/brzEoyCMH0olUn9OqLkyz
+         7PyA==
+X-Gm-Message-State: AOAM532iP2yyyHjS7ui2qhCGq2LJT6dBZdVF0165xqcc3jflfhAL+d5u
+        UxQU2XhUY8k5lEQHTXuptdpxJjEKuMdkLFEPwFQ=
+X-Google-Smtp-Source: ABdhPJztqLAOadKafLBuMq9Yj8MuyVf/Yf3ukTZZwXENvU+o0Jr80JOoA+HJgxSnMKMJTPlMrVjg7DtM8SKyJ5C+vpc=
+X-Received: by 2002:a17:902:7e0f:b0:149:e08f:3b5a with SMTP id
+ b15-20020a1709027e0f00b00149e08f3b5amr118200plm.35.1641366606947; Tue, 04 Jan
+ 2022 23:10:06 -0800 (PST)
 MIME-Version: 1.0
-References: <CACEm96jjWALB=iPiBNr0P5HrX9Oo3bXm_k1PpxsHm4Ns9M-vOQ@mail.gmail.com>
-In-Reply-To: <CACEm96jjWALB=iPiBNr0P5HrX9Oo3bXm_k1PpxsHm4Ns9M-vOQ@mail.gmail.com>
+References: <pull.1090.git.1638538276608.gitgitgadget@gmail.com>
+ <20220103095337.600536-1-fs@gigacodes.de> <CAPig+cS6h6o2_dJAZC1M1Ace29bN2mhPgaEtTWtj3oXfcHq9cA@mail.gmail.com>
+ <xmqqee5oieb2.fsf@gitster.g> <CAPig+cTM3wZz4NXjxYeBuFv0CVNS-T+pBFeVkfMQ-25pL1kBzw@mail.gmail.com>
+ <xmqqmtkcguvm.fsf@gitster.g> <CAPig+cR93GyN53JoZbaiROrNtzGjiet7eTPQOk-26G+mB0KaCA@mail.gmail.com>
+ <20220104125534.wznwbkyxfcmyfqhb@fs> <xmqqo84rcn3j.fsf@gitster.g>
+In-Reply-To: <xmqqo84rcn3j.fsf@gitster.g>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 5 Jan 2022 01:15:55 -0500
-Message-ID: <CAPig+cRhBg9fvAAfzQUrPKqyFKoBtx7GQoiwpyaQr0bajBvfHQ@mail.gmail.com>
-Subject: Re: Stash Apply/Pop not restoring added files when conflict occurs on restore
-To:     AJ Henderson <ahenderson@datto.com>
-Cc:     Git List <git@vger.kernel.org>
+Date:   Wed, 5 Jan 2022 02:09:55 -0500
+Message-ID: <CAPig+cQinNZp_2=eo7nokMCZ9gc-tAKO1V_jejL2Ei9J63tSDQ@mail.gmail.com>
+Subject: Re: [PATCH v2] gpg-interface: trim CR from ssh-keygen
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Fabian Stelzer <fs@gigacodes.de>, Git List <git@vger.kernel.org>,
+        Pedro Martelletto <pedro@yubico.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 5, 2022 at 1:08 AM AJ Henderson <ahenderson@datto.com> wrote:
-> I have had two developers have this problem 3 times.  When they are
-> doing a stash push with newly created files and old files, when they
-> go to do a stash pop, if there is no conflict, the files show up as
-> expected, but when there is a conflict, the modified files are
-> restored (and placed in a conflict state as expected), however, the
-> new files are not restored.
+On Tue, Jan 4, 2022 at 2:33 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Fabian Stelzer <fs@gigacodes.de> writes:
+> > I guess we need a bit more context for this patch to make sense:
+> >
+> > for (line = ssh_principals_out.buf; *line;
+> >      line = strchrnul(line + 1, '\n')) {
+> >       while (*line == '\n')
+> >               line++;
+> >       if (!*line)
+> >               break;
+> >
+> >       trust_size = strcspn(line, "\n"); /* truncate at LF */
+> >       if (trust_size && trust_size != strlen(line) &&
+> >           line[trust_size - 1] == '\r')
+> >               trust_size--; /* the LF was part of CRLF at the end */
+> >       principal = xmemdupz(line, trust_size);
 >
-> We are able to work around this issue by grabbing the files directly
-> out of the log for the stash head, but are unsure why this behavior
-> isn't working as expected.  It seems to be a new change in behavior as
-> we had never previously seen this issue, but have seen it 3 times now
-> in the last few weeks.
+> Ahh, OK.  Sorry for being ultra lazy for not visiting the actual
+> source but just responding after reading only somebody else's
+> comments.
 
-As a follow-up for anyone who comes across this thread in the future,
-Elijah posted a patch[*] to fix this regression.
+I'm also guilty of being lazy and not consulting the actual source. Sorry.
 
-[*] https://lore.kernel.org/git/pull.1180.git.git.1641337498996.gitgitgadget@gmail.com/
+Fabian, thanks for all the extra context information.
+
+> OK, so I was completely missing the idea.  And I agree that it may
+> be a good idea to check how strcspn() returned to deal with an
+> incomplete line, although as you hint later in the message I am
+> responding to, checking line[trust_size] would be a more obvious
+> implementation.
+>
+> In any case, I think the earlier part of the loop is more confusing,
+> and I think fixing that would naturally fix the trust_size
+> computation.  For example, wouldn't this easier to grok?
+
+Indeed, the existing code is confusing me. I've been staring at it for
+several minutes and I think I'm still failing to understand the
+purpose of the +1 in the strchrnul() call. Perhaps I'm missing
+something obvious(?).
+
+>         const char *next;
+>
+>         for (line = ssh_principals_out.buf;
+>              *line;
+>              line = next) {
+>                 const char *end_of_text;
+>
+>                 /* Find the terminating LF */
+>                 next = end_of_text = strchrnul(line, '\n');
+>
+>                 /* Did we find a LF, and did we have CR before it? */
+>                 if (*end_of_text &&
+>                     line < end_of_text &&
+>                     end_of_text[-1] == '\r')
+>                         end_of_text--;
+
+It took several seconds for me to convince myself that the -1 array
+index was safe. Had the `line < end_of_text` condition been written
+`end_of_text > line`, I think it would have been immediately obvious,
+but it's subjective, of course.
+
+>                 /* Unless we hit NUL, skip over the LF we found */
+>                 if (*next)
+>                         next++;
+>
+>                 /* Not all lines are data.  Skip empty ones */
+>                 if (line == end_of_text)
+>                         /*
+>                          * You may want to allow skipping more than just
+>                          * lines with 0-byte on them (e.g. comments?)
+>                          * depending on the format you are reading.
+>                          */
+>                         continue;
+>
+>                 /* We now know we have an non-empty line. Process it */
+>                 principal = xmemdupz(line, end_of_text - line);
+>                 ...
+>         }
+>
+> The idea is to make sure that the place where the line ending
+> convention is taken care of is very isolated at the beginning of the
+> loop.
+
+Yes, this may be an improvement, though the cognitive load is still
+somewhat high. Using one of the `split` functions from strbuf.h or
+string-list.h might reduce the cognitive load significantly, even if
+this code still needs to handle CR removal manually since none of the
+`split` functions are LF/CRLF agnostic. (Adding such a function might
+be useful but could be outside the scope of this bug fix patch.)
