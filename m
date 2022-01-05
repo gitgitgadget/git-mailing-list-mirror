@@ -2,109 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDBAAC433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 20:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EE1EC433EF
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 20:59:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244290AbiAEU6u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 15:58:50 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:8397 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S244298AbiAEU6b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 15:58:31 -0500
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 4JThfC4Zyfz5tl9;
-        Wed,  5 Jan 2022 21:58:27 +0100 (CET)
-Message-ID: <478ed4c7-467d-384d-b6d9-68956dc39c41@kdbg.org>
-Date:   Wed, 5 Jan 2022 21:58:27 +0100
+        id S244280AbiAEU7c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 15:59:32 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51756 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231715AbiAEU72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 15:59:28 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3C7C9100062;
+        Wed,  5 Jan 2022 15:59:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zwDSg6dRGaG1eN9sz3KEmZsOliqQnJFd4TvzV5
+        iGxOY=; b=kEZ9ZUJ5w59kqqUbG2b/Jfq/XlBORqmbdleXTVcE/WkKZJFdVcf/XS
+        H71rKN1+f1zXJ7Ijqo3AmEJEjAbrFmYu2IkfD+U2JVHvlUU+zRZ1PT9QO34pVAqc
+        JC9/zkmDd2eUqDQcXsZvMoJWr8YHpbLVkgjpcmrT6/ZxOgy72qhFA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34271100061;
+        Wed,  5 Jan 2022 15:59:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C386100060;
+        Wed,  5 Jan 2022 15:59:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Marc Strapetz via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Marc Strapetz <marc.strapetz@syntevo.com>
+Subject: Re: [PATCH v2 1/2] t7508: add tests capturing racy timestamp handling
+References: <pull.1105.git.1640181390841.gitgitgadget@gmail.com>
+        <pull.1105.v2.git.1641388523.gitgitgadget@gmail.com>
+        <7d58f80611193f8696d99e317fe6b1e53ac740f7.1641388523.git.gitgitgadget@gmail.com>
+Date:   Wed, 05 Jan 2022 12:59:25 -0800
+In-Reply-To: <7d58f80611193f8696d99e317fe6b1e53ac740f7.1641388523.git.gitgitgadget@gmail.com>
+        (Marc Strapetz via GitGitGadget's message of "Wed, 05 Jan 2022
+        13:15:22 +0000")
+Message-ID: <xmqqczl5hpaq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH v5 00/11] Factorization of messages with similar meaning
-Content-Language: en-US
-To:     =?UTF-8?Q?Jean-No=c3=abl_Avila_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
-References: <pull.1088.v4.git.1641143745.gitgitgadget@gmail.com>
- <pull.1088.v5.git.1641412944.gitgitgadget@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.1088.v5.git.1641412944.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5E22810A-6E6A-11EC-9C97-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.01.22 um 21:02 schrieb Jean-Noël Avila via GitGitGadget:
-> This series is a meager attempt at rationalizing a small fraction of the
-> internationalized messages. Sorry in advance for the dull task of reviewing
-> these insipide patches.
-> 
-> Doing so has some positive effects:
-> 
->  * non-translatable constant strings are kept out of the way for translators
->  * messages with identical meaning are built identically
->  * the total number of messages to translate is decreased.
-> 
-> Changes since V1:
-> 
->  * took into account the comments, except for ref-filter.c where the
->    proposed refactoring is not obvious.
->  * added even more strings to the "cannot be used together" crowd.
-> 
-> Changes since V2:
-> 
->  * fixed change of behaviour in tag.c
->  * reverted sam changes as per Johannes Sixt comments
-> 
-> Changes since V3:
-> 
->  * apply Oxford comma where needed
->  * switch all options to " '%s' " style where i18n is applied.
-> 
-> Changes since V4:
-> 
->  * Apply changes by René on tag.c
->  * cosmetic changes
+"Marc Strapetz via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This round looks good to me, with one caveat: I am not a translator, nor
-do I use a translated version of Git. So, I haven't verified the claim
-that the number translatable strings was reduced greatly, nor whether
-there are any accidential duplicates due to typos. I infer the
-correctness only by looking at the changes.
+> From: Marc Strapetz <marc.strapetz@syntevo.com>
+>
+> "git status" fixes racy timestamps regardless of the worktree being
+> dirty or not. The new test cases capture this behavior.
+>
+> Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
+> ---
+>  t/t7508-status.sh | 28 ++++++++++++++++++++++++++++
+>  1 file changed, 28 insertions(+)
+>
+> diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+> index 05c6c02435d..652cbb5ed2e 100755
+> --- a/t/t7508-status.sh
+> +++ b/t/t7508-status.sh
+> @@ -1656,4 +1656,32 @@ test_expect_success '--no-optional-locks prevents index update' '
+>  	! grep ^1234567890 out
+>  '
+>  
+> +test_expect_success 'racy timestamps will be fixed for clean worktree' '
+> +	echo content >racy-dirty &&
+> +	echo content >racy-racy &&
+> +	git add racy* &&
+> +	git commit -m "racy test files" &&
+> +	# let status rewrite the index, if necessary; after that we expect
+> +	# no more index writes unless caused by racy timestamps; note that
+> +	# timestamps may already be racy now (depending on previous tests)
+> +	git status &&
+> +	test-tool chmtime =1234567890 .git/index &&
+> +	test-tool chmtime --get .git/index >out &&
+> +	grep ^1234567890 out &&
 
-There's one small nit visible in the range-diff; not worth a reroll IMHO:
+If file contents were 1234567890999, this will still hit, but I do
+not think that is what you wanted to see.  Perhaps
 
->   5:  a9d8a50d666 !  5:  ad58bc8d8a9 i18n: tag.c factorize i18n strings
->      @@ builtin/tag.c: int cmd_tag(int argc, const char **argv, const char *prefix)
->       -		die(_("--no-contains option is only allowed in list mode"));
->       -	if (filter.points_at.nr)
->       -		die(_("--points-at option is only allowed in list mode"));
->      +-	if (filter.reachable_from || filter.unreachable_from)
->      +-		die(_("--merged and --no-merged options are only allowed in list mode"));
->       +		only_in_list = "-n";
->       +	else if (filter.with_commit)
->       +		only_in_list = "--contains";
->      @@ builtin/tag.c: int cmd_tag(int argc, const char **argv, const char *prefix)
->       +		only_in_list = "--no-contains";
->       +	else if (filter.points_at.nr)
->       +		only_in_list = "--points-at";
->      ++	else if (filter.reachable_from)
->      ++		only_in_list = "--merged";
->      ++	else if  (filter.unreachable_from)
+	git status &&
+	echo 1234567890 >expect &&
+	test-tool chmtime=$(cat expect) .git/index &&
+	test-tool chmtime --get .git/index >actual &&
+	test_cmp expect actual
 
-An extra blank after the 'if'.
+or something?  But I think you inherited this bogosity from the
+previous test, so I am OK to add a few more copies of the same
+bogosity to the test.
 
->      ++		only_in_list = "--no-merged";
->       +	if (only_in_list)
->       +		die(_("the '%s' option is only allowed in list mode"), only_in_list);
->      - 	if (filter.reachable_from || filter.unreachable_from)
->      --		die(_("--merged and --no-merged options are only allowed in list mode"));
->      -+		die(_("'--merged' and '--no-merged' options are only allowed in list mode"));
->        	if (cmdmode == 'd') {
->        		ret = delete_tags(argv);
->        		goto cleanup;
+Somebody later has to step in and clean them all up, though.  When
+that happens, we should document how the magic 1234567890 timestamp
+was chosen near its first use.
 
--- Hannes
+I think it is because it is a timestamp in year 2009, so as long as
+your filetime clock is reasonably accurate, a write to the file
+would never get such a low timestamp.
+
+> +	git status &&
+> +	test-tool chmtime --get .git/index >out &&
+> +	! grep ^1234567890 out
+
