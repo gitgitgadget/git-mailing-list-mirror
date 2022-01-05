@@ -2,103 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0E4CC433F5
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 23:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E46FC433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 23:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245247AbiAEXAP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 18:00:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46548 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245231AbiAEXAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 18:00:04 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3436EC061212
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 15:00:04 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id l4so650236wmq.3
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 15:00:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=HB2c03CCxZ5FgROzUFd5AZGNunc73gFtHnlzGlbIXCk=;
-        b=JkUzlSDW4LsgkrVgRj+hNJrqYvKWXvZsII40BfAqqFc3TfwMsfQjK3W3pnNDhe1FB4
-         Qv5yJhvaTRaPp5yrizuzYU2p7HxTVQXTr9q3wNMacMj1cpylNFtmTw/JjyIATODDt1hd
-         82gN82Ubdm+8B+m+joaaRElbIp5qtHpnZjTfgCSMpbuTOoKkBfHXyvcInVft9HYvqkio
-         N5vsGDh+cbEya/377EO7dYXgIv6VT8zYbXrl1A1uM80rEPeZmwAUjA+WNHiFD7yIhsk2
-         TcxeBDz7Bx/rX2YZV0PrWXsUrnRA4RzEwOhYzaQ3Kz7NsIZob9s3e6lamPnyxqztvaqc
-         jqlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HB2c03CCxZ5FgROzUFd5AZGNunc73gFtHnlzGlbIXCk=;
-        b=x7MHBUvhI9tZSR9AIVL0SBLqnR9a1af+EmR8kT2ZGsbFdpQkwxLfGfZlstbFGL+KvQ
-         BRxuX77TQtkl3P90RXI5qQiXkoorNBvIliQgEkBrAblLf0QhdblzGHs2/HGckNNx11Aq
-         Q0gTL9lBmsmd9DWdtoQHwPVao8qaRg1KXDmIIqeQhIQ+GBO1HBWI7xFlAslgEaZcrU3t
-         Ts0ZYLrucNMCXqv1ae5n6y3z8Ie/oGwRZ/4jOtQz3FoO096l3js/aBWzmw0CaQRjWz2q
-         Zspx4qxaHqXlaqqUgu4oeco5MfLmnE2ks88MQQSxXJ36JPNJC51/q1p879MyUjmjE+55
-         QRIQ==
-X-Gm-Message-State: AOAM5322P0qhotQtRbxPc273rcyj3u+AsO1OPnhP/GSPYaCMCL8OFzJa
-        opisCAZuYdXQw/UlVuFa2DWbqE9C6e0=
-X-Google-Smtp-Source: ABdhPJzzQiPCUqr5ahIILho0kWJflUwPqgoW8LhCDNawsDtn3sI5JUnGdyXtlBiRMFHAToMhVwAlbQ==
-X-Received: by 2002:a05:600c:3ba9:: with SMTP id n41mr4775244wms.180.1641423602656;
-        Wed, 05 Jan 2022 15:00:02 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m17sm295616wrw.11.2022.01.05.15.00.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jan 2022 15:00:02 -0800 (PST)
-Message-Id: <32ad96530b98d6def19c6871e30ad1774e55626a.1641423600.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1171.v6.git.git.1641423600.gitgitgadget@gmail.com>
+        id S245331AbiAEXMF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 18:12:05 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63912 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245328AbiAEXME (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 18:12:04 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5E2D6100E1A;
+        Wed,  5 Jan 2022 18:12:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dbsZPiS52CfeadSxqsKxQ1oTil/IG23C018/KE
+        po4eE=; b=kDM6/mc7hMqUEY/kpW0JV4uTrRvaEXdgMgrUfrxkl011oLnQ7AXkJJ
+        ExB9c1Km1vm5uNrBktz2x0g1e2P8K6wJ1HqiuHofluwZ/LyWBYf74PgtGfDQq13h
+        SKOZhvsO+VIG4ZMoA39IHvCpU+VNFSfZdzuPaSzVIuDKTU2tWYdNs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4AE3F100E19;
+        Wed,  5 Jan 2022 18:12:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9FE9A100E18;
+        Wed,  5 Jan 2022 18:12:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v6 0/2] name-rev: deprecate --stdin in favor of
+ --annotate-stdin
 References: <pull.1171.v5.git.git.1641356439.gitgitgadget@gmail.com>
         <pull.1171.v6.git.git.1641423600.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 05 Jan 2022 23:00:00 +0000
-Subject: [PATCH v6 2/2] name-rev.c: use strbuf_getline instead of limited size
- buffer
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date:   Wed, 05 Jan 2022 15:12:01 -0800
+In-Reply-To: <pull.1171.v6.git.git.1641423600.gitgitgadget@gmail.com> (John
+        Cai via GitGitGadget's message of "Wed, 05 Jan 2022 22:59:58 +0000")
+Message-ID: <xmqqfsq1g4la.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E44A8AA4-6E7C-11EC-87BE-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Using a buffer limited to 2048 is unnecessarily limiting. Switch to
-using a string buffer to read in stdin for annotation.
+> Introduce a --annotate-stdin that is functionally equivalent of --stdin.
+> --stdin does not behave as --stdin in other subcommands, such as
+> pack-objects whereby it takes one argument per line. Since --stdin can be a
+> confusing and misleading name, the goal is to rename it to --annotate-stdin.
+>
+> This is the first step in a process of eventually fully deprecating --stdin.
+> This change also adds a warning to --stdin warning that it will be removed
+> in the future.
+>
+> See https://lore.kernel.org/git/xmqqsfuh1pxz.fsf@gitster.g/ for discussion.
+>
+> changes since v5:
+>
+>  * fixed documentation example indentation (again)
+>  * moved initialization of strbuf from 1/2 to 2/2
 
-Signed-off-by: "John Cai" <johncai86@gmail.com>
----
- builtin/name-rev.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+This round looks almost perfect.
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 4941cfb4340..7164b54cb79 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -623,14 +623,13 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 	name_tips();
- 
- 	if (annotate_stdin) {
--		char buffer[2048];
-+		struct strbuf sb = STRBUF_INIT;
- 
--		while (!feof(stdin)) {
--			char *p = fgets(buffer, sizeof(buffer), stdin);
--			if (!p)
--				break;
--			name_rev_line(p, &data);
-+		while (strbuf_getline(&sb, stdin) != EOF) {
-+			strbuf_addch(&sb, '\n');
-+			name_rev_line(sb.buf, &data);
- 		}
-+		strbuf_release(&sb);
- 	} else if (all) {
- 		int i, max;
- 
--- 
-gitgitgadget
+One I can think of that _may_ be a good idea to change from this
+version is to undo the HIDDEN thing, so that "git name-rev -h",
+without "git name-rev --help-all", will prominently say that
+"--stdin" is deprecated, and make it an hidden option sometime
+later, but that is not even "I think we should do so", but more like
+"if other people think it is a good idea, I would be supportive".
+
+Thanks.
+
