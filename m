@@ -2,74 +2,240 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 523D0C433EF
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 19:52:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 516CAC433F5
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 20:02:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243725AbiAETwH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 14:52:07 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51670 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243691AbiAETwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 14:52:06 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 266C3FD520;
-        Wed,  5 Jan 2022 14:52:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0N+6HIp6LKj4xkLN8OuHyXovAvr2yXotVOSuJT
-        uKFm0=; b=SlIHj8nAFeikcKMsb3xG3N4kQPhYkaT0lGrF37IAbbeiJqr1lZzOZI
-        NJcLoNBYcSN7L3ksryNYRC7s0nUV9Hr2LIC54fTDLdnItDG0ZV8QSv2lD8TaKXfJ
-        i4d9LuuoXU9sMekhjRfGBOB6gFNZCufShqsT5MPuvTbC6goSAn1QE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1EC71FD51F;
-        Wed,  5 Jan 2022 14:52:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7C276FD51A;
-        Wed,  5 Jan 2022 14:52:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v4 1/2] name-rev: deprecate --stdin in favor of
- --annotate-stdin
-References: <pull.1171.v3.git.git.1641221261.gitgitgadget@gmail.com>
-        <pull.1171.v4.git.git.1641307776.gitgitgadget@gmail.com>
-        <4e9200922a4c2c91e69e3b497fbf4c8702046a27.1641307776.git.gitgitgadget@gmail.com>
-        <16666d32-833a-f3d7-351a-eeef7f25b002@gmail.com>
-Date:   Wed, 05 Jan 2022 11:52:04 -0800
-In-Reply-To: <16666d32-833a-f3d7-351a-eeef7f25b002@gmail.com> (Phillip Wood's
-        message of "Wed, 5 Jan 2022 11:15:57 +0000")
-Message-ID: <xmqqmtkahsez.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S243805AbiAEUCc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 15:02:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33854 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243796AbiAEUC2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 15:02:28 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CF32C061201
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 12:02:28 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id o3so421988wrh.10
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 12:02:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=oDSv+jfkES/5aeO4nlyTi+OEPCC3LcnBSenC4Md1paM=;
+        b=Wobu4fkW6G1dI0+wn48zFV2UFZZ02n5ymxIiYwSW3/iuHmFV1b0h2e+D4FD4eXQ+WN
+         dMBFiFLKFUeeXq7RzVINCtz/cWrlEsLOGI46cKxTxjebIa/300pNJjMLy9NRcT0rMEva
+         lLWr1tXffFEErsRmFKDs5ygx5x/Rg1ojc3GdFzJ+A1CwSH17XP0MmqYglsIAhIFod2gX
+         aXOsOWd3e4SmCOPaHTQKhWQdKYmuS90iyR9QIX9JByZKFV1ccMx8ve6HLgEC976kPh1w
+         EDMfUbheRB0/xn12T1x/6jHJsMCS1ySxcmlBMdayHPuyKkap1kpCPtKIJfSPqRgSraum
+         xdXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=oDSv+jfkES/5aeO4nlyTi+OEPCC3LcnBSenC4Md1paM=;
+        b=skB6GJwAbKIZVnawYz/BX/tgAVqe+RsjL3utoK/jmvNxzsZWAeZwdK46/Ri9a4Q1Cf
+         cKwMscTfIXz9AjYzt1ggem2QlRgJs162zUzPCTdAoIfZjzNG5Bw6ulw1FHm8mcekPl/e
+         gTYMVvb6GXonfx+GkmoFocbiK1BrzF+xX1OuQMcl3yscSEkIgc8do6EDy6eU5hhCTWmJ
+         d1jyyYVRbqKhzOt+WzUcKn8vuWkZg35vIH2Y/LgxnWqseWxRsdFSavrl+1YITUptxLec
+         odTtPuaGIGxdDaOa4RZTEREyIla9jzA3kZtn5vY9MJwUjh0kyw4fvxhlUd29R0iMzBSI
+         B43Q==
+X-Gm-Message-State: AOAM5336fS3pYRnP2vCry/nnrNwFxDlloju6b4gWIXXNckbxU18CcDRb
+        O7IvP0VA/2m0SkpbYfYNQsY3uWrlggI=
+X-Google-Smtp-Source: ABdhPJxT6kvEjy72FIDF8SIHwWQrr+PrfW1zFU8HMNaKCeomnYdTrI8oxyFsikswzWgcgF25QG8X4A==
+X-Received: by 2002:adf:eccd:: with SMTP id s13mr48926631wro.618.1641412946818;
+        Wed, 05 Jan 2022 12:02:26 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r1sm47894780wrz.30.2022.01.05.12.02.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Jan 2022 12:02:26 -0800 (PST)
+Message-Id: <05af90f5814de9c066bbafdaea7a6475ae1125c1.1641412944.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1088.v5.git.1641412944.gitgitgadget@gmail.com>
+References: <pull.1088.v4.git.1641143745.gitgitgadget@gmail.com>
+        <pull.1088.v5.git.1641412944.gitgitgadget@gmail.com>
+From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Wed, 05 Jan 2022 20:02:14 +0000
+Subject: [PATCH v5 01/11] i18n: refactor "foo and bar are mutually exclusive"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F56F8E18-6E60-11EC-A9E2-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
->> @@ -539,6 +539,7 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
->>   		OPT_GROUP(""),
->>   		OPT_BOOL(0, "all", &all, N_("list all commits reachable from all refs")),
->>   		OPT_BOOL(0, "stdin", &transform_stdin, N_("read from stdin")),
->
-> If the intention is to deprecate this option then it might be worth
-> marking it as PARSE_OPT_HIDDEN so that it is not shown by 'git
-> name-rev -h'. (You need to change OPT_BOOL to OPT_BOOL_F to pass the
-> flag)
+Use static strings for constant parts of the sentences. They are all
+turned into "cannot be used together".
 
-Whether we want to do HIDDEN now or not, it is probably a good idea
-to update the help text to 
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+ builtin/checkout.c             | 2 +-
+ builtin/diff-tree.c            | 2 +-
+ builtin/fetch.c                | 4 ++--
+ builtin/init-db.c              | 2 +-
+ builtin/log.c                  | 4 ++--
+ builtin/submodule--helper.c    | 4 ++--
+ builtin/worktree.c             | 2 +-
+ range-diff.c                   | 2 +-
+ t/t0001-init.sh                | 2 +-
+ t/t2025-checkout-no-overlay.sh | 2 +-
+ 10 files changed, 13 insertions(+), 13 deletions(-)
 
-	N_("deprecated synonym to --annotate-stdin")
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 72beeb49aa9..79014e1cb6c 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1639,7 +1639,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 				cb_option, toupper(cb_option));
+ 
+ 	if (opts->overlay_mode == 1 && opts->patch_mode)
+-		die(_("-p and --overlay are mutually exclusive"));
++		die(_("options '%s' and '%s' cannot be used together"), "-p", "--overlay");
+ 
+ 	if (opts->checkout_index >= 0 || opts->checkout_worktree >= 0) {
+ 		if (opts->checkout_index < 0)
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index f33d30d57bf..0e0ac1f1670 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -152,7 +152,7 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (read_stdin && merge_base)
+-		die(_("--stdin and --merge-base are mutually exclusive"));
++		die(_("options '%s' and '%s' cannot be used together"), "--stdin", "--merge-base");
+ 	if (merge_base && opt->pending.nr != 2)
+ 		die(_("--merge-base only works with two commits"));
+ 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f1fe73a3e0f..2c584c85812 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2028,12 +2028,12 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		if (deepen_relative < 0)
+ 			die(_("negative depth in --deepen is not supported"));
+ 		if (depth)
+-			die(_("--deepen and --depth are mutually exclusive"));
++			die(_("options '%s' and '%s' cannot be used together"), "--deepen", "--depth");
+ 		depth = xstrfmt("%d", deepen_relative);
+ 	}
+ 	if (unshallow) {
+ 		if (depth)
+-			die(_("--depth and --unshallow cannot be used together"));
++			die(_("options '%s' and '%s' cannot be used together"), "--depth", "--unshallow");
+ 		else if (!is_repository_shallow(the_repository))
+ 			die(_("--unshallow on a complete repository does not make sense"));
+ 		else
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 2167796ff2a..546f9c595e7 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -557,7 +557,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
+ 
+ 	if (real_git_dir && is_bare_repository_cfg == 1)
+-		die(_("--separate-git-dir and --bare are mutually exclusive"));
++		die(_("options '%s' and '%s' cannot be used together"), "--separate-git-dir", "--bare");
+ 
+ 	if (real_git_dir && !is_absolute_path(real_git_dir))
+ 		real_git_dir = real_pathdup(real_git_dir, 1);
+diff --git a/builtin/log.c b/builtin/log.c
+index 93ace0dde7d..fad93ad2fc1 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1943,9 +1943,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		numbered = 0;
+ 
+ 	if (numbered && keep_subject)
+-		die(_("-n and -k are mutually exclusive"));
++		die(_("options '%s' and '%s' cannot be used together"), "-n", "-k");
+ 	if (keep_subject && subject_prefix)
+-		die(_("--subject-prefix/--rfc and -k are mutually exclusive"));
++		die(_("options '%s' and '%s' cannot be used together"), "--subject-prefix/--rfc", "-k");
+ 	rev.preserve_subject = keep_subject;
+ 
+ 	argc = setup_revisions(argc, argv, &rev, &s_r_opt);
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 9b25a508e6a..c5d3fc3817f 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1313,7 +1313,7 @@ static int module_summary(int argc, const char **argv, const char *prefix)
+ 
+ 	if (files) {
+ 		if (cached)
+-			die(_("--cached and --files are mutually exclusive"));
++			die(_("options '%s' and '%s' cannot be used together"), "--cached", "--files");
+ 		diff_cmd = DIFF_FILES;
+ 	}
+ 
+@@ -2972,7 +2972,7 @@ static int module_set_branch(int argc, const char **argv, const char *prefix)
+ 		die(_("--branch or --default required"));
+ 
+ 	if (opt_branch && opt_default)
+-		die(_("--branch and --default are mutually exclusive"));
++		die(_("options '%s' and '%s' cannot be used together"), "--branch", "--default");
+ 
+ 	if (argc != 1 || !(path = argv[0]))
+ 		usage_with_options(usage, options);
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index a396cfdc64e..9a520485769 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -699,7 +699,7 @@ static int list(int ac, const char **av, const char *prefix)
+ 	if (ac)
+ 		usage_with_options(worktree_usage, options);
+ 	else if (verbose && porcelain)
+-		die(_("--verbose and --porcelain are mutually exclusive"));
++		die(_("options '%s' and '%s' cannot be used together"), "--verbose", "--porcelain");
+ 	else {
+ 		struct worktree **worktrees = get_worktrees();
+ 		int path_maxlen = 0, abbrev = DEFAULT_ABBREV, i;
+diff --git a/range-diff.c b/range-diff.c
+index cac89a2f4f2..30a4de5c2d8 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -556,7 +556,7 @@ int show_range_diff(const char *range1, const char *range2,
+ 	struct string_list branch2 = STRING_LIST_INIT_DUP;
+ 
+ 	if (range_diff_opts->left_only && range_diff_opts->right_only)
+-		res = error(_("--left-only and --right-only are mutually exclusive"));
++		res = error(_("options '%s' and '%s' cannot be used together"), "--left-only", "--right-only");
+ 
+ 	if (!res && read_patches(range1, &branch1, range_diff_opts->other_arg))
+ 		res = error(_("could not parse log for '%s'"), range1);
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 7603ad2f82b..3235ab4d53c 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -331,7 +331,7 @@ test_expect_success 'init with separate gitdir' '
+ 
+ test_expect_success 'explicit bare & --separate-git-dir incompatible' '
+ 	test_must_fail git init --bare --separate-git-dir goop.git bare.git 2>err &&
+-	test_i18ngrep "mutually exclusive" err
++	test_i18ngrep "cannot be used together" err
+ '
+ 
+ test_expect_success 'implicit bare & --separate-git-dir incompatible' '
+diff --git a/t/t2025-checkout-no-overlay.sh b/t/t2025-checkout-no-overlay.sh
+index fa9e0987063..8f13341cf8e 100755
+--- a/t/t2025-checkout-no-overlay.sh
++++ b/t/t2025-checkout-no-overlay.sh
+@@ -25,7 +25,7 @@ test_expect_success 'checkout --no-overlay removing last file from directory' '
+ 
+ test_expect_success 'checkout -p --overlay is disallowed' '
+ 	test_must_fail git checkout -p --overlay HEAD 2>actual &&
+-	test_i18ngrep "fatal: -p and --overlay are mutually exclusive" actual
++	test_i18ngrep "fatal: options .-p. and .--overlay. cannot be used together" actual
+ '
+ 
+ test_expect_success '--no-overlay --theirs with D/F conflict deletes file' '
+-- 
+gitgitgadget
 
-or something like that.
