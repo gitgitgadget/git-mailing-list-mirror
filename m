@@ -2,274 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F35BAC433EF
-	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 15:21:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93AA4C433EF
+	for <git@archiver.kernel.org>; Wed,  5 Jan 2022 15:50:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241398AbiAEPVm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 10:21:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54264 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241379AbiAEPVl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 10:21:41 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30927C061245
-        for <git@vger.kernel.org>; Wed,  5 Jan 2022 07:21:41 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id l4so25742770wmq.3
-        for <git@vger.kernel.org>; Wed, 05 Jan 2022 07:21:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=6Crqt2t8eX8d6Ywbvl9jSQ6nmbsUVI+LgcsjEmk6p9E=;
-        b=hCWXt9+V9KfBhNo96rpgpnlsRMZMGnexT9Jl1GcPEKtgXWPhLtHyNEKDqYZ6mOsRhX
-         n9tcYvub/aCtNbUOtHRpWcFVOIQ+mB5ujCN/24IU0Zig4LVTLE7uPCJrJIBqXy80swIC
-         Bn/QP1kPgfYmESt5VKdWcyOsiAWTMZqhLxvBHaXRJgMwevd1LqfXWGfSrmZg1aoVe/hS
-         R3U8RY3YryVHAswGcYHWReLhK36WHLcPl4z91I1uVfi50wMZLnn1cuQEMGwX0pEX8p1+
-         bsaCfzlkXMysaZNhM6bjzIqvjD1aM7MEDJ5ufMS3ND6030qyYTTWTseCXSMfNX762syt
-         /hIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6Crqt2t8eX8d6Ywbvl9jSQ6nmbsUVI+LgcsjEmk6p9E=;
-        b=GwsMOf8OJu0oHBNnezTi3FGXVY2kbMGAuL5A8FfZh33Ji3uGSSlMfb/Xs94xVw4EQe
-         M124hJ6I+fyTwyU7AwmoAclLRku3975/5v7HVYv6wpk24Gg1zfPkPFhihYUIGJYTc2NK
-         99Ul+8D118X0zt1qmMsnU65qJeKRDbIlnmYj1jZvh/M1WzfcqTw9L8XSvTmsk9S708as
-         iiB1q0UilLTc+2dWxgnl4dZvwtZmPWBvojzHt7HxYBkGr0/llLR1uJGFz/EtMVExaa6o
-         9aDvwWRWdF8Mgwf2kxDp23vGR9Brq+ozs1ygrnR/i/WId7Pxh9RRzD7nLwLPrqU86WeP
-         q8RQ==
-X-Gm-Message-State: AOAM531pyeka9V3v3W0fkUO+59m1yA7ec+mlumcWbBOLHw8Tomi8xOs9
-        T754JJl0+QEgqbb4Z1nODur3zWl+r/M=
-X-Google-Smtp-Source: ABdhPJyH6aDx5CJua4xNSPwKhAAURlRK1dYFcOxpryFy5YWqPCpdo4BCveAPTl83TtthKywkcIl/5A==
-X-Received: by 2002:a7b:c5c4:: with SMTP id n4mr1022145wmk.134.1641396099387;
-        Wed, 05 Jan 2022 07:21:39 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r7sm40242199wrt.77.2022.01.05.07.21.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jan 2022 07:21:38 -0800 (PST)
-Message-Id: <pull.1125.v4.git.git.1641396098056.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1125.v3.git.git.1640931460758.gitgitgadget@gmail.com>
-References: <pull.1125.v3.git.git.1640931460758.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 05 Jan 2022 15:21:37 +0000
-Subject: [PATCH v4] receive-pack.c: consolidate find header logic
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S241687AbiAEPul (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 10:50:41 -0500
+Received: from mout.gmx.net ([212.227.17.22]:56473 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241661AbiAEPuh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 10:50:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1641397834;
+        bh=vJkJeu8yNfwmCvw9Pq+4mEB24SwvG35XaMLh7Bmy4LY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hZDeteJSPAN2d2m0Ho7WcBlwIjP3DfFCtO2sus6l8LRettO7wbNR/ppH8fXk9mwmm
+         p2taNVMo++akYznkCcoPrkF1m5ywIYv3YMBePWUgNuX6wcbKf9iu4tiZ1BA3yfAD96
+         XqLDCCi9ljLmcmrZ/WYJwK9vV3/Sot/IW3hmp900=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.29.215.148] ([89.1.212.167]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZkpb-1mr7nB11EN-00WmQX; Wed, 05
+ Jan 2022 16:50:34 +0100
+Date:   Wed, 5 Jan 2022 16:50:32 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     John Cai <johncai86@gmail.com>
+cc:     git@vger.kernel.org, Tilman Vogel <tilman.vogel@web.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH 1/1] builtin/pull.c: use config value of autostash
+In-Reply-To: <20220104214522.10692-2-johncai86@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201051649060.7076@tvgsbejvaqbjf.bet>
+References: <20220104214522.10692-1-johncai86@gmail.com> <20220104214522.10692-2-johncai86@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:2++6ywUh2XBbVfQET9H55K2x7xM96vcvYbsNpCzHGv2cJKjQvmq
+ qp6BrKImMWiErstUIjx4/2BagfrNvrFwL6LqklOu89lMFVgi21bH4Z3/EMgbq4c+hJ/zBhx
+ VF9XvaqqCFF3AJ8m0GlBzQ7iLcA3ZetlntQghQMq4jgjRsh1x6KgXayCHs8AYJEDOKbZF4q
+ m+swHm0hTKkMMW1XLTSag==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:D7fYR9mEzVI=:N7fPSRWZli7ZecIAFVwCCj
+ XQd9x6oHJXsZnYE6CUs6GUVcD5K57r/7LFN7dMxAtFrT8heaUxLDCkALB+gBvmAMrBQz6biP1
+ TXje7dzFhbAu6tk7NEh+qy7dRH38ssfxVi9KvCnL4SL8pDtHwT3m4LXkGghO6d7zxHa0ERLX8
+ +vg0phnS7TS1OV1GF4dXLLZKaUoHI738gW0Ni3eelzuE+AguT0ugDmzc7adcqyn9xU57COW1W
+ 8JFLFqtKFNlSb/OP/h2Mz5VkyKtL5b6uwbhNKGQFgGQWYX/heHwnBequsjHwkbtqwlGv3d5NM
+ uKX88vmL3+7uyub7ABaNYXygpu0k//UsjbE51gNmZK1avXZQuYLzjZAGOWKnxNmHEGvlO131r
+ eYy0sXH0x4oG+7tYf7iQGjuKid8R11qFtdEEHsHf3dgQ7SIP0VJDGd3Klsp07+B34FEfYdF+p
+ Bs3XpRSnAY0sBBXwjb0hUYtSQG5NNaAxO+fJEVHn/0eGvurOg6R0P+Veb4fkxfHkSOg0K0Cav
+ nFJX63Cyt7Zi8G0QWnhOmLjBi77wZW4ANtejde6tdsqUyql5+75hdqYl6yOCkYvK4eCstB+S+
+ thpF+akegnVuiW1fYC7srhIJrbQRDlKFYADB09jI69tq2XPi90KP116DdBPqPzqyQyEJMiDSZ
+ BrIVAsfnPc582VneRgyiGu3k98uqWUaMs6ULSYmet8xQXgqT5QFenw7HL0o8dX2uJ7pQOV1MR
+ VOQ1ipsB6CCzDmgUZHAQVexN/7mlRK3U76tXdVH1mlyL3rSN0We14zAR5gyaKFRpLSpFyICcf
+ xtSNcNZnUnk5uuxgioHWAlaje+IGK+xDoARzBB6eAF2Wz6jqvde3hpS8aRyl7WR7MufMkB+OA
+ N5UpiDfp2I4QZSvNg4kcUGBcPknsn9V/AtpS8o54uhkDAlVB/hwJnJ922l/n+wLOXpLQGmFeb
+ pzAIxU0cmkpByzOr79ilg4NsTq2wOvINgP279+gAGccwenS+kQvxFSO9Bf1/4ruVomKOk3xJX
+ 411fq9gzjAsG+7k2t/gYbJLnMLH1iyTZCqR4xym9Pkq1Fx2Rv9UK6B1E24rX8fb0lRtm3HcWL
+ HdBQog9R8fjHB4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+Hi John,
 
-There are two functions that have very similar logic of finding a header
-value. find_commit_header, and find_header. We can conslidate the logic
-by introducing a new function find_header_mem, which is equivalent to
-find_commit_header except it takes a len parameter that determines how
-many bytes will be read. find_commit_header and find_header can then both
-call find_header_mem.
+On Tue, 4 Jan 2022, John Cai wrote:
 
-This reduces duplicate logic, as the logic for finding header values
-can now all live in one place.
+> Reported-by: "Tilman Vogel" <tilman.vogel@web.de>
+> Co-authored-by: "Philippe Blain" <levraiphilippeblain@gmail.com>
+> Signed-Off-by: "John Cai" <johncai86@gmail.com>
 
-Signed-off-by: John Cai <johncai86@gmail.com>
----
-    Consolidate find_header logic into one function
-    
-    This addresses the NEEDSWORK comment in builtin/receive-pack.c:
-    
-     /**
-       * NEEDSWORK: reuse find_commit_header() from jk/commit-author-parsing
-       * after dropping "_commit" from its name and possibly moving it out
-       * of commit.c
-       **/
-    
-    
-    There are two functions that have very similar logic of finding a header
-    value. find_commit_header, and find_header. We can conslidate the logic
-    by introducing a new function find_header_mem, which is equivalent to
-    find_commit_header except it takes a len parameter that determines how
-    many bytes will be read. find_commit_header and find_header can then
-    both call find_header_mem.
-    
-    This reduces duplicate logic, as the logic for finding header values can
-    now all live in one place.
-    
-    Changes since v4:
-    
-     * added NEEDSWORK block detailing what needs to be done to clean up
-       find_header_mem
-    
-    Changes since v3:
-    
-     * fixed verbiage in commit message
-     * adjusted style of an if block (based on Junio's feedback)
+We spell the 'o' in 'Signed-off-by' with a lower-case 'o'. That's what
+`git commit -s` does automatically.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1125%2Fjohn-cai%2Fjc%2Freplace-find-header-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1125/john-cai/jc/replace-find-header-v4
-Pull-Request: https://github.com/git/git/pull/1125
+Was this the problem why you stopped using GitGitGadget? It would also
+have helped you avoid the frowned-upon cover letter for single patch
+contributions.
 
-Range-diff vs v3:
+The entire point of GitGitGadget is to _not_ force contributors to know
+about all these things.
 
- 1:  463df42e7e0 ! 1:  a7b00022b00 receive-pack.c: consolidate find header logic
-     @@ Commit message
-      
-          There are two functions that have very similar logic of finding a header
-          value. find_commit_header, and find_header. We can conslidate the logic
-     -    by using find_commit_header and replacing the logic in find_header.
-     -
-     -    Introduce a new function find_header_max, which is equivalent to
-     +    by introducing a new function find_header_mem, which is equivalent to
-          find_commit_header except it takes a len parameter that determines how
-     -    many bytes to read. find_commit_header can then call find_header_max
-     -    with 0 as the len.
-     +    many bytes will be read. find_commit_header and find_header can then both
-     +    call find_header_mem.
-      
-     -    This cleans up duplicate logic, as the logic for finding header values
-     -    is now all in one place.
-     +    This reduces duplicate logic, as the logic for finding header values
-     +    can now all live in one place.
-      
-          Signed-off-by: John Cai <johncai86@gmail.com>
-      
-     @@ builtin/receive-pack.c: static char *prepare_push_cert_nonce(const char *path, t
-      +	size_t out_len;
-      +	const char *val = find_header_mem(msg, len, key, &out_len);
-      +
-     -+	if (val == NULL)
-     ++	if (!val)
-      +		return NULL;
-      +
-      +	if (next_line)
-     @@ commit.c: struct commit_list **commit_list_append(struct commit *commit,
-       	const char *line = msg;
-       
-      -	while (line) {
-     ++	/*
-     ++	 * NEEDSWORK: Between line[0] and msg[len], there may not be a LF nor NUL
-     ++	 * at all, and strchrnul() will scan beyond the range we were given
-     ++	 * Make this operation safer and abide by the contract to only read up to len.
-     ++	 */
-      +	while (line && line < msg + len) {
-       		const char *eol = strchrnul(line, '\n');
-       
-
-
- builtin/receive-pack.c | 33 ++++++++++-----------------------
- commit.c               | 14 ++++++++++++--
- commit.h               |  5 +++++
- 3 files changed, 27 insertions(+), 25 deletions(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 9f4a0b816cf..5c2732a0d07 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -581,32 +581,19 @@ static char *prepare_push_cert_nonce(const char *path, timestamp_t stamp)
- 	return strbuf_detach(&buf, NULL);
- }
- 
--/*
-- * NEEDSWORK: reuse find_commit_header() from jk/commit-author-parsing
-- * after dropping "_commit" from its name and possibly moving it out
-- * of commit.c
-- */
- static char *find_header(const char *msg, size_t len, const char *key,
- 			 const char **next_line)
- {
--	int key_len = strlen(key);
--	const char *line = msg;
--
--	while (line && line < msg + len) {
--		const char *eol = strchrnul(line, '\n');
--
--		if ((msg + len <= eol) || line == eol)
--			return NULL;
--		if (line + key_len < eol &&
--		    !memcmp(line, key, key_len) && line[key_len] == ' ') {
--			int offset = key_len + 1;
--			if (next_line)
--				*next_line = *eol ? eol + 1 : eol;
--			return xmemdupz(line + offset, (eol - line) - offset);
--		}
--		line = *eol ? eol + 1 : NULL;
--	}
--	return NULL;
-+	size_t out_len;
-+	const char *val = find_header_mem(msg, len, key, &out_len);
-+
-+	if (!val)
-+		return NULL;
-+
-+	if (next_line)
-+		*next_line = val + out_len + 1;
-+
-+	return xmemdupz(val, out_len);
- }
- 
- /*
-diff --git a/commit.c b/commit.c
-index a348f085b2b..5ece03e6373 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1631,12 +1631,18 @@ struct commit_list **commit_list_append(struct commit *commit,
- 	return &new_commit->next;
- }
- 
--const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
-+const char *find_header_mem(const char *msg, size_t len,
-+			const char *key, size_t *out_len)
- {
- 	int key_len = strlen(key);
- 	const char *line = msg;
- 
--	while (line) {
-+	/*
-+	 * NEEDSWORK: Between line[0] and msg[len], there may not be a LF nor NUL
-+	 * at all, and strchrnul() will scan beyond the range we were given
-+	 * Make this operation safer and abide by the contract to only read up to len.
-+	 */
-+	while (line && line < msg + len) {
- 		const char *eol = strchrnul(line, '\n');
- 
- 		if (line == eol)
-@@ -1653,6 +1659,10 @@ const char *find_commit_header(const char *msg, const char *key, size_t *out_len
- 	return NULL;
- }
- 
-+const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
-+{
-+	return find_header_mem(msg, strlen(msg), key, out_len);
-+}
- /*
-  * Inspect the given string and determine the true "end" of the log message, in
-  * order to find where to put a new Signed-off-by trailer.  Ignored are
-diff --git a/commit.h b/commit.h
-index 3ea32766bcb..38cc5426615 100644
---- a/commit.h
-+++ b/commit.h
-@@ -290,12 +290,17 @@ void free_commit_extra_headers(struct commit_extra_header *extra);
- 
- /*
-  * Search the commit object contents given by "msg" for the header "key".
-+ * Reads up to "len" bytes of "msg".
-  * Returns a pointer to the start of the header contents, or NULL. The length
-  * of the header, up to the first newline, is returned via out_len.
-  *
-  * Note that some headers (like mergetag) may be multi-line. It is the caller's
-  * responsibility to parse further in this case!
-  */
-+const char *find_header_mem(const char *msg, size_t len,
-+			const char *key,
-+			size_t *out_len);
-+
- const char *find_commit_header(const char *msg, const char *key,
- 			       size_t *out_len);
- 
-
-base-commit: c8b2ade48c204690119936ada89cd938c476c5c2
--- 
-gitgitgadget
+Ciao,
+Dscho
