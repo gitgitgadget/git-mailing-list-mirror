@@ -2,132 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90178C433EF
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 09:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7E19C433F5
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 09:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237581AbiAFJvH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 04:51:07 -0500
-Received: from mout.web.de ([212.227.15.4]:48429 "EHLO mout.web.de"
+        id S237623AbiAFJyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 04:54:24 -0500
+Received: from mout.web.de ([212.227.15.4]:41935 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237370AbiAFJvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 04:51:06 -0500
+        id S236542AbiAFJyY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 04:54:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1641462661;
-        bh=5cNi6g6qo5b18tZz9kmUhmT63aZV9sPCYQBFu6ae2HE=;
-        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
-        b=gNw1N5Uq0oiz5/rSFu7Qz3/RRTzFB8b8UejdzObd7AukG+yxYawlwBlfEJiptOEdQ
-         A9iIh2r4U/DStjZC78GjnUmwzP3Y31yjWuqeTUqZbNojqdiCZ4L4nKJxofwYAzOymQ
-         OW33gAE02D5kLZlF2GyxT2aIp/BIHnINNvil6s/4=
+        s=dbaedf251592; t=1641462860;
+        bh=d5ePrYaxNbHHKcbzBy26EeWTg62HOtDQeqIIBTd66gA=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=HMTOdSPkXRi7tFLVY6TmmZewO6YVjGALsVIE8pqvJIac2eTooAX4FX0dnaOEabD2h
+         dOFDMcT4BZGjpIL7WuWNE2ghseJHUVZpjRY9N0/t4X7l4ch4d+U6v+dvHJEPvRD2XS
+         B2m4B4OA8pEi4jdp/yAZFiQfb1cVYzgXCMLEhjYo=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MdfCH-1mWLaO1FHl-00ZOav; Thu, 06
- Jan 2022 10:51:01 +0100
-Message-ID: <ea01f9b6-2ce3-57e8-533f-4cc29937f700@web.de>
-Date:   Thu, 6 Jan 2022 10:51:00 +0100
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MYu16-1msEBg12lE-00VFDi; Thu, 06
+ Jan 2022 10:54:20 +0100
+Message-ID: <a913ad56-9083-d124-f1ec-58a1f48d48fc@web.de>
+Date:   Thu, 6 Jan 2022 10:54:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.4.1
+Subject: [PATCH 2/2] grep: use grep_not_expr() in compile_pattern_not()
 Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 1/2] grep: use grep_or_expr() in compile_pattern_or()
+References: <ea01f9b6-2ce3-57e8-533f-4cc29937f700@web.de>
+In-Reply-To: <ea01f9b6-2ce3-57e8-533f-4cc29937f700@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:OgwvFwGCgP/A89yi0vOF/yscESgVWdne15kqSjZ+kek23tNjeBs
- yamswcOxLNi6XsQjt9/Y4Quqz4SgJQlt3wzeXewKsxtaPhlJu7/JhucmdeZfvoGGRz+V6MJ
- GL9Q0NGXn6fTbiO7OI+BovZLqodFlEwFz+Sb2RbwD05RYMn1avLN6OPdhvFKKcy5B/bDCfj
- tKL2RNB4dtGOSnD34+z3A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cPUNTp3VNbQ=:j/MayfGxNXquFyLWErh/zc
- GuNowKYRTip0scqmWfsZz7JJ54eMzzY2FAIDEVyrfV3cWhKsEu928r65I5W3DbIjBPE1JSPHN
- 7/FNCd4AEFLTm7xnb2c4ivP/+5rk4quaN89KfJBaTU1q5SEa07b4HRWY+OpcsxiJoEZUEdJsx
- RiTJ4gmlAXNDqmk2saptEzOKdU9z1n8bxHszo/eyTDHCxgZ2osL5ZozpdOq49v31ercZ8HYyy
- ZPR5DHwf2NwA/HjWKuuPqTn50Ak/umBDtFMiDipCru+HhAGRR/fRDcBKA+vtYnAfiRRD1jR8R
- TEOBroLFJQaDTOMh2ObRoJpZ6zkETqozgYI/lj1Tv8lfqKnB6Pr3S7tqPEuGpYTbh7XFdGyES
- WoLzg5EBaNnis7ezKZsm/ay1FLTRlRd+pMaxQJJ3x4V1iA9ZF/nruW04WR8JoOkUEz4yke2Or
- HlP1gyLQoTIvHl4SqS8sqZQAgqhUD3MFrgvNpWQ2iMpig1pKTqe3ntiKAWwiVKDh84VkEPKbm
- 53NZEhIg29w9CUTcX4hKuoBrYXULOdtxZJOwOSd+joP+ewmEcWObDXUNejMNwmlk8DgYh4rVi
- smSTwMfeOitiWpfW3+e0JFXa2c9uf82ObGcB2+649jDrLq+6M6vEkGVhumE+0hG9aAXRInilT
- S8+lCnQeqr9bgieky2/vrkWOu5HHbgeQUz6jOk1I19aiH9Juzby40amRGKZXEFK2BZswAwk2q
- Q+LmK5veJcoVXDWPtLJ1ro43yn3KkVTgxc0Zmy3Y9t+iVt/ePPwX7w0yTW3QPyOkw7J+V8RzG
- /g1DI+J9xyfMTwyJFBWCOulO0+JVcsF2QmnbW3SGct2vfJcaQ7d6y51T40Fq/K/j/OG0a+L5J
- PXgah5fUKI72MxM6elJ8B+stkIK0SlYnYut7zWU0Q9VHj5G+Bx/YOVe10UPAPBgrHoxvgWDgk
- FlF5/Lqrk5+xoEOcTsXb/5HcDyrY75OUjvTgCvIvxGIXJQ0BX0/781BWHkAM+z3mz0WL4H+OY
- 6OaeJDFjcrrgJiAfAX5Jzu7QBXUDy/V1PPCzbXITHMNvCEKy9icmTugJhE3+9odJ/A==
+X-Provags-ID: V03:K1:8WQMr56ZbppNOFhe1jSI8wBdqoJUeex/bgLwNbZMz1XvjqqY9og
+ vfpkoJc/UEc8Iue1DnqfRUu54lB23J4bnOFcD/RbclUbyiaUbthOoFtfScoTE14ZWOwJ443
+ LoDhExaLR5oVlU9nGu6m6jTzUFIiP6xLyXmuXfjGE0tiiJ9YjxGXAlp41dXu/DNNtZ7/F3O
+ t2ekcwi8m/3Iyf7oqvwwQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:TywV73hgDzA=:yXPhKjMP7upLpJZqgyIBnb
+ rg/Dy0hoX4oSVSWSmvgWaFlc8Kqnvs0RYVJTbB94IG8NvTt8B1UrEaWr89Uny6LRqLUcW1h5v
+ 80oHJa1DqANIew4Ateia4mUhbVJtOeGXB/A8KBKn5qXzz9oUTfINZ2xJYbZAQsTJ1tWbcu1om
+ wcCIG1G/BzYeDfvY2vEnZYPMnoCRy0lbYVNMA5Li/UhqAYxBRUytxrWMgfrtjHErzBeVYyrY/
+ TVkTZA9Td9YQyotNNmbkrswPJJJIB/DpRoFXfz0Q9bNHg7YfPj8AR1gi6s1BLF81IOBZzdA7L
+ bHvahn4z1dpADMtjY0Mlk5CgRpKJtokQnvP5OaNQZS0PyiOv+kM2dxVAsRmPMshVJoiHvLnyW
+ sSi/F962JepbBhKr+oQtwCBJexw84aCH1WNjn1+T+OTFAgTEPJeI3IDjePdUUXD1ko5BMNhwu
+ bLvV2zavOkYtVYN4CwttgFMtl40waA3Mk5HK3ZYwcKzK1pS6QRVdzSUN1UAXBTsmLCCWXQ+0S
+ kQimnHh353g4ZAMy1GyMyYLdoo+jiPRl3KitFigAMZV+F8C1gI+kr9AlZ+7Jm2c2K1zqKDkmc
+ NdKSaxHGwqzb6pnOfrzjc8elxo192xsF1hyYznccu3GnAUffnIvNOaT/e3rSvPPe5Z315UKUG
+ lpkRcLcySHXyCk25a0u60JGIUG57456ilelqdwGs9imnaYGnAH/kYiGAPGLlO+GeJb0aFzmg8
+ ENqBCXr3MkHbY9iqiyIN5hjgX6TdXnR7uo4dJjg9cPfvzCDnoSRkTo2uER5c7Db4+fJuHK6v/
+ 3mFHs5r6U4CZlQQbYs5Q+FE7/WQGtiUbVrCh3oAQOxD31oFtuNdnNhagebmZX4hzI8dI6Tzjc
+ OVAxMe7kEsFVjAYbnehihHT4bUI/zzB7Tkpj5fIMZrkqUX2AixXhl5LN2S8Ql9GqjwhEuW/le
+ hUa3VUqKYudkYTP6f6L/GBtrLEBIj7arDw5b9P0M5ysaeZxEYAvaRF062KYRzS5r/t/oYUJVo
+ 1DERmFvXUxtQnJGBa64RP24XbijnQH3tfvX01F2MAn9mMCz0fW6Hlv2dZis5iEBjjA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the definition of grep_or_expr() up and use this function in
-compile_pattern_or() to reduce code duplication.
+Move the definition of grep_not_expr() up and use this function in
+compile_pattern_not() to simplify the code and reduce duplication.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- grep.c | 26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ grep.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index 47c75ab7fb..f1bbe80ccb 100644
+index f1bbe80ccb..bdbd06d437 100644
 =2D-- a/grep.c
 +++ b/grep.c
-@@ -595,6 +595,15 @@ static void compile_regexp(struct grep_pat *p, struct=
+@@ -595,6 +595,14 @@ static void compile_regexp(struct grep_pat *p, struct=
  grep_opt *opt)
  	}
  }
 
-+static struct grep_expr *grep_or_expr(struct grep_expr *left, struct grep=
-_expr *right)
++static struct grep_expr *grep_not_expr(struct grep_expr *expr)
 +{
 +	struct grep_expr *z =3D xcalloc(1, sizeof(*z));
-+	z->node =3D GREP_NODE_OR;
-+	z->u.binary.left =3D left;
-+	z->u.binary.right =3D right;
++	z->node =3D GREP_NODE_NOT;
++	z->u.unary =3D expr;
 +	return z;
 +}
 +
- static struct grep_expr *compile_pattern_or(struct grep_pat **);
- static struct grep_expr *compile_pattern_atom(struct grep_pat **list)
- {
-@@ -677,7 +686,7 @@ static struct grep_expr *compile_pattern_and(struct gr=
-ep_pat **list)
- static struct grep_expr *compile_pattern_or(struct grep_pat **list)
- {
- 	struct grep_pat *p;
--	struct grep_expr *x, *y, *z;
-+	struct grep_expr *x, *y;
-
- 	x =3D compile_pattern_and(list);
- 	p =3D *list;
-@@ -685,11 +694,7 @@ static struct grep_expr *compile_pattern_or(struct gr=
-ep_pat **list)
- 		y =3D compile_pattern_or(list);
- 		if (!y)
- 			die("not a pattern expression %s", p->pattern);
--		CALLOC_ARRAY(z, 1);
--		z->node =3D GREP_NODE_OR;
--		z->u.binary.left =3D x;
--		z->u.binary.right =3D y;
--		return z;
-+		return grep_or_expr(x, y);
- 	}
- 	return x;
- }
-@@ -714,15 +719,6 @@ static struct grep_expr *grep_true_expr(void)
- 	return z;
- }
-
--static struct grep_expr *grep_or_expr(struct grep_expr *left, struct grep=
+ static struct grep_expr *grep_or_expr(struct grep_expr *left, struct grep=
 _expr *right)
+ {
+ 	struct grep_expr *z =3D xcalloc(1, sizeof(*z));
+@@ -647,12 +655,10 @@ static struct grep_expr *compile_pattern_not(struct =
+grep_pat **list)
+ 		if (!p->next)
+ 			die("--not not followed by pattern expression");
+ 		*list =3D p->next;
+-		CALLOC_ARRAY(x, 1);
+-		x->node =3D GREP_NODE_NOT;
+-		x->u.unary =3D compile_pattern_not(list);
+-		if (!x->u.unary)
++		x =3D compile_pattern_not(list);
++		if (!x)
+ 			die("--not followed by non pattern expression");
+-		return x;
++		return grep_not_expr(x);
+ 	default:
+ 		return compile_pattern_atom(list);
+ 	}
+@@ -704,14 +710,6 @@ static struct grep_expr *compile_pattern_expr(struct =
+grep_pat **list)
+ 	return compile_pattern_or(list);
+ }
+
+-static struct grep_expr *grep_not_expr(struct grep_expr *expr)
 -{
 -	struct grep_expr *z =3D xcalloc(1, sizeof(*z));
--	z->node =3D GREP_NODE_OR;
--	z->u.binary.left =3D left;
--	z->u.binary.right =3D right;
+-	z->node =3D GREP_NODE_NOT;
+-	z->u.unary =3D expr;
 -	return z;
 -}
 -
- static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
+ static struct grep_expr *grep_true_expr(void)
  {
- 	struct grep_pat *p;
+ 	struct grep_expr *z =3D xcalloc(1, sizeof(*z));
 =2D-
 2.34.1
