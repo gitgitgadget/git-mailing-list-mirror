@@ -2,246 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A237C433EF
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 20:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CAA3C433EF
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 20:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232454AbiAFUHk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 15:07:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49754 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231401AbiAFUHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 15:07:39 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 094B4C061245
-        for <git@vger.kernel.org>; Thu,  6 Jan 2022 12:07:39 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id o3so6947060wrh.10
-        for <git@vger.kernel.org>; Thu, 06 Jan 2022 12:07:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=g9MllGiuqVSZBMcgEGAmjva+Xs/HACThoEjaDvNbqO8=;
-        b=UbVrk1neN0Fpw3NcEe1WrL9q7Uu1UmTgRxnNjwjbNSnIsd9DZcWcHFcubFZQXJwYSJ
-         /iCWwpCMIJQaqjeCijJgM94o5CxvUDxZD2iidP6/21VrSKDpZI1t4ZcutylWsVfJAZ16
-         7Ia4tmVS09pY6vB91HPtbmUXA7n19wg4LsgzpMaiNokCByrqOw3zTD2K3L0sSyVwTwmK
-         5xj9UEOypnDncniiDq/M5+zrRgeRYr5zcLrjM/3f1CD8bcGXcSfmWyki5J4bykkTCRFT
-         /KiBwWS9S5lRwtmYP0ibg7lsxKpqJQZfqIme2yw6+RCu173wbcxnNB0YaCJd76pckpEO
-         QYKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=g9MllGiuqVSZBMcgEGAmjva+Xs/HACThoEjaDvNbqO8=;
-        b=QNNney0OBRL6bQfH2vHxbeyg729mcDGsUxBWARlOBvOzLlcAM3VOBN/3VWTDinCwqk
-         +PCxyqkq3DR7x1lFzFNfjJPWeRCrEoT+NNCIdFz6O325rpCXnmHzWNIWxsYH6DRWfWLw
-         OZGkC0hHKi6IXR9Rn09wozIY95uIaEBbcjU1YSDAY+kkq37S7PesPcFKO0PthgUA19Ya
-         6ghU9xomw7DwkWdTLnPNBOGMhCWXKe5P6cSA1yKJW1FWhHlgxsE64fotZB7Mq5nso2mF
-         GtsyD45jUmzjmGfDAL3JiLFAgVzBkKuUrWaU3rcPcRYcjtl8/Yt+xvl2B+oRY4dS8Rm9
-         oVNA==
-X-Gm-Message-State: AOAM531EdKyzwkp9ZOOvBs3zkndsxd99zbUdvF2a+sXib+BBL9zuFINQ
-        r0rLfTO+I7VJcmWJPapXA/Wak1wF0VU=
-X-Google-Smtp-Source: ABdhPJwV6rx9p2WCOR8BW+ZRj5V5nMd+gNtoyZq1Q0g9mBHGtE4Uthu9ZF/yBNMIyOovStTeybI2jA==
-X-Received: by 2002:adf:f70b:: with SMTP id r11mr53750394wrp.496.1641499657387;
-        Thu, 06 Jan 2022 12:07:37 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o10sm2719386wmq.31.2022.01.06.12.07.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 12:07:36 -0800 (PST)
-Message-Id: <pull.1125.v6.git.git.1641499655700.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1125.v5.git.git.1641430309837.gitgitgadget@gmail.com>
-References: <pull.1125.v5.git.git.1641430309837.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 06 Jan 2022 20:07:35 +0000
-Subject: [PATCH v6] receive-pack.c: consolidate find header logic
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S243929AbiAFUoy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 15:44:54 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57099 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232673AbiAFUoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 15:44:54 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BEC97164044;
+        Thu,  6 Jan 2022 15:44:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gUpUlPXEmwe+t7VlPWYygW3UHDq/zp09opOE6y
+        W6y/Y=; b=OpIvWclroDoqG/hB5v4d5k7eJgboNGVaGBTDMxQluTOIclM9qjEyHg
+        dYU2C4Zlefi1XD7955xgxs6LUvQgu/N8/3cwzgiG/ejNgCCCOoQ00aJeB3eTQRhK
+        c+WApPsBZnYy9JjMQX9L2OMFFD8jqqPVVmArgxw2AdRIfORzsGC1Y=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B6EB3164043;
+        Thu,  6 Jan 2022 15:44:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 27E02164042;
+        Thu,  6 Jan 2022 15:44:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
+        peff@peff.net, tenglong.tl@alibaba-inc.com,
+        Johannes.Schindelin@gmx.de, Teng Long <dyronetengb@gmail.com>
+Subject: Re: [PATCH v9 5/9] ls-tree: optimize naming and handling of
+ "return" in show_tree()
+References: <cover.1641440700.git.dyroneteng@gmail.com>
+        <75503c41a7e2f3fdbb59ce3568853049b55a2d3b.1641440700.git.dyroneteng@gmail.com>
+Date:   Thu, 06 Jan 2022 12:44:49 -0800
+In-Reply-To: <75503c41a7e2f3fdbb59ce3568853049b55a2d3b.1641440700.git.dyroneteng@gmail.com>
+        (Teng Long's message of "Thu, 6 Jan 2022 12:31:28 +0800")
+Message-ID: <xmqq5yqwd266.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7EB962EA-6F31-11EC-AC9A-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+Teng Long <dyroneteng@gmail.com> writes:
 
-There are two functions that have very similar logic of finding a header
-value. find_commit_header, and find_header. We can conslidate the logic
-by introducing a new function find_header_mem, which is equivalent to
-find_commit_header except it takes a len parameter that determines how
-many bytes will be read. find_commit_header and find_header can then both
-call find_header_mem.
+> +static void init_type(unsigned mode, enum object_type *type)
+> +{
+> +	if (S_ISGITLINK(mode))
+> +		*type = OBJ_COMMIT;
+> +	else if (S_ISDIR(mode))
+> +		*type = OBJ_TREE;
+> +}
+> +
+> +static void init_recursive(struct strbuf *base, const char *pathname,
+> +				int *recursive)
+> +{
+> +	if (show_recursive(base->buf, base->len, pathname))
+> +		*recursive = READ_TREE_RECURSIVE;
+> +}
+> +
+>  static int show_tree(const struct object_id *oid, struct strbuf *base,
+>  		const char *pathname, unsigned mode, void *context)
+>  {
+> -	int retval = 0;
+> +	int recursive = 0;
+>  	size_t baselen;
+>  	enum object_type type = OBJ_BLOB;
+>  
+> -	if (S_ISGITLINK(mode)) {
+> -		type = OBJ_COMMIT;
+> -	} else if (S_ISDIR(mode)) {
+> -		if (show_recursive(base->buf, base->len, pathname)) {
+> -			retval = READ_TREE_RECURSIVE;
+> -			if (!(ls_options & LS_SHOW_TREES))
+> -				return retval;
+> -		}
+> -		type = OBJ_TREE;
+> -	}
+> -	else if (ls_options & LS_TREE_ONLY)
+> -		return 0;
+> +	init_type(mode, &type);
 
-This reduces duplicate logic, as the logic for finding header values
-can now all live in one place.
+What this one is doing sounds more like setting the type variable
+based on the mode bits, and doing only half a job at it.  The name
+"init" does not sound like a good match to what it does.
 
-Signed-off-by: John Cai <johncai86@gmail.com>
----
-    Consolidate find_header logic into one function
-    
-    This addresses the NEEDSWORK comment in builtin/receive-pack.c:
-    
-     /**
-       * NEEDSWORK: reuse find_commit_header() from jk/commit-author-parsing
-       * after dropping "_commit" from its name and possibly moving it out
-       * of commit.c
-       **/
-    
-    
-    There are two functions that have very similar logic of finding a header
-    value. find_commit_header, and find_header. We can conslidate the logic
-    by introducing a new function find_header_mem, which is equivalent to
-    find_commit_header except it takes a len parameter that determines how
-    many bytes will be read. find_commit_header and find_header can then
-    both call find_header_mem.
-    
-    This reduces duplicate logic, as the logic for finding header values can
-    now all live in one place.
-    
-    Changes since v4:
-    
-     * adjust verbiage of NEEDSWORK comment block
-    
-    Changes since v3:
-    
-     * added NEEDSWORK block detailing what needs to be done to clean up
-       find_header_mem
-     * fixed verbiage in commit message
-     * adjusted style of an if block (based on Junio's feedback)
+If we make it a separate function, we probably should add the "else"
+clause to set *type to OBJ_BLOB there, so that the caller does not
+say "we'd assume it is BLOB initially, but tweak it based on mode
+bits".
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1125%2Fjohn-cai%2Fjc%2Freplace-find-header-v6
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1125/john-cai/jc/replace-find-header-v6
-Pull-Request: https://github.com/git/git/pull/1125
+I.e.
 
-Range-diff vs v5:
+	type = get_type(mode);
 
- 1:  02da3136c43 ! 1:  2b01d92b951 receive-pack.c: consolidate find header logic
-     @@ commit.c: struct commit_list **commit_list_append(struct commit *commit,
-      +	 * NEEDSWORK: It's possible for strchrnul() to scan beyond the range
-      +	 * given by len. However, current callers are safe because they compute
-      +	 * len by scanning a NUL-terminated block of memory starting at msg.
-     -+	 * Make this function safer by checking if the input is NUL-terminated
-     -+	 * or has a NL between line[0] and msg[len].
-     ++	 * Nonetheless, it would be better to ensure the function does not look
-     ++	 * at msg beyond the len provided by the caller.
-      +	 */
-      +	while (line && line < msg + len) {
-       		const char *eol = strchrnul(line, '\n');
+where
 
+	static enum object_type get_type(unsigned int mode)
+	{
+		return (S_ISGITLINK(mode) 
+		        ? OBJ_COMMIT
+			: S_ISDIR(mode)
+			? OBJ_TREE
+			: OBJ_BLOB);
+	}
 
- builtin/receive-pack.c | 33 ++++++++++-----------------------
- commit.c               | 16 ++++++++++++++--
- commit.h               |  5 +++++
- 3 files changed, 29 insertions(+), 25 deletions(-)
+or something like that, perhaps?  But I think open-coding the whole
+thing, after losing the "We assume BLOB" initialization, would be
+much easier to follow, i.e.
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 9f4a0b816cf..5c2732a0d07 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -581,32 +581,19 @@ static char *prepare_push_cert_nonce(const char *path, timestamp_t stamp)
- 	return strbuf_detach(&buf, NULL);
- }
+	if (S_ISGITLINK(mode))
+		type = OBJ_COMMIT;
+	else if (S_ISDIR(mode))
+		type = OBJ_TREE;
+	else
+		type = OBJ_BLOB;
+
+without adding init_type() helper function.
+
+> +	init_recursive(base, pathname, &recursive);
+
+This is even less readable.  In the original, it was clear that we
+only call show_recursive() on a path that is a true directory; we
+now seem to unconditionally make a call to it.  Is that intended?
+
+	Side note.  show_recursive() has a confusing name; it does
+	not show anything---it only decides if we want to go
+	recursive.
+
+At least, losing the "we assume recursive is 0" upfront in the
+variable declaration and writing
+
+	if (type == OBJ_TREE && show_recursive(...))
+		recursive = READ_TREE_RECURSIVE;
+	else
+		recursive = 0;
+
+here, without introducing init_recursive(), would make it easier to
+follow.  If we really want to add a new function, perhaps
+
+	recursive = get_recursive(type, base, pathname);
  
--/*
-- * NEEDSWORK: reuse find_commit_header() from jk/commit-author-parsing
-- * after dropping "_commit" from its name and possibly moving it out
-- * of commit.c
-- */
- static char *find_header(const char *msg, size_t len, const char *key,
- 			 const char **next_line)
- {
--	int key_len = strlen(key);
--	const char *line = msg;
--
--	while (line && line < msg + len) {
--		const char *eol = strchrnul(line, '\n');
--
--		if ((msg + len <= eol) || line == eol)
--			return NULL;
--		if (line + key_len < eol &&
--		    !memcmp(line, key, key_len) && line[key_len] == ' ') {
--			int offset = key_len + 1;
--			if (next_line)
--				*next_line = *eol ? eol + 1 : eol;
--			return xmemdupz(line + offset, (eol - line) - offset);
--		}
--		line = *eol ? eol + 1 : NULL;
--	}
--	return NULL;
-+	size_t out_len;
-+	const char *val = find_header_mem(msg, len, key, &out_len);
-+
-+	if (!val)
-+		return NULL;
-+
-+	if (next_line)
-+		*next_line = val + out_len + 1;
-+
-+	return xmemdupz(val, out_len);
- }
- 
- /*
-diff --git a/commit.c b/commit.c
-index a348f085b2b..28391c3468d 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1631,12 +1631,20 @@ struct commit_list **commit_list_append(struct commit *commit,
- 	return &new_commit->next;
- }
- 
--const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
-+const char *find_header_mem(const char *msg, size_t len,
-+			const char *key, size_t *out_len)
- {
- 	int key_len = strlen(key);
- 	const char *line = msg;
- 
--	while (line) {
-+	/*
-+	 * NEEDSWORK: It's possible for strchrnul() to scan beyond the range
-+	 * given by len. However, current callers are safe because they compute
-+	 * len by scanning a NUL-terminated block of memory starting at msg.
-+	 * Nonetheless, it would be better to ensure the function does not look
-+	 * at msg beyond the len provided by the caller.
-+	 */
-+	while (line && line < msg + len) {
- 		const char *eol = strchrnul(line, '\n');
- 
- 		if (line == eol)
-@@ -1653,6 +1661,10 @@ const char *find_commit_header(const char *msg, const char *key, size_t *out_len
- 	return NULL;
- }
- 
-+const char *find_commit_header(const char *msg, const char *key, size_t *out_len)
-+{
-+	return find_header_mem(msg, strlen(msg), key, out_len);
-+}
- /*
-  * Inspect the given string and determine the true "end" of the log message, in
-  * order to find where to put a new Signed-off-by trailer.  Ignored are
-diff --git a/commit.h b/commit.h
-index 3ea32766bcb..38cc5426615 100644
---- a/commit.h
-+++ b/commit.h
-@@ -290,12 +290,17 @@ void free_commit_extra_headers(struct commit_extra_header *extra);
- 
- /*
-  * Search the commit object contents given by "msg" for the header "key".
-+ * Reads up to "len" bytes of "msg".
-  * Returns a pointer to the start of the header contents, or NULL. The length
-  * of the header, up to the first newline, is returned via out_len.
-  *
-  * Note that some headers (like mergetag) may be multi-line. It is the caller's
-  * responsibility to parse further in this case!
-  */
-+const char *find_header_mem(const char *msg, size_t len,
-+			const char *key,
-+			size_t *out_len);
-+
- const char *find_commit_header(const char *msg, const char *key,
- 			       size_t *out_len);
- 
+where
 
-base-commit: c8b2ade48c204690119936ada89cd938c476c5c2
--- 
-gitgitgadget
+	static int get_recursive(enum object_type type,
+				 struct strbuf *base, const char *pathname)
+	{
+		if (type == OBJ_TREE && show_recursive(...))
+			return READ_TREE_RECURSIVE;
+		else
+			return 0;
+	}
+
+but I fail to see the point of doing so; open-coded 4 lines here
+would make the flow of thought much better to me.
+
+In any case, I think your splitting the original into "this is about
+type" and "this is about the recursive bit" is a good idea to help
+making the resulting code easier to follow.
+
+> +	if (type == OBJ_TREE && recursive && !(ls_options & LS_SHOW_TREES))
+> +		return recursive;
+
+We are looking at an entry that is a directory.  We are running in
+recursive mode.  And we are not told to show the directory itself in
+the output.  We skip the rest of the function, which is about to
+show this single entry.  Makes sense.
+
+
+> +	if (type == OBJ_BLOB && (ls_options & LS_TREE_ONLY))
+> +		return !READ_TREE_RECURSIVE;
+
+Negation of a non-zero integer constant is 0, so it is the same as
+the original that returned 0, but I am not sure if it is enhancing
+or hurting readability of the code.  The user of the value, in
+tree.c::read_tree_at(), knows that the possible and valid values are
+0 and READ_TREE_RECURSIVE, so returning 0 would probably be a better
+idea.  After all, the initializer in the original for the variable
+definition of "retval" used "0", not "!READ_TREE_RECURSIVE".
+
+The name "recursive" is much more specific than the overly generic
+"retval".  Its value is to be consumed by read_tree_at(), i.e. our
+caller, to decide if we want it to recurse into the contents of the
+directory.  I would have called it "recurse" (or even "to_recurse"),
+if I were doing this change, though.
