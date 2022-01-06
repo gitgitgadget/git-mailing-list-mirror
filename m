@@ -2,263 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41739C433EF
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 12:54:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BA8AC433EF
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 14:59:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239054AbiAFMyR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 07:54:17 -0500
-Received: from mail1.rz.htw-berlin.de ([141.45.10.101]:42669 "EHLO
-        mail1.rz.htw-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231899AbiAFMyR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 07:54:17 -0500
-X-Greylist: delayed 1331 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Jan 2022 07:54:17 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=htw-berlin.de; s=my; h=Subject:To:From:Date:From:To:Date:Subject;
-        bh=MhyF2773ylwDB2QmeA55F8twfDM5fMg9YNH8T11EsEM=; b=pMp7RDDgNYBnKAgIZWh2Oaq6EB
-        wGop0t2LicPRySQ4DDAmUcElcpe5uJdEkVPqNyTnkVOsl3nIz9FcfC+iohQ5dRIXkpVo6A8IJoweu
-        GM4tjdKvKHPBThQ9df8nUBS/IRcmkI5IJvjkimd6T5NpB3M1qunVIxpFMOaRKWe1OqLWq+95WfIMg
-        lsrieSC+41TbDpvhUIsCktmSZA9dNiC/kHG1IpMDLWruzo/vk7e5jmRjbaERVDwHlyVf9Qg2qhGXr
-        FkcY4Wln82rLAbHEO6+0rPUcJA+ABqsxhkL1mjSoAJkjCY+oTmuxPB6LW6hZW8mS6pi+t12M8Qksa
-        TlbPCnPA==;
-Envelope-to: git@vger.kernel.org
-Received: from webmail.htw-berlin.de ([141.45.70.36])
-        by mail1.rz.htw-berlin.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.94.2 (FreeBSD))
-        (envelope-from <imiadmin@HTW-Berlin.de>)
-        id 1n5Rvm-000KGU-RB
-        for git@vger.kernel.org; Thu, 06 Jan 2022 13:32:03 +0100
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 06 Jan 2022 13:32:03 +0100
-From:   Imi Admin <imiadmin@HTW-Berlin.de>
+        id S240267AbiAFO7F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 09:59:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35394 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240242AbiAFO7F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 09:59:05 -0500
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5F64C061245
+        for <git@vger.kernel.org>; Thu,  6 Jan 2022 06:59:04 -0800 (PST)
+Received: by mail-qv1-xf2c.google.com with SMTP id q4so2530577qvh.9
+        for <git@vger.kernel.org>; Thu, 06 Jan 2022 06:59:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3yujLFVvV1ldi0YusmJnKAsdvCFGWmA/5EDWqqucy5w=;
+        b=HaTwYY3Op3WOumuq2MGO8iapazX08pN8XHxX0jEQuil0loytzIe71cTDVpn5NIIbSv
+         ivv2Z1IlXe8XPZ3wfb9CIfP97ktUBwOVHhJXKIlMNrvdasgfI9ls7RlIn/klrgJKdsi5
+         GgSpfIhychHW5pvZiMyj7xkg3KutwdMTfzFyFyW9SqM5e7Zcy75SH+RF2NSSxGK+eBjn
+         upa+4+1UZxIsxBFsY9S2KUv5iXWOSxCablHMLuBFSy5UTWttCu6bQgE3T2U74hNpeHXV
+         5hgFppg9iUONicHDqbEpd1gEqtc06LKUHWSoT2WYKn7q9czFPjUQ0qZ4tL7YKN1aEHDz
+         e2Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3yujLFVvV1ldi0YusmJnKAsdvCFGWmA/5EDWqqucy5w=;
+        b=vsYoJIPBoSiCS8n0/6hHsbGUorJSi11mZAA2pjoaGViDNkoViJYUMpagel2e9HwIss
+         Pnhk+gvpQk11/M36tOLyEXwu7Ceg5m4d5Wo30pKmobNkelniZ72LqqTCpXs861hKQYV2
+         G+X42zK2K2lJtnXkuSc20c32SeceJGIj4e5dkwh6AH8yhLR+so2A0mxQBHzXWM0UZGfB
+         ktoSa57gOZ32egGBERIsAoUmPYGW3I2q6RB+wNjHXrKBom7VgmenUydHGUCc5xLiRb7M
+         aG+HTlIB6fOZVrTHpH9eP9FqjmYW9fjseZFAPEiU+lsCI4RDtvcnKrCqpqwmbt4tAC+M
+         TlvA==
+X-Gm-Message-State: AOAM533Lbz2IKIGdmjAo1KqFwlXH7++FIyZebrgetCUsHzkwmnmRZpiv
+        OAiPGJsvTukEctxhTPHPn6FiGxegc//D3g==
+X-Google-Smtp-Source: ABdhPJxuVo2eyL9s0xqEBNavl/tB9ethbxGmnSYCmSX5jV9ajtPzWKSKNe7vI2yo4SHbZVPF6vY55Q==
+X-Received: by 2002:a05:6214:2622:: with SMTP id gv2mr54833759qvb.128.1641481143780;
+        Thu, 06 Jan 2022 06:59:03 -0800 (PST)
+Received: from Johns-MBP.myfiosgateway.com (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
+        by smtp.gmail.com with ESMTPSA id m9sm1647266qkn.59.2022.01.06.06.59.02
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 06 Jan 2022 06:59:03 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
 To:     git@vger.kernel.org
-Subject: Problem with credential.helper=store in git 2.32.0.windows.2
-Organization: HTW Berlin
-Message-ID: <8838ac786ed46b841e4172824b80564b@htw-berlin.de>
-X-Sender: imiadmin@htw-berlin.de
-User-Agent: Roundcube Webmail
-X-HTW-AUTHENTICATED: yes
-X-HTW-DELIVERED-TO: git@vger.kernel.org
+Cc:     levraiphilippeblain@gmail.com, phillip.wood123@gmail.com,
+        John Cai <johncai86@gmail.com>,
+        "Tilman Vogel" <tilman.vogel@web.de>,
+        "Junio C Hamano" <gister@pobox.com>
+Subject: [PATCH v2] builtin/pull.c: teach run_merge() to honor rebase.autostash config
+Date:   Thu,  6 Jan 2022 09:58:51 -0500
+Message-Id: <20220106145851.77154-1-johncai86@gmail.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On a git pull --rebase, if fast forward is possible we run merge.
+However, merge will not honor rebase.autostash if it is configured. This
+has the unfortunate result of
 
-i've filled out the bug report below, maybe you can help me...
+$ git config rebase.autostash true
+$ git pull --rebase
 
-Best Sebastian
+to ignore the rebase.autostash value.
 
-*****************************************************************************
+Allow run_merge() to honor rebase.autostash by passing in
+config_autostash if --autostash or --no-autostash flags are not
+explicitly set.
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Reported-by: "Tilman Vogel" <tilman.vogel@web.de>
+Co-authored-by: "Junio C Hamano" <gister@pobox.com>
+Signed-off-by: "John Cai" <johncai86@gmail.com>
+---
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Notes:
+    Fix a bug that prevents git pull --rebase from honoring the rebase.autostash
+    config value.
 
-I sometimes have to use git commands on a remote Windows10 through a ssh 
-shell (PowerShell Server, so powershell as the shell). I'm creating a 
-credentials store file for these commands and set the local git 
-configuration credential.helper=store to point to this file.
-Here's my local git configuration:
+    Changes since V1:
+    - used simpler fix as proposed by Junio
+    - removed redundant test cases
 
-PS C:\scripts> git config -l --show-origin
-file:C:/Program 
-Files/Git/etc/gitconfig	diff.astextplain.textconv=astextplain
-file:C:/Program Files/Git/etc/gitconfig	filter.lfs.clean=git-lfs clean 
--- %f
-file:C:/Program Files/Git/etc/gitconfig	filter.lfs.smudge=git-lfs smudge 
--- %f
-file:C:/Program Files/Git/etc/gitconfig	filter.lfs.process=git-lfs 
-filter-process
-file:C:/Program Files/Git/etc/gitconfig	filter.lfs.required=true
-file:C:/Program Files/Git/etc/gitconfig	http.sslbackend=openssl
-file:C:/Program Files/Git/etc/gitconfig	http.sslcainfo=C:/Program 
-Files/Git/mingw64/ssl/certs/ca-bundle.crt
-file:C:/Program Files/Git/etc/gitconfig	core.autocrlf=true
-file:C:/Program Files/Git/etc/gitconfig	core.fscache=true
-file:C:/Program Files/Git/etc/gitconfig	core.symlinks=false
-file:C:/Program Files/Git/etc/gitconfig	core.editor="C:\\Program 
-Files\\Notepad++\\notepad++.exe" -multiInst -notabbar -nosession 
--noPlugin
-file:C:/Program Files/Git/etc/gitconfig	pull.rebase=false
-file:C:/Program Files/Git/etc/gitconfig	credential.helper=manager-core
-file:C:/Program 
-Files/Git/etc/gitconfig	credential.https://dev.azure.com.usehttppath=true
-file:C:/Program Files/Git/etc/gitconfig	init.defaultbranch=master
-file:.git/config	core.repositoryformatversion=0
-file:.git/config	core.filemode=false
-file:.git/config	core.bare=false
-file:.git/config	core.logallrefupdates=true
-file:.git/config	core.symlinks=false
-file:.git/config	core.ignorecase=true
-file:.git/config	remote.origin.url=https://mygitlab.de/mygroup/myrepo.git
-file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-file:.git/config	branch.master.remote=origin
-file:.git/config	branch.master.merge=refs/heads/master
-file:.git/config	user.name=myname
-file:.git/config	user.email=my@email
-file:.git/config	credential.helper=store --file 
-C:/scripts/.git/.git-credentials
+ builtin/pull.c          |  9 ++++++++-
+ t/t5521-pull-options.sh | 12 ++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-What did you expect to happen? (Expected behavior)
-
-I'd expect that a 'git pull' against my remote simply works without 
-asking me for a user name and password.
-
-What happened instead? (Actual behavior)
-
-My ssh connection hangs...
-
-What's different between what you expected and what actually happened?
-
-Please see above and below...
-
-Anything else you want to add:
-
-My approach worked in a prior git for windows version.
-When i use the same approach on the same remote Windows 10 client via 
-RDP in Powershell, i see that *before* git uses the credential store 
-file, it displays the windows credential dialog. If i click 'cancel' in 
-the dialog, git uses the credential store file:
-
-PS C:\scripts> git pull
-09:33:11.471005 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/bin
-09:33:11.471005 git.c:455               trace: built-in: git pull
-09:33:11.471005 run-command.c:667       trace: run_command: git fetch 
---update-head-ok
-09:33:11.486629 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-09:33:11.502137 git.c:455               trace: built-in: git fetch 
---update-head-ok
-09:33:11.502137 run-command.c:667       trace: run_command: GIT_DIR=.git 
-git remote-https origin https://mygitlab.de/mygroup/myrepo.git
-09:33:11.517762 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-09:33:11.517762 git.c:744               trace: exec: git-remote-https 
-origin https://mygitlab.de/mygroup/myrepo.git
-09:33:11.517762 run-command.c:667       trace: run_command: 
-git-remote-https origin https://mygitlab.de/mygroup/myrepo.git
-09:33:11.611382 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-09:33:11.720731 run-command.c:667       trace: run_command: 'git 
-credential-manager-core get'
-09:33:11.783217 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-09:33:11.798838 git.c:744               trace: exec: 
-git-credential-manager-core get
-09:33:11.798838 run-command.c:667       trace: run_command: 
-git-credential-manager-core get
-fatal: User cancelled the authentication prompt.
-09:33:22.955081 run-command.c:667       trace: run_command: 'git 
-credential-store --file C:/scripts/.git/.git-credentials get'
-09:33:22.970702 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-09:33:22.970702 git.c:455               trace: built-in: git 
-credential-store --file C:/scripts/.git/.git-credentials get
-09:33:23.174185 run-command.c:667       trace: run_command: 'git 
-credential-manager-core store'
-09:33:23.236463 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-09:33:23.236463 git.c:744               trace: exec: 
-git-credential-manager-core store
-09:33:23.236463 run-command.c:667       trace: run_command: 
-git-credential-manager-core store
-09:33:23.689909 run-command.c:667       trace: run_command: 'git 
-credential-store --file C:/scripts/.git/.git-credentials store'
-09:33:23.705534 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-09:33:23.705534 git.c:455               trace: built-in: git 
-credential-store --file C:/scripts/.git/.git-credentials store
-09:33:23.892547 run-command.c:667       trace: run_command: git rev-list 
---objects --stdin --not --all --quiet --alternate-refs
-09:33:23.924306 run-command.c:667       trace: run_command: git rev-list 
---objects --stdin --not --all --quiet --alternate-refs
-09:33:23.924306 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-09:33:23.924306 git.c:455               trace: built-in: git rev-list 
---objects --stdin --not --all --quiet --alternate-refs
-09:33:23.939814 run-command.c:1628      run_processes_parallel: 
-preparing to run up to 1 tasks
-09:33:23.939814 run-command.c:1660      run_processes_parallel: done
-09:33:23.939814 run-command.c:667       trace: run_command: git 
-maintenance run --auto --no-quiet
-09:33:23.939814 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-09:33:23.939814 git.c:455               trace: built-in: git maintenance 
-run --auto --no-quiet
-09:33:23.939814 run-command.c:667       trace: run_command: git merge 
-FETCH_HEAD
-09:33:23.955440 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-09:33:23.955440 git.c:455               trace: built-in: git merge 
-FETCH_HEAD
-Already up to date.
-
-The same happens when i try this with the ssh connection, but the 
-command hangs when trying to exec git-credential-manager-core get:
-
-PS C:\scripts> git pull
-10:02:33.240054 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/bin
-10:02:33.240054 git.c:455               trace: built-in: git pull
-10:02:33.240054 run-command.c:667       trace: run_command: git fetch 
---update-head-ok
-10:02:33.255676 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-10:02:33.255676 git.c:455               trace: built-in: git fetch 
---update-head-ok
-10:02:33.255676 run-command.c:667       trace: run_command: GIT_DIR=.git 
-git remote-https origin 
-https://imiadmgit.f4.htw-berlin.de/f4-imi-li/windows-scripts.git
-10:02:33.255676 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-10:02:33.255676 git.c:744               trace: exec: git-remote-https 
-origin https://imiadmgit.f4.htw-berlin.de/f4-imi-li/windows-scripts.git
-10:02:33.255676 run-command.c:667       trace: run_command: 
-git-remote-https origin 
-https://imiadmgit.f4.htw-berlin.de/f4-imi-li/windows-scripts.git
-10:02:33.271297 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-10:02:33.380647 run-command.c:667       trace: run_command: 'git 
-credential-manager-core get'
-10:02:33.396268 exec-cmd.c:237          trace: resolved executable dir: 
-C:/Program Files/Git/mingw64/libexec/git-core
-10:02:33.396268 git.c:744               trace: exec: 
-git-credential-manager-core get
-10:02:33.396268 run-command.c:667       trace: run_command: 
-git-credential-manager-core get
-
-Anyway as far as i understood git should not exec 
-git-credential-manager-core get at all with my local git configuration?
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.32.0.windows.2
-cpu: x86_64
-built from commit: 3d45ac813c4adf97fe3733c1f763ab6617d5add5
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 19043
-compiler info: gnuc: 10.3
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-
-*****************************************************************************
-
-
-
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 100cbf9fb8..8423e420ee 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -1133,7 +1133,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 			die(_("cannot rebase with locally recorded submodule modifications"));
+ 
+ 		if (can_ff) {
+-			/* we can fast-forward this without invoking rebase */
++			/*
++			* We can fast-forward without invoking
++			* rebase, by calling run_merge().  But we
++			* have to allow rebase.autostash=true to kick
++			* in.
++			*/
++			if (opt_autostash < 0)
++				opt_autostash = config_autostash;
+ 			opt_ff = "--ff-only";
+ 			ret = run_merge();
+ 		} else {
+diff --git a/t/t5521-pull-options.sh b/t/t5521-pull-options.sh
+index 66cfcb09c5..66fac99d2b 100755
+--- a/t/t5521-pull-options.sh
++++ b/t/t5521-pull-options.sh
+@@ -252,4 +252,16 @@ test_expect_success 'git pull --no-verify --verify passed to merge' '
+ 	test_must_fail git -C dst pull --no-ff --no-verify --verify
+ '
+ 
++test_expect_success 'git pull --rebase --autostash succeeds on ff' '
++	test_when_finished "rm -fr src dst actual" &&
++	git init src &&
++	test_commit -C src "initial" file "content" &&
++	git clone src dst &&
++	test_commit -C src --printf "more_content" file "more content\ncontent\n" &&
++	echo "dirty" >>dst/file &&
++	git -C dst pull --rebase --autostash >actual 2>&1 &&
++	grep -q "Fast-forward" actual &&
++	grep -q "Applied autostash." actual
++'
++
+ test_done
 -- 
-Thanks, Sebastian
+2.34.1
+
