@@ -2,132 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 034C9C433EF
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 22:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A48A1C433EF
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 22:57:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245286AbiAFW4p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 17:56:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60356 "EHLO
+        id S245319AbiAFW5p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 17:57:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245250AbiAFW4p (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 17:56:45 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBB18C061245
-        for <git@vger.kernel.org>; Thu,  6 Jan 2022 14:56:44 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id s1so7661608wra.6
-        for <git@vger.kernel.org>; Thu, 06 Jan 2022 14:56:44 -0800 (PST)
+        with ESMTP id S245298AbiAFW5o (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 17:57:44 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B428C061245
+        for <git@vger.kernel.org>; Thu,  6 Jan 2022 14:57:44 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id d187-20020a1c1dc4000000b003474b4b7ebcso1323263wmd.5
+        for <git@vger.kernel.org>; Thu, 06 Jan 2022 14:57:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=jrtc27.com; s=gmail.jrtc27.user;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=evESkuRJrokF2c/G+PUwivulXlpzLFxLiz07htR3dy4=;
-        b=VhyZfAF1/iBpPU6vqFbcbJKLmVj/dqcR3/4FSm6aAXoub1CafscdpLeIelWWGdK3P5
-         3qmR9dg7NPcMlPF/Aqxn5gm5Npbr8P8PoebxQ3n/p463Zg49dG1roiMLVPs12hCShvCG
-         jJcdtjPNGK80Vcoas+J3lt18mCZCc7u9t3NRnfOkNn0C+7tAnw5sKgIaX9E3EekHbGoL
-         wvIIxWMjF+kuB1GeTNj+9gcz/jD95B/1jyO5kIOP5ZhmUwLiQ86wE8qYlXzB83zrykUI
-         qjgMCuey+O6HsFg+relJXR5XFAlTqrwc6sS6xg+jclH6kU3pqJE1quiKzRtNkPMQ1ADb
-         EZSw==
+        bh=C4WFWYUXhFHIWe59R2bsmj934LlsbMsCpG9V47l11k4=;
+        b=D1t9mIv46Lkd0dtNzBkNp3dhSmxrZTT/XiKoNyJ8iN6BDD1yxyo4wcScTzZnt8soOV
+         n5oOjFkqg4PP//FUbuqHgnnCh4C6gHfrh2bd6SExwx/UsyVj5vhqWUETuyAAzzpLvr16
+         rmLoPj/BiNT5NKBPS3PLJpeus5vMaZQL5T5koXMaUUeye0mJ5Wa90wIT2Xq7Jo3fsUYt
+         eT7ic8hgATYi2YKXVfWQN6RmY+QGavwJCC2slSDYF8dAjLL7v7xYhuIoVdHbpRxwfoSY
+         2DBShcqH6nu+UB3tC9A2GuIKzgbmSV8BRcwvJ9cvuNeIHw+rz2v1tM0ea1Js5IF3Q3Nl
+         7ENQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=evESkuRJrokF2c/G+PUwivulXlpzLFxLiz07htR3dy4=;
-        b=7C/5aG3rMoHzY00q4InU83Bv198DQZdJJ7j3JQRQL28HNPMgV/y8GHVYBESUcsGQnR
-         RzZWT6JXv4beSWQJmxRg4Zr4AWROb0GusBxWNBLPiXxPTGHOOkH7hCBkm5g0JAuM7yFC
-         UM0Vn99SFhvzANCttQCL4TzdtD7E/L9XoWpTc4Uw/VJS9Pq34GamkVzM7Yjg8TQ34PzP
-         EX+1RPqgJuFqmBU3UX+7gV7AKvnk9AZxfvQZnQno96b7k5raGcJcwVZ9SN2mCoaS5mdZ
-         L2YCP83B9aanjcoND4S3yN3VzgkwPXqZEFfzJQ8KqCla1ntjNC1Me3rIDdtSrjQFxaxf
-         ZlcA==
-X-Gm-Message-State: AOAM533AiEY6C81/Ee4hmSVtH6hrvCA5AUfHG79VxxUCGO4/rH1t6220
-        YXCKde7AayzJxov3bA1I+++/KA==
-X-Google-Smtp-Source: ABdhPJwLj6AnrxAoc4LPem9xqDe9kX6FvX6Bn/J2AyORlqNoJBUXtHQ+vWTXFMFmq4UcMhfGcuPjUA==
-X-Received: by 2002:adf:fac4:: with SMTP id a4mr51816296wrs.66.1641509803387;
-        Thu, 06 Jan 2022 14:56:43 -0800 (PST)
+        bh=C4WFWYUXhFHIWe59R2bsmj934LlsbMsCpG9V47l11k4=;
+        b=VE6ZEXgqm+Q86lOV/+vUda+/Nw4ZH8P9dkf4oaS+bAaZORkUHhYTZ1Xr+t20to4XeY
+         vUNdMaX6wdskn5MpH1k8J5uiUD/1OZ5VYpwv4PFYwDtyZqWmg9hGAkMZlU2fHohyORrB
+         6XtZGXzaBeyA++d691Wz+0/1uDQY83IXRp20AVCwhv2v29T0ZhzHVMrow2fgcOOcQj4v
+         ZU2VVCoiYcxJwWP0cXt1kRAmjECtjc8ihqzO2LmH501XUq08ur/BDeO2n6EO7SB+BkAK
+         E6CRllnxCIuoFAYwCfEQy3yxvIij2Zzi8rDmdQW41ApQf09ZyT3o8ktxdNvKQNO50jO2
+         ZYyQ==
+X-Gm-Message-State: AOAM532Br3rtIv19aszRl9gtp9Wp17Opcfc1+lWOx4c4Y+m0i1G2RRyR
+        Mj/NWeCJPThdeKir6Tah+9P+z6XJthTtrWIu
+X-Google-Smtp-Source: ABdhPJws/jvgYm5vlrG+lUEIAoH7y8/t6DRMSfmpee5C6zIgdzfT6Ic4AGEdhLriVo1t6vSKxcAOHg==
+X-Received: by 2002:a05:600c:4f94:: with SMTP id n20mr8719881wmq.64.1641509862706;
+        Thu, 06 Jan 2022 14:57:42 -0800 (PST)
 Received: from smtpclient.apple (global-5-143.nat-2.net.cam.ac.uk. [131.111.5.143])
-        by smtp.gmail.com with ESMTPSA id o5sm2747208wmc.39.2022.01.06.14.56.43
+        by smtp.gmail.com with ESMTPSA id o5sm2747208wmc.39.2022.01.06.14.57.42
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Jan 2022 14:56:43 -0800 (PST)
+        Thu, 06 Jan 2022 14:57:42 -0800 (PST)
 Content-Type: text/plain;
         charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Subject: Re: [PATCH] Properly align memory allocations and temporary buffers
+Subject: Re: [PATCH] apply: Avoid ambiguous pointer provenance for CHERI/Arm's
+ Morello
 From:   Jessica Clarke <jrtc27@jrtc27.com>
-In-Reply-To: <xmqqh7agbiuq.fsf@gitster.g>
-Date:   Thu, 6 Jan 2022 22:56:42 +0000
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+In-Reply-To: <YddySiBCOOYYKDmC@nand.local>
+Date:   Thu, 6 Jan 2022 22:57:42 +0000
+Cc:     git@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <97D2AB55-0F8F-4C38-A5C6-1AAA43EA064A@jrtc27.com>
-References: <20220105132324.6651-1-jrtc27@jrtc27.com>
- <YddjJ+uIQM34Gedo@nand.local> <xmqqh7agbiuq.fsf@gitster.g>
-To:     Junio C Hamano <gitster@pobox.com>
+Message-Id: <C2DD77CA-D1F1-45ED-912F-C4532EB2720C@jrtc27.com>
+References: <20220105132310.6600-1-jrtc27@jrtc27.com>
+ <YddySiBCOOYYKDmC@nand.local>
+To:     Taylor Blau <me@ttaylorr.com>
 X-Mailer: Apple Mail (2.3693.40.0.1.81)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6 Jan 2022, at 22:27, Junio C Hamano <gitster@pobox.com> wrote:
+]On 6 Jan 2022, at 22:50, Taylor Blau <me@ttaylorr.com> wrote:
 >=20
-> Taylor Blau <me@ttaylorr.com> writes:
+> On Wed, Jan 05, 2022 at 01:23:10PM +0000, Jessica Clarke wrote:
+>> [...] In most cases this is clear, as normally at least one operand =
+is
+>> provably a plain integer, but if both operands are uintptr_t and have
+>> no indication they're just plain integers then it is ambiguous, and
+>> the current implementation will arbitrarily, but deterministically,
+>> pick the left-hand side, due to empirical evidence that it is more
+>> likely to be correct.
 >=20
->> (+cc Ren=C3=A9 as another possible reviewer)
->>=20
->> On Wed, Jan 05, 2022 at 01:23:24PM +0000, Jessica Clarke wrote:
->>> Currently git_qsort_s allocates a buffer on the stack that has no
->>> alignment, and mem_pool_alloc assumes uintmax_t's size is adequate
->>> alignment for any type.
->>>=20
->>> On CHERI, and thus Arm's Morello prototype, pointers are implemented =
-as
->>> hardware capabilities which, as well as having a normal integer =
-address,
->>> have additional bounds, permissions and other metadata in a second =
-word,
->>> so on a 64-bit architecture they are 128-bit quantities, including =
-their
->>> alignment requirements. Despite being 128-bit, their integer =
-component
->>> is still only a 64-bit field, so uintmax_t remains 64-bit, and =
-therefore
->>> uintmax_t does not sufficiently align an allocation.
+> Wouldn't a simpler, less invasive fix be to instead write the =
+expression
+> so that the left-hand operand is a pointer? IOW, shouldn't the =
+following
+> work (with no other changes):
 >=20
-> Alignment aside, if uintmax_t is 64-bit but your pointer needs
-> 128-bit to store, saving a pointer value in uintmax_t variable would
-> not work correctly, I presume, as casting the 64-bit integral type
-> back into pointer would not be sufficient to recover the lost
-> information that used to be in the second word.
+>    ent->util =3D (void *)((uintptr_t)what | ent->util);
 >=20
-> So, does the architecture have 128-bit uintptr_t and that is a safe
-> type both from the point of view of alignment and from the point of
-> view of not losing information? =20
-
-Yes. It is basically just a char * that lets you perform arbitrary
-arithmetic; not an unsigned long any more for our architectures.
-
-> If that type is larger than uintmax_t, something smells wrong,
-> though.  max is not max anymore at that point.
+> ?
 >=20
-> IIRC, uintptr_t is optional in C99, so a simpler solution to use the
-> larger type between uintptr_t and uintmax_t as a replacement for how
-> we use uintmax_t would not quite work out of the box X-<.
+> (I dropped the explicit cast on the right-hand side, since ent->util =
+is
+> already a uintptr_t, and the left-hand side has an explicit cast, so
+> there isn't any type promotion going on here).
 
-This is also true of uint128_t, it doesn=E2=80=99t fit in a uintmax_t =
-either.
-uintmax_t was a mistake as it becomes part of the ABI and can never be
-revised even when new integer types come along. uintmax_t can hold any
-valid address, but will strip the metadata. It turns out almost no
-software tries to put a pointer in a uintmax_t and cast it back to a
-pointer.
-
-Note that, even if we wanted to, we coldn't just map uintmax_t to a
-uintptr_t, as on 32-bit architectures uintmax_t is a 64-bit integer but
-uintptr_t only has a 32-bit range (plus 32 bits of metadata), and we do
-have a 32-bit CHERI variant for embedded use cases.
-
-This is one of a few warts that people will just have to deal with for
-CHERI; there=E2=80=99s no way round it if you want anything that =
-implements the
-ideas of CHERI.
+That would still warn as it=E2=80=99s still ambiguous. It just happens =
+that the
+arbitrary choice picks the right side. Better to clean up the code to
+remove the ambiguity and clarify it to the programmer.
 
 Jess
 
