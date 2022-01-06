@@ -2,100 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CCFFC433EF
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 17:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 326C3C433FE
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 17:48:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241597AbiAFROD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 12:14:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37536 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238844AbiAFROC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 12:14:02 -0500
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5458DC061245
-        for <git@vger.kernel.org>; Thu,  6 Jan 2022 09:14:02 -0800 (PST)
-Received: by mail-qk1-x730.google.com with SMTP id t66so3332951qkb.4
-        for <git@vger.kernel.org>; Thu, 06 Jan 2022 09:14:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/JjDUuBq1KhUPDSpWrgGMd1P70TqqJCjdCdNzWJRcPY=;
-        b=sWR47gJHpRFF5SBQcNJWMlNFY0FSnOpKnVp2DrabZzjgk48xwUAwgsF8H/EKnm7Nq8
-         tXJynN4XruQjL/D0aCau8JvjS51a78d/ZZXhFrkAwOoCnU+8CkuejVl7z+4dCItuXZwH
-         Ho0yUqzhb0jMfzcqBN0IVQfP14Er0I0ARI1qya6lbn7NcLwV8I0XFfLpjxzy+VzLnlT8
-         kru+vwKytBPLm1nyTtGe3xdE4aKd8a0cWMaS5WKULkz0XQF22p3tqub1BtSa+bxO9fgA
-         bGt4UHRJHpPEQ9jaktwDlS1BZp22EkLtpoAAmUQZ57miI7BMpCb55rUug85dH8N9GEEw
-         zO4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/JjDUuBq1KhUPDSpWrgGMd1P70TqqJCjdCdNzWJRcPY=;
-        b=3hXkU8SibGauk18LS5CxPjMA+6K44j9c6nbC6oA/idy23t7HxTliyhyC+x+TFrYR3d
-         NB+b/iJ3oDf9gD251gKrD+tKJnaiCx9+Gl6LC8NYVtuDtr4k44PLKUjfJmwWQZUul3ZI
-         kGP6DHfdLgyhIN6xqtHtY0GwIJ5jxJmBskclvz7GMleJOiSJnqeZV2TjX1i1W8CCdrVC
-         ucFzsDW8Sw3r3cGJ1jOt6Gc2ExYO0oTkzNNbji6EkEPHZVWEbIl1CGCrVUwUmQ9DecF5
-         MfqMXI7K2jzLQEH7sDyVQQ5zTw4a2+CN5bH2kQtArNoG4bmfZguJbJ3ICFHvBLmea+qF
-         nvGA==
-X-Gm-Message-State: AOAM5314DVoWr/jkwf7KyMaI7GoM8uhmbVoke7lKu2ULBoSQ7CTRKQct
-        46lqNJ9GP9OYTlHSMRjgu1ReqA==
-X-Google-Smtp-Source: ABdhPJwlTuIzI9vJDt4ELMPzRNPl6fCDN+cDuTKXZHI99eERnrwAaLuTQ7KJMht1NyIPbNJ1zl3M8w==
-X-Received: by 2002:a05:620a:199a:: with SMTP id bm26mr2224805qkb.132.1641489241527;
-        Thu, 06 Jan 2022 09:14:01 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r187sm1702768qke.11.2022.01.06.09.14.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 09:14:01 -0800 (PST)
-Date:   Thu, 6 Jan 2022 12:14:00 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     John Cai <johncai86@gmail.com>, git@vger.kernel.org,
-        levraiphilippeblain@gmail.com, phillip.wood123@gmail.com,
-        Tilman Vogel <tilman.vogel@web.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] builtin/pull.c: teach run_merge() to honor
- rebase.autostash config
-Message-ID: <YdcjWG/67JlxTjfF@nand.local>
-References: <20220106150226.77458-1-johncai86@gmail.com>
- <YdcjCKTrK+W/FCw1@nand.local>
+        id S242360AbiAFRsO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 12:48:14 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59569 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242347AbiAFRsN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 12:48:13 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0D5E107771;
+        Thu,  6 Jan 2022 12:48:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=w+koVhz7OT8ryF0VcUpA3s422w8zCyNW/Sz7Gr
+        +NA4s=; b=mtAXmtaMeDbG3vyrrrGoti2dZitS9tZkd4qPGo+ELle5FjRw7ReW8k
+        7XwXwJgzLPitgb7MnnIDJs831ReHnKJ3wiF/jUY8g0vbGBUkhvIwbtgizGyLDrWE
+        kkrJ2OO/s+LKZc5OjaHtDb/lVRAoFv08tNnJk6UFtOIBUgLhyaXjE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9898810776F;
+        Thu,  6 Jan 2022 12:48:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0F85010776E;
+        Thu,  6 Jan 2022 12:48:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Marc Strapetz <marc.strapetz@syntevo.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Marc Strapetz via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] t/README: fix typo
+References: <pull.1110.git.1641338224631.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.2201051701120.7076@tvgsbejvaqbjf.bet>
+        <9f74fc04-ea68-6bdd-3341-ecf7a2aed6cd@syntevo.com>
+        <b265de46-9ccd-4f31-d51c-1df1b39606d5@syntevo.com>
+Date:   Thu, 06 Jan 2022 09:48:10 -0800
+In-Reply-To: <b265de46-9ccd-4f31-d51c-1df1b39606d5@syntevo.com> (Marc
+        Strapetz's message of "Thu, 6 Jan 2022 07:17:42 +0100")
+Message-ID: <xmqqwnjceox1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YdcjCKTrK+W/FCw1@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D12AED5A-6F18-11EC-8D18-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 06, 2022 at 12:12:40PM -0500, Taylor Blau wrote:
-> On Thu, Jan 06, 2022 at 10:02:26AM -0500, John Cai wrote:
-> > diff --git a/builtin/pull.c b/builtin/pull.c
-> > index 100cbf9fb8..8423e420ee 100644
-> > --- a/builtin/pull.c
-> > +++ b/builtin/pull.c
-> > @@ -1133,7 +1133,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
-> >  			die(_("cannot rebase with locally recorded submodule modifications"));
-> >
-> >  		if (can_ff) {
-> > -			/* we can fast-forward this without invoking rebase */
-> > +			/*
-> > +			* We can fast-forward without invoking
-> > +			* rebase, by calling run_merge().  But we
-> > +			* have to allow rebase.autostash=true to kick
-> > +			* in.
-> > +			*/
-> > +			if (opt_autostash < 0)
-> > +				opt_autostash = config_autostash;
+Marc Strapetz <marc.strapetz@syntevo.com> writes:
+
+>>  > find the "dotsh" typo in the same file (it should be "dots", I
+>> think)?
+>> I wouldn't have noticed that, but I agree that it should be 
+>> "test_name_without_dots".
 >
-> This looks OK, and prefers the value of autostash given over options
-> over the configured one. But it may be a little clearer to construct it
-> that way explicitly (see the conditional "if (opt_rebase)" inside of
-> cmd_pull()).
+> Please disregard my last statement. "test_name_without_dotsh" means
+> "test name without .sh extension". For 
+> "t2109-update-index-index-version.sh", the directory will be "trash
+> directory.t2109-update-index-index-version".
 
-Oops, ignore this suggestion. run_merge() looks at the static variable
-opt_autostash, so you really do need to be manipulating it directly.
+Yup.  "without_dot_sh" might have been a better way to spell it, but
+"without_dotsh" certainly is better than "without_dots".
 
-Nevermind: what you wrote here looks fine.
+Thanks for being extra careful.  In any case, the original fix is
+good and has already been queued.
 
-Thanks,
-Taylor
