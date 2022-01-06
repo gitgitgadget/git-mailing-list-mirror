@@ -2,75 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0686CC433EF
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 00:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66A3CC433FE
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 00:22:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343619AbiAFARe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Jan 2022 19:17:34 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55922 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239471AbiAFARd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jan 2022 19:17:33 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 450C417CB2E;
-        Wed,  5 Jan 2022 19:17:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QlI6pKqO0VLmEieMtR5FSSAMmSnn+dHqmf6q2E
-        1vh5o=; b=RPktnEsf6yyDWCp1YqZ7j+6hdkL9byBKm+zJGzqu7mXus/emlUPpNM
-        81q51gA6E+m2TqYwGi4WmjNeMZItoqWzqMftzLt5SGuSjwk+xR2Kh2UYFKD4EsJw
-        KBx/zpBCARY0jPXMwoCAN35pxJjYthZdpimB6blnNCh/+4SRVtBHk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2C14A17CB2D;
-        Wed,  5 Jan 2022 19:17:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 894A317CB2C;
-        Wed,  5 Jan 2022 19:17:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Lessley Dennington <lessleydennington@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: Bug report - sparse-checkout ignores prefix when run in
- subdirectories
-References: <29f0410e-6dfa-2e86-394d-b1fb735e7608@gmail.com>
-        <xmqqsfu1g64s.fsf@gitster.g>
-        <CABPp-BH5woi6KY7OBpnsS-M2EmgLHii9zs8rSwrgcPFkOAvn_A@mail.gmail.com>
-        <xmqqbl0pg3s7.fsf@gitster.g>
-        <CABPp-BFfuDMQXCZg_5YXQLaPtc9nyrJaq8J6VEDVsaiEMeeZMA@mail.gmail.com>
-Date:   Wed, 05 Jan 2022 16:17:29 -0800
-In-Reply-To: <CABPp-BFfuDMQXCZg_5YXQLaPtc9nyrJaq8J6VEDVsaiEMeeZMA@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 5 Jan 2022 16:08:42 -0800")
-Message-ID: <xmqq7dbdg1k6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1343670AbiAFAWd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Jan 2022 19:22:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36898 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1343658AbiAFAW0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jan 2022 19:22:26 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37499C061245
+        for <git@vger.kernel.org>; Wed,  5 Jan 2022 16:22:26 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id m2so1107925qkd.8
+        for <git@vger.kernel.org>; Wed, 05 Jan 2022 16:22:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+raghmH9t5+QVakSMdDRvU+bruMCOBBuXsLLKWWVkyM=;
+        b=KtEbUxP4ttIq2uzdJT0OvsUSLAfXFWq1wZwpxjsKM9zc+CEzH499c/5G3Ex22wkpsW
+         xt7COf10+JZ+qfqVPvcL38v/DxWOUf/3uE+iJYt671Wvxpd3w5Ujm174eAuAOLfmnCi8
+         N7aakZKqGSkIFGr7JkS9EEzbxPCJymuIBRd0lwttK5HndLljnl5LcHkgwBgR2QD6iDHE
+         jPi9mZezDCf7BnX+WMTHdw8jIWjhRCd0dqdKBhZMhFW53ONFdH3e+8e1FvlFvHR13SRq
+         /nLM5tm1vRNcv8wvCZkXmBV59xWgZCVw3wKPKR1Of/fFCq0c7CjSEWSgNzJkKkqE2aLl
+         DYbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+raghmH9t5+QVakSMdDRvU+bruMCOBBuXsLLKWWVkyM=;
+        b=o2cocI9Ngecsb3/d1/t7N9Xvz/u6fNcrUzYa9bKNBw1npyNmY1livAaqYti53ETeLO
+         G6n7X3ZUgF6pepo6esm4232EKDu7FtXBpZsBh0i99nfSsQGOuSr80GSJtkjm0ZNESYep
+         f+EkyLuJoh2dPdbYm+/6B+DUp7iMIW/njV3gDrWEMuOv20eXlatgxgtAVBTqnBu/g4jr
+         uruVROlWkqvTUX5Gag0QNzJ8Nsl7ljcH45eB1NMuaxghkSkya9MRPZfoaKsft/L6rAii
+         Vxz3aOhT07exjomlFaKFhgJpGW3l9BfPa7f+w6/jDcsyg1aP5oTiBSgT7czwQTKs5L2F
+         YkgA==
+X-Gm-Message-State: AOAM531S+laBjwhHFXFn/P69c3p1Y2BEPUb5t4CT4hnBpH92EZp/B5kK
+        v6PAka61UiiX/GTy1Gugxlc5XAfsgeGAfQ==
+X-Google-Smtp-Source: ABdhPJyDgCzybeMnQ0HF8z61P2GvLMqVB9hwl0Hx4/ZdX0AJBg0QVchTl38RxBUv1x2ypm91t3jf3w==
+X-Received: by 2002:a05:620a:1904:: with SMTP id bj4mr40142339qkb.536.1641428545403;
+        Wed, 05 Jan 2022 16:22:25 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id e15sm295177qtq.83.2022.01.05.16.22.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Jan 2022 16:22:25 -0800 (PST)
+Date:   Wed, 5 Jan 2022 19:22:23 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     "Nanekrangsan, Sucheela (NYC-GIS)" 
+        <sucheela.nanekrangsan@interpublic.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Frank, Carson (OMA-GIS)" <carson.frank@interpublic.com>
+Subject: Re: Git bug report git remote get-url
+Message-ID: <YdY2P+xX/a6aHB2b@nand.local>
+References: <00FDB880-5FF6-4C67-9144-5599B2872830@interpublic.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 09813A4E-6E86-11EC-A177-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <00FDB880-5FF6-4C67-9144-5599B2872830@interpublic.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Wed, Jan 05, 2022 at 05:22:06PM +0000, Nanekrangsan, Sucheela (NYC-GIS) wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> 1. I put [remote] entries in /etc/gitconfig
 
-> Are you possibly confusing pathspecs with gitignore patterns here?
-> (Or am I?)  Or are you suggesting that sparse-checkout be modified to
-> accept either gitignore-style files or pathspecs and handle both?
+This is almost certainly the culprit.
 
-Much closer to the latter (actually, removing ignore patterns, and
-make the subsystem work with pathspecs).
+`git remote get-url` doesn't output anything (except the error message
+included in your report) when `remote->configured_in_repo` is zero.
+Indeed, looking at remote.c:handle_config() where we actually add a new
+remote:
 
-> I have never liked that gitignore-style patterns were used for
-> sparse-checkout, but it has always seemed a bit too late to change it.
+    remote = make_remote(remote_state, name, namelen);
+    remote->origin = REMOTE_CONFIG;
+    if (current_config_scope() == CONFIG_SCOPE_LOCAL ||
+        current_config_scope() == CONFIG_SCOPE_WORKTREE)
+            remote->configured_in_repo = 1;
 
-Perhaps.
+we only set configured_in_repo when we're looking at local or
+worktree configuration. Since $(prefix)/etc/gitconfig isn't either of
+those, we'll avoid setting configured_in_repo, hence we'll end up inside
+of this if-statement in builtin/remote.c:get_url():
 
-> Ever since Stolee introduced cone-mode, my preferred strategy for
-> fixing the gitignore-style patterns problem, assuming we are allowed
-> to do so, is to deprecate if not kill non-cone mode.  (And in the
-> meantime, I'm just doing due diligence when I mention non-cone mode in
-> my reviews.)
+    remote = remote_get(remotename);
+    if (!remote_is_configured(remote, 1)) {
+            error(_("No such remote '%s'"), remotename);
+            exit(2);
+    }
+
+...producing the error message in your report.
+
+> 4. After `git remote add xxx`, I can get the URL from `git remote get-url`.
+
+This makes sense, since `git remote add` will configure the remote `xxx`
+in your repository-local configuration, not the system-wide one.
+
+Thanks,
+Taylor
