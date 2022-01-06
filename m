@@ -2,148 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8288FC433F5
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 23:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7513CC433F5
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 23:23:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245329AbiAFXC0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 18:02:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33458 "EHLO
+        id S245448AbiAFXXD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 18:23:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245283AbiAFXCZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 18:02:25 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E26C061245
-        for <git@vger.kernel.org>; Thu,  6 Jan 2022 15:02:25 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id o203-20020a1ca5d4000000b003477d032384so366755wme.2
-        for <git@vger.kernel.org>; Thu, 06 Jan 2022 15:02:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jrtc27.com; s=gmail.jrtc27.user;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=5i2X51+AHaiHi4BUqxfFvrbVgiinVM1ku2ZJbZ24/qo=;
-        b=e5q6JrSG8HmZJtcA/dq9bY6N0Ccw6Q/rEAB9GHdj/ogZQOKQVl+MGV+WLCrN1tgWup
-         eJiLnmoWZ2k42IYc83QyGWMqr7aRLthjtRS9NdPqc5vbIL05yRWV66XMvxPJL+NhNpgo
-         F+DXx1j8sfhaKOSAST03Pa7fyBUbA4mcxd8mbhRBDaVfE83JdovVC1Kda9LP6fyjMTAN
-         rar8UGPUOwxOh8qFfJtQmks+wWlYhqN2tR8lDhjFwN/fXIz43q1kQB/gq5v+VWC2ofGY
-         1jqRfi9E3+Wt0V3MFA8piQV2IbufLbCD01UlbwrCMJ5C0eEvMt1xrM5I9bYHBFkfvPvn
-         fEug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=5i2X51+AHaiHi4BUqxfFvrbVgiinVM1ku2ZJbZ24/qo=;
-        b=t+inY5abLZQS8GVGbsR3BWkjdXLCcccDlNrlcxcZ2X8BWsS4GhWa+Mb6kLA8j9tFxz
-         jC6ccocqpXbs+rgl3/FvMzLj2X3CENoUE4I3PPJ/8jJhDnQoPcg062Mw/oV4x0vLqYWT
-         ohrFGoYGfrSr53/N/ALbud+vOqW4C13TrGAjhca5QEWWylEEiDL5yZNDwYXZHRiU8bPV
-         vxfFHYnN5cwDN6bbinqPyIARwrYTMolwuBL+w6xlLBkYVT9TYvuviCJ/Rv2L/A6COQ9M
-         uwtnql8M7qLNAp8oWM5iXMZbezsfb5DsxXq6TOms+pqdxwbhgiApFM9DPYxyj05hhtyj
-         Kb5g==
-X-Gm-Message-State: AOAM530EG2H6nqz2G+Iwz9S7ZNWL4BjojPFaXxe1bs2kpxN3Sxlwy/GO
-        ZIyI9QEmdMvYaBQeW2PckrgljgPdlXa1XPx4
-X-Google-Smtp-Source: ABdhPJw/pzw/KyBhJ420T47TjJOYdKt61MqfqOzuLb0FIkgBFIVOeiKsekfIfbpPglPaNal1N7Mx9w==
-X-Received: by 2002:a7b:c396:: with SMTP id s22mr6318438wmj.121.1641510143743;
-        Thu, 06 Jan 2022 15:02:23 -0800 (PST)
-Received: from smtpclient.apple (global-5-143.nat-2.net.cam.ac.uk. [131.111.5.143])
-        by smtp.gmail.com with ESMTPSA id 11sm4241079wrz.63.2022.01.06.15.02.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Jan 2022 15:02:23 -0800 (PST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Subject: Re: [PATCH] apply: Avoid ambiguous pointer provenance for CHERI/Arm's
- Morello
-From:   Jessica Clarke <jrtc27@jrtc27.com>
-In-Reply-To: <xmqqczl4bhmo.fsf@gitster.g>
-Date:   Thu, 6 Jan 2022 23:02:23 +0000
+        with ESMTP id S234795AbiAFXXD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 18:23:03 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2498BC061245
+        for <git@vger.kernel.org>; Thu,  6 Jan 2022 15:23:03 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 2CFF15B256;
+        Thu,  6 Jan 2022 23:23:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1641511382;
+        bh=mFPixkSN3Ycen3oIQrLQtT5O9nEuD3tghrQ2WrUUrEs=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=AhBE0jj6BCJJulMVTKcDZl4DeUJEQchGYKPM47l11Gp2UnQMTgHXX4X3TwAsHlNcd
+         iFYGz7dxJP60M9Agp8dI6e8Bv/kL06WlCA0x5ca5mpXUyP+teC2WFaPRXomTT8Uf5s
+         4PaPNojsrU3WmWDJb/CGkh52gpTCuI1Xbwg1lmMqECFRY2u4t0qzmMbsTBozDgd4d3
+         4HT/5dsvTG1GAC65jc5pflx9sibsLBnK1CPiW6V3eFSFvX5k/px6THcCkUvaR62/L4
+         BlBON2BPbpbII6CtbJ2WKvZC5T36vnmsUToS4qGRotlNv+x8IV+iEkFNixyx7MhKR2
+         JKN2FIO/KFQA9UyANMTWRKMAKVCV/hoLtY2y9ig7+dgWl6db/PUl26FkIq4zKH5J5m
+         HusxRKgTQ8lGQnmbTdeFfH3ZTGzjkMSoWhdZdrzWZlC/BVu2Oy69pGWvhfhs0WJSWz
+         Xjrn3T8/DDKJTN+wgraSxcPC6AtktrODAVBvO6HeEBT5bs+4LF1
+Date:   Thu, 6 Jan 2022 23:22:59 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jessica Clarke <jrtc27@jrtc27.com>
 Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <BE9D3BD5-EC19-4881-872D-CEB4039A382D@jrtc27.com>
-References: <20220105132310.6600-1-jrtc27@jrtc27.com>
- <xmqqczl4bhmo.fsf@gitster.g>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3693.40.0.1.81)
+Subject: Re: [PATCH] Properly align memory allocations and temporary buffers
+Message-ID: <Ydd50/BLKlbK+Wj4@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jessica Clarke <jrtc27@jrtc27.com>, git@vger.kernel.org
+References: <20220105132324.6651-1-jrtc27@jrtc27.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="+UeddTN10XKdkj5k"
+Content-Disposition: inline
+In-Reply-To: <20220105132324.6651-1-jrtc27@jrtc27.com>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6 Jan 2022, at 22:53, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Jessica Clarke <jrtc27@jrtc27.com> writes:
->=20
->> On CHERI, and thus Arm's Morello prototype, pointers are implemented =
-as
->> hardware capabilities which, as well as having a normal integer =
-address,
->> have additional bounds, permissions and other metadata in a second =
-word.
->> In order to preserve this metadata, uintptr_t is also implemented as =
-a
->> capability, not a plain integer, which causes problems for binary
->> operators, as the metadata preserved in the output can only come from
->> one of the inputs. In most cases this is clear, as normally at least =
-one
->> operand is provably a plain integer, but if both operands are =
-uintptr_t
->> and have no indication they're just plain integers then it is =
-ambiguous,
->> and the current implementation will arbitrarily, but =
-deterministically,
->> pick the left-hand side, due to empirical evidence that it is more
->> likely to be correct.
->=20
-> What's left-hand side in the context of the code you changed?
-> Between "what" vs "ent->util" you take "what"?  That cannot be
-> true.  Are you referring to the (usually hidden and useless when we
-> use it as an integer) "hardware capabilities" word as "left" vs the
-> value of the pointer as "right"?
 
-Left-hand side is what, right-hand side is ((uintptr_t)ent->util). The
-bounds/permissions/tag/etc need to be inherited from somewhere, and as
-an arbitrary empirically-best choice when otherwise ambiguous we choose
-the left, i.e. what. The alternative would just be to error, which will
-result in strictly more code failing to build for CHERI despite such a
-guess being correct most of the time.
+--+UeddTN10XKdkj5k
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> static uintptr_t register_symlink_changes(struct apply_state *state,
->> 					  const char *path,
->> -					  uintptr_t what)
->> +					  size_t what)
->> {
->> 	struct string_list_item *ent;
->>=20
->> @@ -3823,7 +3823,7 @@ static uintptr_t =
-register_symlink_changes(struct apply_state *state,
->> 		ent =3D string_list_insert(&state->symlink_changes, =
-path);
->> 		ent->util =3D (void *)0;
->> 	}
->> -	ent->util =3D (void *)(what | ((uintptr_t)ent->util));
->> +	ent->util =3D (void *)((uintptr_t)what | =
-((uintptr_t)ent->util));
->> 	return (uintptr_t)ent->util;
->> }
+On 2022-01-05 at 13:23:24, Jessica Clarke wrote:
+> Currently git_qsort_s allocates a buffer on the stack that has no
+> alignment, and mem_pool_alloc assumes uintmax_t's size is adequate
+> alignment for any type.
 >=20
-> I actually wonder if it results in code that is much easier to
-> follow if we did:
+> On CHERI, and thus Arm's Morello prototype, pointers are implemented as
+> hardware capabilities which, as well as having a normal integer address,
+> have additional bounds, permissions and other metadata in a second word,
+> so on a 64-bit architecture they are 128-bit quantities, including their
+> alignment requirements. Despite being 128-bit, their integer component
+> is still only a 64-bit field, so uintmax_t remains 64-bit, and therefore
+> uintmax_t does not sufficiently align an allocation.
 >=20
-> * Introduce an "enum apply_symlink_treatment" that has
->   APPLY_SYMLINK_GOES_AWAY and APPLY_SYMLINK_IN_RESULT as its
->   possible values;
->=20
-> * Make register_symlink_changes() and check_symlink_changes()
->   work with "enum apply_symlink_treatment";
->=20
-> * (optional) stop using string_list() to store the symlink_changes;
->   use strintmap and use strintmap_set() and strintmap_get() to
->   access its entries, so that the ugly implementation detail
->   (i.e. "the container type we use only has a (void *) field to
->   store caller-supplied data, so we cast an integer and a pointer
->   back and forth") can be safely hidden.
+> Moreover, these capabilities have an additional "129th" tag bit, which
+> tracks the validity of the capability and is cleared on any invalid
+> operation that doesn't trap (e.g. partially overwriting a capability
+> will invalidate it) which, combined with the architecture's strict
+> checks on capability manipulation instructions, ensures it is
+> architecturally impossible to construct a capability that gives more
+> rights than those you were given in the first place. To store these tag
+> bits, each capability sized and aligned word in memory gains a single
+> tag bit that is stored in unaddressable (to the processor) memory. This
+> means that it is impossible to store a capability at an unaligned
+> address: a normal load or store of a capability will always take an
+> alignment fault even if the (micro)architecture supports unaligned
+> loads/stores for other data types, and a memcpy will, if the destination
+> is not appropriately aligned, copy the byte representation but lose the
+> tag, meaning that if it is eventually copied back and loaded from an
+> aligned location any attempt to dereference it will trap with a tag
+> fault. Thus, even char buffers that are memcpy'ed to or from must be
+> properly aligned on CHERI architectures if they are to hold pointers.
 
-Those would be better if you want a less-minimal change. I can easily
-do the first two, but the last one may or may not take me a while to
-figure out given I=E2=80=99m not familiar with git=E2=80=99s C =
-internals.
+I think this is going to be a problem in a lot of places, not just in
+Git.  I'm pretty sure that copying data this way is specifically allowed
+by C and POSIX, and thus this approach is going to break a whole lot of
+things.
 
-Jess
+For example, casting a void * to uintptr_t and back should produce two
+pointers that compare equal.  The C standard says that two pointers
+compare equal if they're both null, both point to the same object, or
+one points one past the end of an array and the other happens to point
+to the beginning of another object.  If the pointers aren't null and the
+original one points to valid data, then the resulting pointer (after the
+two casts) would point to the same object (since that's the only valid
+option that's left), and therefore could be used to access it, but that
+wouldn't necessarily work in this case.
 
+The CHERI paper I'm reading also specifically says it is not changing
+uintmax_t, which is a direct violation of the C standard.  If uintptr_t
+must be larger than 64 bits, then so must uintmax_t, even if that
+happens to be inconvenient (because it changes the ABI from the normal
+system ABI).  It sounds like, in fact, that you can't actually provide
+uintptr_t with the current architecture, because it can't be provided in
+a standard-compliant way.
+
+Is there something I'm missing here, or is it the case that CHERI's
+behavior isn't compliant with the C standard?
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--+UeddTN10XKdkj5k
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYdd50gAKCRB8DEliiIei
+gbL4AP9ar4s0YrguMKLHrCaPBveRJ9qZHOuRFqg4WkLyfFA6igEAzh1yVFAc/A1z
+Gxif3xGNOimmyRc6IHlhhJMteuYvdQ0=
+=c15v
+-----END PGP SIGNATURE-----
+
+--+UeddTN10XKdkj5k--
