@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A8C7C433FE
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 22:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DCC8C433EF
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 22:35:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245139AbiAFWfE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 17:35:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55376 "EHLO
+        id S245143AbiAFWfF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 17:35:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245035AbiAFWfC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 17:35:02 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 869D1C061245
-        for <git@vger.kernel.org>; Thu,  6 Jan 2022 14:35:02 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id 2-20020a05600c02c200b003470f96e778so1736982wmn.5
-        for <git@vger.kernel.org>; Thu, 06 Jan 2022 14:35:02 -0800 (PST)
+        with ESMTP id S245132AbiAFWfD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 17:35:03 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E7CFC061201
+        for <git@vger.kernel.org>; Thu,  6 Jan 2022 14:35:03 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id w20so7560395wra.9
+        for <git@vger.kernel.org>; Thu, 06 Jan 2022 14:35:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=i40JuX6lX3aJIPo8eIeALPFNnCxCCoU3xfnyOhE2HM0=;
-        b=MIhCJL02X9DOkdjXFuZddXwHs/mQGKakrY2m4EMmx+AuX8BvLbZWStCwp4/eYYC9IG
-         R9abuZiByb6+KHyaHKjuHHsZ6/f4IAD7UGVsFHmTdTSf/gIgKg1cmb0COXAU31aE4atg
-         Hui4brtj2m6CX6xsoC70Lpko+pm+5wh9oDLmgmUqyxRGYCzRrQxTHH2DVyLxLzAAt31s
-         TZMc5TKyQh+5MmIx3J3iOb9d5gvMAnqH9/dUdUYLEsyRKiBSPo1N4BFyPD1DPTFwvQXy
-         4tVPC9VHBo683YbiCmKLAqUaxN/I1c7r9IB/k9Nywg6LgeMkrkPqSOKd6MBaPjV3dTHg
-         Vf6Q==
+        bh=9CufNRd6wkV0nDNdpn89TrmOrdnKkmCHsO22oDBohPI=;
+        b=an42X77zQnxho7O3HsR8R3Xnui6pXrrpNQE24QY+zEDkHLwgbeDB3nucko1XgAniuc
+         zA+QrE4ZsPpJSVRGJptcPpuIUUOhvgnKUSdIWYp8J6P3esRqS1YW18Q6zzCeXrzaXvm2
+         dg5YmaAude892XOOxJSpi57BR3keIYhP+WrY5O/CBnd32zBiSE8GU+kGHNL5OlqidxP/
+         yl+lif4wMaEjh3zlgh5X2G57BKSa4gOeWc7ZMJXsnRzw9oREvN+bTFeKeMHH6UDBvTnl
+         kK/x5KVXuWpYj5BIcP+M50/M19GFqkxWfqV3WPH0GDh3ehKjm6hghfhrPUzXVsLyCQYm
+         R9GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=i40JuX6lX3aJIPo8eIeALPFNnCxCCoU3xfnyOhE2HM0=;
-        b=ofGfa0KBL4bdKWbwA0KBBM01qEwVq2P5mR8vwwSSP4wazRFh5wANlVyaEpU5eA+zam
-         KrVd346eDmlpdqX9xLqLa2OxaibhHc7mCexYC19fNF1fqf6p7yLR1PzUiqTYvoufSe9C
-         Pc6U4u0/Jt4eJqb1j6eWbFjbaANNhBZZ2REqbrco/jNlouC/pkjrFkmEK9MTAykZZykT
-         9Nt9ITTKA2G60Q5MKyjyGpc0sC8TRaAfHclwmgiDIllm1+Zoo2U0sTAGe5/FNhv+hp++
-         Flxpk80CRSjNNjubBf9gTyZdFS4VBB6A4Vm84XuAAUhhPdXK7RFaoTTfXS8MVadqlMZE
-         UVeQ==
-X-Gm-Message-State: AOAM530O7GTKpy+tgljEfI05/2MEfZZ3/WwaOjY8zHpQxAuOhBkXQfX0
-        +mgMgcvbIlJ2GlxkXpGO9Kl1I/xIpHc=
-X-Google-Smtp-Source: ABdhPJwe2ZlHZjkfsh25NkBsA5/8WT1+W7FADxreAkOalJtb7oUSOVd3qxsgVStF64Evf/ZpTNUZRg==
-X-Received: by 2002:a05:600c:410a:: with SMTP id j10mr6667662wmi.105.1641508500874;
-        Thu, 06 Jan 2022 14:35:00 -0800 (PST)
+        bh=9CufNRd6wkV0nDNdpn89TrmOrdnKkmCHsO22oDBohPI=;
+        b=NpOI3kOGy5a7yYYpdL1SyGEIre+/UXmUHT6YuCExIpiy5hMNtWYbMdd91XrPVYOY7k
+         iwJpBtibvKztw3ZTJh7BWIrmbhHSOSPaO2++ueD4+eIOV/iZ9ezPwLCANDz6ZsCvKfgm
+         JUq4K1cP26e1DgvYvJdZAEzjB0R9Qk3Jpn87M/pJ7+818uTk86UbUwavhxArA3AFCxtt
+         ahNqpAcwbcPh0yvsbtSMztPXkjuQVer6kdAImOTM3pmHXUbrKpq+xGqFn8KGZKyLDk3Q
+         XbEQ2MpCvEAt8wDbx/ozouHnnoQzR1hln89HIkHLRpOWCuyLKzL51u4nHzq7TWQnksLl
+         y+sg==
+X-Gm-Message-State: AOAM531bfaCZgOUKP+xp+kQlCulp7sb31xphaHWBGOlHs3AvqjdimP0i
+        X8tKD+enKlerr0pt834PPysYPtSkHA4=
+X-Google-Smtp-Source: ABdhPJxsFvDoUywWCCdgfYnLzKMG+M3SGqH53lwrQBnOPi/WJo7wj6os4ErqFsRmJ45RkJmY8sIcWQ==
+X-Received: by 2002:a5d:55d1:: with SMTP id i17mr5291855wrw.392.1641508501544;
+        Thu, 06 Jan 2022 14:35:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id az1sm212585wrb.104.2022.01.06.14.35.00
+        by smtp.gmail.com with ESMTPSA id g5sm3651314wrd.100.2022.01.06.14.35.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 14:35:00 -0800 (PST)
-Message-Id: <e6301e9d770bc7b6a2a3eeddcaf4e0123a0b23ab.1641508499.git.gitgitgadget@gmail.com>
+        Thu, 06 Jan 2022 14:35:01 -0800 (PST)
+Message-Id: <d15a23cc8049b1f2f67b089d9edea0ce098065b3.1641508499.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1105.v3.git.1641508499.gitgitgadget@gmail.com>
 References: <pull.1105.v2.git.1641388523.gitgitgadget@gmail.com>
         <pull.1105.v3.git.1641508499.gitgitgadget@gmail.com>
 From:   "Marc Strapetz via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 06 Jan 2022 22:34:55 +0000
-Subject: [PATCH v3 1/4] test-lib: introduce API for verifying file mtime
+Date:   Thu, 06 Jan 2022 22:34:56 +0000
+Subject: [PATCH v3 2/4] t7508: fix bogus mtime verification
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,57 +67,38 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Marc Strapetz <marc.strapetz@syntevo.com>
 
-Add functions `test_set_magic_mtime` and `test_is_magic_mtime` which can
-be used to (re)set the mtime of a file to a predefined ("magic")
-timestamp, then perform some operations and finally check for mtime
-changes of the file.
-
-The core implementation follows the suggestion from the
-mailing list [1].
+The current `grep`-approach in "--no-optional-locks prevents index
+update" may fail e.g. for `out` file contents "1234567890999" [1].
+Fix this by using test-lib's new mtime-verification API.
 
 [1] https://lore.kernel.org/git/xmqqczl5hpaq.fsf@gitster.g/T/#u
 
 Signed-off-by: Marc Strapetz <marc.strapetz@syntevo.com>
 ---
- t/test-lib-functions.sh | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ t/t7508-status.sh | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 389153e5916..01dd8c01f59 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1806,3 +1806,31 @@ test_region () {
- test_readlink () {
- 	perl -le 'print readlink($_) for @ARGV' "$@"
- }
-+
-+# Set a fixed "magic" mtime to the given file,
-+# with an optional increment specified as second argument.
-+# Use in combination with test_is_magic_mtime.
-+test_set_magic_mtime () {
-+	# We are using 1234567890 because it's a common timestamp used in
-+	# various tests. It represents date 2009-02-13 which should be safe
-+	# to use as long as the filetime clock is reasonably accurate.
-+	local inc=${2:-0} &&
-+	local mtime=$((1234567890 + $inc)) &&
-+	test-tool chmtime =$mtime $1 &&
-+	test_is_magic_mtime $1 $inc
-+}
-+
-+# Test whether the given file has the "magic" mtime set,
-+# with an optional increment specified as second argument.
-+# Use in combination with test_set_magic_mtime.
-+test_is_magic_mtime () {
-+	local inc=${2:-0} &&
-+	local mtime=$((1234567890 + $inc)) &&
-+	echo $mtime >.git/test-mtime-expect &&
-+	test-tool chmtime --get $1 >.git/test-mtime-actual &&
-+	test_cmp .git/test-mtime-expect .git/test-mtime-actual
-+	local ret=$?
-+	rm .git/test-mtime-expect
-+	rm .git/test-mtime-actual
-+	return $ret
-+}
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index 05c6c02435d..b9efd2613d0 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -1647,13 +1647,11 @@ test_expect_success '"Initial commit" should not be noted in commit template' '
+ '
+ 
+ test_expect_success '--no-optional-locks prevents index update' '
+-	test-tool chmtime =1234567890 .git/index &&
++	test_set_magic_mtime .git/index &&
+ 	git --no-optional-locks status &&
+-	test-tool chmtime --get .git/index >out &&
+-	grep ^1234567890 out &&
++	test_is_magic_mtime .git/index &&
+ 	git status &&
+-	test-tool chmtime --get .git/index >out &&
+-	! grep ^1234567890 out
++	! test_is_magic_mtime .git/index
+ '
+ 
+ test_done
 -- 
 gitgitgadget
 
