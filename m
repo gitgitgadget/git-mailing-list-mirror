@@ -2,183 +2,263 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DB7CC433EF
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 10:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41739C433EF
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 12:54:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237932AbiAFK0I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 05:26:08 -0500
-Received: from mail-am6eur05on2054.outbound.protection.outlook.com ([40.107.22.54]:26689
-        "EHLO EUR05-AM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S237668AbiAFK0H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 05:26:07 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=g+Jz4fncKnItb4EZk9frtTFSGw4gLfw5SIRaDQmGeBbPiYJXyKqj0+o75K73xt95Mi/9af3azjaCTHnYbK3sXFmGUPNkgULyKE1uqCS/S57ObAjYj3FrPgbqmFgP5b4LXNQX/vhkuQ1a9M4jNMg1euzU7t9ANOoJeuBEFVkIFk2x+ratZ9YEwVRv1zM5MmX4v3gXOX5gNLisizfOozJ0EhihmtnX4NNnFMjJ8pf3tP6510h/9wBssXGwbptWjE00VVOmnZXe5J5BffdT8cJlDutq4AS1a4l50iylf3gt+5K7zfSYwSRNASvqGHAGTIvjMNiTSTX/DOvyJIxCljbFnQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=C6ixQp2H6vmI31pEXMyZPltx0QqcB1BRunE1kFGDapY=;
- b=ZUQdJHNQrs04hSZAzFoB1fz8j/XEUpqG0rmQ9LBY+D57hAFNq5nKY/ie0QzH0VUxqr8AWvq/aPhaLl7HyDDexeWKFZCG9s9D/HN3YvU/CIqjyZC28AAnRjHNI4VvUrl8njGkM54jHcL0gzOv2LoQBIH93Wd+CzLN4C8W3OCyuJ9c0/Z5APn47K2TnGeyhGeZzOzB/gIi5ZfJy3zs8FqVXUd2c5DEzPvnH4ffy/J/xSewCw1UnbKlcqixlF2U73WoQVW+BGNTn1hd7YV69AnPYi2z/RmCXz6Adf/Nu7fY4CXMXvzFoDFsNcisVutxq65UjZHjRtsaVJnuEwRscM79Eg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=C6ixQp2H6vmI31pEXMyZPltx0QqcB1BRunE1kFGDapY=;
- b=hlu/P8E6uK3Jw+cwfiK6LBMVxz7iYXAZ/jzSWwucRjGo+k1aSd4EAlBjGGkqAdYF2ve8xd5S4xuI9qBtfcDIg5YkEjV7F0b6fld/P/mGa+xJVITXFmJOL+jtVvgfpCGp6mfbM8kDiphdrMJFdA30BW5xkLUwxg6xfzZcTo3MMpk=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PA4PR10MB4351.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:bd::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4867.7; Thu, 6 Jan
- 2022 10:26:04 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9%6]) with mapi id 15.20.4867.009; Thu, 6 Jan 2022
- 10:26:04 +0000
-Date:   Thu, 6 Jan 2022 11:26:03 +0100
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        Pedro Martelletto <pedro@yubico.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] gpg-interface: trim CR from ssh-keygen
-Message-ID: <20220106102603.cmb3rf4whd4hmfbb@fs>
-References: <CAPig+cS6h6o2_dJAZC1M1Ace29bN2mhPgaEtTWtj3oXfcHq9cA@mail.gmail.com>
- <xmqqee5oieb2.fsf@gitster.g>
- <CAPig+cTM3wZz4NXjxYeBuFv0CVNS-T+pBFeVkfMQ-25pL1kBzw@mail.gmail.com>
- <xmqqmtkcguvm.fsf@gitster.g>
- <CAPig+cR93GyN53JoZbaiROrNtzGjiet7eTPQOk-26G+mB0KaCA@mail.gmail.com>
- <20220104125534.wznwbkyxfcmyfqhb@fs>
- <xmqqo84rcn3j.fsf@gitster.g>
- <CAPig+cQinNZp_2=eo7nokMCZ9gc-tAKO1V_jejL2Ei9J63tSDQ@mail.gmail.com>
- <20220105103611.upfmcrudw6n3ymx6@fs>
- <xmqqsfu1hq6x.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <xmqqsfu1hq6x.fsf@gitster.g>
-X-ClientProxiedBy: AS9PR04CA0066.eurprd04.prod.outlook.com
- (2603:10a6:20b:48b::19) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        id S239054AbiAFMyR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 07:54:17 -0500
+Received: from mail1.rz.htw-berlin.de ([141.45.10.101]:42669 "EHLO
+        mail1.rz.htw-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231899AbiAFMyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 07:54:17 -0500
+X-Greylist: delayed 1331 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 Jan 2022 07:54:17 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=htw-berlin.de; s=my; h=Subject:To:From:Date:From:To:Date:Subject;
+        bh=MhyF2773ylwDB2QmeA55F8twfDM5fMg9YNH8T11EsEM=; b=pMp7RDDgNYBnKAgIZWh2Oaq6EB
+        wGop0t2LicPRySQ4DDAmUcElcpe5uJdEkVPqNyTnkVOsl3nIz9FcfC+iohQ5dRIXkpVo6A8IJoweu
+        GM4tjdKvKHPBThQ9df8nUBS/IRcmkI5IJvjkimd6T5NpB3M1qunVIxpFMOaRKWe1OqLWq+95WfIMg
+        lsrieSC+41TbDpvhUIsCktmSZA9dNiC/kHG1IpMDLWruzo/vk7e5jmRjbaERVDwHlyVf9Qg2qhGXr
+        FkcY4Wln82rLAbHEO6+0rPUcJA+ABqsxhkL1mjSoAJkjCY+oTmuxPB6LW6hZW8mS6pi+t12M8Qksa
+        TlbPCnPA==;
+Envelope-to: git@vger.kernel.org
+Received: from webmail.htw-berlin.de ([141.45.70.36])
+        by mail1.rz.htw-berlin.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2 (FreeBSD))
+        (envelope-from <imiadmin@HTW-Berlin.de>)
+        id 1n5Rvm-000KGU-RB
+        for git@vger.kernel.org; Thu, 06 Jan 2022 13:32:03 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 104443b5-46ea-4b7c-9a1b-08d9d0fef1b6
-X-MS-TrafficTypeDiagnostic: PA4PR10MB4351:EE_
-X-Microsoft-Antispam-PRVS: <PA4PR10MB4351345EB24F71A7A0058102B64C9@PA4PR10MB4351.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: FaV9jamoz81xcAbfw4gGg2cezXTuvjPYLQ1zI28dCjW4knDbbO6p755ABg0R67FL8yCY+c84G+K2Pmr4uZQlFZTrHguooSADigp6KV3Fd6Vm4ROokWIVrXqN/n8UnO0DQzAItySpqQMIVFr05sT1cYWH1KOUzCApzy89Ww80EJnFhymdY7zO65WPiG79IZsd3szG+2WboiRSmUOUYHMGrfwwyk+vgB72mrTw4zLieMGa0Xtk2WF+BegcDvolKmqAipcMXHHYWcAVlQ6vrYJi3UL41h/VFTF1enIDU46KELqA5EP+fQDT5MSkyuLpY/oUv0SEd6GyM7OqVNPNsZyEoz7DdhZIXxIO4UvHMrVKLlX7BPlUo1Q8QnGi+Ctr3pcveZB3lm5XqdHfMrX2h8xJh6bqre4Tcd//J18xg2yRStj26ajY4sh/HI/od34PG7aNFGVWoKtXmG8mCDzTs6Yj8PhhQ2nuJZEqc8ACJ6MTWzDhdQRnLus24HfPZY/58WMaDVvLB16iorcya2H/mhDrIQXqk2Uw1UDGnR+FpnxXDW+0mQ2Q5B+NoGdkcxS9PQOwbFG3yXcZlUMciF8xaSFsHJcYK5PNTy2Bvp/T8B/oSkFJbYqQ1CLbuZwNiTxnNL/auOdKf1QOQggyoAk7+OVAYQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(346002)(396003)(366004)(136003)(39840400004)(376002)(6486002)(86362001)(6512007)(66476007)(9686003)(53546011)(1076003)(66946007)(66556008)(316002)(38100700002)(6916009)(4326008)(5660300002)(8676002)(33716001)(54906003)(26005)(508600001)(186003)(8936002)(6506007)(2906002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MFhkSE1jZDdnNnh4SUVnTHE5RTVQR2ZsazVZNC8zNE0yMUEyODlNVGV1V0lI?=
- =?utf-8?B?Ukd3RU1leUNzTW9wNUdnTkVXWFRqUEk4ZUF4Q1p5Y1krMTJwTjhpbWdtYS91?=
- =?utf-8?B?N29GR0xldEJQaGI1c2pUeEJGekZLdTVWM2t1SjhiY2JodEtnYVo1VEpSZDJN?=
- =?utf-8?B?MW85VzBYR1JjSWp4cXF4d29Xa2tZZFVqclRHRDhreThjQTRiS2tJQmh4Wm4w?=
- =?utf-8?B?TERlMThNVWh5S2xBbGhSMkRwSk8rdHdMRHlUUFUzbGVlYWFsMmJzZDdVajlj?=
- =?utf-8?B?U1FaUmhpN1Z3cWQ3eHhNUlB3N3BHWG1naVlUUGU0dWphQ3ZMbnA2UlRBVmkw?=
- =?utf-8?B?RjcweWJjOFhMblRmamJXZzBOek1LcWt4dkpVczJHT0d5bzg4WmtxamFjdVhz?=
- =?utf-8?B?WHBqR29wM25pOFhQNmM0RXNaRmRwWGFpdWxvM0dxSTc3SW1wQWJvclo0NjB2?=
- =?utf-8?B?RHNud3RGVW00YzZqeHBhUWZXbEVxU1FCcnJkcXZrdm9zc29DZDlZdXpwQWgw?=
- =?utf-8?B?SUF4SlRRdVZqaklFQU9hUmw4bGV6bCtZTk5pc1Ewd1JaUmdWdVQyVm41SGpL?=
- =?utf-8?B?dzVGYUs3QkZXL2l6UXNRb2N2cHMwdEpITHMyN3JzVFlvYkxKNTRsSmQ5cTZl?=
- =?utf-8?B?MFQyMWgwTTRXb3pVb3Z4T21SUXluUm9Ec3Fmd2JjL2JsYzNVYVBwVjhSYkxL?=
- =?utf-8?B?ZnRBam0rNUVuRldqNzg5ekQ2dStEZkRxMlJaVU1RN0NGSGhLQTdTaXNWZE5u?=
- =?utf-8?B?YldyN3NjcVdxNmRydER5K1NWZStmT0xMdVBrcGZpYlB5d0lqUTRtSWMrVHZa?=
- =?utf-8?B?ZGVrMWRpaFBtQ1BBKzRqQzRWRkt6V3UrSzJqUjVINVplRFhraDZzdGVNNEIy?=
- =?utf-8?B?WVptZGRTQ0VxcnJYNTNnd2h6NDlQWGpBUzdNNHRyZytZd3RwZEFGUGVqTnJm?=
- =?utf-8?B?amJpblhETHBnRHBCd21kK0VldFNFa25GaGYzM1JqeWZYZnE0QkpaTlhmOW9Y?=
- =?utf-8?B?NUVBMklTSHR6Y3VOY0sxUTdaclNlbWkzdUo5VTBVdjFGOEtlMEIxZDNrYnpH?=
- =?utf-8?B?bGxFQVdFeFJqSFlwdy91eHJDaDFuUDVmRkdXM0xvaG45dnNXTWlQT1ZKSkdj?=
- =?utf-8?B?WjVLclI5UVAwNTB0aSt3Q2FpTndCWjU1amQ0VUlJU1daNjBGbTdmV0xXbFVz?=
- =?utf-8?B?YUtQaHpaR1ZpYnd3eWl5MEdwaktmZjFmdi9KT0FZODZtamVTOG5sYkF3MmRO?=
- =?utf-8?B?Uk81dHpUcW5DTDcySkVOak1rS1NvMnVLbjJDMUoxYkpmUmdGQ1dFYi9BL0lS?=
- =?utf-8?B?ZXBHYjN5TDlFaXRtcVc5cDNLU2NMd2w4N3FiMERSU0hUdGFEVlNNbGZIWTNt?=
- =?utf-8?B?dExzSjhoRlJmaS90ck9jTXUvMnhxS2dPTzIxL0JIUDJRN3ZVcWdGY2JJdlNG?=
- =?utf-8?B?eW5JdU5CV2NEbDYrbkd6YjRhbGtvbkNHOFJ4UmFOUmsxZlVZK2pMd0pwa04v?=
- =?utf-8?B?YVV2L240bkNwSUhrWjVZRmw4WldBKzcvKzBYZXpLN1ltcU9YdHBwRS83blJE?=
- =?utf-8?B?QmpGbVUzV2NFNU5LN2drWGtCWmhDamNCYTZ6cFBUU2kzblYrQTVhRExNdXA1?=
- =?utf-8?B?VVJLc3RHSFE4aWJXMUhrU1dVMmhSdUNBU1llUkZCQW1nbktIc0NUejIvcHBv?=
- =?utf-8?B?UFBUbDRGblp6TDcyM3VzREdIcmo4YmdaSmRBclMrNGp6bDlDaEZFdzduWi9r?=
- =?utf-8?B?bndHMDZJbmpvM05hUUo4cjA2RzRpSktXS3BvR2VWYjJoMjk2UlNKbitaRUl6?=
- =?utf-8?B?dEhDcEhIcnBNRitLYXdiSkthTE10cXg1Vy95U3lrMExDZElDc2hvRGxuaWtn?=
- =?utf-8?B?c2xoejV5KzdUWVZ4LzJWOTZtUDZKT2NsYVc4OUY0YTVVZVBPQU1mYlJ0aWlo?=
- =?utf-8?B?aFIzak5hOFNYYUliQU1BVU8vUDZaSTFjSThsVlg4bzllSnA5RmVjTlBKdkly?=
- =?utf-8?B?UHprUkRQcTcrQmQySmNIQTFWUGlSUHYxcFo4RU9xaGVPc25ZQkplQ1Z1cTVP?=
- =?utf-8?B?ak1TZllkWHlNRzEvMEZhUnRSQjhpQU1JVzBEQjN2QmZQbWJzNWVNczgyRDZL?=
- =?utf-8?B?WFZYWVVpK1BucEt1OWsyUS91TlA4WmdreVRQVkI3RGdJNnlNQVhyMFozaGlE?=
- =?utf-8?B?b3lydy9LR1hlSm9wNS96cGdDT3VMS1FjTVFzTE1VQ2FIdFhYeDNLVHcvdE1k?=
- =?utf-8?Q?Uw4H926H4MrFbX4fPi4QEoKUh+O8tuAfiUkx3f6wyQ=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 104443b5-46ea-4b7c-9a1b-08d9d0fef1b6
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jan 2022 10:26:04.6432
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: MyYiMibraorUmv7mrHH2wjaPXlUAi2KP78wKy2VHL/5ncaENB07xOWW9ZFRYdQBsKlsTg6XuzCQE5LZp1OP9AJaQDR/hGrwY+OquZCqOG3c=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4351
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 06 Jan 2022 13:32:03 +0100
+From:   Imi Admin <imiadmin@HTW-Berlin.de>
+To:     git@vger.kernel.org
+Subject: Problem with credential.helper=store in git 2.32.0.windows.2
+Organization: HTW Berlin
+Message-ID: <8838ac786ed46b841e4172824b80564b@htw-berlin.de>
+X-Sender: imiadmin@htw-berlin.de
+User-Agent: Roundcube Webmail
+X-HTW-AUTHENTICATED: yes
+X-HTW-DELIVERED-TO: git@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05.01.2022 12:40, Junio C Hamano wrote:
->Fabian Stelzer <fs@gigacodes.de> writes:
->
->> How about something like this:
->>
->> int string_find_line(char **line, size_t *len) {
->> 	const char *eol = NULL;
->>
->> 	if (*len > 0) {
->> 		*line = *line + *len;
->> 		if (**line && **line == '\r')
->> 			(*line)++;
->> 		if (**line && **line == '\n')
->> 			(*line)++;
->> 	}
->>
->> 	if (!**line)
->> 		return 0;
->>
->> 	eol = strchrnul(*line, '\n');
->>
->> 	/* Trim trailing CR from length */
->> 	if (eol > *line && eol[-1] == '\r')
->> 		eol--;
->>
->> 	*len = eol - *line;
->> 	return 1;
->> }
->
->It is a confusing piece of "we handle one line at a time" helper.
->It is not obvious what the loop invariants are.
->
->It would be most natural to readers if *line points at the very
->beginning of the buffer, i.e. the beginning of the first line,
->and *len points at the very first character of that line, i.e. 0.
->
->But then the first thing this function worries about is a case where
->*len is not 0.  I obviously am biased, but sorry, I find what I gave
->you 100 times simpler to understand.
->
+Hi all,
 
-There are a few more places where the same thing happens and text is just 
-split by LF, ignoring CR. The gpg parsing where this code originated being 
-the most prominent example. However those just parse some parts from the 
-output and the worst that seems to happen is a trailing CR in some log 
-outputs.
-If we are ok with this then your version is indeed the better one. If we 
-want to correct the parsing at the other sites then I think a more 
-generalized function would be better. Since the gpg stuff is in place for a 
-long time and no one complained we can probably leave it as is. I'll prepare 
-a new patch.
+i've filled out the bug report below, maybe you can help me...
 
-Thanks
+Best Sebastian
+
+*****************************************************************************
+
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+
+I sometimes have to use git commands on a remote Windows10 through a ssh 
+shell (PowerShell Server, so powershell as the shell). I'm creating a 
+credentials store file for these commands and set the local git 
+configuration credential.helper=store to point to this file.
+Here's my local git configuration:
+
+PS C:\scripts> git config -l --show-origin
+file:C:/Program 
+Files/Git/etc/gitconfig	diff.astextplain.textconv=astextplain
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.clean=git-lfs clean 
+-- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.smudge=git-lfs smudge 
+-- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.process=git-lfs 
+filter-process
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.required=true
+file:C:/Program Files/Git/etc/gitconfig	http.sslbackend=openssl
+file:C:/Program Files/Git/etc/gitconfig	http.sslcainfo=C:/Program 
+Files/Git/mingw64/ssl/certs/ca-bundle.crt
+file:C:/Program Files/Git/etc/gitconfig	core.autocrlf=true
+file:C:/Program Files/Git/etc/gitconfig	core.fscache=true
+file:C:/Program Files/Git/etc/gitconfig	core.symlinks=false
+file:C:/Program Files/Git/etc/gitconfig	core.editor="C:\\Program 
+Files\\Notepad++\\notepad++.exe" -multiInst -notabbar -nosession 
+-noPlugin
+file:C:/Program Files/Git/etc/gitconfig	pull.rebase=false
+file:C:/Program Files/Git/etc/gitconfig	credential.helper=manager-core
+file:C:/Program 
+Files/Git/etc/gitconfig	credential.https://dev.azure.com.usehttppath=true
+file:C:/Program Files/Git/etc/gitconfig	init.defaultbranch=master
+file:.git/config	core.repositoryformatversion=0
+file:.git/config	core.filemode=false
+file:.git/config	core.bare=false
+file:.git/config	core.logallrefupdates=true
+file:.git/config	core.symlinks=false
+file:.git/config	core.ignorecase=true
+file:.git/config	remote.origin.url=https://mygitlab.de/mygroup/myrepo.git
+file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+file:.git/config	branch.master.remote=origin
+file:.git/config	branch.master.merge=refs/heads/master
+file:.git/config	user.name=myname
+file:.git/config	user.email=my@email
+file:.git/config	credential.helper=store --file 
+C:/scripts/.git/.git-credentials
+
+What did you expect to happen? (Expected behavior)
+
+I'd expect that a 'git pull' against my remote simply works without 
+asking me for a user name and password.
+
+What happened instead? (Actual behavior)
+
+My ssh connection hangs...
+
+What's different between what you expected and what actually happened?
+
+Please see above and below...
+
+Anything else you want to add:
+
+My approach worked in a prior git for windows version.
+When i use the same approach on the same remote Windows 10 client via 
+RDP in Powershell, i see that *before* git uses the credential store 
+file, it displays the windows credential dialog. If i click 'cancel' in 
+the dialog, git uses the credential store file:
+
+PS C:\scripts> git pull
+09:33:11.471005 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/bin
+09:33:11.471005 git.c:455               trace: built-in: git pull
+09:33:11.471005 run-command.c:667       trace: run_command: git fetch 
+--update-head-ok
+09:33:11.486629 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+09:33:11.502137 git.c:455               trace: built-in: git fetch 
+--update-head-ok
+09:33:11.502137 run-command.c:667       trace: run_command: GIT_DIR=.git 
+git remote-https origin https://mygitlab.de/mygroup/myrepo.git
+09:33:11.517762 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+09:33:11.517762 git.c:744               trace: exec: git-remote-https 
+origin https://mygitlab.de/mygroup/myrepo.git
+09:33:11.517762 run-command.c:667       trace: run_command: 
+git-remote-https origin https://mygitlab.de/mygroup/myrepo.git
+09:33:11.611382 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+09:33:11.720731 run-command.c:667       trace: run_command: 'git 
+credential-manager-core get'
+09:33:11.783217 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+09:33:11.798838 git.c:744               trace: exec: 
+git-credential-manager-core get
+09:33:11.798838 run-command.c:667       trace: run_command: 
+git-credential-manager-core get
+fatal: User cancelled the authentication prompt.
+09:33:22.955081 run-command.c:667       trace: run_command: 'git 
+credential-store --file C:/scripts/.git/.git-credentials get'
+09:33:22.970702 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+09:33:22.970702 git.c:455               trace: built-in: git 
+credential-store --file C:/scripts/.git/.git-credentials get
+09:33:23.174185 run-command.c:667       trace: run_command: 'git 
+credential-manager-core store'
+09:33:23.236463 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+09:33:23.236463 git.c:744               trace: exec: 
+git-credential-manager-core store
+09:33:23.236463 run-command.c:667       trace: run_command: 
+git-credential-manager-core store
+09:33:23.689909 run-command.c:667       trace: run_command: 'git 
+credential-store --file C:/scripts/.git/.git-credentials store'
+09:33:23.705534 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+09:33:23.705534 git.c:455               trace: built-in: git 
+credential-store --file C:/scripts/.git/.git-credentials store
+09:33:23.892547 run-command.c:667       trace: run_command: git rev-list 
+--objects --stdin --not --all --quiet --alternate-refs
+09:33:23.924306 run-command.c:667       trace: run_command: git rev-list 
+--objects --stdin --not --all --quiet --alternate-refs
+09:33:23.924306 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+09:33:23.924306 git.c:455               trace: built-in: git rev-list 
+--objects --stdin --not --all --quiet --alternate-refs
+09:33:23.939814 run-command.c:1628      run_processes_parallel: 
+preparing to run up to 1 tasks
+09:33:23.939814 run-command.c:1660      run_processes_parallel: done
+09:33:23.939814 run-command.c:667       trace: run_command: git 
+maintenance run --auto --no-quiet
+09:33:23.939814 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+09:33:23.939814 git.c:455               trace: built-in: git maintenance 
+run --auto --no-quiet
+09:33:23.939814 run-command.c:667       trace: run_command: git merge 
+FETCH_HEAD
+09:33:23.955440 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+09:33:23.955440 git.c:455               trace: built-in: git merge 
+FETCH_HEAD
+Already up to date.
+
+The same happens when i try this with the ssh connection, but the 
+command hangs when trying to exec git-credential-manager-core get:
+
+PS C:\scripts> git pull
+10:02:33.240054 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/bin
+10:02:33.240054 git.c:455               trace: built-in: git pull
+10:02:33.240054 run-command.c:667       trace: run_command: git fetch 
+--update-head-ok
+10:02:33.255676 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+10:02:33.255676 git.c:455               trace: built-in: git fetch 
+--update-head-ok
+10:02:33.255676 run-command.c:667       trace: run_command: GIT_DIR=.git 
+git remote-https origin 
+https://imiadmgit.f4.htw-berlin.de/f4-imi-li/windows-scripts.git
+10:02:33.255676 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+10:02:33.255676 git.c:744               trace: exec: git-remote-https 
+origin https://imiadmgit.f4.htw-berlin.de/f4-imi-li/windows-scripts.git
+10:02:33.255676 run-command.c:667       trace: run_command: 
+git-remote-https origin 
+https://imiadmgit.f4.htw-berlin.de/f4-imi-li/windows-scripts.git
+10:02:33.271297 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+10:02:33.380647 run-command.c:667       trace: run_command: 'git 
+credential-manager-core get'
+10:02:33.396268 exec-cmd.c:237          trace: resolved executable dir: 
+C:/Program Files/Git/mingw64/libexec/git-core
+10:02:33.396268 git.c:744               trace: exec: 
+git-credential-manager-core get
+10:02:33.396268 run-command.c:667       trace: run_command: 
+git-credential-manager-core get
+
+Anyway as far as i understood git should not exec 
+git-credential-manager-core get at all with my local git configuration?
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.32.0.windows.2
+cpu: x86_64
+built from commit: 3d45ac813c4adf97fe3733c1f763ab6617d5add5
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0 19043
+compiler info: gnuc: 10.3
+libc info: no libc information available
+$SHELL (typically, interactive shell): <unset>
+
+
+[Enabled Hooks]
+
+*****************************************************************************
+
+
+
+-- 
+Thanks, Sebastian
