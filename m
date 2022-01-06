@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20867C433EF
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 22:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CC03C433F5
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 22:42:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245208AbiAFWmX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 17:42:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57040 "EHLO
+        id S245209AbiAFWmd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 17:42:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245189AbiAFWmW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 17:42:22 -0500
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11756C061245
-        for <git@vger.kernel.org>; Thu,  6 Jan 2022 14:42:22 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id 202so4158649qkg.13
-        for <git@vger.kernel.org>; Thu, 06 Jan 2022 14:42:22 -0800 (PST)
+        with ESMTP id S245212AbiAFWmb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 17:42:31 -0500
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5C93C0611FD
+        for <git@vger.kernel.org>; Thu,  6 Jan 2022 14:42:30 -0800 (PST)
+Received: by mail-qt1-x834.google.com with SMTP id y17so3789424qtx.9
+        for <git@vger.kernel.org>; Thu, 06 Jan 2022 14:42:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=5FB9y+ypTjyQ9ZFI+uo24PWFFuDpX/he4vbmdVUajaM=;
-        b=EN4nxaVz1dHVZTpTcnSrA+Pe2tQODblq2gHjpEgiA3/LXcVVLaDOtyf2gzhqrqvcCM
-         tc1J9mZzrHnTZsOJvYBddTPs2KBchQWnGd7Bj2KWy+6nwDvhMJLy+PCURDn6OkiuCs5/
-         mxMfF4KNCE7BG2EkVY2Hb4dVA50J/7VOrs0fIPYeeaQvc7/I0PRlHP5qZTR5OgECUGCy
-         ClfsEjphAxsXI3XP0yxskxli4nIq/cjkgS8FOTiK+EWucg5mAFEKRQb1zOd1eZuE2GFK
-         QeC4Eem4sT9GWXqiB7C6vBa+ziUITszKzHrL16QXUj97kB5mNVQX46fWVk3y8UaKj3GJ
-         4Q5g==
+        bh=Y1WlMvkx/EM/x9afpKqxA3UeXzIL9bkPknxvbNJWZ9k=;
+        b=RTO7ILDWcGL95XE6Qe5VFFCkCdKIGpNMndbcLjlmV9M8It9ZPPYbcv2oYICWAncqdF
+         xN5Rn1FeVtUgiUJ88CwlMBi9EXdA66/A/fdxRxtNl+AboyuGGA3P9A9bgVMpM3cGg1ZK
+         O1rHoqwA6DvhR5/diqzuXj8WcoYw6sU2NrrS85UaazdN+VUexVHW+pe8VGLI+Ie2C+ma
+         Ev/O8nf+cOhApE6lst0tkFW8TXMe6aKFCxG0Mb2g5BTYro4Q1K3CHCljZAJ1xjJhvLvy
+         nOrmhcdXG+4dYDDT6wIDKaCOuvGvvRQfrL1OhkKKL+mxoCBIelyio9e7N/r8KS7Fdn52
+         07CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=5FB9y+ypTjyQ9ZFI+uo24PWFFuDpX/he4vbmdVUajaM=;
-        b=3IE4XJ54ONvhoda5E7R+pHSy+i5bybFVlbsz7GV2xLfljAaMNhs2a1ZCRW8QS9wayE
-         2ki6KWQvC7FKKrK0ya/Mk84qv4Ra+NcM1M8LJZpFw04UanB5tOMr2OOkCn3RiaSfzG6L
-         kuDOREEn4KJ51648iU+Z2c6vWv7ceDkPNAXjURImhhuLPekYF1SevgvV86+tJvQ6Q2Lp
-         iiiNNY9kb3laQrCuR+pOFvJioFAPBzBzEuwWYYeD1Jt0j7xrwJPSdx/CVczc9kUMoAI+
-         F+PWKcjIhxsmPaG+A4UnOsqk2q8kcj5tt/4wrJT02KBDsgApnfj4Fum3ScccLQ7ExEnQ
-         QmFA==
-X-Gm-Message-State: AOAM530uWSV+iewKC4WMf4VfV/Ov2/J/NlSSAJvPhwa+Fk1quG7lJqPh
-        a1jZiUmJKFCPjEt8kU2kyIfojtPWOoBTHQ==
-X-Google-Smtp-Source: ABdhPJx1O270u1kta33ZSLOmuSyrFr+dhuO2eELW3ZgPqdfayyqNUSnmi2c/xkh7n+MKXcXAKwjNRA==
-X-Received: by 2002:a05:620a:f0b:: with SMTP id v11mr42224897qkl.243.1641508941117;
-        Thu, 06 Jan 2022 14:42:21 -0800 (PST)
+        bh=Y1WlMvkx/EM/x9afpKqxA3UeXzIL9bkPknxvbNJWZ9k=;
+        b=TxpiJjAfJj4PJRh3kn2DBxHN++569/Pslgjes08Y+QrqhkFVy/rYgFSxKsFQRo94wB
+         s6lN4WiwBHJP9ITSQxRPC6c7xbIIoqpOj8LN1itC2pZK25iBNJkcqnNTe1D9T8a7fpcQ
+         /+R0A9V7I2Zw6bkfJrWltB1KxRYCXRMOU912PDEzAbwi3ZTPmsQQNio7EnOqbPmlecui
+         aXIO+Hb+GBuorSl28r4WWmRVeG6fVmq5vljsc1RR2/ROrV0ei/msRhobhbqwpwgAx+ZS
+         GywnfOyxqGBVBz58ThFjgP5NK0HLM6LS07mdwqo+IeRNldQqzZiVE89bQYCYsZA+8zx5
+         Op5w==
+X-Gm-Message-State: AOAM53022tQsaeimN7C8DAkBt43hdY8mKg02wVIOv+G/yFELh1qfoV8O
+        eYC6o8RlRuE2ORnyuf6ALzQU/pc3+99Ytg==
+X-Google-Smtp-Source: ABdhPJz68i5QE2FI+Cmy22doefnVff0mDoIg1LYCXiLqQkxq8O6hmmgJO1Mo5FgKxeZOyax4jbPaRw==
+X-Received: by 2002:ac8:7d08:: with SMTP id g8mr54729286qtb.573.1641508949810;
+        Thu, 06 Jan 2022 14:42:29 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 8sm2567045qtz.28.2022.01.06.14.42.20
+        by smtp.gmail.com with ESMTPSA id i14sm2642434qko.9.2022.01.06.14.42.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 14:42:20 -0800 (PST)
-Date:   Thu, 6 Jan 2022 17:42:20 -0500
+        Thu, 06 Jan 2022 14:42:29 -0800 (PST)
+Date:   Thu, 6 Jan 2022 17:42:28 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     l.s.r@web.de, gitster@pobox.com
-Subject: [PATCH v2 1/2] grep: extract grep_binexp() from grep_or_expr()
-Message-ID: <dae476d1bd14608358b6c103e2b5dda76d294687.1641508884.git.me@ttaylorr.com>
+Subject: [PATCH v2 2/2] grep: use grep_and_expr() in compile_pattern_and()
+Message-ID: <f637e024222a98b6a064fd49b6b810c0b09527d8.1641508884.git.me@ttaylorr.com>
 References: <cover.1641498525.git.me@ttaylorr.com>
  <cover.1641508884.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -63,49 +63,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When constructing an OR node, the grep.c code uses `grep_or_expr()` to
-make a node, assign its kind, and set its left and right children. The
-same is not done for AND nodes.
+In a similar spirit as a previous commit, use the new `grep_and_expr()`
+to construct the AND node in `compile_pattern_and()`.
 
-Prepare to introduce a new `grep_and_expr()` function which will share
-code with the existing implementation of `grep_or_expr()` by introducing
-a new function which compiles either kind of binary expression, and
-reimplement `grep_or_expr()` in terms of it.
+Unlike the aforementioned previous commit, this is not about code
+duplication, since this is the only spot in grep.c where an AND node is
+constructed. Rather, this is about visual consistency with the other
+`compile_pattern_xyz()` functions.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- grep.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ grep.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index bdbd06d437..d772fe6cc5 100644
+index d772fe6cc5..7a1c52c60a 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -603,15 +603,22 @@ static struct grep_expr *grep_not_expr(struct grep_expr *expr)
- 	return z;
+@@ -619,6 +619,11 @@ static struct grep_expr *grep_or_expr(struct grep_expr *left, struct grep_expr *
+ 	return grep_binexp(GREP_NODE_OR, left, right);
  }
  
--static struct grep_expr *grep_or_expr(struct grep_expr *left, struct grep_expr *right)
-+static struct grep_expr *grep_binexp(enum grep_expr_node kind,
-+				     struct grep_expr *left,
-+				     struct grep_expr *right)
- {
- 	struct grep_expr *z = xcalloc(1, sizeof(*z));
--	z->node = GREP_NODE_OR;
-+	z->node = kind;
- 	z->u.binary.left = left;
- 	z->u.binary.right = right;
- 	return z;
- }
- 
-+static struct grep_expr *grep_or_expr(struct grep_expr *left, struct grep_expr *right)
++static struct grep_expr *grep_and_expr(struct grep_expr *left, struct grep_expr *right)
 +{
-+	return grep_binexp(GREP_NODE_OR, left, right);
++	return grep_binexp(GREP_NODE_AND, left, right);
 +}
 +
  static struct grep_expr *compile_pattern_or(struct grep_pat **);
  static struct grep_expr *compile_pattern_atom(struct grep_pat **list)
  {
+@@ -674,7 +679,7 @@ static struct grep_expr *compile_pattern_not(struct grep_pat **list)
+ static struct grep_expr *compile_pattern_and(struct grep_pat **list)
+ {
+ 	struct grep_pat *p;
+-	struct grep_expr *x, *y, *z;
++	struct grep_expr *x, *y;
+ 
+ 	x = compile_pattern_not(list);
+ 	p = *list;
+@@ -687,11 +692,7 @@ static struct grep_expr *compile_pattern_and(struct grep_pat **list)
+ 		y = compile_pattern_and(list);
+ 		if (!y)
+ 			die("--and not followed by pattern expression");
+-		CALLOC_ARRAY(z, 1);
+-		z->node = GREP_NODE_AND;
+-		z->u.binary.left = x;
+-		z->u.binary.right = y;
+-		return z;
++		return grep_and_expr(x, y);
+ 	}
+ 	return x;
+ }
 -- 
 2.34.1.455.gd6eb6fd089
-
