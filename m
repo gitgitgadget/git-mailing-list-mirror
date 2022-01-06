@@ -2,89 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07FE3C433FE
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 22:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A50D0C433F5
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 22:50:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245230AbiAFWnZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 17:43:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57336 "EHLO
+        id S245266AbiAFWuy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 17:50:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245228AbiAFWnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 17:43:24 -0500
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B740C061201
-        for <git@vger.kernel.org>; Thu,  6 Jan 2022 14:43:24 -0800 (PST)
-Received: by mail-qk1-x72c.google.com with SMTP id f138so4179214qke.10
-        for <git@vger.kernel.org>; Thu, 06 Jan 2022 14:43:24 -0800 (PST)
+        with ESMTP id S245281AbiAFWuw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 17:50:52 -0500
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D935EC061245
+        for <git@vger.kernel.org>; Thu,  6 Jan 2022 14:50:51 -0800 (PST)
+Received: by mail-qt1-x829.google.com with SMTP id f9so3082413qtk.3
+        for <git@vger.kernel.org>; Thu, 06 Jan 2022 14:50:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=GJJ1pr5WiGFOUVPDAP5bVe0uDw4Yyih10MkYhyYihd0=;
-        b=Ap8Lz7ckcp91gPtJ5EwD2Mgs+vb4sLi+htw4TqyrW6f990O9lAa1k3HljnRdFeLpq9
-         JV6gwQjjNTkd4J41rC+oHvoxxK7Q4GsggABNIPNJ3f5q9xh6qfk95mVu1z35Gt6WoEQ5
-         lmOJxoHjci1nvxGWWNJTJYg8AvpcS6mN69esBqB2qGk15HWIHipGf6NaBUl9LEgm9Izh
-         2+2Q/bVvjMAkBKX8uLXWOYcoUC68luD1RFtlTOyPZwc9jxZip7GiM/683szr/NRK3cM7
-         t6klnoQZc68V1tCLkDrsPskqBvqvyBCFaT+PEA25ka1dpyCP55DY0KfMtEIaegNYb22c
-         +s6A==
+        bh=PExsHUBQclPWZV4U5p5UvtGwMhziPw7dzdwsTLEe32s=;
+        b=58HukrpSFLOL5M4/CBNrR0w35YL5V8ZrlKtyYqaX1cGoKkEAd5/+oHSgodkGy83y0v
+         VpkHYxeM1XAO0Yw0V3Br616aA/gf7T4ol+F97kWpJJYIdtIFFNsHvsmMUe7ONDTOqBPY
+         O8aRZFBi3oScvA/sZVFM/KsuxpL0gxWqnO5mmAGhJLHlPUUZlOB8eQSrFuXFMcsjCX78
+         ycB+w3lE6rQwRFMcYJnIFZTtSMb5jwMxWNLsbjyw0AEFNGV8FtuuRTX11jUQFCZ2zI3n
+         syanDbA3qOKvCkSUR0FqzU65qX5jABMpqgRKTor2p8Sv/LJUDSjXa2WAlGNtdosTwu8D
+         JSHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=GJJ1pr5WiGFOUVPDAP5bVe0uDw4Yyih10MkYhyYihd0=;
-        b=esMgb1hoj1KM+h/40odtR1hr9NLEg0Q3vLCfnEWxLw8Wro4Z/5FaCznN60dIrz5dzt
-         NopRQs7j/ySuD73BKvlZbxJOfNhyjfbFjNLMTdifPvHS9ZIDMm4WcyMzcArgpKuMpicp
-         Pq4SivYUHBXumhiSZMqgkKHQnF/R1QyddU/JqBlRxfhdIGWlnBUqlmPqTBehG7g76l5z
-         mJ1AujIorJctiEkVu/YbSQupVYWpkGIaK8A0nbS1gRY9jmMhqjh+kMefuDSfbqbrn+Dy
-         eFsjgftLQCgIqJdByMQrfa9Z+Iw0W7uMb9bAKiOle/1o6jbWXoRh1BF8GiN0CQsoaigP
-         VKYA==
-X-Gm-Message-State: AOAM531uqwF5BLPcl/4WIicbeK3FKh/fLu4d/JnwjKK6TTJ+5XDlt86g
-        XACeeKcnrW0Xp8NL01wrygeswA==
-X-Google-Smtp-Source: ABdhPJxzZb9YAf7udd/v1qi6eyUOcQSz4/GQd2BUj9Ilv4YHDQXztjiagZxv4XuB/lre0/ueUSFLXA==
-X-Received: by 2002:a05:620a:1008:: with SMTP id z8mr5003303qkj.382.1641509003809;
-        Thu, 06 Jan 2022 14:43:23 -0800 (PST)
+        bh=PExsHUBQclPWZV4U5p5UvtGwMhziPw7dzdwsTLEe32s=;
+        b=yhm02dRFyc0mekFIXXkJsBa/4AohQevkuAsFbU14R2KI1krSeN0N8Y2VroUpHWbhuU
+         CPJfrzKeQFJmVHraXmrg2S4+ts4ZZuJ01xtKYDbGkz9masbi/gttwAeHYU+oNUBk/17Q
+         YYgzVmBdJy4G4tXBZblzane0vGLgeAGtpkvQGOWbBRP4rNmX9lCFrjNJajnGl8H4jDHN
+         0RMDx4dfm1wWqXcawnwFVIR7J/NJ8qr/4LdT02Yd1n6hYQyz2GItPNC1TbxFnFIVmm6Q
+         mdd6DgyJjkTvGu1CWx6Kr7Oq30WCCehtpOwpKi5zeQEzVsd0tdjCbaka9Om1V+AqlEYX
+         wztg==
+X-Gm-Message-State: AOAM531P7NS2csGRsj0LlYuzj2qhBuNfQgbfhvuwP5uP2EhOfQY6yk0x
+        KPU0DVxQ0CRh9Y+9deA3KhJgEcRAL27htg==
+X-Google-Smtp-Source: ABdhPJzhTjVguLrQyImUfocVZ/jIAAPNWlF83Tcto4RsKsZuI2YosvdL2l6mw58tc37rgorYpq2FBA==
+X-Received: by 2002:ac8:7d07:: with SMTP id g7mr53917531qtb.364.1641509451060;
+        Thu, 06 Jan 2022 14:50:51 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 82sm2132221qkd.77.2022.01.06.14.43.23
+        by smtp.gmail.com with ESMTPSA id h19sm2592782qth.63.2022.01.06.14.50.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Jan 2022 14:43:23 -0800 (PST)
-Date:   Thu, 6 Jan 2022 17:43:22 -0500
+        Thu, 06 Jan 2022 14:50:50 -0800 (PST)
+Date:   Thu, 6 Jan 2022 17:50:50 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, l.s.r@web.de
-Subject: Re: [PATCH 2/2] grep: use grep_and_expr() in compile_pattern_and()
-Message-ID: <YddwijcMrmkgJNmD@nand.local>
-References: <ea01f9b6-2ce3-57e8-533f-4cc29937f700@web.de>
- <cover.1641498525.git.me@ttaylorr.com>
- <71bd2d1bcc6486f2e21c649708d3f4fa67dc162c.1641498525.git.me@ttaylorr.com>
- <xmqqlezsbjfs.fsf@gitster.g>
+To:     Jessica Clarke <jrtc27@jrtc27.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] apply: Avoid ambiguous pointer provenance for
+ CHERI/Arm's Morello
+Message-ID: <YddySiBCOOYYKDmC@nand.local>
+References: <20220105132310.6600-1-jrtc27@jrtc27.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqlezsbjfs.fsf@gitster.g>
+In-Reply-To: <20220105132310.6600-1-jrtc27@jrtc27.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 06, 2022 at 02:14:47PM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
-> > @@ -687,11 +692,7 @@ static struct grep_expr *compile_pattern_and(struct grep_pat **list)
-> >  		y = compile_pattern_and(list);
-> >  		if (!y)
-> >  			die("--and not followed by pattern expression");
-> > -		CALLOC_ARRAY(z, 1);
-> > -		z->node = GREP_NODE_AND;
-> > -		z->u.binary.left = x;
-> > -		z->u.binary.right = y;
-> > -		return z;
-> > +		return grep_and_expr(x, y);
->
-> You'd need to remove 'z' from the function to avoid getting yelled
-> at by your compiler for unused variable.
+On Wed, Jan 05, 2022 at 01:23:10PM +0000, Jessica Clarke wrote:
+> [...] In most cases this is clear, as normally at least one operand is
+> provably a plain integer, but if both operands are uintptr_t and have
+> no indication they're just plain integers then it is ambiguous, and
+> the current implementation will arbitrarily, but deterministically,
+> pick the left-hand side, due to empirical evidence that it is more
+> likely to be correct.
 
-How embarrassing :-). Thanks for noticing, I wrote this so hastily I
-neglected to even compile it with DEVELOPER=1.
+Wouldn't a simpler, less invasive fix be to instead write the expression
+so that the left-hand operand is a pointer? IOW, shouldn't the following
+work (with no other changes):
 
-The new version I sent in response fixes this issue.
+    ent->util = (void *)((uintptr_t)what | ent->util);
+
+?
+
+(I dropped the explicit cast on the right-hand side, since ent->util is
+already a uintptr_t, and the left-hand side has an explicit cast, so
+there isn't any type promotion going on here).
 
 Thanks,
 Taylor
