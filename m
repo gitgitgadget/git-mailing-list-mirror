@@ -2,64 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22E59C4332F
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 17:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EE15C433EF
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 17:50:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242412AbiAFRtY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 12:49:24 -0500
-Received: from mail-pj1-f41.google.com ([209.85.216.41]:41542 "EHLO
-        mail-pj1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242286AbiAFRtW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 12:49:22 -0500
-Received: by mail-pj1-f41.google.com with SMTP id b1-20020a17090a990100b001b14bd47532so3981251pjp.0
-        for <git@vger.kernel.org>; Thu, 06 Jan 2022 09:49:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Lrb9yxl3/2s3heMUSJ8PDVegjr7O2BRdDEEptglY02A=;
-        b=2H1zNERTnmEnrrQuLixJuyg06yQe5imOoydb7VTwM4Kyw4QivPJ+LUQjDE0fBFkd4S
-         7pxI8Q87JZPjpX/x72MnM7bdZSaeTIe3GhEU2hEAtlUmezi9b7tpqgwUB/pJWlnDQL7x
-         Klj2fSmseGyzcBGb05NE1pMzCazYnMkdBSo+FKPsgp88/o/odDj0ag5v/MNNZ/nlEL2n
-         cEg1KaeV7OfzwxjASt1xPgRLv61GPsaFiRA1GOajnTQBB4ecPhEYqQbUfBbx77EOzYqL
-         PP12Wunqxj209++URy/BSBWJKj9z2LlussAVSmPsd2Gk8pBGuIuWu5hJnfHB8XXxAs56
-         xa9w==
-X-Gm-Message-State: AOAM533mGipLw/KytpDvbmR/n+b7BHROh54fUHAcxFt4Srsfx9+aLHOV
-        haKbJNPqXBdLMDgcFgJxGcBVE2lZQWzUiuLW4Jc=
-X-Google-Smtp-Source: ABdhPJyEvtSMgOHdWKxfwRLC54RHP9VkTvPZdcTvQOl1xE5G9yLp5qa4zW8PXnyCT2THAE7nWWJGN1qjCl0qX4WFQWc=
-X-Received: by 2002:a17:902:b688:b0:149:a1d6:c731 with SMTP id
- c8-20020a170902b68800b00149a1d6c731mr33981467pls.145.1641491361526; Thu, 06
- Jan 2022 09:49:21 -0800 (PST)
+        id S242433AbiAFRut (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 12:50:49 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51800 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241987AbiAFRus (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 12:50:48 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EE4D6162897;
+        Thu,  6 Jan 2022 12:50:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TOYSqEdlHZWZ72mxfXW+pv0FmOrwC5YQrZ5KC0
+        QmUno=; b=ik4ZkfwXJCX9XOooeQj5DPxgUOZkNvoVyf7xHDThRFNfRDp1ob9qiB
+        ivGfWm4JUex4LSKrH2ssZGbZ37DnpwJfZn44MtOduKwHn62OupeD3pGJEQnAvFZ9
+        cBO6rXbC8oBB3CoDHrrNNl94tkbfVoVXN4uRJcb9rnK86fbBpO830=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E7C22162896;
+        Thu,  6 Jan 2022 12:50:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5B440162895;
+        Thu,  6 Jan 2022 12:50:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        Pedro Martelletto <pedro@yubico.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] gpg-interface: trim CR from ssh-keygen
+References: <CAPig+cS6h6o2_dJAZC1M1Ace29bN2mhPgaEtTWtj3oXfcHq9cA@mail.gmail.com>
+        <xmqqee5oieb2.fsf@gitster.g>
+        <CAPig+cTM3wZz4NXjxYeBuFv0CVNS-T+pBFeVkfMQ-25pL1kBzw@mail.gmail.com>
+        <xmqqmtkcguvm.fsf@gitster.g>
+        <CAPig+cR93GyN53JoZbaiROrNtzGjiet7eTPQOk-26G+mB0KaCA@mail.gmail.com>
+        <20220104125534.wznwbkyxfcmyfqhb@fs> <xmqqo84rcn3j.fsf@gitster.g>
+        <CAPig+cQinNZp_2=eo7nokMCZ9gc-tAKO1V_jejL2Ei9J63tSDQ@mail.gmail.com>
+        <20220105103611.upfmcrudw6n3ymx6@fs> <xmqqsfu1hq6x.fsf@gitster.g>
+        <20220106102603.cmb3rf4whd4hmfbb@fs>
+Date:   Thu, 06 Jan 2022 09:50:44 -0800
+In-Reply-To: <20220106102603.cmb3rf4whd4hmfbb@fs> (Fabian Stelzer's message of
+        "Thu, 6 Jan 2022 11:26:03 +0100")
+Message-ID: <xmqqpmp4eosr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20220105141427.48861-1-jholdsworth@nvidia.com>
-In-Reply-To: <20220105141427.48861-1-jholdsworth@nvidia.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 6 Jan 2022 12:49:10 -0500
-Message-ID: <CAPig+cSe8i9VxhJifFui0Or22fXMbD_vgy-cdRgYcA20WkGhTg@mail.gmail.com>
-Subject: Re: [PATCH] git-p4: fixed instantiation of CalledProcessError
-To:     Joel Holdsworth <jholdsworth@nvidia.com>
-Cc:     Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Ben Keene <seraphire@gmail.com>,
-        Andrew Oakley <andrew@adoakley.name>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2C8C3D84-6F19-11EC-9662-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 6, 2022 at 1:56 AM Joel Holdsworth <jholdsworth@nvidia.com> wrote:
-> CalledProcessError is an exception class from the subprocess namespace.
-> When raising this exception, git-p4 would instantiate CalledProcessError
-> objects without properly referencing the subprocess namespace causing
-> the script to fail.
->
-> This patch resolves the issue by replacing CalledProcessError with
-> subprocess.CalledProcessError.
-> ---
+Fabian Stelzer <fs@gigacodes.de> writes:
 
-MIssing sign-off.
+> There are a few more places where the same thing happens and text
+> is just split by LF, ignoring CR. The gpg parsing where this code
+> originated being the most prominent example. ...  ... Since the
+> gpg stuff is in place for a long time and no one complained we can
+> probably leave it as is.
+
+Yeah, that is the conclusion I was hoping for.
+Thanks.
