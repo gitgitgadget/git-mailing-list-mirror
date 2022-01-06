@@ -2,164 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45AF2C433F5
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 21:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8499C433EF
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 21:46:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244389AbiAFVm0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 16:42:26 -0500
-Received: from mail-dm6nam12on2046.outbound.protection.outlook.com ([40.107.243.46]:15200
-        "EHLO NAM12-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S244385AbiAFVmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 16:42:13 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FuAG+prTLH23JLHbY6xvzqsL/ynRAl3pI6KgMC5kr1G8LZHTfCY3DtzCOunMGISeJlE2e+YcJiinjyNp7sh7qamk6vSjdve6LT49+sXFZsnaYDpBjKJbVdgwiiCItVc/9pdVY1XNokWvlZ6dXgHwFLMS63Vw3oV5upUIEiuYlx523l5MQ0bLdlLzG2hSHgztni2lsWBo3P8CXvEWvTg+MjvVYoB0nbO6nLgCzmFTBS4mC+OGsD0TMiC5azB/MQ3CVTPWARVxHUnpESkr5QSejCIw3lWeC//QBEEBIWH6FDiCjp9gl4Il9PMyDScbxeyNQt2c6MoHRjUl3FjnhE/aww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4PWXwmNLpWQrVPPq6hZVoXWTPhTKmKnX6c6UzDynPYE=;
- b=dZMR70V8vn15h5oQU+BlwbIM9jz6ntjcic1Sck0AuJp3GR96JGnEbhcpdLslNNnwL2jNKmkjmFa84WoNRU330mOhmRSx+SsvCgC4HdGY6jlm6PJMxLKJ3QFsvZ3Bt6A/rm7eP/mrt+1dWAon2X9S4J10a6MOgX6kQ9SY9iSVSc1qTI/5KGTXPZStb17bSj0qH2fJf/9+dwP86v1nX9eWhN7e8ncjKSwLFqn0duNpU/BR0TWHYMBnb/tjTr4VA0jFoAnM4YnwhIWy8H5kTLmzn90zPBv72azsUqoboIvZXKkf7u2vrjILSvpkKceCGlKh3drjxPx7npShDKTiC4uBwQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4PWXwmNLpWQrVPPq6hZVoXWTPhTKmKnX6c6UzDynPYE=;
- b=GTNlhR7B77oeljXzdbNgdS4opoPxU/MisA1hFIPJ7BYpkwfwMwgk/La1fX1jo9Nm2Aw+pxRnLp/AN6dwoO0rch4ETUSsVv2cQ996ylIA+Heg8eN2Gqrv68ggYDPNYrpMOYS2fqiJ83U7t8DczWs6d8si4a45kIyJ2hBfRtEpNsXzu2bydTq7hiwrqwpeJQfr2HZ3Aex4tqJn4Z6YZlEbXFtB4a2xpytwlKhpWHghLXBprhisN9C8QRFKatwfhkOiQNKSFJkwYUYNRSYgfOHlikKx0YJEANEKJkGEF4jZI2zx185KgssorxBkl4TFpt4iHhJxejdhW4SaWz3WIRV1EQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
- by MN2PR12MB3854.namprd12.prod.outlook.com (2603:10b6:208:16a::27) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4867.10; Thu, 6 Jan
- 2022 21:42:12 +0000
-Received: from BL0PR12MB4849.namprd12.prod.outlook.com
- ([fe80::509e:bbb9:e1fb:26ed]) by BL0PR12MB4849.namprd12.prod.outlook.com
- ([fe80::509e:bbb9:e1fb:26ed%4]) with mapi id 15.20.4867.009; Thu, 6 Jan 2022
- 21:42:12 +0000
-From:   Joel Holdsworth <jholdsworth@nvidia.com>
-To:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Ben Keene <seraphire@gmail.com>,
-        Andrew Oakley <andrew@adoakley.name>,
-        Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH v2] git-p4: fixed instantiation of CalledProcessError
-Date:   Thu,  6 Jan 2022 21:41:56 +0000
-Message-Id: <20220106214156.90967-1-jholdsworth@nvidia.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: AM8P191CA0027.EURP191.PROD.OUTLOOK.COM
- (2603:10a6:20b:21a::32) To BL0PR12MB4849.namprd12.prod.outlook.com
- (2603:10b6:208:1c2::17)
+        id S244563AbiAFVqX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 16:46:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44198 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244495AbiAFVqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 16:46:17 -0500
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AA39C061245
+        for <git@vger.kernel.org>; Thu,  6 Jan 2022 13:46:17 -0800 (PST)
+Received: by mail-io1-xd32.google.com with SMTP id u8so4808795iol.5
+        for <git@vger.kernel.org>; Thu, 06 Jan 2022 13:46:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=j8y/IPKRv12IJUGXKfPOAUH02EsEsyZulHrNrRk0Zlg=;
+        b=Ng10W7WGnjRyO1BXgnNXqY6bPM6ajIu+o745+DzAu+Iuos1rjPIj9kXovLlRJIDuYb
+         ZjbdRiZcG6dT2VhYBHfxYLc0fPm0Lw6e1yM3awGp1p5tYoJkocVTp5Vw3ObzD2PGdljN
+         DFTwuAbRC06rw6aDkUHfaCtMO0UA+CAeTk/BknUbpV0VxXWuQG91DKWD53eEohbdphmv
+         25zlQvReSCVJzgxTPk08F2LfftMPpVS+IMCBQzJF3yKyfKPp3DkPALZUICLd3Z8uHveS
+         Mkd0vl+jmKeob4E49O6SdIes6YmIAddcmWNadtxkZanZwJwhP6+/I6XLpbzH0xa7Qk++
+         w+bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=j8y/IPKRv12IJUGXKfPOAUH02EsEsyZulHrNrRk0Zlg=;
+        b=T2w1NicFThhwDW8Tn8ZQxxv8ORo1G094SLgtdiaiGqbj5zj6uxgQpOVF5cZAVo/dam
+         KaGrVXula4E6MFXWio8vgRYJrqFsSDzck3bIGXYMzk7RLKCNwWlt3koRpV9lgHBFYmq2
+         kBaJF3uaupP/W791nI0QoEw29CecycVKrQiWjgDQnDdG7xoAlGz0HzQ/BmLft2HCumfG
+         rBuUGMBXb41V1nFu4AF9noaory4Fyynme+/QB4OrxvOenvcT9RAp/uEkJiHgCzg79s8R
+         G68h1+UROrgapq5b3Ni3Gv9uGQu78LFCEyWf2R/wOSNBlbICftcVioU7lgikg2YK4hmi
+         qdjQ==
+X-Gm-Message-State: AOAM5336hMIYph7wsbYyFGmelM7S5Cw0jFFSW/cZllMUQVI9dPY+qDRN
+        PqRpSvLIfodP91oak4K5FdNbjA==
+X-Google-Smtp-Source: ABdhPJx+XFyBlRGxr73atAIkI35TkoH0jZGdSkHgKyPOjW84UTpgo6aICAwREfGNhD/z4eAkWLkHzA==
+X-Received: by 2002:a05:6602:26c1:: with SMTP id g1mr29280827ioo.69.1641505576958;
+        Thu, 06 Jan 2022 13:46:16 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id n2sm2181113ioc.0.2022.01.06.13.46.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jan 2022 13:46:16 -0800 (PST)
+Date:   Thu, 6 Jan 2022 16:46:15 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jessica Clarke <jrtc27@jrtc27.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
+Subject: Re: [PATCH] Properly align memory allocations and temporary buffers
+Message-ID: <YddjJ+uIQM34Gedo@nand.local>
+References: <20220105132324.6651-1-jrtc27@jrtc27.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: ddb58d9a-73a3-4ffe-e96c-08d9d15d6578
-X-MS-TrafficTypeDiagnostic: MN2PR12MB3854:EE_
-X-Microsoft-Antispam-PRVS: <MN2PR12MB3854D269D265D24388144F2DC84C9@MN2PR12MB3854.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:213;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: NsZiOPqwRsZC7gbVvc35YDsdPAOJCLWhvWtHiRsZ0FlzKcA4nHmAff38jinLVBlHmAqq4T5UXr/iyaT61HcNb54Z3/gXDNKyXQL9wlBH5T9sNFb5IICTewO7SWFkU5nyJkUjbJBddRp5RxdcrdpgOhHWB9pIcJR6Jq7b92GEAJzc19vPPKlQLfs68626iXm1ZuTWkdQsP1lztpoi9F9NaYkPOt1iG/HbMjf7AukDbytBDuBhjt9BLfShLM5Bx1QSyLKKL1rL4SWJbBNi3hEqtd6HOz1m3DONt1Ie6YdunYV/QxueY1Xg/RCtkEkkyk4jr3RStf/vtSDaXX4hkdHjwcVa9gRboyhP4Uu6uV5EhVMl3+XF+vhwQGdQNTTHQCm4dk+Wvp+vElFT9R/jm2wMKxa3laeyeNiOVSHIB8yGNhPBVmQzxsJYzd/IC1vb7O9bcAtM/IzMEYhN7d4PRD8WdYThWPBvQuVlZJgBSfsVukFl3NZSJ/ojj9ZU4EmMpTofHhQqSwW9aYzxdDZRYy/kJgaH7vBqOWg6rWEtZ5Y3d3cE+h+iLYSzJ9x2/45/RP9QM4i7vS/C36sMV2n0WvS6MQcpTE3p7bq0z6H/f1bXqjOx+WkUfw31vfbLF6SJHRZI4gEN7R0aPOIX1W6rSwIj7fdLxaIvmoi94pIUTPK6lDKZDUf8h8kZjLCQIoZpNtxRGZ2t7+lH4TPJQ+rIbglO8Q==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(2906002)(52116002)(6486002)(107886003)(7416002)(6512007)(6666004)(54906003)(1076003)(55236004)(86362001)(5660300002)(6506007)(316002)(110136005)(186003)(4326008)(38350700002)(83380400001)(38100700002)(508600001)(66556008)(66476007)(26005)(36756003)(2616005)(66946007)(8936002)(8676002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?qpKa/JsQX14jVikUQqL5Gq7j2n5y9kr4V23GUbEYLXe7G0PR1jbBA5lRNAB6?=
- =?us-ascii?Q?pPq4o83MaHLZi2bODq+4eNBAgB0+MA7feSDKvhI28hNEYK3rE4hMN5g1HPTv?=
- =?us-ascii?Q?etaZM8IKU4K8oMQc1M09OmHA/AotQHGrqMjW2qUFl42FY8zJe8ZNmyughQDm?=
- =?us-ascii?Q?H6qThSCKf3ioODn7qN/YFdCb28EKfJsuYi+OwF+O3Cyxh5D+VHRt5qL+gS3D?=
- =?us-ascii?Q?Nqxm3nXf4ZCd+mvHQdfiVTdc6Fddx9gQfZV9A3ryheCKrdVTx6fK5nF2LSQO?=
- =?us-ascii?Q?3+VF60u7tAVHz68obYe9HVh1d23Oajrri7CoBkIrRE6V7WS90hSZmYtPFQcM?=
- =?us-ascii?Q?fF/AZxmqcajZrol27ub5Ct3Xv40A1nIgNqVlmAEm4c3//wzDPpD83VvCiBj9?=
- =?us-ascii?Q?N4eobEdgSs9p5qsXeA9XsJEekEJMxnwW3mt5HFcarGfx7UzDGo/42mFw7IrC?=
- =?us-ascii?Q?c+MqaVBWQlGWi4llPi/5WWRjFZcTcWPi8vsCvgsFkdCxzXTfw1CtEQdr/yAL?=
- =?us-ascii?Q?YIeA+gFaMQJk7gmI3TUbHUjt8pmp6FSHio2FuqFtJP4+ct10n2opL9OSwVs5?=
- =?us-ascii?Q?hYRcxn3fy5MikuErdGOWigrJaSNt+FTsoSXEm9C0wCWlJVjGkTrvapZURsuF?=
- =?us-ascii?Q?zw1xkThUzs7aQ2dx8M0IMmYGOThStCYoCUAmZ2X9PHdlz+gCt7y80ZdgVSDX?=
- =?us-ascii?Q?SIxYb7LWb9YG7omm8+Z5w5B0GqzQTZ+4Ge+1kq4naDLDtL8Cpa3VukQbX+6S?=
- =?us-ascii?Q?cOLHw1pH+hwxWERRTpeoWiykGGIE80nMWiY0FF/YCO11hxV5qfxmo2uZyjch?=
- =?us-ascii?Q?7KeAN30dWyBieuMhl+hDnTScmUjMp8VkVN8v7Nw4TEp7XSbOIMWLWNKeBheB?=
- =?us-ascii?Q?qQSNaCv7HBF9mB0KSs1lGk4W0vxBRXWRIcKNS6d5vBnWdepZBEMufYMw3ZSo?=
- =?us-ascii?Q?rGhFmDigXciMDDtTejUjBPJQOi2WO8vbznT4jNTl//E+HZyLtw1uuduzMzlI?=
- =?us-ascii?Q?2vaKOl8AqoEv9YUI8AIr5SMzpCkD04byc3ntuAzBlxnP3Tncxz08ZmcbLd59?=
- =?us-ascii?Q?pLPi7h2x743pVXZ9LnxWhM6J/BRQyeQlOaBK9L/lqhBxSPClqO0xWVTNSeTl?=
- =?us-ascii?Q?OCoDPbheNBkKy4CvLTmEcUYRBH8huk+FfV14TB+ncFADoXUkbaYCv4MRgVz1?=
- =?us-ascii?Q?Rn41WziFwL2vYaoTk1fnVB4KxJ/Z/YEAP+tdwnSWIZ2b1ZohfLgDkXi0geQo?=
- =?us-ascii?Q?dBz+WQZMpeTWv6XoSc/+erlgymmfvVzFKaYYo4IcfeCQFVxFkDQp5Q0qRR2h?=
- =?us-ascii?Q?9+oyg2Sk2eyNrX9dz++3HwWL/9TaIHjBnYn8kpSNS4FOMpPOsqumEpZlpafi?=
- =?us-ascii?Q?5gUE+Xyj0LLlnoic/1W+ugCTorMOKRie5E3t8k6Uk1Iac/aoKzFwsw+CnNmE?=
- =?us-ascii?Q?MgDSne5bcIVEqizf7ScaPwKjXiqhzjUgpOPU+VAnDYecWoOj60gu2VN7pqGW?=
- =?us-ascii?Q?ohfwV83UcxL7bVY/lj0D4KoVuclNstyvPaBehXo7bVTSLxRSSoOU8hm+4//D?=
- =?us-ascii?Q?tIMqKUG/qPpZDFo54RQfabYObeloz3m7wnziiPmYk6K86YZ0HEoJKMMuyPL/?=
- =?us-ascii?Q?pzEUQFRNQ+7C4qT7OrF1qXM=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ddb58d9a-73a3-4ffe-e96c-08d9d15d6578
-X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jan 2022 21:42:12.0471
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: U+1eKfJsnJkLnQxGPVCoKiSDo942X7Lra8oWqA7pJnZS21wNKPphMXlwyGlW2epVA3LwAAhsrkl9m+emNaP3Qg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB3854
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220105132324.6651-1-jrtc27@jrtc27.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-CalledProcessError is an exception class from the subprocess namespace.
-When raising this exception, git-p4 would instantiate CalledProcessError
-objects without properly referencing the subprocess namespace causing
-the script to fail.
+(+cc René as another possible reviewer)
 
-This patch resolves the issue by replacing CalledProcessError with
-subprocess.CalledProcessError.
+On Wed, Jan 05, 2022 at 01:23:24PM +0000, Jessica Clarke wrote:
+> Currently git_qsort_s allocates a buffer on the stack that has no
+> alignment, and mem_pool_alloc assumes uintmax_t's size is adequate
+> alignment for any type.
+>
+> On CHERI, and thus Arm's Morello prototype, pointers are implemented as
+> hardware capabilities which, as well as having a normal integer address,
+> have additional bounds, permissions and other metadata in a second word,
+> so on a 64-bit architecture they are 128-bit quantities, including their
+> alignment requirements. Despite being 128-bit, their integer component
+> is still only a 64-bit field, so uintmax_t remains 64-bit, and therefore
+> uintmax_t does not sufficiently align an allocation.
+>
+> Moreover, these capabilities have an additional "129th" tag bit, which
+> tracks the validity of the capability and is cleared on any invalid
+> operation that doesn't trap (e.g. partially overwriting a capability
+> will invalidate it) which, combined with the architecture's strict
+> checks on capability manipulation instructions, ensures it is
+> architecturally impossible to construct a capability that gives more
+> rights than those you were given in the first place. To store these tag
+> bits, each capability sized and aligned word in memory gains a single
+> tag bit that is stored in unaddressable (to the processor) memory. This
+> means that it is impossible to store a capability at an unaligned
+> address: a normal load or store of a capability will always take an
+> alignment fault even if the (micro)architecture supports unaligned
+> loads/stores for other data types, and a memcpy will, if the destination
+> is not appropriately aligned, copy the byte representation but lose the
+> tag, meaning that if it is eventually copied back and loaded from an
+> aligned location any attempt to dereference it will trap with a tag
+> fault. Thus, even char buffers that are memcpy'ed to or from must be
+> properly aligned on CHERI architectures if they are to hold pointers.
+>
+> Address both of these by introducing a new git_max_align type put in a
+> union with the on-stack buffer to force its alignment, as well as a new
+> GIT_MAX_ALIGNMENT macro whose value is the alignment of git_max_align
+> that gets used for mem_pool_alloc. As well as making the code work on
+> CHERI, the former change likely also improves performance on some
+> architectures by making memcpy faster (either because it can use larger
+> block sizes or because the microarchitecture has inefficient unaligned
+> accesses).
+>
+> Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+> ---
+>  compat/qsort_s.c  | 11 +++++++----
+>  git-compat-util.h | 11 +++++++++++
+>  mem-pool.c        |  6 +++---
+>  3 files changed, 21 insertions(+), 7 deletions(-)
+>
+> diff --git a/compat/qsort_s.c b/compat/qsort_s.c
+> index 52d1f0a73d..1ccdb87451 100644
+> --- a/compat/qsort_s.c
+> +++ b/compat/qsort_s.c
+> @@ -49,16 +49,19 @@ int git_qsort_s(void *b, size_t n, size_t s,
+>  		int (*cmp)(const void *, const void *, void *), void *ctx)
+>  {
+>  	const size_t size = st_mult(n, s);
+> -	char buf[1024];
+> +	union {
+> +		char buf[1024];
+> +		git_max_align align;
+> +	} u;
 
-Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
----
-This version adds a previously missing sign-off.
+I'm not sure I understand. Clearly this union aligns buf along the width
+of git_max_align. But what about the preimage makes buf unaligned?
 
- git-p4.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 5fa54a7afe..28581a45c5 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -274,6 +274,17 @@ typedef unsigned long uintptr_t;
+>  #define _ALL_SOURCE 1
+>  #endif
+>
+> +typedef union {
+> +	uintmax_t max_align_uintmax;
+> +	void *max_align_pointer;
+> +} git_max_align;
 
-diff --git a/git-p4.py b/git-p4.py
-index 986595bef0..eefac27803 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -394,7 +394,7 @@ def system(cmd, ignore_error=False):
-         sys.stderr.write("executing %s\n" % str(cmd))
-     retcode = subprocess.call(cmd, shell=expand)
-     if retcode and not ignore_error:
--        raise CalledProcessError(retcode, cmd)
-+        raise subprocess.CalledProcessError(retcode, cmd)
- 
-     return retcode
- 
-@@ -404,7 +404,7 @@ def p4_system(cmd):
-     expand = not isinstance(real_cmd, list)
-     retcode = subprocess.call(real_cmd, shell=expand)
-     if retcode:
--        raise CalledProcessError(retcode, real_cmd)
-+        raise subprocess.CalledProcessError(retcode, real_cmd)
- 
- def die_bad_access(s):
-     die("failure accessing depot: {0}".format(s.rstrip()))
-@@ -4169,7 +4169,7 @@ def run(self, args):
-             init_cmd.append("--bare")
-         retcode = subprocess.call(init_cmd)
-         if retcode:
--            raise CalledProcessError(retcode, init_cmd)
-+            raise subprocess.CalledProcessError(retcode, init_cmd)
- 
-         if not P4Sync.run(self, depotPaths):
-             return False
--- 
-2.34.1
+OK, the purpose of this union is to be as wide as the least common
+alignment between uintmax_t and void *, yes?
 
+> +
+> +typedef struct {
+> +	char unalign;
+> +	git_max_align aligned;
+> +} git_max_alignment;
+> +#define GIT_MAX_ALIGNMENT offsetof(git_max_alignment, aligned)
+
+...then the offset of the aligned field within the git_max_alignment
+struct is going to be that common alignment? Could you not `#define
+GIT_MAX_ALIGNMENT` to be `sizeof(git_max_align)` directly, or is there
+something I'm missing?
+
+I suppose the way you wrote it here is done in order to prevent padding
+on the end of the git_max_align union from artificially increasing the
+value of GIT_MAX_ALIGNMENT.
+
+In any case, I *think* what you wrote here is right. The typedef's are
+uncommon to our codebase, though. I wonder how much of this is all
+necessary.
+
+Thanks,
+Taylor
