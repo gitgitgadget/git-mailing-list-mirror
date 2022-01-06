@@ -2,72 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 326C3C433FE
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 17:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22E59C4332F
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 17:49:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242360AbiAFRsO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 12:48:14 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59569 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242347AbiAFRsN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 12:48:13 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A0D5E107771;
-        Thu,  6 Jan 2022 12:48:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=w+koVhz7OT8ryF0VcUpA3s422w8zCyNW/Sz7Gr
-        +NA4s=; b=mtAXmtaMeDbG3vyrrrGoti2dZitS9tZkd4qPGo+ELle5FjRw7ReW8k
-        7XwXwJgzLPitgb7MnnIDJs831ReHnKJ3wiF/jUY8g0vbGBUkhvIwbtgizGyLDrWE
-        kkrJ2OO/s+LKZc5OjaHtDb/lVRAoFv08tNnJk6UFtOIBUgLhyaXjE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9898810776F;
-        Thu,  6 Jan 2022 12:48:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0F85010776E;
-        Thu,  6 Jan 2022 12:48:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Marc Strapetz <marc.strapetz@syntevo.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Marc Strapetz via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] t/README: fix typo
-References: <pull.1110.git.1641338224631.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.2201051701120.7076@tvgsbejvaqbjf.bet>
-        <9f74fc04-ea68-6bdd-3341-ecf7a2aed6cd@syntevo.com>
-        <b265de46-9ccd-4f31-d51c-1df1b39606d5@syntevo.com>
-Date:   Thu, 06 Jan 2022 09:48:10 -0800
-In-Reply-To: <b265de46-9ccd-4f31-d51c-1df1b39606d5@syntevo.com> (Marc
-        Strapetz's message of "Thu, 6 Jan 2022 07:17:42 +0100")
-Message-ID: <xmqqwnjceox1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S242412AbiAFRtY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 12:49:24 -0500
+Received: from mail-pj1-f41.google.com ([209.85.216.41]:41542 "EHLO
+        mail-pj1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242286AbiAFRtW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 12:49:22 -0500
+Received: by mail-pj1-f41.google.com with SMTP id b1-20020a17090a990100b001b14bd47532so3981251pjp.0
+        for <git@vger.kernel.org>; Thu, 06 Jan 2022 09:49:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Lrb9yxl3/2s3heMUSJ8PDVegjr7O2BRdDEEptglY02A=;
+        b=2H1zNERTnmEnrrQuLixJuyg06yQe5imOoydb7VTwM4Kyw4QivPJ+LUQjDE0fBFkd4S
+         7pxI8Q87JZPjpX/x72MnM7bdZSaeTIe3GhEU2hEAtlUmezi9b7tpqgwUB/pJWlnDQL7x
+         Klj2fSmseGyzcBGb05NE1pMzCazYnMkdBSo+FKPsgp88/o/odDj0ag5v/MNNZ/nlEL2n
+         cEg1KaeV7OfzwxjASt1xPgRLv61GPsaFiRA1GOajnTQBB4ecPhEYqQbUfBbx77EOzYqL
+         PP12Wunqxj209++URy/BSBWJKj9z2LlussAVSmPsd2Gk8pBGuIuWu5hJnfHB8XXxAs56
+         xa9w==
+X-Gm-Message-State: AOAM533mGipLw/KytpDvbmR/n+b7BHROh54fUHAcxFt4Srsfx9+aLHOV
+        haKbJNPqXBdLMDgcFgJxGcBVE2lZQWzUiuLW4Jc=
+X-Google-Smtp-Source: ABdhPJyEvtSMgOHdWKxfwRLC54RHP9VkTvPZdcTvQOl1xE5G9yLp5qa4zW8PXnyCT2THAE7nWWJGN1qjCl0qX4WFQWc=
+X-Received: by 2002:a17:902:b688:b0:149:a1d6:c731 with SMTP id
+ c8-20020a170902b68800b00149a1d6c731mr33981467pls.145.1641491361526; Thu, 06
+ Jan 2022 09:49:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D12AED5A-6F18-11EC-8D18-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <20220105141427.48861-1-jholdsworth@nvidia.com>
+In-Reply-To: <20220105141427.48861-1-jholdsworth@nvidia.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 6 Jan 2022 12:49:10 -0500
+Message-ID: <CAPig+cSe8i9VxhJifFui0Or22fXMbD_vgy-cdRgYcA20WkGhTg@mail.gmail.com>
+Subject: Re: [PATCH] git-p4: fixed instantiation of CalledProcessError
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Marc Strapetz <marc.strapetz@syntevo.com> writes:
-
->>  > find the "dotsh" typo in the same file (it should be "dots", I
->> think)?
->> I wouldn't have noticed that, but I agree that it should be 
->> "test_name_without_dots".
+On Thu, Jan 6, 2022 at 1:56 AM Joel Holdsworth <jholdsworth@nvidia.com> wrote:
+> CalledProcessError is an exception class from the subprocess namespace.
+> When raising this exception, git-p4 would instantiate CalledProcessError
+> objects without properly referencing the subprocess namespace causing
+> the script to fail.
 >
-> Please disregard my last statement. "test_name_without_dotsh" means
-> "test name without .sh extension". For 
-> "t2109-update-index-index-version.sh", the directory will be "trash
-> directory.t2109-update-index-index-version".
+> This patch resolves the issue by replacing CalledProcessError with
+> subprocess.CalledProcessError.
+> ---
 
-Yup.  "without_dot_sh" might have been a better way to spell it, but
-"without_dotsh" certainly is better than "without_dots".
-
-Thanks for being extra careful.  In any case, the original fix is
-good and has already been queued.
-
+MIssing sign-off.
