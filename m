@@ -2,70 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2C61C433F5
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 10:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C622C433F5
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 10:21:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237721AbiAFKLx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 05:11:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55686 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236858AbiAFKLw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 05:11:52 -0500
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D62E2C061245
-        for <git@vger.kernel.org>; Thu,  6 Jan 2022 02:11:51 -0800 (PST)
-Received: by mail-yb1-xb36.google.com with SMTP id j83so6012941ybg.2
-        for <git@vger.kernel.org>; Thu, 06 Jan 2022 02:11:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=b/hAW/YCNGKLMW7zt858XKy6fmstP9OKJUwL+37gU3g=;
-        b=IX7zeUViwzzi2JF/qVyB/W490wig/wCtWwVr5QI/fiFpJq/eJKdwR/UG9am8s2yqah
-         /H3ly/nvtYstHvLs30GreZvs3Jd2/zOia0mRmhjYAKPDaSbdu8sFaedokWAPzHObACDm
-         VCMz6QQ+XCMz+peT9EI/r7ni/nXzloMvfBE00=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=b/hAW/YCNGKLMW7zt858XKy6fmstP9OKJUwL+37gU3g=;
-        b=a6o5jq3O1DWShXMHItfaYnUOCme9/DW6fB1JUTg1NdYls2QQ/KQY1ArPzYbJrTCMHL
-         Rmbd8J6jTlRwmcBI8DjoSUHg/06TTvlsdk9yfctr/DlgvrVDZka3aH8sHHEfM40JXlgi
-         xvt2t9hfa1xj8boMhg2JCc24k+gax+68opOzm6HTjZYUI/N0R06Uzw/pL2+GJTHY0BNO
-         OmQxg+N5ZT3K1ru87ChP56oB965xddRLxQZuaXF4+DGqCuICZS62CAAfbzYBEDwYR17e
-         G+Lwq7JZgsvKmt764X3ve1HsrArahqmudjc8/T2q5twxvd5tV3r+o6zLBo8Iof9YYIm7
-         AoBQ==
-X-Gm-Message-State: AOAM532ImIXN9RYF18NRHbp9OzvEwG/ulH5lHatnFze54JIxIJkvCXtf
-        jhakyKduoM5uIlAkxNEM/FDUXOMnVP2Br/XlSUX+Ua9e5IQV2w==
-X-Google-Smtp-Source: ABdhPJxX2nCmVga9/u2FxdvsSCoNJprfLFLZ/2zAr5OZzgwl7Zum5XPNmXuMmPHBrh2OQAH84S3/WOD4GTEzjxP4Ch8=
-X-Received: by 2002:a25:d690:: with SMTP id n138mr60203946ybg.326.1641463911017;
- Thu, 06 Jan 2022 02:11:51 -0800 (PST)
+        id S236987AbiAFKVu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 05:21:50 -0500
+Received: from smtprelay06.ispgateway.de ([80.67.18.29]:45573 "EHLO
+        smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232117AbiAFKVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 05:21:50 -0500
+Received: from [91.113.179.170] (helo=[192.168.92.29])
+        by smtprelay06.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.94.2)
+        (envelope-from <marc.strapetz@syntevo.com>)
+        id 1n5Psw-0000Ul-Vg; Thu, 06 Jan 2022 11:20:43 +0100
+Message-ID: <54fc04b3-1b6d-c8c9-f3cc-8c8bd647f187@syntevo.com>
+Date:   Thu, 6 Jan 2022 11:21:45 +0100
 MIME-Version: 1.0
-References: <CA+kUOak9_RLpdr9d4pQiwU=K42taCwhMdg5WkLP4GreQd4yWig@mail.gmail.com>
- <CAGyf7-HSia4pRs4FZ107v0jmP4k4Zfw5zJ-3Oz8UvF9oobczEw@mail.gmail.com> <CA+kUOam-Dd-XUk0XaOfw4_rUTg=Ws7w5H=vZ=ZZeEo4XJfsVOg@mail.gmail.com>
-In-Reply-To: <CA+kUOam-Dd-XUk0XaOfw4_rUTg=Ws7w5H=vZ=ZZeEo4XJfsVOg@mail.gmail.com>
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Thu, 6 Jan 2022 10:11:14 +0000
-Message-ID: <CA+kUOakkd2j_-W9cmcJNQeRzYHim2K2s9ugj29OHDgnh4r1yGg@mail.gmail.com>
-Subject: Re: Bug using `fetch` with blank `-c` arguments to git
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Patrick Steinhardt <ps@pks.im>,
-        Bryan Turner <bturner@atlassian.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH v2 1/2] t7508: add tests capturing racy timestamp handling
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Marc Strapetz via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1105.git.1640181390841.gitgitgadget@gmail.com>
+ <pull.1105.v2.git.1641388523.gitgitgadget@gmail.com>
+ <7d58f80611193f8696d99e317fe6b1e53ac740f7.1641388523.git.gitgitgadget@gmail.com>
+ <xmqqczl5hpaq.fsf@gitster.g>
+From:   Marc Strapetz <marc.strapetz@syntevo.com>
+In-Reply-To: <xmqqczl5hpaq.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 4 Jan 2022 at 21:00, Adam Dinwoodie <adam@dinwoodie.org> wrote:
-> <snip>
-> For the sake of double-checking, though, I just uninstalled the
-> version of Git in /usr/bin (after spending some time working out how
-> to do that with apt, without also uninstalling dependencies I wanted
-> to leave alone) and repeated the above commands, and got exactly the
-> same output.
+On 05/01/2022 21:59, Junio C Hamano wrote:
+>> From: Marc Strapetz <marc.strapetz@syntevo.com>
+>>   
+>> +test_expect_success 'racy timestamps will be fixed for clean worktree' '
+>> +	echo content >racy-dirty &&
+>> +	echo content >racy-racy &&
+>> +	git add racy* &&
+>> +	git commit -m "racy test files" &&
+>> +	# let status rewrite the index, if necessary; after that we expect
+>> +	# no more index writes unless caused by racy timestamps; note that
+>> +	# timestamps may already be racy now (depending on previous tests)
+>> +	git status &&
+>> +	test-tool chmtime =1234567890 .git/index &&
+>> +	test-tool chmtime --get .git/index >out &&
+>> +	grep ^1234567890 out &&
+> 
+> If file contents were 1234567890999, this will still hit, but I do
+> not think that is what you wanted to see.  Perhaps
+> 
+> 	git status &&
+> 	echo 1234567890 >expect &&
+> 	test-tool chmtime=$(cat expect) .git/index &&
+> 	test-tool chmtime --get .git/index >actual &&
+> 	test_cmp expect actual
+> 
+> or something?  But I think you inherited this bogosity from the
+> previous test, so I am OK to add a few more copies of the same
+> bogosity to the test.
+> 
+> Somebody later has to step in and clean them all up, though.  When
+> that happens, we should document how the magic 1234567890 timestamp
+> was chosen near its first use.
 
-On the off-chance anyone is following along at home: I've just
-attempted to reproduce this problem with a fresh Debian installation,
-and the problem does not reproduce. So there's clearly something odd
-about my environments. I'm baffled about what it might be, but for now
-I'll keep investigating on my side.
+It seems like this pattern was used only once before my changes, hence I 
+will extract to test-lib-functions.sh and fix the bogosity for the next 
+version of my patch.
+
+-Marc
