@@ -2,125 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7E19C433F5
-	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 09:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2C61C433F5
+	for <git@archiver.kernel.org>; Thu,  6 Jan 2022 10:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237623AbiAFJyY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Jan 2022 04:54:24 -0500
-Received: from mout.web.de ([212.227.15.4]:41935 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236542AbiAFJyY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jan 2022 04:54:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1641462860;
-        bh=d5ePrYaxNbHHKcbzBy26EeWTg62HOtDQeqIIBTd66gA=;
-        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=HMTOdSPkXRi7tFLVY6TmmZewO6YVjGALsVIE8pqvJIac2eTooAX4FX0dnaOEabD2h
-         dOFDMcT4BZGjpIL7WuWNE2ghseJHUVZpjRY9N0/t4X7l4ch4d+U6v+dvHJEPvRD2XS
-         B2m4B4OA8pEi4jdp/yAZFiQfb1cVYzgXCMLEhjYo=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MYu16-1msEBg12lE-00VFDi; Thu, 06
- Jan 2022 10:54:20 +0100
-Message-ID: <a913ad56-9083-d124-f1ec-58a1f48d48fc@web.de>
-Date:   Thu, 6 Jan 2022 10:54:19 +0100
+        id S237721AbiAFKLx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Jan 2022 05:11:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55686 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236858AbiAFKLw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jan 2022 05:11:52 -0500
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D62E2C061245
+        for <git@vger.kernel.org>; Thu,  6 Jan 2022 02:11:51 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id j83so6012941ybg.2
+        for <git@vger.kernel.org>; Thu, 06 Jan 2022 02:11:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=b/hAW/YCNGKLMW7zt858XKy6fmstP9OKJUwL+37gU3g=;
+        b=IX7zeUViwzzi2JF/qVyB/W490wig/wCtWwVr5QI/fiFpJq/eJKdwR/UG9am8s2yqah
+         /H3ly/nvtYstHvLs30GreZvs3Jd2/zOia0mRmhjYAKPDaSbdu8sFaedokWAPzHObACDm
+         VCMz6QQ+XCMz+peT9EI/r7ni/nXzloMvfBE00=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=b/hAW/YCNGKLMW7zt858XKy6fmstP9OKJUwL+37gU3g=;
+        b=a6o5jq3O1DWShXMHItfaYnUOCme9/DW6fB1JUTg1NdYls2QQ/KQY1ArPzYbJrTCMHL
+         Rmbd8J6jTlRwmcBI8DjoSUHg/06TTvlsdk9yfctr/DlgvrVDZka3aH8sHHEfM40JXlgi
+         xvt2t9hfa1xj8boMhg2JCc24k+gax+68opOzm6HTjZYUI/N0R06Uzw/pL2+GJTHY0BNO
+         OmQxg+N5ZT3K1ru87ChP56oB965xddRLxQZuaXF4+DGqCuICZS62CAAfbzYBEDwYR17e
+         G+Lwq7JZgsvKmt764X3ve1HsrArahqmudjc8/T2q5twxvd5tV3r+o6zLBo8Iof9YYIm7
+         AoBQ==
+X-Gm-Message-State: AOAM532ImIXN9RYF18NRHbp9OzvEwG/ulH5lHatnFze54JIxIJkvCXtf
+        jhakyKduoM5uIlAkxNEM/FDUXOMnVP2Br/XlSUX+Ua9e5IQV2w==
+X-Google-Smtp-Source: ABdhPJxX2nCmVga9/u2FxdvsSCoNJprfLFLZ/2zAr5OZzgwl7Zum5XPNmXuMmPHBrh2OQAH84S3/WOD4GTEzjxP4Ch8=
+X-Received: by 2002:a25:d690:: with SMTP id n138mr60203946ybg.326.1641463911017;
+ Thu, 06 Jan 2022 02:11:51 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.1
-Subject: [PATCH 2/2] grep: use grep_not_expr() in compile_pattern_not()
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <ea01f9b6-2ce3-57e8-533f-4cc29937f700@web.de>
-In-Reply-To: <ea01f9b6-2ce3-57e8-533f-4cc29937f700@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:8WQMr56ZbppNOFhe1jSI8wBdqoJUeex/bgLwNbZMz1XvjqqY9og
- vfpkoJc/UEc8Iue1DnqfRUu54lB23J4bnOFcD/RbclUbyiaUbthOoFtfScoTE14ZWOwJ443
- LoDhExaLR5oVlU9nGu6m6jTzUFIiP6xLyXmuXfjGE0tiiJ9YjxGXAlp41dXu/DNNtZ7/F3O
- t2ekcwi8m/3Iyf7oqvwwQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TywV73hgDzA=:yXPhKjMP7upLpJZqgyIBnb
- rg/Dy0hoX4oSVSWSmvgWaFlc8Kqnvs0RYVJTbB94IG8NvTt8B1UrEaWr89Uny6LRqLUcW1h5v
- 80oHJa1DqANIew4Ateia4mUhbVJtOeGXB/A8KBKn5qXzz9oUTfINZ2xJYbZAQsTJ1tWbcu1om
- wcCIG1G/BzYeDfvY2vEnZYPMnoCRy0lbYVNMA5Li/UhqAYxBRUytxrWMgfrtjHErzBeVYyrY/
- TVkTZA9Td9YQyotNNmbkrswPJJJIB/DpRoFXfz0Q9bNHg7YfPj8AR1gi6s1BLF81IOBZzdA7L
- bHvahn4z1dpADMtjY0Mlk5CgRpKJtokQnvP5OaNQZS0PyiOv+kM2dxVAsRmPMshVJoiHvLnyW
- sSi/F962JepbBhKr+oQtwCBJexw84aCH1WNjn1+T+OTFAgTEPJeI3IDjePdUUXD1ko5BMNhwu
- bLvV2zavOkYtVYN4CwttgFMtl40waA3Mk5HK3ZYwcKzK1pS6QRVdzSUN1UAXBTsmLCCWXQ+0S
- kQimnHh353g4ZAMy1GyMyYLdoo+jiPRl3KitFigAMZV+F8C1gI+kr9AlZ+7Jm2c2K1zqKDkmc
- NdKSaxHGwqzb6pnOfrzjc8elxo192xsF1hyYznccu3GnAUffnIvNOaT/e3rSvPPe5Z315UKUG
- lpkRcLcySHXyCk25a0u60JGIUG57456ilelqdwGs9imnaYGnAH/kYiGAPGLlO+GeJb0aFzmg8
- ENqBCXr3MkHbY9iqiyIN5hjgX6TdXnR7uo4dJjg9cPfvzCDnoSRkTo2uER5c7Db4+fJuHK6v/
- 3mFHs5r6U4CZlQQbYs5Q+FE7/WQGtiUbVrCh3oAQOxD31oFtuNdnNhagebmZX4hzI8dI6Tzjc
- OVAxMe7kEsFVjAYbnehihHT4bUI/zzB7Tkpj5fIMZrkqUX2AixXhl5LN2S8Ql9GqjwhEuW/le
- hUa3VUqKYudkYTP6f6L/GBtrLEBIj7arDw5b9P0M5ysaeZxEYAvaRF062KYRzS5r/t/oYUJVo
- 1DERmFvXUxtQnJGBa64RP24XbijnQH3tfvX01F2MAn9mMCz0fW6Hlv2dZis5iEBjjA==
+References: <CA+kUOak9_RLpdr9d4pQiwU=K42taCwhMdg5WkLP4GreQd4yWig@mail.gmail.com>
+ <CAGyf7-HSia4pRs4FZ107v0jmP4k4Zfw5zJ-3Oz8UvF9oobczEw@mail.gmail.com> <CA+kUOam-Dd-XUk0XaOfw4_rUTg=Ws7w5H=vZ=ZZeEo4XJfsVOg@mail.gmail.com>
+In-Reply-To: <CA+kUOam-Dd-XUk0XaOfw4_rUTg=Ws7w5H=vZ=ZZeEo4XJfsVOg@mail.gmail.com>
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Thu, 6 Jan 2022 10:11:14 +0000
+Message-ID: <CA+kUOakkd2j_-W9cmcJNQeRzYHim2K2s9ugj29OHDgnh4r1yGg@mail.gmail.com>
+Subject: Re: Bug using `fetch` with blank `-c` arguments to git
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Patrick Steinhardt <ps@pks.im>,
+        Bryan Turner <bturner@atlassian.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the definition of grep_not_expr() up and use this function in
-compile_pattern_not() to simplify the code and reduce duplication.
+On Tue, 4 Jan 2022 at 21:00, Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> <snip>
+> For the sake of double-checking, though, I just uninstalled the
+> version of Git in /usr/bin (after spending some time working out how
+> to do that with apt, without also uninstalling dependencies I wanted
+> to leave alone) and repeated the above commands, and got exactly the
+> same output.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- grep.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
-
-diff --git a/grep.c b/grep.c
-index f1bbe80ccb..bdbd06d437 100644
-=2D-- a/grep.c
-+++ b/grep.c
-@@ -595,6 +595,14 @@ static void compile_regexp(struct grep_pat *p, struct=
- grep_opt *opt)
- 	}
- }
-
-+static struct grep_expr *grep_not_expr(struct grep_expr *expr)
-+{
-+	struct grep_expr *z =3D xcalloc(1, sizeof(*z));
-+	z->node =3D GREP_NODE_NOT;
-+	z->u.unary =3D expr;
-+	return z;
-+}
-+
- static struct grep_expr *grep_or_expr(struct grep_expr *left, struct grep=
-_expr *right)
- {
- 	struct grep_expr *z =3D xcalloc(1, sizeof(*z));
-@@ -647,12 +655,10 @@ static struct grep_expr *compile_pattern_not(struct =
-grep_pat **list)
- 		if (!p->next)
- 			die("--not not followed by pattern expression");
- 		*list =3D p->next;
--		CALLOC_ARRAY(x, 1);
--		x->node =3D GREP_NODE_NOT;
--		x->u.unary =3D compile_pattern_not(list);
--		if (!x->u.unary)
-+		x =3D compile_pattern_not(list);
-+		if (!x)
- 			die("--not followed by non pattern expression");
--		return x;
-+		return grep_not_expr(x);
- 	default:
- 		return compile_pattern_atom(list);
- 	}
-@@ -704,14 +710,6 @@ static struct grep_expr *compile_pattern_expr(struct =
-grep_pat **list)
- 	return compile_pattern_or(list);
- }
-
--static struct grep_expr *grep_not_expr(struct grep_expr *expr)
--{
--	struct grep_expr *z =3D xcalloc(1, sizeof(*z));
--	z->node =3D GREP_NODE_NOT;
--	z->u.unary =3D expr;
--	return z;
--}
--
- static struct grep_expr *grep_true_expr(void)
- {
- 	struct grep_expr *z =3D xcalloc(1, sizeof(*z));
-=2D-
-2.34.1
+On the off-chance anyone is following along at home: I've just
+attempted to reproduce this problem with a fresh Debian installation,
+and the problem does not reproduce. So there's clearly something odd
+about my environments. I'm baffled about what it might be, but for now
+I'll keep investigating on my side.
