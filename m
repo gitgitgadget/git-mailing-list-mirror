@@ -2,100 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7562C433F5
-	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 10:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44030C433EF
+	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 10:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346711AbiAGKXK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jan 2022 05:23:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44616 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346709AbiAGKXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jan 2022 05:23:07 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C92FC061212
-        for <git@vger.kernel.org>; Fri,  7 Jan 2022 02:23:07 -0800 (PST)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 9C57C5B236;
-        Fri,  7 Jan 2022 10:23:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1641550986;
-        bh=G0IrBYDlppRJRcsMS7ga639I6HH5kBdFJFHCfdlgD1o=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=opWMlGNoa+OOd9AcDV4hFR8FhPI6R9mEWdkgU3VSB+Wwtb9IhJN+r8an1nYmmeeIq
-         iJ8K33FIi2sJQEnQh7o6PLEWuPxusDestn/orAza4iFxXZJ62AijebJfBgW2CDkfuZ
-         HLjRizqWDT63kaOfltVAt+AN7GM8ybKJna1plIFiCBqT63+ssTLpXS8Vd9NbsVc6pe
-         5BBqjyuwQxBPf7K5cwsjdTg0dZluuUhki3QlocObCuIPDHHQmMxqHDVEPv0+nE1PzV
-         w/YtIjr7WYwGkZybiy/Jq9tMAKgtzSydiI5aKpsnEgGH18lQgooIEb70xMzW3KZAsp
-         0K71YMTRGC2HtTuxKkbXZf5goZZ0RF1ey9GCkag0sPbeq0SH4rAkBWr5kcLYVhhReP
-         6RzizfBpDOnrrGt1Ya1vUeFqGV8zgCccPe/HcGqH1SJSjQC6972PB2obfMcjW4hstB
-         0/eY19GUnytR2LXiMhWd8gjVapvuIJ3bqCcDE9KzNrarmvI9faY
-Date:   Fri, 7 Jan 2022 10:23:04 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     theking2@king.ma
-Cc:     git@vger.kernel.org
-Subject: Re: Offer Windows Terminal as option for terminal emulation
-Message-ID: <YdgUiNL653Ib8iul@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        theking2@king.ma, git@vger.kernel.org
-References: <d45a1072c8fec95896cf82b5620f7219@king.ma>
+        id S237912AbiAGKyF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jan 2022 05:54:05 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:56893 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S237932AbiAGKyE (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 7 Jan 2022 05:54:04 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 97A1B5C019F;
+        Fri,  7 Jan 2022 05:54:03 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Fri, 07 Jan 2022 05:54:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:mime-version:content-type; s=fm3;
+         bh=GsyDT5uPYQfyOehZeDdFKl/3GhIo2ifrm9VbGN4swA0=; b=qXXeOVwuSCrB
+        SLcLIHORwr+fLWWxyPaESIxfNn7GMKsqfnZQuVdiGkakHY253TURf7edzIJWFCxg
+        hf02F9F4cn8EdbAB7yXiFtKZ/cmD8u9xY41M7OoQyn7qKVfp+ytvSTplmdDitOHv
+        V3UNCAtLhcEooBtYncSz0N0YNFHDzR/bi3jznleFcqgBU56kBN1t/C/+IoT2fh+Z
+        pL9U6A4NEzgP1MO4YvvQx3BDbH2a+evXmHIe2vtdTahHC7Y5m7zv9LIYxeAapfPg
+        3jP1rTVVR58o2IspfeolxM++SzG6rOPy4/qZ6KV+NIvWRwXfCMzUTNqFAG4fU/Ol
+        BxBZS17qmw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:message-id
+        :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; bh=GsyDT5uPYQfyOehZeDdFKl/3GhIo2
+        ifrm9VbGN4swA0=; b=Z64PIpOD2o5CUFtUrU/Fgz2mWw4cjScnDoa34vh6old+L
+        CcEWhJchZIaWp4kuFqrTM99hwyUZRF4BBFTOf+Be8XqSE25Pt8HIzwTZUCKGq+o2
+        3y87agDFxr2DlTtQzy1+OpHf+LCtY7L9LnqG5IjYW4RkXyoMxNbXlNceMxX6d7oC
+        MmrtUSaPxAk6hm664smyf98NdK2ezYDNd7fcNF3/Q+YZaDUqDwNZjyxUUQDOiA8U
+        1G0+sFQbNPCcnGEglrg1VkcwF6IZKUsvLLtzUFcmUY01tzFtzRfqvexEtqm57z9q
+        J/6cnFoeIqhoMGrgeUevFqjGc7UuYwsljUIMhW3AQ==
+X-ME-Sender: <xms:yxvYYRfqiaqx8273V3BewSVy-s5SKbljhrYSjjGci2CYVlcjCJCW9g>
+    <xme:yxvYYfNxM4xRFdCnBMAbKRssndVwRQXL1Ncy8J2AD-mO7SN6VKIVxI-0lZXM-b7XJ
+    63Lgsq0ggiDSvR5ZA>
+X-ME-Received: <xmr:yxvYYagurKfmm0PLiZVIhWAOJUzVifept8yxhvWfc5J6YGcdgDFnQB74icwcwoS4hoHbs-3_SiMRhgzcuE6P7C_cgb7okTxZgvVxHNZSiOO4QxVYlioeR_J4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudeguddgvddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:yxvYYa85_g0TsSyYs5-jqS2ghUrpzmx-0MrBbwebNJw1N_S66Std7Q>
+    <xmx:yxvYYduNqYjalNCrYhtJdpx_-tGv2qguOj1ZrSZjWvQh1usyW7uLJg>
+    <xmx:yxvYYZHEbraa7qPm_EjO3les_2t_Lrf2NpPqQ2HVH9fP4M2YL2HyEA>
+    <xmx:yxvYYb14wcy6q853QzImDepoT39rFfl2PfoBZ07xXY76crnb1jvGSQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Jan 2022 05:54:02 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id de782017 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 7 Jan 2022 10:53:59 +0000 (UTC)
+Date:   Fri, 7 Jan 2022 11:53:35 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Cc:     iwiedler@gitlab.com
+Subject: [PATCH 0/1] Async-signal safety in signal handlers
+Message-ID: <cover.1641552500.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Ntc0bNtILWIkJp/G"
+        protocol="application/pgp-signature"; boundary="xyJLImmc6lc7dnBB"
 Content-Disposition: inline
-In-Reply-To: <d45a1072c8fec95896cf82b5620f7219@king.ma>
-User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Ntc0bNtILWIkJp/G
-Content-Type: text/plain; charset=utf-8
+--xyJLImmc6lc7dnBB
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2022-01-07 at 08:12:08, theking2@king.ma wrote:
-> Since Windows 11 an acceptable terminal program comes with the OS as
-> replacement for cmd.exe. There is no need to install yet another terminal
-> emulator MinTTY
+Hi,
 
-Hey,
+we have recently observed a Git process which has been hanging around
+for more than a month on one of our servers in production. A backtrace
+showed that the git-fetch(1) process was deadlocked in its signal
+handler while trying to free memory. Functions like malloc, free and
+most I/O functions aren't reentrant though, which means they must not be
+executed in async signal handlers as specified in signal-safety(7).
 
-It looks like you probably wanted to write to the Git for Windows
-project, and I'd recommend their issue tracker at
-https://github.com/git-for-windows/git/issues.  As a non-Windows user, I
-don't know why this decision has been made and whether there were any
-reasons for doing it, but it's a part of Git for Windows and not Git
-proper.
+The fix for git-fetch(1) is rather simple: we can just unlink(2) the
+lockfiles, which is indeed allowed, but skip free'ing memory. But in
+fact, this is a wider issue we have: we mostly didn't pay attention to
+those restrictions, and thus we freely call non-async-signal-safe
+functions. It's less clear what to do about this in most of the cases
+though:
 
-I do know that in the past, Windows Terminal has had some serious
-compliance bugs: it claimed to be xterm-256color (instead of the correct
-ms-terminal) and failed to implement enough features that it broke Vim
-in many cases, which obviously wouldn't be suitable.
+- git-clone(1) tries to clean up the ".git" directory and its worktree
+  on being killed, but needs to allocate memory to compute corresponding
+  paths. We can try to preallocate the buffer, but it's not clear
+  whether there is a proper upper boundary.
 
-However, I think that's been fixed, and it may function correctly now
-that it's supportable as an option, but you'd have to ask the Git for
-Windows project why they don't have that option.  They may be delighted
-to off an option to have less code.
+- git-gc(1) will try to commit "gc.log" and write to stderr, both of
+  which aren't allowed. I think we'll have to just bail and leave it
+  behind in a partially-written state.
+
+- git-repack(1) tries to remove "pack/.tmp-*" files, calling opendir(3P),
+  readdir(3P), closedir(3P) and allocates memory. We probably have to
+  keep track of all temporary files we create in a global list, which we
+  can then access in our signal handler.
+
+- git-worktree(1) is doing the same as git-clone(1), trying to prune the
+  new worktree if it's killed. Again, we'd probably have to preallocate
+  a buffer to compute paths.
+
+- HTTP pushes do all sorts of HTTP requests in their signal handler to
+  unlock the remote server. I don't really see what to do about this
+  except drop the code -- setting a global "please clean up and exit
+  now" flags is probably not going to fly well.
+
+The tempfiles and tmp-objdir code already handles signals correctly.
+
+Patrick
+
+Patrick Steinhardt (1):
+  fetch: fix deadlock when cleaning up lockfiles in async signals
+
+ builtin/clone.c |  2 +-
+ builtin/fetch.c | 17 +++++++++++------
+ transport.c     | 11 ++++++++---
+ transport.h     | 14 +++++++++++++-
+ 4 files changed, 33 insertions(+), 11 deletions(-)
+
 --=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+2.34.1
 
---Ntc0bNtILWIkJp/G
+
+--xyJLImmc6lc7dnBB
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYdgUhwAKCRB8DEliiIei
-gZjVAQDV8ikYRJH/hXB9htK6iYsvFcZxX7Ua/Ggw64vQIiA0pQEAzM9pO7ABraHk
-zWIj0nH69TIP0jKKtY558jqU8cmaAws=
-=U7Q3
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHYG64ACgkQVbJhu7ck
+PpQdRg/7BFFSOXQr8gYV+CW/qRo6BOcMKRx+v2zGXR/BbJUg7NyU9GSS5UX5LVrP
+GOo6kA0froaZoC35BLD74eWtOdXWQnTqbLFkpskB/z0APVE0mNgMd2DeGfyegfpx
+HKEHWEotD+60cIe0ISC0ulGP6+Y/6zABPF8kFaB6xMnNgJ7GPtQX8mpZ4nyGtc1I
+wTHdD/yCHkfkxyYPNccd5y3jNNHXYkwo6G3fzqYftIGAW82pNH2tt/sUCaBlJbiC
+q8IqQo0lPn/+aQ4JE8AYFR3RPrZK0nCcQ0VNI+YQNmtvQepFwdxaTDSfnfHmXkb6
+nKEvmNuJr1wfP/AGNncKNq/ft5djhnTuXojSqys1kq97qT5zaPCtnlu6TtcoMk9L
+BEnGRArkZIcLv1jggR2km/4ljLUGpW1bAP55daol6FTjwAcFlPN10tRYps/vFsKl
+H5nk4WBDeIHOnDPg7E7Od2A4WYyF78bDLI57wLX+YDL6gfiue5+CaN3rj7Cz5Li2
+ClpzXqQi3RcON3ORQ9S508FYp5skXOHczRrj6V+0irFk4xwvDU/qt1k6GLcK2Lx6
+TUH/jnDVdCheCW6OS8dINx/3ceGoPQ+XHLkgPyMxewL5psqIiueY2lgENszKoe86
+fh5OkT32Zg0NIdtKOlcjmhuyQEa9B2f/80IwPK1zUvsPpUbOGY4=
+=qR2G
 -----END PGP SIGNATURE-----
 
---Ntc0bNtILWIkJp/G--
+--xyJLImmc6lc7dnBB--
