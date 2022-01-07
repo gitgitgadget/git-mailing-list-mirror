@@ -2,100 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43F1FC433F5
-	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 19:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C7C7C433EF
+	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 19:54:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233062AbiAGTls (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jan 2022 14:41:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59330 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230209AbiAGTls (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jan 2022 14:41:48 -0500
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04D21C061574
-        for <git@vger.kernel.org>; Fri,  7 Jan 2022 11:41:48 -0800 (PST)
-Received: by mail-il1-x12e.google.com with SMTP id t8so5382636ilf.12
-        for <git@vger.kernel.org>; Fri, 07 Jan 2022 11:41:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/6CNROJNEFCQti7yugOGPsE8LFUlSCRw64T3ECqaaTw=;
-        b=NQfSqCG6iJxPEeDFhS/nNZRM2B+XUlY6lfbFMaT4sHr+FZgi9Ac6k41IqdTOjz23eL
-         +8IaLtuDu/on7Tg+Oh++kIc4IdZtPHM/wYDHdKaxQmRyqNm5mExsKNTY90obDNNooBGV
-         VwYMFEQrAb/1OoNfj5y2S9HHz3adCPOaRDgP01GmpoGoTC0h8cl/3wyzo8+iVTca4lKj
-         rgukeWUWNsd33A2cBBTn6JfaDURDXrEPos1tNyXNP+pHHL2sMkHbUei3qEAGPa934MI4
-         sofOiIqdPYLHHhSWLQhVuMCX4AHSygdCafGdJRK1nPPGKTQJ8aQTTtl+FH9y37bKBvl8
-         cNaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/6CNROJNEFCQti7yugOGPsE8LFUlSCRw64T3ECqaaTw=;
-        b=Gt0qXlOrD5LU3WNzdxEELHo2ReoRezueewPG+pw77N7ddm5uyogtcOEXp7GQ98+cZw
-         ovwXcW16Fuc+8/ENv0EK1udXPTKuG6i948RVSJjXX+MLisjQjLzlBeUxoFhyFKlN4+tq
-         XiBt1pu9ftvZLk2dmedyFTWyz24hs+btxoYkEtGiwb4EAczOT67bdECwb+Lukf/N05x9
-         oY8lGziCuowojUXurjtTAT3+EabdmRMGIjojY2J0b1J7NGwSjRn6z4qi9FH/HjzVeUK5
-         femIkHwdRe4A8D7Oxwt+75buWuhPd49nUNr1YUbF+AMb7zAfIjiRCa3DSEhcu7QhMFVY
-         5Kuw==
-X-Gm-Message-State: AOAM531AE9drEz1wB4ds6tB09OQ99p47UL6PFYjW1B4p9TPd6by2rRsm
-        Uv4cjRmfz9A6YacDpSy0ueOcYA==
-X-Google-Smtp-Source: ABdhPJxW/HT8U7dmT+UkcCtrJ8/2S/rGbVLpgYaXC6vDA3U5syanh/DVYwvjodX3+DYPZxzXw2z6eQ==
-X-Received: by 2002:a05:6e02:20cb:: with SMTP id 11mr32227025ilq.163.1641584507409;
-        Fri, 07 Jan 2022 11:41:47 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id n10sm2596354ioz.17.2022.01.07.11.41.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Jan 2022 11:41:47 -0800 (PST)
-Date:   Fri, 7 Jan 2022 14:41:45 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
-        peff@peff.net, tytso@mit.edu,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 02/17] pack-mtimes: support reading .mtimes files
-Message-ID: <YdiXecK6fAKl8++G@nand.local>
-References: <cover.1638224692.git.me@ttaylorr.com>
- <7d4ae7bd3e28e2ec904abb37b6f26505e37531c5.1638224692.git.me@ttaylorr.com>
- <ef10c824-e2d9-f113-f010-6a1ac307427a@gmail.com>
- <YaqZA02FsCFA9qBi@nand.local>
+        id S233584AbiAGTy1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jan 2022 14:54:27 -0500
+Received: from mout.web.de ([212.227.15.4]:48133 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231377AbiAGTy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jan 2022 14:54:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1641585257;
+        bh=qvh+WwCJ/9ttBGbmjRLsGMZZEAo072QN8GMlSIEXOh4=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=AZgzFxMUN9NFCe5RExoegq1YgS8KtDmFQJh1J2Djia2RX8WHK88zuaapht+ujHLOe
+         woGuWA+s9cEg+/yWRdLnTDNnk55Hk0ARoCu/jpLkEStzBMDgf4x1QRLhpM2kFWdv02
+         1vYRggFBy3GMikTp0iulZX35hHCrRudB3d4Xhurc=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N6Jxd-1mHXiC2WhV-016Ewh; Fri, 07
+ Jan 2022 20:54:17 +0100
+Message-ID: <ec92e2ec-ef0a-8fe3-abcb-5cc6b29de762@web.de>
+Date:   Fri, 7 Jan 2022 20:54:16 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YaqZA02FsCFA9qBi@nand.local>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.1
+Subject: Re: [PATCH 0/2] grep: introduce and use grep_and_expr()
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+References: <ea01f9b6-2ce3-57e8-533f-4cc29937f700@web.de>
+ <cover.1641498525.git.me@ttaylorr.com>
+ <c573cc00-d5b3-9af1-a627-6c2462cae3be@web.de> <YdiVmgJYPzVrIYE1@nand.local>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <YdiVmgJYPzVrIYE1@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:OYIpLAeK/vpPY6F192lNjVh2zwOTEyy2cNCHGI1Xyd+cCr3FBBS
+ cYTEsOGWkl5jMZDMUvtkrDH0+Vxv+fGwSF6Pgt5Hclp6R5LUg2xdAb82q3aWuzAzpAEHIYc
+ ZmseF9O2PHiuwisKUgVU24oav3k1MoRo4nEhDcWQpztGrBvUPAh03NqB8KRsPslGFIp0fTS
+ 3YqePb5wJRmq5On5CTp7g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:rvezZ+M9eJA=:uaFdzAyOIzNN4eXm4h/uLt
+ WUotXuKktr7y/jJkYGUOmOrMqzILxwWgNHnvWCKJLUUDGEuj3Z9qX8Vuzf1A6vwqm+z9PdsdN
+ HT2bN23bP8gHrVMlzmYuq2is0+r47qKOlrMVNzSyszdMuleab5HGkzS75kDAdqbw+hedBuUep
+ MmN59hBHCtiYitFhbMxCKY54MrLayBgA2HJjzLdnBqUwJKXlTDbFlZijlF8bdJrP6FZqBxM1s
+ 1+Kg/N28C1dxZdoCvrJ8qhVJRsNXf+afXoJxIFhz3SobyZWpse2k4CgM+42duzlM7LyJtkumf
+ hbVdJqRGfcBLUvAMXraIeYQZMBIT9dlECjhz9uBvvCR05kPLVQbIcNgvf3GVXhvvd5PUphduc
+ vzd6ul7Lm3eNTfA6XvoPm/4VadXeuqWY3zSf9giFFQzx71hME6mjj2/h1YqGFj97m12sFAxHG
+ kDuhnPD1QJZzw365ponCEKmPqofMMRqWClYJ/po/fChwrHvekxV0o9WDGyAmu627NczTSluVt
+ 5wEx5mA00chN7NjguXsKyiJ3dTIFECaUT7B6i8Z19JjAFn3JtdC97j8QeMdowAIvg6amq5gaL
+ cCjM3Cf1brUfn40bv7wMFmPwbJzrEnFRYZL3EqOAwf1J0N13fwrowCq4Huwp20SlIuQ0wHhn+
+ tb/sQMlok/qRQAaBkRCgpWP+jK3smoIjRcYUDcpUkkSOeXeRRIVSeH/OS/pajoZy80OQvZPCL
+ CVaHc2k095t9aecnGLCgKE3ySryJYiWeGoT2341uBqj66/HOMsf/rsPVCU2beqrXpMSDGW4zr
+ 0WyvM0iUvKhXGeZTACO3U5e1H1wsijD0yP4rhNkkGKZyKhGIuXA99h4QoFrCCvtmrgHasPGn1
+ ct116ItoM1673DtgkMyqiR0EZxxQRc1akoBEV2t4oPA3MUpAJ9jIJOvkZh07AcmExtdRV3hzL
+ WCsZkl78EVFcSAtVtu0U7zTKFSip3aZcffV7eOMlH4vYPu1lXtr/aJjvRWbP058HBOfrxwU9R
+ CExi8Ng5HHwi7KTZGwbG1bfHUN7EYga6DowwQYegvVhKsPDjiu/7kFvSscyHQpuMhDnW30yK2
+ hUCqV6zL90ax6A=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 03, 2021 at 05:24:03PM -0500, Taylor Blau wrote:
-> On Thu, Dec 02, 2021 at 10:06:07AM -0500, Derrick Stolee wrote:
->     - A table of 4-byte unsigned integers in network order. The ith
->       value is the modification time (mtime) of the ith object in the
->       corresponding pack by lexicographic (index) order. The mtimes
->       count standard epoch seconds.
+Am 07.01.22 um 20:33 schrieb Taylor Blau:
+> On Fri, Jan 07, 2022 at 01:57:17PM +0100, Ren=C3=A9 Scharfe wrote:
+>> Am 06.01.22 um 20:50 schrieb Taylor Blau:
+>>> Ren=C3=A9,
+>>>
+>>> Here are a couple of extra patches on top of your series which introdu=
+ce
+>>> and use a new grep_and_expr() function.
+>>>
+>>> Like the final patch says, this isn't about reducing code duplication,
+>>> but rather about adding visual consistency with the other
+>>> `compile_pattern_xyz()` functions.
+>>>
+>>> Taylor Blau (2):
+>>>   grep: extract grep_binexp() from grep_or_expr()
+>>
+>> I considered extracting such a function as well.  I'd have called it
+>> grep_binary_expr(), though, to match the existing names.
+>>
+>> I decided against it because it can be misused by passing a non-binary
+>> kind to it.  (That's a weak objection, but the benefit of such a
+>> function was low already in my mind because it doesn't do much.)  You
+>> solve this by keeping grep_or_expr() and adding grep_and_expr(), which
+>> cannot be misused in this way -- OK.
+
+That "OK" should probably have been a "Good".
+
 >
-> > Storing these mtimes in 32-bits means we will hit the 2038 problem.
-> > The commit-graph stores commit times with an extra two bits to extend
-> > the lifetime by another hundred years or so.
-> >
-> > Could we extend the lifetime of cruft packs by decreasing the granularity
-> > here? Should 'mtime' store a number of _minutes_ instead of seconds? That
-> > should be enough granularity for these purposes.
+> That makes sense. If it's keeping you up at night, we could easily add a
+> check to ensure that `kind` is one of GREP_NODE_OR or GREP_NODE_AND. But
+> I think that any new code that looks like:
 >
-> Perhaps, though it does add some complexity to the code that deals with
-> this format at the expense of some future-proofing. I'm open to it,
-> though.
+>     grep_binexp(GREP_NODE_NOT, xyz, NULL);
+>
+> would probably stick out like a sore thumb. So I doubt that such a check
+> would buy us much practically speaking.
 
-I still have quite a bit of review from this topic sitting in my inbox.
+Having the wrappers for all the binary node types is good enough.  I'm
+not so sure about the sticking out thing -- I managed to miss bigger
+mistakes before..
 
-But this had been lingering on my mind, and I realized I said something
-incorrect. 32-bit mtimes won't cause us to run into the "2038" problem,
-since these aren't signed values. So storing epoch seconds in a uint32_t
-should get us into the year 2106.
+> But I agree that this whole thing probably isn't worth the minimal
+> effort required, since the couple of patches I posted on top are purely
+> about cosmetics.
+>
+> All of that is to say that I'd be happy to see these patches picked up,
+> and I would also not be sad at all to see them left on the floor.
 
-If anybody is still using cruft packs by then, I'll call this project a
-wild success ;-). So in the meantime, I don't think it makes sense to
-reduce the granularity and/or use extra bits to store the timestamps.
+I think the end result is an improvement.
 
-Thanks,
-Taylor
+Ren=C3=A9
