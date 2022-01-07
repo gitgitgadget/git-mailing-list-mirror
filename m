@@ -2,44 +2,44 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55E9EC433F5
-	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 10:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F36F1C433EF
+	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 10:56:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238003AbiAGKyI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jan 2022 05:54:08 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:37259 "EHLO
+        id S237943AbiAGK4O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jan 2022 05:56:14 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:35861 "EHLO
         out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237935AbiAGKyF (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 7 Jan 2022 05:54:05 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 48C365C010F
-        for <git@vger.kernel.org>; Fri,  7 Jan 2022 05:54:05 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 07 Jan 2022 05:54:05 -0500
+        by vger.kernel.org with ESMTP id S237912AbiAGK4N (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 7 Jan 2022 05:56:13 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 809565C01C7;
+        Fri,  7 Jan 2022 05:56:13 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Fri, 07 Jan 2022 05:56:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=fm3; bh=EYCjY5wPlBl/gffNP5OB06cXP9VunJ76bc/ochfR
-        BrA=; b=mW9pfO7j6DbSfSB5duIq13CxcGuOvHoaSXHrP40Om9jSKddUwgGPfyeR
-        9xYcdBYQg4uANWKYUKuZDXIarHHFNK5TrrNx6FQYVdhbPeQfn/+jitxCxW//+nCt
-        wJ2kPE5XQRS8hEN9/PXfXh9H+IuJ5o3HUL/FkWGu6Q37TWdOMC44KGRcZKQXxJ4W
-        fFLAAeHC97gTpr2NkEC8K5ctqARmF5RLu0g7qKz3jSJrtqI5JGTkZksU/G/wB9su
-        X2loXHz9KkeRcEv7cvYM3CWpa/AjvOC3l+FUjiH+hUODbjfWFsZEnAVrvlio7YyR
-        XpzXc83bkQ5rzVndOKy0JUvFk3iQgQ==
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=0BIcQm7swH/D1hQJgDW7QUQJ8yN
+        ROvDnL14CQ21FUMk=; b=QBSUTbQg2F9qCN6TgiRdim/CZvei107xUL+jijd888X
+        uZFtv4p174xxmlhuABGApiEjGJKqtaaGkZR0lPSysESkyQ47I8rjL8NqpQYV+qyM
+        dyBLP2Dj2LRBciunvkdee8rF8lfmmCxYWmJ3xE87ORFITEiRKJ9faD4FNVCxQMzw
+        ftIPngejZlwlx/5WBb8jEyvlWyvUMQgag5bCqDq1GR86AO2zWc0W3eVnkkcTJmyw
+        j7VGl4oLttmdu8jWBxw+BdM7v58t6ClxkDmveaF1azMpGw6H7yc7eVgh4AOxt3/W
+        fGH7M7EfhRb7/ymZFQmKeIFDQXELEzye8mSbyjmEJaQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-type:date:from:in-reply-to
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=EYCjY5
-        wPlBl/gffNP5OB06cXP9VunJ76bc/ochfRBrA=; b=dZ3/jiL+y+luGJS9LKJHkB
-        1XBjobfgvK+vMbSxsJ4czLi9PIFHnTkefvO08e3bvBeHK+4WQdjl0mKHYbfrTELp
-        VV621YCkmW00nxIcQtfKaDIYidSBIAX9oGVReSpM9JBcGoOyf7IK3+gJfkth0qbl
-        tDc/TRu9UYK1QXk7j9frzgBJPyCuDD/fbAS+j2XB5tFYg3zLi7oN16j/TYJkboMq
-        SVJIQ/kMHjfqaG+sWW9sw8vJaq7inWd0anKqo1NyrC0DsxgjzC3tk35QAXmjogHR
-        nI/kJGx1sIF065i+brXHKG876LtvuPO+ROPrlKcOYNjWMVzt6zxIlt59wRonCJhA
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=0BIcQm
+        7swH/D1hQJgDW7QUQJ8yNROvDnL14CQ21FUMk=; b=CtBvnkdT+9AY7fWZFBjUhD
+        iSRlq2nWMAqHOanBxgDBTX+dDAyd0a5G8Q7drgCvp3qqkXuLZRx3uEvnDEXCbpdl
+        xVVGBjEehDO64oA2YFQZznzuRL71g8qaHL/E53RaTNS2yS73xPeaRi3Qj5JKmEyw
+        ParLdbRB+RQplt8qnYVEekK9T6J9M6hp0qATyCRGdLmFxfVKuxAo2ShIy2Fh2+jl
+        u7JoGjOc4m883H6+84gpsf1PjZ6ENGIe6FBc27lQnHGzUdiwSIxPEavVkDDK0mPH
+        7x7+prembuT+mC+tdEIv5Rr/7ZJlXxDTUsuV5JRmwk4JEHlXUHeAE5JFvuQsdDxA
         ==
-X-ME-Sender: <xms:zRvYYbEuavRmogAsm4rGzObzsqklu13ecDT-V4PnhHuEiloSw8ytDQ>
-    <xme:zRvYYYUDS0jAIUPC5RW4pVKtc5-LkxMNmpy_ox4P9KUBfbmsaLsfLrA758HvZGyC7
-    IqSvTrrku7hMY_MUQ>
-X-ME-Received: <xmr:zRvYYdJVFrml91Q5Y4HuPgHi6esjlgyoKlHr-10xIbu6DLw-QjHja0noWYvzwwuhmFhIPEwjcw7JPmaUh9KeVFWFkT7bwBu9dUnFZD5LVp1WeSUg3qlGa5Wy>
+X-ME-Sender: <xms:TRzYYXmy8fazTULPEXiIk9u0OCJN8Lbvj6itYtFn1YWMtO-FKx4y3w>
+    <xme:TRzYYa3PwwgYxwID5SNXhqFdL0dq5pvLxfzfHtLh1ajAd4U77cbPS5HHJKo3fzDOk
+    NpS7wmeHfwBsfS-ww>
+X-ME-Received: <xmr:TRzYYdoy0Rj_Sm8YJj8OhAvZXLenPzgTNQMvKMO7iW_1P7_y3HAohG6unAb70UYsPH8Vt-8dX3w42UV2edqcgkL4VUUEaNaqnGGZrU2bQHU7rdy3GAVfXGFw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudeguddgvdduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
@@ -47,37 +47,39 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudeguddgvdduucetufdoteggod
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:zRvYYZGiGF7p-q8ni0hcJMGPE4b3O71DPrO_4bUoMl0nXk71WjCkgA>
-    <xmx:zRvYYRVCewqLZZsfQHStYBasJ3JJW2qwDf6njSfiXby8S55qcoTs3g>
-    <xmx:zRvYYUOdHNYz7YHyS15vRlbId_uq8cI7pzyO3JgJfmazGy061LxO2w>
-    <xmx:zRvYYQBC2HXIEIoXfYe-iHAeHQiKbZnMUsdilJ0gsc-ZaOGV0AmRKQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 7 Jan 2022 05:54:04 -0500 (EST)
+X-ME-Proxy: <xmx:TRzYYfnunbZNw0jeyyPjmAbHTGe-eYaeP1dxHRn-Q5UD9UY3nPV8Mw>
+    <xmx:TRzYYV06wh0y8aidhFAzmZB_XX5JZUKLZ_BdxYOODplc6jCyGvKS-w>
+    <xmx:TRzYYesDxSAkysU4OPIIjRMu_dJkMwijAgnl5ARZ7W6lRB3AgJQIyA>
+    <xmx:TRzYYS8RXAntXE95jdcm0Di6pzNb8i2wnuZEjGPlLX0zRE_eqdA6TA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Jan 2022 05:56:12 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 2687e273 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-        for <git@vger.kernel.org>;
-        Fri, 7 Jan 2022 10:54:04 +0000 (UTC)
-Date:   Fri, 7 Jan 2022 11:53:39 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 583f2c7e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 7 Jan 2022 10:56:11 +0000 (UTC)
+Date:   Fri, 7 Jan 2022 11:55:47 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
+Cc:     iwiedler@gitlab.com
 Subject: [PATCH 1/1] fetch: fix deadlock when cleaning up lockfiles in async
  signals
-Message-ID: <c46f42a3a3cbf8e1fc523093f733846d52bf59d3.1641551066.git.ps@pks.im>
-References: <cover.1641551066.git.ps@pks.im>
+Message-ID: <555ec6717ecab0fe6ef5660bcf0d61d59f84ef8b.1641552500.git.ps@pks.im>
+References: <cover.1641552500.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Ynd8olyxMUmgBEZh"
+        protocol="application/pgp-signature"; boundary="JUZn/g7LYJLmgxJ3"
 Content-Disposition: inline
-In-Reply-To: <cover.1641551066.git.ps@pks.im>
+In-Reply-To: <cover.1641552500.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Ynd8olyxMUmgBEZh
+--JUZn/g7LYJLmgxJ3
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+
+[Resend with the correct In-Reply-To header set to fix threading]
 
 When fetching packfiles, we write a bunch of lockfiles for the packfiles
 we're writing into the repository. In order to not leave behind any
@@ -125,19 +127,19 @@ they may not be reentrant. As a result, if we execute such functions in
 the signal handler, then they may operate on inconistent state and fail
 in unexpected ways.
 
-Fix this bug by just not free'ing memory when running in the signal
-handler. We're about to re-raise the signal anyway and will thus exit,
-so it's not much of a problem to keep the string list of lockfiles
-untouched. Note that it's fine though to call unlink(2), so we'll still
-clean up the lockfiles correctly.
+Fix this bug by not calling non-async-signal-safe functions when running
+in the signal handler. We're about to re-raise the signal anyway and
+will thus exit, so it's not much of a problem to keep the string list of
+lockfiles untouched. Note that it's fine though to call unlink(2), so
+we'll still clean up the lockfiles correctly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
  builtin/clone.c |  2 +-
  builtin/fetch.c | 17 +++++++++++------
- transport.c     |  5 +++--
+ transport.c     | 11 ++++++++---
  transport.h     | 14 +++++++++++++-
- 4 files changed, 28 insertions(+), 10 deletions(-)
+ 4 files changed, 33 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
 index 5bed37f8b5..585eef9b9a 100644
@@ -154,7 +156,7 @@ index 5bed37f8b5..585eef9b9a 100644
 =20
  	if (option_dissociate) {
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f1fe73a3e0..2c7a644d69 100644
+index f1fe73a3e0..4bc04522ed 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
 @@ -223,17 +223,22 @@ static struct option builtin_fetch_options[] =3D {
@@ -180,7 +182,7 @@ index f1fe73a3e0..2c7a644d69 100644
  static void unlock_pack_on_signal(int signo)
  {
 -	unlock_pack();
-+	unlock_pack(TRANSPORT_UNLOCK_PACK_SKIP_FREE);
++	unlock_pack(TRANSPORT_UNLOCK_PACK_IN_SIGNAL_HANDLER);
  	sigchain_pop(signo);
  	raise(signo);
  }
@@ -205,10 +207,10 @@ ransport,
  	exit_code =3D do_fetch(gtransport, &rs);
  	sigchain_pop(SIGPIPE);
 diff --git a/transport.c b/transport.c
-index 92ab9a3fa6..f636163d05 100644
+index 92ab9a3fa6..2a3e324154 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -1456,13 +1456,14 @@ int transport_fetch_refs(struct transport *transpor=
+@@ -1456,13 +1456,18 @@ int transport_fetch_refs(struct transport *transpor=
 t, struct ref *refs)
  	return rc;
  }
@@ -216,18 +218,24 @@ t, struct ref *refs)
 -void transport_unlock_pack(struct transport *transport)
 +void transport_unlock_pack(struct transport *transport, unsigned int flags)
  {
++	int in_signal_handler =3D !!(flags & TRANSPORT_UNLOCK_PACK_IN_SIGNAL_HAND=
+LER);
  	int i;
 =20
  	for (i =3D 0; i < transport->pack_lockfiles.nr; i++)
- 		unlink_or_warn(transport->pack_lockfiles.items[i].string);
+-		unlink_or_warn(transport->pack_lockfiles.items[i].string);
 -	string_list_clear(&transport->pack_lockfiles, 0);
-+	if ((flags & TRANSPORT_UNLOCK_PACK_SKIP_FREE) =3D=3D 0)
++		if (in_signal_handler)
++			unlink(transport->pack_lockfiles.items[i].string);
++		else
++			unlink_or_warn(transport->pack_lockfiles.items[i].string);
++	if (!in_signal_handler)
 +		string_list_clear(&transport->pack_lockfiles, 0);
  }
 =20
  int transport_connect(struct transport *transport, const char *name,
 diff --git a/transport.h b/transport.h
-index 8bb4c8bbc8..8949ea9d04 100644
+index 8bb4c8bbc8..3f16e50c19 100644
 --- a/transport.h
 +++ b/transport.h
 @@ -279,7 +279,19 @@ const struct ref *transport_get_remote_refs(struct tra=
@@ -239,13 +247,11 @@ sport);
 -void transport_unlock_pack(struct transport *transport);
 +
 +/*
-+ * If this flag is set, then the data structures tracking the locked packf=
-iles
-+ * will not be free'd on unlock. This flag should only be passed when exec=
-uted
-+ * in a signal handler where free(3P) cannot be relied upon.
++ * If this flag is set, unlocking will avoid to call non-async-signal-safe
++ * functions. This will necessarily leave behind some data structures which
++ * cannot be cleaned up.
 + */
-+#define TRANSPORT_UNLOCK_PACK_SKIP_FREE (1 << 0)
++#define TRANSPORT_UNLOCK_PACK_IN_SIGNAL_HANDLER (1 << 0)
 +
 +/*
 + * Unlock all packfiles locked by the transport.
@@ -260,24 +266,24 @@ uted
 2.34.1
 
 
---Ynd8olyxMUmgBEZh
+--JUZn/g7LYJLmgxJ3
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHYG7IACgkQVbJhu7ck
-PpS0rRAAivYQe15gXpFei4Z+6jKDHskZhU7qM+mDX7UGeh0AGu6asmyr/vaUOOew
-uGIUxJEaoHjH3MrSlXyEF9X7aUXykPzaELhunqMWjh/8rBUYzDXpGM4WoAfAAc6H
-f3slUmJfImZsKHM5VRdaA7xnvB648W4T1LPrqsaGDpHoT9useGfV1jiLdQt3Wozn
-xqjDs4AaxKCAn9cK/+9XuqyP6xBCNzGBMd3pCVwTj3a9IkZNdIo29EgWfr3YVEVp
-ODgkBbDev4nePNIEpHSqaI6j697ufZembSQbYbkcq7T2Ye47FMqjhhJWVvNLWzg4
-BEgF/kG7tb6KZ+ncehOyCpeOU3falv8g0F4LOsBCw+xXUstiO4mPSVqUyeJRVl45
-IhFZFCAqw/j5Q9TbXzga7QlRzUDA1GrkOO32zGuLqdlJSXDuj2rJgMC/u7xZECLx
-9SwgsE4O/NwJkEvpm7ao10diOMt6Wy7AOKjIEGQSOzlZicFXr1iFGtpvjhU/M7jM
-ZJe5s0VivKaUZwI2nZOOA1lJQC3agIr3Otzm1AVRYKTC8gaz23Nz8ivNMZO50Cdd
-3vvXdix8LPv2Lqk85BWJ6fQgTJTIG1hYt+QiQ4kiyrBUiNZN6mfXKHNeZ0Telntp
-5ehcauEmtQOzYE+nRvqcb/j8jHzrartP9W0JmUAC8Vza/h+Ab5I=
-=hYxZ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHYHDIACgkQVbJhu7ck
+PpT0qg/+OysY3+cxM4oOs8CGrZ9aVhLSjQRkbFMCCMxTa7+I7tDU937NnrsF4FRz
+/088YKmUwDdtJ8OwudLjivo6wXOY3/IdIVFuCdJt+aEkCb2uMpmMBe/UweBpx1DQ
+RZLXnLSBZR9MRVlYlKVZGHbzOBaF5Ww0POQRaABVG2YHiFRpx9izCEJFvLU48/9J
+UKf24V15CczaQimfBeK9NXAMV7PUOMxYiY234NsoqFVVJdS/97HjdXWonIxO1LvA
+5CLEyPceif/Tx1YJhvtPpD0/IB2LGL6j+LbFB6HBJOA7BK1RwK4L2p+0pYuOQoCv
+cj4TsfkfUhS5crfTWDwr5swrLLO2nteynOfTYlGUsQRTi7hnZiuWz6d8ZfFmElqo
+Eswgdvn1tbUQYVCvsYhOobqqwmNLGCWFiqRvjnkrniN3Xv/qZPUTXXck4lRKTLGG
+Dluyo8SUp2AhLk4BOE10n9u6HAYQ5Qum7PTg1Jc0K32OmVjGSM8H2DxoMvW7d8Fy
++GRUazhpPs9xQK3ZDYYLVVRqfDuqi2TKHP1X+Bkd/k43RD/SnvYVr4DqWtjyTkOR
+D5RGvrDC3rIRzSif2vw8yHI5k2hIWMc5rMnCa24eBqUc+oBiru6W1DKpMgH78SsX
+U50g8DTZlfsswbIDO17Bz1xP14DUGsEioiDYoJ3dchburNUIE98=
+=KG0g
 -----END PGP SIGNATURE-----
 
---Ynd8olyxMUmgBEZh--
+--JUZn/g7LYJLmgxJ3--
