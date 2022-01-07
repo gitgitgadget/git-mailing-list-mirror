@@ -2,115 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC66FC433F5
-	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 13:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8EAAC433EF
+	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 13:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347322AbiAGNED (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jan 2022 08:04:03 -0500
-Received: from mout.gmx.net ([212.227.15.19]:38545 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231883AbiAGND7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jan 2022 08:03:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1641560622;
-        bh=/EdEv50M6lRg9oE3E+7sSWt7M7jlUuusJ1sxAP9/Gpg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=eZfHm7Sd04BqDLi+C2JZMflJYS1IVsSWxNSh9DUa3cb4gDf2O9EMGunCGY5afqux8
-         /M3Xkux3/bgurwKFTSE7u5SE72r5ibBbQ3E2GpbOSaM7vCXApsAgAvKuYL4qGm4/9L
-         4uPTkAEWrcipXQrTiOxxPbd1/+XGbT8Yfr48eFrE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.133.218] ([89.1.215.56]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVvL5-1myR3Y3h3N-00RqWb; Fri, 07
- Jan 2022 14:03:41 +0100
-Date:   Fri, 7 Jan 2022 14:03:37 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Teng Long <dyroneteng@gmail.com>
-cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
-        gitster@pobox.com, peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v9 9/9] cocci: allow padding with `strbuf_addf()`
-In-Reply-To: <8dafb2b3779715aa277eb825a94af87b72f3e093.1641440700.git.dyroneteng@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2201071401240.339@tvgsbejvaqbjf.bet>
-References: <cover.1641440700.git.dyroneteng@gmail.com> <8dafb2b3779715aa277eb825a94af87b72f3e093.1641440700.git.dyroneteng@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1347418AbiAGNE5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jan 2022 08:04:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53708 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347407AbiAGNE4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jan 2022 08:04:56 -0500
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54566C061245
+        for <git@vger.kernel.org>; Fri,  7 Jan 2022 05:04:56 -0800 (PST)
+Received: by mail-yb1-xb2c.google.com with SMTP id 127so337279ybb.4
+        for <git@vger.kernel.org>; Fri, 07 Jan 2022 05:04:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gKVwEBPhnfdhWAcbSjQ5zOq/wuPPTboQoJEN2GlwStk=;
+        b=CWn2zrLCF9F9X0Nj2UrwMFtcxoUYpvFduyQOgeEP7uio2SoeMtucxR5abynmzftxw/
+         RvyZF0QJJhFqus8QEgmKbvLemuuoYiY8Yfo+89QOsfxa162jEB/SRwA8MCeHgG1FA622
+         L1NpTf/IjRHeiyLy/NOZWPZsnjEZOxuPjQ2Vc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gKVwEBPhnfdhWAcbSjQ5zOq/wuPPTboQoJEN2GlwStk=;
+        b=VHT9a1lGgf02vjhhzxVT10ASjE1TuhLq2uw42a/VPCgsmjmczmdpUnhVxn56WcOPUn
+         POgE52b2tCd/zChQv2p1nXU49TWi19MQWFlVr7CJloxT0N9eOhGItxO+R2xGYhuAgz7x
+         wd22or3LP2PLSasVYLOQxjev2ZV1R3pTneCYVS5Y0pD8H8lZvRfan86Rpc3WQHx4EEet
+         tlGZ5B7zNAICGL+x3k8r/xiHfmQzXQP7/Y9heGQ1KOWzPKgS/UfLyNwuIxCRXWeh3FDv
+         TNElWctq9LdGUT3M3GenlLmT4Le0DB0jpon6e6MUg8XnBwm0igEtwfIKo9kSv8hFRxjM
+         dGQg==
+X-Gm-Message-State: AOAM531zwlm4S4/G7YtYqaRzrnL8nSIbNTwQ6KY2n+L6WNsBhwyldNpY
+        BFM0JQOhd1blXdNFYi5VYZoun3CuKCofREl0U0QIoSGQVqc=
+X-Google-Smtp-Source: ABdhPJxOGNx2EWadvMiyY+kGT8+AaL+myfQ/GBxLOwCYe8NAJAUw4nvTYpbFlreMeQwB3S8TVhK0tRLjRNlM1oyg0ks=
+X-Received: by 2002:a25:452:: with SMTP id 79mr66140090ybe.421.1641560695369;
+ Fri, 07 Jan 2022 05:04:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:oxZWH7kJPDNOQ2eDq7Lu4a8wqyCSkfDvBi34yNJTAJwA8iQEWQB
- 6kPxpAOK4+0Fn6OnXGVC8fmyQG97y/THvcEtsdYbCjMzSEaRED0ECUc9Yrc3JsyZmkTWBpY
- QM6YGUESsH62Knuqv7dp+U82y38Ky5SHXaGvLUM6BGWQe9vF1FTq4nnLr7G3b5jIYM+fkch
- uA2aIIczsA/03rkP93hhA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:oLoMpkXY/yY=:0JwIUr6xjnLlNYSFzFwF4X
- 6enKsgNLPoK37xX3Ajpgdl4rbnKuXVAZXw9UBoMxfR7ZqK8JySNSxMCLy6Mm+8hQehL7lRNZy
- Uk8JrKOxm+zZo0a1cKW0C2oOvdKCfIerKs+66DrFY8AKyrLxkV5Vh2jl/kmjMo733KvFZmtsb
- /cMgHmtsg7sari614f1cd079smUCXnOXsjSkV+bbPqrqcyJMdBdfAI+8RYuIfv8Z0bRqVJhwG
- O47zOFodV9GLaEl3l76Jq7i0EQ0srfiA7HODpGi31Pknw38a9k2sD0WObCWCJl1oOYyS0CQJy
- S5Nu+IrJoweE4bJmaxWy8B02dySHaLI6dVb01wiVMeZ46jPLj3TX6JPow6EKbp3KLbshI5aOS
- ZI5fuc4q9khFHy+yyME10gYo0LHTs2T9cKgWwh8NqWBI2EHBQdPwDbM+G6kMNWya67iIFKPnB
- wmqnXyb0CrCL7JoSlqlsRIciXVHdeBp6aCdPiHM2CftTPPgevxsmGfrhE2+qlggEdSI2pOOgT
- 0ayQLkoSTqh4Bul2Ga5Ip+nFrjH1uBWegDsRxk2C11buS9b2LI8Ng3lk2xZifQRAjnEvsmyvk
- +/kmacKv+ekXgikKlQ9bHLa7fezwFEevQaLZR5kTX3Zjn69LaoO5wFxrbA3Jvx1wWnrHwAU9N
- ZYKd76wZ7+Ivi1QX1UViAPGAudc+pmIx3cL4uaw964ZIy2ZpD/1z4GE9jMe2a6tg5W3fmvSIi
- d56RuW23ZKWkvJTKSplxNN27jh+M5UViLZDQjp3RBnvR4ywaSq0v9TSg2/DjcmdrDcDm5sffw
- gOPviwfCY+qoAixnkHV9i32sbsKtx8Qeqx+ds2CfEt4TFQXcaaDWZHBiIrKgC7z2RfMzUEMqe
- 7GnCo10dyEni5Sd88Ohx5DHocNu9rnbux0bi57Krc+GWpyCx+8qpzOFAc34Y3kiOpvXC5R1bf
- MC7MDJeO8etOPZxYjO8SgVRP3ZUgVcnUv2TPGjVC91DY92/FWe1d2RGfHNgtRtAr0hC1CXKa9
- xM1hstC86+WzThPTgfWWmQWmQmuTugu7m91HQj2Yv5eHzrMmBLo/EJewhPWupNVOVOdJ09oD+
- 49+RkppfpyOoFw=
-Content-Transfer-Encoding: quoted-printable
+References: <CA+kUOak9_RLpdr9d4pQiwU=K42taCwhMdg5WkLP4GreQd4yWig@mail.gmail.com>
+ <CAGyf7-HSia4pRs4FZ107v0jmP4k4Zfw5zJ-3Oz8UvF9oobczEw@mail.gmail.com>
+ <CA+kUOam-Dd-XUk0XaOfw4_rUTg=Ws7w5H=vZ=ZZeEo4XJfsVOg@mail.gmail.com> <Ydg3hE+ZcCq4qW9m@ncase>
+In-Reply-To: <Ydg3hE+ZcCq4qW9m@ncase>
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Fri, 7 Jan 2022 13:04:19 +0000
+Message-ID: <CA+kUOamrMn-K8P34AmASaiXJvPu5OgYTXf6Rqwmm2+hjd5644A@mail.gmail.com>
+Subject: Re: Bug using `fetch` with blank `-c` arguments to git
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Teng,
+On Fri, 7 Jan 2022 at 12:52, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> On Tue, Jan 04, 2022 at 09:00:45PM +0000, Adam Dinwoodie wrote:
+> > On Tue, 4 Jan 2022 at 20:04, Bryan Turner <bturner@atlassian.com> wrote:
+> > >
+> > > On Tue, Jan 4, 2022 at 4:37 AM Adam Dinwoodie <adam@dinwoodie.org> wrote:
+> > > >
+> > > > While investigating some issues with a different project, I discovered
+> > > > the command `git -c config.helper= fetch` was working with the Debian
+> > > > stable version of Git (v2.30.2) but not with my local build
+> > > > (v2.34.1.428.gdcc0cd074f).
+> > >
+> > > Since you're working with a locally-built Git, have you, by chance,
+> > > actually _installed_ that build, or is it simply in the Git repository
+> > > itself after running make?
+> > >
+> > > If you haven't _installed_ your build, my guess is you might be
+> > > getting a mismatch wherein your _built_ Git, when it forks out
+> > > subprocesses, is triggering your _installed_ Git (which I assume you
+> > > have, and which I assume is not 2.34.1). Git compiles paths into
+> > > itself to know where to find certain binaries, and if you run a
+> > > compiled-but-not-installed Git then those paths are "wrong". (I see
+> > > administrators do this fairly often when building Git from source to
+> > > set up Bitbucket Server.)
+> > >
+> > > What does `./git --exec-path` print, when you run your 2.34.1 binary?
+> > > And is that where, for example, the compiled 2.34.1 versions of things
+> > > like `git-remote-https` are?
+> >
+> > Good thoughts, but I initially hit this problem after having installed
+> > it; I reproduced it running Git from the working copy for ease of
+> > bisecting, but the problem definitely occurs using the compiled
+> > version after installation. The below was collected after running
+> > `make install` (plus all the previously noted build commands,
+> > including running the configure script to specify the installation
+> > path) with the commit I identified as introducing the problem:
+> >
+> > ```
+> > $ type git
+> > git is hashed (/home/adam/.local/bin/git)
+> >
+> > $ which git
+> > /home/adam/.local/bin/git
+> >
+> > $ git --version
+> > git version 2.29.2.372.g1ff21c05ba
+> >
+> > $ git --exec-path
+> > /home/adam/.local/libexec/git-core
+> >
+> > $ ls $(git --exec-path)/git $(git --exec-path)/git-remote-https
+> > /home/adam/.local/libexec/git-core/git
+> > /home/adam/.local/libexec/git-core/git-remote-https
+> >
+> > $ $(git --exec-path)/git --version
+> > git version 2.29.2.372.g1ff21c05ba
+> >
+> > $ rm -rf tmp && git -c core.autocrlf=true clone git://github.com/git/git tmp
+> > Cloning into 'tmp'...
+> > error: bogus format in GIT_CONFIG_PARAMETERS
+> > fatal: unable to parse command-line config
+> > ```
+> >
+> > For the sake of double-checking, though, I just uninstalled the
+> > version of Git in /usr/bin (after spending some time working out how
+> > to do that with apt, without also uninstalling dependencies I wanted
+> > to leave alone) and repeated the above commands, and got exactly the
+> > same output.
+>
+> I cannot really reproduce this locally. But given that it happens on
+> some installations while it works alright on others my best guess is
+> that you're effectively running a "mixed" setup, where Git binaries of
+> one version execute Git binaries of a different version. The result
+> would be that they have different ways to encode GIT_CONFIG_PARAMETERS,
+> where new versions use the more robust, quoted format, which older
+> versions don't understand, or the other way round.
 
-On Thu, 6 Jan 2022, Teng Long wrote:
+Ah, that makes a lot of sense, thank you! In particular, I hadn't
+quite put together that if different Git binaries compiled with code
+both before and after this change attempted to communicate, they'd be
+doing so using a mutually incompatible interface, and that would
+produce this error.
 
-> A convenient way to pad strings is to use something like
-> `strbuf_addf(&buf, "%20s", "Hello, world!")`.
+> If my theory is correct, then I'm a bit on the edge to call this a bug.
+> Git expects its binaries to all be of the same version, so running such
+> a mixed setup is only going to cause problems. This isn't only true for
+> internal variables like the one we have here, but we also introduce new
+> command line switches and expect Git helpers to understand them without
+> any fallback if an old binary was executed.
 >
-> However, the Coccinelle rule that forbids a format `"%s"` with a
-> constant string argument cast too wide a net, and also forbade such
-> padding.
->
-> The original rule was introduced by commit:
->
->     https://github.com/git/git/commit/28c23cd4c3902449aff72cb9a4a703220b=
-e0d6ac
+> You may want to verify that the Git executables you have are indeed able
+> to execute the correct auxiliary binaries as expected and that they all
+> stem from the same Git version.
 
-Doing this in 9/9 is too late, by this time you already introduced the
-code site that requires this workaround.
-
-At the same time, I wonder why you want to defend spinning up the
-full-blown `printf()` machinery just to pad text that you can easily pad
-yourself. It sounds like a lot of trouble to me to introduce this patch
-and then use an uncommon method to pad a fixed string at runtime. Too much
-trouble for my liking.
-
-Ciao,
-Dscho
-
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> ---
->  contrib/coccinelle/strbuf.cocci | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf=
-.cocci
-> index d9ada69b43..2d6e0f58fc 100644
-> --- a/contrib/coccinelle/strbuf.cocci
-> +++ b/contrib/coccinelle/strbuf.cocci
-> @@ -44,7 +44,7 @@ struct strbuf *SBP;
->
->  @@
->  expression E1, E2;
-> -format F =3D~ "s";
-> +format F =3D~ "^s$";
->  @@
->  - strbuf_addf(E1, "%@F@", E2);
->  + strbuf_addstr(E1, E2);
-> --
-> 2.33.0.rc1.1794.g2ae0a9cb82
->
->
+Yes, that's very much the conclusion I'm coming to as well. As I
+understand things, it should be possible to have multiple Git
+installations at different versions on the same system, provided
+they're all configured to find their libraries and executables in the
+right place, so I've not yet ruled out there being a bug here. But if
+there is a bug, it'll be something related to how Git finds its
+libraries and executables at runtime, rather than anything directly to
+do with this change. And at this point I very strongly suspect I've
+just screwed up somewhere and there's no bug whatsoever.
