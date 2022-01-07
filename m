@@ -2,138 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A21B9C433EF
-	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 13:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C3FAC433EF
+	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 14:57:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347550AbiAGN1E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jan 2022 08:27:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58620 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238076AbiAGN1C (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jan 2022 08:27:02 -0500
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B922C061574
-        for <git@vger.kernel.org>; Fri,  7 Jan 2022 05:27:02 -0800 (PST)
-Received: by mail-qt1-x836.google.com with SMTP id bp39so5482642qtb.6
-        for <git@vger.kernel.org>; Fri, 07 Jan 2022 05:27:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Mmxag0/8GtFg1R1HB8sC4bv2h1Qoh1lwhJYusjsdk2g=;
-        b=TFJVKoaSApyKxgWrQWnQ6U9B1Twj2uvQwVvsbsplqFcRj4LfGvoVz+h6/vNOfA+lxh
-         TJYCy+hrV6h7e1/4wrJgKVHsgADcwREoj08VfuY0qxSAMKzOYc6OEVQdbF+H1EgZmdVd
-         4P6G9JmWDlXfORrGOu6Jd8s+pi+T/uLq/fofX31XeUiSFtCw4ViTSkyF5Tjnx+dLkAH/
-         1dbGAaO9LyO1gDmsmS3I487P6xM2lXC3qkPW8NnXzs7UKHB4dKFrMhsIppFhci+PKnOg
-         8icEJqvuUI+1BGqKR3+UT76EuPIjbUJFqxWywR/lESoibpCPdjRr6Tk/g8K0zTyECm2P
-         ANOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Mmxag0/8GtFg1R1HB8sC4bv2h1Qoh1lwhJYusjsdk2g=;
-        b=1VcfL/hNC7wul0jv9q1mq0lkNhMtRYSgbLo8PzoJyi/66Ar0vOcUNvrk49Wu7e7rC3
-         YbTtjCA7QcojtfO557fZrM9b8/3ir1vS1K3IEmnE6sMWQFG8HhMq4OlfpLiK3qHzgT0S
-         Ju7DQgLXm/LwcI6UXL/p3JfIzPYrbsiFLvDdyiNd700pP+9NtNCNZZzPq5TX5PjnmyA3
-         osMZy/NlK3ne06nPko7GYkQBOoUkLw64hqw2W8SZW9wA3qfTDMpaCfdsZkFD2bzishEU
-         C+n/L2c7g7shBgpdcBDvulLR+p1i9MW/lKPuI1mCpMFsapFpWTwjIXHYN94GU2UwI/33
-         vQIw==
-X-Gm-Message-State: AOAM531MQ2B7ynFBGagCK7u8JJk9vrF0YcwxggPQR7/yNgMCBjQMMv1N
-        KctCgQtIvp9dIn68gQYfVHqmDPF88kMnMw==
-X-Google-Smtp-Source: ABdhPJzSbOwulrnkPOaB6ynJnazAPMWXM+ylZRzNlfc51T7TJYw5wNOLTe5vy1G28gBmM3j9EVMBlA==
-X-Received: by 2002:a05:622a:1206:: with SMTP id y6mr56198389qtx.356.1641562021610;
-        Fri, 07 Jan 2022 05:27:01 -0800 (PST)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id t18sm3724417qtw.64.2022.01.07.05.27.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 07 Jan 2022 05:27:01 -0800 (PST)
-Subject: Re: [PATCH] submodule.h: use a named enum for RECURSE_SUBMODULES_*
-To:     Junio C Hamano <gitster@pobox.com>,
-        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Glen Choo <chooglen@google.com>
-References: <pull.1111.git.1641410782015.gitgitgadget@gmail.com>
- <xmqq1r1lhobf.fsf@gitster.g>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <3160705c-d95c-c389-e929-f1f6bbcd80fc@gmail.com>
-Date:   Fri, 7 Jan 2022 08:27:00 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S239488AbiAGO5O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jan 2022 09:57:14 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:44347 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S239219AbiAGO5O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jan 2022 09:57:14 -0500
+Received: from host-92-7-140-211.as13285.net ([92.7.140.211] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1n5qg3-000Ahf-EQ; Fri, 07 Jan 2022 14:57:12 +0000
+Message-ID: <3b03382e-3fb3-54b2-0917-18ddcade566f@iee.email>
+Date:   Fri, 7 Jan 2022 14:57:11 +0000
 MIME-Version: 1.0
-In-Reply-To: <xmqq1r1lhobf.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: fr
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH] Properly align memory allocations and temporary buffers
+Content-Language: en-GB
+To:     Jessica Clarke <jrtc27@jrtc27.com>, git@vger.kernel.org
+References: <20220105132324.6651-1-jrtc27@jrtc27.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <20220105132324.6651-1-jrtc27@jrtc27.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 05/01/2022 13:23, Jessica Clarke wrote:
+> Currently git_qsort_s allocates a buffer on the stack that has no
+> alignment, and mem_pool_alloc assumes uintmax_t's size is adequate
+> alignment for any type.
+>
+> On CHERI, and thus Arm's Morello prototype, pointers are implemented as
+> hardware capabilities which, as well as having a normal integer address,
+> have additional bounds, permissions and other metadata in a second word,
+> so on a 64-bit architecture they are 128-bit quantities, including their
+> alignment requirements. Despite being 128-bit, their integer component
+> is still only a 64-bit field, so uintmax_t remains 64-bit, and therefore
+> uintmax_t does not sufficiently align an allocation.
 
-Le 2022-01-05 à 16:20, Junio C Hamano a écrit :
-> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Philippe Blain <levraiphilippeblain@gmail.com>
->>
->> Using a named enum allows casting an integer to the enum type in both
->> GDB and LLDB:
->>
->>      (gdb) p (enum diff_submodule_format) options->submodule_format
->>      $1 = DIFF_SUBMODULE_LOG
-> 
-> Hmph, this was somewhat unexpected and quite disappointing.
-> 
-> Because that's not what those "Let's move away from #define'd
-> constants and use more enums" said when they sold their "enum" to
-> us.  In the diff_options struct, the .submodule_format member is of
-> type enum already, so, if we trust what they told us when they sold
-> their enums, "p options->submodule_format" should be enough to give
-> us "DIFF_SUBMODULE_LOG", not "1", as its output.  Do you really need
-> the cast in the above example?
+I did find that the introduction paragraphs in this and its companion
+patch needed a little more background of the uninitiated.
 
-Yes, you are right that my example does not reflect what I'm saying, since
-options->submodule_format is not an int. I checked and indeed we do not
-need any cast to get "DIFF_SUBMODULE_LOG". We do need it when dealing with int's,
-which is not the case here. I'll try to find a better example.
+I felt it needed a few words to highlight the innovative, potentially
+'breaking', changes that CHERI (&co) provides, such as the hidden bit,
+the shift from classic von Neumann architecture, inclusion of typing
+for  values, etc. and how that affects the compromises that are within
+the C standard (and those that features misreadings and conflicts with it).
 
-> 
->> Name the enum listing the different RECURSE_SUBMODULES_* modes, to make
->> debugging easier.
-> 
-> Even though this patch may be a good single step in the right
-> direction, until it is _used_ to declare a variable or a member of a
-> struct of that enum type, it probably is not useful as much as it
-> could be.  The user needs to know which enum is stored in that "int"
-> variable or member the user is interested in to cast it to.
+Some of the follow up discussions have a great similarity with the
+Windows LLP64 (`long long`) issues that also confuse the arithmetic
+operation capabilities with the memory pointer capabilities.
 
-Yes, that's true. But when I came across that, I was in a place of the
-code where some int was compared with a constant in this enum,
-RECURSE_SUBMODULES_something. So it would have been easy to check where
-the enum is declared, learn its name and use it to cast the int to the enum
-type. That's the kind of situation I have in mind.
+The layout needed a bit of SPIN (situation, problem, implication, need
+payoff) to see how it hangs together across all the different
+implementations. I know, from experience, it's not easy to pick out the
+'obvious', but implicit, foundational aspects. While, explaining them
+from an implementation perspective is easy for those who know the
+implementation, I found it took a few reads to get my head around the
+discussion (e.g. I wasn't familiar with `typedef union`s).
 
-> 
-> That is, many changes like this one.
-> 
-> diff --git i/builtin/pull.c w/builtin/pull.c
-> index c8457619d8..f2fd4784df 100644
-> --- i/builtin/pull.c
-> +++ w/builtin/pull.c
-> @@ -71,7 +71,7 @@ static const char * const pull_usage[] = {
->   /* Shared options */
->   static int opt_verbosity;
->   static char *opt_progress;
-> -static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
-> +static enum submodule_recurse_mode recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
->   
->   /* Options passed to git-merge or git-rebase */
->   static enum rebase_type opt_rebase = -1;
-> 
+Improved memory safety does sound to be worthwhile!
 
-Yes, this is a parallel effort that could be done, I agree, but my patch
-was meant to help in the mean time.
+Philip
+> Moreover, these capabilities have an additional "129th" tag bit, which
+> tracks the validity of the capability and is cleared on any invalid
+> operation that doesn't trap (e.g. partially overwriting a capability
+> will invalidate it) which, combined with the architecture's strict
+> checks on capability manipulation instructions, ensures it is
+> architecturally impossible to construct a capability that gives more
+> rights than those you were given in the first place. To store these tag
+> bits, each capability sized and aligned word in memory gains a single
+> tag bit that is stored in unaddressable (to the processor) memory. This
+> means that it is impossible to store a capability at an unaligned
+> address: a normal load or store of a capability will always take an
+> alignment fault even if the (micro)architecture supports unaligned
+> loads/stores for other data types, and a memcpy will, if the destination
+> is not appropriately aligned, copy the byte representation but lose the
+> tag, meaning that if it is eventually copied back and loaded from an
+> aligned location any attempt to dereference it will trap with a tag
+> fault. Thus, even char buffers that are memcpy'ed to or from must be
+> properly aligned on CHERI architectures if they are to hold pointers.
+>
+> Address both of these by introducing a new git_max_align type put in a
+> union with the on-stack buffer to force its alignment, as well as a new
+> GIT_MAX_ALIGNMENT macro whose value is the alignment of git_max_align
+> that gets used for mem_pool_alloc. As well as making the code work on
+> CHERI, the former change likely also improves performance on some
+> architectures by making memcpy faster (either because it can use larger
+> block sizes or because the microarchitecture has inefficient unaligned
+> accesses).
+>
+> Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+> ---
+>  compat/qsort_s.c  | 11 +++++++----
+>  git-compat-util.h | 11 +++++++++++
+>  mem-pool.c        |  6 +++---
+>  3 files changed, 21 insertions(+), 7 deletions(-)
+>
+> diff --git a/compat/qsort_s.c b/compat/qsort_s.c
+> index 52d1f0a73d..1ccdb87451 100644
+> --- a/compat/qsort_s.c
+> +++ b/compat/qsort_s.c
+> @@ -49,16 +49,19 @@ int git_qsort_s(void *b, size_t n, size_t s,
+>  		int (*cmp)(const void *, const void *, void *), void *ctx)
+>  {
+>  	const size_t size = st_mult(n, s);
+> -	char buf[1024];
+> +	union {
+> +		char buf[1024];
+> +		git_max_align align;
+> +	} u;
+>  
+>  	if (!n)
+>  		return 0;
+>  	if (!b || !cmp)
+>  		return -1;
+>  
+> -	if (size < sizeof(buf)) {
+> -		/* The temporary array fits on the small on-stack buffer. */
+> -		msort_with_tmp(b, n, s, cmp, buf, ctx);
+> +	if (size < sizeof(u.buf)) {
+> +		/* The temporary array fits in the small on-stack buffer. */
+> +		msort_with_tmp(b, n, s, cmp, u.buf, ctx);
+>  	} else {
+>  		/* It's somewhat large, so malloc it.  */
+>  		char *tmp = xmalloc(size);
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 5fa54a7afe..28581a45c5 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -274,6 +274,17 @@ typedef unsigned long uintptr_t;
+>  #define _ALL_SOURCE 1
+>  #endif
+>  
+> +typedef union {
+> +	uintmax_t max_align_uintmax;
+> +	void *max_align_pointer;
+> +} git_max_align;
+> +
+> +typedef struct {
+> +	char unalign;
+> +	git_max_align aligned;
+> +} git_max_alignment;
+> +#define GIT_MAX_ALIGNMENT offsetof(git_max_alignment, aligned)
+> +
+>  /* used on Mac OS X */
+>  #ifdef PRECOMPOSE_UNICODE
+>  #include "compat/precompose_utf8.h"
+> diff --git a/mem-pool.c b/mem-pool.c
+> index ccdcad2e3d..748eff925a 100644
+> --- a/mem-pool.c
+> +++ b/mem-pool.c
+> @@ -69,9 +69,9 @@ void *mem_pool_alloc(struct mem_pool *pool, size_t len)
+>  	struct mp_block *p = NULL;
+>  	void *r;
+>  
+> -	/* round up to a 'uintmax_t' alignment */
+> -	if (len & (sizeof(uintmax_t) - 1))
+> -		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
+> +	/* round up to a 'GIT_MAX_ALIGNMENT' alignment */
+> +	if (len & (GIT_MAX_ALIGNMENT - 1))
+> +		len += GIT_MAX_ALIGNMENT - (len & (GIT_MAX_ALIGNMENT - 1));
+>  
+>  	if (pool->mp_block &&
+>  	    pool->mp_block->end - pool->mp_block->next_free >= len)
 
-Thanks,
-
-Philippe.
