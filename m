@@ -2,140 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6266DC433F5
-	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 11:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 542ADC433F5
+	for <git@archiver.kernel.org>; Fri,  7 Jan 2022 11:17:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347044AbiAGLOk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jan 2022 06:14:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56664 "EHLO
+        id S1347028AbiAGLRg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jan 2022 06:17:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347035AbiAGLOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jan 2022 06:14:40 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB3EAC061245
-        for <git@vger.kernel.org>; Fri,  7 Jan 2022 03:14:39 -0800 (PST)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id C82325B252;
-        Fri,  7 Jan 2022 11:14:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1641554078;
-        bh=TJpD4cM384ieybVuzAnQ4AqkCRP9q+O6dKFQ9Sq/zP8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=uX/D3jjXntbxQhyjAZKPtOPsGHobvMorWc9P7EwstZ67ltqtlDfpX5oQJZY4y6opa
-         u5u7d8flGVrh+mTIq75VfrFMpeRueeWqQKCKdS11IAhEgFL3sqGbQ8uy5AD0tf2Awa
-         Z8gmfwDKOL26SoOqCRZ9OJZatv9JVS0J63MjqrCJXoelJp99y+9/rCvxVWdK2RAKna
-         c1tI+spK7Tgjy82YOrv0BQZexe3jwt8JafLN+8F0FVKY9WiDmZG7EY10EqMkcXQaod
-         3JbGTDdAdpkiYssQu3gMutZitSl5HgTOA5eH1g4gaxZPXVsApoMf8XTtHE4yEDR0v5
-         atGDdZ52L+nZj0NbtzEWwUcjoPl64sVk0eiwDYa5DJowjY5KnTTHWSovMFeLV+d3oX
-         dd8NrzdWmQ0JAxQ34V9/hfXTSkzVvI/RNyfEn1dDNXsgKcZmfWf32/aFhVhwWlb9Ny
-         HOMQNdZTKQgaI0r4L9NF5gDcGPwTpwTxbI0GIucJZvShAPjaE+X
-Date:   Fri, 7 Jan 2022 11:14:37 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, iwiedler@gitlab.com
-Subject: Re: [PATCH 1/1] fetch: fix deadlock when cleaning up lockfiles in
- async signals
-Message-ID: <YdggneOlWXf2Z+gf@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-        iwiedler@gitlab.com
-References: <cover.1641552500.git.ps@pks.im>
- <555ec6717ecab0fe6ef5660bcf0d61d59f84ef8b.1641552500.git.ps@pks.im>
+        with ESMTP id S1347023AbiAGLRf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jan 2022 06:17:35 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E1F7C061245
+        for <git@vger.kernel.org>; Fri,  7 Jan 2022 03:17:35 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id l10so10429462wrh.7
+        for <git@vger.kernel.org>; Fri, 07 Jan 2022 03:17:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=5agAh/syT4U88kMESEnfK9fJ5pj1EjazSWzC9dIXF+Q=;
+        b=nehQBNF4QbldBD1ZkNDKLcywHHf9X8+JtMJrB3zqLDFhG0mjaoNZ2WlrOhTiTNdla5
+         u7QWARWxgIebsALRBa9nE9rO1a6beTf6bjh4W4DIJWuPY5YLcu/7wU6VRlJ6wK00cc+p
+         Ayn432nASutnn5z1dtgWHwAL3ReJTPx7E2/BtKK9erQd4Gs662KPGcTq4d1JLQiCsoFQ
+         s5C+eLxHK23gGLPaEftiSyMRr3ASAPlwaRHehqqBi3rztQ1xfSbszY8YmmQafjQ8bG4s
+         FBC7JAR4DA2TY9zMKh9twP5ZvUuof7ofvrHuVjVQjR6n5kdwR2F2WIdaaJSLKLV+3Glk
+         aNFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=5agAh/syT4U88kMESEnfK9fJ5pj1EjazSWzC9dIXF+Q=;
+        b=pSPn8ayRwQZ9XUMI+XJ7e6tboeVaTKnEtLfHMyDL6jBL7jJT1bcM/dEZL+GGrwKNwn
+         DhZ7TUxmcH1QAGrvB08sO7d294lACaWNdzBACA5+ojNJ5ltZrZnQDsUKLuPhhLrztTfl
+         wDViT86JPSU2e1jLpLPo42Wk8OZJHI7Y+mcOy1G7/QRme6p8QM7C30Kqie0YSzYVYIDh
+         Ni4S9NkpGQSHhqcxLkq9eNXKsAEvRNCIhAE/gZcV790liHzha//RLUcFxj3w1QRG1brH
+         jLhket7tdczDT3L11Bl5879w7cdz/8YLYapnhYbQMo1YuToGe5tT0tvjegFMDM6AsLe1
+         6vEA==
+X-Gm-Message-State: AOAM531w17al+uoOGryAxqXfrQ8jBhD1TL6uuqsILzmSGHGgYi5hpP/R
+        +MHg4UzqRI27DUU302YG8W0i2/DKAko=
+X-Google-Smtp-Source: ABdhPJxtAXuYKfw3Xu1lB+vKhnITpCtwdKBDmDbHHYgBrGqqkRNLHbn6YG1Sy4voEqoxtFEeQ8V63w==
+X-Received: by 2002:a5d:6d45:: with SMTP id k5mr29890617wri.397.1641554253447;
+        Fri, 07 Jan 2022 03:17:33 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5sm4588541wrb.77.2022.01.07.03.17.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Jan 2022 03:17:32 -0800 (PST)
+Message-Id: <pull.1105.v4.git.1641554252.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1105.v3.git.1641508499.gitgitgadget@gmail.com>
+References: <pull.1105.v3.git.1641508499.gitgitgadget@gmail.com>
+From:   "Marc Strapetz via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 07 Jan 2022 11:17:27 +0000
+Subject: [PATCH v4 0/4] update-index: refresh should rewrite index in case of racy timestamps
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="KfZDtAT6E1dLKmJE"
-Content-Disposition: inline
-In-Reply-To: <555ec6717ecab0fe6ef5660bcf0d61d59f84ef8b.1641552500.git.ps@pks.im>
-User-Agent: Mutt/2.1.4 (2021-12-11)
+To:     git@vger.kernel.org
+Cc:     Marc Strapetz <marc.strapetz@syntevo.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This patch makes update-index --refresh write the index if it contains racy
+timestamps, as discussed at [1].
 
---KfZDtAT6E1dLKmJE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Changes since v3:
 
-On 2022-01-07 at 10:55:47, Patrick Steinhardt wrote:
-> [Resend with the correct In-Reply-To header set to fix threading]
->=20
-> When fetching packfiles, we write a bunch of lockfiles for the packfiles
-> we're writing into the repository. In order to not leave behind any
-> cruft in case we exit or receive a signal, we register both an exit
-> handler as well as signal handlers for common signals like SIGINT. These
-> handlers will then unlink the locks and free the data structure tracking
-> them. We have observed a deadlock in this logic though:
->=20
->     (gdb) bt
->     #0  __lll_lock_wait_private () at ../sysdeps/unix/sysv/linux/x86_64/l=
-owlevellock.S:95
->     #1  0x00007f4932bea2cd in _int_free (av=3D0x7f4932f2eb20 <main_arena>=
-, p=3D0x3e3e4200, have_lock=3D0) at malloc.c:3969
->     #2  0x00007f4932bee58c in __GI___libc_free (mem=3D<optimized out>) at=
- malloc.c:2975
->     #3  0x0000000000662ab1 in string_list_clear ()
->     #4  0x000000000044f5bc in unlock_pack_on_signal ()
->     #5  <signal handler called>
->     #6  _int_free (av=3D0x7f4932f2eb20 <main_arena>, p=3D<optimized out>,=
- have_lock=3D0) at malloc.c:4024
->     #7  0x00007f4932bee58c in __GI___libc_free (mem=3D<optimized out>) at=
- malloc.c:2975
->     #8  0x000000000065afd5 in strbuf_release ()
->     #9  0x000000000066ddb9 in delete_tempfile ()
->     #10 0x0000000000610d0b in files_transaction_cleanup.isra ()
->     #11 0x0000000000611718 in files_transaction_abort ()
->     #12 0x000000000060d2ef in ref_transaction_abort ()
->     #13 0x000000000060d441 in ref_transaction_prepare ()
->     #14 0x000000000060e0b5 in ref_transaction_commit ()
->     #15 0x00000000004511c2 in fetch_and_consume_refs ()
->     #16 0x000000000045279a in cmd_fetch ()
->     #17 0x0000000000407c48 in handle_builtin ()
->     #18 0x0000000000408df2 in cmd_main ()
->     #19 0x00000000004078b5 in main ()
->=20
-> The process was killed with a signal, which caused the signal handler to
-> kick in and try free the data structures after we have unlinked the
-> locks. It then deadlocks while calling free(3P).
->=20
-> The root cause of this is that it is not allowed to call certain
-> functions in async-signal handlers, as specified by signal-safety(7).
-> Next to most I/O functions, this list of disallowed functions also
-> includes memory-handling functions like malloc(3P) and free(3P) because
-> they may not be reentrant. As a result, if we execute such functions in
-> the signal handler, then they may operate on inconistent state and fail
-> in unexpected ways.
->=20
-> Fix this bug by not calling non-async-signal-safe functions when running
-> in the signal handler. We're about to re-raise the signal anyway and
-> will thus exit, so it's not much of a problem to keep the string list of
-> lockfiles untouched. Note that it's fine though to call unlink(2), so
-> we'll still clean up the lockfiles correctly.
+ * test-lib: improve API for verifying file mtime
+   * fix quoting around "$1"
+   * use "rm -f" for cleanup of auxiliary files
+   * improve API description comments
+ * Note that gitgitgadget's "freebsd_12" check is failing since a couple of
+   days (unrelated to this pull request); hence, this check hasn't been
+   applied to this patch series
 
-I took a look, and this seems reasonable to me.  I know in the
-non-signal case, we'd want to clean up because it means we can check for
-leaks, but I don't see the utility of running Git under Valgrind and
-then sending it a signal, and I think it's just safe to ignore that
-case.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Changes since v2:
 
---KfZDtAT6E1dLKmJE
-Content-Type: application/pgp-signature; name="signature.asc"
+ * new patch: test-lib: introduce API for verifying file mtime
+ * new patch: t7508: fix bogus mtime verification for test
+   "--no-optional-locks prevents index update"
+ * change new tests in t2108 and t7508 to use new test-lib mtime API
+ * fix "--refresh has no racy timestamps to fix" to use +60s mtime to be
+   save on VFAT
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+Changes since v1:
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYdggnAAKCRB8DEliiIei
-gR9sAQC/rsUiVvlnvqIeuZ1zggWd6xLR8TvhCvGEFS519nyKEgEAle6CgKnBLpXU
-Xe3Fht5IuEGoZ2EsWO6obYIcQr6KYAs=
-=pM6m
------END PGP SIGNATURE-----
+ * main commit message now uses 'git update-index' and the paragraph was
+   dropped
+ * t/t7508-status.sh: two tests added which capture status racy handling
+ * builtin/update-index.c: comment improved
+ * t/t2108-update-index-refresh-racy.sh: major overhaul
+   * one test case added
+   * mtime-manipulations simplified and aligned to t7508
+   * code style fixes, as discussed
 
---KfZDtAT6E1dLKmJE--
+[1]
+https://lore.kernel.org/git/d3dd805c-7c1d-30a9-6574-a7bfcb7fc013@syntevo.com/
+
+Marc Strapetz (4):
+  test-lib: introduce API for verifying file mtime
+  t7508: fix bogus mtime verification
+  t7508: add tests capturing racy timestamp handling
+  update-index: refresh should rewrite index in case of racy timestamps
+
+ builtin/update-index.c               | 11 +++++
+ cache.h                              |  1 +
+ read-cache.c                         |  2 +-
+ t/t2108-update-index-refresh-racy.sh | 64 ++++++++++++++++++++++++++++
+ t/t7508-status.sh                    | 30 ++++++++++---
+ t/test-lib-functions.sh              | 33 ++++++++++++++
+ 6 files changed, 135 insertions(+), 6 deletions(-)
+ create mode 100755 t/t2108-update-index-refresh-racy.sh
+
+
+base-commit: dcc0cd074f0c639a0df20461a301af6d45bd582e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1105%2Fmstrap%2Ffeature%2Fupdate-index-refresh-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1105/mstrap/feature/update-index-refresh-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1105
+
+Range-diff vs v3:
+
+ 1:  e6301e9d770 ! 1:  37c11bfafc4 test-lib: introduce API for verifying file mtime
+     @@ t/test-lib-functions.sh: test_region () {
+       	perl -le 'print readlink($_) for @ARGV' "$@"
+       }
+      +
+     -+# Set a fixed "magic" mtime to the given file,
+     -+# with an optional increment specified as second argument.
+     -+# Use in combination with test_is_magic_mtime.
+     ++# Set mtime to a fixed "magic" timestamp in mid February 2009, before we
+     ++# run an operation that may or may not touch the file.  If the file was
+     ++# touched, its timestamp will not accidentally have such an old timestamp,
+     ++# as long as your filesystem clock is reasonably correct.  To verify the
+     ++# timestamp, follow up with test_is_magic_mtime.
+     ++#
+     ++# An optional increment to the magic timestamp may be specified as second
+     ++# argument.
+      +test_set_magic_mtime () {
+     -+	# We are using 1234567890 because it's a common timestamp used in
+     -+	# various tests. It represents date 2009-02-13 which should be safe
+     -+	# to use as long as the filetime clock is reasonably accurate.
+      +	local inc=${2:-0} &&
+      +	local mtime=$((1234567890 + $inc)) &&
+     -+	test-tool chmtime =$mtime $1 &&
+     -+	test_is_magic_mtime $1 $inc
+     ++	test-tool chmtime =$mtime "$1" &&
+     ++	test_is_magic_mtime "$1" $inc
+      +}
+      +
+     -+# Test whether the given file has the "magic" mtime set,
+     -+# with an optional increment specified as second argument.
+     -+# Use in combination with test_set_magic_mtime.
+     ++# Test whether the given file has the "magic" mtime set.  This is meant to
+     ++# be used in combination with test_set_magic_mtime.
+     ++#
+     ++# An optional increment to the magic timestamp may be specified as second
+     ++# argument.  Usually, this should be the same increment which was used for
+     ++# the associated test_set_magic_mtime.
+      +test_is_magic_mtime () {
+      +	local inc=${2:-0} &&
+      +	local mtime=$((1234567890 + $inc)) &&
+      +	echo $mtime >.git/test-mtime-expect &&
+     -+	test-tool chmtime --get $1 >.git/test-mtime-actual &&
+     ++	test-tool chmtime --get "$1" >.git/test-mtime-actual &&
+      +	test_cmp .git/test-mtime-expect .git/test-mtime-actual
+      +	local ret=$?
+     -+	rm .git/test-mtime-expect
+     -+	rm .git/test-mtime-actual
+     ++	rm -f .git/test-mtime-expect
+     ++	rm -f .git/test-mtime-actual
+      +	return $ret
+      +}
+ 2:  d15a23cc804 = 2:  c97a41af389 t7508: fix bogus mtime verification
+ 3:  3567ef91e7a = 3:  82d0b6ab8d2 t7508: add tests capturing racy timestamp handling
+ 4:  4a6b18fb304 = 4:  e31edb74e24 update-index: refresh should rewrite index in case of racy timestamps
+
+-- 
+gitgitgadget
