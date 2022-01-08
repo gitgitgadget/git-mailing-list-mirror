@@ -2,164 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C7EAC433EF
-	for <git@archiver.kernel.org>; Sat,  8 Jan 2022 00:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14CB1C433EF
+	for <git@archiver.kernel.org>; Sat,  8 Jan 2022 00:36:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231808AbiAHASY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Jan 2022 19:18:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36372 "EHLO
+        id S231876AbiAHAgl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Jan 2022 19:36:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229633AbiAHASY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jan 2022 19:18:24 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A68DC061574
-        for <git@vger.kernel.org>; Fri,  7 Jan 2022 16:18:23 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id q25so19489774edb.2
-        for <git@vger.kernel.org>; Fri, 07 Jan 2022 16:18:23 -0800 (PST)
+        with ESMTP id S229553AbiAHAgk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jan 2022 19:36:40 -0500
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB9E4C061574
+        for <git@vger.kernel.org>; Fri,  7 Jan 2022 16:36:39 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id d1so21277900ybh.6
+        for <git@vger.kernel.org>; Fri, 07 Jan 2022 16:36:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8cH3jfmvQdW0PfKEaSdunIsyttQCEHffDWoUAYCkMjQ=;
-        b=WvRKhbf05xskEQqHzpUMgB71YNaXo0q3VQS05x3z3nQxmo557DQvvPd4PcvmyIPlgB
-         5lzMSsfSoZeKeQgiSpAAC5hPv8q4WY5n/zF5iL1DASaM94pK5mHm1Skc2CzYeny1otCq
-         vCGiJfhL8GyJVUVPAY+HExrrSQPMKI+bGAT1T4hoigCO3x9huUydk6rOvqPL4QHaXxHX
-         aa7H/9WfDzUh7OqiOCD24ykRYqKSi16YR46inCxlOYIMSb0c2OmZ0f1KkW5zw5f7ur9t
-         eYEaWJ+iD3UA48ZN9xFWDke0JLfuaKiJyXZqMk3b1DMCGaEwqUZ40aP/DIdt/VGR8dn/
-         /GBw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=GMbgM7qriD2BXjZ13UtTeukLvxuLxzemTFvit5gN7cg=;
+        b=g7AaX0NygK0I02yFCxpXDSOh3B9uBD/OVuLn//3t53f/IK5INCyKrwimxp9jusvq2+
+         zxrR5Cx2Xqw6fBcHsjT9cw1UdEiFOOh8feSbKRyr/EfPx6aH4GR6WFrze7iZSN8uupCt
+         HF87prPoUAvxSlWqy9TaJqsWP3quF4Eg7qQcAJy+lXAxmypj3aiLMQWrnki2SkngJVAJ
+         Y3GSXBtSWkuRFrkmC3MmIRC8l70GuSTUIF9o769dN7wdtAS1rMDC3vCN8NgvR+0PKGeO
+         R0fksu41WksOYvoNe/JWdxAptyl3fw7B1oVbyr92HSrj+I8Aij2rgaX73ayeOLtyhvg5
+         E7zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8cH3jfmvQdW0PfKEaSdunIsyttQCEHffDWoUAYCkMjQ=;
-        b=YM7i/fljpOPWX000BayMgGrD7PiSJM7pb+7jAFL9qIrrQN6N8EIkbnwLRDsfe5yZsm
-         YL/A5vRE6tHF0Z92D/xoqdOgi8ov4pWJ42yUFAet+abcz24nW9oX28lVA4PVGX4MMCKK
-         StA+v9OD1EZkxhC7EZwMVVy/ez3KLgvyfoBDy/rIW39ekqxCc5h0oD+hDZH3whgihCqq
-         j+Ol0JLUOamKyS9R55gHudfavAxG+udvdr8awSyqPS1TqP4gNUPhIblTnhe9+ufpzOmd
-         WN+StJljwacwAYK+Lw049HJOZnyH4C0kjjNI59yL8L329sk89nKFla5gCiWYWmFaBY+K
-         VBAQ==
-X-Gm-Message-State: AOAM5332vKm+V445z1TdiiPR3uNbZZY/YbDjxEN3/XhzxcMlMP1uOVkq
-        jEY+nD5Sryibs3t2bRBXD0n2bf8UIyV2Wl8v/do=
-X-Google-Smtp-Source: ABdhPJyNsjgo+kFNyP5JZKOucfCFGgI566CKqMEANiO+W51RUY7Vvz/uav3L8LM9UiAXvZyPo/jc++qm2HQ1U1ZYNvI=
-X-Received: by 2002:a05:6402:190c:: with SMTP id e12mr66352153edz.153.1641601102165;
- Fri, 07 Jan 2022 16:18:22 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=GMbgM7qriD2BXjZ13UtTeukLvxuLxzemTFvit5gN7cg=;
+        b=2bOYGZzyINbBP9h8Lo5mX2JG+UM5F7a5vTkbx0dFRWhfQg1gInkFEfeb+L4iIOoBj4
+         eSOmybaFovoYRjTqi48cn9gQa4aUoEHcQZuqjqkj1pC9BEvN0vjhu3/r7G7vORipMk/8
+         SgMM+yMLIJBUGcJ0UcIVl2qG6Qsog9A4WNaXuMpygykSyNLsG8WrLZVMfeyloFFrYGQS
+         gKZNymj3ChDoOiJbnDPpsyvWUQrwnwqHRIjwOp7pgU+wIWeTLvxc65rzLT23Wn8gDNj4
+         jO607ehnAGHWT/pyk+myb0NqMkSxTHncP69xfL0UJ/dsQKmixBoss8k+2MPF+Aqmt0ZB
+         Cxyg==
+X-Gm-Message-State: AOAM533HeW0ZwF/rHalJSk5RTvp1X3uMdfi3sXEaLhhn2ZDf2hdM4cJI
+        NbNBwvQj/00oc+DsMQxxTTChT1mWf5OjW+BYsr37GD4MWTc=
+X-Google-Smtp-Source: ABdhPJyOv5pPlbRnAI3UpcMtxvMKUNc+VciTmnE8qF7PEYhBC/PoK0ivpA9tPc1jJXcwchH1J8wd1CopZxps4UeX3rQ=
+X-Received: by 2002:a25:e654:: with SMTP id d81mr74505190ybh.445.1641602198887;
+ Fri, 07 Jan 2022 16:36:38 -0800 (PST)
 MIME-Version: 1.0
-References: <20220105132324.6651-1-jrtc27@jrtc27.com> <YddjJ+uIQM34Gedo@nand.local>
- <xmqqh7agbiuq.fsf@gitster.g> <97D2AB55-0F8F-4C38-A5C6-1AAA43EA064A@jrtc27.com>
- <xmqqfsq09ziq.fsf@gitster.g> <YdeJ8Ub2Q0/c9kO2@camp.crustytoothpaste.net>
- <4D8B32AE-8316-4907-98F6-097901EC3DC0@jrtc27.com> <Ydea3EO7wrYc9/Ij@camp.crustytoothpaste.net>
- <xmqq7dbb9wcz.fsf@gitster.g> <40077881-e91a-dfba-5950-cdc03719264d@web.de>
- <xmqqzgo76xpj.fsf@gitster.g> <f40c1b47-9aad-2dcc-ceeb-5dee2b517cd8@web.de>
-In-Reply-To: <f40c1b47-9aad-2dcc-ceeb-5dee2b517cd8@web.de>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 7 Jan 2022 16:18:10 -0800
-Message-ID: <CABPp-BG3rwC2fy-1fu0GwzofUjaF2HbJOC79BNBHxSoVS-vNAQ@mail.gmail.com>
-Subject: Re: [PATCH] Properly align memory allocations and temporary buffers
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jessica Clarke <jrtc27@jrtc27.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>
+From:   Keith Thompson <Keith.S.Thompson@gmail.com>
+Date:   Fri, 7 Jan 2022 16:36:27 -0800
+Message-ID: <CAAHpriMPdahH2xbrrQbeCJPYpLhr6tuvT6xsG3nACmskKF1v2w@mail.gmail.com>
+Subject: Bug: With diff.noprefix=true, `git format-patch` creates a patch that
+ `git am` rejects
+To:     git@vger.kernel.org
+Cc:     Keith Thompson <Keith.S.Thompson@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 7, 2022 at 3:30 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->
-...
-> --- >8 ---
-> Subject: [PATCH] stable-qsort: avoid using potentially unaligned access
->
-> Like in the previous patch for compat/qsort_s.c, remove the optimization
-> of using an on-stack buffer to avoid small allocations.  This ensures
-> maximum alignment for the array elements and simplifies the code a bit.
->
-> The performance impact for the current callers is unlikely to be
-> noticeable:
->
->  * compat/mingw.c::make_environment_block() uses ALLOC_ARRAY and
->    ALLOC_GROW several times already, so another allocation of up to 1KB
->    should not matter much.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Not familiar with this code, but that makes sense to me.
+What did you do before the bug happened? (Steps to reproduce your issue)
+git format-patch master
 
->  * diffcore-rename.c::diffcore_rename_extended() is called once per diff
->    or twice per merge, and those require allocations for each object and
->    more already.
+What did you expect to happen? (Expected behavior)
+I expected `git format-patch` to create a patch consumable by `git am`.
 
-Actually, this sort could be skipped entirely if it can determine all
-renames early (either because they are found via exact matches, or
-they aren't relevant for the merge result, or they are found via
-basename comparisons).  This sort is only called when we have to
-resort to the full quadratic pairwise comparisons between files, in
-which case we're also slurping in full files, doing the diffcore-delta
-work to convert each file's contents into a spanhash, and then
-pairwise comparing spanhashes for every pairing of source &
-destination files that remain.  That work would absolutely dwarf the
-malloc of a kilobyte.  So I agree, it's not worth worrying about this
-one.
+What happened instead? (Actual behavior)
+`git am` choked on the patch because it was missing the `a/` and `b/`
+prefixes.
 
->  * merge-ort.c::detect_and_process_renames() is called once per merge.
->    It's responsible for the two per-merge diffcore_rename_extended()
->    calls mentioned above as well, though.  So this is possibly the most
->    impacted caller.  Per-object allocations are likely to dwarf the
->    additional small allocations in git_stable_qsort(), though.
+For a simple example, a patch affecting only a top-level file, the error was:
 
-The particular sort call directly found in
-detect_and_process_renames() was once nearly 30% of overall execution
-time in merge-ort[1], but according to some local notes I kept, it
-eventually dropped to about ~1% of overall execution time after
-trivial directory resolution[2] (due to the fact that it could just
-include some higher level directories and omit all the files
-underneath them -- i.e. it had far fewer paths to sort).
+    Applying: Fix typo
+    error: git diff header lacks filename information when removing 1
+leading pathname component (line 9)
+    Patch failed at 0001 Fix typo
 
-Since I suspect your change here would generally just be a small
-percentage of the overall git_stable_qsort() time (if it can even be
-measured), and git_stable_qsort() time is a small percentage of
-merge-ort runtime, I think any runtime differences here would be
-negligible.
+For a patch affecting a file in a subdirectory ("DIR/README"), the error was:
 
-[1] https://lore.kernel.org/git/140c1e89e0ec69c5c5e8a99b632c1cf25c2325d4.16=
-23168703.git.gitgitgadget@gmail.com/
-[2] https://lore.kernel.org/git/pull.988.v4.git.1626841444.gitgitgadget@gma=
-il.com/
+    Applying: Fix typo
+    error: README: does not exist in index
+    Patch failed at 0001 Fix typo
 
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  stable-qsort.c | 16 +++++-----------
->  1 file changed, 5 insertions(+), 11 deletions(-)
->
-> diff --git a/stable-qsort.c b/stable-qsort.c
-> index 6cbaf39f7b..7ff12467cd 100644
-> --- a/stable-qsort.c
-> +++ b/stable-qsort.c
-> @@ -48,15 +48,9 @@ void git_stable_qsort(void *b, size_t n, size_t s,
->                       int (*cmp)(const void *, const void *))
->  {
->         const size_t size =3D st_mult(n, s);
-> -       char buf[1024];
-> -
-> -       if (size < sizeof(buf)) {
-> -               /* The temporary array fits on the small on-stack buffer.=
- */
-> -               msort_with_tmp(b, n, s, cmp, buf);
-> -       } else {
-> -               /* It's somewhat large, so malloc it.  */
-> -               char *tmp =3D xmalloc(size);
-> -               msort_with_tmp(b, n, s, cmp, tmp);
-> -               free(tmp);
-> -       }
-> +       char *tmp;
-> +
-> +       tmp =3D xmalloc(size);
-> +       msort_with_tmp(b, n, s, cmp, tmp);
-> +       free(tmp);
->  }
-> --
-> 2.34.1
+What's different between what you expected and what actually happened?
+See above.
 
-Patch looks good to me.  Reviewed-by: Elijah Newren <newren@gmail.com>
+Anything else you want to add:
+The details: I had this in my $HOME/.gitconfig:
+
+[diff]
+        noprefix = true
+
+This caused `git format-patch` *not* to generate the `a/` and `b/`
+prefixes in the patch file.  Setting "noprefix = false" works around
+the problem.
+
+Here are the first few lines of the resulting patch file:
+===
+cat 0001-Fix-documented-argv-and-envp-params-for-posix_spawn.patch,000
+From f4a41189d86bc208a90e754387294b9c4c11cdfc Mon Sep 17 00:00:00 2001
+From: Keith Thompson <Keith.S.Thompson@gmail.com>
+Date: Wed, 5 Jan 2022 13:30:16 -0800
+Subject: [PATCH] Fix documented argv and envp params for posix_spawn
+
+---
+ newlib/libc/posix/posix_spawn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git newlib/libc/posix/posix_spawn.c newlib/libc/posix/posix_spawn.c
+index 005471fde..85bfa6477 100644
+--- newlib/libc/posix/posix_spawn.c
++++ newlib/libc/posix/posix_spawn.c
+===
+
+Feeding this patch to `git am` caused it to strip the `newlib/`
+prefix from the file name.  There doesn't seem to be a way to coax
+`git format-patch` to ignore the current diff.noprefix setting,
+or `git am` to tolerate the missing prefixes.
+
+Changing my .gitconfig to set diff.noprefix to false avoids the problem.
+I could probably have done that in the local repo rather than in my
+$HOME/.gitconfig .
+
+Suggested possible fixes:
+
+1. Make `git format-patch` ignore the `diff.noprefix` setting, or at
+   least provide an option to do so.  In my opinion this is the best
+   solution.  There's no point in letting `git format-patch` create
+   a patch that `git am` can't handle.
+
+2. Make `git am` tolerate the missing prefixes, perhaps by not
+   removing prefixes that match, or at least provide an option to
+   do so.  For example, given
+       a/newlib/libc/posix/posix_spawn.c
+       b/newlib/libc/posix/posix_spawn.c
+    delete the a/ and b/ prefixes, but given
+       newlib/libc/posix/posix_spawn.c
+       newlib/libc/posix/posix_spawn.c
+    leave the path alone because the top-level directory is identical.
+
+3. Make `git format-patch` print a warning if diff.noprefix is true,
+   letting the person creating the patch know how to avoid the problem.
+
+4. Make `git am` recognize this issue and print a warning, letting
+   the recipient of the patch know they need to manually edit the patch
+   or request a new one.  (This would still be inconvenient.)
+
+This issue is likely to affect other commands including `git apply`
+and possibly others.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.33.1
+cpu: x86_64
+built from commit: af6d1d602a8f64164b266364339c4e936d5bbc33
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.4.0-91-generic #102-Ubuntu SMP Fri Nov 5 16:31:28 UTC 2021 x86_64
+compiler info: gnuc: 9.3
+libc info: glibc: 2.31
+$SHELL (typically, interactive shell): /o/bin/bash
