@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95748C433F5
-	for <git@archiver.kernel.org>; Sat,  8 Jan 2022 08:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC8B5C433FE
+	for <git@archiver.kernel.org>; Sat,  8 Jan 2022 08:56:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233971AbiAHI4r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Jan 2022 03:56:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36214 "EHLO
+        id S233992AbiAHI4s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Jan 2022 03:56:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233961AbiAHI4o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jan 2022 03:56:44 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FD6AC061747
-        for <git@vger.kernel.org>; Sat,  8 Jan 2022 00:56:40 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id e19so145219plc.10
-        for <git@vger.kernel.org>; Sat, 08 Jan 2022 00:56:40 -0800 (PST)
+        with ESMTP id S233920AbiAHI4p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jan 2022 03:56:45 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41979C061574
+        for <git@vger.kernel.org>; Sat,  8 Jan 2022 00:56:45 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id p37so7263383pfh.4
+        for <git@vger.kernel.org>; Sat, 08 Jan 2022 00:56:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Bn7aWpicFpGEy8B9B/JjBfd85aVgRILWqLk+gDEGNmM=;
-        b=Z64+BXdb/UkmfJkJE0evi2bxTPYvG4cTaa7sOK7CAW/rSCvMvZoHEg3/7zNyiY4kGB
-         F1d+8VgCkwHL9Zh211ZPTQZbDLWPTrZzwvx2SsfKaqg5VAQdvpdt4UpnCIvY/vT56pnk
-         yrPc+746h02DyFpH2oIWYEADcLKIG73PyvBB0tHMyHiH5Whg+2aLhtIdtoNDpsnvzKTN
-         ZvXjyHdPIa3wTQHWeoX6N8vpWRUg4xFWGrFfdPhxKqZ962eHxOWuzANEj5M9GgPCFt6Y
-         E32hAixeOZ/gVuNLdatnlRpqX9y2miPWo6WwRaOXBQyw19EFg9RJnwncTS/KVTv6jjie
-         14RA==
+        bh=i6EaJY25k8TGr6OPOF//g4RelKv2TzOdaMRp6nlc9uI=;
+        b=YlEhyGTFKzPNdiB56QsnjsEU681zXzsKy85GliN6ooLkpmRCT4AZO529BHb3IXYrVS
+         IvRdVPilJlosiSIqSV35stEtQifsTwO1Hq5yxJs3Zzluza9v0lo0pqXb8rkB1mH2ruHd
+         yHKdKxIfwnK+VlNFjyejnRUlxM+Tr64hEeVKsgwiEl81zCwfoBffXs5phROZTn4jPGzB
+         /iyVTgl0xTqJV+F4L5gJeGDZSkyF+nVRn25KqOgYhEgf3s/K2SFiaqEAhZXdfHIVDXY5
+         8/ZF7AUChzmO5NDG+CJwmh9CH8d7GEWMNgv30dtAfJcyOdMGPlBmlbo7hZk84q+icyg1
+         THLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Bn7aWpicFpGEy8B9B/JjBfd85aVgRILWqLk+gDEGNmM=;
-        b=DrZ+Uj9HTrqf5Xe/Ql61NSe7aGcv0FFwAju0RcmZ03sekUhGtY59w9kwRAMVvcRyPc
-         5X8qwaOSdUSWDhdbaCLNZ3uWSklF4DdjV2S4/Z4cuf9beN58fUa62M9PzpeZ6//rfLEz
-         Cvj/ecBlPE1ZwiQWdhxhRNhXYxY7aMTlxXrTHU2kf+qLB/CNEncCpEN9ggBLhqZ1ld7M
-         BqsTGYlqQdyYaj401RJ/Pd3Y2JcDfl5QXJQ85htcBiO57/5dsdzdoOwHxQT1le1J4bhw
-         9C8j3Ekl26z5PAfSWYTzkDUZ1h7r1wiOLfofs/Oc/8i+EYDhDdKbiVah3pED5FXLwG0b
-         uXvA==
-X-Gm-Message-State: AOAM530/LEVfLUncxIpSjOmZW/8xJPHfPmWPUbQ48ur0IoDf1ejTfRBl
-        gQdsMmyEKKIe+cb9+V0VGHc=
-X-Google-Smtp-Source: ABdhPJyQ4rv+fO6y5Y6fmAOmLJgAghC9gvkQQ1zRfKU5lBrN3aA6Kiy5cpAOu02UZ7w5mpphR7UlaQ==
-X-Received: by 2002:a17:902:da89:b0:149:304b:fd70 with SMTP id j9-20020a170902da8900b00149304bfd70mr65477938plx.53.1641632199474;
-        Sat, 08 Jan 2022 00:56:39 -0800 (PST)
+        bh=i6EaJY25k8TGr6OPOF//g4RelKv2TzOdaMRp6nlc9uI=;
+        b=25rQP3LgxSiWnPR6v15jR9bMpI4zd/fRKPuaZVu69kE8hHbjtRMd61ybdQvNP8uFHP
+         /CDxhn3ZD1mEK7PDiA0W8W9PT1dKq9xwlNDkxIgt8qw9+Ecj8+59E+HQ0drqV5zrloMA
+         pO6I3Na34Frs+EUoN7viqGPqCLzPz4BnZGYv9rcnjS1ujXKMU/mHDdifQvI23xn4c1OL
+         s1HvqhVhIZxOppwpf4hYPCWYmRY4vWCFbjFRnBQqzMOCESpydMcLPz7L/K6r8byD4ZgG
+         3BaZcedYUmJaFYlPN/BNSYLsyIpMcB2o42cfXYEYNk3J7jdp2h9Njtck5a3llN8CGnzn
+         K/3Q==
+X-Gm-Message-State: AOAM531YUwR9wZKyOY5OyVF2rVeRRfMpvzFQN0b8tnHIzyXi+Q2SLmfo
+        tMefakTP2k5oTMAyXJa1Fko=
+X-Google-Smtp-Source: ABdhPJxO2F4iUXg1XgzS4fVFjp2o/mBk7P7C4lNMoiEfdOUgIXzIfqf/FHOtjEVe4LZyPa/yhsXSxw==
+X-Received: by 2002:a63:8c:: with SMTP id 134mr14232911pga.599.1641632204768;
+        Sat, 08 Jan 2022 00:56:44 -0800 (PST)
 Received: from localhost.localdomain ([58.100.34.57])
-        by smtp.gmail.com with ESMTPSA id x25sm1240990pfu.113.2022.01.08.00.56.37
+        by smtp.gmail.com with ESMTPSA id x25sm1240990pfu.113.2022.01.08.00.56.42
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Jan 2022 00:56:39 -0800 (PST)
+        Sat, 08 Jan 2022 00:56:44 -0800 (PST)
 From:   Han Xin <chiyutianyi@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
@@ -56,9 +56,9 @@ To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: [PATCH v8 4/6] object-file.c: add "stream_loose_object()" to handle large object
-Date:   Sat,  8 Jan 2022 16:54:17 +0800
-Message-Id: <20220108085419.79682-5-chiyutianyi@gmail.com>
+Subject: [PATCH v8 6/6] object-file API: add a format_object_header() function
+Date:   Sat,  8 Jan 2022 16:54:19 +0800
+Message-Id: <20220108085419.79682-7-chiyutianyi@gmail.com>
 X-Mailer: git-send-email 2.34.1.52.gc288e771b4.agit.6.5.6
 In-Reply-To: <20211217112629.12334-1-chiyutianyi@gmail.com>
 References: <20211217112629.12334-1-chiyutianyi@gmail.com>
@@ -69,176 +69,163 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han Xin <hanxin.hx@alibaba-inc.com>
+From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-If we want unpack and write a loose object using "write_loose_object",
-we have to feed it with a buffer with the same size of the object, which
-will consume lots of memory and may cause OOM. This can be improved by
-feeding data to "stream_loose_object()" in a stream.
+Add a convenience function to wrap the xsnprintf() command that
+generates loose object headers. This code was copy/pasted in various
+parts of the codebase, let's define it in one place and re-use it from
+there.
 
-Add a new function "stream_loose_object()", which is a stream version of
-"write_loose_object()" but with a low memory footprint. We will use this
-function to unpack large blob object in latter commit.
+All except one caller of it had a valid "enum object_type" for us,
+it's only write_object_file_prepare() which might need to deal with
+"git hash-object --literally" and a potential garbage type. Let's have
+the primary API use an "enum object_type", and define an *_extended()
+function that can take an arbitrary "const char *" for the type.
 
-Another difference with "write_loose_object()" is that we have no chance
-to run "write_object_file_prepare()" to calculate the oid in advance.
-In "write_loose_object()", we know the oid and we can write the
-temporary file in the same directory as the final object, but for an
-object with an undetermined oid, we don't know the exact directory for
-the object, so we have to save the temporary file in ".git/objects/"
-directory instead.
+See [1] for the discussion that prompted this patch, i.e. new code in
+object-file.c that wanted to copy/paste the xsnprintf() invocation.
 
-"freshen_packed_object()" or "freshen_loose_object()" will be called
-inside "stream_loose_object()" after obtaining the "oid".
+1. https://lore.kernel.org/git/211213.86bl1l9bfz.gmgdl@evledraar.gmail.com/
 
-Helped-by: René Scharfe <l.s.r@web.de>
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
 ---
- object-file.c  | 101 +++++++++++++++++++++++++++++++++++++++++++++++++
- object-store.h |   9 +++++
- 2 files changed, 110 insertions(+)
+ builtin/index-pack.c |  3 +--
+ bulk-checkin.c       |  4 ++--
+ cache.h              | 21 +++++++++++++++++++++
+ http-push.c          |  2 +-
+ object-file.c        | 16 ++++++++++++----
+ 5 files changed, 37 insertions(+), 9 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index 4f0127e823..a462a21629 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2012,6 +2012,107 @@ static int freshen_packed_object(const struct object_id *oid)
- 	return 1;
- }
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index c23d01de7d..8a6ce77940 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -449,8 +449,7 @@ static void *unpack_entry_data(off_t offset, unsigned long size,
+ 	int hdrlen;
  
-+int stream_loose_object(struct input_stream *in_stream, size_t len,
-+			struct object_id *oid)
+ 	if (!is_delta_type(type)) {
+-		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX,
+-				   type_name(type),(uintmax_t)size) + 1;
++		hdrlen = format_object_header(hdr, sizeof(hdr), type, size);
+ 		the_hash_algo->init_fn(&c);
+ 		the_hash_algo->update_fn(&c, hdr, hdrlen);
+ 	} else
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 8785b2ac80..9e685f0f1a 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -220,8 +220,8 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
+ 	if (seekback == (off_t) -1)
+ 		return error("cannot find the current offset");
+ 
+-	header_len = xsnprintf((char *)obuf, sizeof(obuf), "%s %" PRIuMAX,
+-			       type_name(type), (uintmax_t)size) + 1;
++	header_len = format_object_header((char *)obuf, sizeof(obuf),
++					 type, size);
+ 	the_hash_algo->init_fn(&ctx);
+ 	the_hash_algo->update_fn(&ctx, obuf, header_len);
+ 
+diff --git a/cache.h b/cache.h
+index cfba463aa9..64071a8d80 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1310,6 +1310,27 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
+ 						    unsigned long bufsiz,
+ 						    struct strbuf *hdrbuf);
+ 
++/**
++ * format_object_header() is a thin wrapper around s xsnprintf() that
++ * writes the initial "<type> <obj-len>" part of the loose object
++ * header. It returns the size that snprintf() returns + 1.
++ *
++ * The format_object_header_extended() function allows for writing a
++ * type_name that's not one of the "enum object_type" types. This is
++ * used for "git hash-object --literally". Pass in a OBJ_NONE as the
++ * type, and a non-NULL "type_str" to do that.
++ *
++ * format_object_header() is a convenience wrapper for
++ * format_object_header_extended().
++ */
++int format_object_header_extended(char *str, size_t size, enum object_type type,
++				 const char *type_str, size_t objsize);
++static inline int format_object_header(char *str, size_t size,
++				      enum object_type type, size_t objsize)
 +{
-+	int fd, ret, err = 0, flush = 0;
-+	unsigned char compressed[4096];
-+	git_zstream stream;
-+	git_hash_ctx c;
-+	struct strbuf tmp_file = STRBUF_INIT;
-+	struct strbuf filename = STRBUF_INIT;
-+	int dirlen;
-+	char hdr[MAX_HEADER_LEN];
-+	int hdrlen;
-+
-+	/* Since oid is not determined, save tmp file to odb path. */
-+	strbuf_addf(&filename, "%s/", get_object_directory());
-+	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX, type_name(OBJ_BLOB), len) + 1;
-+
-+	/* Common steps for write_loose_object and stream_loose_object to
-+	 * start writing loose oject:
-+	 *
-+	 *  - Create tmpfile for the loose object.
-+	 *  - Setup zlib stream for compression.
-+	 *  - Start to feed header to zlib stream.
-+	 */
-+	fd = start_loose_object_common(&tmp_file, filename.buf, 0,
-+				       &stream, compressed, sizeof(compressed),
-+				       &c, OBJ_BLOB, len, hdr, hdrlen);
-+	if (fd < 0) {
-+		err = -1;
-+		goto cleanup;
-+	}
-+
-+	/* Then the data itself.. */
-+	do {
-+		unsigned char *in0 = stream.next_in;
-+		if (!stream.avail_in && !in_stream->is_finished) {
-+			const void *in = in_stream->read(in_stream, &stream.avail_in);
-+			stream.next_in = (void *)in;
-+			in0 = (unsigned char *)in;
-+			/* All data has been read. */
-+			if (in_stream->is_finished)
-+				flush = Z_FINISH;
-+		}
-+		ret = git_deflate(&stream, flush);
-+		the_hash_algo->update_fn(&c, in0, stream.next_in - in0);
-+		if (write_buffer(fd, compressed, stream.next_out - compressed) < 0)
-+			die(_("unable to write loose object file"));
-+		stream.next_out = compressed;
-+		stream.avail_out = sizeof(compressed);
-+		/*
-+		 * Unlike write_loose_object(), we do not have the entire
-+		 * buffer. If we get Z_BUF_ERROR due to too few input bytes,
-+		 * then we'll replenish them in the next input_stream->read()
-+		 * call when we loop.
-+		 */
-+	} while (ret == Z_OK || ret == Z_BUF_ERROR);
-+
-+	if (stream.total_in != len + hdrlen)
-+		die(_("write stream object %ld != %"PRIuMAX), stream.total_in,
-+		    (uintmax_t)len + hdrlen);
-+
-+	/* Common steps for write_loose_object and stream_loose_object to
-+	 * end writing loose oject:
-+	 *
-+	 *  - End the compression of zlib stream.
-+	 *  - Get the calculated oid.
-+	 */
-+	end_loose_object_common(ret, &c, &stream, oid, NULL,
-+				N_("unable to stream deflate new object (%d)"),
-+				N_("deflateEnd on stream object failed (%d)"));
-+
-+	close_loose_object(fd);
-+
-+	if (freshen_packed_object(oid) || freshen_loose_object(oid)) {
-+		unlink_or_warn(tmp_file.buf);
-+		goto cleanup;
-+	}
-+
-+	loose_object_path(the_repository, &filename, oid);
-+
-+	/* We finally know the object path, and create the missing dir. */
-+	dirlen = directory_size(filename.buf);
-+	if (dirlen) {
-+		struct strbuf dir = STRBUF_INIT;
-+		strbuf_add(&dir, filename.buf, dirlen);
-+
-+		if (mkdir_in_gitdir(dir.buf) && errno != EEXIST) {
-+			err = error_errno(_("unable to create directory %s"), dir.buf);
-+			strbuf_release(&dir);
-+			goto cleanup;
-+		}
-+		strbuf_release(&dir);
-+	}
-+
-+	err = finalize_object_file(tmp_file.buf, filename.buf);
-+cleanup:
-+	strbuf_release(&tmp_file);
-+	strbuf_release(&filename);
-+	return err;
++	return format_object_header_extended(str, size, type, NULL, objsize);
 +}
 +
- int write_object_file_flags(const void *buf, unsigned long len,
- 			    const char *type, struct object_id *oid,
- 			    unsigned flags)
-diff --git a/object-store.h b/object-store.h
-index 952efb6a4b..cc41c64d69 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -34,6 +34,12 @@ struct object_directory {
- 	char *path;
- };
+ /**
+  * parse_loose_header() parses the starting "<type> <len>\0" of an
+  * object. If it doesn't follow that format -1 is returned. To check
+diff --git a/http-push.c b/http-push.c
+index 3309aaf004..f0c044dcf7 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -363,7 +363,7 @@ static void start_put(struct transfer_request *request)
+ 	git_zstream stream;
  
-+struct input_stream {
-+	const void *(*read)(struct input_stream *, unsigned long *len);
-+	void *data;
-+	int is_finished;
-+};
-+
- KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
- 	struct object_directory *, 1, fspathhash, fspatheq)
+ 	unpacked = read_object_file(&request->obj->oid, &type, &len);
+-	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
++	hdrlen = format_object_header(hdr, sizeof(hdr), type, len);
  
-@@ -232,6 +238,9 @@ static inline int write_object_file(const void *buf, unsigned long len,
- 	return write_object_file_flags(buf, len, type, oid, 0);
+ 	/* Set it up */
+ 	git_deflate_init(&stream, zlib_compression_level);
+diff --git a/object-file.c b/object-file.c
+index a462a21629..d384ef2952 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1006,6 +1006,14 @@ void *xmmap(void *start, size_t length,
+ 	return ret;
  }
  
-+int stream_loose_object(struct input_stream *in_stream, size_t len,
-+			struct object_id *oid);
++int format_object_header_extended(char *str, size_t size, enum object_type type,
++				 const char *typestr, size_t objsize)
++{
++	const char *s = type == OBJ_NONE ? typestr : type_name(type);
 +
- int hash_object_file_literally(const void *buf, unsigned long len,
- 			       const char *type, struct object_id *oid,
- 			       unsigned flags);
++	return xsnprintf(str, size, "%s %"PRIuMAX, s, (uintmax_t)objsize) + 1;
++}
++
+ /*
+  * With an in-core object data in "map", rehash it to make sure the
+  * object name actually matches "oid" to detect object corruption.
+@@ -1034,7 +1042,7 @@ int check_object_signature(struct repository *r, const struct object_id *oid,
+ 		return -1;
+ 
+ 	/* Generate the header */
+-	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(obj_type), (uintmax_t)size) + 1;
++	hdrlen = format_object_header(hdr, sizeof(hdr), obj_type, size);
+ 
+ 	/* Sha1.. */
+ 	r->hash_algo->init_fn(&c);
+@@ -1734,7 +1742,7 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
+ 	git_hash_ctx c;
+ 
+ 	/* Generate the header */
+-	*hdrlen = xsnprintf(hdr, *hdrlen, "%s %"PRIuMAX , type, (uintmax_t)len)+1;
++	*hdrlen = format_object_header_extended(hdr, *hdrlen, OBJ_NONE, type, len);
+ 
+ 	/* Sha1.. */
+ 	algo->init_fn(&c);
+@@ -2027,7 +2035,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+ 
+ 	/* Since oid is not determined, save tmp file to odb path. */
+ 	strbuf_addf(&filename, "%s/", get_object_directory());
+-	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX, type_name(OBJ_BLOB), len) + 1;
++	hdrlen = format_object_header(hdr, sizeof(hdr), OBJ_BLOB, len);
+ 
+ 	/* Common steps for write_loose_object and stream_loose_object to
+ 	 * start writing loose oject:
+@@ -2168,7 +2176,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
+ 	buf = read_object(the_repository, oid, &type, &len);
+ 	if (!buf)
+ 		return error(_("cannot read object for %s"), oid_to_hex(oid));
+-	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
++	hdrlen = format_object_header(hdr, sizeof(hdr), type, len);
+ 	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
+ 	free(buf);
+ 
 -- 
 2.34.1.52.gc288e771b4.agit.6.5.6
 
