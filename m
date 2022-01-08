@@ -2,132 +2,257 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BB54C433F5
-	for <git@archiver.kernel.org>; Sat,  8 Jan 2022 10:54:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F9CEC433FE
+	for <git@archiver.kernel.org>; Sat,  8 Jan 2022 12:29:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232725AbiAHKyn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Jan 2022 05:54:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33368 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229973AbiAHKyn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jan 2022 05:54:43 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B5A1C061574
-        for <git@vger.kernel.org>; Sat,  8 Jan 2022 02:54:42 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id k18so16070659wrg.11
-        for <git@vger.kernel.org>; Sat, 08 Jan 2022 02:54:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=j8UBFMs6Ty3D+geMZJvbcW4Ke0i9m04j8vje4wyWuGo=;
-        b=m1Rzpf8GSW48tquXnF2abYhwG70sGdstXRiggBUO97YMCv5eyURz71ChXLZvQZpjK/
-         aPofB5AP+B+tMZn9LAAN0M+fS/7CY8xfpc6OmOoSH8QxehW8s/WLVkK5fkALd0JW/DPL
-         nYJOPrXO4ENoRl92wcyGIaNmj/SXnrvPbnjSHCX8Ogtc8xtwsVmD38eeyncFwd8S3MsD
-         yBAZBPyQdotvvtHgF9pQBWL0X8MvjJuSZ3tx6URrhgWprIG59VLLXMxzHNBFHSARvfTy
-         olM7XC4djnl+esM61d2nK6743NZGwFZESg4k4r4touqrmBqNzEkFc4HLkeh9VsxKBTMQ
-         w6LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=j8UBFMs6Ty3D+geMZJvbcW4Ke0i9m04j8vje4wyWuGo=;
-        b=lInmhLddGFnCUm0tVhrhUd/kd76xoTZbZ2X2XJXErSve9WceHMUk54m4CpcJZKa9wp
-         bs0NocWrvbgzYLWaRQxkh5a6lzOQxhr7ZJ7H60WX1xOIhJT2Wg1uO3bZAmoM4EaPDnTa
-         5zbEgBkOKY+pWUZxkX9LsoPqHXEmcAyo+YYEjS01UW1+XCJa9+6sa7nk6MtLqLwhR7DM
-         OxGK83Sb1Iu4MT6pA1tDbRi9qnVN3CrGbKvAbjeAeNyct73mymV6fnS1xi5vkx/niJcw
-         Gt7j+Z+Rg+VLqAUr1A48IE1CVPiRpFbeDaEwwLXA3MfyHcTQwWupzxU6J1ylChNgvg4X
-         Znzw==
-X-Gm-Message-State: AOAM531a6hwcMId1ZRSw5urMUEX15bxnBo9knVLgq0n9B6/XyU9y45s1
-        7UoaS9/EvDwdobeZxE9I3e4=
-X-Google-Smtp-Source: ABdhPJxBQoiBhpwu/wDGgSCwNPyRTQXrMWAe3gdDTjuMmNsRokM/miR47JTRf2IHheCZQBPA5K5dOA==
-X-Received: by 2002:adf:9bdb:: with SMTP id e27mr4542907wrc.276.1641639281131;
-        Sat, 08 Jan 2022 02:54:41 -0800 (PST)
-Received: from [192.168.1.240] ([31.185.185.186])
-        by smtp.gmail.com with ESMTPSA id c7sm1408299wri.21.2022.01.08.02.54.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 08 Jan 2022 02:54:40 -0800 (PST)
-Message-ID: <2d8c1619-74ab-62b3-3a30-8e500a16649e@gmail.com>
-Date:   Sat, 8 Jan 2022 10:54:35 +0000
+        id S234193AbiAHM3E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Jan 2022 07:29:04 -0500
+Received: from mout.web.de ([212.227.17.12]:38905 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231653AbiAHM3D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jan 2022 07:29:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1641644913;
+        bh=z4SEoA/WfqSVgBA/1LPAMlwy6hUyzNjIX9spjOTgi8k=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=ptyla7jlwnCkHFGnV4hgQYiwN5FRkJuZmg3YBWkwla/g+HCnwrUTpEcVq9fuN+Ewc
+         KObNEMNlgY6RBL7jZgCASmfyIZ0ym0D2G5X2yHyul5qauRU/R6HMsErQddj4ykjIcL
+         9eHF1TbckXGG9IgsPDLWT94xdOBaLgjpdtiIihSM=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MVJNd-1myqww0O07-00SXhY; Sat, 08
+ Jan 2022 13:28:33 +0100
+Message-ID: <8f9dd345-56c4-9a20-151b-e0e6d1a5b3fa@web.de>
+Date:   Sat, 8 Jan 2022 13:28:31 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/1] fetch: fix deadlock when cleaning up lockfiles in
- async signals
-Content-Language: en-GB-large
-To:     Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, iwiedler@gitlab.com
-References: <cover.1641552500.git.ps@pks.im>
- <555ec6717ecab0fe6ef5660bcf0d61d59f84ef8b.1641552500.git.ps@pks.im>
- <YdjBkZsnYd+zYne1@nand.local>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <YdjBkZsnYd+zYne1@nand.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.1
+Subject: Re: [PATCH v8 1/6] unpack-objects: low memory footprint for
+ get_data() in dry_run mode
+Content-Language: en-US
+To:     Han Xin <chiyutianyi@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
+References: <20211217112629.12334-1-chiyutianyi@gmail.com>
+ <20220108085419.79682-2-chiyutianyi@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20220108085419.79682-2-chiyutianyi@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:AlAmMOf5TsSrogWndiHvslqc0WWnQNcukR3Xt+ieb6/qsgHZ6t8
+ dR+40bsR1Meq3jfxnONoA/Uy1XnPi5BK6LcTubQAToDVkZqHHOK5RSFZD4KU5sYUaad6by/
+ seP/6Dyyb/bE2cReZZH+6kez7awEt+rclL7DHoVI2ZrRt1XvC8TBMCyqrYGAcVl5jCxUWix
+ zwa/j+6ak29uHoPiFDgUw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9wHo8wjSp8Y=:18XlzT4NnTU5zpVd3ttYkj
+ 1Pl0CSSKlzeL7u43R8y8p5QqoHw0bWMeNT6buY8JgvP6D7pZbZEii/IckVujYIjefppCCoZrm
+ R/g0na2StS5YGAX0gF7vjfFMGnOUE3E3GBgrkv22Kt3B+GW+TrTpq2qknlEm0nCx2h7KlwcKY
+ tvgmUNqEOywbHEPGtPrbMLUNAbn9lpX1ARgjW636aAm8BwllLN8Py8t1I0ctGw4TheTFErJb0
+ qwMX4am0O6uFAAXdv1rQytI4koMHBXms1rJ5qD8+aGY5nIYC8sIfwKARoMryZmUQE64EHJL3l
+ emuw9fQTqNbzalBO8jUHjjhhoq0PWYnT9hpZ8hbisZPlE7hYwpGpY22CU+AuH56v5WjRFdFTr
+ Z2UmxK1XKGLstffSTpkXLNq0SWdvF1EJyk9+NOwWu0PZuqrkYXagK5aF4868NSYGs7ubLNNBp
+ EJX+VobNC5VpDs3ZvyF8QJrh8mNY7yz1WIjkGknvfg0UudNBZMj3JSTCf424EFjIPpqjigPP5
+ cw0r64kCxErFb3QHN04Vqtwj/2O1Oc0e3l+ltLuoMwWrc1efxKO+V5kHTWLcAjcOkwG+rqEMY
+ qiIaGR+dFNTUY7eZg8uMZUCqP6GWAlz5Ht535DPck7f1nePvyoCkOQZZN7ANYMsJ16lSX1PoE
+ BOnEHYX39lUBQlmkhRCdSVW3S2FGzmlEYP7ybXV7q22WQv+ORIy3yrd0yE1QGpbjx4GoEb7ax
+ huZHwc1yjv8cmQmq0Q1nYv9FQf4xOBWPD7lp5z3mcLb2XjI5QdW/yT5oKd3tDvVS3UGrSUqCN
+ IUdzP6ULX4qK4FrBpO51F2wCL3B7Pq8sdBQNRU5QQZnWvaoYWnTZRpFgWTF4Mrsz5zxrUNSCC
+ iJ6mmbeE9lSTw5VViUZkkOmjcCVZRaJKR4KfUF59/n7jJCgWW2lWdw+BIsuRjshrep8GbdOHz
+ dymhj/mZ3RC4lUME1rcnBAdYlaT3yU/Ff2VR/RGklYcmanMvba5fQA3rSCq3uaFdNM3vk8fcV
+ rIWsv8XvA8fTt89jBijAP9sv2osSmIEgNs5PR1cULKMNzr9GdNc922QA6kNQlO3k05+l1Em1T
+ cLTA8FbYo9D0Ok=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor
+ Am 08.01.22 um 09:54 schrieb Han Xin:
+> From: Han Xin <hanxin.hx@alibaba-inc.com>
+>
+> As the name implies, "get_data(size)" will allocate and return a given
+> size of memory. Allocating memory for a large blob object may cause the
+> system to run out of memory. Before preparing to replace calling of
+> "get_data()" to unpack large blob objects in latter commits, refactor
+> "get_data()" to reduce memory footprint for dry_run mode.
+>
+> Because in dry_run mode, "get_data()" is only used to check the
+> integrity of data, and the returned buffer is not used at all, we can
+> allocate a smaller buffer and reuse it as zstream output. Therefore,
+> in dry_run mode, "get_data()" will release the allocated buffer and
+> return NULL instead of returning garbage data.
+>
+> Suggested-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+> ---
+>  builtin/unpack-objects.c        | 39 ++++++++++++++++++-------
+>  t/t5329-unpack-large-objects.sh | 52 +++++++++++++++++++++++++++++++++
+>  2 files changed, 80 insertions(+), 11 deletions(-)
+>  create mode 100755 t/t5329-unpack-large-objects.sh
+>
+> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+> index 4a9466295b..c6d6c17072 100644
+> --- a/builtin/unpack-objects.c
+> +++ b/builtin/unpack-objects.c
+> @@ -96,15 +96,31 @@ static void use(int bytes)
+>  	display_throughput(progress, consumed_bytes);
+>  }
+>
+> +/*
+> + * Decompress zstream from stdin and return specific size of data.
+> + * The caller is responsible to free the returned buffer.
+> + *
+> + * But for dry_run mode, "get_data()" is only used to check the
+> + * integrity of data, and the returned buffer is not used at all.
+> + * Therefore, in dry_run mode, "get_data()" will release the small
+> + * allocated buffer which is reused to hold temporary zstream output
+> + * and return NULL instead of returning garbage data.
+> + */
+>  static void *get_data(unsigned long size)
+>  {
+>  	git_zstream stream;
+> -	void *buf =3D xmallocz(size);
+> +	unsigned long bufsize;
+> +	void *buf;
+>
+>  	memset(&stream, 0, sizeof(stream));
+> +	if (dry_run && size > 8192)
+> +		bufsize =3D 8192;
+> +	else
+> +		bufsize =3D size;
+> +	buf =3D xmallocz(bufsize);
+>
+>  	stream.next_out =3D buf;
+> -	stream.avail_out =3D size;
+> +	stream.avail_out =3D bufsize;
+>  	stream.next_in =3D fill(1);
+>  	stream.avail_in =3D len;
+>  	git_inflate_init(&stream);
+> @@ -124,8 +140,15 @@ static void *get_data(unsigned long size)
+>  		}
+>  		stream.next_in =3D fill(1);
+>  		stream.avail_in =3D len;
+> +		if (dry_run) {
+> +			/* reuse the buffer in dry_run mode */
+> +			stream.next_out =3D buf;
+> +			stream.avail_out =3D bufsize;
+> +		}
+>  	}
+>  	git_inflate_end(&stream);
+> +	if (dry_run)
+> +		FREE_AND_NULL(buf);
+>  	return buf;
+>  }
+>
+> @@ -325,10 +348,8 @@ static void unpack_non_delta_entry(enum object_type=
+ type, unsigned long size,
+>  {
+>  	void *buf =3D get_data(size);
+>
+> -	if (!dry_run && buf)
+> +	if (buf)
+>  		write_object(nr, type, buf, size);
+> -	else
+> -		free(buf);
+>  }
+>
+>  static int resolve_against_held(unsigned nr, const struct object_id *ba=
+se,
+> @@ -358,10 +379,8 @@ static void unpack_delta_entry(enum object_type typ=
+e, unsigned long delta_size,
+>  		oidread(&base_oid, fill(the_hash_algo->rawsz));
+>  		use(the_hash_algo->rawsz);
+>  		delta_data =3D get_data(delta_size);
+> -		if (dry_run || !delta_data) {
+> -			free(delta_data);
+> +		if (!delta_data)
+>  			return;
+> -		}
+>  		if (has_object_file(&base_oid))
+>  			; /* Ok we have this one */
+>  		else if (resolve_against_held(nr, &base_oid,
+> @@ -397,10 +416,8 @@ static void unpack_delta_entry(enum object_type typ=
+e, unsigned long delta_size,
+>  			die("offset value out of bound for delta base object");
+>
+>  		delta_data =3D get_data(delta_size);
+> -		if (dry_run || !delta_data) {
+> -			free(delta_data);
+> +		if (!delta_data)
+>  			return;
+> -		}
+>  		lo =3D 0;
+>  		hi =3D nr;
+>  		while (lo < hi) {
 
-On 07/01/2022 22:41, Taylor Blau wrote:
-> On Fri, Jan 07, 2022 at 11:55:47AM +0100, Patrick Steinhardt wrote:
->> diff --git a/transport.c b/transport.c
->> index 92ab9a3fa6..2a3e324154 100644
->> --- a/transport.c
->> +++ b/transport.c
->> @@ -1456,13 +1456,18 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
->>   	return rc;
->>   }
->>
->> -void transport_unlock_pack(struct transport *transport)
->> +void transport_unlock_pack(struct transport *transport, unsigned int flags)
->>   {
->> +	int in_signal_handler = !!(flags & TRANSPORT_UNLOCK_PACK_IN_SIGNAL_HANDLER);
->>   	int i;
->>
->>   	for (i = 0; i < transport->pack_lockfiles.nr; i++)
->> -		unlink_or_warn(transport->pack_lockfiles.items[i].string);
->> -	string_list_clear(&transport->pack_lockfiles, 0);
->> +		if (in_signal_handler)
->> +			unlink(transport->pack_lockfiles.items[i].string);
->> +		else
->> +			unlink_or_warn(transport->pack_lockfiles.items[i].string);
-> 
-> This puzzled me when I first read it. But unlink_or_warn() isn't
-> reentrant because it performs buffered IO on stderr, so if we reached
-> this signal handler while executing another function call modifying
-> those same buffers, the call within the signal handler would have
-> undefined behavior.
-> 
-> So that makes sense: freeing (with string_list_clear() below) and
-> performing buffered IO (with unlink_or_warn() here as just described)
-> are certainly off the table.
-> 
-> But is unlink() safe as-is? I'm not so sure. Reading signal-safety(7),
-> it's clearly on the list of functions that are OK to call. But reading
-> the errno section:
-> 
->      errno
->        Fetching and setting the value of errno is async-signal-safe
->        provided that the signal handler saves errno on entry and restores
->        its value before returning.
-> 
-> We certainly not doing that, though that's nothing new, and so I wonder
-> why it doesn't seem to be an issue in practice.
+Nice!
 
-Because in this case we re-raise the signal and exit it does not matter 
-if unlink() clobbers errno. If instead the program were to continue 
-after handling the signal then we would have to save and restore errno 
-to avoid interfering with the code that was running when the signal 
-handler was called.
+> diff --git a/t/t5329-unpack-large-objects.sh b/t/t5329-unpack-large-obje=
+cts.sh
+> new file mode 100755
+> index 0000000000..39c7a62d94
+> --- /dev/null
+> +++ b/t/t5329-unpack-large-objects.sh
+> @@ -0,0 +1,52 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2021 Han Xin
+> +#
+> +
+> +test_description=3D'git unpack-objects with large objects'
+> +
+> +. ./test-lib.sh
+> +
+> +prepare_dest () {
+> +	test_when_finished "rm -rf dest.git" &&
+> +	git init --bare dest.git
+> +}
+> +
+> +assert_no_loose () {
+> +	glob=3Ddest.git/objects/?? &&
+> +	echo "$glob" >expect &&
+> +	eval "echo $glob" >actual &&
+> +	test_cmp expect actual
+> +}
+> +
+> +assert_no_pack () {
+> +	rmdir dest.git/objects/pack
 
-Best Wishes
+I would expect a function whose name starts with "assert" to have no
+side effects.  It doesn't matter here, because it's called only at the
+very end, but that might change.  You can use test_dir_is_empty instead
+of rmdir.
 
-Phillip
-
-> Thanks,
-> Taylor
+> +}
+> +
+> +test_expect_success "create large objects (1.5 MB) and PACK" '
+> +	test-tool genrandom foo 1500000 >big-blob &&
+> +	test_commit --append foo big-blob &&
+> +	test-tool genrandom bar 1500000 >big-blob &&
+> +	test_commit --append bar big-blob &&
+> +	PACK=3D$(echo HEAD | git pack-objects --revs test)
+> +'
+> +
+> +test_expect_success 'set memory limitation to 1MB' '
+> +	GIT_ALLOC_LIMIT=3D1m &&
+> +	export GIT_ALLOC_LIMIT
+> +'
+> +
+> +test_expect_success 'unpack-objects failed under memory limitation' '
+> +	prepare_dest &&
+> +	test_must_fail git -C dest.git unpack-objects <test-$PACK.pack 2>err &=
+&
+> +	grep "fatal: attempting to allocate" err
+> +'
+> +
+> +test_expect_success 'unpack-objects works with memory limitation in dry=
+-run mode' '
+> +	prepare_dest &&
+> +	git -C dest.git unpack-objects -n <test-$PACK.pack &&
+> +	assert_no_loose &&
+> +	assert_no_pack
+> +'
+> +
+> +test_done
