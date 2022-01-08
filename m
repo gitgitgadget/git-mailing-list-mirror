@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13819C433EF
-	for <git@archiver.kernel.org>; Sat,  8 Jan 2022 08:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08FD0C433F5
+	for <git@archiver.kernel.org>; Sat,  8 Jan 2022 08:56:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231367AbiAHI4b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Jan 2022 03:56:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36128 "EHLO
+        id S232249AbiAHI4e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Jan 2022 03:56:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229474AbiAHI4a (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jan 2022 03:56:30 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C35C061574
-        for <git@vger.kernel.org>; Sat,  8 Jan 2022 00:56:29 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id y16-20020a17090a6c9000b001b13ffaa625so14779239pjj.2
-        for <git@vger.kernel.org>; Sat, 08 Jan 2022 00:56:29 -0800 (PST)
+        with ESMTP id S231394AbiAHI4c (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jan 2022 03:56:32 -0500
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 310B5C061574
+        for <git@vger.kernel.org>; Sat,  8 Jan 2022 00:56:32 -0800 (PST)
+Received: by mail-pg1-x52d.google.com with SMTP id a22so3489552pgd.6
+        for <git@vger.kernel.org>; Sat, 08 Jan 2022 00:56:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nbQTcb7iiUKFzp4F618MOYyI8HpsjIR/VL4vbK+4lyM=;
-        b=WSSBYvONVWUgM267a9hiC7IHv/cnyyAVX7A1wVhLnqajV2soz5mAV3+yzs/NNsCEOx
-         U0ofpUF0samkoscbBzFQgqMebJOUSuRUQ2r3u2y440sUCk5OlELyhA9wBTKUSeoAKw75
-         2ABu+pAAr7b1CJ1kVDK+TYJek2nggemvZtUr/bk7p93pkYc5uQHW7EOohO75YB3fk3QC
-         FoCSNE/N95lHY8zq5FWk/bWi899T8gZGel43JIvkcMKYTfBj7ateOLWVi9Ov5beQ5314
-         jZZrRYlgnzVej0bwqGxRuNqmiaSquEoRgws+nZYOKB/+6AnkbY81I0xZwS71zsK8Jgu7
-         11+A==
+        bh=ushZSffbUUFOEG9JLBU0NCvIS5tYyEI+Bs9jQ0a85hY=;
+        b=HuERdGhN9Jx8FaQdnc0Pd1y1Gmq+RC9hLHL7yopohOwrbpsyO6ASZAxMH/8JO6zZC8
+         fy3YJDG55OXC0YZtbuLrLXpT+vRbRXkeLt4zZ0QZAIHncAun32hvxpwdce82Ied3hpoH
+         9+th3PcZtsvCy+FLMaeL8B7/Uco1UDoZgTQXwsaCt1R8smxQ1UhOcR1JX3MAUKcGAfIT
+         vhHHYROLkgrA0JMjXP+F4ymw36WqB7RHtawiU9NTXvu4368foGDMHMmWeCuk6kTHRZ+C
+         92F4eL+zFup8mE5Z+Nj1M/5xBxyl2jTr9CLBenDpnTNCgvSeZHS9818xUDuEpskh+MIK
+         NKew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nbQTcb7iiUKFzp4F618MOYyI8HpsjIR/VL4vbK+4lyM=;
-        b=LdVwRg59HkSaZWbpaCOZitKMV4SERylvCAsgFco+PQBJi6db/iTxNfqt78Lyj82lCA
-         GLaXpPi4H/LnoLNKRakiH9kpsFQJKroBgbvxGMKytgfszBCmDOwIjKRlzil7WoH+t++6
-         T9yKCiLXLuDLl4/UaQx3Y3lkx9712tLIAY3Ge/7wciBMeGCEOd5fe+2urWWMbyClXzCN
-         EB9He4S7Xj1bb/86A1Bx0XB8nqfVONdm5tNM2fVVliaCBOk133hr8tQzNl5xQ7JdZc2B
-         +l3x9xtWCbfSQkr3LCQvpYkVKx9eMpY5lbfL5is4OG/DLP464QRj5bosoPbCP1uoqDpV
-         pYMQ==
-X-Gm-Message-State: AOAM532PBzpf0UfaYNlCWhweFZ5ZKaoWuTMHVwI3OziEng3nm1epQc+O
-        TLdiAxd4ebXRist/7/5w5RE=
-X-Google-Smtp-Source: ABdhPJwpPiTsfshIUyUzvHpFBU0157NhffR7CCB4tuLlt8rYp4ILztPJJ83D5BbMfAb57G86R+PQ/Q==
-X-Received: by 2002:a17:90b:14e:: with SMTP id em14mr17654891pjb.12.1641632189049;
-        Sat, 08 Jan 2022 00:56:29 -0800 (PST)
+        bh=ushZSffbUUFOEG9JLBU0NCvIS5tYyEI+Bs9jQ0a85hY=;
+        b=2gykZEs3GCejeIfpM+sayyputwZdWn9vVhTh8AmmObwRuc/dNzrLAGYJYjkJl4hMXv
+         3/eewvWfPps9VlNUSs9owT0/gQVyZWoaCcEYP8gv6JznQxjMQGz8zIl1vSUGfjYgLYMr
+         kYKKBAq6HWPwI9dOfYetZeAk8rMdkhvLgkPJD2tJ89sIPQI9gaPEHX6qHP8hit22x4qh
+         5LUKXsSUw1Udqfg/01LBVI+vM+sFtfMOqxjz2FnAE8eeW6ejkbrQHvcUBwWbiDTMeUXL
+         ZaDGc8+grB2lZ/fTJRb5V9nJ+5SWvnZfv3OlmVWtj751qCD+/c0q7bWw1cjQ49ByjEIH
+         N/BA==
+X-Gm-Message-State: AOAM5319fsn8RwtlNr15LXb4BNCIxXsmJEaCeb2aw/PwtVCJbPPKPzg+
+        MDYDCPdXDdVWSOcxgn82MBw=
+X-Google-Smtp-Source: ABdhPJzDExivl7rpWMOyX9aolOXAQh5j4kAhedPFfOZhkIwIHmZqDClwPu+ZundpLhq5+nas48pSlg==
+X-Received: by 2002:a63:9544:: with SMTP id t4mr1913508pgn.175.1641632191655;
+        Sat, 08 Jan 2022 00:56:31 -0800 (PST)
 Received: from localhost.localdomain ([58.100.34.57])
-        by smtp.gmail.com with ESMTPSA id x25sm1240990pfu.113.2022.01.08.00.56.26
+        by smtp.gmail.com with ESMTPSA id x25sm1240990pfu.113.2022.01.08.00.56.29
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Jan 2022 00:56:28 -0800 (PST)
+        Sat, 08 Jan 2022 00:56:31 -0800 (PST)
 From:   Han Xin <chiyutianyi@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
@@ -56,14 +56,13 @@ To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
         <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 Cc:     Han Xin <hanxin.hx@alibaba-inc.com>
-Subject: [PATCH v8 0/6] unpack large blobs in stream
-Date:   Sat,  8 Jan 2022 16:54:13 +0800
-Message-Id: <20220108085419.79682-1-chiyutianyi@gmail.com>
+Subject: [PATCH v8 1/6] unpack-objects: low memory footprint for get_data() in dry_run mode
+Date:   Sat,  8 Jan 2022 16:54:14 +0800
+Message-Id: <20220108085419.79682-2-chiyutianyi@gmail.com>
 X-Mailer: git-send-email 2.34.1.52.gc288e771b4.agit.6.5.6
 In-Reply-To: <20211217112629.12334-1-chiyutianyi@gmail.com>
 References: <20211217112629.12334-1-chiyutianyi@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,277 +70,174 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han Xin <hanxin.hx@alibaba-inc.com>
 
-Changes since v7:
-* Use functions "assert_no_loose()" and "assert_no_pack()" to do tests instead
-  of "find" sugguseted by Ævar Arnfjörð Bjarmason[1].
+As the name implies, "get_data(size)" will allocate and return a given
+size of memory. Allocating memory for a large blob object may cause the
+system to run out of memory. Before preparing to replace calling of
+"get_data()" to unpack large blob objects in latter commits, refactor
+"get_data()" to reduce memory footprint for dry_run mode.
 
-* "get_data()" now use the global "dry_run" and it will release the buf before
-  returning.
+Because in dry_run mode, "get_data()" is only used to check the
+integrity of data, and the returned buffer is not used at all, we can
+allocate a smaller buffer and reuse it as zstream output. Therefore,
+in dry_run mode, "get_data()" will release the allocated buffer and
+return NULL instead of returning garbage data.
 
-* Add a new commit "object-file.c: remove the slash for directory_size()"
-  sugguseted by Ævar Arnfjörð Bjarmason[2].
-
-* Add "int is_finished" to "struct input_stream" who will tell us if there is 
-  next buffer in the stream.
-
-* Remove the config "core.bigFileStreamingThreshold" introduced in v5, and keep
-  using "core.bigFileThreshold". Until now, the config variable has been used in
-  the cases listed in "unpack-objects: unpack_non_delta_entry() read data in a
-  stream", this new case belongs to the packfile category.
-
-* Remove unnecessary explicit cast in "object-file API: add a 
-  format_object_header() function" sugguseted by René Scharfe[3].
-
-1. https://lore.kernel.org/git/211221.86bl1arqls.gmgdl@evledraar.gmail.com/
-2. https://lore.kernel.org/git/211221.8635mmrpps.gmgdl@evledraar.gmail.com/
-3. https://lore.kernel.org/git/b2dee243-1a38-531e-02b1-ffd66c465fa5@web.de/
-
-Han Xin (5):
-  unpack-objects: low memory footprint for get_data() in dry_run mode
-  object-file.c: refactor write_loose_object() to several steps
-  object-file.c: remove the slash for directory_size()
-  object-file.c: add "stream_loose_object()" to handle large object
-  unpack-objects: unpack_non_delta_entry() read data in a stream
-
-Ævar Arnfjörð Bjarmason (1):
-  object-file API: add a format_object_header() function
-
- builtin/index-pack.c            |   3 +-
- builtin/unpack-objects.c        | 110 +++++++++++--
- bulk-checkin.c                  |   4 +-
- cache.h                         |  21 +++
- http-push.c                     |   2 +-
- object-file.c                   | 272 ++++++++++++++++++++++++++------
- object-store.h                  |   9 ++
- t/t5329-unpack-large-objects.sh |  69 ++++++++
- 8 files changed, 422 insertions(+), 68 deletions(-)
+Suggested-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+---
+ builtin/unpack-objects.c        | 39 ++++++++++++++++++-------
+ t/t5329-unpack-large-objects.sh | 52 +++++++++++++++++++++++++++++++++
+ 2 files changed, 80 insertions(+), 11 deletions(-)
  create mode 100755 t/t5329-unpack-large-objects.sh
 
-Range-diff against v7:
-1:  a8f232f553 < -:  ---------- unpack-objects.c: add dry_run mode for get_data()
--:  ---------- > 1:  bd34da5816 unpack-objects: low memory footprint for get_data() in dry_run mode
-3:  a571b8f16c ! 2:  f9a4365a7d object-file.c: refactor write_loose_object() to reuse in stream version
-    @@ Metadata
-     Author: Han Xin <hanxin.hx@alibaba-inc.com>
-     
-      ## Commit message ##
-    -    object-file.c: refactor write_loose_object() to reuse in stream version
-    +    object-file.c: refactor write_loose_object() to several steps
-     
-    -    We used to call "get_data()" in "unpack_non_delta_entry()" to read the
-    -    entire contents of a blob object, no matter how big it is. This
-    -    implementation may consume all the memory and cause OOM.
-    +    When writing a large blob using "write_loose_object()", we have to pass
-    +    a buffer with the whole content of the blob, and this behavior will
-    +    consume lots of memory and may cause OOM. We will introduce a stream
-    +    version function ("stream_loose_object()") in latter commit to resolve
-    +    this issue.
-     
-    -    This can be improved by feeding data to "stream_loose_object()" in
-    -    stream instead of read into the whole buf.
-    +    Before introducing a stream vesion function for writing loose object,
-    +    do some refactoring on "write_loose_object()" to reuse code for both
-    +    versions.
-     
-    -    As this new method "stream_loose_object()" has many similarities with
-    -    "write_loose_object()", we split up "write_loose_object()" into some
-    -    steps:
-    -     1. Figuring out a path for the (temp) object file.
-    -     2. Creating the tempfile.
-    -     3. Setting up zlib and write header.
-    -     4. Write object data and handle errors.
-    -     5. Optionally, do someting after write, maybe force a loose object if
-    -    "mtime".
-    +    Rewrite "write_loose_object()" as follows:
-    +
-    +     1. Figure out a path for the (temp) object file. This step is only
-    +        used in "write_loose_object()".
-    +
-    +     2. Move common steps for starting to write loose objects into a new
-    +        function "start_loose_object_common()".
-    +
-    +     3. Compress data.
-    +
-    +     4. Move common steps for ending zlib stream into a new funciton
-    +        "end_loose_object_common()".
-    +
-    +     5. Close fd and finalize the object file.
-     
-         Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-    +    Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-         Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
-     
-      ## object-file.c ##
-    @@ object-file.c: static int create_tmpfile(struct strbuf *tmp, const char *filenam
-      	return fd;
-      }
-      
-    -+static void setup_stream_and_header(git_zstream *stream,
-    -+				    unsigned char *compressed,
-    -+				    unsigned long compressed_size,
-    -+				    git_hash_ctx *c,
-    -+				    char *hdr,
-    -+				    int hdrlen)
-    ++static int start_loose_object_common(struct strbuf *tmp_file,
-    ++				     const char *filename, unsigned flags,
-    ++				     git_zstream *stream,
-    ++				     unsigned char *buf, size_t buflen,
-    ++				     git_hash_ctx *c,
-    ++				     enum object_type type, size_t len,
-    ++				     char *hdr, int hdrlen)
-     +{
-    -+	/* Set it up */
-    ++	int fd;
-    ++
-    ++	fd = create_tmpfile(tmp_file, filename, flags);
-    ++	if (fd < 0)
-    ++		return -1;
-    ++
-    ++	/*  Setup zlib stream for compression */
-     +	git_deflate_init(stream, zlib_compression_level);
-    -+	stream->next_out = compressed;
-    -+	stream->avail_out = compressed_size;
-    ++	stream->next_out = buf;
-    ++	stream->avail_out = buflen;
-     +	the_hash_algo->init_fn(c);
-     +
-    -+	/* First header.. */
-    ++	/*  Start to feed header to zlib stream */
-     +	stream->next_in = (unsigned char *)hdr;
-     +	stream->avail_in = hdrlen;
-     +	while (git_deflate(stream, 0) == Z_OK)
-     +		; /* nothing */
-     +	the_hash_algo->update_fn(c, hdr, hdrlen);
-    ++
-    ++	return fd;
-    ++}
-    ++
-    ++static void end_loose_object_common(int ret, git_hash_ctx *c,
-    ++				    git_zstream *stream,
-    ++				    struct object_id *parano_oid,
-    ++				    const struct object_id *expected_oid,
-    ++				    const char *die_msg1_fmt,
-    ++				    const char *die_msg2_fmt)
-    ++{
-    ++	if (ret != Z_STREAM_END)
-    ++		die(_(die_msg1_fmt), ret, expected_oid);
-    ++	ret = git_deflate_end_gently(stream);
-    ++	if (ret != Z_OK)
-    ++		die(_(die_msg2_fmt), ret, expected_oid);
-    ++	the_hash_algo->final_oid_fn(parano_oid, c);
-     +}
-     +
-      static int write_loose_object(const struct object_id *oid, char *hdr,
-    @@ object-file.c: static int write_loose_object(const struct object_id *oid, char *
-     -	stream.next_out = compressed;
-     -	stream.avail_out = sizeof(compressed);
-     -	the_hash_algo->init_fn(&c);
-    -+	fd = create_tmpfile(&tmp_file, filename.buf, flags);
-    -+	if (fd < 0)
-    -+		return -1;
-    - 
-    +-
-     -	/* First header.. */
-     -	stream.next_in = (unsigned char *)hdr;
-     -	stream.avail_in = hdrlen;
-     -	while (git_deflate(&stream, 0) == Z_OK)
-     -		; /* nothing */
-     -	the_hash_algo->update_fn(&c, hdr, hdrlen);
-    -+	/* Set it up and write header */
-    -+	setup_stream_and_header(&stream, compressed, sizeof(compressed),
-    -+				&c, hdr, hdrlen);
-    ++	/* Common steps for write_loose_object and stream_loose_object to
-    ++	 * start writing loose oject:
-    ++	 *
-    ++	 *  - Create tmpfile for the loose object.
-    ++	 *  - Setup zlib stream for compression.
-    ++	 *  - Start to feed header to zlib stream.
-    ++	 */
-    ++	fd = start_loose_object_common(&tmp_file, filename.buf, flags,
-    ++				       &stream, compressed, sizeof(compressed),
-    ++				       &c, OBJ_NONE, 0, hdr, hdrlen);
-    ++	if (fd < 0)
-    ++		return -1;
-      
-      	/* Then the data itself.. */
-      	stream.next_in = (void *)buf;
-     @@ object-file.c: static int write_loose_object(const struct object_id *oid, char *hdr,
-    + 		stream.avail_out = sizeof(compressed);
-    + 	} while (ret == Z_OK);
-    + 
-    +-	if (ret != Z_STREAM_END)
-    +-		die(_("unable to deflate new object %s (%d)"), oid_to_hex(oid),
-    +-		    ret);
-    +-	ret = git_deflate_end_gently(&stream);
-    +-	if (ret != Z_OK)
-    +-		die(_("deflateEnd on object %s failed (%d)"), oid_to_hex(oid),
-    +-		    ret);
-    +-	the_hash_algo->final_oid_fn(&parano_oid, &c);
-    ++	/* Common steps for write_loose_object and stream_loose_object to
-    ++	 * end writing loose oject:
-    ++	 *
-    ++	 *  - End the compression of zlib stream.
-    ++	 *  - Get the calculated oid to "parano_oid".
-    ++	 */
-    ++	end_loose_object_common(ret, &c, &stream, &parano_oid, oid,
-    ++				N_("unable to deflate new object %s (%d)"),
-    ++				N_("deflateEnd on object %s failed (%d)"));
-    ++
-    + 	if (!oideq(oid, &parano_oid))
-    + 		die(_("confused by unstable object source data for %s"),
-    + 		    oid_to_hex(oid));
-      
-      	close_loose_object(fd);
-      
--:  ---------- > 3:  18dd21122d object-file.c: remove the slash for directory_size()
--:  ---------- > 4:  964715451b object-file.c: add "stream_loose_object()" to handle large object
--:  ---------- > 5:  3f620466fe unpack-objects: unpack_non_delta_entry() read data in a stream
-2:  0d2e0f3a00 ! 6:  8073a3888d object-file API: add a format_object_header() function
-    @@ builtin/index-pack.c: static void *unpack_entry_data(off_t offset, unsigned long
-      	if (!is_delta_type(type)) {
-     -		hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX,
-     -				   type_name(type),(uintmax_t)size) + 1;
-    -+		hdrlen = format_object_header(hdr, sizeof(hdr), type, (uintmax_t)size);
-    ++		hdrlen = format_object_header(hdr, sizeof(hdr), type, size);
-      		the_hash_algo->init_fn(&c);
-      		the_hash_algo->update_fn(&c, hdr, hdrlen);
-      	} else
-    @@ bulk-checkin.c: static int deflate_to_pack(struct bulk_checkin_state *state,
-     -	header_len = xsnprintf((char *)obuf, sizeof(obuf), "%s %" PRIuMAX,
-     -			       type_name(type), (uintmax_t)size) + 1;
-     +	header_len = format_object_header((char *)obuf, sizeof(obuf),
-    -+					 type, (uintmax_t)size);
-    ++					 type, size);
-      	the_hash_algo->init_fn(&ctx);
-      	the_hash_algo->update_fn(&ctx, obuf, header_len);
-      
-    @@ http-push.c: static void start_put(struct transfer_request *request)
-      
-      	unpacked = read_object_file(&request->obj->oid, &type, &len);
-     -	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX , type_name(type), (uintmax_t)len) + 1;
-    -+	hdrlen = format_object_header(hdr, sizeof(hdr), type, (uintmax_t)len);
-    ++	hdrlen = format_object_header(hdr, sizeof(hdr), type, len);
-      
-      	/* Set it up */
-      	git_deflate_init(&stream, zlib_compression_level);
-    @@ object-file.c: static void write_object_file_prepare(const struct git_hash_algo
-      
-      	/* Sha1.. */
-      	algo->init_fn(&c);
-    +@@ object-file.c: int stream_loose_object(struct input_stream *in_stream, size_t len,
-    + 
-    + 	/* Since oid is not determined, save tmp file to odb path. */
-    + 	strbuf_addf(&filename, "%s/", get_object_directory());
-    +-	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %"PRIuMAX, type_name(OBJ_BLOB), len) + 1;
-    ++	hdrlen = format_object_header(hdr, sizeof(hdr), OBJ_BLOB, len);
-    + 
-    + 	/* Common steps for write_loose_object and stream_loose_object to
-    + 	 * start writing loose oject:
-     @@ object-file.c: int force_object_loose(const struct object_id *oid, time_t mtime)
-      	buf = read_object(the_repository, oid, &type, &len);
-      	if (!buf)
-4:  1de06a8f5c < -:  ---------- object-file.c: add "write_stream_object_file()" to support read in stream
-5:  e7b4e426ef < -:  ---------- unpack-objects: unpack_non_delta_entry() read data in a stream
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 4a9466295b..c6d6c17072 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -96,15 +96,31 @@ static void use(int bytes)
+ 	display_throughput(progress, consumed_bytes);
+ }
+ 
++/*
++ * Decompress zstream from stdin and return specific size of data.
++ * The caller is responsible to free the returned buffer.
++ *
++ * But for dry_run mode, "get_data()" is only used to check the
++ * integrity of data, and the returned buffer is not used at all.
++ * Therefore, in dry_run mode, "get_data()" will release the small
++ * allocated buffer which is reused to hold temporary zstream output
++ * and return NULL instead of returning garbage data.
++ */
+ static void *get_data(unsigned long size)
+ {
+ 	git_zstream stream;
+-	void *buf = xmallocz(size);
++	unsigned long bufsize;
++	void *buf;
+ 
+ 	memset(&stream, 0, sizeof(stream));
++	if (dry_run && size > 8192)
++		bufsize = 8192;
++	else
++		bufsize = size;
++	buf = xmallocz(bufsize);
+ 
+ 	stream.next_out = buf;
+-	stream.avail_out = size;
++	stream.avail_out = bufsize;
+ 	stream.next_in = fill(1);
+ 	stream.avail_in = len;
+ 	git_inflate_init(&stream);
+@@ -124,8 +140,15 @@ static void *get_data(unsigned long size)
+ 		}
+ 		stream.next_in = fill(1);
+ 		stream.avail_in = len;
++		if (dry_run) {
++			/* reuse the buffer in dry_run mode */
++			stream.next_out = buf;
++			stream.avail_out = bufsize;
++		}
+ 	}
+ 	git_inflate_end(&stream);
++	if (dry_run)
++		FREE_AND_NULL(buf);
+ 	return buf;
+ }
+ 
+@@ -325,10 +348,8 @@ static void unpack_non_delta_entry(enum object_type type, unsigned long size,
+ {
+ 	void *buf = get_data(size);
+ 
+-	if (!dry_run && buf)
++	if (buf)
+ 		write_object(nr, type, buf, size);
+-	else
+-		free(buf);
+ }
+ 
+ static int resolve_against_held(unsigned nr, const struct object_id *base,
+@@ -358,10 +379,8 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
+ 		oidread(&base_oid, fill(the_hash_algo->rawsz));
+ 		use(the_hash_algo->rawsz);
+ 		delta_data = get_data(delta_size);
+-		if (dry_run || !delta_data) {
+-			free(delta_data);
++		if (!delta_data)
+ 			return;
+-		}
+ 		if (has_object_file(&base_oid))
+ 			; /* Ok we have this one */
+ 		else if (resolve_against_held(nr, &base_oid,
+@@ -397,10 +416,8 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
+ 			die("offset value out of bound for delta base object");
+ 
+ 		delta_data = get_data(delta_size);
+-		if (dry_run || !delta_data) {
+-			free(delta_data);
++		if (!delta_data)
+ 			return;
+-		}
+ 		lo = 0;
+ 		hi = nr;
+ 		while (lo < hi) {
+diff --git a/t/t5329-unpack-large-objects.sh b/t/t5329-unpack-large-objects.sh
+new file mode 100755
+index 0000000000..39c7a62d94
+--- /dev/null
++++ b/t/t5329-unpack-large-objects.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++#
++# Copyright (c) 2021 Han Xin
++#
++
++test_description='git unpack-objects with large objects'
++
++. ./test-lib.sh
++
++prepare_dest () {
++	test_when_finished "rm -rf dest.git" &&
++	git init --bare dest.git
++}
++
++assert_no_loose () {
++	glob=dest.git/objects/?? &&
++	echo "$glob" >expect &&
++	eval "echo $glob" >actual &&
++	test_cmp expect actual
++}
++
++assert_no_pack () {
++	rmdir dest.git/objects/pack
++}
++
++test_expect_success "create large objects (1.5 MB) and PACK" '
++	test-tool genrandom foo 1500000 >big-blob &&
++	test_commit --append foo big-blob &&
++	test-tool genrandom bar 1500000 >big-blob &&
++	test_commit --append bar big-blob &&
++	PACK=$(echo HEAD | git pack-objects --revs test)
++'
++
++test_expect_success 'set memory limitation to 1MB' '
++	GIT_ALLOC_LIMIT=1m &&
++	export GIT_ALLOC_LIMIT
++'
++
++test_expect_success 'unpack-objects failed under memory limitation' '
++	prepare_dest &&
++	test_must_fail git -C dest.git unpack-objects <test-$PACK.pack 2>err &&
++	grep "fatal: attempting to allocate" err
++'
++
++test_expect_success 'unpack-objects works with memory limitation in dry-run mode' '
++	prepare_dest &&
++	git -C dest.git unpack-objects -n <test-$PACK.pack &&
++	assert_no_loose &&
++	assert_no_pack
++'
++
++test_done
 -- 
 2.34.1.52.gc288e771b4.agit.6.5.6
 
