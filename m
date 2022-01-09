@@ -2,76 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB10AC433EF
-	for <git@archiver.kernel.org>; Sun,  9 Jan 2022 18:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BE74C433F5
+	for <git@archiver.kernel.org>; Sun,  9 Jan 2022 19:30:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236497AbiAISc2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Jan 2022 13:32:28 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58107 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236473AbiAIScZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jan 2022 13:32:25 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6104917D8A1;
-        Sun,  9 Jan 2022 13:32:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=BOqpOLJtBBI0wzFKh+uKnhYE5fqv2nonjw8NM6
-        FBsGI=; b=LfpJIUSWEOUb8JSkKWYiq7xAq3mjHgW7kzu7omCtiAK3JufgBWw/NU
-        jz4tvjjjXV1ihrawGuLFWPBhYUfVt/+irRso/BR+u/wo/A5EDE1GtkKJldBIeHvs
-        Hb7plsxxIYKD6YFZJEfkHiQfOnOQw9ANRCmL94ju64v3dEeeMGLsA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 599A517D8A0;
-        Sun,  9 Jan 2022 13:32:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C3A8517D89F;
-        Sun,  9 Jan 2022 13:32:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Issam Maghni via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Issam Maghni <issam.e.maghni@mailbox.org>
-Subject: Re: [PATCH] hook: test -a|o is not POSIX
-References: <pull.1172.git.git.1641528221530.gitgitgadget@gmail.com>
-        <9c7aeb5b-87b2-a51e-c08d-8dfc75ecf588@gmail.com>
-Date:   Sun, 09 Jan 2022 10:32:21 -0800
-In-Reply-To: <9c7aeb5b-87b2-a51e-c08d-8dfc75ecf588@gmail.com> (Bagas Sanjaya's
-        message of "Sun, 9 Jan 2022 15:14:11 +0700")
-Message-ID: <xmqqmtk43glm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7C5EA834-717A-11EC-A7C4-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+        id S234637AbiAITaB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Jan 2022 14:30:01 -0500
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:34839 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232020AbiAITaB (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 9 Jan 2022 14:30:01 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id E4A23320024A
+        for <git@vger.kernel.org>; Sun,  9 Jan 2022 14:30:00 -0500 (EST)
+Received: from imap46 ([10.202.2.96])
+  by compute3.internal (MEProxy); Sun, 09 Jan 2022 14:30:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
+        mime-version:message-id:date:from:to:subject:content-type
+        :content-transfer-encoding; s=fm1; bh=kZoSZPg/wv/75yqcyZwr4Krs6Z
+        FXHGqLqix+s9C4M3U=; b=sbtyzJMGyeDEFbDmnKpByJMQimPM2zUOwm2vTjv7lV
+        T2fv44vB3O60Uql8xJ8Mqq097a3KH0lqt4UchgCUvTWowezdozAXPV4Ic1Qyj4S9
+        k45O0QOvRiES8nG3vqgDBEzrPzgSR72YRBR4yEdM8AvjkpxbDk5m85XSIOXtbW5D
+        yA2iE8m8MIgFsys8kae3uWakdt1nPYgmGlP8ZTPOZ1gsejJBXnoOGOmE7v+PacK6
+        0bXvZ1a145BY0wmK+j+IwL4apdlzhEguEqrVnMtAO7csS9I79yWgiY1DvOWKecyu
+        2Fo220R56UUjePJx3F4ILhuTJ78cU1x7lNPDflt4pTMQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-transfer-encoding:content-type
+        :date:from:message-id:mime-version:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=kZoSZP
+        g/wv/75yqcyZwr4Krs6ZFXHGqLqix+s9C4M3U=; b=jURtvTQbyecazPeP4JelUT
+        169VSABWTidUAu80IS0emi1jaMvzxgx91zqvajtxtdLeK0E6hy2QDj/vkhG87a54
+        YcQG8mbVxDPgWkPbc8D4NlA0dcgwk2+B7Uj4Q/WY3M+FsXKmHwzDIgML/rS1ghGd
+        biEaOskoOo094fQ/2sjiFdSBgSLDKe+Av6Bb277Ta67O7k7IoutRGnBxNxbOy6gr
+        ubkkljznL+RhtXOIveqCoCtW4E0QnkIpttYDhtl0sUYrlgkX3SG/+eJajpgb86ZO
+        07HI2CRxnPztvI7tjqnbHOP/j51leVEPZ+ydkbo4+7yP2RBK9NoR3KwUoqh/X06Q
+        ==
+X-ME-Sender: <xms:uDfbYSERzqfws1TYWze_5Jq_mGi_yM49Sr-RIKoQfrZbbGYgtCnDTQ>
+    <xme:uDfbYTUNg0bTTqQT7INbxskXgktQ9eh1nJsXVScyQm1eJymU--aLaVOCgvqJZoUm9
+    _shoHRG2IMpeoQAnXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudegkedguddvkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkfffhvffutgfgsehtqh
+    ertderreejnecuhfhrohhmpedftfgrmhhkuhhmrghrucftrghmrggthhgrnhgurhgrfdcu
+    oehrsegrrhhtrghgnhhonhdrtghomheqnecuggftrfgrthhtvghrnhepkeekhfdtgfejje
+    etudeugfehgeeghefffeethfeuvedujeeifedtuedtvefhhffhnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprhesrghrthgrghhnohhnrdgtoh
+    hm
+X-ME-Proxy: <xmx:uDfbYcKV5t2d4Mj5LlRO5-wHkS0NjRmBYsj-HAz12q9-npVdXvNgMg>
+    <xmx:uDfbYcF7dTVKqMBvY1x0QjZD8hicN6fVnDVtOvBhhDjHpnaYB_lLhw>
+    <xmx:uDfbYYXbZABKqXfcJxq0UF-EWBuDe3l1tvr2lTy-mjClwJgwRdHhGg>
+    <xmx:uDfbYQgfSSOcZ-BqZZ99i3j8YIc1lWYVdnlswAzkvPFtNlLBWrl-2g>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 3516E1EE007B; Sun,  9 Jan 2022 14:30:00 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4526-gbc24f4957e-fm-20220105.001-gbc24f495
+Mime-Version: 1.0
+Message-Id: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
+Date:   Sun, 09 Jan 2022 20:29:39 +0100
+From:   "Ramkumar Ramachandra" <r@artagnon.com>
+To:     "Git List" <git@vger.kernel.org>
+Subject: git bisect bad @
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
+Hi,
 
->> -		if [ "$oldrev" = "$zero" -a "$denycreatebranch" = "true" ]; then
->> +		if [ "$oldrev" = "$zero" ] && [ "$denycreatebranch" = "true" ]; then
->>   			echo "*** Creating a branch is not allowed in this repository" >&2
->>   			exit 1
->>   		fi
->> base-commit: 2ae0a9cb8298185a94e5998086f380a355dd8907
->
-> From the patch above, the title should be "replace non-POSIX test -a & test -o with logical operator".
+I bumped my head thrice (yes, thrice!) by using `git bisect bad @`. The =
+error displayed to me at the end of one run was the following:
 
-I think "should" is a bit too strong a word.  While yours is a bit
-more explicit on _what_ the solution is, "hook: test -a|o is not
-POSIX" already implies that we are fixing that non-posix-ness by
-rewriting, and it is obvious (cf. Documentation/CodingGuidelines)
-what the right rewrite should be.
+  Cela signifie que le bogue =C3=A9t=C3=A9 corrig=C3=A9 entre ea3595845f=
+5013359b2ba4402f948e454350a74c et=20
+  [2e100906d5d0c276335665ffefedb906d21165ca ea3595845f5013359b2ba4402f94=
+8e454350a74c].
+  error: la bissection a =C3=A9chou=C3=A9 : 'git bisect--helper --bisect=
+-state (null)' a retourn=C3=A9 le code erreur -3
 
-One thing the original does a bit better tha yours is that it tell
-us _where_ the problem is.  So, perhaps
+After the third attempt, I realized: ah yes, computers aren't magic; git=
+-bisect.sh is basically a stupid shell script (no offense!).
 
-    sample hook: use "test ... &&/|| test ..." instead of "test -a/-o"
+Perhaps git-bisect.sh can ref-parse the arguments before starting its wo=
+rk? Agreed, none of the refs are expected to change during its operation=
+, with the exception of the sneaky `@`.
 
-But I find the original just fine.
-
-
+Bonne ann=C3=A9e,
+Ram
