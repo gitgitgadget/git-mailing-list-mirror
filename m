@@ -2,147 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48AC2C433EF
-	for <git@archiver.kernel.org>; Sun,  9 Jan 2022 03:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7852C433EF
+	for <git@archiver.kernel.org>; Sun,  9 Jan 2022 04:25:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232890AbiAID0S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Jan 2022 22:26:18 -0500
-Received: from mail-4324.protonmail.ch ([185.70.43.24]:62439 "EHLO
-        mail-4324.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231589AbiAID0R (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jan 2022 22:26:17 -0500
-Date:   Sun, 09 Jan 2022 03:26:14 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail2; t=1641698775;
-        bh=2xy/N0vRbmInUH5byIAVz06pFaaU7mn4GMGFux2pEx0=;
-        h=Date:To:From:Cc:Reply-To:Subject:Message-ID:In-Reply-To:
-         References:From:To:Cc;
-        b=MEIuLNArVJTaIyBl+7QdYBfXs9BeziB9jmJcwbBQ3Zp7srFUkLWwygZMihzMTGeCE
-         1+CWAy09RhudNprwBunylMDCzk69LPG0F7KpugQVpQc57QckobgRZcDPPoCtUkBDS0
-         7bnWbWbuNl+7bXANuLw5mRagMb5j+UemAsKN1ruEne8vOKcnfNZTRUeDIeo6wRIXGq
-         MMXd2F4niCOOCVgDqaJqMHsZ91nVwOnV9nb1DuDihMHIOSK0BR5KddURy13hijcOCF
-         oIpj+/a8/UW7ihwLe4NyO2DGGPbmxAnMHxE0kvVpj4pNnGrEni+sLYE0B11DquH0je
-         9HR33s4qI7sfA==
-To:     Emily Shaffer <emilyshaffer@google.com>
-From:   =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
-        <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Glen Choo <chooglen@google.com>, calvinwan@google.com,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Reply-To: =?utf-8?Q?Jo=C3=A3o_Victor_Bonfim?= 
-          <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
-Subject: Re: Review process improvements
-Message-ID: <rcGd-SpUU-W-tTnksrZa3gaeC9Kswpy7oPiOyp-GGV5WJgkoICgiD5ppeFz3h89h0l8C1fSRv5XcI6pqR4uEaG8mh29uWmPUDk-NORRkt2o=@protonmail.com>
-In-Reply-To: <YdTuMlAkVIivp1bg@google.com>
-References: <YbvBvch8JcHED+A9@google.com> <211220.86fsqnwkzs.gmgdl@evledraar.gmail.com> <CAPig+cT+NshUMS+BNLKDMuwOEXKEzS3Ve=hK3kCYEBvJNzXuxQ@mail.gmail.com> <J3wlC13aBBawF42_jmIX-9_4S5yvG4W-8miLgPASeby-v_QHn5Vw72gGy8E8WB-TQhGvrvpeC4Y2PnTIy3b1o6In_WHDzZ3s9nf2getOzRU=@protonmail.com> <YdTuMlAkVIivp1bg@google.com>
+        id S234856AbiAIEZD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Jan 2022 23:25:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34810 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232666AbiAIEZC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jan 2022 23:25:02 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD24AC06173F
+        for <git@vger.kernel.org>; Sat,  8 Jan 2022 20:25:01 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id k15so39159578edk.13
+        for <git@vger.kernel.org>; Sat, 08 Jan 2022 20:25:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CDiyb0YysYySPlnUYgPLfdLyKkkKq/wTMCepid5tbr0=;
+        b=FSe4K+AR+H5YDNbfWQdLbO1FLwgpIfOx2J+d2+CJQQVf5z15tRHQmo5Eoe1E87DLfx
+         HwQTvbjkPwPkWqHn0D6UTyHndklN1DpI2lKYnqsxNiZVfYQLpFI42iG9ap5zyks+DEQI
+         DK/jdkfVJbkm0xQhuB0egs6TdLFW2kD5xIw10KWd0NzL3iF9w8mxF1dgnlfbZ1IoTnvr
+         /xMphX/JCe0txudzUVx5TcTcr+XPas7ehTQFrOqDnFzD7CUwGNEPdKvkzSY4rVyPVREM
+         l5fZcZqNHXgfR41QyPKepDfLobTeIg31kjDrQZTQrAtXkoLNdrevD6pioY38zyVAG6QR
+         x+3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CDiyb0YysYySPlnUYgPLfdLyKkkKq/wTMCepid5tbr0=;
+        b=7YSoHRxZQbfgbbEUOgXXbLzBBGiQuZS4AgNDo+nmIFnEs9wwNsOwb/+BMUDLCXZL3H
+         BF0tjuwzrT5y0KF83lJrYyyd75VPKhA7ezg9UgHKMETRux+N2jK3fFy+VRjzAkwameyO
+         vctYQTy6lfj8JD0mbT/G85/DP1bnnmpN46GwWlmDtN3F6mJuoF4bxXeaDK72dFFmmfG+
+         VE9ObsFYR1jmax44F3yX04fkpa1xY3WTC9Q7SBvC1RmdewDVj3fpdoR8qKsyR6luTy9P
+         thECAXzvOav+VU1rtkS5KN48MdhbGZIdx+ZbeF0ASc3wsfUViCsFvsg8FZfp9X4m6mzT
+         UO8A==
+X-Gm-Message-State: AOAM533uXbqvYJScUR6UrKqtLVhNduQXsdYFVjLAF3ttZB2rBQmCdyv0
+        sDfBrpJzosMMvbaBH0diRxLsp9mmNMWRAi9ec/A=
+X-Google-Smtp-Source: ABdhPJwwh+v/7OsrnjYyKlOsYdjiltFKHK0wn1nO8dWrXr8Ma+r50D9bsjovp/AH42WbkyBUQdZ7uvJQeOefj4J1kg0=
+X-Received: by 2002:a17:907:160e:: with SMTP id hb14mr55945556ejc.328.1641702300486;
+ Sat, 08 Jan 2022 20:25:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1109.git.1641317820.gitgitgadget@gmail.com> <de7fc14356231a60c8cac9aa6f92a7fec1560b6a.1641317820.git.gitgitgadget@gmail.com>
+In-Reply-To: <de7fc14356231a60c8cac9aa6f92a7fec1560b6a.1641317820.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 8 Jan 2022 20:24:49 -0800
+Message-ID: <CABPp-BEmT-2+G_PRvhCFkzOc4oP+_5--ESz9=dHAO7gzDsHUOw@mail.gmail.com>
+Subject: Re: [PATCH 9/9] update-index: reduce scope of index expansion in do_reupdate
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> That makes sense to me. As =C3=86var mentioned - just because he and I ar=
-e
-> working on config a lot right now, doesn't mean we will still care in
-> 2023. And remembering to remove yourself from the MAINTAINERS file is a
-> pain.
-
- Maybe make a "contributors" file instead and merely list there who have
-contributed with Git, what have they contributed with (or group
-contributors by their types of contribution) and means of contact, like
-institutions they are a part of, e-mail addresses, telephone numbers,
-while highlighting that all e-mails related to Git are expected to be
-shared with the mailing list unless stated otherwise. Also make the
-input of personal information beyond name voluntary.
-
-> Some providers (at least Gmail, and based on Jo=C3=A3o's reply-to address=
-,
-> protonmail as well) allow mails addressed to
-> e.g. "my-name+from-git-list@example.com" to be delivered to
-> "my-name@example.com" regardless of what follows the +;
-
- Although ProtonMail allows the use of + aliases, no filtering
-is done automatically.
-
-> I have only recently seen you begin to post here, so welcome! and I
-> think I saw someone else mention in another thread, but I'll say again
-> now: in general, please wrap your lines at ~80ch when replying to the
-> mailing list;
-
- Is "80 ch" 80 American units? (half-joke)
- I also have no idea on how to configure that.
-
-> I'm not really sure what you mean by "non-committal" here. I will say
-> that messages coming from the Git mailing list does not imply that
-> messages are safe in any way; we get plenty of spam and phishing mails
-> making it past vger.kernel.org's filters. The proposal of a MAINTAINERS
-> file was definitely not a proposal to modify the review process itself;
-> as always, the expectation is that code should be reviewed by a number
-> of contributors to ensure it's doing what it says it is trying to do. I
-> don't see that that will ever change.
-
- Brain fog, I don't exactly remember either. From what I got I was
-thinking about the servers sending messages in the name of the parties
-listed, not only to them. Also I might be thinking of people sending
-malicious code through commits and git operations and it causing
-problems and also about e-mail addresses being compromised.
-
-> For what it's worth, in my Gmail web client I filter out any mails
-> beginning with `[PATCH` - because in web client I am like you and
-> usually only want to participate in broader discussions. So I think
-> there is already a solution for filtering the way that you want to.
-
- Can't we automate it at the source, though...
- ;A;
-
-> As I mentioned in my mail, we are only conducting review of commit
-> messages and cover letters, not of code - specifically because it is
-> so important to perform in-depth code review out in the open, for the
-> reasons you say. Code review should always happen on this list, and I'm
-> not suggesting to change that. (That's true of patches submitted via
-> GitGitGadget too, by the way - we don't perform review in the comments
-> on those GGG pull requests, for these same reasons.)
+On Tue, Jan 4, 2022 at 9:37 AM Victoria Dye via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> As for the Googley review know-how.... like I mentioned in my reply to
-> the main thread a moment ago, there's not that much "secret sauce". :)
+> From: Victoria Dye <vdye@github.com>
+>
+> Expand the full index (and redo reupdate operation) only if a sparse
+> directory in the index differs from HEAD.
 
- I still believe that methods of reviewing commit messages might be
-helpful if shared collectively.
+This was a bit hard to parse and follow for me.  Perhaps:
 
-> However, if you're curious, you might keep an eye on the #git-devel
-> channel - we have recently started doing public "review club" live
-> meetings and inviting the Git community to join us in reviewing patches
-> on the Git list. The next one is this week, so if you're interested and
-> the timezone works out, you'd be welcome to join us.
+Avoid pre-emptively expanding to a full index in update-index's do_reupdate().
+However, if a sparse directory in the index differs from HEAD, we will need to
+then expand the index and restart the operation.
 
- I both don't know what is Devel and how to use it and don't believe
-anxiety will allow me, specially since I am very socially anxious, I
-am using a TV screen as a "temporary" monitor and it triggers my
-sensory sensitivities, because of the amount of information and light
-(having a text heavy profession might have been a bad idea), and...
+> Only the index entries that differ
+> between the index and HEAD are updated when performing `git update-index
+> --again`, so unmodified sparse directories are safely skipped. The index
+> does need to be expanded when sparse directories contain changes, though,
+> because `update_one(...)` will not operate on sparse directory index
+> entries.
+>
+> Because the index should only be expanded if a sparse directory is modified,
+> add a test ensuring the index is not expanded when differences only exist
+> within the sparse cone.
+>
+> Signed-off-by: Victoria Dye <vdye@github.com>
+> ---
+>  builtin/update-index.c                   | 14 +++++++++++---
+>  t/t1092-sparse-checkout-compatibility.sh |  5 ++++-
+>  2 files changed, 15 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/update-index.c b/builtin/update-index.c
+> index 605cc693bbd..52ecc714d99 100644
+> --- a/builtin/update-index.c
+> +++ b/builtin/update-index.c
+> @@ -606,7 +606,7 @@ static struct cache_entry *read_one_ent(const char *which,
+>                         error("%s: not in %s branch.", path, which);
+>                 return NULL;
+>         }
+> -       if (mode == S_IFDIR) {
+> +       if (!the_index.sparse_index && mode == S_IFDIR) {
+>                 if (which)
+>                         error("%s: not a blob in %s branch.", path, which);
+>                 return NULL;
+> @@ -743,8 +743,6 @@ static int do_reupdate(int ac, const char **av,
+>                  */
+>                 has_head = 0;
+>   redo:
+> -       /* TODO: audit for interaction with sparse-index. */
+> -       ensure_full_index(&the_index);
+>         for (pos = 0; pos < active_nr; pos++) {
+>                 const struct cache_entry *ce = active_cache[pos];
+>                 struct cache_entry *old = NULL;
+> @@ -761,6 +759,16 @@ static int do_reupdate(int ac, const char **av,
+>                         discard_cache_entry(old);
+>                         continue; /* unchanged */
+>                 }
+> +
+> +               /* At this point, we know the contents of the sparse directory are
+> +                * modified with respect to HEAD, so we expand the index and restart
+> +                * to process each path individually
+> +                */
+> +               if (S_ISSPARSEDIR(ce->ce_mode)) {
+> +                       ensure_full_index(&the_index);
+> +                       goto redo;
+> +               }
+> +
+>                 /* Be careful.  The working tree may not have the
+>                  * path anymore, in which case, under 'allow_remove',
+>                  * or worse yet 'allow_replace', active_nr may decrease.
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index bc0741c970d..0863c9747c4 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -1225,7 +1225,10 @@ test_expect_success 'sparse index is not expanded: update-index' '
+>
+>         ensure_not_expanded update-index --add README.md &&
+>         ensure_not_expanded update-index a &&
+> -       ensure_not_expanded update-index --remove deep/a
+> +       ensure_not_expanded update-index --remove deep/a &&
+> +
+> +       ensure_not_expanded reset --soft update-deep &&
+> +       ensure_not_expanded update-index --add --remove --again
+>  '
+>
+>  # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
+> --
+> gitgitgadget
 
-*panic*
-
-... anxiety??? (better not delve too deep into that can of worms)
-
-> Yes, I agree this is the best way to do documentation. Human ability to
-> parse or no - having the same information in two places means that
-> inevitably, one place will become stale. ;)
-
- Maybe use <iframe>s to embed files onto each other? Also make explicit
-or (inclusively) allow the frames to be hidden or collapsed with a button?
-
-> Again, welcome to the project.
-
-<3
-Thank you!
-
- - Jo=C3=A3o Victor Bonfim, please use any pronouns.
+I think the rest makes sense.  Thanks for working on these!
