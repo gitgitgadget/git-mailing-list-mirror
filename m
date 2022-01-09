@@ -2,123 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2B7FC433EF
-	for <git@archiver.kernel.org>; Sun,  9 Jan 2022 19:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9D33C433EF
+	for <git@archiver.kernel.org>; Sun,  9 Jan 2022 20:48:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236842AbiAITyK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Jan 2022 14:54:10 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62562 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230452AbiAITyI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jan 2022 14:54:08 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 753B817A34D;
-        Sun,  9 Jan 2022 14:54:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vlEAr9lslGGl
-        4yEMuM8Lm1zkI+YDo8fMkPqBR/5HyFE=; b=KPValDaT5j/+8/HmHkVei91K+ikz
-        k/5kYJQOUkcaKk5D5ld1O9V0mWKbNbJQ5/e5R0kCQiibbY8ccefBV+GhFfYgYwOh
-        DFXSEGYfxPhAKxwbF3tDWjC46p1w2GqUoRomEofGGxn4zeZzT/ZYaoZt4rEInzbR
-        neqjjN/aKhlu28A=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D7D017A34C;
-        Sun,  9 Jan 2022 14:54:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DA7E317A349;
-        Sun,  9 Jan 2022 14:54:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Ramkumar Ramachandra" <r@artagnon.com>
+        id S232147AbiAIUsl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Jan 2022 15:48:41 -0500
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:43255 "EHLO
+        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232041AbiAIUsl (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 9 Jan 2022 15:48:41 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id 8C5FC3200A3E;
+        Sun,  9 Jan 2022 15:48:40 -0500 (EST)
+Received: from imap46 ([10.202.2.96])
+  by compute3.internal (MEProxy); Sun, 09 Jan 2022 15:48:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
+        mime-version:message-id:in-reply-to:references:date:from:to:cc
+        :subject:content-type:content-transfer-encoding; s=fm1; bh=5dOvE
+        O1mlo5gtLF1ubEFE7KLpOaO2av1DEpB/MTFxL8=; b=p3DmG898xG46mj9LHh4o2
+        bxDRng8P5CGeSXL+tFyQemeOkxCyPc4PC+IwceECx/z93gqB/KQkIMYs83uwOA0N
+        l/LK9mNuaPpIdVbVUvg46N/BqKBFCRGuSlKaV5ECzG6N55FyLeKJKJRieivRMpc1
+        Vil5pCixfeF4/UUQ4UUnBvifQHmIXMep4umOnclVPUyvJKk8k+uivSdFOAwWzuMF
+        6rPaT0QQsG1njyZmeW4SGLoHgT9qmi6UQUl8OBAAdHH8/0JkjKMElGbgPu1t80x2
+        9rwzFHvjgmps3dvo0tEHSBPSravQItVD8inkJ3IvI9NrcdZMlckTDlwupMJS1p4E
+        w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; bh=5dOvEO1mlo5gtLF1ubEFE7KLpOaO2av1DEpB/MTFx
+        L8=; b=BCEsYL3AYDpWDynTMde3xmfZ0O4slix8BnNZpw61B234SteSFSwM8HxJ4
+        UN4F7rkfYXB0FZNaLbkjAnASSE3zLdUsKT5AWNOhoE5rRmmZuwxaR18xRX7gX9v2
+        xzKoAhHMEoPFUGvGKIdDXGut/06rJCff2Fr8jYteyOed1pHZDsFfP2xeeHThpHEM
+        I7CXQbmG/5Fil0MQtoSc4TnTIWP6lEThM3T7meMYp9jUJJT+NojJ1h+nsdzB0RF8
+        kf6qqfhVzF5IyD3CAcke43nIL6ya1VB8tOVUvMgIkJFUL5ZxVVKmtwWrzc6hHnO1
+        qrfpaweUUN5cZ9qI4FA4x30QA3Qyg==
+X-ME-Sender: <xms:J0rbYV1Y26bbiwjj_rmgT0-V8ZhKTKeXy52uRJ4hy7rhwzDDpQ9hbQ>
+    <xme:J0rbYcFJeoCUwW5O-UkUmfFaGHBiN_ZtV4q5f_JFEwrAhvB721chOZ05gKKD1bxbV
+    1x5hzAxW5HI3_W8wec>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudegkedgudegfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgfgse
+    htqhertderreejnecuhfhrohhmpedftfgrmhhkuhhmrghrucftrghmrggthhgrnhgurhgr
+    fdcuoehrsegrrhhtrghgnhhonhdrtghomheqnecuggftrfgrthhtvghrnhepkeevueekie
+    duleekgfelteduheffkeegveffheeljeegkeevteeiteekvedvvdehnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprhesrghrthgrghhnohhnrd
+    gtohhm
+X-ME-Proxy: <xmx:J0rbYV4loeVtA5IvESFsgJ6p7_zS1rBS5ayNnbUtknfHzrYUnuwphQ>
+    <xmx:J0rbYS3JusglBA4YYMjZEY7aBoZIsEFJohXsnc-3SbyuGIHCj4gVJA>
+    <xmx:J0rbYYHaBQAzwA3LxHgydt_eb6GPkYlpodtRWTTO2VPbancBGDtJDg>
+    <xmx:KErbYbyTO3sLAPePHaKDLUYynGjmHrutjzMmlQKV-ATUb-9GQ-U7WQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id D491B1EE007B; Sun,  9 Jan 2022 15:48:39 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4526-gbc24f4957e-fm-20220105.001-gbc24f495
+Mime-Version: 1.0
+Message-Id: <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
+In-Reply-To: <xmqqilus3ctf.fsf@gitster.g>
+References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
+ <xmqqilus3ctf.fsf@gitster.g>
+Date:   Sun, 09 Jan 2022 21:48:19 +0100
+From:   "Ramkumar Ramachandra" <r@artagnon.com>
+To:     "Junio C Hamano" <gitster@pobox.com>
 Cc:     "Git List" <git@vger.kernel.org>
 Subject: Re: git bisect bad @
-References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
-Date:   Sun, 09 Jan 2022 11:54:04 -0800
-In-Reply-To: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com> (Ramkumar
-        Ramachandra's message of "Sun, 09 Jan 2022 20:29:39 +0100")
-Message-ID: <xmqqilus3ctf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E6D75746-7185-11EC-9654-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ramkumar Ramachandra" <r@artagnon.com> writes:
+Hi,
 
-> I bumped my head thrice (yes, thrice!) by using `git bisect bad
-> @`. The error displayed to me at the end of one run was the
-> following:
->
->   Cela signifie que le bogue =C3=A9t=C3=A9 corrig=C3=A9 entre ea3595845=
-f5013359b2ba4402f948e454350a74c et=20
->   [2e100906d5d0c276335665ffefedb906d21165ca ea3595845f5013359b2ba4402f9=
-48e454350a74c].
->   error: la bissection a =C3=A9chou=C3=A9 : 'git bisect--helper --bisec=
-t-state (null)' a retourn=C3=A9 le code erreur -3
->
-> After the third attempt, I realized: ah yes, computers aren't magic; gi=
-t-bisect.sh is basically a stupid shell script (no offense!).
->
-> Perhaps git-bisect.sh can ref-parse the arguments before starting its w=
-ork? Agreed, none of the refs are expected to change during its operation=
-, with the exception of the sneaky `@`.
+Junio C Hamano wrote:
+> So, perhaps there is something you are not quite telling us,
+> e.g. your problem happens during a replay an old bisect session
+> after HEAD has moved---if we had a bug that records symbolic object
+> names in the replay log, it may produce a nonsense result in such a
+> case (but I doubt that is the case---I am reasonably sure that the
+> log also records concrete object names)?
+>=20
+> Perhaps you can try again with a better minimum reproducible
+> example?
 
-As far as I know, the first thing it does to the command line is to
-turn them into concrete object names.  I do not doubt that you had
-some problem, and I do not doubt that it was with "git bisect bad"
-with arguments, but I somehow doubt your diagnosis is correct.
+Indeed, I was a bit naive to assume that bisect didn't rev-parse. I'm ha=
+ppy to report that I've found the minimum reproducible example.
 
-In git-bisect.sh, we see:
+  # on coq.git, for those curious
+  $ git bisect start
+  $ git bisect bad @
+  $ git bisect good V8.14.1
+  $ git bisect run bisect.sh # oops!
+  Lancement de  'bisect.sh'
+  'bisect.sh': bisect.sh: command not found
+  La base de fusion ea3595845f5013359b2ba4402f948e454350a74c est mauvais=
+e.
+  Cela signifie que le bogue =C3=A9t=C3=A9 corrig=C3=A9 entre
+  ea3595845f5013359b2ba4402f948e454350a74c et [2e100906d5d0c276335665ffe=
+fedb906d21165ca].
+  error: la bissection a =C3=A9chou=C3=A9 : 'git bisect--helper --bisect=
+-state (null)' a retourn=C3=A9 le code erreur -3
+  $ git bisect run ./bisect.sh # let's try again!
+  # churn ... build ... test
+  Cela signifie que le bogue =C3=A9t=C3=A9 corrig=C3=A9 entre ea3595845f=
+5013359b2ba4402f948e454350a74c et=20
+  [2e100906d5d0c276335665ffefedb906d21165ca ea3595845f5013359b2ba4402f94=
+8e454350a74c].
+  error: la bissection a =C3=A9chou=C3=A9 : 'git bisect--helper --bisect=
+-state (null)' a retourn=C3=A9 le code erreur -3
 
-        case "$#" in
-        0)
-                usage ;;
-        *)
-                cmd=3D"$1"
-                get_terms
-                shift
-                case "$cmd" in
-                help)
-                        git bisect -h ;;
-                start)
-                        git bisect--helper --bisect-start "$@" ;;
-                bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
-                        git bisect--helper --bisect-state "$cmd" "$@" ;;
+In all three of my runs, there was never a straightforward non-erroring =
+sequence of git-bisect invocations (although my terminal history is lost=
+). Perhaps git-bisect can be hardened a bit, instead of needlessly punis=
+hing the user with a long build + test that doesn't lead anywhere?
 
-So "git bisect--helper --bisect-state bad HEAD" is run in your case.
-Now in builtin/bisect--helper.c::bisect_state(), here is what
-happpens:
-
- * argc is checked to make sure at least one arg is there to give
-   the 'state' (i.e. good or bad)
-
- * if there is no arg, the revision that is marked as the given
-   'state' defaults to "HEAD"
-
- * each remaining arg is first passed to get_oid(), turned into a
-   commit object.
-
-All of the above should happen way before bisect_next_all() calls
-check_good_are_ancestors_of_bad(), that eventually calls
-handle_bad_merge_base() where your "The merge base X is bad" error
-message comes from.
-
-So, perhaps there is something you are not quite telling us,
-e.g. your problem happens during a replay an old bisect session
-after HEAD has moved---if we had a bug that records symbolic object
-names in the replay log, it may produce a nonsense result in such a
-case (but I doubt that is the case---I am reasonably sure that the
-log also records concrete object names)?
-
-Perhaps you can try again with a better minimum reproducible
-example?
-
-Thanks.
-
+Warm regards,
+Ram
