@@ -2,132 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 532F3C433EF
-	for <git@archiver.kernel.org>; Sun,  9 Jan 2022 21:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADEE3C433F5
+	for <git@archiver.kernel.org>; Sun,  9 Jan 2022 21:53:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237141AbiAIVh7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Jan 2022 16:37:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60744 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233873AbiAIVh6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jan 2022 16:37:58 -0500
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4014AC06173F
-        for <git@vger.kernel.org>; Sun,  9 Jan 2022 13:37:58 -0800 (PST)
-Received: by mail-qk1-x729.google.com with SMTP id t66so12885937qkb.4
-        for <git@vger.kernel.org>; Sun, 09 Jan 2022 13:37:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=k++J1sE1pUn5SzIPFEDOiZfKNs1ZfYpZ0LCOXfepkrQ=;
-        b=fVkk4tXlv4Op56BOAKoRhMxQcZ9E4hs4lGrPrYRM+a0KOceLOjANEgRuSFRMUgDaP/
-         4OhT/Zt0GAwPP23U5OZoKBFhBZdraKngwqt8EaoShKoQhu5jmcQ3g7mpyLlPiShlShEg
-         bqRDaXq89g3QEhfc2QS95GEX4eNdNI6tCVUoVVSGMl6DvRfi6SQZ0zjG25TU8p4gaAff
-         kP82Z+05AYONGCC++ZPZkcYpUDGYjye9FfS4vz5hUS0Z8o3D+hbubjfMQ9/gND8g/rys
-         C5rui3ogvCzbBwf+/qTB4KSNhx/i6LV4mx0zcLRAVfmOP1T+yKB3yJDSOmIISCxSBY3B
-         Pjzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=k++J1sE1pUn5SzIPFEDOiZfKNs1ZfYpZ0LCOXfepkrQ=;
-        b=M0GJME0E5LSmh8n1OGxZod/Fz2tV6ODhqt+6C7YKt/ujlLPp6jDnS6zamonEXJjuGU
-         s4avLUgQ6qFgfih6dVTU/4Poq2o0+ncc+m7uYdMUYGZXJewW6V/vjKDfCxgklCAkpuXq
-         HtHwWEjXp938cNBLqYUQHPuN5AMQXzTOTsVB+Wj+XKNVVkcAmGOfUPVTHki6+jN0mUIk
-         QQvPB+q5sns3P+BQWfkhgXCjVCUMpTyspNpA6G2vR4y/yAyvumVARb8DR6VriKQrE2XZ
-         e/vCWX8Wsfz2jq+lQXWP/RrW8dCaIsKQDEd1nFOloSYQx/vcx1D1L5HUKt3eYjsAFF/V
-         H3ag==
-X-Gm-Message-State: AOAM533S6I34o3mkNZ+2kAav03y1lhYbM/VvYOukPEXp44QJexON5ZmM
-        +WaH9uDC8zB2edyAtiG0Ncm8gERPRPkqcA==
-X-Google-Smtp-Source: ABdhPJy6inczhlAEhPTtqsdU5Dx46+0lxuNp89aNFfG4bj1SjOO8SXK+Rxj1+wnaCq1eHe//LRcRvA==
-X-Received: by 2002:a05:620a:22b0:: with SMTP id p16mr2161116qkh.187.1641764277172;
-        Sun, 09 Jan 2022 13:37:57 -0800 (PST)
-Received: from flurp.local (097-069-216-153.res.spectrum.com. [97.69.216.153])
-        by smtp.gmail.com with ESMTPSA id q10sm3411794qtw.88.2022.01.09.13.37.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Jan 2022 13:37:56 -0800 (PST)
-Sender: Eric Sunshine <ericsunshine@gmail.com>
-Date:   Sun, 9 Jan 2022 16:37:49 -0500
-From:   Eric Sunshine <sunshine@sunshineco.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     git@vger.kernel.org, Pedro Martelletto <pedro@yubico.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3] gpg-interface: trim CR from ssh-keygen
-Message-ID: <YdtVrT4gBvnXfNr6@flurp.local>
-References: <20220103095337.600536-1-fs@gigacodes.de>
- <20220107090735.580225-1-fs@gigacodes.de>
+        id S234660AbiAIVx0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Jan 2022 16:53:26 -0500
+Received: from mout.gmx.net ([212.227.17.20]:57499 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229553AbiAIVxZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jan 2022 16:53:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1641765203;
+        bh=Ckl7pBpGDlrz5p7p3c6Q1OZdbm90OVtlXmfb/vPKl2E=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Q4vcFPTR6FnikBsVeuKRyN/ibe+Z8K7vNasKehcTpHnc6FvnBdIguIS5FQHGFeN/w
+         L+LMKIf7rBoBYeLYXSEgj3Tk6IYdX28lHXFR1Vu4KK7ZW+cTOJe3Y/8+055egjDvoV
+         YjGsQwOEysbdI/gYw91+Qg0on4fiDn8jFy8N+MHY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.25.133.218] ([89.1.215.56]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N17YY-1mM1ph2oPa-012ZhR; Sun, 09
+ Jan 2022 22:53:23 +0100
+Date:   Sun, 9 Jan 2022 22:53:17 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Imi Admin <imiadmin@HTW-Berlin.de>
+cc:     git@vger.kernel.org
+Subject: Re: Problem with credential.helper=store in git 2.32.0.windows.2
+In-Reply-To: <8838ac786ed46b841e4172824b80564b@htw-berlin.de>
+Message-ID: <nycvar.QRO.7.76.6.2201092246520.339@tvgsbejvaqbjf.bet>
+References: <8838ac786ed46b841e4172824b80564b@htw-berlin.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220107090735.580225-1-fs@gigacodes.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:dVu8GpBO/62gnmZVj34xlhRzjpdm4dPRXkzIhlfZNWZ+EProbhi
+ wCwiEEU5mU/7qaJ3OWqcV1Bp+wH/dNIYzQRzSJu8yzWwZhwEI8eokG4bXPwxaDkg9a3B7C1
+ HQ7PixTY3YOjs4kptYD4Enarc1QhBd7uvXLJcEddpDNRHn3wyrh9hhloG9C3Ei2qvCeeeQR
+ otkAEIiWZL0EqUzNRt3wA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:K4o62ohjoUI=:ckx2ONdx4Jo3txZLBAdPvF
+ KYRuuMenwYMd6m2gKRgqr7gjFYL/KU+9xmjm1yiub9Y2FKNeQeqbtIIyl2O/l/7tU2OfR+wEX
+ ++wMUV1HUdfVmNtAG2JMpv1QqhdshH2hglj00zG3EGcLYn2C6cPOPcTQ8/fnLzif3PnQdfyr7
+ ounxGPsRaO+2gP7+iGcTwVkeoAKMcxjBznrn37IwmNrg8tfU6dxnyb3xxHICCnwHA7RD17M3r
+ 3XFEQB7D6d/n5zSwgrEJ8huLkYPLHMMd/wtu0hiBFCiJW4VcxniPZnVzwfahkjAQUMUg+8gFw
+ wUo0MyFcu7oHn/i9RiCt8/kpGzsVNoLTa5ifv/j55hhxACc4yaVKkQwqdmHQVz/q+ILp1RdGh
+ 7ksyl028J0NFXJJjshRJb1DGq8dkxoEdB5wAndu8NQLl/jSObb3pSKTkfKQZIKOeM6rBIYtPd
+ BYGEbSvufBQLISRH4oHsvKLb8LmkOkZT+RaVgs+m4pGPvcrx60p2c0wrqEsYPD5+ejkd2NhIz
+ 6iiQMEg48EViDF2IwN5UHzT1zPEW0p965zOHtzEmIOenUVUIE5lrmdv4KHhzKQ/mulOozwt+Y
+ E10KiBk4Vf1Lg/deS1mqVs1ibxisXJUFpz/roDGvSTNWbx9fHzq+FL2mKSwK+E6MjwdyCPUo1
+ a0VLiEfHdwMpBN2vN62HFB1RPcu5ua+EJ76T4/jC39bSruiYfw+8kZxG1ClSDZwSMCmWtMcG9
+ zvt3NLj1d7WCxrH9rM+9CaxkeN+T8fxQ/W38uDc/Zi1HaJ+z12MPnV4OICRGqKnva3SFrRo1l
+ 3upWEdP/HoV+PWX+JIz6MI9MJJxu7zFmt4jFl5c3gqXXMOZPqQL8WFrBdyS3pUv/WvGMlO8F4
+ 7zt9s+q6sYcEeSdib7URgRhHphGOu9k5hWo3+HdFfrvNKB1EoLSpO30o+BmCE6Slob78fSx3T
+ e1RySfCpx0dap0WdeoOXFgKoNQjXXUopp05CEpZsFM7GnplO8n/hP5MQDnIWIfe7mXuYyt/JG
+ JgVZN95+/dRsF2NFG1AItzZtpIBTw/c1jr4lfYcyWlKmCmgXh/qQtQyBzzCS2aYNuyra4COUq
+ +KOQ9ZuWL4nZWI=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 07, 2022 at 10:07:35AM +0100, Fabian Stelzer wrote:
-> We need to trim \r from the output of 'ssh-keygen -Y find-principals' on
-> Windows, or we end up calling 'ssh-keygen -Y verify' with a bogus signer
-> identity. ssh-keygen.c:2841 contains a call to puts(3), which confirms
-> this hypothesis. Signature verification passes with the fix.
+Hi Sebastian,
+
+On Thu, 6 Jan 2022, Imi Admin wrote:
+
+> Here's my local git configuration:
 >
-> Helped-by: Pedro Martelletto <pedro@yubico.com>
-> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+> PS C:\scripts> git config -l --show-origin
+> [...]
+> file:C:/Program Files/Git/etc/gitconfig	credential.helper=3Dmanager-core
+> file:C:/Program Files/Git/etc/gitconfig	credential.https://dev.azure.com=
+.usehttppath=3Dtrue
+> file:C:/Program Files/Git/etc/gitconfig	init.defaultbranch=3Dmaster
+> file:.git/config	core.repositoryformatversion=3D0
+> file:.git/config	core.filemode=3Dfalse
+> file:.git/config	core.bare=3Dfalse
+> file:.git/config	core.logallrefupdates=3Dtrue
+> file:.git/config	core.symlinks=3Dfalse
+> file:.git/config	core.ignorecase=3Dtrue
+> file:.git/config	remote.origin.url=3Dhttps://mygitlab.de/mygroup/myrepo.=
+git
+> file:.git/config	remote.origin.fetch=3D+refs/heads/*:refs/remotes/origin=
+/*
+> file:.git/config	branch.master.remote=3Dorigin
+> file:.git/config	branch.master.merge=3Drefs/heads/master
+> file:.git/config	user.name=3Dmyname
+> file:.git/config	user.email=3Dmy@email
+> file:.git/config	credential.helper=3Dstore --file C:/scripts/.git/.git-c=
+redentials
+>
+> [...]
+>
+> Anyway as far as i understood git should not exec git-credential-manager=
+-core
+> get at all with my local git configuration?
 
-Should this also have a "Helped-by: Junio" since this code was heavily
-inspired by his suggestion[1]?
+You need one additional thing to make that happen. As per
+https://git-scm.com/docs/git-config#Documentation/git-config.txt-credentia=
+lhelper:
 
-[1]: https://lore.kernel.org/git/xmqqo84rcn3j.fsf@gitster.g/
+	Note that multiple helpers may be defined. See gitcredentials[7]
+	for details and examples.
 
-> ---
-> diff --git a/gpg-interface.c b/gpg-interface.c
-> @@ -502,15 +501,30 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
-> +		const char *next;
-> +		for (line = ssh_principals_out.buf;
-> +		     *line;
-> +		     line = next) {
-> +			const char *end_of_text;
-> +
-> +			next = end_of_text = strchrnul(line, '\n');
-> +
-> +			 /* Did we find a LF, and did we have CR before it? */
-> +			if (*end_of_text &&
-> +			    line < end_of_text &&
-> +			    end_of_text[-1] == '\r')
-> +				end_of_text--;
-> +
-> +			/* Unless we hit NUL, skip over the LF we found */
-> +			if (*next)
-> +				next++;
-> +
-> +			/* Not all lines are data.  Skip empty ones */
-> +			if (line == end_of_text)
-> +				continue;
-> +
-> +			/* We now know we have an non-empty line. Process it */
-> +			principal = xmemdupz(line, end_of_text - line);
+And in https://git-scm.com/docs/gitcredentials#_configuration_options, we
+read:
 
-Considering that this code makes a copy of the line _anyhow_ which it
-assigns to `principal`, it still seems like it would be simpler and
-far easier to understand at-a-glance to instead take advantage of one
-of the existing string-splitting functions. For instance, something
-like this:
+	If there are multiple instances of the credential.helper
+	configuration variable, each helper will be tried in turn, and may
+	provide a username, password, or nothing. Once Git has acquired
+	both a username and a password, no more helpers will be tried.
 
-    struct strbuf **line, **to_free;
-    line = to_free = strbuf_split(&ssh_principals_out, '\n');
-    for (; *line; line++) {
-        strbuf_trim_trailing_newline(*line);
-        if (!(*line)->len)
-            continue;
-        principal = (*line)->buf;
+	If credential.helper is configured to the empty string, this
+	resets the helper list to empty (so you may override a helper set
+	by a lower-priority config file by configuring the empty-string
+	helper, followed by whatever set of helpers you would like).
 
-keeping in mind that strbuf_trim_trailing_newline() takes care of
-CR/LF, and with appropriate cleanup at the end of the loop:
+So you need to insert a line "helper =3D` (with an empty value) in your
+.git/config's `[credential]` section:
 
-        strbuf_list_free(to_free);
+	[credential]
+		# reset 'credential.helper' list
+		helper =3D
+		helper =3D "store --file C:/scripts/.git/.git-credentials"
 
-(and removal of `FREE_AND_NULL(principal)` which is no longer needed).
-
-Something similar can be done with string_list_split(), as well.
+Ciao,
+Johannes
