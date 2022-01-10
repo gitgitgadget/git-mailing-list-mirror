@@ -2,232 +2,294 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D775C433F5
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 13:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 240EBC433F5
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 13:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231749AbiAJNSc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 08:18:32 -0500
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:42705 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230248AbiAJNSb (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 10 Jan 2022 08:18:31 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id 680065C00A3;
-        Mon, 10 Jan 2022 08:18:31 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Mon, 10 Jan 2022 08:18:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=nVzs8y/S8HkNBQKeu+rRNKoO1nN
-        DwvuAOSaR7jsstHU=; b=dNxqQygXKoicdZOQ0tRhbTlN7KM9goURYMVYX+eSzJP
-        VpnZmO39aHUVK0A+HcbAwIfcrHExZ5tOmUm9/34XXxNWnIdSLTXZcWUSzTNSdxyr
-        xJeZaxb7A4AapRP4hTpEYNbDDqxLxsnYDp1+5s4h9SqRwwKO2kgtPIBZCDfPLR6K
-        rt/t4toj2LPEBKbJqEVFbSqs0apY+CuTTpQCh/S9qPHh/LABwrIcytfVcPV1I0VZ
-        hS7fuWrw+rME7JMI2SkcGoM6qslf1zaVvtUV6ZVCX+sb2e9mgTaG0IuS5ykkGTfa
-        A8HAhY9CPRNujCTK5XKWR8hX3jSy01I2jxMbHlb3pDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=nVzs8y
-        /S8HkNBQKeu+rRNKoO1nNDwvuAOSaR7jsstHU=; b=GXBfHxr8m7Y8wHAJQllQgN
-        ShLBnlDnaCTAQWqq0xdtJdfIRc1gmgp4WOTh5RSNez5R0bsy70NDMRgiZNOwN4oI
-        IkrxJcnF2NZnONNDhTD1t4aiGPnx63+V/e2rPHGpqcpcJSc+pozQ8aYPlEHV4Nu+
-        YTE4ZpAw/QLg7hcp3FdQF9DRGdPejJHuufnjwkvoZlGkDSGcDiqRyxLSUxJMQdnR
-        CE3v/zBe31NsOrh9T9+JR862T6TQcgXAaCFpJs31XxV0jPww0A9KfyvGx58vvBTb
-        5BYX17slHn591PZLxqOTU9yw38Be1JKITEcmEOp388QSpFz/8fL5TT6d+vbULhzQ
-        ==
-X-ME-Sender: <xms:JzLcYTekvoEEIhhOr779l5Qr1GU1wTYKvsh_Spr74dGGllOAJThuTA>
-    <xme:JzLcYZNxX-LODplatk0tbc620MR0uVMCtipuVjpUTI44-NVBFy4EXjNV1UXZLFLvs
-    09ABmAxWBl6j5TNjA>
-X-ME-Received: <xmr:JzLcYcjFkUceuchBb_1qr0MWEaa_iNeO2_KDMMXk9mldJO7u2yaR472vtKJBFGbiNOd021Y3E6tktlLjjy4TTQNqEomIST8ji3NAJvmyUPRYXK8zHvhNGLhG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudehuddgvdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:JzLcYU9SBnrFAmAWL9XbhBUGuURZEoulYb1sKsziMfBkaWmSRG1ixQ>
-    <xmx:JzLcYfvJu0GD4KH9hufIMOWRbivdcs1LQm6w_SYf-j0S2Y3bzlId8Q>
-    <xmx:JzLcYTEetxLppY_GjYv8nq7QYcwkvt3ezSdr2yiN2-73yShDTdesaw>
-    <xmx:JzLcYfK4GNc3Ktl4_Y9KsAiBjgVbswCP6W_rGyHaOLiO9AVQQznslg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Jan 2022 08:18:30 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 105f7a76 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 10 Jan 2022 13:18:27 +0000 (UTC)
-Date:   Mon, 10 Jan 2022 14:18:14 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Bryan Turner <bturner@atlassian.com>,
-        Waleed Khan <me@waleedkhan.name>
-Subject: Re: [PATCH v2 6/6] refs: skip hooks when deleting uncovered packed
- refs
-Message-ID: <YdwyFmqs0MhU0wA6@ncase>
-References: <cover.1638874287.git.ps@pks.im>
- <cover.1641556319.git.ps@pks.im>
- <0fbf68dbf434986aa971961e20598675b2194d51.1641556319.git.ps@pks.im>
- <xmqq1r1j3s0v.fsf@gitster.g>
+        id S230236AbiAJNtf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 08:49:35 -0500
+Received: from mout.gmx.net ([212.227.17.22]:42101 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234216AbiAJNte (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 08:49:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1641822567;
+        bh=jRD3yHk2yq2HETPbpDMTXI6nLoExuHPje1koq/NV/Tw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Z2kB2xNhxtc30dXaaLcn2WdOrVxoisZUjwBC6Oenws/eeuj20C9BZpwyYFPmWrkj6
+         SkIHq0vn7SuAHbD7aQQ7g/9y1NwA8eWawhUXeDYxsXqp26RJy+4F+I5FGsjnfHroBI
+         rt06k3x9sMeUtwdcDmN3oJw4qvUAq/zXRGLKiVwA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.25.133.218] ([89.1.215.56]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MGz1f-1nC5qO2kIl-00E8vF; Mon, 10
+ Jan 2022 14:49:27 +0100
+Date:   Mon, 10 Jan 2022 14:49:26 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [RFC PATCH 0/2] Introduce new merge-tree-ort command
+In-Reply-To: <CABPp-BHpuLjCYycBwweMW_NdQrS_r3ECmvLb8XjNW-_Rau5NTw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201101427440.339@tvgsbejvaqbjf.bet>
+References: <20220105163324.73369-1-chriscool@tuxfamily.org> <CABPp-BFh7UnQtPM=tO8rfp5bPK4-7esouv5KCx1sUSESwEA=Rw@mail.gmail.com> <CAP8UFD0wKnAg5oyMWchXysPTg3K9Vb4M1tRcPzPE81QM903pYg@mail.gmail.com>
+ <CABPp-BHpuLjCYycBwweMW_NdQrS_r3ECmvLb8XjNW-_Rau5NTw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="YBqUv9WMkFkqCmWR"
-Content-Disposition: inline
-In-Reply-To: <xmqq1r1j3s0v.fsf@gitster.g>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:cfrE31o8P6V4E8zYsUqTsBSbm8eYU7Ut/+Cj3HTWQP3lGpvX/EP
+ XHvlPGPoQKey7cAX5b2h3g5TVLQk0FNtn3r43ndz7b9PNEeO09MijQ8dShqSfPl7bx7Y1Gu
+ dsFvs6tK6F8gFFzMfLLh/GS38zaIvfTK6/ff6Fy33G7F2qrxjIxYmS3vtCMISAXlgOlNXKL
+ ST0sfOjL+yWE6xgX6PtMA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WNRgVilJGGE=:ocDeI42UTfuAuEpkTo8prM
+ fKqY+ZuiBeMxk27Y2xZ3dVPsdg80oh+KNGI2fY9Zkk/YqQrmXh2cmpsCqA+xcqSO+wXdDA9zW
+ TRqKGPmqoXsULKz19TLCqFEVh4e6DpRtHZFvAj7RF/1DuYOotOi00tHLq4rfy9LCTEPAzzs1E
+ 5c8BIEbpJciKMM+ypkqCsr+zEmdwO0QbnTdigJx2appBkJ2ssIa0mBXTyQCumwGLhO5h+nIdY
+ j+n8F2klSlIN7tMYZ5xwJJH0q+cMaAbYo8jcDyS2GJjLUUIE+wD9I7G1sf4np8UwzyDERDNa3
+ KY0s8qi7TpowIVg+lh8BHW82/SeWoPBIrGDVMcUIg5ySpX39IPx0aiwwj7jSOA9J1RVAckkcb
+ RMQOjnn7r4cy/HAocrM9GlkFNk5otlqmmHpWb1nhWGswvHLiZ+qO0TCJKeQH2zTvWaeOb5zla
+ 56R0OUTLkpMHf9pMlclUVe64emDdPW4idD/QFrvL1qtvejqDWbrg+Bw+p+nOCGGdew04YTmcG
+ /RJGQz5Jjsfxy0cVDtd8aqVyWS4KbLOwMyPJHYdPpeKhiRCDKOJvmGzcp41jgop6jL89WiTp+
+ 31jhLXIaBnh2UXBwEKDolt2Fle0TdwgLqqglHVFac6lNWyxGQ76lYDuh4hpNIwxKAIJqWeiY5
+ FfgpshnixLyUBWA02woQrSrH7TNw5tVb8O+dsoyDheoPjzBvmQT/IsuTcDMuvxIHT0giN5wkz
+ lUqlGKhl08pZFZhFekpZhA09ar5enRsszjYRUhEdqoUNkrObWiG660OaKEEDTtk2gMJ4roHYo
+ fduPICWbM52Cd38VwqNhPaugSE+Pi96SS9dkmn2SYTwq/V5n6dff8fioJYgsCIMg5zDIT2SRn
+ 9hfyaUGTxinRv7IgFKJnx588uYqTYFkeRlROx29ZlCJFcQKIKn5VbXtqwJH++ploc0V4PFgfT
+ KrsF52X4shsE0hN6IPdox/ZYvyLbnJuCqpndwct1dh0T9iFMFsdntkMfOi5ICD++GuRWrmT+V
+ NOzNtIGffESUqgw4Lu2PZZpIuAo2VJTu0Nlw7/aEEO1qfwBLxwF3Nw4Op2qcWwCGV8NZzviuY
+ 7EFqe4lUsN4A+8=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Elijah,
 
---YBqUv9WMkFkqCmWR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, 7 Jan 2022, Elijah Newren wrote:
 
-On Fri, Jan 07, 2022 at 06:01:04PM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > When deleting refs from the loose-files refs backend, then we need to be
-> > careful to also delete the same ref from the packed refs backend, if it
-> > exists. If we don't, then deleting the loose ref would "uncover" the
-> > packed ref. We thus always have to queue up deletions of refs for both
-> > the loose and the packed refs backend. This is done in two separate
-> > transactions, where the end result is that the reference-transaction
-> > hook is executed twice for the deleted refs.
+> On Fri, Jan 7, 2022 at 9:58 AM Christian Couder
+> <christian.couder@gmail.com> wrote:
 > >
-> > This behaviour is quite misleading: it's exposing implementation details
-> > of how the files backend works to the user, in contrast to the logical
-> > updates that we'd really want to expose via the hook. Worse yet, whether
-> > the hook gets executed once or twice depends on how well-packed the
-> > repository is: if the ref only exists as a loose ref, then we execute it
-> > once, otherwise if it is also packed then we execute it twice.
->=20
-> If the ref only exists as a packed ref, what happens? ...
->=20
-> > Fix this behaviour and don't execute the reference-transaction hook at
-> > all when refs in the packed-refs backend if it's driven by the files
-> > backend.
->=20
-> ... We try to remove from the loose backend, which would say "nah,
-> it did not exist in my store".  I am not sure if it should execute
-> the delete hook in such a case for the ref.  But if it does not, not
-> running the hook in the ref transaction for packed backend driven by
-> the loose backend would mean nobody notifies the deletion of the
-> ref, no?
-
-This is shown in the test I've added, "deleting packed ref calls hook
-once". We create a new reference and pack it such that it doesn't exist
-as loose ref anymore, but only as a packed one. Updating that ref
-would've caused us to execute the hook twice before, once via the
-packed-backend and once via the loose-backend. With my fix we only
-execute it once via the loose-backend, even if it doesn't currently know
-it. This works because the loose-backend has to create a lock for the
-nonexistent reference such that no concurrent call touches the same ref.
-
-> To me, it seems that the only case this strategy would work
-> correctly is when the files backend calls deletion hook for a
-> request to delete nonexistent ref, which by itself sounds like a
-> problem.
-
-It does so only if the ref exists in either the loose or packed backend
-though. If trying to update a ref which exists in neither of those, then
-the reference transaction would fail with an "unable to resolve
-reference" error in `lock_raw_ref()`.
-
-So this should behave as expected: deleting a packed ref calls the hook
-once, deleting a nonexistent ref fails and doesn't call the hook at all.
-
-Patrick
-
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  refs/files-backend.c             | 9 ++++++---
-> >  t/t1416-ref-transaction-hooks.sh | 7 +------
-> >  2 files changed, 7 insertions(+), 9 deletions(-)
+> > On Wed, Jan 5, 2022 at 5:54 PM Elijah Newren <newren@gmail.com> wrote:
+> > >
+> > > On Wed, Jan 5, 2022 at 8:33 AM Christian Couder
+> > > <christian.couder@gmail.com> wrote:
 > >
-> > diff --git a/refs/files-backend.c b/refs/files-backend.c
-> > index 3c0f3027fe..9a20cb8fa8 100644
-> > --- a/refs/files-backend.c
-> > +++ b/refs/files-backend.c
-> > @@ -1261,7 +1261,8 @@ static int files_delete_refs(struct ref_store *re=
-f_store, const char *msg,
-> >  	if (packed_refs_lock(refs->packed_ref_store, 0, &err))
-> >  		goto error;
-> > =20
-> > -	transaction =3D ref_store_transaction_begin(refs->packed_ref_store, 0=
-, &err);
-> > +	transaction =3D ref_store_transaction_begin(refs->packed_ref_store,
-> > +						  REF_TRANSACTION_SKIP_HOOK, &err);
-> >  	if (!transaction)
-> >  		goto error;
-> > =20
-> > @@ -2775,7 +2776,8 @@ static int files_transaction_prepare(struct ref_s=
-tore *ref_store,
-> >  			 */
-> >  			if (!packed_transaction) {
-> >  				packed_transaction =3D ref_store_transaction_begin(
-> > -						refs->packed_ref_store, 0, err);
-> > +						refs->packed_ref_store,
-> > +						REF_TRANSACTION_SKIP_HOOK, err);
-> >  				if (!packed_transaction) {
-> >  					ret =3D TRANSACTION_GENERIC_ERROR;
-> >  					goto cleanup;
-> > @@ -3046,7 +3048,8 @@ static int files_initial_transaction_commit(struc=
-t ref_store *ref_store,
-> >  				 &affected_refnames))
-> >  		BUG("initial ref transaction called with existing refs");
-> > =20
-> > -	packed_transaction =3D ref_store_transaction_begin(refs->packed_ref_s=
-tore, 0, err);
-> > +	packed_transaction =3D ref_store_transaction_begin(refs->packed_ref_s=
-tore,
-> > +							 REF_TRANSACTION_SKIP_HOOK, err);
-> >  	if (!packed_transaction) {
-> >  		ret =3D TRANSACTION_GENERIC_ERROR;
-> >  		goto cleanup;
-> > diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction=
--hooks.sh
-> > index f9d3d5213f..4e1e84a91f 100755
-> > --- a/t/t1416-ref-transaction-hooks.sh
-> > +++ b/t/t1416-ref-transaction-hooks.sh
-> > @@ -175,16 +175,11 @@ test_expect_success 'deleting packed ref calls ho=
-ok once' '
-> >  	git update-ref -d refs/heads/to-be-deleted $POST_OID &&
-> > =20
-> >  	# We only expect a single hook invocation, which is the logical
-> > -	# deletion. But currently, we see two interleaving transactions, once
-> > -	# for deleting the loose refs and once for deleting the packed ref.
-> > +	# deletion.
-> >  	cat >expect <<-EOF &&
-> > -		prepared
-> > -		$ZERO_OID $ZERO_OID refs/heads/to-be-deleted
-> >  		prepared
-> >  		$POST_OID $ZERO_OID refs/heads/to-be-deleted
-> >  		committed
-> > -		$ZERO_OID $ZERO_OID refs/heads/to-be-deleted
-> > -		committed
-> >  		$POST_OID $ZERO_OID refs/heads/to-be-deleted
-> >  	EOF
+> > > > The current `git merge-tree` command though seems to have a number=
+ of
+> > > > issues, especially:
+> > > >
+> > > >   - it's too much related to the old merge recursive strategy whic=
+h is
+> > > >     not the default anymore since v2.34.0 and is likely to be
+> > > >     deprecated over time,
+> > > >
+> > > >   - it seems to output things in its own special format, which is =
+not
+> > > >     easy to customize, and which needs special code and logic to p=
+arse
+> > >
+> > > I agree we don't want those...but why would new merge-tree options
+> > > have to use the old merge strategy or the old output format?
+> >
+> > Yeah, it's not necessary if there are 2 separate modes, a "real" mode
+> > (like what you implemented with --real in your recent patch series)
+> > and a "trivial" mode (which is the name you give to the old code).
+> >
+> > Adding modes like this to a command is likely to make the command and
+> > its documentation more difficult to understand though. For example I
+> > think that we created `git switch` because the different modes of `git
+> > checkout` made the command hard to learn.
+> >
+> > I gave other reasons in [1] why I prefer a separate command.
+> >
+> > [1] https://lore.kernel.org/git/CAP8UFD1LgfZ0MT9=3DcMvxCcox++_MBBhWG9T=
+wf42cMiXL42AdpQ@mail.gmail.com/
+>
+> I can see where you're coming from, but I think the particular
+> comparison you use isn't quite apples to apples.  `git checkout` has a
+> "change branches" mode and a "revert specific paths" mode.  While
+> those have significant implementation overlap, they seem like
+> different concepts to users.  For merge-tree, the implementation is
+> completely orthogonal between the two modes, but the concept is
+> basically the same from the user viewpoint.  Yes, the output differs
+> in the two merge-tree modes, but command line arguments are often used
+> to tweak the output (much like diff has different output styles based
+> on various flags).  In fact, in [1] where you suggest a new command
+> you suggest that it should have "roughly the same features as git
+> merge-tree and a similar interface".  To me, that suggests that the
+> two may be good candidates for being similar commands.
+>
+> That said, I'm not against a new command.  Personally, my main reason
+> for using merge-tree wasn't because that's where I thought it was best
+> to put it, but just that (IIRC) each of Dscho, Peff, and Junio
+> suggested that location.
+>
+> My biggest gripe was just the command name...
 
---YBqUv9WMkFkqCmWR
-Content-Type: application/pgp-signature; name="signature.asc"
+I am against a new command for what essentially serves the original
+purpose of `merge-tree`.
 
------BEGIN PGP SIGNATURE-----
+The fact that `merge-tree` has not seen any work in almost 12 years is
+testament not only to how hard it was to disentangle the work-tree
+requirement from the recursive merge (it is one of my favorite
+counterexamples when anybody claims that you can easily prototype code in
+a script and then convert it to C), but the fact that there is no user
+within Git itself (apart from t/t4300-merge-tree.sh, which does not count)
+speaks volumes about the design of that `merge-tree` tool.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHcMhUACgkQVbJhu7ck
-PpRXMA/+KGbbInxtzHTIGEOIg/4Bgdkz4aI3bcMrrEYXewqLlMmvivNgbDwAqElw
-9L5SV8UsrQSsERUGvRglOmGUcMKK5qLKVyz6YhGyFg8MOxu/dMJNAq0rB5P05/X+
-HRqyr+o/3eREgev7ny3a3cCXPvajPnBTIQ9oy6z0cKrQ6efVUf1VY3VlcX8lI4E0
-9hGvNRGi4WvphnZITMHeZbX+Fz3zsw8RrxsYLV5DpY9jG6I2omnFeNDrweiPSw1Z
-cG6VTpNVkC/RmMLvK8gVSnL75qQB1Yjmq0a4pjpDqeTEe818zLXDMlcP6rtm8Tab
-5JzWwb/j5mPQPvYblMM65gyLub+OcbUzNkjJA/KvDtDsVZW077aV9wzev1z9/a1L
-rWclCmXGleSI4Bw0zyFPbpXBgdQpXv9hrZZcPpnK/wWFI1lRc/Z1YkRKFAzdvFWg
-Hh6Dst3cRiiX2Na2WS/W+lMmr5OMPX4QCkdHcCmnOiSt04pmU1KWqb092Ml5dj9+
-D+Jt3yjIrY+m04CZw0FDZ2k8PUaCwmJ47xiMUA/Qjf8o1UHzcJ2zX3Da0+Inl/kH
-EG2n9j5/5UZEGaZctbBGqGpYSdTskdLlzr9e8eiFsnpq5S7bzE2B6uObd6v2W+rU
-RfEJCqH/Zz4s63dC0RLBVZdKTeRExfOoN75GGBF2XWwjBAv7tRQ=
-=kTh/
------END PGP SIGNATURE-----
+So it's only fair to breathe life into it by letting it do what it was
+meant to do all along.
 
---YBqUv9WMkFkqCmWR--
+> > Also `git merge-tree` currently outputs diffs, so I thought it would
+> > be sad if the new command couldn't do it.
+> >
+> > [2] https://lore.kernel.org/git/211109.861r3qdpt8.gmgdl@evledraar.gmai=
+l.com/
+>
+> Hmm, I had a totally different opinion.  I felt the diffs in the
+> current merge-tree was a hack to deal with the fact that they didn't
+> have good tools to make use of the results, and ended up providing a
+> Rube-Goldberg scheme to do anything useful with it.
+
+Indeed. When I had a look how libgit2 is used to perform a server-side
+merge, I saw how careful the code is not to produce anything unneeded. And
+since the `merge` operation is performed a ton of times even without any
+user interaction, producing a diff is the _least_ of said code's concerns.
+
+> Providing a tree is a concrete and easily usable object for end users.
+> They can feed that tree to other git commands to do additional things,
+> and obviates the need for the Rube-Goldberg contraption.
+
+I strongly concur.
+
+So I would like to reiterate my challenge to you, Christian: could you
+have a look at the server-side merge of GitLab, and see what it actually
+would need of the `git merge-tree` command?
+
+I _bet_ it needs first and foremost the information "is this mergeable?".
+
+That is by far the most common question the code I saw had to answer,
+without any follow-up questions asked.
+
+An add-on question is then "which files/directories conflicted?". And
+there, it really only wanted the file names, along with the OIDs of the
+respective item in the base, the HEAD and the merge branch.
+
+In my work in December, I also had to implement another thing that I think
+we will have to implement in `merge-tree` in one form or another: when
+users provided merge conflict resolutions via the web UI, we want the
+merge to succeed. What I implemented was this (in a nutshell, a way to
+provide file names with associated blob OIDs that resolve the content
+conflicts):
+
+=2D- snip --
+Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Thu Dec 16 20:46:35 2021 +0100
+Subject: merge-ort: allow pre-resolving merge conflicts
+
+One of merge-ort's particular strengths is that it works well even in a
+worktree-less setting, e.g. in a backend for a server-side merge.
+
+In such a scenario, it is conceivable that the merge in question not
+only results in a conflict, but that the caller figures out some sort of
+resolution before calling the merge again. The second call, of course,
+is meant to apply the merge conflict resolution.
+
+With this commit, we allow just that. The new, optional
+`pre_resolved_conflicts` field of `struct merge_options` maps paths to
+the blob OID of the resolution.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+diff --git a/merge-ort.c b/merge-ort.c
+index a74d4251c3..fa59ce2f97 100644
+=2D-- a/merge-ort.c
++++ b/merge-ort.c
+@@ -3961,6 +3961,7 @@ static void process_entries(struct merge_options *op=
+t,
+ 	prefetch_for_content_merges(opt, &plist);
+ 	for (entry =3D &plist.items[plist.nr-1]; entry >=3D plist.items; --entry=
+) {
+ 		char *path =3D entry->string;
++		struct object_id *resolved_oid;
+ 		/*
+ 		 * NOTE: mi may actually be a pointer to a conflict_info, but
+ 		 * we have to check mi->clean first to see if it's safe to
+@@ -3972,7 +3973,17 @@ static void process_entries(struct merge_options *o=
+pt,
+ 					  &dir_metadata);
+ 		if (mi->clean)
+ 			record_entry_for_tree(&dir_metadata, path, mi);
+-		else {
++		else if (opt->pre_resolved_conflicts &&
++			 (resolved_oid =3D
++			  strmap_get(opt->pre_resolved_conflicts, path))) {
++			mi->clean =3D 1;
++			mi->is_null =3D 0;
++			memcpy(&mi->result.oid, resolved_oid,
++			       sizeof(*resolved_oid));
++			if (!mi->result.mode)
++				mi->result.mode =3D 0100644;
++			record_entry_for_tree(&dir_metadata, path, mi);
++		} else {
+ 			struct conflict_info *ci =3D (struct conflict_info *)mi;
+ 			process_entry(opt, path, ci, &dir_metadata);
+ 		}
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 0795a1d3ec..1f45effdd0 100644
+=2D-- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -47,6 +47,13 @@ struct merge_options {
+ 	const char *subtree_shift;
+ 	unsigned renormalize : 1;
+
++	/*
++	 * (merge-ORT only) If non-NULL, contains a map from `path` to OID. If
++	 * the given `path would be marked as conflict, it is instead resolved
++	 * to the specified blob.
++	 */
++	struct strmap *pre_resolved_conflicts;
++
+ 	/* internal fields used by the implementation */
+ 	struct merge_options_internal *priv;
+ };
+=2D- snap --
+
+It is a proof-of-concept, therefore it expects the resolved conflicts to
+be in _files_. I don't think that there is a way to reasonably handle
+symlink target conflicts or directory/file/symlink conflicts, but there
+might be.
+
+A subsequent commit changed my hacky `merge-tree` hack to optionally
+accept NUL-terminated merge conflict resolutions in <path>/<OID> pairs via
+stdin (again, avoiding files to be written where we do not _need_ spend
+I/O unnecessarily).
+
+The biggest problem we faced at the Contributor Summit was that our
+discussion was not informed by the actual server-side needs. So I would
+like to reiterate my challenge to make that the driver. Let's not use any
+hypothetical scenario as the basis for the design of `git merge-tree`, but
+let's use the concrete requirements of actual server-side merges that are
+currently implemented using libgit2, when trying to figure out what
+functionality we need from `merge-tree`, and in what shape.
+
+Here is an initial list:
+
+- need to determine whether a merge will succeed, quickly
+
+- need the tree OID for a successful merge
+
+- need the list of items that conflict, along with OIDs and modes, if the
+  merge failed
+
+- need a way to provide merge conflict resolutions
+
+And now that I wrote all this, I realize I should have sent it to the
+`merge-tree` thread, not the `merge-tree-ort` thread...
+
+Ciao,
+Dscho
