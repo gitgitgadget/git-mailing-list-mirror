@@ -2,185 +2,353 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1848C433F5
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 15:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90FECC433F5
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 16:07:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236725AbiAJPwp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 10:52:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53574 "EHLO
+        id S236992AbiAJQHh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 11:07:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236445AbiAJPwp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 10:52:45 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ABC2C06173F
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 07:52:44 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id i5so1717626edf.9
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 07:52:44 -0800 (PST)
+        with ESMTP id S236935AbiAJQHg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 11:07:36 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C668C06173F
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 08:07:36 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id z22so10438884edd.12
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 08:07:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=J1fOSTUvetp7zYG6KfpHUDCe6mVaiAoq8PrioScuJXE=;
-        b=NkNSmFW7ZPSWG0FVe4dJQJFfKv/NRZ8NutXBmoWZDa9h4CtL5vA5cCJcpHMZkQKljL
-         PnFWEZDYmhW34EwVJ7FD8X1fgbHQcdT8gCd2gWnadiJqpjt5tUVCtfzMo4w2s6fgEPDT
-         Os8sfKwrp0fAW1Z4/F8RlFVqa7wFgLDiOEkSpzjMhKY1MCUk1iWzlcrEQK9FK+swSbq6
-         ryiF3Gz/IBGz+dNitXtTA1aCwaJgjJC0ys31HYg5pgfptoaWs4FsfYKstLvu3bsAgbIc
-         Nbiy6lGjJDcZDAV4xCAVR7zQ4m7nIGwoOi7guxuxfpdjDJ2AMm3Cb7hcc/z/9C8mn3j8
-         vVKg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=81r8xfSLclJ06uqlnuEoxBv/3V7vEJ7iELqHBto1F5Q=;
+        b=ph/efmaeucJRL5cLMcgnU3QL6OJIo7BXD9pK16YaUQcaTFSt2WO5qO/9f9BydoNm2h
+         oeE2sIPVyn3Sp+Gx0MVCusfUnXkYW/ksEVs238tpVLyd66gMQpYK9hZEzm43J48FEVfx
+         6hWLLFwRs07c1P8FitjQ1jrdih7xEpJGfKjtSAqYcEYo1l3xoo7/oSDPqiOqzVnrM2W4
+         nCax9j905FT3hNpvwblBmcNDFATkn2s9dUs0jgj0OgioIuRkPb4Bp220jHe8Z/VIDD7v
+         CRNc7qLc/IQWlAWcHBNo94Z0+UKaDPxeok3gPf8Bizh/iekb0dZz1mp0STdAh+nrmAtl
+         GmJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=J1fOSTUvetp7zYG6KfpHUDCe6mVaiAoq8PrioScuJXE=;
-        b=sqy6hOmnbGmqpPLzbCt0hlPTNAK77zVgU9Vx4bpnWVVs8xuB+UBpUvrJeBnfrHfxOr
-         q5JQNsREBnqlHanPidjw2GZKZu2knx8glbHFg6mOl5DPa/4Z+jqiZMUcNPQZTYgSuPZf
-         ZPGRuq1TS4wFxWSPS/pm5nnwsQNnHVQWx3QeWSSsi3VQf7+nwFSzvyov6v6Q8oDnI45O
-         GEhIcIokaQ1GETYbGv20++R1CVUkz5frLEH0rgcjtKNmbo0yopkFTmk8qzUAWkb2hH1+
-         lc33TdRzkTpZEzkLlfD+guU3NQaULZkl6C6XQSTSYNJI6vpHb4UO7uigwCqi4vezRxui
-         0X5Q==
-X-Gm-Message-State: AOAM533VLOrthcC9mzyGkDfQQooNTGjdGJYq+OSBlD3c4Ln9LpAENbMm
-        6PRp28CmKEN7f6qEipqH50gh+rSTxKDtX2a6rOE=
-X-Google-Smtp-Source: ABdhPJz+dNfhJIGlCIwIW8zIPkNwQjOyMGkImcdAhcX4kMFv/nDc4M1f86gZcTMnH2yBMoBwi31qEQEXQTqJ0Oirukc=
-X-Received: by 2002:a05:6402:34ca:: with SMTP id w10mr243439edc.359.1641829963117;
- Mon, 10 Jan 2022 07:52:43 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1109.git.1641317820.gitgitgadget@gmail.com>
- <c5b98e36516b8f832576816c202be7581f261909.1641317820.git.gitgitgadget@gmail.com>
- <CABPp-BGmaKsvrO1Qxwuj+WgcvuE_NA4agY_HLQ8=csvddRafqw@mail.gmail.com> <556f6266-a79f-1d5c-6bd7-79d65223b403@github.com>
-In-Reply-To: <556f6266-a79f-1d5c-6bd7-79d65223b403@github.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 10 Jan 2022 07:52:31 -0800
-Message-ID: <CABPp-BHi0N31TQY8Bt8dq6aWGNdOSFQuQPQ7TtqObZx+iwS_mQ@mail.gmail.com>
-Subject: Re: [PATCH 8/9] update-index: integrate with sparse index
-To:     Victoria Dye <vdye@github.com>
-Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=81r8xfSLclJ06uqlnuEoxBv/3V7vEJ7iELqHBto1F5Q=;
+        b=cpacAJwLpmQPobVeTqhaCAcnuTnxfnj3PhVIgZcavvGSbuv2HmLoehkwqTA0Px+r/V
+         g+3Cro3XMXQU6D/+rOQZjtjCHwrvEm7DKQY9Nr9SqeKQaFvRYpG4dlByuQYD8H+kj5wi
+         laol6dPBBEbVfB7CdUeIjVbE+7eMJAKmBQq+f2LET5kvvIphT1T4W7+gIK9JeodZgY6c
+         oEzC4os6NujRFR4KaFsuiN+aQWngnPl6sufv2L1+ZwK5v29q9DrIPyoHlJn2mXH7aefh
+         4wPgNC38MTUgc3UoFa1GKzn0p+/qgEEWVnHHklde31Z4uMzPbVLxuc9dM1V4wpTe+5QZ
+         JnGA==
+X-Gm-Message-State: AOAM533qbePLcQCc7loDfJEioN8RcKh9+7w5aAejMsaL+225qZstjmdD
+        +GJkWdnBqwf1CxcQLuspw1Y3qtdj55o=
+X-Google-Smtp-Source: ABdhPJx6JpxNx0X5zxr7XEpUi/fufTc0Yv8DQVqZtAvSzzjcCLiT39DAPz7Btpkp22DRJ+nLkoKs/w==
+X-Received: by 2002:a05:6402:42ce:: with SMTP id i14mr330372edc.19.1641830854548;
+        Mon, 10 Jan 2022 08:07:34 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id o25sm3747206edr.20.2022.01.10.08.07.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Jan 2022 08:07:33 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1n6xCn-000Lf5-1d;
+        Mon, 10 Jan 2022 17:07:33 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>
+Subject: Re: [PATCH v2 0/8] Add a new --remerge-diff capability to show & log
+Date:   Mon, 10 Jan 2022 16:48:26 +0100
+References: <pull.1103.git.1640109948.gitgitgadget@gmail.com>
+ <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com>
+ <211226.86lf07f1c5.gmgdl@evledraar.gmail.com>
+ <CABPp-BFjZUHKq1OxkgompqbaugCN=c5PFiGxLp9U1sdBePpYvA@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <CABPp-BFjZUHKq1OxkgompqbaugCN=c5PFiGxLp9U1sdBePpYvA@mail.gmail.com>
+Message-ID: <220110.86mtk3zi9m.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 10, 2022 at 6:10 AM Victoria Dye <vdye@github.com> wrote:
->
-> Elijah Newren wrote:
-> > On Tue, Jan 4, 2022 at 9:37 AM Victoria Dye via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >>
-> >> From: Victoria Dye <vdye@github.com>
-> >>
-> >> Enable usage of the sparse index with `update-index`. Most variations of
-> >> `update-index` work without explicitly expanding the index or making any
-> >> other updates in or outside of `update-index.c`.
-> >>
-> >> The one usage requiring additional changes is `--cacheinfo`; if a file
-> >> inside a sparse directory was specified, the index would not be expanded
-> >> until after the cache tree is invalidated, leading to a mismatch between the
-> >> index and cache tree. This scenario is handled by rearranging
-> >> `add_index_entry_with_check`, allowing `index_name_stage_pos` to expand the
-> >> index *before* attempting to invalidate the relevant cache tree path,
-> >> avoiding cache tree/index corruption.
-> >>
-> >> Signed-off-by: Victoria Dye <vdye@github.com>
-> >> ---
-> >>  builtin/update-index.c                   |  3 +++
-> >>  read-cache.c                             | 10 +++++++---
-> >>  t/t1092-sparse-checkout-compatibility.sh | 12 ++++++++++++
-> >>  3 files changed, 22 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> >> index 187203e8bb5..605cc693bbd 100644
-> >> --- a/builtin/update-index.c
-> >> +++ b/builtin/update-index.c
-> >> @@ -1077,6 +1077,9 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
-> >>
-> >>         git_config(git_default_config, NULL);
-> >>
-> >> +       prepare_repo_settings(r);
-> >> +       the_repository->settings.command_requires_full_index = 0;
-> >> +
-> >>         /* we will diagnose later if it turns out that we need to update it */
-> >>         newfd = hold_locked_index(&lock_file, 0);
-> >>         if (newfd < 0)
-> >> diff --git a/read-cache.c b/read-cache.c
-> >> index cbe73f14e5e..b4600e954b6 100644
-> >> --- a/read-cache.c
-> >> +++ b/read-cache.c
-> >> @@ -1339,9 +1339,6 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
-> >>         int skip_df_check = option & ADD_CACHE_SKIP_DFCHECK;
-> >>         int new_only = option & ADD_CACHE_NEW_ONLY;
-> >>
-> >> -       if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
-> >> -               cache_tree_invalidate_path(istate, ce->name);
-> >> -
-> >>         /*
-> >>          * If this entry's path sorts after the last entry in the index,
-> >>          * we can avoid searching for it.
-> >> @@ -1352,6 +1349,13 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
-> >>         else
-> >>                 pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce), EXPAND_SPARSE);
-> >>
-> >> +       /*
-> >> +        * Cache tree path should be invalidated only after index_name_stage_pos,
-> >> +        * in case it expands a sparse index.
-> >> +        */
-> >> +       if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
-> >> +               cache_tree_invalidate_path(istate, ce->name);
-> >> +
-> >>         /* existing match? Just replace it. */
-> >>         if (pos >= 0) {
-> >>                 if (!new_only)
-> >> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> >> index 6804ab23a27..bc0741c970d 100755
-> >> --- a/t/t1092-sparse-checkout-compatibility.sh
-> >> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> >> @@ -1216,6 +1216,18 @@ test_expect_success 'sparse index is not expanded: blame' '
-> >>         done
-> >>  '
-> >>
-> >> +test_expect_success 'sparse index is not expanded: update-index' '
-> >> +       init_repos &&
-> >> +
-> >> +       echo "test" >sparse-index/README.md &&
-> >> +       echo "test2" >sparse-index/a &&
-> >> +       rm -f sparse-index/deep/a &&
-> >> +
-> >> +       ensure_not_expanded update-index --add README.md &&
-> >> +       ensure_not_expanded update-index a &&
-> >> +       ensure_not_expanded update-index --remove deep/a
-> >> +'
-> >
-> > The commit message said this change was about --cacheinfo, but this
-> > test doesn't use that option.  I'm confused; was this a bad patch
-> > splitting by chance?
-> >
->
-> It was not - the commit message title is "update-index: integrate with
-> sparse index" and the message starts by saying that this patch enables use
-> of the sparse index for *all* of `update-index` (where "[m]ost variations of
-> `update-index` work without...making any other updates in or outside of
-> `update-index.c`").
->
-> It goes on to say that the `--cache-info` option is an exception to the
-> above statement (that most variations work without updates outside
-> `update-index.c`) because it requires a slight change to
-> `add_index_entry_with_check(...)` to avoid index corruption. That change is
-> also in this patch, but it's not the main "focus".
->
-> The test added here is intended to broadly test `update-index` with a sparse
-> index. I'll add a case for `--cacheinfo` in my next re-roll but, for
-> context, the reason I didn't originally is because I focused on the (as far
-> as I could tell) most commonly-used variations of `update-index`.
 
-Ah, I see.  I didn't read closely enough and then saw the majority of
-the commit message and code changes were about --cacheinfo, but the
-testcase wasn't.  Sorry about that.
+On Mon, Dec 27 2021, Elijah Newren wrote:
 
-> >> +
-> >>  # NEEDSWORK: a sparse-checkout behaves differently from a full checkout
-> >>  # in this scenario, but it shouldn't.
-> >>  test_expect_success 'reset mixed and checkout orphan' '
-> >> --
-> >> gitgitgadget
-> >>
+> On Sun, Dec 26, 2021 at 2:28 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>> On Sat, Dec 25 2021, Elijah Newren via GitGitGadget wrote:
+>>
+>> > =3D=3D=3D FURTHER BACKGROUND (original cover letter material) =3D=3D
+>> >
+>> > Here are some example commits you can try this out on (with git show
+>> > --remerge-diff $COMMIT):
+>> >
+>> >  * git.git conflicted merge: 07601b5b36
+>> >  * git.git non-conflicted change: bf04590ecd
+>> >  * linux.git conflicted merge: eab3540562fb
+>> >  * linux.git non-conflicted change: 223cea6a4f05
+>> >
+>> > Many more can be found by just running git log --merges --remerge-diff=
+ in
+>> > your repository of choice and searching for diffs (most merges tend to=
+ be
+>> > clean and unmodified and thus produce no diff but a search of '^diff' =
+in the
+>> > log output tends to find the examples nicely).
+>> >
+>> > Some basic high level details about this new option:
+>> >
+>> >  * This option is most naturally compared to --cc, though the output s=
+eems
+>> >    to be much more understandable to most users than --cc output.
+>> >  * Since merges are often clean and unmodified, this new option result=
+s in
+>> >    an empty diff for most merges.
+>> >  * This new option shows things like the removal of conflict markers, =
+which
+>> >    hunks users picked from the various conflicted sides to keep or rem=
+ove,
+>> >    and shows changes made outside of conflict markers (which might ref=
+lect
+>> >    changes needed to resolve semantic conflicts or cleanups of e.g.
+>> >    compilation warnings or other additional changes an integrator felt
+>> >    belonged in the merged result).
+>> >  * This new option does not (currently) work for octopus merges, since
+>> >    merge-ort is specific to two-parent merges[1].
+>> >  * This option will not work on a read-only or full filesystem[2].
+>> >  * We discussed this capability at Git Merge 2020, and one of the
+>> >    suggestions was doing a periodic git gc --auto during the operation=
+ (due
+>> >    to potential new blobs and trees created during the operation). I f=
+ound a
+>> >    way to avoid that; see [2].
+>> >  * This option is faster than you'd probably expect; it handles 33.5 m=
+erge
+>> >    commits per second in linux.git on my computer; see below.
+>> >
+>> > In regards to the performance point above, the timing for running the
+>> > following command:
+>> >
+>> > time git log --min-parents=3D2 --max-parents=3D2 $DIFF_FLAG | wc -l
+>>
+>> I've been trying to come up with some other useful recipies for this new
+>> option (which is already very useful, thanks!)
+>
+> I'm glad you like it.  :-)
+>
+>> Some of these (if correct) are suggestions for incorporating into the
+>> (now rather sparse) documentation. I.e. walking users through how to use
+>> this, and how (if at all) it combines with other options.
+>>
+>> I wanted to find all merges between "master".."seen" for which Junio's
+>> had to resolve a conflict, a na=C3=AFve version is:
+>>
+>>     $ git log --oneline --remerge-diff -p --min-parents=3D2 origin/maste=
+r..origin/seen|grep ^diff -B1 | grep Merge
+>>     [...]
+>
+> I think the naive version is
+>   $ git log --remerge-diff --min-parents=3D2 origin/master..origin/seen
+>   <search for "^diff" using your pager's search functionality>
+>
+> Where the "--min-parents=3D2 origin/master..origin/seen" comes from your
+> problem description ("find all merges between master..seen").
+>
+> You can add --oneline to format it, though it's an orthogonal concern.
+> Also, adding -p is unnecessary: --remerge-diff, like --cc, implies -p.
+>
+>> But I found that this new option nicely integrates with --diff-filter,
+>> i.e. we'll end up showing a diff, and the diff machinery allows you to
+>> to filter on it.
+>>
+>> It seems to me like all the diffs you show fall under "M", so for
+>
+> Yes, the diffs I happened to pick all fell under "M", but by no means
+> should you rely on that happening for all merges in history.  For
+> example, make a new merge commit, then add a completely new file (or
+> delete a file, or rename a file, or copy a file, or change its
+> mode/type), stage the new/deleted/renamed/copied/changed file, and run
+> "git commit --amend".
+>
+> So, although --diff-filter=3DM can be interesting, I would not rely on it.
+
+*Nod* I hadn't thought of those (in retrospect, rather obvious) cases.
+
+>> master..seen (2ae0a9cb829..61055c2920d) this is equivalent (and the
+>> output is the same as the above):
+>>
+>>     $ git -P log --oneline --remerge-diff --no-patch --min-parents=3D2 -=
+-diff-filter=3DM origin/master..origin/seen
+>>     95daa54b1c3 Merge branch 'hn/reftable-fixes' into seen
+>>     26c4c09dd34 Merge branch 'gc/fetch-negotiate-only-early-return' into=
+ seen
+>>     e3dc8d073f6 Merge branch 'gc/branch-recurse-submodules' into seen
+>>     aeada898196 Merge branch 'js/branch-track-inherit' into seen
+>>     4dd30e0da45 Merge branch 'jh/builtin-fsmonitor-part2' into seen
+>>     337743b17d0 Merge branch 'ab/config-based-hooks-2' into seen
+>>     261672178c0 Merge branch 'pw/fix-some-issues-in-reset-head' into seen
+>>     1296d35b041 Merge branch 'ms/customizable-ident-expansion' into seen
+>>     7a3d7d05126 Merge branch 'ja/i18n-similar-messages' into seen
+>>     eda714bb8bc Merge branch 'tb/midx-bitmap-corruption-fix' into seen
+>>     ba02295e3f8 Merge branch 'jh/p4-human-unit-numbers' into jch
+>>     751773fc38b Merge branch 'es/test-chain-lint' into jch
+>>     ec17879f495 Merge branch 'tb/cruft-packs' into tb/midx-bitmap-corrup=
+tion-fix
+>>
+>> However for "origin/master..origin/next" (next =3D 510f9eba9a2 currently)
+>> we'll oddly show this with "-p":
+>>
+>>     9af51fd1d0d Sync with 'master'
+>>     diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+>>     CONFLICT (content): Merge conflict in t/lib-gpg.sh
+>>     d6f56f3248e Merge branch 'es/test-chain-lint' into next
+>>     diff --git a/t/t4126-apply-empty.sh b/t/t4126-apply-empty.sh
+>>     CONFLICT (content): Merge conflict in t/t4126-apply-empty.sh
+>>     index 996c93329c6..33860d38290 100755
+>>     --- a/t/t4126-apply-empty.sh
+>>     +++ b/t/t4126-apply-empty.sh
+>>     [...]
+>>
+>> The "oddly" applying only to that "9af51fd1d0d Sync with 'master'", not
+>> the second d6f56f3248e, which shows the sort of conflict I'd expect. The
+>> two-line "diff" of:
+>>
+>>     diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+>>     CONFLICT (content): Merge conflict in t/lib-gpg.sh
+>>
+>> Shows up with -p --remerge-diff, not a mere -p. I also tried the other
+>> --diff-merges=3D* options, that behavior is new in
+>> --diff-merges=3Dremerge. Is this a bug?
+>
+> Ugh, this is related to my comment elsewhere that conflicts from inner
+> merges are not nicely differentiated.  If I also apply my other series
+> (which has not yet been submitted), this instead appears as follows:
+>
+> $ git show --oneline --remerge-diff 9af51fd1d0d
+> 9af51fd1d0 Sync with 'master'
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+>   From inner merge:  CONFLICT (content): Merge conflict in t/lib-gpg.sh
+>
+> and the addition of the "From inner merge: " text makes it clearer why
+> that line appears.  This is an interesting case where a conflict
+> notice _only_ appears in the inner merge (i.e. the merge of merge
+> bases), which means that both sides on the outer merge changed the
+> relevant portion of the file in the same way, so the outer merge had
+> no conflict.
+>
+> However, instead of trying to differentiate messages from inner
+> merges, I think for --remerge-diff's purposes we should just drop all
+> notices that come from the inner merges.  Those conflict notices might
+> be helpful when initially resolving a merge, but at the --remerge-diff
+> level, they're more likely to be distracting than helpful.
+
+Thanks. I see that v3 addresses this. Will try it out...
+
+>> My local build also has a --pickaxe-patch option. It's something I
+>> submitted on-list before[1] and have been meaning to re-roll.
+>>
+>> I'm discussing it here because it skips the stripping of the "+ " and "-
+>> " prefixes under -G<regex> and allows you to search through the -U<n>
+>> context. With that I'm able to do:
+>>
+>>     git log --oneline --remerge-diff -p --min-parents=3D2 --pickaxe-patc=
+h -G'^\+' --diff-filter=3DM origin/master..origin/seen
+>>
+>> I.e. on top of the above filter only show those diffs that have
+>> additions. FAICT the conflicting diffs where the committer of the merge
+>> conflict picked one side or the other will only have "-" lines".
+>>
+>> So those diffs that have additions look to be those where the person
+>> doing the merge needed to combine the two.
+>>
+>> Well, usually. E.g. 26c4c09dd34 (Merge branch
+>> 'gc/fetch-negotiate-only-early-return' into seen, 2021-12-25) in that
+>> range shows that isn't strictly true. Most such deletion-only diffs are
+>> less interesting in picking one side or the other of the conflict, but
+>> that one combines the two:
+>>
+>>     -<<<<<<< d3419aac9f4 (Merge branch 'pw/add-p-hunk-split-fix' into se=
+en)
+>>                             warning(_("protocol does not support --negot=
+iate-only, exiting"));
+>>     -                       return 1;
+>>     -=3D=3D=3D=3D=3D=3D=3D
+>>     -                       warning(_("Protocol does not support --negot=
+iate-only, exiting."));
+>>                             result =3D 1;
+>>                             goto cleanup;
+>>     ->>>>>>> 495e8601f28 (builtin/fetch: die on --negotiate-only and --r=
+ecurse-submodules)
+>>
+>> Which I guess is partially commentary and partially a request (either
+>> for this series, or some follow-up) for something like a
+>> --remerge-diff-filter option. I.e. it would be very useful to be able to
+>> filter on some combination of:
+>>
+>>  * Which side(s) of the conflict(s) were picked, or a combination?
+>>  * Is there "new work" in the diff to resolve the conflict?
+>>    AFIACT this will always mean we'll have "+ " lines.
+>
+> Do any of the following count as "new work"? :
+>
+>   * the deletion of a file (perhaps one that had no conflict but was
+> deleted anyway)
+>   * mode changes (again, perhaps on files that had no conflict)
+>   * renames of files/directories?
+>
+> If so, searching for "^+" lines might be insufficient, but it depends
+> on what you mean by new work.
+
+Yes, I think at least for the use-cases I had in mind the useful thing
+is knowing which state a merge commit is in:
+
+ A: "Vanilla" merge (i.e. no --remerge-diff output)
+ B: non-"vanilla" merge" (i.e. ew have --remerge-diff output)
+
+What I'm requesting/musing about here (which is very much in the
+category of stuff we can/should do later, and shouldn't prevent this
+"good enough for now" series going in) is being able to disambiguate
+those "B" cases.
+
+I.e. being able to see if their/ours side "won", some mixture of the two
+etc.
+
+>> Or maybe that's not useful at all, and just -G<rx> (maybe combined with
+>> my --pickaxe-patch) will cover it?
+>
+> I'd rather wait until we have a good idea of the potential range of
+> usecases before adding a filter.  (And I think for now, the -G and
+> --pickaxe-patch are probably good enough for this usecase.)  These
+> particular usecases you point out are interesting; thanks for
+> detailing them.  Here's some others to consider:
+>
+>   * Finding out when text was added or removed: `git log
+> --remerge-diff -S<text>` (note that with only -p instead of
+> --remerge-diff, that command will annoyingly misses cases where a
+> merge introduced or removed the text)
+>   * Finding out how a merge differed from one run with some
+> non-default options (e.g. `git show --remerge-diff -Xours` or `git
+> show --remerge-diff -Xno-space-change`; although show doesn't take -X
+> options so this is just an idea at this point)
+>   * Finding out how a merge would have differed had it been run with
+> different options (so instead of comparing a remerge to the merge
+> recorded in history, compare one remerge with default options with a
+> different merge that uses e.g. -Xno-space-change)
+>
+> Also, I've got a follow-up series that also introduces a
+> --remerge-diff-only flag which:
+>   * For single parent commits that cannot be identified as a revert or
+> cherry-pick, do not show a diff.
+>   * For single parent commits that can be identified as a revert or
+> cherry-pick, instead of showing a diff against the parent of the
+> commit, redo the revert or cherry-pick in memory and show a diff
+> against that.
+>   * For merge commits, act the same as --remerge-diff
+
+*nod*
