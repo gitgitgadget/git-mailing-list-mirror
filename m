@@ -2,191 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46324C433EF
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 19:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E704C433EF
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 19:00:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242909AbiAJTAC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 14:00:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41402 "EHLO
+        id S242912AbiAJTA3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 14:00:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242891AbiAJS77 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 13:59:59 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84846C061751
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 10:59:58 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id s1so28636652wra.6
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 10:59:58 -0800 (PST)
+        with ESMTP id S242891AbiAJTA2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 14:00:28 -0500
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31362C06173F
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 11:00:28 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id m1so14628004lfq.4
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 11:00:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=w328BTYQXXh4hjoWqk7ucGJGMLcUN/7vnWOKdaaNkxs=;
-        b=AtBnMey/vCp51gypi9Xou5QSGov6YSDvcIyJ4P6c71KQAmQdaoMcoM9zfuSH1gqSN3
-         2AMMm8aLMG6XguUB88Fbb1iEq3OaBVmoMTd2FBF7mUqlbOEKqDzdS7DtyYbhB8dhCwS/
-         OXstB9+/Y+j1Odukq12OUqtsvaIjNOkF+kCQlJ5fv0u+gSHw66L2jlkQAMBh6PmUQ1lr
-         f7pWz93WmGazHHlitH3wl1vlkFG6xELFlIk+jhmTsNCo8qwXOm+1YCec4cv8vagyqjc5
-         Isvy0jqqD+pMS2NTWUChFUTeBFGjy7P4rYmDgf0Fl6kJRtp5YO3FK3/ekP1uX5Xh+TuO
-         /nJw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=17X4+umi009nkE3kCwG7Ykv8PDquU9+l6cT4QUOyy4E=;
+        b=HKloZTquPMA+MoFZWphh8RF/vnV8QQMpgMtC12zpzYZvAk4DeIBxAHlSoa37n44eoP
+         dFvqaEBnt8SRUXs8SNPB0p81XAM2TvuVwhRew9rcruthXeEnP1dmagdVBcgX0c6RayhL
+         4fMn+zPzUXvWH9vZmgtOtrXUxWvP7vo+5g+thZS/8MNXqg10l+6ob9033fftwubW2Er+
+         s9G3VCr44uhE96dLBsb30bP9yYRXFQFICOl9kDajH5pabdpEhcA3hI7qDMAksWw3CHTZ
+         bFa+PG4/DFLwsu/3coZXdIkX3s2iqmIA8H3O7dR2Ed8ENZA+F+TM8TaXajTpnqSTAnIh
+         0N8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=w328BTYQXXh4hjoWqk7ucGJGMLcUN/7vnWOKdaaNkxs=;
-        b=Fy7SpIlbF3XU54CAiJn0+4z4jJy6B5DLdnm/LZbK1gBSjCfp24tOm8XKzHTzEoDJLJ
-         Mun63pArDazsT2LFkQaxmwxFqA0YfbooH1gjd2Tko0e1+FvMb0etCFCDLoACFJYqoKD1
-         Yuz15+hrM140LlsTLxvHHa7guNc4me6+moWXVv0Ukv/KSwFKfsd1uZn8wHn/tyNiCqah
-         NT9R7wiVUtKt/39voA19ezvytqf2VMLaOk/c7W4yAyc5OzremA78OlBUf/GrAk3YndrP
-         w202dLjH/+JJvv+5gDFgQ6yXCZT/Mv9he5cMDwvwc1a1sBsspy1zv7UuXz9DCdQWwf3E
-         iQuA==
-X-Gm-Message-State: AOAM531acygtX1S0A+y2Pf7whx6enXhdBYqErK1eSCVZ0gUYMN9ycPjQ
-        ZvLF1gpUaoSwUvA+k9tdSm/dLNgit10=
-X-Google-Smtp-Source: ABdhPJy+JYqklob/328bJdDD3YlR1dY/YgJvSARH/g3UQbM5qNMzh0DUIyJoQ/4cGLFylHe67ERhkA==
-X-Received: by 2002:a05:6000:a:: with SMTP id h10mr799934wrx.428.1641841197022;
-        Mon, 10 Jan 2022 10:59:57 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p21sm7874685wmq.20.2022.01.10.10.59.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jan 2022 10:59:56 -0800 (PST)
-Message-Id: <aa9ea67180dd10ef8bdf17e8c23694da15828b21.1641841193.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
-References: <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com>
-        <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
-From:   "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 10 Jan 2022 18:59:52 +0000
-Subject: [PATCH v3 3/3] sparse-checkout: limit tab completion to a single
- level
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=17X4+umi009nkE3kCwG7Ykv8PDquU9+l6cT4QUOyy4E=;
+        b=i4JO4eNOJU97filzsWkmCMEldC+6dMxF/Bxi7RQESXOIWmd3yILqy+lYBMMP6r5qiN
+         OboWeC4dlQsdcMZXpyYopgX7dBeQVKGv4ClpDT69qb7z8G+JqE0MtWsCz2ivAlCHuNR4
+         sHftNM/+b5VrXH2Z258oWFavGj8hQaQeMwKc+ZYnukxvdZ7d3cMd62Yk4ngAIvIMdl6r
+         m4GMnEfLXXteeG1CPHWPn7lxk09HBPWj+HNRmzpWKycW6acCiemus45wk3NS9jmF6KX5
+         pzoDUxIzdUGrHkkS9knY/bn3Y0qD33d4FTus+x4zFxPlreG5phhb71s/25pM0d/pl5fV
+         QSsw==
+X-Gm-Message-State: AOAM531SOjk5pkXShBdeLtH89oMTW+uiPdFyH68wnqnT6YHCGzTeKViZ
+        Gr8nemNlhLC5Eg7WciukCXlxcYWUaVNJWPwf/i4=
+X-Google-Smtp-Source: ABdhPJwEjwCc36AUJ3FwrkkgbsoC/ORTtn3etZTLS3oEJaZGz4lFmyEqvTdPkV4j/1dhwOf4TL/JxfmgjgItudGsxBc=
+X-Received: by 2002:ac2:5b89:: with SMTP id o9mr787027lfn.592.1641841226441;
+ Mon, 10 Jan 2022 11:00:26 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, gitster@pobox.com, johannes.schindelin@gmail.com,
+References: <pull.1093.v2.git.1638845211.gitgitgadget@gmail.com>
+ <pull.1093.v3.git.1639011433.gitgitgadget@gmail.com> <CANQDOddJzgyfQHi8hVMPU5iLwyt4GmpGt5qob0ZrjqTax6K0tw@mail.gmail.com>
+ <007001d804f3$a2e573a0$e8b05ae0$@nexbridge.com>
+In-Reply-To: <007001d804f3$a2e573a0$e8b05ae0$@nexbridge.com>
+From:   Neeraj Singh <nksingh85@gmail.com>
+Date:   Mon, 10 Jan 2022 11:00:15 -0800
+Message-ID: <CANQDOdf4k5K8U-hs+Cv5W9DZFDonab6eMO4XFX4UFHkJ2RzQQg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/4] A design for future-proofing fsync() configuration
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
         Elijah Newren <newren@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lessley Dennington <lessleydennington@gmail.com>
+On Sat, Jan 8, 2022 at 4:55 PM <rsbecker@nexbridge.com> wrote:
+>
+> Please remember that fsync() is operating system and version specific. Yo=
+u cannot make any assumptions about what is supported and what is not. I ha=
+ve recently had issues with git built on a recent operating system not runn=
+ing on a version from 2020. The proposed patches do not work, as I recall, =
+in a portable manner, so caution is required making this change. You can ex=
+pect this not to work on some platforms and some versions. Please account f=
+or that. Requiring users who are not aware of OS details to configure git t=
+o function at all is a bad move, in my view - which has not changed since l=
+ast time.
+>
 
-Ensure only directories at the current level will be tab-completed with
-the sparse-checkout command. For example, if paths a/b/c/ and a/d/ exist
-in the current directory, running a/<TAB> will result in:
+There was already an implied configuration of fsync in the Git
+codebase.  None of the defaults are changing--assuming that a user
+does not explicitly configure the core.fsync setting, Git should work
+the same as it always has.  I don't believe the current patch series
+introduces any new incompatibilities.
 
-        a/b/
-        a/d/
-
-The 'sparse-checkout completes directory names' test has also been
-updated/extended according to these changes.
-
-Co-authored-by: Elijah Newren <newren@gmail.com>
-Co-authored-by: Lessley Dennington <lessleydennington@gmail.com>
-Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
----
- contrib/completion/git-completion.bash | 34 ++++++++++++++++++++++++--
- t/t9902-completion.sh                  | 29 ++++++++++++++--------
- 2 files changed, 51 insertions(+), 12 deletions(-)
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index f478883f51c..21875d08d03 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2986,6 +2986,36 @@ _git_show_branch ()
- 	__git_complete_revlist
- }
- 
-+__gitcomp_directories ()
-+{
-+     local _tmp_dir _tmp_completions
-+
-+     # Get the directory of the current token; this differs from dirname
-+     # in that it keeps up to the final trailing slash.  If no slash found
-+     # that's fine too.
-+     [[ "$cur" =~ .*/ ]]
-+     _tmp_dir=$BASH_REMATCH
-+
-+     # Find possible directory completions, adding trailing '/' characters
-+     _tmp_completions="$(git ls-tree -d --name-only HEAD $_tmp_dir |
-+         sed -e s%$%/%)"
-+
-+     if [[ -n "$_tmp_completions" ]]; then
-+         # There were some directory completions, so find ones that
-+         # start with "$cur", the current token, and put those in COMPREPLY
-+         local i=0 c IFS=$' \t\n'
-+         for c in $_tmp_completions; do
-+             if [[ $c == "$cur"* ]]; then
-+                 COMPREPLY+=("$c")
-+             fi
-+         done
-+     elif [[ "$cur" =~ /$ ]]; then
-+         # No possible further completions any deeper, so assume we're at
-+         # a leaf directory and just consider it complete
-+         __gitcomp_direct_append "$cur "
-+     fi
-+}
-+
- __git_sparse_checkout_subcommand_opts="--cone --no-cone --sparse-index --no-sparse-index"
- 
- _git_sparse_checkout ()
-@@ -3007,11 +3037,11 @@ _git_sparse_checkout ()
- 	case "$subcommand" in
- 		set)
- 			__gitcomp "$__git_sparse_checkout_subcommand_opts --stdin"
--			__gitcomp "$(git ls-tree -d -r HEAD --name-only)"
-+			__gitcomp_directories
- 			;;
- 		add)
- 			__gitcomp "--stdin"
--			__gitcomp "$(git ls-tree -d -r HEAD --name-only)"
-+			__gitcomp_directories
- 			;;
- 		init|reapply)
- 			__gitcomp "$__git_sparse_checkout_subcommand_opts"
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 4dc93ee0595..e11ff0c2efe 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1513,21 +1513,30 @@ test_expect_success 'sparse-checkout completes directory names' '
- 	(
- 		cd sparse-checkout &&
- 		test_completion "git sparse-checkout set f" <<-\EOF
--		folder1 Z
--		folder1/0 Z
--		folder1/0/1 Z
--		folder2 Z
--		folder2/0 Z
--		folder3 Z
-+		folder1/
-+		folder2/
-+		folder3/
-+		EOF
-+	) &&
-+
-+	(
-+		cd sparse-checkout &&
-+		test_completion "git sparse-checkout set folder1/" <<-\EOF
-+		folder1/0/
-+		EOF
-+	) &&
-+
-+	(
-+		cd sparse-checkout &&
-+		test_completion "git sparse-checkout set folder1/0/" <<-\EOF
-+		folder1/0/1/
- 		EOF
- 	) &&
- 
- 	(
- 		cd sparse-checkout/folder1 &&
--		test_completion "git sparse-checkout add " <<-\EOF
--		./ Z
--		0 Z
--		0/1 Z
-+		test_completion "git sparse-checkout add 0" <<-\EOF
-+		0/
- 		EOF
- 	)
- '
--- 
-gitgitgadget
+Thanks,
+Neeraj
