@@ -2,90 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A8D4C433EF
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 17:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4902C433EF
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 17:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238493AbiAJRjE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 12:39:04 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60821 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238481AbiAJRjC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 12:39:02 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B673E1855AD;
-        Mon, 10 Jan 2022 12:39:01 -0500 (EST)
+        id S238561AbiAJRrs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 12:47:48 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63230 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238540AbiAJRrr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 12:47:47 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DD2B71017D2;
+        Mon, 10 Jan 2022 12:47:46 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=N9VTUdLwTf32
-        KoB2rHM+NUPuihQc0SUBxxpoUWWj4RE=; b=e/UH0sjFYbCiiPHhf/kZh/DsyPTp
-        uI8TK2kQmU7i4loDnkNmav7Ei6geFem2FmjnYHDRivkB8O8N/klTNAD2GOKtcMN6
-        oij485CMYd9q4EkLWTdXLVMKCpQhWNcz22rtYQE1J3V95GH+uKnfbQNdekw6dH6q
-        VRA+PoAaePYzs8s=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AF9281855AC;
-        Mon, 10 Jan 2022 12:39:01 -0500 (EST)
+        :content-type; s=sasl; bh=0HeuwSVskZrlI4FmF4y49b32wFPh0Jzh9ek2kB
+        MoOH8=; b=gQ1upgWR0D1yhskYqbnwkt1iPOYY0fhDiEl4qqoZzOPHhyt1vM9FC8
+        DHJm5IAxEtgaHQjcbUOjA8OAfXXlXhM0hR5JyYA1RTIW2j2/zNCG7NOYuGFdR44c
+        zVTkk4bRNLhJXOAdnMlXHNRIc0Eg2KbA7V8e7zR6s+foHuur076Yc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D452D1017D1;
+        Mon, 10 Jan 2022 12:47:46 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 26C381855A9;
-        Mon, 10 Jan 2022 12:38:59 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4976A1017D0;
+        Mon, 10 Jan 2022 12:47:46 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     John Cai <johncai86@gmail.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v7 1/2] name-rev: deprecate --stdin in favor of
- --annotate-stdin
-References: <pull.1171.v6.git.git.1641423600.gitgitgadget@gmail.com>
-        <pull.1171.v7.git.git.1641425372.gitgitgadget@gmail.com>
-        <153f69ea9b6cfc3fff47c91fa237cf97efd6bfae.1641425372.git.gitgitgadget@gmail.com>
-        <56FFAD1E-D081-4D13-A12E-DD6807375B69@gmail.com>
-Date:   Mon, 10 Jan 2022 09:38:58 -0800
-In-Reply-To: <56FFAD1E-D081-4D13-A12E-DD6807375B69@gmail.com> (John Cai's
-        message of "Sat, 08 Jan 2022 08:47:30 -0500")
-Message-ID: <xmqqo84j1oel.fsf@gitster.g>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Teng Long <dyroneteng@gmail.com>, avarab@gmail.com,
+        congdanhqx@gmail.com, git@vger.kernel.org, peff@peff.net,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v9 9/9] cocci: allow padding with `strbuf_addf()`
+References: <nycvar.QRO.7.76.6.2201071401240.339@tvgsbejvaqbjf.bet>
+        <20220110082254.54400-1-dyroneteng@gmail.com>
+        <nycvar.QRO.7.76.6.2201101346090.339@tvgsbejvaqbjf.bet>
+Date:   Mon, 10 Jan 2022 09:47:44 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2201101346090.339@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 10 Jan 2022 13:49:13 +0100 (CET)")
+Message-ID: <xmqqh7ab1nzz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 314384D8-723C-11EC-A044-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6B7809E8-723D-11EC-BB1B-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-John Cai <johncai86@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hi Junio,
+>> [...] about the using "strbuf_addf(line, "%7s" , "-");" or
+>> "strbuf_addstr(line, "      -");". [...]
+>>
+>> Why I prefer more of the former that is because, for the single line,
+>> it's more readable I think.
 >
-> ...
+> I strongly disagree. Using a format requires the reader to interpret a
+> `printf()` format, to remember (if they ever knew) the rules about padding
+> with `%<number>s` formats, and then to satisfy themselves that the result
+> is correct.
 
-Please trim quotes that are irrelevant for understanding what you
-want to say in your message to save recipient's time to find what
-you wrote.
+Both "more readable" and "cognitive load" are quite subjective.
 
->> +		OPT_BOOL(0, "annotate-stdin", &annotate_stdin, N_("annotate text fr=
-om stdin")),
->>  		OPT_BOOL(0, "undefined", &allow_undefined, N_("allow to print `unde=
-fined` names (default)")),
->
-> I=E2=80=99ve changed this back to a non hidden bool. I believe this sho=
-uld be the last thing needed on this one.
-> Let me know if anything else needs adjustment, thanks!
+FWIW, I have a slight preference to the former because I do not have
+to count the whitespaces to figure out at which column the construct
+is trying to align to.  Most of the time, however, I may not deeply
+care if the thing is aligned exactly, and "     -" might be easier
+to scan and getting alarmed by seeing "%7s" to wonder if there is
+something unusual going on.  When I am reading not for finding out
+the precise output format but for general correctness, bunch of 
+unknown number of spaces followed by a dash might be easier to see.
 
-As I said, my mention of hidden vs non-hidden was not my preferrence
-of non-hidden over hidden, but was soliciting opinions from others,
-so I was a bit surprised to see a reroll to change only that thing
-and nothing else so soon.
+But once you know the language, "%7s" is not so alarming, and it
+does make it easier to see both for casual scanning and for counting
+columns.  It also is likely that those who know the language would
+make more efficient developers to fix and/or enhance the code, so I
+prefer to optimize the code for them.
 
-But if it is your preference to leave it unhidden for now, that is
-fine as well.  I have no strong preference over the matter either
-way.
-
-I see only Dscho on the CC list, but I have this feeling that he
-wasn't the one who suggested to hide the old option.  Whoever it
-was, if we can get an ack from them, that would be nicer.
-
-Thanks for working on this.
