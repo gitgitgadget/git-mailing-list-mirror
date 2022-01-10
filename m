@@ -2,114 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2047C433EF
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 19:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F8F4C433F5
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 19:02:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242916AbiAJTBL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 14:01:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41748 "EHLO
+        id S242891AbiAJTCH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 14:02:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242891AbiAJTBK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 14:01:10 -0500
-Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 869D1C06173F
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 11:01:10 -0800 (PST)
-Received: by mail-qt1-x82a.google.com with SMTP id bp39so15442625qtb.6
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 11:01:10 -0800 (PST)
+        with ESMTP id S242133AbiAJTCG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 14:02:06 -0500
+Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com [IPv6:2607:f8b0:4864:20::92a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A873AC06173F
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 11:02:06 -0800 (PST)
+Received: by mail-ua1-x92a.google.com with SMTP id o1so25305998uap.4
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 11:02:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=dA6kOdKOiSwYkKDhihTi/4q7xyNNSQ2GqFO/XDtDkc0=;
-        b=fM54zkCX8CGZ5TRCQMrdbDvRU1uecT5TkWP+jF4airHnepASioNrk/K5Jh//Lb40zm
-         YtlAN0P4ZkuP31nlhh7Falo1FmbVbOkJoOeDx+Rfe93L8YyyqLVCAGUFD9sIWDbbCfvp
-         Qnqjf79G7OmZ/rTCUYyMTnr5HN+7Ia4wfu9Va73FJgZ+w+0FkA4hp8xBHvM4+kK8v80I
-         TRJO2jmP5hxq0vbmDc5TcpUwQTLxJN9seuid7zArs4ytQIjnOvh5m29oMQY2wsOstR66
-         +E5MXP6LQNdNSu4dXs4M3I9aBs0VnPxeaiySYN/d1xIDKVkWhGu+UdMpLWw5Ojz2oePw
-         AOrw==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=S6feBxgKyWtiIS0N+wck1dE98S27WWlWsAjQ5RQi5To=;
+        b=aC/lhZ3zPo0U+Im9c3U6eEPhLebLAhWnTG5DRfdtazzMmrISTAh+5salSRaHT7Oy6c
+         eYA1vxHmpilGY2OVAAHVFZoto321oGfdfvuBhIFGCTiDBGN3mLKPe8eYhkwnqCRFFG2f
+         cWh6YGDcUk8YeQXb5XbFloGNM6qo2PqFWpJtYAr5yc6uW5TBegnc9F63VuGaaPx1y9jZ
+         ae2bXluFacqTLS7Scgp0iAWmkQIcamp/gTtt55S53CTsP9GFa11GgH8Aa9Z4eyujPlaq
+         ddwCUa26Zo/xvlo+nohV33GdjJwu9arnsNu/Iiu+ySlvkp/0TFZrtwqrwMXRzHHcWXJs
+         SbyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=dA6kOdKOiSwYkKDhihTi/4q7xyNNSQ2GqFO/XDtDkc0=;
-        b=G2MDRQ7o2pJP9ZMDVzwKKzt/XuNzge4k38Qk8SiM9xHfoAisaGaQ0IHLBELDtzMQon
-         KLSvXHSMvbtQ6PCDstdbq1HcTXJNtDnUhorq+KID3mrBBKWI06cnFjzPoYodq2eWNC/g
-         yga8muBxLnpa9pJldmP7FiZ9C3f55PR+oLHO/2cEoX0/eFmGi3mALM+kcm7Z1MFzYipU
-         7hIMj0Mojjsnb5y2Wb5p9zpZ42e2L1p3/dAakyDFDA8/lTwaDq+Ju5XgeCxp2aU6pAVp
-         kuEUqNxt8AvFbKWmI+DkdRgl65RhDgH5x8+lPEBDSkz17333xTvE2BFNLR78ye4VKczK
-         vLKg==
-X-Gm-Message-State: AOAM531wAsR9MRmg+W61ggYFlHwVCDA6JDPmD7dAOze6fdgGGI9KJkGx
-        ZIvmTjmoCsiU0lcDGidXrwI=
-X-Google-Smtp-Source: ABdhPJwZoBn1sHSsLPFsg2Wq+rPqE7d2hFlm1P2HAdeC03E0OacVkwVkbDDk/AkYLu4JGd6XeLg0ew==
-X-Received: by 2002:a05:622a:1713:: with SMTP id h19mr981408qtk.464.1641841269693;
-        Mon, 10 Jan 2022 11:01:09 -0800 (PST)
-Received: from [192.168.1.211] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id c7sm5196508qtd.62.2022.01.10.11.01.07
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jan 2022 11:01:08 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood123@gmail.com
-Subject: Re: [PATCH v7 1/2] name-rev: deprecate --stdin in favor of --annotate-stdin
-Date:   Mon, 10 Jan 2022 14:01:06 -0500
-X-Mailer: MailMate Trial (1.14r5852)
-Message-ID: <A869C5DC-98D0-4093-90ED-5F7933041968@gmail.com>
-In-Reply-To: <xmqqo84j1oel.fsf@gitster.g>
-References: <pull.1171.v6.git.git.1641423600.gitgitgadget@gmail.com>
- <pull.1171.v7.git.git.1641425372.gitgitgadget@gmail.com>
- <153f69ea9b6cfc3fff47c91fa237cf97efd6bfae.1641425372.git.gitgitgadget@gmail.com>
- <56FFAD1E-D081-4D13-A12E-DD6807375B69@gmail.com> <xmqqo84j1oel.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=S6feBxgKyWtiIS0N+wck1dE98S27WWlWsAjQ5RQi5To=;
+        b=0CLlPDr20r0G/SXINtFW/spvj/tt27MHAGrCQUXhMIR/if0AeWy4enC8zLMrl30c5B
+         85af4vxaA5iJnCLC+SALiP9Q/iFA9gE2yLxitzqgjMI9Qz3pj2DKK0zMU2N3PvjfcDAZ
+         X1YWX7xtNIAHWExd0hu8OtB80eNKuA45IVJn9/BUsWMIN52cgzAgRUGvHhpFj6wIICfY
+         hpAT2Bvl0/M1JHMDhV9PmQwRFhjtXu5s3Bx24cAdOm7JYZUDy8R/9qa+uZdhCC90+HUV
+         ON/8f5Bg1dopwDQSMkF4o57IRr/9J2Fv4Zd415/HT+iYdf6uq6oKt+erEZIPn3m3AgZF
+         5DHQ==
+X-Gm-Message-State: AOAM530FlNWAv44ZMSTvECE6/i/5h1PNFC/fS0qwZKKfYuRZ+ZPPs0vx
+        kZNsjkBZPAvlZeXz1KugcYJcxpXmHlodSI1au6/QWw==
+X-Google-Smtp-Source: ABdhPJyxtGSOFHvHWTqiVsuzu1G7IYPViDVgv56BS+L+PTFswb4wemmgPW7VNK0TVnrtNEbbRL3EzgO8lh/BfIrTbxU=
+X-Received: by 2002:a05:6102:419f:: with SMTP id cd31mr596406vsb.83.1641841325663;
+ Mon, 10 Jan 2022 11:02:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <pull.1164.git.git.1640287790.gitgitgadget@gmail.com>
+ <c01b1c335a33e5f44289c520a1634d071d882223.1640287790.git.gitgitgadget@gmail.com>
+ <xmqqsfui4nkr.fsf@gitster.g>
+In-Reply-To: <xmqqsfui4nkr.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 10 Jan 2022 20:01:54 +0100
+Message-ID: <CAFQ2z_MEN2j-sHmGK4SA6N8P9bHvjO2=+G0XxXp_9vzLRxwKuw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] reftable: support preset file mode for writing
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Cc=E2=80=99ing Phillip, as he was the one who made the suggestion to make=
- it hidden
+On Fri, Dec 24, 2021 at 5:46 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >       if (add->lock_file_fd < 0) {
+> >               if (errno =3D=3D EEXIST) {
+> >                       err =3D REFTABLE_LOCK_ERROR;
+> > @@ -478,6 +478,13 @@ static int reftable_stack_init_addition(struct ref=
+table_addition *add,
+> >               }
+> >               goto done;
+> >       }
+> > +     if (st->config.default_permissions) {
+> > +             if (chmod(add->lock_file_name.buf, st->config.default_per=
+missions) < 0) {
+> > +                     err =3D REFTABLE_IO_ERROR;
+> > +                     goto done;
+>
+> This part does not exactly make sense, though.
 
-On 10 Jan 2022, at 12:38, Junio C Hamano wrote:
+why?
 
-> John Cai <johncai86@gmail.com> writes:
+> If this were a library code meant to link with ONLY with Git, I
+> would have recommended to make a adjust_shared_perm() call from
+> here, without having to have "unsigned int default_permissions" to
+> reftable_write_options structure.
 >
->> Hi Junio,
->>
->> ...
+> I wonder if it is a better design to make the new member in the
+> structure a pointer to a generic and opaque helper function that is
+> called from here, i.e.
 >
-> Please trim quotes that are irrelevant for understanding what you
-> want to say in your message to save recipient's time to find what
-> you wrote.
+>         if (st->config.adjust_perm &&
+>             st->config.adjust_perm(add->lock_file_name.buf) < 0) {
+>                 err =3D REFTABLE_IO_ERROR;
+>                 goto done;
+>         }
 >
->>> +		OPT_BOOL(0, "annotate-stdin", &annotate_stdin, N_("annotate text f=
-rom stdin")),
->>>  		OPT_BOOL(0, "undefined", &allow_undefined, N_("allow to print `und=
-efined` names (default)")),
->>
->> I=E2=80=99ve changed this back to a non hidden bool. I believe this sh=
-ould be the last thing needed on this one.
->> Let me know if anything else needs adjustment, thanks!
->
-> As I said, my mention of hidden vs non-hidden was not my preferrence
-> of non-hidden over hidden, but was soliciting opinions from others,
-> so I was a bit surprised to see a reroll to change only that thing
-> and nothing else so soon.
->
-> But if it is your preference to leave it unhidden for now, that is
-> fine as well.  I have no strong preference over the matter either
-> way.
+> so that when linking with and calling from git, we can just stuff
+> the pointer to adjust_shared_perm function to the member?
 
-I think it makes sense in this first iteration to keep it non-hidden for =
-visibility purposes.
-Maybe in the next release we can make it hidden before we move it altoget=
-her.
+I read over the adjust_shared_perm function for a bit, but I'm puzzled
+why its complexity is necessary. It seems to do something with X-bits,
+maybe for directories, but that doesn't apply here as we're only
+handling files?
+We also only write new files, so we never have to look at the existing
+mode of a file.
 
->
-> I see only Dscho on the CC list, but I have this feeling that he
-> wasn't the one who suggested to hide the old option.  Whoever it
-> was, if we can get an ack from them, that would be nicer.
->
-> Thanks for working on this.
+With the current approach, the option is very clear about what it
+does, and the unittest is straightforward: set the option, do a write,
+and check that the files have the specified mode.
+
+--
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
