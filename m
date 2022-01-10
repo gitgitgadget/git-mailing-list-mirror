@@ -2,95 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF957C433FE
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 13:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D775C433F5
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 13:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231443AbiAJNEz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 08:04:55 -0500
-Received: from mout.gmx.net ([212.227.17.22]:42053 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236163AbiAJNDO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 08:03:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1641819783;
-        bh=weWjyMuNnjlcol4nOhreusTcxn09c2kgk49/fdfsb4Y=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=hpMa3NsYLPorBf0qqn1KVxOOri5/rkwna77xSJOdbJKIjCMVugjNg3yI4mMbcItnH
-         iTsTaA/Ecfr++Ao7witmr3hKhAOB03ne3csEMdjz3KhPZT3gRAgvGuszkFlkN291Na
-         sL2QzGt3lEmiJmmGGLKP+3extiKN7ELoy5AIbBGk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.133.218] ([89.1.215.56]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mf0BG-1mRnsz1OHa-00gWWw; Mon, 10
- Jan 2022 14:03:03 +0100
-Date:   Mon, 10 Jan 2022 14:03:01 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S231749AbiAJNSc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 08:18:32 -0500
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:42705 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230248AbiAJNSb (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 10 Jan 2022 08:18:31 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id 680065C00A3;
+        Mon, 10 Jan 2022 08:18:31 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Mon, 10 Jan 2022 08:18:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=nVzs8y/S8HkNBQKeu+rRNKoO1nN
+        DwvuAOSaR7jsstHU=; b=dNxqQygXKoicdZOQ0tRhbTlN7KM9goURYMVYX+eSzJP
+        VpnZmO39aHUVK0A+HcbAwIfcrHExZ5tOmUm9/34XXxNWnIdSLTXZcWUSzTNSdxyr
+        xJeZaxb7A4AapRP4hTpEYNbDDqxLxsnYDp1+5s4h9SqRwwKO2kgtPIBZCDfPLR6K
+        rt/t4toj2LPEBKbJqEVFbSqs0apY+CuTTpQCh/S9qPHh/LABwrIcytfVcPV1I0VZ
+        hS7fuWrw+rME7JMI2SkcGoM6qslf1zaVvtUV6ZVCX+sb2e9mgTaG0IuS5ykkGTfa
+        A8HAhY9CPRNujCTK5XKWR8hX3jSy01I2jxMbHlb3pDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=nVzs8y
+        /S8HkNBQKeu+rRNKoO1nNDwvuAOSaR7jsstHU=; b=GXBfHxr8m7Y8wHAJQllQgN
+        ShLBnlDnaCTAQWqq0xdtJdfIRc1gmgp4WOTh5RSNez5R0bsy70NDMRgiZNOwN4oI
+        IkrxJcnF2NZnONNDhTD1t4aiGPnx63+V/e2rPHGpqcpcJSc+pozQ8aYPlEHV4Nu+
+        YTE4ZpAw/QLg7hcp3FdQF9DRGdPejJHuufnjwkvoZlGkDSGcDiqRyxLSUxJMQdnR
+        CE3v/zBe31NsOrh9T9+JR862T6TQcgXAaCFpJs31XxV0jPww0A9KfyvGx58vvBTb
+        5BYX17slHn591PZLxqOTU9yw38Be1JKITEcmEOp388QSpFz/8fL5TT6d+vbULhzQ
+        ==
+X-ME-Sender: <xms:JzLcYTekvoEEIhhOr779l5Qr1GU1wTYKvsh_Spr74dGGllOAJThuTA>
+    <xme:JzLcYZNxX-LODplatk0tbc620MR0uVMCtipuVjpUTI44-NVBFy4EXjNV1UXZLFLvs
+    09ABmAxWBl6j5TNjA>
+X-ME-Received: <xmr:JzLcYcjFkUceuchBb_1qr0MWEaa_iNeO2_KDMMXk9mldJO7u2yaR472vtKJBFGbiNOd021Y3E6tktlLjjy4TTQNqEomIST8ji3NAJvmyUPRYXK8zHvhNGLhG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudehuddgvdehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:JzLcYU9SBnrFAmAWL9XbhBUGuURZEoulYb1sKsziMfBkaWmSRG1ixQ>
+    <xmx:JzLcYfvJu0GD4KH9hufIMOWRbivdcs1LQm6w_SYf-j0S2Y3bzlId8Q>
+    <xmx:JzLcYTEetxLppY_GjYv8nq7QYcwkvt3ezSdr2yiN2-73yShDTdesaw>
+    <xmx:JzLcYfK4GNc3Ktl4_Y9KsAiBjgVbswCP6W_rGyHaOLiO9AVQQznslg>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Jan 2022 08:18:30 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 105f7a76 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 10 Jan 2022 13:18:27 +0000 (UTC)
+Date:   Mon, 10 Jan 2022 14:18:14 +0100
+From:   Patrick Steinhardt <ps@pks.im>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Emily Shaffer <emilyshaffer@google.com>,
-        git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
-        steadmon@google.com, chooglen@google.com, calvinwan@google.com,
-        workflows@vger.kernel.org
-Subject: Why GitGitGadget does not use Sender:, was Re: Review process
- improvements
-In-Reply-To: <xmqqh7b0juk5.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2201101401530.339@tvgsbejvaqbjf.bet>
-References: <YbvBvch8JcHED+A9@google.com>        <20211217183942.npvkb3ajnx6p5cbp@meerkat.local>        <211222.86ee65pb60.gmgdl@evledraar.gmail.com>        <20211222154534.b2gb22ghn2mpyeur@meerkat.local> <xmqqh7b0juk5.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Bryan Turner <bturner@atlassian.com>,
+        Waleed Khan <me@waleedkhan.name>
+Subject: Re: [PATCH v2 6/6] refs: skip hooks when deleting uncovered packed
+ refs
+Message-ID: <YdwyFmqs0MhU0wA6@ncase>
+References: <cover.1638874287.git.ps@pks.im>
+ <cover.1641556319.git.ps@pks.im>
+ <0fbf68dbf434986aa971961e20598675b2194d51.1641556319.git.ps@pks.im>
+ <xmqq1r1j3s0v.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:q9KIisLV+G9Un9qgdRXJuCaWX+Wk3eDRObqbNCB124PfdJXESit
- m1PpNYh76qsR7VY2lE/MjskREHXVGIT5ORRQLrUqBxIszvBNSSUAL+aj7oq/5/97jofJoUV
- aXuaUKl8pxHv1blhLMnuTYaGmcyr/lrXEChQaFcM1paq5doARM4ZlIBWPa1rI/XeeIQ+TL4
- lQwwXLe8OiV4F50hh4WmA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nQln+ulfdKk=:FSTtw4wM9+ao4fovW2hdey
- B+M4Z01S+wcYx2C9G7fJ1Ew3vievAaALaBU7SuI6jkrj2fssQ+2WyYR/50qLbtHnH3FJf25Lc
- 93lxyrFa+hprP4iecqM8HlCEmmCdOgRwPjkyzGZtj2AuXjRTNVgBaKoLmIXbxBYTIxcGCNo8A
- yljKCp3OFrxJwD11NT6fEeblK46/QqW8Jlz3654Y434Y5ihgEegFTntXN9FPQb04hWEso5m7k
- DhmXpmo74pNbfMzVVaQkwEJH/rmmah2xz1gy9ZOuQdAl1wqeYrS9rYFwSFHC+G65hNM+5+mSr
- yRdZKU/NIVCbNFBoS7q3hAPkahQk/E+Ix7ztkUVLKdzMM8aCybaIkUTTJAShsLRsLKRbo8idg
- XKoCmwW3w50Tn1GZ4Cecyc3yqQu0a9hWTxRIRZ8cv4o1kZHaL7ex8w/37WSLre/JOgVNxj1Im
- SEkpSAC6PolK2q7lZYB+NTKfBm875NGCdxKcrZCjh3csDUi+PCT/x+u2GZSoR4g+MHti5uB0P
- YIb/i8krcT8pcESM/nkMLAx0khMWWoF6yvU0+VDx0ZzZpR59rW8zF4hd9EaMN6VnvidHVP/39
- WycdB4DLQkfpfy9nBpc8wdpbEiCnkkJcC3km5KLwwjptr9+mDHBA2Adm+33VTMaekv1mXBQMt
- B7CxBGIX+uVqbXzq9U9HulGRnWx9XekHnpNeTcN7QVzLK74HjlaB0VpevLaniqOgeNPb9uF25
- X17detCSIjQoSMWcuF3tMUlR92mrKlOQVN0+O82ZQaFuKxcW9kE1PAEwvBlj82LisKEI+X8v6
- MNZ1hmE18WWzMwRCRt7DVtXsqEBYwr+tobm4+pfr5KrBKjpNCyKxgO5A9acT3swuGm0CisfYo
- DiyGPKNLuN6zaOSY9r/juT8apNBerVzgVFqpBtgz0BgR9ZiVq9qgyHH+p4o1zAvMQH3Z/yLSR
- DQV+oKnBoS8HTwuDp4tMcxQGOGMEvDgW5duSa8i6B5Vm04LUZ3GzZGTOL/Bbm1F28rvFZy2wF
- SlsZkpTekLEVb41pS24KH1NKCAXBQKtK28+MNARIDbWSkA0+sM4EYgQxXDH3H4Xh7Pxvuk6AZ
- IVaYdKCCu5d+Xo=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="YBqUv9WMkFkqCmWR"
+Content-Disposition: inline
+In-Reply-To: <xmqq1r1j3s0v.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Wed, 22 Dec 2021, Junio C Hamano wrote:
+--YBqUv9WMkFkqCmWR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
->
-> > This would require pretending that we're authorized to send mail from =
-the
-> > domain name of the commit author, so this unfortunately won't work (an=
-d hence
-> > the reason why GGG does it this way). E.g. say you have:
+On Fri, Jan 07, 2022 at 06:01:04PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > When deleting refs from the loose-files refs backend, then we need to be
+> > careful to also delete the same ref from the packed refs backend, if it
+> > exists. If we don't, then deleting the loose ref would "uncover" the
+> > packed ref. We thus always have to queue up deletions of refs for both
+> > the loose and the packed refs backend. This is done in two separate
+> > transactions, where the end result is that the reference-transaction
+> > hook is executed twice for the deleted refs.
 > >
-> > From: foo@redhat.com
-> > Subject: [PATCH] Fix foo
->
-> Would it help to use "Sender:"?
+> > This behaviour is quite misleading: it's exposing implementation details
+> > of how the files backend works to the user, in contrast to the logical
+> > updates that we'd really want to expose via the hook. Worse yet, whether
+> > the hook gets executed once or twice depends on how well-packed the
+> > repository is: if the ref only exists as a loose ref, then we execute it
+> > once, otherwise if it is also packed then we execute it twice.
+>=20
+> If the ref only exists as a packed ref, what happens? ...
+>=20
+> > Fix this behaviour and don't execute the reference-transaction hook at
+> > all when refs in the packed-refs backend if it's driven by the files
+> > backend.
+>=20
+> ... We try to remove from the loose backend, which would say "nah,
+> it did not exist in my store".  I am not sure if it should execute
+> the delete hook in such a case for the ref.  But if it does not, not
+> running the hook in the ref transaction for packed backend driven by
+> the loose backend would mean nobody notifies the deletion of the
+> ref, no?
 
-You had suggested that before, and I explained why it does not work in
-https://lore.kernel.org/git/nycvar.QRO.7.76.6.2008241445200.56@tvgsbejvaqb=
-jf.bet/.
-The gist is: GMail interferes with your cunning plan.
+This is shown in the test I've added, "deleting packed ref calls hook
+once". We create a new reference and pack it such that it doesn't exist
+as loose ref anymore, but only as a packed one. Updating that ref
+would've caused us to execute the hook twice before, once via the
+packed-backend and once via the loose-backend. With my fix we only
+execute it once via the loose-backend, even if it doesn't currently know
+it. This works because the loose-backend has to create a lock for the
+nonexistent reference such that no concurrent call touches the same ref.
 
-> When GGG or any other automation are trying to send e-mail on behalf of
-> the person shown on "From:", I thought that it is the mechanism for them
-> to use to identify themselves.
+> To me, it seems that the only case this strategy would work
+> correctly is when the files backend calls deletion hook for a
+> request to delete nonexistent ref, which by itself sounds like a
+> problem.
 
-Ciao,
-Dscho
+It does so only if the ref exists in either the loose or packed backend
+though. If trying to update a ref which exists in neither of those, then
+the reference transaction would fail with an "unable to resolve
+reference" error in `lock_raw_ref()`.
+
+So this should behave as expected: deleting a packed ref calls the hook
+once, deleting a nonexistent ref fails and doesn't call the hook at all.
+
+Patrick
+
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  refs/files-backend.c             | 9 ++++++---
+> >  t/t1416-ref-transaction-hooks.sh | 7 +------
+> >  2 files changed, 7 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/refs/files-backend.c b/refs/files-backend.c
+> > index 3c0f3027fe..9a20cb8fa8 100644
+> > --- a/refs/files-backend.c
+> > +++ b/refs/files-backend.c
+> > @@ -1261,7 +1261,8 @@ static int files_delete_refs(struct ref_store *re=
+f_store, const char *msg,
+> >  	if (packed_refs_lock(refs->packed_ref_store, 0, &err))
+> >  		goto error;
+> > =20
+> > -	transaction =3D ref_store_transaction_begin(refs->packed_ref_store, 0=
+, &err);
+> > +	transaction =3D ref_store_transaction_begin(refs->packed_ref_store,
+> > +						  REF_TRANSACTION_SKIP_HOOK, &err);
+> >  	if (!transaction)
+> >  		goto error;
+> > =20
+> > @@ -2775,7 +2776,8 @@ static int files_transaction_prepare(struct ref_s=
+tore *ref_store,
+> >  			 */
+> >  			if (!packed_transaction) {
+> >  				packed_transaction =3D ref_store_transaction_begin(
+> > -						refs->packed_ref_store, 0, err);
+> > +						refs->packed_ref_store,
+> > +						REF_TRANSACTION_SKIP_HOOK, err);
+> >  				if (!packed_transaction) {
+> >  					ret =3D TRANSACTION_GENERIC_ERROR;
+> >  					goto cleanup;
+> > @@ -3046,7 +3048,8 @@ static int files_initial_transaction_commit(struc=
+t ref_store *ref_store,
+> >  				 &affected_refnames))
+> >  		BUG("initial ref transaction called with existing refs");
+> > =20
+> > -	packed_transaction =3D ref_store_transaction_begin(refs->packed_ref_s=
+tore, 0, err);
+> > +	packed_transaction =3D ref_store_transaction_begin(refs->packed_ref_s=
+tore,
+> > +							 REF_TRANSACTION_SKIP_HOOK, err);
+> >  	if (!packed_transaction) {
+> >  		ret =3D TRANSACTION_GENERIC_ERROR;
+> >  		goto cleanup;
+> > diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction=
+-hooks.sh
+> > index f9d3d5213f..4e1e84a91f 100755
+> > --- a/t/t1416-ref-transaction-hooks.sh
+> > +++ b/t/t1416-ref-transaction-hooks.sh
+> > @@ -175,16 +175,11 @@ test_expect_success 'deleting packed ref calls ho=
+ok once' '
+> >  	git update-ref -d refs/heads/to-be-deleted $POST_OID &&
+> > =20
+> >  	# We only expect a single hook invocation, which is the logical
+> > -	# deletion. But currently, we see two interleaving transactions, once
+> > -	# for deleting the loose refs and once for deleting the packed ref.
+> > +	# deletion.
+> >  	cat >expect <<-EOF &&
+> > -		prepared
+> > -		$ZERO_OID $ZERO_OID refs/heads/to-be-deleted
+> >  		prepared
+> >  		$POST_OID $ZERO_OID refs/heads/to-be-deleted
+> >  		committed
+> > -		$ZERO_OID $ZERO_OID refs/heads/to-be-deleted
+> > -		committed
+> >  		$POST_OID $ZERO_OID refs/heads/to-be-deleted
+> >  	EOF
+
+--YBqUv9WMkFkqCmWR
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHcMhUACgkQVbJhu7ck
+PpRXMA/+KGbbInxtzHTIGEOIg/4Bgdkz4aI3bcMrrEYXewqLlMmvivNgbDwAqElw
+9L5SV8UsrQSsERUGvRglOmGUcMKK5qLKVyz6YhGyFg8MOxu/dMJNAq0rB5P05/X+
+HRqyr+o/3eREgev7ny3a3cCXPvajPnBTIQ9oy6z0cKrQ6efVUf1VY3VlcX8lI4E0
+9hGvNRGi4WvphnZITMHeZbX+Fz3zsw8RrxsYLV5DpY9jG6I2omnFeNDrweiPSw1Z
+cG6VTpNVkC/RmMLvK8gVSnL75qQB1Yjmq0a4pjpDqeTEe818zLXDMlcP6rtm8Tab
+5JzWwb/j5mPQPvYblMM65gyLub+OcbUzNkjJA/KvDtDsVZW077aV9wzev1z9/a1L
+rWclCmXGleSI4Bw0zyFPbpXBgdQpXv9hrZZcPpnK/wWFI1lRc/Z1YkRKFAzdvFWg
+Hh6Dst3cRiiX2Na2WS/W+lMmr5OMPX4QCkdHcCmnOiSt04pmU1KWqb092Ml5dj9+
+D+Jt3yjIrY+m04CZw0FDZ2k8PUaCwmJ47xiMUA/Qjf8o1UHzcJ2zX3Da0+Inl/kH
+EG2n9j5/5UZEGaZctbBGqGpYSdTskdLlzr9e8eiFsnpq5S7bzE2B6uObd6v2W+rU
+RfEJCqH/Zz4s63dC0RLBVZdKTeRExfOoN75GGBF2XWwjBAv7tRQ=
+=kTh/
+-----END PGP SIGNATURE-----
+
+--YBqUv9WMkFkqCmWR--
