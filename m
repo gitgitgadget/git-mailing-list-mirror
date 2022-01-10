@@ -2,107 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECDA5C433EF
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 18:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89EB9C433EF
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 18:58:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242791AbiAJS5Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 13:57:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40758 "EHLO
+        id S242805AbiAJS6g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 13:58:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242641AbiAJS5X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 13:57:23 -0500
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B07FC06173F
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 10:57:23 -0800 (PST)
-Received: by mail-qk1-x72d.google.com with SMTP id u23so3459531qku.5
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 10:57:23 -0800 (PST)
+        with ESMTP id S240453AbiAJS6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 13:58:35 -0500
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED353C06173F
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 10:58:34 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id f12-20020a056902038c00b006116df1190aso466436ybs.20
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 10:58:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=QFgTb2YwgacS0UvhL2rk8sXalU4vhuqWlTfgXM6I5n4=;
-        b=GiOf49d0WrPmESTY2XmV78ry/TAMZMlK0PQHycxdf+4wSoo94A2uKZOB6UkGuO3piG
-         AI1g8wSit6HBVc3H7BQbv9lXON3NRXMZpkJLhN0S+9SMAzy1AnCFrU907IUTiCIb9CVx
-         BGF2mk0wv1UKLcWSeAY1F1x60la4NFMAq94RsbnpXR/W99Oeowrti3msicNkmXR1uEFR
-         RLNGs8qFJ2BiYEscYMQwCI0KPBFQsVKrCVnm3SJzBSfNUsyUQCEWOX2mETKzrwkbL6vq
-         yN3clP9EVr/nlxgduikJDbRqdzTXW5PZ6hoddQBs2pMh5ZX01LdWdIn6Mw/9V7fhzKvu
-         6K1g==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=iuyGWAKW4Fa4VnJvyVxiYW0sKBO8f5AP1I2uJxLnNjA=;
+        b=cTkwmrpDtdPJOUwVM0wKI3gQegsLONdzKT3sLZ7emyPUKEys9OBl70kOXgbtIa65Zg
+         jVxyq1kZqyhDnxPBqTs93hBCStsOrCGHhBzlbNKS8bxNRqqmcgmHj8PhxWyEGucqH4bc
+         F0xmC3gWsllCtHeGRoKjhLQRh9Yt8bYrfNP+Gz4yyV2LJaSdVSTAtKSRK9hkqJjb7TSB
+         PR3P9c/wjWBr4JdUeTnJGye1a29k+3R3OhfJi0sVbDQPa3RsU+jcqZiMYO3mUXaZ8yvk
+         6hWdTt6cSvOJ//mLzy/qKogyFtW+GGWQhH+BhSVLMhmI58ei27yl/vfoyqgGT/0i84QG
+         /IAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=QFgTb2YwgacS0UvhL2rk8sXalU4vhuqWlTfgXM6I5n4=;
-        b=wNt9WkzZnjSV9Disx5Q2lMbuUuWyz8yfqcyo8x/Z48X0ltiHON8GOgsEohPeFnrlDG
-         AkUBeoeTh47JFO+pCj750vLmXJwrJdsaA1MmUFHLB2AFEcM87f8UhiYWTiD38RBnLYJ0
-         cWF7XJ1Iw0a+MSw5n5kXWzVWCUi/+MsT9GhjVnb6bXqwUjx6VwIE9DNOTBEdidreVwN5
-         jjVezNrbARHOuwkMi51f/FxBK1o0ImeD+1ohdvejTYa/qOJPfB2/dq5Xo0+NefUMIF+y
-         iVo2LcR0u/zpwAiRAh7TU53ImpFrQcG4M2/OSVxaj9w8Wx7xnr35/3OJJ1ECeN9rR3rK
-         K/Ow==
-X-Gm-Message-State: AOAM532HJWTE1xxWw8ouSLj1wij7cK6ExWrjjb2TSzasIMxM+phF21Ky
-        KjshFZ6ocus2vEa8RzAInq0Q
-X-Google-Smtp-Source: ABdhPJy0oAPAHk2STPT+o2lzSP0SPd4WwGgmqLsWpNQfdDyj2T8AyiY+AqK5nVV47jSEOo9tf5k06Q==
-X-Received: by 2002:a37:9d2:: with SMTP id 201mr813532qkj.9.1641841042221;
-        Mon, 10 Jan 2022 10:57:22 -0800 (PST)
-Received: from [192.168.0.105] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
-        by smtp.gmail.com with ESMTPSA id l9sm4905958qkj.37.2022.01.10.10.57.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jan 2022 10:57:21 -0800 (PST)
-Message-ID: <c0a0798d-96fb-936b-3234-88e500eb86d0@github.com>
-Date:   Mon, 10 Jan 2022 13:57:21 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.1
-Subject: Re: [PATCH] cache.h: drop duplicate `ensure_full_index()` declaration
-Content-Language: en-US
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>
-References: <20220110184134.18675-1-martin.agren@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20220110184134.18675-1-martin.agren@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=iuyGWAKW4Fa4VnJvyVxiYW0sKBO8f5AP1I2uJxLnNjA=;
+        b=AM4/rJMxTf5ZJnti1NY5vscDwMYcQ/SZO62M4VyC6gFzVIIsnCtJYlVomUcvHL+rmo
+         SPXf5+WrU8H4qfv/zZENd/hIhFQTLTch/A9oLzWK9eEJbDN7ePGW6xxo7yJ4aKn43rlt
+         FB6EeMAdUziZHJHEh9ZcaEebH1WDUTcLhPqA09XSnmxfu0DZT9+UONu9y+QXzUSXdWSo
+         9lTVaRcl5Ki0/7Ozx4Ny9xbmmDEw582I+KcK83cDo3OxzSUJfzhaEwlLI+VudUUvp0EK
+         d2zygzmE98aDNCwXpK4DXFtaEjhbYKsN1fk/BPoDrd0k8LDxUB9uTAeMcRByLvtr1iUE
+         KwIA==
+X-Gm-Message-State: AOAM531uYKmREUycyNnlCKm6qFtSy/7cVbzxlj9KnouHXzG4f5tnXb9B
+        ZtCRFLq5PCIv7Isf/iSlUuPjf0Crbs2t9unh+3f0
+X-Google-Smtp-Source: ABdhPJysfQrnWsnKYqhbxrC/9LKwAut3M3e5Q2cRurwsZdaPn35B5wA2/q9o2NQuUb21tSWLutDl6Lp61l17hIEezfnU
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:2390:: with SMTP id
+ j138mr1348396ybj.177.1641841114160; Mon, 10 Jan 2022 10:58:34 -0800 (PST)
+Date:   Mon, 10 Jan 2022 10:58:30 -0800
+In-Reply-To: <CABPp-BF+_33zR-vwh-tMTG=vxuah5jyuJVXssa-vAH51qdsrDQ@mail.gmail.com>
+Message-Id: <20220110185830.1115343-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CABPp-BF+_33zR-vwh-tMTG=vxuah5jyuJVXssa-vAH51qdsrDQ@mail.gmail.com>
+X-Mailer: git-send-email 2.34.1.575.g55b058a8bb-goog
+Subject: Re: [PATCH v7 2/2] config: include file if remote URL matches a glob
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     newren@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, chooglen@google.com,
+        gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren wrote:
-> There are two identical declarations of `ensure_full_index()` in
-> cache.h.
+Elijah Newren <newren@gmail.com> writes:
+> > +test_expect_success 'includeIf.hasconfig:remote.*.url' '
+> > +       git init hasremoteurlTest &&
+> > +       test_when_finished "rm -rf hasremoteurlTest" &&
+> > +
+> > +       cat >include-this <<-\EOF &&
+> > +       [user]
+> > +               this = this-is-included
+> > +       EOF
+> > +       cat >dont-include-that <<-\EOF &&
+> > +       [user]
+> > +               that = that-is-not-included
+> > +       EOF
+> > +       cat >>hasremoteurlTest/.git/config <<-EOF &&
+> > +       [includeIf "hasconfig:remote.*.url:foo"]
+> > +               path = "$(pwd)/include-this"
+> > +       [includeIf "hasconfig:remote.*.url:bar"]
+> > +               path = "$(pwd)/dont-include-that"
+> > +       [remote "foo"]
+> > +               url = foo
 > 
-> Commit 3964fc2aae ("sparse-index: add guard to ensure full index",
-> 2021-03-30) provided an empty implementation of `ensure_full_index()`,
-> declaring it in a new file sparse-index.h. When commit 4300f8442a
-> ("sparse-index: implement ensure_full_index()", 2021-03-30) fleshed out
-> the implementation, it added an identical declaration to cache.h.
-> 
-> Then 118a2e8bde ("cache: move ensure_full_index() to cache.h",
-> 2021-04-01) favored having the declaration in cache.h. Because of the
-> double declaration, at that point we could have just dropped the one in
-> sparse-index.h, but instead it got moved to cache.h.
-> 
-> As a result, cache.h contains the exact same function declaration twice.
-> Drop the one under "/* Name hashing */", in favor of the one under
-> "/* Initialize and use the cache information */".
-> 
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-> ---
->  cache.h | 2 --
->  1 file changed, 2 deletions(-)
-> 
-> diff --git a/cache.h b/cache.h
-> index 5d7463e6fb..281f00ab1b 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -350,8 +350,6 @@ void add_name_hash(struct index_state *istate, struct cache_entry *ce);
->  void remove_name_hash(struct index_state *istate, struct cache_entry *ce);
->  void free_name_hash(struct index_state *istate);
->  
-> -void ensure_full_index(struct index_state *istate);
-> -
->  /* Cache entry creation and cleanup */
->  
->  /*
+> Which "foo" is relevant here?  The remote name, or the url value?
+> Could they be given different values so that the testcase is a bit
+> easier to read and understand?
 
-Thanks for cleaning up the duplicate, looks good to me!
+Thanks for taking a look. Sorry for the late reply - I just got back
+from vacation.
+
+This is a good point - I'll change one of them.
+
+> > +test_expect_success 'includeIf.hasconfig:remote.*.url respects last-config-wins' '
+> > +       git init hasremoteurlTest &&
+> > +       test_when_finished "rm -rf hasremoteurlTest" &&
+> > +
+> > +       cat >include-two-three <<-\EOF &&
+> > +       [user]
+> > +               two = included-config
+> > +               three = included-config
+> > +       EOF
+> > +       cat >>hasremoteurlTest/.git/config <<-EOF &&
+> > +       [remote "foo"]
+> > +               url = foo
+> 
+> ...similarly here.
+
+Noted.
+
+> The testcases are very helpful.  I found myself confused when reading
+> just the documentation about how it would be used.  Perhaps an example
+> or two should be added to the documentation?
+
+Will do. I notice that there is a section with examples - I'll add it
+there.
