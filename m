@@ -2,79 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18ABAC433EF
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 18:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE393C433F5
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 18:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241635AbiAJSll (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 13:41:41 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51808 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241315AbiAJSlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 13:41:40 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AE52E185C48;
-        Mon, 10 Jan 2022 13:41:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=x0uazPmEE1QQb7r1pKXSFUz1UfbrIbvyY9GM7D
-        eiGfI=; b=uDbTf3byzxMZQD5IbdYmAbwHPLlXuw1jdL3Zx7jDDbcM/4P+mU3Pul
-        mHPhwlNbKeSR73sNuMCJPhnv4QCPlmp3YHPJuK/hQzFXM5nI2UeUcxYEz7qzbs8e
-        deQv1vY7VgkBgJXtJg5MjdGWDgoNDmhfjOQHEirCytfuxnlK7F/jU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A5DF3185C47;
-        Mon, 10 Jan 2022 13:41:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1987F185C46;
-        Mon, 10 Jan 2022 13:41:38 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Dec 2021, #06; Mon, 27)
-References: <xmqq7dbpvb0q.fsf@gitster.g>
-        <CABPp-BFR29S-Pwq9LZEOjaCxozTV9mkUBpd2SLGwh7jNW+On4w@mail.gmail.com>
-        <kl6ltuej6t3s.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Mon, 10 Jan 2022 10:41:37 -0800
-In-Reply-To: <kl6ltuej6t3s.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Tue, 04 Jan 2022 14:20:23 -0800")
-Message-ID: <xmqqsftvzb4u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S241662AbiAJSm1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 13:42:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37110 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241019AbiAJSm0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 13:42:26 -0500
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF39FC06173F
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 10:42:25 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id br17so16496943lfb.6
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 10:42:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CmOl9Cw6hajV4bqPbSPVLHCnuFXiL2e1YmFzXRDhHJY=;
+        b=VDe5ZTrOT84cvPCtLq+DJmolh6IkVjpm4cdKawHm1YBaewCiCfKhTgBe5t1Wq/tTe4
+         SpoyQX+u18GzsyXXpBNfL2XI7tC/r2ey2J9FKYF3wzm8F0eLrU9DHPqkVAdflD3lmIBr
+         hOsVUiCs5tOkXbw3KHtUpKvO+nYfo2zmYvVxemyH7Br5LbXRcZyO0pHmqu5dKkYuebge
+         YgEwhr3ph3x0zUC/lZV/rw3FQMJvReT0v6+MYIwi1ZrRHC3H15AAm5D/i2xPjj6op2zl
+         zfw5Bmpafw0a1iV1yfUsYtFEX230p4WhQRBnGQvtQokZVfp62BI6A+Fpt8d5qbaj2L69
+         eRQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CmOl9Cw6hajV4bqPbSPVLHCnuFXiL2e1YmFzXRDhHJY=;
+        b=h829M1B9dEMy2HHalIuiJWouYgmiuJC+5c4ADh7PG/CAOaEEy2/iG6APaxypSw8+qo
+         +OmP29PE9s7rVYVkhHiRaBtTs0PG79rZQ33Vp9TK1UyNP0yEw9hTYrfaAtTiPavLn4e0
+         wK0H3SGViZm6h7SpF2TN+q+vDaYgMo0qR8R5Y1fLfZ4+IPUlBuyxR4whkbjwheg3YU/I
+         5c0z8OZCm1Ct+FMfJ8X/9j64bkxdgkhSpPTk3NV5KlCrhoegCKuVzeedx3v8BPUYrvwT
+         ev4UoEvfGAYltpJPwOGn9Yqohg2m+kWFDde4vBsl+/3aGoj1qlOJHPrh+4HqHsb9cgGB
+         J/XQ==
+X-Gm-Message-State: AOAM530BdA38U07jCtoHSywBjIWkcmjCdM10H1ODn3e3JV4dLSN0naew
+        9DYX5/Ctgrgz5M+cgDJEECj2zOub4oI=
+X-Google-Smtp-Source: ABdhPJwyIXP083FmI2YCQ/x+gnafFmNchizLelywhd+JtAFcUMUoV7K+q69HsggvbEqnUd8/OBbo0Q==
+X-Received: by 2002:ac2:4c50:: with SMTP id o16mr748344lfk.368.1641840143856;
+        Mon, 10 Jan 2022 10:42:23 -0800 (PST)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id m3sm697898lfr.60.2022.01.10.10.42.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Jan 2022 10:42:23 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>, Victoria Dye <vdye@github.com>
+Subject: [PATCH] cache.h: drop duplicate `ensure_full_index()` declaration
+Date:   Mon, 10 Jan 2022 19:41:34 +0100
+Message-Id: <20220110184134.18675-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.34.1.703.g22d0c6ccf7
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F1C4BCD8-7244-11EC-B81E-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+There are two identical declarations of `ensure_full_index()` in
+cache.h.
 
-> Elijah Newren <newren@gmail.com> writes:
->
->>> * gc/branch-recurse-submodules (2021-12-25) 7 commits
->>>  - fixup! branch: add --recurse-submodules option for branch creation
->>>  - branch: add --recurse-submodules option for branch creation
->>>  - builtin/branch: clean up action-picking logic in cmd_branch()
->>>  - branch: add a dry_run parameter to create_branch()
->>>  - branch: make create_branch() always create a branch
->>>  - branch: move --set-upstream-to behavior to dwim_and_setup_tracking()
->>>  - Merge branch 'js/branch-track-inherit' into gc/branch-recurse-submodules
->>>  (this branch uses js/branch-track-inherit.)
->>>
->>>  "git branch" learned the "--recurse-submodules" option.
->>>
->>>  Will merge to 'next'?
->>>  source: <20211220233459.45739-1-chooglen@google.com>
->
-> Is there anything in particular blocking this series? e.g. does it need more review?
+Commit 3964fc2aae ("sparse-index: add guard to ensure full index",
+2021-03-30) provided an empty implementation of `ensure_full_index()`,
+declaring it in a new file sparse-index.h. When commit 4300f8442a
+("sparse-index: implement ensure_full_index()", 2021-03-30) fleshed out
+the implementation, it added an identical declaration to cache.h.
 
-An ack or two from those who gave their feedbacks on previous
-rounds, which hasn't happened since v3, I think.
+Then 118a2e8bde ("cache: move ensure_full_index() to cache.h",
+2021-04-01) favored having the declaration in cache.h. Because of the
+double declaration, at that point we could have just dropped the one in
+sparse-index.h, but instead it got moved to cache.h.
 
->> Can we squash the "fixup!" commit before merging?
->
-> Makes sense, I can squash it :)
+As a result, cache.h contains the exact same function declaration twice.
+Drop the one under "/* Name hashing */", in favor of the one under
+"/* Initialize and use the cache information */".
+
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ cache.h | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 5d7463e6fb..281f00ab1b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -350,8 +350,6 @@ void add_name_hash(struct index_state *istate, struct cache_entry *ce);
+ void remove_name_hash(struct index_state *istate, struct cache_entry *ce);
+ void free_name_hash(struct index_state *istate);
+ 
+-void ensure_full_index(struct index_state *istate);
+-
+ /* Cache entry creation and cleanup */
+ 
+ /*
+-- 
+2.34.1.703.g22d0c6ccf7
+
