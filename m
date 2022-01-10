@@ -2,98 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59095C433EF
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 16:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AFB5C433F5
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 17:03:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237645AbiAJQm0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 11:42:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36880 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237627AbiAJQm0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 11:42:26 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0006C06173F
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 08:42:25 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id w16so55882185edc.11
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 08:42:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=8xUl1lpFg8sgMg/1t7u7OyWf+xvhtRijPb6PWPrUbZE=;
-        b=C2V+2KBmtp8u9/wxHAIBBOleUeR6NrqJiA96lP7vn6HefoyMlmx3zIaO73uY467L/y
-         fhHCZP0OD5n49R2JFm/IUtKyXrgSmC74PbnL2HNF+GA/tyja5DMS489211Z+7Jud4wzs
-         kfo0FWpsa/pQvZEJJyB787at9mHcaaKwGHh1w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=8xUl1lpFg8sgMg/1t7u7OyWf+xvhtRijPb6PWPrUbZE=;
-        b=usrJJOTy6ak2f7AhdJoRV4/uK9cz5ye9HiuX15+1Le2/w9OYwevdjwUlwLcgDhsSvA
-         dmOM3EjXT7M/q427BOaS2jKW8mUeiOi5huPFuQjk0yPQbUn92PYnTbFFQZCafkVaLB7p
-         wvxj82fB/xBtpL5d53pkgf+OVOwHvllKsbhR830hsljFhEmdJpDG3Ii7q1tjaprobsVB
-         nnwhTP8alrQH7H65xoYx3wWXt8jGM7V/THs+a8AX++Jp+WXmi/LMtrcatKqmIi/BTkRG
-         keS+RrMyweT5LJJn67h99sEdyBBe6zfnlvPWItED512lq3b2W63dEAkcgfLuyF5m+0/E
-         DDsw==
-X-Gm-Message-State: AOAM531Q4d8/NetFlNsSuU8eJDRkR7zNOXxii6hKPeCf4amzJ2F7ILdj
-        lOYeFV6XqzDSfUKz61RCOna6KEcSzb+4SuHCrsM=
-X-Google-Smtp-Source: ABdhPJx10YBP2xEu+KYt4/bFIqPRldERZgUiUhZXkUD21761q1YA0QraubuLoFxPqUleXnuo79bfpw==
-X-Received: by 2002:a17:907:d29:: with SMTP id gn41mr454167ejc.538.1641832944342;
-        Mon, 10 Jan 2022 08:42:24 -0800 (PST)
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
-        by smtp.gmail.com with ESMTPSA id oz31sm2604019ejc.35.2022.01.10.08.42.23
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Jan 2022 08:42:23 -0800 (PST)
-Received: by mail-wm1-f54.google.com with SMTP id l12-20020a7bc34c000000b003467c58cbdfso9657456wmj.2
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 08:42:23 -0800 (PST)
-X-Received: by 2002:a05:600c:4c94:: with SMTP id g20mr6129539wmp.26.1641832943590;
- Mon, 10 Jan 2022 08:42:23 -0800 (PST)
+        id S237655AbiAJRDZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 12:03:25 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62034 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237327AbiAJRDZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 12:03:25 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A75E018520B;
+        Mon, 10 Jan 2022 12:03:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tMwV1M5hiPSw+xd/P73MFJ7B32XkEa3aLAI6Ud
+        USK+4=; b=HmAW8UC1WPJ+lgV26opiZ/rIBSMn5Lu6Zf+OtLlqpcpgmi4WjSaSDJ
+        PI75wfpFyxg34uhGi3C2IrPT6+lEPPToLuI3/wn3JLy5Z25dIWIrPxzHqmh/rkw2
+        iLHkSqeok3VirM5iOPdsKCOo9gE2DmmDzvPkhTPSqRJjDXVbTXU3s=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8CC3918520A;
+        Mon, 10 Jan 2022 12:03:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EA678185209;
+        Mon, 10 Jan 2022 12:03:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Fabian Stelzer <fs@gigacodes.de>, git@vger.kernel.org,
+        Pedro Martelletto <pedro@yubico.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3] gpg-interface: trim CR from ssh-keygen
+References: <20220103095337.600536-1-fs@gigacodes.de>
+        <20220107090735.580225-1-fs@gigacodes.de>
+        <YdtVrT4gBvnXfNr6@flurp.local>
+Date:   Mon, 10 Jan 2022 09:03:20 -0800
+In-Reply-To: <YdtVrT4gBvnXfNr6@flurp.local> (Eric Sunshine's message of "Sun,
+        9 Jan 2022 16:37:49 -0500")
+Message-ID: <xmqq8rvn34mf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Mon, 10 Jan 2022 08:42:07 -0800
-X-Gmail-Original-Message-ID: <CAHk-=whXPxWL7z3GiPkaDt+yygrRmagrYUnib7Lx=Vvrqx2ufg@mail.gmail.com>
-Message-ID: <CAHk-=whXPxWL7z3GiPkaDt+yygrRmagrYUnib7Lx=Vvrqx2ufg@mail.gmail.com>
-Subject: git ssh signing changed broke tag merge message contents
-To:     Fabian Stelzer <fs@gigacodes.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git List Mailing <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3764D826-7237-11EC-9E73-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So I made the mistake of updating my git tree as I started doing my
-merge window for 5.17, and suddenly all the messages from signed tags
-disappeared from the merge commits.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-I bisected it to commit 02769437e1 ("ssh signing: use sigc struct to
-pass payload"), but haven't done any other analysis.
+> of the existing string-splitting functions. For instance, something
+> like this:
+>
+>     struct strbuf **line, **to_free;
+>     line = to_free = strbuf_split(&ssh_principals_out, '\n');
+>     for (; *line; line++) {
+>         strbuf_trim_trailing_newline(*line);
+>         if (!(*line)->len)
+>             continue;
+>         principal = (*line)->buf;
+>
+> keeping in mind that strbuf_trim_trailing_newline() takes care of
+> CR/LF, and with appropriate cleanup at the end of the loop:
+>
+>         strbuf_list_free(to_free);
+>
+> (and removal of `FREE_AND_NULL(principal)` which is no longer needed).
+>
+> Something similar can be done with string_list_split(), as well.
 
-I assume it's the change to fmt-merge-msg.c, but have no time to actually check.
+Unless you are writing an interactive text editor, an array of
+lines, each of which can individually be manupulated cheaply when
+inserting or deleting a span of chars, is a way too ugly and overly
+expensive data structure to keep your data in the long haul.  In
+short, strbuf_split() was a mistaken piece of API that does not
+belong to this project ;-)
 
-Easy enough to test:
+The cycles spent by crypto before getting to this point in the code
+is expensive enough that the extra cycles to separately scan to
+split them into lines and another scan from the end of the each line
+to trim may not matter, so I'd stop at saying "I'd rather not to see
+the above code" instead of my usual "Please don't", from performance
+perspective in this case.
 
-   echo "Dummy file" > dummy
-   git commit -m "Dummy commit" dummy
-   git tag -s -m "Dummy tag" dummy-tag
-   git reset --hard HEAD^
-   git merge --no-ff dummy-tag
+But from code cleanliness perspective, well, let me just say that
+this is not Python or Java but a C project.
 
-With the above, you are *supposed* to get a merge message in your
-editor something like
 
-    Merge tag 'dummy-tag'
-
-    Dummy tag
-
-    * tag 'dummy-tag':
-      Dummy commit
-
-(ok, that last part you only get with merge.summary=true, of course)
-
-But with the broken commit, that "Dummy tag" message from the tag
-contents does not exist.
-
-Holler if there are questions, but I'm hoping the above explanation is
-clear enough since I'm about to be very busy..
-
-                Linus
