@@ -2,107 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30D67C4332F
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 19:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9D05C433EF
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 19:52:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243927AbiAJTlo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 14:41:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51006 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243815AbiAJTlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 14:41:40 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79963C06173F
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 11:41:40 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id c14-20020a17090a674e00b001b31e16749cso314890pjm.4
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 11:41:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=C5igQ0Zs+VUFFzO/Kzf5FTMRZZIWb1GV1bohCFyqlyQ=;
-        b=CbjigvQWk+dXqF0xtzRAQZd3Th8ln2PUSHyb2KpSwkC/LEHfiG5agUgTdQBKEPHbFg
-         D/JGGEHl7509GSl9vKfnrZRqL6oO6e9AY1wZ0o2KIWJ30RhqDhL+Is1oZk9MeZn6eTa8
-         ++TVLMlc0dQafbxZDXEqwjU+qYVD1MbTjPQ9PjnMPGieQ9owAU24fpVpDYEX6UHA/INQ
-         DXEjtTMOTG8WvkvrXzu5gxnUivpOnuFjQIxqBQ869O4S3/spXnJMl1WzC14D4rYLRiEa
-         p5qYstdJ0DeJg2MJPUEnzwz3moiAcM6DPPauyxy6cK2RM9z+QxVKh3pCiF0fZoWC5gm0
-         tv3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=C5igQ0Zs+VUFFzO/Kzf5FTMRZZIWb1GV1bohCFyqlyQ=;
-        b=ZpfsxuTcGQXGOSprmMUkgHSBs3nWaVWtvzTkC7GEoPQ/sM0lYhXU9yRZqxOwoKGq57
-         NgYKUAK2OvFMQOFu9ZNPwkM/XpxZOm0rtl55Z59seS5tvR7Ne672177tofb5Vhviy8ss
-         jzMeN1MfmI4z3Il7ZvvooXxLQoQ33kX8/qOdf6mlf/EVnEKQWSSC7ZXYIMXmdG2Mdz3h
-         f27Su4LhwVvmpenZqn2Kq37jo2VfKdw9obYH6RlHTuVZjyCGoLX1L59lsqWDMdST7ciR
-         aGEFRRqYBZLgGuLiKADr3SV2oM1LgpDlAFKvyxPuSIVDYAJGsG++8R1Y3wVWWESs2DM7
-         hzxQ==
-X-Gm-Message-State: AOAM531aJRyxt4Puy+pe5nuhEAQGj5Qx8DAWx19PkaZAnPNEMNlkWaoO
-        4Xti1K1HPCFUViq8qlYNQsmYx5UPEuZ20uarTS0=
-X-Google-Smtp-Source: ABdhPJx3GcXBHf+Ero0UvaM7uzAB0hG+rCMxFsD/koz+MMHdN9HFcZyEGSIiC2QoVcEA2hCsg2UaK44FiceczNQpTgc=
-X-Received: by 2002:a17:90a:348c:: with SMTP id p12mr11269371pjb.90.1641843700016;
- Mon, 10 Jan 2022 11:41:40 -0800 (PST)
+        id S243477AbiAJTwG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 14:52:06 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62399 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239531AbiAJTwF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 14:52:05 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D18F17F618;
+        Mon, 10 Jan 2022 14:52:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2XhU1zaLPNKIzFz/U53/Bl5tS3omXtUGh103t+
+        FP99Y=; b=RLiIJ7A2mux29KtADCnMQ+cKcW8YJbdVK5Jgxxjqg4KXwX47qpH9CJ
+        +CZgiat1k24PWIQ54zJy8JKgg7RuHkQ6vGIAHRURQ/SK0JNXZ3IaPr5PLSWQYgCR
+        GiFCAMi+4GePhE2UXNCaVoOdTclkZLeJfJDJcXNF179UDMEf57tI0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 644E517F617;
+        Mon, 10 Jan 2022 14:52:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C23CE17F615;
+        Mon, 10 Jan 2022 14:52:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>
+Subject: A couple more duplicate declarations
+References: <20220110184134.18675-1-martin.agren@gmail.com>
+        <c0a0798d-96fb-936b-3234-88e500eb86d0@github.com>
+        <xmqqfspvz8us.fsf@gitster.g>
+Date:   Mon, 10 Jan 2022 11:52:01 -0800
+In-Reply-To: <xmqqfspvz8us.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        10 Jan 2022 11:30:51 -0800")
+Message-ID: <xmqqwnj7xtb2.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1641440700.git.dyroneteng@gmail.com> <7df58483a4f665f9f54b92a97a6b57704f1e7a0d.1641440700.git.dyroneteng@gmail.com>
-In-Reply-To: <7df58483a4f665f9f54b92a97a6b57704f1e7a0d.1641440700.git.dyroneteng@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Mon, 10 Jan 2022 20:41:28 +0100
-Message-ID: <CAN0heSoTRpymQh0w2pfJcy+16nTHa6MwY+BAqkvfAmQsnj2ihg@mail.gmail.com>
-Subject: Re: [PATCH v9 8/9] ls-tree.c: introduce "--format" option
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, tenglong.tl@alibaba-inc.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: C7E1F304-724E-11EC-B4DC-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Teng,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Fri, 7 Jan 2022 at 06:34, Teng Long <dyroneteng@gmail.com> wrote:
+>> Thanks for cleaning up the duplicate, looks good to me!
+>
+> Thanks, both.
 
-> +--format=<format>::
-> +       A string that interpolates `%(fieldname)` from the result
-> +       being shown. It also interpolates `%%` to `%`, and
-> +       `%xx` where `xx`are hex digits interpolates to character
+This is not urgent at all, given that we are about to enter the
+pre-release stabilization period and patches that might result from
+this message would become lower priority, but there are a couple of
+duplicate declarations, which I'll mention in order to help people
+to come back to them later.
 
-Above, there is a missing space just before "are". That causes the
-manpage to render a little bit funny.
+* trace2_cmd_exit_fl() was added to git-compat-util.h and to
+  trace2.h by ee4512ed (trace2: create new combined trace facility,
+  2019-02-22).  Logically it belongs to the latter.  Moving
+  inclusion of the latter from <cache.h> to <git-compat-util.h>
+  might be the lowest-cost fix, but there may be ramifications.
 
-> +       with hex code `xx`; for example `%00` interpolates to
-> +       `\0` (NUL), `%09` to `\t` (TAB) and `%0a` to `\n` (LF).
-> +       When specified, `--format` cannot be combined with other
-> +       format-altering options, including `--long`, `--name-only`
-> +       and `--object-only`.
-> +
+* xdl_emit_diff() is declared in xdiff/xdiffi.h and xdiff/xemit.h; I
+  wonder if there is a caller that only includes one but not the
+  other header.  As they came from the same upstream-import commit,
+  I wouldn't worry too much about it.
 
-> +Customized format:
-> +
-> +It's support to print customized format by `%(fieldname)` with `--format` option.
-
-I had to re-read this to understand. How about the following?
-
-    It is possible to print in a custom format by using the `--format`
-    option, which is able to interpolate different fields using a
-    `%(fieldname)` notation.
-
-Just a suggestion. Feel free to tweak or ignore. :-)
-
-> +For example, if you want to only print the <object> and <file> fields with a
-> +JSON style, executing with a specific "--format" like
-> +
-> +        git ls-tree --format='{"object":"%(object)", "file":"%(file)"}' <tree-ish>
-> +
-> +The output format changes to:
-> +
-> +        {"object":"<object>", "file":"<file>"}
-> +
-
-Nice!
-
-Martin
