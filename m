@@ -2,126 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADEE3C433F5
-	for <git@archiver.kernel.org>; Sun,  9 Jan 2022 21:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3DACC433EF
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 08:23:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234660AbiAIVx0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Jan 2022 16:53:26 -0500
-Received: from mout.gmx.net ([212.227.17.20]:57499 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229553AbiAIVxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jan 2022 16:53:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1641765203;
-        bh=Ckl7pBpGDlrz5p7p3c6Q1OZdbm90OVtlXmfb/vPKl2E=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Q4vcFPTR6FnikBsVeuKRyN/ibe+Z8K7vNasKehcTpHnc6FvnBdIguIS5FQHGFeN/w
-         L+LMKIf7rBoBYeLYXSEgj3Tk6IYdX28lHXFR1Vu4KK7ZW+cTOJe3Y/8+055egjDvoV
-         YjGsQwOEysbdI/gYw91+Qg0on4fiDn8jFy8N+MHY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.133.218] ([89.1.215.56]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N17YY-1mM1ph2oPa-012ZhR; Sun, 09
- Jan 2022 22:53:23 +0100
-Date:   Sun, 9 Jan 2022 22:53:17 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Imi Admin <imiadmin@HTW-Berlin.de>
-cc:     git@vger.kernel.org
-Subject: Re: Problem with credential.helper=store in git 2.32.0.windows.2
-In-Reply-To: <8838ac786ed46b841e4172824b80564b@htw-berlin.de>
-Message-ID: <nycvar.QRO.7.76.6.2201092246520.339@tvgsbejvaqbjf.bet>
-References: <8838ac786ed46b841e4172824b80564b@htw-berlin.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S240070AbiAJIXA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 03:23:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33524 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238410AbiAJIW7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 03:22:59 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5D7C06173F
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 00:22:59 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id c14-20020a17090a674e00b001b31e16749cso20043360pjm.4
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 00:22:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=egJ1ez/H6xKgB5GwD7WAU4W0HZSYJOXF4uBEIf1ZRCY=;
+        b=bUDLt265G/53l6QseumBE4ebJLCP6OeLEQKJXWilcyqCDVzR7sHnoVl1O4Mmrq3rk5
+         BbYuLRA30DtBi/8B19/aUXCJknDtPmBW1wv5R9O8I12Owcnzp1P6j5pz3b0NX9jUV4oD
+         0p0C71cDTHTJ3eMWZ0Rj8CZttr8+SNDQOWDyozNTfJT0oC4bKzaDBK6Tr6in2juUYVUi
+         KiuSckjxRoU+Pv9Uam+OE1ZvvBZZ0MY/D1uw8J28gyfP4dNSf893YEk87IsZAT2nAiaM
+         pn10Wko42bziZHtiHl2tM3s6Ut6NuzoM1pwKumqE3f3xEmw5o1Htz+vv2ZQdedkcfDMC
+         f2JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=egJ1ez/H6xKgB5GwD7WAU4W0HZSYJOXF4uBEIf1ZRCY=;
+        b=HCacYjB3tWQFYwW0tpONVGnaXPCcSY5YAnPJ5VpO4WM4przFaWocVQRFqk6u0wcc/P
+         3oM+nA20XiCCCUriKZHlLwESI2B0gLiAuA+aq2/2/ohBcitak8DyM9dEXBsBkpi++Cwn
+         nvszq4Ty9ujtC+BvaRujl9vFBw0X4ebdwc434K8l6vH2Ty6xfnsdbqM9Owkm4a8abkEI
+         6oh0456ZI4rq8p/2UBk9gf/wRYnj+wzZeMi5/tsVoTYOOevbPVmbVbXCskefckcwlI2t
+         NkE+l1cOOhx6ghY2wHfnoRJni6x6FFxG5PF5dP6MgM6ZNQIQqkbJQ1aTQjY8EpkYdi/k
+         LKcg==
+X-Gm-Message-State: AOAM533NciX3seLKBFgE5NSxu04rdfgQgYe7lR0LhsK9mkGdTjhyll+r
+        xM+MZKfjZCkklkOYcjXVptk=
+X-Google-Smtp-Source: ABdhPJyPdNwGCXatLM+tabZVx1Z7bKlO9wzNQ02RbjshYnofdeQdonbcEjWTBtocNHQKXQytItbTEA==
+X-Received: by 2002:a17:902:d2d0:b0:149:48e4:f039 with SMTP id n16-20020a170902d2d000b0014948e4f039mr73435136plc.137.1641802978926;
+        Mon, 10 Jan 2022 00:22:58 -0800 (PST)
+Received: from code-infra-dev-cbj.ea134 ([140.205.70.39])
+        by smtp.gmail.com with ESMTPSA id s34sm6172841pfg.198.2022.01.10.00.22.56
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Jan 2022 00:22:58 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+To:     johannes.schindelin@gmx.de
+Cc:     avarab@gmail.com, congdanhqx@gmail.com, dyroneteng@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v9 9/9] cocci: allow padding with `strbuf_addf()`
+Date:   Mon, 10 Jan 2022 16:22:54 +0800
+Message-Id: <20220110082254.54400-1-dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.34.1.399.g7b04f8a8c9.dirty
+In-Reply-To: <nycvar.QRO.7.76.6.2201071401240.339@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.2201071401240.339@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dVu8GpBO/62gnmZVj34xlhRzjpdm4dPRXkzIhlfZNWZ+EProbhi
- wCwiEEU5mU/7qaJ3OWqcV1Bp+wH/dNIYzQRzSJu8yzWwZhwEI8eokG4bXPwxaDkg9a3B7C1
- HQ7PixTY3YOjs4kptYD4Enarc1QhBd7uvXLJcEddpDNRHn3wyrh9hhloG9C3Ei2qvCeeeQR
- otkAEIiWZL0EqUzNRt3wA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:K4o62ohjoUI=:ckx2ONdx4Jo3txZLBAdPvF
- KYRuuMenwYMd6m2gKRgqr7gjFYL/KU+9xmjm1yiub9Y2FKNeQeqbtIIyl2O/l/7tU2OfR+wEX
- ++wMUV1HUdfVmNtAG2JMpv1QqhdshH2hglj00zG3EGcLYn2C6cPOPcTQ8/fnLzif3PnQdfyr7
- ounxGPsRaO+2gP7+iGcTwVkeoAKMcxjBznrn37IwmNrg8tfU6dxnyb3xxHICCnwHA7RD17M3r
- 3XFEQB7D6d/n5zSwgrEJ8huLkYPLHMMd/wtu0hiBFCiJW4VcxniPZnVzwfahkjAQUMUg+8gFw
- wUo0MyFcu7oHn/i9RiCt8/kpGzsVNoLTa5ifv/j55hhxACc4yaVKkQwqdmHQVz/q+ILp1RdGh
- 7ksyl028J0NFXJJjshRJb1DGq8dkxoEdB5wAndu8NQLl/jSObb3pSKTkfKQZIKOeM6rBIYtPd
- BYGEbSvufBQLISRH4oHsvKLb8LmkOkZT+RaVgs+m4pGPvcrx60p2c0wrqEsYPD5+ejkd2NhIz
- 6iiQMEg48EViDF2IwN5UHzT1zPEW0p965zOHtzEmIOenUVUIE5lrmdv4KHhzKQ/mulOozwt+Y
- E10KiBk4Vf1Lg/deS1mqVs1ibxisXJUFpz/roDGvSTNWbx9fHzq+FL2mKSwK+E6MjwdyCPUo1
- a0VLiEfHdwMpBN2vN62HFB1RPcu5ua+EJ76T4/jC39bSruiYfw+8kZxG1ClSDZwSMCmWtMcG9
- zvt3NLj1d7WCxrH9rM+9CaxkeN+T8fxQ/W38uDc/Zi1HaJ+z12MPnV4OICRGqKnva3SFrRo1l
- 3upWEdP/HoV+PWX+JIz6MI9MJJxu7zFmt4jFl5c3gqXXMOZPqQL8WFrBdyS3pUv/WvGMlO8F4
- 7zt9s+q6sYcEeSdib7URgRhHphGOu9k5hWo3+HdFfrvNKB1EoLSpO30o+BmCE6Slob78fSx3T
- e1RySfCpx0dap0WdeoOXFgKoNQjXXUopp05CEpZsFM7GnplO8n/hP5MQDnIWIfe7mXuYyt/JG
- JgVZN95+/dRsF2NFG1AItzZtpIBTw/c1jr4lfYcyWlKmCmgXh/qQtQyBzzCS2aYNuyra4COUq
- +KOQ9ZuWL4nZWI=
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sebastian,
 
-On Thu, 6 Jan 2022, Imi Admin wrote:
+I am not sure whether I have sent the email repeatedly, because it is
+not shown on mailist. If so, sorry to bother you.
 
-> Here's my local git configuration:
->
-> PS C:\scripts> git config -l --show-origin
-> [...]
-> file:C:/Program Files/Git/etc/gitconfig	credential.helper=3Dmanager-core
-> file:C:/Program Files/Git/etc/gitconfig	credential.https://dev.azure.com=
-.usehttppath=3Dtrue
-> file:C:/Program Files/Git/etc/gitconfig	init.defaultbranch=3Dmaster
-> file:.git/config	core.repositoryformatversion=3D0
-> file:.git/config	core.filemode=3Dfalse
-> file:.git/config	core.bare=3Dfalse
-> file:.git/config	core.logallrefupdates=3Dtrue
-> file:.git/config	core.symlinks=3Dfalse
-> file:.git/config	core.ignorecase=3Dtrue
-> file:.git/config	remote.origin.url=3Dhttps://mygitlab.de/mygroup/myrepo.=
-git
-> file:.git/config	remote.origin.fetch=3D+refs/heads/*:refs/remotes/origin=
-/*
-> file:.git/config	branch.master.remote=3Dorigin
-> file:.git/config	branch.master.merge=3Drefs/heads/master
-> file:.git/config	user.name=3Dmyname
-> file:.git/config	user.email=3Dmy@email
-> file:.git/config	credential.helper=3Dstore --file C:/scripts/.git/.git-c=
-redentials
->
-> [...]
->
-> Anyway as far as i understood git should not exec git-credential-manager=
--core
-> get at all with my local git configuration?
+Johannes Schindelin writes:
 
-You need one additional thing to make that happen. As per
-https://git-scm.com/docs/git-config#Documentation/git-config.txt-credentia=
-lhelper:
+> Doing this in 9/9 is too late, by this time you already introduced the
+> code site that requires this workaround.
 
-	Note that multiple helpers may be defined. See gitcredentials[7]
-	for details and examples.
+Yes, you are correct.
+Will fixed if the patch is still remained to next one. 
 
-And in https://git-scm.com/docs/gitcredentials#_configuration_options, we
-read:
+> At the same time, I wonder why you want to defend spinning up the
+> full-blown `printf()` machinery just to pad text that you can easily pad
+> yourself. It sounds like a lot of trouble to me to introduce this patch
+> and then use an uncommon method to pad a fixed string at runtime. Too much
+> trouble for my liking.
 
-	If there are multiple instances of the credential.helper
-	configuration variable, each helper will be tried in turn, and may
-	provide a username, password, or nothing. Once Git has acquired
-	both a username and a password, no more helpers will be tried.
+I may not have explained it clearly in the cover. Sorry for that, I'm going
+to explain some more here, please correct me if there is something wrong or
+the method is not recommended or is not best practice in community.
 
-	If credential.helper is configured to the empty string, this
-	resets the helper list to empty (so you may override a helper set
-	by a lower-priority config file by configuring the empty-string
-	helper, followed by whatever set of helpers you would like).
+Firstly, the patch needs to be introduced I think and it has nothing to do
+with using "      -" or "%7s" here, because the fix recommandation is not
+accurate in terms of the "static-analysis" report if someone just uses the
+"addf" api:
 
-So you need to insert a line "helper =3D` (with an empty value) in your
-.git/config's `[credential]` section:
+-               strbuf_addf(line, "%7s", "-");
++               strbuf_addstr(line, "-");
 
-	[credential]
-		# reset 'credential.helper' list
-		helper =3D
-		helper =3D "store --file C:/scripts/.git/.git-credentials"
+They have different execution results and bring confusion to people. 
 
-Ciao,
-Johannes
+Then secondly, about the using "strbuf_addf(line, "%7s" , "-");" or
+"strbuf_addstr(line, "      -");". I think you prefer the later and I prefer
+the former, right? (I'm not a native English speaker, so I just want to make
+sure I understand whole your meannings).
+
+If I understand everything correctly so far, it's good :)
+
+As I metioned in a previous reply [1], I think there is no performance
+issue here..
+
+Why I prefer more of the former that is because, for the single line,
+it's more readable I think. Maybe it's not going to modify very often,
+but If someone want to know what this is, might have to do a count. So
+I don't think this is any more readable than "%7s".
+
+Here's what I think and looking forward to your reply.
+
+Thanks.
+
+
+[1] https://public-inbox.org/git/CADMgQSRxko6nC0zfDiVVfL2ZkdQVbBq0s59Er+6Nmg9vz4uJKQ@mail.gmail.com/
