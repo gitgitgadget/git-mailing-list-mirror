@@ -2,274 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3DD9C433F5
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 20:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C49A6C433F5
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 20:39:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240342AbiAJUi3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 15:38:29 -0500
-Received: from mail-eopbgr1380073.outbound.protection.outlook.com ([40.107.138.73]:8480
-        "EHLO IND01-MA1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S239773AbiAJUi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 15:38:28 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Jam8TjDvD1RZISN/tgQnc/yViPQzaurnoEM1LDY6mCtUy4s3KtH426ZeRIt63TIDlWEC2V0mTK0FkLo2jhqnjCFTDh1TY97FgQTIkFVGKt7BaKbQkaBRTF8BqdFPulQVlGjmZ0tV3fkMi4eFTWbxXdHO+gFjyur/SbqVeauOEa34vOHqlySM/3eWU8g+M5dDVjMz6dHiEhCbnPUx4EaiMcMUwm5zy3dwBOkk6G1b58hFn3li0lTO3UiPum+gun7tCUOef1j1AV99RpylZnyLXbr/T69NTe4Ko98WaejqGeGSwbrJksaKdDVZFuMmTTj//WU3uTvtQIHZKDUZhKshtw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Z3DPwPkya6YfK4z5pbMHocwxQL1Hf8dfyFa4EbG5LA8=;
- b=RNgGqOLwVLPn81h8USYyxw6yqI0PX3BjGkyAmHKt4iZ9Q0KcH3co+fWXzgO9vh2IXlRzMaUVbY/w9t4pmNVi+kkY7nUJpon4sTO4/8WUYJ2euWjBTvyLZ2QPDv2MBjrWrQG+uQ64NNFE8F6gLmv7gKyZ05W9Xs3kFinVeLX+W9Z6Mk3wVFoJb5LS/P3ERnR3uyf4AGrkWDcvgUaftpuy9gnsIRdyEawDc8nM1hLg0HA7/ZVRDayW3KunpWYRPCfbjYGpFrQCk8sCLmBGvz+G7v366SCAwEJoW/M2o6R0ac3DzkjCSHPFUIKWMRlk2tecR7C57njsuobT2h1qMhaY0g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=24xdb.com; dmarc=pass action=none header.from=24xdb.com;
- dkim=pass header.d=24xdb.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=24xdb.com;
-Received: from MA0PR01MB6922.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:1e::14)
- by MA1PR01MB4371.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:14::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4867.10; Mon, 10 Jan
- 2022 20:38:26 +0000
-Received: from MA0PR01MB6922.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::a02e:d980:e254:8c0c]) by MA0PR01MB6922.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::a02e:d980:e254:8c0c%4]) with mapi id 15.20.4867.011; Mon, 10 Jan 2022
- 20:38:26 +0000
-Content-Type: application/ms-tnef; name="winmail.dat"
-Content-Transfer-Encoding: base64
-From:   Hailey Michelle <hailey.michelle@24xdb.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Red Hat Software Customers List.
-Thread-Topic: Red Hat Software Customers List.
-Thread-Index: AdgGYP9Z1MvBVwI8QDiLzqMUlMtCmg==
-Date:   Mon, 10 Jan 2022 20:31:42 +0000
-Message-ID: <MA0PR01MB6922ED2A52EF48787C849856FC509@MA0PR01MB6922.INDPRD01.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: <MA0PR01MB6922ED2A52EF48787C849856FC509@MA0PR01MB6922.INDPRD01.PROD.OUTLOOK.COM>
+        id S240243AbiAJUjH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 15:39:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35958 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234477AbiAJUjG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 15:39:06 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A59AC06173F
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 12:39:06 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id z22so13473027edd.12
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 12:39:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KOcSFfyCLCJmD0O6378xdWXyknspiJAnoZ/H6KWkwHA=;
+        b=Wf2IXdRHrvy1DQdGUvb7HJY43Q/Bnez3/uYQMk6IfTH4MqoYXGSSA8KkyTNUbNOlzp
+         NuLIxFW/h+WZf60AdZ0r8jsv4ciXBJtwvYZWwuRWH1cLGpRlDDBLRbBqXONFf7m7fLTo
+         dQOj7WyM27L7Q5lRUvupT4KvLOOUy5En2BTYTAWC5L0ur8Idc6WoWzutot4xEdUPQYMI
+         uKKZeL6sXxm5dFm1Czf+nRmfb46XoGwyyVMogceKYd+ZKV3VErAPHnxboPYszO+m5pZG
+         fEJ6/NP+k+exr/DR5JtG13vAXYOmBjGKfJltMex4e3/mDdS0WAeJvNEysfWoqbh0w4da
+         0sHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KOcSFfyCLCJmD0O6378xdWXyknspiJAnoZ/H6KWkwHA=;
+        b=lac+h8zVTbEutNhwUQUZp5B4p8d9OQFWCycFIyTRfXDoLKCBg9pD61xYD1Gf+14TuC
+         OkKi9dQbV3piLJslW04M1T7UDtuZSsAAQb0Y0rc5cNXDWg55y6OiXO2lqFeW4UoAvyx7
+         xRQs7ia7WUipY+afSDnQeYvTdBwVviiZ0KKEmWeSNS/f8lCYhqSVRBSihtJCzGj0MmRz
+         gcUxbwhZbmtLABS10n0fHSGApIqqvdiRctYOyTRGo7/tYREW9LEx4ZlccXmCnxdQCJfs
+         SwjrN7TTAuwFFWsmNB390dcOyHrK+GkzytJOHceH/IPK+JKgnaF1IUv3/18u14N0pyzl
+         yvtQ==
+X-Gm-Message-State: AOAM533K7geTjh8ezqBWnkPFjx0EHwp56VZy6IOFEH6jB13suYWXB4J2
+        +yuToOswU2ER2vHwfvoGMYnmtmFsIlbLd0RCGMVcSz8f//M=
+X-Google-Smtp-Source: ABdhPJwp+QMxcuHGb0ugRGC7st3pvxBcd5umYFS/wwLMSyyfc8W3AVo5wIudZmkydruf9vFd0iveMEY+Nofi9kE/0jA=
+X-Received: by 2002:a50:da48:: with SMTP id a8mr1349137edk.146.1641847144907;
+ Mon, 10 Jan 2022 12:39:04 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 873cceaa-49a4-4cf8-1222-08d9d4792734
-X-MS-TrafficTypeDiagnostic: MA1PR01MB4371:EE_
-X-Microsoft-Antispam-PRVS: <MA1PR01MB437135A0A612340AC92E8F64FC509@MA1PR01MB4371.INDPRD01.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1728;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: xFx091NNTZFxcL8jkXL9egp4N5ygB3blRYjG+hjcmy62IRqORgeL7/KXJUd2GLmfS/k4z/AEl/UjXXtUkqNyj82wIqHpFyaEFeuVKQ9CM2UC/ti3LNw302Q8G1Q4t2B9YvQ9qWO7BrF4WLVhF2ky3ISrJNbo5Ca6O7c+5hvq8Rb1ZrC10xD4Mv6ig+8gJdqNYJ2d5WYRqwOzu1h7zYJZosZ3sxfBuvOMxCTJthfpts5K/Jd5uDAWguwHosqB1tH2VaaUsAOlquskcY+qEc0d3obkQR4gbDlny0xGl96SMxjQormjwgcpxt8CdFoUg9bBLAzbNmD091cVVXoi5sU+FMZzJrKo68ludnXQgP+pJ5DHZtVpLMxZflIQwDda3qbv
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MA0PR01MB6922.INDPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(366004)(38100700002)(66476007)(7696005)(6506007)(186003)(122000001)(26005)(86362001)(8676002)(8936002)(66446008)(73894004)(621065003)(2906002)(55016003)(66946007)(64756008)(9686003)(508600001)(316002)(4270600006)(52536014)(88996005)(33656002)(71200400001)(44832011)(66556008)(6666004)(6916009);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?I7KLS4HFP2DN+FN6aVpcYls7A9lRL9yICpi+Ugc8kjfspLWf9Ufze6IcXeeA?=
- =?us-ascii?Q?4L7xOtr7udnfDHlg8qvDT811EebKK5qtS2N/hRnzzvtVxLluX+PQ3RSCk0p0?=
- =?us-ascii?Q?Ogl0QEfhCdDWm+FXSosL148YH8ABSJCiXcBiiqO///uGOdp09ipL6tGJdgMy?=
- =?us-ascii?Q?SSonrgg5V6EIPQ1M5fBSmZ7VEVa9otrJVk4WH3E2CCRdFTyw9gu829g+fpXj?=
- =?us-ascii?Q?ObbpoD1wmmDCcrc8kW/9LR8SGU1Syets/BPPEZFWGqCRWCxTJlU4/jam9KqJ?=
- =?us-ascii?Q?FLkTxVmftQImF8arH80bXRZ5J5GIcefTUTENzO2zZzYWHUW+UCAdAWnzlE2f?=
- =?us-ascii?Q?zsT4XKNEcUxxiIgG0CHdPFw8Uh/QWGMCa+Vbd9FxgzpZmOg27+Pr/D6U3eSo?=
- =?us-ascii?Q?tlAefEjJ/w03SveuDg0rhjeQ52vc2RyFmU/MenU7+v01XwBiQGI3inWCxKZe?=
- =?us-ascii?Q?r67jD8FGDnsfeon1k4vR1a9oEjYIK/OpAjM7xDjKgjp3wpGR8mQpJrWJm71k?=
- =?us-ascii?Q?KalYv+HoiqG4kV8a8imXk684oGN6aUqEzWqKQZJQxMHnjzaC5/H8t+BYAZXT?=
- =?us-ascii?Q?quU7tLZTup571kH1nkthowQ8lvGuIIVtUTiqWFIUNHLzIPdj5o3xy0qySP3F?=
- =?us-ascii?Q?X3odIRMjWxIee36aL+5OETCntv8X4/51Dimr6i0rHlDInUhqoF1ca3LwFUmY?=
- =?us-ascii?Q?608/8/nKhAhACWiWv4duMpOQnzCaZjVxGTgF3ZzPqMKWSSBNbYeLE1W3LiL0?=
- =?us-ascii?Q?X8bwTg9QNT35vgxOGuYtqCBkGB0Ivejlz56dJXutby/5JvPXnERRFFKOUYra?=
- =?us-ascii?Q?PuOi0p38CXMxJ+VHsZczb0FNaMKjdgbqTv3NP7xEWwGgoG/05cSPn7yqjUfn?=
- =?us-ascii?Q?BePwAQsCSNgSOw1UD06cDFoagxcEm6ySVJj08bpo9RTMCaGP8Ky2q8fMELUC?=
- =?us-ascii?Q?Vw1sPEOAOIhCQmCDcGoV0oKOxSvuDv3bdB76VAr/DQKAlKn+xW63pHqtF730?=
- =?us-ascii?Q?2HOAmwc2NZind4Q+PyXxOU0XewGtINtLo2+ep0oQxKTYslioiHTOAEJTWNV1?=
- =?us-ascii?Q?ulwA+U7ols2ww3XSIn7y/5QaCVNBclceLx+lNCZXD4M7LICqvJOtbQvH0ftS?=
- =?us-ascii?Q?dpHXdzip6/L7Dxwd9JrC6ZdEywU9QKUoD+1XQ31MFEu18r4I9+YSgqH4+YIy?=
- =?us-ascii?Q?AgIZEdhnc9rUW99OQQQv/eWOQ9ScXe+dtbq6AtsI5o4tiga8Qlbnp+/P2QeV?=
- =?us-ascii?Q?sUqEdN0o5D5ypC/Pl8fs/++PMIaZVxWXWKkmYFdLs81IubJGQFTfG6u3xmYN?=
- =?us-ascii?Q?rurzSCDJAbEzPD+ZC6daF2SsyI+4zjOc5ZxqDvwos+ux5EGNLV9PRv4Tv/Xa?=
- =?us-ascii?Q?NVaWC/IqhurW8b7ENyrSckrkcc/OQM8M4NG0seUSQw4/5REV6jq098Eq6dZj?=
- =?us-ascii?Q?xuVkaP6dnzJvFMo01nDjazyuZ2Xf7AWGhDgyw8s/KwrQiOucaR/hiKsMPW15?=
- =?us-ascii?Q?etKdjumzbnxfYDtUfEgp3Eprf/geWDzaI6O7kDfmOcnsJjVz1n93D6z70o1V?=
- =?us-ascii?Q?AY8iPDzNnd74u5KylgomRNdePKRPLTK8a3mPdCj8V9Cjsm6eOJV8P3taU/B5?=
- =?us-ascii?Q?hCEL1yZP6dyCCl2URDvcAUoT2Uy82TNJn/M36/EM2gxYO5nR63IGFTkeo7AU?=
- =?us-ascii?Q?MMAF+Q=3D=3D?=
-X-OriginatorOrg: 24xdb.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jan 2022 20:31:42.1385
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: f170e257-cac5-483e-a9e9-2dd089fef4cf
-X-MS-Exchange-CrossTenant-AuthSource: MA0PR01MB6922.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-Network-Message-Id: 873cceaa-49a4-4cf8-1222-08d9d4792734
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Be+vC0PRqyvCM2LBz7FBB/iUwypWudhO0VzGxYvqYyAFrNyEfRtUVRFTU63HgUueU4BH5CJAd/H+09Vn+sOAdfgOuoO914Hhk/NtATwQSZY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA1PR01MB4371
+References: <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com> <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 10 Jan 2022 12:38:53 -0800
+Message-ID: <CABPp-BG=wr81CPtW1M12xFN_0dyS8mAZjM6o=77LA20Zge8Xng@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] sparse checkout: custom bash completion updates
+To:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        johannes.schindelin@gmail.com,
+        Lessley Dennington <lessleydennington@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-eJ8+IsFXAQaQCAAEAAAAAAABAAEAAQeQBgAIAAAA5AQAAAAAAADoAAEJgAEAIQAAADZBRkYyRUVB
-NTgwRkVCNDhBODE0MDJGODVCNTc5NjQ5AFMHAQ2ABAACAAAAAgACAAEFgAMADgAAAOYHAQAKABQA
-HwAqAAEAVgEBIIADAA4AAADmBwEACgAUAB8AKgABAFYBAQSQBgAIAgAAAQAAABEAAAADABUMAQAA
-AB8AATABAAAAKAAAAGcAaQB0AEAAdgBnAGUAcgAuAGsAZQByAG4AZQBsAC4AbwByAGcAAAAfAAMw
-AQAAACgAAABnAGkAdABAAHYAZwBlAHIALgBrAGUAcgBuAGUAbAAuAG8AcgBnAAAAHwACMAEAAAAK
-AAAAUwBNAFQAUAAAAAAAAgH3XwEAAAByAAAAAAAAAIErH6S+oxAZnW4A3QEPVAIAAAGAZwBpAHQA
-QAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwAAAFMATQBUAFAAAABnAGkAdABAAHYAZwBl
-AHIALgBrAGUAcgBuAGUAbAAuAG8AcgBnAAAAAAAfAP45AQAAACgAAABnAGkAdABAAHYAZwBlAHIA
-LgBrAGUAcgBuAGUAbAAuAG8AcgBnAAAAHwAgOgEAAAAoAAAAZwBpAHQAQAB2AGcAZQByAC4AawBl
-AHIAbgBlAGwALgBvAHIAZwAAAAMAADkAAAAAAwD+DwYAAAALAEA6AAAAAAMAcToAAAAAAgEBPQEA
-AAAQAAAArCKKi+AGakyaFFm2d1PDYQMA3l8AAAAAAwDfXwAAAAAfAPZfAQAAACgAAABnAGkAdABA
-AHYAZwBlAHIALgBrAGUAcgBuAGUAbAAuAG8AcgBnAAAAAwD9XwEAAAADAP9fAAAAAC9SAQOQBgA8
-IwAAVQAAAAIBfwABAAAAUQAAADxNQTBQUjAxTUI2OTIyRUQyQTUyRUY0ODc4N0M4NDk4NTZGQzUw
-OUBNQTBQUjAxTUI2OTIyLklORFBSRDAxLlBST0QuT1VUTE9PSy5DT00+AAAAAAIBExABAAAAfQ8A
-ADxodG1sIHhtbG5zOnY9InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206dm1sIiB4bWxuczpvPSJ1
-cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTpvZmZpY2UiIHhtbG5zOnc9InVybjpzY2hl
-bWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOndvcmQiIHhtbG5zOm09Imh0dHA6Ly9zY2hlbWFzLm1p
-Y3Jvc29mdC5jb20vb2ZmaWNlLzIwMDQvMTIvb21tbCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3Jn
-L1RSL1JFQy1odG1sNDAiPjxoZWFkPjxNRVRBIEhUVFAtRVFVSVY9IkNvbnRlbnQtVHlwZSIgQ09O
-VEVOVD0idGV4dC9odG1sOyBjaGFyc2V0PXVzLWFzY2lpIj48bWV0YSBuYW1lPUdlbmVyYXRvciBj
-b250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQgbWVkaXVtKSI+PHN0eWxlPjwhLS0N
-Ci8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IkNhbWJy
-aWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1mYWNlDQoJ
-e2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAyIDQ7fQ0K
-LyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWwsIGRpdi5N
-c29Ob3JtYWwNCgl7bWFyZ2luLXRvcDowaW47DQoJbWFyZ2luLXJpZ2h0OjBpbjsNCgltYXJnaW4t
-Ym90dG9tOjguMHB0Ow0KCW1hcmdpbi1sZWZ0OjBpbjsNCglsaW5lLWhlaWdodDoxMDclOw0KCWZv
-bnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLCJzYW5zLXNlcmlmIjt9DQpw
-Lk1zb05vU3BhY2luZywgbGkuTXNvTm9TcGFjaW5nLCBkaXYuTXNvTm9TcGFjaW5nDQoJe21zby1z
-dHlsZS1wcmlvcml0eToxOw0KCW1zby1zdHlsZS1saW5rOiJObyBTcGFjaW5nIENoYXIiOw0KCW1h
-cmdpbjowaW47DQoJbWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJ
-Zm9udC1mYW1pbHk6IkNhbGlicmkiLCJzYW5zLXNlcmlmIjt9DQpzcGFuLk5vU3BhY2luZ0NoYXIN
-Cgl7bXNvLXN0eWxlLW5hbWU6Ik5vIFNwYWNpbmcgQ2hhciI7DQoJbXNvLXN0eWxlLXByaW9yaXR5
-OjE7DQoJbXNvLXN0eWxlLWxpbms6Ik5vIFNwYWNpbmciO30NCi5Nc29DaHBEZWZhdWx0DQoJe21z
-by1zdHlsZS10eXBlOmV4cG9ydC1vbmx5O30NCi5Nc29QYXBEZWZhdWx0DQoJe21zby1zdHlsZS10
-eXBlOmV4cG9ydC1vbmx5Ow0KCW1hcmdpbi1ib3R0b206OC4wcHQ7DQoJbGluZS1oZWlnaHQ6MTA3
-JTt9DQpAcGFnZSBXb3JkU2VjdGlvbjENCgl7c2l6ZTo4LjVpbiAxMS4waW47DQoJbWFyZ2luOjEu
-MGluIDEuMGluIDEuMGluIDEuMGluO30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3JkU2Vj
-dGlvbjE7fQ0KLS0+PC9zdHlsZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlZGVm
-YXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48IVtlbmRpZl0tLT48
-IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0Ij4NCjxv
-OmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5b3V0PjwveG1sPjwh
-W2VuZGlmXS0tPjwvaGVhZD48Ym9keSBsYW5nPUVOLVVTPjxkaXYgY2xhc3M9V29yZFNlY3Rpb24x
-PjxwIGNsYXNzPU1zb05vU3BhY2luZz48c3BhbiBzdHlsZT0nY29sb3I6IzFGNEU3OSc+PG86cD4m
-bmJzcDs8L286cD48L3NwYW4+PC9wPjxwIGNsYXNzPU1zb05vU3BhY2luZz48c3BhbiBzdHlsZT0n
-Y29sb3I6IzFGNEU3OSc+IEhpLDxvOnA+PC9vOnA+PC9zcGFuPjwvcD48cCBjbGFzcz1Nc29Ob1Nw
-YWNpbmc+PHNwYW4gc3R5bGU9J2NvbG9yOiMxRjRFNzknPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFu
-PjwvcD48cCBjbGFzcz1Nc29Ob1NwYWNpbmc+PHNwYW4gc3R5bGU9J2NvbG9yOiMxRjRFNzknPiZu
-YnNwO0hvcGUgeW91IGFyZSBkb2luZyB3ZWxsLiZuYnNwOzxvOnA+PC9vOnA+PC9zcGFuPjwvcD48
-cCBjbGFzcz1Nc29Ob1NwYWNpbmc+PHNwYW4gc3R5bGU9J2NvbG9yOiMxRjRFNzknPjxvOnA+Jm5i
-c3A7PC9vOnA+PC9zcGFuPjwvcD48cCBjbGFzcz1Nc29Ob1NwYWNpbmc+PHNwYW4gc3R5bGU9J2Nv
-bG9yOiMxRjRFNzknPldpc2ggeW91IGdldCBhbGwgdGhlIHN1Y2Nlc3MgdGhpcyB5ZWFyLiBIb3Bl
-IHRoYXQgam95IGFuZCBzdWNjZXNzIGZvbGxvdyB5b3UgaW4gZXZlcnkgc2VjdG9yIG9mIGxpZmUu
-IEhhcHB5IE5ldyBZZWFyIDIwMjIhPG86cD48L286cD48L3NwYW4+PC9wPjxwIGNsYXNzPU1zb05v
-U3BhY2luZz48c3BhbiBzdHlsZT0nY29sb3I6IzFGNEU3OSc+PG86cD4mbmJzcDs8L286cD48L3Nw
-YW4+PC9wPjxwIGNsYXNzPU1zb05vU3BhY2luZz48c3BhbiBzdHlsZT0nY29sb3I6IzFGNEU3OSc+
-QXJlIHlvdSBsb29raW5nIGZvciA8Yj5SZWQgSGF0IFNvZnR3YXJlIEN1c3RvbWVyczwvYj4mbmJz
-cDt3aXRoIGVtYWlsLCBwaG9uZSBhbmQgY29tcGxldGUgZGV0YWlscz8mbmJzcDs8bzpwPjwvbzpw
-Pjwvc3Bhbj48L3A+PHAgY2xhc3M9TXNvTm9TcGFjaW5nPjxzcGFuIHN0eWxlPSdjb2xvcjojMUY0
-RTc5Jz48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+PHAgY2xhc3M9TXNvTm9TcGFjaW5nPjxz
-cGFuIHN0eWxlPSdjb2xvcjojMUY0RTc5Jz5MZXQgbWUga25vdyB5b3VyIGdlb2dyYXBoeSBzbyB0
-aGF0IEkgY2FuIGdldCBiYWNrIHdpdGggY291bnRzLCBwcmljaW5nIGFuZCBtb3JlIGluZm9ybWF0
-aW9uIG9uIHlvdXIgaW50ZXJlc3QuJm5ic3A7PG86cD48L286cD48L3NwYW4+PC9wPjxwIGNsYXNz
-PU1zb05vU3BhY2luZz48c3BhbiBzdHlsZT0nY29sb3I6IzFGNEU3OSc+PG86cD4mbmJzcDs8L286
-cD48L3NwYW4+PC9wPjxwIGNsYXNzPU1zb05vU3BhY2luZz48c3BhbiBzdHlsZT0nY29sb3I6IzFG
-NEU3OTtiYWNrZ3JvdW5kOndoaXRlJz5JZiA8Yj5SZWQgSGF0IFNvZnR3YXJlPC9iPjwvc3Bhbj48
-Yj48c3BhbiBzdHlsZT0nY29sb3I6IzFGNEU3OSc+IEN1c3RvbWVyczwvc3Bhbj48L2I+PHNwYW4g
-c3R5bGU9J2NvbG9yOiMxRjRFNzknPiZuYnNwOzxzcGFuIHN0eWxlPSdiYWNrZ3JvdW5kOndoaXRl
-Jz5hcmUgbm90IGFwcGxpY2FibGUgdG8geW91LCBwbGVhc2UgcmVzcG9uZCB3aXRoIHlvdXIgc3Bl
-Y2lmaWMgY3JpdGVyaWEgYW5kIHRoZSBlbnRlcnByaXNlcyB5b3UnZCBwcmVmZXIgdG8gZm9jdXMg
-b24gaW4geW91ciBhZHZlcnRpc2luZyBlZmZvcnQuIFdlIGhhdmUgYWxsIGtpbmRzIG9mIG1hcmtl
-dGluZyBpbmZvcm1hdGlvbiBhdmFpbGFibGUuPC9zcGFuPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD48
-cCBjbGFzcz1Nc29Ob1NwYWNpbmc+PHNwYW4gc3R5bGU9J2NvbG9yOiMxRjRFNzknPjxvOnA+Jm5i
-c3A7PC9vOnA+PC9zcGFuPjwvcD48cCBjbGFzcz1Nc29Ob1NwYWNpbmc+PHNwYW4gc3R5bGU9J2Nv
-bG9yOiMxRjRFNzknPkJlc3QgUmVnYXJkcyw8bzpwPjwvbzpwPjwvc3Bhbj48L3A+PHAgY2xhc3M9
-TXNvTm9TcGFjaW5nPjxiPjxzcGFuIHN0eWxlPSdjb2xvcjojMUY0RTc5Jz5IYWlsZXkgTWljaGVs
-bGU8bzpwPjwvbzpwPjwvc3Bhbj48L2I+PC9wPjxwIGNsYXNzPU1zb05vU3BhY2luZz48Yj48c3Bh
-biBzdHlsZT0nY29sb3I6IzFGNEU3OSc+RGVtYW5kIEdlbmVyYXRpb248L3NwYW4+PC9iPjxzcGFu
-IHN0eWxlPSdjb2xvcjojMUY0RTc5Jz48bzpwPjwvbzpwPjwvc3Bhbj48L3A+PHAgY2xhc3M9TXNv
-Tm9TcGFjaW5nPjxzcGFuIHN0eWxlPSdjb2xvcjpibGFjayc+PG86cD4mbmJzcDs8L286cD48L3Nw
-YW4+PC9wPjxwIGNsYXNzPU1zb05vU3BhY2luZz48c3BhbiBzdHlsZT0nY29sb3I6YmxhY2snPiZu
-YnNwOzwvc3Bhbj48c3BhbiBzdHlsZT0nY29sb3I6I0I0QzZFNyc+VG8gb3B0IG91dCwgcGxlYXNl
-IHJlc3BvbnNlIE91dHMuPC9zcGFuPjxzcGFuIHN0eWxlPSdjb2xvcjpibGFjayc+PG86cD48L286
-cD48L3NwYW4+PC9wPjwvZGl2PjwvYm9keT48L2h0bWw+AAAAHwBCAAEAAAAgAAAASABhAGkAbABl
-AHkAIABNAGkAYwBoAGUAbABsAGUAAAAfAGUAAQAAADQAAABoAGEAaQBsAGUAeQAuAG0AaQBjAGgA
-ZQBsAGwAZQBAADIANAB4AGQAYgAuAGMAbwBtAAAAHwBkAAEAAAAKAAAAUwBNAFQAUAAAAAAAAgFB
-AAEAAAB2AAAAAAAAAIErH6S+oxAZnW4A3QEPVAIAAACASABhAGkAbABlAHkAIABNAGkAYwBoAGUA
-bABsAGUAAABTAE0AVABQAAAAaABhAGkAbABlAHkALgBtAGkAYwBoAGUAbABsAGUAQAAyADQAeABk
-AGIALgBjAG8AbQAAAAAAHwAaDAEAAAAgAAAASABhAGkAbABlAHkAIABNAGkAYwBoAGUAbABsAGUA
-AAAfAB8MAQAAADQAAABoAGEAaQBsAGUAeQAuAG0AaQBjAGgAZQBsAGwAZQBAADIANAB4AGQAYgAu
-AGMAbwBtAAAAHwAeDAEAAAAKAAAAUwBNAFQAUAAAAAAAAgEZDAEAAAB2AAAAAAAAAIErH6S+oxAZ
-nW4A3QEPVAIAAACASABhAGkAbABlAHkAIABNAGkAYwBoAGUAbABsAGUAAABTAE0AVABQAAAAaABh
-AGkAbABlAHkALgBtAGkAYwBoAGUAbABsAGUAQAAyADQAeABkAGIALgBjAG8AbQAAAAAAHwACXQEA
-AAA0AAAAaABhAGkAbABlAHkALgBtAGkAYwBoAGUAbABsAGUAQAAyADQAeABkAGIALgBjAG8AbQAA
-AB8A5V8BAAAABAAAACAAAAALAEA6AQAAAB8AAV0BAAAANAAAAGgAYQBpAGwAZQB5AC4AbQBpAGMA
-aABlAGwAbABlAEAAMgA0AHgAZABiAC4AYwBvAG0AAAALAAIAAQAAAAMAFwABAAAAHwAaAAEAAAAS
-AAAASQBQAE0ALgBOAG8AdABlAAAAAAALACMAAQAAAAMAJgAAAAAACwApAAEAAAACATEAAQAAAGQA
-AABQQ0RGRUIwOQABAAIAAAAAAAAAAAAAAAAALgAAAAAAAAAJRJ7eJRGXR7mV0nUuj/6fAQDbyrv2
-TVAhQpqfsxTqrowMAAAAAAEJAAAQAAAAav8u6lgP60ioFAL4W1eWSQEAAAAAAwA2AAAAAABAADkA
-hQ3NE2EG2AEfAHAAAQAAAEIAAABSAGUAZAAgAEgAYQB0ACAAUwBvAGYAdAB3AGEAcgBlACAAQwB1
-AHMAdABvAG0AZQByAHMAIABMAGkAcwB0AC4AAAAAAAIBcQABAAAAFgAAAAHYBmD/WdTLwVcCPEA4
-i86jFJTLQpoAAAsABgwBAAAAHwA1EAEAAACiAAAAPABNAEEAMABQAFIAMAAxAE0AQgA2ADkAMgAy
-AEUARAAyAEEANQAyAEUARgA0ADgANwA4ADcAQwA4ADQAOQA4ADUANgBGAEMANQAwADkAQABNAEEA
-MABQAFIAMAAxAE0AQgA2ADkAMgAyAC4ASQBOAEQAUABSAEQAMAAxAC4AUABSAE8ARAAuAE8AVQBU
-AEwATwBPAEsALgBDAE8ATQA+AAAAAAADAIAQ/////wMAExIAAAAAQAAHMJBJyBNhBtgBQAAIMIgN
-zRNhBtgBAgELMAEAAAAQAAAAav8u6lgP60ioFAL4W1eWSQIBEDABAAAARgAAAAAAAAAJRJ7eJRGX
-R7mV0nUuj/6fBwDbyrv2TVAhQpqfsxTqrowMAAAAAAELAADbyrv2TVAhQpqfsxTqrowMAABzsLJi
-AAAAAAIBEzABAAAAEAAAANTLwVcCPEA4i86jFJTLQpoCARQwAQAAAAwAAABwAAAAdit+O8pG2QID
-AFszAQAAAAMAWjYAAAAAAwBoNg0AAAALAPo2AQAAAB8A2T8BAAAA+AEAAEgAaQAsAA0ACgANAAoA
-DQAKAA0ACgAgAEgAbwBwAGUAIAB5AG8AdQAgAGEAcgBlACAAZABvAGkAbgBnACAAdwBlAGwAbAAu
-AA0ACgANAAoADQAKAA0ACgBXAGkAcwBoACAAeQBvAHUAIABnAGUAdAAgAGEAbABsACAAdABoAGUA
-IABzAHUAYwBjAGUAcwBzACAAdABoAGkAcwAgAHkAZQBhAHIALgAgAEgAbwBwAGUAIAB0AGgAYQB0
-ACAAagBvAHkAIABhAG4AZAAgAHMAdQBjAGMAZQBzAHMAIABmAG8AbABsAG8AdwAgAHkAbwB1ACAA
-aQBuACAAZQB2AGUAcgB5ACAAcwBlAGMAdABvAHIAIABvAGYAIABsAGkAZgBlAC4AIABIAGEAcABw
-AHkAIABOAGUAdwAgAFkAZQBhAHIAIAAyADAAMgAyACEADQAKAA0ACgANAAoADQAKAEEAcgBlACAA
-eQBvAHUAIABsAG8AbwBrAGkAbgBnACAAZgBvAHIAIABSAGUAZAAgAEgAYQB0ACAAUwBvAGYAdAB3
-AGEAcgBlACAAQwB1AHMAdABvAG0AZQByAHMAIAB3AGkAdABoACAAZQBtAGEAaQBsACwAIABwAGgA
-bwBuAGUAIABhAG4AZAAgAGMAbwBtAHAAbABlAHQAZQAAAAMA3j+fTgAAAwDxPwkEAAAfAPg/AQAA
-ACAAAABIAGEAaQBsAGUAeQAgAE0AaQBjAGgAZQBsAGwAZQAAAAIB+T8BAAAAnQAAAAAAAADcp0DI
-wEIQGrS5CAArL+GCAQAAAAAAAAAvTz1FWENIQU5HRUxBQlMvT1U9RVhDSEFOR0UgQURNSU5JU1RS
-QVRJVkUgR1JPVVAgKEZZRElCT0hGMjNTUERMVCkvQ049UkVDSVBJRU5UUy9DTj0wRDU4MzgwODc5
-MEI0OTA3QkM3OEY4MTg0RTEwNEMxOC1MWURJQS1HSUxCRQAAAAAfAPo/AQAAACAAAABIAGEAaQBs
-AGUAeQAgAE0AaQBjAGgAZQBsAGwAZQAAAAIB+z8BAAAAnQAAAAAAAADcp0DIwEIQGrS5CAArL+GC
-AQAAAAAAAAAvTz1FWENIQU5HRUxBQlMvT1U9RVhDSEFOR0UgQURNSU5JU1RSQVRJVkUgR1JPVVAg
-KEZZRElCT0hGMjNTUERMVCkvQ049UkVDSVBJRU5UUy9DTj0wRDU4MzgwODc5MEI0OTA3QkM3OEY4
-MTg0RTEwNEMxOC1MWURJQS1HSUxCRQAAAAADAP0/5AQAAB8AIkABAAAABgAAAEUAWAAAAAAAHwAj
-QAEAAAACAQAALwBPAD0ARQBYAEMASABBAE4ARwBFAEwAQQBCAFMALwBPAFUAPQBFAFgAQwBIAEEA
-TgBHAEUAIABBAEQATQBJAE4ASQBTAFQAUgBBAFQASQBWAEUAIABHAFIATwBVAFAAIAAoAEYAWQBE
-AEkAQgBPAEgARgAyADMAUwBQAEQATABUACkALwBDAE4APQBSAEUAQwBJAFAASQBFAE4AVABTAC8A
-QwBOAD0AMABEADUAOAAzADgAMAA4ADcAOQAwAEIANAA5ADAANwBCAEMANwA4AEYAOAAxADgANABF
-ADEAMAA0AEMAMQA4AC0ATABZAEQASQBBAC0ARwBJAEwAQgBFAAAAAAAfACRAAQAAAAYAAABFAFgA
-AAAAAB8AJUABAAAAAgEAAC8ATwA9AEUAWABDAEgAQQBOAEcARQBMAEEAQgBTAC8ATwBVAD0ARQBY
-AEMASABBAE4ARwBFACAAQQBEAE0ASQBOAEkAUwBUAFIAQQBUAEkAVgBFACAARwBSAE8AVQBQACAA
-KABGAFkARABJAEIATwBIAEYAMgAzAFMAUABEAEwAVAApAC8AQwBOAD0AUgBFAEMASQBQAEkARQBO
-AFQAUwAvAEMATgA9ADAARAA1ADgAMwA4ADAAOAA3ADkAMABCADQAOQAwADcAQgBDADcAOABGADgA
-MQA4ADQARQAxADAANABDADEAOAAtAEwAWQBEAEkAQQAtAEcASQBMAEIARQAAAAAAHwAwQAEAAAAg
-AAAASABhAGkAbABlAHkAIABNAGkAYwBoAGUAbABsAGUAAAAfADFAAQAAACAAAABIAGEAaQBsAGUA
-eQAgAE0AaQBjAGgAZQBsAGwAZQAAAB8AOEABAAAAIAAAAEgAYQBpAGwAZQB5ACAATQBpAGMAaABl
-AGwAbABlAAAAHwA5QAEAAAAgAAAASABhAGkAbABlAHkAIABNAGkAYwBoAGUAbABsAGUAAAADAFlA
-AAAAAAMAWkAAAAAAAwA3UAEAAAADAAJZAAAWAAMACVkCAAAAHwAKXQEAAAA0AAAAaABhAGkAbABl
-AHkALgBtAGkAYwBoAGUAbABsAGUAQAAyADQAeABkAGIALgBjAG8AbQAAAB8AC10BAAAANAAAAGgA
-YQBpAGwAZQB5AC4AbQBpAGMAaABlAGwAbABlAEAAMgA0AHgAZABiAC4AYwBvAG0AAAACARVdAQAA
-ABIAAAACV+Jw8cXKPkip6S3Qif70zwEAAAIBFl0BAAAAEgAAAAJX4nDxxco+SKnpLdCJ/vTPAQAA
-CwAAgAggBgAAAAAAwAAAAAAAAEYAAAAAFIUAAAAAAAADAACAUONjC8yc0BG82wCAX8zOBAEAAAAk
-AAAASQBuAGQAZQB4AGkAbgBnAEUAcgByAG8AcgBDAG8AZABlAAAAGwAAAB8AAIBQ42MLzJzQEbzb
-AIBfzM4EAQAAACoAAABJAG4AZABlAHgAaQBuAGcARQByAHIAbwByAE0AZQBzAHMAYQBnAGUAAAAA
-AAEAAABwAAAASQBuAGQAZQB4AGkAbgBnACAAUABlAG4AZABpAG4AZwAgAHcAaABpAGwAZQAgAEIA
-aQBnAEYAdQBuAG4AZQBsAFAATwBJAEkAcwBVAHAAVABvAEQAYQB0AGUAIABpAHMAIABmAGEAbABz
-AGUALgAAAAsAAIBQ42MLzJzQEbzbAIBfzM4EAQAAACYAAABJAHMAUABlAHIAbQBhAG4AZQBuAHQA
-RgBhAGkAbAB1AHIAZQAAAAAAAAAAAAsAAIAIIAYAAAAAAMAAAAAAAABGAAAAAAaFAAAAAAAACwAA
-gAggBgAAAAAAwAAAAAAAAEYAAAAAA4UAAAAAAAADAACACCAGAAAAAADAAAAAAAAARgAAAAABhQAA
-AAAAAAMAAIAIIAYAAAAAAMAAAAAAAABGAQAAADIAAABFAHgAYwBoAGEAbgBnAGUAQQBwAHAAbABp
-AGMAYQB0AGkAbwBuAEYAbABhAGcAcwAAAAAAIAAAAAIBAIATj/JB9IMUQaWE7ttaawv/AQAAAC4A
-AABIAGUAYQBkAGUAcgBCAG8AZAB5AEYAcgBhAGcAbQBlAG4AdABMAGkAcwB0AAAAAAABAAAAIgAA
-AAEACgAAAAQAAAAAAAAAFAAAAAAAAAAAAAAA/////wAAAAAAAAsAAIATj/JB9IMUQaWE7ttaawv/
-AQAAABwAAABIAGEAcwBRAHUAbwB0AGUAZABUAGUAeAB0AAAAAAAAAAsAAIATj/JB9IMUQaWE7tta
-awv/AQAAACgAAABJAHMAUQB1AG8AdABlAGQAVABlAHgAdABDAGgAYQBuAGcAZQBkAAAAAAAAAB8A
-AIAfpOszqHouQr57eeGpjlSzAQAAADgAAABDAG8AbgB2AGUAcgBzAGEAdABpAG8AbgBJAG4AZABl
-AHgAVAByAGEAYwBrAGkAbgBnAEUAeAAAAAEAAAAuAQAASQBJAD0AWwBDAEkARAA9ADUANwBjADEA
-YwBiAGQANAAtADMAYwAwADIALQAzADgANAAwAC0AOABiAGMAZQAtAGEAMwAxADQAOQA0AGMAYgA0
-ADIAOQBhADsASQBEAFgASABFAEEARAA9AEQAOAAwADYANgAwAEYARgA1ADkAOwBJAEQAWABDAE8A
-VQBOAFQAPQAxAF0AOwBUAEYAUgA9AE4AbwB0AEYAbwByAGsAaQBuAGcAOwBWAGUAcgBzAGkAbwBu
-AD0AVgBlAHIAcwBpAG8AbgAgADEANQAuADIAMAAgACgAQgB1AGkAbABkACAANAA4ADYANwAuADAA
-KQAsACAAUwB0AGEAZwBlAD0ASAA0ADsAVQBQAD0AMQAwADsARABQAD0AMQBDADUAAAAAAB8AAIAT
-j/JB9IMUQaWE7ttaawv/AQAAABYAAABDAGwAaQBlAG4AdABJAG4AZgBvAAAAAAABAAAAKgAAAEMA
-bABpAGUAbgB0AD0ATQBTAEUAeABjAGgAYQBuAGcAZQBSAFAAQwAAAAAAAwAAgAggBgAAAAAAwAAA
-AAAAAEYAAAAAEIUAAAAAAAALAACACCAGAAAAAADAAAAAAAAARgAAAAAOhQAAAAAAAAMAAIAIIAYA
-AAAAAMAAAAAAAABGAAAAABiFAAAAAAAACwAAgAggBgAAAAAAwAAAAAAAAEYAAAAAgoUAAAAAAAAD
-AA00/T8AAAIBFDQBAAAAEAAAAFSUocApfxAbpYcIACsqJRcfADcAAQAAAEIAAABSAGUAZAAgAEgA
-YQB0ACAAUwBvAGYAdAB3AGEAcgBlACAAQwB1AHMAdABvAG0AZQByAHMAIABMAGkAcwB0AC4AAAAA
-AB8APQABAAAAAgAAAAAAAAABeQ0K
+On Mon, Jan 10, 2022 at 10:59 AM Lessley Dennington via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> This series is based on en/sparse-checkout-set. It updates custom tab
+> completion for the sparse-checkout command. Specifically, it corrects the
+> following issues with the current method:
+>
+>  1. git sparse-checkout <TAB> results in an incomplete list of subcommands
+>     (it is missing reapply and add).
+>  2. git sparse-checkout --<TAB> does not complete the help option.
+>  3. Options for subcommands are not tab-completable.
+>  4. git sparse-checkout set <TAB> and git sparse-checkout add <TAB> show
+>     both file names and directory names.
+>
+> The first commit in this series is a set of failing tests that highlight
+> each of the above issues. The next commit updates the _git_sparse_checkout
+> method in git-completion.bash to enable each of these tests to pass. The
+> final commit modifies the original implementation (which recursively printed
+> prospective directories for completion) to only print directories at the
+> current level for improved performance.
+>
+>
+> Changes since V2
+> ================
+>
+>  * Change use of $prev to $subcommand in _git_sparse_checkout() method in
+>    git-completion.bash.
+>  * State explicitly that directory completion applies in both cone and
+>    non-cone mode in 'sparse-checkout: custom tab completion' commit
+>  * Add new patch with __gitcomp_directories method to improve performance by
+>    only outputting directories at the current level.
+>
+>
+> Changes since V1
+> ================
+>
+>  * Rebase onto en/sparse-checkout-set.
+>  * Add subcommand options (including --no-cone) for set and reapply.
+>  * Extend 'sparse-checkout completes subcommand options' test to validate
+>    new set/reapply subcommand options.
+>  * No longer set index.sparse to false in 'sparse-checkout completes
+>    directory names' test.
+>
+> Thanks, Lessley
+>
+> Lessley Dennington (3):
+>   sparse-checkout: custom tab completion tests
+>   sparse-checkout: custom tab completion
+>   sparse-checkout: limit tab completion to a single level
+>
+>  contrib/completion/git-completion.bash | 68 +++++++++++++++----
+>  t/t9902-completion.sh                  | 94 ++++++++++++++++++++++++++
+>  2 files changed, 150 insertions(+), 12 deletions(-)
+>
+>
+> base-commit: dfac9b609f86cd4f6ce896df9e1172d2a02cde48
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1108%2Fldennington%2Fsparse-checkout-bash-completion-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1108/ldennington/sparse-checkout-bash-completion-v3
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1108
+>
+> Range-diff vs v2:
+>
+>  1:  955fcab0052 = 1:  bbc2d21e1d1 sparse-checkout: custom tab completion tests
+>  2:  cecf501e076 ! 2:  256e5f034c6 sparse-checkout: custom tab completion
+>      @@ Commit message
+>           2. The --help option is tab-completable.
+>           3. Subcommand options are tab-completable.
+>           4. A list of directories (but not files) is provided when users enter git
+>      -    sparse-checkout add <TAB> or git sparse-checkout set <TAB>.
+>      +    sparse-checkout add <TAB> or git sparse-checkout set <TAB>. It is
+>      +    important to note that this will apply for both cone mode and non-cone
+>      +    mode (even though non-cone mode matches on patterns rather than
+>      +    directories).
+
+I would instead phrase this as "(even though non-cone mode can match
+general gitignore patterns rather than just directories)".
+
+The basic idea behind the rewording is that I want to highlight that
+the completions we provide are still valid in non-cone mode, they just
+aren't comprehensive.  Since there's no way to provide a comprehensive
+list of possible patterns for non-cone mode, I think what we are
+choosing to provide is a pretty reasonable choice.
+
+>
+>           Failing tests that were added in the previous commit to verify these
+>           scenarios are now passing with these updates.
+>      @@ contrib/completion/git-completion.bash: _git_show_branch ()
+>       -         ;;
+>       - *)
+>       -         ;;
+>      -+ case "$prev" in
+>      ++ case "$subcommand" in
+>       +         set)
+>       +                 __gitcomp "$__git_sparse_checkout_subcommand_opts --stdin"
+>       +                 __gitcomp "$(git ls-tree -d -r HEAD --name-only)"
+>  -:  ----------- > 3:  aa9ea67180d sparse-checkout: limit tab completion to a single level
+
+Other than that one nit, patches 1-2 (and the testcases in patch 3) are:
+
+Reviewed-by: Elijah Newren <newren@gmail.com>
+
+Since I wrote the new __gitcomp() function in patch 3, it might be
+nice if we can find another reviewer for it. Especially since I've
+only lightly touched the completion code and there might be better
+ways of achieving what I wrote there.
