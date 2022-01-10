@@ -2,199 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACA19C433EF
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 13:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF957C433FE
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 13:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231659AbiAJNAl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 08:00:41 -0500
-Received: from mail-db8eur05on2068.outbound.protection.outlook.com ([40.107.20.68]:3617
-        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S235574AbiAJM7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 07:59:06 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=S69GkqFdNDeJ6Kn643vC6eGS9EJrIHT2wvR14jQ2i8Xomm213YX3CBRgpvATIQJ5ez66g50Ud8d0ldaGZ3TxDViOkESuo8Y0AtdJNzZTcTzpMeg0s6uxakEEt6BzMr+FMHKmuckgPJjH6M350PIGs6CWML6WcKw/lglz316jkUYKqrh+HLVePuyhHH6HSCW0D9MpstQgn15QAG1zOJM5ZbexBn+C4H8nsAeXRqrpyVwtkyK0W7EBftAsBOk3Xc3AFU54Jm+FRGINODXBIcm04hG+oaQBC7PZI2BgCeTt/5VIOit/fKoDodej87NACL9Dz9L/IQTj7UDGvXQozZ+WjA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dteQX4rkiOgVg8ATkjTY/naxPX78l6tINhERc2rPW64=;
- b=cxUQkZLLw+Alp1ZMUXwG9x9WwF3eTU5tq0jr1CrT4B1LLavsjKku9A5cGDfctS5sws4+eGp/PjxNT6n2MwTfHwR0OvKGn/VyTZ1cKUiYUTMfWZETi17rxH/Atr7lth/Qib/GrM1s5EmArK8JIOZm8f2/QjSwB0IRrNMOu9WKe92mo++MKkb7OrI7zrrKVGmrO6Xibl5GBq+w491lP8yA5vo4xgHoR1Ivl2f4uyZCCSAX/c4+v3ICxlxwJiGo/ilZiKbOhHViZvomSszy1lK5yHJCL+lAHuhdtUvR7ftwucqtWZvPf6VMfmOJwdItutv8yuerrOp/pWMLkgQZcBzkgg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dteQX4rkiOgVg8ATkjTY/naxPX78l6tINhERc2rPW64=;
- b=NAYYqnW9jewidZRdLD/LIAF8UHdq6f1bxPVdCjiqgqQMhxhhYsB/jAjfncRzrpyDuRTeN15Idi/wnZGjycVJA5LMvLa/Z7jLdwlwoeVj1jo6f/n1Uu4Z7T7S0PuRX4kddMUiRpPw5IRUJIdmtNQACFj7usBWXR7/Ytobrja8Cus=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PR3PR10MB4255.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:a9::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4867.9; Mon, 10 Jan
- 2022 12:59:02 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9%6]) with mapi id 15.20.4867.012; Mon, 10 Jan 2022
- 12:59:02 +0000
-Date:   Mon, 10 Jan 2022 13:59:01 +0100
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org, Pedro Martelletto <pedro@yubico.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3] gpg-interface: trim CR from ssh-keygen
-Message-ID: <20220110125901.apxqy7tzrc3edjwa@fs>
-References: <20220103095337.600536-1-fs@gigacodes.de>
- <20220107090735.580225-1-fs@gigacodes.de>
- <YdtVrT4gBvnXfNr6@flurp.local>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <YdtVrT4gBvnXfNr6@flurp.local>
-X-ClientProxiedBy: AS9PR05CA0031.eurprd05.prod.outlook.com
- (2603:10a6:20b:489::18) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        id S231443AbiAJNEz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 08:04:55 -0500
+Received: from mout.gmx.net ([212.227.17.22]:42053 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236163AbiAJNDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 08:03:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1641819783;
+        bh=weWjyMuNnjlcol4nOhreusTcxn09c2kgk49/fdfsb4Y=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=hpMa3NsYLPorBf0qqn1KVxOOri5/rkwna77xSJOdbJKIjCMVugjNg3yI4mMbcItnH
+         iTsTaA/Ecfr++Ao7witmr3hKhAOB03ne3csEMdjz3KhPZT3gRAgvGuszkFlkN291Na
+         sL2QzGt3lEmiJmmGGLKP+3extiKN7ELoy5AIbBGk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.25.133.218] ([89.1.215.56]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mf0BG-1mRnsz1OHa-00gWWw; Mon, 10
+ Jan 2022 14:03:03 +0100
+Date:   Mon, 10 Jan 2022 14:03:01 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Emily Shaffer <emilyshaffer@google.com>,
+        git@vger.kernel.org, jrnieder@gmail.com, jonathantanmy@google.com,
+        steadmon@google.com, chooglen@google.com, calvinwan@google.com,
+        workflows@vger.kernel.org
+Subject: Why GitGitGadget does not use Sender:, was Re: Review process
+ improvements
+In-Reply-To: <xmqqh7b0juk5.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2201101401530.339@tvgsbejvaqbjf.bet>
+References: <YbvBvch8JcHED+A9@google.com>        <20211217183942.npvkb3ajnx6p5cbp@meerkat.local>        <211222.86ee65pb60.gmgdl@evledraar.gmail.com>        <20211222154534.b2gb22ghn2mpyeur@meerkat.local> <xmqqh7b0juk5.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 36a2a0c3-db30-4834-08d6-08d9d438f9f1
-X-MS-TrafficTypeDiagnostic: PR3PR10MB4255:EE_
-X-Microsoft-Antispam-PRVS: <PR3PR10MB4255BC599D6689C0E9CEC0DFB6509@PR3PR10MB4255.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:9508;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: lyVgN8tbvaeqp62xQBpS9lD8lqdnbS7e9oJEPlA2Z7HM1NkbO6EZz8DJhkO399f4ecdx2COrWae4SJXtQgLXfK491AdvcPnSPOXo2YqaWreOj0wUPQwofQ86FVHU+ZfIrkHH5NUVG4tY+p3c33ODIHYOFrfwuX1eTD5sMaber55BqWTuAOTTG+ugTmCFNuMlRdeG5G5HqZ4UbkQHh1fbop9NT/ep0uWFq6rWxuzcmvwgnhjFBcpow0SdCAR6DUbX8G54Kf6KCGf3UPlrOnRA3bkP8q1eAYEJdrQ5Plpb/lg6t/amKY7CGynMdt3YlMrzEk+Z8fHgLuBtkIlFR3LtPevOyzgexIwhKFBvWgrHjjNslgtIVrmuJ4eeKgU9QYVgNNG9XrFhCuvnFdPjHuVqomPODCGbqtpaOm7RdCv/DZ9SsZH0rkFtDKR2DrBCeCroKD+30l1Pw3gxT000Q9+yM5PESqx/HrvVd6i5BhRcdutUfNQqZ0aDZkEi8VpiK0iYGVF+E3RYiyoqzg8IGPMKzZSp1X00LT+Ai0eXWQqeNvDqxiHuWACkzvaCMjgnXXwy9y8KCJczHU+VfWlF5pkHUcsqvi0gSDUWUvaDHA4eIlTUTjObwuT7rJm2TsBurSR/pqJuNku4fTgqcGY6p8NxrcpL81uTDa7gd83mqFmSlOuWQhjS++BUwofLCQs0xbgexMq5dPMlsI1VvXXEnQvOLMBljEFUzRCl9jOHOulaC0w=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(396003)(136003)(39840400004)(376002)(366004)(346002)(8936002)(5660300002)(4326008)(26005)(9686003)(1076003)(8676002)(6512007)(966005)(33716001)(316002)(508600001)(6486002)(66946007)(66476007)(66556008)(83380400001)(54906003)(2906002)(6916009)(186003)(38100700002)(86362001)(6506007)(53546011);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YVZzS2xRWWtXUWNCOVVzSytOTEVHQTR3WEVzcUZpMS9XSkxmcmJRdFFUaE1M?=
- =?utf-8?B?T3E5OUNNR3FjZm00TEV3M21pcG9IM2QwbVk4c0hRenFDa0hWQ2R6SXU0YVQx?=
- =?utf-8?B?cUo1MU1kSmRYbDZGSXZZUkpiSjRBK0JHQm55SXliM0NNS3lUb2F4b0twOTIz?=
- =?utf-8?B?TTVuZHBOM2Z3cnVPMldZS3M4ODlObnJGazQxWGY3TXlLcnpwajJPTkpIVVdI?=
- =?utf-8?B?WnVyQXpqRlcxNFlUMDh6YWVUazNPaEYrQkFNM3ZObWNjQXRqMmtmZlFmTmlJ?=
- =?utf-8?B?UEpNRlRQM2tadmN1OXUxTllaaXdPNk5HVStUa0NIOWdIZm9abG1MckNKY3RG?=
- =?utf-8?B?Mk1ScjRPdHhucXFEU01yMnJ4cHZNRE93cCtaWkNXRS82V1p4d3VHaUZIbHhF?=
- =?utf-8?B?bVNoRzgvMDlBZFkrMFVKRHEwNWtKTmdyRGRTWFBvVzFNZkQrSlV3ckdqTjBh?=
- =?utf-8?B?NDVnNHR6d09RZXFFc2tMd3I0cGZXZHQ5aVptR0ZFcGNFQWtLcXBnY2VHK3Z3?=
- =?utf-8?B?SE1INzNycWdleG9JY3cxTXBsZEdLcXBtT1RvOXdudzJ4NDIvbUZtUCtwS05w?=
- =?utf-8?B?SFVUOGFMTTJEYkxOb0NhRENWUDRZejk0SGFvb05ySFhlWCtmQURZWkdLdThj?=
- =?utf-8?B?NTcyQUk5d1lGeXcvV0VDQ3JQVGlBVEtVdGd1UDBwT2lLVVN0QkRUZnV0RE9J?=
- =?utf-8?B?OGxNMVZzWXRoQTB6WHpoUXRldDBCRWNEVS9aNFVBcXN6YjhRVERCVlRQRVMz?=
- =?utf-8?B?N2V2UTJrcVVpYklDOGZTM3NMMVdNN0pMMVlNNzYzMGdxT2RmNUNVVXpzeVEz?=
- =?utf-8?B?YkpNZ1laY3RIUHRSOGhkdC93dCtsRG9McFVmaEpydE4vdFI3dDlSSm56czV5?=
- =?utf-8?B?RVJ6b0JpNWRmeS9ORDJwVEpSTWVkSkg0MDZROXVCUnBLK29MUU4yMG9xVVc3?=
- =?utf-8?B?aFVaNHJqdjhnQ2FpelpldXBSMndVZlpUV2RlSnZJcVY0UGU2bnVHQzRkNkxi?=
- =?utf-8?B?enJkZGVLVG1YODRENFBha0dad1BENGwvUml4blBqcEovSkFpbjByalYzaEtm?=
- =?utf-8?B?S2dRWTZHV2xkdzFpL2pseUo1NHh5L1NKSlJ2aFlqNlJXU3JVcmlEQzIzeG1N?=
- =?utf-8?B?N0dGTHJOQmZJbnJIUFo5WGthWDFZN3A1R2pPWkQ3bi90d2RNeEZIODJrckhu?=
- =?utf-8?B?Zm9TNDhyWjc0c0xuWjdWOHloS0UzOHNmaGR5ellhQnFjcjRPWU01UFNYYkZB?=
- =?utf-8?B?TWQ4bUZZVDlSMy91SnA0bHVCR3FqR1M1Ym9QazZjd1pMZWhKUjNCZGNiTjNu?=
- =?utf-8?B?U1NXY215bU0wTVFmYlMvNW5aNFVsTDd2Yi83WXB3Y2taSERucGZUSlVqY2RK?=
- =?utf-8?B?b0hUOXlWRk56aUZpL3RMZHZoclpJZzFWVHRwYmh3QU9HcXhBK0tQdjc2QzEr?=
- =?utf-8?B?c3VqYXRMV3RuUXpUY2lQS2xua3QxYkhmMjB4VFJ4bGpVMVpxZ0M5cno5RnAr?=
- =?utf-8?B?cEtQdElCNysrN2lFNG5VQy9hYXFLSG1xV0dySHZLUXo1ZzBhamZSblA0VHJP?=
- =?utf-8?B?WlV4NHJpMXJNNkN2OWRjYjZKeC9rdVpMUzdsODhvVHZ4NU9RcWduQzF0OHI5?=
- =?utf-8?B?QkdmWVBad1o1L3U3Rzcwa2laSVIrV252UWwxd0F5dytmd3RRMzZZUlBLK1J1?=
- =?utf-8?B?OCtITE5GQ3VZREdpSHFUKzl5QTJPN05od0lELzljc0lRVERHOEc3VjFNRFNu?=
- =?utf-8?B?N0laVWp3ZEZFcVU0TEtoUXJ4ZTJ5a2R4TGhCc05ubzRGaGxpSjBqM1NLWFpK?=
- =?utf-8?B?SE1TSVhsV2JHUWQwazFhYUJxaUQ3TVMzV2Z5Rk95Sy9RdWpnVEs3QTNVWTFP?=
- =?utf-8?B?MlBlWktyTmJjZXRtUERueXYyeExnWnFJc3pKN2xjbEljRkFQeXlLL1ZpMHlW?=
- =?utf-8?B?d0U3K3Z4WFFaMHBjVDh4MnJSdzkvUUZGcXlZTGw1M0hDWXR6OSsrUmpMejFK?=
- =?utf-8?B?TDhUTmZFUmtSelNaMnQvTHZhV2NuWk9lNjM1SkFuUHNtUERtdzdqbmdLZjhZ?=
- =?utf-8?B?UnRSbTVWMHhySVBZclg5MWYzb05yS3JBTW9VSllaQzNEaVZHRlgvRHcwL3A5?=
- =?utf-8?B?TGFSNWVTYnQ2dTZKQzlWSFhhandqd1lvc052TEplMkNzMGNweEFZSzhLSFFk?=
- =?utf-8?B?VGZPbU5GRFE2RjBzeVZMYXdWQkZUL1BxaG50QzMwcExQcEJYNy9QNWYyVlc4?=
- =?utf-8?Q?r8Bysdh3oxQgG+SYYfmMDh/ezvSfKdj/XrwKpn/1VA=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 36a2a0c3-db30-4834-08d6-08d9d438f9f1
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jan 2022 12:59:02.7778
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: W5PmtlbTivaSrpiUgKWO5Zu5s4TXk9gqw129xQx8Kv/d6wA6ZKlgdTIj6zfahD4+o/XpOOBLpoD7Hsyuu2yrFg5c6D22fNm9+hupm5BdK9w=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB4255
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:q9KIisLV+G9Un9qgdRXJuCaWX+Wk3eDRObqbNCB124PfdJXESit
+ m1PpNYh76qsR7VY2lE/MjskREHXVGIT5ORRQLrUqBxIszvBNSSUAL+aj7oq/5/97jofJoUV
+ aXuaUKl8pxHv1blhLMnuTYaGmcyr/lrXEChQaFcM1paq5doARM4ZlIBWPa1rI/XeeIQ+TL4
+ lQwwXLe8OiV4F50hh4WmA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nQln+ulfdKk=:FSTtw4wM9+ao4fovW2hdey
+ B+M4Z01S+wcYx2C9G7fJ1Ew3vievAaALaBU7SuI6jkrj2fssQ+2WyYR/50qLbtHnH3FJf25Lc
+ 93lxyrFa+hprP4iecqM8HlCEmmCdOgRwPjkyzGZtj2AuXjRTNVgBaKoLmIXbxBYTIxcGCNo8A
+ yljKCp3OFrxJwD11NT6fEeblK46/QqW8Jlz3654Y434Y5ihgEegFTntXN9FPQb04hWEso5m7k
+ DhmXpmo74pNbfMzVVaQkwEJH/rmmah2xz1gy9ZOuQdAl1wqeYrS9rYFwSFHC+G65hNM+5+mSr
+ yRdZKU/NIVCbNFBoS7q3hAPkahQk/E+Ix7ztkUVLKdzMM8aCybaIkUTTJAShsLRsLKRbo8idg
+ XKoCmwW3w50Tn1GZ4Cecyc3yqQu0a9hWTxRIRZ8cv4o1kZHaL7ex8w/37WSLre/JOgVNxj1Im
+ SEkpSAC6PolK2q7lZYB+NTKfBm875NGCdxKcrZCjh3csDUi+PCT/x+u2GZSoR4g+MHti5uB0P
+ YIb/i8krcT8pcESM/nkMLAx0khMWWoF6yvU0+VDx0ZzZpR59rW8zF4hd9EaMN6VnvidHVP/39
+ WycdB4DLQkfpfy9nBpc8wdpbEiCnkkJcC3km5KLwwjptr9+mDHBA2Adm+33VTMaekv1mXBQMt
+ B7CxBGIX+uVqbXzq9U9HulGRnWx9XekHnpNeTcN7QVzLK74HjlaB0VpevLaniqOgeNPb9uF25
+ X17detCSIjQoSMWcuF3tMUlR92mrKlOQVN0+O82ZQaFuKxcW9kE1PAEwvBlj82LisKEI+X8v6
+ MNZ1hmE18WWzMwRCRt7DVtXsqEBYwr+tobm4+pfr5KrBKjpNCyKxgO5A9acT3swuGm0CisfYo
+ DiyGPKNLuN6zaOSY9r/juT8apNBerVzgVFqpBtgz0BgR9ZiVq9qgyHH+p4o1zAvMQH3Z/yLSR
+ DQV+oKnBoS8HTwuDp4tMcxQGOGMEvDgW5duSa8i6B5Vm04LUZ3GzZGTOL/Bbm1F28rvFZy2wF
+ SlsZkpTekLEVb41pS24KH1NKCAXBQKtK28+MNARIDbWSkA0+sM4EYgQxXDH3H4Xh7Pxvuk6AZ
+ IVaYdKCCu5d+Xo=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09.01.2022 16:37, Eric Sunshine wrote:
->On Fri, Jan 07, 2022 at 10:07:35AM +0100, Fabian Stelzer wrote:
->> We need to trim \r from the output of 'ssh-keygen -Y find-principals' on
->> Windows, or we end up calling 'ssh-keygen -Y verify' with a bogus signer
->> identity. ssh-keygen.c:2841 contains a call to puts(3), which confirms
->> this hypothesis. Signature verification passes with the fix.
->>
->> Helped-by: Pedro Martelletto <pedro@yubico.com>
->> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
->
->Should this also have a "Helped-by: Junio" since this code was heavily
->inspired by his suggestion[1]?
+Hi Junio,
 
-Yeah, this should have a "Written-by: Junio" ^^
-I'm never sure when to add these headers (except the signed-off).
+On Wed, 22 Dec 2021, Junio C Hamano wrote:
 
+> Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 >
->[1]: https://lore.kernel.org/git/xmqqo84rcn3j.fsf@gitster.g/
+> > This would require pretending that we're authorized to send mail from =
+the
+> > domain name of the commit author, so this unfortunately won't work (an=
+d hence
+> > the reason why GGG does it this way). E.g. say you have:
+> >
+> > From: foo@redhat.com
+> > Subject: [PATCH] Fix foo
 >
->> ---
->> diff --git a/gpg-interface.c b/gpg-interface.c
->> @@ -502,15 +501,30 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
->> +		const char *next;
->> +		for (line = ssh_principals_out.buf;
->> +		     *line;
->> +		     line = next) {
->> +			const char *end_of_text;
->> +
->> +			next = end_of_text = strchrnul(line, '\n');
->> +
->> +			 /* Did we find a LF, and did we have CR before it? */
->> +			if (*end_of_text &&
->> +			    line < end_of_text &&
->> +			    end_of_text[-1] == '\r')
->> +				end_of_text--;
->> +
->> +			/* Unless we hit NUL, skip over the LF we found */
->> +			if (*next)
->> +				next++;
->> +
->> +			/* Not all lines are data.  Skip empty ones */
->> +			if (line == end_of_text)
->> +				continue;
->> +
->> +			/* We now know we have an non-empty line. Process it */
->> +			principal = xmemdupz(line, end_of_text - line);
->
->Considering that this code makes a copy of the line _anyhow_ which it
->assigns to `principal`, it still seems like it would be simpler and
->far easier to understand at-a-glance to instead take advantage of one
->of the existing string-splitting functions. For instance, something
->like this:
->
->    struct strbuf **line, **to_free;
->    line = to_free = strbuf_split(&ssh_principals_out, '\n');
->    for (; *line; line++) {
->        strbuf_trim_trailing_newline(*line);
->        if (!(*line)->len)
->            continue;
->        principal = (*line)->buf;
->
->keeping in mind that strbuf_trim_trailing_newline() takes care of
->CR/LF, and with appropriate cleanup at the end of the loop:
->
->        strbuf_list_free(to_free);
->
->(and removal of `FREE_AND_NULL(principal)` which is no longer needed).
->
->Something similar can be done with string_list_split(), as well.
+> Would it help to use "Sender:"?
 
-I agree that this is the most readable of the variants (and it works just as 
-well). Since in most cases there even will only ever be a single line of 
-output the extra work/allocation we might be doing with it is quite minimal.
+You had suggested that before, and I explained why it does not work in
+https://lore.kernel.org/git/nycvar.QRO.7.76.6.2008241445200.56@tvgsbejvaqb=
+jf.bet/.
+The gist is: GMail interferes with your cunning plan.
 
-I have done something quite similar in get_default_ssh_signing_key() and got 
-a bit of negative feedback for it (being overkill for retrieving a single 
-line) but ended up using it anyway.
+> When GGG or any other automation are trying to send e-mail on behalf of
+> the person shown on "From:", I thought that it is the mechanism for them
+> to use to identify themselves.
+
+Ciao,
+Dscho
