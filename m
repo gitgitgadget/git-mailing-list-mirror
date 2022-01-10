@@ -2,167 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C49A6C433F5
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 20:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B134AC433F5
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 21:05:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240243AbiAJUjH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 15:39:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35958 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234477AbiAJUjG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 15:39:06 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A59AC06173F
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 12:39:06 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id z22so13473027edd.12
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 12:39:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KOcSFfyCLCJmD0O6378xdWXyknspiJAnoZ/H6KWkwHA=;
-        b=Wf2IXdRHrvy1DQdGUvb7HJY43Q/Bnez3/uYQMk6IfTH4MqoYXGSSA8KkyTNUbNOlzp
-         NuLIxFW/h+WZf60AdZ0r8jsv4ciXBJtwvYZWwuRWH1cLGpRlDDBLRbBqXONFf7m7fLTo
-         dQOj7WyM27L7Q5lRUvupT4KvLOOUy5En2BTYTAWC5L0ur8Idc6WoWzutot4xEdUPQYMI
-         uKKZeL6sXxm5dFm1Czf+nRmfb46XoGwyyVMogceKYd+ZKV3VErAPHnxboPYszO+m5pZG
-         fEJ6/NP+k+exr/DR5JtG13vAXYOmBjGKfJltMex4e3/mDdS0WAeJvNEysfWoqbh0w4da
-         0sHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KOcSFfyCLCJmD0O6378xdWXyknspiJAnoZ/H6KWkwHA=;
-        b=lac+h8zVTbEutNhwUQUZp5B4p8d9OQFWCycFIyTRfXDoLKCBg9pD61xYD1Gf+14TuC
-         OkKi9dQbV3piLJslW04M1T7UDtuZSsAAQb0Y0rc5cNXDWg55y6OiXO2lqFeW4UoAvyx7
-         xRQs7ia7WUipY+afSDnQeYvTdBwVviiZ0KKEmWeSNS/f8lCYhqSVRBSihtJCzGj0MmRz
-         gcUxbwhZbmtLABS10n0fHSGApIqqvdiRctYOyTRGo7/tYREW9LEx4ZlccXmCnxdQCJfs
-         SwjrN7TTAuwFFWsmNB390dcOyHrK+GkzytJOHceH/IPK+JKgnaF1IUv3/18u14N0pyzl
-         yvtQ==
-X-Gm-Message-State: AOAM533K7geTjh8ezqBWnkPFjx0EHwp56VZy6IOFEH6jB13suYWXB4J2
-        +yuToOswU2ER2vHwfvoGMYnmtmFsIlbLd0RCGMVcSz8f//M=
-X-Google-Smtp-Source: ABdhPJwp+QMxcuHGb0ugRGC7st3pvxBcd5umYFS/wwLMSyyfc8W3AVo5wIudZmkydruf9vFd0iveMEY+Nofi9kE/0jA=
-X-Received: by 2002:a50:da48:: with SMTP id a8mr1349137edk.146.1641847144907;
- Mon, 10 Jan 2022 12:39:04 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com> <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 10 Jan 2022 12:38:53 -0800
-Message-ID: <CABPp-BG=wr81CPtW1M12xFN_0dyS8mAZjM6o=77LA20Zge8Xng@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] sparse checkout: custom bash completion updates
-To:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        johannes.schindelin@gmail.com,
-        Lessley Dennington <lessleydennington@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1343760AbiAJVFo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 16:05:44 -0500
+Received: from wout1-smtp.messagingengine.com ([64.147.123.24]:43627 "EHLO
+        wout1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S239741AbiAJVFn (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 10 Jan 2022 16:05:43 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id CD5453200933;
+        Mon, 10 Jan 2022 16:05:42 -0500 (EST)
+Received: from imap46 ([10.202.2.96])
+  by compute3.internal (MEProxy); Mon, 10 Jan 2022 16:05:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
+        mime-version:message-id:in-reply-to:references:date:from:to:cc
+        :subject:content-type; s=fm1; bh=HWBrRE3zCicjHWiaYvXdLJg/Zql/lzA
+        4BVaofLXE3o0=; b=EsrtC0jE1PMw8bOzItkgdj/K6YgzmBc/cV33Q+c+WcLbLA4
+        Zb3mBVcQ8b7YPVSH/RJcBlvkd0Xc2mwg4PCnXEx+J26omlgeaWibB9ka9UAO1gF0
+        anOogC/vfmD1NWIb+enxE6zjGQw3MnP25fr3kBCtZmXrAJ8lYe0KCzLDMQI5sx3N
+        F91OULKJpY5jBk0GW5KvPfFKJbEJu9H5m7Oa6c3nrZWaSZGbtqG8+cr8OQ1iLzQU
+        NQDnLxtFp4eeEtVWG30mOXJgXemKTF0zbSUjkHO5ARWh9Ed3iRL9x93BKWb6OxNq
+        rhXBVJCbKUQbjou5Yw7SsdI15sV4isuiSVgUHNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=HWBrRE
+        3zCicjHWiaYvXdLJg/Zql/lzA4BVaofLXE3o0=; b=mqgCTojshVIOzRlAPG0Tda
+        e5DE9Np7EN3pfpbuMSX64Bj+iv3W1vVTVPHKdOZnEEWoiImAsfTNABmLyKKsT7xC
+        aDU27tRKuJcpSbrX3alXgUfbTgcQQ/HohzxM7TfsAqYw71OAui/B1CfavQ4zdg3b
+        NkWZc1GY/rXyauXeVeVEJ4WlGJxJSGXs4mIu8hFUrsPCnP1V4AH64u8HkgKqKROD
+        Dn1I6fWWZCBie9dHOhFAq5laKTNFNkg0eMAQRpEYybDmgT2zuzxB3QqataA2/WWD
+        Bki4BXlrdNWwuKMJI3y0qcsaFFnGlMnm8/uTaMzuqfX7AKuI+Vu10er6ERTHg1VQ
+        ==
+X-ME-Sender: <xms:pp_cYQyzwRp4UWR9D8yNEeFmYcFpUnbtuTbwTI0eCWStTRHN7FYlLQ>
+    <xme:pp_cYUQgXCo08wMHiR2KgtygrtXtxc5DpFj8HhiTQdcuNGuWTrYmE4gLlaOj8ooxk
+    3PBLbHoPd2kpfX0rvg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvuddrudehuddguddulecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesth
+    dtredtreertdenucfhrhhomhepfdftrghmkhhumhgrrhcutfgrmhgrtghhrghnughrrgdf
+    uceorhesrghrthgrghhnohhnrdgtohhmqeenucggtffrrghtthgvrhhnpefgheffhfffvd
+    dtteehffeuudfhgeeiueevhfeukeeujedtheeggeefleeftdffkeenucffohhmrghinhep
+    sghishgvtghtrdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehrsegrrhhtrghgnhhonhdrtghomh
+X-ME-Proxy: <xmx:pp_cYSUtR3x5Nr6QNd3V38jd1W-N6MoPGNqe4nY6sqX6FvPAkl-EZw>
+    <xmx:pp_cYeji3NWg3e6xY7Uc99RH6jIMYHWaTm_WdpfouIDt7K7RNCAS6A>
+    <xmx:pp_cYSDRDB0h20tUohQej9etVzfA4u7EGCBAL4zVRLqn5JOpzxF34w>
+    <xmx:pp_cYZ-XggPPITwaemGQ3mYPrl_40VUQJLlkPL822Gp7N2f_Y5U9Mw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 0B9AD1EE007D; Mon, 10 Jan 2022 16:05:41 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4527-g032417b6d6-fm-20220109.002-g032417b6
+Mime-Version: 1.0
+Message-Id: <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
+In-Reply-To: <xmqq4k6b34h8.fsf@gitster.g>
+References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
+ <xmqqilus3ctf.fsf@gitster.g>
+ <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
+ <xmqq4k6b34h8.fsf@gitster.g>
+Date:   Mon, 10 Jan 2022 22:04:44 +0100
+From:   "Ramkumar Ramachandra" <r@artagnon.com>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Git List" <git@vger.kernel.org>
+Subject: Re: git bisect bad @
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 10, 2022 at 10:59 AM Lessley Dennington via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This series is based on en/sparse-checkout-set. It updates custom tab
-> completion for the sparse-checkout command. Specifically, it corrects the
-> following issues with the current method:
->
->  1. git sparse-checkout <TAB> results in an incomplete list of subcommands
->     (it is missing reapply and add).
->  2. git sparse-checkout --<TAB> does not complete the help option.
->  3. Options for subcommands are not tab-completable.
->  4. git sparse-checkout set <TAB> and git sparse-checkout add <TAB> show
->     both file names and directory names.
->
-> The first commit in this series is a set of failing tests that highlight
-> each of the above issues. The next commit updates the _git_sparse_checkout
-> method in git-completion.bash to enable each of these tests to pass. The
-> final commit modifies the original implementation (which recursively printed
-> prospective directories for completion) to only print directories at the
-> current level for improved performance.
->
->
-> Changes since V2
-> ================
->
->  * Change use of $prev to $subcommand in _git_sparse_checkout() method in
->    git-completion.bash.
->  * State explicitly that directory completion applies in both cone and
->    non-cone mode in 'sparse-checkout: custom tab completion' commit
->  * Add new patch with __gitcomp_directories method to improve performance by
->    only outputting directories at the current level.
->
->
-> Changes since V1
-> ================
->
->  * Rebase onto en/sparse-checkout-set.
->  * Add subcommand options (including --no-cone) for set and reapply.
->  * Extend 'sparse-checkout completes subcommand options' test to validate
->    new set/reapply subcommand options.
->  * No longer set index.sparse to false in 'sparse-checkout completes
->    directory names' test.
->
-> Thanks, Lessley
->
-> Lessley Dennington (3):
->   sparse-checkout: custom tab completion tests
->   sparse-checkout: custom tab completion
->   sparse-checkout: limit tab completion to a single level
->
->  contrib/completion/git-completion.bash | 68 +++++++++++++++----
->  t/t9902-completion.sh                  | 94 ++++++++++++++++++++++++++
->  2 files changed, 150 insertions(+), 12 deletions(-)
->
->
-> base-commit: dfac9b609f86cd4f6ce896df9e1172d2a02cde48
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1108%2Fldennington%2Fsparse-checkout-bash-completion-v3
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1108/ldennington/sparse-checkout-bash-completion-v3
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1108
->
-> Range-diff vs v2:
->
->  1:  955fcab0052 = 1:  bbc2d21e1d1 sparse-checkout: custom tab completion tests
->  2:  cecf501e076 ! 2:  256e5f034c6 sparse-checkout: custom tab completion
->      @@ Commit message
->           2. The --help option is tab-completable.
->           3. Subcommand options are tab-completable.
->           4. A list of directories (but not files) is provided when users enter git
->      -    sparse-checkout add <TAB> or git sparse-checkout set <TAB>.
->      +    sparse-checkout add <TAB> or git sparse-checkout set <TAB>. It is
->      +    important to note that this will apply for both cone mode and non-cone
->      +    mode (even though non-cone mode matches on patterns rather than
->      +    directories).
+Hi Junio,
 
-I would instead phrase this as "(even though non-cone mode can match
-general gitignore patterns rather than just directories)".
+Junio C Hamano wrote:
+> "Ramkumar Ramachandra" <r@artagnon.com> writes:
+> 
+> >   # on coq.git, for those curious
+> >   $ git bisect start
+> >   $ git bisect bad @
+> >   $ git bisect good V8.14.1
+> >   $ git bisect run bisect.sh # oops!
+> >   Lancement de  'bisect.sh'
+> >   'bisect.sh': bisect.sh: command not found
+> >   La base de fusion ea3595845f5013359b2ba4402f948e454350a74c est mauvaise.
+> > ...
+> 
+> "command not found"?
 
-The basic idea behind the rewording is that I want to highlight that
-the completions we provide are still valid in non-cone mode, they just
-aren't comprehensive.  Since there's no way to provide a comprehensive
-list of possible patterns for non-cone mode, I think what we are
-choosing to provide is a pretty reasonable choice.
+Yeah, I suppose bisect invokes exec(), which then probably expects the executable to either be in $PATH, or expects me to specify the path of the executable, failing that; in other words, './bisect.sh'. In any case, this minor typo shouldn't penalize the user by having to abort the bisect, and restart it, specifying good and bad commits all over again. Then again, there are other ways to bump your head: what if I forgot to chmod +x the bisect.sh? What if there is no bisect.sh? Should I have to restart the bisect process from the beginning?
 
->
->           Failing tests that were added in the previous commit to verify these
->           scenarios are now passing with these updates.
->      @@ contrib/completion/git-completion.bash: _git_show_branch ()
->       -         ;;
->       - *)
->       -         ;;
->      -+ case "$prev" in
->      ++ case "$subcommand" in
->       +         set)
->       +                 __gitcomp "$__git_sparse_checkout_subcommand_opts --stdin"
->       +                 __gitcomp "$(git ls-tree -d -r HEAD --name-only)"
->  -:  ----------- > 3:  aa9ea67180d sparse-checkout: limit tab completion to a single level
+This presents another possible opportunity for enhancement: in an overwhelmingly large majority of the use cases (or so I assume), './' is really redundant.
 
-Other than that one nit, patches 1-2 (and the testcases in patch 3) are:
-
-Reviewed-by: Elijah Newren <newren@gmail.com>
-
-Since I wrote the new __gitcomp() function in patch 3, it might be
-nice if we can find another reviewer for it. Especially since I've
-only lightly touched the completion code and there might be better
-ways of achieving what I wrote there.
+Warm regards,
+Ram
