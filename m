@@ -2,82 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCCD4C433EF
-	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 12:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF94DC433EF
+	for <git@archiver.kernel.org>; Mon, 10 Jan 2022 12:53:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245702AbiAJMuP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 07:50:15 -0500
-Received: from mout.gmx.net ([212.227.17.21]:41043 "EHLO mout.gmx.net"
+        id S245700AbiAJMxA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 07:53:00 -0500
+Received: from mout.gmx.net ([212.227.17.21]:56285 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S245698AbiAJMti (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 07:49:38 -0500
+        id S245667AbiAJMw7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 07:52:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1641818955;
-        bh=CalKF+FyWClaR/sQOt7+53lTyWGteExqy7vJpa/tayo=;
+        s=badeba3b8450; t=1641819177;
+        bh=ex+DjRBvN4yMhgaDCx73iJnT/Ch0izCo4dpiuK1O1/E=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dQUSpZAeG3wL7DMls7cSjRv9y2rlzuUrw0iDHxmnIJx3BMpyWLnrSXDZBpG3COjCq
-         VEdeskgyhQNIXKixPjrylexk8rq5zmzsbcGbxByoOozFvLgoVbu73uZnVV82dUvLwE
-         PKT/KBgO0jgZ3HypMnvXIYLL7ahNDhJzAxjHQUF0=
+        b=PYtK8ZSmEq/N8y672fimVfMqAe56XEq1hbY01Ab2Phk8Ho+Z9cjr4/c8paiJPhB/N
+         BaN8opEXkWJMY9b9aHvNet2w0FQ5yV3VVKhbhH/AaYIvBusZYquDWQf/ww5rjpXOkx
+         +6AJ7o+c1hvMqh3duPf8i+G06J0zOWgke+zNcZbs=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.25.133.218] ([89.1.215.56]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MhD6g-1mU0ev1t7C-00eKc1; Mon, 10
- Jan 2022 13:49:15 +0100
-Date:   Mon, 10 Jan 2022 13:49:13 +0100 (CET)
+Received: from [172.25.133.218] ([89.1.215.56]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M89L1-1n3Lnm1kUV-005IuK; Mon, 10
+ Jan 2022 13:52:57 +0100
+Date:   Mon, 10 Jan 2022 13:52:56 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Teng Long <dyroneteng@gmail.com>
-cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
-        gitster@pobox.com, peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v9 9/9] cocci: allow padding with `strbuf_addf()`
-In-Reply-To: <20220110082254.54400-1-dyroneteng@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2201101346090.339@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.2201071401240.339@tvgsbejvaqbjf.bet> <20220110082254.54400-1-dyroneteng@gmail.com>
+To:     Sebastian Richter <Sebastian.Richter@HTW-Berlin.de>
+cc:     Imi Admin <imiadmin@htw-berlin.de>, git@vger.kernel.org
+Subject: Re: Problem with credential.helper=store in git 2.32.0.windows.2
+In-Reply-To: <1c331bdd51b424022bfd598c71d7d666@HTW-Berlin.de>
+Message-ID: <nycvar.QRO.7.76.6.2201101349550.339@tvgsbejvaqbjf.bet>
+References: <8838ac786ed46b841e4172824b80564b@htw-berlin.de> <nycvar.QRO.7.76.6.2201092246520.339@tvgsbejvaqbjf.bet> <1c331bdd51b424022bfd598c71d7d666@HTW-Berlin.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:U+z05lxUIZp9ASikHxC/OrmI5HG+3BfOuzSL7dBGCXrBKe0g9vi
- SA8G1k/HM4Wdu8khoPgNJAS5CYTSXNxh3WboG+0U5ihKf+5ZZshLnMED92awuNWCfhXmkLx
- sVWLrrdHtUiLMmznGsFwuHNuc4DXV5YhyZEqKDrRfMtrJHChw3HfRXeQr8U42xH8wMnPH8m
- uw/81gwwkqotlGfDHAKSQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CWAbLMze/M4=:NA/Kh3rYKmZetMzVRsmllM
- pvQCYtWlWFsSHxxXNM5Iibnw6VntkXYqWonkLgKLuDLehtP0LcAK2Y9Rks7USYRqfRXlI5EC5
- 4Ey5q5gdFHwSIk3dfIRljujPdLBYVdgDXjtTvjXqy4q8xmTvlDTBTYfj2ueMLnyzLTVSy99J5
- Gb/nm/BzutPaN8L5eorIbMxp8bQYMO5zLtXL9iFdG9h54DVm7uQI3EDh5JsZQclm8A4OpZT26
- 1oMHLA75g+kPOlpDj7OA5scOd/6saJgTwtxc+ySANDx0lw2kIXAeGH6aPTyisehdM8bhFd/Gj
- UrNaHOFo4pAGBWqYuG2QEavGY7H8MXSEI6gSEvVhwcxwxos3dBfT+wNEVaDxnzV2rtNXFAcd1
- wrIkLFdhugxJx7UiGIHTuNeVU04boN96M3+3PNfzEfLYWwoqv5nPkFTQTTKabqvLbReqEKSBC
- 4d/hdTPPskwKD9px0Zxxrb4JPWZdG/BnTdOFx94J3SM7kyHyx+IVeVQap26Mq2uHrhO5dr9j8
- fZeaA8sNWNhveX7x38BAVJtL0tQsrwXAeGN3Hd2ds3VsgjyCmrDjhtPJBfDdeY11SYkHQvwG6
- 2yfNhOmT3diCzr5H8vG1y7Ajony9tgzbEcHaMMIodwEQttL6RkRBJaabD4kIO2nf6ydKkgvFC
- xpTnJoHdrsIp9I/10+cirREWaR/GGqpgLf/UZ4FBNyPTAR14lv/00yw60n/NAQYMD18LAQnBq
- cFDmykAeH/fXekrWBwaBvDJkl6ihJbrvaJK4O232DwwAX35eB6N9tGzY/vI2TH1YtB4Y6YvUx
- sICwQ/l5kNDd1h+1DPMW44NxkH30tQF1XiRSPJSU7Vp0hhej1gIlFl+WpP/jTBufdQ2ptj1Cv
- 7D5fUpZtmb8Ofhmo1twGPjRTz8Jip+r5UxiNej74ZZ+d3W2hOBh37BGpV9fUK+g+B6S4HPqPV
- kwaAxHbFNvQ3UVDLJO/BpA7i/GgSvvKpc4HXK1wKiURlqBkPoTKTy5yM3KvxR+wV9zQG5FCdx
- zMkDy5nU4fJjN42egOHyeGkyDUuWA11HccJ48EAXISqjWUkb0dy6ldo5uq9//65dUjROhSaGz
- ACB55igCCqh06Y=
-Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:sUDX564SXeC+AyiobTtBUWPrs7N554JOB7ZVgqWND2vrymxAJPc
+ zVgLhu1GU2diDjVvvYf5r2pN1uF8F1G4sLRkpND9+r3VNGjhddfMM8g7hElVm/TMfcKxoWP
+ bxMreG2rPb97syRTQxa0YVQoISz6ffXJS7t5nySKclaSVxDhtdgqKQ3AwSyfZ2dMHDCNHB+
+ PUo/C4QVUWcf44hZOuAxQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:v3NyO8zGSFc=:Uo1biG2tfmaDFXxgGyFHE4
+ pCHg41QaNMaEGD/5Q7dG5GHFo0/OSHITQTM3HUV9A7JP+Y8gy1jVnZEQ9ATh8tsrExMxexbd+
+ 4WIRcRzXpFoAQM6QVfvvW/7HKmjPRjjeC96ER9Djw7RZgXQQprwIBSYtVg2pnb5ZEhVh14C9m
+ uQ3h7dBUgUYNF51TqhKxck0cbFYa+O0MP558n+75g+kGyWBiSzTiGLjlJpukTOjHQxXUF+257
+ uIK7cz5dJnJt6CA/5NoNAHM1rJTnUh0aaWD+orfZNdeYGdhNfudVPa+zQY5vP7y7QwStiRweS
+ jpqqzUBRdAVKzaWyxg4+gKqflqHcIBT7gyo1n+ccALzIq9lCXBdHLZMGxprkQIyqohXVQs6vM
+ uMrdqm2XaH5Y1u0ynBSCzbZEPEHbSs9oD/A1fV0ZbQOTo1TFW2xpsfxNvMma5NgM5hqP7YVq5
+ mrO6LKgwJNKF6phgU1BEF5ToRo8caPq7HvY7RdLB19B5hPnUls89mBN3FdUX3TRmBoUlfwtE2
+ hER3FeJMfiHTW4zh0Qw60gSaUYRTqPEEIHhkumiAvu4HbM24KncE0XDzOt5sm5qLGhftkS+wJ
+ uoO2MmowPSAP35fh+DGzd9wRTblaDUElpWXFaHlPposQ+9vUq6QKHJnsHsukoeRJxQvEVfVwN
+ cWjYWRRXHNiTZJ2ZcZU9rcgB8Hui0dCZNe888TnYqu4tGFkhPKmd4qzml3f2YXgg96zcLotgD
+ z/jFMOa7bAJKn1olSmb594grjsLzBAFJRrQZiVjtluEyuNVD8M5t5pjfcR4pTtJn8jeZGjwSh
+ k02HbwPQdVlZP8jfkUn344Kn06YxnlLWiABJXJ9z8Z0Gr3OUjl0B10YiurrwsxwSGyQAJWFmB
+ 4tvLl1hY9chuvoDrZW9oyh06jc9Xoskrhv8NDzT6lbO6Uglqa3lFpcgcoJQNJ9WtEJHHNXiE2
+ JvGGf5RPPiN2hZmcctT5EsScFvJvFdx6IkdLySSCpx7rT/SxlMbIvokhZwW3XgOqdziUv4862
+ GBiSpTVfocr7s7NCMPwHA7l8G3rr/ZXBTrZ7HkNPK0wdaRie4sdg4Kb1C/k0fK+UIjwG/R0Ur
+ qdyhqWB3tnHDm8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Teng,
+Hi Sebastian,
 
-On Mon, 10 Jan 2022, Teng Long wrote:
+On Mon, 10 Jan 2022, Sebastian Richter wrote:
 
-> [...] about the using "strbuf_addf(line, "%7s" , "-");" or
-> "strbuf_addstr(line, "      -");". [...]
->
-> Why I prefer more of the former that is because, for the single line,
-> it's more readable I think.
+> thanks for clarifying this. I'm using 'git config --system --unset
+> credential.helper' before setting the file store in the local configuration
+> now and it works.
 
-I strongly disagree. Using a format requires the reader to interpret a
-`printf()` format, to remember (if they ever knew) the rules about padding
-with `%<number>s` formats, and then to satisfy themselves that the result
-is correct.
+I am not quite sure whether that is a good solution. You are changing the
+system configuration for the benefit of a local configuration. That would
+potentially break every other user outside of that repository that now
+works.
 
-That's quite the cognitive load you put on the reader for something as
-trivial as "      -".
+My suggestion is to either go with my earlier recommendation and add an
+empty `credential.helper` in the repository's config before the actual one
+(and leave the system config alone), or alternatively change the system
+config instead of the repository config in the first place.
 
-Not a fan,
+Ciao,
 Johannes
