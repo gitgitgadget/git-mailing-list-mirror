@@ -2,86 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E14BEC433FE
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 02:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C63FC433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 02:19:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244192AbiAKCTI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 21:19:08 -0500
-Received: from ring.crustytoothpaste.net ([172.105.110.227]:33256 "EHLO
-        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239445AbiAKCTG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 21:19:06 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id A759E5B277;
-        Tue, 11 Jan 2022 02:19:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1641867545;
-        bh=9Ly/kNo95G4atMl+pqI6szrn3a/V6rnzron6z1G8cBw=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=YZhpIlZbuKWFsXxY2Ig5mDIa+m0eQjtkqU85d5l1V2rU1pwEgZKT5F/l7i0MnW/iK
-         Z2AsqPeYf43nDqiSD58Ol2761DqLz1UG57gGuYPmSfeqvrFygSzLRfNKktMKkr8b80
-         l85aLnocebcJDFjwjk+VUAUkklwJdVBjLka+NNjzD1DTdNcvg0YDtxAlmOfQCHNMhc
-         +z2qaUHfswt67uptYvtpJ1nT3dmCutnIHnWDkgZd/+WG6S2YHXNEJYEiDpbUDAE3uE
-         UOYlU0YcHvsvoKuCpIKamfEwu1uZBjwaXCt7mlBIdtn3xlPVjUr2LGRYn12G35oVEa
-         RpwsaQPf1jygx7eHaY8j5Du+9GeKZFaOVzFCIdqGZI9Y9J9d4Biaz2e6coZq8Qlah6
-         8a9E3bl0P7eY67lTojWJxexmziRfimzBE4dgDAXPJttZbrd4jIcZIeX1j0kjgRKRQj
-         TDNcAhQwsAWrUbKwYfIRuDECONKGnw7y35Uk77a0DmlXcJOehzm
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH 2/2] docs: correct documentation about eol attribute
-Date:   Tue, 11 Jan 2022 02:15:07 +0000
-Message-Id: <20220111021507.531736-3-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.34.1.575.g55b058a8bb
-In-Reply-To: <20220111021507.531736-1-sandals@crustytoothpaste.net>
-References: <20220111021507.531736-1-sandals@crustytoothpaste.net>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1346454AbiAKCTQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 21:19:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57816 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239445AbiAKCTP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 21:19:15 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32890C06173F
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 18:19:15 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id ik6-20020a170902ab0600b0014a1e5aab34so2720873plb.21
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 18:19:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=dqIWeR6q1b6Y34YnavF5f51IOfw1RUORif4AjPNbiGc=;
+        b=MRZbhdTbw/cL5ouIcAeSv2QwVx+WwBPt24F/55EBkx1TlykKzd7uYJhR+bjjXO2aI3
+         eHBqqF/wYVOGg6pYMo42pSjvxr9LIiXAqDMglfU1fCXHFAep83OghxTQtcZNktGgUJ/b
+         0pJUzR8NiwBI9zB410N+Mlhs03djptzhahKo5wzjPbZ7u+TQ8R9qmgVrUzj6nw7NhKMq
+         RWrWkcMlQgrrt94e0gLfncrOcJ1Ia+URCzPC069iz7EqOFOAvEq89B66ncKk+0tsWApl
+         7U2Vt8aYYg3Ir+qv0SuhPXTpitXrEiL1fycUUDq3efZAFs2DTgiOhfE+CfpH3PDvoEH4
+         B9+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=dqIWeR6q1b6Y34YnavF5f51IOfw1RUORif4AjPNbiGc=;
+        b=25T2CS3ny7mx5c1I+AMeyH6qkBJKcUiXwW2IX0UB9O8arAY4L6o85quz4Ct5JEOyyC
+         qsCICZBFIfUIInvdEzOax82ZOCbkFeyqHFsfPFvkVRduy1dMJEWX9fp1baZtr+nxh1A7
+         enuAD3BRmONs4g57YmLt3Fa70/dxWyrfKI8jpjLRM0PIYm0/W/K9WZrBKq9V30+wTdtY
+         TGA6qQHxmg0wCOO+mCctazJyNTIEl7dNHXWgsJiWTOpbvAtMUlrj4aNKlEVycURqyvB7
+         2REYX64sm8lM7IXLZuxoz3vEwESDtyH/2GbPMlgISbaH5sDVD0IdwHie+5bcOPwgHSau
+         dkQA==
+X-Gm-Message-State: AOAM533P62qaQjY5mOfxyV7k2r9uAZXWZyM0PJBjKmye6K96EjFT0ohn
+        BTw8OGZ+iDSSXx4o5xasPQlUsBO7yxUpV4d4542g
+X-Google-Smtp-Source: ABdhPJwXPw3LrWS+KYpZkCVHSs4IAH7SDLrQq4f7QKItLyLu6CzKVVpTilplh7EYLAKx6rD4bR5e2v6IRTkaLMbIEidy
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:688d:: with SMTP id
+ a13mr761878pjd.164.1641867554627; Mon, 10 Jan 2022 18:19:14 -0800 (PST)
+Date:   Mon, 10 Jan 2022 18:19:12 -0800
+In-Reply-To: <20211220233459.45739-3-chooglen@google.com>
+Message-Id: <20220111021912.1228794-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20211220233459.45739-3-chooglen@google.com>
+X-Mailer: git-send-email 2.34.1.575.g55b058a8bb-goog
+Subject: Re: [PATCH v6 2/5] branch: make create_branch() always create a branch
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     chooglen@google.com
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, steadmon@google.com,
+        emilyshaffer@google.com, avarab@gmail.com,
+        levraiphilippeblain@gmail.com, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation for the eol attribute states that it is "effectively
-setting the text attribute".  However, this implies that it forces the
-text attribute to always be set, which has not been the case since
-6523728499 ("convert: unify the "auto" handling of CRLF", 2016-06-28).
-Let's avoid confusing users (and the present author when trying to
-describe Git's behavior to others) by clearly documenting in which
-cases the "eol" attribute has effect.
+Glen Choo <chooglen@google.com> writes:
+> create_branch() was formerly used to set tracking without creating a
+> branch. Since the previous commit replaces this use case with
+> dwim_and_setup_tracking(), we can simplify create_branch() so that it
+> always creates a branch.
+> 
+> Do this simplification, in particular:
+> 
+> * remove the special handling of BRANCH_TRACK_OVERRIDE because it is no
+>   longer used
+> * assert that clobber_head_ok can only be provided with force
+> * check that we're handling clobber_head_ok and force correctly by
+>   introducing tests for `git branch --force`
 
-Specifically, the attribute always has an effect unless the file is
-explicitly set as -text, or the file is set as text=auto and the file is
-detected as binary.
+This might have been more simply explained as:
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- Documentation/gitattributes.txt | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+  With the previous commit, these are true of create_branch():
+   * BRANCH_TRACK_OVERRIDE is no longer passed
+   * if clobber_head_ok is true, force is also true
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 83fd4e19a4..60984a4682 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -160,11 +160,12 @@ unspecified.
- ^^^^^
- 
- This attribute sets a specific line-ending style to be used in the
--working directory.  It enables end-of-line conversion without any
--content checks, effectively setting the `text` attribute.  Note that
--setting this attribute on paths which are in the index with CRLF line
--endings may make the paths to be considered dirty.  Adding the path to
--the index again will normalize the line endings in the index.
-+working directory.  This attribute has effect only if the `text`
-+attribute is set or unspecified, or if it is set to `auto` and the file
-+is detected as text.  Note that setting this attribute on paths which
-+are in the index with CRLF line endings may make the paths to be
-+considered dirty. Adding the path to the index again will normalize the
-+line endings in the index.
- 
- Set to string value "crlf"::
- 
+  Assert these situations, delete dead code, and ensure that we're
+  handling clobber_head_ok and force correctly by introducing tests for
+  `git branch --force`. This also means that create_branch() now always
+  creates a branch.
+
+> @@ -426,15 +426,17 @@ void create_branch(struct repository *r, const char *name,
+>  	char *real_ref;
+>  	struct strbuf ref = STRBUF_INIT;
+>  	int forcing = 0;
+> -	int dont_change_ref = 0;
+> -
+> -	if ((track == BRANCH_TRACK_OVERRIDE || clobber_head_ok)
+> -	    ? validate_branchname(name, &ref)
+> -	    : validate_new_branchname(name, &ref, force)) {
+> -		if (!force)
+> -			dont_change_ref = 1;
+> -		else
+> -			forcing = 1;
+> +	struct ref_transaction *transaction;
+> +	struct strbuf err = STRBUF_INIT;
+> +	char *msg;
+> +
+> +	if (clobber_head_ok && !force)
+> +		BUG("'clobber_head_ok' can only be used with 'force'");
+> +
+> +	if (clobber_head_ok ?
+> +			  validate_branchname(name, &ref) :
+> +			  validate_new_branchname(name, &ref, force)) {
+> +		forcing = 1;
+>  	}
+
+Also assert that track is not BRANCH_TRACK_OVERRIDE.
+
+> @@ -42,6 +42,23 @@ test_expect_success 'git branch abc should create a branch' '
+>  	git branch abc && test_path_is_file .git/refs/heads/abc
+>  '
+>  
+> +test_expect_success 'git branch abc should fail when abc exists' '
+> +	test_must_fail git branch abc
+> +'
+> +
+> +test_expect_success 'git branch --force abc should fail when abc is checked out' '
+> +	test_when_finished git switch main &&
+> +	git switch abc &&
+> +	test_must_fail git branch --force abc HEAD~1
+> +'
+> +
+> +test_expect_success 'git branch --force abc should succeed when abc exists' '
+> +	git rev-parse HEAD~1 >expect &&
+> +	git branch --force abc HEAD~1 &&
+> +	git rev-parse abc >actual &&
+> +	test_cmp expect actual
+> +'
+
+These tests make sense.
