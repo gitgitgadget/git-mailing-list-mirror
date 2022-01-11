@@ -2,232 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5FBEC433F5
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 18:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09878C433EF
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 18:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344803AbiAKSaQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 13:30:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242661AbiAKSaP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 13:30:15 -0500
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7855BC06173F
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:30:15 -0800 (PST)
-Received: by mail-qv1-xf36.google.com with SMTP id q3so195945qvc.7
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:30:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=/H9JQ8jHn8LysbWavrkT70VbuRIYA/q9wlS0YoFSdmc=;
-        b=e0imZ/NGS1n6IRg+xP02GznWsDf9/srkZRiO2g55yYy2KdovYwhUFxD/VxQfyt+CHJ
-         9CuORvpLVjaL1NU1W76bM6IYPwzjarTYmvj3gY5Am7uapYdV81t7a/33Izq3wIwB8bq5
-         TpPapy+IGDFACvrtSwpr1BCvqNWl617Za/FTJrw1O1QsgaacV9CtS++zQ00Nd1FRvJ8P
-         bfjyfs8in0JOb0fmF8RNVljPT5VbZpVNhfrD5RMC+mdGDR4qJG+eAH5FKCFqWEgFJTbR
-         dz/6pog5WyZ6Wtinh+fcoKyl81ZjOkFSU5tGjb2CBebk7eofhxe6PADiGZRSZ9ZqgGsq
-         15jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=/H9JQ8jHn8LysbWavrkT70VbuRIYA/q9wlS0YoFSdmc=;
-        b=NF2sYPSeemeOi+du501S9jLsGMtvCJVmD09mLF+BW82cJEj1EafqYxCqo3JQRjeWWQ
-         BQ0PtuEan3GhXFCCvdI4wy28qXEDgxpphC31BijasmF2jNfai6Lr1wG3j0Qky4JOjSSy
-         GEP8SELido/hP8Q5QQgAm8qKYtwSfSEmCTuHw5Pa+eJsc7p8Q84v3KfcTaDgspG4Q8KP
-         88/a1A590wkyieFvbm+HrghJLEF9jPGWqznXmiX6MAf/MNw8sM59lU4G0QFHvrzprG2X
-         zdcAmWebz0RWqLDtGdSiwLYzxMc4DNQfWhpgmgeZncWx9cKLTT4gkt2LF4q7bQzd6Gh9
-         QGtw==
-X-Gm-Message-State: AOAM533i95qcfOkEerl/H23p2N6cs9YMWNifMVZ7N1bfoxRJBXFF2POI
-        2405D+/lXALUU00FTUYBS3Fx
-X-Google-Smtp-Source: ABdhPJzG4uItxIqRaiL8YD0Vk3bVqloERQC9d3/AEjMuyEKvBDvz+YBL9mqDMSxpWoOWYLZ02F/ZVA==
-X-Received: by 2002:a05:6214:23c9:: with SMTP id hr9mr4974956qvb.16.1641925814609;
-        Tue, 11 Jan 2022 10:30:14 -0800 (PST)
-Received: from [192.168.0.102] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
-        by smtp.gmail.com with ESMTPSA id t3sm7840089qtc.7.2022.01.11.10.30.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jan 2022 10:30:14 -0800 (PST)
-Message-ID: <950da537-941f-dfb4-460a-1aa4c68e0750@github.com>
-Date:   Tue, 11 Jan 2022 13:30:13 -0500
+        id S1345404AbiAKSff (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 13:35:35 -0500
+Received: from mout.web.de ([212.227.15.3]:53549 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1345401AbiAKSff (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 13:35:35 -0500
+X-Greylist: delayed 310 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Jan 2022 13:35:34 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1641926133;
+        bh=XnoFfcT3fFbCxPs4/M1vD6n8BL0zsa4UMOlSTFK1oT4=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=jhQ8/zaiNbDphKXY1deyYedjzoIaHEJGNQXkIxCF6uY2HHZt9zBwAVINQ+yGjXBZc
+         vzc6nsflVC5RoT1y45szKZutjs3HoFn+gIDEDWKhpI5guyYw9N+JujrivBgCE8+6gj
+         LTh6+A0rK3j6DgTW0j1cKLFrvoLUqdp5fjDJDLW0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MdO9E-1mY15Z3brk-00ZYrr; Tue, 11
+ Jan 2022 19:30:05 +0100
+Date:   Tue, 11 Jan 2022 19:30:03 +0100
+From:   Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] docs: correct documentation about eol attribute
+Message-ID: <20220111183003.g4fch5d2f47it2hg@tb-raspi4>
+References: <20220111021507.531736-1-sandals@crustytoothpaste.net>
+ <20220111021507.531736-3-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.1
-Subject: Re: [RFC PATCH 5/5] Accelerate
- ensure_skip_worktree_means_skip_worktree by caching
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
-References: <20220109045732.2497526-1-newren@gmail.com>
- <20220109045732.2497526-6-newren@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20220109045732.2497526-6-newren@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220111021507.531736-3-sandals@crustytoothpaste.net>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:u9alP0oaC6uBvYmAKLf6STi7lrFlMav0IAq9Bf8EvG9S9NZIH0b
+ 5OM/MJD629RZ0k/fTofOn+yV+gCX/IyGavl1OHTzgvD2gJVOUxvEefztiMvDxNKU/bpiw1M
+ Rf95IRzELRdy+xy3znmsW6yg/F+T7P8ETIZG/r3SAtkoZXWj/ofJVlQJBOstp0aGdw4Zv3n
+ 5LXDXR2DSVFBcikKt1aAg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:yOtEQ6oY+c4=:0x5aUhrSLMmewV4lK0RpyK
+ jQS+Ajy5lU/yI3dhWsWXFOfUbbsIaDmJ/ZVE6N4BXK2QS5sfbd1/cqfYpQrhVogKgxP+lCbP9
+ V0+M0xgsxpUnjZJVLXpLRj/2mtriApY0oC+GjZyJRspBYiezW7yF++0x/EikFXTetNm/iQQDG
+ //H0f53lCpciCLFn5aQbSgQTgGzpX5kI3sqlbya7wpsFusIvWbWxKBbC5HT+8pbPOKGvaJ5iL
+ yNqtmchFRMqFQ3eB/Et+wivDWMtM2ZMfLpr7QuHDMsT2117cbrLp+2nfFzhWaW1BRSe/atWsU
+ G2o+wQ0x+jfY/ebOxOQVmwuuKc4OyFA/EjPI1clDAJmDzwZQOLZh9jxKmiAQ1NBt+rgWH2HYB
+ NzFH21IARP7tWj1wiOgd3FqW9K/wMTZrEOy/NqMXutSu6jCTaSkJiYSPVXdxb1RLw0rfhwfGc
+ j8mMpLJenabVQg4TzfSCIFQld/4qfZ3AOaC2dLi/9vp/qYnq0Us1ezxukLgZOGCPVP6SgitGb
+ LI5bc7+7EKFLlU8J9KhvRU1Ibd6LvEAp1mwSEFlv67Ymge99WpOz4dANOaN3dxiOR5nS+2GXH
+ xN6JTO+NzCu58pyZwlPChb/xzlhppj5WsfpbehVDZUlbk94Lw7lOWdzhl8I2DRD7C42AOj4l3
+ TWnV7eLceUNDCSi65gtmLQ1bUb+Vg82HD1rkS3B2AtJ7fiiC6Vh5lnleMVJEmJkweIiZ8v+h1
+ KfJamx8Zb7OMNTTGqK5evYMX0X8ro48H10WyRylN5vpcazxkNJzL2Y3aCvfxOX9kK1zC01F1Y
+ UbURS/fnWq4TcOlzJ9WTcuO/wCydXqnRMzMJZqdlSzjkW4HJq0jMEQzOqN5UO+crXgcJOTfHD
+ 8suu8wmSCq2Lz29twQ1Y4jpyR2FHc+XtQlCnn9vzuFkC9dJDQki/KI/eJoonz6pRJka+ku4Em
+ BbPvZVVI2SW8DaO+ReQqxzbRTAaoo2FCCTPS/qiQW3Y0w1HQY/9jmzXP4A2Lw0vAOPFKLcucI
+ BKQ1vxEY6G+icb3fV45MBuDKqUOapyp/FaCnyGma0M9h0VgOTs24f6oa0QoYLYbeAw==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
-> Rather than lstat()'ing every SKIP_WORKTREE path, take advantage of the
-> fact that entire directories will often be missing, especially for cone
-> mode and even more so ever since commit 55dfcf9591 ("sparse-checkout:
-> clear tracked sparse dirs", 2021-09-08).  If we have already determined
-> that the parent directory of a file (or any other previous ancestor)
-> does not exist, then we already know the file cannot exist and do not
-> need to lstat() it separately.
-> 
-> Granted, the cost of ensure_skip_worktree_means_skip_worktree() might
-> be considered a bit high for non-cone mode since it might now lstat()
-> every SKIP_WORKTREE path when the index is loaded (an O(N) cost, with
-> N the number of SKIP_WORKTREE paths), but non-cone mode users already
-> have to deal with the O(N*M) cost (with N=the number of tracked files
-> and M=the number of sparsity patterns), so this should be reasonable.
-> 
+Hej Brian,
+thanks for digging into this.
 
-Did you write/run any performance tests to see how this optimization changed
-the execution time? If not, running the `p2000` performance tests against
-the patch series base, [3/5], and [5/5] would provide some really helpful
-insight into the cost of `ensure_skip_worktree_means_skip_worktree`, then
-how much this optimization improves it.
+Could you be so kind to send the stackoverflow issue ?
+(You can send it to me only)
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
+I have some comments/questions, out of my head.
+
+On Tue, Jan 11, 2022 at 02:15:07AM +0000, brian m. carlson wrote:
+> The documentation for the eol attribute states that it is "effectively
+> setting the text attribute".
+> Let's avoid confusing users (and the present author when trying to
+> describe Git's behavior to others) by clearly documenting in which
+> cases the "eol" attribute has effect.
+>
+> Specifically, the attribute always has an effect unless the file is
+> explicitly set as -text, or the file is set as text=3Dauto and the file =
+is
+> detected as binary.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
->  sparse-index.c | 105 ++++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 103 insertions(+), 2 deletions(-)
-> 
-> diff --git a/sparse-index.c b/sparse-index.c
-> index 79d50e444c..608782e255 100644
-> --- a/sparse-index.c
-> +++ b/sparse-index.c
-> @@ -341,18 +341,117 @@ void ensure_correct_sparsity(struct index_state *istate)
->  		ensure_full_index(istate);
->  }
->  
-> +struct path_cache_entry {
-> +	struct hashmap_entry ent;
-> +	const char *path;
-> +	int path_length;
-> +	int is_present;
-> +};
-> +
-> +static int path_cache_cmp(const void *unused,
-> +			  const struct hashmap_entry *entry1,
-> +			  const struct hashmap_entry *entry2,
-> +			  const void *also_unused)
-> +{
-> +	const struct path_cache_entry *e1, *e2;
-> +
-> +	e1 = container_of(entry1, const struct path_cache_entry, ent);
-> +	e2 = container_of(entry2, const struct path_cache_entry, ent);
-> +	if (e1->path_length != e2->path_length)
-> +		return e1->path_length - e2->path_length;
-> +	return memcmp(e1->path, e2->path, e1->path_length);
-> +}
-> +
-> +static struct path_cache_entry *find_path_cache_entry(struct hashmap *map,
-> +						      const char *str,
-> +						      int str_length)
-> +{
-> +	struct path_cache_entry entry;
-> +	hashmap_entry_init(&entry.ent, memhash(str, str_length));
-> +	entry.path = str;
-> +	entry.path_length = str_length;
-> +	return hashmap_get_entry(map, &entry, ent, NULL);
-> +}
-> +
-> +static void record(struct hashmap *path_cache,
-> +		   struct mem_pool *pool,
-> +		   const char *path,
-> +		   int path_length,
-> +		   int found)
-> +{
-> +	struct path_cache_entry *entry;
-> +
-> +	entry = mem_pool_alloc(pool, sizeof(*entry));
-> +	hashmap_entry_init(&entry->ent, memhash(path, path_length));
-> +	entry->path = path;
-> +	entry->path_length = path_length;
-> +	entry->is_present = found;
-> +	hashmap_add(path_cache, &entry->ent);
-> +}
-> +
-> +static int path_found(struct hashmap *path_cache, struct mem_pool *pool,
-> +		      const char *path, int path_length)
-> +{
-> +	struct stat st;
-> +	int found;
-> +	const char *dirsep = path + path_length - 1;
-> +	const char *tmp;
-> +
-> +	/* Find directory separator; memrchr is sadly glibc-specific */
-> +	while (dirsep > path && *dirsep != '/')
-> +		dirsep--;
-> +
-> +	/* If parent of path doesn't exist, no point lstat'ing path... */
-> +	if (dirsep > path) {
-> +		struct path_cache_entry *entry;
-> +		int new_length, parent_found;
-> +
-> +		/* First, check if path's parent's existence was cached */
-> +		new_length = dirsep - path;
-> +		entry = find_path_cache_entry(path_cache, path, new_length);
-> +		if (entry)
-> +			parent_found = entry->is_present;
-> +		else
-> +			parent_found = path_found(path_cache, pool,
-> +						  path, new_length);
-> +
-> +		if (!parent_found) {
-> +			/* path can't exist if parent dir doesn't */
-> +			record(path_cache, pool, path, path_length, 0);
-> +			return 0;
-> +		} /* else parent was found so must check path itself too... */
-> +	}
-> +
-> +	/* Okay, parent dir exists, so we have to check original path */
-> +
-> +	/* Make sure we have a NUL-terminated string to pass to lstat */
-> +	tmp = path;
-> +	if (path[path_length])
-> +		tmp = mem_pool_strndup(pool, path, path_length);
-> +	/* Determine if path exists */
-> +	found = !lstat(tmp, &st);
-> +
-> +	record(path_cache, pool, path, path_length, found);
-> +	return found;
-> +}
-> +
->  void ensure_skip_worktree_means_skip_worktree(struct index_state *istate)
->  {
-> +	struct hashmap path_cache = HASHMAP_INIT(path_cache_cmp, NULL);
-> +	struct mem_pool pool;
-> +
->  	int i;
-> +
->  	if (!core_apply_sparse_checkout)
->  		return;
->  
-> +	mem_pool_init(&pool, 32*1024);
->  restart:
->  	for (i = 0; i < istate->cache_nr; i++) {
->  		struct cache_entry *ce = istate->cache[i];
-> -		struct stat st;
->  
-> -		if (ce_skip_worktree(ce) && !lstat(ce->name, &st)) {
-> +		if (ce_skip_worktree(ce) &&
-> +		    path_found(&path_cache, &pool, ce->name, strlen(ce->name))) {
->  			if (S_ISSPARSEDIR(ce->ce_mode)) {
->  				ensure_full_index(istate);
->  				goto restart;
-> @@ -360,6 +459,8 @@ void ensure_skip_worktree_means_skip_worktree(struct index_state *istate)
->  			ce->ce_flags &= ~CE_SKIP_WORKTREE;
->  		}
->  	}
-> +	hashmap_clear(&path_cache);
-> +	mem_pool_discard(&pool, 0);
->  }
->  
->  
+>  Documentation/gitattributes.txt | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribut=
+es.txt
+> index 83fd4e19a4..60984a4682 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -160,11 +160,12 @@ unspecified.
+>  ^^^^^
+>
+>  This attribute sets a specific line-ending style to be used in the
+> -working directory.  It enables end-of-line conversion without any
+> -content checks, effectively setting the `text` attribute.  Note that
+> -setting this attribute on paths which are in the index with CRLF line
+> -endings may make the paths to be considered dirty.  Adding the path to
+> -the index again will normalize the line endings in the index.
+> +working directory.  This attribute has effect only if the `text`
+> +attribute is set or unspecified, or if it is set to `auto` and the file
+> +is detected as text.
 
+
+
+>  Note that setting this attribute on paths which
+> +are in the index with CRLF line endings may make the paths to be
+> +considered dirty. Adding the path to the index again will normalize the
+> +line endings in the index.
+
+I think that this can be loosened as well. And, beside this, the "dirty"
+warning about setting attributes could be written as part of the "text"
+attribute as well. I dunno. Here is a possible suggestion:
+
+
+  Note that setting this attribute on paths which are in the index with CR=
+LF
+  line endings may make the paths to be considered dirty - unless "text=3D=
+auto"
+  is set. `git ls-files --eol` can be used to check the "line ending statu=
+s".
+  Adding the path to the index again will normalize the line endings in th=
+e index.
+
+>
+>  Set to string value "crlf"::
+>
