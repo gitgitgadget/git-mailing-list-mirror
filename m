@@ -2,110 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F68EC433F5
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 19:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C57EBC433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 19:40:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236090AbiAKTcB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 14:32:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43868 "EHLO
+        id S237069AbiAKTkw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 14:40:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235731AbiAKTcA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 14:32:00 -0500
-Received: from mail-vk1-xa35.google.com (mail-vk1-xa35.google.com [IPv6:2607:f8b0:4864:20::a35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19D90C06173F
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 11:32:00 -0800 (PST)
-Received: by mail-vk1-xa35.google.com with SMTP id 191so200753vkc.1
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 11:32:00 -0800 (PST)
+        with ESMTP id S236898AbiAKTkv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 14:40:51 -0500
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E250C06173F
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 11:40:51 -0800 (PST)
+Received: by mail-io1-xd2c.google.com with SMTP id w9so273549iol.13
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 11:40:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=WgT9Slz44QqvUBaA9e8PpDBmhhLvYyag4TQett+A5s0=;
-        b=k5PNpu3XCS4Yyj3zdHcbT5vXEmN9D7HDlKrV/caOTGaFilYHiiEL8ioy5uP+2xkjUk
-         SKlJrhORqsJqxrR7JdZT7nzpn1pNPa11Y0tUACpjrd2dVzY35ut04Yoa6sdfq4IoHgSX
-         W3C9FcknvnTbqcPIeTBae85azq7opQBbEfMr1kvZ6eLWCj4L0FcjvxhiQaTDyto59S10
-         6kXzwHJne0mLfdXIf+9OjzZ2O8T/cEAW7rxeoX1Iwz/OhQb7fcHyUsV/U/wC89+l98Zc
-         y4kSiL2NRR84IBmmaEAPwEKRCVMv6mERUWjVEwxCl9v5RItU8Z9eSs8VQhSZGpqhJTKr
-         SNfw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=gVBA6DdjKjO5xgE6VXaXVcKPu7kpLv1R2+WzKiRd0fE=;
+        b=IMRLMgOJP0lKwqH2k06I0N+WTC4eXa1+lHWmo56PUphqi5sm+JiUzTTIcgLyiyaxFP
+         kSZecD2IQXZ/Bw3NRE8u9DjLNtt1nMFs0d4m+kRma125OTltIRdjgUQoGGEXAIE9Sefw
+         PnkgkXP2dB1Y2tPR/UMoiniPGspS7SYFjfFOT4HA39x9QoAtExXEIbPXIlUYKzBXgY7J
+         lLZB62WjCXVju3AKxedidvP/k3ZDNmXVUJFPKAHRU9vdbeVBlh/HUs96FJjfVfppkRDv
+         r11GnAHC5s6ZkcrEFof5llOaobA8FzHjkJSOtvX/EkvfzWHmkp9xjvbXup5NeTX9KHe9
+         ECWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=WgT9Slz44QqvUBaA9e8PpDBmhhLvYyag4TQett+A5s0=;
-        b=iZHzyKdk55MWa/miGRRajIzYT2+Ad6HYjchJ8+TmyddDWcQLKSDaWmkg7irY0j6gel
-         i4sz+g4/UCVQ2WDh+fXKekyOep+ONfpe7oo6wAxxtPRUOrVcEFNcJk8rZuZXMI0/H9v4
-         RBlip1ae58vyUFcgq+S16Vv0fU/wA+R9i9u6a4KxsSF1mtilYfBB3cM/eK1+XQsZwxj2
-         DZdSjJ5DjkG8qNT+qZq9/El6ok96JHa805jkt9Af6jek/afhiM3E5KaJ+t9HzCxkFUUc
-         wjD0j1RswiI598hlOXSSpXBPC16j63pizB9XhUHaEfYRbvNq1+8SJu+87S2TI/1KCBra
-         NpdQ==
-X-Gm-Message-State: AOAM530ofT1/UNfv26q/McLNkL7ZHCABpDNdbJU/CLfO0a3kJK7CK7Wk
-        odprCoYQu9wuGjufnoo+lzWVV+OHOV3sesoBSkDK2Q==
-X-Google-Smtp-Source: ABdhPJzlavDXBWi3wqLr1kwYXWxf5oi3cpbtZ3an65MedVy9YjF4ehDo0G6fDXc1uSsInxXbHrwCahWnZhX0MwIhHck=
-X-Received: by 2002:ac5:cda4:: with SMTP id l4mr2969462vka.10.1641929519052;
- Tue, 11 Jan 2022 11:31:59 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=gVBA6DdjKjO5xgE6VXaXVcKPu7kpLv1R2+WzKiRd0fE=;
+        b=HyfaIIj43VQupOFe2Uo7ZCLi5T+kC4yKi7Lp5Msa+jy+zhl5FNExBZrsTtlYhSl2n1
+         +BIeO03a4yU5IiavR3THKqrc+AiF9nAZFTeeYRTP6e+bS56Y0iEhDG0WGX2SLEWV13gy
+         wU+oaq7I07wI7CyYSwhTcXn/qhkde+tyebfSaQ5yXhBIiJDIuRSFeVH0EWuSZ80D96Su
+         YB4el8S+I9ef+549GgbV6lqVTs5rHpLoQ0TtAgwalGbsvliEaFJEbiX2mEca/ZUAa9fy
+         sRqE9JdgFgxMiIYB0C6wyqay0oqvNExMJdUYTJaeBMlIPel8+LFGS6Hq/IYg1x65f6N2
+         lOqA==
+X-Gm-Message-State: AOAM533a/a/T2DHPvsHZzM1TpR5w4Pxoc388sJAu349vNulUwTmFnkR1
+        5PffWGsNyGiVbjS9G0XKzdx1sw==
+X-Google-Smtp-Source: ABdhPJzqgoGz341btfleIjcWtqMU2Dg1FKOFBdha+vGyvuaYe3/MKPpviNfc5nwr4QxYpOmvVAOT5A==
+X-Received: by 2002:a5e:9b07:: with SMTP id j7mr3040669iok.136.1641930051022;
+        Tue, 11 Jan 2022 11:40:51 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i23sm4475205ila.85.2022.01.11.11.40.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jan 2022 11:40:50 -0800 (PST)
+Date:   Tue, 11 Jan 2022 14:40:50 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Hans Jerry Illikainen <hji@dyntopia.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Gwyneth Morgan <gwymor@tilde.club>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH] t/gpg: simplify test for unknown key
+Message-ID: <Yd3dQkGxG1hbjThH@nand.local>
+References: <20220107091432.581225-1-fs@gigacodes.de>
+ <220111.86r19exl4z.gmgdl@evledraar.gmail.com>
+ <20220111172621.qwupg4oyosvpeguu@fs>
 MIME-Version: 1.0
-References: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com>
- <patch-3.3-93112305523-20220111T163908Z-avarab@gmail.com> <Yd3aZ5Q9Ph0H+Ijn@nand.local>
-In-Reply-To: <Yd3aZ5Q9Ph0H+Ijn@nand.local>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 11 Jan 2022 20:31:47 +0100
-Message-ID: <CAFQ2z_M0Fjjx8tAd_cXqk9K9q43hwienEy=UsLJi2aW8G3sEwA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] reftable tests: avoid "int" overflow, use "uint64_t"
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220111172621.qwupg4oyosvpeguu@fs>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 11, 2022 at 8:28 PM Taylor Blau <me@ttaylorr.com> wrote:
+On Tue, Jan 11, 2022 at 06:26:21PM +0100, Fabian Stelzer wrote:
+> > I was about to submit
+> > exactly this patch for you but with:
+> >
+> > 	-       test_must_fail git verify-commit thirteenth-signed 2>actual &&
+> > 	+       test_must_fail env GNUPGHOME="$GNUPGHOME_NOT_USED" git verify-commit initial 2>actual &&
+> >
+> > Both of those are probably a good thing to do here. I.e.:
+> >
+> > 1. Didn't we have portability issues with "ENV_VAR=VALUE shell_function ..." ?
 >
-> On Tue, Jan 11, 2022 at 05:40:23PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
-> > diff --git a/reftable/merged_test.c b/reftable/merged_test.c
-> > index 24461e8a802..b87ff495dfd 100644
-> > --- a/reftable/merged_test.c
-> > +++ b/reftable/merged_test.c
-> > @@ -24,8 +24,8 @@ license that can be found in the LICENSE file or at
-> >  static void write_test_table(struct strbuf *buf,
-> >                            struct reftable_ref_record refs[], int n)
-> >  {
-> > -     int min =3D 0xffffffff;
-> > -     int max =3D 0;
-> > +     uint64_t min =3D 0xffffffff;
-> > +     uint64_t max =3D 0;
+> I'm not good with portability stuff and trust your judgment on this.
+
+See [1] and the ensuing discussion for a good summary. Re-reading
+that thread and comparing it with what we see with `git grep
+test_must_fail env -- t` confirms that that
+
+    test_must_fail env GNUPGHOME="$GNUPGHOME_NOT_USED" git verify-commit ...
+
+is the right thing to do here.
+
+> > 2. You're pointing to a nonexisting ./empty_home, but shouldn't we use
+> >    $GNUPGHOME_NOT_USED? The existing "show unknown signature with custom format"
+> >    test in the same file does that.
 >
-> Han-Wen: it looks like the loop below the context here is to set the
-> min/max of update_index over all of the ref records?
+> I was not aware of $GNUPGHOME_NOT_USED but it is used in a similar fashion.
+> However it is set to the old value of $GNUPGHOME before we change it in
+> lib-gpg.sh which seems wrong to me. Wouldn't it then just pick up the gpg
+> homedir of whatever the test environment has?
+> Using the variable is good, but i would set it to a known empty directory
+> or?
 
-correct.
+Yeah, t7510 captures the value of $GNUPGHOME as $GNUPGHOME_NOT_USED
+before sourcing t/lib-gpg.sh. So long as nobody else has tampered with
+$GNUPGHOME, they should get `$TRASH_DIRECTORY/gnupg-home-not-used`.
 
-> But perhaps not so from a width perspective, if sizeof(int) !=3D 8 (thoug=
-h
-> I suspect in practice that we are unlikely to have enough possible
-> values of update_index for that to matter).
+But I'm less certain that there isn't somebody accidentally ignoring the
+"not-used" portion of the test $GNUPGHOME ;).
 
-correct.
+And I don't think that reasoning through it all is that worthwhile, so
+I'm fine with what a much more direct ./empty_home here.
 
-> In any case, you're only setting the lower half of `min` high. Maybe:
->
->     uint64_t min =3D ~0ul;
+Thanks,
+Taylor
 
-yeah, that works.
-
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+[1]: https://lore.kernel.org/git/xmqqbn3l3kmc.fsf@gitster.mtv.corp.google.com/
