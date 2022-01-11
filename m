@@ -2,87 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8912CC433F5
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 10:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51360C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 10:41:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237905AbiAKKhl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 05:37:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59660 "EHLO
+        id S1349322AbiAKKl1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 05:41:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237838AbiAKKhk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 05:37:40 -0500
-Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6E46C06173F
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 02:37:39 -0800 (PST)
-Received: by mail-ua1-x929.google.com with SMTP id m15so14442495uap.6
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 02:37:39 -0800 (PST)
+        with ESMTP id S237719AbiAKKlZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 05:41:25 -0500
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A28F4C06173F
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 02:41:24 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id o12so54768851lfk.1
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 02:41:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=MT7ReaU5pfxOHPu7TjKgfx/J/EzIblebxgNZoT956Tk=;
-        b=joQlmNs7+bdD7ISJHFA7tA9uNUFAtJ9KLZ2bm5XCNsOLFjsCaRurHr8Bykiv1Li2f4
-         mjAd6Nou0XAi3xteVmn+qAWdxm64TQaQZD4LXr5mmd5VQnYGtxWjZiO4qswyayZXt6Gi
-         2yNLQgY2qZRNiyww9BBOBxY/o/UjeuhOjB6M035e6SpTpylYkBxeZ/1PyFVb5XWU0Rk3
-         WVFOuKdLSRdAyA1S6RMgUuR32fsqLHQjubgkYhhuOK31HokP6Yk49ggxfqOu/2rIdL67
-         w1uHV/7XtT01TzW22ZbPn/uUe4aubsI3Q4839HFB5W5Vj+c9sTdnh6BlS2qmpRZ7b4sJ
-         0rEA==
+        bh=KrZW2jL8CpSROEIXOvIOJsZOQdZRE/q5s04Kh1ptcwY=;
+        b=dEWGgCcn+VCj7bL5GIGeiHTMXCqiIat5wNLIH8qZ/mtgfGr8T4uyzqFlg4lXnqzq8J
+         U3GJfJOeT8G9DhFZTTECMR3ldobnTfVXkNao892ugnJRrjPzQhNRMpWjG4DbRTGWA4ek
+         OEVwvs539nWSwaCgR12sX5BDUk1k6y0XUbwcPpfN5F+9BKjImJsnJlqvg5yahFOhwV27
+         51TlDFLrmqrguffKlBhFPR9NQs2UywWwWmshy3WWyFeQVePuLnbhdlMxbWBjtNnkLIbB
+         +y6HKcSM7pOZP126GpHnpPzaEeXbLVTZmmDNvGqMLRU3rXzDXMpfH3K94QP4TgPgOrdy
+         bdSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MT7ReaU5pfxOHPu7TjKgfx/J/EzIblebxgNZoT956Tk=;
-        b=h3B8K7+DArgqju61OqJKyJDtJSqSBcuym4wiYW5caKQC+AglKgcTZn4DBi8Pzt3RJr
-         evT+4/xPaAc8BIsEzgbITHyKm0G1m4ea4uDzEm4O+pnNdqj3SbJ9swTIQxYQnsXSVEmv
-         YbMdMtvM8CmTAiFpHMAZYIqiIROh6lLSEYukAtAfB/HcVoieF7ZPjCYEPRZFkcYiJ6TF
-         hH98xyICOkNJUMwNkQ/IqznWi+gwU51w2rqW3ZwlneShNuB43TyVuuKdglclup/rF8cv
-         E0FmxdQO2He/gxOblmcbHslJrW4g2cZna9iGNLYpy5pAD7qN2dU8tKylCBwP7DzSbmfQ
-         m/Vw==
-X-Gm-Message-State: AOAM533cX33CmQsdv0Irj9WXz1XgvsXd9WtHeSRu9DJ4Y4JFPDbIUlf2
-        BREmsmlM2UKsunJDOeEL4lK6RV2ynK4SSkhrOig=
-X-Google-Smtp-Source: ABdhPJxVocO4THBPGwr3DKRThkI2oQofwMpMo4ZdCLUx+B/rU3uYVXUvPxraooURfGZYbFAG6+U2Crd5MwgjjM4gHW4=
-X-Received: by 2002:a67:e9c4:: with SMTP id q4mr1667863vso.43.1641897458725;
- Tue, 11 Jan 2022 02:37:38 -0800 (PST)
+        bh=KrZW2jL8CpSROEIXOvIOJsZOQdZRE/q5s04Kh1ptcwY=;
+        b=nfiFLyo4rSq9OzPuyVfG1yRistsw5DCguE++P9DIC3KvKTmiX/D86GtSYA4lyVQfLD
+         YRR8gd6PwhI8MkLtsQZ/NojvjqTPk/TUK5XZFeLJEbZOsusCqWLZ2BI3aIqIFNizrq53
+         F/4yAWHtDCCxCted330p6naNysPlsHMtP22HqYAbSW0GuxDK99ozLIi9gjvNpYn28jFu
+         4Abr+aZ3UDSITY8dcDsRRNFutUENgMkFQauEIeC/VWdx5qqd8pbShrPNAABxJbnQ4/Zq
+         ngla8s16nS/N46o9ip96WmEJc8N5lH+aJN3qBR1rGDD8TlyfCTEqyPRlV6Vn4Vr5kLxQ
+         7POA==
+X-Gm-Message-State: AOAM531U3rkiwQssciepF8TsU9UBgN+p3pZ+N33su2kUtJVn51n+BpIG
+        8PWIKc/uIT7jvz0Uwmc7Jfznf6YcXQabu9er+t3PHrbufLXVCeom
+X-Google-Smtp-Source: ABdhPJyRT62Ku/kRU5AJVksh1BvuhqwRoubd29Y3mh/SGAByDrIeMxml3j2A91Y+ZhVuSy3sj9+qvJxNltLLJDG9wmQ=
+X-Received: by 2002:a05:6512:3f20:: with SMTP id y32mr2958037lfa.401.1641897683071;
+ Tue, 11 Jan 2022 02:41:23 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1641440700.git.dyroneteng@gmail.com> <8dafb2b3779715aa277eb825a94af87b72f3e093.1641440700.git.dyroneteng@gmail.com>
- <220110.86ilurzcxo.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220110.86ilurzcxo.gmgdl@evledraar.gmail.com>
-From:   Teng Long <dyroneteng@gmail.com>
-Date:   Tue, 11 Jan 2022 18:37:27 +0800
-Message-ID: <CADMgQSQtAB_rX7TPcqbpDoozjghnHRq=HghGYQrmFVzWbB23Aw@mail.gmail.com>
-Subject: Re: [PATCH v9 9/9] cocci: allow padding with `strbuf_addf()`
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     congdanhqx@gmail.com, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>, peff@peff.net,
-        tenglong.tl@alibaba-inc.com,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20211217112629.12334-1-chiyutianyi@gmail.com> <20220108085419.79682-2-chiyutianyi@gmail.com>
+ <8f9dd345-56c4-9a20-151b-e0e6d1a5b3fa@web.de>
+In-Reply-To: <8f9dd345-56c4-9a20-151b-e0e6d1a5b3fa@web.de>
+From:   Han Xin <chiyutianyi@gmail.com>
+Date:   Tue, 11 Jan 2022 18:41:11 +0800
+Message-ID: <CAO0brD17MC4THrGVNq70ey+vP-9-W28kZD4y8Fn1mVqyEbEbKA@mail.gmail.com>
+Subject: Re: [PATCH v8 1/6] unpack-objects: low memory footprint for
+ get_data() in dry_run mode
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Han Xin <hanxin.hx@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 11, 2022 at 2:02 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-
-> > The original rule was introduced by commit:
+On Sat, Jan 8, 2022 at 8:28 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>
+>  Am 08.01.22 um 09:54 schrieb Han Xin:
+> > From: Han Xin <hanxin.hx@alibaba-inc.com>
 > >
-> >     https://github.com/git/git/commit/28c23cd4c3902449aff72cb9a4a703220=
-be0d6ac
+> > +assert_no_loose () {
+> > +     glob=3Ddest.git/objects/?? &&
+> > +     echo "$glob" >expect &&
+> > +     eval "echo $glob" >actual &&
+> > +     test_cmp expect actual
+> > +}
+> > +
+> > +assert_no_pack () {
+> > +     rmdir dest.git/objects/pack
 >
-> Let's refer to commits like this:
+> I would expect a function whose name starts with "assert" to have no
+> side effects.  It doesn't matter here, because it's called only at the
+> very end, but that might change.  You can use test_dir_is_empty instead
+> of rmdir.
 >
->     28c23cd4c39 (strbuf.cocci: suggest strbuf_addbuf() to add one strbuf =
-to an other, 2019-01-25)
 
-OK, I will.
+*nod*
+I think it would be better to rename "assert_no_loose()" to "test_no_loose(=
+)".
+I will remove "assert_no_pack()" and use "test_dir_is_empty()" instead.
 
-> That file currently has:
->
->      18:format F =3D~ "s";
->      26:format F =3D~ "s";
->      47:format F =3D~ "s";
->
-> If we're fixing these let's fix the other logic errors as well.
-
-Thanks for the reminding=EF=BC=8C they'll be applied in the next patch.
+Thanks
+-Han Xin
