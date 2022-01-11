@@ -2,95 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51360C433F5
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 10:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 415E9C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 11:02:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349322AbiAKKl1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 05:41:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60526 "EHLO
+        id S238133AbiAKLCA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 06:02:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237719AbiAKKlZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 05:41:25 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A28F4C06173F
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 02:41:24 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id o12so54768851lfk.1
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 02:41:24 -0800 (PST)
+        with ESMTP id S235439AbiAKLCA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 06:02:00 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A78C06173F
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 03:01:59 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id c126-20020a1c9a84000000b00346f9ebee43so1563385wme.4
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 03:01:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=KrZW2jL8CpSROEIXOvIOJsZOQdZRE/q5s04Kh1ptcwY=;
-        b=dEWGgCcn+VCj7bL5GIGeiHTMXCqiIat5wNLIH8qZ/mtgfGr8T4uyzqFlg4lXnqzq8J
-         U3GJfJOeT8G9DhFZTTECMR3ldobnTfVXkNao892ugnJRrjPzQhNRMpWjG4DbRTGWA4ek
-         OEVwvs539nWSwaCgR12sX5BDUk1k6y0XUbwcPpfN5F+9BKjImJsnJlqvg5yahFOhwV27
-         51TlDFLrmqrguffKlBhFPR9NQs2UywWwWmshy3WWyFeQVePuLnbhdlMxbWBjtNnkLIbB
-         +y6HKcSM7pOZP126GpHnpPzaEeXbLVTZmmDNvGqMLRU3rXzDXMpfH3K94QP4TgPgOrdy
-         bdSA==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=YiDllnMxRN8vN6jps3Jqf5+QqjqRSgs6hBNkredewDQ=;
+        b=HpnfGTA9qqW5yH0QG+e9lD3jl1LnLktWjJWiTUjXEKPBzj/ER7x1Nw53atLEt0mUf3
+         OoYyi+gCOSfIjAA2M3gqjCbRJx+fXh0pstgmjb/dDPIiFZOB5u44fjb3a4wBQo8MFdVo
+         RGnUrmmXJO3PU6ASiS35Vo7qO7WU6gsRFEPjqdeID6Ozbeu9wYUbOD0GCG7VzsDFwD4f
+         umMITGPPAx45Cq23LQbylzUPt8hLUdTJx7aqNL3mJ1TGBHYGMmHZQ1mhCPJZSVDEVK5C
+         Zv8IPdlOzgwOg83Qd69hJFv4Egw/HWEAFLI5hZTToKUH1t+8DWTvIwMkXQxIjsVQ1yFu
+         NxPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=KrZW2jL8CpSROEIXOvIOJsZOQdZRE/q5s04Kh1ptcwY=;
-        b=nfiFLyo4rSq9OzPuyVfG1yRistsw5DCguE++P9DIC3KvKTmiX/D86GtSYA4lyVQfLD
-         YRR8gd6PwhI8MkLtsQZ/NojvjqTPk/TUK5XZFeLJEbZOsusCqWLZ2BI3aIqIFNizrq53
-         F/4yAWHtDCCxCted330p6naNysPlsHMtP22HqYAbSW0GuxDK99ozLIi9gjvNpYn28jFu
-         4Abr+aZ3UDSITY8dcDsRRNFutUENgMkFQauEIeC/VWdx5qqd8pbShrPNAABxJbnQ4/Zq
-         ngla8s16nS/N46o9ip96WmEJc8N5lH+aJN3qBR1rGDD8TlyfCTEqyPRlV6Vn4Vr5kLxQ
-         7POA==
-X-Gm-Message-State: AOAM531U3rkiwQssciepF8TsU9UBgN+p3pZ+N33su2kUtJVn51n+BpIG
-        8PWIKc/uIT7jvz0Uwmc7Jfznf6YcXQabu9er+t3PHrbufLXVCeom
-X-Google-Smtp-Source: ABdhPJyRT62Ku/kRU5AJVksh1BvuhqwRoubd29Y3mh/SGAByDrIeMxml3j2A91Y+ZhVuSy3sj9+qvJxNltLLJDG9wmQ=
-X-Received: by 2002:a05:6512:3f20:: with SMTP id y32mr2958037lfa.401.1641897683071;
- Tue, 11 Jan 2022 02:41:23 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=YiDllnMxRN8vN6jps3Jqf5+QqjqRSgs6hBNkredewDQ=;
+        b=dhTDL+WDAw7NYh+uM+EzX4QhlWbN9vZQJP1qqXnsO4BQV/PTT/e6ZsQ8fQl+UUQAMo
+         dtuafLCKcFDAVNOcuYCm6YYrCILjRhuozRklcF52NVaLdbNnZQt34VV4rQiJA2LLx8D2
+         mxfF+a5hC1BtgZhjcCYlTuuzBGOgk9WGg1h6biz3lvWOb/LzQj0lSFYq7BEgfxGtofmN
+         mlucoBsBw4SPTZxT5gGK6MxOMJ+wpN9j4K9NXtWcbyD7jhJXCMqtJsxKAPXW0/ie1tzm
+         D60ZvgT+ykReEm/CcrqoK6Bz2WcY9CfMTF/zVN3kEfVrhpOoJvuR8EXh+mend9UkFMDo
+         qmUA==
+X-Gm-Message-State: AOAM532n2VGPOGGKTPIb1RulY+AFBMX3wvmQlNj+wdclu0ip6Q2FBESB
+        rdw4aSWBNOq5+X3z6qVeCXw=
+X-Google-Smtp-Source: ABdhPJx0FPZ7FzBVdewvFes1cjowL9igh77sXwXnWoGJBbPeIfPB0Nx9AyMQrHoYS3+2M9WYhkvAgg==
+X-Received: by 2002:a1c:c917:: with SMTP id f23mr2027633wmb.10.1641898918315;
+        Tue, 11 Jan 2022 03:01:58 -0800 (PST)
+Received: from [192.168.1.201] ([31.185.185.186])
+        by smtp.googlemail.com with ESMTPSA id t7sm1423221wmq.42.2022.01.11.03.01.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Jan 2022 03:01:57 -0800 (PST)
+Message-ID: <8d07e92e-b63a-6be4-6999-79c36ca07cb5@gmail.com>
+Date:   Tue, 11 Jan 2022 11:01:55 +0000
 MIME-Version: 1.0
-References: <20211217112629.12334-1-chiyutianyi@gmail.com> <20220108085419.79682-2-chiyutianyi@gmail.com>
- <8f9dd345-56c4-9a20-151b-e0e6d1a5b3fa@web.de>
-In-Reply-To: <8f9dd345-56c4-9a20-151b-e0e6d1a5b3fa@web.de>
-From:   Han Xin <chiyutianyi@gmail.com>
-Date:   Tue, 11 Jan 2022 18:41:11 +0800
-Message-ID: <CAO0brD17MC4THrGVNq70ey+vP-9-W28kZD4y8Fn1mVqyEbEbKA@mail.gmail.com>
-Subject: Re: [PATCH v8 1/6] unpack-objects: low memory footprint for
- get_data() in dry_run mode
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Han Xin <hanxin.hx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v7 1/2] name-rev: deprecate --stdin in favor of
+ --annotate-stdin
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <pull.1171.v6.git.git.1641423600.gitgitgadget@gmail.com>
+ <pull.1171.v7.git.git.1641425372.gitgitgadget@gmail.com>
+ <153f69ea9b6cfc3fff47c91fa237cf97efd6bfae.1641425372.git.gitgitgadget@gmail.com>
+ <56FFAD1E-D081-4D13-A12E-DD6807375B69@gmail.com> <xmqqo84j1oel.fsf@gitster.g>
+ <A869C5DC-98D0-4093-90ED-5F7933041968@gmail.com> <xmqqo84jz9qf.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqo84jz9qf.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 8, 2022 at 8:28 PM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->
->  Am 08.01.22 um 09:54 schrieb Han Xin:
-> > From: Han Xin <hanxin.hx@alibaba-inc.com>
-> >
-> > +assert_no_loose () {
-> > +     glob=3Ddest.git/objects/?? &&
-> > +     echo "$glob" >expect &&
-> > +     eval "echo $glob" >actual &&
-> > +     test_cmp expect actual
-> > +}
-> > +
-> > +assert_no_pack () {
-> > +     rmdir dest.git/objects/pack
->
-> I would expect a function whose name starts with "assert" to have no
-> side effects.  It doesn't matter here, because it's called only at the
-> very end, but that might change.  You can use test_dir_is_empty instead
-> of rmdir.
->
+On 10/01/2022 19:11, Junio C Hamano wrote:
+> John Cai <johncai86@gmail.com> writes:
+> 
+>>> As I said, my mention of hidden vs non-hidden was not my preferrence
+>>> of non-hidden over hidden, but was soliciting opinions from others,
+>>> so I was a bit surprised to see a reroll to change only that thing
+>>> and nothing else so soon.
+>>>
+>>> But if it is your preference to leave it unhidden for now, that is
+>>> fine as well.  I have no strong preference over the matter either
+>>> way.
+>>
+>> I think it makes sense in this first iteration to keep it
+>> non-hidden for visibility purposes.  Maybe in the next release we
+>> can make it hidden before we move it altogether.
+> 
+> I think that is a sensible way forward.
 
-*nod*
-I think it would be better to rename "assert_no_loose()" to "test_no_loose(=
-)".
-I will remove "assert_no_pack()" and use "test_dir_is_empty()" instead.
+I agree
 
 Thanks
--Han Xin
+
+Phillip
+
