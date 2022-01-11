@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C5FEC4332F
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 18:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA3EFC433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 18:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350188AbiAKSHC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 13:07:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51470 "EHLO
+        id S242525AbiAKSHE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 13:07:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345679AbiAKSGB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1350383AbiAKSGB (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 11 Jan 2022 13:06:01 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB01C034003
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:05:16 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id k18so34459065wrg.11
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:05:16 -0800 (PST)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AA36C034002
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:05:15 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id k18so34458914wrg.11
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:05:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=aK3NuUCpaTu71utxcsxgza1gVP3L5JeprbAJ5CLzEws=;
-        b=iGk5ntCP1SQUR9h5NLzSdHrmsCieE9S2sVNE74acepA9X+fC4tHq9i5vj6GzNnpq34
-         QI424hnSPJ/Ad52FWNepbCcA8/hXzvc+Kqm192YYoZb15NXXReSaNTxooViJq+eqURpg
-         EfE4vB87A05wSWvnsohxCHv44W59mAA2cz+NUQfgdCMMCN2dZRdLxnVL1eW+/J0JXfl0
-         kQxNTvxs0E8qlKI5XEvdqXhUaMZrX3ZcqU6P0ts/h0bQ96uhzh/RRtA9aFCSUTCNt/8u
-         z4oZbPdVJqNDl+RS2XT/mTke1y3XnrJXJtxhz3m4wY7AKOU990NWKgWxEHHvu+F5cQ+k
-         WqKA==
+        bh=WCWbgCknVLASCxeZ5soBgr4yUl7SqyT9hYkenmHOnoY=;
+        b=EOz/zIA7uVTycBzDi1x2FO6ikHk8uKo/unTTDT1883jnT+o5qEsGcebu4DttaAfHoY
+         ilXtu3++3gRPmUPS8XyX9oWe0wgLlR3IuIesEVbRyUBheU9vosTvv6iM/5ImlCjggQR7
+         kPNE4jp/ncPSS14y+/zf6vSb7ReOb6UeumutafbzMsYe9dYvi4H8IvEyB3WIQtzqrDW3
+         t7MmR3XEl0fBTAkNhhArAFQ8AE2fv+h7VOFAPkpCGzrBbEI3NMc6nbp4qWRUWURJ67D8
+         W+VyL8bH47uKgsy1t13as4M+jGDN6YFpRrDx5angY1A9WYZuLWw/KuigVzdymD3sjAjj
+         EexQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aK3NuUCpaTu71utxcsxgza1gVP3L5JeprbAJ5CLzEws=;
-        b=PlVxSg5hk8JXN+e2XkvTuBza1C7Y3r3m3fpHg+W5z0QD1iOeyk2lBv3Ml3yecBE8yP
-         gvkOGilRSyl+6VHsx59rvDerlLlJ/vL2MTwhswh5b2RJFlzPvjJHSj02oGcCT2wzG9KC
-         5dK91Hgu+muTfAUlfHacwi2pTgjEB7vjkUKC2yUzrm8h1rTCAPkvXSZAh1IR+e2iU1Ia
-         desJ2FIvsZqHKWVnOPOHrmHd3xu9KYEQh6CFS0NQG5Ix4tHro1WW9iTt5hDHo6nwwh8/
-         hcbHMzL8fCI4D9XsTXPwxUJ8x2RWqWe8NfmKSHXqf+fYqQSoOIDMMMAbOT6OULAdMpZF
-         /74g==
-X-Gm-Message-State: AOAM530+AIAnuBfP/yMLCpRqealFLAWo4AJq8TIPS6DWOyt6g3MKnZxx
-        3QDqLKXEX3kUmFd/eZLtUSl4HGa1HWY=
-X-Google-Smtp-Source: ABdhPJwXpMw+sez1Hd/dqTuLa7kVmyXanFHU63isEluFaTtX7S4POBinuGZWELXetXGabRdNMNpmTQ==
-X-Received: by 2002:adf:ee0e:: with SMTP id y14mr107656wrn.172.1641924315353;
-        Tue, 11 Jan 2022 10:05:15 -0800 (PST)
+        bh=WCWbgCknVLASCxeZ5soBgr4yUl7SqyT9hYkenmHOnoY=;
+        b=K5tTcMcxVd2/azQXSwgj8M23uNINnjoVXdBjeGnp/XtV+KWeXz02DaCwoNqLrix09N
+         UaghWHg1J4opLztYgi940HIf2sA5FqRQiRv62RuXegsmlf+F1cPXUcoCHXNRQzCLu1qa
+         JFDRTwx0aUkEUkBRouIPso95SlKR+hLTJXdRIqfiVoDb5mLhCLR3ZlDErRYykpYSajYi
+         Idg+vD7qTrwIrSt1KGmOfaT9KdG21JX40oqrRGSCrlSFxKD3d+XpXwsgYZo6X9x+uJ4D
+         AAXdFcvZUdnqqFbq7z54MNNlGBLbMlhtyol5ax43o6YJ4pY4iHakMdyPfTsxOAK9rYBA
+         Y3sA==
+X-Gm-Message-State: AOAM5331cX3mtVhmpwYTjimWqbOMCfmbNw/CeSXTCo34A6nbB9CRQF4k
+        Y3WvvikuVnzgMIq5ZJnYWtqDMUAywpg=
+X-Google-Smtp-Source: ABdhPJxO2B9HtMuCbWK1jybtEMxDzBjViFc5pW/RMy87UiZ8QCDyNr4yn9mG05oZuNgojHAGOMJsCg==
+X-Received: by 2002:adf:dfc8:: with SMTP id q8mr4981813wrn.142.1641924313680;
+        Tue, 11 Jan 2022 10:05:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 11sm13268725wrz.63.2022.01.11.10.05.14
+        by smtp.gmail.com with ESMTPSA id x18sm2243216wmj.15.2022.01.11.10.05.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jan 2022 10:05:14 -0800 (PST)
-Message-Id: <ff32952a21c5005552a2892c4ac1a581f4fd0bb2.1641924306.git.gitgitgadget@gmail.com>
+        Tue, 11 Jan 2022 10:05:13 -0800 (PST)
+Message-Id: <601888606d1cf7d7752844dbdbc7fac20d4be8c4.1641924306.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1109.v2.git.1641924306.gitgitgadget@gmail.com>
 References: <pull.1109.git.1641317820.gitgitgadget@gmail.com>
         <pull.1109.v2.git.1641924306.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 11 Jan 2022 18:05:04 +0000
-Subject: [PATCH v2 7/9] update-index: add tests for sparse-checkout
- compatibility
+Date:   Tue, 11 Jan 2022 18:05:02 +0000
+Subject: [PATCH v2 5/9] checkout-index: add --ignore-skip-worktree-bits option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,233 +67,189 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Introduce tests for a variety of `git update-index` use cases, including
-performance scenarios. Tests are intended to exercise `update-index` with
-options that change the commands interaction with the index (e.g.,
-`--again`) and with files/directories inside and outside a sparse checkout
-cone.
+Update `checkout-index` to no longer refresh files that have the
+`skip-worktree` bit set, exiting with an error if `skip-worktree` filenames
+are directly provided to `checkout-index`. The newly-added
+`--ignore-skip-worktree-bits` option provides a mechanism to replicate the
+old behavior, checking out *all* files specified (even those with
+`skip-worktree` enabled).
 
-Of note is that these tests clearly establish the behavior of `git
-update-index --add` with untracked, outside-of-cone files. Unlike `git add`,
-which fails with an error when provided with such files, `update-index`
-succeeds in adding them to the index. Additionally, the `skip-worktree` flag
-is *not* automatically added to the new entry. Although this is pre-existing
-behavior, there are a couple of reasons to avoid changing it in favor of
-consistency with e.g. `git add`:
+The ability to toggle whether files should be checked-out based on
+`skip-worktree` already exists in `git checkout` and `git restore` (both of
+which have an `--ignore-skip-worktree-bits` option). The change to, by
+default, ignore `skip-worktree` files is especially helpful for
+sparse-checkout; it prevents inadvertent creation of files outside the
+sparse definition on disk and eliminates the need to expand a sparse index
+when using the `--all` option.
 
-* `update-index` is low-level command for modifying the index; while it can
-  perform operations similar to those of `add`, it traditionally has fewer
-  "guardrails" preventing a user from doing something they may not want to
-  do (in this case, adding an outside-of-cone, non-`skip-worktree` file to
-  the index)
-* `update-index` typically only exits with an error code if it is incapable
-  of performing an operation (e.g., if an internal function call fails);
-  adding a new file outside the sparse checkout definition is still a valid
-  operation, albeit an inadvisable one
-* `update-index` does not implicitly set flags (e.g., `skip-worktree`) when
-  creating new index entries with `--add`; if flags need to be updated,
-  options like `--[no-]skip-worktree` allow a user to intentionally set them
+Internal usage of `checkout-index` in `git stash` and `git filter-branch` do
+not make explicit use of files with `skip-worktree` enabled, so
+`--ignore-skip-worktree-bits` is not added to them.
 
-All this to say that, while there are valid reasons to consider changing the
-treatment of outside-of-cone files in `update-index`, there are also
-sufficient reasons for leaving it as-is.
-
-Co-authored-by: Derrick Stolee <dstolee@microsoft.com>
+Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- t/perf/p2000-sparse-operations.sh        |   1 +
- t/t1092-sparse-checkout-compatibility.sh | 167 +++++++++++++++++++++++
- 2 files changed, 168 insertions(+)
+ Documentation/git-checkout-index.txt     | 10 +++++++--
+ builtin/checkout-index.c                 | 13 ++++++++++++
+ t/t1092-sparse-checkout-compatibility.sh | 27 +++++++++++++++---------
+ 3 files changed, 38 insertions(+), 12 deletions(-)
 
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 54f8602f3c1..2a7106b9495 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -118,5 +118,6 @@ test_perf_on_all git diff --cached
- test_perf_on_all git blame $SPARSE_CONE/a
- test_perf_on_all git blame $SPARSE_CONE/f3/a
- test_perf_on_all git checkout-index -f --all
-+test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
+diff --git a/Documentation/git-checkout-index.txt b/Documentation/git-checkout-index.txt
+index 4d33e7be0f5..01dbd5cbf54 100644
+--- a/Documentation/git-checkout-index.txt
++++ b/Documentation/git-checkout-index.txt
+@@ -12,6 +12,7 @@ SYNOPSIS
+ 'git checkout-index' [-u] [-q] [-a] [-f] [-n] [--prefix=<string>]
+ 		   [--stage=<number>|all]
+ 		   [--temp]
++		   [--ignore-skip-worktree-bits]
+ 		   [-z] [--stdin]
+ 		   [--] [<file>...]
  
- test_done
+@@ -37,8 +38,9 @@ OPTIONS
+ 
+ -a::
+ --all::
+-	checks out all files in the index.  Cannot be used
+-	together with explicit filenames.
++	checks out all files in the index except for those with the
++	skip-worktree bit set (see `--ignore-skip-worktree-bits`).
++	Cannot be used together with explicit filenames.
+ 
+ -n::
+ --no-create::
+@@ -59,6 +61,10 @@ OPTIONS
+ 	write the content to temporary files.  The temporary name
+ 	associations will be written to stdout.
+ 
++--ignore-skip-worktree-bits::
++	Check out all files, including those with the skip-worktree bit
++	set.
++
+ --stdin::
+ 	Instead of taking list of paths from the command line,
+ 	read list of paths from the standard input.  Paths are
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index e21620d964e..615a118e2f5 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -7,6 +7,7 @@
+ #define USE_THE_INDEX_COMPATIBILITY_MACROS
+ #include "builtin.h"
+ #include "config.h"
++#include "dir.h"
+ #include "lockfile.h"
+ #include "quote.h"
+ #include "cache-tree.h"
+@@ -17,6 +18,7 @@
+ #define CHECKOUT_ALL 4
+ static int nul_term_line;
+ static int checkout_stage; /* default to checkout stage0 */
++static int ignore_skip_worktree; /* default to 0 */
+ static int to_tempfile;
+ static char topath[4][TEMPORARY_FILENAME_LENGTH + 1];
+ 
+@@ -65,6 +67,7 @@ static int checkout_file(const char *name, const char *prefix)
+ 	int namelen = strlen(name);
+ 	int pos = cache_name_pos(name, namelen);
+ 	int has_same_name = 0;
++	int is_skipped = 1;
+ 	int did_checkout = 0;
+ 	int errs = 0;
+ 
+@@ -78,6 +81,9 @@ static int checkout_file(const char *name, const char *prefix)
+ 			break;
+ 		has_same_name = 1;
+ 		pos++;
++		if (!ignore_skip_worktree && ce_skip_worktree(ce))
++			break;
++		is_skipped = 0;
+ 		if (ce_stage(ce) != checkout_stage
+ 		    && (CHECKOUT_ALL != checkout_stage || !ce_stage(ce)))
+ 			continue;
+@@ -106,6 +112,9 @@ static int checkout_file(const char *name, const char *prefix)
+ 		fprintf(stderr, "git checkout-index: %s ", name);
+ 		if (!has_same_name)
+ 			fprintf(stderr, "is not in the cache");
++		else if (is_skipped)
++			fprintf(stderr, "has skip-worktree enabled; "
++					"use '--ignore-skip-worktree-bits' to checkout");
+ 		else if (checkout_stage)
+ 			fprintf(stderr, "does not exist at stage %d",
+ 				checkout_stage);
+@@ -125,6 +134,8 @@ static int checkout_all(const char *prefix, int prefix_length)
+ 	ensure_full_index(&the_index);
+ 	for (i = 0; i < active_nr ; i++) {
+ 		struct cache_entry *ce = active_cache[i];
++		if (!ignore_skip_worktree && ce_skip_worktree(ce))
++			continue;
+ 		if (ce_stage(ce) != checkout_stage
+ 		    && (CHECKOUT_ALL != checkout_stage || !ce_stage(ce)))
+ 			continue;
+@@ -185,6 +196,8 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 	struct option builtin_checkout_index_options[] = {
+ 		OPT_BOOL('a', "all", &all,
+ 			N_("check out all files in the index")),
++		OPT_BOOL(0, "ignore-skip-worktree-bits", &ignore_skip_worktree,
++			N_("do not skip files with skip-worktree set")),
+ 		OPT__FORCE(&force, N_("force overwrite of existing files"), 0),
+ 		OPT__QUIET(&quiet,
+ 			N_("no warning for existing files and files not in index")),
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 0c72c854d84..91f849f541e 100755
+index db7ad41109b..434ef0433c0 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -630,6 +630,173 @@ test_expect_success 'reset with wildcard pathspec' '
- 	test_all_match git ls-files -s -- folder1
- '
- 
-+test_expect_success 'update-index modify outside sparse definition' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+
-+	# Create & modify folder1/a
-+	# Note that this setup is a manual way of reaching the erroneous
-+	# condition in which a `skip-worktree` enabled, outside-of-cone file
-+	# exists on disk. It is used here to ensure `update-index` is stable
-+	# and behaves predictably if such a condition occurs.
-+	run_on_sparse mkdir -p folder1 &&
-+	run_on_sparse cp ../initial-repo/folder1/a folder1/a &&
-+	run_on_all ../edit-contents folder1/a &&
-+
-+	# If file has skip-worktree enabled, update-index does not modify the
-+	# index entry
-+	test_sparse_match git update-index folder1/a &&
-+	test_sparse_match git status --porcelain=v2 &&
-+	test_must_be_empty sparse-checkout-out &&
-+
-+	# When skip-worktree is disabled (even on files outside sparse cone), file
-+	# is updated in the index
-+	test_sparse_match git update-index --no-skip-worktree folder1/a &&
-+	test_all_match git status --porcelain=v2 &&
-+	test_all_match git update-index folder1/a &&
-+	test_all_match git status --porcelain=v2
-+'
-+
-+test_expect_success 'update-index --add outside sparse definition' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+
-+	# Create folder1, add new file
-+	run_on_sparse mkdir -p folder1 &&
-+	run_on_all ../edit-contents folder1/b &&
-+
-+	# The *untracked* out-of-cone file is added to the index because it does
-+	# not have a `skip-worktree` bit to signal that it should be ignored
-+	# (unlike in `git add`, which will fail due to the file being outside
-+	# the sparse checkout definition).
-+	test_all_match git update-index --add folder1/b &&
-+	test_all_match git status --porcelain=v2
-+'
-+
-+# NEEDSWORK: `--remove`, unlike the rest of `update-index`, does not ignore
-+# `skip-worktree` entries by default and will remove them from the index.
-+# The `--ignore-skip-worktree-entries` flag must be used in conjunction with
-+# `--remove` to ignore the `skip-worktree` entries and prevent their removal
-+# from the index.
-+test_expect_success 'update-index --remove outside sparse definition' '
-+	init_repos &&
-+
-+	# When --ignore-skip-worktree-entries is _not_ specified:
-+	# out-of-cone, not-on-disk files are removed from the index
-+	test_sparse_match git update-index --remove folder1/a &&
-+	cat >expect <<-EOF &&
-+	D	folder1/a
-+	EOF
-+	test_sparse_match git diff --cached --name-status &&
-+	test_cmp expect sparse-checkout-out &&
-+
-+	# Reset the state
-+	test_all_match git reset --hard &&
-+
-+	# When --ignore-skip-worktree-entries is specified, out-of-cone
-+	# (skip-worktree) files are ignored
-+	test_sparse_match git update-index --remove --ignore-skip-worktree-entries folder1/a &&
-+	test_sparse_match git diff --cached --name-status &&
-+	test_must_be_empty sparse-checkout-out &&
-+
-+	# Reset the state
-+	test_all_match git reset --hard &&
-+
-+	# --force-remove supercedes --ignore-skip-worktree-entries, removing
-+	# a skip-worktree file from the index (and disk) when both are specified
-+	# with --remove
-+	test_sparse_match git update-index --force-remove --ignore-skip-worktree-entries folder1/a &&
-+	cat >expect <<-EOF &&
-+	D	folder1/a
-+	EOF
-+	test_sparse_match git diff --cached --name-status &&
-+	test_cmp expect sparse-checkout-out
-+'
-+
-+test_expect_success 'update-index with directories' '
-+	init_repos &&
-+
-+	# update-index will exit silently when provided with a directory name
-+	# containing a trailing slash
-+	test_all_match git update-index deep/ folder1/ &&
-+	grep "Ignoring path deep/" sparse-checkout-err &&
-+	grep "Ignoring path folder1/" sparse-checkout-err &&
-+
-+	# When update-index is given a directory name WITHOUT a trailing slash, it will
-+	# behave in different ways depending on the status of the directory on disk:
-+	# * if it exists, the command exits with an error ("add individual files instead")
-+	# * if it does NOT exist (e.g., in a sparse-checkout), it is assumed to be a
-+	#   file and either triggers an error ("does not exist  and --remove not passed")
-+	#   or is ignored completely (when using --remove)
-+	test_all_match test_must_fail git update-index deep &&
-+	run_on_all test_must_fail git update-index folder1 &&
-+	test_must_fail git -C full-checkout update-index --remove folder1 &&
-+	test_sparse_match git update-index --remove folder1 &&
-+	test_all_match git status --porcelain=v2
-+'
-+
-+test_expect_success 'update-index --again file outside sparse definition' '
-+	init_repos &&
-+
-+	test_all_match git checkout -b test-reupdate &&
-+
-+	# Update HEAD without modifying the index to introduce a difference in
-+	# folder1/a
-+	test_sparse_match git reset --soft update-folder1 &&
-+
-+	# Because folder1/a differs in the index vs HEAD,
-+	# `git update-index --no-skip-worktree --again` will effectively perform
-+	# `git update-index --no-skip-worktree folder1/a` and remove the skip-worktree
-+	# flag from folder1/a
-+	test_sparse_match git update-index --no-skip-worktree --again &&
-+	test_sparse_match git status --porcelain=v2 &&
-+
-+	cat >expect <<-EOF &&
-+	D	folder1/a
-+	EOF
-+	test_sparse_match git diff --name-status &&
-+	test_cmp expect sparse-checkout-out
-+'
-+
-+test_expect_success 'update-index --cacheinfo' '
-+	init_repos &&
-+
-+	deep_a_oid=$(git -C full-checkout rev-parse update-deep:deep/a) &&
-+	folder2_oid=$(git -C full-checkout rev-parse update-folder2:folder2) &&
-+	folder1_a_oid=$(git -C full-checkout rev-parse update-folder1:folder1/a) &&
-+
-+	test_all_match git update-index --cacheinfo 100644 $deep_a_oid deep/a &&
-+	test_all_match git status --porcelain=v2 &&
-+
-+	# Cannot add sparse directory, even in sparse index case
-+	test_all_match test_must_fail git update-index --add --cacheinfo 040000 $folder2_oid folder2/ &&
-+
-+	# Sparse match only: the new outside-of-cone entry is added *without* skip-worktree,
-+	# so `git status` reports it as "deleted" in the worktree
-+	test_sparse_match git update-index --add --cacheinfo 100644 $folder1_a_oid folder1/a &&
-+	test_sparse_match git status --porcelain=v2 &&
-+	cat >expect <<-EOF &&
-+	MD folder1/a
-+	EOF
-+	test_sparse_match git status --short -- folder1/a &&
-+	test_cmp expect sparse-checkout-out &&
-+
-+	# To return folder1/a to "normal" for a sparse checkout (ignored &
-+	# outside-of-cone), add the skip-worktree flag.
-+	test_sparse_match git update-index --skip-worktree folder1/a &&
-+	cat >expect <<-EOF &&
-+	S folder1/a
-+	EOF
-+	test_sparse_match git ls-files -t -- folder1/a &&
-+	test_cmp expect sparse-checkout-out
-+'
-+
- test_expect_success 'merge, cherry-pick, and rebase' '
+@@ -772,9 +772,14 @@ test_expect_success 'checkout-index inside sparse definition' '
+ test_expect_success 'checkout-index outside sparse definition' '
  	init_repos &&
  
+-	# File does not exist on disk yet for sparse checkouts, so checkout-index
+-	# succeeds without -f
+-	test_sparse_match git checkout-index -- folder1/a &&
++	# Without --ignore-skip-worktree-bits, outside-of-cone files will trigger
++	# an error
++	test_sparse_match test_must_fail git checkout-index -- folder1/a &&
++	test_i18ngrep "folder1/a has skip-worktree enabled" sparse-checkout-err &&
++	test_path_is_missing folder1/a &&
++
++	# With --ignore-skip-worktree-bits, outside-of-cone files are checked out
++	test_sparse_match git checkout-index --ignore-skip-worktree-bits -- folder1/a &&
+ 	test_cmp sparse-checkout/folder1/a sparse-index/folder1/a &&
+ 	test_cmp sparse-checkout/folder1/a full-checkout/folder1/a &&
+ 
+@@ -783,8 +788,8 @@ test_expect_success 'checkout-index outside sparse definition' '
+ 	run_on_sparse mkdir -p folder1 &&
+ 	run_on_all cp ../new-a folder1/a &&
+ 
+-	test_all_match test_must_fail git checkout-index -- folder1/a &&
+-	test_all_match git checkout-index -f -- folder1/a &&
++	test_all_match test_must_fail git checkout-index --ignore-skip-worktree-bits -- folder1/a &&
++	test_all_match git checkout-index -f --ignore-skip-worktree-bits -- folder1/a &&
+ 	test_cmp sparse-checkout/folder1/a sparse-index/folder1/a &&
+ 	test_cmp sparse-checkout/folder1/a full-checkout/folder1/a
+ '
+@@ -799,14 +804,16 @@ test_expect_success 'checkout-index with folders' '
+ 	test_all_match test_must_fail git checkout-index -f -- folder1/
+ '
+ 
+-# NEEDSWORK: even in sparse checkouts, checkout-index --all will create all
+-# files (even those outside the sparse definition) on disk. However, these files
+-# don't appear in the percentage of tracked files in git status.
+-test_expect_failure 'checkout-index --all' '
++test_expect_success 'checkout-index --all' '
+ 	init_repos &&
+ 
+ 	test_all_match git checkout-index --all &&
+-	test_sparse_match test_path_is_missing folder1
++	test_sparse_match test_path_is_missing folder1 &&
++
++	# --ignore-skip-worktree-bits will cause `skip-worktree` files to be
++	# checked out, causing the outside-of-cone `folder1` to exist on-disk
++	test_all_match git checkout-index --ignore-skip-worktree-bits --all &&
++	test_all_match test_path_exists folder1
+ '
+ 
+ test_expect_success 'clean' '
 -- 
 gitgitgadget
 
