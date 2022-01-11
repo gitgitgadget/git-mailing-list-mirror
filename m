@@ -2,109 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 310B3C433EF
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 20:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9870DC433EF
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 20:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236632AbiAKULV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 15:11:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52890 "EHLO
+        id S236743AbiAKUQt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 15:16:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235771AbiAKULU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 15:11:20 -0500
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43E0FC06173F
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 12:11:20 -0800 (PST)
-Received: by mail-io1-xd31.google.com with SMTP id 19so459529ioz.4
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 12:11:20 -0800 (PST)
+        with ESMTP id S243433AbiAKUQn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 15:16:43 -0500
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04290C061759
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 12:15:59 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id v66-20020a256145000000b006115377709aso275429ybb.3
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 12:15:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=VYcXpWGmyP5/bXR6PwVvwAGH7yqvzUTcOJEi+741ybg=;
-        b=vNUxNT0NwmdOvYuulqX3WPzl+kzuqMI4WWOMBSrCQy9IOMJsXn7Is8yaqzklb7hvV1
-         LM0NRwYwE5W5EIu1Dqt5UoHhSegrJezRJIukZ5rm6aL/K8EbhJFnexW5ylodFtyRH85T
-         xCUJ89QVHM0FUY6wmmg9y7JYCwqCNgjWhod+k8AIjCRc86MFruiVGia8AskceHTIVPAI
-         XMkCGWExJKS8WHdbLZrfW3u24Ed51VHSK+szRYDKlAcC9zQH3sOv8PWyIK5jBDOqrhpl
-         QrHNSkdq/bAzDno4LwfI2RqwJk5UtJE/RLoc8jOzNy8GV3DeZohKhuw1N0X6049GTbQL
-         BvcQ==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=yt9A0DozjSA9n7FkJxwuRLMlMf/3liIo7+PEB9OhJv4=;
+        b=KfqmMpABh9sBmrAoJIDDgczxScMNiVkR6olkGd8CchHwKslN+LaNvNggyUPtGL20Cz
+         ho6fybnHlYh9+c6/5k+vIse8lEuS0MhxKHo8WZ+5kqCD3LGvuCFg1S8tfuhFQ7FJoQAA
+         WD7OngAd6U7AgAPcmibSpaSRJMbWB3I0hrsLG16tIL4qCnlC5oY+mU5L8sw1Di4C4CDi
+         xfbq5li2zNJzRB8MW/j8TJnBpzgZnyDyk7HzbAkIvZ+Yftus74CyBhguSAVkuQsMUdVA
+         IZdjqZ6Ml1XtxHCv9Z0KXt+urdxcWPxU1li7ypy40+xkXjH181IgKijVPbZNWqOBndgK
+         cByQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=VYcXpWGmyP5/bXR6PwVvwAGH7yqvzUTcOJEi+741ybg=;
-        b=a96A8J25KJeGRNSZJyMfJrZDV1TbdmeZwWh08mZbcC1tHk+6hlf5VdZHebC2EKe+Ef
-         Z2+IF+xk5kSsus1pbnxGsxcZ+jGkhV4LIwJ8VHG7gLgyoJj86IOhJJtHwotd+VT0am2n
-         MWeXWWORyX6xkUqcjNmxndvshgNC7lG13zWE8nlDQA75eKfdokONr4LNPpxqu6SN2F1D
-         vRgCrZUv5EuAZpjW598bOEdLJsRBdzk+fHN2HAWAirbMgx/+XxlFopq8Yz58lU5+xv3T
-         Mvg5Ty1vG6lz8yUU4b60tvR6sNP/xbgUOFniMSWvdHhNIfXKMJXsJk0OmakLIO/b2ri+
-         Vivg==
-X-Gm-Message-State: AOAM530oKFQ2v35SQIWWcLkBaCR1eGtfCEBNbA91C9T3UolbhKYj/UST
-        DtxPsQSBCtggMu/BXxNs/zRrqQ==
-X-Google-Smtp-Source: ABdhPJzTiFWUJBeV+ti4+T0J+F9/qkPCgxVtLsyEdn17w1k1ewYlLZppyf9qNSXekc58tBrN5E8LIA==
-X-Received: by 2002:a5d:9857:: with SMTP id p23mr3110583ios.137.1641931879643;
-        Tue, 11 Jan 2022 12:11:19 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x15sm4505839iow.7.2022.01.11.12.11.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jan 2022 12:11:19 -0800 (PST)
-Date:   Tue, 11 Jan 2022 15:11:18 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Teng Long <dyroneteng@gmail.com>, congdanhqx@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        tenglong.tl@alibaba-inc.com,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v9 9/9] cocci: allow padding with `strbuf_addf()`
-Message-ID: <Yd3kZv4Oym1h7zap@nand.local>
-References: <cover.1641440700.git.dyroneteng@gmail.com>
- <8dafb2b3779715aa277eb825a94af87b72f3e093.1641440700.git.dyroneteng@gmail.com>
- <220110.86ilurzcxo.gmgdl@evledraar.gmail.com>
- <Yd2zXOrf+4qX8VLD@nand.local>
- <78aa8c28-d78b-7dee-6616-7708c363a244@web.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <78aa8c28-d78b-7dee-6616-7708c363a244@web.de>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=yt9A0DozjSA9n7FkJxwuRLMlMf/3liIo7+PEB9OhJv4=;
+        b=7wAPhYgLZyeb/LZEGGjSNg5HWLKLWfycy8wIo8aIbNLbFTbi2lB8eZbxNAOSBNvcQv
+         MVx6wL7YS7RyhKQaAhA+KoOEXdbNDwKD6bdEYRUSQNkrawr0ceXnBo13rjjA9R1L3r5V
+         JsY8Sda1FRFbUJELEH4y4Q6gOn702MdevTebNTVT5n7fuSQa88Fv+hg79+UOOEnzm0+g
+         ENy5PEaCFEjon8qZBbCiFfqDFI2jFapn2/xz2gK+3cjAR5GYsE4q5EvbESSh6Nz79wss
+         7hbvATpwPJHAaMqQWMx1Ql3Fqg7L5vyw0HPv6oBGB5Zqk0Dxfw0Wr9fxizmUCfUrIGuK
+         Y7Vg==
+X-Gm-Message-State: AOAM531vfPdunRRW5tIz/oG4lYVCPlYlD9zmQ0l+Ji5CiX5I6zEQYRdN
+        U6aQT1ZakG+xrAzDJL/J66YH4gUa3xtOOdHSCISb
+X-Google-Smtp-Source: ABdhPJxu9x1EVG7smqJW8sLBlLERZ5fC0jYn83BYQUb1HlVleYib5ALPMb9p/4tVyNhgtUDKkg8STF2xutQ5ztRTIrUh
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:cec6:: with SMTP id
+ x189mr7912688ybe.134.1641932158279; Tue, 11 Jan 2022 12:15:58 -0800 (PST)
+Date:   Tue, 11 Jan 2022 12:15:56 -0800
+In-Reply-To: <kl6l4k6akurn.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-Id: <20220111201556.26345-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <kl6l4k6akurn.fsf@chooglen-macbookpro.roam.corp.google.com>
+X-Mailer: git-send-email 2.34.1.575.g55b058a8bb-goog
+Subject: Re: [PATCH v6 5/5] branch: add --recurse-submodules option for branch creation
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     chooglen@google.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, steadmon@google.com,
+        emilyshaffer@google.com, avarab@gmail.com,
+        levraiphilippeblain@gmail.com, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 11, 2022 at 08:06:00PM +0100, René Scharfe wrote:
-> Am 11.01.22 um 17:42 schrieb Taylor Blau:
-> > I find it helpful to have an alias like:
+Glen Choo <chooglen@google.com> writes:
+> >> +test_expect_success 'should create branches if branch exists and --force is given' '
+> >> +	test_when_finished "cleanup_branches super branch-a" &&
+> >> +	(
+> >> +		cd super &&
+> >> +		git -C sub rev-parse HEAD >expected &&
+> >> +		test_commit -C sub baz &&
+> >> +		git -C sub branch branch-a HEAD~1 &&
+> >> +		git branch --recurse-submodules --force branch-a &&
+> >> +		git rev-parse branch-a &&
+> >> +		# assert that sub:branch-a was moved
+> >> +		git -C sub rev-parse branch-a >actual &&
+> >> +		test_cmp expected actual
+> >> +	)
+> >> +'
 > >
-> >     $ git config alias.ll
-> >     !git always --no-pager log -1 --pretty='tformat:%h (%s, %ad)' --date=short
-> >
-> > in my $HOME/.gitconfig so that I can easily format commits in the
-> > standard way.
->
-> You can shorten "--pretty='tformat:%h (%s, %ad)' --date=short" to
-> "--pretty=reference" or "--format=reference".  For me that's easy enough
-> to remember that I don't need an alias.
+> > Should we create branch-a at HEAD instead of HEAD~1?
+> 
+> If we create branch-a at HEAD, we won't be testing that --force moves
+> the branch head. 
 
-Ah, of course. Peff's copy likely predates `--pretty=reference`, and I
-inherited the cruft from him. Your suggestion has the nice benefit of
-colorizing the output when going to the terminal.
+Walking through the lines of the test:
 
-> Silly question, going further off-topic: What's "git always" doing?
+> >> +		git -C sub rev-parse HEAD >expected &&
 
-Oops, I should have mentioned. It's another alias to ensure that the
-following command is always run in a Git repository (either the current
-one or a hand-picked default):
+So "expected" is sub's HEAD at the start of the test. Let's call this
+old-head.
 
-    $ git config alias.always
-    !git rev-parse 2>/dev/null || cd ~/src/git; git
+> >> +		test_commit -C sub baz &&
 
-I often read mail out of my home directory, and the above works with my
-`:Git` command in Vim (which passes its arguments to `git always` and
-inserts the result back into my buffer). That way I don't have to first
-`:cd ~/src/git` and then `:Git ll xyz`, I can just `:Git ll xyz` and it
-does what I meant most of the time.
+We create a new commit on top, whose parent is old-head. Let's call this
+new-head.
 
-Thanks,
-Taylor
+> >> +		git -C sub branch branch-a HEAD~1 &&
+
+We create a new branch at HEAD~1, which is new-head's parent, which is
+old-head. So this branch points to the same thing as "expected".
+
+> >> +		git branch --recurse-submodules --force branch-a &&
+
+When creating new branches with "--force", any branch information in the
+submodule is ignored. So we would expect "branch-a" in sub to be
+overridden from "old-head" to "old-head".
+
+> >> +		git rev-parse branch-a &&
+
+Verifying that branch-a exists, although upon second look, this would
+work whether or not we recursed, so maybe this line can be deleted.
+
+> >> +		# assert that sub:branch-a was moved
+> >> +		git -C sub rev-parse branch-a >actual &&
+> >> +		test_cmp expected actual
+
+A check, as expected.
+
+Unless I missed something, branch-a was never moved - it was created at
+"old-head" and then the "branch --force" is supposed to create it at
+"old-head" anyway. It would make more sense to me if the branch was
+created at "new-head", and then "branch --force" moved it to "old-head".
+
+> This means that the test might pass if we simply ignore
+> any existing branch-a - which is not the intended behavior of --force,
+> but this is behavior that we might want in the future (probably using
+> another option).
+
+By "ignore", supposing that there is an existing branch-a, do you mean
+overwrite branch-a, or not create any branch at all?
