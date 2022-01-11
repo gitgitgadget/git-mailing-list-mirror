@@ -2,378 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8940FC433FE
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 18:11:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5FBEC433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 18:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344327AbiAKSLQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 13:11:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52994 "EHLO
+        id S1344803AbiAKSaQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 13:30:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344673AbiAKSLM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 13:11:12 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BB0EC061748
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:11:11 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id 2-20020a251302000000b006118f867dadso2044472ybt.12
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:11:11 -0800 (PST)
+        with ESMTP id S242661AbiAKSaP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 13:30:15 -0500
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7855BC06173F
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:30:15 -0800 (PST)
+Received: by mail-qv1-xf36.google.com with SMTP id q3so195945qvc.7
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:30:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=/gZQNeovGZL5+ZpDl7rUchVq3anE0AAXTM69LtoN5JU=;
-        b=Eb1V9x9VYhli7ECnGhcaY5r3FD17xOVABh50YE5AgjjZjEafnPfJwiw36avdsJT2VY
-         plkjyC55JeFXHeYt6yUkGOZiT8UugLAPiKQQ2umw8c1itdkml9TLfnxVwZjcpo3EGWWk
-         Gmvs6TTB7fk9ETif+J/I/qLZccMciU2+Oz4fLrtKmLWBoROWnbEUfyA2rChp9tlC6CoC
-         fu6Vnv9kKSTvEJChaSY4UdIkAl9jxRsHWpnd9PU7f9817zBAwxCMnHGWXKfFDDIjdA5y
-         d1Dotgw8w0X6mI+gwzxlLW2GHvW4bdeC2eA8X+HM9qUregzDMFhdBuWDz9SpuJRQCPLH
-         EhpA==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=/H9JQ8jHn8LysbWavrkT70VbuRIYA/q9wlS0YoFSdmc=;
+        b=e0imZ/NGS1n6IRg+xP02GznWsDf9/srkZRiO2g55yYy2KdovYwhUFxD/VxQfyt+CHJ
+         9CuORvpLVjaL1NU1W76bM6IYPwzjarTYmvj3gY5Am7uapYdV81t7a/33Izq3wIwB8bq5
+         TpPapy+IGDFACvrtSwpr1BCvqNWl617Za/FTJrw1O1QsgaacV9CtS++zQ00Nd1FRvJ8P
+         bfjyfs8in0JOb0fmF8RNVljPT5VbZpVNhfrD5RMC+mdGDR4qJG+eAH5FKCFqWEgFJTbR
+         dz/6pog5WyZ6Wtinh+fcoKyl81ZjOkFSU5tGjb2CBebk7eofhxe6PADiGZRSZ9ZqgGsq
+         15jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=/gZQNeovGZL5+ZpDl7rUchVq3anE0AAXTM69LtoN5JU=;
-        b=McHIoPIY0rA6NpWxUnnvws5Y/2QqowanhJxgPxXYjzN+7+OeCbRhNGQZFF2c5eGWg5
-         0G7SzCwh/SWXnzhlWDDQKIbZa99yf+ql1IUGF7g+Oem8Ba4h15hbU14and5qAMNAJzMz
-         7SUlip9KjTzYweZ/6Qzz1KMiLM7Vc4PMSg0MHUvhQoPo8Ry7GLmzrn76hgHrGwlKK07w
-         1TQI0M30bERigsdRhSQ9oSc9PFdJbm4Y14/DdP3ahegRIEmGjJcu5ayq4EXsAaBZvF0Q
-         6SCO/UGnwXeEvwFundtSjaEHWFh9vM1gaPFC6dhpZeZXpfDsShoa1qQiVxU7Lzfk4uz/
-         w11w==
-X-Gm-Message-State: AOAM531qIfzg+Z3SeXXUXNdMM5GJ1WjcuKa+gS/woV0zeYc7kAsK+JIc
-        UxDUR1dUI110qRi86dAiVCa1D2cfOzgRZA==
-X-Google-Smtp-Source: ABdhPJw/VUgd7k+ZCEhfNShCOdVAdSX4ZWEGG55GcfGkP6bsEXyBAAT3MoH0pszsNPicQKbpD2lL8WUKDYHcTQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a5b:dcd:: with SMTP id
- t13mr7732317ybr.46.1641924670460; Tue, 11 Jan 2022 10:11:10 -0800 (PST)
-Date:   Tue, 11 Jan 2022 10:11:08 -0800
-In-Reply-To: <20220111032842.1247928-1-jonathantanmy@google.com>
-Message-Id: <kl6l4k6akurn.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20211220233459.45739-6-chooglen@google.com> <20220111032842.1247928-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v6 5/5] branch: add --recurse-submodules option for branch creation
-From:   Glen Choo <chooglen@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, steadmon@google.com,
-        emilyshaffer@google.com, avarab@gmail.com,
-        levraiphilippeblain@gmail.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=/H9JQ8jHn8LysbWavrkT70VbuRIYA/q9wlS0YoFSdmc=;
+        b=NF2sYPSeemeOi+du501S9jLsGMtvCJVmD09mLF+BW82cJEj1EafqYxCqo3JQRjeWWQ
+         BQ0PtuEan3GhXFCCvdI4wy28qXEDgxpphC31BijasmF2jNfai6Lr1wG3j0Qky4JOjSSy
+         GEP8SELido/hP8Q5QQgAm8qKYtwSfSEmCTuHw5Pa+eJsc7p8Q84v3KfcTaDgspG4Q8KP
+         88/a1A590wkyieFvbm+HrghJLEF9jPGWqznXmiX6MAf/MNw8sM59lU4G0QFHvrzprG2X
+         zdcAmWebz0RWqLDtGdSiwLYzxMc4DNQfWhpgmgeZncWx9cKLTT4gkt2LF4q7bQzd6Gh9
+         QGtw==
+X-Gm-Message-State: AOAM533i95qcfOkEerl/H23p2N6cs9YMWNifMVZ7N1bfoxRJBXFF2POI
+        2405D+/lXALUU00FTUYBS3Fx
+X-Google-Smtp-Source: ABdhPJzG4uItxIqRaiL8YD0Vk3bVqloERQC9d3/AEjMuyEKvBDvz+YBL9mqDMSxpWoOWYLZ02F/ZVA==
+X-Received: by 2002:a05:6214:23c9:: with SMTP id hr9mr4974956qvb.16.1641925814609;
+        Tue, 11 Jan 2022 10:30:14 -0800 (PST)
+Received: from [192.168.0.102] (70.15.20.152.res-cmts.sm.ptd.net. [70.15.20.152])
+        by smtp.gmail.com with ESMTPSA id t3sm7840089qtc.7.2022.01.11.10.30.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Jan 2022 10:30:14 -0800 (PST)
+Message-ID: <950da537-941f-dfb4-460a-1aa4c68e0750@github.com>
+Date:   Tue, 11 Jan 2022 13:30:13 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.1
+Subject: Re: [RFC PATCH 5/5] Accelerate
+ ensure_skip_worktree_means_skip_worktree by caching
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>
+References: <20220109045732.2497526-1-newren@gmail.com>
+ <20220109045732.2497526-6-newren@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <20220109045732.2497526-6-newren@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Elijah Newren wrote:
+> Rather than lstat()'ing every SKIP_WORKTREE path, take advantage of the
+> fact that entire directories will often be missing, especially for cone
+> mode and even more so ever since commit 55dfcf9591 ("sparse-checkout:
+> clear tracked sparse dirs", 2021-09-08).  If we have already determined
+> that the parent directory of a file (or any other previous ancestor)
+> does not exist, then we already know the file cannot exist and do not
+> need to lstat() it separately.
+> 
+> Granted, the cost of ensure_skip_worktree_means_skip_worktree() might
+> be considered a bit high for non-cone mode since it might now lstat()
+> every SKIP_WORKTREE path when the index is loaded (an O(N) cost, with
+> N the number of SKIP_WORKTREE paths), but non-cone mode users already
+> have to deal with the O(N*M) cost (with N=the number of tracked files
+> and M=the number of sparsity patterns), so this should be reasonable.
+> 
 
-> I am not very familiar with branch tracking, so I'll review everything
-> except that part.
->
-> Glen Choo <chooglen@google.com> writes:
->> Although this commit does not introduce breaking changes, it is
->> incompatible with existing --recurse-submodules semantics e.g. `git
->> checkout` does not recursively checkout the expected branches created by
->> `git branch` yet. 
->
-> Probably worth explaining that it will not recursively checkout the
-> expected branches *if* any of them are subsequently updated. Maybe say:
->
->   If a user were to create branches in this way, create a commit on the
->   branch in a submodule, and run "git checkout --recurse-submodules" in
->   the superproject, the commits to be checked out (which are based on
->   the gitlink in the superproject, not on the ref store of the
->   submodule) probably wouldn't match the user's expectation.
->
->> To ensure that the correct set of semantics is used,
->> this commit introduces a new configuration value,
->> `submodule.propagateBranches`, which enables submodule branching when
->> true (defaults to false).
->
-> And then this could be reworded to:
->
->   Because of this, this commit introduces a new configuration value
->   `submodule.propagateBranches`. The plan is for Git commands to
->   prioritize submodule ref store information over superproject gitlink
->   if this is true. Because "git branch --recurse-submodules" writes to
->   submodule ref stores, for the sake of clarity, it will not function
->   unless this configuration value is set.
+Did you write/run any performance tests to see how this optimization changed
+the execution time? If not, running the `p2000` performance tests against
+the patch series base, [3/5], and [5/5] would provide some really helpful
+insight into the cost of `ensure_skip_worktree_means_skip_worktree`, then
+how much this optimization improves it.
 
-Thanks! I'll use this wording - otherwise it might not be clear to
-readers what the difference in 'semantics' refers to.
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  sparse-index.c | 105 ++++++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 103 insertions(+), 2 deletions(-)
+> 
+> diff --git a/sparse-index.c b/sparse-index.c
+> index 79d50e444c..608782e255 100644
+> --- a/sparse-index.c
+> +++ b/sparse-index.c
+> @@ -341,18 +341,117 @@ void ensure_correct_sparsity(struct index_state *istate)
+>  		ensure_full_index(istate);
+>  }
+>  
+> +struct path_cache_entry {
+> +	struct hashmap_entry ent;
+> +	const char *path;
+> +	int path_length;
+> +	int is_present;
+> +};
+> +
+> +static int path_cache_cmp(const void *unused,
+> +			  const struct hashmap_entry *entry1,
+> +			  const struct hashmap_entry *entry2,
+> +			  const void *also_unused)
+> +{
+> +	const struct path_cache_entry *e1, *e2;
+> +
+> +	e1 = container_of(entry1, const struct path_cache_entry, ent);
+> +	e2 = container_of(entry2, const struct path_cache_entry, ent);
+> +	if (e1->path_length != e2->path_length)
+> +		return e1->path_length - e2->path_length;
+> +	return memcmp(e1->path, e2->path, e1->path_length);
+> +}
+> +
+> +static struct path_cache_entry *find_path_cache_entry(struct hashmap *map,
+> +						      const char *str,
+> +						      int str_length)
+> +{
+> +	struct path_cache_entry entry;
+> +	hashmap_entry_init(&entry.ent, memhash(str, str_length));
+> +	entry.path = str;
+> +	entry.path_length = str_length;
+> +	return hashmap_get_entry(map, &entry, ent, NULL);
+> +}
+> +
+> +static void record(struct hashmap *path_cache,
+> +		   struct mem_pool *pool,
+> +		   const char *path,
+> +		   int path_length,
+> +		   int found)
+> +{
+> +	struct path_cache_entry *entry;
+> +
+> +	entry = mem_pool_alloc(pool, sizeof(*entry));
+> +	hashmap_entry_init(&entry->ent, memhash(path, path_length));
+> +	entry->path = path;
+> +	entry->path_length = path_length;
+> +	entry->is_present = found;
+> +	hashmap_add(path_cache, &entry->ent);
+> +}
+> +
+> +static int path_found(struct hashmap *path_cache, struct mem_pool *pool,
+> +		      const char *path, int path_length)
+> +{
+> +	struct stat st;
+> +	int found;
+> +	const char *dirsep = path + path_length - 1;
+> +	const char *tmp;
+> +
+> +	/* Find directory separator; memrchr is sadly glibc-specific */
+> +	while (dirsep > path && *dirsep != '/')
+> +		dirsep--;
+> +
+> +	/* If parent of path doesn't exist, no point lstat'ing path... */
+> +	if (dirsep > path) {
+> +		struct path_cache_entry *entry;
+> +		int new_length, parent_found;
+> +
+> +		/* First, check if path's parent's existence was cached */
+> +		new_length = dirsep - path;
+> +		entry = find_path_cache_entry(path_cache, path, new_length);
+> +		if (entry)
+> +			parent_found = entry->is_present;
+> +		else
+> +			parent_found = path_found(path_cache, pool,
+> +						  path, new_length);
+> +
+> +		if (!parent_found) {
+> +			/* path can't exist if parent dir doesn't */
+> +			record(path_cache, pool, path, path_length, 0);
+> +			return 0;
+> +		} /* else parent was found so must check path itself too... */
+> +	}
+> +
+> +	/* Okay, parent dir exists, so we have to check original path */
+> +
+> +	/* Make sure we have a NUL-terminated string to pass to lstat */
+> +	tmp = path;
+> +	if (path[path_length])
+> +		tmp = mem_pool_strndup(pool, path, path_length);
+> +	/* Determine if path exists */
+> +	found = !lstat(tmp, &st);
+> +
+> +	record(path_cache, pool, path, path_length, found);
+> +	return found;
+> +}
+> +
+>  void ensure_skip_worktree_means_skip_worktree(struct index_state *istate)
+>  {
+> +	struct hashmap path_cache = HASHMAP_INIT(path_cache_cmp, NULL);
+> +	struct mem_pool pool;
+> +
+>  	int i;
+> +
+>  	if (!core_apply_sparse_checkout)
+>  		return;
+>  
+> +	mem_pool_init(&pool, 32*1024);
+>  restart:
+>  	for (i = 0; i < istate->cache_nr; i++) {
+>  		struct cache_entry *ce = istate->cache[i];
+> -		struct stat st;
+>  
+> -		if (ce_skip_worktree(ce) && !lstat(ce->name, &st)) {
+> +		if (ce_skip_worktree(ce) &&
+> +		    path_found(&path_cache, &pool, ce->name, strlen(ce->name))) {
+>  			if (S_ISSPARSEDIR(ce->ce_mode)) {
+>  				ensure_full_index(istate);
+>  				goto restart;
+> @@ -360,6 +459,8 @@ void ensure_skip_worktree_means_skip_worktree(struct index_state *istate)
+>  			ce->ce_flags &= ~CE_SKIP_WORKTREE;
+>  		}
+>  	}
+> +	hashmap_clear(&path_cache);
+> +	mem_pool_discard(&pool, 0);
+>  }
+>  
+>  
 
->
->> @@ -71,6 +68,23 @@ submodule.recurse::
->>  	`git fetch` but does not have a `--no-recurse-submodules` option.
->>  	For these commands a workaround is to temporarily change the
->>  	configuration value by using `git -c submodule.recurse=0`.
->> +	+
->> +	The following list shows the commands that accept
->> +	`--recurse-submodules` and whether they are supported by this
->> +	setting.
->> +	* `checkout`, `fetch`, `grep`, `pull`, `push`, `read-tree`,
->> +	`reset`, `restore` and `switch` are always supported.
->> +	* `clone` and `ls-files` are not supported.
->> +	* `branch` is supported only if `submodule.propagateBranches` is
->> +	enabled
->
-> One oddity is that paragraphs after the "+" cannot be indented - see
-> other documentation files for examples.
-
-Ah, thanks for the catch. Interestingly, it still rendered as expected
-when I ran `make` - perhaps a deviation from the asciidoc spec.
-
->> diff --git a/branch.c b/branch.c
->> index 55c7ba4a25..6d0d9a8e1b 100644
->> --- a/branch.c
->> +++ b/branch.c
->> @@ -8,6 +8,8 @@
->>  #include "sequencer.h"
->>  #include "commit.h"
->>  #include "worktree.h"
->> +#include "submodule-config.h"
->> +#include "run-command.h"
->>  
->>  struct tracking {
->>  	struct refspec_item spec;
->> @@ -478,6 +480,134 @@ void dwim_and_setup_tracking(struct repository *r, const char *new_ref,
->>  	setup_tracking(new_ref, real_orig_ref, track, quiet);
->>  }
->>  
->> +/**
->> + * Creates a branch in a submodule by calling
->> + * create_branches_recursively() in a child process. The child process
->> + * is necessary because install_branch_config() (and its variants) do
->> + * not support writing configs to submodules.
->> + */
->
-> Makes sense that we need a child process, but could the child process be
-> "branch" instead of "submodule--helper"? If not, also mention why.
-
-I'll mention why it has to be "submodule--helper"; I can see why a
-reader might wonder this.
-
-> As for the reason, probably better to explicitly mention
-> install_branch_config_multiple_remotes() and say "(which is called by
-> setup_tracking())".
-
-Sounds good.
-
->> diff --git a/t/t3207-branch-submodule.sh b/t/t3207-branch-submodule.sh
->> new file mode 100755
->> index 0000000000..a2dfb5ad7f
->> --- /dev/null
->> +++ b/t/t3207-branch-submodule.sh
->> @@ -0,0 +1,291 @@
->> +#!/bin/sh
->> +
->> +test_description='git branch submodule tests'
->> +
->> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->> +
->> +. ./test-lib.sh
->> +. "$TEST_DIRECTORY"/lib-rebase.sh
->> +
->> +test_expect_success 'setup superproject and submodule' '
->> +	git init super &&
->> +	test_commit foo &&
->> +	git init sub-sub-upstream &&
->> +	test_commit -C sub-sub-upstream foo &&
->> +	git init sub-upstream &&
->> +	# Submodule in a submodule
->> +	git -C sub-upstream submodule add "$TRASH_DIRECTORY/sub-sub-upstream" sub-sub &&
->> +	git -C sub-upstream commit -m "add submodule" &&
->> +	# Regular submodule
->> +	git -C super submodule add "$TRASH_DIRECTORY/sub-upstream" sub &&
->> +	# Submodule in a subdirectory
->> +	git -C super submodule add "$TRASH_DIRECTORY/sub-sub-upstream" second/sub &&
->> +	git -C super commit -m "add submodule" &&
->> +	git -C super config submodule.propagateBranches true &&
->> +	git -C super/sub submodule update --init
->> +'
->> +
->> +CLEANUP_SCRIPT_PATH="$TRASH_DIRECTORY/cleanup_branches.sh"
->> +
->> +cat >"$CLEANUP_SCRIPT_PATH" <<'EOF'
->> +	#!/bin/sh
->> +
->> +	super_dir="$1"
->> +	shift
->> +	(
->> +		cd "$super_dir" &&
->> +		git checkout main &&
->> +		for branch_name in "$@"; do
->> +			git branch -D "$branch_name"
->> +			git submodule foreach "$TRASH_DIRECTORY/cleanup_branches.sh . $branch_name || true"
->> +		done
->> +	)
->> +EOF
->> +chmod +x "$CLEANUP_SCRIPT_PATH"
->> +
->> +cleanup_branches() {
->> +	TRASH_DIRECTORY="\"$TRASH_DIRECTORY\"" "$CLEANUP_SCRIPT_PATH" "$@"
->> +} >/dev/null 2>/dev/null
->
-> I don't think that the cleanup is saving much in process invocation
-> anymore - could we just delete the whole thing and start anew in each
-> test?
->
-> The rest of the tests are assuming that the cleanup works as expected -
-> I didn't take a close look.
-
-Hm, you're right - deleting the branches is already quite slow, starting
-anew would be easier and might not be much slower. I'll test the
-'starting anew' approach to make sure it's not too slow.
-
-> Also, you should probably use "$(pwd)" instead of $TRASH_DIRECTORY.
-
-Thanks!
-
->> +test_expect_success '--recurse-submodules should fail when not creating branches' '
->> +	test_when_finished "cleanup_branches super branch-a" &&
->> +	(
->> +		cd super &&
->> +		git branch --recurse-submodules branch-a &&
->> +		test_must_fail git branch --recurse-submodules -D branch-a &&
->> +		# Assert that the branches were not deleted
->> +		git rev-parse --abbrev-ref branch-a &&
->> +		git -C sub rev-parse --abbrev-ref branch-a
->> +	)
->> +'
->
-> If we're just checking that the ref exists, no need for "--abbrev-ref".
-> Same comment throughout the file.
-
-Ah yes, thanks.
-
->> +test_expect_success 'should not create any branches if branch is not valid for all repos' '
->> +	test_when_finished "cleanup_branches super branch-a" &&
->> +	(
->> +		cd super &&
->> +		git -C sub branch branch-a &&
->> +		test_must_fail git branch --recurse-submodules branch-a 2>actual &&
->> +		test_must_fail git rev-parse branch-a &&
->> +
->> +		cat >expected <<-EOF &&
->> +		submodule ${SQ}sub${SQ}: fatal: A branch named ${SQ}branch-a${SQ} already exists.
->> +		fatal: submodule ${SQ}sub${SQ}: cannot create branch ${SQ}branch-a${SQ}
->> +		EOF
->> +		test_cmp expected actual
->> +	)
->> +'
->
-> The error message seems too specific - probably enough to grep for the
-> information about the branch already existing.
-
-Makes sense.
-
->
->> +test_expect_success 'should create branches if branch exists and --force is given' '
->> +	test_when_finished "cleanup_branches super branch-a" &&
->> +	(
->> +		cd super &&
->> +		git -C sub rev-parse HEAD >expected &&
->> +		test_commit -C sub baz &&
->> +		git -C sub branch branch-a HEAD~1 &&
->> +		git branch --recurse-submodules --force branch-a &&
->> +		git rev-parse branch-a &&
->> +		# assert that sub:branch-a was moved
->> +		git -C sub rev-parse branch-a >actual &&
->> +		test_cmp expected actual
->> +	)
->> +'
->
-> Should we create branch-a at HEAD instead of HEAD~1?
-
-If we create branch-a at HEAD, we won't be testing that --force moves
-the branch head. This means that the test might pass if we simply ignore
-any existing branch-a - which is not the intended behavior of --force,
-but this is behavior that we might want in the future (probably using
-another option).
-
->> +test_expect_success 'should create branch when submodule is not in HEAD:.gitmodules' '
->> +	test_when_finished "cleanup_branches super branch-a branch-b branch-c" &&
->> +	(
->> +		cd super &&
->> +		git branch branch-a &&
->> +		git checkout -b branch-b &&
->> +		git submodule add ../sub-upstream sub2 &&
->> +		git -C sub2 submodule update --init &&
->> +		# branch-b now has a committed submodule not in branch-a
->> +		git commit -m "add second submodule" &&
->> +		git checkout branch-a &&
->> +		git branch --recurse-submodules branch-c branch-b &&
->> +		git rev-parse branch-c &&
->> +		git -C sub rev-parse branch-c &&
->> +		git -C second/sub rev-parse branch-c &&
->> +		git checkout --recurse-submodules branch-c &&
->> +		git -C sub2 rev-parse branch-c &&
->> +		git -C sub2/sub-sub rev-parse branch-c
->> +	)
->> +'
->
-> No need to check so many repos, I think - just sub2 will do.
-
-Hm yes, there isn't a reason to think that the branch wouldn't be
-created in the other repos.
-
->
-> [skip tracking tests]
->
->> +test_expect_success 'should not create branches in inactive submodules' '
->> +	test_when_finished "cleanup_branches super branch-a" &&
->> +	test_config -C super submodule.sub.active false &&
->> +	(
->> +		cd super &&
->> +		git branch --recurse-submodules branch-a &&
->> +		git rev-parse branch-a &&
->> +		test_must_fail git -C sub branch-a
->> +	)
->> +'
->
-> Makes sense, but could all the tracking tests be together in the file?
-> Or is this order for a reason?
-
-No, you're right, the order doesn't make sense. I'll move this to before
-the tracking tests.
-
->> +test_expect_success 'setup remote-tracking tests' '
->
-> This setup is not just for remote-tracking tests.
-
-Yes, this is misleading, thanks.
-
->
->> +	(
->> +		cd super &&
->> +		git branch branch-a &&
->> +		git checkout -b branch-b &&
->> +		git submodule add ../sub-upstream sub2 &&
->> +		# branch-b now has a committed submodule not in branch-a
->> +		git commit -m "add second submodule"
->> +	) &&
->> +	git clone --branch main --recurse-submodules super super-clone &&
->> +	git -C super-clone config submodule.propagateBranches true
->> +'
->> +
->> +test_expect_success 'should not create branch when submodule is not in .git/modules' '
->
-> I understand that no branch is created, but the title is ambiguous, to
-> me, whether it is a fatal error or not. Maybe the title should be "fatal
-> error upon branch creation when submodule is not in .git/modules".
-
-Ok, makes sense.
-
->
->> +	# The cleanup needs to delete sub2 separately because main does not have sub2
->> +	test_when_finished "git -C super-clone/sub2 branch -D branch-b && \
->> +		git -C super-clone/sub2/sub-sub branch -D branch-b && \
->> +		cleanup_branches super-clone branch-a branch-b" &&
->> +	(
->> +		cd super-clone &&
->> +		# This should succeed because super-clone has sub.
->
-> "has sub in .git/modules", I think.
->
->> +		git branch --recurse-submodules branch-a origin/branch-a &&
->> +		# This should fail because super-clone does not have sub2.
->
-> Likewise.
-
-Ah, yes, it might be confusing otherwise.
