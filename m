@@ -2,87 +2,212 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F3EDC433EF
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 18:36:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FE76C433EF
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 18:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345423AbiAKSgS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 13:36:18 -0500
-Received: from mout.web.de ([212.227.15.3]:58327 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1345406AbiAKSgR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 13:36:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1641926170;
-        bh=fm+Z/40d4Fh/MIIMWzpPwEAnZThpQtmtly13kzY1xtg=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=Pm3M/nXyjGqr3KHCWr6U6hrG4BfwmWVpFm9gO3LpbNcaSG45C3gL3ebL2e54DbqEt
-         nW4vh9ytARwBgz1rbXltGNrPqBbz70RHcioxRKF26JkDnh5x9sNN8AqT9fnoOw18NY
-         zUMV+RslRLy7ANorwIWOdZcnAD40phJ60ZQiMesc=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MKuKH-1mm6Fw3XBt-00L4Ju; Tue, 11
- Jan 2022 19:36:09 +0100
-Message-ID: <c3228d53-5997-d86c-87a5-5861dacde518@web.de>
-Date:   Tue, 11 Jan 2022 19:36:09 +0100
+        id S1350282AbiAKS5K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 13:57:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35654 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242717AbiAKS5J (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 13:57:09 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 124C3C06173F
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:57:09 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id l12-20020a7bc34c000000b003467c58cbdfso2048652wmj.2
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:57:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=8bWchWtlDvf7z1xlIHoZ9tvFCQhiQQN6/ovclM8xjRM=;
+        b=pujE91EmSBT+nA4ZAQ9k4/5Vn0Klih8+e/vs7/STRwAoV7aQ1VzR8HB5H5VK1U4aqW
+         CSxpbGRPoHdlsRkqCUbEyG4ICaa1zivFwyAsVMp+BqdbINT2CJ7oirRdJa68SLuU0Ecs
+         twkIxOgbjlWnStMA+ug2ODa3Tf/FssGJjChy2vnsApvrq/hpyvmuY6MCf1uvfyEb0/jB
+         skoMBv4uWv9XXkfpNxrJAgjlJGDga2HZ2sHDV5ntmxaWQN0+MsiZzA89owmxtIwWnVWm
+         j/zom9o277uFDOiwQPfLpx7B4Ak5iyMcBogVp5h0DEcSSjTXXfXxTbpvz7nV0HP1fev3
+         DFHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=8bWchWtlDvf7z1xlIHoZ9tvFCQhiQQN6/ovclM8xjRM=;
+        b=3ErECIviNTTVBybCwza4jkvZacjydIW1p5RruqlQ9/MvEoxZ2sVm0lZGVEfWy1Bpjy
+         5U8RoVHJ/ouqm91Os9eQzIAPj8UZxjV9+V8GluKV233QNEpVKWkHjvEtSaz74uHx8LQf
+         Mvw+36uJ2qSTtOur7HESI9g/0p++fDYr/bvfFD3Spe5qkBxmn8mFybJsCWuvDSGxWmrO
+         OYRsairIngzphqGKRsbr/fMnp+n41/JxYREuFZNHqoHCBXeiA+fJpT2t7jzrRyzDebrV
+         jOgbsxeuariirW//yn0r4DoSdOJQYJueJL1mH/PeqDUyvdSD/oLDBjh1Zj+/YYH/35rY
+         aVDw==
+X-Gm-Message-State: AOAM532gzEW/+5YekiFn8EQYZbKPbgBbZ6ZJXEXJ+WyWfVFvVfLt19ZP
+        SnlhMtnpBniOHQ1Nnrq4cKg=
+X-Google-Smtp-Source: ABdhPJzFO7maUNCqLfnj6WAx2dH8nT9yrkLZMSv+6uN65h3MDru+/8tksfPkTAohpurMGQhCLvCy+w==
+X-Received: by 2002:a1c:4644:: with SMTP id t65mr3575496wma.19.1641927427667;
+        Tue, 11 Jan 2022 10:57:07 -0800 (PST)
+Received: from [192.168.1.201] ([31.185.185.186])
+        by smtp.googlemail.com with ESMTPSA id n7sm2431108wms.46.2022.01.11.10.57.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Jan 2022 10:57:07 -0800 (PST)
+Message-ID: <348d37a3-f01b-cda6-8ce4-1536e0bd3b06@gmail.com>
+Date:   Tue, 11 Jan 2022 18:57:06 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.1
-Subject: Re: [PATCH 0/3] Fix SunCC compiler complaints new in v2.35.0-rc0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 0/2] builtin add -p: fix hunk splitting
 Content-Language: en-US
-To:     Han-Wen Nienhuys <hanwen@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com>
- <CAFQ2z_M1skVCFYQ-kM5dMVXcUxV-uR+Zf89dKxgc2v1c1tre=A@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CAFQ2z_M1skVCFYQ-kM5dMVXcUxV-uR+Zf89dKxgc2v1c1tre=A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:7Lbetd+WcBg8enF1/rftlqM8us7++kctSG0RFBKjybZhaytYWvu
- X5l4ZhCoSk79SbiFAGEAPSezcoTvUkElm5zbYRgp92WV7por8G6q+auZrrtf9TmjlUF/slo
- tALNabFHrsR95s8Sbs9utpQORZub4ZkKBhD0uOXC38o0bL4EACkQ1q6xx3ulSiDtCEXRhxf
- YWW0PNeWJ7jdqFvHCqhhg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:or8VTXDhhgE=:IIor3sebBaxbndlsxkSfjt
- TsMHdV6/4AzqmNJ0ou0dUsR/gxFTHqS+xJo6lauZhiix+ImVcFdUvTlc5olsnJRMJuQ2zTpl5
- 3F1vam9uDYmj04QZdrS8wCDR9EU+Ovo1wYHnpDUXLFQiwLWbdvvKjVBJVpwoIBF90AXXodEE3
- RYi+1RRHnqvpC4FeaQh9GnCT7idn6lT5l+otbPVvmGGPzEvIv0iY4nvc4O4CHObakt1qejLZT
- 355OQELeoAOj7FAaftxznak71yufFA0KH/83fVPycXqRQuHj/FmBGgIOfYsjiW/WWNbaH1Av2
- 84QbJ+0JxXeNMANNQyfXu/hfa/pwBLWny8CF/P8ZdzCQjK/M+Wgy6lQ0odGy0tFQ35hQIlQj8
- mGFVZGJooWFfKVAQfq8tbWlOCUOY3gEAgWKgikrXhfs0zZFXuQKkEIkZtdA1jE4mfAIVT2tze
- 4FBb8Y5OXlrmXjtQU6qJ3yUXwlz+OTN6GH/5V2Gc6toPSe6Pbwsk0/Q0TgjKJubPBPqVe9Mmw
- eidG+aUeK//xASt/n1AKqzLoU6WLq26vi4uAVPqyD6CHDffXQZXbwwu/LZSSUQ8kdwfrLcVPC
- FGJML0ps7SPigxBYEWEgCkIM+ltWUfOr65lh479y4HRccEqfok8BdK3iqNVag9BH9+DDt6zRt
- HBurwYKgqkjU5jlYq46P5UDAl1RlBbnVAPNJXqTMrvDl7yxxa6C3d4x/ZkcnHvmAZfSHjQKrd
- Yx4bePaPalyh9lBB+7JBK+mgIrgO85SL3ahRXcxg1Ba2B5J/yo5zodZzKKhRs95yB/Od/ZOTq
- V73F3pkrn+nRSvMJoG7eVJEOfgBeAqLXwTI/DVBfsp0T5f20r+Il0+eM7kXpnRByxwVWNE5Vp
- 3M6MNuwz2ta7I8wTLbjds92Ctx1BMz638bCSaZi3Rbk0D/gaNiDkL7iI+e160XaFoh6wDO7pO
- /V4qS3HWkbfQPCwv7GLsRm2yJfBKtUoWAMUbyeAh0lMZhEV4tG4BMDSJb3SQJ0TzQguY+wrNX
- tx3GMc+Qv4ieqpOTolQsczuEfU6HcWFs+So/e/27Afb4+/F0s/fHL5QhV3iQ7ieacQ==
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1100.git.1640010777.gitgitgadget@gmail.com>
+ <pull.1100.v2.git.1641899530.gitgitgadget@gmail.com>
+ <220111.861r1ezcxn.gmgdl@evledraar.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <220111.861r1ezcxn.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.01.22 um 18:06 schrieb Han-Wen Nienhuys:
-> On Tue, Jan 11, 2022 at 5:40 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> This trivial set of patches fixes compiler complaints from SunCC on
->> Solaris that are new in v2.35.0-rc0.
->
-> Thanks, looks fine in principle.
->
-> For the switch, maybe the block types should be an enum. Is there
-> tooling that would detect a missing case in that case, so we could
-> drop the abort() ?
->
-> For the 0xffffffff constant, there is probably a better symbolic
-> constant somewhere. Or could we say (1<<64) -1 without causing
-> overflow?
+Hi Ævar
 
-How about -1?
+On 11/01/2022 12:07, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Jan 11 2022, Phillip Wood via GitGitGadget wrote:
+> 
+>> Thanks to Junio and Ævar for their comments on V1. I've updated the commit
+>> message and added a helper function as suggested.
+> 
+> This v2 LGTM as far as the functionality of the end-state is concerned.
 
-Or you could initialize min and max to the actual value of the first
-item instead of to the absolute limits of the data type.
+Thanks for taking a look
 
-Ren=C3=A9
+> As a remaining nit the complete_file() helper you introduce in 2/2
+> changes 2/4 places that increment "hunk->splittable+into".
+> 
+> I grabbed this PR and came up with this amendmend to it which adds a 2/3
+> step that converts 3/3 of them, followed by adding the 4th user in your
+> 2/2 (now patch 3/3):
+> https://github.com/git/git/compare/master...avar:phillipwood-avar/wip/add-p-fix-hunk-splitting-v2.1
+> 
+> It changes nothing as far as the end-state is concerned, but I think it
+> makes this easier to read & follow. The actual behavior change becomes a
+> one-line addition to add-patch.c, instead of being mixed up with the
+> refactoring of adding the new helper.
+> 
+> If you'd like to pick that up & run with it as a v3 that's fine by me,
+> and if not that's also fine :) Just a suggestion.
+
+I'm not sure I want to go with your extra changes. I've left some
+comments on them below
+
+> @@ -488,12 +499,12 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+>  	else if (starts_with(p, "@@ ") ||
+>  		 (hunk == &file_diff->head &&
+>  		  (skip_prefix(p, "deleted file", &deleted)))) {
+> -		if (marker == '-' || marker == '+')
+> -			/*
+> -			 * Should not happen; previous hunk did not end
+> -			 * in a context line? Handle it anyway.
+> -			 */
+> +			hunk->splittable_into++;
+> +		/*
+> +		 * Should not increment "splittable_into";
+> +		 * previous hunk did not end in a context
+> +		 * line? Handle it anyway.
+> +		 */
+> +		complete_file(marker, &hunk->splittable_into);
+>  
+>  		ALLOC_GROW_BY(file_diff->hunk, file_diff->hunk_nr, 1,
+>  			   file_diff->hunk_alloc);
+
+I deliberately left this alone as I think we should probably make this
+BUG() out instead of silently accepting an invalid diff.
+
+> @@ -566,8 +577,8 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+>  			    (int)(eol - (plain->buf + file_diff->head.start)),
+>  			    plain->buf + file_diff->head.start);
+>  
+> -		if ((marker == '-' || marker == '+') && *p == ' ')
+> -			hunk->splittable_into++;
+> +		if (*p == ' ')
+> +			complete_file(marker, &hunk->splittable_into);
+>  		if (marker && *p != '\\')
+>  			marker = *p;
+  
+Here you are calling complete_file() which has the following comment
+
+      /*
+       * Last hunk ended in non-context line (i.e. it
+       * appended lines to the file, so there are no
+       * trailing context lines).
+       */
+
+for all context lines so the function name and comment would need
+updating.
+
+Best Wishes
+
+Phillip
+
+> A range-diff between your v2 here and that linked-to
+> phillipwood-avar/wip/add-p-fix-hunk-splitting-v2.1:
+> 
+> 1:  cc8639fc29d = 1:  34392397f04 t3701: clean up hunk splitting tests
+> -:  ----------- > 2:  c082176f8c5 add-file.c: use static helper to check marker == +|-
+> 2:  b698989e265 ! 3:  defca0baba4 builtin add -p: fix hunk splitting
+>      @@ Commit message
+>           Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>       
+>        ## add-patch.c ##
+>      -@@ add-patch.c: static int is_octal(const char *p, size_t len)
+>      - 	return 1;
+>      - }
+>      -
+>      -+static void complete_file(char marker, struct hunk *hunk)
+>      -+{
+>      -+	if (marker == '-' || marker == '+')
+>      -+		/*
+>      -+		 * Last hunk ended in non-context line (i.e. it
+>      -+		 * appended lines to the file, so there are no
+>      -+		 * trailing context lines).
+>      -+		 */
+>      -+		hunk->splittable_into++;
+>      -+}
+>      -+
+>      - static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+>      - {
+>      - 	struct strvec args = STRVEC_INIT;
+>       @@ add-patch.c: static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+>        			eol = pend;
+>        
+>        		if (starts_with(p, "diff ")) {
+>      -+			complete_file(marker, hunk);
+>      ++			complete_file(marker, &hunk->splittable_into);
+>        			ALLOC_GROW_BY(s->file_diff, s->file_diff_nr, 1,
+>        				   file_diff_alloc);
+>        			file_diff = s->file_diff + s->file_diff_nr - 1;
+>      -@@ add-patch.c: static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+>      - 				file_diff->hunk->colored_end = hunk->colored_end;
+>      - 		}
+>      - 	}
+>      --
+>      --	if (marker == '-' || marker == '+')
+>      --		/*
+>      --		 * Last hunk ended in non-context line (i.e. it appended lines
+>      --		 * to the file, so there are no trailing context lines).
+>      --		 */
+>      --		hunk->splittable_into++;
+>      -+	complete_file(marker, hunk);
+>      -
+>      - 	/* non-colored shorter than colored? */
+>      - 	if (colored_p != colored_pend) {
+>       
+>        ## t/t3701-add-interactive.sh ##
+>       @@ t/t3701-add-interactive.sh: test_expect_success 'correct message when there is nothing to do' '
+
