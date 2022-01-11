@@ -2,261 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77C78C433EF
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 08:41:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C756C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 09:14:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236503AbiAKIlU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 03:41:20 -0500
-Received: from mail-eopbgr60082.outbound.protection.outlook.com ([40.107.6.82]:31363
-        "EHLO EUR04-DB3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S234862AbiAKIlT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 03:41:19 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nDadhAd5WqnjL+XlzPm37uxdVaUj/MVpdxO4Iv4SsqdIbvnWdb0XMamYwdvIuaBlZA3D1sPtoDV3gZcrRtzCOx1Zc0grM23GNZNVekdf6vfVrtvKA1OPajOp84WESIRt96xIGC05L0/xAlotZqZl9FEMX18pN3VmE+Kjeu4B9lcK5FUOBzofVjnWU+4vPLl07iZaIJlmfMOQvfqkM3Xaj9goA5WwusbO0B1+x7QZARTi0ALrTW9abZ3LesTWdPCWywVyJY3c8AtRW/7ynCpS2q1i7NH4vOzIfom5ty47ISvL1aO8d7hRXp6UsFuqJOtxq1THT2RDm7Rqq5vhEO8ArA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9I3oN0vJdMeWxf4a0m2iWlEX1lPI/lBZatbd0RiOU7M=;
- b=LwR1boEJWV0vxnyctUOMqOKP7nd3/Zy6y7VX6AoHsY0GAADVBgVHwn8Fe+MkoNvW7eRu6g6Mln4cPhPSqrBT7IQNDZl1FgVFU2iWKz4b02Le2ifjbhb+/iMoTVmDowMca8pCWZKMmiQxJVMzK9NBhKW/zCmVMSlTmwaP2e9NWsibBIhotrfqpsl2+CWLNCx9XQT9uSyp0afz48Aa4s+4gHzfWohhYfVtW3idw35iJdT+YFPH8XHmBKLLlozrB/CERrO2SnPIBuoJV7AJFUUmtj9fiOPTmHjhnTRUQOAGSKSY/XNCOGqL1nbPsIS3kC0FSFupinGUyEEbBpAUn+eicw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9I3oN0vJdMeWxf4a0m2iWlEX1lPI/lBZatbd0RiOU7M=;
- b=Iu5M3x8ObwGptpiQ4eMTR57RitA3nM3Oyv92aemOzGMlI4GTx5IeoiatbEFrbYmBruPJ7F/VB2ztHakImVqsSGWaUNn6XlJq2qmilINVYsqyPJxcj7ql12KRrvloBQXqEuXyP/ufPg4fwd7o3rYLo8nLBNtJ8z+VbTVp+oae1LA=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by PA4PR10MB4544.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:107::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4867.10; Tue, 11 Jan
- 2022 08:41:16 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::486c:1c10:65ef:90f9%6]) with mapi id 15.20.4867.012; Tue, 11 Jan 2022
- 08:41:16 +0000
-Date:   Tue, 11 Jan 2022 09:41:15 +0100
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] fmt-merge-msg: prevent use-after-free with signed tags
-Message-ID: <20220111084115.esuyxeopdpaq7g7y@fs>
-References: <YdxqshqXB/+ApOn2@nand.local>
- <6e08b73d602853b3de71257117e85e32b96b5c19.1641849502.git.me@ttaylorr.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <6e08b73d602853b3de71257117e85e32b96b5c19.1641849502.git.me@ttaylorr.com>
-X-ClientProxiedBy: AS8P250CA0018.EURP250.PROD.OUTLOOK.COM
- (2603:10a6:20b:330::23) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        id S1349213AbiAKJOn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 04:14:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40808 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1349231AbiAKJOf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 04:14:35 -0500
+Received: from mail-vk1-xa32.google.com (mail-vk1-xa32.google.com [IPv6:2607:f8b0:4864:20::a32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274B5C061759
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 01:14:35 -0800 (PST)
+Received: by mail-vk1-xa32.google.com with SMTP id bj47so4873874vkb.13
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 01:14:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2xRJlyqEdLY9SXgS2gIOX2fn7pGbxpjuta/SnEioBl4=;
+        b=GyTx1VfImYix63qwK7nDlyQ18sFRxNLKH9quO74VVXa/jnc7PCnFiuTlN4TTrbozCO
+         seX4Eud0NCdriDckCVY2QYWKhOA6q0jnJPwZXQqaY/ASL8lsMqBEpR3T2wzSyaaZ+Xi+
+         iZkRbffnIzt7L7gAagzoTKLK6Fyy/zdYNm4WKm4h2AsAu16+EzHT29DjJeegLWKp9E6W
+         OD2b/gO78yR3rFZZkhLJwLjCBxCK/ec9ng/x8TV0VLzFa+x5N6AOSU9Gxa/NuLs4cVkt
+         mciSOcNIaS7NLBtiXj0umdQoH589ZA41HPCa7tUh2CpvYrI/wO0Ud8lIuJ5WxqNMxGZM
+         5gwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2xRJlyqEdLY9SXgS2gIOX2fn7pGbxpjuta/SnEioBl4=;
+        b=oR7Z9FnZyjK8JobuFiRHuhC2Tc6Tr/f1t2UeZqMxgzkxe/0z8T+OtuCPpy0meF76Rq
+         9bBz6s6niqxo6yOnmci+1UKkqL9MuPoKzHkzCFzhw/bcUYtSZ/nPIyFYxCNw86YygMxj
+         M5gj0+3fA8Scq9ToUTaoqGIlWbo21xicP6Iun4CtVgXzb3KyEuJy+gq0fyWpFrF6Z3Zj
+         8bXO/3/Dz8KsatkubCCuVhLSIkexhJe5kXO8XWrkKHJE5l+BY+0JRfz8OHu3gTAtWasX
+         Y53vNMPTIfjGuC3gVF+TBjwopR3TMSbAK7n8/HjxRI3KjqOpf5fH27Y2gDMY24sBrGI4
+         oy0w==
+X-Gm-Message-State: AOAM531F2IXWWP8+nMBNZ4qoBGw6piK6ZzUjyc0EwC0h4VyiSauOT52J
+        eXs9JYv6UlE79mZ4mjno5/FTavUfYyF3yQ0gBDs1GHHGZwpU402yggc=
+X-Google-Smtp-Source: ABdhPJy2wM4J6vTHY+w1owFpf6QQ9Svy62SwAHnmzB1Kik1ASS3QY1GfgndUlla0e/wqWS0FTDS9JQ3B1CDKuLHkrGo=
+X-Received: by 2002:a05:6122:889:: with SMTP id 9mr1581970vkf.21.1641892474221;
+ Tue, 11 Jan 2022 01:14:34 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: b4a2032f-936c-407b-9304-08d9d4de2172
-X-MS-TrafficTypeDiagnostic: PA4PR10MB4544:EE_
-X-Microsoft-Antispam-PRVS: <PA4PR10MB4544931E141A043211A658B2B6519@PA4PR10MB4544.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: H9Tc6UUZ5tqeuZulWyYHUQNiG9YjWsWKYKktqwshzVYaphdySEam8hE5uEf8/o08bfQsT03iEzmwz/MB+RvatpLCCTcYwXvmop2zsy2+z5eK20xdKcEEj9tDBNVffQrJol/HDA3SAIi7oy9Dgmnh+lOYD9Ppe9tTkdH8/Auuelqc5XHvhUhburfzy1KRZilNoy8LiqjmUowtFpM9JG6Fjmb9vdQRBZtASDfkMHyHLHpfq647LkEt+uVUTrC2tmMa+x8V0XJmG4cLYfJf87Zng8FkgXkezO6UBZuwarQ0qQq9UCY3v3x3fZX3PpVGNV3TptDiHh30shKQk5UEsJoklybegBuJId1b76k7RY5Oe1ukf/rHsqkMK8/dwotv6iWm14Spb3pD1fJ/SA78V9188f9whHkJ8mFPJ63kz9lSru/0aDvzO+WNqtEOD9SXwQvU399r0sJQ/fbwJwWu0ITmE3ipuFUf2ej32WAo0IN9aGO7VKuA0He0UIKaj2v+nbrwCMvRjlQv/7/1dNZDUYp/6G479SvVNgpHGNmVtp0pLVhgmuN2/5FgHHwQTx3mknp8pN+xvh1GxxOhFcnj9qamnXXCj0A/34Pc3BUVFe/LbZ3yTmrWOStwVBR6z3lKWdTQQpSp2veSD3TRqaZd9pAf4Q==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(4636009)(7916004)(136003)(39840400004)(376002)(396003)(366004)(346002)(38100700002)(53546011)(508600001)(6506007)(86362001)(6486002)(54906003)(5660300002)(4326008)(8936002)(6512007)(316002)(2906002)(9686003)(8676002)(33716001)(26005)(186003)(83380400001)(6916009)(1076003)(66946007)(66476007)(66556008);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UndxdW9zK3BwRzFaWXJrWE5taW40MVZIUFRsZXdlWURxZHRQWm9wcThiZ3d0?=
- =?utf-8?B?RFRTQjF3aWpVSmF5aWhWcDNsc0F1bENpNU9PM3lnZ3ZxZHVEYkhCSnhiN2RI?=
- =?utf-8?B?NWdnbldOaXN2cnVVbC91ODlPWmI0YXZPL2J5V3RLYVJSZDEySEc5RkRTUnhm?=
- =?utf-8?B?VEJsWk9tenk3N21xL0c4TVM1V0VvakZyNmI4eVgvTjNOcWpmd3NnckR2Z29G?=
- =?utf-8?B?d3JrK3NHdUtZeXVDQ3hEUHliNW5yWkV3em44OXYwak4zN25IWlB4L2NhVk9O?=
- =?utf-8?B?M0JsVTBlSGdLZlJDcmJxNzhBU2NiMExZMmpNc2pkSDBOQzAvN0VtRml3WGR3?=
- =?utf-8?B?dkh6MzlVSzhYNkJIRUFXZjNzeVZhUGY2SGF0MWdWemxaajZqYmFBSTIrN2M3?=
- =?utf-8?B?Mk1sN09URXFNaGRhWiswWC90c2ZtTWJrR281VXVRMk5ra3drbDZGc1QxS3M1?=
- =?utf-8?B?Y0lML0FnZGpVVitlT1d6aExoZ2E2SjRrcmQxZzgrWEdFYzJUS2dDakhyTzVJ?=
- =?utf-8?B?TkVRNWhaV1NwekJ5cWNxTkV1UDg3TTBtWTNUL05SZUdONVZSQ1Y3RTJXOGR1?=
- =?utf-8?B?ZC9mS1FtWDhEdHYrUk9ML2xSaHBpamxFaGExUlJhcHl1blhCNlZRdjU4b3Vk?=
- =?utf-8?B?ak9lTThoSjJZb2tZWHNaQXNqK3ltdSthdVJUSVVBZ0RVSjFWU3BxT2g4WTUr?=
- =?utf-8?B?djd6THBkbWxxUkVzMjhKU2x2blBha2k5SmdEODd5dkhPdW1aa3Y2MlF6eGx6?=
- =?utf-8?B?RHNOUkZlL0V1WWZXTHVhQ1c1NUpCOHh1VWxUdDlxQXBCUm5ucUFwU1dIWTBt?=
- =?utf-8?B?L254YW1nbFV6ZXBlN2FKdVdMaElmWDdtSkdERlVXeGU0TmV5VDRHeDFwSnhr?=
- =?utf-8?B?OENVOW1uOWRwOUl3aW9pSG8ybEhtbTBhMmZmdHB4eDhwVldCUFFjZEZMNlE5?=
- =?utf-8?B?b25NOGxvb1g3aEZwTTk2WGZyS3JVbUtGQTE0WGkyWi9UK0h1c2g3TUxIUjA3?=
- =?utf-8?B?eXhqelBFTFZQRjZYNHZuamxjbjdXcjAvdWo2L0FDMlVjOTEzcUV6cDI3dndO?=
- =?utf-8?B?MmF0VnRzVzczQTNyb241SmtsZlhac1ZXMFMvQXJLeDUzUERnU3g4QXpERDJq?=
- =?utf-8?B?dTZodHYrWkZkYWNQb01xR2JhTTBaOGllb0ZaL2RkQmxPT004VjRCK3c1TXlr?=
- =?utf-8?B?QzRxaktxSE9FeXc0MkxldVdVVGY0VVlibm0yZUJlekVXZDlIblpONVNLOFh3?=
- =?utf-8?B?NDhvVGpGM0tCa2JzZE5HZ2VOOC92Wlh0elRPaWN3b0V2bE1qRXFMRGFHMEgw?=
- =?utf-8?B?d1ZPSHB1Rmt2U2hEanFYREY4bTlqMFB0VzhoWmVUKzdaTkJPSEhRYzdsWHRs?=
- =?utf-8?B?cWxEOWhWYTJSY2VnQUZDYTNiMG5FWk9WVEVST1hSTktOdTB6SjR6elBidG5R?=
- =?utf-8?B?TnpicmI3bElKOWNxVWsxY1h5OWdpV3Bzc3cyZGNwZXNBMUQ2VzZGbWtPQkJQ?=
- =?utf-8?B?a2hLb0xiRmVGTlA3YXFlQXo3Y25yZ2o0WkhnbGw4NzRaWlE1ZGNVTElOK0R3?=
- =?utf-8?B?UTBBdTVKaHQ5SGIyTFhGdWM3VWxnejE4V25tSDZjTXRPU3hiTi9Rb0FDeWVv?=
- =?utf-8?B?QlRXV0xmQnNNR3JTbUo5S3h3NzYrVHVTU3Zyb3FISGlXVWFlQlVRWW9taERD?=
- =?utf-8?B?U2F3K2EzTWNUaW1zUWRaMjlGelZ4Y3BLMjE0eHdPSnRhVzJ5R3daclNHSmQz?=
- =?utf-8?B?STF6d3hQRWFVVWo3WkUzVll3Y0RhNVgyQ2dsUlVuYi9kUGpxZmRBdHV4SWpM?=
- =?utf-8?B?dkVZd0RYODJKd29obWJueU00aDY1TEZNNVhwMHhKR05BTFV2S01hblVLVDFy?=
- =?utf-8?B?RTBYQ3RXSTFMOXptTlVTSnFzalhXQjBJK0txTlNiR1FUc3R2TjJocmJCd1pk?=
- =?utf-8?B?YnVzaEFKZkxSMGVDRk1OME8zSVN6b3JmQWwwRENtb0hlczBlNmFuYWpSY2VR?=
- =?utf-8?B?RmtRcDNJTlpJRCtOUVNVV1Q4NDBMWm43aEEvTDcxM0JHT0ZXNVZRd0NkRGpT?=
- =?utf-8?B?ZHJITFlrbHFyQTEvdGtROHpIa3FVMzRVZGZ4OTFFUFNXUmNiakRzRHFqcVNL?=
- =?utf-8?B?Wi9PSU82UGh0WURFODNWWURGemlEV3A3bmc5NzI0SHFDTFRZcmxUM0xDdThN?=
- =?utf-8?B?cC85YXpIRFF1T1VQM0pzaGlxcXNiY0EwOHhLalA0VDN6ck5OQUhMcEREdDEx?=
- =?utf-8?Q?rcwipRjnQ92jHhUxsmVVx8T8FaP1UV6vAtUeJMeKSU=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: b4a2032f-936c-407b-9304-08d9d4de2172
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jan 2022 08:41:16.4725
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uCkLPsjjRP0Hv78+Ilxm1rEBsShqLzo9R2fCGxmiK4DSG1HZvjIY5aarUfKnnZrwdisQ3fO0kYnAlgizmfWYJQxRnhfTld3IwMdmpj4L0tc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR10MB4544
+References: <cover.1641440700.git.dyroneteng@gmail.com> <75503c41a7e2f3fdbb59ce3568853049b55a2d3b.1641440700.git.dyroneteng@gmail.com>
+ <xmqq5yqwd266.fsf@gitster.g>
+In-Reply-To: <xmqq5yqwd266.fsf@gitster.g>
+From:   Teng Long <dyroneteng@gmail.com>
+Date:   Tue, 11 Jan 2022 17:14:23 +0800
+Message-ID: <CADMgQSQpX2Dn2q9_y7=pat3s-xUtLaO0iVgrOus3-rvUXQReDg@mail.gmail.com>
+Subject: Re: [PATCH v9 5/9] ls-tree: optimize naming and handling of "return"
+ in show_tree()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     avarab@gmail.com, congdanhqx@gmail.com, git@vger.kernel.org,
+        peff@peff.net, tenglong.tl@alibaba-inc.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Teng Long <dyronetengb@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10.01.2022 16:19, Taylor Blau wrote:
->When merging a signed tag, fmt_merge_msg_sigs() is responsible for
->populating the body of the merge message with the names of the signed
->tags, their signatures, and the validity of those signatures.
+On Fri, Jan 7, 2022 at 4:44 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->In 02769437e1 (ssh signing: use sigc struct to pass payload,
->2021-12-09), check_signature() was taught to pass the object payload via
->the sigc struct instead of passing the payload buffer separately.
+> Teng Long <dyroneteng@gmail.com> writes:
 >
->In effect, 02769437e1 causes buf, and sigc.payload to point at the same
->region in memory. This causes a problem for fmt_tag_signature(), which
->wants to read from this location, since it is freed beforehand by
->signature_check_clear() (which frees it via sigc's `payload` member).
->
->That makes the subsequent use in fmt_tag_signature() a use-after-free.
->
->As a result, merge messages did not contain the body of any signed tags.
->Luckily, they tend not to contain garbage, either, since the result of
->strstr()-ing the object buffer in fmt_tag_signature() is guarded:
->
->    const char *tag_body = strstr(buf, "\n\n");
->    if (tag_body) {
->      tag_body += 2;
->      strbuf_add(tagbuf, tag_body, buf + len - tag_body);
->    }
->
->Unfortunately, the tests in t6200 did not catch this at the time because
->they do not search for the body of signed tags in fmt-merge-msg's
->output.
->
->Resolve this by waiting to call signature_check_clear() until after its
->contents can be safely discarded. Harden ourselves against any future
->regressions in this area by making sure we can find signed tag messages
->in the output of fmt-merge-msg, too.
 
-Sorry for breaking any workflows :/
-Thanks Taylor for the quick fix and the additional test conditions.
+> What this one is doing sounds more like setting the type variable
+> based on the mode bits, and doing only half a job at it.  The name
+> "init" does not sound like a good match to what it does.
+>
+> If we make it a separate function, we probably should add the "else"
+> clause to set *type to OBJ_BLOB there, so that the caller does not
+> say "we'd assume it is BLOB initially, but tweak it based on mode
+> bits".
+>
+> I.e.
+>
+>         type = get_type(mode);
+>
+> where
+>
+>         static enum object_type get_type(unsigned int mode)
+>         {
+>                 return (S_ISGITLINK(mode)
+>                         ? OBJ_COMMIT
+>                         : S_ISDIR(mode)
+>                         ? OBJ_TREE
+>                         : OBJ_BLOB);
+>         }
 
-fmt_merge_msg_sigs() could probably use some additional refactoring to avoid 
-these multiple pointers to the same (detached) buffer. But thats for another 
-time.
+> or something like that, perhaps?  But I think open-coding the whole
+> thing, after losing the "We assume BLOB" initialization, would be
+> much easier to follow, i.e.
+>
+>         if (S_ISGITLINK(mode))
+>                 type = OBJ_COMMIT;
+>         else if (S_ISDIR(mode))
+>                 type = OBJ_TREE;
+>         else
+>                 type = OBJ_BLOB;
+>
+> without adding init_type() helper function.
+>
+> > +     init_recursive(base, pathname, &recursive);
+>
+> This is even less readable.  In the original, it was clear that we
+> only call show_recursive() on a path that is a true directory; we
+> now seem to unconditionally make a call to it.  Is that intended?
+>
+>         Side note.  show_recursive() has a confusing name; it does
+>         not show anything---it only decides if we want to go
+>         recursive.
+>
+> At least, losing the "we assume recursive is 0" upfront in the
+> variable declaration and writing
+>
+>         if (type == OBJ_TREE && show_recursive(...))
+>                 recursive = READ_TREE_RECURSIVE;
+>         else
+>                 recursive = 0;
+>
+> here, without introducing init_recursive(), would make it easier to
+> follow.  If we really want to add a new function, perhaps
+>
+>         recursive = get_recursive(type, base, pathname);
+>
+> where
+>
+>         static int get_recursive(enum object_type type,
+>                                  struct strbuf *base, const char *pathname)
+>         {
+>                 if (type == OBJ_TREE && show_recursive(...))
+>                         return READ_TREE_RECURSIVE;
+>                 else
+>                         return 0;
+>         }
+>
+> but I fail to see the point of doing so; open-coded 4 lines here
+> would make the flow of thought much better to me.
+>
+> In any case, I think your splitting the original into "this is about
+> type" and "this is about the recursive bit" is a good idea to help
+> making the resulting code easier to follow.
+>
+> > +     if (type == OBJ_TREE && recursive && !(ls_options & LS_SHOW_TREES))
+> > +             return recursive;
+>
+> We are looking at an entry that is a directory.  We are running in
+> recursive mode.  And we are not told to show the directory itself in
+> the output.  We skip the rest of the function, which is about to
+> show this single entry.  Makes sense.
+>
+>
+> > +     if (type == OBJ_BLOB && (ls_options & LS_TREE_ONLY))
+> > +             return !READ_TREE_RECURSIVE;
+>
+> Negation of a non-zero integer constant is 0, so it is the same as
+> the original that returned 0, but I am not sure if it is enhancing
+> or hurting readability of the code.  The user of the value, in
+> tree.c::read_tree_at(), knows that the possible and valid values are
+> 0 and READ_TREE_RECURSIVE, so returning 0 would probably be a better
+> idea.  After all, the initializer in the original for the variable
+> definition of "retval" used "0", not "!READ_TREE_RECURSIVE".
+>
+> The name "recursive" is much more specific than the overly generic
+> "retval".  Its value is to be consumed by read_tree_at(), i.e. our
+> caller, to decide if we want it to recurse into the contents of the
+> directory.  I would have called it "recurse" (or even "to_recurse"),
+> if I were doing this change, though.
 
-Thanks
-
->
->Reported-by: Linus Torvalds <torvalds@linux-foundation.org>
->Signed-off-by: Taylor Blau <me@ttaylorr.com>
->---
-> fmt-merge-msg.c          | 2 +-
-> t/t6200-fmt-merge-msg.sh | 8 ++++++++
-> 2 files changed, 9 insertions(+), 1 deletion(-)
->
->diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
->index e5c0aff2bf..baca57d5b6 100644
->--- a/fmt-merge-msg.c
->+++ b/fmt-merge-msg.c
->@@ -541,7 +541,6 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
-> 			else
-> 				strbuf_addstr(&sig, sigc.output);
-> 		}
->-		signature_check_clear(&sigc);
->
-> 		if (!tag_number++) {
-> 			fmt_tag_signature(&tagbuf, &sig, buf, len);
->@@ -565,6 +564,7 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
-> 		}
-> 		strbuf_release(&payload);
-> 		strbuf_release(&sig);
->+		signature_check_clear(&sigc);
-> 	next:
-> 		free(origbuf);
-> 	}
->diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
->index 7544245f90..5a221f8ef1 100755
->--- a/t/t6200-fmt-merge-msg.sh
->+++ b/t/t6200-fmt-merge-msg.sh
->@@ -126,6 +126,7 @@ test_expect_success GPG 'message for merging local tag signed by good key' '
-> 	git fetch . signed-good-tag &&
-> 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-> 	grep "^Merge tag ${apos}signed-good-tag${apos}" actual &&
->+	grep "^signed-tag-msg" actual &&
-> 	grep "^# gpg: Signature made" actual &&
-> 	grep "^# gpg: Good signature from" actual
-> '
->@@ -135,6 +136,7 @@ test_expect_success GPG 'message for merging local tag signed by unknown key' '
-> 	git fetch . signed-good-tag &&
-> 	GNUPGHOME=. git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-> 	grep "^Merge tag ${apos}signed-good-tag${apos}" actual &&
->+	grep "^signed-tag-msg" actual &&
-> 	grep "^# gpg: Signature made" actual &&
-> 	grep -E "^# gpg: Can${apos}t check signature: (public key not found|No public key)" actual
-> '
->@@ -145,6 +147,7 @@ test_expect_success GPGSSH 'message for merging local tag signed by good ssh key
-> 	git fetch . signed-good-ssh-tag &&
-> 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-> 	grep "^Merge tag ${apos}signed-good-ssh-tag${apos}" actual &&
->+	grep "^signed-ssh-tag-msg" actual &&
-> 	grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
-> 	! grep "${GPGSSH_BAD_SIGNATURE}" actual
-> '
->@@ -155,6 +158,7 @@ test_expect_success GPGSSH 'message for merging local tag signed by unknown ssh
-> 	git fetch . signed-untrusted-ssh-tag &&
-> 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-> 	grep "^Merge tag ${apos}signed-untrusted-ssh-tag${apos}" actual &&
->+	grep "^signed-ssh-tag-msg-untrusted" actual &&
-> 	grep "${GPGSSH_GOOD_SIGNATURE_UNTRUSTED}" actual &&
-> 	! grep "${GPGSSH_BAD_SIGNATURE}" actual &&
-> 	grep "${GPGSSH_KEY_NOT_TRUSTED}" actual
->@@ -166,6 +170,7 @@ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'message for merging local tag sign
-> 	git fetch . expired-signed &&
-> 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-> 	grep "^Merge tag ${apos}expired-signed${apos}" actual &&
->+	grep "^expired-signed" actual &&
-> 	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
-> '
->
->@@ -175,6 +180,7 @@ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'message for merging local tag sign
-> 	git fetch . notyetvalid-signed &&
-> 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-> 	grep "^Merge tag ${apos}notyetvalid-signed${apos}" actual &&
->+	grep "^notyetvalid-signed" actual &&
-> 	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
-> '
->
->@@ -184,6 +190,7 @@ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'message for merging local tag sign
-> 	git fetch . timeboxedvalid-signed &&
-> 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-> 	grep "^Merge tag ${apos}timeboxedvalid-signed${apos}" actual &&
->+	grep "^timeboxedvalid-signed" actual &&
-> 	grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual &&
-> 	! grep "${GPGSSH_BAD_SIGNATURE}" actual
-> '
->@@ -194,6 +201,7 @@ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'message for merging local tag sign
-> 	git fetch . timeboxedinvalid-signed &&
-> 	git fmt-merge-msg <.git/FETCH_HEAD >actual &&
-> 	grep "^Merge tag ${apos}timeboxedinvalid-signed${apos}" actual &&
->+	grep "^timeboxedinvalid-signed" actual &&
-> 	! grep "${GPGSSH_GOOD_SIGNATURE_TRUSTED}" actual
-> '
->
->--
->2.34.1.455.gd6eb6fd089
+Thanks, will apply in the next patch.
