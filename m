@@ -2,107 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ECDDC433EF
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 22:05:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC664C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 22:26:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345437AbiAKWFA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 17:05:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51366 "EHLO
+        id S1346340AbiAKW0K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 17:26:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343888AbiAKWE6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 17:04:58 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87BFDC06173F
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 14:04:58 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id t24so1874635edi.8
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 14:04:58 -0800 (PST)
+        with ESMTP id S229798AbiAKW0J (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 17:26:09 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13D7EC06173F
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 14:26:09 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id 30so2161173edv.3
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 14:26:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=To5LM/auYFta9tpRHrRAuZ0OMggZepsBH/HznBCSe/E=;
-        b=EOur0ra/wVHHucjCBP2DL4CdrOiPvehj46FQ3/rr+ggVrqgYq8JaTm/L1jYR3KebD3
-         uh/sKQhvKwRnH3YeyjbhgvHMPmXETuJbw7ytSLVYhKs15ECvJbfmnYr/ACgaTarJjZR8
-         MyZq1PWv953eEfOOlq3KMX3SHq7EV8tPLGJgb20mCu8rGlxczsIKyDr+xZsbGhaR8tVJ
-         xFU12cUDqRM08BM6OrfupbhPAuu98T/DRvGvc++V29GPGUaX8Gmu9LPRBFttjLwh9TyY
-         5IB+XmziUnoU934V2wbxe+MBBjNxYlQJI3dazd2HaJtSJQOwYI59e1EHiilnbES/hoyp
-         kTfQ==
+         :cc:content-transfer-encoding;
+        bh=cb+Z+c3p111w2HACPFREuW/Z8H5FHIHH3G1cIRi6KMI=;
+        b=E1+8n+BRVriPJNZRlLBOn/nfCIQqlzKeqNUAMMPXz3L6hNKT/Wg91FmLFGYMugYOHP
+         69pFJvlfz3kQvqiwsvLzoKBpAcjs6mI5SWcGRET5cVf4GN9On2Nm5BK9RqRfsCAtLvg4
+         8+1AOefCx83RW8YaeVF20/ysVERokLT2oErJo3zqcbd9x6RJmcwkujdPPQXuN7YDuJ7X
+         Nt40jIEXQ2/3BqUYVgZX8cRPNcWZKzbqnjoKWAdwiDqAwEiIdBv2kQK2uaeg6j1+cShF
+         fKswU3zKXCzTkH7ldyMhelljnD/RylfT9OeDhsqhfQ3EWwzV3Py9CvLo0sZSws46z4mC
+         bntw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=To5LM/auYFta9tpRHrRAuZ0OMggZepsBH/HznBCSe/E=;
-        b=2sQrbKST2ze9R/i4rTFNZxUpzT/DwIW/ntTlti35sDGb4DLFYRL3aNSw947JsvjVPL
-         LC7sNwOipOCkBl5719cNlgqT7HGFW4fevczsCI+eNn7DvmOfnuSzh16U1H1Mq4MmblFC
-         1Q/D8hIjVYmUS7jzGPqpEwEL/np+qwF3R1X/G1EnPls5M3ceSJTX1eXoTyvLi6dn5fuQ
-         X9jga0pXj6Rf5j3HBQPMJE39DWlpXXxMHcjN8YzV4dP6e+IXgP/aAtcEzC+vviYQ0pcg
-         0N2TaYbWgOvLercC8CKkHaEUdAGpgpeK3XLyg3dSdY1xB+MO4toECg3mGyB8DFsDevOO
-         ZFvQ==
-X-Gm-Message-State: AOAM533k8VL33KswbChI62cSWUhUB3423e9owRDjTiazAlQPBUVCnbY2
-        /By3zsCCxVMYxHPG+astQ0SO04PqFbEbj7m+IOg=
-X-Google-Smtp-Source: ABdhPJxfF8rndvWI81T8SMrXXf/XOzmISyjrak+3VqO4VpX57X/84FaShWeKze7tw+zCfvwXgSuimHFuHBawY87UyEk=
-X-Received: by 2002:a17:907:3f1b:: with SMTP id hq27mr2555590ejc.613.1641938697061;
- Tue, 11 Jan 2022 14:04:57 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cb+Z+c3p111w2HACPFREuW/Z8H5FHIHH3G1cIRi6KMI=;
+        b=BqGdhxHkSY4Qq0HCjLQlRJTjQSIDo41L0bVwvmj8u3S12PEbVMtMmEwBZ3f0Z/XR1h
+         a4ErkjU1mJYdkVC6LCKiShlAmvz7LnmM4Eqv3jKAYiZWrUGHCbV9njmCOV1i06zUnrEV
+         2WSFDhhPmXriXiEWtFgZ2DeCbyPdNnh7oKqr21iavcQOGw4F7B49aNS4iB04TVdAaeHE
+         MRWykv14RPaAVGWQirbXIvdYN6s7jOVTHf1hTM4o3yKeo4+i66bESHh8qgSr6BvUShsw
+         h8sy8GPAQiz3y2EjEcQEQQTChOskkR/q5C44t62VhpQBRLB+GbZUbT53AYuQROx+Y+Ys
+         JbRg==
+X-Gm-Message-State: AOAM530Jd88e2UBLTFjvqqNzxK1f912wdiA2TOeBRmkzGKG4be9VE52Q
+        gKivGBtXYDU2dI4+jKRn6DRiUUW7+P6yqqpda1g=
+X-Google-Smtp-Source: ABdhPJzXFskVD4v9WMhPQACTS3gPUeMw2Z8Ct+E3JiLQ1ibyWgdfDL6kZCtM4p8TVm/NrIuAqXEBBf8ajIOfuqMNvy8=
+X-Received: by 2002:a17:907:3f1b:: with SMTP id hq27mr2608703ejc.613.1641939967650;
+ Tue, 11 Jan 2022 14:26:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20220109045732.2497526-1-newren@gmail.com> <20220109045732.2497526-6-newren@gmail.com>
- <950da537-941f-dfb4-460a-1aa4c68e0750@github.com>
-In-Reply-To: <950da537-941f-dfb4-460a-1aa4c68e0750@github.com>
+References: <20220105163324.73369-1-chriscool@tuxfamily.org>
+ <CABPp-BFh7UnQtPM=tO8rfp5bPK4-7esouv5KCx1sUSESwEA=Rw@mail.gmail.com>
+ <CAP8UFD0wKnAg5oyMWchXysPTg3K9Vb4M1tRcPzPE81QM903pYg@mail.gmail.com>
+ <CABPp-BHpuLjCYycBwweMW_NdQrS_r3ECmvLb8XjNW-_Rau5NTw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2201101427440.339@tvgsbejvaqbjf.bet> <xmqq8rvn1nkw.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2201111439190.1081@tvgsbejvaqbjf.bet> <220111.86mtk2xb1y.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220111.86mtk2xb1y.gmgdl@evledraar.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 11 Jan 2022 14:04:45 -0800
-Message-ID: <CABPp-BHEuLB9u1ggDUsTZ_85S52XScM4znM7dnrQQ1iKnXxmhw@mail.gmail.com>
-Subject: Re: [RFC PATCH 5/5] Accelerate ensure_skip_worktree_means_skip_worktree
- by caching
-To:     Victoria Dye <vdye@github.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
+Date:   Tue, 11 Jan 2022 14:25:56 -0800
+Message-ID: <CABPp-BFei07srZBgyKs6HCm+G+hmPR-3_EkKjRK8WwGL1Uf2oA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] Introduce new merge-tree-ort command
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 11, 2022 at 10:30 AM Victoria Dye <vdye@github.com> wrote:
+On Tue, Jan 11, 2022 at 12:38 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Elijah Newren wrote:
-> > Rather than lstat()'ing every SKIP_WORKTREE path, take advantage of the
-> > fact that entire directories will often be missing, especially for cone
-> > mode and even more so ever since commit 55dfcf9591 ("sparse-checkout:
-> > clear tracked sparse dirs", 2021-09-08).  If we have already determined
-> > that the parent directory of a file (or any other previous ancestor)
-> > does not exist, then we already know the file cannot exist and do not
-> > need to lstat() it separately.
-> >
-> > Granted, the cost of ensure_skip_worktree_means_skip_worktree() might
-> > be considered a bit high for non-cone mode since it might now lstat()
-> > every SKIP_WORKTREE path when the index is loaded (an O(N) cost, with
-> > N the number of SKIP_WORKTREE paths), but non-cone mode users already
-> > have to deal with the O(N*M) cost (with N=the number of tracked files
-> > and M=the number of sparsity patterns), so this should be reasonable.
-> >
+> On Tue, Jan 11 2022, Johannes Schindelin wrote:
 >
-> Did you write/run any performance tests to see how this optimization changed
-> the execution time? If not, running the `p2000` performance tests against
-> the patch series base, [3/5], and [5/5] would provide some really helpful
-> insight into the cost of `ensure_skip_worktree_means_skip_worktree`, then
-> how much this optimization improves it.
+> > Hi Junio,
+> >
+> > On Mon, 10 Jan 2022, Junio C Hamano wrote:
+> >
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >>
+...
+> > No, I don't think it is a good idea to keep the original behavior aroun=
+d
+> > indefinitely, when it is totally unclear whether there actually _is_ an=
+y
+> > user of this feature out there.
+>
+> For what it's worth I've used it for some automation at an ex-employer
+> at least once. Grepping through my #*git* IRC logs there's a few
+> mentions of it, and likewise for StackOverflow.
+>
+> I'm not opposed to replacing it, and I think that probably in-the-wild
+> users of it are almost certainly just grepping for the conflict markers
+> to see if there's conflicts, or parsing which files have them etc.
+>
+> So if we can provide a better interface that they can use (or even make
+> git merge-tree a thin wrapper...).
+...
+> So I'd personally be much more hesitant to remove or change that, but of
+> course we might still come up with good reasons for why it's worth it,
+> especially with some advertised deprecation period.
+>
+> And isn't any doubt around that even more reason to just go with
+> Elijah's plan of introducing new plumbing? I.e. is it really costing us
+> to just leave these "legacy merge" plumbing built-ins
 
-I haven't[1].  You bring up a very good point; I'll add it for the next round.
+I definitely think it's worth guiding users away from the old `git
+merge-tree` behavior in documentation (i.e. deprecating it).  That may
+also lead towards its eventual removal, but I'm not as worried about
+that.
 
-[1] Long, probably irrelevant story about why: My original patches
-were actually going to go further and just remove the
-present-despite-SKIP_WORKTREE files in _all_ cases, sparse-checkout or
-not. It had not occurred to me while writing the patches to make it
-specific to sparse-checkouts.  Because of that, I figured it was
-better to get feedback on if the idea was acceptable and spent a lot
-more time concentrating on making the case.  Then I realized near the
-end that folks who don't use sparse-checkout or SKIP_WORKTREE might be
-annoyed at the overhead also being added for them, for a feature
-they'll never even use.  I decided to back off a bit, and make it
-sparse-checkout specific.  Then I realized that backing off might just
-keep all users happy anyway (the folks who intentionally use
-present-despite-SKIP_WORKTREE paths, despite their many warts, can
-keep doings so) and edited a lot of my commit messages, docs, and
-cover letter.  And by then it was late Saturday night and I had
-promised to send out my series on Friday.  Since I had already marked
-my cover letter as RFC anyway, I just decided to temporarily punt on
-getting performance numbers...
+`git merge-recursive` was actively used in various places, including
+in `git cherry-pick`.  I had used it a few times myself in a script.
+I don't see a need to deprecate it currently, which naturally would
+push its removal (if anyone is pushing for it) even further away.
+
+> and merge-recursive.c etc. in place?
+
+This, however, is different.  I have much stronger opinions here and I
+do want to eventually remove merge-recursive.c.  Definitely not now,
+because:
+
+  * `ort` has not been the default long enough.  We had one bug
+reported this cycle where ort did the wrong thing and using
+`recursive` was a good workaround.  There may be a long tail here, so
+I'd like to wait a couple years for reports to trickle in.
+  * `merge-recursive.c` is still hard-coded in three places in the
+code; you can't even set a configuration option to choose merge-ort.c
+in those places: builtin/am, builtin/merge-recursive, and
+builtin/stash.
+
+More details on that second point: All three of these use
+merge_recursive_generic() and need that usage to be replaced.  It's on
+my TODO list.  Although it might look like a trivial job of just
+copying merge_recursive_generic() and replace its merge_recursive()
+call with merge_ort_recursive(), that would only get you something
+that would die on assert()s in ort's setup.  If you removed those
+assert()s, then you'd merely be copying the bugs in
+merge_recursive_generic() usage into the new world (and adding one new
+bug).  We should instead fix the problems identified with that usage
+and those callers during the review of ort.  So don't try to do this
+simplistic translation.
