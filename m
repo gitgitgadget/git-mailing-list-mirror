@@ -2,100 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 415E9C433F5
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 11:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2727C433EF
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 11:12:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238133AbiAKLCA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 06:02:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36952 "EHLO
+        id S238482AbiAKLMO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 06:12:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235439AbiAKLCA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 06:02:00 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A78C06173F
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 03:01:59 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id c126-20020a1c9a84000000b00346f9ebee43so1563385wme.4
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 03:01:59 -0800 (PST)
+        with ESMTP id S238050AbiAKLMO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 06:12:14 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AF25C06173F
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 03:12:13 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id w26so4869696wmi.0
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 03:12:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=YiDllnMxRN8vN6jps3Jqf5+QqjqRSgs6hBNkredewDQ=;
-        b=HpnfGTA9qqW5yH0QG+e9lD3jl1LnLktWjJWiTUjXEKPBzj/ER7x1Nw53atLEt0mUf3
-         OoYyi+gCOSfIjAA2M3gqjCbRJx+fXh0pstgmjb/dDPIiFZOB5u44fjb3a4wBQo8MFdVo
-         RGnUrmmXJO3PU6ASiS35Vo7qO7WU6gsRFEPjqdeID6Ozbeu9wYUbOD0GCG7VzsDFwD4f
-         umMITGPPAx45Cq23LQbylzUPt8hLUdTJx7aqNL3mJ1TGBHYGMmHZQ1mhCPJZSVDEVK5C
-         Zv8IPdlOzgwOg83Qd69hJFv4Egw/HWEAFLI5hZTToKUH1t+8DWTvIwMkXQxIjsVQ1yFu
-         NxPg==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=5teVLw05UeLzMec9KlgVuuTlp2TjAYPq0Fm0GQNhHTM=;
+        b=jZ9vp2zNJfhzPBigmeGCTCyyTh7KBfOLoaYObqzpnviq3hcFfqbZcx7IXpZwANArgh
+         Tf9NS0WiP0oZ1Je1Gbp1zL5k+MANdNF+eZVAvZ+H+ilnS05LZ9qf4hWkvxhjVhrGhJU7
+         keGkdCNicaPJLh9wGZnWtyyRrwuAIcRmTcC1bc4NTrPjxLlTFVvSGkbTOmeh0ATFn9ss
+         /JC1KB5W7m/aPpIKyFtidHjrJrq80RA4SaC1FdBdUw7bSso4GHezhb/anJb3rbyMOgJJ
+         ETbA2qHVCvFzIILG/cznFV6+HRytWJlNB9l6bfhEnOSvqHr5ZhkHVvKBdxy2AyoeN1X6
+         HCWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=YiDllnMxRN8vN6jps3Jqf5+QqjqRSgs6hBNkredewDQ=;
-        b=dhTDL+WDAw7NYh+uM+EzX4QhlWbN9vZQJP1qqXnsO4BQV/PTT/e6ZsQ8fQl+UUQAMo
-         dtuafLCKcFDAVNOcuYCm6YYrCILjRhuozRklcF52NVaLdbNnZQt34VV4rQiJA2LLx8D2
-         mxfF+a5hC1BtgZhjcCYlTuuzBGOgk9WGg1h6biz3lvWOb/LzQj0lSFYq7BEgfxGtofmN
-         mlucoBsBw4SPTZxT5gGK6MxOMJ+wpN9j4K9NXtWcbyD7jhJXCMqtJsxKAPXW0/ie1tzm
-         D60ZvgT+ykReEm/CcrqoK6Bz2WcY9CfMTF/zVN3kEfVrhpOoJvuR8EXh+mend9UkFMDo
-         qmUA==
-X-Gm-Message-State: AOAM532n2VGPOGGKTPIb1RulY+AFBMX3wvmQlNj+wdclu0ip6Q2FBESB
-        rdw4aSWBNOq5+X3z6qVeCXw=
-X-Google-Smtp-Source: ABdhPJx0FPZ7FzBVdewvFes1cjowL9igh77sXwXnWoGJBbPeIfPB0Nx9AyMQrHoYS3+2M9WYhkvAgg==
-X-Received: by 2002:a1c:c917:: with SMTP id f23mr2027633wmb.10.1641898918315;
-        Tue, 11 Jan 2022 03:01:58 -0800 (PST)
-Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id t7sm1423221wmq.42.2022.01.11.03.01.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Jan 2022 03:01:57 -0800 (PST)
-Message-ID: <8d07e92e-b63a-6be4-6999-79c36ca07cb5@gmail.com>
-Date:   Tue, 11 Jan 2022 11:01:55 +0000
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=5teVLw05UeLzMec9KlgVuuTlp2TjAYPq0Fm0GQNhHTM=;
+        b=l6X2tDkS0spSUlXCmZLO0TxjdaP0ok+7nHatXhNB2GeNhgqXKsJlMwFGTVEVWXaQrV
+         C6JJJi7t5U6CJawH9mkte+cuXpGbA9ksLZUbO0P7jB6stzC3ApHH33ee0Wq2vhlmg0q+
+         WyhnK3Gf5IrYAGKfZJ6BqD/Y6moeHyuEimP42U9h0M7rY1t+uRTE5f3GCg7RJQOp4vDU
+         L7EO3k2pMye+Y81CmcBDfS4XJf3VpV4Ghc6a6dq1oxZsiPJGzR+dTSQ7Gkco0zNBixBx
+         Z1qfQTXKyf2w2wU66Avl9eeubP9pIsKz44UleHZTTM2K7JhWAyQ0NFD7gs9FMbG1Odfh
+         L+/g==
+X-Gm-Message-State: AOAM531k6hb31224kkGrwIZp2+YwKYhX+OXlpFn/8Sa3ROLT+dYWL2CQ
+        PiZ+ZG1ULXKW29CJ9AssFKpgmAg+gvc=
+X-Google-Smtp-Source: ABdhPJw44xvBP+mvO6L9O1+THJdjocV8lTeEtEX0DbPrYAn6bRV6hOBPgSYA7cwh/C8IX2C9/4SnuQ==
+X-Received: by 2002:a05:600c:1f16:: with SMTP id bd22mr563636wmb.55.1641899531882;
+        Tue, 11 Jan 2022 03:12:11 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z5sm1362606wmf.25.2022.01.11.03.12.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jan 2022 03:12:11 -0800 (PST)
+Message-Id: <pull.1100.v2.git.1641899530.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1100.git.1640010777.gitgitgadget@gmail.com>
+References: <pull.1100.git.1640010777.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 11 Jan 2022 11:12:08 +0000
+Subject: [PATCH v2 0/2] builtin add -p: fix hunk splitting
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v7 1/2] name-rev: deprecate --stdin in favor of
- --annotate-stdin
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <pull.1171.v6.git.git.1641423600.gitgitgadget@gmail.com>
- <pull.1171.v7.git.git.1641425372.gitgitgadget@gmail.com>
- <153f69ea9b6cfc3fff47c91fa237cf97efd6bfae.1641425372.git.gitgitgadget@gmail.com>
- <56FFAD1E-D081-4D13-A12E-DD6807375B69@gmail.com> <xmqqo84j1oel.fsf@gitster.g>
- <A869C5DC-98D0-4093-90ED-5F7933041968@gmail.com> <xmqqo84jz9qf.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqo84jz9qf.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/01/2022 19:11, Junio C Hamano wrote:
-> John Cai <johncai86@gmail.com> writes:
-> 
->>> As I said, my mention of hidden vs non-hidden was not my preferrence
->>> of non-hidden over hidden, but was soliciting opinions from others,
->>> so I was a bit surprised to see a reroll to change only that thing
->>> and nothing else so soon.
->>>
->>> But if it is your preference to leave it unhidden for now, that is
->>> fine as well.  I have no strong preference over the matter either
->>> way.
->>
->> I think it makes sense in this first iteration to keep it
->> non-hidden for visibility purposes.  Maybe in the next release we
->> can make it hidden before we move it altogether.
-> 
-> I think that is a sensible way forward.
+Thanks to Junio and Ævar for their comments on V1. I've updated the commit
+message and added a helper function as suggested.
 
-I agree
+V1 Cover Letter: Fix a small regression in the hunk splitting of the builtin
+version compared to the perl version. Thanks to Szeder for the easy to
+follow bug report.
 
-Thanks
+Phillip Wood (2):
+  t3701: clean up hunk splitting tests
+  builtin add -p: fix hunk splitting
 
-Phillip
+ add-patch.c                | 20 ++++++++++------
+ t/t3701-add-interactive.sh | 48 ++++++++++++++++++++++++++++++++++----
+ 2 files changed, 56 insertions(+), 12 deletions(-)
 
+
+base-commit: cd3e606211bb1cf8bc57f7d76bab98cc17a150bc
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1100%2Fphillipwood%2Fwip%2Fadd-p-fix-hunk-splitting-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1100/phillipwood/wip/add-p-fix-hunk-splitting-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1100
+
+Range-diff vs v1:
+
+ 1:  cc8639fc29d = 1:  cc8639fc29d t3701: clean up hunk splitting tests
+ 2:  5d5639c2b04 ! 2:  b698989e265 builtin add -p: fix hunk splitting
+     @@ Metadata
+       ## Commit message ##
+          builtin add -p: fix hunk splitting
+      
+     +    The C reimplementation of "add -p" fails to split the last hunk in a
+     +    file if hunk ends with an addition or deletion without any post context
+     +    line unless it is the last file to be processed.
+     +
+          To determine whether a hunk can be split a counter is incremented each
+          time a context line follows an insertion or deletion. If at the end of
+          the hunk the value of this counter is greater than one then the hunk
+     @@ Commit message
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+       ## add-patch.c ##
+     +@@ add-patch.c: static int is_octal(const char *p, size_t len)
+     + 	return 1;
+     + }
+     + 
+     ++static void complete_file(char marker, struct hunk *hunk)
+     ++{
+     ++	if (marker == '-' || marker == '+')
+     ++		/*
+     ++		 * Last hunk ended in non-context line (i.e. it
+     ++		 * appended lines to the file, so there are no
+     ++		 * trailing context lines).
+     ++		 */
+     ++		hunk->splittable_into++;
+     ++}
+     ++
+     + static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+     + {
+     + 	struct strvec args = STRVEC_INIT;
+      @@ add-patch.c: static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+       			eol = pend;
+       
+       		if (starts_with(p, "diff ")) {
+     -+			if (marker == '-' || marker == '+')
+     -+				/*
+     -+				 * Last hunk ended in non-context line (i.e. it
+     -+				 * appended lines to the file, so there are no
+     -+				 * trailing context lines).
+     -+				 */
+     -+				hunk->splittable_into++;
+     ++			complete_file(marker, hunk);
+       			ALLOC_GROW_BY(s->file_diff, s->file_diff_nr, 1,
+       				   file_diff_alloc);
+       			file_diff = s->file_diff + s->file_diff_nr - 1;
+     +@@ add-patch.c: static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+     + 				file_diff->hunk->colored_end = hunk->colored_end;
+     + 		}
+     + 	}
+     +-
+     +-	if (marker == '-' || marker == '+')
+     +-		/*
+     +-		 * Last hunk ended in non-context line (i.e. it appended lines
+     +-		 * to the file, so there are no trailing context lines).
+     +-		 */
+     +-		hunk->splittable_into++;
+     ++	complete_file(marker, hunk);
+     + 
+     + 	/* non-colored shorter than colored? */
+     + 	if (colored_p != colored_pend) {
+      
+       ## t/t3701-add-interactive.sh ##
+      @@ t/t3701-add-interactive.sh: test_expect_success 'correct message when there is nothing to do' '
+
+-- 
+gitgitgadget
