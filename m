@@ -2,80 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0823C433F5
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 20:39:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED10FC433EF
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 20:40:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243988AbiAKUjJ convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 11 Jan 2022 15:39:09 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:11337 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233821AbiAKUjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 15:39:08 -0500
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 20BKd7sF047000
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 11 Jan 2022 15:39:07 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Taylor Blau'" <me@ttaylorr.com>
-Cc:     <git@vger.kernel.org>
-References: <00fd01d80691$c87e3ad0$597ab070$@nexbridge.com> <Ydzw+RqR6IfbT/oM@nand.local> <010b01d80697$0c848770$258d9650$@nexbridge.com> <Ydzyv8ZCEpDDRBXT@nand.local> <010d01d8069e$8d330480$a7990d80$@nexbridge.com> <Yd3gJ6C3jU7ZZskc@nand.local>
-In-Reply-To: <Yd3gJ6C3jU7ZZskc@nand.local>
-Subject: RE: [BUG] Re: Git 2.35.0-rc0
-Date:   Tue, 11 Jan 2022 15:39:02 -0500
-Organization: Nexbridge Inc.
-Message-ID: <013e01d8072b$47fbc4a0$d7f34de0$@nexbridge.com>
+        id S243910AbiAKUkO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 15:40:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59662 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233821AbiAKUkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 15:40:13 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF32C06173F
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 12:40:12 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id z22so1004470edd.12
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 12:40:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=pfhb85mESNVGRIH1AhpAGiXUMPmLjIADRTrwSBWQYLE=;
+        b=KewKDQDEkS7aPRNGqVQdpx2b+BTtOjV7b/NwWKZChMuMKer2QbvTJANkUGrv9VBHl/
+         dM74U/CVNN0yXBkkcUy9RvDLsTEgWG2jmzieXCDqO6NstfR59mHrp5/rxzlT3QCLOxHn
+         9qZI9i2bKaROLAERbj2RiLYcue3O7UjxKINeNdKW1ADvO7236sZo5FEz/PBwo4b8u2A2
+         c6p3udRnxsxehl5CXnXb3EbMG9/4Xu8gWeTXGrVyPryWFe2c93zW4UCDMMcmllVj93RK
+         h1jJA4Tu6yBDTvBn8YVPKg4SfdRjJaixjuHRthUfl5XCp+fZU2cCWAA49IOWbzSf6XRN
+         OPaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=pfhb85mESNVGRIH1AhpAGiXUMPmLjIADRTrwSBWQYLE=;
+        b=FPtxSy0iZNCKdXRgRgl/snFV7q2spqSVVFZX7e1TzNtkMCUdg8QWbZX2ZyN4v5kaJM
+         oqf1IiRXJMuYtg78tnDgczwh6g5xpZQ4BSoSEnr3t7chJEFj935Y7vdxx9PXJ2jBkqTq
+         sge/MuRIe1FYXlAek68rDLkw8p8XpkGgGkZfhkCXqzlaqyZf28uE3G+mrrnugktRxojQ
+         ACo9bMul17fPxf+5hpmT61MpFYts5UE80Pl88h7OKFw4zIuLwxoHjm8CjwPqv0vASdXf
+         IBc5YsSiGGz6pVRyYL6+M32uZ4nq2xFjZ1O8ZdzEDLdvIcZulgMq7zOUF38i/v8G0WTb
+         1wFQ==
+X-Gm-Message-State: AOAM532f8nmZWTqnqCTqMgvCBu84ajZcnSyJtqmxXoz4nZKcIJJMQHkx
+        LW5G5cSbIY2uHxvJnz2lFFnIwCUM1N/v4w==
+X-Google-Smtp-Source: ABdhPJzWEPndKgcZxlSmNe+ChFpC/vgjy9lT6DHZBW68khB5Cvhu+jd6ioIHqOBT+dObgK1gWWy2NQ==
+X-Received: by 2002:a17:906:2c0e:: with SMTP id e14mr26753ejh.174.1641933611373;
+        Tue, 11 Jan 2022 12:40:11 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id k8sm310598ejc.115.2022.01.11.12.40.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jan 2022 12:40:11 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1n7NwA-000hbL-Dw;
+        Tue, 11 Jan 2022 21:40:10 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Teng Long <dyroneteng@gmail.com>, congdanhqx@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        tenglong.tl@alibaba-inc.com,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v9 9/9] cocci: allow padding with `strbuf_addf()`
+Date:   Tue, 11 Jan 2022 21:39:18 +0100
+References: <cover.1641440700.git.dyroneteng@gmail.com>
+ <8dafb2b3779715aa277eb825a94af87b72f3e093.1641440700.git.dyroneteng@gmail.com>
+ <220110.86ilurzcxo.gmgdl@evledraar.gmail.com>
+ <Yd2zXOrf+4qX8VLD@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <Yd2zXOrf+4qX8VLD@nand.local>
+Message-ID: <220111.86iluqxaz9.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIzMkomfuhrYaYzn51cwdtqNnfQqQHkNVZQAf1QdqACJzV1/gJXK5FDAmoCVyyrUaJh8A==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 11, 2022 2:53 PM, Taylor Blau wrote:
-> On Mon, Jan 10, 2022 at 10:51:39PM -0500, rsbecker@nexbridge.com
-> wrote:
-> > I now have a different issue:
-> >
-> > make -C t/ all
-> > make[1]: Entering directory '/home/git/git/t'
-> > rm -f -r 'test-results'
-> > /usr/coreutils/bin/bash: /usr/bin/perl: Argument list too long
-> >
-> > Is there anyway to move to xargs? I am not sure why /usr/bin/perl is
-> > having issues with the build.
-> 
-> Tracing through t/Makefile, I am _pretty_ sure that this Perl invocation comes
-> from the test-lint-shell-syntax recipe.
-> 
-> I wonder if something like this would do the trick?
-> 
-> --- 8< ---
-> 
-> diff --git a/t/Makefile b/t/Makefile
-> index 46cd5fc527..d959119133 100644
-> --- a/t/Makefile
-> +++ b/t/Makefile
-> @@ -90,7 +90,7 @@ test-lint-executable:
->  		echo >&2 "non-executable tests:" $$bad; exit 1; }
-> 
->  test-lint-shell-syntax:
-> -	@'$(PERL_PATH_SQ)' check-non-portable-shell.pl $(T) $(THELPERS)
-> $(TPERF)
-> +	@echo $(T) $(THELPERS) $(TPERF) | xargs '$(PERL_PATH_SQ)'
-> +check-non-portable-shell.pl
-> 
->  test-lint-filenames:
->  	@# We do *not* pass a glob to ls-files but use grep instead, to catch
-> 
-> --- >8 ---
 
-I think we don't need this yet. My CI/CD system is a bit more robust and does not get stuck here.
---Randall
+On Tue, Jan 11 2022, Taylor Blau wrote:
 
+> On Mon, Jan 10, 2022 at 07:00:59PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> On Thu, Jan 06 2022, Teng Long wrote:
+>> > The original rule was introduced by commit:
+>> >
+>> >     https://github.com/git/git/commit/28c23cd4c3902449aff72cb9a4a70322=
+0be0d6ac
+>>
+>> Let's refer to commits like this:
+>>
+>>     28c23cd4c39 (strbuf.cocci: suggest strbuf_addbuf() to add one strbuf=
+ to an other, 2019-01-25)
+>
+> I find it helpful to have an alias like:
+>
+>     $ git config alias.ll
+>     !git always --no-pager log -1 --pretty=3D'tformat:%h (%s, %ad)' --dat=
+e=3Dshort
+>
+> in my $HOME/.gitconfig so that I can easily format commits in the
+> standard way.
+>
+> I think that this alias came from Peff, but I can't remember.
+
+Nowadays you can do this as:
+
+    git show -s --pretty=3Dreference
+
+See Documentation/SubmittingPatches
+
+I use:
+
+    $ git help reference
+    'reference' is aliased to '!git --no-pager log --pretty=3Dreference -1'
