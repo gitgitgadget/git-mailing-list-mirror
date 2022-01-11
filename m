@@ -2,118 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0982BC433EF
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 13:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3087AC4332F
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 15:02:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241056AbiAKNr4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 08:47:56 -0500
-Received: from mout.gmx.net ([212.227.17.20]:38065 "EHLO mout.gmx.net"
+        id S244017AbiAKPCc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 10:02:32 -0500
+Received: from mout.gmx.net ([212.227.17.22]:44895 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241007AbiAKNrz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 08:47:55 -0500
+        id S243677AbiAKPC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 10:02:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1641908870;
-        bh=3/MNNASQRqeLIWa/SMj+nl0ZmK++100XzkOcIDK/Cr4=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=BOIfhzojlmErGXvTskECCXIoLSnOPyfS/XDxLyHBF0QuAzaYSFjUJqSZfS1mXiJWI
-         qlaRsLleARz54vDnfbmj1gKeqgxqn0cgB4AzIeslpceKxLkzhFoSexU/8gFP2PQgSr
-         CITAz0ZZyi1xA2jvJBtp6C6JpZn+2YeBvuTXhavc=
+        s=badeba3b8450; t=1641913347;
+        bh=+G3O3kS2c2Lz31b5ZmrLjfEazxVxd6fjwJL20oKOaQc=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=I7GS0QfbJEm51nH+tezfPzbYt1o9oJ6c7VD40JkE6hoecMspkcjgpJafUhImpJxsk
+         CRM0jqmtr+D8LjyWNGhp+rs1Mvt2aXaEZuZ++eya5wyTb4tlXX7n8t67BMFyZnr0P7
+         IjuXNk845WqKUT9nWEmrB6xX5upJ4BFMWWHE7R1w=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.82.111] ([89.1.215.56]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mzyuc-1mBU9b3nsM-00x02S; Tue, 11
- Jan 2022 14:47:49 +0100
-Date:   Tue, 11 Jan 2022 14:47:48 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Elijah Newren <newren@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [RFC PATCH 0/2] Introduce new merge-tree-ort command
-In-Reply-To: <xmqq8rvn1nkw.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2201111439190.1081@tvgsbejvaqbjf.bet>
-References: <20220105163324.73369-1-chriscool@tuxfamily.org> <CABPp-BFh7UnQtPM=tO8rfp5bPK4-7esouv5KCx1sUSESwEA=Rw@mail.gmail.com> <CAP8UFD0wKnAg5oyMWchXysPTg3K9Vb4M1tRcPzPE81QM903pYg@mail.gmail.com> <CABPp-BHpuLjCYycBwweMW_NdQrS_r3ECmvLb8XjNW-_Rau5NTw@mail.gmail.com>
- <nycvar.QRO.7.76.6.2201101427440.339@tvgsbejvaqbjf.bet> <xmqq8rvn1nkw.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Received: from fv-az92-203.nbrkuvepa5puroylvvx1wzp50h.ex.internal.cloudapp.net
+ ([20.88.13.196]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MSKy8-1mwOb43Srw-00Sgr8; Tue, 11 Jan 2022 16:02:27 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.35.0-rc0
+Date:   Tue, 11 Jan 2022 15:02:23 +0000
+Message-Id: <20220111150224.4092-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.34.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:KreNn7QU53KlS/CQY8pRYlXlrDXP8sDhiQExPIhu8osdgjGYAAX
- DRHqU6PlkXHBYGoTM/Q5w5zCjIQMKLf5c7HLCtKs+MM9qkZ6t+mkA7Ij+izxkjoEexnYKH6
- Bo5LCGLrI8Yueu+h2WDhgdGEJ+uAZ1qGqDr3IhMRqVN2Ae8YB+Ci8DZx2rYn4fXiN1jswWH
- iI+irmPBnF0KntL/ztWJA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8atxeFsEhn4=:pBBq6gq7rp5KP0Il8v7OTP
- 5V5JQFk+jy45vEEL8cQLjQ7IHkn9Bb643+ZV1MkrSjepzQv0NDqfDOh4PqLP9cKT2Tqa1zKlU
- 7dTtdCjKWEGPcMH5uHioQO0jjs4zDr/erkfx5AE1bc88y03dKR7S7iDwSHyS8d7B+4DmsGLyL
- +NNdPYjJ24hPBzbOUHYRrBo5y2zv4xuoByOvlGhvEYWXHuR+eU6lQ/i5M7wzecfiJ0JqOhmE9
- 3K0gAcU0eNIswZZjpbhSuGiJAeD/Tfxbaf6SJb7w6ADIhbK8Q+rnIfqMXPldL8ciiCXynNRQH
- oA2Y60tSgSM3iGLD/WBt8xakS8+hHz8wcw5MURp4DbThNBrqItCu6a9ol4UO+hcgYyCPMijtG
- K6r2puNHoVyxrKoFKpl2Zh5GWTPjYEslr+GT7NX2EioQQ5+5qNGbjILs9Dx9uq4Sesi8RcmUe
- Erz+VbrKrsxL4WTHMG/raPlThlkI6BGEvhEHls5m6v+CQdQPvapw6V3kLEojppYeaTI8aSBfi
- imhTfTlwN6xNiA2yzGX838ZEvevCIe5tfLS+Fo1m7Mn6aaNewRxRkvHGzfY1dAF3BFH9BJtQw
- vwZvuHQdZYJ7njkyiYeYbZEjScvS3IeT7ZITEm0XypQHMoXyN32skcv7ylhQpwXMTrw2xJcJW
- P4JRucewucPgWGIcpfjrO5jOuxoE2qSmCb2Fjwtfr61U9CMO+EWMfG5USdbeG8+nL8DF4hsWQ
- 753tg99T/Oxz0+BpbOyOn+3RgA6FmlWWM1ZfBeRTdrQrX4xMTj6It4p2POV39yPy4TQ1323g6
- S+uuwR7RnBE0g8n6jOukTU4w/nTTgj/QdcmGBDYjP2g5mAx7o75UDOy2gQ5SOiMferntLW6PD
- CBmF0h1/IzzvPpRczXPjxAbuCDlEXIVArP7KhzaE7nTSfVPyvg/UpG93J47/JeBoIHERP9gFh
- 2OL0pIiG9okfMb0SZSWG/jkHl+NuCTMUqSKY8I2nNydGV5ebOWGgSt4+Rj+eK4bRrNxy8hKPI
- 3SriCVq4WlGOLaNsppjBPdNs8e9hF84997lY2OBV5CXoVV/yNdaJW4CfhWGkNAcYFx9K0zWX4
- Kke+tb3qYTBmEE=
-Content-Transfer-Encoding: quoted-printable
+Fcc:    Sent
+X-Provags-ID: V03:K1:ZWzEuypRQqF8StTxMpARGz84MZiEAGy0gSsvf8pZGdv6NZJ2Xbl
+ cSjwQsr3lW27t56aTFZCC86F0pt7Iv2juOJYfsdUpsy3J0DH8OzTw+xKw8zKCCJxDcn+uyH
+ 7/vvTR6x2UuCqMl5+Xw2VCEQh6Zi07svtmyl4syDdL64mN7cCghOihTUmSVG9td3jkb1U8V
+ C4Q0LPkVF31bb5JKfOMBA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4F9Bv3Lqs8w=:zVtuSlWxU8JretGGuIBlMI
+ 3H/cet3sOu8Dbq5ntP1mtr5jJ0X5hIexorlp1ptbmtelSLpW3VR74vFB4nmUgeXRvWaO0Vxj+
+ DY/BOIAnKTa5I+rlNefg9TWMe6X74xTL3Vs/ZKiTP3TmdC5qHZkVWuxiANCgPK4I+Wu4xyPw8
+ 2cz3/jDhPmRThS/WV0AhCXq09oGf5iCaFhQbZyEcLJBZZPWT435SPIfYZnCnW5ZCbmNi2tG5u
+ WeYhREPLGNrmwHe3nfp7Lrk9wmReutK0C5Ts+5C51JI5CjGUkX1NG6U92X3tRFJgKx/HMVd0l
+ bgyxh3X6CeROkKlenI95lqNujcOmZXC4EXCZ6Q10uv/QNzIckD5e+0bmnjwpjAPdnhhfEqP2e
+ dyQgIF3Ny6bRbDeU3cnl4yfzFXAv66m0HNgQvIuqebeJjGnBUavosiCerlZ5ZJHlOmrIz/ayW
+ xefoc1oo6zuq042zTA/VPdrAp1do9f1NSlk7SxM1QmeKFBQ/ovdUW1PTShgcU3SY4anx2VoUX
+ 2XDpc4QpPNI9ANk3RtUCiwJOzc766wjRjtlhfBOvydW7yLzzpl7Pju0CS681XWQUQU0C3eAZ+
+ QmGNaPflauoCntocU3XNdVAnQxkypv2qgGAuqkGiQxC5xKQzlXcpnHvhV+Kv4dQHBdj87ylYI
+ k1VfHR81q9gRfXuaVL8jnMF0E5f9Lkc32TV1xT9AIkOXvgMnOFmOIG/YnJjxLxfJG7JwHw1GX
+ +a/OSsb6m2cNrXDUcLw4bOzM3GLwe0+C8Hb9cGJ1xvzF+pcgg8aSFU88yL7NtdRTtnjL65k0l
+ tjVwGROBR63rybT6yDIh2uMJp+o6SxFM2fwdxU1VhpuMuU3jyU2aqDCbbV4P67ikNBOEPPyNI
+ OJVFi5JPQCPTAKVvNCGQFYdYmNtK9zqFFnxmlWlrknVXKWbdh8s+EsavHNzbAuRqer0VLR8IK
+ ZPzr0usMDfwUjjNpIZNKLGG7gF6EUsWgWZ51uoLUl4t8qkJNelnq9s7U13/25pyVarDtokGle
+ XTemAfc+LEggva5wfce6SIuMgwZm+0W7heZkn086hzTyfzXLuKsUBJ0yaovGYlDeGHYpuJMOT
+ xmHV1/w7P7gqfo=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Dear Git users,
 
-On Mon, 10 Jan 2022, Junio C Hamano wrote:
+I hereby announce that Git for Windows 2.35.0-rc0 is available from:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > I am against a new command for what essentially serves the original
-> > purpose of `merge-tree`.
-> >
-> > The fact that `merge-tree` has not seen any work in almost 12 years is
-> > testament not only to how hard it was to disentangle the work-tree
-> > requirement from the recursive merge (it is one of my favorite
-> > counterexamples when anybody claims that you can easily prototype code=
- in
-> > a script and then convert it to C), but the fact that there is no user
-> > within Git itself (apart from t/t4300-merge-tree.sh, which does not co=
-unt)
-> > speaks volumes about the design of that `merge-tree` tool.
-> >
-> > So it's only fair to breathe life into it by letting it do what it was
-> > meant to do all along.
->
-> My "Yup" would not weigh as much as one that Linus (whose original
-> merge-tree survived this long without seeing much enhancements)
-> might give us, but he is busy elsewhere so you guys have to live
-> with mine ;-)
->
-> As to its output, I do agree that "we give a tree when it is already
-> usable to record in a new commit" is a valuable option to have.  The
-> original behaviour should be made available somehow, for those who
-> built their workflow (including scripts) around it, though.
+    https://github.com/git-for-windows/git/releases/tag/v2.35.0-rc0.windows.1
 
-No, I don't think it is a good idea to keep the original behavior around
-indefinitely, when it is totally unclear whether there actually _is_ any
-user of this feature out there.
+Changes since Git for Windows v2.34.1 (November 25th 2021)
 
-We intentionally broke any existing users of `git-parse-remote.sh` by
-removing it, when that feature was much more likely to be used in scripts
-than `git merge-tree`. We cannot say on the one hand that we will get rid
-of some useful script just because we don't want the maintenance burden
-when on the other hand trying to keep support for an operation that is
-unlikely to have any users. That does not compute. (And don't get hung up
-on the specific example of `git-parse-remote.sh`, you know there we
-shuffled around _many_ more things recently that had a good chance of
-breaking existing users.)
+Upcoming breaking changes
 
-Besides, the original `git remote-tree` behavior will be very easy to
-recreate using the better UI, the one that outputs tree OIDs.
+We plan to update the included bash to version 5.1 (currently 4.4) soon
+after Git for Windows 2.35.0 is released. Please check your shell
+scripts for potential compatibility issues.
+
+New Features
+
+  * Comes with Git v2.35.0-rc0.
+  * Comes with a version of the MSYS2 runtime (Git for Windows flavor)
+    based on Cygwin 3.3.3.
+  * Comes with OpenSSL v1.1.1m.
+  * Comes with Git Credential Manager Core v2.0.632.34631.
+  * Comes with cURL v7.81.0.
+
+Git-2.35.0-rc0-64-bit.exe | bd9ad68aeaaff14338a800d52d27bf66f73397aa1624936809cc1efb0b4dd7cf
+Git-2.35.0-rc0-32-bit.exe | d2e84c6a8281654a210376e63aeb239b0d42d67e831b63294251920c504bd8ce
+PortableGit-2.35.0-rc0-64-bit.7z.exe | 56dae5167c5eb289eb98216b23340d3917d137893d139aa3ecd45e0f7b98505e
+PortableGit-2.35.0-rc0-32-bit.7z.exe | a205ce6ac5dbd25d9081caa15aa2039ea20238cc30ec5121adb1a941358f2868
+MinGit-2.35.0-rc0-64-bit.zip | eeb41b855e7930485d4e81174e9c2398f2eee7e02296a2f247758454a6b7acc1
+MinGit-2.35.0-rc0-32-bit.zip | ee583e9137b4056caa490cd33b00a4bb2e692a708682e2ac6065a830d3992fce
+MinGit-2.35.0-rc0-busybox-64-bit.zip | de4eea585d0ce42d3b23bd0fa27fa1bc452de5de4867163fbf7fcf7f50e054ce
+MinGit-2.35.0-rc0-busybox-32-bit.zip | 89b618733a302d3033fc1f0d24efe0599d9292806fc6c5d6fca1aba7d6d7f754
+Git-2.35.0-rc0-64-bit.tar.bz2 | f4f9f1927325b2626aaabf446bce5e94d45a27cafc473c821494f69037431828
+Git-2.35.0-rc0-32-bit.tar.bz2 | 04bf5a56ef4ef54bb4818253b65cbe17864dd5923dc0cb6505268b8759c626d6
 
 Ciao,
-Dscho
+Johannes
