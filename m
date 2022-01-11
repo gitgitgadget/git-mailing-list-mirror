@@ -2,100 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE33DC433EF
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 19:06:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B37E7C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 19:18:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346073AbiAKTGi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 14:06:38 -0500
-Received: from mout.web.de ([212.227.15.14]:33643 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243166AbiAKTGh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 14:06:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1641927962;
-        bh=vtq/yt/cHpLbM3nOgoSsx2yu2eoQlR9djA3kkShe+j0=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=F9wWey6biG656WovKMMsSzVraZ+2d6oIyhYtNdER5kBaoyAgM08uFjfMuO7hWNedp
-         CUpc3/ZvLyBW2WqHyb533k8x3h3BnIkb2eKmvYoJM5XAxXsauXNBsSw8WeXQcZOTpW
-         8sD2sLjDF9sR5qTxjnDCdkFaw8WS5+E2uIt95ugA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MRk0k-1mwtAO2uJ0-00TVZs; Tue, 11
- Jan 2022 20:06:02 +0100
-Message-ID: <78aa8c28-d78b-7dee-6616-7708c363a244@web.de>
-Date:   Tue, 11 Jan 2022 20:06:00 +0100
+        id S1350959AbiAKTSB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 14:18:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40474 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1350838AbiAKTRV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 14:17:21 -0500
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6253DC028B9C
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 11:16:54 -0800 (PST)
+Received: by mail-io1-xd2c.google.com with SMTP id v1so203544ioj.10
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 11:16:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=HP5V+XvpvNZHsKLpLpyiw5ywzfSyx4EToDwhk2CyOAQ=;
+        b=eJa23wd2mk3aanLrSIRpcdAnX1m7SCo8XgMT4UfMMGjTzFlGpOu3Lz7Uxmcm0c6nVg
+         z26yzHe7UrLU08L7dDhxTXs8SrBw/ExUjtfgVn4/ygRGC9cWLVMiLRvSpHpv/0WHF/Zf
+         F4WCEhKw60LTv9cay0uXpUTukSYlaNIOBzpV4K6fKMlHcQiwfALxaCFi5G1zp7UHP6g/
+         NQvxhZBIzgJPy7iQI1QQ7Vxm+CqT1AscJcbNNfkQUuvhFUMT5RSQfHLAyrBFsjk2pISS
+         mp0cPbv/F0YSo97aq6hMYsopxHqUqvcOJZ2/EeiyccELcRawxXEw7YD5AVDrXWp9pdhd
+         bLZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=HP5V+XvpvNZHsKLpLpyiw5ywzfSyx4EToDwhk2CyOAQ=;
+        b=DIluiD3U6krYM6saAu0WkCb+xQ8STk+n4/jOt79az6dt51U/oJjIg/XbMzYZmtGZ4A
+         8T/ECXeEUV+EvAYUqLMugKlAR0fOOeG5IFEoC2F2IM/bWn4L+5VR5+cw/zTlkLEyn5xl
+         3fLNOlLJjmH8r9NwGBvwIypMRrdIhgXN81w8U79nWKf3G3XqlY8xM+tRz2koJRyHQPSd
+         Sv+2wsVG9PfbEM9eRbU4VZNLx2MTOgMyzlEUz2RWp/Kp7nchrsd/gm7caRxFXVDj+tHb
+         lg9ad7C6GLq3Ww6Kjv9FlNnCKGUJ+1+sGgQtgRL/wSOja2rq13QT0rRvSv1AlenBEjEe
+         /gqw==
+X-Gm-Message-State: AOAM530jA+Xb1ZvaYMuJ9D8DRmpKGIvcpxCnNotNm4lX9/+/r1QuuMdr
+        eixQAUnEH0+N1OAKE+V3NBh0VA==
+X-Google-Smtp-Source: ABdhPJx1bogVCvCDeO/VHQQ/kOCBuv+BGNh7JuNkU62Mb16WM5zwHtNx9Uty4zVmqeMxqfMVnCA4Xw==
+X-Received: by 2002:a05:6602:15cf:: with SMTP id f15mr3122245iow.129.1641928613463;
+        Tue, 11 Jan 2022 11:16:53 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i15sm6445325iow.19.2022.01.11.11.16.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jan 2022 11:16:53 -0800 (PST)
+Date:   Tue, 11 Jan 2022 14:16:52 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 2/3] reftable: remove unreachable "return" statements
+Message-ID: <Yd3XpLaZ3qc25PzQ@nand.local>
+References: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com>
+ <patch-2.3-7a6a69314b5-20220111T163908Z-avarab@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.1
-Subject: Re: [PATCH v9 9/9] cocci: allow padding with `strbuf_addf()`
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>
-Cc:     Teng Long <dyroneteng@gmail.com>, congdanhqx@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        tenglong.tl@alibaba-inc.com,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <cover.1641440700.git.dyroneteng@gmail.com>
- <8dafb2b3779715aa277eb825a94af87b72f3e093.1641440700.git.dyroneteng@gmail.com>
- <220110.86ilurzcxo.gmgdl@evledraar.gmail.com> <Yd2zXOrf+4qX8VLD@nand.local>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <Yd2zXOrf+4qX8VLD@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0/2/v6h31cAoZXiqCOktAQmCp0bPWq6DbK1ctpuOhEppltghENe
- YQUwE03+AMBMS7hHHPva7oXD2+/Q0cJNqmTrkykFM6dycPE0WQXHV0mA4aRY4U12OvBn5z2
- N/CzG7p5ePGeg1Ct4vn5sPHhvlzyVIbdvhtzizqISqg9lwQaQINaT/w3jkUQwxy6sLOooII
- WqFeVw/+bp0nHGkcA7iOg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:kiiOjUFFyjA=:mlplCfgb1AzOk8p8mTRlAD
- PfVXMpf6wHY4nGKoj4wEdclR2lbE14ztbHRkgQpdL3x74wxbqbxR8OIicRGOnqSiwOOWoUI7L
- bpCXApi0djhHNcXbDQOwyAvpOq8ObdVlMvFH3GIMlkeJ1rTI1YQtUDHL3H+1i5XDJKBRxGGrb
- p2419tJxlAnBw/ICJXdjhFler9VkK7P+5o075HjMS23EBacX/RDiNUGz+vC4CkWHDLhjAK417
- Vpzgn42aeHNMdcpergCwCATce/XxY03FKRshhznRPjs6agYLLqV976KWGZrRnSHMcNbZ9uwxU
- 2NsPz1e08OJDrSE2AIY66L+FPLt0NGAA4FJnhf6nPCDTvrPDyPamAY9cNEvlThONz3fO0GXau
- vBhGL+gq+sVvhQ1tYHl3tbmzvoBjSQt+bKocU1bkMGQ+8XxykVdBnMx5vgA8zldXALm3JRFwc
- mrqz3n5NMVETQMoUhykUKqK1uqTGVOrpc3+usrdaaSkn8+Epz7YMz0MWm9ttttI8IMcQSv4fA
- eRNx2dB/GL2nQ60a0iGhYL0zAyBCTH22segrBa5AI47ZltWYmAMSjD6G5ZFgjmTeaRG017Feo
- 6eVklvfslSFqmoEAe32bUey1xEve6V+fptlz+fQgM8fd7rNYzvBczIQwOfnsrwAhTzwoLOpDr
- oIXevfs0hBiNfcSFPWCO0ghHKqzVSHOzrTiFLyZ0Tkr+HE+NOT0hLWszi3MLApgMH/W6K/Ctt
- MBn4muT4tCPWlbk5Qf9onwze/OGMvhQo8OXuSN71MOL/jRpaxyMLve/3Y1US5GxTJHtY6nL/y
- nlbUyIgCfoLTe98akCikDm2KGknh4A/PVQTGPoviaZyVx61CYkE0YKbAnR1USnIefhnidU7BH
- qO/IIp10nZWWGCVn0X5iKa2RkXxYeqyr1KWXt/7v7quwX+zm9+31XLZnve34zdvN1trL4BIGR
- BdEOqJuM0eu4nNwbqVF+2JxHE+Zn8KqFlAbFavzDGWyDrrlTpY8GXoiTVtJruWo6nCGlfiszI
- HQERqI/I0n3h31LaeSyQwERtCOxC+CvVzFmFmEDmJGwVu5erYWmLb2YEWsy+UdvGu1RpqAQyK
- tp/mpORUaZj6Fo=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-2.3-7a6a69314b5-20220111T163908Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.01.22 um 17:42 schrieb Taylor Blau:
-> On Mon, Jan 10, 2022 at 07:00:59PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 B=
-jarmason wrote:
->> On Thu, Jan 06 2022, Teng Long wrote:
->>> The original rule was introduced by commit:
->>>
->>>     https://github.com/git/git/commit/28c23cd4c3902449aff72cb9a4a70322=
-0be0d6ac
->>
->> Let's refer to commits like this:
->>
->>     28c23cd4c39 (strbuf.cocci: suggest strbuf_addbuf() to add one strbu=
-f to an other, 2019-01-25)
+On Tue, Jan 11, 2022 at 05:40:22PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> Remove unreachable return statements added in acb533440fc (reftable:
+> implement refname validation, 2021-10-07) and f14bd719349 (reftable:
+> write reftable files, 2021-10-07).
 >
-> I find it helpful to have an alias like:
+> This avoids the following warnings on SunCC 12.5 on
+> gcc211.fsffrance.org:
 >
->     $ git config alias.ll
->     !git always --no-pager log -1 --pretty=3D'tformat:%h (%s, %ad)' --da=
-te=3Dshort
+>     "reftable/refname.c", line 135: warning: statement not reached
+>     "reftable/refname.c", line 135: warning: statement not reached
+
+Interesting. From a cursory reading, I agree with the assessment of
+at least my compiler that these return statements are both unnecessary,
+but...
+
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  reftable/refname.c | 1 -
+>  reftable/writer.c  | 1 -
+>  2 files changed, 2 deletions(-)
 >
-> in my $HOME/.gitconfig so that I can easily format commits in the
-> standard way.
+> diff --git a/reftable/refname.c b/reftable/refname.c
+> index 95734969324..136001bc2c7 100644
+> --- a/reftable/refname.c
+> +++ b/reftable/refname.c
+> @@ -132,7 +132,6 @@ static int validate_refname(const char *name)
+>  			return REFTABLE_REFNAME_ERROR;
+>  		name = next + 1;
+>  	}
+> -	return 0;
+>  }
 
-You can shorten "--pretty=3D'tformat:%h (%s, %ad)' --date=3Dshort" to
-"--pretty=3Dreference" or "--format=3Dreference".  For me that's easy enou=
-gh
-to remember that I don't need an alias.
+In this case the loop inside of validate_refname() should always
+terminate the function within the loop body. But removing this return
+statement here relies on the compiler to determine that fact.
 
-Silly question, going further off-topic: What's "git always" doing?
+I could well imagine on the other end of the spectrum there exists a
+compiler which _doesn't_ make this inference pass, and would complain
+about the opposite thing as you're reporting from SunCC (i.e., that this
+function which returns something other than void does not have a return
+statement outside of the loop).
 
-Ren=C3=A9
+So in that sense, I disagree with the guidance of SunCC's warning. In
+other words: by quelching this warning under one compiler, are we
+introducing a new warning under a different/less advanced compiler?
+
+>  int validate_ref_record_addition(struct reftable_table tab,
+> diff --git a/reftable/writer.c b/reftable/writer.c
+> index 35c8649c9b7..70a7bf142a2 100644
+> --- a/reftable/writer.c
+> +++ b/reftable/writer.c
+> @@ -39,7 +39,6 @@ writer_reftable_block_stats(struct reftable_writer *w, uint8_t typ)
+>  		return &w->stats.log_stats;
+>  	}
+>  	abort();
+> -	return NULL;
+>  }
+
+Here I'm less skeptical, since it's almost certain that any compiler
+would recognize this call to abort() as terminating the whole program.
+So it should be able to infer that anything after it is unreachable.
+
+But even though I'm less skeptical, I'm not sure that I would make the
+same bet (though in practice this one is probably fine since there are
+likely plenty of functions which end in the more standard `die()` and do
+not have a return path).
+
+Can reftable call die()? Or is this the least-common denominator among
+Git and libgit2 for terminating a running program?
+
+Thanks,
+Taylor
