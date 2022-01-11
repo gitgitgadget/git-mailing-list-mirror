@@ -2,111 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED10FC433EF
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 20:40:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 345E0C433EF
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 21:15:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243910AbiAKUkO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 15:40:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59662 "EHLO
+        id S237392AbiAKVPr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 16:15:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233821AbiAKUkN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 15:40:13 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFF32C06173F
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 12:40:12 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id z22so1004470edd.12
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 12:40:12 -0800 (PST)
+        with ESMTP id S231816AbiAKVPr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 16:15:47 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64FBDC061751
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 13:15:46 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id m4so1381683edb.10
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 13:15:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=pfhb85mESNVGRIH1AhpAGiXUMPmLjIADRTrwSBWQYLE=;
-        b=KewKDQDEkS7aPRNGqVQdpx2b+BTtOjV7b/NwWKZChMuMKer2QbvTJANkUGrv9VBHl/
-         dM74U/CVNN0yXBkkcUy9RvDLsTEgWG2jmzieXCDqO6NstfR59mHrp5/rxzlT3QCLOxHn
-         9qZI9i2bKaROLAERbj2RiLYcue3O7UjxKINeNdKW1ADvO7236sZo5FEz/PBwo4b8u2A2
-         c6p3udRnxsxehl5CXnXb3EbMG9/4Xu8gWeTXGrVyPryWFe2c93zW4UCDMMcmllVj93RK
-         h1jJA4Tu6yBDTvBn8YVPKg4SfdRjJaixjuHRthUfl5XCp+fZU2cCWAA49IOWbzSf6XRN
-         OPaQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/E15//QTHzYbwn6ayW8fzHbhwtm7VD3Gz+NNxOiK6vU=;
+        b=OpABS90jDnves9x4XHFNbvlS6a1NfozgvWUPGqELH8QgWkFhLBjQFulC8+cZvkELq4
+         NbMRluIlT29U/WUJd4qxlicw7VRZRJPZZaiau0R+qjchJa7XROV1pZPKU54FnvdTmyEF
+         U3KHjKFnPpZwtPD2kaskMt/0IX0vXiLWrNsu5pGSz23eVQv1hNXtf3bbcOsRvNRjj7nu
+         xlTYWqb9XFkk4Gy20ACpdEav+y0qHz0wY4skwMjEJFya3bWjfKkCAIYa0Uixq+/HSCXV
+         881PSQm4Zfk9g3UG9ZQ/kGTCbSoakTVtpzw5chq6WTbxXjcBW3B24ZafTjZTcWFwUbEb
+         zQ/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=pfhb85mESNVGRIH1AhpAGiXUMPmLjIADRTrwSBWQYLE=;
-        b=FPtxSy0iZNCKdXRgRgl/snFV7q2spqSVVFZX7e1TzNtkMCUdg8QWbZX2ZyN4v5kaJM
-         oqf1IiRXJMuYtg78tnDgczwh6g5xpZQ4BSoSEnr3t7chJEFj935Y7vdxx9PXJ2jBkqTq
-         sge/MuRIe1FYXlAek68rDLkw8p8XpkGgGkZfhkCXqzlaqyZf28uE3G+mrrnugktRxojQ
-         ACo9bMul17fPxf+5hpmT61MpFYts5UE80Pl88h7OKFw4zIuLwxoHjm8CjwPqv0vASdXf
-         IBc5YsSiGGz6pVRyYL6+M32uZ4nq2xFjZ1O8ZdzEDLdvIcZulgMq7zOUF38i/v8G0WTb
-         1wFQ==
-X-Gm-Message-State: AOAM532f8nmZWTqnqCTqMgvCBu84ajZcnSyJtqmxXoz4nZKcIJJMQHkx
-        LW5G5cSbIY2uHxvJnz2lFFnIwCUM1N/v4w==
-X-Google-Smtp-Source: ABdhPJzWEPndKgcZxlSmNe+ChFpC/vgjy9lT6DHZBW68khB5Cvhu+jd6ioIHqOBT+dObgK1gWWy2NQ==
-X-Received: by 2002:a17:906:2c0e:: with SMTP id e14mr26753ejh.174.1641933611373;
-        Tue, 11 Jan 2022 12:40:11 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id k8sm310598ejc.115.2022.01.11.12.40.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jan 2022 12:40:11 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1n7NwA-000hbL-Dw;
-        Tue, 11 Jan 2022 21:40:10 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Teng Long <dyroneteng@gmail.com>, congdanhqx@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        tenglong.tl@alibaba-inc.com,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v9 9/9] cocci: allow padding with `strbuf_addf()`
-Date:   Tue, 11 Jan 2022 21:39:18 +0100
-References: <cover.1641440700.git.dyroneteng@gmail.com>
- <8dafb2b3779715aa277eb825a94af87b72f3e093.1641440700.git.dyroneteng@gmail.com>
- <220110.86ilurzcxo.gmgdl@evledraar.gmail.com>
- <Yd2zXOrf+4qX8VLD@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <Yd2zXOrf+4qX8VLD@nand.local>
-Message-ID: <220111.86iluqxaz9.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/E15//QTHzYbwn6ayW8fzHbhwtm7VD3Gz+NNxOiK6vU=;
+        b=j0qmuRkDZxy+aneKxZVqqRLvY3HMgEdkkjvUR5FcLQMyn62FmKmdorX9+K7ejLx16M
+         lqCYK+5G827gF8GSMKaJimJBkYP8VwLZL97RikUzvFp00H2dsJRlYQ9RYjG//82vtMuW
+         HwJgqZ5H8A7Zpsr3b2hvE2LePiCmgR8LPdVk4iGjBpIwVKfFJ9riXSJ+p60HDk85kLb7
+         DjTCHeh0TSXvb8xnS3YRpKf5CWWcR26PYVhtxqFp2GuAiornrhQ2wdQ2glkyAXUrAPOt
+         ndU3xOdt/SlaSWOWHqw6vVeGm2zsvsdNcOg00eNBnUYMcUj9cPXRhvRbJkq4jV5hfTqV
+         ne0Q==
+X-Gm-Message-State: AOAM533xDAGQKGvjbSFJh3l8ACZC0DMLWZU2Hj57Qlxu8LQMQGwvbez/
+        sYwsOzvFnycQsve16y+kAp80W9LjIzOV8ehSMWs=
+X-Google-Smtp-Source: ABdhPJx6J6fWCLC/6mrNYrxZRxPvYzQcWFUfZb6BxVh/1ccuNhCg228Nd75f+j/QEZJj87Y0L4aeKkqHQXB8hjnrp50=
+X-Received: by 2002:a17:907:2d10:: with SMTP id gs16mr5070766ejc.100.1641935744887;
+ Tue, 11 Jan 2022 13:15:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20220105163324.73369-1-chriscool@tuxfamily.org>
+ <CABPp-BFh7UnQtPM=tO8rfp5bPK4-7esouv5KCx1sUSESwEA=Rw@mail.gmail.com>
+ <CAP8UFD0wKnAg5oyMWchXysPTg3K9Vb4M1tRcPzPE81QM903pYg@mail.gmail.com>
+ <CABPp-BHpuLjCYycBwweMW_NdQrS_r3ECmvLb8XjNW-_Rau5NTw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2201101427440.339@tvgsbejvaqbjf.bet> <CABPp-BHJvFx0fxobYZ2vauK=KfCLF_7So8xABLjqr9rx4SVy-w@mail.gmail.com>
+In-Reply-To: <CABPp-BHJvFx0fxobYZ2vauK=KfCLF_7So8xABLjqr9rx4SVy-w@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 11 Jan 2022 13:15:33 -0800
+Message-ID: <CABPp-BEQ5BBEgB21hUNBuioOfMry_x2nKOLgY8=v2w8eGXrsyw@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] Introduce new merge-tree-ort command
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Jan 11 2022, Taylor Blau wrote:
-
-> On Mon, Jan 10, 2022 at 07:00:59PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> On Thu, Jan 06 2022, Teng Long wrote:
->> > The original rule was introduced by commit:
->> >
->> >     https://github.com/git/git/commit/28c23cd4c3902449aff72cb9a4a70322=
-0be0d6ac
->>
->> Let's refer to commits like this:
->>
->>     28c23cd4c39 (strbuf.cocci: suggest strbuf_addbuf() to add one strbuf=
- to an other, 2019-01-25)
+On Mon, Jan 10, 2022 at 9:59 AM Elijah Newren <newren@gmail.com> wrote:
 >
-> I find it helpful to have an alias like:
+> On Mon, Jan 10, 2022 at 5:49 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+...
+> >, therefore it expects the resolved conflicts to
+> > be in _files_. I don't think that there is a way to reasonably handle
+> > symlink target conflicts or directory/file/symlink conflicts, but there
+> > might be.
 >
->     $ git config alias.ll
->     !git always --no-pager log -1 --pretty=3D'tformat:%h (%s, %ad)' --dat=
-e=3Dshort
+> You really need (mode,oid) pairs to be provided by the user.  That
+> fixes the executable issue I mentioned above, and makes it clear how
+> to handle symlinks and file/symlink conflicts.
 >
-> in my $HOME/.gitconfig so that I can easily format commits in the
-> standard way.
->
-> I think that this alias came from Peff, but I can't remember.
+> directory/file are still handled by providing individual files, but
+> ordering traversal becomes really tricky.  The directory/file case
+> might even require the pre_resolved_conflicts to be pulled out of that
+> loop somehow.  It'd take some investigative work, or some deep
+> thought, or both.
 
-Nowadays you can do this as:
+I think I came up with a solution to this during my run yesterday,
+though I haven't tried or tested it.  Instead of modifying the loop
+over plist.items, you instead add a preliminary loop over
+pre_resolved_conflicts that modifies opt->priv->paths (and add this
+preliminary loop just before the items from opt->priv->paths are added
+to plist.items).  In that preliminary loop, you need to make sure that
+(a) any files in pre_resolved_conflicts corresponding to existing
+_files_ in opt->priv->path result in updating that item's clean &
+is_null & mode & oid state, (b) any files in pre_resolved_conflicts
+that correspond to existing _directories_ in opt->priv->path need the
+value to be expanded to be a conflict_info instead of just a
+merged_info, you need to set the df_conflict bit, and don't update the
+merge_info fields but do update the extended conflict_info ones, (c)
+any new files in pre_resolved_conflicts result in new entries
+opt->priv->paths, (d) any leading directories of new files in
+pre_resolved_conflicts are appropriately handled, meaning: (d1) new
+opt->priv->paths are created if the directory path wasn't in
+opt->priv->paths before, (d2) a tweak to df_conflict for the directory
+item if it previously existed in opt->priv->paths but only as a file
+(possibly also necessitating expanding from a merged_info to a
+conflict_info), (d3) no-op if the directory already existed in
+opt->priv->paths and was just a directory (and in this case, you can
+stop walking the parent directories to the toplevel).
 
-    git show -s --pretty=3Dreference
+Then, after this preliminary loop that modifies opt->priv->paths, the
+rest can just proceed as-is.
 
-See Documentation/SubmittingPatches
-
-I use:
-
-    $ git help reference
-    'reference' is aliased to '!git --no-pager log --pretty=3Dreference -1'
+That should handle new files, new directories, and all directory/file
+conflicts.  Yeah, it's a bunch to look at, but directory/file
+conflicts are always a bear.
