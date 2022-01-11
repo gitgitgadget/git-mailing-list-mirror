@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76C67C433EF
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 18:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DE05C4332F
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 18:06:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344637AbiAKSGv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 13:06:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51476 "EHLO
+        id S1350155AbiAKSGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 13:06:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350382AbiAKSGB (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1350386AbiAKSGB (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 11 Jan 2022 13:06:01 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8A5AC034001
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:05:16 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id p18so4905701wmg.4
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:05:16 -0800 (PST)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68872C034006
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:05:18 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id l25so23650449wrb.13
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 10:05:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ElsfdI2q5RCVU5uBInipvFW5LNSBqOXQEdux36eTkF4=;
-        b=PKQT2ztbW/RVKOyt+K3mIezIrA1v/CAdki9iDEAEJM4zmgoLk3qx+Fr8ZFxgcha2En
-         3H3Q5sKOstlhBYokhX6LrH/GTFm/IKkG0HVMybVj7fBE7oqrOqXi3epZEs+PZ9TrMVnn
-         M3+aCHzWQniWls4Ci3tqVIDGriMRNeF54QGUJHwWDIRD/octrckTqdQ9xpybnXft1yJO
-         dIltD8cyvpSeeqkR8yXv1GfFdHKYI3BYyQoV4dZa7LARrlxctTszEVeLT7W/xtcN+OQ7
-         lkN0a30uWmpA0NF5A0/fHJpnKm8s+5YcMqBu+BWTuCQpuI2ZYDK4Cet480nkNpdnNP3q
-         e9yA==
+        bh=4rzeAfsdKFxeSNaMkn39eRWp7+GTFEzkUIQoVP3u7vU=;
+        b=ZykgYuCgicUpPdsWpSfCMRgkNBBCAt8m2op5WGSrfDFsDm72CRUWvz0Zom4T73XFi9
+         wi1Cqebr1hH2n2QWTNXkl808/nhgGOHq0+aO42T4lC9S6mSG0T3tADB4sghVBvBGOXCb
+         J0zNKRg09Vh+yi0MQfTZeBvyVQDHmWPqeTemh0ScLH1r+fwuqQVWDIFQOeH0Eq8isbXM
+         GeD2J5ei/OxA2Ils1FSxrYVxqYz/JNaaZFwrn3wIcy6il5hmUWhvFhXWJ+CALOXvukp1
+         ZtRgEeYdEXemtvIYsWeJmWecbzCqfIOhfdpc+XHd/puXVbjvhuTbfXMeHqNIfD2n+Mtf
+         1Yhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ElsfdI2q5RCVU5uBInipvFW5LNSBqOXQEdux36eTkF4=;
-        b=LBVh4amJP/Kv4WkV8/CUUEPoqP01lobhpKRoml3VxM0+xMc99S/kyqpIGBjjtFmj9y
-         gRWX+KrfEdgR0MdAu+GAxq5nnl9cqvhx88HFe1HdRfCc5hRdpgpRKUiPs7wvj1nEeHEN
-         Q+QuTieJzY3m7ukHRgNGB6hXYPimnI65Hv/jL7pLj5Kpd+GE9ohEdxjmcM0oH7Gcwu6q
-         Ct4rzgoHAXcYCzdkkUXvw9lYZOBXgGidgu6CQIVoDTisEGV+ShBwrUNMGuKld18Qp6au
-         A203z9ZOumVspAc2p+T2xXmUKxCkuPj9ebItpeJnQ5pTTLoyWFZlk8l748LdVV1EQJPj
-         b2Mw==
-X-Gm-Message-State: AOAM5337kYpPwbKNM/jVtjR3DqZHtQkBAgkfltdlLdnNAgw3K/7nnBKv
-        0UuxB7iVVncrNgIVDgAptBwYEIa24Go=
-X-Google-Smtp-Source: ABdhPJw/q3bNJIjowspiBe2HY0qy9mOrbXVD/tbSzW1LXriaLnKRcxo536owpxd8YoQ/AOBlQHm8Ow==
-X-Received: by 2002:a1c:f002:: with SMTP id a2mr3540655wmb.29.1641924314479;
-        Tue, 11 Jan 2022 10:05:14 -0800 (PST)
+        bh=4rzeAfsdKFxeSNaMkn39eRWp7+GTFEzkUIQoVP3u7vU=;
+        b=C5fCsBCuDuO/Qz4niEZ3T63azUcvWG0OKrnMgMszHgZ/7D822ESmf1Sj+vHp7X2xk2
+         7yptGbzK7ZTOAcBm7yzEFNBm99frK6dW2QRNqE2qNzedZ2Zf3SVosu0rYOqTvRL2IQok
+         ZV9g2HqlXzi6bYnxWv+E9WEuTt4xkeYguQTyHKOw1pvD9jw8X5tHLNqz9L8dhli4ErGR
+         CNMHMcSQjTese10E18Nx2Bms5eIyhwa1TYjChjUtG5Zs0DU5pHCo5vi49a0GOwXDmP0i
+         OM2f76CX8mfaW2ykMci0f2vz6ZNcYAq1wsKYV5UYWn3ys1bgxsFJCTYtJFgcrwINGuBl
+         YF7w==
+X-Gm-Message-State: AOAM531OAqiPmxssw64Iq2JC5q/vL2j29GPvLHLkTkTc2fr9tH4t4us2
+        mgYbhs2CyEeiiztcwW9UPgDN4RjcJrk=
+X-Google-Smtp-Source: ABdhPJxnbTHZ1m8O2VApqRjgHyWI/NSwGAMUIhrvlD6Q8K2kAkmM26KmlyxFSQ52MsRff3JZ8wxR0w==
+X-Received: by 2002:adf:a141:: with SMTP id r1mr4786153wrr.124.1641924316848;
+        Tue, 11 Jan 2022 10:05:16 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bk2sm9523931wrb.65.2022.01.11.10.05.13
+        by smtp.gmail.com with ESMTPSA id o12sm11160974wrc.69.2022.01.11.10.05.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Jan 2022 10:05:14 -0800 (PST)
-Message-Id: <b4b9086dcdc62eff27f9520b9495e3b273946e39.1641924306.git.gitgitgadget@gmail.com>
+        Tue, 11 Jan 2022 10:05:16 -0800 (PST)
+Message-Id: <80697e9259e4a2c12fd0546f5f1895fb3068a66c.1641924306.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1109.v2.git.1641924306.gitgitgadget@gmail.com>
 References: <pull.1109.git.1641317820.gitgitgadget@gmail.com>
         <pull.1109.v2.git.1641924306.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 11 Jan 2022 18:05:03 +0000
-Subject: [PATCH v2 6/9] checkout-index: integrate with sparse index
+Date:   Tue, 11 Jan 2022 18:05:06 +0000
+Subject: [PATCH v2 9/9] update-index: reduce scope of index expansion in
+ do_reupdate
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,127 +68,75 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Add repository settings to allow usage of the sparse index.
+Replace unconditional index expansion in 'do_reupdate()' with one scoped to
+only where a full index is needed. A full index is only required in
+'do_reupdate()' when a sparse directory in the index differs from HEAD; in
+that case, the index is expanded and the operation restarted.
 
-When using the `--all` option, sparse directories are ignored by default due
-to the `skip-worktree` flag, so there is no need to expand the index. If
-`--ignore-skip-worktree-bits` is specified, the index is expanded in order
-to check out all files.
-
-When checking out individual files, existing behavior in a full index is to
-exit with an error if a directory is specified (as the directory name will
-not match an index entry). However, it is possible in a sparse index to
-match a directory name to a sparse directory index entry, but checking out
-that sparse directory still results in an error on checkout. To reduce some
-potential confusion for users, `checkout_file(...)` explicitly exits with an
-informative error if provided with a sparse directory name. The test
-corresponding to this scenario verifies the error message, which now differs
-between sparse index and non-sparse index checkouts.
+Because the index should only be expanded if a sparse directory is modified,
+add a test ensuring the index is not expanded when differences only exist
+within the sparse cone.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/checkout-index.c                 | 28 ++++++++++++++++++++++--
- t/t1092-sparse-checkout-compatibility.sh | 11 +++++++++-
- 2 files changed, 36 insertions(+), 3 deletions(-)
+ builtin/update-index.c                   | 14 +++++++++++---
+ t/t1092-sparse-checkout-compatibility.sh |  5 ++++-
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index 615a118e2f5..97e06e8c52c 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -67,6 +67,7 @@ static int checkout_file(const char *name, const char *prefix)
- 	int namelen = strlen(name);
- 	int pos = cache_name_pos(name, namelen);
- 	int has_same_name = 0;
-+	int is_file = 0;
- 	int is_skipped = 1;
- 	int did_checkout = 0;
- 	int errs = 0;
-@@ -81,6 +82,9 @@ static int checkout_file(const char *name, const char *prefix)
- 			break;
- 		has_same_name = 1;
- 		pos++;
-+		if (S_ISSPARSEDIR(ce->ce_mode))
-+			break;
-+		is_file = 1;
- 		if (!ignore_skip_worktree && ce_skip_worktree(ce))
- 			break;
- 		is_skipped = 0;
-@@ -112,6 +116,8 @@ static int checkout_file(const char *name, const char *prefix)
- 		fprintf(stderr, "git checkout-index: %s ", name);
- 		if (!has_same_name)
- 			fprintf(stderr, "is not in the cache");
-+		else if (!is_file)
-+			fprintf(stderr, "is a sparse directory");
- 		else if (is_skipped)
- 			fprintf(stderr, "has skip-worktree enabled; "
- 					"use '--ignore-skip-worktree-bits' to checkout");
-@@ -130,10 +136,25 @@ static int checkout_all(const char *prefix, int prefix_length)
- 	int i, errs = 0;
- 	struct cache_entry *last_ce = NULL;
- 
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 605cc693bbd..52ecc714d99 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -606,7 +606,7 @@ static struct cache_entry *read_one_ent(const char *which,
+ 			error("%s: not in %s branch.", path, which);
+ 		return NULL;
+ 	}
+-	if (mode == S_IFDIR) {
++	if (!the_index.sparse_index && mode == S_IFDIR) {
+ 		if (which)
+ 			error("%s: not a blob in %s branch.", path, which);
+ 		return NULL;
+@@ -743,8 +743,6 @@ static int do_reupdate(int ac, const char **av,
+ 		 */
+ 		has_head = 0;
+  redo:
 -	/* TODO: audit for interaction with sparse-index. */
 -	ensure_full_index(&the_index);
- 	for (i = 0; i < active_nr ; i++) {
- 		struct cache_entry *ce = active_cache[i];
+ 	for (pos = 0; pos < active_nr; pos++) {
+ 		const struct cache_entry *ce = active_cache[pos];
+ 		struct cache_entry *old = NULL;
+@@ -761,6 +759,16 @@ static int do_reupdate(int ac, const char **av,
+ 			discard_cache_entry(old);
+ 			continue; /* unchanged */
+ 		}
 +
++		/* At this point, we know the contents of the sparse directory are
++		 * modified with respect to HEAD, so we expand the index and restart
++		 * to process each path individually
++		 */
 +		if (S_ISSPARSEDIR(ce->ce_mode)) {
-+			if (!ce_skip_worktree(ce))
-+				BUG("sparse directory '%s' does not have skip-worktree set", ce->name);
-+
-+			/*
-+			 * If the current entry is a sparse directory and skip-worktree
-+			 * entries are being checked out, expand the index and continue
-+			 * the loop on the current index position (now pointing to the
-+			 * first entry inside the expanded sparse directory).
-+			 */
-+			if (ignore_skip_worktree) {
-+				ensure_full_index(&the_index);
-+				ce = active_cache[i];
-+			}
++			ensure_full_index(&the_index);
++			goto redo;
 +		}
 +
- 		if (!ignore_skip_worktree && ce_skip_worktree(ce))
- 			continue;
- 		if (ce_stage(ce) != checkout_stage
-@@ -225,6 +246,9 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 	git_config(git_default_config, NULL);
- 	prefix_length = prefix ? strlen(prefix) : 0;
- 
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
-+
- 	if (read_cache() < 0) {
- 		die("invalid cache");
- 	}
+ 		/* Be careful.  The working tree may not have the
+ 		 * path anymore, in which case, under 'allow_remove',
+ 		 * or worse yet 'allow_replace', active_nr may decrease.
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 434ef0433c0..0c72c854d84 100755
+index fceaba7101d..53f84881de7 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -801,7 +801,14 @@ test_expect_success 'checkout-index with folders' '
- 	test_all_match test_must_fail git checkout-index -f -- deep/ &&
+@@ -1265,7 +1265,10 @@ test_expect_success 'sparse index is not expanded: update-index' '
  
- 	# Outside checkout definition
--	test_all_match test_must_fail git checkout-index -f -- folder1/
-+	# Note: although all tests fail (as expected), the messaging differs. For
-+	# non-sparse index checkouts, the error is that the "file" does not appear
-+	# in the index; for sparse checkouts, the error is explicitly that the
-+	# entry is a sparse directory.
-+	run_on_all test_must_fail git checkout-index -f -- folder1/ &&
-+	test_cmp full-checkout-err sparse-checkout-err &&
-+	! test_cmp full-checkout-err sparse-index-err &&
-+	grep "is a sparse directory" sparse-index-err
+ 	ensure_not_expanded update-index --add README.md &&
+ 	ensure_not_expanded update-index a &&
+-	ensure_not_expanded update-index --remove deep/a
++	ensure_not_expanded update-index --remove deep/a &&
++
++	ensure_not_expanded reset --soft update-deep &&
++	ensure_not_expanded update-index --add --remove --again
  '
  
- test_expect_success 'checkout-index --all' '
-@@ -972,6 +979,8 @@ test_expect_success 'sparse-index is not expanded' '
- 	echo >>sparse-index/untracked.txt &&
- 	ensure_not_expanded add . &&
- 
-+	ensure_not_expanded checkout-index -f a &&
-+	ensure_not_expanded checkout-index -f --all &&
- 	for ref in update-deep update-folder1 update-folder2 update-deep
- 	do
- 		echo >>sparse-index/README.md &&
+ test_expect_success 'sparse index is not expanded: blame' '
 -- 
 gitgitgadget
-
