@@ -2,87 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2880BC433EF
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 02:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6096C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 02:19:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346527AbiAKCLX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Jan 2022 21:11:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55626 "EHLO
+        id S244150AbiAKCTH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Jan 2022 21:19:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344038AbiAKCLW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jan 2022 21:11:22 -0500
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F7D2C06173F
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 18:11:22 -0800 (PST)
-Received: by mail-il1-x12c.google.com with SMTP id h30so3277649ila.12
-        for <git@vger.kernel.org>; Mon, 10 Jan 2022 18:11:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=p5ouuKUjxOt6/34r9EkTeXB/Z/csZLsGm78+48mClaI=;
-        b=Q/QaD22uScFO4ogWhy8WN5Go+RSHJbCzee794KMi7H3E0cNRqmhfo8UwJf83n5TKJy
-         M00Gb4sGMiuxPN/0dE3aH97Kyq9Co1VTDKOEz1I6DYy7EvE9HTiqr+DTkv1tIi73m9y5
-         lWAsqVHdVPb90afV6aJ0m3j1y+6YeXnqI4HA58h2Z8OHB3By4QkcCYvIMI3qbzAHNGxb
-         k9hiyzv83rC17cDUcCf0p+HkX//CA3IFXSRLVJxOWklqnJkJ//ooYG5dGN3gXIj1VaTy
-         RLZ1KbfD8I7dgg2UPEPTMfvOGcSWOrPM/lXB1dB35FkSOYxU+HDqVSdyHQntMAXhmohO
-         thmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=p5ouuKUjxOt6/34r9EkTeXB/Z/csZLsGm78+48mClaI=;
-        b=42EVndSEk5/mqZlMlfVgXK/jHS3WcqqSM2Xyru1Gjnor0UyGJVB3F4YCiDpJtPK36X
-         c2cLu2g5CzBnDUSPVm6wJ4uPlT2mAY5pxWcj7/OQo0RhUVunA/4dqvNpP1zrrCllRTqS
-         y4tLGN+VU1t3E0hdIU4BDZClvtrXnkUTU/LnFittXEMN/DJhxuNf1c3/ZlmKC//0k1Xy
-         /k3eBV6buPlSWVM3N8O7rWM5aSUAxdynK2l6oL77w4Zx+nnkrl5mELzSdAGCkTjyBv3q
-         I2jyIxNOcezNdIpcSTbVS7Z13rTJ6b+yOCdtjmVspn1DLVb5XRU5PVspCO7PQKO28XdS
-         1d7w==
-X-Gm-Message-State: AOAM53173tp+q7VKfkQ0VXbiEqa+J5knMaz8GDZuOkQgVXd8QRbbRaCI
-        Av0wbViFOZ3OiroNTnmmNvGHIo3ZCYskJw==
-X-Google-Smtp-Source: ABdhPJzuVrQUIsftxmgzUjBx/ISF3e66LT9jIg1w+zubVimyGUNXxHVyQt0m5yExFVR4SrtsGPc3kw==
-X-Received: by 2002:a92:c248:: with SMTP id k8mr1311395ilo.212.1641867081536;
-        Mon, 10 Jan 2022 18:11:21 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y4sm5002335iln.4.2022.01.10.18.11.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Jan 2022 18:11:21 -0800 (PST)
-Date:   Mon, 10 Jan 2022 21:11:20 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
-        git@vger.kernel.org, iwiedler@gitlab.com
-Subject: Re: [PATCH 1/1] fetch: fix deadlock when cleaning up lockfiles in
- async signals
-Message-ID: <YdznSPJCSUQwVyg8@nand.local>
-References: <cover.1641552500.git.ps@pks.im>
- <555ec6717ecab0fe6ef5660bcf0d61d59f84ef8b.1641552500.git.ps@pks.im>
- <YdjBkZsnYd+zYne1@nand.local>
- <2d8c1619-74ab-62b3-3a30-8e500a16649e@gmail.com>
+        with ESMTP id S243991AbiAKCTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jan 2022 21:19:06 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C38C06173F
+        for <git@vger.kernel.org>; Mon, 10 Jan 2022 18:19:06 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 913B95B227;
+        Tue, 11 Jan 2022 02:19:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1641867545;
+        bh=YiMgJ0g+IwTuIQnQMrOIhYk3I0BD6/sJszzglZp1W4Q=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=tpQI3is3kcP/nyaWkHmElq1It5NSN06UX0CHW2vwZUjYX8DZZd6y+bHBWHbaKamDM
+         /Bk2t2mxGabhubvcdh1oET7X+UCTTdg645/x+hUgwKvH41QkyZOaKfwKPFlkw/5hL6
+         NzFKxEhrfFhhucOOpLmxT39KG+nHAcepDZnSWBe2EPKgNBfrvYvOGg4l+2Aq390xXl
+         KSAFCrnYyAXsNEA/jF6R0AMf6YH15opbprYI+aRwysB1/zs4IrPU+sE2e5x5GAAqq1
+         Y90EG16tnwKs53WrVHLVBxnO5a+B2EclvN4TDd0M6zB7Cmk+fkjADW5TQC7TsCo8Wi
+         f3adHvMX5FJBuyZGWH/8QeGn1dPNfckiJe5mHARXsoRjpPCL/FTtdpyY4tEnpwgFJl
+         GBwlaXihzyjUk2fQ7NgadJDkEQul4CzxuEwfvCMKbVsSWTrM0pYIseOXqfj6yLaPK9
+         K2BCEUgDIfHXg43m032MYng+QWJDZ4z27mjIAJIK7yaiXf+4Ax8
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH 0/2] Improvements to tests and docs for .gitattributes eol
+Date:   Tue, 11 Jan 2022 02:15:05 +0000
+Message-Id: <20220111021507.531736-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.34.1.575.g55b058a8bb
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2d8c1619-74ab-62b3-3a30-8e500a16649e@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 08, 2022 at 10:54:35AM +0000, Phillip Wood wrote:
-> > But is unlink() safe as-is? I'm not so sure. Reading signal-safety(7),
-> > it's clearly on the list of functions that are OK to call. But reading
-> > the errno section:
-> >
-> > (snip)
-> >
-> > We certainly not doing that, though that's nothing new, and so I wonder
-> > why it doesn't seem to be an issue in practice.
->
-> Because in this case we re-raise the signal and exit it does not matter if
-> unlink() clobbers errno. If instead the program were to continue after
-> handling the signal then we would have to save and restore errno to avoid
-> interfering with the code that was running when the signal handler was
-> called.
+I was answering a question on StackOverflow recently about the
+interaction between text=auto and eol, and someone pointed out to me
+that what I had written, which was based on the documentation, was not
+correct as of Git 2.10 (and more specifically 6523728499 ("convert:
+unify the "auto" handling of CRLF", 2016-06-28)).
 
-That makes perfect sense to me. Thanks for a clear explanation.
+When I set out to document the behavior correctly, I ran into the fact
+that the tests, where I looked for examples of how this behaves, didn't
+have any tests for some of these cases, and so I had some trouble
+documenting this clearly and accurately.  So this series basically just
+adds some tests for existing behavior so we don't change it (and so I
+could figure out how it works) and then updates the documentation
+accordingly.
 
-Taylor
+I tried to make the docs as specific as possible, since I needed them to
+be specific and accurate here, and I felt like speaking affirmatively
+about the behavior would be clearer than speaking negatively about the
+behavior (I tried both).  I would of course be delighted to hear
+suggestions on how this could be clearer or easier to understand.
+
+I realize that 2.35.0-rc0 has just come out and so this won't be picked
+up right away, which is fine, but I thought I'd send it out
+nevertheless (mostly so I don't forget).
+
+brian m. carlson (2):
+  t0027: add tests for eol without text in .gitattributes
+  docs: correct documentation about eol attribute
+
+ Documentation/gitattributes.txt | 11 ++++++-----
+ t/t0027-auto-crlf.sh            |  6 ++++++
+ 2 files changed, 12 insertions(+), 5 deletions(-)
+
