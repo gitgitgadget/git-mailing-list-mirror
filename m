@@ -2,97 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01884C433F5
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 22:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FD47C433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 22:40:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243642AbiAKWdx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 17:33:53 -0500
-Received: from mout.gmx.net ([212.227.15.19]:47277 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233798AbiAKWdw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 17:33:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1641940423;
-        bh=2UZIbFfwwqkJmgLs4g0KP7nmTEzqdbkn8HK/WvCMlQc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EnwYqndbCTzu3Hy3zCRaIboqoj0IewR5O7SChnwgIIQ8wGlDd5tlCgpqIpjUG4azY
-         I2IGV/USUZUKknpjK2AclXBq8NXa55jM6NHuQ28Ot0xs95pRlghNzIOXXWgcli3zkh
-         81SwaT2rVF2+ku8cmQR4zK79VGjOjSSz/cI0zKXQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.24.82.111] ([89.1.215.56]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Msq2E-1mEdCR1JAO-00tCXS; Tue, 11
- Jan 2022 23:33:43 +0100
-Date:   Tue, 11 Jan 2022 23:33:41 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, reiter.christoph@gmail.com,
-        =?UTF-8?Q?Matthias_A=C3=9Fhauer?= <mha1993@live.de>,
-        =?UTF-8?Q?Matthias_A=C3=9Fhauer_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-Subject: Re: [PATCH] lazyload: use correct calling conventions
-In-Reply-To: <nycvar.QRO.7.76.6.2201111412300.1081@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.2201112330480.1081@tvgsbejvaqbjf.bet>
-References: <pull.1181.git.git.1641657750776.gitgitgadget@gmail.com> <xmqqh7abxmxs.fsf@gitster.g> <nycvar.QRO.7.76.6.2201111412300.1081@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1346516AbiAKWkw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 17:40:52 -0500
+Received: from ring.crustytoothpaste.net ([172.105.110.227]:33514 "EHLO
+        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346382AbiAKWkv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 17:40:51 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 913475B227;
+        Tue, 11 Jan 2022 22:40:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1641940849;
+        bh=Ve2axJhfyjE8snJLY0dwoARujS/rdtncRGojCpXPzzo=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=BQh7cxBzZ6dT1v9U5AEuvIYWzblRocg2kGRcQZpJNtdeqWaBA+ER7CaThA1BBq5ji
+         qc9NwtCS5OSNXfJJoLyUamszrLMphb8jzkbRWaPDdszInO/YsUlofpUbYu7IaklMdw
+         j3seNpnDWOf4xtyvS2iEfniibKTKS6xYPnXhAn8jt/iUJ3h80kXGrxPvqxzyamCPSx
+         2uNHG3rjgz4eFXWvjX6EvhWmJTBE3UzvA5szdSbrgAxj8a92nM6wzdX80FHhSJ2hrX
+         KJ8GlgQz6a0MkMj3Ew601MkZrv7nWaGunqCFNpCzJ6Sxs3LXNQ3JUhypRyoebU1yCF
+         lT1rxQrWZOyvr6YPncBPxJ69BMKCe3GMFCf3/tHtHSylqXbfzvjbzJt/PTfps37WvB
+         dzfoHc172mX48WHHR8NE8ZU7oLeS15OhPWTiqVsZn47mSfUh+lKAWx0e3DJpv9L5Vd
+         Y6zRWMhbVrY+i7mZcyi6DvL7c99+PjYxj2UbueVwx0EsEGDos9e
+Date:   Tue, 11 Jan 2022 22:40:47 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] docs: correct documentation about eol attribute
+Message-ID: <Yd4Hb/bxvJZkJP7P@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20220111021507.531736-1-sandals@crustytoothpaste.net>
+ <20220111021507.531736-3-sandals@crustytoothpaste.net>
+ <20220111183003.g4fch5d2f47it2hg@tb-raspi4>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:C9os8I04aS3EGEK6PUT39A//W/e5kyVIucMbDYlixqZ88aZr7sS
- GYiogrmlzFFHajkYm9s+1ZqpcX198XzRRlOmHLVhF/iLoUot3uZeJe+xPvLkZltw3s79JFK
- LNMT+AGVDMqyT2omb63zNFEFImnTA2MUl088P9n6H9kGcQ5R2qw7EdfVxp30DPshvtMWiXZ
- ti1BSFzVKEpL7eTHhxK5A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uTNmqz7DdS0=:xWidoYeZBsQ+HLO6I1CBxD
- aS/8pFd8pizMOaGjtPLRsukzBALftV8Nce8HliCt8rGEFaa84ma9H0ok+qQD8GtQAMZiuTINl
- v+nccfHE0Svd8Suugt28HSkr+D9pRTkfLBTIdgcllKe34iMXhb4dJS2BKhFZ8nLqGq0Ul79Ke
- o1/2bFnbiKZI5STdLEBvIuonJrmUNdwwvXIXHFCpPGlkNTcsmAF6VM/U8DG5Fi6UXxU9GyOFs
- bOYJBDuzQ/qGrF9cuQ6AwScaL5DTBbJVnOdmt9uYJ/AWDSIgYu6V8H9RMbXecpca8C8LpYRV7
- zajYQ4wV2OxYbuiMcRz+U1ETnO/vyKtfEn3CmkXS01blqhGiKHGLZMLzjrcqYBERr2VYBBxDo
- SyUQnFCcOtlXEBX26cIoC+cb5oFK5JLYXHdc/x83f3GVQ2psBuDcTrKh0TjBz4VeKVO3C25sP
- 5kRamZVSCRMqJol+z0ZyWGMoQJ4nO5SaLmDcYqovnCkqniWKEoXvV0i9382Tw02mchfTRJHCf
- MB/v85gxjlyWipj3knobDy97mvOvNHNPmkEAC+U2vYbYX++ULz9600MHhYndj3EOfkZzlSLWk
- LHnSnKmL+twQSLUNePesWQ+eeldeszeUHdaEpwJGTnqwZ7WazJ30LCLwt7+hAvdLd3is3jkz8
- gafIofC5YOKkkrEzBltK/pu9zUhKdtywwaEZPQV2P4F4QQ/qxHVvxrY4zPDIicJvG4UJ43yxk
- oBGW4j+ZEpoo6OwHusoXURD4JV1bYZMo+ClTcFubjt4InPzsOU4+Cg/c1AkNczJwgosNl+DWJ
- WyE5lkasbUNR+rwRB1OQ3yoRLh/6h4wFKHyMVugVIDzYzeFmYPJb8xtPQh3EwA15CMk45gF1X
- kv8SOunGd1E5BX3/fPUfCAWMd0ZMAPWIiy3K2ekN3TvBqQT/0A9se02djHqh69Y1FkKLLbsH1
- Asni0arFeoyGDlPIrtqgTxMtN/K1COz8siCp4u97KUlRAbcjRMcXFscFeRGPYb1/W79D+Q1Az
- 3Ugis+yd3KTt5HRODU6gM5zVqSlUVwUJDaoeMjT1cQqYmy6HY5ZvbNphYDDQlKFgHiUCqUJ38
- dnqw7YuPnv6R6c=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="5D9Swc945AjHa+uR"
+Content-Disposition: inline
+In-Reply-To: <20220111183003.g4fch5d2f47it2hg@tb-raspi4>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Tue, 11 Jan 2022, Johannes Schindelin wrote:
+--5D9Swc945AjHa+uR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Mon, 10 Jan 2022, Junio C Hamano wrote:
->
-> > Dscho, how does this look?  My choices are
-> >
-> >  - Waiting for review.
-> >  - Will merge to 'next'.
-> >  - Will merge to 'next' and then to 'master'.
->
-> My preference is the last option, merge it down quickly.
->
-> > The last one will make it as part of Git 2.35.0 final, unless there
-> > is some unexpected breakage found later.
->
-> I do not expect anything to break. Just like Matthias, I actually expect
-> future breakages to be fended off by this.
+On 2022-01-11 at 18:30:03, Torsten B=C3=B6gershausen wrote:
+> Hej Brian,
+> thanks for digging into this.
+>=20
+> Could you be so kind to send the stackoverflow issue ?
+> (You can send it to me only)
 
-And that future is here already. We just got a report of a problem that is
-resolved by Matthias' patch:
-https://github.com/git-for-windows/git/pull/3624
+I'll just post it here publicly, since I think there's value to folks
+seeing what questions users have:
 
-> Merging it into v2.35.0 final will require a tiny fixup in
-> `compat/win32/flush.c` (which we carry in Git for Windows already),
-> [...]
+https://stackoverflow.com/questions/70633469/what-is-the-difference-between=
+-text-auto-and-text-auto-eol-lf/70636508?
 
-And I did that, and opened a PR already, which I plan on merging soon:
-https://github.com/git-for-windows/git/pull/3626
+> On Tue, Jan 11, 2022 at 02:15:07AM +0000, brian m. carlson wrote:
+> >  Note that setting this attribute on paths which
+> > +are in the index with CRLF line endings may make the paths to be
+> > +considered dirty. Adding the path to the index again will normalize the
+> > +line endings in the index.
+>=20
+> I think that this can be loosened as well. And, beside this, the "dirty"
+> warning about setting attributes could be written as part of the "text"
+> attribute as well. I dunno. Here is a possible suggestion:
+>=20
+>=20
+>   Note that setting this attribute on paths which are in the index with C=
+RLF
+>   line endings may make the paths to be considered dirty - unless "text=
+=3Dauto"
+>   is set. `git ls-files --eol` can be used to check the "line ending stat=
+us".
+>   Adding the path to the index again will normalize the line endings in t=
+he index.
 
-Ciao,
-Dscho
+I'm not sure that's correct, though.  The problem is if the file is
+detected as text, which it might well be if text=3Dauto is set.  Or am I
+not understanding something correctly?
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--5D9Swc945AjHa+uR
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYd4HbgAKCRB8DEliiIei
+gb0DAQDNqRSYfw+KmY1df3i+aLfg32IAuU++FId39Z/gXSOCjwD/W1kFsMfpND3b
+QzWWG038EVTchQjy31O8//lrtd+LUgQ=
+=c/yV
+-----END PGP SIGNATURE-----
+
+--5D9Swc945AjHa+uR--
