@@ -2,95 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3087AC4332F
-	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 15:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC1CEC433F5
+	for <git@archiver.kernel.org>; Tue, 11 Jan 2022 15:42:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244017AbiAKPCc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 10:02:32 -0500
-Received: from mout.gmx.net ([212.227.17.22]:44895 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243677AbiAKPC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 10:02:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1641913347;
-        bh=+G3O3kS2c2Lz31b5ZmrLjfEazxVxd6fjwJL20oKOaQc=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=I7GS0QfbJEm51nH+tezfPzbYt1o9oJ6c7VD40JkE6hoecMspkcjgpJafUhImpJxsk
-         CRM0jqmtr+D8LjyWNGhp+rs1Mvt2aXaEZuZ++eya5wyTb4tlXX7n8t67BMFyZnr0P7
-         IjuXNk845WqKUT9nWEmrB6xX5upJ4BFMWWHE7R1w=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az92-203.nbrkuvepa5puroylvvx1wzp50h.ex.internal.cloudapp.net
- ([20.88.13.196]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MSKy8-1mwOb43Srw-00Sgr8; Tue, 11 Jan 2022 16:02:27 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.35.0-rc0
-Date:   Tue, 11 Jan 2022 15:02:23 +0000
-Message-Id: <20220111150224.4092-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.34.1
-Content-Type: text/plain; charset=UTF-8
+        id S241745AbiAKPmP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 10:42:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45216 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1349602AbiAKPmN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 10:42:13 -0500
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1179C06173F
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 07:42:13 -0800 (PST)
+Received: by mail-il1-x129.google.com with SMTP id 2so10717003ilj.4
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 07:42:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0nZEpXv/ZqpitAsNJkef5X1tfPU5cqn1TnSJr1TAf+M=;
+        b=0h+RNxWOTyOSECmSwXo6oBYNe0MK3bnO9lZVcpYHgAbjsMyHJvYDVF4VtiOJkQIfPh
+         UiOIuwh+B28wfIS2tjeNqTx8BgGJVs4e9O7wS0panvMGAYyPv22d0w1Iu25jTFC6RLRR
+         /laC7bgR0jrJT5bDvR1NPPan1YyM5oHOUt4dY9jebUnKYmJvqQ9ttKUHBOr0WuvK7WbH
+         i/Z8EeaPGN6vfKYYESmIdpyf5Oz7L0oKG4obUlnqauFUgmrp/4kUonTzLqumL8KBXTPm
+         jxxVQuUFYqoZlbIDqWh3OB1uyUNnnnY7kgt6Rr+oGI33wsfoi8uOg84ILwjr0ZAgupAh
+         JXHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0nZEpXv/ZqpitAsNJkef5X1tfPU5cqn1TnSJr1TAf+M=;
+        b=TjMpQyMLVlPaBuTjhtW+wxrCTlLYqqX+gQeXkjWc4uEkqHD/ULbtMJvDrhSYOw+K3Q
+         H/Hi17oKIONduClI0Rp1xtuTUJYzPWlYx1kqhCJr5Y/53OMpCrGOga7+ygj+l5trjDuP
+         iizbTacXPvT+jglO4UcMtdR8RRZwYIJJ7k/LxxLm3Ik1tNtVYlCvzZWGYjthctxobslt
+         Sxl6+wm2nmCa822BmUYrmsRoBul31FO4N7uw09N/oFQsW/eYhQkOUYiOz79qQ2kjPDyt
+         ivMQY/a8fQXdnMXhTvGhiK+wKz4vB6eHm0jFY9nmEBjWJMR9oEW0CrdEhNfg3H1Vvz+V
+         krDw==
+X-Gm-Message-State: AOAM533320PQ2Hpjrz70qlJ8AV5MI5JndzO5rQhnrmp7FRlqzkB2Q4iI
+        LRryZk8L/A9P/Udazl23JawiMib0fzIJ0A==
+X-Google-Smtp-Source: ABdhPJzGiIseing7T4srEbmtgMMBi1cFALjtk+RED/UQy0krJ2UMGhqey1zMp+KI6PUhAr7LW7XPfw==
+X-Received: by 2002:a92:dc8c:: with SMTP id c12mr2553701iln.43.1641915732910;
+        Tue, 11 Jan 2022 07:42:12 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i23sm4175946ila.85.2022.01.11.07.42.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Jan 2022 07:42:12 -0800 (PST)
+Date:   Tue, 11 Jan 2022 10:42:11 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] fmt-merge-msg: prevent use-after-free with signed tags
+Message-ID: <Yd2lU/ecNx1uIt7Q@nand.local>
+References: <YdxqshqXB/+ApOn2@nand.local>
+ <6e08b73d602853b3de71257117e85e32b96b5c19.1641849502.git.me@ttaylorr.com>
+ <20220111084115.esuyxeopdpaq7g7y@fs>
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:ZWzEuypRQqF8StTxMpARGz84MZiEAGy0gSsvf8pZGdv6NZJ2Xbl
- cSjwQsr3lW27t56aTFZCC86F0pt7Iv2juOJYfsdUpsy3J0DH8OzTw+xKw8zKCCJxDcn+uyH
- 7/vvTR6x2UuCqMl5+Xw2VCEQh6Zi07svtmyl4syDdL64mN7cCghOihTUmSVG9td3jkb1U8V
- C4Q0LPkVF31bb5JKfOMBA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4F9Bv3Lqs8w=:zVtuSlWxU8JretGGuIBlMI
- 3H/cet3sOu8Dbq5ntP1mtr5jJ0X5hIexorlp1ptbmtelSLpW3VR74vFB4nmUgeXRvWaO0Vxj+
- DY/BOIAnKTa5I+rlNefg9TWMe6X74xTL3Vs/ZKiTP3TmdC5qHZkVWuxiANCgPK4I+Wu4xyPw8
- 2cz3/jDhPmRThS/WV0AhCXq09oGf5iCaFhQbZyEcLJBZZPWT435SPIfYZnCnW5ZCbmNi2tG5u
- WeYhREPLGNrmwHe3nfp7Lrk9wmReutK0C5Ts+5C51JI5CjGUkX1NG6U92X3tRFJgKx/HMVd0l
- bgyxh3X6CeROkKlenI95lqNujcOmZXC4EXCZ6Q10uv/QNzIckD5e+0bmnjwpjAPdnhhfEqP2e
- dyQgIF3Ny6bRbDeU3cnl4yfzFXAv66m0HNgQvIuqebeJjGnBUavosiCerlZ5ZJHlOmrIz/ayW
- xefoc1oo6zuq042zTA/VPdrAp1do9f1NSlk7SxM1QmeKFBQ/ovdUW1PTShgcU3SY4anx2VoUX
- 2XDpc4QpPNI9ANk3RtUCiwJOzc766wjRjtlhfBOvydW7yLzzpl7Pju0CS681XWQUQU0C3eAZ+
- QmGNaPflauoCntocU3XNdVAnQxkypv2qgGAuqkGiQxC5xKQzlXcpnHvhV+Kv4dQHBdj87ylYI
- k1VfHR81q9gRfXuaVL8jnMF0E5f9Lkc32TV1xT9AIkOXvgMnOFmOIG/YnJjxLxfJG7JwHw1GX
- +a/OSsb6m2cNrXDUcLw4bOzM3GLwe0+C8Hb9cGJ1xvzF+pcgg8aSFU88yL7NtdRTtnjL65k0l
- tjVwGROBR63rybT6yDIh2uMJp+o6SxFM2fwdxU1VhpuMuU3jyU2aqDCbbV4P67ikNBOEPPyNI
- OJVFi5JPQCPTAKVvNCGQFYdYmNtK9zqFFnxmlWlrknVXKWbdh8s+EsavHNzbAuRqer0VLR8IK
- ZPzr0usMDfwUjjNpIZNKLGG7gF6EUsWgWZ51uoLUl4t8qkJNelnq9s7U13/25pyVarDtokGle
- XTemAfc+LEggva5wfce6SIuMgwZm+0W7heZkn086hzTyfzXLuKsUBJ0yaovGYlDeGHYpuJMOT
- xmHV1/w7P7gqfo=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220111084115.esuyxeopdpaq7g7y@fs>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On Tue, Jan 11, 2022 at 09:41:15AM +0100, Fabian Stelzer wrote:
+> fmt_merge_msg_sigs() could probably use some additional refactoring to avoid
+> these multiple pointers to the same (detached) buffer. But thats for another
+> time.
 
-I hereby announce that Git for Windows 2.35.0-rc0 is available from:
+I thought similarly when trying to looking at the original bisection.
+But now that we're in the release candidate phase, I figure that any
+less-than-minimal fix was liable to cause more harm than good.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.35.0-rc0.windows.1
+It is worth looking at in the future, though.
 
-Changes since Git for Windows v2.34.1 (November 25th 2021)
-
-Upcoming breaking changes
-
-We plan to update the included bash to version 5.1 (currently 4.4) soon
-after Git for Windows 2.35.0 is released. Please check your shell
-scripts for potential compatibility issues.
-
-New Features
-
-  * Comes with Git v2.35.0-rc0.
-  * Comes with a version of the MSYS2 runtime (Git for Windows flavor)
-    based on Cygwin 3.3.3.
-  * Comes with OpenSSL v1.1.1m.
-  * Comes with Git Credential Manager Core v2.0.632.34631.
-  * Comes with cURL v7.81.0.
-
-Git-2.35.0-rc0-64-bit.exe | bd9ad68aeaaff14338a800d52d27bf66f73397aa1624936809cc1efb0b4dd7cf
-Git-2.35.0-rc0-32-bit.exe | d2e84c6a8281654a210376e63aeb239b0d42d67e831b63294251920c504bd8ce
-PortableGit-2.35.0-rc0-64-bit.7z.exe | 56dae5167c5eb289eb98216b23340d3917d137893d139aa3ecd45e0f7b98505e
-PortableGit-2.35.0-rc0-32-bit.7z.exe | a205ce6ac5dbd25d9081caa15aa2039ea20238cc30ec5121adb1a941358f2868
-MinGit-2.35.0-rc0-64-bit.zip | eeb41b855e7930485d4e81174e9c2398f2eee7e02296a2f247758454a6b7acc1
-MinGit-2.35.0-rc0-32-bit.zip | ee583e9137b4056caa490cd33b00a4bb2e692a708682e2ac6065a830d3992fce
-MinGit-2.35.0-rc0-busybox-64-bit.zip | de4eea585d0ce42d3b23bd0fa27fa1bc452de5de4867163fbf7fcf7f50e054ce
-MinGit-2.35.0-rc0-busybox-32-bit.zip | 89b618733a302d3033fc1f0d24efe0599d9292806fc6c5d6fca1aba7d6d7f754
-Git-2.35.0-rc0-64-bit.tar.bz2 | f4f9f1927325b2626aaabf446bce5e94d45a27cafc473c821494f69037431828
-Git-2.35.0-rc0-32-bit.tar.bz2 | 04bf5a56ef4ef54bb4818253b65cbe17864dd5923dc0cb6505268b8759c626d6
-
-Ciao,
-Johannes
+Thanks,
+Taylor
