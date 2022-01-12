@@ -2,181 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EAE7C433EF
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 12:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7442C433EF
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 12:43:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353231AbiALMkT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 07:40:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50170 "EHLO
+        id S1353219AbiALMnS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 07:43:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353221AbiALMkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 07:40:12 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8ECEC061748
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 04:40:11 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id e9so4021908wra.2
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 04:40:11 -0800 (PST)
+        with ESMTP id S240547AbiALMnR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 07:43:17 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F83CC06173F
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 04:43:17 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id u21so9469859edd.5
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 04:43:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Oj2RdNn4gsL9wns0HwT+4rw0Bsxfm1p/a9ZNRMWfAQ4=;
-        b=n0CVPvuaDgn9Rnai13M5nQ6QHTiFXuqehoUsuE9EuYZFhTogOzMGcwnbSY5A+xFJJV
-         oCE0c6HqzGMolKoMyUuByo5CtiGfq2wNGUq+EQKSHiX3KtqpETdmZqaOh1kx8Wusj3Sw
-         4iXehJlw/vtjsYvSP6kqTAoAHDiFawc2f9zaWNVSznGuVcOP81AwQ3BdeJ9PtcbMy+B2
-         VPtJjz2D9PNZXb3SptdZGr1h7/2eA+pBAJk5jTeYwGMyX8UO9ueJKMRkoSdZm5N0XVhB
-         u9F/eKZMAOIMTHLSngl03m3mNCNPsNMCGwr6xCKSgMA/LfZJ88mb3HzxrZgx1/ZsKQXb
-         Qa+g==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=UUQDAIN7dImFEnGs+P+M2DlaWmLllIrljPPQj24++cA=;
+        b=nVwzEpK3LP29UhA3zK53pZ0lB2vdHrEGnWXUbLWb3jdRnxF8bq+lj6bD+TXA5LXdnO
+         RApjTLEE6vH5+crdm0ejGKGn4spG7QdPdHTKN5gQdzOAY/W75clY+nl6n4PCX88E1xKL
+         4L8TiZ6tNqA/wlbuXo2x7Z1iY3kcM9je/bX3XU8eEA+tQzpLtyjD2bk9QgHTFvOJnO6u
+         9UJZ7CCqB1LuPCK5ePFLY8rTjWwjtIt+ddH2I/2jVZD7840sJrgbp4kB3ubqWzQhC7lz
+         GStf8awyQJYswqiiwPwCMzQF2E/OPlJ61BubxMT6oNhpdv8E4FWdBOEKvqqZAR0dT6DZ
+         dzlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Oj2RdNn4gsL9wns0HwT+4rw0Bsxfm1p/a9ZNRMWfAQ4=;
-        b=wluvhva1JiPyJHKLmMi2m+Lc/qNrMe8gbGuTwF3MGSMVbQe1FM7JYq5U6/gBdcY9Qg
-         xRdov/0jKP08/nMyrlvDsWnpPcsxLftst6bwBTG7+9Xht57xO7MV/VGiRftvzzlozvwt
-         VpG1iONTMdzFCuGbkJtlD7HlIE/YtbrSAXehjpdhUn3jsdSRio3pnhK3CwbucryvpBFD
-         NYtxWFjFlgdDJIax4D6muZ7dcHDjaYYQSiGPsDUq8D0yXbaZ03Rw9n222FvBPqZH7jUp
-         mrJtrUit3J++17LquPM9t89uXjPsAdTkleH/VtXNCXVB9bQ7I2pBtP6szGu940LBY6Ts
-         x1Lw==
-X-Gm-Message-State: AOAM530crlEdTEzQ6EJL+8dMcsfDQcDBApOKOgRWEqW+I6EkDJMD/o99
-        nGJ8wdNVqIyi5VukNJ82/0/P8XvC/JJ/+A==
-X-Google-Smtp-Source: ABdhPJzYPx17hJ0J+i3BWqgoM8leRoQNtVQxllnYxQ66ITPQR8qJHcEULYIK9YlAmCuXKRV6D6SEgA==
-X-Received: by 2002:a5d:6dc9:: with SMTP id d9mr8203827wrz.42.1641991210042;
-        Wed, 12 Jan 2022 04:40:10 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j13sm5174242wmq.11.2022.01.12.04.40.09
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=UUQDAIN7dImFEnGs+P+M2DlaWmLllIrljPPQj24++cA=;
+        b=vfzAt/4Vx6Yi0tsWtgMxAr5oDKryik3n812NzUzymUJe7c4JSr4Z1PVDqBhrVlExwc
+         Yff65GATwV0vQcaqDeg3zLldMfwDZOMaabJ1dsR/PPislU2il4blxpJtQCyMwQDlyYRz
+         ahAUfg9DR4x07GO7/t7Jwg+W8N/iu6vbOYD1xxufLMGu/oiKKEtgE1QR4qkA4hpSFzVH
+         2GYvb4kXv1DmCweIF545UqS/TIebQs7H8T3xUAeCt3xVzQ1u6is9JJi9dsPuv5G7hCLh
+         UpUgvOKBmQA4umzqeOrJoGvUwSzwoJblNIKvggQs9obHeezXZYJA0kMlsQsPV58pi3kO
+         YclQ==
+X-Gm-Message-State: AOAM533+7lXRciAt6OjDbkYnuJqwBJF091LXwuMXLVBfODJSp04NnPTl
+        XGARD0nQXseKwSLFc0+gY+4=
+X-Google-Smtp-Source: ABdhPJyQlQzO0bCmDXbG5EzO5xXhEEyGnZB1KFrD8gtnWp+VA/iW3uafcaS1X3ZN/RIHXHxsQ1q0CA==
+X-Received: by 2002:aa7:cd9a:: with SMTP id x26mr8985796edv.159.1641991395820;
+        Wed, 12 Jan 2022 04:43:15 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id gs14sm4512248ejc.183.2022.01.12.04.43.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jan 2022 04:40:09 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Josh Steadmon <steadmon@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v7 6/6] object-name: re-use "struct strbuf" in show_ambiguous_object()
-Date:   Wed, 12 Jan 2022 13:39:25 +0100
-Message-Id: <patch-v7-6.6-bf226f67099-20220111T130811Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.0.rc0.848.gb9d3879eb1d
-In-Reply-To: <cover-v7-0.6-00000000000-20220111T130811Z-avarab@gmail.com>
-References: <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com> <cover-v7-0.6-00000000000-20220111T130811Z-avarab@gmail.com>
+        Wed, 12 Jan 2022 04:43:15 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1n7cyA-000iUN-R3;
+        Wed, 12 Jan 2022 13:43:14 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
+Date:   Wed, 12 Jan 2022 13:42:29 +0100
+References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
+ <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
+ <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
+ <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
+ <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
+Message-ID: <220112.86a6g1xgyl.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reduce the allocations done by show_ambiguous_object() by moving the
-"desc" strbuf into the "struct ambiguous_output" introduced in the
-preceding commit.
 
-This doesn't matter for optimization purposes, but since we're
-accumulating a "struct strbuf advice" anyway let's follow that pattern
-and add a "struct strbuf sb", we can then strbuf_reset() it rather
-than calling strbuf_release() for each call to
-show_ambiguous_object().
+On Mon, Dec 20 2021, Derrick Stolee wrote:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- object-name.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+> On 12/20/2021 11:13 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Mon, Dec 20 2021, Derrick Stolee wrote:
+>>=20
+>>> On 12/12/2021 3:13 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>>> But we've also grown a hard dependency on this directory within git
+>>>> itself. Since 94c0956b609 (sparse-checkout: create builtin with 'list'
+>>>> subcommand, 2019-11-21) released with v2.25.0 the "git
+>>>> sparse-checkout" command has wanted to add exclusions to
+>>>> "info/sparse-checkout". It didn't check or create the leading
+>>>> directory, so if it's omitted the command will die.
+>>>
+>>>> Even if that behavior were fixed we'd be left with older versions of
+>>>> "git" dying if that was attempted if they used a repository
+>>>> initialized without a template.
+>>>
+>>> This, I don't understand. Why can't we add a
+>>> safe_create_leading_directories() to any place where we try to
+>>> create a sparse-checkout file?
+>>>
+>>> This would fix situations where older versions were init'd with a
+>>> different template or if the user deleted the info dir. The change
+>>> you've made here doesn't fix those cases, which is what you are
+>>> claiming is the reason to not do the other fix that seems like it
+>>> would.
+>>>
+>>> What am I misunderstanding here?
+>>=20
+>> I'll clarify that a bit in any re-roll.
+>>=20
+>> Pedantically nothing changes, i.e. you can create a repository with an
+>> empty template now, and it'll break on both the sparse-checkout on that
+>> version, and any previous version that had that un-noticed issue.
+>
+> You continue after this with more motivations for adding 'init'=20
+> unconditionally, which I am not fighting.
+>
+> What I _am_ saying is important is that if we are trying to write
+> a file to a known location and its parent directory doesn't exist,
+> then we should create it. Not doing so is a bug and should be
+> fixed, no matter how rare such a thing is to occur. As you've
+> shown, it is not required to have an info directory until we need
+> one (e.g. for sparse-checkout or an excludes file).
+>
+> If you're not planning to add that to this series, then I'll add it
+> to my list. I do think it would fit well into this one, though.
 
-diff --git a/object-name.c b/object-name.c
-index 71236ed1c16..bce3f42356a 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -354,6 +354,7 @@ static int init_object_disambiguation(struct repository *r,
- struct ambiguous_output {
- 	const struct disambiguate_state *ds;
- 	struct strbuf advice;
-+	struct strbuf sb;
- };
- 
- static int show_ambiguous_object(const struct object_id *oid, void *data)
-@@ -361,7 +362,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 	struct ambiguous_output *state = data;
- 	const struct disambiguate_state *ds = state->ds;
- 	struct strbuf *advice = &state->advice;
--	struct strbuf desc = STRBUF_INIT;
-+	struct strbuf *sb = &state->sb;
- 	int type;
- 	const char *hash;
- 
-@@ -377,7 +378,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 		 * output shown when we cannot look up or parse the
- 		 * object in question. E.g. "deadbeef [bad object]".
- 		 */
--		strbuf_addf(&desc, _("%s [bad object]"), hash);
-+		strbuf_addf(sb, _("%s [bad object]"), hash);
- 		goto out;
- 	}
- 
-@@ -402,8 +403,8 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 		 *
- 		 *    "deadbeef commit 2021-01-01 - Some Commit Message"
- 		 */
--		strbuf_addf(&desc, _("%s commit %s - %s"),
--			    hash, date.buf, msg.buf);
-+		strbuf_addf(sb, _("%s commit %s - %s"), hash, date.buf,
-+			    msg.buf);
- 
- 		strbuf_release(&date);
- 		strbuf_release(&msg);
-@@ -426,7 +427,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 		 * The second argument is the "tag" string from
- 		 * object.c.
- 		 */
--		strbuf_addf(&desc, _("%s tag %s - %s"), hash,
-+		strbuf_addf(sb, _("%s tag %s - %s"), hash,
- 			    show_date(tag_date, 0, DATE_MODE(SHORT)),
- 			    tag_tag);
- 	} else if (type == OBJ_TREE) {
-@@ -434,13 +435,13 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 		 * TRANSLATORS: This is a line of ambiguous <type>
- 		 * object output. E.g. "deadbeef tree".
- 		 */
--		strbuf_addf(&desc, _("%s tree"), hash);
-+		strbuf_addf(sb, _("%s tree"), hash);
- 	} else if (type == OBJ_BLOB) {
- 		/*
- 		 * TRANSLATORS: This is a line of ambiguous <type>
- 		 * object output. E.g. "deadbeef blob".
- 		 */
--		strbuf_addf(&desc, _("%s blob"), hash);
-+		strbuf_addf(sb, _("%s blob"), hash);
- 	}
- 
- 
-@@ -451,9 +452,9 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
- 	 * you'll probably want to swap the "%s" and leading " " space
- 	 * around.
- 	 */
--	strbuf_addf(advice, _("  %s\n"), desc.buf);
-+	strbuf_addf(advice, _("  %s\n"), sb->buf);
- 
--	strbuf_release(&desc);
-+	strbuf_reset(sb);
- 	return 0;
- }
- 
-@@ -552,6 +553,7 @@ static enum get_oid_result get_short_oid(struct repository *r,
- 		struct oid_array collect = OID_ARRAY_INIT;
- 		struct ambiguous_output out = {
- 			.ds = &ds,
-+			.sb = STRBUF_INIT,
- 			.advice = STRBUF_INIT,
- 		};
- 
-@@ -581,6 +583,7 @@ static enum get_oid_result get_short_oid(struct repository *r,
- 
- 		oid_array_clear(&collect);
- 		strbuf_release(&out.advice);
-+		strbuf_release(&out.sb);
- 	}
- 
- 	return status;
--- 
-2.34.1.1373.g062f5534af2
-
+Just so we'll avoid stepping on each other's toes, what's the status of
+your plan/non-plan to work on that more isolated fix, perhaps you have
+one that's unsubmitted?
