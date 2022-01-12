@@ -2,119 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C20F6C433EF
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 20:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DB76C433F5
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 20:12:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243310AbiALUG4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 15:06:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357519AbiALUGv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 15:06:51 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AE9EC061751
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 12:06:51 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id a18so14435764edj.7
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 12:06:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YRbRa88uAyxenbjAcXDo7/3Ex94muwkA9ss4Wl5EAzk=;
-        b=LTBqIz7nGMfctKhU1XhAE7KRvXt25P47486WOLq2gVh+/aLRM5PN4pFf5cb03PU2lf
-         aXK96os3j7voJJk9f6rvdUULENCh9MOuDtV8/954LTfVGWJxVSq3uOON2Icv4XQe64+k
-         1L84/mbw7d20QzcvyrUV4wd3KtBIJHz4ARZ45uRAIP8Jjmqs6sbGTiLEcCyrOgi0cZKY
-         DXLN3SrOtfgf/Agy9Q7Ni2KdGpQCTAPpVA+E1alIrOeirJtNkY1pcNm4Jq32q1F7Hx2M
-         3SIAXHOLeL8yx6pmAphFqGrY+pDGZMA/5FMJ+JdFNtz8M0Fzl9rvgXF/kQJd55KTw1v9
-         25FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YRbRa88uAyxenbjAcXDo7/3Ex94muwkA9ss4Wl5EAzk=;
-        b=K+RrbUUVRf+LI72jS0i+aoswHxMJlFL5/NEn0a/NI6GzqIl1Qaa2MuC+4SC4tU6Ry0
-         exsc7lWchZiSrpVwl6adOAnT01sFatyC1bRX0yvsIjuj8MHIxqMjmf8mxmF3f2GRD5/4
-         qGCEThNJvZ0aXZLCPiyBNBMnPXI/+rSnmv6wDHW4SVhLLNCuLgL30FNUnfX/kSKk+vGJ
-         sbVBbTp7IVc2NXrnV++f6MHDbuSnI89MdQWzFGzXcN8W+4SNmkrwALZuJoclV5gWvBe3
-         fkEtDXuZurb4oX92d8/QLs5ytZpHGDWuK0Qvy4QzdR0k2J89mPIpip2NXE3ycloH1XK8
-         AZ0A==
-X-Gm-Message-State: AOAM532iYI+bluWOpecWbrCs/Yvz/kyBRlsHPaonOhlb/pmwyruT7+mo
-        03GAp2Ii4vbYsxAmPbtIuXgf7QFlzEYq+RsaJio=
-X-Google-Smtp-Source: ABdhPJw42RbEI+ITqA15wgCoDM8k8yZUCuciMFNxvKBpFNS37xCa9i8RKSS6/a2JWH8N1ChWrJEv+Z7ahzkZUEiarjc=
-X-Received: by 2002:a17:907:2da3:: with SMTP id gt35mr1034021ejc.493.1642018009520;
- Wed, 12 Jan 2022 12:06:49 -0800 (PST)
+        id S1357588AbiALUMv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 15:12:51 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50908 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1357579AbiALUMk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 15:12:40 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BF65215A102;
+        Wed, 12 Jan 2022 15:12:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EoRZHGg3+yU/BTOcus5GWv1EOiPI4kejvQ5ARN
+        KmyKE=; b=aDeuhdrMJo27aF5eUV/1cZjJclusyK63Na8ZnO3pBsdcKo6UahTA6V
+        3MIKx4YH9dJDlOzd8gBwJj6BrRRxT/kXcWAQxDY50svjqbNZ6XLF4wrULQEDbjv0
+        g2yXUMJ2Jpc7kldoMhNo1v+niYb8YYLR6o4Qau/nJ9qwp1Pzy3SZk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B76EA15A0FF;
+        Wed, 12 Jan 2022 15:12:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2B4CC15A0FE;
+        Wed, 12 Jan 2022 15:12:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Marc Strapetz <marc.strapetz@syntevo.com>, git@vger.kernel.org
+Subject: Re: [PATCH] packfile: avoid overflowing shift during decode
+References: <20211110234033.3144165-1-jonathantanmy@google.com>
+        <xmqqpmr7v4gf.fsf@gitster.g>
+        <5ab9257c-9eba-a171-86d6-3fe7d3a4faec@syntevo.com>
+        <xmqq8rvku3bq.fsf@gitster.g>
+Date:   Wed, 12 Jan 2022 12:12:34 -0800
+In-Reply-To: <xmqq8rvku3bq.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        12 Jan 2022 12:06:01 -0800")
+Message-ID: <xmqq4k68u30t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20220105163324.73369-1-chriscool@tuxfamily.org>
- <CABPp-BFh7UnQtPM=tO8rfp5bPK4-7esouv5KCx1sUSESwEA=Rw@mail.gmail.com>
- <CAP8UFD0wKnAg5oyMWchXysPTg3K9Vb4M1tRcPzPE81QM903pYg@mail.gmail.com>
- <CABPp-BHpuLjCYycBwweMW_NdQrS_r3ECmvLb8XjNW-_Rau5NTw@mail.gmail.com>
- <nycvar.QRO.7.76.6.2201101427440.339@tvgsbejvaqbjf.bet> <xmqq8rvn1nkw.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2201111439190.1081@tvgsbejvaqbjf.bet> <220111.86mtk2xb1y.gmgdl@evledraar.gmail.com>
- <CABPp-BFei07srZBgyKs6HCm+G+hmPR-3_EkKjRK8WwGL1Uf2oA@mail.gmail.com> <xmqqk0f4x20a.fsf@gitster.g>
-In-Reply-To: <xmqqk0f4x20a.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 12 Jan 2022 12:06:38 -0800
-Message-ID: <CABPp-BHQdkhAEmTrtc+XMgj5A5ASBVRw0_bXH10NSrMsyRK+oA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/2] Introduce new merge-tree-ort command
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: FBDC574E-73E3-11EC-AB02-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 12, 2022 at 10:06 AM Junio C Hamano <gitster@pobox.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Marc Strapetz <marc.strapetz@syntevo.com> writes:
 >
-> Elijah Newren <newren@gmail.com> writes:
+>> On 11/11/2021 02:58, Junio C Hamano wrote:
+>>> Jonathan Tan <jonathantanmy@google.com> writes:
+>>> 
+>>>> diff --git a/packfile.c b/packfile.c
+>>>> index 89402cfc69..972c327e29 100644
+>>>> --- a/packfile.c
+>>>> +++ b/packfile.c
+>>>> @@ -1068,7 +1068,7 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
+>>>>   	size = c & 15;
+>>>>   	shift = 4;
+>>>>   	while (c & 0x80) {
+>>>> -		if (len <= used || bitsizeof(long) <= shift) {
+>>>> +		if (len <= used || (bitsizeof(long) - 7) <= shift) {
+>>
+>> This seems to cause troubles now for 32-bit systems (in my case Git
+>> for Windows 32-Bit): `shift` will go through 4, 11, 18 and for 25 it
+>> finally errors out. This means that objects >= 32MB can't be processed
+>> anymore. The condition should probably be changed to:
+>>
+>> +		if (len <= used || (bitsizeof(long) - 7) < shift) {
+>>
+>> This still ensures that the shift can never overflow and on 32-bit
+>> systems restores the maximum size of 4G with a final shift of 127<<25 
+>> (the old condition `bitsizeof(long) <= shift` was perfectly valid for
+>> 32-bit systems).
 >
-...
-> I however suspect that =C3=86var didn't mean by "legacy merge plumbing
-> built-in" the strategy backends.  IOW, I had an impression that what
-> is on the chopping block is merge-tree and not merge-recursive.
->
-> But since you brought up deprecation of recursive, let's spend a few
-> minutes on the topic.
+> Jonathan?
 
-Not sure it matters, but for reference, =C3=86var explicitly brought up
-merge-recursive.c.  The fuller quote was:
 
-> >> I.e. is it really costing us
-> >> to just leave these "legacy merge" plumbing built-ins and
-> >> merge-recursive.c etc. in place?
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+Date: Wed, 12 Jan 2022 12:11:42 -0800
+Subject: [PATCH] packfile: fix off-by-one error in decoding logic
 
-Because he brought it up, I decided to address it.  It was unclear to
-me whether he meant builtin/merge-recursive.c or the toplevel
-merge-recursive.c, so I just addressed both.
+shift count being exactly at 7-bit smaller than the long is OK; on
+32-bit architecture, shift count starts at 4 and goes through 11, 18
+and 25, at which point the guard triggers one iteration too early.
 
-> I suspect that we may be able to just invoke ort when recursive is
-> invoked, and such a wrapping may even be easier than wrapping "git
-> blame" to replace "git annotate" (where a command line option or two
-> needs to change behaviour).
+Reported-by: Marc Strapetz <marc.strapetz@syntevo.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ packfile.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yes, that was the plan I had.
-
-> I doubt there is -X<strategy-option>
-> that affects recursive that ORT does not understand,
-
-Technically there are currently two.  As documented in
-merge-strategies.txt, ORT takes the same -X options as recursive, but
-currently ignores both -Xdiff-algorithm (instead passing
-HISTOGRAM_DIFF down to ll_merge()), and -Xno-renames (instead passing
-DIFF_DETECT_RENAME down to diffcore_rename_extended()).  I guess there
-are three if you count -Xpatience separately from
--Xdiff-algorithm=3Dpatience.
-
-> so it may be quite simple to deprecate "merge -s recursive".
-
-Yes...but why deprecate?  I thought the plan was to (eventually) make
-requests for either `recursive` or `ort` be handled by running the
-`ort` backend.  Making that kind of switch is much smaller than the
-one we already made to switch the default backend from `recursive` to
-`ort`, so I'm not sure I see what we gain by doing such a switch in
-stages.  Maybe I'm missing something?
+diff --git a/packfile.c b/packfile.c
+index d3820c780b..667e21ce97 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1067,7 +1067,7 @@ unsigned long unpack_object_header_buffer(const unsigned char *buf,
+ 	size = c & 15;
+ 	shift = 4;
+ 	while (c & 0x80) {
+-		if (len <= used || (bitsizeof(long) - 7) <= shift) {
++		if (len <= used || (bitsizeof(long) - 7) < shift) {
+ 			error("bad object header");
+ 			size = used = 0;
+ 			break;
+-- 
+2.35.0-rc0-170-g6a31d082e5
