@@ -2,119 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C22F7C433EF
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 14:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAA82C433EF
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 15:17:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242459AbiALOV5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 09:21:57 -0500
-Received: from mout.gmx.net ([212.227.15.19]:41625 "EHLO mout.gmx.net"
+        id S1354507AbiALPRZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 10:17:25 -0500
+Received: from mout.web.de ([217.72.192.78]:40565 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239105AbiALOV4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 09:21:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1641997309;
-        bh=H5gRXv2jxufnDCflLhubdJqbeB9IltCQaxDcxB1k/yo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bldR6hAj94tgDX7NLMpfblN+jqE1IkSKaRc22TUtrben6iK923rrMqO3gC4WSWWoy
-         B20m42s48/rqn7m3X7SVKYdm47402accz6tsXIEdQ0+6Om34ULryFSrDX226dRlKvY
-         EcNl/IEBuwNnlJ9yB8NY9kpOakH7S869NjKs/4sI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.174.184] ([89.1.215.56]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4hzZ-1mO2Wp3zbL-011fzM; Wed, 12
- Jan 2022 15:21:49 +0100
-Date:   Wed, 12 Jan 2022 15:21:46 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 1/3] test-tool genzeros: initialize "zeros" to avoid
- SunCC warning
-In-Reply-To: <patch-1.3-4dadf7320ab-20220111T163908Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2201121518360.2121@tvgsbejvaqbjf.bet>
-References: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com> <patch-1.3-4dadf7320ab-20220111T163908Z-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1354499AbiALPRP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 10:17:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1642000618;
+        bh=MZCKh8rSOtoz4Fhtpw3LRf6uz1Qy6KcPQ24DtUtppNg=;
+        h=X-UI-Sender-Class:Date:From:To:Subject:References:In-Reply-To;
+        b=VNDUCx8zND8VXs/63u440YubeXxE9AuuGztiVq7h+Bbnh9F5c4Cv2PlyZrqX6sTTI
+         2nTe+fl5efhNVohR21xmMTlK3VYkiMzXPP1kmUwTaDGSwyNXfUkePsQKZtRWviC21z
+         xqOrEgsudbq3xVTnY1rEwmhcLTLeueu+NH/LNGno=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MTvrs-1myDQ82HoI-00RLaw; Wed, 12
+ Jan 2022 16:16:58 +0100
+Date:   Wed, 12 Jan 2022 16:16:57 +0100
+From:   Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] docs: correct documentation about eol attribute
+Message-ID: <20220112151657.4yy7q6pk54v4w2eh@tb-raspi4>
+References: <20220111021507.531736-1-sandals@crustytoothpaste.net>
+ <20220111021507.531736-3-sandals@crustytoothpaste.net>
+ <20220111183003.g4fch5d2f47it2hg@tb-raspi4>
+ <Yd4Hb/bxvJZkJP7P@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-371589879-1641997309=:2121"
-X-Provags-ID: V03:K1:O+2TysWG2J3rz6gnHS8icFzdOAYJ2PCobspRWa6Cp2UhEb+MwCj
- N95yvkDvF/CL349Y4xCMqCymBYPmikrIl9akevmTPdqRSi55K+iT4HoIyHZJmr644F48YKN
- bm1L1aKUvX1vywQFO2wqs4ycdgFMoOvGl3vEwBVpD2YyuL14TjnRVhU5wrmwErj3xB0lkzb
- NKcIfBMw/+77Xs+3R8OTw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:F54D6N1edJo=:wQGWCBA5wxJJi7+HDsi9sT
- ZSr8964ZZtLlBVB/XQy2gJEOUGsZsAkcSIk2CQDRQp0QulEZx2XkESdS4jLh5gAHhUeh1Dslp
- DtUuHPwJ5buqM1/uLxQ/IN/zqKlP1OwkUs0yF1UXXIo8tnsRAkf1i2iesijb2njQet7MnEEUR
- 1n6vgiaAQkZODmy2aZVVDd0c60a0xT/yklQgZ9R5ihDK8GKefdmwGYB7u/QoCTCG7aBiyXfJF
- bCh4t5ntAnhkKKmEZ/G4wxlbduuVa3rFr9pK1uHfqyPFf3BbT58amocudik/Zwc9ALxNvmgMD
- z78vczYo/MOgkSB4auXYDWOdrhdZdoQoHyy8IqpK8zJ/k03DkWmw9KiB3a3FS00SscBrKQX5M
- aH9ztKSkf6tNMo+87BpVNve5LXFPisU5/OTJumdFBL+nutehkEBg/9dOIRX7LUrYswpEzJvAX
- ZappMt5AH8OmYsj0twdDZwItWh1VDOdxlePgfI5epDCeZkvWDX1GrKPBKDEPfRZm3hMHptYoa
- QScaHC5nGmNaq/QJyM2ATTKBsW+Y5hUZMj0reSKQh3Uq+WJGqr29lQrFmvYdCPJZ/076bXaE9
- CFZJohKjJRUVUPWsylf/vulQTthX2dx+gxOESeW2l9z+sGpc0Cv8PLNoS1QdPYrWJwdgjOIMO
- DA4DRXTN5c/x4GCE1kmKrCo7DHSDNY8IsFOQQgUCkaNi/5dGdLAcHIvqqE8ssCru0NLjTnPwm
- fMoYO/nA0ersXV2itY1LpdCvh+iltHDZZmJ6WI4332wDj27UAYP2gTtvHdwcPup2DBDS1rnEt
- oJ/XVmdPZfDYYqfFIldcyqFaMVZ2WSiSOMXjo/tYZclc4lTezS/q52BOfHLO/0XAYZdwLAcq8
- VEDdfdIfvSCFo86p7Cb28NQnklFGrnFAG7vlH1Zy/4TNOPs4dufw6JSGCyux3OXVFDEI4DbxA
- ZcLI2m2e1EFPOFSwG5rVwaDOxsndNeMBfReL8QGujlPBwStobAYX2UVK+gGHRwQBTY4l9VqLv
- n6FvGA7A917tuNyd83lb8KKbOn6ULY/PwRDRAJFPnJL6v4aF6hl0RWvS+ZvSTayYePFcNKTQr
- DXtbDu1cfHXmIU=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yd4Hb/bxvJZkJP7P@camp.crustytoothpaste.net>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:kNedG9ZiMVffkKCEsQHUMXluKd3PQp1QOw9+6W5+uPz7hpmktV2
+ ojvUObNfGU0XlL/1Zvk8N22kGOmAWmSOaDyodzxcIDVxGcHFiOLAnc2hP+HMMJjKwzX3wLj
+ hSjzPoP5MiuYwsBakpEyoth3AFfYX9TA+H2njT3r0jeLVshpS0Ftu9cV5zM6KSMYp0jijJ5
+ fyMabpKRShBMr2f6e0F8w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Ued+a8Mdz5Y=:oFhUHmFClzOVnaDw4cJ+9L
+ zGHfsdfmSdO5Et6ChUQ+uh7NHlGopnudzix0Tn8/nvo/d1K3tH79ak4km+q6OfNqVkwACzgqE
+ YjWWQbZofav5SLacO+KQSFyiCvKr+b2IyhNRGxz8K9w1W9Tv2TzLOxj2WYSwSBbswrQSzNN/b
+ ePlshaxbx36eeT5mNiQuyA603MVyt+hr1ncJlG2aviozjkmdfrAOcJcqp8WGNuIlMiFP9BfwR
+ T17lCW96cCoZBZLNmw9U6orBGTZiHTBB4eynSZphjfYKowOPPdR1JljrWx4vkHT22vMa42ynX
+ SkOHL5WqqRvYvB7AJzkVh2qG0OcW7yMAhomAWfSkQyN1ELCrENk88zY9feXXGQPUG4a6SzRht
+ Tpl/Xzt6t40XEDv2L8iaTQlHmsPTuM2KrQzg+k56lrEF9ztlvcSicBDJN4Yrt/lJvu+RMrUdt
+ kBYBkOxVfJlSNY8bGtWxK8NGkK4QnAlh3fjSNynBZ28VeuEW3YoL6KHnAQ1QpvhEyemVNkJ1C
+ Ss/sWlmMIlgGULMx6ioEw9ivH3kLu4dVDp+aMox9dub55xOL/mHqfREupgeR0ggy7xEnBOxoZ
+ T88VqhoEOLedDjzW1wSC+660lo6l39OrE2TVHCTeRqTPIhgFf1eV+OfYeK042/8f0Bq651sZe
+ NItvVAyXfEkLcJ09UCX+5VHBs6na5dQ+9ugEJUsZx2Dw1W1BzWSNvVF+6khQIvH6vKJdwSO21
+ KByLMrD82+O7EmwhJULr6Vw+bWPpaAie2Kaqq41WJBphpJ/RdFCxXH7kpNd2XoqkVTMJ0EhnZ
+ m5ZB+I2JkQ6Fj3a/dFwaw/U0yDuqzfBk10apUG8Ysb2p1P0Snb5guAregvzmQDiRKDWTNeR9+
+ UXsHLwoiXlEYqm6fcFhspWkbijaNhq0TQ8V4iBxGlO5eo637VLGkYEdrN+X8bzusHp341r9ts
+ uyweYoigRTi42qrhqCezGHddPqXfxoovv5s4N3AO4sIMrIRSOuIAPknhrgXmmCKxmKNbnj2lg
+ lkKBAv6thm76liatyryNdmIx3Ow2Dy9WwPBW1SOHHfHIjsJFgT06hF6j0EVJC5u6jiRg0LNrH
+ iQngKT8rK81dQY=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-371589879-1641997309=:2121
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi =C3=86var,
-
-On Tue, 11 Jan 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> It isn't important for optimization to have this be "static", so let's
-> just initialize it and avoid this warning on Sun Studio 12.5:
+On Tue, Jan 11, 2022 at 10:40:47PM +0000, brian m. carlson wrote:
+> On 2022-01-11 at 18:30:03, Torsten B??gershausen wrote:
+> > Hej Brian,
+> > thanks for digging into this.
+> >
+> > Could you be so kind to send the stackoverflow issue ?
+> > (You can send it to me only)
 >
->     "t/helper/test-genzeros.c", line 7: warning: const object should hav=
-e initializer: zeros
->
-> This amends code added in df7000cd910 (test-tool genzeros: generate
-> large amounts of data more efficiently, 2021-11-02), and first tagged
-> with v2.35.0-rc0.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  t/helper/test-genzeros.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/t/helper/test-genzeros.c b/t/helper/test-genzeros.c
-> index 8ca988d6216..5dc89eda0cb 100644
-> --- a/t/helper/test-genzeros.c
-> +++ b/t/helper/test-genzeros.c
-> @@ -3,8 +3,7 @@
->
->  int cmd__genzeros(int argc, const char **argv)
->  {
-> -	/* static, so that it is NUL-initialized */
-> -	static const char zeros[256 * 1024];
-> +	const char zeros[256 * 1024] =3D { 0 };
+> I'll just post it here publicly, since I think there's value to folks
+> seeing what questions users have:
 
-This diff does two things: add an initializer, and turn the variable into
-a `static`. The former is the actual fix that is required. The latter is
-not. During the -rc phase, we do not want to see any of the latter. It is
-unnecessarily controversial and distracting, and can easily be postponed
-until January 25th, 2022.
+Thanks - Please see the comments inline, as usual.
 
-Ciao,
-Johannes
+>
+> https://stackoverflow.com/questions/70633469/what-is-the-difference-betw=
+een-text-auto-and-text-auto-eol-lf/70636508?
 
->  	intmax_t count;
->  	ssize_t n;
->
-> --
-> 2.35.0.rc0.844.gb5945183dcf
->
->
+To pick up the question here:
 
---8323328-371589879-1641997309=:2121--
+  I was reading about the .gitattributes file and the rule to force line e=
+ndings
+  in some tutorials it's written like
+  * text=3Dauto
+  and in some others, it's like
+  * text=3Dauto eol=3Dlf
+  at the first line of the file.
+
+  Are there any differences? what does the first one exactly do? Does it e=
+ven force any line endings?
+[]
+
+Yes, there are differences.
+The line
+* text=3Dauto
+will make sure that all by-Git-as-text-files-detected files
+will be commited with LF into the repo.
+CRLF in the working tree will become LF in the repo.
+
+When the files are checkout, the line endings depend on local
+git config settings:
+core.autocrlf=3Dtrue will give CRLF
+core.autocrlf=3Dinput will give LF
+When core.autocrlf is false (or unset) git looks at core.eol:
+core.eol=3Dcrlf gives CRLF
+core.eol=3Dlf gives LF
+core.eol unset (or native) will use the the native line endings,
+CRLF on Windows, LF everywhere else.
+=2D-------------
+Let's look at
+* text=3Dauto eol=3Dlf
+
+Here Git does not look at any local config variables.
+All files will be checkout out with LF, even on Windows.
+
+>
+> > On Tue, Jan 11, 2022 at 02:15:07AM +0000, brian m. carlson wrote:
+> > >  Note that setting this attribute on paths which
+> > > +are in the index with CRLF line endings may make the paths to be
+> > > +considered dirty. Adding the path to the index again will normalize=
+ the
+> > > +line endings in the index.
+> >
+> > I think that this can be loosened as well. And, beside this, the "dirt=
+y"
+> > warning about setting attributes could be written as part of the "text=
+"
+> > attribute as well. I dunno. Here is a possible suggestion:
+> >
+> >
+> >   Note that setting this attribute on paths which are in the index wit=
+h CRLF
+> >   line endings may make the paths to be considered dirty - unless "tex=
+t=3Dauto"
+> >   is set. `git ls-files --eol` can be used to check the "line ending s=
+tatus".
+> >   Adding the path to the index again will normalize the line endings i=
+n the index.
+>
+> I'm not sure that's correct, though.  The problem is if the file is
+> detected as text, which it might well be if text=3Dauto is set.  Or am I
+> not understanding something correctly?
+
+Which problem are we talking about ?
+Files that once had been commited with CRLF into the repo are
+now considered dirty?
+The "new safer autocrlf-handling" will not try to normalize them
+when text=3Dauto is specified.
+They keep their existing line endings at checkout or checkin.
+
+I hope this makes sense ?
+
