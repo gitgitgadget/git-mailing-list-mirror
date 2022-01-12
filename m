@@ -2,194 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21E00C433F5
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 13:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DD66C433FE
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 14:03:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241802AbiALN6n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 08:58:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40054 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236849AbiALN6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 08:58:41 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26297C06173F
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 05:58:41 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id e9so4441549wra.2
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 05:58:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jrtc27.com; s=gmail.jrtc27.user;
-        h=from:content-transfer-encoding:mime-version:subject:date:references
-         :to:in-reply-to:message-id;
-        bh=hVhw+mYTA0n8S3MIvjTVZ7LCzdBgAZHvDrByDWEioSM=;
-        b=jGbVRIFkd5xP8r2CEbtaQ7vGhWNglI4bLvs2OjnpFw0RvUemBxaYZ5kF31f1MuuFTR
-         oo4fwevyE88qmcPhd0DRD8qT0gngtqGg5h5IAYiCg4uD5MqyqkZ+EOaf0jgYTxKUQi1d
-         tPOIpCX2XodEVtyHE3PCw8mP06bWGLmNowvCDkSpZRUS+k/YezTvdSBeNnt1mO+/0aiM
-         HYnk2FTd9ltrasAZgRUwsDnsxzTZMRmFkyp5tZbAgpzmaAfjjQmBjOZ7T0K1X2wOEj4u
-         Ssa3RySbhYaimUYkGgc1DCFUDEhiYTcF3B6nQ8uI4C/9VZ3LpeZsE6tdE7232qQW/R8S
-         0VXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:date:references:to:in-reply-to:message-id;
-        bh=hVhw+mYTA0n8S3MIvjTVZ7LCzdBgAZHvDrByDWEioSM=;
-        b=nq9MSAXS+O/tgoy9O/iDylYTHtE3bdNY55avZKa6skSpyWagPD1l8Y5zdVP1LoqvzU
-         mfhJsHXg88V+4q/H+4ysgIw+oMK+2mOYmIpn8Qq7ajHI+78QcrYLBw9osYxzZNw9987V
-         fjYb4+Y86Z9TjA03qLArhALkfx1/jmfy5ABrWgUEYbeK6bYhF//moZ0+Hv2kyWpiQwwn
-         icf4//fC2A0cXh1ffQM4qO9lq/vnFOzknPCg34srXymUTCRUK42wGVodG4GmFzI4m0UU
-         l8vP8duh/hg1aZHe93JsP2jJSbsvbe4ziXG9tGI1oNKRSvhmlit3SPB5Dw8h8UB3z84N
-         XN9A==
-X-Gm-Message-State: AOAM533NmE4IbgzmK0JP1yOFJ/m9BxdN3NfSIWieQTB/H+mWsFdgWu5x
-        cVZcg9MC+R+8geqjzCA7w+0IO2VekLT0LrFy
-X-Google-Smtp-Source: ABdhPJyY1KlW7RL/58qFYmvK2/bWLTZRQfr4fW4T1Jaci5ph76DiJGPfgW6+7aHmnG0L2bKL/xbv5A==
-X-Received: by 2002:adf:f2c3:: with SMTP id d3mr2749508wrp.644.1641995919576;
-        Wed, 12 Jan 2022 05:58:39 -0800 (PST)
-Received: from smtpclient.apple (global-5-142.nat-2.net.cam.ac.uk. [131.111.5.142])
-        by smtp.gmail.com with ESMTPSA id n14sm13734264wrf.107.2022.01.12.05.58.39
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jan 2022 05:58:39 -0800 (PST)
-From:   Jessica Clarke <jrtc27@jrtc27.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
-Subject: Re: [PATCH] Properly align memory allocations and temporary buffers
-Date:   Wed, 12 Jan 2022 13:58:38 +0000
-References: <20220105132324.6651-1-jrtc27@jrtc27.com>
-To:     git@vger.kernel.org
-In-Reply-To: <20220105132324.6651-1-jrtc27@jrtc27.com>
-Message-Id: <641A33F3-E98A-40B1-BB11-ADC8C1FECA75@jrtc27.com>
-X-Mailer: Apple Mail (2.3693.40.0.1.81)
+        id S1353941AbiALOD4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 09:03:56 -0500
+Received: from mout.web.de ([212.227.15.4]:48807 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1353924AbiALODw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 09:03:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1641996201;
+        bh=GGYNrfwmmNkWcHeD7V2fFbIeOoQ7fgJ0KQarSwTra4k=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=Scx2eZT+iD3HW12uIErMueRR7/pZqeQ+Of5f5csMXpTrzPIhHGyr7e3asdntGmoHi
+         0XPQCxMq6bM6828kATNjbWAjdMwo9zJi2OvlhgvlHVU0O1aY2XaWyYxiM4Kvs4dJkL
+         mBC3nv7ruegw+XT8E6bfEkNkDKDGyqLHWGAQmQZc=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N5ljL-1mIZhC1o0x-016n0E; Wed, 12
+ Jan 2022 15:03:21 +0100
+Message-ID: <6993c156-4df1-198f-5ce0-781ba13d5dd2@web.de>
+Date:   Wed, 12 Jan 2022 15:03:20 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.4.1
+Subject: Re: [PATCH v5 02/16] reftable: fix resource leak in block.c error
+ path
+Content-Language: en-US
+To:     Han-Wen Nienhuys <hanwen@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+References: <pull.1152.v4.git.git.1639482476.gitgitgadget@gmail.com>
+ <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
+ <9ab631a3b29addaa54415139e7f60a79a19a6edb.1640199396.git.gitgitgadget@gmail.com>
+ <xmqqtuf0fe3r.fsf@gitster.g>
+ <CAFQ2z_OLCzOYXgXCTXyLOwwk7EBkPzwH=KASDmuJbur=q7L1Jg@mail.gmail.com>
+ <xmqq4k6y63j7.fsf@gitster.g>
+ <CAFQ2z_OFK77TC605GqM2Lw1Lf21fyF2cVKkGVrXO6TP6zcp+mw@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <CAFQ2z_OFK77TC605GqM2Lw1Lf21fyF2cVKkGVrXO6TP6zcp+mw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:4PeLnQ744QMNl5+2aQpCvu0kE1PPzhDRX2T8D/xA8r0Ry7ehM6o
+ fdb8nXTinFs3ipGZnBcFELD42TA7O8GER+kqw5Fd7zrJZsRpeyfZ8dhPBK/297pvFNKuqBp
+ 5zbxUKhXS9ZX4eFfN0No1qt276mwTXJIRAyENnGpWxaRyYm+Fgjw8E7xocuN8l9n2rJa/NS
+ imfJEhFq1YpHl77Xqy9Dw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jZ3CyMRQ8wY=:w/NmH530lY9KsKnvXDHNqH
+ 843JKcz0Iq4sACI9EImVtyPVwPt6I0SLi6ezDcaljuEq6QssR6FGqxMefgkmoFfeCaG4sbHb1
+ kQVv65JlTqb+lW4Bns8Jts47NqpIPgDmPmM0CDm/mMv1YFDH1yjbnQHCUWLGxZ1+VrTPKOhrC
+ L8QOS8HNoXhs4lHgJ7ORIijs6pDZlezfVHcbuNz0urHQMmAPHIbLgShKrP719oKaAr7u1LDjq
+ l1tUTTJm+30Itj1IVTVo70r8qMXcJ23+LP7hka0bNZQGhSAvI0wHpGmJ+xaYP8xbQog4ZntrW
+ 6VyoEPidUfoXzxcl4OUFfSxY84dUfkwdOkchM3wtav8g99VkiloI93opxAIj6nOvdeu6O3Ues
+ 469iGAqGn8YUqnG0rsyoOrNHOTNQpR//1C6FFavBVwV1yuiuyllaw8xbDTK8coeh6UaDVD4Xg
+ 4IyZqszfWvsJwwuJpapUr/WW9Xc7vBT6+OE1q1ljoQzNTHpfbEGmqfu6iZtaZpn8e//me7ROK
+ TsGL+ZWVopadprX3JAUFzT16lhg+CR3ZhxVZd0mSG1UlqyczOyihiiRiv+k99IDjH1J+FbvM7
+ hZUH68HrEH01vYgQFLUrM2AJ8VZWq4g/I2+aocqHUISDttJMcwfLO5qq4s7mm+9ZR6hF7f8MD
+ s4D0lryXSyoTAMygN8LrJ9pxLAoSeww9/M7wdOXhV0AOqCrUcCrcqnVbQYGg2N/CL+33HkBod
+ UrT0Bifl+xM9L58VYK+ywtUYOpRY7xxg5MGboHj6dzdjyfe40opMaPc5kFy0aT4Oyj9TOZ0Wo
+ 0WgqQ5EbNzSZpZ65RwZKnT0c7oEDoTx9XDEyQd3DJE1MUDGhYW2h9HzIwyStckKANsbrmUId5
+ eAYxotqmQZbsacWRhukHZXjGg0QEdfqLo5JSHu0LWpqIOP1YslW/FZ3pWFdZv29HnlgQFRxYj
+ +0obT1jKnn3UtaYa7UBxCpV/Py2RBs9Awkdxip4CcnEb1R8tQ95CjKNH+p2B6kMNAQuyq4kUK
+ tghUem01zyT5wbrGJ9jWWq3j3YEq2Yh4p8RGt0K/S6lOJZft5fccWNpQ6XMgCaIQF7AscUQLx
+ K7lOr592Ujw/g4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5 Jan 2022, at 13:23, Jessica Clarke <jrtc27@jrtc27.com> wrote:
-> 
-> Currently git_qsort_s allocates a buffer on the stack that has no
-> alignment, and mem_pool_alloc assumes uintmax_t's size is adequate
-> alignment for any type.
-> 
-> On CHERI, and thus Arm's Morello prototype, pointers are implemented as
-> hardware capabilities which, as well as having a normal integer address,
-> have additional bounds, permissions and other metadata in a second word,
-> so on a 64-bit architecture they are 128-bit quantities, including their
-> alignment requirements. Despite being 128-bit, their integer component
-> is still only a 64-bit field, so uintmax_t remains 64-bit, and therefore
-> uintmax_t does not sufficiently align an allocation.
-> 
-> Moreover, these capabilities have an additional "129th" tag bit, which
-> tracks the validity of the capability and is cleared on any invalid
-> operation that doesn't trap (e.g. partially overwriting a capability
-> will invalidate it) which, combined with the architecture's strict
-> checks on capability manipulation instructions, ensures it is
-> architecturally impossible to construct a capability that gives more
-> rights than those you were given in the first place. To store these tag
-> bits, each capability sized and aligned word in memory gains a single
-> tag bit that is stored in unaddressable (to the processor) memory. This
-> means that it is impossible to store a capability at an unaligned
-> address: a normal load or store of a capability will always take an
-> alignment fault even if the (micro)architecture supports unaligned
-> loads/stores for other data types, and a memcpy will, if the destination
-> is not appropriately aligned, copy the byte representation but lose the
-> tag, meaning that if it is eventually copied back and loaded from an
-> aligned location any attempt to dereference it will trap with a tag
-> fault. Thus, even char buffers that are memcpy'ed to or from must be
-> properly aligned on CHERI architectures if they are to hold pointers.
-> 
-> Address both of these by introducing a new git_max_align type put in a
-> union with the on-stack buffer to force its alignment, as well as a new
-> GIT_MAX_ALIGNMENT macro whose value is the alignment of git_max_align
-> that gets used for mem_pool_alloc. As well as making the code work on
-> CHERI, the former change likely also improves performance on some
-> architectures by making memcpy faster (either because it can use larger
-> block sizes or because the microarchitecture has inefficient unaligned
-> accesses).
-> 
-> Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
-> ---
-> compat/qsort_s.c  | 11 +++++++----
-> git-compat-util.h | 11 +++++++++++
-> mem-pool.c        |  6 +++---
-> 3 files changed, 21 insertions(+), 7 deletions(-)
-
-I can see the alternative fixes for qsort are now in next, as is the
-cleanup of register_symlink_changes to use string sets, which just
-leaves the mem-pool.c change to not assume that uintmax_t is
-sufficiently aligned for every type that git will use. If I move
-GIT_MAX_ALIGNMENT and its helper aggregates to mem-pool.c would that be
-acceptable?
-
-Jess
-
-> diff --git a/compat/qsort_s.c b/compat/qsort_s.c
-> index 52d1f0a73d..1ccdb87451 100644
-> --- a/compat/qsort_s.c
-> +++ b/compat/qsort_s.c
-> @@ -49,16 +49,19 @@ int git_qsort_s(void *b, size_t n, size_t s,
-> 		int (*cmp)(const void *, const void *, void *), void *ctx)
+Am 12.01.22 um 12:58 schrieb Han-Wen Nienhuys:
+> On Fri, Dec 24, 2021 at 5:16 AM Junio C Hamano <gitster@pobox.com> wrote=
+:
+>> Once you
+>> initialize at the declaration with "less meaningful" value (like
+>> zero initialization), the tools won't be able to tell when the code
+>> uses that variable "uninitialized" (because the assignment was
+>> skipped by a bug), since it appears to always be initialied to them.
+>
+> Which tools are these? When I add
+>
+> static void test_memcpy(void)
 > {
-> 	const size_t size = st_mult(n, s);
-> -	char buf[1024];
-> +	union {
-> +		char buf[1024];
-> +		git_max_align align;
-> +	} u;
-> 
-> 	if (!n)
-> 		return 0;
-> 	if (!b || !cmp)
-> 		return -1;
-> 
-> -	if (size < sizeof(buf)) {
-> -		/* The temporary array fits on the small on-stack buffer. */
-> -		msort_with_tmp(b, n, s, cmp, buf, ctx);
-> +	if (size < sizeof(u.buf)) {
-> +		/* The temporary array fits in the small on-stack buffer. */
-> +		msort_with_tmp(b, n, s, cmp, u.buf, ctx);
-> 	} else {
-> 		/* It's somewhat large, so malloc it.  */
-> 		char *tmp = xmalloc(size);
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 5fa54a7afe..28581a45c5 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -274,6 +274,17 @@ typedef unsigned long uintptr_t;
-> #define _ALL_SOURCE 1
-> #endif
-> 
-> +typedef union {
-> +	uintmax_t max_align_uintmax;
-> +	void *max_align_pointer;
-> +} git_max_align;
-> +
-> +typedef struct {
-> +	char unalign;
-> +	git_max_align aligned;
-> +} git_max_alignment;
-> +#define GIT_MAX_ALIGNMENT offsetof(git_max_alignment, aligned)
-> +
-> /* used on Mac OS X */
-> #ifdef PRECOMPOSE_UNICODE
-> #include "compat/precompose_utf8.h"
-> diff --git a/mem-pool.c b/mem-pool.c
-> index ccdcad2e3d..748eff925a 100644
-> --- a/mem-pool.c
-> +++ b/mem-pool.c
-> @@ -69,9 +69,9 @@ void *mem_pool_alloc(struct mem_pool *pool, size_t len)
-> 	struct mp_block *p = NULL;
-> 	void *r;
-> 
-> -	/* round up to a 'uintmax_t' alignment */
-> -	if (len & (sizeof(uintmax_t) - 1))
-> -		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
-> +	/* round up to a 'GIT_MAX_ALIGNMENT' alignment */
-> +	if (len & (GIT_MAX_ALIGNMENT - 1))
-> +		len += GIT_MAX_ALIGNMENT - (len & (GIT_MAX_ALIGNMENT - 1));
-> 
-> 	if (pool->mp_block &&
-> 	    pool->mp_block->end - pool->mp_block->next_free >= len)
-> -- 
-> 2.33.1
-> 
+>  uint32_t dest;
+>  char not_init[200];
+>  int i;
+>  memcpy(&dest, not_init, sizeof(dest));
+>
+>  for (i =3D 0 ; i < 10; i++)
+>   not_init[i] =3D rand() % 255 + 1;
+>  printf("%d", (int) strlen(not_init));
+> }
+>
+> to the C code, it compiles cleanly if I do "make DEVELOPER=3D1".
 
+https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html says about
+-Wuninitialized:
+
+   "Note that there may be no warning about a variable that is used only
+    to compute a value that itself is never used, because such
+    computations may be deleted by data flow analysis before the
+    warnings are printed."
+
+And indeed, dest is not used above.  But even if we change the funtion
+to use dest by returning it, GCC versions 9.1 and higher don't warn
+about the use of the uninitialized buffer.  GCC 4.7.1 to 8.5 do warn,
+though: https://godbolt.org/z/zYz9KvPdK
+
+Ren=C3=A9
