@@ -2,153 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D004EC4332F
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 13:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21E00C433F5
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 13:58:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353729AbiALNtu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 08:49:50 -0500
-Received: from mail-dm6nam12on2073.outbound.protection.outlook.com ([40.107.243.73]:36313
-        "EHLO NAM12-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1353750AbiALNt3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 08:49:29 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AU9C4sEFIeHjVE9s34T8tGvz9ddV3Ri5PpM3lQBYvajz8iWXqcT3lRUDJVZW/XbSURlcvCMWsdytXswd+dj6YHdCEabQWu5bTpBQM0NUBd8hMgm41QHjwF2UWxhk48NcwtKpgqZXj0xXOrubUvOpvrvsm0kkdqZa7JogIoK1sW6Oxprj8U/tP7K2AfGr+HguAbWNva5YhYxBNl8OhLuv28tttdldM6Cbx+qJm8gwOLf6o5VMVMO2Ge8DENM2JovGy0F/J9VOEzX3DOESnQ4DWqRkm+AvegOh90niPg/Bp2s63hVJPaqnlgTNElEvt3GeEEVm+tk21AH8v/2eR7ritA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=guICCNkFX+arutrgwnNHO1HhiNMo4pA0QwG4Ge82WQ8=;
- b=UoYii3izMQA7EMNgqXYX8iDJ5yaqTGocYD7nGjJq/72CzUSt1h4DpOSzP9qzaJ5cMXRSw4cl2VJoxYAjVdYbWXgvqIIGSeh/gVSfYEFkWHL8cxjZZB5uAVVeZFb0nj6qEBEhTdSL5Haoi8GJ94QCQsI4V0eQPedN0ycFS8V1H5u/Ht1UKt8Oi6XPjAL2VKjE37D3YGzf+sx2F1d6JeWg8fX9ctrNwcFRzsvZ68NCs9z9ZuvWyRc5uJDpkC+xvATyfXd3srbIWusF61EPJ8CtyfKrNtL5cx8Zut35BA2qmEura0lRwSW24HSYrwtYmV10+BakUE4zd+680h1G7BOkOg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=guICCNkFX+arutrgwnNHO1HhiNMo4pA0QwG4Ge82WQ8=;
- b=V0ZHVqdfkDbmChlUcyC9gghd4gAVAx/9+EsKBD+8zqnvTnPzvYFlicSRr+OqqTb+d9gFmtB+JdiUnM/XkZHYdUZnE9PqIunDwEjwq78Bd+EGteNrcLGeMd7PUipQZulweO1vlZNl7/z9DKmEDvD0Nq8bqa98BTs2DVGkuT07H8QMXpmTtkBbmVQxmISnW7FEdNWJhdo6iH3h9/0fns+R8HdyAV+mxirufB49iY5rpNSLfjNpAlfj21lMKsrpNv+pYptFPJyZL2F0jjE8LuLOoTHPMPIp1t1u660ak45onHZRCOKhdW5Ih9eJ4fQIxQEidiExOPP7vDThe51OKuDSyA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
- by DM5PR12MB1594.namprd12.prod.outlook.com (2603:10b6:4:e::18) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4867.11; Wed, 12 Jan 2022 13:47:49 +0000
-Received: from BL0PR12MB4849.namprd12.prod.outlook.com
- ([fe80::509e:bbb9:e1fb:26ed]) by BL0PR12MB4849.namprd12.prod.outlook.com
- ([fe80::509e:bbb9:e1fb:26ed%4]) with mapi id 15.20.4888.010; Wed, 12 Jan 2022
- 13:47:49 +0000
-From:   Joel Holdsworth <jholdsworth@nvidia.com>
-To:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Ben Keene <seraphire@gmail.com>,
-        Andrew Oakley <andrew@adoakley.name>,
-        Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH 20/20] git-p4: seperate multiple statements onto seperate lines
-Date:   Wed, 12 Jan 2022 13:46:35 +0000
-Message-Id: <20220112134635.177877-21-jholdsworth@nvidia.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220112134635.177877-1-jholdsworth@nvidia.com>
-References: <20220112134635.177877-1-jholdsworth@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: AM3PR04CA0137.eurprd04.prod.outlook.com (2603:10a6:207::21)
- To BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: ec453e51-b06e-4311-f6af-08d9d5d21ef6
-X-MS-TrafficTypeDiagnostic: DM5PR12MB1594:EE_
-X-Microsoft-Antispam-PRVS: <DM5PR12MB15948E54E05669EC89C280ECC8529@DM5PR12MB1594.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:7219;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: /Ih6UZYUTZkN07V3ND/wUeC1O1IqC8vkpkmdv+RZl0LWpPKJMpoEqE/5F1fCTvql8WN3iKLLScDFeBadvfMvJ1rcfMwmAhvuAVhJlGkr40Ff5XcGc4W4olrSdAqmGxPnvxCTg3jQVK6Y98K4touVksNgdp47qWmxGgOCvnYL9Lg2PhbN30oDefz3ZAqBWoECdNqUpdw9UtpuN3w4yej/rNvnXAuDG3giXVESyyS225fNtlqfuPQmoM3Q/SwJbfFTmxs1GgLKQSkXd9tQuNn+6BHbaiTmtyMdRKKJBH2E1f0LNrQe6ixF3dAlM3UrvGEvX3EYwM0hQglSKVI0+gAc5OwBgFcWmeI+VpSbIPLiFK4bJhjEPeCqySve5I4dUSDK/oBy1yn3gQAVuqBFOt8pZQKMfw8lJVOV7QD3lwiClneg0/b0+chYWoTuMoaHNstIksMtQM2s6apZTXePpeyPH95gV5HTDy5euQn3ndFzLtmFmebe2DUZgkKQ95FNuCNheRibhiq7+wyVR2MU3gpLsnz3tptbh6nk27qSevpScJrN0pYcwdsXLDPQ8KfneBYiK7oqbAltxR1vZWCBNeeaIRYImpNkUB02wggNY8YBCkMIdcGPLMNSbiTEYWoHc/xUKZ3UIyTFbuma/3VZKFsjA4hOMFSNQm8JgtwUDsvagtGalnDKdDT6fg0XITnX7AN2lIKl4fRmq2P9x9z0X5d/2jsVOD53me+oKU8c26Lwt+4eyuSy+nCNbjktI3TQB9iVDggBX05iSC7Fy5bPWQoUDh61o0D4aPj/MbaPuVexhEA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(6486002)(5660300002)(1076003)(26005)(38350700002)(2616005)(55236004)(186003)(54906003)(66946007)(52116002)(38100700002)(6666004)(8936002)(7416002)(83380400001)(8676002)(107886003)(66476007)(6512007)(508600001)(36756003)(316002)(86362001)(6506007)(2906002)(4326008)(110136005)(66556008)(966005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?IrtX1VAzOYjOn80lCLevczj0P3GMfn6DdXl0XWKb+vnE6P6X673WYOTJIDob?=
- =?us-ascii?Q?yAxVSNim5KnfIkKn6ryXDVrEFIcpV76ek20goRqzduIs93tIV5OrGzwgh2PC?=
- =?us-ascii?Q?y6Yx7n0RzDPx1crU1KbXv95DGFhY3kTHjkgfb/3y+hfvWHHOdI8mkNk8VmuR?=
- =?us-ascii?Q?3yfMDAUBNlk/jUXsHMcBwYNs77MmccpmsYJbEwrg4FU5OnIFmgSYdyNBVgAv?=
- =?us-ascii?Q?3vKAJuT2i8VDZR4Oc80ostI7gZZdFSZ12G0pqtA6Spor7+iGKl9kTMoTV7xA?=
- =?us-ascii?Q?fdMmcP3cOBulLUbjNPjl2Ob1Npeivh1Y+B5WuzzjsVsQzvumHe1H9Jt6/Lsn?=
- =?us-ascii?Q?GIpQqu0t40PMwAS86KXOQfMq9CcGcxT360dzlvC66vg4thCrQXNppJxoO9hj?=
- =?us-ascii?Q?Q2Pe6nehrDlmefrWSOLIxb/KSscCwYucCgo3Dr2iWn4LycGGxZDAzV2Y9Y97?=
- =?us-ascii?Q?ZlWkKJQYnkYqG9ykCHto1kbta+N/E+aSAwNxHDezQh0Vwqx0QPytTjlsZP5t?=
- =?us-ascii?Q?HESLajKdLb5Tar6UfydzQP9pbK0Z29XKkHVmjRLg2qFcKQXB2OKzw0sCV5aW?=
- =?us-ascii?Q?DqyopMpXNGDr9mXRJD9yUBSiKPcfscBh8opVnnIygzg0ejCLPH+vp7V7qguP?=
- =?us-ascii?Q?G3jyC1ezq62DtVySPepAEZB0i9VOejyxHquMAik2/MOmlzNpLekFXrdfdEJC?=
- =?us-ascii?Q?aFGfiFgco67jRlVH6ag2JLolExGxSBvtrz17m1/8RdtIUfbpJQviR6F/xf7B?=
- =?us-ascii?Q?E+U/FbPIx+BNx0QkM4v/e3uihBm5+tXUyGxAn2YBmm45AI22zwmelfyvKrkU?=
- =?us-ascii?Q?jOAjlxir/jDcHbt0hEtXNEbYMxKbioKuab5ScLTyI1k40oVvI38jkzx29P/M?=
- =?us-ascii?Q?g/qBmXKhVJBdy2ma2aEb3BWWdu/WobLd0ITTlmsd8VhGBWQE+PJtju0vLy2e?=
- =?us-ascii?Q?pK7UZI9wR8zY+EzQfpYt7ucZmxyaOZHguncTUOw9vVc1yZGxMCTUFQ1Bpu2u?=
- =?us-ascii?Q?4SRky/xxi4K45Yb65ajWpflluU1qRkbowimj4xQQAjTtsBMuNyHPIVlpveN2?=
- =?us-ascii?Q?tGdjEeBafOw3gNeFIfto9DKhPvxd1EhGqjjOsm6YwMx3FsvJVzEa1YwaS59V?=
- =?us-ascii?Q?1QfTkkAU1klaB+QKSs4C+i9hvp/ru4TcXeHIvwORJUAhX0YM2S+VSGUrQ/r+?=
- =?us-ascii?Q?02fqgfoO+uNYEP00QwSuPv3KTBUBfOqMhrIaMZB/U8WiHZNZwBEgA1udepoa?=
- =?us-ascii?Q?V5DVBUERqxVdPq8EljRsiCwWfeYnVZcOQ8YO53zRXQn2ePVfe54PZopmdppd?=
- =?us-ascii?Q?NDMokxO1YTD0+LYoq4UGlYVeX2FMzaC2+Eaxtz9AD6okRsjWvEv+Z/QVV/UH?=
- =?us-ascii?Q?fZ08UpvXs0yvX6dPPMwgpIt6BvZ83wtg66WIAR2U82jI2SEiOqMvcAgxy8Dc?=
- =?us-ascii?Q?1F33TQQBLIwof5o+9x8/KaywnkzfJRAhNcWh3AUYoOcPDTqitrAV41PKAG6Y?=
- =?us-ascii?Q?fjHMyePV79tn/rH3ahXN8RaM/LfSS2MMtdYQELVMh9XUtJ9+ygdHdEHNlAOE?=
- =?us-ascii?Q?2M/pABqcL3O7PFcO5tVSWS+oCZdhtVlMmiSRd0jDiku10ReoLt8PFJn+3oPk?=
- =?us-ascii?Q?1nP03cgk2rC2k7wkKnflnLs=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ec453e51-b06e-4311-f6af-08d9d5d21ef6
-X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jan 2022 13:47:48.9766
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CZfD7vUa+rOmD5SlxcFtuN5tg5kbVuGaRmdcl/HKiZsB1v2gwDpA+QtGtoMi2dRfWZLOE9qp2y9EG7f1RTntSA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR12MB1594
+        id S241802AbiALN6n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 08:58:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40054 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236849AbiALN6l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 08:58:41 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26297C06173F
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 05:58:41 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id e9so4441549wra.2
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 05:58:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jrtc27.com; s=gmail.jrtc27.user;
+        h=from:content-transfer-encoding:mime-version:subject:date:references
+         :to:in-reply-to:message-id;
+        bh=hVhw+mYTA0n8S3MIvjTVZ7LCzdBgAZHvDrByDWEioSM=;
+        b=jGbVRIFkd5xP8r2CEbtaQ7vGhWNglI4bLvs2OjnpFw0RvUemBxaYZ5kF31f1MuuFTR
+         oo4fwevyE88qmcPhd0DRD8qT0gngtqGg5h5IAYiCg4uD5MqyqkZ+EOaf0jgYTxKUQi1d
+         tPOIpCX2XodEVtyHE3PCw8mP06bWGLmNowvCDkSpZRUS+k/YezTvdSBeNnt1mO+/0aiM
+         HYnk2FTd9ltrasAZgRUwsDnsxzTZMRmFkyp5tZbAgpzmaAfjjQmBjOZ7T0K1X2wOEj4u
+         Ssa3RySbhYaimUYkGgc1DCFUDEhiYTcF3B6nQ8uI4C/9VZ3LpeZsE6tdE7232qQW/R8S
+         0VXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:date:references:to:in-reply-to:message-id;
+        bh=hVhw+mYTA0n8S3MIvjTVZ7LCzdBgAZHvDrByDWEioSM=;
+        b=nq9MSAXS+O/tgoy9O/iDylYTHtE3bdNY55avZKa6skSpyWagPD1l8Y5zdVP1LoqvzU
+         mfhJsHXg88V+4q/H+4ysgIw+oMK+2mOYmIpn8Qq7ajHI+78QcrYLBw9osYxzZNw9987V
+         fjYb4+Y86Z9TjA03qLArhALkfx1/jmfy5ABrWgUEYbeK6bYhF//moZ0+Hv2kyWpiQwwn
+         icf4//fC2A0cXh1ffQM4qO9lq/vnFOzknPCg34srXymUTCRUK42wGVodG4GmFzI4m0UU
+         l8vP8duh/hg1aZHe93JsP2jJSbsvbe4ziXG9tGI1oNKRSvhmlit3SPB5Dw8h8UB3z84N
+         XN9A==
+X-Gm-Message-State: AOAM533NmE4IbgzmK0JP1yOFJ/m9BxdN3NfSIWieQTB/H+mWsFdgWu5x
+        cVZcg9MC+R+8geqjzCA7w+0IO2VekLT0LrFy
+X-Google-Smtp-Source: ABdhPJyY1KlW7RL/58qFYmvK2/bWLTZRQfr4fW4T1Jaci5ph76DiJGPfgW6+7aHmnG0L2bKL/xbv5A==
+X-Received: by 2002:adf:f2c3:: with SMTP id d3mr2749508wrp.644.1641995919576;
+        Wed, 12 Jan 2022 05:58:39 -0800 (PST)
+Received: from smtpclient.apple (global-5-142.nat-2.net.cam.ac.uk. [131.111.5.142])
+        by smtp.gmail.com with ESMTPSA id n14sm13734264wrf.107.2022.01.12.05.58.39
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 12 Jan 2022 05:58:39 -0800 (PST)
+From:   Jessica Clarke <jrtc27@jrtc27.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.40.0.1.81\))
+Subject: Re: [PATCH] Properly align memory allocations and temporary buffers
+Date:   Wed, 12 Jan 2022 13:58:38 +0000
+References: <20220105132324.6651-1-jrtc27@jrtc27.com>
+To:     git@vger.kernel.org
+In-Reply-To: <20220105132324.6651-1-jrtc27@jrtc27.com>
+Message-Id: <641A33F3-E98A-40B1-BB11-ADC8C1FECA75@jrtc27.com>
+X-Mailer: Apple Mail (2.3693.40.0.1.81)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PEP8 discourages the use of compound statements where there are multiple
-statements on a single line in the "Other Recommendations" section:
+On 5 Jan 2022, at 13:23, Jessica Clarke <jrtc27@jrtc27.com> wrote:
+> 
+> Currently git_qsort_s allocates a buffer on the stack that has no
+> alignment, and mem_pool_alloc assumes uintmax_t's size is adequate
+> alignment for any type.
+> 
+> On CHERI, and thus Arm's Morello prototype, pointers are implemented as
+> hardware capabilities which, as well as having a normal integer address,
+> have additional bounds, permissions and other metadata in a second word,
+> so on a 64-bit architecture they are 128-bit quantities, including their
+> alignment requirements. Despite being 128-bit, their integer component
+> is still only a 64-bit field, so uintmax_t remains 64-bit, and therefore
+> uintmax_t does not sufficiently align an allocation.
+> 
+> Moreover, these capabilities have an additional "129th" tag bit, which
+> tracks the validity of the capability and is cleared on any invalid
+> operation that doesn't trap (e.g. partially overwriting a capability
+> will invalidate it) which, combined with the architecture's strict
+> checks on capability manipulation instructions, ensures it is
+> architecturally impossible to construct a capability that gives more
+> rights than those you were given in the first place. To store these tag
+> bits, each capability sized and aligned word in memory gains a single
+> tag bit that is stored in unaddressable (to the processor) memory. This
+> means that it is impossible to store a capability at an unaligned
+> address: a normal load or store of a capability will always take an
+> alignment fault even if the (micro)architecture supports unaligned
+> loads/stores for other data types, and a memcpy will, if the destination
+> is not appropriately aligned, copy the byte representation but lose the
+> tag, meaning that if it is eventually copied back and loaded from an
+> aligned location any attempt to dereference it will trap with a tag
+> fault. Thus, even char buffers that are memcpy'ed to or from must be
+> properly aligned on CHERI architectures if they are to hold pointers.
+> 
+> Address both of these by introducing a new git_max_align type put in a
+> union with the on-stack buffer to force its alignment, as well as a new
+> GIT_MAX_ALIGNMENT macro whose value is the alignment of git_max_align
+> that gets used for mem_pool_alloc. As well as making the code work on
+> CHERI, the former change likely also improves performance on some
+> architectures by making memcpy faster (either because it can use larger
+> block sizes or because the microarchitecture has inefficient unaligned
+> accesses).
+> 
+> Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+> ---
+> compat/qsort_s.c  | 11 +++++++----
+> git-compat-util.h | 11 +++++++++++
+> mem-pool.c        |  6 +++---
+> 3 files changed, 21 insertions(+), 7 deletions(-)
 
-https://www.python.org/dev/peps/pep-0008/#other-recommendations
+I can see the alternative fixes for qsort are now in next, as is the
+cleanup of register_symlink_changes to use string sets, which just
+leaves the mem-pool.c change to not assume that uintmax_t is
+sufficiently aligned for every type that git will use. If I move
+GIT_MAX_ALIGNMENT and its helper aggregates to mem-pool.c would that be
+acceptable?
 
-Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
----
- git-p4.py | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+Jess
 
-diff --git a/git-p4.py b/git-p4.py
-index 679667611c..cd7ecb7aeb 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1264,7 +1264,8 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
-             else:
-                 block_size = max(2, block_size // 2)
- 
--            if verbose: print("block size error, retrying with block size {0}".format(block_size))
-+            if verbose:
-+                print("block size error, retrying with block size {0}".format(block_size))
-             continue
-         except P4Exception as e:
-             die('Error retrieving changes description ({0})'.format(e.p4ExitCode))
-@@ -1891,7 +1892,9 @@ def modifyChangelistUser(self, changelist, newUser):
-                 (changelist, newUser))
- 
-         c = changes[0]
--        if c['User'] == newUser: return   # nothing to do
-+        if c['User'] == newUser:
-+            # Nothing to do
-+            return
-         c['User'] = newUser
-         # p4 does not understand format version 3 and above
-         input = marshal.dumps(c, 2)
--- 
-2.34.1
+> diff --git a/compat/qsort_s.c b/compat/qsort_s.c
+> index 52d1f0a73d..1ccdb87451 100644
+> --- a/compat/qsort_s.c
+> +++ b/compat/qsort_s.c
+> @@ -49,16 +49,19 @@ int git_qsort_s(void *b, size_t n, size_t s,
+> 		int (*cmp)(const void *, const void *, void *), void *ctx)
+> {
+> 	const size_t size = st_mult(n, s);
+> -	char buf[1024];
+> +	union {
+> +		char buf[1024];
+> +		git_max_align align;
+> +	} u;
+> 
+> 	if (!n)
+> 		return 0;
+> 	if (!b || !cmp)
+> 		return -1;
+> 
+> -	if (size < sizeof(buf)) {
+> -		/* The temporary array fits on the small on-stack buffer. */
+> -		msort_with_tmp(b, n, s, cmp, buf, ctx);
+> +	if (size < sizeof(u.buf)) {
+> +		/* The temporary array fits in the small on-stack buffer. */
+> +		msort_with_tmp(b, n, s, cmp, u.buf, ctx);
+> 	} else {
+> 		/* It's somewhat large, so malloc it.  */
+> 		char *tmp = xmalloc(size);
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 5fa54a7afe..28581a45c5 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -274,6 +274,17 @@ typedef unsigned long uintptr_t;
+> #define _ALL_SOURCE 1
+> #endif
+> 
+> +typedef union {
+> +	uintmax_t max_align_uintmax;
+> +	void *max_align_pointer;
+> +} git_max_align;
+> +
+> +typedef struct {
+> +	char unalign;
+> +	git_max_align aligned;
+> +} git_max_alignment;
+> +#define GIT_MAX_ALIGNMENT offsetof(git_max_alignment, aligned)
+> +
+> /* used on Mac OS X */
+> #ifdef PRECOMPOSE_UNICODE
+> #include "compat/precompose_utf8.h"
+> diff --git a/mem-pool.c b/mem-pool.c
+> index ccdcad2e3d..748eff925a 100644
+> --- a/mem-pool.c
+> +++ b/mem-pool.c
+> @@ -69,9 +69,9 @@ void *mem_pool_alloc(struct mem_pool *pool, size_t len)
+> 	struct mp_block *p = NULL;
+> 	void *r;
+> 
+> -	/* round up to a 'uintmax_t' alignment */
+> -	if (len & (sizeof(uintmax_t) - 1))
+> -		len += sizeof(uintmax_t) - (len & (sizeof(uintmax_t) - 1));
+> +	/* round up to a 'GIT_MAX_ALIGNMENT' alignment */
+> +	if (len & (GIT_MAX_ALIGNMENT - 1))
+> +		len += GIT_MAX_ALIGNMENT - (len & (GIT_MAX_ALIGNMENT - 1));
+> 
+> 	if (pool->mp_block &&
+> 	    pool->mp_block->end - pool->mp_block->next_free >= len)
+> -- 
+> 2.33.1
+> 
 
