@@ -2,42 +2,41 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2190BC433EF
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 13:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20709C433F5
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 13:49:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353708AbiALNtZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 08:49:25 -0500
-Received: from mail-dm6nam10on2057.outbound.protection.outlook.com ([40.107.93.57]:44001
-        "EHLO NAM10-DM6-obe.outbound.protection.outlook.com"
+        id S1353713AbiALNt0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 08:49:26 -0500
+Received: from mail-dm6nam12on2043.outbound.protection.outlook.com ([40.107.243.43]:52832
+        "EHLO NAM12-DM6-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1353701AbiALNr4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 08:47:56 -0500
+        id S236601AbiALNr6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 08:47:58 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=m0tA7rFgKMtg/OXufQICKSVvdPIbqULH8zsW0ucaw1yOXp+tuUVCo2dkTwk/7+l7UTchjFDuwvhp6WkKN8QrHF3iqbp0hzAY16A4FlpqcP48GI8+vebipmubETNbkiRV1lohP9iuCuslfjMTxROop514RmHQKimA9YJgsDTY/CcmOHvEhvqzz61B6kRzVWX6eYyPLgciWKNApm6cucsOKBFKS56pbkdq/JK2Vy7smYD6mn0i9pgPjOKXElBS4wf9FvLpmod393M+1iSINg+1kNUw4NVTy8km7kP6/+thRuzVbJ5gBrc009IScgOZCDgRvHcIQhPiuKQGqmngbgIDYA==
+ b=jtRoe4Uc00nEJjcr2+XYnVxKd69eyqamzGfROKSZ2x+57bFspse3ZQi5H1ifTA2vNz+q6JgZ4ghLFuuX0l9t78zN4oQx2dIRrRNzER6STyt4T/gWQNwRyEopx4IRlxXHuAKi/nhnARGBH7Q9h8g6tcmeumEqdFlzNe5EIzAxnE6aQBGXMz/YumPn7+8rofbvRLUBaMTB3LOkYNL8foDgSppFSSfyho9dNaj1v4Ixnp33ZUHWIyj3P/YRjxRPceEN1GLhX75aLfq6jjq5p8t8Q9++Exrc8rTYCbdKbp4ViKHzmnGY13KvNjMwq3xhHp1G3sLlIyKSVwSi2LyMVohXAQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wxds9ybv9Of3vjOuabhzf1oske6FKC7HVnBpUySNMIU=;
- b=Vv/Qqf5cPsCvmNw9bO1q9ZUCMczHQd69Z6iXe9XDjOYZQoC1EjZAj/ZS2fpLFf+Em5ujl3JDKrcIJb4wrH07GisBwiw1CMIj2bSW58rHTDaOG78atEsYjFhySv/+0KSQjHT5/BFSR+uM9BEiffEXuiXQh+A44XVQS3/auv5iXdcsMNGU0vbwre/aUbeIeC/pWm2PCpCEQgBwc7PEWfty9Vg7O2vJfC7Beug5N2ilUKb2suiiV5anvzas6YGpY0AaVFXvMkcdNAem4Yx1kDMVmnNLX32pmHF0KQCBVw1mE8gZuCaXDe3gYZnk5EhH9iGlMbMDBqxmfLP66Z/Rl8INEw==
+ bh=OdVU2WZkaABXu3nYmQ/eXg9L3hO08QKQLjegoiBU6o4=;
+ b=HuHiupCcfZi6Zs/U7Yea7rgirkkuBvT+M6FOZjhhKd7Z027jLAQPzuOj90iG0H8en7oeKYtKrMxYPwXGlDYNXswa0Etc1/Qxv7OqJZ8lAh614qTTB/FlUjAvjeeWKi3gRhr1LC5bPYh+5rLyBtKMDpS041qbSucmf1LOz4Ra0Canx89/YDwZ2D8gJR01ftb2xG9TCSpzB92/AGg6L7/3+KLhd1i6nsLdYWSODf7KcvwRrlSj2qij1Js39XwCq9AvNszSlo/8eQ28tYWSp/me7klm55Rbx1pth+u7VFDQCLS6aZ8DItrqTKYhkxtv7N0m0QlyHuKUiu41/vaUbFhw4w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wxds9ybv9Of3vjOuabhzf1oske6FKC7HVnBpUySNMIU=;
- b=JZK6bC4TfBziDa7hKtYhGC25wD8q4NCGT5VLaSnY1ENyE3eOgEMQ/nN6oGZ5h9XIFej2aMBNVa2y7n16mK8WhLGg2pGzbiBDUU4/8NzJNBePntRnG6c9brGdkB7cFzCx3gBmGlumlUqfJJSa+J/v4f8k4dy/wnv9KApbUmOvbBT5SCBolgB4z2CKGLuf3f6Els1Gu781oBuTxVrc1/43MhFXPS/idfhzK1PFp6QvkpgPLJwG8ZAiR2f16NBbdeYyiicnU0MAoBVjlcOYMVK6R+q5mXxjbDnABXzBjtYJDAuj2wWRpox0Cfb2eed/LjLBpvWg9qCLQa+rhkajZy/Waw==
+ bh=OdVU2WZkaABXu3nYmQ/eXg9L3hO08QKQLjegoiBU6o4=;
+ b=BEKOK6jVK7iyQjlLpFmFymrnQ2HHZX2g8WOVBLNPckpgJFeM9gz9iaZyLeXrI+XZ7w5IkAD2ndsakIaSon6HsRqPrm7B7/GLsJYpvkpdUK5G8qHXtSX2se7jbBbnKp0hapTIPQHTzXe6TOcLi1wzQf2zddohoFs3l9hsXaQJS3ECxHKy54iLucOv5D9L/X108DQ51UehEbwtxNe8rPeomBz5vxxVzRAVPfRaHbMyUAUYjwingZ8gXWfun7j+F9s8y9ORB2enhw8x/CLoUdXYQC7EthFO0z5uq6Xo1/xkJ/+iSBjG+rQSeXtUI+TtMa9kaY6hrpgmm+EKVPfRCniPwQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
- by MN2PR12MB3693.namprd12.prod.outlook.com (2603:10b6:208:159::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4888.10; Wed, 12 Jan
- 2022 13:47:40 +0000
+ by DM5PR12MB1594.namprd12.prod.outlook.com (2603:10b6:4:e::18) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4867.11; Wed, 12 Jan 2022 13:47:30 +0000
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::509e:bbb9:e1fb:26ed]) by BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::509e:bbb9:e1fb:26ed%4]) with mapi id 15.20.4888.010; Wed, 12 Jan 2022
- 13:47:40 +0000
+ 13:47:30 +0000
 From:   Joel Holdsworth <jholdsworth@nvidia.com>
 To:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -50,9 +49,9 @@ Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
         Ben Keene <seraphire@gmail.com>,
         Andrew Oakley <andrew@adoakley.name>,
         Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH 16/20] git-p4: tidied visual indented lines of conditionals
-Date:   Wed, 12 Jan 2022 13:46:31 +0000
-Message-Id: <20220112134635.177877-17-jholdsworth@nvidia.com>
+Subject: [PATCH 11/20] git-p4: remove extraneous spaces before function arguments
+Date:   Wed, 12 Jan 2022 13:46:26 +0000
+Message-Id: <20220112134635.177877-12-jholdsworth@nvidia.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220112134635.177877-1-jholdsworth@nvidia.com>
 References: <20220112134635.177877-1-jholdsworth@nvidia.com>
@@ -62,120 +61,135 @@ X-ClientProxiedBy: AM3PR04CA0137.eurprd04.prod.outlook.com (2603:10a6:207::21)
  To BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 4564b66e-6f63-4fe4-978d-08d9d5d219d2
-X-MS-TrafficTypeDiagnostic: MN2PR12MB3693:EE_
-X-Microsoft-Antispam-PRVS: <MN2PR12MB36938415DEE21A143D1CE215C8529@MN2PR12MB3693.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1468;
+X-MS-Office365-Filtering-Correlation-Id: 7d819d2b-3536-4e64-f47b-08d9d5d213e7
+X-MS-TrafficTypeDiagnostic: DM5PR12MB1594:EE_
+X-Microsoft-Antispam-PRVS: <DM5PR12MB1594917B60DF48748CF2C8E2C8529@DM5PR12MB1594.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1079;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: vtoQeSmMV8nvV4BY3DfLck6hb6y7nalBDRU0TpDf9ff5jcJxvFMLKCU0J4z/1aa8iW+eQz/Mm6MH8MsXjAfm/lmUn7QcO/535EnLU4Us4wTDISdmH9H4DOPUs/7V6L87mNJJFzJd5/uh32APGfIEyeUghXW0IhENH59rBGZn5icBUay9saaQMd58wCkyh9UKag833DENx8e5/b1uJaWyJB/L/qKb5Zz7A4i6SOlJDsKymv1x+Ypa/ICxauKzlrExWpfWpAxbWTD2EvuimKy38FYL2BfmmRgyT+DOgQQ0nAE3I6XVQrgz+75kasQ+3rSZQLt39wzxyXGoBe1UTW1C/XhQJ0i1mhZypCGDLdkkNFyoPtGitLvSb2Ip56Ioe47xg24uIEJYOL8oUcjz+b//PddJLytqlQDQ3ZBmSktfJ09Pg1aJ7Y50XRBeBtPrQBzu8FDszJvm+Nt6Ryz2Te+Vj8TrjjmE/ZEycqyl028pYwAaH9iGkk9FQhQcEz3qXUulqcPhpPr9oYI3IvJ8z0Z97+c1HwkdICoF8btVBm51BuRSJDTnXsXU63Pci97x3mDesfFy+YQJb/P/1obZKfZQYCYW/jyijMF3yPzvkZqUpugO/FyVCQWBEXejPo6fqZntZXy728QIzLxOTULmJmPpXLP9j8BLFLW4iPj5a8eq2tJJIEuLXN3S3tUCAytXHwMktggXY5hAlvYOBmgfYN4swaz0rOdcnm9C+mScWfX+WPuWAzIXgCa5440nqoDSetsj2VNgyBUxcdT4GwSZVo717vAOEuVQZtE51nZS0QZCHJg=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(1076003)(508600001)(7416002)(8676002)(107886003)(8936002)(4326008)(86362001)(966005)(2616005)(186003)(6486002)(66946007)(66476007)(66556008)(110136005)(6666004)(52116002)(38100700002)(38350700002)(6512007)(26005)(54906003)(316002)(83380400001)(6506007)(2906002)(36756003)(5660300002)(55236004);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: mTrAEBvcoDU+dCDN0/2MUTlszhXC/yNFuTdzK6PjoTSr87b0wKhTrY19uhVoSgpPS/Ij2URKzK1Uf7Ztjh2nWCdZZa3lzylkB4oJe7h1Afy6X/jwQTZj0gQZdMj2yRgXShfw7x9CCgTtx1vdUvQypQsE8N57owpV7IuwtAWJvsd1Oz+ZYm2JCL/SkyZqqLgzWLGs0HLYFDmQJqYvD/8QYEBTW2rwaxrtREca23YpPBRbPcoVLi1UxDn7kHLYzNSFGxVp0dd0AclaVnx018zJW3K20W29N+iRCQuevBj1HBmo2ubpjlI6Hy6cuyh5TaVyZASJ+EE7dc8BEYmn7b/y3L9f1iAqac/947gw2XZDK6dnLw6ueS5XzRPiMoBwVB0GAUS8XlZkxLqf+71mQ3x4FFbz8PzRnMHJRCdiLfB680f2pXEBCjOvTurLJ5EHhcBbFUySv5bWabvvZ79BziSdUUsiUPVnaP9BnlppNonFMqj1PeFjPbo/wy7U2WN2E+pfVsX6e1K4+qUGmok6wgTmdkt+FqIVyetDIe7muWjlhtsy/JUbRdiMeSXJnlFvKlOnyDdMUTjmsROzpTGw4TXrs9IQ61XEt+UcL0Pj2Zb21fOAx2L7JFFuNNSEKCe1aqfXfd/WY1Vp1CBC65uVEccueapi3hfFC+2YWcLYH6+dKgla6bsi1U/xF5YmLJM7DjVW6fWiY0vEqRbdCgLIAGDh67WdCE82cbdFKaV58Tmp950Lm4iVHnCWBaXCeIQaJRusPePngfhPcC75k4QldDisUupba3oVWCv5S3eVyIRPMls=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(6486002)(5660300002)(1076003)(26005)(38350700002)(2616005)(55236004)(186003)(54906003)(66946007)(52116002)(38100700002)(6666004)(8936002)(7416002)(83380400001)(8676002)(107886003)(66476007)(6512007)(508600001)(36756003)(316002)(86362001)(6506007)(2906002)(4326008)(110136005)(66556008)(966005);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3mQsVDhpfeHdsqQhl7YLigWPh6vIaYx/dbYDAnvEznrJuNI/qW/Un+QvTo6A?=
- =?us-ascii?Q?AfKkMHcJEBhkDRRGDmg4f6Zvv1GQ5lp0EGZWegHrfSDQFvf4luwLmTFt54GL?=
- =?us-ascii?Q?CK0CVqmqzZ/QIGljfv50js37p7vSFaPRy04w7ToizZq1RscJt829MPu1eeo9?=
- =?us-ascii?Q?OtbJsWGuh/z62ZEGL+jUCCZ1F3ND5HThzaihx50xeSl95dCSzzZswN/P4Jqo?=
- =?us-ascii?Q?gSfz1Zsl2QxzNo35FJqIF/kJMWAh+jC4PVq61FZqcH9Vzq4/qAhboayF8WSU?=
- =?us-ascii?Q?ykzhMicjJsYhiVnuuGLa7NgLm1Lm6h3azY/lzURaD/vNlLgIlYhXBv2+B3qX?=
- =?us-ascii?Q?rx6s5odYAnPZ6L5e6dOziDMB8CsIPxK0nQwS6I1Zn70DrDL9SiJyRcU5QZQf?=
- =?us-ascii?Q?PZCIVxY7aSdXkuMn59jTzyqnMpaLi5wnPtOkOYfqyarMQWnu5SLPjBaEtHP3?=
- =?us-ascii?Q?satTWKM4wNb34IFMxqBthGUtTAY2Yi4QSs2a9jfW96iSOAGdRcKYCjeK/rCv?=
- =?us-ascii?Q?x+/VPRYV+OIGgwACsjjA5gEzKOfhD3H0U6I/k/qmqCIWOsCc8KIlhn8XFpMJ?=
- =?us-ascii?Q?7ii9u1KYbZuDHHQMoQyI/DuvG57N50SOLTn1fP+1pv164OEo4jwSjGSEPcfl?=
- =?us-ascii?Q?NfkiReqcKFNGrRDG2ubpmrMJIft40uI9Tlkp/d9BVe5NCiaFm9F+XdQkCyhq?=
- =?us-ascii?Q?y6M3T9ovntkFmgyikEn98BBoUhw5Fe5oDyJZsFxEMOOmy9vQ7/BsWAcWyPLH?=
- =?us-ascii?Q?MxG/pXOmxa44xNzaRjAL0+FAmlByMZp1fAhATLaruQbHwVNhmlVOkeoOu+go?=
- =?us-ascii?Q?mEeCISUCMH/cPVGgBhzxdudCIxokfBC8fCUz7gM/y1F4mExqP1xGsqiPDJU6?=
- =?us-ascii?Q?asbFGXC0rtViRFEbYOOOutEb3Mpg54GiER7DyTXJd515+BlcaZeACn+jkP2M?=
- =?us-ascii?Q?J1uhoHXxLvT+nXkepxIgKMkMsqRYTuzBipYDpEbgAzo+viCILUy/rbyRXrKd?=
- =?us-ascii?Q?6VdPboL9G2eB6+n+ipEC/KxZ0yBwrdhcRxs2xT+S3AxJrvBmILZfWsEuojne?=
- =?us-ascii?Q?BWmXGVsffj210pJoN3PoqNpwxJIKMsGGQ34SUYOsJ73/ehK9V3fixmbM06YR?=
- =?us-ascii?Q?Fi72cLFpqGlU8sLy1mCqfXdsw4/CXR0xHqVyAdL2q6LfJjkNgb+XMsDHCDtZ?=
- =?us-ascii?Q?tIL6Nlc1Ccj/5brcy+mP5YFSA/pMPstYgl9yROXBRO+gehozkRfUQ+Kw2vn0?=
- =?us-ascii?Q?xQhAry5IJeQGQkSggJTkFcF8I35/5ssljDJYSTzeMraKeNINUCbEJvKKKH4X?=
- =?us-ascii?Q?Jf23wLiZ/GIDYZumd1sv8qxvfIUFBS1BvsRtws5dADpZyQ1DOgX55so3ktsC?=
- =?us-ascii?Q?PTwIcN8sEO9oRjVsqpgYvnXO8OdSUsKG6DCIWQCN4AJcKoJj9ep/oC7NcRXR?=
- =?us-ascii?Q?dqzJsAsT2aqqb6kwhBVWr+0qz87LFZoQFpfP3LZkGq/cASIYc0mUncDn5Ucr?=
- =?us-ascii?Q?FbpneY/YLfnahFGzumGJYilHmPobA4u0XBfl5V0l4aTOCLkBRa/uyVsVmgnC?=
- =?us-ascii?Q?1wAlQJBaq6HS/dkr0DhAfzaWvKlRl6NiBxonrmP6yE/P+Ojjlzc2PmbpyUSx?=
- =?us-ascii?Q?c0oS03wV8c8vZE0mtPyoVa8=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?t7DkBDJlqmxmtUj/0sPZ4UhWgqgYVdMK5c85De++hrAt5uSDuqLBYdM3IsHk?=
+ =?us-ascii?Q?sr42eWLzSX3/BzkcFdmT4V44NceZEy6c2VRSQ8pPJZAq7pizRZOLU6cFfnCG?=
+ =?us-ascii?Q?k74Y2xlMkQrkGlDVZQURC3yqPf+5da3GN6wS0495Ottp1+eDBlm1Ug7Bxb0Q?=
+ =?us-ascii?Q?m9n20oQJBAHKepZTHqb5E93g45UHsaRKKZK9QEWjWj4hhmE38qtmFymlBLZX?=
+ =?us-ascii?Q?wgFhQNmNYD4FCh78mi5Yn3Oca3MAVX0pK32Em+6maVW59oG/gh7HyoWoIYb5?=
+ =?us-ascii?Q?DoL07RCmCjVvpInXMtqVwW+D1zad86z8U3/t+g3jP3/nDzX4g1gb/AGtm8+b?=
+ =?us-ascii?Q?/F7ZLX/GSaayHnVsG8zdchHPnGA+sZorDUE8Fq9JMpuGDQ2ooJXHn3soVKUV?=
+ =?us-ascii?Q?zHFa7oLW0tq6F7ipeCp5quQJVpFl5aBVEL8h1MJfjxg5+qZ8C37nAOUVUPtj?=
+ =?us-ascii?Q?bFQBHty/U1t85iFFjK+ilStFn+3WgeL6AnLS2bE3HBXA0t4udeFF/KIbexhO?=
+ =?us-ascii?Q?VPaLChAQtGbslwMbdqoGrzGIN6c+VFKI3tWxT+TVi00i+Ut5bBcj2d/jihCD?=
+ =?us-ascii?Q?Kd+aCE7vvJpabkpcooxZc9c1LTHzRzZDHdZ3D9kbNMHO1n5ZZhLXbXuzNxyD?=
+ =?us-ascii?Q?/cS+KIy8h25HivNqz+LwUIaXH7/QKijXNE6W83F3lOOkmcdfEWIikFs7JqRm?=
+ =?us-ascii?Q?BWbTj1VAskYjaT2jI8Q11bm7HtVdFtLtTrRSQA8vIsIdwX1P5jS2sJTF5Wn8?=
+ =?us-ascii?Q?y537btm2RYduTJLkx8zMsy2+3tvsMrpOV6T5Dnr8anvkg+wW8xCEvLo0KiSJ?=
+ =?us-ascii?Q?imqvC873K7bySmLa8jTnKlO5dJDnF0RvHEftafnOBggIf4GuVWNWgENf6P9W?=
+ =?us-ascii?Q?HgR/MOVGCnsIKtseRvOFTCrfAxE//wzzdJZBfjmg1sWjiivRbOQfa6qdgFRk?=
+ =?us-ascii?Q?9o2hVACph5et5F6kHL53aYuTgJcuddxnOBr2mJz94b8zNi0ehiZItL6V0Tzv?=
+ =?us-ascii?Q?UMyWjHqo4KfMLI64lSeQB4C5usLHm6u7C6zAH8iuQHTsQeiDyM/5pUd6KiDp?=
+ =?us-ascii?Q?CZtq3Tj+KxVfs70zw0G+/A+/W5Om2NlbfTFOmybZvQgfla9piUPMnFLSuX6P?=
+ =?us-ascii?Q?M8WUyzL3WFo/qtG37xDCLVYnbNY9gMc/dW7NwT+M6gjFR+nqLIKJP1yjWpkE?=
+ =?us-ascii?Q?U1WS8/94k25Dn/zZou5T5TizOGCCf2fdzTibkSO/Sj3U6mONGEaq283DCNcP?=
+ =?us-ascii?Q?TuUbjA2ugg/+dMshoI4S4PoCwByVS7Zk6DFp7diPuoyAXayL5GFN9M1CT1FW?=
+ =?us-ascii?Q?YS+3SdIFe60nE70FSizoDd4wg0LoSfK67KeOz1bIVRzi7oD0LrIe2MmPf+rM?=
+ =?us-ascii?Q?O3l5gEEtvjbYS0qil+nyGtlF8UzF6gwfNUqxo5u9HUROCNdUm0Yzaeai59SJ?=
+ =?us-ascii?Q?SL0wAvcVoO+I1EPcaGqNoE6YDx+n5RvccbFj9pWtuldps3RogOjguOAe/QLx?=
+ =?us-ascii?Q?C4hidRajxh1yQVGJQduvFt5xCoGV7m5jB5afz3wK5MHpYe2mjIC9PV0C9WxO?=
+ =?us-ascii?Q?NDRyJrIX+U12ICw8E4Tt4qRI4TQOglryF1x1u5U2W/o/bGOLFCCl+mMEs6+Q?=
+ =?us-ascii?Q?pNmiXyaGjgNf4so2aY4MdQw=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4564b66e-6f63-4fe4-978d-08d9d5d219d2
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7d819d2b-3536-4e64-f47b-08d9d5d213e7
 X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jan 2022 13:47:40.4122
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jan 2022 13:47:30.4390
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: b8wzWFT4xYqF6kqJagPEi6f/CskE0AdbQ5oHRmsmrql2Iqrjbeu63P2hvFvOKFqtvei2yuEfyLU6pc7CNU/6NA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB3693
+X-MS-Exchange-CrossTenant-UserPrincipalName: k0E7wIQXB7hXqjE5bdGT3KvYhjOFibpITv0CekFxeSVUS8hrdN9TtnlOqQD99XfIAQ6xKYuNSz/4F1bTRhQ6UA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR12MB1594
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PEP8 recommends that when wrapping the arguments of conditional
-statements, an extra level of indentation should be added to distinguish
-arguments from the body of the statement.
+PEP8 recommends that there should be no spaces before function arguments
+in the in the "Pet Peeves" section:
 
-This guideline is described here:
-https://www.python.org/dev/peps/pep-0008/#indentation
-
-This patch either adds the indentation, or removes unnecessary wrapping.
+https://www.python.org/dev/peps/pep-0008/#pet-peeves
 
 Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
 ---
- git-p4.py | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ git-p4.py | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 90e7922ebd..0159e35adc 100755
+index 0e54be57b3..f7b6df104f 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -1158,8 +1158,7 @@ def createOrUpdateBranchesFromOrigin(localRefPrefix="refs/remotes/p4/", silent=T
-         originHead = line
- 
-         original = extractSettingsGitLog(extractLogMessageFromGitCommit(originHead))
--        if ('depot-paths' not in original
--            or 'change' not in original):
-+        if 'depot-paths' not in original or 'change' not in original:
+@@ -984,16 +984,16 @@ def extractSettingsGitLog(log):
+     values = {}
+     for line in log.split("\n"):
+         line = line.strip()
+-        m = re.search (r"^ *\[git-p4: (.*)\]$", line)
++        m = re.search(r"^ *\[git-p4: (.*)\]$", line)
+         if not m:
              continue
  
-         update = False
-@@ -2170,8 +2169,8 @@ def applyCommit(self, id):
-                     if regexp:
-                         # this file is a possibility...look for RCS keywords.
-                         for line in read_pipe_lines(
--                            ["git", "diff", "%s^..%s" % (id, id), file],
--                            raw=True):
-+                                ["git", "diff", "%s^..%s" % (id, id), file],
-+                                raw=True):
-                             if regexp.search(line):
-                                 if verbose:
-                                     print("got keyword match on %s in %s in %s" % (regex.pattern, line, file))
-@@ -3181,9 +3180,9 @@ def streamP4FilesCb(self, marshalled):
-                 self.stream_file[k] = marshalled[k]
+-        assignments = m.group(1).split (':')
++        assignments = m.group(1).split(':')
+         for a in assignments:
+-            vals = a.split ('=')
++            vals = a.split('=')
+             key = vals[0].strip()
+-            val = ('='.join (vals[1:])).strip()
+-            if val.endswith ('\"') and val.startswith('"'):
++            val = ('='.join(vals[1:])).strip()
++            if val.endswith('\"') and val.startswith('"'):
+                 val = val[1:-1]
  
-         if (verbose and
--            'streamContentSize' in self.stream_file and
--            'fileSize' in self.stream_file and
--            'depotFile' in self.stream_file):
-+                'streamContentSize' in self.stream_file and
-+                'fileSize' in self.stream_file and
-+                'depotFile' in self.stream_file):
-             size = int(self.stream_file["fileSize"])
-             if size > 0:
-                 progress = 100*self.stream_file['streamContentSize']/size
-@@ -4000,8 +3999,7 @@ def run(self, args):
-                 settings = extractSettingsGitLog(logMsg)
+             values[key] = val
+@@ -2347,9 +2347,9 @@ def applyCommit(self, id):
+             # Revert changes if we skip this patch
+             if not submitted or self.shelve:
+                 if self.shelve:
+-                    print ("Reverting shelved files.")
++                    print("Reverting shelved files.")
+                 else:
+-                    print ("Submission cancelled, undoing p4 changes.")
++                    print("Submission cancelled, undoing p4 changes.")
+                 sys.stdout.flush()
+                 for f in editedFiles | filesToDelete:
+                     p4_revert(f)
+@@ -4018,7 +4018,7 @@ def run(self, args):
+                                     i = i - 1
+                                     break
  
-                 self.readOptions(settings)
--                if ('depot-paths' in settings
--                    and 'change' in settings):
-+                if 'depot-paths' in settings and 'change' in settings:
-                     change = int(settings['change']) + 1
-                     p4Change = max(p4Change, change)
+-                            paths.append ("/".join(cur_list[:i + 1]))
++                            paths.append("/".join(cur_list[:i + 1]))
+ 
+                         self.previousDepotPaths = paths
+ 
+@@ -4047,8 +4047,8 @@ def run(self, args):
+         else:
+             if self.depotPaths and self.depotPaths != args:
+                 print("previous import used depot path %s and now %s was specified. "
+-                       "This doesn't work!" % (' '.join (self.depotPaths),
+-                                               ' '.join (args)))
++                       "This doesn't work!" % (' '.join(self.depotPaths),
++                                               ' '.join(args)))
+                 sys.exit(1)
+ 
+             self.depotPaths = sorted(args)
+@@ -4088,7 +4088,7 @@ def run(self, args):
+                 if len(self.changesFile) == 0:
+                     revision = "#head"
+ 
+-            p = re.sub ("\.\.\.$", "", p)
++            p = re.sub("\.\.\.$", "", p)
+             if not p.endswith("/"):
+                 p += "/"
  
 -- 
 2.34.1
