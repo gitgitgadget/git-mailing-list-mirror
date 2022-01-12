@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1612AC433F5
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 12:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A51E8C433F5
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 12:37:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353200AbiALMhQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 07:37:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49472 "EHLO
+        id S240219AbiALMhU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 07:37:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240219AbiALMhN (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1353192AbiALMhN (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 12 Jan 2022 07:37:13 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36020C06173F
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88598C061748
         for <git@vger.kernel.org>; Wed, 12 Jan 2022 04:37:13 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id e5so1503816wmq.1
+Received: by mail-wm1-x334.google.com with SMTP id l12-20020a7bc34c000000b003467c58cbdfso3369689wmj.2
         for <git@vger.kernel.org>; Wed, 12 Jan 2022 04:37:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ktMb5Te5hceRZIWVXxmNdV404voJzWzR/8UGMqOj59A=;
-        b=MUPcQ9Fl3QZrgAdK7wk+/5PKysFvF/PFUe0U5xd/vOT27+PRqE37RSy/m7M87jKRkg
-         iWuU+iBAaGMN3ZNz3zCWsM2XgZef9wB29RqkK6T1kXEtZG/yGxsJd3aQ/wQnGpcWoqto
-         1yXUePw29rtJksycmKsrhP1iA72nYJv3WnoaldpAvRUWJwvLoqBvJuB4tdEYt1kDXz4K
-         dI4RE75QJ2ixXGqKXnPazrMk/DWghgERClfIQJN74LX9JOI/NMDWlxNYsQTDb9yrFwF8
-         inbAeZG1u/lCAVjm+lBAPTnONcKKClqo34l3Eo3KyqNTwl7LsdTSt4O+dbTCo73HnjvL
-         lBww==
+        bh=+FUjQMgBV9PmXmN07z6HmR1g+5nmIvekvvXTUUve1qE=;
+        b=Ywkd8KQHgyDpZPZ1HWDYLmFV0XzMcOU3YzzTAYn7GZSLjQodVQPmEsXwGVMMn0GUn7
+         nYlTfdzFMO6EcyPCTcyxJ6LsnFHozsTuQEZxvkGAWirnbpZTCyUldX6dGnWP0lUIDAUF
+         iC+O90rBvFLP4mouPrK1X3YZqQgVjzj61X5L/rpyTFXjYw8Zpr8DjUp5AUIMEMr1M9A5
+         9p5R9FuLvGA41dN6c/FKeYqvymHhNvxsv5CC0CttP1PtTO+lFBaOcWNiA5c7RDvxxanp
+         OU64KJgcGpJJslcjGVlD2m6KG9fSPDUu7ByvOX7IMf81LfFlgNxwfhHTDQCaAjbo3pdP
+         W2nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ktMb5Te5hceRZIWVXxmNdV404voJzWzR/8UGMqOj59A=;
-        b=pbWH53Y+bloPMMegsGgankJH9hcNL6RNduIEzonEI9FU6OcFFOkKxVo3Qa95Nf9+Ac
-         0BJtFeIOr7Y5VIg6IoRlw5QrSaVc57Sj6PKZUxml3FwmrhTI+TwY8OgRGOupvZe9bIM0
-         Mo8grvA3SytVXp7yrbSz8CDE6zSogxYayam+fdzyQCbs3MOBHeuSLELe1bemcE5z1fJ+
-         fv5VlLlQ6MpaVvkpuNyQWdfGDnVpDFEhB63Z9AqeIEv5FZHpylNChNVFxCtcd/sPPq/U
-         ChzyDDcTXJqcvU2F5InCiWUUrhfoHPjpl0NcoraX1Epzl7XjY8PVCdhy6SVTK1+m6V5/
-         rpHw==
-X-Gm-Message-State: AOAM530FtGRiInaADm6+WsA9B+CbWSYaQaQ+wrpXyaXZQNQUrlvKv18O
-        oJru272IMKiElSKcE4bM6HteoE4Oax+SvA==
-X-Google-Smtp-Source: ABdhPJx3bna4WCZlNryRQc1aY5WyezH6iPAzGhsEQcdOj+XUcXw9rlFbU1e9k1oTKznVvl/a1kWNQQ==
-X-Received: by 2002:a7b:c007:: with SMTP id c7mr6698956wmb.27.1641991031342;
+        bh=+FUjQMgBV9PmXmN07z6HmR1g+5nmIvekvvXTUUve1qE=;
+        b=sJOfYbKT/jMkfcbvQoKfG6IeJbL7nZAy0XJbAjocBxlRFz0Q/nAcKpP0AkB70NIYdt
+         DDYQ6i8myVpWfiQuQAu3bwyQCWboW+WZ6+QVYKCO2QXrvECECXpCdVfROh4CcTFD1L2G
+         h+omzoblYNUfWqnwRnBOsnE4YzTBcFMh+a51+mI5E4ZMmfKuHM+CLSVMwYr8Lmgj9Pq3
+         8HQwsvDS1CVcQrq9kdwD480DoFxXHQcdik9m02bUb1pUPc+InXw21QdaWxUQR15aVo4l
+         2bIH2ppGWdy4HIjeVc75v3CNhaFNWmzDlRP7LMwEe209sMIhblosRtYquR+6M3OOeZHJ
+         D83w==
+X-Gm-Message-State: AOAM532UH+863BGVgyqlIiI3f/D3A8dY8wvXaQWSdsrvvUda2nP0Nq/K
+        VgEsB8mKr+d5CEJRAtBE9JQNCbKFuNsWnw==
+X-Google-Smtp-Source: ABdhPJwQH2ILeHz5mTNlAUlKqtwVzYS82rLTYCxxj/2abWd9O4MtWn4s7h86d0JjVnqThkq/qxntIA==
+X-Received: by 2002:a05:600c:1991:: with SMTP id t17mr6585569wmq.25.1641991031911;
         Wed, 12 Jan 2022 04:37:11 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z3sm2919137wma.12.2022.01.12.04.37.10
+        by smtp.gmail.com with ESMTPSA id z3sm2919137wma.12.2022.01.12.04.37.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jan 2022 04:37:10 -0800 (PST)
+        Wed, 12 Jan 2022 04:37:11 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,12 +55,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/3] For v2.35.0: refs: ab/refs-errno-cleanup fixup + remove "failure_errno"
-Date:   Wed, 12 Jan 2022 13:36:45 +0100
-Message-Id: <cover-v3-0.3-00000000000-20220112T123117Z-avarab@gmail.com>
+Subject: [PATCH v3 1/3] refs API: use "failure_errno", not "errno"
+Date:   Wed, 12 Jan 2022 13:36:46 +0100
+Message-Id: <patch-v3-1.3-a45268ac24b-20220112T123117Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.0.rc0.848.gb9d3879eb1d
-In-Reply-To: <cover-v2-0.3-00000000000-20211212T195108Z-avarab@gmail.com>
-References: <cover-v2-0.3-00000000000-20211212T195108Z-avarab@gmail.com>
+In-Reply-To: <cover-v3-0.3-00000000000-20220112T123117Z-avarab@gmail.com>
+References: <cover-v2-0.3-00000000000-20211212T195108Z-avarab@gmail.com> <cover-v3-0.3-00000000000-20220112T123117Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,98 +68,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a follow-up to the recently landed ab/refs-errno-cleanup
-topic, I missed a spot and left some meaningless use of "errno" in the
-refs (file) backend.
+Fix a logic error in refs_resolve_ref_unsafe() introduced in a recent
+series of mine to abstract the refs API away from errno. See
+96f6623ada0 (Merge branch 'ab/refs-errno-cleanup', 2021-11-29)for that
+series.
 
-Per the $subject I hope we can get this into v2.35.0. I submitted a
-v1[1] and v2[2] of this around the holidays so I think it may have
-fallen through the cracks.
+In that series introduction of "failure_errno" to
+refs_resolve_ref_unsafe came in ef18119dec8 (refs API: add a version
+of refs_resolve_ref_unsafe() with "errno", 2021-10-16). There we'd set
+"errno = 0" immediately before refs_read_raw_ref(), and then set
+"failure_errno" to "errno" if errno was non-zero afterwards.
 
-1. https://lore.kernel.org/git/cover-0.3-00000000000-20211209T045735Z-avarab@gmail.com/
-2. https://lore.kernel.org/git/cover-v2-0.3-00000000000-20211212T195108Z-avarab@gmail.com/
+Then in the next commit 8b72fea7e91 (refs API: make
+refs_read_raw_ref() not set errno, 2021-10-16) we started expecting
+"refs_read_raw_ref()" to set "failure_errno". It would do that if
+refs_read_raw_ref() failed, but it wouldn't be the same errno.
 
-Ævar Arnfjörð Bjarmason (3):
-  refs API: use "failure_errno", not "errno"
-  sequencer: don't use die_errno() on refs_resolve_ref_unsafe() failure
-  refs API: remove "failure_errno" from refs_resolve_ref_unsafe()
+So we might set the "errno" here to any arbitrary bad value, and end
+up e.g. returning NULL when we meant to return the refname from
+refs_resolve_ref_unsafe(), or the other way around. Instrumenting this
+code will reveal cases where refs_read_raw_ref() will fail, and
+"errno" and "failure_errno" will be set to different values.
 
- refs.c                    | 53 +++++++++++++--------------------------
- refs.h                    |  7 +-----
- refs/files-backend.c      | 34 ++++++++-----------------
- remote.c                  |  3 +--
- sequencer.c               | 10 +++-----
- t/helper/test-ref-store.c |  3 +--
- worktree.c                | 11 +++-----
- 7 files changed, 36 insertions(+), 85 deletions(-)
+In practice I haven't found a case where this scary bug changed
+anything in practice. The reason for that is that we'll not care about
+the actual value of "errno" here per-se, but only whether:
 
-Range-diff against v2:
-1:  161fcad1578 = 1:  a45268ac24b refs API: use "failure_errno", not "errno"
-2:  12d453d3884 = 2:  8d8691a5e93 sequencer: don't use die_errno() on refs_resolve_ref_unsafe() failure
-3:  614590b2d10 ! 3:  8f937d8f64a refs API: remove "failure_errno" from refs_resolve_ref_unsafe()
-    @@ Commit message
-         return value was NULL or not, i.e. if the ref could be resolved.
-     
-         There was one caller left in sequencer.c that used the
-    -    "failure_errnO', but as of the preceding commit it doesn't use that
-    -    "failure_errno" either.
-    +    "failure_errno', but as of the preceding commit it uses a boilerplate
-    +    "ignore_errno" instead.
-     
-         So let's remove this output parameter. Not only isn't it used now, but
-    -    we'd like to slowly move the refs API to a more file-backend
-    -    independent way of communicating error codes, having it use a
-    -    "failure_errno" was only the first step in that direction. If this or
-    -    any other function needs to communicate what specifically is wrong
-    -    with the requested "refname" it'll be better to have the function set
-    -    some output enum of well-defined error states than piggy-backend on
-    -    "errno".
-    +    it's unlikely that we'll want it again in the future. We'd like to
-    +    slowly move the refs API to a more file-backend independent way of
-    +    communicating error codes, having it use a "failure_errno" was only
-    +    the first step in that direction. If this or any other function needs
-    +    to communicate what specifically is wrong with the requested "refname"
-    +    it'll be better to have the function set some output enum of
-    +    well-defined error states than piggy-backend on "errno".
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    @@ refs/files-backend.c: static int lock_ref_for_update(struct files_ref_store *ref
-      						    "error reading reference",
-     @@ refs/files-backend.c: static int files_reflog_expire(struct ref_store *ref_store,
-      
-    - 		if ((flags & EXPIRE_REFLOGS_UPDATE_REF) &&
-    + 		if ((expire_flags & EXPIRE_REFLOGS_UPDATE_REF) &&
-      		    !is_null_oid(&cb.last_kept_oid)) {
-     -			int ignore_errno;
-      			int type;
-    @@ sequencer.c: void print_commit_summary(struct repository *r,
-     
-      ## t/helper/test-ref-store.c ##
-     @@ t/helper/test-ref-store.c: static int cmd_resolve_ref(struct ref_store *refs, const char **argv)
-    - 	int resolve_flags = arg_flags(*argv++, "resolve-flags");
-    + 	int resolve_flags = arg_flags(*argv++, "resolve-flags", empty_flags);
-      	int flags;
-      	const char *ref;
-     -	int ignore_errno;
-    @@ worktree.c: static void add_head_info(struct worktree *wt)
-      	if (!target)
-      		return;
-      
-    -@@ worktree.c: const struct worktree *find_shared_symref(const char *symref,
-    +@@ worktree.c: const struct worktree *find_shared_symref(struct worktree **worktrees,
-      		const char *symref_target;
-      		struct ref_store *refs;
-      		int flags;
-    @@ worktree.c: const struct worktree *find_shared_symref(const char *symref,
-      
-      		if (wt->is_bare)
-      			continue;
-    -@@ worktree.c: const struct worktree *find_shared_symref(const char *symref,
-    +@@ worktree.c: const struct worktree *find_shared_symref(struct worktree **worktrees,
-      
-      		refs = get_worktree_ref_store(wt);
-      		symref_target = refs_resolve_ref_unsafe(refs, symref, 0,
+ 1. We have an errno
+ 2. If it's one of ENOENT, EISDIR or ENOTDIR. See the adjacent code
+    added in a1c1d8170db (refs_resolve_ref_unsafe: handle d/f
+    conflicts for writes, 2017-10-06)
+
+I.e. if we clobber "failure_errno" with "errno", but it happened to be
+one of those three, and we'll clobber it with another one of the three
+we were OK.
+
+Perhaps there are cases where the difference ended up mattering, but I
+haven't found them. Instrumenting the test suite to fail if "errno"
+and "failure_errno" are different shows a lot of failures, checking if
+they're different *and* one is but not the other is outside that list
+of three "errno" values yields no failures.
+
+But let's fix the obvious bug. We should just stop paying attention to
+"errno" in refs_resolve_ref_unsafe(). In addition let's change the
+partial resetting of "errno" in files_read_raw_ref() to happen just
+before the "return", to ensure that any such bug will be more easily
+spotted in the future.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ refs.c               | 2 --
+ refs/files-backend.c | 3 +--
+ 2 files changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index bd2546ae230..addb26293b4 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1722,8 +1722,6 @@ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 		if (refs_read_raw_ref(refs, refname, oid, &sb_refname,
+ 				      &read_flags, failure_errno)) {
+ 			*flags |= read_flags;
+-			if (errno)
+-				*failure_errno = errno;
+ 
+ 			/* In reading mode, refs must eventually resolve */
+ 			if (resolve_flags & RESOLVE_REF_READING)
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index b529fdf237e..43a3b882d7c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -382,7 +382,6 @@ static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 	if (lstat(path, &st) < 0) {
+ 		int ignore_errno;
+ 		myerr = errno;
+-		errno = 0;
+ 		if (myerr != ENOENT)
+ 			goto out;
+ 		if (refs_read_raw_ref(refs->packed_ref_store, refname, oid,
+@@ -399,7 +398,6 @@ static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 		strbuf_reset(&sb_contents);
+ 		if (strbuf_readlink(&sb_contents, path, st.st_size) < 0) {
+ 			myerr = errno;
+-			errno = 0;
+ 			if (myerr == ENOENT || myerr == EINVAL)
+ 				/* inconsistent with lstat; retry */
+ 				goto stat_ref;
+@@ -469,6 +467,7 @@ static int files_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 
+ 	strbuf_release(&sb_path);
+ 	strbuf_release(&sb_contents);
++	errno = 0;
+ 	return ret;
+ }
+ 
 -- 
 2.35.0.rc0.848.gb9d3879eb1d
 
