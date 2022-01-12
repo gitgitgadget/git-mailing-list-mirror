@@ -2,102 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3189C433F5
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 19:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 066F2C433EF
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 19:16:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356576AbiALTKP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 14:10:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56306 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344195AbiALTKG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 14:10:06 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B1DBC06173F
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 11:10:06 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id c4so3330074iln.7
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 11:10:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GtXiJXrP3703wLIuOdDAjTROykxG+8apSv849UDqYi8=;
-        b=qeg47Z9t9w31O4vZDf49jjT/lYAEJULvmLVlp6zBEE9OlPq8fKjCvwL7Y14GUI1roG
-         c3u/eboiKzPYjFQTqWL3fhOmu+glo2yWzvjGgrC2BC7Uh0IeC52xuUr24IDYG6BVobdP
-         9n3DwgyicqEMyEj0KPVykEbf+vU6g/JfQPIvdEo05T6EdJ3CIFV6hYqijTr8YVj6+FZm
-         7fCRXiek/PGuDqt9vs5NBqw+GgesQ5gPyANDg+WwXZhj3uJpVMe2vj8uGcGcolaiLTjn
-         ZFhQUImXkuBrZ6Tho49H53FWd+labptRjpw0X52+iVl/a+1xyZ3LeXBrrPI8BBu4eHfF
-         lJyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GtXiJXrP3703wLIuOdDAjTROykxG+8apSv849UDqYi8=;
-        b=WbX7Cu8K/QRE1ZSA8KZbNQ4XLzaOfGrNKBYTWYrWW+fM9MgDkkJUDZI2daJR0g2UiW
-         rj/BuRX5wNDra5b8fPrj6KO10lcssuj3VJQzgLdbdZ1gZD1TrLpK9rf6JyB5zQdukIFd
-         jjxqIkzMeimL1ZgDmEikXge6J5o+sS6WH+yC3P5u9D3NkgF24K4YYfCTb9VWaN9+QZwM
-         M/c4HXuDj2A08T3ZopHaNh/Pxd7RMDneLhFOUmQzMBFsp4SgVC+RLhBM2KrEMpYuNxF4
-         d6xWAc6vRytsOvhq/k7Hzi/45wWwRzBQfGgLXTt3pQOJuJNwuJtwLVAiG/9N8Lefsfbw
-         vaRQ==
-X-Gm-Message-State: AOAM530cnli8Xue+HLUoNwOHKpQGeQNeQT/f8eKfwRcud6dS+t2ey6NP
-        j633b4e6nK+JprG32N8frLJJQQ==
-X-Google-Smtp-Source: ABdhPJxOcTm45Mz4z28vsVJ73v39NGdpuPG1Wy85zOoQKiKv81E8TEC5BbmJ4N38BqikahqJa8QsJA==
-X-Received: by 2002:a05:6e02:1b0d:: with SMTP id i13mr651216ilv.202.1642014605749;
-        Wed, 12 Jan 2022 11:10:05 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s6sm370182ilq.21.2022.01.12.11.10.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Jan 2022 11:10:05 -0800 (PST)
-Date:   Wed, 12 Jan 2022 14:10:04 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 1/3] test-tool genzeros: initialize "zeros" to avoid
- SunCC warning
-Message-ID: <Yd8njHz2m099iDfL@nand.local>
-References: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com>
- <patch-1.3-4dadf7320ab-20220111T163908Z-avarab@gmail.com>
- <nycvar.QRO.7.76.6.2201121518360.2121@tvgsbejvaqbjf.bet>
+        id S1356603AbiALTQ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 14:16:27 -0500
+Received: from pb-sasl-trial20.pobox.com ([173.228.157.50]:59113 "EHLO
+        pb-sasl-trial20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344128AbiALTQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 14:16:25 -0500
+X-Greylist: delayed 338 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Jan 2022 14:16:25 EST
+Received: from pb-sasl-trial20.pobox.com (localhost.local [127.0.0.1])
+        by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id 0E0E12500D;
+        Wed, 12 Jan 2022 14:10:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bVDyL3Y/GD/XtlqwzldUG+GbCSc=; b=iVkIWY
+        X7mhI3AHZFbxMwXWz8F5zBY77Y3VRjeuxevatg6bLN24tY+/xi9EQisYWa6qCPU9
+        roD6VjSjXPFxy6N+ZdstJx9JyIYi8VKs0gxVIzkjpU1YNw1oslY//XDtndlyPAX9
+        33KWn8JNn6d/QQmKLOuTCQkrJEslXfW3xyXCM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fIqRWfXL+xru3K3hDOKeW5r1Ro03vOdM
+        4GGbTig8p+ezJ3pAFlUCnCOiaKkdVgpHLanO6vWOhMiMHr4t+V1/eJvosKcGKDr6
+        I51puN/GXe5LwYSjQwbt7y7QIW2AukO+1WhrOT2qjqLm6m46YGxkLt4GHVGenooF
+        2Ufeoib4rto=
+Received: from pb-smtp20.sea.icgroup.com (pb-smtp20.pobox.com [10.110.30.20])
+        by pb-sasl-trial20.pobox.com (Postfix) with ESMTP id F26322500A;
+        Wed, 12 Jan 2022 14:10:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4AEA5159BB2;
+        Wed, 12 Jan 2022 14:10:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Anders Kaseorg <andersk@mit.edu>, Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Matthias =?utf-8?Q?R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
+        Daniel Santos <daniel@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Emir SARI <bitigchi@me.com>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>, Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [PATCH v7 8/8] branch: protect branches checked out in all
+ worktrees
+References: <20211201221547.1796213-1-andersk@mit.edu>
+        <20211201221547.1796213-9-andersk@mit.edu>
+        <CANYiYbHBjM-1oezX_1Z+te+wvQpdj=rwggHHCLPepos_Njwqvw@mail.gmail.com>
+        <CANYiYbGdUE_NQFTA31EnEr57E00umfJQoUPMc=OZ3snO+GWZ=w@mail.gmail.com>
+Date:   Wed, 12 Jan 2022 11:10:34 -0800
+In-Reply-To: <CANYiYbGdUE_NQFTA31EnEr57E00umfJQoUPMc=OZ3snO+GWZ=w@mail.gmail.com>
+        (Jiang Xin's message of "Wed, 12 Jan 2022 14:31:33 +0800")
+Message-ID: <xmqqa6g0vkgl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2201121518360.2121@tvgsbejvaqbjf.bet>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 52A5EF1C-73DB-11EC-9363-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 12, 2022 at 03:21:46PM +0100, Johannes Schindelin wrote:
-> > diff --git a/t/helper/test-genzeros.c b/t/helper/test-genzeros.c
-> > index 8ca988d6216..5dc89eda0cb 100644
-> > --- a/t/helper/test-genzeros.c
-> > +++ b/t/helper/test-genzeros.c
-> > @@ -3,8 +3,7 @@
-> >
-> >  int cmd__genzeros(int argc, const char **argv)
-> >  {
-> > -	/* static, so that it is NUL-initialized */
-> > -	static const char zeros[256 * 1024];
-> > +	const char zeros[256 * 1024] = { 0 };
+Jiang Xin <worldhello.net@gmail.com> writes:
+
+> I see Bagas has sent a patch for this:
 >
-> This diff does two things: add an initializer, and turn the variable into
-> a `static`. The former is the actual fix that is required. The latter is
-> not. During the -rc phase, we do not want to see any of the latter. It is
-> unnecessarily controversial and distracting, and can easily be postponed
-> until January 25th, 2022.
+>  * https://lore.kernel.org/git/20220111123627.58625-1-bagasdotme@gmail.com/
 
-This assumes that making the declaration non-static isn't necessary to
-fix the warning from SunCC.
+Yup, picked up and will merge down before -rc1.
 
-I would guess that in reality it probably isn't, so removing the static
-designation is a stray change, and this would have been easier to grok
-as simply:
-
-    -	static const char zeros[256 * 1024];
-    +	static const char zeros[256 * 1024] = { 0 };
-
-But to be honest I don't think it is _that_ big of a deal to make such a
-small change during this point of the development cycle.
-
-Thanks,
-Taylor
+Thanks, all.
