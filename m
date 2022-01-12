@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2446C433FE
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 11:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5090C433F5
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 11:59:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240288AbiALLkC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 06:40:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36622 "EHLO
+        id S1352996AbiALL7K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 06:59:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239705AbiALLkB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 06:40:01 -0500
-Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40466C06173F
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 03:40:01 -0800 (PST)
-Received: by mail-ua1-x92f.google.com with SMTP id y4so4182501uad.1
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 03:40:01 -0800 (PST)
+        with ESMTP id S240123AbiALL7J (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 06:59:09 -0500
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27127C06173F
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 03:59:09 -0800 (PST)
+Received: by mail-ua1-x930.google.com with SMTP id c36so4161181uae.13
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 03:59:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=KSqWPBadiYwofZgHf47PsYzzDhBYuaV9LDe8geDRQOc=;
-        b=aBUtE8B9RfMGfzxXjL5KmZDTAjn3GoGmvW1VNWB+/HJtnEeTyt+CZMLW1ALD9ncBmo
-         EboKeCe6eXotknFIhBU1RvTF0UxayI3lGpwOOJqOzJZtZT7klS0AlAGvwvfwHbicC8dg
-         vulqjbSlRZI5zHgars408p9sSKA1M0noRhJML+eUZ6itLI9trQrGoN8fDnexYrmxMSeX
-         6ETqbwP72Fpu92ea5++T7CCGzHpuO+JsiG8i8wpHlPm0d0sh1Etd8t8L8JTaIXHz9vpn
-         PetbIsWd0LH/s+v+yIEh1u3ZoU1jes8BYXED1dTEJWYMkddZBvm4J66BNlVeeCAdE98S
-         tNAA==
+        bh=RZsp3G3hMwKtST6Od6ZXjAyAM3rtKeua25sWJ9G3x30=;
+        b=mRGdiKlhNIAtBD0MpO1Cib1lPCmWlN0+C4CdtQVSm6bODX10F7YBbs4c1sdZZNqFh/
+         al8jIZNSJdJEtFDnNWk5RKZ4/Beha1POufiOskZ9s1/ffRQjqZEnwpwK7yjCrT57H48I
+         Ct4hyo2PJiEPwBX7sw4qj1fzbyRWfk5Rvaf4413DaoTscMIrokJmuNwUgjWnnMpOXG9Q
+         GN6X55Aio2FePD9nVxvsPAdjcRHyX3HkrFejEBvaswKAlWuJNGY5ToEeRBwwg9L4413l
+         bzne4ofuVLiEXwn8M2rOf2GpKNQC2pnFjB6owOVBAYba19pW30xvy89lNRJ+UuHaxjb0
+         qM4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=KSqWPBadiYwofZgHf47PsYzzDhBYuaV9LDe8geDRQOc=;
-        b=xh1B4CIzs4N13U163GRdyoYA5Zp3MQngqZG+WY8Cw0LKJMPZZPxQOmpFLCg17FTJd2
-         8KDR1fcCqUcn319LIOnfoQvRjuzD4w3q9zB9iKrS4t0Qrv9l/m/w70Omy73BwYZxc5bv
-         PaM9mGZnM4riJO3dccXZlqHOpx7Y5W5DepTGla8xJkp9vwf2nzc3ntdEfq/HNgUQWW6o
-         eLxBbGdBMYtDqn1zTx6QYJPzVibhzOAX0XaKPoJhza6LIFTU/iWpM22groSyc00jRWfm
-         doysD9Qo+dykwpa3Y2MU9YcyaJfgg4GOoH80SO5ch7QTH24YS4gDvkZKfEmasJS0I+z8
-         pfzw==
-X-Gm-Message-State: AOAM532x4IVz3RDNZd6BBoPx2bMlbq+IUiY/I5sP0TqFSNXgNP9uyMw2
-        4CSwqKXUMZ02R4whUHYE7HzfEoMzT5CJHLO3Uhi3MA==
-X-Google-Smtp-Source: ABdhPJxNs+Jpn3PCadr/EW0zIwOml/yq1/MDrTo10gWiZA6lufIUqZM+uvTxFlduN/nllmYu7L2cnvz4BdV0irPKCwY=
-X-Received: by 2002:a67:f497:: with SMTP id o23mr4582154vsn.70.1641987600338;
- Wed, 12 Jan 2022 03:40:00 -0800 (PST)
+        bh=RZsp3G3hMwKtST6Od6ZXjAyAM3rtKeua25sWJ9G3x30=;
+        b=PYubnW9Jvzrh4OIz12rqgrxTxbxTPde8aBIV9kzTx0Y/MuJwSCk6SQrFov5Jd8owgM
+         3l+ZAA0r/39Nfba0oTBBRl4pbVy4JmKYGmLg6Uz7NSPtrEo2gxfJ849G0G8dmbVRqFge
+         Z6uAiLf7RP/yhlAsOuzypxakPS1yzcaqvLAyaOG0uy/LoAR3GmmVSXlOQCot0B0deDsS
+         TOqJ7p/c+W1C7KThM+aqC5kO7oMFx24+OZxgrBi1/0HBR1BGGbyK3Pes4MzkLSclTv0w
+         x8SY5JXmm5KBlqJwUTKuIlCXwbKzPqlpvGjcKgDWNAQZlBpEDVsuhT0ajiMiOsRZAVoc
+         jcBQ==
+X-Gm-Message-State: AOAM532jxIuJkl2eD+JSnEuEMYZtarzAjGcPtIqa6ihB76WHX6DWw1cu
+        DJ1gqg88rQpiSKOBpyt+QLmYR683ivQyn1+UKF3BoQ==
+X-Google-Smtp-Source: ABdhPJxSC18JnDIGSI5dJsNAJzlDuR3JCZeEe/wAG+k9KELpc6NLjRXnRCDfrXttEuuP6R9nMXbLqTIirF1+cSu3++A=
+X-Received: by 2002:a05:6102:2451:: with SMTP id g17mr3840743vss.8.1641988748166;
+ Wed, 12 Jan 2022 03:59:08 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1152.v4.git.git.1639482476.gitgitgadget@gmail.com>
- <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com> <e16bf0c5212ae85daa0d6aa2c78d551824b542bd.1640199396.git.gitgitgadget@gmail.com>
- <xmqq1r24gsph.fsf@gitster.g> <CAFQ2z_OXPw9-hLsaD+E1nGESS7eJH5o5sRrr_R_vW1Oa-vvZoA@mail.gmail.com>
- <xmqqy24a4oyq.fsf@gitster.g>
-In-Reply-To: <xmqqy24a4oyq.fsf@gitster.g>
+ <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com> <9ab631a3b29addaa54415139e7f60a79a19a6edb.1640199396.git.gitgitgadget@gmail.com>
+ <xmqqtuf0fe3r.fsf@gitster.g> <CAFQ2z_OLCzOYXgXCTXyLOwwk7EBkPzwH=KASDmuJbur=q7L1Jg@mail.gmail.com>
+ <xmqq4k6y63j7.fsf@gitster.g>
+In-Reply-To: <xmqq4k6y63j7.fsf@gitster.g>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 12 Jan 2022 12:39:49 +0100
-Message-ID: <CAFQ2z_PDfreeGttTbNTbnr7rRJQFHFfLVD_hJu21QQAR1njPpg@mail.gmail.com>
-Subject: Re: [PATCH v5 16/16] reftable: be more paranoid about 0-length memcpy calls
+Date:   Wed, 12 Jan 2022 12:58:57 +0100
+Message-ID: <CAFQ2z_OFK77TC605GqM2Lw1Lf21fyF2cVKkGVrXO6TP6zcp+mw@mail.gmail.com>
+Subject: Re: [PATCH v5 02/16] reftable: fix resource leak in block.c error path
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -65,43 +65,28 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Fri, Dec 24, 2021 at 5:16 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> But your safe_memcpy() should not be
->
->     safe_memcpy(dst, src, n)
->     {
->         if (n)
->                 memcpy(dst, src, n);
->         return dst;
->     }
->
-> Using memcpy() with size=3D=3D0 is not a crime wrt the language.
-> Passing an invalid pointer while doing so is.
+> Once you
+> initialize at the declaration with "less meaningful" value (like
+> zero initialization), the tools won't be able to tell when the code
+> uses that variable "uninitialized" (because the assignment was
+> skipped by a bug), since it appears to always be initialied to them.
 
-It's not a crime, but what is the benefit of calling memcpy with n =3D=3D 0=
- ?
+Which tools are these? When I add
 
->     safe_memcpy(dst, src, n)
->     {
->         if (dst)
->                 memcpy(dst, src, n);
->         else if (n)
->                 BUG(...);
+static void test_memcpy(void)
+{
+ uint32_t dest;
+ char not_init[200];
+ int i;
+ memcpy(&dest, not_init, sizeof(dest));
 
-I think this is suboptimal. Sure, a segfault is uglier than "out of
-memory" error, but both effectively crash the program, so the
-difference isn't that big.
+ for (i =3D 0 ; i < 10; i++)
+  not_init[i] =3D rand() % 255 + 1;
+ printf("%d", (int) strlen(not_init));
+}
 
-The nice way is if the reftable library grows an error-code
-REFTABLE_OOM, which is propagated once a malloc or realloc returns
-NULL.
+to the C code, it compiles cleanly if I do "make DEVELOPER=3D1".
 
-We could test this exhaustively in the unittest by swapping in a
-malloc that starts failing after N allocations, and then running a
-transaction in a loop, increasing N.
-I'll have to look more closely if this is possible throughout, so for
-this series, I'll just take a closer look at the current call-sites to
-see if NULL can really occur or not.
 
 --=20
 Han-Wen Nienhuys - Google Munich
