@@ -2,82 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DBCDC433F5
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 01:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C31D7C433F5
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 01:22:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236084AbiALBVg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Jan 2022 20:21:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39558 "EHLO
+        id S1345062AbiALBW7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Jan 2022 20:22:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232589AbiALBVg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jan 2022 20:21:36 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1208FC06173F
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 17:21:36 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id n2-20020a255902000000b0060f9d75eafeso1907630ybb.1
-        for <git@vger.kernel.org>; Tue, 11 Jan 2022 17:21:36 -0800 (PST)
+        with ESMTP id S232589AbiALBW6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jan 2022 20:22:58 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F4035C06173F
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 17:22:57 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id br17so2756735lfb.6
+        for <git@vger.kernel.org>; Tue, 11 Jan 2022 17:22:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:message-id:mime-version:subject:from:to
-         :content-transfer-encoding;
-        bh=OnETnzAMDlG/2ynMl5BDj9H2NbkETrkHaeoxNKTAl9Q=;
-        b=SUim+AVlMhE0a0sLLK+QFA3DDxe3R9PaPeiscSaHIi4Ji6XbmEL50pLaXj21Nwbbfl
-         wep8xo9LBRFF/M+GarXPpeqf3OThyOysrjN68PiTZj+ACYe9yhI/5eSQNsbh1T3y1sCP
-         72ecZn9QE6ApvEBimYPdo0xTAMe5MX7UYWK8i5Rq3uUU9LNghOvLIT5Hzs6DSvnRHrdV
-         3fZ8D6/5G3TaQ38Wh5nTTKWSQ8l65b1s/edeBR1wZQGQIP5P00uS93r0C1x4KSmmaQ4l
-         mxo7Iin1c+gz9yPEYCEt+2BVE1a4jRo+OfkSnYZ1qXf911xY0aEZqQUr8kcElyjYYsxA
-         jDGg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=1MJkBh8JTFncbA9Q6e9M2I/C2jViH0eaXvyj/ehxR4o=;
+        b=nbuTmfYB3xDPyuoizVN3dwmIzpxWimlq5/C/boqbpWxt5ZrIILSFxUm+ODeUAOMkeh
+         ZmZFkkK8eXFLNqCnDq6MomjVb+AVfPg7hoaOVd2Fi8zr5VTR152lbbwTlnWshtAbTHxd
+         GYgOHFEbHcxLKadUQLwfqqC9YFcKod/y7EhQEzRL3rwTdYLoSQKxt7udD9M+WihloZnL
+         vFdKQHsF0/uXWWQEKymBBJH+oT8bavsHbqNhpU2Swat8eE8zOCtLOB4pjjxmSei1znQn
+         yLbJ20kozSzOrRNs+wP7PFuJ1x0heDX9Djc2PYFhB7BO9sUVXloZHWCMLicRHVqomzdp
+         Bl6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to
-         :content-transfer-encoding;
-        bh=OnETnzAMDlG/2ynMl5BDj9H2NbkETrkHaeoxNKTAl9Q=;
-        b=vENbjK3zr4nOqYDBc+SfVvLUGjZl1FfklLyEtycB8S2UbXHGbi3HrHJGYAdvOoV34i
-         RoPHADZUbf26SEgIdbnD7O6+bUSFJAJx9aWOU9VnK1Y6lPJ6Pfw19zVlp7jzqtePj2UR
-         +i8YRIqO4BlhRg8suwMBzFV85HoTuwFRgiJ62WdGoLFYozD3UHxNF5cLDIaFmIfm6qd9
-         7gxKEqM7NAzwPylMg8TEB57zJehombpZ2XP71RQfF5s3MsYQzOIYqJ0z2wUwK4N32/LN
-         ORbXtznoi7mNeuZYFLnXm8rHQe+NrEtuUHXuqTiwTpZGehFq5l2lqMwifRjx24IKzhvL
-         t29w==
-X-Gm-Message-State: AOAM533ZecJMC1VB3x1sO41OeinZu0Undn7VFJZGWEOp0YXCCORkUST5
-        NmnIq9UHVoPc/4JRQItnRcUbbp9jxENFZ8KDbdE=
-X-Google-Smtp-Source: ABdhPJyJV9vTaSkCqZW/R6YL4e5e/Upyw9WUR7hG2a16UCCwFc4kkCAzAwuE1VDZbWq3YGNgtHM87fW7ZxQF6EBZaLE=
-X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:200:5535:8952:4e2:8bd])
- (user=emilyshaffer job=sendgmr) by 2002:a25:3620:: with SMTP id
- d32mr10363451yba.222.1641950495354; Tue, 11 Jan 2022 17:21:35 -0800 (PST)
-Date:   Tue, 11 Jan 2022 17:21:30 -0800
-Message-ID: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.34.1.575.g55b058a8bb-goog
-Subject: [PATCH 0/3] Fix SunCC compiler complaints new in v2.35.0-rc0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=1MJkBh8JTFncbA9Q6e9M2I/C2jViH0eaXvyj/ehxR4o=;
+        b=aoaxA0t8WbLw0U5A5aqsAs9LdfY+Wu4fGQgt0pArXx8meWeHHveGrHlxTyPJNxd3pT
+         qV6nBpviqPB6qkkXMqLN+Nr2iG0uuWoP2GLTl+6yvsX6kcR4Db/0cEEO9wbvFR5vXXAK
+         8XrxThSb5nNJP6J5lDgMIrlPXB8AWSCOk17SICGEm443FBJXck0xBZjKXfz5ijtBFx/N
+         3VzNWzqXYeOdnUFPYXU9TJxwlC8uyrU2kO3nX1GIuEtY/TXapa/BUpXPq6YrklJuIMUz
+         +VTnrZDldZYxuqMz1W9yoB5nZxDzzGBiZ4L3kGdc5vjH/caDbK1oEWOzS8/V1ArYTEvk
+         eJcQ==
+X-Gm-Message-State: AOAM533NeakcMCl79hPW4t0aEbClZDhZ+Wvj3YPhHwdO3u2rzUl2/vyh
+        cq49HlQ+SPaxfBeDmxUSznheTXvdv73zsJ+mWXIivtAZ//k=
+X-Google-Smtp-Source: ABdhPJwEwjFrLUR/jjEEC3PUVQQGJ9xvwdJtj6DeEaIadIfwMV7mArtRk6BCHUokc2JcQ6HMuLm6amm3KCHmmp2gOCk=
+X-Received: by 2002:a05:6512:3689:: with SMTP id d9mr5069580lfs.195.1641950575899;
+ Tue, 11 Jan 2022 17:22:55 -0800 (PST)
+MIME-Version: 1.0
+References: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com>
+In-Reply-To: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com>
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git-core-auto+context-review@google.com, git@vger.kernel.org
+Date:   Tue, 11 Jan 2022 17:22:44 -0800
+Message-ID: <CAJoAoZ=T6SJh=gp4BbEbw1F2VSnN_NBeh+dKiTihR7vewLh3zg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Fix SunCC compiler complaints new in v2.35.0-rc0
+To:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Message-ID: <20220112012130.oJLS-HIfgXXTRt8-YaKc-N_UzKBKqz23dw82jFg3w0w@z>
 
-From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+On Tue, Jan 11, 2022 at 5:21 PM Emily Shaffer <emilyshaffer@google.com> wrote:
 
-This trivial set of patches fixes compiler complaints from SunCC on
-Solaris that are new in v2.35.0-rc0.
-
-The first two are only a minor annoyance, and not the first or only
-warnings of those categories that we emit, but if we can avoid adding
-new ones...
-
-The third one is a generic integer overflow bug, and will probably
-result in logic errors or failures in the reftable tests on some other
-platform.
-
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (3):
-  test-tool genzeros: initialize "zeros" to avoid SunCC warning
-  reftable: remove unreachable "return" statements
-  reftable tests: avoid "int" overflow, use "uint64_t"
-
- reftable/merged_test.c   | 4 ++--
- reftable/refname.c       | 1 -
- reftable/writer.c        | 1 -
- t/helper/test-genzeros.c | 3 +--
- 4 files changed, 3 insertions(+), 6 deletions(-)
+ugh, sorry for the thumbfinger. Please ignore.
