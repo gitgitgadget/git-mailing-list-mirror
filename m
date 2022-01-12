@@ -2,146 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D795CC433EF
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 09:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2446C433FE
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 11:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351913AbiALJEt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 04:04:49 -0500
-Received: from mout.web.de ([212.227.15.3]:36907 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1351895AbiALJEt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 04:04:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1641978282;
-        bh=zRUVEV9K/nDsgm8+qyTaVGaneZNKwm3dgSZJPMtenQo=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=IUjM39YhMn8dneESjyNN4fLxdwvuz0eH5nIBcMdsCSWJd9J0bddVlKeWYZKtfGtNP
-         P7rhaQ45RZR1aFagO3nK+6VJm7uLYG9Yu9otxOwfiUSghWIht0Nz6YgJ0j+kDmsH+a
-         fbxgk5vVWEF+IzLfXoJu+HinmPuq83E2lg739gds=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MFayw-1n88aC0Bji-00HZh1; Wed, 12
- Jan 2022 10:04:42 +0100
-Message-ID: <3dade45b-494f-663b-264b-06a51ea1cf56@web.de>
-Date:   Wed, 12 Jan 2022 10:04:28 +0100
+        id S240288AbiALLkC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 06:40:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36622 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239705AbiALLkB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 06:40:01 -0500
+Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40466C06173F
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 03:40:01 -0800 (PST)
+Received: by mail-ua1-x92f.google.com with SMTP id y4so4182501uad.1
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 03:40:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=KSqWPBadiYwofZgHf47PsYzzDhBYuaV9LDe8geDRQOc=;
+        b=aBUtE8B9RfMGfzxXjL5KmZDTAjn3GoGmvW1VNWB+/HJtnEeTyt+CZMLW1ALD9ncBmo
+         EboKeCe6eXotknFIhBU1RvTF0UxayI3lGpwOOJqOzJZtZT7klS0AlAGvwvfwHbicC8dg
+         vulqjbSlRZI5zHgars408p9sSKA1M0noRhJML+eUZ6itLI9trQrGoN8fDnexYrmxMSeX
+         6ETqbwP72Fpu92ea5++T7CCGzHpuO+JsiG8i8wpHlPm0d0sh1Etd8t8L8JTaIXHz9vpn
+         PetbIsWd0LH/s+v+yIEh1u3ZoU1jes8BYXED1dTEJWYMkddZBvm4J66BNlVeeCAdE98S
+         tNAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KSqWPBadiYwofZgHf47PsYzzDhBYuaV9LDe8geDRQOc=;
+        b=xh1B4CIzs4N13U163GRdyoYA5Zp3MQngqZG+WY8Cw0LKJMPZZPxQOmpFLCg17FTJd2
+         8KDR1fcCqUcn319LIOnfoQvRjuzD4w3q9zB9iKrS4t0Qrv9l/m/w70Omy73BwYZxc5bv
+         PaM9mGZnM4riJO3dccXZlqHOpx7Y5W5DepTGla8xJkp9vwf2nzc3ntdEfq/HNgUQWW6o
+         eLxBbGdBMYtDqn1zTx6QYJPzVibhzOAX0XaKPoJhza6LIFTU/iWpM22groSyc00jRWfm
+         doysD9Qo+dykwpa3Y2MU9YcyaJfgg4GOoH80SO5ch7QTH24YS4gDvkZKfEmasJS0I+z8
+         pfzw==
+X-Gm-Message-State: AOAM532x4IVz3RDNZd6BBoPx2bMlbq+IUiY/I5sP0TqFSNXgNP9uyMw2
+        4CSwqKXUMZ02R4whUHYE7HzfEoMzT5CJHLO3Uhi3MA==
+X-Google-Smtp-Source: ABdhPJxNs+Jpn3PCadr/EW0zIwOml/yq1/MDrTo10gWiZA6lufIUqZM+uvTxFlduN/nllmYu7L2cnvz4BdV0irPKCwY=
+X-Received: by 2002:a67:f497:: with SMTP id o23mr4582154vsn.70.1641987600338;
+ Wed, 12 Jan 2022 03:40:00 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.1
-Subject: Re: git bisect bad @
-Content-Language: en-US
-To:     Ramkumar Ramachandra <r@artagnon.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
- <xmqqilus3ctf.fsf@gitster.g>
- <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
- <xmqq4k6b34h8.fsf@gitster.g>
- <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
-Content-Type: text/plain; charset=UTF-8
+References: <pull.1152.v4.git.git.1639482476.gitgitgadget@gmail.com>
+ <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com> <e16bf0c5212ae85daa0d6aa2c78d551824b542bd.1640199396.git.gitgitgadget@gmail.com>
+ <xmqq1r24gsph.fsf@gitster.g> <CAFQ2z_OXPw9-hLsaD+E1nGESS7eJH5o5sRrr_R_vW1Oa-vvZoA@mail.gmail.com>
+ <xmqqy24a4oyq.fsf@gitster.g>
+In-Reply-To: <xmqqy24a4oyq.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 12 Jan 2022 12:39:49 +0100
+Message-ID: <CAFQ2z_PDfreeGttTbNTbnr7rRJQFHFfLVD_hJu21QQAR1njPpg@mail.gmail.com>
+Subject: Re: [PATCH v5 16/16] reftable: be more paranoid about 0-length memcpy calls
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:4MLhuNB3ASdP4STaRPoVHjXYI3ObSA+BSTED1+pQMCtfEBMO7n2
- 3zd7XNobbZBsLloOzXMaOfrvyOMjiA7jHdTH47qYvsTi/5LqY+EP1h/Q+6kXkF4HeRN700l
- U4oX+1X1qkaMO7yskW1q+92IX6rrJKagd0PR5wTQf0fTVS9j3BiX10sLAOGeeCnEj+5fzWt
- 5oBgwAl2LEssFlexW2Mig==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:1SfUoFA38IA=:+ZjLbheX0+E+w7+vShzzFb
- 6iovgF5bYYXHiVUuTZGfZPB8bDnH2s1t5dBdHh+hNYyoTySN/HSDQ1HjexxW4iv4OhUSIw3+d
- tbJW9M5UENSB/JZtIzx4HeGBn/+Bx6JGmusropAKWjmSQgvHYrh37tWqinsJ5hIV5yjqIpGb4
- mBSVU748LRknr4MEsqZsbsggWaxg0Q9Zt/jOePoVYd8s0KNLRggDooJwNIY0jCK6qcaO7SNDb
- LsveEHvtFuC+aFDXHr6qFHwbERAUDRKarpOlUpBdAL7ngpOuNCIfLoJRcXWiEngShZCeaPBAA
- f1yTvxQJL+rq44SWxBlTbvIjjZRf6eyDTy+6p0u+TKl0CZVgdvQJApp6CMIzJna8x3QmbBibJ
- jc0ufdZ2pt/+eegOIRYlpwKcHw4FetCnPAinHQDWQKJVQaJ6Hk+XNg0KlsqtV5qfc1zJ9zRFW
- itja9ZqpLcG4jf5MbF4yhLFpDTW4QJkC4JmVhTUEiwQvhDhMAmtWVJxprGPWdqF1bQIWANYW3
- ezGUQuiEcm1PxSKB8YnUPem9VasRY4a2GQlUgyjc0UnuR+EDSGiFnO8/kwppctJl/26jL8n6Y
- 7SeENMn9KR8VaTIKDbhKMCUR920ztFrmD5RuMmTlp4wCIvHTiYdcRWXbzqGFsuFNksrL9AS7t
- d16ZOMmCT8S2/yT1Y3WsjILj/HRq3Op9z56qvxRdHCQtYvQaOfDRlGvHz1ViVAdUwHADHSMgO
- LX1r/PmxFCYvjG4R0un7QGQFLOVZ4bplJn2YqZdhYe2oWrT7brtOfXObSD4y9UWKP4aAlPwXX
- kYQEXHLY51771Wh2Xm+1C/PB9Wpw3XPJakc0JXDnZzVvfPJ0Ch0r4UvtTQV+5RQlmZZO5R4E8
- xno47tQxWaeVOWhlUSJdXaw7LkZ+/4RJ/BquWA+mZ7czZaqLGog8KcFAC3KOjem3Jm1iOsubm
- pwXZG/Z3rYQOCVflzrEJZAJb2gZWrsj0YlJeFM9spo0/Cf3+bQWckitaA8+BAPQw92uqPee1N
- EiFJq8R1fUiUeeWx7fPP+Nw6JqGrO1LW976kLRmGBPMjTN5go0pQRO05rmUvqt9hCMl6Mc9lW
- FS0QPNt2+Q1WDvWRtfSchHplzDBKWo273zzYRDC/eTYjjCK64m2PJbOeLxO343HkgB94sQueX
- Hhqe30pykp6xwFtMROmx5i+LG8UHwzUDiYPmO/Oo3ewyGhB0pfIAsqeBNbzIlsFZvZ6KcVLDG
- T+zxW4Enogi7PltZU5voXPbrSPfkOFxz9XP8YLsTGLJZ70i6NrYqwD+LomJpJrtuLEARUPpZQ
- K8ZYBL/fnqFJ3c5O1j5iIeD6olLbJSU8Cyhhx3hA/wuSsX6/eBzuEO3fCU9vWb+JJIqcXIVS
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.01.22 um 22:04 schrieb Ramkumar Ramachandra:
-> Hi Junio,
+On Fri, Dec 24, 2021 at 5:16 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Junio C Hamano wrote:
->> "Ramkumar Ramachandra" <r@artagnon.com> writes:
->>
->>>   # on coq.git, for those curious
->>>   $ git bisect start
->>>   $ git bisect bad @
->>>   $ git bisect good V8.14.1
->>>   $ git bisect run bisect.sh # oops!
->>>   Lancement de  'bisect.sh'
->>>   'bisect.sh': bisect.sh: command not found
->>>   La base de fusion ea3595845f5013359b2ba4402f948e454350a74c est mauva=
-ise.
->>> ...
->>
->> "command not found"?
+> But your safe_memcpy() should not be
 >
-> Yeah, I suppose bisect invokes exec(), which then probably expects
-> the executable to either be in $PATH, or expects me to specify the
-> path of the executable, failing that; in other words, './bisect.sh'.
-> In any case, this minor typo shouldn't penalize the user by having to
-> abort the bisect, and restart it, specifying good and bad commits all
-> over again.
+>     safe_memcpy(dst, src, n)
+>     {
+>         if (n)
+>                 memcpy(dst, src, n);
+>         return dst;
+>     }
+>
+> Using memcpy() with size=3D=3D0 is not a crime wrt the language.
+> Passing an invalid pointer while doing so is.
 
-Yes, bisect run invokes the given command using the shell, which tries
-to find it in $PATH.
+It's not a crime, but what is the benefit of calling memcpy with n =3D=3D 0=
+ ?
 
-It would be nice if we could determine if the command was not found by
-the shell and halt the bisection.  This is actually indicated by the
-shell using error code 127.  However, the script itself could also exit
-with that code (e.g. if one of its commands was not found).  Currently
-this is interpreted as a bad revision and bisection continues, as
-documented in the man page of git bisect.
+>     safe_memcpy(dst, src, n)
+>     {
+>         if (dst)
+>                 memcpy(dst, src, n);
+>         else if (n)
+>                 BUG(...);
 
-If we'd make error code 127 (and 126) special by stopping the bisection
-(like we do for 128 and higher) then scripts that relied on that code
-indicating a bad revision would require a manual "git bisect bad" at
-each affected step.  Annoying, but not dangerous.  Such a script would
-have to be modified to convert codes 126 and 127 to e.g. 1.
+I think this is suboptimal. Sure, a segfault is uglier than "out of
+memory" error, but both effectively crash the program, so the
+difference isn't that big.
 
-Seems like a reasonable trade-off to me.  Thoughts?
+The nice way is if the reftable library grows an error-code
+REFTABLE_OOM, which is propagated once a malloc or realloc returns
+NULL.
 
-> Then again, there are other ways to bump your head: what
-> if I forgot to chmod +x the bisect.sh?
+We could test this exhaustively in the unittest by swapping in a
+malloc that starts failing after N allocations, and then running a
+transaction in a loop, increasing N.
+I'll have to look more closely if this is possible throughout, so for
+this series, I'll just take a closer look at the current call-sites to
+see if NULL can really occur or not.
 
-That's indicated by error code 126.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-> What if there is no bisect.sh?
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-You have to provide one, of course, but ...
+Registergericht und -nummer: Hamburg, HRB 86891
 
-> Should I have to restart the bisect process from the beginning?
+Sitz der Gesellschaft: Hamburg
 
-... interpreting the non-existence of the script as all revisions being
-bad seems odd indeed.  Halting the bisection at that point makes more
-sense to me.
-
-> This presents another possible opportunity for enhancement: in an
-> overwhelmingly large majority of the use cases (or so I assume), './'
-> is really redundant.
-Adding the current directory to $PATH would be inconsistent and might
-even be dangerous.
-
-Prepending "./" to a given command that contains no directory separator
-is speculative -- what if that command is actually found in $PATH?
-
-Halting the bisection would take the sting out of such a typo, because
-it's reported immediately and you can fix it and continue.
-Additionally we could check for the command in the current directory
-and suggest something like "'bisect.sh' not found; did you mean
-'./bisect.sh'?".
-
-Ren=C3=A9
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
