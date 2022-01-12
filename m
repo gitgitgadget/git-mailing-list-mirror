@@ -2,135 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94442C433EF
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 19:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE921C433F5
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 19:32:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345232AbiALTXK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 14:23:10 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50154 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242688AbiALTXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 14:23:10 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DE72B159C9E;
-        Wed, 12 Jan 2022 14:23:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=CmiZK4lCaWkU
-        iZl3vxGfqJYFWlg3GeOvci3wUCoKsro=; b=fkBNC4e5y9iVXaeI6iDWIyWeeAWV
-        5ygVfwdYkcv+VnDl4z3s4UgN5synhzWZUDE3UEQyo2tJWycISbOGEjgY/KEl4kyV
-        O/ZeZhwsoCY9WSGLwWqMPXU6JJ1cH3C/XStFfszbPRghtTw6faUhWZ9bFAktV/dA
-        rNbqgn9EZAgJCvU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D59C1159C9B;
-        Wed, 12 Jan 2022 14:23:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4CFB8159C9A;
-        Wed, 12 Jan 2022 14:23:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Gwyneth Morgan <gwymor@tilde.club>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH v2] t/gpg: simplify test for unknown key
-References: <20220107091432.581225-1-fs@gigacodes.de>
-        <20220112120757.874714-1-fs@gigacodes.de>
-Date:   Wed, 12 Jan 2022 11:23:06 -0800
-In-Reply-To: <20220112120757.874714-1-fs@gigacodes.de> (Fabian Stelzer's
-        message of "Wed, 12 Jan 2022 13:07:57 +0100")
-Message-ID: <xmqqv8you5b9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1343985AbiALTcD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 14:32:03 -0500
+Received: from mail-pj1-f42.google.com ([209.85.216.42]:52967 "EHLO
+        mail-pj1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345000AbiALTbw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 14:31:52 -0500
+Received: by mail-pj1-f42.google.com with SMTP id pj2so7197597pjb.2
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 11:31:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZP8q83z24mkvKkF9xvx01eI02//BgsEeEYszMR4NB4s=;
+        b=xHj2xxSLZoaX9v0Z+CtIVFh8oZOIO8l10teIsuY9A6oQiy6KkgBOb+Lb6tDlMDQuPS
+         GAEDOOpMYZH1FXTQGv8dx29DXz1J/cinsuqz+QR1K/acuyPgv0/hSRALqAGvzxKWrQeF
+         CNB+HCy0oAYBDXK4MsGEVrHESRV1O8V2ul+s8XuSuuQBZBMo9Dk01NZqFAR2pyVA1M7h
+         h3SVtPu5V+QrZe0MQ+mD1rLrCQJWWubn85WZyg7w8/TFGJIbQSgxDl9qDL6vkWV4XiBT
+         iq8XMvLZ+xbZvlfxqyaQNoiUWuLc2iNU8DgGwOPJlwIkskYVSlQ+0eVTwc6cKC9qn538
+         Gr8w==
+X-Gm-Message-State: AOAM532WQlfAwCR46uLM9nbggTaJLZeV1zU4Z1ITZ8O4mrZVf+AidjOy
+        gLAkv96A6BNWTfelXUtYBfGiCF4ZLFMnK9XLOz0eXVMH+Ew=
+X-Google-Smtp-Source: ABdhPJyTOSQI1KEa9C+Oj5tW1SFFRBSAjM0yffE1rW9Ckga3/BxurhuMBEHT/NQr8IM0N4evklO00Dk8ilFk9PRMgFk=
+X-Received: by 2002:a63:8bca:: with SMTP id j193mr969987pge.227.1642015911611;
+ Wed, 12 Jan 2022 11:31:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 124867B8-73DD-11EC-87FB-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20220112134635.177877-1-jholdsworth@nvidia.com> <20220112134635.177877-6-jholdsworth@nvidia.com>
+In-Reply-To: <20220112134635.177877-6-jholdsworth@nvidia.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 12 Jan 2022 14:31:40 -0500
+Message-ID: <CAPig+cRemRqk44csVJ+QRiZ0MPZpMwzNCSFLCz+qFdh-pcc5KQ@mail.gmail.com>
+Subject: Re: [PATCH 05/20] git-p4: convert descriptive class and function
+ comments into docstrings
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Stelzer <fs@gigacodes.de> writes:
-
-> To test for a key that is completely unknown to the keyring we need one
-> to sign the commit with. This was done by generating a new key and not
-> add it into the keyring. To avoid the key generation overhead and
-> problems where GPG did hang in CI during it, switch GNUPGHOME to the
-> empty $GNUPGHOME_NOT_USED instead, therefore making all used keys unkno=
-wn=20
-> for this single `verify-commit` call.
+On Wed, Jan 12, 2022 at 8:47 AM Joel Holdsworth <jholdsworth@nvidia.com> wrote:
+> Previously, a small number of functions, methods and classes were
+> documented using comments. This patch improves consistency by converting
+> these into docstrings similar to those that already exist in the script.
 >
-> Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+> Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
 > ---
+> diff --git a/git-p4.py b/git-p4.py
+> @@ -1332,13 +1333,15 @@ def getClientRoot():
+> -# P4 wildcards are not allowed in filenames.  P4 complains
+> -# if you simply add them, but you can force it with "-f", in
+> -# which case it translates them into %xx encoding internally.
+> -#
+>  def wildcard_decode(path):
+> -    # Search for and fix just these four characters.  Do % last so
+> +    """Decode P4 wildcards into %xx encoding
+> +
+> +       P4 wildcards are not allowed in filenames.  P4 complains if you simply
+> +       add them, but you can force it with "-f", in which case it translates
+> +       them into %xx encoding internally.
+> +       """
+> +
+> +    # Search for and fix just these four characters. Do % last so
 
-The original one is already in 'next' so I'll revert the merge and
-queue this one instead.
+The unnecessary whitespace change in the "Search for and fix..." line
+makes for a noisier diff and wasted a little bit of review time. Don't
+know if it's worth a re-roll, though.
 
-We could turn this into incremental and apply it on the original
-one, which may give us a chance to highlight this common mistake
-of using a single-shot environment with shell functions, but let's
-not bother.
+> @@ -3006,9 +3020,9 @@ def encodeWithUTF8(self, path):
+> -    # output one file from the P4 stream
+> -    # - helper for streamP4Files
+>      def streamOneP4File(self, file, contents):
+> +        """Output one file from the P4 stream - helper for streamP4Files."""
 
-Thanks.
+The hyphen is slightly difficult to interpret. A double hyphen, or
+even better a semicolon, would have helped set off the second phrase
+from the first. Alternatively, writing it as:
 
+    """Output one file from the P4 stream.
 
->  t/t7510-signed-commit.sh | 22 ++--------------------
->  1 file changed, 2 insertions(+), 20 deletions(-)
->
-> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-> index 9882b69ae2..8593b7e3cb 100755
-> --- a/t/t7510-signed-commit.sh
-> +++ b/t/t7510-signed-commit.sh
-> @@ -71,25 +71,7 @@ test_expect_success GPG 'create signed commits' '
->  	git tag eleventh-signed $(cat oid) &&
->  	echo 12 | git commit-tree --gpg-sign=3DB7227189 HEAD^{tree} >oid &&
->  	test_line_count =3D 1 oid &&
-> -	git tag twelfth-signed-alt $(cat oid) &&
-> -
-> -	cat >keydetails <<-\EOF &&
-> -	Key-Type: RSA
-> -	Key-Length: 2048
-> -	Subkey-Type: RSA
-> -	Subkey-Length: 2048
-> -	Name-Real: Unknown User
-> -	Name-Email: unknown@git.com
-> -	Expire-Date: 0
-> -	%no-ask-passphrase
-> -	%no-protection
-> -	EOF
-> -	gpg --batch --gen-key keydetails &&
-> -	echo 13 >file && git commit -a -S"unknown@git.com" -m thirteenth &&
-> -	git tag thirteenth-signed &&
-> -	DELETE_FINGERPRINT=3D$(gpg -K --with-colons --fingerprint --batch unk=
-nown@git.com | grep "^fpr" | head -n 1 | awk -F ":" "{print \$10;}") &&
-> -	gpg --batch --yes --delete-secret-keys $DELETE_FINGERPRINT &&
-> -	gpg --batch --yes --delete-keys unknown@git.com
-> +	git tag twelfth-signed-alt $(cat oid)
->  '
-> =20
->  test_expect_success GPG 'verify and show signatures' '
-> @@ -129,7 +111,7 @@ test_expect_success GPG 'verify and show signatures=
-' '
->  '
-> =20
->  test_expect_success GPG 'verify-commit exits failure on unknown signat=
-ure' '
-> -	test_must_fail git verify-commit thirteenth-signed 2>actual &&
-> +	test_must_fail env GNUPGHOME=3D"$GNUPGHOME_NOT_USED" git verify-commi=
-t initial 2>actual &&
->  	! grep "Good signature from" actual &&
->  	! grep "BAD signature from" actual &&
->  	grep -q -F -e "No public key" -e "public key not found" actual
+        This is a helper for streamP4Files().
+        """
+
+might be even clearer. Probably not worth a re-roll, though.
