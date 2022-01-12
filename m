@@ -2,113 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36A73C433EF
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 18:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0675CC433F5
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 18:08:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356017AbiALSGY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 13:06:24 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65261 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1356001AbiALSGU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 13:06:20 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 83EB216B1AB;
-        Wed, 12 Jan 2022 13:06:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=PaKKsK+36fwB
-        SY8z+dgcoEHATB+6UG3GyMtYc0ck16k=; b=Of0s9rNmFORE+F+mXX+hhoBDhYhr
-        XVLEN0NySv+CE43PfCzVfLMM5/5OwDZuCK8cBWtBn0cwOu0pn06U86o2qa0SCNB6
-        TwR3WhOUMVOvssbFO8+AxeMv8w5fWQ/YNJMpk4tUkQ88ibILGZYokMnybkcWMZlG
-        mYqvweKQ1yJx3x0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7D34F16B1AA;
-        Wed, 12 Jan 2022 13:06:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E3EFB16B1A9;
-        Wed, 12 Jan 2022 13:06:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [RFC PATCH 0/2] Introduce new merge-tree-ort command
-References: <20220105163324.73369-1-chriscool@tuxfamily.org>
-        <CABPp-BFh7UnQtPM=tO8rfp5bPK4-7esouv5KCx1sUSESwEA=Rw@mail.gmail.com>
-        <CAP8UFD0wKnAg5oyMWchXysPTg3K9Vb4M1tRcPzPE81QM903pYg@mail.gmail.com>
-        <CABPp-BHpuLjCYycBwweMW_NdQrS_r3ECmvLb8XjNW-_Rau5NTw@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2201101427440.339@tvgsbejvaqbjf.bet>
-        <xmqq8rvn1nkw.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2201111439190.1081@tvgsbejvaqbjf.bet>
-        <220111.86mtk2xb1y.gmgdl@evledraar.gmail.com>
-        <CABPp-BFei07srZBgyKs6HCm+G+hmPR-3_EkKjRK8WwGL1Uf2oA@mail.gmail.com>
-Date:   Wed, 12 Jan 2022 10:06:13 -0800
-In-Reply-To: <CABPp-BFei07srZBgyKs6HCm+G+hmPR-3_EkKjRK8WwGL1Uf2oA@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 11 Jan 2022 14:25:56 -0800")
-Message-ID: <xmqqk0f4x20a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1356011AbiALSH5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 13:07:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41836 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240439AbiALSHx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 13:07:53 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6C45C06173F
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 10:07:52 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id d19so5840284wrb.0
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 10:07:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=fGKJW+c77AHI8/Yl4BF5u/5w7gZ8Y9O6+B1UIPTgJek=;
+        b=TTFZexJlZ4ZztUkL9vHYrXZ7DeLSYxoV5nJyzVA2ps7GZ/AjpbbNHxZ2blVbemfd5B
+         GdszypHxHyvOzbs0CnJPrggCAPS3A/IXuXDzmTfEyMMehuvL3UGj1JEKTJjWyA/xamaD
+         oAc3jtb7jNyN9TK8gQymcB+zgXk7pmOf4d2iA+Fmc354STfhYeWflFrgBPktKUnMs73I
+         uEbGgXeq6+Xs1RZXGTlV0jrj4GgSQjmBECG+iYW+kkGHGHCiMsY+sypHmeAPZxcxgM6E
+         O+ywmHGUUlnpOV/6cSBC+fBp/xqrC8P/CIgsK+0ljG+gGkdw9M0TqlOnAgjLxn6Kq6ct
+         Drhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=fGKJW+c77AHI8/Yl4BF5u/5w7gZ8Y9O6+B1UIPTgJek=;
+        b=3axfnExeTlQGPLXPVPlKLH3pLawj3XKnPPYHuh8OpqDTZ03R1FcMyOs1vpCBcbKIP8
+         1CjL8DDVQP5v1xZLhfguS/qb1GRqh1HbRIG4GuE/md/vLn0MTix6H6Mt9D7MudaY0jmr
+         jFJ6JmB3K5lSI/XunnuhKu6J66+nFusUbAXVskNbWsJFVW2pfeGbZGLbvcmD61GyOWx9
+         +CuXteDjTz1tdh52epCsYmBnUQxbLTWoyzhdlocxN3IIltCi5Pt5V+UBL7wqrMdEKyyu
+         tjsKJYEg5KF5spLFuu9Ai3Hp6viRlyryWBcjhP+YK6BLo2EDqFRDJyMNPSagmqvu8ihu
+         IQlg==
+X-Gm-Message-State: AOAM531npy1WagysB7UpkPhPK+qDnrNDfOuId6ygueKrpatBig82aSns
+        XckDwFJT2RGdq/uimkVp+BHgEGm8bMw=
+X-Google-Smtp-Source: ABdhPJy7MBfBhpm/oVMFdCwzfIHP/1dFGjpzuz+SY0QY+GZuD0SQlB1E1a8AMiLWKLKL38TAO+lzIw==
+X-Received: by 2002:a5d:4f8b:: with SMTP id d11mr800501wru.69.1642010871364;
+        Wed, 12 Jan 2022 10:07:51 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p21sm485590wmq.20.2022.01.12.10.07.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jan 2022 10:07:49 -0800 (PST)
+Message-Id: <pull.1185.git.git.1642010868.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 12 Jan 2022 18:07:41 +0000
+Subject: [PATCH 0/7] reftable: avoid reading and writing empty keys
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 551613DE-73D2-11EC-9FF4-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+this series makes sure that the object record does not have to consider
+empty keys (and therefore, a NULL memcpy destination)
 
->> And isn't any doubt around that even more reason to just go with
->> Elijah's plan of introducing new plumbing? I.e. is it really costing u=
-s
->> to just leave these "legacy merge" plumbing built-ins
->
-> I definitely think it's worth guiding users away from the old `git
-> merge-tree` behavior in documentation (i.e. deprecating it).  That may
-> also lead towards its eventual removal, but I'm not as worried about
-> that.
+while we're at it add some more tests, and fix a naming mistake.
 
-Yup, promising users that we will remove it and telling them that
-they should migrate away from it is necessary.  Doing anything else
-is simply irresponsible.
+Han-Wen Nienhuys (7):
+  Documentation: object_id_len goes up to 31
+  reftable: reject 0 object_id_len
+  reftable: add a test that verifies that writing empty keys fails
+  reftable: avoid writing empty keys at the block layer
+  reftable: ensure that obj_id_len is >= 2 on writing
+  reftable: add test for length of disambiguating prefix
+  reftable: rename writer_stats to reftable_writer_stats
 
-I however suspect that =C3=86var didn't mean by "legacy merge plumbing
-built-in" the strategy backends.  IOW, I had an impression that what
-is on the chopping block is merge-tree and not merge-recursive.
+ Documentation/technical/reftable.txt |   2 +-
+ reftable/block.c                     |  27 ++++---
+ reftable/block_test.c                |   5 ++
+ reftable/reader.c                    |   5 ++
+ reftable/readwrite_test.c            | 103 ++++++++++++++++++++++++++-
+ reftable/reftable-writer.h           |   2 +-
+ reftable/writer.c                    |   9 +--
+ 7 files changed, 135 insertions(+), 18 deletions(-)
 
-But since you brought up deprecation of recursive, let's spend a few
-minutes on the topic.
 
-> `git merge-recursive` was actively used in various places, including
-> in `git cherry-pick`.  I had used it a few times myself in a script.
-> I don't see a need to deprecate it currently, which naturally would
-> push its removal (if anyone is pushing for it) even further away.
-
-I suspect that we may be able to just invoke ort when recursive is
-invoked, and such a wrapping may even be easier than wrapping "git
-blame" to replace "git annotate" (where a command line option or two
-needs to change behaviour).  I doubt there is -X<strategy-option>
-that affects recursive that ORT does not understand, so it may be
-quite simple to deprecate "merge -s recursive".
-
-As you say, replacing the internal implementation is a different
-matter.
-
->   * `merge-recursive.c` is still hard-coded in three places in the
-> code; you can't even set a configuration option to choose merge-ort.c
-> in those places: builtin/am, builtin/merge-recursive, and
-> builtin/stash.
->
-> More details on that second point: All three of these use
-> merge_recursive_generic() and need that usage to be replaced.  It's on
-> my TODO list.
-
-Yes, I do recall mentioning that when we were reviewing the series
-that added ort.
+base-commit: 90d242d36e248acfae0033274b524bfa55a947fd
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1185%2Fhanwen%2Fobj-id-len-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1185/hanwen/obj-id-len-v1
+Pull-Request: https://github.com/git/git/pull/1185
+-- 
+gitgitgadget
