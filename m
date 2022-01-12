@@ -2,91 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20B0CC433F5
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 19:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9E3CC4332F
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 19:56:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1357211AbiALT4r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 14:56:47 -0500
-Received: from mail-pj1-f54.google.com ([209.85.216.54]:36433 "EHLO
-        mail-pj1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243059AbiALTya (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 14:54:30 -0500
-Received: by mail-pj1-f54.google.com with SMTP id i8-20020a17090a138800b001b3936fb375so14475141pja.1
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 11:54:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=M9l6KlKDY3ozvnqkEXa5sDHUM0S1Ggf5RYsmLqai2gk=;
-        b=paiN5HlG4IMib2VoFmbqIluG03IerM9OWp52jIbLDlpZGXICqRtCNt6ij8oPnDxSMu
-         7i0F/zJx9lx0shDxE+GUqstd7frxggkttoej4HhE9K2CtB6Eph1NFYMsEr88YjELqX0x
-         6LhGqY7a8hqyL9mR9BUAmBv/NO0Q/wk7XUCr1f7RhHnZUtdwpv8oeAbi9Kl8ZZSrBeB7
-         6i0KEER++Fc/81JEf1ntCK7GO/XnfwqQxM9epNsG7pWZzx9xxcjgO11XdCf65z60fQtW
-         z906lyitIS6YLIu6NudyAtuwdOWW2EPfl3jNZNI7vd3lhkGNsNQqCcJ/7rLm6BRkuRDr
-         rOSg==
-X-Gm-Message-State: AOAM530pfBHY5AAz80uiHTscIHgTR8I3NUyBPYdPOfPshx9/ja4auXSf
-        Yr8/pAegtRlnQSBfo+jrn//rlM1HDjYguIlSmLs=
-X-Google-Smtp-Source: ABdhPJz8iRju5Y5vPN8s6wmg5n92s6R44Jp7fOPt3sD9wM+1854YzoFSQX2r/oeEmBf1t1iJjwDudHiO7uYizWf+oYs=
-X-Received: by 2002:a17:902:b688:b0:149:a1d6:c731 with SMTP id
- c8-20020a170902b68800b00149a1d6c731mr1293512pls.145.1642017269023; Wed, 12
- Jan 2022 11:54:29 -0800 (PST)
+        id S1357259AbiALT4w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 14:56:52 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:43106 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1350199AbiALT4o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 14:56:44 -0500
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 20CJugNF031702
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 14:56:42 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     <git@vger.kernel.org>
+Subject: [PATCH v1] Modify NonStop configuration to disable uncompress2
+Date:   Wed, 12 Jan 2022 14:56:36 -0500
+Organization: Nexbridge Inc.
+Message-ID: <002901d807ee$84cd2f40$8e678dc0$@nexbridge.com>
 MIME-Version: 1.0
-References: <20220112134635.177877-1-jholdsworth@nvidia.com> <20220112134635.177877-18-jholdsworth@nvidia.com>
-In-Reply-To: <20220112134635.177877-18-jholdsworth@nvidia.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 12 Jan 2022 14:54:18 -0500
-Message-ID: <CAPig+cSHwN9N1K1Fi2DbZhgRdi=iqBkYB==rMKsrq6vqPQJQ4Q@mail.gmail.com>
-Subject: Re: [PATCH 17/20] git-p4: compare to singletons with "is" and "is not"
-To:     Joel Holdsworth <jholdsworth@nvidia.com>
-Cc:     Git List <git@vger.kernel.org>, Luke Diamand <luke@diamand.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Ben Keene <seraphire@gmail.com>,
-        Andrew Oakley <andrew@adoakley.name>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AdgH7kdaFUKIQA6HSIO4w8SxwRwcbQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 12, 2022 at 8:47 AM Joel Holdsworth <jholdsworth@nvidia.com> wrote:
-> PEP8 recommends that comparisons with singletons such as None should be
-> done with "is" and "is not", and never equality operators.
->
-> This guideline is described here:
-> https://www.python.org/dev/peps/pep-0008/#programming-recommendations
->
-> Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
-> ---
-> diff --git a/git-p4.py b/git-p4.py
-> @@ -930,7 +930,7 @@ def p4Where(depotPath):
->              if data[:space] == depotPath:
->                  output = entry
->                  break
-> -    if output == None:
-> +    if not output:
->          return ""
+Modify NonStop configuration to disable uncompress2.
 
-This changes semantics, doesn't it? It will now return "" for None,
-False, and "". Is this change intentional? To match the intent of the
-original, I would have expected it to be written:
+The zlib version available on NonStop x86/ia64 does not contain the
+uncompress2()
+Procedure.
 
-    if output is None:
-        return ""
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+---
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-but, having glanced at the larger context, I suppose the new semantics
-may be okay(?).
+diff --git a/config.mak.uname b/config.mak.uname
+index a3a779327f..9b3e9bff5f 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -576,6 +576,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+        NO_SETENV = YesPlease
+        NO_UNSETENV = YesPlease
+        NO_MKDTEMP = YesPlease
++       NO_UNCOMPRESS2 = YesPlease
+        # Currently libiconv-1.9.1.
+        OLD_ICONV = UnfortunatelyYes
+        NO_REGEX = NeedsStartEnd
+--
+2.34.1
 
->  def parseRevision(ref):
-> @@ -4497,7 +4497,7 @@ def main():
->      if cmd.needsGit:
-> -        if cmd.gitdir == None:
-> +        if not cmd.gitdir:
->              cmd.gitdir = os.path.abspath(".git")
 
-Same question/observation as above. In order to save reviewers some
-time, perhaps the commit message could say something about why the
-semantic change is safe and/or desirable.
+
