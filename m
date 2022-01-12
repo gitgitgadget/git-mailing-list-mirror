@@ -2,42 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCF50C433F5
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 13:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C8DFC433EF
+	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 13:47:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353721AbiALNrj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 08:47:39 -0500
-Received: from mail-dm6nam12on2054.outbound.protection.outlook.com ([40.107.243.54]:16488
-        "EHLO NAM12-DM6-obe.outbound.protection.outlook.com"
+        id S1353687AbiALNrq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 08:47:46 -0500
+Received: from mail-dm6nam08on2079.outbound.protection.outlook.com ([40.107.102.79]:20384
+        "EHLO NAM04-DM6-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1353691AbiALNrS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 08:47:18 -0500
+        id S1353694AbiALNrU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 08:47:20 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UlLXPeE3o/gl5x8I1sT0VJ16akE59bVEDUTj5boUujJXY1jJOZ27yZImNM91u2rVFSyK6C1VEZhniUy0fBYhAxi8psaIRKBf/wA9UgSoyXqCYxIPs3pC0DA7hl/dEPw8sXFoZACmQVnSTF621nqMeTb2ruDcg3k1uupV99nTzYWy/OmcOp+KJQcHfEE4ComZPb/MkNzgelB7tkS70bvdogpnhrlEfhiGzL8qAHSk6NzejcfkQh6hIWWGHUwvSNfBHHDfp1eKw83kdxZoBy6LssbkzSsoMCtBFzL+ZzoIrCfpVd0uJ5Y4mlNKZsahvsljdUtN5O1sKflvPPuEFeVl4g==
+ b=ax7+QwajWx79wSRAxePXIM7uX28ymZrNJqM5cUcrG9UYENAZTIsgwPdSykaLnHZ2c+vNN+mmBWZLSuurhMl3JquxAv9URKyBTUx0bx7asDUxf0jioWn28Ns/Q/SBys5zeqW2M6VSFRjKteGuVWG4UTR3IPc/siUZcaDUxV/aGEfm7DMzt56ZBfQVb+jVVy+bSoDPVnrdTNG0ELP8Klq26V+43IG9qfJuSG1p44UlHmoK/GBIN91+bCEZjLz4jSfgD0pjsuYBmpZI2qGJTEwvGZ4lxwETjxuswFLj0tU56petpSuq7JSZi6azDCvazGOGuJBDflLC09wQyzvUfq7LsQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+mMYjSyquxfF8XWiPNx7fnSquZ/zjOy0cQGD7voEykU=;
- b=CTQZY59OzGa/NNVND5AbjWi9YOkJ4quv8mDXQnJdnpM0BUH+lurC5e6J+R0LKCzkuU7kp2MUiqgnPj2p96JYKaTRAn0gooi9vyAkt3wAZYCPqws/nfI+XYJLIdT++XL63nUAnQRG5HG2GN0A9vwgFHObsYO8lX+9twQdlzyCIioWFL5+uYXA4rw1WFpYd2rJGX/XIAftE3lBks/zuDbE9+ddKBUlGRSDG2dlo/qRXqdt3M2W92Axdivcz/jX1MFKcmuW01+2d9HfNk5CrlBZ2iBTdU5a0Bh+Fvj2WHJ86VJAXXQERlrnnlEBdZ4AJfqEvvh66NaWPwadvnxhwMUBJw==
+ bh=tWjSEpl1imDfOQXWNnXjPs52X+2BjS3OVSoU84HI9eA=;
+ b=KpTRR4Tp5rjuQrvY3uqghO7g81vSRbSeobh102zog91d9mHcrz9Ld7p3qJXv/aTT0p5ZCaOfhs/wKHzh53rZibd2zcfIVVsakJ69jXdW7wLxyViuc83AG/sB/ppDOXwuOeEaJcl2SrjeDIjg4vxKhfTHiZtGqep6oO0nQiV983pHtmQaNee+FSRTRTyd+Q5SSbQGt3Qyc/+mdwywJDpFnx/BX4E+2v+22q7qprA6bpJYuQk3um7aAkDreQwzOUXmSW0SOxn0rFMIpagHS1y7xq1miCoWkIeDYqO/KPcbFgUvDUSNjUTssc/FDzccPiO37soMys2T0qjmnu1K0uUKEQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+mMYjSyquxfF8XWiPNx7fnSquZ/zjOy0cQGD7voEykU=;
- b=dmppT0FJ6zzvhie0FISmz+FUVwSHpMFuMEcHpSzqu3vRr91Ww7wA5GKg8horZkSH0Cmmouvrcz+68jNRnPP7l5gRJuBKcmWbaajsaAKWPO3KKqhZq6CowM021qHluOml+SRDT+mNK/I4g8ngmgNYm3Ro+MMWRGavDZjSRDIJxWb1ZAJaKqKOCitaA39t8OrBz31A4gJccFQkAltByHlWqdR3sozOjgRjnNXblPeFf0QFK3AvnKLSMOBZ7WFXaKqm2I7E40wLGyePgH82sCmLre5JjMA9dS5RVdrYf+Bt3gfAGoEAqF684Mvn5iM+/hxXy5GJmo9YG28bZiTRnhI6hw==
+ bh=tWjSEpl1imDfOQXWNnXjPs52X+2BjS3OVSoU84HI9eA=;
+ b=GJnA7nrNuFytiiXwV4cB6TLcGyOWVORrZ8APryCGs4olXTlX5bEsy55LSj0HMiXu8LZ+ivYdYy+prClHu7Hn+TS8Z4bHnNj9VLvExp8QTMVwN8moCVnikYRU2ai6q7NjfixmxfVViqN4PMAFfZDF83Ie3v1mTeVNFrhKUv6qUMNjAe2zFO4h3OcUt9cxb9zKo5SYrRvkV8elLbQpt49R3zpRpFsP/mfe9nrKieMecubsTnz9hp5vgfF3XdRj6Jg8HawpbwfakqWBHncN/tWPCZNvsNex0z5JE1FhVIGJ6zdF7ZFolxDClT0qC9fjsEauAnp5y5mFuKccT4ZN3DFDaA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
  by CH2PR12MB4279.namprd12.prod.outlook.com (2603:10b6:610:af::24) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4867.7; Wed, 12 Jan
- 2022 13:47:16 +0000
+ 2022 13:47:18 +0000
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::509e:bbb9:e1fb:26ed]) by BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::509e:bbb9:e1fb:26ed%4]) with mapi id 15.20.4888.010; Wed, 12 Jan 2022
- 13:47:16 +0000
+ 13:47:18 +0000
 From:   Joel Holdsworth <jholdsworth@nvidia.com>
 To:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -50,9 +50,9 @@ Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
         Ben Keene <seraphire@gmail.com>,
         Andrew Oakley <andrew@adoakley.name>,
         Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH 04/20] git-p4: improve consistency of docstring formatting
-Date:   Wed, 12 Jan 2022 13:46:19 +0000
-Message-Id: <20220112134635.177877-5-jholdsworth@nvidia.com>
+Subject: [PATCH 05/20] git-p4: convert descriptive class and function comments into docstrings
+Date:   Wed, 12 Jan 2022 13:46:20 +0000
+Message-Id: <20220112134635.177877-6-jholdsworth@nvidia.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220112134635.177877-1-jholdsworth@nvidia.com>
 References: <20220112134635.177877-1-jholdsworth@nvidia.com>
@@ -62,723 +62,441 @@ X-ClientProxiedBy: AM3PR04CA0137.eurprd04.prod.outlook.com (2603:10a6:207::21)
  To BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 31e4ae10-4257-4c5e-6c77-08d9d5d20b87
+X-MS-Office365-Filtering-Correlation-Id: 00a66a9e-cfb7-4ce8-9bae-08d9d5d20cd0
 X-MS-TrafficTypeDiagnostic: CH2PR12MB4279:EE_
-X-Microsoft-Antispam-PRVS: <CH2PR12MB42793B4342807B98AD4E0AD0C8529@CH2PR12MB4279.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:608;
+X-Microsoft-Antispam-PRVS: <CH2PR12MB42794907F170D9800C89261BC8529@CH2PR12MB4279.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:2657;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: JcKyqfzhymAHzStDRvtLT/s6HDcie8zFnQ4cMPxu/GFUviWnX42xu6JDLyful/X1QSuTdb7MK3coJscJg/C62qacVHlRasmoldmW2hEyZ20tUbxSeazQYo2rZCQ3iSCmv4caMzdqYDiVkWhNWyXMdXKmoFeTGM3IfE3sLq4XxS9HZ4m7K7bJ7ym6sZp2htqD1uZcKlhS6+FP562yiVF4csqWcJK77MNQAGWw2BpnHRpRB/bzv184vHd5E53RqAcEXiEyav8r6Ez+dcdJ0RHEiWa+5StF2pxfagyGn/zPlRUJ5TiY6m6gPNJMsLrRWOBAXKv0aTeoBIOxcqT7uRmhGad/EpzH6k1B3EHJggDl9H3rMHnyumn07sVlpCreRmQgfJIi74dXsPps1v3d5ATqHgJ2+HzggtP62BkVazB6OQ/tXARtx60eWTrH0a/AB01mdxz8de829wZ1K1fhgiO8rjOxpptd8a93D44ILLupp+0kkZTWE9362zvEj7i9AaFl8GMouarxYVHQWp8/ZoXVG+41lu3ZjQX8f9DPLaRJYftNZxBmGBDP8KJP1gen2Li7fPhUdd2I9201Z6I92jgM34O0X4+9HJMKkHOzPZBJcI8DzG52mkvVE8pBMnlfds6pjrbqvi9Ld8sTkM6QgjdJJtYI7u+1W+MXLmeVlTpcSvAsmoYYmcpkO2nN7c/VFJSTbQdSKhq2sXU9ZhKMuGUBtlbMjEQ4Ut24XWRONPe3uRe8tyFQa27o6j2hs/ja78Hp+NYKHt7JZ2rfZvHMJSK5YWXk+TUWdXq/tFJ46EplWoVhOLOPCn9rm24taYkmOMVa
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(30864003)(1076003)(55236004)(7416002)(4326008)(38100700002)(38350700002)(508600001)(6506007)(86362001)(54906003)(6486002)(26005)(110136005)(6512007)(186003)(8676002)(2616005)(5660300002)(66476007)(83380400001)(8936002)(2906002)(66946007)(36756003)(66556008)(966005)(107886003)(316002)(52116002)(460985005);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: gqsJdfwQeGdEBJT3kMqJrG4ij8/j5ulgiKOCAhd8m6TAf8RJzT5EFmXi8vaBKhP5b7CO6HWICv1jJyqEkQ7XKGiqNcclD9d+Ox3boy0W5OYVaa7BTQNBBVZ7SunaQpSzhWBWZ14BTBhifA5il2oOzw5ntzI8xcuULyDGteeVyEUfIsWgEL5Nksu6Aw4FmPtPNQ5j8/ctpkNBnZVs3I4ySSVoxwSl2YpIRRL2CBaIBWX0V8Utl88yGXWueKuE2pFXcAA2so+1EKn23Qx5dKW3JSx8h7qG7Pdrab442IvaOpEu+PFpm/wEUKZHUTyi2dW+XbvcJtu4R75o+eutOY55B/OycR0YWOcPOrhVPN1w5PDYwdRWjx8vmbCbctpk0cMwGU1+ZCWvHx53kOk+27N+COwQUE2IvGuTHjWP+e9NGxqijSAR9CVUTlHUEX7uIF3QZDjal890GgOq1ar+bd4SiEHmwX0xUHwlm68BSgS8HUXK1/Beo9w+QWTGk4L92SrGUA7YHtEGggvEYDhLocM8GwtSW0DzMc5EXtF5AXgcJidhvvQL2DJB5mODLTPwOJ3bMqrAfVC8GxbpxD3IlBA5lFDedaejrj26oSl5pI6/6jHZFnEtFRQho95u0PzzVb8hCCvErfwOmzMuomA8+Ib8YROVpoBHy4PiXVYpGB2fd8krQZQpGDyILT9FbWjRqnFZrrfLYPDz7tk2yJrZLnn5Lw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(30864003)(1076003)(19627235002)(55236004)(7416002)(4326008)(38100700002)(38350700002)(508600001)(6506007)(86362001)(54906003)(6486002)(26005)(110136005)(6512007)(186003)(8676002)(2616005)(5660300002)(66476007)(83380400001)(8936002)(2906002)(66946007)(36756003)(6666004)(66556008)(107886003)(316002)(52116002);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?9IXBec02ezBIBbNrHn4mixCdxxy4rAgfJS3DL6WB3LZEUh7x3rAo22eU9sAi?=
- =?us-ascii?Q?/6hKbQ2wYiXcr1gIKO3T1nHDGOpSe/RkGdglt9YDoRu6HlWn5ZCaunsS3CCX?=
- =?us-ascii?Q?Ocb3lj/7/clqQRVegKF1NXvai5lBfjMnXhGDr6Tm4GWp2DZeNFhC3EKcRKe0?=
- =?us-ascii?Q?SrYlqm3rN2VRvfdBfDlNByrRKqJ2+fD9h3HRJi6iC0T6xynp1PqjNzAYsepl?=
- =?us-ascii?Q?7QsNyvjgY3UM1f0+ObAQ1nIR6eHJosdyOKQHWwIdMz+Je/iF4Ca3bThByiUt?=
- =?us-ascii?Q?V+U2tK0ALPxHADFU9UvWWLwVd6T+fm5X3ibfq23w4jYR7aHWsXnK/+Yz5AR0?=
- =?us-ascii?Q?+KrORyLYonk8oA+QluRvfdTf8a2v84Xj9UcRmtBo1HazTFbwCemAGktiGFgw?=
- =?us-ascii?Q?dJEK5IhnQtBxiO3erqtCpePeLIIJBxJOEQipJSpDF0021MlDZk5rB4wxef51?=
- =?us-ascii?Q?N7LdvGITkK5+V28teQsB1BqVkUf+r7g5OO3OmfYm0+338ln8QuP8dFRtUW9x?=
- =?us-ascii?Q?fnghx2dMsTt2d9ojA994DlcxtqZ8rRoJzljcRLAWkYnmyTJHMU6hyJQ2f6x9?=
- =?us-ascii?Q?Y3ybsW/QwZPjQNjOnzWPorreaJwRsk2A7N0N40FuGQgGyNpmpSWkSl+RkXm0?=
- =?us-ascii?Q?q52YiH5CW+4irF88+gttKITwQvgyAgPhlAv861YP4DztG0VIsmHOyF6Tu8nc?=
- =?us-ascii?Q?o4MPwhHjA2tGh9Ba2QkAZt16o69BZ/Bmw4K7QxEW5IyzJC1NPa32QF3tOHyb?=
- =?us-ascii?Q?vS/ebh2tWvEhJMVpqBuJ7Zu7WYYjSK/ClSMgxtUdE7EISqGCnahdXCZ/vBzo?=
- =?us-ascii?Q?AMcg2AnDHWn9Z/QDkk78bVePyjwl/JbVK1SubZwPJb7YHqmWU24eZ7OBrRQV?=
- =?us-ascii?Q?SzK/gzwHMrUvI7+GQJgbXy2hxQ18iNIY9bA4+edBbQokklpcezAtZF6A3RSf?=
- =?us-ascii?Q?6L17r3KNiL2Ms5CsiAlBp/8bYrc4BrGF1KZcaRgcfEp0fC1YzaTKEQO8bNDQ?=
- =?us-ascii?Q?BVopna4p1brID7TNcshOSqmF6dCm2Tcb0I4ucmW/azawDjKH8gGvBOS9Lq99?=
- =?us-ascii?Q?iasWfHk2ntVVuxIqd6yClRGIWiWDGlb1/zlOAO9U74ko4YUwcAv3EqU+QqZy?=
- =?us-ascii?Q?96GRBKmcejAfozFzrFkU1Ztb3XuKGdrSHbcgEKKlPgla3fKOPG082GqOWM+c?=
- =?us-ascii?Q?8ZPd6nObWCYujH+/lQQSzTmSYQLCU6Jbn+qivJEHMSIdBFecPRwGbgQRNWfN?=
- =?us-ascii?Q?ig3GPC5eyhcDmKjnIJ3hKu+L+QEuNvKHiIOyLyHaH1XAaEc/oFjDPggPyaIM?=
- =?us-ascii?Q?4hdy52npFlKp8U076+BP/7DqYQIFzbg92ewcJlO+La+ix7d4T6IrPx5oJG/6?=
- =?us-ascii?Q?cVfx+CcoZU7p2DT4FOw8n0Ot9nrO4w19anUtc15as7+AWQblDvzvnr8nwKch?=
- =?us-ascii?Q?v5GnHG2CKNPhEqZkqpazLbKF1k27Cai96vsxNG4T83pdiTdbzU+DV42raFYO?=
- =?us-ascii?Q?usXdnyLntwk7ut983p9Uq2sRKXoXK5GCq5sc0IWCuG5xHfep4Zh+n9gxiIZG?=
- =?us-ascii?Q?YXjG1BkXuiiSHcW7XbmkpM8busH07KVmJaKKQiq8/4F6RdrizrLP+0OQT1oc?=
- =?us-ascii?Q?Hu70fNT+EoNj/RByJS8grE0=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Bfp1sW2wGhvUHlVsmr0vUv3cWk25c06n0SX+wlPy8HKDD/XSMdZsfcOsKQTu?=
+ =?us-ascii?Q?gheQTub5K8Kgu87zY3Rwrk1H9oycYrd3tlnEYfopJ7H31ERIomXij2h62oRb?=
+ =?us-ascii?Q?o7QuoszHrhndXqxIsCW5qbyjcXRshsWWiXbHIW6eDqEUFaHC+amVNvdrDsuX?=
+ =?us-ascii?Q?BtPxVcjtlioSYsXfy5CulZpWyzRxxsf0RVvx5vdIFAftdkKJyoAmKP5bsYeT?=
+ =?us-ascii?Q?Cb7nMdmy5W5V/XyCRiPqUkHOss8cO36bD5mlffxxY8vHnrOBLkQkihSCLnak?=
+ =?us-ascii?Q?/rLeX3zgsLg2Ks5W2Jlklj0e0JzqYukNck0DXTPh7cAmRPO0oQIqQBU5aCXX?=
+ =?us-ascii?Q?aphJP/tY/ShSYxFZPaVYiplZH4vwN9PO8fw+st3+3dV1CuT5LegdOr5gK/vk?=
+ =?us-ascii?Q?qE9GYLkIYSZrHbbG+sVVa1RL9zqsx5w5tawaGQ8tIm9QRmkdRKkxI/olMg7a?=
+ =?us-ascii?Q?vyS4CmpKG/HdgOguETxB2/9qCBI0gJ5IJQ3qNeaBa8ImiAyadfWkrpiOcYqG?=
+ =?us-ascii?Q?YDelZgNrirV5l7joaoUFB/EfHuUmTQNwpAyJUmJMsiUKVIQS8QfBKADLuUg5?=
+ =?us-ascii?Q?U/xDYbQz7rhT9h3yEFI9UA5I0Wuer4e4NgWVYMJPZaijIXZPDWn7aH6nGyJQ?=
+ =?us-ascii?Q?N2gUB07pmiL0CySi7HLv7eeapMqX0Ep0iDofFEehnMzR1QQ4WelKBMsutxyT?=
+ =?us-ascii?Q?ttdZFp6OwwChatI3S9OIPtcM4fcdKD1sUgRC5N8sBiBdZbHrO8VtaLsUykYl?=
+ =?us-ascii?Q?9qlud/FOB8ruFtPwlkmIPWfNkjHxJqU7pri2CJUnHO1KsLQYodMqQMwMnIY/?=
+ =?us-ascii?Q?VBT/bYfkdmgOTj2kTARcOC0lLv0IM7jeuAtYPgphVe2/f0aLkz8SH4rPChkv?=
+ =?us-ascii?Q?WASEX8/pHK0X2yOWq/OSsuJqQQZNm5zJuqZZyg9VVGhCK+JUImDROYGQa8ID?=
+ =?us-ascii?Q?8nNG1lF7TsXE1zBlEI1pEZ4kWTniV0i1nvnkKHxhVQIz/wbE2+UaUo5M+0xc?=
+ =?us-ascii?Q?xXbgLFjVbidVZK9UBW45AntEB8ImhVQlly8eD+BJcRLQdFMvQ3xUjt7vn4Kp?=
+ =?us-ascii?Q?g3ZzEWBJgayatkmkWJThDSBUjqXrfJnlFE5lsoXMcnJXeDDJn6NwvCTSF9zR?=
+ =?us-ascii?Q?YrYNRdR9xeH4Xsj9PcHZtxdK3gb02gIuiA+PTKLKGO7pwawwEmQx65rE+ANY?=
+ =?us-ascii?Q?gqReqxRHbZfhctq6chqUnG5cCQktE1iInUZXDndrXro6Vp5zrGON5EQVPd2Z?=
+ =?us-ascii?Q?5veO97WevusNGPSZMkqiQpdd0tqcoGYSysdFGuyPy3k2uLSgPEwumrgTAQUh?=
+ =?us-ascii?Q?5Y2mQ1BRA/bt9eUW/P3Nm56Q2HTW8C/PG24/V3rByCEAblmW+EjQn027S2Wu?=
+ =?us-ascii?Q?GA5TsIYz93DY8bKcBzNzoxX2xN0nXkSAT3cNw9bojb0cn0P+YvO6bi+/LXxY?=
+ =?us-ascii?Q?OYacfsGfkl78nHgDs2vEkn9AiUXlbTh1dw6xpjxF4pkfaV4b/mnIzaJx0IbS?=
+ =?us-ascii?Q?K8IXCJo2kmNooEE33mioGORTb20j3VI1fwcruKjBosu582jTXnNwmOcjbVuq?=
+ =?us-ascii?Q?uGEcyotjrcCPoJOQj9I/RzR5XTYwBvV7xf6ZAirT23Gdr878Mv6aupp6+WdV?=
+ =?us-ascii?Q?ley6x+VIkmQO8Piy4vlb96w=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 31e4ae10-4257-4c5e-6c77-08d9d5d20b87
+X-MS-Exchange-CrossTenant-Network-Message-Id: 00a66a9e-cfb7-4ce8-9bae-08d9d5d20cd0
 X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jan 2022 13:47:16.4627
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jan 2022 13:47:18.5419
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pnzoQZS9imZxTD5Fw2PTdEA4iYfFOR/ioxoQtAnF2eT1N02qrd2zHZHgo9tcRTOpAGrlexnVCDaOwFFTrlQaoA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: RquUoBwElnz8Sq0CCPR9IXT176NgvfNjEVxiN+EZz4OWvX8V8KfabAZTCP1q/ul0G9tiCv4QmwPdvpMBrWQ1Mg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4279
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch attempts to improve the consistency of the docstrings by
-making the following changes:
-
-  - Rewraps all docstrings to a 79-character column limit.
-  - Adds a full stop at the end of every docstring.
-  - Removes any spaces after the opening triple-quotes of all
-    docstrings.
-  - Sets the hanging indent of multi-line docstrings to 3-spaces.
-  - Ensures that the closing triple-quotes of multi-line docstrings are
-    always on a new line indented by a 3-space indent.
+Previously, a small number of functions, methods and classes were
+documented using comments. This patch improves consistency by converting
+these into docstrings similar to those that already exist in the script.
 
 Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
 ---
- git-p4.py | 309 +++++++++++++++++++++++++++++-------------------------
- 1 file changed, 167 insertions(+), 142 deletions(-)
+ git-p4.py | 162 +++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 92 insertions(+), 70 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 5fb3e09875..93f4ec843f 100755
+index 93f4ec843f..0bd1ba00ba 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -61,9 +61,9 @@
+@@ -522,7 +522,7 @@ def p4_sync(f, *options):
  
  
- def format_size_human_readable(num):
--    """ Returns a number of units (typically bytes) formatted as a human-readable
--        string.
--    """
-+    """Returns a number of units (typically bytes) formatted as a
-+       human-readable string.
-+       """
-     if num < 1024:
-         return '{:d} B'.format(num)
-     for unit in ["Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
-@@ -76,10 +76,10 @@ def format_size_human_readable(num):
- def p4_build_cmd(cmd):
-     """Build a suitable p4 command line.
- 
--    This consolidates building and returning a p4 command line into one
--    location. It means that hooking into the environment, or other configuration
--    can be done more easily.
--    """
-+       This consolidates building and returning a p4 command line into one
-+       location. It means that hooking into the environment, or other
-+       configuration can be done more easily.
-+       """
-     real_cmd = ["p4"]
- 
-     user = gitConfig("git-p4.user")
-@@ -125,9 +125,9 @@ def p4_build_cmd(cmd):
- 
- 
- def git_dir(path):
--    """ Return TRUE if the given path is a git directory (/path/to/dir/.git).
--        This won't automatically add ".git" to a directory.
--    """
-+    """Return TRUE if the given path is a git directory (/path/to/dir/.git).
-+       This won't automatically add ".git" to a directory.
-+       """
-     d = read_pipe(["git", "--git-dir", path, "rev-parse", "--git-dir"], True).strip()
-     if not d or len(d) == 0:
-         return None
-@@ -136,20 +136,18 @@ def git_dir(path):
- 
- 
- def chdir(path, is_client_path=False):
--    """Do chdir to the given path, and set the PWD environment
--       variable for use by P4.  It does not look at getcwd() output.
--       Since we're not using the shell, it is necessary to set the
--       PWD environment variable explicitly.
--
--       Normally, expand the path to force it to be absolute.  This
--       addresses the use of relative path names inside P4 settings,
--       e.g. P4CONFIG=.p4config.  P4 does not simply open the filename
--       as given; it looks for .p4config using PWD.
--
--       If is_client_path, the path was handed to us directly by p4,
--       and may be a symbolic link.  Do not call os.getcwd() in this
--       case, because it will cause p4 to think that PWD is not inside
--       the client path.
-+    """Do chdir to the given path, and set the PWD environment variable for use
-+       by P4.  It does not look at getcwd() output.  Since we're not using the
-+       shell, it is necessary to set the PWD environment variable explicitly.
-+
-+       Normally, expand the path to force it to be absolute.  This addresses
-+       the use of relative path names inside P4 settings, e.g.
-+       P4CONFIG=.p4config.  P4 does not simply open the filename as given; it
-+       looks for .p4config using PWD.
-+
-+       If is_client_path, the path was handed to us directly by p4, and may be
-+       a symbolic link.  Do not call os.getcwd() in this case, because it will
-+       cause p4 to think that PWD is not inside the client path.
-        """
- 
-     os.chdir(path)
-@@ -170,9 +168,9 @@ def calcDiskFree():
- 
- 
- def die(msg):
--    """ Terminate execution. Make sure that any running child processes have been wait()ed for before
--        calling this.
--    """
-+    """Terminate execution. Make sure that any running child processes have
-+       been wait()ed for before calling this.
-+       """
-     if verbose:
-         raise Exception(msg)
+ def p4_add(f):
+-    # forcibly add file names with wildcards
++    """Forcibly add file names with wildcards."""
+     if wildcard_present(f):
+         p4_system(["add", "-f", f])
      else:
-@@ -181,11 +179,11 @@ def die(msg):
+@@ -590,12 +590,10 @@ def p4_describe(change, shelved=False):
+     return d
  
  
- def prompt(prompt_text):
--    """ Prompt the user to choose one of the choices
-+    """Prompt the user to choose one of the choices
- 
--    Choices are identified in the prompt_text by square brackets around
--    a single letter option.
--    """
-+       Choices are identified in the prompt_text by square brackets around a
-+       single letter option.
+-#
+-# Canonicalize the p4 type and return a tuple of the
+-# base type, plus any modifiers.  See "p4 help filetypes"
+-# for a list and explanation.
+-#
+ def split_p4_type(p4type):
++    """Canonicalize the p4 type and return a tuple of the base type, plus any
++       modifiers.  See "p4 help filetypes" for a list and explanation.
 +       """
-     choices = set(m.group(1) for m in re.finditer(r"\[(.)\]", prompt_text))
-     while True:
-         sys.stderr.flush()
-@@ -218,8 +216,10 @@ def encode_text_stream(s):
+ 
+     p4_filetypes_historical = {
+         "ctempobj": "binary+Sw",
+@@ -626,19 +624,18 @@ def split_p4_type(p4type):
+     return (base, mods)
  
  
- def decode_path(path):
--    """Decode a given string (bytes or otherwise) using configured path encoding options
--    """
-+    """Decode a given string (bytes or otherwise) using configured path
-+       encoding options.
+-#
+-# return the raw p4 type of a file (text, text+ko, etc)
+-#
+ def p4_type(f):
++    """Return the raw p4 type of a file (text, text+ko, etc)."""
++
+     results = p4CmdList(["fstat", "-T", "headType", wildcard_encode(f)])
+     return results[0]['headType']
+ 
+ 
+-#
+-# Given a type base and modifier, return a regexp matching
+-# the keywords that can be expanded in the file
+-#
+ def p4_keywords_regexp_for_type(base, type_mods):
++    """Given a type base and modifier, return a regexp matching the keywords
++       that can be expanded in the file.
 +       """
 +
-     encoding = gitConfig('git-p4.pathEncoding') or 'utf_8'
-     if bytes is not str:
-         return path.decode(encoding, errors='replace') if isinstance(path, bytes) else path
-@@ -271,20 +271,20 @@ def run_git_hook(cmd, param=[]):
- 
- def run_hook_command(cmd, param):
-     """Executes a git hook command
--       cmd = the command line file to be executed. This can be
--       a file that is run by OS association.
- 
--       param = a list of parameters to pass to the cmd command
-+       cmd -- the command line file to be executed.  This can be a file that
-+           is run by OS association.
-+
-+       param -- a list of parameters to pass to the cmd command
- 
--       On windows, the extension is checked to see if it should
--       be run with the Git for Windows Bash shell.  If there
--       is no file extension, the file is deemed a bash shell
--       and will be handed off to sh.exe. Otherwise, Windows
--       will be called with the shell to handle the file assocation.
-+       On Windows, the extension is checked to see if it should be run with
-+       the Git for Windows Bash shell.  If there is no file extension, the file
-+       is deemed a bash shell and will be handed off to sh.exe.  Otherwise,
-+       Windows will be called with the shell to handle the file assocation.
- 
-        For non Windows operating systems, the file is called
-        as an executable.
--    """
-+       """
-     cli = [cmd] + param
-     use_shell = False
-     if platform.system() == 'Windows':
-@@ -324,10 +324,9 @@ def p4_write_pipe(c, stdin):
- 
- 
- def read_pipe_full(c):
--    """ Read output from  command. Returns a tuple
--        of the return status, stdout text and stderr
--        text.
--    """
-+    """Read output from command. Returns a tuple of the return status, stdout
-+       text and stderr text.
-+       """
-     if verbose:
-         sys.stderr.write('Reading pipe: %s\n' % str(c))
- 
-@@ -338,12 +337,12 @@ def read_pipe_full(c):
- 
- 
- def read_pipe(c, ignore_error=False, raw=False):
--    """ Read output from  command. Returns the output text on
--        success. On failure, terminates execution, unless
--        ignore_error is True, when it returns an empty string.
-+    """Read output from  command. Returns the output text on success. On
-+       failure, terminates execution, unless ignore_error is True, when it
-+       returns an empty string.
- 
--        If raw is True, do not attempt to decode output text.
--    """
-+       If raw is True, do not attempt to decode output text.
-+       """
-     (retcode, out, err) = read_pipe_full(c)
-     if retcode != 0:
-         if ignore_error:
-@@ -356,9 +355,9 @@ def read_pipe(c, ignore_error=False, raw=False):
- 
- 
- def read_pipe_text(c):
--    """ Read output from a command with trailing whitespace stripped.
--        On error, returns None.
--    """
-+    """Read output from a command with trailing whitespace stripped. On error,
-+       returns None.
-+       """
-     (retcode, out, err) = read_pipe_full(c)
-     if retcode != 0:
+     if base in ("text", "unicode", "binary"):
+         if "ko" in type_mods:
+             return re_ko_keywords
+@@ -650,12 +647,11 @@ def p4_keywords_regexp_for_type(base, type_mods):
          return None
-@@ -387,14 +386,15 @@ def read_pipe_lines(c, raw=False):
  
  
- def p4_read_pipe_lines(c):
--    """Specifically invoke p4 on the command supplied. """
-+    """Specifically invoke p4 on the command supplied."""
-     real_cmd = p4_build_cmd(c)
-     return read_pipe_lines(real_cmd)
- 
- 
- def p4_has_command(cmd):
--    """Ask p4 for help on this command.  If it returns an error, the
--       command does not exist in this version of p4."""
-+    """Ask p4 for help on this command.  If it returns an error, the command
-+       does not exist in this version of p4.
+-#
+-# Given a file, return a regexp matching the possible
+-# RCS keywords that will be expanded, or None for files
+-# with kw expansion turned off.
+-#
+ def p4_keywords_regexp_for_file(file):
++    """Given a file, return a regexp matching the possible RCS keywords that
++       will be expanded, or None for files with kw expansion turned off.
 +       """
-     real_cmd = p4_build_cmd(["help", cmd])
-     p = subprocess.Popen(real_cmd, stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
-@@ -403,10 +403,11 @@ def p4_has_command(cmd):
- 
- 
- def p4_has_move_command():
--    """See if the move command exists, that it supports -k, and that
--       it has not been administratively disabled.  The arguments
--       must be correct, but the filenames do not have to exist.  Use
--       ones with wildcards so even if they exist, it will fail."""
-+    """See if the move command exists, that it supports -k, and that it has not
-+       been administratively disabled.  The arguments must be correct, but the
-+       filenames do not have to exist.  Use ones with wildcards so even if they
-+       exist, it will fail.
-+       """
- 
-     if not p4_has_command("move"):
-         return False
-@@ -435,7 +436,7 @@ def system(cmd, ignore_error=False):
- 
- 
- def p4_system(cmd):
--    """Specifically invoke p4 as the system command. """
-+    """Specifically invoke p4 as the system command."""
-     real_cmd = p4_build_cmd(cmd)
-     expand = not isinstance(real_cmd, list)
-     retcode = subprocess.call(real_cmd, shell=expand)
-@@ -448,8 +449,8 @@ def die_bad_access(s):
- 
- 
- def p4_check_access(min_expiration=1):
--    """ Check if we can access Perforce - account still logged in
--    """
-+    """Check if we can access Perforce - account still logged in."""
 +
-     results = p4CmdList(["login", "-s"])
+     if not os.path.exists(file):
+         return None
+     else:
+@@ -664,8 +660,9 @@ def p4_keywords_regexp_for_file(file):
  
-     if len(results) == 0:
-@@ -497,14 +498,14 @@ def p4_check_access(min_expiration=1):
  
- 
- def p4_version_string():
--    """Read the version string, showing just the last line, which
--       hopefully is the interesting version bit.
-+    """Read the version string, showing just the last line, which hopefully is
-+       the interesting version bit.
- 
-        $ p4 -V
-        Perforce - The Fast Software Configuration Management System.
-        Copyright 1995-2011 Perforce Software.  All rights reserved.
-        Rev. P4/NTX86/2011.1/393975 (2011/12/16).
--    """
+ def setP4ExecBit(file, mode):
+-    # Reopens an already open file and changes the execute bit to match
+-    # the execute bit setting in the passed in mode.
++    """Reopens an already open file and changes the execute bit to match the
++       execute bit setting in the passed in mode.
 +       """
-     global _p4_version_string
-     if not _p4_version_string:
-         a = p4_read_pipe_lines(["-V"])
-@@ -559,9 +560,11 @@ def p4_last_change():
+ 
+     p4Type = "+x"
+ 
+@@ -680,7 +677,7 @@ def setP4ExecBit(file, mode):
  
  
- def p4_describe(change, shelved=False):
--    """Make sure it returns a valid result by checking for
--       the presence of field "time".  Return a dict of the
--       results."""
-+    """Make sure it returns a valid result by checking for the presence of
-+       field "time".
+ def getP4OpenedType(file):
+-    # Returns the perforce file type for the given file.
++    """Returns the perforce file type for the given file."""
+ 
+     result = p4_read_pipe(["opened", wildcard_encode(file)])
+     match = re.match(".*\((.+)\)( \*exclusive\*)?\r?$", result)
+@@ -690,8 +687,9 @@ def getP4OpenedType(file):
+         die("Could not determine file type for %s (result: '%s')" % (file, result))
+ 
+ 
+-# Return the set of all p4 labels
+ def getP4Labels(depotPaths):
++    """Return the set of all p4 labels."""
 +
-+       Return a dict of the results.
-+       """
+     labels = set()
+     if not isinstance(depotPaths, list):
+         depotPaths = [depotPaths]
+@@ -703,8 +701,9 @@ def getP4Labels(depotPaths):
+     return labels
  
-     cmd = ["describe", "-s"]
-     if shelved:
-@@ -715,21 +718,22 @@ def getGitTags():
- def parseDiffTreeEntry(entry):
-     """Parses a single diff tree entry into its component elements.
  
--    See git-diff-tree(1) manpage for details about the format of the diff
--    output. This method returns a dictionary with the following elements:
--
--    src_mode - The mode of the source file
--    dst_mode - The mode of the destination file
--    src_sha1 - The sha1 for the source file
--    dst_sha1 - The sha1 fr the destination file
--    status - The one letter status of the diff (i.e. 'A', 'M', 'D', etc)
--    status_score - The score for the status (applicable for 'C' and 'R'
--                   statuses). This is None if there is no score.
--    src - The path for the source file.
--    dst - The path for the destination file. This is only present for
--          copy or renames. If it is not present, this is None.
--
--    If the pattern is not matched, None is returned."""
-+       See git-diff-tree(1) manpage for details about the format of the diff
-+       output. This method returns a dictionary with the following elements:
+-# Return the set of all git tags
+ def getGitTags():
++    """Return the set of all git tags."""
 +
-+       src_mode - The mode of the source file
-+       dst_mode - The mode of the destination file
-+       src_sha1 - The sha1 for the source file
-+       dst_sha1 - The sha1 fr the destination file
-+       status - The one letter status of the diff (i.e. 'A', 'M', 'D', etc)
-+       status_score - The score for the status (applicable for 'C' and 'R'
-+                      statuses). This is None if there is no score.
-+       src - The path for the source file.
-+       dst - The path for the destination file. This is only present for
-+             copy or renames. If it is not present, this is None.
+     gitTags = set()
+     for line in read_pipe_lines(["git", "tag"]):
+         tag = line.strip()
+@@ -755,8 +754,9 @@ def parseDiffTreeEntry(entry):
+ 
+ 
+ def isModeExec(mode):
+-    # Returns True if the given git mode represents an executable file,
+-    # otherwise False.
++    """Returns True if the given git mode represents an executable file,
++       otherwise False.
++       """
+     return mode[-3:] == "755"
+ 
+ 
+@@ -1274,13 +1274,14 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
+ 
+ 
+ def p4PathStartsWith(path, prefix):
+-    # This method tries to remedy a potential mixed-case issue:
+-    #
+-    # If UserA adds  //depot/DirA/file1
+-    # and UserB adds //depot/dira/file2
+-    #
+-    # we may or may not have a problem. If you have core.ignorecase=true,
+-    # we treat DirA and dira as the same directory
++    """This method tries to remedy a potential mixed-case issue:
 +
-+       If the pattern is not matched, None is returned.
-+       """
- 
-     global _diff_tree_pattern
-     if not _diff_tree_pattern:
-@@ -757,14 +761,16 @@ def isModeExec(mode):
- 
- 
- class P4Exception(Exception):
--    """ Base class for exceptions from the p4 client """
-+    """Base class for exceptions from the p4 client."""
- 
-     def __init__(self, exit_code):
-         self.p4ExitCode = exit_code
- 
- 
- class P4ServerException(P4Exception):
--    """ Base class for exceptions where we get some kind of marshalled up result from the server """
-+    """Base class for exceptions where we get some kind of marshalled up result
-+       from the server.
-+       """
- 
-     def __init__(self, exit_code, p4_result):
-         super(P4ServerException, self).__init__(exit_code)
-@@ -774,7 +780,7 @@ def __init__(self, exit_code, p4_result):
- 
- 
- class P4RequestSizeException(P4ServerException):
--    """ One of the maxresults or maxscanrows errors """
-+    """One of the maxresults or maxscanrows errors."""
- 
-     def __init__(self, exit_code, p4_result, limit):
-         super(P4RequestSizeException, self).__init__(exit_code, p4_result)
-@@ -782,7 +788,7 @@ def __init__(self, exit_code, p4_result, limit):
- 
- 
- class P4CommandException(P4Exception):
--    """ Something went wrong calling p4 which means we have to give up """
-+    """Something went wrong calling p4 which means we have to give up."""
- 
-     def __init__(self, msg):
-         self.msg = msg
-@@ -1016,7 +1022,8 @@ def gitConfig(key, typeSpecifier=None):
- def gitConfigBool(key):
-     """Return a bool, using git config --bool.  It is True only if the
-        variable is set to true, and False if set to false or not present
--       in the config."""
-+       in the config.
-+       """
- 
-     if key not in _gitConfig:
-         _gitConfig[key] = gitConfig(key, '--bool') == "true"
-@@ -1049,7 +1056,8 @@ def p4BranchesInGit(branchesAreInRemotes=True):
-        in remotes or heads as specified by the argument.  Return
-        a dictionary of { branch: revision } for each one found.
-        The branch names are the short names, without any
--       "p4/" prefix."""
-+       "p4/" prefix.
-+       """
- 
-     branches = {}
- 
-@@ -1280,7 +1288,8 @@ def p4PathStartsWith(path, prefix):
- 
- def getClientSpec():
-     """Look at the p4 client spec, create a View() object that contains
--       all the mappings, and return it."""
-+       all the mappings, and return it.
-+       """
- 
-     specList = p4CmdList("client -o")
-     if len(specList) != 1:
-@@ -1363,13 +1372,15 @@ def __init__(self, writeToGitStream):
-         self.writeToGitStream = writeToGitStream
- 
-     def generatePointer(self, cloneDestination, contentFile):
--        """Return the content of a pointer file that is stored in Git instead of
--           the actual content."""
-+        """Return the content of a pointer file that is stored in Git instead
-+           of the actual content.
-+           """
-         assert False, "Method 'generatePointer' required in " + self.__class__.__name__
- 
-     def pushFile(self, localLargeFile):
-         """Push the actual content which is not stored in the Git repository to
--           a server."""
-+           a server.
-+           """
-         assert False, "Method 'pushFile' required in " + self.__class__.__name__
- 
-     def hasLargeFileExtension(self, relPath):
-@@ -1417,7 +1428,8 @@ def isLargeFile(self, relPath):
-     def processContent(self, git_mode, relPath, contents):
-         """Processes the content of git fast import. This method decides if a
-            file is stored in the large file system and handles all necessary
--           steps."""
-+           steps.
-+           """
-         if self.exceedsLargeFileThreshold(relPath, contents) or self.hasLargeFileExtension(relPath):
-             contentTempFile = self.generateTempFile(contents)
-             (pointer_git_mode, contents, localLargeFile) = self.generatePointer(contentTempFile)
-@@ -1442,7 +1454,8 @@ class MockLFS(LargeFileSystem):
- 
-     def generatePointer(self, contentFile):
-         """The pointer content is the original content prefixed with "pointer-".
--           The local filename of the large file storage is derived from the file content.
-+           The local filename of the large file storage is derived from the
-+           file content.
-            """
-         with open(contentFile, 'r') as f:
-             content = next(f)
-@@ -1452,8 +1465,8 @@ def generatePointer(self, contentFile):
-             return (gitMode, pointerContents, localLargeFile)
- 
-     def pushFile(self, localLargeFile):
--        """The remote filename of the large file storage is the same as the local
--           one but in a different directory.
-+        """The remote filename of the large file storage is the same as the
-+           local one but in a different directory.
-            """
-         remotePath = os.path.join(os.path.dirname(localLargeFile), '..', 'remote')
-         if not os.path.exists(remotePath):
-@@ -1463,7 +1476,8 @@ def pushFile(self, localLargeFile):
- 
- class GitLFS(LargeFileSystem):
-     """Git LFS as backend for the git-p4 large file system.
--       See https://git-lfs.github.com/ for details."""
-+       See https://git-lfs.github.com/ for details.
-+       """
- 
-     def __init__(self, *args):
-         LargeFileSystem.__init__(self, *args)
-@@ -1729,20 +1743,20 @@ def check(self):
-             die("You have files opened with perforce! Close them before starting the sync.")
- 
-     def separate_jobs_from_description(self, message):
--        """Extract and return a possible Jobs field in the commit
--           message.  It goes into a separate section in the p4 change
--           specification.
-+        """Extract and return a possible Jobs field in the commit message.  It
-+           goes into a separate section in the p4 change specification.
- 
--           A jobs line starts with "Jobs:" and looks like a new field
--           in a form.  Values are white-space separated on the same
--           line or on following lines that start with a tab.
-+           A jobs line starts with "Jobs:" and looks like a new field in a
-+           form.  Values are white-space separated on the same line or on
-+           following lines that start with a tab.
- 
--           This does not parse and extract the full git commit message
--           like a p4 form.  It just sees the Jobs: line as a marker
--           to pass everything from then on directly into the p4 form,
--           but outside the description section.
-+           This does not parse and extract the full git commit message like a
-+           p4 form.  It just sees the Jobs: line as a marker to pass everything
-+           from then on directly into the p4 form, but outside the description
-+           section.
- 
--           Return a tuple (stripped log message, jobs string)."""
-+           Return a tuple (stripped log message, jobs string).
-+           """
- 
-         m = re.search(r'^Jobs:', message, re.MULTILINE)
-         if m is None:
-@@ -1753,9 +1767,10 @@ def separate_jobs_from_description(self, message):
-         return (stripped_message, jobtext)
- 
-     def prepareLogMessage(self, template, message, jobs):
--        """Edits the template returned from "p4 change -o" to insert
--           the message in the Description field, and the jobs text in
--           the Jobs field."""
-+        """Edits the template returned from "p4 change -o" to insert the
-+           message in the Description field, and the jobs text in the Jobs
-+           field.
-+           """
-         result = ""
- 
-         inDescriptionSection = False
-@@ -1880,11 +1895,13 @@ def canChangeChangelists(self):
- 
-     def prepareSubmitTemplate(self, changelist=None):
-         """Run "p4 change -o" to grab a change specification template.
++       If UserA adds  //depot/DirA/file1
++       and UserB adds //depot/dira/file2
 +
-            This does not use "p4 -G", as it is nice to keep the submission
-            template in original order, since a human might edit it.
- 
-            Remove lines in the Files section that show changes to files
--           outside the depot path we're committing into."""
-+           outside the depot path we're committing into.
-+           """
- 
-         [upstream, settings] = findUpstreamBranchPoint()
- 
-@@ -1947,8 +1964,10 @@ def prepareSubmitTemplate(self, changelist=None):
-         return template
- 
-     def edit_template(self, template_file):
--        """Invoke the editor to let the user change the submission
--           message.  Return true if okay to continue with the submit."""
-+        """Invoke the editor to let the user change the submission message.
-+
-+           Return true if okay to continue with the submit.
-+           """
- 
-         # if configured to skip the editing part, just submit
-         if gitConfigBool("git-p4.skipSubmitEdit"):
-@@ -2643,8 +2662,9 @@ def run(self, args):
- 
- 
- class View(object):
--    """Represent a p4 view ("p4 help views"), and map files in a
--       repo according to the view."""
-+    """Represent a p4 view ("p4 help views"), and map files in a repo according
-+       to the view.
++       we may or may not have a problem. If you have core.ignorecase=true,
++       we treat DirA and dira as the same directory.
 +       """
+     if gitConfigBool("core.ignorecase"):
+         return path.lower().startswith(prefix.lower())
+     return path.startswith(prefix)
+@@ -1332,13 +1333,15 @@ def getClientRoot():
+     return entry["Root"]
  
-     def __init__(self, client_name):
-         self.mappings = []
-@@ -2653,9 +2673,10 @@ def __init__(self, client_name):
-         self.client_spec_path_cache = {}
  
-     def append(self, view_line):
--        """Parse a view line, splitting it into depot and client
--           sides.  Append to self.mappings, preserving order.  This
--           is only needed for tag creation."""
-+        """Parse a view line, splitting it into depot and client sides.  Append
-+           to self.mappings, preserving order.  This is only needed for tag
-+           creation.
-+           """
- 
-         # Split the view line into exactly two words.  P4 enforces
-         # structure on these lines that simplifies this quite a bit.
-@@ -2704,7 +2725,7 @@ def convert_client_path(self, clientFile):
-         return clientFile[len(self.client_prefix):]
- 
-     def update_client_spec_path_cache(self, files):
--        """ Caching file paths by "p4 where" batch query """
-+        """Caching file paths by "p4 where" batch query."""
- 
-         # List depot file paths exclude that already cached
-         fileArgs = [f['path'] for f in files if decode_path(f['path']) not in self.client_spec_path_cache]
-@@ -2736,9 +2757,11 @@ def update_client_spec_path_cache(self, files):
-                 self.client_spec_path_cache[depotFile] = b''
- 
-     def map_in_client(self, depot_path):
--        """Return the relative location in the client where this
--           depot file should live.  Returns "" if the file should
--           not be mapped in the client."""
-+        """Return the relative location in the client where this depot file
-+           should live.
+-#
+-# P4 wildcards are not allowed in filenames.  P4 complains
+-# if you simply add them, but you can force it with "-f", in
+-# which case it translates them into %xx encoding internally.
+-#
+ def wildcard_decode(path):
+-    # Search for and fix just these four characters.  Do % last so
++    """Decode P4 wildcards into %xx encoding
 +
-+           Returns "" if the file should not be mapped in the client.
++       P4 wildcards are not allowed in filenames.  P4 complains if you simply
++       add them, but you can force it with "-f", in which case it translates
++       them into %xx encoding internally.
++       """
++
++    # Search for and fix just these four characters. Do % last so
+     # that fixing it does not inadvertently create new %-escapes.
+     # Cannot have * in a filename in windows; untested as to
+     # what p4 would do in such a case.
+@@ -1351,6 +1354,8 @@ def wildcard_decode(path):
+ 
+ 
+ def wildcard_encode(path):
++    """Encode %xx coded wildcards into P4 coding."""
++
+     # do % first to avoid double-encoding the %s introduced here
+     path = path.replace("%", "%25") \
+                .replace("*", "%2A") \
+@@ -1597,7 +1602,7 @@ def p4UserId(self):
+         die("Could not find your p4 user id")
+ 
+     def p4UserIsMe(self, p4User):
+-        # return True if the given p4 user is actually me
++        """Return True if the given p4 user is actually me."""
+         me = self.p4UserId()
+         if not p4User or p4User != me:
+             return False
+@@ -1800,7 +1805,9 @@ def prepareLogMessage(self, template, message, jobs):
+         return result
+ 
+     def patchRCSKeywords(self, file, regexp):
+-        # Attempt to zap the RCS keywords in a p4 controlled file matching the given regex
++        """Attempt to zap the RCS keywords in a p4 controlled file matching the
++           given regex.
 +           """
+         (handle, outFileName) = tempfile.mkstemp(dir='.')
+         try:
+             with os.fdopen(handle, "wb") as outFile, open(file, "rb") as inFile:
+@@ -1818,7 +1825,9 @@ def patchRCSKeywords(self, file, regexp):
+         print("Patched up RCS keywords in %s" % file)
  
-         if gitConfigBool("core.ignorecase"):
-             depot_path = depot_path.lower()
-@@ -2889,10 +2912,10 @@ def extractJobsFromCommit(self, commit):
-         return jobs
- 
-     def stripRepoPath(self, path, prefixes):
--        """When streaming files, this is called to map a p4 depot path
--           to where it should go in git.  The prefixes are either
--           self.depotPaths, or self.branchPrefixes in the case of
--           branch detection."""
-+        """When streaming files, this is called to map a p4 depot path to where
-+           it should go in git.  The prefixes are either self.depotPaths, or
-+           self.branchPrefixes in the case of branch detection.
+     def p4UserForCommit(self,id):
+-        # Return the tuple (perforce user,git email) for a given git commit id
++        """Return the tuple (perforce user,git email) for a given git commit
++           id.
 +           """
+         self.getUserMapFromPerforceServer()
+         gitEmail = read_pipe(["git", "log", "--max-count=1",
+                               "--format=%ae", id])
+@@ -1829,7 +1838,7 @@ def p4UserForCommit(self,id):
+             return (self.emails[gitEmail],gitEmail)
  
-         if self.useClientSpec:
-             # branch detection moves files up a level (the branch name)
-@@ -2921,8 +2944,9 @@ def stripRepoPath(self, path, prefixes):
+     def checkValidP4Users(self,commits):
+-        # check if any git authors cannot be mapped to p4 users
++        """Check if any git authors cannot be mapped to p4 users."""
+         for id in commits:
+             (user,email) = self.p4UserForCommit(id)
+             if not user:
+@@ -1840,10 +1849,12 @@ def checkValidP4Users(self,commits):
+                     die("Error: %s\nSet git-p4.allowMissingP4Users to true to allow this." % msg)
+ 
+     def lastP4Changelist(self):
+-        # Get back the last changelist number submitted in this client spec. This
+-        # then gets used to patch up the username in the change. If the same
+-        # client spec is being used by multiple processes then this might go
+-        # wrong.
++        """Get back the last changelist number submitted in this client spec.
++
++           This then gets used to patch up the username in the change. If the
++           same client spec is being used by multiple processes then this might
++           go wrong.
++           """
+         results = p4CmdList("client -o")        # find the current client
+         client = None
+         for r in results:
+@@ -1859,7 +1870,7 @@ def lastP4Changelist(self):
+         die("Could not get changelist number for last submit - cannot patch up user details")
+ 
+     def modifyChangelistUser(self, changelist, newUser):
+-        # fixup the user field of a changelist after it has been submitted.
++        """Fixup the user field of a changelist after it has been submitted."""
+         changes = p4CmdList("change -o %s" % changelist)
+         if len(changes) != 1:
+             die("Bad output from p4 change modifying %s to user %s" %
+@@ -1882,8 +1893,9 @@ def modifyChangelistUser(self, changelist, newUser):
+         die("Could not modify user field of changelist %s to %s" % (changelist, newUser))
+ 
+     def canChangeChangelists(self):
+-        # check to see if we have p4 admin or super-user permissions, either of
+-        # which are required to modify changelists.
++        """Check to see if we have p4 admin or super-user permissions, either
++           of which are required to modify changelists.
++           """
+         results = p4CmdList(["protects", self.depotPath])
+         for r in results:
+             if 'perm' in r:
+@@ -2334,9 +2346,11 @@ def applyCommit(self, id):
+                 os.remove(fileName)
+         return submitted
+ 
+-    # Export git tags as p4 labels. Create a p4 label and then tag
+-    # with that.
+     def exportGitTags(self, gitTags):
++        """Export git tags as p4 labels. Create a p4 label and then tag with
++           that.
++           """
++
+         validLabelRegexp = gitConfig("git-p4.labelExportRegexp")
+         if len(validLabelRegexp) == 0:
+             validLabelRegexp = defaultLabelRegexp
+@@ -2859,8 +2873,8 @@ def __init__(self):
+         self.tz = "%+03d%02d" % (- time.timezone / 3600, ((- time.timezone % 3600) / 60))
+         self.labels = {}
+ 
+-    # Force a checkpoint in fast-import and wait for it to finish
+     def checkpoint(self):
++        """Force a checkpoint in fast-import and wait for it to finish."""
+         self.gitStream.write("checkpoint\n\n")
+         self.gitStream.write("progress checkpoint\n\n")
+         self.gitStream.flush()
+@@ -3006,9 +3020,9 @@ def encodeWithUTF8(self, path):
+                 print('Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, path))
          return path
  
-     def splitFilesIntoBranches(self, commit):
--        """Look at each depotFile in the commit to figure out to what
--           branch it belongs."""
-+        """Look at each depotFile in the commit to figure out to what branch it
-+           belongs.
-+           """
- 
-         if self.clientSpecDirs:
-             files = self.extractFilesFromCommit(commit)
-@@ -3193,9 +3217,10 @@ def make_email(self, userid):
-             return "%s <a@b>" % userid
- 
-     def streamTag(self, gitStream, labelName, labelDetails, commit, epoch):
--        """ Stream a p4 tag.
--        commit is either a git commit, or a fast-import mark, ":<p4commit>"
--        """
-+        """Stream a p4 tag.
+-    # output one file from the P4 stream
+-    # - helper for streamP4Files
+     def streamOneP4File(self, file, contents):
++        """Output one file from the P4 stream - helper for streamP4Files."""
 +
-+           Commit is either a git commit, or a fast-import mark, ":<p4commit>".
-+           """
+         file_path = file['depotFile']
+         relPath = self.stripRepoPath(decode_path(file_path), self.branchPrefixes)
  
+@@ -3100,8 +3114,8 @@ def streamOneP4Deletion(self, file):
+         if self.largeFileSystem and self.largeFileSystem.isLargeFile(relPath):
+             self.largeFileSystem.removeLargeFile(relPath)
+ 
+-    # handle another chunk of streaming data
+     def streamP4FilesCb(self, marshalled):
++        """Handle another chunk of streaming data."""
+ 
+         # catch p4 errors and complain
+         err = None
+@@ -3165,8 +3179,9 @@ def streamP4FilesCb(self, marshalled):
+ 
+         self.stream_have_file_info = True
+ 
+-    # Stream directly from "p4 files" into "git fast-import"
+     def streamP4Files(self, files):
++        """Stream directly from "p4 files" into "git fast-import."""
++
+         filesForCommit = []
+         filesToRead = []
+         filesToDelete = []
+@@ -3270,15 +3285,18 @@ def hasBranchPrefix(self, path):
+         return hasPrefix
+ 
+     def findShadowedFiles(self, files, change):
+-        # Perforce allows you commit files and directories with the same name,
+-        # so you could have files //depot/foo and //depot/foo/bar both checked
+-        # in.  A p4 sync of a repository in this state fails.  Deleting one of
+-        # the files recovers the repository.
+-        #
+-        # Git will not allow the broken state to exist and only the most recent
+-        # of the conflicting names is left in the repository.  When one of the
+-        # conflicting files is deleted we need to re-add the other one to make
+-        # sure the git repository recovers in the same way as perforce.
++        """Perforce allows you commit files and directories with the same name,
++           so you could have files //depot/foo and //depot/foo/bar both checked
++           in.  A p4 sync of a repository in this state fails.  Deleting one of
++           the files recovers the repository.
++
++           Git will not allow the broken state to exist and only the most
++           recent of the conflicting names is left in the repository.  When one
++           of the conflicting files is deleted we need to re-add the other one
++           to make sure the git repository recovers in the same way as
++           perforce.
++           """
++
+         deleted = [f for f in files if f['action'] in self.delete_actions]
+         to_check = set()
+         for f in deleted:
+@@ -3395,8 +3413,11 @@ def commit(self, details, files, branch, parent = "", allow_empty=False):
+                     print("Tag %s does not match with change %s: file count is different."
+                            % (labelDetails["label"], change))
+ 
+-    # Build a dictionary of changelists and labels, for "detect-labels" option.
+     def getLabels(self):
++        """Build a dictionary of changelists and labels, for "detect-labels"
++           option.
++           """
++
+         self.labels = {}
+ 
+         l = p4CmdList(["labels"] + ["%s..." % p for p in self.depotPaths])
+@@ -3422,11 +3443,12 @@ def getLabels(self):
+         if self.verbose:
+             print("Label changes: %s" % self.labels.keys())
+ 
+-    # Import p4 labels as git tags. A direct mapping does not
+-    # exist, so assume that if all the files are at the same revision
+-    # then we can use that, or it's something more complicated we should
+-    # just ignore.
+     def importP4Labels(self, stream, p4Labels):
++        """Import p4 labels as git tags. A direct mapping does not exist, so
++           assume that if all the files are at the same revision then we can
++           use that, or it's something more complicated we should just ignore.
++           """
++
          if verbose:
-             print("writing tag %s for commit %s" % (labelName, commit))
-@@ -4246,8 +4271,7 @@ def __init__(self):
-         self.destbranch = "refs/remotes/p4-unshelved"
+             print("import p4 labels: " + ' '.join(p4Labels))
  
-     def renameBranch(self, branch_name):
--        """ Rename the existing branch to branch_name.N
--        """
-+        """Rename the existing branch to branch_name.N ."""
- 
-         found = True
-         for i in range(0,1000):
-@@ -4263,9 +4287,9 @@ def renameBranch(self, branch_name):
-             sys.exit("gave up trying to rename existing branch {0}".format(sync.branch))
- 
-     def findLastP4Revision(self, starting_point):
--        """ Look back from starting_point for the first commit created by git-p4
--            to find the P4 commit we are based on, and the depot-paths.
--        """
-+        """Look back from starting_point for the first commit created by git-p4
-+           to find the P4 commit we are based on, and the depot-paths.
-+           """
- 
-         for parent in (range(65535)):
-             log = extractLogMessageFromGitCommit("{0}~{1}".format(starting_point, parent))
-@@ -4276,8 +4300,9 @@ def findLastP4Revision(self, starting_point):
-         sys.exit("could not find git-p4 commits in {0}".format(self.origin))
- 
-     def createShelveParent(self, change, branch_name, sync, origin):
--        """ Create a commit matching the parent of the shelved changelist 'change'
--        """
-+        """Create a commit matching the parent of the shelved changelist
-+           'change'.
-+           """
-         parent_description = p4_describe(change, shelved=True)
-         parent_description['desc'] = 'parent for shelved changelist {}\n'.format(change)
-         files = sync.extractFilesFromCommit(parent_description, shelved=False, shelved_cl=change)
 -- 
 2.34.1
 
