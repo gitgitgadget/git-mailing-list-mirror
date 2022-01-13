@@ -2,87 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AD76C433F5
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 17:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21181C433EF
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 18:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234569AbiAMRkX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 12:40:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51972 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229702AbiAMRkX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jan 2022 12:40:23 -0500
-Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5490C061574
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 09:40:22 -0800 (PST)
-Received: by mail-vk1-xa31.google.com with SMTP id 78so4331027vkz.7
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 09:40:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=EEvwjd7AUN7ZKWDjKIAv8msWS57srZhYtaC3wwpPp64=;
-        b=oOzH2SPNEwtYtSMH6rOq5D+oKCtqNGWp7C62fPciBDTOVwYJ7LzyWDQClTV56mvqhP
-         0q6+3FOtD755agiA2Z6X8jLJtsckwgYsWpPPH6/Y8FnFGJq5rQUn+Ja/G9BzJ4FNbadM
-         /GbMLmp4xc/3R71cw3jXm8cSwhVwuB+9agsPh+5+ncCbitTA6e/+/UrhcQyezlko52ls
-         f0eS2INHJdrWISZccFmfiuv2sr2WAx+93lOQXKDDrM688x5oWwTrT//tZLswyaybR/+t
-         GAaN5yALNxoxDWpvW9yCCJSx2Y78w+ekLKLAHReXGBoOnqHQ1CPuoax5hHJWnKyUvRGG
-         mnnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=EEvwjd7AUN7ZKWDjKIAv8msWS57srZhYtaC3wwpPp64=;
-        b=PjkVj0tyaAfZRM1TlEoPGv8WstGxE3OK6dNoC8rTrR56JWDNvQanQw03XcDhYQzUJj
-         kNLKTyTSCmkDbu0C0U9QAg1NvxEF/SnAAZa575HROvqHv2SRytfoAsU/GrnE+B+LK8rf
-         Wq5MUYhHdXmExPeTK8D2gbBqJapHHBi7DV4NXL7G+PrjMPuRTn/Vx5QY+Pat568VTgr6
-         YP7Ax097nzr+7qcA5GAcZUnT40CWjB34d2EF9B8+mL7jOFZBE0XKuJ0HcflbQYmAkcCp
-         vTRX0bK+WsQPJsFqy/ua7xW73FKcCUJv7zx6Dzlg6onLfSIRuJvEL+ls6h0aaooWzCjE
-         6XTQ==
-X-Gm-Message-State: AOAM533YFA/cVtOAVVQxenk0xttMWrKc0CAVxZE7BndIpbyMPQ+qE15H
-        I2QTkN2rUzCJ46oJuME8RgT4DvRyOmtSbZ+4YC++wA==
-X-Google-Smtp-Source: ABdhPJyYNlGu4doKSnwZjw2UJJ/ZhwvUaq8FIOSwBfv2McXWFlaoCLIBrx6q+RNXpT0e4QyJPocL/qi9S+a/UmQuPWk=
-X-Received: by 2002:a1f:3213:: with SMTP id y19mr2869447vky.7.1642095621678;
- Thu, 13 Jan 2022 09:40:21 -0800 (PST)
+        id S237377AbiAMSDH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 13:03:07 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56920 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231162AbiAMSDH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 13:03:07 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 16651FF172;
+        Thu, 13 Jan 2022 13:03:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=6FYlB0msuWRz
+        J03oLAavCdJiSzy1t3rytooQSpB2Ri8=; b=E96cPHJUx8HAdOnFRjHc5HpQ+GmQ
+        S/QeIaszvsXDwSqPCY4CBf4EecIaGXjuvFW5E7W77e0BZBBhAMVUKlugN0Wv4Fgb
+        lA9zXUFoIWvb1Tnl+ROQ7GJbQMMb3Oq62qyd0Nw7yRNy9i6M39RURB1F+czyLwg7
+        cLajHleYxExLeNc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37BFBFF170;
+        Thu, 13 Jan 2022 13:03:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9699DFF16F;
+        Thu, 13 Jan 2022 13:03:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     rsbecker@nexbridge.com, 'Taylor Blau' <me@ttaylorr.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [BUG] Re: Git 2.35.0-rc0
+References: <00fd01d80691$c87e3ad0$597ab070$@nexbridge.com>
+        <Ydzw+RqR6IfbT/oM@nand.local>
+        <010b01d80697$0c848770$258d9650$@nexbridge.com>
+        <Ydzyv8ZCEpDDRBXT@nand.local>
+        <010d01d8069e$8d330480$a7990d80$@nexbridge.com>
+        <xmqqzgo0u5j7.fsf@gitster.g>
+        <220113.864k67vkea.gmgdl@evledraar.gmail.com>
+Date:   Thu, 13 Jan 2022 10:03:01 -0800
+In-Reply-To: <220113.864k67vkea.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 13 Jan 2022 14:21:44 +0100")
+Message-ID: <xmqqv8ynikdm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1188.git.git.1642092934523.gitgitgadget@gmail.com> <220113.86r19btv5a.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220113.86r19btv5a.gmgdl@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 13 Jan 2022 18:40:10 +0100
-Message-ID: <CAFQ2z_Nng6woxKVCpGzL95EOkuBFMQW7FtCTJfyaAZaZ-HMQcA@mail.gmail.com>
-Subject: Re: [PATCH] reftable: avoid initializing structs from structs
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 0D99B744-749B-11EC-A8AB-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 13, 2022 at 6:14 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> I can confirm that this works on the xlc version that errored on this
-> before, the reftable tests even pass!
->
-> > Apparently, the IBM xlc compiler doesn't like this.
->
-> Would make sense to steal the compiler version etc. details from my
-> <patch-1.1-7425b64c0a0-20220113T113821Z-avarab@gmail.com>. I.e. eventuall=
-y
-> we'll be able to change this & other code back, as nobody will care
-> about that older compiler version. It worked before in the pre-image on
-> a more recent xlc.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Feel free to butcher this in any way you like for your series. :)
+> https://lore.kernel.org/git/87wnn62nhp.fsf@evledraar.gmail.com/ this us=
+e
+> of uncompress2() is just saving a few lines of boilerplate instead of
+> using the underlying zlib functions, which every other in-tree user
+> uses.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+I looked at the source of uncompress2(), and I tend to agree that,
+we do NOT HAVE TO add dependency on it.  You should be able to
+rewrite the new caller without using it.
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+But this is a 5-year old API function, that first appeared how many
+years ago in their public release?  In a few years, I would say that
+we would be laughed at if we avoid it with "it is not available
+everywhere".
 
-Registergericht und -nummer: Hamburg, HRB 86891
+And in the meantime, we ship a copy lifted from upstream, so those
+with older zlib would be OK with it, too.
 
-Sitz der Gesellschaft: Hamburg
+That is how I view what we have today.  To me, the logical
+conclusion of the observation is that, we do not have good reason
+to avoid it.
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+When we are adding a new piece of code that drives inflate(), we
+should remember that we now have uncompress2() available in the
+codebase, and see if we can simplify it by using uncompress2().  The
+same is true for a case where we refactor existing code that can
+become simpler with uncompress2().
+
+Thanks.
