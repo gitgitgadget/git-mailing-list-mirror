@@ -2,161 +2,297 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B5BEC433F5
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 00:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F370C433F5
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 00:45:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbiAMAis (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 19:38:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46224 "EHLO
+        id S229898AbiAMApc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 19:45:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229583AbiAMAir (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 19:38:47 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67791C06173F
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 16:38:47 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id u25so16762047edf.1
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 16:38:47 -0800 (PST)
+        with ESMTP id S229876AbiAMApP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 19:45:15 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEF9FC061759
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 16:45:14 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id j13-20020a17090a318d00b001b3e4f72bfbso4714246pjb.9
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 16:45:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=kFPGgGYBYoUFOZ6TiWaSxi4WSFPZqNkItEIQDaLdHuQ=;
-        b=CqFuHWVNZPOrcFkpCiCRv95UCrF+8T2w9o808flk89RyXMIoXALjPfyNwvFEbA1b3U
-         t9rTmmaZzz4VbCw3AR6rEDfMukvrctcqUELLbh1tnlbtP/+EHwKzMG1EtUPPsAsPGNIm
-         DmYxJm0ZEOMQQ/yrPyf3i+DO5Ptto8cok5JQtFayB+4HnT2P8unampBr5sOAcSaQcDCp
-         Rq3lsiGOO8U/ijf4DzwbsPiJ2if/gzOscC5sgNnmX+iaCTSQFSrzCFFZWiykWadF/Tpi
-         8D+xGWlfHJ+mJ8J1s8jB+yV/oR2yUkHMvxngwuBXglIAXnmR6ruRqjSkgb/2yxcRK30e
-         urKw==
+        bh=Tvx6HAbV/ovTGnxzuKriJA4lbhwl0bBqtO59iNKNOGM=;
+        b=jE7Wz3sTdIGKLAPkrr+oclv6fEcSYu9xuyFiSbQl6ZR8SOeQSbBZRtkSrGS1RE9g46
+         wmx3cs5yTDkfVkJRCDZnUPPyIJsbOIBIZYswNEZ1FvS3zI8ZXlJ30jkWMTe5QSaCvKJQ
+         GR7DGB1YIRLvfvZoV07YfLfcuaEkZ0qlt+f/ykDmBL82pLfYmHCKAA5kNRzO3VSlVIrr
+         gTmtiQ19z3mtcO0XwrBqmpuwhm8HPgZbYSDOjG7BZ3wH1JCsjPbQoR9lM1AClE9PEItC
+         6M9UGKwGrLM4Azvb5+ASdSJVXUgeoyUblaB+73hmo+GbNL1QsoOg0VpmXsO80V26CYGV
+         7OWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kFPGgGYBYoUFOZ6TiWaSxi4WSFPZqNkItEIQDaLdHuQ=;
-        b=OBrHk+5Y5gsvKKzahMPP5r4LL+s5Yp+HYKaQz6D9b3/4oVwgvNENlogOjkxXHWlxbz
-         Tz+pfIi0yz+iOBues5pj3C3buHssB6c6KjTUiFmEFWv0NPvhl/JZRTapUASJyTcqS0cD
-         5qytk3HWuo+3atA3aTFb61gM947nxYqQxv7E4NCDHbaQrQK5FYuirUz1uBovP48GxezF
-         qd6RNV5z4NOkEdUM2huopUHw7/2ThIznmpMDbWArErTaBW2AeMoR/MV30BXEfbIOm8ha
-         Npx9rQUOgsmxq9keGwgzbnLRhfbwoYs57IJrSKtWyAPeRqj/9NlLnP1ZfbiLMModyiax
-         Vwhg==
-X-Gm-Message-State: AOAM533vd9iESlDUIZYOhDwspGRNSh1hZLQ9ALVhPJxAa+Z8vHOZCucz
-        BMyvQVxRgJ9QT/26YtkZySuFYB5CBLhiaMeOgwBUeRaPj18=
-X-Google-Smtp-Source: ABdhPJxchR4lAFLnm2hUkLi0gTUEp6UqREsT3ihGDhcwBoZzx8WHGohqNI7fzrsHz00dCwFRsJZhkNXz+QHbULO3ttw=
-X-Received: by 2002:a17:907:8687:: with SMTP id qa7mr1701413ejc.192.1642034325903;
- Wed, 12 Jan 2022 16:38:45 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com>
- <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com> <aa9ea67180dd10ef8bdf17e8c23694da15828b21.1641841193.git.gitgitgadget@gmail.com>
- <0e4bb6f1-337e-38b3-75b2-fe11ff8d68b2@gmail.com>
-In-Reply-To: <0e4bb6f1-337e-38b3-75b2-fe11ff8d68b2@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 12 Jan 2022 16:38:34 -0800
-Message-ID: <CABPp-BEvUCPzcWhuVP==Rk=2pJXxRSGZVjdEzPuzbwTcw7kMRQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] sparse-checkout: limit tab completion to a single level
-To:     Lessley Dennington <lessleydennington@gmail.com>
-Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        johannes.schindelin@gmail.com
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Tvx6HAbV/ovTGnxzuKriJA4lbhwl0bBqtO59iNKNOGM=;
+        b=GUilzCq2unIEa9ILH0DzWoI/5B6zGeeaOIDH20VzZ3yAucnAOsAj4+OP6lUSG2J42a
+         Eg/7xJOpwpxygZdyqniv5eSnCYqiRvw9RQYLcPlgGeRwD57nrVeQGvH1T2wtAg0R7Oqm
+         EzOG3QfsA/xpvblJOn8bKvNufGv25GAMj5pnoj1y0Alu3UyLDvXII5HTxnrbfrpftSx7
+         hOVIELoEOeRwEOl8JxDENFTRMRpDZgdhuIM6f52jlH7FJDIjYkUbAkSXgDwUxR/B0+bD
+         D0JnLn8L1yluPmOP93X3aKA1n6+VmlHeE603mFZC9Q7/C3wj0eyFIT1N5YjnkkH5EhVu
+         6tKg==
+X-Gm-Message-State: AOAM530hoGb9IY2CSN/8gSVY9hnrkSGB+QoV7envS8TVRFeqCEqtjo3T
+        GzPOFkgso8W8x8tH4oAUe2n6iafspssqXshoVSLMGq8Z2YR9gfUqjv+jQD/zawd23tO1BWOksZJ
+        kI36iIVVR8ZVRoiSWUZlnqU1Rxzs6aZ5WQZidN9nUo4LvWLQk/NNSn+2QBSReNlU=
+X-Google-Smtp-Source: ABdhPJywsJSnfefewzrGpLV8FBxwTbvKibSjl/9RpyjPXWIZQLJ0U6GtfXp3y30r2OVPLmQpZtqdz09pvVsRLA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a63:348d:: with SMTP id
+ b135mr1828343pga.481.1642034714073; Wed, 12 Jan 2022 16:45:14 -0800 (PST)
+Date:   Wed, 12 Jan 2022 16:44:58 -0800
+In-Reply-To: <20211222001134.28933-1-chooglen@google.com>
+Message-Id: <20220113004501.78822-1-chooglen@google.com>
+Mime-Version: 1.0
+References: <20211222001134.28933-1-chooglen@google.com>
+X-Mailer: git-send-email 2.34.1.703.g22d0c6ccf7-goog
+Subject: [PATCH v4 0/3] fetch: skip unnecessary tasks when using --negotiate-only
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 12, 2022 at 3:43 PM Lessley Dennington
-<lessleydennington@gmail.com> wrote:
->
-> > +__gitcomp_directories ()
-> > +{
-> > +     local _tmp_dir _tmp_completions
-> > +
-> > +     # Get the directory of the current token; this differs from dirname
-> > +     # in that it keeps up to the final trailing slash.  If no slash found
-> > +     # that's fine too.
-> > +     [[ "$cur" =~ .*/ ]]
-> > +     _tmp_dir=$BASH_REMATCH
-> > +
-> > +     # Find possible directory completions, adding trailing '/' characters
-> > +     _tmp_completions="$(git ls-tree -d --name-only HEAD $_tmp_dir |
-> > +         sed -e s%$%/%)"
-> > +
-> I am admittedly unfamiliar with the use of this format in sed expressions
-> (I'm generally more accustomed to '/' instead of '%'). It's definitely
-> working as it should, I'm just not quite sure of how.
+`git fetch --negotiate-only` is used internally by push negotation and
+it behaves very differently from other uses of `git fetch`, e.g. it does
+not update refs or fetch objects. But because of how cmd_fetch() is
+written, `git fetch --negotiate-only` performs tasks that it shouldn't.
+This is results in behavior that is unnecessary at best, and incorrect
+at worst:
 
-These are the same in sed:
-   sed -e s/apple/banana/
-   sed -e s@apple@banana@
-   sed -e s%apple%banana%
+* Submodules are updated if enabled by recurse.submodules=true, but
+  negotiation fetch doesn't actually update the repo, so this doesn't
+  make sense.
+* Commit graphs will be written if enabled by
+  fetch.writeCommitGraph=true, but this is unnecessary because no
+  objects are fetched [1]. 
+* gc is run, but according to the commit message in [2], we only do this
+  because we expect `git fetch` to introduce objects.
 
-You can pick any character you like, but '/' is what people most often
-use.  My expression involved a '/', though, so I changed the delimiter
-to avoid ugly backslash escapes.
+Make `git fetch --negotiate-only` handle these tasks more rigorously by
+doing the following:
 
-> > +     if [[ -n "$_tmp_completions" ]]; then
-> > +         # There were some directory completions, so find ones that
-> > +         # start with "$cur", the current token, and put those in COMPREPLY
-> > +         local i=0 c IFS=$' \t\n'
-> Does c need to be declared before the loop?
+* Make cmd_fetch() skip irrelevant tasks if we know for certain that
+objects will not be fetched
+* Disable submodule recursion and die() if a user explicitly asks for it
 
-It was, but it's super easy to miss.  Look at the "local" line just
-before your comment; it almost reads like line noise, but basically
-there are three variables declared with two of them given initial
-values.  c is in the middle, without an initial value.
+[1] This is also confirmed by Documentation/config/fetch.txt, which
+  states that Git should only write commit graphs if a pack-file is
+  downloaded.
+[2] 131b8fcbfb (fetch: run gc --auto after fetching, 2013-01-26)
 
-> > +         for c in $_tmp_completions; do
-> > +             if [[ $c == "$cur"* ]]; then
-> > +                 COMPREPLY+=("$c")
-> > +             fi
-> > +         done
-> > +     elif [[ "$cur" =~ /$ ]]; then
-> > +         # No possible further completions any deeper, so assume we're at
-> > +         # a leaf directory and just consider it complete
-> Thank you so much for the detailed comments on this change - it made it
-> really easy to parse.
-> > +         __gitcomp_direct_append "$cur "
-> What's the reason for the trailing space here?
+Changes since v3:
+* change commit message subject: builtin/fetch -> fetch --negotiate-only
+* move the 'goto cleanup' to _after_ the submodule updating task because
+  we may want to update submodules even if objects were not fetched (as
+  pointed out by Junio, thanks!)
+* disable submodule recursion in the patch that checks for
+  --negotiate-only + --recurse-submodules, so we never silently ignore
+  --recurse-submodules.
+* incorporate some of Jonathan's suggestions (thanks!)
 
-The space was related to the "just consider it complete" aspect of the
-comment above.  Anyway, to understand why the space character signals
-the completion being final for this token, let's use some comparisons
-with bash-completion of just a plain 'ls' command...
+Changes since v2:
+* added a prepatory patch that introduces a "goto cleanup"
+* drop an unnecessary line move (as suggested by Junio)
+* check for user-given --recurse-submodules and die() (as suggested by
+  Jonathan and Junio)
+* update --negotiate-only's documentation
 
-In git.git, at the toplevel, if I type
-  ls README.md <TAB>
-(note the space after README.md before pressing <TAB>), then
-completion assumes I'm trying to get another term besides just
-README.md, and can complete on anything in the directory.  In
-contrast, if I type
-   ls README.md<TAB>
-(with no space between README.md and <TAB>), then completion figures
-I'm trying to find filenames that start with "README.md", finds only
-one, and returns "README.md " (note the trailing space).  That
-trailing space makes my command line become "ls README.md " (again,
-with a trailing space), so that if I try to do any more tab
-completions, it's for adding another argument to the ls command, not
-extending the README.md one.
+Changes since v1:
+* added more context to commit message
+* added a NEEDSWORK comment
 
-You can see similar things with ls and directories.  For example, if you type
-  ls Doc<TAB>tec<TAB>m<TAB>
+Glen Choo (3):
+  fetch: use goto cleanup in cmd_fetch()
+  fetch: skip tasks related to fetching objects
+  fetch --negotiate-only: do not update submodules
 
-then you'll note after the first <TAB> you'll see
-  ls Documentation/
-with no trailing space; after the second <TAB> you'll see
-  ls Documentation/technical/
-with no trailing space; and after the third <TAB> you'll see
-  ls Documentation/technical/multi-pack-index.txt
-WITH a trailing space.  In the first two cases, further completions
-were possible so they didn't add a trailing space to signify the
-completion was final, but in the third case it is final and needed the
-trailing space to denote that.
+ Documentation/fetch-options.txt |  1 +
+ builtin/fetch.c                 | 40 ++++++++++++++++++++++++++++++---
+ t/t5516-fetch-push.sh           | 12 ++++++++++
+ t/t5702-protocol-v2.sh          | 12 ++++++++++
+ 4 files changed, 62 insertions(+), 3 deletions(-)
 
-Does that help?
+Range-diff against v3:
+1:  97e2cba633 ! 1:  ffa1a24109 builtin/fetch: use goto cleanup in cmd_fetch()
+    @@ Metadata
+     Author: Glen Choo <chooglen@google.com>
+     
+      ## Commit message ##
+    -    builtin/fetch: use goto cleanup in cmd_fetch()
+    +    fetch: use goto cleanup in cmd_fetch()
+     
+         Replace an early return with 'goto cleanup' in cmd_fetch() so that the
+    -    string_list is always cleared.
+    -
+    -    The string_list_clear() call is purely cleanup; the string_list was not
+    -    reused.
+    +    string_list is always cleared (the string_list_clear() call is purely
+    +    cleanup; the string_list is not reused). This makes cleanup consistent
+    +    so that a subsequent commit can use 'goto cleanup' to bail out early.
+     
+         Signed-off-by: Glen Choo <chooglen@google.com>
+     
+    @@ builtin/fetch.c
+     @@ builtin/fetch.c: int cmd_fetch(int argc, const char **argv, const char *prefix)
+      			gtransport->smart_options->acked_commits = &acked_commits;
+      		} else {
+    - 			warning(_("Protocol does not support --negotiate-only, exiting."));
+    + 			warning(_("protocol does not support --negotiate-only, exiting"));
+     -			return 1;
+     +			result = 1;
+     +			goto cleanup;
+2:  3a3a04b649 < -:  ---------- builtin/fetch: skip unnecessary tasks when using --negotiate-only
+-:  ---------- > 2:  b0c73e8135 fetch: skip tasks related to fetching objects
+3:  97792b5214 ! 3:  914d30866f builtin/fetch: die on --negotiate-only and --recurse-submodules
+    @@ Metadata
+     Author: Glen Choo <chooglen@google.com>
+     
+      ## Commit message ##
+    -    builtin/fetch: die on --negotiate-only and --recurse-submodules
+    +    fetch --negotiate-only: do not update submodules
+     
+    -    The previous commit ignores the value of --recurse-submodules if
+    -    --negotiate-only is given. Since non "no" values of --recurse-submodules
+    -    are not supported with --negotiate-only, make cmd_fetch() check for
+    -    this invalid combination and die.
+    +    `git fetch --negotiate-only` is an implementation detail of push
+    +    negotiation and, unlike most `git fetch` invocations, does not actually
+    +    update the main repository. Thus it should not update submodules even
+    +    if submodule recursion is enabled.
+     
+    -    This is unlikely to affect internal usage of --negotiate-only, but it
+    -    may be helpful for users. We may also want to discourage users from
+    -    using --negotiate-only altogether because it was not intended for them.
+    +    This is not just slow, it is wrong e.g. push negotiation with
+    +    "submodule.recurse=true" will cause submodules to be updated because it
+    +    invokes `git fetch --negotiate-only`.
+    +
+    +    Fix this by disabling submodule recursion if --negotiate-only was given.
+    +    Since this makes --negotiate-only and --recurse-submodules incompatible,
+    +    check for this invalid combination and die.
+    +
+    +    This does not use the "goto cleanup" introduced in the previous commit
+    +    because we want to recurse through submodules whenever a ref is fetched,
+    +    and this can happen without introducing new objects.
+     
+         Signed-off-by: Glen Choo <chooglen@google.com>
+     
+    @@ Documentation/fetch-options.txt: configuration variables documented in linkgit:g
+      	ancestors of the provided `--negotiation-tip=*` arguments,
+      	which we have in common with the server.
+      +
+    -+This is incompatible with `--recurse-submodules[=yes|on-demand]`.
+    ++This is incompatible with `--recurse-submodules=[yes|on-demand]`.
+      Internally this is used to implement the `push.negotiate` option, see
+      linkgit:git-config[1].
+      
+    @@ builtin/fetch.c: static struct transport *gtransport;
+      static struct transport *gsecondary;
+      static const char *submodule_prefix = "";
+      static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+    -+static int recurse_submodules_explicit = RECURSE_SUBMODULES_DEFAULT;
+    ++static int recurse_submodules_cli = RECURSE_SUBMODULES_DEFAULT;
+      static int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
+      static int shown_url = 0;
+      static struct refspec refmap = REFSPEC_INIT_FETCH;
+    @@ builtin/fetch.c: static struct option builtin_fetch_options[] = {
+      	OPT_BOOL('P', "prune-tags", &prune_tags,
+      		 N_("prune local tags no longer on remote and clobber changed tags")),
+     -	OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules, N_("on-demand"),
+    -+	OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules_explicit, N_("on-demand"),
+    ++	OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules_cli, N_("on-demand"),
+      		    N_("control recursive fetching of submodules"),
+      		    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
+      	OPT_BOOL(0, "dry-run", &dry_run,
+     @@ builtin/fetch.c: int cmd_fetch(int argc, const char **argv, const char *prefix)
+    + 
+      	argc = parse_options(argc, argv, prefix,
+      			     builtin_fetch_options, builtin_fetch_usage, 0);
+    - 
+    -+	if (recurse_submodules_explicit != RECURSE_SUBMODULES_DEFAULT)
+    -+		recurse_submodules = recurse_submodules_explicit;
+     +
+    - 	if (negotiate_only) {
+    --		/*
+    --		 * --negotiate-only should never recurse into
+    --		 * submodules, so there is no need to read .gitmodules.
+    --		 */
+    --		recurse_submodules = RECURSE_SUBMODULES_OFF;
+    -+		switch (recurse_submodules_explicit) {
+    ++	if (recurse_submodules_cli != RECURSE_SUBMODULES_DEFAULT)
+    ++		recurse_submodules = recurse_submodules_cli;
+    ++
+    ++	if (negotiate_only) {
+    ++		switch (recurse_submodules_cli) {
+     +		case RECURSE_SUBMODULES_OFF:
+     +		case RECURSE_SUBMODULES_DEFAULT: {
+     +			/*
+     +			 * --negotiate-only should never recurse into
+    -+			 * submodules, so there is no need to read .gitmodules.
+    ++			 * submodules. Skip it by setting recurse_submodules to
+    ++			 * RECURSE_SUBMODULES_OFF.
+     +			 */
+     +			recurse_submodules = RECURSE_SUBMODULES_OFF;
+     +			break;
+    @@ builtin/fetch.c: int cmd_fetch(int argc, const char **argv, const char *prefix)
+     +		default:
+     +			die(_("--negotiate-only and --recurse-submodules cannot be used together"));
+     +		}
+    - 	}
+    - 
+    ++	}
+    ++
+      	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
+    + 		int *sfjc = submodule_fetch_jobs_config == -1
+    + 			    ? &submodule_fetch_jobs_config : NULL;
+    +
+    + ## t/t5516-fetch-push.sh ##
+    +@@ t/t5516-fetch-push.sh: test_expect_success 'push with negotiation proceeds anyway even if negotiation f
+    + 	test_i18ngrep "push negotiation failed" err
+    + '
+    + 
+    ++test_expect_success 'push with negotiation does not attempt to fetch submodules' '
+    ++	mk_empty submodule_upstream &&
+    ++	test_commit -C submodule_upstream submodule_commit &&
+    ++	git submodule add ./submodule_upstream submodule &&
+    ++	mk_empty testrepo &&
+    ++	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
+    ++	test_commit -C testrepo unrelated_commit &&
+    ++	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
+    ++	git -c submodule.recurse=true -c protocol.version=2 -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
+    ++	! grep "Fetching submodule" err
+    ++'
+    ++
+    + test_expect_success 'push without wildcard' '
+    + 	mk_empty testrepo &&
+    + 
+     
+      ## t/t5702-protocol-v2.sh ##
+     @@ t/t5702-protocol-v2.sh: test_expect_success 'usage: --negotiate-only without --negotiation-tip' '
+    @@ t/t5702-protocol-v2.sh: test_expect_success 'usage: --negotiate-only without --n
+      '
+      
+     +test_expect_success 'usage: --negotiate-only with --recurse-submodules' '
+    -+	SERVER="server" &&
+    -+	URI="file://$(pwd)/server" &&
+    -+
+    -+	setup_negotiate_only "$SERVER" "$URI" &&
+    -+
+     +	cat >err.expect <<-\EOF &&
+     +	fatal: --negotiate-only and --recurse-submodules cannot be used together
+     +	EOF
 
-> > +     fi
-> > +}
->
-> Added my review as mentioned in [1].
->
-> [1]:
-> https://lore.kernel.org/git/pull.1108.v2.git.1640892413.gitgitgadget@gmail.com/T/#md3da435452988b0366ab4c2ee4bc06df2d17cb36
+base-commit: 90d242d36e248acfae0033274b524bfa55a947fd
+-- 
+2.33.GIT
+
