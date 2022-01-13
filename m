@@ -2,27 +2,27 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 842C4C433F5
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 15:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6904C433F5
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 15:39:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236136AbiAMPbr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 10:31:47 -0500
-Received: from mout.gmx.net ([212.227.15.15]:43759 "EHLO mout.gmx.net"
+        id S236147AbiAMPjj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 10:39:39 -0500
+Received: from mout.gmx.net ([212.227.15.15]:52977 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232070AbiAMPbr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jan 2022 10:31:47 -0500
+        id S236167AbiAMPji (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 10:39:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1642087899;
-        bh=XsfuhPO6a+lWs836gmP45hmoGNDdUClBq7BZZjanKA8=;
+        s=badeba3b8450; t=1642088373;
+        bh=h90Cg/9N/K0lSTr8/eBKiCYMoNvLhoxVClMryRLEiGM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=OurlYfsiVLSgNRwfK/LQSkP2kjakFbPiOela3zFvdvoh4SNNan3bcmWCbvgxZCCYU
-         zmz6IS8lQEaq9eNkqwuRPmUgxksZdIgNXkmrdc2tkqMKTmhxPfLoeb1MIigJ5mWie/
-         j6dFACbUDLYkpxwn97sLhjG9VCG6RoyimwD7jr64=
+        b=dGroc9jJsw8tMzSds6TyJIdPEaUVnlVRddGSoH4FCBQ8e7WDv0YnOhE/WygDmYMmc
+         CBrfPDUfFSEMnSbp3Y3kgSSnNRNfy98UGARgULo7TY05xbD+ndbDi+/V3uQTV8oigU
+         z4nkYvGSnTdDzO7YhrHFGmN0gFcm8o6H5TCmC6Ys=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.174.184] ([89.1.215.56]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbivM-1mcpO92siU-00dETN; Thu, 13
- Jan 2022 16:31:39 +0100
-Date:   Thu, 13 Jan 2022 16:31:37 +0100 (CET)
+Received: from [172.28.174.184] ([89.1.215.56]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M1poA-1nAF7k3ysS-002Eww; Thu, 13
+ Jan 2022 16:39:33 +0100
+Date:   Thu, 13 Jan 2022 16:39:31 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
@@ -30,36 +30,35 @@ To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?=
 cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
         Junio C Hamano <gitster@pobox.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 1/3] test-tool genzeros: initialize "zeros" to avoid
- SunCC warning
-In-Reply-To: <220113.8635lsvsw6.gmgdl@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2201131629300.2121@tvgsbejvaqbjf.bet>
-References: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com> <patch-1.3-4dadf7320ab-20220111T163908Z-avarab@gmail.com> <nycvar.QRO.7.76.6.2201121518360.2121@tvgsbejvaqbjf.bet> <Yd8njHz2m099iDfL@nand.local>
- <220113.8635lsvsw6.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 2/3] reftable: remove unreachable "return" statements
+In-Reply-To: <220113.86y23jvrrw.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201131638500.2121@tvgsbejvaqbjf.bet>
+References: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com> <patch-2.3-7a6a69314b5-20220111T163908Z-avarab@gmail.com> <Yd3XpLaZ3qc25PzQ@nand.local> <220112.865yqpxge2.gmgdl@evledraar.gmail.com> <Yd8pzOh1HLvDWSPg@nand.local>
+ <220113.86y23jvrrw.gmgdl@evledraar.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1716208071-1642087899=:2121"
-X-Provags-ID: V03:K1:nLpO+pJoizD5eWahksoWgqHrgUu8gMhDjwL23IWS4NqdyBIcWXI
- 9e8NtMOL2u3co4K4jVccUgtAg1MpkA1RHpfhPV14akDNOqws1fR2zVINA0JPVyhv5WILFk+
- 9D29nixNeriHGYaYWhDz0zuhb/2I95mNrfodMH4Tqn1KH1uk3OS5FCTeU26DtMJecVHU4/T
- Y98shE8XB0nB/vyzrzHmA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:me0QRAifX3s=:GKqwmclHm0rv86IcixjA+U
- F7jIqGHzJAvPP1JBW9fqYicmijEnxdK8tMLw+/TQe1s91ykK/u91x0Pn8Jd8NlikV806uHYVX
- FdTuO+JQV8wKOiEm0lS+anxkeULsPT2Qn8daZcXBc8LgMoUIxIKN5FFJ9TGfL0p7ORver5hx3
- Ht3Yes5sNT1Mwc55qLxl+i25xY9VMpJ5L7PBCIYYrbut8cJDaVKDOKFpM+xGNq8jpebp9Pzf7
- MHCSV6OPE95B1ZcR1gAfgMt4tzL770Pxbn+zwwMk1xbZbPVqByKR16VGj38NmZbgdvkpV76YI
- 6NxAoEvowtcB+wpsPVDHU1HIPBaFoy2VeSxOeCpFvKxiFnSBDJMKtefI5SAFf5jU0spTbIaum
- ZaEIJj1z3nlTraOuQW3XSV0VuC55KRUh2wvLhPWy+D/FmRUAYyV/YR1bg83irMfBOCHMFqLws
- GkS4EEF0xr4du1wNwQRUI/FIQ6qjaWIGbzYUx9HFhXv/JXCkRkxV5kc9eC5XXBApCPbiHFu5y
- uVuDXP6YvIo0x4Rv+5PFH3/FwJX2rPmuQcV/yErGxPooUHi1rTxDfU5hBgDdmuJ5+fasmcNZ2
- oHHFwJNQ7hLF90xL9VUaEvSDBI11HBlbEJqlj+EmMEspEuMslC/W60tGy0XNgDUeEF0Zkdkzp
- BFbP7oOmyG51wuq5KD7WY7nP09o6KlR01/r1j8SG19hcTgXcDaKTFvfit2B1QWy78JYAx/V+1
- aCS44uZ6KXbRucqz7MUVZ8J+OFJ3JZFrIQXDQCJ/sT4BanVwQ44gsJwuauwxl8yIOOKkRmy6d
- hVZkF9nOwy8EPjME6++ffmQ0xwwdcJNK1XyfNdCgGYj+//gX9GNWe1/8l1QjdFR9b7CWr+AwK
- 57wV1pOiAQruQLeiuzMO59euxwq4VPd/7KShBl8djB6baooJAF3Q2Ru+isDT0FpwycFDnmOw8
- 8oeuJK+E8qI+BtHgi01si2/TqMtNZWg4rT7Q6xcTus4lNAUGLgSn6nrp8iYBsf3TbMlQHmdD1
- 8bm/y7hONFg4LUeQ/RLU0exXxpX0JmhRa+gYhpeYJTk4qOp0ZrnPMT5nJHuVbw4FyNWgcTuxs
- R8azBzbJ9gCqnA=
+Content-Type: multipart/mixed; boundary="8323328-246936595-1642088373=:2121"
+X-Provags-ID: V03:K1:kFYuCpJFFvmmNoFY8HMGwKBtR8VPq4B77IKoiNr5gdAQDYphrbL
+ feunT8bSwuhDPEQoRumBvjKAGJqiYJ7cXD0YsMMHsIHKgURbEMVl+SXVMelK0wkdUr4GxYL
+ YcOlaNYWmhJh7pHJweWs/KlHqWbvG3ugVSJ2YSKk57mlwCh4DNqUFRdQ5BNefsgqUlJASwW
+ WWjwLKDesbU4Y2Gp8q0LQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qyUTmcfxzgI=:BN6p8UzptfEouarwM0hFfp
+ /OhAQzyGRBboB5+6a+8RZAHmyYN4byZR7RwlUpYWaDimXGGMsCtPf6/koYd5FZHLAkaFgnFGf
+ x9P37PE0JPBNCL95zawzFTonsN0YK2CNJ74al8eWHoEck5C43QOSFLod6Pp2YuC9Smr885gS7
+ MXVWo1saAzlrj7863opyp/tQ8wb4kJaEe5H+txHhRfIjZrYvbm6S1ztRwkcSims6xvfhhVTIB
+ xfIBj1E3iBfMvVDKArv4fCimKRCh1XgVwJit0lxTjZlf5SHRW61jnnydCoJ2IyTtmUGMaRKQT
+ OY3kKBnVTldNoHxamfPHFyKUK22rOzCBI+SeEikq6g2aBmFLmJWOj+OqP9oz6HcHO3mUgWCFk
+ 1Wru1Dw+S2XY5R/Dp5+TqkfyrtFlfTRILm5ePID6Rpad62fyd8QHXIm4FRyHBUzSJGpWZo3cN
+ VkUIzaUiQdr05KyVcbZOtIl+0fpUpLq/D56bSqPG4eJQiK4ob9nBP9EhDf0fkedBL5SRq27zk
+ Vh9qJ1wsdDOkfy3/YN8WT4sTuWeolGXk0CG0fY8Ia1jgw4N4eE6HH8LFAXBG8qP9RbY94HIoJ
+ nx3vBcctmMyWZQDPkPvR7zFiKQKGfKh6EGjovuUIB1GTweA/rYzCu4UZ+5gEZ+2H+nnXghNRK
+ pD4RH5d87xE+VZ0YVCxsKBMNSQb2pzGC462suSQ8Dzady53zFId6+54599YHPVvo2zdw6E1SZ
+ innG06uX3Eet1upYPLtCuXo9UpSFmeJXlZQAvDXki8+HjKLULDIbKdhtHVNSzVS+AjZsHS2gd
+ bpeSi2V0EplFyUTuSaVBjjn+Sc0gZ08nz/0Qp3YUBHo/B0lA9KZQCq8Sq7f+b1l9UdqYlipR4
+ u1KSBhWb/CreqCsVEH7ROx0rHbKm6t9VlOnz045zYdEEbySYzbVIj1snoIBjYW1yWksjiVg7k
+ aHckQmqme/y7phA5pJpdaztvSoimDQrcRmGijFpZLvwVyiKrJ3KWgU/KXna49xv2VR7uzdjXf
+ PV3QpNGr5/hql06W9pC9W/CwyUJkXr9sQFFlBJaPHA7AAUkWh5elH7c9v/PYfa959eQBiA0Pq
+ 4VVsdjjJzGHAUU=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -67,7 +66,7 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1716208071-1642087899=:2121
+--8323328-246936595-1642088373=:2121
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -77,74 +76,90 @@ On Thu, 13 Jan 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
 > On Wed, Jan 12 2022, Taylor Blau wrote:
 >
-> > On Wed, Jan 12, 2022 at 03:21:46PM +0100, Johannes Schindelin wrote:
-> >> > diff --git a/t/helper/test-genzeros.c b/t/helper/test-genzeros.c
-> >> > index 8ca988d6216..5dc89eda0cb 100644
-> >> > --- a/t/helper/test-genzeros.c
-> >> > +++ b/t/helper/test-genzeros.c
-> >> > @@ -3,8 +3,7 @@
+> > On Wed, Jan 12, 2022 at 01:47:40PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
+> >> >> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmai=
+l.com>
+> >> >> ---
+> >> >>  reftable/refname.c | 1 -
+> >> >>  reftable/writer.c  | 1 -
+> >> >>  2 files changed, 2 deletions(-)
+> >> >>
+> >> >> diff --git a/reftable/refname.c b/reftable/refname.c
+> >> >> index 95734969324..136001bc2c7 100644
+> >> >> --- a/reftable/refname.c
+> >> >> +++ b/reftable/refname.c
+> >> >> @@ -132,7 +132,6 @@ static int validate_refname(const char *name)
+> >> >>  			return REFTABLE_REFNAME_ERROR;
+> >> >>  		name =3D next + 1;
+> >> >>  	}
+> >> >> -	return 0;
+> >> >>  }
 > >> >
-> >> >  int cmd__genzeros(int argc, const char **argv)
-> >> >  {
-> >> > -	/* static, so that it is NUL-initialized */
-> >> > -	static const char zeros[256 * 1024];
-> >> > +	const char zeros[256 * 1024] =3D { 0 };
+> >> > In this case the loop inside of validate_refname() should always
+> >> > terminate the function within the loop body. But removing this retu=
+rn
+> >> > statement here relies on the compiler to determine that fact.
+> >> >
+> >> > I could well imagine on the other end of the spectrum there exists =
+a
+> >> > compiler which _doesn't_ make this inference pass, and would compla=
+in
+> >> > about the opposite thing as you're reporting from SunCC (i.e., that=
+ this
+> >> > function which returns something other than void does not have a re=
+turn
+> >> > statement outside of the loop).
+> >> >
+> >> > So in that sense, I disagree with the guidance of SunCC's warning. =
+In
+> >> > other words: by quelching this warning under one compiler, are we
+> >> > introducing a new warning under a different/less advanced compiler?
 > >>
-> >> This diff does two things: add an initializer, and turn the variable =
-into
-> >> a `static`. The former is the actual fix that is required. The latter=
- is
-> >> not. During the -rc phase, we do not want to see any of the latter. I=
-t is
-> >> unnecessarily controversial and distracting, and can easily be postpo=
-ned
-> >> until January 25th, 2022.
+> >> I'd think that any compiler who'd warn about this sort of thing at al=
+l
+> >> would be able to spot constructs like this one, which are basically:
+> >>
+> >>     while (1) {
+> >>     	...
+> >>         if (x)
+> >>         	return;
+> >> 	...
+> >>     }
+> >>     return; /* unreachable */
+> >>
+> >> Where the elided code contains no "break", "goto" or other mechanism =
+for
+> >> exiting the for-loop.
+> >>
+> >> I.e. GCC and Clang don't bother to note the unreachable code, but I
+> >> don't think the reverse will be true, that a compiler will say that a
+> >> "return" is missing there. Having a function be just a loop body that
+> >> returns an some point is a common pattern.
 > >
-> > This assumes that making the declaration non-static isn't necessary to
-> > fix the warning from SunCC.
->
-> Just adding "=3D { 0 }" and retaining the "static" would FWIW make SunCC
-> happy here.
-
-Probably moving the `static` outside of the function would do the same,
-and would be even more surgical a change.
-
-> > I would guess that in reality it probably isn't, so removing the stati=
-c
-> > designation is a stray change, and this would have been easier to grok
-> > as simply:
+> > Right, but I'm more concerned about a less advanced compiler that woul=
+d
+> > complain about the absence of a `return` statement as the last
+> > instruction in a non-void function.
 > >
-> >     -	static const char zeros[256 * 1024];
-> >     +	static const char zeros[256 * 1024] =3D { 0 };
+> > This is probably all academic, anyway, since less advanced compilers
+> > probably have other issues compiling Git as it stands today, but
+> > fundamentally I think that SunCC's warnings here are at the very least
+> > inconsiderate of less advanced compilers.
 > >
-> > But to be honest I don't think it is _that_ big of a deal to make such=
- a
-> > small change during this point of the development cycle.
+> > To me, the safest thing to do would be to leave the code as-is and dro=
+p
+> > this patch.
 >
-> We'd also need to change the comment, so:
->
-> -	/* static, so that it is NUL-initialized */
-> -	static const char zeros[256 * 1024];
-> +	/* static, for no particular reason */
-> +	static const char zeros[256 * 1024] =3D { 0 };
->
-> Which is why I stripped the "static" off it, it was only there as a
-> shorthand for doing the initialization, so once we're doing it ourselves
-> it makes no sense to retain it for this invoked-only-once test helper.
->
-> So I think this patch is good as-is.
+> I really don't see that, sorry. We have an actual example of a compliler
+> that does emit a warning new in this rc on this code, but AFAICT your
+> concern is purely hypothetical.
 
-That's stating the obvious.
+It's just a warning.
 
-> just adding the initializer would need even further explanation in the
-> comment/commit message about the non-sensical end-state. I'm all for
-> being careful in the rc period, but in this case I think we'd be
-> overdoing it.
-
-If this were the only instance where the patch is larger than strictly
-necessary in the -rc phase, I would have let it slide, too.
+So I concur with Taylor. This patch does not need to go into v2.35.0.
 
 Ciao,
 Johannes
 
---8323328-1716208071-1642087899=:2121--
+--8323328-246936595-1642088373=:2121--
