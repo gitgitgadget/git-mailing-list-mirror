@@ -2,202 +2,144 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89039C433F5
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 06:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE987C433EF
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 06:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231487AbiAMGLx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 01:11:53 -0500
-Received: from wout3-smtp.messagingengine.com ([64.147.123.19]:54423 "EHLO
-        wout3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231497AbiAMGLv (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 13 Jan 2022 01:11:51 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 9F5423200E82;
-        Thu, 13 Jan 2022 01:11:50 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 13 Jan 2022 01:11:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=cMTsvQuey6uC/fPqJAElXJpPszk
-        uHDlFE0eC1x5E120=; b=faGJKLPyXXAPXuPh/oRuAd3wLYcl9Ac8moOtzZ+ayLC
-        VKeTnnDduCVxKIjzk8COu2E8YdG4S7EHk1ILSq+sN0oHfayxpojTxgf+FZCyly2d
-        vvbqKOyHD3AEonukOQjS7l5mqqPVir1/g6pVPEMBwf95CfTsbEXITpETQNsFau/Z
-        9TX5d4nrHrAlDzO9yqB4TUDaUOhJZhLEaL0QpqUBN7UB9HgyAKSeuxTnVu7q7ilR
-        RY45gOFxMCng5WCKQQMTvD0EXUVQXCBnLZNqAKYF0FUau4/UafepG2av+e595Ayx
-        SflSNy2/bdLyUHirKlnqUCUZFu4zwx8f9+TKsPNBOEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=cMTsvQ
-        uey6uC/fPqJAElXJpPszkuHDlFE0eC1x5E120=; b=QPmSfkl2rowDr/PSeRPwhw
-        1CpXWK7+WVEcumiH7qOCzXhmntQYspz30Ds4iiSNGOpSBdqLZISud/D2qbHQgHth
-        HcWelHqevNq5mluqHVpxdLe3tMALWeCf14LBOEsz5vnr4Fqf51bAfgeBuM/kIx1/
-        pWITuuraG+YpOvaJ19bTABMB1nnZxT2Rf5aXjC2wvmLI4w+zCJfXRdxSTQNmG6g/
-        XqTB/0np9xyZ1aGTKoVlOold0yQKM8WRLcLzHOJBvlU2krfI912/5wbrNFZqclCl
-        2ntuLYW2/i9dQSfBv2aybnYYaxMHHohR92KEYfYOI/BNyywLdCtfSmZnsrjdJ2yQ
-        ==
-X-ME-Sender: <xms:psLfYaCNz2_3AclDMOzg4-8okeHieoecDHUt5c-WL_dw1SZgNbv-KQ>
-    <xme:psLfYUgpE6zlse9eQh0WjBC47GdYZc9ZWi1kpeKIF9c6PErseXCI-5DYp6Y87VOPD
-    LGUGD_8ZjgBGQUxGg>
-X-ME-Received: <xmr:psLfYdmb__Az5gqsatz43KWjux4bSo5hej-GDuAyIrLNDgSe0JqsTgQC6eVcuNuqL4RYO-nA5WoW-NL8n9f6SboQK91ZomUzKzPj3U2jqonJ4BlL9Ypj_ET7Cg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrtddvgdeludcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimh
-X-ME-Proxy: <xmx:psLfYYy9yWGRIXrp5Am7Jk_KlFZc0E5ySIMRAZ2NYQ0r_ec_R2OJyw>
-    <xmx:psLfYfRAhUQrBnygUA4-DT32UmSbY31JXgYXGBVVaeDlK5hds57FYg>
-    <xmx:psLfYTZ87t7fH4s97ya-WeuGAIC85Ng3n2tqljQIi-ksKmfv2RqMPA>
-    <xmx:psLfYdOTBzcEevmw6BEkxs9AViDlDLTRrqic-NmwY1b4xZlafm7u_A>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Jan 2022 01:11:48 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 42170e41 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 13 Jan 2022 06:11:48 +0000 (UTC)
-Date:   Thu, 13 Jan 2022 07:11:46 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Bryan Turner <bturner@atlassian.com>,
-        Waleed Khan <me@waleedkhan.name>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH v3 6/6] refs: skip hooks when deleting uncovered packed refs
-Message-ID: <279eadc41cda9ceea4c5317d6a4c358c18d50ce9.1642054003.git.ps@pks.im>
-References: <cover.1641556319.git.ps@pks.im>
- <cover.1642054003.git.ps@pks.im>
+        id S230197AbiAMGz6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 01:55:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44834 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230160AbiAMGz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 01:55:57 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772AAC06173F
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 22:55:57 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id q25so19500661edb.2
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 22:55:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=J9U3rNDqQHGxU0SOHJCOICCUujeSkT+ov6lWbH1MzJM=;
+        b=OwgxYzdsr9LRukTjyXda8nGd1lhSuaeEP54hInGhrdr7BiC1mHAKBPdeBqS01W+Jti
+         hY9Lr5GqnZZsBuwQiz9KB86UVb8eIpgV2FExszo9Ft3bTBhI0vqQx9JfQ+1SdqBBLXVi
+         6zRl5pIfyVEEUblCc1K2yaHk+UtUwwgrSFeMMuVvSAZWuFZsiDZApTTJz4QmU/WF5WDM
+         V1PTjvNLLK38xn1Zk+O8fXlveS8rCehQxQpZwkutlcVCuqKxOkXCHRdq95l9W+jTnlMp
+         WKUfNlWVPW2MsCsU9n3E9UfB4EHwvrMm1fbAAtRzrG6Cncy9tyKF8SG+kemPMtskKvTi
+         Uv6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=J9U3rNDqQHGxU0SOHJCOICCUujeSkT+ov6lWbH1MzJM=;
+        b=k85RVvi5q313nZjx+9joc8DcBkOum6HGIMT3iFs4Dvxoz4Mk+0vHDHu3Us08DsgGRB
+         ldl/IYLvtnZIbV4Ab1WJCd6IjavVH7Ff2LEDBQyRnPsxVNuLVwOS6/MuauNTajdFUcdX
+         U0plhn9b5mOXi73YnXbOVnQl2/OcoW9+StoT+ufeXJgxzFZc9KQwZDrkXYITQGwbjKvs
+         w/+eCvGiYYNqjjdQmsQe2At7mRWIfUErUYQoM8wG4jL7HOabtjoPUJcYYWJ0zRJSu0pp
+         ygM7XopY9xwQQCgNzs0YHJp6utrOodJt9wsf9xf3/Cg2ZnQvK0Tb2fvvRrAJCSLNee5g
+         WXNQ==
+X-Gm-Message-State: AOAM533FrbYU9q7ahQKUg+ngSwZHbf+BvcwNKk4YQC5xmqe79KwPU985
+        itA6S9wMWp6KkU5/Don+SvN7zeIKEfz9hQ==
+X-Google-Smtp-Source: ABdhPJyJ0Y92SIxMO6kTX/pWnRH2r8cNj5TnqsNlK0OFbo7iDeat7prvuL2zeI+8QWGbk0mqVZJQTQ==
+X-Received: by 2002:a17:906:38f:: with SMTP id b15mr2495992eja.661.1642056955767;
+        Wed, 12 Jan 2022 22:55:55 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id g9sm545536ejo.222.2022.01.12.22.55.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Jan 2022 22:55:55 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1n7u1a-000m66-Pn;
+        Thu, 13 Jan 2022 07:55:54 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     Johannes.Schindelin@gmx.de, congdanhqx@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        tenglong.tl@alibaba-inc.com, martin.agren@gmail.com,
+        Teng Long <dyronetengb@gmail.com>
+Subject: Re: [PATCH v10 5/9] ls-tree: optimize naming and handling of
+ "return" in show_tree()
+Date:   Thu, 13 Jan 2022 07:49:45 +0100
+References: <cover.1641978175.git.dyroneteng@gmail.com>
+ <b04188c822c32aab6ef59099a0c9078aeda065c3.1641978175.git.dyroneteng@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <b04188c822c32aab6ef59099a0c9078aeda065c3.1641978175.git.dyroneteng@gmail.com>
+Message-ID: <220113.861r1cxgxx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0PwS+CZNaMUviVJ1"
-Content-Disposition: inline
-In-Reply-To: <cover.1642054003.git.ps@pks.im>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---0PwS+CZNaMUviVJ1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Jan 13 2022, Teng Long wrote:
 
-When deleting refs from the loose-files refs backend, then we need to be
-careful to also delete the same ref from the packed refs backend, if it
-exists. If we don't, then deleting the loose ref would "uncover" the
-packed ref. We thus always have to queue up deletions of refs for both
-the loose and the packed refs backend. This is done in two separate
-transactions, where the end result is that the reference-transaction
-hook is executed twice for the deleted refs.
+Re the $subject: Is "optimize naming" here just referring to the
+s/retval/recurse/g?
 
-This behaviour is quite misleading: it's exposing implementation details
-of how the files backend works to the user, in contrast to the logical
-updates that we'd really want to expose via the hook. Worse yet, whether
-the hook gets executed once or twice depends on how well-packed the
-repository is: if the ref only exists as a loose ref, then we execute it
-once, otherwise if it is also packed then we execute it twice.
+Personally I think just a s/retval/ret/g here would make more senes if
+we're doing any change at all, and in either case having this variable
+re-rename split up as its own commit would make the proposed control
+flow changes clearer.
 
-Fix this behaviour and don't execute the reference-transaction hook at
-all when refs in the packed-refs backend if it's driven by the files
-backend. This works as expected even in case the refs to be deleted only
-exist in the packed-refs backend because the loose-backend always queues
-refs in its own transaction even if they don't exist such that they can
-be locked for concurrent creation. And it also does the right thing in
-case neither of the backends has the ref because that would cause the
-transaction to fail completely.
+> The variable which "show_tree()" return is named "retval", a name that's
+> a little hard to understand. This commit tries to make the variable
+> and the related codes more clear in the context.
+>
+> The commit firstly rename "retval" to "recurse" which is a more
+> meaningful name than before. Secondly, "get_type()" is introduced
+> to setup the "type" by "mode", this will remove some of the nested if.
+> After this, The codes here become a little bit clearer, so we do not
+> need to take a look at "read_tree_at()" in "tree.c" to make sure the
+> context of the return value.
+>
+> Signed-off-by: Teng Long <dyronetengb@gmail.com>
+> ---
+>  builtin/ls-tree.c | 33 ++++++++++++++++++---------------
+>  1 file changed, 18 insertions(+), 15 deletions(-)
+>
+> diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+> index eecc7482d5..9729854a3d 100644
+> --- a/builtin/ls-tree.c
+> +++ b/builtin/ls-tree.c
+> @@ -61,24 +61,27 @@ static int show_recursive(const char *base, size_t baselen, const char *pathname
+>  	return 0;
+>  }
+>  
+> +static enum object_type get_type(unsigned int mode)
+> +{
+> +	return (S_ISGITLINK(mode)
+> +	        ? OBJ_COMMIT
+> +	        : S_ISDIR(mode)
+> +	        ? OBJ_TREE
+> +	        : OBJ_BLOB);
+> +}
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- refs/files-backend.c             | 9 ++++++---
- t/t1416-ref-transaction-hooks.sh | 7 +------
- 2 files changed, 7 insertions(+), 9 deletions(-)
+This new function is a re-invention of the object_type() utility in
+cache.h, and isn't needed. I.e....
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 3c0f3027fe..9a20cb8fa8 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1261,7 +1261,8 @@ static int files_delete_refs(struct ref_store *ref_st=
-ore, const char *msg,
- 	if (packed_refs_lock(refs->packed_ref_store, 0, &err))
- 		goto error;
-=20
--	transaction =3D ref_store_transaction_begin(refs->packed_ref_store, 0, &e=
-rr);
-+	transaction =3D ref_store_transaction_begin(refs->packed_ref_store,
-+						  REF_TRANSACTION_SKIP_HOOK, &err);
- 	if (!transaction)
- 		goto error;
-=20
-@@ -2775,7 +2776,8 @@ static int files_transaction_prepare(struct ref_store=
- *ref_store,
- 			 */
- 			if (!packed_transaction) {
- 				packed_transaction =3D ref_store_transaction_begin(
--						refs->packed_ref_store, 0, err);
-+						refs->packed_ref_store,
-+						REF_TRANSACTION_SKIP_HOOK, err);
- 				if (!packed_transaction) {
- 					ret =3D TRANSACTION_GENERIC_ERROR;
- 					goto cleanup;
-@@ -3046,7 +3048,8 @@ static int files_initial_transaction_commit(struct re=
-f_store *ref_store,
- 				 &affected_refnames))
- 		BUG("initial ref transaction called with existing refs");
-=20
--	packed_transaction =3D ref_store_transaction_begin(refs->packed_ref_store=
-, 0, err);
-+	packed_transaction =3D ref_store_transaction_begin(refs->packed_ref_store,
-+							 REF_TRANSACTION_SKIP_HOOK, err);
- 	if (!packed_transaction) {
- 		ret =3D TRANSACTION_GENERIC_ERROR;
- 		goto cleanup;
-diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hoo=
-ks.sh
-index f9d3d5213f..4e1e84a91f 100755
---- a/t/t1416-ref-transaction-hooks.sh
-+++ b/t/t1416-ref-transaction-hooks.sh
-@@ -175,16 +175,11 @@ test_expect_success 'deleting packed ref calls hook o=
-nce' '
- 	git update-ref -d refs/heads/to-be-deleted $POST_OID &&
-=20
- 	# We only expect a single hook invocation, which is the logical
--	# deletion. But currently, we see two interleaving transactions, once
--	# for deleting the loose refs and once for deleting the packed ref.
-+	# deletion.
- 	cat >expect <<-EOF &&
--		prepared
--		$ZERO_OID $ZERO_OID refs/heads/to-be-deleted
- 		prepared
- 		$POST_OID $ZERO_OID refs/heads/to-be-deleted
- 		committed
--		$ZERO_OID $ZERO_OID refs/heads/to-be-deleted
--		committed
- 		$POST_OID $ZERO_OID refs/heads/to-be-deleted
- 	EOF
-=20
---=20
-2.34.1
+>  static int show_tree(const struct object_id *oid, struct strbuf *base,
+>  		const char *pathname, unsigned mode, void *context)
+>  {
+> -	int retval = 0;
+> +	int recurse = 0;
+>  	size_t baselen;
+> -	enum object_type type = OBJ_BLOB;
+> -
+> -	if (S_ISGITLINK(mode)) {
+> -		type = OBJ_COMMIT;
+> -	} else if (S_ISDIR(mode)) {
+> -		if (show_recursive(base->buf, base->len, pathname)) {
+> -			retval = READ_TREE_RECURSIVE;
+> -			if (!(ls_options & LS_SHOW_TREES))
+> -				return retval;
+> -		}
+> -		type = OBJ_TREE;
+> -	}
+> -	else if (ls_options & LS_TREE_ONLY)
+> +	enum object_type type = get_type(mode);
 
+...just drop it and do this:
 
---0PwS+CZNaMUviVJ1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHfwqIACgkQVbJhu7ck
-PpRV0RAAh6WAqL/MZU8jTd3ICMMY5/csnDoLb9wQUoxm+J59V03loc0/Twwo58l6
-GmA+bGwNpnQ6M3jhsTl7sYui6mVEGPszKQGo9pPmPFWWPk8lh3UPuzdBkFCx50oz
-2MT+fE3rvRGf/1sOU+NbLkpCzfPTzh0hj68AGeYQqZm3nnjGLn68RC++qE8u290E
-jbYfXxJrIvShzxNE9A1Z2aEsO0nn1oT9VKn76qR7ocmjD1fnSWxVucReTvGXB94+
-xgxx1EEepjhaJ2/L621R1mEny3Rl2ljb4A1cOCoHUQGn2MNzpuByxUTsEnmy5rmJ
-DUQAT/gMiWyat5eNcqh+oq02XI+XE9BRWFp/zdXileYmJSuSBXHcnKcGZrdnffXN
-xwgiKbquCXLjgMHfD4+JJUZnXpzveqhU9Zg+WqZaI/ubBkMGXBUYYmEPR/dSwsl3
-z8ZDnOLS4DaDiitHiE6zejZ4DVM71+DdxE88MAj4mNRY8iJr5m64WIbPIAMaJxfQ
-mGXOdJLyfUZ9Sv0MwI/BTHic+sG/FWI8z1sB1Syrjdu9mRnWaf0963RjcdgIWPKw
-Y+gdYBHZ+S1/9Uhv7VvwQr/G7vQBXkbNwoPrnkUosbQppBpyz9t/rGXjmrTwt7zC
-VJRUeVOmAohukstycW5U2X6xRAan4Cajml8Q8bOMAOZbHPiuP5Y=
-=t+nZ
------END PGP SIGNATURE-----
-
---0PwS+CZNaMUviVJ1--
+	-       enum object_type type = get_type(mode);
+	+       enum object_type type = object_type(mode);
