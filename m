@@ -2,104 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68169C433EF
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 12:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 818B4C433F5
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 12:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbiAMM0y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 07:26:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35876 "EHLO
+        id S231949AbiAMM2q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 07:28:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234538AbiAMM0h (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jan 2022 07:26:37 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5575CC061757
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 04:26:37 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id k15so22261747edk.13
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 04:26:37 -0800 (PST)
+        with ESMTP id S231301AbiAMM2p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 07:28:45 -0500
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CB92C06173F
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 04:28:45 -0800 (PST)
+Received: by mail-yb1-xb2f.google.com with SMTP id d7so14427724ybo.5
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 04:28:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=pljxj+lDXo/QGviWls3e++lvUJ0pNXA5gkiHbHnuQwE=;
-        b=kQChgwDQpu5vNmDPjhrx8X8KCnbUViZZqVwAL7PGc3Xobhdt1rDuymwWr/p/Qg4kqV
-         re8jgyIjZjIFjWekr+TIIzqdC5mmntIJBjOW5y0yFnVdTuqusXihqxvVMYBpKkjDaku5
-         tE1lebzvCB/9PCJyegJ2eLjl/vHp00G3cF25wr46wqw5rSwWMhqXh+IAgKAxAHGsoEXK
-         rAdlCLvXABUBpjTUA7bKf8Mp36sPbQATGBccu2fJBu5Ev2LV92HK60G9ZzIC9UXCaimO
-         bsWdHejvk4LWADxxSRYqhqceW1f1JGP6sTWemijqiM7Ko50TrQ2yq9OU3q8UPYbhwNMU
-         jOVQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=MirZ7fkmplO5yCAH0nVUn4C4l01puRYnqX6iexJzqdg=;
+        b=SRFEHmIA/IRXZWuUvJM63O8rkp/kXWW3nXCbksTnaNmTceObKwsKoipse7m/p22wyr
+         k4xrG8E1quywW6wKs5XIcy5rQJ9dzLJ7IiCh30yd31BEwbPZ/dNfQ+NE9kJMdrttWzQF
+         7KXXnL2UagpnpCghfwLJcDNCLuwo9srev5ahkJM3EntQG+SgTw5z4hnbCyziSh7OCyJF
+         U5Zs1VWB5NG+MDbKiRSF3AwazUdYLBo2JpwANpAx3AhMbpTmhGpQEfgkWEVu60GEbT19
+         ODjsd0BHKPJ5JrA9izWvXyS3RRZt3CWX1FfyCBAdjfxYvZ/yw68haJ1lQt4sv51fZ3Eg
+         3bYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=pljxj+lDXo/QGviWls3e++lvUJ0pNXA5gkiHbHnuQwE=;
-        b=JUgaxSbgPySgD43Ox2aTAqbp4stxuDFY4b4wAR5i4U9hC6vhactj4CK0/R4Brkpvmi
-         Or0athJwesmg9wttwd2qeJM+KfaKPaUDjJ9rXD32lN3vwCNxnDWDGNNaoneJpXxsPfN1
-         GJUWqs12H47tq4VHMHrxaNBFE2GlwfaOyXhH9Z6M32PR9Z/4y0+VAcxk9UV1NTX8DY7K
-         MC2+OdyKxLzXihW5Pxonxl3OPD8LY+kYR9dhTQNKUXQDt2Pc2A3NItcthn2xx+tH3jI2
-         oJ0WzFYkAlXpShVVx6lag6nEhmFk4LkPKzM3MpBOpuq8ke/U+/Djgw/nACIyjDMyx+SJ
-         ALQw==
-X-Gm-Message-State: AOAM530Xh0jq1odVsOtlcmRPq/vi1KDJ2Z5ojAIynxTx/llVC4ORI9SC
-        oL7S4QE8QhYR2o2FI3kUCpE=
-X-Google-Smtp-Source: ABdhPJxXoFitik8FEtGb36UfCqhE4F9rp+AUIN4VZQQPohOF+wIH4+V2wCcE2MCQgD33lgckaCfI7w==
-X-Received: by 2002:a17:907:d8e:: with SMTP id go14mr3386218ejc.694.1642076795805;
-        Thu, 13 Jan 2022 04:26:35 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ga7sm826203ejc.50.2022.01.13.04.26.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jan 2022 04:26:35 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1n7zBa-000uaa-TU;
-        Thu, 13 Jan 2022 13:26:34 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: Re: [PATCH v3 0/3] For v2.35.0: refs: ab/refs-errno-cleanup fixup +
- remove "failure_errno"
-Date:   Thu, 13 Jan 2022 13:22:55 +0100
-References: <cover-v2-0.3-00000000000-20211212T195108Z-avarab@gmail.com>
- <cover-v3-0.3-00000000000-20220112T123117Z-avarab@gmail.com>
- <xmqqo84gu4sb.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqo84gu4sb.fsf@gitster.g>
-Message-ID: <220113.86lezjvn2d.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MirZ7fkmplO5yCAH0nVUn4C4l01puRYnqX6iexJzqdg=;
+        b=Knu8GDMzcx29yJxP+OjXW62n1nSuYs7DqusGVMfqLOIjyuFzSONnL4Z97+0z7zmkaV
+         ytnXqqzzG/GqqIHUdzyvgaZUAWOCMAZgxs0akZHUIHGYzK6RbEYWkYIWB6tTCDMrIu89
+         0ZTGQz4sZuiF0/ZoIRFUdZ/IXQO9tJpBWN39UNQ5TbJTzy5KTAl0wg1QAG5y9mI8Z1YA
+         /9cVPOXdHZbaWKGjWX188FTw5SBJdoNGsvtW/98MhkKw4IcHg6mdczvyjdYxps33DN3B
+         HvL04R3nmKy2OYcldNqFxwVTxDQiByZEyi2ftWmcwL9+mwM/P5bLmHIrN7wPjJmHhyfQ
+         dtRg==
+X-Gm-Message-State: AOAM531L6P/3gIX+ERv4sYYlHvrNdPKm+qrhoTOAkfqe8/Ptd+fHfyUR
+        fDZkNygEZ/s+Uc3XW0V3Z7R/6ctexLm0F8gnw8M=
+X-Google-Smtp-Source: ABdhPJxM02VEECWG7BwE0YmKX8H7pBz8QwNFatm3UKkyMPyM+8JbCev0xBrSeIFbSvU7M4dc1di9ChwdSp5MdSQY2hI=
+X-Received: by 2002:a05:6902:1027:: with SMTP id x7mr5782103ybt.427.1642076924228;
+ Thu, 13 Jan 2022 04:28:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
+ <xmqqilus3ctf.fsf@gitster.g> <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
+ <xmqq4k6b34h8.fsf@gitster.g> <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
+ <3dade45b-494f-663b-264b-06a51ea1cf56@web.de> <xmqq35lsyhbf.fsf@gitster.g>
+ <13e323e9-eb0c-71c3-215f-b77c91fcc4c8@web.de> <5be4cdad-6769-68e8-0984-5fe89668d007@web.de>
+ <421215c1-f6ae-4ec2-b666-2a481056ef79@www.fastmail.com>
+In-Reply-To: <421215c1-f6ae-4ec2-b666-2a481056ef79@www.fastmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 13 Jan 2022 13:28:32 +0100
+Message-ID: <CAP8UFD3tyBhrOQzg9j4qDAT0Tb8TCTK0=J6ORsiLVuMWn+W9wg@mail.gmail.com>
+Subject: Re: git bisect bad @
+To:     Ramkumar Ramachandra <r@artagnon.com>
+Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>, "Miriam R." <mirucam@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Jan 12 2022, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Thu, Jan 13, 2022 at 10:32 AM Ramkumar Ramachandra <r@artagnon.com> wrot=
+e:
 >
->> This is a follow-up to the recently landed ab/refs-errno-cleanup
->> topic, I missed a spot and left some meaningless use of "errno" in the
->> refs (file) backend.
+> Ren=C3=A9 Scharfe wrote:
+
+> > Reserving 126 and 127 shouldn't cause too much trouble,
+
+I don't think it's a good idea at this point to reserve the 126 and
+127 error codes as there might be existing scripts relying on them to
+mean "bad".
+
+Perhaps we could introduce a new command line option, for example
+--bad-is-only-1, to specify that the only error code considered bad
+will be 1. Or perhaps a more general --bad-is=3D<list of ranges>, to be
+able to specify all the values and ranges that should be considered
+bad.
+
+> > but there's
+> > also a way to avoid it: bisect run could checkout a known-good
+> > revision first and abort if the script returns non-zero for any
+> > reason, including its non-existence.
 >
-> Is it a fix "oops the ones we merged to 'master' were buggy and
-> needs these on top to be correct"?
->
-> If it is merely a follow-up "I am doing more of the same thing as we
-> aimed to do in that topic", I'd rather leave it to the next cycle.
->
-> I'll come back to the topic to find it out from the patches
-> themselves, but after I dealt with other patches that are more
-> clearly fix-ups first.
+> I can't say I'm overly enthusiastic about this trade-off. I think
+> most people would check their bisect scripts against the good
+> revision by hand before starting bisect: why introduce one
+> redundant step for users like me who tend to bump their heads,
+> because they're a bit rusty with machines?
 
-3/3 isn't needed for v2.35.0, but I figured if you were queuing this
-that obvious cleanup after the also-not-strictly-needed 2/3 made sense.
+I also don't like introducing a redundant step, unless a special
+command line option is introduced for it.
 
-But I can leave both of those until after the release if you'd like.
+> Again, I don't know if this is a good idea, but if exit codes from
+> the shell aren't standardized, surely fork() and exec() would have
+> a better spec? So, perhaps remove the little git-bisect.sh and
+> rewrite it in C? I'd be up for this task, if we decide that this is a
+> better way to go.
 
-I think we should have 1/3 for 2.35.0 as rationalized in its commit
-message. I.e. I haven't found a way for that omission in my ef18119dec8
-to break things in practice, but I'm also not confident that I thought
-through all the potential cases. Changing that code to be obviously
-correct in terms of the current API is an easy enough fix.
-
-So just let me know how you'd like to proceed. I.e. I can re-roll a v2
-with just 1/3, but I think this v1 is also good-to-go as-is. Thanks!
+There has been a lot of effort, especially by Miriam (added in Cc), to
+port git-bisect.sh to C over the years.
