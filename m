@@ -2,90 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21181C433EF
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 18:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1215C433F5
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 18:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237377AbiAMSDH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 13:03:07 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56920 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231162AbiAMSDH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jan 2022 13:03:07 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 16651FF172;
-        Thu, 13 Jan 2022 13:03:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=6FYlB0msuWRz
-        J03oLAavCdJiSzy1t3rytooQSpB2Ri8=; b=E96cPHJUx8HAdOnFRjHc5HpQ+GmQ
-        S/QeIaszvsXDwSqPCY4CBf4EecIaGXjuvFW5E7W77e0BZBBhAMVUKlugN0Wv4Fgb
-        lA9zXUFoIWvb1Tnl+ROQ7GJbQMMb3Oq62qyd0Nw7yRNy9i6M39RURB1F+czyLwg7
-        cLajHleYxExLeNc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37BFBFF170;
-        Thu, 13 Jan 2022 13:03:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9699DFF16F;
-        Thu, 13 Jan 2022 13:03:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     rsbecker@nexbridge.com, 'Taylor Blau' <me@ttaylorr.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [BUG] Re: Git 2.35.0-rc0
-References: <00fd01d80691$c87e3ad0$597ab070$@nexbridge.com>
-        <Ydzw+RqR6IfbT/oM@nand.local>
-        <010b01d80697$0c848770$258d9650$@nexbridge.com>
-        <Ydzyv8ZCEpDDRBXT@nand.local>
-        <010d01d8069e$8d330480$a7990d80$@nexbridge.com>
-        <xmqqzgo0u5j7.fsf@gitster.g>
-        <220113.864k67vkea.gmgdl@evledraar.gmail.com>
-Date:   Thu, 13 Jan 2022 10:03:01 -0800
-In-Reply-To: <220113.864k67vkea.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 13 Jan 2022 14:21:44 +0100")
-Message-ID: <xmqqv8ynikdm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237327AbiAMSYc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 13:24:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33606 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230329AbiAMSYc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 13:24:32 -0500
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F15CDC061574
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 10:24:31 -0800 (PST)
+Received: by mail-ua1-x92e.google.com with SMTP id o1so12808075uap.4
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 10:24:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=/TvLJE99MXqEEwm588FJU8lirHxQReEadRRTZLTt1p4=;
+        b=n4lwh0sJrUcOAvaP1+7/AS+QI5ipXToCvQHWOfyiR5mXZMC/U2sa66DBXGcQGaWhuY
+         odHwxw4g80mPNt3csx6qCcSDfJ3Kvm2JbWRZX5ZZUDFgTE/HpbdQa36s+wTjzhjk1dLb
+         R1yhz0gQlXw4mB8Zvp3G+BNBC93gRwv9Ve/rqRRWDXUyJAEUyEZaNyvb8essepv+gCX7
+         0z7XHwqNL4DyeVfnKV4W5eyW/04wJtnk5yItqHQHrz/QUru0SvLmG+Xk/3kcwK2WPRMI
+         U1Cy2DAAwWvNe9HoaysUINU5ir8O9JDCjWFCLvf03E8XNuvMd/ULaCXsOv4wLNiwavwY
+         kfQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/TvLJE99MXqEEwm588FJU8lirHxQReEadRRTZLTt1p4=;
+        b=uszz7aj9mYFT/dfKj8Aq2YKMOV+VtWe359IwGj2radrNgSJKNd3ID++N2V/KkOFO7n
+         DyC08p/IeyxMqpmBieMOA+iLu3yS54kPt0fDJ1cfR/+s/xtxiUXAqvi41TYT4jyxHgzL
+         fo+wypU3dpFr+MfxHhvybpsuYIlNxff6Z07UJ+UYlrFQHsIErpIjUMyyP8bYGY2Q2DYN
+         QdypJNe2qpG1o0TbVOAGL80ul3Nlj6zF9A4Uua46TNXcwDWrdnBjzRmq+HzpIdJ99zrU
+         bRi9WpokqXkdGYkjMhQjRDmt1Qa18zgvlZQ5cYB6Xo/H1Hm7JM/G5JpvwCfdS3aXzKlO
+         4iew==
+X-Gm-Message-State: AOAM5324Hzu8gCLZdhh4EGH9Nv32O+AhwDIunepYV3ZgblAgKo9PUGQO
+        S/jHtKFWGsTIKCewQoJpENerSm7dQPW+Udy1KTalYw==
+X-Google-Smtp-Source: ABdhPJyIcvB6NPohZiBKH5M5Z8T/kZmAUT9RSzYZQdnr+oeDa8HCswiuVAsjbm/JG+UajMq1fBGTb0yhhOJaSzXUHB4=
+X-Received: by 2002:a05:6130:30c:: with SMTP id ay12mr3229281uab.15.1642098270939;
+ Thu, 13 Jan 2022 10:24:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0D99B744-749B-11EC-A8AB-CB998F0A682E-77302942!pb-smtp2.pobox.com
+References: <cover.1638874287.git.ps@pks.im> <cover.1641556319.git.ps@pks.im> <xmqqiluv6vim.fsf@gitster.g>
+In-Reply-To: <xmqqiluv6vim.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 13 Jan 2022 19:24:19 +0100
+Message-ID: <CAFQ2z_P_SiaDbSQdAt5mSp79BnC0-k5B+X09oCVh+w--BO4_6w@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] refs: excessive hook execution with packed refs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Patrick Steinhardt <ps@pks.im>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Bryan Turner <bturner@atlassian.com>,
+        Waleed Khan <me@waleedkhan.name>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Fri, Jan 7, 2022 at 11:17 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > this is a resend of version 1 of this patch series to hopefully entice
+> > some reviews. The only change is that v2 is rebased onto the current
+> > main branch at commit e83ba647f7 (The seventh batch, 2022-01-05). The
+> > following was from the orignial cover letter:
+>
+> I'll add =C3=86var, who has been making a lot of changes to the refs
+> subsystem, and Han-Wen, whose work to add a new ref backend may need
+> to interact with this change, as possible stake-holders to the CC list.
 
-> https://lore.kernel.org/git/87wnn62nhp.fsf@evledraar.gmail.com/ this us=
-e
-> of uncompress2() is just saving a few lines of boilerplate instead of
-> using the underlying zlib functions, which every other in-tree user
-> uses.
+Thanks for the consideration, Jun. As the hook is called from refs.c,
+it should not make a difference for reftable.
 
-I looked at the source of uncompress2(), and I tend to agree that,
-we do NOT HAVE TO add dependency on it.  You should be able to
-rewrite the new caller without using it.
+I looked over the patches. I didn't look at the bottom change to
+packed/loose refs as I'm not an expert.
 
-But this is a 5-year old API function, that first appeared how many
-years ago in their public release?  In a few years, I would say that
-we would be laughed at if we avoid it with "it is not available
-everywhere".
+The individual transaction updates already support their own flags, so
+this change generates some confusion. Consider:
 
-And in the meantime, we ship a copy lifted from upstream, so those
-with older zlib would be OK with it, too.
+int refs_delete_ref(struct ref_store *refs, const char *msg,
+    const char *refname,
+    const struct object_id *old_oid,
+    unsigned int flags)
 
-That is how I view what we have today.  To me, the logical
-conclusion of the observation is that, we do not have good reason
-to avoid it.
+how would one delete a ref skipping the transaction hook? It will be
+easy for someone to pass the SKIP_TRANSACTION_HOOK to
+refs_delete_ref(), with surprising results.
 
-When we are adding a new piece of code that drives inflate(), we
-should remember that we now have uncompress2() available in the
-codebase, and see if we can simplify it by using uncompress2().  The
-same is true for a case where we refactor existing code that can
-become simpler with uncompress2().
+It might make sense to not introduce a new flag namespace, but use
+update->flags instead. You'd have to add your new flag after
+REF_SKIP_REFNAME_VERIFICATION.
+Bonus is that you can unittest the new flag using the existing
+ref-store helper without extra work. (check that a transaction with &
+without the flag works as expected.)
 
-Thanks.
+other than that, looks OK to me.
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
