@@ -2,76 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2C33C4332F
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 09:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E6BDC433EF
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 10:02:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233539AbiAMJwp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 04:52:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56912 "EHLO
+        id S233652AbiAMKCt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 05:02:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233524AbiAMJwo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jan 2022 04:52:44 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95BFEC06173F
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 01:52:43 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id c71so20974384edf.6
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 01:52:43 -0800 (PST)
+        with ESMTP id S232646AbiAMKCr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 05:02:47 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF12C06173F
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 02:02:47 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id b13so21288152edn.0
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 02:02:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=RHRQWq/rez9RYb+DoTHRnDAwejY31cS6W3N771Q1RKM=;
-        b=bkUMEu0/RrZL7ayQfPUplUc+EgKenzLsKRpsch5gjPbSnOgKeh/060HhM3Xi0GQGXu
-         6D87qoZKSlsDH8l5oq73PiwXfewHZ7qa4MaP6yvLsALJhTB9P5pLL0zM71Sh3929z1FX
-         arsLc2nMR5Kq7WREOFDRixTIRjp6P27GHJTMLnuYCJLIeOMSNbUWGJFurPX01HjehKwL
-         u5otoU0R9QJ7AMifYNGniSV+1qaYs+oF0uDEoP97ajKnbUw2P8qVb0e4FdJi1DyMYTJN
-         OHZ0JwYnPtWlfB0NGniK7BH95c5G7HhVwwuHxGUFdtGGEpEQS0ah8SY+ibnuMXr5dQlN
-         NLpw==
+        bh=njCIoVwcn0AmPr3jnBos+XtiAVadbw6rfNPgkTZh5pg=;
+        b=Ci7aNM8+a4l572edUTv84KAFTKoIF+z6eluEHmdx9lNJ2tLgzzA8zwShfAgF2ZfklM
+         IXQw4RwI30cPXoUa+hb2Fklx9PngAchYl4iYTndHXiQ4LG1OmZsa4rzAxdtQFjw012vC
+         +dF2h7nLyBPeJOnYjE5ag2UDQNU9s0DS7+A/0VtBffPJgYls283YBVtF8SF1LoO9bHZa
+         04pmlDu7cQzEnV5pAwSovEC7iwdei0X8sQDrL7VTxVy08QvSiG5BwR0IXUVy60Zx4KcL
+         JB7NsUEZ13IgFAPM3evqDjw9NI1TF3GjvWpozeGSWwSYnXdhrT0dgp6BcHqDqCli8xqL
+         R/LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=RHRQWq/rez9RYb+DoTHRnDAwejY31cS6W3N771Q1RKM=;
-        b=DO+oOUE4ZUsmaFdcvsvsIwAMpCluINvtPLkJMVnSxWrdAriE06LTcg6Tm7vtr6EvqB
-         ZbYSAHI9ikYJqkNYwnzPHzqIm4UtAXxRcAIHgrkUW12vesmzKhxKnGn1vD6+GT6qSjyw
-         zkGqHVoLqqUjmsYHzzpdD9V9YmVLSVD4ocbkCiwXhFyfzhF+ieBLDV1jXRHeYkA0q+yK
-         K6vC1bDS3kHTT95JBWqMvyiQZpD85gYl/1irX8/oOtBNLIemQn9xd9hGPmeQxLwuc0d+
-         6X5HIfwhs6mzIDMFnvDQN0Z7Jqk4wANu9grgwaeEc4Sf455xbzf7rdBPdSScnheLaE/0
-         HLQQ==
-X-Gm-Message-State: AOAM532xY31MRMtTFI9EGacXgGN+zW17r6VvqMDJ9YspoPjR5C94AwKk
-        npfGQIMYHVWaZGtXW+ywv+5473MrSDoMDw==
-X-Google-Smtp-Source: ABdhPJwF3uQHY81R4iRSlj31Ic/2ZVuYWoOJUbBOpBUpxbHu9gwnULad5erZDRPD3XBIcAgwrE23ww==
-X-Received: by 2002:a17:906:c2c7:: with SMTP id ch7mr2312571ejb.595.1642067562090;
-        Thu, 13 Jan 2022 01:52:42 -0800 (PST)
+        bh=njCIoVwcn0AmPr3jnBos+XtiAVadbw6rfNPgkTZh5pg=;
+        b=zdHZ1M8ZMTXpoiEqke9mHlED1F+D/N90Iegt8wo0m1sXDQ6V/IdYLQGeRhdsTSigZ3
+         eqdCl/ku6s9VF3lRpJciD9yndXNYbUER7S8NMBtK1MPzu1QmVRwFoGenaSiPvKuP9b0q
+         h1MwaAfHGFjuhIW8yBS1HsDga0g3/4Mq70Mv9We2QvGIwNk5GWyfHgae8WDZjRl7woLk
+         smivgFLY+ByFoplPWp0FSVXH5xrdtakp6iZUVk/v47trGN70Gg3ZfP5JWV4zGh1AQd4f
+         ibDchG1iCYuuI1annfPaEMbSyotCJEYy1yXjZMJsO399oYPLoWXXY3w2IH8seIp5b8ay
+         AeyA==
+X-Gm-Message-State: AOAM531+NlPzPwR04HwIljbGbDoYUGxdsC2nkGTURvL7zV4hmgtdzqkD
+        nZu5gako2hubqupamc9vW4Q=
+X-Google-Smtp-Source: ABdhPJycoEJ/fS5EsR6dNmaBajokPylSFNqqdl/JsS5+B7KVeA2LvVbkcrQ/jJZrDfyZD+pPYqY4kA==
+X-Received: by 2002:a17:907:da1:: with SMTP id go33mr1392005ejc.60.1642068165839;
+        Thu, 13 Jan 2022 02:02:45 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id f11sm413486edv.67.2022.01.13.01.52.41
+        by smtp.gmail.com with ESMTPSA id 12sm716861ejh.173.2022.01.13.02.02.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Jan 2022 01:52:41 -0800 (PST)
+        Thu, 13 Jan 2022 02:02:45 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1n7wmf-000qba-0P;
-        Thu, 13 Jan 2022 10:52:41 +0100
+        id 1n7wwO-000qs7-LQ;
+        Thu, 13 Jan 2022 11:02:44 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [RFC PATCH 0/2] Introduce new merge-tree-ort command
-Date:   Thu, 13 Jan 2022 10:22:05 +0100
-References: <20220105163324.73369-1-chriscool@tuxfamily.org>
- <CABPp-BFh7UnQtPM=tO8rfp5bPK4-7esouv5KCx1sUSESwEA=Rw@mail.gmail.com>
- <CAP8UFD0wKnAg5oyMWchXysPTg3K9Vb4M1tRcPzPE81QM903pYg@mail.gmail.com>
- <CABPp-BHpuLjCYycBwweMW_NdQrS_r3ECmvLb8XjNW-_Rau5NTw@mail.gmail.com>
- <nycvar.QRO.7.76.6.2201101427440.339@tvgsbejvaqbjf.bet>
- <xmqq8rvn1nkw.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2201111439190.1081@tvgsbejvaqbjf.bet>
- <220111.86mtk2xb1y.gmgdl@evledraar.gmail.com> <xmqqy23kx2k5.fsf@gitster.g>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v5 02/16] reftable: fix resource leak in block.c error path
+Date:   Thu, 13 Jan 2022 10:55:54 +0100
+References: <pull.1152.v4.git.git.1639482476.gitgitgadget@gmail.com>
+ <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
+ <9ab631a3b29addaa54415139e7f60a79a19a6edb.1640199396.git.gitgitgadget@gmail.com>
+ <xmqqtuf0fe3r.fsf@gitster.g>
+ <CAFQ2z_OLCzOYXgXCTXyLOwwk7EBkPzwH=KASDmuJbur=q7L1Jg@mail.gmail.com>
+ <xmqq4k6y63j7.fsf@gitster.g>
+ <CAFQ2z_OFK77TC605GqM2Lw1Lf21fyF2cVKkGVrXO6TP6zcp+mw@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqy23kx2k5.fsf@gitster.g>
-Message-ID: <220113.86fspsvu6v.gmgdl@evledraar.gmail.com>
+In-reply-to: <CAFQ2z_OFK77TC605GqM2Lw1Lf21fyF2cVKkGVrXO6TP6zcp+mw@mail.gmail.com>
+Message-ID: <220113.86bl0gvtq3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -80,114 +77,43 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Jan 12 2022, Junio C Hamano wrote:
+On Wed, Jan 12 2022, Han-Wen Nienhuys wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> On Fri, Dec 24, 2021 at 5:16 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> Once you
+>> initialize at the declaration with "less meaningful" value (like
+>> zero initialization), the tools won't be able to tell when the code
+>> uses that variable "uninitialized" (because the assignment was
+>> skipped by a bug), since it appears to always be initialied to them.
 >
->> Maybe that was the right thing to do, maybe not, but it went out with
->> v2.30.0 and the lack of complaints since then would seem to suggest that
->> I was right that removing it wouldn't be a big deal.
->>
->> Of course it may have broken someone's script somewhere.
->>
->> But an important distinction is that they can get it working again by
->> just copy/pasting that ~100 line shell library into their own script, or
->> calling the underlying commands it was invoking themselves.
+> Which tools are these? When I add
 >
-> Was parse-remote a part of what promised our end-users? [...]
+> static void test_memcpy(void)
+> {
+>  uint32_t dest;
+>  char not_init[200];
+>  int i;
+>  memcpy(&dest, not_init, sizeof(dest));
+>
+>  for (i =3D 0 ; i < 10; i++)
+>   not_init[i] =3D rand() % 255 + 1;
+>  printf("%d", (int) strlen(not_init));
+> }
+>
+> to the C code, it compiles cleanly if I do "make DEVELOPER=3D1".
 
-It was listed under "LOW-LEVEL COMMANDS (PLUMBING)" =3D> "Syncing
-repositories", which has git-daemon, git-{upload,receive}-pack,
-git-shell etc. now.
+Aside from what Ren=C3=A9 said in his follow-up, I think what Junio's
+pointing out here has to do with the use of this pattern in general, not
+the specific code being discussed here.
 
-So, pedantically we removed a removed a plumbing utility without much if
-any warning.
+I.e. if you get into the habit of needless initialization it may not
+matter right now, but once the function grows an if/else branch, or
+someone copies the pattern to such a function it may hide a logic error.
 
-But as I argued when it was removed I think that realistically some of
-our plumbing tools were made for internal-only use, and as the *.sh->C
-rewriting of built-ins progressed they became orphaned.
+So it's not about analyzing the control specific flow here, but that
+your upthread patch is separating a variable and its actual
+internalization by ~20 lines.
 
-They only had public-facing manpages due to plans that never came to
-fruition, or just in copy/pasting an existing template at the time.
-
-I don't think that would matter for git-parse-remote if it had
-subsequently gotted widespread use in the wild (even if it were
-undocumented), but when I investigated that it really seemed to be used
-by approximately nobody.
-
-But a while after it was removed you pushed back on some further similar
-changes to git-sh-setup. I asked some follow-up questions in
-https://lore.kernel.org/git/87tuiwjfvi.fsf@evledraar.gmail.com/ about
-how we should consider these that you didn't reply to.
-
-The greater context being that I was removing git-parse-remote.sh so
-that I could eventually get rid of the bridge of extending
-libintl/gettext to *.sh-land. The current state of that on "master" in
-that regard being:
-=20=20=20=20=20=20=20=20
-    $ git grep '\b(eval_)?gettext(ln)?\b' -- ':!t/' ':!ci/' ':!git-gui' ':!=
-git-sh-i18n.sh' '*.sh'
-    git-merge-octopus.sh:    gettextln "Error: Your local changes to the fo=
-llowing files would be overwritten by merge"
-    git-merge-octopus.sh:           gettextln "Automated merge did not work=
-."
-    git-merge-octopus.sh:           gettextln "Should not be doing an octop=
-us."
-    git-merge-octopus.sh:           die "$(eval_gettext "Unable to find com=
-mon commit with \$pretty_name")"
-    git-merge-octopus.sh:           eval_gettextln "Already up to date with=
- \$pretty_name"
-    git-merge-octopus.sh:           eval_gettextln "Fast-forwarding to: \$p=
-retty_name"
-    git-merge-octopus.sh:   eval_gettextln "Trying simple merge with \$pret=
-ty_name"
-    git-merge-octopus.sh:           gettextln "Simple merge did not work, t=
-rying automatic merge."
-    git-sh-setup.sh:# Source git-sh-i18n for gettext support.
-    git-sh-setup.sh:                die "$(eval_gettext "usage: \$dashless =
-\$USAGE")"
-    git-sh-setup.sh:                LONG_USAGE=3D"$(eval_gettext "usage: \$=
-dashless \$USAGE")"
-    git-sh-setup.sh:                LONG_USAGE=3D"$(eval_gettext "usage: \$=
-dashless \$USAGE
-    git-sh-setup.sh:                gettextln "Cannot chdir to \$cdup, the =
-toplevel of the working tree" >&2
-    git-sh-setup.sh:                die "$(eval_gettext "fatal: \$program_n=
-ame cannot be used without a working tree.")"
-    git-sh-setup.sh:                die "$(eval_gettext "fatal: \$program_n=
-ame cannot be used without a working tree.")"
-    git-sh-setup.sh:                        gettextln "Cannot rewrite branc=
-hes: You have unstaged changes." >&2
-    git-sh-setup.sh:                        eval_gettextln "Cannot \$action=
-: You have unstaged changes." >&2
-    git-sh-setup.sh:                        eval_gettextln "Cannot \$action=
-: Your index contains uncommitted changes." >&2
-    git-sh-setup.sh:                    gettextln "Additionally, your index=
- contains uncommitted changes." >&2
-    git-sh-setup.sh:                        gettextln "You need to run this=
- command from the toplevel of the working tree." >&2
-    git-sh-setup.sh:                gettextln "Unable to determine absolute=
- path of git directory" >&2
-    git-submodule.sh:                       die "fatal: $(eval_gettext "Una=
-ble to find current revision in submodule path '\$displaypath'")"
-    git-submodule.sh:                               die "fatal: $(eval_gett=
-ext "Unable to fetch in submodule path '\$sm_path'")"
-    git-submodule.sh:                       die "fatal: $(eval_gettext "Una=
-ble to find current \${remote_name}/\${branch} revision in submodule path '=
-\$sm_path'")"
-    git-submodule.sh:                               die_msg=3D"fatal: $(eva=
-l_gettext "Failed to recurse into submodule path '\$displaypath'")"
-
-I.e. if we were able to get rid of that we could remove
-sh-i18n--envsubst.c and git-sh-i18n.sh itself.
-
-Some of that is dead code, others have pending *.sh->C rewrites. For the
-rest we could expose a trivial git-i18n.c helper to emit the <10
-messages that remained pending further rewrites, which would be much
-simpler than extending the generic libintl functionality to *.sh.
-
-But since git-sh-i18n.sh latter is publicly documented as plumbing
-(which I'm responsible for, merely by copy/pasting an existing template)
-I stalled on that. Since you seemed to suggest in the linked-to thread
-that removing any such publicly documented shellscripting functions was
-a no-go, even if we'd previously removed git-parse-remote.sh.
+So in the general case, by initializing it when it's declared it's more
+likely that we'll introduce a logic error where it won't be initialized
+at all.
