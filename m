@@ -2,80 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B280C433EF
-	for <git@archiver.kernel.org>; Wed, 12 Jan 2022 23:53:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4FC2C433EF
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 00:00:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236130AbiALXxM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 18:53:12 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:22723 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236126AbiALXxD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 18:53:03 -0500
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 20CNqoiM042611
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 12 Jan 2022 18:52:51 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     <rsbecker@nexbridge.com>, "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>
-References: <002901d807ee$84cd2f40$8e678dc0$@nexbridge.com> <xmqqtue8so89.fsf@gitster.g> <003d01d807fc$b9217400$2b645c00$@nexbridge.com>
-In-Reply-To: <003d01d807fc$b9217400$2b645c00$@nexbridge.com>
-Subject: RE: [PATCH v1] Modify NonStop configuration to disable uncompress2
-Date:   Wed, 12 Jan 2022 18:52:45 -0500
-Organization: Nexbridge Inc.
-Message-ID: <004601d8080f$81edb300$85c91900$@nexbridge.com>
+        id S236350AbiAMAAn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 19:00:43 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63983 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236349AbiAMAAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 19:00:39 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C06F5100358;
+        Wed, 12 Jan 2022 19:00:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=cmwCJnIRFmMUH4jhiN0EexSLPA8ZASekeuz/Ky
+        wLMzQ=; b=sfinB7LrJKl0Jkva58TX2prKM+dLQIjzZ8OiojZctlDQL/nGMZv2tk
+        hIVJxmcOeine6NNIgfrdAP6FUFx9A/gUoIVEfdJ8rDaBBwUiMFBC287PxXmfPvI4
+        WSyhFvhvqjhxtWk43wdqjLC8138CXE4ElNW3NMDq+J9LLC8ek79S4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B6E54100357;
+        Wed, 12 Jan 2022 19:00:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0394E100355;
+        Wed, 12 Jan 2022 19:00:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lessley Dennington <lessleydennington@gmail.com>
+Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com,
+        johannes.schindelin@gmail.com, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 3/3] sparse-checkout: limit tab completion to a
+ single level
+References: <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com>
+        <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
+        <aa9ea67180dd10ef8bdf17e8c23694da15828b21.1641841193.git.gitgitgadget@gmail.com>
+        <0e4bb6f1-337e-38b3-75b2-fe11ff8d68b2@gmail.com>
+Date:   Wed, 12 Jan 2022 16:00:34 -0800
+In-Reply-To: <0e4bb6f1-337e-38b3-75b2-fe11ff8d68b2@gmail.com> (Lessley
+        Dennington's message of "Wed, 12 Jan 2022 15:43:26 -0800")
+Message-ID: <xmqq35lsld25.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQHbiG/+K3gIjJcqhakMnQ8/PDNX6wKW7DKmATiETXisOpJhIA==
+Content-Type: text/plain
+X-Pobox-Relay-ID: D5AE6D80-7403-11EC-A105-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 12, 2022 4:38 PM, I wrote:
-> On January 12, 2022 3:17 PM, Junio wrote:
-> > <rsbecker@nexbridge.com> writes:
-> >
-> > > Modify NonStop configuration to disable uncompress2.
-> > >
-> > > The zlib version available on NonStop x86/ia64 does not contain the
-> > > uncompress2()
-> > > Procedure.
-> > >
-> > > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
-> > > ---
-> > >  config.mak.uname | 1 +
-> > >  1 file changed, 1 insertion(+)
-> >
-> > I'll lift your s-o-b from this patch and use it in
-> <xmqqzgo0u5j7.fsf@gitster.g>, as the
-> > patch part didn't apply.
-> >
-> > Thanks.
-> >
-> > >
-> > > diff --git a/config.mak.uname b/config.mak.uname index
-> > > a3a779327f..9b3e9bff5f 100644
-> > > --- a/config.mak.uname
-> > > +++ b/config.mak.uname
-> > > @@ -576,6 +576,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
-> > >         NO_SETENV = YesPlease
-> > >         NO_UNSETENV = YesPlease
-> > >         NO_MKDTEMP = YesPlease
-> > > +       NO_UNCOMPRESS2 = YesPlease
-> > >         # Currently libiconv-1.9.1.
-> > >         OLD_ICONV = UnfortunatelyYes
-> > >         NO_REGEX = NeedsStartEnd
-> > > --
-> > > 2.34.1
+Lessley Dennington <lessleydennington@gmail.com> writes:
 
-With this patch, rc0 passes on NonStop ia64.
-Thanks,
-Randall
+>> +     # Find possible directory completions, adding trailing '/' characters
+>> +     _tmp_completions="$(git ls-tree -d --name-only HEAD $_tmp_dir |
+>> +         sed -e s%$%/%)"
+>> +
+> I am admittedly unfamiliar with the use of this format in sed expressions
+> (I'm generally more accustomed to '/' instead of '%'). It's definitely
+> working as it should, I'm just not quite sure of how.
+
+The substitution operator "s" in "sed" can take any letter as the
+match-replacement delimiter.  People use 's/match/replacement/'
+usually because that is how textbooks teach them, but whatever
+letter chosen as the delimiter, if it appears in either match or
+replacement, it needs to be quoted, i.e. 's/match/replace\/ment/'.
+
+Using a delimiter letter other than '/' relieves you from having to
+quote a slash when slash is part of match-replacement.  Even though
+it is more common to use a letter that is a more clearly delimiter
+looking, e.g. "s|match|replace/ment|", it is not a crime to use
+letters like '%' and '#', or even 's' ;-)
+
+>> +     if [[ -n "$_tmp_completions" ]]; then
+>> +         # There were some directory completions, so find ones that
+>> +         # start with "$cur", the current token, and put those in COMPREPLY
+>> +         local i=0 c IFS=$' \t\n'
+> Does c need to be declared before the loop?
+>> +         for c in $_tmp_completions; do
+
+bash completion script runs in the same namespace as the end-user's
+interactive session, so we MUST be careful not to contaminate the
+namespace or clobber variable the end-user is using.  "local c" before
+we use $c for our own use is a way to make sure that when this function
+that says "local c" is left, the value (or non-presence) of "c" is
+restored to its original value before this function was entered.
 
