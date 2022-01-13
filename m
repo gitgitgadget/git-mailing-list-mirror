@@ -2,102 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC167C433F5
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 14:23:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DEC6C433F5
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 14:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235628AbiAMOXm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 09:23:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34690 "EHLO
+        id S233075AbiAMO1p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 09:27:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230165AbiAMOXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jan 2022 09:23:41 -0500
-Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3911C06173F
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 06:23:41 -0800 (PST)
-Received: by mail-vk1-xa31.google.com with SMTP id m57so3865476vkf.9
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 06:23:41 -0800 (PST)
+        with ESMTP id S231161AbiAMO1p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 09:27:45 -0500
+Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3168C06173F
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 06:27:44 -0800 (PST)
+Received: by mail-ua1-x92c.google.com with SMTP id p1so11355797uap.9
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 06:27:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=PgX52h8mb2DJn6Ra1V31r4gkBD7h/jrH0KPrvEqtIKM=;
-        b=coK+pSH93gdR1yHDmuicdNlnIQpVuQ+FeY1czdjdMHF0wTKthJXYJY7MYA+NYBC7+A
-         oGxGoF8VJhPqpVnb+nPX3ub74vV6OSFkOWuqIvUumnsxI+LdkA0LHsSW73t0/JA4o7Qb
-         TSTKbAfTbQIopB1lmVL9gB5t1MUOVnsSPgxDU1T3IwMZsU9taMDw8s60I2zJPxEESXAS
-         Fqehkxacdgl6U/hVcjJH2N8HSm2DcKe0yGy4IXkDNII2/g0TrCEeBmkFiXvaCJ/1s3Hl
-         XA8BS/brj2RohQOg9dQIseI59bQ8NqDhDWTeidCYx43mN1TOm0CkLtSnq2s81Duef/MY
-         hb7A==
+        bh=7c/O+/mm74JC0DEHceN/264xSdbGXZVxJYQVnvBZOR8=;
+        b=HVe3MvDQbkJQuEWQcQcALRnXoFIKOuHvcHog8BPwTiHLP9+JpjRL6YNo0KS6DclHJN
+         JCOttdEXOgN8rfa6VEeiZAyXb2KSrTycCiy9DtjF6y8SXEQvQzWQ4ooLbt812Ml1X05A
+         ydGzEPgrzWo4nTX22GRuejuHT/BkMGKL02KvJAdHuK4awTaf62jW08YsE/BwCbSs2o/1
+         3c5Z4IhbCeRGDSCYC/6HkWIvi7McoG3Hl2kbQYiTXXGjT4ZHsmwV7kfVsXpz4TPbq4jG
+         D2bmigqAQ0VVhwbzawydVIqVnAMSvXVekEZ8PAmQ4vmSMx0G/3MrA+XGpPLpRVvp09v0
+         rW1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PgX52h8mb2DJn6Ra1V31r4gkBD7h/jrH0KPrvEqtIKM=;
-        b=kzqnWJa7nV04+Lio/BIk8D3U1CeWHZN/376eWRtnC139gyS1al1pU0Z9C+zPODWXSn
-         1W417rOwy9I7ecrEGdl7Omw1saX9tX+jTaqjNaLhMjO2f65S54/vqszfuyl8vD0/iQnb
-         dOtZsQe/8HWqG52Mniz2c2fUJOrRFUmoCAgx1GLmDHUboki3WfVVdWVnag+GL6JfiCoI
-         3Fuc0F/nW11PH1ZSjwApC4d5bIB82+U6Qjgq9z4nTRlNEk2cDih71CjaIygvBGQy+Hkm
-         9wKRBXxLKCbYdjG54gcWzwpIW23rjBDJ91Anp3+62tHFQ7krImHYAdapva0Gw6zpXghs
-         qqKg==
-X-Gm-Message-State: AOAM531sGLwViIV7fE25KEN/FNWnB222jnIqQmComfN/KO9kmfhn+nEI
-        s+nbetoGrvAEx0cjR3P7NRCewch9MIB9zSbI7Ie4krpLMfY=
-X-Google-Smtp-Source: ABdhPJxB7nDkJnc+l9Jhz+yiQ14+roPd22gUHuUz3HnTbQzjlH9pgQqQoIKaII20GJSEcsc4YPZhF2Sqdo3uJ/NsFcY=
-X-Received: by 2002:ac5:cda4:: with SMTP id l4mr2378161vka.10.1642083820721;
- Thu, 13 Jan 2022 06:23:40 -0800 (PST)
+        bh=7c/O+/mm74JC0DEHceN/264xSdbGXZVxJYQVnvBZOR8=;
+        b=xwbf7Lr0gfLAOrrVuC3GET+D+LysG7/oN7OpNXLgFzaNZDkcQ258G+3eE2epOp6nD1
+         2ZkAdfedNESHOaELHH1bCsa9Ihen4sdlH7xY97ikk7Bomq0tcaXJnhseNhtucwdcyXDs
+         F49flolLJv63yw+1kNb1XAyRCWQwY9t/inPFTxxAWJrK+k+6OoFhM5mxmtcM72W+b+bW
+         xN8jBzKp6gxHmpW54UB3GLD4qpZto4YonFanzHY4pPAhXr8HtGev3VqWAVYaSTyxzISu
+         1zvywJhPF7ZWIpmZFoC3lIxjWDkfVPAGJnlZGOYabsjfoUDXVDDwOgr1jaZimCj5Pr6J
+         ScrQ==
+X-Gm-Message-State: AOAM532CwcM6+xRjQK4mIlS6GT8BFBPjrfe+XItOu+PSecYAxFPucrQz
+        57K0RLfKTDd42Aw9S5tJlSDAKzR5YZUxTxxPXwBMbA==
+X-Google-Smtp-Source: ABdhPJzJ0AcVJguy3kZBKvnkl+MquSBYZ268GrpptWzP/fFaK9D4SN35vtgk1tFl8KxNulUYF8EMfTAnhwC8BcTNFZs=
+X-Received: by 2002:a05:6102:2451:: with SMTP id g17mr2339040vss.8.1642084063885;
+ Thu, 13 Jan 2022 06:27:43 -0800 (PST)
 MIME-Version: 1.0
-References: <0b86f6c2327b88886ad8667d28e0fa8382791499.1633638316.git.gitgitgadget@gmail.com>
- <patch-1.1-7425b64c0a0-20220113T113821Z-avarab@gmail.com>
-In-Reply-To: <patch-1.1-7425b64c0a0-20220113T113821Z-avarab@gmail.com>
+References: <pull.1152.v4.git.git.1639482476.gitgitgadget@gmail.com>
+ <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com> <9ab631a3b29addaa54415139e7f60a79a19a6edb.1640199396.git.gitgitgadget@gmail.com>
+ <xmqqtuf0fe3r.fsf@gitster.g> <CAFQ2z_OLCzOYXgXCTXyLOwwk7EBkPzwH=KASDmuJbur=q7L1Jg@mail.gmail.com>
+ <xmqq4k6y63j7.fsf@gitster.g> <CAFQ2z_OFK77TC605GqM2Lw1Lf21fyF2cVKkGVrXO6TP6zcp+mw@mail.gmail.com>
+ <220113.86bl0gvtq3.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220113.86bl0gvtq3.gmgdl@evledraar.gmail.com>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 13 Jan 2022 15:23:29 +0100
-Message-ID: <CAFQ2z_M2ZH-8RNS_zxShkdaXdO4x4Vr8EwrFo6atd0qzyy36oA@mail.gmail.com>
-Subject: Re: [PATCH] reftable tests: use C syntax compatible with old xlc
+Date:   Thu, 13 Jan 2022 15:27:32 +0100
+Message-ID: <CAFQ2z_NpK3Yr=vHScnJV=1uDnh4P0PceuCXK+CVLvVJ4GtVh3A@mail.gmail.com>
+Subject: Re: [PATCH v5 02/16] reftable: fix resource leak in block.c error path
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 13, 2022 at 12:38 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Thu, Jan 13, 2022 at 11:02 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
-> Change code added in 1ae2b8cda84 (reftable: add merged table view,
-> 2021-10-07) to be compatible with older versions of AIX's IBM xlc
-> compiler. Version V12.1 of it (on gcc111.fsffrance.org) will hard
-> error with:
 >
->     "reftable/merged_test.c", line 211.19: 1506-196 (S) Initialization be=
-tween types "char*" and "struct reftable_ref_record" is not allowed.
->     "reftable/merged_test.c", line 212.19: 1506-196 (S) Initialization be=
-tween types "unsigned long long" and "struct reftable_ref_record" is not al=
-lowed.
->     "reftable/merged_test.c", line 213.19: 1506-196 (S) Initialization be=
-tween types "enum {...}" and "struct reftable_ref_record" is not allowed.
->     "reftable/merged_test.c", line 214.19: 1506-196 (S) Initialization be=
-tween types "unsigned char*" and "struct reftable_ref_record" is not allowe=
-d.
->     "reftable/merged_test.c", line 349.19: 1506-196 (S) Initialization be=
-tween types "char*" and "struct reftable_log_record" is not allowed.
->     "reftable/merged_test.c", line 350.19: 1506-196 (S) Initialization be=
-tween types "unsigned long long" and "struct reftable_log_record" is not al=
-lowed.
->     "reftable/merged_test.c", line 351.19: 1506-196 (S) Initialization be=
-tween types "enum {...}" and "struct reftable_log_record" is not allowed.
+> Aside from what Ren=C3=A9 said in his follow-up, I think what Junio's
+> pointing out here has to do with the use of this pattern in general, not
+> the specific code being discussed here.
+>
+> I.e. if you get into the habit of needless initialization it may not
+> matter right now, but once the function grows an if/else branch, or
+> someone copies the pattern to such a function it may hide a logic error.
+>
+> So it's not about analyzing the control specific flow here, but that
+> your upthread patch is separating a variable and its actual
+> internalization by ~20 lines.
 
-Weird. What C standard does xlc implement?
+I know this is the Git project's preferred style, so I'm OK with
+adapting to that, but I'm also sad about it.
 
-> Perhaps there's a better way to do this, but just duplicating the
-> earlier struct values declared earlier in these functions works, and
-> is probably the least bad solution.
+Sure, you can introduce logic errors by refactoring things, but with
+initialized data, you get a reproducible logic error, rather than
+something whose failure mode depends on platform, compiler and
+surrounding function calls. This makes debugging problems across
+platforms easier. In particular, I don't have a functioning Windows
+environment, so anything that helps minimize differences across
+platforms is welcome to me.
 
-I'd rather not duplicate anything. Can't you do
-
-  struct foobar *want =3D { &r[0], &r[2] .. }
-
---=20
+--
 Han-Wen Nienhuys - Google Munich
 I work 80%. Don't expect answers from me on Fridays.
+--
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Registergericht und -nummer: Hamburg, HRB 86891
+Sitz der Gesellschaft: Hamburg
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
 --
 
 Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
