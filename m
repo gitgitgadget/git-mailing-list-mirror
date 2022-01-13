@@ -2,130 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E19F2C433F5
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 15:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 842C4C433F5
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 15:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236044AbiAMPRC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 10:17:02 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:39731 "EHLO
-        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236041AbiAMPRB (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 13 Jan 2022 10:17:01 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 1F24A5C017F;
-        Thu, 13 Jan 2022 10:17:01 -0500 (EST)
-Received: from imap46 ([10.202.2.96])
-  by compute2.internal (MEProxy); Thu, 13 Jan 2022 10:17:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
-        mime-version:message-id:in-reply-to:references:date:from:to:cc
-        :subject:content-type:content-transfer-encoding; s=fm1; bh=YfeFX
-        YlEXVabwJZX1anz28wto0+nfbew/iepyHeP5kI=; b=BL12TnjODfwzU0sr7ZLm0
-        0Dwb7QlnOj+cMcUd567l4mFtyBhH/RmwjXyPen78Mw84BoyVjAKDX4q9mWSUxlbi
-        ETco7jblu4Xl9SdQJn/Om/hNjhRpHNlrVellhmqVWpFzTpmIyeBkWx0E1bVhA08K
-        A5Gu+2qC2fdds+GSFTGGNU3aFepY8lQMTTUP5tGAjFSUxe8UxhMiyBsViZ1WFZt5
-        6jdSD6dmM9SAUXllV/agQ4/mnJ0mFJ77zzjIkRLIhDXfcddg2Y7z9Q55vBW5D4wG
-        2KaUG1JMe2c8vzK6E7uWRzsQ4Rz6jqRkjyq2VWT0B7U/tNPxVOSwywtLg3qBBeGL
-        g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=YfeFXYlEXVabwJZX1anz28wto0+nfbew/iepyHeP5
-        kI=; b=FypPY5htt0wCyxhOsZydaSwHoRsDloMMiQECkmBjLnM+hxtynarsia80r
-        sAJGtFTGx+4MuOjHT1hH45JuauhbdN1cQe9/UfnwGybnYhCEY3VGUSxxZvpAtB2a
-        OHQZSSEJ/MVfI9deWA/EIsIlmC1DuOkOMQa+GydN8G5GIV8VDjynm79LoeYt4tzy
-        slXjFve85CWWiK9wgpuYluAFEZTISy8q+dtHy/Xm/Cjvuif5NdodsehzbIflN8n6
-        DhChN+wB7616N/OFwEkMS3S1eM4FuOBQaX+IcBHmCjttho9R6t3cvx5JPw0803wH
-        CEtmrve8LevMy1+GKvh40tlZJppPg==
-X-ME-Sender: <xms:bULgYZGkVJsV3lN8iZ-z-JSqQT-y4zrBiqDed2hJek4i53C8jsNNqQ>
-    <xme:bULgYeVzhuraZhIdWk-EG2w-zE25cMDsAU23YptcDDzPdY7DbUcxmyGAhdtmQE2FP
-    ecnkxAFtjlijqnWVkI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrtdefgdejgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdftrghm
-    khhumhgrrhcutfgrmhgrtghhrghnughrrgdfuceorhesrghrthgrghhnohhnrdgtohhmqe
-    enucggtffrrghtthgvrhhnpeekveeukeeiudelkefgleetudehffekgeevffehleejgeek
-    veetieetkeevvddvheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehrsegrrhhtrghgnhhonhdrtghomh
-X-ME-Proxy: <xmx:bULgYbJu2wtz5IvR0bb6MlY8oR7J-S6fiU3_Or7d7M9UvhkFmq3thA>
-    <xmx:bULgYfF53d7S2zUSlwr6O0DFGn4R0Kbg0UuusTvUsPvhb13tq6tU_w>
-    <xmx:bULgYfU1S4R58mWp-Jp04xf5ORgY2vR8E-np2MAdydddoMCRrA7vvw>
-    <xmx:bULgYcgsaXjXniNWcloUC4gYOvj86StKJD6D-T3ZLC_6LexnrRZpgg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id EDD421EE007D; Thu, 13 Jan 2022 10:17:00 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4569-g891f756243-fm-20220111.001-g891f7562
-Mime-Version: 1.0
-Message-Id: <925ef53d-c8b2-4ef4-acee-490900e8a3b7@www.fastmail.com>
-In-Reply-To: <8bc73981-589e-20e5-247b-2f74e166ae1a@web.de>
-References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
- <xmqqilus3ctf.fsf@gitster.g>
- <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
- <xmqq4k6b34h8.fsf@gitster.g>
- <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
- <3dade45b-494f-663b-264b-06a51ea1cf56@web.de> <xmqq35lsyhbf.fsf@gitster.g>
- <13e323e9-eb0c-71c3-215f-b77c91fcc4c8@web.de>
- <5be4cdad-6769-68e8-0984-5fe89668d007@web.de>
- <421215c1-f6ae-4ec2-b666-2a481056ef79@www.fastmail.com>
- <CAP8UFD3tyBhrOQzg9j4qDAT0Tb8TCTK0=J6ORsiLVuMWn+W9wg@mail.gmail.com>
- <8bc73981-589e-20e5-247b-2f74e166ae1a@web.de>
-Date:   Thu, 13 Jan 2022 16:16:40 +0100
-From:   "Ramkumar Ramachandra" <r@artagnon.com>
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        "Christian Couder" <christian.couder@gmail.com>
-Cc:     "Junio C Hamano" <gitster@pobox.com>,
-        "Git List" <git@vger.kernel.org>, "Miriam R." <mirucam@gmail.com>
-Subject: Re: git bisect bad @
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S236136AbiAMPbr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 10:31:47 -0500
+Received: from mout.gmx.net ([212.227.15.15]:43759 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232070AbiAMPbr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 10:31:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1642087899;
+        bh=XsfuhPO6a+lWs836gmP45hmoGNDdUClBq7BZZjanKA8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=OurlYfsiVLSgNRwfK/LQSkP2kjakFbPiOela3zFvdvoh4SNNan3bcmWCbvgxZCCYU
+         zmz6IS8lQEaq9eNkqwuRPmUgxksZdIgNXkmrdc2tkqMKTmhxPfLoeb1MIigJ5mWie/
+         j6dFACbUDLYkpxwn97sLhjG9VCG6RoyimwD7jr64=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.174.184] ([89.1.215.56]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbivM-1mcpO92siU-00dETN; Thu, 13
+ Jan 2022 16:31:39 +0100
+Date:   Thu, 13 Jan 2022 16:31:37 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 1/3] test-tool genzeros: initialize "zeros" to avoid
+ SunCC warning
+In-Reply-To: <220113.8635lsvsw6.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201131629300.2121@tvgsbejvaqbjf.bet>
+References: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com> <patch-1.3-4dadf7320ab-20220111T163908Z-avarab@gmail.com> <nycvar.QRO.7.76.6.2201121518360.2121@tvgsbejvaqbjf.bet> <Yd8njHz2m099iDfL@nand.local>
+ <220113.8635lsvsw6.gmgdl@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-1716208071-1642087899=:2121"
+X-Provags-ID: V03:K1:nLpO+pJoizD5eWahksoWgqHrgUu8gMhDjwL23IWS4NqdyBIcWXI
+ 9e8NtMOL2u3co4K4jVccUgtAg1MpkA1RHpfhPV14akDNOqws1fR2zVINA0JPVyhv5WILFk+
+ 9D29nixNeriHGYaYWhDz0zuhb/2I95mNrfodMH4Tqn1KH1uk3OS5FCTeU26DtMJecVHU4/T
+ Y98shE8XB0nB/vyzrzHmA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:me0QRAifX3s=:GKqwmclHm0rv86IcixjA+U
+ F7jIqGHzJAvPP1JBW9fqYicmijEnxdK8tMLw+/TQe1s91ykK/u91x0Pn8Jd8NlikV806uHYVX
+ FdTuO+JQV8wKOiEm0lS+anxkeULsPT2Qn8daZcXBc8LgMoUIxIKN5FFJ9TGfL0p7ORver5hx3
+ Ht3Yes5sNT1Mwc55qLxl+i25xY9VMpJ5L7PBCIYYrbut8cJDaVKDOKFpM+xGNq8jpebp9Pzf7
+ MHCSV6OPE95B1ZcR1gAfgMt4tzL770Pxbn+zwwMk1xbZbPVqByKR16VGj38NmZbgdvkpV76YI
+ 6NxAoEvowtcB+wpsPVDHU1HIPBaFoy2VeSxOeCpFvKxiFnSBDJMKtefI5SAFf5jU0spTbIaum
+ ZaEIJj1z3nlTraOuQW3XSV0VuC55KRUh2wvLhPWy+D/FmRUAYyV/YR1bg83irMfBOCHMFqLws
+ GkS4EEF0xr4du1wNwQRUI/FIQ6qjaWIGbzYUx9HFhXv/JXCkRkxV5kc9eC5XXBApCPbiHFu5y
+ uVuDXP6YvIo0x4Rv+5PFH3/FwJX2rPmuQcV/yErGxPooUHi1rTxDfU5hBgDdmuJ5+fasmcNZ2
+ oHHFwJNQ7hLF90xL9VUaEvSDBI11HBlbEJqlj+EmMEspEuMslC/W60tGy0XNgDUeEF0Zkdkzp
+ BFbP7oOmyG51wuq5KD7WY7nP09o6KlR01/r1j8SG19hcTgXcDaKTFvfit2B1QWy78JYAx/V+1
+ aCS44uZ6KXbRucqz7MUVZ8J+OFJ3JZFrIQXDQCJ/sT4BanVwQ44gsJwuauwxl8yIOOKkRmy6d
+ hVZkF9nOwy8EPjME6++ffmQ0xwwdcJNK1XyfNdCgGYj+//gX9GNWe1/8l1QjdFR9b7CWr+AwK
+ 57wV1pOiAQruQLeiuzMO59euxwq4VPd/7KShBl8djB6baooJAF3Q2Ru+isDT0FpwycFDnmOw8
+ 8oeuJK+E8qI+BtHgi01si2/TqMtNZWg4rT7Q6xcTus4lNAUGLgSn6nrp8iYBsf3TbMlQHmdD1
+ 8bm/y7hONFg4LUeQ/RLU0exXxpX0JmhRa+gYhpeYJTk4qOp0ZrnPMT5nJHuVbw4FyNWgcTuxs
+ R8azBzbJ9gCqnA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe wrote:
-> Am 13.01.22 um 13:28 schrieb Christian Couder:
-> > I don't think it's a good idea at this point to reserve the 126 and
-> > 127 error codes as there might be existing scripts relying on them
-> > to mean "bad".
->=20
-> Certainly possible -- people get the weirdest ideas.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-My gut reaction is that this is an overly conservative point of view. Th=
-ere are two factors to consider: first, bisect scripts are usually short=
- one-time throwaway scripts tailored to one project for one problem. Sec=
-ond, how likely is it that these people that have a complex script with =
-126/127 as the exit code, which they have been using for years to run bi=
-sect on the same project for the same problem, update their version of g=
-it frequently?
+--8323328-1716208071-1642087899=:2121
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Again, I might be wrong, because I don't know how people use bisect. Wor=
-st case, we can display a warning about this backward incompatibility in=
- the next few versions.
+Hi =C3=86var,
 
-> The implementation language of git bisect is not immediately relevant
-> here, but that the shell is used to call the user-supplied bisect run
-> script is.  If we'd run it directly (without RUN_USING_SHELL) we could
-> distinguish error code 126/127 from execution errors.  I assume the
-> option is used to stay compatible with the old shell version of bisect.
+On Thu, 13 Jan 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Sorry, my misunderstanding. I thought the external command was being cal=
-led from git-bisect.sh. I don't think I understand the purpose of RUN_US=
-ING_SHELL (it just seems to put an "sh -c" in the beginning):
+> On Wed, Jan 12 2022, Taylor Blau wrote:
+>
+> > On Wed, Jan 12, 2022 at 03:21:46PM +0100, Johannes Schindelin wrote:
+> >> > diff --git a/t/helper/test-genzeros.c b/t/helper/test-genzeros.c
+> >> > index 8ca988d6216..5dc89eda0cb 100644
+> >> > --- a/t/helper/test-genzeros.c
+> >> > +++ b/t/helper/test-genzeros.c
+> >> > @@ -3,8 +3,7 @@
+> >> >
+> >> >  int cmd__genzeros(int argc, const char **argv)
+> >> >  {
+> >> > -	/* static, so that it is NUL-initialized */
+> >> > -	static const char zeros[256 * 1024];
+> >> > +	const char zeros[256 * 1024] =3D { 0 };
+> >>
+> >> This diff does two things: add an initializer, and turn the variable =
+into
+> >> a `static`. The former is the actual fix that is required. The latter=
+ is
+> >> not. During the -rc phase, we do not want to see any of the latter. I=
+t is
+> >> unnecessarily controversial and distracting, and can easily be postpo=
+ned
+> >> until January 25th, 2022.
+> >
+> > This assumes that making the declaration non-static isn't necessary to
+> > fix the warning from SunCC.
+>
+> Just adding "=3D { 0 }" and retaining the "static" would FWIW make SunCC
+> happy here.
 
-	static const char **prepare_shell_cmd(struct strvec *out, const char **=
-argv)
-	{
-        ...
-			strvec_push(out, "sh");
-			strvec_push(out, "-c");
+Probably moving the `static` outside of the function would do the same,
+and would be even more surgical a change.
 
-			if (!argv[1])
-				strvec_push(out, argv[0]);
-			else
-				strvec_pushf(out, "%s \"$@\"", argv[0]);
-       ...
-	}
+> > I would guess that in reality it probably isn't, so removing the stati=
+c
+> > designation is a stray change, and this would have been easier to grok
+> > as simply:
+> >
+> >     -	static const char zeros[256 * 1024];
+> >     +	static const char zeros[256 * 1024] =3D { 0 };
+> >
+> > But to be honest I don't think it is _that_ big of a deal to make such=
+ a
+> > small change during this point of the development cycle.
+>
+> We'd also need to change the comment, so:
+>
+> -	/* static, so that it is NUL-initialized */
+> -	static const char zeros[256 * 1024];
+> +	/* static, for no particular reason */
+> +	static const char zeros[256 * 1024] =3D { 0 };
+>
+> Which is why I stripped the "static" off it, it was only there as a
+> shorthand for doing the initialization, so once we're doing it ourselves
+> it makes no sense to retain it for this invoked-only-once test helper.
+>
+> So I think this patch is good as-is.
 
-Warm regards,
-Ram
+That's stating the obvious.
+
+> just adding the initializer would need even further explanation in the
+> comment/commit message about the non-sensical end-state. I'm all for
+> being careful in the rc period, but in this case I think we'd be
+> overdoing it.
+
+If this were the only instance where the patch is larger than strictly
+necessary in the -rc phase, I would have let it slide, too.
+
+Ciao,
+Johannes
+
+--8323328-1716208071-1642087899=:2121--
