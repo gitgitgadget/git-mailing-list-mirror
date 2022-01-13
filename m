@@ -2,140 +2,395 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A84AC433EF
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 03:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10301C433EF
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 03:42:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232273AbiAMDmf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 22:42:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58776 "EHLO
+        id S232262AbiAMDmi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Jan 2022 22:42:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232261AbiAMDmc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 22:42:32 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 526CDC061756
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 19:42:32 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id n30-20020a17090a5aa100b001b2b6509685so8970224pji.3
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 19:42:32 -0800 (PST)
+        with ESMTP id S232267AbiAMDmf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jan 2022 22:42:35 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA171C061759
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 19:42:34 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id pf13so8979507pjb.0
+        for <git@vger.kernel.org>; Wed, 12 Jan 2022 19:42:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nnvutfgoPVy8ARQIFqCSevdqjzHGqHwG1IPa3F2O7Tc=;
-        b=pI+mevWKSJODGz2HMAm2bZ+ra6hyp6wv8CeXz77xD4EVuIF1+ysBJAy4PdW9AVtJhf
-         7saEPDJjxCy/ws1vxJ1iUdLXmhe2FvoiNGEwmRnZRAARlHtZ/mEaV7pGLKPisPs0r4jM
-         MC1idilxEifT3AaYdbIUQwtAtgiYwIlKj8cY9d9CoscVrTYixTbLMUqiWisZuMsgp1I9
-         aICDofttwBpMpSwYg+LtHapLzb2TrnenzbnwX+kzs8ssNSjxpOp42VF6tRzRiQFByWOj
-         EfTkuKk9DprPKKptcQvx9QoVwm84w53QCmNLbM5/nvsMfbBHIvYm4hpg0lXDwBWa/hJp
-         ZASw==
+        bh=8JpgwWjmesDR39WnJycXEe9zdnrRfkszov0Z3qMpYRA=;
+        b=kaKclGoVakkISwum+wvO58wdY5gWMSFdFN+6MEjbSDQlG3ddHgXE0HvLMY725Mcrj6
+         mwh2J3JdUAxfr6j6T6Hp4E0BP8U0lwPndLb+Oo6XJq8YA0oLTcp56qErWXwDe5J/QCJS
+         yyOa3wVuiLOP0gaNXVFScClP7CRGplXE9uj/b4fHBLSNYw61ezlVm8dPtW6sQM1JVYoc
+         zEXKD+yjkH4UdNhEJIbCe2nZbW/BM6DteCmqZmiq5rqNWRzeDLxUn94eUanOlMPRQFrk
+         tkz9v+O96YjP7kNnTBc9v8ugiqEQSFr1oxFwxetc/yasRfbEIEJPhTECIPoiZAt/sfx4
+         b2+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nnvutfgoPVy8ARQIFqCSevdqjzHGqHwG1IPa3F2O7Tc=;
-        b=PHsOwb3FR92q89JWRoxvR3ths1o7YV86ixlTx3sTg49P8nwzEmb7IWtIWQdofzyUHQ
-         KkO70CZpgCKC8314BaW3PEl0qhKtGWd9AbYS61KRevHYPksk2YB4rhGBV7GQiwYfAT8q
-         KxmHcrNcBRDriUuOXGULqKtgK0Fqb3z937RrhoNwY8d8itoggkiHWzOS1+CS57Jq65a8
-         zkFEeewX8Y3jCfDmeSNobvVOTRefPuyC6afm5SLDkLPalzskbL48GRknHZpfrDkZFAUu
-         jmmnG/+a/wMVl3NKPFj31XjF80O4Mvkspb9aoJ28kC6C93WE2x55FldBk/6jezBoAPpf
-         w3NA==
-X-Gm-Message-State: AOAM530oWPN/tyEFayCJor5jeotnIQ8CofGzbjGgDzzHJIOkgtOaWoUW
-        1M7fh9ao653iKFJY/ko3at/FG+4ux7xXmlCxWzE=
-X-Google-Smtp-Source: ABdhPJw1Wh7abfQZ3Csx/pyV/O/ZUZjgkMdxOgBb1cg8HYN2qH2LeCBHzDpfq+jIGOxNbI/E9SkT6g==
-X-Received: by 2002:a17:902:c404:b0:14a:1594:2e69 with SMTP id k4-20020a170902c40400b0014a15942e69mr2576351plk.167.1642045351821;
-        Wed, 12 Jan 2022 19:42:31 -0800 (PST)
+        bh=8JpgwWjmesDR39WnJycXEe9zdnrRfkszov0Z3qMpYRA=;
+        b=y2FOBHV3MDaKBLkKwRD7MYOaFm18cNX2Jrmyf8MqNkYJV8Git+bQ9JD0CDXFKttVr2
+         rbfTCqzJkxTE4weMoAYWAF+PkMI7meRYLUBSM9RtZPPy8fNzWqFmoqiuHVUnMxyrOM+j
+         O19CZ3LgBBgReDji6VaQCGyuG/YrQln5bc9ob9kpgm78TMiGVaROKiwVhxlBIn3J2bvb
+         9KU5Lvr2ZNc+wAmV87NV8oYJuBojeKyAX/eg+uCUfVc2C4OcbnOQmjXgVjLVmbzW2E1D
+         SJHfGDbl15SWtRkcMMBnomjbcK+rNvY9MS5LcoPuav74AlIERxSdRlJQEavsX6+yG05O
+         FFgQ==
+X-Gm-Message-State: AOAM5325mCTbBsriWQVWz+CBmB49KjmCsGPWarnt8MKJvLox1KcD2V+E
+        K3iqHm2WypYQzSNdvdrKZC0=
+X-Google-Smtp-Source: ABdhPJy0kYOfiaF028OMLfZzOXe9iVR80siVGTRX8ZvNpXoxaMycOWnjlAnxZMSvLEzOaOKdd1YIFQ==
+X-Received: by 2002:a17:902:7b96:b0:149:49fc:7de0 with SMTP id w22-20020a1709027b9600b0014949fc7de0mr2513351pll.25.1642045354343;
+        Wed, 12 Jan 2022 19:42:34 -0800 (PST)
 Received: from code-infra-dev-cbj.ea134 ([140.205.70.48])
-        by smtp.gmail.com with ESMTPSA id c20sm879436pgk.75.2022.01.12.19.42.29
+        by smtp.gmail.com with ESMTPSA id c20sm879436pgk.75.2022.01.12.19.42.32
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jan 2022 19:42:31 -0800 (PST)
+        Wed, 12 Jan 2022 19:42:34 -0800 (PST)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     dyroneteng@gmail.com
 Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
         git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        tenglong.tl@alibaba-inc.com, martin.agren@gmail.com,
-        Teng Long <dyronetengb@gmail.com>
-Subject: [PATCH v10 5/9] ls-tree: optimize naming and handling of "return" in show_tree()
-Date:   Thu, 13 Jan 2022 11:42:08 +0800
-Message-Id: <b04188c822c32aab6ef59099a0c9078aeda065c3.1641978175.git.dyroneteng@gmail.com>
+        tenglong.tl@alibaba-inc.com, martin.agren@gmail.com
+Subject: [PATCH v10 6/9] ls-tree.c: support --object-only option for "git-ls-tree"
+Date:   Thu, 13 Jan 2022 11:42:09 +0800
+Message-Id: <bcfbc935b80b889273e3e54fec2a896e44acd2b5.1641978175.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.34.1.390.g2ae0a9cb82.dirty
 In-Reply-To: <cover.1641978175.git.dyroneteng@gmail.com>
 References: <cover.1641978175.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The variable which "show_tree()" return is named "retval", a name that's
-a little hard to understand. This commit tries to make the variable
-and the related codes more clear in the context.
+We usually pipe the output from `git ls-trees` to tools like
+`sed` or `cut` when we only want to extract some fields.
 
-The commit firstly rename "retval" to "recurse" which is a more
-meaningful name than before. Secondly, "get_type()" is introduced
-to setup the "type" by "mode", this will remove some of the nested if.
-After this, The codes here become a little bit clearer, so we do not
-need to take a look at "read_tree_at()" in "tree.c" to make sure the
-context of the return value.
+When we want only the pathname component, we can pass
+`--name-only` option to omit such a pipeline, but there are no
+options for extracting other fields.
 
-Signed-off-by: Teng Long <dyronetengb@gmail.com>
+Teach the "--object-only" option to the command to only show the
+object name. This option cannot be used together with
+"--name-only" or "--long" , they are mutually exclusive (actually
+"--name-only" and "--long" can be combined together before, this
+commit by the way fix this bug).
+
+A simple refactoring was done to the "show_tree" function, intead by
+using bitwise operations to recognize the format for printing to
+stdout. The reason for doing this is that we don't want to increase
+the readability difficulty with the addition of "-object-only",
+making this part of the logic easier to read and expand.
+
+In terms of performance, there is no loss comparing to the
+"master" (2ae0a9cb8298185a94e5998086f380a355dd8907), here are the
+results of the performance tests in my environment based on linux
+repository:
+
+    $hyperfine --warmup=10 "/opt/git/master/bin/git ls-tree -r HEAD"
+    Benchmark 1: /opt/git/master/bin/git ls-tree -r HEAD
+    Time (mean ± σ):     105.8 ms ±   2.7 ms    [User: 85.7 ms, System: 20.0 ms]
+    Range (min … max):   101.5 ms … 111.3 ms    28 runs
+
+    $hyperfine --warmup=10 "/opt/git/ls-tree-oid-only/bin/git ls-tree -r HEAD"
+    Benchmark 1: /opt/git/ls-tree-oid-only/bin/git ls-tree -r HEAD
+    Time (mean ± σ):     105.0 ms ±   3.0 ms    [User: 83.7 ms, System: 21.2 ms]
+    Range (min … max):    99.3 ms … 109.5 ms    27 runs
+
+    $hyperfine --warmup=10 "/opt/git/master/bin/git ls-tree -r -l HEAD"
+    Benchmark 1: /opt/git/master/bin/git ls-tree -r -l HEAD
+    Time (mean ± σ):     337.4 ms ±  10.9 ms    [User: 308.3 ms, System: 29.0 ms]
+    Range (min … max):   323.0 ms … 355.0 ms    10 runs
+
+    $hyperfine --warmup=10 "/opt/git/ls-tree-oid-only/bin/git ls-tree -r -l HEAD"
+    Benchmark 1: /opt/git/ls-tree-oid-only/bin/git ls-tree -r -l HEAD
+    Time (mean ± σ):     337.6 ms ±   6.2 ms    [User: 309.4 ms, System: 28.1 ms]
+    Range (min … max):   330.4 ms … 349.9 ms    10 runs
+
+Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- builtin/ls-tree.c | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ Documentation/git-ls-tree.txt |   7 +-
+ builtin/ls-tree.c             | 141 +++++++++++++++++++++++++---------
+ t/t3104-ls-tree-oid.sh        |  51 ++++++++++++
+ 3 files changed, 160 insertions(+), 39 deletions(-)
+ create mode 100755 t/t3104-ls-tree-oid.sh
 
+diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
+index db02d6d79a..729370f235 100644
+--- a/Documentation/git-ls-tree.txt
++++ b/Documentation/git-ls-tree.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git ls-tree' [-d] [-r] [-t] [-l] [-z]
+-	    [--name-only] [--name-status] [--full-name] [--full-tree] [--abbrev[=<n>]]
++	    [--name-only] [--name-status] [--object-only] [--full-name] [--full-tree] [--abbrev[=<n>]]
+ 	    <tree-ish> [<path>...]
+ 
+ DESCRIPTION
+@@ -59,6 +59,11 @@ OPTIONS
+ --name-only::
+ --name-status::
+ 	List only filenames (instead of the "long" output), one per line.
++	Cannot be combined with `--object-only`.
++
++--object-only::
++	List only names of the objects, one per line. Cannot be combined
++	with `--name-only` or `--name-status`.
+ 
+ --abbrev[=<n>]::
+ 	Instead of showing the full 40-byte hexadecimal object
 diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index eecc7482d5..9729854a3d 100644
+index 9729854a3d..e1a2f8225b 100644
 --- a/builtin/ls-tree.c
 +++ b/builtin/ls-tree.c
-@@ -61,24 +61,27 @@ static int show_recursive(const char *base, size_t baselen, const char *pathname
- 	return 0;
+@@ -16,22 +16,60 @@
+ 
+ static int line_termination = '\n';
+ #define LS_RECURSIVE 1
+-#define LS_TREE_ONLY 2
+-#define LS_SHOW_TREES 4
+-#define LS_NAME_ONLY 8
+-#define LS_SHOW_SIZE 16
++#define LS_TREE_ONLY (1 << 1)
++#define LS_SHOW_TREES (1 << 2)
++#define LS_NAME_ONLY (1 << 3)
++#define LS_SHOW_SIZE (1 << 4)
++#define LS_OBJECT_ONLY (1 << 5)
+ static int abbrev;
+ static int ls_options;
+ static struct pathspec pathspec;
+ static int chomp_prefix;
+ static const char *ls_tree_prefix;
++static unsigned int shown_fields;
++#define FIELD_FILE_NAME 1
++#define FIELD_SIZE (1 << 1)
++#define FIELD_OBJECT_NAME (1 << 2)
++#define FIELD_TYPE (1 << 3)
++#define FIELD_MODE (1 << 4)
++#define FIELD_DEFAULT 29 /* 11101 size is not shown to output by default */
++#define FIELD_LONG_DEFAULT  (FIELD_DEFAULT | FIELD_SIZE)
+ 
+ static const  char * const ls_tree_usage[] = {
+ 	N_("git ls-tree [<options>] <tree-ish> [<path>...]"),
+ 	NULL
+ };
+ 
+-static int show_recursive(const char *base, size_t baselen, const char *pathname)
++enum {
++	MODE_UNSPECIFIED = 0,
++	MODE_NAME_ONLY,
++	MODE_OBJECT_ONLY,
++	MODE_LONG,
++};
++
++static int cmdmode = MODE_UNSPECIFIED;
++
++static int parse_shown_fields(void)
++{
++	if (cmdmode == MODE_NAME_ONLY) {
++		shown_fields = FIELD_FILE_NAME;
++		return 0;
++	}
++	if (cmdmode == MODE_OBJECT_ONLY) {
++		shown_fields = FIELD_OBJECT_NAME;
++		return 0;
++	}
++	if (!ls_options || (ls_options & LS_RECURSIVE)
++	    || (ls_options & LS_SHOW_TREES)
++	    || (ls_options & LS_TREE_ONLY))
++		shown_fields = FIELD_DEFAULT;
++	if (cmdmode == MODE_LONG)
++		shown_fields = FIELD_LONG_DEFAULT;
++	return 1;
++}
++
++static int show_recursive(const char *base, size_t baselen,
++			  const char *pathname)
+ {
+ 	int i;
+ 
+@@ -70,6 +108,39 @@ static enum object_type get_type(unsigned int mode)
+ 	        : OBJ_BLOB);
  }
  
-+static enum object_type get_type(unsigned int mode)
++static int show_default(const struct object_id *oid, enum object_type type,
++			const char *pathname, unsigned mode,
++			struct strbuf *base)
 +{
-+	return (S_ISGITLINK(mode)
-+	        ? OBJ_COMMIT
-+	        : S_ISDIR(mode)
-+	        ? OBJ_TREE
-+	        : OBJ_BLOB);
++	size_t baselen = base->len;
++
++	if (shown_fields & FIELD_SIZE) {
++		char size_text[24];
++		if (type == OBJ_BLOB) {
++			unsigned long size;
++			if (oid_object_info(the_repository, oid, &size) == OBJ_BAD)
++				xsnprintf(size_text, sizeof(size_text), "BAD");
++			else
++				xsnprintf(size_text, sizeof(size_text),
++					  "%" PRIuMAX, (uintmax_t)size);
++		} else {
++			xsnprintf(size_text, sizeof(size_text), "-");
++		}
++		printf("%06o %s %s %7s\t", mode, type_name(type),
++		find_unique_abbrev(oid, abbrev), size_text);
++	} else {
++		printf("%06o %s %s\t", mode, type_name(type),
++		find_unique_abbrev(oid, abbrev));
++	}
++	baselen = base->len;
++	strbuf_addstr(base, pathname);
++	write_name_quoted_relative(base->buf,
++				   chomp_prefix ? ls_tree_prefix : NULL, stdout,
++				   line_termination);
++	strbuf_setlen(base, baselen);
++	return 1;
 +}
 +
  static int show_tree(const struct object_id *oid, struct strbuf *base,
  		const char *pathname, unsigned mode, void *context)
  {
--	int retval = 0;
-+	int recurse = 0;
- 	size_t baselen;
--	enum object_type type = OBJ_BLOB;
--
--	if (S_ISGITLINK(mode)) {
--		type = OBJ_COMMIT;
--	} else if (S_ISDIR(mode)) {
--		if (show_recursive(base->buf, base->len, pathname)) {
--			retval = READ_TREE_RECURSIVE;
--			if (!(ls_options & LS_SHOW_TREES))
--				return retval;
--		}
--		type = OBJ_TREE;
--	}
--	else if (ls_options & LS_TREE_ONLY)
-+	enum object_type type = get_type(mode);
-+
-+	if (type == OBJ_TREE && show_recursive(base->buf, base->len, pathname))
-+		recurse = READ_TREE_RECURSIVE;
-+	if (type == OBJ_TREE && recurse && !(ls_options & LS_SHOW_TREES))
-+		return recurse;
-+	if (type == OBJ_BLOB && (ls_options & LS_TREE_ONLY))
+@@ -84,34 +155,24 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+ 	if (type == OBJ_BLOB && (ls_options & LS_TREE_ONLY))
  		return 0;
  
- 	if (!(ls_options & LS_NAME_ONLY)) {
-@@ -109,7 +112,7 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
- 				   chomp_prefix ? ls_tree_prefix : NULL,
- 				   stdout, line_termination);
- 	strbuf_setlen(base, baselen);
--	return retval;
-+	return recurse;
+-	if (!(ls_options & LS_NAME_ONLY)) {
+-		if (ls_options & LS_SHOW_SIZE) {
+-			char size_text[24];
+-			if (type == OBJ_BLOB) {
+-				unsigned long size;
+-				if (oid_object_info(the_repository, oid, &size) == OBJ_BAD)
+-					xsnprintf(size_text, sizeof(size_text),
+-						  "BAD");
+-				else
+-					xsnprintf(size_text, sizeof(size_text),
+-						  "%"PRIuMAX, (uintmax_t)size);
+-			} else {
+-				xsnprintf(size_text, sizeof(size_text), "-");
+-			}
+-			printf("%06o %s %s %7s\t", mode, type_name(type),
+-			       find_unique_abbrev(oid, abbrev),
+-			       size_text);
+-		} else {
+-			printf("%06o %s %s\t", mode, type_name(type),
+-			       find_unique_abbrev(oid, abbrev));
+-		}
++	if (shown_fields == FIELD_OBJECT_NAME) {
++		printf("%s%c", find_unique_abbrev(oid, abbrev), line_termination);
++		return recurse;
+ 	}
+-	baselen = base->len;
+-	strbuf_addstr(base, pathname);
+-	write_name_quoted_relative(base->buf,
+-				   chomp_prefix ? ls_tree_prefix : NULL,
+-				   stdout, line_termination);
+-	strbuf_setlen(base, baselen);
++
++	if (shown_fields == FIELD_FILE_NAME) {
++		baselen = base->len;
++		strbuf_addstr(base, pathname);
++		write_name_quoted_relative(base->buf,
++					   chomp_prefix ? ls_tree_prefix : NULL,
++					   stdout, line_termination);
++		strbuf_setlen(base, baselen);
++		return recurse;
++	}
++
++	if (shown_fields >= FIELD_DEFAULT)
++		show_default(oid, type, pathname, mode, base);
++
+ 	return recurse;
  }
  
- int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+@@ -129,12 +190,14 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 			LS_SHOW_TREES),
+ 		OPT_SET_INT('z', NULL, &line_termination,
+ 			    N_("terminate entries with NUL byte"), 0),
+-		OPT_BIT('l', "long", &ls_options, N_("include object size"),
+-			LS_SHOW_SIZE),
+-		OPT_BIT(0, "name-only", &ls_options, N_("list only filenames"),
+-			LS_NAME_ONLY),
+-		OPT_BIT(0, "name-status", &ls_options, N_("list only filenames"),
+-			LS_NAME_ONLY),
++		OPT_CMDMODE('l', "long", &cmdmode, N_("include object size"),
++			    MODE_LONG),
++		OPT_CMDMODE(0, "name-only", &cmdmode, N_("list only filenames"),
++			    MODE_NAME_ONLY),
++		OPT_CMDMODE(0, "name-status", &cmdmode, N_("list only filenames"),
++			    MODE_NAME_ONLY),
++		OPT_CMDMODE(0, "object-only", &cmdmode, N_("list only objects"),
++			    MODE_OBJECT_ONLY),
+ 		OPT_SET_INT(0, "full-name", &chomp_prefix,
+ 			    N_("use full path names"), 0),
+ 		OPT_BOOL(0, "full-tree", &full_tree,
+@@ -165,6 +228,8 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 	if (get_oid(argv[0], &oid))
+ 		die("Not a valid object name %s", argv[0]);
+ 
++	parse_shown_fields();
++
+ 	/*
+ 	 * show_recursive() rolls its own matching code and is
+ 	 * generally ignorant of 'struct pathspec'. The magic mask
+diff --git a/t/t3104-ls-tree-oid.sh b/t/t3104-ls-tree-oid.sh
+new file mode 100755
+index 0000000000..6ce62bd769
+--- /dev/null
++++ b/t/t3104-ls-tree-oid.sh
+@@ -0,0 +1,51 @@
++#!/bin/sh
++
++test_description='git ls-tree objects handling.'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_commit A &&
++	test_commit B &&
++	mkdir -p C &&
++	test_commit C/D.txt &&
++	find *.txt path* \( -type f -o -type l \) -print |
++	xargs git update-index --add &&
++	tree=$(git write-tree) &&
++	echo $tree
++'
++
++test_expect_success 'usage: --object-only' '
++	git ls-tree --object-only $tree >current &&
++	git ls-tree $tree >result &&
++	cut -f1 result | cut -d " " -f3 >expected &&
++	test_cmp current expected
++'
++
++test_expect_success 'usage: --object-only with -r' '
++	git ls-tree --object-only -r $tree >current &&
++	git ls-tree -r $tree >result &&
++	cut -f1 result | cut -d " " -f3 >expected &&
++	test_cmp current expected
++'
++
++test_expect_success 'usage: --object-only with --abbrev' '
++	git ls-tree --object-only --abbrev=6 $tree >current &&
++	git ls-tree --abbrev=6 $tree >result &&
++	cut -f1 result | cut -d " " -f3 >expected &&
++	test_cmp current expected
++'
++
++test_expect_success 'usage: incompatible options: --name-only with --object-only' '
++	test_expect_code 129 git ls-tree --object-only --name-only $tree
++'
++
++test_expect_success 'usage: incompatible options: --name-status with --object-only' '
++	test_expect_code 129 git ls-tree --object-only --name-status $tree
++'
++
++test_expect_success 'usage: incompatible options: --long with --object-only' '
++	test_expect_code 129 git ls-tree --object-only --long $tree
++'
++
++test_done
 -- 
 2.34.1.390.g2ae0a9cb82.dirty
 
