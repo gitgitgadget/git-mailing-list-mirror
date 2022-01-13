@@ -2,109 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DEC6C433F5
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 14:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E19F2C433F5
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 15:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233075AbiAMO1p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 09:27:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35630 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231161AbiAMO1p (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jan 2022 09:27:45 -0500
-Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3168C06173F
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 06:27:44 -0800 (PST)
-Received: by mail-ua1-x92c.google.com with SMTP id p1so11355797uap.9
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 06:27:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7c/O+/mm74JC0DEHceN/264xSdbGXZVxJYQVnvBZOR8=;
-        b=HVe3MvDQbkJQuEWQcQcALRnXoFIKOuHvcHog8BPwTiHLP9+JpjRL6YNo0KS6DclHJN
-         JCOttdEXOgN8rfa6VEeiZAyXb2KSrTycCiy9DtjF6y8SXEQvQzWQ4ooLbt812Ml1X05A
-         ydGzEPgrzWo4nTX22GRuejuHT/BkMGKL02KvJAdHuK4awTaf62jW08YsE/BwCbSs2o/1
-         3c5Z4IhbCeRGDSCYC/6HkWIvi7McoG3Hl2kbQYiTXXGjT4ZHsmwV7kfVsXpz4TPbq4jG
-         D2bmigqAQ0VVhwbzawydVIqVnAMSvXVekEZ8PAmQ4vmSMx0G/3MrA+XGpPLpRVvp09v0
-         rW1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7c/O+/mm74JC0DEHceN/264xSdbGXZVxJYQVnvBZOR8=;
-        b=xwbf7Lr0gfLAOrrVuC3GET+D+LysG7/oN7OpNXLgFzaNZDkcQ258G+3eE2epOp6nD1
-         2ZkAdfedNESHOaELHH1bCsa9Ihen4sdlH7xY97ikk7Bomq0tcaXJnhseNhtucwdcyXDs
-         F49flolLJv63yw+1kNb1XAyRCWQwY9t/inPFTxxAWJrK+k+6OoFhM5mxmtcM72W+b+bW
-         xN8jBzKp6gxHmpW54UB3GLD4qpZto4YonFanzHY4pPAhXr8HtGev3VqWAVYaSTyxzISu
-         1zvywJhPF7ZWIpmZFoC3lIxjWDkfVPAGJnlZGOYabsjfoUDXVDDwOgr1jaZimCj5Pr6J
-         ScrQ==
-X-Gm-Message-State: AOAM532CwcM6+xRjQK4mIlS6GT8BFBPjrfe+XItOu+PSecYAxFPucrQz
-        57K0RLfKTDd42Aw9S5tJlSDAKzR5YZUxTxxPXwBMbA==
-X-Google-Smtp-Source: ABdhPJzJ0AcVJguy3kZBKvnkl+MquSBYZ268GrpptWzP/fFaK9D4SN35vtgk1tFl8KxNulUYF8EMfTAnhwC8BcTNFZs=
-X-Received: by 2002:a05:6102:2451:: with SMTP id g17mr2339040vss.8.1642084063885;
- Thu, 13 Jan 2022 06:27:43 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1152.v4.git.git.1639482476.gitgitgadget@gmail.com>
- <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com> <9ab631a3b29addaa54415139e7f60a79a19a6edb.1640199396.git.gitgitgadget@gmail.com>
- <xmqqtuf0fe3r.fsf@gitster.g> <CAFQ2z_OLCzOYXgXCTXyLOwwk7EBkPzwH=KASDmuJbur=q7L1Jg@mail.gmail.com>
- <xmqq4k6y63j7.fsf@gitster.g> <CAFQ2z_OFK77TC605GqM2Lw1Lf21fyF2cVKkGVrXO6TP6zcp+mw@mail.gmail.com>
- <220113.86bl0gvtq3.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220113.86bl0gvtq3.gmgdl@evledraar.gmail.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 13 Jan 2022 15:27:32 +0100
-Message-ID: <CAFQ2z_NpK3Yr=vHScnJV=1uDnh4P0PceuCXK+CVLvVJ4GtVh3A@mail.gmail.com>
-Subject: Re: [PATCH v5 02/16] reftable: fix resource leak in block.c error path
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S236044AbiAMPRC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 10:17:02 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:39731 "EHLO
+        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236041AbiAMPRB (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 13 Jan 2022 10:17:01 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 1F24A5C017F;
+        Thu, 13 Jan 2022 10:17:01 -0500 (EST)
+Received: from imap46 ([10.202.2.96])
+  by compute2.internal (MEProxy); Thu, 13 Jan 2022 10:17:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
+        mime-version:message-id:in-reply-to:references:date:from:to:cc
+        :subject:content-type:content-transfer-encoding; s=fm1; bh=YfeFX
+        YlEXVabwJZX1anz28wto0+nfbew/iepyHeP5kI=; b=BL12TnjODfwzU0sr7ZLm0
+        0Dwb7QlnOj+cMcUd567l4mFtyBhH/RmwjXyPen78Mw84BoyVjAKDX4q9mWSUxlbi
+        ETco7jblu4Xl9SdQJn/Om/hNjhRpHNlrVellhmqVWpFzTpmIyeBkWx0E1bVhA08K
+        A5Gu+2qC2fdds+GSFTGGNU3aFepY8lQMTTUP5tGAjFSUxe8UxhMiyBsViZ1WFZt5
+        6jdSD6dmM9SAUXllV/agQ4/mnJ0mFJ77zzjIkRLIhDXfcddg2Y7z9Q55vBW5D4wG
+        2KaUG1JMe2c8vzK6E7uWRzsQ4Rz6jqRkjyq2VWT0B7U/tNPxVOSwywtLg3qBBeGL
+        g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; bh=YfeFXYlEXVabwJZX1anz28wto0+nfbew/iepyHeP5
+        kI=; b=FypPY5htt0wCyxhOsZydaSwHoRsDloMMiQECkmBjLnM+hxtynarsia80r
+        sAJGtFTGx+4MuOjHT1hH45JuauhbdN1cQe9/UfnwGybnYhCEY3VGUSxxZvpAtB2a
+        OHQZSSEJ/MVfI9deWA/EIsIlmC1DuOkOMQa+GydN8G5GIV8VDjynm79LoeYt4tzy
+        slXjFve85CWWiK9wgpuYluAFEZTISy8q+dtHy/Xm/Cjvuif5NdodsehzbIflN8n6
+        DhChN+wB7616N/OFwEkMS3S1eM4FuOBQaX+IcBHmCjttho9R6t3cvx5JPw0803wH
+        CEtmrve8LevMy1+GKvh40tlZJppPg==
+X-ME-Sender: <xms:bULgYZGkVJsV3lN8iZ-z-JSqQT-y4zrBiqDed2hJek4i53C8jsNNqQ>
+    <xme:bULgYeVzhuraZhIdWk-EG2w-zE25cMDsAU23YptcDDzPdY7DbUcxmyGAhdtmQE2FP
+    ecnkxAFtjlijqnWVkI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrtdefgdejgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdftrghm
+    khhumhgrrhcutfgrmhgrtghhrghnughrrgdfuceorhesrghrthgrghhnohhnrdgtohhmqe
+    enucggtffrrghtthgvrhhnpeekveeukeeiudelkefgleetudehffekgeevffehleejgeek
+    veetieetkeevvddvheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehrsegrrhhtrghgnhhonhdrtghomh
+X-ME-Proxy: <xmx:bULgYbJu2wtz5IvR0bb6MlY8oR7J-S6fiU3_Or7d7M9UvhkFmq3thA>
+    <xmx:bULgYfF53d7S2zUSlwr6O0DFGn4R0Kbg0UuusTvUsPvhb13tq6tU_w>
+    <xmx:bULgYfU1S4R58mWp-Jp04xf5ORgY2vR8E-np2MAdydddoMCRrA7vvw>
+    <xmx:bULgYcgsaXjXniNWcloUC4gYOvj86StKJD6D-T3ZLC_6LexnrRZpgg>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id EDD421EE007D; Thu, 13 Jan 2022 10:17:00 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4569-g891f756243-fm-20220111.001-g891f7562
+Mime-Version: 1.0
+Message-Id: <925ef53d-c8b2-4ef4-acee-490900e8a3b7@www.fastmail.com>
+In-Reply-To: <8bc73981-589e-20e5-247b-2f74e166ae1a@web.de>
+References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
+ <xmqqilus3ctf.fsf@gitster.g>
+ <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
+ <xmqq4k6b34h8.fsf@gitster.g>
+ <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
+ <3dade45b-494f-663b-264b-06a51ea1cf56@web.de> <xmqq35lsyhbf.fsf@gitster.g>
+ <13e323e9-eb0c-71c3-215f-b77c91fcc4c8@web.de>
+ <5be4cdad-6769-68e8-0984-5fe89668d007@web.de>
+ <421215c1-f6ae-4ec2-b666-2a481056ef79@www.fastmail.com>
+ <CAP8UFD3tyBhrOQzg9j4qDAT0Tb8TCTK0=J6ORsiLVuMWn+W9wg@mail.gmail.com>
+ <8bc73981-589e-20e5-247b-2f74e166ae1a@web.de>
+Date:   Thu, 13 Jan 2022 16:16:40 +0100
+From:   "Ramkumar Ramachandra" <r@artagnon.com>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        "Christian Couder" <christian.couder@gmail.com>
+Cc:     "Junio C Hamano" <gitster@pobox.com>,
+        "Git List" <git@vger.kernel.org>, "Miriam R." <mirucam@gmail.com>
+Subject: Re: git bisect bad @
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 13, 2022 at 11:02 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> Aside from what Ren=C3=A9 said in his follow-up, I think what Junio's
-> pointing out here has to do with the use of this pattern in general, not
-> the specific code being discussed here.
->
-> I.e. if you get into the habit of needless initialization it may not
-> matter right now, but once the function grows an if/else branch, or
-> someone copies the pattern to such a function it may hide a logic error.
->
-> So it's not about analyzing the control specific flow here, but that
-> your upthread patch is separating a variable and its actual
-> internalization by ~20 lines.
+Ren=C3=A9 Scharfe wrote:
+> Am 13.01.22 um 13:28 schrieb Christian Couder:
+> > I don't think it's a good idea at this point to reserve the 126 and
+> > 127 error codes as there might be existing scripts relying on them
+> > to mean "bad".
+>=20
+> Certainly possible -- people get the weirdest ideas.
 
-I know this is the Git project's preferred style, so I'm OK with
-adapting to that, but I'm also sad about it.
+My gut reaction is that this is an overly conservative point of view. Th=
+ere are two factors to consider: first, bisect scripts are usually short=
+ one-time throwaway scripts tailored to one project for one problem. Sec=
+ond, how likely is it that these people that have a complex script with =
+126/127 as the exit code, which they have been using for years to run bi=
+sect on the same project for the same problem, update their version of g=
+it frequently?
 
-Sure, you can introduce logic errors by refactoring things, but with
-initialized data, you get a reproducible logic error, rather than
-something whose failure mode depends on platform, compiler and
-surrounding function calls. This makes debugging problems across
-platforms easier. In particular, I don't have a functioning Windows
-environment, so anything that helps minimize differences across
-platforms is welcome to me.
+Again, I might be wrong, because I don't know how people use bisect. Wor=
+st case, we can display a warning about this backward incompatibility in=
+ the next few versions.
 
---
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
---
+> The implementation language of git bisect is not immediately relevant
+> here, but that the shell is used to call the user-supplied bisect run
+> script is.  If we'd run it directly (without RUN_USING_SHELL) we could
+> distinguish error code 126/127 from execution errors.  I assume the
+> option is used to stay compatible with the old shell version of bisect.
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Sorry, my misunderstanding. I thought the external command was being cal=
+led from git-bisect.sh. I don't think I understand the purpose of RUN_US=
+ING_SHELL (it just seems to put an "sh -c" in the beginning):
 
-Registergericht und -nummer: Hamburg, HRB 86891
+	static const char **prepare_shell_cmd(struct strvec *out, const char **=
+argv)
+	{
+        ...
+			strvec_push(out, "sh");
+			strvec_push(out, "-c");
 
-Sitz der Gesellschaft: Hamburg
+			if (!argv[1])
+				strvec_push(out, argv[0]);
+			else
+				strvec_pushf(out, "%s \"$@\"", argv[0]);
+       ...
+	}
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Warm regards,
+Ram
