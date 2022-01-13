@@ -2,107 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0AFAC433F5
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 09:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3164CC433EF
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 09:35:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231844AbiAMJdC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 04:33:02 -0500
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:57189 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231216AbiAMJc6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 13 Jan 2022 04:32:58 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 1E8535C0242;
-        Thu, 13 Jan 2022 04:32:56 -0500 (EST)
-Received: from imap46 ([10.202.2.96])
-  by compute2.internal (MEProxy); Thu, 13 Jan 2022 04:32:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
-        mime-version:message-id:in-reply-to:references:date:from:to:cc
-        :subject:content-type:content-transfer-encoding; s=fm1; bh=EU7VY
-        /oIbTOt48HCEnGIyleLc0Br5p8k17xWGeP6tzQ=; b=ov2WwSLVwWExfjtCg/1H+
-        9Wjej9IVEqyPotaDIS1do9LY8b52x7b/RFn9ICFo98QzxSSxcVskk6T2uLWOsfeO
-        lT+nQPn9nZXt8WDfABQNNqOWOIZwNZS/6iz/udDcP3OpdL+vFVWwMVqE+BCE4sHs
-        6ngoZxz4LjatrVeTXEE68/yrqbxuIbPAF4uvYPhCgl1l5jEuOuJJwOC+SnzMGciW
-        0sBaaeqesD+fXLFxkASOJF6su5nx1PyTn55g2iEWCsnk08eW8EzJlitpDQARXjmi
-        ivLcXK3MgatzSjQaatYXrrAKApVQYiVZtxtGZH+GhfLQRrSCqul5Cs/19tLO1mZF
-        g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=EU7VY/oIbTOt48HCEnGIyleLc0Br5p8k17xWGeP6t
-        zQ=; b=FYGTykYqaT0VYJeFdZT62exzy+cxGuLW8CI6ZYHvdvJuBwrK3RCWoX0KC
-        R70n8YxVz2hP9YqCdAOI/cyuomY86IAAtv7Ql6LVc/6wZJ5JUvGNlqRPHRXHrJ45
-        dZ1w1WsXMSbexZWxI+4fDbkw50lLNbdMgxCr4KpdFs7dzUFeO6OxDMo0xZ90fEmN
-        1rIuhC6HPh7bAWjZh1vRhyomE27PDTqIi4Evf/Rh3FGKQN5UtGsG58ZvVK6iHbba
-        u5QBAoZOCdDu3G0z9WK2vRGeTPTEEzTKM3T8wzd4FmPtW32W6zYIoFZaPd5Gz9QQ
-        y6z2K4m1GIThA1QX1ClE6FaJJs/8A==
-X-ME-Sender: <xms:x_HfYbepf611HSDABELmBysMlbOFnOobaDDnIHPYDlPnJD0f_4L3wg>
-    <xme:x_HfYRPJfwBr9Mz3XcKANMO5vEUU0uruKmrudA_igAM_Htnsafsm4dIEYGY6A-IFI
-    KJ9UwDJhckl_t20Db8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrtdefgddtfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdftrghm
-    khhumhgrrhcutfgrmhgrtghhrghnughrrgdfuceorhesrghrthgrghhnohhnrdgtohhmqe
-    enucggtffrrghtthgvrhhnpeekveeukeeiudelkefgleetudehffekgeevffehleejgeek
-    veetieetkeevvddvheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehrsegrrhhtrghgnhhonhdrtghomh
-X-ME-Proxy: <xmx:x_HfYUgH9NOMpp7gYuRmEDKbZbKEgSksyLBDMWQIVzxapPTJMBvMDw>
-    <xmx:x_HfYc81tegIQ8Yi2HZOkLzWQD1eACuRe6BP4Lojp18ALCKdJGveMw>
-    <xmx:x_HfYXunlzyq6Cs1_SisIVGZLmyNuVFLEjydOpyDoJlsXCcRH9q8zQ>
-    <xmx:yPHfYQWMCf9WKR6fNJVkHXskqaPSYvDfemfia9dIE3NeBk8yNhCoCA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id D78E71EE007D; Thu, 13 Jan 2022 04:32:55 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4569-g891f756243-fm-20220111.001-g891f7562
-Mime-Version: 1.0
-Message-Id: <421215c1-f6ae-4ec2-b666-2a481056ef79@www.fastmail.com>
-In-Reply-To: <5be4cdad-6769-68e8-0984-5fe89668d007@web.de>
-References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
- <xmqqilus3ctf.fsf@gitster.g>
- <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
- <xmqq4k6b34h8.fsf@gitster.g>
- <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
- <3dade45b-494f-663b-264b-06a51ea1cf56@web.de> <xmqq35lsyhbf.fsf@gitster.g>
- <13e323e9-eb0c-71c3-215f-b77c91fcc4c8@web.de>
- <5be4cdad-6769-68e8-0984-5fe89668d007@web.de>
-Date:   Thu, 13 Jan 2022 10:32:35 +0100
-From:   "Ramkumar Ramachandra" <r@artagnon.com>
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Git List" <git@vger.kernel.org>,
-        "Christian Couder" <christian.couder@gmail.com>
-Subject: Re: git bisect bad @
-Content-Type: text/plain;charset=utf-8
+        id S233236AbiAMJfr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 04:35:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53066 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231216AbiAMJfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 04:35:45 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A876BC06173F
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 01:35:44 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id 30so20905250edv.3
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 01:35:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=QFC2E/peMoFOzQhjxgjiQYjG5ld/etSWe2QjqIOej6U=;
+        b=h+RtUjTL/RQkUeiTAXkMGk/h5mvS+7P6bZA2k2q7Wq3Xh3ztm4+SUhOxOtFZXBUWFS
+         JjppT4IDcyC5SFyLvb7SKFNyDXLWFDo1yxq4e2tfC/MaN5A9/84TGLrj2gtmh8UXzHOe
+         3TTCu3viA3lR4CgHn8ookpvrEAuysnytdg5DAQJpTvVf1jrakZgTDo6zA4SrUcTCl0Sb
+         iMWIpA5kLX6vREIoKOgTZ4cj8ptephiLcwl531HYpz4LEsHKY3BGvQmEh5hap+qyfhdT
+         Np0GxTCTCFWHzMqwLpkk9iwENKugKTSTnWXcIxge/Vcj8ke4Jdl1MmXX71lIDm4/Tm7x
+         touQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=QFC2E/peMoFOzQhjxgjiQYjG5ld/etSWe2QjqIOej6U=;
+        b=ChtO9x1SXGkSibfKwetEMiVvlA+R56KTqGT+qDXEsj8lkLckkbsJk+6IMDPE+J/3FJ
+         OO7v80NE/7oc0V37/t+FzfYwGuHAASVyPf3xx05qRXH/t8ZoCfaVK9YoBfT1gadfpqkr
+         GpKcuUgMSBdvm/U5yLHLCP24/5htezbq/IjSWq/G7AHESx/sJBEa58RiBa4xKjk+zFpC
+         Z2q1ltrDzRh1B6NVdaOf4w7/9KAOd3LWa3DU5bFQkdnE6j0iNTiIR6ByLgkJ/myWgm6j
+         5dkHEHIAziUoaZC6EENSp7q7wjpXni1cBMoUMy0Mnnfy1aYFqjARmj1MTz1Ld+5qRadQ
+         sg9Q==
+X-Gm-Message-State: AOAM532xY7l79cTkivMHJj/xn45uibnVDRyjnUk0iOiq2+pKd6aKFib5
+        ZLyRo7P2vj2KcpF6ban9tiLUgDYd9zve9A==
+X-Google-Smtp-Source: ABdhPJw3jenwC2aNjRmBYwvs4zLU3gc8LaKd4vfND0TDwrzCA9zGEtOJZxXK7ggAWzm5P+mj2d5F4A==
+X-Received: by 2002:a05:6402:1e93:: with SMTP id f19mr3328866edf.199.1642066543162;
+        Thu, 13 Jan 2022 01:35:43 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id o25sm902997edr.20.2022.01.13.01.35.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Jan 2022 01:35:42 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1n7wWE-000qBF-78;
+        Thu, 13 Jan 2022 10:35:42 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [RFC PATCH 0/2] Introduce new merge-tree-ort command
+Date:   Thu, 13 Jan 2022 10:26:57 +0100
+References: <20220105163324.73369-1-chriscool@tuxfamily.org>
+ <CABPp-BFh7UnQtPM=tO8rfp5bPK4-7esouv5KCx1sUSESwEA=Rw@mail.gmail.com>
+ <CAP8UFD0wKnAg5oyMWchXysPTg3K9Vb4M1tRcPzPE81QM903pYg@mail.gmail.com>
+ <CABPp-BHpuLjCYycBwweMW_NdQrS_r3ECmvLb8XjNW-_Rau5NTw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2201101427440.339@tvgsbejvaqbjf.bet>
+ <xmqq8rvn1nkw.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2201111439190.1081@tvgsbejvaqbjf.bet>
+ <220111.86mtk2xb1y.gmgdl@evledraar.gmail.com>
+ <CABPp-BFei07srZBgyKs6HCm+G+hmPR-3_EkKjRK8WwGL1Uf2oA@mail.gmail.com>
+ <xmqqk0f4x20a.fsf@gitster.g>
+ <CABPp-BHQdkhAEmTrtc+XMgj5A5ASBVRw0_bXH10NSrMsyRK+oA@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <CABPp-BHQdkhAEmTrtc+XMgj5A5ASBVRw0_bXH10NSrMsyRK+oA@mail.gmail.com>
+Message-ID: <220113.86k0f4vuz5.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe wrote:
-> > Am 12.01.22 um 18:50 schrieb Junio C Hamano:
-> > So exit code values are only very vaguely standardized.  It's very
-> > possible that there are programs that use 126 or 127 to signal
-> > something other than "can't execute" or "cannot find command".  Under
-> > the new rules the bisect run script would have to translate them to
-> > some lower value.
->=20
-> Reserving 126 and 127 shouldn't cause too much trouble, but there's
-> also a way to avoid it: bisect run could checkout a known-good
-> revision first and abort if the script returns non-zero for any
-> reason, including its non-existence.
 
-I can't say I'm overly enthusiastic about this trade-off. I think most p=
-eople would check their bisect scripts against the good revision by hand=
- before starting bisect: why introduce one redundant step for users like=
- me who tend to bump their heads, because they're a bit rusty with machi=
-nes?
+On Wed, Jan 12 2022, Elijah Newren wrote:
 
-Again, I don't know if this is a good idea, but if exit codes from the s=
-hell aren't standardized, surely fork() and exec() would have a better s=
-pec? So, perhaps remove the little git-bisect.sh and rewrite it in C? I'=
-d be up for this task, if we decide that this is a better way to go.
+> On Wed, Jan 12, 2022 at 10:06 AM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Elijah Newren <newren@gmail.com> writes:
+>>
+> ...
+>> I however suspect that =C3=86var didn't mean by "legacy merge plumbing
+>> built-in" the strategy backends.  IOW, I had an impression that what
+>> is on the chopping block is merge-tree and not merge-recursive.
+>>
+>> But since you brought up deprecation of recursive, let's spend a few
+>> minutes on the topic.
+>
+> Not sure it matters, but for reference, =C3=86var explicitly brought up
+> merge-recursive.c.  The fuller quote was:
+>
+>> >> I.e. is it really costing us
+>> >> to just leave these "legacy merge" plumbing built-ins and
+>> >> merge-recursive.c etc. in place?
+>
+> Because he brought it up, I decided to address it.  It was unclear to
+> me whether he meant builtin/merge-recursive.c or the toplevel
+> merge-recursive.c, so I just addressed both.
 
-Warm regards,
-Ram
+FWIW what I meant (but clearly didn't make clear enough) is whether we'd
+deprecate the git-merge-tree(1) command, not whatever powers it under
+the hood.
+
+I.e. I took the greater discussion here to mean (but may have
+misunderstood it) that we were talking about the needs for a
+libgit2-replacing merge plumbing.
+
+The existing git-merge-tree command probably gets us 5% towards that,
+and I can see how being bug-for-bug compatible with it might be
+inconvenient in some future on-top-of-ort rewrite and extension of it.
+
+So we probably SHOULD keep it, but I don't think it's a MUST. I.e. if
+you/someone wrote some more powerful version of it, and keeping it
+became hard to support I think it would be OK to transition/deprecate
+it, as presumably its existing users wouldn't be too inconvenienced, or
+would be happier with the more powerful plumbing tool.
