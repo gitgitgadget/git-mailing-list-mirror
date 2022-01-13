@@ -2,457 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96947C433F5
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 03:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0B64C433EF
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 05:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232267AbiAMDmt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Jan 2022 22:42:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58792 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232291AbiAMDmp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jan 2022 22:42:45 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5E9CC06118C
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 19:42:42 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id hv15so8854802pjb.5
-        for <git@vger.kernel.org>; Wed, 12 Jan 2022 19:42:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RK2c8uYaNoTYvZDHcz4Uhf5/ur9geWCxA6BtH6iBEkA=;
-        b=CoAtzA5k2QBEaRx/Lp5nia/owIlIZaAi1Mqmumq65IQGWFrOtoJBdORR6xwleNUpbj
-         xpdIg5akQPItLagPQMuZ4t1usDemthouj/NB0Mtxk+97cp75xlKrTX7L/O3rCK7ihDKP
-         V0vmy/Vc3mKIqeHxL3P1VvChW03AjcVVua78tmO2J1Zpczc2RvwJoSlkI9S7Ig83W3Kl
-         I5wtNaEPYb26hEQlt5S8MRdt6h5xMy/1Lo4gFziErPGDTBd1FkVT2EYkzUpUNU5YbxJj
-         vbLFzdkrZM+lEMFz9JQFHIRO8odnmZSqbhenQm/aZfiarj1klbMfhEYDOmuBc2rK8DzC
-         yvuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RK2c8uYaNoTYvZDHcz4Uhf5/ur9geWCxA6BtH6iBEkA=;
-        b=5P8cSiRqyU3J4LCJFneilzMWBG3ArYSzLNWangCxny4iBDJY93O3z5n1kBLhSpDRM5
-         q8VlWA/ou0fg2qRbz5jwJF5FeOgdiDC8kmt+lTnoamptMwItqauh9ixe7creIRcTXfzE
-         ohnmv2CeIEZh+V1vF4hguDG7Lq1oFNjj00th/K8kH9dygaAORenrb4tGNFD9PdTSVaYI
-         q+zk0BHpKGW5EwTUoVZ30BF/Hztmsprkxc2XNKa6Sbu3/Ff6j7DNNUGc4NzxjAsjZbmH
-         lmxG3bh7OHy8RTo2Y8cc0X4FcP5Mn+1UBqmxJFYUXih3pNXKz7/AUZgyTv0ot5cK1WCv
-         w2fA==
-X-Gm-Message-State: AOAM533Q0u/+GgP6d4imFkqEz1jGMewnKaPEzbR4f4YqXLo5hKQATpF0
-        sAeU2jmee7JQ0z4P0MNhjWw=
-X-Google-Smtp-Source: ABdhPJzgKig8nr+Elmc/69LaQY+7aomcQPwgpnGbkYmWu80bCg+b9I2w4fXRYd8QOE3v3g+UTGWilw==
-X-Received: by 2002:a17:902:ced2:b0:14a:699e:3ab3 with SMTP id d18-20020a170902ced200b0014a699e3ab3mr2611412plg.0.1642045362360;
-        Wed, 12 Jan 2022 19:42:42 -0800 (PST)
-Received: from code-infra-dev-cbj.ea134 ([140.205.70.48])
-        by smtp.gmail.com with ESMTPSA id c20sm879436pgk.75.2022.01.12.19.42.39
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jan 2022 19:42:41 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     dyroneteng@gmail.com
-Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        tenglong.tl@alibaba-inc.com, martin.agren@gmail.com
-Subject: [PATCH v10 9/9] ls-tree.c: introduce "--format" option
-Date:   Thu, 13 Jan 2022 11:42:12 +0800
-Message-Id: <db058bf670c5668fc5b95baf83667cc282cb739b.1641978175.git.dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.34.1.390.g2ae0a9cb82.dirty
-In-Reply-To: <cover.1641978175.git.dyroneteng@gmail.com>
-References: <cover.1641978175.git.dyroneteng@gmail.com>
+        id S229518AbiAMFLD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 00:11:03 -0500
+Received: from mout.web.de ([212.227.15.14]:38329 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229456AbiAMFLC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 00:11:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1642050652;
+        bh=/na6zqTEKLPOmYcDCozgEgfmED+2/EDuqSePt113hqQ=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=Cn/uLmasZ89ucXgrp78Yb39u9ZCdXHzPP7fiLZZZKHTzaCgrffQXuVae8j8CMfjHu
+         qeJ360JzESEVVG1Fq3MHwoi5z1L2zUlFlCvCrDodbKcxLJp1otpIPC3pE99AevV6hh
+         Z7qlX8FwQ4A/duHDzIdRcFmaZzhocGJQrWj4MyzM=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MgAJ8-1mQHUg3Apq-00hwor; Thu, 13
+ Jan 2022 06:10:52 +0100
+Message-ID: <5be4cdad-6769-68e8-0984-5fe89668d007@web.de>
+Date:   Thu, 13 Jan 2022 06:10:51 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.5.0
+Subject: Re: git bisect bad @
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ramkumar Ramachandra <r@artagnon.com>,
+        Git List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
+ <xmqqilus3ctf.fsf@gitster.g>
+ <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
+ <xmqq4k6b34h8.fsf@gitster.g>
+ <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
+ <3dade45b-494f-663b-264b-06a51ea1cf56@web.de> <xmqq35lsyhbf.fsf@gitster.g>
+ <13e323e9-eb0c-71c3-215f-b77c91fcc4c8@web.de>
+In-Reply-To: <13e323e9-eb0c-71c3-215f-b77c91fcc4c8@web.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:N/jgiUtikjxszGejTU7WZ+l9z5YRXBnhwlmsO+vptbywKlqOr3e
+ FEt8Oj4vvvAPsHbeont7GVWt37y5Up1f3MqyNRrjPyGoqR0uw0V4TfjXEycrIxUvX/32KRs
+ I/6IrJH20QAnqLGc7lbOr5ndCqNKxDsqIHFJ8E0wjf8qaqhfpVonbeHefCY53f/ccBWmdcm
+ 49Dv+LJLu28VPOBljVltg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:AsgF8uWLX+Y=:CiUlY+oXX7GzK4cfXvcay8
+ qaP9TK5/9+x3u0xO65gciGhyM+qRyvUUVTiHYPhwEU8bMfauJSppUJIeH5kBfnubvSv+9nRcp
+ 4M5EchTRjcXQehivXh4bf8cElhOVqJEHqmhcrdrL8foVCVBDgPmAeoxOQvOk26VaaVVSbh5//
+ TiP6n4GZw3xxk5E0EoRHtugHnozHYnwP7oCTaHBeqndmRX1aPi7ZLEOc671uQUpVksPG3TCGK
+ 18OjbOVW3sp3OrTq7AmXOVomEN7LzVREaoBqXZDLTUsAEwCDf/0JqXhw7UfOh7lQfHrzXX3rT
+ hCSy1NS1eDgxx8pAHYXNd+COFRidUryU2l9C8G710IlbRhRnWItBilgSkzQd2FSIFdMgHCnI3
+ ejfq+i3Zws2SPjzcpS3+xTvupa+trR3FgMmGsB3dmibFpgix8QobDbgqIM/OZcHL/WdWvLit/
+ vIW9oiik32VciEhxZq0x3slbswQTfxSaWCqThKNFw42wio5zzksEC3Pr1lvv4NSBxTe1MAT2R
+ Wa4zPeDdQte7rg4gak3K3S+W+52Jz/Wdhd/bhUra8tHTfX3YfsGbpeAZZ10aDrXJpFirCOvTj
+ gjfgAuRdux4KdVja5iG8V4C+Szu9obixJHR4bGE8jVv+JDCJjOkyaw7c6q5zf/U6Se9QtcBEd
+ DWLWVs6x7QLSXSZ1tGHSsqxF7q3+d2D4QEhrc5wSxnAkVl2olPMxIxuTu10L/ZgFMB+7zF+G3
+ 9Wn0nfbERgcxd8RcgwzzbOZnVp0bNuLTy/521gCUqXIvFgUrn+jLqg8/92wrvwWTCkSBdAvrQ
+ ivRjrcGUz2RdAsbRjTwP18w0JSi222PWGSUH7YlijT9opPIXiFezLptv7j5GBWYrnK8fEzePT
+ S49U9Z0u0k2XSiJW4bO9GUhjvX3Agokad8n+Ab32CttXW2+ieZO2FkkJ0zYv9LxWzK6D9Mjd3
+ q7ZIH5yVCJMqx4Wf3oIGT8sdOGKOM3rtq0fC7H5SyqS6yQ+kqf4A1WrnLJM5tHIolYuaBtiPY
+ afTQ/5bBrqXvwm7a4GQmv+fjshd1fQjZG2amY2NgRpamxpE/hpEVqDQKjyG5wQqRd7CMdTtO1
+ 8hHRoxxOAqCOT8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a --format option to ls-tree. It has an existing default output,
-and then --long and --name-only options to emit the default output
-along with the objectsize and, or to only emit object paths.
+Am 12.01.22 um 19:34 schrieb Ren=C3=A9 Scharfe:
+>
+> Am 12.01.22 um 18:50 schrieb Junio C Hamano:
+>> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>>
+>>> It would be nice if we could determine if the command was not found by
+>>> the shell and halt the bisection.  This is actually indicated by the
+>>> shell using error code 127.  However, the script itself could also exi=
+t
+>>> with that code (e.g. if one of its commands was not found).  Currently
+>>> this is interpreted as a bad revision and bisection continues, as
+>>> documented in the man page of git bisect.
+>>>
+>>> If we'd make error code 127 (and 126) special by stopping the bisectio=
+n
+>>> (like we do for 128 and higher) then scripts that relied on that code
+>>> indicating a bad revision would require a manual "git bisect bad" at
+>>> each affected step.  Annoying, but not dangerous.  Such a script would
+>>> have to be modified to convert codes 126 and 127 to e.g. 1.
+>>>
+>>> Seems like a reasonable trade-off to me.  Thoughts?
+>>
+>> Probably.  It is safer than the current "all revisions including the
+>> bottom one and the top one are bad" which leads to the "merge-base
+>> says your good and bad are nonsense" error for the "command not
+>> found" case, but what if the one that reports an error with 127 (or
+>> 126) is coming from something other than shell (i.e. the 'bisect
+>> run' command was fed is not a script at all)?  Is it a no-no for a
+>> random binary that is not an implementation of shell to exit with
+>> these error status?
+>
+> The man page of exit(3) mentions the implementation-defined constants
+> EXIT_SUCCESS and EXIT_FAILURE from C99.  It also says: "Cooperating
+> processes may use other values".
+>
+> sysexits(3) on BSD mentions a few others, all below 100
+> (https://man.openbsd.org/sysexits.3).  Its BUGS section says:
+> "The choice of an appropriate exit value is often ambiguous.".
+>
+> So exit code values are only very vaguely standardized.  It's very
+> possible that there are programs that use 126 or 127 to signal
+> something other than "can't execute" or "cannot find command".  Under
+> the new rules the bisect run script would have to translate them to
+> some lower value.
 
-Rather than add --type-only, --object-only etc. we can just support a
---format using a strbuf_expand() similar to "for-each-ref
---format". We might still add such options in the future for
-convenience.
+Reserving 126 and 127 shouldn't cause too much trouble, but there's
+also a way to avoid it: bisect run could checkout a known-good
+revision first and abort if the script returns non-zero for any
+reason, including its non-existence.
 
-The --format implementation is slower than the existing code, but this
-change does not cause any performance regressions. We'll leave the
-existing show_tree() unchanged, and only run show_tree_fmt() in if
-a --format different than the hardcoded built-in ones corresponding to
-the existing modes is provided.
-
-I.e. something like the "--long" output would be much slower with
-this, mainly due to how we need to allocate various things to do with
-quote.c instead of spewing the output directly to stdout.
-
-The new option of '--format' comes from Ævar Arnfjörð Bjarmasonn's
-idea and suggestion, this commit makes modifications in terms of the
-original discussion on community [1].
-
-Here is the statistics about performance tests:
-
-1. Default format (hitten the builtin formats):
-
-    "git ls-tree <tree-ish>" vs "--format='%(mode) %(type) %(object)%x09%(file)'"
-
-    $hyperfine --warmup=10 "/opt/git/master/bin/git ls-tree -r HEAD"
-    Benchmark 1: /opt/git/master/bin/git ls-tree -r HEAD
-    Time (mean ± σ):     105.2 ms ±   3.3 ms    [User: 84.3 ms, System: 20.8 ms]
-    Range (min … max):    99.2 ms … 113.2 ms    28 runs
-
-    $hyperfine --warmup=10 "/opt/git/ls-tree-oid-only/bin/git ls-tree -r --format='%(mode) %(type) %(object)%x09%(file)'  HEAD"
-    Benchmark 1: /opt/git/ls-tree-oid-only/bin/git ls-tree -r --format='%(mode) %(type) %(object)%x09%(file)'  HEAD
-    Time (mean ± σ):     106.4 ms ±   2.7 ms    [User: 86.1 ms, System: 20.2 ms]
-    Range (min … max):   100.2 ms … 110.5 ms    29 runs
-
-2. Default format includes object size (hitten the builtin formats):
-
-    "git ls-tree -l <tree-ish>" vs "--format='%(mode) %(type) %(object) %(size:padded)%x09%(file)'"
-
-    $hyperfine --warmup=10 "/opt/git/master/bin/git ls-tree -r -l HEAD"
-    Benchmark 1: /opt/git/master/bin/git ls-tree -r -l HEAD
-    Time (mean ± σ):     335.1 ms ±   6.5 ms    [User: 304.6 ms, System: 30.4 ms]
-    Range (min … max):   327.5 ms … 348.4 ms    10 runs
-
-    $hyperfine --warmup=10 "/opt/git/ls-tree-oid-only/bin/git ls-tree -r --format='%(mode) %(type) %(object) %(size:padded)%x09%(file)'  HEAD"
-    Benchmark 1: /opt/git/ls-tree-oid-only/bin/git ls-tree -r --format='%(mode) %(type) %(object) %(size:padded)%x09%(file)'  HEAD
-    Time (mean ± σ):     337.2 ms ±   8.2 ms    [User: 309.2 ms, System: 27.9 ms]
-    Range (min … max):   328.8 ms … 349.4 ms    10 runs
-
-Links:
-	[1] https://public-inbox.org/git/RFC-patch-6.7-eac299f06ff-20211217T131635Z-avarab@gmail.com/
-
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
- Documentation/git-ls-tree.txt |  51 +++++++++++++-
- builtin/ls-tree.c             | 129 +++++++++++++++++++++++++++++++++-
- t/t3105-ls-tree-format.sh     |  55 +++++++++++++++
- 3 files changed, 230 insertions(+), 5 deletions(-)
- create mode 100755 t/t3105-ls-tree-format.sh
-
-diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
-index 729370f235..ebdde6eae3 100644
---- a/Documentation/git-ls-tree.txt
-+++ b/Documentation/git-ls-tree.txt
-@@ -10,9 +10,9 @@ SYNOPSIS
- --------
- [verse]
- 'git ls-tree' [-d] [-r] [-t] [-l] [-z]
--	    [--name-only] [--name-status] [--object-only] [--full-name] [--full-tree] [--abbrev[=<n>]]
--	    <tree-ish> [<path>...]
--
-+	    [--name-only] [--name-status] [--object-only]
-+	    [--full-name] [--full-tree] [--abbrev[=<n>]]
-+	    [--format=<format>] <tree-ish> [<path>...]
- DESCRIPTION
- -----------
- Lists the contents of a given tree object, like what "/bin/ls -a" does
-@@ -79,6 +79,16 @@ OPTIONS
- 	Do not limit the listing to the current working directory.
- 	Implies --full-name.
- 
-+--format=<format>::
-+	A string that interpolates `%(fieldname)` from the result
-+	being shown. It also interpolates `%%` to `%`, and
-+	`%xx` where `xx` are hex digits interpolates to character
-+	with hex code `xx`; for example `%00` interpolates to
-+	`\0` (NUL), `%09` to `\t` (TAB) and `%0a` to `\n` (LF).
-+	When specified, `--format` cannot be combined with other
-+	format-altering options, including `--long`, `--name-only`
-+	and `--object-only`.
-+
- [<path>...]::
- 	When paths are given, show them (note that this isn't really raw
- 	pathnames, but rather a list of patterns to match).  Otherwise
-@@ -87,6 +97,9 @@ OPTIONS
- 
- Output Format
- -------------
-+
-+Default format:
-+
-         <mode> SP <type> SP <object> TAB <file>
- 
- This output format is compatible with what `--index-info --stdin` of
-@@ -105,6 +118,38 @@ quoted as explained for the configuration variable `core.quotePath`
- (see linkgit:git-config[1]).  Using `-z` the filename is output
- verbatim and the line is terminated by a NUL byte.
- 
-+Customized format:
-+
-+It is possible to print in a custom format by using the `--format` option,
-+which is able to interpolate different fields using a `%(fieldname)` notation.
-+For example, if you want to only print the <object> and <file> fields with a
-+JSON style, executing with a specific "--format" like
-+
-+        git ls-tree --format='{"object":"%(object)", "file":"%(file)"}' <tree-ish>
-+
-+The output format changes to:
-+
-+        {"object":"<object>", "file":"<file>"}
-+
-+FIELD NAMES
-+-----------
-+
-+Various values from structured fields can be used to interpolate
-+into the resulting output. For each outputing line, the following
-+names can be used:
-+
-+mode::
-+	The mode of the object.
-+type::
-+	The type of the object (`blob` or `tree`).
-+object::
-+	The name of the object.
-+size[:padded]::
-+	The size of the object ("-" if it's a tree).
-+	It also supports a padded format of size with "%(size:padded)".
-+file::
-+	The filename of the object.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 56cc166adb..e048a68ee0 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -57,6 +57,12 @@ enum {
- 
- static int cmdmode = MODE_UNSPECIFIED;
- 
-+static const char *format;
-+static const char *default_format = "%(mode) %(type) %(object)%x09%(file)";
-+static const char *long_format = "%(mode) %(type) %(object) %(size:padded)%x09%(file)";
-+static const char *name_only_format = "%(file)";
-+static const char *object_only_format = "%(object)";
-+
- static int parse_shown_fields(void)
- {
- 	if (cmdmode == MODE_NAME_ONLY) {
-@@ -76,6 +82,72 @@ static int parse_shown_fields(void)
- 	return 1;
- }
- 
-+static void expand_objectsize(struct strbuf *line, const struct object_id *oid,
-+			      const enum object_type type, unsigned int padded)
-+{
-+	if (type == OBJ_BLOB) {
-+		unsigned long size;
-+		if (oid_object_info(the_repository, oid, &size) < 0)
-+			die(_("could not get object info about '%s'"),
-+			    oid_to_hex(oid));
-+		if (padded)
-+			strbuf_addf(line, "%7" PRIuMAX, (uintmax_t)size);
-+		else
-+			strbuf_addf(line, "%" PRIuMAX, (uintmax_t)size);
-+	} else if (padded) {
-+		strbuf_addf(line, "%7s", "-");
-+	} else {
-+		strbuf_addstr(line, "-");
-+	}
-+}
-+
-+static size_t expand_show_tree(struct strbuf *line, const char *start,
-+			       void *context)
-+{
-+	struct show_tree_data *data = context;
-+	const char *end;
-+	const char *p;
-+	unsigned int errlen;
-+	size_t len = strbuf_expand_literal_cb(line, start, NULL);
-+
-+	if (len)
-+		return len;
-+	if (*start != '(')
-+		die(_("bad ls-tree format: as '%s'"), start);
-+
-+	end = strchr(start + 1, ')');
-+	if (!end)
-+		die(_("bad ls-tree format: element '%s' does not end in ')'"), start);
-+
-+	len = end - start + 1;
-+	if (skip_prefix(start, "(mode)", &p)) {
-+		strbuf_addf(line, "%06o", data->mode);
-+	} else if (skip_prefix(start, "(type)", &p)) {
-+		strbuf_addstr(line, type_name(data->type));
-+	} else if (skip_prefix(start, "(size:padded)", &p)) {
-+		expand_objectsize(line, data->oid, data->type, 1);
-+	} else if (skip_prefix(start, "(size)", &p)) {
-+		expand_objectsize(line, data->oid, data->type, 0);
-+	} else if (skip_prefix(start, "(object)", &p)) {
-+		strbuf_add_unique_abbrev(line, data->oid, abbrev);
-+	} else if (skip_prefix(start, "(file)", &p)) {
-+		const char *name = data->base->buf;
-+		const char *prefix = chomp_prefix ? ls_tree_prefix : NULL;
-+		struct strbuf quoted = STRBUF_INIT;
-+		struct strbuf sb = STRBUF_INIT;
-+		strbuf_addstr(data->base, data->pathname);
-+		name = relative_path(data->base->buf, prefix, &sb);
-+		quote_c_style(name, &quoted, NULL, 0);
-+		strbuf_addbuf(line, &quoted);
-+		strbuf_release(&sb);
-+		strbuf_release(&quoted);
-+	} else {
-+		errlen = (unsigned long)len;
-+		die(_("bad ls-tree format: %%%.*s"), errlen, start);
-+	}
-+	return len;
-+}
-+
- static int show_recursive(const char *base, size_t baselen,
- 			  const char *pathname)
- {
-@@ -116,6 +188,38 @@ static enum object_type get_type(unsigned int mode)
- 	        : OBJ_BLOB);
- }
- 
-+static int show_tree_fmt(const struct object_id *oid, struct strbuf *base,
-+			 const char *pathname, unsigned mode, void *context)
-+{
-+	size_t baselen;
-+	int recurse = 0;
-+	struct strbuf line = STRBUF_INIT;
-+	enum object_type type = get_type(mode);
-+
-+	struct show_tree_data data = {
-+		.mode = mode,
-+		.type = type,
-+		.oid = oid,
-+		.pathname = pathname,
-+		.base = base,
-+	};
-+
-+	if (type == OBJ_TREE && show_recursive(base->buf, base->len, pathname))
-+		recurse = READ_TREE_RECURSIVE;
-+	if (type == OBJ_TREE && recurse && !(ls_options & LS_SHOW_TREES))
-+		return recurse;
-+	if (type == OBJ_BLOB && (ls_options & LS_TREE_ONLY))
-+		return 0;
-+
-+	baselen = base->len;
-+	strbuf_expand(&line, format, expand_show_tree, &data);
-+	strbuf_addch(&line, line_termination);
-+	fwrite(line.buf, line.len, 1, stdout);
-+	strbuf_release(&line);
-+	strbuf_setlen(base, baselen);
-+	return recurse;
-+}
-+
- static int show_default(struct show_tree_data *data)
- {
- 	size_t baselen = data->base->len;
-@@ -195,6 +299,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	struct object_id oid;
- 	struct tree *tree;
- 	int i, full_tree = 0;
-+	read_tree_fn_t fn = show_tree;
- 	const struct option ls_tree_options[] = {
- 		OPT_BIT('d', NULL, &ls_options, N_("only show trees"),
- 			LS_TREE_ONLY),
-@@ -217,6 +322,9 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "full-tree", &full_tree,
- 			 N_("list entire tree; not just current directory "
- 			    "(implies --full-name)")),
-+		OPT_STRING_F(0, "format", &format, N_("format"),
-+			     N_("format to use for the output"),
-+			     PARSE_OPT_NONEG),
- 		OPT__ABBREV(&abbrev),
- 		OPT_END()
- 	};
-@@ -237,6 +345,10 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	    ((LS_TREE_ONLY|LS_RECURSIVE) & ls_options))
- 		ls_options |= LS_SHOW_TREES;
- 
-+	if (format && cmdmode)
-+		usage_msg_opt(
-+			_("--format can't be combined with other format-altering options"),
-+			ls_tree_usage, ls_tree_options);
- 	if (argc < 1)
- 		usage_with_options(ls_tree_usage, ls_tree_options);
- 	if (get_oid(argv[0], &oid))
-@@ -260,6 +372,19 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	tree = parse_tree_indirect(&oid);
- 	if (!tree)
- 		die("not a tree object");
--	return !!read_tree(the_repository, tree,
--			   &pathspec, show_tree, NULL);
-+
-+	/*
-+	 * The generic show_tree_fmt() is slower than show_tree(), so
-+	 * take the fast path if possible.
-+	 */
-+	if (format &&
-+	    (!strcmp(format, default_format) ||
-+	     !strcmp(format, long_format) ||
-+	     !strcmp(format, name_only_format) ||
-+	     !strcmp(format, object_only_format)))
-+		fn = show_tree;
-+	else if (format)
-+		fn = show_tree_fmt;
-+
-+	return !!read_tree(the_repository, tree, &pathspec, fn, NULL);
- }
-diff --git a/t/t3105-ls-tree-format.sh b/t/t3105-ls-tree-format.sh
-new file mode 100755
-index 0000000000..ea0f51d866
---- /dev/null
-+++ b/t/t3105-ls-tree-format.sh
-@@ -0,0 +1,55 @@
-+#!/bin/sh
-+
-+test_description='ls-tree --format'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success 'ls-tree --format usage' '
-+	test_expect_code 129 git ls-tree --format=fmt -l HEAD &&
-+	test_expect_code 129 git ls-tree --format=fmt --name-only HEAD &&
-+	test_expect_code 129 git ls-tree --format=fmt --name-status HEAD &&
-+	test_expect_code 129 git ls-tree --format=fmt --object-only HEAD
-+'
-+
-+test_expect_success 'setup' '
-+	mkdir dir &&
-+	test_commit dir/sub-file &&
-+	test_commit top-file
-+'
-+
-+test_ls_tree_format () {
-+	format=$1 &&
-+	opts=$2 &&
-+	shift 2 &&
-+	git ls-tree $opts -r HEAD >expect.raw &&
-+	sed "s/^/> /" >expect <expect.raw &&
-+	git ls-tree --format="> $format" -r HEAD >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'ls-tree --format=<default-like>' '
-+	test_ls_tree_format \
-+		"%(mode) %(type) %(object)%x09%(file)" \
-+		""
-+'
-+
-+test_expect_success 'ls-tree --format=<long-like>' '
-+	test_ls_tree_format \
-+		"%(mode) %(type) %(object) %(size:padded)%x09%(file)" \
-+		"--long"
-+'
-+
-+test_expect_success 'ls-tree --format=<name-only-like>' '
-+	test_ls_tree_format \
-+		"%(file)" \
-+		"--name-only"
-+'
-+
-+test_expect_success 'ls-tree --format=<object-only-like>' '
-+	test_ls_tree_format \
-+		"%(object)" \
-+		"--object-only"
-+'
-+
-+test_done
--- 
-2.34.1.390.g2ae0a9cb82.dirty
-
+Ren=C3=A9
