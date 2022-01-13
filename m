@@ -2,116 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B046C433EF
-	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 17:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AD76C433F5
+	for <git@archiver.kernel.org>; Thu, 13 Jan 2022 17:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234448AbiAMRit (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 12:38:49 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62921 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229702AbiAMRis (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jan 2022 12:38:48 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EED3217531F;
-        Thu, 13 Jan 2022 12:38:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=f87515MkDEV/
-        SZiJ/5Mgyl8xcsNW6yU2oRtHnUcdW/A=; b=MQEuYeNt8BoxBbQwPibGqKVdfztC
-        vymYdKpe10yEO1VZS7IY2D4EfAdFR/DmMGpsdXcZbgJnw8BaKNZm+vD2WCOqgFAg
-        x8oydHX9FK5pUGqY29T/1qmax3yncJGDhQMObV/9pvOyOPotjcSSpw5OUXAew3uC
-        /fnwp31ZB3drEYI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E754117531E;
-        Thu, 13 Jan 2022 12:38:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6454517531D;
-        Thu, 13 Jan 2022 12:38:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH 1/3] test-tool genzeros: initialize "zeros" to avoid
- SunCC warning
-References: <cover-0.3-00000000000-20220111T163908Z-avarab@gmail.com>
-        <patch-1.3-4dadf7320ab-20220111T163908Z-avarab@gmail.com>
-        <nycvar.QRO.7.76.6.2201121518360.2121@tvgsbejvaqbjf.bet>
-        <Yd8njHz2m099iDfL@nand.local>
-        <220113.8635lsvsw6.gmgdl@evledraar.gmail.com>
-Date:   Thu, 13 Jan 2022 09:38:44 -0800
-In-Reply-To: <220113.8635lsvsw6.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 13 Jan 2022 11:08:44 +0100")
-Message-ID: <xmqqee5bk02j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S234569AbiAMRkX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 12:40:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51972 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229702AbiAMRkX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 12:40:23 -0500
+Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5490C061574
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 09:40:22 -0800 (PST)
+Received: by mail-vk1-xa31.google.com with SMTP id 78so4331027vkz.7
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 09:40:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=EEvwjd7AUN7ZKWDjKIAv8msWS57srZhYtaC3wwpPp64=;
+        b=oOzH2SPNEwtYtSMH6rOq5D+oKCtqNGWp7C62fPciBDTOVwYJ7LzyWDQClTV56mvqhP
+         0q6+3FOtD755agiA2Z6X8jLJtsckwgYsWpPPH6/Y8FnFGJq5rQUn+Ja/G9BzJ4FNbadM
+         /GbMLmp4xc/3R71cw3jXm8cSwhVwuB+9agsPh+5+ncCbitTA6e/+/UrhcQyezlko52ls
+         f0eS2INHJdrWISZccFmfiuv2sr2WAx+93lOQXKDDrM688x5oWwTrT//tZLswyaybR/+t
+         GAaN5yALNxoxDWpvW9yCCJSx2Y78w+ekLKLAHReXGBoOnqHQ1CPuoax5hHJWnKyUvRGG
+         mnnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=EEvwjd7AUN7ZKWDjKIAv8msWS57srZhYtaC3wwpPp64=;
+        b=PjkVj0tyaAfZRM1TlEoPGv8WstGxE3OK6dNoC8rTrR56JWDNvQanQw03XcDhYQzUJj
+         kNLKTyTSCmkDbu0C0U9QAg1NvxEF/SnAAZa575HROvqHv2SRytfoAsU/GrnE+B+LK8rf
+         Wq5MUYhHdXmExPeTK8D2gbBqJapHHBi7DV4NXL7G+PrjMPuRTn/Vx5QY+Pat568VTgr6
+         YP7Ax097nzr+7qcA5GAcZUnT40CWjB34d2EF9B8+mL7jOFZBE0XKuJ0HcflbQYmAkcCp
+         vTRX0bK+WsQPJsFqy/ua7xW73FKcCUJv7zx6Dzlg6onLfSIRuJvEL+ls6h0aaooWzCjE
+         6XTQ==
+X-Gm-Message-State: AOAM533YFA/cVtOAVVQxenk0xttMWrKc0CAVxZE7BndIpbyMPQ+qE15H
+        I2QTkN2rUzCJ46oJuME8RgT4DvRyOmtSbZ+4YC++wA==
+X-Google-Smtp-Source: ABdhPJyYNlGu4doKSnwZjw2UJJ/ZhwvUaq8FIOSwBfv2McXWFlaoCLIBrx6q+RNXpT0e4QyJPocL/qi9S+a/UmQuPWk=
+X-Received: by 2002:a1f:3213:: with SMTP id y19mr2869447vky.7.1642095621678;
+ Thu, 13 Jan 2022 09:40:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A84F0CB6-7497-11EC-8A76-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <pull.1188.git.git.1642092934523.gitgitgadget@gmail.com> <220113.86r19btv5a.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220113.86r19btv5a.gmgdl@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 13 Jan 2022 18:40:10 +0100
+Message-ID: <CAFQ2z_Nng6woxKVCpGzL95EOkuBFMQW7FtCTJfyaAZaZ-HMQcA@mail.gmail.com>
+Subject: Re: [PATCH] reftable: avoid initializing structs from structs
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> On Wed, Jan 12 2022, Taylor Blau wrote:
+On Thu, Jan 13, 2022 at 6:14 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> I can confirm that this works on the xlc version that errored on this
+> before, the reftable tests even pass!
 >
->> On Wed, Jan 12, 2022 at 03:21:46PM +0100, Johannes Schindelin wrote:
->>> > diff --git a/t/helper/test-genzeros.c b/t/helper/test-genzeros.c
->>> > index 8ca988d6216..5dc89eda0cb 100644
->>> > --- a/t/helper/test-genzeros.c
->>> > +++ b/t/helper/test-genzeros.c
->>> > @@ -3,8 +3,7 @@
->>> >
->>> >  int cmd__genzeros(int argc, const char **argv)
->>> >  {
->>> > -	/* static, so that it is NUL-initialized */
->>> > -	static const char zeros[256 * 1024];
->>> > +	const char zeros[256 * 1024] =3D { 0 };
->>>
->>> This diff does two things: add an initializer, and turn the variable =
-into
->>> a `static`. The former is the actual fix that is required. The latter=
- is
->>> not. During the -rc phase, we do not want to see any of the latter. I=
-t is
->>> unnecessarily controversial and distracting, and can easily be postpo=
-ned
->>> until January 25th, 2022.
->>
->> This assumes that making the declaration non-static isn't necessary to
->> fix the warning from SunCC.
+> > Apparently, the IBM xlc compiler doesn't like this.
 >
-> Just adding "=3D { 0 }" and retaining the "static" would FWIW make SunC=
-C
-> happy here.
+> Would make sense to steal the compiler version etc. details from my
+> <patch-1.1-7425b64c0a0-20220113T113821Z-avarab@gmail.com>. I.e. eventuall=
+y
+> we'll be able to change this & other code back, as nobody will care
+> about that older compiler version. It worked before in the pre-image on
+> a more recent xlc.
 
-It would make folks, who worry about having too large an item on the
-stack to begin with, happy, too.  256kB on stack of a function that
-does not make a call into a deep call chain would not matter all
-that much, but it is a good principle to keep in mind.
+Feel free to butcher this in any way you like for your series. :)
 
-We've worked around false "uninitialized" alarms from too picky
-(versions of) compilers before by adding an otherwise unnecessary
-initializers before, and I think this falls into the same category.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-It is a separate matter if it is appropriate to worry about SunCC
-this late in the cycle.  If this were "we were clean before, and
-these small number of places add breakages", I would say yes.
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-But if this is "let's not add more of the same existing breakage
-that we already have tons", we should not even be discussing about
-such a change this late in the cycle (immediately after the new
-offenders were added would have been more appropriate).
+Registergericht und -nummer: Hamburg, HRB 86891
 
-I offhand do not know which side of that line this one falls,
-though.
+Sitz der Gesellschaft: Hamburg
 
-Thanks.
-
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
