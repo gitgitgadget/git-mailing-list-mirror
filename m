@@ -2,91 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12B88C433F5
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 20:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A59C4C433F5
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 20:53:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244340AbiANUmY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 15:42:24 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52422 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239585AbiANUmX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 15:42:23 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B7CB71676A5;
-        Fri, 14 Jan 2022 15:42:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=9hd+wMAqLggO
-        7Vpl7OEmfMUGqk4fGwgLzfPZu+/oh7w=; b=e9zQ7Yfix90uekP2keHoh3H/wHGc
-        i4qg1KXNrEz9c/xbTLL4jI0k9rsaP3atFnAjEqyCnYEJsleIMyaGIeIJwNRUs/03
-        WMAVUn90sPHgMhN6k99pbhNYdlrYqmeZ8lRETDV/4oleCzrk60Ic+FgG1r003Zij
-        VcvlkXxZYb4WroI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B01941676A4;
-        Fri, 14 Jan 2022 15:42:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1507E1676A3;
-        Fri, 14 Jan 2022 15:42:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [RFC PATCH v1 0/1] ls-remote: inconsistency from the order of
- args and opts
-References: <cover.1642129840.git.dyroneteng@gmail.com>
-        <xmqqfspqeun5.fsf@gitster.g>
-        <220114.867db2rs0n.gmgdl@evledraar.gmail.com>
-Date:   Fri, 14 Jan 2022 12:42:17 -0800
-In-Reply-To: <220114.867db2rs0n.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 14 Jan 2022 20:57:17 +0100")
-Message-ID: <xmqqbl0eaw2e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229445AbiANUxy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 15:53:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54524 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229437AbiANUxx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 15:53:53 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F648C061574
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 12:53:52 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id c71so38336793edf.6
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 12:53:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=6zE4uRXjTQfXQMLv787WNK+b85Co98LZxPlI3psySqM=;
+        b=eRQhtox/hs/Z7hgV7/2YsRIQUzU8QAXA+wFXnYLcUb8FBOteM2aA4WZca6ll5rJ3qI
+         RlbKzpD1OXB94bJpof8aw0Me7CGXbc6LkU54j78tc4qdFf9Dp97bG4eoGodIdeDyzzUv
+         RpaMeJGSlvuf/KOSu1003TgqMIN6OfOHOjhvnWGuWC0kc0QIlofMMQq/PLiChHUxKSzA
+         +bm8qqiQlYvqAEla0ikqAWYqhsHJMS6sV6amJOUcfP2aKFJp5kxzt/aQpqtlzyIMN0jX
+         kHokIry5pAQawXhEPMQMag4lw1VYCtjsPL9y0byXrFua6FRrcag2HYjwM5/Fj+AUmydU
+         FvSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=6zE4uRXjTQfXQMLv787WNK+b85Co98LZxPlI3psySqM=;
+        b=uBwV8XFwU0gZScrzV473oqPlu3s5wUd13GGemaIvGPj/7HswOOdQSOT/6du1JX6gJt
+         3yja3X2xm1rV8vMs7W5gtm+iZPT1R6mDBUIoefvNOSBdaDgso2LNaML5NuudiUv2+dBO
+         luNiEg+HExjwxu7a1aiMlOvMsBBPD8g+JQz06fK8S3ScN1gSuwbcjpapZexx1nz1UJHx
+         wriF0NySgOli84n1xrHBDLy4Yn4g1RrEYU6q15v77PJn9HRxexKsSlNojnhJ4/UG2VKw
+         xdQifT/lh8Gl7JQd8bEFm/8tk9rtpFPDUa4frl6VjAqIU2NGkDdMoLXJrgYI974OWVXz
+         bDlA==
+X-Gm-Message-State: AOAM530XqCHcwdwHpxMb+gv0lRIrP47NKdWbC4NBbC0S7sYu2wf6Vbj1
+        VBjHYIUnKAFPRdAM3J9rzHo=
+X-Google-Smtp-Source: ABdhPJw+QnMpzq8/dd8gGrXpVugDogYOYtaYEWQDlOQeZaMwmk7aDItd/4cAMCZ2lXQJr4Z5j14YKw==
+X-Received: by 2002:a17:907:160d:: with SMTP id hb13mr3831359ejc.726.1642193630637;
+        Fri, 14 Jan 2022 12:53:50 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id v8sm2665249edt.10.2022.01.14.12.53.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Jan 2022 12:53:49 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1n8Ta1-001FAn-BN;
+        Fri, 14 Jan 2022 21:53:49 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: v2.35.0 DEVELOPER=1 regression
+Date:   Fri, 14 Jan 2022 21:41:07 +0100
+References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
+ <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
+ <xmqqlf0w5bbc.fsf@gitster.g> <YbAVOtYXA1Hf9EtJ@coredump.intra.peff.net>
+ <xmqq4k7j68eg.fsf@gitster.g> <YbEMnksMEuAz3Nt0@coredump.intra.peff.net>
+ <211209.867dcekm9h.gmgdl@evledraar.gmail.com>
+ <YbMWNZCpy578Qu+l@coredump.intra.peff.net>
+ <220113.86tue7vr6d.gmgdl@evledraar.gmail.com>
+ <YeDUA6NhHuCUkqXf@camp.crustytoothpaste.net> <xmqqilumayfh.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqqilumayfh.fsf@gitster.g>
+Message-ID: <220114.8635lqrqci.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 776243D2-757A-11EC-9B3B-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> We have multiple commands that are in GNU-fashion loose about whether
-> you provide options first before no-option args, or after. E.g. we
-> accept both of:
+On Fri, Jan 14 2022, Junio C Hamano wrote:
+
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 >
->     git push --dry-run <remote> <ref>
+>>> DEVELOPER=1 will now die because its core libraries use C11-specific
+>>> code:
+>>>     
+>>>     archive.c:337:35: error: '_Generic' is a C11 extension [-Werror,-Wc11-extensions]
+>>>                     strbuf_addstr(&path_in_archive, basename(path));
+>>>                                                     ^
+>>>     /usr/include/libgen.h:61:21: note: expanded from macro 'basename'
+>>>     #define basename(x)     __generic(x, const char *, __old_basename, basename)(x)
+>>>                             ^
+>>>     /usr/include/sys/cdefs.h:325:2: note: expanded from macro '__generic'
+>>>             _Generic(expr, t: yes, default: no)
+>>>             ^
 >
-> And:
+> Wow, that sounds horribly broken.
+
+Yes, but it's also working as designed :) We're erroring because the C
+library headers on the OS aren't C99-compliant. That it would apply to
+only git.git's sources was only ever wishful thinking.
+
+>> I think we had this discussion about FreeBSD before and that's why I
+>> specifically dropped that option from the main makefile.  We can either
+>> drop that patch, or we can set it to -std=gnu11 and tell folks setting
+>> DEVELOPER to use a system released in the last five years.  I think we
+>> can be a little stricter with what we require in the case of DEVELOPER
+>> than we might be otherwise.
 >
->     git push <remote> <ref> --dry-run
+> But that is not being stricter, but looser, no?  I thought that the
+> point of -std=gnu99 was to allow us to use C99 features while catching
+> use of language features newer than that, and use of -std=gnu11 will
+> defeat half the point, wouldn't it?
 
-Yes, but I consider that a bug that we cannot fix due to backward
-compatibility issues.
+Indeed. But also as noted in my side-thread reply in
+<220114.86a6fytte9.gmgdl@evledraar.gmail.com> I think that being able to
+use it like this was always wishful thinking.
 
-That is why my preference is to encourage users to stick to the
-POSIX way in gltcli, just like we recommend "stuck" form of options
-its parameter.
+I.e. to brian's "tell folks setting DEVELOPER to use a system released
+in the last five years". This is the exact opposite of that.
 
-> But when GNU came around its option parser was generally happy to accep=
-t
-> options and args in either order. E.g. these both work with GNU
-> coreutils, but the latter will fail on FreeBSD and various other
-> capital-U UNIX-es:
->
->     touch foo; rm -v foo
->     touch foo; rm foo -v
+We are implicitly expecting that the OS will forever be using the
+20+-year old C99 standard, and not trying out fetures in C11
+standardized 10+ years ago. The FreeBSD 13.0 release is less than a year
+old[1].
 
-Yes, among the harm GNU has done on mankind, this is one of the
-biggest ones.  We shouldn't waste our engineering time to support
-more of them in our tools.
+When I went looking I found that the change to use __generic in its
+libgen.h just so happens to have been made in FreeBSD sources around 5
+years ago: [2].
 
-As long as users stick to the recommended "dashed options first and
-then args, among which revs come first and then pathspecs", they
-will be fine.
+1. https://www.freebsd.org/releases/13.0R/announce/
+2. https://github.com/freebsd/freebsd-src/commit/34168b28e99b0bb328c7bb49cd91cb942181056f
