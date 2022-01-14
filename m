@@ -2,70 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF812C433F5
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 12:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A378EC433F5
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 12:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234815AbiANMJI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 07:09:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46380 "EHLO
+        id S240922AbiANMUf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 07:20:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234740AbiANMJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 07:09:07 -0500
+        with ESMTP id S231846AbiANMUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 07:20:34 -0500
 Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D46F5C061574
-        for <git@vger.kernel.org>; Fri, 14 Jan 2022 04:09:06 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id 30so34302514edv.3
-        for <git@vger.kernel.org>; Fri, 14 Jan 2022 04:09:06 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10D71C061574
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 04:20:34 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id a18so34332220edj.7
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 04:20:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=2/njUzgCRJy2qyftH1v84qhPoq7USJ8hX91PUPdtXNU=;
-        b=TsSBNAfhBM+uMk90cZOClxVwDKl5HVQRXD2n1QFvHkgEnvPmfNwIeIvfACG+p/ZImW
-         XxnhlYhR8VfX5jUTKCvttv281klyrMm2wBhfRPZi8oORntZJhHF/GYXLurXxI/8UtnRL
-         h7R8pDmpfitwYCrtwmz31P/SRuVUn0QUD4q3LYZ/WpFehrptFR4yiBwii4+ftGrFypNA
-         2UBjW/a5ZQWZNt1s2CwN7Dc5lydmx3twvgv9de7Edzg8FWXM6dnvEiureoVc/U/CP7gD
-         dswqSEhcgYaOZV12bKdgHfcKx2O5r0fUw7v6voFIFZ5AiKT8GjndIgb4s9v0Ehf99wUv
-         FZtg==
+        bh=1l8xN+q+KsrMOQRcsz4MPmFVoG7xstMTApqOvHDmmQM=;
+        b=L8yA0Wq2biBNKQDdfVmM1zKYMq8lbJOLUHI/BesdERD0XyKtgwNE4PRuC5gB22mqhl
+         4FMlYERXQ7B+2YKsxKe8F2oAlRaYBMFCP6cq5eKFz+fbW39VIy2csXqBFao7rD7dGTqu
+         t9BdeqS7kpfgXMyBNXSrWvMEjb+qNfFjVqstObce8yt+EIW0GoQ1lvAN6K9avs99nB56
+         7w5X4D/zIJ8l4I+LtS/VbRE3WrXCT3dn6aofuGDcGDmVqxwvrWgXsvkCesDpKSHe/cI8
+         VKoVQOkbtLnrKuyhNy/oZkFjkISzl1oqvg7YRN0UUwwhYiHzHAcQeDsc0rl1z7i13ODd
+         JU+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=2/njUzgCRJy2qyftH1v84qhPoq7USJ8hX91PUPdtXNU=;
-        b=7zwiD++hAgcEImbFbRJ8FUlxUCDUAE2eBidj9MfOWUsoF4WwRGtPL8qn1L1oidERvk
-         HgZozecN0EVOPbo5itkFpqKEUGXvxxNSlg4yUb7CejB7ur9/e0vRr4pVz3q9MJfQT+xz
-         mIAbEQZDsYUvheAz01/4ZrJSOkEixHjmL+CIsRy4IAix4CacANhYoRwYNX88nn/ntqvR
-         SZilKeJ4I3RmKGHGSLcVlmD7QG73oPs8sbKCU8a4vtF8VUekuJWzKGc+znqxcf5ge3w4
-         Bah2A6qpf+U1qsoQXzFvXypmGXvmQDv67+E9CsFw6GRbAuvqcsWW96EUcfvjNZet0CgD
-         /OWw==
-X-Gm-Message-State: AOAM532gdxjlBtjBUx96D8lX1DIRIUXBjqGawGyQ9eahX4DbTbyOfeEm
-        7BhvUmmyqKFYutEjV2Ol0KersFG5+OQ=
-X-Google-Smtp-Source: ABdhPJzRmoB+cL5uU9lvS5v/l2OPkTka4oEENnCnmncTwF5G4l1aWkYuMlQUw6BsTdCoMc/zThyiNA==
-X-Received: by 2002:a17:906:7944:: with SMTP id l4mr7217918ejo.598.1642162145408;
-        Fri, 14 Jan 2022 04:09:05 -0800 (PST)
+        bh=1l8xN+q+KsrMOQRcsz4MPmFVoG7xstMTApqOvHDmmQM=;
+        b=I5+iQrHtilYzu4oJuuU6XcRK1DsbVCMLTGolddy8FIqafuUTAoe4W+PpMscfGiamSo
+         eMr6L47/ROJB9uDmAkwxhjDMU8E4M7YJTnvSHmm6OkXk9HoDNYxSQB25L3Fx6PL8ceM9
+         ZCN2zhp7yp0pdPPtBuS30TiVgbrp6dguk+0T75W+l+BuMndE8mGAiXDVpnl9YqcG+wiB
+         6PNuLtAMqS/gfiYYQUn42OlSCxNiOvADsEiaraQJtE+81HMOlCMan5sCL2QZrSxLOyAI
+         okCJnaN2cyAFFsTi7kG6gIowDkzPyrvrG6LMXZMcurt1nuJr6h+31iFdPg+fAFX5GUBt
+         8YoQ==
+X-Gm-Message-State: AOAM531QMK97IX6olBviR+ki+a4BFG0nBIS6BWkfVf/8dWyze7SHG5dh
+        yU1qzRU0OO0udnfvJ3bqDjbl62Yjj7Q=
+X-Google-Smtp-Source: ABdhPJy0lowEbLcF2YlCX0nUISshpxEap8GsSn6RpWkmbTDzN62WUDu81NkRbqaY/5QoOoiEHDXNpg==
+X-Received: by 2002:a17:907:1c91:: with SMTP id nb17mr7007114ejc.712.1642162832318;
+        Fri, 14 Jan 2022 04:20:32 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id di18sm1777976ejc.56.2022.01.14.04.09.04
+        by smtp.gmail.com with ESMTPSA id 20sm1793750ejy.105.2022.01.14.04.20.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jan 2022 04:09:04 -0800 (PST)
+        Fri, 14 Jan 2022 04:20:31 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1n8LOC-0015Ps-4T;
-        Fri, 14 Jan 2022 13:09:04 +0100
+        id 1n8LZH-0015hs-4V;
+        Fri, 14 Jan 2022 13:20:31 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH v7 1/6] object-name tests: add tests for ambiguous
- object blind spots
-Date:   Fri, 14 Jan 2022 13:07:53 +0100
-References: <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com>
- <cover-v7-0.6-00000000000-20220111T130811Z-avarab@gmail.com>
- <patch-v7-1.6-28c01b7f8a5-20220111T130811Z-avarab@gmail.com>
- <xmqq8rvjgszp.fsf@gitster.g>
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH] promisor-remote.c: use oidset for deduplication
+Date:   Fri, 14 Jan 2022 13:11:57 +0100
+References: <pull.1187.git.git.1642105926064.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqq8rvjgszp.fsf@gitster.g>
-Message-ID: <220114.861r1att7j.gmgdl@evledraar.gmail.com>
+In-reply-to: <pull.1187.git.git.1642105926064.gitgitgadget@gmail.com>
+Message-ID: <220114.86wnj2se41.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -74,33 +68,82 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Jan 13 2022, Junio C Hamano wrote:
+On Thu, Jan 13 2022, John Cai via GitGitGadget wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> From: John Cai <johncai86@gmail.com>
 >
->> +test_cmp_failed_rev_parse () {
->> +	cat >expect &&
->> +	test_must_fail git -C "$1" rev-parse "$2" 2>actual.raw &&
->> +	sed "s/\($2\)[0-9a-f]*/\1.../" <actual.raw >actual &&
->> +	test_cmp expect actual
->> +}
+> swap out oid_array for oidset in promisor-remote.c since we get
+> a deduplicated set of oids to operate on.
 >
-> That's dense, especially without a comment (or named variable) that
-> hints readers what the arguments to this helper (and its standard
-> input) ought to be.
+> swap our calls for oid_array for oidset in callers of
+> promisor_remote_get_direct().
+>
+> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 
-I got rid of the named variables from v6 in response to a "shift" that
-shifted the wrong number, but perhaps I should have just removed the
-"shift"?
+FWIW we had an off-list discussion about oidset v.s. a custom hashmap to
+do the same off-list, not about s/oid_array/oidset/ in this area.
 
-> As long as messages from rev-parse on the error stream never has
-> more than one abbreviated object name on a single line, the above
-> should give us a copy of the message with expected object name
-> abbreviated to $2; otherwise we might be missing a /g in the sed
-> script.
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>     promisor-remote.c: use oidset for deduplication
+>=20=20=20=20=20
+>=20=20=20=20=20
 
-In the v6 you rightly commented on the /g that was there previously not
-being needed :)
+Extra \n between $subject and $body.
 
-So I dropped it, in this case we can rely on only getting the
-abbreviated output.
+>     swap out oid_array for oidset in promisor-remote.c since we get a
+
+Nit: s/swap/Swap/, i.e. start the sentence with a capital letter...
+
+>     deduplicated set of oids to operate on. Any direct fetch we can save
+>     will be well worth it.
+>=20=20=20=20=20
+>     oidset does use a slightly larger memory footprint than oid_array, so
+>     this change is a tradeoff between memory footprint and network calls.
+>=20=20=20=20=20
+>     What I'm not sure about is if it's worth swapping out all the calls of
+>     oid_array for oidset in callers of promisor_remote_get_direct().
+
+From what I understand of GGG I think you updated only the summary on
+the PR but not the commit itself, the latter is what would go into
+git.git. Here the commit should be updated so we get this message.
+
+The part after the "---" is usually just used in this project for ad-hoc
+list-only comment.
+
+>  builtin/index-pack.c   |  9 +++---
+>  builtin/pack-objects.c |  9 +++---
+>  diff.c                 | 13 +++-----
+>  diffcore-rename.c      | 12 +++----
+>  diffcore.h             |  3 +-
+>  merge-ort.c            |  8 ++---
+>  object-file.c          |  4 ++-
+>  promisor-remote.c      | 72 ++++++++++++++----------------------------
+>  promisor-remote.h      |  6 ++--
+>  read-cache.c           |  9 +++---
+>  10 files changed, 57 insertions(+), 88 deletions(-)
+
+Rather than inline comments, a comment that applies to all of these:
+
+The difference between these two APIs is thaht oidset is hash-backed,
+and you'd insert into it and we de-duplicate any duplicate OIDs on-the-fly.
+
+The oid_array is just an realloc()'d "struct object_id *oid". On
+insertion you can insert duplicates, but it has the ability to track
+"I've sorted these", and "let's iterate over this sorted, and de-dup any
+duplicates".
+
+We have the two APIs for a reason, but I don't know in any of these
+cases whether this change is safe.
+
+Does e.g. index-pack.c always receive de-duplicated OIDs and we were
+wasting CPU cycles using an oidset?
+
+Do some of these like pack-objects.c receive de-duplicated OIDs from
+e.g. "git repack" *now*, but we just lack test coverage to see that
+they're happy to get duplicate OIDs on stdin (e.g. manually from a
+user), and this would introduce a bug?
+
+But most importantly is it worth it? What's the rationale for the
+change? Less CPU/memory use? Getting e.g. "hyperfine" or "/usr/bin/time
+-v" output for those (if so) would be valuable.
