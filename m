@@ -2,95 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9DC8C433EF
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 23:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEFE4C433EF
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 23:57:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231390AbiANXtO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 18:49:14 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57045 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230491AbiANXtN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 18:49:13 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8D5641686EA;
-        Fri, 14 Jan 2022 18:49:12 -0500 (EST)
+        id S231445AbiANX5w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 18:57:52 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52939 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231437AbiANX5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 18:57:52 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F1B4816AD7D;
+        Fri, 14 Jan 2022 18:57:51 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=XsWnlL8p4gpx4J1Z+9y5sB2H+7ZAnsvZzUqxw8
-        PfBoo=; b=RcCOEas1ZnoQJdudgLB1VGW+sru6isuJjIhTpamIg+wSlEDWv5z59W
-        sE+MDE8PB7dG5ec1S3RgXlOX+GYIuWbnM8ZlZDw0vO25y9seSr7sn3ZDucZT+L99
-        QHw1PY5V4R5X1VCGOhcjKkz1lxMpktl0+Y0nC/1hce9ufTct56yb4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 85E391686E9;
-        Fri, 14 Jan 2022 18:49:12 -0500 (EST)
+        :content-type:content-transfer-encoding; s=sasl; bh=G2isSehP2ci4
+        kPRNmJAfJ9KorrNxu7JgsPV5FGBdC2Q=; b=OzECrw69qo8z78+ES70jfXvmv5JU
+        8qsaeva2PgNAk4vUSk7gEBMDBDjo3v32RyhRm+/atd57zrQ85TIOkVLKleuXQyn1
+        t6jCYPEwBo2lT/I/u/SdD0CQQwaxwbM1ucaFiwnnC6ACHKQARA+tTf3QVz3nsFxN
+        bgoXtrvy1Qybmh4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DE0B316AD7C;
+        Fri, 14 Jan 2022 18:57:51 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EEF861686E6;
-        Fri, 14 Jan 2022 18:49:09 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 38D9C16AD7A;
+        Fri, 14 Jan 2022 18:57:49 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: Mistakes in the stalled category?
-References: <xmqq35lrf8g4.fsf@gitster.g>
-        <CABPp-BFj8NyXG6cQPJeDE46eicbfnP=TgEirRZVcnMM+YNG7OQ@mail.gmail.com>
-Date:   Fri, 14 Jan 2022 15:49:08 -0800
-In-Reply-To: <CABPp-BFj8NyXG6cQPJeDE46eicbfnP=TgEirRZVcnMM+YNG7OQ@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 14 Jan 2022 07:44:36 -0800")
-Message-ID: <xmqqlezh98uj.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: v2.35.0 DEVELOPER=1 regression
+References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
+        <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
+        <xmqqlf0w5bbc.fsf@gitster.g>
+        <YbAVOtYXA1Hf9EtJ@coredump.intra.peff.net>
+        <xmqq4k7j68eg.fsf@gitster.g>
+        <YbEMnksMEuAz3Nt0@coredump.intra.peff.net>
+        <211209.867dcekm9h.gmgdl@evledraar.gmail.com>
+        <YbMWNZCpy578Qu+l@coredump.intra.peff.net>
+        <220113.86tue7vr6d.gmgdl@evledraar.gmail.com>
+        <YeDUA6NhHuCUkqXf@camp.crustytoothpaste.net>
+        <xmqqilumayfh.fsf@gitster.g>
+        <220114.8635lqrqci.gmgdl@evledraar.gmail.com>
+        <xmqqk0f29e6w.fsf@gitster.g>
+Date:   Fri, 14 Jan 2022 15:57:48 -0800
+In-Reply-To: <xmqqk0f29e6w.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        14 Jan 2022 13:53:43 -0800")
+Message-ID: <xmqqh7a598g3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 91989CF0-7594-11EC-A624-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: C7188984-7595-11EC-B6D0-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> [Stalled]
->>
->> * ds/sparse-checkout-requires-per-worktree-config (2021-12-21) 5 commits
->>  . sparse-checkout: use repo_config_set_worktree_gently()
->>  . config: add repo_config_set_worktree_gently()
->>  . worktree: add upgrade_to_worktree_config()
->>  . config: make some helpers repo-aware
->>  . setup: use a repository when upgrading format
->>
->>  "git sparse-checkout" wants to work with per-worktree configration,
->>  but did not work well in a worktree attached to a bare repository.
->>  source: <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> It has been two weeks since the last submission and emails about this
-> topic, so maybe you put this one in "stalled" intentionally.  (If so,
-> and Stolee if this really is stalled, would you like me to try
-> updating?  I know it has expanded quite a bit from the early simple
-> fix you were trying to provide, but you've got most the code I think
-> you need and some important fixes I wouldn't want to see dropped.)
+>>> Wow, that sounds horribly broken.
+>>
+>> Yes, but it's also working as designed :) We're erroring because the C
+>> library headers on the OS aren't C99-compliant. That it would apply to
+>> only git.git's sources was only ever wishful thinking.
+>
+> No, C library supporting only C11 is perfectly fine.  On such a
+> system, the compiler shouldn't even support -std=3Dgnu99.  That is
+> what I consider broken.
 
-[Stalled] being early in the report is primarily a way to remind us
-that an update is overdue.
+Or, the system headers should be arranged in such a way that
+depending on __STDC_VERSION__, it should refrain from using features
+of the language that is not supported.  So supporting -std=3Dgnu99 in
+their compilers may not be a bug---but in that case, their system
+headers are buggy.
 
-<1db0f601-4769-15c0-cd58-ecddfa1fc9d5@gmail.com> is what prompted me
-to consider that I can put it on backburner and spend my time on
-other topics.
-
->> * pw/add-p-hunk-split-fix (2022-01-12) 2 commits
-
-I think what happened was that the previous iteration of this was on
-2021-12-20 and marked as "Expecting a reroll" for a few issues of
-the "What's cooking" report.  And then I've moved it to [Stalled]
-section, but before I had a chance to issue another "What's cooking"
-report, an update came, and when I updated the list of commits, I
-forgot to move the topic out of the [Stalled] category.
-
->> * gc/fetch-negotiate-only-early-return (2022-01-12) 3 commits
-
-Likewise, the previous round was on 2021-12-21.
-
+Anyway.  I think <xmqqzgny7xo7.fsf@gitster.g> shows a viable way
+forward.
