@@ -2,140 +2,170 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0904AC433F5
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 21:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23967C433F5
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 21:12:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229580AbiANVDr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 16:03:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56828 "EHLO
+        id S229601AbiANVMx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 16:12:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbiANVDr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 16:03:47 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E3EC061574
-        for <git@vger.kernel.org>; Fri, 14 Jan 2022 13:03:46 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id o6so38462311edc.4
-        for <git@vger.kernel.org>; Fri, 14 Jan 2022 13:03:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=qfm2cRaNLSCiuHW1qasGlf0WYpMCpfUspahxcrFXS08=;
-        b=DDUi0r4vaENLGAL/Wd6Tn18941xwnY1V+i86C5zFbrgGM3EEUzoSLkY5yenTLuauNH
-         WDg6Fyeqkb9ewvDliLMcjwLNtFZX2LDUXDfxVGJQbzW1mj06xUP+EHGSX4QOUZy8vUH5
-         gP6KmaBW2zbVbiqrIdRwiQqsiipLkGtuKcSzWxZpf4XL2Qy+4wcevfvglwy+t7fFpSqf
-         ptdSfgg6EdFSAwB3vNLAN0tAh4heYzcAgyDO35+jVzljE22tnZNYeEgTdEmnoPFx4Fg6
-         ZnAobhKjb+0E740hXy1uZEjlyDThXBavPZoQuZhllcW37MYEByHyPSd2ipOYpdUOPjmU
-         /mVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=qfm2cRaNLSCiuHW1qasGlf0WYpMCpfUspahxcrFXS08=;
-        b=ibFQcVsqX1jEpIraM2tXL4tpQsy8ugzZY5H6m0rugQEiDHWzEKjwIn2Xk4qgfJpUYk
-         5UsXSEHTl77bPB6dIAlNB+qVH9JMxFYgom9QqQ3vThPvq7Ecctlf+xdKdpE8QYIFsd3z
-         ipkciC8kuAck8BmfZIBLQW7kD63j/Fgex2B5qVBrhCA+l/BcKbHT+SomylT0+ps9EIh5
-         lqKbB49bbpEaD/7oFpQXgNYmSo6liBnY+sAw7rLzN8OrW7fzK4Q0iiFdMDyHes4x6Pgv
-         jDmFnUTOLQJJ91IZ3Rblc94iqzolQnZL7nqUih93TEKvGF+m/8jNdQaCgqm6BFw9nOTU
-         YncQ==
-X-Gm-Message-State: AOAM5319zYZCIyH8iED+llw/fHZ7ZVJhmq4EHhY0vXb7k8mAn3CKGHH4
-        HL4vtaOVtj1f8tzXyDO9bJ1sA897g2IQOg==
-X-Google-Smtp-Source: ABdhPJyqvIeh0nx45fdrUk6AQsyGJpfB2aBFeJTeunFgUwqlf/SQHU5IC+vZvEBSEpDd38/oBzffcw==
-X-Received: by 2002:a50:9549:: with SMTP id v9mr10666770eda.335.1642194225017;
-        Fri, 14 Jan 2022 13:03:45 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id u14sm2642195edv.92.2022.01.14.13.03.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jan 2022 13:03:44 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1n8Tjb-001FSF-Ev;
-        Fri, 14 Jan 2022 22:03:43 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
+        with ESMTP id S229678AbiANVMu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 16:12:50 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69108C061574
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 13:12:50 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 8D6075B236;
+        Fri, 14 Jan 2022 21:12:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1642194769;
+        bh=yZU00rpJArUSlVbeQSJNS7jmWnZ1r44t3iuDKbe/7jA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=N8E42z7hMBL/LqUQWSPCWLeo9BFng9A2ImpRo2cLxZKI0CDjkEgOGX0mUcM0Ph5yt
+         2u13NNTksKqnTt8Xf5RRbJhf6tSC6B8pp2ZLp9SAI0cbW2TT50XRArPKhWGp+n99+0
+         ABXVsFsILeWKHsnx8A8y/sSxOv/l0iaczgTKLjnbUjulpcrRFrX71JIDg+aFaC9B5G
+         GRvDPteiYbSERiwQnxHtbgtXY09hm5tuH5cSnpoY9ZPZrg1ZHHcT/N8fydYFBl4+23
+         9si+bvCJMnLPTC598SWLm7QT33CEkjBuuKcAtOiLc3Qzi5id5oagCRhWsieS8Ljm/N
+         7vOWvzngR+OJaMOoo6p/Hc6kkyT+HSthGXPnh+KwkGl4QA7iJBoRzObXUmCLbc8ITW
+         W+8vvwax03SmGi4bIyh3TJy63nOBYpkqLyZcTWIVBmUqoH9D0BYvhaZ4MFobasPbIK
+         0LZksat9loVASh15yLTIijzXgrPIJX4X4oQr+SMDTrQzMZUCd4B
+Date:   Fri, 14 Jan 2022 21:12:47 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
         tenglong.tl@alibaba-inc.com
 Subject: Re: [RFC PATCH v1 0/1] ls-remote: inconsistency from the order of
  args and opts
-Date:   Fri, 14 Jan 2022 21:57:33 +0100
+Message-ID: <YeHnT1BcisbVvQHB@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
+        tenglong.tl@alibaba-inc.com
 References: <cover.1642129840.git.dyroneteng@gmail.com>
- <xmqqfspqeun5.fsf@gitster.g> <220114.867db2rs0n.gmgdl@evledraar.gmail.com>
- <xmqqbl0eaw2e.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqbl0eaw2e.fsf@gitster.g>
-Message-ID: <220114.86y23iqbbk.gmgdl@evledraar.gmail.com>
+ <xmqqfspqeun5.fsf@gitster.g>
+ <220114.867db2rs0n.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="eA24vURGVwNi2k1t"
+Content-Disposition: inline
+In-Reply-To: <220114.867db2rs0n.gmgdl@evledraar.gmail.com>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-nOn Fri, Jan 14 2022, Junio C Hamano wrote:
+--eA24vURGVwNi2k1t
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On 2022-01-14 at 19:57:17, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>=20
+> On Thu, Jan 13 2022, Junio C Hamano wrote:
+>=20
+> > Teng Long <dyroneteng@gmail.com> writes:
+> >
+> >> +test_must_fail 'Exchange the order of "--heads" and <remote>' '
+> >> +    git --version &&
+> >> +    git init "test.git" &&
+> >> +    test_commit -C "test.git" one &&
+> >> +    git -C "test.git" ls-remote --heads ./. > result.1 &&
+> >> +    git -C "test.git" ls-remote ./. --heads > result.2 &&
+> >
+> > I would say that this is working exactly as designed.  As with the
+> > unix tradition, after the command name, first come options
+> > (e.g. "--heads", "-v", etc. that begin with a dash or two dashes),
+> > then arguments like "origin", "master", "." that are not dashed
+> > options/flags.
+> >
+> > Then among the arguments, we generally take revs first and then
+> > pathspecs.  "git help cli" explicitly mentions this, because it is
+> > specific to "git" command suite, but it does not mention "dashed
+> > options/flags first and then args", primarily because, at least back
+> > when the documentation was written, this was taken as granted, iow,
+> > those who wrote the "gitcli" documentation thought it was a common
+> > knowledge among users that did not need to be spelled out.
+> >
+> > Apparently, it is not a common knowledge at least for you (and
+> > probably others).  Perhaps we should add a paragraph to the cli help
+> > and explicitly mention "options first and then args", before we go
+> > on to say "among args, revs first and then pathspecs".
+>=20
+> I don't think this summary is accurate.
+>=20
+> We have multiple commands that are in GNU-fashion loose about whether
+> you provide options first before no-option args, or after. E.g. we
+> accept both of:
+>=20
+>     git push --dry-run <remote> <ref>
+>=20
+> And:
+>=20
+>     git push <remote> <ref> --dry-run
+>=20
+> The "tradition" you're referring to accurately summarizes how POSIX
+> specifies that things should work.
 >
->> We have multiple commands that are in GNU-fashion loose about whether
->> you provide options first before no-option args, or after. E.g. we
->> accept both of:
->>
->>     git push --dry-run <remote> <ref>
->>
->> And:
->>
->>     git push <remote> <ref> --dry-run
->
-> Yes, but I consider that a bug that we cannot fix due to backward
-> compatibility issues.
->
-> That is why my preference is to encourage users to stick to the
-> POSIX way in gltcli, just like we recommend "stuck" form of options
-> its parameter.
->
->> But when GNU came around its option parser was generally happy to accept
->> options and args in either order. E.g. these both work with GNU
->> coreutils, but the latter will fail on FreeBSD and various other
->> capital-U UNIX-es:
->>
->>     touch foo; rm -v foo
->>     touch foo; rm foo -v
+> But when GNU came around its option parser was generally happy to accept
+> options and args in either order. E.g. these both work with GNU
+> coreutils, but the latter will fail on FreeBSD and various other
+> capital-U UNIX-es:
+>=20
+>     touch foo; rm -v foo
+>     touch foo; rm foo -v
 
-This is only an approximate list, but:
-=20=20=20=20
-    $ git grep -C3 'parse_options' -- 'builtin/*.c'|grep -c PARSE_OPT_STOP_=
-AT_NON_OPTION
-    16
-    $ git grep -C3 'parse_options' -- 'builtin/*.c'|grep -c -F ', 0);'
-    101
+Yes, POSIX specifies this is how it should work because it avoids
+ambiguity.  According to POSIX, -v is a file, and that's a valid name on
+Unix.  If GNU rm fails to delete that file or provide a diagnostic about
+why it didn't, that's a bug.
 
-The GNU-like behavior is far more common in our codebase, and I think
-it's less surprising if commands work the same way for consistency.
+In some cases, we do allow the GNU behavior of providing options
+anywhere on the command line, but we don't when it causes ambiguity,
+like in this case.  I think we should document the current behavior, but
+I also think it's a given when working on Unix because many tools don't
+work that way.  For example, test and find don't permit arbitrary
+location of options and arguments and they are found on all Unix
+systems.  You can't write "test foo -f".
 
-I manually looked through the PARSE_OPT_STOP_AT_NON_OPTION cases, and I
-think this is the only one that's using it for no good reason. The
-others (e.g. "git config") would become ambiguous or error out as a
-result.
+And to prove that this is ambiguous, I provide you the following
+example:
 
-> Yes, among the harm GNU has done on mankind, this is one of the
-> biggest ones.  We shouldn't waste our engineering time to support
-> more of them in our tools.
->
-> As long as users stick to the recommended "dashed options first and
-> then args, among which revs come first and then pathspecs", they
-> will be fine.
+$ git update-ref refs/heads/--symref HEAD
+$ git ls-remote . --symref
+1ffcbaa1a5f10c9f706314d77f88de20a4a498c2        refs/heads/--symref
 
-I find it quite useful. E.g. if you typo a command or forget/want to remove=
- an option:
+That prints something very different if I write "git ls-remote --symref
+=2E".  And it is actually the case that people write this kind of syntax
+in scripts relying on the current behavior and then those scripts get
+used in a variety of situations with arbitrary ref names, so this should
+continue to work this way.  I believe a former employer may have these
+kinds of scripts, for example.
 
-    git push origin HEAD --dry-run
+I'm not opposed to us building new tools which support the GNU behavior,
+but I don't think we should change tools where we have the existing
+behavior because it does lead to breakage in some scripting situations.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-You can just (under readline) do C-p M-DEL, instead of the equivalent
-navigating back a few words, or having to use more advanced readline
-features like ^--dry-run^^ or whatever.
+--eA24vURGVwNi2k1t
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Anecdotally, I've been surprised by the amount of regular terminal users
-whose readline skills pretty much and at using the arrow keys to make
-command corrections. I think this GNU UX decision has probably saved
-several accumulated man-lifetimes by now :)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYeHnTgAKCRB8DEliiIei
+gQABAP949UfqhYn5m3UaIAEVZCcCQsrZ+nuDxdIfAvZJhsaP+QD/XDifjdVKPQ5O
+aDnYMWyYMUxTFlzamwqkKSn5e8cWYgc=
+=faas
+-----END PGP SIGNATURE-----
+
+--eA24vURGVwNi2k1t--
