@@ -2,106 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C216C433EF
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 07:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A612C433EF
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 07:59:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230514AbiANHrQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 02:47:16 -0500
-Received: from mout.web.de ([212.227.15.4]:34131 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230300AbiANHrP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 02:47:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1642146426;
-        bh=HWDHzw915wFy5m223ThlbU960mjU31m/4/F/OrMq8C0=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=pXgEDWwFum8akY5iGg1F28Ql/MV/pPr/00VhN2serQL1iwr7WUYTvChi87mlTQNZg
-         XKEra8xGHGyIwPeVMDDSVUNHfCmi78eLdVDHMC7pWbLMcpjN8LYPNEbaDpYAn8T2Yy
-         FTc2RfOf5/wR6QDAotm5CEno9sbfeI1FTSopGkzM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MDMzC-1n161U16wA-00AwG8; Fri, 14
- Jan 2022 08:47:06 +0100
-Message-ID: <88899d16-5e3e-2bb2-07e9-59f7607c91a8@web.de>
-Date:   Fri, 14 Jan 2022 08:47:05 +0100
+        id S234269AbiANH7N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 02:59:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45000 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234249AbiANH7N (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 02:59:13 -0500
+Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 016CDC061574
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 23:59:13 -0800 (PST)
+Received: by mail-ua1-x92f.google.com with SMTP id l15so15526665uai.11
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 23:59:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=hhKRsATZdEg9Q95S3i+aIn1AdsGPnmWuJ4MZRNRuXDg=;
+        b=M4O8a+2SNnYzh4AhW6kqjwH322gZ6W1I41ykZa8+QrYV4kArsC1u/O93Q5icrVxFYF
+         46p+IRGDAYCmVkeBpCxhvYui37D9KBNGPlJT0C2w8aGIfuYpNhDH6aLvS++UoolhTzUy
+         ZDhBW8EpFuLkkTaG4ZinPVC3bhH22PHXZT/LIn+lLr+wc0hBB6WNKFuWlDHDY3xaNDSV
+         3/yJh84DShQdWCfIiVtyoOfReRVbcwddNzrZ3dgdTWvMTQqmthDxCDKIOqvhEI3CYqU6
+         ys0oXOk8jb/EhSws5o5S7Ql6L1ym8eGTsWOVmIIPSx5S617ZXZQQt9cc7X5S+rFWfozK
+         uO2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hhKRsATZdEg9Q95S3i+aIn1AdsGPnmWuJ4MZRNRuXDg=;
+        b=RoMjlrtMB/u5W9vNr90gwBIWx1JC4ksLcODQIN/ZM/BT8OUn76PMu74znTw4TdWRw2
+         raBd0B88cKHFg0nDT4cwf9IyPL0JcEanWXEzxtPYOAr7xkJFtuUvLO2qBnIN0DHjO/e/
+         URGk1J/U8Aj2XLz4ba8PgfaUt54jJW37J6El3W6x+Vgp30kc+KYYsAmiFCCNs+YiY1yl
+         IvQUe+Z8zeM4I51J41mdxv0s9Dc6o5z193Wf8n87y+wiDzdHPfS8DqIQfTY2DA/mhTqu
+         3h29uaUAZunUINRz2Bm6II9G0BgEO620CESflfkAvbxrrP/PFIKnYoeIpHz2oo+eK86J
+         iPMg==
+X-Gm-Message-State: AOAM531vU7V7dXfHo8xSNH7NaLK4WteEYvNJ6FjdHRC/qonNtPjFec8A
+        RFfNLDvX7+5hBXD8jW4mXplvGVaxy5fKVakGhzw=
+X-Google-Smtp-Source: ABdhPJz8OoDUmiUowJmiq5M4Xs/w04Rzgxc3/tFFtPvTC5p7qksOG55ZzPqaG5iPlGPuhmWEWScl35y+n9DynDS3VQU=
+X-Received: by 2002:a67:d615:: with SMTP id n21mr3954287vsj.43.1642147152035;
+ Thu, 13 Jan 2022 23:59:12 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.5.0
-Subject: Re: git bisect bad @
-Content-Language: en-US
-To:     Ramkumar Ramachandra <r@artagnon.com>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        "Miriam R." <mirucam@gmail.com>
-References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
- <xmqqilus3ctf.fsf@gitster.g>
- <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
- <xmqq4k6b34h8.fsf@gitster.g>
- <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
- <3dade45b-494f-663b-264b-06a51ea1cf56@web.de> <xmqq35lsyhbf.fsf@gitster.g>
- <13e323e9-eb0c-71c3-215f-b77c91fcc4c8@web.de>
- <5be4cdad-6769-68e8-0984-5fe89668d007@web.de>
- <421215c1-f6ae-4ec2-b666-2a481056ef79@www.fastmail.com>
- <CAP8UFD3tyBhrOQzg9j4qDAT0Tb8TCTK0=J6ORsiLVuMWn+W9wg@mail.gmail.com>
- <8bc73981-589e-20e5-247b-2f74e166ae1a@web.de>
- <925ef53d-c8b2-4ef4-acee-490900e8a3b7@www.fastmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <925ef53d-c8b2-4ef4-acee-490900e8a3b7@www.fastmail.com>
-Content-Type: text/plain; charset=UTF-8
+References: <cover.1641978175.git.dyroneteng@gmail.com> <b04188c822c32aab6ef59099a0c9078aeda065c3.1641978175.git.dyroneteng@gmail.com>
+ <220113.861r1cxgxx.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220113.861r1cxgxx.gmgdl@evledraar.gmail.com>
+From:   Teng Long <dyroneteng@gmail.com>
+Date:   Fri, 14 Jan 2022 15:59:01 +0800
+Message-ID: <CADMgQSQ3oWAbDMK73hEwZKJHhO_k8CuJdC2TNWW0+kv1TzYfRQ@mail.gmail.com>
+Subject: Re: [PATCH v10 5/9] ls-tree: optimize naming and handling of "return"
+ in show_tree()
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, tenglong.tl@alibaba-inc.com,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Teng Long <dyronetengb@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:FRK/pfcQ+WqKVeN0m0JaEprW8CKWMFv33W7m+FBhpeXw1Hmt+8S
- DSVt5F4S7ZxFYebt2vEbYW5oRXK8e0LRXZWfaqCaf7arW6WC5WHMT9ZGS+By6hCfM9HSzMA
- 3kYdkYy5lj1I4Q/xbqlRnobtGPVnTGPKjl6Bxt29GeV7Z+SMXbwARDqTRJB+0IperKjFG2b
- r+tdpr2H8yQt8M81Goiyw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Rp3EejazrAY=:gNIULqoVLsjoQkeJWTK7Yk
- QsSc3IUqXEBLS3iSEeba3DA5JJ0szk8sdiJCvPV0Zsvy43rIHcjTFJOdfhDT6RphVO1jIGEz6
- sRMfJ2VUNSeKV1koiA8ZKXrvL2SekoJLjHQu/97v4c/F/KY1vulhUBN9Pui7PXDP5F7Oxl8Fz
- G5/nHiSxPDhVSU2UlbdSyxr4rFf39u+KGqCzPw9WKE1lXZ05jwrbGEaw+tSphh9+skQT4XMPU
- zHpSOEFfj3yRkZZn9zr8BX0NgYz10W/TMjFNKdWEEaTL6YvJY5aQ+nyjnnIW87OsYcX2228ll
- uO8c9t3GqaOlIcJ1oFvkUuz1TgvrWHHM+qXxGwO11KNSSlna1PxDxY/wE8V/ZlZVG9y7hZPjn
- UQEL9miYI3ryNSsu6ajmUSMQkT5A4LFxsVQoKdp5sOo3L1KpfLunM2AiKeKDovyeNTLCPxhmQ
- x1y5o6kjfftJI2g/Sak0KW5qcqTIM1UCcCMy9ZjkOQsRfx3Uydo+1DcRQgvRwwLYQuoiwVlAr
- pqps2D3DqiY5Vy1DOkpJKEPeyU4rI/yRG7lkap1eYjNXxUwOo3S5Li0O4RRZll/aygNldoNXz
- uwoXa+c9dDXMYuxK0PFyeThkmd4Lp1QhANrPy5+oWeKlUGIo5ljhMlDTSkx3ajpaqzdx+d8oA
- GflfqXEoC9/sXgEIasxtebAJmFcN2ZHPTlYyzLBTAPUXGhE6eg9yo/LOfaPa461u9DVjjPD1T
- yw1L7hd9DYJnm2iJo9POrBG9L9hG8AF6t1DF5ocN+pqpvz0zl6+xIlaAFnGKwpTzPtoWPibdc
- qsKzRFecoO0Q7YYcqVMXn76N3XhTztztNZ0BnfTMIYJUzH8yVp3HdVz2qYg7BWPRGFshZM1sS
- SS1Ku7+op5C7Bo+Bf9SLZnziRfZV5iXF3Q+91At4NArLMD/4Wg1vWe+sVqxZ+0ds+3lmDf4u+
- ilE/P5Sr8t4L1mZ+nsay2dUDAJ7gAadWvOmKQ4bh4hSqh0jAO3E4IYJo9M+1fAHYh1LGLh5Qt
- AYoD5YyKAimWT7G3qd1SmkjGgIAyxnfBgB0x4FRpIh3PBJ31+8TIZeb53PZw15ESS7nkUnhIN
- R/MbslozBibLaI=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.01.22 um 16:16 schrieb Ramkumar Ramachandra:
-> Ren=C3=A9 Scharfe wrote:
->> The implementation language of git bisect is not immediately relevant
->> here, but that the shell is used to call the user-supplied bisect run
->> script is.  If we'd run it directly (without RUN_USING_SHELL) we could
->> distinguish error code 126/127 from execution errors.  I assume the
->> option is used to stay compatible with the old shell version of bisect.
->
-> Sorry, my misunderstanding. I thought the external command was being
-> called from git-bisect.sh. I don't think I understand the purpose of
-> RUN_USING_SHELL (it just seems to put an "sh -c" in the beginning):
->
-> 	static const char **prepare_shell_cmd(struct strvec *out, const char **=
-argv)
-> 	{
->         ...
-> 			strvec_push(out, "sh");
-> 			strvec_push(out, "-c");
->
-> 			if (!argv[1])
-> 				strvec_push(out, argv[0]);
-> 			else
-> 				strvec_pushf(out, "%s \"$@\"", argv[0]);
->        ...
-> 	}
+On Thu, Jan 13, 2022 at 2:55 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 
-Using the shell allows the bisect run command to be any shell command,
-not just some script.  E.g. you could bisect a build failure with just
-"git bisect run make".  Quite useful.
+> Re the $subject: Is "optimize naming" here just referring to the
+> s/retval/recurse/g?
 
-Ren=C3=A9
+Yes.
+
+> Personally I think just a s/retval/ret/g here would make more senes if
+> we're doing any change at all, and in either case having this variable
+> re-rename split up as its own commit would make the proposed control
+> flow changes clearer.
+
+Do you mean that I can split the current one into two commits,  one does
+the renaming work and another one does the left work?
+
+If so, I will do this in the next patch.
+
+>
+> This new function is a re-invention of the object_type() utility in
+> cache.h, and isn't needed. I.e....
+>
+> ...just drop it and do this:
+>
+>         -       enum object_type type =3D get_type(mode);
+>         +       enum object_type type =3D object_type(mode);
+
+You are absolutely correct.
+I will replace get_type() to object_type() in the next patch.
