@@ -2,105 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A47EC433F5
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 19:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 779A5C433F5
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 19:39:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244131AbiANThq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 14:37:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36914 "EHLO
+        id S237161AbiANTjR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 14:39:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235243AbiANThp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 14:37:45 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FDD4C061574
-        for <git@vger.kernel.org>; Fri, 14 Jan 2022 11:37:45 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id o6so37727065edc.4
-        for <git@vger.kernel.org>; Fri, 14 Jan 2022 11:37:45 -0800 (PST)
+        with ESMTP id S234013AbiANTjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 14:39:16 -0500
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34E8CC061574
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 11:39:16 -0800 (PST)
+Received: by mail-io1-xd31.google.com with SMTP id v1so13555021ioj.10
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 11:39:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=jlZ7MFKlmml7LjsgIUAeFLJBbqnNNwPZG95droy+iSY=;
-        b=AUf5lFL7Maj6FlcCyOnNSwj7PiFflrhouS3dMo10JwhH+9mertssD3b30I7QV6xUtS
-         0SH2ldWHE5RV4EKda0Uw58RCaTNLnBpPEfQO8yHJWHElj2kdx0kaVz14Jccc2yU7ej43
-         0A2BvCFZu3TMGwy843+HnvrW15sejpmvJZQwDUHS2hztbmPqClj16qnXb5Lewae66BZ6
-         d/lZH2YtOyBFMwg5TkzdGusI8zgXigVT4gApUfSHy6fPtY15MMmZTbr4vAfB57zdXNCo
-         QJ9Yu8+jtWgitb9Q42h/1RRMKHI05/o5arY9ne28gerREMdCxXn5Mdk3bS3IX8WQRCQh
-         PxUg==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yGNZhJQp/4MES/W/IEHOTaLtiDV0+pqz3KDhl0iTsBU=;
+        b=TUwbpBwlujNnHOVk80yN4Rq3bS0D5GLWiKgXCTz5xQTN5lxQtZ3pgCzRhhtb/YFFyc
+         E8SzY608Tq02lS/yiEZR26pLeL5zx0R7hkrvSbtoVhdR/Nli/a7AUpyIRGxpgMFvRlgf
+         5zl5iIahQaNnfOszHebfc6i8+Pk6DNANA+eIoURlzFgTMx6aUTHQdyp83UO4LRZxfRRi
+         5SdNnwd06bqp1sEjCGl+AqTGgNiFwnPdC/G1inAipHaK4MBbkkhJNVRbeWe/9zmyR6C2
+         2so2mEhgE/FU9EDbl1joIpx8OlHPQUoFyXlhG0Xk1cyw/oEhbQ33P0Ykj795QERRPwq7
+         sb8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=jlZ7MFKlmml7LjsgIUAeFLJBbqnNNwPZG95droy+iSY=;
-        b=Xe0ViWxcknaqkRlXxlEnaa7uXc5UOJkGX0/whwrhyLQ2wj4hb9kBPbORi+NKzwfNeR
-         L80ikJrFTUz7k4XJEpOIYnxz8COU7DxB6sR2z5OhecEMkMzw+7Ral/t/gJQPRlxRuhm6
-         N14Qi2jchGdL1iHXcEdjyIC0HL/+EMyVIAjqk8MiwYzs7TT3svQpmN9YQERyzXIeFhJy
-         ZacEZUqrEdl9bXMI5Wyx/IJXh3XVzpbNGeTG3djLtq3dWRhx0iG626DLiQwZ3OjQlm5J
-         JDdegcuhD7EqSujlRFTEKKV/28giLjop4R8jM/X1HIR8z1m+w+vE3eqsS6/ANGqnq1L7
-         Ed0Q==
-X-Gm-Message-State: AOAM532LWfpqMWGqSbJXBgkIpYmDXkcbBq1+DRPRndK1B36ayIfUOfmO
-        AQPne1SIDqjGnVjGiSzVTLsLoOUDYff1EA==
-X-Google-Smtp-Source: ABdhPJxy8ipL0EzZqcq4BGKRiOko926Qn6rX0YUovCxXv6Bo2ve6Sg8O692S9CdJ7f/MUSdzEWqhXQ==
-X-Received: by 2002:a17:906:724a:: with SMTP id n10mr3898268ejk.659.1642189063789;
-        Fri, 14 Jan 2022 11:37:43 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p25sm2651280edw.75.2022.01.14.11.37.42
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yGNZhJQp/4MES/W/IEHOTaLtiDV0+pqz3KDhl0iTsBU=;
+        b=YDU184YoMZwXdhNfiTwwX9UICHcVCiumFf57dHoEkL0RSydQKYg0Ofy9ZyAC180H7z
+         OzeAaXpUA8TOvmIG2OAYicaNTwdaRMoMFIcag4U6cFmZG3s4HSwJudRjJ0cqRflKVcOB
+         a9SyY+NUY4O4Jaik3sl6FtVwlkGBhExN/OnXoAeTVs8idB7sW7F7uyT1DaQcd7dK74jk
+         Xp6zYfKr6Sna7T6Oc4vTukKbxYGvIwwgwBsYtSp9IYhvs1X8ge1KXL0mE/3GZ845hKRl
+         cg80fjiS2ce+z689ti/s8Vtch3SjMVZZkIq3p2hf7Smw4j5B4SrjzcoY2xonteKGWKjJ
+         YO+g==
+X-Gm-Message-State: AOAM530Q1XB7vw6Ds/oZrOtGOGOdkyi0efBuwE/cy6a47ZqRvJpnTGdR
+        ud/wC8rRyY+S6hh2B/BB+tUoHhLHmwwD+w==
+X-Google-Smtp-Source: ABdhPJxa4nZLNsaWHlEfMcv7T8gB0CVRuM4WXuzo32OvAkRAsE2sPz9PTe0IH2kFyaHteDdZmgBMbQ==
+X-Received: by 2002:a02:a18c:: with SMTP id n12mr4733614jah.196.1642189155631;
+        Fri, 14 Jan 2022 11:39:15 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id x15sm5286412iow.7.2022.01.14.11.39.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jan 2022 11:37:42 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1n8SOM-001CpV-7L;
-        Fri, 14 Jan 2022 20:37:42 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        Fri, 14 Jan 2022 11:39:15 -0800 (PST)
+Date:   Fri, 14 Jan 2022 14:39:14 -0500
+From:   Taylor Blau <me@ttaylorr.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Josh Steadmon <steadmon@google.com>
-Subject: Re: [PATCH v7 4/6] object-name: show date for ambiguous tag objects
-Date:   Fri, 14 Jan 2022 20:35:00 +0100
-References: <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com>
- <cover-v7-0.6-00000000000-20220111T130811Z-avarab@gmail.com>
- <patch-v7-4.6-2e5511c9fa5-20220111T130811Z-avarab@gmail.com>
- <xmqq1r1bgso2.fsf@gitster.g> <220114.865yqmtt9z.gmgdl@evledraar.gmail.com>
- <xmqq4k66cf50.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqq4k66cf50.fsf@gitster.g>
-Message-ID: <220114.86bl0ertvd.gmgdl@evledraar.gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: tb/midx-bitmap-corruption-fix (was: Re: What's cooking in git.git
+ (Jan 2022, #03; Thu, 13))
+Message-ID: <YeHRYkl2RaQbrtmx@nand.local>
+References: <xmqq35lrf8g4.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqq35lrf8g4.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Jan 14 2022, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Thu, Jan 13, 2022 at 04:48:59PM -0800, Junio C Hamano wrote:
+> * tb/midx-bitmap-corruption-fix (2022-01-04) 9 commits
+>  - pack-bitmap.c: gracefully fallback after opening pack/MIDX
+>  - midx: read `RIDX` chunk when present
+>  - t/lib-bitmap.sh: parameterize tests over reverse index source
+>  - t5326: move tests to t/lib-bitmap.sh
+>  - t5326: extract `test_rev_exists`
+>  - t5326: drop unnecessary setup
+>  - pack-revindex.c: instrument loading on-disk reverse index
+>  - midx.c: make changing the preferred pack safe
+>  - t5326: demonstrate bitmap corruption after permutation
 >
->> I still think the trade-off of not doing that discussed in the commit
->> message is better, i.e. (to quote upthread):
->>=20=20=20=20=20
->>     We could detect that and emit a "%s [bad tag object]" message (to go
->>     with the existing generic "%s [bad object]"), but I don't think it's
->>     worth the effort. Users are unlikely to ever run into cases where
->>     they've got a broken object that's also ambiguous, and in case they =
-do
->>     output that's a bit nonsensical beats wasting translator time on this
->>     obscure edge case.
+>  A bug that made multi-pack bitmap and the object order out-of-sync
+>  (hence the .midx data gets corrupted) has been fixed.
 >
-> Writing the above (and quoting it again to make me respond to it)
-> have already wasted a lot more time than a better solution that does
-> not lead to a misleading output, especially given that it was given
-> for free to you already.
+>  Waiting for a hopefully final review.
+>  cf. <Ydceeo33Yt4N%2FbrN@nand.local>
+>  source: <cover.1641320129.git.me@ttaylorr.com>
 
-I don't mind changing it, but the reason I re-quoted it is because your
-reply seemed to suggest that you had skimmed past that part before
-making your original comment, not to merely repeat myself.
+I would really like to get this into 2.35 since it's fixing an important
+source of repository corruption, but I think it should have a careful
+round of review before merging. And it is pretty late into the cycle
+anyway, so we may be too late to merge the whole thing.
 
-I.e. it's basically suggesting "how about?..." without addressing the "I
-intentionally didn't do this, because..." argument in the commit
-message.
+But the first two patches:
 
-But sure, I'll add a translatable message for this edge case in a
-re-roll.
+  - midx.c: make changing the preferred pack safe
+  - t5326: demonstrate bitmap corruption after permutation
+
+could be applied as-is and the rest of the series left for later, which
+should be a safer approach (and would be sufficient to resolve the bug
+at the expense of some redundant bytes on disk[1]).
+
+I think Stolee is probably the most familiar with this topic, but he is
+off currently and I'm not sure whether or not he'll be back with enough
+time to get this merged before 2.35.
+
+On the other hand, the bug is pretty difficult to trigger, is affecting
+a very new feature, shouldn't ever cause permanent damage, and can be
+recovered from fairly easily (by dropping existing bitmaps). So perhaps
+it's OK to let it sit out for another release like this...
+
+Thanks,
+Taylor
+
+[1]: More or less storing the contents of the multi-pack-index-$HASH.rev
+     file twice: once in the .rev file itself, and again as an optional
+     write-only chunk in the MIDX.
