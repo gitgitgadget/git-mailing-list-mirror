@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80AC3C433F5
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 15:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F3ACC433EF
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 16:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238495AbiANP76 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 10:59:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43916 "EHLO
+        id S243100AbiANQAB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 11:00:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243096AbiANP7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 10:59:50 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19667C06173F
+        with ESMTP id S238936AbiANP7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 10:59:54 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0942C061746
         for <git@vger.kernel.org>; Fri, 14 Jan 2022 07:59:50 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id s1so16357540wra.6
+Received: by mail-wr1-x429.google.com with SMTP id s1so16357605wra.6
         for <git@vger.kernel.org>; Fri, 14 Jan 2022 07:59:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=B8sYjWF/iiVOI9HKxp3FHaiKzKBQ6qAlUF3+nG4HV5w=;
-        b=QbsII4nhEH5/rDcIMUQ3k3avffRYrG5CfeTBm/+JGnXw17/1eM9XYtBIOW0Fu0c9im
-         /ToKK8Aoijav5a+gXJEO9X1sQ1vnQk4JHZE6svu1HUSTEKoN3xD6xKB2f6dzGsC1M07N
-         08ibP+HTgQj8fuzPYKANp/dE2JwfTs+PfLiG+uzj583vemz5lNoWMcQa46HrWvu6VqA8
-         48WSDovGIOeergpyusItxFcf47gs6UcztbqtrQ+98sWRDsSf2qPNxuXl/FtGVN7/gYNI
-         IH8V5Xu0Ow0/40GyIKOp6m8I2G2MWP61x1cRNX+RQm8wXBaGgMUwDQznZlJGwgCQDPct
-         hMpQ==
+        bh=8tktbsfgdwLJuLd8ONiKhRO06je4eOmcmCGWb6d79ds=;
+        b=RkO7zDFeX6gtwXNojD/0Dh77J6claq26zNUbJ9ALJdtapxb7wWaIvjNLvM77oXPUbF
+         4obMojd0SIcs14nhGZLfyzbuR8y67i4Coqg8gnoVtV/OWxLL9N72lhFYnl5nEUJpSYK5
+         trFLJ4FaUuqkf1Y9B9g/4XBp+FkBqCtxlM1JRwbLp2JpG18nVOGUKj773xo5benrDxhd
+         GLvjB54w1HUMWEF15NDcia+DmVTFgKxFe+gd1GDF3esr9nE2PhWqcL4q/0qz/4Sqoyf0
+         V0EQRn2u7XxkaY0PHYzSZKB2bhX7hXpjAzeBQeZqZ4EHgCsOCYKqDFUr37fCJfMoYWbe
+         ohFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=B8sYjWF/iiVOI9HKxp3FHaiKzKBQ6qAlUF3+nG4HV5w=;
-        b=WfYZisP/ichvkOhKEQj3+BIUYgMOVdHYcCQHVIz2jX1hdsg4kEYjFHi5ICTXuDKDxZ
-         2LIINdgez5/FmGehsON1H+1wQ7H6Zvk8XGT0LrepHtO1EUChGpdmmGdiO9yLZHCa5Y5w
-         H618E6W5tgCfZtz/03DGmlWqGxLwTFO7q6Ux7p4Sxy6jnKzumj9CYAXkP/bVwC0xQ/U2
-         XQgtH5/l5VHLHpH1Z/wD9jD/VcwIAL9PJqz3ghgUZA3QWXYDCn++SL7OuglKy7WrI/aX
-         kETa58MDAQ+hzfCcrEZ1yb4Lkp1bLsxvGOpdjsw11yLsWwXmmCY0f+MWxO7lxD0AMt/+
-         3ElA==
-X-Gm-Message-State: AOAM532IFOJ2368dhbOPaNBN3DxnZuvhMarhajOaXjBOOt4Uj9Y/CgMf
-        jzTpkUK9CtMGIPbezjcX0Qyt31Dhzek=
-X-Google-Smtp-Source: ABdhPJx5Hsi+lVTPxhmvils2SkmOWd8Ap2aWztJR62gdu5p0lkWQGGI+OBm6dUI/Puqz70/Y+/7leQ==
-X-Received: by 2002:a5d:5227:: with SMTP id i7mr8892332wra.212.1642175988328;
-        Fri, 14 Jan 2022 07:59:48 -0800 (PST)
+        bh=8tktbsfgdwLJuLd8ONiKhRO06je4eOmcmCGWb6d79ds=;
+        b=xXI3cfBKYRcZZELTncWGY+UPcL1rzV53+uhsLED+LMGy+Apl2N3RU105L1WyGWSQJR
+         ISstgi9csjSeCyAM/0Z5TH+LKrvBgAeJ/bkrd+Bk/skKMQYK0yW2KqjVeRVUC7dmVFw6
+         gqAv62mvNYHVdtuO8w4QjeU9hZdu0ikvDvw/1AP5txT30R1wPoiFd39lIEfmXgXrSfLf
+         ydxsOnaSOLuYLdE2/Q5e4JyJdYI3/UJyFdnUbtnaGGKDDkT+BlFvuETToD1TF3b+Jz9v
+         qQqoaX3FOmltrAwtBJbX/iTkNV9AzIW4NB6IEOLTRLiwaoTJrFtD+G9fDNdO5qGXT1Te
+         NxiQ==
+X-Gm-Message-State: AOAM530CkJmuGPQHIhQbMC/43cTxcyWeD6Eex9E+Cc9chiDtXLfJzae3
+        SO7R0KlVIEDkr14nfkUVXz0fnminzKg=
+X-Google-Smtp-Source: ABdhPJx/BUw0ALDZ6jbchOHddMri4VstU8ASfHBr4aPT5uTXmk/L/gc3IF0Kjipbhg+BaLn/d1p45g==
+X-Received: by 2002:a05:6000:188f:: with SMTP id a15mr8966199wri.153.1642175989190;
+        Fri, 14 Jan 2022 07:59:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o9sm6261133wri.97.2022.01.14.07.59.47
+        by smtp.gmail.com with ESMTPSA id i10sm6908019wmq.45.2022.01.14.07.59.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Jan 2022 07:59:47 -0800 (PST)
-Message-Id: <0af00779128e594aff0ee4ec5378addeac8e88a2.1642175983.git.gitgitgadget@gmail.com>
+        Fri, 14 Jan 2022 07:59:48 -0800 (PST)
+Message-Id: <05ac964e630a2e72eebaa1818a8807cd7a7d4f7e.1642175983.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
 References: <pull.1114.git.1642092230.gitgitgadget@gmail.com>
         <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 Jan 2022 15:59:42 +0000
-Subject: [PATCH v2 4/5] Update documentation related to sparsity and the
- skip-worktree bit
+Date:   Fri, 14 Jan 2022 15:59:43 +0000
+Subject: [PATCH v2 5/5] Accelerate clear_skip_worktree_from_present_files() by
+ caching
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,278 +71,202 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Make several small updates, to address a few documentation issues
-I spotted:
-  * sparse-checkout focused on "patterns" even though the inputs (and
-    outputs in the case of `list`) are directories in cone-mode
-  * The description section of the sparse-checkout documentation
-    was a bit sparse (no pun intended), and focused more on internal
-    mechanics rather than end user usage.  This made sense in the
-    early days when the command was even more experimental, but let's
-    adjust a bit to try to make it more approachable to end users who
-    may want to consider using it.  Keep the scary backward
-    compatibility warning, though; we're still hard at work trying to
-    fix up commands to behave reasonably in sparse checkouts.
-  * both read-tree and update-index tried to describe how to use the
-    skip-worktree bit, but both predated the sparse-checkout command.
-    The sparse-checkout command is a far easier mechanism to use and
-    for users trying to reduce the size of their working tree, we
-    should recommend users to look at it instead.
-  * The update-index documentation pointed out that assume-unchanged
-    and skip-worktree sounded similar but had different purposes.
-    However, it made no attempt to explain the differences, only to
-    point out that they were different.  Explain the differences.
-  * The update-index documentation focused much more on (internal?)
-    implementation details than on end-user usage.  Try to explain
-    its purpose better for users of update-index, rather than
-    fellow developers trying to work with the SKIP_WORKTREE bit.
-  * Clarify that when core.sparseCheckout=true, we treat a file's
-    presence in the working tree as being an override to the
-    SKIP_WORKTREE bit (i.e. in sparse checkouts when the file is
-    present we ignore the SKIP_WORKTREE bit).
+Trying to clear the skip-worktree bit from files that are present does
+present some computational overhead, for sparse-checkouts.  (We do not
+do the bit clearing in non-sparse-checkouts.)  Optimize it as follows:
 
-Note that this commit, like many touching documentation, is best viewed
-with the `--color-words` option to diff/log.
+Rather than lstat()'ing every SKIP_WORKTREE path, take advantage of the
+fact that entire directories will often be missing, especially for cone
+mode and even more so ever since commit 55dfcf9591 ("sparse-checkout:
+clear tracked sparse dirs", 2021-09-08).  If we have already determined
+that the parent directory of a file (or other previous ancestor) does
+not exist, then the file cannot exist either so we do not need to
+lstat() it separately.
+
+Timings for p2000 included below, reformatted to fit in normal commit
+message line lengths, which compare three things:
+  * Timings before this series
+  * Timings of the unoptimized version of
+    clear_skip_worktree_from_present_files() from a few commits ago
+  * Timings after the optimization in this commit
+
+(NOTE: t/perf/ appears to have timing resolution only down to 0.01 s,
+which presents significant measurement error when timings only differ by
+0.01s.  I don't trust any such timings below, and yet all the optimized
+results differ by at most 0.01s.)
+
+Test        Before Series    Unoptimized              Optimized
+-----------------------------------------------------------------------------
+*git status*
+full-v3     0.15(0.10+0.06)  0.32(0.16+0.17) +113.3%  0.16(0.10+0.07) +6.7%
+full-v4     0.15(0.11+0.05)  0.32(0.17+0.16) +113.3%  0.16(0.11+0.05) +6.7%
+sparse-v3   0.04(0.03+0.04)  0.04(0.02+0.05) +0.0%    0.04(0.02+0.05) +0.0%
+sparse-v4   0.04(0.03+0.04)  0.04(0.02+0.05) +0.0%    0.04(0.03+0.05) +0.0%
+
+*git add -A*
+full-v3     0.40(0.30+0.07)  0.56(0.36+0.17) +40.0%   0.39(0.30+0.07) -2.5%
+full-v4     0.37(0.28+0.07)  0.54(0.37+0.16) +45.9%   0.38(0.29+0.07) +2.7%
+sparse-v3   0.06(0.04+0.05)  0.08(0.05+0.05) +33.3%   0.06(0.05+0.04) +0.0%
+sparse-v4   0.05(0.03+0.05)  0.05(0.04+0.04) +0.0%    0.06(0.04+0.05) +20.0%
+
+*git add .*
+full-v3     0.40(0.31+0.07)  0.57(0.37+0.17) +42.5%   0.41(0.30+0.08) +2.5%
+full-v4     0.38(0.30+0.06)  0.55(0.37+0.16) +44.7%   0.38(0.30+0.06) +0.0%
+sparse-v3   0.06(0.04+0.05)  0.06(0.05+0.04) +0.0%    0.06(0.03+0.05) +0.0%
+sparse-v4   0.06(0.05+0.05)  0.06(0.04+0.05) +0.0%    0.06(0.04+0.06) +0.0%
+
+*git commit -a -m A*
+full-v3     0.41(0.32+0.06)  0.58(0.39+0.17) +41.5%   0.42(0.32+0.07) +2.4%
+full-v4     0.39(0.30+0.07)  0.56(0.38+0.17) +43.6%   0.40(0.31+0.07) +2.6%
+sparse-v3   0.04(0.03+0.04)  0.04(0.03+0.04) +0.0%    0.04(0.03+0.04) +0.0%
+sparse-v4   0.04(0.03+0.05)  0.04(0.03+0.05) +0.0%    0.04(0.03+0.04) +0.0%
+
+*git checkout -f -*
+full-v3     0.56(0.46+0.07)  0.73(0.55+0.16) +30.4%   0.57(0.47+0.08) +1.8%
+full-v4     0.54(0.45+0.07)  0.71(0.53+0.17) +31.5%   0.55(0.45+0.07) +1.9%
+sparse-v3   0.06(0.04+0.04)  0.06(0.04+0.05) +0.0%    0.06(0.04+0.05) +0.0%
+sparse-v4   0.05(0.05+0.04)  0.05(0.04+0.05) +0.0%    0.06(0.04+0.05) +20.0%
+
+*git reset*
+full-v3     0.34(0.26+0.05)  0.51(0.34+0.15) +50.0%   0.34(0.26+0.06) +0.0%
+full-v4     0.32(0.24+0.06)  0.49(0.32+0.15) +53.1%   0.33(0.25+0.06) +3.1%
+sparse-v3   0.04(0.03+0.04)  0.04(0.03+0.04) +0.0%    0.04(0.03+0.04) +0.0%
+sparse-v4   0.03(0.03+0.04)  0.03(0.02+0.04) +0.0%    0.03(0.03+0.04) +0.0%
+
+*git reset --hard*
+full-v3     0.57(0.46+0.07)  0.90(0.61+0.25) +57.9%   0.57(0.45+0.08) +0.0%
+full-v4     0.54(0.46+0.05)  0.88(0.59+0.26) +63.0%   0.55(0.45+0.07) +1.9%
+sparse-v3   0.07(0.03+0.03)  0.07(0.04+0.03) +0.0%    0.07(0.03+0.03) +0.0%
+sparse-v4   0.06(0.03+0.03)  0.06(0.04+0.02) +0.0%    0.06(0.03+0.03) +0.0%
+
+*git reset -- does-not-exist*
+full-v3     0.35(0.27+0.06)  0.52(0.32+0.17) +48.6%   0.35(0.27+0.06) +0.0%
+full-v4     0.33(0.26+0.05)  0.50(0.33+0.15) +51.5%   0.33(0.26+0.06) +0.0%
+sparse-v3   0.04(0.03+0.04)  0.04(0.03+0.04) +0.0%    0.04(0.03+0.04) +0.0%
+sparse-v4   0.04(0.02+0.04)  0.03(0.02+0.04) -25.0%   0.03(0.02+0.04) -25.0%
+
+*git diff*
+full-v3     0.07(0.04+0.04)  0.24(0.11+0.14) +242.9%  0.07(0.04+0.04) +0.0%
+full-v4     0.07(0.03+0.05)  0.24(0.13+0.12) +242.9%  0.08(0.04+0.05) +14.3%
+sparse-v3   0.02(0.01+0.04)  0.02(0.01+0.04) +0.0%    0.02(0.01+0.05) +0.0%
+sparse-v4   0.02(0.02+0.03)  0.02(0.01+0.04) +0.0%    0.02(0.01+0.04) +0.0%
+
+*git diff --cached*
+full-v3     0.05(0.03+0.02)  0.22(0.12+0.09) +340.0%  0.05(0.03+0.01) +0.0%
+full-v4     0.05(0.03+0.01)  0.23(0.12+0.11) +360.0%  0.05(0.03+0.02) +0.0%
+sparse-v3   0.01(0.00+0.00)  0.01(0.00+0.00) +0.0%    0.01(0.00+0.00) +0.0%
+sparse-v4   0.01(0.00+0.00)  0.01(0.00+0.00) +0.0%    0.01(0.00+0.00) +0.0%
+
+*git blame f2/f4/a*
+full-v3     0.18(0.13+0.05)  0.52(0.29+0.23) +188.9%  0.19(0.15+0.04) +5.6%
+full-v4     0.19(0.15+0.04)  0.52(0.28+0.23) +173.7%  0.19(0.14+0.04) +0.0%
+sparse-v3   0.10(0.08+0.02)  0.10(0.09+0.01) +0.0%    0.10(0.09+0.01) +0.0%
+sparse-v4   0.10(0.08+0.02)  0.10(0.08+0.02) +0.0%    0.10(0.08+0.02) +0.0%
+
+*git blame f2/f4/f3/a*
+full-v3     0.45(0.36+0.08)  0.78(0.51+0.27) +73.3%   0.45(0.37+0.08) +0.0%
+full-v4     0.45(0.37+0.08)  0.78(0.51+0.26) +73.3%   0.45(0.37+0.08) +0.0%
+sparse-v3   0.36(0.32+0.04)  0.36(0.31+0.05) +0.0%    0.36(0.31+0.04) +0.0%
+sparse-v4   0.36(0.31+0.05)  0.36(0.31+0.05) +0.0%    0.36(0.31+0.04) +0.0%
+
+*git checkout-index -f --all*
+full-v3     0.07(0.02+0.05)  0.24(0.12+0.12) +242.9%  0.08(0.04+0.04) +14.3%
+full-v4     0.07(0.03+0.04)  0.24(0.11+0.13) +242.9%  0.08(0.03+0.04) +14.3%
+sparse-v3   0.04(0.01+0.03)  0.04(0.00+0.03) +0.0%    0.04(0.01+0.03) +0.0%
+sparse-v4   0.04(0.01+0.02)  0.04(0.01+0.03) +0.0%    0.04(0.01+0.02) +0.0%
+
+*git update-index --add --remove f2/f4/a*
+full-v3     0.29(0.23+0.02)  0.46(0.30+0.12) +58.6%   0.30(0.24+0.02) +3.4%
+full-v4     0.27(0.22+0.02)  0.45(0.29+0.12) +66.7%   0.28(0.22+0.03) +3.7%
+sparse-v3   0.02(0.02+0.00)  0.02(0.01+0.00) +0.0%    0.02(0.01+0.00) +0.0%
+sparse-v4   0.02(0.02+0.00)  0.02(0.02+0.00) +0.0%    0.02(0.02+0.00) +0.0%
+
+So, with the optimization, the extra work appears to be essentially 0
+for sparse-checkouts that are also using sparse-indexes (even before my
+optimization), and the extra work appears to be just marginally more
+than 0 for sparse-checkouts that are using full indexes.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-read-tree.txt       | 12 +++--
- Documentation/git-sparse-checkout.txt | 76 ++++++++++++++++-----------
- Documentation/git-update-index.txt    | 57 +++++++++++++++-----
- 3 files changed, 98 insertions(+), 47 deletions(-)
+ sparse-index.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 54 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-index 8c3aceb8324..99bb387134d 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -375,9 +375,14 @@ have finished your work-in-progress), attempt the merge again.
- SPARSE CHECKOUT
- ---------------
+diff --git a/sparse-index.c b/sparse-index.c
+index b82648b10ee..eed170cd8f7 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -341,18 +341,70 @@ void ensure_correct_sparsity(struct index_state *istate)
+ 		ensure_full_index(istate);
+ }
  
-+Note: The `update-index` and `read-tree` primitives for supporting the
-+skip-worktree bit predated the introduction of
-+linkgit:git-sparse-checkout[1].  Users are encouraged to use
-+`sparse-checkout` in preference to these low-level primitives.
++static int path_found(const char *path, const char **dirname, size_t *dir_len,
++		      int *dir_found)
++{
++	struct stat st;
++	char *newdir;
++	char *tmp;
 +
- "Sparse checkout" allows populating the working directory sparsely.
--It uses the skip-worktree bit (see linkgit:git-update-index[1]) to tell
--Git whether a file in the working directory is worth looking at.
-+It uses the skip-worktree bit (see linkgit:git-update-index[1]) to
-+tell Git whether a file in the working directory is worth looking at.
- 
- 'git read-tree' and other merge-based commands ('git merge', 'git
- checkout'...) can help maintaining the skip-worktree bitmap and working
-@@ -385,7 +390,8 @@ directory update. `$GIT_DIR/info/sparse-checkout` is used to
- define the skip-worktree reference bitmap. When 'git read-tree' needs
- to update the working directory, it resets the skip-worktree bit in the index
- based on this file, which uses the same syntax as .gitignore files.
--If an entry matches a pattern in this file, skip-worktree will not be
-+If an entry matches a pattern in this file, or the entry corresponds to
-+a file present in the working tree, then skip-worktree will not be
- set on that entry. Otherwise, skip-worktree will be set.
- 
- Then it compares the new skip-worktree value with the previous one. If
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index b81dbe06543..3da3d5a1007 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -3,9 +3,7 @@ git-sparse-checkout(1)
- 
- NAME
- ----
--git-sparse-checkout - Initialize and modify the sparse-checkout
--configuration, which reduces the checkout to a set of paths
--given by a list of patterns.
-+git-sparse-checkout - Reduce your working tree to a subset of tracked files
- 
- 
- SYNOPSIS
-@@ -17,8 +15,20 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 
--Initialize and modify the sparse-checkout configuration, which reduces
--the checkout to a set of paths given by a list of patterns.
-+This command is used to create sparse checkouts, which means that it
-+changes the working tree from having all tracked files present, to only
-+have a subset of them.  It can also switch which subset of files are
-+present, or undo and go back to having all tracked files present in the
-+working copy.
++	/*
++	 * If dirname corresponds to a directory that doesn't exist, and this
++	 * path starts with dirname, then path can't exist.
++	 */
++	if (!*dir_found && !memcmp(path, *dirname, *dir_len))
++		return 0;
 +
-+The subset of files is chosen by providing a list of directories in
-+cone mode (which is recommended), or by providing a list of patterns
-+in non-cone mode.
++	/*
++	 * If path itself exists, return 1.
++	 */
++	if (!lstat(path, &st))
++		return 1;
 +
-+When in a sparse-checkout, other Git commands behave a bit differently.
-+For example, switching branches will not update paths outside the
-+sparse-checkout directories/patterns, and `git commit -a` will not record
-+paths outside the sparse-checkout directories/patterns as deleted.
- 
- THIS COMMAND IS EXPERIMENTAL. ITS BEHAVIOR, AND THE BEHAVIOR OF OTHER
- COMMANDS IN THE PRESENCE OF SPARSE-CHECKOUTS, WILL LIKELY CHANGE IN
-@@ -28,7 +38,7 @@ THE FUTURE.
- COMMANDS
- --------
- 'list'::
--	Describe the patterns in the sparse-checkout file.
-+	Describe the directories or patterns in the sparse-checkout file.
- 
- 'set'::
- 	Enable the necessary config settings
-@@ -38,20 +48,26 @@ COMMANDS
- 	list of arguments following the 'set' subcommand. Update the
- 	working directory to match the new patterns.
- +
--When the `--stdin` option is provided, the patterns are read from
--standard in as a newline-delimited list instead of from the arguments.
-+When the `--stdin` option is provided, the directories or patterns are
-+read from standard in as a newline-delimited list instead of from the
-+arguments.
- +
- When `--cone` is passed or `core.sparseCheckoutCone` is enabled, the
--input list is considered a list of directories instead of
--sparse-checkout patterns.  This allows for better performance with a
--limited set of patterns (see 'CONE PATTERN SET' below).  Note that the
--set command will write patterns to the sparse-checkout file to include
--all files contained in those directories (recursively) as well as
--files that are siblings of ancestor directories. The input format
--matches the output of `git ls-tree --name-only`.  This includes
--interpreting pathnames that begin with a double quote (") as C-style
--quoted strings.  This may become the default in the future; --no-cone
--can be passed to request non-cone mode.
-+input list is considered a list of directories.  This allows for
-+better performance with a limited set of patterns (see 'CONE PATTERN
-+SET' below).  The input format matches the output of `git ls-tree
-+--name-only`.  This includes interpreting pathnames that begin with a
-+double quote (") as C-style quoted strings.  Note that the set command
-+will write patterns to the sparse-checkout file to include all files
-+contained in those directories (recursively) as well as files that are
-+siblings of ancestor directories. This may become the default in the
-+future; --no-cone can be passed to request non-cone mode.
-++
-+When `--no-cone` is passed or `core.sparseCheckoutCone` is not enabled,
-+the input list is considered a list of patterns.  This mode is harder
-+to use and less performant, and is thus not recommended.  See the
-+"Sparse Checkout" section of linkgit:git-read-tree[1] and the "Pattern
-+Set" sections below for more details.
- +
- Use the `--[no-]sparse-index` option to use a sparse index (the
- default is to not use it).  A sparse index reduces the size of the
-@@ -69,11 +85,10 @@ understand the sparse directory entries index extension and may fail to
- interact with your repository until it is disabled.
- 
- 'add'::
--	Update the sparse-checkout file to include additional patterns.
--	By default, these patterns are read from the command-line arguments,
--	but they can be read from stdin using the `--stdin` option. When
--	`core.sparseCheckoutCone` is enabled, the given patterns are interpreted
--	as directory names as in the 'set' subcommand.
-+	Update the sparse-checkout file to include additional directories
-+	(in cone mode) or patterns (in non-cone mode).  By default, these
-+	directories or patterns are read from the command-line arguments,
-+	but they can be read from stdin using the `--stdin` option.
- 
- 'reapply'::
- 	Reapply the sparsity pattern rules to paths in the working tree.
-@@ -117,13 +132,14 @@ decreased in utility.
- SPARSE CHECKOUT
- ---------------
- 
--"Sparse checkout" allows populating the working directory sparsely.
--It uses the skip-worktree bit (see linkgit:git-update-index[1]) to tell
--Git whether a file in the working directory is worth looking at. If
--the skip-worktree bit is set, then the file is ignored in the working
--directory. Git will avoid populating the contents of those files, which
--makes a sparse checkout helpful when working in a repository with many
--files, but only a few are important to the current user.
-+"Sparse checkout" allows populating the working directory sparsely.  It
-+uses the skip-worktree bit (see linkgit:git-update-index[1]) to tell Git
-+whether a file in the working directory is worth looking at. If the
-+skip-worktree bit is set, and the file is not present in the working tree,
-+then its absence is ignored. Git will avoid populating the contents of
-+those files, which makes a sparse checkout helpful when working in a
-+repository with many files, but only a few are important to the current
-+user.
- 
- The `$GIT_DIR/info/sparse-checkout` file is used to define the
- skip-worktree reference bitmap. When Git updates the working
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 2853f168d97..568dbfe76b8 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -351,6 +351,10 @@ unchanged".  Note that "assume unchanged" bit is *not* set if
- the index (use `git update-index --really-refresh` if you want
- to mark them as "assume unchanged").
- 
-+Sometimes users confuse the assume-unchanged bit with the
-+skip-worktree bit.  See the final paragraph in the "Skip-worktree bit"
-+section below for an explanation of the differences.
++	/*
++	 * Otherwise, path does not exist so we'll return 0...but we'll first
++	 * determine some info about its parent directory so we can avoid
++	 * lstat calls for future cache entries.
++	 */
++	newdir = strrchr(path, '/');
++	if (!newdir)
++		return 0; /* Didn't find a parent dir; just return 0 now. */
 +
- 
- EXAMPLES
- --------
-@@ -392,22 +396,47 @@ M foo.c
- SKIP-WORKTREE BIT
- -----------------
- 
--Skip-worktree bit can be defined in one (long) sentence: When reading
--an entry, if it is marked as skip-worktree, then Git pretends its
--working directory version is up to date and read the index version
--instead.
--
--To elaborate, "reading" means checking for file existence, reading
--file attributes or file content. The working directory version may be
--present or absent. If present, its content may match against the index
--version or not. Writing is not affected by this bit, content safety
--is still first priority. Note that Git _can_ update working directory
--file, that is marked skip-worktree, if it is safe to do so (i.e.
--working directory version matches index version)
-+Skip-worktree bit can be defined in one (long) sentence: Tell git to
-+avoid writing the file to the working directory when reasonably
-+possible, and treat the file as unchanged when it is not
-+present in the working directory.
++	/*
++	 * If path starts with directory (which we already lstat'ed and found),
++	 * then no need to lstat parent directory again.
++	 */
++	if (*dir_found && *dirname && memcmp(path, *dirname, *dir_len))
++		return 0;
 +
-+Note that not all git commands will pay attention to this bit, and
-+some only partially support it.
++	/* Free previous dirname, and cache path's dirname */
++	*dirname = path;
++	*dir_len = newdir - path + 1;
 +
-+The update-index flags and the read-tree capabilities relating to the
-+skip-worktree bit predated the introduction of the
-+linkgit:git-sparse-checkout[1] command, which provides a much easier
-+way to configure and handle the skip-worktree bits.  If you want to
-+reduce your working tree to only deal with a subset of the files in
-+the repository, we strongly encourage the use of
-+linkgit:git-sparse-checkout[1] in preference to the low-level
-+update-index and read-tree primitives.
++	tmp = xstrndup(path, *dir_len);
++	*dir_found = !lstat(tmp, &st);
++	free(tmp);
 +
-+The primary purpose of the skip-worktree bit is to enable sparse
-+checkouts, i.e. to have working directories with only a subset of
-+paths present.  When the skip-worktree bit is set, Git commands (such
-+as `switch`, `pull`, `merge`) will avoid writing these files.
-+However, these commands will sometimes write these files anyway in
-+important cases such as conflicts during a merge or rebase.  Git
-+commands will also avoid treating the lack of such files as an
-+intentional deletion; for example `git add -u` will not not stage a
-+deletion for these files and `git commit -a` will not make a commit
-+deleting them either.
++	return 0;
++}
++
+ void clear_skip_worktree_from_present_files(struct index_state *istate)
+ {
++	const char *last_dirname = NULL;
++	size_t dir_len = 0;
++	int dir_found = 1;
++
+ 	int i;
++
+ 	if (!core_apply_sparse_checkout)
+ 		return;
  
- Although this bit looks similar to assume-unchanged bit, its goal is
--different from assume-unchanged bit's. Skip-worktree also takes
--precedence over assume-unchanged bit when both are set.
-+different.  The assume-unchanged bit is for leaving the file in the
-+working tree but having Git omit checking it for changes and presuming
-+that the file has not been changed (though if it can determine without
-+stat'ing the file that it has changed, it is free to record the
-+changes).  skip-worktree tells Git to ignore the absence of the file,
-+avoid updating it when possible with commands that normally update
-+much of the working directory (e.g. `checkout`, `switch`, `pull`,
-+etc.), and not have its absence be recorded in commits.  Note that in
-+sparse checkouts (setup by `git sparse-checkout` or by configuring
-+core.sparseCheckout to true), if a file is marked as skip-worktree in
-+the index but is found in the working tree, Git will clear the
-+skip-worktree bit for that file.
+ restart:
+ 	for (i = 0; i < istate->cache_nr; i++) {
+ 		struct cache_entry *ce = istate->cache[i];
+-		struct stat st;
  
- SPLIT INDEX
- -----------
+-		if (ce_skip_worktree(ce) && !lstat(ce->name, &st)) {
++		if (ce_skip_worktree(ce) &&
++		    path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
+ 			if (S_ISSPARSEDIR(ce->ce_mode)) {
+ 				ensure_full_index(istate);
+ 				goto restart;
 -- 
 gitgitgadget
-
