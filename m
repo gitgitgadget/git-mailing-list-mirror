@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3277BC433EF
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 08:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B1ACC433F5
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 09:13:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236951AbiANISq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 03:18:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49428 "EHLO
+        id S233501AbiANJNB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 04:13:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239560AbiANISW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 03:18:22 -0500
-Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7006C06173F
-        for <git@vger.kernel.org>; Fri, 14 Jan 2022 00:18:21 -0800 (PST)
-Received: by mail-ua1-x935.google.com with SMTP id o1so15678728uap.4
-        for <git@vger.kernel.org>; Fri, 14 Jan 2022 00:18:21 -0800 (PST)
+        with ESMTP id S231493AbiANJNA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 04:13:00 -0500
+Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82D64C061574
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 01:13:00 -0800 (PST)
+Received: by mail-ua1-x92c.google.com with SMTP id i5so15793988uaq.10
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 01:13:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=HkdPUe07Snwwrc+a1qsT4lUFLGTOS0ECne/uv1zXfsU=;
-        b=DmpwfYknUUnvzsoqmAkEsfmpzgn75DqJQ9Mn2VBxlfUpcjwx2HQFE2Q6jzy/FH/w+7
-         C84MYLsA05XKLCJJkp9xFIOfFB1EJbvA3rYplrl/jv/POc8wy0KruH974Pyqw51Ax4oZ
-         Jc8MzFoCF5Zp60dJp+woYSnZUTRJkQd1grFqJZG01p0ZMo15nVV0XbukzuhmCfEl6pc6
-         +0GtDdpHo/llVgTgjrXf25RhQWbvfDE4QTUhlBaRExNqd6fHVgn1C7kRPnOob37Fq3IH
-         nEeIUXwIz0CsofjSmAz/pLtPdet6CNViFq014Kud4aBDz+S7OKDiuZZZbhm5YtHK4r1G
-         dJtw==
+        bh=ZN2WI3PoRzakjzHNo3sflH5Fv27SMKewmeVPK87kwho=;
+        b=VZ1lxH9RV2uDxQ5mwLpleXPdm457y3XSalNElD2Slat4wAf4suDojpoeP05ERkN4+0
+         kg8WpObjDFmTpIp8vrONtQVVwdDeEc6s3Uyx8hI47EJMLmva4cgJVVVUuERzhtGeRWuN
+         eOHLc1+NOJhPbYPO7EmRIUGHZlcsHj4eHPU2Lice3aVjjNdS3md5flMdroSc8jcIpxd1
+         CcrqkWJJl0P2TLPCgjOM+fW0g+9i8gymGRGwxA59tqMsQfHxRwDaKyVcFBxut7JEqUUB
+         MIdyx3ErGWduW+2Rc/RbqwfK8o7r5nglPlG9tvyegWTHayuD4sus9LMVIe09pbFmQwey
+         x2sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HkdPUe07Snwwrc+a1qsT4lUFLGTOS0ECne/uv1zXfsU=;
-        b=j26bSFOk55y3zppmGTQpPb34ve+yBg4SRIenyez4mad8TmM4qYu+jiwX4ievky83Jl
-         460QXyc5JQBw9uNSM5V7W4khRqt3fM2/VP+71WnrnnacS9sqYWRBfS7DKFI/VWqSoe4r
-         XmEUgK2l9KkzMJEctUTM6xYZy7N/w04HVWGFHEaUdsXPRcbQvHqcallfx6tUa2zCBg6b
-         depRSWT+8U0N9EJRznBVj77/SsrqpRnz6BSIEqxZPl8Y3HUVmZxmYf9XDR5Bj2Za89SP
-         K8nMzT395duNNhd0zogMCf1ONuKwzKuAmQbjkgIp/e/cBdKd3f/KMmzV673HMbS8s6kJ
-         z6iQ==
-X-Gm-Message-State: AOAM531aX/bInQOteL5LuuPow2qmasQFQcHVIbgEuSsRn5wmOq0/pIHc
-        0Nu66pqpKy7z7TOAOgYcyjvz+QlSzsqkBsVLLoA=
-X-Google-Smtp-Source: ABdhPJyOER/ydsZLOiTcysRZM/UGOAP/1Fj5bPxA+AkzyqtoTsY+1ASYUnxaBUX2YZjYeztxXjoY3bMfF7IdxKTVPzg=
-X-Received: by 2002:a67:d615:: with SMTP id n21mr3974673vsj.43.1642148300992;
- Fri, 14 Jan 2022 00:18:20 -0800 (PST)
+        bh=ZN2WI3PoRzakjzHNo3sflH5Fv27SMKewmeVPK87kwho=;
+        b=esTTqfhezTFVjM6QRSceDXLIWeyNBjxLPBdX/lOb5HG/HStUytvWt2W4ZFbhrLko0G
+         XpUX+4st+7sPr3heVcxclXwgHuFe8hJaBSFAtVqiHodZlLKviHSmcA4TQ/0sDDBBVLsa
+         pBxOoUzW8QTKGoCBeckSkHMiyx1zAcRXCM/6TVlU75mdqURX6dN8ByWC67YYYnlObsjB
+         QS2TN0FGipDidCK8Br+dr+Ex1I+tj15oFvlTk7yLr+7C5+eHxSg4yZhhMtQ76Io04bWu
+         ionCUBAR+zkjmZEFMTDbavcSVx6PFX0UsEwtSjgIkrA5tZfEWHWjvdCGsLaCJU5Ciwup
+         tv7Q==
+X-Gm-Message-State: AOAM532kH5/KSOoLuUIZujjnkU3YeA0ydlOPivcnKCL83lGspS4jmAmg
+        rhzYFJiRusONfXIKXsh46aHFVnGk32ZSPrgmOiPnxhxDbCeOv7Q1NLM=
+X-Google-Smtp-Source: ABdhPJwZ0UM/QylitSObAeIwRF7mjvssGZquKRdssTMN5RjtqjUjaKFocSXiALuvHemrmFYqTRIUlN3HSITLdbmYYvo=
+X-Received: by 2002:ab0:43e3:: with SMTP id l90mr3968900ual.6.1642151579620;
+ Fri, 14 Jan 2022 01:12:59 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1641978175.git.dyroneteng@gmail.com> <bcfbc935b80b889273e3e54fec2a896e44acd2b5.1641978175.git.dyroneteng@gmail.com>
- <220113.86wnj4w228.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220113.86wnj4w228.gmgdl@evledraar.gmail.com>
+References: <cover.1641978175.git.dyroneteng@gmail.com> <3ddffa10278b5814123a5bcd2fd3a531def3ecdc.1641978175.git.dyroneteng@gmail.com>
+ <220113.86sftsw1ut.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220113.86sftsw1ut.gmgdl@evledraar.gmail.com>
 From:   Teng Long <dyroneteng@gmail.com>
-Date:   Fri, 14 Jan 2022 16:18:10 +0800
-Message-ID: <CADMgQSQXLydvgpW+Vm_b-rkSWAuj9FezwveY-iRZnKfsGkOpCA@mail.gmail.com>
-Subject: Re: [PATCH v10 6/9] ls-tree.c: support --object-only option for "git-ls-tree"
+Date:   Fri, 14 Jan 2022 17:12:48 +0800
+Message-ID: <CADMgQSQaE4EtiNXyGKebPyPS_0YTQ=HN+dU89_jD6BgQ1C470A@mail.gmail.com>
+Subject: Re: [PATCH v10 7/9] ls-tree.c: introduce struct "show_tree_data"
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
@@ -64,28 +64,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 13, 2022 at 3:02 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Thu, Jan 13, 2022 at 3:07 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
 
-> In the RFC series I sent this was first implemented in terms of the
-> --format option, and I skipped the custom implementation you're adding
-> here:
-> https://lore.kernel.org/git/RFC-patch-7.7-5e34df4f8dd-20211217T131635Z-av=
-arab@gmail.com/
+> > "show_tree_data" is a struct that packages the necessary fields for
+> > "show_tree()". This commit is a pre-prepared commit for supporting
+> > "--format" option and it does not affect any existing functionality.
 >
-> I think in terms of patch series structure it would make sense to do
-> that, and then have this custom --object-only implementation in terms of
-> not-"--format " follow from that, and thus with the tests for the two
+> Is the only reason this is split off from 9/9 because you're injecting a
+> 8/9 commit for the coccinelle rule change, and wanted to find some
+> logical cut-off between the two?
 
-Sorry, the "not-"--format" means?
+I hope "show_tree()" and "the show_tree_format()" to share this structure,
+so I made this a pre-prepared and non-functional commit.
 
-> (we'd add the tests you're adding here first, just for a
-> --format=3D"%(objectname)" or whatever) we'd see that the two are 1=3D1
-> equivalent in terms of functionality, but that this one is <X>% more
-> optimized.
+After that, in the 9/9, the structure can be used directly and focus on the
+functionality changes. If we merge this commit with 9/9, 9/9 will contain a=
+ part
+of the changes that let "show_tree()" use the new structure, which has noth=
+ing
+to do with "show_tree_format()" actually, because we designed them to go
+through different execution logic. So, personally, I prefer not to mix them
+together.
 
-Please allow me to understand your advice,  if we put the commit of
-introducing "--format" before the commit of introducing "--object-only", wi=
-ll
-be better because it's possible to supply more optimized performance
-(if we have) information in the commit message.
+So, the commit of "show_tree_data()" originally was not for "coccinelle".
+The only thing that is certain is that coccinelle also should go before 9/9
+I think. With regard to 8/9 and 7/9, I think the current order is OK becaus=
+e
+they're not related.
+>
+> For both this & 9/9 this seems to mostly/substantially be code I wrote
+> and submitted as part of
+> https://lore.kernel.org/git/RFC-patch-6.7-eac299f06ff-20211217T131635Z-av=
+arab@gmail.com;
+>
+> The convention we use in such cases is to retain the "Author" header and
+> just add your own Signed-off-by to patches you're modifying/splitting
+> up.
+
+Oops. Sorry for that, I misunderstood it before and I'll be fixed in
+the next path.
+
+Thanks.
