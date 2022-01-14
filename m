@@ -2,68 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6C7CC433EF
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 14:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FBC3C433EF
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 15:44:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241970AbiANOxx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 09:53:53 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:36164 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241883AbiANOxw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 09:53:52 -0500
-Received: from host-92-7-140-211.as13285.net ([92.7.140.211] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1n8Nxe-0000vD-8s;
-        Fri, 14 Jan 2022 14:53:51 +0000
-Message-ID: <851ecd86-02d0-b078-1c90-ebe75ad46926@iee.email>
-Date:   Fri, 14 Jan 2022 14:53:51 +0000
+        id S238679AbiANPou (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 10:44:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40382 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233404AbiANPou (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 10:44:50 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D335C061574
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 07:44:50 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id ay4-20020a05600c1e0400b0034a81a94607so5576708wmb.1
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 07:44:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Mvu7ndYX5DZprVHGTJcEasA5a1gY1biNEZpjfCSKYr8=;
+        b=I7ZzSpLliR53ZJ9jjUo+kw4UbaVHMlpEkDy5ICtNv4ugfB0JP9EICu/TF103ntQAbg
+         VC2JTyPLI8yY87Kt0P7DFfN8vPbPgOMI9bZsd166/L7uIUUiC+BjoXSLMG/kFGQfVDGy
+         NxCGF8k/nbifH8BV3tMwR7jXf770YvO/9kKMUTDW9djUS13JEyfyuXlORzSTXb/yXzvL
+         OdI+mdQXXEXg7hozltJvcHY6GulwcAHMChgOAiTHTrIMPkmPHgJHnSrOhocEO+8ffGAX
+         XA+UWje+pO1fduOrvh77UDtzdbQ2ejD3J24yO/UW1JzRq+v4B7+B+/+OUjlXyZpw8C/c
+         CLtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Mvu7ndYX5DZprVHGTJcEasA5a1gY1biNEZpjfCSKYr8=;
+        b=AIpJh0YnBLMwZywMQrbhtfGxkoy51x5YDcKPQ9EFXdqf4C9m1ycErkoP+hJo7FGSq1
+         /PDdktunRAA8rf/tD0046yoUYTobxXnJKe5xHWo/Cpu8z2ukss/M0n3BEoy1weQa4pcr
+         N9AcCJnM0ANh/vthOGy89B9MMhSR8CpUsq+8c3wOIIRvLG0f/fZv6tKd+RJsR5bowYs+
+         2QVX2QC+zIQNn8/bGsntBa82uE2ZlZX4MsQVi+zNlwxvMNOs3YxavZTkXcNZTDeZn1Zm
+         ypnG70YZcyH4XFb2ElqQ2vc3OYhF2MPMbCNGzEHAeFqdvHw4JdqtV4A9Kg8BJCyHjma0
+         SINA==
+X-Gm-Message-State: AOAM531pSdgT+BGreHXV3kqNG4Ef0s91uppncjo25qwB0tVpEyUuHKwP
+        +PL8my9bRcnO4+oxY/lXBpwUzf6oylGX/TxLl/E=
+X-Google-Smtp-Source: ABdhPJyd7znsuRufygKOcmma3RRiA/EmOxY5aWqw8XERHJwR06J8PzSU5vxvGBxfsTlu+mNM09i9duVJcJxO8tECg/A=
+X-Received: by 2002:a05:6402:c19:: with SMTP id co25mr9495104edb.33.1642175087915;
+ Fri, 14 Jan 2022 07:44:47 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: feature request: add [-f|--from <rootbranch>] to git stash branch
-Content-Language: en-GB
-To:     Colin Kennedy <colin@mrkennedy.ca>, git@vger.kernel.org
-References: <2a4f90e9-9abb-40b6-a6f3-a676567e4fc0@www.fastmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <2a4f90e9-9abb-40b6-a6f3-a676567e4fc0@www.fastmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <xmqq35lrf8g4.fsf@gitster.g>
+In-Reply-To: <xmqq35lrf8g4.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 14 Jan 2022 07:44:36 -0800
+Message-ID: <CABPp-BFj8NyXG6cQPJeDE46eicbfnP=TgEirRZVcnMM+YNG7OQ@mail.gmail.com>
+Subject: Mistakes in the stalled category? (Was: Re: What's cooking in git.git
+ (Jan 2022, #03; Thu, 13))
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Glen Choo <chooglen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, some minor comments, in-line.
+Hi,
 
-On 13/01/2022 16:29, Colin Kennedy wrote:
-> Current syntax of git stash branch is:
->
-> branch <branchname> [<stash>]
->
-> Proposed syntax is:
->
-> branch <branchname> [-f|--from <rootbranch>] [<stash>]
+Are there some errors with the stalled category this time around?  In
+particular...
 
-Just to say that the `-f` is typically reserved/used for the --force
-option if available.
+On Fri, Jan 14, 2022 at 7:16 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> the from flag specifies a branch from which the new branch should be derived.
+> --------------------------------------------------
+> [Stalled]
 >
-> Example usage:
+> * ds/sparse-checkout-requires-per-worktree-config (2021-12-21) 5 commits
+>  . sparse-checkout: use repo_config_set_worktree_gently()
+>  . config: add repo_config_set_worktree_gently()
+>  . worktree: add upgrade_to_worktree_config()
+>  . config: make some helpers repo-aware
+>  . setup: use a repository when upgrading format
 >
-> git stash branch remove-commented-code --from main
->
-> This simplifies a workflow which is common for me. I am working N-commits deep in some feature branch when I discover a low hanging fruit. Dealing with this low hanging fruit is not appropriate for the current feature branch. It's most appropriate to deal with "directly" on a fresh branch from main. Because I am untidy, 
-Maybe an example that shows the level of untidiness might help to
-clarify the suggestion, as to what is included/not included, and how it
-makes it easy later when the stash is recovered.
+>  "git sparse-checkout" wants to work with per-worktree configration,
+>  but did not work well in a worktree attached to a bare repository.
+>  source: <pull.1101.v2.git.1640114048.gitgitgadget@gmail.com>
 
-> I often have a bit of mess in between my staging area, and unstaged changes, and this creates friction when I attempt to stash this low hanging fruit, pop back to main, create the new branch, pop the stashed low hanging fruit, etc etc.
->
-> The proposed flag gives a one-liner to apply stashed patches wherever, no matter your current location, which I think is an improvement.
->
-> Happy to have feedback on the flag. Happy for someone else to implement it. Also happy to consider taking a crack at it myself if it seems like something people would be happy to include. (NB: I haven't written or even read any c, or c++ for that matter, in probably 15 years. So, you know).
->
-> thanks,
-> Colin
+It has been two weeks since the last submission and emails about this
+topic, so maybe you put this one in "stalled" intentionally.  (If so,
+and Stolee if this really is stalled, would you like me to try
+updating?  I know it has expanded quite a bit from the early simple
+fix you were trying to provide, but you've got most the code I think
+you need and some important fixes I wouldn't want to see dropped.)
+But I'm wondering if marking this topic as stalled was intentional,
+because:
 
+> * pw/add-p-hunk-split-fix (2022-01-12) 2 commits
+>  - builtin add -p: fix hunk splitting
+>  - t3701: clean up hunk splitting tests
+>
+>  "git add -p" rewritten in C regressed hunk splitting in some cases,
+>  which has been corrected.
+>
+>  Will merge to 'next'?
+>  source: <pull.1100.v2.git.1641899530.gitgitgadget@gmail.com>
+>
+>
+> * gc/fetch-negotiate-only-early-return (2022-01-12) 3 commits
+>  - fetch --negotiate-only: do not update submodules
+>  - fetch: skip tasks related to fetching objects
+>  - fetch: use goto cleanup in cmd_fetch()
+>
+>  "git fetch --nogotiate-only" is an internal command used by "git
+>  push" to figure out which part of our history is missing from the
+>  other side.  It should never recurse into submodules even when
+>  fetch.recursesubmodules configuration variable is set, nor it
+>  should trigger "gc".  The code has been tightened up to ensure it
+>  only does common ancestry discovery and nothing else.
+>
+>  Almost there.
+>  source: <20220113004501.78822-1-chooglen@google.com>
+
+These last two series were submitted in the two days; they don't seem
+stalled to me.
+
+(The other series in "stalled" besides these three all seemed to
+belong there to me.)
