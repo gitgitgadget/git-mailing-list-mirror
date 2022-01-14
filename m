@@ -2,78 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54C9FC433F5
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 21:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AE98C433EF
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 21:49:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbiANVn7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 16:43:59 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56717 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229903AbiANVn7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 16:43:59 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0007D167BDB;
-        Fri, 14 Jan 2022 16:43:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=v/dHzLVyFdSFCoy7cgsCubMWNbDzQRX+JOYL0K
-        8I0gc=; b=gFhul+s/BFtjMAFLE5yYKzde8svqWtmviF3AEbV5Q/SzWJxCUKXz9Z
-        80+0U6bbwcqMgxtJClsfyCzZScipdRC7fgk/kLPJg/5pBPrKOWov2xl+PIJJtD7C
-        miT9s+7fPpFB5f+ZZ/dpra4jld5cV9gOjwemv2yD0Q2lISeuPT/Z8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id ED935167BDA;
-        Fri, 14 Jan 2022 16:43:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 55973167BD9;
-        Fri, 14 Jan 2022 16:43:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com
-Subject: Re: [PATCH v3 2/9] midx.c: make changing the preferred pack safe
-References: <cover.1638991570.git.me@ttaylorr.com>
-        <cover.1641320129.git.me@ttaylorr.com>
-        <7d20c13f8b48d2aef45c2c8c40efb6ecdb865aa8.1641320129.git.me@ttaylorr.com>
-        <xmqqwnj29f1v.fsf@gitster.g>
-Date:   Fri, 14 Jan 2022 13:43:55 -0800
-In-Reply-To: <xmqqwnj29f1v.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        14 Jan 2022 13:35:08 -0800")
-Message-ID: <xmqqsftq9en8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229951AbiANVtZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 16:49:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38664 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229782AbiANVtZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 16:49:25 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98930C061574
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 13:49:24 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id o6so38818058edc.4
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 13:49:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4XNEBM5Dvq+0QczK4hd/PUXh5ad2+vLWpw4cbAI/YLc=;
+        b=V4EJxaUQLeRfI0SnIQtB/PGs4mjkXqXKQgZ0hcsiwndriFHL1uetZGKSLyroNm7U/X
+         IfFOCRr65oL0voclZ9kjoNQ2kDCh9WFMzJM0s2RFPlGpRYDC1zKHjs34W04htvBrUaxW
+         IcaJvzVSfehBZTSrDPpgLdT3yvCW0Y7q4AySy7MccmGE8AAal03BKGl1pcTavs8eE1aN
+         E1dnfdFwqaM4FNG08HZCAqM8FjpLlNqbHclnFmn+QuMJOWs81s5jxHJd1tMwgMoWO8nZ
+         LSe3Dh9G/JYtJU/r4Vd0qOB/DgdQ+dSzHZeBnwGfp1jjjvc1NGDJ2kOA3NOL1d/z+6ER
+         bNNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4XNEBM5Dvq+0QczK4hd/PUXh5ad2+vLWpw4cbAI/YLc=;
+        b=NkAvNqhcMQ//kJTFLDUAFoO6mWeipVrsUKFHAO+ovF+OA/icmEci7LsylxYRhfvIF8
+         urP5hRP+3ljUFp6z1KOw4SQZQP9Ylk8hNddvlUvuSqF8cUD+wAFSIiBB7dY/E1xQQ/BN
+         Bb6jJkgTzrfQRrlPKixlb0PdSDEPvAN0XUKfwMUvxn7yMzQHb5uD8jXfIMoJG/FWE+Tm
+         eDi4QPxICtfAvkPt4H3DWW/iIdkZY5RmSn6PSZAZG9S+o3+Vpiwgol7yIgKYAqOmpAeJ
+         V6W2Clh4tsZvCUrplliL/zvZnpm12WplGuNUipAIiuhAzP1BreT4l0/FPhCSZViu9t2N
+         Vznw==
+X-Gm-Message-State: AOAM530NxObrOBwzup2glsy6asxornLFUZtVzB8Oyb9pJLfIR8oMqU6R
+        /sYFQ1hnjLkrTYhpTG7osza0Hpc0h+OCLBNqpX0=
+X-Google-Smtp-Source: ABdhPJzoqQsuhB2TLmerWbmIg0qnZ7XXhUjJw2BSNVK3aBu81J+jbhkzq5UZb9o0c3SfMxD/4bFn2rKBPBWg83AZSsE=
+X-Received: by 2002:a50:da48:: with SMTP id a8mr10406892edk.146.1642196963149;
+ Fri, 14 Jan 2022 13:49:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 131FF8AC-7583-11EC-9FE3-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+References: <xmqq35lrf8g4.fsf@gitster.g> <xmqqk0f3dk5o.fsf@gitster.g>
+ <CABPp-BFGxKBzi5RYDuiJv6Vz7yyGYTOdJC9cL_EkPGNJ5BksYQ@mail.gmail.com> <xmqqmtjyaylt.fsf@gitster.g>
+In-Reply-To: <xmqqmtjyaylt.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 14 Jan 2022 13:49:11 -0800
+Message-ID: <CABPp-BGOqK0YJXna3PqnFmTcW_KxzAGbqjpUvRjgAxAwYzG4bw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2022, #03; Thu, 13)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jan 14, 2022 at 11:47 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > It's apparently the latter, because there have been no test script
+> > changes in the relevant tests.
+> >
+> >> Somebody with too much time on their hand should go in and check to
+> >> help, before CI testing on 'seen' becomes useful again.
+> >
+> > This "fixes" seen:
+> > https://lore.kernel.org/git/pull.1192.git.git.1642176433017.gitgitgadget@gmail.com/
+> >
+> > I briefly looked at a couple leak traces and thought they looked ref
+> > related, but I don't have time to go hunt down memory leaks right now.
+> > I figure this thread has reported them, so let's just get "seen" back
+> > to green.
+>
+> If it were "we added a use of known-to-leak command in an otherwise
+> clean test, without adding a new leak", I would wholeheartedly
+> support such a change, but if it is the other way around, it may
+> make sense to leave it broken as an incentive for people who care
+> about leaks to go in and fix them up.
 
-> Taylor Blau <me@ttaylorr.com> writes:
->
->> ... It's likely we were using
->> finalize_object_file() instead of a pure rename() because the former
->> also adjusts shared permissions.
->
-> I thought the primary reason why we use finalize was because we
-> ignore EEXIST (and the assumption is that the files with the same
-> contents get the same name computed from their contents).
->
->>  	tmp_file = write_rev_file_order(NULL, ctx->pack_order, ctx->entries_nr,
->>  					midx_hash, WRITE_REV);
->>  
->> -	if (finalize_object_file(tmp_file, buf.buf))
->> +	if (rename(tmp_file, buf.buf))
->>  		die(_("cannot store reverse index file"));
->
-> Doesn't your new code die with it if buf.buf names an existing file?
+Perhaps.  Waiting can make sense up to a point.
 
-Ah, scratch that.  rename() discards the old one atomically, so as
-long as tmp_file and buf.buf are in the same directory (which I
-think it is in this case), we wouldn't be affected by the bug that
-is worked around with "Coda hack" in finalize_object_file(), either.
+> If we toggle it off any time leak-checker CI job starts complaining
+> on a test script, the leak-checker CI job serves no useful purpose,
+> no?
 
+Folks who use PRs for the purpose of getting the cross-platform CI
+testing before submitting to the list can still get early notification
+of potential leaks in their own series, due to the remaining tests
+being marked as leak-free.  They can then fix up their series before
+submitting them to the list.  That seems like a useful purpose to me.
+
+Further, these CI jobs did notify us of an issue in someone else's
+patches (we don't yet know whose), and we were able to report it much
+like any other bug report.  That gives people a heads up and allows
+them to take action on it.  (And if they do so, they can remark the
+test as leak-free.)  That also seems like a useful purpose to me.
+
+In contrast, if we leave the leak-checker failing and the failing job
+spreads to next and master, then we'll just end up training everyone
+to ignore it -- both for their own PRs and in general.  To me, that's
+what making the leak-checker serve no useful purpose would look like.
