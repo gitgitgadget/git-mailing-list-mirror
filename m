@@ -2,97 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54B18C433EF
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 03:33:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95009C433F5
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 03:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239045AbiANDdl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Jan 2022 22:33:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43148 "EHLO
+        id S239056AbiANDwW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Jan 2022 22:52:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233660AbiANDdk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jan 2022 22:33:40 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23FCBC061574
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 19:33:40 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id q185-20020a25d9c2000000b00611ae9c8773so11950589ybg.18
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 19:33:40 -0800 (PST)
+        with ESMTP id S233660AbiANDwV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jan 2022 22:52:21 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29F11C061574
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 19:52:21 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id c6so3756810plh.6
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 19:52:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:message-id:mime-version:subject:from:to;
-        bh=xqrkK3Ts702sys6jjEWWvN+/STzWu4CAqmk5MehVeaA=;
-        b=Fp4DrC5A1ewPOJmvB38TDGcTLL1CK7MRQ3WZcXr8y31clxQI/1Qw9DusceHLi0bMDs
-         C1nmcCXgyetGoyz88oKFaOJoYyHnuvPEF3DbTTSXxTGY5G/W5kE8FL+mHJPDHdp8AxR7
-         Got5oz1Bi6acoaJ+B+Fawe+bOoIOpt+1jVvyZURna0wmq0U+9yO6DSHh76pdAFhM3C5R
-         lBo3X8l3NUR8RCHOuDZtJzZgLWMmj0go5x6oZvCiRXhRzsOzsIJcEHspu39S++2tMa5+
-         hOENsSsJL0/9Dh+yOFqV7Tv7a0Lurlx6YT1/nXbWHScP7PSmhQyjqxhR1lpbBaWwFtjc
-         5HMQ==
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=bbH9CmGSOYexzYM2P3nMYBpYR16xq9CnqgPwtJXtX0c=;
+        b=BcqdPebo2pSrsUFouybFYy/i+qa1B6km3gOM6Nn7XZNGbe64Dza5ZlwlQOof7CWFir
+         Q+KRGtMGG/0aZAE7Xh3O7+mCc5cNXSrAR+q8A3cT9SkGbVKpMOhsWyVieT4mCzXOidls
+         x+MAHKk9WmfS2nuExmkORjTmiqz80uIeZrdyrlNXQmeebdP4L72i4t5XRFarZ2xt6Oor
+         i8Xu0M7ppYJ+CG4B5bdSbyPri2B6GJgKjWRPhbuLtem0gkhqKziExeAW/WrGjzrcCYDk
+         559vKuWADY3fD4zG0zCPe7QddIcwaLNnx+0jdENMF+/MBnr4lFOD8+Wbh4bCFkxcFXZt
+         szGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
-        bh=xqrkK3Ts702sys6jjEWWvN+/STzWu4CAqmk5MehVeaA=;
-        b=klnXsvoeucSmoqLcBCI/CDOOO2RZ9EA2WviBdD+YQ3niXQNCSD2HOe/41MXTVyXbnu
-         fb6mueBtk6F7T/gFPXWbCczoK/0XoaIbvJKJI9mnmwO7J/J0yxvONcjWQ2+Pqgl9upzb
-         KmR4GwYf9/lMKaPtuzSO7aEUMTCONKrAHeLdUoY/n0Wdk8J5s/VF+dZXuLfpCZEP4eDe
-         nZEO7bHvupGtf0bOHWPOHMYmuDYuQzvuq8CE3Ot70b5xZE/RpCkb/uwi4AUExK+6wTst
-         2R3JZiGZ8AStuixU5HDP3kogwqWYczLBi3SGs7jb16QhuOClWxIsQFaC+hiaI1cpl9pf
-         ttJA==
-X-Gm-Message-State: AOAM530IiKU9sPCAEobBXRTFPrJRpYX99mefT+j0yn1MZ9N4oNolYxY/
-        HOy+Zce8o7d3VZDVQSX+bRIeLz5dppcfP940O9YGTOdMJC0O+NSpjxwDBjitUylzlTZLPrhf3iG
-        DnzidvxxX1ixft6EVoWsw48Mq5e3b1emF473Q59F+iLEOZhKH4ie5Lh12vg12I3Y=
-X-Google-Smtp-Source: ABdhPJzcCUVeW6jUtFB7/CJgTRXmSns2+XVt69YHswRzQQ3+6egUBPnIGqucHH0QFG8am2fSABpXQDDSY4c4qw==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:d145:5bc6:f3c2:cb74])
- (user=steadmon job=sendgmr) by 2002:a25:ba4c:: with SMTP id
- z12mr10823634ybj.136.1642131219119; Thu, 13 Jan 2022 19:33:39 -0800 (PST)
-Date:   Thu, 13 Jan 2022 19:33:36 -0800
-Message-Id: <82e51a52e20fbe13a5a898a0a2f6dbe1188e3fa3.1642116539.git.steadmon@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.34.1.703.g22d0c6ccf7-goog
-Subject: [PATCH] test-lib: unset trace2 parent envvars
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=bbH9CmGSOYexzYM2P3nMYBpYR16xq9CnqgPwtJXtX0c=;
+        b=yp4jzeOqZAi0emS5qAQAKCk91a0V1IawJMC39451TCNAe6+8OrtRk0UXEdohjfbO2P
+         YRLoCZqNa+I7ZveDpBc7fM2wVZfuEIldonCpysOm2cWER6Y9e4aEZ2oIf7Fljvkc2KEk
+         Q5m6b37/zofiHkLN/tll94UvnhDbfp5LZQLSJZkWfGcox+GTK1PeywbXP21SPEK7vAah
+         Fr4gAdWYkncsIP4Jeyu7HYuUw81Lj/nzE3Aw0Eb1wppcIvQKaufLKwcNbMsWK/Qwp4p9
+         03UX0SZAxUj71BPe0D6Dnfcngw9YAoRFUwGkp9WpMU144UauR96NTIu6of4+8KGjNZ8v
+         n7CA==
+X-Gm-Message-State: AOAM531U9X3fOrm+fFsIazCLuh6jlh0byM4Ld/mldGCN/tnFhhbwy3Bk
+        rsEJGJtMC9gIEU3aLT6Ty1x0EA==
+X-Google-Smtp-Source: ABdhPJwo7e7ZD9qAT0/flOuyLEArkhqrW9PaBg0GXr2HU3GQQCUR2kIYDyxeGIE1IleByr12LTacKw==
+X-Received: by 2002:a17:90b:17c4:: with SMTP id me4mr8580321pjb.15.1642132340486;
+        Thu, 13 Jan 2022 19:52:20 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:d145:5bc6:f3c2:cb74])
+        by smtp.gmail.com with ESMTPSA id m10sm3551133pgu.70.2022.01.13.19.52.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Jan 2022 19:52:19 -0800 (PST)
+Date:   Thu, 13 Jan 2022 19:52:07 -0800
 From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Hans Jerry Illikainen <hji@dyntopia.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Gwyneth Morgan <gwymor@tilde.club>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] t/gpg: simplify test for unknown key
+Message-ID: <YeDzZ1utGGc2ifrC@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Fabian Stelzer <fs@gigacodes.de>, git@vger.kernel.org,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Hans Jerry Illikainen <hji@dyntopia.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Gwyneth Morgan <gwymor@tilde.club>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+References: <20220107091432.581225-1-fs@gigacodes.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220107091432.581225-1-fs@gigacodes.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The trace2 subsystem can inherit certain information from parent
-processes via environment variables; e.g., the parent command name and
-session ID. This allows trace2 to note when a command is the child
-process of another Git process, and to adjust various pieces of output
-accordingly.
+On 2022.01.07 10:14, Fabian Stelzer wrote:
+> To test for a key that is completely unknown to the keyring we need one
+> to sign the commit with. This was done by generating a new key and not
+> add it into the keyring. To avoid the key generation overhead and
+> problems where GPG did hang in CI during it, switch GNUPGHOME to an
+> empty directory instead, therefore making all used keys unknown for this
+> single `verify-commit` call.
+> 
+> Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Signed-off-by: Fabian Stelzer <fs@gigacodes.de>
+> ---
+> This was reported by Ævar in <211222.86ilvhpbl0.gmgdl@evledraar.gmail.com>.
+> Just using an empty keyring / gpg homedir should achieve the same effect and 
+> keeps the stress of generating a gpg key out of the CI.
 
-This behavior breaks certain tests that examine trace2 output when the
-tests run as a child of another git process, such as in `git rebase -x
-"make test"`.
+Looks good to me.
 
-While we could fix this by unsetting the relevant variables in the
-affected tests (currently t0210, t0211, t0212, and t6421), this would
-leave other tests vulnerable to similar breakage if new test cases are
-added which inspect trace2 output. So fix this in general by unsetting
-GIT_TRACE2_PARENT_NAME and GIT_TRACE2_PARENT_SID in test-lib.sh.
-
-Reported-by: Emily Shaffer <emilyshaffer@google.com>
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- t/test-lib.sh | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0f7a137c7d..e4716b0b86 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -449,6 +449,8 @@ unset VISUAL EMAIL LANGUAGE $("$PERL_PATH" -e '
- unset XDG_CACHE_HOME
- unset XDG_CONFIG_HOME
- unset GITPERLLIB
-+unset GIT_TRACE2_PARENT_NAME
-+unset GIT_TRACE2_PARENT_SID
- TEST_AUTHOR_LOCALNAME=author
- TEST_AUTHOR_DOMAIN=example.com
- GIT_AUTHOR_EMAIL=${TEST_AUTHOR_LOCALNAME}@${TEST_AUTHOR_DOMAIN}
-
-base-commit: dcc0cd074f0c639a0df20461a301af6d45bd582e
--- 
-2.34.1.703.g22d0c6ccf7-goog
-
+Reviewed-by: Josh Steadmon <steadmon@google.com>
