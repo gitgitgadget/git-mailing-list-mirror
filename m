@@ -2,109 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04C45C433F5
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 19:15:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A47EC433F5
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 19:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244110AbiANTPE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 14:15:04 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60841 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237130AbiANTPA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 14:15:00 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D45C2166E2D;
-        Fri, 14 Jan 2022 14:14:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=bhLIQJEfV4It
-        JRqdk8NBV210FtmVc/LFit4P8jjMSwI=; b=l//a9j3r1zMbDNVUYFssjnUCuVPw
-        kDOlc5LSHg3IYcxScP4HLswLxihQP7UPBuOKj9um84tgord7c2WDHIhlN4eY33CX
-        +fjJFTFKtP9q4IUvudqU8NIyQ+eQfJtY0DBvJs0gaVPebIbn/VC0pjDMY3m5ygIS
-        KbW84v0zSikNemk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CC838166E2C;
-        Fri, 14 Jan 2022 14:14:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 37B26166E2A;
-        Fri, 14 Jan 2022 14:14:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH] promisor-remote.c: use oidset for deduplication
-References: <pull.1187.git.git.1642105926064.gitgitgadget@gmail.com>
-        <220114.86wnj2se41.gmgdl@evledraar.gmail.com>
-Date:   Fri, 14 Jan 2022 11:14:56 -0800
-In-Reply-To: <220114.86wnj2se41.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 14 Jan 2022 13:11:57 +0100")
-Message-ID: <xmqqzgnyb03z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S244131AbiANThq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 14:37:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36914 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235243AbiANThp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 14:37:45 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FDD4C061574
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 11:37:45 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id o6so37727065edc.4
+        for <git@vger.kernel.org>; Fri, 14 Jan 2022 11:37:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=jlZ7MFKlmml7LjsgIUAeFLJBbqnNNwPZG95droy+iSY=;
+        b=AUf5lFL7Maj6FlcCyOnNSwj7PiFflrhouS3dMo10JwhH+9mertssD3b30I7QV6xUtS
+         0SH2ldWHE5RV4EKda0Uw58RCaTNLnBpPEfQO8yHJWHElj2kdx0kaVz14Jccc2yU7ej43
+         0A2BvCFZu3TMGwy843+HnvrW15sejpmvJZQwDUHS2hztbmPqClj16qnXb5Lewae66BZ6
+         d/lZH2YtOyBFMwg5TkzdGusI8zgXigVT4gApUfSHy6fPtY15MMmZTbr4vAfB57zdXNCo
+         QJ9Yu8+jtWgitb9Q42h/1RRMKHI05/o5arY9ne28gerREMdCxXn5Mdk3bS3IX8WQRCQh
+         PxUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=jlZ7MFKlmml7LjsgIUAeFLJBbqnNNwPZG95droy+iSY=;
+        b=Xe0ViWxcknaqkRlXxlEnaa7uXc5UOJkGX0/whwrhyLQ2wj4hb9kBPbORi+NKzwfNeR
+         L80ikJrFTUz7k4XJEpOIYnxz8COU7DxB6sR2z5OhecEMkMzw+7Ral/t/gJQPRlxRuhm6
+         N14Qi2jchGdL1iHXcEdjyIC0HL/+EMyVIAjqk8MiwYzs7TT3svQpmN9YQERyzXIeFhJy
+         ZacEZUqrEdl9bXMI5Wyx/IJXh3XVzpbNGeTG3djLtq3dWRhx0iG626DLiQwZ3OjQlm5J
+         JDdegcuhD7EqSujlRFTEKKV/28giLjop4R8jM/X1HIR8z1m+w+vE3eqsS6/ANGqnq1L7
+         Ed0Q==
+X-Gm-Message-State: AOAM532LWfpqMWGqSbJXBgkIpYmDXkcbBq1+DRPRndK1B36ayIfUOfmO
+        AQPne1SIDqjGnVjGiSzVTLsLoOUDYff1EA==
+X-Google-Smtp-Source: ABdhPJxy8ipL0EzZqcq4BGKRiOko926Qn6rX0YUovCxXv6Bo2ve6Sg8O692S9CdJ7f/MUSdzEWqhXQ==
+X-Received: by 2002:a17:906:724a:: with SMTP id n10mr3898268ejk.659.1642189063789;
+        Fri, 14 Jan 2022 11:37:43 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id p25sm2651280edw.75.2022.01.14.11.37.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Jan 2022 11:37:42 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1n8SOM-001CpV-7L;
+        Fri, 14 Jan 2022 20:37:42 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: [PATCH v7 4/6] object-name: show date for ambiguous tag objects
+Date:   Fri, 14 Jan 2022 20:35:00 +0100
+References: <cover-v6-0.6-00000000000-20211228T143223Z-avarab@gmail.com>
+ <cover-v7-0.6-00000000000-20220111T130811Z-avarab@gmail.com>
+ <patch-v7-4.6-2e5511c9fa5-20220111T130811Z-avarab@gmail.com>
+ <xmqq1r1bgso2.fsf@gitster.g> <220114.865yqmtt9z.gmgdl@evledraar.gmail.com>
+ <xmqq4k66cf50.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqq4k66cf50.fsf@gitster.g>
+Message-ID: <220114.86bl0ertvd.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 42FD9508-756E-11EC-8550-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> From what I understand of GGG I think you updated only the summary on
-> the PR but not the commit itself, the latter is what would go into
-> git.git. Here the commit should be updated so we get this message.
+On Fri, Jan 14 2022, Junio C Hamano wrote:
 
-Ah, I have long learned to ignore the blurb after the three-dash
-line when a patch comes via GGG (because the PR text is often
-useless and most often people seem to use text identical to the
-commit log message).  I didn't realize that the proposed commit log
-message was useless in this particular patch.  I was wondering why
-you were talking about an extra blank line after the title there ;-)
-
-> The part after the "---" is usually just used in this project for ad-ho=
-c
-> list-only comment.
-
-True.  "What I'm not sure about is ..." however does belong to the
-list-only comment, though.  If it is not=20
-
-> The difference between these two APIs is thaht oidset is hash-backed,
-> and you'd insert into it and we de-duplicate any duplicate OIDs on-the-=
-fly.
->=20
-> The oid_array is just an realloc()'d "struct object_id *oid". On
-> insertion you can insert duplicates, but it has the ability to track
-> "I've sorted these", and "let's iterate over this sorted, and de-dup an=
-y
-> duplicates".
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> We have the two APIs for a reason, but I don't know in any of these
-> cases whether this change is safe.
+>> I still think the trade-off of not doing that discussed in the commit
+>> message is better, i.e. (to quote upthread):
+>>=20=20=20=20=20
+>>     We could detect that and emit a "%s [bad tag object]" message (to go
+>>     with the existing generic "%s [bad object]"), but I don't think it's
+>>     worth the effort. Users are unlikely to ever run into cases where
+>>     they've got a broken object that's also ambiguous, and in case they =
+do
+>>     output that's a bit nonsensical beats wasting translator time on this
+>>     obscure edge case.
 >
-> Does e.g. index-pack.c always receive de-duplicated OIDs and we were
-> wasting CPU cycles using an oidset?
->
-> Do some of these like pack-objects.c receive de-duplicated OIDs from
-> e.g. "git repack" *now*, but we just lack test coverage to see that
-> they're happy to get duplicate OIDs on stdin (e.g. manually from a
-> user), and this would introduce a bug?
+> Writing the above (and quoting it again to make me respond to it)
+> have already wasted a lot more time than a better solution that does
+> not lead to a misleading output, especially given that it was given
+> for free to you already.
 
-Also, if oid_array is used to produce a de-duplicated list of object
-names in the current code, it is very likely that oid_array is
-sorted (perhaps the objects are fed in sorted order), and the
-callers depend on the order of the objects they find in the array.
-Throwing sorted list of object names at oidset and then iterating
-over what is in the oidset would likely to destroy the original
-ordering.  I do not offhand know if the callers are broken by such a
-change (either correctness-wise or performance-wise).
+I don't mind changing it, but the reason I re-quoted it is because your
+reply seemed to suggest that you had skimmed past that part before
+making your original comment, not to merely repeat myself.
 
-> But most importantly is it worth it? What's the rationale for the
-> change? Less CPU/memory use? Getting e.g. "hyperfine" or "/usr/bin/time
-> -v" output for those (if so) would be valuable.
+I.e. it's basically suggesting "how about?..." without addressing the "I
+intentionally didn't do this, because..." argument in the commit
+message.
 
-Thanks.
+But sure, I'll add a translatable message for this edge case in a
+re-roll.
