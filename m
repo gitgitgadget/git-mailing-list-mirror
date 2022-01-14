@@ -2,96 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A612C433EF
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 07:59:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6ACCC433F5
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 08:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234269AbiANH7N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 02:59:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45000 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234249AbiANH7N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 02:59:13 -0500
-Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 016CDC061574
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 23:59:13 -0800 (PST)
-Received: by mail-ua1-x92f.google.com with SMTP id l15so15526665uai.11
-        for <git@vger.kernel.org>; Thu, 13 Jan 2022 23:59:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=hhKRsATZdEg9Q95S3i+aIn1AdsGPnmWuJ4MZRNRuXDg=;
-        b=M4O8a+2SNnYzh4AhW6kqjwH322gZ6W1I41ykZa8+QrYV4kArsC1u/O93Q5icrVxFYF
-         46p+IRGDAYCmVkeBpCxhvYui37D9KBNGPlJT0C2w8aGIfuYpNhDH6aLvS++UoolhTzUy
-         ZDhBW8EpFuLkkTaG4ZinPVC3bhH22PHXZT/LIn+lLr+wc0hBB6WNKFuWlDHDY3xaNDSV
-         3/yJh84DShQdWCfIiVtyoOfReRVbcwddNzrZ3dgdTWvMTQqmthDxCDKIOqvhEI3CYqU6
-         ys0oXOk8jb/EhSws5o5S7Ql6L1ym8eGTsWOVmIIPSx5S617ZXZQQt9cc7X5S+rFWfozK
-         uO2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hhKRsATZdEg9Q95S3i+aIn1AdsGPnmWuJ4MZRNRuXDg=;
-        b=RoMjlrtMB/u5W9vNr90gwBIWx1JC4ksLcODQIN/ZM/BT8OUn76PMu74znTw4TdWRw2
-         raBd0B88cKHFg0nDT4cwf9IyPL0JcEanWXEzxtPYOAr7xkJFtuUvLO2qBnIN0DHjO/e/
-         URGk1J/U8Aj2XLz4ba8PgfaUt54jJW37J6El3W6x+Vgp30kc+KYYsAmiFCCNs+YiY1yl
-         IvQUe+Z8zeM4I51J41mdxv0s9Dc6o5z193Wf8n87y+wiDzdHPfS8DqIQfTY2DA/mhTqu
-         3h29uaUAZunUINRz2Bm6II9G0BgEO620CESflfkAvbxrrP/PFIKnYoeIpHz2oo+eK86J
-         iPMg==
-X-Gm-Message-State: AOAM531vU7V7dXfHo8xSNH7NaLK4WteEYvNJ6FjdHRC/qonNtPjFec8A
-        RFfNLDvX7+5hBXD8jW4mXplvGVaxy5fKVakGhzw=
-X-Google-Smtp-Source: ABdhPJz8OoDUmiUowJmiq5M4Xs/w04Rzgxc3/tFFtPvTC5p7qksOG55ZzPqaG5iPlGPuhmWEWScl35y+n9DynDS3VQU=
-X-Received: by 2002:a67:d615:: with SMTP id n21mr3954287vsj.43.1642147152035;
- Thu, 13 Jan 2022 23:59:12 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1641978175.git.dyroneteng@gmail.com> <b04188c822c32aab6ef59099a0c9078aeda065c3.1641978175.git.dyroneteng@gmail.com>
- <220113.861r1cxgxx.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220113.861r1cxgxx.gmgdl@evledraar.gmail.com>
-From:   Teng Long <dyroneteng@gmail.com>
-Date:   Fri, 14 Jan 2022 15:59:01 +0800
-Message-ID: <CADMgQSQ3oWAbDMK73hEwZKJHhO_k8CuJdC2TNWW0+kv1TzYfRQ@mail.gmail.com>
-Subject: Re: [PATCH v10 5/9] ls-tree: optimize naming and handling of "return"
- in show_tree()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, tenglong.tl@alibaba-inc.com,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Teng Long <dyronetengb@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S235239AbiANIEZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 03:04:25 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:48645 "EHLO
+        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232067AbiANIEY (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 14 Jan 2022 03:04:24 -0500
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id E22B75C00AF;
+        Fri, 14 Jan 2022 03:04:23 -0500 (EST)
+Received: from imap46 ([10.202.2.96])
+  by compute2.internal (MEProxy); Fri, 14 Jan 2022 03:04:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
+        mime-version:message-id:in-reply-to:references:date:from:to:cc
+        :subject:content-type:content-transfer-encoding; s=fm1; bh=jlbL6
+        ToZyzB4yDAoqDPOmrEqGFlj6FpsmDPrrVuVYhs=; b=Onf3mGuXh+3qBT7i16O8M
+        nd1tVu4g8ZU8GgqUW1flfp8jmKcIiNyFFtwTYWYor2tm0itLZoqoC2PiAQlJGfxz
+        dM8SSlzWRlxO6HTubkUB2zEbF9h7Qa2XWj3v0HlRdlzrpbF6wYSIaYKdQFSRehpg
+        2Kx/AdMpG0ehvguTTRqH8H29a337hPOf0HeECZ7YUni2qOKPXRLOFywaChzUl6QJ
+        Ds84ff1C2yE9NEUKeom+UXugJ98fThWiMlcxlGYxfqYG2zOWn8qmgHKche2z5YI4
+        s7K6X+suU9do3p1aO6UzJKLBusHHzLh2vJ20/b0KaZy2PqBI1leumJaiQj8F4uBp
+        Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; bh=jlbL6ToZyzB4yDAoqDPOmrEqGFlj6FpsmDPrrVuVY
+        hs=; b=R8AOTFeAV81N8wLMlProgtwil9RzKV+xdyzLpaeTX5EI0ZqhK2KQuMStd
+        uUIafxmPIpBQnL6x4uzsTaSOK4YDjkIxHeih9OdXzcriLz9A04wG7ktTVL3cbOxI
+        uCFd2QBl4Wu2xfT7qyABNKslLkRJxJHGJs8GmSTC5eZ1i7Wm84oF9H+oSv92obcw
+        mWr1ZaJtnDfd2aI6VbXWohGlIh0ie6e3aSwLEkgjv9QwY4qVQWsxbIS8JDATfHLd
+        qzxfzJrpwvmVt/2CodvuXNmeG0KIduvmjzRYpuJ9ZPWh9vG8FAkCELvJ/N7YK7hW
+        SnydbOcuJJUG/QQkZFmXPHtG21WsQ==
+X-ME-Sender: <xms:hy7hYUbgFfrJIk2KgxPR5t1zPIndmHnjbbfdYmnlpfPsWInAvNre8Q>
+    <xme:hy7hYfZ9Td-yB1aFHkPGk5TCfBaBBGzx0hneJSXcJLZJ5ZICcu1nKZ5j9WFEH32fu
+    FXP-mS93sTPwC2sdCQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrtdeggdduudehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvffutgfgsehtqhertderreejnecuhfhrohhmpedftfgr
+    mhhkuhhmrghrucftrghmrggthhgrnhgurhgrfdcuoehrsegrrhhtrghgnhhonhdrtghomh
+    eqnecuggftrfgrthhtvghrnhepkeevueekieduleekgfelteduheffkeegveffheeljeeg
+    keevteeiteekvedvvdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomheprhesrghrthgrghhnohhnrdgtohhm
+X-ME-Proxy: <xmx:hy7hYe_9UR3L3etKgqivCN6dH2s27wmZXsOlTJ--sTd_aVN8r4BVow>
+    <xmx:hy7hYepERcXXqDfuCqGg2HMpL1Qs2Q6ZzyjE0oc8RKxCqanVmeSgeg>
+    <xmx:hy7hYfpXZOowAozBcVz4nFbtqLil_1uNvRWt08BGgGyjOkVirgDGfA>
+    <xmx:hy7hYW2qgEOhcpJHGCpp9lQi8BaLcPk-zUbVSY6kEEibMf-TaEPoDw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id A91B01EE007B; Fri, 14 Jan 2022 03:04:23 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4569-g891f756243-fm-20220111.001-g891f7562
+Mime-Version: 1.0
+Message-Id: <e90803fb-00a1-4575-9a8b-8f7fed7f5e6a@www.fastmail.com>
+In-Reply-To: <88899d16-5e3e-2bb2-07e9-59f7607c91a8@web.de>
+References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
+ <xmqqilus3ctf.fsf@gitster.g>
+ <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
+ <xmqq4k6b34h8.fsf@gitster.g>
+ <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
+ <3dade45b-494f-663b-264b-06a51ea1cf56@web.de> <xmqq35lsyhbf.fsf@gitster.g>
+ <13e323e9-eb0c-71c3-215f-b77c91fcc4c8@web.de>
+ <5be4cdad-6769-68e8-0984-5fe89668d007@web.de>
+ <421215c1-f6ae-4ec2-b666-2a481056ef79@www.fastmail.com>
+ <CAP8UFD3tyBhrOQzg9j4qDAT0Tb8TCTK0=J6ORsiLVuMWn+W9wg@mail.gmail.com>
+ <8bc73981-589e-20e5-247b-2f74e166ae1a@web.de>
+ <925ef53d-c8b2-4ef4-acee-490900e8a3b7@www.fastmail.com>
+ <88899d16-5e3e-2bb2-07e9-59f7607c91a8@web.de>
+Date:   Fri, 14 Jan 2022 09:04:03 +0100
+From:   "Ramkumar Ramachandra" <r@artagnon.com>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        "Christian Couder" <christian.couder@gmail.com>
+Cc:     "Junio C Hamano" <gitster@pobox.com>,
+        "Git List" <git@vger.kernel.org>, "Miriam R." <mirucam@gmail.com>
+Subject: Re: git bisect bad @
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 13, 2022 at 2:55 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+Ren=C3=A9 Scharfe wrote:
+> Using the shell allows the bisect run command to be any shell command,
+> not just some script.  E.g. you could bisect a build failure with just
+> "git bisect run make".  Quite useful.
 
-> Re the $subject: Is "optimize naming" here just referring to the
-> s/retval/recurse/g?
+Ah, that's quite useful, yes. The problem of improving user experience w=
+ith bisect is getting more and more hairy. May I suggest something tract=
+able, albeit not too elegant, and certainly not perfect, in view of impr=
+oving user experience in common use cases?
 
-Yes.
+1. If argv[0] of the supplied command is found in $PATH, check it for ex=
+ecutable permissions. Otherwise, error out. It's highly unlikely that th=
+e user meant a shell builtin, which would supersede the executable in $P=
+ATH.
+2. If argv[0] is found in the current directory, prompt for "Did you mea=
+n ... [Y/n]?"
+3. If checking on merge-base fails, improve the error message with "Perh=
+aps your bisect script is broken?" and reset bisect automatically.
 
-> Personally I think just a s/retval/ret/g here would make more senes if
-> we're doing any change at all, and in either case having this variable
-> re-rename split up as its own commit would make the proposed control
-> flow changes clearer.
-
-Do you mean that I can split the current one into two commits,  one does
-the renaming work and another one does the left work?
-
-If so, I will do this in the next patch.
-
->
-> This new function is a re-invention of the object_type() utility in
-> cache.h, and isn't needed. I.e....
->
-> ...just drop it and do this:
->
->         -       enum object_type type =3D get_type(mode);
->         +       enum object_type type =3D object_type(mode);
-
-You are absolutely correct.
-I will replace get_type() to object_type() in the next patch.
+Warm regards,
+Ram
