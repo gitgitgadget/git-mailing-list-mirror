@@ -2,87 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C45DC433F5
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 06:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7031DC433EF
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 06:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239260AbiANG1Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 01:27:16 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57351 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233322AbiANG1P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 01:27:15 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3485D10CAA2;
-        Fri, 14 Jan 2022 01:27:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3+JkdfIETEWnHWgU2zT1jbWKaX+wlpWfk9Herj
-        ybQ3A=; b=fkK1xvAYv949UVN6rrMejPWjJ6mpK0HrDbr542VYfTLMf3yjSXc5Q5
-        eI5hRtzztgXU5sPeQiOqPfJRz4aFUzDcnLPGW00XYoK8pyFAlRS8q6ofPGxqA0km
-        aMIS8YNdfRbwQm+8dHpXWNxju0gtvnDQ2vldpXhDyQ+/4vJ93dEIk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C7D110CAA1;
-        Fri, 14 Jan 2022 01:27:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 99E0610CAA0;
-        Fri, 14 Jan 2022 01:27:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, tenglong.tl@alibaba-inc.com
+        id S239396AbiANGms (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 01:42:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56196 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235213AbiANGms (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 01:42:48 -0500
+Received: from mail-ua1-x92c.google.com (mail-ua1-x92c.google.com [IPv6:2607:f8b0:4864:20::92c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7E44C061574
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 22:42:47 -0800 (PST)
+Received: by mail-ua1-x92c.google.com with SMTP id m90so15434791uam.2
+        for <git@vger.kernel.org>; Thu, 13 Jan 2022 22:42:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=opJ2VRUD84ckyyaS8VASZoV7bwS4/bOYlIhUQtXI/X4=;
+        b=iEi0Gtt5+0HyyXuJ0N8Rgo1M+2w8B9FpsqRDT6o2AG3ma8IM9KnIa2OQM1jU57uVMQ
+         Pe4SHzk1uUJbggam+Wst/NZItAgaHswr8yMGzSPHgcoeo+umlTLICOe4pPZTIDbSXBfT
+         nbOckuL+bt4aemgyzGcpiGe+ZNmgs1VrNCBkOh8gwge2kuEi2ceH1nl6FBHXyB21BBNd
+         SbkdAEl4Pc2+FXJaZzdrLm7rm3QbG4XcGIonkuH/67w2wUFW6bdkAXRbNCdVYAUBdMSk
+         v9xrqzs9iOad8162EK734ixo87cU72tzdu0KhJrPDoAuJppANR7KUrSRCZgCnAbHIySx
+         Iogg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=opJ2VRUD84ckyyaS8VASZoV7bwS4/bOYlIhUQtXI/X4=;
+        b=OU08TWrT/ttzt67brLKDMkr4FJtzVOr22pTCuWISO1Hk7NKlV0bzDmgAztbdnJCI8S
+         FmrfUhfnfOwBfMUiR2adil1T1yB6VKJCI1F37vwGD7hfL59j2iG3bvF9AfZKQQPQBILQ
+         M2qR5eAIy8jumK/Qsqp0TYW4xwxvTFM/XOf5RblZzJ3UM2vOFtc2+xosoPU0qA/1vKK0
+         AByu+EVRbbI5WjTu64qBt4o0JpS6PxAGB1IB8yVEJrAJOFN9Pww/CAVQQrvlZ3HYTy5i
+         7uJhFKm3DkJxQOrDcZSzvOMIKeEkJ8vlYcjlMOTUKTGsunYUBQEFBgdVAK9hJItB+Os1
+         JGiQ==
+X-Gm-Message-State: AOAM533dRoS6iEdDmo3gcUHi6V9cNmWmOdhUhvrKFYxmXz9mN2oab1by
+        +OsY4Qfs8vXsolGrDupGzA0GZDl/Ry6xQpohkf0=
+X-Google-Smtp-Source: ABdhPJxFIK5FgEmwKWwi7IWy1eDuC9o8VX/Fn4amW/M3lOvuiYREojXEXehB0yTmQ/ExNWyLwb37IIuiVfEjpt0OP6s=
+X-Received: by 2002:a67:d615:: with SMTP id n21mr3886855vsj.43.1642142567095;
+ Thu, 13 Jan 2022 22:42:47 -0800 (PST)
+MIME-Version: 1.0
+References: <cover.1642129840.git.dyroneteng@gmail.com> <xmqqfspqeun5.fsf@gitster.g>
+In-Reply-To: <xmqqfspqeun5.fsf@gitster.g>
+From:   Teng Long <dyroneteng@gmail.com>
+Date:   Fri, 14 Jan 2022 14:42:36 +0800
+Message-ID: <CADMgQSQC4T+MBgbFROy0cmB8FFk=EgikPfErwpMbduaFvEebDA@mail.gmail.com>
 Subject: Re: [RFC PATCH v1 0/1] ls-remote: inconsistency from the order of
  args and opts
-References: <cover.1642129840.git.dyroneteng@gmail.com>
-        <xmqqfspqeun5.fsf@gitster.g>
-Date:   Thu, 13 Jan 2022 22:27:12 -0800
-In-Reply-To: <xmqqfspqeun5.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        13 Jan 2022 21:47:10 -0800")
-Message-ID: <xmqqy23ide7z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 02F2A6DA-7503-11EC-B826-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, tenglong.tl@alibaba-inc.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jan 14, 2022 at 1:47 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-> Teng Long <dyroneteng@gmail.com> writes:
->
->> +test_must_fail 'Exchange the order of "--heads" and <remote>' '
->> +    git --version &&
->> +    git init "test.git" &&
->> +    test_commit -C "test.git" one &&
->> +    git -C "test.git" ls-remote --heads ./. > result.1 &&
->> +    git -C "test.git" ls-remote ./. --heads > result.2 &&
->
-> I would say that this is working exactly as designed.  As with the
-> unix tradition, after the command name, first come options
-> (e.g. "--heads", "-v", etc. that begin with a dash or two dashes),
-> then arguments like "origin", "master", "." that are not dashed
-> options/flags.
-
-I failed to say one important thing (I was again fooled by the "it
-is too obvious to say" that led "gitcli" not to mention this, too).
-
-"dashed-options first and then args" rule means that generally we
-scan the command line from left to right one by one, and as long as
-the one we are looking at begins with "-", we try to interpret it as
-a dashed option, possibly eat the next one as an argument given to
-the option (e.g. "--abbrev 7"), and keep repeating, until the one we
-are at right now does not begin with "-".  And then everything after
-that, we do not interpret it as an option.  That is how "--heads" on
-the second example above, since we have seen . and took it as an
-argument (not a dashed option) is considered as a pattern.
-
-> ...
 > Apparently, it is not a common knowledge at least for you (and
 > probably others).  Perhaps we should add a paragraph to the cli help
 > and explicitly mention "options first and then args", before we go
 > on to say "among args, revs first and then pathspecs".
 
+It's much clearer now, thanks for the detailed answer.
+
+Another question, if I want to follow your advice and add a short
+paragraph in git CLI document, should this patch continue in the
+current RFC patchset or launch a new patchset?
+
+Thanks.
