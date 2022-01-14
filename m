@@ -2,131 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F11C9C433EF
-	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 18:32:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E60FC433EF
+	for <git@archiver.kernel.org>; Fri, 14 Jan 2022 18:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243050AbiANScJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Jan 2022 13:32:09 -0500
-Received: from mail-dm6nam10on2053.outbound.protection.outlook.com ([40.107.93.53]:64353
-        "EHLO NAM10-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S242991AbiANScH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jan 2022 13:32:07 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fNjdElIxyhV9PtTJwqmk7lw235KkQx6Y+DMd6O0GQKkC2jAPpNWZWOoC+EiDXNDAUXRH9H2MZaQsmwFbI+NJ8uM4sRi9uHUDgKAtr4HPk7czsVgDq+CP5bFHCFZ2AenpDz+hYqr1XURujhN+yCZP+0FDnHsZ88LfKVYG/dkKwOamZs1F7GZrDjOQfTyWsys3xI6WHHKslqs9kx1IT/GMBvNFoCYuYgO+kGyThyuUjVZnk79x5dU2I6nyw8adprv9d76kSSlkN2M0A8Z1CzIWTZ5sdu+/vxemZxUmTt1RIxem8MFTZ/DOoiEDA2yD8l96sXHH85Aw84+/M0i29Ll7Tw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0eH2Guz4D7OWnsyBjWGFTIBD+SmTmWS8aWe4iptI1S4=;
- b=lXPtISOxDhdFJwx7pvI1KBpuvPZPo3iqyey+TeYr9nvBMQnyNLoupk/tpSkf8IZn4hWEwIh0RyNrDsMMfirPjH7d7Wko27Qdb754uPqMdbP7G4FLYsprCQzNL58I7P6S80vfO/CmxgHwLJRG0mqTUY5v4qOGHlTFgJCnPfKDVlAtWldGDeJAFD0I5BwZGELps4GiWOFVYelwUW5EgHmoyy7G3yQ+LT4kv9TcfACe5R8NCABDBvIQrW6RFi/Rz0AK/J9Fq4m7t646FshB5rA9XaOiEXyvyRm8zowqiDao/tc0kpo2otSd5gwKcYuJERwzu741uXsUwkMcHmOTCbE/bQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0eH2Guz4D7OWnsyBjWGFTIBD+SmTmWS8aWe4iptI1S4=;
- b=RwMWTUICoQgisa+/wSsI5bMkUtNchv7vt1fOorLhLLv8sIaSmSiF5bJDJc0OImKoiyw913b8JeWOoqBo7jej7sDiLDNpATU7/QBiQf4L25iO3yHCbpmiBbS2gGatQdMECbQ/L7WY7FLO5HhXefimREayStoimlrb0iXn/XULeN/QmtKHcotcST4Nt8/aQD5QaemnvkJEb6NrujvJRe/wR9EOhZL36zP/LNAWnG/UT73dNn4lgsaEs6Vdj6P/tItbi8q8GuuP5AKjIDqPXpPB3YQMDBpNiyuzkADkoXUJWCTX60UHMkfBEo/c5pOKcaQf/APhfgVad1Du5si41C0IQQ==
-Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
- by DM6PR12MB3099.namprd12.prod.outlook.com (2603:10b6:5:38::31) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4888.10; Fri, 14 Jan
- 2022 18:32:04 +0000
-Received: from BL0PR12MB4849.namprd12.prod.outlook.com
- ([fe80::509e:bbb9:e1fb:26ed]) by BL0PR12MB4849.namprd12.prod.outlook.com
- ([fe80::509e:bbb9:e1fb:26ed%4]) with mapi id 15.20.4888.012; Fri, 14 Jan 2022
- 18:32:03 +0000
-From:   Joel Holdsworth <jholdsworth@nvidia.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Luke Diamand <luke@diamand.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
-        Dorgon Chang <dorgonman@hotmail.com>,
-        Joachim Kuebart <joachim.kuebart@gmail.com>,
-        Daniel Levin <dendy.ua@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Ben Keene <seraphire@gmail.com>,
-        Andrew Oakley <andrew@adoakley.name>
-Subject: RE: [PATCH v2 00/21] git-p4: Various code tidy-ups
-Thread-Topic: [PATCH v2 00/21] git-p4: Various code tidy-ups
-Thread-Index: AQHYCIQtB5JjCs0DyEmVJUfxZtMUF6xhkq0CgAFF1aA=
-Date:   Fri, 14 Jan 2022 18:32:03 +0000
-Message-ID: <BL0PR12MB4849877420F075F0E434207CC8549@BL0PR12MB4849.namprd12.prod.outlook.com>
-References: <20220113134728.23192-1-jholdsworth@nvidia.com>
- <xmqqwnj3fdb8.fsf@gitster.g>
-In-Reply-To: <xmqqwnj3fdb8.fsf@gitster.g>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: d6224135-d725-44e1-82e8-08d9d78c2964
-x-ms-traffictypediagnostic: DM6PR12MB3099:EE_
-x-microsoft-antispam-prvs: <DM6PR12MB309987B586F38B206D2BAECBC8549@DM6PR12MB3099.namprd12.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: lLAGs2NaAfslUedWN0n/SzRErK5uTma8qc6EgjXsQNPRHs/B6kM+LofGyGclscLwXsEjMfJM2o6CijuVDioN3kz+FnaQsaot529zG/tOkTKyOPLXm4gNq6swOQ+2V7eV0FF2YAO90FwRG0OcAQhhVJ0NWsjuGZpT9jV+QLmyivoPlIA6Hg+hUkdJ5xv7a8izDBB2kiP7Bb+SnJOZUlu8MdwiImw132hBVKTPxK2qxQhoFOHftDMwiuNEYqEho2Mfd9PeKX1nsaIhevEGPtlp/tGn1Psz6I5lvCRmCdruWaMQvxucC8nGI6NbgJcju36iNtReARvb0rdThGlFbqWX4iQMJKacKuupLqEWVuJMg+QiOE76qaOT0DRCL1Q4+UXv5TREz2WuS6gsJWxKhw1MIj+7DwRToce8XAP1r4oNHzcKoIm0rpVsy0FZzoK2uApi+nQf/AXTEhQdg1Bh6RCCzZMnlOiBzW+zHtuBDs7X8UWFjj7VwQxTTBL14iuvy0Ak6zlbvWJXX/VCJAdB5wbVd7HZd8n72Di03lt+08hl10pcfDV2Hqnre1yib00YJdiSBH4o+9G2rDZusIW1Df9k/d+O0TrRLgnz4uJzFzhz0cWZDIOEsZ0spEwRWdV/cWAETtxbN2wVXtQVq5F075XDk2BXA0gwww7VCOnSd8HkAL7tMj7rCfGxzf1vJI0xcYtb55XRvOB6h4VDSu8/RAII7g==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(9686003)(122000001)(66446008)(316002)(55236004)(64756008)(66556008)(7416002)(6506007)(54906003)(5660300002)(66476007)(2906002)(186003)(26005)(52536014)(86362001)(66946007)(6916009)(71200400001)(38100700002)(7696005)(4326008)(4744005)(8936002)(33656002)(508600001)(38070700005)(76116006)(8676002)(55016003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?6rEF/olVumkDdHamRRKKUAG62UibEEm2ntM8pWqhdX/rvQ9yTnxnB8NrmHKL?=
- =?us-ascii?Q?pa2Hyv4V6YZSEgpHwDEjyIsWXwjJ/rOG9khTjSM6B35hV9/5+p2uWecGThGI?=
- =?us-ascii?Q?d/9ontBuNSBhb33wupuIeBDt4D3Z4WDBx8IFSQeWHUD/VXAXGd/wySlUllke?=
- =?us-ascii?Q?h8q77AWGFj5TF2IvtYjFzMIuFeSxVe0IX6xZOmEGhCyDcbrWImFHpZlhrwCF?=
- =?us-ascii?Q?IoUjUCKt3tIJRHa0A/i6A/1larbSm5lWDCy8Vr7MKB7OaN6a2yi9D30ixpxn?=
- =?us-ascii?Q?71b3lHED3NfVjonyr/8aF5IfYleGTZoc7TU6l/YE/1zoCDqI5NS06m8uZKe5?=
- =?us-ascii?Q?wxQloIij9FhkH/rbudDrRgRwEqCChooJdHaTaINlOws/AVrGEWNtmhtA2ywn?=
- =?us-ascii?Q?DKFRgaISGzVKZk786oSCSTv8oEPtUwqIzXGEmkxAyTqge3+CJrIhrlCUTlTI?=
- =?us-ascii?Q?qoZhk/Iqnq6y3JOH3/gvXuLLM2uvsvD/aVBmZ5OoVs2s2qsAz6yafMsCjGIs?=
- =?us-ascii?Q?JAdZpsnIXPL63DPEwPWlcl6+hxNMTGqbyh2ESJHT6C1dj460vuFM51PIpPDI?=
- =?us-ascii?Q?au3ZEaTm9PX4BJnaQYPzEHF42X5IALs6GxOVbrtVMRBVUtxkLRTh7nCAgQ/q?=
- =?us-ascii?Q?GkbmXXCO3aaqyFsERPL1C1ImLup9ofX8RbSF7BtTlqLmiVn9F5oG638J/bom?=
- =?us-ascii?Q?fRN+Fp1HFV52w3ptGzNZVbVptSymNTmDwQnoYV88EGvwwCBV5pZOuOfI2CNJ?=
- =?us-ascii?Q?F+4UJ/k5kNYAQvgzH/nLPOYozcCdICiQJk4z/rJ8SNt+IxH0SR5VMqx5jTcL?=
- =?us-ascii?Q?TxrD8QGbXQTu3xh3zQGjw366HMXjevvENk6tG4aXHXCtC1NwHfmYvfEPSdOD?=
- =?us-ascii?Q?9ov8mZ2N36m0JIwP3jsVRVvWU/P+4XDp5qLb7qVON9/3CUtsWy0+F0pa5G+B?=
- =?us-ascii?Q?kyyC6tXRrsSUVvkJAGMVM6MZfTYgs+CLlyxPF/4gmjoE4FERifzs3thjIEmx?=
- =?us-ascii?Q?lfnz/pYUvC9MsiLzTIP+hB349KDbKEYzp6aUt2mHJLgFHw/4MsPs7N005K3g?=
- =?us-ascii?Q?JAyoQtAT/AE8SdT52oAysyKjbEs6UIw0+HuMvVCGulPQUc0Th+C3uZd9a7AL?=
- =?us-ascii?Q?unBuUDORNGDqrr7l+1ts0KY8BFM31W26OCSM++PGU6r/qkkzVm2oTb281Uvj?=
- =?us-ascii?Q?TC93YcwbYerd0cvdXd4mLRjQkUTvQMPTYRHyaTLRjtrxjG1CH1l9RkNNkUqy?=
- =?us-ascii?Q?u35MABKkkWqceM028F3SDoekRsjyQA60NCIuKXuWs12jp/xNqpA4/vd8rsJp?=
- =?us-ascii?Q?iyyxTtTU6FMPPyGPijW4Pcy6qvcRtLnyxPuZvCyLfPiwRUY1NqRHmfT4inuq?=
- =?us-ascii?Q?yCnyNM/PXZkCyfpZNi87z6wvfPEUDnZ2KuPsEn7KnXbDK/5M39McfWRdP3pO?=
- =?us-ascii?Q?wkvhWMsUbgXsebBDxYH7psJ6tq9/7jkzoKJKqailDwE9OZlDP6nqvlE0yBnD?=
- =?us-ascii?Q?aLHxLy51S3mBk6PfiGjQ2NM2Sidi5U6GA8hnSP7q68ayBtdMRBZPRGRuqUd0?=
- =?us-ascii?Q?2QiWdjUMVFz4Pv1pUmWn7OGdVyubQeOYyNDElE4uS5UAUohZzH8D2q1Jse5A?=
- =?us-ascii?Q?3g=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S242795AbiANSmh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Jan 2022 13:42:37 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57180 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236181AbiANSmg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jan 2022 13:42:36 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 45AA417FFDA;
+        Fri, 14 Jan 2022 13:42:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=W+UqKdRP+Vpg
+        TqX7eXWkAizGPdhUtxZ6wapbGSNQQqo=; b=mBCm6UyoaHj+t33bKhGeWvtvwaXM
+        Lar8DxwSwQBzKlyMRli2lmw1chBe5YHIW/EbwmcNKaaLlawBSEJqVsJu0izafY5k
+        5+iM0LkmnmgxtOboGCuhKw6yZZ1+nmShSSpJzU6yAz7S0EckDJee2voKzoJm6Zrz
+        xYs0l+wP1C5dSOM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3D53A17FFD9;
+        Fri, 14 Jan 2022 13:42:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A30CC17FFD8;
+        Fri, 14 Jan 2022 13:42:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Ramkumar Ramachandra <r@artagnon.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Git List <git@vger.kernel.org>, "Miriam R." <mirucam@gmail.com>
+Subject: Re: git bisect bad @
+References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
+        <xmqqilus3ctf.fsf@gitster.g>
+        <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
+        <xmqq4k6b34h8.fsf@gitster.g>
+        <bafa9564-fa48-413d-bbef-3f068c03dd31@www.fastmail.com>
+        <3dade45b-494f-663b-264b-06a51ea1cf56@web.de>
+        <xmqq35lsyhbf.fsf@gitster.g>
+        <13e323e9-eb0c-71c3-215f-b77c91fcc4c8@web.de>
+        <5be4cdad-6769-68e8-0984-5fe89668d007@web.de>
+        <421215c1-f6ae-4ec2-b666-2a481056ef79@www.fastmail.com>
+        <CAP8UFD3tyBhrOQzg9j4qDAT0Tb8TCTK0=J6ORsiLVuMWn+W9wg@mail.gmail.com>
+        <8bc73981-589e-20e5-247b-2f74e166ae1a@web.de>
+        <925ef53d-c8b2-4ef4-acee-490900e8a3b7@www.fastmail.com>
+        <88899d16-5e3e-2bb2-07e9-59f7607c91a8@web.de>
+Date:   Fri, 14 Jan 2022 10:42:31 -0800
+In-Reply-To: <88899d16-5e3e-2bb2-07e9-59f7607c91a8@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 14 Jan 2022 08:47:05 +0100")
+Message-ID: <xmqqmtjycg6g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d6224135-d725-44e1-82e8-08d9d78c2964
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jan 2022 18:32:03.8544
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: AuOPSoKu6Wkf7KCOfDsZ7TkQDh4G9u7aSKQguruAUeTZSpLntFoPRu+rADPGVqQ+N+gchUoOyETRIT7VI0S3KA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB3099
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: BBF153A0-7569-11EC-97F7-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> As new things in 'next' that are not in 'master' are not moving until the=
- final
-> release of this cycle, perhaps this needs to wait until much later in the=
- month
-> (see tinyurl.com/gitCal).
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-I was not sure where the patches ought to be based. I can rebase them on to=
-p of 'next' if that would be helpful and/or if you need me to delay them to=
- the end of the month, that's no problem.
+> Am 13.01.22 um 16:16 schrieb Ramkumar Ramachandra:
+>> Ren=C3=A9 Scharfe wrote:
+>>> The implementation language of git bisect is not immediately relevant
+>>> here, but that the shell is used to call the user-supplied bisect run
+>>> script is.  If we'd run it directly (without RUN_USING_SHELL) we coul=
+d
+>>> distinguish error code 126/127 from execution errors.  I assume the
+>>> option is used to stay compatible with the old shell version of bisec=
+t.
+>>
+>> Sorry, my misunderstanding. I thought the external command was being
+>> called from git-bisect.sh. I don't think I understand the purpose of
+>> RUN_USING_SHELL (it just seems to put an "sh -c" in the beginning):
+>>
+>> 	static const char **prepare_shell_cmd(struct strvec *out, const char =
+**argv)
+>> 	{
+>>         ...
+>> 			strvec_push(out, "sh");
+>> 			strvec_push(out, "-c");
+>>
+>> 			if (!argv[1])
+>> 				strvec_push(out, argv[0]);
+>> 			else
+>> 				strvec_pushf(out, "%s \"$@\"", argv[0]);
+>>        ...
+>> 	}
+>
+> Using the shell allows the bisect run command to be any shell command,
+> not just some script.  E.g. you could bisect a build failure with just
+> "git bisect run make".  Quite useful.
 
-Joel
+True, but for example
+
+	$ git bisect run make test
+
+internally gets argv[] =3D { "make", "test", NULL } in bisect_run()
+and then we are the one who make them into a single string, i.e.
+
+	if (argc)
+		sq_quote_argv(&command, argv);
+	else {
+		error(_("bisect run failed: no command provided."));
+		return BISECT_FAILED;
+	}
+
+and that is what we run via the shell in the loop, i.e.
+
+	while (1) {
+		strvec_clear(&args);
+
+		printf(_("running %s\n"), command.buf);
+		res =3D run_command_v_opt(run_args.v, RUN_USING_SHELL);
+
+I do not offhand recall the reason why we need to do that, instead
+of using the original argv[] to invoke run_command_v_opt().
+
+And my earlier "let's not go there" may need to be rethought.  I
+somehow thought we are getting a single string from the end-user
+and will become responsible for splitting it out or substituting
+an environment variable with its value, but I was mistaken.
+
+
