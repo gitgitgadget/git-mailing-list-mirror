@@ -2,202 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C90DC433EF
-	for <git@archiver.kernel.org>; Sat, 15 Jan 2022 09:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68629C433EF
+	for <git@archiver.kernel.org>; Sat, 15 Jan 2022 10:43:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232748AbiAOJ5g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Jan 2022 04:57:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56324 "EHLO
+        id S232870AbiAOKn1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Jan 2022 05:43:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231547AbiAOJ5g (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jan 2022 04:57:36 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94D71C061574
-        for <git@vger.kernel.org>; Sat, 15 Jan 2022 01:57:35 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id 25-20020a05600c231900b003497473a9c4so12021272wmo.5
-        for <git@vger.kernel.org>; Sat, 15 Jan 2022 01:57:35 -0800 (PST)
+        with ESMTP id S231526AbiAOKn0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jan 2022 05:43:26 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D5BC061574
+        for <git@vger.kernel.org>; Sat, 15 Jan 2022 02:43:24 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id t32so4980756pgm.7
+        for <git@vger.kernel.org>; Sat, 15 Jan 2022 02:43:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=CePz3H632UnRp6gmd/uYmbVXyewA0UB2HoHE5zIQDUo=;
-        b=MI28LcAlO0d7tduDOP0arfciZiI/80lOfWY1GtTi8zHk7DU5+EsH174j5DO77ZgoAq
-         glaEyyjAQrNV2aAe59KqKQYTFRA7LObPBC35ejvtaG+WoxQyuvXtxnJXxYW8KEBaSB5a
-         syRVtSiUfxxoCejJQvaZ2S4Prh4LUMlh2reSb9qtIyZM3OyY0QLKezJC6L5+G2r8h6M0
-         M6vsgwsYhb+CJj8pHvUeN40FisjwwMDt/xhCMXmmF0No164uVtM6OfuaAMp1GkCGaNZ8
-         IM/TtyW0Rmn//5bJBh/6dpJxZWV5VNR7VaBooIhg3OrqxneKGumlyH5bmxLiO26h0T/d
-         igdQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:cc
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=EQ1fNtad23pm/rZJMjb9uzyHhhOyURY++RsCMSgIjaY=;
+        b=mUhIUqfuS5WhsUQ/lP+AVyrkRxhrEG5d0iXAsKiMQW9ELLbbPcnPESAkRc7XCSIYYJ
+         qIWAdgcjMeS1ElQMl2fvHuNyLaMUVIABKu23cEv0h+uNQa/KRSH62jWqSZQoiY+y6U0f
+         NxWMtE6smWjW0HzM2IKOYP0P8GcrYj1bSBg3Cu586XXvxtplUZtv19U3LmhOu9+Kh7fg
+         LcC7J3ykIW17BA9Py+hpWvQe/OsbLXqAN+HKewuk/GmsYVijZmGFoi6Rjg3p5VJ+I+D5
+         T8DWQwTdLPezqnPXfuB5qkZEXSvYQs+UDczvQxhKrcLMRQDdq3vxxXi3DjH5AZs86cno
+         d3/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=CePz3H632UnRp6gmd/uYmbVXyewA0UB2HoHE5zIQDUo=;
-        b=fGn7z38jKfjSZft8luXUmyDmfFsxH1qmNzdikA/ZUYER9gwhWMyvtstvzgQQ6QL+HX
-         2ywOganfe7w+FsTU0z9etu9ziSCL1I+alEhSasL8V8sv0WKs/KwbJffiD9r1zFo2zDGu
-         cE63gfkQ86qBBNtLgw00ppu8XQfJWmnhiJhAvz5BzmE3RXe/PoLcFj5ONh+vLw+UDfPM
-         +M+mwbCCIXTud2bs6TfZQw4tpa1BB5DOx2L3ts7fyqIciHQCm358VuUin5fcStlz5Qyj
-         3DKiarxxxmwYi6C+cLzwsLM+bnNFh43COYDYd0mU7QgCW91MN6TuwrY6eFLvIZ9aAhT7
-         ONzg==
-X-Gm-Message-State: AOAM532JUHprfcG5hnjsdP6sjjeqPJZCPh64W+BbSub+VOA2R6XQNvk+
-        7QqvOU364KscgpqzTft2O2w=
-X-Google-Smtp-Source: ABdhPJy+Mz1G7pV6pxKFCqwo1c7ESZOkSFmeS2ReU68/J5zaCtM57RBrNpjdx/CETCGW79idM+DHIw==
-X-Received: by 2002:a05:600c:1e0e:: with SMTP id ay14mr11481799wmb.86.1642240654152;
-        Sat, 15 Jan 2022 01:57:34 -0800 (PST)
-Received: from szeder.dev (94-21-146-106.pool.digikabel.hu. [94.21.146.106])
-        by smtp.gmail.com with ESMTPSA id i10sm9753109wmq.45.2022.01.15.01.57.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Jan 2022 01:57:33 -0800 (PST)
-Date:   Sat, 15 Jan 2022 10:57:25 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com,
-        johannes.schindelin@gmail.com, Elijah Newren <newren@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
-Subject: Re: [PATCH v3 2/3] sparse-checkout: custom tab completion
-Message-ID: <20220115095725.GA1738@szeder.dev>
-References: <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com>
- <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
- <256e5f034c6072b6e3621adfa96c5c6319752fae.1641841193.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=EQ1fNtad23pm/rZJMjb9uzyHhhOyURY++RsCMSgIjaY=;
+        b=tpzUi7x6e1PqLubYMxqhk9wZhN4k2RwTp0IDuRehVuC7lrheOMpO7G1fjdAF6z//Od
+         kaoepvYXovCzD5xacpKn5AaA3RRFASBYHQD2yiWDC6Ai/zj7RVgnsSVcpKfbssXB9Ld8
+         oUxbNledthWjzyOBYPWxqyklOcLTMuV+iyvDfgnJvZbhY0dTGSPN9XWFygimOsDu0NKK
+         lzAmE9TSIWio32VYjy0gA466AWEsGoiJDp6zmABWXEYQLAuSKNl2E9Y6KuZmqhJiK6EG
+         nfdqTxdwBJOe5qNP+yCuBWP7kXhyzxj4xis1CJIA0T4Hs1Uadi1CJZ75lFAPJCjQuHBu
+         vRCw==
+X-Gm-Message-State: AOAM533btmnoJUFhtYI+kB1iDatpBc5nhzvaKipa+30GEtJdxkUDq04R
+        bZXx4rocVIYyXze/Xpa6wJXXZ99QxSdjbA==
+X-Google-Smtp-Source: ABdhPJwLcAGJuJzKxBeAIFOQD8WPo5NrSxywBkqOkjg+y4VOVV9VWVrb2W5CdDnQsDqDcjlymBnQ5A==
+X-Received: by 2002:a63:170e:: with SMTP id x14mr4759079pgl.302.1642243403740;
+        Sat, 15 Jan 2022 02:43:23 -0800 (PST)
+Received: from ?IPV6:2405:201:a800:4d75:7abc:9063:64b3:ac13? ([2405:201:a800:4d75:7abc:9063:64b3:ac13])
+        by smtp.gmail.com with ESMTPSA id y4sm8247814pfi.83.2022.01.15.02.43.22
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 15 Jan 2022 02:43:23 -0800 (PST)
+Message-ID: <9a3837b4-8c67-e114-e977-f6c7b729ba45@gmail.com>
+Date:   Sat, 15 Jan 2022 16:15:06 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <256e5f034c6072b6e3621adfa96c5c6319752fae.1641841193.git.gitgitgadget@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: A new feature command request `cmd_ignore`
+Content-Language: en-US
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <11860e44-beff-39e6-2efc-53324223caee@gmail.com>
+ <CABPp-BFY2issEqOj1Oj71k=494vc8E563CndxPZfXYrteFoNhw@mail.gmail.com>
+ <5f6f1dba-a923-4bb9-70a7-4936566f46e0@kdbg.org>
+From:   Jaydeep Das <jaydeepjd.8914@gmail.com>
+In-Reply-To: <5f6f1dba-a923-4bb9-70a7-4936566f46e0@kdbg.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 10, 2022 at 06:59:51PM +0000, Lessley Dennington via GitGitGadget wrote:
-> Subject: Re: [PATCH v3 2/3] sparse-checkout: custom tab completion
 
-None of these patches touch sparse-checkout, but only the completion
-script and its tests.  Therefore "completion:" would be a better
-matching area prefix.
+> I think that is a paraphrase of the suggestion to
 
-> Fix custom tab completion for sparse-checkout command. This will ensure:
-> 
-> 1. The full list of subcommands is provided when users enter git
-> sparse-checkout <TAB>.
-> 2. The --help option is tab-completable.
+    git rm --cached settings
+    echo settings >> .gitignore
 
-This is inconsistent with the rest of the completion script, because
-it doesn't list '--help' for any commands or subcommand (with the sole
-exception of 'git --<TAB>').
+> when changes to a file 'settings' that was already tracked (and often
+> contains user-specific settings) should be ignored. This misguided and
+> short-sighted "solution" is repeated numerous times on Stackoverflow.
+> Not something that we should encourage.
 
-> 3. Subcommand options are tab-completable.
-> 4. A list of directories (but not files) is provided when users enter git
-> sparse-checkout add <TAB> or git sparse-checkout set <TAB>.
+So what should be done in this scenario? And why is it a discouraged and 
+misguided thing?
 
-Why limit completion only to directories?  Both of those subcommands
-accept files, and I think 'git sparse-checkout set README.md' is a
-perfectly reasonable command.
 
-> It is
-> important to note that this will apply for both cone mode and non-cone
-> mode (even though non-cone mode matches on patterns rather than
-> directories).
-> 
-> Failing tests that were added in the previous commit to verify these
-> scenarios are now passing with these updates.
-> 
-> Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 38 ++++++++++++++++++--------
->  t/t9902-completion.sh                  |  8 +++---
->  2 files changed, 30 insertions(+), 16 deletions(-)
-> 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index c82ccaebcc7..f478883f51c 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -2986,24 +2986,38 @@ _git_show_branch ()
->  	__git_complete_revlist
->  }
->  
-> +__git_sparse_checkout_subcommand_opts="--cone --no-cone --sparse-index --no-sparse-index"
-> +
->  _git_sparse_checkout ()
->  {
-> -	local subcommands="list init set disable"
-> +	local subcommands="list init set disable add reapply"
->  	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-> +
->  	if [ -z "$subcommand" ]; then
-> -		__gitcomp "$subcommands"
-> -		return
-> +		case "$cur" in
-> +			--*)
-> +				__gitcomp "--help"
-> +				;;
-> +			*)
-> +				__gitcomp "$subcommands"
-> +				;;
-> +		esac
->  	fi
->  
-> -	case "$subcommand,$cur" in
-> -	init,--*)
-> -		__gitcomp "--cone"
-> -		;;
-> -	set,--*)
-> -		__gitcomp "--stdin"
-> -		;;
-> -	*)
-> -		;;
-> +	case "$subcommand" in
-> +		set)
-> +			__gitcomp "$__git_sparse_checkout_subcommand_opts --stdin"
-
-Oh, a hard-coded list of --options is so old school :)
-
-All subcommands of 'git sparse-checkout' use parse-options (even those
-that don't have any --options at the moment), so their options can be
-completed programmatically, and then we wouldn't have to worry about
-updating the list of options in the completion script ever again.  It
-would also make several tests added in the previous patch unnecessary.
-
-You could use the completion function of 'git notes' for inspiration
-on how to do that.
-
-> +			__gitcomp "$(git ls-tree -d -r HEAD --name-only)"
-
-This will have troubles with unusual characters in pathnames:
-
-  - If a pathname contains a space (or any other IFS character), then
-    the shell will split that into multiple words.  
-
-  - If a pathname contains a special character, e.g. double quote or
-    backslash, then 'git ls-tree' will quote that path.  Furthermore,
-    by default it will quote pathnames containing e.g. UTF-8
-    characters as well.
-
-  - The shell has its own special characteers that have to be
-    quoted/escaped on the command line to strip them from their
-    special meaning, that quoting/escaping will interfere with listing
-    only paths matching the current word to be completed.
-
-You should use the __git_complete_index_file() helper function
-instead, which takes care of most of this.
-
-Furthermore, these two subsequent __gitcomp() calls will offer both
-options and paths for 'git sparse-checkout set <TAB>', which is
-inconsistent with the rest of the completion script.  Usually it lists
---options only after e.g. 'git rm --<TAB>' or 'git log --<TAB>', but
-after 'git rm <TAB>' and 'git log <TAB>' it lists only files and refs,
-respectively.
-
-> +			;;
-> +		add)
-> +			__gitcomp "--stdin"
-> +			__gitcomp "$(git ls-tree -d -r HEAD --name-only)"
-
-Likewise.
-
-> +			;;
-> +		init|reapply)
-> +			__gitcomp "$__git_sparse_checkout_subcommand_opts"
-> +			;;
-> +		*)
-> +			;;
->  	esac
->  }
->  
+On 1/15/22 14:33, Johannes Sixt wrote:
+> Am 15.01.22 um 06:17 schrieb Elijah Newren:
+>> On Fri, Jan 14, 2022 at 3:03 PM Jaydeep Das <jaydeepjd.8914@gmail.com> wrote:
+>>> and other parameters like `--force`
+>>> could be added which would delete that file cache if that
+>>> file was already committed.
+>> I don't understand what you mean by this.
+> I think that is a paraphrase of the suggestion to
+>
+>     git rm --cached settings
+>     echo settings >> .gitignore
+>
+> when changes to a file 'settings' that was already tracked (and often
+> contains user-specific settings) should be ignored. This misguided and
+> short-sighted "solution" is repeated numerous times on Stackoverflow.
+> Not something that we should encourage.
+>
+> -- Hannes
