@@ -2,42 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C276C433EF
-	for <git@archiver.kernel.org>; Sun, 16 Jan 2022 16:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1206AC433F5
+	for <git@archiver.kernel.org>; Sun, 16 Jan 2022 16:07:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233455AbiAPQHo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Jan 2022 11:07:44 -0500
+        id S235615AbiAPQHz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Jan 2022 11:07:55 -0500
 Received: from mail-dm6nam11on2054.outbound.protection.outlook.com ([40.107.223.54]:56160
         "EHLO NAM11-DM6-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S235587AbiAPQHh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Jan 2022 11:07:37 -0500
+        id S235625AbiAPQHo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Jan 2022 11:07:44 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mxGgV8IlCLKeDM0XS/don7+UfVM/VpvxC9Af8TgT//X+92sR1ks/oKBfbMkJpqRxyqZp66qSfPEFfB+Thnw1bOFxDwDDXkgQ8gbLkbFRFhrOIg622UkniKznXzHn03NXLYYtCL23RCUUa2wYR35UkrV5uAWzAi7mkiI7pE2cHgH36+ZSF3bVkbGZ1Vuxe0CD7psSzZFJqtqSarwdKxbdoS/bPn+wCRvXQtgtzHox3gJWwc/OSRJF2iW4G7vYABJZc12T3dXmORxyIq+ssgkvj62N0fd9RztYnRScj7f7d97RxnlbGBKZfXwX3rKxWEhfuKF/oUGq6GSw/BaAPp7Vpg==
+ b=VixnmVDgQANrGHl6L6ry5FDCnagZmO877TCdNA3/C5N8WmE12R0s/9akkN8ZftTJAAWM6Gt4WJohaiSuS4iXhJ0+7kKPagUR3CCx2EgJDeP67hFoqDBZy4eiikdwkG6Yvv9M3eVBDzdSM/ctVR87ECqGYTl9tizuZd/ymClNP0KRR1PQUzp305Ou5fQOKH8Rv7xBbRhoddrF2neQqDJdOeB9ipuAKfZFxS2oLk7i8r8DNyO+xoBPrRDbomQkC+KFSVCwN5YOSVvs94cF8pZg56iNadVv0vsO7YxZiYfE/mw39cBLBWfpU2+kjYBXw+fFzE0moVZrSSgu17sc0+ujow==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wQmmJWKf4PLRoEBWKYDDhzKn4rz5jXlZmIfJIkrbPFs=;
- b=TMMSOCO/Ou+hMDcCqnEjV9zSLhK7n0lBSGewOHq9cXHtftEUcLMocnhPS0MqUJ0cgpcTpbjWvrljoscT33rKDqlm8b8oo0g3JNtVfpB0UpXWG1tCTZ0Aa9Cpz8ICSIwooAUrPJp8DehfFgz6v1o1e2+ANIKx9oT5QAyakqiv67Jnjji2w8srCN85JkHV+6lfu1AVkilSq/iplnVUDrg56KeP0DlHvCp0YMcCroFaEtG79NUdq6tBtBPLy7dQMkcizxj7WsYyV+PSuo3NMkODdTXq0PK1cIWkCWd4w0GGAgnmmhjIrPE7/mURveYnxoId3PyquqVvGfAYWZQcKZfX4w==
+ bh=NhuCVQFkY9nvDxZ1mq8sas7mK9d7DsPBYLjh33oLPBg=;
+ b=lkhqHviJ+94pYGepCgwVwW1Mrh0ir49gFUm+5GMjg6e0km3vURMpIAiQYpEYx9yWaujISKsbWB7rZFQrY9K/PPJpo5epMdnkLeJe5wpDJIvoPVeiTnzE9KOfiooOFV0r4bklDJikSEfyDidKjBoxuBu5QXUcwP2iZtoNY3OXgXQu4BEwG++J1KeTRfzyLUD5bESp386zylxKn3UFf2Ie4xODTuLgeMishvsvQoTodMyLPiqgKv4tVvPBAgKbDmhibwXQOV/9TBJJJZlLX2d+xp3USXUo3I1nVtPgNSvekz8KShDXHMpgLpW4hODpdV77Vq4wQvQ+ocqUyHZref4lCw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wQmmJWKf4PLRoEBWKYDDhzKn4rz5jXlZmIfJIkrbPFs=;
- b=E6sndq2L/m1aS12l91hh4bkezClG2jttp/uyx+MnCTWsAGFJzjZ/QhmfuT+f4OHRGE2OZLkCcyE/Xe0BpJB95QL+kZTTMNJDCNZK435rerGiinwbGbhA7zJExtq4/utPXFhTdIOgzXltamhDvFrUTjgdd+lwjXR+RuuEQZZTsdB0SO8MOPJHsOlrfRIrTnPMyI0r2fCtil4mpSzMB/yerONLCUJNMQ2IG2CfW+UoEoE9sbQ1t3wa0p0kh5otBC4oD8RC7qScgcD6vdga4MstklDk4/aSdpvBY7z1nZZMbWvCwDnSkumaVY/w/c4/sWR31wzIm8egeAVfUGxRwSD/rQ==
+ bh=NhuCVQFkY9nvDxZ1mq8sas7mK9d7DsPBYLjh33oLPBg=;
+ b=dd3CEHf+oqNGzLsMNyg7K2uQy/NHs+bVzPTkKH+59haZ6+arpJ9kjhq4sFJu3FW3H9jZoQwFMZqa8GvyNh/WV9vrWX3a5wFcfd4AfAQZoFlrzQwp/YVJIT0TmT0IPfGIUDOKVHXlGLLkV6euWX4TWHsKZ9hfZF7Z6H0LNDF4oaNRmSeUj2+xZQY0N666N2xduVjsoGedvadfAhhY8tK7KctRTq4HMHVq7M5mV+ubwHLqTZiHaeA2QuDOidVfnpoPK0RYNOH7JBqJm310JyKUFTzYN++XzJtX91bLzMUnW1weJIHX9mKvQPpSNyhQbW7YoQx96oNXyjdILBHCW6XIZw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
  by BYAPR12MB2597.namprd12.prod.outlook.com (2603:10b6:a03:6e::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4888.12; Sun, 16 Jan
- 2022 16:07:33 +0000
+ 2022 16:07:35 +0000
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::509e:bbb9:e1fb:26ed]) by BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::509e:bbb9:e1fb:26ed%4]) with mapi id 15.20.4888.013; Sun, 16 Jan 2022
- 16:07:33 +0000
+ 16:07:35 +0000
 From:   Joel Holdsworth <jholdsworth@nvidia.com>
 To:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -50,9 +50,9 @@ Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
         Ben Keene <seraphire@gmail.com>,
         Andrew Oakley <andrew@adoakley.name>,
         Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH v3 10/21] git-p4: removed brackets when assigning multiple return values
-Date:   Sun, 16 Jan 2022 16:05:39 +0000
-Message-Id: <20220116160550.514637-11-jholdsworth@nvidia.com>
+Subject: [PATCH v3 11/21] git-p4: place a single space after every comma
+Date:   Sun, 16 Jan 2022 16:05:40 +0000
+Message-Id: <20220116160550.514637-12-jholdsworth@nvidia.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220116160550.514637-1-jholdsworth@nvidia.com>
 References: <20220116160550.514637-1-jholdsworth@nvidia.com>
@@ -63,260 +63,141 @@ X-ClientProxiedBy: AM6PR08CA0019.eurprd08.prod.outlook.com
  (2603:10b6:208:1c2::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 526650c0-ce20-4d1a-0117-08d9d90a4ded
+X-MS-Office365-Filtering-Correlation-Id: 3e5bcb15-64d3-4be2-c952-08d9d90a4f0b
 X-MS-TrafficTypeDiagnostic: BYAPR12MB2597:EE_
-X-Microsoft-Antispam-PRVS: <BYAPR12MB2597140D4DD6E33A9FB1F52AC8569@BYAPR12MB2597.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:284;
+X-Microsoft-Antispam-PRVS: <BYAPR12MB259736F2D1B340CBE244BBC0C8569@BYAPR12MB2597.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:67;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: RuKl2wqossWtD4fb9/ym4qutas7S6az+TTBtR5OD1gufNL1F0gz7jiRfWyltR1UFAHF1WTGlsHrkja3BkpYjTZ+HkAC6JKeef19ULAaHngpANxgA3TkcIEP3KWoGBr2h+IPYEQcSlmGrFjwIpIA+2ARIZcUHF+W8ltrO/xbtrGBRGGE570SbFul0hWlGsr2PYd56cw+P2W96MHlgtj0LQp9WvWZdTGkHH7Qc+7/rG6RyiWs6buooBvCL6D8f0JC/JzmuKO9LR5tLGfXnJJSHyFcZ/MFpkZ+J7eg9th+YcEeQXexOjmInk4ySYDRwXsaO2vmStjrWys8Vo2Jn+pVz4gfcAvcUUXgxKOFjnD2knX0q/dhvKnaN1651O3vzablHZJ/Rf88I7rbABkb6LGH0gCiVFrigJ3/CwIn8MYNydH28CS7WSl/iAQuOwwz/ozRPenQei2p0fWSMb4V/tGhGuPNnACHYVzhdV8dtJeuy7FdLGaLwAL8YYRiUtx76qqiI4pYt/EE8tib5pf5eztyrKB7GNU27aTa9Tvy31M9j39/xqC1fkmzCyOo5I47bBRKtfSWK8JBlU+KMMTPkgrBlk52awI5TdbTkBSTLeF8j2HoIsfBmd5tmMx4OeholHU+brm0nu2jpAIX+uhmtK+sM7Che4kSVmUgm/x1vlJa3RjjjBPEI//EuirtVDNJ0KFokwWLlIzuQctCbMiK0m89jGg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(38350700002)(38100700002)(8936002)(4326008)(83380400001)(186003)(1076003)(6512007)(110136005)(54906003)(107886003)(8676002)(5660300002)(316002)(66556008)(66476007)(55236004)(6506007)(52116002)(86362001)(36756003)(508600001)(66946007)(2906002)(26005)(7416002)(2616005)(6486002);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: gd8UQKLnqUZwVVRPaOPvOp9To/TRLnQaC0wfSpFUOWKivhduVJPUNkXv2LNjBbNTaa1dizinCPEbQ+SEB7wxlNA9GZYrBAg20/K7eTMz3lJpi9n0ltWot3gEknFQw4K+yiiNLoY3m3/NwUnznDeTlWwNx6hE4RNg2nUizK11ooNjJ8SegZ/DyBEyLrGedBqxKFf9POnPTQtzGg6utoBntax2m21oXDPSzKdl2PCdzSAF2AsGcL4vfegrWPEKr9rrJI3XCcUThJkNwObtmKQhbEJt8likp7hrFm2wnsXfyEBC7GlAmRGXDpoCVmRsaCHWmKdpxjX8SORUWRcQx32p9xv2xY7FS6X/78MYMGsak7ItgN4Jopx+eLy/9EB8ALzBaCcQSdnbQUxV0gSO4mVhAwW+/6IbR/tjI7pU2zNs+hT/Ri9upJL6Bn4bCNObHcchSNtkcq5hKlu2e3H7VlJq9Ydt55bts4X5F5BpcECGptnPGoGEOG3Xey08XcR4ml6CA/WbfkJWhgXlihyueUlgLL58oQhvJz3DM7d20sdgwaC/CfH1pe4bZwGPeVLx1zIg517wSFidnbscC9OBwPd7UaD1VK/KlJLzsaA2h8qHt1e7OyCLdEw17t9wtzZ2e1EuUaULFFTSOFk0cVxvZlwVX+3X4bqi50q64q12cHgsPcFg3qOtdiUFdc1tu/QOlYfQgfPU5sgENfi/7p4wujfKyA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(6666004)(38350700002)(38100700002)(8936002)(4326008)(83380400001)(186003)(1076003)(6512007)(110136005)(54906003)(107886003)(8676002)(5660300002)(316002)(66556008)(66476007)(55236004)(6506007)(52116002)(86362001)(36756003)(508600001)(66946007)(2906002)(26005)(7416002)(2616005)(6486002);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?3DsD/Pey2CdAkR3kspSQQBZHsZcnOygpu4AI6OfD6MUyJDLlA1bPCMZBAKBT?=
- =?us-ascii?Q?YW+KaYh2tAFcp9ktemFkwPdu9JDkY08x8vLJHdm1gySWhxfZKOlyWnUna2pU?=
- =?us-ascii?Q?O/qeRSrlZT0dBOORT6r1BdvfSuK846mD28CkpnhZ2bfWZ0wHXHOsCQnCz01E?=
- =?us-ascii?Q?OUezuY3gk4gYtW8Ev9KMiNcRoMXlYuGWrkzgMugvJYRNVZKJRzW0UnRcOQCH?=
- =?us-ascii?Q?zSXoo8oZ3t/MV1VayL+28DqbKLyfFrFvfj+wBYBDx/dWZLpiST7/e08QpXHt?=
- =?us-ascii?Q?LC2fQAQWHdHvnO7TWqoUp2IEh62KZXUAxqtylNFbQgOJFKUFpczkuhSPux3V?=
- =?us-ascii?Q?Pt64agWfFyjaurM7plGE7o1zGqJloQ6fz7c6JbltcTneIkZHdj+3REdWHnBX?=
- =?us-ascii?Q?jSYpwSSzk+9Og1DaL6uerqepRu/UKZ0P0wbliY5lKDPavVZAJ4BbdVHs+uN+?=
- =?us-ascii?Q?m/5bU28pZq9pzEVhZ55gwToTFyNkAdTgNBKc5FnHvfECDkoxVDl20QjgySqK?=
- =?us-ascii?Q?Uy4JoEl2NkXi+7Ro+kDvqzTtHoMpYqv7EyBmvAWMw9VNIUJSLDycr+rVUtMv?=
- =?us-ascii?Q?jLLwqyWQHgIL3NGVSTsrwJbrTmqvn5/PU4gAvcOmzlJqpXtW5uBQZHB198Ww?=
- =?us-ascii?Q?rhU/mgfARFvoY7YNWxxdJlJlu2Q8KB+xB90P4AB+1MoPAmpXWAqB+J2qX2JG?=
- =?us-ascii?Q?SkGkK8xN7hJJ2wkgVWCG/Zzl8XisWANZwXmyE3TsR5cd2XgcVByTduanU16k?=
- =?us-ascii?Q?vcSJGl0+QeUvXqfUeyOzMrpp+yvCRAKGBGrEv7VyKZKaPiQN9PONoTF9d6DW?=
- =?us-ascii?Q?P4WPe0syYUzeX7UdZfjpRujtG9fXagv+mJT5reA9ZFHbdw/0M4hY7dLf7EXt?=
- =?us-ascii?Q?hdU/0Z0UiJgZm/jxp7gRiYwdIgr81TVoRBp4G0TIb8DrEAawLXwvWWsg4f/o?=
- =?us-ascii?Q?QEQ8ZPX+YizVzPUqe2JEnl8ckhST/Cl9Vu2CEOXkhF+0zxxvlgQPHRgguOTM?=
- =?us-ascii?Q?ZXJXlmZQbRbI1jF05R3MO3gZrkMhiXEa9hXgAUL99dgADy2aF3210qsftDRu?=
- =?us-ascii?Q?gjrMtkTQq4p53WZ4kyIwYRBJ4aYOLOQiGc6rOza4y2HgfooQ8xZA3ymP9gyY?=
- =?us-ascii?Q?AelxPbtR7iSPIUeqhW3rqztHJx426IH7vpUWm7ofbQksMFmgiE7vFPvYGedi?=
- =?us-ascii?Q?XpKm6gTg5+JXd6jQsgHexnVwXOl1EZ6EQ8MetfrMFEp5uLHrBeysgXS/0Hdd?=
- =?us-ascii?Q?vkyCBJILBII6byv63SohP95pNqSNLyKZmad6FVrXD30UgM1XSFuuRwlav3NI?=
- =?us-ascii?Q?tgRxV4r2NIjrCVBtbxCfOaByzkZ5ETsGFfub97sTZdr+lJ1dD6EH8mIU0hI1?=
- =?us-ascii?Q?EPni09lR/KCv1gle0JecFs4O3zXwLxJ4ilNIdC7qTXvJ80WW6Z+RK0jn9oIe?=
- =?us-ascii?Q?60H4WK/hKvWZyY+61debUqSsKiUT1u/4zDlZFRZATgNBvbQRa4R6X9yOw2uz?=
- =?us-ascii?Q?xRzOrpyUOG+/mw+tp4ozZaBFQ1eD2ecQqSkY7tLHCEEcFGRChbc5qb07+R0F?=
- =?us-ascii?Q?9kBCYKkGjnsZBy61dZklmU5epQanjiresLQnkPgqbl7idXO58ZL96WKCXInA?=
- =?us-ascii?Q?WsfIKajyFHga/YIpuM5j0pE=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?VimVV3qEKcgYVebJhKZj52jHqp39zrfZlEML2cxcWFdaNmTYW+rx6QU66ipc?=
+ =?us-ascii?Q?L+TNRTrivSwOePnf6bG6nVe6pZ6ixDExBUDpOnRHJuNSqsC7LbMHfn7HDSsw?=
+ =?us-ascii?Q?2mvNY3idvNocmkafoMJ+hJZYvtlPmuvl/cnrWmSKFYkYZj6map5jDdynu1XD?=
+ =?us-ascii?Q?TE9bqsscUDKeh2pg8HWyLwiT0UPEu41ZsQjxYBYxZp+aONEHVI+cU14ghi3J?=
+ =?us-ascii?Q?R7UY3abVwSIZ+pqZ6f0m+sBwj7FkOjPkxrpMGWkTczeFFN2Vw3xm3ajgHLbz?=
+ =?us-ascii?Q?1lc7Uf9BtJIo63194Q6jlkGJT/rAXe4VEle5gKS8ujrjBoNtpCOUEPS5wDUU?=
+ =?us-ascii?Q?OLJf0cJMS0IskovxkDRqwwc0m2huBl/XeRkWNvMQV6XbQohEK0dgpEI7sjwJ?=
+ =?us-ascii?Q?vV3Gx46+co1CGhn/vTYltctqmTEDh5xRzBiMSizntx25qNTsRT3lnlb8oK3e?=
+ =?us-ascii?Q?7jI9D7tCFIEYdHter3B35fh2gfnn5k+W31t6Yg7CKYAe7lzPcnKBRf9vbV3U?=
+ =?us-ascii?Q?FAtdJ4N/Oc6xI81QOVn5nvZ7S8oXBiXrQyKMr3x3xiKBGfleoD39aguQoBBs?=
+ =?us-ascii?Q?coLhbH44YxeYr3r/QxXwG+N22fTM4lNZARKzf3DCtR1IpKKCxocE0A2tPyIZ?=
+ =?us-ascii?Q?GRFOgE20XGdJvDjz7FnrBUlOlQR/CLrGay0M+8Hp1LLkeHtP2Gz0WBbyMtN2?=
+ =?us-ascii?Q?mjgqXyr8ne6GBVpErNKh+Pxw0XNDoW79F15pfxdYUCFyt2N174znkwluWeK+?=
+ =?us-ascii?Q?dnAnwQ6ehFoRss/Meibl+vRrFx1x8k2bFD9OMqAJ6QgCDrCdpn+KJwx7yYc3?=
+ =?us-ascii?Q?Aj6A0RTVZqLBoLOzynrTVD+8f1kvE+q8xtqIHJiWHNEtURiCCg3LEd0/zxdu?=
+ =?us-ascii?Q?GT4ASkvFAKEHmrT4a5MXtn2PQ3wiKupwxj85+cjF7oHIjuMtKAtVJ9R6ijPo?=
+ =?us-ascii?Q?AqzIxh/Idwr3atPJ0ZcEHsUATzFaFwhr0va86goXkF/8GjT8RDO2fQlAZo5N?=
+ =?us-ascii?Q?/kviCCsp+h0CoFyUrU5sdM3o0sBXGaVLHFYpWH8/eh57eQ2Hy8tjKyCLOH0q?=
+ =?us-ascii?Q?5LTLwv8kXlzWt3Ldhj2VBgOzFHqdIR2zXxTXVLdB6h/D+dBRkO1xaKVzgaO/?=
+ =?us-ascii?Q?pYfKIUlv6y3fNhooLzk1jPyw4cZXU+QRLFMVWMdshggA+D9RzJfhH1W/9NxP?=
+ =?us-ascii?Q?v9qoVXnsP1aUqggfk532sK5+GgWuJpez1Ft9US9uNdtkej9lBWNmkqlDzkML?=
+ =?us-ascii?Q?HbMO8X/chcdod5CIlbpHq3C5iNeQ/jySylXhGo/5filEna9etrdi3jmW/5//?=
+ =?us-ascii?Q?cLwU+1MjBApspCQJzj+zIXl9jAtlNy8HMdrbrLm5niLsc1b2SBbAQOgOtX+r?=
+ =?us-ascii?Q?P2PugJOU5F1+2iyN12BiR3P4oaBZE54DkZbipdpsbueDY0TkyRqDIAfFpAuf?=
+ =?us-ascii?Q?wBzKr4MuPV0AZ2CKmvsGyTCBDDHic/PGbNziJyyL4tfN5TeTwsqLpQvEC1dj?=
+ =?us-ascii?Q?Qi4niUYOsO+c5J0aL57bVRTD/TBpujcTdnr4IPPuNYn++vYiygB4b1exfB1g?=
+ =?us-ascii?Q?oFdx9ox8AqGqQ6nNtk4+1Mr0vie5gNA/NwZbaKhgJODr/aznpJuao4g2Ya3F?=
+ =?us-ascii?Q?PO8MH76DlYB6ujBqT75Hchs=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 526650c0-ce20-4d1a-0117-08d9d90a4ded
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e5bcb15-64d3-4be2-c952-08d9d90a4f0b
 X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jan 2022 16:07:33.1789
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jan 2022 16:07:35.0739
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: q0sTzQHadmfxxUt4WiHG0PIN63ntaizDI9eycXEl6BQh6IWFmx0Gc9lUu7ilgcQSb8k2LhUfn+YX3C1xCKzRPg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: +OMDCUKlcR8s2Cwu6aN+alMveq8MtZpUql0femGlAWrjYVq6hwQJVv2eUwM9BGGwtLJD3Nruwg6/I8aKTDvKIQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR12MB2597
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In several places, git-p4 contains code of the form:
-
-(a, b) = foo()
-
-In each case, multiple values are returned through a tuple or a list and
-bound into multiple values.
-
-The brackets around the assigned variables are redundant and can be
-removed:
-
-a, b = foo()
+This patch improves consistency across git-p4 by ensuring all command
+separated arguments to function invocations, tuples and lists are
+separated by commas with a single space following.
 
 Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
 ---
- git-p4.py | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ git-p4.py | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 534f260e9f..385ad98384 100755
+index 385ad98384..6a676cb415 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -300,7 +300,7 @@ def run_hook_command(cmd, param):
-     cli = [cmd] + param
-     use_shell = False
-     if platform.system() == 'Windows':
--        (root,ext) = os.path.splitext(cmd)
-+        root, ext = os.path.splitext(cmd)
-         if ext == "":
-             exe_path = os.environ.get("EXEPATH")
-             if exe_path is None:
-@@ -343,7 +343,7 @@ def read_pipe_full(c, *k, **kw):
+@@ -99,7 +99,7 @@ def p4_build_cmd(cmd):
  
-     p = subprocess.Popen(
-         c, stdout=subprocess.PIPE, stderr=subprocess.PIPE, *k, **kw)
--    (out, err) = p.communicate()
-+    out, err = p.communicate()
-     return (p.returncode, out, decode_text_stream(err))
+     user = gitConfig("git-p4.user")
+     if len(user) > 0:
+-        real_cmd += ["-u",user]
++        real_cmd += ["-u", user]
  
+     password = gitConfig("git-p4.password")
+     if len(password) > 0:
+@@ -1824,7 +1824,7 @@ def patchRCSKeywords(self, file, regexp):
  
-@@ -354,7 +354,7 @@ def read_pipe(c, ignore_error=False, raw=False, *k, **kw):
+         print("Patched up RCS keywords in %s" % file)
  
-        If raw is True, do not attempt to decode output text.
-        """
--    (retcode, out, err) = read_pipe_full(c, *k, **kw)
-+    retcode, out, err = read_pipe_full(c, *k, **kw)
-     if retcode != 0:
-         if ignore_error:
-             out = ""
-@@ -369,7 +369,7 @@ def read_pipe_text(c, *k, **kw):
-     """Read output from a command with trailing whitespace stripped. On error,
-        returns None.
-        """
--    (retcode, out, err) = read_pipe_full(c, *k, **kw)
-+    retcode, out, err = read_pipe_full(c, *k, **kw)
-     if retcode != 0:
-         return None
-     else:
-@@ -423,7 +423,7 @@ def p4_has_move_command():
-         return False
-     cmd = p4_build_cmd(["move", "-k", "@from", "@to"])
-     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
--    (out, err) = p.communicate()
-+    out, err = p.communicate()
-     err = decode_text_stream(err)
-     # return code will be 1 in either case
-     if err.find("Invalid option") >= 0:
-@@ -664,7 +664,7 @@ def p4_keywords_regexp_for_file(file):
-     if not os.path.exists(file):
-         return None
-     else:
--        (type_base, type_mods) = split_p4_type(p4_type(file))
-+        type_base, type_mods = split_p4_type(p4_type(file))
-         return p4_keywords_regexp_for_type(type_base, type_mods)
- 
- 
-@@ -1212,7 +1212,7 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
-         parts = changeRange.split(',')
-         assert len(parts) == 2
-         try:
--            (changeStart, changeEnd) = p4ParseNumericChangeRange(parts)
-+            changeStart, changeEnd = p4ParseNumericChangeRange(parts)
-             block_size = chooseBlockSize(requestedBlockSize)
-         except ValueError:
-             changeStart = parts[0][1:]
-@@ -1437,7 +1437,7 @@ def processContent(self, git_mode, relPath, contents):
+-    def p4UserForCommit(self,id):
++    def p4UserForCommit(self, id):
+         """Return the tuple (perforce user,git email) for a given git commit
+            id.
             """
-         if self.exceedsLargeFileThreshold(relPath, contents) or self.hasLargeFileExtension(relPath):
-             contentTempFile = self.generateTempFile(contents)
--            (pointer_git_mode, contents, localLargeFile) = self.generatePointer(contentTempFile)
-+            pointer_git_mode, contents, localLargeFile = self.generatePointer(contentTempFile)
-             if pointer_git_mode:
-                 git_mode = pointer_git_mode
-             if localLargeFile:
-@@ -1808,7 +1808,7 @@ def patchRCSKeywords(self, file, regexp):
-         """Attempt to zap the RCS keywords in a p4 controlled file matching the
-            given regex.
-            """
--        (handle, outFileName) = tempfile.mkstemp(dir='.')
-+        handle, outFileName = tempfile.mkstemp(dir='.')
-         try:
-             with os.fdopen(handle, "wb") as outFile, open(file, "rb") as inFile:
-                 for line in inFile.readlines():
-@@ -1840,7 +1840,7 @@ def p4UserForCommit(self,id):
-     def checkValidP4Users(self,commits):
+@@ -1833,11 +1833,11 @@ def p4UserForCommit(self,id):
+                               "--format=%ae", id])
+         gitEmail = gitEmail.strip()
+         if gitEmail not in self.emails:
+-            return (None,gitEmail)
++            return (None, gitEmail)
+         else:
+-            return (self.emails[gitEmail],gitEmail)
++            return (self.emails[gitEmail], gitEmail)
+ 
+-    def checkValidP4Users(self,commits):
++    def checkValidP4Users(self, commits):
          """Check if any git authors cannot be mapped to p4 users."""
          for id in commits:
--            (user,email) = self.p4UserForCommit(id)
-+            user, email = self.p4UserForCommit(id)
-             if not user:
-                 msg = "Cannot find p4 user for email %s in commit %s." % (email, id)
-                 if gitConfigBool("git-p4.allowMissingP4Users"):
-@@ -1915,7 +1915,7 @@ def prepareSubmitTemplate(self, changelist=None):
-            outside the depot path we're committing into.
-            """
+             user, email = self.p4UserForCommit(id)
+@@ -3261,7 +3261,7 @@ def streamTag(self, gitStream, labelName, labelDetails, commit, epoch):
  
--        [upstream, settings] = findUpstreamBranchPoint()
-+        upstream, settings = findUpstreamBranchPoint()
+         gitStream.write("tagger %s\n" % tagger)
  
-         template = """\
- # A Perforce Change Specification.
-@@ -2049,7 +2049,7 @@ def applyCommit(self, id):
-         print("Applying", read_pipe(["git", "show", "-s",
-                                      "--format=format:%h %s", id]))
+-        print("labelDetails=",labelDetails)
++        print("labelDetails=", labelDetails)
+         if 'Description' in labelDetails:
+             description = labelDetails['Description']
+         else:
+@@ -3467,7 +3467,7 @@ def importP4Labels(self, stream, p4Labels):
  
--        (p4User, gitEmail) = self.p4UserForCommit(id)
-+        p4User, gitEmail = self.p4UserForCommit(id)
+             if not m.match(name):
+                 if verbose:
+-                    print("label %s does not match regexp %s" % (name,validLabelRegexp))
++                    print("label %s does not match regexp %s" % (name, validLabelRegexp))
+                 continue
  
-         diff = read_pipe_lines(
-             ["git", "diff-tree", "-r"] + self.diffOpts + ["{}^".format(id), id])
-@@ -2214,7 +2214,7 @@ def applyCommit(self, id):
-         #
-         logMessage = extractLogMessageFromGitCommit(id)
-         logMessage = logMessage.strip()
--        (logMessage, jobs) = self.separate_jobs_from_description(logMessage)
-+        logMessage, jobs = self.separate_jobs_from_description(logMessage)
+             if name in ignoredP4Labels:
+@@ -3788,7 +3788,7 @@ def importHeadRevision(self, revision):
+         newestRevision = 0
  
-         template = self.prepareSubmitTemplate(update_shelve)
-         submitTemplate = self.prepareLogMessage(template, logMessage, jobs)
-@@ -2232,7 +2232,7 @@ def applyCommit(self, id):
-             submitTemplate += separatorLine
-             submitTemplate += self.get_diff_description(editedFiles, filesToAdd, symlinks)
+         fileCnt = 0
+-        fileArgs = ["%s...%s" % (p,revision) for p in self.depotPaths]
++        fileArgs = ["%s...%s" % (p, revision) for p in self.depotPaths]
  
--        (handle, fileName) = tempfile.mkstemp()
-+        handle, fileName = tempfile.mkstemp()
-         tmpFile = os.fdopen(handle, "w+b")
-         if self.isWindows:
-             submitTemplate = submitTemplate.replace("\n", "\r\n")
-@@ -2439,7 +2439,7 @@ def run(self, args):
-             if len(allowSubmit) > 0 and not self.master in allowSubmit.split(","):
-                 die("%s is not in git-p4.allowSubmit" % self.master)
+         for info in p4CmdList(["files"] + fileArgs):
  
--        [upstream, settings] = findUpstreamBranchPoint()
-+        upstream, settings = findUpstreamBranchPoint()
-         self.depotPath = settings['depot-paths'][0]
-         if len(self.origin) == 0:
-             self.origin = upstream
-@@ -3039,7 +3039,7 @@ def streamOneP4File(self, file, contents):
-                 file_path, relPath, format_size_human_readable(size)))
-             sys.stdout.flush()
+@@ -4293,7 +4293,7 @@ def renameBranch(self, branch_name):
+         """Rename the existing branch to branch_name.N ."""
  
--        (type_base, type_mods) = split_p4_type(file["type"])
-+        type_base, type_mods = split_p4_type(file["type"])
- 
-         git_mode = "100644"
-         if "x" in type_mods:
-@@ -3104,7 +3104,7 @@ def streamOneP4File(self, file, contents):
-             contents = [regexp.sub(br'$\1$', c) for c in contents]
- 
-         if self.largeFileSystem:
--            (git_mode, contents) = self.largeFileSystem.processContent(git_mode, relPath, contents)
-+            git_mode, contents = self.largeFileSystem.processContent(git_mode, relPath, contents)
- 
-         self.writeToGitStream(git_mode, relPath, contents)
- 
-@@ -3572,7 +3572,7 @@ def getBranchMapping(self):
-         configBranches = gitConfigList("git-p4.branchList")
-         for branch in configBranches:
-             if branch:
--                (source, destination) = branch.split(":")
-+                source, destination = branch.split(":")
-                 self.knownBranches[destination] = source
- 
-                 lostAndFoundBranches.discard(destination)
-@@ -4180,7 +4180,7 @@ def rebase(self):
-         if len(read_pipe("git diff-index HEAD --")) > 0:
-             die("You have uncommitted changes. Please commit them before rebasing or stash them away with git stash.")
- 
--        [upstream, settings] = findUpstreamBranchPoint()
-+        upstream, settings = findUpstreamBranchPoint()
-         if len(upstream) == 0:
-             die("Cannot find upstream branchpoint for rebase")
- 
-@@ -4477,7 +4477,7 @@ def main():
-                                    formatter=HelpFormatter())
- 
-     try:
--        (cmd, args) = parser.parse_args(sys.argv[2:], cmd)
-+        cmd, args = parser.parse_args(sys.argv[2:], cmd)
-     except:
-         parser.print_help()
-         raise
+         found = True
+-        for i in range(0,1000):
++        for i in range(0, 1000):
+             backup_branch_name = "{0}.{1}".format(branch_name, i)
+             if not gitBranchExists(backup_branch_name):
+                 gitUpdateRef(backup_branch_name, branch_name) # copy ref to backup
 -- 
 2.34.1
 
