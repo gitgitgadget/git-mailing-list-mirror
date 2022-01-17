@@ -2,175 +2,227 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF5E0C433EF
-	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 18:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FAFFC433F5
+	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 18:26:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238303AbiAQSWP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jan 2022 13:22:15 -0500
-Received: from mout.web.de ([212.227.15.4]:46169 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238272AbiAQSWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jan 2022 13:22:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1642443727;
-        bh=Fc00h0rI0O4/tVnsnEWthvPCXp0bkWE2WgBkAXihwVs=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=EJl0jDYLz5gbVsVFQDnVk2BTEVWiF0ddF6mk7mDa23E08SCyvvagT1+IrH3hMDDjD
-         k1JjVcQOo7LdLRCfQaJMo6/7H+mxqvShctaue+ajZnoj4e1ITtKjiktA4uYc2tCPVm
-         +bT9/3xU/O9hKja8erM1p/08yL1GR6o0hYXvXRhA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MlLE9-1mSC0o15m1-00lXNT; Mon, 17
- Jan 2022 19:22:07 +0100
-Message-ID: <c605ecc2-29d6-9025-152e-1bcb831e7188@web.de>
-Date:   Mon, 17 Jan 2022 19:22:06 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.5.0
-Subject: Re: [PATCH 9/9] mergesort: use ranks stack
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <943b1e01-465e-5def-a766-0adf667690de@web.de>
- <636647b1-f666-f1e2-4127-ee0869b61036@web.de>
- <220117.864k62qmt1.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <220117.864k62qmt1.gmgdl@evledraar.gmail.com>
+        id S242496AbiAQS0C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jan 2022 13:26:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37252 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242467AbiAQSZ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jan 2022 13:25:58 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B246C061574
+        for <git@vger.kernel.org>; Mon, 17 Jan 2022 10:25:58 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id k5so13242603wmj.3
+        for <git@vger.kernel.org>; Mon, 17 Jan 2022 10:25:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=wTG2RNPqHo8g3j3IiothrZaWVGdqheNq+vmvUhUkS54=;
+        b=FDMTwyToaKQNsnJfSxCh81f7Y31q1oneXmYxiqYUNSTttXDXOkcGBORh1g4jAkyH/V
+         hEoYxZqmDbuqJL/w3A+ER09tyN3A9ZxE1CH9Q4WZk3eNK3SIpFti1ulW/qjfsajewEzo
+         3PCRE3bOo5hQZ5KUJQLIsk5Xcg440rn6vzVaOZYjc/0L6UoRkdjvESNxvhEw5TlKdoIN
+         n3tEE58cFLieaXlX9rkARRu7/VsYngIqfGXJGlj+4s5084o9stDCA9OGGHIJU5wqSnLM
+         YKJHOhzg/KNIA7JxcQyG4pEkgx0JIOPdDc7/QJuivRBulJPS8NGFrPwRrPQJK6cjwQcP
+         ngmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=wTG2RNPqHo8g3j3IiothrZaWVGdqheNq+vmvUhUkS54=;
+        b=B/RQrV/ZYa38+0fE4vdRFKLnbeWct6uqZgAYTBxUXQjjVnmEiw+amdUa2XjUeL7DJ/
+         JFdFdfycbWboxYcuyZ9VQJXHtBr7h0n8GP+P2u94T6eAbY1iOPkhfaBly41s4TkZUhGs
+         2rJpB9HCvHGwBvfexs9QrZNGiHEGhujp24KOW0x/TdBT8SCxfqyLUqbGhAqY8l5tYrhB
+         qo3wb5Wx+JwacQHwZnnNaPQ4s0OSzmCyBOSdYwsdgU6frq237aJukcYbCrvf9QAjyUCu
+         lq6z98TyXNlhX5dJFnORQN3P8NFstkTXg9V+pRt6lCc8cXp9QsxmnMQKu16dFxw/q3CQ
+         YbTg==
+X-Gm-Message-State: AOAM530gcjfIdf2dQ2mGKMomoOG7WIMgv0zqmW2UHfIKnF8Y2X25z7iF
+        yFUm1+Ja7IKcgv1Yv/PesmBEqZ7ITU0=
+X-Google-Smtp-Source: ABdhPJwZqYyZr5yGVvL0brD+cHG+szRLbXjSkjgc7ty0pWMMJDnbeeY4cfkaumktl+VtpVZe9wdOpQ==
+X-Received: by 2002:a7b:cb55:: with SMTP id v21mr21190863wmj.77.1642443956829;
+        Mon, 17 Jan 2022 10:25:56 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c185sm108966wma.24.2022.01.17.10.25.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Jan 2022 10:25:56 -0800 (PST)
+Message-Id: <pull.1194.v2.git.git.1642443955836.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1194.git.git.1642212566346.gitgitgadget@gmail.com>
+References: <pull.1194.git.git.1642212566346.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 17 Jan 2022 18:25:55 +0000
+Subject: [PATCH v2] merge-ort: avoid assuming all renames detected
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zI49DNXSvhQBuizabsypKWuVvXccSpNRrvXm5Kl6KsqwuZMv6I2
- e5rt5jzdHeHbrWkeCGHdJwdeyWLbM4XRvuMYM4enS5nXqCiIjJBeuiyo5SlKkE3TQWXgaLw
- zuSKcKF17rM7KwFcZXJFUO6zH3HWOs/lkb2PLH2pBmRG7kfUi8+hE9VVfhcPHj3Ke4ny9Ez
- 5npiqHg6clPWrz0vquyfg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:l/a3CspSmAk=:tYoSUPuoSdRd9x6WLkYZ8p
- KU3XTwxQvn8Ncwl7lbV8sZ0Gor/e+lNbevkmqFa66FvjUrboWBqNowhtozT0138bjudwyeY7d
- FijhnzWuwBygYxYTbob+Ubq4uz+8BpouIxqOx1BeZl5wlbaFWbHQGmbvaKqtdJoo9DrnRS/Bi
- wZGfV3u4RIqjuxRWbKDuHN4TREf2RaLTagdtPzNXknXr7El0R8QxXaFxkfJvWRXYfq5EJgRV7
- y7p6YLdCHczWQNrjHOljxYcThvSTUbmKFEmdv7WReaTRHclJS+berRmuJwtI6zxX4ayf+vxzp
- uwkz6RkzVUF+6EC81Z+kFB6m5JBDzsJ6V8aXMxFMVMY++hqCiX8XdICBaNwU2tOOPEMms9UDN
- lhFLIFw4YqV8oKFKJIrdpFYy4TBjcIvz2ordMym+YeA2YzHaTJCS8cXtGQ98wlYy6oaFoTXzM
- eMlfyF3iAcfjH3HMqUyviB4P9rHjn4A2K2TyrXzValnaSz5UBiFoK+EwUqJmXzP+ss3JA2Qsf
- EurBY96PNG6nPHYPVrvJGJT25wwbwmvq6TwsEltHAZkt3zVZKjyQrW/MUXFIV4FBpFLXkpc26
- C8p5OUePk+zeJaNFpQl4vcnXKE3nNIlF9h0ADpBc2ZIIubUDghrQZJTxVpLB8TXBdY9pcGRYX
- VM7UHrqr97ktiNZ3wVxv+QO1FC3cUXsfVDYXkqk9UZISF4xBtKV4gfivsVh/xP9gCyXROUN7/
- MeJ7CEuDDSMkv6T6xy26ed3GDPwmGcL2czdjwk4gKNxSdg7zcSanQ0MCh+qfV37WVefwPRrUH
- 8/GRZdwnMXueO4+L6hZplqikBGLGE/B2ulIy25Dtfk6/T9mGwNmYpNjkqucNANSssjLvqFi8X
- 1GA4QsxQfj4IZ8qXff8SuEBs0Kw0mkcinafgMHclK7oOYqow7VbZE0ZnGAYLgc6p8SUrw1yzC
- NqQt1UWaq5EOEgdHv/uxhn3HiaZEHsU/R96QVXFygAuYGEqVG9UECUUoi4/F4oorcleGH+QMq
- ni737WRVNKOTLjHl4HLvMOwCZpx32Uz23JcXyU/KrPyS3D0Sb8rWMKhAyWhBmP4rxg==
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.01.22 um 18:43 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Fri, Oct 01 2021, Ren=C3=A9 Scharfe wrote:
->
->
->> +/*
->> + * Perform an iterative mergesort using an array of sublists.
->> + *
->> + * n is the number of items.
->> + * ranks[i] is undefined if n & 2^i =3D=3D 0, and assumed empty.
->> + * ranks[i] contains a sublist of length 2^i otherwise.
->> + *
->> + * The number of bits in a void pointer limits the number of objects
->> + * that can be created, and thus the number of array elements necessar=
-y
->> + * to be able to sort any valid list.
->> + *
->> + * Adding an item to this array is like incrementing a binary number;
->> + * positional values for set bits correspond to sublist lengths.
->> + */
->>  void *llist_mergesort(void *list,
->>  		      void *(*get_next_fn)(const void *),
->>  		      void (*set_next_fn)(void *, void *),
->>  		      int (*compare_fn)(const void *, const void *))
->>  {
->> -	unsigned long l;
->> -
->> -	if (!list)
->> -		return NULL;
->> -	for (l =3D 1; ; l *=3D 2) {
->> -		void *curr;
->> -		struct mergesort_sublist p, q;
->> +	void *ranks[bitsizeof(void *)];
->> +	size_t n =3D 0;
->> +	int i;
->>
->> -		p.ptr =3D list;
->> -		q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
->> -		if (!q.ptr)
->> -			break;
->> -		p.len =3D q.len =3D l;
->> +	while (list) {
->> +		void *next =3D get_next_fn(list);
->> +		if (next)
->> +			set_next_fn(list, NULL);
->> +		for (i =3D 0; n & (1 << i); i++)
->> +			list =3D llist_merge(ranks[i], list, get_next_fn,
->> +					   set_next_fn, compare_fn);
->> +		n++;
->> +		ranks[i] =3D list;
->> +		list =3D next;
->> +	}
->
-> (Commenting on a commit integrated into v2.34.0)
->
-> The aCC compiler on HP/UX notes:
->
->     "mergesort.c", line 67: warning #2549-D: variable "ranks" is used be=
-fore its value is set
->                         list =3D llist_merge(ranks[i], list, get_next_fn=
-,
->
-> It's commenting on the ranks[i] within the for-loop-within-while-loop
-> above.
+From: Elijah Newren <newren@gmail.com>
 
-That would be a bug.  I think none of the array elements are read before
-they are written -- but of course I'm biased.  Can that compiler show a
-sequence that would lead to reading uninitialized data?  Or anyone else?
+In commit 8b09a900a1 ("merge-ort: restart merge with cached renames to
+reduce process entry cost", 2021-07-16), we noted that in the merge-ort
+steps of
+    collect_merge_info()
+    detect_and_process_renames()
+    process_entries()
+that process_entries() was expensive, and we could often make it cheaper
+by changing this to
+    collect_merge_info()
+    detect_and_process_renames()
+    <cache all the renames, and restart>
+    collect_merge_info()
+    detect_and_process_renames()
+    process_entries()
+because the second collect_merge_info() would be cheaper (we could avoid
+traversing into some directories), the second
+detect_and_process_renames() would be free since we had already detected
+all renames, and then process_entries() has far fewer entries to handle.
 
-Initializing the array would memset(3) 128 bytes on 32-bit systems and
-512 bytes on 64-bit systems.  Doing that everywhere just to appease a
-confused compiler on a dying platform would be merciful, but still sad.
+However, this was built on the assumption that the first
+detect_and_process_renames() actually detected all potential renames.
+If someone has merge.renameLimit set to some small value, that
+assumption is violated which manifests later with the following message:
 
->
->>
->> -		if (compare_fn(p.ptr, q.ptr) > 0)
->> -			list =3D curr =3D pop_item(&q, get_next_fn);
->> +	for (i =3D 0; n; i++, n >>=3D 1) {
->> +		if (!(n & 1))
->> +			continue;
->> +		if (list)
->> +			list =3D llist_merge(ranks[i], list, get_next_fn,
->> +					   set_next_fn, compare_fn);
->>  		else
->> -			list =3D curr =3D pop_item(&p, get_next_fn);
->> -
->> -		while (p.ptr) {
->> -			while (p.len || q.len) {
->> -				void *prev =3D curr;
->> -
->> -				if (!p.len)
->> -					curr =3D pop_item(&q, get_next_fn);
->> -				else if (!q.len)
->> -					curr =3D pop_item(&p, get_next_fn);
->> -				else if (compare_fn(p.ptr, q.ptr) > 0)
->> -					curr =3D pop_item(&q, get_next_fn);
->> -				else
->> -					curr =3D pop_item(&p, get_next_fn);
->> -				set_next_fn(prev, curr);
->> -			}
->> -			p.ptr =3D q.ptr;
->> -			p.len =3D l;
->> -			q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
->> -			q.len =3D q.ptr ? l : 0;
->> -
->> -		}
->> -		set_next_fn(curr, NULL);
->> +			list =3D ranks[i];
->>  	}
->>  	return list;
->>  }
->
+    $ git -c merge.renameLimit=1 rebase upstream
+    ...
+    git: merge-ort.c:546: clear_or_reinit_internal_opts: Assertion
+    `renames->cached_pairs_valid_side == 0' failed.
+
+Turn off this cache-renames-and-restart whenever we cannot detect all
+renames, and add a testcase that would have caught this problem.
+
+Reported-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    merge-ort: avoid assuming all renames detected
+    
+    Fixes https://lore.kernel.org/git/YeHTIfEutLYM4TIU@nand.local/
+    
+    Changes since v1:
+    
+     * Fixed a small style issue
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1194%2Fnewren%2Favoid-assertion-assuming-renames-found-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1194/newren/avoid-assertion-assuming-renames-found-v2
+Pull-Request: https://github.com/git/git/pull/1194
+
+Range-diff vs v1:
+
+ 1:  f1e9901ae67 ! 1:  239d3ba08c1 merge-ort: avoid assuming all renames detected
+     @@ merge-ort.c: static int detect_and_process_renames(struct merge_options *opt,
+       	trace2_region_enter("merge", "regular renames", opt->repo);
+       	detection_run |= detect_regular_renames(opt, MERGE_SIDE1);
+       	detection_run |= detect_regular_renames(opt, MERGE_SIDE2);
+     -+	if (renames->needed_limit != 0) {
+     ++	if (renames->needed_limit) {
+      +		renames->cached_pairs_valid_side = 0;
+      +		renames->redo_after_renames = 0;
+      +	}
+
+
+ merge-ort.c                              |  4 ++
+ t/t6429-merge-sequence-rename-caching.sh | 67 ++++++++++++++++++++++++
+ 2 files changed, 71 insertions(+)
+
+diff --git a/merge-ort.c b/merge-ort.c
+index c3197970219..b0ff9a72879 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -3060,6 +3060,10 @@ static int detect_and_process_renames(struct merge_options *opt,
+ 	trace2_region_enter("merge", "regular renames", opt->repo);
+ 	detection_run |= detect_regular_renames(opt, MERGE_SIDE1);
+ 	detection_run |= detect_regular_renames(opt, MERGE_SIDE2);
++	if (renames->needed_limit) {
++		renames->cached_pairs_valid_side = 0;
++		renames->redo_after_renames = 0;
++	}
+ 	if (renames->redo_after_renames && detection_run) {
+ 		int i, side;
+ 		struct diff_filepair *p;
+diff --git a/t/t6429-merge-sequence-rename-caching.sh b/t/t6429-merge-sequence-rename-caching.sh
+index 035edc40b1e..f2bc8a7d2a2 100755
+--- a/t/t6429-merge-sequence-rename-caching.sh
++++ b/t/t6429-merge-sequence-rename-caching.sh
+@@ -697,4 +697,71 @@ test_expect_success 'caching renames only on upstream side, part 2' '
+ 	)
+ '
+ 
++#
++# The following testcase just creates two simple renames (slightly modified
++# on both sides but without conflicting changes), and a directory full of
++# files that are otherwise uninteresting.  The setup is as follows:
++#
++#   base:     unrelated/<BUNCH OF FILES>
++#             numbers
++#             values
++#   upstream: modify: numbers
++#             modify: values
++#   topic:    add: unrelated/foo
++#             modify: numbers
++#             modify: values
++#             rename: numbers -> sequence
++#             rename: values -> progression
++#
++# This is a trivial rename case, but we're curious what happens with a very
++# low renameLimit interacting with the restart optimization trying to notice
++# that unrelated/ looks like a trivial merge candidate.
++#
++test_expect_success 'avoid assuming we detected renames' '
++	git init redo-weirdness &&
++	(
++		cd redo-weirdness &&
++
++		mkdir unrelated &&
++		for i in $(test_seq 1 10)
++		do
++			>unrelated/$i
++		done &&
++		test_seq  2 10 >numbers &&
++		test_seq 12 20 >values &&
++		git add numbers values unrelated/ &&
++		git commit -m orig &&
++
++		git branch upstream &&
++		git branch topic &&
++
++		git switch upstream &&
++		test_seq  1 10 >numbers &&
++		test_seq 11 20 >values &&
++		git add numbers &&
++		git commit -m "Some tweaks" &&
++
++		git switch topic &&
++
++		>unrelated/foo &&
++		test_seq  2 12 >numbers &&
++		test_seq 12 22 >values &&
++		git add numbers values unrelated/ &&
++		git mv numbers sequence &&
++		git mv values progression &&
++		git commit -m A &&
++
++		#
++		# Actual testing
++		#
++
++		git switch --detach topic^0 &&
++
++		test_must_fail git -c merge.renameLimit=1 rebase upstream &&
++
++		git ls-files -u >actual &&
++		! test_file_is_empty actual
++	)
++'
++
+ test_done
+
+base-commit: 1ffcbaa1a5f10c9f706314d77f88de20a4a498c2
+-- 
+gitgitgadget
