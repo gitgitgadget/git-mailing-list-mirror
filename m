@@ -2,80 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D0CEC433EF
-	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 23:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3D37C433EF
+	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 23:09:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243743AbiAQXFm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jan 2022 18:05:42 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62089 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229842AbiAQXFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jan 2022 18:05:42 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 337DD160D4F;
-        Mon, 17 Jan 2022 18:05:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KIsxMlsZo+2wMihn2A++7G+dFmDDyOG8oJQCqW
-        PkrcY=; b=MRcJ8l5Sqs/z/ULqb9EoQG1gqulf18Or4JXhYHq6a4/EurB79R+FNA
-        MPow3ZjbTIdisc2N2DJC88ceyJg2vZhQOn7q99jO+ivffuqvpmazZlzBYKB9+Isi
-        HBgWgU8nLo1z9+4K32+6z5tR4tH6hKxDWpLf84VhSiyuvwja/0v4Y=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B38D160D4E;
-        Mon, 17 Jan 2022 18:05:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4E1ED160D4D;
-        Mon, 17 Jan 2022 18:05:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "John A. Leuenhagen" <john@zlima12.com>
+        id S243763AbiAQXJU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jan 2022 18:09:20 -0500
+Received: from smtp.zlima12.com ([107.172.191.159]:57484 "EHLO
+        smtp.zlima12.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229842AbiAQXJU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jan 2022 18:09:20 -0500
+Date:   Mon, 17 Jan 2022 18:09:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=zlima12.com; s=dkim;
+        t=1642460959; bh=ImHJ0xxE1cWm9ZlPP0R+AtqAuIwkUDixtl1XwChDk+8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=RhXtEddRtJIANakxGihNOZ5B8U5gbAjmaj22nn94yoptkHHEMGh3xJktXAT2I3bxA
+         OtirbhzSbmu2RZUT/9eATkkcdNo+aBiag3ZIDhU0Tiw6fKHluBhRiUtfAXHWZX5373
+         Yg5dk4tVlKEegNMbmr1qeLvQaKKNvM2vqcrId4imsTABxhgTPzL5x7DbWnt4iGbv9g
+         oYBxJEE5JkuIZxjYtoaxQrh3lBuDFcVG6nK3Ej+1txWxA0jkF90wbdAeZ2Ilg51xWa
+         OqD0dGXceBwiqzknq0rl8LwyqVWwh5y0YFz8SA8PLfk1P8XbzWUPGkkesa7mOO0CYW
+         E8JQqaD0M6cNw==
+From:   "John A. Leuenhagen" <john@zlima12.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org
 Subject: Re: Behavior of core.sharedRepository on non-bare Repositories
+Message-ID: <20220117230827.c4s4kmejk675drf7@Zulu-1>
 References: <20220117223912.fwsydwpkwfbcdlcq@Zulu-1>
-Date:   Mon, 17 Jan 2022 15:05:38 -0800
-In-Reply-To: <20220117223912.fwsydwpkwfbcdlcq@Zulu-1> (John A. Leuenhagen's
-        message of "Mon, 17 Jan 2022 17:39:12 -0500")
-Message-ID: <xmqqo84at131.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+ <YeXz0MYd8wduM9W+@camp.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FCC2940C-77E9-11EC-B995-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YeXz0MYd8wduM9W+@camp.crustytoothpaste.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"John A. Leuenhagen" <john@zlima12.com> writes:
+On Mon, Jan 17, 2022 at 10:55:12PM +0000, brian m. carlson wrote:
+> I can't speak to how this feature is supposed to work on the working
+> tree, but it is generally the case that users should not share a working
+> tree. Any user who can modify the configuration can cause arbitrary code
+> to be executed by every other user of the repository when they run
+> almost any Git command.
+> 
+> The only safe thing to do with an untrusted repository is perform a
+> clone or fetch from it.
+> 
+> It may be in your case that all the users are trusted (e.g., all system
+> administrators), but in general it's strongly recommended that users not
+> share a working tree.  There'll be an entry in the FAQ describing this
+> in the future.
 
-> Based on the wording in the man page, I was under the impression that
-> this would affect all files in any type of repository (bare or not), but
-> it seems as though this is not the case. It affects bare repositories as
-> one would expect, but it only affects the .git directory on non-bare
-> repositories. The working tree is not affected by the option at all.
+Alright, there should definitely be warnings about this then, I'm glad
+something will be added to the FAQ at least.
 
-This behaviour, as far as I know, dates back way before "git
-worktree add" was invented.  Such an arrangement to share the object
-store and refs (i.e. contents of .git/) among multiple worktrees
-were already available via contrib/workdir/ even back then.
+In my case, I wanted to have a user for the purpose of compiling some
+projects. This user would be very unpriviliged, so that the build system
+(whether through misconfiguration or malice) couldn't do much harm.
 
-The motivation behind the current design may be that sharing a
-working tree between two people to allow overwriting each other's
-change in an uncontrolled way with their editors is a total disaster
-and nobody would consider doing such a nonsensical arrangement.  It
-may be why we do not loosen the permission of working tree files
-beyond what your umask does.
+I intended to have a group that my own user and this unpriviliged user
+would be in. All files and directories in the working tree would be
+owned by this group, and should be group-writable. This way, I could
+make edits to source files, but the unpriviliged user could also do what
+it needed to while building the project.
 
-But allowing write access to the same repository from multiple
-working trees were considered worth supporting.  More importantly,
-the repository data access by git is not uncontrolled---there are
-protections with lockfiles to avoid overwriting others' changes.
+> That doesn't mean that this feature couldn't be extended to handle the
+> working tree, but I did want to provide some context on why working
+> trees aren't intended to be shared.
 
-If multiple people must write into the same repository and the same
-working tree, the umask(1) command is your friend.  Add these users
-to the same single group, have the repository and working tree files
-owned by that group, and make sure these users have umask no
-stricter than 007.
-
+Of course, thanks for the input. Considering the dangers you mentioned,
+perhaps this functionality is better off in a completely separate
+option. Or at the least, the description of the feature should be very
+descriptive in all of this.
