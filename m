@@ -2,44 +2,44 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57A97C433F5
-	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 08:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9CC8C433F5
+	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 08:12:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237953AbiAQIMo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jan 2022 03:12:44 -0500
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:38237 "EHLO
+        id S237947AbiAQIMt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jan 2022 03:12:49 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:56063 "EHLO
         out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230177AbiAQIMn (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 17 Jan 2022 03:12:43 -0500
+        by vger.kernel.org with ESMTP id S237951AbiAQIMq (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 17 Jan 2022 03:12:46 -0500
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 1E8445C00C5;
-        Mon, 17 Jan 2022 03:12:43 -0500 (EST)
+        by mailout.nyi.internal (Postfix) with ESMTP id 821455C00C5;
+        Mon, 17 Jan 2022 03:12:46 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 17 Jan 2022 03:12:43 -0500
+  by compute1.internal (MEProxy); Mon, 17 Jan 2022 03:12:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=I2zRV07sfwxW3btYSVMwHIY//nR
-        f9QC4BAaDAkvXvME=; b=oGgMUbTqQ2xhMSPaz0SGx2DGnkMeDFlV104Hqz86adA
-        Z3KRe+uWzzP39O7Fw2ox5L7f1pLbONnY2zSigr2QVMFoUPEdZTknR1tiLNx6654C
-        Guygh73po01ctAaOGepwaGOt6sHpbJVxSiPvbTulXNqmDbjd6TxEtd33UESJPE9z
-        hmARUdSi8jH6+NUWL8l315n5i5ctt7noU1RGLCg0Ju3nyOcLqbltpmwWGQEtwADl
-        fYI78jiPzKV2SlsC0lwrc0ROM/OP7zJoH8x83hrFsyc0eSByO1Y8buSRWcbnJ2DW
-        3IccqGkTt1GOXsNIqlNsGVMvDOnmjSM14mIivn+oM2w==
+        :content-type:in-reply-to; s=fm3; bh=63dCw0k3urB/vN7FoEkXXuzEdUC
+        J+D7Q45z6b/rF/go=; b=H9HFrRSVfYz2DZ116Pz1B6igQosuGYD4h6/QODD4omW
+        QxLZBXonc1c4mkEOyKZznMoXtgMeUG7SIvy7I1mHyxwroUabUWxekAhD7lO1yFns
+        9T8OWAPKFRlqaDJ4vxpI/PZXT51POt4u3Yhxglb9QMWpMPiPWQsBdZwssd7RbxaR
+        D+7sXM4LotclEYvfTvHt6CKyrfrTqz6A3Hhw5HholaNNEwMc8RjL+Yby6b2rSjxQ
+        35z4Of/YWLqHEE82LcPlehzI3bAZpHpMIKwFMQyjctqtkcLaw7Ljr0cYMvacCnPY
+        JIKJDOJwL4ssygMo3HcU7DA2BmKGk/+3SlaLg+eDlEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=I2zRV0
-        7sfwxW3btYSVMwHIY//nRf9QC4BAaDAkvXvME=; b=IIupYzEZW/2MlJhHbAC/cc
-        Hh8x17G3c7DW/SlBX9g7/ABihsb+LxXAwUYWTiFpzTBD13eLSBVXWd3FyEbnZNUQ
-        PwPX+hx4Q9BkzvI8IIL4YtD82k1gJwiio0nEaVV623K9RNdNmrvowb9YbLcq66vb
-        Lkm/vhrLa0CSiLYwQq/7+1VSnOzrNB9X+lCnbVB2SPkBbchqI9QgwjzdkwiREb6C
-        vG9/goSF+ZSBxWB+E+JD/t+CXFcCyXNEjFR8eUkkgg0KIAvRzhCXpo34rVkEDOdN
-        LCpgjR8qnuzzawWywfpyKNcFUD136+DZZ0FnSDyZL+vZLoI36VksIoKiqwZONOHg
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=63dCw0
+        k3urB/vN7FoEkXXuzEdUCJ+D7Q45z6b/rF/go=; b=e9V5pCLHGWeVciuH9j+pIW
+        rv/XBvkoVA53nEf0gLd2TxuZLRvUxa3X72SL6ObGNb7e+EWbPZRLKgGqNh6ODi+Z
+        KLOUmuxo3U8LDEOflQ6jWKdUYC1t/ntCDw8HlnoG0MkKmgJhPX+uE1IC7VyqhdeJ
+        DKE4wEI8/FJC9jCXVxLEvLuAMjsALG+FXolSbh15YdHJc5DpO9/SAP9aoqRa8PZy
+        0VPcCq5FGNkwKAXTKOlcCq0mJtlNv/BJ72NjgPk2vME35het0IZ+3yoVSqSsljtM
+        jkKjIVwT+rnKiEHwaRb5dDa+hnnZNxl1blAsI/MmD2exzszHlyGYsV33gVZvTupg
         ==
-X-ME-Sender: <xms:-iTlYc7u2dmJwHvcnH6rSq9EVMHijOTRsMpA7rVGtecHtG4_P4Py4Q>
-    <xme:-iTlYd7dNaCR7WhYiRvt1OvhAIP2-RFdHWlY4WeYmisPDJci-zIeD4Yu8kOB0AKWJ
-    RIMnTrIIp_TBgzYdw>
-X-ME-Received: <xmr:-iTlYbdDTaBqlx_jD0tLGkRyKQoH9eHonBgQOyaCkJmebfJBQIhEx182CjAN01gELzbQ5cplKoeWy3mcdXo6F7K__ZzYQK7tmVFwAVbeLwqCSr3FhvKtiA>
+X-ME-Sender: <xms:_iTlYY_jalWAMh8XGXcmxJQ4riLqExitEq3Mq11N3nE2SeHa-pj3qw>
+    <xme:_iTlYQt6v3gfRGaIEBayMHDW19UwHSk4ceBjmmqdqhl7IObLO5BhIf5wG44zKkXiO
+    ZwU0CDpMN_-DAN-Bw>
+X-ME-Received: <xmr:_iTlYeAwsXS6X3G_p87myQ8m3-nzU9yxsNKzcqVgkhWqN42ijuWUI81DMgW051J0TJmpvUPVt3WF-KgXJTKW3XaIzOtJ4epU3R6rZkXlxJFX8pfQ7HaHVw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddtgdduudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -48,29 +48,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddtgdduudekucetufdoteggod
     hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
     ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:-iTlYRKrUw9ogiDNjDC17hMeyM1oMLhnTeylhmVMBN-zzjQtjE3Jxg>
-    <xmx:-iTlYQLHLT_y1WXmeCq1cC7hV52W5g04zT12me1jlG3aF1Ybxhk3Rw>
-    <xmx:-iTlYSwkCLqnCTgoDcyroWaKOJ9t11AyAcp6KFbhlWtkZ-rSXkIz4Q>
-    <xmx:-yTlYVEV2SXP-yhycAYZq7F2VtKQxU3rAffb2xB5LHGNzXWHtysLNw>
+X-ME-Proxy: <xmx:_iTlYYd7vnQwWMgy_TTJUs-wN4o-cGTk3qUerSZ6SjPEsiyizpLgQA>
+    <xmx:_iTlYdOmzQa3ZpmSwiIs3g4d5-AP1cXbElXLFi85GjAaYRX64c6Brg>
+    <xmx:_iTlYSk23O6Ilu3NPDo3lPAf3dFPW4Udi2RTPFmqnkpo81vVxEXNAQ>
+    <xmx:_iTlYSrKotapjlTm1Qv8JWtJqmgdA3h7gKUW8PBp6K2DfgtPD6iHKQ>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Jan 2022 03:12:41 -0500 (EST)
+ 17 Jan 2022 03:12:45 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 99ed193f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 17 Jan 2022 08:12:40 +0000 (UTC)
-Date:   Mon, 17 Jan 2022 09:12:39 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id d0e13a53 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 17 Jan 2022 08:12:45 +0000 (UTC)
+Date:   Mon, 17 Jan 2022 09:12:44 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Bryan Turner <bturner@atlassian.com>,
         Waleed Khan <me@waleedkhan.name>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH v4 3/6] refs: allow skipping the reference-transaction hook
-Message-ID: <f4a07fe9a8823d382e010a8b4978fa8a3fc3c943.1642406989.git.ps@pks.im>
+Subject: [PATCH v4 4/6] refs: demonstrate excessive execution of the
+ reference-transaction hook
+Message-ID: <a8981baef74b4622b5819cddaae80c4356f440c4.1642406989.git.ps@pks.im>
 References: <cover.1641556319.git.ps@pks.im>
  <cover.1642406989.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="rzGCon5+Ea6/2lhj"
+        protocol="application/pgp-signature"; boundary="V/VU6KLUv2Bjmh2l"
 Content-Disposition: inline
 In-Reply-To: <cover.1642406989.git.ps@pks.im>
 Precedence: bulk
@@ -78,81 +79,117 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---rzGCon5+Ea6/2lhj
+--V/VU6KLUv2Bjmh2l
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The reference-transaction hook is executing whenever we prepare, commit
-or abort a reference transaction. While this is mostly intentional, in
-case of the files backend we're leaking the implementation detail that
-the store is in fact a composite store with one loose and one packed
-backend to the caller. So while we want to execute the hook for all
-logical updates, executing it for such implementation details is
-unexpected.
-
-Prepare for a fix by adding a new flag which allows to skip execution of
-the hook.
+Add tests which demonstate that we're executing the
+reference-transaction hook too often in some cases, which thus leaks
+implementation details about the reference store's implementation
+itself. Behaviour will be fixed in follow-up commits.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c | 3 +++
- refs.h | 5 +++++
- 2 files changed, 8 insertions(+)
+ t/t1416-ref-transaction-hooks.sh | 64 ++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
-diff --git a/refs.c b/refs.c
-index 7415864b62..526bf5ed97 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2084,6 +2084,9 @@ static int run_transaction_hook(struct ref_transactio=
-n *transaction,
- 	const char *hook;
- 	int ret =3D 0, i;
+diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hoo=
+ks.sh
+index 6c941027a8..0567fbdf0b 100755
+--- a/t/t1416-ref-transaction-hooks.sh
++++ b/t/t1416-ref-transaction-hooks.sh
+@@ -136,4 +136,68 @@ test_expect_success 'interleaving hook calls succeed' '
+ 	test_cmp expect target-repo.git/actual
+ '
 =20
-+	if (transaction->flags & REF_TRANSACTION_SKIP_HOOK)
-+		return 0;
++test_expect_success 'hook does not get called on packing refs' '
++	# Pack references first such that we are in a known state.
++	git pack-refs --all &&
 +
- 	hook =3D find_hook("reference-transaction");
- 	if (!hook)
- 		return ret;
-diff --git a/refs.h b/refs.h
-index 31f7bf9642..d4056f9fe2 100644
---- a/refs.h
-+++ b/refs.h
-@@ -568,6 +568,11 @@ enum action_on_err {
- 	UPDATE_REFS_QUIET_ON_ERR
- };
-=20
-+/*
-+ * Skip executing the reference-transaction hook.
-+ */
-+#define REF_TRANSACTION_SKIP_HOOK (1 << 0)
++	write_script .git/hooks/reference-transaction <<-\EOF &&
++		echo "$@" >>actual
++		cat >>actual
++	EOF
++	rm -f actual &&
 +
- /*
-  * Begin a reference transaction.  The reference transaction must
-  * be freed by calling ref_transaction_free().
++	git update-ref refs/heads/unpacked-ref $POST_OID &&
++	git pack-refs --all &&
++
++	# We only expect a single hook invocation, which is the call to
++	# git-update-ref(1). But currently, packing refs will also trigger the
++	# hook.
++	cat >expect <<-EOF &&
++		prepared
++		$ZERO_OID $POST_OID refs/heads/unpacked-ref
++		committed
++		$ZERO_OID $POST_OID refs/heads/unpacked-ref
++		prepared
++		$ZERO_OID $POST_OID refs/heads/unpacked-ref
++		committed
++		$ZERO_OID $POST_OID refs/heads/unpacked-ref
++		prepared
++		$POST_OID $ZERO_OID refs/heads/unpacked-ref
++		committed
++		$POST_OID $ZERO_OID refs/heads/unpacked-ref
++	EOF
++
++	test_cmp expect actual
++'
++
++test_expect_success 'deleting packed ref calls hook once' '
++	# Create a reference and pack it.
++	git update-ref refs/heads/to-be-deleted $POST_OID &&
++	git pack-refs --all &&
++
++	write_script .git/hooks/reference-transaction <<-\EOF &&
++		echo "$@" >>actual
++		cat >>actual
++	EOF
++	rm -f actual &&
++
++	git update-ref -d refs/heads/to-be-deleted $POST_OID &&
++
++	# We only expect a single hook invocation, which is the logical
++	# deletion. But currently, we see two interleaving transactions, once
++	# for deleting the loose refs and once for deleting the packed ref.
++	cat >expect <<-EOF &&
++		prepared
++		$ZERO_OID $ZERO_OID refs/heads/to-be-deleted
++		prepared
++		$POST_OID $ZERO_OID refs/heads/to-be-deleted
++		committed
++		$ZERO_OID $ZERO_OID refs/heads/to-be-deleted
++		committed
++		$POST_OID $ZERO_OID refs/heads/to-be-deleted
++	EOF
++
++	test_cmp expect actual
++'
++
+ test_done
 --=20
 2.34.1
 
 
---rzGCon5+Ea6/2lhj
+--V/VU6KLUv2Bjmh2l
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHlJPYACgkQVbJhu7ck
-PpRsJw//Zlfpk58TZCajKOWGiZ83NTXBS3pVH9Wn7YURd3rQ7Mm+Ir+h8k/YC3B8
-h9fpShwKUeFHnHJnxUBW93ytSihZeKDAccr2Mr0uMwRGlMx0iCgKcTMqcpj3U+fp
-ttmfLyJ9kgqGo2wdfOf5WEuWol+WBRCPlB4o4Y/Jiqs8Y2s5QsYpoFUrfyWukFhz
-QxCN+WYNyBcLD5DKg01wg/WmtMmhQ6KYqF0G6jQY0u5Pq73U6sMraG4CEPo0vw2J
-S+Rbr2FvkaOR4Z0DqjSeQhcWvPBjfnsXBdvP5sl1LLtOVmEoZnoHbA8LRzEWyVNL
-TWLEdi6JqE6lh3xTlBc1KEeTO2dW6y+U0yWBCzNaSDesa6LhcdrqDjsTbf1cGQ4W
-VlZRR0eiy209UXksQIrsoVFsvO2VvpDIQId4W0OF50FD9MmETJUyKGnV6zFUPTUF
-cTS52pV4ieZGDYHis5CuC/USg46tjwevdIYaSGZrz0fGyeBjqECgUUpYq5F6FbPi
-a60HA45mfC6qO+hLdfbGdIZfVfxHQa6wNuArlDbLdPi4W+7+WzmezDt+8B1qK7vE
-1uw1r6GKPp2by8XPpSs2kRsvVrKdQtWTwbq8tHIW9LEagh8C9jx6km7qnrD/Op+N
-OnDCWond3pN7u/D/1L0VKOD08kHXtBVCpPO+Ris3L0DT2S2okjY=
-=gjIp
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHlJPsACgkQVbJhu7ck
+PpSP4g//asQQm+XoJEusJht/RrZp/L+U/XtjomQ6h9mp4iwEXnkTRLViA81Ty77q
+GSBIyumy7sCocaM3NoI6MslgmUTpx7zW8ML4i0BF+ewY4koKiXpgF8SNp+Z41mUG
+m70CdQacua3OYHMMuif5OmwCCzq01a29XHSlc7Hkc20q+QodBfnMP+fNVUTNvtXv
+PpYfMRpYsA0h3+23ARPVXxIYj7W9/Loh7uDuiW1volSICM97WEI9xiOy1yfg1k66
+4ookB5qUx/AaA5pmaWfA5p9Jp+PHnDaqBR6LpL38dCn/qltKHQQ4hWSOgpkxysFj
+WASlVTsorCiJc1MrkBbZ3kTT1nDataRz36qM+/xbOhq+NNR4/DeQ4jJLkmAaakG4
+0iJqNffqq89QsV9kOe0NXTc+53Y4GxnJG2hpDivTR4Z52bkrHslekPSoc3O203wP
+MU5WrDt8ckHVmxm1CtiDEF8MyUFDkhJtli4+LL5jg2JYzK+iY5qvWl63mBHj/A6A
++FvT5EQ3Q2dorLko9lwNG0s4ykF0HiDBOeIYZP59rga1luXQ5VaS2n/wp3Wf32rZ
+Bi1nx9WOQjYY8BR7AefdQn523PDKv3soxYf0mzuSjQRRsOw0wJFrwtCzzw97VfDA
+OuDhF1JiNlDk4F418pzDdRD5cZ4FtsB3/PeCqidou8Tkpu8PoUo=
+=zh7q
 -----END PGP SIGNATURE-----
 
---rzGCon5+Ea6/2lhj--
+--V/VU6KLUv2Bjmh2l--
