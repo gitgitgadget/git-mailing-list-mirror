@@ -2,266 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA056C4332F
-	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 17:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 10345C433F5
+	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 17:44:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239135AbiAQRUg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jan 2022 12:20:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49288 "EHLO
+        id S237971AbiAQRor (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jan 2022 12:44:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242803AbiAQRTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jan 2022 12:19:17 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7053C03327C
-        for <git@vger.kernel.org>; Mon, 17 Jan 2022 09:13:55 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id w26so21922292wmi.0
-        for <git@vger.kernel.org>; Mon, 17 Jan 2022 09:13:55 -0800 (PST)
+        with ESMTP id S238641AbiAQRop (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jan 2022 12:44:45 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94702C061574
+        for <git@vger.kernel.org>; Mon, 17 Jan 2022 09:44:45 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id 30so68819240edv.3
+        for <git@vger.kernel.org>; Mon, 17 Jan 2022 09:44:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JHFWYWZGznUOxQN8K7ynGvD6b5lYksk46qgvBlyz6O8=;
-        b=e4qzctt5PuZhIx8QGKcjFr1ZcozXwqevCP50JyoZSpBHSR6mx7cxtYA74w8HRlPBmS
-         SzJ79dwhNbymx/H8O8MtWNmG5krsG7afq629P6lCi4Y3zotN7zuuWEfFdIX2QJTEiCRq
-         +TEfhh9SxH5jTy27fR/XQ2zTWk7xdpTE4RByaZZwbDKAe9WWSffDw0vZmh3wpEqJTbuh
-         a8YR6S0vCM/pYSGsKrlhdCX2gPygZ1ZWfvA0itdr3PLR/cl+lSSaRVAkbOM+WmXu/DoB
-         fZ6UKaaIm8DCmjwZnMwv62OFOsdywFcD16wf/gxM7q3Qpo8E11r3SdWVSrJNvDlSmhip
-         e5lw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=evtBZrPKqEocPzFFj6GKWi0ArmtjwdV6suH5BwN7vJY=;
+        b=Z9arkmg1qt+0CTABaHYNP55v4YMschg2iNj7CqV8/YQwfAIQ5B4r8/pb2lLT4yvG7V
+         cRRQSqOpXoz5CvgfwORplJ51wAoW5+E/vWLqAZaORWYpP0tR5mO4SQmBYDU1Tjbhx0iO
+         +LTx8EeTgojQdnJ5uS0cxKayR/hFudrhuGSRW/A3WR5yF6SCK6s+NeM2W59/j6+rfUtT
+         /l1OZde7F3jsplbdmAnvJfJs7aP8Xt+7DPrrpEn3rv7JO0d6waIG7ObxiwiL79WwjM9S
+         MgFek64X0Mvph+g1ElCcTbb+g49X6bBHRww+KBWSRRAtQlx24DHhaXgXLG4G1w5mKiXh
+         Jziw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JHFWYWZGznUOxQN8K7ynGvD6b5lYksk46qgvBlyz6O8=;
-        b=cg24F/J04C9ifk2xaL2kFFDiUeK/NIkxFqnghcrtlT+0WGcIO2WUwKdxZxRAJ4ZU5Q
-         wCJQXbcajM/GshuADzwBFySzmOTX3x4VF5iapplXisQsH/UKRdo1FRlkYp01N9vR+4wq
-         RoV2DrBSpG0BggUEaHqaW50G+NevYN7owkPC8JmajV3xUGI8x35hlwzkZikyUSZN49uF
-         8owbSJkRW3jZmF2sqLjxhLTvRIhW4vxodmuBvpj+LTu8VkhLJfZwAt/yZcFOr6q9QLl+
-         +R76qTw9PU3sc5xf1OozI7sDWPwZIgk0TGgVZlvJ5dffnHmegGV+c/0gp6O2CUTFouM/
-         V0Rw==
-X-Gm-Message-State: AOAM5316kiDPhPH5oRm7Apq+umToV7Qwl9l4EcjpGT6u0wbwQ+Vas9EP
-        Valstt4pWrP7y2Axi5/xfs6fDd9yD0g=
-X-Google-Smtp-Source: ABdhPJyDRityaX3gU+5ecWzoofXoZNqNgLfXIDSImwh5DWxb8cbfgzQUk7xMwbDOynrVEpw8W5uhQg==
-X-Received: by 2002:adf:f390:: with SMTP id m16mr20782053wro.651.1642439633921;
-        Mon, 17 Jan 2022 09:13:53 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d3sm4096273wmq.14.2022.01.17.09.13.53
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=evtBZrPKqEocPzFFj6GKWi0ArmtjwdV6suH5BwN7vJY=;
+        b=tVizJ9noUpNRUQVE0u/DmTFfgKzzhyc9e0hmfvs6FnxDi8A43Pdeip2plIc8WCTLoF
+         l7yexGdVw1f5g313bziF8nHfAqgoAcHcPYUi0iObLfFW/+UFJFtnvNnYz3KMhvYR9/n4
+         GUuinnDnOrJpNXCSGFk4PNmwBWpb7qgPWLR50a7E6COiARdSUV+87wCzA3XjaJ/tnMkA
+         Blb5LYiq6lJJAmdf0TB2iWLYzi/tunxH32I9JOws1TGzqVeUeoamHmdmwrEXAomP1Sgv
+         4dEnQyqKP1ZfSWC2HfHqiDtnGEE6JePph8iM+MlIpOjP5ecaW+5hjV7tORZlM8Rhd8cN
+         fWWQ==
+X-Gm-Message-State: AOAM53321uq+sHxAUdOuy2Uif1kq+Ms+1ehnlisaEWqTBDjstOoTW8Az
+        dWC5YV+unzydLqFGKnfbrDw=
+X-Google-Smtp-Source: ABdhPJyVtCoxh5QMOIwBglNT4o06Zym7tmgHzdpKPRaJk4riQdDTo7zfvV29Crv6sh6LzHibJZ3XUA==
+X-Received: by 2002:a17:907:6089:: with SMTP id ht9mr17680219ejc.552.1642441483964;
+        Mon, 17 Jan 2022 09:44:43 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id f6sm4684942ejf.69.2022.01.17.09.44.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jan 2022 09:13:53 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        David Aguilar <davvid@gmail.com>,
-        "Randall S . Becker" <randall.becker@nexbridge.ca>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] cache.h: auto-detect if zlib has uncompress2()
-Date:   Mon, 17 Jan 2022 18:13:42 +0100
-Message-Id: <patch-1.1-9cea01a1395-20220117T170457Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.0.rc1.855.gbd520c8f475
+        Mon, 17 Jan 2022 09:44:43 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1n9W3e-001Qkw-Qn;
+        Mon, 17 Jan 2022 18:44:42 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 9/9] mergesort: use ranks stack
+Date:   Mon, 17 Jan 2022 18:43:08 +0100
+References: <943b1e01-465e-5def-a766-0adf667690de@web.de>
+ <636647b1-f666-f1e2-4127-ee0869b61036@web.de>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <636647b1-f666-f1e2-4127-ee0869b61036@web.de>
+Message-ID: <220117.864k62qmt1.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the NO_UNCOMPRESS2=Y setting to auto-detect those older zlib
-versions that don't have uncompress2().
 
-This makes the compilation of git less annoying on older systems,
-since the inclusion of a322920d0bb (Provide zlib's uncompress2 from
-compat/zlib-compat.c, 2021-10-07) in v2.35.0-rc0 our default
-dependency on a zlib 1.2.9 or newer unless NO_UNCOMPRESS2=Y is
-specified has resulted in errors when git is compiled.
+On Fri, Oct 01 2021, Ren=C3=A9 Scharfe wrote:
 
-To get around those errors we've needed to bundle config.mak.uname
-changes such as such as 68d1da41c4e (build: NonStop ships with an
-older zlib, 2022-01-10) and the in-flight
-https://lore.kernel.org/git/20220116020520.26895-1-davvid@gmail.com/.
 
-Let's instead rely on ZLIB_VERNUM. Now only those systems where zlib
-is so broken that it can't be rely on (such a system probably doesn't
-exist) need to provide a NO_UNCOMPRESS2=Y.
+> +/*
+> + * Perform an iterative mergesort using an array of sublists.
+> + *
+> + * n is the number of items.
+> + * ranks[i] is undefined if n & 2^i =3D=3D 0, and assumed empty.
+> + * ranks[i] contains a sublist of length 2^i otherwise.
+> + *
+> + * The number of bits in a void pointer limits the number of objects
+> + * that can be created, and thus the number of array elements necessary
+> + * to be able to sort any valid list.
+> + *
+> + * Adding an item to this array is like incrementing a binary number;
+> + * positional values for set bits correspond to sublist lengths.
+> + */
+>  void *llist_mergesort(void *list,
+>  		      void *(*get_next_fn)(const void *),
+>  		      void (*set_next_fn)(void *, void *),
+>  		      int (*compare_fn)(const void *, const void *))
+>  {
+> -	unsigned long l;
+> -
+> -	if (!list)
+> -		return NULL;
+> -	for (l =3D 1; ; l *=3D 2) {
+> -		void *curr;
+> -		struct mergesort_sublist p, q;
+> +	void *ranks[bitsizeof(void *)];
+> +	size_t n =3D 0;
+> +	int i;
+>
+> -		p.ptr =3D list;
+> -		q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
+> -		if (!q.ptr)
+> -			break;
+> -		p.len =3D q.len =3D l;
+> +	while (list) {
+> +		void *next =3D get_next_fn(list);
+> +		if (next)
+> +			set_next_fn(list, NULL);
+> +		for (i =3D 0; n & (1 << i); i++)
+> +			list =3D llist_merge(ranks[i], list, get_next_fn,
+> +					   set_next_fn, compare_fn);
+> +		n++;
+> +		ranks[i] =3D list;
+> +		list =3D next;
+> +	}
 
-See 9da3acfb194 ([PATCH] compat: support pre-1.2 zlib, 2005-04-30) and
-609a2289d76 (Improve accuracy of check for presence of deflateBound.,
-2007-11-07) for in-tree prior art using ZLIB_VERNUM.
+(Commenting on a commit integrated into v2.34.0)
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+The aCC compiler on HP/UX notes:
 
-I think this should be strongly considered for inclusion before the
-final v2.35.0 release.
+    "mergesort.c", line 67: warning #2549-D: variable "ranks" is used befor=
+e its value is set
+                        list =3D llist_merge(ranks[i], list, get_next_fn,
 
-Aside from the ones already (and in-flight) in config.mak.uname, I've
-run into numerous other cases where NO_UNCOMPRESS2=y is needed (so far
-gcc{10,14,45,111,119,135,210} on the GCC farm). Adding
-config.mak.uname detections to those would be tedious, we'd need to
-start detecting various other OS versions.
+It's commenting on the ranks[i] within the for-loop-within-while-loop
+above.
 
-Or, we can just ask zlib.h abuot its ZLIB_VERSION instead, and include
-compat/zlib-uncompress2.c in our own zlib.c wrapper.
-
-This has an interaction with da/rhel7-lacks-uncompress2-and-c99 (the
-merge should preferably delete the NO_UNCOMPRESS2=Y it adds), it's in
-"next", but I didn't base this on that topic as "nex" clearly won't be
-merged down before v2.35.0.
-
- Makefile                  |  6 ++++--
- cache.h                   |  5 +++++
- compat/zlib-uncompress2.c |  5 +----
- config.mak.uname          |  6 ------
- reftable/block.c          |  2 +-
- reftable/system.h         | 12 +-----------
- zlib.c                    |  3 +++
- 7 files changed, 15 insertions(+), 24 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 5580859afdb..3e90820bbfd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -256,7 +256,10 @@ all::
- #
- # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
- #
--# Define NO_UNCOMPRESS2 if your zlib does not have uncompress2.
-+# Define NO_UNCOMPRESS2 if your zlib is older than v1.2.9 and does not
-+# have uncompress2. You should not need to define this unless your
-+# zlib's ZLIB_VERNUM is broken. We'll auto-detect this on the basis of
-+# that macro.
- #
- # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile feedback,
- # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=49299)
-@@ -1728,7 +1731,6 @@ endif
- 
- ifdef NO_UNCOMPRESS2
- 	BASIC_CFLAGS += -DNO_UNCOMPRESS2
--	REFTABLE_OBJS += compat/zlib-uncompress2.o
- endif
- 
- ifdef NO_POSIX_GOODIES
-diff --git a/cache.h b/cache.h
-index 281f00ab1b1..02b355fcf08 100644
---- a/cache.h
-+++ b/cache.h
-@@ -29,6 +29,11 @@ typedef struct git_zstream {
- 	unsigned char *next_out;
- } git_zstream;
- 
-+#if defined(NO_UNCOMPRESS2) || ZLIB_VERNUM < 0x1290
-+#define GIT_NO_UNCOMPRESS2 1
-+int uncompress2(Bytef *dest, uLongf *destLen, const Bytef *source,
-+		uLong *sourceLen);
-+#endif
- void git_inflate_init(git_zstream *);
- void git_inflate_init_gzip_only(git_zstream *);
- void git_inflate_end(git_zstream *);
-diff --git a/compat/zlib-uncompress2.c b/compat/zlib-uncompress2.c
-index 722610b9718..915796e85ac 100644
---- a/compat/zlib-uncompress2.c
-+++ b/compat/zlib-uncompress2.c
-@@ -8,15 +8,12 @@
- 
- */
- 
--#include "../reftable/system.h"
--#define z_const
--
- /*
-  * Copyright (C) 1995-2003, 2010, 2014, 2016 Jean-loup Gailly, Mark Adler
-  * For conditions of distribution and use, see copyright notice in zlib.h
-  */
- 
--#include <zlib.h>
-+/* No "#include <zlib.h>", done in cache.h */
- 
- /* clang-format off */
- 
-diff --git a/config.mak.uname b/config.mak.uname
-index 9b3e9bff5f5..d0701f9beb0 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -261,10 +261,6 @@ ifeq ($(uname_S),FreeBSD)
- 	FILENO_IS_A_MACRO = UnfortunatelyYes
- endif
- ifeq ($(uname_S),OpenBSD)
--	# Versions < 7.0 need compatibility layer
--	ifeq ($(shell expr "$(uname_R)" : "[1-6]\."),2)
--		NO_UNCOMPRESS2 = UnfortunatelyYes
--	endif
- 	NO_STRCASESTR = YesPlease
- 	NO_MEMMEM = YesPlease
- 	USE_ST_TIMESPEC = YesPlease
-@@ -520,7 +516,6 @@ ifeq ($(uname_S),Interix)
- 	endif
- endif
- ifeq ($(uname_S),Minix)
--	NO_UNCOMPRESS2 = YesPlease
- 	NO_IPV6 = YesPlease
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
- 	NO_NSEC = YesPlease
-@@ -576,7 +571,6 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
- 	NO_SETENV = YesPlease
- 	NO_UNSETENV = YesPlease
- 	NO_MKDTEMP = YesPlease
--	NO_UNCOMPRESS2 = YesPlease
- 	# Currently libiconv-1.9.1.
- 	OLD_ICONV = UnfortunatelyYes
- 	NO_REGEX = NeedsStartEnd
-diff --git a/reftable/block.c b/reftable/block.c
-index 855e3f5c947..946edd0f34e 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -13,7 +13,7 @@ license that can be found in the LICENSE file or at
- #include "record.h"
- #include "reftable-error.h"
- #include "system.h"
--#include <zlib.h>
-+#include "zlib.h"
- 
- int header_size(int version)
- {
-diff --git a/reftable/system.h b/reftable/system.h
-index 4907306c0c5..2cebbc94d4d 100644
---- a/reftable/system.h
-+++ b/reftable/system.h
-@@ -15,17 +15,7 @@ license that can be found in the LICENSE file or at
- #include "strbuf.h"
- #include "hash.h" /* hash ID, sizes.*/
- #include "dir.h" /* remove_dir_recursively, for tests.*/
--
--#include <zlib.h>
--
--#ifdef NO_UNCOMPRESS2
--/*
-- * This is uncompress2, which is only available in zlib >= 1.2.9
-- * (released as of early 2017)
-- */
--int uncompress2(Bytef *dest, uLongf *destLen, const Bytef *source,
--		uLong *sourceLen);
--#endif
-+#include "zlib.h"
- 
- int hash_size(uint32_t id);
- 
-diff --git a/zlib.c b/zlib.c
-index d594cba3fc9..d9440dfb784 100644
---- a/zlib.c
-+++ b/zlib.c
-@@ -3,6 +3,9 @@
-  * at init time.
-  */
- #include "cache.h"
-+#ifdef GIT_NO_UNCOMPRESS2
-+#include "compat/zlib-uncompress2.c"
-+#endif
- 
- static const char *zerr_to_string(int status)
- {
--- 
-2.35.0.rc1.855.gbd520c8f475
+>
+> -		if (compare_fn(p.ptr, q.ptr) > 0)
+> -			list =3D curr =3D pop_item(&q, get_next_fn);
+> +	for (i =3D 0; n; i++, n >>=3D 1) {
+> +		if (!(n & 1))
+> +			continue;
+> +		if (list)
+> +			list =3D llist_merge(ranks[i], list, get_next_fn,
+> +					   set_next_fn, compare_fn);
+>  		else
+> -			list =3D curr =3D pop_item(&p, get_next_fn);
+> -
+> -		while (p.ptr) {
+> -			while (p.len || q.len) {
+> -				void *prev =3D curr;
+> -
+> -				if (!p.len)
+> -					curr =3D pop_item(&q, get_next_fn);
+> -				else if (!q.len)
+> -					curr =3D pop_item(&p, get_next_fn);
+> -				else if (compare_fn(p.ptr, q.ptr) > 0)
+> -					curr =3D pop_item(&q, get_next_fn);
+> -				else
+> -					curr =3D pop_item(&p, get_next_fn);
+> -				set_next_fn(prev, curr);
+> -			}
+> -			p.ptr =3D q.ptr;
+> -			p.len =3D l;
+> -			q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
+> -			q.len =3D q.ptr ? l : 0;
+> -
+> -		}
+> -		set_next_fn(curr, NULL);
+> +			list =3D ranks[i];
+>  	}
+>  	return list;
+>  }
 
