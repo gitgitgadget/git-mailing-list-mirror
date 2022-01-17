@@ -2,44 +2,44 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC92C433F5
-	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 08:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9CCAC433F5
+	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 08:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237949AbiAQIMf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jan 2022 03:12:35 -0500
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:55251 "EHLO
+        id S237936AbiAQIMk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jan 2022 03:12:40 -0500
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:35877 "EHLO
         out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230177AbiAQIMe (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 17 Jan 2022 03:12:34 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 5202F5C012F;
-        Mon, 17 Jan 2022 03:12:34 -0500 (EST)
+        by vger.kernel.org with ESMTP id S230177AbiAQIMj (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 17 Jan 2022 03:12:39 -0500
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id B595A5C00C4;
+        Mon, 17 Jan 2022 03:12:38 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 17 Jan 2022 03:12:34 -0500
+  by compute4.internal (MEProxy); Mon, 17 Jan 2022 03:12:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
         :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=JOcWTm0r7D/whALFjlcpQVap6tG
-        /EDNmROIwTOlhCFY=; b=O9hVULzvxqt/xFKSFIvKGYRQDZiACzqGg4CqNAieMfm
-        EbUsU8qG0ENlDOWBUl55Wk8uPfoqjoOevKgxvGKn39R7MAy6czChFpCba+QfCsP5
-        JxE+21eeC1UOjmY+WM6r2mnTIS7d9Tg66Dmc7rbZtSyfp+P7aoGokXNC9XJ0uT/6
-        I/foHTyTEIf2PwoYHP8iaTrqypkjVcBIUQWpM2ayhsfBLrDq3uk4cnk+NcScHr8p
-        2876hXzscIykSaH4PUBNRFWh35k6VxfQdjmhmb1icCwjBHseGg+yGEYdSJitiElU
-        /JYwl4rgIwoHfjPP/YQs05vlX0XlX3MFvlA6R8tnb9Q==
+        :content-type:in-reply-to; s=fm3; bh=jaQeOC/BM7/i7Uns5br8pxMJkP7
+        Aq3qnxFd6LP+EOF8=; b=BgYjEdviIsZohLntQYcqvAz8YFDZXTVX0bepLTWCUrj
+        wPfu2FRJUCXylGB5QtvhiX7SPIhlsAT5sAJkjigkZrbIMKhWHl+TiJdAR9XB9nyz
+        eQLHa8SSAV6ZQek14xwA3ahSeAZg05CAOAVk2dJbgmx2jLzQuxAnQsC4pYvCg67i
+        ih+Dj3HHvPrquVtdp4d1fQLNwu4f+p9H98+d26DdoKWQMAB1HKhMGORt1ESSXnkb
+        zaaUbePhefwSUAmG8N0cpsYRSsB3M4SX0IBH36zPfYgE9MrpOW1aiE/sPW9Ea6fy
+        V215AvuoO8BYNLPoEzilR0XCcDwDPwiMHTo07mP2rag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=JOcWTm
-        0r7D/whALFjlcpQVap6tG/EDNmROIwTOlhCFY=; b=l8S+YR2V5XRkZJFdmLtsAM
-        CKjmorZ5s4jJ/qd51bQVaWZvyuTsd5fJ0NxHrNtVIn9Nii1vgesGm7eDQchdnk3/
-        sDckn7MPczZxZZS9tgIMma7zK7TNjBfmVAsHs0/GpUGwoCGmgxoTajVHTfpmcv3D
-        2IH90CzWNRnfwTgaBytokk468IJPfopci2WsE+Kr7rQCBTSXnR2ChgGdKD6T/Dqn
-        p8xAMULsaSfvhwmVXHTsaVw2cdvuGASztHAkWt7BA0UvFkyIVX79/uUbJsypRw/R
-        DyKyANGqeu9WVFdpTmQE+rT2edMoh852qz9jKvcn7x51QbsGFlemo/kqdVndRJOA
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=jaQeOC
+        /BM7/i7Uns5br8pxMJkP7Aq3qnxFd6LP+EOF8=; b=lOM0Z3+mYAj9kruN5BZolB
+        vKdKvbgDKSs7ACgh3RkDUonJlVdXXEL6SyaU3snMLfrwPuAzqfaqWRdnRKQOyhF+
+        FYwgsfKrR2VZX/HVDwKzS5riuQpZEVSpACbfikaE59hnvXmuE35wW0tgfMC6dWAY
+        rQXIFQRnGcBDDxSu8YpSRXrae0QpTmpQo/cGug+iiV0UBqcDpMjecfAIkhLSgBIE
+        uMPx9llFQKRqT/Q5noSe+dUsi7ptGFHtOm7BuuBUsJMAIFTkKYz4XtdXE174tmK3
+        OPM1dO9tnhhimMwy7srCLF9SPAp76DxS1bggkGs4mI28izMFZZgPavuhYmdJUJNA
         ==
-X-ME-Sender: <xms:8iTlYZu_1qG3BLG3ZqG30Q1NLRlVQZlf1bda7_ignDQCu-mqsQ7NjQ>
-    <xme:8iTlYSfzbi37AshZ1MUMPHHEzJFdHOKHkAn4POMchjVchFlFC3x1DAtYlenh6uKc5
-    cZvZVpS_VKsNqb1Cw>
-X-ME-Received: <xmr:8iTlYczpBvglPEFKc8ZAyE5gi35C4luPD7DI18ED-s4IeW2DG64CDbtEcmQOinyZNFAoVdicl9HhgLwtHccJ7bMNXjCL4ewDpeH6bRwJI1-b2xtEnsleuQ>
+X-ME-Sender: <xms:9iTlYe56MhHKBETS1CW_2MvtNDNQBoCSJn9W6Eke93bViJqdjPS5tw>
+    <xme:9iTlYX5HTqw9NUJ2iFLwkujpA9Ps9LkDLnQHVqL2oM6kL1whQX4ar_92rOfEaaVlj
+    dBe-3vH6hh8tTdXLQ>
+X-ME-Received: <xmr:9iTlYdf8F9X9Mgd2H_5iOKCurluifUcXyDmQGvzCIhZVGHNDrphwXWE7Mt_vJ_U25gwsYhTDNzNY5PhCpPaNQVGpRRZpenbGc5gqEtuZuvmHDd_fuAFK3Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddtgdduudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -48,30 +48,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddtgdduudekucetufdoteggod
     hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:8iTlYQNA8oVcWARvFCnVvODjFzcaAppcsJlyCRRuNv7d8lm4VtbUZQ>
-    <xmx:8iTlYZ-3r4aRMCTYPcBP5EiZUS6WwlJnSzvvH1_DAl9TBFtzwmiMTQ>
-    <xmx:8iTlYQWlROH_IrtvYxLwQR6wc8N8Se9Y4hLvG5JNQo5pEaZT0WbQZw>
-    <xmx:8iTlYVbv6rO58oDgRKT3Lj6oUQpFGV7Hccb7ye3UhDNHQeiwAuxFEQ>
+X-ME-Proxy: <xmx:9iTlYbI9dxVlfPJDT0jqyj9_j6eXV5XYJRf3vCPNJvHCMslUc1t5tA>
+    <xmx:9iTlYSL1jr3GA2LQwqBZBKnManw2FfUPFaoPf_rFTZusJpEENcspBQ>
+    <xmx:9iTlYcyHWR79NNnttc2mlxwDQyzr3hU2EJA4Koavuhz4qOi99OkNFA>
+    <xmx:9iTlYXGEEHaK-1-ZA7DSs-cisYed_8_Z31jlWPBiRudFXgTQwzp8Pw>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Jan 2022 03:12:32 -0500 (EST)
+ 17 Jan 2022 03:12:37 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 71306157 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 17 Jan 2022 08:12:32 +0000 (UTC)
-Date:   Mon, 17 Jan 2022 09:12:31 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 76c96d95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 17 Jan 2022 08:12:36 +0000 (UTC)
+Date:   Mon, 17 Jan 2022 09:12:35 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Bryan Turner <bturner@atlassian.com>,
         Waleed Khan <me@waleedkhan.name>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH v4 1/6] refs: extract packed_refs_delete_refs() to allow
- control of transaction
-Message-ID: <14775046e1fb73a65b2198e72e72428b16d3e65c.1642406989.git.ps@pks.im>
+Subject: [PATCH v4 2/6] refs: allow passing flags when beginning transactions
+Message-ID: <d4ac24c8b8ab8020f7af1c646041b4413b56ec9e.1642406989.git.ps@pks.im>
 References: <cover.1641556319.git.ps@pks.im>
  <cover.1642406989.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="TE0qwjcsAEfKPP3e"
+        protocol="application/pgp-signature"; boundary="30b3LTHy2+Lyx0ur"
 Content-Disposition: inline
 In-Reply-To: <cover.1642406989.git.ps@pks.im>
 Precedence: bulk
@@ -79,185 +78,221 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---TE0qwjcsAEfKPP3e
+--30b3LTHy2+Lyx0ur
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When deleting loose refs, then we also have to delete the refs in the
-packed backend. This is done by calling `refs_delete_refs()`, which
-then uses the packed-backend's logic to delete refs. This doesn't allow
-us to exercise any control over the reference transaction which is being
-created in the packed backend, which is required in a subsequent commit.
+We do not currently have any flags when creating reference transactions,
+but we'll add one to disable execution of the reference transaction hook
+in some cases.
 
-Extract a new function `packed_refs_delete_refs()`, which hosts most of
-the logic to delete refs except for creating the transaction itself.
-Like this, we can easily create the transaction in the files backend
-and thus exert more control over it.
+Allow passing flags to `ref_store_transaction_begin()` to prepare for
+this change.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/files-backend.c  | 13 ++++++++++---
- refs/packed-backend.c | 26 ++++++++++++++++++++------
- refs/packed-backend.h |  7 +++++++
- 3 files changed, 37 insertions(+), 9 deletions(-)
+ refs.c                |  8 +++++---
+ refs.h                |  3 ++-
+ refs/files-backend.c  | 10 +++++-----
+ refs/packed-backend.c |  2 +-
+ refs/refs-internal.h  |  1 +
+ sequencer.c           |  2 +-
+ 6 files changed, 15 insertions(+), 11 deletions(-)
 
+diff --git a/refs.c b/refs.c
+index 4da4996c4d..7415864b62 100644
+--- a/refs.c
++++ b/refs.c
+@@ -800,7 +800,7 @@ int refs_delete_ref(struct ref_store *refs, const char =
+*msg,
+ 	struct ref_transaction *transaction;
+ 	struct strbuf err =3D STRBUF_INIT;
+=20
+-	transaction =3D ref_store_transaction_begin(refs, &err);
++	transaction =3D ref_store_transaction_begin(refs, 0, &err);
+ 	if (!transaction ||
+ 	    ref_transaction_delete(transaction, refname, old_oid,
+ 				   flags, msg, &err) ||
+@@ -1005,6 +1005,7 @@ int read_ref_at(struct ref_store *refs, const char *r=
+efname,
+ }
+=20
+ struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
++						    unsigned int flags,
+ 						    struct strbuf *err)
+ {
+ 	struct ref_transaction *tr;
+@@ -1012,12 +1013,13 @@ struct ref_transaction *ref_store_transaction_begin=
+(struct ref_store *refs,
+=20
+ 	CALLOC_ARRAY(tr, 1);
+ 	tr->ref_store =3D refs;
++	tr->flags =3D flags;
+ 	return tr;
+ }
+=20
+ struct ref_transaction *ref_transaction_begin(struct strbuf *err)
+ {
+-	return ref_store_transaction_begin(get_main_ref_store(the_repository), er=
+r);
++	return ref_store_transaction_begin(get_main_ref_store(the_repository), 0,=
+ err);
+ }
+=20
+ void ref_transaction_free(struct ref_transaction *transaction)
+@@ -1156,7 +1158,7 @@ int refs_update_ref(struct ref_store *refs, const cha=
+r *msg,
+ 	struct strbuf err =3D STRBUF_INIT;
+ 	int ret =3D 0;
+=20
+-	t =3D ref_store_transaction_begin(refs, &err);
++	t =3D ref_store_transaction_begin(refs, 0, &err);
+ 	if (!t ||
+ 	    ref_transaction_update(t, refname, new_oid, old_oid, flags, msg,
+ 				   &err) ||
+diff --git a/refs.h b/refs.h
+index 92360e55a2..31f7bf9642 100644
+--- a/refs.h
++++ b/refs.h
+@@ -231,7 +231,7 @@ char *repo_default_branch_name(struct repository *r, in=
+t quiet);
+  *         struct strbuf err =3D STRBUF_INIT;
+  *         int ret =3D 0;
+  *
+- *         transaction =3D ref_store_transaction_begin(refs, &err);
++ *         transaction =3D ref_store_transaction_begin(refs, 0, &err);
+  *         if (!transaction ||
+  *             ref_transaction_update(...) ||
+  *             ref_transaction_create(...) ||
+@@ -573,6 +573,7 @@ enum action_on_err {
+  * be freed by calling ref_transaction_free().
+  */
+ struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
++						    unsigned int flags,
+ 						    struct strbuf *err);
+ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
+=20
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 90b671025a..459f18dbc1 100644
+index 459f18dbc1..4d4f0c2099 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1249,6 +1249,7 @@ static int files_delete_refs(struct ref_store *ref_st=
-ore, const char *msg,
- {
- 	struct files_ref_store *refs =3D
- 		files_downcast(ref_store, REF_STORE_WRITE, "delete_refs");
-+	struct ref_transaction *transaction =3D NULL;
- 	struct strbuf err =3D STRBUF_INIT;
- 	int i, result =3D 0;
+@@ -1121,7 +1121,7 @@ static void prune_ref(struct files_ref_store *refs, s=
+truct ref_to_prune *r)
+ 	if (check_refname_format(r->name, 0))
+ 		return;
 =20
-@@ -1258,10 +1259,14 @@ static int files_delete_refs(struct ref_store *ref_=
-store, const char *msg,
- 	if (packed_refs_lock(refs->packed_ref_store, 0, &err))
- 		goto error;
-=20
--	if (refs_delete_refs(refs->packed_ref_store, msg, refnames, flags)) {
--		packed_refs_unlock(refs->packed_ref_store);
-+	transaction =3D ref_store_transaction_begin(refs->packed_ref_store, &err);
-+	if (!transaction)
-+		goto error;
-+
-+	result =3D packed_refs_delete_refs(refs->packed_ref_store,
-+					 transaction, msg, refnames, flags);
-+	if (result)
- 		goto error;
--	}
-=20
- 	packed_refs_unlock(refs->packed_ref_store);
-=20
-@@ -1272,6 +1277,7 @@ static int files_delete_refs(struct ref_store *ref_st=
-ore, const char *msg,
- 			result |=3D error(_("could not remove reference %s"), refname);
- 	}
-=20
-+	ref_transaction_free(transaction);
- 	strbuf_release(&err);
- 	return result;
-=20
-@@ -1288,6 +1294,7 @@ static int files_delete_refs(struct ref_store *ref_st=
-ore, const char *msg,
- 	else
- 		error(_("could not delete references: %s"), err.buf);
-=20
-+	ref_transaction_free(transaction);
- 	strbuf_release(&err);
- 	return -1;
- }
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 67152c664e..c964dd1617 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1522,15 +1522,10 @@ static int packed_initial_transaction_commit(struct=
- ref_store *ref_store,
- static int packed_delete_refs(struct ref_store *ref_store, const char *msg,
- 			     struct string_list *refnames, unsigned int flags)
- {
--	struct packed_ref_store *refs =3D
--		packed_downcast(ref_store, REF_STORE_WRITE, "delete_refs");
+-	transaction =3D ref_store_transaction_begin(&refs->base, &err);
++	transaction =3D ref_store_transaction_begin(&refs->base, 0, &err);
+ 	if (!transaction)
+ 		goto cleanup;
+ 	ref_transaction_add_update(
+@@ -1192,7 +1192,7 @@ static int files_pack_refs(struct ref_store *ref_stor=
+e, unsigned int flags)
  	struct strbuf err =3D STRBUF_INIT;
  	struct ref_transaction *transaction;
--	struct string_list_item *item;
- 	int ret;
 =20
--	(void)refs; /* We need the check above, but don't use the variable */
--
- 	if (!refnames->nr)
- 		return 0;
-=20
-@@ -1544,6 +1539,26 @@ static int packed_delete_refs(struct ref_store *ref_=
-store, const char *msg,
+-	transaction =3D ref_store_transaction_begin(refs->packed_ref_store, &err);
++	transaction =3D ref_store_transaction_begin(refs->packed_ref_store, 0, &e=
+rr);
  	if (!transaction)
  		return -1;
 =20
-+	ret =3D packed_refs_delete_refs(ref_store, transaction,
-+				      msg, refnames, flags);
-+
-+	ref_transaction_free(transaction);
-+	return ret;
-+}
-+
-+int packed_refs_delete_refs(struct ref_store *ref_store,
-+			    struct ref_transaction *transaction,
-+			    const char *msg,
-+			    struct string_list *refnames,
-+			    unsigned int flags)
-+{
-+	struct strbuf err =3D STRBUF_INIT;
-+	struct string_list_item *item;
-+	int ret;
-+
-+	/* Assert that the ref store refers to a packed backend. */
-+	packed_downcast(ref_store, REF_STORE_WRITE, "delete_refs");
-+
- 	for_each_string_list_item(item, refnames) {
- 		if (ref_transaction_delete(transaction, item->string, NULL,
- 					   flags, msg, &err)) {
-@@ -1563,7 +1578,6 @@ static int packed_delete_refs(struct ref_store *ref_s=
+@@ -1259,7 +1259,7 @@ static int files_delete_refs(struct ref_store *ref_st=
+ore, const char *msg,
+ 	if (packed_refs_lock(refs->packed_ref_store, 0, &err))
+ 		goto error;
+=20
+-	transaction =3D ref_store_transaction_begin(refs->packed_ref_store, &err);
++	transaction =3D ref_store_transaction_begin(refs->packed_ref_store, 0, &e=
+rr);
+ 	if (!transaction)
+ 		goto error;
+=20
+@@ -2774,7 +2774,7 @@ static int files_transaction_prepare(struct ref_store=
+ *ref_store,
+ 			 */
+ 			if (!packed_transaction) {
+ 				packed_transaction =3D ref_store_transaction_begin(
+-						refs->packed_ref_store, err);
++						refs->packed_ref_store, 0, err);
+ 				if (!packed_transaction) {
+ 					ret =3D TRANSACTION_GENERIC_ERROR;
+ 					goto cleanup;
+@@ -3045,7 +3045,7 @@ static int files_initial_transaction_commit(struct re=
+f_store *ref_store,
+ 				 &affected_refnames))
+ 		BUG("initial ref transaction called with existing refs");
+=20
+-	packed_transaction =3D ref_store_transaction_begin(refs->packed_ref_store=
+, err);
++	packed_transaction =3D ref_store_transaction_begin(refs->packed_ref_store=
+, 0, err);
+ 	if (!packed_transaction) {
+ 		ret =3D TRANSACTION_GENERIC_ERROR;
+ 		goto cleanup;
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index c964dd1617..0b45598e18 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1535,7 +1535,7 @@ static int packed_delete_refs(struct ref_store *ref_s=
 tore, const char *msg,
- 			error(_("could not delete references: %s"), err.buf);
- 	}
+ 	 * updates into a single transaction.
+ 	 */
 =20
--	ref_transaction_free(transaction);
- 	strbuf_release(&err);
- 	return ret;
- }
-diff --git a/refs/packed-backend.h b/refs/packed-backend.h
-index f61a73ec25..a2cca5d9a3 100644
---- a/refs/packed-backend.h
-+++ b/refs/packed-backend.h
-@@ -3,6 +3,7 @@
+-	transaction =3D ref_store_transaction_begin(ref_store, &err);
++	transaction =3D ref_store_transaction_begin(ref_store, 0, &err);
+ 	if (!transaction)
+ 		return -1;
 =20
- struct repository;
- struct ref_transaction;
-+struct string_list;
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 46a839539e..a0af63f162 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -213,6 +213,7 @@ struct ref_transaction {
+ 	size_t nr;
+ 	enum ref_transaction_state state;
+ 	void *backend_data;
++	unsigned int flags;
+ };
 =20
  /*
-  * Support for storing references in a `packed-refs` file.
-@@ -27,6 +28,12 @@ int packed_refs_lock(struct ref_store *ref_store, int fl=
-ags, struct strbuf *err)
- void packed_refs_unlock(struct ref_store *ref_store);
- int packed_refs_is_locked(struct ref_store *ref_store);
+diff --git a/sequencer.c b/sequencer.c
+index 6abd72160c..61edd39d7a 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3588,7 +3588,7 @@ static int do_label(struct repository *r, const char =
+*name, int len)
+ 	strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
+ 	strbuf_addf(&msg, "rebase (label) '%.*s'", len, name);
 =20
-+int packed_refs_delete_refs(struct ref_store *ref_store,
-+			    struct ref_transaction *transaction,
-+			    const char *msg,
-+			    struct string_list *refnames,
-+			    unsigned int flags);
-+
- /*
-  * Return true if `transaction` really needs to be carried out against
-  * the specified packed_ref_store, or false if it can be skipped
+-	transaction =3D ref_store_transaction_begin(refs, &err);
++	transaction =3D ref_store_transaction_begin(refs, 0, &err);
+ 	if (!transaction) {
+ 		error("%s", err.buf);
+ 		ret =3D -1;
 --=20
 2.34.1
 
 
---TE0qwjcsAEfKPP3e
+--30b3LTHy2+Lyx0ur
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHlJO4ACgkQVbJhu7ck
-PpSDwg/+KRK0woYfzUyADedQVyCXIucz9gExRhzsfg/ymJRVdzputHQWT7JJao+G
-iHzGbPF+8cw7TRuyACGJXgaMb0Pf00M/KjdgadFyMlbye7xAraZkFclNEIw7hAhv
-cU1e2f1WuTMUTDsJWCe88eki9/1A+3jLKScxW6Pppi1Qsw0wxaq4IiIAyfjCppKW
-QSXio00BPUW56gRvj7dCkfoFm3SDA1N8m4/kvMznQoZR/39ashy2KbjWYA25dpWr
-E+oQ5GAO5fhGa66Z52kijMHSqnOLmRrHn3RgZ45vy1E29g5tZV/w9gGN2u87btgb
-k5cssEcVkI83A4Ex7Q3/vWaX+EGRUs1zRgRP7iDkLfPDzMm0RI4kI2A+yr+jFZWD
-W7S0knH3bOAtxkWzOohli4Yg6BkgdX9RwSvtALeTGBErRwV+33dDWhbk/hxH62jZ
-mVcdT+qMqFC5QPv8rVLa6lXHoyz1NXlIQ31nqGzXL3OeLpUhNT2klj1/hPn685kc
-pIojQIA48mGjK00ssV1QfF9M6+rvzBAqEvhraFgc/YSMSfGMsdiykNWkZNpccMHV
-+gE1CnnLlHpDdxQaLAmgKorLfzLScbxc+m3YOq9ve8fRfoPSHnJ8RcECoUX640bS
-3ji+edVNdeRIXLochJ2TX4xV3WEPNUXsIOc+5Lv2Jv8VdowvEQw=
-=XFkO
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHlJPIACgkQVbJhu7ck
+PpTLFxAAonkvgdPU4e/Cx/wGHKdSFrc6M4icgg0uAkWwbzAlBenmyk7zmzhvifcy
+pkfC2w1y4+PpvLdnTCCAkeqZ9J0ln4p5tVCcumD770MXoPSqygAnzNhimLHY5/ik
+RRLRIqFampnYLZpq1PR7CfLDOS9Q65h3i2ffpfYiZ43l7bADUxvia/WI2c89kIEJ
+ym+AHv0z5bpJEqRsePE7jcfk0Y+7I59+gPJQTYu+n9B7UXWBndGrOZ9eRI8JSuH8
+9NDdYoO4lckFdfCwOWNLaGygcIAzQdONuwQPmLzDf/gWitVwhKQOijxeKMh/MIK0
+vHt3oGKxIbyNx3r5cV9AMqU0pAQO/rSI/RmjDLBVbFIYKupGcLp+n7peLhSV8JVe
+WSxGLY7db1K+6bqfISpLG17BsNnmevX0OlTrKRrhbnQx3Xx0l+Xi6lP6nn86ZMt2
+cZ5n+Y1p17IcLJ1e08CA6eTy4301sX3sa8cIhbLWpB4WjsDMmzU9K7xa5vjHxFWI
+029Ajm8l1a/1qd7FzOrHyXiDHV+jNxrxaspvQyx28RnCCptYXeyOBgqlrKWbF2e+
+rqoZho1nvtEPd63wYwTc03PNGzRJBsF+lp72CQeHZUxA6+FwmFkgJ4Xm9aZtUniP
+PuT6ye17eEf1Ru8MOIKQddpUEXhvhUQFB/8mdKhl5FqvpJGO6Q4=
+=Emsz
 -----END PGP SIGNATURE-----
 
---TE0qwjcsAEfKPP3e--
+--30b3LTHy2+Lyx0ur--
