@@ -2,68 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61541C433EF
-	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 18:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8964AC433F5
+	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 18:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242234AbiAQStj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jan 2022 13:49:39 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52501 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230519AbiAQStj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jan 2022 13:49:39 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 159C8186D2F;
-        Mon, 17 Jan 2022 13:49:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bCbyBXKeSdokJtnoItNHhWImQG6ORE9KRiwjyK
-        sbAMY=; b=U0RiBstIfyYYidKpsi1bNLVFpMVVQT1zQIl22tNdU9l1u9xl6PtIPx
-        JvvdJWlZiG0BoIRaFJVdmN+7mDQLF807vPShzxaR+Rk79HkPfhY1qIIEC5v6WtY9
-        FykYJOPAonT2w79MdhaX5wm98avZNdeVGU2C8Psrg6MBpq7lJMtBo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0F3AE186D2E;
-        Mon, 17 Jan 2022 13:49:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7C8A3186D2C;
-        Mon, 17 Jan 2022 13:49:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH v2] README.md: add CodingGuidelines and a link for
- Translators
-References: <pull.1115.git.1642182615339.gitgitgadget@gmail.com>
-        <pull.1115.v2.git.1642349490723.gitgitgadget@gmail.com>
-        <6271ff4b-1821-0086-167c-b273ab252eb9@gmail.com>
-Date:   Mon, 17 Jan 2022 10:49:35 -0800
-In-Reply-To: <6271ff4b-1821-0086-167c-b273ab252eb9@gmail.com> (Bagas Sanjaya's
-        message of "Mon, 17 Jan 2022 16:00:32 +0700")
-Message-ID: <xmqqtue2uri8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S242631AbiAQSwZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jan 2022 13:52:25 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:36035 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230519AbiAQSwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jan 2022 13:52:24 -0500
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 20HIqM0A041354
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 17 Jan 2022 13:52:22 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>
+References: <xmqq35lp68rw.fsf@gitster.g>        <026201d80bbc$10a251a0$31e6f4e0$@nexbridge.com> <xmqqy23eurut.fsf@gitster.g>
+In-Reply-To: <xmqqy23eurut.fsf@gitster.g>
+Subject: RE: [ANNOUNCE] Git v2.35.0-rc1
+Date:   Mon, 17 Jan 2022 13:52:16 -0500
+Organization: Nexbridge Inc.
+Message-ID: <027301d80bd3$5c5b6c50$151244f0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 37D0752E-77C6-11EC-94D8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQGnTa7oMwcFXa3F3zH2drJd0IRiNwHnIH4EAhAGWsesqVFqUA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bagas Sanjaya <bagasdotme@gmail.com> writes:
-
-> On 16/01/22 23.11, Philip Oakley via GitGitGadget wrote:
->> +Those wishing to help with error message translation (localization L10)
->> +should see [po/README.md][] (a `po` file is a Portable Object file that
->> +holds the translations).
->> +
+On January 17, 2022 1:42 PM, Junio C Hamano wrote:
+> <rsbecker@nexbridge.com> writes:
+> 
+> > On January 14, 2022 9:19 PM, Junio wrote:
+> >> A release candidate Git v2.35.0-rc1 is now available for testing at the
+usual
+> places.
+> >> It is comprised of 467 non-merge commits since v2.34.0, contributed
+> >> by 80 people, 32 of which are new faces [*].
+> >
+> > FYI: rc1 built/test (mostly) passes on both NonStop x86 and ia64
+platforms.
+> >
+> > We seem to have a recurrence of a transient failure in t5562 from a few
+> releases ago. Retesting makes the problem disappear.
+> >
+> > Subtest 8
+> > #
+> > #		test_env HTTP_CONTENT_ENCODING="gzip" test_http_env upload
+> empty_body &&
+> > #		! verify_http_result "200 OK"
+> > #
+> > Subtest 14
+> > #
+> > #		test_env HTTP_CONTENT_ENCODING="gzip" test_http_env
+> receive empty_body &&
+> > #		! verify_http_result "200 OK"
+> > #
+> >
+> > Am I mistaken that using the ! verify_http_result construct is not
+recommended
+> or am I misremembering the discussion?
+> >
+> > Regards,
+> > --Randall
+> 
+> I do not recall anything about that shell function.
+> 
+> I found a half-thread with similar-looking report on an obscure system,
+since the
+> 2.25 era:
+> 
 >
-> I mean not just error messages are in po/*.po, but also usage and informational
-> strings. We can say "Those wishing to help translating message strings
-> (localization or l10n)...".
+https://lore.kernel.org/git/nycvar.QRO.7.76.6.2003252000200.46@tvgsbejvaqbjf
+.
+> bet/
+> 
+> And then from you that is even older, in the 2.21 era:
+> 
+> https://lore.kernel.org/git/002201d4c560$5a319c40$0e94d4c0$@nexbridge.co
+> m/
+> 
+> But neither seems to lead to a discussion on the use of verify_http_result
+helper.
 
-Yup, that sounds more correct.
+We transitioned from the platform default ksh to bash for build/test of git
+right after that point that cleared the issue. It looks like there could be
+a regression in bash introduced on the platform very recently (June 2021)
+that may be responsible unless /bin/sh is referenced directly in the
+scripts. I will check.
+--Randall
 
-Thanks.
