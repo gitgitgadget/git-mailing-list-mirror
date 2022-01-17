@@ -2,202 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CA88C433F5
-	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 08:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1A47C433EF
+	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 08:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237961AbiAQIM4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jan 2022 03:12:56 -0500
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:40621 "EHLO
-        out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237970AbiAQIM4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 17 Jan 2022 03:12:56 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 9EB355C012F;
-        Mon, 17 Jan 2022 03:12:55 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 17 Jan 2022 03:12:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=5L59ZEYboVBPWID//vXwT1PEYG4
-        VnruvwNAyldgUBaM=; b=Uxg4OGZdVDkkTXJ0tAiDtHbPo3WGvGTpFK/6SU/YwTE
-        5d4eehkxdYVm3axrscJAIrlCSrbf2iyWe8KA6DHpxgcIiCTCJ4JkjbfHrzV0I7gC
-        wYKS8C6Xrx5+fBeBRK6F5fsN/9xD9rnCcDdhTVXpLOoqyjEbggHgMJw9NMPkvZuU
-        uK+x42K8kAQtVzlg8HZysNBQmtvTblX6h9nLnH3O6AWiHwEIvCEVXdMKqvbDvIBv
-        DejT9OheOqSPdYVT+++YAIjobIEBDS1eU8HYEdM6zrsFjMUoSwtlOnLgU7iNTYDZ
-        r30p6dZOpqp/MLP+a8m6Ob0Qx4IhnW5qCSpN17n1mqg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=5L59ZE
-        YboVBPWID//vXwT1PEYG4VnruvwNAyldgUBaM=; b=cOU4AvJEpb6PKFKEfTQwKO
-        FMs1z1vTmOHCAIxRjYWG1RPPSmTa/+q83vQoYpRIZmSZ7KIajED8phlYCYRJ+IkQ
-        /J3TfiL2G/KNXmS78bTjL5UhYzzgEfde0C6IPi4i1K7H9XugDFNaHowmm5faP741
-        Tu6hbXrxMBhPIz8Zy74h4rlyYSCYCr9i9qWr41JoWxqnDnFjQ/3OQOLOA6EpvcxZ
-        HpfWjyELqw/NpJG2SRYm9LC6ljnYA8MNbzrF+qs201o0itTwAySHs4Aj3de+IcsC
-        SQL1nBgwKH9vqk0IESIwCfmXRcbYAZP4/xZH0XuW1sMVYHktn+k5gLT3V7t4cU0Q
-        ==
-X-ME-Sender: <xms:ByXlYYlSX2v0eRhd4pIXtXrE5f55LBWY8qTH4SYLdKHydGP7ioA4xg>
-    <xme:ByXlYX1W_4cIduh_Yeut3n65dYAmWwuNn6R020BvRjKgtwQXe8hrs4nO4VbBeZqBi
-    3FDdDICMQen3yfAyg>
-X-ME-Received: <xmr:ByXlYWp5CGjBBeU6DTlk8Qpnt4Ov2es_mYubErNf4dr6O3vddI2hLdKQ6ny1TSy4pC6LLJvdMzMoxNa87bJby6H8FrYZAGVqTfvao7uUatI_6nRx7spg7g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddtgdduudekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
-    ucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:ByXlYUlaTAcwLKi5JzPG5EP1ddUq3rlpWn4CKxHizMf0KXW8ddZKtg>
-    <xmx:ByXlYW3LL3orVlHgh-oDRdG3rDfTVbeAeuEemr6b9bpP3TCqaqXFZg>
-    <xmx:ByXlYbsngIbQtn0WpQSKLtsNtt1Nla98rUxLVew1qBNufTJL9p8gLg>
-    <xmx:ByXlYZTMd2NTRrTsJUEX_Yvzp0WUOR07NuBx5Yb5Luhr82oUNTA57g>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Jan 2022 03:12:54 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id bb0e01c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 17 Jan 2022 08:12:54 +0000 (UTC)
-Date:   Mon, 17 Jan 2022 09:12:53 +0100
-From:   Patrick Steinhardt <ps@pks.im>
+        id S238029AbiAQIVJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jan 2022 03:21:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38352 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231253AbiAQIVI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jan 2022 03:21:08 -0500
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65C1FC061574
+        for <git@vger.kernel.org>; Mon, 17 Jan 2022 00:21:08 -0800 (PST)
+Received: by mail-pg1-x52d.google.com with SMTP id x83so10207221pgx.4
+        for <git@vger.kernel.org>; Mon, 17 Jan 2022 00:21:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=KMoxMiQoVTgaV/8KjA2uCC4WceOm2hSP0k8xO/9rRr0=;
+        b=cH6U3M5SIGtsDfO0skwr153ee28tI/h4BOcSkz/LfKqcSGgSM2Bmr6HXRRuhjK5wwm
+         7ZqotYuyvt8tZHDvKOunDbT/6ndQmvYTmGkbzVBOIzguQf6gRAlqs/i10/KeUhL3olmy
+         bPUck/AhP304zSYCVhxMXnnelm7BgyUaLrk6YJH7j5X5FPCCo+18LNSXKExImuKqn6K3
+         /X1DCTGmekEo8gspm0LwPpB8+CT7DassOk2PctItWysGxIVf9HftHdzzZ7HFgaWrv8Zd
+         Yb+85kgVdeSgHcWCh0d1EPQfxQXVcz9Sxck1JS+qf4zWvPvf41m+crAoojaM2hSR3ejC
+         B0aQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=KMoxMiQoVTgaV/8KjA2uCC4WceOm2hSP0k8xO/9rRr0=;
+        b=cfcxbRuP9Duy0co9q0+Z5l63zhMQ9sBnBWWm2kylErFwRgUJDmYu71WuHjAUj43lcP
+         LlW1DaRJFRvuP9+k0kMzXeRkaU0l9h2SeV/xVtCnkai9IcNbFqIH6earN2H9nWs0tgjP
+         KSJkAPB9bL9LNhZgU+PpuRj2W6PL+vR+NBQH7noGccex7OBM/6aUlFB7a59AQ0XPhCNB
+         qrWrlu709m3MPpbxhwNNs7hvXMc+4N7C+s3WTqY4VnD8aQ6fc4KeZH0Y47spcchbmpir
+         H+9mqy083gEpRddljaBiEyBqGeyllwmIQ7T+vmKfxF+qu+Cg2ZojkowrRfUETB4XVKYY
+         LI9w==
+X-Gm-Message-State: AOAM533WofQiJMBkulUcpEmUXGjkOgaNnSYx9l8KfS65+6H4F0aevkoY
+        B2bKkR6CuMGPEZ7R5gggfgYlClibGyTP8nCi
+X-Google-Smtp-Source: ABdhPJzmEKwOAlwMOodhhkU8a+3RotyqjuWVG82yqs5/bJsxArEM8DzFQz4Bwt6qgcsMBkV+M9k48A==
+X-Received: by 2002:a63:5712:: with SMTP id l18mr2365786pgb.343.1642407667630;
+        Mon, 17 Jan 2022 00:21:07 -0800 (PST)
+Received: from code-infra-dev-cbj.ea134 ([140.205.70.45])
+        by smtp.gmail.com with ESMTPSA id n26sm10944842pgb.91.2022.01.17.00.21.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 17 Jan 2022 00:21:07 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Bryan Turner <bturner@atlassian.com>,
-        Waleed Khan <me@waleedkhan.name>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: [PATCH v4 6/6] refs: skip hooks when deleting uncovered packed refs
-Message-ID: <d6c7d765aff13df449d61f0f6efbeb66fe86006d.1642406989.git.ps@pks.im>
-References: <cover.1641556319.git.ps@pks.im>
- <cover.1642406989.git.ps@pks.im>
+Cc:     gitster@pobox.com, avarab@gmail.com, sandals@crustytoothpaste.net,
+        tenglong.tl@alibaba-inc.com, Teng Long <dyroneteng@gmail.com>
+Subject: [PATCH v1 1/1] git-cli.txt: clarify "options first and then args"
+Date:   Mon, 17 Jan 2022 16:21:01 +0800
+Message-Id: <fe748304d94e0ae25fd3549aadc49cf951ff2d64.1642405806.git.dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.34.1.391.g9ef3d6f133
+In-Reply-To: <cover.1642405806.git.dyroneteng@gmail.com>
+References: <cover.1642405806.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="od4U//xy+qYMoQyr"
-Content-Disposition: inline
-In-Reply-To: <cover.1642406989.git.ps@pks.im>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+There are some commands permit the user whether to provide options
+first before args, or the reverse order. For example:
 
---od4U//xy+qYMoQyr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    git push --dry-run <remote> <ref>
 
-When deleting refs from the loose-files refs backend, then we need to be
-careful to also delete the same ref from the packed refs backend, if it
-exists. If we don't, then deleting the loose ref would "uncover" the
-packed ref. We thus always have to queue up deletions of refs for both
-the loose and the packed refs backend. This is done in two separate
-transactions, where the end result is that the reference-transaction
-hook is executed twice for the deleted refs.
+And:
 
-This behaviour is quite misleading: it's exposing implementation details
-of how the files backend works to the user, in contrast to the logical
-updates that we'd really want to expose via the hook. Worse yet, whether
-the hook gets executed once or twice depends on how well-packed the
-repository is: if the ref only exists as a loose ref, then we execute it
-once, otherwise if it is also packed then we execute it twice.
+    git push <remote> <ref> --dry-run
 
-Fix this behaviour and don't execute the reference-transaction hook at
-all when refs in the packed-refs backend if it's driven by the files
-backend. This works as expected even in case the refs to be deleted only
-exist in the packed-refs backend because the loose-backend always queues
-refs in its own transaction even if they don't exist such that they can
-be locked for concurrent creation. And it also does the right thing in
-case neither of the backends has the ref because that would cause the
-transaction to fail completely.
+Both of them is supported, but some commands do not, for instance:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+     git ls-remote --heads <remote>
+
+And:
+
+     git ls-remote <remote> --heads
+
+If <remote> only has one ref and it's name is "refs/heads/--heads", you
+will get the same result, otherwise will not.This is because the former
+in the second example will parse "--heads" as an "option" which means
+to limit to only "refs/heads" when listing the remote references, the
+latter treat "--heads" as an argument which means to filter the result
+list with the given pattern.
+
+Therefore, we want to specify a bit more in "gitcli.txt" about the way
+we recommend and help to resolve the ambiguity around some git command
+usage. The related disscussions locate at [1].
+
+By the way, there are some issues with lowercase letters in the document,
+which have been modified together.
+
+[1] https://public-inbox.org/git/cover.1642129840.git.dyroneteng@gmail.com/
+
+Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- refs/files-backend.c             | 9 ++++++---
- t/t1416-ref-transaction-hooks.sh | 7 +------
- 2 files changed, 7 insertions(+), 9 deletions(-)
+ Documentation/gitcli.txt | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 565929210a..844918cbd8 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1261,7 +1261,8 @@ static int files_delete_refs(struct ref_store *ref_st=
-ore, const char *msg,
- 	if (packed_refs_lock(refs->packed_ref_store, 0, &err))
- 		goto error;
-=20
--	transaction =3D ref_store_transaction_begin(refs->packed_ref_store, 0, &e=
-rr);
-+	transaction =3D ref_store_transaction_begin(refs->packed_ref_store,
-+						  REF_TRANSACTION_SKIP_HOOK, &err);
- 	if (!transaction)
- 		goto error;
-=20
-@@ -2776,7 +2777,8 @@ static int files_transaction_prepare(struct ref_store=
- *ref_store,
- 			 */
- 			if (!packed_transaction) {
- 				packed_transaction =3D ref_store_transaction_begin(
--						refs->packed_ref_store, 0, err);
-+						refs->packed_ref_store,
-+						REF_TRANSACTION_SKIP_HOOK, err);
- 				if (!packed_transaction) {
- 					ret =3D TRANSACTION_GENERIC_ERROR;
- 					goto cleanup;
-@@ -3047,7 +3049,8 @@ static int files_initial_transaction_commit(struct re=
-f_store *ref_store,
- 				 &affected_refnames))
- 		BUG("initial ref transaction called with existing refs");
-=20
--	packed_transaction =3D ref_store_transaction_begin(refs->packed_ref_store=
-, 0, err);
-+	packed_transaction =3D ref_store_transaction_begin(refs->packed_ref_store,
-+							 REF_TRANSACTION_SKIP_HOOK, err);
- 	if (!packed_transaction) {
- 		ret =3D TRANSACTION_GENERIC_ERROR;
- 		goto cleanup;
-diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hoo=
-ks.sh
-index f9d3d5213f..4e1e84a91f 100755
---- a/t/t1416-ref-transaction-hooks.sh
-+++ b/t/t1416-ref-transaction-hooks.sh
-@@ -175,16 +175,11 @@ test_expect_success 'deleting packed ref calls hook o=
-nce' '
- 	git update-ref -d refs/heads/to-be-deleted $POST_OID &&
-=20
- 	# We only expect a single hook invocation, which is the logical
--	# deletion. But currently, we see two interleaving transactions, once
--	# for deleting the loose refs and once for deleting the packed ref.
-+	# deletion.
- 	cat >expect <<-EOF &&
--		prepared
--		$ZERO_OID $ZERO_OID refs/heads/to-be-deleted
- 		prepared
- 		$POST_OID $ZERO_OID refs/heads/to-be-deleted
- 		committed
--		$ZERO_OID $ZERO_OID refs/heads/to-be-deleted
--		committed
- 		$POST_OID $ZERO_OID refs/heads/to-be-deleted
- 	EOF
-=20
---=20
-2.34.1
+diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+index 92e4ba6a2f..1819a5a185 100644
+--- a/Documentation/gitcli.txt
++++ b/Documentation/gitcli.txt
+@@ -19,6 +19,15 @@ Many commands take revisions (most often "commits", but sometimes
+ "tree-ish", depending on the context and command) and paths as their
+ arguments.  Here are the rules:
+ 
++ * Options come first and then args.
++    A subcommand may take dashed options (which may take their own
++    arguments, e.g. "--max-parents 2") and arguments.  You SHOULD
++    give dashed options first and then arguments.  Some commands may
++    accept dashed options after you have already gave non-option
++    arguments (which may make the command ambiguous), but you should
++    not rely on it (because eventually we may find a way to fix
++    these ambiguity by enforcing the "options then args" rule).
++
+  * Revisions come first and then paths.
+    E.g. in `git diff v1.0 v2.0 arch/x86 include/asm-x86`,
+    `v1.0` and `v2.0` are revisions and `arch/x86` and `include/asm-x86`
+@@ -72,24 +81,24 @@ you will.
+ Here are the rules regarding the "flags" that you should follow when you are
+ scripting Git:
+ 
+- * it's preferred to use the non-dashed form of Git commands, which means that
++ * It's preferred to use the non-dashed form of Git commands, which means that
+    you should prefer `git foo` to `git-foo`.
+ 
+- * splitting short options to separate words (prefer `git foo -a -b`
++ * Splitting short options to separate words (prefer `git foo -a -b`
+    to `git foo -ab`, the latter may not even work).
+ 
+- * when a command-line option takes an argument, use the 'stuck' form.  In
++ * When a command-line option takes an argument, use the 'stuck' form.  In
+    other words, write `git foo -oArg` instead of `git foo -o Arg` for short
+    options, and `git foo --long-opt=Arg` instead of `git foo --long-opt Arg`
+    for long options.  An option that takes optional option-argument must be
+    written in the 'stuck' form.
+ 
+- * when you give a revision parameter to a command, make sure the parameter is
++ * When you give a revision parameter to a command, make sure the parameter is
+    not ambiguous with a name of a file in the work tree.  E.g. do not write
+    `git log -1 HEAD` but write `git log -1 HEAD --`; the former will not work
+    if you happen to have a file called `HEAD` in the work tree.
+ 
+- * many commands allow a long option `--option` to be abbreviated
++ * Many commands allow a long option `--option` to be abbreviated
+    only to their unique prefix (e.g. if there is no other option
+    whose name begins with `opt`, you may be able to spell `--opt` to
+    invoke the `--option` flag), but you should fully spell them out
+-- 
+2.34.1.391.g9ef3d6f133
 
-
---od4U//xy+qYMoQyr
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHlJQQACgkQVbJhu7ck
-PpShpA//ci1V65CHTg5HPxV/kTAVvS65B2GHJ3Qxg980ixTw0UtcHj7oRZNrS0RC
-ty3w+LrN+ghtKkW6trP971egXyTVZsHCZDb17INIUteDGFIX6x3T5a0Q26Zf8c9F
-ntkYsYUowZZgyPYFyB6nyZuyqv0uCuWMeUxrDSh5n6RXIYOm55yPh7vb+pDaN+9/
-/KV0st+HBaeoG8cqXq77LiotskHjH5hc6rpjnYTwAW5e8DNxSihu/e4/s6zmXztn
-+bieZXlBx2Q825ol6a3ML7oYAzA5feOXSRJmn9+vyq91Ds9dypX1rTIw62eRhtU6
-M8uGFYDkf0s1sy6Dh+cR+CUGyBaxHEysugfOVKjrr87a9SRQRNm39gEeNBR/Awoj
-FEGq7hSi6uHkDDCvb9U4w49ShOQj5EHChjTaDDkSzV8N4yT5zRPsCsIkETEO5Ygd
-2Sl4J+6BjQptarbwRmfomTZbQMyt2x3cAB9bEc/L4952j7ztIIlJl5PTDx2u4tTo
-tXuq/y9GieSeSZcye8sCUPVQS5SUSIN5aDLvbNsv4Y77Sr2Yq1Zc19PxG5UCqIwu
-WcJR40r6Rs1t8dWNKGCvdgUqvYuZWjwxx7oGKPTFtAXbccmbG7QzQvPn8EmLUUA+
-vZiDiOH2foxPBcdi9Ch7GQ7FAzhtEWg6CkuRDZwVO4/OuikTIr8=
-=BFj3
------END PGP SIGNATURE-----
-
---od4U//xy+qYMoQyr--
