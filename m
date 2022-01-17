@@ -2,207 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E78B7C433EF
-	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 18:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF5E0C433EF
+	for <git@archiver.kernel.org>; Mon, 17 Jan 2022 18:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238250AbiAQSSR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 17 Jan 2022 13:18:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35474 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbiAQSSQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jan 2022 13:18:16 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7362AC061574
-        for <git@vger.kernel.org>; Mon, 17 Jan 2022 10:18:15 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id q9-20020a7bce89000000b00349e697f2fbso25720597wmj.0
-        for <git@vger.kernel.org>; Mon, 17 Jan 2022 10:18:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=gE7sJmn+R0d0ZBuSPuj+dMnfevdpYIn8250Ksupi5eM=;
-        b=O5ff4taGK4SQeDx7qHeOUK5Fo3+OLv50vmgP/D6rLAiZAr5CX8y6Jw0Jk1FIUnkeBu
-         +sAtt6XecOEwyqSSm304rQ6bGJTT5qtgNza7N0vcaV1dQp9E2hwsvwxjYO5qDzyHCTXR
-         t73K/DH9q8W9LCkzh6yXYMmz6wXndam/PY4dn3/0vpvh04dS3SbN7/n1pcZA/0sDQ0fq
-         RB51/FdaKKnSDyDv241IaX81E3vPhkgLYfjlGDi4KC8ivpTEFaP+CKDoxgN/Etvryg+l
-         rf80dujp2mRcBUF32pTXjz5PUtQ1tTqPnQWsNa4iWoMMmmBu/F+3KsNQyLkMNGY3qsap
-         LNLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gE7sJmn+R0d0ZBuSPuj+dMnfevdpYIn8250Ksupi5eM=;
-        b=4XP5vapUMv4fxIWv0UJXPWjl5cMjIDJUxgTQPZrpHOpHQQa41/VnO7VGWvHLGUVyPf
-         Jlg1b7OdDuB32W3TkcwbjFBvB3BSWrjnKChAXnszO+dPnh3YA4WqQyw22mdkNahYdBZO
-         SUuaNykl1vvNlcOjBY0CNVYuhdQc8/dZg0h763YtuKYn9jdFFRz5VV0nLHbFISK+2Y1F
-         NRIbIGytI2sx41mgzF2rsDytNdDZPbYGNwRZRF/hCXq7goVHZTMwULeSMaMGv9AeiISy
-         yDnhbvj2rmCV8zhqlEjC/+FhyIN/RSSKR8sLpke9NhPbkTTOG2ytL5Iz0OcZj5sJixvu
-         O9cQ==
-X-Gm-Message-State: AOAM530KwpEunG5FnSc9XBTtRiA7i6CSyGIUn0y5Pza5ZsF1QEZ+Au8A
-        6bYULktoWG6ECZEL1MWq3IUzExwYL2k=
-X-Google-Smtp-Source: ABdhPJz2SgKQqFAGdXMgH4fNgUq5hA78+M3g0MLn8aHY/7WZBDvmIhFXcA8X0tzczHd6W6h0D2qVsQ==
-X-Received: by 2002:adf:d1ec:: with SMTP id g12mr13004082wrd.210.1642443493503;
-        Mon, 17 Jan 2022 10:18:13 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u1sm9026609wrs.97.2022.01.17.10.18.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jan 2022 10:18:12 -0800 (PST)
-Message-Id: <pull.1115.v3.git.1642443491609.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1115.v2.git.1642349490723.gitgitgadget@gmail.com>
-References: <pull.1115.v2.git.1642349490723.gitgitgadget@gmail.com>
-From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 17 Jan 2022 18:18:11 +0000
-Subject: [PATCH v3] README.md: add CodingGuidelines and a link for Translators
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S238303AbiAQSWP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 17 Jan 2022 13:22:15 -0500
+Received: from mout.web.de ([212.227.15.4]:46169 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238272AbiAQSWO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jan 2022 13:22:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1642443727;
+        bh=Fc00h0rI0O4/tVnsnEWthvPCXp0bkWE2WgBkAXihwVs=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=EJl0jDYLz5gbVsVFQDnVk2BTEVWiF0ddF6mk7mDa23E08SCyvvagT1+IrH3hMDDjD
+         k1JjVcQOo7LdLRCfQaJMo6/7H+mxqvShctaue+ajZnoj4e1ITtKjiktA4uYc2tCPVm
+         +bT9/3xU/O9hKja8erM1p/08yL1GR6o0hYXvXRhA=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MlLE9-1mSC0o15m1-00lXNT; Mon, 17
+ Jan 2022 19:22:07 +0100
+Message-ID: <c605ecc2-29d6-9025-152e-1bcb831e7188@web.de>
+Date:   Mon, 17 Jan 2022 19:22:06 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Philip Oakley <philipoakley@iee.email>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.5.0
+Subject: Re: [PATCH 9/9] mergesort: use ranks stack
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <943b1e01-465e-5def-a766-0adf667690de@web.de>
+ <636647b1-f666-f1e2-4127-ee0869b61036@web.de>
+ <220117.864k62qmt1.gmgdl@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <220117.864k62qmt1.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:zI49DNXSvhQBuizabsypKWuVvXccSpNRrvXm5Kl6KsqwuZMv6I2
+ e5rt5jzdHeHbrWkeCGHdJwdeyWLbM4XRvuMYM4enS5nXqCiIjJBeuiyo5SlKkE3TQWXgaLw
+ zuSKcKF17rM7KwFcZXJFUO6zH3HWOs/lkb2PLH2pBmRG7kfUi8+hE9VVfhcPHj3Ke4ny9Ez
+ 5npiqHg6clPWrz0vquyfg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:l/a3CspSmAk=:tYoSUPuoSdRd9x6WLkYZ8p
+ KU3XTwxQvn8Ncwl7lbV8sZ0Gor/e+lNbevkmqFa66FvjUrboWBqNowhtozT0138bjudwyeY7d
+ FijhnzWuwBygYxYTbob+Ubq4uz+8BpouIxqOx1BeZl5wlbaFWbHQGmbvaKqtdJoo9DrnRS/Bi
+ wZGfV3u4RIqjuxRWbKDuHN4TREf2RaLTagdtPzNXknXr7El0R8QxXaFxkfJvWRXYfq5EJgRV7
+ y7p6YLdCHczWQNrjHOljxYcThvSTUbmKFEmdv7WReaTRHclJS+berRmuJwtI6zxX4ayf+vxzp
+ uwkz6RkzVUF+6EC81Z+kFB6m5JBDzsJ6V8aXMxFMVMY++hqCiX8XdICBaNwU2tOOPEMms9UDN
+ lhFLIFw4YqV8oKFKJIrdpFYy4TBjcIvz2ordMym+YeA2YzHaTJCS8cXtGQ98wlYy6oaFoTXzM
+ eMlfyF3iAcfjH3HMqUyviB4P9rHjn4A2K2TyrXzValnaSz5UBiFoK+EwUqJmXzP+ss3JA2Qsf
+ EurBY96PNG6nPHYPVrvJGJT25wwbwmvq6TwsEltHAZkt3zVZKjyQrW/MUXFIV4FBpFLXkpc26
+ C8p5OUePk+zeJaNFpQl4vcnXKE3nNIlF9h0ADpBc2ZIIubUDghrQZJTxVpLB8TXBdY9pcGRYX
+ VM7UHrqr97ktiNZ3wVxv+QO1FC3cUXsfVDYXkqk9UZISF4xBtKV4gfivsVh/xP9gCyXROUN7/
+ MeJ7CEuDDSMkv6T6xy26ed3GDPwmGcL2czdjwk4gKNxSdg7zcSanQ0MCh+qfV37WVefwPRrUH
+ 8/GRZdwnMXueO4+L6hZplqikBGLGE/B2ulIy25Dtfk6/T9mGwNmYpNjkqucNANSssjLvqFi8X
+ 1GA4QsxQfj4IZ8qXff8SuEBs0Kw0mkcinafgMHclK7oOYqow7VbZE0ZnGAYLgc6p8SUrw1yzC
+ NqQt1UWaq5EOEgdHv/uxhn3HiaZEHsU/R96QVXFygAuYGEqVG9UECUUoi4/F4oorcleGH+QMq
+ ni737WRVNKOTLjHl4HLvMOwCZpx32Uz23JcXyU/KrPyS3D0Sb8rWMKhAyWhBmP4rxg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.email>
+Am 17.01.22 um 18:43 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>
+> On Fri, Oct 01 2021, Ren=C3=A9 Scharfe wrote:
+>
+>
+>> +/*
+>> + * Perform an iterative mergesort using an array of sublists.
+>> + *
+>> + * n is the number of items.
+>> + * ranks[i] is undefined if n & 2^i =3D=3D 0, and assumed empty.
+>> + * ranks[i] contains a sublist of length 2^i otherwise.
+>> + *
+>> + * The number of bits in a void pointer limits the number of objects
+>> + * that can be created, and thus the number of array elements necessar=
+y
+>> + * to be able to sort any valid list.
+>> + *
+>> + * Adding an item to this array is like incrementing a binary number;
+>> + * positional values for set bits correspond to sublist lengths.
+>> + */
+>>  void *llist_mergesort(void *list,
+>>  		      void *(*get_next_fn)(const void *),
+>>  		      void (*set_next_fn)(void *, void *),
+>>  		      int (*compare_fn)(const void *, const void *))
+>>  {
+>> -	unsigned long l;
+>> -
+>> -	if (!list)
+>> -		return NULL;
+>> -	for (l =3D 1; ; l *=3D 2) {
+>> -		void *curr;
+>> -		struct mergesort_sublist p, q;
+>> +	void *ranks[bitsizeof(void *)];
+>> +	size_t n =3D 0;
+>> +	int i;
+>>
+>> -		p.ptr =3D list;
+>> -		q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
+>> -		if (!q.ptr)
+>> -			break;
+>> -		p.len =3D q.len =3D l;
+>> +	while (list) {
+>> +		void *next =3D get_next_fn(list);
+>> +		if (next)
+>> +			set_next_fn(list, NULL);
+>> +		for (i =3D 0; n & (1 << i); i++)
+>> +			list =3D llist_merge(ranks[i], list, get_next_fn,
+>> +					   set_next_fn, compare_fn);
+>> +		n++;
+>> +		ranks[i] =3D list;
+>> +		list =3D next;
+>> +	}
+>
+> (Commenting on a commit integrated into v2.34.0)
+>
+> The aCC compiler on HP/UX notes:
+>
+>     "mergesort.c", line 67: warning #2549-D: variable "ranks" is used be=
+fore its value is set
+>                         list =3D llist_merge(ranks[i], list, get_next_fn=
+,
+>
+> It's commenting on the ranks[i] within the for-loop-within-while-loop
+> above.
 
-Before being told how to submit patches, new contributors need
-to be told how to code for, or how to contribute translation to,
-the project.  Add references to the CodingGuidelines and the
-README document on localization.
+That would be a bug.  I think none of the array elements are read before
+they are written -- but of course I'm biased.  Can that compiler show a
+sequence that would lead to reading uninitialized data?  Or anyone else?
 
-Also, split out the instructions to join the list and clarify
-that subscription is via the majordomo address.
+Initializing the array would memset(3) 128 bytes on 32-bit systems and
+512 bytes on 64-bit systems.  Doing that everywhere just to appease a
+confused compiler on a dying platform would be merciful, but still sad.
 
-We use GitHub Markdown reference [2,3] with trailing empty square
-brackets, to match existing text in the file.  On GitHub/GitLab
-pages, the footer references matching the empty [] are not shown
-on the web page. We could switch to using [text](url) form [1]
-if we wanted to, but that is not done as part of this patch.
-
-[1] https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#links
-[2] https://gist.github.com/ChrisTollefson/a3af6d902a74a0afd1c2d79aadc9bb3f#reference-links
-[3] https://github.github.com/gfm/#example-561 (and the para aboveit)
-
-Signed-off-by: Philip Oakley <philipoakley@iee.email>
----
-    README.md: add CodingGuidelines and a link for Translators
-    
-    Also space out the list joining instructions and clarify the
-    subscription via the majordomo address.
-    
-    Signed-off-by: Philip Oakley philipoakley@iee.email
-    
-    cc: Philip Oakley philipoakley@iee.email cc: Junio C Hamano
-    gitster@pobox.com cc: Jiang Xin worldhello.net@gmail.com cc: Bagas
-    Sanjaya bagasdotme@gmail.com
-    
-    changes since V2:
-    
-     * extended the translation 'messages' description
-     * updated commit message based on Junio's suggestion
-    
-    changes since v1:
-    
-     * Used reference style links, rather than lnk [url] style.
-    
-     * added Jiang as L10 coordinator.
-    
-     * note: Patch is a response to a user question on the "Git for Human
-       Beings" git-users list
-       https://groups.google.com/d/msgid/git-users/aa68b9c8-4cf4-4193-8af3-79d7e3feafbbn%40googlegroups.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1115%2FPhilipOakley%2FReadme-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1115/PhilipOakley/Readme-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1115
-
-Range-diff vs v2:
-
- 1:  48cc30b7cc8 ! 1:  953a38091ac README.md: add CodingGuidelines and a link for Translators
-     @@ Metadata
-       ## Commit message ##
-          README.md: add CodingGuidelines and a link for Translators
-      
-     -    The README.md does not use the GitHub Markdown URL links [1] of
-     -    [txt](url), rather the reference method [2] of trailing empty square
-     -    brackets. The references themselves are listed at the foot of the
-     -    document. Those footers are not shown by GitHub/GitLab rendering.
-     +    Before being told how to submit patches, new contributors need
-     +    to be told how to code for, or how to contribute translation to,
-     +    the project.  Add references to the CodingGuidelines and the
-     +    README document on localization.
-      
-     -    Also space out the list joining instructions and clarify that
-     -    subscription is via the majordomo address.
-     +    Also, split out the instructions to join the list and clarify
-     +    that subscription is via the majordomo address.
-     +
-     +    We use GitHub Markdown reference [2,3] with trailing empty square
-     +    brackets, to match existing text in the file.  On GitHub/GitLab
-     +    pages, the footer references matching the empty [] are not shown
-     +    on the web page. We could switch to using [text](url) form [1]
-     +    if we wanted to, but that is not done as part of this patch.
-      
-          [1] https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#links
-          [2] https://gist.github.com/ChrisTollefson/a3af6d902a74a0afd1c2d79aadc9bb3f#reference-links
-     +    [3] https://github.github.com/gfm/#example-561 (and the para aboveit)
-      
-          Signed-off-by: Philip Oakley <philipoakley@iee.email>
-      
-     @@ README.md: installed).
-      +[Documentation/SubmittingPatches][] for instructions on patch submission
-      +and [Documentation/CodingGuidelines][]).
-      +
-     -+Those wishing to help with error message translation (localization L10)
-     -+should see [po/README.md][] (a `po` file is a Portable Object file that
-     -+holds the translations).
-     ++Those wishing to help with error message, usage and informational message
-     ++string translations (localization l10) should see [po/README.md][]
-     ++(a `po` file is a Portable Object file that holds the translations).
-      +
-       To subscribe to the list, send an email with just "subscribe git" in
-      -the body to majordomo@vger.kernel.org. The mailing list archives are
-     @@ README.md: and the name as (depending on your mood):
-       [Documentation/SubmittingPatches]: Documentation/SubmittingPatches
-      +[Documentation/CodingGuidelines]: Documentation/CodingGuidelines
-      +[po/README.md]: po/README.md
-     - \ No newline at end of file
-
-
- README.md | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
-
-diff --git a/README.md b/README.md
-index f6f43e78deb..7ce4f05bae8 100644
---- a/README.md
-+++ b/README.md
-@@ -32,10 +32,16 @@ installed).
- The user discussion and development of Git take place on the Git
- mailing list -- everyone is welcome to post bug reports, feature
- requests, comments and patches to git@vger.kernel.org (read
--[Documentation/SubmittingPatches][] for instructions on patch submission).
-+[Documentation/SubmittingPatches][] for instructions on patch submission
-+and [Documentation/CodingGuidelines][]).
-+
-+Those wishing to help with error message, usage and informational message
-+string translations (localization l10) should see [po/README.md][]
-+(a `po` file is a Portable Object file that holds the translations).
-+
- To subscribe to the list, send an email with just "subscribe git" in
--the body to majordomo@vger.kernel.org. The mailing list archives are
--available at <https://lore.kernel.org/git/>,
-+the body to majordomo@vger.kernel.org (not the Git list). The mailing
-+list archives are available at <https://lore.kernel.org/git/>,
- <http://marc.info/?l=git> and other archival sites.
- 
- Issues which are security relevant should be disclosed privately to
-@@ -64,3 +70,5 @@ and the name as (depending on your mood):
- [Documentation/giteveryday.txt]: Documentation/giteveryday.txt
- [Documentation/gitcvs-migration.txt]: Documentation/gitcvs-migration.txt
- [Documentation/SubmittingPatches]: Documentation/SubmittingPatches
-+[Documentation/CodingGuidelines]: Documentation/CodingGuidelines
-+[po/README.md]: po/README.md
-
-base-commit: 1ffcbaa1a5f10c9f706314d77f88de20a4a498c2
--- 
-gitgitgadget
+>
+>>
+>> -		if (compare_fn(p.ptr, q.ptr) > 0)
+>> -			list =3D curr =3D pop_item(&q, get_next_fn);
+>> +	for (i =3D 0; n; i++, n >>=3D 1) {
+>> +		if (!(n & 1))
+>> +			continue;
+>> +		if (list)
+>> +			list =3D llist_merge(ranks[i], list, get_next_fn,
+>> +					   set_next_fn, compare_fn);
+>>  		else
+>> -			list =3D curr =3D pop_item(&p, get_next_fn);
+>> -
+>> -		while (p.ptr) {
+>> -			while (p.len || q.len) {
+>> -				void *prev =3D curr;
+>> -
+>> -				if (!p.len)
+>> -					curr =3D pop_item(&q, get_next_fn);
+>> -				else if (!q.len)
+>> -					curr =3D pop_item(&p, get_next_fn);
+>> -				else if (compare_fn(p.ptr, q.ptr) > 0)
+>> -					curr =3D pop_item(&q, get_next_fn);
+>> -				else
+>> -					curr =3D pop_item(&p, get_next_fn);
+>> -				set_next_fn(prev, curr);
+>> -			}
+>> -			p.ptr =3D q.ptr;
+>> -			p.len =3D l;
+>> -			q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
+>> -			q.len =3D q.ptr ? l : 0;
+>> -
+>> -		}
+>> -		set_next_fn(curr, NULL);
+>> +			list =3D ranks[i];
+>>  	}
+>>  	return list;
+>>  }
+>
