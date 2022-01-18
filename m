@@ -2,185 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 891C1C433F5
-	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 12:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A460C433EF
+	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 12:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241873AbiARM1R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Jan 2022 07:27:17 -0500
-Received: from mout.web.de ([212.227.15.14]:46699 "EHLO mout.web.de"
+        id S233436AbiARMcn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Jan 2022 07:32:43 -0500
+Received: from mout.gmx.net ([212.227.17.20]:37109 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232814AbiARM1R (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jan 2022 07:27:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1642508826;
-        bh=EzROlSgC6r+SwNRasa0ttt5IDtrhcvEJ9ZVcFkVFc7U=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=d8AdIWHyEHq5H5ZWFaP4lSu1UYFEgEohvaiSoN4aTLVy4OJLcwzi7y/bYwX7zyrFn
-         MHbLeTd2yN3rKeDpaOUIedR9Td/vh5Py/qirs467yX7sV58kxxqM9jEtU/tx7evnXa
-         UnPmnZ2pYF9noPwILUzccF5GWqvABJurRvz4d2XA=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MjgXH-1mTYwb3Alv-00kzdf; Tue, 18
- Jan 2022 13:27:06 +0100
-Message-ID: <e8396687-3bd4-4f52-1952-d99836c01d5d@web.de>
-Date:   Tue, 18 Jan 2022 13:27:05 +0100
+        id S229604AbiARMcm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jan 2022 07:32:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1642509125;
+        bh=/JvNdrbvUCFJbZmEKayW2E/PGCNrnhcpYUDJHQ8Nawk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=DKK+b1WaEoTSoSBahgG9AOtc1+Y09kXy5KSnpYpFI0DxMGglGoFX8b5u5mGiaBTVe
+         noy1+xWnMJYK2STFnvvQD/PGVuiO/RUO2ZUXO80QItpiP08h2o2CONCPvACg7OIlp4
+         eaYrmNBJSjQvpeNSndQkPvbA7ghmRN1/St+vHAQQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.174.184] ([89.1.213.181]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M5fMY-1nFq4V2GnC-0079tp; Tue, 18
+ Jan 2022 13:32:05 +0100
+Date:   Tue, 18 Jan 2022 13:32:03 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Subject: Re: v2.35.0 DEVELOPER=1 regression
+In-Reply-To: <xmqqzgny7xo7.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2201181308540.2121@tvgsbejvaqbjf.bet>
+References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>        <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>        <xmqqlf0w5bbc.fsf@gitster.g>        <YbAVOtYXA1Hf9EtJ@coredump.intra.peff.net>       
+ <xmqq4k7j68eg.fsf@gitster.g>        <YbEMnksMEuAz3Nt0@coredump.intra.peff.net>        <211209.867dcekm9h.gmgdl@evledraar.gmail.com>        <YbMWNZCpy578Qu+l@coredump.intra.peff.net>        <220113.86tue7vr6d.gmgdl@evledraar.gmail.com>       
+ <YeDUA6NhHuCUkqXf@camp.crustytoothpaste.net>        <xmqqilumayfh.fsf@gitster.g> <xmqqzgny7xo7.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.5.0
-Subject: Re: [PATCH 9/9] mergesort: use ranks stack
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <943b1e01-465e-5def-a766-0adf667690de@web.de>
- <636647b1-f666-f1e2-4127-ee0869b61036@web.de>
- <220117.864k62qmt1.gmgdl@evledraar.gmail.com>
- <c605ecc2-29d6-9025-152e-1bcb831e7188@web.de>
- <cf5053b9-451c-7db6-acff-aae41bfabed3@web.de>
- <220118.86r195pb2b.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <220118.86r195pb2b.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:IM1ps8nTdb4dUaGf7iGMoVAHUTlsS8RF6mIuCPbnr6CeTCG26we
+ TrSaXIIXlR9SxnBpeCciEwDAjmJfLQ4ZPsYWjojdj4Gh7x7Ysj61sNjHrcIQDxz/6GDA4FI
+ FumoPtGqsjPaP5JpZl/Df7cys5aA/dois8AtvxsUga9ttEfcfwbJ435iwl+cPJFsQ6es/Ae
+ 59na5bJGCbJP0LGrtYTHg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:klcTNd0rAgk=:VUvTY5v0Ng8DfsVIrzdPy1
+ 5EE+mNIsOUNGqilPnporboUWeDQZQhOuFtIH4CdLTq1UFByy36/gJD+wG4egcmLZF1DIKu0K7
+ wuRbnrgwo6JS+JbGBuPs97xCQYmo/4tO9nazMJtEADlYBzsvFe1Ksb3drrfKGxp9PIsUe9FDn
+ qx9ciV4/yZKzjpk05pbEJripXv4sBlJ9cwv8nNpRDTtLv9vPcMSMLo7FCrFKUVwTMQTA4r1Za
+ LW/GtGkkdEOUH3f+slrc0uXdqzBjwrVu3LQ1ZsvDDFK8SMERBcR3581cYKp38ZIpOEBkOqD8c
+ aqw6fcdNPYuiHG84Bh2qtb4nmMrCitslBMrDIOV7b1XDj7V+opUwyBDzI/MiyXPBtQCwZjHDk
+ 6CLSci0MeuTXkJsJYdToGt1qurPP4WkQdv34dQXeRYnPZ8+T0Bdw7rqDJjlnP/FsbtX0dOPb2
+ doEFrLdyNGKGhpMJ2U696ZMuD+Flkwbt+MoMdLgp4eiTGVwwqRYo18zsd3FTZHZJt+4Yt2PVE
+ Gj2SOCDaN2DTL68rxsijw2Lsyh+ZpZFP1X0yHAF6F9Lvx8mHHqHY7tMeb33yFj/WOvQK+0Y9g
+ Oe3/l0FE7osHr7JMj2OzSofmpqCMvXOKgGYaId1BHK7/QlLTbRJ/HP1emshCj8lXlipIz8M1e
+ 3AUbR2j9u2B78Lj/NwlLpkY6roW2W7JQLyVpAufTLOF9wtwuHhZzlcAYD/M7myguDUpyt4Bxd
+ UFclgusnME0WV3GmuAW4dgVJSD9+Azfse0TDIMzECaLr3mUEIa3WQMevkPDzXMlnLB5q3Bjot
+ 8c4BDg1kkfIeND8o1cHoG85StNLcNZ4SGOnHF1RhmasZy+rcNImyjBxVsRUm3VN/yemvoKh/N
+ WU596hRCk09eS7K5yT0dPNPrw2NQC14OV4MEVmuAHNkcZh+oY4uyS/GjrIXp0nAcguLijGXPh
+ 0P40Abfu7Q163IV93sQL84fp0tSG+lBwaEachHbZZlKMOfka1VOgLLnFqzzd95sbE4vXKwNMm
+ 9ZHLH/CAg72uc4j+YIVIjfzW89z0o6VCqzeK5MivZzNlC3QKnga/uW5D8SziuFBp120ww+Eak
+ 1fPLLC5/aC2QQY=
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:oYC/N5ZGia7QAQxTqriUE1HxQFoVKcNmsDy6D+zaGxUziX+8EJr
- xL2gurZll6rsRyVNVj5sYbRmh0yML4KH3BMJ+7XJ+VLzwtLHjfMvqxC4WWaNXeUG3tEjO+S
- a/pmrwtB6DnaEu13od1gt6da8yGZytQgQhnq1L1rgPLCzf2heqz+lQbmFNjjKZbUUZ4yUOW
- BAP8e94RNymX2iRUIYKxA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+yiUHG5v1As=:zNqE1DKhqD6OmMYXRP/beN
- VSqZuCrcnR3j4QpMAinv4L9N2ImP5KiI977VaOK1qKlntQJjuB8Vvwg1xJeDH7qVln57CYMAA
- QJoNmjGsNaV7mP9mAuGz45yZuRxjAmFrAbB0+REEOZjXdxYbbLWs6w/B+LPDvBWTMJzuESQi+
- OpVyEUjrJJew9xKm1KiL0wRMChi18bYvA6BIfsVLlUDf1SUmQebWwQg8PfBntn6qkIxxuvmYH
- bpgMGe83SSeN1S4ITmQ2/CwW1KJ2haKNe/M7rpbHr0QdQXgWXgpONFlEByar1IiNJQqi9MSm7
- FgJpoyKk96zmp/ezUZRdWc9v3N1vRNXWNSVyx5jS1cBm2sEoE4k+R9CBxfJn2qze6qrr89bq3
- reuS/FbGwTdTajQyM6wA/R2EYElcaU/BPTfS8jHpa6CPERUZmQK2MvJTxe1g2GIDSFUMJH3Hl
- j7Df8RpXfxP1LtMSm53XA7KGd81G5bhpA2Ul/psV1YuTJRvK6GgaciSRVPRF/PBYlS4Bi3p3P
- lj3STsyQfgyeV60Kvu0Z7ER81rrFhtzWT8aBaLloS/geSZZO1kTEW6Ka8sjks+J3Z0g5qYj1Z
- HahTPs7a6BL+q7sy+TG5VOqhO5Jj41Z/s7KWfphiMg84MAQQ7tbE37aeyjLj9z76OY40zfXNc
- DbrGqDgRa3DfQh+YKE8DzS/+/xmLCjYEuwKFFrmSLuT4ZIi+1Glj5lKitT4eShDCSp0/29TrE
- 5HWljwe3lYqMf24v8gysqJvB48+fBuRkm3QTQz4vmHIpaCB8BWl/4GAU6j2tyn33upd35Z5L4
- 9ZKK1J/nkZunlXpndqGeD/GASBmwoaLckhBcTAj0KSxhR0aa4XjaNnd53HPZy8YJ9BlLrGwMZ
- kYntJ7vgpwSlb9dqichj84m2AcB5WDOAVSmH0O1eJgrQ/lBvitlhf8VYE4WKeI3vk3zGvcmdV
- n9xbwLihYsSvbdzE/Alp49X8BvPap2qsFCb1rJf+u9mm9pVeWq6KJpbIOeWzNfjVAqbqofXmH
- zsN6FT6OE+KpWwgTJju/MuSH/BnuB/2QM4CxBtOkTjbzxmiaNa5/5QMyJvELzvZoIg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 18.01.22 um 11:40 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+Hi Junio,
+
+On Fri, 14 Jan 2022, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> On Tue, Jan 18 2022, Ren=C3=A9 Scharfe wrote:
+> >> I think we had this discussion about FreeBSD before and that's why I
+> >> specifically dropped that option from the main makefile.  We can eith=
+er
+> >> drop that patch, or we can set it to -std=3Dgnu11 and tell folks sett=
+ing
+> >> DEVELOPER to use a system released in the last five years.  I think w=
+e
+> >> can be a little stricter with what we require in the case of DEVELOPE=
+R
+> >> than we might be otherwise.
+> >
+> > But that is not being stricter, but looser, no?  I thought that the
+> > point of -std=3Dgnu99 was to allow us to use C99 features while catchi=
+ng
+> > use of language features newer than that, and use of -std=3Dgnu11 will
+> > defeat half the point, wouldn't it?
 >
->> Am 17.01.22 um 19:22 schrieb Ren=C3=A9 Scharfe:
->>> Am 17.01.22 um 18:43 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->>>>
->>>> On Fri, Oct 01 2021, Ren=C3=A9 Scharfe wrote:
->>>>
->>>>
->>>>> +/*
->>>>> + * Perform an iterative mergesort using an array of sublists.
->>>>> + *
->>>>> + * n is the number of items.
->>>>> + * ranks[i] is undefined if n & 2^i =3D=3D 0, and assumed empty.
->>>>> + * ranks[i] contains a sublist of length 2^i otherwise.
->>>>> + *
->>>>> + * The number of bits in a void pointer limits the number of object=
-s
->>>>> + * that can be created, and thus the number of array elements neces=
-sary
->>>>> + * to be able to sort any valid list.
->>>>> + *
->>>>> + * Adding an item to this array is like incrementing a binary numbe=
-r;
->>>>> + * positional values for set bits correspond to sublist lengths.
->>>>> + */
->>>>>  void *llist_mergesort(void *list,
->>>>>  		      void *(*get_next_fn)(const void *),
->>>>>  		      void (*set_next_fn)(void *, void *),
->>>>>  		      int (*compare_fn)(const void *, const void *))
->>>>>  {
->>>>> -	unsigned long l;
->>>>> -
->>>>> -	if (!list)
->>>>> -		return NULL;
->>>>> -	for (l =3D 1; ; l *=3D 2) {
->>>>> -		void *curr;
->>>>> -		struct mergesort_sublist p, q;
->>>>> +	void *ranks[bitsizeof(void *)];
->>>>> +	size_t n =3D 0;
->>>>> +	int i;
->>>>>
->>>>> -		p.ptr =3D list;
->>>>> -		q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
->>>>> -		if (!q.ptr)
->>>>> -			break;
->>>>> -		p.len =3D q.len =3D l;
->>>>> +	while (list) {
->>>>> +		void *next =3D get_next_fn(list);
->>>>> +		if (next)
->>>>> +			set_next_fn(list, NULL);
->>>>> +		for (i =3D 0; n & (1 << i); i++)
->>>>> +			list =3D llist_merge(ranks[i], list, get_next_fn,
->>>>> +					   set_next_fn, compare_fn);
->>>>> +		n++;
->>>>> +		ranks[i] =3D list;
->>>>> +		list =3D next;
->>>>> +	}
->>>>
->>>> (Commenting on a commit integrated into v2.34.0)
->>>>
->>>> The aCC compiler on HP/UX notes:
->>>>
->>>>     "mergesort.c", line 67: warning #2549-D: variable "ranks" is used=
- before its value is set
->>>>                         list =3D llist_merge(ranks[i], list, get_next=
-_fn,
->>>>
->>>> It's commenting on the ranks[i] within the for-loop-within-while-loop
->>>> above.
->>>
->>> That would be a bug.  I think none of the array elements are read befo=
-re
->>> they are written -- but of course I'm biased.  Can that compiler show =
-a
->>> sequence that would lead to reading uninitialized data?  Or anyone els=
-e?
->>>
->>> Initializing the array would memset(3) 128 bytes on 32-bit systems and
->>> 512 bytes on 64-bit systems.  Doing that everywhere just to appease a
->>> confused compiler on a dying platform would be merciful, but still sad=
-.
->>
->> Does the warning disappear if you add "ranks[0] =3D NULL;" before the w=
-hile
->> loop?  And if it does, has adding "if (n & 1) ranks[0] =3D NULL;" inste=
-ad
->> the same effect?
+> If FreeBSD (or any other platform) cannot do "reject features beyond
+> C99", I am perfectly OK to drop -std=3Dgnu99 on such a place.
 >
-> Both of those make the warning go away.
-
-The second one is optimized out by GCC and Clang because n =3D=3D 0 before
-the while loop.  The data flow analysis in aCC that leads to the warning
-must be taking some shortcuts if can be fooled by an inconsequential
-expression.
-
-> Anyway, if you think the pre-image in master now is fine let's leave it
-> as it is. There's no point in just trying to appease aCC here.
+> DEVELOPER=3DYesPlease ought to be a collection of settings that helps
+> the developers the most.  So on platforms that *can* do "reject
+> features beyond C99", I prefer to have it enabled when
+> DEVELOPER=3DYesPlease is given.
 >
-> I just thought I'd send a quick mail about it because I was looking at
-> its warning output, most of those warnings point to obviously harmless
-> issues, but I thought this one *might* point to an actual logic error
-> (but didn't look carefully enough myself), so I thought I'd send a quick
-> note about it.
+> It seems that -std=3Dgnu99 is only added conditionally even in today's
+> config.mak.dev, so it is fine if we dropped -std=3Dgnu99 from there.
+> Which means that developers on FreeBSD cannot participate in vetting
+> use of features beyond C99, but there are developers on other
+> platforms who will, so it's not too bad, I would say.
 
-Sure, it would be a disaster if this loop somehow read uninitialized
-data, and any hint needs towards that end must be taken seriously.  But
-that warning from aCC seems to be a false positive.
+Plus, we have CI runs that do help us, thanks to setting `DEVELOPER=3D1`
+(see https://github.com/git/git/blob/v2.35.0-rc1/ci/lib.sh#L154).
 
-Adding "if (n & 1) ranks[0] =3D NULL;" before the loop and a comment would
-not change the code generated by  "normal" optimizing compilers, so we
-could add this at the cost of slightly hurting readability, if necessary.
+> As config.mak.dev is included after config.mak.uname, something like
+> this may be sufficient, perhaps?
+>
+>  config.mak.dev | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git i/config.mak.dev w/config.mak.dev
+> index d4afac6b51..3deb076d5e 100644
+> --- i/config.mak.dev
+> +++ w/config.mak.dev
+> @@ -20,9 +20,14 @@ endif
+>  endif
+>  endif
+>
+> +ifneq ($(uname_S),FreeBSD)
+>  ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang7,$(COMPI=
+LER_FEATURES))),)
+>  DEVELOPER_CFLAGS +=3D -std=3Dgnu99
+>  endif
+> +else
+> +# FreeBSD cannot limit to C99 because its system headers unconditionall=
+y
+> +# rely on C11 features.
+> +endif
+>
+>  DEVELOPER_CFLAGS +=3D -Wdeclaration-after-statement
+>  DEVELOPER_CFLAGS +=3D -Wformat-security
+>
 
-> If you think not it's probably best just to leave the code as-is.
+I applied this patch on top of the current tip of `seen`, opened a PR at
+https://github.com/gitgitgadget/git/pull/1116. The corresponding FreeBSD
+run is here: https://cirrus-ci.com/task/5867558132776960, and it
+succeeded.
 
-That works for me as well. :)
+In addition, I concur that this is the best we can do, and I really would
+like to have that patch as soon as possible because it confuses new
+contributors when their PR builds fail out of no mistake of their own.
 
-Ren=C3=A9
+Please count this as a vote for including this patch in -rc2.
+
+Thank you,
+Dscho
