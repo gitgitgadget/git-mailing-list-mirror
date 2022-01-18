@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDA03C433EF
-	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 17:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91C47C433F5
+	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 17:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347550AbiARRrq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Jan 2022 12:47:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46694 "EHLO
+        id S1347558AbiARRrs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Jan 2022 12:47:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231299AbiARRrq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jan 2022 12:47:46 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAEABC061574
-        for <git@vger.kernel.org>; Tue, 18 Jan 2022 09:47:45 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id 67-20020a630746000000b003443fe43bbaso9983562pgh.12
-        for <git@vger.kernel.org>; Tue, 18 Jan 2022 09:47:45 -0800 (PST)
+        with ESMTP id S1347551AbiARRrr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jan 2022 12:47:47 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FE8DC061574
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 09:47:47 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id a4-20020a17090a70c400b001b21d9c8bc8so2013247pjm.7
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 09:47:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=5qg8ibaZTnQyb/PEZT0jOHJ3SVf/BfG//B3VsADDnPI=;
-        b=lCSZ1iQkgKnFHgqsEve7+5YI9jMXzeIyTp5nBL90PkJxwZ5yOTjF7Lmcsloghv5EhW
-         eeUYtXYU01Zu13h2fjfkDx14N5CQlcsXuDsR32l/9IjqGXA7+h+YAs6w9O0lWQgkBprF
-         T8C7H0pbA2MkdyAbkDj3yveDggzgOKFemVQnsoUYmOSr183chylvL8XQHO0XdUO3QYjf
-         HIRDa93Gv1Srcmt3aIv3ddD2Gnin4+5YI/avjp5qSuLymek1xliUUmSMFhAR+cVfvAst
-         6Gv21255RVqQkuu5VI+WEpj//h2dNPuJIK4C94xUhS8xIlnUaPJmUm99vAGkO9dDoqs+
-         zwpw==
+        bh=4CFwGdIP8OggbEJHR+LV0WQbEtAD8KXrbazgFBfUOBY=;
+        b=csLsMQucUmVaD7EzFJ1dn8ZlRUdhZkPUq2oYET621ssUkAZTAhtttwVr08Rk6IXXSS
+         9xaY+bD5a8yBozMYUqNXM1shDGYZDOvAkQ8X3hQnoIzHGoMCI622GXsSHyEbciGuZ/Gy
+         jDCxaZyVBVgTp0cfcRV3sZaJhkrM97pOTzN/z7FcdDHIM73FJXSZ3ErNOYUZSPlxNseS
+         njYAYSiEf4mvhiiCG8RJCn0bed2M0pc1e7nrM7/S7kDUY1hS65h5aGf0b1W5ufiohI/t
+         zd/0tuEuaM/0nrSctIxl4CM+LP4BTipGR2RqoDct6KI3/yQJfMUrwKSM0zG72EvfARoM
+         J+mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=5qg8ibaZTnQyb/PEZT0jOHJ3SVf/BfG//B3VsADDnPI=;
-        b=JNGo70drrklal6mMOBYQh9HKmB3FX+D3Sm/jS7z0kl6vVJTR8sxPcW6eqm0ySHJY3n
-         ZcTeXPBltl2gP5ZeMWKeUmQLp5oknBBcJjyg5wZPoSjFjdhlcRr1rnM02ee4SPxrV2+7
-         HpMn/GnH7GCXRq3EPkCSSAqQitarMokFUBjEAIpV/gzWj/mtF1hu2EmuWYhDS7CL+/mo
-         DtODcPOAw0IUjIHBSWoWO2bsZ5LiqN3XlCfGFW80iutlYPARLAVO9J49DKfislduT1oo
-         0oWMtS5JcQCsvjSwE491VbrtE9SIrSIaB+pgsp6ydlu/3lqvmXnFvs9o55IqZXF0YYE2
-         IuZg==
-X-Gm-Message-State: AOAM533IUr0ESKX5gl08Dwamsikalk9BS7KmOiXaU3wixCraIEzTycYc
-        Ry/vNGk/nLOhXVS6JN8ipmMXCq3NrvxXpaCT9SyXliMCKUOwIj2uB9fMjJ9KLrC1y6XsQrUKveH
-        KCZv9jrRRXQhFldf0doOonwY+c88Hlx43P6cJ9PEt6dgyi/suWZN83f3oXNls2HxanEGpcyhq2f
-        AA
-X-Google-Smtp-Source: ABdhPJxITj5zsj4OcCU470hy3CxOKi709SmIpNue7WTUx3WwpTakGlHPC8iOxnUJXWIonKOaSzAhRGzZ78WZAna1wzzB
+        bh=4CFwGdIP8OggbEJHR+LV0WQbEtAD8KXrbazgFBfUOBY=;
+        b=cGL3kPw92vUNrTWes7HbAbHaKvS6LTlwgp8MSHK4U7JL2OCvoiYZY/QseiTnnSvddQ
+         TcqTPyTOLNbnIvOdZWdLUATdgaBCA+c7pU+AMOwiuppcqgjeFC9wCfe0SjhjpznvGznH
+         BAqvU4fg3wdZs1be6nOB9jCra5Up0E3RtOcGdSeHZbM6MBur7zwsxYAGQNdXjqYZuGxG
+         HzkU/F9SeddY/36SMpioRtFJxhW3BF0NIobLA2JT/jC7FeJUURV2t94T9VDbTqfDa9S7
+         3Lb6jOfS9k4Y9YeIOizCJVMRFRN1aLphNy12JOmOGj7Zp6cX4lWmIXxwMJjWYqKvq+QL
+         raXQ==
+X-Gm-Message-State: AOAM533gKtEwLNc23TnA1WQ3wWHRt1BOMaitVNiw5p5zAbk7Efu3IS9Q
+        F2vYW0RiMTi7Pe2Ru2L6Yr/uU4Ea8u/W9ReK6UUg0s7P7dfZcWFLQbuBk3KKryKS8p6QiaskWcu
+        hZ1KCaaLXFc6Vq0VO08mDs+/ORDtWViQU9eIbpgVpMPvc7HryBg7UOAoVXMrFEe8mrqqtTKuu8S
+        r+
+X-Google-Smtp-Source: ABdhPJzG7lAWaVSTG/nV2cTslqs9QlowfIrvXJfKySOZa3wUXVX2vcUbr0gdx2nidvfhRfisYLzjYBBnWLP0OJqwFhBS
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90b:3906:: with SMTP id
- ob6mr41584752pjb.170.1642528064983; Tue, 18 Jan 2022 09:47:44 -0800 (PST)
-Date:   Tue, 18 Jan 2022 09:47:38 -0800
-In-Reply-To: <cover.1634077795.git.jonathantanmy@google.com>
-Message-Id: <cover.1642527965.git.jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:903:11d0:b0:149:a969:400c with
+ SMTP id q16-20020a17090311d000b00149a969400cmr28814072plh.120.1642528066789;
+ Tue, 18 Jan 2022 09:47:46 -0800 (PST)
+Date:   Tue, 18 Jan 2022 09:47:39 -0800
+In-Reply-To: <cover.1642527965.git.jonathantanmy@google.com>
+Message-Id: <b2dcae03ed3016f96a5368db925fa3736c3d7c58.1642527965.git.jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <cover.1634077795.git.jonathantanmy@google.com>
+References: <cover.1634077795.git.jonathantanmy@google.com> <cover.1642527965.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.34.1.703.g22d0c6ccf7-goog
-Subject: [PATCH v8 0/2] Conditional config includes based on remote URL
+Subject: [PATCH v8 1/2] config: make git_config_include() static
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, chooglen@google.com,
@@ -62,88 +63,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks everyone for your review. v8 follows Elijah Newren's comments
-about making URLs more identifiable in tests, and also including an
-example in documentation.
+It is not used from outside the file in which it is declared.
 
-Jonathan Tan (2):
-  config: make git_config_include() static
-  config: include file if remote URL matches a glob
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ config.c | 12 +++++++++++-
+ config.h | 37 ++++---------------------------------
+ 2 files changed, 15 insertions(+), 34 deletions(-)
 
- Documentation/config.txt |  35 +++++++++++
- config.c                 | 132 ++++++++++++++++++++++++++++++++++++---
- config.h                 |  46 ++++----------
- t/t1300-config.sh        | 118 ++++++++++++++++++++++++++++++++++
- 4 files changed, 290 insertions(+), 41 deletions(-)
-
-Range-diff against v7:
-1:  b2dcae03ed = 1:  b2dcae03ed config: make git_config_include() static
-2:  7c70089074 ! 2:  6691e39c82 config: include file if remote URL matches a glob
-    @@ Documentation/config.txt: all branches that begin with `foo/`. This is useful if
-      A few more notes on matching via `gitdir` and `gitdir/i`:
-      
-       * Symlinks in `$GIT_DIR` are not resolved before matching.
-    +@@ Documentation/config.txt: Example
-    + ; currently checked out
-    + [includeIf "onbranch:foo-branch"]
-    + 	path = foo.inc
-    ++
-    ++; include only if a remote with the given URL exists (note
-    ++; that such a URL may be provided later in a file or in a
-    ++; file read after this file is read, as seen in this example)
-    ++[includeIf "hasconfig:remote.*.url:https://example.com/**"]
-    ++	path = foo.inc
-    ++[remote "origin"]
-    ++	url = https://example.com/git
-    + ----
-    + 
-    + Values
-     
-      ## config.c ##
-     @@ config.c: struct config_include_data {
-    @@ t/t1300-config.sh: test_expect_success '--get and --get-all with --fixed-value'
-     +		that = that-is-not-included
-     +	EOF
-     +	cat >>hasremoteurlTest/.git/config <<-EOF &&
-    -+	[includeIf "hasconfig:remote.*.url:foo"]
-    ++	[includeIf "hasconfig:remote.*.url:foourl"]
-     +		path = "$(pwd)/include-this"
-    -+	[includeIf "hasconfig:remote.*.url:bar"]
-    ++	[includeIf "hasconfig:remote.*.url:barurl"]
-     +		path = "$(pwd)/dont-include-that"
-     +	[remote "foo"]
-    -+		url = foo
-    ++		url = foourl
-     +	EOF
-     +
-     +	echo this-is-included >expect-this &&
-    @@ t/t1300-config.sh: test_expect_success '--get and --get-all with --fixed-value'
-     +	EOF
-     +	cat >>hasremoteurlTest/.git/config <<-EOF &&
-     +	[remote "foo"]
-    -+		url = foo
-    ++		url = foourl
-     +	[user]
-     +		one = main-config
-     +		two = main-config
-    -+	[includeIf "hasconfig:remote.*.url:foo"]
-    ++	[includeIf "hasconfig:remote.*.url:foourl"]
-     +		path = "$(pwd)/include-two-three"
-     +	[user]
-     +		three = main-config
-    @@ t/t1300-config.sh: test_expect_success '--get and --get-all with --fixed-value'
-     +
-     +	cat >include-with-url <<-\EOF &&
-     +	[remote "bar"]
-    -+		url = bar
-    ++		url = barurl
-     +	EOF
-     +	cat >>hasremoteurlTest/.git/config <<-EOF &&
-    -+	[includeIf "hasconfig:remote.*.url:foo"]
-    ++	[includeIf "hasconfig:remote.*.url:foourl"]
-     +		path = "$(pwd)/include-with-url"
-     +	EOF
-     +
+diff --git a/config.c b/config.c
+index 2dcbe901b6..94ad5ce913 100644
+--- a/config.c
++++ b/config.c
+@@ -120,6 +120,16 @@ static long config_buf_ftell(struct config_source *conf)
+ 	return conf->u.buf.pos;
+ }
+ 
++struct config_include_data {
++	int depth;
++	config_fn_t fn;
++	void *data;
++	const struct config_options *opts;
++};
++#define CONFIG_INCLUDE_INIT { 0 }
++
++static int git_config_include(const char *var, const char *value, void *data);
++
+ #define MAX_INCLUDE_DEPTH 10
+ static const char include_depth_advice[] = N_(
+ "exceeded maximum include depth (%d) while including\n"
+@@ -306,7 +316,7 @@ static int include_condition_is_true(const struct config_options *opts,
+ 	return 0;
+ }
+ 
+-int git_config_include(const char *var, const char *value, void *data)
++static int git_config_include(const char *var, const char *value, void *data)
+ {
+ 	struct config_include_data *inc = data;
+ 	const char *cond, *key;
+diff --git a/config.h b/config.h
+index f119de0130..48a5e472ca 100644
+--- a/config.h
++++ b/config.h
+@@ -126,6 +126,8 @@ int git_default_config(const char *, const char *, void *);
+ /**
+  * Read a specific file in git-config format.
+  * This function takes the same callback and data parameters as `git_config`.
++ *
++ * Unlike git_config(), this function does not respect includes.
+  */
+ int git_config_from_file(config_fn_t fn, const char *, void *);
+ 
+@@ -158,6 +160,8 @@ void read_very_early_config(config_fn_t cb, void *data);
+  * will first feed the user-wide one to the callback, and then the
+  * repo-specific one; by overwriting, the higher-priority repo-specific
+  * value is left at the end).
++ *
++ * Unlike git_config_from_file(), this function respects includes.
+  */
+ void git_config(config_fn_t fn, void *);
+ 
+@@ -338,39 +342,6 @@ const char *current_config_origin_type(void);
+ const char *current_config_name(void);
+ int current_config_line(void);
+ 
+-/**
+- * Include Directives
+- * ------------------
+- *
+- * By default, the config parser does not respect include directives.
+- * However, a caller can use the special `git_config_include` wrapper
+- * callback to support them. To do so, you simply wrap your "real" callback
+- * function and data pointer in a `struct config_include_data`, and pass
+- * the wrapper to the regular config-reading functions. For example:
+- *
+- * -------------------------------------------
+- * int read_file_with_include(const char *file, config_fn_t fn, void *data)
+- * {
+- * struct config_include_data inc = CONFIG_INCLUDE_INIT;
+- * inc.fn = fn;
+- * inc.data = data;
+- * return git_config_from_file(git_config_include, file, &inc);
+- * }
+- * -------------------------------------------
+- *
+- * `git_config` respects includes automatically. The lower-level
+- * `git_config_from_file` does not.
+- *
+- */
+-struct config_include_data {
+-	int depth;
+-	config_fn_t fn;
+-	void *data;
+-	const struct config_options *opts;
+-};
+-#define CONFIG_INCLUDE_INIT { 0 }
+-int git_config_include(const char *name, const char *value, void *data);
+-
+ /*
+  * Match and parse a config key of the form:
+  *
 -- 
 2.34.1.703.g22d0c6ccf7-goog
 
