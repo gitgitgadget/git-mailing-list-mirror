@@ -2,104 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 877E6C433F5
-	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 16:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87E98C433FE
+	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 16:09:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236407AbiARQBf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Jan 2022 11:01:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49740 "EHLO
+        id S1346940AbiARQJB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Jan 2022 11:09:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233506AbiARQBb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jan 2022 11:01:31 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F68EC061574
-        for <git@vger.kernel.org>; Tue, 18 Jan 2022 08:01:31 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id a18so81652435edj.7
-        for <git@vger.kernel.org>; Tue, 18 Jan 2022 08:01:31 -0800 (PST)
+        with ESMTP id S1346599AbiARQI0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jan 2022 11:08:26 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF17DC061755
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 08:08:22 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id i7-20020a9d68c7000000b0059396529af8so18131552oto.4
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 08:08:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=27iKCvjflip+rZbsr0fYyVsdOlnpOkmbhPcaYp2xyNE=;
-        b=qaiCNhvcqPaibd1h6tL1cnl/fV/+eZK+0f/gv20K5zaMbAnMw2Fpflb7ioou9oNzLw
-         AhwdjmjhMbSLTcMJYf8Ivzu42IoIe/CRDhRCqydDuY0AL1b7WjjoJ7wRVi2gR98InMtG
-         BX4X0hBo58yKcI74gLv5b+hjM4IYVLnPZg96NYmnEbhMkD4mblZ+2hWD6iOIkZ9J2iUS
-         Fd5kWwSfQ16fYOB5iXCfmsxSEbRG5N1+d3bTqSrjiDnb3sjRfDsYJZbhzDtOppW1TvrB
-         M+BvY7RDJWH4D1pfVv+aF5mQEeXadKFLaaUiv6Kze67wBw7ASdBWwGmyeF2zaRTMZAc5
-         XBGA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=Izuux5JIelQeXrlh4FF7o2jxwtG6vCYd5iUspiy53wg=;
+        b=F86I5EdlU8yYMev3D1BHNEUZrJmviacLtwP+9o+W7t49X3xlKvuV4gk4KJOCT/xFRA
+         uBMvpjT/PRGEL0VIupInTtNRejgJHzrY/tM/hr/DuDXaQ+laOO1/sQLRfP/mknz2sxCb
+         qiqcQmESTpbzXLS7WWaYTgY6B7bhS7XfEvrW1t3T0Mznt+HohDWENjpazErp+7i74sYb
+         E77cVzxvicHejbT9nx8WcpGIofXCfEHNEnRZeT5HcChKvuPQp32CoL0JPViSanYMvrn4
+         At2cUrqZ96w6Pugiyy6caRRdI2GC5YSrNuuvh48Jt1aFXEshrZ4XRgJLziw1Qv+nUtTz
+         nGTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=27iKCvjflip+rZbsr0fYyVsdOlnpOkmbhPcaYp2xyNE=;
-        b=iQW62aZH3jheza2y24aJbXnw9UnYk5VKgExo4iu6tKoGMbVI2h8Oz+JVDgBoWefg2Y
-         pEjSaNIxUlDictBeMS0bbaKBS4n+WT+nlLW3tGNUo8VFh0k4Fexv2JitpKXIE18WqA3G
-         vuwT79zBs8Pd7MC65izpJfHakGffbcFb9CwZ5u1JyUbj7ixh0EzjxPNda9Ob/ImrlmrN
-         aC4WwoPXzks8zvZkaBHFJWsDConXHMOhKxGgT6lp2oxFJ6/5zSJT8kVIpcFSBfj1+n7w
-         N9yLwnk+SagVgwahYBpsPzm+UoU2qOwQlcVzCdNgURi1o9ENjP/THEaDl79adHAvuGFf
-         LKug==
-X-Gm-Message-State: AOAM5311PWi7F8IAqCOQqV8jmy+vVap/sRXp6PHdDYppZKNXIAXav3do
-        iB2uzOAWxH6E+qwJDHAE4Oo=
-X-Google-Smtp-Source: ABdhPJxCIwpphKehLenRrFJgXGWTJ5XUKscwWjWZ3qipAvoJAG+Vm/rclRrp4liJEdmIMKNyrhlwzQ==
-X-Received: by 2002:a17:906:6a26:: with SMTP id qw38mr22561264ejc.518.1642521689565;
-        Tue, 18 Jan 2022 08:01:29 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id hq35sm5548204ejc.100.2022.01.18.08.01.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jan 2022 08:01:29 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1n9qvI-001eQY-MQ;
-        Tue, 18 Jan 2022 17:01:28 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Glen Choo <chooglen@google.com>
-Subject: ab/config-based-hooks-2 (was: What's cooking in git.git (Jan 2022,
- #04; Fri, 14))
-Date:   Tue, 18 Jan 2022 16:59:04 +0100
-References: <xmqqy23h4nss.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqy23h4nss.fsf@gitster.g>
-Message-ID: <220118.86a6ftowx3.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=Izuux5JIelQeXrlh4FF7o2jxwtG6vCYd5iUspiy53wg=;
+        b=npcmoeNPKbqUTWH7pG4sENorsIcCZ4N7pkP5qn+439lFOlwOUq2iCuVcVUTpSIioKL
+         jNOx6bgPYq5oZrCu1VfI/sceK5crjGW/NAL1bWcpzjY9kThfxLwNsA8PtVCpAIH0wFwQ
+         B4K3RCLsxkCqAgNqQV3wLvcgzXFVIuB6+rxjHmuGxh0fn+FyUTQUzOSkLtKVxGIATzGn
+         0id7l0E1BhKunndVcJWLdm7yrMK1xBDa6Xp+wZIv/MnkcZF/+auL7t3BqXUC/5y9o4Nd
+         CGvV5bGL2aIqNWPg5Ded4ahDFPwFHOGVUKwmncXVknk9BB8OcfE4tdssvpdof9pWoFno
+         XZpQ==
+X-Gm-Message-State: AOAM533iIodboVh4I9NVKYJ+giN0tI7A24txeHoLRmuvO3zYv2o/Jvb0
+        BVV3nV0zu7kbS5dx8cKncDZeDz767BU=
+X-Google-Smtp-Source: ABdhPJxDpWxvR2MpV4hv0zeYh5ou5OdiblZIxaHi9zGJ3d8wvGXn/a2XhkB0XNdCYbHbtsAiuZNGig==
+X-Received: by 2002:a9d:1b0f:: with SMTP id l15mr20508622otl.38.1642522102194;
+        Tue, 18 Jan 2022 08:08:22 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:113f:db67:413a:89ca? ([2600:1700:e72:80a0:113f:db67:413a:89ca])
+        by smtp.gmail.com with ESMTPSA id t13sm7032518otq.54.2022.01.18.08.08.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 18 Jan 2022 08:08:21 -0800 (PST)
+Message-ID: <a876f4e0-e3b3-d3a3-e469-927669622119@gmail.com>
+Date:   Tue, 18 Jan 2022 11:08:20 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: ds/sparse-checkout-requires-per-worktree-config (was Re: What's
+ cooking in git.git (Jan 2022, #04; Fri, 14))
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqy23h4nss.fsf@gitster.g>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqy23h4nss.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 1/14/2022 11:37 PM, Junio C Hamano wrote:
 
-On Fri, Jan 14 2022, Junio C Hamano wrote:
+> * ds/sparse-checkout-requires-per-worktree-config (2022-01-14) 6 commits
+>  - worktree: copy sparse-checkout patterns and config on add
+>  - sparse-checkout: use repo_config_set_worktree_gently()
+>  - config: add repo_config_set_worktree_gently()
+>  - worktree: add 'init-worktree-config' subcommand
+>  - config: make some helpers repo-aware
+>  - setup: use a repository when upgrading format
+> 
+>  "git sparse-checkout" wants to work with per-worktree configration,
+>  but did not work well in a worktree attached to a bare repository.
+> 
+>  Expecting an update.
+>  cf. <1db0f601-4769-15c0-cd58-ecddfa1fc9d5@gmail.com>
+>  source: <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com>
 
-> * ab/config-based-hooks-2 (2022-01-07) 17 commits
->  - run-command: remove old run_hook_{le,ve}() hook API
->  - receive-pack: convert push-to-checkout hook to hook.h
->  - read-cache: convert post-index-change to use hook.h
->  - commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
->  - git-p4: use 'git hook' to run hooks
->  - send-email: use 'git hook run' for 'sendemail-validate'
->  - git hook run: add an --ignore-missing flag
->  - hooks: convert worktree 'post-checkout' hook to hook library
->  - hooks: convert non-worktree 'post-checkout' hook to hook library
->  - merge: convert post-merge to use hook.h
->  - am: convert applypatch-msg to use hook.h
->  - rebase: convert pre-rebase to use hook.h
->  - hook API: add a run_hooks_l() wrapper
->  - am: convert {pre,post}-applypatch to use hook.h
->  - gc: use hook library for pre-auto-gc hook
->  - hook API: add a run_hooks() wrapper
->  - hook: add 'run' subcommand
->
->  More "config-based hooks".
->
->  Will merge to 'next', with minor nits?
->  source: <cover-v6-00.17-00000000000-20211222T035755Z-avarab@gmail.com>
+Sorry for the delay. I've spent the last two weeks with my
+family under quarantine for COVID.
 
-I'd really like that, if you're OK with it.
+I will update this topic this week.
 
-I.e. I could re-roll it, but those comments are relatively minor, and in
-any case will be addressed eventually by subsequent to-be-submitted
-parts of the hook.[ch] API conversion.
-
-So unless Emily or Glen have strong objections I think it makes sense to
-mark it for 'next'. Thanks!
+Thanks,
+-Stolee
