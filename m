@@ -2,303 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F513C433F5
-	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 10:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E726EC433F5
+	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 10:56:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235883AbiARKAd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Jan 2022 05:00:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51354 "EHLO
+        id S238170AbiARK4C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Jan 2022 05:56:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234406AbiARKAd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jan 2022 05:00:33 -0500
+        with ESMTP id S238153AbiARK4A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jan 2022 05:56:00 -0500
 Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EC35C061574
-        for <git@vger.kernel.org>; Tue, 18 Jan 2022 02:00:32 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id 30so77054957edv.3
-        for <git@vger.kernel.org>; Tue, 18 Jan 2022 02:00:32 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0084C061574
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 02:55:59 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id q25so77625306edb.2
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 02:55:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=eS54VIvohz0qVWgoXlFs/xZKUd8BsBYX63gfVaIGPQg=;
-        b=J8wzrj5m+ZHL8k2v7iEDRi+74XViVLLLAE652bqT5+zo9LRYkgBginpNw+nAumtYff
-         mIt0zVXdhcehk4ZUyqJJkGuPQFjwaiiqDYLfKuiMn8CyJnykvW9Pz+4ni+O6NKs1sEN8
-         3kNvoEoRW7/1JQh7gYB2jqd9TWAd+4KdY+zK2Jfv+FXhqeqsinJk0X5lU0C90dvDzoe5
-         6aEMllxT4AvXDRlixf+4vQRJK2jyR5ISeCt5E18lrk15jz2yTHZ0aCh3UEGGqFylUYvg
-         jvHeyz9NfJgp+0vcHSN69axIHcAkCM1n3aNIXeY5v1ku0vPlcAMz6shjlRP+AnIcSaUA
-         N/nA==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=kyV69AuRSDUPlSTkyn4IBfoQ8i9b/sRkrNIFWOElD/w=;
+        b=JB94xNXx9UwutiN3x+jlXyK+J/TheK+4bLpLwfysYvEs8QwmpGnZDs4WvbbJBtnBbm
+         t2eKJhgtFtP3xVCQrnCCaVJrhrGCxxQQUXvPxu8P3rCvds6HppBX460OqZ/d1zmslhIV
+         YUVi7nRamZHcJl+bWTME3aP0oBNoAXOGwB/E8Z2RANFKT+3euaalWTuffD8HxS/X28om
+         Gq7zVHZW6asP9HWoUZsi229/AHGpJgllpvq2qudgSx4dHoAbTKelcjLyfB1JR6DrkLsl
+         M+/F8oprWZdZp4ZXFL7G77YYYsVe21Ip9e96Mw6wgAUvEeW1/H7SHnnsLi0vN7PMdnOA
+         rERA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=eS54VIvohz0qVWgoXlFs/xZKUd8BsBYX63gfVaIGPQg=;
-        b=RUuX8er5M63lsH72IjnnMIcyazJZQNS/51zj++8Wtz3NxquWRYJA/C6RO3Jeisj8vg
-         Y4OVEl8ONrMJJs6Ep43JLPEXYCh6JXk7UnJvXLPyy6f2MgmPvs9JadL2jx2PbJNNXHTu
-         s2uAyxlkDvuOrlUEjIjAQcKrgHDxFwndCMyQ+GxwiEMG91Ys/2n7ZC7f5EsvmKI28lm8
-         8dGzQWT/ZVfr8ruC7Ua1kXuw2ceGTO5yteEHdXkKYBfrYgaPhI/X93MH7JX6P6pqQbGH
-         tJVZnmTfDiXb2zZPf7ERkwCf7xLDravYeuEd+zfoNacaxMcdMoBJyMYEwuubgsmwhrGv
-         Vgpw==
-X-Gm-Message-State: AOAM533E0kP3taJ6OAsAbj8u9dLMCt2Knia6Fl+vZP8oo8SCXJX01HeK
-        4AGgM6xGdBD7Gw6uVsId0QY=
-X-Google-Smtp-Source: ABdhPJy9E41r5A3AxUOCtqLX0OhPxQIqmQjIb2gnpVhAu1NLaG36rvDX7YRdxTq38bxrpXi6XHWcBA==
-X-Received: by 2002:a05:6402:c85:: with SMTP id cm5mr21644777edb.357.1642500030675;
-        Tue, 18 Jan 2022 02:00:30 -0800 (PST)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=kyV69AuRSDUPlSTkyn4IBfoQ8i9b/sRkrNIFWOElD/w=;
+        b=b+ZDfjVoJ/gypc9Ufk8iDeUzXrLae7QUtOgVTIVwVApWnI4tnyAiUDrRAEie3ZhSeK
+         7T/V/5A35QbBkgI5NlIW3K4euYXhwXDqqb7+o9nTrjOHGfusrg/iBfURUh/YuA71oUqb
+         aInezMeJWjDs499BNDh0NQaWD9+YAx9/HqPQkkZRTMtV+L1Fl87NkiV8MJxa9OI341Kd
+         Ifn1e8IGTVmxzvzLNqe9twuWkZVnAyl/pU1qfCS4diFA7UrrS6FglILB27o2ZQTlHhY7
+         Hmhhzu2AqWG/oYDQNRwF5k7ORZ86bBefR0ouFR1SsQbVzXDwIdmWjwNESI4nu52bRkI9
+         pJCg==
+X-Gm-Message-State: AOAM5333CwYfHw82n9SV097B7SuM6IexBDGtd849XcLbAqrs9bW7wkJ0
+        KVs2cWxCDICWoRjg0tUkPxZSzVl1IxYqfQ==
+X-Google-Smtp-Source: ABdhPJxtfcOds0bnYvQ/3/Io9bBE6n3LD4I5fhLxe2R0kElX0YIh12GlFv1XOJRd0v+AJTC5yOMWlg==
+X-Received: by 2002:a17:906:15d5:: with SMTP id l21mr20492235ejd.287.1642503358072;
+        Tue, 18 Jan 2022 02:55:58 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id mp12sm5253217ejc.19.2022.01.18.02.00.30
+        by smtp.gmail.com with ESMTPSA id k12sm5227139ejk.188.2022.01.18.02.55.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jan 2022 02:00:30 -0800 (PST)
+        Tue, 18 Jan 2022 02:55:57 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1n9lHw-001VE4-OK;
-        Tue, 18 Jan 2022 11:00:28 +0100
+        id 1n9m9c-001Wq8-UE;
+        Tue, 18 Jan 2022 11:55:56 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        rsbecker@nexbridge.com, Taylor Blau <me@ttaylorr.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/2] wrapper: add a helper to generate numbers from a
- CSPRNG
-Date:   Tue, 18 Jan 2022 10:45:12 +0100
-References: <20220104015555.3387101-1-sandals@crustytoothpaste.net>
- <20220117215617.843190-1-sandals@crustytoothpaste.net>
- <20220117215617.843190-2-sandals@crustytoothpaste.net>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 9/9] mergesort: use ranks stack
+Date:   Tue, 18 Jan 2022 11:40:43 +0100
+References: <943b1e01-465e-5def-a766-0adf667690de@web.de>
+ <636647b1-f666-f1e2-4127-ee0869b61036@web.de>
+ <220117.864k62qmt1.gmgdl@evledraar.gmail.com>
+ <c605ecc2-29d6-9025-152e-1bcb831e7188@web.de>
+ <cf5053b9-451c-7db6-acff-aae41bfabed3@web.de>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20220117215617.843190-2-sandals@crustytoothpaste.net>
-Message-ID: <220118.86v8yhpdmr.gmgdl@evledraar.gmail.com>
+In-reply-to: <cf5053b9-451c-7db6-acff-aae41bfabed3@web.de>
+Message-ID: <220118.86r195pb2b.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Jan 17 2022, brian m. carlson wrote:
+On Tue, Jan 18 2022, Ren=C3=A9 Scharfe wrote:
 
-> @@ -234,6 +234,14 @@ all::
->  # Define NO_TRUSTABLE_FILEMODE if your filesystem may claim to support
->  # the executable mode bit, but doesn't really do so.
->  #
-> +# Define CSPRNG_METHOD to "arc4random" if your system has arc4random and
-> +# arc4random_buf, "libbsd" if your system has those functions from libbsd,
-> +# "getrandom" if your system has getrandom, "getentropy" if your system has
-> +# getentropy, "rtlgenrandom" for RtlGenRandom (Windows only), or "openssl" if
-> +# you'd want to use the OpenSSL CSPRNG.  You may set multiple options with
-> +# spaces, in which case a suitable option will be chosen.  If unset or set to
-> +# anything else, defaults to using "/dev/urandom".
-> +#
->  # Define NEEDS_MODE_TRANSLATION if your OS strays from the typical file type
->  # bits in mode values (e.g. z/OS defines I_SFMT to 0xFF000000 as opposed to the
->  # usual 0xF000).
-> @@ -693,6 +701,7 @@ TEST_BUILTINS_OBJS += test-bloom.o
->  TEST_BUILTINS_OBJS += test-chmtime.o
->  TEST_BUILTINS_OBJS += test-config.o
->  TEST_BUILTINS_OBJS += test-crontab.o
-> +TEST_BUILTINS_OBJS += test-csprng.o
->  TEST_BUILTINS_OBJS += test-ctype.o
->  TEST_BUILTINS_OBJS += test-date.o
->  TEST_BUILTINS_OBJS += test-delta.o
-> @@ -1908,6 +1917,31 @@ ifdef HAVE_GETDELIM
->  	BASIC_CFLAGS += -DHAVE_GETDELIM
->  endif
->  
-> +ifneq ($(findstring arc4random,$(CSPRNG_METHOD)),)
-> +	BASIC_CFLAGS += -DHAVE_ARC4RANDOM
-> +endif
-> +
-> +ifneq ($(findstring libbsd,$(CSPRNG_METHOD)),)
-> +	BASIC_CFLAGS += -DHAVE_ARC4RANDOM_LIBBSD
-> +	EXTLIBS += -lbsd
-> +endif
-> +
-> +ifneq ($(findstring getrandom,$(CSPRNG_METHOD)),)
-> +	BASIC_CFLAGS += -DHAVE_GETRANDOM
-> +endif
-> +
-> +ifneq ($(findstring getentropy,$(CSPRNG_METHOD)),)
-> +	BASIC_CFLAGS += -DHAVE_GETENTROPY
-> +endif
-> +
-> +ifneq ($(findstring rtlgenrandom,$(CSPRNG_METHOD)),)
-> +	BASIC_CFLAGS += -DHAVE_RTLGENRANDOM
-> +endif
-> +
-> +ifneq ($(findstring openssl,$(CSPRNG_METHOD)),)
-> +	BASIC_CFLAGS += -DHAVE_OPENSSL_CSPRNG
-> +endif
-> +
+> Am 17.01.22 um 19:22 schrieb Ren=C3=A9 Scharfe:
+>> Am 17.01.22 um 18:43 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>>>
+>>> On Fri, Oct 01 2021, Ren=C3=A9 Scharfe wrote:
+>>>
+>>>
+>>>> +/*
+>>>> + * Perform an iterative mergesort using an array of sublists.
+>>>> + *
+>>>> + * n is the number of items.
+>>>> + * ranks[i] is undefined if n & 2^i =3D=3D 0, and assumed empty.
+>>>> + * ranks[i] contains a sublist of length 2^i otherwise.
+>>>> + *
+>>>> + * The number of bits in a void pointer limits the number of objects
+>>>> + * that can be created, and thus the number of array elements necessa=
+ry
+>>>> + * to be able to sort any valid list.
+>>>> + *
+>>>> + * Adding an item to this array is like incrementing a binary number;
+>>>> + * positional values for set bits correspond to sublist lengths.
+>>>> + */
+>>>>  void *llist_mergesort(void *list,
+>>>>  		      void *(*get_next_fn)(const void *),
+>>>>  		      void (*set_next_fn)(void *, void *),
+>>>>  		      int (*compare_fn)(const void *, const void *))
+>>>>  {
+>>>> -	unsigned long l;
+>>>> -
+>>>> -	if (!list)
+>>>> -		return NULL;
+>>>> -	for (l =3D 1; ; l *=3D 2) {
+>>>> -		void *curr;
+>>>> -		struct mergesort_sublist p, q;
+>>>> +	void *ranks[bitsizeof(void *)];
+>>>> +	size_t n =3D 0;
+>>>> +	int i;
+>>>>
+>>>> -		p.ptr =3D list;
+>>>> -		q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
+>>>> -		if (!q.ptr)
+>>>> -			break;
+>>>> -		p.len =3D q.len =3D l;
+>>>> +	while (list) {
+>>>> +		void *next =3D get_next_fn(list);
+>>>> +		if (next)
+>>>> +			set_next_fn(list, NULL);
+>>>> +		for (i =3D 0; n & (1 << i); i++)
+>>>> +			list =3D llist_merge(ranks[i], list, get_next_fn,
+>>>> +					   set_next_fn, compare_fn);
+>>>> +		n++;
+>>>> +		ranks[i] =3D list;
+>>>> +		list =3D next;
+>>>> +	}
+>>>
+>>> (Commenting on a commit integrated into v2.34.0)
+>>>
+>>> The aCC compiler on HP/UX notes:
+>>>
+>>>     "mergesort.c", line 67: warning #2549-D: variable "ranks" is used b=
+efore its value is set
+>>>                         list =3D llist_merge(ranks[i], list, get_next_f=
+n,
+>>>
+>>> It's commenting on the ranks[i] within the for-loop-within-while-loop
+>>> above.
+>>
+>> That would be a bug.  I think none of the array elements are read before
+>> they are written -- but of course I'm biased.  Can that compiler show a
+>> sequence that would lead to reading uninitialized data?  Or anyone else?
+>>
+>> Initializing the array would memset(3) 128 bytes on 32-bit systems and
+>> 512 bytes on 64-bit systems.  Doing that everywhere just to appease a
+>> confused compiler on a dying platform would be merciful, but still sad.
+>
+> Does the warning disappear if you add "ranks[0] =3D NULL;" before the whi=
+le
+> loop?  And if it does, has adding "if (n & 1) ranks[0] =3D NULL;" instead
+> the same effect?
 
-Just an implementation nit: I think:
-    
-    ifdef HAVE_CSPRNG_ARC4RANDOM
-    endif
-    ifdef HAVE_CSPRNG_GETRANDOM
-    endif
+Both of those make the warning go away.
 
-etc. makes this sort of thing much simpler. It piggy-backs on make's
-default "is defined?" semantics, which avoids a lot of verbosity.
+Anyway, if you think the pre-image in master now is fine let's leave it
+as it is. There's no point in just trying to appease aCC here.
 
-The "findstring" function you're using is also designed for one-letter
-flags like those used for MAKEFLAGS. See /if.*filter/ for a better
-pattern for space-separated tokens if you'd like to use this "variable
-takes a space separated list" pattern....
+I just thought I'd send a quick mail about it because I was looking at
+its warning output, most of those warnings point to obviously harmless
+issues, but I thought this one *might* point to an actual logic error
+(but didn't look carefully enough myself), so I thought I'd send a quick
+note about it.
 
-> diff --git a/config.mak.uname b/config.mak.uname
-> index a3a779327f..ff0710a612 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -141,6 +141,7 @@ ifeq ($(uname_S),Darwin)
->  	HAVE_BSD_SYSCTL = YesPlease
->  	FREAD_READS_DIRECTORIES = UnfortunatelyYes
->  	HAVE_NS_GET_EXECUTABLE_PATH = YesPlease
-> +	CSPRNG_METHOD = arc4random
->  
->  	# Workaround for `gettext` being keg-only and not even being linked via
->  	# `brew link --force gettext`, should be obsolete as of
+If you think not it's probably best just to leave the code as-is.
 
-..another reason to use the "defined?" pattern is that if you're using
-an older version of OSX (or one of the other OS's) and this is wrong you
-can just:
-
-    HAVE_CSPRNG_WHATEVER =
-
-But with space-separated you'll need a more verbose $(filter-out ...).
-
-> +/*
-
-nit: API comments with "/**" comments.
-
-> + * Generate len bytes from the system cryptographically secure PRNG.
-> + * Returns 0 on success and -1 on error, setting errno.  The inability to
-> + * satisfy the full request is an error.
-> + */
-> +int csprng_bytes(void *buf, size_t len);
-> +
->  #endif
-> diff --git a/t/helper/test-csprng.c b/t/helper/test-csprng.c
-> new file mode 100644
-> index 0000000000..65d14973c5
-> --- /dev/null
-> +++ b/t/helper/test-csprng.c
-> @@ -0,0 +1,29 @@
-> +#include "test-tool.h"
-> +#include "git-compat-util.h"
-> +
-> +
-
-nit: extra line, also git-compat-util.h doesn't need to be included, test-tool.h has it.
-
-> +int cmd__csprng(int argc, const char **argv)
-> +{
-> +	unsigned long count;
-> +	unsigned char buf[1024];
-> +
-> +	if (argc > 2) {
-> +		fprintf(stderr, "usage: %s [<size>]\n", argv[0]);
-> +		return 2;
-> +	}
-> +
-> +	count = (argc == 2) ? strtoul(argv[1], NULL, 0) : -1L;
-> +
-> +	while (count) {
-> +		unsigned long chunk = count < sizeof(buf) ? count : sizeof(buf);
-> +		if (csprng_bytes(buf, chunk) < 0) {
-> +			perror("failed to read");
-> +			return 5;
-> +		}
-> +		if (fwrite(buf, chunk, 1, stdout) != chunk)
-> +			return 1;
-> +		count -= chunk;
-> +	}
-> +
-> +	return 0;
-> +}
-
-I know this is just a "demo", but why not add a trivial test *.sh file
-for whatever low-level wrapper test we have, so we at least know it
-won't segfault etc.
-
-These return codes seem quite specific, any reason we need 2 and 5, not
-just "return 1" everywhere on error?
-
-error_errno() instead of perror()?
-
-> +int csprng_bytes(void *buf, size_t len)
-> +{
-> +#if defined(HAVE_ARC4RANDOM) || defined(HAVE_ARC4RANDOM_LIBBSD)
-> +	/* This function never returns an error. */
-> +	arc4random_buf(buf, len);
-> +	return 0;
-> +#elif defined(HAVE_GETRANDOM)
-> +	ssize_t res;
-> +	char *p = buf;
-> +	while (len) {
-> +		res = getrandom(p, len, 0);
-> +		if (res < 0)
-> +			return -1;
-> +		len -= res;
-> +		p += res;
-> +	}
-> +	return 0;
-> +#elif defined(HAVE_GETENTROPY)
-> +	int res;
-> +	char *p = buf;
-> +	while (len) {
-> +		/* getentropy has a maximum size of 256 bytes. */
-> +		size_t chunk = len < 256 ? len : 256;
-> +		res = getentropy(p, chunk);
-> +		if (res < 0)
-> +			return -1;
-> +		len -= chunk;
-> +		p += chunk;
-> +	}
-> +	return 0;
-> +#elif defined(HAVE_RTLGENRANDOM)
-> +	if (!RtlGenRandom(buf, len))
-> +		return -1;
-> +	return 0;
-> +#elif defined(HAVE_OPENSSL_CSPRNG)
-> +	int res = RAND_bytes(buf, len);
-> +	if (res == 1)
-> +		return 0;
-> +	if (res == -1)
-> +		errno = ENOTSUP;
-> +	else
-> +		errno = EIO;
-> +	return -1;
-
-Why fake up errno here instead of just returning -1? In 2/2 you call
-error_errno(). This seems buggy for a function that doesn't clear errno
-and doesn't guarantee that it's set on failure....
-
-> +#else
-> +	ssize_t res;
-> +	char *p = buf;
-> +	int fd, err;
-> +	fd = open("/dev/urandom", O_RDONLY);
-> +	if (fd < 0)
-> +		return -1;
-> +	while (len) {
-> +		res = xread(fd, p, len);
-> +		if (res < 0) {
-> +			err = errno;
-> +			close(fd);
-> +			errno = err;
-> +			return -1;
-> +		}
-> +		len -= res;
-> +		p += res;
-> +	}
-> +	close(fd);
-> +	return 0;
-> +#endif
-> +}
-
-...seems better to turn it into a "int *failure_errno" parameter
-instead, or just have the function itself call error_errno() in these
-cases.
-
-You can't just check "if (errno)" either due to the return value of
-close() not being checked here...
+>>
+>>>
+>>>>
+>>>> -		if (compare_fn(p.ptr, q.ptr) > 0)
+>>>> -			list =3D curr =3D pop_item(&q, get_next_fn);
+>>>> +	for (i =3D 0; n; i++, n >>=3D 1) {
+>>>> +		if (!(n & 1))
+>>>> +			continue;
+>>>> +		if (list)
+>>>> +			list =3D llist_merge(ranks[i], list, get_next_fn,
+>>>> +					   set_next_fn, compare_fn);
+>>>>  		else
+>>>> -			list =3D curr =3D pop_item(&p, get_next_fn);
+>>>> -
+>>>> -		while (p.ptr) {
+>>>> -			while (p.len || q.len) {
+>>>> -				void *prev =3D curr;
+>>>> -
+>>>> -				if (!p.len)
+>>>> -					curr =3D pop_item(&q, get_next_fn);
+>>>> -				else if (!q.len)
+>>>> -					curr =3D pop_item(&p, get_next_fn);
+>>>> -				else if (compare_fn(p.ptr, q.ptr) > 0)
+>>>> -					curr =3D pop_item(&q, get_next_fn);
+>>>> -				else
+>>>> -					curr =3D pop_item(&p, get_next_fn);
+>>>> -				set_next_fn(prev, curr);
+>>>> -			}
+>>>> -			p.ptr =3D q.ptr;
+>>>> -			p.len =3D l;
+>>>> -			q.ptr =3D get_nth_next(p.ptr, l, get_next_fn);
+>>>> -			q.len =3D q.ptr ? l : 0;
+>>>> -
+>>>> -		}
+>>>> -		set_next_fn(curr, NULL);
+>>>> +			list =3D ranks[i];
+>>>>  	}
+>>>>  	return list;
+>>>>  }
+>>>
 
