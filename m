@@ -2,137 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF72AC433F5
-	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 19:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2710C433F5
+	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 19:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348894AbiARTn0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Jan 2022 14:43:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45406 "EHLO
+        id S1348919AbiARTtN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Jan 2022 14:49:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348895AbiARTnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jan 2022 14:43:21 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE19C06161C
-        for <git@vger.kernel.org>; Tue, 18 Jan 2022 11:43:21 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id g205so526527oif.5
-        for <git@vger.kernel.org>; Tue, 18 Jan 2022 11:43:21 -0800 (PST)
+        with ESMTP id S240120AbiARTtL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jan 2022 14:49:11 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7DDDC061574
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 11:49:11 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id k1-20020a63d841000000b003417384b156so85423pgj.13
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 11:49:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=aFTU5ZsklJYMUJdLlJuooFgnxo1V0qsZMbPDV/3m/ws=;
-        b=EqzWjVz5t+o3+p14cjz50OkzB1Q/GpWfPvuE0OF4EPd22gJMtnfqRoJWnAABaXJiCJ
-         y8AlqyUrC1DVzXRHUj4LZwlcskdMH8WELYErJgAtCtgyi9WzsrVBd0lqGJZS04uekvVQ
-         Av33i+aQ9C8mIiB5gRXPMBRT/4Lk/jPfotfvH8AYOp1ajEWJcSQvZpCc36/deKY9dBNk
-         MonGEI518+O0g6wH0zONfRlJ6sanGPuLnozlZxdwx+sADBaM0ylRchyqAflf85ZE76Ou
-         jd25ggnDnbjcGUteq/QlU4XxSq7Jh9616Eiy+gOaMOOS3+zoOqAGJRol1AVo9pccRENl
-         G2Qw==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=+a7uAl6hP8GT7iOqPZifApfuDyk7CHkwdMr1S2Mw2qA=;
+        b=knMwlYTc0V8Egz8kvU9gvrGq9H4RAA5lAEC/pTNxbgPVDZSrYDUzTKNi+s2bfePzgF
+         BgeXktixvhBPONvwZPEvhEnbO28K05LxUIiQK4y1/9e4IXONH9qtJcLXsekkWIi4fMUL
+         56lYs7hzTEDRlVEMxM3VEX2xCY20oieJ0Z+Jt6LJInSjqP1QW1FFo0nk1zBVMOg7twho
+         VMKmt0+RqDKS6TzTnOjp1iWqdvi51O6woQfQBLieX8iPDEPrAKW3djTdz+bB9XbAaOvD
+         ZGzQVLdWZ2dBayPFG5t6KRQ2GfTcMp4fc1CbV7nkPomZiwCtOxFar/BWQ3z7xivoO7zX
+         NgTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=aFTU5ZsklJYMUJdLlJuooFgnxo1V0qsZMbPDV/3m/ws=;
-        b=tNmWkxeTGftxa6SfCrgKAcgpHqYl28gPl8imqM6sY1LMi85vFS/peIabsJLj9nOTpL
-         h8iSSL9xiNLkDDWCtqRg2UK54nf6k9tU+P/hoghxvmFWs5FzrU00ioXWVU9c2+2UAhSd
-         hhDSP7PtBcSq454V12XqN8jjqbHeJ0wx932qU2nkIjof5PLNVRFS3xdLrZG1J03JufNt
-         rqruZxqDjzJIjUhFmttZA+SK0ZzfqXAVgE5LKvbsugIdkntmtkR6vEDUb4d1N/J+kkue
-         Dy6F9f4BNHiWITyPIfootnMTHY698qj1gGhCNT57jOsYJ4bnBXam/mBfiL5TEnxuubNh
-         zlJQ==
-X-Gm-Message-State: AOAM532ROAPfyp4JO/wS8WKJ7cd12ngkrOai5HGM7bGq9yciLeSvFdh7
-        e1Oowo8pUO7n072PKiRd7yg=
-X-Google-Smtp-Source: ABdhPJz0uX1P02BFR0yV4aEL4Bjn7RkOdaw56ADUR8VotFifG8o4BA5M5A5UhYPiJGlnECQtQO3Rkg==
-X-Received: by 2002:a05:6808:1292:: with SMTP id a18mr76772oiw.29.1642535000444;
-        Tue, 18 Jan 2022 11:43:20 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:113f:db67:413a:89ca? ([2600:1700:e72:80a0:113f:db67:413a:89ca])
-        by smtp.gmail.com with ESMTPSA id i7sm6777009oot.17.2022.01.18.11.43.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 18 Jan 2022 11:43:19 -0800 (PST)
-Message-ID: <102cc731-99ec-57b0-91de-23d5569fd959@gmail.com>
-Date:   Tue, 18 Jan 2022 14:43:18 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: [PATCH 03/13] init: unconditionally create the "info" directory
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Adam Spiers <git@adamspiers.org>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <cover-00.13-00000000000-20211212T201308Z-avarab@gmail.com>
- <patch-03.13-784b7947512-20211212T201308Z-avarab@gmail.com>
- <db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com>
- <211220.86tuf3utv9.gmgdl@evledraar.gmail.com>
- <d2399072-ce9d-b654-42b4-d08d973c488e@gmail.com>
- <220112.86a6g1xgyl.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <220112.86a6g1xgyl.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=+a7uAl6hP8GT7iOqPZifApfuDyk7CHkwdMr1S2Mw2qA=;
+        b=fxdg0/MxfwQGGrP3dW78uMd/+oNdFQb+otrfSdnQFNrqm6xyRj3G0WsE/btc8YtK8k
+         yYhAFbzRVO08ORA6PQO87Lh9UIc2zSsUwT2EtJx7Qfv1CZ7/vvn19C2bG5cWdCf94var
+         adODdpuGvNQIqvfqWNmLc34Jg6MPnWjZWT7Mp4s0GcX9XZH2iEaAacjFvPffEbP33Z1k
+         6DcrqYjdigXUpPAJtu1YR+1mYXgoD5l61YrwBaG6/+6wgpSH2KvItIj+5OBuF/2XJ7rH
+         9Rif0IjWbrBIegKl+FZ3IcYtXOPMGUkoLYplEZKVJt1UYViBuCgtszVs6G5p5EFXGs6F
+         IYOA==
+X-Gm-Message-State: AOAM531gezuKfqxNJEVqGKO1lcq0itn78tbZ0/x1HajRp9CH4K1gFIh9
+        iRr+hQhGsJTHO129YNEfbv1VddCJiEwkOw==
+X-Google-Smtp-Source: ABdhPJwmOQYMrwy5hEtuD09uhY3p3P/H8e2D7VnbGz9Ai/unmmF7xwxlQ5HZz2xtduphR84p4BDTPNGLGx9CpQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90b:1bc3:: with SMTP id
+ oa3mr117141pjb.131.1642535351336; Tue, 18 Jan 2022 11:49:11 -0800 (PST)
+Date:   Tue, 18 Jan 2022 11:49:09 -0800
+In-Reply-To: <220118.86a6ftowx3.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6ltue0ygcq.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <xmqqy23h4nss.fsf@gitster.g> <220118.86a6ftowx3.gmgdl@evledraar.gmail.com>
+Subject: Re: ab/config-based-hooks-2 (was: What's cooking in git.git (Jan
+ 2022, #04; Fri, 14))
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/12/2022 7:42 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Dec 20 2021, Derrick Stolee wrote:
-> 
->> On 12/20/2021 11:13 AM, Ævar Arnfjörð Bjarmason wrote:
->>>
->>> On Mon, Dec 20 2021, Derrick Stolee wrote:
->>>
->>>> On 12/12/2021 3:13 PM, Ævar Arnfjörð Bjarmason wrote:
->>>>> But we've also grown a hard dependency on this directory within git
->>>>> itself. Since 94c0956b609 (sparse-checkout: create builtin with 'list'
->>>>> subcommand, 2019-11-21) released with v2.25.0 the "git
->>>>> sparse-checkout" command has wanted to add exclusions to
->>>>> "info/sparse-checkout". It didn't check or create the leading
->>>>> directory, so if it's omitted the command will die.
->>>>
->>>>> Even if that behavior were fixed we'd be left with older versions of
->>>>> "git" dying if that was attempted if they used a repository
->>>>> initialized without a template.
->>>>
->>>> This, I don't understand. Why can't we add a
->>>> safe_create_leading_directories() to any place where we try to
->>>> create a sparse-checkout file?
->>>>
->>>> This would fix situations where older versions were init'd with a
->>>> different template or if the user deleted the info dir. The change
->>>> you've made here doesn't fix those cases, which is what you are
->>>> claiming is the reason to not do the other fix that seems like it
->>>> would.
->>>>
->>>> What am I misunderstanding here?
->>>
->>> I'll clarify that a bit in any re-roll.
->>>
->>> Pedantically nothing changes, i.e. you can create a repository with an
->>> empty template now, and it'll break on both the sparse-checkout on that
->>> version, and any previous version that had that un-noticed issue.
->>
->> You continue after this with more motivations for adding 'init' 
->> unconditionally, which I am not fighting.
->>
->> What I _am_ saying is important is that if we are trying to write
->> a file to a known location and its parent directory doesn't exist,
->> then we should create it. Not doing so is a bug and should be
->> fixed, no matter how rare such a thing is to occur. As you've
->> shown, it is not required to have an info directory until we need
->> one (e.g. for sparse-checkout or an excludes file).
->>
->> If you're not planning to add that to this series, then I'll add it
->> to my list. I do think it would fit well into this one, though.
-> 
-> Just so we'll avoid stepping on each other's toes, what's the status of
-> your plan/non-plan to work on that more isolated fix, perhaps you have
-> one that's unsubmitted?
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-I do not have one that is unsubmitted. I was hoping that you would
-include it in a v2 to this series. I might have been quicker to
-volunteer to create one had I not been sidelined for two weeks, but
-right now I have a lot to catch up on so don't have the time.
+> On Fri, Jan 14 2022, Junio C Hamano wrote:
+>
+>> * ab/config-based-hooks-2 (2022-01-07) 17 commits
+>>  - run-command: remove old run_hook_{le,ve}() hook API
+>>  - receive-pack: convert push-to-checkout hook to hook.h
+>>  - read-cache: convert post-index-change to use hook.h
+>>  - commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
+>>  - git-p4: use 'git hook' to run hooks
+>>  - send-email: use 'git hook run' for 'sendemail-validate'
+>>  - git hook run: add an --ignore-missing flag
+>>  - hooks: convert worktree 'post-checkout' hook to hook library
+>>  - hooks: convert non-worktree 'post-checkout' hook to hook library
+>>  - merge: convert post-merge to use hook.h
+>>  - am: convert applypatch-msg to use hook.h
+>>  - rebase: convert pre-rebase to use hook.h
+>>  - hook API: add a run_hooks_l() wrapper
+>>  - am: convert {pre,post}-applypatch to use hook.h
+>>  - gc: use hook library for pre-auto-gc hook
+>>  - hook API: add a run_hooks() wrapper
+>>  - hook: add 'run' subcommand
+>>
+>>  More "config-based hooks".
+>>
+>>  Will merge to 'next', with minor nits?
+>>  source: <cover-v6-00.17-00000000000-20211222T035755Z-avarab@gmail.com>
+>
+> I'd really like that, if you're OK with it.
+>
+> I.e. I could re-roll it, but those comments are relatively minor, and in
+> any case will be addressed eventually by subsequent to-be-submitted
+> parts of the hook.[ch] API conversion.
+>
+> So unless Emily or Glen have strong objections I think it makes sense to
+> mark it for 'next'. Thanks!
 
-Thanks,
--Stolee
+No strong objections from me :) The minor comments can be cleaned up,
+and some might presumably become obsolete later?
