@@ -2,83 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D57D7C433EF
-	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 21:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F19DC433EF
+	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 21:24:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349467AbiARVCN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Jan 2022 16:02:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35452 "EHLO
+        id S240373AbiARVYF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Jan 2022 16:24:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244694AbiARVCN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jan 2022 16:02:13 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE01EC061574
-        for <git@vger.kernel.org>; Tue, 18 Jan 2022 13:02:12 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id o7-20020a05600c510700b00347e10f66d1so3143440wms.0
-        for <git@vger.kernel.org>; Tue, 18 Jan 2022 13:02:12 -0800 (PST)
+        with ESMTP id S231853AbiARVYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jan 2022 16:24:04 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B7C2C061574
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 13:24:04 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id h12so502436pjq.3
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 13:24:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=I9O8IZAy73m1EceqsEYa5LjjEq3aGY46F/2fWciXjCU=;
-        b=B7LYe9VmLeBV7shBUmpq4lQTBHu1WxOwCFWrK2jNmzn278jNeZU97Hoh8BduWPRRej
-         NYPIJ8zDdX6f8H4bDmmLrhX+zpmnQCwMbE5GwUTNuHacTUDWQk/Zk4xTJkkak6vfLGxr
-         5y8Lgb2oqiKG3QiXiXJELkwv6R5aPT62lfDb14MHi3PFNHTbDSDOKoy3YZRx7OozzwDw
-         TFSs/vpw75V6mYS0EuJyhPQSLpT3Ny1+GlZifhDmbHUiAAWNA8eKmVVCg7ncD9C8oD0D
-         oN3pN217IT07rrciqw+0V0c8hwEPURRsJ5rxbM8kutiG1bJ6jIVzZ7nI99b1BiVlMNhm
-         /3KQ==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8VhEEBxGCubN0Hbjh3WTdeqf9Jk/rBQXKvWlxZScQ/k=;
+        b=b00kcNxvZIlrVTBwn6H2QunujnmicVYeAuZ33s5h/KxhyrKO5Eo4DvPKLG60we86nn
+         S2E0kOIx5sWzm0bbjrY263LmmLfuHQ8azFBolz7PxPPg0cJRhmo+l6Z32Mfb/sSEiE2F
+         B1JQhSn66BYC5NPaWcEULQ43EXhhFUzOidDNlGeBgcFhWcgHPghYFilrMhOO4dHO5bak
+         E7Pj6Q7WqXunD7IgvvxBmJeGGS8EN0AOPdV/xQA2wjVzLiADXBZXZ+CDcUKY4VOjDQYS
+         mnFqmfBLsOxlNdluItydxhACLx4ElvlZlL+skvEPOmOhrZJ3XdBnCl8QI0k7qY2pTY3L
+         paGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=I9O8IZAy73m1EceqsEYa5LjjEq3aGY46F/2fWciXjCU=;
-        b=N21iLpdn9m22c0UgQPAfpYB9N3YIVHx/CSPwci/v2wdExanKlITh+ivcpe1CshMR7r
-         GQATTYTX2lmrq4SkresjMr0xCDq3FhfQ4NlyKOqEjdZ8x02Dwhc0hFGT+Z9N9v6DXryV
-         TzpWzHhkXF6/0UbnlaTJAyX2aO6tk5kgiV9Jfr4bXnT2DhPluEJZtNIVAwa9Ww26Jo4E
-         BgqNYL2V9v6x4Re1XXGO29LhGng7WzPxpzli5X0LRez8yZozf5fGREDj15gYVUg0tHMN
-         /VywXyN5AxH4LVcubZS9nNSQ02M968CWGaoPRXyJDggUDGDdovEMMOUAgPmQ/IreNYEA
-         FEbw==
-X-Gm-Message-State: AOAM530M5VFX3XVGIR+WyTpmp1q0li60kXYmA3mcR1MkIY11C5uiWk4n
-        uxp7GlfWgK2oOZOwJWrwpkY=
-X-Google-Smtp-Source: ABdhPJzi4fZUEnebTGrFCtHfktgULNIBbSeCuhAF2GgS9+L9VY2R2xvtncpvhjUO6BxAq/jrxwPtWA==
-X-Received: by 2002:a5d:6c68:: with SMTP id r8mr26898588wrz.37.1642539731346;
-        Tue, 18 Jan 2022 13:02:11 -0800 (PST)
-Received: from szeder.dev (94-21-146-14.pool.digikabel.hu. [94.21.146.14])
-        by smtp.gmail.com with ESMTPSA id r206sm2984191wma.26.2022.01.18.13.02.10
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=8VhEEBxGCubN0Hbjh3WTdeqf9Jk/rBQXKvWlxZScQ/k=;
+        b=f9uFwZ2N0Fykae/TCsGzsKs3P5hO6v25fB7hLT6fbxAy7dmL45rZCE8gPkIuRbNj+q
+         fy4k70c23qZdAIXrlbiQOYCXDua2dj2lIhB2wZTgM6/1665/ICnMnq6heeR4M+FyLnrx
+         lHxvAZt9P7psbkU992yJW8d4grddH5sEibInQkdS92YsWwUwSGVfPdeY1dTtjLjOKQct
+         6/lSDDsJOO4MtE8eoVxSXn0k1ltAPtqgx+jVxK8HPLAeWcU2mL/QCJ16GmduFmmTBEtg
+         ER2+j0IQJi5YYLoBw5WaRUYubXCWLcKeyapMAqu9lXa09QFVmvrMTIYXaSa9Pws6S73f
+         kytg==
+X-Gm-Message-State: AOAM530S9wCdDGSkis1hzy25byWyj5zlk2qZbtoF+o6sbrWuCSiHuxN7
+        xjJD4uwCQ8F3MOrdJogGMpjVTQ==
+X-Google-Smtp-Source: ABdhPJwMsdMe1K3v2CwTZOIAIaCkg6XcNjgOsmnxvqh4kvGYtTroYE5sGqqWvqDyzFnSOMOGSCkQqw==
+X-Received: by 2002:a17:902:6943:b0:14a:c6d3:d99b with SMTP id k3-20020a170902694300b0014ac6d3d99bmr8880035plt.89.1642541043549;
+        Tue, 18 Jan 2022 13:24:03 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:bc30:e8ee:7a51:943c])
+        by smtp.gmail.com with ESMTPSA id v10sm14588963pfg.19.2022.01.18.13.24.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Jan 2022 13:02:10 -0800 (PST)
-Date:   Tue, 18 Jan 2022 22:02:05 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        johannes.schindelin@gmail.com,
-        Lessley Dennington <lessleydennington@gmail.com>
-Subject: Re: [PATCH v3 2/3] sparse-checkout: custom tab completion
-Message-ID: <20220118210205.GA2632@szeder.dev>
-References: <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com>
- <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
- <256e5f034c6072b6e3621adfa96c5c6319752fae.1641841193.git.gitgitgadget@gmail.com>
- <20220115095725.GA1738@szeder.dev>
- <CABPp-BGR+UrW5ej-8+XXHPkjMfFgURycd9rWC+2awUvYcr_PXA@mail.gmail.com>
- <xmqqv8yjz5us.fsf@gitster.g>
- <CABPp-BErg-RtyycXaRXYfQHEQXA4q-FU9Q6nYkSHJsqL-04oXw@mail.gmail.com>
+        Tue, 18 Jan 2022 13:24:02 -0800 (PST)
+Date:   Tue, 18 Jan 2022 13:23:56 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: unset trace2 parent envvars
+Message-ID: <Yecv7H5rrdMnRJBs@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
+References: <82e51a52e20fbe13a5a898a0a2f6dbe1188e3fa3.1642116539.git.steadmon@google.com>
+ <xmqq35lqetzw.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABPp-BErg-RtyycXaRXYfQHEQXA4q-FU9Q6nYkSHJsqL-04oXw@mail.gmail.com>
+In-Reply-To: <xmqq35lqetzw.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 17, 2022 at 10:14:58AM -0800, Elijah Newren wrote:
-> the
-> documentation never explicitly states files are acceptable to
-> sparse-checkout {set,add}.  It always mentions "directories" and
-> "patterns".
+On 2022.01.13 22:01, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+> > This behavior breaks certain tests that examine trace2 output when the
+> > tests run as a child of another git process, such as in `git rebase -x
+> > "make test"`.
+> 
+> Well explained.  The paragraph makes it clear how easy to trigger
+> and get bitten by this problem.
+> 
+> > While we could fix this by unsetting the relevant variables in the
+> > affected tests (currently t0210, t0211, t0212, and t6421), this would
+> > leave other tests vulnerable to similar breakage if new test cases are
+> > added which inspect trace2 output. So fix this in general by unsetting
+> > GIT_TRACE2_PARENT_NAME and GIT_TRACE2_PARENT_SID in test-lib.sh.
+> 
+> This probably makes sense, but I wonder how it interacts with a user
+> who runs "cd t && GIT_TRACE2=blah ./t0987-test-this.sh" to trace the
+> entire test script, though.
 
-The "Full Pattern Set" section of the manpage does in fact explicitly
-states that files are supported.
+There shouldn't be any problems with this specific use case. I don't see
+a valid reason for a test runner to fake GIT_TRACE2_PARENT_{NAME,SID}
+though. None of the TRACE2 modes require using any of the PARENT
+variables.
 
+
+> > Reported-by: Emily Shaffer <emilyshaffer@google.com>
+> > Helped-by: Jonathan Tan <jonathantanmy@google.com>
+> > Signed-off-by: Josh Steadmon <steadmon@google.com>
+> > ---
+> >  t/test-lib.sh | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index 0f7a137c7d..e4716b0b86 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -449,6 +449,8 @@ unset VISUAL EMAIL LANGUAGE $("$PERL_PATH" -e '
+> >  unset XDG_CACHE_HOME
+> >  unset XDG_CONFIG_HOME
+> >  unset GITPERLLIB
+> > +unset GIT_TRACE2_PARENT_NAME
+> > +unset GIT_TRACE2_PARENT_SID
+> 
+> Hmph.  Have you noticed the more generic "We want to unset almost
+> everything that begins with GIT_, other than those selected few that
+> are designed to be used to affect the tests" above the part you
+> touched?
+> 
+> I am wondering if we should tweak the list there, instead of special
+> casing these two and these two only. There is a pattern that allows
+> anything that match "^GIT_(other|TRACE|things)", and I suspect that
+> the pattern is way too loose (i.e. it allows any garbage to follow,
+> and by allowing "TRACE", it also catches "TRACE2" because the former
+> is a prefix of the latter), which is a problem.
+
+Yes, due to the number of different TRACE2 modes, I figured it was
+cleaner to allow them by default and then explicitly unset the ones that
+cause trouble for trace parsing tests. But if you prefer to lock down
+the list, I can send an alternate fix.
+
+
+Thanks,
+Josh
