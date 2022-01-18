@@ -2,128 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89D82C433F5
-	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 17:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDA03C433EF
+	for <git@archiver.kernel.org>; Tue, 18 Jan 2022 17:47:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347541AbiARRrp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 18 Jan 2022 12:47:45 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57555 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231299AbiARRro (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jan 2022 12:47:44 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BA9A517CADE;
-        Tue, 18 Jan 2022 12:47:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=g6szhg8qmGIDPAbdEsGpZnP5anBxDnlXmc+5s6
-        FczYY=; b=ouws9AkEvrFTKskLBXWUaVLMZpa4euYN3GXMwOmyE43h0dOCGuw9CI
-        owbpmz4I5BocL8uH/O1vOp4QmirRAzxp7YN9cm6yHNihDlI5n12R2xQNlpsTd6ta
-        3h5TfkNIAyT7M+luddMsbahkJOJsNfp2uw8cZCqHPPFqyINs9HKIM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B220817CADD;
-        Tue, 18 Jan 2022 12:47:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0645117CADA;
-        Tue, 18 Jan 2022 12:47:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] Makefile: FreeBSD cannot do C99-or-below build
-References: <pull.1152.git.git.1638899124.gitgitgadget@gmail.com>
-        <8deccc3a1dff7e4f7d613fa63d2781fd1f11f841.1638899124.git.gitgitgadget@gmail.com>
-        <xmqqlf0w5bbc.fsf@gitster.g>
-        <YbAVOtYXA1Hf9EtJ@coredump.intra.peff.net>
-        <xmqq4k7j68eg.fsf@gitster.g>
-        <YbEMnksMEuAz3Nt0@coredump.intra.peff.net>
-        <211209.867dcekm9h.gmgdl@evledraar.gmail.com>
-        <YbMWNZCpy578Qu+l@coredump.intra.peff.net>
-        <220113.86tue7vr6d.gmgdl@evledraar.gmail.com>
-        <YeDUA6NhHuCUkqXf@camp.crustytoothpaste.net>
-        <xmqqilumayfh.fsf@gitster.g> <xmqqzgny7xo7.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2201181308540.2121@tvgsbejvaqbjf.bet>
-Date:   Tue, 18 Jan 2022 09:47:39 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2201181308540.2121@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Tue, 18 Jan 2022 13:32:03 +0100
-        (CET)")
-Message-ID: <xmqq1r15szpg.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BBA01934-7886-11EC-A4B6-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+        id S1347550AbiARRrq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 18 Jan 2022 12:47:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46694 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231299AbiARRrq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jan 2022 12:47:46 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAEABC061574
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 09:47:45 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id 67-20020a630746000000b003443fe43bbaso9983562pgh.12
+        for <git@vger.kernel.org>; Tue, 18 Jan 2022 09:47:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=5qg8ibaZTnQyb/PEZT0jOHJ3SVf/BfG//B3VsADDnPI=;
+        b=lCSZ1iQkgKnFHgqsEve7+5YI9jMXzeIyTp5nBL90PkJxwZ5yOTjF7Lmcsloghv5EhW
+         eeUYtXYU01Zu13h2fjfkDx14N5CQlcsXuDsR32l/9IjqGXA7+h+YAs6w9O0lWQgkBprF
+         T8C7H0pbA2MkdyAbkDj3yveDggzgOKFemVQnsoUYmOSr183chylvL8XQHO0XdUO3QYjf
+         HIRDa93Gv1Srcmt3aIv3ddD2Gnin4+5YI/avjp5qSuLymek1xliUUmSMFhAR+cVfvAst
+         6Gv21255RVqQkuu5VI+WEpj//h2dNPuJIK4C94xUhS8xIlnUaPJmUm99vAGkO9dDoqs+
+         zwpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=5qg8ibaZTnQyb/PEZT0jOHJ3SVf/BfG//B3VsADDnPI=;
+        b=JNGo70drrklal6mMOBYQh9HKmB3FX+D3Sm/jS7z0kl6vVJTR8sxPcW6eqm0ySHJY3n
+         ZcTeXPBltl2gP5ZeMWKeUmQLp5oknBBcJjyg5wZPoSjFjdhlcRr1rnM02ee4SPxrV2+7
+         HpMn/GnH7GCXRq3EPkCSSAqQitarMokFUBjEAIpV/gzWj/mtF1hu2EmuWYhDS7CL+/mo
+         DtODcPOAw0IUjIHBSWoWO2bsZ5LiqN3XlCfGFW80iutlYPARLAVO9J49DKfislduT1oo
+         0oWMtS5JcQCsvjSwE491VbrtE9SIrSIaB+pgsp6ydlu/3lqvmXnFvs9o55IqZXF0YYE2
+         IuZg==
+X-Gm-Message-State: AOAM533IUr0ESKX5gl08Dwamsikalk9BS7KmOiXaU3wixCraIEzTycYc
+        Ry/vNGk/nLOhXVS6JN8ipmMXCq3NrvxXpaCT9SyXliMCKUOwIj2uB9fMjJ9KLrC1y6XsQrUKveH
+        KCZv9jrRRXQhFldf0doOonwY+c88Hlx43P6cJ9PEt6dgyi/suWZN83f3oXNls2HxanEGpcyhq2f
+        AA
+X-Google-Smtp-Source: ABdhPJxITj5zsj4OcCU470hy3CxOKi709SmIpNue7WTUx3WwpTakGlHPC8iOxnUJXWIonKOaSzAhRGzZ78WZAna1wzzB
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90b:3906:: with SMTP id
+ ob6mr41584752pjb.170.1642528064983; Tue, 18 Jan 2022 09:47:44 -0800 (PST)
+Date:   Tue, 18 Jan 2022 09:47:38 -0800
+In-Reply-To: <cover.1634077795.git.jonathantanmy@google.com>
+Message-Id: <cover.1642527965.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1634077795.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.34.1.703.g22d0c6ccf7-goog
+Subject: [PATCH v8 0/2] Conditional config includes based on remote URL
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, chooglen@google.com,
+        newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In "make DEVELOPER=YesPlease" builds, we try to help developers to
-catch as many potential issues as they can by using -Wall and
-turning compilation warnings into errors.  In the same spirit, we
-recently started adding -std=gnu99 to their CFLAGS, so that they can
-notice when they accidentally used language features beyond C99.
+Thanks everyone for your review. v8 follows Elijah Newren's comments
+about making URLs more identifiable in tests, and also including an
+example in documentation.
 
-It however turns out that FreeBSD 13.0 mistakenly uses C11 extension
-in its system header files regardless of what __STDC_VERSION__ says,
-which means that the platform (unless we tweak their system headers)
-cannot be used for this purpose.
+Jonathan Tan (2):
+  config: make git_config_include() static
+  config: include file if remote URL matches a glob
 
-It seems that -std=gnu99 is only added conditionally even in today's
-config.mak.dev, so it is fine if we dropped -std=gnu99 from there.
-Which means that developers on FreeBSD cannot participate in vetting
-use of features beyond C99, but there are developers on other
-platforms who will, so it's not too bad.
+ Documentation/config.txt |  35 +++++++++++
+ config.c                 | 132 ++++++++++++++++++++++++++++++++++++---
+ config.h                 |  46 ++++----------
+ t/t1300-config.sh        | 118 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 290 insertions(+), 41 deletions(-)
 
-We might want a more "fundamental" fix to make the platform capable
-of taking -std=gnu99, like working around the use of unconditional
-C11 extension in its system header files by supplying a set of
-"replacement" definitions in our header files.  We chose not to
-pursue such an approach for two reasons at this point:
-
- (1) The fix belongs to the FreeBSD project, not this project, and
-     such an upstream fix may happen hopefully in a not-too-distant
-     future.
-
- (2) Fixing such a bug in system header files and working it around
-     can lead to unexpected breakages (other parts of their system
-     header files may not be expecting to see and do not work well
-     with our "replacement" definitions).  This close to the final
-     release of this cycle, we have no time for that.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- config.mak.dev | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/config.mak.dev b/config.mak.dev
-index d4afac6b51..3deb076d5e 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -20,9 +20,14 @@ endif
- endif
- endif
- 
-+ifneq ($(uname_S),FreeBSD)
- ifneq ($(or $(filter gcc6,$(COMPILER_FEATURES)),$(filter clang7,$(COMPILER_FEATURES))),)
- DEVELOPER_CFLAGS += -std=gnu99
- endif
-+else
-+# FreeBSD cannot limit to C99 because its system headers unconditionally
-+# rely on C11 features.
-+endif
- 
- DEVELOPER_CFLAGS += -Wdeclaration-after-statement
- DEVELOPER_CFLAGS += -Wformat-security
+Range-diff against v7:
+1:  b2dcae03ed = 1:  b2dcae03ed config: make git_config_include() static
+2:  7c70089074 ! 2:  6691e39c82 config: include file if remote URL matches a glob
+    @@ Documentation/config.txt: all branches that begin with `foo/`. This is useful if
+      A few more notes on matching via `gitdir` and `gitdir/i`:
+      
+       * Symlinks in `$GIT_DIR` are not resolved before matching.
+    +@@ Documentation/config.txt: Example
+    + ; currently checked out
+    + [includeIf "onbranch:foo-branch"]
+    + 	path = foo.inc
+    ++
+    ++; include only if a remote with the given URL exists (note
+    ++; that such a URL may be provided later in a file or in a
+    ++; file read after this file is read, as seen in this example)
+    ++[includeIf "hasconfig:remote.*.url:https://example.com/**"]
+    ++	path = foo.inc
+    ++[remote "origin"]
+    ++	url = https://example.com/git
+    + ----
+    + 
+    + Values
+     
+      ## config.c ##
+     @@ config.c: struct config_include_data {
+    @@ t/t1300-config.sh: test_expect_success '--get and --get-all with --fixed-value'
+     +		that = that-is-not-included
+     +	EOF
+     +	cat >>hasremoteurlTest/.git/config <<-EOF &&
+    -+	[includeIf "hasconfig:remote.*.url:foo"]
+    ++	[includeIf "hasconfig:remote.*.url:foourl"]
+     +		path = "$(pwd)/include-this"
+    -+	[includeIf "hasconfig:remote.*.url:bar"]
+    ++	[includeIf "hasconfig:remote.*.url:barurl"]
+     +		path = "$(pwd)/dont-include-that"
+     +	[remote "foo"]
+    -+		url = foo
+    ++		url = foourl
+     +	EOF
+     +
+     +	echo this-is-included >expect-this &&
+    @@ t/t1300-config.sh: test_expect_success '--get and --get-all with --fixed-value'
+     +	EOF
+     +	cat >>hasremoteurlTest/.git/config <<-EOF &&
+     +	[remote "foo"]
+    -+		url = foo
+    ++		url = foourl
+     +	[user]
+     +		one = main-config
+     +		two = main-config
+    -+	[includeIf "hasconfig:remote.*.url:foo"]
+    ++	[includeIf "hasconfig:remote.*.url:foourl"]
+     +		path = "$(pwd)/include-two-three"
+     +	[user]
+     +		three = main-config
+    @@ t/t1300-config.sh: test_expect_success '--get and --get-all with --fixed-value'
+     +
+     +	cat >include-with-url <<-\EOF &&
+     +	[remote "bar"]
+    -+		url = bar
+    ++		url = barurl
+     +	EOF
+     +	cat >>hasremoteurlTest/.git/config <<-EOF &&
+    -+	[includeIf "hasconfig:remote.*.url:foo"]
+    ++	[includeIf "hasconfig:remote.*.url:foourl"]
+     +		path = "$(pwd)/include-with-url"
+     +	EOF
+     +
 -- 
-2.35.0-rc1-135-g45b839adb0
+2.34.1.703.g22d0c6ccf7-goog
 
