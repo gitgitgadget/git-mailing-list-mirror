@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CE36C433F5
-	for <git@archiver.kernel.org>; Wed, 19 Jan 2022 16:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFC51C433F5
+	for <git@archiver.kernel.org>; Wed, 19 Jan 2022 16:51:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355844AbiASQGS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jan 2022 11:06:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39490 "EHLO
+        id S243450AbiASQvU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jan 2022 11:51:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237164AbiASQGR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jan 2022 11:06:17 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FC61C061574
-        for <git@vger.kernel.org>; Wed, 19 Jan 2022 08:06:17 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id u18so103935edt.6
-        for <git@vger.kernel.org>; Wed, 19 Jan 2022 08:06:17 -0800 (PST)
+        with ESMTP id S230265AbiASQvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jan 2022 11:51:18 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F026EC061574
+        for <git@vger.kernel.org>; Wed, 19 Jan 2022 08:51:17 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id j2so14981503edj.8
+        for <git@vger.kernel.org>; Wed, 19 Jan 2022 08:51:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=fSwK7+POy93Al5+4qWaYAeesdRHNJyJ6SabJMS0dxt0=;
-        b=IqVGmkxuggVWwcdYsDe3l71pPMCCdrvUFALdtj66Dx7oZB4gVqc6IZVtX1YL9NE2s4
-         /Ajdyg+doE/1GtKAjD8PU8imvwHY+JT9mWkbu4oSRIrMFAzMEc3lyf76gQYcBygt592k
-         HpUsCC6OH3M8FCdjJxtduOeBIfnuqZ46CGz/jzNu56F6skeUQb6pCr9LYeCoj0b7lS0+
-         HmuOBrQIEuKW7gglAC3Y7OJXfQ11JkGOaq5nIL+fXC5jXx2wLCyTZRL2avyXEScxDL2q
-         9YFL4vtnqjfqIcIUPbgU3fDwRRhV6M61DcMKVt7uhu55dzAbcaRvQrKWYIN5Ua1YfPt1
-         zfvw==
+        bh=9Akjh+wL9PFpdxakAZi7cUbTn9cRYTE5UofXpsLX8I0=;
+        b=KFsUqP4R+16U8pBMIw4p3HDkMgRTri/7Ocm055hUxO2Sn91RIeVQBBu7m0IisA/hRN
+         ecH+I/aIPjavRGa4ze8glFqiOg4CDwZ6VjmKBqqmLau3hNCiRN8hX/NJu6QtyQmcc/Te
+         DpokjagCk43rw73s2jXU3YJlXdSRfySkoHzAOyg3ji7f/GaKEjBGPs5x1cQfapVbAy/o
+         gQK3YBODVVS0PSwbotVRg7BfpUbYxsuUTqF/s2peuvnI1OsCR2NLzT8kdikBDPC1UjDG
+         3WSOoZr1HhGESSZQ+x1ifSadb1HEWdrLhX7MOVkFdNv8Rsf064YJ5UOwLaGm0tqJP9XB
+         B/Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=fSwK7+POy93Al5+4qWaYAeesdRHNJyJ6SabJMS0dxt0=;
-        b=o4tewcI+igja524PWfME4FLPrQOhGAcdYWjlY7xDrIknEbeyARGAy972R+dq0/eMPw
-         rSKPNXDQyUp/etbd7tuCKT4vYL4oBqs8lzkCVkKMlmMKcjLkIZIiL0c3l/o+e0HAVpqX
-         Rt6UNDkD8Nj51c7g9lM0z/FnseSUtAQvQLNHlKgNwv8UtDiVOs++U3luftX08ELzR0+S
-         Gs9yLMkgBex+Bj1djCxYiPiGMrlgLsoSkHLqn4XfG5+l3X0AO/zHp9I6hv8f7EefCV4u
-         I7EfWNjTc6SDOXIqotQ+N4cTolTzsL1MZgawsXwSdKkNlB46snXzubzk26ByUJbhn0CN
-         v72g==
-X-Gm-Message-State: AOAM530V0HV3K5EtyuOTcaiHfeKNbxSXqXJlCF94qjmEJe0WS73IAJvB
-        e8WQf5c81wDLhun6B9i5tcIM7XvrdvPb1g==
-X-Google-Smtp-Source: ABdhPJywOZkEtwVz8a6/V82DBeABRue+wy34EVvkH/nC5qKs9LHa9GoDclJG2F1zP3AVsN7zrjkjzg==
-X-Received: by 2002:a17:906:dc92:: with SMTP id cs18mr13819479ejc.236.1642608370259;
-        Wed, 19 Jan 2022 08:06:10 -0800 (PST)
+        bh=9Akjh+wL9PFpdxakAZi7cUbTn9cRYTE5UofXpsLX8I0=;
+        b=UpRbL5KS3kqh3JALGwsal/KNQF78eGf4VlwfeW/T6TKaOmZeheYYWDMovHPqPjlLyD
+         wNoQrbryEtEPrzWp6Tgf+HoI8mEkiHSlU46t6aUAlRPxCW4yqCJrUqfry9QoSfwm3tPY
+         LR+H17gidThUEXNqry4Kbzlpxn6GAwsJ3jlY2+XbLfaw6R7lI/8hLalmzw2jOjMfxRm6
+         1ffOTIGccSbA0p+u9A65/fqY7xfdKUY5AUPVKJplXgKvuvm1p9zypzIZCLZGNrCTodqW
+         aUvaVGvqL/JCj8zPbng0Fc0U6nk3NtWVcg0pxZ6kFWBE8BV5O65G9WdhOrU2yyzjcooo
+         7VYg==
+X-Gm-Message-State: AOAM533yCrlsmgFRGhcgIurwc+1NOz0m1GZTCsIgI01lO2Txz+XFwCRr
+        V+ve5srBFuXrgJBWx/Yr5sWCIjCKJ/eGrg==
+X-Google-Smtp-Source: ABdhPJy0wkFyp7YmPKU6POY5QNr1thh2AM1UwoM2jw2mKdPqNdt+glSAqFeAJwVaC/mgM31y+hfWrA==
+X-Received: by 2002:a17:907:7f01:: with SMTP id qf1mr25382173ejc.9.1642611076209;
+        Wed, 19 Jan 2022 08:51:16 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id 5sm79747edx.32.2022.01.19.08.06.09
+        by smtp.gmail.com with ESMTPSA id d16sm68133eje.131.2022.01.19.08.51.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Jan 2022 08:06:09 -0800 (PST)
+        Wed, 19 Jan 2022 08:51:15 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nADTN-001nx4-0Y;
-        Wed, 19 Jan 2022 17:06:09 +0100
+        id 1nAEB0-001oj8-Qn;
+        Wed, 19 Jan 2022 17:51:14 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -60,14 +60,15 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Neeraj Singh <nksingh85@gmail.com>,
         Johannes Altmanninger <aclopte@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 1/9] show, log: provide a --remerge-diff capability
-Date:   Wed, 19 Jan 2022 17:01:12 +0100
+Subject: Re: [PATCH v3 3/9] ll-merge: make callers responsible for showing
+ warnings
+Date:   Wed, 19 Jan 2022 17:41:14 +0100
 References: <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com>
  <pull.1103.v3.git.1640907369.gitgitgadget@gmail.com>
- <d57ae218cf9eaee0b66db299ee1bba9b488b69b1.1640907369.git.gitgitgadget@gmail.com>
+ <b952f674df13a1c3e4bffa823490f905e862ef7c.1640907369.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <d57ae218cf9eaee0b66db299ee1bba9b488b69b1.1640907369.git.gitgitgadget@gmail.com>
-Message-ID: <220119.86lezbn21b.gmgdl@evledraar.gmail.com>
+In-reply-to: <b952f674df13a1c3e4bffa823490f905e862ef7c.1640907369.git.gitgitgadget@gmail.com>
+Message-ID: <220119.86h79zmzy5.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -77,101 +78,56 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Dec 30 2021, Elijah Newren via GitGitGadget wrote:
 
-> From: Elijah Newren <newren@gmail.com>
-> +	struct tmp_objdir *remerge_objdir = NULL;
+> Note that my methodology included first modifying ll_merge() to return
+> a struct, so that the compiler would catch all the callers for me and
+> ensure I had modified all of them.  After modifying all of them, I then
+> changed the struct to an enum.
+> [...]
+> -int ll_merge(mmbuffer_t *result_buf,
+> +enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
+>  	     const char *path,
+>  	     mmfile_t *ancestor, const char *ancestor_label,
+>  	     mmfile_t *ours, const char *our_label,
+> diff --git a/ll-merge.h b/ll-merge.h
+> index aceb1b24132..e4a20e81a3a 100644
+> --- a/ll-merge.h
+> +++ b/ll-merge.h
+> @@ -82,13 +82,20 @@ struct ll_merge_options {
+>  	long xdl_opts;
+>  };
+>  
+> +enum ll_merge_result {
+> +	LL_MERGE_ERROR = -1,
+> +	LL_MERGE_OK = 0,
+> +	LL_MERGE_CONFLICT,
+> +	LL_MERGE_BINARY_CONFLICT,
+> +};
 > +
-> +	if (rev->remerge_diff) {
-> +		remerge_objdir = tmp_objdir_create("remerge-diff");
-> +		if (!remerge_objdir)
-> +			die_errno(_("unable to create temporary object directory"));
-> +		tmp_objdir_replace_primary_odb(remerge_objdir, 1);
-> +	}
 
-Re the errno feedback on v1
-https://lore.kernel.org/git/211221.864k71r6kz.gmgdl@evledraar.gmail.com/
-the API might lose the "errno" due to e.g. the remove_dir_recurse()
-codepath. This seems like it would take care of that:
+Isn't the other side of the enum checking missing in many cases?
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 944d9c0d9b5..d4b8b1aa4b6 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -424,9 +424,9 @@ static int cmd_log_walk(struct rev_info *rev)
- 	int saved_dcctc = 0;
- 
- 	if (rev->remerge_diff) {
--		rev->remerge_objdir = tmp_objdir_create("remerge-diff");
-+		rev->remerge_objdir = tmp_objdir_create_gently("remerge-diff", 0);
- 		if (!rev->remerge_objdir)
--			die_errno(_("unable to create temporary object directory"));
-+			exit(128);
- 		tmp_objdir_replace_primary_odb(rev->remerge_objdir, 1);
- 	}
- 
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index adf6033549e..3c656120003 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -121,19 +121,21 @@ static void env_replace(struct strvec *env, const char *key, const char *val)
- 	strvec_pushf(env, "%s=%s", key, val);
- }
- 
--static int setup_tmp_objdir(const char *root)
-+static int setup_tmp_objdir(const char *root, int quiet)
- {
- 	char *path;
- 	int ret = 0;
- 
- 	path = xstrfmt("%s/pack", root);
- 	ret = mkdir(path, 0777);
-+	if (!quiet && ret < 0)
-+		die_errno(_("unable to create temporary object directory '%s'"), path);
- 	free(path);
- 
- 	return ret;
- }
- 
--struct tmp_objdir *tmp_objdir_create(const char *prefix)
-+struct tmp_objdir *tmp_objdir_create_gently(const char *prefix, int quiet)
- {
- 	static int installed_handlers;
- 	struct tmp_objdir *t;
-@@ -161,6 +163,8 @@ struct tmp_objdir *tmp_objdir_create(const char *prefix)
- 	strbuf_grow(&t->path, 1024);
- 
- 	if (!mkdtemp(t->path.buf)) {
-+		if (!quiet)
-+			error_errno(_("unable to create temporary directory '%s'"), t->path.buf);
- 		/* free, not destroy, as we never touched the filesystem */
- 		tmp_objdir_free(t);
- 		return NULL;
-@@ -173,7 +177,7 @@ struct tmp_objdir *tmp_objdir_create(const char *prefix)
- 		installed_handlers++;
- 	}
- 
--	if (setup_tmp_objdir(t->path.buf)) {
-+	if (setup_tmp_objdir(t->path.buf, quiet)) {
- 		tmp_objdir_destroy(t);
- 		return NULL;
- 	}
-diff --git a/tmp-objdir.h b/tmp-objdir.h
-index 76efc7edee5..5072fb860d9 100644
---- a/tmp-objdir.h
-+++ b/tmp-objdir.h
-@@ -24,8 +24,15 @@ struct tmp_objdir;
- /*
-  * Create a new temporary object directory with the specified prefix;
-  * returns NULL on failure.
-+ *
-+ * The tmp_objdir_create() is an a wrapper for
-+ * tmp_objdir_create_gently(..., 1).
-  */
--struct tmp_objdir *tmp_objdir_create(const char *prefix);
-+struct tmp_objdir *tmp_objdir_create_gently(const char *prefix, int quiet);
-+static inline struct tmp_objdir *tmp_objdir_create(const char *prefix)
-+{
-+	return tmp_objdir_create_gently(prefix, 1);
-+}
- 
- /*
-  * Return a list of environment strings, suitable for use with
+E.g. ll_ext_merge() returns "enum ll_merge_result" now, and does:
+
+        status = run_command_v_opt(args, RUN_USING_SHELL);
+        ret = (status > 0) ? LL_MERGE_CONFLICT : status;
+
+And grepping at the tip of this series shows:
+    
+    $ git grep LL_MERGE_OK
+    ll-merge.c:             ret = LL_MERGE_OK;
+    ll-merge.c:                     ret = LL_MERGE_OK;
+    ll-merge.c:                     ret = LL_MERGE_OK;
+    ll-merge.h:     LL_MERGE_OK = 0,
+
+Similar for LL_MERGE_CONFLICT, the only one that's used outside of the
+file itself and its header is LL_MERGE_BINARY_CONFLICT.
+
+I.e. shouldn't these codepaths:
+
+    git grep -w ll_merge
+
+Be doing a switch() on that new enum? E.g. we lose the type in
+three_way_merge() in apply.c, it seems to me that that function should
+switch over this new enum, and return the "int" that the callers of
+three_way_merge() care about (i.e. just <0, 0, 1, not this enum's -1, 0,
+1, 2.
