@@ -2,118 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3095BC433EF
-	for <git@archiver.kernel.org>; Wed, 19 Jan 2022 11:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1F2FC433F5
+	for <git@archiver.kernel.org>; Wed, 19 Jan 2022 14:43:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354027AbiASLLl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jan 2022 06:11:41 -0500
-Received: from mout.web.de ([212.227.15.3]:60781 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1353333AbiASLLg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jan 2022 06:11:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1642590694;
-        bh=j2uMhwymmEziK7wHeHfuP3CMFSpCRlw1uPQmyuOMFDo=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=oeqU467VtuWT4gf6N6OeXT7arMqaVLW6SRxrxwcEav6dW5Uin3o50oraQzUqUi8M1
-         GY+T1J2vmN6+v5uj96Fs1ToEdOPF/ckDLv4+UnTCaFQ1cDEF4OJcq+8oCH+31WIvar
-         FWCoch53F50sMTMdr6hWFGw0MmqSKlmrdc9n1kOo=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MxHYK-1mPjIM1s4G-00xjGo; Wed, 19
- Jan 2022 12:11:34 +0100
-Message-ID: <b49ba26e-e41b-c597-aeb4-d76c6011fbca@web.de>
-Date:   Wed, 19 Jan 2022 12:11:33 +0100
+        id S1355225AbiASOng (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jan 2022 09:43:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48240 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1355133AbiASOnf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jan 2022 09:43:35 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31AF4C061574
+        for <git@vger.kernel.org>; Wed, 19 Jan 2022 06:43:35 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id c24so10780663edy.4
+        for <git@vger.kernel.org>; Wed, 19 Jan 2022 06:43:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=1mgRhwaUOIjaaBRPxLHj9enaT9b5yquZrLW61ZtP1ZA=;
+        b=TNcjj5qzewJ4ugt4PuaHG5BAVbnDipNRryXlLNOOZ9i0KFt+rglz20hNWpQRx8iH+8
+         7tDQ2vqXlESbbHH5Kqb16T2Ppjp13vaXog8DjL4ljq5E2lWXcDuKUgThGNXBvFFFqL5J
+         c/cpdpowgUkT1pc92qcsPcD2wdBPEJqeUimpUMAZZMFKgKLHaTVlCYnNDeyBs+YT/3FO
+         3OAhhpQVfg+k7qcDUScIy9isTnQZoedVZQ2sr9t2RmRyJHL6mCEpwgS5ZnVuxTupraF9
+         LOqN9CmqNF7p2vIf4ptYOyJvvm8U1JCXx7P6wrHQu+vY6QjHzAF3GXRscBET+si7H3y1
+         1aOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=1mgRhwaUOIjaaBRPxLHj9enaT9b5yquZrLW61ZtP1ZA=;
+        b=SYiUNEE8hMbnKRyQX9pqUEsUwzs6II8ceVDPYrOjFOilaoV0bh7RVVWZD/zkBQWwyX
+         ugzFlnOttbLpxywxGCIV+O0c4YU9/bEGlDWLntFD0RpSy37dgitPwOCFrMAboNvVwNHt
+         Xbd2j7Sxmzr9V/eXg+OFN9xL/SSRGqT1+AnVdbyctwCnl/bSZ2oI/LytIrIhzLURCGjX
+         cMUNMXmRJQeRVVNconUu13i33IMHn7GsWLZ4TDgdt1FMmFzZS0c+VqREYNPWG1Khb7F2
+         rq8P+b+KW2/aKoEZE/1uH7MsZyHU+zxSXIl8eyrls0MB/O5hvQlxQCvjM8I9LoEkoPkK
+         81bg==
+X-Gm-Message-State: AOAM530iidJyew6ifsu0g8jZkjxVemImZWRq9syC5J8J+93vR2l3w8UQ
+        tYPhR37WtVP+HDZCM7Iw1ko=
+X-Google-Smtp-Source: ABdhPJwrMJRnwt0Fwfp9GQzCzEi9L0xaU9wtm8G83nnImMaw8T2SaiRNI43EspS6/fuz8UhJSTxDKQ==
+X-Received: by 2002:a05:6402:100e:: with SMTP id c14mr30174102edu.196.1642603413649;
+        Wed, 19 Jan 2022 06:43:33 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id n7sm3924981ejj.82.2022.01.19.06.43.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jan 2022 06:43:33 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nACBQ-001mI5-7i;
+        Wed, 19 Jan 2022 15:43:32 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] parse-options: document automatic
+ PARSE_OPT_LITERAL_ARGHELP
+Date:   Wed, 19 Jan 2022 15:41:48 +0100
+References: <220111.86a6g3yqf9.gmgdl@evledraar.gmail.com>
+ <3de40324bea6a1dd9bca2654721471e3809e87d8.1642538935.git.steadmon@google.com>
+ <xmqqh7a0r87q.fsf@gitster.g> <ba624c59-5330-360e-dc4a-432752d22fc1@web.de>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <ba624c59-5330-360e-dc4a-432752d22fc1@web.de>
+Message-ID: <220119.867davokff.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.5.0
-Subject: Re: [PATCH 2/2] advice: refactor "action is not possible because you
- have unmerged files"
-Content-Language: en-US
-To:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
-References: <20220119094445.15542-1-bagasdotme@gmail.com>
- <20220119094445.15542-3-bagasdotme@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20220119094445.15542-3-bagasdotme@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:MPTjghLWVdjcIx23z1J8tVkvdsxJlkwI4f++ad9ffuie4s2Vwfu
- JMvaCbFXQOtpG0dIvSu8OZR8fAQOK3HSyLTWewlU72bqzkEy/7WxhdupdaXFNoMrb6a4oK1
- d7b5gO6ubaKFW19NEuHinysqCQO03HXb/om+ZnX5hiQqbOpNpnLB+UeecqmXmVgXKRCmFw7
- d1E4vn23I/ib8gNh8YRBg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Jey4sb5FSIU=:6ONEmkYT9DxOk+1cZd6AkN
- JWd2UmjdlfZCxLtJnfwbqoWxJ+wXsea59CPVePA5BdkWUsUpklkjFeXbrd39sVZuHMgsDsPZ/
- ggyD53VR20xK4CUoLaULxoSF0uCkK86NOXt6TR2ECpnSwhcrd2GvC8bEphRYyFn1MTjPIFzfw
- CW+B2SaHs+25vvQKtX4mO2sPyrfQxcZBXojjG9c15o7BtHd1Y3wbwTtbTB8LD7ZDH92AEFcHG
- ceeIS5s99SwiC/GHKgv94CaEOra+FDv73KbLzx5MuN/qTZRI7CJtBjzBrcQK7pzp1TG+8er0x
- C71+GMBHemjdIuYrpPjJn/qLnMWwzrjIPEQuJHQI1v1DVtWSLDXfC2bLBpfSbBGxswNNokMg6
- rhzRhNozKR4+M7avtBFzLf0vqq7AGf6ETWDnrroqxUiCjBQ1FFtkEgSaD1NBLaVWvvOhJdrGX
- gs1I2hPpWLSvF9LWPbRwRTjKzMhohsqPouGcgcUDwGaj2HCIFFc7LQJeFGtyAz9mbfGyWKk8B
- Fab/Kc6LimxLQ3Qf2a0EKox4a2CwPngWej+HvZ8FTyK5tt04V0kNi3pAt+/inixaywJAWZf80
- gQsnV6kz7enMePw7fRdVHy8zQ+y6Ax81nxbL8LuWWryN+/1YaLgVyk9EH6sglqhKGMIPwiKcp
- yOplOGYA0AXqwtvS3G0HXxaUZB62s6F61FBskuqDAgdz3eKIsg7MjaL1DgZm34lRJ3cmQkZT9
- vuwzS5Lray32RarTb3yJkZ7cdBSHSb0yxtuPeNwHoiZBjQp5eggLfmpEgsL3gLAy4PbhRDiv9
- t+TQCEZRh0iMjnLIU7DT27DG3XVgEO1FtY7EiOk0e8g1v+9n/zXjcILoNVDjc1FS9rVfiaW1V
- QZqqSbHCiDia5MB8IjYvAXomsuz7aTjKp1R8tIvT/uZrYxxzkx41Qxs2ewOY95sQhupnzzQon
- vG5EKhb2m0baJjpAbRvpH9jsWpl0CAxd3qzrkOOt55sjgOEIzHNVfpeP+1epuWI3PCaK7mM8T
- x5pcY0zNGPwb3fo+DN8gMtQaqFoYampDhyLKI9T1zrsEItBjgc2hLeZUch/tIpgPhrG3cEo68
- lgBlR7dlZb6Tcg=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.01.22 um 10:44 schrieb Bagas Sanjaya:
-> Factor action names (cherry-picking, committing, merging, pulling, and
-> reverting) out of the message string.
+
+On Wed, Jan 19 2022, Ren=C3=A9 Scharfe wrote:
+
+> The help strings for arguments are enclosed in angle brackets
+> automatically.  E.g. if argh is specified as "name", "--option <name>"
+> is printed, to indicate that users need to supply an actual name.  The
+> flag PARSE_OPT_LITERAL_ARGHELP turns this off, so that "--option name"
+> is printed instead, to indicate that the literal string needs to be
+> supplied -- a rare case.
 >
-> Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+> This flag is enabled automatically if argh contains special characters
+> like brackets.  The developer is supposed to provide any required angle
+> brackets for more complicated cases.  E.g. if argh is "<start>,<end>"
+> then "--option <start>,<end>" is printed.
+>
+> Add a comment to mention this PARSE_OPT_LITERAL_ARGHELP behavior.
+>
+> Also remove the flag from option definitions for which it's inferred
+> automatically.
+>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 > ---
->  advice.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/advice.c b/advice.c
-> index 1dfc91d176..4c72856478 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -175,15 +175,15 @@ void list_config_advices(struct string_list *list,=
- const char *prefix)
->  int error_resolve_conflict(const char *me)
->  {
->  	if (!strcmp(me, "cherry-pick"))
-> -		error(_("Cherry-picking is not possible because you have unmerged fil=
-es."));
-> +		error(_("%s is not possible because you have unmerged files."), "Cher=
-ry-picking");
->  	else if (!strcmp(me, "commit"))
-> -		error(_("Committing is not possible because you have unmerged files."=
-));
-> +		error(_("%s is not possible because you have unmerged files."), "Comm=
-iting");
->  	else if (!strcmp(me, "merge"))
-> -		error(_("Merging is not possible because you have unmerged files."));
-> +		error(_("%s is not possible because you have unmerged files."), "Merg=
-ing");
->  	else if (!strcmp(me, "pull"))
-> -		error(_("Pulling is not possible because you have unmerged files."));
-> +		error(_("%s is not possible because you have unmerged files."), "Pull=
-ing");
->  	else if (!strcmp(me, "revert"))
-> -		error(_("Reverting is not possible because you have unmerged files.")=
-);
-> +		error(_("%s is not possible because you have unmerged files."), "Reve=
-rting");
->  	else
->  		error(_("It is not possible to %s because you have unmerged files."),
->  			me);
+> Somehow I feel this is not enough, but I can't pin down what's
+> missing.
 
-That effectively reverts 8785c42532 (i18n: advice: internationalize
-message for conflicts, 2016-06-17).  Why?  Having the capitalized
-English present participle of the action appear somewhere in a
-translated string would sure look quite foreign in some (most?)
-languages.
+Rather than just remove the flag from {am,push}.c and document this it
+would be better to add it to the optbug() checks in
+parse_options_check().
 
-Ren=C3=A9
+That way we'll ensure that these flags won't be redunantly specified, if
+we care enough...
