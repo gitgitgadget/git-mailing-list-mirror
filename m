@@ -2,67 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5072DC433F5
-	for <git@archiver.kernel.org>; Wed, 19 Jan 2022 18:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8546BC433EF
+	for <git@archiver.kernel.org>; Wed, 19 Jan 2022 18:56:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356595AbiASSSU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jan 2022 13:18:20 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64498 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235941AbiASSST (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jan 2022 13:18:19 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 89B0A175681;
-        Wed, 19 Jan 2022 13:18:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=tSZ953gRyKnv
-        PHurE3yzPVxcSXPdniJ9z8JfKU7ZBic=; b=YX0sIxxLfmIeepdHAefoaCBdd/g+
-        PdSxjBJ3svP9JwD3J73pjo7/2oH8NklYtJKgWJW96pHSXLAqZBWmVA6z2+CcPD/H
-        SBheR7sRfAvyH2nhvySTNBuOz+aVdNvzTufj4gP0PePGL47JPzZHRn/eMib5ysfI
-        PDh4MH0FpUg4RcI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 81F3D175680;
-        Wed, 19 Jan 2022 13:18:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F1CC217567F;
-        Wed, 19 Jan 2022 13:18:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 2/2] advice: refactor "action is not possible because
- you have unmerged files"
-References: <20220119094445.15542-1-bagasdotme@gmail.com>
-        <20220119094445.15542-3-bagasdotme@gmail.com>
-        <3083234.G16DuhSZxH@cayenne>
-Date:   Wed, 19 Jan 2022 10:18:15 -0800
-In-Reply-To: <3083234.G16DuhSZxH@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-        "Wed, 19 Jan 2022 16:42:35 +0100")
-Message-ID: <xmqqh79zoahk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1356936AbiASS4G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jan 2022 13:56:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50410 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230509AbiASS4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jan 2022 13:56:05 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5164C061574
+        for <git@vger.kernel.org>; Wed, 19 Jan 2022 10:56:04 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id ay14-20020a05600c1e0e00b0034d7bef1b5dso9726617wmb.3
+        for <git@vger.kernel.org>; Wed, 19 Jan 2022 10:56:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=JfI4aodv7CK9qDyeGvhs24tmHnBPER84sQR6uua1igk=;
+        b=HR56GGQ73LM1S8yByz1FkuLqxAu4Z88J+t658NrnnX7j9B4dFOU2PXstdfvxdGlT+v
+         6B1vA9h0+UFUQGDZVLpTl2K9cc6Ll/WAa9NCfSZ7DraZ0O+Ugm7AiAvNWB1xoyiQf1cE
+         Wge3P1O0pVuWQyk0LASs5sOcbvVm5Xm5DMZu7Qmwc3xf5/8J2+XMEG+5wYy+jd0UvXFq
+         8mOPBcgngq3HgvZ6hkJXr9dAcfRpox+r0Cdu2l2vi9oGXAsoZNZLuEJYYMI0A3n8mEBK
+         Y8C+YIMWyCykyHUNc515GKAvXBnvDvpS2o+NxQTGuGKBLmHHlK3Ap9mss1jMzeGpF1ZB
+         sp9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=JfI4aodv7CK9qDyeGvhs24tmHnBPER84sQR6uua1igk=;
+        b=lcUGKsUrb80XqbeVcymIOAfTsXeXa5p3PX/236b67nie0M38b4bOZDoYpiP554gbC5
+         zCJRIoWuNsL4Bda3gqzeuH/lgWjkSuxWJn6aoYh+1XcGatBG319QpioE1nEVsXLM0ONz
+         fYbjRAxL7ivem8Aso/xpiM8AqA03gSV7UFpe3qFq0TyzURHgoluzlHCCTgxKziZQBx3n
+         jywMiyGBiAeNMUg3xPCIUb3AphwXpiygHjlfqD7LcU/1VNceppyLCkuZaxXZs8bhW8mo
+         +Z+RIDWvLFF629W8rQe8YxTp/aR05dgNRFw4vD3vMNR2q9BUqGOSnx0fXB2QaGXJrq20
+         QNvg==
+X-Gm-Message-State: AOAM533U6GnNxCyAb0ry4uC0WHQZScP5ZaMPTkewRbakLTJ1U85TJiZ3
+        Cl1KqLgW2n9/l2/W5YJPqPYAqlhKeOA=
+X-Google-Smtp-Source: ABdhPJx7MxtdP18naLgIsV+VApgtKNivyPGpbcVPcd1UtA5w2TvOT2/76LaUAeDxqVlSbLij7gyw1g==
+X-Received: by 2002:a5d:4e51:: with SMTP id r17mr30315718wrt.444.1642618563261;
+        Wed, 19 Jan 2022 10:56:03 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a9sm362786wmm.32.2022.01.19.10.56.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jan 2022 10:56:02 -0800 (PST)
+Message-Id: <pull.1120.git.1642618562012.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 19 Jan 2022 18:56:01 +0000
+Subject: [PATCH] getcwd(mingw): handle the case when there is no cwd
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2C5B97CA-7954-11EC-B72F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> Playing grammar lego with sentences makes it impossible for translators=
- to find=20
-> a good translation.
+A recent upstream topic introduced checks for certain Git commands that
+prevent them from deleting the current working directory, introducing
+also a regression test that ensures that commands such as `git version`
+_can_ run without a current working directory.
 
-Well said.
+While technically not possible on Windows via the regular Win32 API, we
+do run the regression tests in an MSYS2 Bash which uses a POSIX
+emulation layer (the MSYS2/Cygwin runtime) where a really evil hack
+_does_ allow to delete a directory even if it is the current working
+directory.
 
-Thanks.
+Therefore, Git needs to be prepared for a missing working directory,
+even on Windows.
+
+This issue was not noticed in upstream Git because there was no caller
+that tried to discover a Git directory with a deleted current working
+directory in the test suite. But in the microsoft/git fork, we do want
+to run `pre-command`/`post-command` hooks for every command, even for
+`git version`, which means that we make precisely such a call. The bug
+is not in that `pre-command`/`post-command` feature, though, but in
+`mingw_getcwd()` and needs to be addressed there.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    getcwd(mingw): handle the case when there is no current working
+    directory
+    
+    The bug fixed by this topic was noticed due to test failures while
+    rebasing Microsoft's fork of Git onto v2.35.0-rc1. It may not be
+    desirable to take it into Git v2.35.0 this late in the -rc phase, even
+    though I do plan on integrating it into Git for Windows v2.35.0
+    [https://github.com/git-for-windows/git/pull/3641].
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1120%2Fdscho%2Fmingw-getcwd-without-cwd-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1120/dscho/mingw-getcwd-without-cwd-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1120
+
+ compat/mingw.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 640dcb11de0..03af369b2b9 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1127,6 +1127,10 @@ char *mingw_getcwd(char *pointer, int len)
+ 	}
+ 	if (!ret || ret >= ARRAY_SIZE(wpointer))
+ 		return NULL;
++	if (GetFileAttributesW(wpointer) == INVALID_FILE_ATTRIBUTES) {
++		errno = ENOENT;
++		return NULL;
++	}
+ 	if (xwcstoutf(pointer, wpointer, len) < 0)
+ 		return NULL;
+ 	convert_slashes(pointer);
+
+base-commit: af4e5f569bc89f356eb34a9373d7f82aca6faa8a
+-- 
+gitgitgadget
