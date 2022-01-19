@@ -2,208 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C8C2C433F5
-	for <git@archiver.kernel.org>; Wed, 19 Jan 2022 15:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E810AC433EF
+	for <git@archiver.kernel.org>; Wed, 19 Jan 2022 15:31:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355151AbiASPay (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jan 2022 10:30:54 -0500
-Received: from mout.web.de ([212.227.15.4]:37731 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1355659AbiASPal (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jan 2022 10:30:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1642606231;
-        bh=h2MxrzkR3bwq0GFqyWSV4YX6FijdbgD0TkTxLkf0KM0=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=RnHVorwdM2dZ/BuPIgYEY97Sf7TP7Ui11YkF3aIu1m1Pt3bvFhcHp8hvjQRpbybt4
-         l203/n5FmJReGtBkG1yXM4orD/Ww/zu6kCkYrbPBndvI7OAFjrAJw6kdu2ZtagEIxB
-         sfuyCMd8RmPyMhwX8RcfQRLeItISbhzg4NEwLwfU=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MK52w-1ms72H1ZFe-00Lizm; Wed, 19
- Jan 2022 16:30:31 +0100
-Message-ID: <d41c3a86-dfc9-b867-0094-632d5f3e07cf@web.de>
-Date:   Wed, 19 Jan 2022 16:30:30 +0100
+        id S1355727AbiASPba (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jan 2022 10:31:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59356 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1355832AbiASPbX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jan 2022 10:31:23 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 287E2C061759
+        for <git@vger.kernel.org>; Wed, 19 Jan 2022 07:31:10 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id c24so11421897edy.4
+        for <git@vger.kernel.org>; Wed, 19 Jan 2022 07:31:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=x4vfMNZ4FWZIfmsst23pH2dxrMSq3+vbpGNgaW17Qy0=;
+        b=CHO0uQt5T2bOSeQK0VI7xMjw4ZePgi3nKteGGynGZ/NDiArJ9sf79zI8mD/g1LlDUP
+         p14ZgJjkFLc79aKq4QJdnwOHj4FmTK9ixUmZsw1v4apgzzMECUpEubu5sV9iVRMmMpmb
+         7pcB0igipWYg5JrFk5qcDc66WphDJL6j7M6m3gk0Dkl1Jrk4eP6cz4UkahJ6/ptPChgm
+         KnDF9CJsr76nyB0k/C1tzpcQB8YBxSXRqoEwwWASsLjAh/F0mYjp9EwhK0T3FCjiirAD
+         cVRDajxNqQsuq/zKY3shp+qiSP82eaAThlsExmU8fkwBKZRo68etTCpURYVA7/XTN9W2
+         6hXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=x4vfMNZ4FWZIfmsst23pH2dxrMSq3+vbpGNgaW17Qy0=;
+        b=RhN5kP2FruCISoXv/ozVKxapky+RirXtI8Gp7VcTpbpa2wCuTFP8bsv1c8y2hoz+iP
+         3m/vlsrQIW3Jw7SPLQ1eR2FY7kRdMkClyKi4KdtvToH5S8iVqVgjvR5aP6SlYvPyF8IN
+         pO1DlH5BrMqF+pvYsHJ21Y3dKRNcPi+ap97GPNWnOrsAVQa64QrSxUKYN+R3lUxbffF/
+         Za8GJaj/+ioc+f+c11LXn4M4zh0RXtSePcxfd6HdJi5GAe3ENRMS0l128ycY2qz0KGcx
+         DzeAqc5xWgxtErK19uvoEV8cJKkPTQHZ5z2QvMLkGtxL2Rr03XG9UmYIJDIIzA0orCIj
+         BWgg==
+X-Gm-Message-State: AOAM530cAeLtcrw3L/+bnPpF8YE6cwUct5vD5JEMpzI0qFvNqzxE/jNR
+        tKquwh8UBf4jTxLTkg5mWljFuNps2MKJrg==
+X-Google-Smtp-Source: ABdhPJxtjIlVoIPNX829QL2GuDyM+DCe4h4duqwBd3mJ6vdINwVy67Klhme5N5pI50dn72IpyYpd5A==
+X-Received: by 2002:a17:907:160f:: with SMTP id hb15mr24573025ejc.166.1642606268497;
+        Wed, 19 Jan 2022 07:31:08 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id i6sm38108edf.20.2022.01.19.07.31.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Jan 2022 07:31:07 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nACvT-001nG0-Cr;
+        Wed, 19 Jan 2022 16:31:07 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Neeraj Singh <nksingh85@gmail.com>
+Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Neeraj Singh <neerajsi@microsoft.com>
+Subject: Re: [PATCH v2 2/3] core.fsync: introduce granular fsync control
+Date:   Wed, 19 Jan 2022 16:28:04 +0100
+References: <pull.1093.git.1638588503.gitgitgadget@gmail.com>
+        <pull.1093.v2.git.1638845211.gitgitgadget@gmail.com>
+        <ff80a94bf9add8a6fabcd5146e5177edf5e35e49.1638845211.git.gitgitgadget@gmail.com>
+        <211207.86wnkgo9fv.gmgdl@evledraar.gmail.com>
+        <CANQDOdfX2KaosPwLM4hS4rp+FH9V7VUxUh_md43FfZ9NG4iroQ@mail.gmail.com>
+        <211208.86ee6nmme5.gmgdl@evledraar.gmail.com>
+        <CANQDOddkKbUC-g97JOf40nS28Yv1KACvbjW9gtQZemfBMutPCw@mail.gmail.com>
+        <211209.86bl1ql718.gmgdl@evledraar.gmail.com>
+        <CANQDOdchh3mfC8S6ouWAQbtWzZUkmTzF1p5D9dg4muoBu4N1Fg@mail.gmail.com>
+        <CANQDOdf97WK7kWZHM7xr_fMS1aep5hYYcwC2Pfr_7w4h_8ybfw@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <CANQDOdf97WK7kWZHM7xr_fMS1aep5hYYcwC2Pfr_7w4h_8ybfw@mail.gmail.com>
+Message-ID: <220119.86y23bn3no.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.5.0
-Subject: Re: [PATCH] parse-options: document automatic
- PARSE_OPT_LITERAL_ARGHELP
-Content-Language: en-US
-To:     Bryce Ekrem <bekrem@g.clemson.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        avarab@gmail.com
-References: <220111.86a6g3yqf9.gmgdl@evledraar.gmail.com>
- <3de40324bea6a1dd9bca2654721471e3809e87d8.1642538935.git.steadmon@google.com>
- <xmqqh7a0r87q.fsf@gitster.g> <ba624c59-5330-360e-dc4a-432752d22fc1@web.de>
- <CA++g3E-azP3wFTtNkbFdmT7VW3hvULL0WkkAdwfrMb6HDtcXdg@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CA++g3E-azP3wFTtNkbFdmT7VW3hvULL0WkkAdwfrMb6HDtcXdg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:n/wXCuHWLfJeMTPQeP7b3rw1wLqwiGANQYmTnwr+2obuAQ3vAuS
- cp+6QOJakOqoUPdokerdzP4EEzHxffOCMn1dVpSniHpYs/yolpGxzyoJeLjGtiqZMj9isO/
- PyDU82dQBuwd7adxggBN+1QSdNIbxQwHpLRm5ZOSkjfQuby6mfiJC24zqnRYIEJP1uDaxR6
- GawWgfmcUyAMX5UCAhdXQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zc41U3OsLBo=:6lbQTKqiJZJnfcsXjh9B6Z
- Ye3ZmecDf+5DpoArar8RwEJ0a/vbEGU3fiy1vPLMOA0vL1rpqsyRcCraiiMOZxXyEHhQhEwB4
- WRqnUHSxQd8cF2xHdqrodhcfFRJYQQQFlfR5zGXzEuiQqk4z71qDOuWZ539XZ3Obh9BpjaZ0c
- /Fqo2frHYCdMpADDqWh240r4LWBSSjd2Mi7CTZ9o62sQQTHwhIZPSzTYSHNwybMKhk5zOY2iM
- njbiqJruD+9ybFO30GQoetFAn3puxu8F+p8RipqqwGZwoGGDD6tu2Ae3r3rMeM9mHdx9V6Sny
- WGwAOcrMlRjvfGfzyP9gA1CTCuGMhV83KSD5k6Najr23q6YssuSgeHBMvFgvxeKFlnA1EVtCA
- 5L5m7rpcS49kefUaxO7ukZIQ2Y+syodQVf15sAIrPSAZPSzfLmt9junMqcI/hRf89CpM3TXmS
- IANF7DmlcO5tX8J40LW6Dq7eeO8OZIISajRpECfQ1mBISvzbDDJ81tsi+FWUsbob0KVwVzeox
- HStnzXz0MJV0g5AtszMehR51KgRyubNjIFyqH0APET5cXzmDbBojqQlcovrIEcmGmNH9V1kqd
- s+CuMv+POBhd5r5QxL/e81VmJLrE+XryozfZ3Od0yLNY4QUai3Y5ieYricWnEnwEPlBtFuStz
- nAC6zQRLBZfzb4QZ4WPF8sGYYKRj4a4DU1WBxEpHMzmwG0Nax6cedZhQ0XF5LKbPvuxgXBRuc
- bkTb1UDhcJPoQ1gr2OIqhs9n1sH6m5cwDh/JwL0tvv19hKC5ZWMS7LNMZMVIvCeqfMTafYfOS
- yM5xAwF9vLrVFXgJue44NX+IeS+jTB8xp2Jw8EOwhzfUKCLqwVzRm7i9t8nKH8VfpPLdpcb6k
- 1PJhZi7bVPPA7DWoB04DrDZpHLscsStmk3LyjS/TfamGE/rdOVL7FhoUZ7rZf3BzlIuX7dLh4
- 6d0JWoascssaMpTGg89Xue6dkBdqmtkZh7HaOZegTZff/4Qd2wjX5OyRHp/tzPlzTVSYBYsNw
- /HK1vUSJsry7MG5BSP/LQdqDnyYbWI8bN2YRZXuZY6wS7PXevNPD0DWu8Xv+VkCUZphWDFDZj
- Rz7xLcyHokjoAE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.01.22 um 16:15 schrieb Bryce Ekrem:
-> Can you clarify what argh is instead of argc and argv
-> sounds like you said arghelp
 
-argh is a member of struct option, defined in parse-options.h.  It is a
-string that describes the argument of an option, i.e. it's a short
-"argument help" or "argument hint".
+On Tue, Jan 18 2022, Neeraj Singh wrote:
 
-> On Wed, Jan 19, 2022 at 2:57 AM Ren=C3=A9 Scharfe <l.s.r@web.de <mailto:=
-l.s.r@web.de>> wrote:
->
->     The help strings for arguments are enclosed in angle brackets
->     automatically.=C2=A0 E.g. if argh is specified as "name", "--option =
-<name>"
->     is printed, to indicate that users need to supply an actual name.=C2=
-=A0 The
->     flag PARSE_OPT_LITERAL_ARGHELP turns this off, so that "--option nam=
-e"
->     is printed instead, to indicate that the literal string needs to be
->     supplied -- a rare case.
->
->     This flag is enabled automatically if argh contains special characte=
-rs
->     like brackets.=C2=A0 The developer is supposed to provide any requir=
-ed angle
->     brackets for more complicated cases.=C2=A0 E.g. if argh is "<start>,=
-<end>"
->     then "--option <start>,<end>" is printed.
->
->     Add a comment to mention this PARSE_OPT_LITERAL_ARGHELP behavior.
->
->     Also remove the flag from option definitions for which it's inferred
->     automatically.
->
->     Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de <mailto:l.s.r@web.de>=
->
->     ---
->     Somehow I feel this is not enough, but I can't pin down what's
->     missing.
->
->     =C2=A0builtin/am.c=C2=A0 =C2=A0 | 2 +-
->     =C2=A0builtin/push.c=C2=A0 | 2 +-
->     =C2=A0parse-options.h | 2 ++
->     =C2=A03 files changed, 4 insertions(+), 2 deletions(-)
->
->     diff --git a/builtin/am.c b/builtin/am.c
->     index b6be1f1cb1..fa8d28794a 100644
->     --- a/builtin/am.c
->     +++ b/builtin/am.c
->     @@ -2402,7 +2402,7 @@ int cmd_am(int argc, const char **argv, const =
-char *prefix)
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 { OPTION_CAL=
-LBACK, 0, "show-current-patch", &resume.mode,
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 "(dif=
-f|raw)",
-                        ^^^^^^^^^^^^
-This is the argh for that particular option (--show-current-patch).
+> Hi =C3=86var,
+> Could you please respond to the parent message?
 
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 N_("s=
-how the patch being applied"),
->     -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0PARSE=
-_OPT_CMDMODE | PARSE_OPT_OPTARG | PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGH=
-ELP,
->     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0PARSE=
-_OPT_CMDMODE | PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 parse=
-_opt_show_current_patch, RESUME_SHOW_PATCH },
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_CMDMODE(=
-0, "allow-empty", &resume.mode,
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 N_("record the empty patch as an empty commit"),
->     diff --git a/builtin/push.c b/builtin/push.c
->     index 359db90321..4fa6dfbd09 100644
->     --- a/builtin/push.c
->     +++ b/builtin/push.c
->     @@ -552,7 +552,7 @@ int cmd_push(int argc, const char **argv, const =
-char *prefix)
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_BIT('f',=
- "force", &flags, N_("force updates"), TRANSPORT_PUSH_FORCE),
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_CALLBACK=
-_F(0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
-                                                            ^^^^^^^^^^^^^^=
-^^^^^^^^^^
-And here's the one for CAS_OPT_NAME, defined elsewhere, (resolves
-to --force-with-lease).
+I did just now in
+https://lore.kernel.org/git/220119.8635ljoidt.gmgdl@evledraar.gmail.com/;
+sorry about the delay. This thread fell off my radar.
 
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0N_("require old value of ref =
-to be at this value"),
->     -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 PARSE_OPT_OPTARG | PARSE_OPT_LITERA=
-L_ARGHELP, parseopt_push_cas_option),
->     +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 PARSE_OPT_OPTARG, parseopt_push_cas=
-_option),
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_BIT(0, T=
-RANS_OPT_FORCE_IF_INCLUDES, &flags,
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 N_("require remote updates to be integrated locally"),
->     =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 TRANSPORT_PUSH_FORCE_IF_INCLUDES),
->     diff --git a/parse-options.h b/parse-options.h
->     index e22846d3b7..8d089fb3ae 100644
->     --- a/parse-options.h
->     +++ b/parse-options.h
-
-Here's the comment about argh from parse-options.h:
-
- * `argh`::
- *   token to explain the kind of argument this option wants. Does not
- *   begin in capital letter, and does not end with a full stop.
- *   Should be wrapped by N_() for translation.
-
-
->     @@ -108,6 +108,8 @@ typedef enum parse_opt_result parse_opt_ll_cb(st=
-ruct parse_opt_ctx_t *ctx,
->     =C2=A0 *=C2=A0 =C2=A0PARSE_OPT_LITERAL_ARGHELP: says that argh shoul=
-dn't be enclosed in brackets
->     =C2=A0 *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(i.e. '<argh>') in the help m=
-essage.
->     =C2=A0 *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Useful for options with multi=
-ple parameters.
->     + *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Automatically enabled if argh con=
-tains any
->     + *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0of the following characters: ()<>=
-[]|
->     =C2=A0 *=C2=A0 =C2=A0PARSE_OPT_NOCOMPLETE: by default all visible op=
-tions are completable
->     =C2=A0 *=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 by git-completion.bash. This option suppresses th=
-at.
->     =C2=A0 *=C2=A0 =C2=A0PARSE_OPT_COMP_ARG: this option forces to git-c=
-ompletion.bash to
->     --
->     2.34.1
+> To summarize the main points and questions:
+> 1) The current patch series design of core.fsync favors ease of
+> modification of the complete configuration as a single atomic config
+> step, at the cost of making it somewhat harder to derive a new
+> configuration from an existing one. See [1] where this facility is
+> used.
 >
+> 2) Is there any existing configuration that uses the multi-value
+> schema you proposed? The diff.wsErrorHighlight setting is actually
+> comma-separated.
+
+I replied to that. To add a bit to that the comma-delimited thing isn't
+any sort of a "blocker" or whatever in my mind.
+
+I just wanted to point out that you could get the same with multi-value
+with some better integration, and we might have our cake & eat it too.
+
+But at the end of the day if you disagree you're doing the work, and
+that's ultimately bikeshedding of the config interface. I'm fine with it
+either way.
+
+> 3) Is there any system you can point at or any support in the POSIX
+> spec for requiring fsync for anything other than durability of data
+> across system crash?
+
+Some examples in the linked...
+
+> 4) I think string_list_split_in_place is not valid for splitting a
+> comma-separated list in the config code, since the value coming from
+> the configset code is in some global data structure that might be used
+> again. It seems like we could have subtle problems down the line if we
+> mutate it.
+
+Replied to that too, hope it's all useful. Thanks again for working on
+this, it's really nice to have someone move the state of data integrity
+in git forward.
+
+> [1] https://github.com/neerajsi-msft/git/commit/7e9749a7e94d26c8878945958=
+8997329c5130792#diff-ee0307657f5a76b723c8973db0dbd5a2ca62e14b02711b897418b3=
+5d78fc6023R1327
