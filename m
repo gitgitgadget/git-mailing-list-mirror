@@ -2,110 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 735F3C433F5
-	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 21:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57601C433F5
+	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 22:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347744AbiATV6r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jan 2022 16:58:47 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50424 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347676AbiATV6q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jan 2022 16:58:46 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4ECD1100623;
-        Thu, 20 Jan 2022 16:58:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gJ/TGk4zmzXT14k4g4sDTABeVeAJQX5jCNDyif
-        MkGag=; b=pb7thfoRcY20/7N5QuQDZn5VUCaHiip7GurRVnmnaa1I/iR9v7hH0n
-        O0TN74HuQKFSkjESwEvbCLUC3w50S86fls3F++Du5flfNkjTpq82wBhuzax6JIIE
-        +EtH/c5g9d5T6/4vzKqTZSYe75zH2iPZwWI/oWHy1D5XHuaovTH7A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 43C4B100622;
-        Thu, 20 Jan 2022 16:58:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A1748100621;
-        Thu, 20 Jan 2022 16:58:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Subject: Re* [PATCH v7 0/3] fetch: skip unnecessary tasks when using
- --negotiate-only
-References: <20220119000056.58503-1-chooglen@google.com>
-        <20220120174942.94231-1-chooglen@google.com>
-Date:   Thu, 20 Jan 2022 13:58:43 -0800
-In-Reply-To: <20220120174942.94231-1-chooglen@google.com> (Glen Choo's message
-        of "Thu, 20 Jan 2022 09:49:39 -0800")
-Message-ID: <xmqqk0eugjcc.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1378027AbiATWLx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jan 2022 17:11:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52810 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1378018AbiATWLw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jan 2022 17:11:52 -0500
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FA07C061574
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 14:11:52 -0800 (PST)
+Received: by mail-io1-xd34.google.com with SMTP id h23so8627760iol.11
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 14:11:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=yVLX37F2SHE9pdsMDuRoC7Ej8BDm/LIWpbduFLqwqRo=;
+        b=7RcRiDE3YHasnWuaekFc8FomZCtnicMyuLj2b8XkuemawDV5NGWkVI/VFpWT6n9A1L
+         x2mdXNMbqZ4dVNbu6n9etuIOKOzoVmvmd2lUHJWOtGBavuK0rN7Ldarc5RWO2PxKVq1O
+         NMRajQ6KGfJd81eZGNedYauYXqgtQHBqfJwZls4emhPvcVVYusMhk6NQRSrqmXkOfbyK
+         lec9ms7Y67GKBE4N+VnfyrLz3OQlDFuxeDpB+pKc3x7Z1W1myBT4c8Y5mN0DuVgb+nSd
+         d9Td77M2fGUfWeOUiZnjfQsSTF6cw/I+0KrAUUaJkfgsFKyJe/GGMBg3Yd2Jjc9v2NUP
+         3iVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yVLX37F2SHE9pdsMDuRoC7Ej8BDm/LIWpbduFLqwqRo=;
+        b=AetSgzZ5/Xv7RJCs+lWAKcG2JfyR2yK157F1he1/tLDqRfk6xad1FnZmIzaPv0lJvt
+         /RaaN+fW6sHdojbeaOQDxB+NY2WIBqlQiTSg8ChIITCKf0xOQnoshljknpZPNqvx4zQ6
+         Qf3f5Rpzkog+bxfxJeo5e0AEUsv3pTAbyfNBWVfiuCZQWw+/NwU/VMUHTb5l5wZyhYd6
+         7t8UGqeLcwlSseSXqji8MasgHxEtH7U0ojHa2E8kzS7eNB85AII1ao0Qdr7n3ivyopPd
+         feyaAmpx+zrcXyDkNBP749c5Sf84+oG6iodAvRjCWKdcREt67jGttZEnNoFxBHr5yHgS
+         XuvA==
+X-Gm-Message-State: AOAM532HyqtB/N7tAoaqsYdnp6uX9llDb5g+KUr/fH36QeE3YcFix7S/
+        velUmh82qe8Zs5V5EE0R5Vg9LQ==
+X-Google-Smtp-Source: ABdhPJxyVjcAmPqNBl0Dhd/gKPFSTA56xLQKPKvwGH9TvtRVfyQpqrE8r6fN+SrXjJg1UvNPUM+oEQ==
+X-Received: by 2002:a02:852e:: with SMTP id g43mr414674jai.9.1642716711822;
+        Thu, 20 Jan 2022 14:11:51 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id v6sm1779261ilu.60.2022.01.20.14.11.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 20 Jan 2022 14:11:51 -0800 (PST)
+Date:   Thu, 20 Jan 2022 17:11:50 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com
+Subject: Re: [PATCH v3 1/9] t5326: demonstrate bitmap corruption after
+ permutation
+Message-ID: <YeneJrzjp160edGG@nand.local>
+References: <babce7d29a85df0da54cb651433111bc33097a4e.1641320129.git.me@ttaylorr.com>
+ <20220120175541.3099054-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 23141A5A-7A3C-11EC-AF34-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220120175541.3099054-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+On Thu, Jan 20, 2022 at 09:55:41AM -0800, Jonathan Tan wrote:
+> As an effort to ensure that Git reads coherent .midx, .rev, and .bitmap
+> files, both the .rev and .bitmap files are keyed on the checksum of the
+> .midx file. But the issue here is that a .rev and a .bitmap could both
+> refer to the same .midx checksum when the .rev and .bitmap files are not
+> coherent with respect to each other (e.g. when a Git process has written
+> the .rev, but not the .bitmap yet - but this would appear perfectly
+> ordinary to another concurrently running Git process, since the .midx
+> checksum in the .rev and .bitmap files match).
 
-> Changes since v6:
-> * use standard message format introduced in 246cac8505 (i18n: turn even
->   more messages into "cannot be used together" ones, 2022-01-05) (thanks
->   Jiang Xin!)
+Kind of, and it's possible that we're saying the same thing here using
+different words.
 
-As v6 is already in 'next' since yesterday, let's make it an
-incremental update.  It would give us a place to spell out why we
-consider this change is desirable.
+But seeing an out-of-sync .bitmap and .rev is really a symptom of the
+underlying problem, which is that the MIDX checksum could (prior to
+these patches) be unchanged even when the object order it represents
+_does_ change (e.g., in the case of swapping the preferred pack around
+like the test here demonstrates).
 
-This is a tangent, but I recall there was a talk about "reviewer
-checklist".  Things like:
+> This problem is exacerbated by the fact that the .rev has its .midx
+> checksum in its filename, whereas the .bitmap has its .midx checksum in
+> its file contents. When generating .midx+.rev+.bitmap, it would write
+> the .bitmap but not the .rev, since a .rev of the same filename already
+> exists.
 
- - check if we can reuse existing and identical message to reduce
-   load on translators
+This isn't quite right: both have the MIDX's checksum in their filename.
+For example after running `git repack --write-midx --write-bitmap-index`
+on a random repository, I get these MIDX-related files:
 
- - when we are creating a file in a subdirectory of $GIT_DIR, be
-   prepared to see any directories other than $GIT_DIR itself
-   missing and create them as necessary
+    $ find .git/objects/pack -type f -name 'multi-pack-index*'
+    .git/objects/pack/multi-pack-index-fd71600b4ceb4caf23a538c7829b9284f2b66d73.rev
+    .git/objects/pack/multi-pack-index-fd71600b4ceb4caf23a538c7829b9284f2b66d73.bitmap
+    .git/objects/pack/multi-pack-index
 
- - use safe_create_leading_directories() and adjust_shared_perm() on
-   things under $GIT_DIR but not in the working tree
+Before these patches, it was possible for the MIDX's object order to
+change but for its checksum to remain the same. The problem here is that
+we rename(2)'d the .bitmap into place, but only link(2)'d the .rev into
+place.
 
+So one of the two was updated, and the other was left behind. That does
+make them incoherent with respect to each other; but I find it more
+useful to think of it as the .rev being out-of-sync with the MIDX.
 
-may belong there.
+> The solution is to embed the .rev in the .midx. This means that the
+> checksum stored in .bitmap takes into account the contents of what would
+> have been in .rev, solving the coherency issue. (There are other
+> solutions like storing the name of the preferred pack in .midx, but I
+> think that putting the contents of .rev in the .midx is best.)
 
-I am not sure if it is feasible to create and maintain such a list,
-though.
+Right. The problem being that it's possible to change the MIDX's
+object order without changing its checksum. Since the .rev file's
+contents encodes the pseudo-pack order, embedding it into the MIDX is
+sufficient to guarantee that the MIDX's checksum changes whenever the
+object order does.
 
------ >8 --------- >8 --------- >8 --------- >8 -----
-Subject: [PATCH] fetch: help translators by reusing the same message template
+Apologies if that all exactly matched up with your understanding, and I
+was just telling you stuff that you already knew. But I figure that this
+bug is subtle enough that a little bit of hair-splitting doesn't hurt
+;).
 
-Follow the example set by 12909b6b (i18n: turn "options are
-incompatible" into "cannot be used together", 2022-01-05) and use
-the same message string to reduce the need for translation.
-
-Reported-by: Jiang Xin <worldhello.net@gmail.com>
-Helped-by: Glen Choo <chooglen@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/fetch.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git c/builtin/fetch.c w/builtin/fetch.c
-index dc6e637428..5c329f9835 100644
---- c/builtin/fetch.c
-+++ w/builtin/fetch.c
-@@ -2014,7 +2014,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			break;
- 
- 		default:
--			die(_("--negotiate-only and --recurse-submodules cannot be used together"));
-+			die(_("options '%s' and '%s' cannot be used together"),
-+			    "--negotiate-only", "--recurse-submodules");
- 		}
- 	}
- 
+Thanks,
+Taylor
