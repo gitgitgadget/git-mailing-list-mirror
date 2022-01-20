@@ -2,148 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C828C433F5
-	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 19:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 843C8C433EF
+	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 19:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377407AbiATTIm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jan 2022 14:08:42 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51929 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377408AbiATTIl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jan 2022 14:08:41 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4F85F180079;
-        Thu, 20 Jan 2022 14:08:41 -0500 (EST)
+        id S243059AbiATTP2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jan 2022 14:15:28 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59048 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1377466AbiATTOB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jan 2022 14:14:01 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 55D1317AB58;
+        Thu, 20 Jan 2022 14:14:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=qlIgW78uTweW3Q/zVQByWLn7L
-        ATDvMEbksRVYXZfkkU=; b=DB6ktDrsqgH5wBCEUWLECaea6X1ROY5RQKalCvQBC
-        KNjfAse0gB4qOsu3mjByxb3W81NZ+fwtxcwjlELyTmpjrmsYQD5pfYL5B6uKjrP7
-        Chuy3F1QrKK8QoEhmmcpk73DGU/A2ENXCrDUntpqggxD13+e1pxCoTEI5pCdh5gO
-        vk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 47D4F180078;
-        Thu, 20 Jan 2022 14:08:41 -0500 (EST)
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=V1ETw4iP3UdM
+        fJiWuFq4fz1/GUirmFj9+1uxTUei8QE=; b=fJ2mFnSIvgRIjg7vad55Z1zqLJVG
+        XwHYr37Nm4AaUuLJKjNQHZaIcMq4FylN3JTqA1ESn5vOqHGh1ZucarqYrGykChgz
+        oQKT1RbnjbD7nJWY3vDukNLmYJ3HBffb5H9D6gsapWANCF9SI+rOVVv3fYtpuhYo
+        iBupvmmGPZNYV20=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4DDE517AB57;
+        Thu, 20 Jan 2022 14:14:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B199B180077;
-        Thu, 20 Jan 2022 14:08:38 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A9FE317AB54;
+        Thu, 20 Jan 2022 14:13:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        chooglen@google.com
-Subject: Re: [PATCH] branch,checkout: fix --track documentation
-References: <9628d145881cb875f8e284967e10f587b9f686f9.1631126999.git.steadmon@google.com>
-        <cover.1640039978.git.steadmon@google.com>
-        <dcba40e2c4001611f837f612cc5ee7890c653aff.1640039978.git.steadmon@google.com>
-        <220111.86a6g3yqf9.gmgdl@evledraar.gmail.com>
-        <55d5327a-9c6c-7fd8-b540-e710259c0694@web.de>
-        <220120.864k5ymx55.gmgdl@evledraar.gmail.com>
-        <c3c26192-aee9-185a-e559-b8735139e49c@web.de>
-Date:   Thu, 20 Jan 2022 11:08:37 -0800
-Message-ID: <xmqqk0eui5sa.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 0/2] builtin add -p: fix hunk splitting
+References: <pull.1100.git.1640010777.gitgitgadget@gmail.com>
+        <pull.1100.v2.git.1641899530.gitgitgadget@gmail.com>
+        <220111.861r1ezcxn.gmgdl@evledraar.gmail.com>
+        <348d37a3-f01b-cda6-8ce4-1536e0bd3b06@gmail.com>
+        <xmqqv8yovlc2.fsf@gitster.g>
+        <47e7b23a-56a3-b533-63ed-a854503b59ed@gmail.com>
+        <xmqqr193j8y4.fsf@gitster.g>
+        <220120.86czkmn6gj.gmgdl@evledraar.gmail.com>
+Date:   Thu, 20 Jan 2022 11:13:57 -0800
+In-Reply-To: <220120.86czkmn6gj.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 20 Jan 2022 09:42:27 +0100")
+Message-ID: <xmqqfspii5je.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5FDD9D20-7A24-11EC-AA69-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 1E95085C-7A25-11EC-B081-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Document that the accepted variants of the --track option are --track,
-> --track=3Ddirect, and --track=3Dinherit.  The equal sign in the latter =
-two
-> cannot be replaced with whitespace; in general optional arguments need
-> to be attached firmly to their option.
+> On Wed, Jan 19 2022, Junio C Hamano wrote:
 >
-> Put "direct" consistently before "inherit", if only for the reasons
-> that the former is the default, explained first in the documentation,
-> and comes before the latter alphabetically.
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>
+>>> Even if the helper is finalizing the current hunk then I think that
+>>> "nonsense" hunk would still wrong as it would be calling
+>>> finalize_hunk() on _every_ context line in the hunk rather than just
+>>> being called once to finalize the hunk.
+>>
+>> True; this triggers every time we finish reading the common context
+>> lines and not at the end of hunk.  In any case, I think what we
+>> queued looks good for 'next'.
+>
+> For what it's worth (and as the person who started this side-thread) I
+> agree. This looks good as-is, thanks both!
+>
+>>>>   -		if ((marker =3D=3D '-' || marker =3D=3D '+') && *p =3D=3D ' ')
+>>>> -			hunk->splittable_into++;
+>>>> +		if (*p =3D=3D ' ')
+>>>> +			complete_file(marker, &hunk->splittable_into);
 
-;-)  I see too many good reasons to modestly say "if only for" ;-)
+Yup, thanks all.  The fix is now in 'next' and I expect we can
+safely merge it down as part of the first batch next cycle.
 
-> -'git branch' [--track [direct|inherit] | --no-track] [-f] <branchname>=
- [<start-point>]
-> +'git branch' [--track[=3D(direct|inherit)] | --no-track] [-f] <branchn=
-ame> [<start-point>]
-
-Good.
-
->  -t::
-> ---track [inherit|direct]::
-> +--track[=3D(direct|inherit)]::
-
-Good.
-
-> @@ -216,11 +216,11 @@ This option is only applicable in non-verbose mod=
-e.
->  	upstream when the new branch is checked out.
->  +
->  The exact upstream branch is chosen depending on the optional argument=
-:
-> -`--track` or `--track direct` means to use the start-point branch itse=
-lf as the
-> -upstream; `--track inherit` means to copy the upstream configuration o=
-f the
-> -start-point branch.
-> +`-t`, `--track`, or `--track=3Ddirect` means to use the start-point br=
-anch
-> +itself as the upstream; `--track=3Dinherit` means to copy the upstream
-> +configuration of the start-point branch.
-
-When "-x" and "--long-x" both do the same thing, we list both in the
-heading but omit "-x" from the text, but in this case I fully agree
-with the updated text as "-t" and "--track[=3D...]" work a bit
-differently and there is no way to say "we want inherit" with "-t".
-
-> -`--track direct` is the default when the start point is a remote-track=
-ing branch.
-> +`--track=3Ddirect` is the default when the start point is a remote-tra=
-cking branch.
-
-Good.
-
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 0c8d8a8827..4ce2a24754 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -638,7 +638,7 @@ int cmd_branch(int argc, const char **argv, const c=
-har *prefix)
->  		OPT__VERBOSE(&filter.verbose,
->  			N_("show hash and subject, give twice for upstream branch")),
->  		OPT__QUIET(&quiet, N_("suppress informational messages")),
-> -		OPT_CALLBACK_F('t', "track",  &track, N_("mode"),
-> +		OPT_CALLBACK_F('t', "track",  &track, "(direct|inherit)",
->  			N_("set branch tracking configuration"),
->  			PARSE_OPT_OPTARG,
->  			parse_opt_tracking_mode),
-
-Good.
-
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 6a5dd2a2a2..0bc2e63510 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1549,7 +1549,7 @@ static struct option *add_common_switch_branch_op=
-tions(
->  {
->  	struct option options[] =3D {
->  		OPT_BOOL('d', "detach", &opts->force_detach, N_("detach HEAD at name=
-d commit")),
-> -		OPT_CALLBACK_F('t', "track",  &opts->track, N_("mode"),
-> +		OPT_CALLBACK_F('t', "track",  &opts->track, "(direct|inherit)",
->  			N_("set branch tracking configuration"),
->  			PARSE_OPT_OPTARG,
->  			parse_opt_tracking_mode),
-
-Good.
-
-Thanks.
