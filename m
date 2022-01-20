@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60483C433FE
-	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 15:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5B7BC433EF
+	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 15:12:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376532AbiATPMb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jan 2022 10:12:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42186 "EHLO
+        id S1376524AbiATPMe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jan 2022 10:12:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376511AbiATPMZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jan 2022 10:12:25 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AA86C061746
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:25 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id r7-20020a1c4407000000b0034e043aaac7so287242wma.5
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:25 -0800 (PST)
+        with ESMTP id S1376514AbiATPMY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jan 2022 10:12:24 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C18C061753
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:23 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id l12-20020a7bc34c000000b003467c58cbdfso22639740wmj.2
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=IY/CPJQ0Q+sLVf7jURIMds3wahY4HaQuVDcXfMmDpdE=;
-        b=iN8tcffPW7Vx2ZhdJzn9MVtkdOCqVT7lFBrsFId2Xs0GKA2ipaz1tPcoaDMtiouCoD
-         5XIUvFTsNxNh810Lpao8BUQdSaWwkbwnKK0c1kmpqwVSsKBqkL4JK44HW+Jrt+Zf6g9A
-         7HJilFXtjAsksx2ts9qD2NZChq04kowK1d2RxtHefKl5+TgdbbRQqIRR+3q7hy493/QZ
-         uWDQwxXaiadSMHEuqMeuYYQwrx2LynZGX0smPvhqllHh5hvoyh5GSRiMlbsSh/Hgwk6s
-         eG6cLd57YRdzfxfdYQwLFc3n/OUj62m5lSfMmN3PdhxgcqileUIu5fYwgmmf9iWm5EiW
-         cEpw==
+        bh=pMYa0dfQa1Y/HGAo4moCXBwMLCmicYjMXhnW/sy5Md0=;
+        b=qyV/9O4Znm4gOArqo6ts0AYtWYyIVLX2JDCEDy33fDt3rghy0b2xvkWpAHpXdp+pNQ
+         jPuZt3md/hARNAZaGMmhVt+XciaMXQclkGBr3sZY2RFn5wbZJaBeBdk6ERdk8qyV3ZhF
+         mKR/Y+Mmo4ZXvh0srDsw7liKXvO9XaIUr0WMf1yOipMBXHXTKBFS0UdOy6fztunTPK92
+         ikzevtAcWH+VIBuBgoq8GpJW3e8p3qrPMfouc06FmOvzKuQ5t9v3NUt6Nyba9QBNKfkZ
+         fMaibLeqwVJTVfAOFQOYDYGADoCwIF3zT7g2XRSu2IBQD6m7hR9t8iHnhj9DLlrwR6H7
+         xQ1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IY/CPJQ0Q+sLVf7jURIMds3wahY4HaQuVDcXfMmDpdE=;
-        b=Gi283BcvUreyiU88to/nBHq+a8UOtVaPNpM0nYfOL9PDuRkb0oMihC8iNFKRnofyjY
-         xUySw+15aR6C+ObUUZbhNWhX2x3Gt48t/LUSH4fEyBM/Ap5V1LHNVEk9eBRmyNqs1v1q
-         bl9u/06nhRc0WL2aOjoktHswC7dhE0WWdbz0UbodbwQkupfjGipvgUJ7OUyiKJIB8W2k
-         KcBkkW96r9DsBo6t+D7y6qSb4wRo/1YWQUoZcsGBX1fH6J5EFwMzf7BCgZ5+pWFLmd5z
-         j8U6efU8eDgFI/SGddLQhDWKziL6N9RzmAm5dnU46dSPzEkm2F+YicpU/GQh1viWGZMu
-         ky/g==
-X-Gm-Message-State: AOAM531o36TlqNXoPCGQKOipvSvgLVbPMNGoo1IT0iayS1ArPgbRM2MU
-        Fa4v8R4bXPZgb5qcmQvzEpm3eGBCIe8=
-X-Google-Smtp-Source: ABdhPJyZDr0d7wnARwyEawWbs2N9Wb5tRy6ar3j/2+m+JNkJbia0hlktd290TywQ/55CPCsQ1SqekA==
-X-Received: by 2002:adf:a34c:: with SMTP id d12mr12084694wrb.80.1642691543599;
-        Thu, 20 Jan 2022 07:12:23 -0800 (PST)
+        bh=pMYa0dfQa1Y/HGAo4moCXBwMLCmicYjMXhnW/sy5Md0=;
+        b=ERtUToBTsf+X2IRZKa/LhfdumdUMhXPW5kHOrQ0cS0CB1bqnQ/9OPkt0FSGiiAGCgD
+         q7EpMyXwDIZ3OGqTEbjb0+QOWYfpYyhQOpFYYpPPAvfzLdpkmRYxUkbA1qHg8W2Fg69V
+         Vs3oQChrPKiqAzUFZ3lBFzlwbVZYQsjYoiAQ+ADs8ZxFfN4FoQK3tdOOwUQtFeaq903W
+         mjvq6ZDocW+QkISAylaOCBMJbsHXkwBGNjgYpSUmW1UVvv12hEvNVh2GIz5A08eEjJgP
+         j3vmDXLU8Tn6HDILyUhx7saN37nbrm5qVH63t+Gex+7l9iZ9S9Hox4VF6H8Nxp0GAStE
+         p+og==
+X-Gm-Message-State: AOAM532bT6weeKjWr0XYlKTpdSgAZZyNXr/aUO+e9g4A/fOovuSIVt+x
+        ZNmkxiP5AHv56VZLty5v8JIDfkYbNyM=
+X-Google-Smtp-Source: ABdhPJxsaTXdtvMC+0xKn95nbK8JVenqFUcssAOHyL1mbRfQrf4sRrALrUQmlO0lu4uVihZK3E+pJA==
+X-Received: by 2002:a5d:4944:: with SMTP id r4mr6610908wrs.550.1642691542030;
+        Thu, 20 Jan 2022 07:12:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 16sm2502843wmj.12.2022.01.20.07.12.23
+        by smtp.gmail.com with ESMTPSA id n15sm4140992wrf.79.2022.01.20.07.12.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jan 2022 07:12:23 -0800 (PST)
-Message-Id: <004b7a736bf5ed847bad6518a5a9434c6176f98a.1642691534.git.gitgitgadget@gmail.com>
+        Thu, 20 Jan 2022 07:12:21 -0800 (PST)
+Message-Id: <6f4f24c17ad91b28b22deff2530039bcfde2cbe9.1642691534.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
 References: <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
         <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 Jan 2022 15:12:09 +0000
-Subject: [PATCH v6 10/15] reftable: handle null refnames in
- reftable_ref_record_equal
+Date:   Thu, 20 Jan 2022 15:12:07 +0000
+Subject: [PATCH v6 08/15] reftable: order unittests by complexity
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,32 +73,39 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-Spotted by Coverity.
+This is a more practical ordering when working on refactorings of the
+reftable code.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/record.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ t/helper/test-reftable.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/reftable/record.c b/reftable/record.c
-index 8536bd03aa9..8bbcbff1e69 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -1154,9 +1154,11 @@ int reftable_ref_record_equal(struct reftable_ref_record *a,
- 			      struct reftable_ref_record *b, int hash_size)
- {
- 	assert(hash_size > 0);
--	if (!(0 == strcmp(a->refname, b->refname) &&
--	      a->update_index == b->update_index &&
--	      a->value_type == b->value_type))
-+	if (!null_streq(a->refname, b->refname))
-+		return 0;
-+
-+	if (a->update_index != b->update_index ||
-+	    a->value_type != b->value_type)
- 		return 0;
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index 26b03d7b789..1f0a28cbb64 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -3,15 +3,16 @@
  
- 	switch (a->value_type) {
+ int cmd__reftable(int argc, const char **argv)
+ {
++	/* test from simple to complex. */
+ 	basics_test_main(argc, argv);
++	record_test_main(argc, argv);
+ 	block_test_main(argc, argv);
+-	merged_test_main(argc, argv);
++	tree_test_main(argc, argv);
+ 	pq_test_main(argc, argv);
+-	record_test_main(argc, argv);
+-	refname_test_main(argc, argv);
+ 	readwrite_test_main(argc, argv);
++	merged_test_main(argc, argv);
+ 	stack_test_main(argc, argv);
+-	tree_test_main(argc, argv);
++	refname_test_main(argc, argv);
+ 	return 0;
+ }
+ 
 -- 
 gitgitgadget
 
