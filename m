@@ -2,198 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C59CC433F5
-	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 21:27:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71B3EC433F5
+	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 21:37:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377870AbiATV1M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jan 2022 16:27:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42946 "EHLO
+        id S231373AbiATVh2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jan 2022 16:37:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377869AbiATV1K (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jan 2022 16:27:10 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85EB9C061574
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 13:27:10 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id az27-20020a05600c601b00b0034d2956eb04so16908274wmb.5
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 13:27:10 -0800 (PST)
+        with ESMTP id S1377967AbiATVhX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jan 2022 16:37:23 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D2FFC061574
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 13:37:23 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id m4so34246395edb.10
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 13:37:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hzlcao159OCA1n8K4WVG2j/83WdIvMt+wfKfoQTYmkA=;
-        b=mmOuPuC2lYW8gOC99r802xA+9m8hYoiz9rFOYoGtbhPF/7Yr0x2L70cAZxukY6a24D
-         Dl2rgu3VVHw1WL2pxui6B4mSQIMlAsOJKwPwYzMX4ltK99ptRqiXlNB0YsDAoJ98Umhs
-         0wrijzg8zYmTC5P2jApTJXSi9xvwq7HWLLQteyQrN7kNoUwWeXefbLA5n92F1jXdwxBG
-         EwR6G4N99/1uLE0+o6AwysBE3BQNB7HossPgpl6540KgESJg0doiZM5nVi+l+08lP3w3
-         j9qVLnYpjVDqcOTEY8qZT79QCPB52a3D0ULvbK4ag9yY9TmKcLELMhhRxoQGUV2qlSxq
-         aOng==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=GmTm1Qd70azDs1X0d5psDZWo5tylzKQPFukuOJJAY54=;
+        b=WUsV0QinFBoxu8ijefQcKvUYKTtQ25C7xPVGeX4GxXhKKs2v8NMvzlT0uYCh2uNhxs
+         PYN2aWt+ujwPJRQStCvrR8n3HO3XO+9Ps0thP3pMRnwClNaXE2Ke2qItyRplpH7tSrTT
+         b1PK1iUloYHraO5yTiXCdqBaq+eqPrdYymkrVmS4RoI3SQdeSpOeBSqGuzqC6elqNSyz
+         dL6YBlZQWYrWK4K7BfmANXZ9RpOQZZiYKpzGFmGDLTaxF65+T6x6SOfWWfkmAi18htI9
+         HHEXPGUlQZayL9pmaQNoM7ln6npblrVJ7VQb2MzZttrr3x7S8I762mGf4Pp9LhbM5cYo
+         gsaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hzlcao159OCA1n8K4WVG2j/83WdIvMt+wfKfoQTYmkA=;
-        b=qKsNhXMUZ2taQror7+DSqqyVVJSUwU1aryauRjIovVD8iGBYOzTR6zjBYbwA9ThWF/
-         emIftrFsFxpFvRuh56ku3pfW9Jy2oJ5INaF/obKuXvbgEbIAZX0Ce7A9lrkWQD3siN8d
-         0ZOgCQ4ZcZtwiX5NnAVnJfMi3x3JDyb7Ei5aoo2DTY3v+2w5E/6NEWDTIsPKHpLobrXZ
-         vT3dtU4vfYjQ8lqZ2SEDCrY6bdGcgkosX03lrH63bfxWjn5voieqauJV/RVV6V94i3Iz
-         r+BERZjA8hw8SV+4gZJmMnSvvmfJBSodnO8JLaoTFU/mHZWugToqdw3i5KXaEi5OEsIE
-         dWnQ==
-X-Gm-Message-State: AOAM532b+76+MOj7ENBMAbnRTpNl2JJlGm9/neMAckXr5XL5RP1XI30m
-        /4XUcMikfhlMGt+uWZC/CJ2zgGVrrNLXXw==
-X-Google-Smtp-Source: ABdhPJxDvI4IpQP3QQy+OV7Fc1hHjT1uf2qTT432mW2VqRo0qNJZL6nYPxHAZaebpdXCuZIQMf86kw==
-X-Received: by 2002:a5d:4a8b:: with SMTP id o11mr891666wrq.46.1642714028217;
-        Thu, 20 Jan 2022 13:27:08 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k12sm3761770wrd.98.2022.01.20.13.27.07
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=GmTm1Qd70azDs1X0d5psDZWo5tylzKQPFukuOJJAY54=;
+        b=vYDOa7Hp8DSAHnnT9O73k67Gi/0mqDoZUscb6dXRp0BK4CButi9MfkXAzutyFx7fKb
+         jOhk8NGNCgt+dGnpq0DPfeVbKMeuZCcznYGiO3VHJYDRLkktMjiF/jwt7TuWZtPctf3F
+         +MB3AoDTBEAgi/NxyWhnO99Qt0x7E8fFKNSSuGt/gmiER8BS8SCFLlRUX7OakPrSH3uC
+         RGMw3D/JmQG1uvKA1BVQVuZibjcwCl3CCWGageAvdVN3x1yJ6rj9GzwGZRWRqOT7Gjh0
+         M+j19/QahasXHnJqOr4LfM55ZGrNtFJjX+th4OEhsacmvuP6D4zIG6mcc0s3WK/+GAZd
+         FbIw==
+X-Gm-Message-State: AOAM532oJH56rBEH6sZsaL1jzqw5dSXK4dUiOu3EDeCm8S4JEUYGTLGR
+        pikmgasbEgZvyGO9EBeq98k=
+X-Google-Smtp-Source: ABdhPJx7Lj3fxw1tekxFjPIKhvaKM5kOtKQmn3pmCKXWPUqKcJKZ6cOtwSa6O7+7MdKZGzYR7030dw==
+X-Received: by 2002:a17:907:1c1f:: with SMTP id nc31mr768596ejc.624.1642714641376;
+        Thu, 20 Jan 2022 13:37:21 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id s14sm1833667edx.37.2022.01.20.13.37.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jan 2022 13:27:07 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Todd Zullinger <tmz@pobox.com>,
-        =?UTF-8?q?Petr=20=C5=A0pl=C3=ADchal?= <psplicha@redhat.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] checkout: fix BUG() case in 9081a421a6
-Date:   Thu, 20 Jan 2022 22:26:57 +0100
-Message-Id: <patch-1.1-21ddf7c628d-20220120T212233Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.0.rc1.864.g57621b115b6
-In-Reply-To: <YemTGQZ97vAPUPY0@pobox.com>
-References: <YemTGQZ97vAPUPY0@pobox.com>
+        Thu, 20 Jan 2022 13:37:20 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nAf7Q-0025u3-C9;
+        Thu, 20 Jan 2022 22:37:20 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com
+Subject: Re: [PATCH] sparse-checkout: create leading directory
+Date:   Thu, 20 Jan 2022 22:30:03 +0100
+References: <20220120185548.3648549-1-jonathantanmy@google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <20220120185548.3648549-1-jonathantanmy@google.com>
+Message-ID: <220120.86mtjqks1b.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a regression in my 9081a421a6d (checkout: fix "branch info" memory
-leaks, 2021-11-16) where I'd assumed that the old_branch_info.path
-would have to start with refs/heads/*, but as has been reported[1]
-that's not the case.
 
-As a test case[2] to reproduce this shows the second "git checkout"
-here runs into the BUG() in the pre-image. The test being added is
-amended from[2] and will pass both with this change, and before
-9081a421a6. I.e. our behavior now is again the same as before that
-commit.
+On Thu, Jan 20 2022, Jonathan Tan wrote:
 
-1. https://bugzilla.redhat.com/show_bug.cgi?id=2042920
-2. https://lore.kernel.org/git/YemTGQZ97vAPUPY0@pobox.com/
-
-Reported-by: Petr Šplíchal <psplicha@redhat.com>
-Reported-by: Todd Zullinger <tmz@pobox.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-On Thu, Jan 20 2022, Todd Zullinger wrote:
-
-> Hi,
+> When creating the sparse-checkout file, Git does not create the leading
+> directory, "$GIT_DIR/info", if it does not exist. This causes problems
+> if the repository does not have that directory. Therefore, ensure that
+> the leading directory is created.
 >
-> A bug was filed in the Fedora/Red Hat bugzilla today for the
-> git 2.35.0 rc (rc1, but it's the same in rc2).  Petr (Cc'd),
-> ran the following
+> This is the only "open" in builtin/sparse-checkout.c that does not have
+> a leading directory check. (The other one in write_patterns_and_update()
+> does.)
 >
->     git clone https://github.com/psss/fmf /tmp/fmf
->     cd /tmp/fmf
->     cp .git/refs/remotes/origin/HEAD .git/refs/heads/__DEFAULT__
->     git checkout -f __DEFAULT__
->     git checkout -f __DEFAULT__
+> Note that the test needs to explicitly specify a template when running
+> "git init" because the default template used in the tests has the
+> "info/" directory included.
 >
-> The second git checkout call runs into the BUG() call added
-> in 9081a421a6 (checkout: fix "branch info" memory leaks,
-> 2021-11-16):
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> This problem is being discussed in [1], and we also noticed this problem
+> internally at $DAYJOB. Here's a fix.
 >
->     BUG: builtin/checkout.c:1098: should be able to skip
->     past 'refs/heads/' in 'refs/remotes/origin/master'!
->     Aborted (core dumped)
->
-> This worked in 2.34.1, so it's new to 2.35.0.  Should this
-> work or does the manual copy to setup a branch fall into a
-> new category of "don't do that"?
->
-> (It's novel to get a bug report from rc testing of a distro
-> build -- that doesn't happen often.)
+> [1] https://lore.kernel.org/git/db6f47a3-0df3-505b-b391-6ca289fd61b5@gmail.com/
 
-Thanks to both you and Petr for the report and easy to reproduce case,
-and sorry about causing it.
+Thanks. This fix looks good to me.
 
-In retrospec it's a rather obvious thinko. Here's a minimal fix for
-it, along with a derived test case that I made more exhaustive to
-check the state of the repo before, after, and in-between the two "git
-checkout" commands. As noted it'll also pass with 9081a421a6d
-reverted, showing that our behavior is the same as before that commit.
+Looking at my [1] my preliminary analysis there wasn't correct,
+i.e. there are other cases where we get the "sparse_filename" that you
+don't cover here, but e.g. if you do:
 
- builtin/checkout.c         | 11 ++++-------
- t/t2018-checkout-branch.sh | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 7 deletions(-)
+    <your test> &&
+    rm -rf .git/info &&
+    git sparse-checkout add foo
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 6a5dd2a2a22..52a47ef40e1 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1090,13 +1090,10 @@ static int switch_branches(const struct checkout_opts *opts,
- 		FREE_AND_NULL(old_branch_info.path);
- 
- 	if (old_branch_info.path) {
--		const char *const prefix = "refs/heads/";
--		const char *p;
--		if (skip_prefix(old_branch_info.path, prefix, &p))
--			old_branch_info.name = xstrdup(p);
--		else
--			BUG("should be able to skip past '%s' in '%s'!",
--			    prefix, old_branch_info.path);
-+		const char *p = old_branch_info.path;
-+
-+		skip_prefix(old_branch_info.path, "refs/heads/", &p);
-+		old_branch_info.name = xstrdup(p);
- 	}
- 
- 	if (opts->new_orphan_branch && opts->orphan_from_empty_tree) {
-diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-index 3e93506c045..82df9b8bf64 100755
---- a/t/t2018-checkout-branch.sh
-+++ b/t/t2018-checkout-branch.sh
-@@ -85,6 +85,39 @@ test_expect_success 'setup' '
- 	git branch -m branch1
+It looks like it will fail either way, so for those other codepaths we
+didn't need to ensure the .git/info.
+
+Still, it would be nice to have the fix test for those cases too,
+i.e. how various operations are expected to behave if the user were to
+rm -rf .git/info. That'll obviously yield a broken repo, but we should
+still try to handle it gracefully.
+
+1. https://lore.kernel.org/git/211220.86zgovt9bi.gmgdl@evledraar.gmail.com/
+
+> ---
+>  builtin/sparse-checkout.c          | 3 +++
+>  t/t1091-sparse-checkout-builtin.sh | 7 +++++++
+>  2 files changed, 10 insertions(+)
+>
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index 679c107036..2b0e1db2d2 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -471,6 +471,9 @@ static int sparse_checkout_init(int argc, const char **argv)
+>  		FILE *fp;
+>  
+>  		/* assume we are in a fresh repo, but update the sparse-checkout file */
+> +		if (safe_create_leading_directories(sparse_filename))
+> +			die(_("unable to create leading directories of %s"),
+> +			    sparse_filename);
+>  		fp = xfopen(sparse_filename, "w");
+>  		if (!fp)
+>  			die(_("failed to open '%s'"), sparse_filename);
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index 42776984fe..dba0737599 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -79,6 +79,13 @@ test_expect_success 'git sparse-checkout init' '
+>  	check_files repo a
+>  '
+>  
+> +test_expect_success 'git sparse-checkout init in empty repo' '
+> +	test_when_finished rm -rf empty-repo blank-template &&
+> +	mkdir blank-template &&
+> +	git init --template=blank-template empty-repo &&
+> +	git -C empty-repo sparse-checkout init
+> +'
+> +
+>  test_expect_success 'git sparse-checkout list after init' '
+>  	git -C repo sparse-checkout list >actual &&
+>  	cat >expect <<-\EOF &&
+
+You're using an overly verbose way to say "no templates, please". You
+can squash this in, i.e. --template= is an explicitly supported way to
+do that.
+
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index dba07375993..1fe741d9cd5 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -80,9 +80,8 @@ test_expect_success 'git sparse-checkout init' '
  '
  
-+test_expect_success REFFILES 'checkout a branch without refs/heads/* prefix' '
-+	git clone --no-tags . repo-odd-prefix &&
-+	(
-+		cd repo-odd-prefix &&
-+
-+		cp .git/refs/remotes/origin/HEAD .git/refs/heads/a-branch &&
-+
-+		echo branch1 >expect.ref &&
-+		git rev-parse --abbrev-ref HEAD >actual.ref &&
-+		test_cmp expect.ref actual.ref &&
-+
-+		git checkout -f a-branch &&
-+
-+		echo origin/branch1 >expect.ref &&
-+		git rev-parse --abbrev-ref HEAD >actual.ref &&
-+		test_cmp expect.ref actual.ref &&
-+
-+		git checkout -f a-branch &&
-+
-+		cat >expect <<-EOF &&
-+		$(git rev-parse HEAD) commit	refs/heads/a-branch
-+		$(git rev-parse HEAD) commit	refs/heads/branch1
-+		$(git rev-parse HEAD) commit	refs/remotes/origin/HEAD
-+		$(git rev-parse HEAD) commit	refs/remotes/origin/branch1
-+		EOF
-+		git for-each-ref >actual &&
-+		test_cmp expect actual &&
-+
-+		git rev-parse --abbrev-ref HEAD >actual &&
-+		test_cmp expect.ref actual.ref
-+	)
-+'
-+
- test_expect_success 'checkout -b to a new branch, set to HEAD' '
- 	test_when_finished "
- 		git checkout branch1 &&
--- 
-2.35.0.rc1.864.g57621b115b6
-
+ test_expect_success 'git sparse-checkout init in empty repo' '
+-	test_when_finished rm -rf empty-repo blank-template &&
+-	mkdir blank-template &&
+-	git init --template=blank-template empty-repo &&
++	test_when_finished rm -rf empty-repo &&
++	git init --template= empty-repo &&
+ 	git -C empty-repo sparse-checkout init
+ '
+ 
