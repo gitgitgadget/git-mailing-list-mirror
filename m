@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D0C5C433FE
-	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 15:12:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 493F8C433EF
+	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 15:12:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376508AbiATPMX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jan 2022 10:12:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42150 "EHLO
+        id S1376510AbiATPMZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jan 2022 10:12:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346200AbiATPMU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jan 2022 10:12:20 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2FABC06161C
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:19 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id v123so12782862wme.2
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:19 -0800 (PST)
+        with ESMTP id S1376488AbiATPMV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jan 2022 10:12:21 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B81EC061574
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:20 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id r7-20020a1c4407000000b0034e043aaac7so286687wma.5
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=AMPYXTx+eFm7luhlSKnYJkvbRFLbh+PvTxpJ8Mh2QOA=;
-        b=cIHspsBwTzCzVE5M4aqRkyRLT2fI2Q3mrpJLD/2gtvPkH5oAdKu6HdzmQxJNSRRl1b
-         QbMRgYhQznpGgsY5wJHvJ8PSbloOj2K+0CNedg3h+uXTh498WzD0Qw7jd8snwprRMKy2
-         rg3PHXPRFehaktZQEOPVVa+FogAE3BvQcWEEwTVEQb46eSr1dyAIw9lw6V7iuEOiuou5
-         Mi9cJqpUF8AbSSI5jmN/Vqtl8zbAlIqxR12c4tFlI48H9HEKBSbJOCBlHtMJ4dtlHPL5
-         cIDpQm+IgsjQyXAhtDnZlmue1aOk2hfoyUBZAvLSchVZZhgO9o0FyGPDPAwaxF6fp7/2
-         AYJA==
+        bh=GydEKk/lw83MzlrywQVkOlfzU6wNV+DIBi8JuH4hUEI=;
+        b=FIMT4tbd2i1Ga/sqi7Duk5CuM5JSpTePFDIXkKRsGAeM5Cl1iK2t0ecmYjFHzReFEJ
+         BoWL8wkSoRV8nuPwFMOPfwzazrgEVIHOQfSaFFApayMSgzjGn6YpRQObUhA3loF6/cEJ
+         qNkwZJbvj6OSvStXsiS7LE9+uOxRA9l1qzaWf0dXWl3lP64tMvLmghICnfBNr9EaDgXM
+         PZcDLslFvPqu7cYKS4ey8lSjNkadej7/YRiIiRHWqFvw5SZZBrPqNTlh4Bl9iweOaGIv
+         TBm+4z9UqISPotP0iyKoswX1OlbPsG0nvYlMvxw/fkg4HzefgsYOP0NAj0oqBPqb1dTt
+         /E+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AMPYXTx+eFm7luhlSKnYJkvbRFLbh+PvTxpJ8Mh2QOA=;
-        b=4gwFXm9oxJKAfoLEkj0x3z7JG0g9Mc5zPt6gG4l8rfLbAAzI8LzAPdtvSQYqM5NX/2
-         SO+TH6rua7Br2U+VLq+6qky5dgVP6ahdkRwxRqIsZdXiY5KA2GTRVfKtZnlIPIfnPArS
-         3XikmW+qerWQtolF9r4+ay0yqkw36IZPm7yGOmRlau3qJF0ut9n7t/xkK9X1J+FZ97OP
-         R5dPEE0cLzU1L2kV5Q2VEZi5Vi05NL5P8R/wTH0tBrkbYZbWBdLOlgxsWF8N7cD3E6UN
-         3tKKyRbTFb2T1/WOCPk4CA9/aOWIP4I1VNOMAcVhsV1SYabfGr3WAcsRubLjAWesAdsm
-         CQWA==
-X-Gm-Message-State: AOAM531nnyHgYq5WZalCxd1iJxv7sFtEjEI18nohhwNfQmSQdql5xmym
-        nO6WLd7oHG/LoS+bhUI1+QBN9sv6hpE=
-X-Google-Smtp-Source: ABdhPJyv1vKnB8b9mBdnuKDqq2aVtslkAEZw4fdTvfqfXe54a5VbrXKIBejGWVPFvnGEliJnssyfpQ==
-X-Received: by 2002:a7b:c042:: with SMTP id u2mr9503989wmc.18.1642691538288;
-        Thu, 20 Jan 2022 07:12:18 -0800 (PST)
+        bh=GydEKk/lw83MzlrywQVkOlfzU6wNV+DIBi8JuH4hUEI=;
+        b=KGVUxxNjTg1FSvUcGqAINvg3XDftU4FQGLaNJr1GDaGa78NM0vYMmEGUpNkyyLiEnJ
+         +/fodhJjEEc7O68iSGO7gQ0Pn+AubtjYv35sTQnqdy74VBHLHPlGF2MLne2Wj1EBzoTe
+         Do8iGm8rgNxt2Sv37f0cAwIRAPEn8SrpbcPDWo3hYCFEFXE0zjc/rDKrzn0+ZgmmL2wt
+         mWtO6PfB5A505z/rKypbGeqoEUdP63qAbYoJQ/lYQVcBfPrJFQvrwYfo1FC/s3doFY9A
+         lGVxbtVK5Iubr8LJyFG7BYgqKHWBYBlj/vcS3kJ8lZMS50bZbwEgr01hLFe2qLNJfhun
+         BHaA==
+X-Gm-Message-State: AOAM5324iqmg/9T2ylGLMe6+QXi/RiuS5AD1ixEcD3zO4HhOIY6NAcTY
+        PYC9je9a4l1sxHggxloA4JuzVPZsZyU=
+X-Google-Smtp-Source: ABdhPJwkrpVm0n6J4R0VME5/JnU9Qwji2HkJ0LIabERh977rxnwNVczarX1hEXLScFvAQY8Fosuq+g==
+X-Received: by 2002:a1c:a7c4:: with SMTP id q187mr7541791wme.35.1642691539049;
+        Thu, 20 Jan 2022 07:12:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n14sm3368598wri.101.2022.01.20.07.12.17
+        by smtp.gmail.com with ESMTPSA id n32sm8286644wms.8.2022.01.20.07.12.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jan 2022 07:12:17 -0800 (PST)
-Message-Id: <7cf65e141cfb6de7668a06a8d66cc6e254fac691.1642691534.git.gitgitgadget@gmail.com>
+        Thu, 20 Jan 2022 07:12:18 -0800 (PST)
+Message-Id: <8740ba92981c77f85b855e69c237fdb7449cca58.1642691534.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
 References: <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
         <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 Jan 2022 15:12:02 +0000
-Subject: [PATCH v6 03/15] reftable: fix resource leak blocksource.c
+Date:   Thu, 20 Jan 2022 15:12:03 +0000
+Subject: [PATCH v6 04/15] reftable: check reftable_stack_auto_compact() return
+ value
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,31 +74,25 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This would be triggered in the unlikely event of fstat() failing on an
-opened file.
+Fixes a problem detected by Coverity.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/blocksource.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ reftable/stack_test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/reftable/blocksource.c b/reftable/blocksource.c
-index 0044eecd9aa..2605371c28d 100644
---- a/reftable/blocksource.c
-+++ b/reftable/blocksource.c
-@@ -134,8 +134,10 @@ int reftable_block_source_from_file(struct reftable_block_source *bs,
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index f4c743db80c..e84f50d27ff 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -839,6 +839,7 @@ static void test_reftable_stack_auto_compaction(void)
+ 		EXPECT_ERR(err);
+ 
+ 		err = reftable_stack_auto_compact(st);
++		EXPECT_ERR(err);
+ 		EXPECT(i < 3 || st->merged->stack_len < 2 * fastlog2(i));
  	}
  
- 	err = fstat(fd, &st);
--	if (err < 0)
--		return -1;
-+	if (err < 0) {
-+		close(fd);
-+		return REFTABLE_IO_ERROR;
-+	}
- 
- 	p = reftable_calloc(sizeof(struct file_block_source));
- 	p->size = st.st_size;
 -- 
 gitgitgadget
 
