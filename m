@@ -2,200 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA898C433EF
-	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 17:49:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 643C7C433EF
+	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 17:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232820AbiATRt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jan 2022 12:49:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50642 "EHLO
+        id S233066AbiATRzq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jan 2022 12:55:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232647AbiATRtz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jan 2022 12:49:55 -0500
+        with ESMTP id S233004AbiATRzq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jan 2022 12:55:46 -0500
 Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B4AFC061574
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 09:49:55 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id t27-20020a63461b000000b00342c204e4f3so4070759pga.11
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 09:49:55 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47992C061574
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 09:55:46 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id k13-20020a65434d000000b00342d8eb46b4so4049404pgq.23
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 09:55:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=a4Fmbf7OX4NlFD+yy2HAKDoRFTVn4+1yZVnOsBDbZJQ=;
-        b=R079yfba2LPNbVDl9w/bGgG+CQBf+CJnPm1PcRfolWEC6xhObzBKVSdmpmfZyrA/G+
-         YujORdNiwmH24DNkmsnst7UDFaa5cm44JNaz0IqNMoWtraan4yASsSxNSgPcBPZ5miS6
-         Q/NEOOd8wss1kPu3sy0+33UF1Q15kHaftq3/MfbswGsN0ETdhj985gH9DddaCQo55Aaz
-         EyZbQbIXxzWHB9u2ZUHpL1Yp0IO6PHn5zmK+l/jjeoBwqUeuZTaq8ATrxCZIhbWOv88E
-         XcwYpjUFt4zPXQhyGcTRbi6+8VkSe7ab3pgVDLn5VbTFs1k7TmIjPsMKlr14LKI0Th78
-         2kHA==
+        bh=+O1Dq4yuo0yI6WeinJPdMXkexXrKVM8upGQa3BiINJw=;
+        b=kVxl7GvP+rdDoGdbh2Vs/Vr1OpgMIOOHI1u3a+MmBrQdo8cDr/COpC7vdYmGkDP3fx
+         3NvhCKZmT5QN5ydRiQHEsi4zc2e3Vrs1Su3VyurqamscsAulGXcry7adkVazsvYNhURY
+         TOzxYuQdb4RMM9yrsUopnEVbwB4sWxhgLf84/gsW3kPpdVVl7t/NXmzViNixf5zBmLKM
+         Q3AT5wO0iAB42d/l71yb+/6WJa7N1NvfaE5acCZoyoelTkGgwdky2PwdAUc/PRsg20k3
+         xZVXu8jaceQl0Hr920URnWYJLwILTBK9sDs5puMzb00c6yCzbRLqQthoaIryNNbO+EvS
+         Uh7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=a4Fmbf7OX4NlFD+yy2HAKDoRFTVn4+1yZVnOsBDbZJQ=;
-        b=EFWPOqrj6Q8XzvPr8zi1b08/tPuu02HKn25O8HpfXXKATeQcM/IamxjUPZDPAnPIjc
-         36yxPpyPwxf2M41fb2c571/EtIbAwJlIXhXCt3wafly90q4ifwFs6TCpencNPsrC4l/f
-         12F6yPi7qN3G8iE3x22vGjb9p6uOF5hLWrYhoqNw4xcg/Zpf3grgsr56/e7GG+JmAJ0A
-         2SswHCg2iknn4X61FN/GimLw9plsBbH81GYw3ZozWV41iCNw2llvkFlkcwViCmAeNXjA
-         FcD0FqClPuqP2AaKb83Hzh9zMgHzvP3JO4IS6PLuH6wlhqGiDWveSKLz1P/CAPCynZex
-         xA5Q==
-X-Gm-Message-State: AOAM532bgtDguy5rLbP2LqmRKdxI4lblYgC+gcRDk2vn5+kHXdRDKckz
-        O3NH35rMGyFYSfyf5HX0ymeQ5YsahYjJkEZ/HjeZAe7Onn5GD2dQL/gXx856Uf+nIRQC79R4aqr
-        B6OA9oP9PBRvpWcDtVRIilEzK8q1Xrq8FKuMZ4oekZk0/g28MCE0rUM4u0OQtSHk=
-X-Google-Smtp-Source: ABdhPJxoVkvT5K8F8ul6qHQxw0hsYQj0tRPDgmx/I6wBKg0bAANNaTlfwcFTiOLRiaXIXdNJpY0GYu7tVsF6ow==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:17d2:: with SMTP id
- me18mr80460pjb.79.1642700994966; Thu, 20 Jan 2022 09:49:54 -0800 (PST)
-Date:   Thu, 20 Jan 2022 09:49:42 -0800
-In-Reply-To: <20220120174942.94231-1-chooglen@google.com>
-Message-Id: <20220120174942.94231-4-chooglen@google.com>
+        bh=+O1Dq4yuo0yI6WeinJPdMXkexXrKVM8upGQa3BiINJw=;
+        b=Yf1bRLckwoBJlsgfMj7yX7bwiKlVRPuj7lRDjXI8bhqxisDqPGBF6Q5DILezWf+OqY
+         XBPEjvzfP3FhlcDPE8PhRqkEG/1JjtjvDeAYz5fPyVk3OCbx3DcvNWbfvDxh0Mp+2O1D
+         HsbodA/NT8LHgKpPHi0O7KensMuHzofk6YMcavFnasuOVqgtyYhqX9xx994hWhf3M4b5
+         rL9RW1DcvrbXXmYPZZzUXurEiAMAfVu567MtMWDaVCBt6hOEtFZFIF7wiopoQdddybda
+         CY8643/Zbb4cHSxWJFAt/RjL3f8vv+PAE3Q1EQ3qKmgk0k/5GR6PFbYawhOf7Ts8pMc8
+         42hw==
+X-Gm-Message-State: AOAM530JsIfe67JQI2c3IBcwyG9xI0RlZCnkuU5Y5rfsbzDrtuiKgBVe
+        uGFf10qNK2AxIlSFLBgH9yh7aGaWj9+m6pMjZPe5
+X-Google-Smtp-Source: ABdhPJx8tPCJdKQU58sHZVCqcVD+bTREJNUguPugcPHcKBZ3QFXbE7iJ2Sp80NQr26AwcQMMbA6AOtvhwp7qbQVYNie+
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a63:d312:: with SMTP id
+ b18mr17077450pgg.440.1642701345750; Thu, 20 Jan 2022 09:55:45 -0800 (PST)
+Date:   Thu, 20 Jan 2022 09:55:41 -0800
+In-Reply-To: <babce7d29a85df0da54cb651433111bc33097a4e.1641320129.git.me@ttaylorr.com>
+Message-Id: <20220120175541.3099054-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <20220119000056.58503-1-chooglen@google.com> <20220120174942.94231-1-chooglen@google.com>
+References: <babce7d29a85df0da54cb651433111bc33097a4e.1641320129.git.me@ttaylorr.com>
 X-Mailer: git-send-email 2.34.1.703.g22d0c6ccf7-goog
-Subject: [PATCH v7 3/3] fetch --negotiate-only: do not update submodules
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH v3 1/9] t5326: demonstrate bitmap corruption after permutation
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     me@ttaylorr.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`git fetch --negotiate-only` is an implementation detail of push
-negotiation and, unlike most `git fetch` invocations, does not actually
-update the main repository. Thus it should not update submodules even
-if submodule recursion is enabled.
+Taylor Blau <me@ttaylorr.com> writes:
+> This patch demonstrates a cause of bitmap corruption that can occur when
+> the contents of the multi-pack index does not change, but the underlying
+> object order does.
+> 
+> In this example, we have a MIDX containing two packs, each with a
+> distinct set of objects (pack A corresponds to the tree, blob, and
+> commit from the first patch, and pack B corresponds to the second
+> patch).
+> 
+> First, a MIDX is written where the 'A' pack is preferred. As expected,
+> the bitmaps generated there are in-tact. But then, we generate an
+> identical MIDX with a different object order: this time preferring pack
+> 'B'.
+> 
+> Due to a bug which will be explained and fixed in the following commit,
+> the MIDX is updated, but the .rev file is not, causing the .bitmap file
+> to be read incorrectly. Specifically, the .bitmap file will contain
+> correct data, but the auxiliary object order in the .rev file is stale,
+> causing readers to get confused by reading the new bitmaps using the old
+> object order.
 
-This is not just slow, it is wrong e.g. push negotiation with
-"submodule.recurse=true" will cause submodules to be updated because it
-invokes `git fetch --negotiate-only`.
+Thanks - overall, this looks like a bug that needs to be fixed.
 
-Fix this by disabling submodule recursion if --negotiate-only was given.
-Since this makes --negotiate-only and --recurse-submodules incompatible,
-check for this invalid combination and die.
+For the benefit of other reviewers, here's my summary of the problem:
+the .midx, .rev, and .bitmap files are almost always generated together,
+and it is possible for two different invocations of Git to generate the
+same .midx but a different .rev and .bitmap. For example, when
+generating a .midx+.rev+.bitmap for 2 disjoint packfiles, the 1st time
+with one packfile as preferred and the 2nd time with the other packfile
+as preferred. In .midx, packfiles are always ordered by lexicographical
+order of their names, and the preferred status only matters when an
+object is in multiple packfiles (which never happens in this case, since
+the packfiles are disjoint). But the preferred status affects .rev and
+.bitmap, because they use a concept called "pseudo-pack order" (see
+pack-format.txt for more details) in which the preferred pack comes
+first.
 
-This does not use the "goto cleanup" introduced in the previous commit
-because we want to recurse through submodules whenever a ref is fetched,
-and this can happen without introducing new objects.
+As an effort to ensure that Git reads coherent .midx, .rev, and .bitmap
+files, both the .rev and .bitmap files are keyed on the checksum of the
+.midx file. But the issue here is that a .rev and a .bitmap could both
+refer to the same .midx checksum when the .rev and .bitmap files are not
+coherent with respect to each other (e.g. when a Git process has written
+the .rev, but not the .bitmap yet - but this would appear perfectly
+ordinary to another concurrently running Git process, since the .midx
+checksum in the .rev and .bitmap files match).
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- Documentation/fetch-options.txt |  1 +
- builtin/fetch.c                 | 25 ++++++++++++++++++++++++-
- t/t5516-fetch-push.sh           | 12 ++++++++++++
- t/t5702-protocol-v2.sh          | 12 ++++++++++++
- 4 files changed, 49 insertions(+), 1 deletion(-)
+This problem is exacerbated by the fact that the .rev has its .midx
+checksum in its filename, whereas the .bitmap has its .midx checksum in
+its file contents. When generating .midx+.rev+.bitmap, it would write
+the .bitmap but not the .rev, since a .rev of the same filename already
+exists.
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index e967ff1874..f903683189 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -71,6 +71,7 @@ configuration variables documented in linkgit:git-config[1], and the
- 	ancestors of the provided `--negotiation-tip=*` arguments,
- 	which we have in common with the server.
- +
-+This is incompatible with `--recurse-submodules=[yes|on-demand]`.
- Internally this is used to implement the `push.negotiate` option, see
- linkgit:git-config[1].
- 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 7bbff5a029..efd1c9bb41 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -76,6 +76,7 @@ static struct transport *gtransport;
- static struct transport *gsecondary;
- static const char *submodule_prefix = "";
- static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
-+static int recurse_submodules_cli = RECURSE_SUBMODULES_DEFAULT;
- static int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
- static int shown_url = 0;
- static struct refspec refmap = REFSPEC_INIT_FETCH;
-@@ -167,7 +168,7 @@ static struct option builtin_fetch_options[] = {
- 		 N_("prune remote-tracking branches no longer on remote")),
- 	OPT_BOOL('P', "prune-tags", &prune_tags,
- 		 N_("prune local tags no longer on remote and clobber changed tags")),
--	OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules, N_("on-demand"),
-+	OPT_CALLBACK_F(0, "recurse-submodules", &recurse_submodules_cli, N_("on-demand"),
- 		    N_("control recursive fetching of submodules"),
- 		    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules),
- 	OPT_BOOL(0, "dry-run", &dry_run,
-@@ -2014,6 +2015,28 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_fetch_options, builtin_fetch_usage, 0);
-+
-+	if (recurse_submodules_cli != RECURSE_SUBMODULES_DEFAULT)
-+		recurse_submodules = recurse_submodules_cli;
-+
-+	if (negotiate_only) {
-+		switch (recurse_submodules_cli) {
-+		case RECURSE_SUBMODULES_OFF:
-+		case RECURSE_SUBMODULES_DEFAULT:
-+			/*
-+			 * --negotiate-only should never recurse into
-+			 * submodules. Skip it by setting recurse_submodules to
-+			 * RECURSE_SUBMODULES_OFF.
-+			 */
-+			recurse_submodules = RECURSE_SUBMODULES_OFF;
-+			break;
-+
-+		default:
-+			die(_("options '%s' and '%s' cannot be used together"),
-+			    "--negotiate-only", "--recurse-submodules");
-+		}
-+	}
-+
- 	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
- 		int *sfjc = submodule_fetch_jobs_config == -1
- 			    ? &submodule_fetch_jobs_config : NULL;
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 2f04cf9a1c..87881726ed 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -229,6 +229,18 @@ test_expect_success 'push with negotiation proceeds anyway even if negotiation f
- 	test_i18ngrep "push negotiation failed" err
- '
- 
-+test_expect_success 'push with negotiation does not attempt to fetch submodules' '
-+	mk_empty submodule_upstream &&
-+	test_commit -C submodule_upstream submodule_commit &&
-+	git submodule add ./submodule_upstream submodule &&
-+	mk_empty testrepo &&
-+	git push testrepo $the_first_commit:refs/remotes/origin/first_commit &&
-+	test_commit -C testrepo unrelated_commit &&
-+	git -C testrepo config receive.hideRefs refs/remotes/origin/first_commit &&
-+	git -c submodule.recurse=true -c protocol.version=2 -c push.negotiate=1 push testrepo refs/heads/main:refs/remotes/origin/main 2>err &&
-+	! grep "Fetching submodule" err
-+'
-+
- test_expect_success 'push without wildcard' '
- 	mk_empty testrepo &&
- 
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 710f33e2aa..1b9023d3f0 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -628,6 +628,18 @@ test_expect_success 'usage: --negotiate-only without --negotiation-tip' '
- 	test_cmp err.expect err.actual
- '
- 
-+test_expect_success 'usage: --negotiate-only with --recurse-submodules' '
-+	cat >err.expect <<-\EOF &&
-+	fatal: --negotiate-only and --recurse-submodules cannot be used together
-+	EOF
-+
-+	test_must_fail git -c protocol.version=2 -C client fetch \
-+		--negotiate-only \
-+		--recurse-submodules \
-+		origin 2>err.actual &&
-+	test_cmp err.expect err.actual
-+'
-+
- test_expect_success 'file:// --negotiate-only' '
- 	SERVER="server" &&
- 	URI="file://$(pwd)/server" &&
--- 
-2.33.GIT
-
+The solution is to embed the .rev in the .midx. This means that the
+checksum stored in .bitmap takes into account the contents of what would
+have been in .rev, solving the coherency issue. (There are other
+solutions like storing the name of the preferred pack in .midx, but I
+think that putting the contents of .rev in the .midx is best.)
