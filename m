@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33C9DC433F5
-	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 02:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FABAC433EF
+	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 02:33:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358213AbiATCbq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 19 Jan 2022 21:31:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39392 "EHLO
+        id S1358215AbiATCdv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 19 Jan 2022 21:33:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231473AbiATCbp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Jan 2022 21:31:45 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E420C061574
-        for <git@vger.kernel.org>; Wed, 19 Jan 2022 18:31:44 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id cx27so22421485edb.1
-        for <git@vger.kernel.org>; Wed, 19 Jan 2022 18:31:44 -0800 (PST)
+        with ESMTP id S231473AbiATCdr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Jan 2022 21:33:47 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F21DC061574
+        for <git@vger.kernel.org>; Wed, 19 Jan 2022 18:33:47 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id c24so19911621edy.4
+        for <git@vger.kernel.org>; Wed, 19 Jan 2022 18:33:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=qOf66ViNxUJfEvAuwbMWxG3iuRAtnWdZXXiRrN7nwtY=;
-        b=L2O3aiy/CgV0rSGWP7v3L61YLSbFrvJJ63I+qPNPUp2J9WQsMqGDVEEfEGka23iGDX
-         CC+E+hBY91hX3uOeZYtLeXtNCD9mjFOEMsZCOzRH9Mp/M1ijgC8IzXy7dBolEOdb4Ex7
-         I1/e/1o/GMGLiQ58gb0RGLO8YCYDnDoMJaKoyChpqU7tRfEHtikjtFSrkwPyqPJcahO8
-         2IxdUWMFSyb/ZqJB4MQTSZaRcPpG0aSDsZhOzuhpIZOUSCF30q/T1X705oEItrkZI/VD
-         CGJifmrwDxRnqtNIHsCvxNjaDs34Wr1R6edrjR5QINLj27og/kDR34H0lxp01xlRFdIJ
-         FD6g==
+        bh=+0DFERDe5riyjIXa8yV1u+eVb/K6+jemV7Q87FRz4zo=;
+        b=ggb7QOQEwoZfwGVEXpxWm6yjjh/X2hck3sUN22b2LPZLrTLhZcoA2oOARKEsJhObAC
+         2jaZwvjlx9FI50YbwrlrSUQFxO5EIemAuiOEuz/rON1WSPwQ0RHj+7hY4kHazsIYUQLm
+         0eLLXIL2pnjzD+Vky2gIsy/WTnPgxxfXwGHZZ5Uc4mOw04ZvweP9Leh7etj9cU/bErqM
+         jvtUPhX7aYsjWDY/vp47x1UIGSWdkmgyEo7rQsIOUtV1b4wtY5Wvt6x3wL3zFhbyDht5
+         undHgs/m/3tWYEhhzbf+i16bAfeRZkoGRGTYh3FORPBntVrASlt0bnvHE7TDPAha1uH3
+         zmZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qOf66ViNxUJfEvAuwbMWxG3iuRAtnWdZXXiRrN7nwtY=;
-        b=T7Gktb1s7oWek0hhe4a78ncsjfeULxJxzd7dUsgV4qtWlKRRQZMDy1cIIqr8M3aaR0
-         Wrpm23VnswvWEVZKspHdikE6pCad/11qLSzvkRdSSZEx7IR7uaFUCYR6Zwn9zl5itLEi
-         XJgGOI/7KHAALEkpCdaXT0JU8QXcazP5sAhsTWjYCqSOcVkqEYEJgQe2P4Z9TOFWgnDX
-         owpsS68c+GSeDTZjOMfHc4Vst/8r2BA8TZ6ivEL4X138B8iok57F+Lp1CU+PNXIpm4a/
-         DYkpV2qhbjB/8TEKPer6MTuUF5mtbmoPFhSkQ84crkFufxIDFVDHDYbDNxRsTiXRc7xc
-         T1JA==
-X-Gm-Message-State: AOAM53301dmasuNIfjNKRExNy/r55IatJPllCBpVfStF9HVAwlzzyyia
-        T8URl9lKsagWYGfG0cm29V1j2JzCqO953zWQncwbIXMK
-X-Google-Smtp-Source: ABdhPJyHmHlMs9Jr0TLvW8bs+XWEH6t1B+16L4LRPzF51Zjhp3vovTClNgAFuDDW7ru46sYCOXlA50m3+EB7G21nZ+4=
-X-Received: by 2002:a05:6402:5212:: with SMTP id s18mr34964485edd.359.1642645902583;
- Wed, 19 Jan 2022 18:31:42 -0800 (PST)
+        bh=+0DFERDe5riyjIXa8yV1u+eVb/K6+jemV7Q87FRz4zo=;
+        b=Sgyt+BxfS0A42bSq7N4rIkHEDuJD2+D4DwyVpz0Q/1OGKjezc+7vXwH9arZ9JtjjKS
+         3+nzhEq8MdJ0HHdblglMvYfluXVD0vC1RA5enEXY9VbZGSNeSUYBSBscK6DclosjnCx9
+         FwJxIIQuRTSFhFABnpvnmuQUWOfRPrI1OS1oZM71feVwf21Y3uZ4W+Qez7PwsHPfGFgA
+         kOj6Pny9HWuQzpRkiy8FAnWf7cxjoI9VvLqbMS5uoeLYsVCI5w4kn54KBhvMD4DaMyM3
+         azL4qoSGMpEpq45Fi48QX1yfKoXsE4JfXxzJpwkR3Ddqb0SrFHrm4rG0sCocWgXkRfSL
+         by/Q==
+X-Gm-Message-State: AOAM532IOB87VlioXe0scQP/Q1RBZraqN+PlMgmWEUkMGx9uCOGs9dLn
+        RfJmRCskk2CVOZKfJ69LVTX2WbfBzjlIMlXI0YPGZ7c6
+X-Google-Smtp-Source: ABdhPJzVYffPn6Em/7i4MxFKppaxSpyUI1sAz15d30WVW5FRLPz4+hHtZ1h+CSg8NHoLTE2SdFGrAuZZPNJ46xWLk4Y=
+X-Received: by 2002:a17:907:2d10:: with SMTP id gs16mr26675253ejc.100.1642646026024;
+ Wed, 19 Jan 2022 18:33:46 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1103.v2.git.1640419159.gitgitgadget@gmail.com>
  <pull.1103.v3.git.1640907369.gitgitgadget@gmail.com> <d57ae218cf9eaee0b66db299ee1bba9b488b69b1.1640907369.git.gitgitgadget@gmail.com>
- <220119.86pmonn2mb.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220119.86pmonn2mb.gmgdl@evledraar.gmail.com>
+ <220119.86lezbn21b.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220119.86lezbn21b.gmgdl@evledraar.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 19 Jan 2022 18:31:31 -0800
-Message-ID: <CABPp-BGsf8pcEZrY3vuq0yszy9G57fVa5jMSjT3H+sgDe6hWGg@mail.gmail.com>
+Date:   Wed, 19 Jan 2022 18:33:34 -0800
+Message-ID: <CABPp-BH9+RWE1SQfQiAYFtGZze3eQpeNDYNr2v9dmT77Pns0nA@mail.gmail.com>
 Subject: Re: [PATCH v3 1/9] show, log: provide a --remerge-diff capability
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
@@ -67,146 +67,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 19, 2022 at 7:53 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Wed, Jan 19, 2022 at 8:06 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
 >
 > On Thu, Dec 30 2021, Elijah Newren via GitGitGadget wrote:
 >
 > > From: Elijah Newren <newren@gmail.com>
+> > +     struct tmp_objdir *remerge_objdir =3D NULL;
+> > +
+> > +     if (rev->remerge_diff) {
+> > +             remerge_objdir =3D tmp_objdir_create("remerge-diff");
+> > +             if (!remerge_objdir)
+> > +                     die_errno(_("unable to create temporary object di=
+rectory"));
+> > +             tmp_objdir_replace_primary_odb(remerge_objdir, 1);
+> > +     }
 >
-> > +static int do_remerge_diff(struct rev_info *opt,
-> > +                        struct commit_list *parents,
-> > +                        struct object_id *oid,
-> > +                        struct commit *commit)
-> > +{
-> > +     struct merge_options o;
-> > +     struct commit_list *bases;
-> > +     struct merge_result res =3D {0};
-> > +     struct pretty_print_context ctx =3D {0};
-> > +     struct commit *parent1 =3D parents->item;
-> > +     struct commit *parent2 =3D parents->next->item;
-> > +     struct strbuf parent1_desc =3D STRBUF_INIT;
-> > +     struct strbuf parent2_desc =3D STRBUF_INIT;
-> > +
-> > +     /* Setup merge options */
-> > +     init_merge_options(&o, the_repository);
-> > +     o.show_rename_progress =3D 0;
-> > +
-> > +     ctx.abbrev =3D DEFAULT_ABBREV;
-> > +     format_commit_message(parent1, "%h (%s)", &parent1_desc, &ctx);
-> > +     format_commit_message(parent2, "%h (%s)", &parent2_desc, &ctx);
-> > +     o.branch1 =3D parent1_desc.buf;
-> > +     o.branch2 =3D parent2_desc.buf;
-> > +
-> > +     /* Parse the relevant commits and get the merge bases */
-> > +     parse_commit_or_die(parent1);
-> > +     parse_commit_or_die(parent2);
-> > +     bases =3D get_merge_bases(parent1, parent2);
+> Re the errno feedback on v1
+> https://lore.kernel.org/git/211221.864k71r6kz.gmgdl@evledraar.gmail.com/
+> the API might lose the "errno" due to e.g. the remove_dir_recurse()
+> codepath. This seems like it would take care of that:
 >
-> There's existing leaks all over the place here unrelated to this new
-> code, so this is no big deal, but I noticed that get_merge_bases() here
-> leaks.
-
-Interesting.
-
-> Shouldn't it call free_commit_list() like e.g. diff_get_merge_base()
-> which invokes get_merge_bases() does on the return value?
-
-See the comment describing merge_incore_recursive() in merge-ort.h,
-particularly this part:
-
-* merge_bases will be consumed (emptied) so make a copy if you need it.
-
-So free_commit_list() seems like it'd lead to a double free or use-after-fr=
-ee.
-
-However, looking at merge_ort_internal() it looks like there is a bug
-in its consumption of the merge bases (which I copied from
-merge_recursive; oops).  It pops the first one off the commit list,
-but then merely iterates through the remainder of the list without
-popping.  So, if there's only one merge base, it'll consume it and the
-code will look leak free (which must have been the cases I was looking
-at when I was doing leak testing).  But in recursive cases, it leaks
-the second and later ones.
-
-Since the caller still has a pointer referring to the first (already
-free'd) commit, I think that if they attempt to use it then it would
-probably cause a use-after-free.
-
-
-So, yes, I think there's a leak, but it's not due to this patch.  It's
-one that has been around since...the introduction of merge-recursive
-(though it originally computed the merge bases internally rather than
-allowing them to be passed in).  So, it's been around for quite a
-while.
-
-I'll look into it, and see if I can come up with a fix, but it doesn't
-really belong in this series.  I'll submit it separately.
-
-Thanks for the report.
-
-> > +test_description=3D'remerge-diff handling'
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +test_expect_success 'setup basic merges' '
-> > +     test_write_lines 1 2 3 4 5 6 7 8 9 >numbers &&
-> > +     git add numbers &&
-> > +     git commit -m base &&
-> > +
-> > +     git branch feature_a &&
-> > +     git branch feature_b &&
-> > +     git branch feature_c &&
-> > +
-> > +     git branch ab_resolution &&
-> > +     git branch bc_resolution &&
-> > +
-> > +     git checkout feature_a &&
-> > +     test_write_lines 1 2 three 4 5 6 7 eight 9 >numbers &&
-> > +     git commit -a -m change_a &&
-> > +
-> > +     git checkout feature_b &&
-> > +     test_write_lines 1 2 tres 4 5 6 7 8 9 >numbers &&
-> > +     git commit -a -m change_b &&
-> > +
-> > +     git checkout feature_c &&
-> > +     test_write_lines 1 2 3 4 5 6 7 8 9 10 >numbers &&
-> > +     git commit -a -m change_c &&
-> > +
-> > +     git checkout bc_resolution &&
-> > +     git merge --ff-only feature_b &&
-> > +     # no conflict
-> > +     git merge feature_c &&
-> > +
-> > +     git checkout ab_resolution &&
-> > +     git merge --ff-only feature_a &&
-> > +     # conflicts!
-> > +     test_must_fail git merge feature_b &&
-> > +     # Resolve conflict...and make another change elsewhere
-> > +     test_write_lines 1 2 drei 4 5 6 7 acht 9 >numbers &&
-> > +     git add numbers &&
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 944d9c0d9b5..d4b8b1aa4b6 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -424,9 +424,9 @@ static int cmd_log_walk(struct rev_info *rev)
+>         int saved_dcctc =3D 0;
 >
-> Just a matter of taste, but FWIW some of the custom
-> test_write_lines/commit here could nowadays use test_commit with
-> --printf: 47c88d16ba6 (test-lib functions: add --printf option to
-> test_commit, 2021-05-10)
+>         if (rev->remerge_diff) {
+> -               rev->remerge_objdir =3D tmp_objdir_create("remerge-diff")=
+;
+> +               rev->remerge_objdir =3D tmp_objdir_create_gently("remerge=
+-diff", 0);
+>                 if (!rev->remerge_objdir)
+> -                       die_errno(_("unable to create temporary object di=
+rectory"));
+> +                       exit(128);
+>                 tmp_objdir_replace_primary_odb(rev->remerge_objdir, 1);
+>         }
 >
-> I don't think it's worth the churn to change it here, just an FYI.
+> diff --git a/tmp-objdir.c b/tmp-objdir.c
+> index adf6033549e..3c656120003 100644
+> --- a/tmp-objdir.c
+> +++ b/tmp-objdir.c
+> @@ -121,19 +121,21 @@ static void env_replace(struct strvec *env, const c=
+har *key, const char *val)
+>         strvec_pushf(env, "%s=3D%s", key, val);
+>  }
+>
+> -static int setup_tmp_objdir(const char *root)
+> +static int setup_tmp_objdir(const char *root, int quiet)
+>  {
+>         char *path;
+>         int ret =3D 0;
+>
+>         path =3D xstrfmt("%s/pack", root);
+>         ret =3D mkdir(path, 0777);
+> +       if (!quiet && ret < 0)
+> +               die_errno(_("unable to create temporary object directory =
+'%s'"), path);
+>         free(path);
+>
+>         return ret;
+>  }
+>
+> -struct tmp_objdir *tmp_objdir_create(const char *prefix)
+> +struct tmp_objdir *tmp_objdir_create_gently(const char *prefix, int quie=
+t)
+>  {
+>         static int installed_handlers;
+>         struct tmp_objdir *t;
+> @@ -161,6 +163,8 @@ struct tmp_objdir *tmp_objdir_create(const char *pref=
+ix)
+>         strbuf_grow(&t->path, 1024);
+>
+>         if (!mkdtemp(t->path.buf)) {
+> +               if (!quiet)
+> +                       error_errno(_("unable to create temporary directo=
+ry '%s'"), t->path.buf);
+>                 /* free, not destroy, as we never touched the filesystem =
+*/
+>                 tmp_objdir_free(t);
+>                 return NULL;
+> @@ -173,7 +177,7 @@ struct tmp_objdir *tmp_objdir_create(const char *pref=
+ix)
+>                 installed_handlers++;
+>         }
+>
+> -       if (setup_tmp_objdir(t->path.buf)) {
+> +       if (setup_tmp_objdir(t->path.buf, quiet)) {
+>                 tmp_objdir_destroy(t);
+>                 return NULL;
+>         }
+> diff --git a/tmp-objdir.h b/tmp-objdir.h
+> index 76efc7edee5..5072fb860d9 100644
+> --- a/tmp-objdir.h
+> +++ b/tmp-objdir.h
+> @@ -24,8 +24,15 @@ struct tmp_objdir;
+>  /*
+>   * Create a new temporary object directory with the specified prefix;
+>   * returns NULL on failure.
+> + *
+> + * The tmp_objdir_create() is an a wrapper for
+> + * tmp_objdir_create_gently(..., 1).
+>   */
+> -struct tmp_objdir *tmp_objdir_create(const char *prefix);
+> +struct tmp_objdir *tmp_objdir_create_gently(const char *prefix, int quie=
+t);
+> +static inline struct tmp_objdir *tmp_objdir_create(const char *prefix)
+> +{
+> +       return tmp_objdir_create_gently(prefix, 1);
+> +}
+>
+>  /*
+>   * Return a list of environment strings, suitable for use with
 
-Good to know; thanks for the heads up.
-
-Note, though, and this has nothing to do with your patches, but I'm
-not sure I'll ever use this particular feature since I don't much care
-for test_commit except in trivial cases.  Others have recommended the
-function to me before, but my attempts to use it have cost me far more
-time than it has saved due to its quirks not working well with the
-merges I have attempted to setup.  Beyond the fact that its
-documentation is a lie and the filename defaults to <message>.t, one
-also has to memorize the order of three positional arguments and add a
-smattering of additional flags (--printf, --append, --no-tag) and add
-a bunch of newline directives to get things right.  The function can
-be useful and nice on non-merge tests (e.g. when you can pass it just
-one positional argument) and I'm happy to use it there, but for
-merge-related tests it's a needless time sink where the best you can
-hope for after fighting it is getting code that is overall _less_
-readable than what you started with.
+Yeah, I think this suggests that switching from die() to die_errno()
+was a mistake.  Your patch looks right (though most of it belongs as
+part of ns/tmp-objdir rather than this series), but I think it makes
+the code uglier and I don't see why this theoretical error path is
+worth all this trouble.  A die() is totally sufficient here.
