@@ -2,109 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6444CC433F5
-	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 22:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D0B5C433F5
+	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 22:21:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378051AbiATWSu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jan 2022 17:18:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54346 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347534AbiATWSu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jan 2022 17:18:50 -0500
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD51CC061574
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 14:18:49 -0800 (PST)
-Received: by mail-io1-xd30.google.com with SMTP id p7so8737880iod.2
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 14:18:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=mOS7KK+Qj14RSMfqXwoMOo8ME83Bw/WGAA8x2wzwelE=;
-        b=q16ukb6zN82t5eHMh6BdbGVs+pKLOxKB7IuPgLE+EVNJv5u1jeHpxHsspTtmsa1TPV
-         l/uNiKBV9JCLTQV327nmm93dzU29GkxhN6CeyDdzN8oPDyixlkVskY+qFOeLZqGr2gPD
-         NAqPeqC8hpB21ylo6sebjFxLX4lFlTZKQW9dycw7H9yHKCreWJwzYgJqkkvMdrARKgKt
-         yVtBrEGnTMtBgCEEwWDxEUlUjWP9wg67Ml5+SNYm7ezCBkhq8t21RfLXDCPLCEVTnzhK
-         eYH0kHT/SDFxFLwsRR0xCqDkEyrk7SJTPef9qxJOUAVWcfjTpSYRRseJgl5okS5nickT
-         LS1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=mOS7KK+Qj14RSMfqXwoMOo8ME83Bw/WGAA8x2wzwelE=;
-        b=WbjYb/+7rxYAOFWaps0u65ucma/kCTIoeA39w26r5oSeU+zPqzmqpI4E2S1uMcPHcd
-         A7+w2LfDyAIyqxpoo3+bIK1/tdlnOOwpmPSkvgCByk/LR123qaJB8z/dxa5IegLwdxSj
-         xhN/p4OaE03uQ2VQVetle6xKYzRgnvd7rTwd834E5L4hE07hwRY3Pi52BAyZYCPbDfgD
-         bEieI1wWEiKT2fkkbnu8fYMoSRe3lkbXN6JD9sHUmG488vsoVKhANS5YGzU1Gn6LvW2c
-         5aLZH7Q24yr1cnd7hGp7Dxl1vJ6H3Cu12kAtcH50ZfUHNIDtHnOA7oIZjdt8weDoRvJQ
-         g1lw==
-X-Gm-Message-State: AOAM532K9AgSU/CrijfON5UI/RMfmg1ZbhghXxrWTuTfY6YF9+M6v9dW
-        K0TNfqLjVDMuqKgQj2vYZv+VQfxcSDPFYQ==
-X-Google-Smtp-Source: ABdhPJxc9ZPsezC/REJxfFh9wcYfrgbNLZmU3ksMnJaeCfN1yFzBc1bGpcC1ceIKteOlTX/9dfGnrA==
-X-Received: by 2002:a02:a58b:: with SMTP id b11mr418628jam.308.1642717129335;
-        Thu, 20 Jan 2022 14:18:49 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b11sm1939089ilr.51.2022.01.20.14.18.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jan 2022 14:18:49 -0800 (PST)
-Date:   Thu, 20 Jan 2022 17:18:48 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com
-Subject: Re: [PATCH v3 3/9] pack-revindex.c: instrument loading on-disk
- reverse index
-Message-ID: <YenfyK8wE5VXuHoo@nand.local>
-References: <3279e2eb9b7bbfcc930e4ee146a3bd2476ef91eb.1641320129.git.me@ttaylorr.com>
- <20220120181545.3104404-1-jonathantanmy@google.com>
+        id S1378055AbiATWVC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jan 2022 17:21:02 -0500
+Received: from ring.crustytoothpaste.net ([172.105.110.227]:36304 "EHLO
+        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238984AbiATWVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jan 2022 17:21:01 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id A95355B227;
+        Thu, 20 Jan 2022 22:21:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1642717260;
+        bh=W+27akZFrv9qNIxm0TfuvA5Dxcqf5PR2ocnE9PpzyRY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=hcacFSXWTv4rJhTel7QqWL1xqTksJN3AYxE1GyWEZJ2cYhf/6g5wqLGN9r4zZBhER
+         nrrDesMyAeJbv+vVnnwbjka8PLw2Y6T73O+7834vtXDkeC8Wq8XPFNgU9XB7Sl3NoY
+         Kf+UnDCvy5MW9vLD0uCHIBmp1aR/x0f+/31GeUVSAkfPRUEJ5qMO0oSIz3fHEeMgNX
+         j58ei0sGNxRutT016iCUlfIBgHL4Xijmdwmtn4HS+FGLOu0fk8rfMFLPEm1TEWwUe1
+         dRst87xd0U4MBY4sR6BxzFx02wCBaSIZlhvJqEPDC8geQAeCovFfKUQr5l7Y1I7Im1
+         rvTj6SBoPNNvt8OneM2fcNt89Pi3XU4oOQJUJjPxg/afPH8+4craTNEaA5zOclBkOz
+         C3dBezZHsbzcb9WxXuT3l2z59sxStkAQ6afMR0lRZ5zo97OSzrqBNcVaJ9dyjofaNg
+         MVtYF4DRNTQNB0/QP8/Ic1xlZuok6tqoDnHSfajn84dAzKa2iVg
+Date:   Thu, 20 Jan 2022 22:20:57 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Michael Herrmann <michael@herrmann.io>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: A puzzle: reset --hard and hard links
+Message-ID: <YengSfSDzVzvrJ6f@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Michael Herrmann <michael@herrmann.io>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <CABrKpmDseZkPCpRb8KmBJaxDp24sySJay5ffZrxqgSMGKyj5qQ@mail.gmail.com>
+ <YeiOoAcM7TMK2pgz@camp.crustytoothpaste.net>
+ <xmqqilufl5cv.fsf@gitster.g>
+ <CABrKpmCt3zKONLp5ZjV1PxLyfM-koc=tKopKUUpx4nF2n_eo_w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="LTm6K4QdPXUojrrX"
 Content-Disposition: inline
-In-Reply-To: <20220120181545.3104404-1-jonathantanmy@google.com>
+In-Reply-To: <CABrKpmCt3zKONLp5ZjV1PxLyfM-koc=tKopKUUpx4nF2n_eo_w@mail.gmail.com>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 20, 2022 at 10:15:45AM -0800, Jonathan Tan wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
-> > In a subsequent commit, we'll use the MIDX's new 'RIDX' chunk as a
-> > source for the reverse index's data. But it will be useful for tests to
-> > be able to determine whether the reverse index was loaded from the
-> > separate .rev file, or from a chunk within the MIDX.
->
-> As for this patch and all subsequent patches, we (at $DAYJOB) discussed
-> during our Review Club the idea of not supporting .rev files altogether.
-> Firstly, because of this bug, we cannot fully trust .rev files anymore.
-> And even if we decided to trust it (or to trust it after some
-> verification step that I can't think of), that file would only be useful
-> for a short time until a regularly scheduled maintenance step
-> regenerates the bitmaps anyway.
 
-I assume that you're talking about MIDX .rev files here, not the usual
-packfile ones which are only related in the sense that they follow the
-same file format, but are otherwise distinct.
+--LTm6K4QdPXUojrrX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-We could drop support for the MIDX .rev files, but I do not think it is
-a very good idea. There are tagged versions of Git which have .rev files
-out in the wild, so suddenly dropping support for them would mean that
-existing repositories would no longer be able to read their multi-pack
-bitmaps after upgrading to a version of Git which doesn't include
-support for separate .rev files.
+On 2022-01-20 at 08:59:02, Michael Herrmann wrote:
+> Thank you for your replies. Is there a way to tell Git not to sever
+> hard links as highlighted by my example?
 
-So there are some backwards compatibility concerns there, and I think
-that that alone means we can't do it.
+No, there isn't.  If you need to deal with files that should be linked
+and stored in a Git repository, your best bet is symlinks.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-In order to maintain good test coverage of the soon-to-be deprecated
-external MIDX .rev files, this patch series adds some additional testing
-knobs to make sure that we're thoroughly exercising both cases.
+--LTm6K4QdPXUojrrX
+Content-Type: application/pgp-signature; name="signature.asc"
 
-It's somewhat unfortunate that we are stuck with on-disk .rev files for
-MIDXs, since it opened the door for this bug to manifest itself. But I
-am not comfortable getting rid of them at this point.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
 
-In any case, the .rev file's contents are moving to the MIDX, and by the
-end of this series we do not write an external .rev file when creating a
-multi-pack bitmap, so you are more than free to not trust any existing
-.rev files anymore.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYengSQAKCRB8DEliiIei
+gVT9AQDykx4eVKrs5rVqukMRsHTq/FquRNBDt0bo1QicvjI36wEA9VmfKDlF+8O6
+m3qhXxGXNHtk/4mcZFvI/GdxigHL4A4=
+=VGTG
+-----END PGP SIGNATURE-----
 
-Thanks,
-Taylor
+--LTm6K4QdPXUojrrX--
