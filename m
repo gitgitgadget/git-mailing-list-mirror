@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A77DC433EF
-	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 15:12:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25899C433F5
+	for <git@archiver.kernel.org>; Thu, 20 Jan 2022 15:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376515AbiATPM0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jan 2022 10:12:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42178 "EHLO
+        id S1376521AbiATPM2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Jan 2022 10:12:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376509AbiATPMY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jan 2022 10:12:24 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 014B8C061748
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:22 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id v123so12783115wme.2
+        with ESMTP id S1376365AbiATPMW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Jan 2022 10:12:22 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E306C061401
+        for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:21 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id e9-20020a05600c4e4900b0034d23cae3f0so14486545wmq.2
         for <git@vger.kernel.org>; Thu, 20 Jan 2022 07:12:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4f+I3S+5kXlrq2dgprxTUst4Q5HxOS1EHDxdA1BG70w=;
-        b=i6kfUc6nxgzHKqB4LDRUfuZVULCh/jE8z1l8Vkn5LcvbxTyrSNhAK8MNRWDFwz7Lgw
-         xfLumpUKAv2LEM/4FG55oGdePsjT9aLoK2rSVmXggzU43plm1lwTp28EbIFOjX0dJsfj
-         hPcfOqIl3rfg5LZEYpk+jd9UiRxjs+tpIr2SbawjfkCuO7DYu4RMm/fOXmSb0No0t9XO
-         wZAAibpaE/m3ItfB+kUcryFZMnfIi6NPFszqFoRbfWe13VTOAh7pKd98WR5Isdyf43hd
-         405/OnDOoyzxxDNAys5H2oaxv9OoviIjlql2zJ4hYSifN/4w8n6YQSbPhPepdEcWi2vk
-         c5oQ==
+        bh=1RBfs0p86hdynJHyBF5Adh0gBV25zTb1bkuk97sM/+w=;
+        b=KfDGQgF5TLEyV8bBChACaSDcdE3ca+PPaBBpM6crL4GOJeQuvNqU/XlZe2/Pqyy1FF
+         EcKsjjLSobNNeLk+zJYmSgjBwoEkkHDIJQfpI0brHDDKcUgdpb86FCrGP2zosbB2E92E
+         kAF8/ftSDm2HFbkaMB5j5Q7E3z26s66bqW+bVrl7ePInYD/3dgjThSZfEakW9FJUqINN
+         pMXqjPoNZoxGzGY3yP/mtF5obY3/A4CZ62rWRgARKwL33taI/DwLSCd7cPcNkC7oLXZp
+         p6uEdtuTZqdGfGH/7KkkzF4ljT0Z55ELegW5RsWLSWncUXXHBg/sIWDKTFqyrEpO1TPk
+         nfyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4f+I3S+5kXlrq2dgprxTUst4Q5HxOS1EHDxdA1BG70w=;
-        b=YAvQtDQ8RjNOdHnsEqW89YbpPW2zkpCp5jrQIVlzqBkCK+YYmNqp5qISVVX5vGIScV
-         bGvwx7Bd5lNSuElvN1HNO5RYGIZCofbI6EPSONIbSxpshCqpYBA6P2kTUXZH0g8mmqBq
-         qolojiLts+Vfvglw5sOwfbe2q+YCqLHHfMHyCr/dhm6ruQ1qI7xKhI/hGN3MCSTnNsJg
-         eSol8+BCN2SUEFcpaKEhlL+NmgfxgqE2V3dWvO8sLFOkNLzmCmWJRfYUZ5SNIrjAgOdt
-         F7NiW7BQyr48AM+4RWvvkREQs4Z52acQETb8u+f0+Y8PShLCSH2ENLpEeMT1V2Frna3a
-         XEdQ==
-X-Gm-Message-State: AOAM531wxZjWk0HhzAuYcIFsvKFr5yN23ijzKFdMBH8cIC+Z4wzLZnWE
-        T5gO2NigCtPONhvxCSBppiinDiwgvK4=
-X-Google-Smtp-Source: ABdhPJwRkFgVRBf12KEhAqVpR9q7KglFx2VZsKWiE068+E21qXrvY83tfpILYexQZIJYVchBCBF6xQ==
-X-Received: by 2002:adf:e196:: with SMTP id az22mr33910301wrb.637.1642691540503;
-        Thu, 20 Jan 2022 07:12:20 -0800 (PST)
+        bh=1RBfs0p86hdynJHyBF5Adh0gBV25zTb1bkuk97sM/+w=;
+        b=4uUWIc+vC8Y0hk8EOxWYpPP332uy5PzYzB0qiiC1g9bdJlhvVTZlAGUSKh0jbpJ12k
+         XM0pE5Gs51gey/3TO21K2Z4yBuJuJc5v0tDtuYI2S9rQ0Gf82RlYqjWdDkYTP5pWgJ5I
+         G0HgzSTgQs8/pr0ubI6k8C/+8vWMdqq0Dg0w0rUDIC5oYjv+0iaSpwSYVXtij++8oMoV
+         tNxKPqUb5hXIf88TWH3ooAebvCP2iN++Ozovx0wMP/xznrjTsYqkvDRrBeQxll4vvEKK
+         W4svhy+120hEzPNF+u418pVp4XC1BzfYVKzD1mj2cNXqM10uHI6x2DJgMqIrbNlVUahr
+         oUNw==
+X-Gm-Message-State: AOAM533FIrTwotkWTyJAfEFZKl3m1+EAKEarXYWsg/VH4c4sZyzqI8ul
+        SOt71cze6nqGEFobPcBFudBqMV17/CA=
+X-Google-Smtp-Source: ABdhPJy10YMADMDQAkaLeFz7XEHGkLuIIjtNpAQjS6RF+WTcjq0ZZDz9eGEgihVk4PtgOoAU03rWNQ==
+X-Received: by 2002:a7b:cc12:: with SMTP id f18mr9515006wmh.42.1642691539771;
+        Thu, 20 Jan 2022 07:12:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r7sm6375140wma.39.2022.01.20.07.12.19
+        by smtp.gmail.com with ESMTPSA id p16sm2649773wmq.20.2022.01.20.07.12.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Jan 2022 07:12:20 -0800 (PST)
-Message-Id: <630f67bdb519251815f878fba73b07dd0ae75320.1642691534.git.gitgitgadget@gmail.com>
+        Thu, 20 Jan 2022 07:12:19 -0800 (PST)
+Message-Id: <08be6d90a4890b63fe9b0885af0df084c9ca81fd.1642691534.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
 References: <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
         <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 20 Jan 2022 15:12:05 +0000
-Subject: [PATCH v6 06/15] reftable: fix resource warning
+Date:   Thu, 20 Jan 2022 15:12:04 +0000
+Subject: [PATCH v6 05/15] reftable: ignore remove() return value in
+ stack_test.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,57 +74,26 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This would trigger in the unlikely event that we are compacting, and
-the next available file handle is 0.
+If the cleanup fails, there is nothing we can do.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/stack.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ reftable/stack_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 56bf5f2d84a..ddbdf1b9c8b 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -889,7 +889,7 @@ static int stack_compact_range(struct reftable_stack *st, int first, int last,
- 	struct strbuf new_table_path = STRBUF_INIT;
- 	int err = 0;
- 	int have_lock = 0;
--	int lock_file_fd = 0;
-+	int lock_file_fd = -1;
- 	int compact_count = last - first + 1;
- 	char **listp = NULL;
- 	char **delete_on_success =
-@@ -923,7 +923,7 @@ static int stack_compact_range(struct reftable_stack *st, int first, int last,
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index e84f50d27ff..19fe4e20085 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -90,7 +90,7 @@ static void test_read_file(void)
+ 		EXPECT(0 == strcmp(want[i], names[i]));
  	}
- 	/* Don't want to write to the lock for now.  */
- 	close(lock_file_fd);
--	lock_file_fd = 0;
-+	lock_file_fd = -1;
+ 	free_names(names);
+-	remove(fn);
++	(void) remove(fn);
+ }
  
- 	have_lock = 1;
- 	err = stack_uptodate(st);
-@@ -1031,7 +1031,7 @@ static int stack_compact_range(struct reftable_stack *st, int first, int last,
- 		goto done;
- 	}
- 	err = close(lock_file_fd);
--	lock_file_fd = 0;
-+	lock_file_fd = -1;
- 	if (err < 0) {
- 		err = REFTABLE_IO_ERROR;
- 		unlink(new_table_path.buf);
-@@ -1068,9 +1068,9 @@ done:
- 		listp++;
- 	}
- 	free_names(subtable_locks);
--	if (lock_file_fd > 0) {
-+	if (lock_file_fd >= 0) {
- 		close(lock_file_fd);
--		lock_file_fd = 0;
-+		lock_file_fd = -1;
- 	}
- 	if (have_lock) {
- 		unlink(lock_file_name.buf);
+ static void test_parse_names(void)
 -- 
 gitgitgadget
 
