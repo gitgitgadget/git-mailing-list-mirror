@@ -2,450 +2,261 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3D78C433F5
-	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 17:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C032C433EF
+	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 18:18:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380962AbiAURyX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jan 2022 12:54:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35288 "EHLO
+        id S1381873AbiAUSSh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 13:18:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344348AbiAURyW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jan 2022 12:54:22 -0500
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB1B7C06173D
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 09:54:22 -0800 (PST)
-Received: by mail-qt1-x835.google.com with SMTP id h15so10849703qtx.0
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 09:54:22 -0800 (PST)
+        with ESMTP id S1382059AbiAUSS2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jan 2022 13:18:28 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B669AC06173B
+        for <git@vger.kernel.org>; Fri, 21 Jan 2022 10:18:27 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id s5so2322518ejx.2
+        for <git@vger.kernel.org>; Fri, 21 Jan 2022 10:18:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rMcKufTpGJiFoMuDeX7W2G3L0mwK3Regy2riylMbZpc=;
-        b=bJ9yLti4PU17VD/6UjCeLFFyjTmgGZdCftomPrUdi4uIV+uthXAETyr+YL+SfYGh/z
-         3WSvJn5mNrxQ0MF+Adgk73LB/yoLHpgrFXC55OtoDC8T/hUC/9XBU0LU10R1nv1bp62r
-         fU+JQzFIYObcHbmP/MniF8b9fNidPq5yxKjeOuZmogp1sfoEE7LbwwSWUwyZzecasgm0
-         hit2VXm2VsDTRHc2g3haEuO88rjE6gNRE/+CqkIYhIOsZ128y8fNBaIfatZAu94AyJ0v
-         87XLhFO6+iqyp++Nd5sAsEWQYPY+rjb1oIWyql543w4DjVKJhp5evIsID6Jo62bvoNay
-         0cNg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Nf2vTiQb3ES5dxvMtRDNlgIgxSieltMXDg8D9VmNYEE=;
+        b=iDh6eyb83NWMtTcjlDPp+AeUksE8kCuBMXsPi9VwaE0X+yp9UOf7TchLd4D/ZNXfWZ
+         ejxVrF4pVry8cpEp5IQj7yMqXrKRwQeU0qXvyaW1aQmYBAGxqdY+eigavqom7z/ghALP
+         lBumaRd/s/P33udlZk8+1S5KBY15TkZQPR1FERkfaVuFNP7Z36CKXcEZmag9V97t+Lik
+         gQwhIGKx7UFSHIOSf0bJh+62ebMT/zJpj7ezefsSi9V7UL6MjeQmW5Doh2xUIUNArvdp
+         4nJCFMogAvbflddy0/TW6KonDrgAHSNnXATZiw4AZAMiTBEwLAUiGDj11dtIe9QMCHbd
+         6gcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=rMcKufTpGJiFoMuDeX7W2G3L0mwK3Regy2riylMbZpc=;
-        b=ijLSFdZB2oMEj0HI5kSm26u6C9PX97M+BgdZX6kjk7G9LKNmYtdQ8+V6NPIcRi+Jgp
-         hJQtqpRDH1Uy4rOr9VPZPWUQzpLpktBhjWTk67XIBjixwRQznSQd59CD7ib4Cbz6QzdX
-         bJ4tClDeRk3ioOMmPklJWGhK6gp5KnRoPTnMpDQn7Ye71d1OQtYGheH6pqJ2/HxXB3LP
-         E5fJasIJ51Avd0KYh1EEvSl8xN+iwiH2G/kepWYjyu3za5ZBxKyxADEvNX/q5ayyB8N8
-         IKL9hGOMNDQmGmMgF8k9bt7diqx39785yTnOMYleOofCtVdrp/0Qx6QPkfgzhrLH3H2d
-         myIQ==
-X-Gm-Message-State: AOAM532Tal8o2Fu+5MzNWDsiGnA7Qq+PLp1/5lZ1cXvspP9sIfX7ryhY
-        pMqeMZfFrBAXVCK/bznzG/8Vv/s96FDBBQ==
-X-Google-Smtp-Source: ABdhPJyt+BfWvvtJ0Z9Jvwdgkg5AXGpfZk0rOeMjQsJ8X+IdWCkS5m/SJzU2d5vyaNUUUGqln3QNLg==
-X-Received: by 2002:a05:622a:178a:: with SMTP id s10mr2520932qtk.404.1642787661447;
-        Fri, 21 Jan 2022 09:54:21 -0800 (PST)
-Received: from Johns-MBP.myfiosgateway.com (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id r137sm3338116qke.42.2022.01.21.09.54.20
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 21 Jan 2022 09:54:21 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, me@ttaylorr.com, John Cai <johncai86@gmail.com>
-Subject: [RFC] cat-file: add a --stdin-cmd mode
-Date:   Fri, 21 Jan 2022 12:54:05 -0500
-Message-Id: <20220121175405.45753-1-johncai86@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Nf2vTiQb3ES5dxvMtRDNlgIgxSieltMXDg8D9VmNYEE=;
+        b=d7sHa4F6khd8TWoCxXY6llQVr3dmhHpm3L/eyx9LhIv9ikbzmizxu0UYMxQVQr6OOl
+         n9CtCM427HM8cEcDPPS2oyKM2+CBQM2ZFiWrA5y7kj7EUH9JU5LaKMSDFRx2j0owVb17
+         SLD4HMjrwfAkdMF/s8Z6p3RXSVw+EIzkC+Mey8T27pVtF/GhdimT8xXomYdSoLYENTJv
+         DJB3Zeo2hcdNEJ+0LK5UmMABXY5MD9M61/ycVYXSBFP4hiVC1Nrjti6ITEcnI/M/gSnr
+         cFcld12jYLIo8BKQw6krs7S41TipcaYe1xf04Q6W/v4HEI+mml2rpzBJ7OCmr2AvxCO/
+         LP/w==
+X-Gm-Message-State: AOAM530iT2odj//mKOYmQxxwGRiiZmiG8ymiN1rlScgXV5hESLSbB3m/
+        pthonqYgEA4AT2k1d1slJj8jeYlTWDxbPQ==
+X-Google-Smtp-Source: ABdhPJwUg0rRx5KOMgLUdfmp/ykUweJ3Grzka0vC1vjNWWiYVAhEj7Peh6l8bI7IyJEjz0co3U0Uaw==
+X-Received: by 2002:a17:907:d1a:: with SMTP id gn26mr4218231ejc.51.1642789105975;
+        Fri, 21 Jan 2022 10:18:25 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id j8sm2282063ejs.136.2022.01.21.10.18.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Jan 2022 10:18:25 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nAyUS-002EN2-H4;
+        Fri, 21 Jan 2022 19:18:24 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Paul Smith <paul@mad-scientist.net>,
+        Sibi Siddharthan <sibisiddharthan.github@gmail.com>
+Subject: Re: [PATCH v2 3/3] Makefile: replace most hardcoded object lists
+ with $(wildcard)
+Date:   Fri, 21 Jan 2022 19:13:44 +0100
+References: <patch-1.1-bbacbed5c95-20211030T223011Z-avarab@gmail.com>
+ <cover-v2-0.3-00000000000-20211101T191231Z-avarab@gmail.com>
+ <patch-v2-3.3-cd62d8f92d1-20211101T191231Z-avarab@gmail.com>
+ <24482f96-7d87-1570-a171-95ec182f6091@gmail.com>
+ <211106.86tugpfikn.gmgdl@evledraar.gmail.com>
+ <40dbf962-2ccd-b4d6-7110-31317eb35e34@gmail.com>
+ <xmqqtugl102l.fsf@gitster.g> <220121.86o845jnvv.gmgdl@evledraar.gmail.com>
+ <4caf3c95-c19c-80c6-daea-84dcb3ec9663@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <4caf3c95-c19c-80c6-daea-84dcb3ec9663@gmail.com>
+Message-ID: <220121.867datj6kv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This RFC patch proposes a new flag --stdin-cmd that works with
-git-cat-file --batch. Similar to git-update-ref --stdin, it will accept
-commands and arguments from stdin.
 
-The start of this idea was discussed in [1], where the original
-motivation was to be able to control when the buffer was flushed to
-stdout in --buffer mode.
+On Fri, Jan 21 2022, Phillip Wood wrote:
 
-However, this can actually be much more useful in situations when
-git-cat-file --batch is being used as a long lived backend query
-process. At GitLab, we use a pair of cat-file processes. One for
-iterating over object metadata with --batch-check, and the other to grab
-object contents with --batch. However, if we had --stdin-cmd, we could
-get rid of the second --batch-check process, and just have one progress
-where we can flip between getting object info, and getting object contents.
-This can lead to huge savings.
+> Hi =C3=86var
+>
+> On 21/01/2022 12:01, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Tue, Nov 09 2021, Junio C Hamano wrote:
+>>=20
+>>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>>
+>>>>> We can also have some DEVOPTS knob so we'll prune out files found if
+>>>>> a
+>>>>> $(shell)-out to "git status" tells us they're untracked. I wouldn't m=
+ind
+>>>>> that (and could implement it) if it was optional.
+>>>>> Also note that you've got some of this already, e.g. we'll pick up
+>>>>> *.h
+>>>>> files via a glob for "make TAGS", the dependency graph etc.
+>>>>
+>>>> I'd be happier using 'git ls-files' with a glob if we need to move
+>>>> away from listing the files explicitly rather than having to pass some
+>>>> exclude list when running make. Having seen your comments below about
+>>>> ls-files/find I had a look at the Makefile and they always seem to be
+>>>> used together as "git ls-files ... || find ...". Doing that would mean
+>>>> we wouldn't try to build any untracked files but still find everything
+>>>> in a tarball.
+>>>
+>>> I've been quiet on this topic because honestly I do not find the
+>>> pros-and-cons favourable for more use of wildcards [*].  Tools like
+>>> git (especially .gitignore) and Makefile are to help users to be
+>>> safely sloppy by ensuring that random crufts the users may create in
+>>> the working tree for their convenience are not picked up by default
+>>> unless the project to consciously expresses the desire to use them.
+>>>
+>>> Allowing to be sloppy while maintaining Makefile feels like a false
+>>> economy, and having to paper it over by adding exceptions and
+>>> forcing developers to learn such ad-hoc rules even more so.
+>>>
+>>>      Side note: TAGS generation and some other minor things may use
+>>>      $(wildcard) and can throw tokens in cruft files in the output,
+>>>      which is not ideal, but the damage is local.  We cannot treat
+>>>      that the same as building binaries and tarballs.
+>>>
+>>> If we could use "git ls-files" consistently, that may make it
+>>> somewhat safer; you'd at least need to "git add" a new file before
+>>> it gets into the picture.  But it would be impossible, because we
+>>> need to be able to bootstrap Git from a tarball extract.
+>>>
+>>>>>>> We could make this simpler still for the Makefile by moving
+>>>>>>> "unix-socket.c" etc. to e.g. a "conditional-src/" directory, likewi=
+se
+>>>>>>> for $(PROGRAM_OBJS) to e.g. "programs/". If we did that we would not
+>>>>>>> need the "$(filter-out)" for LIB_OBJS. I don't think that's worth i=
+t,
+>>>>>>> e.g. due to "git log -- <path>" on the files now needing a "--follo=
+w".
+>>>
+>>> And it is not quite clear to me why we want to even more pile
+>>> workaround like this on top.  This also is to paper over the mistake
+>>> of being sloppy and using $(wildcard), which makes it unable to
+>>> distinguish, among the ones that match a pattern, between FOO_OBJS
+>>> and BAR_OBJS, no?  Moving files around in the working tree to group
+>>> related things together is a good thing, and it has been a good move
+>>> to separate built-ins and library-ish parts into different
+>>> directories.  But the above does not sound like it.
+>>>
+>>> Other than "these source files may or may not be compiled
+>>> depending", what trait do files in conditional-src/ share, other
+>>> than "dividing them into a separate category makes it simpler to
+>>> write Makefile using $(wildcard)"?  I do not think of a good one.
+>>>
+>>> The only time I found that the large list of files in Makefile was
+>>> problematic was *NOT* when multiple topics added, renamed or removed
+>>> the files (it is pretty much bog standard merge conflicts that do
+>>> not happen very often to begin with).  It is when this kind of
+>>> "large scale refactoring" for the sake of refactoring happens.
+>>>
+>>>> I'm not so worried about those other targets, but being able to
+>>>> reliably build and test git with some cruft lying around is useful
+>>>> though. I'm still not entirely sure what the motivation for this
+>>>> change is (adding new files is not that common) but I think using the
+>>>> established "git ls-files || find" pattern would be a good way of
+>>>> globbing without picking up rubbish if there is a compelling reason to
+>>>> drop the lists.
+>>>
+>>> Yes.
+>> Reviewing the reftable coverity topic I was reminded of this
+>> patch. I.e. in it we have this fix:
+>> https://lore.kernel.org/git/xmqqtugl102l.fsf@gitster.g/
+>> Which shows another advantage of using this sort of $(wildcard)
+>> pattern,
+>> i.e. if we had this:
+>>=20=09
+>> 	diff --git a/Makefile b/Makefile
+>> 	index 5580859afdb..48ea18afa53 100644
+>> 	--- a/Makefile
+>> 	+++ b/Makefile
+>> 	@@ -2443,33 +2443,9 @@ XDIFF_OBJS +=3D xdiff/xutils.o
+>> 	 .PHONY: xdiff-objs
+>> 	 xdiff-objs: $(XDIFF_OBJS)
+>>=20=09
+>> 	-REFTABLE_OBJS +=3D reftable/basics.o
+>> 	-REFTABLE_OBJS +=3D reftable/error.o
+>> 	-REFTABLE_OBJS +=3D reftable/block.o
+>> 	-REFTABLE_OBJS +=3D reftable/blocksource.o
+>> 	-REFTABLE_OBJS +=3D reftable/iter.o
+>> 	-REFTABLE_OBJS +=3D reftable/publicbasics.o
+>> 	-REFTABLE_OBJS +=3D reftable/merged.o
+>> 	-REFTABLE_OBJS +=3D reftable/pq.o
+>> 	-REFTABLE_OBJS +=3D reftable/reader.o
+>> 	-REFTABLE_OBJS +=3D reftable/record.o
+>> 	-REFTABLE_OBJS +=3D reftable/refname.o
+>> 	-REFTABLE_OBJS +=3D reftable/generic.o
+>> 	-REFTABLE_OBJS +=3D reftable/stack.o
+>> 	-REFTABLE_OBJS +=3D reftable/tree.o
+>> 	-REFTABLE_OBJS +=3D reftable/writer.o
+>> 	-
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/basics_test.o
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/block_test.o
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/dump.o
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/merged_test.o
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/pq_test.o
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/record_test.o
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/readwrite_test.o
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/refname_test.o
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/stack_test.o
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/test_framework.o
+>> 	-REFTABLE_TEST_OBJS +=3D reftable/tree_test.o
+>> 	+REFTABLE_SOURCES =3D $(wildcard reftable/*.c)
+>> 	+REFTABLE_OBJS +=3D $(filter-out test,$(REFTABLE_SOURCES:%.c=3D%.o))
+>> 	+REFTABLE_TEST_OBJS +=3D $(filter test,$(REFTABLE_SOURCES:%.c=3D%.o))
+>>=20=09
+>> 	 TEST_OBJS :=3D $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/hel=
+per/%,$(TEST_BUILTINS_OBJS))
+>> We'd have a shorter Makefile, not need to manually maintain the
+>> list,
+>> and we'd have been getting linker errors all along on the dead code
+>> (just showing one of many here):
+>> 	$ make
+>> 	[...]
+>> 	/usr/bin/ld: reftable/libreftable.a(generic.o): in function `reftable_t=
+able_seek_ref':
+>> 	/home/avar/g/git/reftable/generic.c:17: multiple definition of `reftabl=
+e_table_seek_ref'; reftable/libreftable.a(reftable.o):/home/avar/g/git/reft=
+able/reftable.c:17: first defined here
+>> 	[...]
+>> 	clang: error: linker command failed with exit code 1 (use -v to see inv=
+ocation)
+>> 	make: *** [Makefile:2925: t/helper/test-tool] Error 1
+>> 	make: Target 'all' not remade because of errors.
+>
+> Random cruft breaking the build was the reason I objected to this
+> change, just because the cruft was being tracked by git in this case=20
+> does not change that.
 
-git cat-file --batch --stdin-cmd
+The difference is that the above is a "good" breakage, i.e. one where we
+ended up carrying dead code in-tree, so it wouldn't have escaped the
+lab.
 
-$ <command> [arg1] [arg2] NL
+Whereas I think that you're concerned that adding a WIP foobar.c to the
+tree would break your compilation the next time you invoke 'make'.
 
-We can also add a -z mode to allow for NUL-terminated lines
+Would something like this way of having our cake and eating it too
+address your concerns?
 
-$ <command> [arg1] [arg2] NUL
+I.e. if we have 'git' installed already we could just ask it about any
+untracked files, and filter those out:
+=20=20=20=20
+    ifndef NO_WILDCARD_SECOND_GUESSING
+    UNTRACKED_FILES :=3D $(shell git status --porcelain=3D1 2>/dev/null | s=
+ed -n -e '/^\?? / { s/^.. //; p}')
+    else
+    UNTRACKED_FILES =3D
+    endif
+=20=20=20=20
+    REFTABLE_SOURCES =3D $(filter-out $(UNTRACKED_FILES),$(wildcard reftabl=
+e/*.c))
+    REFTABLE_OBJS +=3D $(filter-out test,$(REFTABLE_SOURCES:%.c=3D%.o))
+    REFTABLE_TEST_OBJS +=3D $(filter test,$(REFTABLE_SOURCES:%.c=3D%.o))
 
-This patch adds three commands: object, info, fflush
-
-$ object <sha1> NL
-$ info <sha1> NL
-$ fflush NL
-
-These three would be immediately useful in GitLab's context, but one can
-imagine this mode to be further extended for other things.
-
-For instance, a non-trivial part of "cat-file --batch" time is spent
-on parsing its argument and seeing if it's a revision, ref etc. So we
-could add a command that only accepts a full-length 40
-character SHA-1.
-
-This would be the first step in adding such an interface to
-git-cat-file.
-
-[1] https://lore.kernel.org/git/pull.1124.git.git.1636149400.gitgitgadget@gmail.com/
-
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: John Cai <johncai86@gmail.com>
----
- builtin/cat-file.c  | 137 +++++++++++++++++++++++++++++++++++++++++++-
- strvec.c            |  23 ++++++++
- strvec.h            |   8 +++
- t/t1006-cat-file.sh |  72 +++++++++++++++++++++++
- 4 files changed, 239 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 7b3f42950e..2679b34b43 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -16,6 +16,7 @@
- #include "packfile.h"
- #include "object-store.h"
- #include "promisor-remote.h"
-+#include "strvec.h"
- 
- struct batch_options {
- 	int enabled;
-@@ -26,7 +27,10 @@ struct batch_options {
- 	int unordered;
- 	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
- 	const char *format;
-+	int stdin_cmd;
-+	int end_null;
- };
-+static char line_termination = '\n';
- 
- static const char *force_path;
- 
-@@ -508,6 +512,126 @@ static int batch_unordered_packed(const struct object_id *oid,
- 				      data);
- }
- 
-+enum batch_state {
-+	/* Non-transactional state open for commands. */
-+	BATCH_STATE_OPEN,
-+};
-+
-+static void parse_cmd_object(struct batch_options *opt,
-+			     const int argc, const char **argv,
-+			     struct strbuf *output,
-+			     struct expand_data *data)
-+{
-+	batch_one_object(argv[0], output, opt, data);
-+}
-+
-+static void parse_cmd_info(struct batch_options *opt,
-+			     const int argc, const char **argv,
-+			     struct strbuf *output,
-+			     struct expand_data *data)
-+{
-+	opt->print_contents = 0;
-+	batch_one_object(argv[0], output, opt, data);
-+}
-+
-+static void parse_cmd_fflush(struct batch_options *opt,
-+			     const int argc, const char **argv,
-+			     struct strbuf *output,
-+			     struct expand_data *data)
-+{
-+	fflush(stdout);
-+}
-+
-+typedef void (*parse_cmd_fn_t)(struct batch_options *, const int,
-+			       const char **, struct strbuf *,
-+			       struct expand_data *);
-+
-+static const struct parse_cmd {
-+	const char *prefix;
-+	parse_cmd_fn_t fn;
-+	unsigned args;
-+	enum batch_state state;
-+} command[] = {
-+	{ "object", parse_cmd_object, 1, BATCH_STATE_OPEN },
-+	{ "info", parse_cmd_info, 1, BATCH_STATE_OPEN },
-+	{ "fflush", parse_cmd_fflush, 0, BATCH_STATE_OPEN },
-+};
-+
-+static void batch_objects_stdin_cmd(struct batch_options *opt,
-+				    struct strbuf *output,
-+				    struct expand_data *data)
-+{
-+	struct strbuf input = STRBUF_INIT;
-+	enum batch_state state = BATCH_STATE_OPEN;
-+
-+	/* Read each line dispatch its command */
-+	while (!strbuf_getwholeline(&input, stdin, line_termination)) {
-+		int i;
-+		const struct parse_cmd *cmd = NULL;
-+		struct strvec args = STRVEC_INIT;
-+		size_t n;
-+		const char *p;
-+
-+		if (*input.buf == line_termination)
-+			die("empty command in input");
-+		else if (isspace(*input.buf))
-+			die("whitespace before command: %s", input.buf);
-+
-+		for (i = 0; i < ARRAY_SIZE(command); i++) {
-+			const char *prefix = command[i].prefix;
-+			char c;
-+
-+			if (!starts_with(input.buf, prefix))
-+				continue;
-+
-+			/*
-+			 * If the command has arguments, verify that it's
-+			 * followed by a space. Otherwise, it shall be followed
-+			 * by a line terminator.
-+			 */
-+			c = command[i].args ? ' ' : line_termination;
-+			if (input.buf[strlen(prefix)] != c)
-+				continue;
-+
-+			cmd = &command[i];
-+			break;
-+		}
-+		if (!cmd)
-+			die("unknown command: %s", input.buf);
-+
-+		/*
-+		 * Read additional arguments. Do not raise an error in
-+		 * case there is an early EOF to let the command
-+		 * handle missing arguments with a proper error message
-+		 */
-+		p = input.buf + strlen(cmd->prefix) + 1;
-+		if (*p == line_termination || !*p) {
-+			n = 0;
-+		} else {
-+			const char *pos = strstr(p, "\n");
-+			char *str = xstrndup(p, pos - p);
-+
-+			n = strvec_split_delim(&args, str, ' ', - 1);
-+			free(str);
-+		}
-+
-+		if (n < cmd->args)
-+			die("%s: too few arguments", cmd->prefix);
-+		if (n > cmd->args)
-+			die("%s: too many arguments", cmd->prefix);
-+
-+		switch (state) {
-+		case BATCH_STATE_OPEN:
-+			/* TODO: command state management */
-+			break;
-+		}
-+		cmd->fn(opt, args.nr, args.v, output, data);
-+		strvec_clear(&args);
-+	}
-+
-+	strbuf_release(&input);
-+}
-+
- static int batch_objects(struct batch_options *opt)
- {
- 	struct strbuf input = STRBUF_INIT;
-@@ -515,6 +639,7 @@ static int batch_objects(struct batch_options *opt)
- 	struct expand_data data;
- 	int save_warning;
- 	int retval = 0;
-+	const int stdin_cmd = opt->stdin_cmd;
- 
- 	if (!opt->format)
- 		opt->format = "%(objectname) %(objecttype) %(objectsize)";
-@@ -590,7 +715,8 @@ static int batch_objects(struct batch_options *opt)
- 	save_warning = warn_on_object_refname_ambiguity;
- 	warn_on_object_refname_ambiguity = 0;
- 
--	while (strbuf_getline(&input, stdin) != EOF) {
-+	while (!stdin_cmd &&
-+	       strbuf_getline(&input, stdin) != EOF) {
- 		if (data.split_on_whitespace) {
- 			/*
- 			 * Split at first whitespace, tying off the beginning
-@@ -608,6 +734,9 @@ static int batch_objects(struct batch_options *opt)
- 		batch_one_object(input.buf, &output, opt, &data);
- 	}
- 
-+	if (stdin_cmd)
-+		batch_objects_stdin_cmd(opt, &output, &data);
-+
- 	strbuf_release(&input);
- 	strbuf_release(&output);
- 	warn_on_object_refname_ambiguity = save_warning;
-@@ -685,6 +814,10 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 			batch_option_callback),
- 		OPT_CMDMODE(0, "batch-all-objects", &opt,
- 			    N_("with --batch[-check]: ignores stdin, batches all known objects"), 'b'),
-+		OPT_BOOL(0, "stdin-cmd", &batch.stdin_cmd,
-+			 N_("with --batch[-check]: enters stdin 'command mode")),
-+		OPT_BOOL('z', NULL, &batch.end_null, N_("with --stdin-cmd, use NUL termination")),
-+
- 		/* Batch-specific options */
- 		OPT_GROUP(N_("Change or optimize batch output")),
- 		OPT_BOOL(0, "buffer", &batch.buffer_output, N_("buffer --batch output")),
-@@ -738,6 +871,8 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 	/* Batch defaults */
- 	if (batch.buffer_output < 0)
- 		batch.buffer_output = batch.all_objects;
-+	if (batch.end_null)
-+		line_termination = '\0';
- 
- 	/* Return early if we're in batch mode? */
- 	if (batch.enabled) {
-diff --git a/strvec.c b/strvec.c
-index 61a76ce6cb..7dca04bf7a 100644
---- a/strvec.c
-+++ b/strvec.c
-@@ -85,6 +85,29 @@ void strvec_split(struct strvec *array, const char *to_split)
- 	}
- }
- 
-+size_t strvec_split_delim(struct strvec *array, const char *string,
-+			  int delim, int maxsplit)
-+{
-+	size_t count = 0;
-+	const char *p = string, *end;
-+
-+	for (;;) {
-+		count++;
-+		if (maxsplit >= 0 && count > maxsplit) {
-+			strvec_push(array, p);
-+			return count;
-+		}
-+		end = strchr(p, delim);
-+		if (end) {
-+			strvec_push_nodup(array, xmemdupz(p, end - p));
-+			p = end + 1;
-+		} else {
-+			strvec_push(array, p);
-+			return count;
-+		}
-+	}
-+}
-+
- void strvec_clear(struct strvec *array)
- {
- 	if (array->v != empty_strvec) {
-diff --git a/strvec.h b/strvec.h
-index 9f55c8766b..c474918b91 100644
---- a/strvec.h
-+++ b/strvec.h
-@@ -73,6 +73,14 @@ void strvec_pop(struct strvec *);
- /* Splits by whitespace; does not handle quoted arguments! */
- void strvec_split(struct strvec *, const char *);
- 
-+/**
-+ * strvec_split_delim() is a split function that behaves more like its
-+ * string_list_split() cousin than the whitespace-splitting
-+ * strvec_split().
-+ */
-+size_t strvec_split_delim(struct strvec *array, const char *string,
-+			  int delim, int maxsplit);
-+
- /**
-  * Free all memory associated with the array and return it to the
-  * initial, empty state.
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 145eee11df..8f339746ec 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -964,4 +964,76 @@ test_expect_success 'cat-file --batch-all-objects --batch-check ignores replace'
- 	test_cmp expect actual
- '
- 
-+F='%s\0'
-+
-+test_expect_success 'stdin-cmd not enough arguments' '
-+	echo "object " >cmd &&
-+	test_expect_code 128 git cat-file --batch --stdin-cmd < cmd 2>err &&
-+	grep -E "^fatal:.*too few arguments" err
-+'
-+
-+test_expect_success 'stdin-cmd too many arguments' '
-+	echo "object foo bar" >cmd &&
-+	test_expect_code 128 git cat-file --batch --stdin-cmd < cmd 2>err &&
-+	grep -E "^fatal:.*too many arguments" err
-+'
-+
-+test_expect_success 'stdin-cmd unknown command' '
-+	echo unknown_command >cmd &&
-+	test_expect_code 128 git cat-file --batch --stdin-cmd < cmd 2>err &&
-+	grep -E "^fatal:.*unknown command.*" err &&
-+	test_expect_code 128 git cat-file --batch --stdin-cmd -z < cmd 2>err &&
-+	grep -E "^fatal:.*unknown command.*" err
-+'
-+
-+test_expect_success 'setup object data' '
-+	content="Object Data" &&
-+	size=$(strlen "$content") &&
-+	sha1=$(echo_without_newline "$content" | git hash-object -w --stdin)
-+'
-+
-+test_expect_success 'stdin-cmd calling object works' '
-+	echo "object $sha1" | git cat-file --batch --stdin-cmd >actual &&
-+	echo "$sha1 blob $size" >expect &&
-+	echo `git cat-file -p "$sha1"` >>expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'stdin-cmd -z calling object works' '
-+	printf $F "object $sha1" | git cat-file --batch --stdin-cmd -z >actual &&
-+	echo "$sha1 blob $size" >expect &&
-+	echo `git cat-file -p "$sha1"` >>expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'setup object data' '
-+	content="Object Data" &&
-+	size=$(strlen "$content") &&
-+	sha1=$(echo_without_newline "$content" | git hash-object -w --stdin)
-+'
-+
-+test_expect_success 'stdin-cmd calling object works' '
-+	echo "object $sha1" | git cat-file --batch --stdin-cmd >actual &&
-+	echo "$sha1 blob $size" >expect &&
-+	echo `git cat-file -p "$sha1"` >>expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'stdin-cmd -z calling object works' '
-+	printf $F "object $sha1" | git cat-file --batch --stdin-cmd -z >actual &&
-+	echo "$sha1 blob $size" >expect &&
-+	echo `git cat-file -p "$sha1"` >>expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'stdin-cmd fflush works' '
-+	printf "fflush\n" > cmd &&
-+	test_expect_code 0 git cat-file --batch --stdin-cmd < cmd 2>err
-+'
-+
-+test_expect_success 'stdin-cmd -z fflush works' '
-+	printf $F 'fflush' > cmd &&
-+	test_expect_code 0 git cat-file --batch --stdin-cmd -z < cmd 2>err
-+'
-+
- test_done
--- 
-2.34.1
-
+A non-demo implementation of this would piggy-back on the "git ls-files"
+shell-out we already do, but since that requires some refactoring I
+thought it would be better to demo it like this.
