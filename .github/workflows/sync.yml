@@ -20,7 +20,7 @@ jobs:
     steps:
     - name: Partial clone
       run: |
-        git clone --bare --filter=blob:none https://github.com/$GITHUB_REPOSITORY .
+        git clone --bare --depth=1 --filter=blob:none https://github.com/$GITHUB_REPOSITORY .
     - name: Update from lore.kernel.org
       run: |
         git fetch https://lore.kernel.org/git/$LORE_EPOCH refs/heads/master:refs/heads/lore-$LORE_EPOCH
