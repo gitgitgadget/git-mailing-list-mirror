@@ -2,67 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88E72C433F5
-	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 11:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F54EC433F5
+	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 11:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380136AbiAULXb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jan 2022 06:23:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58404 "EHLO
+        id S1380176AbiAULlO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 06:41:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380209AbiAULXS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jan 2022 06:23:18 -0500
+        with ESMTP id S1350189AbiAULlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jan 2022 06:41:13 -0500
 Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7234DC061751
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 03:23:17 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id b13so41920612edn.0
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 03:23:17 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B643C061574
+        for <git@vger.kernel.org>; Fri, 21 Jan 2022 03:41:13 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id u18so27708910edt.6
+        for <git@vger.kernel.org>; Fri, 21 Jan 2022 03:41:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=B00M2S/KAZz3VvWMAY71igOxMk7ZCoccvYbhtKful9M=;
-        b=UfPi3wu4IGgzqnrK5WcC4bm4korpEEfRAFK0fe+M4D/Q+8IgbZfKTuGS3zRRZinuCk
-         rcvlX5GEFJKbwj0IaUdFFhXSHE+2byrwacubz4kbhiu4AjkKvG45J2Zh+WO+1Lk5gJXn
-         lrRZomoAKkxMGEiWBerA/KeD3Ed30ksoTafOsybgJsRnCIolKGEMmWsSmOqlizewio3f
-         GzS+CtKRz1cbbpQN4cnhUyH7BzeZI3hRzxytkJhgXVbWFszkSqUTr5AP79wLkhqqz2xR
-         QPvJ2z1A47RrTt1DIhnlSP5WNdI4ZZBIRK5MNnAXz+l8ib0KJXerO4rVLaU41oM0X+AU
-         rlKQ==
+        bh=lpkScMq+tIzWt0nbdMyIoNw7fx+XUi+C8wBf6+M5cXc=;
+        b=HEGUyqFM9xXzjGlbQMg+g7r42mol3dg1oV62uvyxpmRbuwg1oTcAE2xDm1Xtk6PkSM
+         Uz465mD4NtPtTufjvKDE3Lp/7HFhu8/+9I9du1+4ODS2rZ5NfVPRVm79VsVdNvFLfbs/
+         o33EoRJxusoS1FntAf56vKeDEPC4xqPb5Nf/wkizF9hY0gkCIq2WleKe5Be8wTJ9mwIF
+         5ntLnZD8t3+W0rdr5IvAcLQvAgFVVF8vVG1h0hUgG/9e/l0/L7EE2N5uldNdfG1RrjPo
+         K+StQc47ni7QtmXUq18uy47ijmjf2whK6hWLm45fCoc8us4Q+o4MWb61q8laxUNdxx4T
+         zfiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=B00M2S/KAZz3VvWMAY71igOxMk7ZCoccvYbhtKful9M=;
-        b=266Z2/8ja00r48OJAWP1DoHipDW+o0oRuHvVUfrnkkxsFtSTtPsyeJuAkT14/y/ky5
-         UcDNuwuIt8BJSpzrln/e1cPuI4DeXr5TV2Gnrlaw3xnSkf/cl3K/Z7Zu5BeDAbtscyIK
-         +Kh9O+8WyqLSX99CUZlK4Asm/qKlGt6XdljPaxbNUdT7CBElfDgAYvvGPARWM0r6MDNS
-         oCaWu2c7ZEnUVltSzuQTpCElRAdukod/6PAPll7NNWOl1qqhWqvqGlEr8rALc1Y++A9/
-         w2EIsqJEzVMLdbZzyLAKbKMYpT4Yqzu3SmiXT+9exbtAmXOWP0KMzYuuYbb8E1OBRBAU
-         jgDA==
-X-Gm-Message-State: AOAM533uN/FoZZvv9a8hA0XfaiC/SW0Hrq1Fcgw6F9I8qVi9UkPZgImC
-        4mXe23uBafjnaxP4xzVFNe2f1zGxEew10Q==
-X-Google-Smtp-Source: ABdhPJwZJzZYYqMLPNvgrogRENLDTanSC/lxUnpmY/bmKiSxCAEWW8cVON7QCYwUESqwG1q0lHnlMg==
-X-Received: by 2002:a17:907:7b84:: with SMTP id ne4mr2903642ejc.273.1642764195423;
-        Fri, 21 Jan 2022 03:23:15 -0800 (PST)
+        bh=lpkScMq+tIzWt0nbdMyIoNw7fx+XUi+C8wBf6+M5cXc=;
+        b=c1TK+oDxfzU9eAMfvlWfYn1JwwsKwUcpLWTM4PI40/FxcIAZ8CLlF17+kYiC0QWjmJ
+         16sVmVHwqxtkNSxFrJ7Y4YMJLA8rHvf98Bbz5XhJyAOn/y2Xn3PJZmQX4cbijNQh8vSl
+         iVtCqyYWyxLCpOfJGOh3Hkkt+5+YyXHu2Uypg2YAfPGDzyghf20FnvViYgH+xfcw+KG/
+         OgeAxNARorKLplnC6ngDuKu+fm3L+uIFGRsNxKfeAQMx2DiR1bTAV2HUNgeC2/zK5ipg
+         HmoNuHTHNUDYUw690FBY14bcHF/MvBFmi5nfMYqks+g8ZTL4Be5qUFbQmOAfhByJ5ypD
+         5GBA==
+X-Gm-Message-State: AOAM533wqgJXrQQocNuSEOA9aBw75K5YnY3ShKu4CU0vIbMx3AjK5VVb
+        Un4GLrh/BOL9Tn6HONG8MiahCQgIeuVdmQ==
+X-Google-Smtp-Source: ABdhPJwrBwz6nletBQErEpMLjJjNoGm0JhNawiE3UsKLlubWvWbvpdzTm9N12mYGqCvD2IM1Z2JMYA==
+X-Received: by 2002:a05:6402:5212:: with SMTP id s18mr3919061edd.359.1642765271439;
+        Fri, 21 Jan 2022 03:41:11 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id k3sm2454915edr.97.2022.01.21.03.23.14
+        by smtp.gmail.com with ESMTPSA id gv34sm1950495ejc.125.2022.01.21.03.41.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jan 2022 03:23:14 -0800 (PST)
+        Fri, 21 Jan 2022 03:41:10 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nAs0g-0026sD-I7;
-        Fri, 21 Jan 2022 12:23:14 +0100
+        id 1nAsI2-0027Jg-Ce;
+        Fri, 21 Jan 2022 12:41:10 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
-        Petr =?utf-8?B?xaBwbMOtY2hhbA==?= <psplicha@redhat.com>
-Subject: Re: [PATCH] checkout: fix BUG() case in 9081a421a6
-Date:   Fri, 21 Jan 2022 12:14:58 +0100
-References: <YemTGQZ97vAPUPY0@pobox.com>
- <patch-1.1-21ddf7c628d-20220120T212233Z-avarab@gmail.com>
- <xmqqee52ghwg.fsf@gitster.g>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH] branch,checkout: fix --track usage strings
+Date:   Fri, 21 Jan 2022 12:27:33 +0100
+References: <220111.86a6g3yqf9.gmgdl@evledraar.gmail.com>
+ <3de40324bea6a1dd9bca2654721471e3809e87d8.1642538935.git.steadmon@google.com>
+ <220120.86zgnqli9v.gmgdl@evledraar.gmail.com> <xmqqbl06jlr6.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqee52ghwg.fsf@gitster.g>
-Message-ID: <220121.86iludl4d9.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqbl06jlr6.fsf@gitster.g>
+Message-ID: <220121.86ee51l3jd.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -73,93 +72,120 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jan 20 2022, Junio C Hamano wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
->> Fix a regression in my 9081a421a6d (checkout: fix "branch info" memory
->> leaks, 2021-11-16) where I'd assumed that the old_branch_info.path
->> would have to start with refs/heads/*, but as has been reported[1]
->> that's not the case.
->>
->> As a test case[2] to reproduce this shows the second "git checkout"
->> here runs into the BUG() in the pre-image. The test being added is
->> amended from[2] and will pass both with this change, and before
->> 9081a421a6. I.e. our behavior now is again the same as before that
->> commit.
+>> With that we'll now emit:
+>>=20=20=20=20=20
+>>     $ ./git add -h 2>&1|grep chmod
+>>         --chmod[=3D](+|-)x      override the executable bit of the liste=
+d files
+>> ...
+>> But the usage output stated that the "=3D" was mandatory before.
 >
->> +test_expect_success REFFILES 'checkout a branch without refs/heads/* pr=
-efix' '
->> +	git clone --no-tags . repo-odd-prefix &&
->> +	(
->> +		cd repo-odd-prefix &&
->> +
->> +		cp .git/refs/remotes/origin/HEAD .git/refs/heads/a-branch &&
+> I am not sure if it is healthy to be _that_ strict when interpreting
+> the boilerplate elements in the output.  Between "git add -h" that
+> gives
 >
-> I am not sure if this is a sensible test case to begin with.
+>     (1) git add --chmod( |=3D)(+|-)x
+>     (2) git add --chmod=3D(+|-)x
 >
-> It sets up recursive symbolic ref in this way:
+> I would prefer the latter 10x as much as the former.  The choice
+> "You can give either plus or minus" is very much what the reader
+> must understand and it is worth reminding in the help.  Compared to
+> that, "You can use the stuck form that is recommended by gitcli
+> documentation when giving the argument to the --chmod option, or you
+> can give the argument to the option as a separate command line
+> argument", while technically correct, is not a choice that is worth
+> cluttering the output and making it harder to read.
 >
-> 	HEAD points at refs/heads/a-branch
-> 	refs/heads/a-branch points at refs/remotes/origin/HEAD
-> 	refs/remotes/origin/HEAD points at refs/remotes/origin/branch1
+> To put it differently, the choice (+|-) is something the user needs
+> to pick correctly to make what they want to happen happen.  On the
+> other hand, the choice ( |=3D) is not.  As this is a boilerplate
+> choice that is shared by any and all options that take an argument,
+> once you are aware that stuck form is recommended but that separate
+> form is also accepted, you'd see "git add --chmod=3Dblah" in the help
+> and would not hesitate to type "git add --chmod blah".  And if you
+> are not aware of the existence of the alternative, nothing is lost.
+> You can type '=3D' and see what you want to see happen happen.
 >
-> The checked out branch (i.e. what HEAD points at) is nominally a
-> local branch, but it totally violates the spirit of the safety valve
-> that says "HEAD" MUST point at a local branch or otherwise it is
-> detached.  Creating a commit while "a-branch" is checked out would
-> not affect *ANY* local branch state and instead makes an update to
-> the remote tracking branch that does not reflect *any* past states
-> at the remote repository.  Even worse, a "git fetch" that updates
-> the remote tracking branches will make the HEAD, the index and the
-> working tree into an inconsistent state.
->
-> Simply put, I think the BUG() is catching a case where we should
-> have been diagnosing as a broken repository.
+> Not cluttering the help text with an extra choice that the user does
+> not have to make has a value.
 
-Yes, I agree that we should be spotting this . Todd/Petr: If you're able
-to describe it I'm curious about the original case you encountered that
-the test case is derived from.
+I.e. if we're not going for pedantic accuracy you'd prefer the below
+diff instead?
 
-> So from my point of view, BUG() is indeed inappropriate because what
-> the conditional statement noticed was a broken repository, and not a
-> programming bug.
->
-> What we should never do is to promise this "only kosher in letter
-> but not in spirit" violation of "HEAD must point at a local branch"
-> rule will be supported.
->
-> So, unless I hear more convincing arguments (and Todd's example or
-> anything similar that makes "git commit" from that state update a
-> ref outside local branches is *not*), I am hesitant to call the new
-> behaviour and 9081a421a6d a regression.
+I.e. when an option doesn't take an optional argument we're going out of
+our way to say that you can omit the "=3D", but we can instead just
+include it and have the the explanation in gitcli(7) about when "=3D" is
+optional suffice.
 
-Well, the user is doing odd things with git, but we should reserve BUG()
-for things that aren't rechable. Any time a user is able to arrange our
-tooling in such a way as to call BUG() is a ... bug.
+Also, with the sh completion if you do "git add --chm<TAB>" it expands
+it to "git add --chmod=3D", i.e. the cursor is left after the "=3D" that's
+not shown in the "git add -h". So always including it would be
+consistent with that.
+=20=20=20=20
+    diff --git a/parse-options.c b/parse-options.c
+    index a8283037be9..75c345bb738 100644
+    --- a/parse-options.c
+    +++ b/parse-options.c
+    @@ -916,7 +916,7 @@ static int usage_argh(const struct option *opts, FI=
+LE *outfile)
+                    else
+                            s =3D literal ? "[%s]" : "[<%s>]";
+            else
+    -               s =3D literal ? " %s" : " <%s>";
+    +               s =3D literal ? "=3D%s" : "=3D<%s>";
+            return utf8_fprintf(outfile, s, opts->argh ? _(opts->argh) : _(=
+"..."));
+     }
+=20=20=20=20=20
+Just this patch will make getopts test fail, because we'll need
+e.g. this test_cmp adjusted:
+=20=20=20=20
+    + diff -u expect output
+    --- expect      2022-01-21 11:31:17.395492260 +0000
+    +++ output      2022-01-21 11:31:17.395492260 +0000
+    @@ -5,7 +5,7 @@
+=20=20=20=20=20
+         -h, --help            show the help
+         --foo                 some nifty option --foo
+    -    --bar ...             some cool option --bar with an argument
+    +    --bar=3D...             some cool option --bar with an argument
+         -b, --baz             a short and long option
+=20=20=20=20=20
+     An option group Header
+    @@ -13,20 +13,20 @@
+         -d, --data[=3D...]      short and long option with an optional arg=
+ument
+=20=20=20=20=20
+     Argument hints
+    -    -B <arg>              short option required argument
+    -    --bar2 <arg>          long option required argument
+    -    -e, --fuz <with-space>
+    +    -B=3D<arg>              short option required argument
+    +    --bar2=3D<arg>          long option required argument
+    +    -e, --fuz=3D<with-space>
+                               short and long option required argument
+         -s[<some>]            short option optional argument
+         --long[=3D<data>]       long option optional argument
+         -g, --fluf[=3D<path>]   short and long option optional argument
+    -    --longest <very-long-argument-hint>
+    +    --longest=3D<very-long-argument-hint>
+                               a very long argument hint
+    -    --pair <key=3Dvalue>    with an equals sign in the hint
+    +    --pair=3D<key=3Dvalue>    with an equals sign in the hint
+         --aswitch             help te=3Dt contains? fl*g characters!`
+    -    --bswitch <hint>      hint has trailing tab character
+    +    --bswitch=3D<hint>      hint has trailing tab character
+         --cswitch             switch has trailing tab character
+    -    --short-hint <a>      with a one symbol hint
+    +    --short-hint=3D<a>      with a one symbol hint
 
-> What did the code before that BUG() do when faced with this nonsense
-> configuration?  If forbidding outright broke a sensible workflow
-> that happened to have been "working", I am OK to demote it to
-> warning() and restore the previous behaviour temporarily, whatever
-> it was (I think it was just old_branch_info.name was left unset
-> because we were not on local branch, but I don't know if the missing
-> .name was making any irrecoverable damage).  But the longer term
-> direction should be that we treat the "update HEAD ends up updating
-> some ref outside refs/heads/" a longstanding bug that needs to be
-> fixed.
+It's arguably a bit odd to see the "=3D" for those that have
+!opts->long_name, but on the other hand I can't think of a reason other
+than it looking unusual to me for why we wouldn't include the "=3D" there
+for consistency.
 
-The behavior with my patch here is exactly the same as before. I.e. it
-was rather straightforward, the xstrdup() is new, but before we'd just
-take the un-skipped string that didn't start with refs/heads/ as-is.
-
-I agree that it's better to look at this more deeply, but given the rc2
-being out, and this surely being something we want in the final I'd
-think we'd want to keep this patch as-is.
-
-I.e. this is all a bit odd, but it was odd in exactly this way in v2.34.0 t=
-oo.
-
-We can add a warning() or die(), but a change that does that & convinces
-you it's the right thing thing will require more careful consideration,
-testing etc.
-
-So I really think we should narrow our focus and keep this as-is.
+It's odd that we don't have the short options in --git-completion-helper
+at all, so "git am -C<tab>" isn't completed", but looking at
+show_gitcomp() we'd need some further adjusting to make that work.
