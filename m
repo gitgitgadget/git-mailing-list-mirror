@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B365C433F5
-	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 19:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4932BC433FE
+	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 19:12:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231871AbiAUTMa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jan 2022 14:12:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52874 "EHLO
+        id S231517AbiAUTMb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 14:12:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231163AbiAUTM1 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231277AbiAUTM1 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 21 Jan 2022 14:12:27 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A51FC06173B
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 11:12:26 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id e9-20020a05600c4e4900b0034d23cae3f0so23402179wmq.2
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 11:12:26 -0800 (PST)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4965CC06173D
+        for <git@vger.kernel.org>; Fri, 21 Jan 2022 11:12:27 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id q141-20020a1ca793000000b00347b48dfb53so23528176wme.0
+        for <git@vger.kernel.org>; Fri, 21 Jan 2022 11:12:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=LLRddwRlb3+xaGRybKZWXk1WLkIn9q55Y8o8W1Ldyek=;
-        b=Kqir6E1anO1eWzEANs/xh/7ZA01yQREbZ4h9IJz+B6TBCyo5/rF5Pl7Y2j216u2u08
-         ijGEYgHxeCy0Ig2KhNM1UCcMRO348B2yO6SIvSVTZXEJSm+T5H3CSQW+6QIDUpbNt9Po
-         Vva926dzOS7i08LfCZ9EOEqPfQ1K6ewtkQY8JPsyt66PxiGSi/qHSh7QmFqL7h5nO1qB
-         BicZh3pEGsiXydbqturyn8mF3JdczsOWgzNcif3Bteobk4qfQsywiV8s7O7i1c5/RRmm
-         Fhk05cFosc/I4ZGFaJeaYyGR5xuYa3aMT+im4U+ywTv99uPqZ9uC82YEccIKIoYs4RmP
-         AYiA==
+        bh=yNaezyHCbZfihrt2P4wjEMui/03iDIuquSCOMU1Tw38=;
+        b=k/3euAwVVGU+IufBDqt8HpKf/SpsHFkZO3NdswuuR8FBZkSoyxEHMqpj0yAb6i0HVE
+         gYC1IU2rv8uYKZzYNy2mg3dCkYzpx5A06qqFBa9UwV44zJSoa6lSvYJcSV3qohC+sKTm
+         jNNDQahTI6aUAyKGvTB+r+YQcP9zHqgMT5IJWT23FihG+Y5HvOguZWe0+nfJdnPwsV2S
+         n12fzFpUoKaMpTYAWdTmZqdRR5eSGeqBMeLAqgXmDl1sL5rPXNuJhIM+yWart/rj6f6X
+         wwRo7knQ9S0Okn+aF4kwGKEsLfWtPKW9v+H73i76mzlZJFSBoj+I+6+GS7Pycr7wizV3
+         8LEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LLRddwRlb3+xaGRybKZWXk1WLkIn9q55Y8o8W1Ldyek=;
-        b=IhvVCPrC7KCjZEYgLsIbaCos6aYsSKZmxOF8SbWnX6vsgeUXIDuJMmqJr+AHUDlJyG
-         /Pboik3KpMvHeagksIul9YDUcRhwJy57Bo3r+uuAu6lProKkseLDJTLuijFd2HXfbyDn
-         ldFuikf+jGM0h/1estJrl8h0D1UWaXg2dat5Bpl3O8qfSCHf7nyjbZEALPzUxt6WXT5W
-         8SQeNe2Bt/QQriXiiSCUMr4z39nBjbUqbW/LTsAC3uWM202K1KAnA2MD9tYHU5CxaJDG
-         c7WiBzpFbPCZv+6aOzd1CxJHdpsgpRM9KmXIHefEY536Qet5xAFBwZoyt6s64KyD7me8
-         UCHw==
-X-Gm-Message-State: AOAM532M6HN6fcXShVqHZUPZv/hR8YDgkuphrTRCnwcYSvZi3lzRmTTa
-        aJ5PIRxN5946pFAhobbwAC8KJMnrK3E=
-X-Google-Smtp-Source: ABdhPJxhlr/64aSAoF+qV2npX2rH9uAUoJ1wrFxzRE61bM/mKp2XR6JxlZeK8RMfIaN11VYBdpEd1Q==
-X-Received: by 2002:a1c:a7c2:: with SMTP id q185mr1958672wme.3.1642792344740;
-        Fri, 21 Jan 2022 11:12:24 -0800 (PST)
+        bh=yNaezyHCbZfihrt2P4wjEMui/03iDIuquSCOMU1Tw38=;
+        b=hPJUcrsXBy1KG8srcBpg2cLrwosk3IusjMIuxb0urLGfOvacdOVhxRyna9dizH14jd
+         8XOusoWZeQgxEYACe4AkRByCEa3VsrmGCkgJHWVYwF9cj7xkhjuI+Ucq7FrJzOa2KnB1
+         eDZplX9YMr+vEv7hw8pY4SXnQvxi7RUmMOhImEvthcZ3hrazPYBBPiM+8+7e43lUM2A6
+         QusSSQXZaX1UPXMeJCd6pqkn6iD9qRgh5rK69DCctekty4p+NJIPOq/PmxHsgbTN0nQM
+         1PeKHsbnQdMYj1c3w85xMY5l0LMSR4XEEX0ukEGVMvVb4q/VhVedo5WRJoKgfMZkJR+E
+         5ZJA==
+X-Gm-Message-State: AOAM530Cs0KIAHQnHoaKJdMZCbsDBb/HkKae3khtnjBMBvh8leEEA7cz
+        6rz/hj5LBGavLDugUaTboFhcq1IVzr4=
+X-Google-Smtp-Source: ABdhPJyP8BKPPRA3P+kPQUI1x5A9xay7PswihvjF++QJGOK8psFvNGtssFRJhXw6Ftr70qZ/8dlX/Q==
+X-Received: by 2002:a7b:c317:: with SMTP id k23mr2005832wmj.20.1642792345552;
+        Fri, 21 Jan 2022 11:12:25 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 16sm5689064wmj.12.2022.01.21.11.12.23
+        by smtp.gmail.com with ESMTPSA id u15sm917842wrn.48.2022.01.21.11.12.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jan 2022 11:12:24 -0800 (PST)
-Message-Id: <f06de6c1b2fbd5c5a23b6755197a3683c7d18d2f.1642792341.git.gitgitgadget@gmail.com>
+        Fri, 21 Jan 2022 11:12:25 -0800 (PST)
+Message-Id: <8d6c3d48f0eb0e3af00a01d6463f6cd601bb0076.1642792341.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com>
 References: <pull.1103.v3.git.1640907369.gitgitgadget@gmail.com>
         <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Jan 2022 19:12:12 +0000
-Subject: [PATCH v4 02/10] log: clean unneeded objects during `log
- --remerge-diff`
+Date:   Fri, 21 Jan 2022 19:12:13 +0000
+Subject: [PATCH v4 03/10] ll-merge: make callers responsible for showing
+ warnings
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,132 +75,375 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The --remerge-diff option will need to create new blobs and trees
-representing the "automatic merge" state.  If one is traversing a
-long project history, one can easily get hundreds of thousands of
-loose objects generated during `log --remerge-diff`.  However, none of
-those loose objects are needed after we have completed our diff
-operation; they can be summarily deleted.
+Since some callers may want to send warning messages to somewhere other
+than stdout/stderr, stop printing "warning: Cannot merge binary files"
+from ll-merge and instead modify the return status of ll_merge() to
+indicate when a merge of binary files has occurred.  Message printing
+probably does not belong in a "low-level merge" anyway.
 
-Add a new helper function to tmp_objdir to discard all the contained
-objects, and call it after each merge is handled.
+This commit continues printing the message as-is, just from the callers
+instead of within ll_merge().  Future changes will start handling the
+message differently in the merge-ort codepath.
+
+There was one special case here: the callers in rerere.c do NOT check
+for and print such a message; since those code paths explicitly skip
+over binary files, there is no reason to check for a return status of
+LL_MERGE_BINARY_CONFLICT or print the related message.
+
+Note that my methodology included first modifying ll_merge() to return
+a struct, so that the compiler would catch all the callers for me and
+ensure I had modified all of them.  After modifying all of them, I then
+changed the struct to an enum.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/log.c | 13 +++++++------
- log-tree.c    |  8 +++++++-
- revision.h    |  3 +++
- tmp-objdir.c  |  5 +++++
- tmp-objdir.h  |  6 ++++++
- 5 files changed, 28 insertions(+), 7 deletions(-)
+ apply.c            |  5 ++++-
+ builtin/checkout.c | 12 ++++++++----
+ ll-merge.c         | 40 ++++++++++++++++++++++------------------
+ ll-merge.h         |  9 ++++++++-
+ merge-blobs.c      |  5 ++++-
+ merge-ort.c        |  5 ++++-
+ merge-recursive.c  |  5 ++++-
+ notes-merge.c      |  5 ++++-
+ rerere.c           |  9 +++++----
+ 9 files changed, 63 insertions(+), 32 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 846ba0f995a..ac550e1ae62 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -407,13 +407,12 @@ static int cmd_log_walk(struct rev_info *rev)
- 	struct commit *commit;
- 	int saved_nrl = 0;
- 	int saved_dcctc = 0;
--	struct tmp_objdir *remerge_objdir = NULL;
+diff --git a/apply.c b/apply.c
+index 43a0aebf4ee..8079395755f 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3492,7 +3492,7 @@ static int three_way_merge(struct apply_state *state,
+ {
+ 	mmfile_t base_file, our_file, their_file;
+ 	mmbuffer_t result = { NULL };
+-	int status;
++	enum ll_merge_result status;
  
- 	if (rev->remerge_diff) {
--		remerge_objdir = tmp_objdir_create("remerge-diff");
--		if (!remerge_objdir)
-+		rev->remerge_objdir = tmp_objdir_create("remerge-diff");
-+		if (!rev->remerge_objdir)
- 			die(_("unable to create temporary object directory"));
--		tmp_objdir_replace_primary_odb(remerge_objdir, 1);
-+		tmp_objdir_replace_primary_odb(rev->remerge_objdir, 1);
+ 	/* resolve trivial cases first */
+ 	if (oideq(base, ours))
+@@ -3509,6 +3509,9 @@ static int three_way_merge(struct apply_state *state,
+ 			  &their_file, "theirs",
+ 			  state->repo->index,
+ 			  NULL);
++	if (status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			path, "ours", "theirs");
+ 	free(base_file.ptr);
+ 	free(our_file.ptr);
+ 	free(their_file.ptr);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index cbf73b8c9f6..3a559d69303 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -237,6 +237,7 @@ static int checkout_merged(int pos, const struct checkout *state,
+ 	struct cache_entry *ce = active_cache[pos];
+ 	const char *path = ce->name;
+ 	mmfile_t ancestor, ours, theirs;
++	enum ll_merge_result merge_status;
+ 	int status;
+ 	struct object_id oid;
+ 	mmbuffer_t result_buf;
+@@ -267,13 +268,16 @@ static int checkout_merged(int pos, const struct checkout *state,
+ 	memset(&ll_opts, 0, sizeof(ll_opts));
+ 	git_config_get_bool("merge.renormalize", &renormalize);
+ 	ll_opts.renormalize = renormalize;
+-	status = ll_merge(&result_buf, path, &ancestor, "base",
+-			  &ours, "ours", &theirs, "theirs",
+-			  state->istate, &ll_opts);
++	merge_status = ll_merge(&result_buf, path, &ancestor, "base",
++				&ours, "ours", &theirs, "theirs",
++				state->istate, &ll_opts);
+ 	free(ancestor.ptr);
+ 	free(ours.ptr);
+ 	free(theirs.ptr);
+-	if (status < 0 || !result_buf.ptr) {
++	if (merge_status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			path, "ours", "theirs");
++	if (merge_status < 0 || !result_buf.ptr) {
+ 		free(result_buf.ptr);
+ 		return error(_("path '%s': cannot merge"), path);
  	}
+diff --git a/ll-merge.c b/ll-merge.c
+index 261657578c7..a937cec59a6 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -14,7 +14,7 @@
  
- 	if (rev->early_output)
-@@ -458,8 +457,10 @@ static int cmd_log_walk(struct rev_info *rev)
- 	rev->diffopt.no_free = 0;
- 	diff_free(&rev->diffopt);
+ struct ll_merge_driver;
  
--	if (rev->remerge_diff)
--		tmp_objdir_destroy(remerge_objdir);
-+	if (rev->remerge_diff) {
-+		tmp_objdir_destroy(rev->remerge_objdir);
-+		rev->remerge_objdir = NULL;
-+	}
+-typedef int (*ll_merge_fn)(const struct ll_merge_driver *,
++typedef enum ll_merge_result (*ll_merge_fn)(const struct ll_merge_driver *,
+ 			   mmbuffer_t *result,
+ 			   const char *path,
+ 			   mmfile_t *orig, const char *orig_name,
+@@ -49,7 +49,7 @@ void reset_merge_attributes(void)
+ /*
+  * Built-in low-levels
+  */
+-static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
++static enum ll_merge_result ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 			   mmbuffer_t *result,
+ 			   const char *path,
+ 			   mmfile_t *orig, const char *orig_name,
+@@ -58,6 +58,7 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 			   const struct ll_merge_options *opts,
+ 			   int marker_size)
+ {
++	enum ll_merge_result ret;
+ 	mmfile_t *stolen;
+ 	assert(opts);
  
- 	if (rev->diffopt.output_format & DIFF_FORMAT_CHECKDIFF &&
- 	    rev->diffopt.flags.check_failed) {
-diff --git a/log-tree.c b/log-tree.c
-index 84ed864fc81..d4655b63d75 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -4,6 +4,7 @@
- #include "diff.h"
- #include "object-store.h"
- #include "repository.h"
-+#include "tmp-objdir.h"
- #include "commit.h"
- #include "tag.h"
- #include "graph.h"
-@@ -944,7 +945,12 @@ static int do_remerge_diff(struct rev_info *opt,
- 	strbuf_release(&parent1_desc);
- 	strbuf_release(&parent2_desc);
- 	merge_finalize(&o, &res);
--	/* TODO: clean up the temporary object directory */
-+
-+	/* Clean up the contents of the temporary object directory */
-+	if (opt->remerge_objdir)
-+		tmp_objdir_discard_objects(opt->remerge_objdir);
-+	else
-+		BUG("unable to remove temporary object directory");
+@@ -68,16 +69,19 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 	 */
+ 	if (opts->virtual_ancestor) {
+ 		stolen = orig;
++		ret = LL_MERGE_OK;
+ 	} else {
+ 		switch (opts->variant) {
+ 		default:
+-			warning("Cannot merge binary files: %s (%s vs. %s)",
+-				path, name1, name2);
+-			/* fallthru */
++			ret = LL_MERGE_BINARY_CONFLICT;
++			stolen = src1;
++			break;
+ 		case XDL_MERGE_FAVOR_OURS:
++			ret = LL_MERGE_OK;
+ 			stolen = src1;
+ 			break;
+ 		case XDL_MERGE_FAVOR_THEIRS:
++			ret = LL_MERGE_OK;
+ 			stolen = src2;
+ 			break;
+ 		}
+@@ -87,16 +91,10 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 	result->size = stolen->size;
+ 	stolen->ptr = NULL;
  
- 	return !opt->loginfo;
+-	/*
+-	 * With -Xtheirs or -Xours, we have cleanly merged;
+-	 * otherwise we got a conflict.
+-	 */
+-	return opts->variant == XDL_MERGE_FAVOR_OURS ||
+-	       opts->variant == XDL_MERGE_FAVOR_THEIRS ?
+-	       0 : 1;
++	return ret;
  }
-diff --git a/revision.h b/revision.h
-index 13178e6b8f3..44efce3f410 100644
---- a/revision.h
-+++ b/revision.h
-@@ -318,6 +318,9 @@ struct rev_info {
  
- 	/* misc. flags related to '--no-kept-objects' */
- 	unsigned keep_pack_cache_flags;
-+
-+	/* Location where temporary objects for remerge-diff are written. */
-+	struct tmp_objdir *remerge_objdir;
+-static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
++static enum ll_merge_result ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 			mmbuffer_t *result,
+ 			const char *path,
+ 			mmfile_t *orig, const char *orig_name,
+@@ -105,7 +103,9 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 			const struct ll_merge_options *opts,
+ 			int marker_size)
+ {
++	enum ll_merge_result ret;
+ 	xmparam_t xmp;
++	int status;
+ 	assert(opts);
+ 
+ 	if (orig->size > MAX_XDIFF_SIZE ||
+@@ -133,10 +133,12 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ 	xmp.ancestor = orig_name;
+ 	xmp.file1 = name1;
+ 	xmp.file2 = name2;
+-	return xdl_merge(orig, src1, src2, &xmp, result);
++	status = xdl_merge(orig, src1, src2, &xmp, result);
++	ret = (status > 0) ? LL_MERGE_CONFLICT : status;
++	return ret;
+ }
+ 
+-static int ll_union_merge(const struct ll_merge_driver *drv_unused,
++static enum ll_merge_result ll_union_merge(const struct ll_merge_driver *drv_unused,
+ 			  mmbuffer_t *result,
+ 			  const char *path,
+ 			  mmfile_t *orig, const char *orig_name,
+@@ -178,7 +180,7 @@ static void create_temp(mmfile_t *src, char *path, size_t len)
+ /*
+  * User defined low-level merge driver support.
+  */
+-static int ll_ext_merge(const struct ll_merge_driver *fn,
++static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+ 			mmbuffer_t *result,
+ 			const char *path,
+ 			mmfile_t *orig, const char *orig_name,
+@@ -194,6 +196,7 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 	const char *args[] = { NULL, NULL };
+ 	int status, fd, i;
+ 	struct stat st;
++	enum ll_merge_result ret;
+ 	assert(opts);
+ 
+ 	sq_quote_buf(&path_sq, path);
+@@ -236,7 +239,8 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 		unlink_or_warn(temp[i]);
+ 	strbuf_release(&cmd);
+ 	strbuf_release(&path_sq);
+-	return status;
++	ret = (status > 0) ? LL_MERGE_CONFLICT : status;
++	return ret;
+ }
+ 
+ /*
+@@ -362,7 +366,7 @@ static void normalize_file(mmfile_t *mm, const char *path, struct index_state *i
+ 	}
+ }
+ 
+-int ll_merge(mmbuffer_t *result_buf,
++enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
+ 	     const char *path,
+ 	     mmfile_t *ancestor, const char *ancestor_label,
+ 	     mmfile_t *ours, const char *our_label,
+diff --git a/ll-merge.h b/ll-merge.h
+index aceb1b24132..e4a20e81a3a 100644
+--- a/ll-merge.h
++++ b/ll-merge.h
+@@ -82,13 +82,20 @@ struct ll_merge_options {
+ 	long xdl_opts;
  };
  
- int ref_excluded(struct string_list *, const char *path);
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index 3d38eeab66b..adf6033549e 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -79,6 +79,11 @@ static void remove_tmp_objdir_on_signal(int signo)
- 	raise(signo);
- }
- 
-+void tmp_objdir_discard_objects(struct tmp_objdir *t)
-+{
-+	remove_dir_recursively(&t->path, REMOVE_DIR_KEEP_TOPLEVEL);
-+}
++enum ll_merge_result {
++	LL_MERGE_ERROR = -1,
++	LL_MERGE_OK = 0,
++	LL_MERGE_CONFLICT,
++	LL_MERGE_BINARY_CONFLICT,
++};
 +
- /*
-  * These env_* functions are for setting up the child environment; the
-  * "replace" variant overrides the value of any existing variable with that
-diff --git a/tmp-objdir.h b/tmp-objdir.h
-index cda5ec76778..76efc7edee5 100644
---- a/tmp-objdir.h
-+++ b/tmp-objdir.h
-@@ -46,6 +46,12 @@ int tmp_objdir_migrate(struct tmp_objdir *);
+ /**
+  * Perform a three-way single-file merge in core.  This is a thin wrapper
+  * around `xdl_merge` that takes the path and any merge backend specified in
+  * `.gitattributes` or `.git/info/attributes` into account.
+  * Returns 0 for a clean merge.
   */
- int tmp_objdir_destroy(struct tmp_objdir *);
+-int ll_merge(mmbuffer_t *result_buf,
++enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
+ 	     const char *path,
+ 	     mmfile_t *ancestor, const char *ancestor_label,
+ 	     mmfile_t *ours, const char *our_label,
+diff --git a/merge-blobs.c b/merge-blobs.c
+index ee0a0e90c94..8138090f81c 100644
+--- a/merge-blobs.c
++++ b/merge-blobs.c
+@@ -36,7 +36,7 @@ static void *three_way_filemerge(struct index_state *istate,
+ 				 mmfile_t *their,
+ 				 unsigned long *size)
+ {
+-	int merge_status;
++	enum ll_merge_result merge_status;
+ 	mmbuffer_t res;
  
-+/*
-+ * Remove all objects from the temporary object directory, while leaving it
-+ * around so more objects can be added.
-+ */
-+void tmp_objdir_discard_objects(struct tmp_objdir *);
-+
- /*
-  * Add the temporary object directory as an alternate object store in the
-  * current process.
+ 	/*
+@@ -50,6 +50,9 @@ static void *three_way_filemerge(struct index_state *istate,
+ 				istate, NULL);
+ 	if (merge_status < 0)
+ 		return NULL;
++	if (merge_status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			path, ".our", ".their");
+ 
+ 	*size = res.size;
+ 	return res.ptr;
+diff --git a/merge-ort.c b/merge-ort.c
+index 0342f104836..c24da2ba3cb 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -1743,7 +1743,7 @@ static int merge_3way(struct merge_options *opt,
+ 	mmfile_t orig, src1, src2;
+ 	struct ll_merge_options ll_opts = {0};
+ 	char *base, *name1, *name2;
+-	int merge_status;
++	enum ll_merge_result merge_status;
+ 
+ 	if (!opt->priv->attr_index.initialized)
+ 		initialize_attr_index(opt);
+@@ -1787,6 +1787,9 @@ static int merge_3way(struct merge_options *opt,
+ 	merge_status = ll_merge(result_buf, path, &orig, base,
+ 				&src1, name1, &src2, name2,
+ 				&opt->priv->attr_index, &ll_opts);
++	if (merge_status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			path, name1, name2);
+ 
+ 	free(base);
+ 	free(name1);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index d9457797dbb..bc73c52dd84 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1044,7 +1044,7 @@ static int merge_3way(struct merge_options *opt,
+ 	mmfile_t orig, src1, src2;
+ 	struct ll_merge_options ll_opts = {0};
+ 	char *base, *name1, *name2;
+-	int merge_status;
++	enum ll_merge_result merge_status;
+ 
+ 	ll_opts.renormalize = opt->renormalize;
+ 	ll_opts.extra_marker_size = extra_marker_size;
+@@ -1090,6 +1090,9 @@ static int merge_3way(struct merge_options *opt,
+ 	merge_status = ll_merge(result_buf, a->path, &orig, base,
+ 				&src1, name1, &src2, name2,
+ 				opt->repo->index, &ll_opts);
++	if (merge_status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			a->path, name1, name2);
+ 
+ 	free(base);
+ 	free(name1);
+diff --git a/notes-merge.c b/notes-merge.c
+index b4a3a903e86..01d596920ea 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -344,7 +344,7 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
+ {
+ 	mmbuffer_t result_buf;
+ 	mmfile_t base, local, remote;
+-	int status;
++	enum ll_merge_result status;
+ 
+ 	read_mmblob(&base, &p->base);
+ 	read_mmblob(&local, &p->local);
+@@ -358,6 +358,9 @@ static int ll_merge_in_worktree(struct notes_merge_options *o,
+ 	free(local.ptr);
+ 	free(remote.ptr);
+ 
++	if (status == LL_MERGE_BINARY_CONFLICT)
++		warning("Cannot merge binary files: %s (%s vs. %s)",
++			oid_to_hex(&p->obj), o->local_ref, o->remote_ref);
+ 	if ((status < 0) || !result_buf.ptr)
+ 		die("Failed to execute internal merge");
+ 
+diff --git a/rerere.c b/rerere.c
+index d83d58df4fb..d26627c5932 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -609,19 +609,20 @@ static int try_merge(struct index_state *istate,
+ 		     const struct rerere_id *id, const char *path,
+ 		     mmfile_t *cur, mmbuffer_t *result)
+ {
+-	int ret;
++	enum ll_merge_result ret;
+ 	mmfile_t base = {NULL, 0}, other = {NULL, 0};
+ 
+ 	if (read_mmfile(&base, rerere_path(id, "preimage")) ||
+-	    read_mmfile(&other, rerere_path(id, "postimage")))
+-		ret = 1;
+-	else
++	    read_mmfile(&other, rerere_path(id, "postimage"))) {
++		ret = LL_MERGE_CONFLICT;
++	} else {
+ 		/*
+ 		 * A three-way merge. Note that this honors user-customizable
+ 		 * low-level merge driver settings.
+ 		 */
+ 		ret = ll_merge(result, path, &base, NULL, cur, "", &other, "",
+ 			       istate, NULL);
++	}
+ 
+ 	free(base.ptr);
+ 	free(other.ptr);
 -- 
 gitgitgadget
 
