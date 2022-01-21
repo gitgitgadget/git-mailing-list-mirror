@@ -1,0 +1,27 @@
+name: sync
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron:  "2,7,12,17,22,27,32,37,42,47,52,57 * * * *"
+
+env:
+  LORE_EPOCH: 1
+
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Partial clone
+      run: |
+        git clone --bare --filter=blob:none https://github.com/$GITHUB_REPOSITORY
+    - name: Update from lore.kernel.org
+      run: |
+        git fetch https://lore.kernel.org/git/$LORE_EPOCH refs/heads/master:refs/heads/lore-$LORE_EPOCH
+    - name: Push to mirror
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git push https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY lore-$LORE_EPOCH
