@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6EA0C433FE
-	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 19:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7069DC433EF
+	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 19:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231906AbiAUTMe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jan 2022 14:12:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52900 "EHLO
+        id S232008AbiAUTMg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 14:12:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231822AbiAUTMa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jan 2022 14:12:30 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A880FC06173B
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 11:12:29 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id s4so500264wrb.0
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 11:12:29 -0800 (PST)
+        with ESMTP id S231482AbiAUTMb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jan 2022 14:12:31 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B32ADC06173D
+        for <git@vger.kernel.org>; Fri, 21 Jan 2022 11:12:30 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id o1-20020a1c4d01000000b0034d95625e1fso15443045wmh.4
+        for <git@vger.kernel.org>; Fri, 21 Jan 2022 11:12:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Jt+pEdaNvy6+eLb7fLZGKq6uyZ8j2uRNVRhVEtft+jI=;
-        b=LKEucIYQ5/Cg3BJiFTcDAAEZo/dnHDReoUBILaukasUCadShIhQEmErr9xa+uU+gpi
-         4Kc2+K6Fq5d8RRTlzUTBECPaWd5rh03SFoMG69je9/RgK05JMnAmG9Lqfs8iKZyNYtE1
-         DSMu5gqLoubLHeEfE8ygMVdzmpETOqXiZVq265Hekmc2fWK9uPO2CGbWqTCejenqVXgF
-         XwDKKZxH+i1WbiM7n525LRdr+WKcne4WLarD8rPZGxj4fDl7PXkHhxeOtbN4uQ4RHdWn
-         yQnPGZ54raxMqa8gVOShrjJ8ppiyAFezTB0PrKJmSUTE87SejTWUCIKO92vHopserZTJ
-         jVJA==
+        bh=2NmfFQRBnIwE//dIuq0V8oIvdy2aUwh7Fz41UnhXWvA=;
+        b=HkHOAZkISTkU3Ij8RtW6zt9e7w22II7T85DSCzEyawRs1sTxQiArYgCjYGdx2RWW41
+         KkcetNL36feGmgvTGdHWHQMTuWsV1d4YRaILqCIo7/VZduBpPA95RZODvScVmK7nlhYx
+         twlPDoxPMQAdI+BtgbdQN5Op3eJpVx1X3BkKdHGSGd5HMN6IZ/Jp2wolHch+5OrvRxf1
+         pde7M60xrQH8/PsGnBAxYbXh/erKWcagLXlgof0bxVqO0B+etxn37Bn7eNOaVxJwf8Aj
+         6zukOeyvMr4CCIyiZSGX/6pTb6s+NzKaqOLc02zaanEAO+VFujJph435gwSzQDbOk2EH
+         t3EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Jt+pEdaNvy6+eLb7fLZGKq6uyZ8j2uRNVRhVEtft+jI=;
-        b=TkcVhtU2ahzE5/7wTlLuSAJYR8u33a4zAUr5y9BkLrj/JQY4JdQyYoq8qfjgpTmavn
-         7wDVyDWgA+jbixeP7rrHKJpy/jQuSjkr/zcBsEEQJZA4Wy0+DBG1fcaHmqYSj3mSzxVh
-         vldFxl+eaM/yT9PQxChpdhbyJ5KnRJBHBaKtJ++zS0ggDDNdmgIAI8/rqx1AB7danSYJ
-         L2v7xggF6G7OHvkV43yC1SXM5PjnxtaC6c9T+bSkPjmsLWoiKfHJc2peMJ1LfNkc28xH
-         HO2brjeEG9Me6jGS0Naj4HqJ7RgY/Ac1oXuhSKioT4S0fabc2pqwXPKWrM0VzQDQa5zM
-         ktGw==
-X-Gm-Message-State: AOAM532/WHkgzcB7cpecoVH9/d1Gbdpu2puTO/DXvlqcKXurJmoNBjsq
-        7gmcCavkFpFupD+GVzhlm2PFg7zv9To=
-X-Google-Smtp-Source: ABdhPJzZH1knF2HXU+1SfdFK4z5y02isq7vvXAPWbgDOorQJ2R2hf1fh81xS3SoSrIEgtq8GaFLbqw==
-X-Received: by 2002:a05:6000:1548:: with SMTP id 8mr4967375wry.66.1642792348062;
-        Fri, 21 Jan 2022 11:12:28 -0800 (PST)
+        bh=2NmfFQRBnIwE//dIuq0V8oIvdy2aUwh7Fz41UnhXWvA=;
+        b=FRye7+qHwcEftRZStDT+/O0gmhw4nY+DBeIsbV1yqp0oC2TCOFL827fTS2IhO0HoQ9
+         ONqNjX3aD+lr3fe5j3oh0NxINLUkF7Equroy8J3z/0ZE03IkUBPOekueKsfREyrnMKD1
+         AoSeglE2/KRMaIczAWNlVu2++7VgpanmhGf0VfJbs8gBMxU94gzNh4lglVU5d0MOFGhY
+         Mx3iVdH0MGwXwqtOOxq8k/8/4ebxDCuUjE8U1IPXXYCQu3t1AiNlHzpW0sUHZ7jWeG7m
+         m4hoHBQBGcWs5F1P7lG13YB9VHGPGzdUL6bcSA0MHP2zSIPRyjR62fwF2sPvF2gmTpau
+         hSbA==
+X-Gm-Message-State: AOAM532LRH6/SFFCwuMaSMJU0hjvuHIbg8xBL2TIWr6nkLfdIB49gSZR
+        IdthbqVUl7gVcAiI+NxtPTzHDd6ZhrY=
+X-Google-Smtp-Source: ABdhPJzB/U7faHwAi7FXg27rP6N0zKImi1n2lAPmlVF8oJtMdmkJBlq9eYfiR24Qtl8wJ6g7Sr/ClQ==
+X-Received: by 2002:a05:600c:1987:: with SMTP id t7mr1948919wmq.124.1642792349052;
+        Fri, 21 Jan 2022 11:12:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a18sm6887725wrw.5.2022.01.21.11.12.27
+        by smtp.gmail.com with ESMTPSA id n14sm6929858wri.101.2022.01.21.11.12.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jan 2022 11:12:27 -0800 (PST)
-Message-Id: <e2441608c6385a231ecb70f22424672a8e022862.1642792341.git.gitgitgadget@gmail.com>
+        Fri, 21 Jan 2022 11:12:28 -0800 (PST)
+Message-Id: <62734beb693a6a6256106f0ffad9519a76c9d6d8.1642792341.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com>
 References: <pull.1103.v3.git.1640907369.gitgitgadget@gmail.com>
         <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 21 Jan 2022 19:12:16 +0000
-Subject: [PATCH v4 06/10] merge-ort: format messages slightly different for
- use in headers
+Date:   Fri, 21 Jan 2022 19:12:17 +0000
+Subject: [PATCH v4 07/10] diff: add ability to insert additional headers for
+ paths
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,129 +75,261 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-When users run
-    git show --remerge-diff $MERGE_COMMIT
-or
-    git log -p --remerge-diff ...
-stdout is not an appropriate location to dump conflict messages, but we
-do want to provide them to users.  We will include them in the diff
-headers instead...but for that to work, we need for any multiline
-messages to replace newlines with both a newline and a space.  Add a new
-flag to signal when we want these messages modified in such a fashion,
-and use it in path_msg() to modify these messages this way.  Also, allow
-a special prefix to be specified for these headers.
+When additional headers are provided, we need to
+  * add diff_filepairs to diff_queued_diff for each paths in the
+    additional headers map which, unless that path is part of
+    another diff_filepair already found in diff_queued_diff
+  * format the headers (colorization, line_prefix for --graph)
+  * make sure the various codepaths that attempt to return early
+    if there are "no changes" take into account the headers that
+    need to be shown.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c       | 42 ++++++++++++++++++++++++++++++++++++++++--
- merge-recursive.c |  4 ++++
- merge-recursive.h |  2 ++
- 3 files changed, 46 insertions(+), 2 deletions(-)
+ diff.c     | 124 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ diff.h     |   3 +-
+ log-tree.c |   2 +-
+ 3 files changed, 123 insertions(+), 6 deletions(-)
 
-diff --git a/merge-ort.c b/merge-ort.c
-index 998e92ec593..481305d2bcf 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -634,17 +634,49 @@ static void path_msg(struct merge_options *opt,
- 		     const char *fmt, ...)
- {
- 	va_list ap;
--	struct strbuf *sb = strmap_get(&opt->priv->output, path);
-+	struct strbuf *sb, *dest;
-+	struct strbuf tmp = STRBUF_INIT;
-+
-+	if (opt->record_conflict_msgs_as_headers && omittable_hint)
-+		return; /* Do not record mere hints in tree */
-+	sb = strmap_get(&opt->priv->output, path);
- 	if (!sb) {
- 		sb = xmalloc(sizeof(*sb));
- 		strbuf_init(sb, 0);
- 		strmap_put(&opt->priv->output, path, sb);
- 	}
+diff --git a/diff.c b/diff.c
+index 861282db1c3..1bfb01c18ec 100644
+--- a/diff.c
++++ b/diff.c
+@@ -27,6 +27,7 @@
+ #include "help.h"
+ #include "promisor-remote.h"
+ #include "dir.h"
++#include "strmap.h"
  
-+	dest = (opt->record_conflict_msgs_as_headers ? &tmp : sb);
-+
- 	va_start(ap, fmt);
--	strbuf_vaddf(sb, fmt, ap);
-+	strbuf_vaddf(dest, fmt, ap);
- 	va_end(ap);
- 
-+	if (opt->record_conflict_msgs_as_headers) {
-+		int i_sb = 0, i_tmp = 0;
-+
-+		/* Start with the specified prefix */
-+		if (opt->msg_header_prefix)
-+			strbuf_addf(sb, "%s ", opt->msg_header_prefix);
-+
-+		/* Copy tmp to sb, adding spaces after newlines */
-+		strbuf_grow(sb, sb->len + 2*tmp.len); /* more than sufficient */
-+		for (; i_tmp < tmp.len; i_tmp++, i_sb++) {
-+			/* Copy next character from tmp to sb */
-+			sb->buf[sb->len + i_sb] = tmp.buf[i_tmp];
-+
-+			/* If we copied a newline, add a space */
-+			if (tmp.buf[i_tmp] == '\n')
-+				sb->buf[++i_sb] = ' ';
-+		}
-+		/* Update length and ensure it's NUL-terminated */
-+		sb->len += i_sb;
-+		sb->buf[sb->len] = '\0';
-+
-+		strbuf_release(&tmp);
-+	}
-+
-+	/* Add final newline character to sb */
- 	strbuf_addch(sb, '\n');
+ #ifdef NO_FAST_WORKING_DIRECTORY
+ #define FAST_WORKING_DIRECTORY 0
+@@ -3406,6 +3407,31 @@ struct userdiff_driver *get_textconv(struct repository *r,
+ 	return userdiff_get_textconv(r, one->driver);
  }
  
-@@ -4246,6 +4278,9 @@ void merge_switch_to_result(struct merge_options *opt,
- 		struct string_list olist = STRING_LIST_INIT_NODUP;
- 		int i;
- 
-+		if (opt->record_conflict_msgs_as_headers)
-+			BUG("Either display conflict messages or record them as headers, not both");
++static struct strbuf *additional_headers(struct diff_options *o,
++					 const char *path)
++{
++	if (!o->additional_path_headers)
++		return NULL;
++	return strmap_get(o->additional_path_headers, path);
++}
 +
- 		trace2_region_enter("merge", "display messages", opt->repo);
- 
- 		/* Hack to pre-allocate olist to the desired size */
-@@ -4347,6 +4382,9 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
- 	assert(opt->recursive_variant >= MERGE_VARIANT_NORMAL &&
- 	       opt->recursive_variant <= MERGE_VARIANT_THEIRS);
- 
-+	if (opt->msg_header_prefix)
-+		assert(opt->record_conflict_msgs_as_headers);
++static void add_formatted_headers(struct strbuf *msg,
++				  struct strbuf *more_headers,
++				  const char *line_prefix,
++				  const char *meta,
++				  const char *reset)
++{
++	char *next, *newline;
 +
- 	/*
- 	 * detect_renames, verbosity, buffer_output, and obuf are ignored
- 	 * fields that were used by "recursive" rather than "ort" -- but
-diff --git a/merge-recursive.c b/merge-recursive.c
-index bc73c52dd84..9ec1e6d043a 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -3714,6 +3714,10 @@ static int merge_start(struct merge_options *opt, struct tree *head)
- 
- 	assert(opt->priv == NULL);
- 
-+	/* Not supported; option specific to merge-ort */
-+	assert(!opt->record_conflict_msgs_as_headers);
-+	assert(!opt->msg_header_prefix);
++	for (next = more_headers->buf; *next; next = newline) {
++		newline = strchrnul(next, '\n');
++		strbuf_addf(msg, "%s%s%.*s%s\n", line_prefix, meta,
++			    (int)(newline - next), next, reset);
++		if (*newline)
++			newline++;
++	}
++}
 +
- 	/* Sanity check on repo state; index must match head */
- 	if (repo_index_has_changes(opt->repo, head, &sb)) {
- 		err(opt, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 0795a1d3ec1..b88000e3c25 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -46,6 +46,8 @@ struct merge_options {
- 	/* miscellaneous control options */
- 	const char *subtree_shift;
- 	unsigned renormalize : 1;
-+	unsigned record_conflict_msgs_as_headers : 1;
-+	const char *msg_header_prefix;
+ static void builtin_diff(const char *name_a,
+ 			 const char *name_b,
+ 			 struct diff_filespec *one,
+@@ -3464,6 +3490,17 @@ static void builtin_diff(const char *name_a,
+ 	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
+ 	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
+ 	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
++	if (!DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two)) {
++		/*
++		 * We should only reach this point for pairs from
++		 * create_filepairs_for_header_only_notifications().  For
++		 * these, we should avoid the "/dev/null" special casing
++		 * above, meaning we avoid showing such pairs as either
++		 * "new file" or "deleted file" below.
++		 */
++		lbl[0] = a_one;
++		lbl[1] = b_two;
++	}
+ 	strbuf_addf(&header, "%s%sdiff --git %s %s%s\n", line_prefix, meta, a_one, b_two, reset);
+ 	if (lbl[0][0] == '/') {
+ 		/* /dev/null */
+@@ -4328,6 +4365,7 @@ static void fill_metainfo(struct strbuf *msg,
+ 	const char *set = diff_get_color(use_color, DIFF_METAINFO);
+ 	const char *reset = diff_get_color(use_color, DIFF_RESET);
+ 	const char *line_prefix = diff_line_prefix(o);
++	struct strbuf *more_headers = NULL;
  
- 	/* internal fields used by the implementation */
- 	struct merge_options_internal *priv;
+ 	*must_show_header = 1;
+ 	strbuf_init(msg, PATH_MAX * 2 + 300);
+@@ -4364,6 +4402,11 @@ static void fill_metainfo(struct strbuf *msg,
+ 	default:
+ 		*must_show_header = 0;
+ 	}
++	if ((more_headers = additional_headers(o, name))) {
++		add_formatted_headers(msg, more_headers,
++				      line_prefix, set, reset);
++		*must_show_header = 1;
++	}
+ 	if (one && two && !oideq(&one->oid, &two->oid)) {
+ 		const unsigned hexsz = the_hash_algo->hexsz;
+ 		int abbrev = o->abbrev ? o->abbrev : DEFAULT_ABBREV;
+@@ -5852,12 +5895,27 @@ int diff_unmodified_pair(struct diff_filepair *p)
+ 
+ static void diff_flush_patch(struct diff_filepair *p, struct diff_options *o)
+ {
+-	if (diff_unmodified_pair(p))
++	int include_conflict_headers =
++	    (additional_headers(o, p->one->path) &&
++	     (!o->filter || filter_bit_tst(DIFF_STATUS_UNMERGED, o)));
++
++	/*
++	 * Check if we can return early without showing a diff.  Note that
++	 * diff_filepair only stores {oid, path, mode, is_valid}
++	 * information for each path, and thus diff_unmodified_pair() only
++	 * considers those bits of info.  However, we do not want pairs
++	 * created by create_filepairs_for_header_only_notifications()
++	 * (which always look like unmodified pairs) to be ignored, so
++	 * return early if both p is unmodified AND we don't want to
++	 * include_conflict_headers.
++	 */
++	if (diff_unmodified_pair(p) && !include_conflict_headers)
+ 		return;
+ 
++	/* Actually, we can also return early to avoid showing tree diffs */
+ 	if ((DIFF_FILE_VALID(p->one) && S_ISDIR(p->one->mode)) ||
+ 	    (DIFF_FILE_VALID(p->two) && S_ISDIR(p->two->mode)))
+-		return; /* no tree diffs in patch format */
++		return;
+ 
+ 	run_diff(p, o);
+ }
+@@ -5888,10 +5946,17 @@ static void diff_flush_checkdiff(struct diff_filepair *p,
+ 	run_checkdiff(p, o);
+ }
+ 
+-int diff_queue_is_empty(void)
++int diff_queue_is_empty(struct diff_options *o)
+ {
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+ 	int i;
++	int include_conflict_headers =
++	    (o->additional_path_headers &&
++	     (!o->filter || filter_bit_tst(DIFF_STATUS_UNMERGED, o)));
++
++	if (include_conflict_headers)
++		return 0;
++
+ 	for (i = 0; i < q->nr; i++)
+ 		if (!diff_unmodified_pair(q->queue[i]))
+ 			return 0;
+@@ -6325,6 +6390,54 @@ void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc)
+ 		warning(_(rename_limit_advice), varname, needed);
+ }
+ 
++static void create_filepairs_for_header_only_notifications(struct diff_options *o)
++{
++	struct strset present;
++	struct diff_queue_struct *q = &diff_queued_diff;
++	struct hashmap_iter iter;
++	struct strmap_entry *e;
++	int i;
++
++	strset_init_with_options(&present, /*pool*/ NULL, /*strdup*/ 0);
++
++	/*
++	 * Find out which paths exist in diff_queued_diff, preferring
++	 * one->path for any pair that has multiple paths.
++	 */
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		char *path = p->one->path ? p->one->path : p->two->path;
++
++		if (strmap_contains(o->additional_path_headers, path))
++			strset_add(&present, path);
++	}
++
++	/*
++	 * Loop over paths in additional_path_headers; for each NOT already
++	 * in diff_queued_diff, create a synthetic filepair and insert that
++	 * into diff_queued_diff.
++	 */
++	strmap_for_each_entry(o->additional_path_headers, &iter, e) {
++		if (!strset_contains(&present, e->key)) {
++			struct diff_filespec *one, *two;
++			struct diff_filepair *p;
++
++			one = alloc_filespec(e->key);
++			two = alloc_filespec(e->key);
++			fill_filespec(one, null_oid(), 0, 0);
++			fill_filespec(two, null_oid(), 0, 0);
++			p = diff_queue(q, one, two);
++			p->status = DIFF_STATUS_MODIFIED;
++		}
++	}
++
++	/* Re-sort the filepairs */
++	diffcore_fix_diff_index();
++
++	/* Cleanup */
++	strset_clear(&present);
++}
++
+ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
+ {
+ 	int i;
+@@ -6337,6 +6450,9 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
+ 	if (o->color_moved)
+ 		o->emitted_symbols = &esm;
+ 
++	if (o->additional_path_headers)
++		create_filepairs_for_header_only_notifications(o);
++
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+ 		if (check_pair_status(p))
+@@ -6413,7 +6529,7 @@ void diff_flush(struct diff_options *options)
+ 	 * Order: raw, stat, summary, patch
+ 	 * or:    name/name-status/checkdiff (other bits clear)
+ 	 */
+-	if (!q->nr)
++	if (!q->nr && !options->additional_path_headers)
+ 		goto free_queue;
+ 
+ 	if (output_format & (DIFF_FORMAT_RAW |
+diff --git a/diff.h b/diff.h
+index 8ba85c5e605..ce9e2cf2e4f 100644
+--- a/diff.h
++++ b/diff.h
+@@ -395,6 +395,7 @@ struct diff_options {
+ 
+ 	struct repository *repo;
+ 	struct option *parseopts;
++	struct strmap *additional_path_headers;
+ 
+ 	int no_free;
+ };
+@@ -593,7 +594,7 @@ void diffcore_fix_diff_index(void);
+ "                show all files diff when -S is used and hit is found.\n" \
+ "  -a  --text    treat all files as text.\n"
+ 
+-int diff_queue_is_empty(void);
++int diff_queue_is_empty(struct diff_options *o);
+ void diff_flush(struct diff_options*);
+ void diff_free(struct diff_options*);
+ void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc);
+diff --git a/log-tree.c b/log-tree.c
+index d4655b63d75..33c28f537a6 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -850,7 +850,7 @@ int log_tree_diff_flush(struct rev_info *opt)
+ 	opt->shown_dashes = 0;
+ 	diffcore_std(&opt->diffopt);
+ 
+-	if (diff_queue_is_empty()) {
++	if (diff_queue_is_empty(&opt->diffopt)) {
+ 		int saved_fmt = opt->diffopt.output_format;
+ 		opt->diffopt.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 		diff_flush(&opt->diffopt);
 -- 
 gitgitgadget
 
