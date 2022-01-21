@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17F04C433EF
-	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 11:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64210C433F5
+	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 11:54:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350236AbiAULt5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jan 2022 06:49:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36192 "EHLO
+        id S234642AbiAULyn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 06:54:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350122AbiAULt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jan 2022 06:49:56 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B2BAC061574
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 03:49:56 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id z22so41821780edd.12
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 03:49:56 -0800 (PST)
+        with ESMTP id S233354AbiAULyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jan 2022 06:54:43 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A43C1C061574
+        for <git@vger.kernel.org>; Fri, 21 Jan 2022 03:54:42 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id n10so26427534edv.2
+        for <git@vger.kernel.org>; Fri, 21 Jan 2022 03:54:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=vF3lrB6s7iSp37aE9GfkR4BS2sKjwUwfM4aofNENhKo=;
-        b=jLmrNRHRsWA4ACcfj29XT06y9BLHuC7Uz4Y2lyCYcpVE2YC2AKFdvnW5jE5+7Rxztz
-         BFwvQBh5CTy0BZ2KFMUGSyf1YBwaof3ciyU3LB1v3bymegJDk+wptuI+LCaUTqax2Toy
-         ATFtWieWSSc2BTNC6FYFJOQkgzIM5I6SwyGJpDY4wprcI70OfbsTpH24Vad5hWHo04rg
-         4aVDvHfR+HpwNffOrKzIf/vlKsotRJC66uyjPP68JD/GZzmIiTvDDmHIosr+qUquuWw9
-         h998bTLXYebWX1/F7YlMpIMIBF5l7xXyzymLDRgxNPRR0VWF3MFI+Di9L1etXC7xIj5r
-         O5Lg==
+        bh=G30Y2Fssk8ADiZodHhLgshGCj9yuMX3e1NPDP/tz+Y4=;
+        b=mhD0m3mdIb39UatjWPzlrfOmbWIytv8fzDxkD3GLOSGARmp8Yv/8n+ARPviEmM0kkc
+         rbI9kIj94PQOBD0Z1C7frEtkuv+u9e1cgWiUJpillkv+SSQPZF8SQh92b1R6GzTOXYR2
+         nTgsZUMYd+l+YMjIx4+iu6iLl8kTnfv0WaMYXODeo8xJMw0uUDF2FxA3cNmilvhpxsFF
+         OjW7jjsOSunDJqLwKwV6dC/VnhBLnFW+Q3qbupnpK0GmfoZjTDmLqWSD4ktjjzjav8ax
+         EDLLGurE0zyU4eKnnUD3iv44eG2BzG0AGfyr7Zy52Q+HBSaoBd1TmND3IX6Sl16tjchn
+         A6dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=vF3lrB6s7iSp37aE9GfkR4BS2sKjwUwfM4aofNENhKo=;
-        b=JXFycmYCNKhmrvV9HFNhpXgGwyoFd19qN+OE463qE1Ujgbn8ppE+7rOXLd3MJ8Pq5p
-         2kRMEsEFl3154s0oD7t/KrFbGtFSnwsnzrX2Mkv55fVOcs3ln3SVLGOtn2r+ftUUxTKy
-         Z0nXjF3iXJkTI8+7euM61/pnp95gVBh18jG1hLu7VrNgvFhLZcPgTT5xJY2CX2t6q05J
-         RuO9Qgn45On5OrWgWDVqagMC2OmRI/9C7rEJFhoJfhzWj/fFXioOHlhc2qV3ETMAEoci
-         c1jtKj0YIYGeJvKejuKiLE9A+b1rxecR8luZTTddaCQmYkRR/jfk7/4kWleaDQnvMDKY
-         y2eQ==
-X-Gm-Message-State: AOAM532YCRMbi+6YYeOSSRzFPyqwoumMKm3ZLZf8SFKP2A2b5j+R0kd0
-        orLBLiT2GXNnTHJLZnum59w3/BLGR6kZ5Q==
-X-Google-Smtp-Source: ABdhPJxLkI2tntlrnMeGfPCQ1HCsnevJSEjLuiFVOmRHy8xi+/lNf2m+uRG5nuNsazMqTLPWRjE00w==
-X-Received: by 2002:a17:907:7f86:: with SMTP id qk6mr2977407ejc.631.1642765794209;
-        Fri, 21 Jan 2022 03:49:54 -0800 (PST)
+        bh=G30Y2Fssk8ADiZodHhLgshGCj9yuMX3e1NPDP/tz+Y4=;
+        b=Q6pm3BokxYFe3hUaogoebB+XHcLAoIvDIT3nDKZCJxZlaZSPzH3IxMctLx2PX2ZPhK
+         xMqghLoW9H33vRFPixRLqeAhcPnuCllHcQqGHn9HBod8diKNpXWZB+gu4h0VU1DgBlJs
+         YX8DGo8nsvyNLLjpaCOR7/cgxxbHmv6u+jicddfzfNffLzwHXLvFthVoJb7HMDwD9JQa
+         6wJ+IaCTlgBbf/E19C4zlvIXy7t+09pVx4/DJRMbgU2ZcJDLvx3WA81RVtRQNUR83dO/
+         7RDxx0AQAYL++Jw+WCJ24ra120KC4nIeESHBqMr2ORlNaAsKUhvsBOHow11CuqWBtX4D
+         ZwQg==
+X-Gm-Message-State: AOAM532Bu+dwP1hxb+eHy78yL845a/TgKk48FneJMfG0935NHti8wpdL
+        fZGDp9cW8hbFM5lA2fTipSdT8ZJOVX/N0g==
+X-Google-Smtp-Source: ABdhPJyzPwu9U7+yoOFOady/HaEcM3PRW7zqEt9LNdiKlFP+Fb+0ZKOXnsQL2rcQyw8ryb9g2bmOfQ==
+X-Received: by 2002:a17:907:72c5:: with SMTP id du5mr3048951ejc.210.1642766080908;
+        Fri, 21 Jan 2022 03:54:40 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id r22sm2503856edt.51.2022.01.21.03.49.53
+        by smtp.gmail.com with ESMTPSA id d23sm1609743eja.86.2022.01.21.03.54.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jan 2022 03:49:53 -0800 (PST)
+        Fri, 21 Jan 2022 03:54:40 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nAsQT-0027Y4-4b;
-        Fri, 21 Jan 2022 12:49:53 +0100
+        id 1nAsV5-0027h2-Qf;
+        Fri, 21 Jan 2022 12:54:39 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -60,15 +60,14 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Neeraj Singh <nksingh85@gmail.com>,
         Han-Wen Nienhuys <hanwenn@gmail.com>,
         Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v6 05/15] reftable: ignore remove() return value in
- stack_test.c
-Date:   Fri, 21 Jan 2022 12:46:05 +0100
+Subject: Re: [PATCH v6 12/15] reftable: implement record equality generically
+Date:   Fri, 21 Jan 2022 12:52:09 +0100
 References: <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
  <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
- <08be6d90a4890b63fe9b0885af0df084c9ca81fd.1642691534.git.gitgitgadget@gmail.com>
+ <6385e449ba714e3ce41f10276fc60e9757519492.1642691534.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <08be6d90a4890b63fe9b0885af0df084c9ca81fd.1642691534.git.gitgitgadget@gmail.com>
-Message-ID: <220121.86wnitjoke.gmgdl@evledraar.gmail.com>
+In-reply-to: <6385e449ba714e3ce41f10276fc60e9757519492.1642691534.git.gitgitgadget@gmail.com>
+Message-ID: <220121.86sfthjocg.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -80,39 +79,70 @@ On Thu, Jan 20 2022, Han-Wen Nienhuys via GitGitGadget wrote:
 
 > From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> If the cleanup fails, there is nothing we can do.
+> This simplifies unittests a little, and provides further coverage for
+> reftable_record_copy().
 >
 > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 > ---
->  reftable/stack_test.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  reftable/record.c      | 57 +++++++++++++++++++++++++++++++++++++++++-
+>  reftable/record.h      |  5 +++-
+>  reftable/record_test.c | 23 +++--------------
+>  3 files changed, 63 insertions(+), 22 deletions(-)
 >
-> diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-> index e84f50d27ff..19fe4e20085 100644
-> --- a/reftable/stack_test.c
-> +++ b/reftable/stack_test.c
-> @@ -90,7 +90,7 @@ static void test_read_file(void)
->  		EXPECT(0 == strcmp(want[i], names[i]));
->  	}
->  	free_names(names);
-> -	remove(fn);
-> +	(void) remove(fn);
+> diff --git a/reftable/record.c b/reftable/record.c
+> index f7c77c51539..2a9e41a992e 100644
+> --- a/reftable/record.c
+> +++ b/reftable/record.c
+> @@ -430,6 +430,15 @@ static int reftable_ref_record_is_deletion_void(const void *p)
+>  		(const struct reftable_ref_record *)p);
 >  }
 >  
->  static void test_parse_names(void)
+> +
 
-Well, if we fail here due to a permission error or other I/O weirdness
-surely it's better to:
+stray extra newline being added here.
 
-	if (remove(fn) < 0)
-		die_errno("unable to remove '%s'", fn);
+> +static int reftable_ref_record_equal_void(const void *a,
+> +					  const void *b, int hash_size)
+> +{
+> +	struct reftable_ref_record *ra = (struct reftable_ref_record *) a;
+> +	struct reftable_ref_record *rb = (struct reftable_ref_record *) b;
+> +	return reftable_ref_record_equal(ra, rb, hash_size);
+> +}
+> +
+>  static struct reftable_record_vtable reftable_ref_record_vtable = {
+>  	.key = &reftable_ref_record_key,
+>  	.type = BLOCK_TYPE_REF,
+> @@ -439,6 +448,7 @@ static struct reftable_record_vtable reftable_ref_record_vtable = {
+>  	.decode = &reftable_ref_record_decode,
+>  	.release = &reftable_ref_record_release_void,
+>  	.is_deletion = &reftable_ref_record_is_deletion_void,
+> +	.equal = &reftable_ref_record_equal_void,
+>  };
+>  
+>  static void reftable_obj_record_key(const void *r, struct strbuf *dest)
+> @@ -572,6 +582,25 @@ static int not_a_deletion(const void *p)
+>  	return 0;
+>  }
+>  
+> +static int reftable_obj_record_equal_void(const void *a, const void *b, int hash_size)
+> +{
+> +	struct reftable_obj_record *ra = (struct reftable_obj_record *) a;
+> +	struct reftable_obj_record *rb = (struct reftable_obj_record *) b;
+> +
+> +	if (ra->hash_prefix_len != rb->hash_prefix_len
+> +	    || ra->offset_len != rb->offset_len)
+> +		return 0;
+> +
+> +	if (ra->hash_prefix_len &&
+> +	    memcmp(ra->hash_prefix, rb->hash_prefix, ra->hash_prefix_len))
+> +		return 0;
 
-Otherwise we're just silently sweeping that under the rug, and likely
-having the "rm -rf" we'll shortly do in test-lib.sh catch it at a
-distance.
+Similar to the memcpy() paranoia isn't this memcmp() paranoia?
+I.e. memcmp() returns 0 on a n=0, so we can lose the
+"ra->hash_prefix_len &&" here, no?
 
-Also why are we using remove() here at all? Shouldn't this just be
-unlink()? Or per the feedback above unlink_or_warn() or
-remove_or_warn()? I.e. looking at the context we just open()'d this
-"fn", so we're not unsure if it's a directory or a file, are we?
+> +	if (ra->offset_len &&
+> +	    memcmp(ra->offsets, rb->offsets, ra->offset_len * sizeof(uint64_t)))
+> +		return 0;
 
+...and here, since 0 * sizeof() will just get us zero.
