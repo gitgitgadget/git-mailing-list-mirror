@@ -2,95 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8997AC433EF
-	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 21:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CE1DC433F5
+	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 22:09:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232566AbiAUV6O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jan 2022 16:58:14 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58559 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231180AbiAUV6O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jan 2022 16:58:14 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 93D0315B5E3;
-        Fri, 21 Jan 2022 16:58:13 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-        :to:cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=T1izo1S3m/UyS
-        8IC7/+hyOhbiyIFywjjDced/mMxsMc=; b=hawydpEUJFIC3+6XSvyDLl/sPxHT/
-        7CC5jTxSybeJa3mR/HfhN/3ra+9C4ybEF7/nLWE5Cb/2gJz/qJzlRwIkGBcFxLVp
-        L99HXnrAC8oEWn7vPeczbw2kiFuaoswUhUfRy7H/f20gYp4bb12SKmL/OpLkVokY
-        AMFn6HpB79eoYQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8CF8415B5E1;
-        Fri, 21 Jan 2022 16:58:13 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [71.254.192.242])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        id S232356AbiAUWJJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 17:09:09 -0500
+Received: from ring.crustytoothpaste.net ([172.105.110.227]:36604 "EHLO
+        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229484AbiAUWJJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jan 2022 17:09:09 -0500
+Received: from camp.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0B9BD15B5E0;
-        Fri, 21 Jan 2022 16:58:09 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Date:   Fri, 21 Jan 2022 16:58:06 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Petr =?utf-8?B?xaBwbMOtY2hhbA==?= <psplicha@redhat.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] checkout: fix BUG() case in 9081a421a6
-Message-ID: <YessbkNZlxLOTzBE@pobox.com>
-References: <YemTGQZ97vAPUPY0@pobox.com>
- <patch-1.1-21ddf7c628d-20220120T212233Z-avarab@gmail.com>
- <xmqqee52ghwg.fsf@gitster.g>
- <220121.86iludl4d9.gmgdl@evledraar.gmail.com>
- <CABXw6YMztos7UYJn0LxKiWvZ_oy55mu+k__jABdXwAW0H3J0cA@mail.gmail.com>
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id DDC585B227;
+        Fri, 21 Jan 2022 22:09:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1642802947;
+        bh=NASK+ELLcKLDs50jdPU9Mb8Aoc0WO1oeC/2/d450i0Y=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=uxV+1JVp520oRQwQPE09o3RdUi+QW39Zp71x4VvIlZTXq1XAWLk0NzxmRLCvsgH9N
+         +ZmwWyrCm89llQ99RA2c0h04f0yBPorwFx3Ei/8EQi1bqbTK1mHN+5r0bZMbFIAH5C
+         pqh20RQQnJiCpJXPe/RsCft5LUlRgWmzN02pNypD7peTJNAfeiLJB6cYvVNDOnlxBN
+         7X1G+4hiHoLfdbXHtdp5atLIYfbCISjYS2hsTUBDEsXqndjPVJHwr/MP5d5LdiTR9O
+         stapM1wVcG96RXxJZU1NO5t8BsGNhEXPToNpGj4/t3sGIaktsTr4hDiCRYa8ScPSKg
+         5XWCMNAPoSdGv/eYwWsSCn0obPpxROYkhP83MURvRmK9CnIC8S9r+J/IEdl9ETvmVz
+         ypnSzUcGSDy/7VAp2DXp/7FbJeT6FKEQodMj0r2xTbN3xw8yhrgLfIPLIu9ELjNo63
+         SqyNlEqh4/bbCaq5r+KuCqUmy49SD7FaL6izMkSaGJSt1LX9/JN
+Date:   Fri, 21 Jan 2022 22:09:06 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Lauri Rooden <lauri@rooden.ee>
+Cc:     git@vger.kernel.org
+Subject: Re: Strange checkout with GIT_WORK_TREE
+Message-ID: <YesvAkBnxq3xrHTV@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Lauri Rooden <lauri@rooden.ee>, git@vger.kernel.org
+References: <CAHqym3xs_M7BvvFDq2pHM-+DgK_nJcBakVEBL-GiNwnCRzMwWA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="0Uhfa0BpGVmfY2y8"
 Content-Disposition: inline
-In-Reply-To: <CABXw6YMztos7UYJn0LxKiWvZ_oy55mu+k__jABdXwAW0H3J0cA@mail.gmail.com>
-X-Pobox-Relay-ID: 3903EEF2-7B05-11EC-9CAD-CBA7845BAAA9-09356542!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAHqym3xs_M7BvvFDq2pHM-+DgK_nJcBakVEBL-GiNwnCRzMwWA@mail.gmail.com>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Petr =C5=A0pl=C3=ADchal wrote:
-> Thanks for explaining in detail what's wrong about the approach.
 
-Yes, thank you =C3=86var and Junio for providing context and the
-thoughtful planning on how to fix this in both the short and
-long term.
+--0Uhfa0BpGVmfY2y8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> We didn't know about the "HEAD must point at a local branch" rule
-> and copying the ref seemed to be the easiest way to create a local
-> branch pointing always to the latest content of the remote default
-> branch. I described the use case here:
+On 2022-01-21 at 16:37:58, Lauri Rooden wrote:
+> Does the GIT_WORK_TREE get lost on the middle of process
+> or I am misunderstand the git checkout?
 >=20
->     https://bugzilla.redhat.com/show_bug.cgi?id=3D2042920#c2
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> - I wrote a shell script to reproduce
 >=20
-> Basically we just need to checkout and reset --hard to the default
-> remote branch after entering a git repository while HEAD can be
-> pointing anywhere. Could you suggest some more straightforward way
-> to achieve this from a script? Thanks.
+> ```git-test.sh
+> GIT_ROOT=3D$(mktemp -d)
+> GIT_COPY=3D$(mktemp -d)
+>=20
+> echo "Create git repo with two commits: $GIT_ROOT"
+> cd $GIT_ROOT
+> git init
+> echo 1 > a.txt
+> echo 1 > b.txt
+> git add *.txt
+> git commit -m "Initial commit"
+> echo 2 > b.txt
+> git add b.txt
+> git commit -m "Second commit"
+>=20
+> echo "Checkout to other work-tree: $GIT_COPY"
+> GIT_WORK_TREE=3D$GIT_COPY git checkout HEAD~1
+> git status
+>=20
+> echo "ORIGIN $GIT_ROOT"
+> ls -la $GIT_ROOT
+> echo "COPY $GIT_COPY"
+> ls -la $GIT_COPY
+> ```
+>=20
+> What did you expect to happen? (Expected behavior)
+> - a.txt and b.txt checkouted to $GIT_COPY both with content `1`
+> - current folder unchanged
+>=20
+> What happened instead? (Actual behavior)
+> - only b.txt checkouted to $GIT_COPY
+> - HEAD~1 checkouted in current folder but folder content remains HEAD
 
-I'm nearly positive that I don't know the best way, but
-here's _a_ way to do it.  It assumes the default remote name
-is origin, which seems less than ideal.
+Here's what I believe is happening here.  When you run "git checkout
+HEAD~1", Git notices that the only file that's stale in the index
+compared to what's already present is b.txt; a.txt is up to date.  As
+such, it only writes one file into the working tree, since only one file
+needs to be updated.  This is an optimization, since for large working
+trees, writing out every file every time would be extremely expensive.
 
-(Hopefully this isn't egregiously wrong.  But if it is, I'm
-happy to serve as an example of how _not_ to do it for
-others.)
+I don't know what our official position is on switching working trees
+like this. I would generally recommend you pick one and stick to it, but
+if you want to do this, you'll need to update the index for the working
+tree first.  You can do that by something like this in place of your
+checkout:
 
-    git clone https://github.com/psss/fmf /tmp/fmf
-    cd /tmp/fmf
-    git switch -c custom-branch
-    : work work work
-    defbranch=3D$(git symbolic-ref --short refs/remotes/origin/HEAD)
-    git switch -f ${defbranch#*/}
-    git reset --hard @{u}
+  GIT_WORK_TREE=3D$GIT_COPY git update-index --refresh
+  GIT_WORK_TREE=3D$GIT_COPY git checkout -f HEAD~1
 
-Odds are there's a better way to do this or to arrange
-things in a way that lets you solve an easier problem.
+That will inform Git that your working copy is stale and then the -f
+flag to checkout will force Git to overwrite the missing files.
 
+If your goal is to have multiple worktrees for one repository, you can
+do that with "git worktree", which will keep separate indices for your
+separate directories, provided they're on separate branches.  If you
+just want to create a detached copy of the files for a repository from a
+commit, you can do this:
+
+  git archive HEAD~1 | tar -C "$GIT_COPY" -xf -
+
+Hopefully that explains what's going on.  If you tell us a little bit
+more about what you wanted to accomplish, we may be able to help you
+find a way to do it that provides results that are at least less
+surprising and more predictable.
 --=20
-Todd
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--0Uhfa0BpGVmfY2y8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYesvAgAKCRB8DEliiIei
+gRLrAP9Sa/k+uIHeNOlik8qt0Sox7bkTi46jRx8kJmNO2SQ8BAD+J/onLgiYC1vU
+VZTx6Cs+exJNp5OAMgWB0i/9cmxbCww=
+=gGHv
+-----END PGP SIGNATURE-----
+
+--0Uhfa0BpGVmfY2y8--
