@@ -2,106 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81F2AC433F5
-	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 21:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8997AC433EF
+	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 21:58:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229707AbiAUVT6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jan 2022 16:19:58 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50182 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbiAUVT5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jan 2022 16:19:57 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AEA84100C74;
-        Fri, 21 Jan 2022 16:19:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Hv0eVUhPTDq1
-        D8xbJlCNdPInAkf5F1i2x1m7EWezs6c=; b=SOK1Sqj/0ZDGjTf1/Ohkv3cnIHOu
-        dCF1WkB2T0fsVuApZZbyH6ojKb10d8RmqWHUdogkK9uy/ywFtok5R0nbSaIXtRhP
-        eAtNAy8xbZNO6qa7+7OpnBViQsc1q9WuqibWkA4l7jnoYkXYfH/jCJ8eP06nHwoH
-        CnwivcnbaiVG1G8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A634B100C73;
-        Fri, 21 Jan 2022 16:19:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S232566AbiAUV6O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 16:58:14 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58559 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231180AbiAUV6O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jan 2022 16:58:14 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 93D0315B5E3;
+        Fri, 21 Jan 2022 16:58:13 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
+        :to:cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to:content-transfer-encoding; s=sasl; bh=T1izo1S3m/UyS
+        8IC7/+hyOhbiyIFywjjDced/mMxsMc=; b=hawydpEUJFIC3+6XSvyDLl/sPxHT/
+        7CC5jTxSybeJa3mR/HfhN/3ra+9C4ybEF7/nLWE5Cb/2gJz/qJzlRwIkGBcFxLVp
+        L99HXnrAC8oEWn7vPeczbw2kiFuaoswUhUfRy7H/f20gYp4bb12SKmL/OpLkVokY
+        AMFn6HpB79eoYQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8CF8415B5E1;
+        Fri, 21 Jan 2022 16:58:13 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [71.254.192.242])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 19709100C72;
-        Fri, 21 Jan 2022 16:19:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
-        Petr =?utf-8?B?xaBwbMOtY2hhbA==?= <psplicha@redhat.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0B9BD15B5E0;
+        Fri, 21 Jan 2022 16:58:09 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Date:   Fri, 21 Jan 2022 16:58:06 -0500
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Petr =?utf-8?B?xaBwbMOtY2hhbA==?= <psplicha@redhat.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: [PATCH] checkout: fix BUG() case in 9081a421a6
+Message-ID: <YessbkNZlxLOTzBE@pobox.com>
 References: <YemTGQZ97vAPUPY0@pobox.com>
-        <patch-1.1-21ddf7c628d-20220120T212233Z-avarab@gmail.com>
-        <xmqqee52ghwg.fsf@gitster.g>
-        <220121.86iludl4d9.gmgdl@evledraar.gmail.com>
-Date:   Fri, 21 Jan 2022 13:19:54 -0800
-In-Reply-To: <220121.86iludl4d9.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 21 Jan 2022 12:14:58 +0100")
-Message-ID: <xmqqczkkg51h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+ <patch-1.1-21ddf7c628d-20220120T212233Z-avarab@gmail.com>
+ <xmqqee52ghwg.fsf@gitster.g>
+ <220121.86iludl4d9.gmgdl@evledraar.gmail.com>
+ <CABXw6YMztos7UYJn0LxKiWvZ_oy55mu+k__jABdXwAW0H3J0cA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E18FF3F0-7AFF-11EC-B6C9-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Disposition: inline
+In-Reply-To: <CABXw6YMztos7UYJn0LxKiWvZ_oy55mu+k__jABdXwAW0H3J0cA@mail.gmail.com>
+X-Pobox-Relay-ID: 3903EEF2-7B05-11EC-9CAD-CBA7845BAAA9-09356542!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Petr =C5=A0pl=C3=ADchal wrote:
+> Thanks for explaining in detail what's wrong about the approach.
 
->> So, unless I hear more convincing arguments (and Todd's example or
->> anything similar that makes "git commit" from that state update a
->> ref outside local branches is *not*), I am hesitant to call the new
->> behaviour and 9081a421a6d a regression.
->
-> Well, the user is doing odd things with git, but we should reserve BUG(=
-)
-> for things that aren't rechable. Any time a user is able to arrange our
-> tooling in such a way as to call BUG() is a ... bug.
+Yes, thank you =C3=86var and Junio for providing context and the
+thoughtful planning on how to fix this in both the short and
+long term.
 
-Yes, I concur.
+> We didn't know about the "HEAD must point at a local branch" rule
+> and copying the ref seemed to be the easiest way to create a local
+> branch pointing always to the latest content of the remote default
+> branch. I described the use case here:
+>=20
+>     https://bugzilla.redhat.com/show_bug.cgi?id=3D2042920#c2
+>=20
+> Basically we just need to checkout and reset --hard to the default
+> remote branch after entering a git repository while HEAD can be
+> pointing anywhere. Could you suggest some more straightforward way
+> to achieve this from a script? Thanks.
 
->> What did the code before that BUG() do when faced with this nonsense
->> configuration?  If forbidding outright broke a sensible workflow
->> that happened to have been "working", I am OK to demote it to
->> warning() and restore the previous behaviour temporarily, whatever
->> it was (I think it was just old_branch_info.name was left unset
->> because we were not on local branch, but I don't know if the missing
->> .name was making any irrecoverable damage).  But the longer term
->> direction should be that we treat the "update HEAD ends up updating
->> some ref outside refs/heads/" a longstanding bug that needs to be
->> fixed.
->
-> The behavior with my patch here is exactly the same as before. I.e. it
-> was rather straightforward, the xstrdup() is new, but before we'd just
-> take the un-skipped string that didn't start with refs/heads/ as-is.
+I'm nearly positive that I don't know the best way, but
+here's _a_ way to do it.  It assumes the default remote name
+is origin, which seems less than ideal.
 
-OK, that might have done a wrong thing (instead of dying) for a
-strange settings like that, but the change was never about
-tightening and detecting such a strangeness but only about plugging
-leaks, so reverting that narrow part of the patch is the right thing
-to do.
+(Hopefully this isn't egregiously wrong.  But if it is, I'm
+happy to serve as an example of how _not_ to do it for
+others.)
 
-> I agree that it's better to look at this more deeply, but given the rc2
-> being out, and this surely being something we want in the final I'd
-> think we'd want to keep this patch as-is.
+    git clone https://github.com/psss/fmf /tmp/fmf
+    cd /tmp/fmf
+    git switch -c custom-branch
+    : work work work
+    defbranch=3D$(git symbolic-ref --short refs/remotes/origin/HEAD)
+    git switch -f ${defbranch#*/}
+    git reset --hard @{u}
 
-Yes, except for the update in the test.  I do not think we want to
-promise what should happen to the _values_ of these refs after the
-operation at all.  If it only says "checkout should not exit with
-non-zero status", I would be OK.  Promising anything more than that,
-I do not think it is a good idea.
+Odds are there's a better way to do this or to arrange
+things in a way that lets you solve an easier problem.
 
-For now, I plan to do the "revert the check-and-BUG and nothing
-else" change.
-
-Thanks.
-
+--=20
+Todd
