@@ -2,145 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CE1DC433F5
-	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 22:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60705C433EF
+	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 22:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232356AbiAUWJJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jan 2022 17:09:09 -0500
-Received: from ring.crustytoothpaste.net ([172.105.110.227]:36604 "EHLO
-        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbiAUWJJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jan 2022 17:09:09 -0500
-Received: from camp.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id DDC585B227;
-        Fri, 21 Jan 2022 22:09:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1642802947;
-        bh=NASK+ELLcKLDs50jdPU9Mb8Aoc0WO1oeC/2/d450i0Y=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=uxV+1JVp520oRQwQPE09o3RdUi+QW39Zp71x4VvIlZTXq1XAWLk0NzxmRLCvsgH9N
-         +ZmwWyrCm89llQ99RA2c0h04f0yBPorwFx3Ei/8EQi1bqbTK1mHN+5r0bZMbFIAH5C
-         pqh20RQQnJiCpJXPe/RsCft5LUlRgWmzN02pNypD7peTJNAfeiLJB6cYvVNDOnlxBN
-         7X1G+4hiHoLfdbXHtdp5atLIYfbCISjYS2hsTUBDEsXqndjPVJHwr/MP5d5LdiTR9O
-         stapM1wVcG96RXxJZU1NO5t8BsGNhEXPToNpGj4/t3sGIaktsTr4hDiCRYa8ScPSKg
-         5XWCMNAPoSdGv/eYwWsSCn0obPpxROYkhP83MURvRmK9CnIC8S9r+J/IEdl9ETvmVz
-         ypnSzUcGSDy/7VAp2DXp/7FbJeT6FKEQodMj0r2xTbN3xw8yhrgLfIPLIu9ELjNo63
-         SqyNlEqh4/bbCaq5r+KuCqUmy49SD7FaL6izMkSaGJSt1LX9/JN
-Date:   Fri, 21 Jan 2022 22:09:06 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Lauri Rooden <lauri@rooden.ee>
-Cc:     git@vger.kernel.org
-Subject: Re: Strange checkout with GIT_WORK_TREE
-Message-ID: <YesvAkBnxq3xrHTV@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Lauri Rooden <lauri@rooden.ee>, git@vger.kernel.org
-References: <CAHqym3xs_M7BvvFDq2pHM-+DgK_nJcBakVEBL-GiNwnCRzMwWA@mail.gmail.com>
+        id S231126AbiAUWh1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 17:37:27 -0500
+Received: from mout.gmx.net ([212.227.15.19]:53967 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229911AbiAUWh1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jan 2022 17:37:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1642804645;
+        bh=0t2/lq3QSr4LAo9s/+fTz5PmIMYouCNbpLf3wtwm7mM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ZGRSb/yIfZd5truqy19i6afIzKsNGazROTZ/WrVAlZujKRsH8lcewLp2PnmJVp0gu
+         1/9rN2p0Dg39eD/ygOpwmKNojNf42J4Fjyn88MakxX8ZoprU45TadVxGIo9qVyRASJ
+         QcqNZXoCoW+IUz6eOv7XIEpvkTJytUkOWtqSiqhE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.174.184] ([89.1.213.181]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mf07E-1mdcfH04Ec-00gXHv; Fri, 21
+ Jan 2022 23:37:25 +0100
+Date:   Fri, 21 Jan 2022 23:37:23 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jaydeep Das <jaydeepjd.8914@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [Newcomer] Suggestions for microprojects
+In-Reply-To: <e176d1b3-482b-899b-af24-ac03c65d103d@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201212330280.2121@tvgsbejvaqbjf.bet>
+References: <e176d1b3-482b-899b-af24-ac03c65d103d@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0Uhfa0BpGVmfY2y8"
-Content-Disposition: inline
-In-Reply-To: <CAHqym3xs_M7BvvFDq2pHM-+DgK_nJcBakVEBL-GiNwnCRzMwWA@mail.gmail.com>
-User-Agent: Mutt/2.1.4 (2021-12-11)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:JVTmWKG+aZ9lkOIqVnrGJnzhva0+fXLpYrgAOCHsOKbNWvl0RT9
+ pt48hh3+rVd6qaikkrYaAlymtaJPl0Xfb86DqHU9vdCZgVUgbJhEm66uiSVs5HoLOOnvT+/
+ hi3Oe2JcwSk/E6X7SP6x1EddGAKm+CVBeJ8qDk9BODmyQd1CG4HDUGhqGx5zSRIm+U2U3kW
+ XpXxW397uSHBrTyKo+Ddg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:D1GsKogxsX4=:HGVcNIjo4DxbWXRhaKF3Cm
+ FbncTff2qwSpOhIc9DAOxJLn5lFUZS09vGfx6xXTY48cElFhnXG76XlOZV6P6yPZY4JRg41zy
+ jCBTQ60Vnmqs8joIiRfLguuBdALHYjZ543PeasI1bHMg5e9KmwQBvyLYiFMmUnMXju8igSSbo
+ 7kYkhsPKB9OwCOxLp3gfmVZYfEAMl+yQKKj/e0wIvYsgeEqmB63dF4oX2E5SMQqjbunk6300g
+ BvDFBl//ZF54Epttn6AN5je2dPITMfysoozcLDiNDAe4pavsYa3x/+LZodLGyXOWsIcoA4kLa
+ W8JldnaRb+fg2vyp6ApNW7uypjcuNJ82RHTKoWKpLkH3SJaCj4J9Yo1lFNLxqn69vXfkAbIUX
+ Fv59mhKKfZIDm0gAPnXvBf4j1ZAos9EK8CmSePnWz54tz3/Nx20h1YVQse7EDglMm+ew5aIiz
+ CkvsLUoBz4BwB7onW3TXz0ZrgdmQqDYHBWI0NelXuPCpcgRO0n+0hHg8tjRhr++lWaqXdw7tb
+ h9eO1wyKshQbYs4YKbwjC5EJfVv9fbwgK1Ip4JOGKgz/tS7U5DSOEfXGXygDoptVsgGXS4g5l
+ xRBW6NanpYbjbYtUPRdeba5A5Q5dp75lXco7RWot1s/1L/hY47tD9+W1pAbdulYy71ex9Jqyx
+ Z0bxiPOnkzFBBCEl8HvlLehzUqnLO4CK8FiwwySYTG9JfiCDKS7o7MlFYN/PVQUazH8gRND+n
+ ma12L5rKf+btzpHbt433e7crYmuD1SltqghNxk2At83arcd/D7fg0SBI8C54UL8ifT7W4zMZ+
+ yrGd/JyrroFWjPOfzkoODbg3OMcDNEATJDvdur59+5Plv67CfP2v6j2fF0k+sV3xL8jaQwS8H
+ aSbGYUfnGF/TTeqBfWxwBMcZCb03pj07CtHPCCZ3rNXgq9cpR6we/wdIoYSSAoXSu25+ccbNl
+ KgB7jhK7BVu6KEseHHhvFWnjagpOOQ+Da0Mxj75Sk2u/+rx5mGiMcAiV/0cyDKtisJVEJFNjs
+ oPZ+unFXXUpdAxYEg9saw2ebAyzU2lpHuKdd+e4Jl5Hr5Aq9JWWQFkaRlAetIhK0WdU4QNRdP
+ 6fo5+/AxnMQAOc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Jaydeep,
 
---0Uhfa0BpGVmfY2y8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+welcome to the project!
 
-On 2022-01-21 at 16:37:58, Lauri Rooden wrote:
-> Does the GIT_WORK_TREE get lost on the middle of process
-> or I am misunderstand the git checkout?
->=20
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> - I wrote a shell script to reproduce
->=20
-> ```git-test.sh
-> GIT_ROOT=3D$(mktemp -d)
-> GIT_COPY=3D$(mktemp -d)
->=20
-> echo "Create git repo with two commits: $GIT_ROOT"
-> cd $GIT_ROOT
-> git init
-> echo 1 > a.txt
-> echo 1 > b.txt
-> git add *.txt
-> git commit -m "Initial commit"
-> echo 2 > b.txt
-> git add b.txt
-> git commit -m "Second commit"
->=20
-> echo "Checkout to other work-tree: $GIT_COPY"
-> GIT_WORK_TREE=3D$GIT_COPY git checkout HEAD~1
-> git status
->=20
-> echo "ORIGIN $GIT_ROOT"
-> ls -la $GIT_ROOT
-> echo "COPY $GIT_COPY"
-> ls -la $GIT_COPY
-> ```
->=20
-> What did you expect to happen? (Expected behavior)
-> - a.txt and b.txt checkouted to $GIT_COPY both with content `1`
-> - current folder unchanged
->=20
-> What happened instead? (Actual behavior)
-> - only b.txt checkouted to $GIT_COPY
-> - HEAD~1 checkouted in current folder but folder content remains HEAD
+On Mon, 17 Jan 2022, Jaydeep Das wrote:
 
-Here's what I believe is happening here.  When you run "git checkout
-HEAD~1", Git notices that the only file that's stale in the index
-compared to what's already present is b.txt; a.txt is up to date.  As
-such, it only writes one file into the working tree, since only one file
-needs to be updated.  This is an optimization, since for large working
-trees, writing out every file every time would be extremely expensive.
+> I want to starting contributing to the git project but can't decide
+> where to start.
 
-I don't know what our official position is on switching working trees
-like this. I would generally recommend you pick one and stick to it, but
-if you want to do this, you'll need to update the index for the working
-tree first.  You can do that by something like this in place of your
-checkout:
+In general, I would recommend to pick a project that is of personal
+interest to you. If you have used Git for more than a week, I am _certain_
+that you found things you wish Git did better. That would be the kind of
+project that I'd think would be ideal.
 
-  GIT_WORK_TREE=3D$GIT_COPY git update-index --refresh
-  GIT_WORK_TREE=3D$GIT_COPY git checkout -f HEAD~1
+> I have read the coding-style and contributing guidelines stuff from the
+> website and am eager to start writing code. Is there any small patches
+> that I can make in the codebase that could help me get started with it?
 
-That will inform Git that your working copy is stale and then the -f
-flag to checkout will force Git to overwrite the missing files.
+There are two public bug trackers for the Git project, although I must
+make clear that neither has been officially accepted by the Git project as
+authoritative. The official bug tracker is the Git mailing list (which
+lacks any tooling, of course, to find all reported and still unfixed
+bugs). The two aforementioned bug trackers can be found here:
 
-If your goal is to have multiple worktrees for one repository, you can
-do that with "git worktree", which will keep separate indices for your
-separate directories, provided they're on separate branches.  If you
-just want to create a detached copy of the files for a repository from a
-commit, you can do this:
+	https://github.com/gitgitgadget/git/issues
 
-  git archive HEAD~1 | tar -C "$GIT_COPY" -xf -
+and
 
-Hopefully that explains what's going on.  If you tell us a little bit
-more about what you wanted to accomplish, we may be able to help you
-find a way to do it that provides results that are at least less
-surprising and more predictable.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+	https://crbug.com/git
 
---0Uhfa0BpGVmfY2y8
-Content-Type: application/pgp-signature; name="signature.asc"
+If you want some easy project, I would suggest to look at the first bug
+tracker because some tickets in there are labeled with "good first issue",
+e.g. this one:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+	https://github.com/gitgitgadget/git/issues/636
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYesvAgAKCRB8DEliiIei
-gRLrAP9Sa/k+uIHeNOlik8qt0Sox7bkTi46jRx8kJmNO2SQ8BAD+J/onLgiYC1vU
-VZTx6Cs+exJNp5OAMgWB0i/9cmxbCww=
-=gGHv
------END PGP SIGNATURE-----
-
---0Uhfa0BpGVmfY2y8--
+Ciao,
+Johannes
