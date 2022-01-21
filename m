@@ -2,98 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60705C433EF
-	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 22:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ADE0C433F5
+	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 23:09:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231126AbiAUWh1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jan 2022 17:37:27 -0500
-Received: from mout.gmx.net ([212.227.15.19]:53967 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229911AbiAUWh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jan 2022 17:37:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1642804645;
-        bh=0t2/lq3QSr4LAo9s/+fTz5PmIMYouCNbpLf3wtwm7mM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=ZGRSb/yIfZd5truqy19i6afIzKsNGazROTZ/WrVAlZujKRsH8lcewLp2PnmJVp0gu
-         1/9rN2p0Dg39eD/ygOpwmKNojNf42J4Fjyn88MakxX8ZoprU45TadVxGIo9qVyRASJ
-         QcqNZXoCoW+IUz6eOv7XIEpvkTJytUkOWtqSiqhE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.174.184] ([89.1.213.181]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mf07E-1mdcfH04Ec-00gXHv; Fri, 21
- Jan 2022 23:37:25 +0100
-Date:   Fri, 21 Jan 2022 23:37:23 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jaydeep Das <jaydeepjd.8914@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [Newcomer] Suggestions for microprojects
-In-Reply-To: <e176d1b3-482b-899b-af24-ac03c65d103d@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2201212330280.2121@tvgsbejvaqbjf.bet>
-References: <e176d1b3-482b-899b-af24-ac03c65d103d@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S229495AbiAUXJw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 18:09:52 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56760 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229446AbiAUXJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jan 2022 18:09:52 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B04B615C113;
+        Fri, 21 Jan 2022 18:09:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=quWMpp+uNsxauxYkd1AgJnvVXINV78ClFtOEjo
+        UmwwY=; b=Hdks1326C9iBnzDh0huyP4kfPslmBNvIVudIxWb1uX1Ghm5b9htv5J
+        Lfs3gDQKW5wt2Is9KpsBvOcNnTvAXsYi2nVzVhii8MUPPzWlfaUXvS8huMjHH/pt
+        6AlU4387w5CudXtV55aiTx42uApL/c/KFnInmWJ9dVgXeGGnUWiZg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A941A15C112;
+        Fri, 21 Jan 2022 18:09:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0E53515C110;
+        Fri, 21 Jan 2022 18:09:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lauri Rooden <lauri@rooden.ee>
+Cc:     git@vger.kernel.org
+Subject: Re: Strange checkout with GIT_WORK_TREE
+References: <CAHqym3xs_M7BvvFDq2pHM-+DgK_nJcBakVEBL-GiNwnCRzMwWA@mail.gmail.com>
+Date:   Fri, 21 Jan 2022 15:09:47 -0800
+In-Reply-To: <CAHqym3xs_M7BvvFDq2pHM-+DgK_nJcBakVEBL-GiNwnCRzMwWA@mail.gmail.com>
+        (Lauri Rooden's message of "Fri, 21 Jan 2022 18:37:58 +0200")
+Message-ID: <xmqqv8yceldw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JVTmWKG+aZ9lkOIqVnrGJnzhva0+fXLpYrgAOCHsOKbNWvl0RT9
- pt48hh3+rVd6qaikkrYaAlymtaJPl0Xfb86DqHU9vdCZgVUgbJhEm66uiSVs5HoLOOnvT+/
- hi3Oe2JcwSk/E6X7SP6x1EddGAKm+CVBeJ8qDk9BODmyQd1CG4HDUGhqGx5zSRIm+U2U3kW
- XpXxW397uSHBrTyKo+Ddg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:D1GsKogxsX4=:HGVcNIjo4DxbWXRhaKF3Cm
- FbncTff2qwSpOhIc9DAOxJLn5lFUZS09vGfx6xXTY48cElFhnXG76XlOZV6P6yPZY4JRg41zy
- jCBTQ60Vnmqs8joIiRfLguuBdALHYjZ543PeasI1bHMg5e9KmwQBvyLYiFMmUnMXju8igSSbo
- 7kYkhsPKB9OwCOxLp3gfmVZYfEAMl+yQKKj/e0wIvYsgeEqmB63dF4oX2E5SMQqjbunk6300g
- BvDFBl//ZF54Epttn6AN5je2dPITMfysoozcLDiNDAe4pavsYa3x/+LZodLGyXOWsIcoA4kLa
- W8JldnaRb+fg2vyp6ApNW7uypjcuNJ82RHTKoWKpLkH3SJaCj4J9Yo1lFNLxqn69vXfkAbIUX
- Fv59mhKKfZIDm0gAPnXvBf4j1ZAos9EK8CmSePnWz54tz3/Nx20h1YVQse7EDglMm+ew5aIiz
- CkvsLUoBz4BwB7onW3TXz0ZrgdmQqDYHBWI0NelXuPCpcgRO0n+0hHg8tjRhr++lWaqXdw7tb
- h9eO1wyKshQbYs4YKbwjC5EJfVv9fbwgK1Ip4JOGKgz/tS7U5DSOEfXGXygDoptVsgGXS4g5l
- xRBW6NanpYbjbYtUPRdeba5A5Q5dp75lXco7RWot1s/1L/hY47tD9+W1pAbdulYy71ex9Jqyx
- Z0bxiPOnkzFBBCEl8HvlLehzUqnLO4CK8FiwwySYTG9JfiCDKS7o7MlFYN/PVQUazH8gRND+n
- ma12L5rKf+btzpHbt433e7crYmuD1SltqghNxk2At83arcd/D7fg0SBI8C54UL8ifT7W4zMZ+
- yrGd/JyrroFWjPOfzkoODbg3OMcDNEATJDvdur59+5Plv67CfP2v6j2fF0k+sV3xL8jaQwS8H
- aSbGYUfnGF/TTeqBfWxwBMcZCb03pj07CtHPCCZ3rNXgq9cpR6we/wdIoYSSAoXSu25+ccbNl
- KgB7jhK7BVu6KEseHHhvFWnjagpOOQ+Da0Mxj75Sk2u/+rx5mGiMcAiV/0cyDKtisJVEJFNjs
- oPZ+unFXXUpdAxYEg9saw2ebAyzU2lpHuKdd+e4Jl5Hr5Aq9JWWQFkaRlAetIhK0WdU4QNRdP
- 6fo5+/AxnMQAOc=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3B44EC5C-7B0F-11EC-9473-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jaydeep,
+Lauri Rooden <lauri@rooden.ee> writes:
 
-welcome to the project!
+> echo "Checkout to other work-tree: $GIT_COPY"
+> GIT_WORK_TREE=$GIT_COPY git checkout HEAD~1
 
-On Mon, 17 Jan 2022, Jaydeep Das wrote:
+In this particular case, it happens that it does not make a
+difference, but it is discouraged to set GIT_WORK_TREE without
+setting GIT_DIR.
 
-> I want to starting contributing to the git project but can't decide
-> where to start.
+    GIT_DIR was invented as a way to say "I am at the top of the
+    working tree but I do not have .git/ directory here---it is at
+    that other place, i.e. $GIT_DIR".  And this was OK if you worked
+    only at the top of the working tree.  GIT_WORK_TREE was then
+    invented to help folks who do not always work at the top of the
+    working tree.  With that, they can still set GIT_DIR to point at
+    the location of the repository proper, use GIT_WORK_TREE to
+    point at the top of the working tree, and chdir freely to any
+    subdirectory of $GIT_WORK_TREE and expect things to work.
 
-In general, I would recommend to pick a project that is of personal
-interest to you. If you have used Git for more than a week, I am _certain_
-that you found things you wish Git did better. That would be the kind of
-project that I'd think would be ideal.
+So, the more kosher way to do the above is
 
-> I have read the coding-style and contributing guidelines stuff from the
-> website and am eager to start writing code. Is there any small patches
-> that I can make in the codebase that could help me get started with it?
+	echo "checkout to other work-tree: $GIT_COPY"
+	cd "$GIT_COPY"
+	GIT_DIR="$GIT_ROOT/.git" git checkout HEAD~
 
-There are two public bug trackers for the Git project, although I must
-make clear that neither has been officially accepted by the Git project as
-authoritative. The official bug tracker is the Git mailing list (which
-lacks any tooling, of course, to find all reported and still unfixed
-bugs). The two aforementioned bug trackers can be found here:
+but what you wrote also happens to the same thing.  We auto-discover
+the git directory (i.e. the current directory has .git/ directory in
+it, and that is used as the GIT_DIR).
 
-	https://github.com/gitgitgadget/git/issues
+Now, what you observed is totally expected.
 
-and
+Because HEAD~ in "git checkout HEAD~" is *not* a branch name, it is
+a short-hand of "git checkout --detach HEAD~".  It is "I want to
+switch to the named commit, not on any branch.  Note that I may have
+local changes, and please carry them when you switch to the commit".
 
-	https://crbug.com/git
+And when you run the above "git checkout", do you have local
+changes?  Yes, you do.  Since
 
-If you want some easy project, I would suggest to look at the first bug
-tracker because some tickets in there are labeled with "good first issue",
-e.g. this one:
+ * Your GIT_DIR is "$GIT_ROOT/.git"; your HEAD has two files, a.txt
+   and b.txt, with 1 and 2 in it, respectively.  They match the
+   index in that GIT_DIR.
 
-	https://github.com/gitgitgadget/git/issues/636
+ * Your working tree is "$GIT_COPY".  You do not have a.txt and
+   b.txt.  I.e. your local change is to remove a.txt and b.txt
 
-Ciao,
-Johannes
+Now you want to move to the state of HEAD~, where each of a.txt and
+b.txt has 1 in it.  So, if there weren't any local change, switching
+to this commit would change a.txt and b.txt to have 1 in them.
+
+Now between HEAD and HEAD~, there was no change to a.txt; so we
+honor your local change to REMOVE a.txt.  That is why you do not
+have "$GIT_COPY/a.txt" in the result.
+
+But b.txt is different between HEAD and HEAD~.  Pedantically, this
+*should* result in "the difference between two commits and your
+local change conflicts", and make the "checkout" command fail
+without doing anything.  But there is an ancient special case to
+help working in a sparsely populated working tree that allows Git
+to treat "missing" file as the same as "unchanged" file, and I think
+that is what is kicking in.  Instead of treating your "deletion" as
+something that conflicts with the change between HEAD and HEAD~ to
+turn 2 to 1, the command pretends as if you left b.txt as-is, and
+let you switch to HEAD~, instread of failing.
+
+In any case, if you wanted to make a copy of a different commit into
+a separate directory, use of GIT_DIR/GIT_WORK_TREE is totally a
+wrong way to do so.  If you go and look at $GIT_ROOT after your
+switching to "HEAD~", $GIT_ROOT/.git/HEAD and $GIT_ROOT/.git/index
+have moved to the "Initial" commit, but your working tree files in
+$GIT_ROOT are left as before, which would totally be confusing.
+
+Using "git worktree" to create $GIT_COPY as an additional worktree,
+or "git clone" to create $GIT_COPY as an additional repository, may
+be what you are looking for.
+
+
+
+
+
