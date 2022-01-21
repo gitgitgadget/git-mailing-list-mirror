@@ -2,393 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E56DC433EF
-	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 03:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1A8AC433F5
+	for <git@archiver.kernel.org>; Fri, 21 Jan 2022 09:43:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233343AbiAUDcw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Jan 2022 22:32:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38404 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233319AbiAUDcw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Jan 2022 22:32:52 -0500
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D43AC061574
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 19:32:52 -0800 (PST)
-Received: by mail-yb1-xb49.google.com with SMTP id d65-20020a256844000000b00614359972a6so7573528ybc.16
-        for <git@vger.kernel.org>; Thu, 20 Jan 2022 19:32:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:message-id:mime-version:subject:from:to;
-        bh=wKG2AiUMPe18KvrH7huATJA/CeOt00/oi1egLi1szyc=;
-        b=WDCuFN3mVc4Bthb98wHnvrk0fs1zNWPK6iJHjNqiZtp+ZEViXadnd2iq+xoXyQq0ie
-         6xQN6fBN3rTFnNG5TE6jRkkpiNrlZpdPRxknP6oPbR71A4Ex4scv91t8qzOfc9ZbeM1g
-         nVmnyidoage08eNmyynYEYuktoIiFQlMGPTDzJWRdyUBN7fbhp84OGd0BxO7TLXdoz2C
-         CfC39IYKo4YGKF0QGMJ3gCCZs2pfENISCV0zQkMpWABcpQh88j1RI/56nvpgXwD0PiL7
-         t0w+6nfziN7F9KBpXFTJEA0Do9GfP7wrbhBHAwcljdRAsk/jCgnyl8TACr1pe1hYKst4
-         WDdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
-        bh=wKG2AiUMPe18KvrH7huATJA/CeOt00/oi1egLi1szyc=;
-        b=B90zlg5l7OgMhdeAWMoqLFKcj3Sj9NIuwvMFnzas2pMFX/OLdid6mDAWLauEYSofJY
-         TY+B/Vo4Hqh0P0kz+g7Peip2j2i74g1fw+2Xb1ojw7c7fvU7sfKsfMN9MUS0jOBzBqQR
-         jC0HNQ2/HcO4lCfs8IcM5YR5Po+B8CF0dmDtZXaABNT7y1ol84PUQcvl39PjqSkreAxw
-         nWfATMXSbbhycaBUZUbpgz6uQl/gM/yXwyZpbe3MWprWeydghtL5WDWvjTNvuDM9agHG
-         N+WonQZIfvlTfLuC3FDEw0eGRj+Bso2F6lAETmdnnP67dudkzI3ZQNqXl6FK0b1lyXHW
-         y4Bw==
-X-Gm-Message-State: AOAM532em7cwYQyHv6KsDMQFlT/1+aB6V8XQijcFb5HqdL0m1LzAiPYQ
-        9AuXy/1ZYOFgB+cPRZbyTePreK4Q/8Pgz+c5QQHiGtEhhHAgInkG6wrP7nvoLSiIY4Lg6hYPhlc
-        M97wLTpLgQGirFa/WgeZK4s+Sf+KP3nFfOiJjFoRKwTxPvx93ufkzeyoAqnUL2Z8=
-X-Google-Smtp-Source: ABdhPJy3OF4MxkbAOpb6j+w5teelcdIpli5a+4jsuqga6MxsgVC6XFSqARRiwwY5yvRbyMh9XQApW1F18LZ9fQ==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2ce:200:7dee:d62:dd3f:8e50])
- (user=steadmon job=sendgmr) by 2002:a25:2f47:: with SMTP id
- v68mr3416615ybv.437.1642735971071; Thu, 20 Jan 2022 19:32:51 -0800 (PST)
-Date:   Thu, 20 Jan 2022 19:32:48 -0800
-Message-Id: <50ebf7bd39adf34fa4ada27cd433d81b5381abe5.1642735881.git.steadmon@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.35.0.rc0.227.g00780c9af4-goog
-Subject: [PATCH] clone, submodule: pass partial clone filters to submodules
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        id S1379414AbiAUJnH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 04:43:07 -0500
+Received: from mout.web.de ([212.227.15.4]:32967 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231417AbiAUJnG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jan 2022 04:43:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1642758179;
+        bh=rywMXzo2LtRMoezaQmZy5irU5/FVSlbj2PZDyq8wl5k=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=Xy8gwVCH98VJ2wyurKDY3/pR086DpoIEPPS9LDoq4SCl8ShNdbO2RIl9kBMYyicTn
+         F61IzLPhfa5GR3PxEbW3Rq/6hil6CBAuRm7mcf/m5OwPfFtwgrHe32x+zoBiF0WwVi
+         7qq/3H5USZlmcgFpnxA/x1XDAcs9WFq2Hv82TBlI=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MBjIG-1n0zbq3gyK-00CTf2; Fri, 21
+ Jan 2022 10:42:58 +0100
+Message-ID: <f6cc8042-a455-6398-9f91-0e64921252e4@web.de>
+Date:   Fri, 21 Jan 2022 10:42:58 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.5.0
+Subject: Re: [PATCH] parse-options: document automatic
+ PARSE_OPT_LITERAL_ARGHELP
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        avarab@gmail.com
+References: <220111.86a6g3yqf9.gmgdl@evledraar.gmail.com>
+ <3de40324bea6a1dd9bca2654721471e3809e87d8.1642538935.git.steadmon@google.com>
+ <xmqqh7a0r87q.fsf@gitster.g> <ba624c59-5330-360e-dc4a-432752d22fc1@web.de>
+ <xmqqlezboakd.fsf@gitster.g> <c6ab4408-1091-4d14-849e-afe5f3053e8b@web.de>
+ <xmqqiluejmcp.fsf@gitster.g>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqiluejmcp.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:4N1b8ggdJEeHqHj3ddPbWWDJYBqEp7P21osmmtilP5VCJRo5bd+
+ EakfjAk0cTM2LCbSlnpfR0vTqyRJAHUNTGeo5kNFxyw5WFXTW3OGL/N+DIE3zfOpEmxwnL/
+ bWfuhu5hNYnZxinTnOACR0mg886WPNzY2OCHf7dGPzOcdWeXIoAnhjiWQr3husMR9dbpwQ1
+ vYFm3q/HA8bgVx2y2jH5g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:EBVpD9HRm3A=:jfTZA+AfpBgpqCGT/67636
+ irO+hvIoN2f3+T1V7vSGdUoiP87sJhkfUO/6/ePlFHDybVCPefFpCZfG5exAmycpkqm7bWQ9h
+ 2i3R98US1xfPPHvRKnA0h4bBIAogG+3MkLDDXhGHev9EKh2AzEhg5AKJg6Wj4IHS8PHhVSigI
+ wybyxbUjM5xFm9pFJftr2rf+iwK8r8Ou4Q7I/lncR75HeyYy3vFapKT/VLm1DEpT0HvZh3yKS
+ zxohg2a7oswTqRfg0zYq9tPfFlYkMwuBvZtp2fdVM7Lg55SJUZFVKVH4lS1MEIT/Bui1MWS22
+ XIm2f6RN9uA+RH26PmL3yzt1ZZN+X2rzt5Nep8KRiBYgciQKLa+H6eonqhWGXfNFeOrXgF5RS
+ Bs+rSAYRb9choXvXYTL0rxc7OPqyN7rR2e9MxPqxZYq8Ao2m9QrIT4Q03PCI+551Rsv7IAsrn
+ D0kF28rwgHmSnG5p3tdAZL02tG8cLwMbcVJRQ6w2cfANY4DBhE3z1ljAGlrWgMpFWh7QkmzZb
+ HazkjLTVV/KnjeqLHyzmIDxYxZApVq1qlObVPeo7jWLfiUkeQeuo2invpqkejjRSV6JanKXYE
+ kDrYWYKgC9GTN0SPo2LHwi37r7PuZt9zfZkntxXBpzm3M7l6pIwbOOGWr0o9ukCYqRV9ayr74
+ XkUnVDFb4LLc4hHciZvRLqedCrjx2RYUckI0fZQpckcqduW+Vb9xNhr5d1HZpxoa0Ot+VQQtq
+ xYmT1eToI2aSVt25ig+I9iaLbdrzeGrP5ozBZli7fPLDkhNlqqFof48iAowFtT8PB8sIydARZ
+ tCGdaWVD+BQE094bv+w/fOySF/CQcw4U+HA4WcC7fky6bhsD3Z9dkOHN8MQfVFlfW88l3gVGD
+ WKIsJG/y4EG9wvZkeVFapFMGPMTevQnrF9iQ3NZG/91FagSHf+m3E8yvdMwTQ/dIc2AHwgEV+
+ 0oapvvRYycnqExJnY5nTxl7oPznjaIRn/tSCH9Cm1XOBr6QRka/aaosVkfWtJpKvqXgSHpW8w
+ WC6aekm6XoKWm7XE8B5xlJuYmE/Q4ux7mUP1PD6aSsB1LIz5UVJ1kL/BNPyKmo3dFw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When cloning a repo with a --filter and with --recurse-submodules
-enabled, the partial clone filter only applies to
-the top-level repo. This can lead to unexpected bandwidth and disk
-usage for projects which include large submodules. For example, a user
-might wish to make a partial clone of Gerrit and would run:
-`git clone --recurse-submodules --filter=blob:5k
-https://gerrit.googlesource.com/gerrit`. However, only the superproject
-would be a partial clone; all the submodules would have all blobs
-downloaded regardless of their size. With this change, the same filter
-applies to submodules, meaning the expected bandwidth and disk savings
-apply consistently.
+Am 20.01.22 um 19:25 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>> Now that I read the whole comment, I think the right place to introduce
+>> the automatic brackets is the description of argh some lines up.
+>>
+>> --- >8 ---
+>> Subject: [PATCH 5/5] parse-options: document bracketing of argh
+>>
+>> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+>> ---
+>>  parse-options.h | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>>
+>> diff --git a/parse-options.h b/parse-options.h
+>> index e22846d3b7..88d589d159 100644
+>> --- a/parse-options.h
+>> +++ b/parse-options.h
+>> @@ -85,6 +85,11 @@ typedef enum parse_opt_result parse_opt_ll_cb(struct=
+ parse_opt_ctx_t *ctx,
+>>   *   token to explain the kind of argument this option wants. Does not
+>>   *   begin in capital letter, and does not end with a full stop.
+>>   *   Should be wrapped by N_() for translation.
+>> + *   Is automatically enclosed in brackets when printed, unless it
+>> + *   contains any of the following characters: ()<>[]|
+>> + *   E.g. "name" is shown as "<name>" to indicate that a name value
+>> + *   needs to be supplied, not the literal string "name", but
+>> + *   "<start>,<end>" and "(this|that)" are printed verbatim.
+>>   *
+>>   * `help`::
+>>   *   the short help associated to what the option does.
+>
+> Very nice.
+>
+> This version gives the necessary information in (almost) one place.
+>
+> I said (almost) because "it contains any of ..." is not the only way
+> to decline the <automatic angle brackets>, and am wondering if it is
+> more helpful to say something like
+>
+> 	... when printed, unless PARSE_OPT_LITERAL_ARGHELP is set in
+> 	the flags, or it contains any of the following characters: ...
+>
+> and then shrink the description of the flag bit to
+>
+>     PARSE_OPT_LITERAL_ARGHELP: controls if `argh` is enclosed in in
+>     brackets when shown (see the description on `argh` above).
+>
 
-Plumb the --filter argument from git-clone through git-submodule and
-git-submodule--helper, such that submodule clones also have the filter
-applied.
+The idea was to document the base behavior at the top and the effects of
+flags at the bottom.  Blurring this distinction and cross-referencing
+gives a better whole, though, I agree.  It would have helped me find the
+right place to put the list of special chars, for one thing.  So how
+about this?
 
-This applies the same filter to the superproject and all submodules.
-Users who prefer the current behavior (i.e., a filter only on the
-superproject) would need to clone with `--no-recurse-submodules` and
-then manually initialize each submodule.
+=2D-- >8 ---
+Subject: [PATCH v2] parse-options: document bracketing of argh
 
-Applying filters to submodules should be safe thanks to Jonathan Tan's
-recent work [1, 2, 3] eliminating the use of alternates as a method of
-accessing submodule objects, so any submodule object access now triggers
-a lazy fetch from the submodule's promisor remote if the accessed object
-is missing. This patch is an updated version of [4], which was created
-prior to Jonathan Tan's work.
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ parse-options.h | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-[1]: 8721e2e (Merge branch 'jt/partial-clone-submodule-1', 2021-07-16)
-[2]: 11e5d0a (Merge branch 'jt/grep-wo-submodule-odb-as-alternate',
-	2021-09-20)
-[3]: 162a13b (Merge branch 'jt/no-abuse-alternate-odb-for-submodules',
-	2021-10-25)
-[4]: https://lore.kernel.org/git/52bf9d45b8e2b72ff32aa773f2415bf7b2b86da2.1563322192.git.steadmon@google.com/
-
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- builtin/clone.c                    |  4 ++++
- builtin/submodule--helper.c        | 30 ++++++++++++++++++++++---
- git-submodule.sh                   | 17 +++++++++++++-
- t/t5617-clone-submodules-remote.sh | 17 ++++++++++++++
- t/t7814-grep-recurse-submodules.sh | 36 ++++++++++++++++++++++++++++++
- 5 files changed, 100 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 727e16e0ae..196e947714 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -729,6 +729,10 @@ static int checkout(int submodule_progress)
- 			strvec_push(&args, "--no-fetch");
- 		}
- 
-+		if (filter_options.choice)
-+			strvec_pushf(&args, "--filter=%s",
-+				     expand_list_objects_filter_spec(&filter_options));
-+
- 		if (option_single_branch >= 0)
- 			strvec_push(&args, option_single_branch ?
- 					       "--single-branch" :
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c5d3fc3817..11552970f2 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -20,6 +20,7 @@
- #include "diff.h"
- #include "object-store.h"
- #include "advice.h"
-+#include "list-objects-filter-options.h"
- 
- #define OPT_QUIET (1 << 0)
- #define OPT_CACHED (1 << 1)
-@@ -1630,6 +1631,7 @@ struct module_clone_data {
- 	const char *name;
- 	const char *url;
- 	const char *depth;
-+	struct list_objects_filter_options *filter_options;
- 	struct string_list reference;
- 	unsigned int quiet: 1;
- 	unsigned int progress: 1;
-@@ -1796,6 +1798,10 @@ static int clone_submodule(struct module_clone_data *clone_data)
- 			strvec_push(&cp.args, "--dissociate");
- 		if (sm_gitdir && *sm_gitdir)
- 			strvec_pushl(&cp.args, "--separate-git-dir", sm_gitdir, NULL);
-+		if (clone_data->filter_options && clone_data->filter_options->choice)
-+			strvec_pushf(&cp.args, "--filter=%s",
-+				     expand_list_objects_filter_spec(
-+					     clone_data->filter_options));
- 		if (clone_data->single_branch >= 0)
- 			strvec_push(&cp.args, clone_data->single_branch ?
- 				    "--single-branch" :
-@@ -1852,6 +1858,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- {
- 	int dissociate = 0, quiet = 0, progress = 0, require_init = 0;
- 	struct module_clone_data clone_data = MODULE_CLONE_DATA_INIT;
-+	struct list_objects_filter_options filter_options;
- 
- 	struct option module_clone_options[] = {
- 		OPT_STRING(0, "prefix", &clone_data.prefix,
-@@ -1881,17 +1888,19 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 			   N_("disallow cloning into non-empty directory")),
- 		OPT_BOOL(0, "single-branch", &clone_data.single_branch,
- 			 N_("clone only one branch, HEAD or --branch")),
-+		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
- 		OPT_END()
- 	};
- 
- 	const char *const git_submodule_helper_usage[] = {
- 		N_("git submodule--helper clone [--prefix=<path>] [--quiet] "
- 		   "[--reference <repository>] [--name <name>] [--depth <depth>] "
--		   "[--single-branch] "
-+		   "[--single-branch] [--filter <filter-spec>]"
- 		   "--url <url> --path <path>"),
- 		NULL
- 	};
- 
-+	memset(&filter_options, 0, sizeof(filter_options));
- 	argc = parse_options(argc, argv, prefix, module_clone_options,
- 			     git_submodule_helper_usage, 0);
- 
-@@ -1899,12 +1908,14 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	clone_data.quiet = !!quiet;
- 	clone_data.progress = !!progress;
- 	clone_data.require_init = !!require_init;
-+	clone_data.filter_options = &filter_options;
- 
- 	if (argc || !clone_data.url || !clone_data.path || !*(clone_data.path))
- 		usage_with_options(git_submodule_helper_usage,
- 				   module_clone_options);
- 
- 	clone_submodule(&clone_data);
-+	list_objects_filter_release(&filter_options);
- 	return 0;
- }
- 
-@@ -1994,6 +2005,7 @@ struct submodule_update_clone {
- 	const char *recursive_prefix;
- 	const char *prefix;
- 	int single_branch;
-+	struct list_objects_filter_options *filter_options;
- 
- 	/* to be consumed by git-submodule.sh */
- 	struct update_clone_data *update_clone;
-@@ -2154,6 +2166,9 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 		strvec_pushl(&child->args, "--prefix", suc->prefix, NULL);
- 	if (suc->recommend_shallow && sub->recommend_shallow == 1)
- 		strvec_push(&child->args, "--depth=1");
-+	if (suc->filter_options && suc->filter_options->choice)
-+		strvec_pushf(&child->args, "--filter=%s",
-+			     expand_list_objects_filter_spec(suc->filter_options));
- 	if (suc->require_init)
- 		strvec_push(&child->args, "--require-init");
- 	strvec_pushl(&child->args, "--path", sub->path, NULL);
-@@ -2498,6 +2513,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	const char *update = NULL;
- 	struct pathspec pathspec;
- 	struct submodule_update_clone suc = SUBMODULE_UPDATE_CLONE_INIT;
-+	struct list_objects_filter_options filter_options;
-+	int ret;
- 
- 	struct option module_update_clone_options[] = {
- 		OPT_STRING(0, "prefix", &prefix,
-@@ -2528,6 +2545,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 			   N_("disallow cloning into non-empty directory")),
- 		OPT_BOOL(0, "single-branch", &suc.single_branch,
- 			 N_("clone only one branch, HEAD or --branch")),
-+		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
- 		OPT_END()
- 	};
- 
-@@ -2540,20 +2558,26 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	update_clone_config_from_gitmodules(&suc.max_jobs);
- 	git_config(git_update_clone_config, &suc.max_jobs);
- 
-+	memset(&filter_options, 0, sizeof(filter_options));
- 	argc = parse_options(argc, argv, prefix, module_update_clone_options,
- 			     git_submodule_helper_usage, 0);
-+	suc.filter_options = &filter_options;
- 
- 	if (update)
- 		if (parse_submodule_update_strategy(update, &suc.update) < 0)
- 			die(_("bad value for update parameter"));
- 
--	if (module_list_compute(argc, argv, prefix, &pathspec, &suc.list) < 0)
-+	if (module_list_compute(argc, argv, prefix, &pathspec, &suc.list) < 0) {
-+		list_objects_filter_release(&filter_options);
- 		return 1;
-+	}
- 
- 	if (pathspec.nr)
- 		suc.warn_if_uninitialized = 1;
- 
--	return update_submodules(&suc);
-+	ret = update_submodules(&suc);
-+	list_objects_filter_release(&filter_options);
-+	return ret;
- }
- 
- static int run_update_procedure(int argc, const char **argv, const char *prefix)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 652861aa66..926f6873d3 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -10,7 +10,7 @@ USAGE="[--quiet] [--cached]
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
--   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--[no-]single-branch] [--] [<path>...]
-+   or: $dashless [--quiet] update [--init [--filter=<filter-spec>]] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--[no-]single-branch] [--] [<path>...]
-    or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
-    or: $dashless [--quiet] set-url [--] <path> <newurl>
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
-@@ -49,6 +49,7 @@ dissociate=
- single_branch=
- jobs=
- recommend_shallow=
-+filter=
- 
- die_if_unmatched ()
- {
-@@ -347,6 +348,14 @@ cmd_update()
- 		--no-single-branch)
- 			single_branch="--no-single-branch"
- 			;;
-+		--filter)
-+			case "$2" in '') usage ;; esac
-+			filter="--filter=$2"
-+			shift
-+			;;
-+		--filter=*)
-+			filter=$1
-+			;;
- 		--)
- 			shift
- 			break
-@@ -361,6 +370,11 @@ cmd_update()
- 		shift
- 	done
- 
-+	if test -n "$filter" && test "$init" != "1"
-+	then
-+		usage
-+	fi
-+
- 	if test -n "$init"
- 	then
- 		cmd_init "--" "$@" || return
-@@ -379,6 +393,7 @@ cmd_update()
- 		$single_branch \
- 		$recommend_shallow \
- 		$jobs \
-+		$filter \
- 		-- \
- 		"$@" || echo "#unmatched" $?
- 	} | {
-diff --git a/t/t5617-clone-submodules-remote.sh b/t/t5617-clone-submodules-remote.sh
-index e2dbb4eaba..bc4fa11d51 100755
---- a/t/t5617-clone-submodules-remote.sh
-+++ b/t/t5617-clone-submodules-remote.sh
-@@ -28,6 +28,13 @@ test_expect_success 'setup' '
- 	)
- '
- 
-+# bare clone giving "srv.bare" for use as our server.
-+test_expect_success 'setup bare clone for server' '
-+	git clone --bare "file://$(pwd)/." srv.bare &&
-+	git -C srv.bare config --local uploadpack.allowfilter 1 &&
-+	git -C srv.bare config --local uploadpack.allowanysha1inwant 1
-+'
-+
- test_expect_success 'clone with --no-remote-submodules' '
- 	test_when_finished "rm -rf super_clone" &&
- 	git clone --recurse-submodules --no-remote-submodules "file://$pwd/." super_clone &&
-@@ -65,4 +72,14 @@ test_expect_success 'clone with --single-branch' '
- 	)
- '
- 
-+# do basic partial clone from "srv.bare"
-+# confirm partial clone was registered in the local config for super and sub.
-+test_expect_success 'clone with --filter' '
-+	git clone --recurse-submodules --filter blob:none "file://$pwd/srv.bare" super_clone &&
-+	test_cmp_config -C super_clone 1 core.repositoryformatversion &&
-+	test_cmp_config -C super_clone blob:none remote.origin.partialclonefilter &&
-+	test_cmp_config -C super_clone/sub 1 core.repositoryformatversion &&
-+	test_cmp_config -C super_clone/sub blob:none remote.origin.partialclonefilter
-+'
-+
- test_done
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index 058e5d0c96..f7452af262 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -544,4 +544,40 @@ test_expect_failure 'grep saves textconv cache in the appropriate repository' '
- 	test_path_is_file "$sub_textconv_cache"
- '
- 
-+test_expect_success 'grep partially-cloned submodule' '
-+	# Set up clean superproject and submodule for partial cloning.
-+	git init super &&
-+	git init super/sub &&
-+	(
-+		cd super &&
-+		test_commit --no-tag "Add file in superproject" super-file "Some content for super-file" &&
-+		test_commit -C sub --no-tag "Add file in submodule" sub-file "Some content for sub-file" &&
-+		git submodule add ./sub &&
-+		git commit -m "Add other as submodule sub" &&
-+		test_tick &&
-+		test_commit -C sub --no-tag --append "Update file in submodule" sub-file "Some more content for sub-file" &&
-+		git add sub &&
-+		git commit -m "Update submodule" &&
-+		test_tick &&
-+		git config --local uploadpack.allowfilter 1 &&
-+		git config --local uploadpack.allowanysha1inwant 1 &&
-+		git -C sub config --local uploadpack.allowfilter 1 &&
-+		git -C sub config --local uploadpack.allowanysha1inwant 1
-+	) &&
-+	# Clone the superproject & submodule, then make sure we can lazy-fetch submodule objects.
-+	git clone --filter=blob:none --recurse-submodules "file://$(pwd)/super" partial &&
-+	(
-+		cd partial &&
-+		cat >expect <<-\EOF &&
-+		HEAD^:sub/sub-file:Some content for sub-file
-+		HEAD^:super-file:Some content for super-file
-+		EOF
-+
-+		GIT_TRACE2_EVENT="$(pwd)/trace2.log" git grep -e content --recurse-submodules HEAD^ >actual &&
-+		test_cmp expect actual &&
-+		# Verify that we actually fetched data from the promisor remote:
-+		grep \"category\":\"promisor\",\"key\":\"fetch_count\",\"value\":\"1\" trace2.log >/dev/null
-+	)
-+'
-+
- test_done
-
-base-commit: b56bd95bbc8f716cb8cbb5fdc18b9b0f00323c6a
--- 
-2.35.0.rc0.227.g00780c9af4-goog
-
+diff --git a/parse-options.h b/parse-options.h
+index e22846d3b7..2e801b3c9a 100644
+=2D-- a/parse-options.h
++++ b/parse-options.h
+@@ -85,6 +85,11 @@ typedef enum parse_opt_result parse_opt_ll_cb(struct pa=
+rse_opt_ctx_t *ctx,
+  *   token to explain the kind of argument this option wants. Does not
+  *   begin in capital letter, and does not end with a full stop.
+  *   Should be wrapped by N_() for translation.
++ *   Is enclosed in brackets when printed, unless PARSE_OPT_LITERAL_ARGHE=
+LP
++ *   is set in `flags` or it contains any of the following characters: ()=
+<>[]|
++ *   E.g. "name" is shown as "<name>" to indicate that a name value
++ *   needs to be supplied, not the literal string "name", but
++ *   "<start>,<end>" and "(this|that)" are printed verbatim.
+  *
+  * `help`::
+  *   the short help associated to what the option does.
+@@ -105,9 +110,8 @@ typedef enum parse_opt_result parse_opt_ll_cb(struct p=
+arse_opt_ctx_t *ctx,
+  *				not last it will require an argument.
+  *				Should not be used with PARSE_OPT_OPTARG.
+  *   PARSE_OPT_NODASH: this option doesn't start with a dash.
+- *   PARSE_OPT_LITERAL_ARGHELP: says that argh shouldn't be enclosed in b=
+rackets
+- *				(i.e. '<argh>') in the help message.
+- *				Useful for options with multiple parameters.
++ *   PARSE_OPT_LITERAL_ARGHELP: says that `argh` shouldn't be enclosed in
++ *				brackets (see `argh` description above).
+  *   PARSE_OPT_NOCOMPLETE: by default all visible options are completable
+  *			   by git-completion.bash. This option suppresses that.
+  *   PARSE_OPT_COMP_ARG: this option forces to git-completion.bash to
+=2D-
+2.34.1
