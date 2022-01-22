@@ -2,116 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A965C433F5
-	for <git@archiver.kernel.org>; Sat, 22 Jan 2022 01:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94A44C433EF
+	for <git@archiver.kernel.org>; Sat, 22 Jan 2022 01:11:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231477AbiAVBI6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Jan 2022 20:08:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47336 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230465AbiAVBI6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Jan 2022 20:08:58 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0559FC06173B
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 17:08:58 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id r11so9499542pgr.6
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 17:08:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=A/fnfI9BrNjQxL67SoiezenhzBGMkzjCGpzGilAYo7c=;
-        b=oPNqDiup/qPoQ7/OFlw5SjxCC8vLJ97Bbd8hq6o9NNcdjMFgsxMqlsLub/RpwN5cQE
-         UnfdB6fYtfbrek46dBt0nvRkofrB/sLixAQPkGFJIr3WP0e6JZSYFd9gBVgy98WJ1RLS
-         n3FL8wDoYszofM0DhtiobGZHvUtQfi26UdCXA8Rk5CiQJghs25Oj+j92dwkiBiMDM7BU
-         r1aojjAkzlTFNTczV3q5YCYxAvdn2hhGNRaaGjLzUUHsQ3/MgxjQrR1iRO2n1NQJ46+d
-         rQWUjbMWHTtNPTOTp6QpHYtLSY2mNEpbPNK7g5uTfrzs5SyFyJS8WEAO2DuTJYhH4Ayu
-         lE+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=A/fnfI9BrNjQxL67SoiezenhzBGMkzjCGpzGilAYo7c=;
-        b=xtfqVZ/aDF+BSTxte0P+aGS4m8tYJHNMv/t6ZRqpVRi3Rlh5cquraxcxAmXn1RepG6
-         ur6AyGr0m6EPnWEG9OrNVkQsafN7AIVlvB1/z77ihVoyV2WGhkXJcIgZbZYAe4iiX0ZK
-         +K9MxYqDmBnSyk3FKuRao/DMcC7oc7z03BDVQoj4H7p0ZdG+GdgrmG6cjVtl+Rg72nIO
-         SanD33wdbAcr9UBmHYvk/SphTXA3JPA6Ln+ucpD+q27D3wxLGIZRSAxDYUIQoeZM118J
-         7Xb11fPijy1qkMtdVkWflEC374S/hTD561/UzZjjfV1tSNLMjy8LfQasnO83DzHym1YI
-         5dBw==
-X-Gm-Message-State: AOAM532gtAvWmu+JLAgnzhg0upsl12DXR+zK6xBWt/MLB77FCI6YOodx
-        mHHAEh/4GgzbemfZSl0H1oD+oNoco9I=
-X-Google-Smtp-Source: ABdhPJykiPGbmwmmMY7EG5+mFMm6dSPchxTrXXJWRxH4Utm41Z9ft/htrtOaCKD2v7f5jfJFkc7Kgw==
-X-Received: by 2002:a05:6a00:1589:b0:4c3:cc45:58e2 with SMTP id u9-20020a056a00158900b004c3cc4558e2mr5724816pfk.86.1642813737498;
-        Fri, 21 Jan 2022 17:08:57 -0800 (PST)
-Received: from ?IPV6:2601:602:9e81:12c0:2d18:26b4:c539:428e? ([2601:602:9e81:12c0:2d18:26b4:c539:428e])
-        by smtp.gmail.com with ESMTPSA id 20sm5362554pgz.59.2022.01.21.17.08.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Jan 2022 17:08:57 -0800 (PST)
-Message-ID: <5e7e4858-10ea-06d4-0406-84b83c26dc43@gmail.com>
-Date:   Fri, 21 Jan 2022 17:08:55 -0800
+        id S231383AbiAVBLz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Jan 2022 20:11:55 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50773 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230013AbiAVBLz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Jan 2022 20:11:55 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E6F1415D17E;
+        Fri, 21 Jan 2022 20:11:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=cJ7V2wmYY1s+pQZdgtVabAIlv
+        RrqGHzTVcLxb5IBKc4=; b=WQEq+D+yHD3zjVnlEQEqh3EWwDRNKdypwPdDD4sxN
+        aMRNZ02UT8f7Tbgnn/k80925zRDfMGYJsjEgioXlDn2gUJZJ9PUhCKjX6ZnFXlXZ
+        dnJhqIew7fuZOG6ajjYSyWAoRWhWqs8qeBgRS7KyOJoorMTkR5mzP0H7BtcKqE3k
+        Nk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DFAE815D17D;
+        Fri, 21 Jan 2022 20:11:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 559E115D17C;
+        Fri, 21 Jan 2022 20:11:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Neeraj Singh <nksingh85@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v6 02/15] reftable: fix resource leak in block.c error path
+References: <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
+        <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
+        <315ce62e710e6e80dc8a4d959e5532b5f9142669.1642691534.git.gitgitgadget@gmail.com>
+        <220121.865yqdl3ff.gmgdl@evledraar.gmail.com>
+Date:   Fri, 21 Jan 2022 17:11:51 -0800
+Message-ID: <xmqq5yqcd160.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.5.0
-Subject: Re: [PATCH v3 2/3] sparse-checkout: custom tab completion
-Content-Language: en-US
-From:   Lessley Dennington <lessleydennington@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        johannes.schindelin@gmail.com
-References: <pull.1108.v2.git.1640892413.gitgitgadget@gmail.com>
- <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
- <256e5f034c6072b6e3621adfa96c5c6319752fae.1641841193.git.gitgitgadget@gmail.com>
- <20220115095725.GA1738@szeder.dev>
- <CABPp-BGR+UrW5ej-8+XXHPkjMfFgURycd9rWC+2awUvYcr_PXA@mail.gmail.com>
- <xmqqv8yjz5us.fsf@gitster.g>
- <CABPp-BErg-RtyycXaRXYfQHEQXA4q-FU9Q6nYkSHJsqL-04oXw@mail.gmail.com>
- <xmqq7dayup5d.fsf@gitster.g> <ee58a0d5-5773-238d-706f-3fb264b6e8db@gmail.com>
- <78956982-f5fc-1681-1efe-42e408132a4f@gmail.com>
-In-Reply-To: <78956982-f5fc-1681-1efe-42e408132a4f@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 484A9670-7B20-11EC-8DB0-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
+> On Thu, Jan 20 2022, Han-Wen Nienhuys via GitGitGadget wrote:
+>
+>> From: Han-Wen Nienhuys <hanwen@google.com>
+>>
+>> Add test coverage for corrupt zlib data. Fix memory leaks demonstrated=
+ by
+>> unittest.
+>>
+>> This problem was discovered by a Coverity scan.
+>>
+>> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+>> ---
+>>  reftable/block.c          | 26 +++++++++------
+>>  reftable/reader.c         | 23 ++++++++------
+>>  reftable/readwrite_test.c | 66 ++++++++++++++++++++++++++++++++++++++=
++
+>>  3 files changed, 97 insertions(+), 18 deletions(-)
+>>
+>> diff --git a/reftable/block.c b/reftable/block.c
+>> index 855e3f5c947..6c8e8705205 100644
+>> --- a/reftable/block.c
+>> +++ b/reftable/block.c
+>> @@ -188,13 +188,16 @@ int block_reader_init(struct block_reader *br, s=
+truct reftable_block *block,
+>>  	uint32_t full_block_size =3D table_block_size;
+>>  	uint8_t typ =3D block->data[header_off];
+>>  	uint32_t sz =3D get_be24(block->data + header_off + 1);
+>> -
+>
+> stray extra whitespace being added in the middle of variable
+> declarations.
 
-On 1/21/22 5:07 PM, Lessley Dennington wrote:
->>> I know it is your preference to complete only directories and
->>> exclude filenames, but I question if the confusion such a design
->>> causes to end-users is worth it.
->>
->> I think perhaps we're a little caught up in exemplifying commands that
->> are unrelated to sparse-checkout. As Elijah said in [1], the documentation
->> states that directories and patterns are acceptable to sparse-checkout but
->> not files. While it is not reasonable to try to offer every pattern a user
->> could possibly pass to sparse-checkout, it is reasonable to offer
->> directories and (in my opinion) will help guide users toward correct usage
->> of the command.
->>
->> However, since completion on directories is cone-mode-specific, I am
->> willing to accept the suggestion to only complete directories if we are in
->> a cone-mode sparse-checkout and apply it in v4 of this series.
->>
->> [1]: 
->> https://lore.kernel.org/git/CABPp-BErg-RtyycXaRXYfQHEQXA4q-FU9Q6nYkSHJsqL-04oXw@mail.gmail.com/ 
->>
-> 
-> In light of non-cone mode being removed in the near future (see [1]), it
-> actually seems it does not make sense to add different behaviors for cone
-> mode and non-cone mode. I also ran this by some other contributors, who
-> thought it would be best to complete on both files and directories so as
-> not to confuse users (as Junio and Szeder have indicated). So, instead of
-> differentiating between cone mode and non-cone mode in V4, I will plan to
-> remove directory completion.
-> 
-> [1]: 
-> https://lore.kernel.org/git/CABPp-BEwMAPHGt5xD9jDU58grbrAqCdqNY9Nh8UJGLKuLbArXQ@mail.gmail.com/ 
-> 
-My apologies, I will not remove directory completion, but rather will
-return to completing on both files and directories.
+Hmph.  Isn't it removing a blank line?
