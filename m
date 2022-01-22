@@ -2,99 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31446C433EF
-	for <git@archiver.kernel.org>; Sat, 22 Jan 2022 09:32:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E2AAC433FE
+	for <git@archiver.kernel.org>; Sat, 22 Jan 2022 09:32:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbiAVJcB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Jan 2022 04:32:01 -0500
-Received: from mout.gmx.net ([212.227.17.21]:53043 "EHLO mout.gmx.net"
+        id S230212AbiAVJcX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Jan 2022 04:32:23 -0500
+Received: from mout.gmx.net ([212.227.17.21]:58893 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229660AbiAVJcA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Jan 2022 04:32:00 -0500
+        id S230011AbiAVJcV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Jan 2022 04:32:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1642843918;
-        bh=fasZiJ3QyBGzB6zPdTVlh8BurwiEMUyD+Bz2fnP9lfk=;
+        s=badeba3b8450; t=1642843937;
+        bh=aW2qGYU6T0GWmsSPRlw3WXChLCCD5TNwUut2T7COKxU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NS0ZpV3eTSD//z2B2PnZqexOokuYLmNCMSPPjtMdXfq80cZpYO07T3PFDjC2B8OxJ
-         rdWWzbDAzdOpaXCWR1f3L48n5ZHT4I+4AeVCqnGD86VIUQiXvcp4SN3rdcM3NHL3Bd
-         DdVjv7FWJeMN1peCRdEhHAQmZ+Jq7wgX6b9jdLfY=
+        b=YyZI2KvHiihEFpgUr0XGGqfABD+y+jhk59YJiYifsCn+kT0Azd2rf81guhWGrmdrJ
+         v9Pp0ycpVQYgXt7GWUgXLCWkgPxVOGyiPIjM+0fu487gQEG9Q4s/Krr7InhvGC0rfu
+         nzp0pQcN9y3pFx/Ax/0f/MLL5NgjUYyQ0fxl58BQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.28.174.184] ([89.1.213.181]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MpUYu-1mWPQY1qjE-00psnT; Sat, 22
- Jan 2022 10:31:58 +0100
-Date:   Sat, 22 Jan 2022 10:31:57 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MDQic-1n2z0p288c-00AV76; Sat, 22
+ Jan 2022 10:32:17 +0100
+Date:   Sat, 22 Jan 2022 10:32:16 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] [Non-critical]: sparse index vs split index fixes
-In-Reply-To: <CABPp-BFXMMH2_qqWPGaWX76mqEs2Z1GFNzbyeu2rLgaFPt7JyQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2201221031250.2121@tvgsbejvaqbjf.bet>
-References: <pull.1119.git.1642613379.gitgitgadget@gmail.com> <CABPp-BFXMMH2_qqWPGaWX76mqEs2Z1GFNzbyeu2rLgaFPt7JyQ@mail.gmail.com>
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] split-index: it really is incompatible with the
+ sparse index
+In-Reply-To: <xmqqh79wejzo.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2201221032060.2121@tvgsbejvaqbjf.bet>
+References: <pull.1119.git.1642613379.gitgitgadget@gmail.com> <1bb57ccd61452124119bb663f5e35e9676748c82.1642613380.git.gitgitgadget@gmail.com> <xmqqh79wejzo.fsf@gitster.g>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:hovIvljgL5j06cZbhIf+ejao8qq/7YL/nvKErm2Dy/OcHvL6VXe
- gj7zE5bqLEA3eGCfEuuxgPkiihHb1T18frYezbliCehy3fa16mPjKErLirFJlTJBZf28p1h
- bN6A+L/9dZRwfA5uYc5kvoQV51noGXi+hwRlN9kaTJJ6fzo64V5FC/kxe7+WbZQNtB4+5Bk
- snc9+oSNcPxFfd0hi/V+w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TD/BoMPlRIE=:RdkTwjEikavJcC0mbL9au2
- HBC6b3qFJ3nFPFVtLpK9bgIzbDC0KH5aAh1mCsi/zZpL6gxol7b8L5QpfCmiDgSF2tZ3mV9Dy
- sj1Q5yj8V24Aq1qMi4Rqhg32hdsaqZTLlU30aS21/CsiGUurPfoWOtKsyBDVCEJogYgDraMDw
- F0IQeW8/BDD+wLUSbgsEkW7b3CLS118HYzYrC7GfQZWT8qGfc1AHtHsRU4gnDS8Qa/IexqmYg
- 9wFJHPcoSd97NaqtdbWGnZEo9SMIPMEPAXWkU0PfHVG1fW0CiuaU9gpLLarmsmfFXQ6MAJd6X
- HvzSvPuep0d3BcSxAz/O4BRf/MPfmIAFXmazAlgU9qSFPsGjz6U19J/40b2/y/mmbmPJ5QZPS
- sYsWOTMcxUum39ErnsK5WIbQwJ/jNh26Ukea+lt4Vn8KT0Tc+jPN+wo8SMOeWKTgDqtTco2tG
- mJDgbZQ8apUj0VizlGgOv/mwbW7iJN5qfRZJYO4VPe9A875WMtCEbR/onLHc1L3oWZRcCz1oh
- We3PFbx9CTkKXU5/PWVN+zitnJTeSmVGERfvyAYiaG+InOG07+enwikWz9ERy427Un8CR6sBN
- OvzItb/QhrjEHzE8KYzDA6FQ7xCeMMifaSu15s05lcG5sDhyTCqaOlvsqY0spsAyOpQSmO7jK
- 186F0od2qfbOjT7AHutPNjnUUpZZ6oYXzSWHvkRL08JMwks5eOP4n3UVcjoZarYVWfMJUXCLz
- 4AeCy9inEWDDpjCofgCOoNZ3HTDq6X24jd8KoH6naFi8ywZkGQLDf3np51pIjRtzckwgMoU4i
- tWpO4DM+hzL9YxzpVCPft/DGerBAJj8VdwSi1E/g1pDEyRMe6KIxvDgwHzXy1qsPyYWhfJv+D
- uk5EH5ATtI5kOK/oAY01xtAIQwGmrbJeUv1lB5L4DnSCtzy9lkumdClnutfmpR/xO82hzgUiU
- epM/P+Untxoso5wxVNLdarMj7R3Jp14yVIlUEsFNGqHQji/0eN0DTagKT6hNgZSoW2Ndbv/lq
- BaXwqPldMSUF5fi1ucJqFc4JaLguJWkSRbmgWD6DdkIYd9D4IL2lHJ9qwgHHLp1OaQC7TpxYu
- ikjfPLnIvjgBfY=
+X-Provags-ID: V03:K1:onVfDuhlCxKN3r7Jl2/qEZ6PnlrlgaMlHAPokHvZFdefZ11pziK
+ t/oK941rYW6bvSHlRtmB0fn9Km9IhPVzCocCgLr9vfehE4wLjW41HaTV26wBwQ8xbwa/rXB
+ gx1ku9UushjMOkONzqrZlQ8o2GzsXxGpbfgxpxcOcWLf5K3ifbBV+uZkg8DICs0DeKgDFNj
+ 3O+SasCajHjnVWjwcg74g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GZtc+yTL//A=:bEAWC3+fAcGDJ8xCxu6DI2
+ xEhrxBsGGHgj+tl4N+excQa37qQD1pLCfGNKCRak2vunsp4xFqbMl8ilM93CyANajSVYlwZBF
+ Inb71kFd5FGEFcLe6NOwJhBM9hBXr+Bkh0aqkg86nV5ydz46rj7834DMDttR4+UqYE7V5mGfm
+ pPqIgOgiAzCigECVqjckAlUb17wyv09wHZpUEfhN14J+mcAEjfEbiOxUZ9c/Gc+8+w1apnt7B
+ ABHV/BQ+HjOEKqXLsIUHvOCmsaLVrEVhdDanr7dNsSrcv3PB9kPACQf6tTvQ3gXXogzO7Yfbp
+ kOJ3p7lHeBzO3XZxNXPnoH7ae3sPO2Ac55vHnuLaul+3RcdaQVabsL2Uk3d7/IHczra2W0Twt
+ GDyhETdtTbp5e6cEhu0yB2vbNMs47lqtMlKXFsC03Hamy98HwXaXvc55Ii0JhvCLThXp2nM0t
+ Dxp3x6gYbMsS/m5jsxEndEMZDD4X/HgV3v7Y3OynwvvuIX3G+R5PSphlKZQ4WM/Q9LHLzZAe1
+ dKcV+FNAhj38J0gRiFGv+6iwsQkzsT+8u5FOFIlXTz5pktlbeS8xYWy3zwgeyAZm/kyQRq/5s
+ Z5+FPGrniOcJsQFBGWy9STDAyQGvO1IVgvr1GG1ffL+/tpgjmk7EhSBB2Fc640RbkEs0UyLt/
+ zDbCcSFP1zhYACwD8vc1O38rV3L5cmm7fqkdvinLlUzkcXnz1DcOf7tdzlMf5DDQ9aT8PSQJv
+ qoXl4J/MjRR5wfpbGe8+LkcCtzjIy5A/NNIuVvA4GG6ycOdXnSMOYuTe5BtGhuQkFkO7Iezgc
+ Xs709/C8QExWnTsx63BsRtUilfE5jeATX+SeenBNh2kw6vpniaxbo+8pfFDLJN80wPo8ReI6u
+ ++FDEIfc/HWPuN322ZizKwmvEZbNJMMcA4gdEWxYbm14GgKtnM02fJQ0u/nNLxQPuxPjPPL8/
+ gLY7Cho2XO0MEraigOZSuqiaopPle06M73TkrgjvcVeJz8ea2sn5qXfu4dC6vu9IofwQVU3L9
+ zciXfekO/IBbC9CO8OkGPT5Kk6mzOklxH8120+nmlSn9whlplS6R9M0FSJ30s3vDfVMjgdHxK
+ Y61QtVdzrEjrUQ=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi Junio,
 
-On Fri, 21 Jan 2022, Elijah Newren wrote:
+On Fri, 21 Jan 2022, Junio C Hamano wrote:
 
-> On Fri, Jan 21, 2022 at 11:53 AM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > We noticed split/sparse index-related issues while rebasing Microsoft'=
-s fork
-> > of Git. These fixes are necessary for that fork's test suite to pass, =
-but
-> > they might not be super critical to get into upstream v2.35.0 (especia=
-lly
-> > this close to -rc2). However, the team felt that the decision should b=
-e left
-> > to the Git maintainer whether to take these patches into v2.35.0 or no=
-t.
+> > ... at least for now. So let's error out if we are even trying to
+> > initialize the split index when the index is sparse, or when trying to
+> > write the split index extension for a sparse index.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  read-cache.c  | 3 +++
+> >  split-index.c | 3 +++
+> >  2 files changed, 6 insertions(+)
 >
-> Thanks for digging into these and putting in some guardrails to
-> prevent similar issues.  I hit similar things with some of my changes
-> and had to fight t1091 to get it to pass in CI under
-> GIT_TEST_SPLIT_INDEX=3D1.  I don't recall seeing the specific error you
-> mention in patch 1, but maybe I just overlooked it.  I ended up
-> finding little workarounds such as disabling sparse-checkouts at the
-> end of various tests before new ones I was adding, and being extra
-> careful to not leave the sparse-index selected.  I probably should
-> have dug further, but didn't.  Thanks for digging in.
-
-Seeing how much time it took to properly diagnose and fix these issues, I
-do not fault you ;-)
-
-> I've read over the patch series; it looks good to me:
->
-> Reviewed-by: Elijah Newren <newren@gmail.com>
+> Good.  Will queue.
 
 Thank you!
 Dscho
