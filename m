@@ -2,99 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45EEDC433EF
-	for <git@archiver.kernel.org>; Sat, 22 Jan 2022 07:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6587DC433F5
+	for <git@archiver.kernel.org>; Sat, 22 Jan 2022 08:10:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233637AbiAVH67 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Jan 2022 02:58:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51710 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233530AbiAVH67 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Jan 2022 02:58:59 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01CA1C06173B
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 23:58:58 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id j23so41604911edp.5
-        for <git@vger.kernel.org>; Fri, 21 Jan 2022 23:58:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=SchlN926Igm8WUqhMj4oIu9HT2BMjpB8vet0f+kIHSc=;
-        b=SR37+ohxIbGvwqBn8wA4m+3q2omx8+Q/O5YARwj39dbNpOTlIlbVkRCSW4CVoJ8/KG
-         yNFRgRlCVlagYFE/XutJbBTRQv+1mcPT2UWQcYLBmKil5Ceq+K65KR3Yqpay2PXR3r5B
-         Ma8xBijtQZDtXM1HEk0OoPgXkJf2wo+I4LRyi9pkUafaCt7hKDzp1/5auH+tMgqsIbK5
-         76Esii004CYz2SXPZj7eoR6TbeXYIKh2uYVTtP9n3ZtyNOOPRxNo9Rew9mfHRTf7LUCy
-         VO+z3SRwv+D0H8droHwGUUgqbnzcfOYQo4r/osdZA/oIwU0nj52wa5zCf3dA224J0qyV
-         /TCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=SchlN926Igm8WUqhMj4oIu9HT2BMjpB8vet0f+kIHSc=;
-        b=HWBnY5YLiD83XeCTEdrGDgWBUSrFJ2oSqkQTh46KmPcKTTVonsm0S3Ko85h8mYj/YX
-         gbbM8tRoPg5bPbLc+c1SmMjM3sRu9x0MgBqNJftG3UnhE8buMAkvFmKrRnjrbcXvWI3q
-         aHet6qEteLvAcLd4R3TdNaU/s5DCPPdWCqrGJsqS+anGptUWCzXifm8QOqU8f944vq/b
-         u3ncoRuS+IrmQ/e0vKorvP1UUM9bE0EZ6W0Au8LqKuu4NHADyM59zJ5uabmBgxae4STJ
-         lvCkhZlNAf3YJMq5oLRacBuoAQbOwtYRg8Grl07nLU8CGtEQ6ZYx3B/rpsHZIrleU950
-         orqg==
-X-Gm-Message-State: AOAM532iUiWXvaz+oGu14ChsaC+vTAeG4oUuBZYXOkfCVKhOoqiAxDg4
-        y3KvVG3tKgO8TDEzW27wwag=
-X-Google-Smtp-Source: ABdhPJyktmSf7SxIFEgQZ6Yh6W8UgdQph59m6tKU55C6ihy3MMNlf/RM8oApYfGs9klJKY80+77Gpw==
-X-Received: by 2002:a05:6402:22b3:: with SMTP id cx19mr7437607edb.37.1642838336820;
-        Fri, 21 Jan 2022 23:58:56 -0800 (PST)
-Received: from szeder.dev (94-21-146-14.pool.digikabel.hu. [94.21.146.14])
-        by smtp.gmail.com with ESMTPSA id n6sm3459296edy.87.2022.01.21.23.58.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Jan 2022 23:58:56 -0800 (PST)
-Date:   Sat, 22 Jan 2022 08:58:51 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, stolee@gmail.com
-Subject: Re: [PATCH] sparse-checkout: create leading directory
-Message-ID: <20220122075851.GA1718@szeder.dev>
-References: <20220120185548.3648549-1-jonathantanmy@google.com>
- <220120.86mtjqks1b.gmgdl@evledraar.gmail.com>
+        id S229553AbiAVIKF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Jan 2022 03:10:05 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:3316 "EHLO bsmtp2.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229488AbiAVIKF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Jan 2022 03:10:05 -0500
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4Jgpnk3s91z5tl9;
+        Sat, 22 Jan 2022 09:10:00 +0100 (CET)
+Message-ID: <3063ea48-077c-df12-de91-1e8f2f62d3e9@kdbg.org>
+Date:   Sat, 22 Jan 2022 09:10:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Subject: Re: [PATCH] checkout: avoid BUG() when hitting a broken repository
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>,
+        =?UTF-8?B?UGV0ciDFoHBsw61jaGFs?= <psplicha@redhat.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <YemTGQZ97vAPUPY0@pobox.com>
+ <patch-1.1-21ddf7c628d-20220120T212233Z-avarab@gmail.com>
+ <xmqqlez8d2e6.fsf@gitster.g> <xmqqbl04d1s9.fsf_-_@gitster.g>
+From:   Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <xmqqbl04d1s9.fsf_-_@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <220120.86mtjqks1b.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 20, 2022 at 10:30:03PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-> > index 42776984fe..dba0737599 100755
-> > --- a/t/t1091-sparse-checkout-builtin.sh
-> > +++ b/t/t1091-sparse-checkout-builtin.sh
-> > @@ -79,6 +79,13 @@ test_expect_success 'git sparse-checkout init' '
-> >  	check_files repo a
-> >  '
-> >  
-> > +test_expect_success 'git sparse-checkout init in empty repo' '
-> > +	test_when_finished rm -rf empty-repo blank-template &&
-> > +	mkdir blank-template &&
-> > +	git init --template=blank-template empty-repo &&
-> > +	git -C empty-repo sparse-checkout init
-> > +'
-> > +
-> >  test_expect_success 'git sparse-checkout list after init' '
-> >  	git -C repo sparse-checkout list >actual &&
-> >  	cat >expect <<-\EOF &&
+Am 22.01.22 um 01:58 schrieb Junio C Hamano:
+> So, taking the two earlier comments from me together...
 > 
-> You're using an overly verbose way to say "no templates, please". You
-> can squash this in, i.e. --template= is an explicitly supported way to
-> do that.
+> I _think_ I was the one who spotted the funny skip_prefix() whose
+> result was not used, and suggested this unrelated check, during the
+> review.  Sorry about that.
+> 
+> ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+> 
+> Subject: [PATCH] checkout: avoid BUG() when hitting a broken repository
+> 
+> When 9081a421 (checkout: fix "branch info" memory leaks, 2021-11-16)
+> cleaned up existing memory leaks, we added an unrelated sanity check
+> to ensure that a local branch is truly local and not a symref to
+> elsewhere that dies with BUG() otherwise.  This was misguided in two
+> ways.  First of all, such a tightening did not belong to a leak-fix
+> patch.  And the condition it detected was *not* a bug in our program
+> but a problem in user data, where warning() or die() would have been
+> more appropriate.
+> 
+> As the condition is not fatal (the result of computing the local
+> branch name in the code that is involved in the faulty check is only
+> used as a textual label for the commit), let's revert the code to
+> the original state, i.e. strip "refs/heads/" to compute the local
+> branch name if possible, and otherwise leave it NULL.  The consumer
+> of the information in merge_working_tree() is prepared to see NULL
+> in there and act accordingly.
+> 
+> cf. https://bugzilla.redhat.com/show_bug.cgi?id=2042920
+> 
+> Reported-by: Petr Šplíchal <psplicha@redhat.com>
+> Reported-by: Todd Zullinger <tmz@pobox.com>
+> Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/checkout.c         |  3 ---
+>  t/t2018-checkout-branch.sh | 13 +++++++++++++
+>  2 files changed, 13 insertions(+), 3 deletions(-)
+> 
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 43d0275187..1fb34d537d 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1094,9 +1094,6 @@ static int switch_branches(const struct checkout_opts *opts,
+>  		const char *p;
+>  		if (skip_prefix(old_branch_info.path, prefix, &p))
+>  			old_branch_info.name = xstrdup(p);
+> -		else
+> -			BUG("should be able to skip past '%s' in '%s'!",
+> -			    prefix, old_branch_info.path);
+>  	}
+>  
+>  	if (opts->new_orphan_branch && opts->orphan_from_empty_tree) {
+> diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
+> index 93be1c0eae..5dda5ad4cb 100755
+> --- a/t/t2018-checkout-branch.sh
+> +++ b/t/t2018-checkout-branch.sh
+> @@ -85,6 +85,19 @@ test_expect_success 'setup' '
+>  	git branch -m branch1
+>  '
+>  
+> +test_expect_success 'checkout a branch without refs/heads/* prefix' '
+> +	git clone --no-tags . repo-odd-prefix &&
+> +	(
+> +		cd repo-odd-prefix &&
+> +
+> +		origin=$(git symbolic-ref refs/remotes/origin/HEAD) &&
+> +		git symbolic-ref refs/heads/a-branch "$origin" &&
+> +
+> +		git checkout -f a-branch &&
+> +		git checkout -f a-branch
 
-It would be even more expressive to use 'git init --no-template', but,
-alas, that doesn't work:
+I haven't grasped the hairy details of the circumstances regarding this
+issue, and are observing this thread only from the sideline. I wonder
+whether there is a significance that there are two identical checkout
+commands in a row. In particular, could the second checkout not just
+switch back to main? A comment in the test case would help me and future
+readers.
 
-  $ git init --no-template /tmp/foo
-  Initialized empty Git repository in /tmp/foo/.git/
-  $ ls /tmp/foo/.git
-  branches  config  description  HEAD  hooks  info  objects  refs
+> +	)
+> +'
+> +
+>  test_expect_success 'checkout -b to a new branch, set to HEAD' '
+>  	test_when_finished "
+>  		git checkout branch1 &&
 
+-- Hannes
