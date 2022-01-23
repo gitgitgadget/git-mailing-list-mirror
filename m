@@ -2,87 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E12EC433EF
-	for <git@archiver.kernel.org>; Sun, 23 Jan 2022 20:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF248C433EF
+	for <git@archiver.kernel.org>; Sun, 23 Jan 2022 21:06:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240093AbiAWUhW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Jan 2022 15:37:22 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54785 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240057AbiAWUhU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jan 2022 15:37:20 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F17CB112D71;
-        Sun, 23 Jan 2022 15:37:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-        :subject:date:message-id:mime-version:content-type; s=sasl; bh=n
-        c3P7SmTG61hloePSVWZGQjQ/01omEbjRIkUdTSBUK0=; b=qh4GS87uK/W+po3KS
-        dl1kDva6RHfQ89bJh0xQjBwa9AVQbj3psAZuGrAF4plOqi/EcYOZI8Z/PXCfxPsS
-        4WgNxoKlwP7PWtN1VjP1/SEUG/x98eZtgq1B917sqmPrkeN7lkofapL/A8pAIpcS
-        hyX3yfiWTLtukX1ah3NnZ3sVQ0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E8F16112D70;
-        Sun, 23 Jan 2022 15:37:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 59190112D6F;
-        Sun, 23 Jan 2022 15:37:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S240191AbiAWVGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Jan 2022 16:06:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57830 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231262AbiAWVGw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jan 2022 16:06:52 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87D35C06173B
+        for <git@vger.kernel.org>; Sun, 23 Jan 2022 13:06:51 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id ah7so15914313ejc.4
+        for <git@vger.kernel.org>; Sun, 23 Jan 2022 13:06:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:cc:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=MFFqyifpVVLxyT/ZobDaFyuq29GJ79nFfRsxC0oYqAk=;
+        b=W576Yt5qQmjnTR3WjdiL5ZpcevdCJ6loCTGh8Akp5fldO44aWuRpeZOAHPLCsGuh8+
+         ve0phPqljt0hN3vQCSuAHfPwUd45NxYPvNLlBRSehUwrvl4wXEQ7PTz6QMu7SPIk6q8J
+         sbuFhJqTyEMix3lnsBSMdNZ8tGc0uNTdURNKAISyGZxTwqYUyGF90o1sDAqyjGj6jNDS
+         +jLc2MKNNwHd+lohK2r6bUUYuqmTdQG3ToE92V/ruCybz+fZnVspdcjZaSpShZfBKIoJ
+         AdNF7cc4S67PFoYymVHR9T8FtxZJpRkVv7J8ssEaoCysZSt+PX6ddSkZe8KTmroq/Y0m
+         8Dmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=MFFqyifpVVLxyT/ZobDaFyuq29GJ79nFfRsxC0oYqAk=;
+        b=qJFFBuTB1VIAg8Np/vWyAVplsrs09KAZIfcDPpmdEFYs2YjSfBg0MF5vtRD4X6tHbY
+         S3suVTjfzRJsE8FbzHe5QJzoxSUAnGATmbQ21g4pstaQfZ3nRd0bF1L6a3jgVukz6KaO
+         f9BCScCViJwFJn3o53izLVWL8Mj92cTM4uQpP2wFQIfFEvqIMf4sc5ncu1759R1cvR83
+         m6OTw2V9uyrNv8R8WDh9QwzuYJGv+RvYeiRbCT0S6uqbF6TOUq3FbkBQCvrEDHM1FdDN
+         BfbFc8ojcQaDMxiT2v1jwtickl7k7sF4jeFTdcohoo6tLm1rxN7YyRTMqjRjYStvSn0I
+         dTmg==
+X-Gm-Message-State: AOAM530nAystrZu2X8FqBrfRMPsbbfdB2SrQCzqKNGqEP/Xf6XkzKa9T
+        VynyP1aPf1dlCseUwK2slTT3+CrJdjc=
+X-Google-Smtp-Source: ABdhPJzjJHt8s1JTKHAqSCO10mQ7u2X9qiN18l8KYsCJV98PwmlLyMItVtXKxHkMNB6qqN/VLCSTtA==
+X-Received: by 2002:a17:906:90b:: with SMTP id i11mr10681320ejd.661.1642972009880;
+        Sun, 23 Jan 2022 13:06:49 -0800 (PST)
+Received: from [192.168.1.94] (176.248.7.93.rev.sfr.net. [93.7.248.176])
+        by smtp.gmail.com with ESMTPSA id e19sm3108463ejl.225.2022.01.23.13.06.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 23 Jan 2022 13:06:49 -0800 (PST)
 To:     git@vger.kernel.org
-Subject: [RFC] Contributor doc: more on the proposed log message
-Date:   Sun, 23 Jan 2022 12:37:18 -0800
-Message-ID: <xmqqilua89z5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Cc:     git.jonathan.bressat@gmail.com, guillaume.cogoni@gmail.com
+From:   Cogoni Guillaume <cogoni.guillaume@gmail.com>
+Subject: [Newcomer] Any ideas for microprojects ?
+Message-ID: <e5a0448a-4606-7ed1-78d9-b06520688616@gmail.com>
+Date:   Sun, 23 Jan 2022 22:06:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 42742492-7C8C-11EC-9F50-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have been thinking about making it more clear why we care about
-the log message, and noticed that we have CodingGuidelines and
-SubmittingPatches, both are specifically targetted for the
-contributors of THIS project (not to users contributing to a project
-that happens to use Git).
+Hello,
 
-I think the first thing to fix is that we have the "describe your
-changes well" section in the latter, as if it is not part of the
-code that is covered by CodingGuidelines.  You formulate the thought
-on how to explain/sell your changes to others, and you sift the text
-you add to help fellow developers into the ones you leave in in-code
-comments and in the proposed log message, while you code.  I am
-tempted to propose moving the part about proposed log message from
-SubmittingPatches to CodingGuidelines for this reason.
+We are students from Université Claude Bernard Lyon 1 in France in
+first year of Master’s degree Computer Science
+We want to try to contribute to the Git project as a part of
+our studies.
+Our mentor in this work is Matthieu Moy, who has already contributed
+to Git a lot.
 
-Independent of the above, here is a small update I would add to
-clarify the project convention on the log message.
+So, we are looking for ideas to start our contribute.
+Can you help us ?
+And if we have an idea, how we submit it to be sure that we don't
+go in something wrong. Is there a special tag ?
 
-Thoughts?
+Thank you in advance for your help.
 
----
- Documentation/SubmittingPatches | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
-index 92b80d94d4..11d0c85988 100644
---- c/Documentation/SubmittingPatches
-+++ w/Documentation/SubmittingPatches
-@@ -142,6 +142,13 @@ The body should provide a meaningful commit message, which:
- 
- . alternate solutions considered but discarded, if any.
- 
-+[[present-tense]]
-+The problem statement that describes the status quo is written in the
-+present tense.  Write "The code does X when it is given input Y",
-+instead of "The code used to do Y when given input X".  You do not
-+have to say "Currently"---the status quo in the problem statement is
-+about the code _without_ your change, by project convention.
-+
- [[imperative-mood]]
- Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
- instead of "[This patch] makes xyzzy do frotz" or "[I] changed xyzzy
+Sincerely,
+COGONI Guillaume and BRESSAT Jonathan
