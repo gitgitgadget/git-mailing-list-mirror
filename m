@@ -2,230 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65824C433EF
-	for <git@archiver.kernel.org>; Sun, 23 Jan 2022 08:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 542C0C433F5
+	for <git@archiver.kernel.org>; Sun, 23 Jan 2022 12:30:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235961AbiAWIFO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Jan 2022 03:05:14 -0500
-Received: from mout.web.de ([212.227.15.3]:55469 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230390AbiAWIFN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jan 2022 03:05:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1642925102;
-        bh=UGiulYeu0wig7PB/fOJYo788UcFMSvuher4TFKE5aa0=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=M6MAHxOdSObJzvR5bolyF6TlZRo/+RFrLAi3ORfKIdYibXPWhSODGKuNRtGXq/xdY
-         mhia8PIOvf+3oYDbaEDwk85NMZjR13BRg4ge317vNmPoYNSNE8YDpNLeyBbt1VyrNl
-         jyr4dk43Q1fyMjBGh2neIZwNYYhs+VfbzC9ByTRY=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MOm0x-1mvOjJ1iBD-00Pri6; Sun, 23
- Jan 2022 09:05:02 +0100
-Message-ID: <90488a50-c015-c9c8-e58b-81ccb66feaf6@web.de>
-Date:   Sun, 23 Jan 2022 09:05:01 +0100
+        id S236313AbiAWM3e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Jan 2022 07:29:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54086 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231757AbiAWM3b (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jan 2022 07:29:31 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4254EC06173B
+        for <git@vger.kernel.org>; Sun, 23 Jan 2022 04:29:31 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id o64so13597480pjo.2
+        for <git@vger.kernel.org>; Sun, 23 Jan 2022 04:29:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cUp3oW8WgCyZ/HpcxWgcZqNca0ebQPKl+ffyXeDO+II=;
+        b=TRjzOFwN+dvDvKaY6rZGexj85M/uiiJwcEI/YVyHMmFzJMJ28E8Nzm14KqZ6gleajp
+         b+ZpUTaBXAp4BrlMAxTFqqNWe8CJSYSXhJQgmZJwT06TnoK4/RwInupQaXjMo7M+fm+p
+         h1zm0+v+ZKI3miqgWqRrwi+3gW06yWzrrnslce+oM+su5NH8d5szxV/sER0/RSIMa4U+
+         RB2jqRHLpM0uzJOiLM2LrHV09ZLZ1MmUBbdqAM6oBJv4cBDASAYm2T/DK7wNZyYWrTWf
+         NKQY3VsclOYO/MZw0IkFl2djY55D1ie9TH3geixG/OMFA3Cc3MajOKx7RJmcdhgv7Gzw
+         zrvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=cUp3oW8WgCyZ/HpcxWgcZqNca0ebQPKl+ffyXeDO+II=;
+        b=W8hoEqiw2H/u1NFWWfTn9BdsMJiq29kOThT9eaEKpAEwMrY4i5XxcAuL2E4mm0RSmB
+         QziIwxPLP0kSS8sPeL3tJanGeu471GKsJyPYvyF4eQechvIXxeWuyqA/yDvERBy90xwB
+         dwDkjNHpb/PsdqaPgAFuqz7ivzo1RW+aKy2wVHLlRHZ9kYXy+BnK0HdNkrw95pKOnIJK
+         Fggad/8FI8wbqtYUq8IrWyYE70fknqGhgsv2f3SNvmNhRWucFznKUOcnoUqsfvt30RqD
+         zj2PDyw3DYHenzklq7+cIsobFV616RPIL5CMcUSpcXU7cpj17jxeUcfEPrtkRxWvnAxp
+         O/yw==
+X-Gm-Message-State: AOAM532M2e/nnjBEBt5PDIltCZ6xXQBRwDm9RnMtC+3+pnUOfWgaCtCU
+        1HO9Y0boPV9mmcv19PojLz0=
+X-Google-Smtp-Source: ABdhPJyZ9IPKVdZJUF5FdRQpJuAF9vdgGyyZXLiVwrHsOnppocUuxXOxLVUwpgL/Xtupb6kLyIRmEw==
+X-Received: by 2002:a17:902:9306:b0:14a:18ab:298c with SMTP id bc6-20020a170902930600b0014a18ab298cmr10320396plb.87.1642940970692;
+        Sun, 23 Jan 2022 04:29:30 -0800 (PST)
+Received: from tigtog.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id w4sm9347523pgs.28.2022.01.23.04.29.28
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 23 Jan 2022 04:29:29 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Git l10n discussion group <git-l10n@googlegroups.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Arusekk <arek_koz@o2.pl>, Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        Daniel Santos <daniel@brilhante.top>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Emir SARI <bitigchi@me.com>, Emir SARI <emir_sari@icloud.com>,
+        Fangyi Zhou <me@fangyi.io>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Jordi Mas <jmas@softcatala.org>,
+        =?UTF-8?q?J=C3=BCrgen=20Kr=C3=A4mer?= <jkr@jottkaerr.de>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.35.0 round 2
+Date:   Sun, 23 Jan 2022 20:29:25 +0800
+Message-Id: <20220123122925.22967-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.5.0
-Subject: Re: [PATCH 03/12] merge-tree: add option parsing and initial shell
- for real merge function
-Content-Language: en-US
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
- <65fdae9ddba7c7065ce27acbf4e80a1a74842aa7.1642888562.git.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <65fdae9ddba7c7065ce27acbf4e80a1a74842aa7.1642888562.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:shEmMh7zIVQriHhg1MflXf+DLjQ8DZn1IfH9frWoCDWaH2zztga
- w0zS49Fv+sNuXJ26CYvYDavBGliukcLePYa1r/4oK6wEemNq7NQXXpwTXsVB1gRm9cKK2G6
- 7YJ3rKAnoYWzg7EKPfF8JBDR8ftmFAtSpew44JcNCbod3e3jDDhaSZIobkq3pLwAHPdMcEM
- JaYllR31sAeKLdEFsRuYQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zEHXy9mzepU=:x/DbaDT9ABRezp+3Cvozr3
- U+sHG0ORornyZ3ZJr7Nvn040CoY8VsTn+tImDrZ330kRWU5GU60vJP6CJS96zy7lXIP2ho9el
- dz9ljqlAEPikgXbd/EE3q0airBJ49lT5YxnlfA6uFLMt6x3yOgmH2EzOQm4hVyITER9VpPqsp
- dhZ65m7g4VcZDmnuRZs0ZbamiwXIQewuotiCRdWw+96e0KTTILsGcyy1f9Ty987S6vsOkI9jP
- gsg/DsylUolYBPZs3ubrDDGqKoFv1lWaNip8zjcrQrayydMCGWG1Evq1rdB2dbIjOkC5edwqZ
- lpVQsAl/J+stCdjfplEJ23nXc1RvBnHjZILLlDrzDyYtqTmLQEhh8bp8OzebZyHFpFPdJ76TJ
- qJPwjHUGbPu+7zj6iMXhCpFUK6Td47S1zsjqHU6ZNJBrMVPjsnBmXht3cmKs4t3MbUEo2d7Pa
- 1tXsm5HWDngy5QDkLCasY3adoz8NSqWPl9SJ+V9RyBiK5DPJfkWRo9n2bGyakiz6e3vio4UUX
- 7kRHQpsT6yn3asz9eHInxlNJu5gnD/lw/EEVqR2cNY7VMIZoBr5R+uPfNPGxLW6hXZiGDzoE/
- SJZNd1c2QFsbDEK3kkFI7dP9yApB5OM3joJ11YUrdzymOo5XGJ6Mdhhlw09JQR04eQA0GR0nd
- URKom7Ikeo01gAglXjwgacJj/yjWExJJi1p5UtyUnstFWsc3Hu0n8fzK07n3rn4ubLmRf157R
- qW7B4VPhnS7yF6d28KN0/rII8Du4sQ+Ok5aloWCDqK7xDqLUY/SeRkSuaFvZ/zEYyNRfJ21fz
- /o1tShKDhlmKVQ46daAIFKb0tW9mhkmlhK3gDHjDWpylvNF7q2YQ4HF56LZjh0amaR4xTfA6L
- NtDhpcuDv9aKQC44ZTJA9peZwEtPrfx/ozeqFjTh3qQDFjWI0wUM/U5jEjg3ujASSzmHU4XrZ
- 21jw7HokzcT1kfkGFhqQY+D6iTCNFnfQDIHGKcUAlqH0uRFlWFIc8iKM/2h18zkccwOX5LsD5
- xxwtStoLUel/IIjfRsYJqKvW2md9r8GOPayo+sBnXqxpF9ZgwZ8440zsJqXx2QE2OpfVjNHrS
- mdB+PRsHYU3zB4=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.01.22 um 22:55 schrieb Elijah Newren via GitGitGadget:
-> From: Elijah Newren <newren@gmail.com>
->
-> Let merge-tree accept a `--write-tree` parameter for choosing real
-> merges instead of trivial merges, and accept an optional
-> `--trivial-merge` option to get the traditional behavior.  Note that
-> these accept different numbers of arguments, though, so these names
-> need not actually be used.
->
-> Note that real merges differ from trivial merges in that they handle:
->   - three way content merges
->   - recursive ancestor consolidation
->   - renames
->   - proper directory/file conflict handling
->   - etc.
-> Basically all the stuff you'd expect from `git merge`, just without
-> updating the index and working tree.  The initial shell added here does
-> nothing more than die with "real merges are not yet implemented", but
-> that will be fixed in subsequent commits.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  builtin/merge-tree.c | 67 ++++++++++++++++++++++++++++++++++++++------
->  git.c                |  2 +-
->  2 files changed, 59 insertions(+), 10 deletions(-)
->
-> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> index 914ec960b7e..33e47cc1534 100644
-> --- a/builtin/merge-tree.c
-> +++ b/builtin/merge-tree.c
-> @@ -3,13 +3,12 @@
->  #include "tree-walk.h"
->  #include "xdiff-interface.h"
->  #include "object-store.h"
-> +#include "parse-options.h"
->  #include "repository.h"
->  #include "blob.h"
->  #include "exec-cmd.h"
->  #include "merge-blobs.h"
->
-> -static const char merge_tree_usage[] =3D "git merge-tree <base-tree> <b=
-ranch1> <branch2>";
-> -
->  struct merge_list {
->  	struct merge_list *next;
->  	struct merge_list *link;	/* other stages for this object */
-> @@ -366,15 +365,17 @@ static void *get_tree_descriptor(struct repository=
- *r,
->  	return buf;
->  }
->
-> -static int trivial_merge(int argc, const char **argv)
-> +static int trivial_merge(const char *base,
-> +			 const char *branch1,
-> +			 const char *branch2)
->  {
->  	struct repository *r =3D the_repository;
->  	struct tree_desc t[3];
->  	void *buf1, *buf2, *buf3;
->
-> -	buf1 =3D get_tree_descriptor(r, t+0, argv[1]);
-> -	buf2 =3D get_tree_descriptor(r, t+1, argv[2]);
-> -	buf3 =3D get_tree_descriptor(r, t+2, argv[3]);
-> +	buf1 =3D get_tree_descriptor(r, t+0, base);
-> +	buf2 =3D get_tree_descriptor(r, t+1, branch1);
-> +	buf3 =3D get_tree_descriptor(r, t+2, branch2);
->  	trivial_merge_trees(t, "");
->  	free(buf1);
->  	free(buf2);
-> @@ -384,9 +385,57 @@ static int trivial_merge(int argc, const char **arg=
-v)
->  	return 0;
->  }
->
-> +struct merge_tree_options {
-> +	int real;
-> +	int trivial;
-> +};
-> +
-> +static int real_merge(struct merge_tree_options *o,
-> +		      const char *branch1, const char *branch2)
-> +{
-> +	die(_("real merges are not yet implemented"));
-> +}
-> +
->  int cmd_merge_tree(int argc, const char **argv, const char *prefix)
->  {
-> -	if (argc !=3D 4)
-> -		usage(merge_tree_usage);
-> -	return trivial_merge(argc, argv);
-> +	struct merge_tree_options o =3D { 0 };
-> +	int expected_remaining_argc;
-> +
-> +	const char * const merge_tree_usage[] =3D {
-> +		N_("git merge-tree [--write-tree] <branch1> <branch2>"),
-> +		N_("git merge-tree [--trivial-merge] <base-tree> <branch1> <branch2>"=
-),
-> +		NULL
-> +	};
-> +	struct option mt_options[] =3D {
-> +		OPT_BOOL(0, "write-tree", &o.real,
-> +			 N_("do a real merge instead of a trivial merge")),
-> +		OPT_BOOL(0, "trivial-merge", &o.trivial,
-> +			 N_("do a trivial merge only")),
-> +		OPT_END()
-> +	};
-> +
-> +	/* Check for a request for basic help */
-> +	if (argc =3D=3D 2 && !strcmp(argv[1], "-h"))
-> +		usage_with_options(merge_tree_usage, mt_options);
+Hi Junio,
 
-This is unnecessary; parse_options() handles -h already.
+Please pull the following l10n updates for Git 2.35.0.
 
-> +
-> +	/* Parse arguments */
-> +	argc =3D parse_options(argc, argv, prefix, mt_options,
-> +			     merge_tree_usage, 0);
-> +	if (o.real && o.trivial)
-> +		die(_("--write-tree and --trivial-merge are incompatible"));
+The following changes since commit df3c41adeb212432c53d93ce6ace5d5374dc6e11:
 
-12909b6b8a (i18n: turn "options are incompatible" into "cannot be used
-together", 2022-01-05) standardized messages of that kind; let's stick
-to that to simplify translation:
+  Git 2.35-rc1 (2022-01-14 15:26:53 -0800)
 
-		die(_("options '%s' and '%s' cannot be used together"),
-		    "--write-tree", "--trivial-merge");
+are available in the Git repository at:
 
-> +	if (o.real || o.trivial) {
-> +		expected_remaining_argc =3D (o.real ? 2 : 3);
-> +		if (argc !=3D expected_remaining_argc)
-> +			usage_with_options(merge_tree_usage, mt_options);
-> +	} else {
-> +		if (argc < 2 || argc > 3)
-> +			usage_with_options(merge_tree_usage, mt_options);
-> +		o.real =3D (argc =3D=3D 2);
-> +	}
-> +
-> +	/* Do the relevant type of merge */
-> +	if (o.real)
-> +		return real_merge(&o, argv[0], argv[1]);
-> +	else
-> +		return trivial_merge(argv[0], argv[1], argv[2]);
->  }
-> diff --git a/git.c b/git.c
-> index 5ff21be21f3..6090a1289db 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -558,7 +558,7 @@ static struct cmd_struct commands[] =3D {
->  	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_T=
-REE | NO_PARSEOPT },
->  	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK=
-_TREE | NO_PARSEOPT },
->  	{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | N=
-O_PARSEOPT },
-> -	{ "merge-tree", cmd_merge_tree, RUN_SETUP | NO_PARSEOPT },
-> +	{ "merge-tree", cmd_merge_tree, RUN_SETUP },
->  	{ "mktag", cmd_mktag, RUN_SETUP | NO_PARSEOPT },
->  	{ "mktree", cmd_mktree, RUN_SETUP },
->  	{ "multi-pack-index", cmd_multi_pack_index, RUN_SETUP },
+  git@github.com:git-l10n/git-po.git tags/l10n-2.35.0-rnd2
+
+for you to fetch changes up to 9e2b35d7643cc26f61094d80c8d5f512eb467981:
+
+  l10n: Update Catalan translation (2022-01-23 09:40:52 +0100)
+
+----------------------------------------------------------------
+l10n-2.35.0-rnd2
+
+----------------------------------------------------------------
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (5195t)
+
+Bagas Sanjaya (2):
+      l10n: po-id for 2.35 (round 1)
+      l10n: po-id for 2.35 (round 2)
+
+Emir SARI (1):
+      l10n: tr: v2.35.0 round 1
+
+Fangyi Zhou (1):
+      l10n: zh_CN: v2.35.0 round 1
+
+Jean-Noël Avila (1):
+      l10n: fr: v2.35.0 round 1
+
+Jiang Xin (8):
+      l10n: git.pot: v2.35.0 round 1 (126 new, 142 removed)
+      Merge branch 'master' of github.com:nafmo/git-l10n-sv
+      Merge branch 'fr_2.35.0_rnd1' of github.com:jnavila/git
+      Merge tag 'v2.35.0-rc1'
+      l10n: git.pot: v2.35.0 round 2 (1 new, 1 removed)
+      l10n: batch update to fix typo in branch.c
+      Merge branch 'po-id' of github.com:bagasme/git-po
+      Merge branch 'l10n/zh_TW/220113' of github.com:l10n-tw/git-po
+
+Jordi Mas (3):
+      l10n: Update Catalan translation
+      l10n: Update Catalan translation
+      l10n: Update Catalan translation
+
+Jürgen Krämer (1):
+      l10n: de.po: Fix translation for "'%s' is aliased to '%s'"
+
+Matthias Rüster (1):
+      l10n: de.po: Update German translation
+
+Peter Krefting (2):
+      l10n: sv.po: Fix typo
+      l10n: sv.po: Update Swedish translation (5196t0f0u)
+
+Trần Ngọc Quân (1):
+      l10n: vi(5195t): Update for v2.35.0 round 2
+
+Yi-Jyun Pan (2):
+      l10n: zh_TW: v2.35.0 round 1 (1 fuzzy)
+      l10n: zh_TW: v2.35.0 round 2 (0 untranslated)
+
+ po/bg.po    | 6281 +++++++++++++++++++--------------------
+ po/ca.po    | 9522 +++++++++++++++++++++++++++--------------------------------
+ po/de.po    | 6332 +++++++++++++++++++--------------------
+ po/fr.po    | 6661 +++++++++++++++++++++--------------------
+ po/git.pot  | 6009 +++++++++++++++++++------------------
+ po/id.po    | 6719 ++++++++++++++++++++---------------------
+ po/sv.po    | 6681 +++++++++++++++++++++--------------------
+ po/tr.po    | 6379 +++++++++++++++++++--------------------
+ po/vi.po    | 8645 ++++++++++++++++++++---------------------------------
+ po/zh_CN.po | 6911 ++++++++++++++++++++-----------------------
+ po/zh_TW.po | 6627 +++++++++++++++++++++--------------------
+ 11 files changed, 37060 insertions(+), 39707 deletions(-)
+
+--
+Jiang Xin
