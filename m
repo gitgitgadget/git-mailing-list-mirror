@@ -2,83 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3348DC433F5
-	for <git@archiver.kernel.org>; Sun, 23 Jan 2022 00:30:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E161C433EF
+	for <git@archiver.kernel.org>; Sun, 23 Jan 2022 00:38:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231846AbiAWAaY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Jan 2022 19:30:24 -0500
-Received: from mail-gateway-shared15.cyon.net ([194.126.200.68]:60790 "EHLO
-        mail-gateway-shared15.cyon.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S230488AbiAWAaY (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 22 Jan 2022 19:30:24 -0500
-X-Greylist: delayed 671 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Jan 2022 19:30:23 EST
-Received: from s019.cyon.net ([149.126.4.28])
-        by mail-gateway-shared15.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1nBQb8-0002qX-Lc
-        for git@vger.kernel.org; Sun, 23 Jan 2022 01:19:11 +0100
-Received: from [10.20.10.230] (port=49022 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.94.2)
-        (envelope-from <dev+git@drbeat.li>)
-        id 1nBQb7-009wwO-EJ; Sun, 23 Jan 2022 01:19:09 +0100
-Message-ID: <74d35354-20a6-9cc1-3452-573460c694bd@drbeat.li>
-Date:   Sun, 23 Jan 2022 01:19:08 +0100
+        id S232005AbiAWAic (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Jan 2022 19:38:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42830 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229542AbiAWAib (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Jan 2022 19:38:31 -0500
+Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com [IPv6:2607:f8b0:4864:20::a31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC6A1C06173B
+        for <git@vger.kernel.org>; Sat, 22 Jan 2022 16:38:30 -0800 (PST)
+Received: by mail-vk1-xa31.google.com with SMTP id w206so7874889vkd.10
+        for <git@vger.kernel.org>; Sat, 22 Jan 2022 16:38:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eE4Q+cHZn+4JtI95pWUx1rv5Wsyb3OjBgCY0IgUbYjY=;
+        b=k4+YNlwNIV81P/beUo9H7Its1AvRA63rghjkBq87Z0i5BKzZ8lIZsIkYQ5W9ITqD4m
+         oViVHMXaoc8yImcMix3G4GepOwXN+JxuL5An+dekvq4US+IVHc3i3uj1ynyAmanAWzN7
+         I6OcphTfJRmIijtJT1QnQCbfE3QjeHKVqaFBBWNiucy8fxRR2Xpm3GxxJZkSyuU/9wHe
+         sfV2vxK0lMvzj6wNgUEzfpnHlwRXAbJBCekJV2SQCidKwnpRcNBkR1yHZ++gb5PEiMbw
+         rzYYQ0h8w/ei3OAqqcStEa4ng/LxCUiVPyHWTxsl72Is3ahed6M8+OUPXkBsVxsu3Bzm
+         LpSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eE4Q+cHZn+4JtI95pWUx1rv5Wsyb3OjBgCY0IgUbYjY=;
+        b=KjxPxbGIp4XFPM22jsLef849S70PEN7MnDiwOVQ40Ev8L+avc1O+5+oE61Q01HDHtK
+         2Cv1lPnuH3DoZpI/NVQzDxUWBi04Dc2ylx2uR8MQDkrg5KT1/Is0SLd8iEXOj3QhB7hz
+         yvf7E/VSrwgYAVewcFnuN3IdFMNB9HuN58CnjavufwLjSSO+PtV7GNOahtT+Ku5r85A4
+         uccHhiTNcliQIeRroEkifr113I+dsmY8MRUmZayd1GnECT/FFOtQzqoo9XCmZN7+khUo
+         vJyMARYjrd9j7RV2Erm0Xw4sb6408HBL8h5S/NiK1GARC2lwIgOmF7+yAWxbuAMxnJLv
+         grog==
+X-Gm-Message-State: AOAM530oKtawxpyE9B4woNm5jv1pHQQ8RM4cR1s3f01ih+zPyBDbnbrE
+        2gX7pJjFseWZ8sG1AOT/Vm6hqqAVviaex8rrgc96ik2Oh87AN1Ae
+X-Google-Smtp-Source: ABdhPJxlPed3NI6iY+BrU0pLRDoUDK/zS/hYa8gIi4luOhwVOwUt11N2lnE7RzqrnE290QN7x1XTKv6euhfZBQxTh5A=
+X-Received: by 2002:a05:6122:1793:: with SMTP id o19mr3995088vkf.40.1642898309027;
+ Sat, 22 Jan 2022 16:38:29 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.5.0
-Subject: Re: [PATCH v3] cache.h: auto-detect if zlib has uncompress2()
-Content-Language: de-CH
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-        "Randall S . Becker" <randall.becker@nexbridge.ca>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-References: <patch-v2-1.1-444eacf30be-20220119T094428Z-avarab@gmail.com>
- <patch-v3-1.1-e9cb8763fd4-20220120T011414Z-avarab@gmail.com>
- <xmqqr190ekrh.fsf@gitster.g>
-From:   Beat Bolli <dev+git@drbeat.li>
-In-Reply-To: <xmqqr190ekrh.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+References: <CAGP6POJ9gwp+t-eP3TPkivBLLbNb2+qj=61Mehcj=1BgrVOSLA@mail.gmail.com>
+ <5373af01-eeae-fb66-e9f7-41f2a022b275@kdbg.org>
+In-Reply-To: <5373af01-eeae-fb66-e9f7-41f2a022b275@kdbg.org>
+From:   Hongyi Zhao <hongyi.zhao@gmail.com>
+Date:   Sun, 23 Jan 2022 08:38:17 +0800
+Message-ID: <CAGP6PO+GMi6jqRZ5HWxES5GDYkEDHoXOOZ+VvDkm0sC4nxkT4Q@mail.gmail.com>
+Subject: Re: Some sub-commands can't be completed by TAB key.
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22.01.22 00:23, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
-> 
->> As noted in the updated commit message this approach of having an
->> object just for this fallback function comes at the cost of some
->> complexity, but now the compat object lives neatly in its own object.
-> 
-> I do not see any change in this patch adding costly complexity, but
-> I notice lack of one possible trick that might become problem with
-> some compilers and linkers when their zlib has uncompress2()
-> function.  Let's have this graduate very early in the next cycle, to
-> see if anybody on a rarer system sees a complaint due to having to
-> deal with a totally empty object file.
+On Sat, Jan 22, 2022 at 10:47 PM Johannes Sixt <j6t@kdbg.org> wrote:
+>
+> Am 22.01.22 um 09:42 schrieb Hongyi Zhao:
+> > I find that there are some  sub-commands can't be completed by TAB key:
+> >
+> > $ git <TAB>
+> > add               cherry-pick       fetch             latexdiff
+> > [...]
+> > As you can see, there are some sub-commands which are not listed in
+> > the above list, for example, the following ones:
+> >
+> > $ git ls-remote
+> > $ git ls-files
+> >
+> > Any hints for this problem?
+>
+> Tab completion is only available for user-facing sub-commands
+> ("porcelain"), but not for sub-commands intended for scripting
+> ("plumbing"). The intent is to make tab completion more efficient during
+> day-to-day work on the command line. For example,
 
-OpenSSL has a macro in include/openssl/macros.h to counteract exactly this:
+But there are so many git sub-commands, so if the plumbing feature is
+supported, it will facilitate user to check the availability of some
+sub-commands.
 
-     /*
-      * Sometimes OPENSSL_NO_xxx ends up with an empty file and some 
-compilers
-      * don't like that.  This will hopefully silence them.
-      */
-     #define NON_EMPTY_TRANSLATION_UNIT static void *dummy = &dummy;
+>    $ git l<TAB>
+>
+> arrives at
+>
+>    $ git log <cursor here>
 
-They insert it in the otherwise empty "#else" branch of conditionally 
-complied code.
+I see the following:
 
+$ git l<TAB>
+latexdiff   log
 
-Cheers, Beat
+> instead of
+>
+>    log     ls-files     ls-remote     ls-tree
+>    $ git l<cursor here>
+>
+> -- Hannes
