@@ -2,82 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF248C433EF
-	for <git@archiver.kernel.org>; Sun, 23 Jan 2022 21:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76BC2C433F5
+	for <git@archiver.kernel.org>; Sun, 23 Jan 2022 21:32:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240191AbiAWVGx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Jan 2022 16:06:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57830 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231262AbiAWVGw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jan 2022 16:06:52 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87D35C06173B
-        for <git@vger.kernel.org>; Sun, 23 Jan 2022 13:06:51 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id ah7so15914313ejc.4
-        for <git@vger.kernel.org>; Sun, 23 Jan 2022 13:06:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:cc:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=MFFqyifpVVLxyT/ZobDaFyuq29GJ79nFfRsxC0oYqAk=;
-        b=W576Yt5qQmjnTR3WjdiL5ZpcevdCJ6loCTGh8Akp5fldO44aWuRpeZOAHPLCsGuh8+
-         ve0phPqljt0hN3vQCSuAHfPwUd45NxYPvNLlBRSehUwrvl4wXEQ7PTz6QMu7SPIk6q8J
-         sbuFhJqTyEMix3lnsBSMdNZ8tGc0uNTdURNKAISyGZxTwqYUyGF90o1sDAqyjGj6jNDS
-         +jLc2MKNNwHd+lohK2r6bUUYuqmTdQG3ToE92V/ruCybz+fZnVspdcjZaSpShZfBKIoJ
-         AdNF7cc4S67PFoYymVHR9T8FtxZJpRkVv7J8ssEaoCysZSt+PX6ddSkZe8KTmroq/Y0m
-         8Dmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:to:cc:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=MFFqyifpVVLxyT/ZobDaFyuq29GJ79nFfRsxC0oYqAk=;
-        b=qJFFBuTB1VIAg8Np/vWyAVplsrs09KAZIfcDPpmdEFYs2YjSfBg0MF5vtRD4X6tHbY
-         S3suVTjfzRJsE8FbzHe5QJzoxSUAnGATmbQ21g4pstaQfZ3nRd0bF1L6a3jgVukz6KaO
-         f9BCScCViJwFJn3o53izLVWL8Mj92cTM4uQpP2wFQIfFEvqIMf4sc5ncu1759R1cvR83
-         m6OTw2V9uyrNv8R8WDh9QwzuYJGv+RvYeiRbCT0S6uqbF6TOUq3FbkBQCvrEDHM1FdDN
-         BfbFc8ojcQaDMxiT2v1jwtickl7k7sF4jeFTdcohoo6tLm1rxN7YyRTMqjRjYStvSn0I
-         dTmg==
-X-Gm-Message-State: AOAM530nAystrZu2X8FqBrfRMPsbbfdB2SrQCzqKNGqEP/Xf6XkzKa9T
-        VynyP1aPf1dlCseUwK2slTT3+CrJdjc=
-X-Google-Smtp-Source: ABdhPJzjJHt8s1JTKHAqSCO10mQ7u2X9qiN18l8KYsCJV98PwmlLyMItVtXKxHkMNB6qqN/VLCSTtA==
-X-Received: by 2002:a17:906:90b:: with SMTP id i11mr10681320ejd.661.1642972009880;
-        Sun, 23 Jan 2022 13:06:49 -0800 (PST)
-Received: from [192.168.1.94] (176.248.7.93.rev.sfr.net. [93.7.248.176])
-        by smtp.gmail.com with ESMTPSA id e19sm3108463ejl.225.2022.01.23.13.06.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Jan 2022 13:06:49 -0800 (PST)
-To:     git@vger.kernel.org
-Cc:     git.jonathan.bressat@gmail.com, guillaume.cogoni@gmail.com
-From:   Cogoni Guillaume <cogoni.guillaume@gmail.com>
-Subject: [Newcomer] Any ideas for microprojects ?
-Message-ID: <e5a0448a-4606-7ed1-78d9-b06520688616@gmail.com>
-Date:   Sun, 23 Jan 2022 22:06:48 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S240187AbiAWVcH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Jan 2022 16:32:07 -0500
+Received: from ring.crustytoothpaste.net ([172.105.110.227]:37210 "EHLO
+        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235024AbiAWVcH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jan 2022 16:32:07 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 6E9215B227;
+        Sun, 23 Jan 2022 21:32:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1642973526;
+        bh=WCgmQ99r+I0FO4MH5f/cBKAllgESRUO3ASY9S5zpIZs=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=xJOtL8eOB3JBhT8KPZS/ByfBHwC8RTtpOWtJx9MZj62E3Ev8BjS0ZQRh9bryBsCpU
+         uSumfZIc3VquUo2yuCeXDvlRPv6X6B1RYDwNUzhZFVPLOqex0+wlM4cRfp/3jI8KsT
+         g8I9f5gWU0YlzXWGyxxtxBGGaj3WhTJ9wsk3ehVzJooNDhpN2Kjn8bUNzqH6n0fXHG
+         3Fx4PaFSti5BowsufTR9CF34jjtU4bycYxl4wtvAYqh+cEEAdqFE5lgLRxvdNu7MCw
+         iPJcHYvcVwkWPc1Pyy7IsaKHJEoA5yhIGQq3cFNCUzmX6m2IAT6P4zMC3sewGTSaFM
+         50H0FID+nkK9Wt1SySFWBQ6EZi5kmjICMfWX38q2B9/r5BK+hsF/RTY7DUDyaRnNWT
+         uGimDgiqAR3JCgpwGCE4e/dhpIzuPN3djFi2i7LBqwp4zhkALIO/cq4ooBjHzYLeyw
+         ExgsOCEmLUQbfGgsWUyAm16lzffVmqxRejVYFP8hFrvb9oeSAUd
+Date:   Sun, 23 Jan 2022 21:32:04 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] Contributor doc: more on the proposed log message
+Message-ID: <Ye3JVEm77d7zMU5L@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqilua89z5.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="rZK7J5AN7kal5gcT"
+Content-Disposition: inline
+In-Reply-To: <xmqqilua89z5.fsf@gitster.g>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-We are students from Université Claude Bernard Lyon 1 in France in
-first year of Master’s degree Computer Science
-We want to try to contribute to the Git project as a part of
-our studies.
-Our mentor in this work is Matthieu Moy, who has already contributed
-to Git a lot.
+--rZK7J5AN7kal5gcT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So, we are looking for ideas to start our contribute.
-Can you help us ?
-And if we have an idea, how we submit it to be sure that we don't
-go in something wrong. Is there a special tag ?
+On 2022-01-23 at 20:37:18, Junio C Hamano wrote:
+> I have been thinking about making it more clear why we care about
+> the log message, and noticed that we have CodingGuidelines and
+> SubmittingPatches, both are specifically targetted for the
+> contributors of THIS project (not to users contributing to a project
+> that happens to use Git).
+>=20
+> I think the first thing to fix is that we have the "describe your
+> changes well" section in the latter, as if it is not part of the
+> code that is covered by CodingGuidelines.  You formulate the thought
+> on how to explain/sell your changes to others, and you sift the text
+> you add to help fellow developers into the ones you leave in in-code
+> comments and in the proposed log message, while you code.  I am
+> tempted to propose moving the part about proposed log message from
+> SubmittingPatches to CodingGuidelines for this reason.
+>=20
+> Independent of the above, here is a small update I would add to
+> clarify the project convention on the log message.
+>=20
+> Thoughts?
 
-Thank you in advance for your help.
+I think this is a good idea, since it differs from the way people
+usually discuss things outside of literature, and it's very common for
+this to trip people up.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-Sincerely,
-COGONI Guillaume and BRESSAT Jonathan
+--rZK7J5AN7kal5gcT
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYe3JUwAKCRB8DEliiIei
+gcKeAQCCR/ZDA83IqJs6DGUMwcanX480CMR8CmZpUBkcFNf2FgD9HC8QsvFjiCMr
+UwapyVrrjinyhsKK7HRMnCtLwT4CBw0=
+=oXzV
+-----END PGP SIGNATURE-----
+
+--rZK7J5AN7kal5gcT--
