@@ -2,128 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AA45C433F5
-	for <git@archiver.kernel.org>; Sun, 23 Jan 2022 17:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F59DC433F5
+	for <git@archiver.kernel.org>; Sun, 23 Jan 2022 19:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239241AbiAWRbW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Jan 2022 12:31:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38072 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238595AbiAWRbW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Jan 2022 12:31:22 -0500
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 023BCC06173B
-        for <git@vger.kernel.org>; Sun, 23 Jan 2022 09:31:21 -0800 (PST)
-Received: by mail-qk1-x733.google.com with SMTP id s12so17155439qkg.6
-        for <git@vger.kernel.org>; Sun, 23 Jan 2022 09:31:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=WVPIlNatdERkwxjn5qP2PdptQmIWAXpYzS7unGQVmws=;
-        b=gNBcMjSXTymm9YLjz2KKB+q+cxVyc+EiyC+xUr94XQYui+3+Un6rfmDc9+K4JYDEsV
-         HQzkepwE+jCYkngL8+Uc8Uod7p27p5bnbbY2GFcpie2nuytxwfyXvuqmD+cMcPfrQ7E5
-         rtMrgsJSv7rfpYobbNgY9j49gUh/NRw/AlsdDwF5hjqCxJnbwNOTs+7wctmj9+GaCwUY
-         eBGyBCTYU7H0pEreu4hE03t+x4YilaXZX2H/us3Jbd7Fj4hOX3UezBPM5yd/Qds88d1Q
-         m9+QLFTyMPaKchEOnVTpbcmyVKBO8AXmzpIxROZJaLQ2v10nfmkYVE24lbAxwJgiVVtM
-         rdsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=WVPIlNatdERkwxjn5qP2PdptQmIWAXpYzS7unGQVmws=;
-        b=KvEQxJwUYVb6WDXNkuPz3rjr0pY+UAmN0zrLLKy8NWC3JXwcF9cKwRa4yRwmS82I5c
-         VVrvw5hkqtp9pr7rmGIXgjfOE2ReJlZRlk7/T06NHYtyFLGzA1xYS2YsenaYqyDcsxtd
-         lH1wsrgHw+8zf7yBVoHtNsX64e9VEhAmTDuZld5moz53zfdwJ2rv+eRE02YQdzArvSXL
-         rMso6NDu3+3KuUPiqx9Vl+r6GQOGNylgQNDI7ApdTTnrf/pD/3BMhGawaJA/Nry9bjHX
-         7/tKe4jT4vVgEXt0IGMWngDY+hFCgNtxPkffFbUX3OFWkCearvtxWTA6ity5xzldzz5J
-         EC1Q==
-X-Gm-Message-State: AOAM530xBdtuTZzHQg0b3MaMY8AZGpWAPB4Yo4lmPYFoxeT/WVIkEK30
-        3EC8NSqWjGOLFw4dIfXY1YIv8SmpenU=
-X-Google-Smtp-Source: ABdhPJw4uATB4T3ljkm8IHypxGM6vC90CK1w2cyzZ9mP9HFi2aLyFQQnO5l6BcHLW9cKMEqdtwCNJw==
-X-Received: by 2002:a05:620a:4503:: with SMTP id t3mr8703787qkp.525.1642959080738;
-        Sun, 23 Jan 2022 09:31:20 -0800 (PST)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id j19sm6265342qko.121.2022.01.23.09.31.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 23 Jan 2022 09:31:20 -0800 (PST)
-Subject: Re: Some sub-commands can't be completed by TAB key.
-To:     Hongyi Zhao <hongyi.zhao@gmail.com>, Johannes Sixt <j6t@kdbg.org>
-Cc:     Git List <git@vger.kernel.org>
-References: <CAGP6POJ9gwp+t-eP3TPkivBLLbNb2+qj=61Mehcj=1BgrVOSLA@mail.gmail.com>
- <5373af01-eeae-fb66-e9f7-41f2a022b275@kdbg.org>
- <CAGP6PO+GMi6jqRZ5HWxES5GDYkEDHoXOOZ+VvDkm0sC4nxkT4Q@mail.gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <5a30ac1f-d414-0976-cd08-7b059117af41@gmail.com>
-Date:   Sun, 23 Jan 2022 12:31:18 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S239600AbiAWTSK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Jan 2022 14:18:10 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52255 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229533AbiAWTSK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Jan 2022 14:18:10 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 35951FE011;
+        Sun, 23 Jan 2022 14:18:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=15hCEQflv2fY
+        qywxNOdcGeOi7HERf4vArLo/mujhWkA=; b=sRGn1FlNQ5KFhUoMjGD64gXc9I72
+        LkELQroNnbongj4pk4vx+RZ5V6vcFZDlVaasmmFHFHPHgmg0nhtQO1c0HYQgHOkt
+        eL8jxzCIX8xBB+XOZYFeapJ1FGIm91YI/BVgmB/+Yt3D+M54aV3HSkdMP9romshs
+        zpOktitrdwBtn2M=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2AE67FE010;
+        Sun, 23 Jan 2022 14:18:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 74B22FE00F;
+        Sun, 23 Jan 2022 14:18:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Beat Bolli <dev+git@drbeat.li>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
+        "Randall S . Becker" <randall.becker@nexbridge.ca>,
+        Taylor Blau <me@ttaylorr.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        =?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v3] cache.h: auto-detect if zlib has uncompress2()
+References: <patch-v2-1.1-444eacf30be-20220119T094428Z-avarab@gmail.com>
+        <patch-v3-1.1-e9cb8763fd4-20220120T011414Z-avarab@gmail.com>
+        <xmqqr190ekrh.fsf@gitster.g>
+        <74d35354-20a6-9cc1-3452-573460c694bd@drbeat.li>
+Date:   Sun, 23 Jan 2022 11:18:07 -0800
+In-Reply-To: <74d35354-20a6-9cc1-3452-573460c694bd@drbeat.li> (Beat Bolli's
+        message of "Sun, 23 Jan 2022 01:19:08 +0100")
+Message-ID: <xmqqtudu9s7k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAGP6PO+GMi6jqRZ5HWxES5GDYkEDHoXOOZ+VvDkm0sC4nxkT4Q@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID: 32B514EA-7C81-11EC-8DA2-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hongyi,
+Beat Bolli <dev+git@drbeat.li> writes:
 
-Le 2022-01-22 à 19:38, Hongyi Zhao a écrit :
-> On Sat, Jan 22, 2022 at 10:47 PM Johannes Sixt <j6t@kdbg.org> wrote:
->>
->> Am 22.01.22 um 09:42 schrieb Hongyi Zhao:
->>> I find that there are some  sub-commands can't be completed by TAB key:
->>>
->>> $ git <TAB>
->>> add               cherry-pick       fetch             latexdiff
->>> [...]
->>> As you can see, there are some sub-commands which are not listed in
->>> the above list, for example, the following ones:
->>>
->>> $ git ls-remote
->>> $ git ls-files
->>>
->>> Any hints for this problem?
->>
->> Tab completion is only available for user-facing sub-commands
->> ("porcelain"), but not for sub-commands intended for scripting
->> ("plumbing"). The intent is to make tab completion more efficient during
->> day-to-day work on the command line. For example,
-> 
-> But there are so many git sub-commands, so if the plumbing feature is
-> supported, it will facilitate user to check the availability of some
-> sub-commands.
+> On 22.01.22 00:23, Junio C Hamano wrote:
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>>=20
+>>> As noted in the updated commit message this approach of having an
+>>> object just for this fallback function comes at the cost of some
+>>> complexity, but now the compat object lives neatly in its own object.
+>> I do not see any change in this patch adding costly complexity, but
+>> I notice lack of one possible trick that might become problem with
+>> some compilers and linkers when their zlib has uncompress2()
+>> function.  Let's have this graduate very early in the next cycle, to
+>> see if anybody on a rarer system sees a complaint due to having to
+>> deal with a totally empty object file.
+>
+> OpenSSL has a macro in include/openssl/macros.h to counteract exactly t=
+his:
+>
+>     /*
+>      * Sometimes OPENSSL_NO_xxx ends up with an empty file and some
+>        compilers
+>      * don't like that.  This will hopefully silence them.
+>      */
+>     #define NON_EMPTY_TRANSLATION_UNIT static void *dummy =3D &dummy;
+>
+> They insert it in the otherwise empty "#else" branch of conditionally
+> complied code.
 
-If what you want to do is "check the availability" of some sub-command,
-you can simply do 'git <subcommand> -h', for example, and see if Git recognizes
-the subcommand. 
+Between my "I recall some compilers and linkers had trouble with an
+totally empty object files, and we'd better be prepared for them"
+and "I didn't see any system that had such a problem during my
+tests", I still lean toward "it merely shows that the problem is
+rarer than the set of systems you tried", even without further
+input.
 
-If you mean discovering Git commands, you can use 'git help -a', which will list
-all commands, including pluming commands.
+But "It is a problem for which a real workaround is used in a system
+that is used more widely than we are" is a clear enough evidence
+that we should have one, especially the solution is so trivial.
 
-If you want to customize the Bash completion so that some select plumbing 
-commands do appear in the tab completion, you can use the config 
-'completion.commands' [1]. Setting it to "ls-files ls-remote ls-tree"
-would then give you your desired output below.
+https://github.com/openssl/openssl/pull/10425 seems to indicate that
+they are moving in a direction that removes the necessity to use
+this macro, by switching to tell the build system to not compile and
+build a file that would become empty due to conditionals, but nobody
+in the discussion seems to question the need for the macro for
+portability if an otherwise empty file need to be dealt with.
 
-> 
->>    $ git l<TAB>
->>
->> arrives at
->>
->>    $ git log <cursor here>
-> 
-> I see the following:
-> 
-> $ git l<TAB>
-> latexdiff   log
-
-This would mean you have a 'git-latexdiff' command somewhere in your PATH.
-
-Hope that helps,
-
-Philippe.
-
-[1] https://git-scm.com/docs/git-config#Documentation/git-config.txt-completioncommands
+Thanks.
