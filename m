@@ -2,93 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD1E6C433F5
-	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 18:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1753AC433EF
+	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 18:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245136AbiAXSWf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 13:22:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36596 "EHLO
+        id S245226AbiAXSZM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 13:25:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232267AbiAXSWe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 13:22:34 -0500
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6085DC06173B
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 10:22:34 -0800 (PST)
-Received: by mail-pl1-x649.google.com with SMTP id s19-20020a170902b19300b00149a463ad43so3782409plr.1
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 10:22:34 -0800 (PST)
+        with ESMTP id S245211AbiAXSZD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 13:25:03 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75CFBC061401
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 10:25:03 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id x1-20020a17090ab00100b001b380b8ed35so358156pjq.7
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 10:25:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=HtAYBwZ9c+yKt5elaj3PmlU5kjDTRAANVjS8KwprxAo=;
-        b=d+9EEmRXXPpYHTvw3DSV5cz8CabvXynvleG3O+/uhf4/3AXf85zA0UYzAHSX7GUGUL
-         dM2WhoNytfxi4G+qpgDerniaHj+5bmmN739lyMIy1P0+cdVnfJ05LexDADqSCAm6TP4v
-         wH6aA3qK6Ilf5rjTm1Nd3P/x9cciltIEa9N5ptSXkJxX90xGUsXKEOJpG1aO8GAUvDa0
-         IgoA6Yr2Io3KOrOB2CbN87Fzg3d2FZuMhiU7Su4TZgCu3Fjn4755tQj+OSEwD4KDvYOE
-         VELrbV115PlhOcVljJCVnlqNvmryeKgODFaa4p4VJ/KT0F3D/qnImvszOLXujgpGyDx1
-         vUIg==
+         :cc:content-transfer-encoding;
+        bh=UQa0DPqc9ETeaI0C0ZUEyQgpSHLiGAxHO4gvIYiQejg=;
+        b=NaA4Zv1uYY4RAVn28POL7/YmBP6Vsh0CS1hcDzY/JruSsnBvzQJRmw8ZD8yYQMcKLU
+         ziIaX7wmOmLpAQT7CXhGJFWWjML9LlXF810RbZqpvL4OG9qBVfLifDLlX1Wn1Q7v80QM
+         DwpkOEMAxbClIFhRIB1M6fDVjHnP/pTo6+k1KZSn7ZszYl4cgs1Cg38zXcc18owqtA9B
+         SYtGOgx7kmIixrcEza34N08fBKSbPyWHly/aESbwAREVi5u55hu4z9dp6CgMtTyRH147
+         mQewAZI+Rw9zdQSqhjWY26AYR1C5KjcX8Pdb9ZckP657fo5+MjShSFE8SKMVi8wfaDkt
+         yUiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=HtAYBwZ9c+yKt5elaj3PmlU5kjDTRAANVjS8KwprxAo=;
-        b=vTgmFmV85K7dU3f271Vphh9xFusPtJ+d30l6ZTXZ5nNWcn3DZTPI5ymEML60r1FIpa
-         pY+GcxuY7o3zxqo8FSX1iYDvravYlRa3lp+VZHxGFAd5NKrFbnhPw2+DIfZxQxenY+/5
-         fNCKuOCfYQ1r0Hl2YVfUGqR+JInzZz7KAM4YWplzwi9uFEEmK7tWutkIzhSRQ8kSfK2f
-         tdmfHhpl9wmLQZ+zCJNsCf+8cN1t8LcA/yRwM70zuaaajS62q+ikp1tQvthgq4t2E4Fj
-         AcHA+ReQCI/1ibxmKHsVVljPbFAiAWE2FR/8j5GW0ecD5tp6UHww4vw6Q580pRYJSoY5
-         fImg==
-X-Gm-Message-State: AOAM531KWpR2NCA3l+Yyd8D9OLexnnpXsxelM9KlHM9tzIX1tCbwmZJX
-        LhZXP27OOS47De/3/IaULrXR9MSYlTH9P3LCTF4V
-X-Google-Smtp-Source: ABdhPJy5Wzq2ZK8TAVIjAv20Y34NWYUvzFIwPUSm92u3YgtrV9isGtNC8WHYls/qnR7nVVv6rOfMg0b+1LXqbOK/7eaJ
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=UQa0DPqc9ETeaI0C0ZUEyQgpSHLiGAxHO4gvIYiQejg=;
+        b=LCqEWUlK7F5J3EmkSjMPUE8yw4PzpOS+AIhmosZfqVfgPwWRzHhkF0AQs2QC0o3S30
+         +LAP2R3xxYBxqVHiOaod1m/ZvlLLh2j6idAd86Gwkgcnduw278NaOj8EOf05F/fnuwoz
+         sNRYVaJNtbNzsKHBvlzJPowlZsdGsH1NynGt+DFYOEJEtCpy9JjKKNDF/Ga4VotqlAx3
+         2dBSrlNBed9OW66kXiEX9uCO2OYCn1Yr+z14bv/kRPutfUkmrQDNk4umCROB7HMSIDqZ
+         BXtUBYXqlcI+tzkyPaYbuuWoHXJMdIhF0p4OECxACCzoi7jdr14H5wvDilHOG0m/Sk4J
+         Csjg==
+X-Gm-Message-State: AOAM532ov+ckSwBFbx0Y50gDD+mHXA/+Tdki9SsmOx5k0VtSGDj2AfrH
+        0tov3Yf2VQH1eeKTj/Wev0GpEttrdpOvv1Czv1wt
+X-Google-Smtp-Source: ABdhPJxNF+it+hcDEoaS3tiWqpx8V+dutjRQMHkLVKj++rinT9NP74jcI2t1Czxdt/EoCJiv+UllVBYrUq+N6zvFVO6w
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:b55:b0:4c9:25c7:b522 with
- SMTP id p21-20020a056a000b5500b004c925c7b522mr5397308pfo.55.1643048553773;
- Mon, 24 Jan 2022 10:22:33 -0800 (PST)
-Date:   Mon, 24 Jan 2022 10:22:31 -0800
-In-Reply-To: <CABPp-BG9rxJsA9XwgUxpny5TDW4W7Z85PAkBdzKJXrSJxAim1g@mail.gmail.com>
-Message-Id: <20220124182231.2439029-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a17:902:8ec6:b0:14a:c625:eb2d with
+ SMTP id x6-20020a1709028ec600b0014ac625eb2dmr15500005plo.26.1643048702821;
+ Mon, 24 Jan 2022 10:25:02 -0800 (PST)
+Date:   Mon, 24 Jan 2022 10:25:00 -0800
+In-Reply-To: <220124.86zgnlgyjr.gmgdl@evledraar.gmail.com>
+Message-Id: <20220124182500.2439823-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <CABPp-BG9rxJsA9XwgUxpny5TDW4W7Z85PAkBdzKJXrSJxAim1g@mail.gmail.com>
+References: <220124.86zgnlgyjr.gmgdl@evledraar.gmail.com>
 X-Mailer: git-send-email 2.35.0.rc0.227.g00780c9af4-goog
 Subject: Re: [PATCH v2] sparse-checkout: create leading directory
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     newren@gmail.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, gitster@pobox.com,
-        avarab@gmail.com, jabolopes@google.com
+To:     avarab@gmail.com
+Cc:     newren@gmail.com, jonathantanmy@google.com, git@vger.kernel.org,
+        gitster@pobox.com, jabolopes@google.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-> On Fri, Jan 21, 2022 at 6:05 PM Jonathan Tan <jonathantanmy@google.com> wro=
-> te:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> The first thing I said in this thread is "Thanks. This fix looks good to
+> me.". I'd be happy to have just this fix in. This patch resolves a
+> blocked of an earlier series of mine.
+>=20
+> The rest of the feedback here (aside from the trivial "rm -rf" fix) was
+> an attempt to bridge the gap between this & my earlier look in [1].
+>=20
+> > And I think I'd say the same thing even if I saw your tests as being
+> > much more closely related to what Jonathan was checking.
 > >
-> > When creating the sparse-checkout file, Git does not create the leading
-> > directory, "$GIT_DIR/info", if it does not exist. This causes problems
-> > if the repository does not have that directory. Therefore, ensure that
-> > the leading directory is created.
-> >
-> > This is the only "open" in builtin/sparse-checkout.c that does not have
-> > a leading directory check. (The other one in write_patterns_and_update()
-> > does.)
-> >
-> > Note that the test needs to explicitly specify a template when running
-> > "git init" because the default template used in the tests has the
-> > "info/" directory included.
-> 
-> If wanted, you could avoid that by using `git worktree add ...`;
-> git-worktree will create a $GIT_DIR that does not contain an info
-> subdirectory.
-> 
-> (No need to resubmit or anything, mostly I'm just mentioning another
-> way folks might have triggered this issue.)
+> > That's my $0.02 on "why not?".  The story totally changes if you want
+> > to submit these tests separate from Jonathan's series.  If that's the
+> > scenario, then I fully agree with you on "it's cheap to add more test
+> > coverage so why not include it?"
+>=20
+> Sure, or maybe he'd be interested, or not. I'd rather try to suggest
+> some small proposed changes than submit a patch of my own as an initial
+> approach.
 
-Ah, thanks for the information.
-
-> Patch looks good to me:
-> 
-> Reviewed-by: Elijah Newren <newren@gmail.com>
-
-Thanks for taking a look!
+If my patch is OK going in on its own, I'd rather do that, and leave
+additional changes to other patch sets.
