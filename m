@@ -2,199 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E73BC433EF
-	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 15:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 030C6C433EF
+	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 15:34:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240790AbiAXP3t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 10:29:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51228 "EHLO
+        id S235960AbiAXPez (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 10:34:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234124AbiAXP3q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 10:29:46 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFCC1C06173B
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 07:29:45 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id p12so57269653edq.9
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 07:29:45 -0800 (PST)
+        with ESMTP id S231408AbiAXPey (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 10:34:54 -0500
+Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A91C06173B
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 07:34:54 -0800 (PST)
+Received: by mail-ua1-x936.google.com with SMTP id c36so31631585uae.13
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 07:34:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=UcltebWCA/I3OqwLUU8Pab2EClA2+6XVAoQNVRCZcuE=;
-        b=jSI19bslfKAb4gQztPuFayAW7rwhiL7Q8aer0kIRfobk0hG9qBB3bDY8fHp6GJraPC
-         GOW1mebsDbMDUATpofwiysLEJaNakXBfayMj5UQK3k/EiMuctDBcmY+LNkJO7U0s/fB9
-         yMLT39FxcmFCrardQaLF8DpNVhQjuSmuivmvrrZycB6Z1pZACjpSkSIiTj51sB2eyRvY
-         pWDkFcuUYUbCj28T7mMO3cseJnvVytiHZcbZNOtPKaog4DO+NUO8eayFT2zGoCo0A+/E
-         x93tn88aA//Lv7+VXH+16A5mfkfi/bRWmTtZKzPqfUqp78hoUmlTZpR+hfGNnpK5uo43
-         0SEA==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=O8TmqdZeZUEz8ws2wiGuLgUZ3GFabGsMA3Pbazm/PD8=;
+        b=AFL5ZsTxNQLoTftFTgdWzR93scaabC947oHopfeFUB9iTyrHroiF/03/lpVw31VH9n
+         Fd6mlwxuCcZlWRtxqLwwfTZMuzuTTu6GXcjgYA7EMZVAx0u4174myb2MUmvducVzIQiJ
+         qDn+10/IEs6Bv6NUVH5JyRzniKOvOJt/c1hgKWxVMjz27J8lXuN0dTlfAP6Csgb/GjRG
+         U5LTbJ7gQnFhQJFvRPK/ouAod8SgDEtdTiFXNJFUGhlvTZVmAZN8nL2jOGpZdEglkPqU
+         kSSO1wu2tQuNP87JZ3fph0EJArGehr8C6iPOAUvYQLHHgIFQwsFxsODng/pXJ0xxiBhB
+         rVpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=UcltebWCA/I3OqwLUU8Pab2EClA2+6XVAoQNVRCZcuE=;
-        b=FR1i9r228jGDlBODs+FhppBl3+kkKgzOnn4D7wivz/kkyEl0+UD7EEsQvVyS9JS1T0
-         Xp1rF1P8qFag7x5ym4S7K8yShn+4saL6iir37ec0ebR784bpPjUYyjNmOV8FGKrgFHbn
-         x4Z3AXqqMUo8/l1MTdmeQ9FSNygoc6Or7/LSnmlqglSpmgie0dX+i3bxD17T9ghfP6fS
-         8q4R4DGVOh5JTcBA1KNDhkqXd8eBNfZxZ9iwaQp3ZefCZWyCFpkK41yAoYCLv/iIWju5
-         9AB/KqVmG7Odq5/kSZTOGUYSQFGeoirvuR1zQ73/JjwvSvisUxjOnv7N1awP4SIsIWQ9
-         cZSw==
-X-Gm-Message-State: AOAM532tF0TFLX7aLC3Pzx488QHjas4JbMMSPXCktQeSynbBz0402zAF
-        GegcHmdtCEP9pa6QfEdfJJoJrwp2I+k=
-X-Google-Smtp-Source: ABdhPJxZT9MVo2MghaoVcmZDQuzGJL8e9RA335UyR/We9/s3+y+LPAd5jPuqB0Jy5YrNXZrVrteU3Q==
-X-Received: by 2002:aa7:cd17:: with SMTP id b23mr12467370edw.141.1643038183997;
-        Mon, 24 Jan 2022 07:29:43 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id y17sm5001630ejw.165.2022.01.24.07.29.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jan 2022 07:29:43 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nC1Hr-002XLm-21;
-        Mon, 24 Jan 2022 16:29:43 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     BoJun via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, BoJun <bojun.cbj@gmail.com>,
-        Chen Bojun <bojun.cbj@alibaba-inc.com>
-Subject: Re: [PATCH] receive-pack: purge temporary data if no command is
- ready to run
-Date:   Mon, 24 Jan 2022 16:17:26 +0100
-References: <pull.1124.git.1642987616372.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <pull.1124.git.1642987616372.gitgitgadget@gmail.com>
-Message-ID: <220124.86v8y9gniw.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=O8TmqdZeZUEz8ws2wiGuLgUZ3GFabGsMA3Pbazm/PD8=;
+        b=DogzImCQSHK4NtJEs0JQofjvRjRKuPkI94siBbVe5+nXxfYs02+WsGh1yJYnaKgrW4
+         rA6Iy76IGjQLjWToTaJS3P4OtmT3NIIKbxbY/fFgMLGd/zTmLEL0/u9HSADEt9zAW0UM
+         nm13HMlP9kuMwMoUNv+ufwCg7ss5KDjyBHzD1cmgQAWU2OyCL8DX0+UBNWtKesR4MpD9
+         wWwKdi+zroNLtWUp0UIEyi/JbHTjgDJF6L6gWPRLP7ulIfSEoioDFs7JH6IX9RGILRWU
+         CKS9+DDKAG6J+rb8mPmwl8uQjbosP5AJXNrzl7Py/fqgQzf5PMF2l2+G8FxIFafhz/wX
+         GuLg==
+X-Gm-Message-State: AOAM532jKy2YYHxAjIb3R3O3X4OyLKLvYegNvH4eXofcK6XNJ6aP4Ack
+        /30IVw8U1unnDqX0SXzOkJm1CeHVwmBRwflN7NrhSg==
+X-Google-Smtp-Source: ABdhPJzs7IMjXPJnpFUa1iCwHRjMUShkY3DOKbt6E5me7nwd6rK8NbHy2GBW1LFZlGq4Jg2Xy8MEBxMTUCSHKAVEd5o=
+X-Received: by 2002:a67:d98f:: with SMTP id u15mr2666898vsj.16.1643038493673;
+ Mon, 24 Jan 2022 07:34:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
+ <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com> <54bcac325bd542aa81328e5616b2b7573d43adac.1642691534.git.gitgitgadget@gmail.com>
+ <220121.86fsphjml0.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220121.86fsphjml0.gmgdl@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 24 Jan 2022 16:34:41 +0100
+Message-ID: <CAFQ2z_PAqW+RS2Znaf2wwOJfdNfkjP1VV84=xaPu_1EAuX+u5w@mail.gmail.com>
+Subject: Re: [PATCH v6 14/15] reftable: make reftable_record a tagged union
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Neeraj Singh <nksingh85@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Jan 24 2022, BoJun via GitGitGadget wrote:
-
-> From: Chen Bojun <bojun.cbj@alibaba-inc.com>
+On Fri, Jan 21, 2022 at 1:32 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> > From: Han-Wen Nienhuys <hanwen@google.com>
+> >
+> > This reduces the amount of glue code, because we don't need a void
+> > pointer or vtable within the structure.
+> > [...]
+> > -     struct reftable_record rec =3D { NULL };
+> > -     reftable_record_from_ref(&rec, &ref);
+> > +     struct reftable_record rec =3D { .type =3D BLOCK_TYPE_REF,
+> > +                                    .u.ref =3D {
+> > +                                            .refname =3D (char *)name,
+> > +                                    } };
+> >       return tab->ops->seek_record(tab->table_arg, it, &rec);
+> >  }
 >
-> When pushing a hidden ref, e.g.:
+> Both for this & the below don't we prefer to have such assignments on
+> their own line? I.e.:
+
+I generally let clang-format do formatting for me, but it looks like
+it doesn't want to make a decision about where to put line breaks
+here.
+
+I've made the style consistent.
+> > +     struct reftable_record clean =3D {
+> > +             .type =3D typ,
 >
->     $ git push origin HEAD:refs/hidden/foo
+> ...only this "type" member, which won't confuse a compiler.
 >
-> "receive-pack" will reject our request with an error message like this:
+> > +     switch (typ) {
 >
->     ! [remote rejected] HEAD -> refs/hidden/foo (deny updating a hidden ref)
+> ...but actually...
+
+typ vs type is a remnant of the Go origins (type is a reserved word in Go).
+
+I fixed up a couple of places where I add it newly in the commit, but
+it makes more sense to change this throughout in a separate commit.
+
+> > +     return clean;
+> > +}
 >
-> The remote side ("git-receive-pack") will not create the hidden ref as
-> expected, but the pack file sent by "git-send-pack" is left inside the
-> remote repository. I.e. the quarantine directory is not purged as it
-> should be.
+> ...reading this whole function shouldn't this be a more normal *_init()
+> pattern function where the caller just populates the ".type =3D ", and we
+> init the rest here? That would also make the ownership more obvious, and
+> if any future API user needs to pass in variable on the heap instead of
+> us returning it on the stack here...
 
-Hrm, shouldn't the tmp-objdir.[ch]'s atexit() make sure that won't
-happen (but maybe it's buggy/not acting as I thought...)?
+this function exists so you can initialize as part of a list of
+declarations , eg.
 
-> Add a checkpoint before calling "tmp_objdir_migrate()" and after calling
-> the "pre-receive" hook to purge that temporary data in the quarantine
-> area when there is no command ready to run.
+ struct reftable_record rec =3D reftable_new_record(block_reader_type(br));
+ struct strbuf key =3D STRBUF_INIT;
+ int err =3D 0;
+ struct block_iter next =3D {
+  .last_key =3D STRBUF_INIT,
+ };
+ int i =3D binsearch(br->restart_count, &restart_key_less, &args);
 
-But we're not purging anything, just returning early?
+with init functions, you have reorganize all of these blocks.
 
-If we'll always refuse this update, why do we need to run the
-pre-receive hook at all, isn't that another bug?....
 
-> The reason we do not add the checkpoint before the "pre-receive" hook,
-> but after it, is that the "pre-receive" hook is called with a switch-off
-> "skip_broken" flag, and all commands, even broken ones, should be fed
-> by calling "feed_receive_hook()".
-
-...but I see it's intentional, but does this make sense per the
-rationale of 160b81ed819 (receive-pack: don't pass non-existent refs to
-post-{receive,update} hooks, 2011-09-28)? Maybe, but the reason we have
-these for "non-existent refs" != this categorical denial of a hidden
-ref.
-
-> Add a new test case and fix some formatting issues in t5516 as well.
+> > -/* zeroes out the embedded record */
+> > +/* frees and zeroes out the embedded record */
+> >  void reftable_record_release(struct reftable_record *rec);
 >
-> Helped-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> Helped-by: Teng Long <dyroneteng@gmail.com>
-> Signed-off-by: Chen Bojun <bojun.cbj@alibaba-inc.com>
-> ---
->     receive-pack: purge temporary data if no command is ready to run
-
-[...odd duplication of mostly the same commit message from GGG
-(presumably...]
-
-> -mk_empty () {
-> +mk_empty() {
-
-This patch includes a lot of line-re-wrapping, shell formatting changes
-etc. You should really submit this without any of those & just have the
-meaningful changes here.
-
-> [...]
-> -for head in HEAD @
-> -do
-> +for head in HEAD @; do
-
-e.g. this, indentation changes earlier, and most of the changes here...
-
->  
->  	test_expect_success "push with $head" '
->  		mk_test testrepo heads/main &&
-> @@ -1020,7 +1011,7 @@ test_expect_success 'push into aliased refs (inconsistent)' '
->  	)
->  '
->  
-> -test_force_push_tag () {
-> +test_force_push_tag() {
->  	tag_type_description=$1
->  	tag_args=$2
->  
-> @@ -1066,7 +1057,7 @@ test_force_push_tag () {
->  test_force_push_tag "lightweight tag" "-f"
->  test_force_push_tag "annotated tag" "-f -a -m'tag message'"
->  
-> -test_force_fetch_tag () {
-> +test_force_fetch_tag() {
->  	tag_type_description=$1
->  	tag_args=$2
->  
-> @@ -1158,8 +1149,7 @@ test_expect_success 'push --prune refspec' '
->  	! check_push_result testrepo $the_first_commit tmp/foo tmp/bar
->  '
->  
-> -for configsection in transfer receive
-> -do
-> +for configsection in transfer receive; do
->  	test_expect_success "push to update a ref hidden by $configsection.hiderefs" '
->  		mk_test testrepo heads/main hidden/one hidden/two hidden/three &&
->  		(
-> @@ -1250,8 +1240,7 @@ test_expect_success 'fetch exact SHA1 in protocol v2' '
->  	git -C child fetch -v ../testrepo $the_commit:refs/heads/copy
->  '
->  
-> -for configallowtipsha1inwant in true false
-> -do
-> +for configallowtipsha1inwant in true false; do
->  	test_expect_success "shallow fetch reachable SHA1 (but not a ref), allowtipsha1inwant=$configallowtipsha1inwant" '
->  		mk_empty testrepo &&
->  		(
-> @@ -1809,4 +1798,12 @@ test_expect_success 'refuse fetch to current branch of bare repository worktree'
->  	git -C bare.git fetch -u .. HEAD:wt
->  '
->  
-> +test_expect_success 'refuse to push a hidden ref, and make sure do not pollute the repository' '
-> +	mk_empty testrepo &&
-> +	git -C testrepo config receive.hiderefs refs/hidden &&
-> +	git -C testrepo config receive.unpackLimit 1 &&
-> +	test_must_fail git push testrepo HEAD:refs/hidden/foo &&
-> +	test_dir_is_empty testrepo/.git/objects/pack
-> +'
-> +
->  test_done
+> I didn't follow all the vtable entries, but for these:
 >
-> base-commit: 297ca895a27a6bbdb7906371d533f72a12ad25b2
+>     4 matches for ".release =3D" in buffer: record.c
+>         440:        .release =3D &reftable_ref_record_release_void,
+>         582:        .release =3D &reftable_obj_record_release,
+>         925:        .release =3D &reftable_log_record_release_void,
+>        1052:        .release =3D &reftable_index_record_release,
+>
+> Some zero'd the data out already, but for
+> "reftable_index_record_release" isn't promising this a bug, as we don't
+> want to memset() to 0 a strbuf_init()?
 
+Isn't strbuf_release() -which is used- the correct way to clear out a strbu=
+f?
 
-...until we get to this, this mostly OK, but maybe test the case for
-what the hook does here (depending on what we want to do).
+>>       }
+>> -
+>
+>...more stray whitespace...
 
-If the quarantine directory was not purged as before how does checking
-whether testrepo/.git/objects/pack is empty help? We place those in
-.git/objects/tmp_objdir-* don't we?
+If you trim this much context, can you provide a line number?
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
