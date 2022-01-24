@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54B73C433EF
-	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 19:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AC4BC433F5
+	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 19:33:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347470AbiAXTdC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 14:33:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52770 "EHLO
+        id S1348954AbiAXTdE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 14:33:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352687AbiAXTa4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 14:30:56 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30D4CC061A7E
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 11:13:58 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id a13so15476104wrh.9
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 11:13:58 -0800 (PST)
+        with ESMTP id S1352690AbiAXTa5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 14:30:57 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17906C02983F
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 11:13:59 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id n8so23598402wmk.3
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 11:13:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=FbnsH1HGDpSv3hUkzpcagL9He39C7BCnALhMQYFFCrc=;
-        b=KiNdi8n/RnpKZqmvMAVQ1opHBitsn2dXvvbDSNNhUnDCZH8XjdBOR8iawD4x4DqIz8
-         w3k5jnFyxXTdSxWHcDEnKGwe3GZJXpflQxNhEdJZuKyE9rVe6xvE5PoVFao1lyffSPwx
-         8gVLDB+uGupiKyaT9eX2mcYOOA704LEQ1Fxz2KcVePvYAv6LvGcjo/4xwo+suerjUnoi
-         o8eEP4O6ux6WuJfp1aAikbMRDRKAxQN3mUsXjknf4f5BFTA/8IEy7+f49Xl9hpPzfuCx
-         J2ZRGRl8Bh5H0BBHN/nq+/5BQjQ88lWMxjZhNNqNdk8Q02snRsraDIJ2sVALmM9M+gSi
-         aL4A==
+        bh=TUCZrT0R8cpMEB18cBkDpHwmjdJOKsrx7vpHWxOMd7M=;
+        b=Bah38H0CUreC1+kek28c1yeXF8E/18Qcjc4+6w3qUYDA4NGkjEh035a1fB9lTxf48b
+         Xt23bSGOJ/q9G519omBYe7TWgap7Rd9jWPUgqBUlEX4iOUD/5c12jpgCXITQ1KQo79MH
+         zMOkBoBwV+z91OGuBQDp8Lx0zHXkpk6B3hKQaM7bRGyefM/Dd+AKHS2zQpmSpZFmBeYA
+         G3MFyAwQc8IBJHjqAjyRyA45FtlTxgpM+2fJCR1VBk3jZglABiOiw2qtDahlGTHvT8rQ
+         vky2+cg6K9LfY3qFUkz/gSDwwK2SGDUHb8L3OT+LAjpcqXhs7kAkUT6WCJ2IixXoNMvf
+         OZSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FbnsH1HGDpSv3hUkzpcagL9He39C7BCnALhMQYFFCrc=;
-        b=UqJW2Qb8uwEhGyOhCsj01+9s2eMuOocIsvCN2wjgv2eAhA3oinA5e2u9VtFrCLUQYg
-         Xq8/sq5f+Ym+3qk2Yr0+aWb9VXsjDOI7RMCzthDxXGLiYKm9Ji4vUdWygloPG+Qhorkx
-         S1vnhmg820BDT7RtycoCM4MYblHoSi0eaqrRJKAkbYgokBv5c0u4YOHpxTq9bL/qM+Tu
-         UqGeRxzb1WRbRvHEwiTubfyweZk2lmFqlYzNZYwmLxRWYFAIEIXp5576+cXZ5CIvbp21
-         U12KuudelAXo3xXP2opVKmR0bPjHDZTqVf1amFABWqmyCoKZ1USBxEHGkvleaBlXqK0X
-         NVlg==
-X-Gm-Message-State: AOAM532gAYsI8AfM9SoHP34NSdA1zlLnZ5i8tAMPB+KxBxXvONUJ5D9F
-        9Xzb2pl4cYvq1hTZI/SD+Ql4zGslJYQ1vA==
-X-Google-Smtp-Source: ABdhPJzH73HBaEZYn7YzxEvjaToGK/nj9aiKWnQZ3DtKOC4P1X7cbfKWj1va5flStwWePR26doZknA==
-X-Received: by 2002:adf:fc0c:: with SMTP id i12mr6703795wrr.173.1643051636631;
-        Mon, 24 Jan 2022 11:13:56 -0800 (PST)
+        bh=TUCZrT0R8cpMEB18cBkDpHwmjdJOKsrx7vpHWxOMd7M=;
+        b=P1zOWJ2ybto4RHxgbBiDDIYag6twYrNNiMICfVCipmwTKFo/DQqkkjibkX06bFs9CE
+         Jmy0/VOwxUCrHZWQhPbZjsSmvRzdWu0SrNN9F3aho6UwiFv706ELMxZzvrKcuUUZuSC3
+         9olNuSMCFG/4Cdm0AugOIjKAjtM8yW2tkxQwCXN9jfSkNZTyqvw1Aaltph0SUtkzewVQ
+         wCjq8VQQ2jzt3b2PK4i3i9+wZWrjV74C/EzC0TBzFz+Vy/cqKImAyxpXTFwGwS7I3001
+         IqdB+iJEfLjmY+SJD4Wp9wPp726sy1tEGV+/vQLYzSvIowcJhyIP5HP2Ga8bdsRVa4sL
+         xPZQ==
+X-Gm-Message-State: AOAM531tEJXEnXxpUQb3HPhEA8OahkVuAPEGeFVIVe7Gk6Hx5DfOuR4j
+        VXiLjX6uH1ekZeYEOYUN0Qj2txHEOXOjBw==
+X-Google-Smtp-Source: ABdhPJyeNokdloFAdvP09PmlJ2lDDj91FLPbN6FUl6mZMyP8+KcNEi5LOGUz7O+h+UfNqzg6KGtqkA==
+X-Received: by 2002:a05:600c:4ed3:: with SMTP id g19mr3054065wmq.63.1643051637503;
+        Mon, 24 Jan 2022 11:13:57 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u18sm192229wmq.24.2022.01.24.11.13.55
+        by smtp.gmail.com with ESMTPSA id 1sm146911wmo.37.2022.01.24.11.13.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jan 2022 11:13:55 -0800 (PST)
-Message-Id: <a83a9cf59b7b3e7200611e067b59866d0b678b46.1643051624.git.gitgitgadget@gmail.com>
+        Mon, 24 Jan 2022 11:13:57 -0800 (PST)
+Message-Id: <7e23d14d1af8624067c0afd8f21e793ee551a78f.1643051624.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1152.v7.git.git.1643051624.gitgitgadget@gmail.com>
 References: <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
         <pull.1152.v7.git.git.1643051624.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 24 Jan 2022 19:13:40 +0000
-Subject: [PATCH v7 12/16] reftable: implement record equality generically
+Date:   Mon, 24 Jan 2022 19:13:41 +0000
+Subject: [PATCH v7 13/16] reftable: remove outdated file reftable.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,208 +73,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This simplifies unittests a little, and provides further coverage for
-reftable_record_copy().
+This was renamed to generic.c, but the origin was never removed
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/record.c      | 54 +++++++++++++++++++++++++++++++++++++++++-
- reftable/record.h      |  5 +++-
- reftable/record_test.c | 23 +++---------------
- 3 files changed, 60 insertions(+), 22 deletions(-)
+ reftable/reftable.c | 115 --------------------------------------------
+ 1 file changed, 115 deletions(-)
+ delete mode 100644 reftable/reftable.c
 
-diff --git a/reftable/record.c b/reftable/record.c
-index 1ae344c745b..b543585ad39 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -430,6 +430,14 @@ static int reftable_ref_record_is_deletion_void(const void *p)
- 		(const struct reftable_ref_record *)p);
- }
- 
-+static int reftable_ref_record_equal_void(const void *a,
-+					  const void *b, int hash_size)
-+{
-+	struct reftable_ref_record *ra = (struct reftable_ref_record *) a;
-+	struct reftable_ref_record *rb = (struct reftable_ref_record *) b;
-+	return reftable_ref_record_equal(ra, rb, hash_size);
-+}
-+
- static struct reftable_record_vtable reftable_ref_record_vtable = {
- 	.key = &reftable_ref_record_key,
- 	.type = BLOCK_TYPE_REF,
-@@ -439,6 +447,7 @@ static struct reftable_record_vtable reftable_ref_record_vtable = {
- 	.decode = &reftable_ref_record_decode,
- 	.release = &reftable_ref_record_release_void,
- 	.is_deletion = &reftable_ref_record_is_deletion_void,
-+	.equal = &reftable_ref_record_equal_void,
- };
- 
- static void reftable_obj_record_key(const void *r, struct strbuf *dest)
-@@ -572,6 +581,23 @@ static int not_a_deletion(const void *p)
- 	return 0;
- }
- 
-+static int reftable_obj_record_equal_void(const void *a, const void *b, int hash_size)
-+{
-+	struct reftable_obj_record *ra = (struct reftable_obj_record *) a;
-+	struct reftable_obj_record *rb = (struct reftable_obj_record *) b;
-+
-+	if (ra->hash_prefix_len != rb->hash_prefix_len
-+	    || ra->offset_len != rb->offset_len)
-+		return 0;
-+
-+	if (memcmp(ra->hash_prefix, rb->hash_prefix, ra->hash_prefix_len))
-+		return 0;
-+	if (memcmp(ra->offsets, rb->offsets, ra->offset_len * sizeof(uint64_t)))
-+		return 0;
-+
-+	return 1;
-+}
-+
- static struct reftable_record_vtable reftable_obj_record_vtable = {
- 	.key = &reftable_obj_record_key,
- 	.type = BLOCK_TYPE_OBJ,
-@@ -580,7 +606,8 @@ static struct reftable_record_vtable reftable_obj_record_vtable = {
- 	.encode = &reftable_obj_record_encode,
- 	.decode = &reftable_obj_record_decode,
- 	.release = &reftable_obj_record_release,
--	.is_deletion = not_a_deletion,
-+	.is_deletion = &not_a_deletion,
-+	.equal = &reftable_obj_record_equal_void,
- };
- 
- void reftable_log_record_print(struct reftable_log_record *log,
-@@ -881,6 +908,14 @@ static int zero_hash_eq(uint8_t *a, uint8_t *b, int sz)
- 	return !memcmp(a, b, sz);
- }
- 
-+static int reftable_log_record_equal_void(const void *a,
-+					  const void *b, int hash_size)
-+{
-+	return reftable_log_record_equal((struct reftable_log_record *) a,
-+					 (struct reftable_log_record *) b,
-+					 hash_size);
-+}
-+
- int reftable_log_record_equal(const struct reftable_log_record *a,
- 			      const struct reftable_log_record *b, int hash_size)
- {
-@@ -924,6 +959,7 @@ static struct reftable_record_vtable reftable_log_record_vtable = {
- 	.decode = &reftable_log_record_decode,
- 	.release = &reftable_log_record_release_void,
- 	.is_deletion = &reftable_log_record_is_deletion_void,
-+	.equal = &reftable_log_record_equal_void
- };
- 
- struct reftable_record reftable_new_record(uint8_t typ)
-@@ -1042,6 +1078,14 @@ static int reftable_index_record_decode(void *rec, struct strbuf key,
- 	return start.len - in.len;
- }
- 
-+static int reftable_index_record_equal(const void *a, const void *b, int hash_size)
-+{
-+	struct reftable_index_record *ia = (struct reftable_index_record *) a;
-+	struct reftable_index_record *ib = (struct reftable_index_record *) b;
-+
-+	return ia->offset == ib->offset && !strbuf_cmp(&ia->last_key, &ib->last_key);
-+}
-+
- static struct reftable_record_vtable reftable_index_record_vtable = {
- 	.key = &reftable_index_record_key,
- 	.type = BLOCK_TYPE_INDEX,
-@@ -1051,6 +1095,7 @@ static struct reftable_record_vtable reftable_index_record_vtable = {
- 	.decode = &reftable_index_record_decode,
- 	.release = &reftable_index_record_release,
- 	.is_deletion = &not_a_deletion,
-+	.equal = &reftable_index_record_equal,
- };
- 
- void reftable_record_key(struct reftable_record *rec, struct strbuf *dest)
-@@ -1098,6 +1143,13 @@ int reftable_record_is_deletion(struct reftable_record *rec)
- 	return rec->ops->is_deletion(rec->data);
- }
- 
-+int reftable_record_equal(struct reftable_record *a, struct reftable_record *b, int hash_size)
-+{
-+	if (a->ops != b->ops)
-+		return 0;
-+	return a->ops->equal(a->data, b->data, hash_size);
-+}
-+
- void reftable_record_from_ref(struct reftable_record *rec,
- 			      struct reftable_ref_record *ref_rec)
- {
-diff --git a/reftable/record.h b/reftable/record.h
-index 498e8c50bf4..da75d7d1f11 100644
---- a/reftable/record.h
-+++ b/reftable/record.h
-@@ -58,6 +58,9 @@ struct reftable_record_vtable {
- 
- 	/* is this a tombstone? */
- 	int (*is_deletion)(const void *rec);
-+
-+	/* Are two records equal? This assumes they have the same type. Returns 0 for non-equal. */
-+	int (*equal)(const void *a, const void *b, int hash_size);
- };
- 
- /* record is a generic wrapper for different types of records. */
-@@ -98,7 +101,7 @@ struct reftable_obj_record {
- };
- 
- /* see struct record_vtable */
+diff --git a/reftable/reftable.c b/reftable/reftable.c
+deleted file mode 100644
+index 0e4607a7cd6..00000000000
+--- a/reftable/reftable.c
++++ /dev/null
+@@ -1,115 +0,0 @@
+-/*
+-Copyright 2020 Google LLC
 -
-+int reftable_record_equal(struct reftable_record *a, struct reftable_record *b, int hash_size);
- void reftable_record_key(struct reftable_record *rec, struct strbuf *dest);
- uint8_t reftable_record_type(struct reftable_record *rec);
- void reftable_record_copy_from(struct reftable_record *rec,
-diff --git a/reftable/record_test.c b/reftable/record_test.c
-index f4ad7cace41..92680848156 100644
---- a/reftable/record_test.c
-+++ b/reftable/record_test.c
-@@ -21,18 +21,7 @@ static void test_copy(struct reftable_record *rec)
- 	reftable_record_copy_from(&copy, rec, GIT_SHA1_RAWSZ);
- 	/* do it twice to catch memory leaks */
- 	reftable_record_copy_from(&copy, rec, GIT_SHA1_RAWSZ);
--	switch (reftable_record_type(&copy)) {
--	case BLOCK_TYPE_REF:
--		EXPECT(reftable_ref_record_equal(reftable_record_as_ref(&copy),
--						 reftable_record_as_ref(rec),
--						 GIT_SHA1_RAWSZ));
--		break;
--	case BLOCK_TYPE_LOG:
--		EXPECT(reftable_log_record_equal(reftable_record_as_log(&copy),
--						 reftable_record_as_log(rec),
--						 GIT_SHA1_RAWSZ));
--		break;
+-Use of this source code is governed by a BSD-style
+-license that can be found in the LICENSE file or at
+-https://developers.google.com/open-source/licenses/bsd
+-*/
+-
+-#include "basics.h"
+-#include "record.h"
+-#include "generic.h"
+-#include "reftable-iterator.h"
+-#include "reftable-generic.h"
+-
+-int reftable_table_seek_ref(struct reftable_table *tab,
+-			    struct reftable_iterator *it, const char *name)
+-{
+-	struct reftable_ref_record ref = {
+-		.refname = (char *)name,
+-	};
+-	struct reftable_record rec = { NULL };
+-	reftable_record_from_ref(&rec, &ref);
+-	return tab->ops->seek_record(tab->table_arg, it, &rec);
+-}
+-
+-int reftable_table_read_ref(struct reftable_table *tab, const char *name,
+-			    struct reftable_ref_record *ref)
+-{
+-	struct reftable_iterator it = { NULL };
+-	int err = reftable_table_seek_ref(tab, &it, name);
+-	if (err)
+-		goto done;
+-
+-	err = reftable_iterator_next_ref(&it, ref);
+-	if (err)
+-		goto done;
+-
+-	if (strcmp(ref->refname, name) ||
+-	    reftable_ref_record_is_deletion(ref)) {
+-		reftable_ref_record_release(ref);
+-		err = 1;
+-		goto done;
 -	}
-+	EXPECT(reftable_record_equal(rec, &copy, GIT_SHA1_RAWSZ));
- 	reftable_record_destroy(&copy);
- }
- 
-@@ -346,13 +335,7 @@ static void test_reftable_obj_record_roundtrip(void)
- 					   GIT_SHA1_RAWSZ);
- 		EXPECT(n == m);
- 
--		EXPECT(in.hash_prefix_len == out.hash_prefix_len);
--		EXPECT(in.offset_len == out.offset_len);
 -
--		EXPECT(!memcmp(in.hash_prefix, out.hash_prefix,
--			       in.hash_prefix_len));
--		EXPECT(0 == memcmp(in.offsets, out.offsets,
--				   sizeof(uint64_t) * in.offset_len));
-+		EXPECT(reftable_record_equal(&rec, &rec_out, GIT_SHA1_RAWSZ));
- 		strbuf_release(&key);
- 		reftable_record_release(&rec_out);
- 	}
-@@ -390,7 +373,7 @@ static void test_reftable_index_record_roundtrip(void)
- 	m = reftable_record_decode(&out_rec, key, extra, dest, GIT_SHA1_RAWSZ);
- 	EXPECT(m == n);
- 
--	EXPECT(in.offset == out.offset);
-+	EXPECT(reftable_record_equal(&rec, &out_rec, GIT_SHA1_RAWSZ));
- 
- 	reftable_record_release(&out_rec);
- 	strbuf_release(&key);
+-done:
+-	reftable_iterator_destroy(&it);
+-	return err;
+-}
+-
+-uint64_t reftable_table_max_update_index(struct reftable_table *tab)
+-{
+-	return tab->ops->max_update_index(tab->table_arg);
+-}
+-
+-uint64_t reftable_table_min_update_index(struct reftable_table *tab)
+-{
+-	return tab->ops->min_update_index(tab->table_arg);
+-}
+-
+-uint32_t reftable_table_hash_id(struct reftable_table *tab)
+-{
+-	return tab->ops->hash_id(tab->table_arg);
+-}
+-
+-void reftable_iterator_destroy(struct reftable_iterator *it)
+-{
+-	if (!it->ops) {
+-		return;
+-	}
+-	it->ops->close(it->iter_arg);
+-	it->ops = NULL;
+-	FREE_AND_NULL(it->iter_arg);
+-}
+-
+-int reftable_iterator_next_ref(struct reftable_iterator *it,
+-			       struct reftable_ref_record *ref)
+-{
+-	struct reftable_record rec = { NULL };
+-	reftable_record_from_ref(&rec, ref);
+-	return iterator_next(it, &rec);
+-}
+-
+-int reftable_iterator_next_log(struct reftable_iterator *it,
+-			       struct reftable_log_record *log)
+-{
+-	struct reftable_record rec = { NULL };
+-	reftable_record_from_log(&rec, log);
+-	return iterator_next(it, &rec);
+-}
+-
+-int iterator_next(struct reftable_iterator *it, struct reftable_record *rec)
+-{
+-	return it->ops->next(it->iter_arg, rec);
+-}
+-
+-static int empty_iterator_next(void *arg, struct reftable_record *rec)
+-{
+-	return 1;
+-}
+-
+-static void empty_iterator_close(void *arg)
+-{
+-}
+-
+-static struct reftable_iterator_vtable empty_vtable = {
+-	.next = &empty_iterator_next,
+-	.close = &empty_iterator_close,
+-};
+-
+-void iterator_set_empty(struct reftable_iterator *it)
+-{
+-	assert(!it->ops);
+-	it->iter_arg = NULL;
+-	it->ops = &empty_vtable;
+-}
 -- 
 gitgitgadget
 
