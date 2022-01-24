@@ -2,1364 +2,888 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 339DDC4332F
-	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 19:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5189C433FE
+	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 19:42:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348577AbiAXTjV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 14:39:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52296 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1352701AbiAXTa5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 14:30:57 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93368C028C16
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 11:14:00 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id a203-20020a1c98d4000000b0034d2956eb04so62856wme.5
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 11:14:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=LSlnqzr1ZYzdBnbAS7yfckCZJ4mp6nmarof+7B5s4BE=;
-        b=N/03hvTNX5o0ESMratW0cjxO91kF+qEdTBGzRD93pelqkD0pHbyD9g+Shk94ZuNCyh
-         rjaMIR5W7SsQEEhAb96PnSb7jvBvUo+PDXGvNg2CVl+gmAmc5pMNAhxXHsKC5eqHSNWv
-         V8pJgGYSUfbAnPA+MXE+Pf4z4k6b+owrjYfUXT3sfHs+7d/nSMPRZqGg6nprtkWqtBrw
-         sRzXonJ/J834r6+stwUEyskN5UiZKRCJvodrsbYuCtbRFaBJcZhVyD69bLUrwiJiucmd
-         Jjbhket4cPNwuomnhcBpLgIJAmxaFA5bUbRXw2n198lMRkEPzw0vyFalCHrzNVy01hJX
-         0woA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LSlnqzr1ZYzdBnbAS7yfckCZJ4mp6nmarof+7B5s4BE=;
-        b=yLD/9ghOoOFAKTOaHqskku0nZs6+4ffPq/+MqaHMikN74wuNuEEqRHa2+eah1j5P7i
-         bTKWksY1s/WVWUaTABDygBoCaKTyZO+P4K6tfphvuws8Lth9ucYpLEy866Ck1hltkbLm
-         BuoaydvO8EP4J3VZGIU50sVCUT0IZubZtLLjfuxmTMkkbXlQs/bJuuiZDEcZu3bTVgkw
-         ifW9Pqg5zhg2P8lwTfpjQUD6dSxjDcbx6QJZRrXhalgSqqpFXaV7/uofF8FrhR8ve3F5
-         NchHa7eoW8Yil3pV2m/0jVXHYfiREmECAcTVZq7Z4q+eQF1Lf5RVvjZN3R2QVRkL+f+G
-         Dbog==
-X-Gm-Message-State: AOAM531jBy6q22fPsL2SWnYQCy2Un/A/5Cr7D6qr9ulu71Ei+YdpjCvE
-        uYOmYGw8+uNbjAzoEynrEUtVZDuE8hZf4A==
-X-Google-Smtp-Source: ABdhPJy0IA82ZH1984k1+6nYCnJ0e8SJ6DmE3qUfz+CsJBUZp59TiBwSESXJtvOCvVk0ypxUhnaG7Q==
-X-Received: by 2002:a7b:c14c:: with SMTP id z12mr3126168wmi.84.1643051638531;
-        Mon, 24 Jan 2022 11:13:58 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i6sm178428wma.22.2022.01.24.11.13.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Jan 2022 11:13:57 -0800 (PST)
-Message-Id: <047bbb75fcbb67c41d307bf5fa44587a76cc0777.1643051624.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1152.v7.git.git.1643051624.gitgitgadget@gmail.com>
-References: <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
-        <pull.1152.v7.git.git.1643051624.gitgitgadget@gmail.com>
-From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 24 Jan 2022 19:13:42 +0000
-Subject: [PATCH v7 14/16] reftable: make reftable_record a tagged union
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S1355605AbiAXTmM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 14:42:12 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65198 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1355117AbiAXTkD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 14:40:03 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B476211BC6A;
+        Mon, 24 Jan 2022 14:40:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=F
+        ekuxcGXuXdP4xfzq13YPosvPuPLPnvKUaGCeUHsgQw=; b=j6MitTzzDT0JfZ2x+
+        m9b1FH9n7JwJ1JrkWKJrSEYC0EzPI/mIER6YjI6jwoxzD2NJfJh0UjDodyvS+4jl
+        SMzkWsUYj7HdQC3o6nWYgoKbFzkKlDlIOVRPrbav8Y5NMmFhWXrhkma5xOEwfJ0j
+        dSXWGOc4stYfeBMHasgcZhJ3LA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 99DB411BC69;
+        Mon, 24 Jan 2022 14:40:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A9A4511BC68;
+        Mon, 24 Jan 2022 14:39:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Han-Wen Nienhuys <hanwen@google.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Neeraj Singh <nksingh85@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
+Subject: What's cooking in git.git (Jan 2022, #07; Mon, 24)
+X-master-at: 89bece5c8c96f0b962cfc89e63f82d603fd60bed
+X-next-at: 8bbb082509e826de6735dfa02922cfc3d7ffb8bc
+Date:   Mon, 24 Jan 2022 11:39:58 -0800
+Message-ID: <xmqq35lc53e9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6AA9EAB6-7D4D-11EC-8296-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Han-Wen Nienhuys <hanwen@google.com>
+Git 2.35 final has been tagged.  Let's wait for a few days to see if
+there are regressions that needs brown-paper-bag fixes before we
+start moving topics from 'next' to 'master' for the new cycle.
 
-This reduces the amount of glue code, because we don't need a void
-pointer or vtable within the structure.
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen',
+which means nothing more than that I have found them of interest for
+some reason (like "it may have hard-to-resolve conflicts with
+another topic already in flight" or "this may turn out to be
+useful").  Do not read too much into a topic being in (or not in)
+'seen'.  The ones marked with '.' do not appear in any of the
+integration branches, but I am still holding onto them.
 
-The only snag is that reftable_index_record contain a strbuf, so it
-cannot be zero-initialized. To address this, use reftable_new_record()
-to return fresh instance, given a record type. Since
-reftable_new_record() doesn't cause heap allocation anymore, it should
-be balanced with reftable_record_release() rather than
-reftable_record_destroy().
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-Thanks to Peff for the suggestion.
+With maint, master, next, seen, todo:
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- reftable/block.c       |   2 +-
- reftable/block_test.c  |  22 ++---
- reftable/generic.c     |  39 +++++---
- reftable/iter.c        |   4 +-
- reftable/merged.c      |  31 +++---
- reftable/pq.c          |   2 +-
- reftable/pq_test.c     |  29 +++---
- reftable/reader.c      |  84 +++++++++--------
- reftable/record.c      | 209 +++++++++++++++++++----------------------
- reftable/record.h      |  42 ++++-----
- reftable/record_test.c | 154 +++++++++++++++---------------
- reftable/writer.c      |  38 ++++----
- 12 files changed, 328 insertions(+), 328 deletions(-)
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-vcs/git/
 
-diff --git a/reftable/block.c b/reftable/block.c
-index 5832f85501d..80ad10bb794 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -422,7 +422,7 @@ int block_reader_seek(struct block_reader *br, struct block_iter *it,
- done:
- 	strbuf_release(&key);
- 	strbuf_release(&next.last_key);
--	reftable_record_destroy(&rec);
-+	reftable_record_release(&rec);
- 
- 	return err;
- }
-diff --git a/reftable/block_test.c b/reftable/block_test.c
-index 4b3ea262dcb..fa2ee092ec0 100644
---- a/reftable/block_test.c
-+++ b/reftable/block_test.c
-@@ -26,8 +26,9 @@ static void test_block_read_write(void)
- 	struct block_writer bw = {
- 		.last_key = STRBUF_INIT,
- 	};
--	struct reftable_ref_record ref = { NULL };
--	struct reftable_record rec = { NULL };
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_REF,
-+	};
- 	int i = 0;
- 	int n;
- 	struct block_reader br = { 0 };
-@@ -40,7 +41,6 @@ static void test_block_read_write(void)
- 	block.source = malloc_block_source();
- 	block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
- 			  header_off, hash_size(GIT_SHA1_FORMAT_ID));
--	reftable_record_from_ref(&rec, &ref);
- 
- 	for (i = 0; i < N; i++) {
- 		char name[100];
-@@ -48,14 +48,14 @@ static void test_block_read_write(void)
- 		snprintf(name, sizeof(name), "branch%02d", i);
- 		memset(hash, i, sizeof(hash));
- 
--		ref.refname = name;
--		ref.value_type = REFTABLE_REF_VAL1;
--		ref.value.val1 = hash;
-+		rec.u.ref.refname = name;
-+		rec.u.ref.value_type = REFTABLE_REF_VAL1;
-+		rec.u.ref.value.val1 = hash;
- 
- 		names[i] = xstrdup(name);
- 		n = block_writer_add(&bw, &rec);
--		ref.refname = NULL;
--		ref.value_type = REFTABLE_REF_DELETION;
-+		rec.u.ref.refname = NULL;
-+		rec.u.ref.value_type = REFTABLE_REF_DELETION;
- 		EXPECT(n == 0);
- 	}
- 
-@@ -74,7 +74,7 @@ static void test_block_read_write(void)
- 		if (r > 0) {
- 			break;
- 		}
--		EXPECT_STREQ(names[j], ref.refname);
-+		EXPECT_STREQ(names[j], rec.u.ref.refname);
- 		j++;
- 	}
- 
-@@ -92,7 +92,7 @@ static void test_block_read_write(void)
- 		n = block_iter_next(&it, &rec);
- 		EXPECT(n == 0);
- 
--		EXPECT_STREQ(names[i], ref.refname);
-+		EXPECT_STREQ(names[i], rec.u.ref.refname);
- 
- 		want.len--;
- 		n = block_reader_seek(&br, &it, &want);
-@@ -100,7 +100,7 @@ static void test_block_read_write(void)
- 
- 		n = block_iter_next(&it, &rec);
- 		EXPECT(n == 0);
--		EXPECT_STREQ(names[10 * (i / 10)], ref.refname);
-+		EXPECT_STREQ(names[10 * (i / 10)], rec.u.ref.refname);
- 
- 		block_iter_close(&it);
- 	}
-diff --git a/reftable/generic.c b/reftable/generic.c
-index 7a8a738d860..b176c1cde0a 100644
---- a/reftable/generic.c
-+++ b/reftable/generic.c
-@@ -7,6 +7,7 @@ https://developers.google.com/open-source/licenses/bsd
- */
- 
- #include "basics.h"
-+#include "constants.h"
- #include "record.h"
- #include "generic.h"
- #include "reftable-iterator.h"
-@@ -15,23 +16,23 @@ https://developers.google.com/open-source/licenses/bsd
- int reftable_table_seek_ref(struct reftable_table *tab,
- 			    struct reftable_iterator *it, const char *name)
- {
--	struct reftable_ref_record ref = {
--		.refname = (char *)name,
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_REF,
-+		.u.ref = { .refname = (char *)name, }
- 	};
--	struct reftable_record rec = { NULL };
--	reftable_record_from_ref(&rec, &ref);
- 	return tab->ops->seek_record(tab->table_arg, it, &rec);
- }
- 
- int reftable_table_seek_log(struct reftable_table *tab,
- 			    struct reftable_iterator *it, const char *name)
- {
--	struct reftable_log_record log = {
--		.refname = (char *)name,
--		.update_index = ~((uint64_t)0),
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_LOG,
-+		.u.log = {
-+			.refname = (char *)name,
-+			.update_index = ~((uint64_t)0),
-+		}
- 	};
--	struct reftable_record rec = { NULL };
--	reftable_record_from_log(&rec, &log);
- 	return tab->ops->seek_record(tab->table_arg, it, &rec);
- }
- 
-@@ -129,17 +130,25 @@ void reftable_iterator_destroy(struct reftable_iterator *it)
- int reftable_iterator_next_ref(struct reftable_iterator *it,
- 			       struct reftable_ref_record *ref)
- {
--	struct reftable_record rec = { NULL };
--	reftable_record_from_ref(&rec, ref);
--	return iterator_next(it, &rec);
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_REF,
-+		.u.ref = *ref,
-+	};
-+	int err = iterator_next(it, &rec);
-+	*ref = rec.u.ref;
-+	return err;
- }
- 
- int reftable_iterator_next_log(struct reftable_iterator *it,
- 			       struct reftable_log_record *log)
- {
--	struct reftable_record rec = { NULL };
--	reftable_record_from_log(&rec, log);
--	return iterator_next(it, &rec);
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_LOG,
-+		.u.log = *log,
-+	};
-+	int err = iterator_next(it, &rec);
-+	*log = rec.u.log;
-+	return err;
- }
- 
- int iterator_next(struct reftable_iterator *it, struct reftable_record *rec)
-diff --git a/reftable/iter.c b/reftable/iter.c
-index 93d04f735b8..a8d174c0406 100644
---- a/reftable/iter.c
-+++ b/reftable/iter.c
-@@ -32,7 +32,7 @@ static int filtering_ref_iterator_next(void *iter_arg,
- 				       struct reftable_record *rec)
- {
- 	struct filtering_ref_iterator *fri = iter_arg;
--	struct reftable_ref_record *ref = rec->data;
-+	struct reftable_ref_record *ref = &rec->u.ref;
- 	int err = 0;
- 	while (1) {
- 		err = reftable_iterator_next_ref(&fri->it, ref);
-@@ -127,7 +127,7 @@ static int indexed_table_ref_iter_next_block(struct indexed_table_ref_iter *it)
- static int indexed_table_ref_iter_next(void *p, struct reftable_record *rec)
- {
- 	struct indexed_table_ref_iter *it = p;
--	struct reftable_ref_record *ref = rec->data;
-+	struct reftable_ref_record *ref = &rec->u.ref;
- 
- 	while (1) {
- 		int err = block_iter_next(&it->cur, rec);
-diff --git a/reftable/merged.c b/reftable/merged.c
-index e5b53da6db3..82511762d2a 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -30,7 +30,7 @@ static int merged_iter_init(struct merged_iter *mi)
- 
- 		if (err > 0) {
- 			reftable_iterator_destroy(&mi->stack[i]);
--			reftable_record_destroy(&rec);
-+			reftable_record_release(&rec);
- 		} else {
- 			struct pq_entry e = {
- 				.rec = rec,
-@@ -57,18 +57,17 @@ static void merged_iter_close(void *p)
- static int merged_iter_advance_nonnull_subiter(struct merged_iter *mi,
- 					       size_t idx)
- {
--	struct reftable_record rec = reftable_new_record(mi->typ);
- 	struct pq_entry e = {
--		.rec = rec,
-+		.rec = reftable_new_record(mi->typ),
- 		.index = idx,
- 	};
--	int err = iterator_next(&mi->stack[idx], &rec);
-+	int err = iterator_next(&mi->stack[idx], &e.rec);
- 	if (err < 0)
- 		return err;
- 
- 	if (err > 0) {
- 		reftable_iterator_destroy(&mi->stack[idx]);
--		reftable_record_destroy(&rec);
-+		reftable_record_release(&e.rec);
- 		return 0;
- 	}
- 
-@@ -126,11 +125,11 @@ static int merged_iter_next_entry(struct merged_iter *mi,
- 		if (err < 0) {
- 			return err;
- 		}
--		reftable_record_destroy(&top.rec);
-+		reftable_record_release(&top.rec);
- 	}
- 
- 	reftable_record_copy_from(rec, &entry.rec, hash_size(mi->hash_id));
--	reftable_record_destroy(&entry.rec);
-+	reftable_record_release(&entry.rec);
- 	strbuf_release(&entry_key);
- 	return 0;
- }
-@@ -290,11 +289,10 @@ int reftable_merged_table_seek_ref(struct reftable_merged_table *mt,
- 				   struct reftable_iterator *it,
- 				   const char *name)
- {
--	struct reftable_ref_record ref = {
--		.refname = (char *)name,
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_REF,
-+		.u.ref = { .refname = (char *)name, },
- 	};
--	struct reftable_record rec = { NULL };
--	reftable_record_from_ref(&rec, &ref);
- 	return merged_table_seek_record(mt, it, &rec);
- }
- 
-@@ -302,12 +300,13 @@ int reftable_merged_table_seek_log_at(struct reftable_merged_table *mt,
- 				      struct reftable_iterator *it,
- 				      const char *name, uint64_t update_index)
- {
--	struct reftable_log_record log = {
--		.refname = (char *)name,
--		.update_index = update_index,
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_LOG,
-+		.u.log = {
-+			.refname = (char *)name,
-+			.update_index = update_index,
-+		}
- 	};
--	struct reftable_record rec = { NULL };
--	reftable_record_from_log(&rec, &log);
- 	return merged_table_seek_record(mt, it, &rec);
- }
- 
-diff --git a/reftable/pq.c b/reftable/pq.c
-index efc474017a2..5ffc8380c4a 100644
---- a/reftable/pq.c
-+++ b/reftable/pq.c
-@@ -98,7 +98,7 @@ void merged_iter_pqueue_release(struct merged_iter_pqueue *pq)
- {
- 	int i = 0;
- 	for (i = 0; i < pq->len; i++) {
--		reftable_record_destroy(&pq->heap[i].rec);
-+		reftable_record_release(&pq->heap[i].rec);
- 	}
- 	FREE_AND_NULL(pq->heap);
- 	pq->len = pq->cap = 0;
-diff --git a/reftable/pq_test.c b/reftable/pq_test.c
-index c9bb05e37b7..5d58a4c05b6 100644
---- a/reftable/pq_test.c
-+++ b/reftable/pq_test.c
-@@ -31,7 +31,7 @@ static void test_pq(void)
- 	int N = ARRAY_SIZE(names) - 1;
- 
- 	struct merged_iter_pqueue pq = { NULL };
--	const char *last = NULL;
-+	char *last = NULL;
- 
- 	int i = 0;
- 	for (i = 0; i < N; i++) {
-@@ -42,12 +42,12 @@ static void test_pq(void)
- 
- 	i = 1;
- 	do {
--		struct reftable_record rec =
--			reftable_new_record(BLOCK_TYPE_REF);
--		struct pq_entry e = { 0 };
--
--		reftable_record_as_ref(&rec)->refname = names[i];
--		e.rec = rec;
-+		struct pq_entry e = {
-+			.rec = {
-+				.type = BLOCK_TYPE_REF,
-+				.u.ref = { .refname = names[i], }
-+			}
-+		};
- 		merged_iter_pqueue_add(&pq, e);
- 		merged_iter_pqueue_check(pq);
- 		i = (i * 7) % N;
-@@ -55,19 +55,18 @@ static void test_pq(void)
- 
- 	while (!merged_iter_pqueue_is_empty(pq)) {
- 		struct pq_entry e = merged_iter_pqueue_remove(&pq);
--		struct reftable_ref_record *ref =
--			reftable_record_as_ref(&e.rec);
--
-+		struct reftable_record *rec = &e.rec;
- 		merged_iter_pqueue_check(pq);
- 
-+		EXPECT(reftable_record_type(rec) == BLOCK_TYPE_REF);
- 		if (last) {
--			EXPECT(strcmp(last, ref->refname) < 0);
-+			EXPECT(strcmp(last, rec->u.ref.refname) < 0);
- 		}
--		last = ref->refname;
--		ref->refname = NULL;
--		reftable_free(ref);
-+		/* this is names[i], so don't dealloc. */
-+		last = rec->u.ref.refname;
-+		rec->u.ref.refname = NULL;
-+		reftable_record_release(rec);
- 	}
--
- 	for (i = 0; i < N; i++) {
- 		reftable_free(names[i]);
- 	}
-diff --git a/reftable/reader.c b/reftable/reader.c
-index 272378ed1d5..565cda8d5a2 100644
---- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -239,8 +239,7 @@ static int table_iter_next_in_block(struct table_iter *ti,
- {
- 	int res = block_iter_next(&ti->bi, rec);
- 	if (res == 0 && reftable_record_type(rec) == BLOCK_TYPE_REF) {
--		((struct reftable_ref_record *)rec->data)->update_index +=
--			ti->r->min_update_index;
-+		rec->u.ref.update_index += ti->r->min_update_index;
- 	}
- 
- 	return res;
-@@ -480,7 +479,7 @@ static int reader_seek_linear(struct reftable_reader *r, struct table_iter *ti,
- 
- done:
- 	block_iter_close(&next.bi);
--	reftable_record_destroy(&rec);
-+	reftable_record_release(&rec);
- 	strbuf_release(&want_key);
- 	strbuf_release(&got_key);
- 	return err;
-@@ -490,34 +489,36 @@ static int reader_seek_indexed(struct reftable_reader *r,
- 			       struct reftable_iterator *it,
- 			       struct reftable_record *rec)
- {
--	struct reftable_index_record want_index = { .last_key = STRBUF_INIT };
--	struct reftable_record want_index_rec = { NULL };
--	struct reftable_index_record index_result = { .last_key = STRBUF_INIT };
--	struct reftable_record index_result_rec = { NULL };
-+	struct reftable_record want_index = {
-+		.type = BLOCK_TYPE_INDEX, .u.idx = { .last_key = STRBUF_INIT }
-+	};
-+	struct reftable_record index_result = {
-+		.type = BLOCK_TYPE_INDEX,
-+		.u.idx = { .last_key = STRBUF_INIT },
-+	};
- 	struct table_iter index_iter = TABLE_ITER_INIT;
- 	struct table_iter next = TABLE_ITER_INIT;
- 	int err = 0;
- 
--	reftable_record_key(rec, &want_index.last_key);
--	reftable_record_from_index(&want_index_rec, &want_index);
--	reftable_record_from_index(&index_result_rec, &index_result);
-+	reftable_record_key(rec, &want_index.u.idx.last_key);
- 
- 	err = reader_start(r, &index_iter, reftable_record_type(rec), 1);
- 	if (err < 0)
- 		goto done;
- 
--	err = reader_seek_linear(r, &index_iter, &want_index_rec);
-+	err = reader_seek_linear(r, &index_iter, &want_index);
- 	while (1) {
--		err = table_iter_next(&index_iter, &index_result_rec);
-+		err = table_iter_next(&index_iter, &index_result);
- 		table_iter_block_done(&index_iter);
- 		if (err != 0)
- 			goto done;
- 
--		err = reader_table_iter_at(r, &next, index_result.offset, 0);
-+		err = reader_table_iter_at(r, &next, index_result.u.idx.offset,
-+					   0);
- 		if (err != 0)
- 			goto done;
- 
--		err = block_iter_seek(&next.bi, &want_index.last_key);
-+		err = block_iter_seek(&next.bi, &want_index.u.idx.last_key);
- 		if (err < 0)
- 			goto done;
- 
-@@ -545,8 +546,8 @@ static int reader_seek_indexed(struct reftable_reader *r,
- done:
- 	block_iter_close(&next.bi);
- 	table_iter_close(&index_iter);
--	reftable_record_release(&want_index_rec);
--	reftable_record_release(&index_result_rec);
-+	reftable_record_release(&want_index);
-+	reftable_record_release(&index_result);
- 	return err;
- }
- 
-@@ -595,11 +596,10 @@ static int reader_seek(struct reftable_reader *r, struct reftable_iterator *it,
- int reftable_reader_seek_ref(struct reftable_reader *r,
- 			     struct reftable_iterator *it, const char *name)
- {
--	struct reftable_ref_record ref = {
--		.refname = (char *)name,
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_REF,
-+		.u.ref = { .refname = (char *)name, },
- 	};
--	struct reftable_record rec = { NULL };
--	reftable_record_from_ref(&rec, &ref);
- 	return reader_seek(r, it, &rec);
- }
- 
-@@ -607,12 +607,13 @@ int reftable_reader_seek_log_at(struct reftable_reader *r,
- 				struct reftable_iterator *it, const char *name,
- 				uint64_t update_index)
- {
--	struct reftable_log_record log = {
--		.refname = (char *)name,
--		.update_index = update_index,
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_LOG,
-+		.u.log = {
-+			.refname = (char *)name,
-+			.update_index = update_index,
-+		}
- 	};
--	struct reftable_record rec = { NULL };
--	reftable_record_from_log(&rec, &log);
- 	return reader_seek(r, it, &rec);
- }
- 
-@@ -656,31 +657,33 @@ static int reftable_reader_refs_for_indexed(struct reftable_reader *r,
- 					    struct reftable_iterator *it,
- 					    uint8_t *oid)
- {
--	struct reftable_obj_record want = {
--		.hash_prefix = oid,
--		.hash_prefix_len = r->object_id_len,
-+	struct reftable_record want = {
-+		.type = BLOCK_TYPE_OBJ,
-+		.u.obj = {
-+			.hash_prefix = oid,
-+			.hash_prefix_len = r->object_id_len,
-+		},
- 	};
--	struct reftable_record want_rec = { NULL };
- 	struct reftable_iterator oit = { NULL };
--	struct reftable_obj_record got = { NULL };
--	struct reftable_record got_rec = { NULL };
-+	struct reftable_record got = {
-+		.type = BLOCK_TYPE_OBJ,
-+		.u.obj = { 0 },
-+	};
- 	int err = 0;
- 	struct indexed_table_ref_iter *itr = NULL;
- 
- 	/* Look through the reverse index. */
--	reftable_record_from_obj(&want_rec, &want);
--	err = reader_seek(r, &oit, &want_rec);
-+	err = reader_seek(r, &oit, &want);
- 	if (err != 0)
- 		goto done;
- 
- 	/* read out the reftable_obj_record */
--	reftable_record_from_obj(&got_rec, &got);
--	err = iterator_next(&oit, &got_rec);
-+	err = iterator_next(&oit, &got);
- 	if (err < 0)
- 		goto done;
- 
--	if (err > 0 ||
--	    memcmp(want.hash_prefix, got.hash_prefix, r->object_id_len)) {
-+	if (err > 0 || memcmp(want.u.obj.hash_prefix, got.u.obj.hash_prefix,
-+			      r->object_id_len)) {
- 		/* didn't find it; return empty iterator */
- 		iterator_set_empty(it);
- 		err = 0;
-@@ -688,15 +691,16 @@ static int reftable_reader_refs_for_indexed(struct reftable_reader *r,
- 	}
- 
- 	err = new_indexed_table_ref_iter(&itr, r, oid, hash_size(r->hash_id),
--					 got.offsets, got.offset_len);
-+					 got.u.obj.offsets,
-+					 got.u.obj.offset_len);
- 	if (err < 0)
- 		goto done;
--	got.offsets = NULL;
-+	got.u.obj.offsets = NULL;
- 	iterator_from_indexed_table_ref_iter(it, itr);
- 
- done:
- 	reftable_iterator_destroy(&oit);
--	reftable_record_release(&got_rec);
-+	reftable_record_release(&got);
- 	return err;
- }
- 
-diff --git a/reftable/record.c b/reftable/record.c
-index b543585ad39..238ff882aab 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -15,6 +15,24 @@ https://developers.google.com/open-source/licenses/bsd
- #include "reftable-error.h"
- #include "basics.h"
- 
-+static struct reftable_record_vtable *
-+reftable_record_vtable(struct reftable_record *rec);
-+
-+static void *reftable_record_data(struct reftable_record *rec)
-+{
-+	switch (rec->type) {
-+	case BLOCK_TYPE_REF:
-+		return &rec->u.ref;
-+	case BLOCK_TYPE_LOG:
-+		return &rec->u.log;
-+	case BLOCK_TYPE_INDEX:
-+		return &rec->u.idx;
-+	case BLOCK_TYPE_OBJ:
-+		return &rec->u.obj;
-+	}
-+	abort();
-+}
-+
- int get_var_int(uint64_t *dest, struct string_view *in)
- {
- 	int ptr = 0;
-@@ -474,12 +492,13 @@ static void reftable_obj_record_copy_from(void *rec, const void *src_rec,
- 		(const struct reftable_obj_record *)src_rec;
- 
- 	reftable_obj_record_release(obj);
--	*obj = *src;
--	obj->hash_prefix = reftable_malloc(obj->hash_prefix_len);
-+	obj->hash_prefix = reftable_malloc(src->hash_prefix_len);
-+	obj->hash_prefix_len = src->hash_prefix_len;
- 	memcpy(obj->hash_prefix, src->hash_prefix, obj->hash_prefix_len);
- 
--	obj->offsets = reftable_malloc(obj->offset_len * sizeof(uint64_t));
--	COPY_ARRAY(obj->offsets, src->offsets, obj->offset_len);
-+	obj->offsets = reftable_malloc(src->offset_len * sizeof(uint64_t));
-+	obj->offset_len = src->offset_len;
-+	COPY_ARRAY(obj->offsets, src->offsets, src->offset_len);
- }
- 
- static uint8_t reftable_obj_record_val_type(const void *rec)
-@@ -962,58 +981,6 @@ static struct reftable_record_vtable reftable_log_record_vtable = {
- 	.equal = &reftable_log_record_equal_void
- };
- 
--struct reftable_record reftable_new_record(uint8_t typ)
--{
--	struct reftable_record rec = { NULL };
--	switch (typ) {
--	case BLOCK_TYPE_REF: {
--		struct reftable_ref_record *r =
--			reftable_calloc(sizeof(struct reftable_ref_record));
--		reftable_record_from_ref(&rec, r);
--		return rec;
--	}
--
--	case BLOCK_TYPE_OBJ: {
--		struct reftable_obj_record *r =
--			reftable_calloc(sizeof(struct reftable_obj_record));
--		reftable_record_from_obj(&rec, r);
--		return rec;
--	}
--	case BLOCK_TYPE_LOG: {
--		struct reftable_log_record *r =
--			reftable_calloc(sizeof(struct reftable_log_record));
--		reftable_record_from_log(&rec, r);
--		return rec;
--	}
--	case BLOCK_TYPE_INDEX: {
--		struct reftable_index_record empty = { .last_key =
--							       STRBUF_INIT };
--		struct reftable_index_record *r =
--			reftable_calloc(sizeof(struct reftable_index_record));
--		*r = empty;
--		reftable_record_from_index(&rec, r);
--		return rec;
--	}
--	}
--	abort();
--	return rec;
--}
--
--/* clear out the record, yielding the reftable_record data that was
-- * encapsulated. */
--static void *reftable_record_yield(struct reftable_record *rec)
--{
--	void *p = rec->data;
--	rec->data = NULL;
--	return p;
--}
--
--void reftable_record_destroy(struct reftable_record *rec)
--{
--	reftable_record_release(rec);
--	reftable_free(reftable_record_yield(rec));
--}
--
- static void reftable_index_record_key(const void *r, struct strbuf *dest)
- {
- 	const struct reftable_index_record *rec = r;
-@@ -1036,6 +1003,7 @@ static void reftable_index_record_release(void *rec)
- {
- 	struct reftable_index_record *idx = rec;
- 	strbuf_release(&idx->last_key);
-+	idx->offset = 0;
- }
- 
- static uint8_t reftable_index_record_val_type(const void *rec)
-@@ -1100,98 +1068,60 @@ static struct reftable_record_vtable reftable_index_record_vtable = {
- 
- void reftable_record_key(struct reftable_record *rec, struct strbuf *dest)
- {
--	rec->ops->key(rec->data, dest);
-+	reftable_record_vtable(rec)->key(reftable_record_data(rec), dest);
- }
- 
- uint8_t reftable_record_type(struct reftable_record *rec)
- {
--	return rec->ops->type;
-+	return rec->type;
- }
- 
- int reftable_record_encode(struct reftable_record *rec, struct string_view dest,
- 			   int hash_size)
- {
--	return rec->ops->encode(rec->data, dest, hash_size);
-+	return reftable_record_vtable(rec)->encode(reftable_record_data(rec),
-+						   dest, hash_size);
- }
- 
- void reftable_record_copy_from(struct reftable_record *rec,
- 			       struct reftable_record *src, int hash_size)
- {
--	assert(src->ops->type == rec->ops->type);
-+	assert(src->type == rec->type);
- 
--	rec->ops->copy_from(rec->data, src->data, hash_size);
-+	reftable_record_vtable(rec)->copy_from(reftable_record_data(rec),
-+					       reftable_record_data(src),
-+					       hash_size);
- }
- 
- uint8_t reftable_record_val_type(struct reftable_record *rec)
- {
--	return rec->ops->val_type(rec->data);
-+	return reftable_record_vtable(rec)->val_type(reftable_record_data(rec));
- }
- 
- int reftable_record_decode(struct reftable_record *rec, struct strbuf key,
- 			   uint8_t extra, struct string_view src, int hash_size)
- {
--	return rec->ops->decode(rec->data, key, extra, src, hash_size);
-+	return reftable_record_vtable(rec)->decode(reftable_record_data(rec),
-+						   key, extra, src, hash_size);
- }
- 
- void reftable_record_release(struct reftable_record *rec)
- {
--	rec->ops->release(rec->data);
-+	reftable_record_vtable(rec)->release(reftable_record_data(rec));
- }
- 
- int reftable_record_is_deletion(struct reftable_record *rec)
- {
--	return rec->ops->is_deletion(rec->data);
-+	return reftable_record_vtable(rec)->is_deletion(
-+		reftable_record_data(rec));
- }
- 
- int reftable_record_equal(struct reftable_record *a, struct reftable_record *b, int hash_size)
- {
--	if (a->ops != b->ops)
-+	if (a->type != b->type)
- 		return 0;
--	return a->ops->equal(a->data, b->data, hash_size);
--}
--
--void reftable_record_from_ref(struct reftable_record *rec,
--			      struct reftable_ref_record *ref_rec)
--{
--	assert(!rec->ops);
--	rec->data = ref_rec;
--	rec->ops = &reftable_ref_record_vtable;
--}
--
--void reftable_record_from_obj(struct reftable_record *rec,
--			      struct reftable_obj_record *obj_rec)
--{
--	assert(!rec->ops);
--	rec->data = obj_rec;
--	rec->ops = &reftable_obj_record_vtable;
--}
--
--void reftable_record_from_index(struct reftable_record *rec,
--				struct reftable_index_record *index_rec)
--{
--	assert(!rec->ops);
--	rec->data = index_rec;
--	rec->ops = &reftable_index_record_vtable;
--}
--
--void reftable_record_from_log(struct reftable_record *rec,
--			      struct reftable_log_record *log_rec)
--{
--	assert(!rec->ops);
--	rec->data = log_rec;
--	rec->ops = &reftable_log_record_vtable;
--}
--
--struct reftable_ref_record *reftable_record_as_ref(struct reftable_record *rec)
--{
--	assert(reftable_record_type(rec) == BLOCK_TYPE_REF);
--	return rec->data;
--}
--
--struct reftable_log_record *reftable_record_as_log(struct reftable_record *rec)
--{
--	assert(reftable_record_type(rec) == BLOCK_TYPE_LOG);
--	return rec->data;
-+	return reftable_record_vtable(a)->equal(
-+		reftable_record_data(a), reftable_record_data(b), hash_size);
- }
- 
- static int hash_equal(uint8_t *a, uint8_t *b, int hash_size)
-@@ -1264,3 +1194,60 @@ void string_view_consume(struct string_view *s, int n)
- 	s->buf += n;
- 	s->len -= n;
- }
-+
-+static struct reftable_record_vtable *
-+reftable_record_vtable(struct reftable_record *rec)
-+{
-+	switch (rec->type) {
-+	case BLOCK_TYPE_REF:
-+		return &reftable_ref_record_vtable;
-+	case BLOCK_TYPE_LOG:
-+		return &reftable_log_record_vtable;
-+	case BLOCK_TYPE_INDEX:
-+		return &reftable_index_record_vtable;
-+	case BLOCK_TYPE_OBJ:
-+		return &reftable_obj_record_vtable;
-+	}
-+	abort();
-+}
-+
-+struct reftable_record reftable_new_record(uint8_t type)
-+{
-+	struct reftable_record clean = {
-+		.type = type,
-+	};
-+
-+	/* the following is involved, but the naive solution (just return
-+	 * `clean` as is, except for BLOCK_TYPE_INDEX), returns a garbage
-+	 * clean.u.obj.offsets pointer on Windows VS CI.  Go figure.
-+	 */
-+	switch (type) {
-+	case BLOCK_TYPE_OBJ:
-+	{
-+		struct reftable_obj_record obj = { 0 };
-+		clean.u.obj = obj;
-+		break;
-+	}
-+	case BLOCK_TYPE_INDEX:
-+	{
-+		struct reftable_index_record idx = {
-+			.last_key = STRBUF_INIT,
-+		};
-+		clean.u.idx = idx;
-+		break;
-+	}
-+	case BLOCK_TYPE_REF:
-+	{
-+		struct reftable_ref_record ref = { 0 };
-+		clean.u.ref = ref;
-+		break;
-+	}
-+	case BLOCK_TYPE_LOG:
-+	{
-+		struct reftable_log_record log = { 0 };
-+		clean.u.log = log;
-+		break;
-+	}
-+	}
-+	return clean;
-+}
-diff --git a/reftable/record.h b/reftable/record.h
-index da75d7d1f11..010a322e901 100644
---- a/reftable/record.h
-+++ b/reftable/record.h
-@@ -63,16 +63,10 @@ struct reftable_record_vtable {
- 	int (*equal)(const void *a, const void *b, int hash_size);
- };
- 
--/* record is a generic wrapper for different types of records. */
--struct reftable_record {
--	void *data;
--	struct reftable_record_vtable *ops;
--};
--
- /* returns true for recognized block types. Block start with the block type. */
- int reftable_is_block_type(uint8_t typ);
- 
--/* creates a malloced record of the given type. Dispose with record_destroy */
-+/* return an initialized record for the given type */
- struct reftable_record reftable_new_record(uint8_t typ);
- 
- /* Encode `key` into `dest`. Sets `is_restart` to indicate a restart. Returns
-@@ -100,6 +94,22 @@ struct reftable_obj_record {
- 	int offset_len;
- };
- 
-+/* record is a generic wrapper for different types of records. It is normally
-+ * created on the stack, or embedded within another struct. If the type is
-+ * known, a fresh instance can be initialized explicitly. Otherwise, use
-+ * reftable_new_record() to initialize generically (as the index_record is not
-+ * valid as 0-initialized structure)
-+ */
-+struct reftable_record {
-+	uint8_t type;
-+	union {
-+		struct reftable_ref_record ref;
-+		struct reftable_log_record log;
-+		struct reftable_obj_record obj;
-+		struct reftable_index_record idx;
-+	} u;
-+};
-+
- /* see struct record_vtable */
- int reftable_record_equal(struct reftable_record *a, struct reftable_record *b, int hash_size);
- void reftable_record_key(struct reftable_record *rec, struct strbuf *dest);
-@@ -114,25 +124,9 @@ int reftable_record_decode(struct reftable_record *rec, struct strbuf key,
- 			   int hash_size);
- int reftable_record_is_deletion(struct reftable_record *rec);
- 
--/* zeroes out the embedded record */
-+/* frees and zeroes out the embedded record */
- void reftable_record_release(struct reftable_record *rec);
- 
--/* clear and deallocate embedded record, and zero `rec`. */
--void reftable_record_destroy(struct reftable_record *rec);
--
--/* initialize generic records from concrete records. The generic record should
-- * be zeroed out. */
--void reftable_record_from_obj(struct reftable_record *rec,
--			      struct reftable_obj_record *objrec);
--void reftable_record_from_index(struct reftable_record *rec,
--				struct reftable_index_record *idxrec);
--void reftable_record_from_ref(struct reftable_record *rec,
--			      struct reftable_ref_record *refrec);
--void reftable_record_from_log(struct reftable_record *rec,
--			      struct reftable_log_record *logrec);
--struct reftable_ref_record *reftable_record_as_ref(struct reftable_record *ref);
--struct reftable_log_record *reftable_record_as_log(struct reftable_record *ref);
--
- /* for qsort. */
- int reftable_ref_record_compare_name(const void *a, const void *b);
- 
-diff --git a/reftable/record_test.c b/reftable/record_test.c
-index 92680848156..4a025c48104 100644
---- a/reftable/record_test.c
-+++ b/reftable/record_test.c
-@@ -16,13 +16,14 @@
- 
- static void test_copy(struct reftable_record *rec)
- {
--	struct reftable_record copy =
--		reftable_new_record(reftable_record_type(rec));
-+	struct reftable_record copy = { 0 };
-+	uint8_t type = reftable_record_type(rec);
-+	copy = reftable_new_record(type);
- 	reftable_record_copy_from(&copy, rec, GIT_SHA1_RAWSZ);
- 	/* do it twice to catch memory leaks */
- 	reftable_record_copy_from(&copy, rec, GIT_SHA1_RAWSZ);
- 	EXPECT(reftable_record_equal(rec, &copy, GIT_SHA1_RAWSZ));
--	reftable_record_destroy(&copy);
-+	reftable_record_release(&copy);
- }
- 
- static void test_varint_roundtrip(void)
-@@ -95,11 +96,11 @@ static void test_reftable_ref_record_roundtrip(void)
- 	int i = 0;
- 
- 	for (i = REFTABLE_REF_DELETION; i < REFTABLE_NR_REF_VALUETYPES; i++) {
--		struct reftable_ref_record in = { NULL };
--		struct reftable_ref_record out = { NULL };
--		struct reftable_record rec_out = { NULL };
-+		struct reftable_record in = {
-+			.type = BLOCK_TYPE_REF,
-+		};
-+		struct reftable_record out = { .type = BLOCK_TYPE_REF };
- 		struct strbuf key = STRBUF_INIT;
--		struct reftable_record rec = { NULL };
- 		uint8_t buffer[1024] = { 0 };
- 		struct string_view dest = {
- 			.buf = buffer,
-@@ -108,48 +109,46 @@ static void test_reftable_ref_record_roundtrip(void)
- 
- 		int n, m;
- 
--		in.value_type = i;
-+		in.u.ref.value_type = i;
- 		switch (i) {
- 		case REFTABLE_REF_DELETION:
- 			break;
- 		case REFTABLE_REF_VAL1:
--			in.value.val1 = reftable_malloc(GIT_SHA1_RAWSZ);
--			set_hash(in.value.val1, 1);
-+			in.u.ref.value.val1 = reftable_malloc(GIT_SHA1_RAWSZ);
-+			set_hash(in.u.ref.value.val1, 1);
- 			break;
- 		case REFTABLE_REF_VAL2:
--			in.value.val2.value = reftable_malloc(GIT_SHA1_RAWSZ);
--			set_hash(in.value.val2.value, 1);
--			in.value.val2.target_value =
-+			in.u.ref.value.val2.value =
-+				reftable_malloc(GIT_SHA1_RAWSZ);
-+			set_hash(in.u.ref.value.val2.value, 1);
-+			in.u.ref.value.val2.target_value =
- 				reftable_malloc(GIT_SHA1_RAWSZ);
--			set_hash(in.value.val2.target_value, 2);
-+			set_hash(in.u.ref.value.val2.target_value, 2);
- 			break;
- 		case REFTABLE_REF_SYMREF:
--			in.value.symref = xstrdup("target");
-+			in.u.ref.value.symref = xstrdup("target");
- 			break;
- 		}
--		in.refname = xstrdup("refs/heads/master");
-+		in.u.ref.refname = xstrdup("refs/heads/master");
- 
--		reftable_record_from_ref(&rec, &in);
--		test_copy(&rec);
-+		test_copy(&in);
- 
--		EXPECT(reftable_record_val_type(&rec) == i);
-+		EXPECT(reftable_record_val_type(&in) == i);
- 
--		reftable_record_key(&rec, &key);
--		n = reftable_record_encode(&rec, dest, GIT_SHA1_RAWSZ);
-+		reftable_record_key(&in, &key);
-+		n = reftable_record_encode(&in, dest, GIT_SHA1_RAWSZ);
- 		EXPECT(n > 0);
- 
- 		/* decode into a non-zero reftable_record to test for leaks. */
--
--		reftable_record_from_ref(&rec_out, &out);
--		m = reftable_record_decode(&rec_out, key, i, dest,
--					   GIT_SHA1_RAWSZ);
-+		m = reftable_record_decode(&out, key, i, dest, GIT_SHA1_RAWSZ);
- 		EXPECT(n == m);
- 
--		EXPECT(reftable_ref_record_equal(&in, &out, GIT_SHA1_RAWSZ));
--		reftable_record_release(&rec_out);
-+		EXPECT(reftable_ref_record_equal(&in.u.ref, &out.u.ref,
-+						 GIT_SHA1_RAWSZ));
-+		reftable_record_release(&in);
- 
- 		strbuf_release(&key);
--		reftable_ref_record_release(&in);
-+		reftable_record_release(&out);
- 	}
- }
- 
-@@ -202,7 +201,7 @@ static void test_reftable_log_record_roundtrip(void)
- 	set_test_hash(in[0].value.update.new_hash, 1);
- 	set_test_hash(in[0].value.update.old_hash, 2);
- 	for (i = 0; i < ARRAY_SIZE(in); i++) {
--		struct reftable_record rec = { NULL };
-+		struct reftable_record rec = { .type = BLOCK_TYPE_LOG };
- 		struct strbuf key = STRBUF_INIT;
- 		uint8_t buffer[1024] = { 0 };
- 		struct string_view dest = {
-@@ -210,23 +209,25 @@ static void test_reftable_log_record_roundtrip(void)
- 			.len = sizeof(buffer),
- 		};
- 		/* populate out, to check for leaks. */
--		struct reftable_log_record out = {
--			.refname = xstrdup("old name"),
--			.value_type = REFTABLE_LOG_UPDATE,
--			.value = {
--				.update = {
--					.new_hash = reftable_calloc(GIT_SHA1_RAWSZ),
--					.old_hash = reftable_calloc(GIT_SHA1_RAWSZ),
--					.name = xstrdup("old name"),
--					.email = xstrdup("old@email"),
--					.message = xstrdup("old message"),
-+		struct reftable_record out = {
-+			.type = BLOCK_TYPE_LOG,
-+			.u.log = {
-+				.refname = xstrdup("old name"),
-+				.value_type = REFTABLE_LOG_UPDATE,
-+				.value = {
-+					.update = {
-+						.new_hash = reftable_calloc(GIT_SHA1_RAWSZ),
-+						.old_hash = reftable_calloc(GIT_SHA1_RAWSZ),
-+						.name = xstrdup("old name"),
-+						.email = xstrdup("old@email"),
-+						.message = xstrdup("old message"),
-+					},
- 				},
- 			},
- 		};
--		struct reftable_record rec_out = { NULL };
- 		int n, m, valtype;
- 
--		reftable_record_from_log(&rec, &in[i]);
-+		rec.u.log = in[i];
- 
- 		test_copy(&rec);
- 
-@@ -234,16 +235,16 @@ static void test_reftable_log_record_roundtrip(void)
- 
- 		n = reftable_record_encode(&rec, dest, GIT_SHA1_RAWSZ);
- 		EXPECT(n >= 0);
--		reftable_record_from_log(&rec_out, &out);
- 		valtype = reftable_record_val_type(&rec);
--		m = reftable_record_decode(&rec_out, key, valtype, dest,
-+		m = reftable_record_decode(&out, key, valtype, dest,
- 					   GIT_SHA1_RAWSZ);
- 		EXPECT(n == m);
- 
--		EXPECT(reftable_log_record_equal(&in[i], &out, GIT_SHA1_RAWSZ));
-+		EXPECT(reftable_log_record_equal(&in[i], &out.u.log,
-+						 GIT_SHA1_RAWSZ));
- 		reftable_log_record_release(&in[i]);
- 		strbuf_release(&key);
--		reftable_record_release(&rec_out);
-+		reftable_record_release(&out);
- 	}
- }
- 
-@@ -311,41 +312,43 @@ static void test_reftable_obj_record_roundtrip(void)
- 					       } };
- 	int i = 0;
- 	for (i = 0; i < ARRAY_SIZE(recs); i++) {
--		struct reftable_obj_record in = recs[i];
- 		uint8_t buffer[1024] = { 0 };
- 		struct string_view dest = {
- 			.buf = buffer,
- 			.len = sizeof(buffer),
- 		};
--		struct reftable_record rec = { NULL };
-+		struct reftable_record in = {
-+			.type = BLOCK_TYPE_OBJ,
-+			.u.obj = recs[i],
-+		};
- 		struct strbuf key = STRBUF_INIT;
--		struct reftable_obj_record out = { NULL };
--		struct reftable_record rec_out = { NULL };
-+		struct reftable_record out = { .type = BLOCK_TYPE_OBJ };
- 		int n, m;
- 		uint8_t extra;
- 
--		reftable_record_from_obj(&rec, &in);
--		test_copy(&rec);
--		reftable_record_key(&rec, &key);
--		n = reftable_record_encode(&rec, dest, GIT_SHA1_RAWSZ);
-+		test_copy(&in);
-+		reftable_record_key(&in, &key);
-+		n = reftable_record_encode(&in, dest, GIT_SHA1_RAWSZ);
- 		EXPECT(n > 0);
--		extra = reftable_record_val_type(&rec);
--		reftable_record_from_obj(&rec_out, &out);
--		m = reftable_record_decode(&rec_out, key, extra, dest,
-+		extra = reftable_record_val_type(&in);
-+		m = reftable_record_decode(&out, key, extra, dest,
- 					   GIT_SHA1_RAWSZ);
- 		EXPECT(n == m);
- 
--		EXPECT(reftable_record_equal(&rec, &rec_out, GIT_SHA1_RAWSZ));
-+		EXPECT(reftable_record_equal(&in, &out, GIT_SHA1_RAWSZ));
- 		strbuf_release(&key);
--		reftable_record_release(&rec_out);
-+		reftable_record_release(&out);
- 	}
- }
- 
- static void test_reftable_index_record_roundtrip(void)
- {
--	struct reftable_index_record in = {
--		.offset = 42,
--		.last_key = STRBUF_INIT,
-+	struct reftable_record in = {
-+		.type = BLOCK_TYPE_INDEX,
-+		.u.idx = {
-+			.offset = 42,
-+			.last_key = STRBUF_INIT,
-+		},
- 	};
- 	uint8_t buffer[1024] = { 0 };
- 	struct string_view dest = {
-@@ -353,31 +356,30 @@ static void test_reftable_index_record_roundtrip(void)
- 		.len = sizeof(buffer),
- 	};
- 	struct strbuf key = STRBUF_INIT;
--	struct reftable_record rec = { NULL };
--	struct reftable_index_record out = { .last_key = STRBUF_INIT };
--	struct reftable_record out_rec = { NULL };
-+	struct reftable_record out = {
-+		.type = BLOCK_TYPE_INDEX,
-+		.u.idx = { .last_key = STRBUF_INIT },
-+	};
- 	int n, m;
- 	uint8_t extra;
- 
--	strbuf_addstr(&in.last_key, "refs/heads/master");
--	reftable_record_from_index(&rec, &in);
--	reftable_record_key(&rec, &key);
--	test_copy(&rec);
-+	strbuf_addstr(&in.u.idx.last_key, "refs/heads/master");
-+	reftable_record_key(&in, &key);
-+	test_copy(&in);
- 
--	EXPECT(0 == strbuf_cmp(&key, &in.last_key));
--	n = reftable_record_encode(&rec, dest, GIT_SHA1_RAWSZ);
-+	EXPECT(0 == strbuf_cmp(&key, &in.u.idx.last_key));
-+	n = reftable_record_encode(&in, dest, GIT_SHA1_RAWSZ);
- 	EXPECT(n > 0);
- 
--	extra = reftable_record_val_type(&rec);
--	reftable_record_from_index(&out_rec, &out);
--	m = reftable_record_decode(&out_rec, key, extra, dest, GIT_SHA1_RAWSZ);
-+	extra = reftable_record_val_type(&in);
-+	m = reftable_record_decode(&out, key, extra, dest, GIT_SHA1_RAWSZ);
- 	EXPECT(m == n);
- 
--	EXPECT(reftable_record_equal(&rec, &out_rec, GIT_SHA1_RAWSZ));
-+	EXPECT(reftable_record_equal(&in, &out, GIT_SHA1_RAWSZ));
- 
--	reftable_record_release(&out_rec);
-+	reftable_record_release(&out);
- 	strbuf_release(&key);
--	strbuf_release(&in.last_key);
-+	strbuf_release(&in.u.idx.last_key);
- }
- 
- int record_test_main(int argc, const char *argv[])
-diff --git a/reftable/writer.c b/reftable/writer.c
-index 83a23daf60b..96a5155ea77 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -256,8 +256,10 @@ done:
- int reftable_writer_add_ref(struct reftable_writer *w,
- 			    struct reftable_ref_record *ref)
- {
--	struct reftable_record rec = { NULL };
--	struct reftable_ref_record copy = *ref;
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_REF,
-+		.u.ref = *ref,
-+	};
- 	int err = 0;
- 
- 	if (ref->refname == NULL)
-@@ -266,8 +268,7 @@ int reftable_writer_add_ref(struct reftable_writer *w,
- 	    ref->update_index > w->max_update_index)
- 		return REFTABLE_API_ERROR;
- 
--	reftable_record_from_ref(&rec, &copy);
--	copy.update_index -= w->min_update_index;
-+	rec.u.ref.update_index -= w->min_update_index;
- 
- 	err = writer_add_record(w, &rec);
- 	if (err < 0)
-@@ -306,7 +307,10 @@ int reftable_writer_add_refs(struct reftable_writer *w,
- static int reftable_writer_add_log_verbatim(struct reftable_writer *w,
- 					    struct reftable_log_record *log)
- {
--	struct reftable_record rec = { NULL };
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_LOG,
-+		.u.log = *log,
-+	};
- 	if (w->block_writer &&
- 	    block_writer_type(w->block_writer) == BLOCK_TYPE_REF) {
- 		int err = writer_finish_public_section(w);
-@@ -317,7 +321,6 @@ static int reftable_writer_add_log_verbatim(struct reftable_writer *w,
- 	w->next -= w->pending_padding;
- 	w->pending_padding = 0;
- 
--	reftable_record_from_log(&rec, log);
- 	return writer_add_record(w, &rec);
- }
- 
-@@ -398,8 +401,10 @@ static int writer_finish_section(struct reftable_writer *w)
- 		w->index_len = 0;
- 		w->index_cap = 0;
- 		for (i = 0; i < idx_len; i++) {
--			struct reftable_record rec = { NULL };
--			reftable_record_from_index(&rec, idx + i);
-+			struct reftable_record rec = {
-+				.type = BLOCK_TYPE_INDEX,
-+				.u.idx = idx[i],
-+			};
- 			if (block_writer_add(w->block_writer, &rec) == 0) {
- 				continue;
- 			}
-@@ -467,17 +472,18 @@ static void write_object_record(void *void_arg, void *key)
- {
- 	struct write_record_arg *arg = void_arg;
- 	struct obj_index_tree_node *entry = key;
--	struct reftable_obj_record obj_rec = {
--		.hash_prefix = (uint8_t *)entry->hash.buf,
--		.hash_prefix_len = arg->w->stats.object_id_len,
--		.offsets = entry->offsets,
--		.offset_len = entry->offset_len,
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_OBJ,
-+		.u.obj = {
-+			.hash_prefix = (uint8_t *)entry->hash.buf,
-+			.hash_prefix_len = arg->w->stats.object_id_len,
-+			.offsets = entry->offsets,
-+			.offset_len = entry->offset_len,
-+		}
- 	};
--	struct reftable_record rec = { NULL };
- 	if (arg->err < 0)
- 		goto done;
- 
--	reftable_record_from_obj(&rec, &obj_rec);
- 	arg->err = block_writer_add(arg->w->block_writer, &rec);
- 	if (arg->err == 0)
- 		goto done;
-@@ -490,7 +496,7 @@ static void write_object_record(void *void_arg, void *key)
- 	arg->err = block_writer_add(arg->w->block_writer, &rec);
- 	if (arg->err == 0)
- 		goto done;
--	obj_rec.offset_len = 0;
-+	rec.u.obj.offset_len = 0;
- 	arg->err = block_writer_add(arg->w->block_writer, &rec);
- 
- 	/* Should be able to write into a fresh block. */
--- 
-gitgitgadget
+With all the integration branches and topics broken out:
 
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* ab/checkout-branch-info-leakfix (2022-01-21) 1 commit
+  (merged to 'next' on 2022-01-23 at 8bbb082509)
+ + checkout: avoid BUG() when hitting a broken repository
+
+ We added an unrelated sanity checking that leads to a BUG() while
+ plugging a leak, which triggered in a repository with symrefs in
+ the local branch namespace that point at a ref outside.  Partially
+ revert the change to avoid triggering the BUG().
+ source: <xmqqbl04d1s9.fsf_-_@gitster.g>
+
+--------------------------------------------------
+[New Topics]
+
+* jc/mem-pool-alignment (2022-01-24) 1 commit
+ - mem-pool: don't assume uintmax_t is aligned enough for all types
+
+ Update the logic to compute alignment requirement for our mem-pool.
+
+ Will merge to 'next'?
+ source: <20220123203347.74869-1-jrtc27@jrtc27.com>
+
+--------------------------------------------------
+[Stalled]
+
+* je/http-better-error-output (2021-12-03) 1 commit
+ . http-backend: give a hint that web browser access is not supported
+
+ When the http-backend program, which is the server-side component
+ for the smart HTTP transport, sends a "404 Not found" error, we
+ deliberately did not say anything to the requesting client.  We now
+ send a message back to the browser to tell the user that they do
+ not want to visit the URL via their browser, instead of a totally
+ blank page.
+
+ Expecting a reroll.
+ Breaks its self tests.
+ cf. <7r23s082-o3q0-479o-srqn-r45q778s5nq7@vanv.qr>
+ source: <20211202102855.23907-1-jengelh@inai.de>
+
+
+* cb/save-term-across-editor-invocation (2021-12-01) 3 commits
+ - fixup! editor: allow for saving/restoring terminal state
+ - editor: allow for saving/restoring terminal state
+ - terminal: teach save_term to fail when not foreground
+
+ Some editors are reported to leave the terminal in funny state
+ after they exit on Windows.  Work it around by saving and restoring
+ the terminal state when needed.
+
+ Expecting a reroll.
+ cf. <CAPUEsphktbdxeV7hvF52Or3CVHS8oOk5-WV=xfEZa8kfCVVnVg@mail.gmail.com>
+ source: <20211202035446.1154-1-carenas@gmail.com>
+
+
+* ar/submodule-update (2021-10-13) 9 commits
+ . submodule--helper: rename helper functions
+ . submodule--helper: remove unused helpers
+ . submodule: move core cmd_update() logic to C
+ . submodule--helper: run update using child process struct
+ . submodule--helper: allow setting superprefix for init_submodule()
+ . submodule--helper: refactor get_submodule_displaypath()
+ . submodule--helper: rename helpers for update-clone
+ . submodule--helper: get remote names from any repository
+ . submodule--helper: split up ensure_core_worktree()
+
+ Rewrite of "git submodule update" in C.
+
+ Expecting a reroll?
+ cf. <YWiXL+plA7GHfuVv@google.com>
+ source: <20211013051805.45662-10-raykar.ath@gmail.com>
+
+--------------------------------------------------
+[Cooking]
+
+* ab/auto-detect-zlib-compress2 (2022-01-24) 1 commit
+ - compat: auto-detect if zlib has uncompress2()
+
+ Notice older zlib to enable our replacement uncompress2()
+ automatically.
+
+ Will merge to 'next'?
+ source: <xmqqr18x3s5s.fsf@gitster.g>
+
+
+* en/plug-leaks-in-merge (2022-01-21) 2 commits
+ - merge: fix memory leaks in cmd_merge()
+ - merge-ort: fix memory leak in merge_ort_internal()
+
+ Leakfix.
+
+ Will merge to 'next'.
+ source: <pull.1200.git.git.1642664835.gitgitgadget@gmail.com>
+
+
+* js/apply-partial-clone-filters-recursively (2022-01-21) 1 commit
+ - clone, submodule: pass partial clone filters to submodules
+
+ "git clone --filter=... --recurse-submodules" only makes the
+ top-level a partial clone, while submodules are fully cloned.  This
+ behaviour is changed to pass the same filter down to the submodules.
+ source: <50ebf7bd39adf34fa4ada27cd433d81b5381abe5.1642735881.git.steadmon@google.com>
+
+
+* js/sparse-vs-split-index (2022-01-23) 3 commits
+ - split-index: it really is incompatible with the sparse index
+ - t1091: disable split index
+ - sparse-index: sparse index is disallowed when split index is active
+
+ Mark in various places in the code that the sparse index and the
+ split index features are mutually incompatible.
+
+ Will merge to 'next'.
+ source: <pull.1119.git.1642613379.gitgitgadget@gmail.com>
+
+
+* js/test-unset-trace2-parents (2022-01-20) 1 commit
+  (merged to 'next' on 2022-01-20 at ebb085e3e4)
+ + test-lib: unset trace2 parent envvars
+
+ Avoid tests that are run under GIT_TRACE2 set from failing
+ unnecessarily.
+
+ Will cook in 'next'.
+ source: <82e51a52e20fbe13a5a898a0a2f6dbe1188e3fa3.1642116539.git.steadmon@google.com>
+
+
+* jt/sparse-checkout-leading-dir-fix (2022-01-21) 1 commit
+ - sparse-checkout: create leading directory
+
+ "git sparse-checkout init" failed to write into $GIT_DIR/info
+ directory when the repository was created without one, which has
+ been corrected to auto-create it.
+
+ Will merge to 'next'.
+ source: <20220121174441.3991963-1-jonathantanmy@google.com>
+
+
+* rs/parse-options-lithelp-help (2022-01-20) 1 commit
+ - parse-options: document bracketing of argh
+
+ Comment update.
+ source: <c6ab4408-1091-4d14-849e-afe5f3053e8b@web.de>
+
+
+* en/merge-ort-restart-optim-fix (2022-01-17) 1 commit
+  (merged to 'next' on 2022-01-19 at 84da10b057)
+ + merge-ort: avoid assuming all renames detected
+
+ The merge-ort misbehaved when merge.renameLimit configuration is
+ set too low and failed to find all renames.
+
+ Will cook in 'next'.
+ source: <pull.1194.v2.git.git.1642443955836.gitgitgadget@gmail.com>
+
+
+* jh/p4-various-fixups (2022-01-16) 23 commits
+ . git-p4: seperate multiple statements onto seperate lines
+ . git-p4: move inline comments to line above
+ . git-p4: only seperate code blocks by a single empty line
+ . git-p4: compare to singletons with "is" and "is not"
+ . git-p4: normalize indentation of lines in conditionals
+ . git-p4: ensure there is a single space around all operators
+ . git-p4: ensure every comment has a single #
+ . git-p4: remove spaces between dictionary keys and colons
+ . git-p4: remove redundant backslash-continuations inside brackets
+ . git-p4: remove extraneous spaces before function arguments
+ . git-p4: place a single space after every comma
+ . git-p4: removed brackets when assigning multiple return values
+ . git-p4: remove spaces around default arguments
+ . git-p4: remove padding from lists, tuples and function arguments
+ . git-p4: sort and de-duplcate pylint disable list
+ . git-p4: remove commented code
+ . git-p4: convert descriptive class and function comments into docstrings
+ . git-p4: improve consistency of docstring formatting
+ . git-p4: indent with 4-spaces
+ . git-p4: remove unneeded semicolons from statements
+ . git-p4: add blank lines between functions and class definitions
+ . Merge branch 'jh/p4-spawning-external-commands-cleanup' into jh/p4-various-fixups
+ . Merge branch 'jh/p4-fix-use-of-process-error-exception' into jh/p4-various-fixups
+ (this branch uses jh/p4-fix-use-of-process-error-exception and jh/p4-spawning-external-commands-cleanup.)
+
+ Various cleanups to "git p4".
+
+ Breaks its own test suite.
+ source: <20220116160550.514637-1-jholdsworth@nvidia.com>
+
+
+* po/readme-mention-contributor-hints (2022-01-17) 1 commit
+  (merged to 'next' on 2022-01-19 at 7e14690eb9)
+ + README.md: add CodingGuidelines and a link for Translators
+
+ Doc update.
+
+ Will cook in 'next'.
+ source: <pull.1115.v3.git.1642443491609.gitgitgadget@gmail.com>
+
+
+* tl/doc-cli-options-first (2022-01-17) 1 commit
+  (merged to 'next' on 2022-01-19 at 9ec14cfe73)
+ + git-cli.txt: clarify "options first and then args"
+
+ We explain that revs come first before the pathspec among command
+ line arguments, but did not spell out that dashed options come
+ before other args, which has been corrected.
+
+ Will cook in 'next'.
+ source: <fe748304d94e0ae25fd3549aadc49cf951ff2d64.1642405806.git.dyroneteng@gmail.com>
+
+
+* rs/bisect-executable-not-found (2022-01-19) 4 commits
+ - bisect--helper: double-check run command on exit code 126 and 127
+ - bisect: document run behavior with exit codes 126 and 127
+ - bisect--helper: release strbuf and strvec on run error
+ - bisect--helper: report actual bisect_state() argument on error
+
+ source: <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
+
+
+* ds/sparse-checkout-requires-per-worktree-config (2022-01-14) 6 commits
+ . worktree: copy sparse-checkout patterns and config on add
+ . sparse-checkout: use repo_config_set_worktree_gently()
+ . config: add repo_config_set_worktree_gently()
+ . worktree: add 'init-worktree-config' subcommand
+ . config: make some helpers repo-aware
+ . setup: use a repository when upgrading format
+
+ "git sparse-checkout" wants to work with per-worktree configration,
+ but did not work well in a worktree attached to a bare repository.
+
+ Expecting an update.
+ cf. <1db0f601-4769-15c0-cd58-ecddfa1fc9d5@gmail.com>
+ Introduces new leaks.
+ cf. https://github.com/git/git/runs/4823667255?check_suite_focus=true
+ source: <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com>
+
+
+* pw/add-p-hunk-split-fix (2022-01-12) 2 commits
+  (merged to 'next' on 2022-01-19 at ea57b2c9a6)
+ + builtin add -p: fix hunk splitting
+ + t3701: clean up hunk splitting tests
+
+ "git add -p" rewritten in C regressed hunk splitting in some cases,
+ which has been corrected.
+
+ Will cook in 'next'.
+ source: <pull.1100.v2.git.1641899530.gitgitgadget@gmail.com>
+
+
+* gc/fetch-negotiate-only-early-return (2022-01-20) 4 commits
+  (merged to 'next' on 2022-01-20 at e7616428eb)
+ + fetch: help translators by reusing the same message template
+  (merged to 'next' on 2022-01-19 at 0f15147cfa)
+ + fetch --negotiate-only: do not update submodules
+ + fetch: skip tasks related to fetching objects
+ + fetch: use goto cleanup in cmd_fetch()
+
+ "git fetch --negotiate-only" is an internal command used by "git
+ push" to figure out which part of our history is missing from the
+ other side.  It should never recurse into submodules even when
+ fetch.recursesubmodules configuration variable is set, nor it
+ should trigger "gc".  The code has been tightened up to ensure it
+ only does common ancestry discovery and nothing else.
+
+ Will cook in 'next'.
+ source: <20220119000056.58503-1-chooglen@google.com>
+
+
+* jh/p4-fix-use-of-process-error-exception (2022-01-06) 1 commit
+  (merged to 'next' on 2022-01-10 at 49d529bfd7)
+ + git-p4: fix instantiation of CalledProcessError
+ (this branch is used by jh/p4-various-fixups.)
+
+ Will cook in 'next'.
+ source: <20220106214156.90967-1-jholdsworth@nvidia.com>
+
+
+* jh/p4-spawning-external-commands-cleanup (2022-01-06) 3 commits
+  (merged to 'next' on 2022-01-10 at 54b36b4e66)
+ + git-p4: don't print shell commands as python lists
+ + git-p4: pass command arguments as lists instead of using shell
+ + git-p4: don't select shell mode using the type of the command argument
+ (this branch is used by jh/p4-various-fixups.)
+
+ Will cook in 'next'.
+ source: <20220106214035.90725-1-jholdsworth@nvidia.com>
+
+
+* pb/pull-rebase-autostash-fix (2022-01-14) 1 commit
+  (merged to 'next' on 2022-01-14 at 83a388a7e2)
+ + pull --rebase: honor rebase.autostash when fast-forwarding
+
+ "git pull --rebase" ignored the rebase.autostash configuration
+ variable when the remote history is a descendant of our history,
+ which has been corrected.
+
+ Will cook in 'next'.
+ source: <xmqqr19aayxp.fsf@gitster.g>
+
+
+* rs/grep-expr-cleanup (2022-01-06) 4 commits
+  (merged to 'next' on 2022-01-10 at b70a3bb0fa)
+ + grep: use grep_and_expr() in compile_pattern_and()
+ + grep: extract grep_binexp() from grep_or_expr()
+ + grep: use grep_not_expr() in compile_pattern_not()
+ + grep: use grep_or_expr() in compile_pattern_or()
+
+ Code clean-up.
+
+ Will cook in 'next'.
+ source: <cover.1641498525.git.me@ttaylorr.com>
+
+
+* fs/ssh-signing-crlf (2022-01-07) 1 commit
+  (merged to 'next' on 2022-01-19 at 76b86faafb)
+ + gpg-interface: trim CR from ssh-keygen
+
+ The code path that verifies signatures made with ssh were made to
+ work better on a system with CRLF line endings.
+
+ Will cook in 'next'.
+ source: <20220107090735.580225-1-fs@gigacodes.de>
+
+
+* jc/qsort-s-alignment-fix (2022-01-07) 2 commits
+  (merged to 'next' on 2022-01-10 at 329fd6e09a)
+ + stable-qsort: avoid using potentially unaligned access
+ + compat/qsort_s.c: avoid using potentially unaligned access
+
+ Fix a hand-rolled alloca() imitation that may have violated
+ alignment requirement of data being sorted in compatibility
+ implementation of qsort_s() and stable qsort().
+
+ Will cook in 'next'.
+ source: <f40c1b47-9aad-2dcc-ceeb-5dee2b517cd8@web.de>
+ source: <xmqqzgo76xpj.fsf@gitster.g>
+
+
+* ps/avoid-unnecessary-hook-invocation-with-packed-refs (2022-01-17) 6 commits
+ - refs: skip hooks when deleting uncovered packed refs
+ - refs: do not execute reference-transaction hook on packing refs
+ - refs: demonstrate excessive execution of the reference-transaction hook
+ - refs: allow skipping the reference-transaction hook
+ - refs: allow passing flags when beginning transactions
+ - refs: extract packed_refs_delete_refs() to allow control of transaction
+
+ Because a deletion of ref would need to remove it from both the
+ loose ref store and the packed ref store, a delete-ref operation
+ that logically removes one ref may end up invoking ref-transaction
+ hook twice, which has been corrected.
+
+ Introduces new leaks when merged to 'seen'.
+ source: <cover.1642406989.git.ps@pks.im>
+
+
+* rs/apply-symlinks-use-strset (2022-01-07) 1 commit
+  (merged to 'next' on 2022-01-10 at 32497a67d5)
+ + apply: use strsets to track symlinks
+
+ "git apply" (ab)used the util pointer of the string-list to keep
+ track of how each symbolic link needs to be handled, which has been
+ simplified by using strset.
+
+ Will cook in 'next'.
+ source: <8739caad-aa3d-1f0f-b5dd-6174a8e059f6@web.de>
+
+
+* ld/sparse-index-bash-completion (2022-01-10) 3 commits
+ - sparse-checkout: limit tab completion to a single level
+ - sparse-checkout: custom tab completion
+ - sparse-checkout: custom tab completion tests
+
+ The command line completion (in contrib/) learns to complete
+ arguments give to "git sparse-checkout" command.
+ source: <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
+
+
+* bc/clarify-eol-attr (2022-01-12) 2 commits
+ - docs: correct documentation about eol attribute
+ - t0027: add tests for eol without text in .gitattributes
+
+ Doc and test update around the eol attribute.
+ source: <20220111021507.531736-1-sandals@crustytoothpaste.net>
+
+
+* jz/rev-list-exclude-first-parent-only (2022-01-12) 1 commit
+ - git-rev-list: add --exclude-first-parent-only flag
+
+ "git log" and friends learned an option --exclude-first-parent-only
+ to propagate UNINTERESTING bit down only along the first-parent
+ chain, just like --first-parent option shows commits that lack the
+ UNINTERESTING bit only along the first-parent chain.
+ source: <20220111213941.30129-1-jerry@skydio.com>
+
+
+* en/present-despite-skipped (2022-01-14) 6 commits
+ - Accelerate clear_skip_worktree_from_present_files() by caching
+ - Update documentation related to sparsity and the skip-worktree bit
+ - repo_read_index: clear SKIP_WORKTREE bit from files present in worktree
+ - unpack-trees: fix accidental loss of user changes
+ - t1011: add testcase demonstrating accidental loss of user modifications
+ - Merge branch 'vd/sparse-clean-etc' into en/present-despite-skipped
+ (this branch uses vd/sparse-clean-etc.)
+
+ In sparse-checkouts, files mis-marked as missing from the working tree
+ could lead to later problems.  Such files were hard to discover, and
+ harder to correct.  Automatically detecting and correcting the marking
+ of such files has been added to avoid these problems.
+ source: <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
+
+
+* bc/csprng-mktemps (2022-01-17) 2 commits
+ - wrapper: use a CSPRNG to generate random file names
+ - wrapper: add a helper to generate numbers from a CSPRNG
+
+ Pick a better random number generator and use it when we prepare
+ temporary filenames.
+
+ Are we solving the right problem?
+ cf. <220118.86zgntpegy.gmgdl@evledraar.gmail.com>
+ source: <20220117215617.843190-1-sandals@crustytoothpaste.net>
+
+
+* jc/reflog-parse-options (2022-01-10) 2 commits
+  (merged to 'next' on 2022-01-12 at 1659e49c4b)
+ + builtin/reflog.c: use parse-options api for expire, delete subcommands
+ + Merge branch 'ab/reflog-prep' into jc/reflog-parse-options
+
+ Use the parse-options API in "git reflog" command.
+
+ Will cook in 'next'.
+ source: <pull.1175.v5.git.git.1641495981650.gitgitgadget@gmail.com>
+
+
+* vd/sparse-clean-etc (2022-01-13) 9 commits
+ - update-index: reduce scope of index expansion in do_reupdate
+ - update-index: integrate with sparse index
+ - update-index: add tests for sparse-checkout compatibility
+ - checkout-index: integrate with sparse index
+ - checkout-index: add --ignore-skip-worktree-bits option
+ - checkout-index: expand sparse checkout compatibility tests
+ - clean: integrate with sparse index
+ - reset: reorder wildcard pathspec conditions
+ - reset: fix validation in sparse index test
+ (this branch is used by en/present-despite-skipped.)
+
+ "git update-index", "git checkout-index", and "git clean" are
+ taught to work better with the sparse checkout feature.
+ source: <pull.1109.v2.git.1641924306.gitgitgadget@gmail.com>
+
+
+* ms/update-index-racy (2022-01-07) 4 commits
+  (merged to 'next' on 2022-01-14 at 705a33f63b)
+ + update-index: refresh should rewrite index in case of racy timestamps
+ + t7508: add tests capturing racy timestamp handling
+ + t7508: fix bogus mtime verification
+ + test-lib: introduce API for verifying file mtime
+
+ "git update-index --refresh" has been taught to deal better with
+ racy timestamps (just like "git status" already does).
+
+ Will cook in 'next'.
+ source: <pull.1105.v4.git.1641554252.gitgitgadget@gmail.com>
+
+
+* jc/find-header (2022-01-06) 1 commit
+  (merged to 'next' on 2022-01-10 at 8a13b4f0b3)
+ + receive-pack.c: consolidate find header logic
+
+ Code clean-up.
+
+ Will cook in 'next'.
+ source: <pull.1125.v6.git.git.1641499655700.gitgitgadget@gmail.com>
+
+
+* jc/name-rev-stdin (2022-01-10) 2 commits
+  (merged to 'next' on 2022-01-19 at a58e05fabe)
+ + name-rev.c: use strbuf_getline instead of limited size buffer
+ + name-rev: deprecate --stdin in favor of --annotate-stdin
+
+ "git name-rev --stdin" does not behave like usual "--stdin" at
+ all.  Start the process of renaming it to "--annotate-stdin".
+
+ Will cook in 'next'.
+ source: <pull.1171.v7.git.git.1641425372.gitgitgadget@gmail.com>
+
+
+* en/remerge-diff (2022-01-21) 11 commits
+ - diff-merges: avoid history simplifications when diffing merges
+ - merge-ort: mark conflict/warning messages from inner merges as omittable
+ - show, log: include conflict/warning messages in --remerge-diff headers
+ - diff: add ability to insert additional headers for paths
+ - merge-ort: format messages slightly different for use in headers
+ - merge-ort: mark a few more conflict messages as omittable
+ - merge-ort: capture and print ll-merge warnings in our preferred fashion
+ - ll-merge: make callers responsible for showing warnings
+ - log: clean unneeded objects during `log --remerge-diff`
+ - show, log: provide a --remerge-diff capability
+ - Merge branch 'ns/tmp-objdir' into en/remerge-diff
+
+ "git log --remerge-diff" shows the difference from mechanical merge
+ result and the merge result that is actually recorded.
+
+ Will merge to 'next'?
+ source: <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com>
+
+
+* bs/forbid-i18n-of-protocol-token-in-fetch-pack (2021-12-22) 2 commits
+ - fixup! fetch-pack: parameterize message containing 'ready' keyword
+ - fetch-pack: parameterize message containing 'ready' keyword
+
+ L10n support for a few error messages.
+
+ Expecting an ack for fixup.
+ source: <20211222075805.19027-1-bagasdotme@gmail.com>
+
+
+* gc/branch-recurse-submodules (2022-01-10) 6 commits
+ - branch: add --recurse-submodules option for branch creation
+ - builtin/branch: clean up action-picking logic in cmd_branch()
+ - branch: add a dry_run parameter to create_branch()
+ - branch: make create_branch() always create a branch
+ - branch: move --set-upstream-to behavior to dwim_and_setup_tracking()
+ - Merge branch 'js/branch-track-inherit' into gc/branch-recurse-submodules
+
+ "git branch" learned the "--recurse-submodules" option.
+
+ Expecting a reroll.
+ cf. <kl6l7db6kvp2.fsf@chooglen-macbookpro.roam.corp.google.com>
+ source: <20211220233459.45739-1-chooglen@google.com>
+
+
+* hn/reftable-coverity-fixes (2022-01-20) 17 commits
+ - reftable: add print functions to the record types
+ - reftable: make reftable_record a tagged union
+ - reftable: remove outdated file reftable.c
+ - reftable: implement record equality generically
+ - reftable: make reftable-record.h function signatures const correct
+ - reftable: handle null refnames in reftable_ref_record_equal
+ - reftable: drop stray printf in readwrite_test
+ - reftable: order unittests by complexity
+ - reftable: all xxx_free() functions accept NULL arguments
+ - reftable: fix resource warning
+ - reftable: ignore remove() return value in stack_test.c
+ - reftable: check reftable_stack_auto_compact() return value
+ - reftable: fix resource leak blocksource.c
+ - reftable: fix resource leak in block.c error path
+ - reftable: fix OOB stack write in print functions
+ - Merge branch 'hn/create-reflog-simplify' into hn/reftable-coverity-fixes
+ - Merge branch 'hn/reftable' into hn/reftable-coverity-fixes
+
+ Problems identified by Coverity in the reftable code have been
+ corrected.
+
+ Will merge to 'next'.
+ source: <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
+
+
+* tb/midx-bitmap-corruption-fix (2022-01-04) 9 commits
+ - pack-bitmap.c: gracefully fallback after opening pack/MIDX
+ - midx: read `RIDX` chunk when present
+ - t/lib-bitmap.sh: parameterize tests over reverse index source
+ - t5326: move tests to t/lib-bitmap.sh
+ - t5326: extract `test_rev_exists`
+ - t5326: drop unnecessary setup
+ - pack-revindex.c: instrument loading on-disk reverse index
+ - midx.c: make changing the preferred pack safe
+ - t5326: demonstrate bitmap corruption after permutation
+
+ A bug that made multi-pack bitmap and the object order out-of-sync
+ (hence the .midx data gets corrupted) has been fixed.
+
+ Waiting for a hopefully final review.
+ cf. <Ydceeo33Yt4N%2FbrN@nand.local>
+ source: <cover.1641320129.git.me@ttaylorr.com>
+
+
+* pw/fix-some-issues-in-reset-head (2021-12-08) 14 commits
+ - rebase -m: don't fork git checkout
+ - rebase --apply: set ORIG_HEAD correctly
+ - rebase --apply: fix reflog
+ - reset_head(): take struct rebase_head_opts
+ - rebase: cleanup reset_head() calls
+ - reset_head(): make default_reflog_action optional
+ - reset_head(): factor out ref updates
+ - create_autostash(): remove unneeded parameter
+ - reset_head(): remove action parameter
+ - rebase --apply: don't run post-checkout hook if there is an error
+ - rebase: do not remove untracked files on checkout
+ - rebase: pass correct arguments to post-checkout hook
+ - t5403: refactor rebase post-checkout hook tests
+ - rebase: factor out checkout for up to date branch
+
+ Fix "some issues" in a helper function reset_head().
+
+ Expecting a reroll.
+ cf. <xmqqk0gdskkh.fsf@gitster.g>
+ cf. <xmqqwnkdr3xb.fsf@gitster.g>
+ cf. <xmqqpmq5r3j9.fsf@gitster.g>
+ cf. <xmqqczm5r34h.fsf@gitster.g>
+ cf. <CABPp-BEHW4VLG18twcM_8iOco1jZ2iuGT+KN8aS+-sAAnBhTnw@mail.gmail.com>
+ source: <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
+
+
+* ab/cat-file (2022-01-12) 12 commits
+  (merged to 'next' on 2022-01-12 at ee4d43041d)
+ + cat-file: s/_/-/ in typo'd usage_msg_optf() message
+ + cat-file: don't whitespace-pad "(...)" in SYNOPSIS and usage output
+  (merged to 'next' on 2022-01-05 at e145efa605)
+ + cat-file: use GET_OID_ONLY_TO_DIE in --(textconv|filters)
+ + object-name.c: don't have GET_OID_ONLY_TO_DIE imply *_QUIETLY
+ + cat-file: correct and improve usage information
+ + cat-file: fix remaining usage bugs
+ + cat-file: make --batch-all-objects a CMDMODE
+ + cat-file: move "usage" variable to cmd_cat_file()
+ + cat-file docs: fix SYNOPSIS and "-h" output
+ + parse-options API: add a usage_msg_optf()
+ + cat-file tests: test messaging on bad objects/paths
+ + cat-file tests: test bad usage
+
+ Assorted updates to "git cat-file", especially "-h".
+
+ Will cook in 'next'.
+ source: <cover-v6-00.10-00000000000-20211228T132637Z-avarab@gmail.com>
+ source: <cover-0.2-00000000000-20220110T220553Z-avarab@gmail.com>
+
+
+* ab/grep-patterntype (2022-01-18) 10 commits
+ - grep.[ch]: remove GREP_PATTERN_TYPE_UNSPECIFIED
+ - grep: simplify config parsing and option parsing
+ - grep.c: do "if (bool && memchr())" not "if (memchr() && bool)"
+ - grep.h: make "grep_opt.pattern_type_option" use its enum
+ - grep API: call grep_config() after grep_init()
+ - grep.c: don't pass along NULL callback value
+ - built-ins: trust the "prefix" from run_builtin()
+ - grep tests: add missing "grep.patternType" config tests
+ - log tests: check if grep_config() is called by "log"-like cmds
+ - grep.h: remove unused "regex_t regexp" from grep_opt
+
+ Some code clean-up in the "git grep" machinery.
+
+ Looking good, except for the last two steps.
+ source: <cover-v8-00.10-00000000000-20220118T155211Z-avarab@gmail.com>
+
+
+* js/use-builtin-add-i (2021-12-01) 2 commits
+ - add -i: default to the built-in implementation
+ - t2016: require the PERL prereq only when necessary
+
+ "git add -i" was rewritten in C some time ago and has been in
+ testing; the reimplementation is now exposed to general public by
+ default.
+
+ On hold.
+ There are known breakages on macOS.
+ cf. <nycvar.QRO.7.76.6.2112021832060.63@tvgsbejvaqbjf.bet>
+ source: <pull.1087.git.1638281655.gitgitgadget@gmail.com>
+
+
+* jt/conditional-config-on-remote-url (2022-01-18) 2 commits
+  (merged to 'next' on 2022-01-19 at 3c2df266eb)
+ + config: include file if remote URL matches a glob
+ + config: make git_config_include() static
+
+ The conditional inclusion mechanism of configuration files using
+ "[includeIf <condition>]" learns to base its decision on the
+ URL of the remote repository the repository interacts with.
+
+ Will cook in 'next'.
+ source: <cover.1642527965.git.jonathantanmy@google.com>
+
+
+* ab/ambiguous-object-name (2022-01-13) 6 commits
+ - object-name: re-use "struct strbuf" in show_ambiguous_object()
+ - object-name: iterate ambiguous objects before showing header
+ - object-name: show date for ambiguous tag objects
+ - object-name: make ambiguous object output translatable
+ - object-name: explicitly handle OBJ_BAD in show_ambiguous_object()
+ - object-name tests: add tests for ambiguous object blind spots
+
+ Error output given in response to an ambiguous object name has been
+ improved.
+ source: <cover-v7-0.6-00000000000-20220111T130811Z-avarab@gmail.com>
+
+
+* tl/ls-tree-oid-only (2022-01-13) 9 commits
+ - ls-tree.c: introduce "--format" option
+ - cocci: allow padding with `strbuf_addf()`
+ - ls-tree.c: introduce struct "show_tree_data"
+ - ls-tree.c: support --object-only option for "git-ls-tree"
+ - ls-tree: optimize naming and handling of "return" in show_tree()
+ - ls-tree: use "size_t", not "int" for "struct strbuf"'s "len"
+ - ls-tree: use "enum object_type", not {blob,tree,commit}_type
+ - ls-tree: add missing braces to "else" arms
+ - ls-tree: remove commented-out code
+
+ "git ls-tree" learns "--oid-only" option, similar to "--name-only",
+ and more generalized "--format" option.
+ source: <cover.1641978175.git.dyroneteng@gmail.com>
+
+
+* ab/config-based-hooks-2 (2022-01-07) 17 commits
+  (merged to 'next' on 2022-01-19 at 594b6da22c)
+ + run-command: remove old run_hook_{le,ve}() hook API
+ + receive-pack: convert push-to-checkout hook to hook.h
+ + read-cache: convert post-index-change to use hook.h
+ + commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
+ + git-p4: use 'git hook' to run hooks
+ + send-email: use 'git hook run' for 'sendemail-validate'
+ + git hook run: add an --ignore-missing flag
+ + hooks: convert worktree 'post-checkout' hook to hook library
+ + hooks: convert non-worktree 'post-checkout' hook to hook library
+ + merge: convert post-merge to use hook.h
+ + am: convert applypatch-msg to use hook.h
+ + rebase: convert pre-rebase to use hook.h
+ + hook API: add a run_hooks_l() wrapper
+ + am: convert {pre,post}-applypatch to use hook.h
+ + gc: use hook library for pre-auto-gc hook
+ + hook API: add a run_hooks() wrapper
+ + hook: add 'run' subcommand
+
+ More "config-based hooks".
+
+ Will cook in 'next'.
+ source: <cover-v6-00.17-00000000000-20211222T035755Z-avarab@gmail.com>
+
+
+* jh/builtin-fsmonitor-part2 (2021-12-25) 31 commits
+ - fixup! t7527: create test for fsmonitor--daemon
+ - fixup! t/perf/p7519: speed up test on Windows
+ - t7527: test status with untracked-cache and fsmonitor--daemon
+ - fsmonitor: force update index after large responses
+ - fsmonitor--daemon: use a cookie file to sync with file system
+ - fsmonitor--daemon: periodically truncate list of modified files
+ - t/perf/p7519: add fsmonitor--daemon test cases
+ - t/perf/p7519: speed up test on Windows
+ - t/helper/test-chmtime: skip directories on Windows
+ - t/perf: avoid copying builtin fsmonitor files into test repo
+ - t7527: create test for fsmonitor--daemon
+ - t/helper/fsmonitor-client: create IPC client to talk to FSMonitor Daemon
+ - help: include fsmonitor--daemon feature flag in version info
+ - fsmonitor--daemon: implement handle_client callback
+ - compat/fsmonitor/fsm-listen-darwin: implement FSEvent listener on MacOS
+ - compat/fsmonitor/fsm-listen-darwin: add macos header files for FSEvent
+ - compat/fsmonitor/fsm-listen-win32: implement FSMonitor backend on Windows
+ - fsmonitor--daemon: create token-based changed path cache
+ - fsmonitor--daemon: define token-ids
+ - fsmonitor--daemon: add pathname classification
+ - fsmonitor--daemon: implement 'start' command
+ - fsmonitor--daemon: implement 'run' command
+ - compat/fsmonitor/fsm-listen-darwin: stub in backend for Darwin
+ - compat/fsmonitor/fsm-listen-win32: stub in backend for Windows
+ - fsmonitor--daemon: implement 'stop' and 'status' commands
+ - fsmonitor--daemon: add a built-in fsmonitor daemon
+ - fsmonitor: document builtin fsmonitor
+ - fsmonitor: use IPC to query the builtin FSMonitor daemon
+ - fsmonitor: config settings are repository-specific
+ - fsmonitor-ipc: create client routines for git-fsmonitor--daemon
+ - fsmonitor: enhance existing comments
+
+ Built-in fsmonitor (part 2).
+
+ Expecting a reroll.
+ Seems that the discussion stalled.
+ cf. <d9c3ef61-768c-3560-2858-3438c355a742@jeffhostetler.com>
+ source: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
+
+
+* es/superproject-aware-submodules (2021-11-18) 5 commits
+ - submodule: use config to find superproject worktree
+ - submodule: record superproject gitdir during 'update'
+ - submodule: record superproject gitdir during absorbgitdirs
+ - introduce submodule.superprojectGitDir record
+ - t7400-submodule-basic: modernize inspect() helper
+
+ A configuration variable in a submodule points at the location of
+ the superproject it is bound to (RFC).
+
+ Expecting a reroll.
+ cf. <20211117234300.2598132-1-jonathantanmy@google.com>
+ source: <20211117005701.371808-1-emilyshaffer@google.com>
+
+
+* ab/only-single-progress-at-once (2022-01-07) 7 commits
+ - *.c: use isatty(0|2), not isatty(STDIN_FILENO|STDERR_FILENO)
+ - pack-bitmap-write.c: don't return without stop_progress()
+ - progress.c: add temporary variable from progress struct
+ - progress.c tests: test some invalid usage
+ - progress.c tests: make start/stop commands on stdin
+ - progress.c test helper: add missing braces
+ - leak tests: fix a memory leak in "test-progress" helper
+
+ Further tweaks on progress API.
+
+ Getting there.
+ source: <cover-v8-0.7-00000000000-20211228T150728Z-avarab@gmail.com>
