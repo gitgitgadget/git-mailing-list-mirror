@@ -2,107 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E090C433F5
-	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 22:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 269E9C433F5
+	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 22:34:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1382573AbiAXWdw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 17:33:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35644 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355485AbiAXWRR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 17:17:17 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93E28C04A2CD
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 12:45:12 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id t1-20020a6564c1000000b002e7f31cf59fso10508955pgv.14
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 12:45:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=tdSBCdj83xP4iOMnUELbBmRWAjZFBy7Q3ekNtIBGSAo=;
-        b=LQqJ/3iLQgMzC6sGHLIyqbfRIBw+4PNje5Z/hGNxLDplTGGXSoZIQyYscRF1+dFYFU
-         LZdr65GgakPz2GEtkZEoaBZZAPf1ht8OMAuiZRm5NDJlpOM8oPlj0wFnbx8hBCtOMFKr
-         kbDRq8boNCqPJncnbPJJXFYMEkO5mWCazMQAEYfVqFQa8gLbnhlTOkZVk1UGfVcjTBoA
-         fUzM0qjCioBN38Ejf7hay+oer3wbrlbv1NuPYfYbooCGuJnMGJ98s+0uBTu1u92++me5
-         JkrJTBG9b7BvAEvl6tc1r/gVNtjgs8TEoKzDmTSQFjjzIzwZe6ctxXNaHkXRPJ98LVbt
-         d1oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=tdSBCdj83xP4iOMnUELbBmRWAjZFBy7Q3ekNtIBGSAo=;
-        b=gyNQxSVfNR545uIYJH064fTFRtHjyNYVo003MIH/stdC3AZHN0/nKQWc8VjpYXNi34
-         3XlYxA0qrrPOz7IEK0otLGdWUXwWKFsh7rrr8Oc3JC/mHglLU5XeRSQ1glUbNbocJPba
-         RAXO6CGKhQ9Hu2yRFlW5bfkkkcIDRcN+TVasmhD+CbQoGjhQYHmV0yPNkC3vQem51Vji
-         wC/klBQETkzIjhKxjDS0kzUntYhlcuWZBoCbIUpImgzd9ASy/0ijuha2GE2FnRzb1T8W
-         ESrUU5iUnf9bb+xLFqck0crCCGiXeklvPZZLrEZZVnDcCvczvlKzN2JdQ7pvijPHY0XY
-         DPRg==
-X-Gm-Message-State: AOAM532UBXspRLvaVO4iwscCUE0uxTTzKUSC96spEIEnJKgDqpIjozbT
-        QX4ImLflkKiLgGIX6wMatXwYNrTvLmB/yVOodwPnrU4IOteP8oBOGKP0ohULgL9g9OA+nR2NxSm
-        wf0auuTW/0BRYSDVt0s3Iol3sXeIoDifwrjhpXzg8Ln1m3mpCUSQP5gn6H5eueoo=
-X-Google-Smtp-Source: ABdhPJztf/8vqjGazrSJIoaciNJr8Pc5X76bMjgV6mTRfQMY2cwaAjiW/ioUtWL63NSHRNd0OMfNrlFBt6XH+w==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:9001:b0:14a:a1b2:1e6d with SMTP
- id a1-20020a170902900100b0014aa1b21e6dmr15819754plp.124.1643057111998; Mon,
- 24 Jan 2022 12:45:11 -0800 (PST)
-Date:   Mon, 24 Jan 2022 12:44:42 -0800
-In-Reply-To: <20220124204442.39353-1-chooglen@google.com>
-Message-Id: <20220124204442.39353-7-chooglen@google.com>
-Mime-Version: 1.0
-References: <20211220233459.45739-1-chooglen@google.com> <20220124204442.39353-1-chooglen@google.com>
-X-Mailer: git-send-email 2.35.0.rc0.227.g00780c9af4-goog
-Subject: [PATCH v7 6/6] branch.c: use 'goto cleanup' in setup_tracking() to
- fix memory leaks
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, Philippe Blain <levraiphilippeblain@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1588797AbiAXWd6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 17:33:58 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:16093 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1586019AbiAXWZd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 17:25:33 -0500
+Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 20OMItIf071077
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 24 Jan 2022 17:18:55 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Michael Herrmann'" <michael@herrmann.io>
+Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        <git@vger.kernel.org>
+References: <CABrKpmDseZkPCpRb8KmBJaxDp24sySJay5ffZrxqgSMGKyj5qQ@mail.gmail.com>        <YeiOoAcM7TMK2pgz@camp.crustytoothpaste.net>        <xmqqilufl5cv.fsf@gitster.g>        <CABrKpmCt3zKONLp5ZjV1PxLyfM-koc=tKopKUUpx4nF2n_eo_w@mail.gmail.com>        <YengSfSDzVzvrJ6f@camp.crustytoothpaste.net>        <CABrKpmASHgBwPYgKnO2ZZRVVxMti=NFaxw6cBV=pst0xpVZYGA@mail.gmail.com>        <CABrKpmBFrrWgBh7QAOX35zQr_e+LC1E6Jn5FKb_XP-7bew9Hkg@mail.gmail.com>        <xmqqk0ep57ou.fsf@gitster.g>        <CABrKpmB7UEGzLCiNHQtY5-Dt16jLkpcpBEx3o8y9OBGZ418keA@mail.gmail.com> <xmqqfspc3k8k.fsf@gitster.g>
+In-Reply-To: <xmqqfspc3k8k.fsf@gitster.g>
+Subject: RE: A puzzle: reset --hard and hard links
+Date:   Mon, 24 Jan 2022 17:18:48 -0500
+Organization: Nexbridge Inc.
+Message-ID: <000e01d81170$5f62f600$1e28e200$@nexbridge.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIdSZEWasf1qw9XDX0IOkXUDFK/0AFI6l++AW4YK6QChYVSowKGdvMkASjeS7cCVC6c4gKVeznYAcmdvf0CQ0BaO6tZNzpA
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- branch.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+On January 24, 2022 4:19 PM, Junio wrote:
+> Michael Herrmann <michael@herrmann.io> writes:
+> 
+> >> It is merely because you helped Git to realize
+> >
+> > I don't want to "help Git realize". I'm sorry but in my opinion `git
+> > status` should not have any effects on other commands. I don't
+> > understand how you can argue that calling `git status` is a valid fix
+> > to "help Git".
+> >
+> >> With another step 1.5 "append a line to the file in question", git
+> >> should severe the link,
+> >
+> > I don't want to sever the hard link. I want to avoid that it gets
+severed.
+> 
+> Sorry, if that is the case, what you want is not a version control, and it
+is certainly
+> not Git.  You want something else.
+> 
+> Think about this scenario.
+> 
+>     $ rm -fr one && git init one && cd one
+>     $ echo 0 >a; echo 0 >b; git add a b; git commit -m zero
+> 
+> We have two files, a and b, each of which has "0" in it.
+> 
+>     $ echo 1 >b; git add b; git commit -m one
+> 
+> Now they have "0" and "1" respectively.
+> 
+>     $ echo 2 >a; echo 2 >b; git commit -a -m two
+>     $ ln -f a b
+>     $ git diff
+>     $ git diff HEAD
+> 
+> Now they have "2".  Since they have identical contents, "diff" would
+report no
+> difference relative to the index or HEAD, even after we manually break the
+> working tree by making one of them a hardlink to the other.
+> 
+> Now, what should this command do?
+> 
+>     $ git reset --hard HEAD^
+> 
+> What the user is asking is (1) to move the branch to point at the previous
+commit,
+> which had 0 and 1 in a and b respectively, and (2) to make sure that the
+index and
+> the working tree contents match what is recorded in the commit.
+> 
+> So for Git to be a usefully correct version control system, it is
+essential to make
+> sure what it writes out would not affect any path other than the one it is
+writing
+> out.  When it writes "0" to "a", it MUST break the hardlink from elsewhere
+that
+> points at "a" before it does so.  Otherwise, the "0" it writes into "a"
+will also be
+> seen elsewhere, which is not what the updated HEAD (i.e. commit "one")
+wants to
+> see.  The same for "b" when it is updated from "2" to "1"
+> when this happens.
 
-diff --git a/branch.c b/branch.c
-index be33fe09fa..1e9a585633 100644
---- a/branch.c
-+++ b/branch.c
-@@ -239,7 +239,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 	if (track != BRANCH_TRACK_INHERIT)
- 		for_each_remote(find_tracked_branch, &tracking);
- 	else if (inherit_tracking(&tracking, orig_ref))
--		return;
-+		goto cleanup;
- 
- 	if (!tracking.matches)
- 		switch (track) {
-@@ -249,7 +249,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 		case BRANCH_TRACK_INHERIT:
- 			break;
- 		default:
--			return;
-+			goto cleanup;
- 		}
- 
- 	if (tracking.matches > 1)
-@@ -262,6 +262,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
- 				tracking.remote, tracking.srcs) < 0)
- 		exit(-1);
- 
-+cleanup:
- 	string_list_clear(tracking.srcs, 0);
- }
- 
--- 
-2.33.GIT
+I think there are more use cases here than are apparent but also some
+serious question about why one would do this.
+
+In a Linux/POSIX environment, one can do a hard link to a file inside a git
+repo, change the file using something like vim, and have git recognize that
+there is a change in git status. However, this only works on some platforms.
+Hard links do not have a 100% consistent semantic from one OS to another,
+one file system to another, or even between editors and scripts. As Junio
+pointed out, using a > operator on a hard link is likely going to replace
+the file instead of modifying the existing one. >> might correctly append
+and have git recognize it in a git status... on some platforms.
+
+Making git consistent in this situation across every possible situation is
+not only impractical, it is likely impossible and cutting down what git is
+allowed to do so that only those common things are implemented might gut git
+badly.
+
+If you are looking for doing external edits while keeping git notified, I
+would suggest wrapping the file modification in a script that is aware of
+hard links so that you get the results you want.
+
+Alternatively, a soft link made externally to a physical git file location
+might do what you want - assuming your platform supports soft links. Your
+modification script/program/etc. would use the file directly in git instead
+of the hard link inode, so git is happy. A git status would see the change
+because the file really only exists in git. Other git operations, like
+restore, switch, etc., would cause the physical file to be modified
+correctly, and anything using the referencing soft link would see the
+change. Note: I am not suggest soft-linking from inside git to outside.
+
+--Randall
 
