@@ -2,56 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76634C433EF
-	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 17:18:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43A93C433EF
+	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 17:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244267AbiAXRSq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 12:18:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49138 "EHLO
+        id S244389AbiAXRa3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 12:30:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231765AbiAXRSp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 12:18:45 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FDB9C061744
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 09:18:45 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id m4so23348391ejb.9
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 09:18:45 -0800 (PST)
+        with ESMTP id S235612AbiAXRa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 12:30:28 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E5BEC06173B
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 09:30:28 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id c24so55681445edy.4
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 09:30:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=4zyDaDztf/MaT8jze05rJQTzry2y2d+ufgPQHBWAP+Y=;
-        b=bzmaVKkfN/d7eoiWfbTritnnYP/5LQLwkD2rgrpBdogJOZ1XyVzrlkv1wnZAMdutQx
-         gl/NkAa8ohV96skhelxajMPwSqyW9Ugaz8v+hoCWhnFVMe1yHFIZaqGDVxu+pdYHCCm0
-         5UDD8HEa4+G2pxTcuU5M+ul386hvOojhC3z1IchAsKqZ7AflWr2omacrgpV9i+WAEUhA
-         CH0OoDjFCCUq3jK38TRr4gHFfFIT0WkuZjACiHcIIGJ5o84h+DZJOvgNEIidWP2xfsG7
-         nI9fe26SIb7kVC3IN6DzYxMYNOszGwnkjpeir0wxOS/0z8nP9CsFJuO2L5qzDecJah25
-         cfgA==
+        bh=yHpSDthfhKEo5mlfg+K0EfIVt4RD6kmDnsUnHGgseP4=;
+        b=YKNScUtAbG0mK3BRb3LaqmRxAVnge2ApVGdxAoZAWN9nP5ibofsCnmFYay9AxNBI5i
+         Flqa9Mbl8LMIS9SVzxJKHmBUuy8it9MWL9oNKs/0fB+b/XizxjjZM0B5/9WQJpfmRQ5/
+         +NB4JAeDUhgCbQS51+xnqRYc/AbBezVE5TsNr+MYlU2wIDwB/Z9p6f18Hk9Ti8tyx0ej
+         Sy6ERwTKv7lSUvdQPxJg+/Jn5seQE292Bdkygl3wrWHIJHigjTSm7b1nWFwsfmueoqyp
+         bjXjKX7ymXSt8VphyxlDPTqpvOJEUIoNCLsq/exfQQvEe3sE/gMMBs3Xy9qi7okIhdgf
+         olxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4zyDaDztf/MaT8jze05rJQTzry2y2d+ufgPQHBWAP+Y=;
-        b=S9pk5qoA5VL587Qysy1luAl/Aq/LMvqbG2atVOWDsAuC2KoQxcQGpA7Dn6CYVunnCN
-         idxOP8824cTkxa90RZQBzOW4HmG+du2zGlioQLc0rzPh8m6zRtcPCxLnzpdOYLFFlpr2
-         pEhFXxAoGNqixIZIPy+pPdlbSdli3V8hLTDDz1JNK/tCmcqIqrOIlH4KjE55ufn+V7g7
-         rN5Wsgi7h9OBPcBTpDwYI5d2gKKl0Jd7x8ugx8zB7563oPUWbJsJhP/0Dh9AetPa+fzi
-         fKid+Tw/arwji7/DsqLFL6YNtwIiNBm5iN0M1Id+dmAC4+5TG0+xlhAbJZZ9/FdPMtoY
-         ByQQ==
-X-Gm-Message-State: AOAM532/oAFsV6NYZcBS1rpyB3KG83Km8oGvAJnRjG8sKoNXx+9dP1Wr
-        RjIj04FHjkJY7cs/xirtnO014r9XPJs2y/+KCQw=
-X-Google-Smtp-Source: ABdhPJw9lJv7+dcsMQ2+UVQBNv5bDBm3nvVqfweE/51SOXUinrjBMVmGh6YPU8GPC+vO48ob1TwGyPJ6cx4qziXsTOA=
-X-Received: by 2002:a17:907:2da3:: with SMTP id gt35mr13269633ejc.493.1643044723714;
- Mon, 24 Jan 2022 09:18:43 -0800 (PST)
+        bh=yHpSDthfhKEo5mlfg+K0EfIVt4RD6kmDnsUnHGgseP4=;
+        b=qFcw/4PAR0koIOwWVajOr2EDEC792uLzL/Og7uS57VYFzPMyFd6j9Flu1RtccMZMLc
+         eN7ghhkU2+PtIjMW2bUHu/lOflHXZuGcPEImdsLvcew74P7NAdLlC6CwJIqL9NrTnwCk
+         NvMOp/+zUPqH4nxru2I5mMthPdNLtNS/T8gmgovHLOpIS70r7q3gB6le1AAt6IWOFl3M
+         yp5qC50DJUDdH+WNcQACKdikIIPy4gAz4wJFFmoQIW7T0usVjWRj5CSzcZWU3iMfouFE
+         C+Ef56IxsKbbQzXEuQabWfKXqEnZWfbgyLmv8kbC7IU9wTPcvxR1DwXeNoyQ6+ah1Dqq
+         KTCw==
+X-Gm-Message-State: AOAM533/zHLjAi2Mgv1g0lcIbyg/bBuvu1YSQe39L0sdfhSm4cGZdhjk
+        xKSc3g0oJR6Y0nFVgYAE57usruqJdwIXVbPc+QU=
+X-Google-Smtp-Source: ABdhPJxgMx5DzLjgpAmMEYwZDLMg1zwNndQe3+XT5qNbpvtMrbzAU8ELGxow7FIhNRSAk5fvp7nbpbkO4IQ8hWLUEaw=
+X-Received: by 2002:a05:6402:5216:: with SMTP id s22mr1017238edd.359.1643045426760;
+ Mon, 24 Jan 2022 09:30:26 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
- <fcbb087fa8865ac05e20473d822cd9795590ee38.1642888562.git.gitgitgadget@gmail.com>
- <220124.868rv5ih93.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220124.868rv5ih93.gmgdl@evledraar.gmail.com>
+ <050add3e4986c457cd467b36eb4fd1f215b7406d.1642888562.git.gitgitgadget@gmail.com>
+ <220124.864k5tigto.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220124.864k5tigto.gmgdl@evledraar.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 24 Jan 2022 09:18:32 -0800
-Message-ID: <CABPp-BF8oXCNpbXi1xb3Veh_Vi0uDXVX9VNOWMVz_zwjG=earQ@mail.gmail.com>
-Subject: Re: [PATCH 09/12] merge-tree: provide a list of which files have conflicts
+Date:   Mon, 24 Jan 2022 09:30:15 -0800
+Message-ID: <CABPp-BGnOes7J_piDyBUeuLVm274w4-9G3k0vR-0it3z7TPn_w@mail.gmail.com>
+Subject: Re: [PATCH 10/12] merge-tree: provide easy access to `ls-files -u`
+ style info
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -68,73 +69,145 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 24, 2022 at 2:02 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Mon, Jan 24, 2022 at 2:11 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
 >
 > On Sat, Jan 22 2022, Elijah Newren via GitGitGadget wrote:
 >
 > > From: Elijah Newren <newren@gmail.com>
 > >
-> > Callers of `git merge-tree --write-tree` will often want to know which
-> > files had conflicts.  While they could potentially attempt to parse the
-> > CONFLICT notices printed, those messages are not meant to be machine
-> > readable.  Provide a simpler mechanism of just printing the files (in
-> > the same format as `git ls-files` with quoting, but restricted to
+> > Much like `git merge` updates the index with information of the form
+> >     (mode, oid, stage, name)
+> > provide this output for conflicted files for merge-tree as well.
+> > Provide an --exclude-oids-and-modes option for users to exclude the
+> > mode, oid, and stage and only get the list of conflicted filenames.
 > > [...]
+> > +--exclude-oids-and-modes::
+> > +     Instead of writing a list of (mode, oid, stage, path) tuples
+> > +     to output for conflicted files, just provide a list of
+> > +     filenames with conflicts.
+> > +
+> > [...]
+> > -This is a sequence of lines containing a filename on each line, quoted
+> > -as explained for the configuration variable `core.quotePath` (see
+> > -linkgit:git-config[1]).
+> > +This is a sequence of lines with the format
+> > +
+> > +     <mode> <object> <stage> <filename>
+> > +
+> > +The filename will be quoted as explained for the configuration
+> > +variable `core.quotePath` (see linkgit:git-config[1]).  However, if
+> > +the `--exclude-oids-and-modes` option is passed, the mode, object, and
+> > +stage will be omitted.
+> >
+> >  Informational messages
+> >  ~~~~~~~~~~~~~~~~~~~~~~
+> >
+> >  This always starts with a blank line to separate it from the previous
+> > -section, and then has free-form messages about the merge, such as:
+> > +sections, and then has free-form messages about the merge, such as:
+> >
+> >    * "Auto-merging <file>"
+> >    * "CONFLICT (rename/delete): <oldfile> renamed...but deleted in..."
+> > @@ -113,6 +123,14 @@ plumbing commands since the possibility of merge c=
+onflicts give it a
+> >  much higher chance of the command not succeeding (and NEWTREE containi=
+ng
+> >  a bunch of stuff other than just a toplevel tree).
+> >
+> > +git-merge-tree was written to provide users with the same information
+> > +that they'd have access to if using `git merge`:
+> > +  * what would be written to the working tree (the <OID of toplevel tr=
+ee>)
+> > +  * the higher order stages that would be written to the index (the
+> > +    <Conflicted file info>)
+> > +  * any messages that would have been printed to stdout (the <Informat=
+ional
+> > +    messages>)
+> > +
+> >  GIT
+> >  ---
+> >  Part of the linkgit:git[1] suite
 > > diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> > index 560640ad911..d8eeeb3f306 100644
+> > index d8eeeb3f306..7aa7f9fd54a 100644
 > > --- a/builtin/merge-tree.c
 > > +++ b/builtin/merge-tree.c
-> > @@ -11,6 +11,9 @@
-> >  #include "blob.h"
-> >  #include "exec-cmd.h"
-> >  #include "merge-blobs.h"
-> > +#include "quote.h"
-> > +
-> > +static int line_termination =3D '\n';
->
-> But unlike ls-files we don't do anything with line_termination as a !=3D
-> '\n', maybe in a later commit?
->
-> >  struct merge_list {
-> >       struct merge_list *next;
-> > @@ -395,7 +398,8 @@ struct merge_tree_options {
+> > @@ -395,6 +395,7 @@ struct merge_tree_options {
+> >       int real;
+> >       int trivial;
+> >       int show_messages;
+> > +     int exclude_oids_and_modes;
 > >  };
 > >
 > >  static int real_merge(struct merge_tree_options *o,
-> > -                   const char *branch1, const char *branch2)
-> > +                   const char *branch1, const char *branch2,
-> > +                   const char *prefix)
-> >  {
-> >       struct commit *parent1, *parent2;
-> >       struct commit_list *common;
-> > @@ -449,6 +453,22 @@ static int real_merge(struct merge_tree_options *o=
+> > @@ -461,7 +462,11 @@ static int real_merge(struct merge_tree_options *o=
 ,
-> >               o->show_messages =3D !result.clean;
-> >
-> >       printf("%s\n", oid_to_hex(&result.tree->object.oid));
-> > +     if (!result.clean) {
-> > +             struct string_list conflicted_files =3D STRING_LIST_INIT_=
-NODUP;
-> > +             const char *last =3D NULL;
-> > +             int i;
-> > +
-> > +             merge_get_conflicted_files(&result, &conflicted_files);
-> > +             for (i =3D 0; i < conflicted_files.nr; i++) {
-> > +                     const char *name =3D conflicted_files.items[i].st=
+> >               merge_get_conflicted_files(&result, &conflicted_files);
+> >               for (i =3D 0; i < conflicted_files.nr; i++) {
+> >                       const char *name =3D conflicted_files.items[i].st=
 ring;
-> > +                     if (last && !strcmp(last, name))
-> > +                             continue;
-> > +                     write_name_quoted_relative(
-> > +                             name, prefix, stdout, line_termination);
+> > -                     if (last && !strcmp(last, name))
+> > +                     struct stage_info *c =3D conflicted_files.items[i=
+].util;
+> > +                     if (!o->exclude_oids_and_modes)
+> > +                             printf("%06o %s %d\t",
+> > +                                    c->mode, oid_to_hex(&c->oid), c->s=
+tage);
+> > +                     else if (last && !strcmp(last, name))
+> >                               continue;
+> >                       write_name_quoted_relative(
+> >                               name, prefix, stdout, line_termination);
+> > @@ -495,6 +500,10 @@ int cmd_merge_tree(int argc, const char **argv, co=
+nst char *prefix)
+> >                        N_("do a trivial merge only")),
+> >               OPT_BOOL(0, "messages", &o.show_messages,
+> >                        N_("also show informational/conflict messages"))=
+,
+> > +             OPT_BOOL_F(0, "exclude-oids-and-modes",
+> > +                        &o.exclude_oids_and_modes,
+> > +                        N_("list conflicted files without oids and mod=
+es"),
+> > +                        PARSE_OPT_NONEG),
+> >               OPT_END()
+> >       };
 >
-> But here it's never \0 or whatever.
+> Perhaps this really is the last formatting information anyone will want,
+> but with a default of "<mode> <object> <stage> <filename>" being made
+> "<stage> <filename>" with --exclude-oids-and-modes perhaps we'll want
+> --exclude-all-except-filename etc. later.
 
-Correct, I didn't add any option for changing it.  But why hardcode it
-to "\n"?  Leaving it this way makes it easier to change later if folks
-say they want NUL-terminated output.  Since the series is RFC and the
-output already has changed drastically and appears to be the primary
-discussion and disagreement point, I wanted to provide what seemed
-like a reasonable suggestion and maintain flexiibility to address
-feedback (though who knows -- I might need to just completely redo the
-output again in ways much bigger than adding a -z option).
+Um, that's actually what this option does.  Maybe my chosen name was bad.
+
+--name-only like ls-files uses would have been nice, but it's
+misleading since it only affects the <conflict info> section of the
+output, not the printed tree or the informational messages.
+
+> It seems a lot simpler for new code to just support a --conflict-format
+> option, lifting some code from the in-flight
+> https://lore.kernel.org/git/db058bf670c5668fc5b95baf83667cc282cb739b.1641=
+978175.git.dyroneteng@gmail.com/
+>
+> I.e. that inner loop becomes a slightly more verbose strbuf_expand(),
+> but it's all easy boilerplate code.
+>
+> Then we just feed "%(objectmode) %(objectname) %(objectstage)
+> %(filename)" into it by default, and allow the user to customize it.
+
+"simpler"?  More flexible certainly.
+
+I'm not sure that the flexibility is warranted, in this case, though.
+In ls-trees, where users don't need to process the output and can feed
+it directly to something else, that flexibility makes sense.  But here
+the output *needs* special post-processing anyway since it's mixing
+three different types of output by default: top-level tree, conflicted
+file info, and informational conflict messages.  (In my previous round
+I tried to split these kinds of output to separate locations so they
+could be parsed separately, but both Dscho and Christian didn't like
+that).
+
+So, the default I figured should be to just provide all the
+information and just let others process it as wanted.  But Taylor had
+said earlier that if there were conflicts the only information he
+wanted was a list of conflicted files (no stages, oids, or modes), so
+I figured an option making that a bit easier to extract was
+worthwhile.  And that's what this patch is about.
