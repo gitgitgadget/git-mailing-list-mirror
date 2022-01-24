@@ -2,71 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63D83C433EF
-	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 13:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF273C433F5
+	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 14:14:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233206AbiAXNsr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 08:48:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55358 "EHLO
+        id S232833AbiAXOOv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 09:14:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbiAXNsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 08:48:46 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D9FC06173B
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 05:48:45 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id z19so12715266lfq.13
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 05:48:45 -0800 (PST)
+        with ESMTP id S232281AbiAXOOt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 09:14:49 -0500
+Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E4CC06173B
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 06:14:49 -0800 (PST)
+Received: by mail-ua1-x92b.google.com with SMTP id b16so31217422uaq.4
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 06:14:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=herrmann.io; s=google;
+        d=google.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xC7062mb1ZQWhSTe56vzu6LeTjP0awH7KSaaGUWW2vA=;
-        b=MHj4KVeF+L0nU1/quDWfHkYPrbJ3hL7NpcU3p/r09c+Mx79mw8xTiul88tTF/0OIRQ
-         O2IV++gAP+I8VMyIzqpOM7Am5HjUNZL2mmCpu+Ed5mgaGX0iDPJ8+WNR82O0oiNx3iHj
-         42o6LF/7EZ032CJWtP9LJ0VrsMEqUbbcQNUcY=
+         :cc:content-transfer-encoding;
+        bh=cwlzWlm2NaSkW/g7wmSjA8+wjUmDEB2HJnR/q8iSuc8=;
+        b=ZJSaXFsYCDBHeQfLlPROzMYajnHYO9nUSqzbOQ1rGHFjmCdMAxOO5NXsCQv3t+pIX3
+         r7v6D/3XefvL4O2G0ZUsWjUSopDSn6r+p366Y8Jp66aCfh40Qfqy8j0h9vNolFecZjgv
+         lTlS3urdVRMlTDQeMlfOeDlGCFD+32Q2xzk7/jg2yjdB1USZHPj3vyDuJiAjVq8yqtpH
+         +cKU/cdLkO1ronYNkv/yCrkq86wmxTPSFnrncZkI/Utm4dD2tX/Vqef9QJ46yMwiG3Aj
+         6j1zIwdI+oWlUidHijNpT54p1PPfE7SR4a4fzM45pnPcrNCV+6XGmS/1pLi1/MsNo2vg
+         yKnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xC7062mb1ZQWhSTe56vzu6LeTjP0awH7KSaaGUWW2vA=;
-        b=4u5+z2NmvDP1QZQDGMRGJ42BqaHT/yve//T0BEkrTQYzba6HfMx315wbtF2gTEbU9T
-         P9NKi2f72cEQYXaKI35m+z+Mo0L29Y5U1FclNBLrAGE+X0KnXtdURNoZSpecqsZFxLxC
-         wL+ZLYEpztavmqUDri+XLycSdAWcsbEKgzPd3w3wE8QzXd08XAk2WlwcF+oQ3yOhlKom
-         DYH4z8UmVbABlzTy138ZcHz7wr04Pdc9raArqEcxe9g6PlDm9rXKus4rDnFJjKed/V7M
-         QGi60glxpQ7LxBsg1gBf5Ga8YjHsnDQYR46gy47wlSjwnccfTLB6ZkAr+KMV93xS06lh
-         /i0w==
-X-Gm-Message-State: AOAM533I0yovLC8Hk9Li8f0ypDHjk/wnfgZMWa2Mmw+ELnexoxLB0IKu
-        8CkLTFn42pkda6HyA2B/fGhcd3ZqHvMHf5+g0q5gJGySySsLYBYu
-X-Google-Smtp-Source: ABdhPJyy5Bi1M0ZKFoRuIC7ea6hmdivN3OQVhPQIYCDHcb7ZeW62HPW/gnTz8cSd1Dn/dPbiMk+yxTikcCATxCrbn/8=
-X-Received: by 2002:a05:6512:ba0:: with SMTP id b32mr3806849lfv.122.1643032123999;
- Mon, 24 Jan 2022 05:48:43 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cwlzWlm2NaSkW/g7wmSjA8+wjUmDEB2HJnR/q8iSuc8=;
+        b=3K8a6zDqqrn+wCiava/u9oF5wDR0WQRbU2iMWNi8Y1INC9SppdQJXk2UBda9fWQkA/
+         BDfu0Jjb4PFjh73vcu2b/19sDN1WU39Ss1Zu8hUkR9KifwLeZxkf88tCcM2+JgYJi1O7
+         Hk3jQbBrmvftMB78FOkVgxXSwQr1v0jR29uuhafZDH3xJJ1UaHlmJC9vmHttkLn7qRva
+         YEmeLFUb3YzHi/kJYVJSaEYva6KApG6bKnSxOGHBEbkKv7LzdHHP4T9L+ycxaEcyQXeS
+         KtSpl70oTA+dfW+jnqN0adwTkB7zmlz2KrUEwDYfDr+fdeTjcug8tqnTWumamCbJqJtd
+         pPkQ==
+X-Gm-Message-State: AOAM531IBDF16IobcRoP3beDNlXpe/HRHSZ2CUtiTsM4+qWnlFY8J+UF
+        uQnl1zLpMdZi8ADkdbpzAiawjUNWjS4dxrOp9G0zJA==
+X-Google-Smtp-Source: ABdhPJzX6y7qyS6kHAcnzMG48STSxmtfoZFnZj2KF6mQUvueeqJWlWulr9/bUkykf4VGgG3z5/X01+gxNxYcHSBffdg=
+X-Received: by 2002:a67:d98f:: with SMTP id u15mr2486408vsj.16.1643033688110;
+ Mon, 24 Jan 2022 06:14:48 -0800 (PST)
 MIME-Version: 1.0
-References: <CABrKpmDseZkPCpRb8KmBJaxDp24sySJay5ffZrxqgSMGKyj5qQ@mail.gmail.com>
- <YeiOoAcM7TMK2pgz@camp.crustytoothpaste.net> <xmqqilufl5cv.fsf@gitster.g>
- <CABrKpmCt3zKONLp5ZjV1PxLyfM-koc=tKopKUUpx4nF2n_eo_w@mail.gmail.com>
- <YengSfSDzVzvrJ6f@camp.crustytoothpaste.net> <CABrKpmASHgBwPYgKnO2ZZRVVxMti=NFaxw6cBV=pst0xpVZYGA@mail.gmail.com>
-In-Reply-To: <CABrKpmASHgBwPYgKnO2ZZRVVxMti=NFaxw6cBV=pst0xpVZYGA@mail.gmail.com>
-From:   Michael Herrmann <michael@herrmann.io>
-Date:   Mon, 24 Jan 2022 10:48:27 -0300
-Message-ID: <CABrKpmBFrrWgBh7QAOX35zQr_e+LC1E6Jn5FKb_XP-7bew9Hkg@mail.gmail.com>
-Subject: Re: A puzzle: reset --hard and hard links
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <pull.1152.v5.git.git.1640199396.gitgitgadget@gmail.com>
+ <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com> <9218bd59b2570ab08f3a2e5c0b590656d00482c4.1642691534.git.gitgitgadget@gmail.com>
+ <220121.86a6fpl3hr.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220121.86a6fpl3hr.gmgdl@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 24 Jan 2022 15:14:37 +0100
+Message-ID: <CAFQ2z_Pe6PsV4nMRqQRrFTnOQ2+Lb1o-pCn2oBiVAkec2RtkPw@mail.gmail.com>
+Subject: Re: [PATCH v6 01/15] reftable: fix OOB stack write in print functions
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Neeraj Singh <nksingh85@gmail.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I now believe this is a bug in Git because calling `git status` fixes
-the problem.
+On Fri, Jan 21, 2022 at 12:42 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> > -     char hex[2 * GIT_SHA256_RAWSZ + 1] =3D { 0 }; /* BUG */
+> > +     char hex[GIT_MAX_HEXSZ + 1] =3D { 0 }; /* BUG */
+>
+> Is whatever "BUG" this is still current after this change?
 
-1) Create a hard link to a file in a Git repo.
-2) Call `git status`.
-3) Call `git reset --hard`.
+I can't remember what this was about. Dropping.
 
-Without 2), Git severs the hard link. With 2), the hard link is preserved.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-Reproduction steps ("Test script") and further info:
-https://github.com/brave/brave-browser/issues/20316#issuecomment-1020054082
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-This occurs for me on Debian 10 & 11, as well as Git 2.30.2 and 2.20.1.
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
