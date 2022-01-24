@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BB5DC433EF
-	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 17:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76634C433EF
+	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 17:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244087AbiAXRMc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 12:12:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47520 "EHLO
+        id S244267AbiAXRSq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 12:18:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241310AbiAXRM2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 12:12:28 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3064DC06173D
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 09:12:28 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id n10so42177778edv.2
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 09:12:28 -0800 (PST)
+        with ESMTP id S231765AbiAXRSp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 12:18:45 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FDB9C061744
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 09:18:45 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id m4so23348391ejb.9
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 09:18:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=rEOxaEO/6XAc6kBNInPSRoUYKR88qoQk5oY7Wxv8vp8=;
-        b=YFi5Djtmcqydxnu3id9HHkbvuoUw7NPNkxrHOGS32IP+ES6BjmcFDrBhGdtjQ/nF0K
-         xuCMi7urVJETor3kfRFbYtVB1895+gRE9Xg9j5p0DZvDBecQwdu5Y1wNWIfErdNGB9Bm
-         dyFPa69aunWFVY+f/ubAy2zriDpgn97kUkYxCuCDiWx9mc0Q5DIp2dWC4FvVGwTcBg1i
-         fJwsqS3uRo4KIcZVlOKsFf7c86BXKMZI1YyuEvKVB+Ef5bCj1c8MjdKamG9w3bsXXhjO
-         nHoePxIZ0iVq28eqIkJdU5T6H8bErVCQhhJRaZtJ/09wgJhK42oEYAcSUHBIot8TKq2s
-         4CBQ==
+        bh=4zyDaDztf/MaT8jze05rJQTzry2y2d+ufgPQHBWAP+Y=;
+        b=bzmaVKkfN/d7eoiWfbTritnnYP/5LQLwkD2rgrpBdogJOZ1XyVzrlkv1wnZAMdutQx
+         gl/NkAa8ohV96skhelxajMPwSqyW9Ugaz8v+hoCWhnFVMe1yHFIZaqGDVxu+pdYHCCm0
+         5UDD8HEa4+G2pxTcuU5M+ul386hvOojhC3z1IchAsKqZ7AflWr2omacrgpV9i+WAEUhA
+         CH0OoDjFCCUq3jK38TRr4gHFfFIT0WkuZjACiHcIIGJ5o84h+DZJOvgNEIidWP2xfsG7
+         nI9fe26SIb7kVC3IN6DzYxMYNOszGwnkjpeir0wxOS/0z8nP9CsFJuO2L5qzDecJah25
+         cfgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rEOxaEO/6XAc6kBNInPSRoUYKR88qoQk5oY7Wxv8vp8=;
-        b=NUES0wB76c+xASGNuasz72qlQNp/DIVQkJaGceHBdi43eXjPF+fnsaJq0cPwBMOdz8
-         JtK1ohR7ejBqL7WgtsuQeJ65t5iCaLtx/e3rf8qh3H3sY3PxThBYemcfY+63+zm1f1US
-         sVo1/OgbRHHvQoXPxAOtH0P2agQQ1rbnywkDfT2t8Pt2wcpTLlHf+bjr+CYGjsOP5EMl
-         YRGBQBVzL1z0MgMXFhqCTa1NTkuvml8C62x0AhsEnXaxMU8oQMncbOjGcNCsVr/sYU92
-         TjwqILp71YyvmRHBRkN/Jl/sAP+VaLqXLzVAyddEYyvzJUyGjOZA2BlL3ZbijNloM0vs
-         7AlA==
-X-Gm-Message-State: AOAM532OWEGWQHTwKrjXGH/PD0YHU6ICVzEWTG2EBWeJ5PSq9XDGZK1n
-        GdclKZvFbpWuqq8GvwOsoHIbf3Bc3xxFggZiHi0=
-X-Google-Smtp-Source: ABdhPJyZdf+5GlpxWnAZ9bqKV6YahhutkI5YHJZGduh6Kwoe09ND13apEHkLHBB1eT0+q4xb76OnQA5e3wEKsfSkUrI=
-X-Received: by 2002:a05:6402:26cc:: with SMTP id x12mr6972120edd.153.1643044346575;
- Mon, 24 Jan 2022 09:12:26 -0800 (PST)
+        bh=4zyDaDztf/MaT8jze05rJQTzry2y2d+ufgPQHBWAP+Y=;
+        b=S9pk5qoA5VL587Qysy1luAl/Aq/LMvqbG2atVOWDsAuC2KoQxcQGpA7Dn6CYVunnCN
+         idxOP8824cTkxa90RZQBzOW4HmG+du2zGlioQLc0rzPh8m6zRtcPCxLnzpdOYLFFlpr2
+         pEhFXxAoGNqixIZIPy+pPdlbSdli3V8hLTDDz1JNK/tCmcqIqrOIlH4KjE55ufn+V7g7
+         rN5Wsgi7h9OBPcBTpDwYI5d2gKKl0Jd7x8ugx8zB7563oPUWbJsJhP/0Dh9AetPa+fzi
+         fKid+Tw/arwji7/DsqLFL6YNtwIiNBm5iN0M1Id+dmAC4+5TG0+xlhAbJZZ9/FdPMtoY
+         ByQQ==
+X-Gm-Message-State: AOAM532/oAFsV6NYZcBS1rpyB3KG83Km8oGvAJnRjG8sKoNXx+9dP1Wr
+        RjIj04FHjkJY7cs/xirtnO014r9XPJs2y/+KCQw=
+X-Google-Smtp-Source: ABdhPJw9lJv7+dcsMQ2+UVQBNv5bDBm3nvVqfweE/51SOXUinrjBMVmGh6YPU8GPC+vO48ob1TwGyPJ6cx4qziXsTOA=
+X-Received: by 2002:a17:907:2da3:: with SMTP id gt35mr13269633ejc.493.1643044723714;
+ Mon, 24 Jan 2022 09:18:43 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
- <05bd17686e1404c81542b6bbf69dcd3decb83c5b.1642888562.git.gitgitgadget@gmail.com>
- <220124.86h79tihjm.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220124.86h79tihjm.gmgdl@evledraar.gmail.com>
+ <fcbb087fa8865ac05e20473d822cd9795590ee38.1642888562.git.gitgitgadget@gmail.com>
+ <220124.868rv5ih93.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220124.868rv5ih93.gmgdl@evledraar.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 24 Jan 2022 09:12:15 -0800
-Message-ID: <CABPp-BE+4rZNP-5mT2MNOWR6y6BgEG6mt1r_qcrZtarom6aGsw@mail.gmail.com>
-Subject: Re: [PATCH 04/12] merge-tree: implement real merges
+Date:   Mon, 24 Jan 2022 09:18:32 -0800
+Message-ID: <CABPp-BF8oXCNpbXi1xb3Veh_Vi0uDXVX9VNOWMVz_zwjG=earQ@mail.gmail.com>
+Subject: Re: [PATCH 09/12] merge-tree: provide a list of which files have conflicts
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -68,77 +68,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 24, 2022 at 1:55 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Mon, Jan 24, 2022 at 2:02 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
 >
 > On Sat, Jan 22 2022, Elijah Newren via GitGitGadget wrote:
 >
-> > +     /*
-> > +      * TODO: Support subtree and other -X options?
-> > +     if (use_strategies_nr =3D=3D 1 &&
-> > +         !strcmp(use_strategies[0]->name, "subtree"))
-> > +             opt.subtree_shift =3D "";
-> > +     for (x =3D 0; x < xopts_nr; x++)
-> > +             if (parse_merge_opt(&opt, xopts[x]))
->
-> Better omitted WIP code in a non-RFC series?
-
-It's RFC: https://lore.kernel.org/git/pull.1122.git.1642888562.gitgitgadget=
-@gmail.com/
-
-But yeah, I should drop it.  Previous rounds of this RFC submission
-got me feedback that the other commented-out code bit I used to have
-was something folks wanted in the initial version of the series so I
-uncommented and cleaned it up.  The fact that no one has commented on
-this part suggests these options don't need to be supported from the
-start.
-
-> > +                     die(_("Unknown strategy option: -X%s"), xopts[x])=
-;
->
-> As a general issue with this series, die(), BUG() etc. messages should
-> start with a non-capital letter.
-
-Right, thanks for the reminder.  I'll go through and try to fix up.
-
-> > +     printf("%s\n", oid_to_hex(&result.tree->object.oid));
->
-> And for both this...
->
-> > +             printf(_("Conflicts!\n"));
->
-> ... and this we can just use puts(). For the former it's just less code,
-> but for the latter translators also don't need to see the always-there
-> \n in the translated message.
-
-Makes sense.
-
-> > +# This test is ort-specific
-> > +test "${GIT_TEST_MERGE_ALGORITHM:-ort}" =3D ort || {
->
-> Is this ${} trickery really needed? We're not testing with "set -u". So j=
-ust:
->
->         if test "$GIT_..." !=3D "ort"
->         then
->                 ...
->         fi
-
-Ah, that would be simpler; thanks.
-
-> > +test_expect_success 'Barf on too many arguments' '
-> > +     test_expect_code 129 git merge-tree --write-tree side1 side2 side=
-3 2>expect &&
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Callers of `git merge-tree --write-tree` will often want to know which
+> > files had conflicts.  While they could potentially attempt to parse the
+> > CONFLICT notices printed, those messages are not meant to be machine
+> > readable.  Provide a simpler mechanism of just printing the files (in
+> > the same format as `git ls-files` with quoting, but restricted to
+> > [...]
+> > diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+> > index 560640ad911..d8eeeb3f306 100644
+> > --- a/builtin/merge-tree.c
+> > +++ b/builtin/merge-tree.c
+> > @@ -11,6 +11,9 @@
+> >  #include "blob.h"
+> >  #include "exec-cmd.h"
+> >  #include "merge-blobs.h"
+> > +#include "quote.h"
 > > +
-> > +     grep "^usage: git merge-tree" expect
-> > +'
+> > +static int line_termination =3D '\n';
 >
-> Nit: In most other tests these usage assertions are at the top of the
-> test, and for those we also make do with just testing the 129 exit code,
-> which is probably enough here too...
+> But unlike ls-files we don't do anything with line_termination as a !=3D
+> '\n', maybe in a later commit?
+>
+> >  struct merge_list {
+> >       struct merge_list *next;
+> > @@ -395,7 +398,8 @@ struct merge_tree_options {
+> >  };
+> >
+> >  static int real_merge(struct merge_tree_options *o,
+> > -                   const char *branch1, const char *branch2)
+> > +                   const char *branch1, const char *branch2,
+> > +                   const char *prefix)
+> >  {
+> >       struct commit *parent1, *parent2;
+> >       struct commit_list *common;
+> > @@ -449,6 +453,22 @@ static int real_merge(struct merge_tree_options *o=
+,
+> >               o->show_messages =3D !result.clean;
+> >
+> >       printf("%s\n", oid_to_hex(&result.tree->object.oid));
+> > +     if (!result.clean) {
+> > +             struct string_list conflicted_files =3D STRING_LIST_INIT_=
+NODUP;
+> > +             const char *last =3D NULL;
+> > +             int i;
+> > +
+> > +             merge_get_conflicted_files(&result, &conflicted_files);
+> > +             for (i =3D 0; i < conflicted_files.nr; i++) {
+> > +                     const char *name =3D conflicted_files.items[i].st=
+ring;
+> > +                     if (last && !strcmp(last, name))
+> > +                             continue;
+> > +                     write_name_quoted_relative(
+> > +                             name, prefix, stdout, line_termination);
+>
+> But here it's never \0 or whatever.
 
-I see a fair number of counterexamples searching for 129 in the test
-suite, and I've been bitten enough times seeing tests expect an error
-but get a different kind of error than the commit message stated they
-were expecting that I prefer the extra check beyond the error code.
-Anyway, I'll leave this piece as-is.
+Correct, I didn't add any option for changing it.  But why hardcode it
+to "\n"?  Leaving it this way makes it easier to change later if folks
+say they want NUL-terminated output.  Since the series is RFC and the
+output already has changed drastically and appears to be the primary
+discussion and disagreement point, I wanted to provide what seemed
+like a reasonable suggestion and maintain flexiibility to address
+feedback (though who knows -- I might need to just completely redo the
+output again in ways much bigger than adding a -z option).
