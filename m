@@ -2,137 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 269E9C433F5
-	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 22:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BB0FC433FE
+	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 22:34:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1588797AbiAXWd6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 17:33:58 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:16093 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1586019AbiAXWZd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 17:25:33 -0500
-Received: from Mazikeen (cpe00fc8d49d843-cm00fc8d49d840.cpe.net.cable.rogers.com [99.229.22.139] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 20OMItIf071077
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 24 Jan 2022 17:18:55 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Michael Herrmann'" <michael@herrmann.io>
-Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        <git@vger.kernel.org>
-References: <CABrKpmDseZkPCpRb8KmBJaxDp24sySJay5ffZrxqgSMGKyj5qQ@mail.gmail.com>        <YeiOoAcM7TMK2pgz@camp.crustytoothpaste.net>        <xmqqilufl5cv.fsf@gitster.g>        <CABrKpmCt3zKONLp5ZjV1PxLyfM-koc=tKopKUUpx4nF2n_eo_w@mail.gmail.com>        <YengSfSDzVzvrJ6f@camp.crustytoothpaste.net>        <CABrKpmASHgBwPYgKnO2ZZRVVxMti=NFaxw6cBV=pst0xpVZYGA@mail.gmail.com>        <CABrKpmBFrrWgBh7QAOX35zQr_e+LC1E6Jn5FKb_XP-7bew9Hkg@mail.gmail.com>        <xmqqk0ep57ou.fsf@gitster.g>        <CABrKpmB7UEGzLCiNHQtY5-Dt16jLkpcpBEx3o8y9OBGZ418keA@mail.gmail.com> <xmqqfspc3k8k.fsf@gitster.g>
-In-Reply-To: <xmqqfspc3k8k.fsf@gitster.g>
-Subject: RE: A puzzle: reset --hard and hard links
-Date:   Mon, 24 Jan 2022 17:18:48 -0500
-Organization: Nexbridge Inc.
-Message-ID: <000e01d81170$5f62f600$1e28e200$@nexbridge.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIdSZEWasf1qw9XDX0IOkXUDFK/0AFI6l++AW4YK6QChYVSowKGdvMkASjeS7cCVC6c4gKVeznYAcmdvf0CQ0BaO6tZNzpA
-Content-Language: en-ca
+        id S1348570AbiAXWdy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 17:33:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37628 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1585432AbiAXWXd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 17:23:33 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33EEBC041898
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 12:53:47 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id t1-20020a6564c1000000b002e7f31cf59fso10519171pgv.14
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 12:53:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=rqUylm9VdgmZYhEmcAxZx2Bvna1gA7GqrDXblBRBUZ0=;
+        b=U83c3NmWLdWC3JTNA0PdjAyO2Ro0UL7pNYyR1kTmb6svqs3ETcVtRlar2NmBPCASYL
+         kWllslcrq3POZjmhTqINeLlJVhcLWXsF7hh+FJXtqskJPVPDuZY63gqpp9J0Cpn+EFzA
+         +549s0HI3dcE8HCWSIlq+y1Zdbpa+NkWzf5q3SPDAMv+eUp9sfePM9ePrHTXIWiXAuY5
+         nu+C1t4e+IQ5uM98CD4YAMwVpg95rM1oFW0bLoLgfw160OL3vesOrp1Sv1SpVVciyuS5
+         JnOS4kqvRLp7oz/bFfcwS288byxnRR1Q1kQ2nHOEtTCtpSeNOXYKDPx5obgbcAlCYQad
+         Vy/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=rqUylm9VdgmZYhEmcAxZx2Bvna1gA7GqrDXblBRBUZ0=;
+        b=qGKd5AWo65D/+wVbLislYHgEBaecW4jQ0Iowym6hYKzZ0GPdUC11QeLQvKlTNM9hk/
+         SBkG4nA1kJuWtfNaPlyKPnZXZIeFw/LX3qNKlEGCefUQk7ykpO24JHLOGAbCTAOIb3yK
+         b0n4ZZjHd/3myTREdkbCOUpIPxTTDTtWxJsexTm+U7Man7AYLzdnOjXU9ODV6Zi097Ko
+         iFACesxj+VNpfM4jNNcBavPINdXF7bIuXtCLO/re63qTyybBd5i+0fES8B0w96f27AdF
+         K5iZle1iCO7oi40l2gXRunVozjTzTZ4b4/CDt98FkVA61f8CwSs1jed9zOBCcypOfysG
+         uA5A==
+X-Gm-Message-State: AOAM5338LoyhkALIVdcSx6ha71QfCdhVkfcCyHoAddlqzbBKIysEGu19
+        wdCTTR2YcoAaDth+CgCveq+vwD0BMXBqU3KI6dHBEym7iyirAWPhv8ZYOiikgN5UeVLf/A1nBzP
+        +M4nusOjc9LZWMPaVSaGbMck6zyBIRHdUGSUaA5wf7ABUy4Ao7EjnSVy/1d8eACc=
+X-Google-Smtp-Source: ABdhPJyo09cXBTY5xxPj+v9BIIEW4nNehIA31RxWzmwwReGJUOuloC8MIePASJ9gZcHzvbT7VRFEOXkUNnM2EQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1d10:b0:4c8:d23:2151 with SMTP
+ id a16-20020a056a001d1000b004c80d232151mr9295443pfx.63.1643057626590; Mon, 24
+ Jan 2022 12:53:46 -0800 (PST)
+Date:   Mon, 24 Jan 2022 12:53:42 -0800
+In-Reply-To: <YYwxVO7A29FcN+hN@coredump.intra.peff.net>
+Message-Id: <20220124205342.41450-1-chooglen@google.com>
+Mime-Version: 1.0
+References: <YYwxVO7A29FcN+hN@coredump.intra.peff.net>
+X-Mailer: git-send-email 2.35.0.rc0.227.g00780c9af4-goog
+Subject: [PATCH] stash: strip "refs/heads/" with skip_prefix
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Glen Choo <chooglen@google.com>, Kraymer <kraymer@gmail.com>,
+        Daniel Hahler <git@thequod.de>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 24, 2022 4:19 PM, Junio wrote:
-> Michael Herrmann <michael@herrmann.io> writes:
-> 
-> >> It is merely because you helped Git to realize
-> >
-> > I don't want to "help Git realize". I'm sorry but in my opinion `git
-> > status` should not have any effects on other commands. I don't
-> > understand how you can argue that calling `git status` is a valid fix
-> > to "help Git".
-> >
-> >> With another step 1.5 "append a line to the file in question", git
-> >> should severe the link,
-> >
-> > I don't want to sever the hard link. I want to avoid that it gets
-severed.
-> 
-> Sorry, if that is the case, what you want is not a version control, and it
-is certainly
-> not Git.  You want something else.
-> 
-> Think about this scenario.
-> 
->     $ rm -fr one && git init one && cd one
->     $ echo 0 >a; echo 0 >b; git add a b; git commit -m zero
-> 
-> We have two files, a and b, each of which has "0" in it.
-> 
->     $ echo 1 >b; git add b; git commit -m one
-> 
-> Now they have "0" and "1" respectively.
-> 
->     $ echo 2 >a; echo 2 >b; git commit -a -m two
->     $ ln -f a b
->     $ git diff
->     $ git diff HEAD
-> 
-> Now they have "2".  Since they have identical contents, "diff" would
-report no
-> difference relative to the index or HEAD, even after we manually break the
-> working tree by making one of them a hardlink to the other.
-> 
-> Now, what should this command do?
-> 
->     $ git reset --hard HEAD^
-> 
-> What the user is asking is (1) to move the branch to point at the previous
-commit,
-> which had 0 and 1 in a and b respectively, and (2) to make sure that the
-index and
-> the working tree contents match what is recorded in the commit.
-> 
-> So for Git to be a usefully correct version control system, it is
-essential to make
-> sure what it writes out would not affect any path other than the one it is
-writing
-> out.  When it writes "0" to "a", it MUST break the hardlink from elsewhere
-that
-> points at "a" before it does so.  Otherwise, the "0" it writes into "a"
-will also be
-> seen elsewhere, which is not what the updated HEAD (i.e. commit "one")
-wants to
-> see.  The same for "b" when it is updated from "2" to "1"
-> when this happens.
+When generating a message for a stash, "git stash" only records the
+part of the branch name to the right of the last "/". e.g. if HEAD is at
+"foo/bar/baz", "git stash" generates a message prefixed with "WIP on
+baz:" instead of "WIP on foo/bar/baz:".
 
-I think there are more use cases here than are apparent but also some
-serious question about why one would do this.
+Fix this by using skip_prefix() to skip "refs/heads/" instead of looking
+for the last instance of "/".
 
-In a Linux/POSIX environment, one can do a hard link to a file inside a git
-repo, change the file using something like vim, and have git recognize that
-there is a change in git status. However, this only works on some platforms.
-Hard links do not have a 100% consistent semantic from one OS to another,
-one file system to another, or even between editors and scripts. As Junio
-pointed out, using a > operator on a hard link is likely going to replace
-the file instead of modifying the existing one. >> might correctly append
-and have git recognize it in a git status... on some platforms.
+Reported-by: Kraymer <kraymer@gmail.com>
+Reported-by: Daniel Hahler <git@thequod.de>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+I prepared this fix before checking the mailing list for any bug
+reports; turns out that there are at least two existing reports.
 
-Making git consistent in this situation across every possible situation is
-not only impractical, it is likely impossible and cutting down what git is
-allowed to do so that only those common things are implemented might gut git
-badly.
+My fix happens to be exactly the same as what Peff suggested, with the
+additional test that he asked for.
 
-If you are looking for doing external edits while keeping git notified, I
-would suggest wrapping the file modification in a script that is aware of
-hard links so that you get the results you want.
+ builtin/stash.c  |  2 +-
+ t/t3903-stash.sh | 11 +++++++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-Alternatively, a soft link made externally to a physical git file location
-might do what you want - assuming your platform supports soft links. Your
-modification script/program/etc. would use the file directly in git instead
-of the hard link inode, so git is happy. A git status would see the change
-because the file really only exists in git. Other git operations, like
-restore, switch, etc., would cause the physical file to be modified
-correctly, and anything using the referencing soft link would see the
-change. Note: I am not suggest soft-linking from inside git to outside.
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 1ef2017c59..01f072a2fb 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1332,7 +1332,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 
+ 	branch_ref = resolve_ref_unsafe("HEAD", 0, NULL, &flags);
+ 	if (flags & REF_ISSYMREF)
+-		branch_name = strrchr(branch_ref, '/') + 1;
++		skip_prefix(branch_ref, "refs/heads/", &branch_name);
+ 	head_short_sha1 = find_unique_abbrev(&head_commit->object.oid,
+ 					     DEFAULT_ABBREV);
+ 	strbuf_addf(&msg, "%s: %s ", branch_name, head_short_sha1);
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 686747e55a..bf83fb940e 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1042,6 +1042,17 @@ test_expect_success 'create stores correct message' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'create when branch name has /' '
++	test_when_finished "git checkout main" &&
++	git checkout -b some/topic &&
++	>foo &&
++	git add foo &&
++	STASH_ID=$(git stash create "create test message") &&
++	echo "On some/topic: create test message" >expect &&
++	git show --pretty=%s -s ${STASH_ID} >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'create with multiple arguments for the message' '
+ 	>foo &&
+ 	git add foo &&
 
---Randall
+base-commit: 89bece5c8c96f0b962cfc89e63f82d603fd60bed
+-- 
+2.33.GIT
 
