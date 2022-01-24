@@ -2,82 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10184C4332F
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 02:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01463C433F5
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 02:00:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348945AbiAYB7K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 20:59:10 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:59064 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381569AbiAXUVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 15:21:19 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9ED55176806;
-        Mon, 24 Jan 2022 15:21:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=BQCAs1SfCFRC
-        1JSisuCN2eadbgMLXXVsNJbZl3kH940=; b=mlDhRTR7JekKD8id6ED40cGXrlcW
-        qs9OlZ8jMcmKmwBDqg0LtLpnID9BoHypee7ySOWC4hup+nKfPwuJPXmCTlfyc61U
-        9QuU3pNLujYe6xBX19alRQ6oyMvb0yScHbBmxMlboDsy7jZHpUpOjDRGw+QwMXF3
-        KXVeiM8l1xEsEdI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 96E94176804;
-        Mon, 24 Jan 2022 15:21:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F23C0176803;
-        Mon, 24 Jan 2022 15:21:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
-        David Aguilar <davvid@gmail.com>,
-        "Randall S . Becker" <randall.becker@nexbridge.ca>,
-        Taylor Blau <me@ttaylorr.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3?= =?utf-8?Q?n?= 
-        <carenas@gmail.com>, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v5] compat: auto-detect if zlib has uncompress2()
-References: <patch-v2-1.1-444eacf30be-20220119T094428Z-avarab@gmail.com>
-        <patch-v3-1.1-e9cb8763fd4-20220120T011414Z-avarab@gmail.com>
-        <xmqqr190ekrh.fsf@gitster.g>
-        <74d35354-20a6-9cc1-3452-573460c694bd@drbeat.li>
-        <xmqqtudu9s7k.fsf@gitster.g> <xmqqh79t7sj4.fsf_-_@gitster.g>
-        <xmqqr18x3s5s.fsf@gitster.g>
-        <220124.86r18xgcv4.gmgdl@evledraar.gmail.com>
-Date:   Mon, 24 Jan 2022 12:21:14 -0800
-In-Reply-To: <220124.86r18xgcv4.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 24 Jan 2022 20:07:26 +0100")
-Message-ID: <xmqqlez43mx1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1349627AbiAYCAV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 21:00:21 -0500
+Received: from mail-pj1-f41.google.com ([209.85.216.41]:50846 "EHLO
+        mail-pj1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1848485AbiAXXWf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 18:22:35 -0500
+Received: by mail-pj1-f41.google.com with SMTP id o11so704269pjf.0
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 15:22:34 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=RauCMbeJrGv6VsRQE0JqmZbqK10XBe4h/d9a4p7SEbk=;
+        b=uPvC9MZiWanRxjRJpu6bup5+D7o0qDIfHA21U4vZrOMZE3Xyw5X4L59Qty1s+Dyl5r
+         t6jIyzOS69VwpuH4FyndcJZFLPEm+03fe5a+kdE/ErKCgew4cuzE0ScDw2we3zpvNNLa
+         6apteYrAaCyLe9e8MUxICchSuLdtPJGH//BWjMo4NjHYMjb/hnS6MmoQAK9GXvCrHM0S
+         0/3ZmYzYKCIbJY9EOSfo4OZnaZxInDPqy8c9+WZDmdDuhrNFaJsfXT4LW/XdBtNtmmRv
+         yAVLgcMmwFDMJTc5BDwkw8RI6jGpngFyokC4+WH6h/HrG1kqaBdO3a64hVfpvA18ZPkH
+         gKJA==
+X-Gm-Message-State: AOAM532lpRY8WJhkocHYG+QpsZaLqH+xe35rMLGWawCRh/WRCCyHvuIw
+        rJA4o8V0giae7skEjbYrZwwVXmgnXUpfm19WX39YJt6RPCw=
+X-Google-Smtp-Source: ABdhPJyCtRLvUZ8irUjWHNQRQJd5Ks4BezXehYweaWQNj7C2GZl1qKtTANZwKsxfbRuomKQKj3qL/nWz0lYTsZ/zyPk=
+X-Received: by 2002:a17:902:9049:b0:14a:ea20:1f21 with SMTP id
+ w9-20020a170902904900b0014aea201f21mr16466377plz.35.1643066554060; Mon, 24
+ Jan 2022 15:22:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2EA71C4A-7D53-11EC-A016-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com> <d2ff51bb5dacfe084166de106e9a864c902f0f36.1643050574.git.gitgitgadget@gmail.com>
+In-Reply-To: <d2ff51bb5dacfe084166de106e9a864c902f0f36.1643050574.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 24 Jan 2022 18:22:23 -0500
+Message-ID: <CAPig+cTk142o5xkN0jHB6y1h=4zYBwhpwdTxG0oO3Ox+xqdgdQ@mail.gmail.com>
+Subject: Re: [PATCH 2/9] ci/run-build-and-tests: take a more high-level view
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Jan 24, 2022 at 3:02 PM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> In the web UI of GitHub workflows, failed runs are presented with the
+> job step that failed auto-expanded. In the current setup, this is not
+> helpful at all because that shows only the output of `prove`, which says
+> which test failed, but not in what way.
+>
+> What would help understand the reader what went wrong is the verbose
+> test output of the failed test.
+>
+> The logs of the failed runs do contain that verbose test output, but it
+> is shown in the _next_ step (which is marked as succeeding, and is
+> therefore _not_ auto-expanded). Anyone not intimately familiar with this
+> would completely miss the verbose test output, being left mostly
+> puzzled with the test failures.
+>
+> We are about to show the failed test cases' output in the _same_ step,
+> so that the user has a much easier time to figure out what was going
+> wrong.
+>
+> But first, we must partially revert the change that tried to improve the
+> CI runs by combining the `Makefile` targets to build into a single
+> `make` invocation. That might have sounded like a good idea at the time,
+> but it does make it rather impossible for the CI script to determine
+> whether the _build_ failed, or the _tests_. If the tests were run at
+> all, that is.
+>
+> So let's go back to calling `make` for the build, and call `make test`
+> separately so that we can easily detect that _that_ invocation failed,
+> and react appropriately.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> @@ -10,7 +10,7 @@ windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
+> -export MAKE_TARGETS="all test"
+> +run_tests=t
+>
+>  case "$jobname" in
+>  linux-gcc)
+> @@ -41,14 +41,18 @@ pedantic)
+>         # Don't run the tests; we only care about whether Git can be
+>         # built.
+>         export DEVOPTS=pedantic
+> -       export MAKE_TARGETS=all
+> +       run_tests=
+>         ;;
+>  esac
+>
+>  # Any new "test" targets should not go after this "make", but should
+>  # adjust $MAKE_TARGETS. Otherwise compilation-only targets above will
+>  # start running tests.
+> -make $MAKE_TARGETS
 
-> Aside: I have not yet found such a compiler, does anyone know of one
-> that breaks? In any case doing this for good measure seems fine, just
-> wondering if we're cargo-culting a needless workaround or not.
+The comment talking about MAKE_TARGETS seems out of date now that
+MAKE_TARGETS has been removed from this script.
 
-Before I started Git, I had to deal with quite a many variations of
-UNIX, all of which looked alike but behaved slightly differently,
-and I do recall seeing this exact breakage, so it is a real solution
-to a real problem, and I can see OpenSSL folks had seen the same one.
+> +make
+> +if test -n "$run_tests"
+> +then
+> +       make test
+> +fi
+>  check_unignored_build_artifacts
 
-If you find my experience is not Enough, I have no further words for
-you on this topic.
-
-If the question is "name a compiler that breaks and is *still* in
-active use", then the answer would be fuzzy (it depends on the
-definition of "in active use"), but is useful to find out.
-
-
+This changes behavior, doesn't it? Wth the original "make all test",
+if the `all` target failed, then the `test` target would not be
+invoked. However, with the revised code, `make test` is invoked even
+if `make all` fails. Is that behavior change significant? Do we care
+about it?
