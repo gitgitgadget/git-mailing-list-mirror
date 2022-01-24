@@ -2,421 +2,322 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4264EC433F5
-	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 18:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EC97C433F5
+	for <git@archiver.kernel.org>; Mon, 24 Jan 2022 19:01:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245260AbiAXS2E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 13:28:04 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60312 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245257AbiAXS2D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 13:28:03 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5E5CA1791A9;
-        Mon, 24 Jan 2022 13:28:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=HaX133RBapUcnoI3PgKSUmX9A
-        z89eyKQgQ8KU29prxc=; b=XcERdWY8DM+r/Pn7t46IjuiX8VCb3pnAR42KA9pqP
-        I7UT4tpL0hWeIZ46lGix2gt4VYFhUzzfhh1dfaBRmvykT9kOSc/KVtnYAtVUgIiH
-        tYsoLLTTzPt/Neq7wGNN1qJmAeBC5F94FLKWNo8y8SxOh9HYT1iVxCFgYPJz+LE+
-        jQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 573231791A8;
-        Mon, 24 Jan 2022 13:28:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BB9281791A5;
-        Mon, 24 Jan 2022 13:28:00 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Beat Bolli <dev+git@drbeat.li>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        David Aguilar <davvid@gmail.com>,
-        "Randall S . Becker" <randall.becker@nexbridge.ca>,
-        Taylor Blau <me@ttaylorr.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v5] compat: auto-detect if zlib has uncompress2()
-References: <patch-v2-1.1-444eacf30be-20220119T094428Z-avarab@gmail.com>
-        <patch-v3-1.1-e9cb8763fd4-20220120T011414Z-avarab@gmail.com>
-        <xmqqr190ekrh.fsf@gitster.g>
-        <74d35354-20a6-9cc1-3452-573460c694bd@drbeat.li>
-        <xmqqtudu9s7k.fsf@gitster.g> <xmqqh79t7sj4.fsf_-_@gitster.g>
-Date:   Mon, 24 Jan 2022 10:27:59 -0800
-Message-ID: <xmqqr18x3s5s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1344362AbiAXTBh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 14:01:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44170 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344728AbiAXS7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 13:59:00 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61FCDC06124E
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 10:56:18 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id r65so550233wma.0
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 10:56:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=RU6DQxFtT8zQTzM0eb0z0Gc2Pnj94UIPWTjuZrH1SO0=;
+        b=AWT9nsjm8D6zZl/hKi/XfbDAojXDHUN9RZ3Z0C20eDqaFTwAwlPk1No8Mp0pSyqNh0
+         lZ5qIOAYS9LFCTMg2rX7qUUdWOlphtmgLU1awKxyAzR6dPOOsjNfBM0rtLGrn6KaqzCC
+         mA6uKUr+5pgZJLGvuoRYyiwKupLLxS0Qx9e9sC+QnYyqqPJkLG1bbzv4OhTz32ZMS/hW
+         YqCT+2jrvdoTQ9Cx1fSHVZqpkhF3uhcNw/XR7P8/mgm37ZXqcbT+lqg8v33rPi72aUJA
+         qxs53rToL6Axqy6t4UMplDvNdSilDxMtLyR63Ed8UaygzuFchzL1bIoQ9Ch4za7ShyNw
+         tp+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=RU6DQxFtT8zQTzM0eb0z0Gc2Pnj94UIPWTjuZrH1SO0=;
+        b=yeiW5wp573XjlZuxjOvAEJ1j36S2/drAuqjT6rRf58c7NoutFCW4w6QyRVYzXquIUB
+         maoWRmPzBpsKnNV0H2QqarE7puAi11cns6XkP4D1MgApeBbmagS+qy+bDf03N3epK8mf
+         TQBVcVwkNVnZPUBOTSJClCOHOziYwWK+NXd5mV7rk+WXpgqF3/sUHfhF6TSS69rsdj6/
+         vVCw6yfu+vZ7FxZIFoqc4Wis2Q4s2tESokH8K3i2ThuR4TMGL23a3ShmVKRMRADXavNf
+         mAxJsF3CqPa5kjBORaRk31yUsC/DF/t/T5/Qz8Stz3aBVy6Unzuy66hH7hXipmDt7i2O
+         DgdA==
+X-Gm-Message-State: AOAM532KYxxZXzGFsr3TfReURPlDrpLV6x6vzyqsimDqGVWTKOHI2kUA
+        FVTDnQaDkieAzT9Y76U5gSgHLeO2z3Y=
+X-Google-Smtp-Source: ABdhPJwwnv1hjdunf5KR/CiY+mTrvOJB84ienrYQDEF9szrfbDHqDQ9Qz0DccRvy0EhKVOPR2rB4OA==
+X-Received: by 2002:a05:600c:220f:: with SMTP id z15mr2941789wml.145.1643050576601;
+        Mon, 24 Jan 2022 10:56:16 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i3sm14587491wru.33.2022.01.24.10.56.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Jan 2022 10:56:15 -0800 (PST)
+Message-Id: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 24 Jan 2022 18:56:05 +0000
+Subject: [PATCH 0/9] ci: make Git's GitHub workflow output much more helpful
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5C61CDAC-7D43-11EC-9D88-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 
-We have a copy of uncompress2() implementation in compat/ so that we
-can build with an older version of zlib that lack the function, and
-the build procedure selects if it is used via the NO_UNCOMPRESS2
-$(MAKE) variable.  This is yet another "annoying" knob the porters
-need to tweak on platforms that are not common enough to have the
-default set in the config.mak.uname file.
+Background
+==========
 
-Attempt to instead ask the system header <zlib.h> to decide if we
-need the compatibility implementation.  This is a deviation from the
-way we have been handling the "compatiblity" features so far, and if
-it can be done cleanly enough, it could work as a model for features
-that need compatibility definition we discover in the future.  With
-that goal in mind, avoid expedient but ugly hacks, like shoving the
-code that is conditionally compiled into an unrelated .c file, which
-may not work in future cases---instead, take an approach that uses a
-file that is independently compiled and stands on its own.
+Recent patches intended to help readers figure out CI failures much quicker
+than before. Unfortunately, they haven't been entirely positive for me. For
+example, they broke the branch protections in Microsoft's fork of Git, where
+we require Pull Requests to pass a certain set of Checks (which are
+identified by their names) and therefore caused follow-up work.
 
-Compile and link compat/zlib-uncompress2.c file unconditionally, but
-conditionally hide the implementation behind #if/#endif when zlib
-version is 1.2.9 or newer, and unconditionally archive the resulting
-object file in the libgit.a to be picked up by the linker.
+Using CI and in general making it easier for new contributors is an area I'm
+passionate about, and one I'd like to see improved.
 
-There are a few things to note in the shape of the code base after
-this change:
 
- - We no longer use NO_UNCOMPRESS2 knob; if the system header
-   <zlib.h> claims a version that is more cent than the library
-   actually is, this would break, but it is easy to add it back when
-   we find such a system.
+The current situation
+=====================
 
- - The object file compat/zlib-uncompress2.o is always compiled and
-   archived in libgit.a, just like a few other compat/ object files
-   already are.
+Let me walk you through the current experience when a PR build fails: I get
+a notification mail that only says that a certain job failed. There's no
+indication of which test failed (or was it the build?). I can click on a
+link at it takes me to the workflow run. Once there, all it says is "Process
+completed with exit code 1", or even "code 2". Sure, I can click on one of
+the failed jobs. It even expands the failed step's log (collapsing the other
+steps). And what do I see there?
 
- - The inclusion of <zlib.h> is done in <git-compat-util.h>; we used
-   to do so from <cache.h> which includes <git-compat-util.h> as the
-   first thing it does, so from the *.c codes, there is no practical
-   change.
+Let's look at an example of a failed linux-clang (ubuntu-latest) job
+[https://github.com/git-for-windows/git/runs/4822802185?check_suite_focus=true]:
 
- - Until objects in libgit.a that is already used gains a reference
-   to the function, the reftable code will be the only one that
-   wants it, so libgit.a on the linker command line needs to appear
-   once more at the end to satisify the mutual dependency.
+[...]
+Test Summary Report
+-------------------
+t1092-sparse-checkout-compatibility.sh           (Wstat: 256 Tests: 53 Failed: 1)
+  Failed test:  49
+  Non-zero exit status: 1
+t3701-add-interactive.sh                         (Wstat: 0 Tests: 71 Failed: 0)
+  TODO passed:   45, 47
+Files=957, Tests=25489, 645 wallclock secs ( 5.74 usr  1.56 sys + 866.28 cusr 364.34 csys = 1237.92 CPU)
+Result: FAIL
+make[1]: *** [Makefile:53: prove] Error 1
+make[1]: Leaving directory '/home/runner/work/git/git/t'
+make: *** [Makefile:3018: test] Error 2
 
- - Beat found a trick used by OpenSSL to avoid making the
-   conditionally-compiled object truly empty (apparently because
-   they had to deal with compilers that do not want to see an
-   effectively empty input file).  Our compat/zlib-uncompress2.c
-   file borrows the same trick for portabilty.
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Helped-by: Beat Bolli <dev+git@drbeat.li>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+That's it. I count myself lucky not to be a new contributor being faced with
+something like this.
 
- * With a single-liner update to the Makefile with an updated log
-   message that explains the change.  I am not sure if this version
-   can become the model of future "compat" support, or we should
-   just discard the new approach and use the Makefile macro approach
-   that has worked well for all of our existing compat support
-   already.
+Now, since I am active in the Git project for a couple of days or so, I can
+make sense of the "TODO passed" label and know that for the purpose of
+fixing the build failures, I need to ignore this, and that I need to focus
+on the "Failed test" part instead.
 
-Range-diff against v4:
-1:  d26c9073bf ! 1:  63c5753c6f compat: auto-detect if zlib has uncompres=
-s2()
-    @@ Commit message
-         need to tweak on platforms that are not common enough to have th=
-e
-         default set in the config.mak.uname file.
-    =20
-    -    =C3=86var came up with an idea to instead ask the system header =
-<zlib.h>
-    -    to decide if we need the compatibility implementation.  We can
-    -    compile and link compat/zlib-uncompress2.c file unconditionally,=
- but
-    +    Attempt to instead ask the system header <zlib.h> to decide if w=
-e
-    +    need the compatibility implementation.  This is a deviation from=
- the
-    +    way we have been handling the "compatiblity" features so far, an=
-d if
-    +    it can be done cleanly enough, it could work as a model for feat=
-ures
-    +    that need compatibility definition we discover in the future.  W=
-ith
-    +    that goal in mind, avoid expedient but ugly hacks, like shoving =
-the
-    +    code that is conditionally compiled into an unrelated .c file, w=
-hich
-    +    may not work in future cases---instead, take an approach that us=
-es a
-    +    file that is independently compiled and stands on its own.
-    +
-    +    Compile and link compat/zlib-uncompress2.c file unconditionally,=
- but
-         conditionally hide the implementation behind #if/#endif when zli=
-b
-         version is 1.2.9 or newer, and unconditionally archive the resul=
-ting
-         object file in the libgit.a to be picked up by the linker.
-    @@ Commit message
-            first thing it does, so from the *.c codes, there is no pract=
-ical
-            change.
-    =20
-    +     - Until objects in libgit.a that is already used gains a refere=
-nce
-    +       to the function, the reftable code will be the only one that
-    +       wants it, so libgit.a on the linker command line needs to app=
-ear
-    +       once more at the end to satisify the mutual dependency.
-    +
-          - Beat found a trick used by OpenSSL to avoid making the
-            conditionally-compiled object truly empty (apparently because
-            they had to deal with compilers that do not want to see an
-    @@ Makefile: THIRD_PARTY_SOURCES +=3D compat/regex/%
-      THIRD_PARTY_SOURCES +=3D sha1dc/%
-     =20
-     -GITLIBS =3D common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB)
-    ++# xdiff and reftable libs may in turn depend on what is in libgit.a
-     +GITLIBS =3D common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) =
-$(LIB_FILE)
-      EXTLIBS =3D
-     =20
+I also know that I do not have to get myself an ubuntu-latest box just to
+reproduce the error, I do not even have to check out the code and run it
+just to learn what that "49" means.
 
- Makefile                  | 11 +++--------
- cache.h                   |  1 -
- ci/lib.sh                 |  1 -
- compat/zlib-uncompress2.c | 11 ++++++-----
- config.mak.uname          |  7 -------
- configure.ac              | 13 -------------
- git-compat-util.h         | 12 ++++++++++++
- reftable/system.h         | 11 -----------
- 8 files changed, 21 insertions(+), 46 deletions(-)
+I know, and I do not expect any new contributor, not even most seasoned
+contributors to know, that I have to patiently collapse the "Run
+ci/run-build-and-tests.sh" job's log, and instead expand the "Run
+ci/print-test-failures.sh" job log (which did not fail and hence does not
+draw any attention to it).
 
-diff --git a/Makefile b/Makefile
-index 5580859afd..f194b2afc6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -256,8 +256,6 @@ all::
- #
- # Define NO_DEFLATE_BOUND if your zlib does not have deflateBound.
- #
--# Define NO_UNCOMPRESS2 if your zlib does not have uncompress2.
--#
- # Define NO_NORETURN if using buggy versions of gcc 4.6+ and profile fee=
-dback,
- # as the compiler can crash (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=
-=3D49299)
- #
-@@ -862,6 +860,7 @@ LIB_OBJS +=3D commit-reach.o
- LIB_OBJS +=3D commit.o
- LIB_OBJS +=3D compat/obstack.o
- LIB_OBJS +=3D compat/terminal.o
-+LIB_OBJS +=3D compat/zlib-uncompress2.o
- LIB_OBJS +=3D config.o
- LIB_OBJS +=3D connect.o
- LIB_OBJS +=3D connected.o
-@@ -1194,7 +1193,8 @@ THIRD_PARTY_SOURCES +=3D compat/regex/%
- THIRD_PARTY_SOURCES +=3D sha1collisiondetection/%
- THIRD_PARTY_SOURCES +=3D sha1dc/%
-=20
--GITLIBS =3D common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB)
-+# xdiff and reftable libs may in turn depend on what is in libgit.a
-+GITLIBS =3D common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB=
-_FILE)
- EXTLIBS =3D
-=20
- GIT_USER_AGENT =3D git/$(GIT_VERSION)
-@@ -1726,11 +1726,6 @@ ifdef NO_DEFLATE_BOUND
- 	BASIC_CFLAGS +=3D -DNO_DEFLATE_BOUND
- endif
-=20
--ifdef NO_UNCOMPRESS2
--	BASIC_CFLAGS +=3D -DNO_UNCOMPRESS2
--	REFTABLE_OBJS +=3D compat/zlib-uncompress2.o
--endif
--
- ifdef NO_POSIX_GOODIES
- 	BASIC_CFLAGS +=3D -DNO_POSIX_GOODIES
- endif
-diff --git a/cache.h b/cache.h
-index 281f00ab1b..3a0142aa56 100644
---- a/cache.h
-+++ b/cache.h
-@@ -18,7 +18,6 @@
- #include "repository.h"
- #include "mem-pool.h"
-=20
--#include <zlib.h>
- typedef struct git_zstream {
- 	z_stream z;
- 	unsigned long avail_in;
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 9d28ab50fb..cbc2f8f1ca 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -197,7 +197,6 @@ esac
- case "$jobname" in
- linux32)
- 	CC=3Dgcc
--	MAKEFLAGS=3D"$MAKEFLAGS NO_UNCOMPRESS2=3D1"
- 	;;
- linux-musl)
- 	CC=3Dgcc
-diff --git a/compat/zlib-uncompress2.c b/compat/zlib-uncompress2.c
-index 722610b971..77a1b08048 100644
---- a/compat/zlib-uncompress2.c
-+++ b/compat/zlib-uncompress2.c
-@@ -1,3 +1,6 @@
-+#include "git-compat-util.h"
-+
-+#if ZLIB_VERNUM < 0x1290
- /* taken from zlib's uncompr.c
-=20
-    commit cacf7f1d4e3d44d871b605da3b647f07d718623f
-@@ -8,16 +11,11 @@
-=20
- */
-=20
--#include "../reftable/system.h"
--#define z_const
--
- /*
-  * Copyright (C) 1995-2003, 2010, 2014, 2016 Jean-loup Gailly, Mark Adle=
-r
-  * For conditions of distribution and use, see copyright notice in zlib.=
-h
-  */
-=20
--#include <zlib.h>
--
- /* clang-format off */
-=20
- /* =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-@@ -93,3 +91,6 @@ int ZEXPORT uncompress2 (
- 	   err =3D=3D Z_BUF_ERROR && left + stream.avail_out ? Z_DATA_ERROR :
- 	   err;
- }
-+#else
-+static void *dummy_variable =3D &dummy_variable;
-+#endif
-diff --git a/config.mak.uname b/config.mak.uname
-index c48db45106..92ea00c219 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -66,7 +66,6 @@ ifeq ($(uname_S),Linux)
- 	# centos7/rhel7 provides gcc 4.8.5 and zlib 1.2.7.
- 	ifneq ($(findstring .el7.,$(uname_R)),)
- 		BASIC_CFLAGS +=3D -std=3Dc99
--		NO_UNCOMPRESS2 =3D YesPlease
- 	endif
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
-@@ -266,10 +265,6 @@ ifeq ($(uname_S),FreeBSD)
- 	FILENO_IS_A_MACRO =3D UnfortunatelyYes
- endif
- ifeq ($(uname_S),OpenBSD)
--	# Versions < 7.0 need compatibility layer
--	ifeq ($(shell expr "$(uname_R)" : "[1-6]\."),2)
--		NO_UNCOMPRESS2 =3D UnfortunatelyYes
--	endif
- 	NO_STRCASESTR =3D YesPlease
- 	NO_MEMMEM =3D YesPlease
- 	USE_ST_TIMESPEC =3D YesPlease
-@@ -525,7 +520,6 @@ ifeq ($(uname_S),Interix)
- 	endif
- endif
- ifeq ($(uname_S),Minix)
--	NO_UNCOMPRESS2 =3D YesPlease
- 	NO_IPV6 =3D YesPlease
- 	NO_ST_BLOCKS_IN_STRUCT_STAT =3D YesPlease
- 	NO_NSEC =3D YesPlease
-@@ -581,7 +575,6 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
- 	NO_SETENV =3D YesPlease
- 	NO_UNSETENV =3D YesPlease
- 	NO_MKDTEMP =3D YesPlease
--	NO_UNCOMPRESS2 =3D YesPlease
- 	# Currently libiconv-1.9.1.
- 	OLD_ICONV =3D UnfortunatelyYes
- 	NO_REGEX =3D NeedsStartEnd
-diff --git a/configure.ac b/configure.ac
-index d60d494ee4..5ee25ec95c 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -664,22 +664,9 @@ AC_LINK_IFELSE([ZLIBTEST_SRC],
- 	NO_DEFLATE_BOUND=3Dyes])
- LIBS=3D"$old_LIBS"
-=20
--AC_DEFUN([ZLIBTEST_UNCOMPRESS2_SRC], [
--AC_LANG_PROGRAM([#include <zlib.h>],
-- [uncompress2(NULL,NULL,NULL,NULL);])])
--AC_MSG_CHECKING([for uncompress2 in -lz])
--old_LIBS=3D"$LIBS"
--LIBS=3D"$LIBS -lz"
--AC_LINK_IFELSE([ZLIBTEST_UNCOMPRESS2_SRC],
--	[AC_MSG_RESULT([yes])],
--	[AC_MSG_RESULT([no])
--	NO_UNCOMPRESS2=3Dyes])
--LIBS=3D"$old_LIBS"
--
- GIT_UNSTASH_FLAGS($ZLIB_PATH)
-=20
- GIT_CONF_SUBST([NO_DEFLATE_BOUND])
--GIT_CONF_SUBST([NO_UNCOMPRESS2])
-=20
- #
- # Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 1229c8296b..ea111a7b48 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1386,6 +1386,18 @@ void unleak_memory(const void *ptr, size_t len);
- #define UNLEAK(var) do {} while (0)
- #endif
-=20
-+#define z_const
-+#include <zlib.h>
-+
-+#if ZLIB_VERNUM < 0x1290
-+/*
-+ * This is uncompress2, which is only available in zlib >=3D 1.2.9
-+ * (released as of early 2017). See compat/zlib-uncompress2.c.
-+ */
-+int uncompress2(Bytef *dest, uLongf *destLen, const Bytef *source,
-+		uLong *sourceLen);
-+#endif
-+
- /*
-  * This include must come after system headers, since it introduces macr=
-os that
-  * replace system names.
-diff --git a/reftable/system.h b/reftable/system.h
-index 4907306c0c..18f9207dfe 100644
---- a/reftable/system.h
-+++ b/reftable/system.h
-@@ -16,17 +16,6 @@ license that can be found in the LICENSE file or at
- #include "hash.h" /* hash ID, sizes.*/
- #include "dir.h" /* remove_dir_recursively, for tests.*/
-=20
--#include <zlib.h>
--
--#ifdef NO_UNCOMPRESS2
--/*
-- * This is uncompress2, which is only available in zlib >=3D 1.2.9
-- * (released as of early 2017)
-- */
--int uncompress2(Bytef *dest, uLongf *destLen, const Bytef *source,
--		uLong *sourceLen);
--#endif
--
- int hash_size(uint32_t id);
-=20
- #endif
---=20
-2.35.0-155-g0eb5153edc
+I know, and again: I do not expect many others to know this, that I then
+have to click into the "Search logs" box (not the regular web browser's
+search via Ctrl+F!) and type in "not ok" to find the log of the failed test
+case (and this might still be a "known broken" one that is marked via
+test_expect_failure and once again needs to be ignored).
 
+To be excessively clear: This is not a great experience!
+
+
+Improved output
+===============
+
+Our previous Azure Pipelines-based CI builds had a much nicer UI, one that
+even showed flaky tests, and trends e.g. how long the test cases ran. When I
+ported Git's CI over to GitHub workflows (to make CI more accessible to new
+contributors), I knew fully well that we would leave this very nice UI
+behind, and I had hoped that we would get something similar back via new,
+community-contributed GitHub Actions that can be used in GitHub workflows.
+However, most likely because we use a home-grown test framework implemented
+in opinionated POSIX shells scripts, that did not happen.
+
+So I had a look at what standards exist e.g. when testing PowerShell
+modules, in the way of marking up their test output in GitHub workflows, and
+I was not disappointed: GitHub workflows support "grouping" of output lines,
+i.e. marking sections of the output as a group that is then collapsed by
+default and can be expanded. And it is this feature I decided to use in this
+patch series, along with GitHub workflows' commands to display errors or
+notices that are also shown on the summary page of the workflow run. Now, in
+addition to "Process completed with exit code" on the summary page, we also
+read something like:
+
+⊗ linux-gcc (ubuntu-latest)
+   failed: t9800.20 submit from detached head
+
+
+Even better, this message is a link, and following that, the reader is
+presented with something like this
+[https://github.com/dscho/git/runs/4840190622?check_suite_focus=true]:
+
+⏵ Run ci/run-build-and-tests.sh
+⏵ CI setup
+  + ln -s /home/runner/none/.prove t/.prove
+  + run_tests=t
+  + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+  + group Build make
+  + set +x
+⏵ Build
+⏵ Run tests
+  === Failed test: t9800-git-p4-basic ===
+⏵ ok: t9800.1 start p4d
+⏵ ok: t9800.2 add p4 files
+⏵ ok: t9800.3 basic git p4 clone
+⏵ ok: t9800.4 depot typo error
+⏵ ok: t9800.5 git p4 clone @all
+⏵ ok: t9800.6 git p4 sync uninitialized repo
+⏵ ok: t9800.7 git p4 sync new branch
+⏵ ok: t9800.8 clone two dirs
+⏵ ok: t9800.9 clone two dirs, @all
+⏵ ok: t9800.10 clone two dirs, @all, conflicting files
+⏵ ok: t9800.11 clone two dirs, each edited by submit, single git commit
+⏵ ok: t9800.12 clone using non-numeric revision ranges
+⏵ ok: t9800.13 clone with date range, excluding some changes
+⏵ ok: t9800.14 exit when p4 fails to produce marshaled output
+⏵ ok: t9800.15 exit gracefully for p4 server errors
+⏵ ok: t9800.16 clone --bare should make a bare repository
+⏵ ok: t9800.17 initial import time from top change time
+⏵ ok: t9800.18 unresolvable host in P4PORT should display error
+⏵ ok: t9800.19 run hook p4-pre-submit before submit
+  Error: failed: t9800.20 submit from detached head
+⏵ failure: t9800.20 submit from detached head 
+  Error: failed: t9800.21 submit from worktree
+⏵ failure: t9800.21 submit from worktree 
+  === Failed test: t9801-git-p4-branch ===
+  [...]
+
+
+The "Failed test:" lines are colored in yellow to give a better visual clue
+about the logs' structure, the "Error:" label is colored in red to draw the
+attention to the important part of the log, and the "⏵" characters indicate
+that part of the log is collapsed and can be expanded by clicking on it.
+
+To drill down, the reader merely needs to expand the (failed) test case's
+log by clicking on it, and then study the log. If needed (e.g. when the test
+case relies on side effects from previous test cases), the logs of preceding
+test cases can be expanded as well. In this example, when expanding
+t9800.20, it looks like this (for ease of reading, I cut a few chunks of
+lines, indicated by "[...]"):
+
+[...]
+⏵ ok: t9800.19 run hook p4-pre-submit before submit
+  Error: failed: t9800.20 submit from detached head
+⏷ failure: t9800.20 submit from detached head 
+      test_when_finished cleanup_git &&
+      git p4 clone --dest="$git" //depot &&
+        (
+          cd "$git" &&
+          git checkout p4/master &&
+          >detached_head_test &&
+          git add detached_head_test &&
+          git commit -m "add detached_head" &&
+          git config git-p4.skipSubmitEdit true &&
+          git p4 submit &&
+            git p4 rebase &&
+            git log p4/master | grep detached_head
+        )
+    [...]
+    Depot paths: //depot/
+    Import destination: refs/remotes/p4/master
+    
+    Importing revision 9 (100%)Perforce db files in '.' will be created if missing...
+    Perforce db files in '.' will be created if missing...
+    
+    Traceback (most recent call last):
+      File "/home/runner/work/git/git/git-p4", line 4455, in <module>
+        main()
+      File "/home/runner/work/git/git/git-p4", line 4449, in main
+        if not cmd.run(args):
+      File "/home/runner/work/git/git/git-p4", line 2590, in run
+        rebase.rebase()
+      File "/home/runner/work/git/git/git-p4", line 4121, in rebase
+        if len(read_pipe("git diff-index HEAD --")) > 0:
+      File "/home/runner/work/git/git/git-p4", line 297, in read_pipe
+        retcode, out, err = read_pipe_full(c, *k, **kw)
+      File "/home/runner/work/git/git/git-p4", line 284, in read_pipe_full
+        p = subprocess.Popen(
+      File "/usr/lib/python3.8/subprocess.py", line 858, in __init__
+        self._execute_child(args, executable, preexec_fn, close_fds,
+      File "/usr/lib/python3.8/subprocess.py", line 1704, in _execute_child
+        raise child_exception_type(errno_num, err_msg, err_filename)
+    FileNotFoundError: [Errno 2] No such file or directory: 'git diff-index HEAD --'
+    error: last command exited with $?=1
+    + cleanup_git
+    + retry_until_success rm -r /home/runner/work/git/git/t/trash directory.t9800-git-p4-basic/git
+    + nr_tries_left=60
+    + rm -r /home/runner/work/git/git/t/trash directory.t9800-git-p4-basic/git
+    + test_path_is_missing /home/runner/work/git/git/t/trash directory.t9800-git-p4-basic/git
+    + test 1 -ne 1
+    + test -e /home/runner/work/git/git/t/trash directory.t9800-git-p4-basic/git
+    + retry_until_success mkdir /home/runner/work/git/git/t/trash directory.t9800-git-p4-basic/git
+    + nr_tries_left=60
+    + mkdir /home/runner/work/git/git/t/trash directory.t9800-git-p4-basic/git
+    + exit 1
+    + eval_ret=1
+    + :
+    not ok 20 - submit from detached head
+    #    
+    #        test_when_finished cleanup_git &&
+    #        git p4 clone --dest="$git" //depot &&
+    #        (
+    #            cd "$git" &&
+    #            git checkout p4/master &&
+    #            >detached_head_test &&
+    #            git add detached_head_test &&
+    #            git commit -m "add detached_head" &&
+    #            git config git-p4.skipSubmitEdit true &&
+    #            git p4 submit &&
+    #            git p4 rebase &&
+    #            git log p4/master | grep detached_head
+    #        )
+    #    
+  Error: failed: t9800.21 submit from worktree
+  [...]
+
+
+Is this the best UI we can have for test failures in CI runs? I hope we can
+do better. Having said that, this patch series presents a pretty good start,
+and offers a basis for future improvements.
+
+Johannes Schindelin (9):
+  ci: fix code style
+  ci/run-build-and-tests: take a more high-level view
+  ci: make it easier to find failed tests' logs in the GitHub workflow
+  ci/run-build-and-tests: add some structure to the GitHub workflow
+    output
+  tests: refactor --write-junit-xml code
+  test(junit): avoid line feeds in XML attributes
+  ci: optionally mark up output in the GitHub workflow
+  ci: use `--github-workflow-markup` in the GitHub workflow
+  ci: call `finalize_test_case_output` a little later
+
+ .github/workflows/main.yml           |  12 ---
+ ci/lib.sh                            |  81 ++++++++++++++--
+ ci/run-build-and-tests.sh            |  11 ++-
+ ci/run-test-slice.sh                 |   5 +-
+ t/test-lib-functions.sh              |   4 +-
+ t/test-lib-github-workflow-markup.sh |  50 ++++++++++
+ t/test-lib-junit.sh                  | 132 +++++++++++++++++++++++++++
+ t/test-lib.sh                        | 128 ++++----------------------
+ 8 files changed, 287 insertions(+), 136 deletions(-)
+ create mode 100644 t/test-lib-github-workflow-markup.sh
+ create mode 100644 t/test-lib-junit.sh
+
+
+base-commit: af4e5f569bc89f356eb34a9373d7f82aca6faa8a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1117%2Fdscho%2Fuse-grouping-in-ci-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1117/dscho/use-grouping-in-ci-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1117
+-- 
+gitgitgadget
