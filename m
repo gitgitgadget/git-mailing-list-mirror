@@ -2,98 +2,192 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCBAEC5AC75
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 23:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 784C8C5AC75
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 23:59:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234949AbiAYXjv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 18:39:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52094 "EHLO
+        id S235046AbiAYX7X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 18:59:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234946AbiAYXju (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 18:39:50 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15583C06161C
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 15:39:50 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id a4-20020a17090a70c400b001b21d9c8bc8so1862678pjm.7
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 15:39:50 -0800 (PST)
+        with ESMTP id S235042AbiAYX7W (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 18:59:22 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2DE8C06161C
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 15:59:21 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id o12so34494723eju.13
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 15:59:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=OAjmSRyQY7QYymsRzKoFbnpE+tlnsSFTv5b/vq7vWL0=;
-        b=qHqIbhU6az0wQJNq+PotmTItgO4Pa4EQWUDFo3gL6mfYuKyARGv4368gbZpA40SCYa
-         4uauNWNtsABONfwrRBBs3urA4Hln9beZeN0lHk2a0WOb+/elNormT65RtJrER7AGDkxr
-         bHPA3Kzi+GKAFxpv0bOLRbooxUujp04INkwUJbJw1CHv0CRyR3CR8v3Ta33giUgMcZ2U
-         qMTlHx0SKLqo71Az2t/I4QBEgowzuHzl2rdLTwQS8dv7ClxWTYNyaOEafaCpclF7WdLS
-         BxXUJ/7F4M+8cfPP9RC/7Kch4Yl8/IIzIUy/cUmWFXd6JJ8SMnmaTPla27N1en+yWLle
-         u/Zw==
+        bh=lx05+RsmZ0lhj7kU5w2c2mtFyUb9xMsyD8ZYovcrNe8=;
+        b=meEy21llnhNKM9EhlyPPKpK6Em6zk3ZM2y4VkkJ3PYId942FgoouLXdOtIuzDsE1TL
+         uNacA97CFtSvwzo5Qq25INDmuq0pCfvL6BUGpAhZr9iBYUyV8TNjSzT4aVn+LuqL/fR2
+         phnbO7ZW4e8d7YBahJO5zzsYWMiKhwzbvwL5hPLqHoOw/QhpX665gjyk8kakI9UkUrTe
+         jEd99HaoCGIJ19HBeu0kd3FyI3v45lO4V6xKFitP6NXCtz7lEsMx42Q8LVZB8r/qzMM8
+         BT4Z57anHXi3QQw686xMqMNC8t2UivxZq/xVoLJhG28N9qdHgzpkkKHXQrXUl84V0bu4
+         EdVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=OAjmSRyQY7QYymsRzKoFbnpE+tlnsSFTv5b/vq7vWL0=;
-        b=Vx5V8qaYHkdCofZedWqPlObNfxWl2yoCF0+URHNCUkq9FxVR/KV4AXat+fN6bchf0H
-         bu2AR5C3yL0qxdO2Fi/U31RBa1eV70mFgWWapzVplca7stqWCMF8vUiy5txvHngfdBjw
-         kJtBTmpr0rMRRqYLODsBRQdA5QrM0OST+WDq5hbXiM4XFyiZg2zaXQSoQBlgom+zS5wb
-         faDYH39q4AwzrZM77NQtRbtA7b6y4qcDVDzMnjNnaUZwsLilNQ27sTOmYal0BOoh1f2o
-         UDaflD/B8VZ42nAaDou3J9n4nRI8v1wydYrLIoyS4R5QWFyEJnWruUIsuh5RqrhYfDzA
-         DSPQ==
-X-Gm-Message-State: AOAM531MMg8cnq+kCeGNGg2ScX26Rum9We/8/jZjXnKYcX8xEDdCIfcd
-        eDHHgx802nXWhiK5JeqVz7TWTnXHxjaoQHLAJBPyjLp+nu6E3AxV4K+qa4Xskx8qiPgysDa5zk8
-        W5tZYlERs2kx9mXedOyC16dUq3BzHgR0cnT5wijc8BhEbEN/ytr/N2N+Wif82zbk=
-X-Google-Smtp-Source: ABdhPJytELdZtpmwYoI6yo6AUxPhUo1v0NDekPxzF2UP4AM7FiEHCB7AQVBeByDZXczoppyuftW8jzTvW/W5Hg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:be15:b0:149:a608:7098 with SMTP
- id r21-20020a170902be1500b00149a6087098mr20568628pls.63.1643153989526; Tue,
- 25 Jan 2022 15:39:49 -0800 (PST)
-Date:   Tue, 25 Jan 2022 15:39:48 -0800
-In-Reply-To: <20220125233612.46831-1-chooglen@google.com>
-Message-Id: <kl6lfspb1j23.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220125233612.46831-1-chooglen@google.com>
-Subject: Re: [PATCH] sequencer.c: set GIT_WORK_TREE in run_git_checkout
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lx05+RsmZ0lhj7kU5w2c2mtFyUb9xMsyD8ZYovcrNe8=;
+        b=IGoGiHLQbwxdtauIyz8AFqo4aGSPw7S04VJYOrZK8vEkhx4y9khjnNFI++u7WfGyDB
+         TWTV97gnQuaW/58xks3TVLAq8akKkxet3UdyU4ZIvaUXqYUYl8ErsWhMF25ULsgcimHY
+         duQguzwO4LvPWz4kH29Qge4vhHvkbOcxqAGuE+Duiw+g2F1nczErwsJKYFliL508K7+7
+         zaJvsMgnhNv3p3LwV0GsTcIcAEd5eRV0cTO70PJJbEkg/vh56798ZwR8u33HqPKSOYmz
+         vm6eyMEOxEevlfYn227HhjkaKduUUgP1wRbOtunM1+CDP0AzWcvpP89awai7ZIKGNefS
+         kVWg==
+X-Gm-Message-State: AOAM5337Qtz9MxZzo9FSKL2e/m1cpAT6jiN9+jUdGSUMKgvOX/O6k3+B
+        zpZiohfY+kMCH3FgpcDhDJePvg+IDfkwVM8pgHLSmBnoyWc=
+X-Google-Smtp-Source: ABdhPJwmjsavbaUaRT9WQbuC1FIWARCAf+uPGEC4EgjfZIRN4R0zV9xKgP2TnTNNtMTgwAPb7v8kPCofTGQoUKLQhfs=
+X-Received: by 2002:a17:907:2dac:: with SMTP id gt44mr3685913ejc.493.1643155160220;
+ Tue, 25 Jan 2022 15:59:20 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
+ <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com> <f8efb7446c33f14631b088ac043aca8a403a3250.1638340854.git.gitgitgadget@gmail.com>
+ <kl6lilu71rzl.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6lilu71rzl.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 25 Jan 2022 15:59:08 -0800
+Message-ID: <CABPp-BFdD=f82QvQfokD346YT6aCQ=WwZ09S-a=BPXXj5_LZkg@mail.gmail.com>
+Subject: Re: [Bug] Rebase from worktree subdir is broken (was Re: [PATCH v5
+ 07/11] rebase: do not attempt to remove startup_info->original_cwd)
+To:     Glen Choo <chooglen@google.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-
-> When rebasing in a subdirectory of a worktree, Git fails due to a dirty
-> worktree:
+On Tue, Jan 25, 2022 at 12:27 PM Glen Choo <chooglen@google.com> wrote:
 >
->   error: The following untracked working tree files would be overwritten
-> by merge:
+> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Since rebase spawns a `checkout` subprocess, make sure we run that from
+> > the startup_info->original_cwd directory, so that the checkout process
+> > knows to protect that directory.
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  sequencer.c          | 2 ++
+> >  t/t2501-cwd-empty.sh | 4 ++--
+> >  2 files changed, 4 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/sequencer.c b/sequencer.c
+> > index ea96837cde3..83f257e7fa4 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -4228,6 +4228,8 @@ static int run_git_checkout(struct repository *r, struct replay_opts *opts,
+> >
+> >       cmd.git_cmd = 1;
+> >
+> > +     if (startup_info->original_cwd)
+> > +             cmd.dir = startup_info->original_cwd;
+> >       strvec_push(&cmd.args, "checkout");
+> >       strvec_push(&cmd.args, commit);
+> >       strvec_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
+> > diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
+> > index b1182390ba3..52335a8afe9 100755
+> > --- a/t/t2501-cwd-empty.sh
+> > +++ b/t/t2501-cwd-empty.sh
+> > @@ -166,11 +166,11 @@ test_expect_success 'cherry-pick fails if cwd needs to be removed' '
+> >  '
+> >
+> >  test_expect_success 'rebase does not clean cwd incidentally' '
+> > -     test_incidental_dir_removal failure git rebase reverted
+> > +     test_incidental_dir_removal success git rebase reverted
+> >  '
+> >
+> >  test_expect_success 'rebase fails if cwd needs to be removed' '
+> > -     test_required_dir_removal failure git rebase fd_conflict
+> > +     test_required_dir_removal success git rebase fd_conflict
+> >  '
+> >
+> >  test_expect_success 'revert does not clean cwd incidentally' '
+> > --
+> > gitgitgadget
+>
+> This commit (which is already in master) introduces a bug that breaks
+> rebase when rebasing inside a subdirectory of a worktree. You can see
+> that the below test fails with:
+>
+>   error: The following untracked working tree files would be overwritten by merge:
 >           a/b/c
 >   Please move or remove them before you merge.
+
+Thanks for the detailed report -- with a full testcase!
+
+> This only affects subdirectories in worktrees, i.e. rebasing anywhere in
+> the `main-wt` directory is fine, and rebasing from the top of `other-wt`
+> is fine, but `other-wt/any/other/dir` fails.
 >
-> This occurs because "git rebase" invokes a "git checkout" without
-> propagating the GIT_WORK_TREE environment variable, causing the worktree
-> to be assumed to be ".". This was not an issue until bc3ae46b42 (rebase:
-> do not attempt to remove startup_info->original_cwd, 2021-12-09), when
-> the .dir of the "git checkout" child process was changed such that it no
-> longer runs at the root of the worktree.
->
-> Propagate GIT_WORK_TREE to the "git checkout" child process and test
-> that rebase in a subdirectory of a worktree succeeds.
->
-> Signed-off-by: Glen Choo <chooglen@google.com>
+> I haven't tracked down the root cause yet, but judging from the commit,
+> I would suppose that the checkout is being spawned in the wrong
+> directory, causing the files to not be cleaned up.
+
+There's nothing wrong with running checkout from a subdirectory.  It
+is unfortunate that setup.c auto-discovers both the git directory and
+the working tree, but sets GIT_DIR without setting GIT_WORK_TREE in
+the case of a non-main worktree; it's not particularly friendly for
+subcommands.  Of course, it's also unfortunate that sequencer still
+forks subprocesses other than those requested by a user with e.g.
+--exec.
+
+But, anyway, I've got a patch that I'll send as soon as it passes CI
+(https://github.com/git/git/pull/1205).
+
 > ---
-> Here is a fix for the bug I found in [1]. I didn't look through the rest
-> of the "preserve cwd" thread for other possible bugs pertaining to
-> worktrees, but I didn't find any during a cursory glance at sequencer.c.
+>  t/t3400-rebase.sh | 29 +++++++++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
 >
-> I'm also not sure if this is the idiomatic way to do it since, I assume,
-> we'd always want to propagate GIT_WORK_TREE, but this is identical to
-> how do_exec() sets GIT_WORK_TREE in the same file (perhaps this is
-> something that should be refactored).
+> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+> index 23dbd3c82e..8b8b66538b 100755
+> --- a/t/t3400-rebase.sh
+> +++ b/t/t3400-rebase.sh
+> @@ -416,4 +416,33 @@ test_expect_success MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs is a symlink'
+>         mv actual_logs .git/logs
+>  '
 >
-> [1] https://lore.kernel.org/git/kl6lilu71rzl.fsf@chooglen-macbookpro.roam.corp.google.com
-
-I forgot to add this to the previous email:
-
-cc-ing Junio because this bug is in master.
+> +test_expect_success 'rebase when inside worktree subdirectory' '
+> +       git init main-wt &&
+> +       (
+> +               cd main-wt &&
+> +               git commit --allow-empty -m "initial" &&
+> +               # create commit with foo/bar/baz
+> +               mkdir -p foo/bar &&
+> +               touch foo/bar/baz &&
+> +               git add foo/bar/baz &&
+> +               git commit -m "add foo/bar/baz" &&
+> +               # create commit with a/b/c
+> +               mkdir -p a/b &&
+> +               touch a/b/c &&
+> +               git add a/b/c &&
+> +               git commit -m "add a/b/c" &&
+> +               # create another branch for our other worktree
+> +               git branch other &&
+> +               git worktree add ../other-wt other &&
+> +               (
+> +                       cd ../other-wt &&
+> +                       mkdir -p random/dir &&
+> +                       (
+> +                               cd random/dir &&
+> +                               git rebase --onto HEAD^^ HEAD^  # drops the HEAD^ commit
+> +                       )
+> +               )
+> +       )
+> +'
+> +
+>  test_done
+> --
+> 2.35.0.rc0.227.g00780c9af4-goog
