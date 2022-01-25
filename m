@@ -2,100 +2,46 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCEC9C433F5
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 17:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EEC5C433F5
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 17:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1587297AbiAYRQd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 12:16:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47220 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238256AbiAYRNh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 12:13:37 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9FE1C06175E
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 09:12:23 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id a18so64422668edj.7
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 09:12:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=3ulb9rghKF+6CDWv56W41VBTR1Pdb5jJur02vn23Jek=;
-        b=q5wSo/QqYOXSu+OA2j6faw9To/TnU5l+763pYwFQ3d3Ongba6Nz8l5LEvNLz1H/1xB
-         VZi8WgK+5FTpDmrVP/Srj5M2j2wyKg3fIDJsJa9ipD9AdJstGnMr7v2pebGZOa9h5Kxk
-         0BzlwwK2RJc+80yQijh5pnr6sEM1/qZyF0pEyXiThD5czXdwKAaxEnL/yKwhPPxPQH0m
-         fxHZXBo9xOKtrSEpgan3JTa8MGOcy2qrjLlynxv5Z9c4Hfb56aIyMqu3M4nuurwzt0vV
-         iiQw3HBAkodDBIP6cF34CEKDahflHKsU9Q45PyAYk4A8+8EBy9UVlFP6W907FMKRvRUB
-         TyfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=3ulb9rghKF+6CDWv56W41VBTR1Pdb5jJur02vn23Jek=;
-        b=z1xjG8RzO2Tm2a7aiJggbdcZmsDHv06p/J/Hki1iTqE9QzXqWkzud4s8mPIGX+1Awn
-         pT616Ht5aa7Rgrg6X+rWT+56iPTSnpBBAXTtkdcJd4DoZWOMTBZzmSYJXfrZyxCAIGJ9
-         F4xPM+eIKImwyqUlhJpogmFeDuq+r/kaRKwmHBr+ZCh399ZmbqJ3tLBI7dzYrrROyWn2
-         FRLhMjXCzHFq07BMHYL8CTFK5HCdXG4KDIj9Lu1OwsF2ELVAAGa0XMY4856PDZNgk5eQ
-         4OgKHobkOEKtlKqduSdif7WrzedZQbXL7gvGEI6YihRFeYYnYNFPKMaYHrVKsqeb0C6x
-         k4eQ==
-X-Gm-Message-State: AOAM5338ScRMZZ3YrL94OlI5dAPUyvemwvjGr1AOCihsdhKgFL2Py7V7
-        zBn3yLH5dN7pLhoYjizgRIQFl1/k4vXpHg==
-X-Google-Smtp-Source: ABdhPJw+JOTg1Trc3OSshIG7zznBysx8GRRbUBF6JHErq5wB5upaBwfBw5vK3zho8MNdEtktsYhP5A==
-X-Received: by 2002:a05:6402:1bcc:: with SMTP id ch12mr21732315edb.227.1643130742145;
-        Tue, 25 Jan 2022 09:12:22 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id j15sm6386687ejx.199.2022.01.25.09.12.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jan 2022 09:12:21 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nCPMi-002v0j-Gy;
-        Tue, 25 Jan 2022 18:12:20 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Greg Hurrell <greg@hurrell.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] docs: Fix bad whitespace in
- Documentation/config/pgp.txt
-Date:   Tue, 25 Jan 2022 18:09:57 +0100
-References: <20220125123716.66991-1-greg@hurrell.net>
- <20220125123716.66991-2-greg@hurrell.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20220125123716.66991-2-greg@hurrell.net>
-Message-ID: <220125.861r0vhh8r.gmgdl@evledraar.gmail.com>
+        id S1345539AbiAYRbo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 12:31:44 -0500
+Received: from shell1.rawbw.com ([198.144.192.42]:53447 "EHLO shell1.rawbw.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1588269AbiAYR3x (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 12:29:53 -0500
+X-Greylist: delayed 955 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Jan 2022 12:29:53 EST
+Received: from [192.168.5.3] (c-73-189-35-76.hsd1.ca.comcast.net [73.189.35.76])
+        (authenticated bits=0)
+        by shell1.rawbw.com (8.15.1/8.15.1) with ESMTPSA id 20PHDYEe070105
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 09:13:53 -0800 (PST)
+        (envelope-from yuri@rawbw.com)
+X-Authentication-Warning: shell1.rawbw.com: Host c-73-189-35-76.hsd1.ca.comcast.net [73.189.35.76] claimed to be [192.168.5.3]
+Message-ID: <4493bcea-c7dd-da0a-e811-83044b3a1cac@tsoft.com>
+Date:   Tue, 25 Jan 2022 09:13:33 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Content-Language: en-US
+To:     Git Mailing List <git@vger.kernel.org>
+From:   Yuri <yuri@rawbw.com>
+Subject: 'git stash push' isn't atomic when Ctrl-C is pressed
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ctrl-C was pressed in the middle. git creates the stash record and 
+didn't update the files.
 
-On Tue, Jan 25 2022, Greg Hurrell wrote:
 
-nit @ subject: I'd suggest:
+Expected behavior: Ctrl-C should cleanly roll back the operation.
 
-	Documentation/config/pgp.txt: replace stray <TAB> character with <SPC>
 
-Or something, i.e. the "docs" can just be replaced by the filename, so
-we don't need to put it at the end.
 
-As general style, we tend to not have the <msg> part of "<subsystem>:
-<msg>" start with a capital letter, i.e. "fix" not "Fix".
+Yuri
 
-> Signed-off-by: Greg Hurrell <greg@hurrell.net>
-> ---
->  Documentation/config/gpg.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
-> index 0cb189a077..abfabd6d62 100644
-> --- a/Documentation/config/gpg.txt
-> +++ b/Documentation/config/gpg.txt
-> @@ -37,7 +37,7 @@ gpg.minTrustLevel::
->  gpg.ssh.defaultKeyCommand::
->  	This command that will be run when user.signingkey is not set and a ssh
->  	signature is requested. On successful exit a valid ssh public key is
-> -	expected in the	first line of its output. To automatically use the first
-> +	expected in the first line of its output. To automatically use the first
 
-Since I had to look it's a s/\t/ / of a tab between "the" and "first" in
-the pre-image>
