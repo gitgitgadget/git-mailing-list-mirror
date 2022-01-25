@@ -2,116 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AC94C4332F
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 16:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBF4AC433EF
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 17:09:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1586190AbiAYQvX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 11:51:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41888 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1586633AbiAYQuG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 11:50:06 -0500
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B57C06173D
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 08:50:06 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id q127so2885657ljq.2
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 08:50:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=18W9gwjKg0F2GXKSWtzFFSoZI103NWkAR6xaTRCr++E=;
-        b=T4ZQv7chzoCNBoYnsfcrfqh2Ix7YaPRUzt5w/NCOypJf/uakNpujOULauiJoQiYg8B
-         myNUyOS+7dSqcjj9Yw7Sv3twsnk8twR85aNFmUQZu89H2sUfcliKR76szNxzTmT0HQ4K
-         hwLtjWQ7pRN9yx8ZK/SXiWuW3Dp+CP/PRLmfM6Z0ehPxV+Vq302C0d9hHwITocmLQEkF
-         SIFiRBCmdeyDkfDiaU9ejCe69kpFDKNk5gVzBSpXvpU9RheYTiFJKEVPH1MNPMyWVaME
-         pe3r+H2mGfUh4DFoSwiZiSqqyesRr++3i/SPpR0aw+dUP9RgYjF2I0WQ3kioE32kEIwb
-         JSeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=18W9gwjKg0F2GXKSWtzFFSoZI103NWkAR6xaTRCr++E=;
-        b=Xc5A6sUyh20F+XCG33IlBPXAQP7Hg9dtJVTb/jr4SH1bqndK/PkTT9COlhqZAo9dP1
-         pXMRVvtwcbXuOzoDqWb36vj+bfOUsXe3CZ4HMX60FC1CSflDLExdc4SxrHMQj/YT/2aZ
-         9pPI3XExSU+KDlbwmy0pUEaqwdFNrMpUnqL58TM7wkj5BpTGD3j+avbm+kJc52bq+qfs
-         cnYWE3zzaQu17zkH+g2/p/fn0IRV7/ODOR0OubKYo5MHiUfZe2xjBDbAHQquxsZTe5w8
-         8M8tpWKHdtKv0rvSCDXULqQWKTgxaD/dX1SALRqTnIfi/3Cbk2lLnUjQb+m/NFeh3mvs
-         fVLg==
-X-Gm-Message-State: AOAM532qmDkhS6zKxA8OnQNTFO2BCO3fML/TqU+ohdMHGrc9J6enOlgR
-        t6s9BBmLf1bAyhZLEflqSY/2vyygVAdrVdYye/E=
-X-Google-Smtp-Source: ABdhPJwEVi4XoD6THP5YxfX6YjeR8tq+oAqx937mGQK3p+fIuwu6TjSAWffiQYYOBAhgEg7pDbkSE8bpFE6Kv3o8Xzc=
-X-Received: by 2002:a2e:584f:: with SMTP id x15mr7836744ljd.395.1643129404180;
- Tue, 25 Jan 2022 08:50:04 -0800 (PST)
+        id S1348819AbiAYRJk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 12:09:40 -0500
+Received: from mout.gmx.net ([212.227.15.19]:36475 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1354099AbiAYRHr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 12:07:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1643130454;
+        bh=0BzJfvWZ+hzVznOd9zFxxMqHjzksvu2xCOVtAe2mck0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BWZC6jtnod632oZTkrt9vS5pU8n080Us1hoILtuxBQ1T+Bu22/mtxmD8MpdwP8w7G
+         8fhFR42xlf/jTgma340lQABeqx855bdJat4VkBwZ2oThtRq36ETYbejuiGkTzueKa0
+         l1qLMbzTnL1GkBxegBANsgSYQLOMUvlLQoslTivQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.174.184] ([89.1.213.181]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M9nxn-1n9Oc72iYv-005mnn; Tue, 25
+ Jan 2022 18:07:34 +0100
+Date:   Tue, 25 Jan 2022 18:07:32 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 04/12] merge-tree: implement real merges
+In-Reply-To: <05bd17686e1404c81542b6bbf69dcd3decb83c5b.1642888562.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201251804250.2121@tvgsbejvaqbjf.bet>
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com> <05bd17686e1404c81542b6bbf69dcd3decb83c5b.1642888562.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.1124.git.1642987616372.gitgitgadget@gmail.com> <xmqqk0eo1zhu.fsf@gitster.g>
-In-Reply-To: <xmqqk0eo1zhu.fsf@gitster.g>
-From:   Bojun Chen <bojun.cbj@gmail.com>
-Date:   Wed, 26 Jan 2022 00:49:52 +0800
-Message-ID: <CADuS7Aov-J4LjAm_e_DOHaAba9JHFFV-2trxBywzL4vtwuvr4Q@mail.gmail.com>
-Subject: Re: [PATCH] receive-pack: purge temporary data if no command is ready
- to run
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     BoJun via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Chen Bojun <bojun.cbj@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:/97I+lz9V67YhrZLelVRHEs7xEkE2L/pgA/dmbBaKO+RrZimTZG
+ ll60Dwacnbn0klBCgKK0ZTE29EBO4tFQPu+YYhPc/de6Fbp9HpyVutFZs5b1JQ0oCAM838T
+ qXTKckUcJqx55MCMo6sAB60h+rT+bVR9djO6MqtycNQfaVsQz17hBTp+grqzy+PEitix/dW
+ swWvpDOXQoSFmqC14HPGQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lRH8Wcatszg=:nbK5i07lFx7e0oVOTt1r9l
+ hkat9LvkSHYINqDY9Bj39Q1RICykZ+RuClvizHL8hsD7mjROV4bEHyow8jfc2Dj8HS5eIIMVh
+ vJy/NTtP1jJ4ghbQZtpA6XdU6V1EfnOL6A23SW9nvPilN4ONo1e56K+eDZDvPCWsy++6RvoSV
+ jsh6/I+ySaLoPdx338LWqRi9kNC3jlwrhmaDbILaI04H4HcdEro40BivTwOM/UpNQ3Ge07FkR
+ ZWWEcAO0tyb1DFbEUO4lS3xR2zB4UVctNdF9Mh1kXr33SKULOHDW1WaWOPZcx+nyLJkqd1NFZ
+ HzU/V2xoseeOqHmMS288OnYWzASqUktQEMHDLMgoTih9w1rc8ZudR+fq7BvizZJ+wmcoOKK/u
+ L9uFHKzJ/CSWreSFJ4J2k93EEqqtqNNxmjf/565C3knU2WOnTb0Ub8gRjCEVVOu/JI4Am6yH4
+ rIcibo9o/1iYdPvciLBCp1GJ4Cj21Hi3mzAb6wbjVZaOtu2Cr+6ixtx9wmuyL7w9J/qsUafrD
+ qZBEWgBrV7YBW1qumcmsqlcM1c+echYp5DOkkd0ElBQb4OFTc6V6SOOH3MVqxOJjK+4SkghEb
+ FJE4y4TZ+Nh3tGu3CpUqDkEOIjo+4MbUP477o11TPZ8WCWdsHn5Src/9gTQShZXqlrO5g5UDc
+ YI6TLVkYjVEjigumgfC3aJtIH8t/JBZkvHQEPSe64WJ9t04Wnn6N5At74DvlGgf80+j7irNek
+ S4jWfIWj7KShCLEJv3jLublizef5YIiliSqP4XXIen0iJg5xs7wa0Fk8zRKgZ1osBmi7wC00n
+ ng7CHThRjBtyFm+4+gZDQJa5xbG1HEokcNQlOcBAoWlXnXStEnJLv0nmSK70TyRxocxjbn1Zq
+ 7BffX3vULhn4Bj8OhTpJXmrq933L0DpRnaqVLYXMa+8VJA7v2uLIKGrxLPJGAPDVbCR2Ls+T1
+ aCm0CIkKm1t5Hhtl/woHXcbuMADrGFNkH2+BLBzQ7/EVNBxu8QMQKBqXqGczik7fyEG/13QnV
+ oNGaAYPQ0TkuCVYgfqgmFfe5TThu/RdHADbPwpL/65pt0cM5etO0x6Gp0GyaCJBmzD+ahj6tD
+ Xy3ernzlMlvVNU=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B41=E6=9C=8825=E6=97=
-=A5=E5=91=A8=E4=BA=8C 07:32=E5=86=99=E9=81=93=EF=BC=9A
->
-> > +     /*
-> > +      * If there is no command ready to run, should return directly to=
- destroy
-> > +      * temporary data in the quarantine area.
-> > +      */
-> > +     for (cmd =3D commands; cmd && cmd->error_string; cmd =3D cmd->nex=
-t);
->
-> Write the empty body of the loop like this:
->
->         for (...)
->                 ; /* nothing */
->
-> to make it stand out.
->
+Hi Elijah,
 
-Thanks for the suggestion, this is more readable.
+On Sat, 22 Jan 2022, Elijah Newren via GitGitGadget wrote:
 
-> > +     if (!cmd)
-> > +             return;
-> > +
->
-> > -mk_empty () {
-> > +mk_empty() {
-> >       repo_name=3D"$1"
-> >       rm -fr "$repo_name" &&
-> > -     mkdir "$repo_name" &&
-> > -     (
-> > -             cd "$repo_name" &&
-> > -             git init &&
-> > -             git config receive.denyCurrentBranch warn &&
-> > -             mv .git/hooks .git/hooks-disabled
-> > -     )
-> > +             mkdir "$repo_name" &&
-> > +             (
-> > +                     cd "$repo_name" &&
-> > +                             git init &&
-> > +                             git config receive.denyCurrentBranch warn=
- &&
-> > +                             mv .git/hooks .git/hooks-disabled
-> > +             )
-> >  }
->
-> Documentation/CodingGuidelines.  As far as I can tell, the above
-> does not change anything the function does, and the only change in
-> the patch is to violate the style guide badly.  Why?
+> +The second form is deprecated; it is kept for backward compatibility
+> +reasons but may be deleted in the future.  It will only do a trivial
+> +merge.  It reads three tree-ish, and outputs trivial merge results and
+> +conflicting stages to the standard output in a semi-diff format.
+> +Since this was designed for higher level scripts to consume and merge
+> +the results back into the index, it omits entries that match
+> +<branch1>.  The result of this second form is is similar to what
 
-Sorry. I'll roll back these formatting issues. Jiang Xin reminded me to
-look at this document, but I did miss an important part. At the same
-time, I used a wrong range-diff command in the review I sent internally
-earlier, which made my changes look like "mk_empty() {"
-to "mk_empty () {". So this problem was not detected in time.
+There is a double "is" in this line. Taking a step back, I would suggest
+to not only remove this paragraph, but to mark the `[--trivial-merge]`
+option clearly as `(DEPRECATED)`.
+
+> +three-way 'git read-tree -m' does, but instead of storing the results
+> +in the index, the command outputs the entries to the standard output.
+> +This form not only has limited applicability, the output format is
+> +also difficult to work with, and it will generally be less performant
+> +than the first form even on successful merges (especially if working
+> +in large repositories).  The remainder of this manual will only
+> +discuss the first form.
+
+Thank you,
+Dscho
