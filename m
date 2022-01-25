@@ -2,58 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9397BC433EF
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 22:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 186B4C433F5
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 22:41:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233999AbiAYWlY (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S234004AbiAYWlY (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 25 Jan 2022 17:41:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38418 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234009AbiAYWlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 17:41:18 -0500
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0233C061744
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 14:41:16 -0800 (PST)
-Received: by mail-io1-xd34.google.com with SMTP id e79so25498773iof.13
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 14:41:16 -0800 (PST)
+        with ESMTP id S233979AbiAYWlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 17:41:19 -0500
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5972CC06173B
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 14:41:19 -0800 (PST)
+Received: by mail-io1-xd2d.google.com with SMTP id h7so7590445iof.3
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 14:41:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ahHgmFwDyherQZGLThvnABviCUK+6qUyvDyUogSc9Kk=;
-        b=X8sOB3T+dH4pxibrjn/fkmzHNC6LMOOofc8aFBISAc/pKVkIuqKT0ETFaWYk1jmfz2
-         +T0BfOvYfHyRc7ui+9YN31GFr1euGs4C5ZZA1tw01uWkumLZ+9yQ6527cWIk7xfFWKAa
-         ookNm9070Ez9l5fjCQoQfCXcGCCZvdodKCJwFh2zjUK6XPZD8NJrTF7FQF6V1Bq34p7I
-         E81PohCooRZhSPt2CqcqrmWTJIeQsJOV5K4PiiRAWYCCthq0RpvqC4rT4betuNRey0C8
-         WKDMHewNIiPUsLtFMqMkCaXZ4Ar/wVyKfV4kXUJyz4UxA0nsAqCmibtwBZlstOD4zO4O
-         uUjA==
+        bh=ZCBeKYSESM6PQ6DMU6B7r2y6ketx6stqiAumtrKpXSQ=;
+        b=I6+L+iN83EfcMkXATi/t99mFSv/AGP12k+tZWTti+QmsfHhiz0hfGOY4ofXJBXGZTe
+         US5BAA+TSo9x23KC+bvbxXnB0Wv5ZRALN+X9j78FESom8Z3UBzLkikPSuFs4I2bagHit
+         53sr2yG8hgWedsNgBrtlqK+b3/ASXJU6M736K5niiCPlvQK4tSOc000r1uq97U8t5ob5
+         7ZPsRiuNjRKBmJyx/FTKqw8zGSCkhrlIyVOTQbxA39PRB935hdgq91gF/tbiewLuoOqr
+         Lpl0OTcuqZ92N7KeBgrkEr7kUf6o150nVbAsGTIn6Z8ztaXW7zK1gMg/rYBZ7Pc7gMuj
+         fJyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ahHgmFwDyherQZGLThvnABviCUK+6qUyvDyUogSc9Kk=;
-        b=qaIzo5PLXVY125xOYghtxVmsuO+Bxs3Lr37oSmMQU2ZHvwVRXqNdgYRjj/07H1RvdN
-         U8AnXtm4JiTGbATadZ+lwHlifOxsRe7+h6a687pxzTHOXvqhjLAuxsyb1Gq7ucWssGia
-         K0js4kZGdvBlWyOJrPBRtK00RkcTePnmVRn8q3lf6Oc0O5EJDVI9UfU2uPsA/790bryz
-         6jzOfP4BdByqpxb/wU3HvTFr1BRLncnkMpCPbG2Mb0ZEhWq3/GP68UCgmULIrGh8M9mh
-         xoj2sphGkl5S7Tpgfc7H8MVxR+Ih6NZm6/6p1t/DYburw6iFhEOxxCznic6JZUmKRqQI
-         dnHw==
-X-Gm-Message-State: AOAM531F9ukZPaCAWGP89jriwIcBl2/9buCsWjlAtGEcHu/uumkNm7p+
-        6MMBsA9jTpO6B6pAoen6gXla7/dRY7IuSw==
-X-Google-Smtp-Source: ABdhPJzwNZZOxSY1iNeXsEs24nIOPeRPnrYMXLQ8s5gsH6PxR18U2FZPxl7GddGGJy5XddZdDfm+mA==
-X-Received: by 2002:a5e:dc44:: with SMTP id s4mr4603198iop.143.1643150476252;
-        Tue, 25 Jan 2022 14:41:16 -0800 (PST)
+        bh=ZCBeKYSESM6PQ6DMU6B7r2y6ketx6stqiAumtrKpXSQ=;
+        b=kg7KTrwlFRaoV3T/oEnSujlfXDeZOG/S27gY69cu5mgfbq+wbqca637y2iPQ5AfOx5
+         yc+oyGRF27H9pbEt+SxKCnIB6m60Dq8Sfx5KJ9gSOgyArScsRus1dCETC4mafcgN1Hm+
+         jwbiBr4Dvm2ixZ33q77ZFGiq4wzCNgIslg5af1U+9Yu/RAGGnABHyhETGCyr3hQo9eUd
+         arBq495xmx7JA6i1jTNCH8FdclVBXK221E3WQ0CuMVXzRwMAEcM1Vo52RWqAeI232QX/
+         pLFJn71JPXppZeBrN6E1quxlQ4hMJGcGljQgJMuGMvPRPXj8IbEg3rG7kwSV1BL+zenm
+         sL8g==
+X-Gm-Message-State: AOAM530lsp5GpQYWMISBf6ADKFjBadZywiOylN73ujHZpaFfXhzxXh0z
+        6vhLfyZCTHFVMt5Nmpa+vGTHP/DEZqTAag==
+X-Google-Smtp-Source: ABdhPJyvrb7mDd/SJ4lfZ/Cl7FLaWJGqxsEDcHBDVT8T+hrtIPVwZgoNYUX+SMsWGRvzl/d1HB0bfw==
+X-Received: by 2002:a05:6638:a3c:: with SMTP id 28mr11429254jao.281.1643150478605;
+        Tue, 25 Jan 2022 14:41:18 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id p9sm9480714iln.61.2022.01.25.14.41.15
+        by smtp.gmail.com with ESMTPSA id z6sm10038982ilu.42.2022.01.25.14.41.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jan 2022 14:41:16 -0800 (PST)
-Date:   Tue, 25 Jan 2022 17:41:15 -0500
+        Tue, 25 Jan 2022 14:41:18 -0800 (PST)
+Date:   Tue, 25 Jan 2022 17:41:17 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, jonathantanmy@google.com, stolee@gmail.com
-Subject: [PATCH v4 7/9] t/lib-bitmap.sh: parameterize tests over reverse
- index source
-Message-ID: <3f35ef64991cae47024ee1d2ce17d800094c59f7.1643150456.git.me@ttaylorr.com>
+Subject: [PATCH v4 8/9] midx: read `RIDX` chunk when present
+Message-ID: <94563cf038722852d801bd0a8e744a569799f354.1643150456.git.me@ttaylorr.com>
 References: <cover.1638991570.git.me@ttaylorr.com>
  <cover.1643150456.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -64,90 +63,212 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To prepare for reading the reverse index data out of the MIDX itself,
-teach the `test_rev_exists` function to take an expected "source" for
-the reverse index data.
+When a MIDX contains the new `RIDX` chunk, ensure that the reverse index
+is read from it instead of the on-disk .rev file. Since we need to
+encode the object order in the MIDX itself for correctness reasons,
+there is no point in storing the same data again outside of the MIDX.
 
-When given "rev", it asserts that the MIDX's `.rev` file exists, and is
-loaded when verifying the integrity of its bitmaps. Otherwise, it
-ensures that trace2 reports the source of the reverse index data as the
-same string which was given to test_rev_exists().
+So, this patch stops writing separate .rev files, and reads it out of
+the MIDX itself. This is possible to do with relatively little new code,
+since the format of the RIDX chunk is identical to the data in the .rev
+file. In other words, we can implement this by pointing the
+`revindex_data` field at the reverse index chunk of the MIDX instead of
+the .rev file without any other changes.
 
-The following patch will implement reading the reverse index data from
-the MIDX itself.
+Note that we have two knobs that are adjusted for the new tests:
+GIT_TEST_MIDX_WRITE_REV and GIT_TEST_MIDX_READ_RIDX. The former controls
+whether the MIDX .rev is written at all, and the latter controls whether
+we read the MIDX's RIDX chunk.
+
+Both are necessary to ensure that the test added at the beginning of
+this series continues to work. This is because we always need to write
+the RIDX chunk in the MIDX in order to change its checksum, but we want
+to make sure reading the existing .rev file still works (since the RIDX
+chunk takes precedence by default).
+
+Arguably this isn't a very interesting mode to test, because the
+precedence rules mean that we'll always read the RIDX chunk over the
+.rev file. But it makes it impossible for a user to induce corruption in
+their repository by adjusting the test knobs (since if we had an
+either/or knob they could stop writing the RIDX chunk, allowing them to
+tweak the MIDX's object order without changing its checksum).
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/lib-bitmap.sh | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ midx.c                            |  6 +++++-
+ midx.h                            |  1 +
+ pack-revindex.c                   | 17 +++++++++++++++++
+ t/lib-bitmap.sh                   |  4 ++--
+ t/t5326-multi-pack-bitmaps.sh     |  6 ++++++
+ t/t5327-multi-pack-bitmaps-rev.sh | 23 +++++++++++++++++++++++
+ t/t7700-repack.sh                 |  4 ----
+ 7 files changed, 54 insertions(+), 7 deletions(-)
+ create mode 100755 t/t5327-multi-pack-bitmaps-rev.sh
 
+diff --git a/midx.c b/midx.c
+index 0248c4577c..6e6cb0eb04 100644
+--- a/midx.c
++++ b/midx.c
+@@ -162,6 +162,9 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir, int local
+ 
+ 	pair_chunk(cf, MIDX_CHUNKID_LARGEOFFSETS, &m->chunk_large_offsets);
+ 
++	if (git_env_bool("GIT_TEST_MIDX_READ_RIDX", 1))
++		pair_chunk(cf, MIDX_CHUNKID_REVINDEX, &m->chunk_revindex);
++
+ 	m->num_objects = ntohl(m->chunk_oid_fanout[255]);
+ 
+ 	CALLOC_ARRAY(m->pack_names, m->num_packs);
+@@ -1429,7 +1432,8 @@ static int write_midx_internal(const char *object_dir,
+ 	finalize_hashfile(f, midx_hash, CSUM_FSYNC | CSUM_HASH_IN_STREAM);
+ 	free_chunkfile(cf);
+ 
+-	if (flags & MIDX_WRITE_REV_INDEX)
++	if (flags & MIDX_WRITE_REV_INDEX &&
++	    git_env_bool("GIT_TEST_MIDX_WRITE_REV", 0))
+ 		write_midx_reverse_index(midx_name.buf, midx_hash, &ctx);
+ 	if (flags & MIDX_WRITE_BITMAP) {
+ 		if (write_midx_bitmap(midx_name.buf, midx_hash, &ctx,
+diff --git a/midx.h b/midx.h
+index b7d79a515c..22e8e53288 100644
+--- a/midx.h
++++ b/midx.h
+@@ -36,6 +36,7 @@ struct multi_pack_index {
+ 	const unsigned char *chunk_oid_lookup;
+ 	const unsigned char *chunk_object_offsets;
+ 	const unsigned char *chunk_large_offsets;
++	const unsigned char *chunk_revindex;
+ 
+ 	const char **pack_names;
+ 	struct packed_git **packs;
+diff --git a/pack-revindex.c b/pack-revindex.c
+index bd15ebad03..08dc160167 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -298,9 +298,26 @@ int load_midx_revindex(struct multi_pack_index *m)
+ {
+ 	struct strbuf revindex_name = STRBUF_INIT;
+ 	int ret;
++
+ 	if (m->revindex_data)
+ 		return 0;
+ 
++	if (m->chunk_revindex) {
++		/*
++		 * If the MIDX `m` has a `RIDX` chunk, then use its contents for
++		 * the reverse index instead of trying to load a separate `.rev`
++		 * file.
++		 *
++		 * Note that we do *not* set `m->revindex_map` here, since we do
++		 * not want to accidentally call munmap() in the middle of the
++		 * MIDX.
++		 */
++		trace2_data_string("load_midx_revindex", the_repository,
++				   "source", "midx");
++		m->revindex_data = (const uint32_t *)m->chunk_revindex;
++		return 0;
++	}
++
+ 	trace2_data_string("load_midx_revindex", the_repository,
+ 			   "source", "rev");
+ 
 diff --git a/t/lib-bitmap.sh b/t/lib-bitmap.sh
-index 48a8730a13..253895c04e 100644
+index 253895c04e..a95537e759 100644
 --- a/t/lib-bitmap.sh
 +++ b/t/lib-bitmap.sh
-@@ -275,17 +275,23 @@ midx_pack_source () {
- 
- test_rev_exists () {
- 	commit="$1"
-+	kind="$2"
- 
--	test_expect_success 'reverse index exists' '
-+	test_expect_success "reverse index exists ($kind)" '
- 		GIT_TRACE2_EVENT=$(pwd)/event.trace \
- 			git rev-list --test-bitmap "$commit" &&
- 
--		test_path_is_file $midx-$(midx_checksum $objdir).rev &&
--		grep "\"category\":\"load_midx_revindex\",\"key\":\"source\",\"value\":\"rev\"" event.trace
-+		if test "rev" = "$kind"
-+		then
-+			test_path_is_file $midx-$(midx_checksum $objdir).rev
-+		fi &&
-+		grep "\"category\":\"load_midx_revindex\",\"key\":\"source\",\"value\":\"$kind\"" event.trace
- 	'
+@@ -290,7 +290,7 @@ test_rev_exists () {
  }
  
  midx_bitmap_core () {
-+	rev_kind="${1:-rev}"
-+
+-	rev_kind="${1:-rev}"
++	rev_kind="${1:-midx}"
+ 
  	setup_bitmap_history
  
- 	test_expect_success 'create single-pack midx with bitmaps' '
-@@ -295,7 +301,7 @@ midx_bitmap_core () {
- 		test_path_is_file $midx-$(midx_checksum $objdir).bitmap
- 	'
- 
--	test_rev_exists HEAD
-+	test_rev_exists HEAD "$rev_kind"
- 
- 	basic_bitmap_tests
- 
-@@ -325,7 +331,7 @@ midx_bitmap_core () {
- 		test_path_is_file $midx-$(midx_checksum $objdir).bitmap
- 	'
- 
--	test_rev_exists HEAD
-+	test_rev_exists HEAD "$rev_kind"
- 
- 	basic_bitmap_tests
- 
-@@ -428,6 +434,8 @@ midx_bitmap_core () {
+@@ -434,7 +434,7 @@ midx_bitmap_core () {
  }
  
  midx_bitmap_partial_tests () {
-+	rev_kind="${1:-rev}"
-+
+-	rev_kind="${1:-rev}"
++	rev_kind="${1:-midx}"
+ 
  	test_expect_success 'setup partial bitmaps' '
  		test_commit packed &&
- 		git repack &&
-@@ -437,7 +445,7 @@ midx_bitmap_partial_tests () {
- 		test_path_is_file $midx-$(midx_checksum $objdir).bitmap
- 	'
+diff --git a/t/t5326-multi-pack-bitmaps.sh b/t/t5326-multi-pack-bitmaps.sh
+index 100ac90d15..c0924074c4 100755
+--- a/t/t5326-multi-pack-bitmaps.sh
++++ b/t/t5326-multi-pack-bitmaps.sh
+@@ -9,6 +9,12 @@ test_description='exercise basic multi-pack bitmap functionality'
+ GIT_TEST_MULTI_PACK_INDEX=0
+ GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
  
--	test_rev_exists HEAD~
-+	test_rev_exists HEAD~ "$rev_kind"
++# This test exercise multi-pack bitmap functionality where the object order is
++# stored and read from a special chunk within the MIDX, so use the default
++# behavior here.
++sane_unset GIT_TEST_MIDX_WRITE_REV
++sane_unset GIT_TEST_MIDX_READ_RIDX
++
+ midx_bitmap_core
  
- 	basic_bitmap_tests HEAD~
- }
+ bitmap_reuse_tests() {
+diff --git a/t/t5327-multi-pack-bitmaps-rev.sh b/t/t5327-multi-pack-bitmaps-rev.sh
+new file mode 100755
+index 0000000000..d30ba632c8
+--- /dev/null
++++ b/t/t5327-multi-pack-bitmaps-rev.sh
+@@ -0,0 +1,23 @@
++#!/bin/sh
++
++test_description='exercise basic multi-pack bitmap functionality (.rev files)'
++
++. ./test-lib.sh
++. "${TEST_DIRECTORY}/lib-bitmap.sh"
++
++# We'll be writing our own midx and bitmaps, so avoid getting confused by the
++# automatic ones.
++GIT_TEST_MULTI_PACK_INDEX=0
++GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=0
++
++# Unlike t5326, this test exercise multi-pack bitmap functionality where the
++# object order is stored in a separate .rev file.
++GIT_TEST_MIDX_WRITE_REV=1
++GIT_TEST_MIDX_READ_RIDX=0
++export GIT_TEST_MIDX_WRITE_REV
++export GIT_TEST_MIDX_READ_RIDX
++
++midx_bitmap_core rev
++midx_bitmap_partial_tests rev
++
++test_done
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index e489869dd9..5922fb5bdd 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -312,16 +312,13 @@ test_expect_success 'cleans up MIDX when appropriate' '
+ 		checksum=$(midx_checksum $objdir) &&
+ 		test_path_is_file $midx &&
+ 		test_path_is_file $midx-$checksum.bitmap &&
+-		test_path_is_file $midx-$checksum.rev &&
+ 
+ 		test_commit repack-3 &&
+ 		GIT_TEST_MULTI_PACK_INDEX=0 git repack -Adb --write-midx &&
+ 
+ 		test_path_is_file $midx &&
+ 		test_path_is_missing $midx-$checksum.bitmap &&
+-		test_path_is_missing $midx-$checksum.rev &&
+ 		test_path_is_file $midx-$(midx_checksum $objdir).bitmap &&
+-		test_path_is_file $midx-$(midx_checksum $objdir).rev &&
+ 
+ 		test_commit repack-4 &&
+ 		GIT_TEST_MULTI_PACK_INDEX=0 git repack -Adb &&
+@@ -354,7 +351,6 @@ test_expect_success '--write-midx with preferred bitmap tips' '
+ 		test_line_count = 1 before &&
+ 
+ 		rm -fr $midx-$(midx_checksum $objdir).bitmap &&
+-		rm -fr $midx-$(midx_checksum $objdir).rev &&
+ 		rm -fr $midx &&
+ 
+ 		# instead of constructing the snapshot ourselves (c.f., the test
 -- 
 2.34.1.455.gd6eb6fd089
 
