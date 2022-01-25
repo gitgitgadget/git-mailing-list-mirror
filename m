@@ -2,93 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CBF4AC433EF
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 17:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCEC9C433F5
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 17:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348819AbiAYRJk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 12:09:40 -0500
-Received: from mout.gmx.net ([212.227.15.19]:36475 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1354099AbiAYRHr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 12:07:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1643130454;
-        bh=0BzJfvWZ+hzVznOd9zFxxMqHjzksvu2xCOVtAe2mck0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=BWZC6jtnod632oZTkrt9vS5pU8n080Us1hoILtuxBQ1T+Bu22/mtxmD8MpdwP8w7G
-         8fhFR42xlf/jTgma340lQABeqx855bdJat4VkBwZ2oThtRq36ETYbejuiGkTzueKa0
-         l1qLMbzTnL1GkBxegBANsgSYQLOMUvlLQoslTivQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.174.184] ([89.1.213.181]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M9nxn-1n9Oc72iYv-005mnn; Tue, 25
- Jan 2022 18:07:34 +0100
-Date:   Tue, 25 Jan 2022 18:07:32 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 04/12] merge-tree: implement real merges
-In-Reply-To: <05bd17686e1404c81542b6bbf69dcd3decb83c5b.1642888562.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2201251804250.2121@tvgsbejvaqbjf.bet>
-References: <pull.1122.git.1642888562.gitgitgadget@gmail.com> <05bd17686e1404c81542b6bbf69dcd3decb83c5b.1642888562.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1587297AbiAYRQd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 12:16:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47220 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238256AbiAYRNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 12:13:37 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9FE1C06175E
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 09:12:23 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id a18so64422668edj.7
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 09:12:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=3ulb9rghKF+6CDWv56W41VBTR1Pdb5jJur02vn23Jek=;
+        b=q5wSo/QqYOXSu+OA2j6faw9To/TnU5l+763pYwFQ3d3Ongba6Nz8l5LEvNLz1H/1xB
+         VZi8WgK+5FTpDmrVP/Srj5M2j2wyKg3fIDJsJa9ipD9AdJstGnMr7v2pebGZOa9h5Kxk
+         0BzlwwK2RJc+80yQijh5pnr6sEM1/qZyF0pEyXiThD5czXdwKAaxEnL/yKwhPPxPQH0m
+         fxHZXBo9xOKtrSEpgan3JTa8MGOcy2qrjLlynxv5Z9c4Hfb56aIyMqu3M4nuurwzt0vV
+         iiQw3HBAkodDBIP6cF34CEKDahflHKsU9Q45PyAYk4A8+8EBy9UVlFP6W907FMKRvRUB
+         TyfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=3ulb9rghKF+6CDWv56W41VBTR1Pdb5jJur02vn23Jek=;
+        b=z1xjG8RzO2Tm2a7aiJggbdcZmsDHv06p/J/Hki1iTqE9QzXqWkzud4s8mPIGX+1Awn
+         pT616Ht5aa7Rgrg6X+rWT+56iPTSnpBBAXTtkdcJd4DoZWOMTBZzmSYJXfrZyxCAIGJ9
+         F4xPM+eIKImwyqUlhJpogmFeDuq+r/kaRKwmHBr+ZCh399ZmbqJ3tLBI7dzYrrROyWn2
+         FRLhMjXCzHFq07BMHYL8CTFK5HCdXG4KDIj9Lu1OwsF2ELVAAGa0XMY4856PDZNgk5eQ
+         4OgKHobkOEKtlKqduSdif7WrzedZQbXL7gvGEI6YihRFeYYnYNFPKMaYHrVKsqeb0C6x
+         k4eQ==
+X-Gm-Message-State: AOAM5338ScRMZZ3YrL94OlI5dAPUyvemwvjGr1AOCihsdhKgFL2Py7V7
+        zBn3yLH5dN7pLhoYjizgRIQFl1/k4vXpHg==
+X-Google-Smtp-Source: ABdhPJw+JOTg1Trc3OSshIG7zznBysx8GRRbUBF6JHErq5wB5upaBwfBw5vK3zho8MNdEtktsYhP5A==
+X-Received: by 2002:a05:6402:1bcc:: with SMTP id ch12mr21732315edb.227.1643130742145;
+        Tue, 25 Jan 2022 09:12:22 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id j15sm6386687ejx.199.2022.01.25.09.12.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jan 2022 09:12:21 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nCPMi-002v0j-Gy;
+        Tue, 25 Jan 2022 18:12:20 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Greg Hurrell <greg@hurrell.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] docs: Fix bad whitespace in
+ Documentation/config/pgp.txt
+Date:   Tue, 25 Jan 2022 18:09:57 +0100
+References: <20220125123716.66991-1-greg@hurrell.net>
+ <20220125123716.66991-2-greg@hurrell.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <20220125123716.66991-2-greg@hurrell.net>
+Message-ID: <220125.861r0vhh8r.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/97I+lz9V67YhrZLelVRHEs7xEkE2L/pgA/dmbBaKO+RrZimTZG
- ll60Dwacnbn0klBCgKK0ZTE29EBO4tFQPu+YYhPc/de6Fbp9HpyVutFZs5b1JQ0oCAM838T
- qXTKckUcJqx55MCMo6sAB60h+rT+bVR9djO6MqtycNQfaVsQz17hBTp+grqzy+PEitix/dW
- swWvpDOXQoSFmqC14HPGQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:lRH8Wcatszg=:nbK5i07lFx7e0oVOTt1r9l
- hkat9LvkSHYINqDY9Bj39Q1RICykZ+RuClvizHL8hsD7mjROV4bEHyow8jfc2Dj8HS5eIIMVh
- vJy/NTtP1jJ4ghbQZtpA6XdU6V1EfnOL6A23SW9nvPilN4ONo1e56K+eDZDvPCWsy++6RvoSV
- jsh6/I+ySaLoPdx338LWqRi9kNC3jlwrhmaDbILaI04H4HcdEro40BivTwOM/UpNQ3Ge07FkR
- ZWWEcAO0tyb1DFbEUO4lS3xR2zB4UVctNdF9Mh1kXr33SKULOHDW1WaWOPZcx+nyLJkqd1NFZ
- HzU/V2xoseeOqHmMS288OnYWzASqUktQEMHDLMgoTih9w1rc8ZudR+fq7BvizZJ+wmcoOKK/u
- L9uFHKzJ/CSWreSFJ4J2k93EEqqtqNNxmjf/565C3knU2WOnTb0Ub8gRjCEVVOu/JI4Am6yH4
- rIcibo9o/1iYdPvciLBCp1GJ4Cj21Hi3mzAb6wbjVZaOtu2Cr+6ixtx9wmuyL7w9J/qsUafrD
- qZBEWgBrV7YBW1qumcmsqlcM1c+echYp5DOkkd0ElBQb4OFTc6V6SOOH3MVqxOJjK+4SkghEb
- FJE4y4TZ+Nh3tGu3CpUqDkEOIjo+4MbUP477o11TPZ8WCWdsHn5Src/9gTQShZXqlrO5g5UDc
- YI6TLVkYjVEjigumgfC3aJtIH8t/JBZkvHQEPSe64WJ9t04Wnn6N5At74DvlGgf80+j7irNek
- S4jWfIWj7KShCLEJv3jLublizef5YIiliSqP4XXIen0iJg5xs7wa0Fk8zRKgZ1osBmi7wC00n
- ng7CHThRjBtyFm+4+gZDQJa5xbG1HEokcNQlOcBAoWlXnXStEnJLv0nmSK70TyRxocxjbn1Zq
- 7BffX3vULhn4Bj8OhTpJXmrq933L0DpRnaqVLYXMa+8VJA7v2uLIKGrxLPJGAPDVbCR2Ls+T1
- aCm0CIkKm1t5Hhtl/woHXcbuMADrGFNkH2+BLBzQ7/EVNBxu8QMQKBqXqGczik7fyEG/13QnV
- oNGaAYPQ0TkuCVYgfqgmFfe5TThu/RdHADbPwpL/65pt0cM5etO0x6Gp0GyaCJBmzD+ahj6tD
- Xy3ernzlMlvVNU=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
 
-On Sat, 22 Jan 2022, Elijah Newren via GitGitGadget wrote:
+On Tue, Jan 25 2022, Greg Hurrell wrote:
 
-> +The second form is deprecated; it is kept for backward compatibility
-> +reasons but may be deleted in the future.  It will only do a trivial
-> +merge.  It reads three tree-ish, and outputs trivial merge results and
-> +conflicting stages to the standard output in a semi-diff format.
-> +Since this was designed for higher level scripts to consume and merge
-> +the results back into the index, it omits entries that match
-> +<branch1>.  The result of this second form is is similar to what
+nit @ subject: I'd suggest:
 
-There is a double "is" in this line. Taking a step back, I would suggest
-to not only remove this paragraph, but to mark the `[--trivial-merge]`
-option clearly as `(DEPRECATED)`.
+	Documentation/config/pgp.txt: replace stray <TAB> character with <SPC>
 
-> +three-way 'git read-tree -m' does, but instead of storing the results
-> +in the index, the command outputs the entries to the standard output.
-> +This form not only has limited applicability, the output format is
-> +also difficult to work with, and it will generally be less performant
-> +than the first form even on successful merges (especially if working
-> +in large repositories).  The remainder of this manual will only
-> +discuss the first form.
+Or something, i.e. the "docs" can just be replaced by the filename, so
+we don't need to put it at the end.
 
-Thank you,
-Dscho
+As general style, we tend to not have the <msg> part of "<subsystem>:
+<msg>" start with a capital letter, i.e. "fix" not "Fix".
+
+> Signed-off-by: Greg Hurrell <greg@hurrell.net>
+> ---
+>  Documentation/config/gpg.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
+> index 0cb189a077..abfabd6d62 100644
+> --- a/Documentation/config/gpg.txt
+> +++ b/Documentation/config/gpg.txt
+> @@ -37,7 +37,7 @@ gpg.minTrustLevel::
+>  gpg.ssh.defaultKeyCommand::
+>  	This command that will be run when user.signingkey is not set and a ssh
+>  	signature is requested. On successful exit a valid ssh public key is
+> -	expected in the	first line of its output. To automatically use the first
+> +	expected in the first line of its output. To automatically use the first
+
+Since I had to look it's a s/\t/ / of a tab between "the" and "first" in
+the pre-image>
