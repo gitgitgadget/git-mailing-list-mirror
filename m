@@ -2,153 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2692C433F5
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 04:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C7A5C433F5
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 04:04:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S3420159AbiAYECY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Jan 2022 23:02:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33016 "EHLO
+        id S248956AbiAYEDM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Jan 2022 23:03:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S3417394AbiAYCHw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Jan 2022 21:07:52 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5024EC04967B
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 17:59:30 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id n10so44324998edv.2
-        for <git@vger.kernel.org>; Mon, 24 Jan 2022 17:59:30 -0800 (PST)
+        with ESMTP id S3418581AbiAYCOU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Jan 2022 21:14:20 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73DF6C024145
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 16:22:35 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id f21so12808626ljc.2
+        for <git@vger.kernel.org>; Mon, 24 Jan 2022 16:22:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3vRNUhv6DOi6EnrDhUfDJNcqZ8oaayWJvRoHHiaWEtc=;
-        b=YuRvLKb2J3yvTKXgCNFd7v/LRkuM2Quvs0NmMxwMLeojzJXII7lRVVWmu6Fr6AWCEt
-         LbBnYD4wZeaagb+e5ba/ypgwjb+VToUcQOAZpplK0aJXSnU6vy0XJl9MGzVkT1m2gBZi
-         qj5jM+pWhLzKxesRcsws+SSGPoMM1ZPXgo4VJKvChzf0tJXijYq/Ya5/5QSrCiV8yuLA
-         0sjAT/RZ/RScXYJO925G/yvCnpfVGKbeV3TRLzWZxyPoG0n87Sdh/5JHQcO8NFdz3/gr
-         ZsIRtXzX0Ch+3+hWjxs1n9DMgImTzjHvskffD8562Big3TVXvB2ZhhL/TltI+pXVKPmP
-         I5fg==
+         :cc;
+        bh=1GlHLXoOmdyOym1k4K6xI8nhKi59JtqBUWKAMuBMWZ4=;
+        b=nAv0jJ+euOVVkmHdgC0YToP+d7Gw0hdSm5aNyv+NRcKIdT8OO2DV/N+tU6C7HEHC9L
+         abY67RNHogfCSmEndg5DAHF3McajEy8ZTJ2E1MCV5NRI+HMMg39CqsRA6eQ72YC1YvHB
+         ogp7XPpmWYMm9nbrEyABixa+qTSGhMBS8WSXsC7QXBrvn58Pi2pn58dRpl5am2lN/q0I
+         sUSKUIyGC7znSZ75631est9qKEwuEUyZvbJ0jwgg+aFOMVgCmF2YEhH99jTIDD79TRFe
+         RNQzJhuBC2pAv2P3SvyiHfF+3zAPtFuV24+bvlDgCLDQgSNZVbPdcpvsgYNJ+yIodw9q
+         qddw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3vRNUhv6DOi6EnrDhUfDJNcqZ8oaayWJvRoHHiaWEtc=;
-        b=QajRDG/EkyJU3ZxEvpsUwLj+Ud/QlT1g+yCD1Z/mR5hHEqw8RtHTHTnWhqS94KRrKg
-         wCPOa8Vl15DUFl1CVYBJNsY0+4H5DHbqNmoxNrobj0DoAao7/cYHYyAMMfhHVbfvus4a
-         g7D7J+Aozrg7/cWdT6MKlMD/I/sFkvraZzcqPG94xcMWWdfjQQSmchbHemDxLNRsGy8u
-         +MsIi/xgXmzTO9WD3gKjIwFUU5MRX+gOqihnUVrUf3C8XdbUkayiXDDzfGcLBFvSW6k0
-         Wjo2qHWIAxWAfrat2e3dbEoxYxYLvU29QyETudLPbg9f8OKLNfie39ZVd3cF/A6JpzJq
-         +47g==
-X-Gm-Message-State: AOAM533IvFkmVx+JdyPxBCveSHNs1QBIc2qqe8jGcIrzzJny9rIOm69R
-        RH6NW5kYB14uihuNQYGb4MKa0CVR/IqApZI9oJsKjekcBKM=
-X-Google-Smtp-Source: ABdhPJzjqjatUbzPEt+0lsNM4gdZjZk06sie2l/nKRdJbWI/YgzQyWSP+XcRq8hALaGS1AnDtpM9ZK9HppnJdUgXX+w=
-X-Received: by 2002:a50:da48:: with SMTP id a8mr18107538edk.146.1643075968841;
- Mon, 24 Jan 2022 17:59:28 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=1GlHLXoOmdyOym1k4K6xI8nhKi59JtqBUWKAMuBMWZ4=;
+        b=Lu3Y+Soya9wJl9gANhG02FRctTO51U4ENkeVRT84YD/YfayNoXy7RstxlkFkqsli2f
+         0qX4y9mBIwLPPvjVk4CpGMfQEZ/gXh/fzJtZ1cTeid2oVRsfmp4tgrEVqQFFBmPCZNBs
+         RyyQ5PiVzYYN7b9wHTVRu5wo2xM7lbYLF/43/w1F+8LvlnlLoXpcpOLTQ1YdjW7pxcGe
+         fIVX+EM3L3Y4Uojue6hx7TbQinD4kujy74FakqOavVJ/F8Emgl5rPHNY/g07GsfOgD6G
+         AIl9JWui7e7EF0QttkBsMqOTAqdD5N+0hOpIYPLVaeXzltwVvRN2ANuoLNWMPzOcyHMj
+         B8sw==
+X-Gm-Message-State: AOAM531KuLNu7wwaCKKmnnaLxUKteU2oEOHR8SHpSfERBmzDwk0MpBQ/
+        rtGciOrprHsp+H2aFblW7VW1e8DCizhil87fs8rp49HX1z0=
+X-Google-Smtp-Source: ABdhPJylABAK/BCZRK1dcbnF7iN0iH13ofpcRIAKuXUGnWAEPWLRp1NOQD0hdqjy8yrxm6QkFMeQer+yIGWQzW0TJzI=
+X-Received: by 2002:a05:651c:4d4:: with SMTP id e20mr12896262lji.195.1643070153710;
+ Mon, 24 Jan 2022 16:22:33 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
- <095aa266c2bfdda47ed722fbc5a0d9c94132fbf1.1642888562.git.gitgitgadget@gmail.com>
- <220124.86czkhihcu.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220124.86czkhihcu.gmgdl@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 24 Jan 2022 17:59:16 -0800
-Message-ID: <CABPp-BFcFt2GqsGi57dn6vWNqdnF+_Rt0BgpAWgD=taXWAS9AA@mail.gmail.com>
-Subject: Re: [PATCH 05/12] merge-ort: split out a separate display_update_messages()
- function
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+References: <pull.1124.git.1642987616372.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1124.git.1642987616372.gitgitgadget@gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Tue, 25 Jan 2022 08:22:19 +0800
+Message-ID: <CANYiYbGJc6RStoCfJjh0Y3BzQ1QdnoN_xSFz4keYVik1dq0cnw@mail.gmail.com>
+Subject: Re: [PATCH] receive-pack: purge temporary data if no command is ready
+ to run
+To:     BoJun via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>, BoJun <bojun.cbj@gmail.com>
+Cc:     Chen Bojun <bojun.cbj@alibaba-inc.com>,
+        =?UTF-8?B?5r6z5piO?= <tenglong.tl@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 24, 2022 at 2:00 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Sat, Jan 22 2022, Elijah Newren via GitGitGadget wrote:
->
-> > From: Elijah Newren <newren@gmail.com>
-> > [...]
-> > +     /* Hack to pre-allocate olist to the desired size */
-> > +     ALLOC_GROW(olist.items, strmap_get_size(&opti->output),
-> > +                olist.alloc);
->
-> Perhaps just add a string_list_grow()? But I wonder if this is really
-> needed v.s. just using the default growing pattern here.
+On Mon, Jan 24, 2022 at 11:12 PM BoJun via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> -mk_empty () {
+> +mk_empty() {
 
-A string_list_grow() would probably be helpful to add at some point;
-then it could also be used in process_entries().
+That's wrong. We prefer a space between the function name and the
+parentheses for shell script, see:
 
-> > +
-> > +     /* Put every entry from output into olist, then sort */
-> > +     strmap_for_each_entry(&opti->output, &iter, e) {
-> > +             string_list_append(&olist, e->key)->util =3D e->value;
-> > +     }
-> > +     string_list_sort(&olist);
-> > +
-> > +     /* Iterate over the items, printing them */
-> > +     for (i =3D 0; i < olist.nr; ++i) {
-> > +             struct strbuf *sb =3D olist.items[i].util;
-> > +
-> > +             printf("%s", sb->buf);
-> > +     }
+ * https://github.com/git/git/blob/master/Documentation/CodingGuidelines#L138
+
+>         repo_name="$1"
+>         rm -fr "$repo_name" &&
+> -       mkdir "$repo_name" &&
+> -       (
+> -               cd "$repo_name" &&
+> -               git init &&
+> -               git config receive.denyCurrentBranch warn &&
+> -               mv .git/hooks .git/hooks-disabled
+> -       )
+> +               mkdir "$repo_name" &&
+> +               (
+> +                       cd "$repo_name" &&
+> +                               git init &&
+> +                               git config receive.denyCurrentBranch warn &&
+> +                               mv .git/hooks .git/hooks-disabled
+> +               )
+
+The indent your made is ugly.
+
+>  }
 >
-> Shorter/nicer:
+> -mk_test () {
+> +mk_test() {
+>         repo_name="$1"
+>         shift
 >
->         for_each_string_list_item(item, &olist) {
->                 struct strbuf *sb =3D item->util;
->                 puts(sb->buf);
->         }
+>         mk_empty "$repo_name" &&
+> -       (
+> -               for ref in "$@"
+> -               do
+> -                       git push "$repo_name" $the_first_commit:refs/$ref ||
+> -                       exit
+> -               done &&
+> -               cd "$repo_name" &&
+> -               for ref in "$@"
+> -               do
+> -                       echo "$the_first_commit" >expect &&
+> -                       git show-ref -s --verify refs/$ref >actual &&
+> -                       test_cmp expect actual ||
+> -                       exit
+> -               done &&
+> -               git fsck --full
+> -       )
+> +               (
+> +                       for ref in "$@"; do
 
-How did I not know about and not find for_each_string_list_item() when
-I was writing this code a couple years ago?  (and still didn't learn
-of it until now?)
+Code style of the original is goold, yours is bad. See:
 
-Thanks for the pointer.  Won't change anything right now, though, since...
+ * https://github.com/git/git/blob/master/Documentation/CodingGuidelines#L100
 
-> > -     if (display_update_msgs) {
-> > -             struct merge_options_internal *opti =3D result->priv;
-> > -             struct hashmap_iter iter;
-> > -             struct strmap_entry *e;
-> > -             struct string_list olist =3D STRING_LIST_INIT_NODUP;
-> > -             int i;
-> > -
-> > -             if (opt->record_conflict_msgs_as_headers)
-> > -                     BUG("Either display conflict messages or record t=
-hem as headers, not both");
-> > -
-> > -             trace2_region_enter("merge", "display messages", opt->rep=
-o);
-> > -
-> > -             /* Hack to pre-allocate olist to the desired size */
-> > -             ALLOC_GROW(olist.items, strmap_get_size(&opti->output),
-> > -                        olist.alloc);
-> > -
-> > -             /* Put every entry from output into olist, then sort */
-> > -             strmap_for_each_entry(&opti->output, &iter, e) {
-> > -                     string_list_append(&olist, e->key)->util =3D e->v=
-alue;
-> > -             }
-> > -             string_list_sort(&olist);
-> > -
-> > -             /* Iterate over the items, printing them */
-> > -             for (i =3D 0; i < olist.nr; ++i) {
-> > -                     struct strbuf *sb =3D olist.items[i].util;
-> > -
-> > -                     printf("%s", sb->buf);
-> > -             }
-> > -             string_list_clear(&olist, 0);
+> +                               done &&
+> +                               git fsck --full
+> +               )
+>  }
 >
-> Ah, at this point I see you're just moving code around :) Sending this
-> anyway in case it's useful :)
+>  mk_test_with_hooks() {
 
-yep, so I won't change anything now, but yes th
-for_each_string_list_item() tip is still useful as a heads up.
-Thanks.
+This is the place you can fix by adding a space between the function
+name and the parentheses.
+
+> +               (
+> +                       cd "$repo_name" &&
+> +                               mkdir .git/hooks &&
+> +                               cd .git/hooks &&
+> +                               cat >pre-receive <<-'EOF' &&
+> +                                       #!/bin/sh
+> +                                       cat - >>pre-receive.actual
+
+Too deep indent. The original implementation is good, yours is bad.
+
+>
+> -for head in HEAD @
+> -do
+> +for head in HEAD @; do
+
+Bad coding style, please read through the "CodingGuidelines" for bash.
+
+--
+Jiang Xin
