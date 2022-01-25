@@ -2,74 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFA7BC43219
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 17:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 595B1C433F5
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 18:11:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356458AbiAYReq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 12:34:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51856 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350624AbiAYRd3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 12:33:29 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7AAAC061744
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 09:33:28 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id z22so64418920edd.12
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 09:33:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HNArb2Cpq2MFOf8nZFWMSE/h8+WM9cwfpEbGcO9+ZAQ=;
-        b=LSqphwLbSnLNBb+MS6wGjkU4afcn4QtJFoYPu3uMjnFyfLx/+9Rby/R7R3//QHH+AS
-         ayro+8/7VXmSW+m44sZJfmM/p7QmuBFDF7OouzkEy+i3rEbETRsLCReMKiO4ifS+joxI
-         rrJ3MhY63vfNVBNsK/6/X4Ewzk7io0xCG3tk2bFGbnyanBL1i3x9y7ePSWyT3kb28440
-         6Ax/s2iQz8LvWgEDQgxeJR6mnyXNpxoF6n1VLzWP9KuSvFgBbU1vTydLcB+OPBUbSHC/
-         7gL5zBAYwfEyFpmCRFDhnDllMCs6vFxmG6ulqytNqRvm6Yx63ZLvdvLNrvKhP1sM4wmc
-         Qd5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HNArb2Cpq2MFOf8nZFWMSE/h8+WM9cwfpEbGcO9+ZAQ=;
-        b=0Qh2Bsg7b0zh7yUUO+uzYY2N0FIV1oD7Qw0QmvyMw7FLS7yr5lQWPjzKk2rAA66WzD
-         jUMySjhsnIPoH2IbBHE0sfx9DRM0OHNs+xLHdJLufPZ1VZJDyPyGMdXGXfVCAVhkhH4i
-         mzT/fqBW8/wqaqLNhgvQxIT+cDaFkeMSDuLiqEPf/vJmnpqX5rAcH8uLCGgAOcSuv0lq
-         I+reUsPVc3vpc4SKYFN36OXQkRLMM/jEAbQJ/ZpaKq8ls47R7yR1j5nvEiW3ON8JFWBv
-         txGOwIcIeekcTgU10Kjfbw/IzTyZZaTs/l//6rXcHYZkBzD8AQnLwmPjXZ2YhLLrgzlM
-         o6Zw==
-X-Gm-Message-State: AOAM5315RjWf1qqVkiAYhIBaeFImw7yQHZHIh6rJUaAYp/LReb0qoUd0
-        kdfOA4SBWXay1R8hjknwlnCoh0cmkP/122MXOQE=
-X-Google-Smtp-Source: ABdhPJy+wojvDFByWxr50HzjjhURqsveAw1qnGueFjGjbJQmrK8F/7cpSlHGIKeA5uQZhx7UIiGF3GwcSQJauhqFEEc=
-X-Received: by 2002:aa7:cd17:: with SMTP id b23mr17485000edw.141.1643132007244;
- Tue, 25 Jan 2022 09:33:27 -0800 (PST)
+        id S230187AbiAYSL3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 13:11:29 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54671 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229527AbiAYSLS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 13:11:18 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A89017FCFB;
+        Tue, 25 Jan 2022 13:11:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=emgfuPOLl2VzeeQMlJp0+sR47uNuaRAeMntZ7p
+        HdhfA=; b=LqBVwb4XxCuNBezqx+pX/PwtVBRhIQEoNce+GvVJzwcOrtN9ZIDA4m
+        KubI36uOcHODddejePLl4b+fv2ec6AubJa+k0r/WMoTWOs8mTwWVPrbUuWScY6Kg
+        MBCghWQ79qbEglEQORVrhZk8ljvEd3SMzDIbXT4QmiAracbk4eSe4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2356817FCFA;
+        Tue, 25 Jan 2022 13:11:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8196617FCF7;
+        Tue, 25 Jan 2022 13:11:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>,
+        David Aguilar <davvid@gmail.com>,
+        "Randall S . Becker" <randall.becker@nexbridge.ca>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v5] compat: auto-detect if zlib has uncompress2()
+References: <patch-v2-1.1-444eacf30be-20220119T094428Z-avarab@gmail.com>
+        <patch-v3-1.1-e9cb8763fd4-20220120T011414Z-avarab@gmail.com>
+        <xmqqr190ekrh.fsf@gitster.g>
+        <74d35354-20a6-9cc1-3452-573460c694bd@drbeat.li>
+        <xmqqtudu9s7k.fsf@gitster.g> <xmqqh79t7sj4.fsf_-_@gitster.g>
+        <xmqqr18x3s5s.fsf@gitster.g>
+        <220124.86r18xgcv4.gmgdl@evledraar.gmail.com>
+        <xmqqlez43mx1.fsf@gitster.g>
+        <CAPUEspheGc2kYkX-T8YUbW7z8v650L83===q29DWZrE823FktA@mail.gmail.com>
+Date:   Tue, 25 Jan 2022 10:11:06 -0800
+In-Reply-To: <CAPUEspheGc2kYkX-T8YUbW7z8v650L83===q29DWZrE823FktA@mail.gmail.com>
+        (Carlo Arenas's message of "Tue, 25 Jan 2022 02:11:10 -0800")
+Message-ID: <xmqqtudrznwl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <e5a0448a-4606-7ed1-78d9-b06520688616@gmail.com> <nycvar.QRO.7.76.6.2201251639540.2121@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2201251639540.2121@tvgsbejvaqbjf.bet>
-From:   Jonathan Bressat <git.jonathan.bressat@gmail.com>
-Date:   Tue, 25 Jan 2022 18:33:15 +0100
-Message-ID: <CANteD_wEoOdbDoqh=U6zdPOBk1UAymp148cN2tjf7CX19NhGMA@mail.gmail.com>
-Subject: Re: [Newcomer] Any ideas for microprojects ?
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Cogoni Guillaume <cogoni.guillaume@gmail.com>, git@vger.kernel.org,
-        guillaume.cogoni@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2ADC4E70-7E0A-11EC-BC8C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Carlo Arenas <carenas@gmail.com> writes:
 
-On tue, 25 Jan 2022 - 16:43, Johannes Schindelin wrote :
+> On Mon, Jan 24, 2022 at 12:21 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> If the question is "name a compiler that breaks and is *still* in
+>> active use", then the answer would be fuzzy (it depends on the
+>> definition of "in active use"), but is useful to find out.
+>
+> `gcc -pedantic -werror` will abort the build (ISO C forbids an empty
+> translation unit) because an empty translation unit is not
+> syntactically correct code per ISO, as well as clang (ISO C requires a
+> translation unit to contain at least one declaration
+> [-Wempty-translation-unit]).
 
-> If you need ideas, you could look for tickets at
-> https://github.com/gitgitgadget/git/issues (an inofficial bug tracker for
-> the Git project). You might want to look for the label "good first issue",
-> e.g. https://github.com/gitgitgadget/git/issues/1125
+Ah, I remember that one, and it cleanly concludes the thread.
+Thanks.
 
-Thanks, That would help us a lot !
-we will look at it soon.
-
-Glad to start contributing to the project.
-
-BRESSAT Jonathan and COGONI Guillaume
