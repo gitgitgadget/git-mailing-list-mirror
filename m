@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0E69C4332F
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 11:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19933C433EF
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 11:10:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380697AbiAYLIc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 06:08:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47626 "EHLO
+        id S1380804AbiAYLKi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 06:10:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229991AbiAYLGZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 06:06:25 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA7C0C06173B
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 03:06:22 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id i82so580844wma.4
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 03:06:22 -0800 (PST)
+        with ESMTP id S1380619AbiAYLIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 06:08:16 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCF26C061777
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 03:08:00 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id r2-20020a1c2b02000000b0034f7b261169so1527525wmr.2
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 03:08:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=V08i0DYE5pSEiQcygJQZJcESCFU9/aQlinFW2AVW7J8=;
-        b=XrybncVuUG6iIU4Lsr3J143HY5Pw+yKtTioyC8ksS7KNrjXWmV+4FOnPgtz12hNpB+
-         URhTBFibJ29b87Q7I5VtSYqr7FfvHOcFlHwyBPHHRthN75mA3wqMtXQcq29lR+LZlCYl
-         2+o8m9CXLlMlTOeQFI7dp8rYcc8XztnteVETNJXDrFRqYVb8v3iU1/Lf4KfmHQ8KoY0/
-         VoarUaSUPt2z1Noh5W/fTMl/iJOtibXB0+Nlcpiperr0LBpFOR8Qjxxv+M/GeFs52owv
-         GUvKpYQYOEoIABOK6pVCSQuehGgH9D6D8Dm6Ap7EHlOcv15SwRcHhzOZ2Ja8ZedTU6m9
-         Nb/A==
+        bh=UMbwt/ixFzdzCZ4RZBh1VZzzcIBD/L2SKhC2Hd6IHVY=;
+        b=i5JfBWcTI8mRZtltad3RP399TZFakI53EPOAdbDmK+XS00HCXCIy/qoV8+Lzg1iLnK
+         3hL1xb1VMigaCkWERGs5bvFjMQJfbAHH0sl7HKIntyPTUkImDNk7lzZBxo48EY1lsE0S
+         n7NOr/M+wE9M1WJEp4OghppTBgMaI0fz8l3WXbpl17e2bI+RX7y3tt1mJLadvxRdVPnF
+         7J5Q9bRJZfU2GkO+jY4Hoy61rcRnEsu62fSTGpiIcHKqr/+hJQoj1ivpsgdLgX7CGnQW
+         OZsP3WNOcof/Ri7ejqAAGcoz/2VOTdm3iURjFvMaAxkKExLO0LAFnOYvEArcTRfhglYS
+         OgVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=V08i0DYE5pSEiQcygJQZJcESCFU9/aQlinFW2AVW7J8=;
-        b=z2p5xY4CuQH/7padWwV0grUGLzkWrCE4XmRWM0qjFk4r7BO1E727AKROcD0vBDCL7W
-         vlDD4oIsV0LDbpBQa0QTlJCtxx8D3PQ6YVrgKRUdBid0zfNOHPvpCDl3JJNWNhKEhM/y
-         TU9vn8OiKQnyZe+cUhUW9gvKRfhy6GB/v+PyFg3Zpi+ltxMzafVhuAnkRuhfyH/qi5/a
-         QSM/we3zMwx5ifdAVQradB90kA1rOtCeuVwbGuRrPT2BPYW2l2fXrNd80qg/eizzxfF/
-         XO6pFYasE0sME+6ffFsxYdTobqTmSgdc6UBbS2xzENyKiOhJLUc42GaLwqLDoe6QQwHT
-         63/Q==
-X-Gm-Message-State: AOAM533uda6DFuyV7xoeXcmtvIz1MWdGH3EEAJTEy+9X7S5dc2JYRa3P
-        LfaMdYGmEJD7SzRROaZ3+tA=
-X-Google-Smtp-Source: ABdhPJywRHxoTvOGCULmo6C0IabISLOzFu60DVcEpH9xQrjQBOK0y/NcnGeaziz9mk0RrcWWimQk0Q==
-X-Received: by 2002:a05:600c:2309:: with SMTP id 9mr2465780wmo.82.1643108780999;
-        Tue, 25 Jan 2022 03:06:20 -0800 (PST)
+        bh=UMbwt/ixFzdzCZ4RZBh1VZzzcIBD/L2SKhC2Hd6IHVY=;
+        b=EbRhManmpYH82dm8zI7BtpobIeCt3mSjhSD/6vWSPgXmiY7JJsTbPEcZSnWiLSyta4
+         0oiLgI0Y1/CZx0DOfa9RntOOZ4f/Fndw6/g7LCR0AuCOsu9Knse+S1Th0HgrksgISsig
+         ighWp6Bv6QFDn3AEAgvgCJWVFq9S3mHoxDfirRkqj00FsxJW58V+A958fEjsKzaJIeNn
+         COEBXHJ8VNU2Vz38NjwmLqr5x2ar6GIi+jXvp+JzQKHlZn/jYYdnCLSVi29KuCjc//5H
+         ue8k27y/jGicDarEy9XIHC4cryk8PQDGb+/HU2iC/2fXuisYX71qnzIh4IOQro2uXlyw
+         2OUg==
+X-Gm-Message-State: AOAM531C551fccLTpKtKjVZP2jcJrh7NfUo6VFVKmVpf6gxPzeSsT5/3
+        khKEuRvUBe2Q3q69JvRWcw2PWfuOkvI=
+X-Google-Smtp-Source: ABdhPJw0Iqp24IXVrnK+g7OtxjoswkXYHWyHrQ42sEa++3SOgBgYPFLnA7U421oaEpxRVMhuR97rwA==
+X-Received: by 2002:a05:600c:4c88:: with SMTP id g8mr2457208wmp.105.1643108879312;
+        Tue, 25 Jan 2022 03:07:59 -0800 (PST)
 Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id t4sm16536836wro.71.2022.01.25.03.06.19
+        by smtp.googlemail.com with ESMTPSA id l20sm54806wms.24.2022.01.25.03.07.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Jan 2022 03:06:20 -0800 (PST)
-Message-ID: <36966d92-1460-699a-007d-da2a7da6c088@gmail.com>
-Date:   Tue, 25 Jan 2022 11:06:19 +0000
+        Tue, 25 Jan 2022 03:07:58 -0800 (PST)
+Message-ID: <74ef1b90-0d7a-fa28-9c5a-4c328674384e@gmail.com>
+Date:   Tue, 25 Jan 2022 11:07:57 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.4.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 07/14] create_autostash(): remove unneeded parameter
+Subject: Re: [PATCH v2 10/14] rebase: cleanup reset_head() calls
 Content-Language: en-US
 To:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
@@ -69,70 +69,75 @@ Cc:     git@vger.kernel.org,
         Phillip Wood <phillip.wood@dunelm.org.uk>
 References: <pull.1049.git.1633082702.gitgitgadget@gmail.com>
  <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
- <341fe183c18ee28b459ba26f2c8c369d9367c328.1638975482.git.gitgitgadget@gmail.com>
- <xmqqpmq5r3j9.fsf@gitster.g>
+ <5ea636009e7858e50357f0f6f8d8fa42e056db60.1638975482.git.gitgitgadget@gmail.com>
+ <xmqqczm5r34h.fsf@gitster.g>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqpmq5r3j9.fsf@gitster.g>
+In-Reply-To: <xmqqczm5r34h.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/12/2021 19:17, Junio C Hamano wrote:
+On 09/12/2021 19:26, Junio C Hamano wrote:
 > "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
 >> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >>
->> The default_reflog parameter of create_autostash() is passed to
->> reset_head(). However as creating a stash does not involve updating
->> any refs the parameter is not used by reset_head(). Removing the
->> parameter from create_autostash() simplifies the callers.
+>> If ORIG_HEAD is not set by passing RESET_ORIG_HEAD then there is no
+>> need to pass anything for reflog_orig_head. In addition to the callers
+>> fixed in this commit move_to_original_branch() also passes
+>> reflog_orig_head without setting ORIG_HEAD. That caller is mistakenly
+>> passing the message it wants to put in the branch reflog which is not
+>> currently possible so we delay fixing that caller until we can pass
+>> the message as the branch reflog.
 > 
-> It does make the callers of create_autostash() easier to reason
-> about, but ...
+> As I hinted elsewhere, these rules should be spelled out in a
+> comment before "int reset_head(...)" either in reset.[ch].
 > 
->> @@ -4132,7 +4131,7 @@ void create_autostash(struct repository *r, const char *path,
->>   		write_file(path, "%s", oid_to_hex(&oid));
->>   		printf(_("Created autostash: %s\n"), buf.buf);
->>   		if (reset_head(r, NULL, NULL, RESET_HEAD_HARD, NULL, NULL,
->> -			       default_reflog_action) < 0)
->> +			       "") < 0)
+> For this particular one, I wonder if
 > 
-> ... makes the reader wonder what the empty string is doing here.
-> The fact that reset_head() does not care about the last parameter
-> when not given oid or switch_to_branch parameters feels like too
-> much implementation detail to expect the callers to know about.
+>   (A) we can lose RESET_ORIG_HEAD bit and use the presence of
+>       reflog_orig_head to mean what that bit currently means, or
 > 
-> Unless it is documented in reset.[ch] before the beginning of the
-> "int reset_head(...)" definition/declaration, that is.
+>   (B) we keep the current code strucure, but make it a BUG() if
+>       a non-NULL reflog_orig_head is given without RESET_ORIG_HEAD
+>       bit set.
 
-I've moved this patch down the series so it looks like
--			       default_reflog_action) < 0)
-+			       NULL) < 0)
-
-which should be clearer
+We do (B) later in the series, it cannot be done in this commit as we 
+leave move_to_original_branch() unchanged here and that would BUG() out. 
+I've added a comment it the commit message to explain this.
 
 Best Wishes
 
 Phillip
 
 > 
->>   			die(_("could not reset --hard"));
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>>   builtin/rebase.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/builtin/rebase.c b/builtin/rebase.c
+>> index 3d78b5c8bef..fdd822c470f 100644
+>> --- a/builtin/rebase.c
+>> +++ b/builtin/rebase.c
+>> @@ -675,7 +675,7 @@ static int run_am(struct rebase_options *opts)
 >>   
->>   		if (discard_index(r->index) < 0 ||
->> diff --git a/sequencer.h b/sequencer.h
->> index 05a7d2ba6b3..da64473636b 100644
->> --- a/sequencer.h
->> +++ b/sequencer.h
->> @@ -197,8 +197,7 @@ void commit_post_rewrite(struct repository *r,
->>   			 const struct commit *current_head,
->>   			 const struct object_id *new_head);
->>   
->> -void create_autostash(struct repository *r, const char *path,
->> -		      const char *default_reflog_action);
->> +void create_autostash(struct repository *r, const char *path);
->>   int save_autostash(const char *path);
->>   int apply_autostash(const char *path);
->>   int apply_autostash_oid(const char *stash_oid);
+>>   		reset_head(the_repository, &opts->orig_head,
+>>   			   opts->head_name, 0,
+>> -			   "HEAD", NULL, DEFAULT_REFLOG_ACTION);
+>> +			   NULL, NULL, DEFAULT_REFLOG_ACTION);
+>>   		error(_("\ngit encountered an error while preparing the "
+>>   			"patches to replay\n"
+>>   			"these revisions:\n"
+>> @@ -1777,7 +1777,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>>   			options.head_name ? options.head_name : "detached HEAD",
+>>   			oid_to_hex(&options.onto->object.oid));
+>>   		reset_head(the_repository, NULL, options.head_name,
+>> -			   RESET_HEAD_REFS_ONLY, "HEAD", msg.buf, NULL);
+>> +			   RESET_HEAD_REFS_ONLY, NULL, msg.buf, NULL);
+>>   		strbuf_release(&msg);
+>>   		ret = finish_rebase(&options);
+>>   		goto cleanup;
 
