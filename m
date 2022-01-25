@@ -2,107 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23AD2C433EF
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 21:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A6CBC433F5
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 21:46:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233318AbiAYVpE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 16:45:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53836 "EHLO
+        id S233330AbiAYVqP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 16:46:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231500AbiAYVpD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 16:45:03 -0500
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 496D4C06173B
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 13:45:03 -0800 (PST)
-Received: by mail-il1-x131.google.com with SMTP id z4so2860215ilz.4
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 13:45:03 -0800 (PST)
+        with ESMTP id S231500AbiAYVqO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 16:46:14 -0500
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2D76C06173B
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 13:46:14 -0800 (PST)
+Received: by mail-io1-xd34.google.com with SMTP id 9so9762533iou.2
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 13:46:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ACpUdSui0lGbur2CzTW762vimNdvAgvOo6/m7KDEHVg=;
-        b=kLW4r+/ZmrUuB5cz5E5op8Ftddv5aXX8zpuFwEZEz0mj+NDn8BT6hTOEPE8KvTz8+k
-         uu0AJe6cPIE/yyq8ENr3JTr2VPbUrFuQbiVJTjRTbbnfUs4aJ1qYyCRgutYTb9KjFlDK
-         3PEPaJ0Ep6oYJtquM0Dk6NOxygH8ZSOwuMOul7d8OnAjjgDRMfXrlsthfN73j1liJSnC
-         IyBUjESrPbWtwR8Yn/qbNfaprnymgNSKqPOPlf0r7giVvEOxkjCh4/IRtfWPzKY+W0GA
-         GFcD5FeWUWrFrABxDU9oI40230t1L8heFlSE8IuvLeVBCYOLUO0WoLe3v8bRcU6g/ax5
-         qPoA==
+        bh=vpkJfqE9Pf/rBeTL35V+3UWxqujI6UpTbFrv7Ny+D/0=;
+        b=b3uIlnkYMcGTRBWIft3Cxetoab6DACgpJz1QzxFW7Yx54w44NEqerGWaTOQ8t2k2G3
+         RPd/CZsIMsxFeO6RZM3SSBwXWRUYtvUShdIrFGveyKFN3jP002oqBwapnw3ysaLq2Po/
+         j9HpDKRhllnyF9W/GsqfcRVpEBrgtF6B7l7uJ/VcTjKHXX1YISoUuac52kqwGmIBe1Hk
+         QfMmGEEsfUgLbP/62iV+/Z5pmtL/MGGnW3vOcGToTVQtQo/aBIhFjU8sZBnyD7V7cFkG
+         rh6G9EkD56OBgTDLw2h021RC8GlKLB5YJfI7kqPjpCdg2BzPWo930WBqqp1dokrKDtlS
+         074A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ACpUdSui0lGbur2CzTW762vimNdvAgvOo6/m7KDEHVg=;
-        b=6NVtEdEvQtJw73VxGfBTQ1F+U6G2Iv9ZtLpgkvYBsNxQDdQic2N0jkI6KVIh4/Un7i
-         97LX+xisB1skZ901DPG4/YWHF1Wnn2CRBTXEt8IEadA0phbvRfjIV1TpLXWw5FuvN3hp
-         wwyfjgIp7oHSOkGELwq3dWGuHFnJ6RXTAgYNhQxWrygd0ViYXsb9s+9JEKSB+is1Z4VP
-         L7JKUgG9YfVlwtDlZT18phq5ljbMGXWXmLzGzm3fOhjvWlx4tmEE3FjN29Gh5GunSOwJ
-         feAj2LZpk/VaaoFqZff0u2q+yGG4ZwmcxURmtdOr0K1PCBWa9+hjoh3xC/cpwWHF9FMj
-         8hmA==
-X-Gm-Message-State: AOAM533IsVhrAmJTQu6qVq+/6CZH5qdSGUU72j8q/IOJQk4Ns/U4LOub
-        lQCEcWn3rjHMVgBYUGV6+KhyDTrLk6wk3A==
-X-Google-Smtp-Source: ABdhPJwzoFct8NIdReCOyAqQx1S95x0+5KAcn9wQ96L52z1AkMijd/P42m3HTzxK5AsE++kafP9GRg==
-X-Received: by 2002:a92:cd87:: with SMTP id r7mr13225963ilb.192.1643147102668;
-        Tue, 25 Jan 2022 13:45:02 -0800 (PST)
+        bh=vpkJfqE9Pf/rBeTL35V+3UWxqujI6UpTbFrv7Ny+D/0=;
+        b=Uf8oCv/7EncT6DwzawAVDyS6eB4P7vHYJ0HHtn96F7WZTOr43IQzEQTxL7iV8HI33e
+         6AfcpjVFW+X+vLpKhqm7o6kZz4p3joeMgI//2bjfcAj2s7D4cZhkcfL/PoYWPpC9+d8j
+         pFBfFpuaycvLyEEDXK9MRaQW8vEHiC7ksAmicS3owhWEDc3IYOBzZtPBK920BIhixg84
+         5YJDiGm18WsxXBdC9nV1WAPsD7ZvP0ZMKXPkHs0BwO3Mx3SKtkqT/TIEVeVCnpKl/xaX
+         PZZUj92WzfKPFqWcdjrOpCfOcY2DEVH6trVOtg+EnZ1pgVR+o8D0Wgu8+Sg+RVFpbIOh
+         ixIw==
+X-Gm-Message-State: AOAM53326SpHO/3eeqiKY/R/ChHPYd496IwpKrd49cWGX/HMVFhUd66M
+        EElytqokh+6lIXAdQVcdr9hWwOjsZxxz9Q==
+X-Google-Smtp-Source: ABdhPJzdXxTX/8+MNO5RYsvozjIf0PeI46ym+lht7ig93srT3tbGtFBLddJm+j5LZdFhPNk8u2HkQA==
+X-Received: by 2002:a05:6602:2ac6:: with SMTP id m6mr12103588iov.134.1643147173428;
+        Tue, 25 Jan 2022 13:46:13 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r9sm1300797ill.52.2022.01.25.13.45.02
+        by smtp.gmail.com with ESMTPSA id d7sm9635163ilv.7.2022.01.25.13.46.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jan 2022 13:45:02 -0800 (PST)
-Date:   Tue, 25 Jan 2022 16:45:01 -0500
+        Tue, 25 Jan 2022 13:46:13 -0800 (PST)
+Date:   Tue, 25 Jan 2022 16:46:12 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com
-Subject: Re: [PATCH v3 8/9] midx: read `RIDX` chunk when present
-Message-ID: <YfBvXS841To7ZXcp@nand.local>
-References: <55aa69de12c5f82a66836e829f915363cc73b421.1641320129.git.me@ttaylorr.com>
- <20220124192702.2452750-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v3 9/9] pack-bitmap.c: gracefully fallback after opening
+ pack/MIDX
+Message-ID: <YfBvpKCEFLWHF59p@nand.local>
+References: <9707d5ea4433d9a5c7f8581dbb2d8a05f410efd3.1641320129.git.me@ttaylorr.com>
+ <20220124192910.2453842-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20220124192702.2452750-1-jonathantanmy@google.com>
+In-Reply-To: <20220124192910.2453842-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 24, 2022 at 11:27:01AM -0800, Jonathan Tan wrote:
-> > Note that we have two knobs that are adjusted for the new tests:
-> > GIT_TEST_MIDX_WRITE_REV and GIT_TEST_MIDX_READ_RIDX. The former controls
-> > whether the MIDX .rev is written at all, and the latter controls whether
-> > we read the MIDX's RIDX chunk.
-> >
-> > Both are necessary to ensure that the test added at the beginning of
-> > this series continues to work. This is because we always need to write
-> > the RIDX chunk in the MIDX in order to change its checksum, but we want
-> > to make sure reading the existing .rev file still works (since the RIDX
-> > chunk takes precedence by default).
+On Mon, Jan 24, 2022 at 11:29:10AM -0800, Jonathan Tan wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+> > When opening a MIDX/pack-bitmap, we call open_midx_bitmap_1() or
+> > open_pack_bitmap_1() respectively in a loop over the set of MIDXs/packs.
+> > By design, these functions are supposed to be called over every pack and
+> > MIDX, since only one of them should have a valid bitmap.
 >
-> Could we disable the beginning-of-this-series test when the MIDX .rev is
-> not written instead? Then, we can test what the user would actually
-> experience (no reverse index in .midx, reverse index in .rev) instead of
-> simulating it by skipping over the reverse index section in .midx.
->
-> If we can't do that, then I would agree that the approach in this patch
-> seems like the best approach.
+> Thanks for this series. Apart from my minor comments on patches 7 and 8,
+> this series looks good.
 
-I considered it, i.e., by having the two knobs be:
+Thanks, I think we need a reroll anyway to reinstate the call to
+finalize_object_file() as well as to have these patches be based on the
+tip of master now that we're on the other side of v2.35.0.
 
-    - GIT_TEST_MIDX_WRITE_REV
-    - GIT_TEST_MIDX_WRITE_RIDX
-
-where the pair (true, false) would correspond to what a corrupt
-repository would look like before this series. But I dislike that it
-allows the caller to alter the MIDX's checksum by controlling whether or
-not the chunk is written.
-
-So it's really looking at the same problem from two sides: do you make
-the RIDX chunk disappear by not reading it, or by never writing it in
-the first place? And although the latter is more "accurate", it did
-allow me to sidestep a lot of gory details like the ones I outlined in
-the second patch.
-
-I don't remember everything fully, since some time has passed since I
-originally wrote this, but I remember encountering some of the races
-where you'd read the old bitmap in the new object order, and other
-annoyances.
+I'll send that shortly. In the meantime, thanks for your review!
 
 Thanks,
 Taylor
