@@ -2,177 +2,285 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3B92C433EF
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 20:27:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F55DC433F5
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 20:53:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231942AbiAYU1H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 15:27:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35890 "EHLO
+        id S232618AbiAYUwa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 15:52:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231904AbiAYU1F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 15:27:05 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5F5DC06173B
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 12:27:05 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id o72-20020a17090a0a4e00b001b4e5b5b6c0so2374376pjo.5
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 12:27:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=aIjaabNBdKLaYUkRrvCoIHLdHK/NE75i0yNQSa6L/nw=;
-        b=FMDaw2Kxly2LxcFwvhFABdxQKor/a22C1rfc7MgCAGa83nATHTJwo6zrgK1KPMIVf8
-         u6ASGF1Barq0PsoECShxYIlk0C/pZPk2f4/OLM85HLNiy/vpPfT1FRs0rOv4/1+6gZe6
-         DTtvD90F3JZtW95WZAyMMxFnz97odoZ9e69Z/9Rw5RULpd8tqidmoocaVKPLsG8YjhPS
-         XA0x0etGTcL3AKyhY0xvJ5FfwXhOVOAPvtffAsurnNlFmUOhPbCgz0wabrPczlFt2W0T
-         T+RpmuVBmPLat0KFlhcltNBJ9FFo8zwu04Bh2+2Xl2N10HxLzVV/TEvEeHjKh89ZDOlm
-         1mfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=aIjaabNBdKLaYUkRrvCoIHLdHK/NE75i0yNQSa6L/nw=;
-        b=vZVqb9ZcKCNOTrNIJg7cGImC2QCTo5cWlKxHM3KYRsJWFgoa9tMgFFiPXVuruJzNKd
-         8Rx78pAf6bgavwoR+lhH9pk/m2ryEjLT8qe7MHz+RVMDMObc3mC5j4U2NhIFFC4MEEjc
-         TpgkKrm48/w8NfCDZTzSd84wZmDL34TFZ9//HYzZP3rY4gek53dB62quvaeIwa+IKOAV
-         jDYFN/3Cm7Gfm9j+tbqN2IOVE32XZA1iv9ddN2y0slet2dtIWvo3Q+GkHQwuCuosW/tx
-         nKqjODUC+7ZOD79RvenLakaoRrctYiOVsTjHoJEBOeL+wUzypPPjPXRwuY5D77IhLsjT
-         NedQ==
-X-Gm-Message-State: AOAM530n9t0sDWtyx6By6VVOOzZxzbyt0H8UwuWMAh46l1A7Rl9gFDKf
-        F4l3me2gFHQ/uwwTtsPUjpRdnqL/5wEAcw==
-X-Google-Smtp-Source: ABdhPJyyb1zx8rSF8jrtohGEPIb63I4aLvC2I30053u3z7/K0gRAJVVwp+sYtbX5RtmQqScPIES0drdrQVGd2w==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:4d82:: with SMTP id
- oj2mr627505pjb.1.1643142424782; Tue, 25 Jan 2022 12:27:04 -0800 (PST)
-Date:   Tue, 25 Jan 2022 12:26:54 -0800
-In-Reply-To: <f8efb7446c33f14631b088ac043aca8a403a3250.1638340854.git.gitgitgadget@gmail.com>
-Message-Id: <kl6lilu71rzl.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
- <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com> <f8efb7446c33f14631b088ac043aca8a403a3250.1638340854.git.gitgitgadget@gmail.com>
-Subject: [Bug] Rebase from worktree subdir is broken (was Re: [PATCH v5 07/11]
- rebase: do not attempt to remove startup_info->original_cwd)
-From:   Glen Choo <chooglen@google.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        "=?utf-8?Q?Ren=C3=A9?= Scharfe" <l.s.r@web.de>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S232605AbiAYUwO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 15:52:14 -0500
+Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [IPv6:2a01:e0c:1:1599::13])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CF72C06173B
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 12:52:13 -0800 (PST)
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:9225:6fd8:b89b:1501])
+        (Authenticated sender: jn.avila@free.fr)
+        by smtp4-g21.free.fr (Postfix) with ESMTPSA id 33F3B19F522;
+        Tue, 25 Jan 2022 21:52:07 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+        s=smtp-20201208; t=1643143930;
+        bh=xJYt0hsjVkVW1ZAoyhbIAUvTGJLO2fu27De+3VGywLE=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=N2QkGC9VogzqRlw61fe91dOP44VyuADVGgJ461bGChIQEyvexY7hv4n6dauVDLS1Y
+         s3bavSY1eeFfVzery4lVm1o1EsYdBLPmPEaCBrXB5wKAI3A8OqXyVqRzE+Kz27sAn9
+         qEfE4PMbfFLFmUBSDHTgkVEN0vDqva8FYr6455AInPNiVJ+NVnZEIK6WLo12+x1IYE
+         mVNfxmg8jIufiq6nUyMtI1ZnbowyV9biORe76/El4Q5Ff2xHfwXT5Lya3XnBKW6sDS
+         E3qKgwY44vOOdTgxX3LqT6KgobE0RJRVQp2dXunw4nbvOhG1iuciV0vhpUBprIJqfS
+         3IK9D7KA4jZrQ==
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     Johannes Sixt <j6t@kdbg.org>, phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org,
+        =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Subject: Re: [PATCH 1/4] i18n: factorize more 'incompatible options' messages
+Date:   Tue, 25 Jan 2022 21:52:06 +0100
+Message-ID: <2894278.sRLLl5rxgE@cayenne>
+In-Reply-To: <80593381-2ecc-5de5-76b7-0e6c6452559f@gmail.com>
+References: <pull.1123.git.1642876553.gitgitgadget@gmail.com> <ba203623-87b1-f3eb-9498-52c4ea4ba07e@kdbg.org> <80593381-2ecc-5de5-76b7-0e6c6452559f@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Le lundi 24 janvier 2022, 12:06:19 CET Phillip Wood a =E9crit :
+> On 24/01/2022 07:14, Johannes Sixt wrote:
+> > Am 22.01.22 um 19:35 schrieb Jean-No=EBl Avila via GitGitGadget:
+> >> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
+> >>
+> >> When more than two options are mutually exclusive, print the ones
+> >> which are actually on the command line.
+> >=20
+> > Reading this, I expect that all mutually exclusive options are listed in
+> > the error messages. But the updated code lists only the first and second
+> > option even if more are on the command line. What is the justification
+> > for that? Just "make the work for translators easier"? I am not 100%
+> > sure that this is the right balance. Wouldn't it be helpful for users to
+> > get to know which set of options is incompatible, or is an error message
+> > not the right place for this kind of education? Don't know...
+>=20
+> That was my feeling as well when reading this patch, I think the loss of=
+=20
+> information in the error messages is a shame.
 
-> From: Elijah Newren <newren@gmail.com>
->
-> Since rebase spawns a `checkout` subprocess, make sure we run that from
-> the startup_info->original_cwd directory, so that the checkout process
-> knows to protect that directory.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  sequencer.c          | 2 ++
->  t/t2501-cwd-empty.sh | 4 ++--
->  2 files changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index ea96837cde3..83f257e7fa4 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4228,6 +4228,8 @@ static int run_git_checkout(struct repository *r, struct replay_opts *opts,
->  
->  	cmd.git_cmd = 1;
->  
-> +	if (startup_info->original_cwd)
-> +		cmd.dir = startup_info->original_cwd;
->  	strvec_push(&cmd.args, "checkout");
->  	strvec_push(&cmd.args, commit);
->  	strvec_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
-> diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
-> index b1182390ba3..52335a8afe9 100755
-> --- a/t/t2501-cwd-empty.sh
-> +++ b/t/t2501-cwd-empty.sh
-> @@ -166,11 +166,11 @@ test_expect_success 'cherry-pick fails if cwd needs to be removed' '
->  '
->  
->  test_expect_success 'rebase does not clean cwd incidentally' '
-> -	test_incidental_dir_removal failure git rebase reverted
-> +	test_incidental_dir_removal success git rebase reverted
->  '
->  
->  test_expect_success 'rebase fails if cwd needs to be removed' '
-> -	test_required_dir_removal failure git rebase fd_conflict
-> +	test_required_dir_removal success git rebase fd_conflict
->  '
->  
->  test_expect_success 'revert does not clean cwd incidentally' '
-> -- 
-> gitgitgadget
+The enhancement aims at being more precise as to which options actually=20
+present on=20
+the command line are mutually exclusive, instead of letting the user sort o=
+ut=20
+where the clash comes from. Personal taste, but the "--foo/--bar" is poor u=
+ser=20
+interaction: better a partial but precise message than a (hopefully) comple=
+te=20
+but generic one.
 
-This commit (which is already in master) introduces a bug that breaks
-rebase when rebasing inside a subdirectory of a worktree. You can see
-that the below test fails with:
 
-  error: The following untracked working tree files would be overwritten by merge:
-          a/b/c
-  Please move or remove them before you merge.
 
-This only affects subdirectories in worktrees, i.e. rebasing anywhere in
-the `main-wt` directory is fine, and rebasing from the top of `other-wt`
-is fine, but `other-wt/any/other/dir` fails.
+> >> @@ -1268,19 +1269,19 @@ static int parse_and_validate_options(int argc=
+,=20
+const char *argv[],
+> >>   			die(_("You are in the middle of a rebase --=20
+cannot amend."));
+> >>   	}
+> >>   	if (fixup_message && squash_message)
+> >> -		die(_("Options --squash and --fixup cannot be used=20
+together"));
+> >> -	if (use_message)
+> >> -		f++;
+> >> -	if (edit_message)
+> >> -		f++;
+> >> -	if (fixup_message)
+> >> -		f++;
+> >> -	if (logfile)
+> >> -		f++;
+> >> +		die(_("options '%s' and '%s' cannot be used together"),=20
+"--squash", "--fixup");
+> >> +	f_options[f] =3D "-C";
+> >> +	f+=3D	!!use_message;
+> >> +	f_options[f] =3D "-c";
+> >> +	f+=3D!!edit_message;
+> >> +	f_options[f] =3D "-F";
+> >> +	f+=3D!!logfile;
+> >> +	f_options[f] =3D "--fixup";
+> >> +	f+=3D!!fixup_message;
+>=20
+> This feels like an out of bounds access waiting to happen when someone=20
+> adds a new option but forgets to increase the size of f_options above
 
-I haven't tracked down the root cause yet, but judging from the commit,
-I would suppose that the checkout is being spawned in the wrong
-directory, causing the files to not be cleaned up.
+That's one of the advantages of C99: declaring the variables near their use=
+=20
+site so that you can keep them in you brain while reading the code.
 
----
- t/t3400-rebase.sh | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+>=20
+> Best Wishes
+>=20
+> Phillip
+>=20
+> >=20
+> > I prefer this if-cascade over the "f +=3D truth_value" style, because I
+> > find it is easier to understand. If you write it as
+> >=20
+> > 	if (extcmd)
+> > 		f_options[f++] =3D "--extcmd";
+> >=20
+> > you get each branch down to two lines. (But then others may disagree
+> > with the easy-to-understand argument due to the f++ buried in the
+> > expression. Unsure...)
 
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 23dbd3c82e..8b8b66538b 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -416,4 +416,33 @@ test_expect_success MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs is a symlink'
- 	mv actual_logs .git/logs
- '
- 
-+test_expect_success 'rebase when inside worktree subdirectory' '
-+	git init main-wt &&
-+	(
-+		cd main-wt &&
-+		git commit --allow-empty -m "initial" &&
-+		# create commit with foo/bar/baz
-+		mkdir -p foo/bar &&
-+		touch foo/bar/baz &&
-+		git add foo/bar/baz &&
-+		git commit -m "add foo/bar/baz" &&
-+		# create commit with a/b/c
-+		mkdir -p a/b &&
-+		touch a/b/c &&
-+		git add a/b/c &&
-+		git commit -m "add a/b/c" &&
-+		# create another branch for our other worktree
-+		git branch other &&
-+		git worktree add ../other-wt other &&
-+		(
-+			cd ../other-wt &&
-+			mkdir -p random/dir &&
-+			(
-+				cd random/dir &&
-+				git rebase --onto HEAD^^ HEAD^  # drops the HEAD^ commit
-+			)
-+		)
-+	)
-+'
-+
- test_done
--- 
-2.35.0.rc0.227.g00780c9af4-goog
+
+
+
+> >=20
+> >>  =20
+> >>   	if (use_gui_tool)
+> >>   		setenv("GIT_MERGETOOL_GUI", "true", 1);
+> >> diff --git a/builtin/grep.c b/builtin/grep.c
+> >> index 9e34a820ad4..b199781cb27 100644
+> >> --- a/builtin/grep.c
+> >> +++ b/builtin/grep.c
+> >> @@ -1168,10 +1168,10 @@ int cmd_grep(int argc, const char **argv, cons=
+t=20
+char *prefix)
+> >>   		setup_pager();
+> >>  =20
+> >>   	if (!use_index && (untracked || cached))
+> >> -		die(_("--cached or --untracked cannot be used with --
+no-index"));
+> >> +		die(_("options '%s' and '%s' cannot be used=20
+together"),"--cached/--untracked", "--no-index");
+> >=20
+> > Huh? "--cached/--untracked"? Which one was used on the command line?=20
+But...
+> >=20
+> >>  =20
+> >>   	if (untracked && cached)
+> >> -		die(_("--untracked cannot be used with --cached"));
+> >> +		die(_("options '%s' and '%s' cannot be used together"),=20
+"--untracked", "--cached");
+> >>  =20
+> >>   	if (!use_index || untracked) {
+> >>   		int use_exclude =3D (opt_exclude < 0) ? use_index : !!
+opt_exclude;
+> >=20
+> > ... doesn't this logic imply that --cached, --untracked, and --no-index
+> > are three mutually exclusive options?
+> >=20
+> >> diff --git a/builtin/log.c b/builtin/log.c
+> >> index 4b493408cc5..59b4a2fd380 100644
+> >> --- a/builtin/log.c
+> >> +++ b/builtin/log.c
+> >> @@ -1759,6 +1759,9 @@ int cmd_format_patch(int argc, const char **argv=
+,=20
+const char *prefix)
+> >>   	struct strbuf rdiff_title =3D STRBUF_INIT;
+> >>   	int creation_factor =3D -1;
+> >>  =20
+> >> +	int f =3D 0;
+> >> +	char * f_options[4];
+> >> +
+> >=20
+> > Style: char *f_options[4]; don't needlessly separate these new variables
+> > from the others by an empty line.
+> >=20
+> >>   	const struct option builtin_format_patch_options[] =3D {
+> >>   		OPT_CALLBACK_F('n', "numbered", &numbered, NULL,
+> >>   			    N_("use [PATCH n/m] even with a single=20
+patch"),
+> >> @@ -1978,8 +1981,21 @@ int cmd_format_patch(int argc, const char **arg=
+v,=20
+const char *prefix)
+> >>   	if (rev.show_notes)
+> >>   		load_display_notes(&rev.notes_opt);
+> >>  =20
+> >> -	if (use_stdout + rev.diffopt.close_file + !!output_directory > 1)
+> >> -		die(_("options '%s', '%s', and '%s' cannot be used=20
+together"), "--stdout", "--output", "--output-directory");
+> >> +	if (use_stdout) {
+> >> +		f_options[f] =3D "--stdout";
+> >> +		f++;
+> >> +	}
+> >> +	if (rev.diffopt.close_file) {
+> >> +		f_options[f] =3D "--output";
+> >> +		f++;
+> >> +	}
+> >> +	if (output_directory) {
+> >> +		f_options[f] =3D "--output-directory";
+> >> +		f++;
+> >> +	}
+> >> +
+> >> +	if (f > 1)
+> >> +		die(_("options '%s'and '%s' cannot be used together"),=20
+f_options[0], f_options[1]);
+> >>  =20
+> >>   	if (use_stdout) {
+> >>   		setup_pager();
+> >> diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+> >> index 6719ac198dc..1447f1c493a 100644
+> >> --- a/builtin/merge-base.c
+> >> +++ b/builtin/merge-base.c
+> >> @@ -159,12 +159,12 @@ int cmd_merge_base(int argc, const char **argv,=
+=20
+const char *prefix)
+> >>   		if (argc < 2)
+> >>   			usage_with_options(merge_base_usage,=20
+options);
+> >>   		if (show_all)
+> >> -			die("--is-ancestor cannot be used with --
+all");
+> >> +			die(_("options '%s' and '%s' cannot be used=20
+together"),"--is-ancestor", "--all");
+> >>   		return handle_is_ancestor(argc, argv);
+> >>   	}
+> >>  =20
+> >>   	if (cmdmode =3D=3D 'r' && show_all)
+> >> -		die("--independent cannot be used with --all");
+> >> +		die(_("options '%s' and '%s' cannot be used=20
+together"),"--independent", "--all");
+> >>  =20
+> >>   	if (cmdmode =3D=3D 'o')
+> >>   		return handle_octopus(argc, argv, show_all);
+> >> diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commi=
+t-
+template-squash-signoff.sh
+> >> index 91964653a0b..5fcaa0b4f2a 100755
+> >> --- a/t/t7500-commit-template-squash-signoff.sh
+> >> +++ b/t/t7500-commit-template-squash-signoff.sh
+> >> @@ -442,7 +442,7 @@ test_expect_success '--fixup=3Dreword: give error =
+with=20
+pathsec' '
+> >>   '
+> >>  =20
+> >>   test_expect_success '--fixup=3Dreword: -F give error message' '
+> >> -	echo "fatal: Only one of -c/-C/-F/--fixup can be used." >expect &&
+> >> +	echo "fatal: options '\''-F'\'' and '\''--fixup'\'' cannot be used=20
+together" >expect &&
+> >>   	test_must_fail git commit --fixup=3Dreword:HEAD~ -F msg  2>actual &&
+> >>   	test_cmp expect actual
+> >>   '
+> >=20
+> > A general comment: To me, it looks like you didn't want to change the
+> > variable name 'f' in the first hunk above, and then just named the array
+> > 'f_options' to go with 'f'. Perhaps `exclusive_opt` (not plural!) for
+> > the array. Now, renaming 'f' to something longer makes the code a bit
+> > unwieldy. Therefore, let me suggest yet another approach: factor out
+> > functions check_exclusive_opts3(), check_exclusive_opts4(), to be used=
+=20
+like
+> >=20
+> > 	check_exclusive_opts3(use_stdout, "--stdout",
+> > 		rev.diffopt.close_file, "--output",
+> > 		output_directory, "--output-directory");
+> >=20
+> > I am not yet proposing check_exclusive_opts2(), but others may think it
+> > is an improvement, too, (if they think that such functions are an
+> > improvement in the first place).
+> >=20
+> > -- Hannes
+>=20
+
+Will factorize away such exclusive options, but I'm not sure where. Should =
+it=20
+be in git-compat-util.h?
+
+
