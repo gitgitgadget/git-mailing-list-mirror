@@ -2,192 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 784C8C5AC75
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 23:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB2F6C5AC75
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 00:04:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235046AbiAYX7X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 18:59:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56408 "EHLO
+        id S235080AbiAZAEn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 19:04:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235042AbiAYX7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 18:59:22 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2DE8C06161C
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 15:59:21 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id o12so34494723eju.13
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 15:59:21 -0800 (PST)
+        with ESMTP id S235042AbiAZAEn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 19:04:43 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC3AC06161C
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 16:04:42 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id m4so34603642ejb.9
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 16:04:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lx05+RsmZ0lhj7kU5w2c2mtFyUb9xMsyD8ZYovcrNe8=;
-        b=meEy21llnhNKM9EhlyPPKpK6Em6zk3ZM2y4VkkJ3PYId942FgoouLXdOtIuzDsE1TL
-         uNacA97CFtSvwzo5Qq25INDmuq0pCfvL6BUGpAhZr9iBYUyV8TNjSzT4aVn+LuqL/fR2
-         phnbO7ZW4e8d7YBahJO5zzsYWMiKhwzbvwL5hPLqHoOw/QhpX665gjyk8kakI9UkUrTe
-         jEd99HaoCGIJ19HBeu0kd3FyI3v45lO4V6xKFitP6NXCtz7lEsMx42Q8LVZB8r/qzMM8
-         BT4Z57anHXi3QQw686xMqMNC8t2UivxZq/xVoLJhG28N9qdHgzpkkKHXQrXUl84V0bu4
-         EdVA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=/MF14RV1DmuTvPEQUxyjPvx3j3FWyGkoSHdlDSkc+mk=;
+        b=Zzjzt+wQxwA5E8iyxcFNwHvi0O2J4l/STApZT94YSnMjEHbDaP48jFe2N32NvAdBPt
+         c7ApBJIEVGGIDOOPLzPOqfnIle2nkdMWWCR8oRYgIVjggmKv+or2zr8zP+L4eQI2clKh
+         eUYoVNj5WuZ9e4NFsYocHx1LFC4mETsNJhw2V+hviqPnxtga3H/Q7XbWRlU8BHSFp/Cw
+         JnhNR6OPFfhBRaOoK1ynkN4ZKTNr7MTfndNseSpAHRS7XSZ57WagsabHySNh0709ZPZ6
+         a2oin0h4DifCHZRTIYafgmJIdrLHINwTRMX/gvnjpz1JqG0n9yy2iVtWNi7faf9FU5PD
+         V+HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lx05+RsmZ0lhj7kU5w2c2mtFyUb9xMsyD8ZYovcrNe8=;
-        b=IGoGiHLQbwxdtauIyz8AFqo4aGSPw7S04VJYOrZK8vEkhx4y9khjnNFI++u7WfGyDB
-         TWTV97gnQuaW/58xks3TVLAq8akKkxet3UdyU4ZIvaUXqYUYl8ErsWhMF25ULsgcimHY
-         duQguzwO4LvPWz4kH29Qge4vhHvkbOcxqAGuE+Duiw+g2F1nczErwsJKYFliL508K7+7
-         zaJvsMgnhNv3p3LwV0GsTcIcAEd5eRV0cTO70PJJbEkg/vh56798ZwR8u33HqPKSOYmz
-         vm6eyMEOxEevlfYn227HhjkaKduUUgP1wRbOtunM1+CDP0AzWcvpP89awai7ZIKGNefS
-         kVWg==
-X-Gm-Message-State: AOAM5337Qtz9MxZzo9FSKL2e/m1cpAT6jiN9+jUdGSUMKgvOX/O6k3+B
-        zpZiohfY+kMCH3FgpcDhDJePvg+IDfkwVM8pgHLSmBnoyWc=
-X-Google-Smtp-Source: ABdhPJwmjsavbaUaRT9WQbuC1FIWARCAf+uPGEC4EgjfZIRN4R0zV9xKgP2TnTNNtMTgwAPb7v8kPCofTGQoUKLQhfs=
-X-Received: by 2002:a17:907:2dac:: with SMTP id gt44mr3685913ejc.493.1643155160220;
- Tue, 25 Jan 2022 15:59:20 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=/MF14RV1DmuTvPEQUxyjPvx3j3FWyGkoSHdlDSkc+mk=;
+        b=34Ugwj5abbGaKciC3j3Yz/6GvKoWfzhok0MKV7wbb1+3gIO/VzAGp5UBUDtKF4T1zQ
+         r+LgKnYcN13CFXaHmLksc+Lbu3/2ir9Oil/3VlxDhuu6xB75mromyjr9+4J7I4Z1nw/x
+         u2hJoOx0lhuF3gA4y/gwyohNSgUHEfYotsJcL6dVMvXi86FKNWHAB+xe8lVImZSX7Doz
+         5TKsPt5Glb00nBoj/4Gn5mKT8HFCgc+d0V83C4p72D3hpEth5gfuNVUFbeEripjhOaOJ
+         4q4z7lS/ffgahASs77ww835ZbNdhdeE5hw+39hed1xJnhawe4wfaq2qJ8hklYc4ZLR7+
+         EhbA==
+X-Gm-Message-State: AOAM533UBKNksiJbu4fl3yV25Yqgzqzf59iRk2l7zVnFmGKUGjaJldTZ
+        BLvrrWJq/7SDIpTepmuHzoXGETr9qZMP2Q==
+X-Google-Smtp-Source: ABdhPJzap+iXp11OqyraIaTgCNzoWTDsIgRKMm9aXXC0pQFyAtSGNdyHkd1QJMUPGqpqL7ME1YsQtQ==
+X-Received: by 2002:a17:907:3e96:: with SMTP id hs22mr9279050ejc.640.1643155480530;
+        Tue, 25 Jan 2022 16:04:40 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id vr6sm6746245ejb.45.2022.01.25.16.04.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jan 2022 16:04:40 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nCVnj-0034Ow-IS;
+        Wed, 26 Jan 2022 01:04:39 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH 3/9] ci: make it easier to find failed tests' logs in
+ the GitHub workflow
+Date:   Wed, 26 Jan 2022 00:48:03 +0100
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+ <98891b0d3f7927086350cc9523736ae2eb7c1ee2.1643050574.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <98891b0d3f7927086350cc9523736ae2eb7c1ee2.1643050574.git.gitgitgadget@gmail.com>
+Message-ID: <220126.86sftbfjl4.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
- <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com> <f8efb7446c33f14631b088ac043aca8a403a3250.1638340854.git.gitgitgadget@gmail.com>
- <kl6lilu71rzl.fsf@chooglen-macbookpro.roam.corp.google.com>
-In-Reply-To: <kl6lilu71rzl.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 25 Jan 2022 15:59:08 -0800
-Message-ID: <CABPp-BFdD=f82QvQfokD346YT6aCQ=WwZ09S-a=BPXXj5_LZkg@mail.gmail.com>
-Subject: Re: [Bug] Rebase from worktree subdir is broken (was Re: [PATCH v5
- 07/11] rebase: do not attempt to remove startup_info->original_cwd)
-To:     Glen Choo <chooglen@google.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 25, 2022 at 12:27 PM Glen Choo <chooglen@google.com> wrote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > Since rebase spawns a `checkout` subprocess, make sure we run that from
-> > the startup_info->original_cwd directory, so that the checkout process
-> > knows to protect that directory.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  sequencer.c          | 2 ++
-> >  t/t2501-cwd-empty.sh | 4 ++--
-> >  2 files changed, 4 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/sequencer.c b/sequencer.c
-> > index ea96837cde3..83f257e7fa4 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -4228,6 +4228,8 @@ static int run_git_checkout(struct repository *r, struct replay_opts *opts,
-> >
-> >       cmd.git_cmd = 1;
-> >
-> > +     if (startup_info->original_cwd)
-> > +             cmd.dir = startup_info->original_cwd;
-> >       strvec_push(&cmd.args, "checkout");
-> >       strvec_push(&cmd.args, commit);
-> >       strvec_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
-> > diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
-> > index b1182390ba3..52335a8afe9 100755
-> > --- a/t/t2501-cwd-empty.sh
-> > +++ b/t/t2501-cwd-empty.sh
-> > @@ -166,11 +166,11 @@ test_expect_success 'cherry-pick fails if cwd needs to be removed' '
-> >  '
-> >
-> >  test_expect_success 'rebase does not clean cwd incidentally' '
-> > -     test_incidental_dir_removal failure git rebase reverted
-> > +     test_incidental_dir_removal success git rebase reverted
-> >  '
-> >
-> >  test_expect_success 'rebase fails if cwd needs to be removed' '
-> > -     test_required_dir_removal failure git rebase fd_conflict
-> > +     test_required_dir_removal success git rebase fd_conflict
-> >  '
-> >
-> >  test_expect_success 'revert does not clean cwd incidentally' '
-> > --
-> > gitgitgadget
->
-> This commit (which is already in master) introduces a bug that breaks
-> rebase when rebasing inside a subdirectory of a worktree. You can see
-> that the below test fails with:
->
->   error: The following untracked working tree files would be overwritten by merge:
->           a/b/c
->   Please move or remove them before you merge.
 
-Thanks for the detailed report -- with a full testcase!
+On Mon, Jan 24 2022, Johannes Schindelin via GitGitGadget wrote:
 
-> This only affects subdirectories in worktrees, i.e. rebasing anywhere in
-> the `main-wt` directory is fine, and rebasing from the top of `other-wt`
-> is fine, but `other-wt/any/other/dir` fails.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> I haven't tracked down the root cause yet, but judging from the commit,
-> I would suppose that the checkout is being spawned in the wrong
-> directory, causing the files to not be cleaned up.
-
-There's nothing wrong with running checkout from a subdirectory.  It
-is unfortunate that setup.c auto-discovers both the git directory and
-the working tree, but sets GIT_DIR without setting GIT_WORK_TREE in
-the case of a non-main worktree; it's not particularly friendly for
-subcommands.  Of course, it's also unfortunate that sequencer still
-forks subprocesses other than those requested by a user with e.g.
---exec.
-
-But, anyway, I've got a patch that I'll send as soon as it passes CI
-(https://github.com/git/git/pull/1205).
-
-> ---
->  t/t3400-rebase.sh | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
+> You currently have to know a lot of implementation details when
+> investigating test failures in the CI runs. The first step is easy: the
+> failed job is marked quite clearly, but when opening it, the failed step
+> is expanded, which in our case is the one running
+> `ci/run-build-and-tests.sh`. This step, most notably, only offers a
+> high-level view of what went wrong: it prints the output of `prove`
+> which merely tells the reader which test script failed.
 >
-> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> index 23dbd3c82e..8b8b66538b 100755
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -416,4 +416,33 @@ test_expect_success MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs is a symlink'
->         mv actual_logs .git/logs
->  '
+> The actually interesting part is in the detailed log of said failed
+> test script. But that log is shown in the CI run's step that runs
+> `ci/print-test-failures.sh`. And that step is _not_ expanded in the web
+> UI by default.
 >
-> +test_expect_success 'rebase when inside worktree subdirectory' '
-> +       git init main-wt &&
-> +       (
-> +               cd main-wt &&
-> +               git commit --allow-empty -m "initial" &&
-> +               # create commit with foo/bar/baz
-> +               mkdir -p foo/bar &&
-> +               touch foo/bar/baz &&
-> +               git add foo/bar/baz &&
-> +               git commit -m "add foo/bar/baz" &&
-> +               # create commit with a/b/c
-> +               mkdir -p a/b &&
-> +               touch a/b/c &&
-> +               git add a/b/c &&
-> +               git commit -m "add a/b/c" &&
-> +               # create another branch for our other worktree
-> +               git branch other &&
-> +               git worktree add ../other-wt other &&
-> +               (
-> +                       cd ../other-wt &&
-> +                       mkdir -p random/dir &&
-> +                       (
-> +                               cd random/dir &&
-> +                               git rebase --onto HEAD^^ HEAD^  # drops the HEAD^ commit
-> +                       )
-> +               )
-> +       )
-> +'
-> +
->  test_done
-> --
-> 2.35.0.rc0.227.g00780c9af4-goog
+> Let's help the reader by showing the failed tests' detailed logs in the
+> step that is expanded automatically, i.e. directly after the test suite
+> failed.
+>
+> This also helps the situation where the _build_ failed and the
+> `print-test-failures` step was executed under the assumption that the
+> _test suite_ failed, and consequently failed to find any failed tests.
+>
+> An alternative way to implement this patch would be to source
+> `ci/print-test-failures.sh` in the `handle_test_failures` function to
+> show these logs. However, over the course of the next few commits, we
+> want to introduce some grouping which would be harder to achieve that
+> way (for example, we do want a leaner, and colored, preamble for each
+> failed test script, and it would be trickier to accommodate the lack of
+> nested groupings in GitHub workflows' output).
+
+Is it really better to have the first thing you see in a failing job be
+this level of detail?
+
+To take the "before" demo job from your CL, if you click on a failing
+job you'll currently end up with ~1600 lines of "prove" setup and
+output, culminating in (the browser auto-scrolls to the end):
+
+    [...]
+    Test Summary Report
+    -------------------
+    t1092-sparse-checkout-compatibility.sh           (Wstat: 256 Tests: 53 Failed: 1)
+      Failed test:  49
+      Non-zero exit status: 1
+    t3701-add-interactive.sh                         (Wstat: 0 Tests: 71 Failed: 0)
+      TODO passed:   45, 47
+    Files=957, Tests=25489, 645 wallclock secs ( 5.74 usr  1.56 sys + 866.28 cusr 364.34 csys = 1237.92 CPU)
+    Result: FAIL
+
+Is it ideal? No. But I think that folding the ci/print-test-failures.sh
+output into that step makes it much worse. Now I'll be sent to the very
+bottom of ~16000 lines (yes, that's an extra zero at the end) of output,
+ending in:
+
+    [...]
+    + test_cmp expect sparse-checkout-out
+    + test 2 -ne 2
+    + GIT_ALLOC_LIMIT=0 eval diff -u "$@"
+    + diff -u expect sparse-checkout-out
+    + test_cmp full-checkout-err sparse-checkout-err
+    + test 2 -ne 2
+    + GIT_ALLOC_LIMIT=0 eval diff -u "$@"
+    + diff -u full-checkout-err sparse-checkout-err
+    + test_cmp full-checkout-err sparse-index-err
+    + test 2 -ne 2
+    + GIT_ALLOC_LIMIT=0 eval diff -u "$@"
+    + diff -u full-checkout-err sparse-index-err
+    
+    ok 53 - checkout behaves oddly with df-conflict-2
+    # failed 1 among 53 test(s)
+    1..53
+
+Now you'll need to scroll up or search just to see what test failed.
+
+Usually when these fail I might only look at the failing test name (at
+that point already knowing why it failed). I think it's a feature that
+we only expand the verbose output later.
+
+I realize that:
+
+1) This isn't the exact output you emit in the post-image here, since you're not
+actually using ci/print-test-failures.sh, but from eyeballing the script
+it seems to do basically the same thing, i.e. it'll emit the full *.out
+file.
+
+B.t.w. why isn't this using ci/print-test-failures.sh. Your "an
+alternative way" paragraph doesn't really explain it. Sure, it'll be
+further tweaked later, but in the meantime do we have to re-invent
+ci/print-test-failures.sh? Anyway...
+
+2) The end-state at the end of this series looks somewhat different, but I think
+that end-state shares the UX problem noted above, and to some extent
+makes it worse.
+
+That one has 28 thousand lines of output!
+
+Now I know it's elided so you're only supposed to see a few screenfulls
+of it, but at least in my browser that end-state is *very slow*, much
+slower than the version that shows me the full ~16 thousand lines at
+once.
+
+Presumably it's doing some very expensive JavaScript/CSS behind the
+scenes.
+
+I mean so slow that when I press page up and down I can see 3-8 lines of
+that folded output appear at once, then the next 3-8 lines etc. The
+current output meanwhile (and this more verbose one) is
+near-instant. This is in Firefox 91.4, if it matters.
