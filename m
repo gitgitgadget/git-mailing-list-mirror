@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78D86C433F5
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 18:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B85C3C433EF
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 18:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233241AbiAYSnI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 13:43:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39904 "EHLO
+        id S233215AbiAYSnL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 13:43:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233095AbiAYSmV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 13:42:21 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81FABC061749
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 10:42:20 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id s18so21563345wrv.7
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 10:42:20 -0800 (PST)
+        with ESMTP id S233094AbiAYSmU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 13:42:20 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5F55C06173E
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 10:42:18 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id e2so6182676wra.2
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 10:42:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=INwATnL1xRLYdZVmyzbjAkZIOCTDRoDVPXqO0Q4F5YA=;
-        b=UiRsWtECrsrqKnEBQz4eesM/Eyd3ZKKH7QculiW6w4zdUNiD7qPLy5VDjEzr56ajMQ
-         8pEoSP1r11vdpYaGLhpXZjhIrL/MKLCZVcoAARokqDt/ZJrkODYZoriE213JT4Y3pCTl
-         FU1j/xWS2zrgswT3N+K44RYMoDoFWgTpZOdkWV/9eWQxe3YG6cKotee/yyN4mASUBTwH
-         z7cdrdhCYixPRnjzfiM4U75kg422SQimNSB7wOvcHtmnnBJmnGE+HDwdG7owIsqF7qEq
-         kZLrckWKxZVUl9lHGyVciLRiEuO+dBmSeXGwMS918jed9qAJu/g1QggjqIKN+GzUJAMX
-         tnTA==
+        bh=8hp2MiLjwahWoIrBxqypq0Dh6jYC1c8Kd9JUDxNK2Cs=;
+        b=BzCPkGSytNBNTflw2rd4MClgn5ZFL+WEZLjPKNRbloXeGXsJcEzXf3HEN0OBJhvHTe
+         PuqVPJJBiXwax30TfW4TyNlfUShxDP4G9wDj0+fI8P2cRHj/ggGYDLrY2kdMz61BB7q7
+         c7iroft6Z/KDwVTE70nOYe93kpX/zcX5N/Iw8SZ35V9AMuCoGBfqkW5G2I15QCM35PMc
+         JFBTHs9WphJYk5oMkPKfsTxipyXTka/kdt31P/zbXInfBpERrgv58FEvb46ZHoCLd2vu
+         FALwE3BpHk70/Vi63z8vVKE71uGszoxdJJF+8TPR7Pc2LuBX9590H73MRRn6hzGW8fk2
+         Q9Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=INwATnL1xRLYdZVmyzbjAkZIOCTDRoDVPXqO0Q4F5YA=;
-        b=Z9mfnxAAuLHre+JlxGcb/SUOM+imCCwCtvefeOmUjve3NAIG0Z5YI686xOhFSAgg13
-         /ur7E6/iTWEYpcm589/ZF+ddmu0apLswEP16uCkDPvtwJ2zYteE76dNWzLNgSKnvFukm
-         hE9t+WHnhDO8PPvhwXluue+uhVi1lX+rdSgG3DIwgOE+wWpUQD3cC1h78RlyryGyaJww
-         jnrX+grErILUqtowCLWcBgqCoz8fkcP+NFHhX2rmDX8dCmpcYx0WoeaVo0FSyFSlKuWc
-         RHVX2Bw9jN8e+BYGlFqyM6bdujv8Nqy4QQ7c+V5vP4OKAH4D4GjQZBw9XgSY0rFayfmF
-         IpiA==
-X-Gm-Message-State: AOAM532kDRx8sf2kCLJQVk5iIXzYH3xoRl8IfPT9jOM5ANbNGf1U8ZlR
-        l/96Y5U1nL8mZnO2jJNvctmJjlLoA+CL0g==
-X-Google-Smtp-Source: ABdhPJwuxdaGqrOI8SKD08XXL0X1VL1c/bZMT+tw2j8kqR2XEIfPsIFTwsGmCETqwAcxNnYa+x4XSw==
-X-Received: by 2002:a5d:47cf:: with SMTP id o15mr6893631wrc.583.1643136138925;
-        Tue, 25 Jan 2022 10:42:18 -0800 (PST)
+        bh=8hp2MiLjwahWoIrBxqypq0Dh6jYC1c8Kd9JUDxNK2Cs=;
+        b=EWyxBPQI0YPfgLSOEDhhfmWFfFXog8sb9WorQc3MRKO3ggvUL2xaw3YoRPAtnVqfDH
+         pj2qCyjaHUOzqky7l0H8v+pCWFinYdk9j/7xV4lhGZr+vW1iQUC6US7sNb9z1hwclA9J
+         ICOVHyOX4BF7Jwalyepv2cDRsn+H55LlI4DIWJkVFt/QHNZmP1dZjXgXu6DL2vRf5uAA
+         6rhcg+O3s9eSNSYMw+PxrM8SGzixT2gph07Kz0Dkh4wQVrkmHMcPPMu7U3Cg6ENQzd2d
+         MN8Ji/7ionOkfk+wd5Gobpe3cK4CbsnPmYAUwY2GT9U5AaSotjza0Ql0HUh2hZcfzNJE
+         AH6g==
+X-Gm-Message-State: AOAM530UeilwxP6NQLA0Uo1SkNl55ogcQnN8SUnQF4vA00+/w+aoXan3
+        w6JDKWN9p4m1jBkcud7oCJtBFuQ7Vy6Ytg==
+X-Google-Smtp-Source: ABdhPJzE4RwAoM/HcAe4frzRXMlVROnNPq+myc+xrY+Yzz1xpUzCbGO7eqx2klLmIBklsn1w5zoDSQ==
+X-Received: by 2002:a05:6000:18a2:: with SMTP id b2mr10369376wri.282.1643136137110;
+        Tue, 25 Jan 2022 10:42:17 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u3sm7603945wrs.55.2022.01.25.10.42.18
+        by smtp.gmail.com with ESMTPSA id 31sm21903298wrl.27.2022.01.25.10.42.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jan 2022 10:42:18 -0800 (PST)
-Message-Id: <110d5e0546c76848d6e942a6c9b69d5146b0e1b3.1643136134.git.gitgitgadget@gmail.com>
+        Tue, 25 Jan 2022 10:42:16 -0800 (PST)
+Message-Id: <459e09dedd71fcb64b9796bac52c3812d78f2405.1643136134.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com>
 References: <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com>
         <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 25 Jan 2022 18:42:12 +0000
-Subject: [PATCH v4 3/5] config: add repo_config_set_worktree_gently()
+Date:   Tue, 25 Jan 2022 18:42:10 +0000
+Subject: [PATCH v4 1/5] Documentation: add extensions.worktreeConfig details
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,111 +69,140 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-Some config settings, such as those for sparse-checkout, are likely
-intended to only apply to one worktree at a time. To make this write
-easier, add a new config API method, repo_config_set_worktree_gently().
+The extensions.worktreeConfig extension was added in 58b284a (worktree:
+add per-worktree config files, 2018-10-21) and was somewhat documented
+in Documentation/git-config.txt. However, the extensions.worktreeConfig
+value was not specified further in the list of possible config keys. The
+location of the config.worktree file is not specified, and there are
+some precautions that should be mentioned clearly, but are only
+mentioned in git-worktree.txt.
 
-This method will attempt to write to the worktree-specific config, but
-will instead write to the common config file if worktree config is not
-enabled.  The next change will introduce a consumer of this method.
+Expand the documentation to help users discover the complexities of
+extensions.worktreeConfig by adding details and cross links in these
+locations (relative to Documentation/):
+
+- config/extensions.txt
+- git-config.txt
+- git-worktree.txt
+
+The updates focus on items such as
+
+* $GIT_DIR/config.worktree takes precedence over $GIT_COMMON_DIR/config.
+
+* The core.worktree and core.bare=true settings are incorrect to have in
+  the common config file when extensions.worktreeConfig is enabled.
+
+* The sparse-checkout settings core.sparseCheckout[Cone] are recommended
+  to be set in the worktree config.
+
+As documented in 11664196ac ("Revert "check_repository_format_gently():
+refuse extensions for old repositories"", 2020-07-15), this extension
+must be considered regardless of the repository format version for
+historical reasons.
+
+A future change will update references to extensions.worktreeConfig
+within git-sparse-checkout.txt, but a behavior change is needed before
+making those updates.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- config.c | 35 ++++++++++++++++++++++++++++++++---
- config.h |  8 ++++++++
- 2 files changed, 40 insertions(+), 3 deletions(-)
+ Documentation/config/extensions.txt | 31 +++++++++++++++++++++++++++++
+ Documentation/git-config.txt        |  8 ++++++--
+ Documentation/git-worktree.txt      | 11 +++++++---
+ 3 files changed, 45 insertions(+), 5 deletions(-)
 
-diff --git a/config.c b/config.c
-index 2bffa8d4a01..1a03ced1a54 100644
---- a/config.c
-+++ b/config.c
-@@ -21,6 +21,7 @@
- #include "dir.h"
- #include "color.h"
- #include "refs.h"
-+#include "worktree.h"
- 
- struct config_source {
- 	struct config_source *prev;
-@@ -2884,6 +2885,20 @@ int git_config_set_gently(const char *key, const char *value)
- 	return git_config_set_multivar_gently(key, value, NULL, 0);
- }
- 
-+int repo_config_set_worktree_gently(struct repository *r,
-+				    const char *key, const char *value)
-+{
-+	/* Only use worktree-specific config if it is is already enabled. */
-+	if (repository_format_worktree_config) {
-+		char *file = repo_git_path(r, "config.worktree");
-+		int ret = git_config_set_multivar_in_file_gently(
-+					file, key, value, NULL, 0);
-+		free(file);
-+		return ret;
-+	}
-+	return repo_config_set_multivar_gently(r, key, value, NULL, 0);
-+}
+diff --git a/Documentation/config/extensions.txt b/Documentation/config/extensions.txt
+index 4e23d73cdca..5999dcb2a1f 100644
+--- a/Documentation/config/extensions.txt
++++ b/Documentation/config/extensions.txt
+@@ -6,3 +6,34 @@ extensions.objectFormat::
+ Note that this setting should only be set by linkgit:git-init[1] or
+ linkgit:git-clone[1].  Trying to change it after initialization will not
+ work and will produce hard-to-diagnose issues.
 +
- void git_config_set(const char *key, const char *value)
- {
- 	git_config_set_multivar(key, value, NULL, 0);
-@@ -3181,14 +3196,28 @@ void git_config_set_multivar_in_file(const char *config_filename,
- int git_config_set_multivar_gently(const char *key, const char *value,
- 				   const char *value_pattern, unsigned flags)
- {
--	return git_config_set_multivar_in_file_gently(NULL, key, value, value_pattern,
--						      flags);
-+	return repo_config_set_multivar_gently(the_repository, key, value,
-+					       value_pattern, flags);
-+}
++extensions.worktreeConfig::
++	If enabled, then worktrees will load config settings from the
++	`$GIT_DIR/config.worktree` file in addition to the
++	`$GIT_COMMON_DIR/config` file. Note that `$GIT_COMMON_DIR` and
++	`$GIT_DIR` are the same for the main worktree, while other
++	worktrees have `$GIT_DIR` equal to
++	`$GIT_COMMON_DIR/worktrees/<worktree-name>/`. The settings in the
++	`config.worktree` file will override settings from any other
++	config files.
+++
++When enabling `extensions.worktreeConfig`, you must be careful to move
++certain values from the common config file to the main worktree's
++`config.worktree` file, if present:
+++
++* `core.worktree` must be moved from `$GIT_COMMON_DIR/config` to
++  `$GIT_COMMON_DIR/config.worktree`.
++* If `core.bare` is true, then it must be moved from `$GIT_COMMON_DIR/config`
++  to `$GIT_COMMON_DIR/config.worktree`.
+++
++It may also be beneficial to adjust the locations of `core.sparseCheckout`
++and `core.sparseCheckoutCone` depending on your desire for customizable
++sparse-checkout settings for each worktree. By default, the `git
++sparse-checkout` builtin enables `extensions.worktreeConfig`, assigns
++these config values on a per-worktree basis, and uses the
++`$GIT_DIR/info/sparse-checkout` file to specify the sparsity for each
++worktree independently. See linkgit:git-sparse-checkout[1] for more
++details.
+++
++For historical reasons, `extensions.worktreeConfig` is respected
++regardless of the `core.repositoryFormatVersion` setting.
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 2285effb363..95cefd5e399 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -141,9 +141,13 @@ from all available files.
+ See also <<FILES>>.
+ 
+ --worktree::
+-	Similar to `--local` except that `.git/config.worktree` is
++	Similar to `--local` except that `$GIT_DIR/config.worktree` is
+ 	read from or written to if `extensions.worktreeConfig` is
+-	present. If not it's the same as `--local`.
++	enabled. If not it's the same as `--local`. Note that `$GIT_DIR`
++	is equal to `$GIT_COMMON_DIR` for the main worktree, but is of the
++	form `.git/worktrees/<worktree-name>/` for other worktrees. See
++	linkgit:git-worktree[1] to learn how to enable
++	`extensions.worktreeConfig`.
+ 
+ -f <config-file>::
+ --file <config-file>::
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 9e862fbcf79..ea0ee9f8bb5 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -286,8 +286,8 @@ CONFIGURATION FILE
+ ------------------
+ By default, the repository `config` file is shared across all working
+ trees. If the config variables `core.bare` or `core.worktree` are
+-already present in the config file, they will be applied to the main
+-working trees only.
++present in the common config file and `extensions.worktreeConfig` is
++disabled, then they will be applied to the main working trees only.
+ 
+ In order to have configuration specific to working trees, you can turn
+ on the `worktreeConfig` extension, e.g.:
+@@ -307,11 +307,16 @@ them to the `config.worktree` of the main working tree. You may also
+ take this opportunity to review and move other configuration that you
+ do not want to share to all working trees:
+ 
+- - `core.worktree` and `core.bare` should never be shared
++ - `core.worktree` should never be shared.
 +
-+int repo_config_set_multivar_gently(struct repository *r, const char *key,
-+				    const char *value,
-+				    const char *value_pattern, unsigned flags)
-+{
-+	char *file = repo_git_path(r, "config");
-+	int res = git_config_set_multivar_in_file_gently(file,
-+							 key, value,
-+							 value_pattern,
-+							 flags);
-+	free(file);
-+	return res;
- }
++ - `core.bare` should not be shared unless the value is `core.bare=false`.
  
- void git_config_set_multivar(const char *key, const char *value,
- 			     const char *value_pattern, unsigned flags)
- {
--	git_config_set_multivar_in_file(NULL, key, value, value_pattern,
-+	git_config_set_multivar_in_file(git_path("config"),
-+					key, value, value_pattern,
- 					flags);
- }
+  - `core.sparseCheckout` is recommended per working tree, unless you
+    are sure you always use sparse checkout for all working trees.
  
-diff --git a/config.h b/config.h
-index f119de01309..1d98ad269bd 100644
---- a/config.h
-+++ b/config.h
-@@ -253,6 +253,13 @@ void git_config_set_in_file(const char *, const char *, const char *);
- 
- int git_config_set_gently(const char *, const char *);
- 
-+/**
-+ * Write a config value that should apply to the current worktree. If
-+ * extensions.worktreeConfig is enabled, then the write will happen in the
-+ * current worktree's config. Otherwise, write to the common config file.
-+ */
-+int repo_config_set_worktree_gently(struct repository *, const char *, const char *);
++See the documentation of `extensions.worktreeConfig` in
++linkgit:git-config[1] for more details.
 +
- /**
-  * write config values to `.git/config`, takes a key/value pair as parameter.
-  */
-@@ -281,6 +288,7 @@ int git_config_parse_key(const char *, char **, size_t *);
- 
- int git_config_set_multivar_gently(const char *, const char *, const char *, unsigned);
- void git_config_set_multivar(const char *, const char *, const char *, unsigned);
-+int repo_config_set_multivar_gently(struct repository *, const char *, const char *, const char *, unsigned);
- int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, unsigned);
- 
- /**
+ DETAILS
+ -------
+ Each linked working tree has a private sub-directory in the repository's
 -- 
 gitgitgadget
 
