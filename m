@@ -2,64 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED0B3C433F5
-	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 21:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 895FCC433EF
+	for <git@archiver.kernel.org>; Tue, 25 Jan 2022 21:40:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233085AbiAYV0l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 16:26:41 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:31552 "EHLO bsmtp3.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233025AbiAYV0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 16:26:40 -0500
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4Jk0KT4d8Dz5tlC;
-        Tue, 25 Jan 2022 22:26:37 +0100 (CET)
-Message-ID: <5740b0c5-7df8-5947-a4c9-0ece2bf17891@kdbg.org>
-Date:   Tue, 25 Jan 2022 22:26:37 +0100
+        id S233239AbiAYVkf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 16:40:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52828 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231860AbiAYVke (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 16:40:34 -0500
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5150AC06173B
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 13:40:34 -0800 (PST)
+Received: by mail-io1-xd32.google.com with SMTP id z199so10870458iof.10
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 13:40:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Z3UycJYARpCRCUXtGP+ENCBDcXDkOeZ7LSy4Wi6zhJA=;
+        b=D+Uj0V3nt9i15/arswiF5EPAAbiNS4GA0YMy8kQZk4+1Lzwz6C/yxdtUWgSlW3kFyq
+         L31j9FZYwQqKoGp09jw8ANsv0ttyW9/VT1gVA4UScUov6QACyLHqu18qcwg2pbsxhy0x
+         hjAeTlE0UzJkuxSHn8RctglCSn95Jp88B1UNQMd5EPOxObdzBHBDJ3LEJmtOIlI7c9yi
+         XuaTPhGOA197psC0iXETG2ciB9oFIk8G2LYYiFJSkNA+H02XNYwWywLYAYxY80JKbu8i
+         P0WmmS8Ej8iRd8uCzdRhZCngciqgK9pKx8wMepT1DrrWqSCjioCuOLBGsfjg0run+/H3
+         UF0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Z3UycJYARpCRCUXtGP+ENCBDcXDkOeZ7LSy4Wi6zhJA=;
+        b=SDmEbbECVeMYMKJQ5XhtpYeUgcUBEx10EYt7uQwzsI0CABukENI8qIa3woWcezHuf+
+         n22395qgU/5ikp/yoPDgYMjc9AqsT5gCi4HijFtS2/SL+/tX2Pga+MNP7emq9OZXfrrg
+         Ynnfohwa85IR86+9jcC8sEh8B/zEXVtMtthlRuurIstm+9xUeUbztlXBa4aFCM0cPP87
+         OH23eKtu6iw+Ec/egMfL/x0TzutXheOwVeToyQCYpJpcBDoqejMTP5baa2v66NTcu9jM
+         xCXlHpNSKAV0iVtOif9zqbbnR2lYbLLR9eD2tfmccAiaZkmxIcFWh4ovz7QxFJQNuGys
+         Bk2Q==
+X-Gm-Message-State: AOAM531uQqN47fBrYEiL9uRPwPqUcXyAFDsMayvL4LBK+cE+5BfODmTh
+        +K1Hw/b3oe+yvwSX6n7uOtZcFMvsHQIkSg==
+X-Google-Smtp-Source: ABdhPJzwalJvKNmDlnbLgIwpQBlGZkaiRkxpMpO8CUnWU4NfSf2WvqDzLu+V7QfHldLtoKOptrvluA==
+X-Received: by 2002:a02:9343:: with SMTP id e3mr1784704jah.75.1643146833669;
+        Tue, 25 Jan 2022 13:40:33 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i20sm8906237iov.46.2022.01.25.13.40.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Jan 2022 13:40:32 -0800 (PST)
+Date:   Tue, 25 Jan 2022 16:40:32 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com
+Subject: Re: [PATCH v3 7/9] t/lib-bitmap.sh: parameterize tests over reverse
+ index source
+Message-ID: <YfBuUBOjWpvVOE/9@nand.local>
+References: <7ce3dc60f93d5154943a63f1c09345bd47fbc7c9.1641320129.git.me@ttaylorr.com>
+ <20220124191503.2447008-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Subject: Re: [PATCH 1/4] i18n: factorize more 'incompatible options' messages
-Content-Language: en-US
-To:     =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Jean-No=c3=abl_Avila_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, phillip.wood@dunelm.org.uk
-References: <pull.1123.git.1642876553.gitgitgadget@gmail.com>
- <ba203623-87b1-f3eb-9498-52c4ea4ba07e@kdbg.org>
- <80593381-2ecc-5de5-76b7-0e6c6452559f@gmail.com> <2894278.sRLLl5rxgE@cayenne>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <2894278.sRLLl5rxgE@cayenne>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220124191503.2447008-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.01.22 um 21:52 schrieb Jean-Noël AVILA:
-> Le lundi 24 janvier 2022, 12:06:19 CET Phillip Wood a écrit :
->> On 24/01/2022 07:14, Johannes Sixt wrote:
->>> A general comment: To me, it looks like you didn't want to change the
->>> variable name 'f' in the first hunk above, and then just named the array
->>> 'f_options' to go with 'f'. Perhaps `exclusive_opt` (not plural!) for
->>> the array. Now, renaming 'f' to something longer makes the code a bit
->>> unwieldy. Therefore, let me suggest yet another approach: factor out
->>> functions check_exclusive_opts3(), check_exclusive_opts4(), to be used 
-> like
->>>
->>> 	check_exclusive_opts3(use_stdout, "--stdout",
->>> 		rev.diffopt.close_file, "--output",
->>> 		output_directory, "--output-directory");
->>>
->>> I am not yet proposing check_exclusive_opts2(), but others may think it
->>> is an improvement, too, (if they think that such functions are an
->>> improvement in the first place).
-> 
-> Will factorize away such exclusive options, but I'm not sure where. Should it 
-> be in git-compat-util.h?
+On Mon, Jan 24, 2022 at 11:15:03AM -0800, Jonathan Tan wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+> > To prepare for reading the reverse index data out of the MIDX itself,
+> > teach the `test_rev_exists` function to take an expected "source" for
+> > the reverse index data.
+>
+> Thanks - up to here looks good. Thanks especially for patch 6, which was easy
+> to verify using "--color-moved --color-moved-ws=allow-indentation-change".
 
-How about parse-options.*? There are already some helper functions near
-the end of parse-options.c. Perhaps the names I suggested must be
-revised, though.
+Good, thanks for verifying.
 
--- Hannes
+> > diff --git a/t/lib-bitmap.sh b/t/lib-bitmap.sh
+> > index 48a8730a13..77b5f46a03 100644
+> > --- a/t/lib-bitmap.sh
+> > +++ b/t/lib-bitmap.sh
+> > @@ -275,17 +275,23 @@ midx_pack_source () {
+> >
+> >  test_rev_exists () {
+> >  	commit="$1"
+> > +	kind="$2"
+> >
+> >  	test_expect_success 'reverse index exists' '
+>
+> To make it easier to understand test failures, we should probably
+> include "kind" in the name of the test case.
+
+Sure, that seems good to me.
+
+> In a separate commit after this one, we should do it for the other
+> blocks.
+
+But I'm not as certain about this one. The tests are already separated
+into two different test scripts (t5326 for the in-MIDX .rev file, and
+t5327 for the external .rev file). So it should already be clear based
+on what test script you're running.
+
+
+Thanks,
+Taylor
