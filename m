@@ -2,106 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B614BC2BA4C
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 11:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D22CC28CF5
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 11:15:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240474AbiAZLHh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 06:07:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39086 "EHLO
+        id S233494AbiAZLPg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 06:15:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240462AbiAZLHf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 06:07:35 -0500
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86DBBC06161C
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 03:07:35 -0800 (PST)
-Received: by mail-yb1-xb2c.google.com with SMTP id g81so70240121ybg.10
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 03:07:35 -0800 (PST)
+        with ESMTP id S240574AbiAZLPc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 06:15:32 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF84C061748
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 03:15:32 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id k18so25136447wrg.11
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 03:15:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aTESW53tX4qDP3u7HwFMsYBwMp7/feOGnZCQhWRhhB8=;
-        b=o+EC+JTN7APeyWutPVPNPLEOCHPwDs3+VwgqgNn9cvp+uJLeoY8U8BH43EDV7gQgbc
-         VtvvLPojx6R/6fm2MvPdmmh/j8kvLnFJkOrlS3AoO3u8H1gxq4x7lVHOdXYP8L2j9FVD
-         ufaAuxc7qOdBEbdh71P8fgejJT3zV+XKPnCnWB/eC23JFRQEs8DS3b5o21byg4Vd3x1v
-         UX1DoKkxm5vL4X9cTkb4YcqzglzvnnFag2TPg7Oo0TnSN2BE1Zmxy6LkEKxRqQ8TPPQR
-         WdAt2Ox/ydUc4LbYEyfunugL1y2w5VDVfXp5YSRC4EPfCSM817g7eSO9kDJUwN+HjT7w
-         Wgjw==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=WZZgqP8vsOM0ZwCwqFtht9DnabIP0nvY1EHM0yKPqxo=;
+        b=lbr6bkzkT2R03ffPtxqQALhnT6Wc/f7mR0z/Y0ZeIm0o2o/zFUtU4rVC3rur5FkbCZ
+         QCQYcxgc21r6JNF2LhA1rO4Q0Y5Txc4VHFr8hDmFdS5GF/K6x9NV1dxhZMIx7fRFuQSR
+         ZkYCNrfBn9f9DK4TjgjKOkmyPiOeYKu7DhGiJWQ/1mm4tdkLuKZ3u7ZIW72onshLE1/F
+         NgqfQF3SLvbT1YfogVKh6UNZo76thfNQBwnHtnInJ0aeUbXkNxTIm/L08os1yBUqI71Q
+         wVRrA0IYiDKcgerDnnfWqsUvIW0idaaG+yS5Ik6xIiBKOywHkhPIYnVEWsPtIklLaFFY
+         fcOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aTESW53tX4qDP3u7HwFMsYBwMp7/feOGnZCQhWRhhB8=;
-        b=AX0QwAokvSu1dbiXth3Qw6nWRzKFNZHhM04bCZUaqmb+7vxp7fpU1PHTJ4Ow84sj1x
-         1zUbEbzcOrAcUhsf6qC6vOnYuMeVXBCtIddsxbpjf//itGhf/sjhiudW6JkHtSV7s8rG
-         dcHsI3mtlL16c0FBH2sGFpZacvjlZbOToxPWf+ob2Tk6Ib664MXaTMXiPGMzXa12ypWx
-         9/4wW5A0Jgyenvvw0qb9ByFzi8YwFXrXFFhuWJmfD8uPEx+PNrF3hP4D2PwEC/c/Ant6
-         YCdb5uXOwTLc9L7OkAMtMNXoiDPIuArAkfoXvrE8bprIeVBfGxODKctFqvpPaO94B1rj
-         Wy9w==
-X-Gm-Message-State: AOAM532jmXpo6mDhaUBKob8HqheZcGJhmnCIe87zVAw0tmLnmQczzKP3
-        O/bF/N93s6M6k9cT8inF6RWmq9ADdBju0sqv2ts=
-X-Google-Smtp-Source: ABdhPJzdXFChgEK4UYZKL+KxXq6kow6GoBk7e5s6Y2X/gW4/di15als+kdBtKCD/vhk9fDPciwW4K9qlupmpnGhjABc=
-X-Received: by 2002:a25:dac1:: with SMTP id n184mr34551584ybf.649.1643195254745;
- Wed, 26 Jan 2022 03:07:34 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=WZZgqP8vsOM0ZwCwqFtht9DnabIP0nvY1EHM0yKPqxo=;
+        b=DQJcC8qZ/05rdUF+mjv+dVwDs9fzDbyW4PPF6Q5nkF8c+7p6c7TyMZO2QX4i4ZgcNE
+         GYmC/U/zmTSN2vn6bMsZa/DOlvNUvltBemelOW7Leh75zqj43bL1hh7yWzHYeWWrk3Tp
+         NheF+Hc0N68cL/bUP2Iuy42D977b7yB+z/17ko2AwzHif9jRgSaLgcfS7xQcPIs8L0EN
+         4qliU4vQmXdXWOF7Wz7EXmbRWtAvcBpt4MWxowYa6iIprlpJnAFglsZZwk0lnx8w/ViZ
+         4b0GRaQRZ3CwxaCisj0J5Yn2bXhP6Tcj34zwbeumXpOn1i1YyjBQqzSG3odcJ/0Anzzy
+         kEjg==
+X-Gm-Message-State: AOAM531eV3GKEyvmf5K/5/5Z3j3BhII+Gv0fbcqRFs/LJ4APLA7HtRw5
+        EZ6+H8uz+jyCn+TDf3yBsWh7VMNz1mE=
+X-Google-Smtp-Source: ABdhPJz0UJnK5b55PyumE8JV4hQNOvetCB26patM9ay25huykb0o8mHvB+4UH0rPjrvb7cqyyxHu0w==
+X-Received: by 2002:adf:ce07:: with SMTP id p7mr22061026wrn.329.1643195730664;
+        Wed, 26 Jan 2022 03:15:30 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bg23sm3692488wmb.5.2022.01.26.03.15.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jan 2022 03:15:30 -0800 (PST)
+Message-Id: <pull.1130.git.1643195729608.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 26 Jan 2022 11:15:29 +0000
+Subject: [PATCH] scalar: accept -C and -c options before the subcommand
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1122.git.1642888562.gitgitgadget@gmail.com> <35e0ed9271a0229fe2acd2385a7e4171d4dfe077.1642888562.git.gitgitgadget@gmail.com>
-In-Reply-To: <35e0ed9271a0229fe2acd2385a7e4171d4dfe077.1642888562.git.gitgitgadget@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 26 Jan 2022 12:07:23 +0100
-Message-ID: <CAP8UFD0iQg4nL6eSTDbEu8t6h+K0H+nGF8y_N0z3XyjH+KGORA@mail.gmail.com>
-Subject: Re: [PATCH 08/12] merge-ort: provide a merge_get_conflicted_files()
- helper function
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 22, 2022 at 10:56 PM Elijah Newren via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> +void merge_get_conflicted_files(struct merge_result *result,
-> +                               struct string_list *conflicted_files)
-> +{
-> +       struct hashmap_iter iter;
-> +       struct strmap_entry *e;
-> +       struct merge_options_internal *opti = result->priv;
-> +
-> +       strmap_for_each_entry(&opti->conflicted, &iter, e) {
-> +               const char *path = e->key;
-> +               struct conflict_info *ci = e->value;
-> +               int i;
-> +
-> +               VERIFY_CI(ci);
-> +
-> +               for (i = MERGE_BASE; i <= MERGE_SIDE2; i++) {
-> +                       struct stage_info *si;
-> +
-> +                       if (!(ci->filemask & (1ul << i)))
-> +                               continue;
-> +
-> +                       si = xmalloc(sizeof(*si));
+The `git` executable has these two very useful options:
 
-It's probably a premature optimization, so feel free to ignore, but as
-MERGE_BASE and MERGE_SIDE2 are constants, and ci->filemask is constant
-inside the 'for' loop, we could compute before the 'for' loop how many
-'struct stage_info' we will need and allocate them all at once before
-the 'for' loop.
+-C <directory>:
+	switch to the specified directory before performing any actions
 
-> +                       si->stage = i+1;
-> +                       si->mode = ci->stages[i].mode;
-> +                       oidcpy(&si->oid, &ci->stages[i].oid);
-> +                       string_list_append(conflicted_files, path)->util = si;
-> +               }
-> +       }
-> +       /* string_list_sort() uses a stable sort, so we're good */
-> +       string_list_sort(conflicted_files);
-> +}
+-c <key>=<value>:
+	temporarily configure this setting for the duration of the
+	specified scalar subcommand
+
+With this commit, we teach the `scalar` executable the same trick.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    scalar: accept -C and -c options
+    
+    This makes the scalar command a bit more handy by offering the same -c
+    <key>=<value> and -C <directory> options as the git command.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1130%2Fdscho%2Fscalar-c-and-C-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1130/dscho/scalar-c-and-C-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1130
+
+ contrib/scalar/scalar.c   | 22 +++++++++++++++++++++-
+ contrib/scalar/scalar.txt | 10 ++++++++++
+ 2 files changed, 31 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+index 1ce9c2b00e8..7db2a97416e 100644
+--- a/contrib/scalar/scalar.c
++++ b/contrib/scalar/scalar.c
+@@ -808,6 +808,25 @@ int cmd_main(int argc, const char **argv)
+ 	struct strbuf scalar_usage = STRBUF_INIT;
+ 	int i;
+ 
++	while (argc > 1 && *argv[1] == '-') {
++		if (!strcmp(argv[1], "-C")) {
++			if (argc < 3)
++				die(_("-C requires a <directory>"));
++			if (chdir(argv[2]) < 0)
++				die_errno(_("could not change to '%s'"),
++					  argv[2]);
++			argc -= 2;
++			argv += 2;
++		} else if (!strcmp(argv[1], "-c")) {
++			if (argc < 3)
++				die(_("-c requires a <key>=<value> argument"));
++			git_config_push_parameter(argv[2]);
++			argc -= 2;
++			argv += 2;
++		} else
++			break;
++	}
++
+ 	if (argc > 1) {
+ 		argv++;
+ 		argc--;
+@@ -818,7 +837,8 @@ int cmd_main(int argc, const char **argv)
+ 	}
+ 
+ 	strbuf_addstr(&scalar_usage,
+-		      N_("scalar <command> [<options>]\n\nCommands:\n"));
++		      N_("scalar [-C <directory>] [-c <key>=<value>] "
++			 "<command> [<options>]\n\nCommands:\n"));
+ 	for (i = 0; builtins[i].name; i++)
+ 		strbuf_addf(&scalar_usage, "\t%s\n", builtins[i].name);
+ 
+diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
+index f416d637289..cf4e5b889cc 100644
+--- a/contrib/scalar/scalar.txt
++++ b/contrib/scalar/scalar.txt
+@@ -36,6 +36,16 @@ The `scalar` command implements various subcommands, and different options
+ depending on the subcommand. With the exception of `clone`, `list` and
+ `reconfigure --all`, all subcommands expect to be run in an enlistment.
+ 
++The following options can be specified _before_ the subcommand:
++
++-C <directory>::
++	Before running the subcommand, change the working directory. This
++	option imitates the same option of linkgit:git[1].
++
++-c <key>=<value>::
++	For the duration of running the specified subcommand, configure this
++	setting. This option imitates the same option of linkgit:git[1].
++
+ COMMANDS
+ --------
+ 
+
+base-commit: ddc35d833dd6f9e8946b09cecd3311b8aa18d295
+-- 
+gitgitgadget
