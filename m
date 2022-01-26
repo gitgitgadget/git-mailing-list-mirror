@@ -2,99 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1800EC28CF5
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 11:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 440E7C28CF5
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 12:03:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233864AbiAZLjo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 06:39:44 -0500
-Received: from smtp36.i.mail.ru ([94.100.177.96]:60038 "EHLO smtp36.i.mail.ru"
+        id S240923AbiAZMDF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 07:03:05 -0500
+Received: from mout.gmx.net ([212.227.17.22]:60691 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233852AbiAZLjo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 06:39:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=IBEcwhCcIwQ6CpC3DHsxIotfC+1wLLqEqu1OoYaMyKI=;
-        t=1643197183;x=1643802583; 
-        b=TbnZYkK9e3HL+N5bH9Gz0De5PxQhGWMAmOMp3UCCrbCRtR9L+xrrgfeepgFGwm3nofghx/HUkjTWh14BW90KTsN4e/fzKuQoCBNi29ncxQzQjFzI1en3LLVyQiPhDpIl67INZFfAU/IraWhnwdXGaiV+MPhalqoy0jVF5IwWl1w=;
-Received: by smtp36.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
-        id 1nCgeL-00089l-Fk; Wed, 26 Jan 2022 14:39:42 +0300
-Date:   Wed, 26 Jan 2022 14:39:39 +0300
-From:   Konstantin Khomoutov <kostix@bswap.ru>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Konstantin Khomoutov <kostix@bswap.ru>, git@vger.kernel.org
-Subject: Re: [RFC] shell: local x=$1 may need to quote the RHS
-Message-ID: <20220126113939.cl5pbcous4gmdjri@carbon>
-References: <xmqqsftc3nd6.fsf@gitster.g>
- <20220125092419.cgtfw32nk2niazfk@carbon>
- <xmqqa6fjzlm0.fsf@gitster.g>
- <YfBbRca0Rjl59MM0@nand.local>
- <xmqqo83zt54a.fsf@gitster.g>
+        id S229612AbiAZMDF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 07:03:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1643198578;
+        bh=tEV/R55a5mzCRtkkZDQRb3yUu4nhk+bvdRCrCZVDTG0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=iVmBI/4JWraz2EbVKqyhgV1+FCp8ehmwcTLe5A2OUlJegoVsU4jzCtCXbeaixoEkd
+         9kTgPabhM0FFaydcDwn/us1VAFmHsDODYBZIHvfFUeQ6omLs+vvJlcOfU2Y1Xf4th7
+         Su3jYlHeFu4DYU03m6eENaphXGAsqykbx5XMjvRs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.174.184] ([89.1.213.181]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MGhuU-1mzzge26k6-00Dphq; Wed, 26
+ Jan 2022 13:02:58 +0100
+Date:   Wed, 26 Jan 2022 13:02:54 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 00/12] RFC: In-core git merge-tree ("Server side
+ merges")
+In-Reply-To: <CAP8UFD1-=RDx5=JpHEp=sFEOWr2MP-YovOPE7aTydrPLoVGa5w@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201261250380.6842@tvgsbejvaqbjf.bet>
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com> <CAP8UFD1-=RDx5=JpHEp=sFEOWr2MP-YovOPE7aTydrPLoVGa5w@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo83zt54a.fsf@gitster.g>
-Authentication-Results: smtp36.i.mail.ru; auth=pass smtp.auth=kostix@bswap.ru smtp.mailfrom=kostix@bswap.ru
-X-4EC0790: 10
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD9AA78FDF62ECAE61F7A922168D8AD45D749A6A71140E6560E182A05F5380850402523AC05B12DA1761C4B0015D62BA5973386EC65677EF86F3D1641AF7F436515
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE77603ADE015AF816DEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637ED2BA022FBF94AB68638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D82717DF19759CDB76C39205D339F44A5A117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCF1175FABE1C0F9B6A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD1828451B159A507268D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE652FD71AFB96DC7D148812EF9080FC94D8FC6C240DEA7642DBF02ECDB25306B2B78CF848AE20165D0A6AB1C7CE11FEE37812A6222701F2156136E347CC761E07C4224003CC836476EA7A3FFF5B025636E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F7900637AF8E4F18C523FAA9EFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
-X-C1DE0DAB: 0D63561A33F958A540E8F1100AB2125ED36E2BE19B47E81C4824E6BB1378F2BFD59269BC5F550898D99A6476B3ADF6B47008B74DF8BB9EF7333BD3B22AA88B938A852937E12ACA75B742A0F936AD8A56410CA545F18667F91A7EA1CDA0B5A7A0
-X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D349A401E2B4D763A4A79606FDED788B15D38A6A913B9B336420444EA5DCD2A18FADC24CFD32AC825A11D7E09C32AA3244CB658C71956D6A9F7239271CF8E46477E259227199D06760A927AC6DF5659F194
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojF0Kx79yI7sUfPKivv/MVmg==
-X-Mailru-Sender: 7E479B994E4F3A2CC35291DD34DB74CF04450A1BED1010BF7F34129C9AA2AB13D42F93969D0DF7B72F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
-X-Mras: Ok
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:r7n/Evw2ychLzvhvLlllcE9KReDINoEmmrGSOAiOmcWKOsIEYLK
+ oCKNmWUqg3ZjiG5VdZAD17qnI3aqawMN43SFIMUquHDCNcMobRSObkFdxqbAIbLznCb+5nO
+ xfNuKAVWg+JiFAJJ9/bK6z6Xbrs5gOveR2WS9ZX3+8uCM5ksdFlV4liUqeQaXsAM/Pny9xz
+ GJdmWfHhS5gSYU0V3wMpw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:t2lvpjxw6C0=:mEkXz8lGuqDUI/fkmJjZ7Z
+ iashsX5qqG2Ek4zBT1v1zotN87WNa/TL+bI7r3kTcvDJ2PxpErNnJssC7uiAYOeud3Wf+3hXn
+ +rUFOFHWR5Xg1Fx6iYh+w1dwHoiHOzXTLEsGTAes0NAl0cw7U8zY4c19yVsr2QdcawdvTvUI0
+ jB173b+AbfUH1hRU5fDiBbsW3jlg5fT978OK2TyLTHf7tPSmRP2C46okeqNRS1OEe/GV/FVee
+ Karu5jD81bEHZTfOy248lm4DUC0HsoO7f93BOkIlGNxQdK4fYhztfixWgbnYJlqs8wGbgaTPE
+ R+bcrrd9Y2DYdu1D+Kqw+k70Kx9W5gLvFZa5wXk+rFkn+1puarriNhJTdIhO+TK7fQuE+CGQO
+ 4ZiAjrIUtQHUxi5xW94uvj8DwaUdkX3u3x5FQvoEJ1b/qfrjX7VPMtRZ5w3RnLPX5ffpnWTAO
+ kUnqZXJTEcEv3hSNrg6Mg38hnWFtJFul3acpm6ZLB8A7SSDyngvLkPJGTqEG3+yWrpdNJDBoi
+ JulpjCpHyLGYY4v/bGknPP5rBH97Zg/jgGP7rBaj6OB0sxyIwsi2bh09ZP2jqmDhjv75gzDbN
+ 6mzGdaJ2IbsX9Xw/7C/bS/UPtfNPSejm4wJc5NtBSjM2gn7La64HT/tp03C1uYwCFE1vXxCYP
+ 1jPl5/GrBeTj7WJts49Tve0nVq3LP/+v51dQSjvxGE8KH6tJafTc3s63GqOCizHsteCA4f5da
+ EPeLWk0pjjNyFEVDTyH2jU9uEsL889VVLsu1dT/QDem4HQUGMqFcBdkyiIE2UizAvd3EnApLw
+ vLwfJeUqAKFBbpbUHFgGCrWlDap0bVKG1F90o+U/pvmyQWzIhjlwM65LUXzw6jUvmBMGoCMga
+ 6n+ewk4l0NNug05nou0mEh+e2pugpmy/qeYImWOwCzv7OaN1syoiQL1K8xQK+8k59WyXrOgyF
+ dRdSPNsZphNCQBqq3EKm9010BLMObVofa2lgvZcTUDHYj1u0Yczp5oQIfE9LBCcrJBrnRTMZr
+ P6wxUGrNR8jaFzfhtAhz2vA1YhQ4kFOUPscLjkzrJSWyWT/EGvkAGyFve8gp/UHp8eDLyRk1h
+ Vy7lOXqTMPGrJo=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 25, 2022 at 09:53:25PM -0800, Junio C Hamano wrote:
+Hi Christian,
 
-> Taylor Blau <me@ttaylorr.com> writes:
-> 
->> Yeah; bisecting dash with your example script pointed me at cbb71a8
->> (eval: Add assignment built-in support again, 2018-05-19), which indeed
->> appears in v0.5.11 (and all subsequent versions).
->>
->> cbb71a8 points at release 0.3.8-15, which predates Git (and a tag
->> pointing at it was never created, since it's behind the big "initial
->> import" commit at the beginning of dash.git's history). But skimming
->> ChangeLog.O, we see:
->>
->>     * Removed assignment builtins since it is at best undefined by the
->>       SuS and also can't be implemented consistently.
->>
->> So this probably didn't work at all between that 0.3.8-15 up until v0.5.11.
-[...]
-> So here is a bit wider "grep" output, looking for
-> 
-> $ git grep '^[ 	]*local[	 ].*=' \*.sh
-> 
-> to reject _any_ assignment on the same line as "local", but I
-> manually excluded the ones that are not meant to be run with dash.
-> I obviously excluded the one in t0000 (try_local_xy) that is a
-> weather-balloon for this exact issue.
-> 
-> According to this thread, these would not work correctly on dash
-> older than 0.5.11 and needs fixing by splitting declaration of
-> variables as locals and assignment of their initial values.
+On Wed, 26 Jan 2022, Christian Couder wrote:
 
-By the way, back then when Debian and Ubuntu were switching running their
-system scripts from bash to dash (which bought definite speedups), many
-scripts had to get rid of bashisms, and this page [1] summarizes quite many
-differences between these shells including handing of `local`.
-To cite it:
+> On Sat, Jan 22, 2022 at 10:56 PM Elijah Newren via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>
+> >  * Accept an optional --trivial-merge option to get old style merge-tr=
+ee
+> >    behavior
+> >  * Allow both --write-tree and --trivial-merge to be omitted since we =
+can
+> >    deduce which from number of arguments
+>
+> I still think that it might be simpler and cleaner to leave 'git
+> merge-tree' alone for now, and just add a new command named for
+> example 'git write-merge-tree'.
 
-| Dash (old versions maybe?) and (at least) bash do not handle local the same:
-|
-| -    local a=5 b=6;
-| +    local a=5;
-| +    local b=6;
-|
-| The first line in /bin/bash makes a and b local variables. And in /bin/dash
-| this line makes b a global variable! 
+That would assume that the original `git merge-tree` implementation was
+useful. That notion has been thoroughly refuted in the meantime, though.
 
-Not sure it lists a possible problems our test harness also has but wanted to
-give a heads-up anyway just in case.
+I am really opposed to introducing a new command here. Elijah took the
+best approach we can take here: save the `merge-tree` command by teaching
+it to do something useful.
 
- 1. https://wiki.ubuntu.com/DashAsBinSh
+> Later we can always add flags to 'git merge-tree' or add 'git
+> trivial-merge-tree' as an alias for 'git merge-tree', and eventually
+> slowly switch 'git merge-tree' to mean only 'git write-merge-tree' if
+> that's where we want to go.
 
+I suggested before, and seem to need to repeat again, that we need to let
+ourselves be guided less by hypothetical scenarios, and more by actual,
+concrete use cases where the revamped `merge-tree` command is useful.
+
+And since I already provided some feedback based on my work from working
+on a server-side backend, I am fairly certain that we already have a
+pretty good idea where we want to go.
+
+> > Stuff intentionally NOT included, but which others seemed to feel stro=
+ngly
+> > about; they'd need to convince me more on these:
+> >
+> >  * Any form of diff output[1]
+>
+> It's not a big issue for me to not include them right now as long as
+> it's possible to add cli options later that add them.
+
+But why? That _so_ smells like a hypothetical scenario.
+
+We do not need the diffs. It is highly unlikely that the server-side wants
+to have diffs, and if a user does want the diffs, it is very, very easy to
+generate them by chaining low-level commands.
+
+So there is absolutely no need for `git merge-tree` to produce diffs.
+
+> The reason is that I think in many cases when there are conflicts, the
+> conflicts will be small and the user will want to see them. So it would
+> be simpler to just have an option to show any conflict right away,
+> rather than have the user launch another command (a diff-tree against
+> which tree and with which options?).
+
+That assumes that server-side merge UIs will present merge conflicts in
+the form of diffs containing merge conflict markers. Which I don't think
+will happen, like, ever.
+
+In short: I completely disagree that we should introduce a new command,
+and I also completely disagree that the `merge-tree` command should output
+any diffs.
+
+I do agree that we need to be mindful of what we actually need, and in
+that regard, I reiterate that we need to let concrete use cases guide us.
+As part of GitLab, you might be in an excellent position to look at
+GitLab's concrete server-side needs when it comes to use `git merge-tree`
+to perform merges.
+
+Ciao,
+Dscho
