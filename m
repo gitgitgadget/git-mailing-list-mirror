@@ -2,162 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C406C2BA4C
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 19:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EBE8C2BA4C
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 19:12:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232046AbiAZTFL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 14:05:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39132 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbiAZTFK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 14:05:10 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60CF1C06161C
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 11:05:10 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id j2so634690ejk.6
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 11:05:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nzrU26AdaFJTRp6Zninoqy7uAWSy6Vvcmv4Ix4vUbbw=;
-        b=i4qdVm541RpIzQjuib6/o633/NnVIIFybm5r5ek93N1x03JIuYyPaQd8XEYGI4CTdC
-         sKa8yLBzY5TlJIX1ZcCYwY8kx47DYEQOR5LGvL8aIQfFvSe5eAeK+DNJkunKfB6m7MMz
-         8/TgmDDZX+sYlXtUlSO5AnmRzxu8TfW4A/uWWlB2LRnqekP3WP9d0mBVXd5tfMTDg1B3
-         KI9DKQfp8/Wlll69QQpfMY7N4TaXd8QGOf9ZxMwEJBMbvwbCFqbSJQPlUHphupDcgt3a
-         zaM3NkGuFR0dlVtGKitKb/2IzxRQ9Ng58MEAqqMhst0LBFUVogbyWuFr++mToGDwHszd
-         pjQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nzrU26AdaFJTRp6Zninoqy7uAWSy6Vvcmv4Ix4vUbbw=;
-        b=JZackl/uZgRkgYW7sHrpyyL+LWuhhBceCTU9+KscvJtFzgCn1KfByWeez2+OT9So4r
-         T8uZ//VOPObAbJVqzfM4kAStq8ZbCykGTnov+R02bUTS3BrhHfekspq6G0e5Tt8jfltq
-         DqyJlPfmIEcmgwLmc6hDbSI1XZtQW+GDkWcVclfKKtobLJcO1S0+w+R/xUOo6wlGi6N1
-         53wiQpTBEYPAinLTzu0pGgY7kcpbil2jsqOPLqC6I1lnNgnq8tZvo8uxrvXQV+3eTDh5
-         C57aHWGB0OlM2XflMJpU7VVdHLqCFfemBj5Shx3kLvQgWomHLA3xxO/jXsmjjhJAX+so
-         NgXQ==
-X-Gm-Message-State: AOAM533Y5znNdapngLM2vav5Vm5Aokr05rv+Mn7/k7ToWlHgXLIDf/X8
-        m2EvN3LWOljdL1w3JSz9hHJKhylb22AC5dUaT7k=
-X-Google-Smtp-Source: ABdhPJzh2W5dDEIq1t6gJ0vd7X9vH5r0acUxBTWhpSNBWT3zliCqPjjfAEtdMARXD5HjC1pyG9tpHf6PwFizkU8sOLI=
-X-Received: by 2002:a17:907:608b:: with SMTP id ht11mr47402ejc.613.1643223908617;
- Wed, 26 Jan 2022 11:05:08 -0800 (PST)
+        id S244385AbiAZTMB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 14:12:01 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53921 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244362AbiAZTMA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 14:12:00 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AADA216A350;
+        Wed, 26 Jan 2022 14:12:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=TM2keVmDnjWc7OPK0ZenQkp07nBUFtzwhkiqxt
+        41pXM=; b=QTAJs2/8VOCAQQq9kn0qjO1p5LalAMwD5qKWa/N82XyVaSplhCnVAw
+        eGsbLE4Wmx0IcbXiliLDmPHEBNvO+FldJZ/RqVNbhY3zRajArFPl6sNBEBRRObBg
+        O3oiqeMwCAdu4YgCNdZzbwRalj4YHoOOacfIByUSFH0t/1OZmbw4Q=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A37FC16A34F;
+        Wed, 26 Jan 2022 14:12:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C506316A34C;
+        Wed, 26 Jan 2022 14:11:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] clone: support unusual remote ref configurations
+References: <20220124180909.2437002-1-jonathantanmy@google.com>
+Date:   Wed, 26 Jan 2022 11:11:55 -0800
+In-Reply-To: <20220124180909.2437002-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Mon, 24 Jan 2022 10:09:09 -0800")
+Message-ID: <xmqqfspas45g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
- <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com> <f8efb7446c33f14631b088ac043aca8a403a3250.1638340854.git.gitgitgadget@gmail.com>
- <kl6lilu71rzl.fsf@chooglen-macbookpro.roam.corp.google.com>
- <CABPp-BFdD=f82QvQfokD346YT6aCQ=WwZ09S-a=BPXXj5_LZkg@mail.gmail.com> <kl6la6fj1gpb.fsf@chooglen-macbookpro.roam.corp.google.com>
-In-Reply-To: <kl6la6fj1gpb.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 26 Jan 2022 11:04:57 -0800
-Message-ID: <CABPp-BHH0d9evJ5n-njKkPPsTQrY9E4Sh4Yb+Nq_JiYffuHUBQ@mail.gmail.com>
-Subject: Re: [Bug] Rebase from worktree subdir is broken (was Re: [PATCH v5
- 07/11] rebase: do not attempt to remove startup_info->original_cwd)
-To:     Glen Choo <chooglen@google.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Philip Oakley <philipoakley@iee.email>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D468EC06-7EDB-11EC-AFEB-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 25, 2022 at 4:30 PM Glen Choo <chooglen@google.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Tue, Jan 25, 2022 at 12:27 PM Glen Choo <chooglen@google.com> wrote:
-> >>
-> >> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >>
-> >> > From: Elijah Newren <newren@gmail.com>
-> >> >
-> >> > Since rebase spawns a `checkout` subprocess, make sure we run that from
-> >> > the startup_info->original_cwd directory, so that the checkout process
-> >> > knows to protect that directory.
-> >> >
-> >> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> >> > ---
-> >> >  sequencer.c          | 2 ++
-> >> >  t/t2501-cwd-empty.sh | 4 ++--
-> >> >  2 files changed, 4 insertions(+), 2 deletions(-)
-> >> >
-> >> > diff --git a/sequencer.c b/sequencer.c
-> >> > index ea96837cde3..83f257e7fa4 100644
-> >> > --- a/sequencer.c
-> >> > +++ b/sequencer.c
-> >> > @@ -4228,6 +4228,8 @@ static int run_git_checkout(struct repository *r, struct replay_opts *opts,
-> >> >
-> >> >       cmd.git_cmd = 1;
-> >> >
-> >> > +     if (startup_info->original_cwd)
-> >> > +             cmd.dir = startup_info->original_cwd;
-> >> >       strvec_push(&cmd.args, "checkout");
-> >> >       strvec_push(&cmd.args, commit);
-> >> >       strvec_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
-> >> > diff --git a/t/t2501-cwd-empty.sh b/t/t2501-cwd-empty.sh
-> >> > index b1182390ba3..52335a8afe9 100755
-> >> > --- a/t/t2501-cwd-empty.sh
-> >> > +++ b/t/t2501-cwd-empty.sh
-> >> > @@ -166,11 +166,11 @@ test_expect_success 'cherry-pick fails if cwd needs to be removed' '
-> >> >  '
-> >> >
-> >> >  test_expect_success 'rebase does not clean cwd incidentally' '
-> >> > -     test_incidental_dir_removal failure git rebase reverted
-> >> > +     test_incidental_dir_removal success git rebase reverted
-> >> >  '
-> >> >
-> >> >  test_expect_success 'rebase fails if cwd needs to be removed' '
-> >> > -     test_required_dir_removal failure git rebase fd_conflict
-> >> > +     test_required_dir_removal success git rebase fd_conflict
-> >> >  '
-> >> >
-> >> >  test_expect_success 'revert does not clean cwd incidentally' '
-> >> > --
-> >> > gitgitgadget
-> >>
-> >> This commit (which is already in master) introduces a bug that breaks
-> >> rebase when rebasing inside a subdirectory of a worktree. You can see
-> >> that the below test fails with:
-> >>
-> >>   error: The following untracked working tree files would be overwritten by merge:
-> >>           a/b/c
-> >>   Please move or remove them before you merge.
-> >
-> > Thanks for the detailed report -- with a full testcase!
->
-> Glad to be of help :)
->
-> >> This only affects subdirectories in worktrees, i.e. rebasing anywhere in
-> >> the `main-wt` directory is fine, and rebasing from the top of `other-wt`
-> >> is fine, but `other-wt/any/other/dir` fails.
-> >>
-> >> I haven't tracked down the root cause yet, but judging from the commit,
-> >> I would suppose that the checkout is being spawned in the wrong
-> >> directory, causing the files to not be cleaned up.
-> >
-> > There's nothing wrong with running checkout from a subdirectory.  It
-> > is unfortunate that setup.c auto-discovers both the git directory and
-> > the working tree, but sets GIT_DIR without setting GIT_WORK_TREE in
-> > the case of a non-main worktree; it's not particularly friendly for
-> > subcommands.  Of course, it's also unfortunate that sequencer still
-> > forks subprocesses other than those requested by a user with e.g.
-> > --exec.
-> >
-> > But, anyway, I've got a patch that I'll send as soon as it passes CI
-> > (https://github.com/git/git/pull/1205).
->
-> I wish I had seen this email before diving into debugging it myself
-> since your fix is more comprehensive, but it was a good learning
-> experience nonetheless.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Yeah, sorry, it took me quite a bit of debugging as well before
-figuring all this stuff out, so I don't think I sent the email in time
-to save you the work.
+> When cloning a branchless and tagless but not refless remote using
+> protocol v0 or v1, Git calls transport_fetch_refs() with an empty ref
+> list. This makes the clone fail with the message "remote transport
+> reported error".
+>
+> Git should have refrained from calling transport_fetch_refs(), just like
+> it does in the case that the remote is refless. Therefore, teach Git to
+> do this.
+
+Makes sense.
+
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 727e16e0ae..3df441eb71 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -862,7 +862,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  	const struct ref *refs, *remote_head;
+>  	struct ref *remote_head_points_at = NULL;
+>  	const struct ref *our_head_points_at;
+> -	struct ref *mapped_refs;
+> +	struct ref *mapped_refs = NULL;
+>  	const struct ref *ref;
+>  	struct strbuf key = STRBUF_INIT;
+>  	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
+> @@ -1184,7 +1184,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  
+>  	refs = transport_get_remote_refs(transport, &transport_ls_refs_options);
+>  
+> -	if (refs) {
+> +	if (refs)
+> +		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
+> +
+> +	if (mapped_refs) {
+>  		int hash_algo = hash_algo_by_ptr(transport_get_hash_algo(transport));
+
+OK, we used to decide on what they advertised and then filtered that
+to what we are interested in inside the "true" side of the if/else.
+If the result of filtering became empty, we declared a trouble.
+
+Now we do the filtering first and decide on that.  No matter how
+many uninteresting refs they advertise, if they show no refs of
+interest to us, it is like they have an empty repository.
+
+> @@ -1193,8 +1196,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  		 */
+>  		initialize_repository_version(hash_algo, 1);
+>  		repo_set_hash_algo(the_repository, hash_algo);
+> -
+> -		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
+>  		/*
+>  		 * transport_get_remote_refs() may return refs with null sha-1
+>  		 * in mapped_refs (see struct transport->get_refs_list
+
+[start #leftoverbits]
+
+I noticed these while reading outside the context of this patch.
+None of them should be part of this patch, which deals only with the
+case where mapped_refs becomes empty.
+
+Here in the post-context of this hunk, there is a loop that iterates
+over the original refs list, not the filtered mapped_refs list, to
+compute "complete_refs_before_fetch".  Should we need to update the
+loop to work on mapped_refs?
+
+And after that, we compute remote_head using the original refs
+list, not the mapped_refs list, when calling find_ref_by_name(),
+but use mapped_refs when calling guess_remote_head().  The
+inconsistency smells fishy.
+
+[end #leftoverbits]
+
+
+> @@ -1240,7 +1241,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  					option_branch, remote_name);
+>  
+>  		warning(_("You appear to have cloned an empty repository."));
+> -		mapped_refs = NULL;
+
+And we come here instead with the new code.  We claim "you appear to
+have cloned an empty repository", which is much closer than
+"reported an error".
+
+> @@ -1271,7 +1271,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>  
+>  	if (is_local)
+>  		clone_local(path, git_dir);
+> -	else if (refs && complete_refs_before_fetch) {
+> +	else if (mapped_refs && complete_refs_before_fetch) {
+>  		if (transport_fetch_refs(transport, mapped_refs))
+>  			die(_("remote transport reported error"));
+>  	}
+
+And this is the other crux of the fix.  As the root cause of the
+problems is to decide with NULL-ness of refs if we do something that
+uses mapped_refs, this fixes the inconsistency.
+
+Looking good.
+
+Will queue.  Thanks.
+
+> diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
+> index 468bd3e13e..6c8d4c6cf1 100755
+> --- a/t/t5700-protocol-v1.sh
+> +++ b/t/t5700-protocol-v1.sh
+> @@ -149,6 +149,21 @@ test_expect_success 'push with file:// using protocol v1' '
+>  	grep "push< version 1" log
+>  '
+>  
+> +test_expect_success 'cloning branchless tagless but not refless remote' '
+> +	rm -rf server client &&
+> +
+> +	git -c init.defaultbranch=main init server &&
+> +	echo foo >server/foo.txt &&
+> +	git -C server add foo.txt &&
+> +	git -C server commit -m "message" &&
+> +	git -C server update-ref refs/notbranch/alsonottag HEAD &&
+> +	git -C server checkout --detach &&
+> +	git -C server branch -D main &&
+> +	git -C server symbolic-ref HEAD refs/heads/nonexistentbranch &&
+> +
+> +	git -c protocol.version=1 clone "file://$(pwd)/server" client
+> +'
+> +
+>  # Test protocol v1 with 'ssh://' transport
+>  #
+>  test_expect_success 'setup ssh wrapper' '
