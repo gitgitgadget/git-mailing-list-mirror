@@ -2,109 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D05CEC5AC75
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 00:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C97DC5DF62
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 00:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235298AbiAZAbD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Jan 2022 19:31:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35398 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235278AbiAZAbC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Jan 2022 19:31:02 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FC03C06161C
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 16:31:01 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id a8so34553360ejc.8
-        for <git@vger.kernel.org>; Tue, 25 Jan 2022 16:31:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=NmvcAHBrFYdtUda5I1grmoTWlVqgNZWTa1ahBC7971U=;
-        b=RTIfy5BhdGeumNZ96OKZL9Fazz+gkEC/HtJxX630hLbo4cULs62ZEKCbzcrGd3wUOl
-         KikFw4GL20ILka771+sHK3QacyqqUZOnfHJ9oBZEgemI68WMPq8BV3DIYKFilAovBota
-         IksSDd135DiBIuQkEfhFBRd9qYYPvPLOwwcLw3tJ1HQFjBgsYUyXq0+ehvoXEHZz9fCJ
-         DVXqVYPmd2w+fKXWwlWcf2quZ6Abrv0m3Vy9l8r+TkUeu5BoaENKdOngTj/BJwWAWXwK
-         DPcIItaKju+npfS6mFQYVmjajLVCl2J483raG5mysGrfYgsg9iFZWSgP/Dud95nT+IJg
-         VZdg==
+        id S235304AbiAZAcq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Jan 2022 19:32:46 -0500
+Received: from mail-pf1-f180.google.com ([209.85.210.180]:35705 "EHLO
+        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235305AbiAZAci (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Jan 2022 19:32:38 -0500
+Received: by mail-pf1-f180.google.com with SMTP id u130so16966026pfc.2
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 16:32:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=NmvcAHBrFYdtUda5I1grmoTWlVqgNZWTa1ahBC7971U=;
-        b=BFepAz0fuvtwsxP3nlUW3hKe1DBd8Ha26dPm2/o4h4oaLevusMK7Q8yw4Pr7Qwro1u
-         InukjG95xyZ+ncXO6IX5cx3ws5g78Nleao4KYEAUSUltzsMjISk8RNYhYoVont7eJuD6
-         p1OSJfl/NDbQ1cchd5MncI8DXjwTky2q4oNL//yGz0HMETlmbtH8ki90OnjPx+PqBro1
-         2jy89UUD+gfcikEa8dxaXO8yiq3K8bm992aCJF1t4Xi05CTBkTxjoa25DEcM7LGYp2vR
-         OAO42ezKNZA35akHC5f6VIRz6dlEdC+sZynM8IjZaGBfgYrRPdsazvrzalQes/zwNoG8
-         EAiw==
-X-Gm-Message-State: AOAM530ltKt9GqNlO5/T0RQwPMtT07GhIV+08jdmhA5S9Lzd98ij3SAZ
-        gLDHf5nDOc9mX+mmRMTmAM8=
-X-Google-Smtp-Source: ABdhPJwnXc4WvEWdt2DoAWY2WgHfVgAPb5K4DK0hCnDVxQKULIA7dXDQgqkjhiV9AenaykpWUXN20w==
-X-Received: by 2002:a17:906:6015:: with SMTP id o21mr18530919ejj.637.1643157059853;
-        Tue, 25 Jan 2022 16:30:59 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id h1sm8813544edz.64.2022.01.25.16.30.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Jan 2022 16:30:59 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nCWDC-00356h-Vo;
-        Wed, 26 Jan 2022 01:30:58 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/9] ci: make Git's GitHub workflow output much more
- helpful
-Date:   Wed, 26 Jan 2022 01:25:54 +0100
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
-Message-ID: <220126.86k0enfid9.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rX0pwMoatIyTnbdGn6Rx8ujxbY6eTEowGePpP/1SQeg=;
+        b=iPMk1tNsU3Un0HRZqecmiiZjp55v2h8EYpZMtclWnNlt7QqoOTk1fN3sHsaBe3i3Cj
+         OHzWznCZEUQV+Cv9GAMn2betShJPMiv6bDliUKRQM8jVQTu8WabMMXupLWd/5F6Wg1n3
+         63YDLVeEeg0PjvgF4pvvw8EoAIK5mEDADAYqDA1i3O/5XJBOPMcCdFmsPwkh2OG7qXbJ
+         kqwtxPr32HYTG/PJUCpLP711f90kheXn19dCuNMJl3CPbcGDbVNKcle4nXMF654BVVdZ
+         txVndt71q3XB5jYuFMDFmLDFXpCRBm6/ntiR2KEX6eBsg5TJS6Uj/OL4XHdPguW9AzJS
+         cVOQ==
+X-Gm-Message-State: AOAM530a3zk53NCChRwNwMzQ2MNZDX9D4npaZhUIfH8K1rh3Zv7npN02
+        OO5CF4VeFE5yY6PVKxevQjguqsQxpLEj6gIqFJE=
+X-Google-Smtp-Source: ABdhPJz8KSmIGWKuQX64YZx+CnfqUkKX+L0NsZ8o4clemKWOXOL2AwsbAW+uodnO8jMwxOiTk387BWvDNzKaBkuYaPA=
+X-Received: by 2002:aa7:8d02:0:b0:4c1:b464:9826 with SMTP id
+ j2-20020aa78d02000000b004c1b4649826mr20712895pfe.67.1643157158106; Tue, 25
+ Jan 2022 16:32:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
+ <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com> <f8efb7446c33f14631b088ac043aca8a403a3250.1638340854.git.gitgitgadget@gmail.com>
+ <kl6lilu71rzl.fsf@chooglen-macbookpro.roam.corp.google.com> <CABPp-BFdD=f82QvQfokD346YT6aCQ=WwZ09S-a=BPXXj5_LZkg@mail.gmail.com>
+In-Reply-To: <CABPp-BFdD=f82QvQfokD346YT6aCQ=WwZ09S-a=BPXXj5_LZkg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 25 Jan 2022 19:32:27 -0500
+Message-ID: <CAPig+cT3Zqa2BLsZ3ZVPCj4-bW5eb35sWXV-mYLqA-dvzC8XJg@mail.gmail.com>
+Subject: Re: [Bug] Rebase from worktree subdir is broken (was Re: [PATCH v5
+ 07/11] rebase: do not attempt to remove startup_info->original_cwd)
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Glen Choo <chooglen@google.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Jan 24 2022, Johannes Schindelin via GitGitGadget wrote:
-
-> Background
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+On Tue, Jan 25, 2022 at 6:59 PM Elijah Newren <newren@gmail.com> wrote:
+> On Tue, Jan 25, 2022 at 12:27 PM Glen Choo <chooglen@google.com> wrote:
+> > This commit (which is already in master) introduces a bug that breaks
+> > rebase when rebasing inside a subdirectory of a worktree. You can see
+> > that the below test fails with:
 >
-> Recent patches intended to help readers figure out CI failures much quick=
-er
-> than before. Unfortunately, they haven't been entirely positive for me. F=
-or
-> example, they broke the branch protections in Microsoft's fork of Git, wh=
-ere
-> we require Pull Requests to pass a certain set of Checks (which are
-> identified by their names) and therefore caused follow-up work.
+> There's nothing wrong with running checkout from a subdirectory.  It
+> is unfortunate that setup.c auto-discovers both the git directory and
+> the working tree, but sets GIT_DIR without setting GIT_WORK_TREE in
+> the case of a non-main worktree; it's not particularly friendly for
+> subcommands.  Of course, it's also unfortunate that sequencer still
+> forks subprocesses other than those requested by a user with e.g.
+> --exec.
+>
+> But, anyway, I've got a patch that I'll send as soon as it passes CI
+> (https://github.com/git/git/pull/1205).
+>
+> > +test_expect_success 'rebase when inside worktree subdirectory' '
+> > +       git init main-wt &&
+> > +       (
+> > +               cd main-wt &&
+> > +               git commit --allow-empty -m "initial" &&
+> > +               # create commit with foo/bar/baz
+> > +               mkdir -p foo/bar &&
+> > +               touch foo/bar/baz &&
+> > +               git add foo/bar/baz &&
+> > +               git commit -m "add foo/bar/baz" &&
+> > +               # create commit with a/b/c
+> > +               mkdir -p a/b &&
+> > +               touch a/b/c &&
+> > +               git add a/b/c &&
+> > +               git commit -m "add a/b/c" &&
+> > +               # create another branch for our other worktree
+> > +               git branch other &&
+> > +               git worktree add ../other-wt other &&
+> > +               (
+> > +                       cd ../other-wt &&
+> > +                       mkdir -p random/dir &&
+> > +                       (
+> > +                               cd random/dir &&
+> > +                               git rebase --onto HEAD^^ HEAD^  # drops the HEAD^ commit
+> > +                       )
+> > +               )
+> > +       )
+> > +'
 
-This seems to be a reference to my df7375d7728 (CI: use shorter names
-that fit in UX tooltips, 2021-11-23) merged as part of ab/ci-updates,
-and I understand from this summary that you had some custom job
-somewhere that scraped the job names which broke.
+This is entirely minor, but all the inner subshells in this test are
+superfluous. The outermost (...) will ensure that the working
+directory is restored regardless of whether anything within its body
+fails, no matter how much you `cd` around. Thus, all the inner
+subshells could be dropped.
 
-That's unfortunate, I do think being able to actually read the tooltips
-in the GitHub UI was a worthwhile trade-off in the end though.
+An alternative would be to close the outermost subshell immediately
+after `git worktree add`:
 
-But I'm entirely confused about what any of that has to do with this
-series, which is about changing how the job output itself is presented
-and summarized, and not about the job names, and making them fit in
-tooltips.
+    git init main-wt &&
+    (
+        cd main-wt &&
+        ...
+        git worktree add ../other-wt other
+    ) &&
+    mkdir -p other-wt/random/dir &&
+    (
+        cd other-wt/random/dir &&
+        ...
+    )
 
-Later in the summary you note:=20
-
-> Using CI and in general making it easier for new contributors is an area =
-I'm
-> passionate about, and one I'd like to see improved.
-> [...]
-> =E2=8A=97 linux-gcc (ubuntu-latest)
->    failed: t9800.20 submit from detached head
-
-Which has one of the new and shorter jobnames, but in a part of the UX
-where the length didn't matter, and I can't find a way where it does.
+however, that may not buy you any clarity.
