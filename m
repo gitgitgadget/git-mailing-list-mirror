@@ -2,160 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBCD0C28CF5
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 20:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E975C2BA4C
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 20:05:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229620AbiAZUBd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 15:01:33 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63822 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbiAZUBc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 15:01:32 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4FC3C177C1A;
-        Wed, 26 Jan 2022 15:01:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6/2BOK6PzAyJV3Fx3uBy11zrN7VCqAiwAZKp8Y
-        tN2Cc=; b=g2zwprpBh0+kVEDWjMrbgweKkITpcnS2IFXnQh7hEkYLpKAmssq0/e
-        dTScO5REorRgxw/sjUCggRQPAQq+jS1wUKDRftN455UrBaq06WHDxuOwHYozZ4mo
-        pMiOXwO4tulqVwkhQaJm/7osSEnzvNO3MIJ7bjklXV80+OPp6p/dg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 48FED177C19;
-        Wed, 26 Jan 2022 15:01:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B507D177C17;
-        Wed, 26 Jan 2022 15:01:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] sequencer, stash: fix running from worktree subdir
-References: <pull.1205.git.git.1643161426138.gitgitgadget@gmail.com>
-Date:   Wed, 26 Jan 2022 12:01:28 -0800
-In-Reply-To: <pull.1205.git.git.1643161426138.gitgitgadget@gmail.com> (Elijah
-        Newren via GitGitGadget's message of "Wed, 26 Jan 2022 01:43:45
-        +0000")
-Message-ID: <xmqqfspaqnaf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229800AbiAZUFh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 15:05:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52908 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229790AbiAZUFg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 15:05:36 -0500
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C1E7C06161C
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 12:05:36 -0800 (PST)
+Received: by mail-il1-x12b.google.com with SMTP id o10so719528ilh.0
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 12:05:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=aKpxGoc8gav7QWepoo3hdtR9INeLElFCN/ripH9Rym8=;
+        b=VA+JWk6LVtPvW+e72maJBYgtubwh8uyp/QeozqCoVzCUiM4XpDwKJMK8nkQ099sL3W
+         HYt4rUH5hqAiAVpA2611x0yaWn5cwYLlY4lzjHbO1U/Y5pTHD/kj99O/mCv09JWzFd9O
+         NXw7x6BiO+3KGBQ3FmPrb0x+e7kZFXPEFVI9hlyZZyGbrkaCepy4StjTZ2zi2H+88SoZ
+         juuF2tzXJs6f3lMQjMlTFLIE7n99ujN/Q2zLvBR5wZvCHuI2UzYBc46Uoz6WkXxIflxx
+         QWouQzqRbQxphk6kQY0SPUUO+7GKgOLev+AvLh3GQAtRvIOj+YOm8t93W0cMWDFitp2x
+         Lfyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=aKpxGoc8gav7QWepoo3hdtR9INeLElFCN/ripH9Rym8=;
+        b=mwHaGQ2kHPHmSaMSidJFk+NKmMa1sfD9XZ7HDB3Pmgeto35upmbosACYmpdV7KYrl0
+         pXwF5xGc2Yqt99BAhD9j0+395dsWMNkmPzqfTsr6QFcq/VDd2yH417kFzHosuMKOpC88
+         BCbRCRzxgzxKIeeiX9fONWHiSusqGIFsF0cUVd29WpSRd/adco/yJnv3gGzQsCAMGl/A
+         ela7sCPIYn7RQ3Ooat2A2uMigG29VJHFkPUz11ZoBqHSG6Xe2d5De0p4eeNkTDDtHoXB
+         6neZBzpvb++QgxwD1AJ/TdoXshMFwiJAYyg66BYm/Bl2VXFx1/GJKOxEpyQDntY88eIL
+         uveA==
+X-Gm-Message-State: AOAM531cSANFDa16ozRKiXk5FTFoSM22LGgHIB36q+aclT7moqfIXgt6
+        LhMqVV+qFWT+pU/GryQ57uxx8Q==
+X-Google-Smtp-Source: ABdhPJxCzGnEvOVmZf5LR0XIng4uXj9lHqnR3csf8478IY3hYuN22BvsJwABlGURy07avlokUNzGxQ==
+X-Received: by 2002:a05:6e02:1c49:: with SMTP id d9mr518404ilg.168.1643227535857;
+        Wed, 26 Jan 2022 12:05:35 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id f2sm11386236ilu.79.2022.01.26.12.05.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jan 2022 12:05:35 -0800 (PST)
+Date:   Wed, 26 Jan 2022 15:05:34 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git Community <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: Git in GSoC 2022?
+Message-ID: <YfGpjm8mCkWIPM6V@nand.local>
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C06AE392-7EE2-11EC-8F04-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Kaartic,
 
-> From: Elijah Newren <newren@gmail.com>
->
-> In commits bc3ae46b42 ("rebase: do not attempt to remove
-> startup_info->original_cwd", 2021-12-09) and 0fce211ccc ("stash: do not
-> attempt to remove startup_info->original_cwd", 2021-12-09), we wanted to
-> allow the subprocess to know which directory the parent process was
-> running from, so that the subprocess could protect it.  However...
->
-> When run from a non-main worktree, setup_git_directory() will note
-> that the discovered git directory
-> (/PATH/TO/.git/worktree/non-main-worktree) does not match
-> DEFAULT_GIT_DIR_ENVIRONMENT (see setup_discovered_git_dir()), and
-> decide to set GIT_DIR in the environment.  This matters because...
->
-> Whenever git is run with the GIT_DIR environment variable set, and
-> GIT_WORK_TREE not set, it presumes that '.' is the working tree.  So...
->
-> This combination results in the subcommand being very confused about
-> the working tree.  Fix it by also setting the GIT_WORK_TREE environment
-> variable along with setting cmd.dir.
->
-> A possibly more involved fix we could consider for later would be to
-> make setup.c set GIT_WORK_TREE whenever (a) it discovers both the git
-> directory and the working tree and (b) it decides to set GIT_DIR in the
-> environment.  I did not attempt that here as such would be too big of a
-> change for a 2.35.1 release.
->
-> Test-case-by: Glen Choo <chooglen@google.com>
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->     [2.35 regression] sequencer, stash: fix running from worktree subdir
+Thanks for organizing this.
 
-Thanks.  This is the kind of fix we all should be concentrating on
-in the first week after the release.
+On Wed, Jan 26, 2022 at 11:59:16PM +0530, Kaartic Sivaraam wrote:
+> First, are we interested in participating in the 2022 round of
+> GSoC?
 
-Very much appreciated.
+I think it would be great to participate this year, provided that we can
+come up with some interesting projects and mentors to help out.
 
-Will queue.
+>     Taylor showed interest in a bitmap-related project during
+>     the Outreachy application period [4]. Taylor, are you still
+>     interested in mentoring a bitmap-related project? Would it
+>     be possible for you to do so for the upcoming GSoC?
 
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 1ef2017c595..86cd0b456e7 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -1539,8 +1539,12 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
->  			struct child_process cp = CHILD_PROCESS_INIT;
->  
->  			cp.git_cmd = 1;
-> -			if (startup_info->original_cwd)
-> +			if (startup_info->original_cwd) {
->  				cp.dir = startup_info->original_cwd;
-> +				strvec_pushf(&cp.env_array, "%s=%s",
-> +					     GIT_WORK_TREE_ENVIRONMENT,
-> +					     the_repository->worktree);
-> +			}
->  			strvec_pushl(&cp.args, "clean", "--force",
->  				     "--quiet", "-d", ":/", NULL);
->  			if (include_untracked == INCLUDE_ALL_FILES)
-> diff --git a/sequencer.c b/sequencer.c
-> index 6abd72160cc..5213d16e971 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -4223,8 +4223,11 @@ static int run_git_checkout(struct repository *r, struct replay_opts *opts,
->  
->  	cmd.git_cmd = 1;
->  
-> -	if (startup_info->original_cwd)
-> +	if (startup_info->original_cwd) {
->  		cmd.dir = startup_info->original_cwd;
-> +		strvec_pushf(&cmd.env_array, "%s=%s",
-> +			     GIT_WORK_TREE_ENVIRONMENT, r->worktree);
-> +	}
->  	strvec_push(&cmd.args, "checkout");
->  	strvec_push(&cmd.args, commit);
->  	strvec_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
-> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> index 23dbd3c82ed..71b1735e1dd 100755
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -416,4 +416,25 @@ test_expect_success MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs is a symlink'
->  	mv actual_logs .git/logs
->  '
->  
-> +test_expect_success 'rebase when inside worktree subdirectory' '
-> +	git init main-wt &&
-> +	(
-> +		cd main-wt &&
-> +		git commit --allow-empty -m "initial" &&
-> +		mkdir -p foo/bar &&
-> +		test_commit foo/bar/baz &&
-> +		mkdir -p a/b &&
-> +		test_commit a/b/c &&
-> +		# create another branch for our other worktree
-> +		git branch other &&
-> +		git worktree add ../other-wt other &&
-> +		cd ../other-wt &&
-> +		# create and cd into a subdirectory
-> +		mkdir -p random/dir &&
-> +		cd random/dir &&
-> +		# now do the rebase
-> +		git rebase --onto HEAD^^ HEAD^  # drops the HEAD^ commit
-> +	)
-> +'
-> +
->  test_done
->
-> base-commit: 89bece5c8c96f0b962cfc89e63f82d603fd60bed
+I'm available and interested in mentoring. I don't think I found many
+interested folks via Outreachy who wanted to work on bitmaps, but I
+think it's worth trying again via GSoC. I can rejigger the proposed
+projects there a bit, too.
+
+(I figured that it would be fun to have an intern with fairly wide
+discretion over what they could work on, but it might be better for some
+folks to have a clearer idea ahead of time.)
+
+> [4]: https://public-inbox.org/git/YVTM+WQH%2FUyhVeTz@nand.local/
+
+Thanks,
+Taylor
