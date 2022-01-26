@@ -2,177 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAB51C433EF
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 21:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A569C433F5
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 21:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232804AbiAZV5e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 16:57:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50320 "EHLO
+        id S232435AbiAZV7g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 16:59:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230454AbiAZV5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 16:57:32 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A56BC06161C
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 13:57:32 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id a12-20020a056a001d0c00b004cc283b2e30so417683pfx.2
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 13:57:32 -0800 (PST)
+        with ESMTP id S231508AbiAZV7e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 16:59:34 -0500
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 611FFC06161C
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 13:59:34 -0800 (PST)
+Received: by mail-io1-xd29.google.com with SMTP id c188so1311513iof.6
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 13:59:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=ibolrxbzAwa/nHwXU6rIdf77TaISg+IXHQ4un6GrInA=;
-        b=QDHVF0NDrh0XoP/G9j4ohCIqys0GDwzQE8qcfmCOZYwRLwoPoFPeXbc4HE0WEF7+t6
-         hIln3QRkxVJwZFWbFzslWWLpNgweFNuCzgXM1Y/kY3WrKdrfbRP8HcrNSWxMEOUJY1fx
-         ynt/0xKGwtZYhO/nGNMeaWGex4XBbf1j4r/y0iZIaFiChuC8uQEDjnFaRl8OmdsgeiDc
-         cEcUxqyG4blSbgvBql+MW395FLSiD1AhlXCLSnkSog9qFLUv16uSEIiHL75ow9qoy9xI
-         Xw5JbP5fOtb1tXjp8J15RZCwoEXomdMc/xYclZKZ2sxbis25w+XV6ysNv4g5XGFDZHbu
-         U4Hw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=OBGpI4Mh2f9H8LD8pVKkF0z2KHeqltJwbNtO61gEHBA=;
+        b=jltYyzRpVbx3PMt++QbXZ2Fbfby2Y/EjA/ksN1xSCg/LToxvAlXpz9T/zCx7E6fJZ9
+         flrQ4m/ddGyKumkiIuzOkhk3AGjQI1D7lqrTlaRuCkWkDiD8StSkmPYdLXfAn5OKmVEO
+         2GmNsOvLWEbU8AKPAcCQOjClN+g2g0JyCfTbhponCfC1GDkVjk/Qpy62Bk4bAOKKiaIB
+         RVJjXKtdztc6V75Fifvi4loSMQ38g04qbGPJ+OJwVJTux45ay5GUHCMlnblNt3q9nc7k
+         x3ZK11/njv6COk4SGvOuL5BaQ/mdNcq+gVmKZgpU+pR0hDsJgxA1I2Lzt14nRphJRob9
+         N7SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=ibolrxbzAwa/nHwXU6rIdf77TaISg+IXHQ4un6GrInA=;
-        b=carjlRO+9es+PXAd18gAIGEDNSSMbgH+BGUULohoOL9iAxQtW709Q/B4LriidKc1Tb
-         gSElex/Jw54L1R8ybmer8iVe8epiLhnvIlYEz4PWMWEUM2lUp09w7wtLwSAKa4VlIh67
-         JZg7kiaVxvO+5mWr15cnIGWWaI6af8uLTi9LgO4IeZFW3t1sQPZkXH9vy3ns7S79NeXf
-         JYq3mXTANTbWb2vo0rDNeo5NxS5knbTQ979DN6AaZkFXF2+1WQBJI7CC6/ajRMsVQsqf
-         f6rWnRxM8uEQmqbUC/6uvs/LsYw9hSYsgYnenoXZp7C7JGe+rB7ku8JJI96o57Ftx/54
-         yL/w==
-X-Gm-Message-State: AOAM531+YuHpnzTpNeFTx7etDvn9Gxa2A/QCZGuYjHlt0FERFbgVw1p/
-        T3giwtyFD8gEviYG2oXgXAaKeHjfCgfCzw==
-X-Google-Smtp-Source: ABdhPJzyfcDhXr6vd2ee1MeqSvUuKzw1E4X8lQExpzM4+jkFB5q7Arx9Bky20rL4j44L0TikO6ReXuTmN2HPSg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:7c17:: with SMTP id
- x23mr938906pll.123.1643234251777; Wed, 26 Jan 2022 13:57:31 -0800 (PST)
-Date:   Wed, 26 Jan 2022 13:57:29 -0800
-In-Reply-To: <2a50d67e-364b-5927-801b-00f38179e904@gmail.com>
-Message-Id: <kl6lwnimyxbq.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <2a50d67e-364b-5927-801b-00f38179e904@gmail.com>
-Subject: Re: git worktree, submodule and force checkout/switch
-From:   Glen Choo <chooglen@google.com>
-To:     Federico Kircheis <federico.kircheis@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=OBGpI4Mh2f9H8LD8pVKkF0z2KHeqltJwbNtO61gEHBA=;
+        b=k3fIlVjGnBF4h3kIsLeuPsz4Ulw6+X7IJKERwe7fRtKnO5KUY4RIOZGwoM4XYk3h68
+         ADQkge9Q6N5d81FIo7JKh0fTyXUFcTN5kHi5QCRF1qrOEwjF9QJ+jrXeFTJmwzdqw91L
+         WRUqAtRbAFAIcHEXGX+16HPvb9ti5gkkSrR+mG9/Mpf/67zxBmOA2fEWmrp9nDwp18ex
+         xbrSxnO+DQQ/lJT7Ka5EGtHNUAOC3HoPWGnlEIXt84T6HC6uk6S+pnyB8Wo2wh4S73S6
+         VTY0qiWAPYj1CQTaPgxDOhovv7OzKxqNYkL3HeAfy4X89SLiyL9dz3qUyQPlREjxi29t
+         Gctg==
+X-Gm-Message-State: AOAM533l/d6n4bNxgO100lWpRVMLddwb2gJQO/DFmY1QvGihEWNRc3cA
+        619dgYVQtWZp17oWAUiDYUGsmg==
+X-Google-Smtp-Source: ABdhPJzCQVFDSOHh4QjYA0E+jJSo9lqdUIloiPRPfhB3oRH1XDryEczC34VM6jwmF5ShohO7v8c7ag==
+X-Received: by 2002:a02:ce99:: with SMTP id y25mr398364jaq.294.1643234373703;
+        Wed, 26 Jan 2022 13:59:33 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g14sm10871658ilj.41.2022.01.26.13.59.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jan 2022 13:59:33 -0800 (PST)
+Date:   Wed, 26 Jan 2022 16:59:32 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] http API: fix dangling pointer issue noted by GCC 12.0
+Message-ID: <YfHERK0RUwVjM963@nand.local>
+References: <patch-1.1-1cec367e805-20220126T212921Z-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-1.1-1cec367e805-20220126T212921Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Federico Kircheis <federico.kircheis@gmail.com> writes:
+On Wed, Jan 26, 2022 at 10:30:40PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> But we can instead amend the code added in baa7b67d091 (HTTP slot
+> reuse fixes, 2006-03-10) to get rid of "int *finished" entirely. I
+> instrumented the code to add this after every use of slot->finished or
+> slot->in_use:
+>
+>     if (slot->finished && slot->in_use == *slot->finished) BUG("in-use = %d and finished = %d disconnect", slot->in_use, *slot->finished);
+>     if (!slot->finished && !slot->in_use) BUG("have !in-use and no finished pointer");
+>
+> Which never fires, but we would get occurrences of:
+>
+>     if (!slot->finished && slot->in_use) BUG("have in-use and no finished pointer");
+>
+> I.e. we can simply drop the field and rely on "slot->in_use" in cases
+> where we used "finished" before. The two fields were mirror images of
+> each other, and the tri-state nature of "finished" wasn't something we
+> relied upon.
 
-> Hello to everyone,
->
-> I would like to report what I believe is a bug, or at least an 
-> inconsistent behavior when using submodules and worktrees.
->
->
-> Consider following test-case
->
-> ----
-> # create 2 repositories with one commit
-> mkdir repo1 && (cd repo1 && git init && git commit --allow-empty -m "repo1")
-> mkdir repo2 && (cd repo2 && git init && git commit --allow-empty -m "repo2")
->
-> # add submodule, a couple of branches, and a worktree
-> cd repo1
-> git submodule add ../repo2 && git commit -m "add submodule"
-> git switch -c branch1
-> git switch -c branch2
-> git worktree add ../repo1.w --detach
->
->
-> # test switch in the worktree
-> cd ../repo1.w
-> # git switch works
-> git switch --recurse-submodule branch1
-> git switch --recurse-submodule master
-> #git submodule update # (1)
-> cat .git
-> cat .gitmodules
-> cat repo2/.git # (2)
-> git switch --force branch1 # (3)error if no submodule update
-> ----
->
->
-> Notice that if one forgets to git submodule update (1) before git switch 
-> --force branch1, even when using --recurse-submodule, there is no 
-> submodule, as repo1.w/repo2/ is empty (2).
->
-> It is confusing/unexpected that git switch --force fails and creates a 
-> repo1.w/repo2/.git file pointing to the wrong location.
->
->
-> As comparison, when cloning a repository and forgetting to do "git 
-> submodule update", then "git switch --force branch1" works as expected:
->
->
->
-> ----
-> # create 2 repositories with one commit
-> mkdir repo1 && (cd repo1 && git init && git commit --allow-empty -m "repo1")
-> mkdir repo2 && (cd repo2 && git init && git commit --allow-empty -m "repo2")
->
-> cd repo1
-> git submodule add ../repo2 && git commit -m "add submodule"
-> git switch -c branch1
-> git switch -c branch2
->
-> cd ..
-> git clone repo1 repo1.c
-> cd repo1.c
-> git switch branch2
-> git switch --force branch1 # works, event without git submodule update
-> ----
->
->
->
->
-> Notice:
-> In both cases "git switch" and "git checkout" behave the same.
-> Also the parameter "--recurse-submodule" does not change anything.
->
->
-> Best
->
-> Federico
->
->
-> PS: I'm not subscribed to the mailing list (yet), so please keep me in CC.
+This sort of thing always makes me a little nervous, regardless of how
+carefully it's done. I'm not sure I quite follow the above reasoning,
+but let's take a look at the code...
 
-Thanks for the report! This is very cosmetically similar to another bug
-that Elijah (cc-ed) sent a patch for [1]. However, in my testing, the
-test case doesn't even pass in v2.34.0, which doesn't have en/keep-cwd
-(which is the branch that introduced the motivation for [1]).
+> diff --git a/http-walker.c b/http-walker.c
+> index 910fae539b8..5cc369dea85 100644
+> --- a/http-walker.c
+> +++ b/http-walker.c
+> @@ -225,13 +225,9 @@ static void process_alternates_response(void *callback_data)
+>  					 alt_req->url->buf);
+>  			active_requests++;
+>  			slot->in_use = 1;
+> -			if (slot->finished != NULL)
+> -				(*slot->finished) = 0;
 
-So despite the unfortunate timing, I am inclined to think that this is a
-longstanding issue with worktrees and submodules (and not a recent
-regression in 2.35). I'm sending this out quickly just to say that it's
-not a regression, and I might take a closer look when I have time.
+Makes sense; here we set slot->in_use to 1, and would have set
+slot->finished to 0.
 
-This is the test case I used:
+>  			if (!start_active_slot(slot)) {
+>  				cdata->got_alternates = -1;
+>  				slot->in_use = 0;
+> -				if (slot->finished != NULL)
+> -					(*slot->finished) = 1;
 
-  test_expect_success 'bugreport' '
-    # create 2 repositories with one commit
-    mkdir repo1 && (cd repo1 && git init && git commit --allow-empty -m "repo1") &&
-    mkdir repo2 && (cd repo2 && git init && git commit --allow-empty -m "repo2") &&
+Vice-versa here, OK.
 
-    # add submodule, a couple of branches, and a worktree
-    cd repo1 &&
-    git submodule add ../repo2 && git commit -m "add submodule" &&
-    git switch -c branch1 &&
-    git switch -c branch2 &&
-    git worktree add ../repo1.w --detach &&
+> diff --git a/http.c b/http.c
+> index 229da4d1488..4507c9ac9c7 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -197,9 +197,6 @@ static void finish_active_slot(struct active_request_slot *slot)
+>  	closedown_active_slot(slot);
+>  	curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CODE, &slot->http_code);
+>
+> -	if (slot->finished != NULL)
+> -		(*slot->finished) = 1;
+> -
 
-    # test switch in the worktree
-    cd ../repo1.w &&
-    # git switch works
-    git switch --recurse-submodules branch1 &&
-    git switch --recurse-submodules main &&
-    cat .git &&
-    cat .gitmodules &&
-    cat repo2/.git &&
-    git switch --force branch1
-  '
+But this one I don't quite follow. Or, at least, I don't readily see
+that slot->in_use is necessarily going to be 0 here, or (if it isn't)
+that we somehow don't care.
 
-[1] https://lore.kernel.org/git/pull.1205.git.git.1643161426138.gitgitgadget@gmail.com
+Could you walk me through your reasoning on why this particular hunk is
+OK?
+
+> @@ -1327,10 +1323,8 @@ void run_active_slot(struct active_request_slot *slot)
+>  	fd_set excfds;
+>  	int max_fd;
+>  	struct timeval select_timeout;
+> -	int finished = 0;
+>
+> -	slot->finished = &finished;
+> -	while (!finished) {
+> +	while (slot->in_use) {
+>  		step_active_slots();
+>
+>  		if (slot->in_use) {
+
+This part of the diff looks OK to me; you're just swapping the use of
+'!finished' with 'slot->in_use', which makes sense *assuming* that they
+are truly mirror images of each other.
+
+The rest of the diff looks good to me, but I do think we should nail
+down an answer to the question that I posed earlier in this message
+first.
+
+Thanks,
+Taylor
