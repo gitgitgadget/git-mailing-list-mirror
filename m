@@ -2,147 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BE9CC28CF5
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 17:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4824DC28CF5
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 17:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243714AbiAZR16 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 12:27:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44652 "EHLO
+        id S243901AbiAZRlY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 12:41:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236899AbiAZR15 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 12:27:57 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BFF8C06161C
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 09:27:57 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id i65so311719pfc.9
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 09:27:57 -0800 (PST)
+        with ESMTP id S243946AbiAZRlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 12:41:19 -0500
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1751BC061756
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 09:41:12 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id o131-20020a25d789000000b00614957c60dfso559764ybg.15
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 09:41:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=QA9Jy/iKqgKEQsaXWgIG4R4jrNJw4TrOTldRbQbBbKU=;
-        b=fT8C/358fXcisD29fvv0T8th8KWC/1vK7KFpFyO2sxFUaWk+Xy1qKDiK4oJKsItXyN
-         SBffx2Qjvh9gaozHPP/GxqDLXDrf0TAFdK7PmdaKJbjRVkbS/obXfTSCREAoXsgvdt82
-         0qXFJcN5T9vi2Q4ZwQF1Xrt6ul7noichLa8Lqa5MgguhojwjX/3/EjoqYdloLFUFoCfH
-         0gbP5ItLm3tkiRAKwpmBdhqChAQfwluwFOhJeOoM8MLVi6d7EpLGT1f8bIhoCRTBVDAZ
-         knYzIpdf5KJW2VejxvxDZE4Nc4GeQYLuPa+r3AZx+8Oz30ufoqcaUtN/m45uF/aUyrq/
-         aZjQ==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=11iAl32xss9rzRTqG6X32iDYf9aZQRTnunDPDQ/xBls=;
+        b=ldWgFyqFRkmQXfoELQstk/vxJswwgC3KRqrOP9oT3RhBqjsgZin7QpJgskdqU2L7xH
+         8G8Le60X12MEDEBChLm40RUDkVIVa5WAzZLLr7/RZZh9iPI8/7kNM1ySfpdrdi30o58U
+         +UBKoH+RDi6HzWp0HcCa5PIPthIBaqHtMQQb/0qmHmgSfX7pZ3oqElJ/0I+2Zn0H2bI+
+         Fj0BD7KP8xKLzbb/KVrc9wUrW9UZ7TNrRIy6EJX3m3BYBfH9BWYfkIKDJOc5ibg4Rbqo
+         Z8ZirsKqsUGVZdCvl6xE9xzw/Gkmg/Z5JV3Wj+A9DcJxiwqdRZZjdHFGBKBdchx3/fQM
+         Hsxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=QA9Jy/iKqgKEQsaXWgIG4R4jrNJw4TrOTldRbQbBbKU=;
-        b=5ssGH+pCO+TCP5F4aOPFndvBrEDZ0cPVKE8qZunzWwsWQuGu/UQKx5i12eDFiCwJOr
-         HQUBeI5Sg61Q5VL4W8z3B64ihUWBxAtWIwnqhtfLJjlnaB8ugInWdwjq1ttHZmKHzgJs
-         TA0nLsm3+nsUYhRlm+K7kcnt88r/ibFTAJ5+wpYtj5bnWlRoWoPt/9FVYkhV2CMOjhZ7
-         ujdw2QY0JZUMxo6o8c8U7vozUrhGdRy+w8hqcPHRbuZfdmGbguAr3/M8qa4Fm3zZzAel
-         EYQQt7VRn3EAzXUnl42yiJZ+zCsu61D2/6o6pApi6paWgeZndQ1WGCwdJNOy9Mi/50wo
-         096A==
-X-Gm-Message-State: AOAM532OxzABtrlbECQw/z5jwguBvOn4eU0V7wkSTAPTCXeB5qJbfZeZ
-        g24Y6F/a4cPpP0RWNGshWR6B6A==
-X-Google-Smtp-Source: ABdhPJzYolN/eJgzwVAJnWP7MxT6pS3WAWE0j9GL2jo0jEh4yZ8Zp6rEMooVyR1uBDlgat3CEwZ6tQ==
-X-Received: by 2002:a65:6403:: with SMTP id a3mr15445361pgv.399.1643218076522;
-        Wed, 26 Jan 2022 09:27:56 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:6aef:b12a:4316:e953])
-        by smtp.gmail.com with ESMTPSA id z25sm2592333pfg.129.2022.01.26.09.27.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jan 2022 09:27:55 -0800 (PST)
-Date:   Wed, 26 Jan 2022 09:27:49 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        gitscale@google.com
-Subject: Re: Submodule UX overhaul update (was: What's cooking in git.git
- (Jan 2022, #07; Mon, 24))
-Message-ID: <YfGElSykenUSs/Lh@google.com>
-References: <xmqq35lc53e9.fsf@gitster.g>
- <YfBTRuPrGGjepe+D@google.com>
- <220126.867damfuvo.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <220126.867damfuvo.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=11iAl32xss9rzRTqG6X32iDYf9aZQRTnunDPDQ/xBls=;
+        b=Ep5qTGg2x/FuH3mUZXY6BiCkGPjh3YJEzQd40G6V1dSUbOiz0yDikUeBBV80MO5TpE
+         6yd7N6gnsuEOFSshsVWSlWI2fbQVUyiBMxi7OCdoUTWscUGp2M33Y+be9kVuUgHX2jy8
+         1W9MIEnx1xhtGkTDYi0F75ZLkQM69n5PYQ0cjWcac/fTeWEpLkyUEkzkQgzhSdqxch4l
+         cgoq0khaqMrzBKn+Igs2+h13glRIfroSFM8g4YjIPzbTuwSACoSSTHh/X5P7UDoKPUeG
+         nuTzOBGQS/4r0vo2BwWElrMxjS962KwDz8srORnd+FywC6G+SyaDH+9MTWjOFdlu/IlG
+         AJ0A==
+X-Gm-Message-State: AOAM5336kz3joTa7Lu4aIEvHrQKeSD+t8AlnEwCMi6pWn/6cFw7l0poh
+        NqDHUZPpLF3CPI04o61vpWursZcE0/pkTQ==
+X-Google-Smtp-Source: ABdhPJzFRD0h0BpS2VIpiUD+q2i6zUq4ONk2ncvbOmMC/YFzcfCkHiXCQANC1F/BkYhKhFcI/+4ax7KIwfZBEw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a25:83c3:: with SMTP id
+ v3mr41095330ybm.141.1643218871285; Wed, 26 Jan 2022 09:41:11 -0800 (PST)
+Date:   Wed, 26 Jan 2022 09:41:09 -0800
+In-Reply-To: <pull.1205.git.git.1643161426138.gitgitgadget@gmail.com>
+Message-Id: <kl6l35la1jka.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1205.git.git.1643161426138.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] sequencer, stash: fix running from worktree subdir
+From:   Glen Choo <chooglen@google.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 26, 2022 at 03:09:19PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> 
-> On Tue, Jan 25 2022, Emily Shaffer wrote:
-> 
-> >> * ab/config-based-hooks-2 (2022-01-07) 17 commits
-> >>   (merged to 'next' on 2022-01-19 at 594b6da22c)
-> >>  + run-command: remove old run_hook_{le,ve}() hook API
-> >>  + receive-pack: convert push-to-checkout hook to hook.h
-> >>  + read-cache: convert post-index-change to use hook.h
-> >>  + commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
-> >>  + git-p4: use 'git hook' to run hooks
-> >>  + send-email: use 'git hook run' for 'sendemail-validate'
-> >>  + git hook run: add an --ignore-missing flag
-> >>  + hooks: convert worktree 'post-checkout' hook to hook library
-> >>  + hooks: convert non-worktree 'post-checkout' hook to hook library
-> >>  + merge: convert post-merge to use hook.h
-> >>  + am: convert applypatch-msg to use hook.h
-> >>  + rebase: convert pre-rebase to use hook.h
-> >>  + hook API: add a run_hooks_l() wrapper
-> >>  + am: convert {pre,post}-applypatch to use hook.h
-> >>  + gc: use hook library for pre-auto-gc hook
-> >>  + hook API: add a run_hooks() wrapper
-> >>  + hook: add 'run' subcommand
-> >> 
-> >>  More "config-based hooks".
-> >> 
-> >>  Will cook in 'next'.
-> >>  source: <cover-v6-00.17-00000000000-20211222T035755Z-avarab@gmail.com>
-> >> 
-> >
-> > Very excited to see this one go in and looking forward to the next set!
-> > By the way, this reduced the number of patches Google is carrying
-> > internally on top of 'next' from 46 to 29. :) (All but 7 of those are
-> > the rest of config-based-hooks.)
-> 
-> Good to hear, I'm waiting on Junio to merge this down, and will then
-> submit the next step in the config-based hook conversion.
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thanks!
+> From: Elijah Newren <newren@gmail.com>
+>
+> In commits bc3ae46b42 ("rebase: do not attempt to remove
+> startup_info->original_cwd", 2021-12-09) and 0fce211ccc ("stash: do not
+> attempt to remove startup_info->original_cwd", 2021-12-09), we wanted to
+> allow the subprocess to know which directory the parent process was
+> running from, so that the subprocess could protect it.  However...
+>
+> When run from a non-main worktree, setup_git_directory() will note
+> that the discovered git directory
+> (/PATH/TO/.git/worktree/non-main-worktree) does not match
+> DEFAULT_GIT_DIR_ENVIRONMENT (see setup_discovered_git_dir()), and
+> decide to set GIT_DIR in the environment.  This matters because...
+>
+> Whenever git is run with the GIT_DIR environment variable set, and
+> GIT_WORK_TREE not set, it presumes that '.' is the working tree.  So...
+>
+> This combination results in the subcommand being very confused about
+> the working tree.  Fix it by also setting the GIT_WORK_TREE environment
+> variable along with setting cmd.dir.
+>
+> A possibly more involved fix we could consider for later would be to
+> make setup.c set GIT_WORK_TREE whenever (a) it discovers both the git
+> directory and the working tree and (b) it decides to set GIT_DIR in the
+> environment.  I did not attempt that here as such would be too big of a
+> change for a 2.35.1 release.
 
-> 
-> > It might seem slightly selfish for me to include config-based-hooks in
-> > the "submodules update" letter, but this is actually very important for
-> > submodules too - without config-based hooks, we don't have a good way to
-> > distribute a hook across an entire Git superproject-and-submodules
-> > codebase. With config-based hooks + "config.superproject" shared between
-> > the submodules and superproject, this becomes a very easy story :)
-> 
-> I'm probably missing something, not that config-based hooks aren't great
-> & all that, but for this specific use-case wouldn't core.hooksPath work?
-> I.e. to simply set that in the submodules to the superproject's
-> .git/hooks directory?
-> 
-> That could even be done with the includeIf + include.path mechanism to
-> apply to all projects below a certain path, which presumably is similar
-> to how it would work with config-based hooks.
+As the commit message explains, GIT_DIR and GIT_WORK_TREE are closely
+linked, and this interaction is subtle enough that we'd want to guard
+against it instead of policing it manually. So, yes, setting them
+together makes a lot of sense.
 
-It's not quite so simple. We could set core.hooksPath in /etc/gitconfig,
-but a user who already has core.hooksPath set in ~/.gitconfig would
-override it. And since we're currently working with users who previously
-used Repo, it wouldn't surprise me to see savvy users globally setting
-core.hooksPath because that doesn't interfere with Repo's own hook
-system. In that case, even using an includeIf around the /etc/gitconfig
-line won't help, because I'd guess the config included at the system
-level will still be overridden by the config included at the global
-level.
+>  builtin/stash.c   |  6 +++++-
+>  sequencer.c       |  5 ++++-
+>  t/t3400-rebase.sh | 21 +++++++++++++++++++++
+>  3 files changed, 30 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index 1ef2017c595..86cd0b456e7 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -1539,8 +1539,12 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+>  			struct child_process cp = CHILD_PROCESS_INIT;
+>  
+>  			cp.git_cmd = 1;
+> -			if (startup_info->original_cwd)
+> +			if (startup_info->original_cwd) {
+>  				cp.dir = startup_info->original_cwd;
+> +				strvec_pushf(&cp.env_array, "%s=%s",
+> +					     GIT_WORK_TREE_ENVIRONMENT,
+> +					     the_repository->worktree);
+> +			}
+>  			strvec_pushl(&cp.args, "clean", "--force",
+>  				     "--quiet", "-d", ":/", NULL);
+>  			if (include_untracked == INCLUDE_ALL_FILES)
+> diff --git a/sequencer.c b/sequencer.c
+> index 6abd72160cc..5213d16e971 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4223,8 +4223,11 @@ static int run_git_checkout(struct repository *r, struct replay_opts *opts,
+>  
+>  	cmd.git_cmd = 1;
+>  
+> -	if (startup_info->original_cwd)
+> +	if (startup_info->original_cwd) {
+>  		cmd.dir = startup_info->original_cwd;
+> +		strvec_pushf(&cmd.env_array, "%s=%s",
+> +			     GIT_WORK_TREE_ENVIRONMENT, r->worktree);
+> +	}
+>  	strvec_push(&cmd.args, "checkout");
+>  	strvec_push(&cmd.args, commit);
+>  	strvec_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
+> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+> index 23dbd3c82ed..71b1735e1dd 100755
+> --- a/t/t3400-rebase.sh
+> +++ b/t/t3400-rebase.sh
+> @@ -416,4 +416,25 @@ test_expect_success MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs is a symlink'
+>  	mv actual_logs .git/logs
+>  '
+>  
+> +test_expect_success 'rebase when inside worktree subdirectory' '
+> +	git init main-wt &&
+> +	(
+> +		cd main-wt &&
+> +		git commit --allow-empty -m "initial" &&
+> +		mkdir -p foo/bar &&
+> +		test_commit foo/bar/baz &&
+> +		mkdir -p a/b &&
+> +		test_commit a/b/c &&
+> +		# create another branch for our other worktree
+> +		git branch other &&
+> +		git worktree add ../other-wt other &&
+> +		cd ../other-wt &&
+> +		# create and cd into a subdirectory
+> +		mkdir -p random/dir &&
+> +		cd random/dir &&
+> +		# now do the rebase
+> +		git rebase --onto HEAD^^ HEAD^  # drops the HEAD^ commit
+> +	)
+> +'
+> +
+>  test_done
 
-And anyway.... we've been shipping config based hooks internally for
-over a year now, so there's not much reason to stop now ;)
+Looks good :)
 
-> 
-> Obviously the full config-based hook mechanism is much nicer, I just
-> wonder if it's something you can use as a transitory mechanism until
-> then.
-> 
-
- - Emily
+Reviewed-by: Glen Choo <chooglen@google.com>
