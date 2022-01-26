@@ -2,197 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 605A7C28CF5
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 14:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC70CC2BA4C
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 15:02:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242384AbiAZOwh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 09:52:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35948 "EHLO
+        id S242512AbiAZPCp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 10:02:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242387AbiAZOwV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 09:52:21 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F31FC061748
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 06:52:21 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id f17so26226990wrx.1
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 06:52:21 -0800 (PST)
+        with ESMTP id S242584AbiAZPCn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 10:02:43 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC4CC06161C
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 07:02:43 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id u24so23307054eds.11
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 07:02:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=4p85Auc2vlR13q5/sQ6+B+PkCCTFXjyR+Y50k90EXY8=;
-        b=mPrYiUTFNSFgnGYmZ9pLPpsChdhph3dkOc8C3kfxPF2l2dTlZfK2QNYmumlXdswQ3Z
-         j4iJ2CPgHaTIy93faMQ2mgjSCtZppwS6NAryQd/1hei53y+sKJ8DqgbI8mPlijhxfGmI
-         sXEGt4bg/pajZNSHNyXVVZeho403EekAma68/pOsZhh9k4tkzolUnR43KQb1UndFe2tu
-         86uYmOLpjfyletZ15qysebvKkMrM88zf++pc+PhJNeKfvfeT2unE2RvBE3pckRYplUio
-         u/fTx4qps4uNg1cHIbyxqsgHO8kn+n7y9KmhT+hAZT9p4YMIn3fte4zE7FAihEiRsGO2
-         2vFQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=v9iG997ocsLdy44q7nhj5Tinhl1b8J5+r9L4yY/7qHk=;
+        b=oS9w6211omwxJLtsMi1j42Oz3r8ejJq+HXuF0j/lK9lTaF9Q0xqTjzN53pxLbNdbtQ
+         xHZ0/GBQzTe1CrgB+QDuAJ60jtjN7JvyH5NHilK/zNkojtBaJb1AKdAW7sAlGbZFfv2w
+         y37tJ3VJOCH7Eb3EDeXs2fy6Si965HWfL5MAAY5RkB9XqyVk71V5RSYdpsJ/ihjxO1BF
+         EkktnMwlf+xTZckpPUH28qxF07VXGaXU46lTgzXwuXNjoescnvyD08RRVRmfI3IsiNqL
+         k8zefoJwgi25VV9430IxsIyGQME0XPHtYGQjfffqqJpNlhH1CylfEmMXJVv6nngQEw7n
+         rPcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=4p85Auc2vlR13q5/sQ6+B+PkCCTFXjyR+Y50k90EXY8=;
-        b=NT2+6FOn/2dZ9usX8fW/9LBASuCamPr2Du58LRCUUO1LXeR7RxUOE9qOfshcpBrxww
-         0Ud/7u0T3Zq8NWZXJTQsryfN4ligtE31heK/ZhQc0HU/ocSfbozVW450nOcfcq+ECY9j
-         vTprh8yLiPCDMZ46ZSggYCkwt3EpjlJIvZe/yKnn/mqYlpCiKVy4xBb5FEKz1raEpmK2
-         uEp0dcVzQTezN1/lzbzfFbBuGnY1VyC3EqGcMXeJTu9SJJKh5qKsk02M+nRkc81TA/R+
-         uF6lUyrgo5Uzr1Soz/+BYQ+OtGgmp9jMb6/UY38C2MFfnBMhCpZrQJL+o2oXvkkpe0xl
-         cnNA==
-X-Gm-Message-State: AOAM53341UMLThYFewvkMYyMsqnYSbWnsRUA4A9YjU6YQi3qybw/aeGQ
-        CShzySv2JEHv+KuLI/orqJOm/BT7WZk=
-X-Google-Smtp-Source: ABdhPJyWPkdCULY5y/77p1OoLyUXllafUECmKGrcqbOdF8RBXtPqPUduLh/Sa8hZWrVZnzb/wp5NKA==
-X-Received: by 2002:a5d:6da4:: with SMTP id u4mr21193688wrs.629.1643208739611;
-        Wed, 26 Jan 2022 06:52:19 -0800 (PST)
-Received: from [192.168.1.240] ([31.185.185.186])
-        by smtp.gmail.com with ESMTPSA id n13sm3535752wms.8.2022.01.26.06.52.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jan 2022 06:52:19 -0800 (PST)
-Message-ID: <7b56e91b-a7c9-b7cb-356c-e9615b9459fa@gmail.com>
-Date:   Wed, 26 Jan 2022 14:52:17 +0000
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=v9iG997ocsLdy44q7nhj5Tinhl1b8J5+r9L4yY/7qHk=;
+        b=PlfFxJFfh9rsHDVrEoERBsz6OVPXjcCFY/q8u4CScc+ORke2hhb6Y95vB8VakJAiuz
+         Kv59ZDPbOmEGtwkdvdGwj+NGQBSlyK8cUIWq2FI23t94u9WcIRIVVluuykjQVqIaAh5O
+         cAMjypRT+y1CdPENJPn5i9LIyCRiTpHreBQAp9zkHr0k79sqh76j20DHc0OGWnE3J8aO
+         BOfbbR5Wl1fSTmwCS/eZT1G3bJXNSU4u/+6oyfdjxfGvNpPA/uJH/6CU+hJ+Pr/aRVfw
+         LNEKVMcfYE5WPx5oXe7ClTXrhhORKb2CfRFiX2HHR15YNO41G1yJUw7yxJbtqRlX64fF
+         FJmg==
+X-Gm-Message-State: AOAM533MBkQD0g2dHv2wduwlrUoK6RpDLHBBwYSORUYGLaCvS50TouVO
+        rfPGKbOJJsdqIHcnlUfRtPc=
+X-Google-Smtp-Source: ABdhPJxt6EbDJZZ/+WXM3bwqeGb/QuY4WDQm01C3vZ4Fs9dUTp+6BMCk+3OiACnn28pF0I04BFr6cw==
+X-Received: by 2002:a05:6402:40cb:: with SMTP id z11mr17314760edb.127.1643209361788;
+        Wed, 26 Jan 2022 07:02:41 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id g6sm5336512ejz.170.2022.01.26.07.02.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jan 2022 07:02:41 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nCjom-003AAx-Mm;
+        Wed, 26 Jan 2022 16:02:40 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
+        stolee@gmail.com
+Subject: Re: [PATCH v4 1/9] t5326: demonstrate bitmap corruption after
+ permutation
+Date:   Wed, 26 Jan 2022 16:01:20 +0100
+References: <cover.1638991570.git.me@ttaylorr.com>
+ <cover.1643150456.git.me@ttaylorr.com>
+ <7ea9cced8ec79a8e39948a5e4b8dde6e9b54695a.1643150456.git.me@ttaylorr.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <7ea9cced8ec79a8e39948a5e4b8dde6e9b54695a.1643150456.git.me@ttaylorr.com>
+Message-ID: <220126.8635lafskv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 11/14] reset_head(): take struct rebase_head_opts
-Content-Language: en-GB-large
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
- <pull.1049.v3.git.1643202349.gitgitgadget@gmail.com>
- <d170703e8334a6f082f18b9e5bde3be3a60deed7.1643202349.git.gitgitgadget@gmail.com>
- <220126.86fspafwg8.gmgdl@evledraar.gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <220126.86fspafwg8.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
 
-On 26/01/2022 13:35, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, Jan 26 2022, Phillip Wood via GitGitGadget wrote:
-> 
->> @@ -669,13 +672,15 @@ static int run_am(struct rebase_options *opts)
->>   
->>   	status = run_command(&format_patch);
->>   	if (status) {
->> +		struct reset_head_opts ropts = { 0 };
->>   		unlink(rebased_patches);
->>   		free(rebased_patches);
->>   		strvec_clear(&am.args);
->>   
->> -		reset_head(the_repository, &opts->orig_head,
->> -			   opts->head_name, 0,
->> -			   NULL, NULL, DEFAULT_REFLOG_ACTION);
->> +		ropts.oid = &opts->orig_head;
->> +		ropts.branch = opts->head_name;
->> +		ropts.default_reflog_action = DEFAULT_REFLOG_ACTION;
->> +		reset_head(the_repository, &ropts);
->>   		error(_("\ngit encountered an error while preparing the "
->>   			"patches to replay\n"
->>   			"these revisions:\n"
-> 
-> Wouldn't these and the rest be easier to read as:
-> 
-> 	struct reset_head_opts ropts = {
-> 		.oid = &opts->orig_head,
->                  .branch = opts->head_name,
->                  .default_reflog_action = DEFAULT_REFLOG_ACTION,
->          };
+On Tue, Jan 25 2022, Taylor Blau wrote:
 
-I did start out doing something like that but changed to the current 
-style as I felt it made it easier to convert the calls correctly and for 
-reviewers to verify that the conversion is correct when the deletion of 
-the old function arguments is adjacent to the insertion of the new 
-struct assignments and the assignments are in the same order as the old 
-function arguments.
+> +test_expect_failure 'changing the preferred pack does not corrupt bitmaps' '
+> +	rm -fr repo &&
+> +	git init repo &&
+> +	test_when_finished "rm -fr repo" &&
 
-> ....
-> 
-> 
->> @@ -814,14 +819,17 @@ static int rebase_config(const char *var, const char *value, void *data)
->>   static int checkout_up_to_date(struct rebase_options *options)
->>   {
->>   	struct strbuf buf = STRBUF_INIT;
->> +	struct reset_head_opts ropts = { 0 };
->>   	int ret = 0;
->>   
->>   	strbuf_addf(&buf, "%s: checkout %s",
->>   		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
->>   		    options->switch_to);
->> -	if (reset_head(the_repository, &options->orig_head,
->> -		       options->head_name, RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
->> -		       NULL, buf.buf, NULL) < 0)
->> +	ropts.oid = &options->orig_head;
->> +	ropts.branch = options->head_name;
->> +	ropts.flags = RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
->> +	ropts.head_msg = buf.buf;
-> 
-> ...and then for some of the ones like this "ropts.head_msg = buf.buf"
-> assignment you just do that one immediately after the strbuf_addf() or
-> whatever modifies it.
-> 
-> That way it's clear what options we get from the function arguments and
-> can populate right away, and which ones we need to run some code in the
-> function before we can update "ropts".
+Nit: The initial "rm -fr" isn't needed here, and we should aim to have
+tests clean up after themselves, not needing to clean up after other
+tests.
 
-I'm not immediately clear why that matters. My priority was to keep the 
-assignments in the same order an the old function arguments to make the 
-conversion and review easier.
-
-> [Ditto for the elided parts below]
-> 
->>   #define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
->>   
->> +/* Request a detached checkout */
->>   #define RESET_HEAD_DETACH (1<<0)
->> +/* Request a reset rather than a checkout */
->>   #define RESET_HEAD_HARD (1<<1)
->> +/* Run the post-checkout hook */
->>   #define RESET_HEAD_RUN_POST_CHECKOUT_HOOK (1<<2)
->> +/* Only update refs, do not touch the worktree */
->>   #define RESET_HEAD_REFS_ONLY (1<<3)
->> +/* Update ORIG_HEAD as well as HEAD */
->>   #define RESET_ORIG_HEAD (1<<4)
->>   
->> -int reset_head(struct repository *r, struct object_id *oid,
->> -	       const char *switch_to_branch, unsigned flags,
->> -	       const char *reflog_orig_head, const char *reflog_head,
->> -	       const char *default_reflog_action);
->> +struct reset_head_opts {
->> +	/*
->> +	 * The commit to checkout/reset to. Defaults to HEAD.
->> +	 */
->> +	const struct object_id *oid;
->> +	/*
->> +	 * Optional branch to switch to.
->> +	 */
->> +	const char *branch;
->> +	/*
->> +	 * Flags defined above.
->> +	 */
->> +	unsigned flags;
-> 
-> It's nice to make these sort of things an enum type for the reasons
-> explained in 3f9ab7ccdea (parse-options.[ch]: consistently use "enum
-> parse_opt_flags", 2021-10-08), i.e. gdb and the like will give you the
-> labels in the debugger.
-
-Yeah that's true but I'm not actually touching the flags here, just 
-adding comments.
-
-Best Wishes
-
-Phillip
+This appears to have been copy/pasted from the test you added in
+54156af0d66 (t5326: test propagating hashcache values, 2021-09-17),
+which needlessly used that pattern, the tests you added preceding it
+follow the "clean up your own mess" pattern.
