@@ -2,140 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53E33C2BA4C
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 16:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BE9CC28CF5
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 17:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243254AbiAZQn0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 11:43:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34266 "EHLO
+        id S243714AbiAZR16 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 12:27:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236669AbiAZQnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 11:43:24 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A436C06161C
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 08:43:23 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id k25so40073418ejp.5
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 08:43:23 -0800 (PST)
+        with ESMTP id S236899AbiAZR15 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 12:27:57 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BFF8C06161C
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 09:27:57 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id i65so311719pfc.9
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 09:27:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:to:content-language:from:subject
-         :content-transfer-encoding;
-        bh=z1YIZLB1n/7L1NzRVtrWek/H7BoCvPP+5MIRI2XW5GI=;
-        b=dUFBqh5CZeM7Qf0EYJdDCH65LUZEdZhNqjeVh4s6L7Uea/j4PM1u3WuyQg40CURcT0
-         hXoUai0/ovxAlGYSf60lNxaCv1yWZMtEnmURB3Ii47hyAO2NDeJev7OK+mzw4cewePWR
-         ePmaIKzlAj+Ig4KaZdxJcspwuAox9S/l+88rcn2I9409zsRGwclrI1m5rEEbGWDOsbKP
-         OPOwZ+SXTWfiMbKeoixmQIePqCC8+F1/bL/rblkFwv5sYbAXKlKAsuAitI/8hJktVWRC
-         j3Hr45B/emhDNr7NE5D+7KEyLQj8FUQzE8qr9+/ey1L7HlZXqiJEYwpRvvZ0jGm+fCt+
-         K2WA==
+        d=google.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=QA9Jy/iKqgKEQsaXWgIG4R4jrNJw4TrOTldRbQbBbKU=;
+        b=fT8C/358fXcisD29fvv0T8th8KWC/1vK7KFpFyO2sxFUaWk+Xy1qKDiK4oJKsItXyN
+         SBffx2Qjvh9gaozHPP/GxqDLXDrf0TAFdK7PmdaKJbjRVkbS/obXfTSCREAoXsgvdt82
+         0qXFJcN5T9vi2Q4ZwQF1Xrt6ul7noichLa8Lqa5MgguhojwjX/3/EjoqYdloLFUFoCfH
+         0gbP5ItLm3tkiRAKwpmBdhqChAQfwluwFOhJeOoM8MLVi6d7EpLGT1f8bIhoCRTBVDAZ
+         knYzIpdf5KJW2VejxvxDZE4Nc4GeQYLuPa+r3AZx+8Oz30ufoqcaUtN/m45uF/aUyrq/
+         aZjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:to:content-language
-         :from:subject:content-transfer-encoding;
-        bh=z1YIZLB1n/7L1NzRVtrWek/H7BoCvPP+5MIRI2XW5GI=;
-        b=CXlDULXUKdZ0IzyJz1Zr5L6Q82F3vWYrCDXzEzulbI7ijAPqDHRimp6+U/zO0qVKzE
-         fxU7URRJ31vqIVxvNOUL5BaAsUOFk6IwdYvAI5wBuoKAzMyOPlKB9GogutZbU22BCOOO
-         VnYHR18v0CSYf5lZEcKkVBuzgyNMZ/c/QAfi/hx5D3KOvfN1mfKLjs+2y1LgrKDB303W
-         n9pT4KBa6v+QoVBRqAHlL6+VznArvxNlbBI/0Te0VOD7anKqPHB6eCt9iLJVjL/TXSdJ
-         p41J5twSxnVm83qox7GO8Egu06gE7ea4RAK1ZyHP/Z1IuVCGZvY0UFKG3B4q0jayOiCI
-         s1+A==
-X-Gm-Message-State: AOAM532y4aYl2eDgfl4d9EU8be2P2n2Mis7g2VfQHSSWdc/OCmVdzAgK
-        xaDnucvme4wQ3QSDE4tQUSlfyzsBlK8=
-X-Google-Smtp-Source: ABdhPJx91OJ8e/fl+5tQsSVoJcWadOrmnTKu94m41tf3xT3QPY0093PE+pQVG/kXImnrbbe7zAcGWA==
-X-Received: by 2002:a17:906:d9a:: with SMTP id m26mr20812370eji.762.1643215401897;
-        Wed, 26 Jan 2022 08:43:21 -0800 (PST)
-Received: from [192.168.178.26] (ip5b40c18c.dynamic.kabel-deutschland.de. [91.64.193.140])
-        by smtp.gmail.com with ESMTPSA id oz3sm7654665ejb.206.2022.01.26.08.43.21
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jan 2022 08:43:21 -0800 (PST)
-Message-ID: <2a50d67e-364b-5927-801b-00f38179e904@gmail.com>
-Date:   Wed, 26 Jan 2022 17:37:52 +0100
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=QA9Jy/iKqgKEQsaXWgIG4R4jrNJw4TrOTldRbQbBbKU=;
+        b=5ssGH+pCO+TCP5F4aOPFndvBrEDZ0cPVKE8qZunzWwsWQuGu/UQKx5i12eDFiCwJOr
+         HQUBeI5Sg61Q5VL4W8z3B64ihUWBxAtWIwnqhtfLJjlnaB8ugInWdwjq1ttHZmKHzgJs
+         TA0nLsm3+nsUYhRlm+K7kcnt88r/ibFTAJ5+wpYtj5bnWlRoWoPt/9FVYkhV2CMOjhZ7
+         ujdw2QY0JZUMxo6o8c8U7vozUrhGdRy+w8hqcPHRbuZfdmGbguAr3/M8qa4Fm3zZzAel
+         EYQQt7VRn3EAzXUnl42yiJZ+zCsu61D2/6o6pApi6paWgeZndQ1WGCwdJNOy9Mi/50wo
+         096A==
+X-Gm-Message-State: AOAM532OxzABtrlbECQw/z5jwguBvOn4eU0V7wkSTAPTCXeB5qJbfZeZ
+        g24Y6F/a4cPpP0RWNGshWR6B6A==
+X-Google-Smtp-Source: ABdhPJzYolN/eJgzwVAJnWP7MxT6pS3WAWE0j9GL2jo0jEh4yZ8Zp6rEMooVyR1uBDlgat3CEwZ6tQ==
+X-Received: by 2002:a65:6403:: with SMTP id a3mr15445361pgv.399.1643218076522;
+        Wed, 26 Jan 2022 09:27:56 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:6aef:b12a:4316:e953])
+        by smtp.gmail.com with ESMTPSA id z25sm2592333pfg.129.2022.01.26.09.27.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jan 2022 09:27:55 -0800 (PST)
+Date:   Wed, 26 Jan 2022 09:27:49 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        gitscale@google.com
+Subject: Re: Submodule UX overhaul update (was: What's cooking in git.git
+ (Jan 2022, #07; Mon, 24))
+Message-ID: <YfGElSykenUSs/Lh@google.com>
+References: <xmqq35lc53e9.fsf@gitster.g>
+ <YfBTRuPrGGjepe+D@google.com>
+ <220126.867damfuvo.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Content-Language: en-US
-From:   Federico Kircheis <federico.kircheis@gmail.com>
-Subject: git worktree, submodule and force checkout/switch
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220126.867damfuvo.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello to everyone,
+On Wed, Jan 26, 2022 at 03:09:19PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> 
+> On Tue, Jan 25 2022, Emily Shaffer wrote:
+> 
+> >> * ab/config-based-hooks-2 (2022-01-07) 17 commits
+> >>   (merged to 'next' on 2022-01-19 at 594b6da22c)
+> >>  + run-command: remove old run_hook_{le,ve}() hook API
+> >>  + receive-pack: convert push-to-checkout hook to hook.h
+> >>  + read-cache: convert post-index-change to use hook.h
+> >>  + commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
+> >>  + git-p4: use 'git hook' to run hooks
+> >>  + send-email: use 'git hook run' for 'sendemail-validate'
+> >>  + git hook run: add an --ignore-missing flag
+> >>  + hooks: convert worktree 'post-checkout' hook to hook library
+> >>  + hooks: convert non-worktree 'post-checkout' hook to hook library
+> >>  + merge: convert post-merge to use hook.h
+> >>  + am: convert applypatch-msg to use hook.h
+> >>  + rebase: convert pre-rebase to use hook.h
+> >>  + hook API: add a run_hooks_l() wrapper
+> >>  + am: convert {pre,post}-applypatch to use hook.h
+> >>  + gc: use hook library for pre-auto-gc hook
+> >>  + hook API: add a run_hooks() wrapper
+> >>  + hook: add 'run' subcommand
+> >> 
+> >>  More "config-based hooks".
+> >> 
+> >>  Will cook in 'next'.
+> >>  source: <cover-v6-00.17-00000000000-20211222T035755Z-avarab@gmail.com>
+> >> 
+> >
+> > Very excited to see this one go in and looking forward to the next set!
+> > By the way, this reduced the number of patches Google is carrying
+> > internally on top of 'next' from 46 to 29. :) (All but 7 of those are
+> > the rest of config-based-hooks.)
+> 
+> Good to hear, I'm waiting on Junio to merge this down, and will then
+> submit the next step in the config-based hook conversion.
 
-I would like to report what I believe is a bug, or at least an 
-inconsistent behavior when using submodules and worktrees.
+Thanks!
 
+> 
+> > It might seem slightly selfish for me to include config-based-hooks in
+> > the "submodules update" letter, but this is actually very important for
+> > submodules too - without config-based hooks, we don't have a good way to
+> > distribute a hook across an entire Git superproject-and-submodules
+> > codebase. With config-based hooks + "config.superproject" shared between
+> > the submodules and superproject, this becomes a very easy story :)
+> 
+> I'm probably missing something, not that config-based hooks aren't great
+> & all that, but for this specific use-case wouldn't core.hooksPath work?
+> I.e. to simply set that in the submodules to the superproject's
+> .git/hooks directory?
+> 
+> That could even be done with the includeIf + include.path mechanism to
+> apply to all projects below a certain path, which presumably is similar
+> to how it would work with config-based hooks.
 
-Consider following test-case
+It's not quite so simple. We could set core.hooksPath in /etc/gitconfig,
+but a user who already has core.hooksPath set in ~/.gitconfig would
+override it. And since we're currently working with users who previously
+used Repo, it wouldn't surprise me to see savvy users globally setting
+core.hooksPath because that doesn't interfere with Repo's own hook
+system. In that case, even using an includeIf around the /etc/gitconfig
+line won't help, because I'd guess the config included at the system
+level will still be overridden by the config included at the global
+level.
 
-----
-# create 2 repositories with one commit
-mkdir repo1 && (cd repo1 && git init && git commit --allow-empty -m "repo1")
-mkdir repo2 && (cd repo2 && git init && git commit --allow-empty -m "repo2")
+And anyway.... we've been shipping config based hooks internally for
+over a year now, so there's not much reason to stop now ;)
 
-# add submodule, a couple of branches, and a worktree
-cd repo1
-git submodule add ../repo2 && git commit -m "add submodule"
-git switch -c branch1
-git switch -c branch2
-git worktree add ../repo1.w --detach
+> 
+> Obviously the full config-based hook mechanism is much nicer, I just
+> wonder if it's something you can use as a transitory mechanism until
+> then.
+> 
 
-
-# test switch in the worktree
-cd ../repo1.w
-# git switch works
-git switch --recurse-submodule branch1
-git switch --recurse-submodule master
-#git submodule update # (1)
-cat .git
-cat .gitmodules
-cat repo2/.git # (2)
-git switch --force branch1 # (3)error if no submodule update
-----
-
-
-Notice that if one forgets to git submodule update (1) before git switch 
---force branch1, even when using --recurse-submodule, there is no 
-submodule, as repo1.w/repo2/ is empty (2).
-
-It is confusing/unexpected that git switch --force fails and creates a 
-repo1.w/repo2/.git file pointing to the wrong location.
-
-
-As comparison, when cloning a repository and forgetting to do "git 
-submodule update", then "git switch --force branch1" works as expected:
-
-
-
-----
-# create 2 repositories with one commit
-mkdir repo1 && (cd repo1 && git init && git commit --allow-empty -m "repo1")
-mkdir repo2 && (cd repo2 && git init && git commit --allow-empty -m "repo2")
-
-cd repo1
-git submodule add ../repo2 && git commit -m "add submodule"
-git switch -c branch1
-git switch -c branch2
-
-cd ..
-git clone repo1 repo1.c
-cd repo1.c
-git switch branch2
-git switch --force branch1 # works, event without git submodule update
-----
-
-
-
-
-Notice:
-In both cases "git switch" and "git checkout" behave the same.
-Also the parameter "--recurse-submodule" does not change anything.
-
-
-Best
-
-Federico
-
-
-PS: I'm not subscribed to the mailing list (yet), so please keep me in CC.
+ - Emily
