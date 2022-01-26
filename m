@@ -2,156 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D22CC28CF5
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 11:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1800EC28CF5
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 11:39:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233494AbiAZLPg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 06:15:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40974 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240574AbiAZLPc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 06:15:32 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF84C061748
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 03:15:32 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id k18so25136447wrg.11
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 03:15:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=WZZgqP8vsOM0ZwCwqFtht9DnabIP0nvY1EHM0yKPqxo=;
-        b=lbr6bkzkT2R03ffPtxqQALhnT6Wc/f7mR0z/Y0ZeIm0o2o/zFUtU4rVC3rur5FkbCZ
-         QCQYcxgc21r6JNF2LhA1rO4Q0Y5Txc4VHFr8hDmFdS5GF/K6x9NV1dxhZMIx7fRFuQSR
-         ZkYCNrfBn9f9DK4TjgjKOkmyPiOeYKu7DhGiJWQ/1mm4tdkLuKZ3u7ZIW72onshLE1/F
-         NgqfQF3SLvbT1YfogVKh6UNZo76thfNQBwnHtnInJ0aeUbXkNxTIm/L08os1yBUqI71Q
-         wVRrA0IYiDKcgerDnnfWqsUvIW0idaaG+yS5Ik6xIiBKOywHkhPIYnVEWsPtIklLaFFY
-         fcOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=WZZgqP8vsOM0ZwCwqFtht9DnabIP0nvY1EHM0yKPqxo=;
-        b=DQJcC8qZ/05rdUF+mjv+dVwDs9fzDbyW4PPF6Q5nkF8c+7p6c7TyMZO2QX4i4ZgcNE
-         GYmC/U/zmTSN2vn6bMsZa/DOlvNUvltBemelOW7Leh75zqj43bL1hh7yWzHYeWWrk3Tp
-         NheF+Hc0N68cL/bUP2Iuy42D977b7yB+z/17ko2AwzHif9jRgSaLgcfS7xQcPIs8L0EN
-         4qliU4vQmXdXWOF7Wz7EXmbRWtAvcBpt4MWxowYa6iIprlpJnAFglsZZwk0lnx8w/ViZ
-         4b0GRaQRZ3CwxaCisj0J5Yn2bXhP6Tcj34zwbeumXpOn1i1YyjBQqzSG3odcJ/0Anzzy
-         kEjg==
-X-Gm-Message-State: AOAM531eV3GKEyvmf5K/5/5Z3j3BhII+Gv0fbcqRFs/LJ4APLA7HtRw5
-        EZ6+H8uz+jyCn+TDf3yBsWh7VMNz1mE=
-X-Google-Smtp-Source: ABdhPJz0UJnK5b55PyumE8JV4hQNOvetCB26patM9ay25huykb0o8mHvB+4UH0rPjrvb7cqyyxHu0w==
-X-Received: by 2002:adf:ce07:: with SMTP id p7mr22061026wrn.329.1643195730664;
-        Wed, 26 Jan 2022 03:15:30 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bg23sm3692488wmb.5.2022.01.26.03.15.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jan 2022 03:15:30 -0800 (PST)
-Message-Id: <pull.1130.git.1643195729608.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 26 Jan 2022 11:15:29 +0000
-Subject: [PATCH] scalar: accept -C and -c options before the subcommand
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S233864AbiAZLjo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 06:39:44 -0500
+Received: from smtp36.i.mail.ru ([94.100.177.96]:60038 "EHLO smtp36.i.mail.ru"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233852AbiAZLjo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 06:39:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=IBEcwhCcIwQ6CpC3DHsxIotfC+1wLLqEqu1OoYaMyKI=;
+        t=1643197183;x=1643802583; 
+        b=TbnZYkK9e3HL+N5bH9Gz0De5PxQhGWMAmOMp3UCCrbCRtR9L+xrrgfeepgFGwm3nofghx/HUkjTWh14BW90KTsN4e/fzKuQoCBNi29ncxQzQjFzI1en3LLVyQiPhDpIl67INZFfAU/IraWhnwdXGaiV+MPhalqoy0jVF5IwWl1w=;
+Received: by smtp36.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1nCgeL-00089l-Fk; Wed, 26 Jan 2022 14:39:42 +0300
+Date:   Wed, 26 Jan 2022 14:39:39 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Konstantin Khomoutov <kostix@bswap.ru>, git@vger.kernel.org
+Subject: Re: [RFC] shell: local x=$1 may need to quote the RHS
+Message-ID: <20220126113939.cl5pbcous4gmdjri@carbon>
+References: <xmqqsftc3nd6.fsf@gitster.g>
+ <20220125092419.cgtfw32nk2niazfk@carbon>
+ <xmqqa6fjzlm0.fsf@gitster.g>
+ <YfBbRca0Rjl59MM0@nand.local>
+ <xmqqo83zt54a.fsf@gitster.g>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo83zt54a.fsf@gitster.g>
+Authentication-Results: smtp36.i.mail.ru; auth=pass smtp.auth=kostix@bswap.ru smtp.mailfrom=kostix@bswap.ru
+X-4EC0790: 10
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD9AA78FDF62ECAE61F7A922168D8AD45D749A6A71140E6560E182A05F5380850402523AC05B12DA1761C4B0015D62BA5973386EC65677EF86F3D1641AF7F436515
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE77603ADE015AF816DEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637ED2BA022FBF94AB68638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D82717DF19759CDB76C39205D339F44A5A117882F4460429724CE54428C33FAD305F5C1EE8F4F765FCF1175FABE1C0F9B6A471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352033AC447995A7AD1828451B159A507268D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE652FD71AFB96DC7D148812EF9080FC94D8FC6C240DEA7642DBF02ECDB25306B2B78CF848AE20165D0A6AB1C7CE11FEE37812A6222701F2156136E347CC761E07C4224003CC836476EA7A3FFF5B025636E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F7900637AF8E4F18C523FAA9EFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
+X-C1DE0DAB: 0D63561A33F958A540E8F1100AB2125ED36E2BE19B47E81C4824E6BB1378F2BFD59269BC5F550898D99A6476B3ADF6B47008B74DF8BB9EF7333BD3B22AA88B938A852937E12ACA75B742A0F936AD8A56410CA545F18667F91A7EA1CDA0B5A7A0
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D349A401E2B4D763A4A79606FDED788B15D38A6A913B9B336420444EA5DCD2A18FADC24CFD32AC825A11D7E09C32AA3244CB658C71956D6A9F7239271CF8E46477E259227199D06760A927AC6DF5659F194
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojF0Kx79yI7sUfPKivv/MVmg==
+X-Mailru-Sender: 7E479B994E4F3A2CC35291DD34DB74CF04450A1BED1010BF7F34129C9AA2AB13D42F93969D0DF7B72F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Jan 25, 2022 at 09:53:25PM -0800, Junio C Hamano wrote:
 
-The `git` executable has these two very useful options:
+> Taylor Blau <me@ttaylorr.com> writes:
+> 
+>> Yeah; bisecting dash with your example script pointed me at cbb71a8
+>> (eval: Add assignment built-in support again, 2018-05-19), which indeed
+>> appears in v0.5.11 (and all subsequent versions).
+>>
+>> cbb71a8 points at release 0.3.8-15, which predates Git (and a tag
+>> pointing at it was never created, since it's behind the big "initial
+>> import" commit at the beginning of dash.git's history). But skimming
+>> ChangeLog.O, we see:
+>>
+>>     * Removed assignment builtins since it is at best undefined by the
+>>       SuS and also can't be implemented consistently.
+>>
+>> So this probably didn't work at all between that 0.3.8-15 up until v0.5.11.
+[...]
+> So here is a bit wider "grep" output, looking for
+> 
+> $ git grep '^[ 	]*local[	 ].*=' \*.sh
+> 
+> to reject _any_ assignment on the same line as "local", but I
+> manually excluded the ones that are not meant to be run with dash.
+> I obviously excluded the one in t0000 (try_local_xy) that is a
+> weather-balloon for this exact issue.
+> 
+> According to this thread, these would not work correctly on dash
+> older than 0.5.11 and needs fixing by splitting declaration of
+> variables as locals and assignment of their initial values.
 
--C <directory>:
-	switch to the specified directory before performing any actions
+By the way, back then when Debian and Ubuntu were switching running their
+system scripts from bash to dash (which bought definite speedups), many
+scripts had to get rid of bashisms, and this page [1] summarizes quite many
+differences between these shells including handing of `local`.
+To cite it:
 
--c <key>=<value>:
-	temporarily configure this setting for the duration of the
-	specified scalar subcommand
+| Dash (old versions maybe?) and (at least) bash do not handle local the same:
+|
+| -    local a=5 b=6;
+| +    local a=5;
+| +    local b=6;
+|
+| The first line in /bin/bash makes a and b local variables. And in /bin/dash
+| this line makes b a global variable! 
 
-With this commit, we teach the `scalar` executable the same trick.
+Not sure it lists a possible problems our test harness also has but wanted to
+give a heads-up anyway just in case.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    scalar: accept -C and -c options
-    
-    This makes the scalar command a bit more handy by offering the same -c
-    <key>=<value> and -C <directory> options as the git command.
+ 1. https://wiki.ubuntu.com/DashAsBinSh
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1130%2Fdscho%2Fscalar-c-and-C-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1130/dscho/scalar-c-and-C-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1130
-
- contrib/scalar/scalar.c   | 22 +++++++++++++++++++++-
- contrib/scalar/scalar.txt | 10 ++++++++++
- 2 files changed, 31 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-index 1ce9c2b00e8..7db2a97416e 100644
---- a/contrib/scalar/scalar.c
-+++ b/contrib/scalar/scalar.c
-@@ -808,6 +808,25 @@ int cmd_main(int argc, const char **argv)
- 	struct strbuf scalar_usage = STRBUF_INIT;
- 	int i;
- 
-+	while (argc > 1 && *argv[1] == '-') {
-+		if (!strcmp(argv[1], "-C")) {
-+			if (argc < 3)
-+				die(_("-C requires a <directory>"));
-+			if (chdir(argv[2]) < 0)
-+				die_errno(_("could not change to '%s'"),
-+					  argv[2]);
-+			argc -= 2;
-+			argv += 2;
-+		} else if (!strcmp(argv[1], "-c")) {
-+			if (argc < 3)
-+				die(_("-c requires a <key>=<value> argument"));
-+			git_config_push_parameter(argv[2]);
-+			argc -= 2;
-+			argv += 2;
-+		} else
-+			break;
-+	}
-+
- 	if (argc > 1) {
- 		argv++;
- 		argc--;
-@@ -818,7 +837,8 @@ int cmd_main(int argc, const char **argv)
- 	}
- 
- 	strbuf_addstr(&scalar_usage,
--		      N_("scalar <command> [<options>]\n\nCommands:\n"));
-+		      N_("scalar [-C <directory>] [-c <key>=<value>] "
-+			 "<command> [<options>]\n\nCommands:\n"));
- 	for (i = 0; builtins[i].name; i++)
- 		strbuf_addf(&scalar_usage, "\t%s\n", builtins[i].name);
- 
-diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-index f416d637289..cf4e5b889cc 100644
---- a/contrib/scalar/scalar.txt
-+++ b/contrib/scalar/scalar.txt
-@@ -36,6 +36,16 @@ The `scalar` command implements various subcommands, and different options
- depending on the subcommand. With the exception of `clone`, `list` and
- `reconfigure --all`, all subcommands expect to be run in an enlistment.
- 
-+The following options can be specified _before_ the subcommand:
-+
-+-C <directory>::
-+	Before running the subcommand, change the working directory. This
-+	option imitates the same option of linkgit:git[1].
-+
-+-c <key>=<value>::
-+	For the duration of running the specified subcommand, configure this
-+	setting. This option imitates the same option of linkgit:git[1].
-+
- COMMANDS
- --------
- 
-
-base-commit: ddc35d833dd6f9e8946b09cecd3311b8aa18d295
--- 
-gitgitgadget
