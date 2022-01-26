@@ -2,83 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AFBFC2BA4C
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 06:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A7C6C28CF5
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 07:00:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234492AbiAZGDa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 01:03:30 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56937 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234275AbiAZGD3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 01:03:29 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id ED360171C22;
-        Wed, 26 Jan 2022 01:03:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=mYnZRaWT1UeVVKvdz9qb5SYbUT2P7JpuKDJOniSqD5A=; b=NGkC
-        CGa8eQ+sDkNkyHAUKkx5NGTw5KmBQD8SKOXhTokqXsJew+iZeV8QS3zj7uHKf2+B
-        qcGrhNAJXqahnbrYUzdBvbZaVAHU4tu+FgJ/lxnRiyA1xmy4WWJVfOUZBVeP9+T9
-        5eCh8a8F3P5Uzm5UQ0EdHisUFShSkEx0zqdjRBo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E600E171C21;
-        Wed, 26 Jan 2022 01:03:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 61778171C20;
-        Wed, 26 Jan 2022 01:03:26 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Josh Steadmon <steadmon@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] clone, submodule: pass partial clone filters to submodules
-References: <50ebf7bd39adf34fa4ada27cd433d81b5381abe5.1642735881.git.steadmon@google.com>
-        <xmqqsftgbkvm.fsf@gitster.g>
-        <CABPp-BE2B9NkWG8bWft6m-UOg66aRpjwSRTWvAyrKCiwJCemHQ@mail.gmail.com>
-Date:   Tue, 25 Jan 2022 22:03:25 -0800
-Message-ID: <xmqqilu7t4nm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237534AbiAZHAF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 02:00:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37760 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237537AbiAZG7x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 01:59:53 -0500
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFFDBC061744
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 22:59:52 -0800 (PST)
+Received: by mail-pg1-x52b.google.com with SMTP id h23so20343343pgk.11
+        for <git@vger.kernel.org>; Tue, 25 Jan 2022 22:59:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=dLTDyxqtjY4t/uhtPCwNlIXoWkblxxKWlv7XjnLdgQw=;
+        b=BYlOW/YA1v/zZu4z5CHiWNX2w4a5hHJFGDnDj7LTNJlHgxYBGX5So/dFGw98CZ4Rug
+         xRAVnsc/6Hyoij9hp5MEcf1tv0CTEAQY26pQcNvB2APhjWHBA9pLGbd/HN3BllGKlO2O
+         PlT6YOUEmppis6LATFYz0ZGpxJa6LrgrlBjGrFo1JLaU4VKgh6Yl7QYvo4PKOL1FaLMj
+         hT3CRrRwGJdzIGmQGEuFk5qOevZ/mJk0Pedpjk7u38IkGElgy5i1kcrkBNYlWeBj5uMg
+         jHhwlkqD37rxmmVfAfVMV6WKHQTf+bDJW4t7C4OKPHlExqnRMEFtgXmhAfl5iucpPLCZ
+         7eLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=dLTDyxqtjY4t/uhtPCwNlIXoWkblxxKWlv7XjnLdgQw=;
+        b=b5hiic+SyC0anLirvAznXRFZ2FHfnCTV3DD2ZQRg/JYgFBMl0eG3Pxw+j3UI3dFHXL
+         2VGZhxvU+IQ6EDOTEnizMi5p1ZLBE45rXRP0JWt2DNMDZDd9M0jbTlCdDKrku4bOaSIt
+         oItDJDNA8kwm/HKZ5+KATS7tK3Nvpv7o/DZn8lq8fYEwyELbg9KXXSlRwbJpgHZW6Ohw
+         RlUoFDjz5rXAvDogz0L/SuGAq+wz+4u+lEGEcXa3WAnj8cxIeuiTr1rpJT/AQI8+YsMb
+         Wd+SgRRSm/OQ0p3yt0XfugHKdMc03w5y0n2NCdbXCk38p4AFcvoe29RygttmkOc5oHqj
+         SThg==
+X-Gm-Message-State: AOAM531Ayqc96d8Hbwa/0nkoIbI09F+LYhyJ5bTxC/yvZtscb4PfV+aM
+        Ecohj05ybi2541rtih6MUGfUZVRmK+U=
+X-Google-Smtp-Source: ABdhPJwemaXq6VL/B/Yc2n2S4+39SkWjSqkT1E40FDEzYflYIQ3fq2ZfTghXmK5YoWkwDTE/VSOB4g==
+X-Received: by 2002:a63:a619:: with SMTP id t25mr18066670pge.235.1643180392370;
+        Tue, 25 Jan 2022 22:59:52 -0800 (PST)
+Received: from [192.168.43.80] (subs03-180-214-233-28.three.co.id. [180.214.233.28])
+        by smtp.gmail.com with ESMTPSA id l20sm1025934pfc.53.2022.01.25.22.59.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Jan 2022 22:59:52 -0800 (PST)
+Message-ID: <0e8ef47b-7bb7-df38-1d97-90fda4471bbb@gmail.com>
+Date:   Wed, 26 Jan 2022 13:59:46 +0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AD354A12-7E6D-11EC-A3BF-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v4 1/5] Documentation: add extensions.worktreeConfig
+ details
+Content-Language: en-US
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     stolee@gmail.com, sunshine@sunshineco.com, allred.sean@gmail.com,
+        gitster@pobox.com, Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com>
+ <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com>
+ <459e09dedd71fcb64b9796bac52c3812d78f2405.1643136134.git.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <459e09dedd71fcb64b9796bac52c3812d78f2405.1643136134.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On 26/01/22 01.42, Derrick Stolee via GitGitGadget wrote:
+> As documented in 11664196ac ("Revert "check_repository_format_gently():
+> refuse extensions for old repositories"", 2020-07-15), this extension
+> must be considered regardless of the repository format version for
+> historical reasons.
+> 
+...
+> +For historical reasons, `extensions.worktreeConfig` is respected
+> +regardless of the `core.repositoryFormatVersion` setting.
 
-> But how would that interact with this patch?  There's a bit of a
-> conflict.  There's a few ways out:
->   * Make your change be explicit rather than implicit: Based on
-> Junio's first concern, you could modify this patch so that it requires
-> a new flag like --filter-submodules-too (or some better name), and
-> perhaps folks with a path filter just wouldn't use that.
+This implies `extensions.worktreeConfig` become integral part of every
+repository format version, from the past until now and to the future,
+right?
 
-I would very much prefer this, given that this is a change of
-default proposed by those who want a different default than the
-status quo, even without the "how would we know it is sensible to
-just pass down any and all filters?" issue.
-
->   * Make these incompatible: Maybe a path filter is incompatible with
-> --recurse-submodules, and we should throw an error if both are
-> specified.
-
-Perhaps.  Or automatically filter out such an incompatible ones, but
-of course, that would mean submodules are made less filtered than
-top-level which is usually the other way around.
-
->   * Attempt to marry the two options: Each submodule could perhaps
-> extract the subset of paths with itself as a leading directory and
-> remove that leading prefix and then use that as the path portion of
-> the filter.  (And perhaps even taking this a step farther: each level
-> of cloning will only recurse into submodules which match the specified
-> paths).
-
-Yup, for some filters, passing them down may have a "natural"
-translation, similar to adding the prefix to a pathspec element.
-It would probably depend on the filter if there is such a natural
-translation even exists, though.
+-- 
+An old man doll... just what I always wanted! - Clara
