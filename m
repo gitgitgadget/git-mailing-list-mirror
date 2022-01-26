@@ -2,68 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC70CC2BA4C
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 15:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D554C28CF5
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 15:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242512AbiAZPCp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 10:02:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38560 "EHLO
+        id S242541AbiAZPEY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 10:04:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242584AbiAZPCn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 10:02:43 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AC4CC06161C
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 07:02:43 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id u24so23307054eds.11
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 07:02:43 -0800 (PST)
+        with ESMTP id S235639AbiAZPEX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 10:04:23 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB429C06161C
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 07:04:22 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id p15so39651385ejc.7
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 07:04:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=v9iG997ocsLdy44q7nhj5Tinhl1b8J5+r9L4yY/7qHk=;
-        b=oS9w6211omwxJLtsMi1j42Oz3r8ejJq+HXuF0j/lK9lTaF9Q0xqTjzN53pxLbNdbtQ
-         xHZ0/GBQzTe1CrgB+QDuAJ60jtjN7JvyH5NHilK/zNkojtBaJb1AKdAW7sAlGbZFfv2w
-         y37tJ3VJOCH7Eb3EDeXs2fy6Si965HWfL5MAAY5RkB9XqyVk71V5RSYdpsJ/ihjxO1BF
-         EkktnMwlf+xTZckpPUH28qxF07VXGaXU46lTgzXwuXNjoescnvyD08RRVRmfI3IsiNqL
-         k8zefoJwgi25VV9430IxsIyGQME0XPHtYGQjfffqqJpNlhH1CylfEmMXJVv6nngQEw7n
-         rPcg==
+        bh=OCYhnosqNwMdThAduX2uXGcPNFSinPzP3+x7opv7azY=;
+        b=NqSmV5PfRFlM9LsEjvjFL/tAcdn2RGbG+bbhb+Tp5xD9tzMEYo43juZY4CvQrMwKuF
+         Dxr5htBjUWNSUsv4KZmonfBr7btwrqkZ/nnVD4NKYFxtzgJE8rU/QOvnN4PLOXxCbHuv
+         P2pkK5ImMS4jBDb63+ivkQQEy+vgCfPUDhiWbLk5VSh/nBXIK0QM3Ew4eogKLuptlAyh
+         o1CJYR45o0I6KWyOxT1+FRJKihYgA8kyPL9LLYn+W0PBEqlB3UZoepVc1rR4FX6wjDPu
+         Bu2E4QmU4CX0S67lpPSUXmP/wMUvQzHMtHGldDzmoUQmDJwdatvX+0cjHsKhogJ/ScfM
+         jOmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=v9iG997ocsLdy44q7nhj5Tinhl1b8J5+r9L4yY/7qHk=;
-        b=PlfFxJFfh9rsHDVrEoERBsz6OVPXjcCFY/q8u4CScc+ORke2hhb6Y95vB8VakJAiuz
-         Kv59ZDPbOmEGtwkdvdGwj+NGQBSlyK8cUIWq2FI23t94u9WcIRIVVluuykjQVqIaAh5O
-         cAMjypRT+y1CdPENJPn5i9LIyCRiTpHreBQAp9zkHr0k79sqh76j20DHc0OGWnE3J8aO
-         BOfbbR5Wl1fSTmwCS/eZT1G3bJXNSU4u/+6oyfdjxfGvNpPA/uJH/6CU+hJ+Pr/aRVfw
-         LNEKVMcfYE5WPx5oXe7ClTXrhhORKb2CfRFiX2HHR15YNO41G1yJUw7yxJbtqRlX64fF
-         FJmg==
-X-Gm-Message-State: AOAM533MBkQD0g2dHv2wduwlrUoK6RpDLHBBwYSORUYGLaCvS50TouVO
-        rfPGKbOJJsdqIHcnlUfRtPc=
-X-Google-Smtp-Source: ABdhPJxt6EbDJZZ/+WXM3bwqeGb/QuY4WDQm01C3vZ4Fs9dUTp+6BMCk+3OiACnn28pF0I04BFr6cw==
-X-Received: by 2002:a05:6402:40cb:: with SMTP id z11mr17314760edb.127.1643209361788;
-        Wed, 26 Jan 2022 07:02:41 -0800 (PST)
+        bh=OCYhnosqNwMdThAduX2uXGcPNFSinPzP3+x7opv7azY=;
+        b=rt1fu6r2TldbSH+Q8xIL99Adj0mnQp7wWVuIvMrqOvoGMziQR0oFYiaEbASjh5jYvh
+         k1rjvsOy4EvZSfeAk/azBI0nm4wbBZL8HhTtzhwJB8tVxLNzieXFjy3dcbCLjC1ttxl0
+         XFpe1IKXxaiLPJ6Bciwe3R0uq5/1ApBacMCPfflttBJD5HaVvzgg7gA0iNwrRTQ9uiVm
+         zSA60HM3XD0P4znvlfjikPUtGYJhEssw/d+jvDKeD4jD7Kifo3uJMl2jkisQR5dRZIKR
+         KH0R1lT+AGEzj4XZcTyTEnpI8IClnzK0WLfdYniIg9pkqmbYkF/rjXR9TQkESfkA+D3B
+         gB3g==
+X-Gm-Message-State: AOAM530PxVynSBMyVm3WZETqctw4aEIf+LBj4aw/TVkbRnLJeLbXbr3u
+        Sjy9BsnbOOwYS8xqDAivHpI=
+X-Google-Smtp-Source: ABdhPJwGDzRSMKQKFQHxuM5f/E7mgCY8b1kq38ZfBojVSxiQlDf4Z+glXaJC4N4iE+MubDiwYRrICQ==
+X-Received: by 2002:a17:907:8687:: with SMTP id qa7mr5187290ejc.328.1643209461324;
+        Wed, 26 Jan 2022 07:04:21 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g6sm5336512ejz.170.2022.01.26.07.02.41
+        by smtp.gmail.com with ESMTPSA id s12sm7484641ejx.184.2022.01.26.07.04.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jan 2022 07:02:41 -0800 (PST)
+        Wed, 26 Jan 2022 07:04:20 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nCjom-003AAx-Mm;
-        Wed, 26 Jan 2022 16:02:40 +0100
+        id 1nCjqO-003ADs-6z;
+        Wed, 26 Jan 2022 16:04:20 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com,
         stolee@gmail.com
-Subject: Re: [PATCH v4 1/9] t5326: demonstrate bitmap corruption after
- permutation
-Date:   Wed, 26 Jan 2022 16:01:20 +0100
+Subject: Re: [PATCH v4 3/9] pack-revindex.c: instrument loading on-disk
+ reverse index
+Date:   Wed, 26 Jan 2022 16:03:50 +0100
 References: <cover.1638991570.git.me@ttaylorr.com>
  <cover.1643150456.git.me@ttaylorr.com>
- <7ea9cced8ec79a8e39948a5e4b8dde6e9b54695a.1643150456.git.me@ttaylorr.com>
+ <abc18613e04a3bb8571926cb653296fe6b49cc60.1643150456.git.me@ttaylorr.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <7ea9cced8ec79a8e39948a5e4b8dde6e9b54695a.1643150456.git.me@ttaylorr.com>
-Message-ID: <220126.8635lafskv.gmgdl@evledraar.gmail.com>
+In-reply-to: <abc18613e04a3bb8571926cb653296fe6b49cc60.1643150456.git.me@ttaylorr.com>
+Message-ID: <220126.86y232edxn.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -73,16 +73,33 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Jan 25 2022, Taylor Blau wrote:
 
-> +test_expect_failure 'changing the preferred pack does not corrupt bitmaps' '
-> +	rm -fr repo &&
-> +	git init repo &&
-> +	test_when_finished "rm -fr repo" &&
+> In a subsequent commit, we'll use the MIDX's new 'RIDX' chunk as a
+> source for the reverse index's data. But it will be useful for tests to
+> be able to determine whether the reverse index was loaded from the
+> separate .rev file, or from a chunk within the MIDX.
+>
+> To instrument this, add a trace2 event which the tests can look for in
+> order to determine the reverse index's source.
+>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  pack-revindex.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/pack-revindex.c b/pack-revindex.c
+> index 70d0fbafcb..bd15ebad03 100644
+> --- a/pack-revindex.c
+> +++ b/pack-revindex.c
+> @@ -301,6 +301,9 @@ int load_midx_revindex(struct multi_pack_index *m)
+>  	if (m->revindex_data)
+>  		return 0;
+>  
+> +	trace2_data_string("load_midx_revindex", the_repository,
+> +			   "source", "rev");
+> +
+>  	get_midx_rev_filename(&revindex_name, m);
+>  
+>  	ret = load_revindex_from_disk(revindex_name.buf,
 
-Nit: The initial "rm -fr" isn't needed here, and we should aim to have
-tests clean up after themselves, not needing to clean up after other
-tests.
-
-This appears to have been copy/pasted from the test you added in
-54156af0d66 (t5326: test propagating hashcache values, 2021-09-17),
-which needlessly used that pattern, the tests you added preceding it
-follow the "clean up your own mess" pattern.
+IMO easier to read/reason about if squashed into 5/9, where it's first
+used, or at least re-arrange it so that 4/9 isn't between the two...
