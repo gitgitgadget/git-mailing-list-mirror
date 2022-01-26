@@ -2,126 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 366EEC28CF5
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 14:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7629BC28CF5
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 14:37:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241962AbiAZOND (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 09:13:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54944 "EHLO
+        id S242213AbiAZOhL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 09:37:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241954AbiAZONC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 09:13:02 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F582C06161C
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 06:13:02 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id b13so69343504edn.0
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 06:13:02 -0800 (PST)
+        with ESMTP id S242210AbiAZOhH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 09:37:07 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FAEAC06173B
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 06:37:07 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id d138-20020a1c1d90000000b0034e043aaac7so1280945wmd.5
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 06:37:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=QWOKVAWuVzBoMuYqr9aJDp7x3YdffLYPSb/WqcuLzc8=;
-        b=pcm6XuSHHRP87uB5KNtsxLCPPsQuAVG3qw49XLBH7mmuRW/rsXTWS+UYlg59yTzv17
-         z0PZ7il4Kbz4AyUP/HUvBID185mA3mLUVhHDqffbC/AExODIzRQWH64R90YNL9xsspXC
-         RyFwq3tQDeEvjey99f8kAK/4/INUMpuP/qbf4CcXYvcppxA6yimq2cXmC4lQYP3L4izG
-         wTNeieJxYjag76xQXpn8nNeqw4petRbuzGkHZlmQe6RUzwWGDvsIvgOV5QMj4bmlLnze
-         HsIHzm6RiGw9AJSgc7inR17zPKizudrD1wyeSVSU4Vr1w2VHzHGuPflb6TEi3FQ+Cbee
-         zDrw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=K6g0wjx5Ea9Q2YLh2kpjuhQ4eDx0XpDJiZXNvFHaxiA=;
+        b=apR1jsP590TVT7mkBcmBWqi58EwFmgHlYz1w3K80Q15RgRMENWCtg5wxlCO24qMgXY
+         8m6vI9YN5TH+5plcCu91ow0F2mudZ3cV424ZBJvR3zvCtSIDs5NexFPhn5g5PQKdxAc3
+         tKvEYGkiR0YWCKcx8/GlwCdBAbpt6oaRdwSpZIT/atBh5cdjBxq/d37SyOowjP20obL5
+         FC9EJBhIxDtXxjhSQMbfHEurRNRnmRlhpXYpS0kacB2wM2UEPmzHf1tpQRWAfxmSdEzN
+         1GZIn0DhCigIH4BSozQfEgw0VOsP1UCqJjMtXS9b7Oiu1FuEnF5DQlANlKR5lczfz1xQ
+         reng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=QWOKVAWuVzBoMuYqr9aJDp7x3YdffLYPSb/WqcuLzc8=;
-        b=Wq72tByBXICrv+ab8LShS+Ejsz0Qd+yWNDuFMOVzVjX8I02j9NUSCoCkoOIteGJ7Ac
-         66hNkd46lepZWslspd5fQ9N3PwkK2cCw9mhkY9tFEoWv6TISwc+oathUair4vRGc94B/
-         ZNDYtuNKHTVuvXfV+hzsk2bilshD0adVWnmegIAMj0m4/YvvLZ3zZIMZAyUhovICYyqd
-         qBkPT1l0PfnUNd78qZGCUItB6q7ZPTbU9tIlgAXH928c60En9kny1DoWNxE7+JlSP7Oh
-         kb9ZKuTWs19l0s2isHFQGVr+N63IifqLlocqYRmFrEU07+xdodklDflCMCzgHRpMaRT7
-         TbQQ==
-X-Gm-Message-State: AOAM533/hSQYoTfOfkWbbkFAFiJLlxYZ5qqqc2cZqd+n9C/BeW8/Fhce
-        vE7jNMn8YxXjHIX5me5hT/GIOXtdEdU=
-X-Google-Smtp-Source: ABdhPJzF7b8R8HzgiX+Sr2NugbQgCBy7mAkzI2zZO7xAP1ZY8+FDBfe+zN4uYd5B56n7X7Vvd796hA==
-X-Received: by 2002:aa7:d3c2:: with SMTP id o2mr25668888edr.207.1643206380810;
-        Wed, 26 Jan 2022 06:13:00 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id h19sm3512114edv.90.2022.01.26.06.13.00
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=K6g0wjx5Ea9Q2YLh2kpjuhQ4eDx0XpDJiZXNvFHaxiA=;
+        b=OhFQB6VUYmiFbZojujBGLOolIXGN/nkHwTZOINv5aG05IcFGUSYTaVBbTP2HRYVXA8
+         g+afuP220/CQ958Ph6KDZ5ghW/YC478x/CBKLzeo5GneIFyAZ/xAF0dQpbNLsCEuolHp
+         TWjHDzr+526LM+5gLIE/4puPkyiXld/7zQ0HkocvFdD0O22L7aHd2lV6yfHhN3AxmCkx
+         mMZ0cskKWPGEW58acTGaqkHwiUHc96V7+isZ60ANNQKzFZOgWMfjR7SZ8wozyQ2/1eKO
+         F5ODe3WsbhCd5IXPK07M011EJBSf0NPjWWqR13XdS1H7yUCizmx0ICs6ke6+zQQvnxFj
+         BP2g==
+X-Gm-Message-State: AOAM532I9ORVLVwVmCgqIazwxvGLtwIQqCRnG9D2ugSy1WnPYEmuJG+L
+        9eJRxQUn5q8A+qhlLoFVth9IQ9awP3ksZQ==
+X-Google-Smtp-Source: ABdhPJxwnFX3AFBwNlTQclCx34MltG5H45Zt4hIDNr5RGQ3wq02qd91DIm1/8GecinGiYwpIbRlsBA==
+X-Received: by 2002:a7b:cf23:: with SMTP id m3mr7613446wmg.146.1643207825773;
+        Wed, 26 Jan 2022 06:37:05 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id x4sm21015294wrp.13.2022.01.26.06.37.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jan 2022 06:13:00 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nCj2h-0038r6-Je;
-        Wed, 26 Jan 2022 15:12:59 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        gitscale@google.com
-Subject: Re: Submodule UX overhaul update (was: What's cooking in git.git
- (Jan 2022, #07; Mon, 24))
-Date:   Wed, 26 Jan 2022 15:09:19 +0100
-References: <xmqq35lc53e9.fsf@gitster.g> <YfBTRuPrGGjepe+D@google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <YfBTRuPrGGjepe+D@google.com>
-Message-ID: <220126.867damfuvo.gmgdl@evledraar.gmail.com>
+        Wed, 26 Jan 2022 06:37:04 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 1/2] sequencer: don't use die_errno() on refs_resolve_ref_unsafe() failure
+Date:   Wed, 26 Jan 2022 15:37:00 +0100
+Message-Id: <patch-v4-1.2-7f31277fd57-20220126T143427Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.0.890.g96f29f9df61
+In-Reply-To: <cover-v4-0.2-00000000000-20220126T143427Z-avarab@gmail.com>
+References: <xmqqo84gu4sb.fsf@gitster.g> <cover-v4-0.2-00000000000-20220126T143427Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Change code that was faithfully migrated to the new "resolve_errno"
+API in ed90f04155d (refs API: make resolve_ref_unsafe() not set errno,
+2021-10-16) to stop caring about the errno at all.
 
-On Tue, Jan 25 2022, Emily Shaffer wrote:
+When we fail to resolve "HEAD" after the sequencer runs it doesn't
+really help to say what the "errno" value is, since the fake backend
+errno may or may not reflect anything real about the state of the
+".git/HEAD". With the upcoming reftable backend this fakery will
+become even more pronounced.
 
->> * ab/config-based-hooks-2 (2022-01-07) 17 commits
->>   (merged to 'next' on 2022-01-19 at 594b6da22c)
->>  + run-command: remove old run_hook_{le,ve}() hook API
->>  + receive-pack: convert push-to-checkout hook to hook.h
->>  + read-cache: convert post-index-change to use hook.h
->>  + commit: convert {pre-commit,prepare-commit-msg} hook to hook.h
->>  + git-p4: use 'git hook' to run hooks
->>  + send-email: use 'git hook run' for 'sendemail-validate'
->>  + git hook run: add an --ignore-missing flag
->>  + hooks: convert worktree 'post-checkout' hook to hook library
->>  + hooks: convert non-worktree 'post-checkout' hook to hook library
->>  + merge: convert post-merge to use hook.h
->>  + am: convert applypatch-msg to use hook.h
->>  + rebase: convert pre-rebase to use hook.h
->>  + hook API: add a run_hooks_l() wrapper
->>  + am: convert {pre,post}-applypatch to use hook.h
->>  + gc: use hook library for pre-auto-gc hook
->>  + hook API: add a run_hooks() wrapper
->>  + hook: add 'run' subcommand
->> 
->>  More "config-based hooks".
->> 
->>  Will cook in 'next'.
->>  source: <cover-v6-00.17-00000000000-20211222T035755Z-avarab@gmail.com>
->> 
->
-> Very excited to see this one go in and looking forward to the next set!
-> By the way, this reduced the number of patches Google is carrying
-> internally on top of 'next' from 46 to 29. :) (All but 7 of those are
-> the rest of config-based-hooks.)
+So let's just die() instead of die_errno() here. This will also help
+simplify the refs_resolve_ref_unsafe() API. This was the only user of
+it that wasn't ignoring the "failure_errno" output parameter.
 
-Good to hear, I'm waiting on Junio to merge this down, and will then
-submit the next step in the config-based hook conversion.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ sequencer.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-> It might seem slightly selfish for me to include config-based-hooks in
-> the "submodules update" letter, but this is actually very important for
-> submodules too - without config-based hooks, we don't have a good way to
-> distribute a hook across an entire Git superproject-and-submodules
-> codebase. With config-based hooks + "config.superproject" shared between
-> the submodules and superproject, this becomes a very easy story :)
-
-I'm probably missing something, not that config-based hooks aren't great
-& all that, but for this specific use-case wouldn't core.hooksPath work?
-I.e. to simply set that in the submodules to the superproject's
-.git/hooks directory?
-
-That could even be done with the includeIf + include.path mechanism to
-apply to all projects below a certain path, which presumably is similar
-to how it would work with config-based hooks.
-
-Obviously the full config-based hook mechanism is much nicer, I just
-wonder if it's something you can use as a transitory mechanism until
-then.
+diff --git a/sequencer.c b/sequencer.c
+index 6abd72160cc..03cdf548d72 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1281,7 +1281,7 @@ void print_commit_summary(struct repository *r,
+ 	struct strbuf author_ident = STRBUF_INIT;
+ 	struct strbuf committer_ident = STRBUF_INIT;
+ 	struct ref_store *refs;
+-	int resolve_errno;
++	int ignore_errno;
+ 
+ 	commit = lookup_commit(r, oid);
+ 	if (!commit)
+@@ -1333,11 +1333,9 @@ void print_commit_summary(struct repository *r,
+ 
+ 	refs = get_main_ref_store(the_repository);
+ 	head = refs_resolve_ref_unsafe(refs, "HEAD", 0, NULL, NULL,
+-				       &resolve_errno);
+-	if (!head) {
+-		errno = resolve_errno;
+-		die_errno(_("unable to resolve HEAD after creating commit"));
+-	}
++				       &ignore_errno);
++	if (!head)
++		die(_("unable to resolve HEAD after creating commit"));
+ 	if (!strcmp(head, "HEAD"))
+ 		head = _("detached HEAD");
+ 	else
+-- 
+2.35.0.890.g96f29f9df61
 
