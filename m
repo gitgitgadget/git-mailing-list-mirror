@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1AB6C28CF5
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 13:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04230C2BA4C
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 13:06:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237612AbiAZNGU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 08:06:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38608 "EHLO
+        id S237978AbiAZNGV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 08:06:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236988AbiAZNGG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 08:06:06 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8331C061771
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 05:06:03 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id e8so23879943wrc.0
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 05:06:03 -0800 (PST)
+        with ESMTP id S237450AbiAZNGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 08:06:11 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 983FBC061774
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 05:06:04 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id u15so25702577wrt.3
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 05:06:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lcKW21KfIFpmvlE4yMQWb+ek/SqePBY3AOIEy94txuU=;
-        b=oAKsV/oN2FfXmApHsSZscoy+f9Yk2JXlvZHGRdcYAHG+76KVbDPkkFcEVG7AkAgnfX
-         3ah4c2kTNZwxjnZt6BQuHPGQ/N/CnhCTdmF1GK772Gz4RrFoM4LY5YqEB0HJuztHXnnQ
-         D1k0xS8OKc2vsvny6CudO+JuTqJMurNpjQkLeM2BcadlUpVfsGiWOeykjHa8YBUs73B2
-         S2iQW5Y49fuXwLxZEAePq67UbUM7tN9Vx7TQyUo4ii2i4l8J7gqJ0O5kieASK7xynHUp
-         R2une7OjTvMG/gwcHG8yDz+VyAhP66uP+IvIYCHw80zMUCRdc0Ccz3DByvXL+bYHg6JH
-         cR2g==
+        bh=ieTmdmFrQ3TWBhksR7eaDCc6S5DicVx4i30sMnKFuC4=;
+        b=RM5Rh+oxLQhcw7OGQYn1F2b4VAOTbAeIr6GbyoR+Sr4qXFtyj8GN9ztbfM1rPvMevP
+         KblqqDH7Ydy2XPd9dx6O3/z9uxtRI+Woq4v81BFjkhNMY12vAm0QzZvY9ElZjGNh2XdI
+         6ZyDTKrOOOWEJcXLtpwWtS4Tk7uPp3UZr/v3yt5l7dnx9DCUtZTKGJD/1AFYRW/eF98F
+         i9NguS79LUVnhvRDi6kdpW8+EVXHetrqeZVuTcPL9Z/mPdgzCZXG/cs70fImtFtIxBQF
+         YXGkF10vCwsgXDL39+GYWt7n1omEydtHf2KBvtHmFXg8kSwmiwYiWQu6eggyaAlczAw6
+         PhOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lcKW21KfIFpmvlE4yMQWb+ek/SqePBY3AOIEy94txuU=;
-        b=yI/LIT4DHaOOVsnbBCjtk5i1ZMYd7qGBJQQsrbAL3rvYEeSHpsFYMi7zR4SJjAGCkm
-         4R0D2PMUiSNxslO9IgvFfDrOd3W+wmDRGmtDgx5d2EIYl16ahapWdqd/v0I7TlpUbsd0
-         7F9pphHLPVFZfbq6PEFz0qjE0spnewRdZZ6NMCIiSZVXWujb24HMR5gVgq15p3wUUGda
-         TZOJ1+/YKXgIAuTFjduVyRBtNSZolM1Iy7oDS2UmePNt65eymGOfgPPeQJtWdcMoKMws
-         tTr2mfW71q4mizPwxfcrBCdaM0kiL90m5mjyfw0vfu+96FNRYmsTyzhX6NUbZ165Cvv1
-         ag9A==
-X-Gm-Message-State: AOAM530c9tublYkVaw8oVvM8m+NkB9odgAgjgANTcbz6dRiB8x5MKZC0
-        +Rcc9JqFmRRi/8TBts2ILb5XDue2hoI=
-X-Google-Smtp-Source: ABdhPJwhcXZFJjSA1h/8s19DzF1b0q6qXHUPmk1YBwvaG+47Fl46JET/Zn2gLZm6+Of6m4pF8us3rQ==
-X-Received: by 2002:a05:6000:2c8:: with SMTP id o8mr17686613wry.393.1643202362299;
-        Wed, 26 Jan 2022 05:06:02 -0800 (PST)
+        bh=ieTmdmFrQ3TWBhksR7eaDCc6S5DicVx4i30sMnKFuC4=;
+        b=ytB+HMABBJl6yJUYY2+3fslKq7f4oyJN7O2bOiFHUnFFkL/hdJOPs3iEBS30aoWePh
+         oZFhoaoUnVLYoJp7mQn9+qXbdbIUe9+5Xztra+oXUgGbpU3eNK/HwpNjh0bbwMfoEudR
+         qHSawic0S4PJlMbU5bu1fbvbfaT1hO501br9X5HpHCY4kE1l7BRjqgZx3D6y3ujoQEWH
+         f50nWwC7l0lnnxzkWlHkfacpoJyPTClf7fUzc1ssEtiKrda47JG6RcjSxyq2whyB0Dn8
+         grMNDczOZM6lfMIxhCaxgZOoL0QtIi7YAoNDsBZYywClIY7iBRwC14pbQ0b/BZ87OfQO
+         3miQ==
+X-Gm-Message-State: AOAM533U1NW9DdXpcNKjfAeIE7fvM1zIbufrnzDRdlPZQldqZOF7z7ng
+        IiP7JR/UPsTyayID7Wof2GpUJGNsgyY=
+X-Google-Smtp-Source: ABdhPJzhZxf5gTnnVrEY7cphrR8h2hSGTE3XXyV8g4ff44yFtqsfJ/jVCZns2TEjUfYxK42wCYmAVA==
+X-Received: by 2002:a05:6000:2c6:: with SMTP id o6mr11109811wry.660.1643202363048;
+        Wed, 26 Jan 2022 05:06:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m8sm10533146wrn.106.2022.01.26.05.06.01
+        by smtp.gmail.com with ESMTPSA id u9sm2962593wmc.11.2022.01.26.05.06.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jan 2022 05:06:01 -0800 (PST)
-Message-Id: <0ef0e9781127df7485069c6e84786b08d4841422.1643202349.git.gitgitgadget@gmail.com>
+        Wed, 26 Jan 2022 05:06:02 -0800 (PST)
+Message-Id: <9b9560ef6767721d2e6095a1515dfa8a01ec7be1.1643202349.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1049.v3.git.1643202349.gitgitgadget@gmail.com>
 References: <pull.1049.v2.git.1638975481.gitgitgadget@gmail.com>
         <pull.1049.v3.git.1643202349.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 26 Jan 2022 13:05:48 +0000
-Subject: [PATCH v3 13/14] rebase --apply: set ORIG_HEAD correctly
+Date:   Wed, 26 Jan 2022 13:05:49 +0000
+Subject: [PATCH v3 14/14] rebase -m: don't fork git checkout
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,107 +74,85 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-At the start of a rebase, ORIG_HEAD is updated to the tip of the
-branch being rebased. Unfortunately reset_head() always uses the
-current value of HEAD for this which is incorrect if the rebase is
-started with "git rebase <upstream> <branch>" as in that case
-ORIG_HEAD should be updated to <branch>. This only affects the "apply"
-backend as the "merge" backend does not yet use reset_head() for the
-initial checkout. Fix this by passing in orig_head when calling
-reset_head() and add some regression tests.
+Now that reset_head() can handle the initial checkout of onto
+correctly use it in the "merge" backend instead of forking "git
+checkout".  This opens the way for us to stop calling the
+post-checkout hook in the future. Not running "git checkout" means
+that "rebase -i/m" no longer recurse submodules when checking out
+"onto" (thanks to Philippe Blain for pointing this out). As the rest
+of rebase does not know what to do with submodules this is probably a
+good thing. When using merge-ort rebase ought be able to handle
+submodules correctly if it parsed the submodule config, such a change
+is left for a future patch series.
+
+The "apply" based rebase has avoided forking git checkout
+since ac7f467fef ("builtin/rebase: support running "git rebase
+<upstream>"", 2018-08-07). The code that handles the checkout was
+moved into libgit by b309a97108 ("reset: extract reset_head() from
+rebase", 2020-04-07).
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/rebase.c           |  1 +
- reset.c                    |  4 +++-
- reset.h                    |  4 ++++
- t/t3418-rebase-continue.sh | 26 ++++++++++++++++++++++++++
- 4 files changed, 34 insertions(+), 1 deletion(-)
+ sequencer.c | 38 +++++++++++---------------------------
+ 1 file changed, 11 insertions(+), 27 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b55a9cff05d..e942c300f8c 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1769,6 +1769,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	strbuf_addf(&msg, "%s: checkout %s",
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
- 	ropts.oid = &options.onto->object.oid;
-+	ropts.orig_head = &options.orig_head,
- 	ropts.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
- 			RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
- 	ropts.head_msg = msg.buf;
-diff --git a/reset.c b/reset.c
-index e02915c0f65..448cb3fd785 100644
---- a/reset.c
-+++ b/reset.c
-@@ -15,6 +15,7 @@ static int update_refs(const struct reset_head_opts *opts,
- 	unsigned detach_head = opts->flags & RESET_HEAD_DETACH;
- 	unsigned run_hook = opts->flags & RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
- 	unsigned update_orig_head = opts->flags & RESET_ORIG_HEAD;
-+	const struct object_id *orig_head = opts->orig_head;
- 	const char *switch_to_branch = opts->branch;
- 	const char *reflog_branch = opts->branch_msg;
- 	const char *reflog_head = opts->head_msg;
-@@ -43,7 +44,8 @@ static int update_refs(const struct reset_head_opts *opts,
- 				strbuf_addstr(&msg, "updating ORIG_HEAD");
- 				reflog_orig_head = msg.buf;
- 			}
--			update_ref(reflog_orig_head, "ORIG_HEAD", head,
-+			update_ref(reflog_orig_head, "ORIG_HEAD",
-+				   orig_head ? orig_head : head,
- 				   old_orig, 0, UPDATE_REFS_MSG_ON_ERR);
- 		} else if (old_orig)
- 			delete_ref(NULL, "ORIG_HEAD", old_orig, 0);
-diff --git a/reset.h b/reset.h
-index 7ef7e43ea8c..a28f81829d8 100644
---- a/reset.h
-+++ b/reset.h
-@@ -22,6 +22,10 @@ struct reset_head_opts {
- 	 * The commit to checkout/reset to. Defaults to HEAD.
- 	 */
- 	const struct object_id *oid;
-+	/*
-+	 * Optional value to set ORIG_HEAD. Defaults to HEAD.
-+	 */
-+	const struct object_id *orig_head;
- 	/*
- 	 * Optional branch to switch to.
- 	 */
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index 22eca73aa3e..130e2f9b553 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -308,4 +308,30 @@ test_expect_success 'there is no --no-reschedule-failed-exec in an ongoing rebas
- 	test_expect_code 129 git rebase --edit-todo --no-reschedule-failed-exec
- '
+diff --git a/sequencer.c b/sequencer.c
+index a62ea9d0e05..19082aa6c9b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4217,42 +4217,26 @@ int apply_autostash_oid(const char *stash_oid)
+ 	return apply_save_autostash_oid(stash_oid, 1);
+ }
  
-+test_orig_head_helper () {
-+	test_when_finished 'git rebase --abort &&
-+		git checkout topic &&
-+		git reset --hard commit-new-file-F2-on-topic-branch' &&
-+	git update-ref -d ORIG_HEAD &&
-+	test_must_fail git rebase "$@" &&
-+	test_cmp_rev ORIG_HEAD commit-new-file-F2-on-topic-branch
-+}
-+
-+test_orig_head () {
-+	type=$1
-+	test_expect_success "rebase $type sets ORIG_HEAD correctly" '
-+		git checkout topic &&
-+		git reset --hard commit-new-file-F2-on-topic-branch &&
-+		test_orig_head_helper $type main
-+	'
-+
-+	test_expect_success "rebase $type <upstream> <branch> sets ORIG_HEAD correctly" '
-+		git checkout main &&
-+		test_orig_head_helper $type main topic
-+	'
-+}
-+
-+test_orig_head --apply
-+test_orig_head --merge
-+
- test_done
+-static int run_git_checkout(struct repository *r, struct replay_opts *opts,
+-			    const char *commit, const char *action)
+-{
+-	struct child_process cmd = CHILD_PROCESS_INIT;
+-	int ret;
+-
+-	cmd.git_cmd = 1;
+-
+-	strvec_push(&cmd.args, "checkout");
+-	strvec_push(&cmd.args, commit);
+-	strvec_pushf(&cmd.env_array, GIT_REFLOG_ACTION "=%s", action);
+-
+-	if (opts->verbose)
+-		ret = run_command(&cmd);
+-	else
+-		ret = run_command_silent_on_success(&cmd);
+-
+-	if (!ret)
+-		discard_index(r->index);
+-
+-	return ret;
+-}
+-
+ static int checkout_onto(struct repository *r, struct replay_opts *opts,
+ 			 const char *onto_name, const struct object_id *onto,
+ 			 const struct object_id *orig_head)
+ {
+-	const char *action = reflog_message(opts, "start", "checkout %s", onto_name);
+-
+-	if (run_git_checkout(r, opts, oid_to_hex(onto), action)) {
++	struct reset_head_opts ropts = {
++		.oid = onto,
++		.orig_head = orig_head,
++		.flags = RESET_HEAD_DETACH | RESET_ORIG_HEAD |
++				RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
++		.head_msg = reflog_message(opts, "start", "checkout %s",
++					   onto_name),
++		.default_reflog_action = "rebase"
++	};
++	if (reset_head(r, &ropts)) {
+ 		apply_autostash(rebase_path_autostash());
+ 		sequencer_remove_state(opts);
+ 		return error(_("could not detach HEAD"));
+ 	}
+ 
+-	return update_ref(NULL, "ORIG_HEAD", orig_head, NULL, 0, UPDATE_REFS_MSG_ON_ERR);
++	return 0;
+ }
+ 
+ static int stopped_at_head(struct repository *r)
 -- 
 gitgitgadget
-
