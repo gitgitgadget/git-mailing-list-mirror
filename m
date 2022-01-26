@@ -2,87 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86547C2BA4C
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 12:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCC11C5DF62
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 12:14:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241091AbiAZMOc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 07:14:32 -0500
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:37773 "EHLO
+        id S241125AbiAZMOm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 07:14:42 -0500
+Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:39129 "EHLO
         wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233952AbiAZMOb (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 26 Jan 2022 07:14:31 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 3BD1F3200993;
-        Wed, 26 Jan 2022 07:14:30 -0500 (EST)
+        by vger.kernel.org with ESMTP id S241122AbiAZMOl (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 26 Jan 2022 07:14:41 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id C3DE73200993;
+        Wed, 26 Jan 2022 07:14:40 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Wed, 26 Jan 2022 07:14:30 -0500
+  by compute3.internal (MEProxy); Wed, 26 Jan 2022 07:14:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hurrell.net; h=
-        cc:cc:content-transfer-encoding:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm1; bh=DXhFgNBB+85q76
-        9ebdJk8AAq4gzaxe++iazwB8vxXMo=; b=meakYZospfSFuNSQPNtzvNf2xGJEVw
-        xCg8NtWFCaL3zIfq1XFKthOSNWp2BC7Rzrc9lSLN9SnAn7V5Bm47ErdFUIHnK/cb
-        koonQGxJVSp2LMjdKZBNCx3PWpsbAerF53G2p8kXB7+7goD+CA/g44d1Tc+9P+Qk
-        N6fDW7lC0ymgLa/YOCftIUXKhtDHRWQMUip0D6BmIigPOan1lI39bvE29FxGGa9C
-        Z3SyTE7GDr+MuyynLD+JDXCFqs5qPtvdsslHuiM5jBlRKx/bVJwaYmUq5EVzMLcT
-        XYqLl8Gk0t47rKvH29PBjd7wjKvaj08x2OkeuFOePj3NyMOr7iFNnAMA==
+        cc:cc:content-transfer-encoding:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm1; bh=RrFW3pVt7gAPqsj88IbBgYcr+bbQOa
+        hvtt/Fi6cHprU=; b=nGmIHdPkCQwYYqkoh5RpmyQDRrXzxEbF6gxFTW87npVvvx
+        95KK8VoAbqj70RcxjIveg0pwppiQJaByGvNrY2qA3Hj2+UGq7+BBw9+IDH/FK0nl
+        GDa4bpaM98PrkSj8TGOr6ZlqKN9h8ndVP6qVuYuFzA3bPUCw+ptnspQK7KBZqcVw
+        clkkxqtF9e2Zw56lPo3gE2HndFIVLW4dZ3PE+iUQMZIsW7NDweZXjwv2MmWO8W/4
+        usEwiDhKFD409cfuUAoJDLfTXFC/7gI1vme1YXQJ/OLSjA1g3357AcMYyge9Hglm
+        8smSa1dlfx673tBFLbtJdiCK3tipcInnDN6HH7bg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=DXhFgNBB+85q769ebdJk8AAq4gzaxe++iazwB8vxX
-        Mo=; b=ETTY/FS01jPiB9FvQwrZ2QxC2t4W+W//FVLCwDd2B6c/eCAsmj7escCcN
-        zZ1K+C22M1mHHgNq62FsnwTN4hH/GMzBPopzqbbGjlMuDTqZllQiFmgmFtg/iyNx
-        tFQv7RcN2OqnrDKQivkIQJPq9EzR1iFlVcRIK9fFiIfN5HJ2O7+97jkCWwSjGl4h
-        FSWR25/UZVY30vfzIexDK3W5bheOrW/1/GhWwuhyfjmPxspAKW6QuvTSiC8/rHp2
-        Fw7xOhx/B01oK04pbLrkoMx8tAJdBW66e4PwC2jNsdqItIhga1YTRq/0HVi4kxbS
-        O2MO2o9l8GEN9YXP4BeduNXSx4mPg==
-X-ME-Sender: <xms:JTvxYRMnXpOsW2WIlealgxETn0P1IA3OI8dYKn2awLgOhaeB-Y1Xiw>
-    <xme:JTvxYT_Rqx1T_H4SFvirhWtUHd2W0aLG-shIaylsRHz7UoI_QvAuc2cgypzzR-p57
-    SPxtmbJIK7yyPAQNAo>
-X-ME-Received: <xmr:JTvxYQQKm3_rHn53h1MrjZNgIu-KkazuDDtoMMfwnvC5LBD1lnWejDZddPlx7qNdZrjogoS9Z1ey_ybQNOtzp619>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrfedugdefjecutefuodetggdotefrodftvf
+        messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=RrFW3p
+        Vt7gAPqsj88IbBgYcr+bbQOahvtt/Fi6cHprU=; b=fOMFEfya8c6MvHqaKqs6CM
+        623gHIHKOYTv8PznmPa3c1Eh51heVP6lLqZv5OY0uq/SH1atX17A9eg//TZLBYE+
+        E2dx5lkpKmxPofM22dpvZyYg5qVrPMhu+qk85IuyjoRCVOOwvuFtXBBxNOfnP4an
+        G1OEu1CP/VzHPhDDC+4FmQX07X8QLtfqC4SGQzvBZSwISH0a5DP8AObjpB7JelGf
+        eVsPME7N72Rkb3gAdEvh01Z0ARoo//hHUDfT30/n/dJo5T1b4nt9cDP7UmOAnBdo
+        dZKnG/s5rfOZ+vsu/ej0+e+JXM6PULVKP/2QE3StM5kN3OeZjrZ66v5vFuYrrMfg
+        ==
+X-ME-Sender: <xms:MDvxYXf9udOPX1d_hoc-O8mg8mgqZ4o8_wSDg1MAOBhLvA5uSFUFYA>
+    <xme:MDvxYdPxk2OZMsJSCwwQ2E8TRFv3POY_AVVVV4_nv4DKftBY06qarcaNAAnomO3Ob
+    U8ai9bks9V1OjHqN6Q>
+X-ME-Received: <xmr:MDvxYQjhJTFW66bDyOmcRjhF5p7aKZ9qmj4NW_8xG4h5_HiAwdITizOWYX1lky3vydkck6p5auGM-etK6LhxKhKP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrfedugdefkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfgggtgfesthekre
-    dtredtjeenucfhrhhomhepifhrvghgucfjuhhrrhgvlhhluceoghhrvghgsehhuhhrrhgv
-    lhhlrdhnvghtqeenucggtffrrghtthgvrhhnpeetveehueeigedugffffeethfeigeelle
-    ehgeeikeduvedtueegieffieekfedvjeenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehgrhgvgheshhhurhhrvghllhdrnhgvth
-X-ME-Proxy: <xmx:JTvxYdtHlpiMw_DowXwE8KQSEgJvG3dpJDp2t-YaZMMOlTMNgqLYqg>
-    <xmx:JTvxYZces2BNARCwXNGeaBTDAJiQFDo0ye30WrVwfUhEU2_Wo2c6cQ>
-    <xmx:JTvxYZ1M2r9bZprfRm1QlBEcDeb5nuPuGKOjq5GkkCB49uayklDjeA>
-    <xmx:JTvxYZnjFdU55LYrzlq3QP9tr5WXHOx42Rtrtgn3dNfUfoEKCIAhKQ>
+    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
+    ertddtnecuhfhrohhmpefirhgvghcujfhurhhrvghllhcuoehgrhgvgheshhhurhhrvghl
+    lhdrnhgvtheqnecuggftrfgrthhtvghrnhepueetvdeiffdugeegheduhedtudefleejhe
+    dttdetvdetfefhveekueduleehtdefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepghhrvghgsehhuhhrrhgvlhhlrdhnvght
+X-ME-Proxy: <xmx:MDvxYY9skZ0eM3qNaeAwZgC_UirGMDJxRvTG3A2BhvOZnjqtt70cog>
+    <xmx:MDvxYTt3ixAd6QSLCcgXkSpqVVusf2oUizVa7wOOJ2hOmAyWH8bwuA>
+    <xmx:MDvxYXFiy-2z-Q-N8VU6JxlAN_SgBJT2kYyYMOMxTYPkxNy6e26XzA>
+    <xmx:MDvxYcXaLT-iwzVyKShX7mMHYuV68eclOio4QdoOLQpZ60ykNhd7pg>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Jan 2022 07:14:28 -0500 (EST)
+ 26 Jan 2022 07:14:39 -0500 (EST)
 From:   Greg Hurrell <greg@hurrell.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 0/2] Apply minor fixes to Documentation/config/pgp.txt 
-Date:   Wed, 26 Jan 2022 13:14:24 +0100
-Message-Id: <20220126121426.53799-1-greg@hurrell.net>
+        <avarab@gmail.com>, Greg Hurrell <greg@hurrell.net>
+Subject: [PATCH v2 1/2] Documentation/config/pgp.txt: replace stray <TAB> character with <SPC>
+Date:   Wed, 26 Jan 2022 13:14:25 +0100
+Message-Id: <20220126121426.53799-2-greg@hurrell.net>
 X-Mailer: git-send-email 2.35.0
-In-Reply-To: <220125.861r0vhh8r.gmgdl@evledraar.gmail.com>
+In-Reply-To: <20220126121426.53799-1-greg@hurrell.net>
 References: <220125.861r0vhh8r.gmgdl@evledraar.gmail.com>
+ <20220126121426.53799-1-greg@hurrell.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just applying changes to commit messages as suggested by Ævar Arnfjörð
-Bjarmason:
+Specifically, replace the tab between "the" and "first" with a space.
 
-> nit @ subject: I'd suggest:
->
->	Documentation/config/pgp.txt: replace stray <TAB> character with <SPC>
->
-> Or something, i.e. the "docs" can just be replaced by the filename, so
-> we don't need to put it at the end.
->
-> As general style, we tend to not have the <msg> part of "<subsystem>:
-> <msg>" start with a capital letter, i.e. "fix" not "Fix".
+Signed-off-by: Greg Hurrell <greg@hurrell.net>
+---
+ Documentation/config/gpg.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
+index 0cb189a077..abfabd6d62 100644
+--- a/Documentation/config/gpg.txt
++++ b/Documentation/config/gpg.txt
+@@ -37,7 +37,7 @@ gpg.minTrustLevel::
+ gpg.ssh.defaultKeyCommand::
+ 	This command that will be run when user.signingkey is not set and a ssh
+ 	signature is requested. On successful exit a valid ssh public key is
+-	expected in the	first line of its output. To automatically use the first
++	expected in the first line of its output. To automatically use the first
+ 	available key from your ssh-agent set this to "ssh-add -L".
+ 
+ gpg.ssh.allowedSignersFile::
+-- 
+2.35.0
 
