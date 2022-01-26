@@ -2,170 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26474C433F5
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 22:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3E43C433EF
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 22:43:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230249AbiAZWfD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 17:35:03 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52977 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbiAZWfA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 17:35:00 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1A604178E6C;
-        Wed, 26 Jan 2022 17:34:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=BeJ5jkSuUQWy
-        Fk9HwIGpG2a+J/2ePxcYh0RSIXk0LBk=; b=cJMBAw2T5lBwKdVuLj/IGoMMKX1V
-        eCgh3iyX3v/KaB4t7w6IVCs3ebXFfQrzjMkxJ19w4ADXWu6MPSVShGvoTIY0Nf1D
-        mvjgC3bjPxS+WcH8TCbI5SLKbtsItfMUL0cCxe+UnOwizfWY1wgQR3fvjAU3bZzl
-        j7i+rUGb/GVeKLo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 125EC178E6B;
-        Wed, 26 Jan 2022 17:34:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 841EA178E6A;
-        Wed, 26 Jan 2022 17:34:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Hongyi Zhao <hongyi.zhao@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        =?utf-8?Q?Jo=C3=A3o?= Victor Bonfim 
-        <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
-Subject: Re: [PATCH] completion: add a GIT_COMPLETION_SHOW_ALL_COMMANDS
-References: <CAGP6POJ9gwp+t-eP3TPkivBLLbNb2+qj=61Mehcj=1BgrVOSLA@mail.gmail.com>
-        <patch-1.1-5f18305ca08-20220125T124757Z-avarab@gmail.com>
-Date:   Wed, 26 Jan 2022 14:34:55 -0800
-In-Reply-To: <patch-1.1-5f18305ca08-20220125T124757Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 25 Jan
- 2022 13:49:04 +0100")
-Message-ID: <xmqqk0emp1m8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S229863AbiAZWnu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 17:43:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32870 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229672AbiAZWnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 17:43:49 -0500
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6353DC06161C
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 14:43:49 -0800 (PST)
+Received: by mail-il1-x131.google.com with SMTP id d3so957592ilr.10
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 14:43:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OkGpcN/nZXnMuxk9PfMB0Hwf8azenJeAnvfaLMrJtvE=;
+        b=ry1R5yU1U6NmXO78uj+b1u5r+iZAPKeEc6ZUThkVn18A62ozZZSKzElIKXdTHvCyg5
+         j8CuUoqnreGeGAfOQfEF7z37FYVXxn7DmFsr2FI6JC+pRyuITwf8JUiNxdMjyO4S92aJ
+         GHdkyRBXWyaJj9R5ro4lSrmDZ2BMC8GYlOOZjVGL7yPKBjaaE3UXpftW9EYBUWG5bO7B
+         mgpxCrZWVN2/KpNAn2jMwhKdjwv3JRlUE8nGfnDpcLt2q/P6hoiSRgp4mZUrOXsn/aP9
+         UNLU9fPHDmIMXo/xcaf6aGA/wA3EcI3wDFZQUekVIOfG9J4gyOyVjrA7DWf+ngVnUUzE
+         67hQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OkGpcN/nZXnMuxk9PfMB0Hwf8azenJeAnvfaLMrJtvE=;
+        b=5PoJXxcPbu2fEkcMiRkXJDjGUl/nubqz6NFWXMwsD6wx7GhyYSNLPqvPwiGPMDktDh
+         atcLHPoa3oes3nzx56Sf6L34L4vL/DrwcBGCI9bY1+KMRvPdnaDd0GbCCXc3qlBB4xpe
+         vTArbaHI4Uk74nhlR5nwihfseLBPdMJVSwbSIs8bIR3GvD3tN9VopGRitFJ3CSAbhnEj
+         dcmHxU7ZRbHoGVU0aqKc81f7uOsuJfY8HThmnhs2joPfZe8j9JT8cp+mnTlfrf7aNf6i
+         Tymq69dtafMafXYsjWrpqIBtIGyEyc9+UQyDrGoKdN8iAiJGRv3myetxlhLPetbZBSOg
+         iJBg==
+X-Gm-Message-State: AOAM532rmwNaFJkEObjUv1e7/+3ic7c8jhXG3Dtp0FCXvqSbVy/Lk4+C
+        Mo2vJRXT1BGHZGPmKwVQOgSCYQ==
+X-Google-Smtp-Source: ABdhPJxHEYlbe6+1MSgpFozRW/d1zQZs6gcowX2Zun6csRESb5lJIg/VKNqwggbRVdP+P7s5y0F6fA==
+X-Received: by 2002:a92:d78b:: with SMTP id d11mr949511iln.226.1643237028781;
+        Wed, 26 Jan 2022 14:43:48 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id j2sm11071389ilu.2.2022.01.26.14.43.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jan 2022 14:43:48 -0800 (PST)
+Date:   Wed, 26 Jan 2022 17:43:47 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Matthew John Cheetham <mjcheetham@outlook.com>
+Subject: Re: [PATCH 3/5] scalar: teach `diagnose` to gather packfile info
+Message-ID: <YfHOo8Mf3RP4j0Y6@nand.local>
+References: <pull.1128.git.1643186507.gitgitgadget@gmail.com>
+ <330b36de799f82425c22bec50e6e42f0e495cab8.1643186507.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3018E81E-7EF8-11EC-A910-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <330b36de799f82425c22bec50e6e42f0e495cab8.1643186507.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
-
-> Add a GIT_COMPLETION_SHOW_ALL_COMMANDS=3D1 configuration setting to go
-> with the existing GIT_COMPLETION_SHOW_ALL=3D1 added in
-> c099f579b98 (completion: add GIT_COMPLETION_SHOW_ALL env var,
-> 2020-08-19).
+On Wed, Jan 26, 2022 at 08:41:45AM +0000, Matthew John Cheetham via GitGitGadget wrote:
+> From: Matthew John Cheetham <mjcheetham@outlook.com>
 >
-> This will include plumbing commands such as "cat-file" in "git <TAB>"
-> and "git c<TAB>" completion. Without/with this I have 134 and 243
-> completion with git <TAB>, respectively.
-
-OK.  This makes sense in the sense that more choice is better.
-
-> It was already possible to do this by tweaking
-> GIT_COMPLETION_SHOW_ALL_COMMANDS from the outside, that testing
-> variable was added in 84a97131065 (completion: let git provide the
-> completable command list, 2018-05-20). Doing this before loading
-> git-completion.bash worked:
-
-Perhaps there is a typo that ruined whole the paragraph.  We are
-adding that variable with this patch, so by definition, it did not
-exist before, which means we cannot "tweak" it because it did not
-exist.
-
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -49,6 +49,11 @@
->  #     and git-switch completion (e.g., completing "foo" when "origin/f=
-oo"
->  #     exists).
->  #
-> +#   GIT_COMPLETION_SHOW_ALL_COMMANDS
-> +#
-> +#     When set to "1" suggest all commands, including plumbing command=
-s
-> +#     which are hidden by default (e.g. "cat-file" on "git ca<TAB>").
-> +#
-
-Usually we frown upon inserting a new thing to the middle of a list
-of things that has no inherent order.  In this case, I think this is
-OK, as the existing "all" (below) is about completing options, while
-the new one is about completing subcommands, and the latter is at a
-higher conceptual level than the former.
-
->  #   GIT_COMPLETION_SHOW_ALL
->  #
->  #     When set to "1" suggest all options, including options which are
-> @@ -3455,7 +3460,13 @@ __git_main ()
->  			then
->  				__gitcomp "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
->  			else
-> -				__gitcomp "$(__git --list-cmds=3Dlist-mainporcelain,others,nohelpe=
-rs,alias,list-complete,config)"
-> +				local list_cmds=3Dlist-mainporcelain,others,nohelpers,alias,list-c=
-omplete,config
+> Teach the `scalar diagnose` command to gather file size information
+> about pack files.
+>
+> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+> ---
+>  contrib/scalar/scalar.c          | 39 ++++++++++++++++++++++++++++++++
+>  contrib/scalar/t/t9099-scalar.sh |  2 ++
+>  2 files changed, 41 insertions(+)
+>
+> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+> index e26fb2fc018..690933ffdf3 100644
+> --- a/contrib/scalar/scalar.c
+> +++ b/contrib/scalar/scalar.c
+> @@ -653,6 +653,39 @@ cleanup:
+>  	return res;
+>  }
+>
+> +static void dir_file_stats(struct strbuf *buf, const char *path)
+> +{
+> +	DIR *dir = opendir(path);
+> +	struct dirent *e;
+> +	struct stat e_stat;
+> +	struct strbuf file_path = STRBUF_INIT;
+> +	size_t base_path_len;
 > +
-> +				if test "${GIT_COMPLETION_SHOW_ALL_COMMANDS-}" =3D "1"
-> +				then
-> +					list_cmds=3Dbuiltins,$list_cmds
+> +	if (!dir)
+> +		return;
+> +
+> +	strbuf_addstr(buf, "Contents of ");
+> +	strbuf_add_absolute_path(buf, path);
+> +	strbuf_addstr(buf, ":\n");
+> +
+> +	strbuf_add_absolute_path(&file_path, path);
+> +	strbuf_addch(&file_path, '/');
+> +	base_path_len = file_path.len;
+> +
+> +	while ((e = readdir(dir)) != NULL)
 
-It is sad that there is no "plumbing" class (assuming the goal is
-"we by default exclude plumbing, so add that to the list"), or just
-"everything under the sun" class.  If there were a plumbing command
-that is not implemented as a built-in, adding buitlins to list_cmds
-will not show the command, will it?  Also, because nohelpers is not
-removed from list_cmds, whatever command that were removed from
-exclude_helpers_from_list() will be hidden.
+Hmm. Is there a reason that this couldn't use
+for_each_file_in_pack_dir() with a callback that just does the stat()
+and buffer manipulation?
 
-It looks as though help.c needs a new list_all_cmds() that can be
-called from git.c::list_cmds() when "all" is asked for, and dumps
-everything from command_list[] plus whatever load_command_list()
-loads.
+I don't think it's critical either way, but it would eliminate some of
+the boilerplate that is shared between this implementation and the one
+that already exists in for_each_file_in_pack_dir().
 
-> +				fi
-> +				__gitcomp "$(__git --list-cmds=3D$list_cmds)"
->  			fi
->  			;;
->  		esac
+> +		if (!is_dot_or_dotdot(e->d_name) && e->d_type == DT_REG) {
+> +			strbuf_setlen(&file_path, base_path_len);
+> +			strbuf_addstr(&file_path, e->d_name);
 
-Having said all that, assuming that including "builtins" is a good
-enough approximation (which I do not have no opinion on), the
-implementation looks good to me.
+For what it's worth, I think the callback would start here:
 
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index 98c62806328..e3ea6a41b00 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -2432,6 +2432,33 @@ test_expect_success 'option aliases are shown wi=
-th GIT_COMPLETION_SHOW_ALL' '
->  	EOF
->  '
-> =20
-> +test_expect_success 'plumbing commands are excluded without GIT_COMPLE=
-TION_SHOW_ALL_COMMANDS' '
-> +	. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
-> +	sane_unset GIT_TESTING_PORCELAIN_COMMAND_LIST &&
+> +			if (!stat(file_path.buf, &e_stat))
+> +				strbuf_addf(buf, "%-70s %16"PRIuMAX"\n",
+> +					    e->d_name,
+> +					    (uintmax_t)e_stat.st_size);
 
-As we've done dot-sourcing of the file at the beginning of the
-script already, dot-sourcing the same thing again would only
-overwrite what was done before, without clearing the deck.  Which
-may not hurt for the purpose of _this_ test _right_ _now_q.
+...and end here.
 
-But as this is not done inside a subshell, whetever we dot-source
-here will persist til the end of the script.  Which may be more
-problematic as it will affect the tests that come (and new tests
-that will be added) after this point.
-
-The same comment applies to the other new test added immediately
-after this one.
-
-Other than that, looks sensible to me.
-
-Thanks.
+Thanks,
+Taylor
