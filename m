@@ -2,131 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A7A3C2BA4C
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 18:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39CD8C2BA4C
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 18:46:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232622AbiAZS3g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 13:29:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59010 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231779AbiAZS3e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 13:29:34 -0500
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA7BC06161C
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 10:29:34 -0800 (PST)
-Received: by mail-pg1-x52e.google.com with SMTP id j10so172291pgc.6
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 10:29:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:subject:to:cc:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=Fhw5Wbez0mH/Q5Hm2fPmiivO4AL5tOmMkE2U2USk038=;
-        b=eQe0grn7m0IBzqxkZDPd8EXN9wAumr8TnShw8YJq2ME2iBX2xUulgZvu4GC4Kdf46G
-         8zJMiOBlRDVP8VZCkg7mzdRtqMx3U3vkns21I3kRQgXuxwwnf37bytahdccmU3Zv+iyG
-         hPB7hgbCggeiMGuWmTkfONLLvhww3jdDXs1TEAgKQPkFsPKdVuBfj2ZBTwPDXP3jbxas
-         bjRr15p4HbQ7Z1RwUnWCTpX2kTAKOWXavsIheBy+pp/5uTEPfbWe5vwL+Zz/Z2pqHK2p
-         oTTqYfEjIn1yd7+yfO1hjcEHbdFmuGY+olLC4poAz5FQMz6zGfGCUtDg4JRIeBt/TpN5
-         AQbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:subject:to:cc:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=Fhw5Wbez0mH/Q5Hm2fPmiivO4AL5tOmMkE2U2USk038=;
-        b=LjJR07YR3iTyxmfRcPDLxgUjbpLzdSmEjSSaJE/odEI3XmVQ4K55dzSQ/WiTxYtBvS
-         3TCu4oJoIjrYhMg/TQEQcIutzaOze1VtbHtO6W6QLfDBRldh5+3omfYAMefiC4l0QZX1
-         M8Mx0NAS4AMin1pf4T+EIKjGE+9LSSXZf57SV0T4S67162pR2dVb0tzSb6PfUlaKbo1f
-         5gukN1ygoRui0fOI7DmY0AY5oV8785YKgOC3e4AQ6y6Zu1ERbsGK0dC5j+q1KgRenNEm
-         n47hQ5gneHsmtNV2chC9x800y5fW3J1KRDsqduLVzebfJcsTofIaSWJ0yBrIcSqb/Udc
-         2GQg==
-X-Gm-Message-State: AOAM5321OPCaPsrURBoVKSAVP/nsau+wkZgp6sdPxpVE20aGi/SXUQET
-        xVKnMsDKY+Nzuyd6O8t7BY0=
-X-Google-Smtp-Source: ABdhPJxK6YlaAQPwoZYakpi4FE5zZyqtJgHOrFi/sgWlpYEvL3S9QNI/ojvQ3ClNSSHsTJbYPDQL/g==
-X-Received: by 2002:aa7:888c:0:b0:4ca:75a3:aa1c with SMTP id z12-20020aa7888c000000b004ca75a3aa1cmr10601997pfe.65.1643221773487;
-        Wed, 26 Jan 2022 10:29:33 -0800 (PST)
-Received: from [192.168.208.38] ([49.205.87.95])
-        by smtp.gmail.com with ESMTPSA id g11sm757326pfj.21.2022.01.26.10.29.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Jan 2022 10:29:32 -0800 (PST)
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Git in GSoC 2022?
-To:     Git Community <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Message-ID: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
-Date:   Wed, 26 Jan 2022 23:59:16 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S244224AbiAZSqW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 13:46:22 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59959 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244178AbiAZSqU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 13:46:20 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9C0FC169F06;
+        Wed, 26 Jan 2022 13:46:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DVhorwNdtsl2uDLOFbFXMitJ2JADpYFCJ8Dfec
+        3tVww=; b=pdM0rQpYNDY7tV4GkgWGB2KguLvVv2t4/a/bk2kZFYPJvM2dki8HsZ
+        S4A2FEurQ2vr6ryEe5EkCQdJmQrgOxFSiYCjCPIq7NMQTvJbVaNLXBoQK8Y19Cbj
+        nigeUoJHmb2zpPP38If/VY8dQyDr35+0kFbJ7rCmtaoenlzMGu59U=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 94168169F05;
+        Wed, 26 Jan 2022 13:46:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0E971169F04;
+        Wed, 26 Jan 2022 13:46:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Michael Herrmann <michael@herrmann.io>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: A puzzle: reset --hard and hard links
+References: <YengSfSDzVzvrJ6f@camp.crustytoothpaste.net>
+        <CABrKpmASHgBwPYgKnO2ZZRVVxMti=NFaxw6cBV=pst0xpVZYGA@mail.gmail.com>
+        <CABrKpmBFrrWgBh7QAOX35zQr_e+LC1E6Jn5FKb_XP-7bew9Hkg@mail.gmail.com>
+        <xmqqk0ep57ou.fsf@gitster.g>
+        <CABrKpmB7UEGzLCiNHQtY5-Dt16jLkpcpBEx3o8y9OBGZ418keA@mail.gmail.com>
+        <xmqqfspc3k8k.fsf@gitster.g>
+        <CABrKpmDjrTPhL_55YaXEAVTEmu8iZEsKUJYab7OgK0=w9d_7MA@mail.gmail.com>
+        <220125.865yq8ghae.gmgdl@evledraar.gmail.com>
+        <87pmog2bbf.fsf@igel.home>
+        <CABrKpmAcNsexcmHK5kZvZr_NBm7TWWU=wVQExHwWSPpprptdQw@mail.gmail.com>
+        <YfCue6m4gqGEWqDj@camp.crustytoothpaste.net>
+Date:   Wed, 26 Jan 2022 10:46:15 -0800
+In-Reply-To: <YfCue6m4gqGEWqDj@camp.crustytoothpaste.net> (brian m. carlson's
+        message of "Wed, 26 Jan 2022 02:14:19 +0000")
+Message-ID: <xmqqsftas5c8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3EA65C7E-7ED8-11EC-B412-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-GSoC 2022 is approaching. The timeline has been released [1].
-Mentoring organizations should submit applications between
-February 7 and 21 at 1800 UTC. So, I thought I'll kick off
-the discussion about our plans for GSoC 2022.
+> Thanks, this is helpful context and it explains why you'd want this
+> behavior.  If you're involved with the project, it may be helpful to
+> point out to other project members that this occurs and suggest that the
+> scripts avoid running "git reset --hard".  For example, it may be easy
+> to avoid if "git status --porcelain" produces empty output.  I've heard
+> stories about Chromium's build times and I'm sure such an optimization
+> would be welcome.
 
-First, are we interested in participating in the 2022 round of
-GSoC?
+I am not sure about that.  If the ONLY problem is that hardlinks to
+UNMODIFIED paths are severed by "reset --hard" when it is not necessary
+in order to ensure that HEAD and the working tree matches in content
+without clobbering anything unrelated, then adding an internal call
+to refresh before "git reset --hard" would neatly solve it, and
+there should not be a need for end-user workaround like that.
 
-If we are interested in participating we need:
+But it does not change the fact that we try to avoid clobbering
+anything unrelated to the path we are updating when we need to
+update the contents of the working tree files, and the way we do so
+is to call checkout_entry(), which does unlink() followed by
+creat().  So even though you may be able to teach "git reset --hard"
+to refrain from severing extra hardlinks when it does not have to,
+it will do so when the contents of the path must be changed.
 
-   - Volunteers who are wiling to act as mentors. I would be
-     willing to be volunteer myself as a mentor for one student.
-  
-   - Microprojects: I believe we could repurpose the Outreachy
-     microproject ideas[2] for GSoC too. If others have suggestions
-     for microproject ideas, please share them.
+To be quite honest, I am not sure if the patch below is safe either.
+I doubt that the lack of "update-index --refresh" in the "reset
+--hard" command was a mistake; rather, I suspect that it was
+deliberately omitted to avoid some problems, which I do not offhand
+recall.
 
-   - Project ideas: There are two mentioned in SoC-2021-Ideas[3]
-     but both were picked by GSoC students the previous year. So,
-     we would need new ones this year.
+ builtin/reset.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-     Taylor showed interest in a bitmap-related project during
-     the Outreachy application period [4]. Taylor, are you still
-     interested in mentoring a bitmap-related project? Would it
-     be possible for you to do so for the upcoming GSoC?
-
-
-Also, wanted to note that GSoC has some changes in store for
-this year [5]. Concisely they are:
-
-   - Expanding eligibility: the program is now open to non-students.
-
-   - Multiple Sizes of Projects: In 2021, project size was reduced
-     (~175 hours). This year, both medium sized projects (~175 hours)
-     and large projects (~350 hours) are supported.
-
-     GSoC organizers recommend communities to have both medium _and_
-     large size projects.
-
-   - Increased timing flexibility: rather than a mandatory 12-week
-     program, projects can be extended for up to 22 weeks by the
-     mentor and the contributors.
-
-See the blog [5] for more details.
-
-
-[ References ]
-
-[1]: https://developers.google.com/open-source/gsoc/timeline
-
-[2]: https://git.github.io/Outreachy-23-Microprojects/
-
-[3]: https://git.github.io/SoC-2021-Ideas/
-
-[4]: https://public-inbox.org/git/YVTM+WQH%2FUyhVeTz@nand.local/
-
-[5]: https://opensource.googleblog.com/2021/11/expanding-google-summer-of-code-in-2022.html
-
--- 
-Sivaraam
+diff --git c/builtin/reset.c w/builtin/reset.c
+index b97745ee94..8adc1be75b 100644
+--- c/builtin/reset.c
++++ w/builtin/reset.c
+@@ -83,6 +83,7 @@ static int reset_index(const char *ref, const struct object_id *oid, int reset_t
+ 	}
+ 
+ 	read_cache_unmerged();
++	refresh_cache(REFRESH_QUIET);
+ 
+ 	if (reset_type == KEEP) {
+ 		struct object_id head_oid;
