@@ -2,97 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50350C2BA4C
-	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 12:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F3FAC28CF5
+	for <git@archiver.kernel.org>; Wed, 26 Jan 2022 12:46:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241135AbiAZMOq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 07:14:46 -0500
-Received: from wout5-smtp.messagingengine.com ([64.147.123.21]:56495 "EHLO
-        wout5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S241136AbiAZMOo (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 26 Jan 2022 07:14:44 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id C038C32009DB;
-        Wed, 26 Jan 2022 07:14:43 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 26 Jan 2022 07:14:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hurrell.net; h=
-        cc:cc:content-transfer-encoding:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm1; bh=lJ6hxeVWRuT2ITbnCHVn65A8bA/cQL
-        90lpuTiqn7TAM=; b=yNRiy/twDxat64OGSW+lMvbttKspKO3P8c9i8PXWPtwlLX
-        Hpw9oXlBHRCfN4MQcppI+IL38uCv7leLlXR+6CzO9yT4+FbjCGQowt4XvWhnu1pr
-        ZGwcDjADymey8nm9MWT0fb8108WMizrcArS6wigi5KN/iTsRuqgCrLvjWv8mI2cE
-        XqIph21jdRrDwkrjzZnG5me8ATUgg8LhqGPnLJzMzQdzZYCmYkK4fO7q197Nt8KB
-        cvXTlzv98uI2BcDOPo57y0AgxGMWKdAT76hDAET723shJvtsPgtcWhKX6htSLLlE
-        5MpPD3iFVtthT33Al5heT5PyHu0BWHqf0XIckOkw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=lJ6hxe
-        VWRuT2ITbnCHVn65A8bA/cQL90lpuTiqn7TAM=; b=AJ8kXIrCzAA80TwVUOx5O3
-        DbgnTG++3OCRrRdgMNzNICcdT+rdn6uYyxqS7hLQMC+xGZO1BcHLYboMVNfTRa+8
-        RRF8giGSNjerfqC57P02pgKQ29kH0ebwY8lm0HoYxlv4cuOSL0iZhoz2AFVt3POp
-        LvgrBqYlZVrKMfWOvx5F0qWdXR8m2uxuWY+Tk+9+R6HUtDRvDwsuq38dnwSc6LEM
-        TDWbGjP2LURJIvLAbjOrXEAp7Ps3Om+vqQUlqNFW2HD4ylFGKLacIjihmqQlpLr4
-        KYRDQtvbJvzz3zLTaDI+Xzv9SpaEMs4PrdkgxCNbcbLcnAmQCF2LwOaUJwl1zZ4A
-        ==
-X-ME-Sender: <xms:MzvxYYxA9vthFl4no4IlWbP59eupSmPKcqYLKD1joyN7ellPtH0giA>
-    <xme:MzvxYcRf3bYaDWEzeyD0PHLBfsw4pyds6ib5g062mmtzExeEFYkNHaWdtjsibB5_6
-    clp6Unchd859cx6Jf4>
-X-ME-Received: <xmr:MzvxYaU2XPgmD51wwjYjRLObh6aoy57emTlJbpbpMwBt6smMfitEFvPnOrdSOVTfMhN1NNqcL7eL9ADz1mArAJ_S>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrfedugdefkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
-    ertddtnecuhfhrohhmpefirhgvghcujfhurhhrvghllhcuoehgrhgvgheshhhurhhrvghl
-    lhdrnhgvtheqnecuggftrfgrthhtvghrnhepueetvdeiffdugeegheduhedtudefleejhe
-    dttdetvdetfefhveekueduleehtdefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepghhrvghgsehhuhhrrhgvlhhlrdhnvght
-X-ME-Proxy: <xmx:MzvxYWjuWlMs8mPAYHasqR5HfX6Q7-Oh5-gBqXKbYf80bpZQ67jeHw>
-    <xmx:MzvxYaC2DGRuGiBk8iL6MeDiAHNNGvU1OWUWuH_X-My-uKDPiDzdSQ>
-    <xmx:MzvxYXIe5KEngUAylWL2wAdh6xkRHliGG-aQxXWkmarqSkeU2EOfBg>
-    <xmx:MzvxYb5eKmGuxV3lv-A2Kne7UoTMZ73QbXm565nhwX2yZsPPl4znOw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Jan 2022 07:14:42 -0500 (EST)
-From:   Greg Hurrell <greg@hurrell.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Greg Hurrell <greg@hurrell.net>
-Subject: [PATCH 2/2] Documentation/config/pgp.txt: add missing apostrophe
-Date:   Wed, 26 Jan 2022 13:14:26 +0100
-Message-Id: <20220126121426.53799-3-greg@hurrell.net>
-X-Mailer: git-send-email 2.35.0
-In-Reply-To: <20220126121426.53799-1-greg@hurrell.net>
-References: <220125.861r0vhh8r.gmgdl@evledraar.gmail.com>
- <20220126121426.53799-1-greg@hurrell.net>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S241468AbiAZMqE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 07:46:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33902 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234178AbiAZMqD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 07:46:03 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C534C06161C
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 04:46:03 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id k18so25576816wrg.11
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 04:46:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=6wind.com; s=google;
+        h=mime-version:content-transfer-encoding:date:message-id:subject:from
+         :to:cc:references:in-reply-to;
+        bh=4ZTFArTLLjG8kaTBkvf33BV+IJf6YkHqJ7Racx2L+yA=;
+        b=Kcu/4WWiR5CoOd4qEkrmOf3+yOobJeV1ckfdkGTTxURGpcmMCeQBRY2NulIb1fC2Rf
+         ywDFxOCVWi7CfK1+bn22r35R8idgwk/UgqIspGU5e7b4eH6z8Ptc9vi335w5QQ1hUKd/
+         O3drBy5MQw6s2EwogAhcadJjdz7CGPyt+XofgW9GMNILBHyQvikXPvC8rBOt8RSBHGDm
+         zh94vAV3eizhsM8MVeeOGnc/WgBIl9OmVK0CHN8lNLuv0+ocyi42qxdF8qVuBLm+E5O4
+         z6IRO23EA+esn0+BjE2vvgwlE0t5URPKEW539ALxmkLKsnR+bqXpuxD9MgnBvYwZHmw8
+         MRzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:content-transfer-encoding:date
+         :message-id:subject:from:to:cc:references:in-reply-to;
+        bh=4ZTFArTLLjG8kaTBkvf33BV+IJf6YkHqJ7Racx2L+yA=;
+        b=gLJw8ffL5TARIeNM13KJ9BFFAjTVEPWSfjWXY+xh6fYRWWcktRQoChh+/GHy7RZ1KF
+         aMzdCjizVT95ioYeKQuZ99gJ1RadO2M5N+TtieobGZEv3Om11J1ABR3FjxPshv5vhVkg
+         eQ6RszpDyiMpVfYZc6TYpe8Uj1IToXbftaOaHaoVU+A8XWtWWYDxNPZx3n9W1T2d1E9p
+         /uaqs6hfw7c8xWvZhW7OdZo2LE9VSx2tHHVbyq03Ijpe/Gy/71yqXM6ZKRjgl+WgD/9V
+         WUWdd+tEPA4ARon1Ov4gGdWzB8+lC2RS2idhPoseFNSoSZHON9fskekgV1fPcfEoir/E
+         oUrg==
+X-Gm-Message-State: AOAM530/sIqJE0tRxsi5Etukv/ag/EGpm6/xvbgy9UXPZq/pcy3JgFDx
+        0Di+wAmyDMu/Sis9mdAEv1xfRW/lwEGRTw==
+X-Google-Smtp-Source: ABdhPJxEOOYQDLLRHbwgsUApahkPM5t1/gwEJRC1D+HyW1IfkppHGff5eIYWT0XZxEeD4GbDz69WnA==
+X-Received: by 2002:a5d:58c4:: with SMTP id o4mr16581908wrf.532.1643201162030;
+        Wed, 26 Jan 2022 04:46:02 -0800 (PST)
+Received: from localhost (2a01cb000f483e003b320a5f125af7b5.ipv6.abo.wanadoo.fr. [2a01:cb00:f48:3e00:3b32:a5f:125a:f7b5])
+        by smtp.gmail.com with ESMTPSA id i17sm19174369wru.107.2022.01.26.04.46.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jan 2022 04:46:01 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Wed, 26 Jan 2022 13:46:00 +0100
+Message-Id: <CHFM74053TIA.3G3CIXQYDMDXS@diabtop>
+Subject: Re: [PATCH] receive-pack: interrupt pre-receive when client
+ disconnects
+From:   "Robin Jarry" <robin.jarry@6wind.com>
+To:     "Jiang Xin" <worldhello.net@gmail.com>
+Cc:     "Git List" <git@vger.kernel.org>,
+        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        "Jonathan Tan" <jonathantanmy@google.com>,
+        "Jiang Xin" <zhiyou.jx@alibaba-inc.com>,
+        "Robin Jarry" <robin@jarry.cc>,
+        =?utf-8?q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+References: <20220125095445.1796938-1-robin.jarry@6wind.com>
+ <CANYiYbGRK0eshjUJoPH0yWT1tVLoerOMC6CY6tAMrwAh7T+y1g@mail.gmail.com>
+In-Reply-To: <CANYiYbGRK0eshjUJoPH0yWT1tVLoerOMC6CY6tAMrwAh7T+y1g@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an apostrophe to "signatures" to indicate the possessive
-relationship in "the signature's creation".
+Jiang Xin, Jan 26, 2022 at 08:17:
+> We used to ignore the SIGPIPE signal when calling "pre-receive" hook,
+> so we could tolerant a buggy "pre-receive" implementation which didn't
+> consume all the input from "receive-pack". On the other side, "ctrl-c"
+> from the client side will terminate "receive-pack", only if we do not
+> ignore the SIGPIPE signal when running "pre-receive".
+>
+> Wouldn't this be much simpler: add a new configuration variable
+> "receive.loosePreReceiveImplementation", and only ignore SIGPIPE when
+> "receive-pack" turns off the config variable?
 
-Signed-off-by: Greg Hurrell <greg@hurrell.net>
----
- Documentation/config/gpg.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I had not thought of this. Yes it would be much simpler. I'll prepare
+another patch with this approach.
 
-diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
-index abfabd6d62..86892ada77 100644
---- a/Documentation/config/gpg.txt
-+++ b/Documentation/config/gpg.txt
-@@ -66,7 +66,7 @@ This way only committers with an already valid key can add or change keys in the
- +
- Since OpensSSH 8.8 this file allows specifying a key lifetime using valid-after &
- valid-before options. Git will mark signatures as valid if the signing key was
--valid at the time of the signatures creation. This allows users to change a
-+valid at the time of the signature's creation. This allows users to change a
- signing key without invalidating all previously made signatures.
- +
- Using a SSH CA key with the cert-authority option
--- 
-2.35.0
-
+Thanks!
