@@ -2,151 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC815C433EF
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 22:04:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6403DC433EF
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 22:15:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243544AbiA0WD7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 17:03:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43506 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241948AbiA0WD5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 17:03:57 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EBBEC061714
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 14:03:57 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id q141-20020a1ca793000000b00347b48dfb53so2776563wme.0
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 14:03:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=6Q7F4C8AWG73GonN9Ck7xmdK9K4fYGIcHPfj8k8h1/A=;
-        b=OHvziAJ6F96o6yOMM13GShSFtE/WNusy5h6NXONIk0T/abFEh0oPJwLu3tendBtzPb
-         FvpnhB4njZyiSdQiAu0BpYBQepzyNf9JO+K368hZ7SdNB+ge52ac4BKTEjGgVFi0Li9B
-         hSLoRBdrWL+Kej3Icxp4Ya/dyJoh7Cp88pLVyAyKLfUqMc5qS/yc8o5jWRw9RdVsZ2uu
-         /0U4vRIAa4sTOsUchwtwbrDkI6il+SpwGro+kDV554fkeiZ8PRYuMEpuNZSS00Lc9qID
-         Z7dn7h3lqL80JYWxwQn9T9QlV94BzM49DC65yxZFtPP3Abnw394riVrQvvqc40X1oEg+
-         fOtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6Q7F4C8AWG73GonN9Ck7xmdK9K4fYGIcHPfj8k8h1/A=;
-        b=gjwYmCApsAGh49wwsE7Kraf2ER+hSdeTNmYMAjqIkOVKBuBvuxG1myO8G90rmDolRP
-         i+E/5H23RTDcVAI/D8ZGHdbCTlJubQdcpihCuxoWzlLjqRye6WOdaaB4QlV+3+LX5fev
-         e/kNtcM9HkLlwvJNRyxZ9KfY0zmtkQEOiTfOpqUMlta/6twymjZwUTP1EuIpt4mFqSS9
-         W1nJDvYY+qnw0EMtoTWmWrjHnf1NAcVK/UXOmeR1Mddg+4LW2csQgzX+e5RTxRtID/II
-         Gure/SyQ8Ax87c31oJvs2dsCWqJ/55x0m6XXsV44FX4n5PEDa+Lstb1oGpUOFtHMrJ8C
-         cF9A==
-X-Gm-Message-State: AOAM530KX+FPOwSI7mUP2hL1r8qqEDl3W76LAxXdTrMfjs3NepTGOJ5v
-        famFO9AooyWTmfj4X77NFJKJcq/DomQ=
-X-Google-Smtp-Source: ABdhPJyZBzJJrMNt+gQnDNpG1AI8OZqT4cd33YHGWQsB8bewBdmPGOzqX8CwUyt+hwNV8+qAUTfpXQ==
-X-Received: by 2002:a7b:cbce:: with SMTP id n14mr13370033wmi.90.1643321036090;
-        Thu, 27 Jan 2022 14:03:56 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c11sm3942687wri.43.2022.01.27.14.03.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 14:03:55 -0800 (PST)
-Message-Id: <047a63173775d309e8d88c60b58d7756be5c0900.1643321031.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1133.git.1643321031.gitgitgadget@gmail.com>
-References: <pull.1133.git.1643321031.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 27 Jan 2022 22:03:51 +0000
-Subject: [PATCH 4/4] stash: stop warning about the obsolete `stash.useBuiltin`
- config setting
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S235917AbiA0WPj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 17:15:39 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51143 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232422AbiA0WPj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 17:15:39 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id F13091807AF;
+        Thu, 27 Jan 2022 17:15:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=kps32uO+1KDMnsA5cWDBeBHGSanuqcjjc4oG0F
+        hRlVg=; b=HdJ8iBosEll9LmzGs3MvU3ItFl2F3K3ZQ0RTLviAUZ39duU02LtQoz
+        5B9tTQ/HNQ3jBLrSvkGMISWoplLh0ef/tHMASKdr4E2NVhmkjOdtQ3nbbrHUbPis
+        7PN/1ac6+wi1UVgXAYfdwUj5A8dE2er/FHkdz+A4tZvKXGsXX3x74=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D4DEB1807AE;
+        Thu, 27 Jan 2022 17:15:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 38F9A1807AD;
+        Thu, 27 Jan 2022 17:15:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v7 6/6] branch.c: use 'goto cleanup' in setup_tracking()
+ to fix memory leaks
+References: <20211220233459.45739-1-chooglen@google.com>
+        <20220124204442.39353-1-chooglen@google.com>
+        <20220124204442.39353-7-chooglen@google.com>
+Date:   Thu, 27 Jan 2022 14:15:35 -0800
+In-Reply-To: <20220124204442.39353-7-chooglen@google.com> (Glen Choo's message
+        of "Mon, 24 Jan 2022 12:44:42 -0800")
+Message-ID: <xmqqfsp8zuyg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A6E9AC46-7FBE-11EC-97F0-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Glen Choo <chooglen@google.com> writes:
 
-In 8a2cd3f5123 (stash: remove the stash.useBuiltin setting, 2020-03-03),
-we removed support for `stash.useBuiltin`, but left a warning in its
-place.
+> Signed-off-by: Glen Choo <chooglen@google.com>
+> ---
+>  branch.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/branch.c b/branch.c
+> index be33fe09fa..1e9a585633 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -239,7 +239,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+>  	if (track != BRANCH_TRACK_INHERIT)
+>  		for_each_remote(find_tracked_branch, &tracking);
+>  	else if (inherit_tracking(&tracking, orig_ref))
+> -		return;
+> +		goto cleanup;
+>  
+>  	if (!tracking.matches)
+>  		switch (track) {
+> @@ -249,7 +249,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+>  		case BRANCH_TRACK_INHERIT:
+>  			break;
+>  		default:
+> -			return;
+> +			goto cleanup;
+>  		}
+>  
+>  	if (tracking.matches > 1)
+> @@ -262,6 +262,7 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+>  				tracking.remote, tracking.srcs) < 0)
+>  		exit(-1);
+>  
+> +cleanup:
+>  	string_list_clear(tracking.srcs, 0);
 
-After almost two years, and several major versions, it is time to remove
-even that warning.
+Makes sense.  There is no other exit paths out of the function after
+the tracking_srcs variable gets initialized, so this should be
+covering everything.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/stash.c  | 10 ----------
- t/t3903-stash.sh | 15 ---------------
- 2 files changed, 25 deletions(-)
+Two tangential findings:
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 1ef2017c595..25793b5a75a 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -788,7 +788,6 @@ static int list_stash(int argc, const char **argv, const char *prefix)
- static int show_stat = 1;
- static int show_patch;
- static int show_include_untracked;
--static int use_legacy_stash;
- 
- static int git_stash_config(const char *var, const char *value, void *cb)
- {
-@@ -804,10 +803,6 @@ static int git_stash_config(const char *var, const char *value, void *cb)
- 		show_include_untracked = git_config_bool(var, value);
- 		return 0;
- 	}
--	if (!strcmp(var, "stash.usebuiltin")) {
--		use_legacy_stash = !git_config_bool(var, value);
--		return 0;
--	}
- 	return git_diff_basic_config(var, value, cb);
- }
- 
-@@ -1778,11 +1773,6 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_stash_config, NULL);
- 
--	if (use_legacy_stash ||
--	    !git_env_bool("GIT_TEST_STASH_USE_BUILTIN", -1))
--		warning(_("the stash.useBuiltin support has been removed!\n"
--			  "See its entry in 'git help config' for details."));
--
- 	argc = parse_options(argc, argv, prefix, options, git_stash_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN | PARSE_OPT_KEEP_DASHDASH);
- 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 686747e55a3..b149e2af441 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1272,7 +1272,6 @@ test_expect_success 'stash works when user.name and user.email are not set' '
- 	>2 &&
- 	git add 2 &&
- 	test_config user.useconfigonly true &&
--	test_config stash.usebuiltin true &&
- 	(
- 		sane_unset GIT_AUTHOR_NAME &&
- 		sane_unset GIT_AUTHOR_EMAIL &&
-@@ -1323,20 +1322,6 @@ test_expect_success 'stash handles skip-worktree entries nicely' '
- 	git rev-parse --verify refs/stash:A.t
- '
- 
--test_expect_success 'stash -c stash.useBuiltin=false warning ' '
--	expected="stash.useBuiltin support has been removed" &&
--
--	git -c stash.useBuiltin=false stash 2>err &&
--	test_i18ngrep "$expected" err &&
--	env GIT_TEST_STASH_USE_BUILTIN=false git stash 2>err &&
--	test_i18ngrep "$expected" err &&
--
--	git -c stash.useBuiltin=true stash 2>err &&
--	test_must_be_empty err &&
--	env GIT_TEST_STASH_USE_BUILTIN=true git stash 2>err &&
--	test_must_be_empty err
--'
--
- test_expect_success 'git stash succeeds despite directory/file change' '
- 	test_create_repo directory_file_switch_v1 &&
- 	(
--- 
-gitgitgadget
+ * I see exit(-1) in the precontext of the final hunk.  We probably
+   would want to fix it, as negative argument to exit(3) is
+   misleading (the standard makes it clear that only the least
+   significant 8 bits matter, so it is not that bad).
+
+ * At the end, what is cleared is tracking.srcs, but because it is a
+   pointer to the real resource we allocated on our stack, it would
+   be cleaner to pass &tracking_srcs instead.
+
+Both are not what this patch introduces, and are outside the scope
+of this series.
+
+Thanks.
