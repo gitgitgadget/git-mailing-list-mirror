@@ -2,57 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB9FDC433FE
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 19:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75019C4332F
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 19:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245421AbiA0TIe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 14:08:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59154 "EHLO
+        id S245441AbiA0TIf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 14:08:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229628AbiA0TId (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 14:08:33 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25698C061714
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 11:08:33 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id q9-20020a7bce89000000b00349e697f2fbso6621011wmj.0
+        with ESMTP id S229628AbiA0TIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 14:08:34 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B8A6C061714
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 11:08:34 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id c190-20020a1c9ac7000000b0035081bc722dso2485096wme.5
         for <git@vger.kernel.org>; Thu, 27 Jan 2022 11:08:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=OFSFOkjuqqF8lzY7lcKawx11bc/uDnRWJ1yOFsJJV7U=;
-        b=UEprRjz98FgfcYjsTFY1PFDXemguGxbtxWNQv+z3F8uRKG4wd0y+fIzIEy3buqcTYY
-         kdZCkU3OosGJU6CtzRYXIfzG+hnK7KEew+0/Uz58KfQtd/RAfCIilAHlHdoe7aBZl2Hp
-         G9mX0BHQaWHpC4LgFZAa7e7OjA/KcHKEXY3aUPehOEa4zniOBrtYM9Wj2uDtZwiVeZq7
-         gebWdsc1qV/FO1WmeRSmNKwpwNFHvNFlhdfKkF6SKmMIfmehWanUNk44FNt8oRQIDcq1
-         ABo6om3iMmsSkXI3BJbqstvGdpq8vJYAFh8yqgy4C3bprZvnV05XTRIV7bNCHXWExaV6
-         FNgQ==
+        bh=Iwq7WehpMs5Yl9L12/kZ1dSjIALu6riIJpTzPAUgSOM=;
+        b=cvEFxvKx5GP6QJQUwCEiIp0qkV+5IpJKhEKEzXj3nS45Tq0x5op9YVfv7HtooY5LOs
+         cZIazWevv4+eh5PYwKNDZKgPT904ItgUgJvxsjIBm9Atk8/1SkXmOC8do/xoo12QaOBy
+         5TnTxA12rCQAziEs+5A+wpt2K/fNi/PWTNsqRc4+LN0ujhAvDkSOBzNFst1PHPOUvSLd
+         +xan8uTg4fE1VDfgyTHbCnpQSpJevCy8qJAngyynNWyHwz6kDaOB7qzAeATcRZW1PXs2
+         +6U000IqKlxG6w5rCOHZlg7qSF8clRvCLcYS5QQqq/g+ghcAMNDcWDHBK4idXU45SdAy
+         zK2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=OFSFOkjuqqF8lzY7lcKawx11bc/uDnRWJ1yOFsJJV7U=;
-        b=b23J9gGsTt/DGdZ26FAcn/l1pX51gJ14l9QPj7WucAOMdVAa99sJP1XUTBqO6iNGva
-         l0bTMInGyO7vDoP1JYdS3Pe9IO0KoMT/+SEg2AuiJFk3UdudLaz+FJst32EZGaCeMlJ9
-         XKvDKrCJ3PvJQjfo+pgti0NUwLeU7dATLpTZ2gZmUuzjfWaetlOwLVXBXp7APkaaqasf
-         fm1fZ/zSskRowVDT2z4gaabLmfeh/RfAUU36YA+8LvlCnsIO0i2M0OhtR3b0jPkVlgSv
-         3MrYS0Tutf+WcCBsibhyb21IIApvncok8cOv2BlfpWPTBQ3SK7sBqkg1U7c0oHj/9IdJ
-         cnHw==
-X-Gm-Message-State: AOAM531r7pwmb94PlblRpH2FSjTDnIeIrVsLcKvz8YGRYTbA1QP/TdLb
-        EeWv1KbU7qGf0fMD5wSNyhnZbRQHlfo=
-X-Google-Smtp-Source: ABdhPJxXW+eS03M2zvcgdoV9bIJIdB3jcM6cVC0yz8702RP4t/dQUIGB1dHdIO2dhLVZxYI26CKDjg==
-X-Received: by 2002:a1c:2b06:: with SMTP id r6mr12937111wmr.4.1643310511421;
-        Thu, 27 Jan 2022 11:08:31 -0800 (PST)
+        bh=Iwq7WehpMs5Yl9L12/kZ1dSjIALu6riIJpTzPAUgSOM=;
+        b=Z6cgsd9TnXohbIkFt8hPHJHZ68BjBsbZSQJGCX4A3dXtbxJxiXhdkM33jHsdWLuO79
+         5cmlVYJhlMzC5pjt4zUGxWwST7R30iYuovjm5HhtjcC4N3TpWSpgH5knZtW1/YDGLb5h
+         repg5ORyLWSdiifmNEvn0vedF1l/E91l0l1dBZca+7YgU6Evb4z9Jn9pQOs39fjMnX+5
+         iLZcVjGS/nUdX5BHPA7Ths0BHW22le6cNNeoI6Yvg1ECn7Ytmf5yWCtKMLj0r6T3GmDs
+         3NJUWOGVt2E9gz0lH/yKc1hWP7QMUUocJtmHCKHRpuPZ51sE7DmVXZ02HDoe3LmzHbb6
+         xHbw==
+X-Gm-Message-State: AOAM530SHxZmx724v5a5PnOSd1bmgM9loQvRyiYk0To6Aooss9aNA0h/
+        aXiupJYoAWZvdca40UiBlih6biANk0Y=
+X-Google-Smtp-Source: ABdhPJwRIPqzwquW7W2JBUHPDReUDfWEneIGGBK7k2GlQvdnp/2EGMvGZF+vp0eyFfehkFUaqcB+9A==
+X-Received: by 2002:a05:600c:17d5:: with SMTP id y21mr4528764wmo.102.1643310512324;
+        Thu, 27 Jan 2022 11:08:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z1sm129590wma.20.2022.01.27.11.08.30
+        by smtp.gmail.com with ESMTPSA id 16sm128330wmj.12.2022.01.27.11.08.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 11:08:30 -0800 (PST)
-Message-Id: <pull.1127.v2.git.1643310510.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1127.git.1643149759.gitgitgadget@gmail.com>
+        Thu, 27 Jan 2022 11:08:31 -0800 (PST)
+Message-Id: <704bb2ba18ee3af5857064f6fd61689f98da0480.1643310510.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1127.v2.git.1643310510.gitgitgadget@gmail.com>
 References: <pull.1127.git.1643149759.gitgitgadget@gmail.com>
+        <pull.1127.v2.git.1643310510.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 27 Jan 2022 19:08:26 +0000
-Subject: [PATCH v2 0/3] Fix two --diff-filter bugs
+Date:   Thu, 27 Jan 2022 19:08:27 +0000
+Subject: [PATCH v2 1/3] docs(diff): lose incorrect claim about `diff-files
+ --diff-filter=A`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,148 +63,54 @@ To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A colleague noticed that git diff --diff-filter=Dr behaved in an unexpected
-way. The expectation was that the command shows only deleted files, but not
-renamed ones.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Turns out that Git's code is incorrect and turns on all diff-filter flags
-because the argument contains a lower-case letter. But since it starts with
-an upper-case letter, we should actually not turn all those flags on.
+Originally, before we had `--intent-to-add`, there was no way that `git
+diff-files` could see added files: if a file did not exist in the index,
+`git diff-files` would not show it because it looks only at worktree
+files when there is an index entry at the same path.
 
-While working on the fix, I realized that the documentation of the
---diff-filter flag was not updated when intent-to-add files were no longer
-shown as modified by git diff, but as added.
+We used this example in the documentation of the diff options to explain
+that not every `--diff-filter=<option>` has an effect in all scenarios.
 
-Changes since v1:
+Even when we added `--intent-to-add`, the comment was still correct,
+because initially we showed such files as modified instead of added.
 
- * Now even the case of multiple --diff-filter options is handled.
+However, when that bug was fixed in feea6946a5b (diff-files: treat
+"i-t-a" files as "not-in-index", 2020-06-20), the comment in the
+documentation became incorrect.
 
-Johannes Schindelin (3):
-  docs(diff): lose incorrect claim about `diff-files --diff-filter=A`
-  diff.c: move the diff filter bits definitions up a bit
-  diff-filter: be more careful when looking for negative bits
+Let's just remove it.
 
- Documentation/diff-options.txt |  7 +--
- diff.c                         | 97 +++++++++++++++-------------------
- diff.h                         |  2 +-
- t/t4202-log.sh                 | 13 +++++
- 4 files changed, 60 insertions(+), 59 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/diff-options.txt | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-
-base-commit: 89bece5c8c96f0b962cfc89e63f82d603fd60bed
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1127%2Fdscho%2Fdiff-filter-buglets-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1127/dscho/diff-filter-buglets-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1127
-
-Range-diff vs v1:
-
- 1:  704bb2ba18e = 1:  704bb2ba18e docs(diff): lose incorrect claim about `diff-files --diff-filter=A`
- -:  ----------- > 2:  19c7223e265 diff.c: move the diff filter bits definitions up a bit
- 2:  e8006493a9e ! 3:  b041d2b7a3b diff-filter: be more careful when looking for negative bits
-     @@ Commit message
-          provided a lower-case letter: if the `--diff-filter` argument starts
-          with an upper-case letter, we must not start with all bits turned on.
-      
-     +    Even worse, it is possible to specify the diff filters in multiple,
-     +    separate options, e.g. `--diff-filter=AM [...] --diff-filter=m`.
-     +
-     +    Let's accumulate the include/exclude filters independently, and only
-     +    special-case the "only exclude filters were specified" case after
-     +    parsing the options altogether.
-     +
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## diff.c ##
-     +@@ diff.c: void diff_setup_done(struct diff_options *options)
-     + 	if (!options->use_color || external_diff())
-     + 		options->color_moved = 0;
-     + 
-     ++	if (options->filter_not) {
-     ++		if (!options->filter)
-     ++			options->filter = ~filter_bit[DIFF_STATUS_FILTER_AON];
-     ++		options->filter &= ~options->filter_not;
-     ++	}
-     ++
-     + 	FREE_AND_NULL(options->parseopts);
-     + }
-     + 
-      @@ diff.c: static int diff_opt_diff_filter(const struct option *option,
-     + 	BUG_ON_OPT_NEG(unset);
-       	prepare_filter_bits();
-       
-     - 	/*
-     +-	/*
-      -	 * If there is a negation e.g. 'd' in the input, and we haven't
-     -+	 * If the input starts with a negation e.g. 'd', and we haven't
-     - 	 * initialized the filter field with another --diff-filter, start
-     - 	 * from full set of bits, except for AON.
-     - 	 */
-     - 	if (!opt->filter) {
-     +-	 * initialized the filter field with another --diff-filter, start
-     +-	 * from full set of bits, except for AON.
-     +-	 */
-     +-	if (!opt->filter) {
-      -		for (i = 0; (optch = optarg[i]) != '\0'; i++) {
-      -			if (optch < 'a' || 'z' < optch)
-      -				continue;
-     -+		optch = optarg[0];
-     -+		if (optch >= 'a' && 'z' >= optch) {
-     - 			opt->filter = (1 << (ARRAY_SIZE(diff_status_letters) - 1)) - 1;
-     - 			opt->filter &= ~filter_bit[DIFF_STATUS_FILTER_AON];
-     +-			opt->filter = (1 << (ARRAY_SIZE(diff_status_letters) - 1)) - 1;
-     +-			opt->filter &= ~filter_bit[DIFF_STATUS_FILTER_AON];
-      -			break;
-     - 		}
-     +-		}
-     +-	}
-     +-
-     + 	for (i = 0; (optch = optarg[i]) != '\0'; i++) {
-     + 		unsigned int bit;
-     + 		int negate;
-     +@@ diff.c: static int diff_opt_diff_filter(const struct option *option,
-     + 			return error(_("unknown change class '%c' in --diff-filter=%s"),
-     + 				     optarg[i], optarg);
-     + 		if (negate)
-     +-			opt->filter &= ~bit;
-     ++			opt->filter_not |= bit;
-     + 		else
-     + 			opt->filter |= bit;
-       	}
-     +
-     + ## diff.h ##
-     +@@ diff.h: struct diff_options {
-     + 	struct diff_flags flags;
-     + 
-     + 	/* diff-filter bits */
-     +-	unsigned int filter;
-     ++	unsigned int filter, filter_not;
-     + 
-     + 	int use_color;
-       
-      
-       ## t/t4202-log.sh ##
-     @@ t/t4202-log.sh: test_expect_success 'diff-filter=R' '
-       
-       '
-       
-     -+test_expect_success 'diff-filter=Ra' '
-     ++test_expect_success 'multiple --diff-filter bits' '
-      +
-      +	git log -M --pretty="format:%s" --diff-filter=R HEAD >expect &&
-      +	git log -M --pretty="format:%s" --diff-filter=Ra HEAD >actual &&
-     ++	test_cmp expect actual &&
-     ++	git log -M --pretty="format:%s" --diff-filter=aR HEAD >actual &&
-     ++	test_cmp expect actual &&
-     ++	git log -M --pretty="format:%s" \
-     ++		--diff-filter=a --diff-filter=R HEAD >actual &&
-      +	test_cmp expect actual
-      +
-      +'
-
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index c89d530d3d1..2549df0d212 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -616,11 +616,8 @@ ifndef::git-format-patch[]
+ Also, these upper-case letters can be downcased to exclude.  E.g.
+ `--diff-filter=ad` excludes added and deleted paths.
+ +
+-Note that not all diffs can feature all types. For instance, diffs
+-from the index to the working tree can never have Added entries
+-(because the set of paths included in the diff is limited by what is in
+-the index).  Similarly, copied and renamed entries cannot appear if
+-detection for those types is disabled.
++Note that not all diffs can feature all types. For instance, copied and
++renamed entries cannot appear if detection for those types is disabled.
+ 
+ -S<string>::
+ 	Look for differences that change the number of occurrences of
 -- 
 gitgitgadget
+
