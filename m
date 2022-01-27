@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47FA7C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77E68C4321E
 	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 11:56:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240879AbiA0L4k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 06:56:40 -0500
+        id S240908AbiA0L4l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 06:56:41 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240416AbiA0L4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 06:56:38 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B9DEC061747
+        with ESMTP id S240560AbiA0L4j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 06:56:39 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9A7CC06173B
         for <git@vger.kernel.org>; Thu, 27 Jan 2022 03:56:38 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id c23so4315025wrb.5
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 03:56:37 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id u15so4332367wrt.3
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 03:56:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gTfRkno8sCLReMHVLRaVWrnXn3pfrxveyOB4k6/Y7GA=;
-        b=NlmY29V66S6n2EmezaFjpsX11K68xqfnMpYnBBRVQCYIRrgd+Byd52mnOKqEz9rE06
-         FfDX4FIn6Tufd5usVpy80Pljt0ceMvRVmC3ijoG3mpQ7QCuP358ZRljfvsvDjcuEFerY
-         DVINH/j8ao/5jXEBah+RMMwnXzCTfdreYfiWNXSaDjIEAv5NeGm+Hi3d4vgThXRa+2LQ
-         Tx/0dSKr5zBkEH0DlHg+CWPB01fdUHe8KJYkDZinf0ocrHuXbxNV/sSx7KNidsh+uUhX
-         S3OSsaBl+JT773Jj7BP9AGulbzGXPYCjywZaKmr6Lr1wxzwEYbMonjmqCaHvJKvPVH6D
-         mZVg==
+        bh=18mKGpPhWp9hWHyTBzRMEw5kkCkYFPrzmva0o5ZN9gY=;
+        b=oy1BuJSJNGbMTRbOg0Mar5iJhgt84kzvLe+ydpo28eN7rYRvpja0y7+FTD20B8+aSE
+         0tEc6TrbfsDD7JAAc842RA5rQzjloO6+/2B24muf2+jhwbbbqR7MeNseSJUsNp3EgShb
+         rzz8blTa9eXmiYPdSKs7v9DlFs8syRztLaijxIIMJxItNf9TKPz6qZLzMgSVy9GzeS6Y
+         wkVIhS8Nh8uFxfDyatzzKtjp6AkwqB4iiDspKM+xPM4SE2tTVGD31J4lqUjghDwLSDwA
+         CQRIw1v2b94a/JdNTsbTaL3/HHdDz4gNSO8LhYgwnO8cNLjHrt2qlTeHDsnuc5KuU9EN
+         VTow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gTfRkno8sCLReMHVLRaVWrnXn3pfrxveyOB4k6/Y7GA=;
-        b=prNrkikPFA4HeTkJNn+5srTGpn4xpwPAnTlQTw0PG9r/XZr7PQ8W3ljJmERTBrxAXT
-         M4MmSWiwGxa7aUcEb76sSby2btZsaVb+nOXGPmaZl+mcHgT5XDskZUhGPEvBIaJXeDjj
-         NN0KgUng9JOchV7pZe+SOhEYAAdkVqk7HSUIs6pje8Y7lwEVGP9lk18yQC/H93uSAKSu
-         A+YQtECPqRwrTUFp4GGSA3Wa9vCoI+wMse+qkaSozUngcMgtePVS9EpwknLHwaOSvA3t
-         eqLGlzaETg3fqJbCk3oysty4Ryb383e8UGTQSkgWiVhYBIzlgEThhVVXEcReyRHYc3wV
-         7lmA==
-X-Gm-Message-State: AOAM5317YAPkaumXo8vwMuK7E8t+qgVMHJ1lNPsrAe/RajuvS7triKcp
-        6iZ8vsNOhvW04mgCztLSCis//TGNViSQSw==
-X-Google-Smtp-Source: ABdhPJzoq2NutktsfFFYjFqFKT7khqjJU/e2GE/GnBRNgk+KajPXiUwnetXvhuccU4AYPhAW18iixg==
-X-Received: by 2002:adf:fb0e:: with SMTP id c14mr2713892wrr.586.1643284596392;
-        Thu, 27 Jan 2022 03:56:36 -0800 (PST)
+        bh=18mKGpPhWp9hWHyTBzRMEw5kkCkYFPrzmva0o5ZN9gY=;
+        b=oKr/e0E4IG4pc2srf17qnz5rs3OdMOhQst8IqRu8HpL3+frBmx8MVNMvbggXtG4wWg
+         BorAp4IWuM8BCGCQ/JMXeMVc274Z/NReAO0QLFRm6Cu/ZtaHiVI7OPe48/Shfz1Nq6he
+         ezwVMzkbVHzfWvhQxxu5ha2otnaenuVSkzWK0Ye7mIuuRVqNWp6bYgDukVKlhEBaKmA/
+         8aEBQELN2dEF1n2KRcswrFfPy+XuM2usKvQ7K3kVGE0qOGQiac1TEEijMvgzzDXAIEkV
+         eZI3vq2Bw2gpL5DterxRaVFu2AaIAIxBLc8RnTdnxyAQB3TUd4yXr6ETsxn08TfAmtLX
+         h/ew==
+X-Gm-Message-State: AOAM531plQ67Q1PUyYATFpFFBd5Rd5b6nCHcwZSsVYuXTn4fwHIc5to5
+        FTCXFcW2aF4XCO1JBquQ9jsnyWdB8vYW8Q==
+X-Google-Smtp-Source: ABdhPJxWmxAmREUQq2nm47w3/SAG8GZ9Mwd8h/ZtEp3+jcpLCGk1C0b8pB4AwY9BMdwiNltrWnI6xg==
+X-Received: by 2002:a5d:5552:: with SMTP id g18mr2807368wrw.343.1643284597121;
+        Thu, 27 Jan 2022 03:56:37 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i94sm1910663wri.21.2022.01.27.03.56.35
+        by smtp.gmail.com with ESMTPSA id i94sm1910663wri.21.2022.01.27.03.56.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 03:56:35 -0800 (PST)
+        Thu, 27 Jan 2022 03:56:36 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, J Smith <dark.panda@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v9 1/9] grep.h: remove unused "regex_t regexp" from grep_opt
-Date:   Thu, 27 Jan 2022 12:56:23 +0100
-Message-Id: <patch-v9-1.9-b9372cde017-20220127T115058Z-avarab@gmail.com>
+Subject: [PATCH v9 2/9] log tests: check if grep_config() is called by "log"-like cmds
+Date:   Thu, 27 Jan 2022 12:56:24 +0100
+Message-Id: <patch-v9-2.9-30219a0ae9d-20220127T115058Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.0.894.g563b84683b9
 In-Reply-To: <cover-v9-0.9-00000000000-20220127T115058Z-avarab@gmail.com>
 References: <cover-v8-00.10-00000000000-20220118T155211Z-avarab@gmail.com> <cover-v9-0.9-00000000000-20220127T115058Z-avarab@gmail.com>
@@ -67,28 +67,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This "regex_t" in grep_opt has not been used since
-f9b9faf6f8a (builtin-grep: allow more than one patterns., 2006-05-02),
-we still use a "regex_t" for compiling regexes, but that's in the
-"grep_pat" struct".
+Extend the tests added in my 9df46763ef1 (log: add exhaustive tests
+for pattern style options & config, 2017-05-20) to check not only
+whether "git log" handles "grep.patternType", but also "git show"
+etc.
+
+It's sufficient to check whether we match a "fixed" or a "basic" regex
+here to see if these codepaths correctly invoked grep_config(). We
+don't need to check the details of their regular expression matching
+as the "log" test does.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.h | 1 -
- 1 file changed, 1 deletion(-)
+ t/t4202-log.sh | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/grep.h b/grep.h
-index 6a1f0ab0172..400172676a1 100644
---- a/grep.h
-+++ b/grep.h
-@@ -136,7 +136,6 @@ struct grep_opt {
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 50495598619..e775b378e4b 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -449,6 +449,30 @@ test_expect_success !FAIL_PREREQS 'log with various grep.patternType configurati
+ 	)
+ '
  
- 	const char *prefix;
- 	int prefix_length;
--	regex_t regexp;
- 	int linenum;
- 	int columnnum;
- 	int invert;
++for cmd in show whatchanged reflog format-patch
++do
++	case "$cmd" in
++	format-patch) myarg="HEAD~.." ;;
++	*) myarg= ;;
++	esac
++
++	test_expect_success "$cmd: understands grep.patternType, like 'log'" '
++		git init "pattern-type-$cmd" &&
++		(
++			cd "pattern-type-$cmd" &&
++			test_commit 1 file A &&
++			test_commit "(1|2)" file B 2 &&
++
++			git -c grep.patternType=fixed $cmd --grep="..." $myarg >actual &&
++			test_must_be_empty actual &&
++
++			git -c grep.patternType=basic $cmd --grep="..." $myarg >actual &&
++			test_file_not_empty actual
++		)
++	'
++done
++test_done
++
+ test_expect_success 'log --author' '
+ 	cat >expect <<-\EOF &&
+ 	Author: <BOLD;RED>A U<RESET> Thor <author@example.com>
 -- 
 2.35.0.894.g563b84683b9
 
