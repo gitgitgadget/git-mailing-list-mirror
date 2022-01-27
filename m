@@ -2,235 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6D09C433FE
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 15:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CE5DC433EF
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 15:14:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242807AbiA0PJ0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 10:09:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58966 "EHLO
+        id S242764AbiA0POc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 10:14:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242796AbiA0PJW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 10:09:22 -0500
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90652C061714
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 07:09:22 -0800 (PST)
-Received: by mail-yb1-xb29.google.com with SMTP id i10so9588159ybt.10
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 07:09:22 -0800 (PST)
+        with ESMTP id S232879AbiA0POb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 10:14:31 -0500
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69234C061714
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 07:14:31 -0800 (PST)
+Received: by mail-oo1-xc2d.google.com with SMTP id w15-20020a4a9d0f000000b002c5cfa80e84so751970ooj.5
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 07:14:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=knb5L5Ukp9mYCRneB7fdA0Aq1Fw8cyRnuG3+9MTWHPk=;
-        b=f6Hnhj9U6ywE4mCJu8NSa5J4vHq+us33hbGHf/shrPVEbDDpvUUdAOB1MnaAs4qCBC
-         DZF0c28xJRXsCdjuIwWjrtKlxKKYG9O/tcAreAOoKtnQJxk0SbINVnjKiJ//y+EftS/b
-         2lmipkWmKdXjKfbUVJtXYyzy+dSpqujwQCPktNYE99LpYcSFqZWOFRbxCFIs2ArfRJsa
-         HoRHf1jmN1PifMtBcMKNA8Uy3UKGSV6EqYLTNlRh9I6s3d9cy2pwxv8Won4Tt0W25Cv4
-         m2DY7LCVWmxvTXgSzE5sXrAFuCQ1ZZOw2Z2zXGfxjYmh7aEX/vGv5FmCpcJsKjgq+jcU
-         R3AA==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=oFOUPCBfJVqCtu0/xdeXSKZznad0wkc2KWWQMFodcGE=;
+        b=DGLTzgtsj6AQtToT3B0RTOBh2DACht+A6zg19cYZOAYGyd5ePea7Lk27JtShrqMMhA
+         iGKlztN5Fji7tUqX8LL6Ey5iRPWtjQWLSi33nLZduSR5SZUrUk6UEu1ShOoanuAOLVld
+         mJCmV/7yDSx65m0uzUnEbngGxfy9WaLl4YPGEfO+LRz/9vmiXILSGMDuHO8NrKMamUUR
+         dxoTSFTwyotD0hzN9V775f874wCCEVNc2fWPY1sHPam3wKireLXh89qDTMzJA7mZT9GD
+         etc/uOdFXW4+dSDvHkvLxWHQpdWIuExRgpR0jSrjI65W/K7wThRoh+B9qeJX6HZliTbd
+         Z40A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=knb5L5Ukp9mYCRneB7fdA0Aq1Fw8cyRnuG3+9MTWHPk=;
-        b=eRyXH/JRYo2hm1iSBR0GzDCezJ8kOimmQfI9mqX9JM2CrsvOnnzgTvCc+hPTwuU0Vx
-         XvoVKJ9tc3LknXBCDho8bko7mMDWgSi5jqIz41L+Doqmzq+JgimyUKVmBD5WfDbHD+TX
-         cD3lo9bbBkfyUBF03aqWXJDB09YX12tlBfzWBN5Zp9VsOTnZJhSBcS8/YW4uXTbcF3WQ
-         cHVRRvGGKLYNvNWBFuxIB5hiOL0+UUh6mCtNhkfC1yJ/Dmn4guUCOKeMj3VoxBRtxkQI
-         UUPj+wFqlE1WFvLjBlR7Pv7gwLkMoyRk1RzlxYSfWfFofBZWpz7VvWUGFvaiQeLViVLj
-         5hjw==
-X-Gm-Message-State: AOAM530jRk4rBcjq6K9t2OA8WIN70q6gtcTQdQSgbmSIM20Twrccmpd9
-        5v9+ePxyNSobFJ/1BByovnhWrK+nZTXJ6nJfqtva7JpeVkY=
-X-Google-Smtp-Source: ABdhPJxYWvXACy8UOgrysmZRLZ/+PaukNi4+Fl3+d9z6cxbkhIPdaXKtiFdCLdOy1sGpqgZ9/Yq8WBXiVmcpqTFVTH0=
-X-Received: by 2002:a25:6d05:: with SMTP id i5mr6010244ybc.179.1643296161391;
- Thu, 27 Jan 2022 07:09:21 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=oFOUPCBfJVqCtu0/xdeXSKZznad0wkc2KWWQMFodcGE=;
+        b=LgJ/R/FcIxrR87TaBiJCBc8VEn1vwbc/a88AinIHbQoQe3hmkkTZVQ75QHmhFBZDjP
+         AXRAYusCDfDsVzSMrgaZzl/+DtM98x/d51I7gdqPBQVamUecBWQA7T6q191pQiClIZya
+         bfSHU4xY2QB8RvSF4U7v0PN6n7avW9KJ6jgg37/2ThxOsTary61xARiwivr18iq213Ml
+         NVrjQ/Vd+yYrBTvXgGNYngEOQar7Wu3Nss1dffvfxqNhnARsRAj1CfYeX7CQlublk3NX
+         Fns8jLUDdWPUfUsX5o1eKMMMYJ6MYH7VZ4+IMcvTAkVwu3faysOlim9yJIFftjoWAAGE
+         QAgg==
+X-Gm-Message-State: AOAM530dqpViYFDRMGpy6+/7EpRUCKEK1r4SQIyIqhVB4pVelYeNx56l
+        aYoWyUrPqTL00OThhiSG4iq3CQQk5Uk=
+X-Google-Smtp-Source: ABdhPJyq+oXlVIzr1cawTV5KBxegi8xVWIHhHaXR3eoy+IwWzaEAohkq/Un/MNYDqQBuE7hRP31c7Q==
+X-Received: by 2002:a4a:a58f:: with SMTP id d15mr2114445oom.40.1643296470720;
+        Thu, 27 Jan 2022 07:14:30 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:d9cb:250e:9ea6:f8? ([2600:1700:e72:80a0:d9cb:250e:9ea6:f8])
+        by smtp.gmail.com with ESMTPSA id 124sm10145971oif.7.2022.01.27.07.14.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jan 2022 07:14:30 -0800 (PST)
+Message-ID: <0a52155c-4605-d96f-965a-104a399ae86e@gmail.com>
+Date:   Thu, 27 Jan 2022 10:14:28 -0500
 MIME-Version: 1.0
-From:   clime <clime7@gmail.com>
-Date:   Thu, 27 Jan 2022 16:09:10 +0100
-Message-ID: <CAGqZTUuLNoZR7L9r1unR75S4Gte83DGSV2QUnGG2PqQOPBigAg@mail.gmail.com>
-Subject: spurious git stash create failures
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 3/5] scalar: teach `diagnose` to gather packfile info
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>,
+        Matthew John Cheetham via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Matthew John Cheetham <mjcheetham@outlook.com>
+References: <pull.1128.git.1643186507.gitgitgadget@gmail.com>
+ <330b36de799f82425c22bec50e6e42f0e495cab8.1643186507.git.gitgitgadget@gmail.com>
+ <YfHOo8Mf3RP4j0Y6@nand.local>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <YfHOo8Mf3RP4j0Y6@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On 1/26/2022 5:43 PM, Taylor Blau wrote:
+> On Wed, Jan 26, 2022 at 08:41:45AM +0000, Matthew John Cheetham via GitGitGadget wrote:
+>> From: Matthew John Cheetham <mjcheetham@outlook.com>
+>>
+>> Teach the `scalar diagnose` command to gather file size information
+>> about pack files.
+>>
+>> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+>> ---
+>>  contrib/scalar/scalar.c          | 39 ++++++++++++++++++++++++++++++++
+>>  contrib/scalar/t/t9099-scalar.sh |  2 ++
+>>  2 files changed, 41 insertions(+)
+>>
+>> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+>> index e26fb2fc018..690933ffdf3 100644
+>> --- a/contrib/scalar/scalar.c
+>> +++ b/contrib/scalar/scalar.c
+>> @@ -653,6 +653,39 @@ cleanup:
+>>  	return res;
+>>  }
+>>
+>> +static void dir_file_stats(struct strbuf *buf, const char *path)
+>> +{
+>> +	DIR *dir = opendir(path);
+>> +	struct dirent *e;
+>> +	struct stat e_stat;
+>> +	struct strbuf file_path = STRBUF_INIT;
+>> +	size_t base_path_len;
+>> +
+>> +	if (!dir)
+>> +		return;
+>> +
+>> +	strbuf_addstr(buf, "Contents of ");
+>> +	strbuf_add_absolute_path(buf, path);
+>> +	strbuf_addstr(buf, ":\n");
+>> +
+>> +	strbuf_add_absolute_path(&file_path, path);
+>> +	strbuf_addch(&file_path, '/');
+>> +	base_path_len = file_path.len;
+>> +
+>> +	while ((e = readdir(dir)) != NULL)
+> 
+> Hmm. Is there a reason that this couldn't use
+> for_each_file_in_pack_dir() with a callback that just does the stat()
+> and buffer manipulation?
+> 
+> I don't think it's critical either way, but it would eliminate some of
+> the boilerplate that is shared between this implementation and the one
+> that already exists in for_each_file_in_pack_dir().
 
-I am using `git stash create` from a python script and occasionally it
-fails with return code 1 without seemingly any reason (i.e. without
-printing anything to stderr).
+It's helpful to see if there are other crud files in the pack
+directory. This method is also extended in microsoft/git to
+scan the alternates directory (which we expect to exist as the
+"shared objects cache).
 
-After discussing this in the git irc channel, I have added strace to
-the call (GIT_TRACE=2 env var didn't provide any info except: "trace:
-built-in: git stash create" and then fail).
+We might want to modify the implementation in this series to
+run dir_file_stats() on each odb in the_repository. This would
+give us the data for the shared object cache for free while
+being more general to other Git repos. (It would require us to
+do some reaction work in microsoft/git and be a change of
+behavior, but we are the only ones who have looked at these
+diagnose files before, so that change will be easy to manage.)
 
-I also wrapped the call in for loop to retry if it fails ;( and today,
-on a clean work-tree, it failed once and then immediately succeeded on
-next loop iteration a few tens of ms later. Here are strace parts that
-went differently in each try:
-
-(I reproduced this on git 2.30 and 2.31 on two different systems, i
-don't use any GUI or IDE, just the script that calls git stash
-create).
-
-...
-newfstatat(AT_FDCWD, "merge_runs.py", {st_mode=S_IFREG|0775,
-st_size=1164, ...}, AT_SYMLINK_NOFOLLOW) = 0
-newfstatat(AT_FDCWD, "paper_reproducer", {st_mode=S_IFREG|0775,
-st_size=81651, ...}, AT_SYMLINK_NOFOLLOW) = 0   ### till now the same
-in successful run
-readlink(".git/index", 0x55c61b001a30, 32) = -1 EINVAL (Invalid
-argument)   ### this block until ENDBLOCK is only present in the
-failed run
-getcwd("/home/clime/vizorbot", 129) = 21
-openat(AT_FDCWD, "/home/clime/vizorbot/.git/index.lock",
-O_RDWR|O_CREAT|O_EXCL|O_CLOEXEC, 0666) = 3
-rt_sigaction(SIGINT, {sa_handler=0x55c6198df5a0, sa_mask=[INT],
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f9d3d534320},
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGHUP, {sa_handler=0x55c6198df5a0, sa_mask=[HUP],
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f9d3d534320},
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGTERM, {sa_handler=0x55c6198df5a0, sa_mask=[TERM],
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f9d3d534320},
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGQUIT, {sa_handler=0x55c6198df5a0, sa_mask=[QUIT],
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f9d3d534320},
-{sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-rt_sigaction(SIGPIPE, {sa_handler=0x55c6198df5a0, sa_mask=[PIPE],
-sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f9d3d534320},
-{sa_handler=SIG_DFL, sa_mask=[PIPE], sa_flags=SA_RESTORER|SA_RESTART,
-sa_restorer=0x7f9d3d534320}, 8) = 0
-getpid() = 7126
-newfstatat(AT_FDCWD, "paper_reproducer", {st_mode=S_IFREG|0775,
-st_size=81651, ...}, AT_SYMLINK_NOFOLLOW) = 0
-openat(AT_FDCWD, "paper_reproducer", O_RDONLY|O_CLOEXEC) = 4
-openat(AT_FDCWD, "/etc/gitattributes", O_RDONLY) = -1 ENOENT (No such
-file or directory)
-openat(AT_FDCWD, "/home/clime/.config/git/attributes", O_RDONLY) = -1
-ENOENT (No such file or directory)
-openat(AT_FDCWD, ".gitattributes", O_RDONLY) = -1 ENOENT (No such file
-or directory)
-openat(AT_FDCWD, ".git/info/attributes", O_RDONLY) = -1 ENOENT (No
-such file or directory)
-mmap(NULL, 81651, PROT_READ, MAP_PRIVATE, 4, 0) = 0x7f9d2fe30000
-munmap(0x7f9d2fe30000, 81651) = 0
-close(4) = 0
-newfstatat(AT_FDCWD, "param_sets", {st_mode=S_IFDIR|0775,
-st_size=4096, ...}, AT_SYMLINK_NOFOLLOW) = 0   ### ENDBLOCK
-newfstatat(AT_FDCWD, "param_sets/params0", {st_mode=S_IFDIR|0775,
-st_size=4096, ...}, AT_SYMLINK_NOFOLLOW) = 0
-
-... now this part in the end is also only in failed run:
-
-lseek(3, 0, SEEK_CUR) = 0
-lseek(3, 0, SEEK_CUR) = 0
-write(3, "DIRC\0\0\0\2\0\0\0016a\354'@%\253\301\36a\354'@%\253\301\36\0\0\375\0"...,
-48938) = 48938
-close(3) = 0
-newfstatat(AT_FDCWD, "/home/clime/vizorbot/.git/index.lock",
-{st_mode=S_IFREG|0664, st_size=48938, ...}, 0) = 0
-rename("/home/clime/vizorbot/.git/index.lock",
-"/home/clime/vizorbot/.git/index") = 0
-access(".git/hooks/post-index-change", X_OK) = -1 ENOENT (No such file
-or directory)
-newfstatat(AT_FDCWD, ".git/HEAD", {st_mode=S_IFREG|0664, st_size=23,
-...}, AT_SYMLINK_NOFOLLOW) = 0
-openat(AT_FDCWD, ".git/HEAD", O_RDONLY) = 3
-read(3, "ref: refs/heads/master\n", 256) = 23
-read(3, "", 233) = 0
-close(3) = 0
-newfstatat(AT_FDCWD, ".git/refs/heads/master", {st_mode=S_IFREG|0664,
-st_size=41, ...}, AT_SYMLINK_NOFOLLOW) = 0
-openat(AT_FDCWD, ".git/refs/heads/master", O_RDONLY) = 3
-read(3, "71bbd69706edf1746ce971e495f841a5"..., 256) = 41
-read(3, "", 215) = 0
-close(3) = 0
-newfstatat(AT_FDCWD, ".git/refs/HEAD", 0x7ffc90cf1990,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/tags/HEAD", 0x7ffc90cf1990,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/heads/HEAD", 0x7ffc90cf1990,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/remotes/HEAD", 0x7ffc90cf1990,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/remotes/HEAD/HEAD", 0x7ffc90cf1990,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/HEAD", {st_mode=S_IFREG|0664, st_size=23,
-...}, AT_SYMLINK_NOFOLLOW) = 0
-openat(AT_FDCWD, ".git/HEAD", O_RDONLY) = 3
-read(3, "ref: refs/heads/master\n", 256) = 23
-read(3, "", 233) = 0
-close(3) = 0
-newfstatat(AT_FDCWD, ".git/refs/heads/master", {st_mode=S_IFREG|0664,
-st_size=41, ...}, AT_SYMLINK_NOFOLLOW) = 0
-openat(AT_FDCWD, ".git/refs/heads/master", O_RDONLY) = 3
-read(3, "71bbd69706edf1746ce971e495f841a5"..., 256) = 41
-read(3, "", 215) = 0
-close(3) = 0
-newfstatat(AT_FDCWD, ".git/refs/HEAD", 0x7ffc90cf1990,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/tags/HEAD", 0x7ffc90cf1990,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/heads/HEAD", 0x7ffc90cf1990,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/remotes/HEAD", 0x7ffc90cf1990,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/remotes/HEAD/HEAD", 0x7ffc90cf1990,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/HEAD", {st_mode=S_IFREG|0664, st_size=23,
-...}, AT_SYMLINK_NOFOLLOW) = 0
-openat(AT_FDCWD, ".git/HEAD", O_RDONLY) = 3
-read(3, "ref: refs/heads/master\n", 256) = 23
-read(3, "", 233) = 0
-close(3) = 0
-newfstatat(AT_FDCWD, ".git/refs/heads/master", {st_mode=S_IFREG|0664,
-st_size=41, ...}, AT_SYMLINK_NOFOLLOW) = 0
-openat(AT_FDCWD, ".git/refs/heads/master", O_RDONLY) = 3
-read(3, "71bbd69706edf1746ce971e495f841a5"..., 256) = 41
-read(3, "", 215) = 0
-close(3) = 0
-newfstatat(AT_FDCWD, ".git/refs/HEAD", 0x7ffc90cf0db0,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/tags/HEAD", 0x7ffc90cf0db0,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/heads/HEAD", 0x7ffc90cf0db0,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/remotes/HEAD", 0x7ffc90cf0db0,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-newfstatat(AT_FDCWD, ".git/refs/remotes/HEAD/HEAD", 0x7ffc90cf0db0,
-AT_SYMLINK_NOFOLLOW) = -1 ENOENT (No such file or directory)
-newfstatat(AT_FDCWD, ".git/packed-refs", {st_mode=S_IFREG|0664,
-st_size=373, ...}, 0) = 0
-getpid() = 7126
-exit_group(1) = ?
-+++ exited with 1 +++
-
-Best regards
-clime
+Thanks,
+-Stolee
