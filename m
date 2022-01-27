@@ -2,155 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8E9BC433EF
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 04:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 125BEC433F5
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 05:26:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236050AbiA0Egh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 23:36:37 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64739 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbiA0Egf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 23:36:35 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 29E9917B4BB;
-        Wed, 26 Jan 2022 23:36:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=5DTxFbLqUp60kfuAvuA3gQR5SgA6nP0lSLTmTqY6wak=; b=NlAu
-        E8t/GylgxUWRBILUzOaWJnpqaAzoBDsn5+dzP2R1wj0u8lNr2XVVMTbjD2azT7Xr
-        eanL4iQWeSg6GM14T/dXAGjr/AJS1RDmJGns4gcqKttC0XsYwSaIj0v7i90FrBsk
-        WTer6C/tcxEoZAm0ELBBHB9Oh5iqFoAEmTJjeFA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2198817B4B8;
-        Wed, 26 Jan 2022 23:36:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8D0C217B4B7;
-        Wed, 26 Jan 2022 23:36:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Robin Jarry <robin.jarry@6wind.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-        Patryk Obara <patryk.obara@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v2] receive-pack: add option to interrupt pre-receive
- when client exits
-References: <20220125095445.1796938-1-robin.jarry@6wind.com>
-        <20220126214438.3066132-1-robin.jarry@6wind.com>
-Date:   Wed, 26 Jan 2022 20:36:31 -0800
-Message-ID: <xmqqv8y54wxc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S236156AbiA0F05 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 00:26:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39310 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232965AbiA0F04 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 00:26:56 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83F60C06173B
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 21:26:56 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id k18so2558897wrg.11
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 21:26:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=IB+HySO7RhV3m+YJsU8OoafOl7+wSjN/HS8QDu1KAlA=;
+        b=p/6lCCDj8D0Z5a9jh8zGKB28Og5yPhEYsB04ByNfIbDitme+vKysMoc0J4mvohfxN6
+         NGZQ0SoG82eoe5MpqGZDU68FNDVgiQ63+5xYh40pnWRn4ngEt4sXFcpY4JeNEHwBbEWa
+         gLiA0MBS3JjQyUZvWXGtCbHNju3v/+XEZldrnoubptdOMr8g/oHb+gzCE+8Mv+Ql4092
+         xWolFKm0rymWEh45AiEI/l1U+yWjYfx61wEBPZMmVfeRCk+X+tNQE8yNkTjPvwU/rfzz
+         lhf2OyX5ExLmDd9/UM3yIz3hbqxOTBmEW82JWWfZU92KMbdRgpWaCZmVcwDXoxedPkE9
+         +wFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=IB+HySO7RhV3m+YJsU8OoafOl7+wSjN/HS8QDu1KAlA=;
+        b=CSRSNSpre7nZM24CXF8e5pKg3qL/0mgBbotpUuMSlmPENsWfn3fzVkUKiE0/6rkm92
+         KxTGKhX16VFIP86m9iJx1/iJjUzvYicvt9zgNqzgElzoYV+8lb1NqMt80f0pW2CDLBth
+         jY5PxxZUDii31xfkhAV/Gmg4a1+9Q+0Jo+m3pzIUhb/QSa75hYCw1EuC/61/jAB6CEsT
+         5u2GveEw3KT6jJSTxTjbPJcwVMGtqJ7M0l2NW9W7Omr0abvspbj9fvNZGzxOYXAWkwqi
+         GV8J1jLm0Sm1z1DBzGwKWypVZxPI3m54OUW0PVpyuLm4DR/F06HB+SKdiIHEELlwZUAo
+         59Ew==
+X-Gm-Message-State: AOAM531FbWjKYHjSMpt33eZs6e3dxY+yeyv5rzl70xmQZ2KImGP7vu18
+        pFxLp6JMQfcx0Bok2szOBl+htFvqH0Yexg==
+X-Google-Smtp-Source: ABdhPJzW1XiVJGp1WTzjrfguZilSITIoOhYsxdw1EF0BlktOLue1vYXQF6l4vqxb70vSPJYCVxkPRw==
+X-Received: by 2002:adf:ef48:: with SMTP id c8mr1553278wrp.368.1643261214834;
+        Wed, 26 Jan 2022 21:26:54 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id z5sm6017661wmp.10.2022.01.26.21.26.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Jan 2022 21:26:54 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Josh Steadmon <steadmon@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v8 1/7] object-name tests: add tests for ambiguous object blind spots
+Date:   Thu, 27 Jan 2022 06:26:43 +0100
+Message-Id: <patch-v8-1.7-756c94bda7a-20220127T052116Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.0.890.gd7e422415d9
+In-Reply-To: <cover-v8-0.7-00000000000-20220127T052116Z-avarab@gmail.com>
+References: <cover-v7-0.6-00000000000-20220111T130811Z-avarab@gmail.com> <cover-v8-0.7-00000000000-20220127T052116Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B3F1695E-7F2A-11EC-810A-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Robin Jarry <robin.jarry@6wind.com> writes:
+Extend the tests for ambiguous objects to check how we handle objects
+where we return OBJ_BAD when trying to parse them. As noted in [1] we
+have a blindspot when it comes to this behavior.
 
-> When hitting ctrl-c on the client while a remote pre-receive hook is
-> running, receive-pack is not killed by SIGPIPE because the signal is
-> ignored. This is a side effect of commit ec7dbd145bd8 (receive-pack:
-> allow hooks to ignore its standard input stream).
+Since we need to add new test data here let's extend these tests to be
+tested under SHA-256, in d7a2fc82491 (t1512: skip test if not using
+SHA-1, 2018-05-13) all of the existing tests were skipped, as they
+rely on specific SHA-1 object IDs.
 
-I somehow feel that it is unrealistic to expect the command to be
-killed via SIGPIPE because there is no guarantee that the command
-has that many bytes to send out to to get the signal in the first
-place.  Such an expectation is simply wrong, isn't it?
+For these tests it only matters that the first 4 characters of the OID
+prefix are the same for both SHA-1 and SHA-256. This uses strings that
+I mined, and have the same prefix when hashed with both.
 
-> This can be confusing for most people and may even be considered a bug.
+We "test_cmp" the full output to guard against any future regressions,
+and because a subsequent commit will tweak it. Showing a diff of how
+the output changes is helpful to explain those subsequent commits.
 
-So, there is not much I see is confusing, and I expect "most people"
-would not get confused or consider it a bug.  Killing a local
-process may or may not have any immediate effect on what happens on
-the other side of the connection.
+The "sed" invocation in test_cmp_failed_rev_parse() doesn't need a
+"/g" because under both SHA-1 and SHA-256 we'll wildcard match any
+trailing part of the OID after our known starting prefix. We'd like to
+convert all of that to just "..." for the "test_cmp" which follows.
 
-On the other hand, the SIGPIPE death by a poorly written pre-receive
-hook was a source of real confusion.  The pushing end cannot do
-anything about it to fix if the hook disconnected before reading all
-of the proposed updates.
+1. https://lore.kernel.org/git/YZwbphPpfGk78w2f@coredump.intra.peff.net/
 
-> Add a new receive.strictPreReceiveImpl config option to *not* ignore
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t1512-rev-parse-disambiguation.sh | 82 +++++++++++++++++++++++++++++
+ 1 file changed, 82 insertions(+)
 
-I guess that the receiving end must know if its hook is loosely written
-or not, so having a knob to revert to the older mode of operation
-may probably be OK.
+diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
+index b0119bf8bc8..c14d88eae20 100755
+--- a/t/t1512-rev-parse-disambiguation.sh
++++ b/t/t1512-rev-parse-disambiguation.sh
+@@ -25,6 +25,88 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+ 
++test_cmp_failed_rev_parse () {
++	dir=$1
++	rev=$2
++
++	cat >expect &&
++	test_must_fail git -C "$dir" rev-parse "$rev" 2>actual.raw &&
++	sed "s/\($rev\)[0-9a-f]*/\1.../" <actual.raw >actual &&
++	test_cmp expect actual
++}
++
++test_expect_success 'ambiguous blob output' '
++	git init --bare blob.prefix &&
++	(
++		cd blob.prefix &&
++
++		# Both start with "dead..", under both SHA-1 and SHA-256
++		echo brocdnra | git hash-object -w --stdin &&
++		echo brigddsv | git hash-object -w --stdin &&
++
++		# Both start with "beef.."
++		echo 1agllotbh | git hash-object -w --stdin &&
++		echo 1bbfctrkc | git hash-object -w --stdin
++	) &&
++
++	test_must_fail git -C blob.prefix rev-parse dead &&
++	test_cmp_failed_rev_parse blob.prefix beef <<-\EOF
++	error: short object ID beef... is ambiguous
++	hint: The candidates are:
++	hint:   beef... blob
++	hint:   beef... blob
++	fatal: ambiguous argument '\''beef...'\'': unknown revision or path not in the working tree.
++	Use '\''--'\'' to separate paths from revisions, like this:
++	'\''git <command> [<revision>...] -- [<file>...]'\''
++	EOF
++'
++
++test_expect_success 'ambiguous loose bad object parsed as OBJ_BAD' '
++	git init --bare blob.bad &&
++	(
++		cd blob.bad &&
++
++		# Both have the prefix "bad0"
++		echo xyzfaowcoh | git hash-object -t bad -w --stdin --literally &&
++		echo xyzhjpyvwl | git hash-object -t bad -w --stdin --literally
++	) &&
++
++	test_cmp_failed_rev_parse blob.bad bad0 <<-\EOF
++	error: short object ID bad0... is ambiguous
++	hint: The candidates are:
++	fatal: invalid object type
++	EOF
++'
++
++test_expect_success POSIXPERM 'ambigous zlib corrupt loose blob' '
++	git init --bare blob.corrupt &&
++	(
++		cd blob.corrupt &&
++
++		# Both have the prefix "cafe"
++		echo bnkxmdwz | git hash-object -w --stdin &&
++		oid=$(echo bmwsjxzi | git hash-object -w --stdin) &&
++
++		oidf=objects/$(test_oid_to_path "$oid") &&
++		chmod 755 $oidf &&
++		echo broken >$oidf
++	) &&
++
++	test_cmp_failed_rev_parse blob.corrupt cafe <<-\EOF
++	error: short object ID cafe... is ambiguous
++	hint: The candidates are:
++	error: inflate: data stream error (incorrect header check)
++	error: unable to unpack cafe... header
++	error: inflate: data stream error (incorrect header check)
++	error: unable to unpack cafe... header
++	hint:   cafe... unknown type
++	hint:   cafe... blob
++	fatal: ambiguous argument '\''cafe...'\'': unknown revision or path not in the working tree.
++	Use '\''--'\'' to separate paths from revisions, like this:
++	'\''git <command> [<revision>...] -- [<file>...]'\''
++	EOF
++'
++
+ if ! test_have_prereq SHA1
+ then
+ 	skip_all='not using SHA-1 for objects'
+-- 
+2.35.0.890.gd7e422415d9
 
-Do not abbreviate "Implementation" in the name of a configuration
-variable, if that is the word you meant, by the way.  We try to
-spell things out for clarity.
-
-Also, "strict implementation" is way too vague.  What you want to
-say here is that the hook will not stop reading its input in the
-middle, causing the feeder to be killed by SIGPIPE, and from other
-aspects its implementation may not be strict at all.
-
-A name that goes well with a statement "This hook reads all of its
-input" would work much better.
-
-Should this cover only one hook, or should we introduce just one
-configuration to say "all hooks that read from their standard input
-stream are clean and will read their input to the end"?  Or do we
-need to have N different variables for each of N hooks that may stop
-reading from their standard input in the middle (not necessarily
-limited to the receive-pack command)?  I think there are a handful
-other hooks that take input from their standard input stream and I
-am not sure if pre-receive should be singled out like this.
-
-If this Boolean "This hook reads all of its input to the end" is to
-be added per hook, I suspect that the namespace of the configuration
-variable should be coordinated with the other effort to "define" hooks
-in the configuration file(s) in the first place.  Emily, do you have
-a suggestion?
-
-> +static volatile pid_t hook_pid;
-> +
-> +static void kill_hook(int signum)
-> +{
-> +	if (hook_pid != 0) {
-> +		kill(hook_pid, signum);
-> +		waitpid(hook_pid, NULL, 0);
-> +		hook_pid = 0;
-
-Is it safe to kill(2) from within a signal handler?
-
-Why does this patch do anything more than a partial reversion of
-ec7dbd14 (receive-pack: allow hooks to ignore its standard input
-stream, 2014-09-12), i.e. "if the configuration says do not be
-lenient to hooks that do not consume their input, do not ignore
-sigpipe at all".
-
-> +	}
-> +	sigchain_pop(signum);
-> +	raise(signum);
-> +}
-> +
->  struct receive_hook_feed_state {
->  	struct command *cmd;
->  	struct ref_push_report *report;
-> @@ -858,7 +877,11 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
->  		return code;
->  	}
->  
-> -	sigchain_push(SIGPIPE, SIG_IGN);
-> +	hook_pid = proc.pid;
-> +	if (strict_pre_receive_impl && strcmp(hook_name, "pre-receive") == 0)
-> +		sigchain_push(SIGPIPE, kill_hook);
-> +	else
-> +		sigchain_push(SIGPIPE, SIG_IGN);
->  
->  	while (1) {
->  		const char *buf;
-> @@ -872,6 +895,7 @@ static int run_and_feed_hook(const char *hook_name, feed_fn feed,
->  	if (use_sideband)
->  		finish_async(&muxer);
->  
-> +	hook_pid = 0;
->  	sigchain_pop(SIGPIPE);
->  
->  	return finish_command(&proc);
