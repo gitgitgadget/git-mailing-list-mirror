@@ -2,103 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74D28C433EF
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 18:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06B55C433FE
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 18:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233724AbiA0So0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 13:44:26 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64243 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232003AbiA0SoY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 13:44:24 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 91C75174B3B;
-        Thu, 27 Jan 2022 13:44:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=L2KDQ1beiiPh2ogQUfVrqwJ6OdWSF6PExnQjY0
-        orzas=; b=li9+CXek+94gtYSFlOBkn48sUqr+uRI4TQtdppH5B+rJ06hLKyiaCT
-        D4LKKelMeX0W7QRjseFSsBv3f2w00ZXED6SaIC8KHUlNZqpLe2X3Dq1V9Larq945
-        p9g8bkpRvAC4XzZrw+ozaLAc89JDYmXb6Y1CZa0Y8fZKnudeUM148=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 81F82174B3A;
-        Thu, 27 Jan 2022 13:44:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A79A5174B39;
-        Thu, 27 Jan 2022 13:44:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeffrey Walton <noloader@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: WARNING: terminal is not fully functional
-References: <CAH8yC8kYP2Sth+vUZMzHujKQZC6r1kFf+Lz=6_WRs4GFR65B9g@mail.gmail.com>
-        <xmqqr18t4sc0.fsf@gitster.g>
-        <CAH8yC8k53a4xcDh34XqoA0VCcxG+Y+mE-rb1MKMd_Z+r-t=_Bw@mail.gmail.com>
-Date:   Thu, 27 Jan 2022 10:44:18 -0800
-In-Reply-To: <CAH8yC8k53a4xcDh34XqoA0VCcxG+Y+mE-rb1MKMd_Z+r-t=_Bw@mail.gmail.com>
-        (Jeffrey Walton's message of "Thu, 27 Jan 2022 02:05:18 -0500")
-Message-ID: <xmqqczkd2f3x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 23199BB4-7FA1-11EC-9549-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+        id S236489AbiA0Spa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 13:45:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53862 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233971AbiA0Sp2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 13:45:28 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84763C06173B
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 10:45:28 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id p6-20020a170902780600b0014c1f146295so1912772pll.5
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 10:45:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=6hbYlyJCZ6uZKK3cIst/AbpkPkHdjjGPRvhUh+u14Ks=;
+        b=H6z2BftimnudlPdnn4rZrSRe/vHZWJEtfyTgSasfcP6OUgo6mpjZsVdnRCT2kCU+tn
+         Lum7agbnasrtp5cuKb6wwvdZLfz08puEQMRZ6tz6hZRNwQhIPA2jbLUuYSWCOxAhwXoU
+         /dj4bHdIW/FLzXlfMjtXqKm3ftHQZzKASSEr+rL6EieRLQYv+/DSCsE5wYk64b/f0l5J
+         4mxdQ2zHH2TDJcmmXTsxMsIf/GhlanieFXv6SRteIvZreUUTMbsKR1XGG4b83qKlA5X9
+         6Qu4Njc5L2yMLbcrcni8oP1B8wKx5MfrlLK1camc6QTZ4PbcExc5RH8J1gcPTm1631SS
+         aNzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=6hbYlyJCZ6uZKK3cIst/AbpkPkHdjjGPRvhUh+u14Ks=;
+        b=IHMhiXSiZKxSHY+ByfZm3VSvZnz3KeUek9ciwNsNP5ts7MIILMFq0JvE7c5nSjDvxb
+         zDWaXOCwxS6QXxC1CcIt9h0UYWdTUbYeBvsmPvD3LXi50OZOpBmHdjgcEaeN0mPVIzgO
+         7tx1IS8213wAJScV3TtjJR7z1dSlM/7NGTvB5X3O6ze3AG7zHZBzqHy6TXTaiiYbd19J
+         fWwH5QPWtXZ+vPgBMphoegXpI5aACAAchac+hlQYqacLUBqr3YePUK/XodQFvunX+iDC
+         R4Db0Qc4yKz9ePNuCScugIURC9hyBqOd6h+p7y39FCW2/Wnkj7ctWhpUkF3kkCnJDi2/
+         zRuQ==
+X-Gm-Message-State: AOAM5310K92NCw5682DJ4KiV93tKm/a8QslFsK5meSe61fiYrNIpPJmO
+        hfBHpkBncCsbz+VoQ40Pd3HVDZGCqFK6zA==
+X-Google-Smtp-Source: ABdhPJxa7Bv3eCr1UOf4mmL18RktofobuojwmDpEa2hRZj1gB6grrJB0Y8k1JioCHk6UbkNq1CKmSM+yHqJoMQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a62:7c42:: with SMTP id
+ x63mr4089202pfc.31.1643309127958; Thu, 27 Jan 2022 10:45:27 -0800 (PST)
+Date:   Thu, 27 Jan 2022 10:45:24 -0800
+In-Reply-To: <patch-v4-1.7-1a0b1323cd7-20220127T143552Z-avarab@gmail.com>
+Message-Id: <kl6ltudpyq4b.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20211013051805.45662-1-raykar.ath@gmail.com> <cover-v4-0.7-00000000000-20220127T143552Z-avarab@gmail.com>
+ <patch-v4-1.7-1a0b1323cd7-20220127T143552Z-avarab@gmail.com>
+Subject: Re: [PATCH v4 1/7] submodule--helper: get remote names from any repository
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrn@google.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        pc44800@gmail.com, Shourya Shukla <periperidip@gmail.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeffrey Walton <noloader@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Thu, Jan 27, 2022 at 1:15 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Jeffrey Walton <noloader@gmail.com> writes:
->>
->> > I needed to install Git on Ubuntu 8. Git seems to work Ok for most
->> > task, but this is unusual:
->> >
->> >     $ git diff
->> >     WARNING: terminal is not fully functional
->> >     -  (press RETURN)
->> >
->> > Here's the terminal:
->> >
->> >     $ echo $TERM
->> >     xterm-256color
->> ...
->> Something to try quickly would be:
->>
->> $ export TERM=vt100; less README.md
->>
->> As the termcap/terminfo entry for vt100 is usually more widely
->> available, this may unblock you.
->> 
->> > It seems like loss of colors on an old platform is not that important.
->> > However, the message being printed creates an actionable item that
->> > needs attention. I think no message would be a better option.
->>
->> You would want to redirect it to folks who work on "less" ;-)
+This wasn't introduced by you (it was introduced in v1 [1]), but I think
+it's worth pointing out.
+
+> Let's instead introduce a function called `repo_get_default_remote()`
+> which takes any repository object and retrieves the remote accordingly.
 >
-> Oh, sorry about that.
+> `get_default_remote()` is then defined as a call to
+> `repo_get_default_remote()` with 'the_repository' passed to it.
 
-No need to be sorry for that.
+We say this, suggesting that repo_get_default_remote()'s signature is
+just get_default_remote()'s plus a "struct repository *" (like most
+repo_*). But..
 
-I seem to have these terminfo database entries for terminals whose
-name begin with 'x':
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index c5d3fc3817f..965260edb22 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -29,11 +29,10 @@
+>  typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
+>  				  void *cb_data);
+> =20
+> -static char *get_default_remote(void)
+> +static char *repo_get_default_remote(struct repository *repo, const char=
+ *refname)
+>  {
+>  	char *dest =3D NULL, *ret;
+>  	struct strbuf sb =3D STRBUF_INIT;
+> -	const char *refname =3D resolve_ref_unsafe("HEAD", 0, NULL, NULL);
+> =20
+>  	if (!refname)
+>  		die(_("No such ref: %s"), "HEAD");
+> @@ -46,7 +45,7 @@ static char *get_default_remote(void)
+>  		die(_("Expecting a full ref name, got %s"), refname);
+> =20
+>  	strbuf_addf(&sb, "branch.%s.remote", refname);
+> -	if (git_config_get_string(sb.buf, &dest))
+> +	if (repo_config_get_string(repo, sb.buf, &dest))
+>  		ret =3D xstrdup("origin");
+>  	else
+>  		ret =3D dest;
+> @@ -55,6 +54,25 @@ static char *get_default_remote(void)
+>  	return ret;
+>  }
+> =20
+> +static char *get_default_remote_submodule(const char *module_path)
+> +{
+> +	const char *refname;
+> +	struct repository subrepo;
+> +	int ignore_errno;
+> +
+> +	refname =3D refs_resolve_ref_unsafe(get_submodule_ref_store(module_path=
+),
+> +					  "HEAD", 0, NULL, NULL,
+> +					  &ignore_errno);
+> +	repo_submodule_init(&subrepo, the_repository, module_path, null_oid());
+> +	return repo_get_default_remote(&subrepo, refname);
+> +}
+> +
+> +static char *get_default_remote(void)
+> +{
+> +	const char *refname =3D resolve_ref_unsafe("HEAD", 0, NULL, NULL);
+> +	return repo_get_default_remote(the_repository, refname);
+> +}
+> +
 
-    $ /bin/ls /lib/terminfo/x
-    xterm
-    xterm-256color
-    xterm-color
-    xterm-debian
-    xterm-mono
-    xterm-r5
-    xterm-r6
-    xterm-vt220
-    xterm-xfree86
+repo_get_default_remote() actually take yet another argument - refname.
 
-my suspicion is that you are lacking xterm-256color for some reason.
-These usually come from ncurses-base package if I am not mistaken.
+It looks to me that repo_get_default_remote() shouldn't take the
+refname argument at all and that we should be using
+refs_resolve_ref_unsafe() instead, like:
+
+  +static char *repo_get_default_remote(struct repository *repo)
+    {
+    char *dest =3D NULL, *ret;
+    struct strbuf sb =3D STRBUF_INIT;
+  -	const char *refname =3D resolve_ref_unsafe("HEAD", 0, NULL, NULL);
+  +	const char *refname =3D refs_resolve_ref_unsafe(
+  +   get_main_ref_store(repo), "HEAD", 0, NULL, NULL /*, errno? */);
+
+this makes the rest of the code a lot cleaner..
+
+  +static char *get_default_remote_submodule(const char *module_path)
+  +{
+  +	struct repository subrepo;
+  +
+  +	repo_submodule_init(&subrepo, the_repository, module_path, null_oid());
+  +	return repo_get_default_remote(&subrepo);
+  +}
+  +
+  +static char *get_default_remote(void)
+  +{
+  +  return repo_get_default_remote(the_repository);
+  +}
+
+And because it's quite idiomatic to initialize the subrepo struct in
+order to can call repo_* functions, we could even drop
+get_default_remote_submodule() altogether.
+
+As for why this wasn't the original approach, the only reason I can
+think of is that we didn't realize get_main_ref_store(subrepo) was an
+option.
+
+[1] https://lore.kernel.org/git/20210907115932.36068-3-raykar.ath@gmail.com=
+/
 
