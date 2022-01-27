@@ -2,150 +2,293 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69C91C433F5
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 16:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E41C4C433F5
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 17:05:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243997AbiA0QnM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 11:43:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52960 "EHLO
+        id S244306AbiA0RFr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 12:05:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231757AbiA0QnK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 11:43:10 -0500
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA9E9C061714
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 08:43:10 -0800 (PST)
-Received: by mail-ot1-x336.google.com with SMTP id x52-20020a05683040b400b0059ea92202daso3091834ott.7
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 08:43:10 -0800 (PST)
+        with ESMTP id S238767AbiA0RFo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 12:05:44 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA81C061714
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 09:05:44 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id s13so7326648ejy.3
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 09:05:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=OSyTbPCrYpoFa2xh3L+xg/+d9BOwztBfAwkRZPkw3z8=;
-        b=AkkFGw629Hc/6SaBRcFiRl2RooJTJ1iJLyHL7eTnazi4zQex8xtE+WVru3cm7kI/WA
-         wZTvRBu+65aPtFFBL/sfP4hc/t24Se9Cp0zw3PGbeMJyVErPF9aUMaX2ontz5DhbsLu1
-         2I451flPiUtCSTN+CE9joe1nFfQhLoVtmDyKI1l2pTZfLCOXUQJGsN7mOpeFQhXVZ15a
-         uNHEcZSBP+++91/FLZW9wDBo6NEhjodP4O717l46I6ibiW0fVy3tohbb4EJ5FXtbppNj
-         iMdsnPzfLrSnDUxlPIpioW/0yVLM5Cxl+hvXjawAZ/Kd1ivehf561Bz9bq93Rr1lWMHV
-         be/A==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=E3VPZB/Pia8Ih8OzfvV/5T9WA9w362QoyaFHn1BxLu0=;
+        b=Q1mJYhFpPZ+Kwp3nLHjac9fxsarn45gJZQ6wCINhxmDmu05Jsj3otE3HxWlUFQMF2C
+         Ul1/vtq1HN9zlAZYj7KzZSBktx3l79KGQmlqK5DsjFeTSZ+/cNsf7Wf4BQcGRTbfEOZ0
+         9uHbOl0kMh+MVfHLouDpsOFi9zDbYVNRdtzo93+rA1rvz+bnbHQuuVSD44IAsSXBk3yT
+         4Sje9UZrhreBY4CFbl9cMyEYKT7Fo7vvEm7/pps3uvEObOmudRYoQartKMHKlXGmsBxb
+         8a+kttetTFKuDeVv4WdYkmjAnKvyv4sK9MwWMr/536AMwABIrs1JXPSGb/tNMJc7z6lk
+         8aOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=OSyTbPCrYpoFa2xh3L+xg/+d9BOwztBfAwkRZPkw3z8=;
-        b=OQwaN5yVTOlMQWuOxIe9m0Mmed77XxF07ixqNuTVuFSiByHgNZRz1SWWvAGn6KLiVx
-         LTwytd2JMXhYUywQ19/gxYnQ5eFO0FThcAzgnzbxx/5lFJNEVyS8fjff3Y0I/u7H6YmQ
-         tBchx53QhleCJjYMUpVoRgfeKKJSIUTSnnCupfxz6qvQJ0v+ZzQKUHOR6VNBPBUWgeER
-         phEn6k2fRe9fNo80LNNWj2U0RbHwKOJ+rziEQ+adlFeMBh1RAzBDCvpN6i7UGRtDIRWl
-         f94HNbrQp4nAHNL0Iie2ev3UN5n3RIiZAXP1m+3+OMEQylFqWtrJcDwzbxfDVPv7wRxm
-         EWpg==
-X-Gm-Message-State: AOAM5325CVlFXfWR+XWF6/Um2OnQOeOris548Hb9yOsDa8IQ8a4+GjKe
-        xnm44zfOVhgvJHtZsN4V8yg=
-X-Google-Smtp-Source: ABdhPJwNvnrvbK0KlqWrN1sbUgzYlSWNjSst11jdCqLsJ3gJj4Sj8oC6uxoebf7zk+MQsgEUeEChnA==
-X-Received: by 2002:a9d:6e90:: with SMTP id a16mr2682575otr.206.1643301790090;
-        Thu, 27 Jan 2022 08:43:10 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:d9cb:250e:9ea6:f8? ([2600:1700:e72:80a0:d9cb:250e:9ea6:f8])
-        by smtp.gmail.com with ESMTPSA id o144sm6969211ooo.25.2022.01.27.08.43.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jan 2022 08:43:09 -0800 (PST)
-Message-ID: <e1934710-e228-adc4-d37c-f706883bd27c@gmail.com>
-Date:   Thu, 27 Jan 2022 11:43:08 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=E3VPZB/Pia8Ih8OzfvV/5T9WA9w362QoyaFHn1BxLu0=;
+        b=JjdMPXo9ytS3f0jgp0skrsFcatQyIEvr87dQsAwrHRz3DOpjtEhz1uE/6mYe2ECAo8
+         CrMm6N9VxyFHVp8Ur833qsltki1ZQRbGP7U9+nSOt9jtYe/rTHWDNpVB1yvwNH0ZGbWI
+         hHTdFUSlztFPxTvnP8gkSnbo6MJHY9gFxBdT2w7YFbMM1WXPpAW8Cjz3zuCU6o0EZo43
+         xyZnywTbeWSq3+KEiN952BjeIpAvgX4q1ItZZg9JFNC/98WqxSnPFusTgpidjg1s2w9g
+         TKMio1An6rrOCbFv4ByIoDOg/5orOKbN/3ZFNP5QrfC+8fUaVmdK+NaW57KHVG6/Bzor
+         uWjQ==
+X-Gm-Message-State: AOAM532lCtOBgO5WcCi3Ucalll5WbpK/0/0SkofVLBG6mhPNp8gcKr8Q
+        AeghtkyUH44Ov4sp1AWlEROVPn76jvqVhg==
+X-Google-Smtp-Source: ABdhPJwlRKO4dwZ6CpxbqEvY6/YFx+CF8AUH9bb2suHlyI0oXl9iESj+/Fu5MUGo8IMedcoOboLmhw==
+X-Received: by 2002:a17:907:6d82:: with SMTP id sb2mr3638914ejc.3.1643303142130;
+        Thu, 27 Jan 2022 09:05:42 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ha3sm8855632ejb.157.2022.01.27.09.05.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jan 2022 09:05:41 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nD8DM-003YXt-Uo;
+        Thu, 27 Jan 2022 18:05:40 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Taylor Blau <me@ttaylorr.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: CI "grouping" within jobs v.s. lighter split-out jobs (was: [PATCH
+ 0/9] ci: make Git's GitHub workflow output much more helpful)
+Date:   Thu, 27 Jan 2022 17:31:51 +0100
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+Message-ID: <220127.86ilu5cdnf.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: Bug report - sparse-checkout ignores prefix when run in
- subdirectories
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Lessley Dennington <lessleydennington@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <29f0410e-6dfa-2e86-394d-b1fb735e7608@gmail.com>
- <xmqqsfu1g64s.fsf@gitster.g>
- <CABPp-BH5woi6KY7OBpnsS-M2EmgLHii9zs8rSwrgcPFkOAvn_A@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BH5woi6KY7OBpnsS-M2EmgLHii9zs8rSwrgcPFkOAvn_A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/5/2022 6:19 PM, Elijah Newren wrote:
-> On Wed, Jan 5, 2022 at 2:38 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Lessley Dennington <lessleydennington@gmail.com> writes:
->>
->>> Hello everyone! See the following bug report pertaining to sparse-checkout
->>> when run outside top-level directories.
->>
->> In a bug report it is fine, but "outside top-level" usually means
->> above the top-level of the working tree.  Here, I think you meant
->> running in a subdirectory of the top-level.
->>
->> Perhaps something along this line?
->>
->>  builtin/sparse-checkout.c | 10 ++++++++++
->>  1 file changed, 10 insertions(+)
->>
->> diff --git c/builtin/sparse-checkout.c w/builtin/sparse-checkout.c
->> index 45e838d8f8..4e5efbb85e 100644
->> --- c/builtin/sparse-checkout.c
->> +++ w/builtin/sparse-checkout.c
->> @@ -753,6 +753,16 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
->>         if (!core_sparse_checkout_cone && argc == 0) {
->>                 argv = default_patterns;
->>                 argc = default_patterns_nr;
->> +       } else if (argc && prefix && *prefix) {
->> +               /*
->> +                * The args are not pathspecs, so unfortunately we
->> +                * cannot imitate how cmd_add() uses parse_pathspec().
->> +                */
->> +               int i;
->> +               int prefix_len = strlen(prefix);
->> +
->> +               for (i = 0; i < argc; i++)
->> +                       argv[i] = prefix_path(prefix, prefix_len, argv[i]);
->>         }
-> 
-> This looks good (sparse_checkout_add() needs a similar fix), at least
-> for cone mode.  There might be a small pickle here that I didn't think
-> about before.  --cone mode always uses directories, so we expect
-> people to provide directory names.  Because of that, I think it's fair
-> to expect the arguments passed to `set` or `add` to be paths relative
-> to the current working directory.  In contrast, for non-cone mode we
-> do not expect pathnames but gitignore-style globs.  And when we get
-> gitignore-style globs, we don't know if they were intended relative to
-> the current working directory or the toplevel, because we only have
-> one $GIT_DIR/info/sparse-checkout file versus many .gitignore files.
-> So, should "**.py" go directly into the sparse-checkout file as-is, or
-> be translated to "my/current/subdir/**.py" first?
-> 
-> Maybe translating is always fine, or maybe we want to throw an error
-> when: (not using cone mode and prefix is non-empty and any patterns
-> are provided).
-> 
-> Thoughts?
 
-You seem to have worked it out in the other threads, but I came here
-to agree: we should not do this transformation unless we are in
-cone mode. We should also do this when "--cone" is supplied.
+[CC-ing some people who've been interested in CI architechture]
 
-The prefix_path() collapses "../" entries, right? Just making sure
-that we test that scenario when writing a full fix here.
+On Mon, Jan 24 2022, Johannes Schindelin via GitGitGadget wrote:
 
-For example, if we added a case to t1092, we should be able to
-do the following within any of the example repos:
+> [...]
+> The current situation
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Let me walk you through the current experience when a PR build fails: I g=
+et
+> a notification mail that only says that a certain job failed. There's no
+> indication of which test failed (or was it the build?). I can click on a
+> link at it takes me to the workflow run. Once there, all it says is "Proc=
+ess
+> completed with exit code 1", or even "code 2". Sure, I can click on one of
+> the failed jobs. It even expands the failed step's log (collapsing the ot=
+her
+> steps). And what do I see there?
+>
+> Let's look at an example of a failed linux-clang (ubuntu-latest) job
+> [https://github.com/git-for-windows/git/runs/4822802185?check_suite_focus=
+=3Dtrue]:
+>
+> [...]
+> Test Summary Report
+> -------------------
+> t1092-sparse-checkout-compatibility.sh           (Wstat: 256 Tests: 53 Fa=
+iled: 1)
+>   Failed test:  49
+>   Non-zero exit status: 1
+> t3701-add-interactive.sh                         (Wstat: 0 Tests: 71 Fail=
+ed: 0)
+>   TODO passed:   45, 47
+> Files=3D957, Tests=3D25489, 645 wallclock secs ( 5.74 usr  1.56 sys + 866=
+.28 cusr 364.34 csys =3D 1237.92 CPU)
+> Result: FAIL
+> make[1]: *** [Makefile:53: prove] Error 1
+> make[1]: Leaving directory '/home/runner/work/git/git/t'
+> make: *** [Makefile:3018: test] Error 2
+>
 
-	git sparse-checkout disable &&
-	cd folder1 &&
-	git sparse-checkout set --cone . ../folder2
-	git sparse-checkout list >actual &&
-	cat >expect <<-EOF &&
-	folder1
-	folder2
-	EOF
-	test_cmp expect actual
+Firstly I very much applaud any effort to move the CI UX forward. I know
+we haven't seen eye-to-eye on some of the trade-offs there, but I think
+something like this series is a step in the right direction. I.e. trying
+harder to summarize the output for the user, and making use of some CI
+platform-specific features.
 
-Thanks,
--Stolee
+I sent a reply in this thread purely on some implementation concerns
+related to that in
+https://lore.kernel.org/git/220126.86sftbfjl4.gmgdl@evledraar.gmail.com/,
+but let's leave that aside for now...
+
+> [...]
+> So I had a look at what standards exist e.g. when testing PowerShell
+> modules, in the way of marking up their test output in GitHub workflows, =
+and
+> I was not disappointed: GitHub workflows support "grouping" of output lin=
+es,
+> i.e. marking sections of the output as a group that is then collapsed by
+> default and can be expanded. And it is this feature I decided to use in t=
+his
+> patch series, along with GitHub workflows' commands to display errors or
+> notices that are also shown on the summary page of the workflow run. Now,=
+ in
+> addition to "Process completed with exit code" on the summary page, we al=
+so
+> read something like:
+>
+> =E2=8A=97 linux-gcc (ubuntu-latest)
+>    failed: t9800.20 submit from detached head
+>
+> Even better, this message is a link, and following that, the reader is
+> presented with something like this
+> [https://github.com/dscho/git/runs/4840190622?check_suite_focus=3Dtrue]:
+
+This series is doing several different things, at least:
+
+ 1) "Grouping" the ci/ output, i.e. "make" from "make test"
+ 2) Doing likewise for t/test-lib.sh
+ 3) In doing that for t/test-lib.sh, also "signalling" the GitHub CI,
+    to e.g. get the "submit from detached head" output you quote just
+    a few lines above
+
+I'd like to focus on just #1 here.
+
+Where I was going with that in my last CI series was to make a start at
+eventually being able to run simply "make" at the top-level
+"step". I.e. to have a recipe that looks like:
+
+    - run: make
+    - run: make test
+
+I feel strongly that that's where we should be heading, and the #1 part
+of this series is basically trying to emulate what you'd get for free if
+we simply did that.
+
+I.e. if you run single commands at the "step" level (in GitHub CI
+nomenclature) you'll get what you're doing with groupings in this series
+for free, and without any special code in ci/*, better yet if you then
+do want grouping *within* that step you're free to do so without having
+clobbered your one-level of grouping already on distinguishing "make"
+from "make test".
+
+IOW our CI now looks like this (pseudocode):
+
+     - job:
+       - step1:
+         - use ci/lib.sh to set env vars
+         - run a script like ci/run-build-and-tests.sh
+       - step2:
+         - use ci/lib.sh to set env vars
+         - run a script like print-test-failures.sh
+
+But should instead look like:
+
+     - job:
+       - step1:
+         - set variables in $GITHUB_ENV using ci/lib.sh
+       - step2:
+         - make
+       - step3:
+         - make test
+       - step4:
+         - run a script like print-test-failures.sh
+
+Well, we can quibble about "step4", but again, let's focus on #1 here,
+that's more #2-#3 territory.
+
+I had some WIP code to do that which I polished up, here's how e.g. a
+build failure looks like in your implementation (again, just focusing on
+how "make" and "make test" is divided out, not the rest):
+
+    https://github.com/dscho/git/runs/4840190622?check_suite_focus=3Dtrue#s=
+tep:4:62
+
+I.e. you've made "build" an expandable group at the same level as a
+single failed test, and still all under the opaque
+ci/run-build-and-test.sh script.
+
+And here's mine. This is using a semi-recent version of my patches that
+happened to have a failure, not quite what I've got now, but close
+enough for this E-Mail:
+
+    https://github.com/avar/git/runs/4956260395?check_suite_focus=3Dtrue#st=
+ep:7:1
+
+Now, notice two things, one we've made "make" and "make test" top-level
+steps, but more importantly if you expand that "make test" step on yours
+you'll get the full "make test" output,
+
+And two it's got something you don't have at all, which is that we're
+now making use of the GitHub CI feature of having pre-declared an
+environment for "make test", which the CI knows about (you need to click
+to expand it):
+
+    https://github.com/avar/git/runs/4956260395?check_suite_focus=3Dtrue#st=
+ep:7:4
+
+Right now that's something we hardly make use of at all, but with my
+changes the environment is the *only* special sauce we specify before
+the step, i.e. GIT_PROVE_OPTS=3D.. DEFAULT_TEST_TARGET=3D... etc.
+
+I think I've run out of my ML quota for now, but here's the branch that imp=
+lements it:
+
+    https://github.com/git/git/compare/master...avar:avar/ci-unroll-make-co=
+mmands-to-ci-recipe
+
+That's "282 additions and 493 deletions.", much of what was required to
+do this was to eject the remaining support for the dead Travis and Azure
+CI's that we don't run, i.e. to entirely remove any sort of state
+management or job control from ci/lib.sh, and have it *only* be tasked
+with setting variables for subsequent steps to use.
+
+That makes it much simpler, my end-state of it is ~170 lines v.s. your
+~270 (but to be fair some of that's deleted Travis code):
+
+    https://github.com/avar/git/blob/avar/ci-unroll-make-commands-to-ci-rec=
+ipe/ci/lib.sh
+    https://github.com/gitgitgadget/git/blob/pr-1117/dscho/use-grouping-in-=
+ci-v1/ci/lib.sh
+
+And much of the rest is just gone, e.g. ci/run-build-and-tests.sh isn't
+there anymore, instead you simply run "make" or "make test" (or the
+equivalent on Windows, which also works):
+
+    https://github.com/avar/git/tree/avar/ci-unroll-make-commands-to-ci-rec=
+ipe/ci
+    https://github.com/gitgitgadget/git/tree/pr-1117/dscho/use-grouping-in-=
+ci-v1/ci
+
+Anyway, I hope we can find some sort of joint way forward with this,
+because I think your #1 at least is going in the opposite direction we
+should be going to achieve much the same ends you'd like to achieve.
+
+We can really just do this in a much simpler way once we stop treating
+ci/lib.sh and friends as monolithic ball of mud entry points.
+
+But I'd really like us not to go in this direction of using markup to
+"sub-divide" the "steps" within a given job, when we can relatively
+easily just ... divide the steps.
+
+As shown above that UI plays much more naturally into the CI's native
+features & how it likes to arrange & present things.
+
+And again, all of this is *only* discussing the "step #1" noted
+above. Using "grouping" for presenting the test failures themselves or
+sending summaries to the CI "Summary" is a different matter.
+
+Thanks!
+
+
+
