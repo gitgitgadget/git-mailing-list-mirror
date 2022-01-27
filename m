@@ -2,129 +2,475 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DDEAC433EF
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 20:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56322C433F5
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 21:04:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240821AbiA0Uxf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 15:53:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55412 "EHLO
+        id S243736AbiA0VEW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 16:04:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240138AbiA0Uxf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 15:53:35 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E951EC061714
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 12:53:34 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id c192so2792805wma.4
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 12:53:34 -0800 (PST)
+        with ESMTP id S235243AbiA0VEW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 16:04:22 -0500
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EABC3C061714
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 13:04:21 -0800 (PST)
+Received: by mail-io1-xd2c.google.com with SMTP id p63so4393404iod.11
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 13:04:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=6wind.com; s=google;
-        h=mime-version:content-transfer-encoding:date:message-id:to:cc
-         :subject:from:references:in-reply-to;
-        bh=KhOAx1L3naEHtpFkj4vNjtl/4nm+wrMJy++28n9pAoM=;
-        b=XknSNijIomUJVoPnR7cSADiDGTsJ0PsfXF8R4iGTv3uy9FfaRFjOW5MFB/U0VVwjx4
-         UKPu38cgOV1XDKx3xQUDe78idtBSd/LpTBI/KgP3w1aE3/RzLq03uV61dj6rBtIUrL9f
-         /buoEi9zwLP4EKF/MXdahzHXY1gbpUeOyWRtjQxpFXKrU0qJkqwwjLgkQFK1fMc4604Y
-         LoQN72rojUJt5VcimQL/a9SijBMDplJjr7a8Y+5EVR6FbG7EUX3nRPmVqPsHTXahTP+x
-         +7v2s3iH1U8qL68ujNmcGhoiw710O4MyOtltQy384V9fE0DSHLF9AB7aHtTzEO8V84jP
-         E+RA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=3NRjEH3AaUfiIcCxpINixUwx3nrVVvJLQXJcoaF1YkQ=;
+        b=DhUegqp2mwW8JvD4FmYZ3KQ46NnC5s89lHzwocIj0/Y1QY5gwbDKyvHF2TzvisI1oK
+         x8nXvRe+r+6dkuQ2EdckFgJ4N2RcIqAAfzwseBrjVmJgIhgQhwEjWKXkhxoc7UHgum9y
+         0C8LcnRRd0pkUfidISJIt8OBDUDVn0TEjQlHcEGOjsxJPKWV5xiT4qvhGH5mjSik52l9
+         9vXlej2H503Neykb+j/Zneu1jp7uCCvXEDI7OA9yedjk1n8OvD3GZ7UrcJFzsRHBxL8i
+         Nk/OGKQcyFynrFQdxzqd11LORXEQ4C2it55VxKfIJUPcW0qI0j50L5Caj9eCrXCCZcny
+         u1pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:content-transfer-encoding:date
-         :message-id:to:cc:subject:from:references:in-reply-to;
-        bh=KhOAx1L3naEHtpFkj4vNjtl/4nm+wrMJy++28n9pAoM=;
-        b=5gOq8dJIf0AjoTbzWekPJc/QPW3XQbpiRu1Tnz/vJAmBd21rfsYdJtcWkiXym0XSrz
-         zqnbXtFNWYMNh/yicOOVM4d0hzlYbYJmmyGNNpxGPNsWon5HfgB7PVG0wQkQdtOWbfZK
-         VjId8aEk2gkwvjBEHVA4TGAYGyMJWSC5aS2WE3abz+5d4dODlzJSBEP17P5GouqztVik
-         FWIMcCbxdRu86glUNzpy5ji5JF3OSgun+Zo1lthQKYCVRW+pSR4OLvYxxCKFt9rKYrBk
-         v7JNokSsgvXX54e4elcTc4iNPYhKoUie6K4kAkwUZYL8xzOz92xj6niUIVeMuHI5OVdx
-         dc+w==
-X-Gm-Message-State: AOAM533iNL7sD7kvzDzoar2hzMimOZBXoP82jseW2NUc8xcfZqZGdGI3
-        /IFhXgQKXj3qaRD3hlfkIzziKQ==
-X-Google-Smtp-Source: ABdhPJzcrO4HMWAoPCLQmp/X0ASh56J9zMQKS42jJYwdUWqK5lLiXRaSoAEPWEWV5bD46sICda1ZWQ==
-X-Received: by 2002:a1c:a302:: with SMTP id m2mr4786760wme.84.1643316813478;
-        Thu, 27 Jan 2022 12:53:33 -0800 (PST)
-Received: from localhost (2a01cb000f483e004bf57bbe4fddc0d6.ipv6.abo.wanadoo.fr. [2a01:cb00:f48:3e00:4bf5:7bbe:4fdd:c0d6])
-        by smtp.gmail.com with ESMTPSA id a24sm282038wmm.31.2022.01.27.12.53.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jan 2022 12:53:33 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=3NRjEH3AaUfiIcCxpINixUwx3nrVVvJLQXJcoaF1YkQ=;
+        b=0AVeuyo46h9mezFwQifJDbYqKF68iqV+RcdOxsKQ9CaoWTMUGJnDutQn4TsseGNtNz
+         H+NlRBU7KF4TH0L/N2OIgrCyzYWzwz1xa9ABsHMGWv3qUShtOM/OJIzgDCTcM3aoIDfm
+         EgmEIp1plkc98iIfWYh5gY3DgJ1Zw+cTfrSa4QSIc/nj9VJ43lDQWZxrIZjBjiEzls70
+         6GUWbjcLCutuFfv3Iy3EmpNqhJio39Ycka0nBwwDLXKGEY0f9RmPKBygAJmLdNlxOFfk
+         02nxBJFTI2iPYXAlN4fWIaEcJFR5/AednPwEGS7ot2OMf9f1qVqeM2vOpZpiWnb+VU5y
+         Y4kA==
+X-Gm-Message-State: AOAM531WZCyK79EcPYy5aLej1kuR3pdhjYC34UO4FxtJ2h3pyxvbOs/e
+        hW4HcpVo8RR0MMtLo/lRxJU=
+X-Google-Smtp-Source: ABdhPJxFTXWatwfJE6lCVKH9ZkW6L0E4s5s5JNXlScPAfiL4NzvUuldsVZ6fPs+OcyHK0UUNunl4Sg==
+X-Received: by 2002:a6b:b7cf:: with SMTP id h198mr3280385iof.166.1643317461322;
+        Thu, 27 Jan 2022 13:04:21 -0800 (PST)
+Received: from [192.168.68.66] (ool-ad03998c.dyn.optonline.net. [173.3.153.140])
+        by smtp.gmail.com with ESMTPSA id g14sm12394758ilj.41.2022.01.27.13.04.20
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 27 Jan 2022 13:04:20 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, avarab@gmail.com, me@ttaylorr.com
+Subject: Re: [RFC v2] cat-file: add a --stdin-cmd mode
+Date:   Thu, 27 Jan 2022 16:04:19 -0500
+X-Mailer: MailMate Trial (1.14r5852)
+Message-ID: <1C2DA310-452B-4846-9183-0D3CDB05620B@gmail.com>
+In-Reply-To: <1540ee6b-d7ef-428e-d2f8-74bc4847c34f@gmail.com>
+References: <20220125225008.45944-1-johncai86@gmail.com>
+ <1540ee6b-d7ef-428e-d2f8-74bc4847c34f@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date:   Thu, 27 Jan 2022 21:53:32 +0100
-Message-Id: <CHGR6XNP6TV7.15VGVNQUJM9J6@diabtop>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Emily Shaffer" <emilyshaffer@google.com>, <git@vger.kernel.org>,
-        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
-        "Patryk Obara" <patryk.obara@gmail.com>,
-        "Jiang Xin" <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v2] receive-pack: add option to interrupt pre-receive
- when client exits
-From:   "Robin Jarry" <robin.jarry@6wind.com>
-X-Mailer: aerc/0.7.1-30-g7edcc9f79409
-References: <20220125095445.1796938-1-robin.jarry@6wind.com>
- <20220126214438.3066132-1-robin.jarry@6wind.com>
- <xmqqv8y54wxc.fsf@gitster.g> <CHGCP9P33XDQ.3FEWHU0PBMNU6@diabtop>
- <xmqqr18t2fxl.fsf@gitster.g>
-In-Reply-To: <xmqqr18t2fxl.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano, Jan 27, 2022 at 19:26:
-> Sorry, but I was (and am) questioning why we want to do more than
-> "let it be killed by SIGPIPE, just like we used to do before
-> ec7dbd14 (receive-pack: allow hooks to ignore its standard input
-> stream, 2014-09-12) introduced the current behaviour", so the answer
-> is still "why do we even need to complicate the thing with keepalive
-> or anything we don't have, and we didn't have before ec7dbd14, in
-> the code paths that are involved?"
+Hey Phillip,
 
-My main goal is to abort a push if a user hits ctrl-c (or is
-disconnected) before the objects have been moved to permanent storage.
+First of all thank you for the thorough review=E2=80=94it really helps so=
+meone who=E2=80=99s learning how to contribute!
 
-(partially) reverting to previous behavior would only allow aborting
-pushes *if* the pre-receive hook sends some output and this output
-cannot be forwarded to the client. There is no guarantee that the hook
-will send any output. Also, it would restore hard to track issue with
-poorly written pre-receive hooks.
+On 27 Jan 2022, at 6:25, Phillip Wood wrote:
 
-I wonder if it would be possible to not rely on the pre-receive hook
-sending output and this output somehow not being forwarded to the
-client.
+> Hi John
+>
+> On 25/01/2022 22:50, John Cai wrote:
+>> This RFC patch proposes a new flag --stdin-cmd that works with
+>> git-cat-file --batch. Similar to git-update-ref --stdin, it will accep=
+t
+>> commands and arguments from stdin.
+>>
+>> The start of this idea was discussed in [1], where the original
+>> motivation was to be able to control when the buffer was flushed to
+>> stdout in --buffer mode.
+>>
+>> However, this can actually be much more useful in situations when
+>> git-cat-file --batch is being used as a long lived backend query
+>> process. At GitLab, we use a pair of cat-file processes. One for
+>> iterating over object metadata with --batch-check, and the other to gr=
+ab
+>> object contents with --batch. However, if we had --stdin-cmd, we could=
 
-Instead, explicitly check if the client is still connected and alive
-after the pre-receive hook has exited but before completing the push
-transaction. That was my intent with that (invalid by the way) keepalive
-example.
+>> get rid of the second --batch-check process, and just have one progres=
+s
+>> where we can flip between getting object info, and getting object cont=
+ents.
+>> This can lead to huge savings.
+>>
+>> git cat-file --batch --stdin-cmd
+>>
+>> $ <command> [arg1] [arg2] NL
+>>
+>> We can also add a -z mode to allow for NUL-terminated lines
+>>
+>> $ <command> [arg1] [arg2] NUL
+>>
+>> This patch adds three commands: object, info, fflush
+>>
+>> $ object <sha1> NL
+>> $ info <sha1> NL
+>> $ fflush NL
+>>
+>> These three would be immediately useful in GitLab's context, but one c=
+an
+>> imagine this mode to be further extended for other things.
+>>
+>> For instance, a non-trivial part of "cat-file --batch" time is spent
+>> on parsing its argument and seeing if it's a revision, ref etc. So we
+>> could add a command that only accepts a full-length 40
+>> character SHA-1.
+>>
+>> This would be the first step in adding such an interface to
+>> git-cat-file.
+>>
+>> [1] https://lore.kernel.org/git/pull.1124.git.git.1636149400.gitgitgad=
+get@gmail.com/
+>>
+>> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> Signed-off-by: John Cai <johncai86@gmail.com>
+>> ---
+>> Changes from v1:
+>>
+>> - changed option name to batch-command.
+>> - changed command function interface to receive the whole line after t=
+he command
+>>    name to put the onus of parsing arguments to each individual comman=
+d function.
+>> - pass in whole line to batch_one_object in both parse_cmd_object and
+>>    parse_cmd_info to support spaces in the object reference.
+>> - removed addition of -z to include in a separate patch series
+>> - added documentation.
+>
+> I've left some comments below, they're mostly small details, I like the=
+ new option name and the changes you've made to the command parsing.
+>
+>> ---
+>>   Documentation/git-cat-file.txt |  15 +++++
+>>   builtin/cat-file.c             | 114 +++++++++++++++++++++++++++++++=
++-
+>>   strvec.c                       |  23 +++++++
+>>   strvec.h                       |   8 +++
+>>   t/t1006-cat-file.sh            |  32 +++++++++
+>>   5 files changed, 191 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-fi=
+le.txt
+>> index bef76f4dd0..8aefa45e4c 100644
+>> --- a/Documentation/git-cat-file.txt
+>> +++ b/Documentation/git-cat-file.txt
+>> @@ -96,6 +96,21 @@ OPTIONS
+>>   	need to specify the path, separated by whitespace.  See the
+>>   	section `BATCH OUTPUT` below for details.
+>>  +-batch-command::
+>
+> is this missing a '-'?
+>
+>> +	Enter a command mode that reads from stdin. May not be combined with=
+ any
+>> +	other options or arguments except `--textconv` or `--filters`, in wh=
+ich
+>> +	case the input lines also need to specify the path, separated by
+>> +	whitespace.  See the section `BATCH OUTPUT` below for details.
+>> +
+>> +object <object>::
+>> +	Print object contents for object reference <object>
+>> +
+>> +info <object>::
+>> +	Print object info for object reference <object>
+>> +
+>> +flush::
+>> +	Flush to stdout immediately when used with --buffer
+>> +
+>>   --batch-all-objects::
+>>   	Instead of reading a list of objects on stdin, perform the
+>>   	requested batch operation on all objects in the repository and
+>> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+>> index 7b3f42950e..30794284d5 100644
+>> --- a/builtin/cat-file.c
+>> +++ b/builtin/cat-file.c
+>> @@ -16,6 +16,7 @@
+>>   #include "packfile.h"
+>>   #include "object-store.h"
+>>   #include "promisor-remote.h"
+>> +#include "strvec.h"
+>>    struct batch_options {
+>>   	int enabled;
+>> @@ -26,7 +27,10 @@ struct batch_options {
+>>   	int unordered;
+>>   	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
+>>   	const char *format;
+>> +	int stdin_cmd;
+>
+> Now that the option has been renamed it would be nice to rename the cor=
+responding variable to match
 
-I do not know git internals to say if it feasible without any protocol
-breakage. My attempts work well for aborting pushes:
+I was trying to find a good name. There is already a cmdmode variable. I=E2=
+=80=99m thinking stdin_cmd is not such a
+bad name since we are receiving commands from stdin. suggestions welcome!=
 
- Writing objects: 100% (3/3), 321 bytes | 321.00 KiB/s, done.
- Total 3 (delta 1), reused 1 (delta 0), pack-reused 0
- remote: pre-receive start^C
- <--- client has disconnected
-      receive-pack fails to send the "keepalive" packet
-      the temp objects are *not* migrated to permanent storage
 
-But this always leads to errors on the client side when receive-pack
-sends the "keepalive packet":
+>
+>> +	int end_null;
+>
+> If you're not adding '-z' here then you don't need this or the addition=
+ below.
+>
+>>   };
+>> +static char line_termination =3D '\n';
+>>    static const char *force_path;
+>>  @@ -508,6 +512,102 @@ static int batch_unordered_packed(const struct =
+object_id *oid,
+>>   				      data);
+>>   }
+>>  +enum batch_state {
+>> +	/* Non-transactional state open for commands. */
+>> +	BATCH_STATE_OPEN,
+>> +};
+>
+> I forgot to ask what the idea behind the batch state is last time - wha=
+t's it for?
 
- Writing objects: 100% (3/3), 321 bytes | 321.00 KiB/s, done.
- Total 3 (delta 1), reused 1 (delta 0), pack-reused 0
- remote: pre-receive start
- remote: pre-receive end OK
- error: unexpected flush packet while reading remote unpack status
- error: invalid ref status from remote: unpack
- remote: post-receive start
- remote: post-receive end OK
- To git@host:repo.git
-  ! [remote failure]    main -> main (remote failed to report status)
- error: failed to push some refs to 'git@host:repo.git'
+This is to support transactional semantics for commands we want to suppor=
+t in the future, but
+since this is already a biggish change, we can leave this out of this ser=
+ies.
 
-Am I chasing rainbows or is that possible in the current state of the
-git protocol? Maybe I need to send the keepalive packet in a sideband?
-I have read the technical docs several times but I cannot understand how
-everything works properly.
+>
+>> +static void parse_cmd_object(struct batch_options *opt,
+>> +			     const char *line,
+>> +			     struct strbuf *output,
+>> +			     struct expand_data *data)
+>> +{
+>> +	opt->print_contents =3D 1;
+>> +	batch_one_object(line, output, opt, data);
+>> +}
+>> +
+>> +static void parse_cmd_info(struct batch_options *opt,
+>> +			   const char *line,
+>> +			   struct strbuf *output,
+>> +			   struct expand_data *data)
+>> +{
+>> +	opt->print_contents =3D 0;
+>> +	batch_one_object(line, output, opt, data);
+>> +}
+>> +
+>> +static void parse_cmd_fflush(struct batch_options *opt,
+>> +			     const char *line,
+>> +			     struct strbuf *output,
+>> +			     struct expand_data *data)
+>> +{
+>> +	fflush(stdout);
+>> +}
+>> +
+>> +typedef void (*parse_cmd_fn_t)(struct batch_options *, const char *,
+>> +			       struct strbuf *, struct expand_data *);
+>> +
+>> +static const struct parse_cmd {
+>> +	const char *prefix;
+>> +	parse_cmd_fn_t fn;
+>> +	unsigned args;
+>
+> This is now a flag so maybe 'takes_args' would better describe its purp=
+ose.
+>
+>> +	enum batch_state state;
+>> +} commands[] =3D {
+>> +	{ "object", parse_cmd_object, 1, BATCH_STATE_OPEN },
+>> +	{ "info", parse_cmd_info, 1, BATCH_STATE_OPEN },
+>> +	{ "fflush", parse_cmd_fflush, 0, BATCH_STATE_OPEN },
+>> +};
+>> +
+>> +static void batch_objects_stdin_cmd(struct batch_options *opt,
+>> +				    struct strbuf *output,
+>> +				    struct expand_data *data)
+>> +{
+>> +	struct strbuf input =3D STRBUF_INIT;
+>> +	enum batch_state state =3D BATCH_STATE_OPEN;
+>> +
+>> +	/* Read each line dispatch its command */
+>> +	while (!strbuf_getwholeline(&input, stdin, line_termination)) {
+>> +		int i;
+>> +		const struct parse_cmd *cmd =3D NULL;
+>> +		const char *p;
+>> +
+>> +		if (*input.buf =3D=3D line_termination)
+>> +			die("empty command in input");
+>> +		else if (isspace(*input.buf))
+>> +			die("whitespace before command: %s", input.buf);
+>> +
+>> +		for (i =3D 0; i < ARRAY_SIZE(commands); i++) {
+>> +			const char *prefix =3D commands[i].prefix;
+>> +			char c;
+>> +			const char *cmd_name;
+>
+> skip_prefix() sets this to the end of the name so maybe 'cmd_end' would=
+ be clearer?
+>
+>> +			if (!skip_prefix(input.buf, prefix, &cmd_name))
+>> +				continue;
+>> +			/*
+>> +			 * If the command has arguments, verify that it's
+>> +			 * followed by a space. Otherwise, it shall be followed
+>> +			 * by a line terminator.
+>> +			 */
+>> +			c =3D commands[i].args ? ' ' : line_termination;
+>> +			if (input.buf[strlen(prefix)] !=3D c)
+>
+> Now that you're using skip_prefix() you can write this as
+>     		if (*cmd_end !=3D c)
+>
+>> +				continue;
+>> +
+>> +			cmd =3D &commands[i];
+>> +			break;
+>> +		}
+>> +		if (!cmd)
+>> +			die("unknown command: %s", input.buf);
+>> +
+>> +		p =3D input.buf + strlen(cmd->prefix) + 1;
+>
+> This can be simplified to
+>     	p =3D cmd_end + 1;
+>
+>> +		const char *pos =3D strstr(p, &line_termination);
+>
+> This isn't needed without '-z'. If it were required then using strchrnu=
+l() would prevent a NULL pointer dereference when the last input line doe=
+s not end with a terminator. I think we typically call a pointer to the e=
+nd of the line 'eol' or 'end'. Also variables should be declared at the t=
+op of the function.
+>
+>> +		switch (state) {
+>> +		case BATCH_STATE_OPEN:
+>> +			break;
+>> +		}
+>> +		cmd->fn(opt, xstrndup(p, pos-p), output, data);
+>
+> Is there a reason this is passing a copy of the string?
+>
+>> +	}
+>> +	strbuf_release(&input);
+>> +}
+>> +
+>>   static int batch_objects(struct batch_options *opt)
+>>   {
+>>   	struct strbuf input =3D STRBUF_INIT;
+>> @@ -515,6 +615,7 @@ static int batch_objects(struct batch_options *opt=
+)
+>>   	struct expand_data data;
+>>   	int save_warning;
+>>   	int retval =3D 0;
+>> +	const int stdin_cmd =3D opt->stdin_cmd;
+>>    	if (!opt->format)
+>>   		opt->format =3D "%(objectname) %(objecttype) %(objectsize)";
+>> @@ -590,7 +691,8 @@ static int batch_objects(struct batch_options *opt=
+)
+>>   	save_warning =3D warn_on_object_refname_ambiguity;
+>>   	warn_on_object_refname_ambiguity =3D 0;
+>>  -	while (strbuf_getline(&input, stdin) !=3D EOF) {
+>> +	while (!stdin_cmd &&
+>
+> If you moved the 'if (stdin_cmd)' block above this block we could loose=
+ this change. I'm not sure if that is possible without looking at the who=
+le function though.
+>
+>> +	       strbuf_getline(&input, stdin) !=3D EOF) {
+>>   		if (data.split_on_whitespace) {
+>>   			/*
+>>   			 * Split at first whitespace, tying off the beginning
+>> @@ -608,6 +710,9 @@ static int batch_objects(struct batch_options *opt=
+)
+>>   		batch_one_object(input.buf, &output, opt, &data);
+>>   	}
+>>  +	if (stdin_cmd)
+>> +		batch_objects_stdin_cmd(opt, &output, &data);
+>> +
+>>   	strbuf_release(&input);
+>>   	strbuf_release(&output);
+>>   	warn_on_object_refname_ambiguity =3D save_warning;
+>> @@ -636,6 +741,7 @@ static int batch_option_callback(const struct opti=
+on *opt,
+>>    	bo->enabled =3D 1;
+>>   	bo->print_contents =3D !strcmp(opt->long_name, "batch");
+>> +	bo->stdin_cmd =3D !strcmp(opt->long_name, "batch-command");
+>>   	bo->format =3D arg;
+>>    	return 0;
+>> @@ -683,6 +789,10 @@ int cmd_cat_file(int argc, const char **argv, con=
+st char *prefix)
+>>   			N_("like --batch, but don't emit <contents>"),
+>>   			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
+>>   			batch_option_callback),
+>> +		OPT_CALLBACK_F(0, "batch-command", &batch, N_(""),
+>> +			 N_("enters batch mode that accepts commands"),
+>> +			 PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+>> +			 batch_option_callback),
+>>   		OPT_CMDMODE(0, "batch-all-objects", &opt,
+>>   			    N_("with --batch[-check]: ignores stdin, batches all known ob=
+jects"), 'b'),
+>>   		/* Batch-specific options */
+>> @@ -738,6 +848,8 @@ int cmd_cat_file(int argc, const char **argv, cons=
+t char *prefix)
+>>   	/* Batch defaults */
+>>   	if (batch.buffer_output < 0)
+>>   		batch.buffer_output =3D batch.all_objects;
+>> +	if (batch.end_null)
+>> +		line_termination =3D '\0';
+>>    	/* Return early if we're in batch mode? */
+>>   	if (batch.enabled) {
+>> diff --git a/strvec.c b/strvec.c
+>> index 61a76ce6cb..7dca04bf7a 100644
+>> --- a/strvec.c
+>> +++ b/strvec.c
+>> [...]
+>
+> We don't need any strvec changes now that we don't split the input line=
+s to --bactch-command
+>
+>> +F=3D'%s\0'
+>
+> This isn't used now
+>
+>> +test_expect_success 'batch-command unknown command' '
+>> +	echo unknown_command >cmd &&
+>> +	test_expect_code 128 git cat-file --batch-command < cmd 2>err &&
+>> +	grep -E "^fatal:.*unknown command.*" err
+>> +'
+>> +
+>> +test_expect_success 'setup object data' '
+>> +	content=3D"Object Data" &&
+>> +	size=3D$(strlen "$content") &&
+>> +	sha1=3D$(echo_without_newline "$content" | git hash-object -w --stdi=
+n)
+>> +'
+>> +
+>> +test_expect_success 'batch-command calling object works' '
+>> +	echo "object $sha1" | git cat-file --batch-command >actual &&
+>> +	echo "$sha1 blob $size" >expect &&
+>> +	echo `git cat-file -p "$sha1"` >>expect &&
+>> +	test_cmp expect actual
+>> +'
+>> +
+>> +test_expect_success 'batch-command calling info works' '
+>> +	echo "info $sha1" | git cat-file --batch-command >actual &&
+>> +	echo "$sha1 blob $size" >expect &&
+>> +	test_cmp expect actual
+>> +'
+>
+> I had a quick look at this test file and there is a loop at the top tha=
+t runs some --batch tests on various inputs, I wonder if these two tests =
+could go in there.
+>
+>> +test_expect_success 'batch-command fflush works' '
+>> +	printf "fflush\n" > cmd &&
+>> +	test_expect_code 0 git cat-file --batch-command < cmd 2>err
+>> +'
+>
+> It'd be nice to check this actually flushes the output.
 
-Thank you for your time.
+could you give me some ideas on how to do this?
+
+>
+> Best Wishes
+>
+> Phillip
+>
+>>   test_done
