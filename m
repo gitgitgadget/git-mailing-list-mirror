@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF809C433F5
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 16:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96324C433EF
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 16:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243651AbiA0QXN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 11:23:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48058 "EHLO
+        id S243670AbiA0QXO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 11:23:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243622AbiA0QXJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 11:23:09 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9E15C06173B
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 08:23:08 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id c192so2314786wma.4
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 08:23:08 -0800 (PST)
+        with ESMTP id S243636AbiA0QXK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 11:23:10 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6866C061747
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 08:23:09 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id f17so5814255wrx.1
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 08:23:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BAETt61/rXj9abAjf8MzrmJN3IQi5ZHrn+x2pIH9/VI=;
-        b=Qem0fB1UjwOTBVQViNi4eY6HgD7ZTqt9DshpupXFmCIYiK3In1ih1fgtIo1M83zb3X
-         SOSX2xdTPSeCF8P21VQTT+i/cdVmf6zf+9JU+JgdhgwgmG2tmisgU758j4zfj2xRXxcw
-         eOyOKGNZeMpajOqCXqehBJYBrAJ2icxIA5CkqbZs52MoF9tQKWP8PO+ctREkyzgEQYDs
-         GHLGgJ2GFjZPLrBnKZgWdypXJ1KnvA2jJ6T7+kMjpDWNW893mm6ecctNUKmd/6RoSZnv
-         9hClZoPiYO2NZOVEk3v6yScQ2t7QiAOAUP9jHe0FgT12T+QG9VyOiL+tWWs5VUzGx28G
-         GUqQ==
+        bh=UnEncWY7prPme576qHMowsf0JhOvzLfHRK/Tpeb+3HY=;
+        b=plfjjfC1nU1ZmtYp6+9R3TKeaIxZd8tTTYToivZfesc1sTCle3qAsqHH8Wv40EOwD7
+         Amzba3MhDYZ7jnJ2uZYYxAsv18pjWxG1XbmW7kWtd35UDfMQPB3ef3IgIHYEE7CEgNP7
+         wlqakj2lnoCoaoEad4kGq+us6hWoWMvaJc8+tznZpjGataOKPRZ4/jpwfKXxwJwVhvLj
+         8qWM616F8HdGxu/meITreTfuGc+lnQPATWmSelqagXoBwJ/A6pAqESwyOFCxzMBu74dM
+         OrW3HsgMwrz63vyREUigZLk65dcXuDMXxc98mIfwKbg+G9EDrD9qSCjOeM+Y6K2suKla
+         HUtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BAETt61/rXj9abAjf8MzrmJN3IQi5ZHrn+x2pIH9/VI=;
-        b=Sg+JBzHmUW+Xsqk9Hue/6AlvytZzsgGvCyG29EDm51Ov5HMb/Ksscecej5Ci2hfnJ7
-         fnRx9BJcqncR6n3AwmZ9S+i1qiwq2xt4495r160+0u+jII65b3tFMcbfE0CJM19QLcov
-         lDydVE8NEMemqg1PiNseYLK2HmDa39LELfRsdtOrLAzXDXpB+1DVt5TCvnAN469PLTz1
-         f5KmHAuWymDwdUpy0ftGI94LO6SBjJpFfL3FE1g9zSB4iOSe3cc85kbwn8W7iiSoKUsg
-         AZdwE51y/2cTH6IeGQgp3hYJ+2ogajs6Dkj3u4Ew6G2+WTHu49NYbO6MeCvNvKUBkZOi
-         Ndzw==
-X-Gm-Message-State: AOAM531095K0FvV80cj88Bew+yS6gdoWPWjbsJm2e2+INF20EPeVFCOR
-        rGH3UZq5MaonUz0kcS3eFZdw4pV05qYFyQ==
-X-Google-Smtp-Source: ABdhPJyR5xqXlfm501Bus4Raegc5TbBZ0BTG2VeG4+3NCCdVnhsxlvdSF7Hfx+v/E12OwCM2vYiMGg==
-X-Received: by 2002:a7b:c44e:: with SMTP id l14mr3889151wmi.185.1643300587271;
-        Thu, 27 Jan 2022 08:23:07 -0800 (PST)
+        bh=UnEncWY7prPme576qHMowsf0JhOvzLfHRK/Tpeb+3HY=;
+        b=AtOxquWDts7Oxm01GLi5n5fy48CxA/cc2Szh+2CfHnvp+VALotZ4umdrQ3RsZYvpjP
+         wkg1sLrcka6V4UyHc64STzpvsQ9ceC0NrwYofUAMY9/KciTAbMPcUJxUfXzXVP9SUrjb
+         bHkXiVtwKU3SJ41ntFD3ZZ8iivF+hR89JfkingES8qpPftRAoVbmQdQACv0WWnm+ONaT
+         UrIcjfCoH80Q3lCr9R3h5FdQ7ZFWOoa5RcBYtwFCehzobcP/rLn2K4Nenmffm6zpX0k0
+         V2rNDAsYWl33/Anw931XrHzNy8Jf6gkPGV08AQ4ZHasETPFzgcfV2Wgzd/l3+guoOdDt
+         +ClA==
+X-Gm-Message-State: AOAM533VTVfPKZU0ESozhH10MNV2xDQdp7fF85COKyIrUYtLGpi67GuF
+        gd5+rD/73TtIEdlKbHrcXSq/H1G0Xd1Uyg==
+X-Google-Smtp-Source: ABdhPJwP22VAt4X1d6RtD7ce5CA2b4Psr9Zuwl5zGR7H6oISYyz69WZj1Ndw54s5ISIIjPdZxg/jgw==
+X-Received: by 2002:a05:6000:1ac8:: with SMTP id i8mr3604200wry.136.1643300588198;
+        Thu, 27 Jan 2022 08:23:08 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f13sm3257186wry.77.2022.01.27.08.23.06
+        by smtp.gmail.com with ESMTPSA id f13sm3257186wry.77.2022.01.27.08.23.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 08:23:06 -0800 (PST)
+        Thu, 27 Jan 2022 08:23:07 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Glen Choo <chooglen@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 5/7] builtin/submodule--helper.c: reformat designated initializers
-Date:   Thu, 27 Jan 2022 17:22:54 +0100
-Message-Id: <patch-v4-5.7-29aa2fc0851-20220127T143552Z-avarab@gmail.com>
+Subject: [PATCH v4 6/7] builtin/submodule--helper.c: rename "suc" variable to "opt"
+Date:   Thu, 27 Jan 2022 17:22:55 +0100
+Message-Id: <patch-v4-6.7-d3ad6e7a351-20220127T143552Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.0.894.g563b84683b9
 In-Reply-To: <cover-v4-0.7-00000000000-20220127T143552Z-avarab@gmail.com>
 References: <20211013051805.45662-1-raykar.ath@gmail.com> <cover-v4-0.7-00000000000-20220127T143552Z-avarab@gmail.com>
@@ -73,56 +73,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Atharva Raykar <raykar.ath@gmail.com>
+Rename the "suc" variable in "builtin/submodule--helper.c" to
+"opt". The only reason for this change is to make the subsequent
+commit's diff smaller, by doing this rename we can "anchor" the diff
+better, as it "borrow" most of the options declared here as-is as far
+as the diff rename detection is concerned.
 
-The second hunk here will make a subsequent commit's diff smaller, and
-let's do the first and third hunks while we're at it so that we
-consistently format all of these.
-
-Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ builtin/submodule--helper.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 328c6cc87cd..1553b318cc7 100644
+index 1553b318cc7..a96976b1772 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1656,7 +1656,10 @@ struct module_clone_data {
- 	unsigned int require_init: 1;
- 	int single_branch;
- };
--#define MODULE_CLONE_DATA_INIT { .reference = STRING_LIST_INIT_NODUP, .single_branch = -1 }
-+#define MODULE_CLONE_DATA_INIT { \
-+	.reference = STRING_LIST_INIT_NODUP, \
-+	.single_branch = -1, \
-+}
- 
- struct submodule_alternate_setup {
- 	const char *submodule_name;
-@@ -2049,7 +2052,9 @@ struct update_data {
- 	unsigned int nofetch: 1;
- 	unsigned int just_cloned: 1;
- };
--#define UPDATE_DATA_INIT { .update_strategy = SUBMODULE_UPDATE_STRATEGY_INIT }
-+#define UPDATE_DATA_INIT { \
-+	.update_strategy = SUBMODULE_UPDATE_STRATEGY_INIT, \
-+}
- 
- static void next_submodule_warn_missing(struct submodule_update_clone *suc,
- 		struct strbuf *out, const char *displaypath)
-@@ -3015,7 +3020,9 @@ struct add_data {
- 	unsigned int progress: 1;
- 	unsigned int dissociate: 1;
- };
--#define ADD_DATA_INIT { .depth = -1 }
-+#define ADD_DATA_INIT { \
-+	.depth = -1, \
-+}
- 
- static void append_fetch_remotes(struct strbuf *msg, const char *git_dir_path)
+@@ -2519,36 +2519,36 @@ static int update_clone(int argc, const char **argv, const char *prefix)
  {
+ 	const char *update = NULL;
+ 	struct pathspec pathspec;
+-	struct submodule_update_clone suc = SUBMODULE_UPDATE_CLONE_INIT;
++	struct submodule_update_clone opt = SUBMODULE_UPDATE_CLONE_INIT;
+ 
+ 	struct option module_update_clone_options[] = {
+ 		OPT_STRING(0, "prefix", &prefix,
+ 			   N_("path"),
+ 			   N_("path into the working tree")),
+-		OPT_STRING(0, "recursive-prefix", &suc.recursive_prefix,
++		OPT_STRING(0, "recursive-prefix", &opt.recursive_prefix,
+ 			   N_("path"),
+ 			   N_("path into the working tree, across nested "
+ 			      "submodule boundaries")),
+ 		OPT_STRING(0, "update", &update,
+ 			   N_("string"),
+ 			   N_("rebase, merge, checkout or none")),
+-		OPT_STRING_LIST(0, "reference", &suc.references, N_("repo"),
++		OPT_STRING_LIST(0, "reference", &opt.references, N_("repo"),
+ 			   N_("reference repository")),
+-		OPT_BOOL(0, "dissociate", &suc.dissociate,
++		OPT_BOOL(0, "dissociate", &opt.dissociate,
+ 			   N_("use --reference only while cloning")),
+-		OPT_STRING(0, "depth", &suc.depth, "<depth>",
++		OPT_STRING(0, "depth", &opt.depth, "<depth>",
+ 			   N_("create a shallow clone truncated to the "
+ 			      "specified number of revisions")),
+-		OPT_INTEGER('j', "jobs", &suc.max_jobs,
++		OPT_INTEGER('j', "jobs", &opt.max_jobs,
+ 			    N_("parallel jobs")),
+-		OPT_BOOL(0, "recommend-shallow", &suc.recommend_shallow,
++		OPT_BOOL(0, "recommend-shallow", &opt.recommend_shallow,
+ 			    N_("whether the initial clone should follow the shallow recommendation")),
+-		OPT__QUIET(&suc.quiet, N_("don't print cloning progress")),
+-		OPT_BOOL(0, "progress", &suc.progress,
++		OPT__QUIET(&opt.quiet, N_("don't print cloning progress")),
++		OPT_BOOL(0, "progress", &opt.progress,
+ 			    N_("force cloning progress")),
+-		OPT_BOOL(0, "require-init", &suc.require_init,
++		OPT_BOOL(0, "require-init", &opt.require_init,
+ 			   N_("disallow cloning into non-empty directory")),
+-		OPT_BOOL(0, "single-branch", &suc.single_branch,
++		OPT_BOOL(0, "single-branch", &opt.single_branch,
+ 			 N_("clone only one branch, HEAD or --branch")),
+ 		OPT_END()
+ 	};
+@@ -2557,25 +2557,25 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 		N_("git submodule--helper update-clone [--prefix=<path>] [<path>...]"),
+ 		NULL
+ 	};
+-	suc.prefix = prefix;
++	opt.prefix = prefix;
+ 
+-	update_clone_config_from_gitmodules(&suc.max_jobs);
+-	git_config(git_update_clone_config, &suc.max_jobs);
++	update_clone_config_from_gitmodules(&opt.max_jobs);
++	git_config(git_update_clone_config, &opt.max_jobs);
+ 
+ 	argc = parse_options(argc, argv, prefix, module_update_clone_options,
+ 			     git_submodule_helper_usage, 0);
+ 
+ 	if (update)
+-		if (parse_submodule_update_strategy(update, &suc.update) < 0)
++		if (parse_submodule_update_strategy(update, &opt.update) < 0)
+ 			die(_("bad value for update parameter"));
+ 
+-	if (module_list_compute(argc, argv, prefix, &pathspec, &suc.list) < 0)
++	if (module_list_compute(argc, argv, prefix, &pathspec, &opt.list) < 0)
+ 		return 1;
+ 
+ 	if (pathspec.nr)
+-		suc.warn_if_uninitialized = 1;
++		opt.warn_if_uninitialized = 1;
+ 
+-	return update_submodules(&suc);
++	return update_submodules(&opt);
+ }
+ 
+ static int run_update_procedure(int argc, const char **argv, const char *prefix)
 -- 
 2.35.0.894.g563b84683b9
 
