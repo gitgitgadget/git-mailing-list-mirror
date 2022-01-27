@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CE5DC433EF
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 15:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0690BC4332F
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 15:17:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242764AbiA0POc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 10:14:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60138 "EHLO
+        id S242879AbiA0PRT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 10:17:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232879AbiA0POb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 10:14:31 -0500
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69234C061714
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 07:14:31 -0800 (PST)
-Received: by mail-oo1-xc2d.google.com with SMTP id w15-20020a4a9d0f000000b002c5cfa80e84so751970ooj.5
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 07:14:31 -0800 (PST)
+        with ESMTP id S242946AbiA0PRN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 10:17:13 -0500
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8381EC061751
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 07:17:10 -0800 (PST)
+Received: by mail-ot1-x32a.google.com with SMTP id o9-20020a9d7189000000b0059ee49b4f0fso2859530otj.2
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 07:17:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=oFOUPCBfJVqCtu0/xdeXSKZznad0wkc2KWWQMFodcGE=;
-        b=DGLTzgtsj6AQtToT3B0RTOBh2DACht+A6zg19cYZOAYGyd5ePea7Lk27JtShrqMMhA
-         iGKlztN5Fji7tUqX8LL6Ey5iRPWtjQWLSi33nLZduSR5SZUrUk6UEu1ShOoanuAOLVld
-         mJCmV/7yDSx65m0uzUnEbngGxfy9WaLl4YPGEfO+LRz/9vmiXILSGMDuHO8NrKMamUUR
-         dxoTSFTwyotD0hzN9V775f874wCCEVNc2fWPY1sHPam3wKireLXh89qDTMzJA7mZT9GD
-         etc/uOdFXW4+dSDvHkvLxWHQpdWIuExRgpR0jSrjI65W/K7wThRoh+B9qeJX6HZliTbd
-         Z40A==
+        bh=YAMUa2HZjfi1F8m6b/U+0jxWu1dlQRya0UjttMOP3rg=;
+        b=UxxLd7uSSYUbk3xsi0nZco2SyyMbo3KLNR6TSkw166sy0sHAH71mTiOPEJbGQdXr9s
+         wfAdx/UG+Ylm2D8+j0hCe7x58GZxhkcbbcclOL2ZInyb5/DuUAjypRloiXIu4krDlTNh
+         I/Wvf+BYSSs/o8GvP2K2WCBJgxlEr4kIZLgHUamOPl/ZS4GS30CgOXe/tossyXeolDW/
+         mCgdrViy5/dUy3cceHACW4SE4bbrD6lZgCRWLNjECnrz7xSPFDsROqadf5y3HxEg8isa
+         ePzXWhhIedxEL8Dkny8ImWGO5WzKXgpX5BpzU60SSWwp0BSYrkqmWUAhJrQwv2hNSeYt
+         1GwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=oFOUPCBfJVqCtu0/xdeXSKZznad0wkc2KWWQMFodcGE=;
-        b=LgJ/R/FcIxrR87TaBiJCBc8VEn1vwbc/a88AinIHbQoQe3hmkkTZVQ75QHmhFBZDjP
-         AXRAYusCDfDsVzSMrgaZzl/+DtM98x/d51I7gdqPBQVamUecBWQA7T6q191pQiClIZya
-         bfSHU4xY2QB8RvSF4U7v0PN6n7avW9KJ6jgg37/2ThxOsTary61xARiwivr18iq213Ml
-         NVrjQ/Vd+yYrBTvXgGNYngEOQar7Wu3Nss1dffvfxqNhnARsRAj1CfYeX7CQlublk3NX
-         Fns8jLUDdWPUfUsX5o1eKMMMYJ6MYH7VZ4+IMcvTAkVwu3faysOlim9yJIFftjoWAAGE
-         QAgg==
-X-Gm-Message-State: AOAM530dqpViYFDRMGpy6+/7EpRUCKEK1r4SQIyIqhVB4pVelYeNx56l
-        aYoWyUrPqTL00OThhiSG4iq3CQQk5Uk=
-X-Google-Smtp-Source: ABdhPJyq+oXlVIzr1cawTV5KBxegi8xVWIHhHaXR3eoy+IwWzaEAohkq/Un/MNYDqQBuE7hRP31c7Q==
-X-Received: by 2002:a4a:a58f:: with SMTP id d15mr2114445oom.40.1643296470720;
-        Thu, 27 Jan 2022 07:14:30 -0800 (PST)
+        bh=YAMUa2HZjfi1F8m6b/U+0jxWu1dlQRya0UjttMOP3rg=;
+        b=qXR6uWmCQ9bRUDxDNmUVXOp39VteDMWyNTcpeUusXZP5Aj7u7WwyWzFUQNrC5A8eV8
+         irv6hhsocJb8idvPEDuGKP4XXdt6QgI6pQizzQ5O2QEhMVrdfQCvlUzCbUOY9ifR5bNh
+         gWc3mRaMUAWBzaP4iRZmQOHwVUDgATRmD9HJDEy6+PAqTVN+q+ZPWWNBrwd9jnSGJnmK
+         W3MD+Zo+rz1LDBIvO2Z8rBO5leWXE4DMvVhJrULw3h/B68Kc7T1rFpd/5WkAQRYbnUC4
+         Jx3DXblVMNsLt8wv9o+5nwrXXmvHo7xnRUvJY2X3oNvnX0A/TnJ7Y+5HSSUyVVUTBbCM
+         JavA==
+X-Gm-Message-State: AOAM532Pf7YlRXapdzVyPT93pmh+I2A8UMpXKsqyHbTTj0HcupUVkSii
+        g9IDeC3uBgVtN0wZPJy170k=
+X-Google-Smtp-Source: ABdhPJxn4dJ2ZXILbV+tXzzOScaOEAzazlHcKgz+vhCWrPIlz5Ql3jvZLUn5QyAE+c7LhyulnNvI8g==
+X-Received: by 2002:a05:6830:3148:: with SMTP id c8mr2399652ots.226.1643296629587;
+        Thu, 27 Jan 2022 07:17:09 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:d9cb:250e:9ea6:f8? ([2600:1700:e72:80a0:d9cb:250e:9ea6:f8])
-        by smtp.gmail.com with ESMTPSA id 124sm10145971oif.7.2022.01.27.07.14.29
+        by smtp.gmail.com with ESMTPSA id a2sm11668414oiw.33.2022.01.27.07.17.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jan 2022 07:14:30 -0800 (PST)
-Message-ID: <0a52155c-4605-d96f-965a-104a399ae86e@gmail.com>
-Date:   Thu, 27 Jan 2022 10:14:28 -0500
+        Thu, 27 Jan 2022 07:17:08 -0800 (PST)
+Message-ID: <027ebd30-77c7-1f09-9fe1-0523b9487319@gmail.com>
+Date:   Thu, 27 Jan 2022 10:17:07 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH 3/5] scalar: teach `diagnose` to gather packfile info
+Subject: Re: [PATCH 4/5] scalar: teach `diagnose` to gather loose objects
+ information
 Content-Language: en-US
 To:     Taylor Blau <me@ttaylorr.com>,
         Matthew John Cheetham via GitGitGadget 
@@ -62,78 +63,41 @@ Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Matthew John Cheetham <mjcheetham@outlook.com>
 References: <pull.1128.git.1643186507.gitgitgadget@gmail.com>
- <330b36de799f82425c22bec50e6e42f0e495cab8.1643186507.git.gitgitgadget@gmail.com>
- <YfHOo8Mf3RP4j0Y6@nand.local>
+ <213f2c94b73f90fc758c2e3872804cf640cb2005.1643186507.git.gitgitgadget@gmail.com>
+ <YfHQSrdkieNuBEXT@nand.local>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <YfHOo8Mf3RP4j0Y6@nand.local>
+In-Reply-To: <YfHQSrdkieNuBEXT@nand.local>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/26/2022 5:43 PM, Taylor Blau wrote:
-> On Wed, Jan 26, 2022 at 08:41:45AM +0000, Matthew John Cheetham via GitGitGadget wrote:
->> From: Matthew John Cheetham <mjcheetham@outlook.com>
->>
->> Teach the `scalar diagnose` command to gather file size information
->> about pack files.
->>
->> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
->> ---
->>  contrib/scalar/scalar.c          | 39 ++++++++++++++++++++++++++++++++
->>  contrib/scalar/t/t9099-scalar.sh |  2 ++
->>  2 files changed, 41 insertions(+)
->>
->> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
->> index e26fb2fc018..690933ffdf3 100644
->> --- a/contrib/scalar/scalar.c
->> +++ b/contrib/scalar/scalar.c
->> @@ -653,6 +653,39 @@ cleanup:
->>  	return res;
->>  }
->>
->> +static void dir_file_stats(struct strbuf *buf, const char *path)
->> +{
->> +	DIR *dir = opendir(path);
->> +	struct dirent *e;
->> +	struct stat e_stat;
->> +	struct strbuf file_path = STRBUF_INIT;
->> +	size_t base_path_len;
->> +
->> +	if (!dir)
->> +		return;
->> +
->> +	strbuf_addstr(buf, "Contents of ");
->> +	strbuf_add_absolute_path(buf, path);
->> +	strbuf_addstr(buf, ":\n");
->> +
->> +	strbuf_add_absolute_path(&file_path, path);
->> +	strbuf_addch(&file_path, '/');
->> +	base_path_len = file_path.len;
->> +
+On 1/26/2022 5:50 PM, Taylor Blau wrote:
+> On Wed, Jan 26, 2022 at 08:41:46AM +0000, Matthew John Cheetham via GitGitGadget wrote:
 >> +	while ((e = readdir(dir)) != NULL)
+>> +		if (!is_dot_or_dotdot(e->d_name) &&
+>> +		    e->d_type == DT_DIR && strlen(e->d_name) == 2 &&
+>> +		    !hex_to_bytes(&c, e->d_name, 1)) {
 > 
-> Hmm. Is there a reason that this couldn't use
-> for_each_file_in_pack_dir() with a callback that just does the stat()
-> and buffer manipulation?
+> What is this call to hex_to_bytes() for? I assume it's checking to make
+> sure the directory we're looking at is one of the shards of loose
+> objects.
 > 
-> I don't think it's critical either way, but it would eliminate some of
-> the boilerplate that is shared between this implementation and the one
-> that already exists in for_each_file_in_pack_dir().
+> Similar to my suggestion on the previous patch, I think that we could
+> get rid of this function entirely and replace it with a call to
+> for_each_loose_file_in_objdir().
 
-It's helpful to see if there are other crud files in the pack
-directory. This method is also extended in microsoft/git to
-scan the alternates directory (which we expect to exist as the
-"shared objects cache).
+There is a possibility that there are files other than loose objects
+in these directories, so summarizing those counts might be helpful
+information. For example: if somehow .git/objects/00/ was full of a
+bunch of non-objects, it would still slow down Git commands that ask
+for a short-sha starting with "00".
 
-We might want to modify the implementation in this series to
-run dir_file_stats() on each odb in the_repository. This would
-give us the data for the shared object cache for free while
-being more general to other Git repos. (It would require us to
-do some reaction work in microsoft/git and be a change of
-behavior, but we are the only ones who have looked at these
-diagnose files before, so that change will be easy to manage.)
+While this shouldn't be a normal case, the 'diagnose' command is
+built to help us find these extremely odd scenarios because they
+_have_ happened before (typically because of a VFS for Git bug
+taught us how to look for these situations).
 
 Thanks,
 -Stolee
