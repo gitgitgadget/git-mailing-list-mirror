@@ -2,117 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D32CC433EF
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 03:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F2ADC433F5
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 03:55:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235866AbiA0DrJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Jan 2022 22:47:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45858 "EHLO
+        id S235915AbiA0DzS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Jan 2022 22:55:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230056AbiA0DrI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Jan 2022 22:47:08 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0269BC06161C
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 19:47:08 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id ka4so2766296ejc.11
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 19:47:07 -0800 (PST)
+        with ESMTP id S235900AbiA0DzP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Jan 2022 22:55:15 -0500
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6835AC06161C
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 19:55:15 -0800 (PST)
+Received: by mail-pl1-x62d.google.com with SMTP id h14so1425542plf.1
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 19:55:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=hb0bXLpKyZTdmZ4PqJNQYORQSk4Y8QNCl77y0VsHZh4=;
-        b=WybKiwTdLSOwDYinEZzruFHPqBTe7PTQnkIyPvUUvVTmZSF8EK4nIM6OZqpvK4H7A5
-         SodoIRCA/RgPaxmUYLIoUSI0vKjZspOsmblMg4bvbSwpE41EwrBHa78POXdkUlDJ0Pqy
-         5wfWYpE3XXrHYr/G67NVKYY+hVDG5ieixjAZZC4tMAjTfsWWqD5ohOYAAEoZsJTO4QJx
-         o2WWxPWjMCmuRsjlHo3yTDhJmEdvu0R0x04DBdhyp5+GwFxNmcdxO7lu8ZadxOlHV9Py
-         cc4ag9vAnbdISNxMlgQ/Sv/Ukh+ZVBpgoYXbiKd+WSUkjogrVwCDk2GK2aMq9Dgh1WJp
-         48oQ==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=oqWu7eZpBX5ox1Xps0Lrbk2UWh9wLepI7Ngg3xLcNJw=;
+        b=DvmThlBtUh8oYkWt1zjOn6I+r8lhQ+FVz70NqFDh+7yjMES2xe/+OeVfvgTzvDLTGE
+         F/E0EVN0w9f962AMwAbYEm4uOtOs2P8j/K/gEH/s1zvB4OMQpKN2vm6WZKO95kFIAuUH
+         2tc4cKL7r6N6KcPpRsd0jM9IR+uNZkHEchgrmN9HEwxzxRruwSTQK8en8dQCnOcplQ+N
+         FxaEPs5IZrm9+wIkAt/P0QOpSGSirvZ8GdFSeyjbdT5Jwqwg42FnABdtlf32NEbce4MM
+         x+CBitBHO9kk5879BKojQPWsxrX44wtW2+vu1jJdRGyAdiClAcLWrjR9ktQn1A9H7DTs
+         gSUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=hb0bXLpKyZTdmZ4PqJNQYORQSk4Y8QNCl77y0VsHZh4=;
-        b=gfrfHcWLfwH+i3jey0rAUfMHmPjfZgTZEqjKMZZHmOe5gmUesgdrQnT9ElTfJqWn1H
-         uE4I4+GEJk6oxlw4oUlJ2wXdE3aGkxewDxrsD9U69BiS0nFJNEGhhbXqjQplMO0fhKbI
-         AtbuWdTLHx1Inc41UqcEaaXF75+BjJgVonrgzig3h0HNVRMxcRpags0SrQlX97Oqx/LN
-         UJEsOF0lbSckp3diSnc1SB5jrVmWurPCc4F9hD2wCXCVGWlwjf+V6FAGzAfJ3D83+wvl
-         J130ksSn82usFlVKgr/CxGepOpT3D6wDjlW4rfzpCnenNvNXQv2w3sKPp0nTsp9PRsNi
-         2sCw==
-X-Gm-Message-State: AOAM533+iRkLZBTPHjVKGgrtfkck0XasoYTrasg0hG6qJ3HONPm6EUkV
-        6LKT16n42uHx1+fySvotzUkTqQkPYWVcFw==
-X-Google-Smtp-Source: ABdhPJyhPeL1OptR41SZCQfVY9QFaGQEpfj+iWzIdVEm3mtHsubGx2/UOHc9fq0KegO5tOsn6p5I7Q==
-X-Received: by 2002:a17:907:97c3:: with SMTP id js3mr1580617ejc.232.1643255226444;
-        Wed, 26 Jan 2022 19:47:06 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v10sm10666219edx.36.2022.01.26.19.47.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Jan 2022 19:47:05 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nCvkX-003HSK-Cn;
-        Thu, 27 Jan 2022 04:47:05 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] http API: fix dangling pointer issue noted by GCC 12.0
-Date:   Thu, 27 Jan 2022 04:45:19 +0100
-References: <patch-1.1-1cec367e805-20220126T212921Z-avarab@gmail.com>
- <xmqqczkengsg.fsf@gitster.g> <xmqq8rv2nggn.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqq8rv2nggn.fsf@gitster.g>
-Message-ID: <220127.86mtjhdeme.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=oqWu7eZpBX5ox1Xps0Lrbk2UWh9wLepI7Ngg3xLcNJw=;
+        b=mPx3czdPhJPnFJYf1DCi40QTLG0nkQ0nv45IJnjGInouOxCl8m//OzsbJMziG2t64T
+         9s/2otqSIKxOPQJuKGorviMBDpR94XzcdeNl2kwNYAWF7il5leFQ/bj8eP8qXCvHs1/R
+         Kzhs2rzmVLSRSTr8+bis9O93NLpaIAZwYs9drLqlX6f3A6ieVNUg43mpRlGsd6yOnvPb
+         XiPU//p81PsO1x6fVnllRxCcn6wXOi+E11if/v1HiwFVissC2I3AUNtDuO0mgge173xg
+         zQCWI+MioToVnF8yfFgrPkUtBAR7+qRqrBv9wOmKHNoIwf+Vyf6v9XO2jmJUyHmCSESP
+         Wy6g==
+X-Gm-Message-State: AOAM530ovpFOomJntOS6S0Mj4/pLqibCeYd278wzvLl15GYtiWLlzUTY
+        71eu18wj8su+gWrpdqP/l+E=
+X-Google-Smtp-Source: ABdhPJyAEajoP05XrFgoMeKXCQbXpAb9QGoTIpXoM4ncV/5RzlaQagBzyOkYJSi0RJgc2O373A7tlQ==
+X-Received: by 2002:a17:90a:b90b:: with SMTP id p11mr2180459pjr.189.1643255714817;
+        Wed, 26 Jan 2022 19:55:14 -0800 (PST)
+Received: from [192.168.43.80] (subs02-180-214-232-13.three.co.id. [180.214.232.13])
+        by smtp.gmail.com with ESMTPSA id a14sm3809887pfv.212.2022.01.26.19.55.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Jan 2022 19:55:14 -0800 (PST)
+Message-ID: <9d2e58ab-2d8f-0797-84ed-0c1e8941edaa@gmail.com>
+Date:   Thu, 27 Jan 2022 10:55:08 +0700
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: Git in GSoC 2022?
+Content-Language: en-US
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Git Community <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 27/01/22 01.29, Kaartic Sivaraam wrote:
+>    - Project ideas: There are two mentioned in SoC-2021-Ideas[3]
+>      but both were picked by GSoC students the previous year. So,
+>      we would need new ones this year.
 
-On Wed, Jan 26 2022, Junio C Hamano wrote:
+I have several project ideas:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I am puzzled by this error.  The assignment is the only one that
->> assigns a real pointer to the .finished member, and until
->> finish_active_slot() is called on the slot, the loop would not
->> leave.  I would understand the error if slot->finished is used after
->> the function returns to the caller, but I do not think it is the
->> case.
->
-> IOW, I am wondering if this is a mistaken compiler that needs to be
-> told not to raise a false warning.
->
-> If the motivation behind the original "do not get fooled by a reused
-> slot still working on somebody else's request---instead return when
-> our request is done" was indeed what I speculated, then the pointer
-> slot->finished when we leave this function should not matter to
-> anybody.  Would the following patch make the compiler realize that
-> we never smuggle a local variable's address out of this function via
-> a pointer in the structure?
->
->  http.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git c/http.c w/http.c
-> index 229da4d148..85437b1980 100644
-> --- c/http.c
-> +++ w/http.c
-> @@ -1367,6 +1367,9 @@ void run_active_slot(struct active_request_slot *slot)
->  			select(max_fd+1, &readfds, &writefds, &excfds, &select_timeout);
->  		}
->  	}
-> +
-> +	if (slot->finished == &finished)
-> +		slot->finished = NULL;
->  }
->  
->  static void release_active_slot(struct active_request_slot *slot)
-
-Yes, that does quiet it. The GCC warning is specifically about pointers
-that survive the exit of the function. From the commit that added it to
-gcc.git:
-    
-    +      /* The use is one of a dangling pointer if a clobber of the variable
-    +        [the pointer points to] has not been found before the function exit
-    +        point.  */
-    
+   - Document the "binary diff" format. Right now we have documentation
+     for all diff formats used in Git, except for binary diff. Hint:
+     read `diff.c`
+   - Rewrite `git-request-pull.sh` in C. Currently the shell script
+     implementation hard-codes message template and only outputs to
+     stdout (though can be redirected to a file using shell means).
+     In the C version, message template can be configured (with the
+     default is same as current version) and introduces new
+     `-o/--output` option to specify output file.
+  
+-- 
+An old man doll... just what I always wanted! - Clara
