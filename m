@@ -2,221 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74EDAC433EF
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 20:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DDEAC433EF
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 20:53:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344034AbiA0UaO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 15:30:14 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58836 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231384AbiA0UaN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 15:30:13 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8BFDE107066;
-        Thu, 27 Jan 2022 15:30:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=yZEEc7ddQuXm
-        G+KpE73cVMmpSMhLb8kbGgQpKNCVDFE=; b=TZ4VqIBO1/kaT377m2gUGAZvnTwz
-        uu6hDnhoy1DF/LGCm0/V+N1zgo2AUxb1jldPZVl2toVHr97R0/fC5QxsbkhQsNlM
-        EMz7yQ4sdpNL5czLMWlJi3rnU12Uhf7SIhbu669Ukdy2sWBkW/YtMXsZlf/Nax4W
-        N7wO/DNGvDKHq34=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F8E5107065;
-        Thu, 27 Jan 2022 15:30:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8D4BD107064;
-        Thu, 27 Jan 2022 15:30:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, J Smith <dark.panda@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v9 9/9] grep: simplify config parsing and option parsing
-References: <cover-v8-00.10-00000000000-20220118T155211Z-avarab@gmail.com>
-        <cover-v9-0.9-00000000000-20220127T115058Z-avarab@gmail.com>
-        <patch-v9-9.9-445467e87f7-20220127T115058Z-avarab@gmail.com>
-Date:   Thu, 27 Jan 2022 12:30:09 -0800
-In-Reply-To: <patch-v9-9.9-445467e87f7-20220127T115058Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 27 Jan
- 2022 12:56:31
-        +0100")
-Message-ID: <xmqq35l82a7i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: ED20AFB6-7FAF-11EC-9000-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+        id S240821AbiA0Uxf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 15:53:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55412 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240138AbiA0Uxf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 15:53:35 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E951EC061714
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 12:53:34 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id c192so2792805wma.4
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 12:53:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=6wind.com; s=google;
+        h=mime-version:content-transfer-encoding:date:message-id:to:cc
+         :subject:from:references:in-reply-to;
+        bh=KhOAx1L3naEHtpFkj4vNjtl/4nm+wrMJy++28n9pAoM=;
+        b=XknSNijIomUJVoPnR7cSADiDGTsJ0PsfXF8R4iGTv3uy9FfaRFjOW5MFB/U0VVwjx4
+         UKPu38cgOV1XDKx3xQUDe78idtBSd/LpTBI/KgP3w1aE3/RzLq03uV61dj6rBtIUrL9f
+         /buoEi9zwLP4EKF/MXdahzHXY1gbpUeOyWRtjQxpFXKrU0qJkqwwjLgkQFK1fMc4604Y
+         LoQN72rojUJt5VcimQL/a9SijBMDplJjr7a8Y+5EVR6FbG7EUX3nRPmVqPsHTXahTP+x
+         +7v2s3iH1U8qL68ujNmcGhoiw710O4MyOtltQy384V9fE0DSHLF9AB7aHtTzEO8V84jP
+         E+RA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:content-transfer-encoding:date
+         :message-id:to:cc:subject:from:references:in-reply-to;
+        bh=KhOAx1L3naEHtpFkj4vNjtl/4nm+wrMJy++28n9pAoM=;
+        b=5gOq8dJIf0AjoTbzWekPJc/QPW3XQbpiRu1Tnz/vJAmBd21rfsYdJtcWkiXym0XSrz
+         zqnbXtFNWYMNh/yicOOVM4d0hzlYbYJmmyGNNpxGPNsWon5HfgB7PVG0wQkQdtOWbfZK
+         VjId8aEk2gkwvjBEHVA4TGAYGyMJWSC5aS2WE3abz+5d4dODlzJSBEP17P5GouqztVik
+         FWIMcCbxdRu86glUNzpy5ji5JF3OSgun+Zo1lthQKYCVRW+pSR4OLvYxxCKFt9rKYrBk
+         v7JNokSsgvXX54e4elcTc4iNPYhKoUie6K4kAkwUZYL8xzOz92xj6niUIVeMuHI5OVdx
+         dc+w==
+X-Gm-Message-State: AOAM533iNL7sD7kvzDzoar2hzMimOZBXoP82jseW2NUc8xcfZqZGdGI3
+        /IFhXgQKXj3qaRD3hlfkIzziKQ==
+X-Google-Smtp-Source: ABdhPJzcrO4HMWAoPCLQmp/X0ASh56J9zMQKS42jJYwdUWqK5lLiXRaSoAEPWEWV5bD46sICda1ZWQ==
+X-Received: by 2002:a1c:a302:: with SMTP id m2mr4786760wme.84.1643316813478;
+        Thu, 27 Jan 2022 12:53:33 -0800 (PST)
+Received: from localhost (2a01cb000f483e004bf57bbe4fddc0d6.ipv6.abo.wanadoo.fr. [2a01:cb00:f48:3e00:4bf5:7bbe:4fdd:c0d6])
+        by smtp.gmail.com with ESMTPSA id a24sm282038wmm.31.2022.01.27.12.53.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jan 2022 12:53:33 -0800 (PST)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 27 Jan 2022 21:53:32 +0100
+Message-Id: <CHGR6XNP6TV7.15VGVNQUJM9J6@diabtop>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Emily Shaffer" <emilyshaffer@google.com>, <git@vger.kernel.org>,
+        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
+        "Patryk Obara" <patryk.obara@gmail.com>,
+        "Jiang Xin" <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v2] receive-pack: add option to interrupt pre-receive
+ when client exits
+From:   "Robin Jarry" <robin.jarry@6wind.com>
+X-Mailer: aerc/0.7.1-30-g7edcc9f79409
+References: <20220125095445.1796938-1-robin.jarry@6wind.com>
+ <20220126214438.3066132-1-robin.jarry@6wind.com>
+ <xmqqv8y54wxc.fsf@gitster.g> <CHGCP9P33XDQ.3FEWHU0PBMNU6@diabtop>
+ <xmqqr18t2fxl.fsf@gitster.g>
+In-Reply-To: <xmqqr18t2fxl.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Junio C Hamano, Jan 27, 2022 at 19:26:
+> Sorry, but I was (and am) questioning why we want to do more than
+> "let it be killed by SIGPIPE, just like we used to do before
+> ec7dbd14 (receive-pack: allow hooks to ignore its standard input
+> stream, 2014-09-12) introduced the current behaviour", so the answer
+> is still "why do we even need to complicate the thing with keepalive
+> or anything we don't have, and we didn't have before ec7dbd14, in
+> the code paths that are involved?"
 
-> In a preceding commit we changed grep_config() to be called after
-> grep_init(), which means that much of the complexity here can go
-> away.
->
-> As before both "grep.patternType" and "grep.extendedRegexp" are
-> last-one-wins variable, with "grep.extendedRegexp" yielding to
-> "grep.patternType", except when "grep.patternType=3Ddefault".
->
-> Note that this applies as we parse the config, i.e. a sequence of:
->
->     -c grep.patternType=3Dperl
->     -c grep.extendedRegexp=3Dtrue \
->     -c grep.patternType=3Ddefault
->
-> should select ERE due to "grep.extendedRegexp=3Dtrue and
-> grep.patternType=3Ddefault".
+My main goal is to abort a push if a user hits ctrl-c (or is
+disconnected) before the objects have been moved to permanent storage.
 
-Correct.  The same reasoning would apply to:
+(partially) reverting to previous behavior would only allow aborting
+pushes *if* the pre-receive hook sends some output and this output
+cannot be forwarded to the client. There is no guarantee that the hook
+will send any output. Also, it would restore hard to track issue with
+poorly written pre-receive hooks.
 
-	-c grep.extendedRegexp=3Dtrue \=20
-	-c grep.patternType=3Dperl \
-	-c grep.patternType=3Ddefault
+I wonder if it would be possible to not rely on the pre-receive hook
+sending output and this output somehow not being forwarded to the
+client.
 
-which should also select ERE due to "grep.extendedRegexp=3Dtrue and
-grep.patternType=3Ddefault".  As we re-check grep.extendedRegexp every
-time grep.patternType changes, and we keep extendedRegexp as a
-separate copy without getting lost like earlier rounds of this
-series, this should work.
+Instead, explicitly check if the client is still connected and alive
+after the pre-receive hook has exited but before completing the push
+transaction. That was my intent with that (invalid by the way) keepalive
+example.
 
-Would this also work?
+I do not know git internals to say if it feasible without any protocol
+breakage. My attempts work well for aborting pushes:
 
-	-c grep.extendedRegexp=3Dfalse \
-	-c grep.patternType=3Ddefault \
-	-c grep.extendedRegexp=3Dtrue
+ Writing objects: 100% (3/3), 321 bytes | 321.00 KiB/s, done.
+ Total 3 (delta 1), reused 1 (delta 0), pack-reused 0
+ remote: pre-receive start^C
+ <--- client has disconnected
+      receive-pack fails to send the "keepalive" packet
+      the temp objects are *not* migrated to permanent storage
 
-We do keep extendedRegexp, but as soon as we read .patternType that
-is default, adjust_pattern_type() overwrites the pattern_type_option
-member with BRE, and the fact that .patternType was specified as "do
-whatever the .extendedRegexp says" is lost when we read the third
-one.
+But this always leads to errors on the client side when receive-pack
+sends the "keepalive packet":
 
-So, no, I am not sure this is correct.
+ Writing objects: 100% (3/3), 321 bytes | 321.00 KiB/s, done.
+ Total 3 (delta 1), reused 1 (delta 0), pack-reused 0
+ remote: pre-receive start
+ remote: pre-receive end OK
+ error: unexpected flush packet while reading remote unpack status
+ error: invalid ref status from remote: unpack
+ remote: post-receive start
+ remote: post-receive end OK
+ To git@host:repo.git
+  ! [remote failure]    main -> main (remote failed to report status)
+ error: failed to push some refs to 'git@host:repo.git'
 
-> diff --git a/grep.c b/grep.c
-> index 60228a95a4f..f07a21ff1aa 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -48,6 +48,12 @@ static int parse_pattern_type_arg(const char *opt, c=
-onst char *arg)
-> =20
->  define_list_config_array_extra(color_grep_slots, {"match"});
-> =20
-> +static void adjust_pattern_type(enum grep_pattern_type *pto, const int=
- ero)
-> +{
-> +	if (*pto =3D=3D GREP_PATTERN_TYPE_UNSPECIFIED)
-> +		*pto =3D ero ? GREP_PATTERN_TYPE_ERE : GREP_PATTERN_TYPE_BRE;
-> +}
+Am I chasing rainbows or is that possible in the current state of the
+git protocol? Maybe I need to send the keepalive packet in a sideband?
+I have read the technical docs several times but I cannot understand how
+everything works properly.
 
-OK.  Earlier rounds just replaced the UNSPECIFIED with hardcoded value "0=
-",
-which was more or less pointless.  I think this is easier to follow.
-
-But as I said, "committing" ERE vs BRE in this manner is probably
-way too early and produce an incorrect result.  Instead ...
-
-> @@ -490,9 +446,9 @@ static void compile_regexp(struct grep_pat *p, stru=
-ct grep_opt *opt)
-
-... this is the right place to do the "see if pattern_type_option is
-'default' and if so use 'extended_regexp_option' to commit to either
-BRE or ERE".
-
-I guess that is what I have been repeating during the review of the
-past few rounds.  Am I overlooking some other cases where that
-simpler-to-explain approach does not work?
-
->  	p->word_regexp =3D opt->word_regexp;
->  	p->ignore_case =3D opt->ignore_case;
-> -	p->fixed =3D opt->fixed;
-> +	p->fixed =3D opt->pattern_type_option =3D=3D GREP_PATTERN_TYPE_FIXED;
-> =20
-> -	if (!opt->pcre2 &&
-> +	if (opt->pattern_type_option !=3D GREP_PATTERN_TYPE_PCRE &&
->  	    memchr(p->pattern, 0, p->patternlen))
->  		die(_("given pattern contains NULL byte (via -f <file>). This is onl=
-y supported with -P under PCRE v2"));
-> =20
-> @@ -544,14 +500,14 @@ static void compile_regexp(struct grep_pat *p, st=
-ruct grep_opt *opt)
->  		return;
->  	}
-> =20
-> -	if (opt->pcre2) {
-> +	if (opt->pattern_type_option =3D=3D GREP_PATTERN_TYPE_PCRE) {
->  		compile_pcre2_pattern(p, opt);
->  		return;
->  	}
-> =20
->  	if (p->ignore_case)
->  		regflags |=3D REG_ICASE;
-> -	if (opt->extended_regexp_option)
-> +	if (opt->pattern_type_option =3D=3D GREP_PATTERN_TYPE_ERE)
->  		regflags |=3D REG_EXTENDED;
->  	err =3D regcomp(&p->regexp, p->pattern, regflags);
->  	if (err) {
-> diff --git a/grep.h b/grep.h
-> index 89a2ce51130..f89324e9aa9 100644
-> --- a/grep.h
-> +++ b/grep.h
-> @@ -143,7 +143,6 @@ struct grep_opt {
->  	int unmatch_name_only;
->  	int count;
->  	int word_regexp;
-> -	int fixed;
->  	int all_match;
->  	int no_body_match;
->  	int body_hit;
-> @@ -154,7 +153,6 @@ struct grep_opt {
->  	int allow_textconv;
->  	int extended;
->  	int use_reflog_filter;
-> -	int pcre2;
->  	int relative;
->  	int pathname;
->  	int null_following_name;
-> @@ -183,6 +181,7 @@ struct grep_opt {
->  	.relative =3D 1, \
->  	.pathname =3D 1, \
->  	.max_depth =3D -1, \
-> +	.extended_regexp_option =3D -1, \
-
-I do not think you meant this.  Uninitialized grep.extendedRegexp
-defaults to 0 (BRE), I think.
-
->  	.pattern_type_option =3D GREP_PATTERN_TYPE_UNSPECIFIED, \
->  	.colors =3D { \
->  		[GREP_COLOR_CONTEXT] =3D "", \
-> @@ -202,7 +201,6 @@ struct grep_opt {
-> =20
->  int grep_config(const char *var, const char *value, void *);
->  void grep_init(struct grep_opt *, struct repository *repo);
-> -void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt =
-*opt);
-> =20
->  void append_grep_pat(struct grep_opt *opt, const char *pat, size_t pat=
-len, const char *origin, int no, enum grep_pat_token t);
->  void append_grep_pattern(struct grep_opt *opt, const char *pat, const =
-char *origin, int no, enum grep_pat_token t);
-> diff --git a/revision.c b/revision.c
-> index d6e0e2b23b5..dd301e30147 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -2860,8 +2860,6 @@ int setup_revisions(int argc, const char **argv, =
-struct rev_info *revs, struct s
-> =20
->  	diff_setup_done(&revs->diffopt);
-> =20
-> -	grep_commit_pattern_type(GREP_PATTERN_TYPE_UNSPECIFIED,
-> -				 &revs->grep_filter);
->  	if (!is_encoding_utf8(get_log_output_encoding()))
->  		revs->grep_filter.ignore_locale =3D 1;
->  	compile_grep_patterns(&revs->grep_filter);
+Thank you for your time.
