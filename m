@@ -2,151 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C22A3C433FE
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 21:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F077C433EF
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 21:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243179AbiA0VWA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 16:22:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33566 "EHLO
+        id S1344365AbiA0VdJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 16:33:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239496AbiA0VV7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 16:21:59 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFB28C061714
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 13:21:58 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id c2so2861517wml.1
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 13:21:58 -0800 (PST)
+        with ESMTP id S234277AbiA0VdJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 16:33:09 -0500
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34DADC061714
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 13:33:09 -0800 (PST)
+Received: by mail-pf1-x449.google.com with SMTP id z20-20020aa791d4000000b004bd024eaf19so2185638pfa.16
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 13:33:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=AyUX98jHiz4d9t0sthFC67+vY1meE25DkgIlmuUYxFk=;
-        b=LHs1+AXu7smI3o6AMSgJJ8PKgWG4Ocs7X/9e5btIVZuYjEkzYLhLvo8G0x0zvSMkOh
-         kccPUj+bAN8dfX17eA8JpVuROfkIo4Ld4Y/pWppRS2RmpBZS1TPbqLhHcbPaTp+ra7ez
-         DZYrWGM57rJhV04ke07W8Qxmayx0cYJXxTQW6Oynq3Lw+CNtoRZjBtgiE9HvzSFVJxKk
-         YKmws2IDhn9EEAcP8tkU2Dzt4yS3yfA6WgJyzXjV7H2yW45nRreN+xRoa92ONvN3j4tw
-         n+9BTWcpmaO66J3RrpXT+NQg+IMS0e+3GeV2K5jQk9lhpX4P2gOsAe+CLxam+eSjGbeG
-         zOpw==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=LZdKdnxXEiXtCL/HsGiIe11WgR7Dn8ukO+eDOmsKs8g=;
+        b=e3vLR0R7786nkOSdoQcYPdmrQVLIVqH14RDRtWT4EeOKXIJmXZw6yLyWGpIfkM6gM1
+         Hu7KeobPEzt5bDIiytcqJdMmJT47wemHlSRJ/PZ3sKz25XSyphqyFDWcJJQkA4RLmlhd
+         gu8wdc7/Vn7agnZEIDMGpM6YRmFAcml2DkUUSX52BqtjsqQ1huez/FNLbRi8aQZRWka/
+         lc3p8LkfvdHP+SVLnKddVVI16FigMFk0fKBWr2q8NWQkvWyV7uDBK2l+5PiaGf7uxvaf
+         R36BrlE4Dal4RqqKVA3KsWWLb2DRroIPmVlwxMwYQy0yg0IoBWiFn0Bxovx9zZCHozSM
+         y1Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AyUX98jHiz4d9t0sthFC67+vY1meE25DkgIlmuUYxFk=;
-        b=xpbaUWpcbCVAfvFSO1por9aiQ/VRZwmTpCqD0Tv+p0UrTMNAdZ1TVsG14N9/HmV0qL
-         kcz2iFg75uAtQSOXnOgt9I41fUI0RDAjr5wI+FLuRASZDTHH29m+7akRw83Lr/eFQf1y
-         CBJ88wE44uDnPzwp08OLWcBMP0DGlHGp9WhBYVLJAu9dtv2p0bMNVqtKwBdBI25uvsK9
-         d6zwepV8SjFs740CZdIw2gW0gzhscSEAmk3fJkpjm5qpgc5CyhhngJQgc9WV/B+0+7N2
-         QS2Y8XL05E8rhk9ybfqorRmD74u4LQ3R/m7tP3oG9zL4on2rVmBMc2u3be+mLaYuFSY8
-         zhlw==
-X-Gm-Message-State: AOAM532KCp+WhhiUpM+f8qBDS8b81IfmyDRbi7EiLun4HfjsaYPoB7Mj
-        1AJFPFaLWixz1vblg4sTPDFqKft7hE4=
-X-Google-Smtp-Source: ABdhPJyJtiiApMicTNQg2KtN/G9yhLppm9QcGH/wOIz/ey7ox2OkbYgDJthx4aQkMV/4RAaK8ir7Vw==
-X-Received: by 2002:a7b:cb93:: with SMTP id m19mr13313156wmi.186.1643318517315;
-        Thu, 27 Jan 2022 13:21:57 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n13sm3071293wrm.68.2022.01.27.13.21.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 13:21:56 -0800 (PST)
-Message-Id: <7d70beb2a6b3967c51d1d7feb34bfb9368066cdb.1643318514.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1108.v4.git.1643318514.gitgitgadget@gmail.com>
-References: <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
-        <pull.1108.v4.git.1643318514.gitgitgadget@gmail.com>
-From:   "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 27 Jan 2022 21:21:53 +0000
-Subject: [PATCH v4 2/3] completion: sparse-checkout updates
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, gitster@pobox.com, johannes.schindelin@gmail.com,
-        Elijah Newren <newren@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=LZdKdnxXEiXtCL/HsGiIe11WgR7Dn8ukO+eDOmsKs8g=;
+        b=vjul4F7joEny2ckMTSprh1onzp4mG3UNLJN2hTKmVZe5JwuWAeXwY/F9gickGv+vJu
+         XmSQX9uMqjI9ygWec9L/XEkO/ZFHIePFSDOOnw2/NbMa52c7pnz9MnlmISvqnDv4g4zb
+         OlWxJDk9jvuBB3WclKRLhNlE6uK8UqpCzHoQkvvTCFqk6nzfAxlXp0ak1s9SYNY/Pe26
+         iG3iRB9193Ql34Kyhlpx8+c+lEH1vNxCFqJfMv3mmIkW4XYJ038VxJuVkjCae/VtAVO6
+         wyTHV1ZxyncD0H6ToCcbjJP30SRRge4cpL/anEIIwAa950uFA3UiFlmvkyxJiwjVXRwv
+         d+Jw==
+X-Gm-Message-State: AOAM532mKGX2D6kuaPDLUCMJPnzLkw0cEC/c6nv6uF/vl9mWdIBh0+4A
+        uSlf1PGCGXtA+WZl5MJ7L11iyzvpToDxng==
+X-Google-Smtp-Source: ABdhPJwK4PBV6p/m3M+NohUNV2gbk8rgaM3JMq8bTdtk2Q+uoyUvsQlhqN4nyNMD3cFDZL7Z7ZKS6hJEGI4T0w==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:aa7:9429:: with SMTP id
+ y9mr5078880pfo.20.1643319188453; Thu, 27 Jan 2022 13:33:08 -0800 (PST)
+Date:   Thu, 27 Jan 2022 13:32:58 -0800
+In-Reply-To: <20220127202918.3099460-1-jonathantanmy@google.com>
+Message-Id: <kl6lr18szwxh.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20220124204442.39353-6-chooglen@google.com> <20220127202918.3099460-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v7 5/6] branch: add --recurse-submodules option for branch creation
+From:   Glen Choo <chooglen@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, steadmon@google.com,
+        emilyshaffer@google.com, avarab@gmail.com,
+        levraiphilippeblain@gmail.com, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lessley Dennington <lessleydennington@gmail.com>
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Fix custom tab completion for the sparse-checkout command. This will
-ensure:
+>> Although this commit does not introduce breaking changes, it is
+>> incompatible with existing --recurse-submodules commands because "git
+>> branch --recurse-submodules" writes to the submodule ref store, but most
+>> commands only consider the superproject gitlink and ignore the submodule
+>> ref store. For example, "git checkout --recurse-submodules" will check
+>> out the commits in the superproject gitlinks (and put the submodules in
+>> detached HEAD) instead of checking out the submodule branches.
+>
+> The usual meaning of "incompatible" is "cannot be used together", I
+> think, which is not what's happening here - it's just that the user
+> would expect them to work together in a specific way but they don't do
+> that.
 
-1. The full list of subcommands is provided when users enter git
-sparse-checkout <TAB>.
-2. Subcommand options are tab-completable.
-3. A list of directories (but not files) is provided when users enter git
-sparse-checkout add <TAB> or git sparse-checkout set <TAB> in cone mode
-only. In non-cone mode, these commands will continue to complete both
-directory and file names.
+Ok, I'll replace "incompatible with" with "does not interact well with".
 
-Failing tests that were added in the previous commit to verify these
-scenarios are now passing with these updates.
+>> + */
+>> +static int submodule_create_branch(struct repository *r,
+>> +				   const struct submodule *submodule,
+>> +				   const char *name, const char *start_oid,
+>> +				   const char *start_name, int force,
+>> +				   int reflog, int quiet,
+>> +				   enum branch_track track, int dry_run)
+>> +{
+>> +	int ret = 0;
+>> +	struct child_process child = CHILD_PROCESS_INIT;
+>> +	struct strbuf child_err = STRBUF_INIT;
+>> +	struct strbuf out_buf = STRBUF_INIT;
+>> +	char *out_prefix = xstrfmt("submodule '%s': ", submodule->name);
+>> +	child.git_cmd = 1;
+>> +	child.err = -1;
+>> +	child.stdout_to_stderr = 1;
+>> +
+>> +	prepare_other_repo_env(&child.env_array, r->gitdir);
+>> +	/*
+>> +	 * submodule_create_branch() is indirectly invoked by "git
+>> +	 * branch", but we cannot invoke "git branch" in the child
+>> +	 * process because it does not let us set start_name and
+>> +	 * start_oid separately (see create_branches_recursively()).
+>
+> Probably clearer to enumerate the 3 different pieces of information
+> needed: the name of the branch to be created, the OID, and the name of
+> the branch that would be used for tracking purposes.
 
-Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
----
- contrib/completion/git-completion.bash | 15 ++++++++-------
- t/t9902-completion.sh                  |  4 ++--
- 2 files changed, 10 insertions(+), 9 deletions(-)
+Makes sense. Also the comment on create_branches_recursively() doesn't
+do a great job of explaining why we need the additional piece of
+information (tracking name), so I'll tidy them up together.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index c82ccaebcc7..a920cdab201 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2988,21 +2988,22 @@ _git_show_branch ()
- 
- _git_sparse_checkout ()
- {
--	local subcommands="list init set disable"
-+	local subcommands="list init set disable add reapply"
- 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+
- 	if [ -z "$subcommand" ]; then
- 		__gitcomp "$subcommands"
- 		return
- 	fi
- 
- 	case "$subcommand,$cur" in
--	init,--*)
--		__gitcomp "--cone"
--		;;
--	set,--*)
--		__gitcomp "--stdin"
-+		*,--*)
-+			__gitcomp_builtin sparse-checkout_$subcommand "" "--"
- 		;;
--	*)
-+		set,*|add,*)
-+			if [ $(__git config core.sparseCheckoutCone) ]; then
-+				__git_complete_index_file "--directory"
-+			fi
- 		;;
- 	esac
- }
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 6004d854102..f56ba3f64c9 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1447,7 +1447,7 @@ test_expect_success 'git checkout - with --detach, complete only references' '
- 	EOF
- '
- 
--test_expect_failure 'sparse-checkout completes subcommands' '
-+test_expect_success 'sparse-checkout completes subcommands' '
- 	test_completion "git sparse-checkout " <<-\EOF
- 	list Z
- 	init Z
-@@ -1458,7 +1458,7 @@ test_expect_failure 'sparse-checkout completes subcommands' '
- 	EOF
- '
- 
--test_expect_failure 'cone mode sparse-checkout completes directory names' '
-+test_expect_success 'cone mode sparse-checkout completes directory names' '
- 	# set up sparse-checkout repo
- 	git init sparse-checkout &&
- 	(
--- 
-gitgitgadget
+> An argument could be made that "git branch" should be extended to be
+> able to take in these 3 different pieces of information, but it also
+> makes sense to put this functionality in submodule--helper for now,
+> since the whole thing is marked as experimental.
 
+Yes, I considered this, but I can't think of a good reason to expose
+this functionality to users - users can set their upstream with the more
+intuitive "git branch --set-upstream-to".
+
+>> +/*
+>> + * Creates a new branch in repository and its submodules (and its
+>> + * submodules, recursively). Besides these exceptions, the parameters
+>> + * function identically to create_branch():
+>> + *
+>> + * - start_name is the name of the ref, in repository r, that the new
+>> + *   branch should start from. In submodules, branches will start from
+>> + *   the respective gitlink commit ids in start_name's tree.
+>> + *
+>> + * - tracking_name is the name used of the ref that will be used to set
+>> + *   up tracking, e.g. origin/main. This is propagated to submodules so
+>> + *   that tracking information will appear as if the branch branched off
+>> + *   tracking_name instead of start_name (which is a plain commit id for
+>> + *   submodules). If omitted, start_name is used for tracking (just like
+>> + *   create_branch()).
+>> + *
+>> + */
+>> +void create_branches_recursively(struct repository *r, const char *name,
+>> +				 const char *start_name,
+>> +				 const char *tracking_name, int force,
+>> +				 int reflog, int quiet, enum branch_track track,
+>> +				 int dry_run);
+>
+> Instead of taking in "name", "start_name", and "tracking_name", could we
+> take in "name", "oid", and "tracking_name"? That way, it's clearer what
+> each parameter is used for.
+
+I used start_name to mirror create_branches(), but start_name makes less
+sense here because it's ambiguous.
+
+Since the start_name is always an oid or NULL, this makes sense. I'll do
+this.
+
+>> +test_expect_success 'should not create branches in inactive submodules' '
+>> +	test_when_finished "reset_test" &&
+>> +	test_config -C super submodule.sub.active false &&
+>> +	(
+>> +		cd super &&
+>> +		git branch --recurse-submodules branch-a &&
+>> +		git rev-parse branch-a &&
+>> +		test_must_fail git -C sub branch-a
+>> +	)
+>> +'
+>
+> The "test_must_fail" line doesn't make sense - there is no such command
+> branch-a. To avoid errors like this, maybe make sure that all
+> test_must_fail invocations are accompanied by assertions on the error
+> message. (And for "test_must_fail git rev-parse", we could have a helper
+> function here that asserts the "object not found".)
+
+Ah good catch. I'll make the test helper.
+
+>
+>> +test_expect_success 'should set up tracking of local branches with track=always' '
+>> +	test_when_finished "reset_test" &&
+>> +	(
+>> +		cd super &&
+>> +		git -c branch.autoSetupMerge=always branch --recurse-submodules branch-a main &&
+>> +		git -C sub rev-parse main &&
+>> +		test "$(git -C sub config branch.branch-a.remote)" = . &&
+>> +		test "$(git -C sub config branch.branch-a.merge)" = refs/heads/main
+>> +	)
+>> +'
+>
+> As described in t/README line 671, this means that the inner command
+> could silently fail. You can do `REMOTE=$(...) &&` <newline> `test ...`.
+> Same comment throughout this file.
+
+Thanks for the catch and double thanks for the recommended fix.
+
+Will reroll soon.
