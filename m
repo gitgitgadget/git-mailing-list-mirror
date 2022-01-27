@@ -2,104 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5D3EC433F5
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 14:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C37CFC433EF
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 14:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242363AbiA0O3E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 09:29:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49384 "EHLO
+        id S242506AbiA0OjS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 09:39:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229755AbiA0O3D (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 09:29:03 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65379C061747
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 06:29:03 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id w133so6144666oie.7
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 06:29:03 -0800 (PST)
+        with ESMTP id S242502AbiA0OjP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 09:39:15 -0500
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A7AAC061714
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 06:39:15 -0800 (PST)
+Received: by mail-ot1-x330.google.com with SMTP id b12-20020a9d754c000000b0059eb935359eso2734460otl.8
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 06:39:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=NOCUuVzGE3ehIVxPAWisAzYIB8019ABdinWblNEtijs=;
-        b=LsU/MW5WK3rdN9khk/xjURdhPpXwovpkAoRbh0Jh2FcOdqqsetowyuQhFIdyHD+8sV
-         7FaURaQyFlYHEpkyLBuTKtmYDO+OU1JH6i8VN8jmDmvQ9IB3qwUfV/+oZln4mZpDN4i7
-         L7DrW14MUnnH57GLzcYdol84F3fJKYFzSrHNP8ffzrjg/IVDjEHuZeiGY/5RkI4owB5P
-         KtQFI7tym268/TYVEjqOOh8d9TJ/0zP9UI/rNZBN+VybMIieEyUlzlHOtrMFzwHfEoo8
-         rtFx83aELSWjDWcnyrANN7WnuqBad608cXjIqHR9P2jvmoTg3TFBX683QpCu3guwjQg+
-         2MBg==
+        bh=eHSxnbyT5f7IQMy8RXXYhnOlGOo3q1AuUfcQUqqD7O0=;
+        b=cIEXpbf5yFcIEV8n1eB6+ibTUqNQUmGHUyBbzvs7NFQqE6uc4OJpvhui+xZP/R9E7W
+         Gym6fp00BXnmRp5eemi8k/9vPTS272n+QgEuxWbhbYvTFCEXZ3hNMBCzyX+MxGVy/FrG
+         6cEr5pVUuYLtO4AbQ1mIPCKRARtGeYsMsjuf42uVx7kfWuLM4i1+MTD3KjUxkJIqyFig
+         KKKT5zuKovlyqkE8LrNV8CxLJ59Q7OGKTRplx2fuwCbD8aVPNIM9rxzo5P/nVcxOJcNG
+         W1C80Lvzrs5lhTeHTYeuH9oh04tSFjpZN2oVel4wdkTAC6cSBip6XcEUNJl7wR7UDQzK
+         +gUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=NOCUuVzGE3ehIVxPAWisAzYIB8019ABdinWblNEtijs=;
-        b=lZNqHiJy6zBO+KLknvfVi0rADV3f8J4E8m/vZaIKHoYrq9bOurwrTxiwxTpef0OwB/
-         wxhmFvBVoagvt1VlXvmpm31JSkegK3AcRRoMHac3D3p6Iz/XReHh21AU9gtZo53lj+0G
-         tIv8m855vqgnPmJJ8wBdTVPy1B0BjA952MtbxwWyMb1ru7WatHoOlTn4WTYu6SfWoySN
-         gUD9m1k6zz4mBGHU6tKCiCA1n3ThaZbySvlQkk4u7Iw9rO3iMqD65fCHAjEPsToLFQlD
-         RYKkYKAGZuMcDNKkyVpLOMUk3c80K8xl9EHus/7sMCcay3vA9Kj3kRat/2vjKGjbIYHH
-         E/nw==
-X-Gm-Message-State: AOAM532SJL6jYAmswn3pimpwW5b6Km8ek6VpAjSPFly5uSvWn5KvY0zD
-        TFg9v5DZTuYSxCwEYtXPOFQ=
-X-Google-Smtp-Source: ABdhPJzZF8tUGi9Pw+dpa8I255Jng+gKZ0BYVaP0/+TQFuYxG8D3ba2KmkXZx5gSSkki9laRbUBpaA==
-X-Received: by 2002:a05:6808:3029:: with SMTP id ay41mr2271609oib.173.1643293742674;
-        Thu, 27 Jan 2022 06:29:02 -0800 (PST)
+        bh=eHSxnbyT5f7IQMy8RXXYhnOlGOo3q1AuUfcQUqqD7O0=;
+        b=Ycc4JdhhALE3gda5ZFyzVy7WWJQgr/GZdui3YlDfKlU5LR0jdK2RXWyYJZZduO8nHV
+         5LmGKe1Gc+Vt+BteShUo/5s39Bt4m9iDia5g03MaoJAHWlhx6QLwdC/RAUdJTZ/6a49d
+         ZG0cpgDykBA8ye03RX9t54UM0GJqnlOFFPyft5w1WeH9jHf313npVoNm4YXODFWEUYB/
+         50rKAQIjbqWbZwHm7Mghxz5T/9Vu9LC1gmHiMgUUILyJymJ8GTTOByiPLmWjoOY0x+UC
+         Y1DMFjak2KT4OHm1Iy175KRiZnJeHoYKqy2bM8BKS3jrfcJaIkg56oda/ocpcdTTQ7f3
+         Vvuw==
+X-Gm-Message-State: AOAM5328DdI7876cdJTgoKzSMkETMrY1k1aLnXhPdnbJ1h8B/XoKJoJn
+        Xs4GqNt/8B4WoSC1RzJYUT8=
+X-Google-Smtp-Source: ABdhPJw0YZr72UI1NprPMmHhus5n7YpTP4q802IryivL9xksaOYg3kOcd31ZMY/WGH2F9+/bSYn2Hw==
+X-Received: by 2002:a05:6830:1493:: with SMTP id s19mr2261970otq.85.1643294354515;
+        Thu, 27 Jan 2022 06:39:14 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:d9cb:250e:9ea6:f8? ([2600:1700:e72:80a0:d9cb:250e:9ea6:f8])
-        by smtp.gmail.com with ESMTPSA id g34sm4268880ooi.48.2022.01.27.06.29.01
+        by smtp.gmail.com with ESMTPSA id j19sm6425947ots.21.2022.01.27.06.39.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Jan 2022 06:29:02 -0800 (PST)
-Message-ID: <c693f0bf-dafd-e4da-dd5c-ca44f20fe588@gmail.com>
-Date:   Thu, 27 Jan 2022 09:29:00 -0500
+        Thu, 27 Jan 2022 06:39:13 -0800 (PST)
+Message-ID: <ca51848c-d3e1-7f85-0268-ab4c999ea2bd@gmail.com>
+Date:   Thu, 27 Jan 2022 09:39:11 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH v4 0/5] Sparse checkout: fix bug with worktree of bare
- repo
+Subject: Re: Git in GSoC 2022?
 Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Sean Allred <allred.sean@gmail.com>,
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Git Community <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com>
- <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com>
- <CABPp-BHm3GRA3HWQwK2JiTKWye80ovwh-DRUOTys7g2D4UmwsA@mail.gmail.com>
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Victoria Dye <vdye@github.com>
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BHm3GRA3HWQwK2JiTKWye80ovwh-DRUOTys7g2D4UmwsA@mail.gmail.com>
+In-Reply-To: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/27/2022 2:20 AM, Elijah Newren wrote:
-> On Tue, Jan 25, 2022 at 10:42 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> This series is now based on v2.35.0 since that contains all of the necessary
->> topics.
+On 1/26/2022 1:29 PM, Kaartic Sivaraam wrote:
+> If we are interested in participating we need:
 > 
-> Heads up for the maintainer: has a minor textual conflict with
-> en/present-despite-skipped (this series modifies the end of a
-> paragraph that the other series modifies the beginning of).
+>   - Volunteers who are wiling to act as mentors. I would be
+>     willing to be volunteer myself as a mentor for one student.
+>  
+>   - Microprojects: I believe we could repurpose the Outreachy
+>     microproject ideas[2] for GSoC too. If others have suggestions
+>     for microproject ideas, please share them.
+> 
+>   - Project ideas: There are two mentioned in SoC-2021-Ideas[3]
+>     but both were picked by GSoC students the previous year. So,
+>     we would need new ones this year.
 
-Thanks for pointing this out. My next version will not have this conflict,
-so feel free to resolve the conflict by dropping the changes on this side.
+One project that could be interesting for GSoC (and the timing
+should work out) is to complete the sparse index integrations for
+some of the less critical commands. Some examples include 'git mv'
+and 'git rm', I think.
 
->> This patch series includes a fix to the bug reported by Sean Allred [1] and
->> diagnosed by Eric Sunshine [2].
->>
->> The root cause is that 'git sparse-checkout init' writes to the worktree
->> config without checking that core.bare or core.worktree are set in the
->> common config file. This series fixes this, but also puts in place some
->> helpers to prevent this from happening in the future.
-> This series has become pretty solid.  I had only very minor comments
-> on the patches.  Thanks for working on this.
+This of course depends on some ongoing work to integrate more of
+the critical commands that we implemented early in microsoft/git,
+such as Victoria's current series which is leading to a 'git stash'
+integration and a series I have waiting in the wings for a 'git
+sparse-checkout' integration.
 
-Thank you for your careful review. I'll let it simmer over the weekend
-before sending a v5 that includes your recommended changes.
+However, I think we have a decent paved-path for a new contributor
+to jump in and get started on the remaining commands. The granularity
+means that the project has multiple milestones that can be hit
+without an all-in-one series.
+
+>   - Multiple Sizes of Projects: In 2021, project size was reduced
+>     (~175 hours). This year, both medium sized projects (~175 hours)
+>     and large projects (~350 hours) are supported.
+> 
+>     GSoC organizers recommend communities to have both medium _and_
+>     large size projects.
+
+I think this project would fit in the "medium" category.
 
 Thanks,
 -Stolee
