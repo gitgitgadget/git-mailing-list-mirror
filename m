@@ -2,226 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 740EFC433F5
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 07:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F25CAC433EF
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 07:06:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237070AbiA0HCM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 02:02:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57412 "EHLO
+        id S237097AbiA0HGR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 02:06:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236988AbiA0HCL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 02:02:11 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CBD6C061714
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 23:02:11 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id n10so2316172edv.2
-        for <git@vger.kernel.org>; Wed, 26 Jan 2022 23:02:11 -0800 (PST)
+        with ESMTP id S229823AbiA0HGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 02:06:16 -0500
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D240BC061714
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 23:06:16 -0800 (PST)
+Received: by mail-pg1-x534.google.com with SMTP id e9so1514807pgb.3
+        for <git@vger.kernel.org>; Wed, 26 Jan 2022 23:06:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=q8okE5Sqr0llEpfrYwz8FIZP4ZDaz8Tk7KRU7lJNMsM=;
-        b=YbKyIWydtZStbAirkAl8m9GZUlfMhlemX5TADrmx1EOnBJeIx95gtytQvMB/qYwLOB
-         Z/r3gzTR4TDQRPxzfk2Xb35zAaBUl54tx3Pb1loim6bZWnl1PaQPvbWX6LJYAikrW6yB
-         2Zq0NGTMn2iK8Ddg3FJyLdCw8v3OcOr4Tbk31xTLk4Xusayyo+e5ute2iG+qFAl+iKbL
-         YnrCfj02oKIy6ETDk18PPy8IO5Msi4HVIqkJZg4Ixh0/sNv8fsKcQi9LpHcRuXg3SNso
-         2p3u1XjCaBCsWEoRXXTznAednTwmhZ76xDRYrwFiSaj9sdHSsv2FYc9Nu9XqFeMVQbmR
-         zfWQ==
+        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
+         :subject:to:cc;
+        bh=/qg6/bJ/Gtm8o26duCTLdQRgFY9P0BtWj3rn+ZGE8pI=;
+        b=alfXWiVHrS9SU1SUARuTBO5ElEIy6ZpbQCY8UQGNeSHR9HKvbJtAbGxIDZOnf4AGVe
+         19SCLVAetbIYTo4um0jkCPlEiKibBU2aMcubV8Uw7rh5cGBv9hEBPcEKcKV8F08My1ky
+         TgYnD7EOaM+t1VULrSvDY5UY/VH86EvMUCEa6b6EPoXIy18W4wjY+DICCJNs6rjdXeZV
+         cHB2zSmc+mwzkeYB3gvQLsTNrG316e/sgFXAufiP/Fq7+Igv8HJLFJFPZZAWfu6trTVL
+         w4v3+phBDUjSkd34/P51L9ffMONM7To7KdYXz4hsuDp3m9KZWLFfmGVRkOnDa0EAUutV
+         2Fmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=q8okE5Sqr0llEpfrYwz8FIZP4ZDaz8Tk7KRU7lJNMsM=;
-        b=eJJPZjUIym6/rQjgXIpFVMIBT17Qp19PrKzhpY4KRX8E8IxSlOSDDmrGm5GTTASDex
-         2WFdu2meUL4jlufNEZSw6r8rZXcyswvKfHKRJD2cpRVVfYbLlYtJDlsca/loVhSa/ccI
-         97pzMSJ6f+VVdD0SBkLhotY/njmTvdLPBJt8AV27uRxJMtribk4dt0iGWWKXzh/F0opY
-         faWbvaIQaOvW4uBtALGCALDcnZIEsnSw4zlGrRW/f5BICkfsOKu/mthEqDQPu2bx4JHq
-         tqp9ya6N8AM3MbjDVvRzsdevpTd+0NbDVVIH4LQVVN4d2cHBdhblPJRSIlchnoXzHbqm
-         8QqQ==
-X-Gm-Message-State: AOAM5304DjF8JKOa/7VVDGuJG0BoFr43V9PkF2pnTwxb4MOJvWqXi2fK
-        c7Ei4zXuSr+MEKlgDvUHHjk7YzPPjq/lBzw1Zl0=
-X-Google-Smtp-Source: ABdhPJxyN+WK8r4hdgrv7jyCK3Lj5Bp9hJUO+mvZzQ/4QNvBn8PYqOOnHdPaNrXADQ5s7yLfWvMYZAGgb2+oVAsdTS4=
-X-Received: by 2002:aa7:da44:: with SMTP id w4mr2397631eds.146.1643266929938;
- Wed, 26 Jan 2022 23:02:09 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
+         :from:date:message-id:subject:to:cc;
+        bh=/qg6/bJ/Gtm8o26duCTLdQRgFY9P0BtWj3rn+ZGE8pI=;
+        b=MwJIMR6yHeNIG+cG853TPQERfQ2fwZ800+i/zsfBPXbsXIgq7saSNuEdnUUJdbqUVv
+         e+YwSbjKWFg6QiDE51mKJNBK+BySJddNtsAf6foLIJ9c19R2ujTbvrDDo7B8G69INMHi
+         HmRLdCIAhs1PlSfYDXgA3JInefn7p3goZxJCE34DXrjA7klq/5oSRVPCZlUveT9emAxa
+         cA3KUcH4JG0WV2k+anigPRZ0opGGE5GRG+JAEhEN5UiZLlVFaput7U6+ZJkHw/wtIyA0
+         8//IdETZySWpXo5v2JtIPh6DhRSGB5Cs1yBlYGs5cu56C3RpkcwOb0wQ4F9XQT37eSuF
+         ln4w==
+X-Gm-Message-State: AOAM5337YuK6j4d3W9rd7Hm6IhzUGByhR2U5aXQM2gRJcYshR25KCIWw
+        Oz/000SZsZk6QKvk+8XQEsiJXnji++W+KKpMIQ1o/wND
+X-Google-Smtp-Source: ABdhPJwjRbd8j9/FK7vDpLecCHuCJA9e91U2QNNe31M5EulbSKghxCMRaUOghSPYtdNiA9mO+PFnh+5tmC7qv8vgC2s=
+X-Received: by 2002:a63:461c:: with SMTP id t28mr1807049pga.567.1643267176129;
+ Wed, 26 Jan 2022 23:06:16 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1101.v3.git.1640727143.gitgitgadget@gmail.com>
- <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com> <d262a76b448a495f00f460e9ed9439a74946de49.1643136134.git.gitgitgadget@gmail.com>
-In-Reply-To: <d262a76b448a495f00f460e9ed9439a74946de49.1643136134.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 26 Jan 2022 23:01:58 -0800
-Message-ID: <CABPp-BGjDW8-epG8NXr7tF2nibEty=W+Z058-aWB7wQAn86CNA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] worktree: create init_worktree_config()
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Sean Allred <allred.sean@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+References: <CAH8yC8kYP2Sth+vUZMzHujKQZC6r1kFf+Lz=6_WRs4GFR65B9g@mail.gmail.com>
+ <xmqqr18t4sc0.fsf@gitster.g>
+In-Reply-To: <xmqqr18t4sc0.fsf@gitster.g>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Thu, 27 Jan 2022 02:05:18 -0500
+Message-ID: <CAH8yC8k53a4xcDh34XqoA0VCcxG+Y+mE-rb1MKMd_Z+r-t=_Bw@mail.gmail.com>
+Subject: Re: WARNING: terminal is not fully functional
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 25, 2022 at 10:42 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Thu, Jan 27, 2022 at 1:15 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> From: Derrick Stolee <dstolee@microsoft.com>
+> Jeffrey Walton <noloader@gmail.com> writes:
 >
-> Upgrading a repository to use extensions.worktreeConfig is non-trivial.
-> There are several steps involved, including moving some config settings
-> from the common config file to the main worktree's config.worktree file.
-> The previous change updated the documentation with all of these details.
+> > I needed to install Git on Ubuntu 8. Git seems to work Ok for most
+> > task, but this is unusual:
+> >
+> >     $ git diff
+> >     WARNING: terminal is not fully functional
+> >     -  (press RETURN)
+> >
+> > Here's the terminal:
+> >
+> >     $ echo $TERM
+> >     xterm-256color
 >
-> Commands such as 'git sparse-checkout set' upgrade the repository to use
-> extensions.worktreeConfig without following these steps, causing some
-> user pain in some special cases.
+> A short answer.  You are using "less" as the pager, but it is not
+> working with your terminal.  Likely reason is perhaps you are
+> missing terminfo/termcap database entry for that terminal.
 >
-> Create a helper method, init_worktree_config(), that will be used in a
-> later change to fix this behavior within 'git sparse-checkout set'. The
-> method is carefully documented in worktree.h.
+> I have working xterm-256color, so
+>
+>         $ TERM=xterm-256color less README.md
+>
+> works as expected, but using a (bogus) terminal that no system would
+> have ever heard of, e.g.
+>
+>         $ TERM=no-such-terminal-exists less README.md
+>
+> results in exactly the symptom you are observing.
+>
+> Something to try quickly would be:
+>
+> $ export TERM=vt100; less README.md
+>
+> As the termcap/terminfo entry for vt100 is usually more widely
+> available, this may unblock you.
+>
+> > It seems like loss of colors on an old platform is not that important.
+> > However, the message being printed creates an actionable item that
+> > needs attention. I think no message would be a better option.
+>
+> You would want to redirect it to folks who work on "less" ;-)
 
-I was curious why you were only fixing `set` and not `init`, but I
-looked ahead and it appears you are fixing both, since both use
-set_config().  And I can see leaving out the mention of `init` since
-it's deprecated.  Anyway, it's all good here, I'm basically just
-thinking out loud...
+Oh, sorry about that.
 
-> Note that we do _not_ upgrade the repository format version to 1 during
-> this process. The worktree config extension must be considered by Git
-> and third-party tools even if core.repositoryFormatVersion is 0 for
-> historical reasons documented in 11664196ac ("Revert
-> "check_repository_format_gently(): refuse extensions for old
-> repositories"", 2020-07-15). This is a special case for this extension,
-> and newer extensions (such as extensions.objectFormat) still need to
-> upgrade the repository format version.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
->  worktree.c | 70 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  worktree.h | 19 +++++++++++++++
->  2 files changed, 89 insertions(+)
->
-> diff --git a/worktree.c b/worktree.c
-> index 6f598dcfcdf..dc4ead4c8fb 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -5,6 +5,7 @@
->  #include "worktree.h"
->  #include "dir.h"
->  #include "wt-status.h"
-> +#include "config.h"
->
->  void free_worktrees(struct worktree **worktrees)
->  {
-> @@ -826,3 +827,72 @@ int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath,
->         *wtpath = path;
->         return 0;
->  }
-> +
-> +static int move_config_setting(const char *key, const char *value,
-> +                              const char *from_file, const char *to_file)
-> +{
-> +       if (git_config_set_in_file_gently(to_file, key, value))
-> +               return error(_("unable to set %s in '%s'"), key, to_file);
-> +       if (git_config_set_in_file_gently(from_file, key, NULL))
-> +               return error(_("unable to unset %s in '%s'"), key, from_file);
-> +       return 0;
-> +}
-> +
-> +int init_worktree_config(struct repository *r)
-> +{
-> +       int res = 0;
-> +       int bare = 0;
-> +       struct config_set cs = { { 0 } };
-> +       const char *core_worktree;
-> +       char *common_config_file = xstrfmt("%s/config", r->commondir);
-> +       char *main_worktree_file = xstrfmt("%s/config.worktree", r->commondir);
-> +
-> +       /*
-> +        * If the extension is already enabled, then we can skip the
-> +        * upgrade process.
-> +        */
-> +       if (repository_format_worktree_config)
-> +               return 0;
-> +       if ((res = git_config_set_gently("extensions.worktreeConfig", "true")))
-> +               return error(_("failed to set extensions.worktreeConfig setting"));
-> +
-> +       git_configset_init(&cs);
-> +       git_configset_add_file(&cs, common_config_file);
-> +
-> +       /*
-> +        * If core.bare is true in the common config file, then we need to
-> +        * move it to the base worktree's config file or it will break all
-> +        * worktrees. If it is false, then leave it in place because it
-> +        * _could_ be negating a global core.bare=true.
-> +        */
-> +       if (!git_configset_get_bool(&cs, "core.bare", &bare) && bare) {
-> +               if ((res = move_config_setting("core.bare", "true",
-> +                                              common_config_file,
-> +                                              main_worktree_file)))
-> +                       goto cleanup;
-> +       }
-> +       /*
-> +        * If core.worktree is set, then the base worktree is located
-> +        * somewhere different than the parent of the common Git dir.
-> +        * Relocate that value to avoid breaking all worktrees with this
-> +        * upgrade to worktree config.
-> +        */
-> +       if (!git_configset_get_string_tmp(&cs, "core.worktree", &core_worktree)) {
-> +               if ((res = move_config_setting("core.worktree", core_worktree,
-> +                                              common_config_file,
-> +                                              main_worktree_file)))
-> +                       goto cleanup;
-> +       }
-> +
-> +       /*
-> +        * Ensure that we use worktree config for the remaining lifetime
-> +        * of the current process.
-> +        */
-> +       repository_format_worktree_config = 1;
-> +
-> +cleanup:
-> +       git_configset_clear(&cs);
-> +       free(common_config_file);
-> +       free(main_worktree_file);
-> +       return res;
-> +}
-> diff --git a/worktree.h b/worktree.h
-> index 9e06fcbdf3d..5ea5fcc3647 100644
-> --- a/worktree.h
-> +++ b/worktree.h
-> @@ -183,4 +183,23 @@ void strbuf_worktree_ref(const struct worktree *wt,
->                          struct strbuf *sb,
->                          const char *refname);
->
-> +/**
-> + * Enable worktree config for the first time. This will make the following
-> + * adjustments:
-> + *
-> + * 1. Add extensions.worktreeConfig=true in the common config file.
-> + *
-> + * 2. If the common config file has a core.worktree value or core.bare is
-> + *    set to true, then those values are moved to the main worktree's
-> + *    config.worktree file.
-
-This is a bit ambiguous.  If core.worktree is set and core.bare is
-false, are both moved or only one?  I'm afraid folks won't understand
-that it's just one from this description.
-
-
-> + *
-> + * If extensions.worktreeConfig is already true, then this method
-> + * terminates early without any of the above steps. The existing config
-> + * arrangement is assumed to be intentional.
-> + *
-> + * Returns 0 on success. Reports an error message and returns non-zero
-> + * if any of these steps fail.
-> + */
-> +int init_worktree_config(struct repository *r);
-> +
->  #endif
-> --
-
-Other than the ambiguity in worktree.h, this patch looks solid.
+Jeff
