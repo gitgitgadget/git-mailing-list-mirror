@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE487C433EF
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 16:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF809C433F5
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 16:23:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243640AbiA0QXL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 11:23:11 -0500
+        id S243651AbiA0QXN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 11:23:13 -0500
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243624AbiA0QXI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 11:23:08 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB1EFC06174A
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 08:23:07 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id l25so5694576wrb.13
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 08:23:07 -0800 (PST)
+        with ESMTP id S243622AbiA0QXJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 11:23:09 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9E15C06173B
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 08:23:08 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id c192so2314786wma.4
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 08:23:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7aU/gZ7cPKOMEAFGP4ZSJcP4SETV85kq/0rkq3vOiLE=;
-        b=gvfOaPccndpRszBbi0zEVVulnU/0jzp/YVZ+9lM4cdyrayHwj8l9dUM0xuhMV9ZOeJ
-         RsStiy244BWi+ubk8GcbHxUauIx+OaEmTu7afw9uaMKmVBWpVTgbY++ALY+Em38uEWPY
-         C7fwUB9A+dGFA5dQQ0Xm8yewqXNfWUfDkaN16h5lBRbSrozIJa2eOZtGXXXyC2I8iFaD
-         g8abvrqO/HwEN4etkptjJLYuw7XC4W7UMlaMIyy9iujKj6c8LOgtoHioTgwSqd+5gugg
-         +b4pCo2A36+5g/LX5DkLmF1s0Zq9HbvpeTrZ+qx+/1NekfQJj/T6sk9AihG6EBXmbnDv
-         uArg==
+        bh=BAETt61/rXj9abAjf8MzrmJN3IQi5ZHrn+x2pIH9/VI=;
+        b=Qem0fB1UjwOTBVQViNi4eY6HgD7ZTqt9DshpupXFmCIYiK3In1ih1fgtIo1M83zb3X
+         SOSX2xdTPSeCF8P21VQTT+i/cdVmf6zf+9JU+JgdhgwgmG2tmisgU758j4zfj2xRXxcw
+         eOyOKGNZeMpajOqCXqehBJYBrAJ2icxIA5CkqbZs52MoF9tQKWP8PO+ctREkyzgEQYDs
+         GHLGgJ2GFjZPLrBnKZgWdypXJ1KnvA2jJ6T7+kMjpDWNW893mm6ecctNUKmd/6RoSZnv
+         9hClZoPiYO2NZOVEk3v6yScQ2t7QiAOAUP9jHe0FgT12T+QG9VyOiL+tWWs5VUzGx28G
+         GUqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7aU/gZ7cPKOMEAFGP4ZSJcP4SETV85kq/0rkq3vOiLE=;
-        b=miwEfprds6NNNPMbdyijIEePitQpLMVbby+1viz16tFH0vLM8197g6LYSzxS9jjL9b
-         Vt0wmASJHwBRgmEyJn25hbTlIDuuZAvq5Isdq/zI7fCA/aq7m7DsbOUo42W9NHRTSmL2
-         /ogh0c//EC4gMrfNpg0BnBWW25VmOBjm/JYQ/zbuzcbm3nn2jU76Yce83rgsdCH0fZp1
-         pTHu02YXkwvA3gtqsoDcv15fqVZtcy9P5njynGwfQeDt4/wT3JuML49fqkQh6eGP1rFp
-         DLlULZM77AaYFaIJJijvZ9jy2tTenZ2l/AOuGUPwoqpxJKP9EOA9ZRGw7vDSc8bkA+ij
-         Omzg==
-X-Gm-Message-State: AOAM533Hh2EejT7X6ft78nYWF4JJFzbtY9s1LttXeub3h2NIzxR8j6ER
-        PUXY2DO60Tg8SLHq9vnkqc3m4IQQ7tamOQ==
-X-Google-Smtp-Source: ABdhPJwVeUXJsbD6HBP6lhPFAVeW3Z/Joo+ln0H9/zMyDqgv6U47Fbs9Qh9ZTbC9Qd3BNYhZJqFkvg==
-X-Received: by 2002:a5d:6c67:: with SMTP id r7mr3479510wrz.17.1643300585990;
-        Thu, 27 Jan 2022 08:23:05 -0800 (PST)
+        bh=BAETt61/rXj9abAjf8MzrmJN3IQi5ZHrn+x2pIH9/VI=;
+        b=Sg+JBzHmUW+Xsqk9Hue/6AlvytZzsgGvCyG29EDm51Ov5HMb/Ksscecej5Ci2hfnJ7
+         fnRx9BJcqncR6n3AwmZ9S+i1qiwq2xt4495r160+0u+jII65b3tFMcbfE0CJM19QLcov
+         lDydVE8NEMemqg1PiNseYLK2HmDa39LELfRsdtOrLAzXDXpB+1DVt5TCvnAN469PLTz1
+         f5KmHAuWymDwdUpy0ftGI94LO6SBjJpFfL3FE1g9zSB4iOSe3cc85kbwn8W7iiSoKUsg
+         AZdwE51y/2cTH6IeGQgp3hYJ+2ogajs6Dkj3u4Ew6G2+WTHu49NYbO6MeCvNvKUBkZOi
+         Ndzw==
+X-Gm-Message-State: AOAM531095K0FvV80cj88Bew+yS6gdoWPWjbsJm2e2+INF20EPeVFCOR
+        rGH3UZq5MaonUz0kcS3eFZdw4pV05qYFyQ==
+X-Google-Smtp-Source: ABdhPJyR5xqXlfm501Bus4Raegc5TbBZ0BTG2VeG4+3NCCdVnhsxlvdSF7Hfx+v/E12OwCM2vYiMGg==
+X-Received: by 2002:a7b:c44e:: with SMTP id l14mr3889151wmi.185.1643300587271;
+        Thu, 27 Jan 2022 08:23:07 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f13sm3257186wry.77.2022.01.27.08.23.05
+        by smtp.gmail.com with ESMTPSA id f13sm3257186wry.77.2022.01.27.08.23.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Jan 2022 08:23:05 -0800 (PST)
+        Thu, 27 Jan 2022 08:23:06 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Glen Choo <chooglen@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 4/7] submodule--helper: run update using child process struct
-Date:   Thu, 27 Jan 2022 17:22:53 +0100
-Message-Id: <patch-v4-4.7-76c5a826a80-20220127T143552Z-avarab@gmail.com>
+Subject: [PATCH v4 5/7] builtin/submodule--helper.c: reformat designated initializers
+Date:   Thu, 27 Jan 2022 17:22:54 +0100
+Message-Id: <patch-v4-5.7-29aa2fc0851-20220127T143552Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.0.894.g563b84683b9
 In-Reply-To: <cover-v4-0.7-00000000000-20220127T143552Z-avarab@gmail.com>
 References: <20211013051805.45662-1-raykar.ath@gmail.com> <cover-v4-0.7-00000000000-20220127T143552Z-avarab@gmail.com>
@@ -75,88 +75,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Atharva Raykar <raykar.ath@gmail.com>
 
-We switch to using the run-command API function that takes a
-'struct child process', since we are using a lot of the options. This
-will also make it simple to switch over to using 'capture_command()'
-when we start handling the output of the command completely in C.
+The second hunk here will make a subsequent commit's diff smaller, and
+let's do the first and third hunks while we're at it so that we
+consistently format all of these.
 
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Shourya Shukla <periperidip@gmail.com>
 Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 34 ++++++++++++++++------------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ builtin/submodule--helper.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f8e18820ace..328c6cc87cd 100644
+index 328c6cc87cd..1553b318cc7 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2346,47 +2346,45 @@ static int fetch_in_submodule(const char *module_path, int depth, int quiet, str
+@@ -1656,7 +1656,10 @@ struct module_clone_data {
+ 	unsigned int require_init: 1;
+ 	int single_branch;
+ };
+-#define MODULE_CLONE_DATA_INIT { .reference = STRING_LIST_INIT_NODUP, .single_branch = -1 }
++#define MODULE_CLONE_DATA_INIT { \
++	.reference = STRING_LIST_INIT_NODUP, \
++	.single_branch = -1, \
++}
  
- static int run_update_command(struct update_data *ud, int subforce)
+ struct submodule_alternate_setup {
+ 	const char *submodule_name;
+@@ -2049,7 +2052,9 @@ struct update_data {
+ 	unsigned int nofetch: 1;
+ 	unsigned int just_cloned: 1;
+ };
+-#define UPDATE_DATA_INIT { .update_strategy = SUBMODULE_UPDATE_STRATEGY_INIT }
++#define UPDATE_DATA_INIT { \
++	.update_strategy = SUBMODULE_UPDATE_STRATEGY_INIT, \
++}
+ 
+ static void next_submodule_warn_missing(struct submodule_update_clone *suc,
+ 		struct strbuf *out, const char *displaypath)
+@@ -3015,7 +3020,9 @@ struct add_data {
+ 	unsigned int progress: 1;
+ 	unsigned int dissociate: 1;
+ };
+-#define ADD_DATA_INIT { .depth = -1 }
++#define ADD_DATA_INIT { \
++	.depth = -1, \
++}
+ 
+ static void append_fetch_remotes(struct strbuf *msg, const char *git_dir_path)
  {
--	struct strvec args = STRVEC_INIT;
--	struct strvec child_env = STRVEC_INIT;
-+	struct child_process cp = CHILD_PROCESS_INIT;
- 	char *oid = oid_to_hex(&ud->oid);
- 	int must_die_on_failure = 0;
--	int git_cmd;
- 
- 	switch (ud->update_strategy.type) {
- 	case SM_UPDATE_CHECKOUT:
--		git_cmd = 1;
--		strvec_pushl(&args, "checkout", "-q", NULL);
-+		cp.git_cmd = 1;
-+		strvec_pushl(&cp.args, "checkout", "-q", NULL);
- 		if (subforce)
--			strvec_push(&args, "-f");
-+			strvec_push(&cp.args, "-f");
- 		break;
- 	case SM_UPDATE_REBASE:
--		git_cmd = 1;
--		strvec_push(&args, "rebase");
-+		cp.git_cmd = 1;
-+		strvec_push(&cp.args, "rebase");
- 		if (ud->quiet)
--			strvec_push(&args, "--quiet");
-+			strvec_push(&cp.args, "--quiet");
- 		must_die_on_failure = 1;
- 		break;
- 	case SM_UPDATE_MERGE:
--		git_cmd = 1;
--		strvec_push(&args, "merge");
-+		cp.git_cmd = 1;
-+		strvec_push(&cp.args, "merge");
- 		if (ud->quiet)
--			strvec_push(&args, "--quiet");
-+			strvec_push(&cp.args, "--quiet");
- 		must_die_on_failure = 1;
- 		break;
- 	case SM_UPDATE_COMMAND:
--		git_cmd = 0;
--		strvec_push(&args, ud->update_strategy.command);
-+		cp.use_shell = 1;
-+		strvec_push(&cp.args, ud->update_strategy.command);
- 		must_die_on_failure = 1;
- 		break;
- 	default:
- 		BUG("unexpected update strategy type: %s",
- 		    submodule_strategy_to_string(&ud->update_strategy));
- 	}
--	strvec_push(&args, oid);
-+	strvec_push(&cp.args, oid);
- 
--	prepare_submodule_repo_env(&child_env);
--	if (run_command_v_opt_cd_env(args.v, git_cmd ? RUN_GIT_CMD : RUN_USING_SHELL,
--				     ud->sm_path, child_env.v)) {
-+	cp.dir = xstrdup(ud->sm_path);
-+	prepare_submodule_repo_env(&cp.env_array);
-+	if (run_command(&cp)) {
- 		switch (ud->update_strategy.type) {
- 		case SM_UPDATE_CHECKOUT:
- 			printf(_("Unable to checkout '%s' in submodule path '%s'"),
 -- 
 2.35.0.894.g563b84683b9
 
