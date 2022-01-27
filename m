@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EDE8C4332F
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 21:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C22A3C433FE
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 21:22:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240460AbiA0VWB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 16:22:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33572 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242071AbiA0VWA (ORCPT <rfc822;git@vger.kernel.org>);
+        id S243179AbiA0VWA (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 27 Jan 2022 16:22:00 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EED8C061714
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 13:21:59 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id k18so7027140wrg.11
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 13:21:59 -0800 (PST)
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33566 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239496AbiA0VV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 16:21:59 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFB28C061714
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 13:21:58 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id c2so2861517wml.1
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 13:21:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8YyHqO8/eWWBYUcmf9+spwTt+AfR9s7a6T0/n6ElNU4=;
-        b=qeUCNdOrNApe3WNzaj5rnBrzh3ssCtZ9xXuHg6mXYE+SQb0NcWiU/pBkwfSH3bgGob
-         PYmnIm74JxEylQGjaITZ6WG261hsCD3KE4RUllfV4PikxzkTyAE6l5YAvyCuDsmu9aXm
-         M3c9J5XKdLpSKb1RQrTWxzI2rFbFwhePktJ5dEZ1SxfGN9s1ruxPXn0KE2C+BX7za2c4
-         YJ9yz+J4eHu013U3ybS1DB959KjeJ7tldFdHg52ScfFeE4mFbbHsF5cobXM2GLpGTxsI
-         6ATrj7JesmtnQ3t4L1h2KMobZc3Z4XXP8jplKGc/Dv3uR/sj6TA2bNSTYtDWEJ0vCHwr
-         8iJQ==
+        bh=AyUX98jHiz4d9t0sthFC67+vY1meE25DkgIlmuUYxFk=;
+        b=LHs1+AXu7smI3o6AMSgJJ8PKgWG4Ocs7X/9e5btIVZuYjEkzYLhLvo8G0x0zvSMkOh
+         kccPUj+bAN8dfX17eA8JpVuROfkIo4Ld4Y/pWppRS2RmpBZS1TPbqLhHcbPaTp+ra7ez
+         DZYrWGM57rJhV04ke07W8Qxmayx0cYJXxTQW6Oynq3Lw+CNtoRZjBtgiE9HvzSFVJxKk
+         YKmws2IDhn9EEAcP8tkU2Dzt4yS3yfA6WgJyzXjV7H2yW45nRreN+xRoa92ONvN3j4tw
+         n+9BTWcpmaO66J3RrpXT+NQg+IMS0e+3GeV2K5jQk9lhpX4P2gOsAe+CLxam+eSjGbeG
+         zOpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8YyHqO8/eWWBYUcmf9+spwTt+AfR9s7a6T0/n6ElNU4=;
-        b=Q6vV5ZtLbO/JIEGINc37xiO0/B83CLZWt0jJjkhCpaYnq6VYsNhZZX9RY3AGxcDTtS
-         nOwAKQDrxNzGwqApCI6CaXq89Tkp4X/TPc+QBTY24ydQDUKdh0N0jhtMfUUMgw85AkFB
-         nh6xzQLJHGtu7+rCWb+/bC92/DzK4E8IR1occVHT/hfUsn/1U8SH2G5eraovfXed3zEA
-         MLw+lXILpGV21CuBVbGnUOJPXBx1PsyrHTULKH0Crce9KUbWfm5tH7KYASq2oDqNX7YP
-         iZu1wJWfSRyECAR5U6WfSezwUWqhz4v2Y2XdIr4FBwW29ih6tEeKq12RrzlPnqey5c4Y
-         DDqA==
-X-Gm-Message-State: AOAM530Qjh2HCAw7a+4aNOFQvww+bHYcqa2M7KVFjK1j2phUYXs46G5W
-        pQpma0xriH6o0AfKnngVHvPLbiTVFWg=
-X-Google-Smtp-Source: ABdhPJwczXi+JSGstTaLVVwFf7a5uMM28BP6/8BZkFx8Rn/l9Jrlh0baL6gRmHTcCMKssjtQcjr1Mg==
-X-Received: by 2002:adf:f88e:: with SMTP id u14mr4420749wrp.406.1643318518035;
-        Thu, 27 Jan 2022 13:21:58 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o14sm340071wmr.3.2022.01.27.13.21.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=AyUX98jHiz4d9t0sthFC67+vY1meE25DkgIlmuUYxFk=;
+        b=xpbaUWpcbCVAfvFSO1por9aiQ/VRZwmTpCqD0Tv+p0UrTMNAdZ1TVsG14N9/HmV0qL
+         kcz2iFg75uAtQSOXnOgt9I41fUI0RDAjr5wI+FLuRASZDTHH29m+7akRw83Lr/eFQf1y
+         CBJ88wE44uDnPzwp08OLWcBMP0DGlHGp9WhBYVLJAu9dtv2p0bMNVqtKwBdBI25uvsK9
+         d6zwepV8SjFs740CZdIw2gW0gzhscSEAmk3fJkpjm5qpgc5CyhhngJQgc9WV/B+0+7N2
+         QS2Y8XL05E8rhk9ybfqorRmD74u4LQ3R/m7tP3oG9zL4on2rVmBMc2u3be+mLaYuFSY8
+         zhlw==
+X-Gm-Message-State: AOAM532KCp+WhhiUpM+f8qBDS8b81IfmyDRbi7EiLun4HfjsaYPoB7Mj
+        1AJFPFaLWixz1vblg4sTPDFqKft7hE4=
+X-Google-Smtp-Source: ABdhPJyJtiiApMicTNQg2KtN/G9yhLppm9QcGH/wOIz/ey7ox2OkbYgDJthx4aQkMV/4RAaK8ir7Vw==
+X-Received: by 2002:a7b:cb93:: with SMTP id m19mr13313156wmi.186.1643318517315;
         Thu, 27 Jan 2022 13:21:57 -0800 (PST)
-Message-Id: <760cae85bd4163d9cbef1585186cda60c8c3b35b.1643318514.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n13sm3071293wrm.68.2022.01.27.13.21.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jan 2022 13:21:56 -0800 (PST)
+Message-Id: <7d70beb2a6b3967c51d1d7feb34bfb9368066cdb.1643318514.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1108.v4.git.1643318514.gitgitgadget@gmail.com>
 References: <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
         <pull.1108.v4.git.1643318514.gitgitgadget@gmail.com>
 From:   "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 27 Jan 2022 21:21:54 +0000
-Subject: [PATCH v4 3/3] completion: ensure cone mode completion with multiple
- <TAB>s
+Date:   Thu, 27 Jan 2022 21:21:53 +0000
+Subject: [PATCH v4 2/3] completion: sparse-checkout updates
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,119 +71,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Lessley Dennington <lessleydennington@gmail.com>
 
-Ensure users in a cone mode sparse checkout can tab-complete to
-directories at multiple levels with multiple <TAB>s. For example, if path
-a/b/c/ exists in the current directory, running a<TAB>b<TAB> will result
-in:
+Fix custom tab completion for the sparse-checkout command. This will
+ensure:
 
-        a/b/c/
+1. The full list of subcommands is provided when users enter git
+sparse-checkout <TAB>.
+2. Subcommand options are tab-completable.
+3. A list of directories (but not files) is provided when users enter git
+sparse-checkout add <TAB> or git sparse-checkout set <TAB> in cone mode
+only. In non-cone mode, these commands will continue to complete both
+directory and file names.
 
-The 'sparse-checkout completes directory names' test has also been
-updated with trailing slashes according to these changes.
+Failing tests that were added in the previous commit to verify these
+scenarios are now passing with these updates.
 
-Co-authored-by: Elijah Newren <newren@gmail.com>
-Co-authored-by: Lessley Dennington <lessleydennington@gmail.com>
 Signed-off-by: Lessley Dennington <lessleydennington@gmail.com>
 ---
- contrib/completion/git-completion.bash | 33 ++++++++++++++++++++++++--
- t/t9902-completion.sh                  | 12 +++++-----
- 2 files changed, 37 insertions(+), 8 deletions(-)
+ contrib/completion/git-completion.bash | 15 ++++++++-------
+ t/t9902-completion.sh                  |  4 ++--
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index a920cdab201..defcc8560c1 100644
+index c82ccaebcc7..a920cdab201 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -2986,11 +2986,40 @@ _git_show_branch ()
- 	__git_complete_revlist
- }
+@@ -2988,21 +2988,22 @@ _git_show_branch ()
  
-+__gitcomp_directories ()
-+{
-+     local _tmp_dir _tmp_completions
-+
-+     # Get the directory of the current token; this differs from dirname
-+     # in that it keeps up to the final trailing slash.  If no slash found
-+     # that's fine too.
-+     [[ "$cur" =~ .*/ ]]
-+     _tmp_dir=$BASH_REMATCH
-+
-+     # Find possible directory completions, adding trailing '/' characters
-+     _tmp_completions="$(git ls-tree -d --name-only HEAD $_tmp_dir |
-+         sed -e s%$%/%)"
-+
-+     if [[ -n "$_tmp_completions" ]]; then
-+         # There were some directory completions, so find ones that
-+         # start with "$cur", the current token, and put those in COMPREPLY
-+         local i=0 c IFS=$' \t\n'
-+         for c in $_tmp_completions; do
-+             if [[ $c == "$cur"* ]]; then
-+                 COMPREPLY+=("$c")
-+             fi
-+         done
-+     elif [[ "$cur" =~ /$ ]]; then
-+         # No possible further completions any deeper, so assume we're at
-+         # a leaf directory and just consider it complete
-+         __gitcomp_direct_append "$cur "
-+     fi
-+}
-+
  _git_sparse_checkout ()
  {
- 	local subcommands="list init set disable add reapply"
+-	local subcommands="list init set disable"
++	local subcommands="list init set disable add reapply"
  	local subcommand="$(__git_find_on_cmdline "$subcommands")"
--
++
  	if [ -z "$subcommand" ]; then
  		__gitcomp "$subcommands"
  		return
-@@ -3002,7 +3031,7 @@ _git_sparse_checkout ()
+ 	fi
+ 
+ 	case "$subcommand,$cur" in
+-	init,--*)
+-		__gitcomp "--cone"
+-		;;
+-	set,--*)
+-		__gitcomp "--stdin"
++		*,--*)
++			__gitcomp_builtin sparse-checkout_$subcommand "" "--"
  		;;
- 		set,*|add,*)
- 			if [ $(__git config core.sparseCheckoutCone) ]; then
--				__git_complete_index_file "--directory"
-+				__gitcomp_directories
- 			fi
+-	*)
++		set,*|add,*)
++			if [ $(__git config core.sparseCheckoutCone) ]; then
++				__git_complete_index_file "--directory"
++			fi
  		;;
  	esac
+ }
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index f56ba3f64c9..c04fc25fa32 100755
+index 6004d854102..f56ba3f64c9 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -1478,30 +1478,30 @@ test_expect_success 'cone mode sparse-checkout completes directory names' '
- 	(
- 		cd sparse-checkout &&
- 		test_completion "git sparse-checkout set f" <<-\EOF
--		folder1
--		folder2
--		folder3
-+		folder1/
-+		folder2/
-+		folder3/
- 		EOF
- 	) &&
- 
- 	(
- 		cd sparse-checkout &&
- 		test_completion "git sparse-checkout set folder1/" <<-\EOF
--		folder1/0
-+		folder1/0/
- 		EOF
- 	) &&
- 
- 	(
- 		cd sparse-checkout &&
- 		test_completion "git sparse-checkout set folder1/0/" <<-\EOF
--		folder1/0/1
-+		folder1/0/1/
- 		EOF
- 	) &&
- 
- 	(
- 		cd sparse-checkout/folder1 &&
- 		test_completion "git sparse-checkout add 0" <<-\EOF
--		0
-+		0/
- 		EOF
- 	)
+@@ -1447,7 +1447,7 @@ test_expect_success 'git checkout - with --detach, complete only references' '
+ 	EOF
  '
+ 
+-test_expect_failure 'sparse-checkout completes subcommands' '
++test_expect_success 'sparse-checkout completes subcommands' '
+ 	test_completion "git sparse-checkout " <<-\EOF
+ 	list Z
+ 	init Z
+@@ -1458,7 +1458,7 @@ test_expect_failure 'sparse-checkout completes subcommands' '
+ 	EOF
+ '
+ 
+-test_expect_failure 'cone mode sparse-checkout completes directory names' '
++test_expect_success 'cone mode sparse-checkout completes directory names' '
+ 	# set up sparse-checkout repo
+ 	git init sparse-checkout &&
+ 	(
 -- 
 gitgitgadget
+
