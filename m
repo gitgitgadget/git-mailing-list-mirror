@@ -2,330 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B28DBC433EF
-	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 10:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CCFEC433EF
+	for <git@archiver.kernel.org>; Thu, 27 Jan 2022 11:01:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239738AbiA0KzL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 05:55:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55122 "EHLO
+        id S239881AbiA0LBl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 06:01:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239722AbiA0KzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 05:55:09 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B94BCC061714
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 02:55:09 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id w133so5097970oie.7
-        for <git@vger.kernel.org>; Thu, 27 Jan 2022 02:55:09 -0800 (PST)
+        with ESMTP id S231951AbiA0LBk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 06:01:40 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 427D8C061714
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 03:01:40 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id l35-20020a05600c1d2300b0034d477271c1so1583576wms.3
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 03:01:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZnZ/FlE6Ve5I8F60wxL/klxn2NUVuGSEVaqhnzd3+qQ=;
-        b=LIioBhaRCO8bKZkPWZxdA1aZzFgnTCisUmwSyRbjpjiyGFg2IhMxuRkLSkMr7vjStt
-         c8c+5OLI13oWuXlRyRw1yiw6hJ30HyC8OAQIryzyjq+G3trzwNqla84kZFCBoFAgohLD
-         ukb7TUl0kALdpiierJv8pwrn8wuV1Oc8ldjCg3YJnPpu3vEeIlvULGhBrrEQd6XYVzx7
-         Y0wuccOwzxA7r1zYF65v3zg3D3ddjjNeOhEgey6KqnFCZwk5x/hcIw305X85Ao502xXp
-         jMdnO8iDRq5DPJrhQprV/Hr2XCPg56hbsQoZyM0afZGKTOhZr5v7VN/xjnxIHro+sqHy
-         qv3g==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=jur9NzgbTff9BfcxQPvJuoNt5ScM3SvT7gaAwUL7aHw=;
+        b=UDTGBuYlIIcCtRuJEyDvDUTKHE9HEeaeXRIw1zJpqg44shFV7RK603hFUsUrzMq73J
+         wXb3uXbVPXPtBXei/fW9vgI8dmiuzbav4kghN8g7dVwfo6QbpbG6tvEQYDmfXoZYYGKT
+         HvIV37lBcCJlIRsOUPqb1ZWb8lAQb84byBpWq4hbN6uc5GNa9LKxMVa7i7NuUgOtl1hZ
+         +n1QrQ3Q425C//lejR2Ssg9L7EN9lR63wOLgzqHtIUHC2J5YZ4LzwuuvEPOFSFTUJVXC
+         4PoLQFRZaZ02kZR5HpZaXNY7wUYgAt6eFlhkmfeoAbgz8O7d+5ZaIO/cnKtHEF7vNbbV
+         hb/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZnZ/FlE6Ve5I8F60wxL/klxn2NUVuGSEVaqhnzd3+qQ=;
-        b=nUmkaDu1VNmMce641c0iecnj5ODE54uJl1ijWVfaUKere+A599CFTKMILNvdO5zuMw
-         R3tbjIyRzKRxs0UzOIT71F/38L0lso25+gb/GRtPHWFUsot5HUQ+dxPXJAZlwW2C8Llu
-         q5IuDYpsXtA9dBLRjXtJGdg/P4tNOiwBRR4nHrZzBevuHhsHBuHdaA7nF4Qj20omuPL6
-         BTNy5K8O48KOGVqZBDIWN84jiCgqKho2kPIjpKMCjr/R+CjvkogglnavQn/GqCIPrSLA
-         KVSGDNQTzMK77v+BJXQY5k7mOy/qlhSawBYd5w9hH1RfLJiXwfZG/UXdhGWKAB3w7/Yd
-         QapQ==
-X-Gm-Message-State: AOAM532pYvbQ3PUFgJJMogOQEvpfcaojtmPEdJVGycVKFb7w1BDvFRFb
-        lrExo1naKvuM8JZY5LxEjkFvIZKM+28FyaUjpH1DsDi88GPuSukM
-X-Google-Smtp-Source: ABdhPJzEmqKVKvOjiPtJ/Knm8DcSZcD5sBaSprhtR150kox3JguNXAY3oaWM5CBwRnRc9uIYXjyd024q3k7ITI7xGTQ=
-X-Received: by 2002:aca:5e55:: with SMTP id s82mr6477956oib.109.1643280908961;
- Thu, 27 Jan 2022 02:55:08 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=jur9NzgbTff9BfcxQPvJuoNt5ScM3SvT7gaAwUL7aHw=;
+        b=Se32R7Wz+5fvDWfDEDP/XVVAk6JJrc+glfzS1m1pps8bXEw0SkEdDScWP9nEPK5Yrr
+         4rb90L0o8EzzEkh+8BPW5OcbgF61xCv8BSxZYQJm/bwgVz1rfnCUkf7hNyaGrjbri+c0
+         +HKNELV2ri1viWlfF+xZ5aF3/wTgcZ2wY1fKAd0+hB0xKn2mwZ9LGMdlaI6GgTyS1LfA
+         4AVoR+pm0ZXLk/WlE5Cwa+ypOIJp9+HHNbkn0p2tIWmEuO7QZFVJ/R43st34Wf7gbrHs
+         hfp7PdKXevT30p5/vZTCisX4YiKwEeafegyhaWiMwopqZPZqdL3iX1kTbUYL+4gTLdfS
+         yurw==
+X-Gm-Message-State: AOAM531EXUYkGsw7A7lZLjTJdsV4ko7y1aprMALhHRn/UKXzkBwu1PCl
+        fLwsIe8APyXCAMRmUX1Enbw=
+X-Google-Smtp-Source: ABdhPJzSDOt7Q0ZnX992AHd0kocOr6gDD1XYqIyIMWqlE2by3SnePNrxig5nvR2yNG24sH3nX/tMag==
+X-Received: by 2002:a05:600c:1498:: with SMTP id c24mr2763657wmh.78.1643281298792;
+        Thu, 27 Jan 2022 03:01:38 -0800 (PST)
+Received: from [192.168.1.201] ([31.185.185.186])
+        by smtp.googlemail.com with ESMTPSA id o10sm2198275wri.19.2022.01.27.03.01.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Jan 2022 03:01:38 -0800 (PST)
+Message-ID: <b56c8855-df66-4e6d-6bc8-01cd06dd0feb@gmail.com>
+Date:   Thu, 27 Jan 2022 11:01:37 +0000
 MIME-Version: 1.0
-References: <20220123060318.471414-1-shaoxuan.yuan02@gmail.com>
-In-Reply-To: <20220123060318.471414-1-shaoxuan.yuan02@gmail.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Thu, 27 Jan 2022 18:54:55 +0800
-Message-ID: <CAJyCBOQvOZO9esuP4dZuRmSat8Ug+TJYkjBKqTznM1wq8e85xQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH] lib-read-tree-m-3way: modernize a test script (style)
-To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [Bug] Rebase from worktree subdir is broken (was Re: [PATCH v5
+ 07/11] rebase: do not attempt to remove startup_info->original_cwd)
+Content-Language: en-US
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Elijah Newren <newren@gmail.com>, Glen Choo <chooglen@google.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>
+References: <pull.1140.v4.git.git.1638225434.gitgitgadget@gmail.com>
+ <pull.1140.v5.git.git.1638340854.gitgitgadget@gmail.com>
+ <f8efb7446c33f14631b088ac043aca8a403a3250.1638340854.git.gitgitgadget@gmail.com>
+ <kl6lilu71rzl.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <CABPp-BFdD=f82QvQfokD346YT6aCQ=WwZ09S-a=BPXXj5_LZkg@mail.gmail.com>
+ <4cdb1e15-31d8-7fa4-b1f3-b43498685e13@gmail.com>
+ <CAPig+cQVNdmHQnhORqh2XtJSMhcOymR99pmKTWOAyhoQ10khSw@mail.gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAPig+cQVNdmHQnhORqh2XtJSMhcOymR99pmKTWOAyhoQ10khSw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Not sure if this email is overlooked (I understand its content is
-lackluster though).
+On 26/01/2022 17:53, Eric Sunshine wrote:
+> On Wed, Jan 26, 2022 at 6:00 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> On 25/01/2022 23:59, Elijah Newren wrote:
+>>> There's nothing wrong with running checkout from a subdirectory.  It
+>>> is unfortunate that setup.c auto-discovers both the git directory and
+>>> the working tree, but sets GIT_DIR without setting GIT_WORK_TREE in
+>>> the case of a non-main worktree; it's not particularly friendly for
+>>> subcommands.  Of course, it's also unfortunate that sequencer still
+>>> forks subprocesses other than those requested by a user with e.g.
+>>> --exec.
+>>>
+>>> But, anyway, I've got a patch that I'll send as soon as it passes CI
+>>> (https://github.com/git/git/pull/1205).
+>>
+>> The patch hasn't come through to me on the mailing list yet, but it
+>> looks good. I thought we set both GIT_DIR and GIT_WORK_TREE when we were
+>> in a non-main worktree but obviously we don't. Eric do you happen to
+>> know if that is intentional?
+> 
+> As far as I know, there is no reason to set GIT_DIR and GIT_WORK_TREE,
+> in general, when in a linked worktree since each worktree has its own
+> .git file ("gitfile") which tells Git commands where the repository is
+> and signals that that directory itself (which contains the .git file)
+> is indeed a Git worktree.
 
-I'm looking forward to participating in this year's GSoC :) And I will
-be really appreciated if anyone could possibly reply to it (and my
-self-intro).
+Oh of course I should have thought of that. Now I'm wondering why we're 
+exporting GIT_DIR - I should go and read the code for myself.
 
---
-Thanks,
-Shaoxuan
+Thanks
 
-On Sun, Jan 23, 2022 at 2:04 PM Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> wrote:
->
-> As a microproject, I found another small fix regarding styling to do.
->
-> I changed the old style '\' (backslash) to new style "'" (single
-> quotes).
->
-> And I also fixed some double quotes misuse.
->
-> Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-> ---
-> Other than that, I forgot to introduce myself in the last patch and
-> here it goes:
->
-> I'm Shaoxuan Yuan, currently a sophomore majors in Computer Science and Engineering
-> (CSE) @ University of California, Irvine.
->
-> I have prior open-source experience in which I was [maintaining|contributing to] the
-> Casbin community. My main language is Python, and I'm a C newbie
-> because I'm quite interested in contributing to git (since it is in my main daily
-> toolkit and it is a charm to wield :-) ).
->
-> And for now I'm still taking baby steps trying to crack some test script
-> styling issues. After getting more familiar with the git contribution
-> process, I will try something bigger (though not THAT big) to get a
-> firmer grasp of git.
->
->  t/lib-read-tree-m-3way.sh | 154 +++++++++++++++++++-------------------
->  1 file changed, 77 insertions(+), 77 deletions(-)
->
-> diff --git a/t/lib-read-tree-m-3way.sh b/t/lib-read-tree-m-3way.sh
-> index 168329adbc..e40739b8db 100644
-> --- a/t/lib-read-tree-m-3way.sh
-> +++ b/t/lib-read-tree-m-3way.sh
-> @@ -8,16 +8,16 @@ do
->          p=$a$b
->         echo This is $p from the original tree. >$p
->         echo This is Z/$p from the original tree. >Z/$p
-> -       test_expect_success \
-> -           "adding test file $p and Z/$p" \
-> -           'git update-index --add $p &&
-> -           git update-index --add Z/$p'
-> +       test_expect_success 'adding test file $p and Z/$p' '
-> +           git update-index --add $p &&
-> +           git update-index --add Z/$p
-> +    '
->      done
->  done
->  echo This is SS from the original tree. >SS
-> -test_expect_success \
-> -    'adding test file SS' \
-> -    'git update-index --add SS'
-> +test_expect_success 'adding test file SS' '
-> +    git update-index --add SS
-> +'
->  cat >TT <<\EOF
->  This is a trivial merge sample text.
->  Branch A is expected to upcase this word, here.
-> @@ -30,12 +30,12 @@ At the very end, here comes another line, that is
->  the word, expected to be upcased by Branch B.
->  This concludes the trivial merge sample file.
->  EOF
-> -test_expect_success \
-> -    'adding test file TT' \
-> -    'git update-index --add TT'
-> -test_expect_success \
-> -    'prepare initial tree' \
-> -    'tree_O=$(git write-tree)'
-> +test_expect_success 'adding test file TT' '
-> +    git update-index --add TT
-> +'
-> +test_expect_success 'prepare initial tree' '
-> +    tree_O=$(git write-tree)
-> +'
->
->  ################################################################
->  # Branch A and B makes the changes according to the above matrix.
-> @@ -45,48 +45,48 @@ test_expect_success \
->
->  to_remove=$(echo D? Z/D?)
->  rm -f $to_remove
-> -test_expect_success \
-> -    'change in branch A (removal)' \
-> -    'git update-index --remove $to_remove'
-> +test_expect_success 'change in branch A (removal)' '
-> +    git update-index --remove $to_remove
-> +'
->
->  for p in M? Z/M?
->  do
->      echo This is modified $p in the branch A. >$p
-> -    test_expect_success \
-> -       'change in branch A (modification)' \
-> -        "git update-index $p"
-> +    test_expect_success 'change in branch A (modification)' '
-> +        git update-index $p
-> +    '
->  done
->
->  for p in AN AA Z/AN Z/AA
->  do
->      echo This is added $p in the branch A. >$p
-> -    test_expect_success \
-> -       'change in branch A (addition)' \
-> -       "git update-index --add $p"
-> +    test_expect_success 'change in branch A (addition)' '
-> +           git update-index --add $p
-> +    '
->  done
->
->  echo This is SS from the modified tree. >SS
->  echo This is LL from the modified tree. >LL
-> -test_expect_success \
-> -    'change in branch A (addition)' \
-> -    'git update-index --add LL &&
-> -     git update-index SS'
-> +test_expect_success 'change in branch A (addition)' '
-> +    git update-index --add LL &&
-> +    git update-index SS
-> +'
->  mv TT TT-
->  sed -e '/Branch A/s/word/WORD/g' <TT- >TT
->  rm -f TT-
-> -test_expect_success \
-> -    'change in branch A (edit)' \
-> -    'git update-index TT'
-> +test_expect_success 'change in branch A (edit)' '
-> +    git update-index TT
-> +'
->
->  mkdir DF
->  echo Branch A makes a file at DF/DF, creating a directory DF. >DF/DF
-> -test_expect_success \
-> -    'change in branch A (change file to directory)' \
-> -    'git update-index --add DF/DF'
-> +test_expect_success 'change in branch A (change file to directory)' '
-> +    git update-index --add DF/DF
-> +'
->
-> -test_expect_success \
-> -    'recording branch A tree' \
-> -    'tree_A=$(git write-tree)'
-> +test_expect_success 'recording branch A tree' '
-> +    tree_A=$(git write-tree)
-> +'
->
->  ################################################################
->  # Branch B
-> @@ -94,65 +94,65 @@ test_expect_success \
->
->  rm -rf [NDMASLT][NDMASLT] Z DF
->  mkdir Z
-> -test_expect_success \
-> -    'reading original tree and checking out' \
-> -    'git read-tree $tree_O &&
-> -     git checkout-index -a'
-> +test_expect_success 'reading original tree and checking out' '
-> +    git read-tree $tree_O &&
-> +    git checkout-index -a
-> +'
->
->  to_remove=$(echo ?D Z/?D)
->  rm -f $to_remove
-> -test_expect_success \
-> -    'change in branch B (removal)' \
-> -    "git update-index --remove $to_remove"
-> +test_expect_success 'change in branch B (removal)' '
-> +    git update-index --remove $to_remove
-> +'
->
->  for p in ?M Z/?M
->  do
->      echo This is modified $p in the branch B. >$p
-> -    test_expect_success \
-> -       'change in branch B (modification)' \
-> -       "git update-index $p"
-> +    test_expect_success 'change in branch B (modification)' '
-> +           git update-index $p
-> +    '
->  done
->
->  for p in NA AA Z/NA Z/AA
->  do
->      echo This is added $p in the branch B. >$p
-> -    test_expect_success \
-> -       'change in branch B (addition)' \
-> -       "git update-index --add $p"
-> +    test_expect_success 'change in branch B (addition)' '
-> +           git update-index --add $p
-> +    '
->  done
->  echo This is SS from the modified tree. >SS
->  echo This is LL from the modified tree. >LL
-> -test_expect_success \
-> -    'change in branch B (addition and modification)' \
-> -    'git update-index --add LL &&
-> -     git update-index SS'
-> +test_expect_success 'change in branch B (addition and modification)' '
-> +    git update-index --add LL &&
-> +    git update-index SS
-> +'
->  mv TT TT-
->  sed -e '/Branch B/s/word/WORD/g' <TT- >TT
->  rm -f TT-
-> -test_expect_success \
-> -    'change in branch B (modification)' \
-> -    'git update-index TT'
-> +test_expect_success 'change in branch B (modification)' '
-> +    git update-index TT
-> +'
->
->  echo Branch B makes a file at DF. >DF
-> -test_expect_success \
-> -    'change in branch B (addition of a file to conflict with directory)' \
-> -    'git update-index --add DF'
-> -
-> -test_expect_success \
-> -    'recording branch B tree' \
-> -    'tree_B=$(git write-tree)'
-> -
-> -test_expect_success \
-> -    'keep contents of 3 trees for easy access' \
-> -    'rm -f .git/index &&
-> -     git read-tree $tree_O &&
-> -     mkdir .orig-O &&
-> -     git checkout-index --prefix=.orig-O/ -f -q -a &&
-> -     rm -f .git/index &&
-> -     git read-tree $tree_A &&
-> -     mkdir .orig-A &&
-> -     git checkout-index --prefix=.orig-A/ -f -q -a &&
-> -     rm -f .git/index &&
-> -     git read-tree $tree_B &&
-> -     mkdir .orig-B &&
-> -     git checkout-index --prefix=.orig-B/ -f -q -a'
-> +test_expect_success 'change in branch B (addition of a file to conflict with directory)' '
-> +    git update-index --add DF
-> +'
-> +
-> +test_expect_success 'recording branch B tree' '
-> +    tree_B=$(git write-tree)
-> +'
-> +
-> +test_expect_success 'keep contents of 3 trees for easy access' '
-> +    rm -f .git/index &&
-> +    git read-tree $tree_O &&
-> +    mkdir .orig-O &&
-> +    git checkout-index --prefix=.orig-O/ -f -q -a &&
-> +    rm -f .git/index &&
-> +    git read-tree $tree_A &&
-> +    mkdir .orig-A &&
-> +    git checkout-index --prefix=.orig-A/ -f -q -a &&
-> +    rm -f .git/index &&
-> +    git read-tree $tree_B &&
-> +    mkdir .orig-B &&
-> +    git checkout-index --prefix=.orig-B/ -f -q -a
-> +'
-> --
-> 2.25.1
->
+Phillip
