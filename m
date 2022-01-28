@@ -2,106 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B691AC433F5
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 12:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE204C433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 12:36:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348508AbiA1MfJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 07:35:09 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50443 "EHLO mout.gmx.net"
+        id S1348520AbiA1Mgf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 07:36:35 -0500
+Received: from mout.gmx.net ([212.227.17.20]:49505 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236511AbiA1MfF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 07:35:05 -0500
+        id S236322AbiA1Mgd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 07:36:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1643373299;
-        bh=XxcuwxFWxSSQ3bwADtwka+5tDfbqjR/p1XXBfRQUTxw=;
+        s=badeba3b8450; t=1643373388;
+        bh=z+Q1rscLwsmkiUr0Lt3HWU30YAYlHRrOsMA0LWhVG8g=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JmLIe8NVdTtqm/Nulmbo8+qOuxLYOBlQ8T757S/cbKqZOdR6SJuVgJYJXypoZ2tvq
-         7Y3q1yEot+5VrSr3HHFv+tJrCwhdMH+q3BGpvXggaQRoLRdzJKLPvURMU2ZcbwbKPT
-         hJovpB1cXFJoWkcno7n6wEecWXRslcBWAd/hIqYM=
+        b=MSFdmwZZC9TQ7kB3qYN0ToFu5wxkbP2nRWyM2Nmeij85xIM+UvybijLLO3ygtp+8G
+         FbrALNgOJwVdJ/7koX+xIP/CRX2Y2/B9B/TXNPTHgG07aonh3XB2P6Qn5TJTMt1xMP
+         RLmFv7IL+RSzwWu0YC6LcpmuHGE0TsgktdUaVyu8=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MyKDU-1mLLuJ2wSy-00yfbs; Fri, 28
- Jan 2022 13:34:59 +0100
-Date:   Fri, 28 Jan 2022 13:34:56 +0100 (CET)
+Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8ofO-1m9l9u1u0U-015tNg; Fri, 28
+ Jan 2022 13:36:28 +0100
+Date:   Fri, 28 Jan 2022 13:36:25 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Thomas Gummerer <t.gummerer@gmail.com>
 cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         Taylor Blau <me@ttaylorr.com>
 Subject: Re: [PATCH] fetch --prune: exit with error if pruning fails
-In-Reply-To: <87lez0p1db.fsf@coati.i-did-not-set--mail-host-address--so-tickle-me>
-Message-ID: <nycvar.QRO.7.76.6.2201281333410.347@tvgsbejvaqbjf.bet>
-References: <20220127153714.1190894-1-t.gummerer@gmail.com> <xmqqmtjh0x5f.fsf@gitster.g> <87lez0p1db.fsf@coati.i-did-not-set--mail-host-address--so-tickle-me>
+In-Reply-To: <87pmocp1si.fsf@coati.i-did-not-set--mail-host-address--so-tickle-me>
+Message-ID: <nycvar.QRO.7.76.6.2201281335050.347@tvgsbejvaqbjf.bet>
+References: <20220127153714.1190894-1-t.gummerer@gmail.com> <xmqqmtjh0x5f.fsf@gitster.g> <nycvar.QRO.7.76.6.2201281110050.347@tvgsbejvaqbjf.bet> <87pmocp1si.fsf@coati.i-did-not-set--mail-host-address--so-tickle-me>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:SQM1BkNzFQ2Lj0Jr8p7SRiOLGIwuyXM6c3zWg0biAyab+e0XOt9
- MJYrzaJsxuJ0unwIMQWxVsHvvEtDCjH9psZQHT8Uf31QB3CGsx4EXI5YQlexpfOfS0WGaK3
- gOTn6PNJQmdiZygulL/0M1jIyvmEnkYhmLQrsQUL5W/xRllo4rOL2VHvUwuhjQUab9mFTDW
- /dzX2pKBJSijgR05vFnxQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Oo8sy0MUVfY=:Isx1uOOH8QKFj9u/WLeo6n
- nmenGnRdPFFvaqJsbvZ6sFZPBZE9ZXh2nXCLLEJszjwvhB/xl/6CWicnHNoHwbgPvu5KkNNfL
- nrqlpxSdHiCqU5wkhJ5+CcqnRdyEG+pMEpBdEt3JqyWGFrAlUCY6R32HgaY/EgepaOD0Eod4h
- WkZv14E0hkHBtkHRqw1UiWN/ho34I1xAj+bCq3WXKIaAHWgMAQRCHEAbdTalwafBQFs/V1enk
- O95tegYZ5aiLw0/5FSRheBksCT0fTJU+1QPg63lHjL7jhl1CQ6Hw20967JaeNwXnnVI2N0Hb8
- 8awnxnAUmr6jA1Y4s6m1ja+EZCxNqsRFUCbUNKpQFzagvqntqgyNACzh2RAmv49eJR4GT5fH5
- bXLNEoo7yTF6T+rkR4O99EoasOoOoKbuDkjqkV6EmdqbzTy55ierrccJ1lBqR0TX1JE3zrXVh
- bRzAnYLl0CzxMfOOQ77xLeIxO6GhCYVz2ehTT8biVCQL/HljWAD2nvZYkJ34FsWfPyiVec06s
- SfXkG73MgyItVoLSGE1jpQ79TKyqZgMqUwAbZ8U6KgTy6SAM/xoQkDI7j0HHUmA59y03msp1Z
- MCM/NnC28xoKVPqkCMJLDzjlI3F8JzD6RFrgH17XLBesSUGZuyZNqCYBiUlSsBsgUtMQJUnW9
- HpBQDSA6IQdgNXOJ78d9Y2uF+OKZICyJEIXxzn1QZSpipj7QGyIjuV//3AQOLKMddzZhkANxO
- zcT4hnacXtzx4OWiQmt7Fazyhqjtb1pTsTXLaf5nBOxorjaNUKXZExqkLfiG89826KaOmgvct
- RJ68y2G0wLTion/SjwWcpasvEwY3kEDPtiWhgBJWOVnLThNwuD5LG/YGrzqjAge/AQgPZ+iMk
- Nny7xGCKRfddrlqsBWytALKQHwJvzNRCEtAvZbNggIJunhmuitOjnIynkXkl0W2fosXwWv+Ry
- u46uJMuwAwxf6A72grDrlmNlxAjAvfgTqg3hJCjDXv/gXIzZ+YYDI1Nz1tKIVQ3ifEGZqytkL
- vIjr4QNMdgNBjucK+TJOrHm8GOIMHI2iKmwVivMLckOLDlF5OA8rene2aCZtNvs8Ly3oy6dhx
- ePNauAGitDdYxQ=
+X-Provags-ID: V03:K1:Qk463u6GwbQrTbBh8IWiPzT0ITwxjxfV5rEqG7G20E5jgAh0DtO
+ ftfUQbnNpavN6qdlO31BgquQMhZNzCmQ6yk0IVcGPO1izyePFaTigxcrQ+aN2jL0WCUljpD
+ x7VV+fY6jx6YZxWleskkpj5lB7/C/e1GlePamV6fWqLSCGCtlUrHmCStzFlFOwevv9tWkGU
+ h54P61uRCpTWSkdP4ib7A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:cxv7DAkww4o=:ngMtx9dSiZZaKnaMVo/Pk8
+ hrg8jjFdQ2t59RL9nrur3Uz5F+5ls10U8MnSKMw0Efp3t+pvvXxVyOp4Wc/RJzhbqYzZ/xxXC
+ dUK3frTkE40gbjy59Of+Ux6ICp+Yi+4XB6lpv05yEOVDlsv/xE/bWDpphVJlalt4GCQKiC8g5
+ zmkHAtaFT3WhJihSkSpMG8PZ9V13zQNK7WOBo5q1xF2b5yuReeJap1vTz0gu0RjD79dOO2BoD
+ g6gSMz0/TbGjOShaUgh0zPB0P1nolDsMXKOqzOzfR3MYvqt+2T8Ti39BY+HE5+pQSgnNWompC
+ 9HfcFLGwZzzK6zWfp20CzZF3+L9Ct+EpFKQ6+9lDNMHRV3NSmcNk6NeHCzXaVFsmc1wbrSsDc
+ l+Kg++cVCKnR5AiUdERXzfGdeLmc1K6pV/sSF2GWvI6a507zrhrDJV1I8bC9l/pjE/oAbbO3X
+ fJSQmaBCM0bIO6GXUv0Oxz+U/MlHsK8cok/3SoA83K5sP5MEnCvVABW8Zi36+YvDq3TjLU6A9
+ h+rmDQajSVee6YVWj+oWzONjwRAOUocSSnnMJhEa6LDg6J94nuJ4SNCAAlTH+F7KmzcHKF7k3
+ S+FrPjbRuiBEckZzi4rkRJHEK2P0HKQYanisQA8QrhZwGrt4ELw8KPTPhfBxOX0TPq2ExLmFc
+ Zats0/5jM78w+VYFtG0UZAVkPgcoKeD5oL90HbwGjcP2GQ0BsaVeSZ6njgZiUPjyC1BYySrdU
+ mWCUyTpbv3DqDsv960YTTQWQuc/HRtw3gLaoxqpAtNHrGOhLQj5NVPn58lMl0styVRDCTF1xd
+ fFX0IEVq8NEcbHSAyuW3MuU6H1B26sydngl/4f5lbLWrAY/Ns435Gc2lOlv2Y8ok5Ujds8zIH
+ lXYIXzJjL4DJ+YKJHEa4HG+M1p7nJjPpvg+InJhULkjPh0+wHVjwyUKlA2LXOunzljfwzh2AT
+ uHsiVe+A8sdE+d7X8vkVDzwKUR/gJrtCqYvBUKaxuAIOOkaAHSlz5TSR0H4PMBEmG7jUaO8ko
+ 261ezkX9g4dAXvPII96c1+AbVWJAHFtlB6+pKdDnbguZ+CTppxW0y1dlLCFekhBba09YNB+bt
+ 0ynVe7PhWdyCSA=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
+Hi Thomas & Junio,
 
 On Fri, 28 Jan 2022, Thomas Gummerer wrote:
 
-> Junio C Hamano writes:
+> Johannes Schindelin writes:
 >
-> > Thomas Gummerer <t.gummerer@gmail.com> writes:
+> > On Thu, 27 Jan 2022, Junio C Hamano wrote:
 > >
-> >> +test_expect_success REFFILES 'fetch --prune fails to delete branches=
-' '
-> >> +	cd "$D" &&
-> >> +	git clone . prune-fail &&
-> >> +	cd prune-fail &&
-> >> +	git update-ref refs/remotes/origin/extrabranch main &&
-> >> +	>.git/packed-refs.new &&
-> >> +	test_must_fail git fetch --prune origin
-> >
-> > Is it because the lockfile ".new" on packed-refs prevents deletion
-> > of refs but does not block creation and updates to existing refs
-> > that it is an effective test for the "--prune" issue?  If we somehow
-> > "locked" the whole ref updates, then the fetch would fail even
-> > without "--prune", so it may be "effective", but smells like knowing
-> > too much implementation detail.  Yuck, but I do not offhand think of
-> > any better way (it is easier to think of worse ways), so without
-> > further input, I would say that this is the best (or "least bad") we
-> > can do.
+> >> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> >>
+> >> > +		if (retcode) {
+> >> > +			free_refs(ref_map);
+> >> > +			goto cleanup;
+> >> >  		}
+> >>
+> >> This part is iffy.  We tried to prune refs, we may have removed some
+> >> of the refs missing from the other side but we may still have some
+> >> other refs that are missing from the other side due to the failure
+> >> we noticed.
+> >>
+> >> Is it sensible to abort the fetching?  I am undecided, but without
+> >> further input, my gut reaction is that it is safe and may even be
+> >> better to treat this as a soft error and try to go closer to where
+> >> the user wanted to go as much as possible by continuing to fetch
+> >> from the other side, given that we have already paid for the cost of
+> >> discovering the refs from the other side.
 >
-> Yes, that's correct.  New refs will be created as loose refs, so they
-> don't care about packed-refs.  However deletions can potentially be
-> happening in packed-refs, and that's why it fails when 'packed-refs.new'
-> exists.
+> > I am not so sure. When pruning failed, there may very well be director=
+ies
+> > or files in the way of fetching the refs as desired. And it might be e=
+ven
+> > worse if pruning failed _without_ the fetch failing afterwards: the us=
+er
+> > specifically asked for stale refs to be cleaned up, the command succee=
+ded,
+> > but did not do what the user asked for.
 >
-> I don't love the test either, but I also can't think of a better way to
-> do this.
+> I was thinking along similar lines here.  I was going back and forth
+> between letting the fetch continue, and then exiting with a non-zero
+> exit code, and just erroring out directly.
 
-Maybe add a code comment about it? Something like:
-
-	[...]
-	: this will prevent --prune from locking packed-refs &&
-	>.git/packed-refs.new &&
-	[...]
+Oh, I think I misunderstood Junio. As long as the failed prune will cause
+a non-zero exit code, I am fine with continuing to try to fetch.
 
 Ciao,
 Dscho
