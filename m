@@ -2,191 +2,233 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 761B2C433F5
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 13:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C95E9C433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 14:32:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245284AbiA1Nh6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 08:37:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59436 "EHLO
+        id S1349173AbiA1OcD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 09:32:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245248AbiA1Nh5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 08:37:57 -0500
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E15F6C061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 05:37:56 -0800 (PST)
-Received: by mail-yb1-xb34.google.com with SMTP id m6so18485938ybc.9
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 05:37:56 -0800 (PST)
+        with ESMTP id S232446AbiA1OcA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 09:32:00 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E02DC061714
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 06:32:00 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id a13so11237386wrh.9
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 06:32:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KdmCfmiA3B2WBv4/hxhKYS3vS1PRXmznEyAmWZ82n2M=;
-        b=LjKGaCLFE3LuqitSqD3Qnv0Q7icbftp4B8/I0p8ukdYyngZPwAgBoDE7vxBfmt++hC
-         VPT+RlYjIF+RIWIZYlC9c159sYhEeFLyKSFRvN43/L43hT1wAb8OYChv53eXOopg3RfK
-         SHKYY2F7sJ5Ljd+haS1woTOU5N9CNbxy8tJQB9TlrIKdVXVoH3ha+rcXGffboF3OJIaZ
-         8dxjwSqjtlvaH/i6m1fuBa73IPqF2p0WSSU4IRtBeYGixtuRzj+KzO6uIBC3D2gbMrBa
-         pU444lOe+LYOcvfzGilfFFfuLPurIn4/5zWo2bsQP9xSuJzhl649Ow8nSFeIZJOB2222
-         83Qw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=sk0uhcofNNnOFjGPvNXzzTnsPAxGF11w/2EjUczFyEQ=;
+        b=DlLVggEPFBk4csaFUGhqYoGoY29++2Wtzz8pbmz1zG15z6w+Y5sNUI0vqgUNlp5eI3
+         07hwLpaL0jPdvt3M0V6ari/UqxNxmNlsGj3vLU5qNsbnGoy0sMBFinY1jvuP9A0fYeZl
+         ReP7NS4z3ujEfzma020Iq8NkSLxmj8miJqTi59CW4oMOHAHcd9DizXu0t2EC2CgjTAyS
+         4m1N0vUQz8UJTAbeG30P509tVQI7IgwrtMLRNr8jccyzRhYczc/3WHVN2C1zbdi3fB+R
+         mscsJey9I7VzXqRO2dutvBO5us2qQgQw276sZfmc8WhgPOFSf89ewraumb9ee9W5qKYG
+         ehpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KdmCfmiA3B2WBv4/hxhKYS3vS1PRXmznEyAmWZ82n2M=;
-        b=WWQf8UJQff7jk73kHGnbnOgcDIVW+sPBlHR6VYDYgtn9op1jMOiGmDyqGfJXOBH8b0
-         gkbhCGSpNn8rVKYJukVkBfBeFHxRFu5mBHovSHqSDRgBcZXmZ75OLNyN64bxZNkht/az
-         LJ0AlZB61Xk8sAHJoSGVgiY2WpRNcER3zTIC6Q5tces4T7kmLsfk9CDdh7GyWwraw6md
-         KEAE4fUbR4hsB9Ca88YkyF3lRMUb2eAl97NUTdg0TjIjXdYwAoc01Uf9athXHv4NxqZn
-         wMGrWHT9zGz07pVHupRR5dzQqSvTtQ+Y4yhiwmu/4y3P0Y+iebcW+x26Tc9kwSFURFWp
-         7n/w==
-X-Gm-Message-State: AOAM530bKv2IMv6SxdikyN37PZWQcaXHoR+j2ThCBVXcJ3PrPEnQsRlk
-        sdUFK5acpLCN692Vcb9Ft6uwl2NyTJehuube7090/45f3vo=
-X-Google-Smtp-Source: ABdhPJy8lITPWwJNz5sgGvwhMAvP0piTnpbo7NXu5Ky5TqYa7cHu6drQtzv4QxSLV225YlX1gcVw1ZDFIVATW2aMbjA=
-X-Received: by 2002:a25:b296:: with SMTP id k22mr13019270ybj.50.1643377075928;
- Fri, 28 Jan 2022 05:37:55 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=sk0uhcofNNnOFjGPvNXzzTnsPAxGF11w/2EjUczFyEQ=;
+        b=sU/45eT/TbEMzCl8DVZRSIZv0bGFSmIGhPITDBn1fy9ph5RodrOBaPbiqnKdiqR0GO
+         TBgeOAMGfOeY4m1Weh/OBcDDXueRpxl+Sjz+YS9zHFX+W7Sm/FqNF0Aa4HjZsw+R6i98
+         Cx/lMgJxNMZFbHpT58slDsPTO7UiN03UNUlJUBby+yjwm4N6w6AY3Gf2eOyKtQNndQkO
+         IKGTSv9IWy9jOD5MThOR9mfl3hLnat2Tmahb37mVGrwJnV9jIsfn4dRxSCWy0rOMxtjH
+         EjcJUzEdzquymb9cC76mHZ3UAWQ5D54t7CHM6pIc0Qx4qEyRFsqvTNS8b0tRqhpyYkg8
+         O0HQ==
+X-Gm-Message-State: AOAM53323QNsV/TM8kIUqIZwqwlrjDB1rKY81E+SvwGUdWllSZeGE+3I
+        2JtXqZptkmQbzeKhoIEAUw7rdEvVUzU=
+X-Google-Smtp-Source: ABdhPJzMwE2dcfCnguxbQS5rMjz0d2YWMzKSINsYc6yVXEgpAxNuuPg8TaeqjERXdXNl5jmPo8tyHw==
+X-Received: by 2002:a5d:6349:: with SMTP id b9mr7371948wrw.178.1643380318699;
+        Fri, 28 Jan 2022 06:31:58 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l39sm2168009wms.24.2022.01.28.06.31.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jan 2022 06:31:58 -0800 (PST)
+Message-Id: <pull.1130.v2.git.1643380317358.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1130.git.1643195729608.gitgitgadget@gmail.com>
+References: <pull.1130.git.1643195729608.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 28 Jan 2022 14:31:57 +0000
+Subject: [PATCH v2] scalar: accept -C and -c options before the subcommand
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
- <CAP8UFD1-=RDx5=JpHEp=sFEOWr2MP-YovOPE7aTydrPLoVGa5w@mail.gmail.com>
- <nycvar.QRO.7.76.6.2201261250380.6842@tvgsbejvaqbjf.bet> <CAP8UFD2qFmZ2Adk71SQw9xtq5keZ=d2hcMwF=fs9OtW4==0ZYg@mail.gmail.com>
- <nycvar.QRO.7.76.6.2201281343360.347@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2201281343360.347@tvgsbejvaqbjf.bet>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 28 Jan 2022 14:37:44 +0100
-Message-ID: <CAP8UFD1iJs0iGe430_Y=S6_nadS8AfBr_w0MuX-0H4ObcwDNdg@mail.gmail.com>
-Subject: Re: [PATCH 00/12] RFC: In-core git merge-tree ("Server side merges")
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Fri, Jan 28, 2022 at 1:58 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Christian,
->
-> On Wed, 26 Jan 2022, Christian Couder wrote:
->
-> > On Wed, Jan 26, 2022 at 1:03 PM Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
-> > >
-> > > On Wed, 26 Jan 2022, Christian Couder wrote:
-> > >
-> > > > The reason is that I think in many cases when there are conflicts,
-> > > > the conflicts will be small and the user will want to see them. So
-> > > > it would be simpler to just have an option to show any conflict
-> > > > right away, rather than have the user launch another command (a
-> > > > diff-tree against which tree and with which options?).
-> > >
-> > > That assumes that server-side merge UIs will present merge conflicts in
-> > > the form of diffs containing merge conflict markers. Which I don't think
-> > > will happen, like, ever.
-> >
-> > Please take a look at:
-> >
-> > https://docs.gitlab.com/ee/user/project/merge_requests/conflicts.html#resolve-conflicts-in-the-inline-editor
-> >
-> > As you can see in the image there are conflict markers in the file
-> > displayed by the server UI.
->
-> Please note the difference between what I wrote above (present merge
-> conflicts in the form of diffs containing merge conflict markers) and what
-> is shown in the document you linked to (present a file annotated with
-> merge conflict markers).
->
-> There is no diff in that page.
+The `git` executable has these two very useful options:
 
-The server UI could just get a diff with the conflicts inside instead
-of the full files with conflict inside, as the diff would be smaller
-to parse than the full files. So even if it's not shown, the diff
-could still be useful.
+-C <directory>:
+	switch to the specified directory before performing any actions
 
-Also just above the section of the link I sent, there is this section
+-c <key>=<value>:
+	temporarily configure this setting for the duration of the
+	specified scalar subcommand
 
-https://docs.gitlab.com/ee/user/project/merge_requests/conflicts.html#resolve-conflicts-in-interactive-mode
+With this commit, we teach the `scalar` executable the same trick.
 
-where one can see diff markers in the image. There are no conflict
-markers in those images, but it's possible that a future UI could
-combine both a diff and conflict markers.
+Note: It might look like a good idea to try to reuse the
+`handle_options()` function in `git.c` instead of replicating only the
+`-c`/`-C` part. However, that function is not only not in `libgit.a`, it
+is also intricately entangled with the rest of the code in `git.c` that
+is necessary e.g. to handle `--paginate`. Besides, no other option
+handled by that `handle_options()` function is relevant to Scalar,
+therefore the cost of refactoring vastly would outweigh the benefit.
 
-Also please note that I don't absolutely require diffs. At the
-beginning of the paragraph from my original email that you quoted
-above, there was:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    scalar: accept -C and -c options
+    
+    This makes the scalar command a bit more handy by offering the same -c
+    <key>=<value> and -C <directory> options as the git command.
+    
+    Changes since v1:
+    
+     * Added a regression test case.
+     * Augmented the commit message with a brief analysis why we're choosing
+       not to refactor git.c:handle_options() but instead copy-edit the
+       dozen or so lines that we want.
 
-"It's not a big issue for me to not include them right now as long as
-it's possible to add cli options later that add them."
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1130%2Fdscho%2Fscalar-c-and-C-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1130/dscho/scalar-c-and-C-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1130
 
-So I was just saying that the format and code should be flexible
-enough to be able to easily accommodate sending further data like
-diffs with additional options. I think it's a very reasonable request.
-So please don't make it a huge issue. You can always NACK a patch
-adding such an option later.
+Range-diff vs v1:
 
-> What's more: there are not only conflict markers in the editor,
+ 1:  8f2af8c3ec1 ! 1:  d7ee2d03b04 scalar: accept -C and -c options before the subcommand
+     @@ Commit message
+      
+          With this commit, we teach the `scalar` executable the same trick.
+      
+     +    Note: It might look like a good idea to try to reuse the
+     +    `handle_options()` function in `git.c` instead of replicating only the
+     +    `-c`/`-C` part. However, that function is not only not in `libgit.a`, it
+     +    is also intricately entangled with the rest of the code in `git.c` that
+     +    is necessary e.g. to handle `--paginate`. Besides, no other option
+     +    handled by that `handle_options()` function is relevant to Scalar,
+     +    therefore the cost of refactoring vastly would outweigh the benefit.
+     +
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## contrib/scalar/scalar.c ##
+     @@ contrib/scalar/scalar.txt: The `scalar` command implements various subcommands,
+       COMMANDS
+       --------
+       
+     +
+     + ## contrib/scalar/t/t9099-scalar.sh ##
+     +@@ contrib/scalar/t/t9099-scalar.sh: test_expect_success 'scalar delete with enlistment' '
+     + 	test_path_is_missing cloned
+     + '
+     + 
+     ++test_expect_success 'scalar supports -c/-C' '
+     ++	test_when_finished "scalar delete sub" &&
+     ++	git init sub &&
+     ++	scalar -C sub -c status.aheadBehind=bogus register &&
+     ++	test -z "$(git -C sub config --local status.aheadBehind)" &&
+     ++	test true = "$(git -C sub config core.preloadIndex)"
+     ++'
+     ++
+     + test_done
 
-You don't see the ">>>>>>>"?
 
-> there is
-> clearly a visual marker next to the line number that indicates that the
-> editor has a fundamental understanding where the conflict markers are.
+ contrib/scalar/scalar.c          | 22 +++++++++++++++++++++-
+ contrib/scalar/scalar.txt        | 10 ++++++++++
+ contrib/scalar/t/t9099-scalar.sh |  8 ++++++++
+ 3 files changed, 39 insertions(+), 1 deletion(-)
 
-Yeah, so this shows that those markers can be important for the editor.
+diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+index 1ce9c2b00e8..7db2a97416e 100644
+--- a/contrib/scalar/scalar.c
++++ b/contrib/scalar/scalar.c
+@@ -808,6 +808,25 @@ int cmd_main(int argc, const char **argv)
+ 	struct strbuf scalar_usage = STRBUF_INIT;
+ 	int i;
+ 
++	while (argc > 1 && *argv[1] == '-') {
++		if (!strcmp(argv[1], "-C")) {
++			if (argc < 3)
++				die(_("-C requires a <directory>"));
++			if (chdir(argv[2]) < 0)
++				die_errno(_("could not change to '%s'"),
++					  argv[2]);
++			argc -= 2;
++			argv += 2;
++		} else if (!strcmp(argv[1], "-c")) {
++			if (argc < 3)
++				die(_("-c requires a <key>=<value> argument"));
++			git_config_push_parameter(argv[2]);
++			argc -= 2;
++			argv += 2;
++		} else
++			break;
++	}
++
+ 	if (argc > 1) {
+ 		argv++;
+ 		argc--;
+@@ -818,7 +837,8 @@ int cmd_main(int argc, const char **argv)
+ 	}
+ 
+ 	strbuf_addstr(&scalar_usage,
+-		      N_("scalar <command> [<options>]\n\nCommands:\n"));
++		      N_("scalar [-C <directory>] [-c <key>=<value>] "
++			 "<command> [<options>]\n\nCommands:\n"));
+ 	for (i = 0; builtins[i].name; i++)
+ 		strbuf_addf(&scalar_usage, "\t%s\n", builtins[i].name);
+ 
+diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
+index f416d637289..cf4e5b889cc 100644
+--- a/contrib/scalar/scalar.txt
++++ b/contrib/scalar/scalar.txt
+@@ -36,6 +36,16 @@ The `scalar` command implements various subcommands, and different options
+ depending on the subcommand. With the exception of `clone`, `list` and
+ `reconfigure --all`, all subcommands expect to be run in an enlistment.
+ 
++The following options can be specified _before_ the subcommand:
++
++-C <directory>::
++	Before running the subcommand, change the working directory. This
++	option imitates the same option of linkgit:git[1].
++
++-c <key>=<value>::
++	For the duration of running the specified subcommand, configure this
++	setting. This option imitates the same option of linkgit:git[1].
++
+ COMMANDS
+ --------
+ 
+diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
+index 2e1502ad45e..89781568f43 100755
+--- a/contrib/scalar/t/t9099-scalar.sh
++++ b/contrib/scalar/t/t9099-scalar.sh
+@@ -85,4 +85,12 @@ test_expect_success 'scalar delete with enlistment' '
+ 	test_path_is_missing cloned
+ '
+ 
++test_expect_success 'scalar supports -c/-C' '
++	test_when_finished "scalar delete sub" &&
++	git init sub &&
++	scalar -C sub -c status.aheadBehind=bogus register &&
++	test -z "$(git -C sub config --local status.aheadBehind)" &&
++	test true = "$(git -C sub config core.preloadIndex)"
++'
++
+ test_done
 
-> Which means that the conflict markers must have been generated
-> independently of Git rather than parsed in some random diff that was
-> produced by Git.
-
-Why couldn't they be generated by Git and then just parsed from a diff
-in the future, even if that was not the case here?
-
-> In other words: you are making my case for me that `git merge-tree` should
-> not generate diff output because it would not even be used.
-
-The other link above in this email actually shows that diffs are used
-right now to resolve conflicts.
-
-> > > In short: I completely disagree that we should introduce a new command,
-> > > and I also completely disagree that the `merge-tree` command should output
-> > > any diffs.
-> > >
-> > > I do agree that we need to be mindful of what we actually need, and in
-> > > that regard, I reiterate that we need to let concrete use cases guide us.
-> > > As part of GitLab, you might be in an excellent position to look at
-> > > GitLab's concrete server-side needs when it comes to use `git merge-tree`
-> > > to perform merges.
-> >
-> > I hope I provided a concrete use case with the link above.
->
-> Sorry, I apparently was a bit unclear.
->
-> In the context of discussing `git merge-tree`, a low-level Git command,
-> when I talk about a user, I do not mean a human being, but a program that
-> calls that command and parses its output.
-
-So it could very well parse diffs containing conflict markers and show
-those conflict markers.
-
-[...]
-
-> Of course, I am still left guessing what the server-side needs concretely,
-> because that is not at all obvious from the user-facing web site to which
-> you sent me. What is needed is a good, hard look at the actual _code_, the
-> code that calls into libgit2 to perform a merge, and that could instead
-> spawn a `git merge-tree` process to accomplish the same thing.
->
-> We need to get away from hypothetical scenarios. They're not helping.
-
-I am not even asking for a feature, just to make it possible to extend
-the output of a brand new command in an RFC with some possibly useful
-things, and you are making such requests...
-
-Please relax a bit on this.
+base-commit: ddc35d833dd6f9e8946b09cecd3311b8aa18d295
+-- 
+gitgitgadget
