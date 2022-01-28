@@ -2,490 +2,482 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25AD0C433EF
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 18:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 213E8C433EF
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 18:35:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350565AbiA1Sdw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 13:33:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43664 "EHLO
+        id S1350630AbiA1Sfu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 13:35:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbiA1Sdt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 13:33:49 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91940C061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 10:33:49 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id 200so6367205qki.2
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 10:33:49 -0800 (PST)
+        with ESMTP id S232977AbiA1Sft (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 13:35:49 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 729C7C061714
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 10:35:48 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id j23so11546156edp.5
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 10:35:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JrkRqwAA6IvGcgVyqh+hm5Pzx6WHeoOjMGAD58fICPw=;
-        b=liBfupL6UwJuUEAjxtfDYuIDC18NZbp9jtF9CRVyR+1oBWncZgVLSuyYFbZhwB4/+H
-         uIEPErB6sy8Jzz4kjsWzfzLylOwQum6Ie4o7nlczKqujS6Ufb5L4fXP8AmyFuDMClr+p
-         G0d8YvWYGNuCjTf+EvOG+nYdSygm41P2/Y610xct9xsjaRrwknfV4MMdjmIo4v76jLyd
-         NbheLetmFCBzPOjINGMEf66Ncg93Uyg8RCHZ+Ts8HcjpCOoVPDZxDdnIdSQrVSepb2hZ
-         HfrX/NOJVJsps11qMKZgBSlIgFOoXzL1fvbkSoV11YbxaO7Sp7GWWkIGGe93MW0x0vDu
-         zAuQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=lhRNOggVQxTBX7cQO4N2ocUHMifFY9DJKp2EcFhYUyo=;
+        b=pODJthEqaKtpFIHfGT0lT1jEK0KC7XjD9u/MOHEDhJhIAbNjr/pTCqX0bTb9cI9DvE
+         9UvTWSmd3NrkGYFblgDLuhY4YyQW2odi8hgQi1bkd+eswXPFVpOBAM7pe04y2fsdix5S
+         sfX7DTkOy/MDZYJ/hGSiupLzj2rKXVRoyvhNQ2BcJrBwIEZNftRbf2a8KXRhZt35vVFX
+         WUJ4B9+0qlqPxk9dWQgiIvRBl8Y0QFK4sl/BHG/pIYkPSY+0K0YQ4yQxPsd9S4i/XtTG
+         aO+9xwVB8CUUnDldAO8SkXVHnjnnNLlC6H8ohpDTWrxzaFUc4viVdsrIbGwms+k5U8xg
+         eJkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=JrkRqwAA6IvGcgVyqh+hm5Pzx6WHeoOjMGAD58fICPw=;
-        b=cNUvLYQIxxCeyWQYwAGG9q0xx0TT/l9qF2iYT7NM+SUkH0kDDodWRGGzmgKxwhZADn
-         Z88pKHYt0gLmVw+canr0V9E7glBA0X4Rk0C4GqdInHU06bUNiBBjhdY+7DMLufTsCFI+
-         zEPh3Y+w06wbHA8FmmkEjDGUq8v/4aEZgECERKZzWyVlr5trIyX2vbyGaunI3eeYPVwB
-         VcEQFNeJbB5oTc/kqX3u1tCwoj71Gpq4dVpdm7wuiY6jEYbPIq9SMRmvk99AGu4+WXXe
-         lDo8pi87okF3BOh3XXS03ScYgrBRc+bIr15ubK6RJO277Xiy68nT1Y7D0Pv55OmUMtZa
-         +9ZQ==
-X-Gm-Message-State: AOAM531kIhRUoO+OZqkFp2lLvkXalTZcIkKykqNmWx3KuE/dA8CU4jMo
-        obIOFAj1fE4KpeWCc3kpt7B6nctHiQ6YkQ==
-X-Google-Smtp-Source: ABdhPJwVF+cVRYiTdNF5BcBiweV9TW5LiKXWqB2yHQ1Tc8Hp+JjaXM4fs+AkmjCgS+pQFTNdvoKEOQ==
-X-Received: by 2002:a05:620a:d42:: with SMTP id o2mr6402317qkl.51.1643394828433;
-        Fri, 28 Jan 2022 10:33:48 -0800 (PST)
-Received: from Johns-MBP.myfiosgateway.com (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id bq13sm3869987qkb.9.2022.01.28.10.33.47
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 28 Jan 2022 10:33:47 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, me@ttaylorr.com, phillip.wood123@gmail.com,
-        e@80x24.org, John Cai <johncai86@gmail.com>
-Subject: [RFC v3] cat-file: add a --stdin-cmd mode
-Date:   Fri, 28 Jan 2022 13:33:19 -0500
-Message-Id: <20220128183319.43496-1-johncai86@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=lhRNOggVQxTBX7cQO4N2ocUHMifFY9DJKp2EcFhYUyo=;
+        b=57BbVdAujo5AGSWLxau6tqtWaJXK5m91/kCl/TU/Znok7IPiZBp+aDEpK2mTIVKhpn
+         QYYg/gXpCq+sfbd9KeQcOgSmci2TPkk1ehybiA9Se1XhLP1uwo44ET229P/i8tgfCyJT
+         pknWDzM6cTq3FSdBs/ROQ5k97Ry5ccSb5nV+yptmcuOXWmAqzSc77BKQaGHeQ8hUDeya
+         rvb4tx9j8Q7qwu/ICP2PZQzyLAS01Vw5cpAzZ7CXpnFoWJv0cQN2Zvvd4CKrE3+bMYf1
+         0ogMC/UE9dlYgDLA/gf35QP/wP1YhS3FLDprn31I3m/cL7xNJyWjum5Krx+u4Z7ynIXy
+         FmFA==
+X-Gm-Message-State: AOAM5332Tw8LD1qw+kwq9h05BbAs7E6wTBxmQkMGll34Eg9wzD6a4795
+        Qxmgyz+U7ioxta25ZXJ2S94=
+X-Google-Smtp-Source: ABdhPJzsogLueinu7/olAjn3TceA1L8CHVmSRK4PCgZffkgBLYNNZc0/jfDpAavZykL6UgUMpPESRQ==
+X-Received: by 2002:a05:6402:1705:: with SMTP id y5mr9374968edu.200.1643394946643;
+        Fri, 28 Jan 2022 10:35:46 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id dc24sm10228070ejb.201.2022.01.28.10.35.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jan 2022 10:35:45 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nDW65-003jut-9B;
+        Fri, 28 Jan 2022 19:35:45 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] scalar: accept -C and -c options before the subcommand
+Date:   Fri, 28 Jan 2022 19:21:38 +0100
+References: <pull.1130.git.1643195729608.gitgitgadget@gmail.com>
+ <220127.86v8y5dgus.gmgdl@evledraar.gmail.com>
+ <0f8d5d04-e86c-48e2-fea0-32c25c3f9325@gmail.com>
+ <nycvar.QRO.7.76.6.2201281148310.347@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <nycvar.QRO.7.76.6.2201281148310.347@tvgsbejvaqbjf.bet>
+Message-ID: <220128.8635l7d7y6.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This RFC patch proposes a new flag --batch-command that works with
-git-cat-file --batch. Similar to git-update-ref --stdin, it will accept
-commands and arguments from stdin.
 
-The start of this idea was discussed in [1], where the original
-motivation was to be able to control when the buffer was flushed to
-stdout in --buffer mode.
+On Fri, Jan 28 2022, Johannes Schindelin wrote:
 
-However, this can actually be much more useful in situations when
-git-cat-file --batch is being used as a long lived backend query
-process. At GitLab, we use a pair of cat-file processes. One for
-iterating over object metadata with --batch-check, and the other to grab
-object contents with --batch. However, if we had --batch-command, we could
-get rid of the second --batch-check process, and just have one process
-where we can flip between getting object info, and getting object contents.
-This can lead to huge savings since on a given server there could be hundreds to
-thousands of git cat-file processes at a time.
+> On Thu, 27 Jan 2022, Derrick Stolee wrote:
+>
+>> The biggest benefits of using handle_options() is for other pre-command
+>> options such as --exec-path, which I use on a regular basis when testing
+>> new functionality.
+>>
+>> There are other options in handle_options() that might not be
+>> appropriate, or might be incorrect if we just make handle_options()
+>> non-static. For example, `scalar --list-cmds=parseopt` wouldn't show the
+>> scalar commands and would instead show the git commands.
+>
+> Right, and since `handle_options()` lives in the same file as `git`'s
+> `cmd_main()` function, we would not only have to disentangle options that
+> work only for `git` from those that would also work for `scalar`, but we
+> would have to extract the `handle_options()` function into a separate
+> file.
+>
+> And while at it, a tangent someone with infinite time on their hands might
+> suggest is: why not convert `handle_options()` to the `parse_options()`
+> machinery? Which would of course solve one issue by adding several new
+> ones. Don't get me wrong: I would find it useful to convert
+> `git.c:handle_options()` to a function in `libgit.a` which uses the
+> `parse_options()` machinery. It'll just require a lot of time, and I do
+> not see enough benefit that would make it worth embarking on that
+> particular journey.
+>
+> But since I had a look at `handle_options()` anyway, I might just as well
+> summarize my insights about how applicable the supported options are for
+> `scalar` here:
+> [...]
+> # Detrimental
+>
+>   --exec-path
+>
+> 	Since `scalar` is tightly coupled to a specific Git version, it
+> 	would cause much more harm than benefit to encourage users to use
+> 	a different Git version by offering them this option.
 
-git cat-file --batch-command
+So just to clarify, do you and Stolee disagree about scalar supporting
+--exec-path, per his comments above?
 
-$ <command> [arg1] [arg2] NL
+>
+>   --list-cmds
+>
+> 	As you pointed out, this option would produce misleading output.
+>
+> Given that only the `-c` and `-C` options are _actually_ useful in the
+> context of the `scalar` command, I would argue that I chose the best
+> approach, as the benefit of the intrusive refactorings that would be
+> necessary to share code with `git.c` is rather small compared with the
+> amount of work.
+>
+>> So my feeling is that we should continue to delay this functionality
+>> until Scalar is more stable, perhaps even until after it moves out of
+>> contrib/. The need to change handle_options() to work with a new
+>> top-level command is novel enough to be worth careful scrutiny, but that
+>> effort is only valuable if the Git community is more committed to having
+>> Scalar in the tree for the long term.
+>
+> I am okay with holding off with this, for now.
+>
+> On the other hand, as I pointed out above: I do not really see it worth
+> the effort to refactor `git.c:handle_options()` for the minimal benefit it
+> would give us over the approach I chose in the patch under discussion.
 
-This patch adds three commands: object, info, fflush
+I'm fine with just integrating this patch as-is, I just wanted to chime
+in upthread with a question/context about a thing stated in previous
+discussion/a link to that discussion.
 
-$ object <sha1> NL
-$ info <sha1> NL
-$ fflush NL
+It does seem to me that you're making a mountain out of a molehill
+here. The below quick hack is a lib-ification of -c, -C and --config-env
+that took me around 10 minutes. For ease of reading I squashed it into
+your patch.
 
-These three would be immediately useful in GitLab's context, but one can
-imagine this mode to be further extended for other things.
+I mean, we're just talking about copy/pasting existing working code to a
+new header file, giving it a function parameter, and other small bits of
+scaffolding.
 
-Future improvements:
-- a non-trivial part of "cat-file --batch" time is spent
-on parsing its argument and seeing if it's a revision, ref etc. So we
-could add a command that only accepts a full-length 40
-character SHA-1.
+One thing we'll be doing by doing that is not wasting the time of
+(checks $(ls -l po/*.po|wc -l) ...) around 20 translator on 2 new
+strings you introduced, and if you view it with the move detection you
+can see it's almost entirely just moving existing code around.
 
-This would be the first step in adding such an interface to
-git-cat-file.
+In this case I don't mind much, but speaking generally I see you and
+Stolee tying yourselves in knots again about scalar being in contrib so
+we shouldn't use libgit.
 
-[1] https://lore.kernel.org/git/pull.1124.git.git.1636149400.gitgitgadget@gmail.com/
+It already uses libgit, there's even (last I checked) at least one
+function in it only used directly by the scalar code.
 
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: John Cai <johncai86@gmail.com>
----
+I don't remember anyone having any objection to scalar using libgit
+code, or even that there's libgit code just to help it along. That's a
+self-imposed limitation you two seem to have invented.
 
-Taylor, I'd be interested in your thoughts on this proposal since you helped
-review the previous patch that turned into this RFC. Thanks!
+Personally I find a patch like the below much easier to review. It's the
+parts that aren't easy to review boilerplate are all things that we have
+in-tree already.
 
-Changes from v2:
+Whereas proposing a new way to parse -c or -C will lead (at least me) to
+carefully eyeballing that new implementation, looking at how it differs
+(if at all) from the existing one, wondering why the i18n strings are
+subtly different etc (I saw one reason is that since the code was
+copy/pasted initially the git.c version was updated, but your patch
+wasn't updated to copy it).
 
-- refactored tests to be within run_tests()
-- added a test to test --buffer behavior with fflush
-- cleaned up cat-file.c: clarified var names, removed unnecessary code
-  based on suggestions from Phillip Wood
-- removed strvec changes
-
-Changes from v1:
-
-- changed option name to batch-command.
-- changed command function interface to receive the whole line after the command
-  name to put the onus of parsing arguments to each individual command function.
-- pass in whole line to batch_one_object in both parse_cmd_object and
-  parse_cmd_info to support spaces in the object reference.
-- removed addition of -z to include in a separate patch series
-- added documentation.
----
- Documentation/git-cat-file.txt |  15 +++++
- builtin/cat-file.c             | 114 +++++++++++++++++++++++++++++++--
- t/t1006-cat-file.sh            |  83 ++++++++++++++++++++++++
- 3 files changed, 205 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index bef76f4dd0..254e546c79 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -96,6 +96,21 @@ OPTIONS
- 	need to specify the path, separated by whitespace.  See the
- 	section `BATCH OUTPUT` below for details.
+diff --git a/Makefile b/Makefile
+index 5580859afdb..2d0a6611cd5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -900,6 +900,7 @@ LIB_OBJS += fmt-merge-msg.o
+ LIB_OBJS += fsck.o
+ LIB_OBJS += fsmonitor.o
+ LIB_OBJS += gettext.o
++LIB_OBJS += gitcmd.o
+ LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+ LIB_OBJS += grep.o
+diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+index 1ce9c2b00e8..ee793ff6ccc 100644
+--- a/contrib/scalar/scalar.c
++++ b/contrib/scalar/scalar.c
+@@ -11,6 +11,7 @@
+ #include "dir.h"
+ #include "packfile.h"
+ #include "help.h"
++#include "gitcmd.h"
  
-+--batch-command::
-+	Enter a command mode that reads from stdin. May not be combined with any
-+	other options or arguments except `--textconv` or `--filters`, in which
-+	case the input lines also need to specify the path, separated by
-+	whitespace.  See the section `BATCH OUTPUT` below for details.
-+
-+object <object>::
-+	Print object contents for object reference <object>
-+
-+info <object>::
-+	Print object info for object reference <object>
-+
-+flush::
-+	Flush to stdout immediately when used with --buffer
-+
- --batch-all-objects::
- 	Instead of reading a list of objects on stdin, perform the
- 	requested batch operation on all objects in the repository and
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 7b3f42950e..cc9e47943b 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -24,9 +24,11 @@ struct batch_options {
- 	int buffer_output;
- 	int all_objects;
- 	int unordered;
--	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
-+	int mode; /* may be 'w' or 'c' for --filters or --textconv */
- 	const char *format;
-+	int command;
- };
-+static char line_termination = '\n';
+ /*
+  * Remove the deepest subdirectory in the provided path string. Path must not
+@@ -808,17 +809,33 @@ int cmd_main(int argc, const char **argv)
+ 	struct strbuf scalar_usage = STRBUF_INIT;
+ 	int i;
  
- static const char *force_path;
+-	if (argc > 1) {
+ 	argv++;
+ 	argc--;
  
-@@ -302,19 +304,19 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 	if (data->type == OBJ_BLOB) {
- 		if (opt->buffer_output)
- 			fflush(stdout);
--		if (opt->cmdmode) {
-+		if (opt->mode) {
- 			char *contents;
- 			unsigned long size;
- 
- 			if (!data->rest)
- 				die("missing path for '%s'", oid_to_hex(oid));
- 
--			if (opt->cmdmode == 'w') {
-+			if (opt->mode == 'w') {
- 				if (filter_object(data->rest, 0100644, oid,
- 						  &contents, &size))
- 					die("could not convert '%s' %s",
- 					    oid_to_hex(oid), data->rest);
--			} else if (opt->cmdmode == 'c') {
-+			} else if (opt->mode == 'c') {
- 				enum object_type type;
- 				if (!textconv_object(the_repository,
- 						     data->rest, 0100644, oid,
-@@ -326,7 +328,7 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 					die("could not convert '%s' %s",
- 					    oid_to_hex(oid), data->rest);
- 			} else
--				BUG("invalid cmdmode: %c", opt->cmdmode);
-+				BUG("invalid mode: %c", opt->mode);
- 			batch_write(opt, contents, size);
- 			free(contents);
- 		} else {
-@@ -508,6 +510,95 @@ static int batch_unordered_packed(const struct object_id *oid,
- 				      data);
- }
- 
-+static void parse_cmd_object(struct batch_options *opt,
-+			     const char *line,
-+			     struct strbuf *output,
-+			     struct expand_data *data)
-+{
-+	opt->print_contents = 1;
-+	batch_one_object(line, output, opt, data);
-+}
++	while (argc > 1 && *argv[0] == '-') {
++		int show_usage = 0;
 +
-+static void parse_cmd_info(struct batch_options *opt,
-+			   const char *line,
-+			   struct strbuf *output,
-+			   struct expand_data *data)
-+{
-+	opt->print_contents = 0;
-+	batch_one_object(line, output, opt, data);
-+}
++		if (gity_handle_options(&argv, &argc, NULL, &show_usage)) {
++			(argv)++;
++			(argc)--;
 +
-+static void parse_cmd_fflush(struct batch_options *opt,
-+			     const char *line,
-+			     struct strbuf *output,
-+			     struct expand_data *data)
-+{
-+	fflush(stdout);
-+}
-+
-+typedef void (*parse_cmd_fn_t)(struct batch_options *, const char *,
-+			       struct strbuf *, struct expand_data *);
-+
-+static const struct parse_cmd {
-+	const char *prefix;
-+	parse_cmd_fn_t fn;
-+	unsigned takes_args;
-+} commands[] = {
-+	{ "object", parse_cmd_object, 1},
-+	{ "info", parse_cmd_info, 1},
-+	{ "fflush", parse_cmd_fflush, 0},
-+};
-+
-+static void batch_objects_command(struct batch_options *opt,
-+				    struct strbuf *output,
-+				    struct expand_data *data)
-+{
-+	struct strbuf input = STRBUF_INIT;
-+
-+	/* Read each line dispatch its command */
-+	while (!strbuf_getwholeline(&input, stdin, line_termination)) {
-+		int i;
-+		const struct parse_cmd *cmd = NULL;
-+		const char *p, *cmd_end;
-+
-+		if (*input.buf == line_termination)
-+			die("empty command in input");
-+		else if (isspace(*input.buf))
-+			die("whitespace before command: %s", input.buf);
-+
-+		for (i = 0; i < ARRAY_SIZE(commands); i++) {
-+			const char *prefix = commands[i].prefix;
-+			char c;
-+			if (!skip_prefix(input.buf, prefix, &cmd_end))
-+				continue;
-+			/*
-+			 * If the command has arguments, verify that it's
-+			 * followed by a space. Otherwise, it shall be followed
-+			 * by a line terminator.
-+			 */
-+			c = commands[i].takes_args ? ' ' : line_termination;
-+			if (input.buf[strlen(prefix)] != c)
-+				die("arguments invalid for command: %s", commands[i].prefix);
-+
-+			cmd = &commands[i];
-+			if (cmd->takes_args) {
-+				p = cmd_end + 1;
-+				// strip newline before handing it to the
-+				// handling function
-+				input.buf[strcspn(input.buf, "\n")] = '\0';
-+			}
-+
++			if (show_usage)
++				goto usage;
++		} else {
 +			break;
 +		}
-+
-+		if (!cmd)
-+			die("unknown command: %s", input.buf);
-+
-+		cmd->fn(opt, p, output, data);
 +	}
-+	strbuf_release(&input);
-+}
 +
- static int batch_objects(struct batch_options *opt)
- {
- 	struct strbuf input = STRBUF_INIT;
-@@ -515,6 +606,7 @@ static int batch_objects(struct batch_options *opt)
- 	struct expand_data data;
- 	int save_warning;
- 	int retval = 0;
-+	const int command = opt->command;
++	if (argc) {
+ 		for (i = 0; builtins[i].name; i++)
+ 			if (!strcmp(builtins[i].name, argv[0]))
+ 				return !!builtins[i].fn(argc, argv);
+ 	}
  
- 	if (!opt->format)
- 		opt->format = "%(objectname) %(objecttype) %(objectsize)";
-@@ -529,7 +621,7 @@ static int batch_objects(struct batch_options *opt)
- 	strbuf_expand(&output, opt->format, expand_format, &data);
- 	data.mark_query = 0;
- 	strbuf_release(&output);
--	if (opt->cmdmode)
-+	if (opt->mode)
- 		data.split_on_whitespace = 1;
++usage:
+ 	strbuf_addstr(&scalar_usage,
+-		      N_("scalar <command> [<options>]\n\nCommands:\n"));
++		      N_("scalar [-C <directory>] [-c <key>=<value>] "
++			 "<command> [<options>]\n\nCommands:\n"));
+ 	for (i = 0; builtins[i].name; i++)
+ 		strbuf_addf(&scalar_usage, "\t%s\n", builtins[i].name);
+
+diff --git a/Makefile b/Makefile
+index 5580859afdb..2d0a6611cd5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -900,6 +900,7 @@ LIB_OBJS += fmt-merge-msg.o
+ LIB_OBJS += fsck.o
+ LIB_OBJS += fsmonitor.o
+ LIB_OBJS += gettext.o
++LIB_OBJS += gitcmd.o
+ LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+ LIB_OBJS += grep.o
+diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+index 1ce9c2b00e8..ee793ff6ccc 100644
+--- a/contrib/scalar/scalar.c
++++ b/contrib/scalar/scalar.c
+@@ -11,6 +11,7 @@
+ #include "dir.h"
+ #include "packfile.h"
+ #include "help.h"
++#include "gitcmd.h"
  
- 	/*
-@@ -590,6 +682,9 @@ static int batch_objects(struct batch_options *opt)
- 	save_warning = warn_on_object_refname_ambiguity;
- 	warn_on_object_refname_ambiguity = 0;
+ /*
+  * Remove the deepest subdirectory in the provided path string. Path must not
+@@ -808,17 +809,33 @@ int cmd_main(int argc, const char **argv)
+ 	struct strbuf scalar_usage = STRBUF_INIT;
+ 	int i;
  
-+	if (command)
-+		batch_objects_command(opt, &output, &data);
+-	if (argc > 1) {
+ 	argv++;
+ 	argc--;
+ 
++	while (argc > 1 && *argv[0] == '-') {
++		int show_usage = 0;
 +
- 	while (strbuf_getline(&input, stdin) != EOF) {
- 		if (data.split_on_whitespace) {
- 			/*
-@@ -636,6 +731,7 @@ static int batch_option_callback(const struct option *opt,
- 
- 	bo->enabled = 1;
- 	bo->print_contents = !strcmp(opt->long_name, "batch");
-+	bo->command = !strcmp(opt->long_name, "batch-command");
- 	bo->format = arg;
- 
- 	return 0;
-@@ -683,6 +779,10 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 			N_("like --batch, but don't emit <contents>"),
- 			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
- 			batch_option_callback),
-+		OPT_CALLBACK_F(0, "batch-command", &batch, N_(""),
-+			 N_("enters batch mode that accepts commands"),
-+			 PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-+			 batch_option_callback),
- 		OPT_CMDMODE(0, "batch-all-objects", &opt,
- 			    N_("with --batch[-check]: ignores stdin, batches all known objects"), 'b'),
- 		/* Batch-specific options */
-@@ -742,7 +842,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 	/* Return early if we're in batch mode? */
- 	if (batch.enabled) {
- 		if (opt_cw)
--			batch.cmdmode = opt;
-+			batch.mode = opt;
- 		else if (opt && opt != 'b')
- 			usage_msg_optf(_("'-%c' is incompatible with batch mode"),
- 				       usage, options, opt);
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 145eee11df..92f0b14a95 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -112,6 +112,46 @@ maybe_remove_timestamp () {
-     fi
- }
- 
-+run_buffer_test () {
-+	type=$1
-+	sha1=$2
-+	size=$3
-+	flush=$4
++		if (gity_handle_options(&argv, &argc, NULL, &show_usage)) {
++			(argv)++;
++			(argc)--;
 +
-+	mkfifo V.input
-+	exec 8<>V.input
-+	rm V.input
++			if (show_usage)
++				goto usage;
++		} else {
++			break;
++		}
++	}
 +
-+	mkfifo V.output
-+	exec 9<>V.output
-+	rm V.output
-+	
-+	(
-+		git cat-file --buffer --batch-command <&8 >&9 &
-+		echo $! >&9 &&
-+		wait $!
-+		echo >&9 EARLY_EXIT
-+	) &
-+	sh_pid=$!
-+	read fi_pid <&9
-+	test_when_finished "
-+		exec 8>&-; exec 9>&-;
-+		kill $sh_pid && wait $sh_pid
-+		kill $fi_pid && wait $fi_pid
-+		true"
-+	expect=$(echo "$sha1 $type $size")
-+	echo "info $sha1" >&8
-+	if test "$flush" = "true"
-+	then
-+		echo "fflush" >&8
-+	else
-+		expect="EARLY_EXIT"
-+		kill $fi_pid && wait $fi_pid
-+	fi
-+	read actual <&9
-+	test "$actual" = "$expect"
-+}
-+
- run_tests () {
-     type=$1
-     sha1=$2
-@@ -177,6 +217,18 @@ $content"
- 	test_cmp expect actual
-     '
++	if (argc) {
+ 		for (i = 0; builtins[i].name; i++)
+ 			if (!strcmp(builtins[i].name, argv[0]))
+ 				return !!builtins[i].fn(argc, argv);
+ 	}
  
-+    test -z "$content" ||
-+    test_expect_success "--batch-command output of $type content is correct" '
-+	maybe_remove_timestamp "$batch_output" $no_ts >expect &&
-+	maybe_remove_timestamp "$(echo object $sha1 | git cat-file --batch-command)" $no_ts >actual &&
-+	test_cmp expect actual
-+    '
++usage:
+ 	strbuf_addstr(&scalar_usage,
+-		      N_("scalar <command> [<options>]\n\nCommands:\n"));
++		      N_("scalar [-C <directory>] [-c <key>=<value>] "
++			 "<command> [<options>]\n\nCommands:\n"));
+ 	for (i = 0; builtins[i].name; i++)
+ 		strbuf_addf(&scalar_usage, "\t%s\n", builtins[i].name);
+ 
+diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
+index f416d637289..cf4e5b889cc 100644
+--- a/contrib/scalar/scalar.txt
++++ b/contrib/scalar/scalar.txt
+@@ -36,6 +36,16 @@ The `scalar` command implements various subcommands, and different options
+ depending on the subcommand. With the exception of `clone`, `list` and
+ `reconfigure --all`, all subcommands expect to be run in an enlistment.
+ 
++The following options can be specified _before_ the subcommand:
 +
-+    test_expect_success "batch-command output of $type info is correct" '
-+	echo "$sha1 $type $size" >expect &&
-+	echo "info $sha1" | git cat-file --batch-command >actual &&
-+	test_cmp expect actual
-+'
-     test_expect_success "custom --batch-check format" '
- 	echo "$type $sha1" >expect &&
- 	echo $sha1 | git cat-file --batch-check="%(objecttype) %(objectname)" >actual &&
-@@ -232,12 +284,29 @@ test_expect_success '--batch-check without %(rest) considers whole line' '
- 	test_cmp expect actual
++-C <directory>::
++	Before running the subcommand, change the working directory. This
++	option imitates the same option of linkgit:git[1].
++
++-c <key>=<value>::
++	For the duration of running the specified subcommand, configure this
++	setting. This option imitates the same option of linkgit:git[1].
++
+ COMMANDS
+ --------
+ 
+diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
+index 2e1502ad45e..89781568f43 100755
+--- a/contrib/scalar/t/t9099-scalar.sh
++++ b/contrib/scalar/t/t9099-scalar.sh
+@@ -85,4 +85,12 @@ test_expect_success 'scalar delete with enlistment' '
+ 	test_path_is_missing cloned
  '
  
-+test_expect_success '--batch-command --buffer with flush is correct for blob' '
-+	run_buffer_test 'blob' $hello_sha1 $hello_size true
-+'
-+
-+test_expect_success '--batch-command --buffer without flush is correct for blob' '
-+	run_buffer_test 'blob' $hello_sha1 $hello_size false
-+'
-+
- tree_sha1=$(git write-tree)
-+
- tree_size=$(($(test_oid rawsz) + 13))
- tree_pretty_content="100644 blob $hello_sha1	hello"
- 
- run_tests 'tree' $tree_sha1 $tree_size "" "$tree_pretty_content"
- 
-+test_expect_success '--batch-command --buffer with flush is correct for tree' '
-+	run_buffer_test 'tree' $tree_sha1 $tree_size true
-+'
-+
-+test_expect_success '--batch-command --buffer without flush is correct for tree' '
-+	run_buffer_test 'tree' $tree_sha1 $tree_size false
-+'
-+
- commit_message="Initial commit"
- commit_sha1=$(echo_without_newline "$commit_message" | git commit-tree $tree_sha1)
- commit_size=$(($(test_oid hexsz) + 137))
-@@ -263,6 +332,14 @@ tag_size=$(strlen "$tag_content")
- 
- run_tests 'tag' $tag_sha1 $tag_size "$tag_content" "$tag_content" 1
- 
-+test_expect_success '--batch-command --buffer with flush is correct for tag' '
-+	run_buffer_test 'tag' $tag_sha1 $tag_size true
-+'
-+
-+test_expect_success '--batch-command --buffer without flush is correct for tag' '
-+	run_buffer_test 'tag' $tag_sha1 $tag_size false
-+'
-+
- test_expect_success \
-     "Reach a blob from a tag pointing to it" \
-     "test '$hello_content' = \"\$(git cat-file blob $tag_sha1)\""
-@@ -964,4 +1041,10 @@ test_expect_success 'cat-file --batch-all-objects --batch-check ignores replace'
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'batch-command unknown command' '
-+	echo unknown_command >cmd &&
-+	test_expect_code 128 git cat-file --batch-command < cmd 2>err &&
-+	grep -E "^fatal:.*unknown command.*" err
++test_expect_success 'scalar supports -c/-C' '
++	test_when_finished "scalar delete sub" &&
++	git init sub &&
++	scalar -C sub -c status.aheadBehind=bogus register &&
++	test -z "$(git -C sub config --local status.aheadBehind)" &&
++	test true = "$(git -C sub config core.preloadIndex)"
 +'
 +
  test_done
--- 
-2.34.1
-
+diff --git a/git.c b/git.c
+index edda922ce6d..dc75b3f0294 100644
+--- a/git.c
++++ b/git.c
+@@ -5,6 +5,7 @@
+ #include "run-command.h"
+ #include "alias.h"
+ #include "shallow.h"
++#include "gitcmd.h"
+ 
+ #define RUN_SETUP		(1<<0)
+ #define RUN_SETUP_GENTLY	(1<<1)
+@@ -138,6 +139,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 
+ 	while (*argc > 0) {
+ 		const char *cmd = (*argv)[0];
++		int show_usage = 0;
+ 		if (cmd[0] != '-')
+ 			break;
+ 
+@@ -247,22 +249,6 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			setenv(GIT_IMPLICIT_WORK_TREE_ENVIRONMENT, "0", 1);
+ 			if (envchanged)
+ 				*envchanged = 1;
+-		} else if (!strcmp(cmd, "-c")) {
+-			if (*argc < 2) {
+-				fprintf(stderr, _("-c expects a configuration string\n" ));
+-				usage(git_usage_string);
+-			}
+-			git_config_push_parameter((*argv)[1]);
+-			(*argv)++;
+-			(*argc)--;
+-		} else if (!strcmp(cmd, "--config-env")) {
+-			if (*argc < 2) {
+-				fprintf(stderr, _("no config key given for --config-env\n" ));
+-				usage(git_usage_string);
+-			}
+-			git_config_push_env((*argv)[1]);
+-			(*argv)++;
+-			(*argc)--;
+ 		} else if (skip_prefix(cmd, "--config-env=", &cmd)) {
+ 			git_config_push_env(cmd);
+ 		} else if (!strcmp(cmd, "--literal-pathspecs")) {
+@@ -295,19 +281,6 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			set_alternate_shallow_file(the_repository, (*argv)[0], 1);
+ 			if (envchanged)
+ 				*envchanged = 1;
+-		} else if (!strcmp(cmd, "-C")) {
+-			if (*argc < 2) {
+-				fprintf(stderr, _("no directory given for '%s' option\n" ), "-C");
+-				usage(git_usage_string);
+-			}
+-			if ((*argv)[1][0]) {
+-				if (chdir((*argv)[1]))
+-					die_errno("cannot change to '%s'", (*argv)[1]);
+-				if (envchanged)
+-					*envchanged = 1;
+-			}
+-			(*argv)++;
+-			(*argc)--;
+ 		} else if (skip_prefix(cmd, "--list-cmds=", &cmd)) {
+ 			trace2_cmd_name("_query_");
+ 			if (!strcmp(cmd, "parseopt")) {
+@@ -322,6 +295,10 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			} else {
+ 				exit(list_cmds(cmd));
+ 			}
++		} else if (gity_handle_options(argv, argc, envchanged,
++					       &show_usage)) {
++			if (show_usage)
++				usage(git_usage_string);
+ 		} else {
+ 			fprintf(stderr, _("unknown option: %s\n"), cmd);
+ 			usage(git_usage_string);
+diff --git a/gitcmd.c b/gitcmd.c
+new file mode 100644
+index 00000000000..0d8630ec2a4
+--- /dev/null
++++ b/gitcmd.c
+@@ -0,0 +1,47 @@
++#include "cache.h"
++#include "gitcmd.h"
++#include "config.h"
++
++int gity_handle_options(const char ***argv, int *argc,
++			int *envchanged, int *show_usage)
++{
++	const char *cmd = (*argv)[0];
++
++	if (!strcmp(cmd, "-c")) {
++		if (*argc < 2) {
++			fprintf(stderr, _("-c expects a configuration string\n" ));
++			goto usage;
++		}
++		git_config_push_parameter((*argv)[1]);
++		(*argv)++;
++		(*argc)--;
++	} else if (!strcmp(cmd, "--config-env")) {
++		if (*argc < 2) {
++			fprintf(stderr, _("no config key given for --config-env\n" ));
++			goto usage;
++		}
++		git_config_push_env((*argv)[1]);
++		(*argv)++;
++		(*argc)--;
++	} else if (!strcmp(cmd, "-C")) {
++		if (*argc < 2) {
++			fprintf(stderr, _("no directory given for '%s' option\n" ), "-C");
++			goto usage;
++		}
++		if ((*argv)[1][0]) {
++			if (chdir((*argv)[1]))
++				die_errno("cannot change to '%s'", (*argv)[1]);
++			if (envchanged)
++				*envchanged = 1;
++		}
++		(*argv)++;
++		(*argc)--;
++	} else {
++		return 0;
++	}
++	return 1;
++usage:
++	*show_usage = 1;
++	return 1;
++}
++
+diff --git a/gitcmd.h b/gitcmd.h
+new file mode 100644
+index 00000000000..95c934b1500
+--- /dev/null
++++ b/gitcmd.h
+@@ -0,0 +1,11 @@
++#ifndef GITCMD_H
++#define GITCMD_H
++
++/**
++ * Handle options like in a "git"-y way, i.e. to emulate a command
++ * that works like "git" itself. This is the part of handle_options()
++ * that contrib/scalar needs from git.c.
++ */
++int gity_handle_options(const char ***argv, int *argc, int *envchanged,
++			int *show_usage);
++#endif
