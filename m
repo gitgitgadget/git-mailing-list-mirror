@@ -2,108 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE204C433F5
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 12:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00C13C433EF
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 12:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348520AbiA1Mgf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 07:36:35 -0500
-Received: from mout.gmx.net ([212.227.17.20]:49505 "EHLO mout.gmx.net"
+        id S1348641AbiA1MmU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 07:42:20 -0500
+Received: from mout.gmx.net ([212.227.17.22]:48823 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236322AbiA1Mgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 07:36:33 -0500
+        id S1348603AbiA1MmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 07:42:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1643373388;
-        bh=z+Q1rscLwsmkiUr0Lt3HWU30YAYlHRrOsMA0LWhVG8g=;
+        s=badeba3b8450; t=1643373733;
+        bh=aTbsbht8Y4ICE5pjalGz+7noO67oAL63Z+M0TwPasLo=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=MSFdmwZZC9TQ7kB3qYN0ToFu5wxkbP2nRWyM2Nmeij85xIM+UvybijLLO3ygtp+8G
-         FbrALNgOJwVdJ/7koX+xIP/CRX2Y2/B9B/TXNPTHgG07aonh3XB2P6Qn5TJTMt1xMP
-         RLmFv7IL+RSzwWu0YC6LcpmuHGE0TsgktdUaVyu8=
+        b=O+ESoDBlchLXW9+nkIwXaVyIEjPT4N30y3p4LL5I4ThRDCtTxkZsgrZvnplBd0E9s
+         +vYFvJz1/UOJhmQCn9UNCbfDN8cL9bMxm1v89vaajDZZida1myPoGRYjs7ETYzdb2c
+         S8izwaDmuDv9PXjRhpxiTJwM3goEL4VOmzTDRBoc=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8ofO-1m9l9u1u0U-015tNg; Fri, 28
- Jan 2022 13:36:28 +0100
-Date:   Fri, 28 Jan 2022 13:36:25 +0100 (CET)
+Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MS3mt-1moJTi2qRX-00TRjK; Fri, 28
+ Jan 2022 13:42:13 +0100
+Date:   Fri, 28 Jan 2022 13:42:11 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] fetch --prune: exit with error if pruning fails
-In-Reply-To: <87pmocp1si.fsf@coati.i-did-not-set--mail-host-address--so-tickle-me>
-Message-ID: <nycvar.QRO.7.76.6.2201281335050.347@tvgsbejvaqbjf.bet>
-References: <20220127153714.1190894-1-t.gummerer@gmail.com> <xmqqmtjh0x5f.fsf@gitster.g> <nycvar.QRO.7.76.6.2201281110050.347@tvgsbejvaqbjf.bet> <87pmocp1si.fsf@coati.i-did-not-set--mail-host-address--so-tickle-me>
+To:     "Miriam R." <mirucam@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 00/11] Finish converting git bisect into a built-in
+In-Reply-To: <CAN7CjDC+O883DB1iaJAXF5ZCis7FP2Z9z0y2qS2-JVAKfQA8aA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201281336410.347@tvgsbejvaqbjf.bet>
+References: <pull.1132.git.1643328752.gitgitgadget@gmail.com> <CAN7CjDC+O883DB1iaJAXF5ZCis7FP2Z9z0y2qS2-JVAKfQA8aA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Qk463u6GwbQrTbBh8IWiPzT0ITwxjxfV5rEqG7G20E5jgAh0DtO
- ftfUQbnNpavN6qdlO31BgquQMhZNzCmQ6yk0IVcGPO1izyePFaTigxcrQ+aN2jL0WCUljpD
- x7VV+fY6jx6YZxWleskkpj5lB7/C/e1GlePamV6fWqLSCGCtlUrHmCStzFlFOwevv9tWkGU
- h54P61uRCpTWSkdP4ib7A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:cxv7DAkww4o=:ngMtx9dSiZZaKnaMVo/Pk8
- hrg8jjFdQ2t59RL9nrur3Uz5F+5ls10U8MnSKMw0Efp3t+pvvXxVyOp4Wc/RJzhbqYzZ/xxXC
- dUK3frTkE40gbjy59Of+Ux6ICp+Yi+4XB6lpv05yEOVDlsv/xE/bWDpphVJlalt4GCQKiC8g5
- zmkHAtaFT3WhJihSkSpMG8PZ9V13zQNK7WOBo5q1xF2b5yuReeJap1vTz0gu0RjD79dOO2BoD
- g6gSMz0/TbGjOShaUgh0zPB0P1nolDsMXKOqzOzfR3MYvqt+2T8Ti39BY+HE5+pQSgnNWompC
- 9HfcFLGwZzzK6zWfp20CzZF3+L9Ct+EpFKQ6+9lDNMHRV3NSmcNk6NeHCzXaVFsmc1wbrSsDc
- l+Kg++cVCKnR5AiUdERXzfGdeLmc1K6pV/sSF2GWvI6a507zrhrDJV1I8bC9l/pjE/oAbbO3X
- fJSQmaBCM0bIO6GXUv0Oxz+U/MlHsK8cok/3SoA83K5sP5MEnCvVABW8Zi36+YvDq3TjLU6A9
- h+rmDQajSVee6YVWj+oWzONjwRAOUocSSnnMJhEa6LDg6J94nuJ4SNCAAlTH+F7KmzcHKF7k3
- S+FrPjbRuiBEckZzi4rkRJHEK2P0HKQYanisQA8QrhZwGrt4ELw8KPTPhfBxOX0TPq2ExLmFc
- Zats0/5jM78w+VYFtG0UZAVkPgcoKeD5oL90HbwGjcP2GQ0BsaVeSZ6njgZiUPjyC1BYySrdU
- mWCUyTpbv3DqDsv960YTTQWQuc/HRtw3gLaoxqpAtNHrGOhLQj5NVPn58lMl0styVRDCTF1xd
- fFX0IEVq8NEcbHSAyuW3MuU6H1B26sydngl/4f5lbLWrAY/Ns435Gc2lOlv2Y8ok5Ujds8zIH
- lXYIXzJjL4DJ+YKJHEa4HG+M1p7nJjPpvg+InJhULkjPh0+wHVjwyUKlA2LXOunzljfwzh2AT
- uHsiVe+A8sdE+d7X8vkVDzwKUR/gJrtCqYvBUKaxuAIOOkaAHSlz5TSR0H4PMBEmG7jUaO8ko
- 261ezkX9g4dAXvPII96c1+AbVWJAHFtlB6+pKdDnbguZ+CTppxW0y1dlLCFekhBba09YNB+bt
- 0ynVe7PhWdyCSA=
-Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:+eFXSBH+ysN24pZjPYxj70Bb74v/1W9BNtKEyDbJmSWDlOIfrgv
+ jaOqyI8cs0LZu0ABytn0kUMOWgCFtLnyN5B1a365AnIZGIkgbGIba36eHl9j1YDstUbBjZj
+ ahUduJt9lTrc9hnx3285rRyV2mZiot0E9Oc2okJ5VE7/CzJ6p6YgsEVizO3xmkg9fz6fAr3
+ croAwyNlGp31OibnvCgZg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jmtAnPoTU5Q=:6tzgA11LDcjZFmO+jrTLJ8
+ 52IRdOSZqySSZvCQqXH971YrLsqV2vGDg94B4ftE6zPjlWuKGk+ocE2O3LxWVOA3FWZlYgSdL
+ w82oCm3IRZ9FC85d2MsiI5YMx616cUXpLSq3ZxtPsGvqLqowUPoUSD1hZYEwc7Af4+SJ5P3xb
+ /HjcoAGKZalfpvpQ/Zv7m3hmJmR0YBl3MBONjGX0NhbWqEcaDVTLx61Y/ENAkSwwpyxcjRLA3
+ crCL0UKtXNMKpW3CQhgahM+wJWc9hTKAscFKVJ1Z6CVaHD0+V/8MDUnK9lVTDh+Yv314PX20B
+ MIChqeL4eFIvldWsVwk67pI/HVJf1sv/YTqsNrPmYh6rwv2S1BnZPCo/Gi33ELG7gDD49hAmt
+ oYxICJn3MuMdM/+Vs+KfvM9qcEaJ1hFesDwWuyPG6dn3WCj5tx2/K2+VqeVyvaPgMQsdpJwaJ
+ o7L/wNcWKmdrZcXSmHqYUPhAvSp3f5Lsg7W2BGtyI1JTsTyD1dcLIwRoAHbarBigMCksLREzk
+ JWtYOV1PuVOlVXqBexNkZTNVjW0Sw0z1ZZNK61zIu96p5BdE209c5rlZYS7h4iGowLwsBWN6o
+ Xr2k0vUIb9rJiix+9oSoOmQ3N3ubWJ6hyD7ONnyfoQ+lZQQf6FOxD4E0+DkBbBuMxPyEw4rcg
+ XZgZR2dNcEvf1HxFARsbEv22SOsgU20//K6jOCj8Vz54Yvm/BCXklo/ehuz12jmwNQPrI5g61
+ J41EiqtBFKe3P4k/wA7rP7HqikZWkRgrOYuztfeqYfd0uD4Hqfmi0/HmpF7/Xj2kWoF2wZUE7
+ STCJtv7cgnDZZsDszYn4GtG+z6DrCsPKuYRUeYkqvCuMp4uZKuN+prksvTZDDZAV1d8y70sIz
+ Jj+48xVoTMEQiLKyAZIwffSSvcIctPNodpAeDb2mrjYN5emUM1vIanZabEQNlnDIf7xm83p2j
+ 6cDRUeZgHu1Tu1+QOWDixsQba1kK78lgsSsu0BLZZgujeNBsZshPm29rp1sl1O7I0al/g5izy
+ ZJT7e/9Fla0Ea1s+ydGt4g9QAEVRFYxgjJqnXje4N7/BFG3JNe0E4O+T5ruvjb2ZnqRoaaMZE
+ qJCzVp5fqFfYyE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas & Junio,
+Hi Miriam,
 
-On Fri, 28 Jan 2022, Thomas Gummerer wrote:
+On Fri, 28 Jan 2022, Miriam R. wrote:
 
-> Johannes Schindelin writes:
->
-> > On Thu, 27 Jan 2022, Junio C Hamano wrote:
-> >
-> >> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> >>
-> >> > +		if (retcode) {
-> >> > +			free_refs(ref_map);
-> >> > +			goto cleanup;
-> >> >  		}
-> >>
-> >> This part is iffy.  We tried to prune refs, we may have removed some
-> >> of the refs missing from the other side but we may still have some
-> >> other refs that are missing from the other side due to the failure
-> >> we noticed.
-> >>
-> >> Is it sensible to abort the fetching?  I am undecided, but without
-> >> further input, my gut reaction is that it is safe and may even be
-> >> better to treat this as a soft error and try to go closer to where
-> >> the user wanted to go as much as possible by continuing to fetch
-> >> from the other side, given that we have already paid for the cost of
-> >> discovering the refs from the other side.
->
-> > I am not so sure. When pruning failed, there may very well be director=
-ies
-> > or files in the way of fetching the refs as desired. And it might be e=
-ven
-> > worse if pruning failed _without_ the fetch failing afterwards: the us=
-er
-> > specifically asked for stale refs to be cleaned up, the command succee=
-ded,
-> > but did not do what the user asked for.
->
-> I was thinking along similar lines here.  I was going back and forth
-> between letting the fetch continue, and then exiting with a non-zero
-> exit code, and just erroring out directly.
+> I had done the last commits to finish the porting of git bisect command
+> since my Outreachy internship two years ago (
+> https://gitlab.com/mirucam/git/-/commits/git-bisect-work-part5-v1), and I
+> was planning to send them in the last patch series during this February.
 
-Oh, I think I misunderstood Junio. As long as the failed prune will cause
-a non-zero exit code, I am fine with continuing to try to fetch.
+Oh sorry! I specifically went to look at your fork before starting to work
+on the patch series, but had not seen that branch. Now I updated my
+remote-tracking branches and see it as a new branch, so I am not sure
+whether I missed it or whether it simply wasn't there.
+
+All in all, we did very similar things. I have a slight preference for the
+more concise version that does not use any command modes (and therefore
+also does not duplicate the commands in the output of `git bisect -h`).
+
+Maybe you could find time in February to review my patch series? Not a big
+deal if you're too busy.
 
 Ciao,
 Dscho
