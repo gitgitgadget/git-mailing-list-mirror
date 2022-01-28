@@ -2,639 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CB2BC433FE
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 11:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8A71C433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 11:27:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348014AbiA1LLQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 06:11:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52684 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347980AbiA1LLP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 06:11:15 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B27AC061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 03:11:15 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id l25so10118336wrb.13
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 03:11:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xLgNCPRi/31QYFCk8hJWxiAbB6I+ajGEM9TF8V4lIY0=;
-        b=XGhs7FPJWwPNZmZhfUPPbOXYacr9vU3gnJguyIife/jSr/6g5BY/ycfZDhOlEOyELO
-         FCPT6qbJCQVjQuMbrIsqpqlsdGRcLVbDQ6JwwBzs9dN/hUxY6I565gBvhUUzOJPqtL4u
-         otLMwHp3lJayYD0/p7FP7xKahq0lqBJ3BYHi9wRAmJ1JoiVuigqhM26m4Q6XDvc176Z2
-         D9ZR1cGvUa2K17lTLns0itmAoFndFL4jVkpnMGXzR4xyXKFN9pUmipfHPnRUhVi7PwN5
-         V9SCqrfb3gd0dlVYZbdy5562IUeedc/LDEJEdvNeebLBYrRKsV2TY1tiB7GLa1AAbEF4
-         d9Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xLgNCPRi/31QYFCk8hJWxiAbB6I+ajGEM9TF8V4lIY0=;
-        b=mdwmX1ZJ1A7mJbkGU/RDN4dV5BeMGEQxA9xjPW5LJi+b50rN9ZnpHZ3UqZFGTU2e2l
-         sOLfhWyh0vJOMHJGox84yQXRqmQSClXQHJMWXzPC+4BrARxk5JhyG98/N11YDVmZzNOt
-         a4iHu3St6KDDz4+V5iICSjyPfUrWLd335L84nS4BrXoW/ZxDlc82EbkjxDkh05hTQPrx
-         c8Gr7Pci7/JzV4s8QLDWzEIBUctmqpvjvUoDQQNyJZOhd8noPOx3b6hDNC/E826Th9Ff
-         6neNDMnEYYR8GYRpACx2DKm+vKuVIBMsP4xNPtd7n/HLyqpDa6OZzXmAPnoO/XwDKDQY
-         8lJQ==
-X-Gm-Message-State: AOAM532ZqW3A6pt4FFDtJdBntl8MJFzpEEX3Gkqk7XZue61FNZrhSnXV
-        g6ZNW9tyFBsgxZ4lLljpturfgVKvVxd1zA==
-X-Google-Smtp-Source: ABdhPJwLf8DJ01vrY59i4TMYmrrymGxesGQnBKblCQnAnk3OpSJngpRU/U6n9AuQ+1hbYBCVND07IQ==
-X-Received: by 2002:adf:e48f:: with SMTP id i15mr6328489wrm.119.1643368273166;
-        Fri, 28 Jan 2022 03:11:13 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id j15sm1988521wmq.19.2022.01.28.03.11.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jan 2022 03:11:12 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 2/2] C99: remove hardcoded-out !HAVE_VARIADIC_MACROS code
-Date:   Fri, 28 Jan 2022 12:11:09 +0100
-Message-Id: <patch-v2-2.2-966d96505cb-20220128T110330Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.0.912.ga4a35ddedc3
-In-Reply-To: <cover-v2-0.2-00000000000-20220128T110330Z-avarab@gmail.com>
-References: <cover-0.2-00000000000-20210412T105422Z-avarab@gmail.com> <cover-v2-0.2-00000000000-20220128T110330Z-avarab@gmail.com>
+        id S235986AbiA1L10 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 06:27:26 -0500
+Received: from mout.gmx.net ([212.227.15.19]:53091 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235774AbiA1L1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 06:27:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1643369241;
+        bh=keordmJo4yADq1JKKLwwSehvDVBBwZYPwO9Is7Jf2PY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Iqxc2l1rRrTnChlrqv1GcJVJwAM/3aR2ovqnk+AUzxVq7scsc+gXrcu+dsaMBfFQR
+         PHccC2vciYiU3JRafblrrIaCVCCYu3/MIUO1tSjzrW4DXBkR0EA4hFyfDyoGNeGzmB
+         Vy5wjdiVssn0jr6vGZuFp809QVqnKWPOSFm9YV1s=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MSKuA-1mpBWz2Mfo-00Sfdl; Fri, 28
+ Jan 2022 12:27:21 +0100
+Date:   Fri, 28 Jan 2022 12:27:19 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee <stolee@gmail.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] scalar: accept -C and -c options before the subcommand
+In-Reply-To: <0f8d5d04-e86c-48e2-fea0-32c25c3f9325@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201281148310.347@tvgsbejvaqbjf.bet>
+References: <pull.1130.git.1643195729608.gitgitgadget@gmail.com> <220127.86v8y5dgus.gmgdl@evledraar.gmail.com> <0f8d5d04-e86c-48e2-fea0-32c25c3f9325@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:aTl+cuG1J+62rKy5QGENU9tbe8g1LXJW8QqRyxcXDqYcYZzC8gL
+ HZI8AM5tf3OupoS609qDE859KejSRlUNob0T5vOP9gRQ36jdFZynmtwo6pvJOLoJGXzgUq/
+ go5r4JiXxsi3HvkOC98QmRoti95cTadBSBZXfW8GAopv8GYfOtun7zJG/nLDcfkqnWMOfYP
+ ViXTkwZOJAw7O90a2pbhw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:oc8T4uic6MY=:9TDLHNZJt+WO0e64Xmfbwd
+ z52TJDfuJ12Oyy1VwzBan32iOgApBvkNFdkmqolCrGSm0Ow8FAvawtTglUxdFgaHqcIaVXlZH
+ CGrKa251tqTu1t/OrcSE5gJH0EiHn8OP6W6kV2fqGfvN+vRef0sH4W3acFoULJdxjzmNjlccd
+ r8wAL3UntB8YK9Udln9j0HcUBRfnjaIasz9J+V4txcetyD/lOzlfK7JEqr8hQj4nbnADkAaca
+ P3mp8M682oepnguA0eWC8EB9kwtynhZmh1LKgYkf1N44Eym8mn0gRFvZwtdkVaQTOCFHPlUtp
+ G2kimoH8EPDXuQudQwao4DX8FMT2wsp7AfGBLu6zF3RrFXzyhcUStgVKIFNfIW4jMd5vvNsYR
+ mmYiUpyfIMu44SuI688Q2y7LmtVZs5gI2B5pAeSUMTVlLHRGETD0v46GIS1sWWxV6s6L5a6i3
+ nksFDmVv+QGBd1mYfypudmAdKQdbXaAK6dLVuRS7QRJ479g8M7UbTXwcGWstlpwbI0xscVTEx
+ ZLqlTw30uZ6fHtYn6ODN7awNp5Mgc5rh2IUvWHGJ7nhP+L+t46DvYG7vMhdWHL4/JxXrRuVqm
+ 1v4kW3tpqa9LwGB8PdsFB+dpJFEFHKCE/ElLSKIlDjMUfRVN9kyjrIj3A5kJ6pQPd+dVoj7Rm
+ KHJ4CzyiihnY/etc8XiNS8qRaY0iCZ3jg/Q7pRik7oByAPyvM7cl+rEvpcZMm/5CoZloYi+uM
+ ORLq9L/+/V16cf68NpkMSbFzZtsoLZQHOefAHKnHjFYtvdPDQ3XDLsDOpeA8xY6X0eeTXjV+G
+ Qj/ha5InhpJfqJ8GI1ZpMgtUXnvVsH5uRw4r/9//2XKt/RNITSeBIfsklze7NOf4PKrDklQ2S
+ ZsupSFCv5byGNHoVg/G6kYdQdllUUMGFxcm4/cTUZIFN1/rrYPA0bWGv0nwC5rbAWPVRv3EoY
+ uIPyTDxs3eFuxeKx0d+XDOrMMloyhXS8O1gwxNirhsDOlzRXlD0XDlVbbs5+7tDz0URSe8I+n
+ aNj14XghsBsP40kp+ZJ2NP4XERkxSi9lSyPHEAu2JoeCh07+nbb7h/VmHVg6HcVpi2VEpt4dO
+ nWGRKZabJV8ybE=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the "else" branches of the HAVE_VARIADIC_MACROS macro, which
-has been unconditionally omitted since 765dc168882 (git-compat-util:
-always enable variadic macros, 2021-01-28).
+Hi Stolee,
 
-Since they were hardcoded out anyone trying to compile a version of
-git v2.31.0 or later would have had a compilation error. 10 months
-across a few releases since then should have been enough time for
-anyone who cared to run into that and report the issue.
+On Thu, 27 Jan 2022, Derrick Stolee wrote:
 
-In addition to that, for anyone unsetting HAVE_VARIADIC_MACROS we've
-been emitting extremely verbose warnings since at least
-ee4512ed481 (trace2: create new combined trace facility,
-2019-02-22). That's because there is no such thing as a
-"region_enter_printf" or "region_leave_printf" format, so at least
-under GCC and Clang everything that includes trace.h (almost every
-file) emits a couple of warnings about that.
+> The biggest benefits of using handle_options() is for other pre-command
+> options such as --exec-path, which I use on a regular basis when testing
+> new functionality.
+>
+> There are other options in handle_options() that might not be
+> appropriate, or might be incorrect if we just make handle_options()
+> non-static. For example, `scalar --list-cmds=3Dparseopt` wouldn't show t=
+he
+> scalar commands and would instead show the git commands.
 
-There's a large benefit to being able to have a hard dependency rely
-on variadic macros, the code surrounding usage.c is hard to maintain
-if we need to write two implementations of everything, and by relying
-on "__FILE__" and "__LINE__" along with "__VA_ARGS__" we can in the
-future make error(), die() etc. log where they were called from. We've
-also recently merged d67fc4bf0ba (Merge branch 'bc/require-c99',
-2021-12-10) which further cements our hard dependency on C99.
+Right, and since `handle_options()` lives in the same file as `git`'s
+`cmd_main()` function, we would not only have to disentangle options that
+work only for `git` from those that would also work for `scalar`, but we
+would have to extract the `handle_options()` function into a separate
+file.
 
-So let's delete the fallback code, and update our CodingGuidelines to
-note that we depend on this. The added bullet-point starts with
-lower-case for consistency with other bullet-points in that section.
+And while at it, a tangent someone with infinite time on their hands might
+suggest is: why not convert `handle_options()` to the `parse_options()`
+machinery? Which would of course solve one issue by adding several new
+ones. Don't get me wrong: I would find it useful to convert
+`git.c:handle_options()` to a function in `libgit.a` which uses the
+`parse_options()` machinery. It'll just require a lot of time, and I do
+not see enough benefit that would make it worth embarking on that
+particular journey.
 
-The diff in "trace.h" is relatively hard to read, since we need to
-retain the existing API docs, which were comments on the code used if
-HAVE_VARIADIC_MACROS was not defined.
+But since I had a look at `handle_options()` anyway, I might just as well
+summarize my insights about how applicable the supported options are for
+`scalar` here:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/CodingGuidelines |   3 +
- banned.h                       |   5 --
- git-compat-util.h              |  12 ---
- trace.c                        |  80 +-------------------
- trace.h                        | 133 +++++++++++++--------------------
- trace2.c                       |  39 ----------
- trace2.h                       |  25 -------
- usage.c                        |  15 +---
- 8 files changed, 58 insertions(+), 254 deletions(-)
+# Beneficial
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 0e27b5395d8..1858075a159 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -210,6 +210,9 @@ For C programs:
-    . since mid 2017 with 512f41cf, we have been using designated
-      initializers for array (e.g. "int array[10] = { [5] = 2 }").
- 
-+   . since early 2021 with 765dc168882, we have been using variadic
-+     macros, mostly for printf-like trace and debug macros.
-+
-    These used to be forbidden, but we have not heard any breakage
-    report, and they are assumed to be safe.
- 
-diff --git a/banned.h b/banned.h
-index 7ab4f2e4921..6ccf46bc197 100644
---- a/banned.h
-+++ b/banned.h
-@@ -21,13 +21,8 @@
- 
- #undef sprintf
- #undef vsprintf
--#ifdef HAVE_VARIADIC_MACROS
- #define sprintf(...) BANNED(sprintf)
- #define vsprintf(...) BANNED(vsprintf)
--#else
--#define sprintf(buf,fmt,arg) BANNED(sprintf)
--#define vsprintf(buf,fmt,arg) BANNED(vsprintf)
--#endif
- 
- #undef gmtime
- #define gmtime(t) BANNED(gmtime)
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 57f20439ef6..9943c182a62 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1244,24 +1244,12 @@ static inline int regexec_buf(const regex_t *preg, const char *buf, size_t size,
- #endif
- #endif
- 
--/*
-- * This is always defined as a first step towards making the use of variadic
-- * macros unconditional. If it causes compilation problems on your platform,
-- * please report it to the Git mailing list at git@vger.kernel.org.
-- */
--#define HAVE_VARIADIC_MACROS 1
--
- /* usage.c: only to be used for testing BUG() implementation (see test-tool) */
- extern int BUG_exit_code;
- 
--#ifdef HAVE_VARIADIC_MACROS
- __attribute__((format (printf, 3, 4))) NORETURN
- void BUG_fl(const char *file, int line, const char *fmt, ...);
- #define BUG(...) BUG_fl(__FILE__, __LINE__, __VA_ARGS__)
--#else
--__attribute__((format (printf, 1, 2))) NORETURN
--void BUG(const char *fmt, ...);
--#endif
- 
- /*
-  * Preserves errno, prints a message, but gives no warning for ENOENT.
-diff --git a/trace.c b/trace.c
-index f726686fd92..794a087c21e 100644
---- a/trace.c
-+++ b/trace.c
-@@ -108,16 +108,11 @@ static int prepare_trace_line(const char *file, int line,
- 	gettimeofday(&tv, NULL);
- 	secs = tv.tv_sec;
- 	localtime_r(&secs, &tm);
--	strbuf_addf(buf, "%02d:%02d:%02d.%06ld ", tm.tm_hour, tm.tm_min,
--		    tm.tm_sec, (long) tv.tv_usec);
--
--#ifdef HAVE_VARIADIC_MACROS
--	/* print file:line */
--	strbuf_addf(buf, "%s:%d ", file, line);
-+	strbuf_addf(buf, "%02d:%02d:%02d.%06ld %s:%d", tm.tm_hour, tm.tm_min,
-+		    tm.tm_sec, (long) tv.tv_usec, file, line);
- 	/* align trace output (column 40 catches most files names in git) */
- 	while (buf->len < 40)
- 		strbuf_addch(buf, ' ');
--#endif
- 
- 	return 1;
- }
-@@ -229,74 +224,6 @@ static void trace_performance_vprintf_fl(const char *file, int line,
- 	strbuf_release(&buf);
- }
- 
--#ifndef HAVE_VARIADIC_MACROS
--
--void trace_printf(const char *format, ...)
--{
--	va_list ap;
--	va_start(ap, format);
--	trace_vprintf_fl(NULL, 0, &trace_default_key, format, ap);
--	va_end(ap);
--}
--
--void trace_printf_key(struct trace_key *key, const char *format, ...)
--{
--	va_list ap;
--	va_start(ap, format);
--	trace_vprintf_fl(NULL, 0, key, format, ap);
--	va_end(ap);
--}
--
--void trace_argv_printf(const char **argv, const char *format, ...)
--{
--	va_list ap;
--	va_start(ap, format);
--	trace_argv_vprintf_fl(NULL, 0, argv, format, ap);
--	va_end(ap);
--}
--
--void trace_strbuf(struct trace_key *key, const struct strbuf *data)
--{
--	trace_strbuf_fl(NULL, 0, key, data);
--}
--
--void trace_performance(uint64_t nanos, const char *format, ...)
--{
--	va_list ap;
--	va_start(ap, format);
--	trace_performance_vprintf_fl(NULL, 0, nanos, format, ap);
--	va_end(ap);
--}
--
--void trace_performance_since(uint64_t start, const char *format, ...)
--{
--	va_list ap;
--	va_start(ap, format);
--	trace_performance_vprintf_fl(NULL, 0, getnanotime() - start,
--				     format, ap);
--	va_end(ap);
--}
--
--void trace_performance_leave(const char *format, ...)
--{
--	va_list ap;
--	uint64_t since;
--
--	if (perf_indent)
--		perf_indent--;
--
--	if (!format) /* Allow callers to leave without tracing anything */
--		return;
--
--	since = perf_start_times[perf_indent];
--	va_start(ap, format);
--	trace_performance_vprintf_fl(NULL, 0, getnanotime() - since,
--				     format, ap);
--	va_end(ap);
--}
--
--#else
--
- void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
- 			 const char *format, ...)
- {
-@@ -342,9 +269,6 @@ void trace_performance_leave_fl(const char *file, int line,
- 	va_end(ap);
- }
- 
--#endif /* HAVE_VARIADIC_MACROS */
--
--
- static const char *quote_crnl(const char *path)
- {
- 	static struct strbuf new_path = STRBUF_INIT;
-diff --git a/trace.h b/trace.h
-index e25984051aa..7ad2f03d07c 100644
---- a/trace.h
-+++ b/trace.h
-@@ -126,85 +126,10 @@ void trace_command_performance(const char **argv);
- void trace_verbatim(struct trace_key *key, const void *buf, unsigned len);
- uint64_t trace_performance_enter(void);
- 
--#ifndef HAVE_VARIADIC_MACROS
--
--/**
-- * Prints a formatted message, similar to printf.
-- */
--__attribute__((format (printf, 1, 2)))
--void trace_printf(const char *format, ...);
--
--__attribute__((format (printf, 2, 3)))
--void trace_printf_key(struct trace_key *key, const char *format, ...);
--
--/**
-- * Prints a formatted message, followed by a quoted list of arguments.
-- */
--__attribute__((format (printf, 2, 3)))
--void trace_argv_printf(const char **argv, const char *format, ...);
--
--/**
-- * Prints the strbuf, without additional formatting (i.e. doesn't
-- * choke on `%` or even `\0`).
-- */
--void trace_strbuf(struct trace_key *key, const struct strbuf *data);
--
- /**
-- * Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
-+ * Macros to add the file:line of the calling code, instead of that of
-+ * the trace function itself.
-  *
-- * Example:
-- * ------------
-- * uint64_t t = 0;
-- * for (;;) {
-- * 	// ignore
-- * t -= getnanotime();
-- * // code section to measure
-- * t += getnanotime();
-- * // ignore
-- * }
-- * trace_performance(t, "frotz");
-- * ------------
-- */
--__attribute__((format (printf, 2, 3)))
--void trace_performance(uint64_t nanos, const char *format, ...);
--
--/**
-- * Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled.
-- *
-- * Example:
-- * ------------
-- * uint64_t start = getnanotime();
-- * // code section to measure
-- * trace_performance_since(start, "foobar");
-- * ------------
-- */
--__attribute__((format (printf, 2, 3)))
--void trace_performance_since(uint64_t start, const char *format, ...);
--
--__attribute__((format (printf, 1, 2)))
--void trace_performance_leave(const char *format, ...);
--
--#else
--
--/*
-- * Macros to add file:line - see above for C-style declarations of how these
-- * should be used.
-- */
--
--/*
-- * TRACE_CONTEXT may be set to __FUNCTION__ if the compiler supports it. The
-- * default is __FILE__, as it is consistent with assert(), and static function
-- * names are not necessarily unique.
-- *
-- * __FILE__ ":" __FUNCTION__ doesn't work with GNUC, as __FILE__ is supplied
-- * by the preprocessor as a string literal, and __FUNCTION__ is filled in by
-- * the compiler as a string constant.
-- */
--#ifndef TRACE_CONTEXT
--# define TRACE_CONTEXT __FILE__
--#endif
--
--/*
-  * Note: with C99 variadic macros, __VA_ARGS__ must include the last fixed
-  * parameter ('format' in this case). Otherwise, a call without variable
-  * arguments will have a surplus ','. E.g.:
-@@ -218,7 +143,23 @@ void trace_performance_leave(const char *format, ...);
-  *
-  * which is invalid (note the ',)'). With GNUC, '##__VA_ARGS__' drops the
-  * comma, but this is non-standard.
-+ *
-+ * TRACE_CONTEXT may be set to __FUNCTION__ if the compiler supports it. The
-+ * default is __FILE__, as it is consistent with assert(), and static function
-+ * names are not necessarily unique.
-+ *
-+ * __FILE__ ":" __FUNCTION__ doesn't work with GNUC, as __FILE__ is supplied
-+ * by the preprocessor as a string literal, and __FUNCTION__ is filled in by
-+ * the compiler as a string constant.
-+ */
-+#ifndef TRACE_CONTEXT
-+# define TRACE_CONTEXT __FILE__
-+#endif
-+
-+/**
-+ * Prints a formatted message, similar to printf.
-  */
-+#define trace_printf(...) trace_printf_key(&trace_default_key, __VA_ARGS__)
- 
- #define trace_printf_key(key, ...)					    \
- 	do {								    \
-@@ -227,8 +168,9 @@ void trace_performance_leave(const char *format, ...);
- 					    __VA_ARGS__);		    \
- 	} while (0)
- 
--#define trace_printf(...) trace_printf_key(&trace_default_key, __VA_ARGS__)
--
-+/**
-+ * Prints a formatted message, followed by a quoted list of arguments.
-+ */
- #define trace_argv_printf(argv, ...)					    \
- 	do {								    \
- 		if (trace_pass_fl(&trace_default_key))			    \
-@@ -236,12 +178,32 @@ void trace_performance_leave(const char *format, ...);
- 					    argv, __VA_ARGS__);		    \
- 	} while (0)
- 
-+/**
-+ * Prints the strbuf, without additional formatting (i.e. doesn't
-+ * choke on `%` or even `\0`).
-+ */
- #define trace_strbuf(key, data)						    \
- 	do {								    \
- 		if (trace_pass_fl(key))					    \
- 			trace_strbuf_fl(TRACE_CONTEXT, __LINE__, key, data);\
- 	} while (0)
- 
-+/**
-+ * Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
-+ *
-+ * Example:
-+ * ------------
-+ * uint64_t t = 0;
-+ * for (;;) {
-+ * 	// ignore
-+ * t -= getnanotime();
-+ * // code section to measure
-+ * t += getnanotime();
-+ * // ignore
-+ * }
-+ * trace_performance(t, "frotz");
-+ * ------------
-+ */
- #define trace_performance(nanos, ...)					    \
- 	do {								    \
- 		if (trace_pass_fl(&trace_perf_key))			    \
-@@ -249,6 +211,16 @@ void trace_performance_leave(const char *format, ...);
- 					     __VA_ARGS__);		    \
- 	} while (0)
- 
-+/**
-+ * Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled.
-+ *
-+ * Example:
-+ * ------------
-+ * uint64_t start = getnanotime();
-+ * // code section to measure
-+ * trace_performance_since(start, "foobar");
-+ * ------------
-+ */
- #define trace_performance_since(start, ...)				    \
- 	do {								    \
- 		if (trace_pass_fl(&trace_perf_key))			    \
-@@ -265,6 +237,7 @@ void trace_performance_leave(const char *format, ...);
- 						   __VA_ARGS__);	    \
- 	} while (0)
- 
-+
- /* backend functions, use non-*fl macros instead */
- __attribute__((format (printf, 4, 5)))
- void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
-@@ -285,6 +258,4 @@ static inline int trace_pass_fl(struct trace_key *key)
- 	return key->fd || !key->initialized;
- }
- 
--#endif /* HAVE_VARIADIC_MACROS */
--
- #endif /* TRACE_H */
-diff --git a/trace2.c b/trace2.c
-index b2d471526fd..179caa72cfe 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -641,20 +641,6 @@ void trace2_region_enter_printf_fl(const char *file, int line,
- 	va_end(ap);
- }
- 
--#ifndef HAVE_VARIADIC_MACROS
--void trace2_region_enter_printf(const char *category, const char *label,
--				const struct repository *repo, const char *fmt,
--				...)
--{
--	va_list ap;
--
--	va_start(ap, fmt);
--	trace2_region_enter_printf_va_fl(NULL, 0, category, label, repo, fmt,
--					 ap);
--	va_end(ap);
--}
--#endif
--
- void trace2_region_leave_printf_va_fl(const char *file, int line,
- 				      const char *category, const char *label,
- 				      const struct repository *repo,
-@@ -717,20 +703,6 @@ void trace2_region_leave_printf_fl(const char *file, int line,
- 	va_end(ap);
- }
- 
--#ifndef HAVE_VARIADIC_MACROS
--void trace2_region_leave_printf(const char *category, const char *label,
--				const struct repository *repo, const char *fmt,
--				...)
--{
--	va_list ap;
--
--	va_start(ap, fmt);
--	trace2_region_leave_printf_va_fl(NULL, 0, category, label, repo, fmt,
--					 ap);
--	va_end(ap);
--}
--#endif
--
- void trace2_data_string_fl(const char *file, int line, const char *category,
- 			   const struct repository *repo, const char *key,
- 			   const char *value)
-@@ -826,17 +798,6 @@ void trace2_printf_fl(const char *file, int line, const char *fmt, ...)
- 	va_end(ap);
- }
- 
--#ifndef HAVE_VARIADIC_MACROS
--void trace2_printf(const char *fmt, ...)
--{
--	va_list ap;
--
--	va_start(ap, fmt);
--	trace2_printf_va_fl(NULL, 0, fmt, ap);
--	va_end(ap);
--}
--#endif
--
- const char *trace2_session_id(void)
- {
- 	return tr2_sid_get();
-diff --git a/trace2.h b/trace2.h
-index 0cc7b5f5312..1b109f57d0a 100644
---- a/trace2.h
-+++ b/trace2.h
-@@ -397,18 +397,9 @@ void trace2_region_enter_printf_fl(const char *file, int line,
- 				   const struct repository *repo,
- 				   const char *fmt, ...);
- 
--#ifdef HAVE_VARIADIC_MACROS
- #define trace2_region_enter_printf(category, label, repo, ...)                 \
- 	trace2_region_enter_printf_fl(__FILE__, __LINE__, (category), (label), \
- 				      (repo), __VA_ARGS__)
--#else
--/* clang-format off */
--__attribute__((format (region_enter_printf, 4, 5)))
--void trace2_region_enter_printf(const char *category, const char *label,
--				const struct repository *repo, const char *fmt,
--				...);
--/* clang-format on */
--#endif
- 
- /**
-  * Emit a 'region_leave' event for <category>.<label> with optional
-@@ -442,18 +433,9 @@ void trace2_region_leave_printf_fl(const char *file, int line,
- 				   const struct repository *repo,
- 				   const char *fmt, ...);
- 
--#ifdef HAVE_VARIADIC_MACROS
- #define trace2_region_leave_printf(category, label, repo, ...)                 \
- 	trace2_region_leave_printf_fl(__FILE__, __LINE__, (category), (label), \
- 				      (repo), __VA_ARGS__)
--#else
--/* clang-format off */
--__attribute__((format (region_leave_printf, 4, 5)))
--void trace2_region_leave_printf(const char *category, const char *label,
--				const struct repository *repo, const char *fmt,
--				...);
--/* clang-format on */
--#endif
- 
- /**
-  * Emit a key-value pair 'data' event of the form <category>.<key> = <value>.
-@@ -506,14 +488,7 @@ void trace2_printf_va_fl(const char *file, int line, const char *fmt,
- 
- void trace2_printf_fl(const char *file, int line, const char *fmt, ...);
- 
--#ifdef HAVE_VARIADIC_MACROS
- #define trace2_printf(...) trace2_printf_fl(__FILE__, __LINE__, __VA_ARGS__)
--#else
--/* clang-format off */
--__attribute__((format (printf, 1, 2)))
--void trace2_printf(const char *fmt, ...);
--/* clang-format on */
--#endif
- 
- /*
-  * Optional platform-specific code to dump information about the
-diff --git a/usage.c b/usage.c
-index 9943dd8742e..b738dd178b3 100644
---- a/usage.c
-+++ b/usage.c
-@@ -299,10 +299,7 @@ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_lis
- 	va_copy(params_copy, params);
- 
- 	/* truncation via snprintf is OK here */
--	if (file)
--		snprintf(prefix, sizeof(prefix), "BUG: %s:%d: ", file, line);
--	else
--		snprintf(prefix, sizeof(prefix), "BUG: ");
-+	snprintf(prefix, sizeof(prefix), "BUG: %s:%d: ", file, line);
- 
- 	vreportf(prefix, fmt, params);
- 
-@@ -317,7 +314,6 @@ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_lis
- 	abort();
- }
- 
--#ifdef HAVE_VARIADIC_MACROS
- NORETURN void BUG_fl(const char *file, int line, const char *fmt, ...)
- {
- 	va_list ap;
-@@ -325,15 +321,6 @@ NORETURN void BUG_fl(const char *file, int line, const char *fmt, ...)
- 	BUG_vfl(file, line, fmt, ap);
- 	va_end(ap);
- }
--#else
--NORETURN void BUG(const char *fmt, ...)
--{
--	va_list ap;
--	va_start(ap, fmt);
--	BUG_vfl(NULL, 0, fmt, ap);
--	va_end(ap);
--}
--#endif
- 
- #ifdef SUPPRESS_ANNOTATED_LEAKS
- void unleak_memory(const void *ptr, size_t len)
--- 
-2.35.0.912.ga4a35ddedc3
+  -c <key>=3D<value>
+  --config-env <key>=3D<value>
+  -C <directory>
 
+	Since I added support for these (except for the long form
+	`--config-env` that I actually only learned while researching this
+	email), it is obvious that I'd like `scalar` to support them.
+
+# Won't hurt
+
+  --html-path
+  --man-path
+  --info-path
+
+	Sure, for `scalar help` (which I implement in a patch series I
+	have not yet formally contributed to the Git mailing list), these
+	options might even make some sense.
+
+  --paginate
+  --no-pager
+
+	There are no Scalar commands that would benefit from using the
+	pager. But if we parse those options, we also have to handle them.
+	Which would mean extracting _even more_ code from `git.c` just so
+	that we can reuse `handle_options()` in Scalar.
+
+  --no-replace-objects
+  --git-dir
+  --work-tree
+
+	These options would only be relevant to the `scalar run` command,
+	no other Scalar command works on an existing Git worktree. And
+	even for that command, I doubt that they are actually useful in
+	Scalar's context.
+
+  --namespace
+
+	This option seems relevant mostly for repositories that are served
+	up for cloning and fetching, which is not what the Scalar command
+	supports directly.
+
+  --super-prefix
+  --bare
+
+	These options do not make sense in Scalar's context (it's neither
+	about bare repositories not about submodules). That is the case
+	for most `git` commands, too, of course.
+
+  --literal-pathspecs
+  --no-literal-pathspecs
+  --glob-pathspecs
+  --noglob-pathspecs
+  --icase-pathspecs
+  --no-optional-locks
+
+	None of Scalar's commands take pathspecs, so these options won't
+	have any effect.
+
+  --shallow-file
+
+	This option (which I learned about today) is purposefully not
+	documented, as it is merely an internal option for use e.g. by
+	`receive-pack`.
+
+# Detrimental
+
+  --exec-path
+
+	Since `scalar` is tightly coupled to a specific Git version, it
+	would cause much more harm than benefit to encourage users to use
+	a different Git version by offering them this option.
+
+  --list-cmds
+
+	As you pointed out, this option would produce misleading output.
+
+Given that only the `-c` and `-C` options are _actually_ useful in the
+context of the `scalar` command, I would argue that I chose the best
+approach, as the benefit of the intrusive refactorings that would be
+necessary to share code with `git.c` is rather small compared with the
+amount of work.
+
+> So my feeling is that we should continue to delay this functionality
+> until Scalar is more stable, perhaps even until after it moves out of
+> contrib/. The need to change handle_options() to work with a new
+> top-level command is novel enough to be worth careful scrutiny, but that
+> effort is only valuable if the Git community is more committed to having
+> Scalar in the tree for the long term.
+
+I am okay with holding off with this, for now.
+
+On the other hand, as I pointed out above: I do not really see it worth
+the effort to refactor `git.c:handle_options()` for the minimal benefit it
+would give us over the approach I chose in the patch under discussion.
+
+Ciao,
+Dscho
