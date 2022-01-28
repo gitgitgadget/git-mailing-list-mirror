@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74381C433EF
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 00:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3F57C433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 00:12:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344485AbiA1AMj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 19:12:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44000 "EHLO
+        id S1344493AbiA1AMk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 19:12:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238679AbiA1AMg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 19:12:36 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 210C5C061714
+        with ESMTP id S1344449AbiA1AMh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 19:12:37 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECE02C061714
         for <git@vger.kernel.org>; Thu, 27 Jan 2022 16:12:36 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id o1-20020a1c4d01000000b0034d95625e1fso6995843wmh.4
+Received: by mail-wr1-x434.google.com with SMTP id l25so7610827wrb.13
         for <git@vger.kernel.org>; Thu, 27 Jan 2022 16:12:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=n0OsaVS4N8R3uutCBihXpyJsQg+PHu3KsqzE/4O5064=;
-        b=VM6cVF5aTuUrLhecz+7CvqG1q150s6ugPhQX+DJVKQ4gnNSVV7kXFQ0PlHj8lL0y5j
-         4naXeLzNprNaX4YHHUC3forX/TU4iE3nT2x6LKPQo78V6eHsOUQOQ8yZVYt7dmn8wU0G
-         33OePka8ThaOLg9n6nkAz/qDmkZ/07NDXdZjeT9TlhAgjqNyrXngBwq1Ys2tCP6FDvuY
-         3Ix56BMIVBnzhF/AaTuksLQtvMC6NKvPFqDyJFCruODIya3XC4gRDTlc2nxnVl7TsGDM
-         i8PFQyUxEfce8kt1AcLfbofrXbqz3PITcTAm4Tdlz2UStWeC9lj8x34bJeFBQqWdkYWL
-         wwgA==
+        bh=Ff2Q/b+XBBCbZWENkgo9wWyYGUXXcYV6vwClmKN88ag=;
+        b=TSZ714fGc6H3TkXMvwsqdbz0q3XFKIWSGBlHEMxKfMrxUr5emGPgoZmc+FpfS8nfT+
+         jVL9cr77ZZBLgnrZpTq/K1UShWHcMVHY82Grd0iHNUrPvI1JEtUTt0iZgRhXPgdn1AIT
+         DJZj3KXth/V/wPvFV3UOARtzGjTV6HeA35p8ZJHKEwEIrtsLOZsP1GGbWZLzNAnElVDt
+         /HQqDw/tgnq8as9jxqpp+tI3LFYK4j5xZ9JPOKUdYKVmOTXv3dPngPL79VB98aIZVND9
+         hN4xqRFFxomdV8Ru/qULwNTev45Fy2Ygw1qVrtIuBAmbQpNnPZa0LWkpFAUB28sxCrAS
+         WliQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=n0OsaVS4N8R3uutCBihXpyJsQg+PHu3KsqzE/4O5064=;
-        b=hwbIpeMMBJtE3O0KU3CdHQG6H8CmpqFs3XIMz7qomAIyHhzYFhRof6c7FU3W+GREVH
-         6jKz8IWfkbJmrYZB2LeKKfxwcbB5RdF35vV9ySdwn4pZtmO6jd7vTfHCBVVDZch95U22
-         Iw10TxGPJeGLszm37q8cRnYOIEIUq4kx51H4ftaWhgHxhud95wUAfhkspeFNsapZ6Msw
-         FRz1Rmq8bB2ZfHCJxQvJ+KzXfYfLIl7EsrMoZQrBGpRpZMoNhBGl2oY+2rvhWv8wuNs3
-         HA/7dVb4M/YjR/n/NoLWttJWsxjMTsOfG11p20UUSUw/CWuj17gPTbDEJQNR39RUxzxl
-         I4Hg==
-X-Gm-Message-State: AOAM532h87NHlL+w059KT0X0fKrSjX36Xjqk2wM3Dk0PN2vkcxgmseXn
-        q5gld4dcJr9uvrzV8c1w9fzh8EIBwhk=
-X-Google-Smtp-Source: ABdhPJzadBbRXGBTY3vnOoRo4MEBNMEmj63wHx+a2fJbN03SWmv06CZENH2BghWQzfX7j9G80PWzTQ==
-X-Received: by 2002:a1c:4386:: with SMTP id q128mr5110911wma.9.1643328754520;
-        Thu, 27 Jan 2022 16:12:34 -0800 (PST)
+        bh=Ff2Q/b+XBBCbZWENkgo9wWyYGUXXcYV6vwClmKN88ag=;
+        b=PPK6CbENe/fIOYLxqkcrb3g8ydlR08JelmV06Ia8gip4hcRohVGhnFdmRBjtuoFIGN
+         IksEyHBB/YeY0hOeoHLTCSVM18Uzfw2B6tVA4TrwkGvIv0gOoSqNOJsVxjqqcbQLmsdD
+         wL49OGm6KWdNXb5CfH1EICtQdCLy9BoXtq7/04Bwkt9Xuy9YXp7u9FlMhngfbTp0Og2K
+         x/OgyeUXca8gR1PE6egKPBPPtOXnWmW2hUM96dPTKZGdue9OIeM35988nIEywqi1mB5R
+         bdC/aF60NztVRjyoiM0w8zGvtyNvh7T1Pg0cdZ8+ajoeZH4eAq0VQiEen2ozZf7JMo+5
+         Y21w==
+X-Gm-Message-State: AOAM5327yNkT+1B4OYPVS5kwzVdKp5BmV7/aMk4OVfmWCMKWjLdnce0T
+        +S9m495WF4fiqMQLUapG7ZeyqsmetTI=
+X-Google-Smtp-Source: ABdhPJxZUghbgrXNWLF4tHAnhZVRCeIQc6q/yGKZdEvo8vKTQvxqM2yagg3H28A9N6CnIL7v0Z9VZw==
+X-Received: by 2002:a5d:65cd:: with SMTP id e13mr5025887wrw.472.1643328755303;
+        Thu, 27 Jan 2022 16:12:35 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e13sm4019252wrq.35.2022.01.27.16.12.34
+        by smtp.gmail.com with ESMTPSA id j12sm3246757wru.38.2022.01.27.16.12.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 27 Jan 2022 16:12:34 -0800 (PST)
-Message-Id: <93d19d85ee38f50019d5f05605ce7b5eca76cbd6.1643328752.git.gitgitgadget@gmail.com>
+Message-Id: <8e0e555998007b2625f4a99f3b800e5f4cf89e19.1643328752.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1132.git.1643328752.gitgitgadget@gmail.com>
 References: <pull.1132.git.1643328752.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 28 Jan 2022 00:12:22 +0000
-Subject: [PATCH 01/11] bisect run: fix the error message
+Date:   Fri, 28 Jan 2022 00:12:23 +0000
+Subject: [PATCH 02/11] bisect--helper: retire the --no-log option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,58 +69,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In d1bbbe45df8 (bisect--helper: reimplement `bisect_run` shell function
-in C, 2021-09-13), we ported the `bisect run` subcommand to C, including
-the part that prints out an error message when the implicit `git bisect
-bad` or `git bisect good` failed.
-
-However, the error message was supposed to print out whether the state
-was "good" or "bad", but used a bogus (because non-populated) `args`
-variable for it.
+Turns out we actually never used it, anyway...
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/bisect--helper.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ builtin/bisect--helper.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 28a2e6a5750..4208206af07 100644
+index 4208206af07..9c8ba61dac0 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -1093,7 +1093,6 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
- {
- 	int res = BISECT_OK;
- 	struct strbuf command = STRBUF_INIT;
--	struct strvec args = STRVEC_INIT;
- 	struct strvec run_args = STRVEC_INIT;
- 	const char *new_state;
- 	int temporary_stdout_fd, saved_stdout;
-@@ -1111,8 +1110,6 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
- 	strvec_push(&run_args, command.buf);
- 
- 	while (1) {
--		strvec_clear(&args);
--
- 		printf(_("running %s\n"), command.buf);
- 		res = run_command_v_opt(run_args.v, RUN_USING_SHELL);
- 
-@@ -1157,14 +1154,13 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
- 			printf(_("bisect found first bad commit"));
- 			res = BISECT_OK;
- 		} else if (res) {
--			error(_("bisect run failed: 'git bisect--helper --bisect-state"
--			" %s' exited with error code %d"), args.v[0], res);
-+			error(_("bisect run failed: 'git bisect"
-+			" %s' exited with error code %d"), new_state, res);
- 		} else {
- 			continue;
- 		}
- 
- 		strbuf_release(&command);
--		strvec_clear(&args);
- 		strvec_clear(&run_args);
- 		return res;
- 	}
+@@ -1182,7 +1182,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		BISECT_VISUALIZE,
+ 		BISECT_RUN,
+ 	} cmdmode = 0;
+-	int res = 0, nolog = 0;
++	int res = 0;
+ 	struct option options[] = {
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+ 			 N_("reset the bisection state"), BISECT_RESET),
+@@ -1206,8 +1206,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("visualize the bisection"), BISECT_VISUALIZE),
+ 		OPT_CMDMODE(0, "bisect-run", &cmdmode,
+ 			 N_("use <cmd>... to automatically bisect."), BISECT_RUN),
+-		OPT_BOOL(0, "no-log", &nolog,
+-			 N_("no log for BISECT_WRITE")),
+ 		OPT_END()
+ 	};
+ 	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
 -- 
 gitgitgadget
 
