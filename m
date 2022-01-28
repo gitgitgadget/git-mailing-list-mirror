@@ -2,60 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4115AC433F5
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 11:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED9F6C433EF
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 11:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244318AbiA1Lnu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 06:43:50 -0500
-Received: from mout.gmx.net ([212.227.17.21]:41197 "EHLO mout.gmx.net"
+        id S232783AbiA1Lw6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 06:52:58 -0500
+Received: from mout.gmx.net ([212.227.15.15]:46901 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237378AbiA1Lnt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 06:43:49 -0500
+        id S1348285AbiA1Lwv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 06:52:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1643370227;
-        bh=xBfLYhmMe0qUfVFA/hzdIwMM6z9VHyOlredLD6NsFrk=;
+        s=badeba3b8450; t=1643370768;
+        bh=5A7VOdlP6LBDX0lcbsrE24f+r9G+ZTZQMHijW+XYfzE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=XB9b0fpHp7CBGjzhPw6mHwKcbqmSWq3nqA6fjNcT/okmMlZ/gMZylXlrK41b2M/xP
-         IFhl9PlbFvsSnVg0ZJS2xRzl8EIOPZYqkoptAaYMzzQB06EKvGdepPS01+Ftbj4Qo0
-         +8aESLPmRiyaEemfrH1u+exQYOvWk3UD5FRlk5II=
+        b=gD9vpM5ctbRbPk2ZLoP3lq7UBdS5XcWCDSnAiqupVy1OAILPwGZI0OmqHxNWZ+p5d
+         ysOvZVEPZZvAoBd6t349WC2Waj8Rg2v9KsBdba8cLposT1O4bzkPB56XPJup8ox58R
+         G3Ze8LWSg3cSyNrWwkzhaLd6A3TdUvNzk3L3WVuw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAfUe-1n6r9P0wgK-00B5mR; Fri, 28
- Jan 2022 12:43:47 +0100
-Date:   Fri, 28 Jan 2022 12:43:44 +0100 (CET)
+Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MaJ3n-1mjOVB1G57-00WGWP; Fri, 28
+ Jan 2022 12:52:48 +0100
+Date:   Fri, 28 Jan 2022 12:52:45 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Taylor Blau <me@ttaylorr.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH] scalar: accept -C and -c options before the subcommand
-In-Reply-To: <YfG0ybYOCwDzlbi5@nand.local>
-Message-ID: <nycvar.QRO.7.76.6.2201281227330.347@tvgsbejvaqbjf.bet>
-References: <pull.1130.git.1643195729608.gitgitgadget@gmail.com> <YfG0ybYOCwDzlbi5@nand.local>
+Subject: Re: [PATCH 2/2] diff-filter: be more careful when looking for negative
+ bits
+In-Reply-To: <YfCGDY5qXPCFXpfp@nand.local>
+Message-ID: <nycvar.QRO.7.76.6.2201281249310.347@tvgsbejvaqbjf.bet>
+References: <pull.1127.git.1643149759.gitgitgadget@gmail.com> <e8006493a9ed4da9b9125865e004ba7ace20e7a4.1643149759.git.gitgitgadget@gmail.com> <YfCGDY5qXPCFXpfp@nand.local>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Dh9RKhEFwKFwHSS6WtZZmlaoQy4ZglA3sde1xNH0mzhBuwqXTYk
- 54ZMxmjnbS9ICiExZEhoYufmJYNL/8db61vCq371wdbM7bH6rmcVIudS8y66fGDRPKJbGgS
- eKzfq7xz6D7clbKujk1uBBQXWIyYivPhm5ZbmvMFMOgL2+/EmIzK3jZ+tjZnvmKAkue3E7I
- uRn1qqArlUCKxTiSdgRMA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:U+TIVX4Mlmo=:+lKn814Fr5G7QUMjIHX1wY
- H9knE4e/fzNvgPkI/oBnMefm/8GThyApUqZuWk1UNjOFe3sAGcqVzk9M4B9nKM7lgdCClEmCb
- Fq6HTBr5opfLwgtewqeSKwnysJSRjGvTngm+JBJ2zWKKjbPwiMxcbfWnNj7rdl3GDrSh9WrLW
- ZFaleL+M4ccTmGdaHMC7RH6hWbinlH9UKbNnRp1f7wtZzeine7wyolbrYhSj/x/EuaToA7ojl
- Tb2i17tVBg3npQH47KvwmKFu495OuvNCmMoDnKCQsq5hsoqGZdY/VrxjJcLBwYUYGVgik/fB1
- nWPdjScIwwAUy/3snqhmsNJ/td7IC1a/RjrIJwyROL54u+b2YRcyhXpHt88H/5pHroNfhpXUf
- oy8rjQ7g7U/rGmKdhI5QEOsXJjV/OAsaxyUPL0wb70e4cLTa8EhvSAJk4stI1Am/Q3me6V1FW
- V+xSzl0Acg34Lcgs5fYmyVBN3XupWGr6gT5UfLc5zF+7Piug/XAyKqQLQHuZbELe9+DQxiLhF
- ZnMQgUMPPUXwvhXUn+4sbIJt1XUEj71mzlI5a3q4yXXVFhRb8taeQd+HMqAqh5ENgf9rY9K9g
- eG0D7bk39g6z+55H98JcOPr1DnMdo0Ihu7DtlhMqUnXFbP9S8Z084jkarIRW4OT39qNbs9a3G
- 10ZT/jnohFCPhUd3Rk1nSLld4xb2xUfsdrBkNTl9HG/NQ9eI9ZGDDWqOn6/G6nzvV3wxU0iWH
- sfRxqajEn93DVK76cxTwi4YJ4tQg/s8IdFVzJNL9qjr9LJnjp7zbPBVHiQXgkV+ICQN1B9wae
- vASd/A7h+TW6O2ZgG3a9liEF9mAozM2hHzK7SpFNi25bAU4IPbj7B4WKeCq6Uu13gf1bhy3BH
- 0kAGViuNSDB49wAPKXRZWDtcq0QRE20otAN3RQU/AVRdSCBG0Ofjcgq8uA3ThkSdBHRe7f0YB
- 0HtqCy2g0MRwd1qr9rCa6TYR3Q+xUnf0IGXmoYUKRhOC2CiHo9glaGJhCWEBsgPj79gE87Fj4
- VMIr1T5tqZZOrZdgQ+hij8I/W5N20V8iA903F3vMels1Bp7vVycCzueywFQFyUUSEVLRPfQcH
- qqfHqZdABIVzEY=
+X-Provags-ID: V03:K1:y0KxJPgdnDi0RGWBP/5WYb+r2HijXV7CT8fqzfiETTTkNB0+ClX
+ JCOoyLTjfA84Xincitq7MN9eUbhAzHvyi4bu5DnrrFJKOkAIf2K8dw0CCv3jmxMYHxXl7SV
+ e7/JmnWlQlX+Im1YqzxwlceqSLQ4x36TfA9hA5BtVQ1FgVRHY7iMK1YAAghZU3nA0M1uBzE
+ tJhBtJRXRb+F8HW9tPRoA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:S5OcZvxaSC0=:tfX3ha9UrVli34Gva9lriq
+ dmzYCqAINZxufdg8rPPmVWSXT5F3Y3qhDqN4U62W8Xw7pK53synpwI0f4j/47fdBTRUDc5uGr
+ rshAFn4OibNG0dkegwL7BJw2THeJSV0vpbH86T67NoHEZ8id4uTnJZErljgCY1tWt9TJ2NGn4
+ TWZ4o31qbAIn/9vy+FiNfBQcY5JgnAuPJpQmnyLJ22lTqbkeHXSEsfOe8CK/WyzHwcRKom9uF
+ IPgks/O1O7neCS5fRKajgxLzWdXMsbeSRJXb6uenbYksQZ2BYCjgYEre5h9R835BRvzP5hG5o
+ R80ggUZVa+NyLzDV1hh1pRDooIcMimzI68Q3iCL1/H+mNz+K1ahQwAIuSvUrsHTTolp+yaueA
+ Tj+fCSz7h9oPl32DXn8GvISFh2HlpFgipTO344wWLxvrCtw7VyG43EP1O8woF57+SixGcrTfv
+ r18dcSBw11jeI+mOG2FS6z8SAM2vMpYZr+zhJpiNlIhYNXu2Txbe4Umh7HxbQM0YubfsaUyC9
+ U7xdTpL9k+IxXnlxl+yjcUP1jAqJZ1L9ApkxCSl6EPH8FzFjXjn37DRTzJ6fU825CkDSobO7S
+ ygtZ3ixuMowlBOc2TsqHBfyOW/Q9U9Gmx4RTzAL3ZfJr2+pwyD0XQ2A2GBZdd4b35W3SeI8F+
+ t8LonxfGkDgx1wjOLCr4dNDOgdFzyD7HSYWjD2ut0RksNQUASCvBUWQCWG5NsHFm5EoXeEfAy
+ /3YcW3vW1ewT5kZ2cx9exhpwVvbVwxn0//0j7MnrJhIkAVi8xkuRJPckkA2JxEcdLuzDVy5tC
+ rUnTfgfRWZiGaiFAqPy412LFBN39I1u+i+UbRRBhmAiCTXodn9lDrKoxaxOtBd4mKjo/QxvqG
+ +RQ9Pn27ECSFOHBa6iFtzX6pl0QPjGhGZKBMNZV4SGD5vPAaitB840ORAD0wyTYzJvSrN2P+t
+ 4gSUVmpIQF8ZtLEDfjyqk+AFdYtC+NOjDG86GqosixchMk5Bx0ZB5TgXUlpEhzvSVHGBE+wEv
+ MNyKcAryoakYlVPPTeDgsNm80da42pHoGfkqSLUtgKWaGX6U2pj2D1b2wrnoPiFlviy3gsOJm
+ ONoc4s4hKqoWpw=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,120 +64,63 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Taylor,
 
-On Wed, 26 Jan 2022, Taylor Blau wrote:
+On Tue, 25 Jan 2022, Taylor Blau wrote:
 
-> On Wed, Jan 26, 2022 at 11:15:29AM +0000, Johannes Schindelin via GitGit=
+> On Tue, Jan 25, 2022 at 10:29:19PM +0000, Johannes Schindelin via GitGit=
 Gadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > diff --git a/diff.c b/diff.c
+> > index c862771a589..fc1151b9c73 100644
+> > --- a/diff.c
+> > +++ b/diff.c
+> > @@ -4821,17 +4821,15 @@ static int diff_opt_diff_filter(const struct o=
+ption *option,
+> >  	prepare_filter_bits();
 > >
-> > The `git` executable has these two very useful options:
-> >
-> > -C <directory>:
-> > 	switch to the specified directory before performing any actions
-> >
-> > -c <key>=3D<value>:
-> > 	temporarily configure this setting for the duration of the
-> > 	specified scalar subcommand
-> >
-> > With this commit, we teach the `scalar` executable the same trick.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >     scalar: accept -C and -c options
-> >
-> >     This makes the scalar command a bit more handy by offering the sam=
-e -c
-> >     <key>=3D<value> and -C <directory> options as the git command.
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1130=
-%2Fdscho%2Fscalar-c-and-C-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1130/ds=
-cho/scalar-c-and-C-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/1130
-> >
-> >  contrib/scalar/scalar.c   | 22 +++++++++++++++++++++-
-> >  contrib/scalar/scalar.txt | 10 ++++++++++
-> >  2 files changed, 31 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-> > index 1ce9c2b00e8..7db2a97416e 100644
-> > --- a/contrib/scalar/scalar.c
-> > +++ b/contrib/scalar/scalar.c
-> > @@ -808,6 +808,25 @@ int cmd_main(int argc, const char **argv)
-> >  	struct strbuf scalar_usage =3D STRBUF_INIT;
-> >  	int i;
-> >
-> > +	while (argc > 1 && *argv[1] =3D=3D '-') {
-> > +		if (!strcmp(argv[1], "-C")) {
-> > +			if (argc < 3)
-> > +				die(_("-C requires a <directory>"));
-> > +			if (chdir(argv[2]) < 0)
-> > +				die_errno(_("could not change to '%s'"),
-> > +					  argv[2]);
-> > +			argc -=3D 2;
-> > +			argv +=3D 2;
-> > +		} else if (!strcmp(argv[1], "-c")) {
-> > +			if (argc < 3)
-> > +				die(_("-c requires a <key>=3D<value> argument"));
-> > +			git_config_push_parameter(argv[2]);
-> > +			argc -=3D 2;
-> > +			argv +=3D 2;
-> > +		} else
-> > +			break;
-> > +	}
-> > +
+> >  	/*
+> > -	 * If there is a negation e.g. 'd' in the input, and we haven't
+> > +	 * If the input starts with a negation e.g. 'd', and we haven't
+> >  	 * initialized the filter field with another --diff-filter, start
+> >  	 * from full set of bits, except for AON.
+> >  	 */
+> >  	if (!opt->filter) {
+> > -		for (i =3D 0; (optch =3D optarg[i]) !=3D '\0'; i++) {
+> > -			if (optch < 'a' || 'z' < optch)
+> > -				continue;
+> > +		optch =3D optarg[0];
+> > +		if (optch >=3D 'a' && 'z' >=3D optch) {
+> >  			opt->filter =3D (1 << (ARRAY_SIZE(diff_status_letters) - 1)) - 1;
+> >  			opt->filter &=3D ~filter_bit[DIFF_STATUS_FILTER_AON];
+> > -			break;
+> >  		}
+> >  	}
 >
-> All looks right to me based on a cursory scan. It's too bad that we have
-> to copy this code from git.c::handle_options().
+> Thinking through how this would have worked before with
+> `--diff-filter=3DDr`, I think it goes something like:
+>
+>   1. We set all bits (except the all-or-none bit) on via the first loop.
+>   2. Then we OR in the bit for deletions, which does not change the
+>      overall filter (since it was already set by the previous step).
+>   3. Then we unset the bit corresponding to renames.
+>
+> That leaves us with all bits on except two: DIFF_STATUS_RENAMED and
+> DIFF_STATUS_FILTER_AON.
 
-It's only a dozen lines, though, and they are pretty stable, so I doubt
-that we risk divergent copied code.
+Correct. And since we asked only for "Deleted", we get way more than we
+bargained for.
 
-> Could we call handle_options() (assuming that it was available to
-> Scalar's compilation unit) instead? I'm not sure if that's a naive
-> question or not, but it might be nice to explain it out in the commit
-> message in case other reviewers have the same question that I did.
+> As far as I can understand, the AON "filter" shows all files as long as
+> at least one of them matches the filter, otherwise it shows nothing at
+> all.
 
-I just responded to Stolee elsewhere in this thread with a lengthy
-analysis of the options, and the conclusion that it would not be worth the
-effort to refactor `handle_options()`.
+Right, so on its own, it is quite useless. It needs to be combined with
+another diff filter to make sense.
 
-> On a more practical note: is there an easy way to test this?
+> But that doesn't save us, since we have many more bits on than we should
+> have, meaning that `--diff-filter=3DDr` doesn't work at all (assuming yo=
+u
+> expected it to show just deletions, like `--diff-filter=3DD` does).
 
-It would be pretty easy to test `-C`:
-
-	git init sub &&
-	scalar -C sub register &&
-	[... verify that `sub/` is now a Scalar repository ...]
-
-For `-c`, we would need to configure something parsed by
-`git_default_config()` that would influence what `scalar register` does,
-then verify that. Or even better, use a config setting that is in the
-"Optional" section of `set_recommended_config()`, i.e. it will refuse to
-override an already-configured value. Something like `status.aheadBehind`.
-
-I added this:
-
-=2D- snip --
-diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-sca=
-lar.sh
-index 2e1502ad45e..89781568f43 100755
-=2D-- a/contrib/scalar/t/t9099-scalar.sh
-+++ b/contrib/scalar/t/t9099-scalar.sh
-@@ -85,4 +85,12 @@ test_expect_success 'scalar delete with enlistment' '
- 	test_path_is_missing cloned
- '
-
-+test_expect_success 'scalar supports -c/-C' '
-+	test_when_finished "scalar delete sub" &&
-+	git init sub &&
-+	scalar -C sub -c status.aheadBehind=3Dbogus register &&
-+	test -z "$(git -C sub config --local status.aheadBehind)" &&
-+	test true =3D "$(git -C sub config core.preloadIndex)"
-+'
-+
- test_done
-=2D- snap --
+Correct.
 
 Ciao,
 Dscho
