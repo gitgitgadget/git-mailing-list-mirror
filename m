@@ -2,183 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54FE2C433EF
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 10:19:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CCF0C433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 10:55:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347818AbiA1KTe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 05:19:34 -0500
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:45597 "EHLO
-        wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1347815AbiA1KTd (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 28 Jan 2022 05:19:33 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id 41B0F32020BB
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 05:19:33 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Fri, 28 Jan 2022 05:19:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=NAeNbJ6bC/xiLnoPh/WWWHVUMaK3yxFOs0CwOR
-        UQjs0=; b=S0/oK9ZdHELb9pSlDp1tVzfO1RsgbC3efznJaF2iU1Fvpt+JxDKLzA
-        Qjx2TYS3BNqou426hT1WV2j6j6dFIq2YSavtrs57+WQRj/8INbfSenyUwtDWkAGo
-        N3/3wuv0egd1ylh9R+BEaLs4RP6ashtvm6fbY5c9X5XuEcmzVBgau+VoLuLvuRxf
-        N6qlowckRlvMBAixHnAYQJ4ij+M494ewpmdvD4eO8XDkwTyKQZdr9/vzPFvU/NZf
-        9Lc0+TVBP8UpkbsTuFwO4FhLZWdiDEDU3MHZ+3ohmmBwR9ADoqLevmg2yTD7U06X
-        LlO+pLteOwZg/JX5YtEqEADtCOACd6Uw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=NAeNbJ6bC/xiLnoPh
-        /WWWHVUMaK3yxFOs0CwORUQjs0=; b=P1qiXXTurVBYI8YnJRssa9h4t3wkta9OO
-        kap6H1CtAJBxB8qYn14o8KnutoJNnOxHved6rr3Lzfk2rxf8yeV9JLd5/nm/Qk3D
-        omVZutKzuGp0MJrJ+hUdwyscsDKIDXh+hGfmr4n9z74ToRZRDLDwzXW4+BU7zoAF
-        AdayUOyRTVX4RDgBmIWErHWdAdVFtY17ey0/zl3XI8XhnqoTD6NVeH56v9GWYTfm
-        Rc7am6ahKdHQgrpAusu77VFtQ205JRjo6sN8DeeB6aOyLMwfZtyg8YphkP9GTX99
-        wRl3Jqjt4on6a+kJZVu+h0KASKvVbePrDCMFtc04lxUiSVKrOfUWQ==
-X-ME-Sender: <xms:NMPzYUXVEqy3hMNlgrVsu10WrMILt34nZYMAcSIWtXhrzuzT6WI5WQ>
-    <xme:NMPzYYnoMulHUzS7UebQOYtJUG497nop9C2e1Rn24M_Mfm_Gswe7aMMtoWf5DX_WM
-    U3efSQl5mB3YIINiw>
-X-ME-Received: <xmr:NMPzYYZwRCvaN9KXLwiU1JRRgLtnZ5Ev4tldEpyATv7qBKxVC5DLruOIK_pSa-imaAFSOZDHS2Na4LXdMquf8mRKV179fZgQRiZ-whJyBkywB8dPxO1a3gc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrfeehgddugecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeehgfejueevjeetudehgffffeffvdejfeejie
-    dvkeffgfekuefgheevteeufeelkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:NMPzYTW5px1k90L3koXlUzqsPDLaD7C0dnCql_dNAyJVb7_eIA3MAg>
-    <xmx:NMPzYek97z9gYDAyy5fPlONZLWOaTl7YAQ1MynvjaHfxC76WEJKMEQ>
-    <xmx:NMPzYYdOL8xxJdwJLovyZxwEjQAXpOpKOXqebZgCj0W590nHk6q6Og>
-    <xmx:NMPzYYRDjtCadM5pY25JMYgExPRh0DBPr4QGKZmvDGUWgoKpUq5FTg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 28 Jan 2022 05:19:32 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id b50b74bf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-        for <git@vger.kernel.org>;
-        Fri, 28 Jan 2022 10:19:31 +0000 (UTC)
-Date:   Fri, 28 Jan 2022 11:19:30 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Subject: [PATCH 2/2] fetch: skip computing output width when not printing
- anything
-Message-ID: <5a3fd3232fd9e19e6f0054717a1f54c71bd8f272.1643364888.git.ps@pks.im>
-References: <cover.1643364888.git.ps@pks.im>
+        id S1347929AbiA1Kzu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 05:55:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49034 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244101AbiA1Kzu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 05:55:50 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCF80C061714
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 02:55:49 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id u15so10127276wrt.3
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 02:55:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=references:user-agent:from:to:cc:subject:in-reply-to:date
+         :message-id:mime-version;
+        bh=y3wmnrZ9/kcI3s478FOZrtqaehOHhKQpBBEu/jXw7J4=;
+        b=DW5ksRpcF9Dem5vIH1LM1qo6hTRqsyiq8EjrnRt02eF1mLLAlOapdZkJwW9/NL1+AF
+         YZ4xJQLA2JGRDiq46TC1u/SraSuyyHSBkYz+voVjEPc/95epL8s8zcw6L/dquvxXQPmY
+         XWIgJjBkYWe7qWA3BkOXhMBq+nJhi5N7Db2LZHeExS5HMt6iZv1IFtCxzG79uxYCgdk9
+         LvUboyX4yvq56uEVn6Dm+YD3SogJwOGnrphIT4XKW/rmHXuNB6KMM/jOQJ7dvTvQowPC
+         YGgHuxCH5VE6lvEVS0Cu+6MiZyoAfV6nJ+U6bkpBEc2+/CkpWIG57FTXzJcA5Ezgny0I
+         vmMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:references:user-agent:from:to:cc:subject
+         :in-reply-to:date:message-id:mime-version;
+        bh=y3wmnrZ9/kcI3s478FOZrtqaehOHhKQpBBEu/jXw7J4=;
+        b=CA0OGwPh3vLYPNJQkVWiRa38huto7tpFyZgr7dsH8IvbNShSKvGG2RXHKLahWG+i+b
+         Sp9PQynyQrm+MVTNXH5m2bKYacCfty1dvZ1uwy9plR6jesNyzLocHtVQFzVs4K9TaTOQ
+         oWf/28zFmrJn6qWLqYZ4NfQZ4+wTMav7Xl1eMvrJPJ3QGVXCxlJMP8eEW4wRLq1Nm2J1
+         ITdmrntOqOJ7dc/q1czzPj3YFns+kwv7K/50bN/VKzBCJeV18wSu8/pUk6fwTm8pLON+
+         QDOhfQTB6fDpu0sMZ4DOySrvB1oAgTjh2fCWv4IjWbktSOi4YZL1j11aHBa7iWIcang5
+         33hg==
+X-Gm-Message-State: AOAM532BxlDAaZ8/CbD8InRvJ40N16lyphrs/aFkIeNzPjVF170DxRIk
+        45CvHxbIQwUPvWztSodGjoQdPM6Ru3U=
+X-Google-Smtp-Source: ABdhPJzmJuhKjozlrUZ0mIP5H9d+sS9XGgBUcc9QkjOYwXOxcLmquoFJlfmaUb8PKdp+ZsT5pUIw5g==
+X-Received: by 2002:a5d:624f:: with SMTP id m15mr6624409wrv.353.1643367348187;
+        Fri, 28 Jan 2022 02:55:48 -0800 (PST)
+Received: from localhost ([77.75.179.5])
+        by smtp.gmail.com with ESMTPSA id z3sm1906983wmp.42.2022.01.28.02.55.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jan 2022 02:55:47 -0800 (PST)
+References: <20220127153714.1190894-1-t.gummerer@gmail.com>
+ <xmqqmtjh0x5f.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2201281110050.347@tvgsbejvaqbjf.bet>
+User-agent: mu4e 1.4.15; emacs 27.2
+From:   "Thomas Gummerer" <t.gummerer@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] fetch --prune: exit with error if pruning fails
+In-reply-to: <nycvar.QRO.7.76.6.2201281110050.347@tvgsbejvaqbjf.bet>
+Date:   Fri, 28 Jan 2022 10:55:41 +0000
+Message-ID: <87pmocp1si.fsf@coati.i-did-not-set--mail-host-address--so-tickle-me>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="KIxxj8IV7G/OvWBy"
-Content-Disposition: inline
-In-Reply-To: <cover.1643364888.git.ps@pks.im>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---KIxxj8IV7G/OvWBy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Johannes Schindelin writes:
 
-When updating references via git-fetch(1), then by default we report to
-the user which references have been changed. This output is formatted in
-a nice table such that the different columns are aligned. Because the
-first column contains abbreviated object IDs we thus need to iterate
-over all refs which have changed and compute the minimum length for
-their respective abbreviated hashes. While this effort makes sense in
-most cases, it is wasteful when the user passes the `--quiet` flag: we
-don't print the summary, but still compute the length.
+> Hi Junio,
+>
+> On Thu, 27 Jan 2022, Junio C Hamano wrote:
+>
+>> Thomas Gummerer <t.gummerer@gmail.com> writes:
+>>
+>> > +		if (retcode) {
+>> > +			free_refs(ref_map);
+>> > +			goto cleanup;
+>> >  		}
+>>
+>> This part is iffy.  We tried to prune refs, we may have removed some
+>> of the refs missing from the other side but we may still have some
+>> other refs that are missing from the other side due to the failure
+>> we noticed.
+>>
+>> Is it sensible to abort the fetching?  I am undecided, but without
+>> further input, my gut reaction is that it is safe and may even be
+>> better to treat this as a soft error and try to go closer to where
+>> the user wanted to go as much as possible by continuing to fetch
+>> from the other side, given that we have already paid for the cost of
+>> discovering the refs from the other side.
 
-Skip computing the summary width when the user asked for us to be quiet.
-This gives us a small speedup of nearly 10% when doing a dry-run
-mirror-fetch in a repository with thousands of references being updated:
+> I am not so sure. When pruning failed, there may very well be directories
+> or files in the way of fetching the refs as desired. And it might be even
+> worse if pruning failed _without_ the fetch failing afterwards: the user
+> specifically asked for stale refs to be cleaned up, the command succeeded,
+> but did not do what the user asked for.
 
-    Benchmark 1: git fetch --prune --dry-run +refs/*:refs/* (HEAD~)
-      Time (mean =C2=B1 =CF=83):     34.048 s =C2=B1  0.233 s    [User: 30.=
-739 s, System: 4.640 s]
-      Range (min =E2=80=A6 max):   33.785 s =E2=80=A6 34.296 s    5 runs
+I was thinking along similar lines here.  I was going back and forth
+between letting the fetch continue, and then exiting with a non-zero
+exit code, and just erroring out directly.  I ended up with the latter
+because it felt like the right thing to do for the user.  The command
+failed, so I'd think it's more confusing that it does more work after
+that (even if we already did part of that work).
 
-    Benchmark 2: git fetch --prune --dry-run +refs/*:refs/* (HEAD)
-      Time (mean =C2=B1 =CF=83):     30.768 s =C2=B1  0.287 s    [User: 27.=
-534 s, System: 4.565 s]
-      Range (min =E2=80=A6 max):   30.432 s =E2=80=A6 31.181 s    5 runs
+But I don't care too much one way or another, as long as we end up with
+a non-zero exit code when the fetch fails.
 
-    Summary
-      'git fetch --prune --dry-run +refs/*:refs/* (HEAD)' ran
-        1.11 =C2=B1 0.01 times faster than 'git fetch --prune --dry-run +re=
-fs/*:refs/* (HEAD~)'
+> Maybe Thomas has an even stronger argument in favor of erroring out. In
+> any case, I don't think that `--prune` should be a "best effort, otherwise
+> just shrug" option. If we wanted that, we could introduce
+> `--prune-best-effort` or some such...
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
+I don't have a strong argument on whether we should error out
+immediately after failing to prune the refs, or just erroring out after
+doing the rest of the work, other than exiting early feels right to me.
 
-[Resend with correct In-Reply-To header.]
+From the comments upthread it seems to me that the argument is more
+whether we should continue after failing to prune, and exit with a
+non-zero exit code, or if we should just fail early.
 
- builtin/fetch.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 5f06b21f8e..ebbde5d56d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1093,12 +1093,15 @@ static int store_updated_refs(const char *raw_url, =
-const char *remote_name,
- 	struct ref *rm;
- 	char *url;
- 	int want_status;
--	int summary_width =3D transport_summary_width(ref_map);
-+	int summary_width =3D 0;
-=20
- 	rc =3D open_fetch_head(&fetch_head);
- 	if (rc)
- 		return -1;
-=20
-+	if (verbosity >=3D 0)
-+		summary_width =3D transport_summary_width(ref_map);
-+
- 	if (raw_url)
- 		url =3D transport_anonymize_url(raw_url);
- 	else
-@@ -1344,7 +1347,6 @@ static int prune_refs(struct refspec *rs, struct ref =
-*ref_map,
- 	int url_len, i, result =3D 0;
- 	struct ref *ref, *stale_refs =3D get_stale_heads(rs, ref_map);
- 	char *url;
--	int summary_width =3D transport_summary_width(stale_refs);
- 	const char *dangling_msg =3D dry_run
- 		? _("   (%s will become dangling)")
- 		: _("   (%s has become dangling)");
-@@ -1373,6 +1375,8 @@ static int prune_refs(struct refspec *rs, struct ref =
-*ref_map,
- 	}
-=20
- 	if (verbosity >=3D 0) {
-+		int summary_width =3D transport_summary_width(stale_refs);
-+
- 		for (ref =3D stale_refs; ref; ref =3D ref->next) {
- 			struct strbuf sb =3D STRBUF_INIT;
- 			if (!shown_url) {
---=20
-2.35.0
-
-
---KIxxj8IV7G/OvWBy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHzwzEACgkQVbJhu7ck
-PpT51g/+K1xg1wD+pyKUJKp8t2ny+PQltYBcTTZKr28el5iTbRt1lpK8EsDwswQv
-wTPKYq8B8GZcR8W8FD3gQOhE3LEmgiU/rSxS9ElVVwYAkBIkjIMfxuD1rdTZoSqU
-tcl6M917m6tTOJY+bNUHtpU2SD0g9P9AI9CrbFH6IDjw/rJkRV94bogUv6raL1q/
-EV+r37Skap1nxHo2g1T4GG1OESpVu/Ts29Hnk/KZxZN3QnFgA8GrU9NBDSW9hGTB
-qrXrNz3adsnRR0+cmtkr68ZWTpTKhhispCBcySUXtqdYtXn4R0PIiogktgnbDjU9
-CC6zKcU5jY8gSTrdFM/hknZgHJyDXjj7KfQQ4sjJQdJn2ho4feAEd/4zxC3giXns
-5HaYTa+K31zW8NoQrpKxRURKbEZxMCFK0td8mPJL4VzuLE5QUCMBS3KIE4bUciC7
-7gX74PKNJIGhUgkCaG1t4oO9AC97h8yUUQL1pQwAmlRNF9zf/i+yrG+xLgwNbm/o
-qdY2jcfJKnTJHb2Vd2yxs2mnhLdyX0BodjogUhrslM4KXnjS4PliOF6V4WP5v88Q
-xfNfvAuE2Bvl01ohCvpjYUyDPHelPUjqR540V9bK+cUFvEsYItp+tfTia7nTN9kH
-Jrbju1bOq9u/E+qb9V1l6v60YecOUISXpBA7KG4yEsRZaK2VBK0=
-=/Qrx
------END PGP SIGNATURE-----
-
---KIxxj8IV7G/OvWBy--
+Though I'm happy to introduce a '--prune-best-effort' option or
+something like that if we still want to preserve that option for users.
+I don't really see people wanting to use that though, and it should be
+very rare that '--prune' fails, but the rest of the fetch succeeds.
