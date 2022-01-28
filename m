@@ -2,230 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D6D9C433EF
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 09:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBAC9C433EF
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 10:14:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347739AbiA1Jv2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 04:51:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34270 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234467AbiA1Jv1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 04:51:27 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9900C061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 01:51:27 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id g205so11317977oif.5
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 01:51:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Jc5vGuGBKuGDG61hgzMeZaCAfGUDkyg7Ex7RWxrhFpc=;
-        b=b11Y4WOh7TH3wCMh5baIsfBVHaMIzdXczIWDI0TlDNVcVS7LkRbtzg6+UXjXEDNYp5
-         VuednSexBsyxeqnpIveBcbpI2rwHmkY6tq7kolXNnEcgzwhkRWqzkQajswOgxszP5HOa
-         WYphy/ZVouVtrj2WwLu0rY8zXoaWlsD2J3qnIwwdakNDHiPn7GwBNaa0a/YK5W+QpzOJ
-         Ey2ob5qaxcoqM5wD59ovCPWJg6eFFd1WDfMs/dDsQRwwJcuwgpmWPMYvzQdsfc9qPVeK
-         67Un1cBNgBOI9DmVY9dYcuhpghVmdpo9RBunF17HB6hrYIvfClxOATPPCC3SOiUGNdIb
-         t9Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Jc5vGuGBKuGDG61hgzMeZaCAfGUDkyg7Ex7RWxrhFpc=;
-        b=b17Oz/9md+ZsBUdNFyiRMlghdwA5HQkwUStYxI+9cCDDCb9EXoWi3S8lQjvi8orAI6
-         ZEr5dMaxPlZ11hiXkbghVD7cKioTwIXrYfUjIoNbZkvjElGpbrE+LbIiYHDSOJpcbx1R
-         ab+M9nYoacO+m+TtZ1w6CZCY7n0geJ21QCDPRZqp8pfY62k1fHrJg/CYC1kq/CtMJyU0
-         HLvJpMqeqG0v5bw9cpBQ1H8rYl/w1W4Uzoy8wjRYt26DwYfc41NIRKDWlwavMjjggrC6
-         Zdt4Dy1RGjmCluexB1XuuYzT5772z7urZt4eDZZppSQ+DxSdA2KPBIBqiohG2Ek4XHLp
-         bqjg==
-X-Gm-Message-State: AOAM533NAdzENRnNhd+SUIHD9b1oqXbrpkBoWbbNcR1jtFQubAzXmPLJ
-        oAPaSg9eRt18WvZ/KM/VwM1ofkZbHCf2HsjGpWq7P9lKSsQRDg==
-X-Google-Smtp-Source: ABdhPJz/sqFbbwscb34yTYbSbw6hFGjFj9hShLr1jFRloWdUuLIBkZB7Y2BVq+fDYRvzthkN056QYdT+mo/mYXCCOX8=
-X-Received: by 2002:a05:6808:d47:: with SMTP id w7mr9462339oik.78.1643363487187;
- Fri, 28 Jan 2022 01:51:27 -0800 (PST)
+        id S245062AbiA1KOI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 05:14:08 -0500
+Received: from mout.gmx.net ([212.227.17.21]:42651 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241773AbiA1KOG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 05:14:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1643364840;
+        bh=C/5JQA4U7sw8wdQOkUr4xUDhCIgo/aDtPEy/zV7p9x8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=CUjmW05vjnwbQ38mY6kTRAj1AZDFHsiuhu/zl+gtiz5c/NzBeOzte6j1i+wefLH0U
+         wmUewzGlcI7CYMQFhl4ajAmaSuqBqg33PeXvkpz0sHSm4qv2BhT3XBhlmAEb8Wda7J
+         qY2KK49bz5vCgSGkezJBSrMio7YoLhEz71u6tVJs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7b6b-1nC2p82xDR-0084qK; Fri, 28
+ Jan 2022 11:13:59 +0100
+Date:   Fri, 28 Jan 2022 11:13:56 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] fetch --prune: exit with error if pruning fails
+In-Reply-To: <xmqqmtjh0x5f.fsf@gitster.g>
+Message-ID: <nycvar.QRO.7.76.6.2201281110050.347@tvgsbejvaqbjf.bet>
+References: <20220127153714.1190894-1-t.gummerer@gmail.com> <xmqqmtjh0x5f.fsf@gitster.g>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20220123060318.471414-1-shaoxuan.yuan02@gmail.com> <CAPig+cS5tOr2NRJmAC1BNQPKYyeLXy0iy36q35-y7rFkrWewJw@mail.gmail.com>
-In-Reply-To: <CAPig+cS5tOr2NRJmAC1BNQPKYyeLXy0iy36q35-y7rFkrWewJw@mail.gmail.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Fri, 28 Jan 2022 17:51:16 +0800
-Message-ID: <CAJyCBOSd7pVedwexMn7HGQfJeVcOUJ4VVgYKYt+7TjQz7QCf1Q@mail.gmail.com>
-Subject: Re: [GSoC][PATCH] lib-read-tree-m-3way: modernize a test script (style)
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:3xpXVeJpyDv8XVu9YLa3Otf8poR4VhYDPKYXxfy2Cg0gSC0/AMe
+ jJNOseBKf17cegIMNoZiDyCjbOo3kBvh3Hgyj8kcFoaAQbNWdWipqcmiMua5P63hxiCsLn/
+ htlKfGjDqugam7qOZtizYC8JVjE7Yv/jD5DslLhLv6gzdVmUQURyto7L1ebANCRsR5LJSWd
+ 7Fkaxhzs8SL1KrU7Z6oYA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:C6S8l19RHqI=:XWJDw8RLXwXoUDMovmj+C8
+ ikXvDVUEoBXsdGsBohUsNUGeLInniArFB89p4Fmc/zhXMVDdUGH03JiuKk2BJzJCYHMvGl2mu
+ 3WuG0P56igTOYX2aYrVZHKsQaujLP2gn75e379iZA0Ey0LXUzjcC8NldKA1Cg/8MnpkbORx+A
+ 6Qwo3lsgQLyc+4fLrwDO2OZ86qXYnPgjXvp52hXH1jR8WSyp+PDFwPOL7qj04B3YkuYsR57mX
+ zjL8l8VKj3LkXjcCpD4Ij9Qq/fQoTEh0oL1N1VOCnlvp54eMMQxd6R6TYalKH76okqpUgi8hA
+ Nx7YTmHmKIbzWo4pLuzsYqjxhlRDdaphFiMCnb107NCAbOfMK7+3v9YAJ+p2Afak1Fod1YpMz
+ LqqeEqhuR4nPo8LFEE/yPqrJP70FwEd4c16uP9oKW6XcpMD2ytwwDnq7bUMJJfXIP4GASA1J5
+ L53xT25lwC2KpfKC3ydK43rEshwAahye007Pe8/SFIRv9DA1TDu3KzXQKIIPwRCtelqyWaCBC
+ 26OXmFBXahZKeNXTbF0HXyjaXcX/hD+BznS/b/2hbbn1dTHIqK0d0sfxyO4Lh/ShXUHB8a8kU
+ dKmWeB9KBmYONd2OxpIENYi/kD/8Lvgo2uEmgjodi70uj9Ul46lxcqFn7JCiDrVDr6NvOtfh3
+ du/BAq+RQ18kVIXtz5/WyYNHo4zC5JeZM7xpCfhHQ2DUuobfkb3h8wqfoOZ5/tbRJljREJQ3u
+ GHqMvhbzKERuBY+0o0Sl35KJ1jIu46EjuG+hnl+IKrSm5QgOxhR57bpmV+YvisSSoyO21/WFJ
+ 871CExJd3KLJR2/oLi/MMc3qvBR+K7y9OAf08tsKI1TwpvGwJwjNBlU8hXdjy0ZOLfbtA3fvw
+ OKyal63rTAAF2l0h0H0h6KRaTgRiAJ08Cxf340hVDFf46rLFe55TdVLNHUQ+0R/hri0kG5ggQ
+ Gssnto9poXPscK/EHmaJD4KIqGEtfI3z3DmFTJ2dRalMMNsvIlSJyjcWgYMWWqpC/Y0x7I1NO
+ cH/D3jfNMC2BR1I5YFbKA1tiMzT2et1F2Ws5zfD1YxmXLx5seRNqzbQVq3IiOfTJT3O/EEoT8
+ KDalYiSTbA56Lk=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 28, 2022 at 4:34 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+Hi Junio,
+
+On Thu, 27 Jan 2022, Junio C Hamano wrote:
+
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
 >
-> On Mon, Jan 24, 2022 at 1:37 AM Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> wrote:
-> > lib-read-tree-m-3way: modernize a test script (style)
+> > +		if (retcode) {
+> > +			free_refs(ref_map);
+> > +			goto cleanup;
+> >  		}
 >
-> Prefixing the subject with "t/" would help better explain which part
-> of the project this patch is touching. Perhaps:
+> This part is iffy.  We tried to prune refs, we may have removed some
+> of the refs missing from the other side but we may still have some
+> other refs that are missing from the other side due to the failure
+> we noticed.
 >
->     t/lib-read-tree-m-3way: modernize style
+> Is it sensible to abort the fetching?  I am undecided, but without
+> further input, my gut reaction is that it is safe and may even be
+> better to treat this as a soft error and try to go closer to where
+> the user wanted to go as much as possible by continuing to fetch
+> from the other side, given that we have already paid for the cost of
+> discovering the refs from the other side.
 
-Thanks, this tip is really helpful and I forgot to add the directory prefix.
+I am not so sure. When pruning failed, there may very well be directories
+or files in the way of fetching the refs as desired. And it might be even
+worse if pruning failed _without_ the fetch failing afterwards: the user
+specifically asked for stale refs to be cleaned up, the command succeeded,
+but did not do what the user asked for.
 
-> > As a microproject, I found another small fix regarding styling to do.
->
-> Everything above the "---" line below your sign-off will become part
-> of the permanent project history; everything below the "---" is mere
-> commentary for reviewers. Reviewers may be interested in knowing that
-> this is a microproject, but it likely won't be meaningful to future
-> readers of the project history. As such, place this sort of commentary
-> below the "---" line.
+Maybe Thomas has an even stronger argument in favor of erroring out. In
+any case, I don't think that `--prune` should be a "best effort, otherwise
+just shrug" option. If we wanted that, we could introduce
+`--prune-best-effort` or some such...
 
-Sure, I did not realize this. I should've put the comments below "---" instead.
-
-> > I changed the old style '\' (backslash) to new style "'" (single
-> > quotes).
->
-> Not sure what this means. I _think_ you mean that you changed:
->
->     test_expect_success \
->         'title' \
->         'body'
->
-> to:
->
->     test_expect_success 'title' '
->         body
->     '
->
-> Sometimes you can convey such a meaning more clearly by a simple
-> example as illustrated above.
->
-> > And I also fixed some double quotes misuse.
->
-> Again, it is unclear what this means. Providing an example can help
-> readers understand what you changed.
-
-Will do, definitely a helpful tip.
-
-> > Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-> > ---
-> > Other than that, I forgot to introduce myself in the last patch and
-> > here it goes:
-> >
-> > I'm Shaoxuan Yuan, currently a sophomore majors in Computer Science and Engineering
-> > (CSE) @ University of California, Irvine.
-> >
-> > I have prior open-source experience in which I was [maintaining|contributing to] the
-> > Casbin community. My main language is Python, and I'm a C newbie
-> > because I'm quite interested in contributing to git (since it is in my main daily
-> > toolkit and it is a charm to wield :-) ).
-> >
-> > And for now I'm still taking baby steps trying to crack some test script
-> > styling issues. After getting more familiar with the git contribution
-> > process, I will try something bigger (though not THAT big) to get a
-> > firmer grasp of git.
->
-> Welcome. Please understand that all review comments (above and below)
-> are meant to be constructive and help familiarize you with the local
-> customs of the Git project; they are not meant as any sort of
-> criticism.
-
-Thanks, I learned a lot from your review comments :)
-
-> > diff --git a/t/lib-read-tree-m-3way.sh b/t/lib-read-tree-m-3way.sh
-> > @@ -8,16 +8,16 @@ do
-> >         echo This is Z/$p from the original tree. >Z/$p
-> > -       test_expect_success \
-> > -           "adding test file $p and Z/$p" \
-> > -           'git update-index --add $p &&
-> > -           git update-index --add Z/$p'
-> > +       test_expect_success 'adding test file $p and Z/$p' '
-> > +           git update-index --add $p &&
-> > +           git update-index --add Z/$p
-> > +    '
->
-> Taking into consideration the difference in behavior of single-quoted
-> strings and double-quoted strings, changing this test's title from
-> double- to single-quoted is undesirable since `$p` is supposed to be
-> interpolated into the title; the title should not contain a literal
-> "$p". (Unlike the test title which is simply echo'd/print'd, the test
-> body gets eval'd, which is why `$p` in the body is acceptable even
-> though the body is in single-quotes.)
-
-Agree, I didn't realize the difference between single and double
-quotes in shell scripts
-(I was just imitating other similar style fixes).
-
-> > -test_expect_success \
-> > -    'adding test file SS' \
-> > -    'git update-index --add SS'
-> > +test_expect_success 'adding test file SS' '
-> > +    git update-index --add SS
-> > +'
->
-> Since you're touching this anyhow as part of fixing style issues, you
-> should also fix the indentation to use tabs rather than spaces. The
-> same comment applies to the rest of the patch, as well.
-
-Sure.
-
-> >  for p in M? Z/M?
-> >  do
-> >      echo This is modified $p in the branch A. >$p
-> > -    test_expect_success \
-> > -       'change in branch A (modification)' \
-> > -        "git update-index $p"
-> > +    test_expect_success 'change in branch A (modification)' '
-> > +        git update-index $p
-> > +    '
-> >  done
->
-> In this case, the indentation of the entire body of the for-loop needs
-> to be fixed to use tabs rather than spaces, however, fixing all the
-> indentation problems together with the other problems can make for a
-> too-noisy patch for reviewers to really see what is going on. As such,
-> it may be better to make this a multi-patch series in which one patch
-> fixes indentation problems only.
-
-> As mentioned above, changing the body of the test from double- to
-> single-quoted string should (presumably) be okay since the body gets
-> eval'd and `$p` will be visible at the time of `eval`, however, mixing
-> this sort of change in with all the other changes being made makes it
-> hard for reviewers to spot such little details, let alone reason about
-> correctness. As such, switching of quote types is also probably the
-> sort of change which should be split out into its own patch. The same
-> comment applies to other changes following this one.
-
-I think so. I was thinking fixing all the general styling issues in one
-patch (since they are all style related), but now I realize that the general
-style patch can be divided into sub-patches for clearer review experience.
-
-And my question is, should I do this "multi-patch series" thing in the form of
-"-v<n>" (all under this thread), e.g. "v2" or "v3"? Or I just submit
-multiple patches
-separately (a new thread for each one)?
-
-> Overall, with the exception of the test title which needs to
-> interpolate `$p`, the rest of the changes are probably reasonable and
-> benign. It's important to understand that lengthy patches like this
-> full of mechanical changes tend to be quite taxing on reviewers, so
-> it's a good idea to help in any way you can to ease the review burden.
-> This can be done, for instance, by making only a single type of change
-> per patch (i.e. indentation fixes), or by limiting the scope or
-> breadth of the changes, which is especially important for this sort of
-
-I'm not quite sure what this means, and I quote, "limiting the scope or
-breadth of the changes". Are you suggesting, for example,
-fixing fewer occurrences of tab indentation issue in a patch; or, for
-example, limiting the
-fix to a specific "test_expect_success" block, and do multiple patches
-sequentially?
-
-> "noise" change -- a change just for the sake of change -- which
-> doesn't have any immediate practical benefit.
-
-Overall, thanks for the reply and it is really helpful! I did make a lot of
-mistakes in this patch, but I'm learning a lot :)
-And I will amend my patch base on these suggestions then submit a v2.
-
---
-Thanks,
-Shaoxuan
+Ciao,
+Dscho
