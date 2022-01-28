@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23BC8C433FE
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 22:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03C1FC433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 22:24:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236526AbiA1WYN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 17:24:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39036 "EHLO
+        id S1344739AbiA1WYO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 17:24:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232474AbiA1WYM (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232825AbiA1WYM (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 28 Jan 2022 17:24:12 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EBC5C061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 14:24:11 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id u15so13487199wrt.3
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 14:24:11 -0800 (PST)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 736A6C06173B
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 14:24:12 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id e2so13512474wra.2
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 14:24:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=GmdRpvBz1XQEaQ/Ok30KtN/n17H0Td/yUpCS7K+Rxco=;
-        b=iqlV1YMafAIJhwnch8PE+7jVAvM/nGPmS3K84onkZ135GpY11g5ltbGqRK5/AmVHRQ
-         H1LaYPmdlH36Lx/NsYaLWSyKLBkYd+cEA9iYYxJQ4pDLb3PDQ2cLJkGN5E10wcHMa34t
-         SKbwSX7unH05+wNshlf0zqnJ68QCMcLDoFRADlTRJtcoYQe9sCuKfmcLxXnq6Az5SUT2
-         fa9biXfOHSIcMAO274DtYnEIyW1G6nmJ2pLKeVB0rfuiNHiRmX9l99mNZmCGgLDD3ykM
-         F+a0rwb/QYg250mglc1Mk68KUi3LIivwicb6NF6iqYtdxQacKuAFV60aqtNHtVNWK8Hm
-         yV7Q==
+        bh=pz4l60nqjTP/xK3XTg6XqoLscYS+trH9OCEOGty2PVc=;
+        b=fVrA2RTJR4k8KOZBSgaVtq6erPpqKk4NVPJE5q0q8UU0hbSjCXWeu9+TuvrO81IIoP
+         twcu2CxhNou8qFgBn+Fw00gl3Kun9YwAXQNOrTVAhA/4pi6zqLvMjJ+nwu4s4uplx3P3
+         qoaLp6UtnVfBxLVhKgY7XJgFlK7PEUvOAiuzeuA3WtefeoCstDVeOC4S7vxV1KtMW1y4
+         psojPVTqlldoSEd0j+2m+RLyjiyDvZZtASUYD1O0GVOC0PXVVKyp++JnXevVHMJEUZft
+         P+f1U9Y84/GOh/Rhovc6gsSpcL6oMXbdS47e0qitKgIBVPs9rcPp0u3Eh/aJRVUSLwTV
+         T8+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=GmdRpvBz1XQEaQ/Ok30KtN/n17H0Td/yUpCS7K+Rxco=;
-        b=FNGMllChQvzeMLfxNuRIsT8uEmZU87SLezXNtDH9N+FLwTdpXO5cRExrmlA7+AtWm8
-         aX7B+sAiYLd/PHrwISYkIfyfGe1VMTLjnuqbc3kMev3t+RCFUL/ktfIrwD6XFiW1WXEN
-         mvN/9sDHOn+KetjGwI4xGd/1p/v4/AJaX1gn6y7Nu0gHKhGG1ZxFpectyuFm2NaUudfX
-         2rB3hsfuO+UQD4oYcPlxYEzgoEHIPfeWylpzvtKU+Ry2idI4ua2f5CS+25u8kwQ7pc1m
-         UHGZEJxsJ2oxVueE1gKRRPrIVEcr3bNoWo8f8GDnD+hdPPMsngjvL1fJ/9qLafkiPw6f
-         5FUw==
-X-Gm-Message-State: AOAM530gBiZ9zwbQTVdeRFjw7twsGnwjmCD8E4DAlcxmFgfVF2qySgAt
-        TlNPZl1J1z2cUByw327f6/TXOXVswCk=
-X-Google-Smtp-Source: ABdhPJxhekkCqb6vO3DYsn04hiMSemM0Q4GPjVIfespsD0wPoFokc87+brMjUZN5izlK+7n88unPAA==
-X-Received: by 2002:adf:ee8b:: with SMTP id b11mr8850722wro.430.1643408650043;
+        bh=pz4l60nqjTP/xK3XTg6XqoLscYS+trH9OCEOGty2PVc=;
+        b=Jv4ZAt03igmluCxXejGbsfyLeCAQBfyUrufSuKQNa4aNIWFjbt2DhS+qP+ODqg5tEK
+         py/F2A5S68YHWaSZKcQcgjlDry70Afm8alZDKHC5t2iyth9JwTarDQeR5bzRTYnkjmgs
+         M0cJwrqBvUQPn2WcyR8GIOpCssjcPb+I7Srwt+jTohxDQ+vhou8hiN2Z4m5WVI+39djS
+         F/wLcL1hiaXyTNZ3lUW1xVJ1IEAlaz1m9SnLL3oiJFesN0pH41RqbpfAGloOkaXmTZtz
+         4bwUMekqG7tWc/VClk0HM5L2AMUn2d0NdCiyenewN5auImkFSy1D2F9fHeNbnWLaPZk2
+         fXYQ==
+X-Gm-Message-State: AOAM5305/jVpOil7lUGcx+3t1xtjv10zvlnI432ELpBYQlO9j/8VGEfM
+        AEpEc5F/n+Biyeop+AdBGUZx1plkgYc=
+X-Google-Smtp-Source: ABdhPJx/3vjJ0c9ql/TpfTLmXj5J1klm4QPWjJiw8+T9+Q0yKEPCf7YqqWc+Mhb6ic3Se/1TKRbmgA==
+X-Received: by 2002:a05:6000:1884:: with SMTP id a4mr8839686wri.632.1643408650875;
         Fri, 28 Jan 2022 14:24:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g15sm804518wri.82.2022.01.28.14.24.09
+        by smtp.gmail.com with ESMTPSA id i6sm5426787wrw.8.2022.01.28.14.24.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jan 2022 14:24:09 -0800 (PST)
-Message-Id: <4c860698d69106f9c66b7c32c8169796dca8e511.1643408644.git.gitgitgadget@gmail.com>
+        Fri, 28 Jan 2022 14:24:10 -0800 (PST)
+Message-Id: <376f8b5690813e0a1df5fc0afc18d620bcd88ca3.1643408644.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1123.v2.git.1643408643.gitgitgadget@gmail.com>
 References: <pull.1123.git.1642876553.gitgitgadget@gmail.com>
         <pull.1123.v2.git.1643408643.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Fri, 28 Jan 2022 22:24:01 +0000
-Subject: [PATCH v2 2/4] i18n: factorize "invalid value" messages
+Date:   Fri, 28 Jan 2022 22:24:02 +0000
+Subject: [PATCH v2 3/4] i18n: remove from i18n strings that do not hold
+ translatable parts
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,276 +71,299 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Use the same message when an invalid value is passed to a command line
-option or a configuration variable.
-
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- builtin/am.c           | 7 ++++---
- builtin/blame.c        | 6 +++---
- builtin/fetch.c        | 4 ++--
- builtin/pack-objects.c | 2 +-
- builtin/pull.c         | 6 +++---
- builtin/push.c         | 2 +-
- builtin/send-pack.c    | 2 +-
- diff-merges.c          | 2 +-
- gpg-interface.c        | 4 ++--
- ls-refs.c              | 2 +-
- parallel-checkout.c    | 3 ++-
- sequencer.c            | 2 +-
- setup.c                | 2 +-
- submodule-config.c     | 2 +-
- t/t4150-am.sh          | 2 +-
- 15 files changed, 25 insertions(+), 23 deletions(-)
+ archive.c                    | 2 +-
+ builtin/bisect--helper.c     | 6 +++---
+ builtin/count-objects.c      | 2 +-
+ builtin/hash-object.c        | 2 +-
+ builtin/help.c               | 4 ++--
+ builtin/mktag.c              | 2 +-
+ builtin/mktree.c             | 2 +-
+ builtin/notes.c              | 6 +++---
+ builtin/prune-packed.c       | 2 +-
+ builtin/rebase.c             | 2 +-
+ builtin/reflog.c             | 2 +-
+ builtin/remote.c             | 2 +-
+ builtin/replace.c            | 2 +-
+ builtin/sparse-checkout.c    | 8 ++++----
+ builtin/stripspace.c         | 4 ++--
+ builtin/submodule--helper.c  | 2 +-
+ builtin/update-server-info.c | 2 +-
+ 17 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index b6be1f1cb11..ba1dacbc034 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -199,7 +199,7 @@ static int am_option_parse_empty(const struct option *opt,
- 	else if (!strcmp(arg, "keep"))
- 		*opt_value = KEEP_EMPTY_COMMIT;
- 	else
--		return error(_("Invalid value for --empty: %s"), arg);
-+		return error(_("invalid value for '%s': '%s'"), "--empty", arg);
+diff --git a/archive.c b/archive.c
+index d571249cf39..e29d0e00f6c 100644
+--- a/archive.c
++++ b/archive.c
+@@ -12,7 +12,7 @@
  
- 	return 0;
- }
-@@ -2239,7 +2239,7 @@ static int parse_opt_patchformat(const struct option *opt, const char *arg, int
- 	 * when you add new options
- 	 */
- 	else
--		return error(_("Invalid value for --patch-format: %s"), arg);
-+		return error(_("invalid value for '%s': '%s'"), "--patch-format", arg);
- 	return 0;
- }
+ static char const * const archive_usage[] = {
+ 	N_("git archive [<options>] <tree-ish> [<path>...]"),
+-	N_("git archive --list"),
++	"git archive --list",
+ 	N_("git archive --remote <repo> [--exec <cmd>] [<options>] <tree-ish> [<path>...]"),
+ 	N_("git archive --remote <repo> [--exec <cmd>] --list"),
+ 	NULL
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 28a2e6a5750..f962dbd4303 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -22,15 +22,15 @@ static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
  
-@@ -2282,7 +2282,8 @@ static int parse_opt_show_current_patch(const struct option *opt, const char *ar
- 				break;
- 		}
- 		if (new_value >= ARRAY_SIZE(valid_modes))
--			return error(_("Invalid value for --show-current-patch: %s"), arg);
-+			return error(_("invalid value for '%s': '%s'"),
-+						 "--show-current-patch", arg);
- 	}
- 
- 	if (resume->mode == RESUME_SHOW_PATCH && new_value != resume->sub_mode)
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 7fafeac4081..ca821420d68 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -721,8 +721,8 @@ static int git_blame_config(const char *var, const char *value, void *cb)
- 	}
- 	if (!strcmp(var, "color.blame.repeatedlines")) {
- 		if (color_parse_mem(value, strlen(value), repeated_meta_color))
--			warning(_("invalid color '%s' in color.blame.repeatedLines"),
--				value);
-+			warning(_("invalid value for '%s': '%s'"),
-+					"color.blame.repeatedLines", value);
- 		return 0;
- 	}
- 	if (!strcmp(var, "color.blame.highlightrecent")) {
-@@ -739,7 +739,7 @@ static int git_blame_config(const char *var, const char *value, void *cb)
- 			coloring_mode &= ~(OUTPUT_COLOR_LINE |
- 					    OUTPUT_SHOW_AGE_WITH_COLOR);
- 		} else {
--			warning(_("invalid value for blame.coloring"));
-+			warning(_("invalid value for '%s': '%s'"), "blame.coloring", value);
- 			return 0;
- 		}
- 	}
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index eaab8056bf9..19ec48f3330 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -758,8 +758,8 @@ static void prepare_format_display(struct ref *ref_map)
- 	else if (!strcasecmp(format, "compact"))
- 		compact_format = 1;
- 	else
--		die(_("configuration fetch.output contains invalid value %s"),
--		    format);
-+		die(_("invalid value for '%s': '%s'"),
-+			  "fetch.output", format);
- 
- 	for (rm = ref_map; rm; rm = rm->next) {
- 		if (rm->status == REF_STATUS_REJECT_SHALLOW ||
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index ba2006f2212..192c3ca305e 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3504,7 +3504,7 @@ static int option_parse_missing_action(const struct option *opt,
- 		return 0;
- 	}
- 
--	die(_("invalid value for --missing"));
-+	die(_("invalid value for '%s': '%s'"), "--missing", arg);
- 	return 0;
+ static const char * const git_bisect_helper_usage[] = {
+ 	N_("git bisect--helper --bisect-reset [<commit>]"),
+-	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
++	"git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]",
+ 	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
+ 					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
+-	N_("git bisect--helper --bisect-next"),
++	"git bisect--helper --bisect-next",
+ 	N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
+ 	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
+ 	N_("git bisect--helper --bisect-replay <filename>"),
+ 	N_("git bisect--helper --bisect-skip [(<rev>|<range>)...]"),
+-	N_("git bisect--helper --bisect-visualize"),
++	"git bisect--helper --bisect-visualize",
+ 	N_("git bisect--helper --bisect-run <cmd>..."),
+ 	NULL
+ };
+diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+index 3fae474f6f1..07b94195962 100644
+--- a/builtin/count-objects.c
++++ b/builtin/count-objects.c
+@@ -87,7 +87,7 @@ static int print_alternate(struct object_directory *odb, void *data)
  }
  
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 100cbf9fb85..e54a0ccadc6 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -42,9 +42,9 @@ static enum rebase_type parse_config_rebase(const char *key, const char *value,
- 		return v;
+ static char const * const count_objects_usage[] = {
+-	N_("git count-objects [-v] [-H | --human-readable]"),
++	"git count-objects [-v] [-H | --human-readable]",
+ 	NULL
+ };
  
- 	if (fatal)
--		die(_("Invalid value for %s: %s"), key, value);
-+		die(_("invalid value for '%s': '%s'"), key, value);
- 	else
--		error(_("Invalid value for %s: %s"), key, value);
-+		error(_("invalid value for '%s': '%s'"), key, value);
+diff --git a/builtin/hash-object.c b/builtin/hash-object.c
+index c7b3ad74c60..04e2442ec7c 100644
+--- a/builtin/hash-object.c
++++ b/builtin/hash-object.c
+@@ -81,7 +81,7 @@ int cmd_hash_object(int argc, const char **argv, const char *prefix)
+ {
+ 	static const char * const hash_object_usage[] = {
+ 		N_("git hash-object [-t <type>] [-w] [--path=<file> | --no-filters] [--stdin] [--] <file>..."),
+-		N_("git hash-object  --stdin-paths"),
++		"git hash-object  --stdin-paths",
+ 		NULL
+ 	};
+ 	const char *type = blob_type;
+diff --git a/builtin/help.c b/builtin/help.c
+index d387131dd83..b4f2ad3f94e 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -77,8 +77,8 @@ static struct option builtin_help_options[] = {
+ static const char * const builtin_help_usage[] = {
+ 	N_("git help [-a|--all] [--[no-]verbose]]\n"
+ 	   "         [[-i|--info] [-m|--man] [-w|--web]] [<command>]"),
+-	N_("git help [-g|--guides]"),
+-	N_("git help [-c|--config]"),
++	"git help [-g|--guides]",
++	"git help [-c|--config]",
+ 	NULL
+ };
  
- 	return REBASE_INVALID;
+diff --git a/builtin/mktag.c b/builtin/mktag.c
+index 3b2dbbb37e6..c7b905c614b 100644
+--- a/builtin/mktag.c
++++ b/builtin/mktag.c
+@@ -7,7 +7,7 @@
+ #include "config.h"
+ 
+ static char const * const builtin_mktag_usage[] = {
+-	N_("git mktag"),
++	"git mktag",
+ 	NULL
+ };
+ static int option_strict = 1;
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index ae78ca1c029..8bdaada922a 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -63,7 +63,7 @@ static void write_tree(struct object_id *oid)
  }
-@@ -318,7 +318,7 @@ static const char *config_get_ff(void)
- 	if (!strcmp(value, "only"))
- 		return "--ff-only";
  
--	die(_("Invalid value for pull.ff: %s"), value);
-+	die(_("invalid value for '%s': '%s'"), "pull.ff", value);
+ static const char *mktree_usage[] = {
+-	N_("git mktree [-z] [--missing] [--batch]"),
++	"git mktree [-z] [--missing] [--batch]",
+ 	NULL
+ };
+ 
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 05d60483e82..f99593a1853 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -32,8 +32,8 @@ static const char * const git_notes_usage[] = {
+ 	N_("git notes [--ref <notes-ref>] edit [--allow-empty] [<object>]"),
+ 	N_("git notes [--ref <notes-ref>] show [<object>]"),
+ 	N_("git notes [--ref <notes-ref>] merge [-v | -q] [-s <strategy>] <notes-ref>"),
+-	N_("git notes merge --commit [-v | -q]"),
+-	N_("git notes merge --abort [-v | -q]"),
++	"git notes merge --commit [-v | -q]",
++	"git notes merge --abort [-v | -q]",
+ 	N_("git notes [--ref <notes-ref>] remove [<object>...]"),
+ 	N_("git notes [--ref <notes-ref>] prune [-n] [-v]"),
+ 	N_("git notes [--ref <notes-ref>] get-ref"),
+@@ -89,7 +89,7 @@ static const char * const git_notes_prune_usage[] = {
+ };
+ 
+ static const char * const git_notes_get_ref_usage[] = {
+-	N_("git notes get-ref"),
++	"git notes get-ref",
+ 	NULL
+ };
+ 
+diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+index b7b9281a8ce..da3273a268b 100644
+--- a/builtin/prune-packed.c
++++ b/builtin/prune-packed.c
+@@ -3,7 +3,7 @@
+ #include "prune-packed.h"
+ 
+ static const char * const prune_packed_usage[] = {
+-	N_("git prune-packed [-n | --dry-run] [-q | --quiet]"),
++	"git prune-packed [-n | --dry-run] [-q | --quiet]",
+ 	NULL
+ };
+ 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 36490d06c8a..64796c6a785 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -36,7 +36,7 @@ static char const * const builtin_rebase_usage[] = {
+ 		"[--onto <newbase> | --keep-base] [<upstream> [<branch>]]"),
+ 	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
+ 		"--root [<branch>]"),
+-	N_("git rebase --continue | --abort | --skip | --edit-todo"),
++	"git rebase --continue | --abort | --skip | --edit-todo",
+ 	NULL
+ };
+ 
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index a4b1dd27e13..ee5ee8d8cf6 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -800,7 +800,7 @@ static int cmd_reflog_exists(int argc, const char **argv, const char *prefix)
+  */
+ 
+ static const char reflog_usage[] =
+-N_("git reflog [ show | expire | delete | exists ]");
++"git reflog [ show | expire | delete | exists ]";
+ 
+ int cmd_reflog(int argc, const char **argv, const char *prefix)
+ {
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 299c466116d..6f27ddc47bd 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -14,7 +14,7 @@
+ #include "commit-reach.h"
+ 
+ static const char * const builtin_remote_usage[] = {
+-	N_("git remote [-v | --verbose]"),
++	"git remote [-v | --verbose]",
+ 	N_("git remote add [-t <branch>] [-m <master>] [-f] [--tags | --no-tags] [--mirror=<fetch|push>] <name> <url>"),
+ 	N_("git remote rename <old> <new>"),
+ 	N_("git remote remove <name>"),
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 6ff1734d587..ac92337c0ec 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -22,7 +22,7 @@ static const char * const git_replace_usage[] = {
+ 	N_("git replace [-f] <object> <replacement>"),
+ 	N_("git replace [-f] --edit <object>"),
+ 	N_("git replace [-f] --graft <commit> [<parent>...]"),
+-	N_("git replace [-f] --convert-graft-file"),
++	"git replace [-f] --convert-graft-file",
+ 	N_("git replace -d <object>..."),
+ 	N_("git replace [--format=<format>] [-l [<pattern>]]"),
+ 	NULL
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 679c1070368..771c9869a1c 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -43,7 +43,7 @@ static void write_patterns_to_file(FILE *fp, struct pattern_list *pl)
  }
  
- /**
-diff --git a/builtin/push.c b/builtin/push.c
-index 359db90321c..cad997965a7 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -486,7 +486,7 @@ static int git_push_config(const char *k, const char *v, void *cb)
- 				if (value && !strcasecmp(value, "if-asked"))
- 					set_push_cert_flags(flags, SEND_PACK_PUSH_CERT_IF_ASKED);
- 				else
--					return error("Invalid value for '%s'", k);
-+					return error(_("invalid value for '%s'"), k);
- 			}
- 		}
- 	} else if (!strcmp(k, "push.recursesubmodules")) {
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 69c432ef1a6..64962be0168 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -145,7 +145,7 @@ static int send_pack_config(const char *k, const char *v, void *cb)
- 				if (value && !strcasecmp(value, "if-asked"))
- 					args.push_cert = SEND_PACK_PUSH_CERT_IF_ASKED;
- 				else
--					return error("Invalid value for '%s'", k);
-+					return error(_("invalid value for '%s'"), k);
- 			}
- 		}
- 	}
-diff --git a/diff-merges.c b/diff-merges.c
-index 5060ccd890b..cd6c102a0d5 100644
---- a/diff-merges.c
-+++ b/diff-merges.c
-@@ -67,7 +67,7 @@ static void set_diff_merges(struct rev_info *revs, const char *optarg)
- 	diff_merges_setup_func_t func = func_by_opt(optarg);
+ static char const * const builtin_sparse_checkout_list_usage[] = {
+-	N_("git sparse-checkout list"),
++	"git sparse-checkout list",
+ 	NULL
+ };
  
- 	if (!func)
--		die(_("unknown value for --diff-merges: %s"), optarg);
-+		die(_("invalid value for '%s': '%s'"), "--diff-merges", optarg);
- 
- 	func(revs);
- 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index b52eb0e2e04..04d751a16a8 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -702,7 +702,7 @@ int git_gpg_config(const char *var, const char *value, void *cb)
- 			return config_error_nonbool(var);
- 		fmt = get_format_by_name(value);
- 		if (!fmt)
--			return error("unsupported value for %s: %s",
-+			return error("invalid value for '%s': '%s'",
- 				     var, value);
- 		use_format = fmt;
- 		return 0;
-@@ -717,7 +717,7 @@ int git_gpg_config(const char *var, const char *value, void *cb)
- 		free(trust);
- 
- 		if (ret)
--			return error("unsupported value for %s: %s", var,
-+			return error("invalid value for '%s': '%s'", var,
- 				     value);
- 		return 0;
- 	}
-diff --git a/ls-refs.c b/ls-refs.c
-index 54078323dcb..ae09dd59478 100644
---- a/ls-refs.c
-+++ b/ls-refs.c
-@@ -34,7 +34,7 @@ static void ensure_config_read(void)
- 		} else if (!strcmp(str, "ignore")) {
- 			/* do nothing */
- 		} else {
--			die(_("invalid value '%s' for lsrefs.unborn"), str);
-+			die(_("invalid value for '%s': '%s'"), "lsrefs.unborn", str);
- 		}
- 	}
- 	config_read = 1;
-diff --git a/parallel-checkout.c b/parallel-checkout.c
-index 8dd7e7bad40..237c02f1d81 100644
---- a/parallel-checkout.c
-+++ b/parallel-checkout.c
-@@ -39,7 +39,8 @@ void get_parallel_checkout_configs(int *num_workers, int *threshold)
- 
- 	if (env_workers && *env_workers) {
- 		if (strtol_i(env_workers, 10, num_workers)) {
--			die("invalid value for GIT_TEST_CHECKOUT_WORKERS: '%s'",
-+			die(_("invalid value for '%s': '%s'"),
-+				"GIT_TEST_CHECKOUT_WORKERS",
- 			    env_workers);
- 		}
- 		if (*num_workers < 1)
-diff --git a/sequencer.c b/sequencer.c
-index 6abd72160cc..9b985e8648d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2806,7 +2806,7 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
- 		return error(_("invalid key: %s"), key);
- 
- 	if (!error_flag)
--		return error(_("invalid value for %s: %s"), key, value);
-+		return error(_("invalid value for '%s': '%s'"), key, value);
- 
- 	return 0;
+@@ -419,7 +419,7 @@ static int update_modes(int *cone_mode, int *sparse_index)
  }
-diff --git a/setup.c b/setup.c
-index af3b8c09abe..fe74092a022 100644
---- a/setup.c
-+++ b/setup.c
-@@ -559,7 +559,7 @@ static enum extension_result handle_extension(const char *var,
- 			return config_error_nonbool(var);
- 		format = hash_algo_by_name(value);
- 		if (format == GIT_HASH_UNKNOWN)
--			return error("invalid value for 'extensions.objectformat'");
-+			return error(_("invalid value for '%s': '%s'"), "extensions.objectformat", value);
- 		data->hash_algo = format;
- 		return EXTENSION_OK;
- 	}
-diff --git a/submodule-config.c b/submodule-config.c
-index f95344028b5..fb95a026f48 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -496,7 +496,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 		else if (parse_submodule_update_strategy(value,
- 			 &submodule->update_strategy) < 0 ||
- 			 submodule->update_strategy.type == SM_UPDATE_COMMAND)
--			die(_("invalid value for %s"), var);
-+			die(_("invalid value for '%s'"), var);
- 	} else if (!strcmp(item.buf, "shallow")) {
- 		if (!me->overwrite && submodule->recommend_shallow != -1)
- 			warn_multiple_config(me->treeish_name, submodule->name,
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index 6caff0ca397..159fae8d016 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -1169,7 +1169,7 @@ test_expect_success 'invalid when passing the --empty option alone' '
- 	test_when_finished "git am --abort || :" &&
- 	git checkout empty-commit^ &&
- 	test_must_fail git am --empty empty-commit.patch 2>err &&
--	echo "error: Invalid value for --empty: empty-commit.patch" >expected &&
-+	echo "error: invalid value for '\''--empty'\'': '\''empty-commit.patch'\''" >expected &&
- 	test_cmp expected err
- '
+ 
+ static char const * const builtin_sparse_checkout_init_usage[] = {
+-	N_("git sparse-checkout init [--cone] [--[no-]sparse-index]"),
++	"git sparse-checkout init [--cone] [--[no-]sparse-index]",
+ 	NULL
+ };
+ 
+@@ -762,7 +762,7 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+ }
+ 
+ static char const * const builtin_sparse_checkout_reapply_usage[] = {
+-	N_("git sparse-checkout reapply [--[no-]cone] [--[no-]sparse-index]"),
++	"git sparse-checkout reapply [--[no-]cone] [--[no-]sparse-index]",
+ 	NULL
+ };
+ 
+@@ -800,7 +800,7 @@ static int sparse_checkout_reapply(int argc, const char **argv)
+ }
+ 
+ static char const * const builtin_sparse_checkout_disable_usage[] = {
+-	N_("git sparse-checkout disable"),
++	"git sparse-checkout disable",
+ 	NULL
+ };
+ 
+diff --git a/builtin/stripspace.c b/builtin/stripspace.c
+index be33eb83c1b..1e34cf2bebd 100644
+--- a/builtin/stripspace.c
++++ b/builtin/stripspace.c
+@@ -15,8 +15,8 @@ static void comment_lines(struct strbuf *buf)
+ }
+ 
+ static const char * const stripspace_usage[] = {
+-	N_("git stripspace [-s | --strip-comments]"),
+-	N_("git stripspace [-c | --comment-lines]"),
++	"git stripspace [-s | --strip-comments]",
++	"git stripspace [-c | --comment-lines]",
+ 	NULL
+ };
+ 
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index c5d3fc3817f..b80aa9898ac 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2883,7 +2883,7 @@ static int module_config(int argc, const char **argv, const char *prefix)
+ 	const char *const git_submodule_helper_usage[] = {
+ 		N_("git submodule--helper config <name> [<value>]"),
+ 		N_("git submodule--helper config --unset <name>"),
+-		N_("git submodule--helper config --check-writeable"),
++		"git submodule--helper config --check-writeable",
+ 		NULL
+ 	};
+ 
+diff --git a/builtin/update-server-info.c b/builtin/update-server-info.c
+index 4321a344567..880fffec587 100644
+--- a/builtin/update-server-info.c
++++ b/builtin/update-server-info.c
+@@ -4,7 +4,7 @@
+ #include "parse-options.h"
+ 
+ static const char * const update_server_info_usage[] = {
+-	N_("git update-server-info [--force]"),
++	"git update-server-info [--force]",
+ 	NULL
+ };
  
 -- 
 gitgitgadget
