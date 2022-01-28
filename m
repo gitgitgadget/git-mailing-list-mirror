@@ -2,45 +2,45 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89D70C433EF
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 10:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54FE2C433EF
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 10:19:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347176AbiA1KRh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 05:17:37 -0500
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:56905 "EHLO
+        id S1347818AbiA1KTe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 05:19:34 -0500
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:45597 "EHLO
         wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1345674AbiA1KRO (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 28 Jan 2022 05:17:14 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id A5CA63202069
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 05:17:13 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 28 Jan 2022 05:17:13 -0500
+        by vger.kernel.org with ESMTP id S1347815AbiA1KTd (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 28 Jan 2022 05:19:33 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id 41B0F32020BB
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 05:19:33 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Fri, 28 Jan 2022 05:19:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=+zodOWDJK8kYc9duP2VQbj6jPP/xgrAJ46esAP
-        HZFj0=; b=Nx6nZ3M1TSRM+9m5jKLPTCXPDSiRQeFkRDJcQt/H74CL0g1BxtyZRx
-        ij8zGqsMHMY75WOCT9Fc57dRYsKK7KCJ4R+5k2pEo9TWJlChqoQkT046BR5ChpN3
-        vpljDBAGxW4GJTD9aQ1OdYjbRImfxGP4UZeDsQQEM3/sbooVz5UDTXX+PS4uskzP
-        +8LGtli4JIUqXjA8XmrpBjC7JTzZ0xErqR9X/AqsRo20oDmsGzxLnN8T87Mw+Obz
-        xTyFEdVFFALz8MvSn8QwtZtZhflP6yMhXeTfQG6X7ruw7ayQp3KjYZqwZ+V3JtrY
-        LxKg+Oz5jI0a/wk3SVeCaAtBuTXGcOuA==
+        :subject:to:to; s=fm3; bh=NAeNbJ6bC/xiLnoPh/WWWHVUMaK3yxFOs0CwOR
+        UQjs0=; b=S0/oK9ZdHELb9pSlDp1tVzfO1RsgbC3efznJaF2iU1Fvpt+JxDKLzA
+        Qjx2TYS3BNqou426hT1WV2j6j6dFIq2YSavtrs57+WQRj/8INbfSenyUwtDWkAGo
+        N3/3wuv0egd1ylh9R+BEaLs4RP6ashtvm6fbY5c9X5XuEcmzVBgau+VoLuLvuRxf
+        N6qlowckRlvMBAixHnAYQJ4ij+M494ewpmdvD4eO8XDkwTyKQZdr9/vzPFvU/NZf
+        9Lc0+TVBP8UpkbsTuFwO4FhLZWdiDEDU3MHZ+3ohmmBwR9ADoqLevmg2yTD7U06X
+        LlO+pLteOwZg/JX5YtEqEADtCOACd6Uw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+zodOWDJK8kYc9duP
-        2VQbj6jPP/xgrAJ46esAPHZFj0=; b=aproTLmV8wzzWqBRVw5xnHIoSSiDfTHZA
-        zE19HgQ/5vKb7vm7ZnbbV3SkdeEiw9EOAD73dxHmmRr4owsREUB4vJoCnwCj7qX+
-        HnBW/4yBPxmdSqwb9GPqqoNvog3PN16h2LNAIfodwc8SDp8U8QnKFKB9QpM29bQn
-        pLlRB4+WL1H/fQuyjHxancgq8dmhjXc7FX5W5jEuz9SdROPOHTTgO7I3GBsE8LRH
-        T/4d6PZ0beCb4jLulLSI60khWVxqFVSZvPv1tVzMOnAdvYgkKpRG820JRBSa1Jns
-        lRWPpDejgSvQG+WmoIfztsNU4BUF3mG52/5t3/g3h2eJ0QrkLCBHg==
-X-ME-Sender: <xms:qMLzYQMpqTOIRXHS_-IB9bd3E1xtNLB9j33TeAjiWUprlS7n_fNUhg>
-    <xme:qMLzYW9Emaon_9bJkZTYwUPtyPVVLlUHhH4qttSpkSnocme26iZ5MDlcrxx4axTew
-    RVCfnJZBHYN5bK7EA>
-X-ME-Received: <xmr:qMLzYXQ1cqYIpLbzwtz_xAshO7NsvF-X1RITzyf8JLTjXDLTs7rHybUN1MCYzfszjMwzY3F6zFpMHx7x_INrcnR48_gYNpIM5ta2jJh21r-zXtH5AGRfWAs>
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=NAeNbJ6bC/xiLnoPh
+        /WWWHVUMaK3yxFOs0CwORUQjs0=; b=P1qiXXTurVBYI8YnJRssa9h4t3wkta9OO
+        kap6H1CtAJBxB8qYn14o8KnutoJNnOxHved6rr3Lzfk2rxf8yeV9JLd5/nm/Qk3D
+        omVZutKzuGp0MJrJ+hUdwyscsDKIDXh+hGfmr4n9z74ToRZRDLDwzXW4+BU7zoAF
+        AdayUOyRTVX4RDgBmIWErHWdAdVFtY17ey0/zl3XI8XhnqoTD6NVeH56v9GWYTfm
+        Rc7am6ahKdHQgrpAusu77VFtQ205JRjo6sN8DeeB6aOyLMwfZtyg8YphkP9GTX99
+        wRl3Jqjt4on6a+kJZVu+h0KASKvVbePrDCMFtc04lxUiSVKrOfUWQ==
+X-ME-Sender: <xms:NMPzYUXVEqy3hMNlgrVsu10WrMILt34nZYMAcSIWtXhrzuzT6WI5WQ>
+    <xme:NMPzYYnoMulHUzS7UebQOYtJUG497nop9C2e1Rn24M_Mfm_Gswe7aMMtoWf5DX_WM
+    U3efSQl5mB3YIINiw>
+X-ME-Received: <xmr:NMPzYYZwRCvaN9KXLwiU1JRRgLtnZ5Ev4tldEpyATv7qBKxVC5DLruOIK_pSa-imaAFSOZDHS2Na4LXdMquf8mRKV179fZgQRiZ-whJyBkywB8dPxO1a3gc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrfeehgddugecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
@@ -48,34 +48,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrfeehgddugecutefuodetggdote
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgfejueevjeetudehgffffeffvdejfeejie
     dvkeffgfekuefgheevteeufeelkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:qMLzYYtmep61R-v9U6DI_Z7Cv_YQDPJjkz82Y06WF7bjECGq7eyrDw>
-    <xmx:qMLzYYdPpsD_P-Zs5PdMNtFeeC0A87p9FmFmdpypEkCMzH3aJ-7E9A>
-    <xmx:qMLzYc3CnVWtSOQKecq_zo7ySZco9umam-9aUqEQIHuiKKklCSn1FA>
-    <xmx:qcLzYSr2EXSKee-o0GVaTk01cAVtS1OonBDOL08VkERdHNpbpQGKJA>
+X-ME-Proxy: <xmx:NMPzYTW5px1k90L3koXlUzqsPDLaD7C0dnCql_dNAyJVb7_eIA3MAg>
+    <xmx:NMPzYek97z9gYDAyy5fPlONZLWOaTl7YAQ1MynvjaHfxC76WEJKMEQ>
+    <xmx:NMPzYYdOL8xxJdwJLovyZxwEjQAXpOpKOXqebZgCj0W590nHk6q6Og>
+    <xmx:NMPzYYRDjtCadM5pY25JMYgExPRh0DBPr4QGKZmvDGUWgoKpUq5FTg>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 28 Jan 2022 05:17:12 -0500 (EST)
+ <git@vger.kernel.org>; Fri, 28 Jan 2022 05:19:32 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 40975f70 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id b50b74bf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
         for <git@vger.kernel.org>;
-        Fri, 28 Jan 2022 10:17:11 +0000 (UTC)
-Date:   Fri, 28 Jan 2022 11:17:10 +0100
+        Fri, 28 Jan 2022 10:19:31 +0000 (UTC)
+Date:   Fri, 28 Jan 2022 11:19:30 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Subject: [PATCH 2/2] fetch: skip computing output width when not printing
  anything
-Message-ID: <5a3fd3232fd9e19e6f0054717a1f54c71bd8f272.1643364639.git.ps@pks.im>
-References: <cover.1643364639.git.ps@pks.im>
+Message-ID: <5a3fd3232fd9e19e6f0054717a1f54c71bd8f272.1643364888.git.ps@pks.im>
+References: <cover.1643364888.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="pOmLPJlGj4bcZmEK"
+        protocol="application/pgp-signature"; boundary="KIxxj8IV7G/OvWBy"
 Content-Disposition: inline
-In-Reply-To: <cover.1643364639.git.ps@pks.im>
+In-Reply-To: <cover.1643364888.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---pOmLPJlGj4bcZmEK
+--KIxxj8IV7G/OvWBy
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
@@ -110,6 +110,9 @@ fs/*:refs/* (HEAD~)'
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
+
+[Resend with correct In-Reply-To header.]
+
  builtin/fetch.c | 8 ++++++--
  1 file changed, 6 insertions(+), 2 deletions(-)
 
@@ -158,24 +161,24 @@ const char *remote_name,
 2.35.0
 
 
---pOmLPJlGj4bcZmEK
+--KIxxj8IV7G/OvWBy
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHzwqUACgkQVbJhu7ck
-PpQ+8BAAoehrJgW8Y5sa2CCJ2H/XkAbSj5kzDbkQYvnwZrvKR72Vqvk74KD/0hsN
-zSSbaDycYdEVDUyhsm/N1CgKLFn6KwzALsRyEQMBgCGtLEJbw+GRTlBPpP16fnjy
-D1hnxSfq5Ekn2WC/YlJUXMvaIEjumvn0g+/MBBxTrJsNXl4NwzdgInVqgT6P+E7M
-TGYM2av6EDoYtAmAFoqqAomUJU9rX6kLncc1dYhkspQr/3Q/+YTzxk1A9tt311Ip
-SuRvViHpM61p/8eqYsvs54y+Zw3bzt3qt8iUzsb9OdymDuaLn9KgVhxur919A9vC
-Ba2X8EZQ9pN2FOG3BjrCSJ03j8U6HNsf8O78Fb5KhJYlV6odsR7UaDfCGGq3saBH
-I9zLTqCRxF+GnME2c7BpZqWKPbFUg1KMOSyCH7m63awq1hv3Gv4i6oRFyvR0l0Iq
-lgAqAZUcLbv1zonIJ+EBkmVf4nEwuU7KSHNfvzkEO0aNWHS2Hgc4+HHpkiFJui8g
-/Jp+/evHTTIHozilW+rdg/UjpgwQl6n9n2vguzECUBN2+Dp8ee1O7Ds0Lw2DuqUW
-k+kmNq8hNx8IaIAn0oz6eIfbFAS/Fsx0bnAg9ukJK1AQQAqVryMLotb++Eyh2QQT
-4DxnGK4iuoDy3NNmZXq+K1N36uey9/v0ReNrwxVs6xW7Kl7VcjU=
-=hAZW
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHzwzEACgkQVbJhu7ck
+PpT51g/+K1xg1wD+pyKUJKp8t2ny+PQltYBcTTZKr28el5iTbRt1lpK8EsDwswQv
+wTPKYq8B8GZcR8W8FD3gQOhE3LEmgiU/rSxS9ElVVwYAkBIkjIMfxuD1rdTZoSqU
+tcl6M917m6tTOJY+bNUHtpU2SD0g9P9AI9CrbFH6IDjw/rJkRV94bogUv6raL1q/
+EV+r37Skap1nxHo2g1T4GG1OESpVu/Ts29Hnk/KZxZN3QnFgA8GrU9NBDSW9hGTB
+qrXrNz3adsnRR0+cmtkr68ZWTpTKhhispCBcySUXtqdYtXn4R0PIiogktgnbDjU9
+CC6zKcU5jY8gSTrdFM/hknZgHJyDXjj7KfQQ4sjJQdJn2ho4feAEd/4zxC3giXns
+5HaYTa+K31zW8NoQrpKxRURKbEZxMCFK0td8mPJL4VzuLE5QUCMBS3KIE4bUciC7
+7gX74PKNJIGhUgkCaG1t4oO9AC97h8yUUQL1pQwAmlRNF9zf/i+yrG+xLgwNbm/o
+qdY2jcfJKnTJHb2Vd2yxs2mnhLdyX0BodjogUhrslM4KXnjS4PliOF6V4WP5v88Q
+xfNfvAuE2Bvl01ohCvpjYUyDPHelPUjqR540V9bK+cUFvEsYItp+tfTia7nTN9kH
+Jrbju1bOq9u/E+qb9V1l6v60YecOUISXpBA7KG4yEsRZaK2VBK0=
+=/Qrx
 -----END PGP SIGNATURE-----
 
---pOmLPJlGj4bcZmEK--
+--KIxxj8IV7G/OvWBy--
