@@ -2,45 +2,45 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F7F5C433EF
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 10:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89D70C433EF
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 10:17:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346582AbiA1KRe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 05:17:34 -0500
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:54939 "EHLO
+        id S1347176AbiA1KRh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 05:17:37 -0500
+Received: from wout4-smtp.messagingengine.com ([64.147.123.20]:56905 "EHLO
         wout4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1347467AbiA1KRH (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 28 Jan 2022 05:17:07 -0500
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 094A332020B8
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 05:17:06 -0500 (EST)
+        by vger.kernel.org with ESMTP id S1345674AbiA1KRO (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 28 Jan 2022 05:17:14 -0500
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id A5CA63202069
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 05:17:13 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 28 Jan 2022 05:17:07 -0500
+  by compute3.internal (MEProxy); Fri, 28 Jan 2022 05:17:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=khyC3E3k6PB1acc0N8tSw3L8A8FjOL4+mYr16K
-        7y878=; b=q+vrHhLIj4SQOuFMWOn+vBmkoZIN3CtXeXyWIo5cI2dMmLSEP3D5mP
-        9tigWezp2cX+9zGSnZTF9BjZhdX67i8q6Q6XWy021wV9wyarP8S9vb3cZ9dSQIJ3
-        I5cbNjjmvTp+dK/HuD34Qsn57HOQ7ji8hWz2YQXM20GltuZnny91y9eV7ilFP8cp
-        lgIf3mPO192Fvk9aY/ADH+StJY9RW2H4hTZhV/2ZG9Un42E+pEEmkFGDCnxxCdSj
-        gP/o3V8GFmJWuhIi57mTg4Ybzxb3mnQcWZM9VW5tPhcvYz7N66UOPLtyymusFPY+
-        Cfq1gbj7MmeM4bxn9nGJLLcs+g5t7ipQ==
+        :subject:to:to; s=fm3; bh=+zodOWDJK8kYc9duP2VQbj6jPP/xgrAJ46esAP
+        HZFj0=; b=Nx6nZ3M1TSRM+9m5jKLPTCXPDSiRQeFkRDJcQt/H74CL0g1BxtyZRx
+        ij8zGqsMHMY75WOCT9Fc57dRYsKK7KCJ4R+5k2pEo9TWJlChqoQkT046BR5ChpN3
+        vpljDBAGxW4GJTD9aQ1OdYjbRImfxGP4UZeDsQQEM3/sbooVz5UDTXX+PS4uskzP
+        +8LGtli4JIUqXjA8XmrpBjC7JTzZ0xErqR9X/AqsRo20oDmsGzxLnN8T87Mw+Obz
+        xTyFEdVFFALz8MvSn8QwtZtZhflP6yMhXeTfQG6X7ruw7ayQp3KjYZqwZ+V3JtrY
+        LxKg+Oz5jI0a/wk3SVeCaAtBuTXGcOuA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=khyC3E3k6PB1acc0N
-        8tSw3L8A8FjOL4+mYr16K7y878=; b=DvbQIjVXmtVLZK/+hq4d0yDLZWyZRy8IT
-        8N+kmEhYapMKWSGNBludRiPA9J8uz2y6Qj2OZoeKUbKWSK5qASOUxKl5g1pjFKPq
-        rQ6EzY97+2q+ZfuQBn4MMaTW7xflktW/sbWoJE1vADyhBAYxBKAQbe/20PEC1rx5
-        boY+0it0Zj7oino/BdQM4Oqjwc+aFr0WPk5UwPpFq9gM+6WzC2TMHwPiiWjxQM/U
-        6Dqj99bwtZEluCGRefIaeOUTO8fQCwAyIO/VxK0nzBSzxsuIM/44yjKCykpxRl6n
-        Lw2wqbo37QWfxc934pLQRoDtZrmTUANuzpppTiWVeS/k53g5zg1jQ==
-X-ME-Sender: <xms:osLzYeKLiWo8NS9f2NAF9R_e9Axyl1tCJc98JfjTpyUwFpNWLNVFGg>
-    <xme:osLzYWK3iyh8IFtJNF7dpXBVpopYcrDh62IcGt7R0BHnlJFBcpftrNrqCRybjehkU
-    -EsnDIJTYYV07stcg>
-X-ME-Received: <xmr:osLzYet498tww4nVts-GBGyDCdIMGCJrTfYPlzOcxEbcR8XOWBBniWztSCRKwYt18dNFYTs57zTDbV82JUvB5QHp3CKaSpRFAbAnMQdyCo-mxQpeuAHp3bY>
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=+zodOWDJK8kYc9duP
+        2VQbj6jPP/xgrAJ46esAPHZFj0=; b=aproTLmV8wzzWqBRVw5xnHIoSSiDfTHZA
+        zE19HgQ/5vKb7vm7ZnbbV3SkdeEiw9EOAD73dxHmmRr4owsREUB4vJoCnwCj7qX+
+        HnBW/4yBPxmdSqwb9GPqqoNvog3PN16h2LNAIfodwc8SDp8U8QnKFKB9QpM29bQn
+        pLlRB4+WL1H/fQuyjHxancgq8dmhjXc7FX5W5jEuz9SdROPOHTTgO7I3GBsE8LRH
+        T/4d6PZ0beCb4jLulLSI60khWVxqFVSZvPv1tVzMOnAdvYgkKpRG820JRBSa1Jns
+        lRWPpDejgSvQG+WmoIfztsNU4BUF3mG52/5t3/g3h2eJ0QrkLCBHg==
+X-ME-Sender: <xms:qMLzYQMpqTOIRXHS_-IB9bd3E1xtNLB9j33TeAjiWUprlS7n_fNUhg>
+    <xme:qMLzYW9Emaon_9bJkZTYwUPtyPVVLlUHhH4qttSpkSnocme26iZ5MDlcrxx4axTew
+    RVCfnJZBHYN5bK7EA>
+X-ME-Received: <xmr:qMLzYXQ1cqYIpLbzwtz_xAshO7NsvF-X1RITzyf8JLTjXDLTs7rHybUN1MCYzfszjMwzY3F6zFpMHx7x_INrcnR48_gYNpIM5ta2jJh21r-zXtH5AGRfWAs>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrfeehgddugecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
@@ -48,160 +48,134 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrfeehgddugecutefuodetggdote
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgfejueevjeetudehgffffeffvdejfeejie
     dvkeffgfekuefgheevteeufeelkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:osLzYTYKibZ_o2ZiMTVK8LTyxZ-ISvQbg9grnmKw0skaLV20X9iyrA>
-    <xmx:osLzYVahkVHK2zlTebSR4xZQY3V86WUrrhXM_EbO7xRQOfk28ORBDg>
-    <xmx:osLzYfCRI2Jzm00nTzwGUK4O1oogM6o3-NhB5blNTMjgoqkRKOQsvw>
-    <xmx:osLzYX201s9WqTOoFyMfk1A7m-USAlfgF_C3uIehfsnkSonMvQXRPA>
+X-ME-Proxy: <xmx:qMLzYYtmep61R-v9U6DI_Z7Cv_YQDPJjkz82Y06WF7bjECGq7eyrDw>
+    <xmx:qMLzYYdPpsD_P-Zs5PdMNtFeeC0A87p9FmFmdpypEkCMzH3aJ-7E9A>
+    <xmx:qMLzYc3CnVWtSOQKecq_zo7ySZco9umam-9aUqEQIHuiKKklCSn1FA>
+    <xmx:qcLzYSr2EXSKee-o0GVaTk01cAVtS1OonBDOL08VkERdHNpbpQGKJA>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 28 Jan 2022 05:17:06 -0500 (EST)
+ <git@vger.kernel.org>; Fri, 28 Jan 2022 05:17:12 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id c8475f5c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 40975f70 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
         for <git@vger.kernel.org>;
-        Fri, 28 Jan 2022 10:17:04 +0000 (UTC)
-Date:   Fri, 28 Jan 2022 11:17:03 +0100
+        Fri, 28 Jan 2022 10:17:11 +0000 (UTC)
+Date:   Fri, 28 Jan 2022 11:17:10 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/2] fetch-pack: use commit-graph when computing cutoff
-Message-ID: <31cf8f87a149c0fc8013b869e0e30364f3c60e01.1643364888.git.ps@pks.im>
-References: <cover.1643364888.git.ps@pks.im>
+Subject: [PATCH 2/2] fetch: skip computing output width when not printing
+ anything
+Message-ID: <5a3fd3232fd9e19e6f0054717a1f54c71bd8f272.1643364639.git.ps@pks.im>
+References: <cover.1643364639.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Bwor5V1UddUBLlyS"
+        protocol="application/pgp-signature"; boundary="pOmLPJlGj4bcZmEK"
 Content-Disposition: inline
-In-Reply-To: <cover.1643364888.git.ps@pks.im>
+In-Reply-To: <cover.1643364639.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Bwor5V1UddUBLlyS
+--pOmLPJlGj4bcZmEK
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-During packfile negotiation we iterate over all refs announced by the
-remote side to check whether their IDs refer to commits already known to
-us. If a commit is known to us already, then its date is a potential
-cutoff point for commits we have in common with the remote side.
+When updating references via git-fetch(1), then by default we report to
+the user which references have been changed. This output is formatted in
+a nice table such that the different columns are aligned. Because the
+first column contains abbreviated object IDs we thus need to iterate
+over all refs which have changed and compute the minimum length for
+their respective abbreviated hashes. While this effort makes sense in
+most cases, it is wasteful when the user passes the `--quiet` flag: we
+don't print the summary, but still compute the length.
 
-There is potentially a lot of commits announced by the remote depending
-on how many refs there are in the remote repository, and for every one
-of them we need to search for it in our object database and, if found,
-parse the corresponding object to find out whether it is a candidate for
-the cutoff date. This can be sped up by trying to look up commits via
-the commit-graph first, which is a lot more efficient.
+Skip computing the summary width when the user asked for us to be quiet.
+This gives us a small speedup of nearly 10% when doing a dry-run
+mirror-fetch in a repository with thousands of references being updated:
 
-One thing to keep in mind though is that the commit-graph corrects
-committer dates:
+    Benchmark 1: git fetch --prune --dry-run +refs/*:refs/* (HEAD~)
+      Time (mean =C2=B1 =CF=83):     34.048 s =C2=B1  0.233 s    [User: 30.=
+739 s, System: 4.640 s]
+      Range (min =E2=80=A6 max):   33.785 s =E2=80=A6 34.296 s    5 runs
 
-    * A commit with at least one parent has corrected committer date
-      equal to the maximum of its commiter date and one more than the
-      largest corrected committer date among its parents.
-
-As a result, it may be that the commit date we load via the commit graph
-is more recent than it would have been when loaded via the ODB, and as a
-result we may also choose a more recent cutoff point. But as the code
-documents, this is only a heuristic and it is okay if we determine a
-wrong cutoff date. The worst that can happen is that we report more
-commits as HAVEs to the server when using corrected dates.
-
-Loading commits via the commit-graph is typically much faster than
-loading commits via the object database. Benchmarks in a repository with
-about 2,1 million refs and an up-to-date commit-graph show a 20% speedup
-when mirror-fetching:
-
-    Benchmark 1: git fetch --atomic +refs/*:refs/* (v2.35.0)
-      Time (mean =C2=B1 =CF=83):     75.264 s =C2=B1  1.115 s    [User: 68.=
-199 s, System: 10.094 s]
-      Range (min =E2=80=A6 max):   74.145 s =E2=80=A6 76.862 s    5 runs
-
-    Benchmark 2: git fetch --atomic +refs/*:refs/* (HEAD)
-      Time (mean =C2=B1 =CF=83):     62.350 s =C2=B1  0.854 s    [User: 55.=
-412 s, System: 9.976 s]
-      Range (min =E2=80=A6 max):   61.224 s =E2=80=A6 63.216 s    5 runs
+    Benchmark 2: git fetch --prune --dry-run +refs/*:refs/* (HEAD)
+      Time (mean =C2=B1 =CF=83):     30.768 s =C2=B1  0.287 s    [User: 27.=
+534 s, System: 4.565 s]
+      Range (min =E2=80=A6 max):   30.432 s =E2=80=A6 31.181 s    5 runs
 
     Summary
-      'git fetch --atomic +refs/*:refs/* (HEAD)' ran
-        1.21 =C2=B1 0.02 times faster than 'git fetch --atomic +refs/*:refs=
-/* (v2.35.0)'
+      'git fetch --prune --dry-run +refs/*:refs/* (HEAD)' ran
+        1.11 =C2=B1 0.01 times faster than 'git fetch --prune --dry-run +re=
+fs/*:refs/* (HEAD~)'
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- fetch-pack.c | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ builtin/fetch.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index dd6ec449f2..c5967e228e 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -696,26 +696,30 @@ static void mark_complete_and_common_ref(struct fetch=
-_negotiator *negotiator,
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 5f06b21f8e..ebbde5d56d 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1093,12 +1093,15 @@ static int store_updated_refs(const char *raw_url, =
+const char *remote_name,
+ 	struct ref *rm;
+ 	char *url;
+ 	int want_status;
+-	int summary_width =3D transport_summary_width(ref_map);
++	int summary_width =3D 0;
 =20
- 	trace2_region_enter("fetch-pack", "parse_remote_refs_and_find_cutoff", NU=
-LL);
- 	for (ref =3D *refs; ref; ref =3D ref->next) {
--		struct object *o;
-+		struct commit *commit;
+ 	rc =3D open_fetch_head(&fetch_head);
+ 	if (rc)
+ 		return -1;
 =20
--		if (!has_object_file_with_flags(&ref->old_oid,
-+		commit =3D lookup_commit_in_graph(the_repository, &ref->old_oid);
-+		if (!commit) {
-+			struct object *o;
++	if (verbosity >=3D 0)
++		summary_width =3D transport_summary_width(ref_map);
 +
-+			if (!has_object_file_with_flags(&ref->old_oid,
- 						OBJECT_INFO_QUICK |
--							OBJECT_INFO_SKIP_FETCH_OBJECT))
--			continue;
--		o =3D parse_object(the_repository, &ref->old_oid);
--		if (!o)
--			continue;
-+						OBJECT_INFO_SKIP_FETCH_OBJECT))
-+				continue;
-+			o =3D parse_object(the_repository, &ref->old_oid);
-+			if (!o || o->type !=3D OBJ_COMMIT)
-+				continue;
-+
-+			commit =3D (struct commit *)o;
-+		}
-=20
- 		/*
- 		 * We already have it -- which may mean that we were
- 		 * in sync with the other side at some time after
- 		 * that (it is OK if we guess wrong here).
- 		 */
--		if (o->type =3D=3D OBJ_COMMIT) {
--			struct commit *commit =3D (struct commit *)o;
--			if (!cutoff || cutoff < commit->date)
--				cutoff =3D commit->date;
--		}
-+		if (!cutoff || cutoff < commit->date)
-+			cutoff =3D commit->date;
+ 	if (raw_url)
+ 		url =3D transport_anonymize_url(raw_url);
+ 	else
+@@ -1344,7 +1347,6 @@ static int prune_refs(struct refspec *rs, struct ref =
+*ref_map,
+ 	int url_len, i, result =3D 0;
+ 	struct ref *ref, *stale_refs =3D get_stale_heads(rs, ref_map);
+ 	char *url;
+-	int summary_width =3D transport_summary_width(stale_refs);
+ 	const char *dangling_msg =3D dry_run
+ 		? _("   (%s will become dangling)")
+ 		: _("   (%s has become dangling)");
+@@ -1373,6 +1375,8 @@ static int prune_refs(struct refspec *rs, struct ref =
+*ref_map,
  	}
- 	trace2_region_leave("fetch-pack", "parse_remote_refs_and_find_cutoff", NU=
-LL);
 =20
+ 	if (verbosity >=3D 0) {
++		int summary_width =3D transport_summary_width(stale_refs);
++
+ 		for (ref =3D stale_refs; ref; ref =3D ref->next) {
+ 			struct strbuf sb =3D STRBUF_INIT;
+ 			if (!shown_url) {
 --=20
 2.35.0
 
 
---Bwor5V1UddUBLlyS
+--pOmLPJlGj4bcZmEK
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHzwp4ACgkQVbJhu7ck
-PpRHPBAAqymRE8wUeWpr4GZYJsUWSvf1gND37iP82/5j23kcu5vrnJpDThogKKsR
-GKgo+vjrcDElT7AhvdJmOdySdCPRS8I2V3Baq0Z178SEvWeOZHWHYh0y12mqCS2K
-vmNkGr55Tx2E6m701T5Dsj+IXebeA/RcsdKUVkbMhkyGFZa3lNYFZIfp5h+aMbSy
-nBtF/rUALCAR2wPtoWeQm5X/0xZrDrZyfq8jzXGHwQolACpzZ7IKkju5xC7BVTd5
-j/g/0PZHTITu5aahrMaYiirxZoZU35g/84o8J8Mls6bglclvPRf/zDxeeyNnzGPL
-hZY1rgopVODaUMt5iIH3Y21PPhYce9luV4Nk7pALnAibsBVwDe7m/lt5SUmQK5sS
-LqUaQJO3nOWZWKxjnjj+bmQyCLdGhG11XkEUYiPFjrGkNe0BpA/DLPu6b/ptaMbt
-FXXYX+lqHl0va9ucSo/yUBxDCKdeGnCwrC8fSLC75eYN2Q0t4YnKW83btI5SOga8
-OEQh/gU91EoexYal2qb6SnHV8C0pNZjN46iwvphN6nt2+InOAcCjM4vl4iMUry18
-qj6GVzWJKsMLmzmg6I18O8wffswGSGJvvLo5SwF/K7Wf3EO4iSg1LF7tAvQWpVBi
-Jfncq/yw+0s2ZWkUqzZK88999T1rGEc5xbzQ4JaYav2wtPkeHiU=
-=cwMT
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmHzwqUACgkQVbJhu7ck
+PpQ+8BAAoehrJgW8Y5sa2CCJ2H/XkAbSj5kzDbkQYvnwZrvKR72Vqvk74KD/0hsN
+zSSbaDycYdEVDUyhsm/N1CgKLFn6KwzALsRyEQMBgCGtLEJbw+GRTlBPpP16fnjy
+D1hnxSfq5Ekn2WC/YlJUXMvaIEjumvn0g+/MBBxTrJsNXl4NwzdgInVqgT6P+E7M
+TGYM2av6EDoYtAmAFoqqAomUJU9rX6kLncc1dYhkspQr/3Q/+YTzxk1A9tt311Ip
+SuRvViHpM61p/8eqYsvs54y+Zw3bzt3qt8iUzsb9OdymDuaLn9KgVhxur919A9vC
+Ba2X8EZQ9pN2FOG3BjrCSJ03j8U6HNsf8O78Fb5KhJYlV6odsR7UaDfCGGq3saBH
+I9zLTqCRxF+GnME2c7BpZqWKPbFUg1KMOSyCH7m63awq1hv3Gv4i6oRFyvR0l0Iq
+lgAqAZUcLbv1zonIJ+EBkmVf4nEwuU7KSHNfvzkEO0aNWHS2Hgc4+HHpkiFJui8g
+/Jp+/evHTTIHozilW+rdg/UjpgwQl6n9n2vguzECUBN2+Dp8ee1O7Ds0Lw2DuqUW
+k+kmNq8hNx8IaIAn0oz6eIfbFAS/Fsx0bnAg9ukJK1AQQAqVryMLotb++Eyh2QQT
+4DxnGK4iuoDy3NNmZXq+K1N36uey9/v0ReNrwxVs6xW7Kl7VcjU=
+=hAZW
 -----END PGP SIGNATURE-----
 
---Bwor5V1UddUBLlyS--
+--pOmLPJlGj4bcZmEK--
