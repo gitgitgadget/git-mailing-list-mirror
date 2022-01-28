@@ -2,108 +2,179 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61FA4C433F5
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 15:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A8C2C433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 16:05:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245534AbiA1PLa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 10:11:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52870 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245354AbiA1PL3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 10:11:29 -0500
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00C85C061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 07:11:29 -0800 (PST)
-Received: by mail-yb1-xb2e.google.com with SMTP id k17so19340667ybk.6
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 07:11:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=yb38KhIEDw+K31Mk0HQwEde8/zpOT8MrpKNrn9wYai8=;
-        b=Db/aIKisljVH5YTWxQxtAA7SngI/i+kxZXvZcWvRLWBknJYEtWgZPVFZopXFyGCOzI
-         BnhhqGhazJlHG6xGrzf76WPwTjoDS7Z1sR/COso8Mu6uev8khM8iX4F4CFbioSVcs2KR
-         zHPLRmvjfmLdKImG5rgsXLbbD2pY5PKnRew3bN7VRA78pYLwUrTIt7X6N/tAjGW+jZmK
-         9XDaTWXQqR+1k3S/eAtU7DLw9sPnNhGYqSEyxMEYyAbHMuUZBMifvbTodtAFBlo3vEwm
-         ey5o4Xr4DaSwFTTJoF8/QgKpZmtP+TW8QlQrHmi11aZe0ruUVauwDNc5DBXsITPbXrbP
-         ikNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=yb38KhIEDw+K31Mk0HQwEde8/zpOT8MrpKNrn9wYai8=;
-        b=qxCbu2ozLDws+WVMOuuP3VjdQrx/yrgRqGeKAJ1vvf0jIRhdenOurssypAohNnzsMv
-         YboC6rGLbI5PBlVnORewplntx2wxm8nQiWLvgQ+VUJqdk/XN87zCZEGRUP3TY4vvepWy
-         wx2jvz/xNe/A2LB6Jm7FK3GOWLJOPK2pDABtaBgKchHjPWdhQIbJ01Ht6qAdcA/ePibk
-         yzCL7qPcwRFbbrIWgl0EU0H/ZtTB6/57QhXK7yYIWRoQG8rpRhuJmiUMwOC/hwv1zPR0
-         J/OYFDLl4DlqQ+t+8v++wncC6j0HljzRHXmUDY+hpYJa10W4g3R4N9Yrt3GLi/I9L1AS
-         Pvwg==
-X-Gm-Message-State: AOAM530veA5WBr4kUKD6raG5LDXNm1j9X2PhPI5HFaTQ8f7XRUlODfEg
-        ETF9yNlxuuRu3FCsA0pZ6iZMdXzteqHbvPltfYY=
-X-Google-Smtp-Source: ABdhPJyRbWW7mMyjfevdgzlit3wR2NiUQUKyv5T/B2BsSw8XROdI+DxIyVdiDLHcU32b1udde/G8sCpnYLxMcoLRsE0=
-X-Received: by 2002:a25:ab24:: with SMTP id u33mr3379133ybi.59.1643382687839;
- Fri, 28 Jan 2022 07:11:27 -0800 (PST)
+        id S1349922AbiA1QFn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 11:05:43 -0500
+Received: from mout.gmx.net ([212.227.15.18]:42523 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234788AbiA1QFj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 11:05:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1643385932;
+        bh=pQ2mktuVqAw8NSjguEngTg6+P9y9QTBvI34X8UEgXXE=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=R7MKujK6z+jNMc2kueZ3vAuvxMNvGJk4mZEppvExOkb6Cly9AhbuRbL5ELyAJto6L
+         QZL3hSom2iXj6NftP7c2Pxs/5Guj+4fhnEZ3XN/PJv5vfsxk85lFF0onKwhaKc6Ol1
+         tQzliz14D060uHMcXhg910UZ+oBk9ilseM0MIZ3Q=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N0X8o-1mHMrI2b5Q-00wXaE; Fri, 28
+ Jan 2022 17:05:32 +0100
+Date:   Fri, 28 Jan 2022 17:05:30 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 00/12] RFC: In-core git merge-tree ("Server side
+ merges")
+In-Reply-To: <CAP8UFD1iJs0iGe430_Y=S6_nadS8AfBr_w0MuX-0H4ObcwDNdg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2201281647361.347@tvgsbejvaqbjf.bet>
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com> <CAP8UFD1-=RDx5=JpHEp=sFEOWr2MP-YovOPE7aTydrPLoVGa5w@mail.gmail.com> <nycvar.QRO.7.76.6.2201261250380.6842@tvgsbejvaqbjf.bet> <CAP8UFD2qFmZ2Adk71SQw9xtq5keZ=d2hcMwF=fs9OtW4==0ZYg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2201281343360.347@tvgsbejvaqbjf.bet> <CAP8UFD1iJs0iGe430_Y=S6_nadS8AfBr_w0MuX-0H4ObcwDNdg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <pull.1132.git.1643328752.gitgitgadget@gmail.com>
- <CAN7CjDC+O883DB1iaJAXF5ZCis7FP2Z9z0y2qS2-JVAKfQA8aA@mail.gmail.com> <nycvar.QRO.7.76.6.2201281336410.347@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2201281336410.347@tvgsbejvaqbjf.bet>
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Fri, 28 Jan 2022 16:11:16 +0100
-Message-ID: <CAN7CjDC+A08tq-6bfxMUH_VcEZHVOr=BpWEiuuinBj7ufnch3g@mail.gmail.com>
-Subject: Re: [PATCH 00/11] Finish converting git bisect into a built-in
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:jA/tTc17ggGx5sZZiC/Xm2rxtvZrooRHqvo7Lqhjeebq3oGj8h6
+ VPPj/NoN4kGUoWTRwQtkYhTPQSDuNCBTbapE3zP6eKXwgEKh81VGRI7CpV9fCdUzMATYU10
+ fB6rvo0LXEyixGPLFXNvmg3ys2AnBbKM6lbUM9z25JLgzVMgXj4dPKw0zerk5wKeVkF2PFQ
+ 4MLBnfrVDWaDM0ntUrgpg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/bmjgIvvqx0=:+yFuxgxXIv/cm3GI2qtlwF
+ k7Ojdv0GfzkSXMr5HpK6meWytuG4V73/+bccWOJE/sC0Y12EAt2PjnS2VrO6PJ/wY/WOjy17v
+ gP/KusWB9VRegr8wDNdvn5lGNOUYd+aloPmQxITx1qsQPWRNDlpyAmhFSDhviUB0JdWYS1FDV
+ xX2Me7lg1K+KLF0kOaUuB81hfzyrxAyDrkYmTyYHcMpCOYc1bqj9jtxMb8Rx1MNP3ZVFkTwnO
+ 1zR/9oPFXOx78PiWLtjIGyVOGGTvcnJb+B50J4WikTQ2KdstopYTLtOKowRAKbrVAEMvtNIKp
+ Gmc1VqQE/nNSw8GZQXt40ivLR/EypgAC8OdknSi7oIS/wcmp0gIAG1r/X6ATx2rC7DBkI9JqQ
+ XQz8SUDUE1UhFq4varSH9oLf6r/sKBixuDP3+THDLQ+bVk0LgHkHxWxNiNLvqKAvho79KUlRZ
+ /PDgGLnBPkpqeH/ep/ETYPSqKLqvuz0XtZNFRe5JrfxHETdxo8IlSQsMxML9I27Cg2beQHYgY
+ /PHOapxPDrBugklfINV4PG8nN1wGPBiTPVFPZOu1McRt/TeGH8wlnk88EJONy/MtDDtQtewaI
+ WgBxhDIgnB2vgoLu7kVlq0zMUjEffrdTnhdD9rQ8hkblfLi69e8u03YfD7kdRGbyBTF64m8cu
+ 73ZW3Ro6OKNGZhjpbzWEL8E8tjEyjqnR//1IeEnxKeGYvHR9Sd/QDVk8z4oMjoI0D228uzDi6
+ CDPsmgtpVZI96StYsGcU3pAuwOHHcRhGs7iGJlk7kKR67b297mBouZLR9FSzv6+E1A2jeFXZ+
+ Jpq+BOEbxbEu4kzB7n/u2ypTNrFmncQSfci3OXpYlYTzQ8KOnqcrc4rlEZvqqI67YCX4rh/8w
+ zg+xXlufh/u5FJhsR3En8WW618hbkRCJw8zgYrvMBL7BMMQodRDjP+IxbRBwhHMYIDoFYuWXB
+ ymT/cARD0qUR8vOnLNS/AiNmPa6ml/hUQBAmlHzSZFumO0loG2YLNr9gNMhqPC2KWtgpOiV78
+ s7ynXGmRTQISlzdg7Sq8WJQuTHRkhmYmv3q4NxnY+KoPltWsc5hE/UzUE0czGh1wtRl681HqU
+ aiKujFMDhy4PX4=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-El vie, 28 ene 2022 a las 13:42, Johannes Schindelin
-(<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
->
-> Hi Miriam,
->
-> On Fri, 28 Jan 2022, Miriam R. wrote:
->
-> > I had done the last commits to finish the porting of git bisect command
-> > since my Outreachy internship two years ago (
-> > https://gitlab.com/mirucam/git/-/commits/git-bisect-work-part5-v1), and=
- I
-> > was planning to send them in the last patch series during this February=
-.
->
-> Oh sorry! I specifically went to look at your fork before starting to wor=
-k
-> on the patch series, but had not seen that branch. Now I updated my
-> remote-tracking branches and see it as a new branch, so I am not sure
-> whether I missed it or whether it simply wasn't there.
+Hi Christian,
 
-Hi Johannes,
+On Fri, 28 Jan 2022, Christian Couder wrote:
 
-the branch  ..part5-v1, I think it is from the last month, but the
-commits were done like two years ago during my internship and they
-were also in this branch
-(https://gitlab.com/mirucam/git/-/commits/git-bisect-work4.7). But
-don=E2=80=99t worry. Of course your patch series will be way better.
+> On Fri, Jan 28, 2022 at 1:58 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Wed, 26 Jan 2022, Christian Couder wrote:
+> >
+> > > On Wed, Jan 26, 2022 at 1:03 PM Johannes Schindelin
+> > > <Johannes.Schindelin@gmx.de> wrote:
+> > > >
+> > > > On Wed, 26 Jan 2022, Christian Couder wrote:
+> > > >
+> > > > > The reason is that I think in many cases when there are conflict=
+s,
+> > > > > the conflicts will be small and the user will want to see them. =
+So
+> > > > > it would be simpler to just have an option to show any conflict
+> > > > > right away, rather than have the user launch another command (a
+> > > > > diff-tree against which tree and with which options?).
+> > > >
+> > > > That assumes that server-side merge UIs will present merge conflic=
+ts in
+> > > > the form of diffs containing merge conflict markers. Which I don't=
+ think
+> > > > will happen, like, ever.
+> > >
+> > > Please take a look at:
+> > >
+> > > https://docs.gitlab.com/ee/user/project/merge_requests/conflicts.htm=
+l#resolve-conflicts-in-the-inline-editor
+> > >
+> > > As you can see in the image there are conflict markers in the file
+> > > displayed by the server UI.
+> >
+> > Please note the difference between what I wrote above (present merge
+> > conflicts in the form of diffs containing merge conflict markers) and =
+what
+> > is shown in the document you linked to (present a file annotated with
+> > merge conflict markers).
+> >
+> > There is no diff in that page.
+>
+> The server UI could just get a diff with the conflicts inside instead
+> of the full files with conflict inside, as the diff would be smaller
+> to parse than the full files. So even if it's not shown, the diff
+> could still be useful.
 
->
-> All in all, we did very similar things. I have a slight preference for th=
-e
-> more concise version that does not use any command modes (and therefore
-> also does not duplicate the commands in the output of `git bisect -h`).
->
-> Maybe you could find time in February to review my patch series? Not a bi=
-g
-> deal if you're too busy.
->
+You really need to get away from talking about this in hypothetical terms.
 
-Haha, I could review it, but I am sure they will be perfect.
+> Also just above the section of the link I sent, there is this section
+>
+> https://docs.gitlab.com/ee/user/project/merge_requests/conflicts.html#re=
+solve-conflicts-in-interactive-mode
+>
+> where one can see diff markers in the image.
+
+That's a side-by-side diff. Git cannot even produce those.
+
+> > What's more: there are not only conflict markers in the editor,
+>
+> You don't see the ">>>>>>>"?
+
+Yes, I do. And not only that. I also see that the editor knows very
+specifically where the conflict happens.
+
+And since any file can contain `>>>>>>>` _without_ it being a conflict
+marker, the editor most likely does not parse the output of Git that
+contains a conflict marker. At least I hope it does not because it would
+then very easily be confused by strings that look like conflict markers,
+but aren't.
+
+Think about our very own test suite, and why we specifically set
+`conflict-marker-size=3D32` for those files. Same reason why the server
+backend cannot simply ingest files with conflict markers and then hope to
+figure out which `>>>>>>>` are real conflict markers and which are not.
+
+> > there is clearly a visual marker next to the line number that
+> > indicates that the editor has a fundamental understanding where the
+> > conflict markers are.
+>
+> Yeah, so this shows that those markers can be important for the editor.
+
+Of course they are important! That's my point!
+
+> > In other words: you are making my case for me that `git merge-tree` sh=
+ould
+> > not generate diff output because it would not even be used.
+>
+> The other link above in this email actually shows that diffs are used
+> right now to resolve conflicts.
+
+It shows that Git was not used to generate the diff, is what it shows.
+
+I see that you are still trying to guess what the server-side needs
+actually are. It really is time to stop guessing. So I will keep
+challenging you to actually look at the GitLab code, to take a stab at
+teaching it to use `git merge-tree` to perform merges. And then to come
+back with what you learned. I guarantee you that that will be multiple
+times more useful than talking about it in hypotheticals.
+
+And you are in such an almost unique position to contribute to this patch
+series, to provide that very valuable feedback how `git merge-tree` could
+be improved to support actual, real-life server-side code that is
+currently in use! So why not make the most out of it?
+
 Ciao,
-Miriam.
-
-> Ciao,
-> Dscho
+Johannes
