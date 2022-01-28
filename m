@@ -2,86 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3983EC433F5
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 01:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8F22C433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 01:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345193AbiA1B47 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Jan 2022 20:56:59 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53563 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345178AbiA1B47 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Jan 2022 20:56:59 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC123108966;
-        Thu, 27 Jan 2022 20:56:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LOG6X3s5ZiQd72eMxfm7cqVDcXVe1GPCA5u0CB
-        0vZ88=; b=juJSqNnlJAOqPTXBNoCDum+z/UUEMtaTS/yjO1csdapkCgrLYWNyY4
-        fXda4lfqXm9iFDnis6EWp2eq5VN2YZL8XuxQE9L1727cpfPtsbvdZGxUByz5uvF7
-        ZtQ1zKWS6vSYcqBQSma/I6fUHH8jYEgOM87aDKvaatB21k02Tc9G0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B36C7108965;
-        Thu, 27 Jan 2022 20:56:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D04B108962;
-        Thu, 27 Jan 2022 20:56:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        johannes.schindelin@gmail.com, Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
-Subject: Re: [PATCH v4 1/3] completion: add sparse-checkout tests
-References: <pull.1108.v3.git.1641841193.gitgitgadget@gmail.com>
-        <pull.1108.v4.git.1643318514.gitgitgadget@gmail.com>
-        <5bb598a055dd8121ad5c7228b11618b037029478.1643318514.git.gitgitgadget@gmail.com>
-        <CABPp-BFdaLpmcnU2DUy0Wx1rapsWckz4=aG5yTGdCcM3U3on8Q@mail.gmail.com>
-Date:   Thu, 27 Jan 2022 17:56:56 -0800
-In-Reply-To: <CABPp-BFdaLpmcnU2DUy0Wx1rapsWckz4=aG5yTGdCcM3U3on8Q@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 27 Jan 2022 16:08:20 -0800")
-Message-ID: <xmqqtudoy653.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1345136AbiA1B6W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Jan 2022 20:58:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39848 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235461AbiA1B6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Jan 2022 20:58:21 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BC08C061714
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 17:58:21 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id o1-20020a1c4d01000000b0034d95625e1fso7114373wmh.4
+        for <git@vger.kernel.org>; Thu, 27 Jan 2022 17:58:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=/9zq0JTPS0G097TAOHKN86aKPBt6S6nCuxmR1/MAziA=;
+        b=qAmAjZjD3LPJwRVVSzFGoarWLwJd754/SEb6kYvVhGkEmsELSXbRAk3ioNI6MC9UZq
+         XCmaDtLzk/pytqJkYeH1NmDYBqr5I3m7CYB2B+6UKzfvTZyxujKK/GuMN5PmQ8WqxM8m
+         BxppgI7Kr6EtGTl1E7z7bEFHG2a1rBLGN03aRx1GQVElP+HPgTOQg8mBRc/rkEUkz1jV
+         taHgjA0jWqiIRrpsnP3FCGJ0GSDQhNKPvcEwk8FfHpTwgcBvJwe7Zoki2sI6HGTEgi+f
+         hQgDKzRgKVGXFfkn1fixyE9R8+H7NeV+0/4ub53DJEFJHDQ2jS/c4cH7gOy3+HFzFbL6
+         PIPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=/9zq0JTPS0G097TAOHKN86aKPBt6S6nCuxmR1/MAziA=;
+        b=FsXi4KD5EGn0Xa/wEFS2FwG6EMZGDjsbyEeZe4oQktVpLCQryv/SrLG3UX+MSRt17e
+         q5sAhvpNG0q+8Ue/fb6POUwtqMkYC5MMBNSvQ3f5y3v8pusNuFNmznnuOk0CCV/GdhFN
+         q7zijnta9injINrXI2ges7g54Ycm/kn4oP+8CDr6fw7j09HC0C4JqwNkozuDMpAhhi5+
+         6ClJCcZ7Z0hIQ9nLSGKp1ILDjyhW7CrFPqIgmWSF2IXCCEkONg/GBcEKJ7Vls9T6rUax
+         zv9/NLfDo8Y+887gSRkCTrzTh8F0MnomMhQDkMF2OQCnrPBY6MbzjWhywRQ00QYC3nN6
+         jZ4Q==
+X-Gm-Message-State: AOAM533LIOe8vH60FH6N68SdkbE/fHjKzyKsvnz0gX7cF4qwdndnvQ4R
+        pOrzlXoqUcPDqzaSIZI3/rrJbYihbyg=
+X-Google-Smtp-Source: ABdhPJxtro0+tVfxwfNj0FbErtlVo38pa51rSYuLL/eHBDXL7IbRst070xntwPaDgKx2v/jN3J4t3A==
+X-Received: by 2002:a7b:c933:: with SMTP id h19mr5486296wml.114.1643335099712;
+        Thu, 27 Jan 2022 17:58:19 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o3sm3370562wrq.70.2022.01.27.17.58.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jan 2022 17:58:19 -0800 (PST)
+Message-Id: <pull.1189.git.git.1643335098710.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 28 Jan 2022 01:58:18 +0000
+Subject: [PATCH] sparse-checkout: fix a couple minor memory leaks
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9388B0D8-7FDD-11EC-ACF4-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>, Victoria Dye <vdye@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+From: Elijah Newren <newren@gmail.com>
 
-> On Thu, Jan 27, 2022 at 1:21 PM Lessley Dennington via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Lessley Dennington <lessleydennington@gmail.com>
->>
->> Add tests for missing/incorrect components of custom tab completion for
->> the sparse-checkout command. These tests specifically highlight the
->> following:
->>
->> 1. git sparse-checkout <TAB> results in an incomplete list of subcommands
->> (it is missing reapply and add).
->> 2. git sparse-checkout set <TAB> and git sparse-checkout add <TAB> show
->> both file names and directory names. While this is the correct behavior
->
-> s/is/may be/
+These were introduced in commit 55dfcf9591 ("sparse-checkout: clear
+tracked sparse dirs", 2021-09-08) and missed in my review at the time.
+Plug the leaks.
 
-I would stop at "this may be a less surprising behaviour" without
-going into "correctness".
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    sparse-checkout: fix a couple minor memory leaks
 
->> +test_expect_success 'non-cone mode sparse-checkout uses bash completion' '
->> +       # reset sparse-checkout repo to non-cone mode
->> +       git -C sparse-checkout sparse-checkout disable &&
->> +       git -C sparse-checkout sparse-checkout set &&
->
-> Can we add a --no-cone here in preparation for the default to switch?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1189%2Fnewren%2Fsparse-directory-cleaning-memleaks-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1189/newren/sparse-directory-cleaning-memleaks-v1
+Pull-Request: https://github.com/git/git/pull/1189
 
-It would be good to do so, if we plan to switch the default.
+ builtin/sparse-checkout.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 679c1070368..c655517e019 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -185,6 +185,8 @@ static void clean_tracked_sparse_directories(struct repository *r)
+ 				item->string);
+ 		}
+ 
++		strvec_clear(&s);
++		clear_pathspec(&p);
+ 		dir_clear(&dir);
+ 	}
+ 
+
+base-commit: 1ffcbaa1a5f10c9f706314d77f88de20a4a498c2
+-- 
+gitgitgadget
