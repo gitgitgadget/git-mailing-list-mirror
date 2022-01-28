@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 224BFC433F5
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 22:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23BC8C433FE
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 22:24:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235706AbiA1WYM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 17:24:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39030 "EHLO
+        id S236526AbiA1WYN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 17:24:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232825AbiA1WYL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 17:24:11 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA5CCC061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 14:24:10 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id o1-20020a1c4d01000000b0034d95625e1fso9122518wmh.4
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 14:24:10 -0800 (PST)
+        with ESMTP id S232474AbiA1WYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 17:24:12 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EBC5C061714
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 14:24:11 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id u15so13487199wrt.3
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 14:24:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=bg61q8YupMzzEQIieQ16KJAQxYOzP3RskInHDpuinDI=;
-        b=e5PgDmeZxHZ72jyCXOBefT11ChEdcHteFF3T7mvv7fgPhiVfJ0FnFaYa0AMUiXsu6P
-         4mKLkJAR95QZIIj0gkqtgoTBe5mV+ZF72OtITy5eShxgs+eKnUP1HsbkQNbkRYAySrwd
-         AkLCkF4HjZoNC328J2WZU6cW4xQsToxUTZZuw0PJ2lW/t1LqQyV3GWHGN3uvybsFJL0m
-         L6EWYmJkwnz2yN/Ri0tNRi/k/8X+QSxY5KPM0MpBQP3Dx2VVhqmUR+DN1ug6LO5y7TR2
-         mXd4dlxytGQEfkvnXdLDZACaHzdjcz8FbBFJwUXGY8e7TKyP8Id2WyZ+By6nnpoPbiBf
-         9sng==
+        bh=GmdRpvBz1XQEaQ/Ok30KtN/n17H0Td/yUpCS7K+Rxco=;
+        b=iqlV1YMafAIJhwnch8PE+7jVAvM/nGPmS3K84onkZ135GpY11g5ltbGqRK5/AmVHRQ
+         H1LaYPmdlH36Lx/NsYaLWSyKLBkYd+cEA9iYYxJQ4pDLb3PDQ2cLJkGN5E10wcHMa34t
+         SKbwSX7unH05+wNshlf0zqnJ68QCMcLDoFRADlTRJtcoYQe9sCuKfmcLxXnq6Az5SUT2
+         fa9biXfOHSIcMAO274DtYnEIyW1G6nmJ2pLKeVB0rfuiNHiRmX9l99mNZmCGgLDD3ykM
+         F+a0rwb/QYg250mglc1Mk68KUi3LIivwicb6NF6iqYtdxQacKuAFV60aqtNHtVNWK8Hm
+         yV7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=bg61q8YupMzzEQIieQ16KJAQxYOzP3RskInHDpuinDI=;
-        b=sjd/FRHToI6/ndXk9UYFanLc40NcOXepUhSwAN+wVnFHl6c+K5XYUwdiQ7XOJseJX3
-         3raW6RTYnP7QDsrYhbJMucHCTA9cs9JORZeviwXhwb85YhQbq0OeMNcQMqcWR+mOvRAu
-         uaeeZ2Uzc92QzvitvWF2+Mcx6YPOyX6d9eBAIZJtso6VYpooWSPmHk3bLwuU6MXnhvwT
-         cNMVcdBFV+fHT9A2nA5WujVUnPS38nffCIdBFlUkuziJkvNXjSu8TZrszRH0k9tj3NYR
-         QNsFWl5fIT7v60aIwUHkG8fLyKRaWVFepn/KLTX6QcgHBruY8IWv1XXFp3/PwC4h2mCc
-         x2iQ==
-X-Gm-Message-State: AOAM530QW9ZYfHtD51PFgUwfsH+NTPzLSoGRO+u1g+MsVuV8tIrdJaiC
-        K8cWp8Un7Vxj13rFPHICkrg0SQSasHM=
-X-Google-Smtp-Source: ABdhPJzWDK9Fogp5zFTIH3x2Z8pBagwUVUhjEx14pScf6Q+xppaPGinxK0pNp9d0SckR9LP54SNNHA==
-X-Received: by 2002:a05:600c:d7:: with SMTP id u23mr9056131wmm.17.1643408649252;
-        Fri, 28 Jan 2022 14:24:09 -0800 (PST)
+        bh=GmdRpvBz1XQEaQ/Ok30KtN/n17H0Td/yUpCS7K+Rxco=;
+        b=FNGMllChQvzeMLfxNuRIsT8uEmZU87SLezXNtDH9N+FLwTdpXO5cRExrmlA7+AtWm8
+         aX7B+sAiYLd/PHrwISYkIfyfGe1VMTLjnuqbc3kMev3t+RCFUL/ktfIrwD6XFiW1WXEN
+         mvN/9sDHOn+KetjGwI4xGd/1p/v4/AJaX1gn6y7Nu0gHKhGG1ZxFpectyuFm2NaUudfX
+         2rB3hsfuO+UQD4oYcPlxYEzgoEHIPfeWylpzvtKU+Ry2idI4ua2f5CS+25u8kwQ7pc1m
+         UHGZEJxsJ2oxVueE1gKRRPrIVEcr3bNoWo8f8GDnD+hdPPMsngjvL1fJ/9qLafkiPw6f
+         5FUw==
+X-Gm-Message-State: AOAM530gBiZ9zwbQTVdeRFjw7twsGnwjmCD8E4DAlcxmFgfVF2qySgAt
+        TlNPZl1J1z2cUByw327f6/TXOXVswCk=
+X-Google-Smtp-Source: ABdhPJxhekkCqb6vO3DYsn04hiMSemM0Q4GPjVIfespsD0wPoFokc87+brMjUZN5izlK+7n88unPAA==
+X-Received: by 2002:adf:ee8b:: with SMTP id b11mr8850722wro.430.1643408650043;
+        Fri, 28 Jan 2022 14:24:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v8sm2703789wmd.44.2022.01.28.14.24.08
+        by smtp.gmail.com with ESMTPSA id g15sm804518wri.82.2022.01.28.14.24.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jan 2022 14:24:08 -0800 (PST)
-Message-Id: <844e01391e1198960072844536d736f51573cac6.1643408644.git.gitgitgadget@gmail.com>
+        Fri, 28 Jan 2022 14:24:09 -0800 (PST)
+Message-Id: <4c860698d69106f9c66b7c32c8169796dca8e511.1643408644.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1123.v2.git.1643408643.gitgitgadget@gmail.com>
 References: <pull.1123.git.1642876553.gitgitgadget@gmail.com>
         <pull.1123.v2.git.1643408643.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Fri, 28 Jan 2022 22:24:00 +0000
-Subject: [PATCH v2 1/4] i18n: factorize more 'incompatible options' messages
+Date:   Fri, 28 Jan 2022 22:24:01 +0000
+Subject: [PATCH v2 2/4] i18n: factorize "invalid value" messages
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,253 +70,277 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Find more incompatible options to factorize.
-
-When more than two options are mutually exclusive, print the ones
-which are actually on the command line.
+Use the same message when an invalid value is passed to a command line
+option or a configuration variable.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- builtin/commit.c                          | 39 +++++++++---------
- builtin/difftool.c                        |  5 ++-
- builtin/grep.c                            |  8 ++--
- builtin/log.c                             |  5 ++-
- builtin/merge-base.c                      |  4 +-
- parse-options.c                           | 50 +++++++++++++++++++++++
- parse-options.h                           |  9 ++++
- t/t7500-commit-template-squash-signoff.sh |  2 +-
- 8 files changed, 90 insertions(+), 32 deletions(-)
+ builtin/am.c           | 7 ++++---
+ builtin/blame.c        | 6 +++---
+ builtin/fetch.c        | 4 ++--
+ builtin/pack-objects.c | 2 +-
+ builtin/pull.c         | 6 +++---
+ builtin/push.c         | 2 +-
+ builtin/send-pack.c    | 2 +-
+ diff-merges.c          | 2 +-
+ gpg-interface.c        | 4 ++--
+ ls-refs.c              | 2 +-
+ parallel-checkout.c    | 3 ++-
+ sequencer.c            | 2 +-
+ setup.c                | 2 +-
+ submodule-config.c     | 2 +-
+ t/t4150-am.sh          | 2 +-
+ 15 files changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b9ed0374e30..1966f965008 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1242,8 +1242,6 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 				      struct commit *current_head,
- 				      struct wt_status *s)
- {
--	int f = 0;
--
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 	finalize_deferred_config(s);
+diff --git a/builtin/am.c b/builtin/am.c
+index b6be1f1cb11..ba1dacbc034 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -199,7 +199,7 @@ static int am_option_parse_empty(const struct option *opt,
+ 	else if (!strcmp(arg, "keep"))
+ 		*opt_value = KEEP_EMPTY_COMMIT;
+ 	else
+-		return error(_("Invalid value for --empty: %s"), arg);
++		return error(_("invalid value for '%s': '%s'"), "--empty", arg);
  
-@@ -1251,7 +1249,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 		force_author = find_author_by_nickname(force_author);
- 
- 	if (force_author && renew_authorship)
--		die(_("Using both --reset-author and --author does not make sense"));
-+		die(_("options '%s' and '%s' cannot be used together"), "--reset-author", "--author");
- 
- 	if (logfile || have_option_m || use_message)
- 		use_editor = 0;
-@@ -1268,20 +1266,20 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 			die(_("You are in the middle of a rebase -- cannot amend."));
- 	}
- 	if (fixup_message && squash_message)
--		die(_("Options --squash and --fixup cannot be used together"));
--	if (use_message)
--		f++;
--	if (edit_message)
--		f++;
--	if (fixup_message)
--		f++;
--	if (logfile)
--		f++;
--	if (f > 1)
--		die(_("Only one of -c/-C/-F/--fixup can be used."));
--	if (have_option_m && (edit_message || use_message || logfile))
--		die((_("Option -m cannot be combined with -c/-C/-F.")));
--	if (f || have_option_m)
-+		die(_("options '%s' and '%s' cannot be used together"), "--squash", "--fixup");
-+	die_if_incompatible_opt4(!!use_message, "-C",
-+							 !!edit_message, "-c",
-+							 !!logfile, "-F",
-+							 !!fixup_message, "--fixup");
-+	if (have_option_m) {
-+		if (edit_message)
-+			die(_("options '%s' and '%s' cannot be used together"), "-m", "-c");
-+		else if  (use_message)
-+			die(_("options '%s' and '%s' cannot be used together"), "-m", "-C");
-+		else if (logfile)
-+			die(_("options '%s' and '%s' cannot be used together"), "-m", "-F");
-+	}
-+	if (use_message || edit_message || logfile ||fixup_message || have_option_m)
- 		template_file = NULL;
- 	if (edit_message)
- 		use_message = edit_message;
-@@ -1306,9 +1304,10 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	if (patch_interactive)
- 		interactive = 1;
- 
--	if (also + only + all + interactive > 1)
--		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
--
-+	die_if_incompatible_opt4(also, "-i/--include",
-+							 only, "-o/--only",
-+							 all, "-a/--all",
-+							 interactive, "--interactive/-p/--patch");
- 	if (fixup_message) {
- 		/*
- 		 * We limit --fixup's suboptions to only alpha characters.
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index c79fbbf67e5..ae487785735 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -732,8 +732,9 @@ int cmd_difftool(int argc, const char **argv, const char *prefix)
- 	} else if (dir_diff)
- 		die(_("options '%s' and '%s' cannot be used together"), "--dir-diff", "--no-index");
- 
--	if (use_gui_tool + !!difftool_cmd + !!extcmd > 1)
--		die(_("options '%s', '%s', and '%s' cannot be used together"), "--gui", "--tool", "--extcmd");
-+	die_if_incompatible_opt3(use_gui_tool, "--gui",
-+							 !!difftool_cmd, "--tool",
-+							 !!extcmd, "--extcmd");
- 
- 	if (use_gui_tool)
- 		setenv("GIT_MERGETOOL_GUI", "true", 1);
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 9e34a820ad4..cdf52667710 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1167,11 +1167,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	if (!show_in_pager && !opt.status_only)
- 		setup_pager();
- 
--	if (!use_index && (untracked || cached))
--		die(_("--cached or --untracked cannot be used with --no-index"));
--
--	if (untracked && cached)
--		die(_("--untracked cannot be used with --cached"));
-+	die_if_incompatible_opt3(!use_index, "--no-index",
-+							 untracked, "--untracked",
-+							 cached, "--cached");
- 
- 	if (!use_index || untracked) {
- 		int use_exclude = (opt_exclude < 0) ? use_index : !!opt_exclude;
-diff --git a/builtin/log.c b/builtin/log.c
-index 4b493408cc5..048b2c37470 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1978,8 +1978,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (rev.show_notes)
- 		load_display_notes(&rev.notes_opt);
- 
--	if (use_stdout + rev.diffopt.close_file + !!output_directory > 1)
--		die(_("options '%s', '%s', and '%s' cannot be used together"), "--stdout", "--output", "--output-directory");
-+	die_if_incompatible_opt3(use_stdout, "--stdout",
-+							 rev.diffopt.close_file, "--output",
-+							 !!output_directory, "--output-directory");
- 
- 	if (use_stdout) {
- 		setup_pager();
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index 6719ac198dc..1447f1c493a 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -159,12 +159,12 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix)
- 		if (argc < 2)
- 			usage_with_options(merge_base_usage, options);
- 		if (show_all)
--			die("--is-ancestor cannot be used with --all");
-+			die(_("options '%s' and '%s' cannot be used together"),"--is-ancestor", "--all");
- 		return handle_is_ancestor(argc, argv);
- 	}
- 
- 	if (cmdmode == 'r' && show_all)
--		die("--independent cannot be used with --all");
-+		die(_("options '%s' and '%s' cannot be used together"),"--independent", "--all");
- 
- 	if (cmdmode == 'o')
- 		return handle_octopus(argc, argv, show_all);
-diff --git a/parse-options.c b/parse-options.c
-index a8283037be9..fb9e1976ab3 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -1079,3 +1079,53 @@ void NORETURN usage_msg_opt(const char *msg,
- 	die_message("%s\n", msg); /* The extra \n is intentional */
- 	usage_with_options(usagestr, options);
+ 	return 0;
  }
-+
-+void die_if_incompatible_opt3(int opt1, const char *opt1_name,
-+							  int opt2, const char *opt2_name,
-+							  int opt3, const char *opt3_name)
-+{
-+	int count = 0;
-+	const char *options[3];
-+
-+	if (opt1)
-+		options[count++] = opt1_name;
-+	if (opt2)
-+		options[count++] = opt2_name;
-+	if (opt3)
-+		options[count++] = opt3_name;
-+	if (count > 2)
-+		die(_("options '%s', '%s', and '%s' cannot be used together"), opt1_name, opt2_name, opt3_name);
-+	else if (count > 1)
-+		die(_("options '%s' and '%s' cannot be used together"), options[0], options[1]);
-+}
-+
-+void die_if_incompatible_opt4(int opt1, const char *opt1_name,
-+							  int opt2, const char *opt2_name,
-+							  int opt3, const char *opt3_name,
-+							  int opt4, const char *opt4_name)
-+{
-+	int count = 0;
-+	const char *options[4];
-+
-+	if (opt1)
-+		options[count++] = opt1_name;
-+	if (opt2)
-+		options[count++] = opt2_name;
-+	if (opt3)
-+		options[count++] = opt3_name;
-+	if (opt4)
-+		options[count++] = opt4_name;
-+	switch (count) {
-+	case 4:
-+		die(_("options '%s', '%s', '%s', and '%s' cannot be used together"), opt1_name, opt2_name, opt3_name, opt4_name);
-+		break;
-+	case 3:
-+		die(_("options '%s', '%s', and '%s' cannot be used together"), options[0], options[1], options[2]);
-+		break;
-+	case 2:
-+		die(_("options '%s' and '%s' cannot be used together"), options[0], options[1]);
-+		break;
-+	default:
-+		break;
-+	}
-+}
-diff --git a/parse-options.h b/parse-options.h
-index e22846d3b7b..cf393839ac4 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -339,4 +339,13 @@ int parse_opt_tracking_mode(const struct option *, const char *, int);
- #define OPT_PATHSPEC_FILE_NUL(v)  OPT_BOOL(0, "pathspec-file-nul", v, N_("with --pathspec-from-file, pathspec elements are separated with NUL character"))
- #define OPT_AUTOSTASH(v) OPT_BOOL(0, "autostash", v, N_("automatically stash/stash pop before and after"))
+@@ -2239,7 +2239,7 @@ static int parse_opt_patchformat(const struct option *opt, const char *arg, int
+ 	 * when you add new options
+ 	 */
+ 	else
+-		return error(_("Invalid value for --patch-format: %s"), arg);
++		return error(_("invalid value for '%s': '%s'"), "--patch-format", arg);
+ 	return 0;
+ }
  
-+void die_if_incompatible_opt3(int opt1, const char *opt1_name,
-+							  int opt2, const char *opt2_name,
-+							  int opt3, const char *opt3_name);
-+
-+void die_if_incompatible_opt4(int opt1, const char *opt1_name,
-+							  int opt2, const char *opt2_name,
-+							  int opt3, const char *opt3_name,
-+							  int opt4, const char *opt4_name);
-+
- #endif
-diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 91964653a0b..5fcaa0b4f2a 100755
---- a/t/t7500-commit-template-squash-signoff.sh
-+++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -442,7 +442,7 @@ test_expect_success '--fixup=reword: give error with pathsec' '
+@@ -2282,7 +2282,8 @@ static int parse_opt_show_current_patch(const struct option *opt, const char *ar
+ 				break;
+ 		}
+ 		if (new_value >= ARRAY_SIZE(valid_modes))
+-			return error(_("Invalid value for --show-current-patch: %s"), arg);
++			return error(_("invalid value for '%s': '%s'"),
++						 "--show-current-patch", arg);
+ 	}
+ 
+ 	if (resume->mode == RESUME_SHOW_PATCH && new_value != resume->sub_mode)
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 7fafeac4081..ca821420d68 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -721,8 +721,8 @@ static int git_blame_config(const char *var, const char *value, void *cb)
+ 	}
+ 	if (!strcmp(var, "color.blame.repeatedlines")) {
+ 		if (color_parse_mem(value, strlen(value), repeated_meta_color))
+-			warning(_("invalid color '%s' in color.blame.repeatedLines"),
+-				value);
++			warning(_("invalid value for '%s': '%s'"),
++					"color.blame.repeatedLines", value);
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "color.blame.highlightrecent")) {
+@@ -739,7 +739,7 @@ static int git_blame_config(const char *var, const char *value, void *cb)
+ 			coloring_mode &= ~(OUTPUT_COLOR_LINE |
+ 					    OUTPUT_SHOW_AGE_WITH_COLOR);
+ 		} else {
+-			warning(_("invalid value for blame.coloring"));
++			warning(_("invalid value for '%s': '%s'"), "blame.coloring", value);
+ 			return 0;
+ 		}
+ 	}
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index eaab8056bf9..19ec48f3330 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -758,8 +758,8 @@ static void prepare_format_display(struct ref *ref_map)
+ 	else if (!strcasecmp(format, "compact"))
+ 		compact_format = 1;
+ 	else
+-		die(_("configuration fetch.output contains invalid value %s"),
+-		    format);
++		die(_("invalid value for '%s': '%s'"),
++			  "fetch.output", format);
+ 
+ 	for (rm = ref_map; rm; rm = rm->next) {
+ 		if (rm->status == REF_STATUS_REJECT_SHALLOW ||
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index ba2006f2212..192c3ca305e 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3504,7 +3504,7 @@ static int option_parse_missing_action(const struct option *opt,
+ 		return 0;
+ 	}
+ 
+-	die(_("invalid value for --missing"));
++	die(_("invalid value for '%s': '%s'"), "--missing", arg);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 100cbf9fb85..e54a0ccadc6 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -42,9 +42,9 @@ static enum rebase_type parse_config_rebase(const char *key, const char *value,
+ 		return v;
+ 
+ 	if (fatal)
+-		die(_("Invalid value for %s: %s"), key, value);
++		die(_("invalid value for '%s': '%s'"), key, value);
+ 	else
+-		error(_("Invalid value for %s: %s"), key, value);
++		error(_("invalid value for '%s': '%s'"), key, value);
+ 
+ 	return REBASE_INVALID;
+ }
+@@ -318,7 +318,7 @@ static const char *config_get_ff(void)
+ 	if (!strcmp(value, "only"))
+ 		return "--ff-only";
+ 
+-	die(_("Invalid value for pull.ff: %s"), value);
++	die(_("invalid value for '%s': '%s'"), "pull.ff", value);
+ }
+ 
+ /**
+diff --git a/builtin/push.c b/builtin/push.c
+index 359db90321c..cad997965a7 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -486,7 +486,7 @@ static int git_push_config(const char *k, const char *v, void *cb)
+ 				if (value && !strcasecmp(value, "if-asked"))
+ 					set_push_cert_flags(flags, SEND_PACK_PUSH_CERT_IF_ASKED);
+ 				else
+-					return error("Invalid value for '%s'", k);
++					return error(_("invalid value for '%s'"), k);
+ 			}
+ 		}
+ 	} else if (!strcmp(k, "push.recursesubmodules")) {
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index 69c432ef1a6..64962be0168 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -145,7 +145,7 @@ static int send_pack_config(const char *k, const char *v, void *cb)
+ 				if (value && !strcasecmp(value, "if-asked"))
+ 					args.push_cert = SEND_PACK_PUSH_CERT_IF_ASKED;
+ 				else
+-					return error("Invalid value for '%s'", k);
++					return error(_("invalid value for '%s'"), k);
+ 			}
+ 		}
+ 	}
+diff --git a/diff-merges.c b/diff-merges.c
+index 5060ccd890b..cd6c102a0d5 100644
+--- a/diff-merges.c
++++ b/diff-merges.c
+@@ -67,7 +67,7 @@ static void set_diff_merges(struct rev_info *revs, const char *optarg)
+ 	diff_merges_setup_func_t func = func_by_opt(optarg);
+ 
+ 	if (!func)
+-		die(_("unknown value for --diff-merges: %s"), optarg);
++		die(_("invalid value for '%s': '%s'"), "--diff-merges", optarg);
+ 
+ 	func(revs);
+ 
+diff --git a/gpg-interface.c b/gpg-interface.c
+index b52eb0e2e04..04d751a16a8 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -702,7 +702,7 @@ int git_gpg_config(const char *var, const char *value, void *cb)
+ 			return config_error_nonbool(var);
+ 		fmt = get_format_by_name(value);
+ 		if (!fmt)
+-			return error("unsupported value for %s: %s",
++			return error("invalid value for '%s': '%s'",
+ 				     var, value);
+ 		use_format = fmt;
+ 		return 0;
+@@ -717,7 +717,7 @@ int git_gpg_config(const char *var, const char *value, void *cb)
+ 		free(trust);
+ 
+ 		if (ret)
+-			return error("unsupported value for %s: %s", var,
++			return error("invalid value for '%s': '%s'", var,
+ 				     value);
+ 		return 0;
+ 	}
+diff --git a/ls-refs.c b/ls-refs.c
+index 54078323dcb..ae09dd59478 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -34,7 +34,7 @@ static void ensure_config_read(void)
+ 		} else if (!strcmp(str, "ignore")) {
+ 			/* do nothing */
+ 		} else {
+-			die(_("invalid value '%s' for lsrefs.unborn"), str);
++			die(_("invalid value for '%s': '%s'"), "lsrefs.unborn", str);
+ 		}
+ 	}
+ 	config_read = 1;
+diff --git a/parallel-checkout.c b/parallel-checkout.c
+index 8dd7e7bad40..237c02f1d81 100644
+--- a/parallel-checkout.c
++++ b/parallel-checkout.c
+@@ -39,7 +39,8 @@ void get_parallel_checkout_configs(int *num_workers, int *threshold)
+ 
+ 	if (env_workers && *env_workers) {
+ 		if (strtol_i(env_workers, 10, num_workers)) {
+-			die("invalid value for GIT_TEST_CHECKOUT_WORKERS: '%s'",
++			die(_("invalid value for '%s': '%s'"),
++				"GIT_TEST_CHECKOUT_WORKERS",
+ 			    env_workers);
+ 		}
+ 		if (*num_workers < 1)
+diff --git a/sequencer.c b/sequencer.c
+index 6abd72160cc..9b985e8648d 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2806,7 +2806,7 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
+ 		return error(_("invalid key: %s"), key);
+ 
+ 	if (!error_flag)
+-		return error(_("invalid value for %s: %s"), key, value);
++		return error(_("invalid value for '%s': '%s'"), key, value);
+ 
+ 	return 0;
+ }
+diff --git a/setup.c b/setup.c
+index af3b8c09abe..fe74092a022 100644
+--- a/setup.c
++++ b/setup.c
+@@ -559,7 +559,7 @@ static enum extension_result handle_extension(const char *var,
+ 			return config_error_nonbool(var);
+ 		format = hash_algo_by_name(value);
+ 		if (format == GIT_HASH_UNKNOWN)
+-			return error("invalid value for 'extensions.objectformat'");
++			return error(_("invalid value for '%s': '%s'"), "extensions.objectformat", value);
+ 		data->hash_algo = format;
+ 		return EXTENSION_OK;
+ 	}
+diff --git a/submodule-config.c b/submodule-config.c
+index f95344028b5..fb95a026f48 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -496,7 +496,7 @@ static int parse_config(const char *var, const char *value, void *data)
+ 		else if (parse_submodule_update_strategy(value,
+ 			 &submodule->update_strategy) < 0 ||
+ 			 submodule->update_strategy.type == SM_UPDATE_COMMAND)
+-			die(_("invalid value for %s"), var);
++			die(_("invalid value for '%s'"), var);
+ 	} else if (!strcmp(item.buf, "shallow")) {
+ 		if (!me->overwrite && submodule->recommend_shallow != -1)
+ 			warn_multiple_config(me->treeish_name, submodule->name,
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 6caff0ca397..159fae8d016 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -1169,7 +1169,7 @@ test_expect_success 'invalid when passing the --empty option alone' '
+ 	test_when_finished "git am --abort || :" &&
+ 	git checkout empty-commit^ &&
+ 	test_must_fail git am --empty empty-commit.patch 2>err &&
+-	echo "error: Invalid value for --empty: empty-commit.patch" >expected &&
++	echo "error: invalid value for '\''--empty'\'': '\''empty-commit.patch'\''" >expected &&
+ 	test_cmp expected err
  '
  
- test_expect_success '--fixup=reword: -F give error message' '
--	echo "fatal: Only one of -c/-C/-F/--fixup can be used." >expect &&
-+	echo "fatal: options '\''-F'\'' and '\''--fixup'\'' cannot be used together" >expect &&
- 	test_must_fail git commit --fixup=reword:HEAD~ -F msg  2>actual &&
- 	test_cmp expect actual
- '
 -- 
 gitgitgadget
 
