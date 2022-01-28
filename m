@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5FECC433EF
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 12:02:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 052D1C433FE
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 12:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348125AbiA1MC5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 07:02:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36436 "EHLO
+        id S1348171AbiA1MC6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 07:02:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242911AbiA1MC4 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S244353AbiA1MC4 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 28 Jan 2022 07:02:56 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D71FC061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 04:02:55 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id e8so10552665wrc.0
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 04:02:55 -0800 (PST)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67DFFC061714
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 04:02:56 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id f17so10508350wrx.1
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 04:02:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=DYuGb9rSkace8bGLkTMmHIMDj91JTpOlwsxg0hTlXNo=;
-        b=I5RaRHCG1sPqTxdvcRk5TWrfj1tSColTgciQBSwM2OsNpDzrObkN0aQRFEZNp84A+6
-         pZawY7j29tye0dUMPM9TNRGv5RMiHoCME98NL9UctthHCtHBYnrU8TMNOmO1LJs5s8I3
-         Fg18tX5GinenLTsO/hST9BZmSSwAUBbI6GFCm9mYmyKjMyT6VMBUtmxD47wLmORV6W7k
-         AzKNApi4Pu5iuiGS6+a16SbtysBIPwgQQYF7nUcghv6Ls3VUgS2/W1Z+Ba/NB44P2Cah
-         9vgIXHzF2HYNXq8Z+S83TqXQUIZDdjcqeF1PKLDA5GB622pgFqbf/xcOn9nQQbpmoZot
-         uXNw==
+        bh=yn11dC0UUJVOeGUVCENUnG8LQlPDdRO6ilUxv446bR0=;
+        b=nouzknN/J54bTPALP1Ast3HTWiN+ETc6p5lk+wQT2Mgse21rAoDFVOjPvsQczZX2MB
+         5sfk0ghVw3MGCkPx/Fnerit3et70gswa4hqXCQJ8nZ98gaIen5pvpd+CTGC+NEdHFX64
+         t4mtfZ1h8lL/r9ZlqrpDqndlJjrq02hxHoBxhf9YNgGWjn/EdrRINxSLcVGx8Ib/ii5H
+         ZIlthN/M6ya7FFyIaeT60zqJoM9ZkWVGjx3Cnqmc61iuRvwkKlHXfPso3PLskzqcPVIU
+         BcMEs4SmrBIT+j8KQ2v6KdJdPzCtUfaIUoiaEygMnfMG1WpJgGV/NE7Vsh2sRRL1hMvU
+         J3pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DYuGb9rSkace8bGLkTMmHIMDj91JTpOlwsxg0hTlXNo=;
-        b=BDAOcZr9lCFg3xQbmwDEZnq/hGtNehkK3YJu7lS6sRGmwYIFDmA1OtQ3X7Tk3CxPgX
-         hZiy0JeUiXRV5jBu9C6NAS1mWwuBrgIT0H9ot74CeLRrt0eUkUvWot44FIcLXd6uAVQ4
-         +oYM4QQtndlYSjKlNzJpMBDO+2Sgc68d6pRoolf12f5gzG/IF1/t/c4dEtlIhUCjoIha
-         mCAgm5BU3BTopx9XYlueH78CAq7cp+GEh64eNIzO/5Fq63kc9KAtLG9IAnEYXsAHd+pV
-         YvY4wBMNlOKqZIOCT2TWhltzhlDLW0wvbMSbEMrDRBY0tVMl2+k3fwjhUkypCJlfggi5
-         X/AA==
-X-Gm-Message-State: AOAM531Xtz6dLYiCQzGCK1JkwwxFvwsPj+LtnCdcVkjImfghO4i1yUdH
-        Da8HACMIn7mt7CZ4aLDtDZlTG9YdtSw=
-X-Google-Smtp-Source: ABdhPJz5vWSTcFxsDiRP72ttWpXVr6YKCfkxVBqnuqoof12KNm9VXnakOe5AdHE6q8FRU5USr2lwkw==
-X-Received: by 2002:a05:6000:2ac:: with SMTP id l12mr7259259wry.371.1643371373966;
-        Fri, 28 Jan 2022 04:02:53 -0800 (PST)
+        bh=yn11dC0UUJVOeGUVCENUnG8LQlPDdRO6ilUxv446bR0=;
+        b=8IM4Sxi3SOMyIj2EIBnAWxIvtZih7Ek/eNxBLnPyvwA4E35b42fS1Qdfn8YdT3OUqy
+         odr717mdPaPjc68ts39QmdyDCqO4gFq+Bj81jo/t0AIAqQtNxHZ3vJC0ilMb4nH/R4Kb
+         a8ji7YQ+5vgL0D7fCHHPEHChtkTzjwUqjiFusOjbrFfSzy/djk/yI8/Pr0VOH2xisH/U
+         pzsVR1KYWLLdURim5po6qIBCgmOeJ3ikfbcYP77/WkcGtbj52t4kqRHrj1X72gaoFEej
+         2flwRsGvImGo+ZlY4gimPNfyMuw4oddUxA6KrANFp8ttcOUkrwZk4yCXtGakU4l0FGXi
+         efZg==
+X-Gm-Message-State: AOAM531xwTZL2lCqcu/LMFefyY6FZ6rS7hRLYWwp0O4V9ICG6UsUoDDp
+        zUX8minoREtvLjyZbaG5t+ysLinQFNU=
+X-Google-Smtp-Source: ABdhPJww6fv9i6hiRqIJVFerp0R3V5Fufkhk7AXGvaeBY7/5BP26IKaf6Xoqw69GptPWl7bRTr2YSQ==
+X-Received: by 2002:a5d:5049:: with SMTP id h9mr6952424wrt.502.1643371374864;
+        Fri, 28 Jan 2022 04:02:54 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n14sm4747417wri.75.2022.01.28.04.02.53
+        by smtp.gmail.com with ESMTPSA id t16sm1945474wmq.21.2022.01.28.04.02.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jan 2022 04:02:53 -0800 (PST)
-Message-Id: <19c7223e265962eac2f56d82d87c2fd069f04c6e.1643371370.git.gitgitgadget@gmail.com>
+        Fri, 28 Jan 2022 04:02:54 -0800 (PST)
+Message-Id: <f1f027ad61beb1bd0dee73acbffdee5c0f967e9a.1643371370.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1127.v3.git.1643371370.gitgitgadget@gmail.com>
 References: <pull.1127.v2.git.1643310510.gitgitgadget@gmail.com>
         <pull.1127.v3.git.1643371370.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 28 Jan 2022 12:02:49 +0000
-Subject: [PATCH v3 2/3] diff.c: move the diff filter bits definitions up a bit
+Date:   Fri, 28 Jan 2022 12:02:50 +0000
+Subject: [PATCH v3 3/3] diff-filter: be more careful when looking for negative
+ bits
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,108 +71,120 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This prepares for a more careful handling of the `--diff-filter`
-options over the next few commits.
+The `--diff-filter=<bits>` option allows to filter the diff by certain
+criteria, for example `R` to only show renamed files. It also supports
+negating a filter via a down-cased letter, i.e. `r` to show _everything
+but_ renamed files.
 
-This commit is best viewed with `--color-moved`.
+However, the code is a bit overzealous when trying to figure out whether
+`git diff` should start with all diff-filters turned on because the user
+provided a lower-case letter: if the `--diff-filter` argument starts
+with an upper-case letter, we must not start with all bits turned on.
+
+Even worse, it is possible to specify the diff filters in multiple,
+separate options, e.g. `--diff-filter=AM [...] --diff-filter=m`.
+
+Let's accumulate the include/exclude filters independently, and only
+special-case the "only exclude filters were specified" case after
+parsing the options altogether.
+
+Note: The code replaced by this commit took pains to avoid setting any
+unused bits of `options->filter`. That was unnecessary, though, as all
+accesses happen via the `filter_bit_tst()` function using specific bits,
+and setting the unused bits has no effect. Therefore, we can simplify
+the code by using `~0` (or in this instance, `~<unwanted-bit>`).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- diff.c | 74 +++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 37 insertions(+), 37 deletions(-)
+ diff.c         | 23 +++++++----------------
+ diff.h         |  2 +-
+ t/t4202-log.sh | 13 +++++++++++++
+ 3 files changed, 21 insertions(+), 17 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index c862771a589..5081052c431 100644
+index 5081052c431..4ab4299b817 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4570,6 +4570,43 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
- 	prep_parse_options(options);
- }
+@@ -4720,6 +4720,12 @@ void diff_setup_done(struct diff_options *options)
+ 	if (!options->use_color || external_diff())
+ 		options->color_moved = 0;
  
-+static const char diff_status_letters[] = {
-+	DIFF_STATUS_ADDED,
-+	DIFF_STATUS_COPIED,
-+	DIFF_STATUS_DELETED,
-+	DIFF_STATUS_MODIFIED,
-+	DIFF_STATUS_RENAMED,
-+	DIFF_STATUS_TYPE_CHANGED,
-+	DIFF_STATUS_UNKNOWN,
-+	DIFF_STATUS_UNMERGED,
-+	DIFF_STATUS_FILTER_AON,
-+	DIFF_STATUS_FILTER_BROKEN,
-+	'\0',
-+};
-+
-+static unsigned int filter_bit['Z' + 1];
-+
-+static void prepare_filter_bits(void)
-+{
-+	int i;
-+
-+	if (!filter_bit[DIFF_STATUS_ADDED]) {
-+		for (i = 0; diff_status_letters[i]; i++)
-+			filter_bit[(int) diff_status_letters[i]] = (1 << i);
++	if (options->filter_not) {
++		if (!options->filter)
++			options->filter = ~filter_bit[DIFF_STATUS_FILTER_AON];
++		options->filter &= ~options->filter_not;
 +	}
-+}
 +
-+static unsigned filter_bit_tst(char status, const struct diff_options *opt)
-+{
-+	return opt->filter & filter_bit[(int) status];
-+}
-+
-+unsigned diff_filter_bit(char status)
-+{
-+	prepare_filter_bits();
-+	return filter_bit[(int) status];
-+}
-+
- void diff_setup_done(struct diff_options *options)
- {
- 	unsigned check_mask = DIFF_FORMAT_NAME |
-@@ -4774,43 +4811,6 @@ static int parse_dirstat_opt(struct diff_options *options, const char *params)
- 	return 1;
+ 	FREE_AND_NULL(options->parseopts);
  }
  
--static const char diff_status_letters[] = {
--	DIFF_STATUS_ADDED,
--	DIFF_STATUS_COPIED,
--	DIFF_STATUS_DELETED,
--	DIFF_STATUS_MODIFIED,
--	DIFF_STATUS_RENAMED,
--	DIFF_STATUS_TYPE_CHANGED,
--	DIFF_STATUS_UNKNOWN,
--	DIFF_STATUS_UNMERGED,
--	DIFF_STATUS_FILTER_AON,
--	DIFF_STATUS_FILTER_BROKEN,
--	'\0',
--};
--
--static unsigned int filter_bit['Z' + 1];
--
--static void prepare_filter_bits(void)
--{
--	int i;
--
--	if (!filter_bit[DIFF_STATUS_ADDED]) {
--		for (i = 0; diff_status_letters[i]; i++)
--			filter_bit[(int) diff_status_letters[i]] = (1 << i);
+@@ -4820,21 +4826,6 @@ static int diff_opt_diff_filter(const struct option *option,
+ 	BUG_ON_OPT_NEG(unset);
+ 	prepare_filter_bits();
+ 
+-	/*
+-	 * If there is a negation e.g. 'd' in the input, and we haven't
+-	 * initialized the filter field with another --diff-filter, start
+-	 * from full set of bits, except for AON.
+-	 */
+-	if (!opt->filter) {
+-		for (i = 0; (optch = optarg[i]) != '\0'; i++) {
+-			if (optch < 'a' || 'z' < optch)
+-				continue;
+-			opt->filter = (1 << (ARRAY_SIZE(diff_status_letters) - 1)) - 1;
+-			opt->filter &= ~filter_bit[DIFF_STATUS_FILTER_AON];
+-			break;
+-		}
 -	}
--}
 -
--static unsigned filter_bit_tst(char status, const struct diff_options *opt)
--{
--	return opt->filter & filter_bit[(int) status];
--}
--
--unsigned diff_filter_bit(char status)
--{
--	prepare_filter_bits();
--	return filter_bit[(int) status];
--}
--
- static int diff_opt_diff_filter(const struct option *option,
- 				const char *optarg, int unset)
- {
+ 	for (i = 0; (optch = optarg[i]) != '\0'; i++) {
+ 		unsigned int bit;
+ 		int negate;
+@@ -4851,7 +4842,7 @@ static int diff_opt_diff_filter(const struct option *option,
+ 			return error(_("unknown change class '%c' in --diff-filter=%s"),
+ 				     optarg[i], optarg);
+ 		if (negate)
+-			opt->filter &= ~bit;
++			opt->filter_not |= bit;
+ 		else
+ 			opt->filter |= bit;
+ 	}
+diff --git a/diff.h b/diff.h
+index 8ba85c5e605..a70e7c478c1 100644
+--- a/diff.h
++++ b/diff.h
+@@ -283,7 +283,7 @@ struct diff_options {
+ 	struct diff_flags flags;
+ 
+ 	/* diff-filter bits */
+-	unsigned int filter;
++	unsigned int filter, filter_not;
+ 
+ 	int use_color;
+ 
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 50495598619..b25182379ff 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -142,6 +142,19 @@ test_expect_success 'diff-filter=R' '
+ 
+ '
+ 
++test_expect_success 'multiple --diff-filter bits' '
++
++	git log -M --pretty="format:%s" --diff-filter=R HEAD >expect &&
++	git log -M --pretty="format:%s" --diff-filter=Ra HEAD >actual &&
++	test_cmp expect actual &&
++	git log -M --pretty="format:%s" --diff-filter=aR HEAD >actual &&
++	test_cmp expect actual &&
++	git log -M --pretty="format:%s" \
++		--diff-filter=a --diff-filter=R HEAD >actual &&
++	test_cmp expect actual
++
++'
++
+ test_expect_success 'diff-filter=C' '
+ 
+ 	git log -C -C --pretty="format:%s" --diff-filter=C HEAD >actual &&
 -- 
 gitgitgadget
-
