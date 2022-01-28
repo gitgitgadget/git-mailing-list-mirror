@@ -2,139 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 230B7C433EF
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 17:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C202C433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 18:05:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343501AbiA1RwS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 12:52:18 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55257 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241251AbiA1RwR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 12:52:17 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7765D17E087;
-        Fri, 28 Jan 2022 12:52:16 -0500 (EST)
+        id S1349941AbiA1SFg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 13:05:36 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65401 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344097AbiA1SFf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 13:05:35 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DB3C71848CC;
+        Fri, 28 Jan 2022 13:05:34 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zspS9uOH3yCjOusinq7OwBndsg0Ubt/kBGPopm
-        hOUN8=; b=jplu61IcxadzSymMonqUmdeK9UaDQWFQKVSuZ1m6Et79S78Fde4JF2
-        bOZ5PC0+MRC66z4z383OJ70kvXF2PY162aX/BI3Yfx/Ubwr4f21AWwKzpOcMXeVn
-        XQys+GAodJAAEEgAymQNANM68zdMvVzFhO/L/wacviGqf7fGO7q2M=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6F95E17E086;
-        Fri, 28 Jan 2022 12:52:16 -0500 (EST)
+        :content-type; s=sasl; bh=E6drF2aBtIN2UgmJrYbM/DUbiqJF0m4DtHqneJ
+        C9VZc=; b=EbCdRgfMspE29hWjsfUDScHSKuF1PE9L1fsP4mDTvzfe6zPMy+clmt
+        o59gmJZB+LkBnrMWR7DiG4k9W4/SiUmz+Wul2mQlm2bHLZPL0rtSeUcginN9/Gcn
+        +ehSTkJupU1vphYZGspbPbWpmJW7OFuDXC0VsPiZCRSj3qcdOa914=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D33741848CB;
+        Fri, 28 Jan 2022 13:05:34 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E080017E085;
-        Fri, 28 Jan 2022 12:52:13 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4DE401848CA;
+        Fri, 28 Jan 2022 13:05:32 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Robin Jarry <robin.jarry@6wind.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-        Patryk Obara <patryk.obara@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v3] receive-pack: check if client is alive before
- completing the push
-References: <CHGR6XNP6TV7.15VGVNQUJM9J6@diabtop>
-        <20220127215553.1386024-1-robin.jarry@6wind.com>
-Date:   Fri, 28 Jan 2022 09:52:12 -0800
-In-Reply-To: <20220127215553.1386024-1-robin.jarry@6wind.com> (Robin Jarry's
-        message of "Thu, 27 Jan 2022 22:55:53 +0100")
-Message-ID: <xmqq4k5nychf.fsf@gitster.g>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] scalar: accept -C and -c options before the subcommand
+References: <pull.1130.git.1643195729608.gitgitgadget@gmail.com>
+        <220127.86v8y5dgus.gmgdl@evledraar.gmail.com>
+        <0f8d5d04-e86c-48e2-fea0-32c25c3f9325@gmail.com>
+Date:   Fri, 28 Jan 2022 10:05:31 -0800
+In-Reply-To: <0f8d5d04-e86c-48e2-fea0-32c25c3f9325@gmail.com> (Derrick
+        Stolee's message of "Thu, 27 Jan 2022 09:46:55 -0500")
+Message-ID: <xmqqv8y3wxas.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0669C288-8063-11EC-B113-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: E24BD9E8-8064-11EC-85FE-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Robin Jarry <robin.jarry@6wind.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> Abort the push operation (i.e. do not migrate the objects from temporary
-> to permanent storage) if the client has disconnected while the
-> pre-receive hook was running.
+> My understanding was that this was ejected so we could find the right time
+> to lib-ify handle_options() (as Taylor suggested), but we didn't want to do
+> that while Scalar was still in a tentative state (in contrib/ with a plan
+> to move it out after more is implemented).
 >
-> This reduces the risk of inconsistencies on network errors or if the
-> user hits ctrl-c while the pre-receive hook is running.
+> The biggest benefits of using handle_options() is for other pre-command
+> options such as --exec-path, which I use on a regular basis when testing
+> new functionality.
 >
-> Send a keepalive packet (empty) on sideband 2 (the one to report
-> progress). If the client has exited, receive-pack will be killed via
-> SIGPIPE and the push will be aborted. This only works when sideband*
-> capabilities are advertised by the client.
-
-If they have already exited but the fact hasn't reached us over the
-network, the write() will succeed to deposit the packet in the send
-buffer.  So I am not sure how much this would actually help, but it
-should be safe to send an unsolicited keepalive as long as the other
-side is expecting to hear from us.  When either report_status or
-report_status_v2 capabilities is in effect, we will make a report()
-or report_v2() call later, so we should be safe.
-
-> Signed-off-by: Robin Jarry <robin.jarry@6wind.com>
-> ---
-> v2 -> v3:
->     I had missed Documentation/technical/pack-protocol.txt. Using
->     sideband 2 to send the keepalive packet works.
+> There are other options in handle_options() that might not be appropriate,
+> or might be incorrect if we just make handle_options() non-static. For
+> example, `scalar --list-cmds=parseopt` wouldn't show the scalar commands
+> and would instead show the git commands.
 >
->  builtin/receive-pack.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 9f4a0b816cf9..8b0d56897c9f 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -1971,6 +1971,15 @@ static void execute_commands(struct command *commands,
->  		return;
->  	}
->  
-> +	/*
-> +	 * Send a keepalive packet on sideband 2 (progress info) to ensure that
-> +	 * the client has not disconnected while pre-receive was running.
-> +	 */
+> So my feeling is that we should continue to delay this functionality until
+> Scalar is more stable, perhaps even until after it moves out of contrib/.
+> The need to change handle_options() to work with a new top-level command
+> is novel enough to be worth careful scrutiny, but that effort is only
+> valuable if the Git community is more committed to having Scalar in the
+> tree for the long term.
 
-I suspect that any keepalive, unless it expects an active "yes, I am
-still alive" response from the other side, is too weak to "ensure".
+The usual caveat that little things tend to accumulate and you can
+die from thousands of paper cuts aside, if "run in that directory"
+and "pretend these configuration variables are set" are useful
+enough features to Scalar, I think that the straight-forward option
+parser this patch adds is very much acceptable.
 
-I guess "to notice a client that has disconnected (e.g. killed with
-^C)" is more appropriate.
+If we need more options (i.e. when we need to add the third thing),
+that would be the best time to see how handle_options() can be
+restructured to serve the different set of options git and Scaler
+need.
 
-> +	if (use_sideband) {
-> +		static const char buf[] = "0005\2";
-> +		write_or_die(1, buf, sizeof(buf) - 1);
-> +	}
+And this loop, which is too small to be even called "duplicated
+implementation", should suffice in the meantime.
 
-Observing how execute_commands() and helper functions report an
-error to the callers higher in the call chain, and ask them to abort
-the remainder of the operation, I am not sure if write_or_die() is
-appropriate.
 
-    Side note: inside copy_to_sideband(), which runs in async, it is
-    a different matter (i.e. the main process on our side is not
-    what gets killed by that _or_die() part of the call), but this
-    one kills the main process.
-
-The convention around this code path seems to be to fill explanation
-of error in cmd->error_string and return to the caller.  In this
-case, the error_strings may not reach the pusher via report() or
-report_v2() as they may have disconnected, but calling the report()
-functions is not the only thing the caller will want to do after
-calling us, so giving it a chance to clean up may be a better
-design, e.g.
-
-	if (write_in_full(...) < 0) {
-		for (cmd = commands; cmd; cmd = cmd->next)
-	        	cmd->error_string = "pusher went away";
-		return;
-	}
-
-Yes, the current code will not actually use the error string in any
-useful way in this particular case, since report() or report_v2()
-will have nobody listening to them.  But being consistent will help
-maintaining the caller, as it can later be extended to use it
-locally (e.g. log the request and its outcome, check which cmd has
-succeeded and failed using the NULL-ness of cmd->error_string, etc.)
