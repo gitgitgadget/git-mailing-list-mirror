@@ -2,196 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8A71C433F5
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 11:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4115AC433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 11:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235986AbiA1L10 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 06:27:26 -0500
-Received: from mout.gmx.net ([212.227.15.19]:53091 "EHLO mout.gmx.net"
+        id S244318AbiA1Lnu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 06:43:50 -0500
+Received: from mout.gmx.net ([212.227.17.21]:41197 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235774AbiA1L1Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 06:27:24 -0500
+        id S237378AbiA1Lnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 06:43:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1643369241;
-        bh=keordmJo4yADq1JKKLwwSehvDVBBwZYPwO9Is7Jf2PY=;
+        s=badeba3b8450; t=1643370227;
+        bh=xBfLYhmMe0qUfVFA/hzdIwMM6z9VHyOlredLD6NsFrk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Iqxc2l1rRrTnChlrqv1GcJVJwAM/3aR2ovqnk+AUzxVq7scsc+gXrcu+dsaMBfFQR
-         PHccC2vciYiU3JRafblrrIaCVCCYu3/MIUO1tSjzrW4DXBkR0EA4hFyfDyoGNeGzmB
-         Vy5wjdiVssn0jr6vGZuFp809QVqnKWPOSFm9YV1s=
+        b=XB9b0fpHp7CBGjzhPw6mHwKcbqmSWq3nqA6fjNcT/okmMlZ/gMZylXlrK41b2M/xP
+         IFhl9PlbFvsSnVg0ZJS2xRzl8EIOPZYqkoptAaYMzzQB06EKvGdepPS01+Ftbj4Qo0
+         +8aESLPmRiyaEemfrH1u+exQYOvWk3UD5FRlk5II=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MSKuA-1mpBWz2Mfo-00Sfdl; Fri, 28
- Jan 2022 12:27:21 +0100
-Date:   Fri, 28 Jan 2022 12:27:19 +0100 (CET)
+Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAfUe-1n6r9P0wgK-00B5mR; Fri, 28
+ Jan 2022 12:43:47 +0100
+Date:   Fri, 28 Jan 2022 12:43:44 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Derrick Stolee <stolee@gmail.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+To:     Taylor Blau <me@ttaylorr.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Subject: Re: [PATCH] scalar: accept -C and -c options before the subcommand
-In-Reply-To: <0f8d5d04-e86c-48e2-fea0-32c25c3f9325@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2201281148310.347@tvgsbejvaqbjf.bet>
-References: <pull.1130.git.1643195729608.gitgitgadget@gmail.com> <220127.86v8y5dgus.gmgdl@evledraar.gmail.com> <0f8d5d04-e86c-48e2-fea0-32c25c3f9325@gmail.com>
+In-Reply-To: <YfG0ybYOCwDzlbi5@nand.local>
+Message-ID: <nycvar.QRO.7.76.6.2201281227330.347@tvgsbejvaqbjf.bet>
+References: <pull.1130.git.1643195729608.gitgitgadget@gmail.com> <YfG0ybYOCwDzlbi5@nand.local>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:aTl+cuG1J+62rKy5QGENU9tbe8g1LXJW8QqRyxcXDqYcYZzC8gL
- HZI8AM5tf3OupoS609qDE859KejSRlUNob0T5vOP9gRQ36jdFZynmtwo6pvJOLoJGXzgUq/
- go5r4JiXxsi3HvkOC98QmRoti95cTadBSBZXfW8GAopv8GYfOtun7zJG/nLDcfkqnWMOfYP
- ViXTkwZOJAw7O90a2pbhw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:oc8T4uic6MY=:9TDLHNZJt+WO0e64Xmfbwd
- z52TJDfuJ12Oyy1VwzBan32iOgApBvkNFdkmqolCrGSm0Ow8FAvawtTglUxdFgaHqcIaVXlZH
- CGrKa251tqTu1t/OrcSE5gJH0EiHn8OP6W6kV2fqGfvN+vRef0sH4W3acFoULJdxjzmNjlccd
- r8wAL3UntB8YK9Udln9j0HcUBRfnjaIasz9J+V4txcetyD/lOzlfK7JEqr8hQj4nbnADkAaca
- P3mp8M682oepnguA0eWC8EB9kwtynhZmh1LKgYkf1N44Eym8mn0gRFvZwtdkVaQTOCFHPlUtp
- G2kimoH8EPDXuQudQwao4DX8FMT2wsp7AfGBLu6zF3RrFXzyhcUStgVKIFNfIW4jMd5vvNsYR
- mmYiUpyfIMu44SuI688Q2y7LmtVZs5gI2B5pAeSUMTVlLHRGETD0v46GIS1sWWxV6s6L5a6i3
- nksFDmVv+QGBd1mYfypudmAdKQdbXaAK6dLVuRS7QRJ479g8M7UbTXwcGWstlpwbI0xscVTEx
- ZLqlTw30uZ6fHtYn6ODN7awNp5Mgc5rh2IUvWHGJ7nhP+L+t46DvYG7vMhdWHL4/JxXrRuVqm
- 1v4kW3tpqa9LwGB8PdsFB+dpJFEFHKCE/ElLSKIlDjMUfRVN9kyjrIj3A5kJ6pQPd+dVoj7Rm
- KHJ4CzyiihnY/etc8XiNS8qRaY0iCZ3jg/Q7pRik7oByAPyvM7cl+rEvpcZMm/5CoZloYi+uM
- ORLq9L/+/V16cf68NpkMSbFzZtsoLZQHOefAHKnHjFYtvdPDQ3XDLsDOpeA8xY6X0eeTXjV+G
- Qj/ha5InhpJfqJ8GI1ZpMgtUXnvVsH5uRw4r/9//2XKt/RNITSeBIfsklze7NOf4PKrDklQ2S
- ZsupSFCv5byGNHoVg/G6kYdQdllUUMGFxcm4/cTUZIFN1/rrYPA0bWGv0nwC5rbAWPVRv3EoY
- uIPyTDxs3eFuxeKx0d+XDOrMMloyhXS8O1gwxNirhsDOlzRXlD0XDlVbbs5+7tDz0URSe8I+n
- aNj14XghsBsP40kp+ZJ2NP4XERkxSi9lSyPHEAu2JoeCh07+nbb7h/VmHVg6HcVpi2VEpt4dO
- nWGRKZabJV8ybE=
+X-Provags-ID: V03:K1:Dh9RKhEFwKFwHSS6WtZZmlaoQy4ZglA3sde1xNH0mzhBuwqXTYk
+ 54ZMxmjnbS9ICiExZEhoYufmJYNL/8db61vCq371wdbM7bH6rmcVIudS8y66fGDRPKJbGgS
+ eKzfq7xz6D7clbKujk1uBBQXWIyYivPhm5ZbmvMFMOgL2+/EmIzK3jZ+tjZnvmKAkue3E7I
+ uRn1qqArlUCKxTiSdgRMA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:U+TIVX4Mlmo=:+lKn814Fr5G7QUMjIHX1wY
+ H9knE4e/fzNvgPkI/oBnMefm/8GThyApUqZuWk1UNjOFe3sAGcqVzk9M4B9nKM7lgdCClEmCb
+ Fq6HTBr5opfLwgtewqeSKwnysJSRjGvTngm+JBJ2zWKKjbPwiMxcbfWnNj7rdl3GDrSh9WrLW
+ ZFaleL+M4ccTmGdaHMC7RH6hWbinlH9UKbNnRp1f7wtZzeine7wyolbrYhSj/x/EuaToA7ojl
+ Tb2i17tVBg3npQH47KvwmKFu495OuvNCmMoDnKCQsq5hsoqGZdY/VrxjJcLBwYUYGVgik/fB1
+ nWPdjScIwwAUy/3snqhmsNJ/td7IC1a/RjrIJwyROL54u+b2YRcyhXpHt88H/5pHroNfhpXUf
+ oy8rjQ7g7U/rGmKdhI5QEOsXJjV/OAsaxyUPL0wb70e4cLTa8EhvSAJk4stI1Am/Q3me6V1FW
+ V+xSzl0Acg34Lcgs5fYmyVBN3XupWGr6gT5UfLc5zF+7Piug/XAyKqQLQHuZbELe9+DQxiLhF
+ ZnMQgUMPPUXwvhXUn+4sbIJt1XUEj71mzlI5a3q4yXXVFhRb8taeQd+HMqAqh5ENgf9rY9K9g
+ eG0D7bk39g6z+55H98JcOPr1DnMdo0Ihu7DtlhMqUnXFbP9S8Z084jkarIRW4OT39qNbs9a3G
+ 10ZT/jnohFCPhUd3Rk1nSLld4xb2xUfsdrBkNTl9HG/NQ9eI9ZGDDWqOn6/G6nzvV3wxU0iWH
+ sfRxqajEn93DVK76cxTwi4YJ4tQg/s8IdFVzJNL9qjr9LJnjp7zbPBVHiQXgkV+ICQN1B9wae
+ vASd/A7h+TW6O2ZgG3a9liEF9mAozM2hHzK7SpFNi25bAU4IPbj7B4WKeCq6Uu13gf1bhy3BH
+ 0kAGViuNSDB49wAPKXRZWDtcq0QRE20otAN3RQU/AVRdSCBG0Ofjcgq8uA3ThkSdBHRe7f0YB
+ 0HtqCy2g0MRwd1qr9rCa6TYR3Q+xUnf0IGXmoYUKRhOC2CiHo9glaGJhCWEBsgPj79gE87Fj4
+ VMIr1T5tqZZOrZdgQ+hij8I/W5N20V8iA903F3vMels1Bp7vVycCzueywFQFyUUSEVLRPfQcH
+ qqfHqZdABIVzEY=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee,
+Hi Taylor,
 
-On Thu, 27 Jan 2022, Derrick Stolee wrote:
+On Wed, 26 Jan 2022, Taylor Blau wrote:
 
-> The biggest benefits of using handle_options() is for other pre-command
-> options such as --exec-path, which I use on a regular basis when testing
-> new functionality.
+> On Wed, Jan 26, 2022 at 11:15:29AM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > The `git` executable has these two very useful options:
+> >
+> > -C <directory>:
+> > 	switch to the specified directory before performing any actions
+> >
+> > -c <key>=3D<value>:
+> > 	temporarily configure this setting for the duration of the
+> > 	specified scalar subcommand
+> >
+> > With this commit, we teach the `scalar` executable the same trick.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >     scalar: accept -C and -c options
+> >
+> >     This makes the scalar command a bit more handy by offering the sam=
+e -c
+> >     <key>=3D<value> and -C <directory> options as the git command.
+> >
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1130=
+%2Fdscho%2Fscalar-c-and-C-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1130/ds=
+cho/scalar-c-and-C-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/1130
+> >
+> >  contrib/scalar/scalar.c   | 22 +++++++++++++++++++++-
+> >  contrib/scalar/scalar.txt | 10 ++++++++++
+> >  2 files changed, 31 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+> > index 1ce9c2b00e8..7db2a97416e 100644
+> > --- a/contrib/scalar/scalar.c
+> > +++ b/contrib/scalar/scalar.c
+> > @@ -808,6 +808,25 @@ int cmd_main(int argc, const char **argv)
+> >  	struct strbuf scalar_usage =3D STRBUF_INIT;
+> >  	int i;
+> >
+> > +	while (argc > 1 && *argv[1] =3D=3D '-') {
+> > +		if (!strcmp(argv[1], "-C")) {
+> > +			if (argc < 3)
+> > +				die(_("-C requires a <directory>"));
+> > +			if (chdir(argv[2]) < 0)
+> > +				die_errno(_("could not change to '%s'"),
+> > +					  argv[2]);
+> > +			argc -=3D 2;
+> > +			argv +=3D 2;
+> > +		} else if (!strcmp(argv[1], "-c")) {
+> > +			if (argc < 3)
+> > +				die(_("-c requires a <key>=3D<value> argument"));
+> > +			git_config_push_parameter(argv[2]);
+> > +			argc -=3D 2;
+> > +			argv +=3D 2;
+> > +		} else
+> > +			break;
+> > +	}
+> > +
 >
-> There are other options in handle_options() that might not be
-> appropriate, or might be incorrect if we just make handle_options()
-> non-static. For example, `scalar --list-cmds=3Dparseopt` wouldn't show t=
-he
-> scalar commands and would instead show the git commands.
+> All looks right to me based on a cursory scan. It's too bad that we have
+> to copy this code from git.c::handle_options().
 
-Right, and since `handle_options()` lives in the same file as `git`'s
-`cmd_main()` function, we would not only have to disentangle options that
-work only for `git` from those that would also work for `scalar`, but we
-would have to extract the `handle_options()` function into a separate
-file.
+It's only a dozen lines, though, and they are pretty stable, so I doubt
+that we risk divergent copied code.
 
-And while at it, a tangent someone with infinite time on their hands might
-suggest is: why not convert `handle_options()` to the `parse_options()`
-machinery? Which would of course solve one issue by adding several new
-ones. Don't get me wrong: I would find it useful to convert
-`git.c:handle_options()` to a function in `libgit.a` which uses the
-`parse_options()` machinery. It'll just require a lot of time, and I do
-not see enough benefit that would make it worth embarking on that
-particular journey.
+> Could we call handle_options() (assuming that it was available to
+> Scalar's compilation unit) instead? I'm not sure if that's a naive
+> question or not, but it might be nice to explain it out in the commit
+> message in case other reviewers have the same question that I did.
 
-But since I had a look at `handle_options()` anyway, I might just as well
-summarize my insights about how applicable the supported options are for
-`scalar` here:
+I just responded to Stolee elsewhere in this thread with a lengthy
+analysis of the options, and the conclusion that it would not be worth the
+effort to refactor `handle_options()`.
 
-# Beneficial
+> On a more practical note: is there an easy way to test this?
 
-  -c <key>=3D<value>
-  --config-env <key>=3D<value>
-  -C <directory>
+It would be pretty easy to test `-C`:
 
-	Since I added support for these (except for the long form
-	`--config-env` that I actually only learned while researching this
-	email), it is obvious that I'd like `scalar` to support them.
+	git init sub &&
+	scalar -C sub register &&
+	[... verify that `sub/` is now a Scalar repository ...]
 
-# Won't hurt
+For `-c`, we would need to configure something parsed by
+`git_default_config()` that would influence what `scalar register` does,
+then verify that. Or even better, use a config setting that is in the
+"Optional" section of `set_recommended_config()`, i.e. it will refuse to
+override an already-configured value. Something like `status.aheadBehind`.
 
-  --html-path
-  --man-path
-  --info-path
+I added this:
 
-	Sure, for `scalar help` (which I implement in a patch series I
-	have not yet formally contributed to the Git mailing list), these
-	options might even make some sense.
+=2D- snip --
+diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-sca=
+lar.sh
+index 2e1502ad45e..89781568f43 100755
+=2D-- a/contrib/scalar/t/t9099-scalar.sh
++++ b/contrib/scalar/t/t9099-scalar.sh
+@@ -85,4 +85,12 @@ test_expect_success 'scalar delete with enlistment' '
+ 	test_path_is_missing cloned
+ '
 
-  --paginate
-  --no-pager
-
-	There are no Scalar commands that would benefit from using the
-	pager. But if we parse those options, we also have to handle them.
-	Which would mean extracting _even more_ code from `git.c` just so
-	that we can reuse `handle_options()` in Scalar.
-
-  --no-replace-objects
-  --git-dir
-  --work-tree
-
-	These options would only be relevant to the `scalar run` command,
-	no other Scalar command works on an existing Git worktree. And
-	even for that command, I doubt that they are actually useful in
-	Scalar's context.
-
-  --namespace
-
-	This option seems relevant mostly for repositories that are served
-	up for cloning and fetching, which is not what the Scalar command
-	supports directly.
-
-  --super-prefix
-  --bare
-
-	These options do not make sense in Scalar's context (it's neither
-	about bare repositories not about submodules). That is the case
-	for most `git` commands, too, of course.
-
-  --literal-pathspecs
-  --no-literal-pathspecs
-  --glob-pathspecs
-  --noglob-pathspecs
-  --icase-pathspecs
-  --no-optional-locks
-
-	None of Scalar's commands take pathspecs, so these options won't
-	have any effect.
-
-  --shallow-file
-
-	This option (which I learned about today) is purposefully not
-	documented, as it is merely an internal option for use e.g. by
-	`receive-pack`.
-
-# Detrimental
-
-  --exec-path
-
-	Since `scalar` is tightly coupled to a specific Git version, it
-	would cause much more harm than benefit to encourage users to use
-	a different Git version by offering them this option.
-
-  --list-cmds
-
-	As you pointed out, this option would produce misleading output.
-
-Given that only the `-c` and `-C` options are _actually_ useful in the
-context of the `scalar` command, I would argue that I chose the best
-approach, as the benefit of the intrusive refactorings that would be
-necessary to share code with `git.c` is rather small compared with the
-amount of work.
-
-> So my feeling is that we should continue to delay this functionality
-> until Scalar is more stable, perhaps even until after it moves out of
-> contrib/. The need to change handle_options() to work with a new
-> top-level command is novel enough to be worth careful scrutiny, but that
-> effort is only valuable if the Git community is more committed to having
-> Scalar in the tree for the long term.
-
-I am okay with holding off with this, for now.
-
-On the other hand, as I pointed out above: I do not really see it worth
-the effort to refactor `git.c:handle_options()` for the minimal benefit it
-would give us over the approach I chose in the patch under discussion.
++test_expect_success 'scalar supports -c/-C' '
++	test_when_finished "scalar delete sub" &&
++	git init sub &&
++	scalar -C sub -c status.aheadBehind=3Dbogus register &&
++	test -z "$(git -C sub config --local status.aheadBehind)" &&
++	test true =3D "$(git -C sub config core.preloadIndex)"
++'
++
+ test_done
+=2D- snap --
 
 Ciao,
 Dscho
