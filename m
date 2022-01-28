@@ -2,131 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 705B7C433F5
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 19:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED7A9C433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 19:37:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350966AbiA1Tcf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 14:32:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56856 "EHLO
+        id S1348029AbiA1Th2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 14:37:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237547AbiA1Tce (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 14:32:34 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CDCAC061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 11:32:34 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id e2so12833029wra.2
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 11:32:34 -0800 (PST)
+        with ESMTP id S1344219AbiA1Th0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 14:37:26 -0500
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64DB0C061714
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 11:37:25 -0800 (PST)
+Received: by mail-qk1-x72c.google.com with SMTP id w8so6500744qkw.8
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 11:37:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=6wind.com; s=google;
-        h=mime-version:content-transfer-encoding:date:message-id:from:to:cc
-         :subject:references:in-reply-to;
-        bh=P5cFTnprNnOKzdrpwf0x9NSiEHs8zxS8bNMdxo3FxAA=;
-        b=QsiqfdmYkwGrFk3SK22vnYfCU4BD/jBgTzwTJCIOGHdnPkG6VYH9Bu4n1ahWdIbW4Z
-         P64KUuMLyefa1jH/cXD4egYhK0hbDfwir2JWKfmIITe4Q6ui545LpHJZAGkqbgvZEjqq
-         Ff4OS03hm2+FrK6ss+/BUvjS4KOslj5w0ImZVkYWQlamFLhgfwihO6Xb2585bFB0FnhF
-         mzyUpOhrHxV3D2OLjWEIbyw2gWyicLZ8C7sW0m8IPUrm9PhiqbpXxbUekbODXf5OgVt6
-         OdvQxSexpHLqKqry8SxjjvbwOah9En0HrmdLr1k951JudSnarfw+DuAn3KD3loKNkatD
-         KDbg==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=MohTi/7T09DB5Bmr3VAx/lb1eypVgsTde2V5BCKt4Tg=;
+        b=o1DSESlTugFLm0rYyr3LAtMdZ36O7E/xNDiywydoUh8H5bC//WNSrQ57tjNULaNj56
+         1/JZpiMvS2Ma3L8e0O1THKJr0bc4zNVzGHrpB0BjVZEpa1H6up53oxdygFoVZ0Q64sGe
+         +F9XajtxktiOEfHtS77RWQeB4HWM9FQFHYWXOEqbn73qeRUkBTWRXpCsfsBHHu37ljUz
+         eIXf+40S71fRxOMS7uJEDpLF+qoqj454oBjxZV6N6LeSjbBlrwTuwfh0j7Mkn4oGZsof
+         qegmbbTiTHodvSwnFanlCCXcLqxjVXmKfA9o9Gn4bMhiPSg2/vzBfs0ZloXsziO6IyXE
+         r85Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:content-transfer-encoding:date
-         :message-id:from:to:cc:subject:references:in-reply-to;
-        bh=P5cFTnprNnOKzdrpwf0x9NSiEHs8zxS8bNMdxo3FxAA=;
-        b=FdX5lV1tQ4eQANh6T1oSNeJIHG9dRqB3KNQt7MMyfWIwfgH51s68QPbWvYMaQ2DJSJ
-         Q7/hUUTn6YI5R+J8L4T2ozuuPQlfILQwTwuB7+ZezWTjNacZEypGgmc7BYEnmgBA3TrZ
-         OTh/zjERbRT0aOmlC45rMYrMQZwC7/D8a6/qvFqRx3P3GD+5JctKHWUnQkJCAlseZKth
-         FXcV4L1e7ZbJLU50E59WbY4YE81kl98Xih/HVatlVhfJwdJIDwv4auyyx2EdShFfL0SF
-         I2BKA3ElyHQyFoOxTPNgjfYLGJev+yPuW4P9y88rnOPv3hszIXkZe4Fwxyl/oFSqsWLz
-         At7w==
-X-Gm-Message-State: AOAM5333lSmwwi8IA0W8XHXi8eAZJAvc8MfD2u167/iZryPLDmyVRLR3
-        43NfOorXdB2xjyCeY6fmRgsm5K2oDin2xA==
-X-Google-Smtp-Source: ABdhPJyK62kZzmDSbQzYPKE2u55Gvt1mX6NwInXEk3B/XbkoVDtpbbXXZ34fZ05Eho6slkGpqHj9oQ==
-X-Received: by 2002:a05:6000:2a5:: with SMTP id l5mr2697528wry.394.1643398352904;
-        Fri, 28 Jan 2022 11:32:32 -0800 (PST)
-Received: from localhost (2a01cb000f483e004bf57bbe4fddc0d6.ipv6.abo.wanadoo.fr. [2a01:cb00:f48:3e00:4bf5:7bbe:4fdd:c0d6])
-        by smtp.gmail.com with ESMTPSA id n10sm6975989wrf.96.2022.01.28.11.32.31
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=MohTi/7T09DB5Bmr3VAx/lb1eypVgsTde2V5BCKt4Tg=;
+        b=s+f5rw9b2r9wQaKtoueJkxAAK/m4UCCkKmprNb66jbBBijVrrs1MtxNdY36AubEVw7
+         GnDJ+en4OXmLt/uabQMGkjQV562rIfEYD9oss2nLmai+QKCwyNDDOpjSIY/1+RbxlfcQ
+         eC4eLlj7Wq5w4b+NJOb+yOtN6cVhSqMyuK1fLd99FTkW6ju8cLVyqsX3RorkQTaacBPJ
+         65XO7u2TjV7ilyCcfPS/jSS8F7h6wTWUz1Hjt3atWpc49FQDpAmaChf0BJ15TNpos2BU
+         8uRfKS1xPkc2y/3S5EDmX8grpOJ5Y3bhQDkRQKWHxxtUFy7EIqFtOuCCQqIshDcbZ/Eq
+         dX/w==
+X-Gm-Message-State: AOAM531fSvwLinO4cwIphA1y0EUN4JSIJCCCaDZXR9Abj/b1hkX+VLr1
+        4gJDj0QqSxBuwnjYASXuLbI=
+X-Google-Smtp-Source: ABdhPJxplUnonGdYVdo0Yj7S0UUzJCoFmyghVBw/qJCqMcCRNKjWnnMVYjufSg+SrYs8ZNvrUlWXsw==
+X-Received: by 2002:a37:a2cb:: with SMTP id l194mr6686783qke.531.1643398644123;
+        Fri, 28 Jan 2022 11:37:24 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:5cd8:5d5f:ba81:6c67? ([2600:1700:e72:80a0:5cd8:5d5f:ba81:6c67])
+        by smtp.gmail.com with ESMTPSA id w5sm3964795qko.34.2022.01.28.11.37.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 28 Jan 2022 11:32:32 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        Fri, 28 Jan 2022 11:37:23 -0800 (PST)
+Message-ID: <5283a1b2-a31f-1657-1a67-cab6d9fec0ac@gmail.com>
+Date:   Fri, 28 Jan 2022 14:37:22 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH] scalar: accept -C and -c options before the subcommand
+Content-Language: en-US
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+References: <pull.1130.git.1643195729608.gitgitgadget@gmail.com>
+ <220127.86v8y5dgus.gmgdl@evledraar.gmail.com>
+ <0f8d5d04-e86c-48e2-fea0-32c25c3f9325@gmail.com>
+ <nycvar.QRO.7.76.6.2201281148310.347@tvgsbejvaqbjf.bet>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <nycvar.QRO.7.76.6.2201281148310.347@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 28 Jan 2022 20:32:31 +0100
-Message-Id: <CHHK3G8H9D1X.23YTAHXI55311@diabtop>
-From:   "Robin Jarry" <robin.jarry@6wind.com>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>, "Emily Shaffer" <emilyshaffer@google.com>,
-        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
-        "Patryk Obara" <patryk.obara@gmail.com>,
-        "Jiang Xin" <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v3] receive-pack: check if client is alive before
- completing the push
-X-Mailer: aerc/0.7.1-32-g429b2b168003
-References: <CHGR6XNP6TV7.15VGVNQUJM9J6@diabtop>
- <20220127215553.1386024-1-robin.jarry@6wind.com>
- <xmqq4k5nychf.fsf@gitster.g>
-In-Reply-To: <xmqq4k5nychf.fsf@gitster.g>
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano, Jan 28, 2022 at 18:52:
-> If they have already exited but the fact hasn't reached us over the
-> network, the write() will succeed to deposit the packet in the send
-> buffer.  So I am not sure how much this would actually help, but it
-> should be safe to send an unsolicited keepalive as long as the other
-> side is expecting to hear from us.  When either report_status or
-> report_status_v2 capabilities is in effect, we will make a report()
-> or report_v2() call later, so we should be safe.
+On 1/28/2022 6:27 AM, Johannes Schindelin wrote:
+> Hi Stolee,
+> 
+> On Thu, 27 Jan 2022, Derrick Stolee wrote:
+> 
+>> The biggest benefits of using handle_options() is for other pre-command
+>> options such as --exec-path, which I use on a regular basis when testing
+>> new functionality.
+>>
+>> There are other options in handle_options() that might not be
+>> appropriate, or might be incorrect if we just make handle_options()
+>> non-static. For example, `scalar --list-cmds=parseopt` wouldn't show the
+>> scalar commands and would instead show the git commands.
+> 
+> Right, and since `handle_options()` lives in the same file as `git`'s
+> `cmd_main()` function, we would not only have to disentangle options that
+> work only for `git` from those that would also work for `scalar`, but we
+> would have to extract the `handle_options()` function into a separate
+> file.
 
-This is not perfect but I think this is the best we can do without
-adding a new capability so that the client sends a reply to the
-keepalive packet.
+I agree that these would be necessary steps.
 
-> I suspect that any keepalive, unless it expects an active "yes, I am
-> still alive" response from the other side, is too weak to "ensure".
+> But since I had a look at `handle_options()` anyway, I might just as well
+> summarize my insights about how applicable the supported options are for
+> `scalar` here:
+> 
+> # Beneficial
+> 
+>   -c <key>=<value>
+>   --config-env <key>=<value>
+>   -C <directory>
+> 
+> 	Since I added support for these (except for the long form
+> 	`--config-env` that I actually only learned while researching this
+> 	email), it is obvious that I'd like `scalar` to support them.
 >
-> I guess "to notice a client that has disconnected (e.g. killed with
-> ^C)" is more appropriate.
+> # Won't hurt
 
-OK, I will change that.
+These "Won't hurt" items look to me as "they probably don't matter, but
+it would be nice if "scalar <option>" didn't just fail for users who are
+used to "git <option>".
 
-> > +	if (use_sideband) {
-> > +		static const char buf[] =3D "0005\2";
-> > +		write_or_die(1, buf, sizeof(buf) - 1);
-> > +	}
->
-> Observing how execute_commands() and helper functions report an
-> error to the callers higher in the call chain, and ask them to abort
-> the remainder of the operation, I am not sure if write_or_die() is
-> appropriate.
->
->     Side note: inside copy_to_sideband(), which runs in async, it is
->     a different matter (i.e. the main process on our side is not
->     what gets killed by that _or_die() part of the call), but this
->     one kills the main process.
->
-> The convention around this code path seems to be to fill explanation
-> of error in cmd->error_string and return to the caller.  In this
-> case, the error_strings may not reach the pusher via report() or
-> report_v2() as they may have disconnected, but calling the report()
-> functions is not the only thing the caller will want to do after
-> calling us, so giving it a chance to clean up may be a better
-> design, e.g.
->
-> 	if (write_in_full(...) < 0) {
-> 		for (cmd =3D commands; cmd; cmd =3D cmd->next)
-> 	        	cmd->error_string =3D "pusher went away";
-> 		return;
-> 	}
->
-> Yes, the current code will not actually use the error string in any
-> useful way in this particular case, since report() or report_v2()
-> will have nobody listening to them.  But being consistent will help
-> maintaining the caller, as it can later be extended to use it
-> locally (e.g. log the request and its outcome, check which cmd has
-> succeeded and failed using the NULL-ness of cmd->error_string, etc.)
+> # Detrimental
 
-The main receive-pack process will be killed by SIGPIPE anyway but I can
-fill the error_string fields and return for code consistency.
+I think your "detrimental" choices are actually more useful than any of
+your "won't hurt" choices.
 
-I'll send a v4, thanks for the review.
+>   --exec-path
+> 
+> 	Since `scalar` is tightly coupled to a specific Git version, it
+> 	would cause much more harm than benefit to encourage users to use
+> 	a different Git version by offering them this option.
+
+As mentioned, I use this option in my local development all the time.
+This compatibility issue you discuss is something that happens within
+Git itself, too, when it calls a subcommand. So, users can already
+hurt themselves in this way and should be cautious about using it.
+
+>   --list-cmds
+> 
+> 	As you pointed out, this option would produce misleading output.
+
+It would, but I also think that a correct implementation would be
+helpful to users. It just takes more work than just calling
+handle_options() as-is.
+
+> Given that only the `-c` and `-C` options are _actually_ useful in the
+> context of the `scalar` command, I would argue that I chose the best
+> approach, as the benefit of the intrusive refactorings that would be
+> necessary to share code with `git.c` is rather small compared with the
+> amount of work.
+> 
+>> So my feeling is that we should continue to delay this functionality
+>> until Scalar is more stable, perhaps even until after it moves out of
+>> contrib/. The need to change handle_options() to work with a new
+>> top-level command is novel enough to be worth careful scrutiny, but that
+>> effort is only valuable if the Git community is more committed to having
+>> Scalar in the tree for the long term.
+> 
+> I am okay with holding off with this, for now.
+> 
+> On the other hand, as I pointed out above: I do not really see it worth
+> the effort to refactor `git.c:handle_options()` for the minimal benefit it
+> would give us over the approach I chose in the patch under discussion.
+
+I was thinking that it would be good to maybe extract just the "-C", "-c"
+options from handle_options() and call that from scalar.c, but it wouldn't
+work to "just parse "-C" and "-c" and then parse all the other options"
+because if someone did "git --exec-path=<X> -C <Y> status" then the "-C"
+parser would want to stop after seeing "--exec-path".
+
+So, perhaps the code copy is really the least intrusive approach we have
+until we see a need for more of these options.
+
+Thanks,
+-Stolee
