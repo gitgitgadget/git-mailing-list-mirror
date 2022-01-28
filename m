@@ -2,189 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 052D1C433FE
-	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 12:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B691AC433F5
+	for <git@archiver.kernel.org>; Fri, 28 Jan 2022 12:35:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348171AbiA1MC6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 07:02:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36442 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244353AbiA1MC4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 07:02:56 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67DFFC061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 04:02:56 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id f17so10508350wrx.1
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 04:02:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=yn11dC0UUJVOeGUVCENUnG8LQlPDdRO6ilUxv446bR0=;
-        b=nouzknN/J54bTPALP1Ast3HTWiN+ETc6p5lk+wQT2Mgse21rAoDFVOjPvsQczZX2MB
-         5sfk0ghVw3MGCkPx/Fnerit3et70gswa4hqXCQJ8nZ98gaIen5pvpd+CTGC+NEdHFX64
-         t4mtfZ1h8lL/r9ZlqrpDqndlJjrq02hxHoBxhf9YNgGWjn/EdrRINxSLcVGx8Ib/ii5H
-         ZIlthN/M6ya7FFyIaeT60zqJoM9ZkWVGjx3Cnqmc61iuRvwkKlHXfPso3PLskzqcPVIU
-         BcMEs4SmrBIT+j8KQ2v6KdJdPzCtUfaIUoiaEygMnfMG1WpJgGV/NE7Vsh2sRRL1hMvU
-         J3pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=yn11dC0UUJVOeGUVCENUnG8LQlPDdRO6ilUxv446bR0=;
-        b=8IM4Sxi3SOMyIj2EIBnAWxIvtZih7Ek/eNxBLnPyvwA4E35b42fS1Qdfn8YdT3OUqy
-         odr717mdPaPjc68ts39QmdyDCqO4gFq+Bj81jo/t0AIAqQtNxHZ3vJC0ilMb4nH/R4Kb
-         a8ji7YQ+5vgL0D7fCHHPEHChtkTzjwUqjiFusOjbrFfSzy/djk/yI8/Pr0VOH2xisH/U
-         pzsVR1KYWLLdURim5po6qIBCgmOeJ3ikfbcYP77/WkcGtbj52t4kqRHrj1X72gaoFEej
-         2flwRsGvImGo+ZlY4gimPNfyMuw4oddUxA6KrANFp8ttcOUkrwZk4yCXtGakU4l0FGXi
-         efZg==
-X-Gm-Message-State: AOAM531xwTZL2lCqcu/LMFefyY6FZ6rS7hRLYWwp0O4V9ICG6UsUoDDp
-        zUX8minoREtvLjyZbaG5t+ysLinQFNU=
-X-Google-Smtp-Source: ABdhPJww6fv9i6hiRqIJVFerp0R3V5Fufkhk7AXGvaeBY7/5BP26IKaf6Xoqw69GptPWl7bRTr2YSQ==
-X-Received: by 2002:a5d:5049:: with SMTP id h9mr6952424wrt.502.1643371374864;
-        Fri, 28 Jan 2022 04:02:54 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t16sm1945474wmq.21.2022.01.28.04.02.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jan 2022 04:02:54 -0800 (PST)
-Message-Id: <f1f027ad61beb1bd0dee73acbffdee5c0f967e9a.1643371370.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1127.v3.git.1643371370.gitgitgadget@gmail.com>
-References: <pull.1127.v2.git.1643310510.gitgitgadget@gmail.com>
-        <pull.1127.v3.git.1643371370.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 28 Jan 2022 12:02:50 +0000
-Subject: [PATCH v3 3/3] diff-filter: be more careful when looking for negative
- bits
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1348508AbiA1MfJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 07:35:09 -0500
+Received: from mout.gmx.net ([212.227.17.21]:50443 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236511AbiA1MfF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 07:35:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1643373299;
+        bh=XxcuwxFWxSSQ3bwADtwka+5tDfbqjR/p1XXBfRQUTxw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JmLIe8NVdTtqm/Nulmbo8+qOuxLYOBlQ8T757S/cbKqZOdR6SJuVgJYJXypoZ2tvq
+         7Y3q1yEot+5VrSr3HHFv+tJrCwhdMH+q3BGpvXggaQRoLRdzJKLPvURMU2ZcbwbKPT
+         hJovpB1cXFJoWkcno7n6wEecWXRslcBWAd/hIqYM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.196.48] ([89.1.213.181]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MyKDU-1mLLuJ2wSy-00yfbs; Fri, 28
+ Jan 2022 13:34:59 +0100
+Date:   Fri, 28 Jan 2022 13:34:56 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] fetch --prune: exit with error if pruning fails
+In-Reply-To: <87lez0p1db.fsf@coati.i-did-not-set--mail-host-address--so-tickle-me>
+Message-ID: <nycvar.QRO.7.76.6.2201281333410.347@tvgsbejvaqbjf.bet>
+References: <20220127153714.1190894-1-t.gummerer@gmail.com> <xmqqmtjh0x5f.fsf@gitster.g> <87lez0p1db.fsf@coati.i-did-not-set--mail-host-address--so-tickle-me>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:SQM1BkNzFQ2Lj0Jr8p7SRiOLGIwuyXM6c3zWg0biAyab+e0XOt9
+ MJYrzaJsxuJ0unwIMQWxVsHvvEtDCjH9psZQHT8Uf31QB3CGsx4EXI5YQlexpfOfS0WGaK3
+ gOTn6PNJQmdiZygulL/0M1jIyvmEnkYhmLQrsQUL5W/xRllo4rOL2VHvUwuhjQUab9mFTDW
+ /dzX2pKBJSijgR05vFnxQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Oo8sy0MUVfY=:Isx1uOOH8QKFj9u/WLeo6n
+ nmenGnRdPFFvaqJsbvZ6sFZPBZE9ZXh2nXCLLEJszjwvhB/xl/6CWicnHNoHwbgPvu5KkNNfL
+ nrqlpxSdHiCqU5wkhJ5+CcqnRdyEG+pMEpBdEt3JqyWGFrAlUCY6R32HgaY/EgepaOD0Eod4h
+ WkZv14E0hkHBtkHRqw1UiWN/ho34I1xAj+bCq3WXKIaAHWgMAQRCHEAbdTalwafBQFs/V1enk
+ O95tegYZ5aiLw0/5FSRheBksCT0fTJU+1QPg63lHjL7jhl1CQ6Hw20967JaeNwXnnVI2N0Hb8
+ 8awnxnAUmr6jA1Y4s6m1ja+EZCxNqsRFUCbUNKpQFzagvqntqgyNACzh2RAmv49eJR4GT5fH5
+ bXLNEoo7yTF6T+rkR4O99EoasOoOoKbuDkjqkV6EmdqbzTy55ierrccJ1lBqR0TX1JE3zrXVh
+ bRzAnYLl0CzxMfOOQ77xLeIxO6GhCYVz2ehTT8biVCQL/HljWAD2nvZYkJ34FsWfPyiVec06s
+ SfXkG73MgyItVoLSGE1jpQ79TKyqZgMqUwAbZ8U6KgTy6SAM/xoQkDI7j0HHUmA59y03msp1Z
+ MCM/NnC28xoKVPqkCMJLDzjlI3F8JzD6RFrgH17XLBesSUGZuyZNqCYBiUlSsBsgUtMQJUnW9
+ HpBQDSA6IQdgNXOJ78d9Y2uF+OKZICyJEIXxzn1QZSpipj7QGyIjuV//3AQOLKMddzZhkANxO
+ zcT4hnacXtzx4OWiQmt7Fazyhqjtb1pTsTXLaf5nBOxorjaNUKXZExqkLfiG89826KaOmgvct
+ RJ68y2G0wLTion/SjwWcpasvEwY3kEDPtiWhgBJWOVnLThNwuD5LG/YGrzqjAge/AQgPZ+iMk
+ Nny7xGCKRfddrlqsBWytALKQHwJvzNRCEtAvZbNggIJunhmuitOjnIynkXkl0W2fosXwWv+Ry
+ u46uJMuwAwxf6A72grDrlmNlxAjAvfgTqg3hJCjDXv/gXIzZ+YYDI1Nz1tKIVQ3ifEGZqytkL
+ vIjr4QNMdgNBjucK+TJOrHm8GOIMHI2iKmwVivMLckOLDlF5OA8rene2aCZtNvs8Ly3oy6dhx
+ ePNauAGitDdYxQ=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Thomas,
 
-The `--diff-filter=<bits>` option allows to filter the diff by certain
-criteria, for example `R` to only show renamed files. It also supports
-negating a filter via a down-cased letter, i.e. `r` to show _everything
-but_ renamed files.
+On Fri, 28 Jan 2022, Thomas Gummerer wrote:
 
-However, the code is a bit overzealous when trying to figure out whether
-`git diff` should start with all diff-filters turned on because the user
-provided a lower-case letter: if the `--diff-filter` argument starts
-with an upper-case letter, we must not start with all bits turned on.
+> Junio C Hamano writes:
+>
+> > Thomas Gummerer <t.gummerer@gmail.com> writes:
+> >
+> >> +test_expect_success REFFILES 'fetch --prune fails to delete branches=
+' '
+> >> +	cd "$D" &&
+> >> +	git clone . prune-fail &&
+> >> +	cd prune-fail &&
+> >> +	git update-ref refs/remotes/origin/extrabranch main &&
+> >> +	>.git/packed-refs.new &&
+> >> +	test_must_fail git fetch --prune origin
+> >
+> > Is it because the lockfile ".new" on packed-refs prevents deletion
+> > of refs but does not block creation and updates to existing refs
+> > that it is an effective test for the "--prune" issue?  If we somehow
+> > "locked" the whole ref updates, then the fetch would fail even
+> > without "--prune", so it may be "effective", but smells like knowing
+> > too much implementation detail.  Yuck, but I do not offhand think of
+> > any better way (it is easier to think of worse ways), so without
+> > further input, I would say that this is the best (or "least bad") we
+> > can do.
+>
+> Yes, that's correct.  New refs will be created as loose refs, so they
+> don't care about packed-refs.  However deletions can potentially be
+> happening in packed-refs, and that's why it fails when 'packed-refs.new'
+> exists.
+>
+> I don't love the test either, but I also can't think of a better way to
+> do this.
 
-Even worse, it is possible to specify the diff filters in multiple,
-separate options, e.g. `--diff-filter=AM [...] --diff-filter=m`.
+Maybe add a code comment about it? Something like:
 
-Let's accumulate the include/exclude filters independently, and only
-special-case the "only exclude filters were specified" case after
-parsing the options altogether.
+	[...]
+	: this will prevent --prune from locking packed-refs &&
+	>.git/packed-refs.new &&
+	[...]
 
-Note: The code replaced by this commit took pains to avoid setting any
-unused bits of `options->filter`. That was unnecessary, though, as all
-accesses happen via the `filter_bit_tst()` function using specific bits,
-and setting the unused bits has no effect. Therefore, we can simplify
-the code by using `~0` (or in this instance, `~<unwanted-bit>`).
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- diff.c         | 23 +++++++----------------
- diff.h         |  2 +-
- t/t4202-log.sh | 13 +++++++++++++
- 3 files changed, 21 insertions(+), 17 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 5081052c431..4ab4299b817 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4720,6 +4720,12 @@ void diff_setup_done(struct diff_options *options)
- 	if (!options->use_color || external_diff())
- 		options->color_moved = 0;
- 
-+	if (options->filter_not) {
-+		if (!options->filter)
-+			options->filter = ~filter_bit[DIFF_STATUS_FILTER_AON];
-+		options->filter &= ~options->filter_not;
-+	}
-+
- 	FREE_AND_NULL(options->parseopts);
- }
- 
-@@ -4820,21 +4826,6 @@ static int diff_opt_diff_filter(const struct option *option,
- 	BUG_ON_OPT_NEG(unset);
- 	prepare_filter_bits();
- 
--	/*
--	 * If there is a negation e.g. 'd' in the input, and we haven't
--	 * initialized the filter field with another --diff-filter, start
--	 * from full set of bits, except for AON.
--	 */
--	if (!opt->filter) {
--		for (i = 0; (optch = optarg[i]) != '\0'; i++) {
--			if (optch < 'a' || 'z' < optch)
--				continue;
--			opt->filter = (1 << (ARRAY_SIZE(diff_status_letters) - 1)) - 1;
--			opt->filter &= ~filter_bit[DIFF_STATUS_FILTER_AON];
--			break;
--		}
--	}
--
- 	for (i = 0; (optch = optarg[i]) != '\0'; i++) {
- 		unsigned int bit;
- 		int negate;
-@@ -4851,7 +4842,7 @@ static int diff_opt_diff_filter(const struct option *option,
- 			return error(_("unknown change class '%c' in --diff-filter=%s"),
- 				     optarg[i], optarg);
- 		if (negate)
--			opt->filter &= ~bit;
-+			opt->filter_not |= bit;
- 		else
- 			opt->filter |= bit;
- 	}
-diff --git a/diff.h b/diff.h
-index 8ba85c5e605..a70e7c478c1 100644
---- a/diff.h
-+++ b/diff.h
-@@ -283,7 +283,7 @@ struct diff_options {
- 	struct diff_flags flags;
- 
- 	/* diff-filter bits */
--	unsigned int filter;
-+	unsigned int filter, filter_not;
- 
- 	int use_color;
- 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 50495598619..b25182379ff 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -142,6 +142,19 @@ test_expect_success 'diff-filter=R' '
- 
- '
- 
-+test_expect_success 'multiple --diff-filter bits' '
-+
-+	git log -M --pretty="format:%s" --diff-filter=R HEAD >expect &&
-+	git log -M --pretty="format:%s" --diff-filter=Ra HEAD >actual &&
-+	test_cmp expect actual &&
-+	git log -M --pretty="format:%s" --diff-filter=aR HEAD >actual &&
-+	test_cmp expect actual &&
-+	git log -M --pretty="format:%s" \
-+		--diff-filter=a --diff-filter=R HEAD >actual &&
-+	test_cmp expect actual
-+
-+'
-+
- test_expect_success 'diff-filter=C' '
- 
- 	git log -C -C --pretty="format:%s" --diff-filter=C HEAD >actual &&
--- 
-gitgitgadget
+Ciao,
+Dscho
