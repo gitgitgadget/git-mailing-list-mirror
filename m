@@ -2,131 +2,211 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22E9DC433EF
-	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 06:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5AA6C433EF
+	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 06:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240228AbiA2GWF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Jan 2022 01:22:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59068 "EHLO
+        id S240956AbiA2Gej (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Jan 2022 01:34:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232116AbiA2GWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jan 2022 01:22:04 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79DFFC061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 22:22:04 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id j2so14407137edj.8
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 22:22:04 -0800 (PST)
+        with ESMTP id S235895AbiA2Gei (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jan 2022 01:34:38 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75EC0C061714
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 22:34:37 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id me13so23562833ejb.12
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 22:34:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zQdc0Q4u8jNaJTGIzN1suD+LfCRzp1m68o6Q3+EfcgM=;
-        b=Jc5Dha3XWdMeYFQoyklcpgAL781rYQFLqIEJSSTtForlLcZD67sOFfly3HHr9oTy79
-         hreA8B2zjL2TbvT6qdpcHoO/us7Z6PXOJGL5ssF5y6y1LGkIdv5jHyoNCq3uc4L4DqUK
-         4sOepg9LA37cUvVCy2CwOHDuIRDuq5b24GZ5Rs5dbxNFYZtZJ2HUVXoZEOjga4kMA5Dl
-         S2Oo6z68OCuTUr42ZMJSIZI67WvVB6XMgFPvth755+Cy9zdyYgAl7eDD20+3VfAPzPht
-         eDAVa8Y+MsmBkyVIlmDheTnP5jHepGiM9/iAAPrEHyNkaJNf5m8pBKS5PztpfnO9pL/a
-         yAAA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=mN6TzOjRNhse8NW7nyFtgqug4AIzLlh6MZ2AJwebwhI=;
+        b=RM8dhKWfOncgckmLho9E/nR2OwUNSpxzO+qjvqnJFXUAlN/6mARbcxsRqDY2wYHVrV
+         HfmTlLO1hRq+lnbqZn0YRfWLV3UIptB6Sf6EEPH/rLX2cC9LCRJr8U1rFA7CdWIwTJMl
+         O9xUai4aEJprrqIKRpT3VLZNa/vXe7UBFusjarGnd/hk6tlHpnU9C+rttfq/7WqRods/
+         BZawVm0H59hiaij13LEUe10MaolzX0IAG5HQLPe6jI+K//veXJoSfZI+6cxXB9NiwbMB
+         3JDywkygje+3hhqcqpNMMU47ZUyAYPWUXoQNP7N+qrR7Wa1NUvJuBfavnzDXdAxaPFwT
+         tXVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zQdc0Q4u8jNaJTGIzN1suD+LfCRzp1m68o6Q3+EfcgM=;
-        b=TZ7+89ZA92gGjoeqLKvI0hWVPSp8j6mpEwBkUnVsJha2d7WaOOuzWzEyneHSOGh3SY
-         EgzrehNT7IIfQ2btyFlDckZwHd/uqaihS0Q+bGk3UaJHtp1pQXJJ3oltLEM7P7ZLcO/y
-         7YRf95D31Z9GvEogZNWZtI9WlSBIBP72Zr2sgBfS5At3j1NaPHHX/+mTTDZ7y173Qo1+
-         GtndpHzH1taRd8bgnE1gL9vbnDPt/I2Y2lcnzhvlASYxq/BtP16yWa2wulPcJYPb9ZZe
-         zdMuTeBcIlsMuZxHfSeJs35YTiSjH6x5hjyqArls4/85ewRgXEpwoz5lskSTNO0O8fsO
-         7SqQ==
-X-Gm-Message-State: AOAM530+IalgDMtYv8CR/5rEOukvcJRvQzBv9RLXqIiman/6EsNbrUUq
-        kMOJiMYqWlECvvmuiSt+yy5JmkwKQ77qoqJ/cla4oNk3
-X-Google-Smtp-Source: ABdhPJw7TqepM5Uz6th91gWQKHUy9cYK2eNgq9/ox+tUBYjl6cJ6+IKasZ7VjL99L61H1EemuoWGbr0hmkLCxjQRdCI=
-X-Received: by 2002:a05:6402:84f:: with SMTP id b15mr5001113edz.206.1643437322804;
- Fri, 28 Jan 2022 22:22:02 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
- <fcbb087fa8865ac05e20473d822cd9795590ee38.1642888562.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2201281755200.347@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2201281755200.347@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 28 Jan 2022 22:21:51 -0800
-Message-ID: <CABPp-BEn=fvmTyYEzjSfvKkYyHj0te=6ck6WF+Jor+L1jKrVkg@mail.gmail.com>
-Subject: Re: [PATCH 09/12] merge-tree: provide a list of which files have conflicts
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=mN6TzOjRNhse8NW7nyFtgqug4AIzLlh6MZ2AJwebwhI=;
+        b=nSEf0eTANXK5PNTIxYcVHJ0s/Ak9JEzKg767Zaen7uE2VchUZVoNoMYpBFHr//7nin
+         hRuL9nTnvzWppN2/3LB2ix7nrNYB5v9pGOvdic6Pxx78egEcIzBP2HU7ATm5Nh2U4bP5
+         yuyxJaVGBKnqmyK8bVZosOkjrMqYHdvriuLICc76RR5f5KZ4mHl/IPf+whGmU1RRlJUs
+         s0jzakbN1N+JI95zbnaB6uGg2OuHyNFj0sPejdHl0GNorXORdZN4kNuWGG27PHDLMcJY
+         66vKpZUgk32uwqeeoP+aS0Y9bux26Mcxy7hMt6+AqJZda71AtYlRyPRydBpE9VGe/kXh
+         RYuQ==
+X-Gm-Message-State: AOAM531FcXjvDg8Cl9oCFn0yXqTwe3bdrBhOqjawcZTBR2Rahjznm399
+        7adgmi7g4m95dwO9N8FRR+aQFvSHQQh8PlHf
+X-Google-Smtp-Source: ABdhPJydsPmXqZLS0ifDAhryygF947C7ENplfAyG9P8xtdSWMI9riU6KTQRAsXDrUbrus9bllKlAxA==
+X-Received: by 2002:a17:907:1b21:: with SMTP id mp33mr9908747ejc.523.1643438075802;
+        Fri, 28 Jan 2022 22:34:35 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id f6sm14112451edy.18.2022.01.28.22.34.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Jan 2022 22:34:35 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nDhJi-003kyx-7r;
+        Sat, 29 Jan 2022 07:34:34 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] repo-settings: fix checking for
+ fetch.negotiationAlgorithm=default
+Date:   Sat, 29 Jan 2022 07:08:44 +0100
+References: <pull.1131.git.1643334969216.gitgitgadget@gmail.com>
+ <220128.86ee4scn2s.gmgdl@evledraar.gmail.com>
+ <CABPp-BEehHHbDi_muWHCaT1GvRmPbPiMmvB-2O9+0w2A+yEM0Q@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <CABPp-BEehHHbDi_muWHCaT1GvRmPbPiMmvB-2O9+0w2A+yEM0Q@mail.gmail.com>
+Message-ID: <220129.86y22zaw3p.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 28, 2022 at 8:57 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+
+On Fri, Jan 28 2022, Elijah Newren wrote:
+
+> Hi =C3=86var,
 >
-> Hi Elijah,
+> On Thu, Jan 27, 2022 at 11:54 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+> [...]
+>>> > Technically, before commit 3050b6dfc75d, repo-settings would treat any
+>> > fetch.negotiationAlgorithm value other than "skipping" or "noop" as a
+>> > request for "default", but I think it probably makes more sense to
+>> > ignore such broken requests and leave fetch.negotiationAlgorithm with
+>> > the default value rather than the value of "default".  (If that sounds
+>> > confusing, note that "default" is usually the default value, but when
+>> > feature.experimental=3Dtrue, "skipping" is the default value.)
+>> >
+>> > [...]
+>> >     A long sidenote about naming things "default":
+>> >
+>> >     Many years ago, in the Gnome community, there was a huge fight that
+>> >     erupted, in part due to confusion over "default". There was a jour=
+nalist
+>> >     who had been a designer in a past life, who had a little friction =
+with
+>> >     the rest of the community, but intended well and generally improved
+>> >     things. At some point, they suggested some changes to improve the
+>> >     "default" theme (and they were a nice improvement), but not being a
+>> >     developer the changes weren't communicated in the form of a patch.=
+ And
+>> >     the changes accidentally got applied to the wrong theme: the defau=
+lt one
+>> >     (yes, there was a theme named "default" which was not the default
+>> >     theme). Now, basically no one used the default theme because it wa=
+s so
+>> >     hideously ugly. I think we suffered from a case of not being able =
+to
+>> >     change the default (again?) because no one could get an agreement =
+on
+>> >     what the default should be. Who did actually use the default theme,
+>> >     though? The person writing the release notes (though they only use=
+d it
+>> >     for taking screenshots to include in the release notes, and otherw=
+ise
+>> >     used some other theme). So, with people under pressure for an immi=
+nent
+>> >     release, there were screenshots that looked like garbage, and
+>> >     investigation eventually uncovered that it was due to changes that=
+ were
+>> >     meant for the "default" theme having accidentally been applied to =
+the
+>> >     default theme. It could have just been an amusing story if not for=
+ the
+>> >     other unfortunate factors happening around the same time and the h=
+eated
+>> >     and protracted flamewars that erupted.
+>> >
+>> >     Don't name settings/themes/things "default" if it describes someth=
+ing
+>> >     specific, since someone may come along and decide that something e=
+lse
+>> >     should be the default, and then you're stuck with a non-default
+>> >     "default". Sadly, the name was already picked and documented so for
+>> >     backward compatibility we need to support it...
+>>
+>> Funny story, I think this is only going to bite us if we don't switch
+>> the default over along with promoting this out of feature.experimental.
+>>
+>> I.e. =3Ddefault should always be equivalent to not declaring that config
+>> at all anywhere, and not drift to being a reference to some name that
+>> happens to be "default", as in the GNOME case.
 >
-> On Sat, 22 Jan 2022, Elijah Newren via GitGitGadget wrote:
+> No, we have the same problem as the Gnome case.  See this part of the
+> documentation for fetch.negotiationAlgorithm:
 >
-> > From: Elijah Newren <newren@gmail.com>
-> >
-[...]
-> > diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-> > index fd7a867de60..041a4ac2785 100644
-> > --- a/Documentation/git-merge-tree.txt
-> > +++ b/Documentation/git-merge-tree.txt
-> > @@ -58,6 +58,7 @@ simply one line:
-> >  Whereas for a conflicted merge, the output is by default of the form:
-> >
-> >       <OID of toplevel tree>
-> > +     <Conflicted file list>
-> >       <Informational messages>
+> """
+>     The default is "default" which instructs Git to use the
+>     default algorithm that never skips commits (unless the server has
+>     acknowledged it or one of its descendants).
+> """
 >
-> To distinguish between the list of conflicted files and the informational
-> messages, I think it would be good to insert an empty line, as a
-> separator, like.
+> features.experimental turns on "skipping" as the default behavior, and
+> that text clearly rules out the possibility that "default" could be
+> used to mean "skipping".  So, if that experimental feature graduates,
+> then the default behavior of fetch.negotiationAlgorithm will NOT be
+> the "default" behavior of fetch.negotationAlgorithm.
 
-Yes, I agree; that's why I did so.  :-)
+I see what you mean, and I'm aware that I'm debating this with a native
+speaker :)
 
-[...]
-> >       if (o->show_messages) {
-> >               printf("\n");
+FWIW I didn't read it that way, earlier it discusses "skipping", and
+here it's describing what the default is. But especially since you'd
+have no reason to set this except to "reset to default" I didn't take it
+to be a promise that the default wouldn't change.
+
+I.e. maybe we'll just make it "skipping" and drop the current "default"
+code, or we'll give the current "default" a name at that point.
+
+But I do see how us not having a name for the "defult" complicates that
+view of the world. For grep.patternType we've got the same thing, but
+"default" there is "basic", so that's a bit different.
+
+I do read log.date's "default" as being the sort of GNOME case you're
+describing however. But I don't think we'd ever change the default
+there, a date format is too subjective, whereas an internal algorithm is
+liable to change.
+
+But I think we should just change this to make it explicit (separate
+from this narrow bugfix). Maybe "exhaustive" would be a good permanent
+name for the default algorithm?
+
+>> In our case it's more of a story about the inconsistencies in our config
+>> space, i.e. some values you can't reset at all, some take empty values
+>> to do so, others "default" etc.
+>> [...]
+>>
+>> Since it's the same as the preceding test, maybe we can squash this in
+>> to avoid the duplication? This works for me.
+>> [...]
+>> -       rm -f trace &&
+>> -       cp -r client clientv2 &&
+>> -       GIT_TRACE_PACKET=3D"$(pwd)/trace" git -C clientv2 -c protocol.ve=
+rsion=3D2 \
+>> +test_expect_success 'use ref advertisement to prune "have" lines sent' '
+>> +       test_negotiation_algorithm_default \
+>>                 -c feature.experimental=3Dtrue \
+>> -               -c fetch.negotiationAlgorithm=3Ddefault \
+>> -               fetch origin server_has both_have_2 &&
+>> -       grep "have $(git -C client rev-parse client_has)" trace &&
+>> -       grep "have $(git -C client rev-parse both_have_2)" trace &&
+>> -       ! grep "have $(git -C client rev-parse both_have_2^)" trace
+>> +               -c fetch.negotiationAlgorithm=3Ddefault
 >
-> ... it seems that we do this already...
+> I think you accidentally dropped one of the two tests by turning it
+> into a function and then only calling it for the latter usage and not
+> the former, but I get your idea.  It makes sense; I'll make the
+> change.
 
-Yep.
-
-[...]
-> > diff --git a/t/t4301-merge-tree-real.sh b/t/t4301-merge-tree-real.sh
-> > index c34f8e6c1ed..43c9950dedb 100755
-> > --- a/t/t4301-merge-tree-real.sh
-> > +++ b/t/t4301-merge-tree-real.sh
-> > @@ -94,6 +94,8 @@ test_expect_success 'test conflict notices and such' '
-> >       #   "whatever" has *both* a modify/delete and a file/directory conflict
-> >       cat <<-EOF >expect &&
-> >       HASH
-> > +     greeting
-> > +     whatever~side1
-> >
-> >       Auto-merging greeting
-> >       CONFLICT (content): Merge conflict in greeting
->
-> ... as illustrated by the test, too. I guess the documentation should show
-> the empty line, too?
-
-It does:
-
-    Informational messages
-    ~~~~~~~~~~~~~~~~~~~~~~
-
-    This always starts with a blank line to separate it from the previous
-    sections, and then has free-form messages about the merge, such as:
-
-The newline should not be split out separately, because --no-messages
-suppresses the newline.  (Without the messages section, the newline
-isn't needed.)
+Ah yes, oops. Yes we should clearly have the non-"-c [...]" case too
+(and it's what I was aiming for) :)
