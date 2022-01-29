@@ -2,196 +2,246 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA834C433F5
-	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 06:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FAE0C433EF
+	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 06:59:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241669AbiA2Gqn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Jan 2022 01:46:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36196 "EHLO
+        id S1345112AbiA2G7O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Jan 2022 01:59:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229958AbiA2Gqm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jan 2022 01:46:42 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7512CC061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 22:46:41 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id u18so14507561edt.6
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 22:46:41 -0800 (PST)
+        with ESMTP id S242645AbiA2G7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jan 2022 01:59:10 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB270C061714
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 22:59:09 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id a8so23631879ejc.8
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 22:59:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=p0TVzSaRraChCqsXVZY4uvZv7AfTcBz0jNFOIhK5c5I=;
-        b=VIudr39VtvxQoSDd+Y6BcNQwylgunupPoWy8kGVTLdpS2RGUqniVMBL8MdCF4k2b9e
-         aM5iIQvA2PUknqJQqEU/+C3FJAOwFXnRjurQzvVjZHLlUWaOmy66Tf9KAczX+B/qtE+L
-         WB7barvHsOLbmio9SofjV7wkvugzBa2I/HJBORJbO1Gap7Xeiy2Tw9jAc5DOlhDS8Bo7
-         Mn746Jf1YheHWJA5sdmJcDpGxittI3tL5tgj9yCst4uY4S6W7GMfIj/VGc74TSTseTxb
-         kRN6D+Hv1GhY2ilLxTz5+K4Ao0IgpOBqs+UqIw6dm/WvM3bNLQwSKb6sdml6vkgLlZFz
-         rFzQ==
+         :message-id:mime-version;
+        bh=whzCAPFHZzZIZB8Jq3pPLF0mJdHGgZlLJUrVJQUgxSg=;
+        b=Pdrx4HwqORh5zPRRa3+tJW9L0GCn3v2zwjI4t0PzC39Tnxx3p0b1XUfnX6XksbDrB6
+         eWFNPw1sD4SgBBDMmRBvvbDZ4m5nzlcX+BJmJeg+NdPL6Gj71bJA06idwHQ/qw/gRehy
+         Kc5wkq+c0bN7tRrD1g1gQW+dJIDj0Vxgw8fyQjWaFknc2fLz/I09BFfpse4p3KQlqPKs
+         cQG8+GEzw9X35i/hKrgBANqMlnf8ugH+Pn6lA4sAj2KEHT/IaKp63DRgZZfwje7aCR3J
+         ry8XHp2RiSy/qE4fdzmr8oPkkZ0nLwUHVgGcYi03HDi8fkeWMhSfKXP3tVmWBDnONbZo
+         td2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=p0TVzSaRraChCqsXVZY4uvZv7AfTcBz0jNFOIhK5c5I=;
-        b=toWq8ntUx4OeOOLa0Zrs41wLK5GuU+d2M7M+uhwn+7eoE3ztKFUoq80/Mi5rY3Qv9A
-         Mm4LVk3hwvGlIwFn95kT0ALbYzXJHE7dQZLlLU1MR0XtTVi29JHXMo/saKKQgxGC6KS7
-         re5sF5juothnq4/aVKs9iZyIxIFpuGTnA08E63clq6JCzHI2Bd4WfmdqbdBGCkvwEpEK
-         PTes9BH+SJx/aRYnPECUiAE8uLvwfwU3KkqpmdJf5wzJ9EokMq34ZWBrjsLw2cu/RPd0
-         7n5LYXLybArB2EgIjmX9nu0NFyw0nyoGLYQ+TBaWCfmDZb9J+vnFdNRvU2L0sbvZIJXC
-         eb0A==
-X-Gm-Message-State: AOAM532hRi0oR0D7f7aZE7awrU6wDVLDCD2GKqax7Ti9Pv25+S0I/Lc5
-        5a95rvhQ8cDdERUwvDVkrXM=
-X-Google-Smtp-Source: ABdhPJwG7auYM0C6fs0mTdxXG7531TDKldT+dRbl51K8u6VDnxhK3+zidEiOKulcW7QScgRreIRIGg==
-X-Received: by 2002:a05:6402:254a:: with SMTP id l10mr11296163edb.318.1643438799748;
-        Fri, 28 Jan 2022 22:46:39 -0800 (PST)
+         :in-reply-to:message-id:mime-version;
+        bh=whzCAPFHZzZIZB8Jq3pPLF0mJdHGgZlLJUrVJQUgxSg=;
+        b=VLFORDdt9/PJqmIljVZSuG4JTTM34XoeWVn6rEKLayCJiAussM8ja5DeJ1vRaVVyJy
+         YsN4yp4y9pnwvG/hU2Fi8iuEhDIAwzlX4MIpZP0uJq16qt/NLL7r528JSHlt+wRb9RQD
+         CnUdDgtTbPT4958l0S9FT98InWM8Q1R9ytedyEAmfKmeYqV9OKPWX67R8XC2lRrPZq+a
+         U3hnZ+P8Kb063xDT16r/kYgW0pKqWLXOn4/BPoXB1aQ5Mu6yR1UZNOc8WcQLNBQJImur
+         YYOabuMxVesSifz54j5jq01j2xU0cmHrM3bURgaIm107iYf0Um7jqYjPW3Hqm8Xb4JPN
+         eTBA==
+X-Gm-Message-State: AOAM531mOKD+t2gnpmw5CQ0YxU0OaFYaJk0BNYwdX64om2kTQjRuzS8N
+        xRlMhdX7NHm67fDgMiIFNyMrHhRvx4dNhlxA
+X-Google-Smtp-Source: ABdhPJyo14mQzKDU2xsfTLtafEzVIg6HRwwSYlqNHY91Ydij8QrwEaM7YPBPPeX47TOWStjVXaZPyA==
+X-Received: by 2002:a17:907:9253:: with SMTP id kb19mr9549177ejb.707.1643439547913;
+        Fri, 28 Jan 2022 22:59:07 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id d17sm14143193ede.88.2022.01.28.22.46.39
+        by smtp.gmail.com with ESMTPSA id o11sm13948121edq.5.2022.01.28.22.59.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jan 2022 22:46:39 -0800 (PST)
+        Fri, 28 Jan 2022 22:59:07 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nDhVO-003lDt-JL;
-        Sat, 29 Jan 2022 07:46:38 +0100
+        id 1nDhhS-003lTC-Qj;
+        Sat, 29 Jan 2022 07:59:06 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] scalar: accept -C and -c options before the subcommand
-Date:   Sat, 29 Jan 2022 07:39:45 +0100
-References: <pull.1130.git.1643195729608.gitgitgadget@gmail.com>
- <220127.86v8y5dgus.gmgdl@evledraar.gmail.com>
- <0f8d5d04-e86c-48e2-fea0-32c25c3f9325@gmail.com>
- <nycvar.QRO.7.76.6.2201281148310.347@tvgsbejvaqbjf.bet>
- <220128.8635l7d7y6.gmgdl@evledraar.gmail.com>
- <2150a170-bf02-f510-3995-c103650ad8fc@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 07/11] bisect: move even the option parsing to
+ `bisect--helper`
+Date:   Sat, 29 Jan 2022 07:47:52 +0100
+References: <pull.1132.git.1643328752.gitgitgadget@gmail.com>
+ <515e86e20758ed7f5b4a8ce8f38bfbbac27ec42a.1643328752.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <2150a170-bf02-f510-3995-c103650ad8fc@gmail.com>
-Message-ID: <220129.86tudnavjl.gmgdl@evledraar.gmail.com>
+In-reply-to: <515e86e20758ed7f5b4a8ce8f38bfbbac27ec42a.1643328752.git.gitgitgadget@gmail.com>
+Message-ID: <220129.86pmobauyt.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Jan 28 2022, Derrick Stolee wrote:
+On Fri, Jan 28 2022, Johannes Schindelin via GitGitGadget wrote:
 
-> On 1/28/2022 1:21 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Fri, Jan 28 2022, Johannes Schindelin wrote:
->>=20
->>> On Thu, 27 Jan 2022, Derrick Stolee wrote:
->>>
->>>> The biggest benefits of using handle_options() is for other pre-command
->>>> options such as --exec-path, which I use on a regular basis when testi=
-ng
->>>> new functionality.
->>>>
->>>> There are other options in handle_options() that might not be
->>>> appropriate, or might be incorrect if we just make handle_options()
->>>> non-static. For example, `scalar --list-cmds=3Dparseopt` wouldn't show=
- the
->>>> scalar commands and would instead show the git commands.
->>>
->>> Right, and since `handle_options()` lives in the same file as `git`'s
->>> `cmd_main()` function, we would not only have to disentangle options th=
-at
->>> work only for `git` from those that would also work for `scalar`, but we
->>> would have to extract the `handle_options()` function into a separate
->>> file.
->>>
->>> And while at it, a tangent someone with infinite time on their hands mi=
-ght
->>> suggest is: why not convert `handle_options()` to the `parse_options()`
->>> machinery? Which would of course solve one issue by adding several new
->>> ones. Don't get me wrong: I would find it useful to convert
->>> `git.c:handle_options()` to a function in `libgit.a` which uses the
->>> `parse_options()` machinery. It'll just require a lot of time, and I do
->>> not see enough benefit that would make it worth embarking on that
->>> particular journey.
->>>
->>> But since I had a look at `handle_options()` anyway, I might just as we=
-ll
->>> summarize my insights about how applicable the supported options are for
->>> `scalar` here:
->>> [...]
->>> # Detrimental
->>>
->>>   --exec-path
->>>
->>> 	Since `scalar` is tightly coupled to a specific Git version, it
->>> 	would cause much more harm than benefit to encourage users to use
->>> 	a different Git version by offering them this option.
->>=20
->> So just to clarify, do you and Stolee disagree about scalar supporting
->> --exec-path, per his comments above?
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> [...]
+> Side note: The `if (!strcmp(...)) ... else if (!strcmp(...)) ... else if
+> (!strcmp(...)) ...` chain seen in this patch was not actually the first
+> idea how to convert the command modes to sub-commands. Since the
+> `bisect--helper` command already used the `parse-opions` API with neatly
+> set-up command modes, naturally the idea was to use `PARSE_OPT_NODASH`
+> to support proper sub-commands instead. However, the `parse-options` API
+> is not set up for that, and even after making that option work with long
+> options, it turned out that `STOP_AT_NON_OPTION` and `KEEP_UNKNOWN`
+> would have to be used but these options were not designed to work
+> together. So it would appear as if a lot of work would have to be done
+> just to be able to use `parse_options()` just to parse the sub-command,
+> instead of a simple `if...else if` chain, the latter being a
+> dramatically simpler implementation. Therefore, we now keep the
+> `parse_options()` call primarily to support `-h` and little else.
+
+Yes, in this case we're hardly getting any use out of parse_options() as
+it is.
+
+And here the problem is that we're going from parsing a "git <cmd>
+--bisect-FOO" to "git <cmd> FOO", and parse_options() obviously is more
+set up to like the former form.
+
+For your playing around with flags (the "not set up for that" for
+PARSE_OPT_NODASH is that it doesn't like "long options"?) I wonder if
+you considered/tried just setting the argc you pass to it such that it
+only looks at the "FOO" item.
+
+Or just parse_options_step(), which is the supported function equivalent
+of "I set up my state, now parse this one item".
+
+Anyway...
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/bisect--helper.c | 172 ++++++++++++++++-----------------------
+>  git-bisect.sh            |  49 +----------
+>  2 files changed, 72 insertions(+), 149 deletions(-)
 >
-> I think it would be nice, but it's also not a blocker for me.
->
->> In this case I don't mind much, but speaking generally I see you and
->> Stolee tying yourselves in knots again about scalar being in contrib so
->> we shouldn't use libgit.
->>=20
->> It already uses libgit, there's even (last I checked) at least one
->> function in it only used directly by the scalar code.
->
-> My concern is not that we shouldn't use libgit (because we do) but that
-> we shouldn't make significant changes to libgit.a only for Scalar's
-> benefit until it is incorporated in a more final way.
->
-> In my opinion, well-architected code is code that is easy to delete.
-> Until we have Scalar mostly feature-complete and can make a decision
-> about it living in the Git tree long-term (and _where_ it resides), I
-> would like to have the following property: If I were to revert all
-> commits that touch contrib/scalar/ and squash them into a single commit,
-> then we would have a bunch of file deletions and a very small set of
-> edits to the Makefile. I don't know how much the ship has sailed there
-> already, but keeping the size of that "revert diff" small means that we
-> are keeping the coupling low during this review process.
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 219fa99cd0b..4450305c81c 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -20,18 +20,34 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
+>  static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
+>  static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
+>  
+> -static const char * const git_bisect_helper_usage[] = {
+> -	N_("git bisect--helper --bisect-reset [<commit>]"),
+> -	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
+> -	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
+> -					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
+> -	N_("git bisect--helper --bisect-next"),
+> -	N_("git bisect--helper [--bisect-state] (bad|new) [<rev>]"),
+> -	N_("git bisect--helper [--bisect-state] (good|old) [<rev>...]"),
+> -	N_("git bisect--helper --bisect-replay <filename>"),
+> -	N_("git bisect--helper --bisect-skip [(<rev>|<range>)...]"),
+> -	N_("git bisect--helper --bisect-visualize"),
+> -	N_("git bisect--helper --bisect-run <cmd>..."),
+> +static const char * const git_bisect_usage[] = {
+> +	N_("git bisect help\n"
+> +	   "\tprint this long help message."),
+> +	N_("git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]\n"
+> +	   "\t\t [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]\n"
+> +	   "\treset bisect state and start bisection."),
+> +	N_("git bisect (bad|new) [<rev>]\n"
+> +	   "\tmark <rev> a known-bad revision/\n"
+> +	   "\t\ta revision after change in a given property."),
+> +	N_("git bisect (good|old) [<rev>...]\n"
+> +	   "\tmark <rev>... known-good revisions/\n"
+> +	   "\t\trevisions before change in a given property."),
+> +	N_("git bisect terms [--term-good | --term-bad]\n"
+> +	   "\tshow the terms used for old and new commits (default: bad, good)"),
+> +	N_("git bisect skip [(<rev>|<range>)...]\n"
+> +	   "\tmark <rev>... untestable revisions."),
+> +	N_("git bisect next\n"
+> +	   "\tfind next bisection to test and check it out."),
+> +	N_("git bisect reset [<commit>]\n"
+> +	   "\tfinish bisection search and go back to commit."),
+> +	N_("git bisect (visualize|view)\n"
+> +	   "\tshow bisect status in gitk."),
+> +	N_("git bisect replay <logfile>\n"
+> +	   "\treplay bisection log."),
+> +	N_("git bisect log\n"
+> +	   "\tshow bisect log."),
+> +	N_("git bisect run <cmd>...\n"
+> +	   "\tuse <cmd>... to automatically bisect."),
+>  	NULL
+>  };
 
-Fair enough.
+...I think you're throwing the baby out with the bathwater here. The
+parse_options() version is much nicer to maintain, and will to
+auto-alignment of the help output.
 
-I think there's cases where it won't make sense, and cases where it
-will.
+As builtin/commit-graph.c, builtin/stash.c, builtin/bundle.c we can and
+do have these manual if/else if chains in combination with
+parse_options(). There's no need to change this part (except for the
+s/bisect-helper/bisect/ etc. change.
 
-Maybe it doesn't make sense here, but generally I wouldn't take it being
-needed for scalar heavily into account per-se, for the review & i18n
-reasons I mentioned.
+>  
+> @@ -1168,115 +1184,69 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
+>  
+>  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>  {
+> -	enum {
+> -		BISECT_START = 1,
+> -		BISECT_STATE,
+> -		BISECT_TERMS,
+> -		BISECT_SKIP,
+> -		BISECT_NEXT,
+> -		BISECT_RESET,
+> -		BISECT_VISUALIZE,
+> -		BISECT_REPLAY,
+> -		BISECT_LOG,
+> -		BISECT_RUN,
+> -	} cmdmode = 0;
+>  	int res = 0;
+>  	struct option options[] = {
+> -		OPT_CMDMODE(0, "bisect-start", &cmdmode,
+> -			 N_("start the bisect session"), BISECT_START),
+> -		OPT_CMDMODE(0, "bisect-state", &cmdmode,
+> -			 N_("mark the state of ref (or refs)"), BISECT_STATE),
+> -		OPT_CMDMODE(0, "bisect-terms", &cmdmode,
+> -			 N_("print out the bisect terms"), BISECT_TERMS),
+> -		OPT_CMDMODE(0, "bisect-skip", &cmdmode,
+> -			 N_("skip some commits for checkout"), BISECT_SKIP),
+> -		OPT_CMDMODE(0, "bisect-next", &cmdmode,
+> -			 N_("find the next bisection commit"), BISECT_NEXT),
+> -		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+> -			 N_("reset the bisection state"), BISECT_RESET),
+> -		OPT_CMDMODE(0, "bisect-visualize", &cmdmode,
+> -			 N_("visualize the bisection"), BISECT_VISUALIZE),
+> -		OPT_CMDMODE(0, "bisect-replay", &cmdmode,
+> -			 N_("replay the bisection process from the given file"), BISECT_REPLAY),
+> -		OPT_CMDMODE(0, "bisect-log", &cmdmode,
+> -			 N_("list the bisection steps so far"), BISECT_LOG),
+> -		OPT_CMDMODE(0, "bisect-run", &cmdmode,
+> -			 N_("use <cmd>... to automatically bisect."), BISECT_RUN),
+>  		OPT_END()
+>  	};
+>  	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
+> +	const char *command = argc > 1 ? argv[1] : "help";
+>  
+> -	argc = parse_options(argc, argv, prefix, options,
+> -			     git_bisect_helper_usage,
+> -			     PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_UNKNOWN);
+> +	/* Handle -h and invalid options */
+> +	parse_options(argc - 1, argv + 1, prefix, options,
+> +		      git_bisect_usage,
+> +		      PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_UNKNOWN |
+> +		      PARSE_OPT_ONE_SHOT | PARSE_OPT_STOP_AT_NON_OPTION);
 
-I.e. the list is already looking at these patches, and translators are
-being presented these strings as part of our existing set.
+Why isn't PARSE_OPT_STOP_AT_NON_OPTION sufficient here? That's pretty
+much our "this is subcommand" pattern flag. See:
 
-So "this reuses existing tested code" and "you won't need to translate
-this new thing" will be benefits whatever the current state of scalar
-is.
+    git grep -W PARSE_OPT_STOP_AT_NON_OPTION -- builtin
 
->> I don't remember anyone having any objection to scalar using libgit
->> code, or even that there's libgit code just to help it along. That's a
->> self-imposed limitation you two seem to have invented.
->>=20
->> Personally I find a patch like the below much easier to review. It's the
->> parts that aren't easy to review boilerplate are all things that we have
->> in-tree already.
->>=20
->> Whereas proposing a new way to parse -c or -C will lead (at least me) to
->> carefully eyeballing that new implementation, looking at how it differs
->> (if at all) from the existing one, wondering why the i18n strings are
->> subtly different etc (I saw one reason is that since the code was
->> copy/pasted initially the git.c version was updated, but your patch
->> wasn't updated to copy it).
->
->> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
->> index 1ce9c2b00e8..ee793ff6ccc 100644
->> --- a/contrib/scalar/scalar.c
->> +++ b/contrib/scalar/scalar.c
->
->> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
->> index 1ce9c2b00e8..ee793ff6ccc 100644
->> --- a/contrib/scalar/scalar.c
->> +++ b/contrib/scalar/scalar.c
->
-> Was this diff double-copied or something?
+Which lists the examples above.
 
-Yes, sorry the first 3 hunks are the same. I manually re-copied this
-into my editor (I forgot a stray debugging printf) and screwed it up.
+I think this should strive to just copy an existing pattern as-is. See
+e.g. 92f480909f7 (multi-pack-index: refactor "goto usage" pattern,
+2021-08-23) for one change to make them a bit more consistent (as they
+all solve the same problem)....
+
+> [...]
+> +		else {
+> +			char *msg = xstrfmt(_("unknown command: '%s'"), command);
+> +			usage_msg_opt(msg, git_bisect_usage, options);
+
+...e.g. this part in cmd_commit_graph is nicer.
