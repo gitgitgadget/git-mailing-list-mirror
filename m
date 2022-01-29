@@ -2,142 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A290C433F5
-	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 18:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C834C433F5
+	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 18:09:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353093AbiA2SHn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Jan 2022 13:07:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44634 "EHLO
+        id S1352989AbiA2SJc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Jan 2022 13:09:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353013AbiA2SH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jan 2022 13:07:27 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D930CC061757
-        for <git@vger.kernel.org>; Sat, 29 Jan 2022 10:07:26 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id j5-20020a05600c1c0500b0034d2e956aadso6391039wms.4
-        for <git@vger.kernel.org>; Sat, 29 Jan 2022 10:07:26 -0800 (PST)
+        with ESMTP id S244646AbiA2SJb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jan 2022 13:09:31 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FBD7C061714
+        for <git@vger.kernel.org>; Sat, 29 Jan 2022 10:09:31 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id h20-20020a17090adb9400b001b518bf99ffso14042068pjv.1
+        for <git@vger.kernel.org>; Sat, 29 Jan 2022 10:09:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=lLW1tnVjrI8ldV8t2Ig6LB0ohAIWgVUqYCgU8u6eHps=;
-        b=qMx8aUz9OSLKalXt80m8bmfRqhcdC2zJCmDonL8Z/PgKK6ciMlQg4Fgzz7TncgYJax
-         fuWEyjYAewOTP/3phkIMbOOL+SgRxSVIV75bTIYqJLCqVqIhuAGGbunf5heEufimfqfE
-         jN/ckp0K2BrwgBuGB6/52ZTatZ3fwNPyrboEhPMVVnKd0Zv0tJA3ehYTYCOEsz9ToTlE
-         pjrB2OKKH9qVgEHYbJGEPq9Ffwz3t9mkC7lrNikkdBdXCImbFcV37D373aJs+VexAB27
-         nLHOxghLKfecSA3WW0WkAeER3ODuut26EF/df/iHSD7rqDd5CkpmfbXfXFIEoPnYobhe
-         gMRw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dAad/I3J2tVkQoUF7SQYfCZKBgyWo5AMoir1H0T49GQ=;
+        b=dBzymi48Z+6Xvls48HHW9AqDvN8amV6DV35Qix6k/fMoed5QZ7INTjTGgg/7LWUSiZ
+         ALK8KqbXgoX60oEMzUv/+IPPsnYJJjkdOgo6ElY8NBhn9epQXm+/8rzSWo07ny+NwXnf
+         5UB7rXektta+QiRBDl/5xrf2kxkz2L8kNuJAag63xKxqVCjR3dYLDYA6piu+bcWCY2TG
+         L8XssSZb8Pfcb1OGshOLR/auBndsQqbBJotvwZEEJ9jY1RyX6Ba+WRQ0Fr0GNRmIQK/B
+         6LOSPBp2peMltQ0UgBD10Tg+y8xwU1AgbIxQ6wrGutMRRntOYDLqHxxs6yzGg9SfSjH6
+         AbHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lLW1tnVjrI8ldV8t2Ig6LB0ohAIWgVUqYCgU8u6eHps=;
-        b=7ZHe0btFjrNkbwsDL0jAN4pnHmu/VIjof2nNj0wMss2PEi8GYTS56zfQDOOqrnirmB
-         fbhelDCdo/XAt/Uxx9BYbqX689niv1pv4GM1L5WsW8qhELBxhInFb24UEuszxpPVdyWi
-         p0W3ZAz4eOZkSJF4fhphiwYTpTX2X0SJuNqFzGrTIhUAD3cjXZArKlhx9U2nOT+AiuoB
-         QQEVX384Pd15skfy/CmI+K0qG9lFD3O0GplqCjXinmPCAH007e9KHcOiw+GnUcijT+fP
-         l93ed+mXDWDVfXnndcoGeauEi3pR1eANtsueHkmiwhcVY6YYYh9eDyRE1sSItSrhfH6s
-         XRQw==
-X-Gm-Message-State: AOAM531fA6LBZGEm5j5LC4+RcpWJxM3D3RikrBjKV2N0PkuzyQXWAREA
-        ibJt0EY0efuAwE4z3vGV91SJf5eyNgk=
-X-Google-Smtp-Source: ABdhPJy6JluEPoTDMpGm6Qvvnq1vFgHIq8PTYCTUGc3S59/H+NtkTpmQlPjaTEvMRkhhKklUJish9A==
-X-Received: by 2002:a05:600c:35c8:: with SMTP id r8mr8844398wmq.142.1643479645265;
-        Sat, 29 Jan 2022 10:07:25 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o3sm7409535wrq.70.2022.01.29.10.07.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Jan 2022 10:07:24 -0800 (PST)
-Message-Id: <e7c63425a0e4070a3bfd0e7614d7447a42e3d598.1643479633.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
-References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
-        <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 29 Jan 2022 18:07:13 +0000
-Subject: [PATCH v2 13/13] git-merge-tree.txt: add a section on potentional
- usage mistakes
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dAad/I3J2tVkQoUF7SQYfCZKBgyWo5AMoir1H0T49GQ=;
+        b=U7NkRxRmaqsfSWbSw3SikKL2Dn4zHG87MsgItKzanyywkVVSSGuZR36PGdNrjXg+Y9
+         JHQNUAMvFZkM+2aMc5SGJ9+o934oZxoTaQcuAj9KaA0uQMJAiByoDwrYjPSAniKN95S4
+         VcWvpk7Rw2TlGTMZZ8WY3mayMB0YbXPNLf6pev+2Iu88TrJDtPuSZmkxWK7AK05K+ZUJ
+         ET9zmRPO9Wxub/BsiKlEddHzIam2DMJidKyTJjn+JNpZMY4hX39NhcdZXIVTJcP7QHtG
+         bGvTJQrb1oIYoPsx4/i15LRjjIADoNUchavfSvNSirN826f4kSGp0+dF/5GVQ4tebD79
+         5nPA==
+X-Gm-Message-State: AOAM531FPt8uarmMEYLCXiNoR/H4rhzRHlv4hwomrK9m02lejNDVJKxN
+        2bROsvSrZBlaCGuSw4k4L1A=
+X-Google-Smtp-Source: ABdhPJxBUt7KQvjFO3xNThLBQC2uoYAVNA6lzhHrwn68Ut/FqhQma/QtH4hhX1RYB+Eilh6DUy0LOQ==
+X-Received: by 2002:a17:902:694c:: with SMTP id k12mr14456092plt.98.1643479771043;
+        Sat, 29 Jan 2022 10:09:31 -0800 (PST)
+Received: from [192.168.208.38] ([49.204.143.33])
+        by smtp.gmail.com with ESMTPSA id rm3sm6358344pjb.13.2022.01.29.10.09.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 29 Jan 2022 10:09:30 -0800 (PST)
+Subject: Re: Git in GSoC 2022?
+To:     Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Cc:     Git Community <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+ <YfGpjm8mCkWIPM6V@nand.local>
+ <CAP8UFD1Mqv=MUcdjjhTpOkP0yWpnv9Jr=aB5G+4XmAqWsJBX4g@mail.gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <f850f137-79a2-6fcb-cd2f-de382c314fad@gmail.com>
+Date:   Sat, 29 Jan 2022 23:39:26 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+In-Reply-To: <CAP8UFD1Mqv=MUcdjjhTpOkP0yWpnv9Jr=aB5G+4XmAqWsJBX4g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On 27/01/22 3:02 pm, Christian Couder wrote:
+> Hi,
+> 
+> On Wed, Jan 26, 2022 at 9:05 PM Taylor Blau <me@ttaylorr.com> wrote:
+> 
+>> On Wed, Jan 26, 2022 at 11:59:16PM +0530, Kaartic Sivaraam wrote:
+>>> First, are we interested in participating in the 2022 round of
+>>> GSoC?
+>>
+>> I think it would be great to participate this year, provided that we can
+>> come up with some interesting projects and mentors to help out.
+> 
+> I agree.
+> 
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-merge-tree.txt | 46 ++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+Great. :)
 
-diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-index d35710c81d5..b97ddc58a7a 100644
---- a/Documentation/git-merge-tree.txt
-+++ b/Documentation/git-merge-tree.txt
-@@ -133,6 +133,52 @@ that they'd have access to if using `git merge`:
-   * any messages that would have been printed to stdout (the <Informational
-     messages>)
- 
-+MISTAKES TO AVOID
-+-----------------
-+
-+Do NOT look through the resulting toplevel tree to try to find which
-+files conflict; parse the <Conflicted file info> section instead.  Not
-+only would parsing an entire tree be horrendously slow in large
-+repositories, there are numerous types of conflicts not representable by
-+conflict markers (modify/delete, mode conflict, binary file changed on
-+both sides, file/directory conflicts, various rename conflict
-+permutations, etc.)
-+
-+Do NOT interpret an empty <Conflicted file info> list as a clean merge;
-+check the exit status.  A merge can have conflicts without having
-+individual files conflict (there are a few types of directory rename
-+conflicts that fall into this category, and others might also be added
-+in the future).
-+
-+Do NOT attempt to guess or make the user guess the conflict types from
-+the <Conflicted file info> list.  The information there is insufficient
-+to do so.  For example: Rename/rename(1to2) conflicts (both sides
-+renamed the same file differently) will result in three different file
-+having higher order stages (but each only has one higher order stage),
-+with no way (short of the <Informational messages> section) to determine
-+which three files are related.  File/directory conflicts also result in
-+a file with exactly one higher order stage.
-+Possibly-involved-in-directory-rename conflicts (when
-+"merge.directoryRenames" is unset or set to "conflicts") also result in
-+a file with exactly one higher order stage.  In all cases, the
-+<Informational messages> section has the necessary info, though it is
-+not designed to be machine parseable.
-+
-+Do NOT assume all filenames listed in the <Informational messages>
-+section had conflicts.  Messages can be included for files that have no
-+conflicts, such as "Auto-merging <file>".
-+
-+AVOID taking the OIDS from the <Conflicted file info> and re-merging
-+them to present the conflicts to the user.  This will lose information.
-+Instead, look up the version of the file found within the <OID of
-+toplevel tree> and show that instead.  In particular, the latter will
-+have conflict markers annotated with the original branch/commit being
-+merged and, if renames were involved, the original filename.  While you
-+could include the original branch/commit in the conflict marker
-+annotations when re-merging, the original filename is not available from
-+the <Conflicted file info> and thus you would be losing information that
-+might help the user resolve the conflict.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
+>>>      Taylor showed interest in a bitmap-related project during
+>>>      the Outreachy application period [4]. Taylor, are you still
+>>>      interested in mentoring a bitmap-related project? Would it
+>>>      be possible for you to do so for the upcoming GSoC?
+>>
+>> I'm available and interested in mentoring. I don't think I found many
+>> interested folks via Outreachy who wanted to work on bitmaps, but I
+>> think it's worth trying again via GSoC. I can rejigger the proposed
+>> projects there a bit, too.
+> 
+> I am also available and interested in mentoring and I can reuse a
+> project prepared for the last Outreachy round too.
+> 
+
+That's nice.
+
+I've opened a PR in the git.github.io repo to create a mostly empty ideas
+document for GSoC 2022. Here's the link for reference:
+
+   https://github.com/git/git.github.io/pull/540
+
+Once that's merged, anyone could feel free to open PRs with their
+ideas to this document:
+
+   https://github.com/git/git.github.io/blob/master/SoC-2022-Ideas.md
+
+   (note: currently returns a 404; it should work if the PR is merged)
+
+Alternatively, if you share information about a project idea here, I would
+be glad to add them to the document. For some motivation, you could see the
+project ideas page of 2021:
+
+   https://git.github.io/SoC-2021-Ideas/
+
 -- 
-gitgitgadget
+Sivaraam
