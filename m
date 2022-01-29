@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E047C433F5
-	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 00:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0EABC433F5
+	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 00:05:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351892AbiA2AFE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 19:05:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33366 "EHLO
+        id S1351893AbiA2AFI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 19:05:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351857AbiA2AFA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 19:05:00 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AFC0C061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 16:05:00 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id v8-20020a17090a778800b001b2e6d08cd1so4673047pjk.8
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 16:05:00 -0800 (PST)
+        with ESMTP id S1351868AbiA2AFC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 19:05:02 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54237C061747
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 16:05:02 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id x1-20020a17090ab00100b001b380b8ed35so4671072pjq.7
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 16:05:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=dWSTTlcJ4T1THDMW0itLmeWFkX3ceLwh7/zIH80teS0=;
-        b=OGKPpkYLMHsjo2l/RfYqz0xamnWMkjjUKqO88sH/xgBK1ubSuqHIScsHmEOBtom6tV
-         XUDlJEhecW2CPbmuKMTVs0NLcQyyS+8Fh9jxwzLqUv5gruZsvLvtBCSL7LPxKYgPh6pp
-         jo2CiRIN5QOHYB2aRNpFEAy9z+CcMiiXvC8wGJ+jaLpbnlsNsiIIGs2QMZQdrUq32qYL
-         nYxIsrhkVxMN5Wj/5Abs+0Ym3auAlqdpAazTlSOvt1O5Y8X8aW9qiatMoihbMxCqAxS3
-         WMRrPccZfKmiLluTuCd7/ZRrSlhRSXWXR+4WL2Ork89D+KFHn1jozUrHoy02pB+w+65Y
-         hxdA==
+        bh=Z2cI7+fidAOey6BoZpTflTD7ym3i9+9ULEDvvtZ51HM=;
+        b=spqdZcjGOTiv1HZCmvjfxQFDqOsBlweVhLHndLMiGs7QEwjqGDYCSyXGR3SiwC7m61
+         1ZNCGaUJmf+fbNxLOGaLtSDeX+m8SMN9GiMwrM1v8+j+2GENz03CnsmVVpijJG/MPNVG
+         k0RB3yuOYcmiwA/siQ/0UF6mUs5QtmyZnHFs+2BxmMoAzknUrf9+ENZH7leQjEOe3s9f
+         XNnPYUtJ23a1xS2f0G2zIctSD4Fm9jqAhViRmEVc3LVJb/YBMb+0fQh8QUx6QK0sUDxr
+         kO64FCrUoQsvEYBk+vO/kBbrqK2OrDBt4jnS5j48CRNdys7yahM/pMr15RDW8UR5QFC8
+         YHqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=dWSTTlcJ4T1THDMW0itLmeWFkX3ceLwh7/zIH80teS0=;
-        b=CBs7IAw8G+l8gpw4grGvAVSZBbY40lVVJfP6l0mpO2zQm39T3CoBlIkGBCN25FY2iD
-         7RV7BLoYXVPGNpaPvku53CcMPLAPddNPbeAgWhbsX+RYiHUfQqnAaeVJxvsm4kJFGnhk
-         huFFWkxft9+TxwjMuIDrKbTOX4VsIrECgoUsw/+jXbwtmpnuB7sgDh8amK/ADDj4oPdI
-         fLtLApEI6H8b7HtSSR9zlOSDGCSoXfN8yptrOmNqr6QtgW9Iq0LBph8At8abLeXhHLJS
-         S7OQ+RhJ0SvJu1qxTiU80k8HsQEJYCObR3maQoslx091GXbMYNmwOrW/iDzOMMHsDu9m
-         hRjQ==
-X-Gm-Message-State: AOAM533wYlhoKNRDCgzZ9Fq5wlBNFNqIosk79WMKY40Be5Xjzog8m+up
-        5BUj/mL+4AO3+EBoY4xe3ZabMbwEvftpsH9Z7VAq1Ah9QLBaKaj0BizPexAzy7M9hxkxpDTY3Hy
-        DNDRk1s9dBxiRc2OKWjZ7YVsg/vhumqpG+4UKTPuADh5WEuw2ZLW9AOPz+XhM7Do=
-X-Google-Smtp-Source: ABdhPJz8oyCq07Lvvioja0EANAgc125cxn8VlRVbK1+1f+3RK3fkma5Nwr2JJTpM27vlUPaqa072XXLEOhPTqQ==
+        bh=Z2cI7+fidAOey6BoZpTflTD7ym3i9+9ULEDvvtZ51HM=;
+        b=pi/xgIoPUT/cYtGjhEmU7gA3ELmx3Vm8UZ+szsmU3lMqNBLRGpY3e1poxmw6PKqtOJ
+         oFHG2qj5dO85xc+V25iErPV9ivlgoMdf2YIOgb8Xx7i+KVA+i2Qs1hkgUw2jp2Ull87X
+         481sRBWrqTJOgJ/974/9s7wNvjbp3DB0gEi8Rw9xvnb6Q00dnNBYTTPJK1kGMudL02Ho
+         FNm2e/SHi0wJfKjqWcB+iNvdRPLSBJqPN3LwfcWbkbYrseo9LGT1VqCqFuSX7Fyto3zr
+         t45ug0xnpZLD4FI59nOPRSjp8M2HQxmljWclZ6Il5kDzL/9KhRTjl9nLPDuCajxLv3oa
+         gVWw==
+X-Gm-Message-State: AOAM53355BW+6NVfWBPh55VaA3u9p4yMAnBsRkTWwl2XgzwudtjXvP95
+        f6gdmOtrZhJNY9AV3zUqGwwAqpHikP8CVjm6Ojq/jaKAw2h6L5mT/qzoIdwYhzy+6R7/ixbq1ss
+        lS1cN5Bp3j1gW32RiU5yMHHBFCS/4ZWcnNZCj1dSjzecNev1gNCcNxg/lUaF1vFw=
+X-Google-Smtp-Source: ABdhPJyPQOGIzj9ffKrOD6YvcE5/REe4/a7xqueYlv6MvMb8lWAihcOsfMVdd7tb277+UOKm3uDUyuLG0Agl7g==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:f54b:: with SMTP id
- h11mr10904993plf.86.1643414699579; Fri, 28 Jan 2022 16:04:59 -0800 (PST)
-Date:   Fri, 28 Jan 2022 16:04:41 -0800
+ (user=chooglen job=sendgmr) by 2002:a17:902:b718:: with SMTP id
+ d24mr10820987pls.46.1643414701592; Fri, 28 Jan 2022 16:05:01 -0800 (PST)
+Date:   Fri, 28 Jan 2022 16:04:42 -0800
 In-Reply-To: <20220129000446.99261-1-chooglen@google.com>
-Message-Id: <20220129000446.99261-2-chooglen@google.com>
+Message-Id: <20220129000446.99261-3-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220124204442.39353-1-chooglen@google.com> <20220129000446.99261-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.0.rc2.247.g8bbb082509-goog
-Subject: [PATCH v8 1/6] branch: move --set-upstream-to behavior to dwim_and_setup_tracking()
+Subject: [PATCH v8 2/6] branch: make create_branch() always create a branch
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -66,93 +66,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit is preparation for a future commit that will simplify
-create_branch() so that it always creates a branch. This will allow
-create_branch() to accept a dry_run parameter (which is needed for "git
-branch --recurse-submodules").
+With the previous commit, there are no more invocations of
+create_branch() that do not create a branch because:
 
-create_branch() used to always create a branch, but 4fc5006676 (Add
-branch --set-upstream, 2010-01-18) changed it to also be able to set
-tracking information without creating a branch.
+* BRANCH_TRACK_OVERRIDE is no longer passed
+* clobber_head_ok = true and force = false is never passed
 
-Refactor the code that sets tracking information into its own functions
-dwim_branch_start() and dwim_and_setup_tracking(). Also change an
-invocation of create_branch() in cmd_branch() in builtin/branch.c to use
-dwim_and_setup_tracking(), since that invocation is only for setting
-tracking information (in "git branch --set-upstream-to").
-
-As of this commit, create_branch() is no longer invoked in a way that
-does not create branches.
+Assert these situations, delete dead code and ensure that we're handling
+clobber_head_ok and force correctly by introducing tests for `git branch
+--force`. As a result, create_branch() now always creates a branch.
 
 Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- branch.c         | 87 +++++++++++++++++++++++++++++++++++++-----------
- branch.h         | 22 ++++++++++++
- builtin/branch.c |  9 ++---
- 3 files changed, 92 insertions(+), 26 deletions(-)
+ branch.c          | 57 ++++++++++++++++++++++-------------------------
+ branch.h          |  4 ++--
+ t/t3200-branch.sh | 17 ++++++++++++++
+ 3 files changed, 46 insertions(+), 32 deletions(-)
 
 diff --git a/branch.c b/branch.c
-index a4e4631ef1..f3a31930fb 100644
+index f3a31930fb..df24021f27 100644
 --- a/branch.c
 +++ b/branch.c
-@@ -218,9 +218,11 @@ static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
- }
- 
- /*
-- * This is called when new_ref is branched off of orig_ref, and tries
-- * to infer the settings for branch.<new_ref>.{remote,merge} from the
-- * config.
-+ * Used internally to set the branch.<new_ref>.{remote,merge} config
-+ * settings so that branch 'new_ref' tracks 'orig_ref'. Unlike
-+ * dwim_and_setup_tracking(), this does not do DWIM, i.e. "origin/main"
-+ * will not be expanded to "refs/remotes/origin/main", so it is not safe
-+ * for 'orig_ref' to be raw user input.
-  */
- static void setup_tracking(const char *new_ref, const char *orig_ref,
- 			   enum branch_track track, int quiet)
-@@ -341,31 +343,37 @@ N_("\n"
- "will track its remote counterpart, you may want to use\n"
- "\"git push -u\" to set the upstream config as you push.");
- 
--void create_branch(struct repository *r,
--		   const char *name, const char *start_name,
--		   int force, int clobber_head_ok, int reflog,
--		   int quiet, enum branch_track track)
-+/**
-+ * DWIMs a user-provided ref to determine the starting point for a
-+ * branch and validates it, where:
-+ *
-+ *   - r is the repository to validate the branch for
-+ *
-+ *   - start_name is the ref that we would like to test. This is
-+ *     expanded with DWIM and assigned to out_real_ref.
-+ *
-+ *   - track is the tracking mode of the new branch. If tracking is
-+ *     explicitly requested, start_name must be a branch (because
-+ *     otherwise start_name cannot be tracked)
-+ *
-+ *   - out_oid is an out parameter containing the object_id of start_name
-+ *
-+ *   - out_real_ref is an out parameter containing the full, 'real' form
-+ *     of start_name e.g. refs/heads/main instead of main
-+ *
-+ */
-+static void dwim_branch_start(struct repository *r, const char *start_name,
-+			   enum branch_track track, char **out_real_ref,
-+			   struct object_id *out_oid)
- {
- 	struct commit *commit;
- 	struct object_id oid;
+@@ -429,15 +429,19 @@ void create_branch(struct repository *r,
  	char *real_ref;
--	struct strbuf ref = STRBUF_INIT;
--	int forcing = 0;
+ 	struct strbuf ref = STRBUF_INIT;
+ 	int forcing = 0;
 -	int dont_change_ref = 0;
- 	int explicit_tracking = 0;
- 
- 	if (track == BRANCH_TRACK_EXPLICIT || track == BRANCH_TRACK_OVERRIDE)
- 		explicit_tracking = 1;
- 
+-
 -	if ((track == BRANCH_TRACK_OVERRIDE || clobber_head_ok)
 -	    ? validate_branchname(name, &ref)
 -	    : validate_new_branchname(name, &ref, force)) {
@@ -160,119 +101,107 @@ index a4e4631ef1..f3a31930fb 100644
 -			dont_change_ref = 1;
 -		else
 -			forcing = 1;
--	}
--
- 	real_ref = NULL;
- 	if (get_oid_mb(start_name, &oid)) {
- 		if (explicit_tracking) {
-@@ -402,7 +410,37 @@ void create_branch(struct repository *r,
++	struct ref_transaction *transaction;
++	struct strbuf err = STRBUF_INIT;
++	char *msg;
++
++	if (track == BRANCH_TRACK_OVERRIDE)
++		BUG("'track' cannot be BRANCH_TRACK_OVERRIDE. Did you mean to call dwim_and_setup_tracking()?");
++	if (clobber_head_ok && !force)
++		BUG("'clobber_head_ok' can only be used with 'force'");
++
++	if (clobber_head_ok ?
++			  validate_branchname(name, &ref) :
++			  validate_new_branchname(name, &ref, force)) {
++		forcing = 1;
+ 	}
  
- 	if ((commit = lookup_commit_reference(r, &oid)) == NULL)
- 		die(_("Not a valid branch point: '%s'."), start_name);
--	oidcpy(&oid, &commit->object.oid);
-+	if (out_real_ref) {
-+		*out_real_ref = real_ref;
-+		real_ref = NULL;
-+	}
-+	if (out_oid)
-+		oidcpy(out_oid, &commit->object.oid);
-+
-+	FREE_AND_NULL(real_ref);
-+}
-+
-+void create_branch(struct repository *r,
-+		   const char *name, const char *start_name,
-+		   int force, int clobber_head_ok, int reflog,
-+		   int quiet, enum branch_track track)
-+{
-+	struct object_id oid;
-+	char *real_ref;
-+	struct strbuf ref = STRBUF_INIT;
-+	int forcing = 0;
-+	int dont_change_ref = 0;
-+
-+	if ((track == BRANCH_TRACK_OVERRIDE || clobber_head_ok)
-+	    ? validate_branchname(name, &ref)
-+	    : validate_new_branchname(name, &ref, force)) {
-+		if (!force)
-+			dont_change_ref = 1;
-+		else
-+			forcing = 1;
-+	}
-+
-+	dwim_branch_start(r, start_name, track, &real_ref, &oid);
- 
+ 	dwim_branch_start(r, start_name, track, &real_ref, &oid);
+@@ -445,27 +449,20 @@ void create_branch(struct repository *r,
  	if (reflog)
  		log_all_ref_updates = LOG_REFS_NORMAL;
-@@ -436,6 +474,15 @@ void create_branch(struct repository *r,
- 	free(real_ref);
- }
  
-+void dwim_and_setup_tracking(struct repository *r, const char *new_ref,
-+			     const char *orig_ref, enum branch_track track,
-+			     int quiet)
-+{
-+	char *real_orig_ref;
-+	dwim_branch_start(r, orig_ref, track, &real_orig_ref, NULL);
-+	setup_tracking(new_ref, real_orig_ref, track, quiet);
-+}
-+
- void remove_merge_branch_state(struct repository *r)
- {
- 	unlink(git_path_merge_head(r));
+-	if (!dont_change_ref) {
+-		struct ref_transaction *transaction;
+-		struct strbuf err = STRBUF_INIT;
+-		char *msg;
+-
+-		if (forcing)
+-			msg = xstrfmt("branch: Reset to %s", start_name);
+-		else
+-			msg = xstrfmt("branch: Created from %s", start_name);
+-
+-		transaction = ref_transaction_begin(&err);
+-		if (!transaction ||
+-		    ref_transaction_update(transaction, ref.buf,
+-					   &oid, forcing ? NULL : null_oid(),
+-					   0, msg, &err) ||
+-		    ref_transaction_commit(transaction, &err))
+-			die("%s", err.buf);
+-		ref_transaction_free(transaction);
+-		strbuf_release(&err);
+-		free(msg);
+-	}
++	if (forcing)
++		msg = xstrfmt("branch: Reset to %s", start_name);
++	else
++		msg = xstrfmt("branch: Created from %s", start_name);
++	transaction = ref_transaction_begin(&err);
++	if (!transaction ||
++		ref_transaction_update(transaction, ref.buf,
++					&oid, forcing ? NULL : null_oid(),
++					0, msg, &err) ||
++		ref_transaction_commit(transaction, &err))
++		die("%s", err.buf);
++	ref_transaction_free(transaction);
++	strbuf_release(&err);
++	free(msg);
+ 
+ 	if (real_ref && track)
+ 		setup_tracking(ref.buf + 11, real_ref, track, quiet);
 diff --git a/branch.h b/branch.h
-index 815dcd40c0..ab2315c611 100644
+index ab2315c611..cf3a4d3ff3 100644
 --- a/branch.h
 +++ b/branch.h
-@@ -18,6 +18,28 @@ extern enum branch_track git_branch_track;
- 
- /* Functions for acting on the information about branches. */
- 
-+/**
-+ * Sets branch.<new_ref>.{remote,merge} config settings such that
-+ * new_ref tracks orig_ref according to the specified tracking mode.
-+ *
-+ *   - new_ref is the name of the branch that we are setting tracking
-+ *     for.
-+ *
-+ *   - orig_ref is the name of the ref that is 'upstream' of new_ref.
-+ *     orig_ref will be expanded with DWIM so that the config settings
-+ *     are in the correct format e.g. "refs/remotes/origin/main" instead
-+ *     of "origin/main".
-+ *
-+ *   - track is the tracking mode e.g. BRANCH_TRACK_REMOTE causes
-+ *     new_ref to track orig_ref directly, whereas BRANCH_TRACK_INHERIT
-+ *     causes new_ref to track whatever orig_ref tracks.
-+ *
-+ *   - quiet suppresses tracking information.
-+ */
-+void dwim_and_setup_tracking(struct repository *r, const char *new_ref,
-+			     const char *orig_ref, enum branch_track track,
-+			     int quiet);
-+
- /*
-  * Creates a new branch, where:
+@@ -52,8 +52,8 @@ void dwim_and_setup_tracking(struct repository *r, const char *new_ref,
   *
-diff --git a/builtin/branch.c b/builtin/branch.c
-index c5de1207e4..62b1a70b05 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -822,12 +822,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		if (!ref_exists(branch->refname))
- 			die(_("branch '%s' does not exist"), branch->name);
+  *   - force enables overwriting an existing (non-head) branch
+  *
+- *   - clobber_head_ok allows the currently checked out (hence existing)
+- *     branch to be overwritten; without 'force', it has no effect.
++ *   - clobber_head_ok, when enabled with 'force', allows the currently
++ *     checked out (head) branch to be overwritten
+  *
+  *   - reflog creates a reflog for the branch
+  *
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index a74b2e06a1..9157382ad0 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -42,6 +42,23 @@ test_expect_success 'git branch abc should create a branch' '
+ 	git branch abc && test_path_is_file .git/refs/heads/abc
+ '
  
--		/*
--		 * create_branch takes care of setting up the tracking
--		 * info and making sure new_upstream is correct
--		 */
--		create_branch(the_repository, branch->name, new_upstream,
--			      0, 0, 0, quiet, BRANCH_TRACK_OVERRIDE);
-+		dwim_and_setup_tracking(the_repository, branch->name,
-+					new_upstream, BRANCH_TRACK_OVERRIDE,
-+					quiet);
- 	} else if (unset_upstream) {
- 		struct branch *branch = branch_get(argv[0]);
- 		struct strbuf buf = STRBUF_INIT;
++test_expect_success 'git branch abc should fail when abc exists' '
++	test_must_fail git branch abc
++'
++
++test_expect_success 'git branch --force abc should fail when abc is checked out' '
++	test_when_finished git switch main &&
++	git switch abc &&
++	test_must_fail git branch --force abc HEAD~1
++'
++
++test_expect_success 'git branch --force abc should succeed when abc exists' '
++	git rev-parse HEAD~1 >expect &&
++	git branch --force abc HEAD~1 &&
++	git rev-parse abc >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'git branch a/b/c should create a branch' '
+ 	git branch a/b/c && test_path_is_file .git/refs/heads/a/b/c
+ '
 -- 
 2.33.GIT
 
