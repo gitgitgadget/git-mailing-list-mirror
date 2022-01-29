@@ -2,211 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3953C433F5
-	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 07:11:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE6A0C433F5
+	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 07:59:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349266AbiA2HLY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Jan 2022 02:11:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41658 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243344AbiA2HLW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jan 2022 02:11:22 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1977C061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 23:11:21 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id c24so14818959edy.4
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 23:11:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=wkTE8FoJIeBUGhT2opj1kH+zl24SVeFuCe1u/8InToA=;
-        b=JCaCaGzHMQvqpwzl90vi5vu9A2fIIlZ4nc8Iiul/JGhaC5AmeAEK8l1OQvchGJ5nAv
-         +YUhcNwD97aIc4ziGiac/AyAZ0bbVLlhLmS76Wi4LmM1hlfYvC+aG3ejMKJF0eY6Ayg6
-         xGFJANS6xW/jrlNoS1kLPW0wrXFUc0eniIDb5qX3xhNOTP/kQrw3hBZfpO7jPfvdtnXs
-         z7uFSUQepEHEh5pGkhEYUCj1p28clZLHHSBKRIaulbAmkpOZiZJwP6OXtDuekezC9t2u
-         5kNRu0lNUovVVJ9mdjQcGULzgpFINSX8YgjEPYPj8Ob/scLD84houHqxi6p3zsFDkt7n
-         /qtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=wkTE8FoJIeBUGhT2opj1kH+zl24SVeFuCe1u/8InToA=;
-        b=wsXv+RCjIyIcB8cYktaYKsoX3TxCED3SyYdEiEI+F1CNiIPGfTjPdGJYs6sCoY2GiS
-         Lwzd8pEUPlnzMNvKO4wlhKhnxYgi7g+946FnWH9cb8pzxu78oxtNjl3N9YOrrhAWSkrE
-         eXuU0eY31SDwv6c8l3jj7spdbzR2Mv2QyhLV5cLbkYVIIJsWgg/Ts0W1VH2Z2MD+ObPN
-         Mh1/WD8yMxDsLdRLJUX0Go1K8sMrm1b6hMCQyHn714RWzB1IJW4byU3t5R4MoUcr6LsG
-         wdaMX8AemhDsSvQ5cIPplSUve0+HCE953Nw1BgGekCjPgxu3cv7xgxdr1mO0pmB1rO+m
-         lQcg==
-X-Gm-Message-State: AOAM5329Jlz6KsaQIxaIAqT4Hxk3odi5ZoBc8qnUasxJk3T0Tp+Dmzv7
-        bt/VmTYA3xatXYBAQ8ln39bBFZnhz1udHJEZ
-X-Google-Smtp-Source: ABdhPJwQJRjIWH5KDeW10juiwaw9tJRF9o8wusz3sNo/EX0XNdJP/LK6ypWItHlKSyoU30Y9AHNvOg==
-X-Received: by 2002:a05:6402:4415:: with SMTP id y21mr11591263eda.162.1643440280234;
-        Fri, 28 Jan 2022 23:11:20 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id cz6sm8712213edb.4.2022.01.28.23.11.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jan 2022 23:11:19 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nDhtH-003lj4-6N;
-        Sat, 29 Jan 2022 08:11:19 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 09/11] Turn `git bisect` into a full built-in.
-Date:   Sat, 29 Jan 2022 08:09:28 +0100
-References: <pull.1132.git.1643328752.gitgitgadget@gmail.com>
- <1c0bd8a326f482d1a6c485b7f93f510268dade20.1643328752.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <1c0bd8a326f482d1a6c485b7f93f510268dade20.1643328752.git.gitgitgadget@gmail.com>
-Message-ID: <220129.86h79naueg.gmgdl@evledraar.gmail.com>
+        id S1343747AbiA2H7c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Jan 2022 02:59:32 -0500
+Received: from mout.gmx.net ([212.227.17.21]:32903 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241942AbiA2H7a (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jan 2022 02:59:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1643443168;
+        bh=ktA2F3wPFRz0fTr4R8pUmH0WOmJo7htNjmmsxznzU/g=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=RSSoZx+VUZdGqh8X3v7eIM1eizy7LTx1topQ4EnKC2nIyTcNz6PRMwis19m6LPiV4
+         088EzjjT0ToXbw7j5HRfmurSDAPFvuee4bfAqQ1kn4PTvxrv+qGq7kKHW2BggX/MAU
+         sufvcWOSRNfd+KK1BntnStFIpzcn9KJM3m8rT6Xs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az71-976.54gadnqkfkfezo4rfhga4mummb.dx.internal.cloudapp.net
+ ([168.62.215.17]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MKsj7-1mxRCs3v6D-00LGjD; Sat, 29 Jan 2022 08:59:28 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.35.1
+Date:   Sat, 29 Jan 2022 07:59:24 +0000
+Message-Id: <20220129075924.4980-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.35.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
+Fcc:    Sent
+X-Provags-ID: V03:K1:nH3X7ttRGpF9RaX6TpfAgC2xdKL5kZr1atl9PAt8+S+IoKn/eG4
+ mXzjL9JNB8jRAx22nSc1RVuYQi3YjMgHt8DUZs6lN93wIHauz94uxAAXtoS5yUcQn7j6vSj
+ L6e+FLynr86sWJzng05IiJMe2dIETZr1b6jSAcwa5fjpK4nXNK1Em92CmMkIX7B0Hh/mJ1W
+ HBRM7UjkkN3pwpIAqTVkg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WhoDpx4Ei/M=:rN0vdwfYQz1b2UMBvchjFX
+ dfAjjIb5lN1vtLFJhURrMi4mIxr2m32667udV8yDVTEWjvne4v/8qga/Cg/LqeZnklYuSn5AI
+ tQGYDIxsZXhydw7QMgduTh00ECUGArxPvQdEHu3ONPtXBejE3Lr3fEbWDgPpTdwtMzy0Fi93y
+ Qz8fxCUbJZw3hANAf/YKMsAe/64pogh+BgmYsI3uWX65aoMxX+gkKo8qGQ73bhtN1y8JQnCCO
+ hDDFgyWBKuNdPUdpZtyb5INvkuBUnpYIBgO0wMywbTJEoGg9UKJvyX5DDtWe87nL4qhrX15Yi
+ L5BooPLMq/USxJnAeF7L9MIaeHFqtXgr/Z3pyOyBqha0HeG546OeJNynabhxdiPLQuW3TB4NE
+ 7ZkxuI13oA4IxnNFGsOYq2Ly0FAOVa5fXmlFnKd+drGRiGLtRqWV3jTrlTqt0DQCBmG3UyAJU
+ IvPjMrBhy73vRZecfKCIjRdLKgbBmBT1rNADdR8ZGlOLBIv7jyi6oXks2sdeo/DlTH6poNV+6
+ Bhk2GJ88bgdy70umOADTHWP0CA6wq+esCI11RbsBdqScWLeoj5+opIdXtY4xuxkZMxfatE4nm
+ fquOEuNC77hwkOUcS1TqlOxIgcJkZT40a6Mab97GL0GJ2G4SADUnPCW+rgiaM9H7hToQZFRIb
+ Mo75yPb7eCes4jMX6P7AHQ/DeLWgcTToGtlLc0C93bPcEIILPnW3jShjYETcd4Q54vZuGQdt2
+ uc18r5X9A1KsDdHInIx6AKz2mGSruWrSTne0kKpCZsGdcLCuEtIZKOgL7upAWX1Odl8nJQipr
+ 8iHsrK/9/Y0Siaatk8aQ9X0EdiWhjTy+3x3vUodY7b8UYqQ+rooIV9EJGaKPrm9aNA9gZmaGm
+ 08Sl3kZhF6Z0dHILZ83VxBhPZ0fMFSg2pzykkPOnFhXoh7kE4vG46lP36qTP0LI313h6e91cO
+ c0yPwjs9D/yjoZ+bxsvI4CMbetdVvR9b8POTP6W/4dR1oX7HeVXjIBNhl+YdlUP92YkxSLrIx
+ Yio3J9zK5+kqZ2dO91RaeWZQ9p2Akvk4N4bj2XlCuYM9/6i1dk1l1yW1C5J+Qp3v9U1Ry5Mf4
+ xWSD47sJjtVUsA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Dear Git users,
 
-On Fri, Jan 28 2022, Johannes Schindelin via GitGitGadget wrote:
+I hereby announce that Git for Windows 2.35.1 is available from:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Now that the shell script hands off to the `bisect--helper` to do
-> _anything_ (except to show the help), it is but a tiny step to let the
-> helper implement the actual `git bisect` command instead.
->
-> This retires `git-bisect.sh`, concluding a multi-year journey that many
-> hands helped with, in particular Pranit Bauna, Tanushree Tumane and
-> Miriam Rubio.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  Makefile                               |  3 +--
->  builtin.h                              |  2 +-
->  builtin/{bisect--helper.c => bisect.c} |  2 +-
->  git-bisect.sh                          | 37 --------------------------
->  git.c                                  |  2 +-
->  5 files changed, 4 insertions(+), 42 deletions(-)
->  rename builtin/{bisect--helper.c => bisect.c} (99%)
->  delete mode 100755 git-bisect.sh
->
-> diff --git a/Makefile b/Makefile
-> index 5580859afdb..ce2eabeca58 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -595,7 +595,6 @@ THIRD_PARTY_SOURCES =
->  # interactive shell sessions without exporting it.
->  unexport CDPATH
->  
-> -SCRIPT_SH += git-bisect.sh
->  SCRIPT_SH += git-difftool--helper.sh
->  SCRIPT_SH += git-filter-branch.sh
->  SCRIPT_SH += git-merge-octopus.sh
-> @@ -1064,7 +1063,7 @@ BUILTIN_OBJS += builtin/am.o
->  BUILTIN_OBJS += builtin/annotate.o
->  BUILTIN_OBJS += builtin/apply.o
->  BUILTIN_OBJS += builtin/archive.o
-> -BUILTIN_OBJS += builtin/bisect--helper.o
-> +BUILTIN_OBJS += builtin/bisect.o
->  BUILTIN_OBJS += builtin/blame.o
->  BUILTIN_OBJS += builtin/branch.o
->  BUILTIN_OBJS += builtin/bugreport.o
-> diff --git a/builtin.h b/builtin.h
-> index 8a58743ed63..b5567ea3a9d 100644
-> --- a/builtin.h
-> +++ b/builtin.h
-> @@ -116,7 +116,7 @@ int cmd_am(int argc, const char **argv, const char *prefix);
->  int cmd_annotate(int argc, const char **argv, const char *prefix);
->  int cmd_apply(int argc, const char **argv, const char *prefix);
->  int cmd_archive(int argc, const char **argv, const char *prefix);
-> -int cmd_bisect__helper(int argc, const char **argv, const char *prefix);
-> +int cmd_bisect(int argc, const char **argv, const char *prefix);
->  int cmd_blame(int argc, const char **argv, const char *prefix);
->  int cmd_branch(int argc, const char **argv, const char *prefix);
->  int cmd_bugreport(int argc, const char **argv, const char *prefix);
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect.c
-> similarity index 99%
-> rename from builtin/bisect--helper.c
-> rename to builtin/bisect.c
-> index 009c919a989..189aca9dd22 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect.c
-> @@ -1182,7 +1182,7 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
->  	}
->  }
->  
-> -int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
-> +int cmd_bisect(int argc, const char **argv, const char *prefix)
->  {
->  	int res = 0;
->  	struct option options[] = {
-> diff --git a/git-bisect.sh b/git-bisect.sh
-> deleted file mode 100755
-> index 028d39cd9ce..00000000000
-> --- a/git-bisect.sh
-> +++ /dev/null
-> @@ -1,37 +0,0 @@
-> -#!/bin/sh
-> -
-> -USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|view|replay|log|run]'
-> -LONG_USAGE='git bisect help
-> -	print this long help message.
-> -git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]
-> -		 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]
-> -	reset bisect state and start bisection.
-> -git bisect (bad|new) [<rev>]
-> -	mark <rev> a known-bad revision/
-> -		a revision after change in a given property.
-> -git bisect (good|old) [<rev>...]
-> -	mark <rev>... known-good revisions/
-> -		revisions before change in a given property.
-> -git bisect terms [--term-good | --term-bad]
-> -	show the terms used for old and new commits (default: bad, good)
-> -git bisect skip [(<rev>|<range>)...]
-> -	mark <rev>... untestable revisions.
-> -git bisect next
-> -	find next bisection to test and check it out.
-> -git bisect reset [<commit>]
-> -	finish bisection search and go back to commit.
-> -git bisect (visualize|view)
-> -	show bisect status in gitk.
-> -git bisect replay <logfile>
-> -	replay bisection log.
-> -git bisect log
-> -	show bisect log.
-> -git bisect run <cmd>...
-> -	use <cmd>... to automatically bisect.
-> -
-> -Please use "git help bisect" to get the full man page.'
-> -
-> -OPTIONS_SPEC=
-> -. git-sh-setup
-> -
-> -exec git bisect--helper "$@"
-> diff --git a/git.c b/git.c
-> index edda922ce6d..a8500132a28 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -490,7 +490,7 @@ static struct cmd_struct commands[] = {
->  	{ "annotate", cmd_annotate, RUN_SETUP | NO_PARSEOPT },
->  	{ "apply", cmd_apply, RUN_SETUP_GENTLY },
->  	{ "archive", cmd_archive, RUN_SETUP_GENTLY },
-> -	{ "bisect--helper", cmd_bisect__helper, RUN_SETUP },
-> +	{ "bisect", cmd_bisect, RUN_SETUP },
->  	{ "blame", cmd_blame, RUN_SETUP },
->  	{ "branch", cmd_branch, RUN_SETUP | DELAY_PAGER_CONFIG },
->  	{ "bugreport", cmd_bugreport, RUN_SETUP_GENTLY },
+    https://gitforwindows.org/
 
-This should really be squashed into 07/11, and I think shows an unstated
-reason for why you probably ditched parse_options.
+Changes since Git for Windows v2.35.0 (January 24th 2022)
 
-I.e. you've stuck the descriptions of the command into what we'd in
-parse_options() put after a "" item. See builtin/blame.c for such a use.
+New Features
 
-So having this squashed would really make it clear how the "-h" output
-is different after this series (which is OK), and what strings are
-re-used or not etc.
+  * Comes with Git v2.35.1.
+
+Git-2.35.1-64-bit.exe | 5d66948e7ada0ab184b2745fdf6e11843443a97655891c3c6268b5985b88bf4f
+Git-2.35.1-32-bit.exe | 5e45b1226b106dd241de0be0b350052afe53bd61dce80ac6044600dc85fbfa0b
+PortableGit-2.35.1-64-bit.7z.exe | fe70498dbeee9b3616d9c2a9766279362efdc030dd5ae0c9882f090efdf3d04d
+PortableGit-2.35.1-32-bit.7z.exe | f4b945cf9ee74106673fcc712ef4e92285d2ceca8b81c7d9bfe86eda1f00db9e
+MinGit-2.35.1-64-bit.zip | 4c0e24b27c425282afc1755b518cd876833efcd07765be04c383af9e365a221a
+MinGit-2.35.1-32-bit.zip | 134c2c5c74f3dcf68ba940b20a631f4153ce89ea2ba5974f93a839f0ab3cb9d0
+MinGit-2.35.1-busybox-64-bit.zip | 36f5693228a177bf0aec00085f44a7014dae8b47a4ea20867ca24857a4a0a070
+MinGit-2.35.1-busybox-32-bit.zip | 9dc2093dd30c1d404baca1604f1fb50ed977e3e0ce65943ff2a5c956c6d4fadf
+Git-2.35.1-64-bit.tar.bz2 | a8dafe3ed839494e8b71212c1027830aa8d6f2f04365f4e523888f793f8e3fd5
+Git-2.35.1-32-bit.tar.bz2 | 57b063b1db2d99836330043527137b5db8f63a29ef8845480dd9a3908f555f92
+
+Ciao,
+Johannes
