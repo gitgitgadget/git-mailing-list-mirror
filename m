@@ -2,131 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52A6CC433EF
-	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 08:08:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D078C433F5
+	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 08:18:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344026AbiA2IIj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Jan 2022 03:08:39 -0500
-Received: from bsmtp2.bon.at ([213.33.87.16]:62507 "EHLO bsmtp2.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241955AbiA2IIi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Jan 2022 03:08:38 -0500
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4Jm6Qr0CjWz5tl9;
-        Sat, 29 Jan 2022 09:08:34 +0100 (CET)
-Message-ID: <f7468ea3-d9f6-96be-168d-de610d535e72@kdbg.org>
-Date:   Sat, 29 Jan 2022 09:08:34 +0100
+        id S1344981AbiA2ISI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Jan 2022 03:18:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56304 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235248AbiA2ISH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Jan 2022 03:18:07 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5342C061714
+        for <git@vger.kernel.org>; Sat, 29 Jan 2022 00:18:07 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id w81so2961739ybg.12
+        for <git@vger.kernel.org>; Sat, 29 Jan 2022 00:18:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4M126kntqeyNcPAZBl09PnofcxtmvZkLYy7lF1Cz7Rc=;
+        b=OCvstx0NaTETyZ+cJA9sC9UwsJ3aLbY/5VSuQpodLFQlf6MhZ3zzQLoqfNgxYtMNLJ
+         yf9wpSCIXFZUFiUpTe6BW9UXoAlXVUPaPpac6OkKA51sAGR7u1L0nS6J8CrW091s6dR5
+         5ZMUU2DH9XtjHMf1NUDHnyU3aY2tJUehbqqlh4QfchiOSJZmxiL0Ncr1QiqratIQp11A
+         ZwRjL8FjRlq1b4oXVa6hvnFl/jPm4u/Xlpv9FmjNk/QKBZpV15fsC0wxXypCGnJZB2uV
+         166sDHQlTxNHXR7t5BwoKUflUag5CgvBmghSs0Wj7OPv00e4sOZL0P5E+7qlKajSUWUx
+         7b4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4M126kntqeyNcPAZBl09PnofcxtmvZkLYy7lF1Cz7Rc=;
+        b=QIZ+bojfYhdkQi1DWRGuB0APAz4m6+oFFTPXzGTtUYKdHtJqO8wThEhTIHJXimIok7
+         YvPJVeY+qIVm9kwQVLFPyvu7KLu3K4j4EuizAQxuaYlt3lW46YuXhSF82zf5mXtGV3wX
+         Eh7s3RptbKCBbJ2Xa55gyINwD3Bd1dO+kZK5jwdYreNu83Z6idXKCjBgUAbgfxJD4scW
+         UepgCHBrWhXtUnrZF11pITAFIRcQQzoN/j2JUY66xGQW7OqY3W92dFExks1ka4ALdoZ/
+         OTgPccdhWXk6q7rxsLaHBmrugYSDVmozKuQluPOXT7AVi2YJsrPScgG2l88ZCfOVDWmU
+         SRAg==
+X-Gm-Message-State: AOAM531ffRcNNw4ZdMZobU9/HVjdu01W4E/ec+DBbZ2Ryr0zHVv7xHQj
+        M67vhzP1Y4HcGtOQfjLFYTB8J3VS20mtPUBeRQh1QM+E20w=
+X-Google-Smtp-Source: ABdhPJxqzkiOXHfwN8oA2jkdsIlhktKCO2iuAXQyXttjpU3gntwkDvqD/OkeLC8WxmiE7OEh9EWYtEstRjAl8fp6Ceg=
+X-Received: by 2002:a25:71c4:: with SMTP id m187mr18305209ybc.427.1643444286743;
+ Sat, 29 Jan 2022 00:18:06 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v2 1/4] i18n: factorize more 'incompatible options'
- messages
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>,
-        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?Q?Jean-No=c3=abl_Avila_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>
-References: <pull.1123.git.1642876553.gitgitgadget@gmail.com>
- <pull.1123.v2.git.1643408643.gitgitgadget@gmail.com>
- <844e01391e1198960072844536d736f51573cac6.1643408644.git.gitgitgadget@gmail.com>
- <7f46e276-b669-e8fe-21fd-6b43f5bfb33b@kdbg.org> <xmqqee4rtnts.fsf@gitster.g>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <xmqqee4rtnts.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
+ <CAP8UFD1-=RDx5=JpHEp=sFEOWr2MP-YovOPE7aTydrPLoVGa5w@mail.gmail.com> <CABPp-BH2sWWwy5bgn+R0hnnYQ6o0+1R1=VB-LYzDM+p4NMRhWg@mail.gmail.com>
+In-Reply-To: <CABPp-BH2sWWwy5bgn+R0hnnYQ6o0+1R1=VB-LYzDM+p4NMRhWg@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 29 Jan 2022 09:17:55 +0100
+Message-ID: <CAP8UFD243zGGderSFtH5WxOhidAv6566Df6vdUfKRiBb1qu9tg@mail.gmail.com>
+Subject: Re: [PATCH 00/12] RFC: In-core git merge-tree ("Server side merges")
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 29.01.22 um 00:58 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
->> A bit of code duplication could be avoided if die_if_incompatible_opt3()
->> forwarded with an additional pair 0, "" to die_if_incompatible_opt4().
-> 
-> I wondered if a single varargs function
-> 
->     void die_if_incompatible_optN(const char *name1, int opt1, ...);
-> 
-> that takes a name=NULL terminated sequence of <name, opt> would
-> work, but
-> 
->  (1) it would require the caller to always spell out the terminating
->      NULL, which may be ugly.
-> 
->  (2) it would tempt people to programatically generate message for N
->      options, which leads to sentence lego, which is the exact
->      opposite of what this series wants to achieve.
+On Sat, Jan 29, 2022 at 8:04 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Wed, Jan 26, 2022 at 12:48 AM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> >
+> > On Sat, Jan 22, 2022 at 10:56 PM Elijah Newren via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
 
-The reason I did not suggest a varargs version is because
+> > > Stuff intentionally NOT included, but which others seemed to feel strongly
+> > > about; they'd need to convince me more on these:
+> > >
+> > >  * Any form of diff output[1]
+> >
+> > It's not a big issue for me to not include them right now as long as
+> > it's possible to add cli options later that add them.
+>
+> My main concern is just that `merge-tree` remain a low-level tool and
+> have machine-parseable output.  I was a little worried that both you
+> and Dscho wanted everything on stdout rather than in separate files,
+> as the <Informational messages> part of the output is rather
+> free-form.  But since it's at the end, and has a machine-parseable
+> beginning, it can just be slurped in and we're all good.  The diff
+> output raises my eyebrow because I'm worried we're losing this
+> property.  If there are clear usecases for adding more output, and we
+> can do so without losing this machine-parseable property, I don't have
+> a problem with adding an option for it.
 
-  (3) it is not typesafe.
+That's ok for me for now. I will certainly not work on adding options
+for diff output without any usecase.
 
-A varargs implementation could be used as an implementation helper, but
-should not be a public interface.
+> One analogy we might use here is that `git merge` provides a diffstat
+> at the end.  What you're asking is more than a diffstat, but might be
+> considered similar-ish in nature.
+>
+> > The reason is
+> > that I think in many cases when there are conflicts, the conflicts
+> > will be small and the user will want to see them.
+>
+> I'm a little worried about the assumption here that conflict size is
+> measurable and visible via diffs.  That might be true in some cases,
+> but a UI written with that assumption is going to be very confusing
+> when hitting cases where that assumption does not hold.  For example:
+>
+>   * What if there is a binary file conflict, or a modify/delete or
+> rename/delete conflict, or failed-to-merge submodule conflict, or a
+> file location conflict? (For these, there is no diff relative to the
+> first parent and hence this conflict would have no diff output for
+> it)?
+>   * What if there was a simple file/directory conflict?  A diff would
+> show a rename (even when neither side did any renames), but not any
+> conflict markers.
+>   * What if there was a rename/rename conflict (both sides renamed
+> same file differently) or a distinct types conflict?  The former
+> results in three different conflicting files, none of them with
+> conflict markers, while the latter results in two different
+> conflicting files both without conflict markers?  Showing individual
+> per-file diffs totally loses all context here -- it'll show no-diff
+> for one of the files, and totally new additions for the ones.
 
-> In any case, I do agree with you that the callers of _opt3()
-> variants can just pass (0, "unused") in the 4-th slot.  If this were
-> made varargs, then it only needs to pass NULL at the end, so that
-> might be an improvement, though.
-> 
-> Also, isn't "if" in the name of the function misleading?  as far as
-> I can tell, this function is not "check if these options are
-> compatible and die if some are incompatible with each other", but
-> the caller is convinced that these options are incompatible before
-> it decides to call this function and there is no "if" in what this
-> function can do.
+In those cases we just tell users that they cannot resolve those
+conflicts in the user interface, see the following doc:
 
-Good point.
+https://docs.gitlab.com/ee/user/project/merge_requests/conflicts.html#conflicts-you-can-resolve-in-the-user-interface
 
-> void die_for_incompatible_opts(const char *name1, int opt1, ...)
-> {
-> 	const char *name[4];
-> 	int count = 0;
->         va_list params;
-> 
->         va_start(params, name1);
-> 
->         if (opt1)
-> 	        name[count++] = name1;
->         while (count < ARRAY_SIZE(name)) {
->                 const char *n = va_arg(params, const char *);
-> 
->                 if (!n)
-> 			break;
->                 if (va_arg(params, int))
-> 	                name[count++] = n;
->         }
->         va_end(params);
-> 
->         switch (count) {
-> 	default:
-> 		BUG("die-for-incompatible-opts can only take up to %d args",
-> 		    ARRAY_SIZE(name));
+> Such a problem statement just seems fraught with edge cases to me, and
+> suggests that the problem statement might be in need of revisiting.
 
-The problems here are: (1) this case triggers only if there is an actual
-invocation with all 5+ incompatible options, and (2) at that time, the
-out-of-bounds write to the name array has already happened.
+Users understand that some kinds of conflicts cannot yet be resolved
+using a user interface. Maybe we will be able to make improvements so
+that more kinds of conflicts can be resolved in a UI in the future
+though. That's why a flexible and extensible output could help.
 
-I know this implementation is just a rough show-case. But since it's
-been written by a very proficient mind, I'm now convinced: it's not
-sufficiently easy to write the varargs version, so let's not go there.
+> Don't read this as me closing the door on the possibility of diffs;
+> I'm not trying to do that.  I'm listing my misgivings about how I
+> think they might be used (i.e. be careful if you're headed down this
+> path as you might be digging yourself a never-ending support hole).
+> You can also think of my comments as feedback to consider and address
+> when you propose a future feature addition for adding diffs.  If/when
+> you propose such a feature, we'd probably be able to dive more into
+> specifics and usecases at that time, which may or may not circumvent
+> my concerns.
 
-> 	case 4:
-> 		die(_("options '%s', '%s', '%s', and '%s'"
-> 		      " cannot be used together"),
-> 		    name[0], name[1], name[2], name[3]);
-> 		break;
-> 	case 3:
-> 		die(_("options '%s', '%s', and '%s'"
-> 		      " cannot be used together"),
-> 		    name[0], name[1], name[2]);
-> 		break;
-> 	...
-> 	}
-> }
-> 
-> might be easier to extend when somebody discovers there needs the
-> "opt5" variant. 
+I know that diffs, or any new single feature, will likely not be a
+silver bullet.
 
--- Hannes
+> > So it would be
+> > simpler to just have an option to show any conflict right away, rather
+> > than have the user launch another command (a diff-tree against which
+> > tree and with which options?).
+>
+> Um, this part I'm not sure I get.  I thought the reason for the diffs
+> was performance -- you knew you wanted the diffs, and you wanted it
+> done as part of the same process.  But why would this be simpler?
+
+In the commit message of 4/12 you show an example of using it in simple scripts:
+
+NEWTREE=$(git merge-tree --write-tree $BRANCH1 $BRANCH2)
+test $? -eq 0 || die "There were conflicts..."
+...
+
+So I think it would be simpler for someone interested in seeing the
+conflicts, like a script writer, or maybe someone using it manually
+for example as a dry run before performing a merge, to be able to get
+them right away from the command rather than to have to use another
+command (which means finding the right command, arguments and options
+for that) to get them.
+
+> Your patch series included three different diffs, and the emails you
+> pointed me at suggested all kinds of configurability.  That suggests
+> the merge-tree command would have to take the exact same options the
+> user would supply to diff, and thus would have to be told all the same
+> options, right?  I don't see how this removes any complexity at all
+> for the user.
+>
+> Unless...is the request in some way similar to merge's diffstat where
+> there is always a very specific type of diff that is wanted and you
+> aren't envisioning much flexibility in what kind of diff or what to
+> diff against -- is that where the simplification comes from?
+
+Well I just think the default diff output could be tailored for the
+most likely usecases and options made available later for more
+advanced usecases or users.
