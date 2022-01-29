@@ -2,57 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71845C433EF
-	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 04:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B041C433EF
+	for <git@archiver.kernel.org>; Sat, 29 Jan 2022 04:47:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344512AbiA2Edh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Jan 2022 23:33:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35576 "EHLO
+        id S1352393AbiA2ErG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Jan 2022 23:47:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230242AbiA2Ede (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Jan 2022 23:33:34 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5176DC061714
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 20:33:33 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id o12so22794373eju.13
-        for <git@vger.kernel.org>; Fri, 28 Jan 2022 20:33:33 -0800 (PST)
+        with ESMTP id S241498AbiA2ErA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Jan 2022 23:47:00 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3ACDC061714
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 20:46:58 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id k25so22873075ejp.5
+        for <git@vger.kernel.org>; Fri, 28 Jan 2022 20:46:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=kGqVImmY8OFpjMEoUcz0L9cPV4A6GgD6Anf3jF/9uik=;
-        b=Xdp/QDoDmEcQTjWUTtT0KC5DfbMAspkYLTaH/sScO/220dtaxKmu8e7FAeuADiv5ux
-         AtnUPL6Y7+qkJiRhAB7Fmt+RO3xqdTk0I6AYUgBFxWMIR5YGxu1W6wbWbuxIMjn33yW8
-         shTmhfJKN2cgI9zadXDrl/6lorrw/sArur4XiuE67AhmHqkh0pKU22K1qoVIQa3g7YZV
-         aFK1Zaa2ZTvdjip2A6hsQx9F7I8y8390PFJc4H6j+bv9Eq5SGnr961+3zBedXB+lcZHS
-         UXGkC5mq/osJ+kj989F5x1hl0naLiN2ZRRFWISvQelcw4yPrAxAdJjm+iDBHHI8n53Sb
-         gfrg==
+        bh=hAvWyvNyEdtdZqFV0gJyhYCuYFJK0kVvxubp4MplHws=;
+        b=PLVkO5+VMg/LBmo8BOl3L6FrLaNntnGyZARWGaATecfCUHUvO0yMCvhR33B4+GAOwF
+         7VTvnQ5rpMeLnXMEHv1LhalVzL2enbWFrNqLiD/Z4l4e1lEfJbf/BtUavzPIOQNFPI9s
+         DycH8iz6Z676MzysVaUd6+9lDVwtLOe+0r71qI/2j7meozQaOXwzHCWRKAk3UfTf9OyK
+         dkk7PQQfmaWxmBu8PztNyaf85k3NLv3dZ0NnW8BO8sQF2ovpwakeFA6ntIszWUW6UWxO
+         wU5zeoSQ5XmTFua4TTu0GF80vfZ4DlyWMR3LOpYzHD11pARnvW5+1/FXFw1Vzy7SuSes
+         o2Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kGqVImmY8OFpjMEoUcz0L9cPV4A6GgD6Anf3jF/9uik=;
-        b=5iEWDlmbBh0kjTGzblUjvDuW0FITHqzyXEM+V1YRqwzioQQ2oc6tOlp3108yNa0EOE
-         qhjOS1vkPOsb2INh/j4OWSSiDPWpSwD/iRC2JWdpe4vcNXRK19XlL+XphgZtBUXJIWYu
-         V5iTpHa0afomG+7GCo2XI170ime/QHx75hbLlpezV3wcjyqm2o5/wobx57aTbXjzpRA8
-         uALodoPPkh9dcC7ZF4su7w6kItmvb30JH7Ykt3uK/lx4OKzOUXk8alJ/oV5s9c4SQLMi
-         52LMVYcXkfKuZebtNRVViE9AoumZrTG3UTzERMJ4ixvTwM9mHjxyyRRUs/eXG9Lcn+Yu
-         /AZg==
-X-Gm-Message-State: AOAM5309prjTx22agSSBdxVayWeu7njXGVOSm11Fu1Z7BI0VzRwdea2f
-        WO5nzq9aDBrK587l0cuEW4kVT9p8wYRGzwJG2i2EJC7x
-X-Google-Smtp-Source: ABdhPJyKqPeqNnyfJE2F/kFFshNqvmix0HGFqbEHwXxs23axYUWU++ddl3k+27rymTmYxI3/JCfCshqkZq226hiHKtE=
-X-Received: by 2002:a17:907:7da8:: with SMTP id oz40mr3258453ejc.328.1643430811831;
- Fri, 28 Jan 2022 20:33:31 -0800 (PST)
+        bh=hAvWyvNyEdtdZqFV0gJyhYCuYFJK0kVvxubp4MplHws=;
+        b=c3OdlHqMV7Pj7VOBRxev6xN6DaRXPW5Sosj3tHtkVIQQ2HuGK/tZUF76s8HZPmCdXf
+         p3W7OvjAIPKQ4BT+FXDLKW6f3DMyio8tgLpTh2iFCmpaud/0R6EpoJMdQnRKlDs2XwtZ
+         gvxijHtm8ZTJnRLcs9FHU5cuZU5EkOCt4icYoYTdm7Mqk5xPFd4RTcm+kUVghgipb4Ns
+         kII8+cRByUCYgetEvPacOceB78bf9qdKeyJAdvSKy7Dq4nfXx6FDlAmkbjpWVp3fnv6G
+         KVKmzVgAcGasjnXTuQA6TEDwIKxv3laBEInhOWAPP0xygExdIse0rEK2NaE6icIY/Lm/
+         49Eg==
+X-Gm-Message-State: AOAM533d8TgNALsS8sOcqR11JPhtA38tHfEhg9B1wWffCDHgL3jci2j+
+        HxN8sgydCTqBHp6NODGQWjjfTglkShlaKbsJX9Q=
+X-Google-Smtp-Source: ABdhPJxPmGWwFdbR1UvVro7worYQTrnyBMf69HJVjTMpDy+dGQ2lRZ3Jzm3j9h7BWqV6me9mc8fTiZ3uJhB1MvAPx+w=
+X-Received: by 2002:a17:907:60d5:: with SMTP id hv21mr9595301ejc.476.1643431617486;
+ Fri, 28 Jan 2022 20:46:57 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
- <e3ef17eb46fdfd759030761ab6d7c35fbf24ee0f.1642888562.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2201281716420.347@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2201281716420.347@tvgsbejvaqbjf.bet>
+ <2f296aeeefbf8340cfb8b7fa4fef5ad49c8b4aa1.1642888562.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2201281731240.347@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2201281731240.347@tvgsbejvaqbjf.bet>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 28 Jan 2022 20:33:20 -0800
-Message-ID: <CABPp-BGHf864FMaS0YkBUF=Rr9gmrQYVav96nwMmYWFVs3XuFA@mail.gmail.com>
-Subject: Re: [PATCH 06/12] merge-ort: allow update messages to be written to
- different file stream
+Date:   Fri, 28 Jan 2022 20:46:46 -0800
+Message-ID: <CABPp-BEnH-DeQnReUSCg+CH4ZZr-GzPogCnQvZ76po_BzEPjuw@mail.gmail.com>
+Subject: Re: [PATCH 07/12] merge-tree: support including merge messages in output
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -67,152 +66,133 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 28, 2022 at 8:31 AM Johannes Schindelin
+On Fri, Jan 28, 2022 at 8:37 AM Johannes Schindelin
 <Johannes.Schindelin@gmx.de> wrote:
 >
 > Hi Elijah,
 >
 > On Sat, 22 Jan 2022, Elijah Newren via GitGitGadget wrote:
 >
-> > diff --git a/merge-ort.c b/merge-ort.c
-> > index f9e35b0f96b..b78dde55ad9 100644
-> > --- a/merge-ort.c
-> > +++ b/merge-ort.c
-> > @@ -4236,7 +4236,8 @@ static int record_conflicted_index_entries(struct merge_options *opt)
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > When running `git merge-tree --write-tree`, we previously would only
+> > return an exit status reflecting the cleanness of a merge, and print out
+> > the toplevel tree of the resulting merge.  Merges also have
+> > informational messages, ("Auto-merging <PATH>", "CONFLICT (content):
+> > ...", "CONFLICT (file/directory)", etc.)  In fact, when non-content
+> > conflicts occur (such as file/directory, modify/delete, add/add with
+> > differing modes, rename/rename (1to2), etc.), these informational
+> > messages are often the only notification since these conflicts are not
+> > representable in the contents of the file.
+> >
+> > Add a --[no-]messages option so that callers can request these messages
+> > be included at the end of the output.  Include such messages by default
+> > when there are conflicts, and omit them by default when the merge is
+> > clean.
+>
+> Makes sense.
+>
+> > diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+> > index 0c19639594d..560640ad911 100644
+> > --- a/builtin/merge-tree.c
+> > +++ b/builtin/merge-tree.c
+> > @@ -440,22 +441,30 @@ static int real_merge(struct merge_tree_options *o,
+> >               commit_list_insert(j->item, &merge_bases);
+> >
+> >       merge_incore_recursive(&opt, merge_bases, parent1, parent2, &result);
+> > -     printf("%s\n", oid_to_hex(&result.tree->object.oid));
+> > +
+> >       if (result.clean < 0)
+> >               die(_("failure to merge"));
+> > -     else if (!result.clean)
+> > -             printf(_("Conflicts!\n"));
+> > +
+> > +     if (o->show_messages == -1)
+> > +             o->show_messages = !result.clean;
+> > +
+> > +     printf("%s\n", oid_to_hex(&result.tree->object.oid));
+> > +     if (o->show_messages) {
+> > +             printf("\n");
+> > +             merge_display_update_messages(&opt, &result, stdout);
+> > +     }
+>
+> Excellent.
+>
+> >       merge_finalize(&opt, &result);
+> >       return !result.clean; /* result.clean < 0 handled above */
 > >  }
 > >
-> >  void merge_display_update_messages(struct merge_options *opt,
-> > -                                struct merge_result *result)
-> > +                                struct merge_result *result,
-> > +                                FILE *stream)
+> >  int cmd_merge_tree(int argc, const char **argv, const char *prefix)
 > >  {
-> >       struct merge_options_internal *opti = result->priv;
-> >       struct hashmap_iter iter;
-> > @@ -4263,7 +4264,7 @@ void merge_display_update_messages(struct merge_options *opt,
-> >       for (i = 0; i < olist.nr; ++i) {
-> >               struct strbuf *sb = olist.items[i].util;
+> > -     struct merge_tree_options o = { 0 };
+> > +     struct merge_tree_options o = { .show_messages = -1 };
+> >       int expected_remaining_argc;
+> > +     int original_argc;
 > >
-> > -             printf("%s", sb->buf);
-> > +             fprintf(stream, "%s", sb->buf);
->
-> Maybe `strbuf_write(sb, stream);` instead? Whenever I see a `"%s"`, I feel
-> like it's unnecessary churn...
-
-Makes sense.
-
-> >       }
-> >       string_list_clear(&olist, 0);
+> >       const char * const merge_tree_usage[] = {
+> > -             N_("git merge-tree [--write-tree] <branch1> <branch2>"),
+> > +             N_("git merge-tree [--write-tree] [<options>] <branch1> <branch2>"),
+> >               N_("git merge-tree [--trivial-merge] <base-tree> <branch1> <branch2>"),
+> >               NULL
+> >       };
+> > @@ -464,6 +473,8 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+> >                        N_("do a real merge instead of a trivial merge")),
+> >               OPT_BOOL(0, "trivial-merge", &o.trivial,
+> >                        N_("do a trivial merge only")),
+> > +             OPT_BOOL(0, "messages", &o.show_messages,
+> > +                      N_("also show informational/conflict messages")),
+> >               OPT_END()
+> >       };
 > >
+> > @@ -472,10 +483,13 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+> >               usage_with_options(merge_tree_usage, mt_options);
+> >
+> >       /* Parse arguments */
+> > +     original_argc = argc;
+> >       argc = parse_options(argc, argv, prefix, mt_options,
+> >                            merge_tree_usage, 0);
+> >       if (o.real && o.trivial)
+> >               die(_("--write-tree and --trivial-merge are incompatible"));
+> > +     if (!o.real && original_argc < argc)
+> > +             die(_("--write-tree must be specified if any other options are"));
 >
-> Missing from this hunk:
+> Hmm. Well. Hmm.
 >
->         /* Also include needed rename limit adjustment now */
->         diff_warn_rename_limit("merge.renamelimit",
->                                opti->renames.needed_limit, 0);
 >
-> This function explicitly writes to `stdout`, and will need to be adjusted,
-> I think, before we can include an adjustment to this call in this patch.
+> I'd rather keep `--write-tree` neat and optional. What's wrong with
+> allowing
+>
+>         git merge-tree --no-messages HEAD MERGE_HEAD
+>
+> ?
 
-Oh, good point.
+Yeah, oops.  Nothing is wrong with that...but do note that there is
+something wrong with this:
 
-> Unless we override `warn_routine()` (which is used inside that function),
-> that is. Which is hacky, and we would not have addressed the
-> `fflush(stdout)` in `diff_warn_rename_limit()`. So I would much prefer
-> something like this:
->
-> -- snip --
-> diff --git a/diff.c b/diff.c
-> index 861282db1c3..87966602cbd 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -6312,17 +6312,25 @@ static const char rename_limit_advice[] =
->  N_("you may want to set your %s variable to at least "
->     "%d and retry the command.");
->
-> -void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc)
-> +void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc,
-> +                           FILE *out)
->  {
-> -       fflush(stdout);
-> +       const char *fmt = NULL;
-> +
->         if (degraded_cc)
-> -               warning(_(degrade_cc_to_c_warning));
-> +               fmt = _(degrade_cc_to_c_warning);
->         else if (needed)
-> -               warning(_(rename_limit_warning));
-> +               fmt = _(rename_limit_warning);
->         else
->                 return;
->         if (0 < needed)
-> -               warning(_(rename_limit_advice), varname, needed);
-> +               fmt = _(rename_limit_advice);
-> +
-> +       fflush(out);
-> +       if (out == stdout)
-> +               warning(fmt, varname, needed);
-> +       else
-> +               fprintf(out, fmt, varname, needed);
->  }
->
->  static void diff_flush_patch_all_file_pairs(struct diff_options *o)
-> @@ -6754,7 +6762,7 @@ int diff_result_code(struct diff_options *opt, int status)
->
->         diff_warn_rename_limit("diff.renameLimit",
->                                opt->needed_rename_limit,
-> -                              opt->degraded_cc_to_c);
-> +                              opt->degraded_cc_to_c, stdout);
->         if (!opt->flags.exit_with_status &&
->             !(opt->output_format & DIFF_FORMAT_CHECKDIFF))
->                 return status;
-> diff --git a/diff.h b/diff.h
-> index 8ba85c5e605..be4ee68c0a2 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -596,7 +596,8 @@ void diffcore_fix_diff_index(void);
->  int diff_queue_is_empty(void);
->  void diff_flush(struct diff_options*);
->  void diff_free(struct diff_options*);
-> -void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc);
-> +void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc,
-> +                           FILE *out);
->
->  /* diff-raw status letters */
->  #define DIFF_STATUS_ADDED              'A'
-> diff --git a/merge-ort.c b/merge-ort.c
-> index 0342f104836..e6b5a0e7c64 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -4264,7 +4264,7 @@ void merge_switch_to_result(struct merge_options *opt,
->
->                 /* Also include needed rename limit adjustment now */
->                 diff_warn_rename_limit("merge.renamelimit",
-> -                                      opti->renames.needed_limit, 0);
-> +                                      opti->renames.needed_limit, 0, stdout);
->
->                 trace2_region_leave("merge", "display messages", opt->repo);
->         }
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index d9457797dbb..10b2948678c 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -3731,7 +3731,8 @@ static void merge_finalize(struct merge_options *opt)
->                 strbuf_release(&opt->obuf);
->         if (show(opt, 2))
->                 diff_warn_rename_limit("merge.renamelimit",
-> -                                      opt->priv->needed_rename_limit, 0);
-> +                                      opt->priv->needed_rename_limit, 0,
-> +                                      stdout);
->         FREE_AND_NULL(opt->priv);
->  }
->
-> -- snap --
+    git merge-tree --no-messages MERGE_BASE HEAD MERGE_HEAD
 
-I like this, but believe it makes more sense as a preparatory patch.
-So I created one and made you the author, and included your
-signed-off-by.  That okay with you?
+because the three argument form is signalling the deprecated trivial
+merge, and the trivial merge code doesn't handle any options.  You
+were right to call out my code since I placed it too early and made it
+a bit obtuse.  I've changed it to:
 
+    if (o.mode == 't' && original_argc < argc)
+        die(_("--trivial-merge is incompatible with all other options"));
+
+where o.mode is guaranteed to be set before that check.
+
+> To be clear, I think we need this instead:
 >
-> The rest of the patch looks good to me.
+>         if (o.trivial && o.show_messages >= 0)
+>                 die(_("--trivial-merge is incompatible with additional options"));
+
+Most of that is better, assuming the o.trivial check handles the
+implicit case too.  Thanks.  I'm not so sure about the check on
+o.show_messages, though, because then I'll have to keep adding
+additional checks for each new additional option (and future patches
+will add more).  So, I think I'll keep the original_argc < argc part
+of the check instead of that.  :-)
+
+> I like the rest of the patch very much!
 
 Thanks!
