@@ -2,282 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D953AC433EF
-	for <git@archiver.kernel.org>; Sun, 30 Jan 2022 13:02:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B75FDC433EF
+	for <git@archiver.kernel.org>; Sun, 30 Jan 2022 13:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347045AbiA3NCM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Jan 2022 08:02:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36406 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbiA3NCK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Jan 2022 08:02:10 -0500
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DB86C061714
-        for <git@vger.kernel.org>; Sun, 30 Jan 2022 05:02:10 -0800 (PST)
-Received: by mail-qt1-x82f.google.com with SMTP id j12so8855526qtr.2
-        for <git@vger.kernel.org>; Sun, 30 Jan 2022 05:02:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=5TRBROS/7X1wfWjGfzQVTT8ypzNS4v2OFhsHEqh4x0w=;
-        b=RY3443m6vg9y2kfjkauO3QNma2UCp2tJ+Q+u8RmxuCdBjf63xpFyMDJImWlErL3tXT
-         nBYp3CXg0wGqbZgq+YDkQe59NFRZdgwlqFYFXRVGdJqkRxaahJeHZQ1R+GCQ/MBITC42
-         pAuYaA05TpMa8g8ySsC/XhGCuXCRCmoj+t2vT72iqTXMTkFtHQRwFJxINMCagLm16/Rj
-         8UqNlz2yqKkF/cXue0R8DUMRTlK0uAPweAPy+zsfJGz66+w7f5WifrmubK/4zZvHeVkW
-         kjN9QQ0ril5HL17/lvRsDHMqMdmbRtf3H1suEO4yHiB6L8+Dv9MFHHdUwx9CEni5vG7B
-         2x4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=5TRBROS/7X1wfWjGfzQVTT8ypzNS4v2OFhsHEqh4x0w=;
-        b=39mwesLEwXqdXZ2X31qcWIN6zkNrlwEjxOu/OWQOQfNMXg0LHZUyl4ioXae9/JERfh
-         7ow1hOD5VElfpXJGsFu/6LxBDV6Jsf71O6cBmHGiSbHHmDMrR7mhiNxZPTVraElJiu6e
-         BFEqTjbm0ocsdU0AQOaGA/tzbbZlekuTArbTrvLKOwT2pR3HurB2SOv798iZ2m2DGz+X
-         ooQ9RFxAIhiG9Kwrmw15TLw7R1D3rujgAB2ZrxCR0a9S+lJnIav08ZijLdxT+7g43wXb
-         LkVzz8lMK+rg8W+/j54q/N0WoB0khP5CC5mJOxScabAxx7EK+5MMVjv9zDW/JM8BXL37
-         EH9g==
-X-Gm-Message-State: AOAM532TSihDASZEJlqHqjijqMhaKD0f887Fc8d/eRdp6h+6mOmPqC9W
-        zHUbexLcH1BYYm7f4f7Cgaw=
-X-Google-Smtp-Source: ABdhPJzXgsV//2GKOb2x/XMRgGjpSHDjVt7Q5iswyqKYszwBg/S7M5eV0Mob27tctjOnb16WR/ew6A==
-X-Received: by 2002:ac8:5756:: with SMTP id 22mr882491qtx.12.1643547729387;
-        Sun, 30 Jan 2022 05:02:09 -0800 (PST)
-Received: from [192.168.1.211] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id u11sm3201908qkp.122.2022.01.30.05.02.08
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Jan 2022 05:02:08 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 2/2] repack: add --filter=<filter-spec> option
-Date:   Sun, 30 Jan 2022 08:02:07 -0500
-X-Mailer: MailMate Trial (1.14r5852)
-Message-ID: <8D4655AA-8D2A-4D4C-A7CD-B79A8A9E66D7@gmail.com>
-In-Reply-To: <A4BAD509-FA1F-49C3-87AF-CF4B73C559F1@gmail.com>
-References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
- <a3166381572481f2ed159740eb8a1d88d4f9dc0f.1643248180.git.gitgitgadget@gmail.com>
- <a62a007f-7c61-68eb-c0e6-548dc9b6f671@gmail.com>
- <A4BAD509-FA1F-49C3-87AF-CF4B73C559F1@gmail.com>
+        id S1354891AbiA3NdQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Jan 2022 08:33:16 -0500
+Received: from mout.web.de ([212.227.15.14]:33317 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1354875AbiA3NdO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Jan 2022 08:33:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1643549567;
+        bh=bzWC+edEdNe4nhq3rvJbo6HlqORYNxndf1qPB73h3vc=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=QtZopcFGBsBMda29/iddPSS6k4vuAgj+yLkRWGQThm4pBfI856BFfP5DUgBWSQeHm
+         kMLSr6Op8gK9nB/qcJuGwqd7f6H/uZ06wbEbmBZtX+UBXjLTIcwQeC/xp7DKY5igOu
+         95USJvkjo/xEELHbb6Y2LPH8L2QdKj7CEg/pZnW8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MhFlm-1mZrUD2fX0-00eYe0; Sun, 30
+ Jan 2022 14:32:47 +0100
+Message-ID: <b74f781c-548b-5254-d3d1-fc1873c70e10@web.de>
+Date:   Sun, 30 Jan 2022 14:32:46 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.5.1
+Subject: Re: [v2.35.0 regression] some PCRE hangs under UTF-8 locale (was:
+ [PATCH 1/2] grep/pcre2: use PCRE2_UTF even with ASCII patterns)
+Content-Language: en-US
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Hamza Mahfooz <someguy@effective-light.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        Andreas Schwab <schwab@linux-m68k.org>
+References: <5fa6962e-3c1c-6dbc-f6d7-589151a9baec@web.de>
+ <20220129172542.GB2581@szeder.dev>
+ <dca59178-6e9b-315b-06ee-8e3201aa391c@web.de>
+ <20220130090422.GA4769@szeder.dev>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20220130090422.GA4769@szeder.dev>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:YEDoKjU2GBQEWtm6hixQaD2o9qhvZorw9xjG5dgq/ul0HFi5dNw
+ Hs0kp98WGA635G9PYrW9h/2Lm58bhV/OhwkBrGcA19gPmEQRz933NnA7RgvPXggR0xKW/zR
+ 467LhfJ9JlvvOXCOYYtZ07YbBY8fhmeaFglj7a0SinhkkLEEKZwfdPFQWr0kC6hcx3iV894
+ QycYvlbdJsrS8rcaJ1s2Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/8GgRtyMoDg=:QkkxWh+1ZxiIxiUxThxZrg
+ xtAyJL6CktoGNZi92vSZr5TfCFVtcXO6hgpdqRh0cV4ZJp6OW7dKFTSj/qfkXcjtyiZ2Op32z
+ Jz+ndVB9NKoYU2sJXyGugIEVS1+lxERf+tmpLRKyriIB5FwHA51pWOrzgvez+AkFsgLUrsZc7
+ IsF/O5KiNtfyo1u9VqTi7WGmRU7r+CWWNM2HcjKhjjCHw3LMt1IAUZ2rBd3jy356J6QplZoV/
+ PCNKj6SQ2E4YilC8ytjftmbRmCWegXBhzVv7LBNm4Ss0LwS286krRP05b/E3pNDqvGj3+NyTr
+ Q9CKv62r51UBnD8iKgpasaraglAzKOKfivxAIjG69gPTQgmhcarvOi49V/IssLXpdYkKUE/ON
+ pCQsSIM/Q8emTolxMcvp5KPfqxqMSIkxrbVMHP5uwe2n7PxO6VJP4cW/lt92TO1zWoa+YuxeD
+ q3Jl0qDzy56otfzJIYvnnh7UWMxylWqhveeWqSxgCExx0zBoj3oP7tMcOal9OMBleaDxLtNTi
+ hCTvx7ZPZr+MJ0Iicljk6numxzD363Lp1GIJaeGx9OX2f8ss/x0nVTt2sFYWiOwcC++Ahp458
+ krCabsc112xmc1ZqBYtqcIZx2952cmKEYp6vQHwmsbGCJePjEnfOro+HLmlmam8eOMRWJeOKE
+ Z3of7Odhx+q5gYTGsEnfC+9DTqC/NJbRSKaVUy4HZqNi/NVxex5qGXEXppUhRuyMeTHyZqi9u
+ rbjaJqRoW0NA7jBE+K84PIUtDJhLUPFJe2oQrX1NzgqnaZUcidfz1C3Do4VVAPlCrijaAKPlL
+ m5mbpM00+ea0sg9Q/mWkcrDVe7oBekMSb1nUrO2HloyNUHaMX9h51xzd+ZBXgoGS5TtwaUcJx
+ o6iXpXSLneyGNBtjH8oyKerwKmbxjAPCd212YsCFRQhqWgoJOV/v4Y3XIW3KXe3Va2QBwtRaN
+ OuSfbQRMAus/4sW17wMfA+CLI9yfEn8RaYA3MnGcXlPrqx3cgKCCnm2x+r0G/+qKCU3KA91e1
+ 5UIfMyKWpbPdunpMslxkMA6NrWQ1AvgROKqxN7aj8p5Cd6Yjk544I1JjLZoBPzIe0g5nFlDIi
+ WeCAoNRyFuYW0A=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry forgot to include the link to Christian's demo. included below
+Am 30.01.22 um 10:04 schrieb SZEDER G=C3=A1bor:
+> On Sun, Jan 30, 2022 at 08:55:02AM +0100, Ren=C3=A9 Scharfe wrote:
+>> e0c6029 (Fix inifinite loop when a single byte newline is searched in
+>> JIT., 2020-05-29) [1] sounds like it might have fixed it.  It's part of
+>> version 10.36.
+>
+> I saw this hang on two Ubuntu 20.04 based boxes, which predate that
+> fix you mention only by a month or two, and apparently the almost two
+> years since then was not enough for this fix to trickle down into
+> updated 20.04 pcre packages, because:
+>
+>> Do you still get the error when you disable JIT, i.e. when you use the
+>> pattern "(*NO_JIT)^\s" instead?
+>
+> No, with this pattern it works as expected.
+>
+> So is there a more convenient way to disable PCRE JIT in Git?  FWIW,
+> (non-git) 'grep -P' works with the same patterns.
 
-On 29 Jan 2022, at 14:14, John Cai wrote:
+I don't know a better way.  We could do it automatically, though:
 
-> Hi Stolee,
->
-> Thanks for taking the time to review this patch! I added some points of=
- clarification
-> down below.
->
-> On 27 Jan 2022, at 10:03, Derrick Stolee wrote:
->
->> On 1/26/2022 8:49 PM, John Cai via GitGitGadget wrote:
->>> From: John Cai <johncai86@gmail.com>
->>>
->>> Currently, repack does not work with partial clones. When repack is r=
-un
->>> on a partially cloned repository, it grabs all missing objects from
->>> promisor remotes. This also means that when gc is run for repository
->>> maintenance on a partially cloned repository, it will end up getting
->>> missing objects, which is not what we want.
->>
->> This shouldn't be what is happening. Do you have a demonstration of
->> this happening? repack_promisor_objects() should be avoiding following=
+=2D-- >8 ---
+Subject: [PATCH] grep: disable JIT on PCRE2 before 10.36 to avoid endless =
+loop
 
->> links outside of promisor packs so we can safely 'git gc' in a partial=
+Commit e0c6029 (Fix inifinite loop when a single byte newline is
+searched in JIT., 2020-05-29) of PCRE2 adds the following point to its
+ChangeLog for version 10.36:
 
->> clone without downloading all reachable blobs.
->
-> You're right, sorry I was mistaken about this detail of how partial clo=
-nes work.
->>
->>> In order to make repack work with partial clone, teach repack a new
->>> option --filter, which takes a <filter-spec> argument. repack will sk=
-ip
->>> any objects that are matched by <filter-spec> similar to how the clon=
-e
->>> command will skip fetching certain objects.
->>
->> This is a bit misleading, since 'git clone' doesn't "skip fetching",
->> but instead requests a filter and the server can choose to write a
->> pack-file using that filter. I'm not sure if it's worth how pedantic
->> I'm being here.
->
-> Thanks for the more precise description of the mechanics of partial clo=
-ne.
-> I'll improve the wording in the next version of this patch series.
->
->>
->> The thing that I find confusing here is that you are adding an option
->> that could be run on a _full_ repository. If I have a set of packs
->> and none of them are promisor (I have every reachable object), then
->> what is the end result after 'git repack -adf --filter=3Dblob:none'?
->> Those existing pack-files shouldn't be deleted because they have
->> objects that are not in the newly-created pack-file.
->>
->> I'd like to see some additional clarity on this before continuing
->> to review this series.
->
-> Apologies for the lack of clarity. Indeed, I can see why this is the mo=
-st important
-> detail of this patch to provide enough context on, as it involves delet=
-ing
-> objects from a full repository as you said.
->
-> To back up a little, the goal is to be able to offload large
-> blobs to a separate http server. Christian Couder has a demo [1] that s=
-hows
-> this in detail.
->
-> If we had the following:
-> A. an http server to use as a generalized object store
-> B. a server update hook that uploads large blobs to 1.
-> C. a git server
-> D. a regular job that runs `git repack --filter` to remove large
-> blobs from C.
->
-> Clients would need to configure both C) and A) as promisor remotes to
-> be able to get everything. When they push new large blobs, they can
-> still push them to C), as B) will upload them to A), and D) will
-> regularly remove those large blobs from C).
->
-> This way with a little bit of client and server configuration, we can h=
-ave
-> a native way to support offloading large files without git LFS.
-> It would be more flexible as you can easily tweak which blobs are consi=
-dered large
-> files by tweaking B) and D).
->
+  2. Fix inifinite loop when a single byte newline is searched in JIT when
+  invalid utf8 mode is enabled.
 
-[1] https://gitlab.com/chriscool/partial-clone-demo/-/blob/master/http-pr=
-omisor/server_demo.txt
+Avoid that bug on older versions (which are still reportedly found in
+the wild) by disabling the JIT when handling UTF-8.
 
->>
->>> The final goal of this feature, is to be able to store objects on a
->>> server other than the regular git server itself.
->>>
->>> There are several scripts added so we can test the process of using a=
+Reported-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Not sure how to test it.  Killing git grep after a second or so seems a
+bit clumsy.  timeout(1) from GNU coreutils at least allows doing that
+from the shell, but it's not a standard tool.  Perhaps we need a new
+test helper for that purpose?
 
->>> remote helper to upload blobs to an http server:
->>>
->>> - t/lib-httpd/list.sh lists blobs uploaded to the http server.
->>> - t/lib-httpd/upload.sh uploads blobs to the http server.
->>> - t/t0410/git-remote-testhttpgit a remote helper that can access blob=
-s
->>>   onto from an http server. Copied over from t/t5801/git-remote-testh=
-ttpgit
->>>   and modified to upload blobs to an http server.
->>> - t/t0410/lib-http-promisor.sh convenience functions for uploading
->>>   blobs
->>
->> I think these changes to the tests should be extracted to a new
->> patch where this can be discussed in more detail. I didn't look
->> too closely at them because I want to focus on whether this
->> --filter option is a good direction for 'git repack'.
->>
->>>  		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
->>> @@ -819,6 +824,11 @@ int cmd_repack(int argc, const char **argv, cons=
-t char *prefix)
->>>  		if (line.len !=3D the_hash_algo->hexsz)
->>>  			die(_("repack: Expecting full hex object ID lines only from pack-=
-objects."));
->>>  		string_list_append(&names, line.buf);
->>> +		if (po_args.filter) {
->>> +			char *promisor_name =3D mkpathdup("%s-%s.promisor", packtmp,
->>> +							line.buf);
->>> +			write_promisor_file(promisor_name, NULL, 0);
->>
->> This code is duplicated in repack_promisor_objects(), so it would be
->> good to extract that logic into a helper method called by both places.=
+ grep.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
->
-> Thanks for pointing this out. I'll incorporate this into the next versi=
-on.
->>
->>> +		}
->>>  	}
->>>  	fclose(out);
->>>  	ret =3D finish_command(&cmd);
->>
->>> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
->>> index e489869dd94..78cc1858cb6 100755
->>> --- a/t/t7700-repack.sh
->>> +++ b/t/t7700-repack.sh
->>> @@ -237,6 +237,26 @@ test_expect_success 'auto-bitmaps do not complai=
-n if unavailable' '
->>>  	test_must_be_empty actual
->>>  '
->>>
->>> +test_expect_success 'repack with filter does not fetch from remote' =
-'
->>> +	rm -rf server client &&
->>> +	test_create_repo server &&
->>> +	git -C server config uploadpack.allowFilter true &&
->>> +	git -C server config uploadpack.allowAnySHA1InWant true &&
->>> +	echo content1 >server/file1 &&
->>> +	git -C server add file1 &&
->>> +	git -C server commit -m initial_commit &&
->>> +	expected=3D"?$(git -C server rev-parse :file1)" &&
->>> +	git clone --bare --no-local server client &&
->>
->> You could use "file:://$(pwd)/server" here instead of "server".
->
-> good point, thanks
->
->>
->>> +	git -C client config remote.origin.promisor true &&
->>> +	git -C client -c repack.writebitmaps=3Dfalse repack -a -d --filter=3D=
-blob:none &&
->> This isn't testing what you want it to test, because your initial
->> clone doesn't use --filter=3Dblob:none, so you already have all of
->> the objects in the client. You would never trigger a need for a
->> fetch from the remote.
->
-> right, so this test is actually testing that repack --filter would shed=
- objects to show
-> that it can be used as D) as a regular cleanup job for git servers that=
- utilize another
-> http server to host large blobs.
->
->>
->>> +	git -C client rev-list --objects --all --missing=3Dprint >objects &=
-&
->>> +	grep "$expected" objects &&
->>> +	git -C client repack -a -d &&
->>> +	expected=3D"$(git -C server rev-parse :file1)" &&
->>
->> This is signalling to me that you are looking for a remote fetch
->> now that you are repacking everything, and that can only happen
->> if you deleted objects from the client during your first repack.
->> That seems incorrect.
->>
->>> +	git -C client rev-list --objects --all --missing=3Dprint >objects &=
-&
->>> +	grep "$expected" objects
->>> +'
->>
->> Based on my current understanding, this patch seems unnecessary (repac=
-ks
->> should already be doing the right thing when in the presence of a part=
-ial
->> clone) and incorrect (we should not delete existing reachable objects
->> when repacking with a filter).
->>
->> I look forward to hearing more about your intended use of this feature=
- so
->> we can land on a better way to solve the problems you are having.
->
-> Thanks for the callouts on the big picture of this proposed change. Loo=
-king
-> forward to getting your thoughts on this!
->>
->> Thanks,
->> -Stolee
+diff --git a/grep.c b/grep.c
+index 7bb0360869..16629a2301 100644
+=2D-- a/grep.c
++++ b/grep.c
+@@ -406,6 +406,14 @@ static void compile_pcre2_pattern(struct grep_pat *p,=
+ const struct grep_opt *opt
+ 	}
+
+ 	pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
++#ifndef GIT_PCRE2_VERSION_10_36_OR_HIGHER
++	/*
++	 * Work around the bug fixed by e0c6029 (Fix inifinite loop when a
++	 * single byte newline is searched in JIT., 2020-05-29).
++	 */
++	if (options & PCRE2_MATCH_INVALID_UTF)
++		p->pcre2_jit_on =3D 0;
++#endif
+ 	if (p->pcre2_jit_on) {
+ 		jitret =3D pcre2_jit_compile(p->pcre2_pattern, PCRE2_JIT_COMPLETE);
+ 		if (jitret)
+=2D-
+2.35.0
