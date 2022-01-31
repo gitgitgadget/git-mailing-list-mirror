@@ -2,79 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95A82C433F5
-	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 17:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3183C433F5
+	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 17:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350196AbiAaRQn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Jan 2022 12:16:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47528 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350100AbiAaRQl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jan 2022 12:16:41 -0500
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C6EC061714
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 09:16:41 -0800 (PST)
-Received: by mail-yb1-xb33.google.com with SMTP id c6so42609385ybk.3
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 09:16:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=H0ehjEYk9DctZQuU3kzjgO3G71JnvzD0YfZ79WwWrzk=;
-        b=aBoaLawiI+7zYx4y0vp0a0qcY5ApaeAtn3ndsZzty812Hf0nE/mtBHV6MW0/JwnDYv
-         6iJ6N8Z+O09wswpFmxwTDFbPXm3q2ubY091B+2+ZC+TKMUQSeTzFxqM1FRlnfU8+rEvD
-         5F/zmdULEqOxhd9gp58uKG81KnELVJw4EEF73Mw+EzFA246BSGvF5EzOkfC60BqgdO5h
-         7ZLXgcE4xTHWE1+TDwHhx3ino/DPIN3d5MMYmL88A7CVxoKhWeH8X8F+JmOlq6fygRoz
-         bxTc3CzRKSAVLXKxJ+hGwum2MdxEVkmPwITYmH//INp/ZxYHC8b1ghjo1nX3zilgIBVS
-         K7EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=H0ehjEYk9DctZQuU3kzjgO3G71JnvzD0YfZ79WwWrzk=;
-        b=PNMFjZkkvCrqGEq9Ba0C4yzT8P8aCcNylM2JQDmojElj4jVLbx8aVBEqQIfOaiTae2
-         v7+R/XWgU6HnA66kRMWNX2xHBGgdWG0zbIrrwYSxi4FMrzHOawH5CTUq6Kb361i3stxx
-         YOiGgGFDzjz9bQCNmvWz+rI535S7wGQ2gv7u8zp5iGXF04GdmeOMbGn4ZpBghwJe1BJ5
-         ABW0KorhSMigfo4ma4AwiaaAXuJn+GJC84MaEnSZGaJ50DiIINcedhz237hg3yqiy+ue
-         UrD/eHMsbPpN7CQJ+qTfJDZOgyr2kO/q0aYaZY76aNtXcW9ujOP4qCAvxcCJyg1GttNH
-         6XEg==
-X-Gm-Message-State: AOAM533NK3+g6scV2hh300CrgBrowfkl1vWs4OROLf2I7Q6f2rjLRbMQ
-        94DB913jF9XODK++b08IpIe/1v5Zpvr5q4xiAOcvUp67cls=
-X-Google-Smtp-Source: ABdhPJyYJFBvs4E41RyJRdprJWG5MfCVomXyF3lvzcvCGUr1C4p23pAwOUqhw1aE3uEYKvykbKJZMraJS3RqYFrtzdU=
-X-Received: by 2002:a25:71c4:: with SMTP id m187mr31685659ybc.427.1643649400049;
- Mon, 31 Jan 2022 09:16:40 -0800 (PST)
+        id S1380973AbiAaR2L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Jan 2022 12:28:11 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52913 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1380963AbiAaR2G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jan 2022 12:28:06 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F02CE162CA5;
+        Mon, 31 Jan 2022 12:28:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eFZr9lXI0kotFV8LC/t1zFya83dBrPjqSOJ5M7
+        9ZB9o=; b=bnKP9rkooGmBe8Y2NNErXm/CntdkkEDH87Y17Dl6+ozGSEaVomhbQ6
+        aaoyCy2vhS6perjZyVMEVg/E+TuhqFx8IsKnIc5F5MrPPmkWoSic0YFfb40joIkO
+        mkZ3sOq7dO4n59p0G7jhOjLSfOcUKVMWmhv/lZszdsZWmof3Dy5eo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E95AD162CA4;
+        Mon, 31 Jan 2022 12:28:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 61C19162CA3;
+        Mon, 31 Jan 2022 12:28:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git ML <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: BUG: Various "advice.*" config doesn't work
+References: <220128.867dakcgj0.gmgdl@evledraar.gmail.com>
+        <YfgLeVw0rrk7Q5/+@nand.local>
+Date:   Mon, 31 Jan 2022 09:28:02 -0800
+In-Reply-To: <YfgLeVw0rrk7Q5/+@nand.local> (Taylor Blau's message of "Mon, 31
+        Jan 2022 11:16:57 -0500")
+Message-ID: <xmqq1r0nke71.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 31 Jan 2022 18:16:29 +0100
-Message-ID: <CAP8UFD0SehQ43njmAFyVWvq4KVfiC-HH1PBbk64hmdwKZ=H3Aw@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 83
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Erik Cervin Edin <erik@cervined.in>,
-        Sean Allred <allred.sean@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Philip Oakley <philipoakley@iee.email>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 25135032-82BB-11EC-A7E4-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Taylor Blau <me@ttaylorr.com> writes:
 
-The 83rd edition of Git Rev News is now published:
+> But having something like (in builtin/add.c:add_files()):
+>
+>     if (advice_enabled(ADVICE_ADD_IGNORED_FILES))
+>         advise(_("..."));
+>
+> feels like it opens the door to call advise() by default if we happened
+> to forget to read the configuration.
 
-  https://git.github.io/rev_news/2022/01/31/edition-83/
+True.
 
-Thanks a lot to Philip Oakley who helped this month!
+> I think that is a good candidate to
+> be replaced with advice_if_enabled().
 
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
+Meaning advice_enabled() will lazily load the configuration?  If so,
+then what you saw in builtin/add.c::add_files() would automatically
+become just as safe as advice_if_enabled(), no?
 
-PS: An issue for the next edition is already opened and contributions
-are welcome:
+> I'm not sure if that is true in general, though. Take a look at this
+> example (from branch.c:create_branch()):
+>
+>     if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE)) {
+>         error(_(upstream_missing), start_name);
+>         advise(_(upstream_advice));
+>         exit(1);
+>     }
+>     die(_(upstream_missing), start_name);
+>
+> This also makes it possible to call advise() when we shouldn't have. But
+> how should we rewrite this code? Wanting to either error() (and then
+> call exit(1)) or die() based on whether or not we're going to print the
+> advice makes it tricky.
 
-  https://github.com/git/git.github.io/issues/544
+I am puzzled why you think the above "check, do things, give a
+piece of advice, and do even more things" needs to be rewritten.
+
+Everything you are showing above becomes a problem only when
+advice_enabled() does not work reliably, due to a bug that fails to
+read the configuration.
+
+> Maybe, though I still think BUG() is a bit extreme, and we could
+> accomplish the same by having the advice API just read the config if it
+> hasn't done so already before emitting advice.
+
+Calling things like git_config(git_default_config) with side-effects
+on other global variables are definitely a no-no, but as long as it
+reacts to configuration variables only under advice.* namespace,
+that might be OK.
+
+Thanks.
