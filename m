@@ -2,161 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F9CEC433F5
-	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 22:22:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0B89C433F5
+	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 22:42:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232909AbiAaWWN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Jan 2022 17:22:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33548 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbiAaWWN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jan 2022 17:22:13 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D22C061714
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 14:22:12 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id s9so28179012wrb.6
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 14:22:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=IoGvfX0jZTTIaBqmJmGRJmwl1PqcSfSqEQmdDnkxGks=;
-        b=mjbNqtVEzP+O8IVziNH3ktOoHpWfIA1jtkBgr4EO8pRFjIUVSH8Lwkt7/iWKmmNdSI
-         ex5QHMluMXDgeYYm3Do1jhKIuHh/UUuAiEKzCZNsoUImgjyi5gSLztjFKuIotuY0PbIA
-         Lc21F+2KiKxZdqQ6P7fped4pcRnIjzUgCDF5vA13UxSI/jiGcj2ZhbE65HI/pMVWId9k
-         d098w4NunWmvio0vdll0uMWiT3NYMPCSqyd7CgMMLo5yJQwiiPo9iPQ0mF2tdH6fK8UB
-         P5GrYqpsKX/Wxu62BjcY634vuMuSjkG6i33DOpUOqKbHW9YMZkqXV0IJYIZmhltKZl2g
-         LNPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=IoGvfX0jZTTIaBqmJmGRJmwl1PqcSfSqEQmdDnkxGks=;
-        b=PKKeRoutEsrApqTg3/oHVwRiBavuPijHP/BnuJY1OBXidsKWMT0HMjuOxtNgnsMD2/
-         DnzmKnkjuNGyfgGBTWa0w5pMgc1qjVilwcDXRtNpBqnEZ+O7HN/kBcYT+48rRejDWgbD
-         aZphwZ4D0VOEQbk5GQa5Bv8ZAbrsr0UzDfx99FfYL+W7PTPgLhZriU22EpLH9E3gOLmZ
-         aIOLG9fFQelDOW5jKCYqKaYi6XJ/aO6FrxIscoPUvNg72VbbxZFyen1WAc0EAyT/cgmy
-         rtXA8wtHxlwHbSqdvoBWf/RLUJgGnPv51BUsqSnndzOLrgLBXBgIUDNnd+AnkTwkFIlk
-         VGmA==
-X-Gm-Message-State: AOAM531ol4ncQBiW4eAUJkqDLe7UtpL80OouZMJlPRvCEnjFavTjqFHs
-        DnGIlyOiH/BKMiYVlo4KsBuZQvpWHXA=
-X-Google-Smtp-Source: ABdhPJxgftacZacO7N5GIG75NeouhTv7bpCRBzRnLAMrFdANOxC9b/N1n37UhGOYcznEmd4GMmTi+g==
-X-Received: by 2002:adf:a313:: with SMTP id c19mr19024956wrb.552.1643667731441;
-        Mon, 31 Jan 2022 14:22:11 -0800 (PST)
-Received: from smtpclient.apple ([2a01:e34:ec41:7980:bd0f:43a4:6858:c6cb])
-        by smtp.gmail.com with ESMTPSA id y15sm18822686wry.36.2022.01.31.14.22.10
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 31 Jan 2022 14:22:11 -0800 (PST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: Stage, test, and commit only some changes, then repeat
-From:   =?utf-8?Q?G=C3=A9ry_Ogam?= <gery.ogam@gmail.com>
-In-Reply-To: <87iltzpo1r.fsf@osv.gnss.ru>
-Date:   Mon, 31 Jan 2022 23:22:10 +0100
-Cc:     git@vger.kernel.org
+        id S234425AbiAaWmF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Jan 2022 17:42:05 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64315 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234386AbiAaWmD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jan 2022 17:42:03 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B2ECA165A75;
+        Mon, 31 Jan 2022 17:42:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=0EdLtNjvVyzU
+        wralPpyzA5xxiXlTxUEmebMrsQUmvQs=; b=M6XMvaDCY5niKZWDejzvR0rK66Oj
+        yXMQJuYe8lOIAorysyuI2954yY3UWvvYHwEyJhOhXWpA2obcKOjW3kJpYKc+zuzJ
+        GGAqN4HKKNQYk2wsWwPNsV6M94k/83zYoV8inQJEDfOeOOPGAME2JxN2mpXnrQFz
+        MfbO/DVxrYEReYk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AB49A165A74;
+        Mon, 31 Jan 2022 17:42:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1D0EC165A6F;
+        Mon, 31 Jan 2022 17:42:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH v4 1/4] i18n: factorize more 'incompatible options'
+ messages
+References: <pull.1123.v3.git.1643580113.gitgitgadget@gmail.com>
+        <pull.1123.v4.git.1643666870.gitgitgadget@gmail.com>
+        <2eac2ef502b86d0c15513c8d0e69928ce2140b1f.1643666870.git.gitgitgadget@gmail.com>
+Date:   Mon, 31 Jan 2022 14:41:59 -0800
+In-Reply-To: <2eac2ef502b86d0c15513c8d0e69928ce2140b1f.1643666870.git.gitgitgadget@gmail.com>
+        (=?utf-8?Q?=22Jean-No=C3=ABl?= Avila via GitGitGadget"'s message of "Mon,
+ 31 Jan 2022
+        22:07:46 +0000")
+Message-ID: <xmqqv8xzh6iw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 013AFDFA-82E7-11EC-BF27-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <0558E792-899A-4B08-B0A1-4844E5D1EFF2@gmail.com>
-References: <37128901-233F-4428-8A52-470773A18AB0@gmail.com>
- <87bkzrvpjv.fsf@osv.gnss.ru> <49031AA3-CDC3-4CF6-A04B-E3533907FCA4@gmail.com>
- <87iltzpo1r.fsf@osv.gnss.ru>
-To:     Sergey Organov <sorganov@gmail.com>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Le 31 janv. 2022 =C3=A0 22:56, Sergey Organov <sorganov@gmail.com> a =
-=C3=A9crit :
->=20
-> G=C3=A9ry Ogam <gery.ogam@gmail.com> writes:
->=20
->>> Le 31 janv. 2022 =C3=A0 17:27, Sergey Organov <sorganov@gmail.com> a =
-=C3=A9crit :
->>>=20
->>> G=C3=A9ry Ogam <gery.ogam@gmail.com> writes:
->>>=20
->>>> Hello,
->>>>=20
->>>> I would like to stage, test, and commit only *some* changes of the
->>>> working tree, and then repeat this process with the remaining =
-changes.
->>>>=20
->>>> My current solution (published at
->>>> https://stackoverflow.com/a/70914962/2326961):
->>>>=20
->>>> 1. Stage some changes:
->>>>  ```
->>>>  git add -p file
->>>>  ```
->>>> 2. Save away the remaining changes:
->>>>  ```
->>>>  git diff >patch
->>>>  git stash push -k
->>>>  ```
->>>> 3. Test the staged changes.
->>>> 4. Commit the staged changes:
->>>>  ```
->>>>  git commit
->>>>  ```
->>>> 5. Restore the remaining changes:
->>>>  ```
->>>>  git apply patch
->>>>  ```
->>>> 6. Go to step 1.
->>>>=20
->>>> It is not ideal because a) it uses a patch file for saving the
->>>> remaining changes; b) it uses the stash only for setting the =
-working
->>>> tree to the index state.
->>>>=20
->>>> It would be ideal if I could save *only* the remaining changes in =
-the
->>>> stash instead of resorting to a patch file. How to do it?
->>>=20
->>> It looks like you don't need patch file for this workflow. What's =
-wrong with:
->>>=20
->>> git add...
->>> git stash push --keep-index
->>> ... check, git add fixes
->>> git commit
->>> git stash apply
->>>=20
->>> ???
->>>=20
->>> -- Sergey Organov
->>=20
->> Hello Sergey,
->>=20
->> `git stash` saves the transition from the HEAD state to the working
->> tree state. It also sets the working tree to the *HEAD* state.
->>=20
->> `git stash --keep-index` saves the transition from the HEAD state to
->> the working tree state. It also sets the working tree to the *index*
->> state.
->>=20
->> `git stash pop` applies the last saved transition. So if the working
->> tree was not in HEAD state (like after `git stash --keep-index`),
->> there will be a conflict.
->=20
-> Did you actually try it and got conflict? I doubt there will be any if
-> you don't modify anything after "git stash --keep-index" during =
-testing,
-> and if you do, than any method might bring conflicts.
->=20
-> In fact I just re-tested this to make sure, and got no conflicts.
->=20
-> -- Sergey Organov
+"Jean-No=C3=ABl Avila via GitGitGadget"  <gitgitgadget@gmail.com> writes:
 
-git init
-touch file
-git add file
-git commit
-echo one >>file
-git add file
-echo two >>file
-git stash push --keep-index
-git stash pop
+> +inline void die_for_incompatible_opt3(int opt1, const char *opt1_name,
+> +				      int opt2, const char *opt2_name,
+> +				      int opt3, const char *opt3_name)
+> +{
+> +	die_for_incompatible_opt4(opt1, opt1_name,
+> +				  opt2, opt2_name,
+> +				  opt3, opt3_name,
+> +				  0, "");
+> +}
 
-G=C3=A9ry Ogam=
+I haven't seen a non-static inline function defined in a common
+header files.  Does this actually work?  In my build, ld choked on
+this one.
+
+Otherwise make it "static inline"?  Or just
+
+#define die_for_incompatible_opt3(o1,n1,o2,n2,o3,n3) \
+	die_for_incompatible_opt4((o1), (n1), \
+				  (o2), (n2), \
+				  (o3), (n3), \
+				  0, "")
+
+perhaps?
