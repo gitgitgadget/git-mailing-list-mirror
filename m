@@ -2,157 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36080C433EF
-	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 23:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0DBCC433EF
+	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 23:30:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229526AbiAaXZf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Jan 2022 18:25:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47976 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbiAaXZe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jan 2022 18:25:34 -0500
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B6E4C061714
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 15:25:34 -0800 (PST)
-Received: by mail-qv1-xf32.google.com with SMTP id g11so14422848qvu.3
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 15:25:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skydio.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DvLTtx+h3I71MZeU5JxwErqfaP/UAXjZzw2Dzf6Mbds=;
-        b=tRuF6P0WVyhAjLDTsDN56AEs77y+th110231uwf1PMs0fDyegtgnrtUJL5yyC1COQG
-         RDPAvl6ZZLNcR0rppQzNUn9WoAwoF+iwLQEV+CPyP7guj88zdoWGzS9aGHZ7JtIJSjl5
-         AHHVChoeap+jVQhMioxHN47z7ugNpXLmhOc4cnh0Gj5WvjS0x4yfCvwXgh/hWsbaLA+X
-         dd34PTNp6V6JS5om0tPtgpCa+TdZGSJP/2TvlA9pRgSTpYRNK5tI3pxdUwurDqIqoPeS
-         RxjYoAOwVqrHbLWt2QQuOAn1s6tp4eF5SaWC9aJPaEpMxbMsrPeZPoXrlJcOtZb9ORvB
-         VMBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DvLTtx+h3I71MZeU5JxwErqfaP/UAXjZzw2Dzf6Mbds=;
-        b=4mC1mN+9cBKJEUSMDruN8s3J16tZD4YwDGz3qt1rz5OxYGQ5//KcJxxvhJg/m9EskY
-         kizjlkbx8lTwrB/lyM/+91gmjUP4dh0sryMBoTAegnDsIiUIwJodQc5mRQa7yreZJZGA
-         Y5W96BOAEQAQ3fVJC32GPSVgzjFcaM1XN9UtU3maXg2W3VfI5+Rhl8l6CcIhiWMQMHPJ
-         Vsl6cL0q2HN8wi+YSdK9FCbuMYZDTpm4glbHcdWo4z38HjSITmeTm8aEazbV0SVAZhZs
-         dYywez4T/VVSAESHRBMZsJcM+DdY8UplWiuEm+ciPL0LX57opdv+0iSl9tf7xpt1HAhv
-         bz0Q==
-X-Gm-Message-State: AOAM533RyP3Ds06HHSLCMHz9VfjKxvTGY88zZrMaCxkChm0Hdthi7lZg
-        VGMdMriWCwGiabM+qUOxBPowA/Gm431CNg==
-X-Google-Smtp-Source: ABdhPJyWLYTl2DNhyrLgizNpsmlyDkQ8W40L8O+PHTnx1VtbEMa5nNlHUrxbboKe4E6/D6khn/SZVA==
-X-Received: by 2002:a05:6214:623:: with SMTP id a3mr20618099qvx.122.1643671532913;
-        Mon, 31 Jan 2022 15:25:32 -0800 (PST)
-Received: from jerry-desktop2.localdomain ([50.236.240.214])
-        by smtp.gmail.com with ESMTPSA id br30sm7890495qkb.67.2022.01.31.15.25.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 15:25:32 -0800 (PST)
-From:   Jerry Zhang <jerry@skydio.com>
-To:     git@vger.kernel.org, gitster@pobox.com
-Cc:     Jerry Zhang <jerry@skydio.com>
-Subject: [PATCH V2 1/2] patch-id: Fix antipatterns in tests
-Date:   Mon, 31 Jan 2022 15:25:29 -0800
-Message-Id: <20220131232529.8484-1-jerry@skydio.com>
-X-Mailer: git-send-email 2.35.1.6.g61799e0acb
-In-Reply-To: <20220131232318.8248-1-jerry@skydio.com>
-References: <20220131232318.8248-1-jerry@skydio.com>
+        id S229554AbiAaXa2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Jan 2022 18:30:28 -0500
+Received: from ring.crustytoothpaste.net ([172.105.110.227]:39970 "EHLO
+        ring.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229457AbiAaXa1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jan 2022 18:30:27 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id D78F85B26D;
+        Mon, 31 Jan 2022 23:30:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1643671826;
+        bh=h3mwwbnQKEsWIMfodBnIz8u34uRakjXq9G8gkzrN4wc=;
+        h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
+         In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=wF+yvhE1vVnPLJXwenyf16oz44q77VgJeELSpgcfOytX8E5T4wPh+tCAYni1cLWMl
+         pdEQzdnNCbCzWoqR7de5Q7qmqoXcq2Gs7DGJ829SyPqdC0Q067PGaZDryfizsjd2lZ
+         B2DHHp8xkS2+HslwpidJqnJwijejVwI2bzlwheVGvRCd59x65rFbSrr7IpjxH/tRkS
+         6vAA0TEx6xEqP5TOYH5oAd+nq65UNGwHiN1phUkRX50kmC8CpE7sTvOaKE8/CUt8wq
+         sUK7deOyQ7M/fPpnGVEQlP7BnAFjEXqWFAEilbjLIcvmFp6Pj3XcuwlBM8P6Afvy6g
+         nzlYXDkQzmZQO5dlNG/BPmRufnuZhVg4UFvSSrkvVb+m+h3jaw/nYjm3JBBJ94OtG2
+         W7/jTvYx6MRGjW4iq+ebR11tejEjojONlfOA0u8Ijf3MrORgXemoM/hMI44M4oyZf4
+         h3KQlZGq+PLrPJ8KDL4OEICsvtdy0XXiPULMx/4UuHnK8cHlXgQ
+Date:   Mon, 31 Jan 2022 23:30:25 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+Subject: Re: Why won't "git rebase -Xrenormalize -i $REBASE_SHA" do anything?
+Message-ID: <YfhxESEsZo7CwFiz@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+References: <20220131110149.GE16463@raven.inka.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="PYcUfrHvGHRvDcQ6"
+Content-Disposition: inline
+In-Reply-To: <20220131110149.GE16463@raven.inka.de>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clean up the tests for patch-id by moving file preparation
-tasks inside the test body and redirecting files directly into
-stdin instead of using 'cat'.
 
-Signed-off-by: Jerry Zhang <jerry@skydio.com>
----
-V1->V2:
-- For some reason I put format-patch in the commit text when this
-change is actually to patch-id.
+--PYcUfrHvGHRvDcQ6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- t/t4204-patch-id.sh | 64 ++++++++++++++++++++++-----------------------
- 1 file changed, 31 insertions(+), 33 deletions(-)
+On 2022-01-31 at 11:01:50, Josef Wolf wrote:
+> Hello,
+>=20
+> I've added "* text=3Dauto" to an existing repo with a completely linear h=
+istory.
+>=20
+> Now, as expected, every rebase operation gives me lots of conflicts, whic=
+h are
+> hard to resolve.
+>=20
+> So I'd like to clean up the history:
+>=20
+>   $ git rebase -Xrenormalize -i $REBASE_SHA
+>=20
+> But this turns out to be a no-op? It says immediately
+>=20
+>   Successfully rebased and updated refs/heads/wip-normalize
+>=20
+> without even the counter which is usually output to show progress during =
+an
+> interactive rebase as it is working through the rebase-todo. I can confirm
+> that nothing has happened by checking the sha of the branch.
+>=20
+> So, what am I missing? How would I renormalize all the commits of a branc=
+h?
+> The branch has linear history, no merges there.
 
-diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
-index 80f4a65b28..da60f5b472 100755
---- a/t/t4204-patch-id.sh
-+++ b/t/t4204-patch-id.sh
-@@ -164,42 +164,40 @@ test_expect_success 'patch-id respects config from subdir' '
- 		cd subdir &&
- 		test_patch_id irrelevant patchid.stable=true
- 	)
- '
- 
--cat >nonl <<\EOF
--diff --git i/a w/a
--index e69de29..2e65efe 100644
----- i/a
--+++ w/a
--@@ -0,0 +1 @@
--+a
--\ No newline at end of file
--diff --git i/b w/b
--index e69de29..6178079 100644
----- i/b
--+++ w/b
--@@ -0,0 +1 @@
--+b
--EOF
--
--cat >withnl <<\EOF
--diff --git i/a w/a
--index e69de29..7898192 100644
----- i/a
--+++ w/a
--@@ -0,0 +1 @@
--+a
--diff --git i/b w/b
--index e69de29..6178079 100644
----- i/b
--+++ w/b
--@@ -0,0 +1 @@
--+b
--EOF
--
- test_expect_success 'patch-id handles no-nl-at-eof markers' '
--	cat nonl | calc_patch_id nonl &&
--	cat withnl | calc_patch_id withnl &&
-+	cat >nonl <<-EOF &&
-+	diff --git i/a w/a
-+	index e69de29..2e65efe 100644
-+	--- i/a
-+	+++ w/a
-+	@@ -0,0 +1 @@
-+	+a
-+	\ No newline at end of file
-+	diff --git i/b w/b
-+	index e69de29..6178079 100644
-+	--- i/b
-+	+++ w/b
-+	@@ -0,0 +1 @@
-+	+b
-+	EOF
-+	cat >withnl <<-EOF &&
-+	diff --git i/a w/a
-+	index e69de29..7898192 100644
-+	--- i/a
-+	+++ w/a
-+	@@ -0,0 +1 @@
-+	+a
-+	diff --git i/b w/b
-+	index e69de29..6178079 100644
-+	--- i/b
-+	+++ w/b
-+	@@ -0,0 +1 @@
-+	+b
-+	EOF
-+	calc_patch_id nonl <nonl &&
-+	calc_patch_id withnl <withnl &&
- 	test_cmp patch-id_nonl patch-id_withnl
- '
- test_done
--- 
-2.32.0.1314.g6ed4fcc4cc
+I think what you probably want is to add the -f option.  By default, Git
+doesn't perform a rebase when the current branch is up to date with the
+base branch.  If you want to do it anyway, in this case, to rewrite
+commits, then -f should make that happen.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
+--PYcUfrHvGHRvDcQ6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYfhxEAAKCRB8DEliiIei
+gdQlAPwLZmojn7rqFByTg530XHnluKVpHr/HRWYUhMeQbZGWvAD8C0CG7M0pisG7
+gXU2uwWvFFG/r8JoZfYIRcK0uxyYlQI=
+=l0Rb
+-----END PGP SIGNATURE-----
+
+--PYcUfrHvGHRvDcQ6--
