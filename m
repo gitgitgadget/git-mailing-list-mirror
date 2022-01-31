@@ -2,164 +2,281 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3C8EC433F5
-	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 14:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09C14C433F5
+	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 15:01:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376367AbiAaOIG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Jan 2022 09:08:06 -0500
-Received: from mail-am6eur05on2139.outbound.protection.outlook.com ([40.107.22.139]:60480
-        "EHLO EUR05-AM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S244552AbiAaOIF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jan 2022 09:08:05 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jqMSPY2uaYGNFXWi3nPfNrqdjhbpxt6hZKU77cgLJKDjBapfc6cN4YYHnjNyASBIAS7KmW1IJecvKIuPt2SHPu3WVuE+ef10OYSeK51a9IpnBIhR5cyHjeNm3EZun16bDu4O841+n4GNUsadO32gwU9I31kWdGRkm0TGiW3TPz7oTAOGw3yMmLgKUtqEigIDrYFJPiO6puVHoNZ2BnxB2b5j6HtFne4mHGHKnqCzI+OZX+0W3yij71IHFuUnhvK2yP4o8iWSscCgtK30G86iDpSyrITFEFRAvNaaqNiGWA0EqaDTsOjiziXGMvGcjM7rpWUC958Ve/mcfp3jCAMg1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ojCu9k4zTguerLM28EoeA4nVqlA8SzKoVSHUnOW92dg=;
- b=CbfjMbS6pRQ3RAQmY/zoIANw1CNrOzu2KFtp10wpkdrEGsuRTdM1UAGk8GD9s0B/wWIpB0Y7NczeX4ybhDvPI+TqX1h3TO4nYv0mpXEGjBATlJgq3K45O7BFNqP4lNDdJMrlGHSIeCui6XpdksJ4yLsS3JIrg+raR6swEml00hK0KyllCMg3lI35aKB19l7/9FFt7WLUSbI4UtjOK5NngzdWYce7BtbqkoaZYlbxMnS5kUaNAVNSMve+npC2vRyc7dGzIsHKdeGSHEM8UAj2S2/vRQEZQeBckNql0IV5lQb33xjbJMCY4vXoSRZXrGci4D05kKwaQM1tKBYitDy0Uw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=prevas.dk;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ojCu9k4zTguerLM28EoeA4nVqlA8SzKoVSHUnOW92dg=;
- b=C+r6zLyd+CbTrhFltkq7IfthtAUx4o5kioGC++wIK8J4hU0boi0LEKfSXZI6YH+mf3b6Rw39MsvOWHjqh02tKtGkxBc2LpIx3diWLchYlgcPda/v3TlZG1YxTofq+uI+dfBxCBj075NRpMKEnvCf7MruPZkNB6Xt2vTH7TOOD6Y=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=prevas.dk;
-Received: from DU0PR10MB5266.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:34a::22)
- by DBAPR10MB4044.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:1ce::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4930.15; Mon, 31 Jan
- 2022 14:08:04 +0000
-Received: from DU0PR10MB5266.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::608f:51b:ced9:9c8f]) by DU0PR10MB5266.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::608f:51b:ced9:9c8f%7]) with mapi id 15.20.4930.021; Mon, 31 Jan 2022
- 14:08:03 +0000
-To:     Git Mailing List <git@vger.kernel.org>
-From:   Rasmus Villemoes <rasmus.villemoes@prevas.dk>
-Subject: remotes group with one member
-Message-ID: <b5d27968-fd45-a58e-3619-feadc6a4cc5e@prevas.dk>
-Date:   Mon, 31 Jan 2022 15:08:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: GV3P280CA0089.SWEP280.PROD.OUTLOOK.COM
- (2603:10a6:150:a::13) To DU0PR10MB5266.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:10:34a::22)
+        id S1349275AbiAaPBE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Jan 2022 10:01:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43858 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1349242AbiAaPBC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jan 2022 10:01:02 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77E48C061714
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 07:01:02 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id n12-20020a05600c3b8c00b0034eb13edb8eso55278wms.0
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 07:01:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Yyy7TOjsZDdzkZmfzFEf41RIXTFNpDu/6AJY1Cy4618=;
+        b=Sjtt+TKjQgidTRABipXx6hU4sNb1uDkFbHeZFTqW+NRlbM4UYLr/P1y/CYyHiK165Q
+         HjfNgsh3YE6pcw6ZV7w4toqLtRylYzkOnN2h4pJml4oxhkEDBQ8NxbBl3PHc3eoTnH8x
+         ZXKAA8tZHjlhU+DOoIy+gLGf1B0nNfu/Dk/uQjSLnW9QY7hqt3Nf3a1ncK2qPjT9l3wx
+         XWsuEcS20ihTIME8yjLh8HbC1ishPoPl+PJQid29OmKHn9ni7f2a4m5A3vUi9KbC5qYQ
+         Yw7d1dloxokdRObzjFfulKhbgBYVmOZF1AcXmRVM0fQc/SiyTUqM1spbiFtErc4auHs2
+         M9Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Yyy7TOjsZDdzkZmfzFEf41RIXTFNpDu/6AJY1Cy4618=;
+        b=EoqHey+o50gvsGkok8Y5JL4yZuu93QTOI5t7QcmYpG7iWTIFEXolVDQ+gm3JlrZaPp
+         66QbMl0eIo5ZH0EygHN15boJ2J0LvukRi+dubTMENr89xtissmmc5gGCWAXF6xT0EGy5
+         FxyqEqrbww31v8VUZg4G0NvPT8tyTz1C8o8DxFRt6wBlJLvhdUWEXc3Lq4pGs3LxfnVK
+         G8FrT4WyGNG3HIyni6vTjWR3/67nphgpBJIAZ7JJixboVq4sVa3VtRWiCO1RICVR9SGX
+         usavcJeT9ROAlWLLgHSJ96U+UGX6IKJcE5mXYJ/doGF7W7LXxWEZXSWG5jqrsRwzFnmR
+         y7lw==
+X-Gm-Message-State: AOAM533yyG9bs4JQb1cUmB98QOYmbTIqdHlTpeHtywGUHFwr7GNRuzvr
+        2FAXUuN4qeFH4S7ByhPTrzL8XPbusug=
+X-Google-Smtp-Source: ABdhPJx6PHS+fXhLgDrNn6P56t9V6pt3AjaZRisAiQnbvOn1gKNB2ppq+cz7EzzhsJRIcHpzEUyM3A==
+X-Received: by 2002:a05:600c:4ed3:: with SMTP id g19mr9160263wmq.186.1643641260683;
+        Mon, 31 Jan 2022 07:01:00 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g4sm13573433wrd.111.2022.01.31.07.01.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Jan 2022 07:01:00 -0800 (PST)
+Message-Id: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com>
+References: <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 31 Jan 2022 15:00:54 +0000
+Subject: [PATCH v5 0/5] Sparse checkout: fix bug with worktree of bare repo
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 424d68c7-ef84-481b-a86d-08d9e4c318cf
-X-MS-TrafficTypeDiagnostic: DBAPR10MB4044:EE_
-X-Microsoft-Antispam-PRVS: <DBAPR10MB4044CB7F90F26C82517FFA4B93259@DBAPR10MB4044.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: u4bnHoav9IOT887PPiyXJgEaFsBTEtZX1L4sFCzski6jOvVnB/S0Qh8xVkL+80i3daXYKwKe8GTSw+aySsORqGICPG3Ae6nqSbdlcytB9xvWgooae/SW31y1kfLUvAB8qRuQ5j6qfuyJV1rieuG9MumGNNrNaZRmHjx9V2r5Dr1Y1yQj+Vn+1rPxmqk8qfx/yJZLzfZvf9tpGQ3v7/B8lxfkU6oxV1fubkJsSdES3YI6BBdGTudynLS0zZ0UxSZ284SMitUZm3/B5jXFkD9P7Z+x7PD0dpWLB7HTwpV8BfqjCNNjQwBQTFr2eGr14z2hS2vjnyZ+WTJF8MJchUQV/ueVBAt8zNCDOzU2xAo2cYHtHZhchkYjcKYI+foQR/ujbHwpyQaWBSCSRC/qvTF5X9chmqJQyubEMEHQKTo11Qhi8c4hcqYkHRDr/0RuaywzfWr7NzbJ2fYx1EehZd9gnn0jBa9ixovMIdVXQrYqDJPng5Z57bGq54CvewvNmeCt9SzD52tNL6EvRUxBBLh3AkRe5HzmpR2HO/rB7gT3zQkwzRKJgk6UyyYT7AWJyWBPhJ6sIuIUAThjegqu5IijJqkINzsvwtSOzXOP6CtnQJU3nI1uU1nHRgPP16R8ggMeF47cQOwr4eKnIh3XnXwA5sIQduHrTqewrBS8/P+F37SH5WEJ1dv2Hot1wkiNUPJ42F5/uIKGhdCSvHQCFB/z2pUpDGjatxP1pN6xq2F1CHi2sLjnvduZ2hJ1ZNYA8mFKj5peiEiDtAbGWuEi5Th6Uw==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU0PR10MB5266.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(366004)(6506007)(26005)(44832011)(52116002)(8976002)(5660300002)(2906002)(2616005)(6512007)(186003)(31696002)(83380400001)(86362001)(508600001)(6916009)(36756003)(8676002)(8936002)(66946007)(316002)(66556008)(66476007)(6486002)(38100700002)(38350700002)(31686004)(45980500001)(43740500002)(20210929001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?Windows-1252?Q?Cu1yw4C17cLZ1BDYlqCntp2qL4eAiGiU1xffB4q6YUu3g9Vquqq1QnKG?=
- =?Windows-1252?Q?oqdSeYT5saTefOchm9g1FMTyTR4uq2V7XaK7T+DhjAU1gGAIi4aGn9W+?=
- =?Windows-1252?Q?bO+PcHPrgePqHuqGJcJfMmFcCbqua5GvficrjTH4sTEjX/2VMBLQd0Kp?=
- =?Windows-1252?Q?Tn65ph0KEXbbJh0kepo8IjlPEARWL/lEAXMtqlUxn4C/vU1i9wl49XcP?=
- =?Windows-1252?Q?apCn8y8SYNlmafB6n0u1q9nLqJ0yA8YtCHY1aSN+3g6OVCwUYjtOkuc2?=
- =?Windows-1252?Q?DbLiXzL9zu50hoUivVIFSt3ujjxSt11ub7uPfds546m66Z7XYy+d6LPH?=
- =?Windows-1252?Q?aGBSNHiuKutHX1y8l5XjI8fnQZGYHAMvND3fEbHLkOl+FwA0aDDpop6N?=
- =?Windows-1252?Q?DVpM0DUuARuhVAIKsDxNW8JnSjQAX8+So5+rzOKnsxJ9H6ZYJoDKM96j?=
- =?Windows-1252?Q?O8CIEYe8/roiseBWnA6BNoZyS+WEFDDn0ziuH+qcYOM+Z3kv7AJiPDci?=
- =?Windows-1252?Q?s5xGcg30FhIGhzqFsERdZ8VfZvrMQ6oCqpofJb8nB+775iZLYYv16dUb?=
- =?Windows-1252?Q?ZaGwOcHDqcSIxt+cgM2D4B7spOZn0YSObUh8gFsaUFHZltnTNA/FlWQG?=
- =?Windows-1252?Q?cqckBEw+OJwBoBUj291d6m/f90QGDQ9Jv3g0thgNN1ccBE90btzXgy7Q?=
- =?Windows-1252?Q?X1IEVaW4sPnxLaL+DrwCbftNzP/6oiRbdv0DhfxcTA3kYLl5vFLVJZYY?=
- =?Windows-1252?Q?CLFfCnvkvSKezXaMNLy9DePmknSIXprJyhTtINnHPcFlWGIXHrgiugdf?=
- =?Windows-1252?Q?7sqmQ/1jXV3JSP45l5yBVFcpwXWZ+Q+heY7b/5y68XVn+LLXuxayIkEQ?=
- =?Windows-1252?Q?+TKckeITATomdM+bpblIvj2U4Ry+QSRYUDv7x34GSKd1cggIxFMgvEdk?=
- =?Windows-1252?Q?6Wi4vSwtEhH5IvPVssn2P76xHqQ2jdPLOjeZB4azgS8Ubk0mClr3CThM?=
- =?Windows-1252?Q?uJJRiFwLgOIPgPh1WuZ5OAWlXu95qZ2MzADeGqBX9ts4e87LQ3j/aa8s?=
- =?Windows-1252?Q?WkT7CrYYAxv/I4sPAONOqcpEw19I4pNCGis3vShsJrNmbTvwED6/6NNp?=
- =?Windows-1252?Q?nvyXkLGolWF4BZ+EJEXgwuY3THaxwySBAi843R78Dmh4gAZZZ9re/wnZ?=
- =?Windows-1252?Q?0dL9EBi60CzLxFCSBD9rvtYifRhEYSjtfZTlhxgZFeITcRP3/R82Tg6a?=
- =?Windows-1252?Q?uxqNlLe4sV7MuMnbV1DBuwm54SDvz0ArJZWGa+V/Ro7xpaD4B6BjQ0GH?=
- =?Windows-1252?Q?0uEH9lD/22yLtuw557kFi5Sk4p+XxRWhnxJ+U4ECPmMfB7mrADomHQXx?=
- =?Windows-1252?Q?zXsIuHqNMEEzKClZJz4vNeTqDVqL4DO7Rcert8h0htctD0bBA5e+xqgX?=
- =?Windows-1252?Q?0xFiMTF0NNskeTZowkwYg1ksBijjd778oAjBXKaJ4mPkzcVZLbt7QY3L?=
- =?Windows-1252?Q?Dj8uqc+/4c5x0NF9IFDN8ENzHj0Xv6O4zdM3XVs4OA/vk4eVFjU97TTo?=
- =?Windows-1252?Q?mSX1Ue4PoGARlW1Ha4dL8uGFUzsUF0/fSGin6ZUZJJhwhZD3/wAb1Y4/?=
- =?Windows-1252?Q?mUviAOe+JoKDW8X+mb7H0yZ8dW6BmyhA5DtV3BpVoNUd0hDS2ISiLAfN?=
- =?Windows-1252?Q?0uQ/Aw7pKg/h0yJXE4ktaqFc5YScZZirVAAGNF+1iEIZybtoIhUYT3ay?=
- =?Windows-1252?Q?Wf2BYgoiDtwL7nxwcorw82jRJZERQcGDQfKZthJMwLdVACx29HbCK5Eq?=
- =?Windows-1252?Q?274uzA=3D=3D?=
-X-OriginatorOrg: prevas.dk
-X-MS-Exchange-CrossTenant-Network-Message-Id: 424d68c7-ef84-481b-a86d-08d9e4c318cf
-X-MS-Exchange-CrossTenant-AuthSource: DU0PR10MB5266.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jan 2022 14:08:03.8309
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: d350cf71-778d-4780-88f5-071a4cb1ed61
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XFurwKge/YUDnOWF2j920z9F+pvteJ/raduGLEg+bcdJ2+7r3hU51UdP/d2FfoicjQPF7RjL6o6a4PwN5ZN+SzS+s37S8Lkrqo/n4FJ3R9Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR10MB4044
+To:     git@vger.kernel.org
+Cc:     stolee@gmail.com, sunshine@sunshineco.com, allred.sean@gmail.com,
+        gitster@pobox.com, Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This series is now based on v2.35.0 since that contains all of the necessary
+topics.
 
-I was trying to make use of defining a remotes.upstreams group, along
-with setting up suitable remote.<bla>.fetch variables for each, in order
-to make sure our local clones of various repositories are kept in sync
-with various upstream sources - e.g. for the linux kernel, we're pulling
-from both Linus', -stable and the -rt trees. For other projects, we only
-have one upstream, but I wanted to keep the logic in the cron job simple
-so I could do 'git fetch upstreams' in each of them. When there are
-actually several remotes in the 'upstreams' group, this works fine. But
-when there's only one (say, origin), it fails with
+This patch series includes a fix to the bug reported by Sean Allred [1] and
+diagnosed by Eric Sunshine [2].
 
-$ git fetch upstreams
-fatal: 'upstreams' does not appear to be a git repository
-fatal: Could not read from remote repository.
+The root cause is that 'git sparse-checkout init' writes to the worktree
+config without checking that core.bare or core.worktree are set in the
+common config file. This series fixes this, but also puts in place some
+helpers to prevent this from happening in the future.
 
-If I put the silly value "origin origin" in remotes.upstreams, it works
-as expected.
+ATTENTION: I have significantly redesigned the series since previous
+versions, so most of this cover letter is new.
 
-Digging into fetch.c, I can see where this behaviour comes from
+ * Patch 1 updates documentation around extensions.worktreeConfig in a few
+   places to improve discoverability. Several cross links are added to make
+   it easy to find the related areas. (The documentation for the changes to
+   'git sparse-checkout' are delayed to patch 4.)
 
-	} else if (multiple) {
-		/* All arguments are assumed to be remotes or groups */
-		for (i = 0; i < argc; i++)
-			if (!add_remote_or_group(argv[i], &list))
-				die(_("no such remote or remote group: %s"),
-				    argv[i]);
-	} else {
-		/* Single remote or group */
-		(void) add_remote_or_group(argv[0], &list);
-		if (list.nr > 1) {
-			/* More than one remote */
-			if (argc > 1)
-				die(_("fetching a group and specifying refspecs does not make sense"));
-		} else {
-			/* Zero or one remotes */
-			remote = remote_get(argv[0]);
-			prune_tags_ok = (argc == 1);
-			argc--;
-			argv++;
-		}
-	}
+ * Patch 2 introduces the init_worktree_config() helper which follows the
+   documented instructions to enable extensions.worktreeConfig as well as
+   move the core.bare and core.worktree config values. This update does not
+   modify core.repositoryFormatVersion, since this is not needed
+   specifically for extensions.worktreeConfig.
 
-That is, when add_remote_or_group() has resolved the group to just one
-element in list, we redo the lookup with a remote_get(), essentially
-forgetting the translation from the group name "upstreams" to the
-singleton "origin".
+ * Patch 3 adds a new repo_config_set_worktree_gently() helper method so we
+   can internally adjust a config value within a worktree, at least if
+   extensions.worktreeConfig is enabled. (It will write to the common config
+   file if the extension is not enabled.)
 
-This feels like a bug to me, at least a UX one. Looking at this code, I
-also saw that I could probably work around it if I say "git fetch
---multiple upstreams" (and that does work as expected), but it's
-somewhat counterintuitive to have to specify --multiple to get a
-singleton group to work.
+ * Patch 4 modifies the sparse-checkout builtin to use
+   init_worktree_config() and repo_config_set_worktree_gently() in ways that
+   fix the reported bug. The behavior change here is that it will no longer
+   upgrade the repository format version, since that is not needed for
+   extensions.worktreeConfig.
 
-Rasmus
+ * Patch 5 updates 'git worktree add' to copy the worktree config from the
+   current worktree to the new one (while unsetting core.bare=true and
+   core.worktree=*) along with copying the sparse-checkout patterns file.
+
+[1]
+https://lore.kernel.org/git/CABceR4bZmtC4rCwgxZ1BBYZP69VOUca1f_moJoP989vTUZWu9Q@mail.gmail.com/
+[2]
+https://lore.kernel.org/git/CAPig+cQ6U_yFw-X2OWrizB1rbCvc4bNxuSzKFzmoLNnm0GH8Eg@mail.gmail.com/
+
+
+Updates in v5
+=============
+
+ * Cleaned up documentation as per Elijah's suggestions.
+ * Removed unnecessary conflicting change in git-sparse-checkout.txt
+ * Fixed an ambiguous comment about moving config values.
+
+
+Updates in v4
+=============
+
+ * Rebased to v2.35.0
+ * Fixed memory leak (was leaking repo_git_path() result)
+ * Added additional documentation updates so curious users can discover the
+   intricacies of extensions.worktreeConfig from multiple entry points.
+ * Significantly reduced the amount of changes to config.c.
+ * 'git sparse-checkout' no longer upgrades the repository format.
+ * Dropped the update to upgrade_repository_format(), since it is not
+   needed.
+ * Dropped the 'git worktree init-worktree-config' subcommand in favor of a
+   helper method called by 'git sparse-checkout'
+ * Many others because of the significant changes required by the above
+   items.
+
+Thanks, -Stolee
+
+Derrick Stolee (5):
+  Documentation: add extensions.worktreeConfig details
+  worktree: create init_worktree_config()
+  config: add repo_config_set_worktree_gently()
+  sparse-checkout: set worktree-config correctly
+  worktree: copy sparse-checkout patterns and config on add
+
+ Documentation/config/extensions.txt   | 31 ++++++++++++
+ Documentation/git-config.txt          |  8 ++-
+ Documentation/git-sparse-checkout.txt | 16 ++++--
+ Documentation/git-worktree.txt        | 11 +++--
+ builtin/sparse-checkout.c             | 28 +++++------
+ builtin/worktree.c                    | 60 +++++++++++++++++++++++
+ config.c                              | 35 ++++++++++++--
+ config.h                              |  8 +++
+ sparse-index.c                        | 10 ++--
+ t/t1091-sparse-checkout-builtin.sh    | 35 ++++++++++----
+ t/t2400-worktree-add.sh               | 46 +++++++++++++++++-
+ worktree.c                            | 70 +++++++++++++++++++++++++++
+ worktree.h                            | 21 ++++++++
+ 13 files changed, 333 insertions(+), 46 deletions(-)
+
+
+base-commit: 89bece5c8c96f0b962cfc89e63f82d603fd60bed
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1101%2Fderrickstolee%2Fsparse-checkout%2Fbare-worktree-bug-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1101/derrickstolee/sparse-checkout/bare-worktree-bug-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/1101
+
+Range-diff vs v4:
+
+ 1:  459e09dedd7 ! 1:  1bd5f26271c Documentation: add extensions.worktreeConfig details
+     @@ Commit message
+          within git-sparse-checkout.txt, but a behavior change is needed before
+          making those updates.
+      
+     +    Helped-by: Elijah Newren <newren@gmail.com>
+          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## Documentation/config/extensions.txt ##
+     @@ Documentation/git-config.txt: from all available files.
+      -	present. If not it's the same as `--local`.
+      +	enabled. If not it's the same as `--local`. Note that `$GIT_DIR`
+      +	is equal to `$GIT_COMMON_DIR` for the main worktree, but is of the
+     -+	form `.git/worktrees/<worktree-name>/` for other worktrees. See
+     ++	form `$GIT_DIR/worktrees/<worktree-name>/` for other worktrees. See
+      +	linkgit:git-worktree[1] to learn how to enable
+      +	`extensions.worktreeConfig`.
+       
+     @@ Documentation/git-worktree.txt: CONFIGURATION FILE
+      -already present in the config file, they will be applied to the main
+      -working trees only.
+      +present in the common config file and `extensions.worktreeConfig` is
+     -+disabled, then they will be applied to the main working trees only.
+     ++disabled, then they will be applied to the main working tree only.
+       
+       In order to have configuration specific to working trees, you can turn
+       on the `worktreeConfig` extension, e.g.:
+     @@ Documentation/git-worktree.txt: them to the `config.worktree` of the main workin
+      - - `core.worktree` and `core.bare` should never be shared
+      + - `core.worktree` should never be shared.
+      +
+     -+ - `core.bare` should not be shared unless the value is `core.bare=false`.
+     ++ - `core.bare` should not be shared if the value is `core.bare=true`.
+       
+        - `core.sparseCheckout` is recommended per working tree, unless you
+          are sure you always use sparse checkout for all working trees.
+ 2:  d262a76b448 ! 2:  2a2c350112e worktree: create init_worktree_config()
+     @@ worktree.h: void strbuf_worktree_ref(const struct worktree *wt,
+      + *
+      + * 1. Add extensions.worktreeConfig=true in the common config file.
+      + *
+     -+ * 2. If the common config file has a core.worktree value or core.bare is
+     -+ *    set to true, then those values are moved to the main worktree's
+     -+ *    config.worktree file.
+     ++ * 2. If the common config file has a core.worktree value, then that value
+     ++ *    is moved to the main worktree's config.worktree file.
+     ++ *
+     ++ * 3. If the common config file has a core.bare enabled, then that value
+     ++ *    is moved to the main worktree's config.worktree file.
+      + *
+      + * If extensions.worktreeConfig is already true, then this method
+      + * terminates early without any of the above steps. The existing config
+ 3:  110d5e0546c = 3:  802b28a9510 config: add repo_config_set_worktree_gently()
+ 4:  fbfaa17797c ! 4:  08b89d17ccf sparse-checkout: set worktree-config correctly
+     @@ Documentation/git-sparse-checkout.txt: COMMANDS
+      -	(extensions.worktreeConfig, core.sparseCheckout,
+      -	core.sparseCheckoutCone) if they are not already enabled, and
+      -	write a set of patterns to the sparse-checkout file from the
+     --	list of arguments following the 'set' subcommand. Update the
+     --	working directory to match the new patterns.
+      +	Enable the necessary sparse-checkout config settings
+     -+	(`core.sparseCheckout` and possibly `core.sparseCheckoutCone`) if
+     -+	they are not already enabled, and write a set of patterns to the
+     -+	sparse-checkout file from the list of arguments following the
+     -+	'set' subcommand. Update the working directory to match the new
+     -+	patterns.
+     -++
+     ++	(`core.sparseCheckout`, `core.sparseCheckoutCone`, and
+     ++	`index.sparse`) if they are not already set to the desired values,
+     ++	and write a set of patterns to the sparse-checkout file from the
+     + 	list of arguments following the 'set' subcommand. Update the
+     + 	working directory to match the new patterns.
+     + +
+      +To ensure that adjusting the sparse-checkout settings within a worktree
+      +does not alter the sparse-checkout settings in other worktrees, the 'set'
+      +subcommand will upgrade your repository config to use worktree-specific
+     @@ Documentation/git-sparse-checkout.txt: COMMANDS
+      +the 'set' subcommand are stored in the worktree-specific sparse-checkout
+      +file. See linkgit:git-worktree[1] and the documentation of
+      +`extensions.worktreeConfig` in linkgit:git-config[1] for more details.
+     - +
+     +++
+       When the `--stdin` option is provided, the patterns are read from
+       standard in as a newline-delimited list instead of from the arguments.
+     -@@ Documentation/git-sparse-checkout.txt: interact with your repository until it is disabled.
+     - 	By default, these patterns are read from the command-line arguments,
+     - 	but they can be read from stdin using the `--stdin` option. When
+     - 	`core.sparseCheckoutCone` is enabled, the given patterns are interpreted
+     --	as directory names as in the 'set' subcommand.
+     -+	as directory names as in the 'set' subcommand. The sparsity defined
+     -+	by the arguments to the 'add' subcommand are added to the patterns
+     -+	in the worktree-specific sparse-checkout file.
+     - 
+     - 'reapply'::
+     - 	Reapply the sparsity pattern rules to paths in the working tree.
+     + +
+      
+       ## builtin/sparse-checkout.c ##
+      @@
+ 5:  bb9e550ff3d ! 5:  85779dfaed3 worktree: copy sparse-checkout patterns and config on add
+     @@ t/t1091-sparse-checkout-builtin.sh: test_expect_success 'add to sparse-checkout'
+      +	cat repo/.git/info/sparse-checkout >old &&
+      +	test_when_finished cp old repo/.git/info/sparse-checkout &&
+      +	test_when_finished git -C repo worktree remove ../worktree &&
+     -+	git -C repo sparse-checkout set "/*" &&
+     ++	git -C repo sparse-checkout set --no-cone "/*" &&
+      +	git -C repo worktree add --quiet ../worktree 2>err &&
+      +	test_must_be_empty err &&
+      +	new=repo/.git/worktrees/worktree/info/sparse-checkout &&
+
+-- 
+gitgitgadget
