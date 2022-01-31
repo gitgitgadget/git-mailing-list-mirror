@@ -2,86 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1503EC433F5
-	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 17:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95A82C433F5
+	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 17:16:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380758AbiAaRNU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Jan 2022 12:13:20 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60341 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1380741AbiAaRNT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jan 2022 12:13:19 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 18315162B99;
-        Mon, 31 Jan 2022 12:13:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ne5xPykQlLNVdlZOVsXDzLz1V5Rf8noTq5oFpH
-        UCITs=; b=fGCRt7himMVDmk89bMjwy4JknvubP7jACIcMDXueZNx+5tlfpzIx/h
-        CJuUStVhKGKmPasMcXcAVGucdPXmZMGvLML4Zav7mB1rYkdYF8mf2CDvpwW3udFU
-        /ygVdks4H2AiH/SdzqWdG7SDZIj5fEwz43jioUOFFuOW/1p1nibgY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F23DC162B98;
-        Mon, 31 Jan 2022 12:13:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 61C8F162B97;
-        Mon, 31 Jan 2022 12:13:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git <git@vger.kernel.org>
-Subject: Re: flags types/names
-References: <xmqq35lc53e9.fsf@gitster.g> <YfOd7QRK4zjLwJci@ncase>
-        <xmqqilu3woj2.fsf@gitster.g>
-        <CAFQ2z_M_SXENMU6Y3Evrz9-G_+pqjd-zPQiZjnA_y2hvb+Egkw@mail.gmail.com>
-Date:   Mon, 31 Jan 2022 09:13:15 -0800
-In-Reply-To: <CAFQ2z_M_SXENMU6Y3Evrz9-G_+pqjd-zPQiZjnA_y2hvb+Egkw@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Mon, 31 Jan 2022 10:50:16 +0100")
-Message-ID: <xmqqbkzrkevo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1350196AbiAaRQn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Jan 2022 12:16:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47528 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1350100AbiAaRQl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jan 2022 12:16:41 -0500
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C6EC061714
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 09:16:41 -0800 (PST)
+Received: by mail-yb1-xb33.google.com with SMTP id c6so42609385ybk.3
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 09:16:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=H0ehjEYk9DctZQuU3kzjgO3G71JnvzD0YfZ79WwWrzk=;
+        b=aBoaLawiI+7zYx4y0vp0a0qcY5ApaeAtn3ndsZzty812Hf0nE/mtBHV6MW0/JwnDYv
+         6iJ6N8Z+O09wswpFmxwTDFbPXm3q2ubY091B+2+ZC+TKMUQSeTzFxqM1FRlnfU8+rEvD
+         5F/zmdULEqOxhd9gp58uKG81KnELVJw4EEF73Mw+EzFA246BSGvF5EzOkfC60BqgdO5h
+         7ZLXgcE4xTHWE1+TDwHhx3ino/DPIN3d5MMYmL88A7CVxoKhWeH8X8F+JmOlq6fygRoz
+         bxTc3CzRKSAVLXKxJ+hGwum2MdxEVkmPwITYmH//INp/ZxYHC8b1ghjo1nX3zilgIBVS
+         K7EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=H0ehjEYk9DctZQuU3kzjgO3G71JnvzD0YfZ79WwWrzk=;
+        b=PNMFjZkkvCrqGEq9Ba0C4yzT8P8aCcNylM2JQDmojElj4jVLbx8aVBEqQIfOaiTae2
+         v7+R/XWgU6HnA66kRMWNX2xHBGgdWG0zbIrrwYSxi4FMrzHOawH5CTUq6Kb361i3stxx
+         YOiGgGFDzjz9bQCNmvWz+rI535S7wGQ2gv7u8zp5iGXF04GdmeOMbGn4ZpBghwJe1BJ5
+         ABW0KorhSMigfo4ma4AwiaaAXuJn+GJC84MaEnSZGaJ50DiIINcedhz237hg3yqiy+ue
+         UrD/eHMsbPpN7CQJ+qTfJDZOgyr2kO/q0aYaZY76aNtXcW9ujOP4qCAvxcCJyg1GttNH
+         6XEg==
+X-Gm-Message-State: AOAM533NK3+g6scV2hh300CrgBrowfkl1vWs4OROLf2I7Q6f2rjLRbMQ
+        94DB913jF9XODK++b08IpIe/1v5Zpvr5q4xiAOcvUp67cls=
+X-Google-Smtp-Source: ABdhPJyYJFBvs4E41RyJRdprJWG5MfCVomXyF3lvzcvCGUr1C4p23pAwOUqhw1aE3uEYKvykbKJZMraJS3RqYFrtzdU=
+X-Received: by 2002:a25:71c4:: with SMTP id m187mr31685659ybc.427.1643649400049;
+ Mon, 31 Jan 2022 09:16:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1461EBEC-82B9-11EC-8B33-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 31 Jan 2022 18:16:29 +0100
+Message-ID: <CAP8UFD0SehQ43njmAFyVWvq4KVfiC-HH1PBbk64hmdwKZ=H3Aw@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 83
+To:     git <git@vger.kernel.org>
+Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Erik Cervin Edin <erik@cervined.in>,
+        Sean Allred <allred.sean@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Philip Oakley <philipoakley@iee.email>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+Hi everyone,
 
-> My questions:
->
-> * am I the only one who struggles with the different flavor of `flags` ?
+The 83rd edition of Git Rev News is now published:
 
-Probably no.
+  https://git.github.io/rev_news/2022/01/31/edition-83/
 
-> * if no, what should be done about this? Maybe
->
->   typedef unsigned int ref_flags;
->   #define REF_IS_SYMREF 0x1
->   char *refs_resolve_ref_unsafe(const char *refname, ref_flags *flags, ... );
->
-> or
->
->   typedef enum ref_flags {
->      REF_IS_SYMREF = 0x1,
->   };
->   char *refs_resolve_ref_unsafe(const char *refname, enum ref_flags
-> *flags, ... );
+Thanks a lot to Philip Oakley who helped this month!
 
-It is very good to use symbolic constants implemented either as C
-preprocessor macros or enums, I would think.
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
 
-However, I am not enthused to see typedefs; I've never seen multiple
-typedefs of the same integral type did anything useful in C.  Perhaps
-things are different in the C++ land, but we do not live there.
+PS: An issue for the next edition is already opened and contributions
+are welcome:
 
-> A somewhat related gripe is that some code uses `int flags` and other
-> code uses `unsigned flags`. It would be great to standardize this.
-
-I agree.  Unless there is very compelling reason to single out the
-topmost bit and treat it as special, a set of flag bits should be
-"unsigned".
+  https://github.com/git/git.github.io/issues/544
