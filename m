@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17854C433FE
-	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 15:01:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BE7FC433EF
+	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 15:01:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349305AbiAaPBF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Jan 2022 10:01:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43862 "EHLO
+        id S1350566AbiAaPBG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Jan 2022 10:01:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349248AbiAaPBD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jan 2022 10:01:03 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32E32C06173B
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 07:01:03 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id l25so25883761wrb.13
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 07:01:03 -0800 (PST)
+        with ESMTP id S1349242AbiAaPBE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jan 2022 10:01:04 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C029C061714
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 07:01:04 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id k6-20020a05600c1c8600b003524656034cso6521394wms.2
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 07:01:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/ZljNoJgVbCVB9yLzYfuE976PzYqWu1MtluAAAmo3IQ=;
-        b=bDmCnjChXkWaPoJxXZF3wK4YjKKwFjD4p81jzsu7ejDxyCAwL8aji7w7js4sg+BApp
-         3gJvAG8BkmSa7aW8b1h9KRs0g7bKVNQ2i2yUciz5LlzJdPhelH1bucnZguRwqBMt2rd3
-         8Bv0g3yg5VChJ+tyzuVwFyFDpN7VpO2n4H3kUXo+PtiLclre+zBKeU5a/HYaro7sjUZ2
-         yNU0enhlzyR4jGcc2bgRq11nosiE1937NTFky6lwjhk/zNTWShGXbUhFQVjMkdE9iiZg
-         6t29orPSgUoKzBsFjTooxrfUcDpMf50f6owzpBC1cIZv6VcfvKBwtUZroTJu/zeC2nnn
-         CtHA==
+        bh=uyMDAyf4BzO629nUhVYIK18MvIpf6a1gpCToHf8x+fw=;
+        b=FVtpVTB7w6ab6zLJzL5NAnMLJ36CAvwRINhZyuhyTQKg8fS9nK3rg11zCl24b2cn0s
+         +fODqKicDYUPF/Pi/8CjWzDXec2VD7ksq/h1b5zSTsyy2NDl432goZFp21/ZCdR1S7I4
+         ilIvJNhn0eskzV510VySBdcbHaXg3qb5VAl4c8k9/NWH/acCT0+qF0Aizyl2x7Maf7Kn
+         XHBaNFZcMKya0YJ5vIk3AlZ9cwy1B5NTsRJofCzYcNUOL/FtNfn13WzrdOioohZEZATQ
+         hFrsv4rwKOvTUDQJ2my2M0pCaOxWAzWXfHmUasb7Tb+xC73s3rqKU9Uz6YNOpEQoSsII
+         EciA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/ZljNoJgVbCVB9yLzYfuE976PzYqWu1MtluAAAmo3IQ=;
-        b=2MFaKOc+0PSgg8aRD/9PL8CmzSo8Fi/Ms88l61y4Y6iN5upFvqEWWIJFlzp8cICb7X
-         yAAgYN0AbKgjErx9D1E9XweufoFL/zUBK8GDNPOLHicgza3bJ6MXQLOjeKGj372haoM6
-         ypdphYykzI8gv3ZYv6QG75ziSk3QiTVvNLQf4kBMKZgwgruZjAc7PBUwaDUN/+elpfOn
-         mwQUx0u8vMeUFAtm2QhWLxj4Fv1QA/vxHCbjewALOrCEKX9ii5V5THPQkb+hfGjytGB3
-         D7GqQnsLqZBZfgfYFX/89Rd/ZsPkgFUtn3LeyIpmUwV+EVW9KAnqnHaUw5meIxMvG3YX
-         M2rQ==
-X-Gm-Message-State: AOAM533qRJ+aNPgeW+5at+ZEAtVq+4z9fd2QYdlkf2iOVgyzmHmymlw3
-        zBvbxXnKkd3Yxrbar6N4KHl2FSV3D4E=
-X-Google-Smtp-Source: ABdhPJxdHRwjLue40/J1sqn1HMvsFJih1rnQRs3SV+Em3o2mdRfWAR0SILrCVNXqomoSxEO5t92s+w==
-X-Received: by 2002:a5d:64e5:: with SMTP id g5mr9633508wri.345.1643641261529;
-        Mon, 31 Jan 2022 07:01:01 -0800 (PST)
+        bh=uyMDAyf4BzO629nUhVYIK18MvIpf6a1gpCToHf8x+fw=;
+        b=Hf8ZnZdDIGIXJR6vs1w++JotD+tYWHgISJ/ztgUpfkuWNRf55ZMAlLaskg++jRedE6
+         7VK07IdSzBic0v3F7p73XYW6hVz2d0rFgSwAM6VLCWAuLdHyFZGtAU3+Lbpa1pzB+0rb
+         bisCYdXRXIay0Nticmg6N91B4rVgmVEjNYt1eOdimh9t69osiUFd3XR8GkXFuj6QBAvj
+         u5EVB8bgZuyXhN+dqTqKjduwKzRe20eSD8VXwecBzBUumibcBmOTG86jm+cL45ufH+UX
+         +wWSmqUHvlKAhhsFICZxe1i41Tc6qqbpArL+LFXnIrC3OAk7OO/X8m7HRH/KdgTifUA6
+         9qzg==
+X-Gm-Message-State: AOAM532vL+pGCE9qX8wYJykkSHEjhuxj0gZK15X+GVyXic5Q3Iv6XU4O
+        nJS5TSbxRs0jRve0dqI4agq5IAIgRt8=
+X-Google-Smtp-Source: ABdhPJxlee8zU2+mhUJzJFYEn5zj6jeZ/r3bCs3EB+QmeycLQIHFAciZyozJosxMhnuqbs1n5gEGvw==
+X-Received: by 2002:a1c:1f0c:: with SMTP id f12mr18787508wmf.44.1643641262441;
+        Mon, 31 Jan 2022 07:01:02 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 11sm9511903wmx.5.2022.01.31.07.01.00
+        by smtp.gmail.com with ESMTPSA id n15sm9308205wmr.26.2022.01.31.07.01.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 07:01:01 -0800 (PST)
-Message-Id: <1bd5f26271c9b1cff6c920bb91738ae903dccc61.1643641259.git.gitgitgadget@gmail.com>
+        Mon, 31 Jan 2022 07:01:02 -0800 (PST)
+Message-Id: <2a2c350112e647510c5f7c81e831661948cfb68d.1643641259.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
 References: <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com>
         <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 31 Jan 2022 15:00:55 +0000
-Subject: [PATCH v5 1/5] Documentation: add extensions.worktreeConfig details
+Date:   Mon, 31 Jan 2022 15:00:56 +0000
+Subject: [PATCH v5 2/5] worktree: create init_worktree_config()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,141 +70,149 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The extensions.worktreeConfig extension was added in 58b284a (worktree:
-add per-worktree config files, 2018-10-21) and was somewhat documented
-in Documentation/git-config.txt. However, the extensions.worktreeConfig
-value was not specified further in the list of possible config keys. The
-location of the config.worktree file is not specified, and there are
-some precautions that should be mentioned clearly, but are only
-mentioned in git-worktree.txt.
+Upgrading a repository to use extensions.worktreeConfig is non-trivial.
+There are several steps involved, including moving some config settings
+from the common config file to the main worktree's config.worktree file.
+The previous change updated the documentation with all of these details.
 
-Expand the documentation to help users discover the complexities of
-extensions.worktreeConfig by adding details and cross links in these
-locations (relative to Documentation/):
+Commands such as 'git sparse-checkout set' upgrade the repository to use
+extensions.worktreeConfig without following these steps, causing some
+user pain in some special cases.
 
-- config/extensions.txt
-- git-config.txt
-- git-worktree.txt
+Create a helper method, init_worktree_config(), that will be used in a
+later change to fix this behavior within 'git sparse-checkout set'. The
+method is carefully documented in worktree.h.
 
-The updates focus on items such as
+Note that we do _not_ upgrade the repository format version to 1 during
+this process. The worktree config extension must be considered by Git
+and third-party tools even if core.repositoryFormatVersion is 0 for
+historical reasons documented in 11664196ac ("Revert
+"check_repository_format_gently(): refuse extensions for old
+repositories"", 2020-07-15). This is a special case for this extension,
+and newer extensions (such as extensions.objectFormat) still need to
+upgrade the repository format version.
 
-* $GIT_DIR/config.worktree takes precedence over $GIT_COMMON_DIR/config.
-
-* The core.worktree and core.bare=true settings are incorrect to have in
-  the common config file when extensions.worktreeConfig is enabled.
-
-* The sparse-checkout settings core.sparseCheckout[Cone] are recommended
-  to be set in the worktree config.
-
-As documented in 11664196ac ("Revert "check_repository_format_gently():
-refuse extensions for old repositories"", 2020-07-15), this extension
-must be considered regardless of the repository format version for
-historical reasons.
-
-A future change will update references to extensions.worktreeConfig
-within git-sparse-checkout.txt, but a behavior change is needed before
-making those updates.
-
-Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/config/extensions.txt | 31 +++++++++++++++++++++++++++++
- Documentation/git-config.txt        |  8 ++++++--
- Documentation/git-worktree.txt      | 11 +++++++---
- 3 files changed, 45 insertions(+), 5 deletions(-)
+ worktree.c | 70 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ worktree.h | 21 ++++++++++++++++
+ 2 files changed, 91 insertions(+)
 
-diff --git a/Documentation/config/extensions.txt b/Documentation/config/extensions.txt
-index 4e23d73cdca..5999dcb2a1f 100644
---- a/Documentation/config/extensions.txt
-+++ b/Documentation/config/extensions.txt
-@@ -6,3 +6,34 @@ extensions.objectFormat::
- Note that this setting should only be set by linkgit:git-init[1] or
- linkgit:git-clone[1].  Trying to change it after initialization will not
- work and will produce hard-to-diagnose issues.
+diff --git a/worktree.c b/worktree.c
+index 6f598dcfcdf..dc4ead4c8fb 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -5,6 +5,7 @@
+ #include "worktree.h"
+ #include "dir.h"
+ #include "wt-status.h"
++#include "config.h"
+ 
+ void free_worktrees(struct worktree **worktrees)
+ {
+@@ -826,3 +827,72 @@ int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath,
+ 	*wtpath = path;
+ 	return 0;
+ }
 +
-+extensions.worktreeConfig::
-+	If enabled, then worktrees will load config settings from the
-+	`$GIT_DIR/config.worktree` file in addition to the
-+	`$GIT_COMMON_DIR/config` file. Note that `$GIT_COMMON_DIR` and
-+	`$GIT_DIR` are the same for the main worktree, while other
-+	worktrees have `$GIT_DIR` equal to
-+	`$GIT_COMMON_DIR/worktrees/<worktree-name>/`. The settings in the
-+	`config.worktree` file will override settings from any other
-+	config files.
-++
-+When enabling `extensions.worktreeConfig`, you must be careful to move
-+certain values from the common config file to the main worktree's
-+`config.worktree` file, if present:
-++
-+* `core.worktree` must be moved from `$GIT_COMMON_DIR/config` to
-+  `$GIT_COMMON_DIR/config.worktree`.
-+* If `core.bare` is true, then it must be moved from `$GIT_COMMON_DIR/config`
-+  to `$GIT_COMMON_DIR/config.worktree`.
-++
-+It may also be beneficial to adjust the locations of `core.sparseCheckout`
-+and `core.sparseCheckoutCone` depending on your desire for customizable
-+sparse-checkout settings for each worktree. By default, the `git
-+sparse-checkout` builtin enables `extensions.worktreeConfig`, assigns
-+these config values on a per-worktree basis, and uses the
-+`$GIT_DIR/info/sparse-checkout` file to specify the sparsity for each
-+worktree independently. See linkgit:git-sparse-checkout[1] for more
-+details.
-++
-+For historical reasons, `extensions.worktreeConfig` is respected
-+regardless of the `core.repositoryFormatVersion` setting.
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 2285effb363..a48f7529fbc 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -141,9 +141,13 @@ from all available files.
- See also <<FILES>>.
- 
- --worktree::
--	Similar to `--local` except that `.git/config.worktree` is
-+	Similar to `--local` except that `$GIT_DIR/config.worktree` is
- 	read from or written to if `extensions.worktreeConfig` is
--	present. If not it's the same as `--local`.
-+	enabled. If not it's the same as `--local`. Note that `$GIT_DIR`
-+	is equal to `$GIT_COMMON_DIR` for the main worktree, but is of the
-+	form `$GIT_DIR/worktrees/<worktree-name>/` for other worktrees. See
-+	linkgit:git-worktree[1] to learn how to enable
-+	`extensions.worktreeConfig`.
- 
- -f <config-file>::
- --file <config-file>::
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 9e862fbcf79..b8d53c48303 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -286,8 +286,8 @@ CONFIGURATION FILE
- ------------------
- By default, the repository `config` file is shared across all working
- trees. If the config variables `core.bare` or `core.worktree` are
--already present in the config file, they will be applied to the main
--working trees only.
-+present in the common config file and `extensions.worktreeConfig` is
-+disabled, then they will be applied to the main working tree only.
- 
- In order to have configuration specific to working trees, you can turn
- on the `worktreeConfig` extension, e.g.:
-@@ -307,11 +307,16 @@ them to the `config.worktree` of the main working tree. You may also
- take this opportunity to review and move other configuration that you
- do not want to share to all working trees:
- 
-- - `core.worktree` and `core.bare` should never be shared
-+ - `core.worktree` should never be shared.
++static int move_config_setting(const char *key, const char *value,
++			       const char *from_file, const char *to_file)
++{
++	if (git_config_set_in_file_gently(to_file, key, value))
++		return error(_("unable to set %s in '%s'"), key, to_file);
++	if (git_config_set_in_file_gently(from_file, key, NULL))
++		return error(_("unable to unset %s in '%s'"), key, from_file);
++	return 0;
++}
 +
-+ - `core.bare` should not be shared if the value is `core.bare=true`.
- 
-  - `core.sparseCheckout` is recommended per working tree, unless you
-    are sure you always use sparse checkout for all working trees.
- 
-+See the documentation of `extensions.worktreeConfig` in
-+linkgit:git-config[1] for more details.
++int init_worktree_config(struct repository *r)
++{
++	int res = 0;
++	int bare = 0;
++	struct config_set cs = { { 0 } };
++	const char *core_worktree;
++	char *common_config_file = xstrfmt("%s/config", r->commondir);
++	char *main_worktree_file = xstrfmt("%s/config.worktree", r->commondir);
 +
- DETAILS
- -------
- Each linked working tree has a private sub-directory in the repository's
++	/*
++	 * If the extension is already enabled, then we can skip the
++	 * upgrade process.
++	 */
++	if (repository_format_worktree_config)
++		return 0;
++	if ((res = git_config_set_gently("extensions.worktreeConfig", "true")))
++		return error(_("failed to set extensions.worktreeConfig setting"));
++
++	git_configset_init(&cs);
++	git_configset_add_file(&cs, common_config_file);
++
++	/*
++	 * If core.bare is true in the common config file, then we need to
++	 * move it to the base worktree's config file or it will break all
++	 * worktrees. If it is false, then leave it in place because it
++	 * _could_ be negating a global core.bare=true.
++	 */
++	if (!git_configset_get_bool(&cs, "core.bare", &bare) && bare) {
++		if ((res = move_config_setting("core.bare", "true",
++					       common_config_file,
++					       main_worktree_file)))
++			goto cleanup;
++	}
++	/*
++	 * If core.worktree is set, then the base worktree is located
++	 * somewhere different than the parent of the common Git dir.
++	 * Relocate that value to avoid breaking all worktrees with this
++	 * upgrade to worktree config.
++	 */
++	if (!git_configset_get_string_tmp(&cs, "core.worktree", &core_worktree)) {
++		if ((res = move_config_setting("core.worktree", core_worktree,
++					       common_config_file,
++					       main_worktree_file)))
++			goto cleanup;
++	}
++
++	/*
++	 * Ensure that we use worktree config for the remaining lifetime
++	 * of the current process.
++	 */
++	repository_format_worktree_config = 1;
++
++cleanup:
++	git_configset_clear(&cs);
++	free(common_config_file);
++	free(main_worktree_file);
++	return res;
++}
+diff --git a/worktree.h b/worktree.h
+index 9e06fcbdf3d..e9e839926b0 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -183,4 +183,25 @@ void strbuf_worktree_ref(const struct worktree *wt,
+ 			 struct strbuf *sb,
+ 			 const char *refname);
+ 
++/**
++ * Enable worktree config for the first time. This will make the following
++ * adjustments:
++ *
++ * 1. Add extensions.worktreeConfig=true in the common config file.
++ *
++ * 2. If the common config file has a core.worktree value, then that value
++ *    is moved to the main worktree's config.worktree file.
++ *
++ * 3. If the common config file has a core.bare enabled, then that value
++ *    is moved to the main worktree's config.worktree file.
++ *
++ * If extensions.worktreeConfig is already true, then this method
++ * terminates early without any of the above steps. The existing config
++ * arrangement is assumed to be intentional.
++ *
++ * Returns 0 on success. Reports an error message and returns non-zero
++ * if any of these steps fail.
++ */
++int init_worktree_config(struct repository *r);
++
+ #endif
 -- 
 gitgitgadget
 
