@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A876C433EF
-	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 23:23:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36080C433EF
+	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 23:25:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229478AbiAaXX0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Jan 2022 18:23:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47458 "EHLO
+        id S229526AbiAaXZf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Jan 2022 18:25:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbiAaXXZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jan 2022 18:23:25 -0500
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8AB8C061714
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 15:23:24 -0800 (PST)
-Received: by mail-qt1-x835.google.com with SMTP id h25so12056142qtm.1
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 15:23:24 -0800 (PST)
+        with ESMTP id S229519AbiAaXZe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jan 2022 18:25:34 -0500
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B6E4C061714
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 15:25:34 -0800 (PST)
+Received: by mail-qv1-xf32.google.com with SMTP id g11so14422848qvu.3
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 15:25:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skydio.com; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=t8EX9/iwPlhRIEeRy+dRGbZLG1hXbMfIygOBNNVWi6w=;
-        b=0WIbY3sZJfCZcxW0ebl4CAk3btFbm6CCA86KlMSG8XSoDI9WMXbSLHYnKgs8rD8511
-         7ZeiNVk61HzMMImPlshSOqbxP5dPNo5RA3Ke2jRcm//AWi6RN/dr/N/tv25W9URf086E
-         yqjgTERgBw8zeAXcJO/QrVz93qdCx5t9Y2yBc8QXnvX5gw67qBVYH0BSc3Ii4usrbybr
-         ITekDa55k/wdn9aMs+8yucIWnLLNX4Gl0nK0JasW80qY0z9PNf41cDRdw9Lw4H3czh6A
-         b5K0k84i/FabosiIk4k4tuJ81o3VqdgTbaLpxOO0Je6cNjM7QNiXIjEjBSu/1DJaRhF4
-         2lUQ==
+        bh=DvLTtx+h3I71MZeU5JxwErqfaP/UAXjZzw2Dzf6Mbds=;
+        b=tRuF6P0WVyhAjLDTsDN56AEs77y+th110231uwf1PMs0fDyegtgnrtUJL5yyC1COQG
+         RDPAvl6ZZLNcR0rppQzNUn9WoAwoF+iwLQEV+CPyP7guj88zdoWGzS9aGHZ7JtIJSjl5
+         AHHVChoeap+jVQhMioxHN47z7ugNpXLmhOc4cnh0Gj5WvjS0x4yfCvwXgh/hWsbaLA+X
+         dd34PTNp6V6JS5om0tPtgpCa+TdZGSJP/2TvlA9pRgSTpYRNK5tI3pxdUwurDqIqoPeS
+         RxjYoAOwVqrHbLWt2QQuOAn1s6tp4eF5SaWC9aJPaEpMxbMsrPeZPoXrlJcOtZb9ORvB
+         VMBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=t8EX9/iwPlhRIEeRy+dRGbZLG1hXbMfIygOBNNVWi6w=;
-        b=lEgB3vbMMlkSpEBy0YdMxKDwhG2TE3JsECzXbjVSFDi3IOrn9xFPhnKEyEvVtHdWQb
-         XuNxJ/TQGXlZOXpuoJ2A4jBqQvLvxSTJovi+dZKfI9tGfZLEX+6CyId2UklGnjzPokbR
-         AGol0fw/npiosyGZwvXKZgIp2Q14w1riEaPXB8VpFTL0xs2hdlN/Nm8e3i1SO5dQ/ggN
-         tEPVBawsr/iMxk/n/ewBcg2K6SgNcSpOKpOUYrqHhdfPW0Jyx6Gj3RZ0FloTFxP84yLV
-         gLkdMO/7YlZKeFRAMheR0s2cJ7wdw+SMIIpQn+u3orSD50QkoTSmBDrxwcbDQcryEoNm
-         x56w==
-X-Gm-Message-State: AOAM531y7W+fQ1mKjXTB9TX1TDoK2Opmp+xVdJDwI6Vie272kRJnfRRJ
-        G46VG01LAUqsqC4s3u9IuThIhbnhSAKZVA==
-X-Google-Smtp-Source: ABdhPJyMV9jm27vwiR5UIxmIh5jEpw+p9bU0rHM8niOgDk7EujLhHBVXSWlNefSWCZKh41oTwAK3GQ==
-X-Received: by 2002:ac8:424b:: with SMTP id r11mr16686114qtm.392.1643671403670;
-        Mon, 31 Jan 2022 15:23:23 -0800 (PST)
+        bh=DvLTtx+h3I71MZeU5JxwErqfaP/UAXjZzw2Dzf6Mbds=;
+        b=4mC1mN+9cBKJEUSMDruN8s3J16tZD4YwDGz3qt1rz5OxYGQ5//KcJxxvhJg/m9EskY
+         kizjlkbx8lTwrB/lyM/+91gmjUP4dh0sryMBoTAegnDsIiUIwJodQc5mRQa7yreZJZGA
+         Y5W96BOAEQAQ3fVJC32GPSVgzjFcaM1XN9UtU3maXg2W3VfI5+Rhl8l6CcIhiWMQMHPJ
+         Vsl6cL0q2HN8wi+YSdK9FCbuMYZDTpm4glbHcdWo4z38HjSITmeTm8aEazbV0SVAZhZs
+         dYywez4T/VVSAESHRBMZsJcM+DdY8UplWiuEm+ciPL0LX57opdv+0iSl9tf7xpt1HAhv
+         bz0Q==
+X-Gm-Message-State: AOAM533RyP3Ds06HHSLCMHz9VfjKxvTGY88zZrMaCxkChm0Hdthi7lZg
+        VGMdMriWCwGiabM+qUOxBPowA/Gm431CNg==
+X-Google-Smtp-Source: ABdhPJyWLYTl2DNhyrLgizNpsmlyDkQ8W40L8O+PHTnx1VtbEMa5nNlHUrxbboKe4E6/D6khn/SZVA==
+X-Received: by 2002:a05:6214:623:: with SMTP id a3mr20618099qvx.122.1643671532913;
+        Mon, 31 Jan 2022 15:25:32 -0800 (PST)
 Received: from jerry-desktop2.localdomain ([50.236.240.214])
-        by smtp.gmail.com with ESMTPSA id t18sm3428936qta.90.2022.01.31.15.23.22
+        by smtp.gmail.com with ESMTPSA id br30sm7890495qkb.67.2022.01.31.15.25.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 15:23:23 -0800 (PST)
+        Mon, 31 Jan 2022 15:25:32 -0800 (PST)
 From:   Jerry Zhang <jerry@skydio.com>
 To:     git@vger.kernel.org, gitster@pobox.com
 Cc:     Jerry Zhang <jerry@skydio.com>
-Subject: [PATCH V3 2/2] patch-id: fix scan_hunk_header on diffs with 1 line of before/after
-Date:   Mon, 31 Jan 2022 15:23:18 -0800
-Message-Id: <20220131232318.8248-2-jerry@skydio.com>
+Subject: [PATCH V2 1/2] patch-id: Fix antipatterns in tests
+Date:   Mon, 31 Jan 2022 15:25:29 -0800
+Message-Id: <20220131232529.8484-1-jerry@skydio.com>
 X-Mailer: git-send-email 2.35.1.6.g61799e0acb
 In-Reply-To: <20220131232318.8248-1-jerry@skydio.com>
 References: <20220131232318.8248-1-jerry@skydio.com>
@@ -62,127 +62,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Normally diffs will contain a hunk header of the format
-"@@ -2,2 +2,15 @@ code". However when there is only 1 line of
-change, the unified diff format allows for the second comma
-separated value to be omitted in either before or after
-line counts.
-
-This can produce hunk headers that look like
-"@@ -2 +2,18 @@ code" or "@@ -2,2 +2 @@ code".
-As a result, scan_hunk_header mistakenly returns the line
-number as line count, which then results in unpredictable
-parsing errors with the rest of the patch, including giving
-multiple lines of output for a single commit.
-
-Fix by explicitly setting line count to 1 when there is
-no comma, and add a test.
-
-apply.c contains this same logic except it is correct. A
-worthwhile future project might be to unify these two diff
-parsers so they both benefit from fixes.
+Clean up the tests for patch-id by moving file preparation
+tasks inside the test body and redirecting files directly into
+stdin instead of using 'cat'.
 
 Signed-off-by: Jerry Zhang <jerry@skydio.com>
 ---
-V2->V3:
-- Made it clearer that the 1 line case is the only one where
-unified diff would use this particular format.
-- Cleaned up test and made separate patch to clean up old test.
+V1->V2:
+- For some reason I put format-patch in the commit text when this
+change is actually to patch-id.
 
- builtin/patch-id.c  |  9 +++++++--
- t/t4204-patch-id.sh | 31 ++++++++++++++++++++++++++++++-
- 2 files changed, 37 insertions(+), 3 deletions(-)
+ t/t4204-patch-id.sh | 64 ++++++++++++++++++++++-----------------------
+ 1 file changed, 31 insertions(+), 33 deletions(-)
 
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 822ffff51f..881fcf3273 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -30,26 +30,31 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
- 
- 	q = p + 4;
- 	n = strspn(q, digits);
- 	if (q[n] == ',') {
- 		q += n + 1;
-+		*p_before = atoi(q);
- 		n = strspn(q, digits);
-+	} else {
-+		*p_before = 1;
- 	}
-+
- 	if (n == 0 || q[n] != ' ' || q[n+1] != '+')
- 		return 0;
- 
- 	r = q + n + 2;
- 	n = strspn(r, digits);
- 	if (r[n] == ',') {
- 		r += n + 1;
-+		*p_after = atoi(r);
- 		n = strspn(r, digits);
-+	} else {
-+		*p_after = 1;
- 	}
- 	if (n == 0)
- 		return 0;
- 
--	*p_before = atoi(q);
--	*p_after = atoi(r);
- 	return 1;
- }
- 
- static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
- 			   struct strbuf *line_buf, int stable)
 diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
-index da60f5b472..686ecc3c18 100755
+index 80f4a65b28..da60f5b472 100755
 --- a/t/t4204-patch-id.sh
 +++ b/t/t4204-patch-id.sh
-@@ -36,11 +36,11 @@ test_expect_success 'patch-id output is well-formed' '
- calc_patch_id () {
- 	patch_name="$1"
- 	shift
- 	git patch-id "$@" >patch-id.output &&
- 	sed "s/ .*//" patch-id.output >patch-id_"$patch_name" &&
--	test_line_count -gt 0 patch-id_"$patch_name"
-+	test_line_count -eq 1 patch-id_"$patch_name"
- }
+@@ -164,42 +164,40 @@ test_expect_success 'patch-id respects config from subdir' '
+ 		cd subdir &&
+ 		test_patch_id irrelevant patchid.stable=true
+ 	)
+ '
  
- get_top_diff () {
- 	git log -p -1 "$@" -O bar-then-foo --
- }
-@@ -198,6 +198,35 @@ test_expect_success 'patch-id handles no-nl-at-eof markers' '
- 	EOF
- 	calc_patch_id nonl <nonl &&
- 	calc_patch_id withnl <withnl &&
+-cat >nonl <<\EOF
+-diff --git i/a w/a
+-index e69de29..2e65efe 100644
+---- i/a
+-+++ w/a
+-@@ -0,0 +1 @@
+-+a
+-\ No newline at end of file
+-diff --git i/b w/b
+-index e69de29..6178079 100644
+---- i/b
+-+++ w/b
+-@@ -0,0 +1 @@
+-+b
+-EOF
+-
+-cat >withnl <<\EOF
+-diff --git i/a w/a
+-index e69de29..7898192 100644
+---- i/a
+-+++ w/a
+-@@ -0,0 +1 @@
+-+a
+-diff --git i/b w/b
+-index e69de29..6178079 100644
+---- i/b
+-+++ w/b
+-@@ -0,0 +1 @@
+-+b
+-EOF
+-
+ test_expect_success 'patch-id handles no-nl-at-eof markers' '
+-	cat nonl | calc_patch_id nonl &&
+-	cat withnl | calc_patch_id withnl &&
++	cat >nonl <<-EOF &&
++	diff --git i/a w/a
++	index e69de29..2e65efe 100644
++	--- i/a
++	+++ w/a
++	@@ -0,0 +1 @@
++	+a
++	\ No newline at end of file
++	diff --git i/b w/b
++	index e69de29..6178079 100644
++	--- i/b
++	+++ w/b
++	@@ -0,0 +1 @@
++	+b
++	EOF
++	cat >withnl <<-EOF &&
++	diff --git i/a w/a
++	index e69de29..7898192 100644
++	--- i/a
++	+++ w/a
++	@@ -0,0 +1 @@
++	+a
++	diff --git i/b w/b
++	index e69de29..6178079 100644
++	--- i/b
++	+++ w/b
++	@@ -0,0 +1 @@
++	+b
++	EOF
++	calc_patch_id nonl <nonl &&
++	calc_patch_id withnl <withnl &&
  	test_cmp patch-id_nonl patch-id_withnl
  '
-+
-+test_expect_success 'patch-id handles diffs with one line of before/after' '
-+	cat >diffu1 <<-EOF &&
-+	diff --git a/bar b/bar
-+	index bdaf90f..31051f6 100644
-+	--- a/bar
-+	+++ b/bar
-+	@@ -2 +2,2 @@
-+	 b
-+	+c
-+	diff --git a/car b/car
-+	index 00750ed..2ae5e34 100644
-+	--- a/car
-+	+++ b/car
-+	@@ -1 +1,2 @@
-+	 3
-+	+d
-+	diff --git a/foo b/foo
-+	index e439850..7146eb8 100644
-+	--- a/foo
-+	+++ b/foo
-+	@@ -2 +2,2 @@
-+	 a
-+	+e
-+	EOF
-+	calc_patch_id diffu1 <diffu1 &&
-+	test_config patchid.stable true &&
-+	calc_patch_id diffu1stable <diffu1
-+'
  test_done
 -- 
 2.32.0.1314.g6ed4fcc4cc
