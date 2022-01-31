@@ -2,148 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04DB9C433EF
-	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 17:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0491C433F5
+	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 17:45:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1381037AbiAaRfS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Jan 2022 12:35:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51554 "EHLO
+        id S1381015AbiAaRpZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Jan 2022 12:45:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381036AbiAaRey (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jan 2022 12:34:54 -0500
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A696FC061741
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 09:34:44 -0800 (PST)
-Received: by mail-io1-xd2d.google.com with SMTP id s18so17832608ioa.12
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 09:34:44 -0800 (PST)
+        with ESMTP id S231629AbiAaRpY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jan 2022 12:45:24 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF7DDC061714
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 09:45:23 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id b13so28464563edn.0
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 09:45:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fbFljXIqwW8G4rkbofn09LeivaVc5HGe7b5Z7CpNHRY=;
-        b=EF72s2HyxaeeUdnloYvAFxu15c1p3RwiX1OQ9rA6KJ+8Stk52tjj7fYNHikfnKnnA2
-         8BsYFrnzPPx82oc65ZQ2kmuQAEFQfOhBhLB22bYIGogWaXl19nzFsKKT7Y6kPZ+VrgL9
-         tZuGnsEQ2LjE+EnohgS7bquDzN3MThp0P1yzfUsG672y19DeHTPZ98ovyj9aJRc+CZyq
-         uOrFGgrUJmvBw0hYBF3YmSkvMqiAVnoTRKHmpN8yfugYLHMc5C2y4AO51bJUTI2W54rH
-         yFF4nTg52LYqk6nbHcq+dmJWGE/sK52WMgHYnFkxwtrksc8vHK7i0O5JQU2S28XswHcR
-         CWnQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rwDGYtDnZqPgftDNT8078lqpIFYuBAAehWB8vsCTpW4=;
+        b=RupT8LtrWvEzgie544cWggjosxaYGzJrEZ21NjC+wFqRfgOv7RK5S3jt0/xmJCQ+DT
+         lXMXg9C9SbDNymFZFubJIf68iehOIFDgVJPH5V5mXi9WAlav9rC1dhht+uZ6wQ5zyyfv
+         /BmvbnRbKOAYlXbut9xerFZ5oE7gvq+8ix9pE650A/q36HwwBVZ1QH5JXNiFNQuWKuYe
+         Gitqw821OTLCOxbfRiFXEDTzIyi091+WrHy5ELCBRUMmGjANY2WE5Y0sEeRb4EB+3EXc
+         4mXv/NnSNL/tFflAl1EoXQ5bQsw9sClM7uPMSgmzqLjbUxUbRBwrg9jK7c74C0r7tMV4
+         BxSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fbFljXIqwW8G4rkbofn09LeivaVc5HGe7b5Z7CpNHRY=;
-        b=frcWi2FdaUZq1ArwYnujFcniQBykdaCri5I+cvHIL096pxUDURGMGsocewDcKFhjM4
-         BZcvEdosGipvA5lWyrugu67TecyMqjqYa3FMUUCUhrY9bi/WIj3GcbezbtEQwJ8iu0bg
-         3EmQjnTDkNfrfamHQ/klXGZlws4PiEDcHZEkwbPVzKoLnIbV8X9I4DOBHvLUVVcHcYYv
-         YEFspZH3HokflPk9icnqbBzJln6moYx8RRad/Wt9/3MiwN5cSSBOU793NPBm0AdJ0rDL
-         klBdoyYsIHGPchOHy94uY42YiubbQcJeE+32STBcMf/0oA3bgRFaYv8YplhUxSz/IbtM
-         vzZg==
-X-Gm-Message-State: AOAM530oLL1skZfzosmsit9gelDgjLYYPBRt+KiSYQZnbG2EMWkWDLCN
-        Op7m3y1mJqT1oLfQYohwX194Vw==
-X-Google-Smtp-Source: ABdhPJxmBWEIqs0TigKBhBxn870YSwm8h/xgc0fvrBftBKUPA/7k2bRgNSSFnwaPCzckO4c/Ex2zjA==
-X-Received: by 2002:a05:6638:4105:: with SMTP id ay5mr9893201jab.301.1643650483770;
-        Mon, 31 Jan 2022 09:34:43 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id q16sm17690928ion.27.2022.01.31.09.34.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 09:34:43 -0800 (PST)
-Date:   Mon, 31 Jan 2022 12:34:42 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git ML <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: BUG: Various "advice.*" config doesn't work
-Message-ID: <YfgdsnfQ05ywre8l@nand.local>
-References: <220128.867dakcgj0.gmgdl@evledraar.gmail.com>
- <YfgLeVw0rrk7Q5/+@nand.local>
- <xmqq1r0nke71.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rwDGYtDnZqPgftDNT8078lqpIFYuBAAehWB8vsCTpW4=;
+        b=KcHvLD38kvYShtz/Wlza9ALXd5EmBzNeaAZTK1Pea5mRkM40kmpt+RRqfWNlxEsfc/
+         8wPk6APsNVVG0Rvtk4QJp7jOo/M6OP2+AiuPr98UuiAyWt4TPI3xSXkU/yCDWiA/gQQ6
+         wkWOmpkMCYEUFFSe9IYSInNYx6ixhdc+94qpJuacW3MCj5xd97vQGuPIbICSl/BXq7js
+         qsa1mxAdA4SRkxhPCdRjQ/+qyKr0oE/TicP1qOCrhGUoEBCX+jg6EQTDHyzoQRPX8Ks6
+         6moNo30swSizn0Ang5BQyjD8P8ErdLggyxgN3SzD8d+7RxlYxbjR4rbH81zkTWl+rJPA
+         vhTA==
+X-Gm-Message-State: AOAM531r9+W1/k6dUmhSebTIHueo5r1r289TioBOMP3DgQJbj4QlatBh
+        6R7cxTRk3bNKgRN2wzS76PLk9RYj6C+6u0OmxFs=
+X-Google-Smtp-Source: ABdhPJwMGKDRwgWsRUdU0vZFhagyPJCGf8FRNkfSjyQ649iOC9uRudetQr8bjMdnDqwokXpp9XF96jybxx26YUaoXj8=
+X-Received: by 2002:aa7:d313:: with SMTP id p19mr22439710edq.380.1643651122185;
+ Mon, 31 Jan 2022 09:45:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1r0nke71.fsf@gitster.g>
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
+ <CAP8UFD1-=RDx5=JpHEp=sFEOWr2MP-YovOPE7aTydrPLoVGa5w@mail.gmail.com>
+ <CABPp-BH2sWWwy5bgn+R0hnnYQ6o0+1R1=VB-LYzDM+p4NMRhWg@mail.gmail.com>
+ <CAP8UFD243zGGderSFtH5WxOhidAv6566Df6vdUfKRiBb1qu9tg@mail.gmail.com> <CABPp-BGYAgUbfJVMXTOTq3mMcBsFvrvRKA6KpLkcdDj7NvFEhA@mail.gmail.com>
+In-Reply-To: <CABPp-BGYAgUbfJVMXTOTq3mMcBsFvrvRKA6KpLkcdDj7NvFEhA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 31 Jan 2022 09:45:10 -0800
+Message-ID: <CABPp-BFovPdTa6yXTbu2QvnD6a+DV5LAZ+CPNEcKD+5=dgsYfg@mail.gmail.com>
+Subject: Re: [PATCH 00/12] RFC: In-core git merge-tree ("Server side merges")
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 31, 2022 at 09:28:02AM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Sat, Jan 29, 2022 at 9:43 AM Elijah Newren <newren@gmail.com> wrote:
 >
-> > But having something like (in builtin/add.c:add_files()):
+> Hi Christian,
+>
+> On Sat, Jan 29, 2022 at 12:18 AM Christian Couder
+> <christian.couder@gmail.com> wrote:
 > >
-> >     if (advice_enabled(ADVICE_ADD_IGNORED_FILES))
-> >         advise(_("..."));
+> > On Sat, Jan 29, 2022 at 8:04 AM Elijah Newren <newren@gmail.com> wrote:
+> > >
+> > > On Wed, Jan 26, 2022 at 12:48 AM Christian Couder
+> > > <christian.couder@gmail.com> wrote:
+[...]
+> > > > The reason is
+> > > > that I think in many cases when there are conflicts, the conflicts
+> > > > will be small and the user will want to see them.
+> > >
+> > > I'm a little worried about the assumption here that conflict size is
+> > > measurable and visible via diffs.  That might be true in some cases,
+> > > but a UI written with that assumption is going to be very confusing
+> > > when hitting cases where that assumption does not hold.  For example:
+> > >
+> > >   * What if there is a binary file conflict, or a modify/delete or
+> > > rename/delete conflict, or failed-to-merge submodule conflict, or a
+> > > file location conflict? (For these, there is no diff relative to the
+> > > first parent and hence this conflict would have no diff output for
+> > > it)?
+> > >   * What if there was a simple file/directory conflict?  A diff would
+> > > show a rename (even when neither side did any renames), but not any
+> > > conflict markers.
+> > >   * What if there was a rename/rename conflict (both sides renamed
+> > > same file differently) or a distinct types conflict?  The former
+> > > results in three different conflicting files, none of them with
+> > > conflict markers, while the latter results in two different
+> > > conflicting files both without conflict markers?  Showing individual
+> > > per-file diffs totally loses all context here -- it'll show no-diff
+> > > for one of the files, and totally new additions for the ones.
 > >
-> > feels like it opens the door to call advise() by default if we happened
-> > to forget to read the configuration.
->
-> True.
->
-> > I think that is a good candidate to
-> > be replaced with advice_if_enabled().
->
-> Meaning advice_enabled() will lazily load the configuration?  If so,
-> then what you saw in builtin/add.c::add_files() would automatically
-> become just as safe as advice_if_enabled(), no?
-
-The change I was wondering aloud about was having advice_enabled()
-lazily load the configuration.
-
-So what is written in add_files() above would become safe (if it wasn't
-already), and could easily be replaced with advise_if_enabled().
-
-> > I'm not sure if that is true in general, though. Take a look at this
-> > example (from branch.c:create_branch()):
+> > In those cases we just tell users that they cannot resolve those
+> > conflicts in the user interface, see the following doc:
 > >
-> >     if (advice_enabled(ADVICE_SET_UPSTREAM_FAILURE)) {
-> >         error(_(upstream_missing), start_name);
-> >         advise(_(upstream_advice));
-> >         exit(1);
-> >     }
-> >     die(_(upstream_missing), start_name);
-> >
-> > This also makes it possible to call advise() when we shouldn't have. But
-> > how should we rewrite this code? Wanting to either error() (and then
-> > call exit(1)) or die() based on whether or not we're going to print the
-> > advice makes it tricky.
+> > https://docs.gitlab.com/ee/user/project/merge_requests/conflicts.html#conflicts-you-can-resolve-in-the-user-interface
 >
-> I am puzzled why you think the above "check, do things, give a
-> piece of advice, and do even more things" needs to be rewritten.
+> So...I think you may have just convinced me that my fears were
+> justified and that I should probably NAK any attempt to add diffs to
+> the merge-tree command.  I won't jump to conclusions but you've
+> provided some pretty strong signal to me against going down that
+> route.  The list of limitations in the link you provide do mostly
+> avoid the broken cases I listed above, but it enshrines those
+> limitations on that webpage as fundamental rather than just as current
+> implementation shortcomings.  You may not be able to remove those
+> limitations on that webpage without either expunging the diffs from
+> the UI or exposing the brokenness of the various cases above.
 >
-> Everything you are showing above becomes a problem only when
-> advice_enabled() does not work reliably, due to a bug that fails to
-> read the configuration.
+> If you do propose a diff option in the future, come prepared to
+> discuss how you'll avoid accidentally leading others down into paths
+> with the same fundamental issues, and/or how the above types of
+> conflicts might still be meaningfully handled.
 
-What I'm more or less trying to point out is that an unguarded advise()
-function defeats the purpose of the advice API, which should exist to
-avoid mistakes like these (where advice is printed to the user when they
-have already opted out of that advice).
+Actually, after having a few extra days to think about it, I thought
+of something that should have been obvious to me, given my other
+in-flight series that this depends upon...
 
-I was thinking that it would be nice to have advise() take an
-advice_type enum and have it behave like advise_if_enabled(). But there
-are spots that you really do want to print advice unconditionally. And
-that spot in create_branch() is one of those where it isn't clear that
-the change I'm proposing works.
+If you used the same trick that remerge-diff does to include the
+CONFLICT (and related messages) headers in the diff, then the kinds of
+conflicts that are normally either invisible or misleading/confusing
+to show via a diff would suddenly have the extra notices needed to
+explain them, and make this problem tractable.
 
-(BTW, I would definitely disagree that I'm saying anything "needs" to be
-rewritten here. This is all just thinking aloud about what the advice
-API can and should help callers with.)
+Further, it'd only make sense to do the special diff as part of the
+merge-tree process, since it has the conflict messages strmap needed
+to do this.
 
-> > Maybe, though I still think BUG() is a bit extreme, and we could
-> > accomplish the same by having the advice API just read the config if it
-> > hasn't done so already before emitting advice.
+And there's not all that much work that would be needed to take
+advantage of this, especially since this series already depends upon
+the remerge-diff series.
+
+So, maybe this is fine after all.
+
+> Also, the list of limitations you have may not be quite comprehensive
+> enough to avoid all problems (though it certainly avoids most of
+> them).  Can I ask a couple clarifying questions about your list of
+> limitations in that link? :
 >
-> Calling things like git_config(git_default_config) with side-effects
-> on other global variables are definitely a no-no, but as long as it
-> reacts to configuration variables only under advice.* namespace,
-> that might be OK.
+>   * When that page says the file cannot already contain conflict
+> markers, is the check performed on the version of the file in the two
+> trees being merged, or is the check performed on the 2nd and 3rd index
+> stage of the merge result (these are not equivalent checks, even if
+> they often give the same answer)?
+>   * When that page says the file must already exist in the same path
+> on both branches, is the check performed on by checking the path in
+> the two trees being merged, or is the check performed on the 2nd and
+> 3rd index stage of the merge result (again, these are not equivalent
+> checks)?
 
-Yes, I definitely agree we should absolutely not be calling
-git_default_config() as part of "lazily load the advice.*
-configuration".
-
-> Thanks.
-
-Thanks,
-Taylor
+I am still curious about this either way.
