@@ -2,290 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B02DC433EF
-	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 15:01:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E8A9C433EF
+	for <git@archiver.kernel.org>; Mon, 31 Jan 2022 15:51:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358790AbiAaPBM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Jan 2022 10:01:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43884 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358760AbiAaPBH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jan 2022 10:01:07 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEFBAC06173B
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 07:01:06 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id l35-20020a05600c1d2300b0034d477271c1so9565116wms.3
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 07:01:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=gK4ZPfO2ivlVA1lIXUAfZArXY/3xNecB/HSAOb9Ny7g=;
-        b=dLAkYepUFgW8rDJVmYi+1BWni2NSvoAT8yCroRjddrwpPc58qWFKG9uQk7cLb5Gr7a
-         p41watXoF69MxLvHHxEwZ2HQ8i+rx8UNyB99W1vZ6qKNmNHxIIkZvyO9qH6FMri6/xJ8
-         Kt6l2V+8lMi93Xrmfleo3WgVH2r8iHJXKfp8wG65YF1QpbTuzMVI46VXFIaZLjGxt9+/
-         Nm0mCoIcJ52QBoIGTXayAPZ7danwQbole5ZJ6y5QZ/r30Cioxo9m9kY/EXG/KyWOWwr0
-         drlfX3GEZBVIRbtTXqaYeWunCLfnv+R+V9BZ7rzBQpwUaxQMwnoSZFx70pzcqqt/1Ns1
-         +IHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gK4ZPfO2ivlVA1lIXUAfZArXY/3xNecB/HSAOb9Ny7g=;
-        b=2pMoVSEzaxAIZZ4um8p4NT5mNK6d2gfJX1bFVOUREXm8tk66Ghjn94t6NujMYOd14w
-         swXopscJvque+REb/WzVFZwEnsXV5Vh9/tsoyBTuOC+mQcIuyr3D+6UteAS3E+F6gZj4
-         FDB2C/QJo4fdz302QyjaMDxzIK/JOG0qph3JTurBdFH6e/T4Xkflm04X61No6jZSs+p/
-         fWJuVZAXz2ECf4Ggi3PlovZOO1icV6OKcXqq2IXJCkjQ0lismPd2aimlfy6FxnjzyF6h
-         sUS3+bar1mmYc2ZELKvlqEl2PwCF3/2XkrPggrOwyiSqcBy2ONQL/ji2TkJyH/iBbLEb
-         h+HQ==
-X-Gm-Message-State: AOAM533hv7diyV2IWNMDKfpGiuJ7Iw9Cwt2vt0I0chSSviF+5YBFB3KB
-        Vl6tTrVHdqXuFdThHU2JA3GjbdVuHf4=
-X-Google-Smtp-Source: ABdhPJxVWKugGwLXSXRsnMo5q4Sg5cfHP+rv5ocOIHGlMP/CLj9ykZem9IlbOc6fqGAz2L+NYn0bQA==
-X-Received: by 2002:a05:600c:4f06:: with SMTP id l6mr5605446wmq.126.1643641265249;
-        Mon, 31 Jan 2022 07:01:05 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ay3sm6114151wmb.44.2022.01.31.07.01.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 07:01:04 -0800 (PST)
-Message-Id: <85779dfaed39220e18129e823aff9c95ade5985b.1643641259.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
-References: <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com>
-        <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 31 Jan 2022 15:00:59 +0000
-Subject: [PATCH v5 5/5] worktree: copy sparse-checkout patterns and config on
- add
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1379902AbiAaPv2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Jan 2022 10:51:28 -0500
+Received: from mout.web.de ([212.227.17.12]:34425 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235351AbiAaPv0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jan 2022 10:51:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1643644284;
+        bh=kg+bQmCP3kIvCN4o2QzALPodQWmMX1lQBwa3FLFW95I=;
+        h=X-UI-Sender-Class:Date:From:To:Subject:References:In-Reply-To;
+        b=S8YqriZpbRHaheNbiUiwsC6dmXtNNA61miXBO+hvaAI3BHaaBXGkyshANo49spGD/
+         i046l7mGumhgRgzY+5rfRVWVZCFtMVdIe6/wvWU1a20EgZzSTqZAJhHTrPge6YvWIN
+         F+/i2ISnYbaJanyr1gXmlCVyyXzFNFECqS0sHB8c=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MHEXi-1n1PnY2WRs-00DVnM; Mon, 31
+ Jan 2022 16:51:24 +0100
+Date:   Mon, 31 Jan 2022 16:51:24 +0100
+From:   Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To:     Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+Subject: Re: Why won't "git rebase -Xrenormalize -i $REBASE_SHA" do anything?
+Message-ID: <20220131155124.u25j4bit3ahusgsc@tb-raspi4>
+References: <20220131110149.GE16463@raven.inka.de>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, sunshine@sunshineco.com, allred.sean@gmail.com,
-        gitster@pobox.com, Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220131110149.GE16463@raven.inka.de>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:LSmMOFRdzTjQ2hQxNgSBgfAF4QSUB6AILjaLYqD0Y3BmjP+prgi
+ KtRieJYXJPrp4bHg1bonUy23NdDuqFOhpZ8os0d9EGvdq2wAzAWDlj/7VcVFICvBcF/D8Zg
+ TfZyBBlQxtHsuV1oDOPwByPTCKOnUu8uo5HAPVgCTXVO3AmidB3oUwUNXHFsxHG+RmxkLSn
+ J5lUkf4LDXMSIQCExvKMg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:6ea/cRyu3gY=:xBwL4ps55mxOggyuxfP0SF
+ QCoehncs58O5oROqBGk89DW4W/bdJErNJj7pRrwne4dhPUCj16P68SurYbvixqiL+LrOMbc8m
+ i+wsYnkYvXKBCR6r/2TNz4v8JONKeGmpxN3/wNgktmxzymMlZEFqidU5vBfqKrcifWSIVgoGB
+ EE69YE5NDu9EfSWC9Etu/9asCbRBB0qTCCRGXiNU7mRL74nJwusDK6RGMLvwAkEYJbppMYBTk
+ Declw2xTyF2MYE9P622KS9DP5RsBpt36cTXcr5Rc9W25uLao8LANw9zLEIYL/fjSyhfJXqaSv
+ obmIW/8cWz2Mq8AQPBGGefjtJuc0sFjCM3Avq4njSGX3hf8W78QYHGXR+G+2rfQbvid6m57PL
+ u4yYcRqGvUuLH4R6Sm2GIZlWP86XWB2IZT3oS5x7EAfBgiXamtLZqBs4mM4UgTRsjn/05/ez2
+ 0rfTlTBKYYniz+KePRmpq+TfefuQdXQe8B3/rL2Kg0ZbPs0r07JCLoib01K1M35mCCxeaVhLO
+ IkC09x5Um+9gZuVziRznfU+s+9IWy+lIkqFOR75WwXQ3BdHSUezX81MBb9pFY73d/04ieOubN
+ Ke6pjQIRFBVEZ1Qk7ASiZi6H2FDlqzokBYn837zwk3PbOTpXqXx9TLQcnl2EzfDUszr2ozkdq
+ vjcpBEzFDv39qb/h//L6Sq3U7NesWoEFQcOlFaPEIcLlwnYq1fJW12vwLvUXJAk+t5OBCD7/k
+ xZjvqAShMmAPkL0HqyBEhwp9BalMXnExmQ3qiP+wW9tsqCF8GlyZ76Na+Rn3eoHXHyA65tFFn
+ TbcJ1bQW45Laaji14B8MJzhEDQXXdQSz9EjQJxFga5rdTEme90XsI0pD+C+oqZIthOlcxU227
+ oDIOstU2NMdusEuq22VBzd38+Dv4chqpH73qQABJo3Uiy8amT3pUufTZIjpQys8PkK5+QE0uN
+ qBHnIHnqDGcrHbVbZA8Wy80ySDBTp6Lk2rwKROUirx0AM15PnWteBpIJpC9mESVGuPBoTuu8o
+ xVbJxCgywcd5jicUaCwwpSAhv7RWPI6qPfNei5iJ8tya5FtqyzTqdLx7ol9EDq7Eqr1Ge3BuI
+ JIzFji4x6qmxGo=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On Mon, Jan 31, 2022 at 12:01:50PM +0100, Josef Wolf wrote:
+> Hello,
+>
+> I've added "* text=3Dauto" to an existing repo with a completely linear =
+history.
 
-When adding a new worktree, it is reasonable to expect that we want to
-use the current set of sparse-checkout settings for that new worktree.
-This is particularly important for repositories where the worktree would
-become too large to be useful. This is even more important when using
-partial clone as well, since we want to avoid downloading the missing
-blobs for files that should not be written to the new worktree.
+What exactly does this mean ?
+Is there one branch, several branches ?
+No merges at all ?
 
-The only way to create such a worktree without this intermediate step of
-expanding the full worktree is to copy the sparse-checkout patterns and
-config settings during 'git worktree add'. Each worktree has its own
-sparse-checkout patterns, and the default behavior when the
-sparse-checkout file is missing is to include all paths at HEAD. Thus,
-we need to have patterns from somewhere, they might as well be the
-current worktree's patterns. These are then modified independently in
-the future.
+>
+> Now, as expected, every rebase operation gives me lots of conflicts, whi=
+ch are
+> hard to resolve.
+>
+> So I'd like to clean up the history:
+>
+>   $ git rebase -Xrenormalize -i $REBASE_SHA
+>
+> But this turns out to be a no-op? It says immediately
+>
+>   Successfully rebased and updated refs/heads/wip-normalize
+>
+> without even the counter which is usually output to show progress during=
+ an
+> interactive rebase as it is working through the rebase-todo. I can confi=
+rm
+> that nothing has happened by checking the sha of the branch.
+>
+> So, what am I missing? How would I renormalize all the commits of a bran=
+ch?
+That is a tricky question.
+If you renormalize all commits of one branch,
+you create a complete new history, right ?
+Just out of interest:
+Why do you want to do this ?
+And I have the slight feeling, that Git does not support this
+"renormalize all the commits of a branch" workflow, but I may be wrong.
 
-In addition to the sparse-checkout file, copy the worktree config file
-if worktree config is enabled and the file exists. This will copy over
-any important settings to ensure the new worktree behaves the same as
-the current one. The only exception we must continue to make is that
-core.bare and core.worktree should become unset in the worktree's config
-file.
+Is you repo public ?
+Or could you come up with an example ?
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- builtin/worktree.c                 | 60 ++++++++++++++++++++++++++++++
- t/t1091-sparse-checkout-builtin.sh | 31 +++++++++++----
- t/t2400-worktree-add.sh            | 46 ++++++++++++++++++++++-
- 3 files changed, 127 insertions(+), 10 deletions(-)
-
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 2838254f7f2..dc9cd6decc8 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -335,6 +335,66 @@ static int add_worktree(const char *path, const char *refname,
- 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
- 	write_file(sb.buf, "../..");
- 
-+	/*
-+	 * If the current worktree has sparse-checkout enabled, then copy
-+	 * the sparse-checkout patterns from the current worktree.
-+	 */
-+	if (core_apply_sparse_checkout) {
-+		char *from_file = git_pathdup("info/sparse-checkout");
-+		char *to_file = xstrfmt("%s/worktrees/%s/info/sparse-checkout",
-+					realpath.buf, name);
-+
-+		if (file_exists(from_file)) {
-+			if (safe_create_leading_directories(to_file) ||
-+			    copy_file(to_file, from_file, 0666))
-+				error(_("failed to copy '%s' to '%s'; sparse-checkout may not work correctly"),
-+				      from_file, to_file);
-+		}
-+
-+		free(from_file);
-+		free(to_file);
-+	}
-+
-+	/*
-+	 * If we are using worktree config, then copy all current config
-+	 * values from the current worktree into the new one, that way the
-+	 * new worktree behaves the same as this one.
-+	 */
-+	if (repository_format_worktree_config) {
-+		char *from_file = git_pathdup("config.worktree");
-+		char *to_file = xstrfmt("%s/worktrees/%s/config.worktree",
-+					realpath.buf, name);
-+
-+		if (file_exists(from_file)) {
-+			struct config_set cs = { { 0 }};
-+			const char *str_value;
-+			int bool_value;
-+
-+			if (safe_create_leading_directories(to_file) ||
-+			    copy_file(to_file, from_file, 0666))
-+				die(_("failed to copy worktree config from '%s' to '%s'"),
-+				    from_file, to_file);
-+
-+			git_configset_init(&cs);
-+			git_configset_add_file(&cs, from_file);
-+
-+			if (!git_configset_get_bool(&cs, "core.bare", &bool_value) &&
-+			    bool_value &&
-+			    git_config_set_multivar_in_file_gently(
-+					to_file, "core.bare", NULL, "true", 0))
-+				error(_("failed to unset 'core.bare' in '%s'"), to_file);
-+			if (!git_configset_get_value(&cs, "core.worktree", &str_value) &&
-+			    git_config_set_in_file_gently(to_file,
-+							  "core.worktree", NULL))
-+				error(_("failed to unset 'core.worktree' in '%s'"), to_file);
-+
-+			git_configset_clear(&cs);
-+		}
-+
-+		free(from_file);
-+		free(to_file);
-+	}
-+
- 	strvec_pushf(&child_env, "%s=%s", GIT_DIR_ENVIRONMENT, sb_git.buf);
- 	strvec_pushf(&child_env, "%s=%s", GIT_WORK_TREE_ENVIRONMENT, path);
- 	cp.git_cmd = 1;
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index be6ea4ffe33..8b92e307318 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -146,9 +146,9 @@ test_expect_success 'interaction with clone --no-checkout (unborn index)' '
- '
- 
- test_expect_success 'set enables config' '
--	git init empty-config &&
-+	git init worktree-config &&
- 	(
--		cd empty-config &&
-+		cd worktree-config &&
- 		test_commit test file &&
- 		test_path_is_missing .git/config.worktree &&
- 		git sparse-checkout set nothing &&
-@@ -201,6 +201,21 @@ test_expect_success 'add to sparse-checkout' '
- 	check_files repo "a folder1 folder2"
- '
- 
-+test_expect_success 'worktree: add copies sparse-checkout patterns' '
-+	cat repo/.git/info/sparse-checkout >old &&
-+	test_when_finished cp old repo/.git/info/sparse-checkout &&
-+	test_when_finished git -C repo worktree remove ../worktree &&
-+	git -C repo sparse-checkout set --no-cone "/*" &&
-+	git -C repo worktree add --quiet ../worktree 2>err &&
-+	test_must_be_empty err &&
-+	new=repo/.git/worktrees/worktree/info/sparse-checkout &&
-+	test_path_is_file $new &&
-+	test_cmp repo/.git/info/sparse-checkout $new &&
-+	git -C worktree sparse-checkout set --cone &&
-+	test_cmp_config -C worktree true core.sparseCheckoutCone &&
-+	test_must_fail git -C repo core.sparseCheckoutCone
-+'
-+
- test_expect_success 'cone mode: match patterns' '
- 	git -C repo config --worktree core.sparseCheckoutCone true &&
- 	rm -rf repo/a repo/folder1 repo/folder2 &&
-@@ -520,13 +535,13 @@ test_expect_success 'interaction with submodules' '
- '
- 
- test_expect_success 'different sparse-checkouts with worktrees' '
-+	git -C repo sparse-checkout set --cone deep folder1 &&
- 	git -C repo worktree add --detach ../worktree &&
--	check_files worktree "a deep folder1 folder2" &&
--	git -C worktree sparse-checkout init --cone &&
--	git -C repo sparse-checkout set folder1 &&
--	git -C worktree sparse-checkout set deep/deeper1 &&
--	check_files repo a folder1 &&
--	check_files worktree a deep
-+	check_files worktree "a deep folder1" &&
-+	git -C repo sparse-checkout set --cone folder1 &&
-+	git -C worktree sparse-checkout set --cone deep/deeper1 &&
-+	check_files repo "a folder1" &&
-+	check_files worktree "a deep"
- '
- 
- test_expect_success 'set using filename keeps file on-disk' '
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 37ad79470fb..3fb5b21b943 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -165,8 +165,50 @@ test_expect_success '"add" default branch of a bare repo' '
- 	(
- 		git clone --bare . bare2 &&
- 		cd bare2 &&
--		git worktree add ../there3 main
--	)
-+		git worktree add ../there3 main &&
-+		cd ../there3 &&
-+		git status
-+	) &&
-+	cat >expect <<-EOF &&
-+	init.t
-+	EOF
-+	ls there3 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '"add" to bare repo with worktree config' '
-+	(
-+		git clone --bare . bare3 &&
-+		cd bare3 &&
-+		git config extensions.worktreeconfig true &&
-+		git config --worktree core.bare true &&
-+		git config --worktree core.worktree "$(pwd)" &&
-+		git config --worktree bogus.key value &&
-+		git config --unset core.bare &&
-+		git worktree add ../there4 main &&
-+		cd ../there4 &&
-+		git status &&
-+		git worktree add --detach ../there5 &&
-+		cd ../there5 &&
-+		git status
-+	) &&
-+
-+	# the worktree has the arbitrary value copied.
-+	test_cmp_config -C there4 value bogus.key &&
-+	test_cmp_config -C there5 value bogus.key &&
-+
-+	# however, core.bare and core.worktree were removed.
-+	test_must_fail git -C there4 config core.bare &&
-+	test_must_fail git -C there4 config core.worktree &&
-+
-+	cat >expect <<-EOF &&
-+	init.t
-+	EOF
-+
-+	ls there4 >actual &&
-+	test_cmp expect actual &&
-+	ls there5 >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'checkout with grafts' '
--- 
-gitgitgadget
+> The branch has linear history, no merges there.
+>
+> Thanks,
+>
+> --
+> Josef Wolf
+> jw@raven.inka.de
