@@ -2,73 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 573B4C433FE
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 09:45:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79EFFC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 09:51:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236144AbiBAJpf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 04:45:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44818 "EHLO
+        id S236221AbiBAJvv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 04:51:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236126AbiBAJpe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 04:45:34 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 408A5C061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 01:45:34 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id m4so52385240ejb.9
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 01:45:34 -0800 (PST)
+        with ESMTP id S234561AbiBAJvu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 04:51:50 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA975C061714
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 01:51:49 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id a8so52174930ejc.8
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 01:51:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=KpHwjpBK3XGK1q6KR6bKlZjeEESuPli246X5MOVN0k8=;
-        b=ORdwDHRHOyBer3RzJh7JJQHz9NymBY046Mn5GRVlheaOfIN3+etFCW4gtmpUSkeCSo
-         EPNn38qeE+BcERsognA19zrYDsuf06SVqhVkh5QYkEW8vTlxFygJINXX4scZwzx+9aVr
-         C2ul7t9oWA8HpXnRAIN8dldoMPRmuPHy3ddJZV11upxoqpf4dMRkCZWpyh66CjoLo6Zl
-         TMIbGwPQ0sOlsVZGgBv75MywthPkM7gbn2rg0Oe7Nw2xQ2G6uxxMnBKy0Wv9qZSt9mKa
-         6S1r27J3k099mzGGukTPPqG5QjdXh3ftalXJaEH83VwbiEBhDngvX8P2NZwQncMeqxU6
-         fKYw==
+        bh=AbQexgpbrDtu5u9LxK/S0fyLCVE+/NB+JFPzYh4u608=;
+        b=Arn0fxppJbbvoq7rEyX7+Qq3jDHl3aEjzNcAaqt/0rxyCn3N6DNpmW3w//tGyfHkJu
+         lzTQ0rGOPS0MouOmgiaZ/mMsw7IbvCMDplHT42GJaXJhJyNzbS43bcfegFiDVhaX00nj
+         PWeQ5rrlMkECPeevkTTe/VDsj46OkVICKsznHJgMGm9YXrp60wsqUt9yZ2YqOgIHePie
+         9YD2NJkSM35rYWPKZJuiommygEXT/EpvWJ5ew7VRy4j7vLRiBwud3DDZe1CikzCz9zpK
+         n2Ig1Ed0B6+rNA8SKe6WLaZ7DCTfPwAL1OuY/2KF7yi38a2PTvxCGOMo2nRxWGAWLmdr
+         Uqkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=KpHwjpBK3XGK1q6KR6bKlZjeEESuPli246X5MOVN0k8=;
-        b=BVkCYzY40HJvJi9GG9IaO4p8D+WM4QapbhBBhQnjG/HF/KOtQIfZuLVhIeyh8FfCOf
-         lFhIi0qSOVgBGv7LOt6e5GNAh5Y5X+huepj8mX35rLuvTFrKF2rFSEj4W7HPq3cPwLBM
-         eDPHhMgsLwEZfpL2pBkibYN1LYSCAb9J9bc7uIT8GICQ4PiKhhWv7S2EeOyeSvzkMeVO
-         qHSVsO1Nrk+6rqIDHvTfYiY42e23iSez8SEK5eQXYxo1YAhmMMfjxL4QZdFArAJUV4I6
-         qf3+SwEFFPHIbD7Z5l2TwD65odFsP9SywwxWQ+Mx0OEZxU2LY++J8d0+wGdDh8BEOykS
-         J/lQ==
-X-Gm-Message-State: AOAM5339F9MFInYJY5C00YPh05f9aysoIa0VBDJYkC8z83lh1ULW4VKF
-        tXclUxScjXldeZz2yi3zyqIBJyi5LkM=
-X-Google-Smtp-Source: ABdhPJwvggwxNVvcuRfyYFy5tbKFzN1BIV075z6NJ/nIBAgwz4fKV+J/tDR+hXpOm8AghfhmMtZhCQ==
-X-Received: by 2002:a17:907:3fa5:: with SMTP id hr37mr20876729ejc.690.1643708732512;
-        Tue, 01 Feb 2022 01:45:32 -0800 (PST)
+        bh=AbQexgpbrDtu5u9LxK/S0fyLCVE+/NB+JFPzYh4u608=;
+        b=gqIhU4Jt3TIeec5IHgrif6wIQEptE0qj1ec8ILhtEEo7rdq4gb7phmPqAG1sUIscty
+         VmGUdq/bfABSY1j4Rr1BvbYgBZY0/JE8OVhF+CbDuLhZ3BjnACUA7SYioKbaiyWGyNIb
+         Gend2Rf2O6qEBPuQNUXievz6dgOoee77rjbyvfulWzi0ZJHcrXSah/iPPF6k8FYK71YK
+         yOMlwnKMNgmQ82YUY3efhWm9vBjBZryPdspauZvkWRUYDOrRteeIosj54kDd/aIyH6IX
+         J1mhbTBdTfYl+LlN5viz3fCHhPUzsTJlDAbSuqrt4VyvAzGvUurlv3W5TUloIcGNrkBn
+         Bymw==
+X-Gm-Message-State: AOAM530Cfp5dMcH4ASku4mJdAhtSrq38KzWT1oMkL1ENTpIiGnFGKAPk
+        LigwX0fsy6LANbB57iWNipQ=
+X-Google-Smtp-Source: ABdhPJw8CJG3FeU4JldC4wnqki7ga408rjeh/X+12FcZ7xMDm1/3t57rCEOm5h+kCHZSPTBISLqN0g==
+X-Received: by 2002:a17:907:728b:: with SMTP id dt11mr19913518ejc.70.1643709108312;
+        Tue, 01 Feb 2022 01:51:48 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id l3sm14211617ejg.44.2022.02.01.01.45.31
+        by smtp.gmail.com with ESMTPSA id cf25sm15757797edb.63.2022.02.01.01.51.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 01:45:31 -0800 (PST)
+        Tue, 01 Feb 2022 01:51:47 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nEpj8-003yTK-Ui;
-        Tue, 01 Feb 2022 10:45:30 +0100
+        id 1nEppC-003ya7-G5;
+        Tue, 01 Feb 2022 10:51:46 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v4 02/10] log: clean unneeded objects during `log
- --remerge-diff`
-Date:   Tue, 01 Feb 2022 10:35:41 +0100
-References: <pull.1103.v3.git.1640907369.gitgitgadget@gmail.com>
- <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com>
- <f06de6c1b2fbd5c5a23b6755197a3683c7d18d2f.1642792341.git.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        John Cai <johncai86@gmail.com>, git@vger.kernel.org,
+        me@ttaylorr.com, phillip.wood123@gmail.com, e@80x24.org
+Subject: Re: [RFC v3] cat-file: add a --stdin-cmd mode
+Date:   Tue, 01 Feb 2022 10:48:38 +0100
+References: <20220128183319.43496-1-johncai86@gmail.com>
+ <56f851f3-946b-0524-1643-25799ef46b55@gmail.com>
+ <xmqqpmo7ix0l.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <f06de6c1b2fbd5c5a23b6755197a3683c7d18d2f.1642792341.git.gitgitgadget@gmail.com>
-Message-ID: <220201.86v8xyapj9.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqpmo7ix0l.fsf@gitster.g>
+Message-ID: <220201.86r18map8t.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -76,45 +71,67 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Jan 21 2022, Elijah Newren via GitGitGadget wrote:
+On Mon, Jan 31 2022, Junio C Hamano wrote:
 
-> From: Elijah Newren <newren@gmail.com>
-> [...]
-> @@ -944,7 +945,12 @@ static int do_remerge_diff(struct rev_info *opt,
->  	strbuf_release(&parent1_desc);
->  	strbuf_release(&parent2_desc);
->  	merge_finalize(&o, &res);
-> -	/* TODO: clean up the temporary object directory */
-> +
-> +	/* Clean up the contents of the temporary object directory */
-> +	if (opt->remerge_objdir)
-> +		tmp_objdir_discard_objects(opt->remerge_objdir);
-> +	else
-> +		BUG("unable to remove temporary object directory");
+> Bagas Sanjaya <bagasdotme@gmail.com> writes:
+>
+>> On 29/01/22 01.33, John Cai wrote:
+>>> Future improvements:
+>>> - a non-trivial part of "cat-file --batch" time is spent
+>>> on parsing its argument and seeing if it's a revision, ref etc. So we
+>>> could add a command that only accepts a full-length 40
+>>> character SHA-1.
+>>
+>> I think the full hash is actually revision name.
+>
+> There is no entry for "revision name" in Documentation/glossary-content.txt
+> ;-)
+>
+> But to John, if you have a loop that feedseach line to get_oid(), 
+>
+> 	while (getline(buf)) {
+> 		struct object_id oid;
+> 		if (get_oid(buf, &oid))
+> 			warn and continue;
+> 		use oid;
+> 	}
+>
+> is it much slower than a mode that can ONLY handle a full object
+> name input, i.e.
+>
+> 	while (getline(buf)) {
+> 		struct object_id oid;
+> 		if (get_oid_hex(buf, &oid))
+> 			warn and continue;
+> 		use oid;
+> 	}
+>
+> when your input is restricted to full object names?
+>
+> get_oid() == repo_get_oid()
+> -> get_oid_with_context()
+>    -> get_oid_with_context_1()
+>       -> get_oid_1()
+> 	 -> peel_onion()
+> 	 -> get_oid_basic()
+> 	    -> get_oid_hex()
+> 	    -> repo_dwim_ref()
+>
+> it seems that warn_ambiguous_refs and warn_on_object_refname_ambiguity
+> we would waste time on refname discovery but I see cat-file already
+> has some provision to disable this check.  So when we do not need to
+> call repo_dwim_ref(), do we still spend measurable cycles in this
+> callchain?
 
-Re the die in 1/10 I don't think this will ever trigger the way this bug
-suggests.
+For what it's worth I think this claim that we spend a non-trivial
+amount of time on the difference between these two comes from me
+originally. I'd had a chat with John about various things to try out in
+such a "cat-file --batch" mode, and this was one of those things.
 
-If we didn't manage to remove the directory that'll be signalled with
-the return code of tmp_objdir_discard_objects() which you're adding
-here, but which doesn't have a meaningful return value.
+I tried instrumenting the relevant code in builtin/cat-file.c the other
+(but forgot to reply to this thread), and whatever I'd found there at
+the time (this was weeks/months ago) I couldn't reproduce.
 
-So shouldn't it first of all be returning the "int" like the
-remove_dir_recursively() user in tmp_objdir_destroy_1() makes use of?
-
-What this bug is really about is:
-
-    BUG("our juggling of opt->remerge_objdir between here and builtin/log.c is screwy")
-
-Or something, because if we failed to remove the director(ies) we'll
-just ignore that here.
-
-> +void tmp_objdir_discard_objects(struct tmp_objdir *t)
-> +{
-> +	remove_dir_recursively(&t->path, REMOVE_DIR_KEEP_TOPLEVEL);
-> +}
-
-I skimmed remove_dir_recurse() a bit, but didn't test this, does this
-remove just the "de/eadbeef..." in "de/eadbeef..." or also "de/",
-i.e. do we (and do we want) to keep the fanned-out 256 loose top-level
-directories throughout the operation?
+So there's probably nothing worthwhile to check out here, i.e. the
+trivial cost of get_oid_with_context() is probably nothing to worry
+about.
