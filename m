@@ -2,176 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43A19C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 08:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FD58C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 09:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235563AbiBAIhe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 03:37:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57906 "EHLO
+        id S236048AbiBAJfm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 04:35:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233167AbiBAIha (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 03:37:30 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D7EBC061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 00:37:30 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id z19so32145900lfq.13
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 00:37:30 -0800 (PST)
+        with ESMTP id S234230AbiBAJfm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 04:35:42 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 075F3C061714
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 01:35:42 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id j2so32625074edj.8
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 01:35:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=QT24RDq6FLDW6uGQeTjL+Y6zBCe+w5pGj8BJHNMUV8Y=;
-        b=BW4h0+gyHPfnO2qrIPOmMkrzcB6wCrXrlEbCLYCW8hobCEeLU2qSEuiSRZZz93kZU/
-         zJeW0e3zMInV9RKFfVY+Y1AHonTp4xZtOYpHAUZ6rfM0ZG6LdlAcP3/bc+hLwAM4cTIB
-         zdduXhnHyNhWDD8wxclRgVbOJKv9VCDU9CWM+uDt118wmGK5w/gdi5VpZTvWbgbfdQv0
-         uuiqddiojodPwHSekF64cgqdH7px0nLQyMx/pbUV5GW6Gt97pdoC5tuV+WPP1NnkbDmv
-         ZW5EnlfPYSr8VjkfrnjINp+fxbY8T0ZA9+T5/jWvZXvHqF2OOR8w3XPm3eZKu7BtKmPm
-         2Fpw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=uClK3BNFiXnkqL1eDILwDtmXjoJzpqvCpFsNy6Pym9w=;
+        b=McJbcNwMPQKw2CUTJqbzYVcT27Z75aJto1ZrHjckLqZwW1ep20z8ypetDrzdzzYqkZ
+         4Osd5Ko12itHHm9PBdDsYr9Y2cx///zSYculNdKn5A7ulLZSjmurl6WUmJqBLqSmPcBB
+         fsbX2+jhSIsuVMTD1jb3ujEy2+v6kynpF43eFuzZTDxTN319NvGUjxYiPGHZD9ak8gC4
+         pX+/K2ZcFtF7XPuk2RpP1U+G+VXbydvng9qnArQJUDMNMJ+SkN4Le2CXLPpQBSPfTlg0
+         4hExTgB7f045DzLcY1WKO4gIAc2Gk0uQ5N0cU4UkhWqOnKEo+aJ2yrAaXKF7qWS81AB8
+         5sLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=QT24RDq6FLDW6uGQeTjL+Y6zBCe+w5pGj8BJHNMUV8Y=;
-        b=NBttcN5NSRJhYmK6C2niOcpQw7GJwzd97mWdD3bpTIXw+txdqDi96gsbrPx1MJbl4L
-         1aXInGrOxiAHHQyjLdhPobshFsb/lqGwEOGEGvGPjZhI65riuLfFBxVZug050u4PpYwn
-         KDGQ0/zhadfFU4uEcr/A5N47x7JKkw1+SeKs76rki/++yFrn0vHiwTD6Gw1Bms7lYtem
-         HgZAcF1mTPFtdzv5HYiW3tZQMj4XHFWC4i5irm0YnLws/4/BcFJ5VgeXIcUFcE/skLmY
-         conE/M6RWdgz7surJl5Rl+iY+ppaKfZL+4aEQccMnWJpTEZ2ZMcqn6emoKTvb2jjrZeF
-         X8TA==
-X-Gm-Message-State: AOAM531CWEdyIyW2q4Cf+ujuJo2emqMnv4F+wMYyzbLrVFJ4Oc0EC4MK
-        Rh29YZTz0wKXklRp70pRdQjx1/MPbo8=
-X-Google-Smtp-Source: ABdhPJw6HrXoW2XLVyIOWiBzLbzOREEe1BCvchwDwLSFOK7TGjR93mwCA4HqCPCem1pMPh2mu6SM/A==
-X-Received: by 2002:a05:6512:c13:: with SMTP id z19mr13376245lfu.309.1643704647932;
-        Tue, 01 Feb 2022 00:37:27 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id u12sm3450636lfl.188.2022.02.01.00.37.27
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=uClK3BNFiXnkqL1eDILwDtmXjoJzpqvCpFsNy6Pym9w=;
+        b=Ne/OhzwGCRwdOD4OlbnG2n60nbeBAxA0HHAHrA0zbP4KbFMjfK/Hq2Qo/RyUHz32nl
+         u+ksD7taVS1elVsFmekwKcDkwY9TgGyx4wLLvOy1rljAzrjbHxnFviqbvjGOTtoY7h/5
+         LvGQasYPl6Y0hkeOugyVIVZqyopAZHidmZ76uTaeaOINBYSzu5C6MZ8C6Q/qYz+UuIm1
+         y9XjWo7OmNNgv/jap2mJ6n+ATu7tL6ua9qrZ/CZqS8n5uPT5VM1Xpbk1gFmh0AmEQ0sG
+         rkChMPF38teY+sB64Ygk9ivvsjnUwkwskZlQsVpP5Wr7lfaVYzJi4YlcGr2UtgnX9boY
+         Lodg==
+X-Gm-Message-State: AOAM531s+FKhLwqr7Isx3rld5ZMy1wHGgBVYdf2xro0oKPYkLJuWLq5J
+        O2RHHVJdRr6xyPrpPAKvrGXI8jbjT9E=
+X-Google-Smtp-Source: ABdhPJwX997nLVNF9K4tP1ETvA58cGuP8FmiLD1fvNw0lxtD7JNKI5o0+AJ6L8PFgjdjZAIBxJRFyA==
+X-Received: by 2002:aa7:c04e:: with SMTP id k14mr23958792edo.131.1643708140125;
+        Tue, 01 Feb 2022 01:35:40 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id s7sm14313912ejo.212.2022.02.01.01.35.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 00:37:27 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     =?utf-8?Q?G=C3=A9ry?= Ogam <gery.ogam@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Stage, test, and commit only some changes, then repeat
-References: <37128901-233F-4428-8A52-470773A18AB0@gmail.com>
-        <87bkzrvpjv.fsf@osv.gnss.ru>
-        <49031AA3-CDC3-4CF6-A04B-E3533907FCA4@gmail.com>
-        <87iltzpo1r.fsf@osv.gnss.ru>
-        <0558E792-899A-4B08-B0A1-4844E5D1EFF2@gmail.com>
-Date:   Tue, 01 Feb 2022 11:37:26 +0300
-In-Reply-To: <0558E792-899A-4B08-B0A1-4844E5D1EFF2@gmail.com>
- (=?utf-8?Q?=22G=C3=A9ry?= Ogam"'s
-        message of "Mon, 31 Jan 2022 23:22:10 +0100")
-Message-ID: <87fsp3nfsp.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.0.50 (gnu/linux)
+        Tue, 01 Feb 2022 01:35:39 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nEpZa-003yHz-QJ;
+        Tue, 01 Feb 2022 10:35:38 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 01/10] show, log: provide a --remerge-diff capability
+Date:   Tue, 01 Feb 2022 10:09:39 +0100
+References: <pull.1103.v3.git.1640907369.gitgitgadget@gmail.com>
+        <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com>
+        <0b94724311df34dd10debd43c466695ed406d790.1642792341.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <0b94724311df34dd10debd43c466695ed406d790.1642792341.git.gitgitgadget@gmail.com>
+Message-ID: <220201.86zgnb9bf9.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Géry Ogam <gery.ogam@gmail.com> writes:
 
->> Le 31 janv. 2022 à 22:56, Sergey Organov <sorganov@gmail.com> a écrit :
->> 
->> Géry Ogam <gery.ogam@gmail.com> writes:
->> 
->>>> Le 31 janv. 2022 à 17:27, Sergey Organov <sorganov@gmail.com> a écrit :
->>>> 
->>>> Géry Ogam <gery.ogam@gmail.com> writes:
->>>> 
->>>>> Hello,
->>>>> 
->>>>> I would like to stage, test, and commit only *some* changes of the
->>>>> working tree, and then repeat this process with the remaining changes.
->>>>> 
->>>>> My current solution (published at
->>>>> https://stackoverflow.com/a/70914962/2326961):
->>>>> 
->>>>> 1. Stage some changes:
->>>>>  ```
->>>>>  git add -p file
->>>>>  ```
->>>>> 2. Save away the remaining changes:
->>>>>  ```
->>>>>  git diff >patch
->>>>>  git stash push -k
->>>>>  ```
->>>>> 3. Test the staged changes.
->>>>> 4. Commit the staged changes:
->>>>>  ```
->>>>>  git commit
->>>>>  ```
->>>>> 5. Restore the remaining changes:
->>>>>  ```
->>>>>  git apply patch
->>>>>  ```
->>>>> 6. Go to step 1.
->>>>> 
->>>>> It is not ideal because a) it uses a patch file for saving the
->>>>> remaining changes; b) it uses the stash only for setting the working
->>>>> tree to the index state.
->>>>> 
->>>>> It would be ideal if I could save *only* the remaining changes in the
->>>>> stash instead of resorting to a patch file. How to do it?
->>>> 
->>>> It looks like you don't need patch file for this workflow. What's
->>>> wrong with:
->>>> 
->>>> git add...
->>>> git stash push --keep-index
->>>> ... check, git add fixes
->>>> git commit
->>>> git stash apply
->>>> 
->>>> ???
->>>> 
->>>> -- Sergey Organov
->>> 
->>> Hello Sergey,
->>> 
->>> `git stash` saves the transition from the HEAD state to the working
->>> tree state. It also sets the working tree to the *HEAD* state.
->>> 
->>> `git stash --keep-index` saves the transition from the HEAD state to
->>> the working tree state. It also sets the working tree to the *index*
->>> state.
->>> 
->>> `git stash pop` applies the last saved transition. So if the working
->>> tree was not in HEAD state (like after `git stash --keep-index`),
->>> there will be a conflict.
->> 
->> Did you actually try it and got conflict? I doubt there will be any if
->> you don't modify anything after "git stash --keep-index" during testing,
->> and if you do, than any method might bring conflicts.
->> 
->> In fact I just re-tested this to make sure, and got no conflicts.
->> 
->> -- Sergey Organov
->
-> git init
-> touch file
-> git add file
-> git commit
-> echo one >>file
-> git add file
-> echo two >>file
-> git stash push --keep-index
-> git stash pop
+On Fri, Jan 21 2022, Elijah Newren via GitGitGadget wrote:
 
-Yep, if you have overlapping changes in work-tree and in the index, it
-will happen indeed. I've rather tested handling of non-overlapping
-changes in the same file that occurs much more often in practice, at
-least for me.
+> From: Elijah Newren <newren@gmail.com>
+> [...]
+>  ifdef::git-log[]
+> ---diff-merges=(off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc)::
+> +--diff-merges=(off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc|remerge|r)::
+>  --no-diff-merges::
+>  	Specify diff format to be used for merge commits. Default is
+>  	{diff-merges-default} unless `--first-parent` is in use, in which case
+> @@ -64,6 +64,14 @@ ifdef::git-log[]
+>  	each of the parents. Separate log entry and diff is generated
+>  	for each parent.
+>  +
+> +--diff-merges=remerge:::
+> +--diff-merges=r:::
+> +--remerge-diff:::
+> +	With this option, two-parent merge commits are remerged to
+> +	create a temporary tree object -- potentially containing files
+> +	with conflict markers and such.  A diff is then shown between
+> +	that temporary tree and the actual merge commit.
+> ++
 
-BTW, for reference, Emacs's magit, that is essentially alternate Git
-porcelain, has support for all 4 possible modes of stashing:
+Re some previous discussion. I really think we should add something like
+this paragraph to this:
+    
+    The output emitted when this option is used is subject to change, and so
+    is its interaction with other options (unless explicitly
+    documented). I.e. many of the same caveats as the "OUTPUT STABILITY" in
+    the linkgit:git-range-diff[1] documentation describes apply here. In
+    particular other diff filtering options, pathspec limitations etc. may
+    not produce the expected results, as some of those may apply to the
+    "real" diff of the merge, and not on the generated "remerge-diff".
 
-z Save                  Z Snapshot          
-i Save index            I Snapshot index    
-w Save worktree         W Snapshot worktree 
-x Save keeping index    r Snapshot to wipref
+I think that would nicely give us permission to develop this further
+without having to think about all the option interaction etc.
 
-For Git itself I've recently added --staged/-S, so the only mode that is
-still missing is --worktree indeed.
+This is really useful right now, but I'd hate for it to get merged with
+some bug/behavior that's not obvious to us now, and it being hard to fix
+that because we'd have to consider the implicitly promised backwards
+compatibility.
 
--- Sergey Organov
+>  	int saved_dcctc = 0;
+> +	struct tmp_objdir *remerge_objdir = NULL;
+> +
+> +	if (rev->remerge_diff) {
+> +		remerge_objdir = tmp_objdir_create("remerge-diff");
+> +		if (!remerge_objdir)
+> +			die(_("unable to create temporary object directory"));
+
+I guess the s/die_errno/die/ here is better for now as we won't report
+the wrong errno, but also lose the common case of errno being right. But
+that can be fixed up with some other series to the tmp-objdir API.
+
+> [...]
+> +# This test is ort-specific
+> +test "${GIT_TEST_MERGE_ALGORITHM:-ort}" = ort || {
+> +	skip_all="GIT_TEST_MERGE_ALGORITHM != ort"
+> +	test_done
+> +}
+
+FWIW this is still on a more complex pattern that it needs to be, see
+this v1 discussion (which you seemed to ack):
+
+https://lore.kernel.org/git/CABPp-BE+4rZNP-5mT2MNOWR6y6BgEG6mt1r_qcrZtarom6aGsw@mail.gmail.com/
