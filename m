@@ -2,261 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BADBEC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 14:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 293E7C433FE
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 15:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239531AbiBAOxk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 09:53:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58896 "EHLO
+        id S240612AbiBAPt5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 10:49:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239496AbiBAOxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 09:53:30 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C2DEC061748
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 06:53:30 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id c192so12913093wma.4
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 06:53:30 -0800 (PST)
+        with ESMTP id S240608AbiBAPt4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 10:49:56 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B348C061741
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 07:49:56 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id n8so13059955wmk.3
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 07:49:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NAp7EfJr5bbDUe1qTWWr8w0y3gHJmRvaUHoDIvAXrGo=;
-        b=X1BKrWP49guuywFQh8YzSHrZfhNI/VpPMcOPgNvnNdN3vEjLktNsd4Elw/oFzgQp2Q
-         eRLwqrB5No5a6Dtkfs/eKQTtU1fLLA5XwRU6yhLuhf09rzXs4IviXvB8jQaDJGYyMePP
-         nzkZpIXh4cE7XOpa0KrLtvKiU+AY8cOt02j9WF7sdEWi85ubmRI0YLp/OPGuuYFjshRI
-         UfAvzo8LB9iRzM8kYtWoSzdeiDstiQNGkMhxc5KXDbbm7C5hzZ+R6efs4JQut5uK7fkA
-         +7vDP22+0Ntr+ckU/eG7oL67z99qUn1IleiOUbqhfkzjchpNBamM1jKCbeqPYQ9gJl2B
-         euYQ==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=21tkZGRZRoaMAEOVM1CnWwI582YQaNQ04FwuLNQ9Um4=;
+        b=RRlpkXkatZcSA+zGWRQimfNhAMQgfmvc4BFFTQB/axqTpUJ2pUosxtN9DuHdGDZtMZ
+         SDgFe4PEKFqI1KaFKZkdwMTbRdmsxBOAZozKS7t8nbV336UT/YhsphqcoXhhU7DpuDZs
+         nIUEGhu/IBcF0o6WR8q0YCd/FUd+xblyTnDQqx9R60hQDDP5zkHJPSXUKFeE13M1qurT
+         dRXRnFp7cCnimk9LSROgDUCAue7FWJeB7HG8W3sV6QGlDUHG60nT7uxFn4CE01An3ycP
+         fKTnxfYtICsbaTXirCZzalTok5gR8ZwwjsTNPbWsc1304c95Ikxzav/R2DteViav1Gks
+         PTUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NAp7EfJr5bbDUe1qTWWr8w0y3gHJmRvaUHoDIvAXrGo=;
-        b=kbfTsFgAzApRjtfMq0KHl39pUGSZJKToGQbgWXvV5K851TthXUKJGw59O50jnBJSMJ
-         diXTAOQzPxpH69vRYkpHYEIKftg5n1gE/tU+q6SaWjt9rytq+A/vxzBJYXvGK94GnSAe
-         Ei5D/XvjjSp3JAeeXACWpRpdxkviNXwnrvhQMJhLNQdF2ykpYgpyLU9Q/F3ux/A73cEk
-         I4sCSqSBUS3zgrbXHG/SjevEVt1bE4GGtqTir2CeVHfIr6UJ/7NlonriTkDKEDowAZpI
-         VtpIS2K9PHUy11D84458R/sslKOvLZ/izVLjFIH3kzmAhgkih50vBD6q2mgc/XNHUATI
-         yc7Q==
-X-Gm-Message-State: AOAM533fFEqWeRNpWASNo7gJTcFzeFneSq+ajDC5+Q/5nT0ACC5yvED0
-        PibkBngDkyqMCnQ3+Fo4m85u01IKRTTMMg==
-X-Google-Smtp-Source: ABdhPJySEes/dLveC1VrQgquHvpLz5YnpcEN9xIjDZjmWr2wahsDUm6Q9Ga7QG9SzqMdXNxT7mzjJQ==
-X-Received: by 2002:a05:600c:4f53:: with SMTP id m19mr2082538wmq.45.1643727208424;
-        Tue, 01 Feb 2022 06:53:28 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id bg17sm2492054wmb.2.2022.02.01.06.53.27
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=21tkZGRZRoaMAEOVM1CnWwI582YQaNQ04FwuLNQ9Um4=;
+        b=vctvXF/kuNrXecxyfk82HSeigDckxEBYRNqSSbVNc94/fRnZjngfKS0QW8pkjckwHQ
+         FweU1E85GhJXl2ETR1JHN2R2T6m0gQ5P7VbClOl/CGkI9k7jldvIVGppwA4phsMtWlcS
+         tyUQ/ihG4uDDSm6MyZLaVUsVsTCXVcvhr3icFKCCaFiFoAdvBgKad+99t8PdjaVWtBZD
+         Ka9hHIJdqNbojjslNBxCbg1FXAJAvf+iKoy+SEMFi5KvIhKQLztzPAZ/0glCnXg+u6pp
+         vtt6cD2HwmtfiK9tfQHm6D2MCac6p95KH0+RT3eiXgc3RzqlxAM6UA6hn3IXU/Akkz0A
+         99rA==
+X-Gm-Message-State: AOAM530xj9TFo1o09zCDAqb/1cFW2jupyxlfEbxspnjdsDO2o3LwTPzT
+        02XWz+oDpa7ioZcrQDGGys0+S9ohndc=
+X-Google-Smtp-Source: ABdhPJwBzYIyToVpArPuw2He0QXwx2mOIMywHKSfnrNiAmCbIkMZwVY66SomQGvg/9pzXVrEf3Q/Og==
+X-Received: by 2002:a05:600c:1596:: with SMTP id r22mr2360956wmf.33.1643730594846;
+        Tue, 01 Feb 2022 07:49:54 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r8sm15065267wrx.2.2022.02.01.07.49.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 06:53:27 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Han Xin <chiyutianyi@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 10/10] object-file API: pass an enum to read_object_with_reference()
-Date:   Tue,  1 Feb 2022 15:53:12 +0100
-Message-Id: <patch-10.10-d89fe344c70-20220201T144803Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.0.913.g12b4baa2536
-In-Reply-To: <cover-00.10-00000000000-20220201T144803Z-avarab@gmail.com>
-References: <cover-00.10-00000000000-20220201T144803Z-avarab@gmail.com>
-MIME-Version: 1.0
+        Tue, 01 Feb 2022 07:49:54 -0800 (PST)
+Message-Id: <pull.1138.git.1643730593.gitgitgadget@gmail.com>
+From:   "Robert Coup via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 01 Feb 2022 15:49:47 +0000
+Subject: [PATCH 0/6] [RFC] partial-clone: add ability to refetch with expanded filter
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Robert Coup <robert@coup.net.nz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the read_object_with_reference() function to take an "enum
-object_type". It was not prepared to handle an arbitrary "const
-char *type", as it was itself calling type_from_string().
+If a filter is changed on a partial clone repository, for example from
+blob:none to blob:limit=1m, there is currently no straightforward way to
+bulk-refetch the objects that match the new filter for existing local
+commits. This is because the client will report commits as "have" during
+negotiation and any dependent objects won't be included in the transferred
+pack. Another use case is discussed at [1].
 
-Let's change the only caller that passes in user data to use
-type_from_string(), and convert the rest to use e.g. "OBJ_TREE"
-instead of "tree_type".
+This patch series proposes adding a --refilter option to fetch & fetch-pack
+to enable doing a full fetch with a different filter, as if the local has no
+commits in common with the remote. It builds upon cbe566a071
+("negotiator/noop: add noop fetch negotiator", 2020-08-18).
 
-The "cat-file" caller is not on the codepath that
-handles"--allow-unknown", so the type_from_string() there is safe. Its
-use of type_from_string() doesn't functionally differ from that of the
-pre-image.
+To note:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/cat-file.c     | 11 +++++++----
- builtin/fast-import.c  |  6 +++---
- builtin/grep.c         |  4 ++--
- builtin/pack-objects.c |  2 +-
- cache.h                |  2 +-
- object-file.c          |  5 ++---
- tree-walk.c            |  6 +++---
- 7 files changed, 19 insertions(+), 17 deletions(-)
+ 1. This will produce duplicated objects between the existing and newly
+    fetched packs, but gc will clean them up.
+ 2. This series doesn't check that there's a new filter in any way, whether
+    configured via config or passed via --filter=. Personally I think that's
+    fine.
+ 3. If a user fetches with --refilter applying a more restrictive filter
+    than previously (eg: blob:limit=1m then blob:limit=1k) the eventual
+    state is a no-op, since any referenced object already in the local
+    repository is never removed. Potentially this could be improved in
+    future by more advanced gc, possibly along the lines discussed at [2].
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index d94050e6c18..3c5bc505e0a 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -154,7 +154,10 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		break;
- 
- 	case 0:
--		if (type_from_string(exp_type) == OBJ_BLOB) {
-+	{
-+		enum object_type exp_type_id = type_from_string(exp_type);
-+
-+		if (exp_type_id == OBJ_BLOB) {
- 			struct object_id blob_oid;
- 			if (oid_object_info(the_repository, &oid, NULL) == OBJ_TAG) {
- 				char *buffer = read_object_file(&oid, &type,
-@@ -176,10 +179,10 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 			 * fall-back to the usual case.
- 			 */
- 		}
--		buf = read_object_with_reference(the_repository,
--						 &oid, exp_type, &size, NULL);
-+		buf = read_object_with_reference(the_repository, &oid,
-+						 exp_type_id, &size, NULL);
- 		break;
--
-+	}
- 	default:
- 		die("git cat-file: unknown option: %s", exp_type);
- 	}
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 123df7d9a53..c52e807f56e 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -2483,7 +2483,7 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
- 		unsigned long size;
- 		char *buf = read_object_with_reference(the_repository,
- 						       &commit_oid,
--						       commit_type, &size,
-+						       OBJ_COMMIT, &size,
- 						       &commit_oid);
- 		if (!buf || size < the_hash_algo->hexsz + 6)
- 			die("Not a valid commit: %s", p);
-@@ -2555,7 +2555,7 @@ static void parse_from_existing(struct branch *b)
- 		char *buf;
- 
- 		buf = read_object_with_reference(the_repository,
--						 &b->oid, commit_type, &size,
-+						 &b->oid, OBJ_COMMIT, &size,
- 						 &b->oid);
- 		parse_from_commit(b, buf, size);
- 		free(buf);
-@@ -2651,7 +2651,7 @@ static struct hash_list *parse_merge(unsigned int *count)
- 			unsigned long size;
- 			char *buf = read_object_with_reference(the_repository,
- 							       &n->oid,
--							       commit_type,
-+							       OBJ_COMMIT,
- 							       &size, &n->oid);
- 			if (!buf || size < the_hash_algo->hexsz + 6)
- 				die("Not a valid commit: %s", from);
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 9e34a820ad4..75e07b5623a 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -482,7 +482,7 @@ static int grep_submodule(struct grep_opt *opt,
- 		object_type = oid_object_info(subrepo, oid, NULL);
- 		obj_read_unlock();
- 		data = read_object_with_reference(subrepo,
--						  oid, tree_type,
-+						  oid, OBJ_TREE,
- 						  &size, NULL);
- 		if (!data)
- 			die(_("unable to read tree (%s)"), oid_to_hex(oid));
-@@ -651,7 +651,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 		int hit, len;
- 
- 		data = read_object_with_reference(opt->repo,
--						  &obj->oid, tree_type,
-+						  &obj->oid, OBJ_TREE,
- 						  &size, NULL);
- 		if (!data)
- 			die(_("unable to read tree (%s)"), oid_to_hex(&obj->oid));
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index ba2006f2212..c4df3df3141 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1802,7 +1802,7 @@ static void add_preferred_base(struct object_id *oid)
- 		return;
- 
- 	data = read_object_with_reference(the_repository, oid,
--					  tree_type, &size, &tree_oid);
-+					  OBJ_TREE, &size, &tree_oid);
- 	if (!data)
- 		return;
- 
-diff --git a/cache.h b/cache.h
-index 881ae36fd47..92da61ef47a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1552,7 +1552,7 @@ int cache_name_stage_compare(const char *name1, int len1, int stage1, const char
- 
- void *read_object_with_reference(struct repository *r,
- 				 const struct object_id *oid,
--				 const char *required_type,
-+				 enum object_type required_type,
- 				 unsigned long *size,
- 				 struct object_id *oid_ret);
- 
-diff --git a/object-file.c b/object-file.c
-index 0a6d56db39f..6c6e21ccc92 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1728,16 +1728,15 @@ void *read_object_file_extended(struct repository *r,
- 
- void *read_object_with_reference(struct repository *r,
- 				 const struct object_id *oid,
--				 const char *required_type_name,
-+				 enum object_type required_type,
- 				 unsigned long *size,
- 				 struct object_id *actual_oid_return)
- {
--	enum object_type type, required_type;
-+	enum object_type type;
- 	void *buffer;
- 	unsigned long isize;
- 	struct object_id actual_oid;
- 
--	required_type = type_from_string(required_type_name);
- 	oidcpy(&actual_oid, oid);
- 	while (1) {
- 		int ref_length = -1;
-diff --git a/tree-walk.c b/tree-walk.c
-index 3a94959d64a..506234b4b81 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -89,7 +89,7 @@ void *fill_tree_descriptor(struct repository *r,
- 	void *buf = NULL;
- 
- 	if (oid) {
--		buf = read_object_with_reference(r, oid, tree_type, &size, NULL);
-+		buf = read_object_with_reference(r, oid, OBJ_TREE, &size, NULL);
- 		if (!buf)
- 			die("unable to read tree %s", oid_to_hex(oid));
- 	}
-@@ -605,7 +605,7 @@ int get_tree_entry(struct repository *r,
- 	unsigned long size;
- 	struct object_id root;
- 
--	tree = read_object_with_reference(r, tree_oid, tree_type, &size, &root);
-+	tree = read_object_with_reference(r, tree_oid, OBJ_TREE, &size, &root);
- 	if (!tree)
- 		return -1;
- 
-@@ -677,7 +677,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
- 			unsigned long size;
- 			tree = read_object_with_reference(r,
- 							  &current_tree_oid,
--							  tree_type, &size,
-+							  OBJ_TREE, &size,
- 							  &root);
- 			if (!tree)
- 				goto done;
+[1]
+https://public-inbox.org/git/aa7b89ee-08aa-7943-6a00-28dcf344426e@syntevo.com/
+[2]
+https://public-inbox.org/git/A4BAD509-FA1F-49C3-87AF-CF4B73C559F1@gmail.com/
+
+Robert Coup (6):
+  fetch-negotiator: add specific noop initializor
+  fetch-pack: add partial clone refiltering
+  builtin/fetch-pack: add --refilter option
+  fetch: add --refilter option
+  t5615-partial-clone: add test for --refilter
+  doc/partial-clone: mention --refilter option
+
+ Documentation/fetch-options.txt           |  9 ++++
+ Documentation/git-fetch-pack.txt          |  4 ++
+ Documentation/technical/partial-clone.txt |  3 ++
+ builtin/fetch-pack.c                      |  4 ++
+ builtin/fetch.c                           | 18 ++++++-
+ fetch-negotiator.c                        |  5 ++
+ fetch-negotiator.h                        |  8 ++++
+ fetch-pack.c                              | 57 +++++++++++++++--------
+ fetch-pack.h                              |  1 +
+ remote-curl.c                             |  6 +++
+ t/t5616-partial-clone.sh                  | 42 ++++++++++++++++-
+ transport-helper.c                        |  3 ++
+ transport.c                               |  4 ++
+ transport.h                               |  4 ++
+ 14 files changed, 146 insertions(+), 22 deletions(-)
+
+
+base-commit: 5d01301f2b865aa8dba1654d3f447ce9d21db0b5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1138%2Frcoup%2Frc-partial-clone-refilter-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1138/rcoup/rc-partial-clone-refilter-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1138
 -- 
-2.35.0.913.g12b4baa2536
-
+gitgitgadget
