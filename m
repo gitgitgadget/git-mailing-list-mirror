@@ -2,91 +2,224 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF952C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 20:15:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F7FEC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 20:29:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239048AbiBAUPz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 15:15:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49874 "EHLO
+        id S236451AbiBAU3a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 15:29:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233574AbiBAUPy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 15:15:54 -0500
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE094C061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 12:15:53 -0800 (PST)
-Received: by mail-il1-x134.google.com with SMTP id e8so15229335ilm.13
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 12:15:53 -0800 (PST)
+        with ESMTP id S234508AbiBAU33 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 15:29:29 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCDE6C061714
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 12:29:28 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id m11so36919414edi.13
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 12:29:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=+qy6u/cS/3pRauSEAGyX8WefddE2jLR2WUFEpDbQW44=;
-        b=3L46n8I1l87+YT/CYOsDvx2OiKTE+2Me3svWpT/Pwj4vIfqxqQ2MYKUuyo3RIHm4rk
-         LONYd5h/2dFyPshbDYOGKc1P05PZgXON4kyyxV4Jk+mkUUj2wunwVS83GTGLsu6gxwtT
-         hM3F38m9KKIK++MqpLe1Zf8l9TlqCnsg0r1pHA6De91ryOLCMu6Mz6QSERhusLPHt91Z
-         c17Ux2vB2xeAnHpDF009Uel0KKikxtiD4FQO6EtSqRQgpvfoPyveqRD5zoDBuhmp/n/g
-         y1KHVyfoXl+iNYAZrg7Nnf20gFnpY/5bjisoJYxWEeMdva8KcHCSoB3PidNyXDqLuCii
-         zraA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=nxPjiy167uk7iet8lT8o8y8wfxS+HAYxxkHOZcgNM44=;
+        b=Fa5aSTenauGM251gkAhukjUK9IcdDHrEB5ORw8m3COBmNtWtPjzis0DJCWDGUQsyrn
+         N8BkUjhl618oWYjD5fqDV0l69q4xl3eza863msTnXOhnHkoq9RTfsE6sxQ6CCsgnaGtn
+         BP1PKSScvSxUac5HAZRM71vKkDwWTEzrMUIUUvdUxnAAxIhFfykPJix1qIXD6ctXkff7
+         b/Qjyb+wMi2YgxnV9IeU+AOWPA9hhWfLQ/RtSExbFil2CbqDR8dbczk7z+6ucan+GzwB
+         8zG0+GoU48vqcuyhGlVREeIYX9IxPHOW4gbV5q/hhIydEQdAET6/Zts0/BhLiCYbUJZh
+         Y9kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=+qy6u/cS/3pRauSEAGyX8WefddE2jLR2WUFEpDbQW44=;
-        b=Quuv1X4PwE3yOB8Was+gMyCjI1g9woQ7uoMP34XJUg3uaAVDGm25SqVv/fYdPpbmdp
-         K5vgE2o8kZBJTDb9sQZYnRI96Bm9dUccXNaps408OmgrJaTE62DDhMz+Vj9JHs77gR5r
-         qKzeNi/H5wkwc6a+r1OjMErvuaAtsIiTLCjCeXrVwlOcJevrizobdAUWh5YDI+VOgsvZ
-         Q1JoaP3FZAs70EKz71muW/EDylkXS4TP1Xmflkh53sP+CgNtTQs2xURSJXFZ+EGfJy0K
-         HI53SxmGhLD3U8oklcIDR/XPYkBgNuTCTW12hUXk7DWjQeYpLXsqsNIZD4Ko31GPrd86
-         sRgg==
-X-Gm-Message-State: AOAM531FClo4xInLknpZfg8F59qT6TF7aA7jr4WfUMe1jgwyTQbAOzsa
-        xeV6UuvSnydx7Te+QDVB8nP9y7IrJQmZiw==
-X-Google-Smtp-Source: ABdhPJxzao93EvM5a/vXv146KohzIcUK4cfd08F/bcz2n7kHeqrFVLsGnfwK2lnHaPYjIuVYee+QtA==
-X-Received: by 2002:a05:6e02:16c6:: with SMTP id 6mr4087439ilx.320.1643746553265;
-        Tue, 01 Feb 2022 12:15:53 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g14sm19328380ilj.41.2022.02.01.12.15.52
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=nxPjiy167uk7iet8lT8o8y8wfxS+HAYxxkHOZcgNM44=;
+        b=Dy5N3TbGWm1652wpZ1v3q1esowjI2Pjk2UF4GVGvxCnUNrlCJSfpD5ZstYvSSIDsaD
+         wWDTtBUfbhHzkPhQg1mXo4x2pJrYQSJ8h5R6A2JI6AdL6Rt8zEgk3neFIVzJ79DHxZuD
+         9uKhxrKYWe0tcRxg2/cqdV6ZhQRZaMnm5WOaboW7zTXcpZyOkVWhsLJ0ZwMuBRujAC3e
+         obzJG4pPAg6u3bso/+FjqnHImB4NTdZSzFk0w4kFVH7X7F1wapLXoKwid65P4NRq+9q8
+         98YtS9llATq21NN472U3EV2OjZKXKWmm//Ol2m3tEtcETlZ87E3sZV2/PYhB8RVKmJcN
+         3XoQ==
+X-Gm-Message-State: AOAM533GDM3KtMh2NaFQW0jq5DOucLhyJp9x0OTI6r1GmtIO1ZwGHTJs
+        9mWh5uRvUd49xza0TFcoqp2YARA5DGKMKg==
+X-Google-Smtp-Source: ABdhPJwrXkAtiVhygyTAka4K6MGHcmlFzm9TZkvH3tOBja74D8CRACufC9RY+P86tux1yvH6zHsgWA==
+X-Received: by 2002:a05:6402:548:: with SMTP id i8mr26851118edx.60.1643747366806;
+        Tue, 01 Feb 2022 12:29:26 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id f11sm19611001edv.29.2022.02.01.12.29.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 12:15:53 -0800 (PST)
-Date:   Tue, 1 Feb 2022 15:15:52 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: Getting rid of "hint: Using 'master' as the name for the initial
- branch." when initializing a repository with pygit
-Message-ID: <YfmU+D7wB2ePMGTZ@nand.local>
-References: <20220201184128.GT3113@kunlun.suse.cz>
- <YfmPiZZ/1RGzzfWE@nand.local>
- <20220201200246.GW3113@kunlun.suse.cz>
+        Tue, 01 Feb 2022 12:29:26 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nEzmH-004LE9-L5;
+        Tue, 01 Feb 2022 21:29:25 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v2] refs.h: make all flags arguments unsigned
+Date:   Tue, 01 Feb 2022 21:20:59 +0100
+References: <pull.1210.git.git.1643660136530.gitgitgadget@gmail.com>
+ <pull.1210.v2.git.git.1643719616840.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <pull.1210.v2.git.git.1643719616840.gitgitgadget@gmail.com>
+Message-ID: <220201.86ilty9vq2.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20220201200246.GW3113@kunlun.suse.cz>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 01, 2022 at 09:02:46PM +0100, Michal Suchánek wrote:
-> On Tue, Feb 01, 2022 at 02:52:41PM -0500, Taylor Blau wrote:
+
+On Tue, Feb 01 2022, Han-Wen Nienhuys via GitGitGadget wrote:
+
+> From: Han-Wen Nienhuys <hanwen@google.com>
 >
-> > If you have set the init.defaultBranch configuration, we will suppress
-> > the hint you're talking about.
+> As discussed in
+> https://lore.kernel.org/git/xmqqbkzrkevo.fsf@gitster.g/ , we don't
+> want to treat the sign bit specially, so make all flags in refs.h
+> unsigned.
 >
-> That's the problem - there is no way to pass the configuration when
-> using a library to create a repository.
+> For uniformity, rename all variables to `flags` or `unused_flags`,
+> from `flag`. In a couple of shadowing cases, use `ref_flags` for
+> clarity.
 
-Of course; but I was suggesting that you set it in $HOME/.gitconfig, or
-in your global /etc/gitconfig.
+For what it's worth I thought the suggestion of enums in your
+https://lore.kernel.org/git/xmqqbkzrkevo.fsf@gitster.g/ made more sense,
+e.g. I tried this on top:
+	
+	diff --git a/refs.c b/refs.c
+	index 5f29775def1..dc33573f064 100644
+	--- a/refs.c
+	+++ b/refs.c
+	@@ -265,7 +265,8 @@ int ref_resolves_to_object(const char *refname,
+	 }
+	 
+	 char *refs_resolve_refdup(struct ref_store *refs, const char *refname,
+	-			  int resolve_flags, struct object_id *oid,
+	+			  enum resolve_ref_flags resolve_flags,
+	+			  struct object_id *oid,
+	 			  unsigned int *flags)
+	 {
+	 	const char *result;
+	@@ -276,7 +277,8 @@ char *refs_resolve_refdup(struct ref_store *refs, const char *refname,
+	 	return xstrdup_or_null(result);
+	 }
+	 
+	-char *resolve_refdup(const char *refname, unsigned int resolve_flags,
+	+char *resolve_refdup(const char *refname,
+	+		     enum resolve_ref_flags resolve_flags,
+	 		     struct object_id *oid, unsigned int *flags)
+	 {
+	 	return refs_resolve_refdup(get_main_ref_store(the_repository),
+	@@ -292,7 +294,8 @@ struct ref_filter {
+	 	void *cb_data;
+	 };
+	 
+	-int read_ref_full(const char *refname, unsigned int resolve_flags,
+	+int read_ref_full(const char *refname,
+	+		  enum resolve_ref_flags resolve_flags,
+	 		  struct object_id *oid, unsigned int *flags)
+	 {
+	 	int ignore_errno;
+	@@ -1679,7 +1682,8 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
+	 }
+	 
+	 const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
+	-				    int resolve_flags, struct object_id *oid,
+	+				    enum resolve_ref_flags resolve_flags,
+	+				    struct object_id *oid,
+	 				    unsigned int *flags, int *failure_errno)
+	 {
+	 	static struct strbuf sb_refname = STRBUF_INIT;
+	@@ -1779,7 +1783,8 @@ int refs_init_db(struct strbuf *err)
+	 	return refs->be->init_db(refs, err);
+	 }
+	 
+	-const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+	+const char *resolve_ref_unsafe(const char *refname,
+	+			       enum resolve_ref_flags resolve_flags,
+	 			       struct object_id *oid, unsigned int *flags)
+	 {
+	 	int ignore_errno;
+	diff --git a/refs.h b/refs.h
+	index c5462b75807..8c7404eaf78 100644
+	--- a/refs.h
+	+++ b/refs.h
+	@@ -64,24 +64,30 @@ struct worktree;
+	  * type of failure encountered, but not necessarily one that came from
+	  * a syscall. We might have faked it up.
+	  */
+	-#define RESOLVE_REF_READING 0x01
+	-#define RESOLVE_REF_NO_RECURSE 0x02
+	-#define RESOLVE_REF_ALLOW_BAD_NAME 0x04
+	+enum resolve_ref_flags {
+	+	RESOLVE_REF_READING = 1 << 0,
+	+	RESOLVE_REF_NO_RECURSE = 1 << 1,
+	+	RESOLVE_REF_ALLOW_BAD_NAME = 1 << 2,
+	+};
+	 
+	 const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
+	-				    int resolve_flags, struct object_id *oid,
+	+				    enum resolve_ref_flags resolve_flags,
+	+				    struct object_id *oid,
+	 				    unsigned int *flags, int *failure_errno);
+	 
+	-const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+	+const char *resolve_ref_unsafe(const char *refname,
+	+			       enum resolve_ref_flags resolve_flags,
+	 			       struct object_id *oid, unsigned int *flags);
+	 
+	 char *refs_resolve_refdup(struct ref_store *refs, const char *refname,
+	-			  int resolve_flags, struct object_id *oid,
+	+			  enum resolve_ref_flags resolve_flags,
+	+			  struct object_id *oid,
+	 			  unsigned int *flags);
+	-char *resolve_refdup(const char *refname, unsigned int resolve_flags,
+	+char *resolve_refdup(const char *refname,
+	+		     enum resolve_ref_flags resolve_flags,
+	 		     struct object_id *oid, unsigned int *flags);
+	 
+	-int read_ref_full(const char *refname, unsigned int resolve_flags,
+	+int read_ref_full(const char *refname, enum resolve_ref_flags resolve_flags,
+	 		  struct object_id *oid, unsigned int *flags);
+	 int read_ref(const char *refname, struct object_id *oid);
 
-> > Alternatively, you can make sure that `git init` is invoked with the
-> > `-q` (quiet) flag, which suppresses that warning whether or not you have
-> > set the init.defaultBranch config.
->
-> Yes, that is exactly the option that would do it.
+I don't mind if this goes in, but I think doing that would make this
+much easier to deal with, as it would be more obvious when working on
+the code just what flag you're dealing with. Even as Junio points out
+downthread of that it mostly doesn't matter in C.
 
-OK, I assume that this means that you can pass custom flags down to `git
-init` via the library you're using.
+See though 3f9ab7ccdea (parse-options.[ch]: consistently use "enum
+parse_opt_flags", 2021-10-08) where doing it this way makes debugging
+much nicer to work with.
 
-Thanks,
-Taylor
+> -		int flag;
+> -		char *head_ref = resolve_refdup("HEAD", 0, NULL, &flag);
+> -		if (head_ref &&
+> -		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new_branch_info->path)))
+> +		unsigned int flags;
+> +		char *head_ref = resolve_refdup("HEAD", 0, NULL, &flags);
+> +		if (head_ref && (!(flags & REF_ISSYMREF) ||
+> +				 strcmp(head_ref, new_branch_info->path)))
+
+I don't think this needs a re-roll, but FWIW I think it's much easier to
+review changes like these if the changes are kept apart. E.g. this
+variable renaming from the type change.
+
+> -static int add_one_refname(const char *refname,
+> -			   const struct object_id *oid,
+> -			   int flag, void *cbdata)
+> +static int add_one_refname(const char *refname, const struct object_id *oid,
+> +			   unsigned int unused_flags, void *cbdata)
+
+And this change not mentioned in the commit message of seemingly doing
+some re-flowing of argument lists while we're at it.
+
+The post-image is better, but better done is another step IMO.
+
+I didn't look through the rest of the diff as you sent it, but locally
+with appropriate word-diff flags to hide any formatting changes.
+
+The post-image LGTM, but I'm also a bit "meh" on the churn just for
+signed->unsigned, especially given the conflict with my in-flight
+ab/no-errno-from-resolve-ref-unsafe. But it's not too bad, and if Junio
+hasn't complained about it...
