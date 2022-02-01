@@ -2,137 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60FF9C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 16:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68C17C433EF
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 17:00:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241259AbiBAQzJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 11:55:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58826 "EHLO
+        id S230481AbiBARAd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 12:00:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229861AbiBAQzI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 11:55:08 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5B01C061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 08:55:07 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id k25so55718650ejp.5
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 08:55:07 -0800 (PST)
+        with ESMTP id S230392AbiBARAb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 12:00:31 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D37C061714
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 09:00:31 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id j5-20020a05600c1c0500b0034d2e956aadso2057972wms.4
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 09:00:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=vnPpKn+V/14NVtSaO5lN9JEXjf5kgGd8AyvaNwTi7/o=;
-        b=Z5e5vYxf9S/nkSXRgKeCBfhFxsxTyGX0H593DXAP6XiUF1UlMe9LKLojy07DgknoJz
-         60IzO1LwEH44oAKQH2LlrJc8l9U+i3lFu0Dj1KGOQx1grrmDDOerzSwhcILqAsF0sDrV
-         3DDTMjd3QK2amxuPB7y/w++93NYOKMUDpDuM3xg6CtfqbM8YIuqiD5TkIT5TJxpI3k1b
-         rpU2FILYYGidsZCimRetSQ3Sh37uOuLa7wRL5YE6IGbUi5wdHirGqvSqSBM3F0MyNEYo
-         MdtY9jWWrYzLdrOAnPlPPwhLOYnjYaVjgRJTukuoOAwVByOLr7sgr2PatvvO8Yx+Iuo+
-         xmFA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=8xxK3oUztkD1MpAUQ3OHQmNmApNl8HTWXaUt1AciwKE=;
+        b=JIzSxYqoGKNrbb1dtTUwB5/TmE0qaZL8xFRAKcknj3rvonP6XvyvlbkUedAkRbQv20
+         NwoGdhQZst8tZFMagM/xKh47ZcpYcvIHrqOx2o0syLFOpPuLL7C33rxhu96JE6D44Qwj
+         tfKnHft5V6WNR5L2G5ReEY3PWcXfw4mD+V2AowxzJbzOLcsWBO+SFZ5yKxnHFGnrXp/0
+         x3FpQAAdWlyr3z244ts92lUkLfm7IvxQeN1izx+QDDLkwYTRtHiaDmxDDMQd9eZ+WXx/
+         UVy/9p7GKeK6FI2rfurmM2KeIHb8pI9f8hbEO/GWSatnf28qMXo9a8S8hycvBRzqlw2M
+         l7kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vnPpKn+V/14NVtSaO5lN9JEXjf5kgGd8AyvaNwTi7/o=;
-        b=lh6dR5g/E2hoqGVzs7uMtNqn+s6OUEttRs3xqLcrKS34cxI3RefgCOw+bxHwEn4kre
-         Io/WhNfy0JBA4m9xedXlneF+tBB0CrIRZHx2eGxI3takUsltBF+8HFEZDkhPlbNNXWEE
-         N2l5SFkk3xpFeFFMDfB9bP9bjtPpsLemiNn/HcKep9IYy+zMzbK7rTaEARv6qaOMo4eS
-         es816lLArixJRWzr6nzRuMc6AMDr4pYP5qdE6UQmZTVtVxMsi3FF2WvKgeZH66EiYdNw
-         PvCwhiprhnXgdAICTavHsJlhbnthmuNLh8HZKl7DtK6nm1MQzT4mBnQMTDezopqzU3vv
-         9Hrw==
-X-Gm-Message-State: AOAM530LBcmrsqVEvnzkRVNU5SGMdpzFm9HGJm+JdS/mEAkcUmeoPsid
-        pJvjYD/qpBBuo0q6G9cd7qV+L8T9s4WZNYb68OBSGY0V2Fg=
-X-Google-Smtp-Source: ABdhPJwbxQuBM48AHlpocFdY2a+tDFGIuhQHr0IB7lE5cDKyhoTyK+Hw4d84wglucXL0z99pvWG3ol5JuF0jVy8Uv7Y=
-X-Received: by 2002:a17:906:4793:: with SMTP id cw19mr15959067ejc.100.1643734506390;
- Tue, 01 Feb 2022 08:55:06 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=8xxK3oUztkD1MpAUQ3OHQmNmApNl8HTWXaUt1AciwKE=;
+        b=az9qUatsvB0twsThKHDD8jhtalB91kyqNoHttrGskkIztJ/zoOMRE3Vf9k2+XBHJnU
+         WSHxJvu1HrbC14G1J/mBQihFhrcqB57TqPZ0AoDLaaUBg8WIxZ/mPa17v2K0IxNSVPzo
+         aVvuMl0Y4JDWU9f6IlSdh/UhOgER790EfgbXU+X1uXP2JOIJquKHqHnFtiGu3NKPIk53
+         CJPaPy+sb2gJnyPAULXEz/7uiZi2GzYAvj+WkhVGt0KrfbxXckyyQ6FO6GkBY9xAJYad
+         Erluyai2cU8ehLipSBhy7jXMwTJhd0dtFxrq3ElOHsKNthCpNmVtw9Yj27m9B8ZJvlG1
+         WiVQ==
+X-Gm-Message-State: AOAM530VKYs+EPJO7vViiHFZPjWe2zWzxhrLlJjH8rCX1ZC87wTM2Z+n
+        5LEd5PnJjkbgVCBtXNaC3s4ukPYswRk=
+X-Google-Smtp-Source: ABdhPJzhU10UcDCW8lZISv/H99fgHH2D8mtWZHEmiVcciLamhcYjTN3zR66MPlgGVtrJGbAV8TAzQQ==
+X-Received: by 2002:a1c:f210:: with SMTP id s16mr2597869wmc.99.1643734829467;
+        Tue, 01 Feb 2022 09:00:29 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u14sm2843156wmq.41.2022.02.01.09.00.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Feb 2022 09:00:28 -0800 (PST)
+Message-Id: <pull.1131.v3.git.1643734828.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1131.v2.git.1643478692337.gitgitgadget@gmail.com>
+References: <pull.1131.v2.git.1643478692337.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 01 Feb 2022 17:00:25 +0000
+Subject: [PATCH v3 0/3] repo-settings: fix checking for fetch.negotiationAlgorithm=default
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1103.v3.git.1640907369.gitgitgadget@gmail.com>
- <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com> <f06de6c1b2fbd5c5a23b6755197a3683c7d18d2f.1642792341.git.gitgitgadget@gmail.com>
- <220201.86v8xyapj9.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220201.86v8xyapj9.gmgdl@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 1 Feb 2022 08:54:54 -0800
-Message-ID: <CABPp-BHPZZuGoJO8PXCngBhStBJmDhbyCYOmR+CVZX5wv3O+4w@mail.gmail.com>
-Subject: Re: [PATCH v4 02/10] log: clean unneeded objects during `log --remerge-diff`
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>,
-        Johannes Altmanninger <aclopte@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 1, 2022 at 1:45 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
->
-> On Fri, Jan 21 2022, Elijah Newren via GitGitGadget wrote:
->
-> > From: Elijah Newren <newren@gmail.com>
-> > [...]
-> > @@ -944,7 +945,12 @@ static int do_remerge_diff(struct rev_info *opt,
-> >       strbuf_release(&parent1_desc);
-> >       strbuf_release(&parent2_desc);
-> >       merge_finalize(&o, &res);
-> > -     /* TODO: clean up the temporary object directory */
-> > +
-> > +     /* Clean up the contents of the temporary object directory */
-> > +     if (opt->remerge_objdir)
-> > +             tmp_objdir_discard_objects(opt->remerge_objdir);
-> > +     else
-> > +             BUG("unable to remove temporary object directory");
->
-> Re the die in 1/10 I don't think this will ever trigger the way this bug
-> suggests.
->
-> If we didn't manage to remove the directory that'll be signalled with
-> the return code of tmp_objdir_discard_objects() which you're adding
-> here, but which doesn't have a meaningful return value.
->
-> So shouldn't it first of all be returning the "int" like the
-> remove_dir_recursively() user in tmp_objdir_destroy_1() makes use of?
->
-> What this bug is really about is:
->
->     BUG("our juggling of opt->remerge_objdir between here and builtin/log=
-.c is screwy")
->
-> Or something, because if we failed to remove the director(ies) we'll
-> just ignore that here.
+This regression is not new in v2.35; it first appeared in v2.34. So, not
+urgent.
 
-Yeah, I think I'm suffering from leftover bits from earlier versions
-since this patch series has been waiting for 17 months now.  I
-switched it to
+Changes since v2:
 
-    BUG("did a remerge diff without remerge_objdir?!?");
+ * Also fix the fact that fetch.negotationAlgorithm=$BOGUS_VALUE no longer
+   errors out (yet another regression, this one dating back to v2.24.0), and
+   add a test to make sure we don't regress it again.
+ * Add 'consecutive' as a synonym for 'default', and remove 'default' from
+   the documentation to guide people towards using 'consecutive' when they
+   want the classic behavior.
 
->
-> > +void tmp_objdir_discard_objects(struct tmp_objdir *t)
-> > +{
-> > +     remove_dir_recursively(&t->path, REMOVE_DIR_KEEP_TOPLEVEL);
-> > +}
->
-> I skimmed remove_dir_recurse() a bit, but didn't test this, does this
-> remove just the "de/eadbeef..." in "de/eadbeef..." or also "de/",
-> i.e. do we (and do we want) to keep the fanned-out 256 loose top-level
-> directories throughout the operation?
+Changes since v1:
 
-It will remove everything below t->path, but leave t->path.  As such,
-it'll nuke any of the 256 loose top-level directories that exist.
+ * Put the common code in two testcases into a function, and then just
+   invoked it from each
 
-If someone wants to come along later and measure performance and
-determine if leaving those 256 loose top-level directories around
-improves things, I think that's fine, but I'm not going to look at it
-as part of this series.  I'm more curious about where tmp_objdir
-creates the temporary directory; when the intent is to migrate the
-objects into the main directory, it should probably be created on the
-same filesystem.  When the intent is scratch space, like it is for
---remerge-diff, the tmp_objdir should probably be shoved in /dev/shm
-or something like that.  But again, that's outside of this series.
-This series already has had a long list of things keeping it from the
-light of day; there's no need to add frills to it as part of the
-initial submission.
+Elijah Newren (3):
+  repo-settings: fix checking for fetch.negotiationAlgorithm=default
+  repo-settings: fix error handling for unknown values
+  repo-settings: name the default fetch.negotiationAlgorithm
+    'consecutive'
+
+ Documentation/config/fetch.txt | 21 ++++++++++-----------
+ fetch-negotiator.c             |  2 +-
+ repo-settings.c                |  7 ++++++-
+ repository.h                   |  2 +-
+ t/t5500-fetch-pack.sh          | 24 +++++++++++++++++++++---
+ 5 files changed, 39 insertions(+), 17 deletions(-)
+
+
+base-commit: 89bece5c8c96f0b962cfc89e63f82d603fd60bed
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1131%2Fnewren%2Ffix-fetch-negotiation-algorithm-equals-default-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1131/newren/fix-fetch-negotiation-algorithm-equals-default-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1131
+
+Range-diff vs v2:
+
+ 1:  633c873b513 ! 1:  df0ec5ffe98 repo-settings: fix checking for fetch.negotiationAlgorithm=default
+     @@ t/t5500-fetch-pack.sh: test_expect_success 'use ref advertisement to prune "have
+      +test_expect_success 'same as last but with config overrides' '
+      +	test_negotiation_algorithm_default \
+      +		-c feature.experimental=true \
+     -+		-c fetch.negotiationAlgorithm=default \
+     ++		-c fetch.negotiationAlgorithm=default
+       '
+       
+       test_expect_success 'filtering by size' '
+ -:  ----------- > 2:  23f692b81be repo-settings: fix error handling for unknown values
+ -:  ----------- > 3:  7b28c527a90 repo-settings: name the default fetch.negotiationAlgorithm 'consecutive'
+
+-- 
+gitgitgadget
