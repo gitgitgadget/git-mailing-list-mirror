@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DFE5EC433EF
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 03:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 965FCC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 03:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233146AbiBADdu (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S233153AbiBADdu (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 31 Jan 2022 22:33:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47298 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233095AbiBADdt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233135AbiBADdt (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 31 Jan 2022 22:33:49 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66ACFC061714
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 19:33:48 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id n8so11699899wmk.3
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09E21C06173B
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 19:33:49 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id e2so29336013wra.2
         for <git@vger.kernel.org>; Mon, 31 Jan 2022 19:33:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=b8GKfvnuRKk8ioouOntohVXgZyj0JVF1Aua2Y5B12C4=;
-        b=lP5RkPZxVb4sEZWN8I6tPAu/WEZUkTB58uTxYk6mYI3RWMTH/pRSQYu982ZabxF4md
-         pVW4GHO3/3wLIwzFHH59GRK8lMvwEgGtrlA7n/Baw0jE7ik5Tn/L6EWL9eEv8/qJn7Cj
-         fVDKin8oSYOI7zx70tLEfOKpweB+Qy5qCPw9Xu4sK9IzpBKeBh/IWRnaDvm+azETo21S
-         JXdJgVzmv0r9ynwl1A63P97CwFdZrJpBO6VymF3TjMQBIl9bIQtSEv0M+uozYsOM+3VE
-         KuLqsCcHTpCCgjEwdKq4WI6oXSDqS6vgaRBDSdsL4pMwyh1epBJUB5DaAQqjKy6VuE/T
-         ciCw==
+        bh=v+OuTPAl6ZNLqE/T3Mq644SRjbGfLH7E7h45uhDq1cI=;
+        b=QvMbWQAU+cr9kuEffvxyOnNWIG8mSLO8ZuCBXtuU/JnAaCATxMUS8W/H2V5h13rLlB
+         rFYzPDAJTveTral5fi4Sy/zDMgobpkzBH6Nh/E0ArW3uf3hvgrEZ0Ok5gqxiIgRERy6X
+         fggoJ+vOLbB/Ef5XQ7R1zjNrsXeSCzfCdSrlGYJM4x8dmDPXvwDBuOOMcoYz1tvI63hG
+         /u/y6lpuUXLZcNrL9l4osSHo3uI5g6Stu0chkbO+8U074Qo6bTV1/ZTAc8rOxMMk+4IM
+         O7ILu9zy0G8xlXyqhzAct2L4DI29wtecPTJYkIDkONAY1sFxiWvlIJ5jYLIja06v6+Aq
+         dKrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=b8GKfvnuRKk8ioouOntohVXgZyj0JVF1Aua2Y5B12C4=;
-        b=7FPaH4IV88r3SHc7McXg4lUm1Eksx2beYjhX2vE5SWDyrWTSoheU4bjrV2qKXrm78l
-         xvDkp0PeLI7m8w3N0Wk+fbIg5y6cmly6soHRkT2hFAA8isOnINtPrUmcn0d/qaAd/wrq
-         5FAyMGp3htN164fWGOTb308TLE3rwOtEdLU/WoGqVizmUj94wRHTGk2EIB6oqx1xfoRn
-         ZbFiIoJuUw8SY86EXXe2e1mB6mr8S+3ZG+JzAV/B0A8p4WvSXN2BGGCn0cxgiBIFTU2A
-         gPrebIp7irXaKWas6abc9F/Za1Drivz9Jd73pmJ0qu7GAGyTi/dyJpAIa3Wlfpsz7No2
-         lCBw==
-X-Gm-Message-State: AOAM532JcvZUl+t1t1gn3d3PHA/rWkTuyEcxg76Nz5GYe1lFPWJ7Oj6E
-        NY/d/KikRtY7naUM2Fuex1p+OYPMUNg=
-X-Google-Smtp-Source: ABdhPJyP69jYQt9R0GKqCODoeveWk886Ewpn8qhx39sGHhLx7esqbO5nyCoHQI9Wja+pDPGPxPDeOg==
-X-Received: by 2002:a05:600c:1596:: with SMTP id r22mr34350wmf.33.1643686426596;
-        Mon, 31 Jan 2022 19:33:46 -0800 (PST)
+        bh=v+OuTPAl6ZNLqE/T3Mq644SRjbGfLH7E7h45uhDq1cI=;
+        b=tMMMJ5lEpAhWtG019RPa9wne6DQXCkv4KEzEMPobdyeE9u6Rnioyi+c+ECw2W4Zsun
+         lVccGoxtMYFFZpd2gr/SKUBap0UNsTh2AnLvfhgJagNF5LO+BAHOeoClUF919tyIK0ze
+         9NeQhq/XXVY8hvq1XlRZLS4agixRrapkOyH28F5YpXAY+5jVnmOc4jfxOw3XjRA03KIg
+         0OmulV4hpzWF31PwbV4nbJ2MjZR06tr5RRo0ZRNaBaRjd0dQmk43nvPzXOO+2VnfHric
+         8LfvQiRzSVNQWEQ55p7oJG2z6Qb7REz3u0aJCqDKu18IKJl1VQVtgYmtBX2WaJS9fRvI
+         sBBA==
+X-Gm-Message-State: AOAM532vqLnXRtYqrU/Wxxh1DZrCSI/4+dpheTxJdmAxuL77r3q9ujz1
+        o5J+MsfAIQ1OOQRp3sgnosXPaJT9WY0=
+X-Google-Smtp-Source: ABdhPJzjJAt1e2Sh60Csnjb1rt1jk3TleWSZr/0xyIbXSrlVnDZbAHH6+h992vlUMqZBLgYtT5vFfA==
+X-Received: by 2002:a5d:46c1:: with SMTP id g1mr11572033wrs.111.1643686427394;
+        Mon, 31 Jan 2022 19:33:47 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r17sm897999wmq.33.2022.01.31.19.33.45
+        by smtp.gmail.com with ESMTPSA id l5sm930125wmq.7.2022.01.31.19.33.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 19:33:45 -0800 (PST)
-Message-Id: <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1093.v3.git.1639011433.gitgitgadget@gmail.com>
+        Mon, 31 Jan 2022 19:33:46 -0800 (PST)
+Message-Id: <51a218d100db2b8282b6a2b5c68033b532bcd19e.1643686425.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
 References: <pull.1093.v3.git.1639011433.gitgitgadget@gmail.com>
-From:   "Neeraj K. Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Feb 2022 03:33:40 +0000
-Subject: [PATCH v4 0/4] A design for future-proofing fsync() configuration
+        <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
+From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 01 Feb 2022 03:33:41 +0000
+Subject: [PATCH v4 1/4] core.fsyncmethod: add writeout-only mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -60,283 +61,392 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     rsbecker@nexbridge.com, bagasdotme@gmail.com, newren@gmail.com,
         avarab@gmail.com, nksingh85@gmail.com, ps@pks.im,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
+        "Neeraj K. Singh" <neerajsi@microsoft.com>,
+        Neeraj Singh <neerajsi@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an implementation of an extensible configuration mechanism for
-fsyncing persistent components of a repo.
+From: Neeraj Singh <neerajsi@microsoft.com>
 
-The main goals are to separate the "what" to sync from the "how". There are
-now two settings: core.fsync - Control the 'what', including the index.
-core.fsyncMethod - Control the 'how'. Currently we support writeout-only and
-full fsync.
+This commit introduces the `core.fsyncMethod` configuration
+knob, which can currently be set to `fsync` or `writeout-only`.
 
-Syncing of refs can be layered on top of core.fsync. And batch mode will be
-layered on core.fsyncMethod.
+The new writeout-only mode attempts to tell the operating system to
+flush its in-memory page cache to the storage hardware without issuing a
+CACHE_FLUSH command to the storage controller.
 
-core.fsyncObjectfiles is removed and will issue a deprecation warning if
-it's seen.
+Writeout-only fsync is significantly faster than a vanilla fsync on
+common hardware, since data is written to a disk-side cache rather than
+all the way to a durable medium. Later changes in this patch series will
+take advantage of this primitive to implement batching of hardware
+flushes.
 
-I'd like to get agreement on this direction before submitting batch mode to
-the list. The batch mode series is available to view at
-https://github.com/gitgitgadget/git/pull/1134
+When git_fsync is called with FSYNC_WRITEOUT_ONLY, it may fail and the
+caller is expected to do an ordinary fsync as needed.
 
-Please see [1], [2], and [3] for discussions that led to this series.
+On Apple platforms, the fsync system call does not issue a CACHE_FLUSH
+directive to the storage controller. This change updates fsync to do
+fcntl(F_FULLFSYNC) to make fsync actually durable. We maintain parity
+with existing behavior on Apple platforms by setting the default value
+of the new core.fsyncMethod option.
 
-After this change, new persistent data files added to the repo will need to
-be added to the fsync_component enum and documented in the
-Documentation/config/core.txt text.
-
-V4 changes:
-
- * Rebase onto master at b23dac905bd.
- * Add a comment to write_pack_file indicating why we don't fsync when
-   writing to stdout.
- * I kept the configuration schema as-is rather than switching to
-   multi-value. The thinking here is that a stateless last-one-wins config
-   schema (comma separated) will make it easier to achieve some holistic
-   self-consistent fsync configuration for a particular repo.
-
-V3 changes:
-
- * Remove relative path from git-compat-util.h include [4].
- * Updated newly added warning texts to have more context for localization
-   [4].
- * Fixed tab spacing in enum fsync_action
- * Moved the fsync looping out to a helper and do it consistently. [4]
- * Changed commit description to use camelCase for config names. [5]
- * Add an optional fourth patch with derived-metadata so that the user can
-   exclude a forward-compatible set of things that should be recomputable
-   given existing data.
-
-V2 changes:
-
- * Updated the documentation for core.fsyncmethod to be less certain.
-   writeout-only probably does not do the right thing on Linux.
- * Split out the core.fsync=index change into its own commit.
- * Rename REPO_COMPONENT to FSYNC_COMPONENT. This is really specific to
-   fsyncing, so the name should reflect that.
- * Re-add missing Makefile change for SYNC_FILE_RANGE.
- * Tested writeout-only mode, index syncing, and general config settings.
-
-[1] https://lore.kernel.org/git/211110.86r1bogg27.gmgdl@evledraar.gmail.com/
-[2]
-https://lore.kernel.org/git/dd65718814011eb93ccc4428f9882e0f025224a6.1636029491.git.ps@pks.im/
-[3]
-https://lore.kernel.org/git/pull.1076.git.git.1629856292.gitgitgadget@gmail.com/
-[4]
-https://lore.kernel.org/git/CANQDOdf8C4-haK9=Q_J4Cid8bQALnmGDm=SvatRbaVf+tkzqLw@mail.gmail.com/
-[5] https://lore.kernel.org/git/211207.861r2opplg.gmgdl@evledraar.gmail.com/
-
-Neeraj Singh (4):
-  core.fsyncmethod: add writeout-only mode
-  core.fsync: introduce granular fsync control
-  core.fsync: new option to harden the index
-  core.fsync: add a `derived-metadata` aggregate option
-
- Documentation/config/core.txt       | 35 ++++++++---
- Makefile                            |  6 ++
- builtin/fast-import.c               |  2 +-
- builtin/index-pack.c                |  4 +-
- builtin/pack-objects.c              | 24 +++++---
- bulk-checkin.c                      |  5 +-
- cache.h                             | 49 +++++++++++++++-
- commit-graph.c                      |  3 +-
- compat/mingw.h                      |  3 +
- compat/win32/flush.c                | 28 +++++++++
- config.c                            | 90 ++++++++++++++++++++++++++++-
- config.mak.uname                    |  3 +
- configure.ac                        |  8 +++
+Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
+---
+ Documentation/config/core.txt       |  9 ++++
+ Makefile                            |  6 +++
+ cache.h                             |  7 ++++
+ compat/mingw.h                      |  3 ++
+ compat/win32/flush.c                | 28 +++++++++++++
+ config.c                            | 12 ++++++
+ config.mak.uname                    |  3 ++
+ configure.ac                        |  8 ++++
  contrib/buildsystems/CMakeLists.txt |  3 +-
- csum-file.c                         |  5 +-
- csum-file.h                         |  3 +-
- environment.c                       |  3 +-
- git-compat-util.h                   | 24 ++++++++
- midx.c                              |  3 +-
- object-file.c                       |  3 +-
- pack-bitmap-write.c                 |  3 +-
- pack-write.c                        | 13 +++--
- read-cache.c                        | 19 ++++--
- wrapper.c                           | 64 ++++++++++++++++++++
- write-or-die.c                      | 11 ++--
- 25 files changed, 367 insertions(+), 47 deletions(-)
+ environment.c                       |  1 +
+ git-compat-util.h                   | 24 +++++++++++
+ wrapper.c                           | 64 +++++++++++++++++++++++++++++
+ write-or-die.c                      | 11 +++--
+ 13 files changed, 174 insertions(+), 5 deletions(-)
  create mode 100644 compat/win32/flush.c
 
-
-base-commit: b23dac905bde28da47543484320db16312c87551
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1093%2Fneerajsi-msft%2Fns%2Fcore-fsync-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1093/neerajsi-msft/ns/core-fsync-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1093
-
-Range-diff vs v3:
-
- 1:  15edfe51509 ! 1:  51a218d100d core.fsyncmethod: add writeout-only mode
-     @@ Makefile: ifdef HAVE_CLOCK_MONOTONIC
-       endif
-      
-       ## cache.h ##
-     -@@ cache.h: extern int read_replace_refs;
-     - extern char *git_replace_ref_base;
-     +@@ cache.h: extern char *git_replace_ref_base;
-       
-       extern int fsync_object_files;
-     + extern int use_fsync;
-      +
-      +enum fsync_method {
-      +	FSYNC_METHOD_FSYNC,
-     @@ compat/win32/flush.c (new)
-      +
-      +#define FLUSH_FLAGS_FILE_DATA_ONLY 1
-      +
-     -+       DECLARE_PROC_ADDR(ntdll.dll, NTSTATUS, NtFlushBuffersFileEx,
-     ++       DECLARE_PROC_ADDR(ntdll.dll, NTSTATUS, NTAPI, NtFlushBuffersFileEx,
-      +			 HANDLE FileHandle, ULONG Flags, PVOID Parameters, ULONG ParameterSize,
-      +			 PIO_STATUS_BLOCK IoStatusBlock);
-      +
-     @@ contrib/buildsystems/CMakeLists.txt: if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-       		compat/nedmalloc/nedmalloc.c compat/strdup.c)
-      
-       ## environment.c ##
-     -@@ environment.c: const char *git_attributes_file;
-     - const char *git_hooks_path;
-     - int zlib_compression_level = Z_BEST_SPEED;
-     +@@ environment.c: int zlib_compression_level = Z_BEST_SPEED;
-       int pack_compression_level = Z_DEFAULT_COMPRESSION;
-     --int fsync_object_files;
-     + int fsync_object_files;
-     + int use_fsync = -1;
-      +enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
-       size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
-       size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
-     @@ wrapper.c: int xmkstemp_mode(char *filename_template, int mode)
-       	int err;
-      
-       ## write-or-die.c ##
-     -@@ write-or-die.c: void fprintf_or_die(FILE *f, const char *fmt, ...)
-     - 
-     - void fsync_or_die(int fd, const char *msg)
-     - {
-     +@@ write-or-die.c: void fsync_or_die(int fd, const char *msg)
-     + 		use_fsync = git_env_bool("GIT_TEST_FSYNC", 1);
-     + 	if (!use_fsync)
-     + 		return;
-      -	while (fsync(fd) < 0) {
-      -		if (errno != EINTR)
-      -			die_errno("fsync error on '%s'", msg);
-      -	}
-     ++
-      +	if (fsync_method == FSYNC_METHOD_WRITEOUT_ONLY &&
-      +	    git_fsync(fd, FSYNC_WRITEOUT_ONLY) >= 0)
-      +		return;
- 2:  080be1a6f64 ! 2:  7a164ba9571 core.fsync: introduce granular fsync control
-     @@ builtin/index-pack.c: static void final(const char *final_pack_name, const char
-      
-       ## builtin/pack-objects.c ##
-      @@ builtin/pack-objects.c: static void write_pack_file(void)
-     - 		 * If so, rewrite it like in fast-import
-     - 		 */
-     + 			display_progress(progress_state, written);
-     + 		}
-     + 
-     +-		/*
-     +-		 * Did we write the wrong # entries in the header?
-     +-		 * If so, rewrite it like in fast-import
-     +-		 */
-       		if (pack_to_stdout) {
-      -			finalize_hashfile(f, hash, CSUM_HASH_IN_STREAM | CSUM_CLOSE);
-     ++			/*
-     ++			 * We never fsync when writing to stdout since we may
-     ++			 * not be writing to an actual pack file. For instance,
-     ++			 * the upload-pack code passes a pipe here. Calling
-     ++			 * fsync on a pipe results in unnecessary
-     ++			 * synchronization with the reader on some platforms.
-     ++			 */
-      +			finalize_hashfile(f, hash, FSYNC_COMPONENT_NONE,
-      +					  CSUM_HASH_IN_STREAM | CSUM_CLOSE);
-       		} else if (nr_written == nr_remaining) {
-     @@ builtin/pack-objects.c: static void write_pack_file(void)
-      +					  CSUM_HASH_IN_STREAM | CSUM_FSYNC | CSUM_CLOSE);
-       		} else {
-      -			int fd = finalize_hashfile(f, hash, 0);
-     ++			/*
-     ++			 * If we wrote the wrong number of entries in the
-     ++			 * header, rewrite it like in fast-import.
-     ++			 */
-     ++
-      +			int fd = finalize_hashfile(f, hash, FSYNC_COMPONENT_PACK, 0);
-       			fixup_pack_header_footer(fd, hash, pack_tmp_name,
-       						 nr_written, hash, offset);
-     @@ cache.h: void reset_shared_repository(void);
-       extern char *git_replace_ref_base;
-       
-      -extern int fsync_object_files;
-     +-extern int use_fsync;
-      +/*
-      + * These values are used to help identify parts of a repository to fsync.
-      + * FSYNC_COMPONENT_NONE identifies data that will not be a persistent part of the
-      + * repository and so shouldn't be fsynced.
-      + */
-      +enum fsync_component {
-     -+	FSYNC_COMPONENT_NONE			= 0,
-     ++	FSYNC_COMPONENT_NONE,
-      +	FSYNC_COMPONENT_LOOSE_OBJECT		= 1 << 0,
-      +	FSYNC_COMPONENT_PACK			= 1 << 1,
-      +	FSYNC_COMPONENT_PACK_METADATA		= 1 << 2,
-     @@ cache.h: void reset_shared_repository(void);
-       
-       enum fsync_method {
-       	FSYNC_METHOD_FSYNC,
-     +@@ cache.h: enum fsync_method {
-     + };
-     + 
-     + extern enum fsync_method fsync_method;
-     ++extern int use_fsync;
-     + extern int core_preload_index;
-     + extern int precomposed_unicode;
-     + extern int protect_hfs;
-      @@ cache.h: int copy_file_with_time(const char *dst, const char *src, int mode);
-       void write_or_die(int fd, const void *buf, size_t count);
-       void fsync_or_die(int fd, const char *);
-     @@ csum-file.h: int hashfile_truncate(struct hashfile *, struct hashfile_checkpoint
-       void crc32_begin(struct hashfile *);
-      
-       ## environment.c ##
-     -@@ environment.c: const char *git_hooks_path;
-     +@@ environment.c: const char *git_attributes_file;
-     + const char *git_hooks_path;
-       int zlib_compression_level = Z_BEST_SPEED;
-       int pack_compression_level = Z_DEFAULT_COMPRESSION;
-     +-int fsync_object_files;
-     + int use_fsync = -1;
-       enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
-      +enum fsync_component fsync_components = FSYNC_COMPONENTS_DEFAULT;
-       size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
-     @@ midx.c: static int write_midx_internal(const char *object_dir,
-      
-       ## object-file.c ##
-      @@ object-file.c: int hash_object_file(const struct git_hash_algo *algo, const void *buf,
-     - /* Finalize a file on disk, and close it. */
-       static void close_loose_object(int fd)
-       {
-     --	if (fsync_object_files)
-     --		fsync_or_die(fd, "loose object file");
-     -+	fsync_component_or_die(FSYNC_COMPONENT_LOOSE_OBJECT, fd, "loose object file");
-     + 	if (!the_repository->objects->odb->will_destroy) {
-     +-		if (fsync_object_files)
-     +-			fsync_or_die(fd, "loose object file");
-     ++		fsync_component_or_die(FSYNC_COMPONENT_LOOSE_OBJECT, fd, "loose object file");
-     + 	}
-     + 
-       	if (close(fd) != 0)
-     - 		die_errno(_("error when closing loose object file"));
-     - }
-      
-       ## pack-bitmap-write.c ##
-      @@ pack-bitmap-write.c: void bitmap_writer_finish(struct pack_idx_entry **index,
- 3:  2207950beba = 3:  f217dba77a1 core.fsync: new option to harden the index
- 4:  a830d177d4c = 4:  5c22a41c1f3 core.fsync: add a `derived-metadata` aggregate option
-
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index c04f62a54a1..dbb134f7136 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -547,6 +547,15 @@ core.whitespace::
+   is relevant for `indent-with-non-tab` and when Git fixes `tab-in-indent`
+   errors. The default tab width is 8. Allowed values are 1 to 63.
+ 
++core.fsyncMethod::
++	A value indicating the strategy Git will use to harden repository data
++	using fsync and related primitives.
+++
++* `fsync` uses the fsync() system call or platform equivalents.
++* `writeout-only` issues pagecache writeback requests, but depending on the
++  filesystem and storage hardware, data added to the repository may not be
++  durable in the event of a system crash. This is the default mode on macOS.
++
+ core.fsyncObjectFiles::
+ 	This boolean will enable 'fsync()' when writing object files.
+ +
+diff --git a/Makefile b/Makefile
+index 5580859afdb..1eff9953280 100644
+--- a/Makefile
++++ b/Makefile
+@@ -405,6 +405,8 @@ all::
+ #
+ # Define HAVE_CLOCK_MONOTONIC if your platform has CLOCK_MONOTONIC.
+ #
++# Define HAVE_SYNC_FILE_RANGE if your platform has sync_file_range.
++#
+ # Define NEEDS_LIBRT if your platform requires linking with librt (glibc version
+ # before 2.17) for clock_gettime and CLOCK_MONOTONIC.
+ #
+@@ -1892,6 +1894,10 @@ ifdef HAVE_CLOCK_MONOTONIC
+ 	BASIC_CFLAGS += -DHAVE_CLOCK_MONOTONIC
+ endif
+ 
++ifdef HAVE_SYNC_FILE_RANGE
++	BASIC_CFLAGS += -DHAVE_SYNC_FILE_RANGE
++endif
++
+ ifdef NEEDS_LIBRT
+ 	EXTLIBS += -lrt
+ endif
+diff --git a/cache.h b/cache.h
+index 281f00ab1b1..37a32034b2f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -995,6 +995,13 @@ extern char *git_replace_ref_base;
+ 
+ extern int fsync_object_files;
+ extern int use_fsync;
++
++enum fsync_method {
++	FSYNC_METHOD_FSYNC,
++	FSYNC_METHOD_WRITEOUT_ONLY
++};
++
++extern enum fsync_method fsync_method;
+ extern int core_preload_index;
+ extern int precomposed_unicode;
+ extern int protect_hfs;
+diff --git a/compat/mingw.h b/compat/mingw.h
+index c9a52ad64a6..6074a3d3ced 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -329,6 +329,9 @@ int mingw_getpagesize(void);
+ #define getpagesize mingw_getpagesize
+ #endif
+ 
++int win32_fsync_no_flush(int fd);
++#define fsync_no_flush win32_fsync_no_flush
++
+ struct rlimit {
+ 	unsigned int rlim_cur;
+ };
+diff --git a/compat/win32/flush.c b/compat/win32/flush.c
+new file mode 100644
+index 00000000000..291f90ea940
+--- /dev/null
++++ b/compat/win32/flush.c
+@@ -0,0 +1,28 @@
++#include "git-compat-util.h"
++#include <winternl.h>
++#include "lazyload.h"
++
++int win32_fsync_no_flush(int fd)
++{
++       IO_STATUS_BLOCK io_status;
++
++#define FLUSH_FLAGS_FILE_DATA_ONLY 1
++
++       DECLARE_PROC_ADDR(ntdll.dll, NTSTATUS, NTAPI, NtFlushBuffersFileEx,
++			 HANDLE FileHandle, ULONG Flags, PVOID Parameters, ULONG ParameterSize,
++			 PIO_STATUS_BLOCK IoStatusBlock);
++
++       if (!INIT_PROC_ADDR(NtFlushBuffersFileEx)) {
++		errno = ENOSYS;
++		return -1;
++       }
++
++       memset(&io_status, 0, sizeof(io_status));
++       if (NtFlushBuffersFileEx((HANDLE)_get_osfhandle(fd), FLUSH_FLAGS_FILE_DATA_ONLY,
++				NULL, 0, &io_status)) {
++		errno = EINVAL;
++		return -1;
++       }
++
++       return 0;
++}
+diff --git a/config.c b/config.c
+index 2bffa8d4a01..f67f545f839 100644
+--- a/config.c
++++ b/config.c
+@@ -1490,6 +1490,18 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.fsyncmethod")) {
++		if (!value)
++			return config_error_nonbool(var);
++		if (!strcmp(value, "fsync"))
++			fsync_method = FSYNC_METHOD_FSYNC;
++		else if (!strcmp(value, "writeout-only"))
++			fsync_method = FSYNC_METHOD_WRITEOUT_ONLY;
++		else
++			warning(_("ignoring unknown core.fsyncMethod value '%s'"), value);
++
++	}
++
+ 	if (!strcmp(var, "core.fsyncobjectfiles")) {
+ 		fsync_object_files = git_config_bool(var, value);
+ 		return 0;
+diff --git a/config.mak.uname b/config.mak.uname
+index c48db45106c..2c67b3b93ce 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -57,6 +57,7 @@ ifeq ($(uname_S),Linux)
+ 	HAVE_CLOCK_MONOTONIC = YesPlease
+ 	# -lrt is needed for clock_gettime on glibc <= 2.16
+ 	NEEDS_LIBRT = YesPlease
++	HAVE_SYNC_FILE_RANGE = YesPlease
+ 	HAVE_GETDELIM = YesPlease
+ 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ 	BASIC_CFLAGS += -DHAVE_SYSINFO
+@@ -462,6 +463,7 @@ endif
+ 	CFLAGS =
+ 	BASIC_CFLAGS = -nologo -I. -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
+ 	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
++		compat/win32/flush.o \
+ 		compat/win32/path-utils.o \
+ 		compat/win32/pthread.o compat/win32/syslog.o \
+ 		compat/win32/trace2_win32_process_info.o \
+@@ -639,6 +641,7 @@ ifeq ($(uname_S),MINGW)
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+ 		compat/win32/trace2_win32_process_info.o \
++		compat/win32/flush.o \
+ 		compat/win32/path-utils.o \
+ 		compat/win32/pthread.o compat/win32/syslog.o \
+ 		compat/win32/dirent.o
+diff --git a/configure.ac b/configure.ac
+index d60d494ee4c..660b91f90b4 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1095,6 +1095,14 @@ AC_COMPILE_IFELSE([CLOCK_MONOTONIC_SRC],
+ 	[AC_MSG_RESULT([no])
+ 	HAVE_CLOCK_MONOTONIC=])
+ GIT_CONF_SUBST([HAVE_CLOCK_MONOTONIC])
++
++#
++# Define HAVE_SYNC_FILE_RANGE=YesPlease if sync_file_range is available.
++GIT_CHECK_FUNC(sync_file_range,
++	[HAVE_SYNC_FILE_RANGE=YesPlease],
++	[HAVE_SYNC_FILE_RANGE])
++GIT_CONF_SUBST([HAVE_SYNC_FILE_RANGE])
++
+ #
+ # Define NO_SETITIMER if you don't have setitimer.
+ GIT_CHECK_FUNC(setitimer,
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 5100f56bb37..276e74c1d54 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -261,7 +261,8 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 				NOGDI OBJECT_CREATION_MODE=1 __USE_MINGW_ANSI_STDIO=0
+ 				USE_NED_ALLOCATOR OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_WIN32_MMAP
+ 				UNICODE _UNICODE HAVE_WPGMPTR ENSURE_MSYSTEM_IS_SET)
+-	list(APPEND compat_SOURCES compat/mingw.c compat/winansi.c compat/win32/path-utils.c
++	list(APPEND compat_SOURCES compat/mingw.c compat/winansi.c
++		compat/win32/flush.c compat/win32/path-utils.c
+ 		compat/win32/pthread.c compat/win32mmap.c compat/win32/syslog.c
+ 		compat/win32/trace2_win32_process_info.c compat/win32/dirent.c
+ 		compat/nedmalloc/nedmalloc.c compat/strdup.c)
+diff --git a/environment.c b/environment.c
+index fd0501e77a5..3e3620d759f 100644
+--- a/environment.c
++++ b/environment.c
+@@ -44,6 +44,7 @@ int zlib_compression_level = Z_BEST_SPEED;
+ int pack_compression_level = Z_DEFAULT_COMPRESSION;
+ int fsync_object_files;
+ int use_fsync = -1;
++enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
+ size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
+ size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
+ size_t delta_base_cache_limit = 96 * 1024 * 1024;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 1229c8296b9..76cb85a56b1 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1265,6 +1265,30 @@ __attribute__((format (printf, 1, 2))) NORETURN
+ void BUG(const char *fmt, ...);
+ #endif
+ 
++#ifdef __APPLE__
++#define FSYNC_METHOD_DEFAULT FSYNC_METHOD_WRITEOUT_ONLY
++#else
++#define FSYNC_METHOD_DEFAULT FSYNC_METHOD_FSYNC
++#endif
++
++enum fsync_action {
++	FSYNC_WRITEOUT_ONLY,
++	FSYNC_HARDWARE_FLUSH
++};
++
++/*
++ * Issues an fsync against the specified file according to the specified mode.
++ *
++ * FSYNC_WRITEOUT_ONLY attempts to use interfaces available on some operating
++ * systems to flush the OS cache without issuing a flush command to the storage
++ * controller. If those interfaces are unavailable, the function fails with
++ * ENOSYS.
++ *
++ * FSYNC_HARDWARE_FLUSH does an OS writeout and hardware flush to ensure that
++ * changes are durable. It is not expected to fail.
++ */
++int git_fsync(int fd, enum fsync_action action);
++
+ /*
+  * Preserves errno, prints a message, but gives no warning for ENOENT.
+  * Returns 0 on success, which includes trying to unlink an object that does
+diff --git a/wrapper.c b/wrapper.c
+index 36e12119d76..572f28f14ff 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -546,6 +546,70 @@ int xmkstemp_mode(char *filename_template, int mode)
+ 	return fd;
+ }
+ 
++/*
++ * Some platforms return EINTR from fsync. Since fsync is invoked in some
++ * cases by a wrapper that dies on failure, do not expose EINTR to callers.
++ */
++static int fsync_loop(int fd)
++{
++	int err;
++
++	do {
++		err = fsync(fd);
++	} while (err < 0 && errno == EINTR);
++	return err;
++}
++
++int git_fsync(int fd, enum fsync_action action)
++{
++	switch (action) {
++	case FSYNC_WRITEOUT_ONLY:
++
++#ifdef __APPLE__
++		/*
++		 * on macOS, fsync just causes filesystem cache writeback but does not
++		 * flush hardware caches.
++		 */
++		return fsync_loop(fd);
++#endif
++
++#ifdef HAVE_SYNC_FILE_RANGE
++		/*
++		 * On linux 2.6.17 and above, sync_file_range is the way to issue
++		 * a writeback without a hardware flush. An offset of 0 and size of 0
++		 * indicates writeout of the entire file and the wait flags ensure that all
++		 * dirty data is written to the disk (potentially in a disk-side cache)
++		 * before we continue.
++		 */
++
++		return sync_file_range(fd, 0, 0, SYNC_FILE_RANGE_WAIT_BEFORE |
++						 SYNC_FILE_RANGE_WRITE |
++						 SYNC_FILE_RANGE_WAIT_AFTER);
++#endif
++
++#ifdef fsync_no_flush
++		return fsync_no_flush(fd);
++#endif
++
++		errno = ENOSYS;
++		return -1;
++
++	case FSYNC_HARDWARE_FLUSH:
++		/*
++		 * On some platforms fsync may return EINTR. Try again in this
++		 * case, since callers asking for a hardware flush may die if
++		 * this function returns an error.
++		 */
++#ifdef __APPLE__
++		return fcntl(fd, F_FULLFSYNC);
++#else
++		return fsync_loop(fd);
++#endif
++	default:
++		BUG("unexpected git_fsync(%d) call", action);
++	}
++}
++
+ static int warn_if_unremovable(const char *op, const char *file, int rc)
+ {
+ 	int err;
+diff --git a/write-or-die.c b/write-or-die.c
+index a3d5784cec9..9faa5f9f563 100644
+--- a/write-or-die.c
++++ b/write-or-die.c
+@@ -62,10 +62,13 @@ void fsync_or_die(int fd, const char *msg)
+ 		use_fsync = git_env_bool("GIT_TEST_FSYNC", 1);
+ 	if (!use_fsync)
+ 		return;
+-	while (fsync(fd) < 0) {
+-		if (errno != EINTR)
+-			die_errno("fsync error on '%s'", msg);
+-	}
++
++	if (fsync_method == FSYNC_METHOD_WRITEOUT_ONLY &&
++	    git_fsync(fd, FSYNC_WRITEOUT_ONLY) >= 0)
++		return;
++
++	if (git_fsync(fd, FSYNC_HARDWARE_FLUSH) < 0)
++		die_errno("fsync error on '%s'", msg);
+ }
+ 
+ void write_or_die(int fd, const void *buf, size_t count)
 -- 
 gitgitgadget
+
