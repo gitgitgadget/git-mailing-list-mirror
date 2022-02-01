@@ -2,151 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28FD0C433EF
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 16:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 053ACC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 16:44:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241146AbiBAQkX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 11:40:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55512 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233760AbiBAQkV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 11:40:21 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B29C061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 08:40:21 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id s5so55747662ejx.2
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 08:40:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nCLI0/C0ud3nHrVPd5zwGrlrW91jH6ddzefKb0AmsA8=;
-        b=aXyiVdMXo3OBSa0yEiAalf+5VEZnXHXplrjDY+XLA3SjPtw8Quc/AqtycHuCfa+y6m
-         IaFgC5KzGQdt1lV9pO/9kxFAwc6raWIILMOKjDgnmXr3oUTDKjcp7/Nt5UFsYE9dTKI6
-         rR+mgp86/OujWlf/RSJWdjlEIv/1peR7r8M1JPViLoNwdoT6x2ONCStJR4GBWyfHN3fY
-         VvnZRCrWUjov+d87F9dcrnUOLA7HjvoNlsr7rfdpSSWqw+lG40pJ1xsTXla75+IDlV4f
-         43VVGR4t32F0bl4krPkpDSPZbZkydOZculTleCu1l1BElNWKZmvhMpsgm/WhmUUjQw+i
-         RmDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nCLI0/C0ud3nHrVPd5zwGrlrW91jH6ddzefKb0AmsA8=;
-        b=evnRoNQG8d6u4xIWJrtGEWufEev9bma/DzUF+WA+JbEsDuqt7+6xUo1n1MUupR3kFr
-         IdTrL/A3UuabIGsYnkR80lGwud8pWqeoJx4Wq1rYRmKan459q7fHodGJXe635JPJIQHy
-         T834utt3cWAKuFYWlheRuL0ZUFpnpjBC6p/d2TLKkn/RofbAaUCgMI3gOQiokbO/NXVS
-         PzuXx57qWxUIBXOhp/lJ/b67d3GMc2RPHs6UHqU/Wyqk6UUv1CuLIVM0AtyHy+tx9RlS
-         uLS3IBkaGSF33DJYOQpPNj+oKy+vGMCQhhF+QwUvS/LEKS+FrDC9FzWxVJXZGdNePLgE
-         m/xA==
-X-Gm-Message-State: AOAM532Ni8rYMUuhUcMJf6HngD5Z2v2GK6/Gi4Uywzr0AnqLNyKSzmhb
-        HnUCOKRhyfLTzde2fTmnH1FJKiHl+EOqhQCCMxzDuF48
-X-Google-Smtp-Source: ABdhPJxh5EWJFmki1mxFmp9g2zHoa+uVR1DPnXrBfa11UXrVsJMZAklNeryFfNGr1xgYhqWojrtR9n/ACQDQYXlrt9A=
-X-Received: by 2002:a17:907:7da8:: with SMTP id oz40mr15868277ejc.328.1643733619550;
- Tue, 01 Feb 2022 08:40:19 -0800 (PST)
+        id S241207AbiBAQot (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 11:44:49 -0500
+Received: from mout.gmx.net ([212.227.15.15]:44889 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241188AbiBAQos (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 11:44:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1643733886;
+        bh=eZxAjprX9DZxrcWl1c3SdI0WMLPRw6RU1ZEf5Zf83eo=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=ByPEZ92nj3MsOgkhp6mE32DWNx3ZvuyHAzQ3UqqhB2HymQFka6PCDRqI2SKVsB9Up
+         Ai0yPb6DTkn7usDtFNSEstKpZ8XkhjUErvILsajjnfGhgz+UD5M3pcoSKyjqvxdMkn
+         kheAmGsNUhKegoa3zE3ODxHjzAO7RfZUPWDuqsV8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from fv-az30-552.0unkxdino51e5fmf2tnbwhsmqg.dx.internal.cloudapp.net
+ ([13.91.104.98]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
+ (Nemesis) id 1MiJV6-1md9H11iSc-00fRzF; Tue, 01 Feb 2022 17:44:45 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.35.1(2)
+Date:   Tue,  1 Feb 2022 16:44:41 +0000
+Message-Id: <20220201164441.4952-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.35.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-References: <pull.1103.v3.git.1640907369.gitgitgadget@gmail.com>
- <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com> <0b94724311df34dd10debd43c466695ed406d790.1642792341.git.gitgitgadget@gmail.com>
- <220201.86zgnb9bf9.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220201.86zgnb9bf9.gmgdl@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 1 Feb 2022 08:40:08 -0800
-Message-ID: <CABPp-BE1p4bvm40-w5UDczSG8Ws+rR5tvjBL4gq_cgvYa92Q+Q@mail.gmail.com>
-Subject: Re: [PATCH v4 01/10] show, log: provide a --remerge-diff capability
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sergey Organov <sorganov@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Neeraj Singh <nksingh85@gmail.com>,
-        Johannes Altmanninger <aclopte@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Fcc:    Sent
+X-Provags-ID: V03:K1:H9CObi3ui3qJydrMDccd238oBFurOrI8TWR3bxmRA79ag2YlUtB
+ I0jh4fjpLrLMVDprsWTg75thNneK7nSJI4+kd5umIEPDJ5KNbEOjzWH62jgXbnPuOyoLzUC
+ TuGc9xRH98W7qwSXWj1ARTxLroh0as+3uqXVFFbYji99yO2yU/Lo6AlNvGPiEcLl6sRk4+Q
+ 8fmQtHRJYTqLOHL6pWliA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:i9IOQoCLN/g=:LDVKTBNb8AezGSQ1rD0gM4
+ A3Oj2Z3UmI1S4iM+RiYWAK9GsNj38cN0g2KrNHLDoJDKfnrDsBEicT6RrxRm79r1wOS7YUW+G
+ 3Cq8283hex62GIJ1J3DKckp1V9bQ9FHOVKtB1qKrZDmGm/62ITGT3/sF+A6di6uHROBqhc2kR
+ Bes6RtB/F2545uW4+fL6bZ2amH2Rkd3L+JvP1CvqrUyVMKfPtnfMBG4AyoIcNClgggyGZQBLm
+ tS1TQHBYx7pVcm+hEBoaUUTsovBbCdiG7hxpfYjw9qJZ3Ya+cGN7rQS2AzI+gPZl/x11+YHuP
+ 7w7GAhA0KqaoX1vs2iWmyzTs4qzDChzxz1clp8QnohuGXQ1pw0bJhkwCZ0WvK6O6hXSU5gc1y
+ I3qGMsIjwZCoj/AyYKEFTIG/Ezp9zqFGQtoEwqgLl5r9nF/f+bYoMkGfnzt0ODHWjfty0mIEA
+ GY/htzvkVfAjtdRxCZnJldTB/PLKZcOYUc1vXRdsdvuHkZOHgzzvkkNY7M7EEkDS3rUTxKWHq
+ Tn7Po4YYg7j0anFK6cuyDPAzRf7NMdDKh8sXpWqGW8dRAyZpzW5W1qipOp6aZ6LX+hbPta6py
+ R/nD6Qcj0H9zupOxq9g2VLMj0+qV7TQtWxHjM3rt4izBmuSFFGThO2YktmtQ1udmcFzviDG9O
+ lDU5W+b6hSI0wGS6QCA8OeJeesI3eYty6XmB27hWRAjStOZbfQqWDnRBVgqUYT/6SAe1bAjg1
+ /QX3RcsWrbWjzGE4wwThHx3Q+CTLTgFDAAEslysQBb7ctSAvof72PWsW4HiPz9rPeng4zIJU6
+ 1QllNlmD892ovT9wzXVXA3Znxxpd0m7T/uZPlkQEY6HnQHGQck0QLb/ebs4m/cIhhgdtL3jFG
+ we/xjdwvlkeeqovup4xgLyEFlUAkBWgdhr2h7DU1LIMT+yACwJFIr1ZT9frdyzIWLGdhvkbf5
+ 4M+olYcZ7ty2syleh6BDCFaThr1m4qXL0Vg106bQjWGyFCdU8BJHrS05kwnJp1xK71lpuiYWg
+ fHwRVSrgjJLIlgNalrkn9YMkm5/Q44rroClB6IUZqbe52lxMbLz9VurvBVC8EOwsp/NUp0ZC6
+ z8I6C4DqjC2ohc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 1, 2022 at 1:35 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
->
-> On Fri, Jan 21 2022, Elijah Newren via GitGitGadget wrote:
->
-> > From: Elijah Newren <newren@gmail.com>
-> > [...]
-> >  ifdef::git-log[]
-> > ---diff-merges=3D(off|none|on|first-parent|1|separate|m|combined|c|dens=
-e-combined|cc)::
-> > +--diff-merges=3D(off|none|on|first-parent|1|separate|m|combined|c|dens=
-e-combined|cc|remerge|r)::
-> >  --no-diff-merges::
-> >       Specify diff format to be used for merge commits. Default is
-> >       {diff-merges-default} unless `--first-parent` is in use, in which=
- case
-> > @@ -64,6 +64,14 @@ ifdef::git-log[]
-> >       each of the parents. Separate log entry and diff is generated
-> >       for each parent.
-> >  +
-> > +--diff-merges=3Dremerge:::
-> > +--diff-merges=3Dr:::
-> > +--remerge-diff:::
-> > +     With this option, two-parent merge commits are remerged to
-> > +     create a temporary tree object -- potentially containing files
-> > +     with conflict markers and such.  A diff is then shown between
-> > +     that temporary tree and the actual merge commit.
-> > ++
->
-> Re some previous discussion. I really think we should add something like
-> this paragraph to this:
->
->     The output emitted when this option is used is subject to change, and=
- so
->     is its interaction with other options (unless explicitly
->     documented). I.e. many of the same caveats as the "OUTPUT STABILITY" =
-in
->     the linkgit:git-range-diff[1] documentation describes apply here. In
->     particular other diff filtering options, pathspec limitations etc. ma=
-y
->     not produce the expected results, as some of those may apply to the
->     "real" diff of the merge, and not on the generated "remerge-diff".
->
-> I think that would nicely give us permission to develop this further
-> without having to think about all the option interaction etc.
->
-> This is really useful right now, but I'd hate for it to get merged with
-> some bug/behavior that's not obvious to us now, and it being hard to fix
-> that because we'd have to consider the implicitly promised backwards
-> compatibility.
+Dear Git users,
 
-Sure I can add something.  I think the first sentence should be
-sufficient though.
+I hereby announce that Git for Windows 2.35.1(2) is available from:
 
-> >       int saved_dcctc =3D 0;
-> > +     struct tmp_objdir *remerge_objdir =3D NULL;
-> > +
-> > +     if (rev->remerge_diff) {
-> > +             remerge_objdir =3D tmp_objdir_create("remerge-diff");
-> > +             if (!remerge_objdir)
-> > +                     die(_("unable to create temporary object director=
-y"));
->
-> I guess the s/die_errno/die/ here is better for now as we won't report
-> the wrong errno, but also lose the common case of errno being right. But
-> that can be fixed up with some other series to the tmp-objdir API.
->
-> > [...]
-> > +# This test is ort-specific
-> > +test "${GIT_TEST_MERGE_ALGORITHM:-ort}" =3D ort || {
-> > +     skip_all=3D"GIT_TEST_MERGE_ALGORITHM !=3D ort"
-> > +     test_done
-> > +}
->
-> FWIW this is still on a more complex pattern that it needs to be, see
-> this v1 discussion (which you seemed to ack):
->
-> https://lore.kernel.org/git/CABPp-BE+4rZNP-5mT2MNOWR6y6BgEG6mt1r_qcrZtaro=
-m6aGsw@mail.gmail.com/
+    https://gitforwindows.org/
 
-Um, I thought I made this change.  How did I lose it?
+Changes since Git for Windows v2.35.1 (January 29th 2022)
 
-Thanks for catching; will fix.
+Bug Fixes
+
+  * A bug in FSCache that triggered by a patch that made it into Git
+    for Windows v2.35.0 was fixed.
+
+Git-2.35.1.2-64-bit.exe | 77768d0d1b01e84e8570d54264be87194aa424ec7e527883280b9da9761f0a2a
+Git-2.35.1.2-32-bit.exe | b5394b97899b0d1c4857f63b7ad6f6a7108f30ca7433ff338ccd57e7c3152336
+PortableGit-2.35.1.2-64-bit.7z.exe | c346a4888525de88a6391ec3640013532d0954910bc78950f07e850cacade245
+PortableGit-2.35.1.2-32-bit.7z.exe | 93f4a28a423250fff64b16f5c068a143d0f35100d055416c05609f1e890bf92d
+MinGit-2.35.1.2-64-bit.zip | e48a78b1b0b6ddbddb539e9ab2d9d99494e2859b6f2113bdb3a8303c00e8d1a4
+MinGit-2.35.1.2-32-bit.zip | 9ca4d38e3ee8b0eb830a17ec9379444155719d6cb1d3d4fe37e4c2b5991c920d
+MinGit-2.35.1.2-busybox-64-bit.zip | aad8fe5975cb94bb550efbb0b4b696388de1d078296e1f31c268d144f6a6b0ea
+MinGit-2.35.1.2-busybox-32-bit.zip | 6f80172dc7f22f4e028024dd3ec6a2ecc0178363f79a7006d3322b05bb6a8143
+Git-2.35.1.2-64-bit.tar.bz2 | ec1b015003f54e467eb50664b8b675b871b3258e81ad6e1a0d680966a8e3ad5a
+Git-2.35.1.2-32-bit.tar.bz2 | c07568acc519bd0082d16642b6e3dd6c5f87824a68b3cd50fb89b54f06c1732d
+
+Ciao,
+Johannes
