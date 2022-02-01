@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E872BC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 14:53:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED7C2C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 14:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239522AbiBAOx3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 09:53:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58844 "EHLO
+        id S239561AbiBAOxd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 09:53:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239501AbiBAOxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 09:53:25 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCE13C061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 06:53:24 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id e8so32616670wrc.0
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 06:53:24 -0800 (PST)
+        with ESMTP id S239536AbiBAOx2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 09:53:28 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26CFDC061751
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 06:53:28 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id l25so32447885wrb.13
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 06:53:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XOSYKHe2bixbR2/YPhWafApg2uOKVw0OfCGyhgqjn5o=;
-        b=Ba918+ZlF4mhw30SCmHDeQV/GdqniXx85EghkLno9VYPjkLF/VvCVRq3bNvn5WxtVV
-         kDpRBP9NTCIyuACpPN1bqg4X7/zHajG1li7r0+qpPovaqZQmqZvqAGdp9P9BiQGIv7fr
-         I+KwWbQ1mkjm34Q48RLBTlYl6IbmCPqQn4tmq3FD3YP649XOzvkhNmXUhN1kEvAGnULN
-         J+p6wZr12sA9hjHvjtCAfqGcy/y9e9eByRvlWFjY4j23IqJoEfk53TbizXY/EY+S6PqN
-         ozouIOqZwAWf3xvC8NNdgLIOre1J909ZhFdI6IvvdtE/OuoWzKSTEutjoUh80S38Lq1u
-         T6Sg==
+        bh=l/Xo0wVgPKBzazvAr/XlilEXWF0mmWaCHFyW89trm9U=;
+        b=cekJ3UTmuQgDh8XDegxxOcdwnXDxc8MzRg6uy5Vsh48kyUekapgIzeCA39awPo88DY
+         +HpFOw6SLPh7Zf0N4y1wvfXB4Zeau3zRtecrzuizSvytyrx6W/1mHcevRnu8ZqIjutiN
+         Zl0OmePi6/7E/l7irjOQQ1LLvCeKXHGUAsB+hbY7MW7QcNq6WoR/MiaHfQkKxeusnfXE
+         fGexqAnvGPBJtXWV6/KOC6+YUmOnUbgbx2EcMPjyeRfbAZs1FWd9PQzh6XNgodwzcG5D
+         nI8z0VbbysAl/3ErV42v0Q6rPo7k9GSMQiYV4FykqxAgV0OrL9KKaAxnN4ACehvaP9O8
+         ACtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XOSYKHe2bixbR2/YPhWafApg2uOKVw0OfCGyhgqjn5o=;
-        b=k5XsiCc/4y5/HSK2Cg2XwcsycMz3gOkjPcW/XiO8J8z7T3t+JH2CnO8JZS+Djv3iCy
-         I172NJmaWHJd0PB5UWfA35MlBmiX967H9cm1uMZXWB7ysjvFaljaMie2vPPPPwPZTiS9
-         3qFDarLncYGzZp3DZGhlSPD8VQRQBHIMf3j2Y1Sz7iErxTnysc0NrTA3nfeRzShlBLUG
-         e5OI1p0nsTN8fPfv/D5J5s9CF/O99f8xdKVvPpM16c38M5yuMMvA3fHhe6XhFr8gClZ8
-         wJeLNtKnWoAgoPK8rQgNvm2HHM+w6xITKCcArrnBEcQKG9Ug6xQu7aLPGm0Mkdpe1fS8
-         JwHQ==
-X-Gm-Message-State: AOAM532uC8qCUghwVI2CgsOcjT03TiII4zYV418kFPkEHDBzM7AS2+E8
-        1mVb8p5lseQzbUDlIAB6vm3SIMb438s8lQ==
-X-Google-Smtp-Source: ABdhPJwsnbH09kyfAOfnrq/v8iXq02p9KmgcwH+pkpOGuvzQcojiLA84as34RWEdiD8IoZL8Z1YD/w==
-X-Received: by 2002:adf:d1c6:: with SMTP id b6mr9527093wrd.669.1643727203202;
-        Tue, 01 Feb 2022 06:53:23 -0800 (PST)
+        bh=l/Xo0wVgPKBzazvAr/XlilEXWF0mmWaCHFyW89trm9U=;
+        b=bUIj2asiUqO7k9TjsFfpQCV3qfHo6tdJmlp9UhVIz173Ec3jX7jXnT+rTmXU+0BYjd
+         fedE/3eUcvCQ0yJdGDyQlKUXCoT72v3PWHEBXy515IW6d5Yus39oDO0wVRnKI6d3Z45d
+         VZYQDPIh9OSSEA2brxeyawag+0t5q+OnkhMOPvFw/+Q+ynHB3ovzk5HfulbiB8boxE2F
+         7giVNHwi1T5OqcQy4HMNU+LnDHURc24wyhrX8ckE1Sdx2XEhIfwpriarw1ts4IFadCev
+         qijZtZAZAGKcxkX4+qc0tGLaGuWM+vWu/DYnYk589rTwpqf9QeFUFTS/Cnn1DV9d3vHw
+         0tMQ==
+X-Gm-Message-State: AOAM533hvKoG3Vf3Gn0ZGs7I/wixJ9QcFvdEixoeoc6/eLs3GM6m0usy
+        ZVCf4qv1CrEpaoYavALr/f0S4DzZw9RHKg==
+X-Google-Smtp-Source: ABdhPJxFvsqmmJDC4ic8K1U+arTjPtdZrajRV3RSraJkYnpaqAqNGGkHPXvavhmehpsqNtQUOmRwgw==
+X-Received: by 2002:a05:6000:170b:: with SMTP id n11mr21994005wrc.163.1643727206458;
+        Tue, 01 Feb 2022 06:53:26 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id bg17sm2492054wmb.2.2022.02.01.06.53.22
+        by smtp.gmail.com with ESMTPSA id bg17sm2492054wmb.2.2022.02.01.06.53.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 06:53:22 -0800 (PST)
+        Tue, 01 Feb 2022 06:53:25 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 06/10] object-file API: replace some use of check_object_signature()
-Date:   Tue,  1 Feb 2022 15:53:08 +0100
-Message-Id: <patch-06.10-2a065bf23da-20220201T144803Z-avarab@gmail.com>
+Subject: [PATCH 08/10] object-file API: replace check_object_signature() with stream_*
+Date:   Tue,  1 Feb 2022 15:53:10 +0100
+Message-Id: <patch-08.10-70c3e84dd0d-20220201T144803Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.0.913.g12b4baa2536
 In-Reply-To: <cover-00.10-00000000000-20220201T144803Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20220201T144803Z-avarab@gmail.com>
@@ -70,104 +70,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a "hash_object_file_literally()" function to go with the existing
-"hash_object_file()" function. This is currently a wrapper for its
-sibling, but this change will allow us to change it to take an "enum
-object_type" in a subsequent commit.
+Change the task of the the check_object_signature() function so that
+it no longer confusingly does two unrelated things.
 
-The only caller that wanted to pass a custom type to
-"check_object_signature()" was the "git fsck" via its
-"read_loose_object()", which is being changed here.
+Now the "!map" branch of it is exposed as a renamed
+stream_object_signature(). In preceding commits we migrated all of the
+"if (map)" callers over to "hash_object_file_oideq()" or
+"hash_object_file_literally()" followed by "!oideq(...)".
 
-There was an existing hash_object_file_literally() which I'm renaming
-to "hash_write_object_file_literally()", that function is only used
-for "hash-object --literally". That renaming is being done because it
-would be confusing to have a "hash_object_file_literally()" and a
-"hash_object_file()" that do very different things.
+This makes the caller in parse_object() less confusing, as we'll now
+no longer need to pass NULL for "map" and "OBJ_BAD" for the unused
+"type" argument. The "verify_packfile()" caller is arguably a bit
+worse off than before, but as we're only using this function in a
+couple of places now a bit more verbosity there is acceptable.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/hash-object.c |  4 ++--
- object-file.c         | 18 +++++++++++++-----
- object-store.h        |  6 +++---
- 3 files changed, 18 insertions(+), 10 deletions(-)
+ cache.h       | 11 ++++++++---
+ object-file.c | 17 +++--------------
+ object.c      |  2 +-
+ pack-check.c  |  8 ++++++--
+ 4 files changed, 18 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index c7b3ad74c60..624e9e677fb 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -25,8 +25,8 @@ static int hash_literally(struct object_id *oid, int fd, const char *type, unsig
- 	if (strbuf_read(&buf, fd, 4096) < 0)
- 		ret = -1;
- 	else
--		ret = hash_object_file_literally(buf.buf, buf.len, type, oid,
--						 flags);
-+		ret = hash_write_object_file_literally(buf.buf, buf.len, type, oid,
-+						       flags);
- 	strbuf_release(&buf);
- 	return ret;
- }
+diff --git a/cache.h b/cache.h
+index d9c68c66d53..881ae36fd47 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1319,9 +1319,14 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
+ struct object_info;
+ int parse_loose_header(const char *hdr, struct object_info *oi);
+ 
+-int check_object_signature(struct repository *r, const struct object_id *oid,
+-			   void *buf, unsigned long size, enum object_type type,
+-			   struct object_id *real_oidp);
++
++/**
++ * stream_object_signature() tries to read the object named with "oid"
++ * using the streaming interface and rehash it to make sure the object
++ * name actually matches "oid" to detect object corruption.
++ */
++int stream_object_signature(struct repository *r, const struct object_id *oid,
++			    struct object_id *real_oidp);
+ 
+ int finalize_object_file(const char *tmpfile, const char *filename);
+ 
 diff --git a/object-file.c b/object-file.c
-index 27d10112960..9fc959fa05d 100644
+index 4a23a7aa79f..27f587d1dcd 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1862,6 +1862,13 @@ void hash_object_file(const struct git_hash_algo *algo, const void *buf,
- 	write_object_file_prepare(algo, buf, len, type, oid, hdr, &hdrlen);
+@@ -1066,29 +1066,18 @@ int format_object_header(char *str, size_t size, enum object_type type,
+ 	return format_object_header_literally(str, size, name, objsize);
  }
  
-+static void hash_object_file_literally(const struct git_hash_algo *algo, const void *buf,
-+				       unsigned long len, const char *type,
-+				       struct object_id *oid)
-+{
-+	hash_object_file(algo, buf, len, type, oid);
-+}
-+
- int hash_object_file_oideq(const struct git_hash_algo *algo, const void *buf,
- 			   unsigned long len, enum object_type type,
- 			   const struct object_id *oid,
-@@ -2043,9 +2050,9 @@ int write_object_file_flags(const void *buf, unsigned long len,
- 	return write_loose_object(oid, hdr, hdrlen, buf, len, 0, flags);
- }
- 
--int hash_object_file_literally(const void *buf, unsigned long len,
--			       const char *type, struct object_id *oid,
--			       unsigned flags)
-+int hash_write_object_file_literally(const void *buf, unsigned long len,
-+				     const char *type, struct object_id *oid,
-+				     unsigned flags)
+-/*
+- * With an in-core object data in "map", rehash it to make sure the
+- * object name actually matches "oid" to detect object corruption.
+- * With "map" == NULL, try reading the object named with "oid" using
+- * the streaming interface and rehash it to do the same.
+- */
+-int check_object_signature(struct repository *r, const struct object_id *oid,
+-			   void *map, unsigned long size, enum object_type type,
+-			   struct object_id *real_oidp)
++int stream_object_signature(struct repository *r, const struct object_id *oid,
++			    struct object_id *real_oidp)
  {
- 	char *header;
- 	int hdrlen, status = 0;
-@@ -2630,9 +2637,10 @@ int read_loose_object(const char *path,
- 			git_inflate_end(&stream);
- 			goto out;
+ 	struct object_id tmp;
+ 	struct object_id *real_oid = real_oidp ? real_oidp : &tmp;
++	unsigned long size;
+ 	enum object_type obj_type;
+ 	struct git_istream *st;
+ 	git_hash_ctx c;
+ 	char hdr[MAX_HEADER_LEN];
+ 	int hdrlen;
+ 
+-	if (map) {
+-		hash_object_file(r->hash_algo, map, size, type, real_oid);
+-		return !oideq(oid, real_oid) ? -1 : 0;
+-	}
+-
+ 	st = open_istream(r, oid, &obj_type, &size, NULL);
+ 	if (!st)
+ 		return -1;
+diff --git a/object.c b/object.c
+index 795b1356a1b..bf51b2056e9 100644
+--- a/object.c
++++ b/object.c
+@@ -279,7 +279,7 @@ struct object *parse_object(struct repository *r, const struct object_id *oid)
+ 	if ((obj && obj->type == OBJ_BLOB && repo_has_object_file(r, oid)) ||
+ 	    (!obj && repo_has_object_file(r, oid) &&
+ 	     oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
+-		if (check_object_signature(r, repl, NULL, 0, OBJ_BAD, NULL) < 0) {
++		if (stream_object_signature(r, repl, NULL) < 0) {
+ 			error(_("hash mismatch %s"), oid_to_hex(oid));
+ 			return NULL;
  		}
--		if (check_object_signature(the_repository, expected_oid,
-+		hash_object_file_literally(the_repository->hash_algo,
- 					   *contents, *size,
--					   oi->type_name->buf, real_oid))
-+					   oi->type_name->buf, real_oid);
-+		if (!oideq(expected_oid, real_oid))
- 			goto out;
- 	}
- 
-diff --git a/object-store.h b/object-store.h
-index 95907062682..2ddc20b3304 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -272,9 +272,9 @@ static inline int write_object_file(const void *buf, unsigned long len,
- 	return write_object_file_flags(buf, len, type, oid, 0);
- }
- 
--int hash_object_file_literally(const void *buf, unsigned long len,
--			       const char *type, struct object_id *oid,
--			       unsigned flags);
-+int hash_write_object_file_literally(const void *buf, unsigned long len,
-+				     const char *type, struct object_id *oid,
-+				     unsigned flags);
- 
- /*
-  * Add an object file to the in-memory object store, without writing it
+diff --git a/pack-check.c b/pack-check.c
+index faceae610d3..5d5169507ec 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -142,8 +142,12 @@ static int verify_packfile(struct repository *r,
+ 			err = error("cannot unpack %s from %s at offset %"PRIuMAX"",
+ 				    oid_to_hex(&oid), p->pack_name,
+ 				    (uintmax_t)entries[i].offset);
+-		else if (check_object_signature(r, &oid, data, size,
+-						type, NULL))
++		else if (data && !hash_object_file_oideq(r->hash_algo, data,
++							 size, type, &oid,
++							 NULL))
++			err = error("packed %s from %s is corrupt",
++				    oid_to_hex(&oid), p->pack_name);
++		else if (!data && stream_object_signature(r, &oid, NULL))
+ 			err = error("packed %s from %s is corrupt",
+ 				    oid_to_hex(&oid), p->pack_name);
+ 		else if (fn) {
 -- 
 2.35.0.913.g12b4baa2536
 
