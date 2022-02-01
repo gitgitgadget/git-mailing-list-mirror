@@ -2,87 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 012C8C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 19:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAA86C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 19:59:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233660AbiBATxb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 14:53:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44578 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233014AbiBATxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 14:53:30 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E27BC061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 11:53:30 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id s9so34067979wrb.6
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 11:53:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=PLdqYaIAa6OsUPiLElEBXar+0pn9pC/Y0d3d5WyDF0c=;
-        b=pvXop/eVDuTsphEbWq/TnTLxOVJ3aquHDlW7AdkWWiqhLmz52gtqMBGKSTHjKtdmIl
-         8KnLkEraFOT8QhtL2QfHWjsuF7eS+33KpvhMBt/HAfxpnWP2W019x99CM5MAiwDT2OLs
-         8pBS4DMVQp0S+/MWrrXvEA7uawVzXUYujJJmkoHzYFBPSSVuvhFRTzZOLx+ntP5yMeH1
-         n9Jwmq2QhxghgSeR9KrqKFZUzZWxtQXhO7jWjiWuTiOEDfwNwf9/Tl0/irWO2bL8EBN8
-         p8YZyECwKoM02vG0GC7pXp4tJqqexXzLQIzrYjFEAVkEP/1IBZU9WWyaBoHUTiT7Pumy
-         BxzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PLdqYaIAa6OsUPiLElEBXar+0pn9pC/Y0d3d5WyDF0c=;
-        b=CjXXyWOCDSrczwja7BPMJLHM3+uAvBEa95T7JikciDEEMzP5cJOILUnU8uLXmijffx
-         yNW7Rkc+bf5lkfhSxw2pJ9sFat7KGht2n84HVMafgmMMpZYk2/Y3FcoNK8x/UjWwqNcv
-         EVU4I1z82xJjGWelUB8W6DtsWCYXr20WVelVnc9L1oZ2Vr8f1wTyU0tUF0Z43ZJF80/3
-         JDWB0VqK2fPVIue4nVLOLdAcntkoaGMeW9MqqPQIjTzgUXRC2l4Yc4T3MKMB2qcO+T7P
-         mFIaPcs7ayhLYH+u3jncU2iy4qltrSkpAMU8nqGmVXTqoNnojfcV4Xqdr1vx9AiVelv+
-         CUdg==
-X-Gm-Message-State: AOAM533eOjlW8asAs3QWxym9VEgKiYGLw8tLEEcjBwXjSKMHg5q3XIWs
-        XgAzR/abnTj2YUJrkhxeLhU=
-X-Google-Smtp-Source: ABdhPJwsDD4IWtiEmmo9X48+2r/y4bAK9T0duMsqgsyOLNEM06vemRzidvuSLlEuYWyuuZa8Eutxqg==
-X-Received: by 2002:a05:6000:3c7:: with SMTP id b7mr22792289wrg.260.1643745208913;
-        Tue, 01 Feb 2022 11:53:28 -0800 (PST)
-Received: from gmail.com (91.141.53.66.wireless.dyn.drei.com. [91.141.53.66])
-        by smtp.gmail.com with ESMTPSA id n15sm2999134wmr.26.2022.02.01.11.53.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 11:53:28 -0800 (PST)
-Date:   Tue, 1 Feb 2022 20:53:25 +0100
-From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Thomas Koutcher <thomas.koutcher@online.fr>
-Subject: Re: [PATCH RESEND] subtree: force merge commit
-Message-ID: <20220201195325.e5u6zrxabbszzlji@gmail.com>
-References: <xmqqpmqy12u0.fsf@gitster.g>
- <20220201172601.262718-1-aclopte@gmail.com>
- <xmqqtudics32.fsf@gitster.g>
+        id S234839AbiBAT7Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 14:59:16 -0500
+Received: from smtp-out1.suse.de ([195.135.220.28]:52948 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234782AbiBAT7P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 14:59:15 -0500
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+        by smtp-out1.suse.de (Postfix) with ESMTP id 784C72110A
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 19:59:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1643745554; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=a1iuc1pNxgjfllTnCrdekVkY9aiOjNWjPGg7GnK4RJY=;
+        b=kjuFYBqC4GdYTe0Hwo14Svh+Vf0dSy8j4gR4Q+MX66f/vhO2CE3XQvnbKeAVj5ejlWpd4T
+        Eki0MQyqjvf4jDrub96f2ELdjjn07WCEswTQCEAS99lzYRRYpR0B0bL1MHnRiW4vjSdu/X
+        61Wz+goFCWGnXNY4qPfARLfVLkeZRgQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1643745554;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=a1iuc1pNxgjfllTnCrdekVkY9aiOjNWjPGg7GnK4RJY=;
+        b=6GmcgwbTtGr5oLUCtP9FnYf9HvOyGf7qkGaeiEodAeklU6F+ch0WTHdt9mpoiwexhaC1HZ
+        gu+6x9gFJaG+DOBQ==
+Received: from kunlun.suse.cz (unknown [10.100.128.76])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by relay2.suse.de (Postfix) with ESMTPS id 706D9A3B87
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 19:59:14 +0000 (UTC)
+Date:   Tue, 1 Feb 2022 20:59:13 +0100
+From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To:     git@vger.kernel.org
+Subject: Re: Getting rid of "hint: Using 'master' as the name for the initial
+ branch." when not initializing a repository with pygit
+Message-ID: <20220201195913.GV3113@kunlun.suse.cz>
+References: <20220201184128.GT3113@kunlun.suse.cz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <xmqqtudics32.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220201184128.GT3113@kunlun.suse.cz>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 01, 2022 at 11:19:45AM -0800, Junio C Hamano wrote:
-> Johannes Altmanninger <aclopte@gmail.com> writes:
+On Tue, Feb 01, 2022 at 07:41:28PM +0100, Michal Suchánek wrote:
+> Hello,
 > 
-> > BTW is there a good way to tell "git send-email --in-reply-to"
-> > to prefill "To:" and "Cc:" based on the message I'm replying to?
+> I am running some tests of a project that uses pygit, and the test
+> creates a test repository .. using pygit.
 > 
-> I do not think there is, and I do not think it is readily feasible.
-> Given a message ID, how would you figure out these two values?
-> Hardcode the URL of mailing list archive and the rules to find these
-> values given a message ID?  What if you have a local mail archive
-> that you'd rather use instead of going to the public internet?
+> I noticed that in some environments the default branch warning is
+> displayed and not others because the git version varies.
+> 
+> The warning is just noise in the test log so I would like to avoid it,
+> and I would like to find a solution that works for git that predates the
+> introduction of this warning and the option to silence it as well as
+> the future git versions in which the default is subject to change.
+> 
+> AFAICT there is no clean way to do it. I can set up the global option to
+> whatever but I don't want to do that just to run tests.
+> 
+> I could set the repo local option but before calling
+> pygit2.init_repository() there is no repository to configure, and after
+> it is too late because I expect the message to be printed by this call.
+> 
+> Also I cannot rely on pygit to have some latest bells and whistles
+> because like git it varies across environments and the whole point of
+> running the test in different environments is to verify that it works
+> with whatever tool versions are avaialble there.
 
-The "b4" tool accepts message IDs and allows to configure how to look up
-message contents. This is the default:
+Actually, I found that the code uses a mix of pygit2 and direct git
+calls, and it's the direct call to git init that prints the warning
+which can be fixed trivially by using pygit:
+@@ -460,7 +460,7 @@ class TestMergeTool(unittest.TestCase):
+         self.ks_dir = tempfile.mkdtemp(prefix="gs_ks")
+         os.chdir(self.ks_dir)
+ 
+-        subprocess.check_call(("git", "init", "./",), stdout=subprocess.DEVNULL)
++        pygit2.init_repository("./")
+         subprocess.check_call(
+             ("git", "config", "--add", "mergetool.git-sort.cmd",
+              "%s $LOCAL $BASE $REMOTE $MERGED" % (
 
-	[b4]
-	# Where to look up threads by message id
-	midmask = https://lore.kernel.org/r/%s
+which begs the question how would I fix it if I was not using pygit. The
+git version that does not produce the warning also does not support -b
+so it cannot be be universally used with git init. Is there some
+reasonable waey to detect this?
 
-b4 has some powerful features but I think I just want something that reads an
-email on stdin and outputs the appropriate "send-email --in-reply-to" command.
-I'll probably parse the mail headers myself.
+Thanks
+
+Michal
