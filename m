@@ -2,224 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F7FEC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 20:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE101C433EF
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 20:35:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236451AbiBAU3a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 15:29:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52972 "EHLO
+        id S239231AbiBAUf4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 15:35:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234508AbiBAU33 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 15:29:29 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCDE6C061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 12:29:28 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id m11so36919414edi.13
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 12:29:28 -0800 (PST)
+        with ESMTP id S229702AbiBAUfz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 15:35:55 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 651C3C061714
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 12:35:55 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id f17so34323543wrx.1
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 12:35:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=nxPjiy167uk7iet8lT8o8y8wfxS+HAYxxkHOZcgNM44=;
-        b=Fa5aSTenauGM251gkAhukjUK9IcdDHrEB5ORw8m3COBmNtWtPjzis0DJCWDGUQsyrn
-         N8BkUjhl618oWYjD5fqDV0l69q4xl3eza863msTnXOhnHkoq9RTfsE6sxQ6CCsgnaGtn
-         BP1PKSScvSxUac5HAZRM71vKkDwWTEzrMUIUUvdUxnAAxIhFfykPJix1qIXD6ctXkff7
-         b/Qjyb+wMi2YgxnV9IeU+AOWPA9hhWfLQ/RtSExbFil2CbqDR8dbczk7z+6ucan+GzwB
-         8zG0+GoU48vqcuyhGlVREeIYX9IxPHOW4gbV5q/hhIydEQdAET6/Zts0/BhLiCYbUJZh
-         Y9kA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=j+DgR5GXimpiJ3ODwpSJ5gq2Cea49M4SXXqLK9TO/PI=;
+        b=Bsm7oKMhSXBsGYPGOVyycnLQwLhL6YR3Ou916ZB+rsvyNRJ3/Y7b3f3A/70Ahu3NZj
+         QNCwasK5Qgx4w3k6UcszxH9ASkhKWUCZIqSVUsGf9WLLKgXIjZat4Mm1D7bCqMG6oj42
+         Gx3ke43a31AG0PtnjJAtw40WeqGyoAdQ0Tbt+71i12yg5sR9lxwW7hgjCKud4Rvna5Cb
+         q1E3CHpixYD44CmBFWKbJzklZX/u3I9ujf8pApZ8D91UvBwtr72n35gdJcxiqLC972F2
+         jUmfLq3lNPyhpSQyT/ewXOQOjilZVZjy3t8mppwQF+JAks1vfyFeUaofGxYGt3LP2pFt
+         oFHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=nxPjiy167uk7iet8lT8o8y8wfxS+HAYxxkHOZcgNM44=;
-        b=Dy5N3TbGWm1652wpZ1v3q1esowjI2Pjk2UF4GVGvxCnUNrlCJSfpD5ZstYvSSIDsaD
-         wWDTtBUfbhHzkPhQg1mXo4x2pJrYQSJ8h5R6A2JI6AdL6Rt8zEgk3neFIVzJ79DHxZuD
-         9uKhxrKYWe0tcRxg2/cqdV6ZhQRZaMnm5WOaboW7zTXcpZyOkVWhsLJ0ZwMuBRujAC3e
-         obzJG4pPAg6u3bso/+FjqnHImB4NTdZSzFk0w4kFVH7X7F1wapLXoKwid65P4NRq+9q8
-         98YtS9llATq21NN472U3EV2OjZKXKWmm//Ol2m3tEtcETlZ87E3sZV2/PYhB8RVKmJcN
-         3XoQ==
-X-Gm-Message-State: AOAM533GDM3KtMh2NaFQW0jq5DOucLhyJp9x0OTI6r1GmtIO1ZwGHTJs
-        9mWh5uRvUd49xza0TFcoqp2YARA5DGKMKg==
-X-Google-Smtp-Source: ABdhPJwrXkAtiVhygyTAka4K6MGHcmlFzm9TZkvH3tOBja74D8CRACufC9RY+P86tux1yvH6zHsgWA==
-X-Received: by 2002:a05:6402:548:: with SMTP id i8mr26851118edx.60.1643747366806;
-        Tue, 01 Feb 2022 12:29:26 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id f11sm19611001edv.29.2022.02.01.12.29.26
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=j+DgR5GXimpiJ3ODwpSJ5gq2Cea49M4SXXqLK9TO/PI=;
+        b=nIcfo0zcpD6kv7RdZ3Yp/JzffSev5ZZMaPJAIRTMJYsbqNtto0GOAtbQQE92cWKcI4
+         hGoLcb0rtSXNlhIecr66Wu3JzG/l7hPQPnZzDurd9qoNhFAIQZaofecKG5a17bpiuSrp
+         81HshWrhT1ESZixnHbfXefsIvsVVMzzQMCscXZ5Hj1XDj2i1nLckCu9jOyIltrSg837K
+         YltL6fT3oQxcnxM7Vt4srAvew8KQVHBy7P57vx4GL0eqA1czbfrHNxG0TouOjxW9C0Oy
+         Ow9QuFU59NhCSRrxOvLwjDcMu9fO2hqoWzI1fa/baGh1COM+b5ib85lkdaKe/tht7Tjk
+         a5ww==
+X-Gm-Message-State: AOAM532bLdSRW0Z8rORcU3d11ZgSyb+sN5UnFGi7s4cIQ5YFQQj7kht8
+        mKByoaR8eIWMNiGrNH0vvpLub0LDHfjyTg==
+X-Google-Smtp-Source: ABdhPJw7/R8QCwSZjOq/0W3xZz+pYqXXSGfOuQ0kNseaVfwRpw7Ui94foQSFHD1sQCcZOyRs8tidDA==
+X-Received: by 2002:a5d:4390:: with SMTP id i16mr13619242wrq.516.1643747753646;
+        Tue, 01 Feb 2022 12:35:53 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id j12sm15252246wru.38.2022.02.01.12.35.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 12:29:26 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nEzmH-004LE9-L5;
-        Tue, 01 Feb 2022 21:29:25 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v2] refs.h: make all flags arguments unsigned
-Date:   Tue, 01 Feb 2022 21:20:59 +0100
-References: <pull.1210.git.git.1643660136530.gitgitgadget@gmail.com>
- <pull.1210.v2.git.git.1643719616840.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <pull.1210.v2.git.git.1643719616840.gitgitgadget@gmail.com>
-Message-ID: <220201.86ilty9vq2.gmgdl@evledraar.gmail.com>
+        Tue, 01 Feb 2022 12:35:53 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] t0051: use "skip_all" under !MINGW in single-test file
+Date:   Tue,  1 Feb 2022 21:35:51 +0100
+Message-Id: <patch-1.1-34ff968dcb8-20220201T203428Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.0.913.g12b4baa2536
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Have this file added in 06ba9d03e34 (t0051: test GIT_TRACE to a
+windows named pipe, 2018-09-11) use the same "skip_all" pattern as an
+existing Windows-only test added in 0e218f91c29 (mingw: unset PERL5LIB
+by default, 2018-10-30) uses.
 
-On Tue, Feb 01 2022, Han-Wen Nienhuys via GitGitGadget wrote:
+This way TAP consumers like "prove" will show a nice summary when the
+test is skipped, e.g.:
 
-> From: Han-Wen Nienhuys <hanwen@google.com>
->
-> As discussed in
-> https://lore.kernel.org/git/xmqqbkzrkevo.fsf@gitster.g/ , we don't
-> want to treat the sign bit specially, so make all flags in refs.h
-> unsigned.
->
-> For uniformity, rename all variables to `flags` or `unused_flags`,
-> from `flag`. In a couple of shadowing cases, use `ref_flags` for
-> clarity.
+    $ prove t0051-windows-named-pipe.sh
+    [...]
+    t0051-windows-named-pipe.sh ... skipped: skipping Windows-specific tests
+    [...]
 
-For what it's worth I thought the suggestion of enums in your
-https://lore.kernel.org/git/xmqqbkzrkevo.fsf@gitster.g/ made more sense,
-e.g. I tried this on top:
-	
-	diff --git a/refs.c b/refs.c
-	index 5f29775def1..dc33573f064 100644
-	--- a/refs.c
-	+++ b/refs.c
-	@@ -265,7 +265,8 @@ int ref_resolves_to_object(const char *refname,
-	 }
-	 
-	 char *refs_resolve_refdup(struct ref_store *refs, const char *refname,
-	-			  int resolve_flags, struct object_id *oid,
-	+			  enum resolve_ref_flags resolve_flags,
-	+			  struct object_id *oid,
-	 			  unsigned int *flags)
-	 {
-	 	const char *result;
-	@@ -276,7 +277,8 @@ char *refs_resolve_refdup(struct ref_store *refs, const char *refname,
-	 	return xstrdup_or_null(result);
-	 }
-	 
-	-char *resolve_refdup(const char *refname, unsigned int resolve_flags,
-	+char *resolve_refdup(const char *refname,
-	+		     enum resolve_ref_flags resolve_flags,
-	 		     struct object_id *oid, unsigned int *flags)
-	 {
-	 	return refs_resolve_refdup(get_main_ref_store(the_repository),
-	@@ -292,7 +294,8 @@ struct ref_filter {
-	 	void *cb_data;
-	 };
-	 
-	-int read_ref_full(const char *refname, unsigned int resolve_flags,
-	+int read_ref_full(const char *refname,
-	+		  enum resolve_ref_flags resolve_flags,
-	 		  struct object_id *oid, unsigned int *flags)
-	 {
-	 	int ignore_errno;
-	@@ -1679,7 +1682,8 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
-	 }
-	 
-	 const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
-	-				    int resolve_flags, struct object_id *oid,
-	+				    enum resolve_ref_flags resolve_flags,
-	+				    struct object_id *oid,
-	 				    unsigned int *flags, int *failure_errno)
-	 {
-	 	static struct strbuf sb_refname = STRBUF_INIT;
-	@@ -1779,7 +1783,8 @@ int refs_init_db(struct strbuf *err)
-	 	return refs->be->init_db(refs, err);
-	 }
-	 
-	-const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
-	+const char *resolve_ref_unsafe(const char *refname,
-	+			       enum resolve_ref_flags resolve_flags,
-	 			       struct object_id *oid, unsigned int *flags)
-	 {
-	 	int ignore_errno;
-	diff --git a/refs.h b/refs.h
-	index c5462b75807..8c7404eaf78 100644
-	--- a/refs.h
-	+++ b/refs.h
-	@@ -64,24 +64,30 @@ struct worktree;
-	  * type of failure encountered, but not necessarily one that came from
-	  * a syscall. We might have faked it up.
-	  */
-	-#define RESOLVE_REF_READING 0x01
-	-#define RESOLVE_REF_NO_RECURSE 0x02
-	-#define RESOLVE_REF_ALLOW_BAD_NAME 0x04
-	+enum resolve_ref_flags {
-	+	RESOLVE_REF_READING = 1 << 0,
-	+	RESOLVE_REF_NO_RECURSE = 1 << 1,
-	+	RESOLVE_REF_ALLOW_BAD_NAME = 1 << 2,
-	+};
-	 
-	 const char *refs_resolve_ref_unsafe(struct ref_store *refs, const char *refname,
-	-				    int resolve_flags, struct object_id *oid,
-	+				    enum resolve_ref_flags resolve_flags,
-	+				    struct object_id *oid,
-	 				    unsigned int *flags, int *failure_errno);
-	 
-	-const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
-	+const char *resolve_ref_unsafe(const char *refname,
-	+			       enum resolve_ref_flags resolve_flags,
-	 			       struct object_id *oid, unsigned int *flags);
-	 
-	 char *refs_resolve_refdup(struct ref_store *refs, const char *refname,
-	-			  int resolve_flags, struct object_id *oid,
-	+			  enum resolve_ref_flags resolve_flags,
-	+			  struct object_id *oid,
-	 			  unsigned int *flags);
-	-char *resolve_refdup(const char *refname, unsigned int resolve_flags,
-	+char *resolve_refdup(const char *refname,
-	+		     enum resolve_ref_flags resolve_flags,
-	 		     struct object_id *oid, unsigned int *flags);
-	 
-	-int read_ref_full(const char *refname, unsigned int resolve_flags,
-	+int read_ref_full(const char *refname, enum resolve_ref_flags resolve_flags,
-	 		  struct object_id *oid, unsigned int *flags);
-	 int read_ref(const char *refname, struct object_id *oid);
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-I don't mind if this goes in, but I think doing that would make this
-much easier to deal with, as it would be more obvious when working on
-the code just what flag you're dealing with. Even as Junio points out
-downthread of that it mostly doesn't matter in C.
+A trivial UX improvement for the "prove" output, so that we'll show a
+notice in the same way as e.g. t0029-core-unsetenvvars.sh and
+t5580-unc-paths.sh do (which are both Windows-specific).
 
-See though 3f9ab7ccdea (parse-options.[ch]: consistently use "enum
-parse_opt_flags", 2021-10-08) where doing it this way makes debugging
-much nicer to work with.
+ t/t0051-windows-named-pipe.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-> -		int flag;
-> -		char *head_ref = resolve_refdup("HEAD", 0, NULL, &flag);
-> -		if (head_ref &&
-> -		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new_branch_info->path)))
-> +		unsigned int flags;
-> +		char *head_ref = resolve_refdup("HEAD", 0, NULL, &flags);
-> +		if (head_ref && (!(flags & REF_ISSYMREF) ||
-> +				 strcmp(head_ref, new_branch_info->path)))
+diff --git a/t/t0051-windows-named-pipe.sh b/t/t0051-windows-named-pipe.sh
+index 10ac92d2250..412f413360d 100755
+--- a/t/t0051-windows-named-pipe.sh
++++ b/t/t0051-windows-named-pipe.sh
+@@ -3,8 +3,13 @@
+ test_description='Windows named pipes'
+ 
+ . ./test-lib.sh
++if ! test_have_prereq MINGW
++then
++	skip_all='skipping Windows-specific tests'
++	test_done
++fi
+ 
+-test_expect_success MINGW 'o_append write to named pipe' '
++test_expect_success 'o_append write to named pipe' '
+ 	GIT_TRACE="$(pwd)/expect" git status >/dev/null 2>&1 &&
+ 	{ test-tool windows-named-pipe t0051 >actual 2>&1 & } &&
+ 	pid=$! &&
+-- 
+2.35.0.913.g12b4baa2536
 
-I don't think this needs a re-roll, but FWIW I think it's much easier to
-review changes like these if the changes are kept apart. E.g. this
-variable renaming from the type change.
-
-> -static int add_one_refname(const char *refname,
-> -			   const struct object_id *oid,
-> -			   int flag, void *cbdata)
-> +static int add_one_refname(const char *refname, const struct object_id *oid,
-> +			   unsigned int unused_flags, void *cbdata)
-
-And this change not mentioned in the commit message of seemingly doing
-some re-flowing of argument lists while we're at it.
-
-The post-image is better, but better done is another step IMO.
-
-I didn't look through the rest of the diff as you sent it, but locally
-with appropriate word-diff flags to hide any formatting changes.
-
-The post-image LGTM, but I'm also a bit "meh" on the churn just for
-signed->unsigned, especially given the conflict with my in-flight
-ab/no-errno-from-resolve-ref-unsafe. But it's not too bad, and if Junio
-hasn't complained about it...
