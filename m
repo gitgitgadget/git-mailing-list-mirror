@@ -2,82 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29379C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 21:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1456C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 22:07:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236485AbiBAV6n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 16:58:43 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60901 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236439AbiBAV6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 16:58:41 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B3FA7105091;
-        Tue,  1 Feb 2022 16:58:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=nkQsX7rRniIW
-        hVkaSaUUIJH8Cj+WaKLXvdQmJece6JQ=; b=qw1Apkome30Tdlddq33w6htaYnzY
-        pGH6LtzGBQevMqxXewWtHs+3jJHTv2HRd503LMxVp+vri+GVvyXz1u1DI9d28q7k
-        YCYg9qgxXYzpaDVPeUvdSP6ZN2fotBXdAuvM+b3k/+GgFqXAMeqwkXVfcJGbLyrC
-        kw+DjrzDCf+Q7+k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ABBC7105090;
-        Tue,  1 Feb 2022 16:58:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1380410508F;
-        Tue,  1 Feb 2022 16:58:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH] perl Git.pm: don't ignore signalled failure in
- _cmd_close()
-References: <patch-1.1-86353c3b366-20220201T205218Z-avarab@gmail.com>
-Date:   Tue, 01 Feb 2022 13:58:38 -0800
-In-Reply-To: <patch-1.1-86353c3b366-20220201T205218Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 1 Feb
- 2022 21:52:52 +0100")
-Message-ID: <xmqqwnieb65t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S237012AbiBAWHf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 17:07:35 -0500
+Received: from bsmtp3.bon.at ([213.33.87.17]:63257 "EHLO bsmtp3.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231178AbiBAWHf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 17:07:35 -0500
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4JpJvS0DLYz5tlP;
+        Tue,  1 Feb 2022 23:07:31 +0100 (CET)
+Message-ID: <d9275c31-7558-fc9c-9eb3-2a0cb81a8259@kdbg.org>
+Date:   Tue, 1 Feb 2022 23:07:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1D4DE53E-83AA-11EC-97AD-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH V3 1/2] patch-id: Fix antipatterns in tests
+Content-Language: en-US
+To:     Jerry Zhang <jerry@skydio.com>
+References: <20220131232529.8484-1-jerry@skydio.com>
+ <20220131235218.27392-1-jerry@skydio.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+From:   Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20220131235218.27392-1-jerry@skydio.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Am 01.02.22 um 00:52 schrieb Jerry Zhang:
+> Clean up the tests for patch-id by moving file preparation
+> tasks inside the test body and redirecting files directly into
+> stdin instead of using 'cat'.
 
-> Fix misbehavior in Git.pm that dates back to the very first version of
-> the library in git.git added in b1edc53d062 (Introduce Git.pm (v4),
-> 2006-06-24). When we fail to execute a command we shouldn't ignore all
-> signals, those can happen e.g. if abort() is called, or if the command
-> segfaults.
+You announce that `cat` is about to be removed...
 
-Good find.
+>  test_expect_success 'patch-id handles no-nl-at-eof markers' '
+> -	cat nonl | calc_patch_id nonl &&
+> -	cat withnl | calc_patch_id withnl &&
+> +	cat >nonl <<-'EOF' &&
 
-> All of our tests pass even without the SIGPIPE exception being added
-> here, but as the code appears to have been trying to ignore it let's
-> keep ignoring it for now.
->
+... but it is still here...
 
-Sounds OK-ish to me.
+> +	diff --git i/a w/a
+> +	index e69de29..2e65efe 100644
+> +	--- i/a
+> +	+++ w/a
+> +	@@ -0,0 +1 @@
+> +	+a
+> +	\ No newline at end of file
+> +	diff --git i/b w/b
+> +	index e69de29..6178079 100644
+> +	--- i/b
+> +	+++ w/b
+> +	@@ -0,0 +1 @@
+> +	+b
+> +	'EOF'
+> +	cat >withnl <<-'EOF' &&
 
-> +sub _is_sig {
-> +	my ($v, $n) =3D @_;
-> +
-> +	# We are avoiding a "use POSIX qw(SIGPIPE SIGABRT)" in the hot
-> +	# Git.pm codepath.
-> +	require POSIX;
-> +	no strict 'refs';
-> +	$v =3D=3D *{"POSIX::$n"}->();
-> +}
+... and here, although...
 
+> +	diff --git i/a w/a
+> +	index e69de29..7898192 100644
+> +	--- i/a
+> +	+++ w/a
+> +	@@ -0,0 +1 @@
+> +	+a
+> +	diff --git i/b w/b
+> +	index e69de29..6178079 100644
+> +	--- i/b
+> +	+++ w/b
+> +	@@ -0,0 +1 @@
+> +	+b
+> +	'EOF'
+> +	calc_patch_id nonl <nonl &&
+> +	calc_patch_id withnl <withnl &&
 
+... you could in fact just redirect the here-documents into these commands.
 
+>  	test_cmp patch-id_nonl patch-id_withnl
+>  '
+>  test_done
+
+-- Hannes
