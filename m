@@ -2,85 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 053ACC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 16:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60FF9C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 16:55:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241207AbiBAQot (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 11:44:49 -0500
-Received: from mout.gmx.net ([212.227.15.15]:44889 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241188AbiBAQos (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 11:44:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1643733886;
-        bh=eZxAjprX9DZxrcWl1c3SdI0WMLPRw6RU1ZEf5Zf83eo=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=ByPEZ92nj3MsOgkhp6mE32DWNx3ZvuyHAzQ3UqqhB2HymQFka6PCDRqI2SKVsB9Up
-         Ai0yPb6DTkn7usDtFNSEstKpZ8XkhjUErvILsajjnfGhgz+UD5M3pcoSKyjqvxdMkn
-         kheAmGsNUhKegoa3zE3ODxHjzAO7RfZUPWDuqsV8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from fv-az30-552.0unkxdino51e5fmf2tnbwhsmqg.dx.internal.cloudapp.net
- ([13.91.104.98]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1MiJV6-1md9H11iSc-00fRzF; Tue, 01 Feb 2022 17:44:45 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.35.1(2)
-Date:   Tue,  1 Feb 2022 16:44:41 +0000
-Message-Id: <20220201164441.4952-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.35.1
-Content-Type: text/plain; charset=UTF-8
+        id S241259AbiBAQzJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 11:55:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58826 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229861AbiBAQzI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 11:55:08 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5B01C061714
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 08:55:07 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id k25so55718650ejp.5
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 08:55:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=vnPpKn+V/14NVtSaO5lN9JEXjf5kgGd8AyvaNwTi7/o=;
+        b=Z5e5vYxf9S/nkSXRgKeCBfhFxsxTyGX0H593DXAP6XiUF1UlMe9LKLojy07DgknoJz
+         60IzO1LwEH44oAKQH2LlrJc8l9U+i3lFu0Dj1KGOQx1grrmDDOerzSwhcILqAsF0sDrV
+         3DDTMjd3QK2amxuPB7y/w++93NYOKMUDpDuM3xg6CtfqbM8YIuqiD5TkIT5TJxpI3k1b
+         rpU2FILYYGidsZCimRetSQ3Sh37uOuLa7wRL5YE6IGbUi5wdHirGqvSqSBM3F0MyNEYo
+         MdtY9jWWrYzLdrOAnPlPPwhLOYnjYaVjgRJTukuoOAwVByOLr7sgr2PatvvO8Yx+Iuo+
+         xmFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vnPpKn+V/14NVtSaO5lN9JEXjf5kgGd8AyvaNwTi7/o=;
+        b=lh6dR5g/E2hoqGVzs7uMtNqn+s6OUEttRs3xqLcrKS34cxI3RefgCOw+bxHwEn4kre
+         Io/WhNfy0JBA4m9xedXlneF+tBB0CrIRZHx2eGxI3takUsltBF+8HFEZDkhPlbNNXWEE
+         N2l5SFkk3xpFeFFMDfB9bP9bjtPpsLemiNn/HcKep9IYy+zMzbK7rTaEARv6qaOMo4eS
+         es816lLArixJRWzr6nzRuMc6AMDr4pYP5qdE6UQmZTVtVxMsi3FF2WvKgeZH66EiYdNw
+         PvCwhiprhnXgdAICTavHsJlhbnthmuNLh8HZKl7DtK6nm1MQzT4mBnQMTDezopqzU3vv
+         9Hrw==
+X-Gm-Message-State: AOAM530LBcmrsqVEvnzkRVNU5SGMdpzFm9HGJm+JdS/mEAkcUmeoPsid
+        pJvjYD/qpBBuo0q6G9cd7qV+L8T9s4WZNYb68OBSGY0V2Fg=
+X-Google-Smtp-Source: ABdhPJwbxQuBM48AHlpocFdY2a+tDFGIuhQHr0IB7lE5cDKyhoTyK+Hw4d84wglucXL0z99pvWG3ol5JuF0jVy8Uv7Y=
+X-Received: by 2002:a17:906:4793:: with SMTP id cw19mr15959067ejc.100.1643734506390;
+ Tue, 01 Feb 2022 08:55:06 -0800 (PST)
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:H9CObi3ui3qJydrMDccd238oBFurOrI8TWR3bxmRA79ag2YlUtB
- I0jh4fjpLrLMVDprsWTg75thNneK7nSJI4+kd5umIEPDJ5KNbEOjzWH62jgXbnPuOyoLzUC
- TuGc9xRH98W7qwSXWj1ARTxLroh0as+3uqXVFFbYji99yO2yU/Lo6AlNvGPiEcLl6sRk4+Q
- 8fmQtHRJYTqLOHL6pWliA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:i9IOQoCLN/g=:LDVKTBNb8AezGSQ1rD0gM4
- A3Oj2Z3UmI1S4iM+RiYWAK9GsNj38cN0g2KrNHLDoJDKfnrDsBEicT6RrxRm79r1wOS7YUW+G
- 3Cq8283hex62GIJ1J3DKckp1V9bQ9FHOVKtB1qKrZDmGm/62ITGT3/sF+A6di6uHROBqhc2kR
- Bes6RtB/F2545uW4+fL6bZ2amH2Rkd3L+JvP1CvqrUyVMKfPtnfMBG4AyoIcNClgggyGZQBLm
- tS1TQHBYx7pVcm+hEBoaUUTsovBbCdiG7hxpfYjw9qJZ3Ya+cGN7rQS2AzI+gPZl/x11+YHuP
- 7w7GAhA0KqaoX1vs2iWmyzTs4qzDChzxz1clp8QnohuGXQ1pw0bJhkwCZ0WvK6O6hXSU5gc1y
- I3qGMsIjwZCoj/AyYKEFTIG/Ezp9zqFGQtoEwqgLl5r9nF/f+bYoMkGfnzt0ODHWjfty0mIEA
- GY/htzvkVfAjtdRxCZnJldTB/PLKZcOYUc1vXRdsdvuHkZOHgzzvkkNY7M7EEkDS3rUTxKWHq
- Tn7Po4YYg7j0anFK6cuyDPAzRf7NMdDKh8sXpWqGW8dRAyZpzW5W1qipOp6aZ6LX+hbPta6py
- R/nD6Qcj0H9zupOxq9g2VLMj0+qV7TQtWxHjM3rt4izBmuSFFGThO2YktmtQ1udmcFzviDG9O
- lDU5W+b6hSI0wGS6QCA8OeJeesI3eYty6XmB27hWRAjStOZbfQqWDnRBVgqUYT/6SAe1bAjg1
- /QX3RcsWrbWjzGE4wwThHx3Q+CTLTgFDAAEslysQBb7ctSAvof72PWsW4HiPz9rPeng4zIJU6
- 1QllNlmD892ovT9wzXVXA3Znxxpd0m7T/uZPlkQEY6HnQHGQck0QLb/ebs4m/cIhhgdtL3jFG
- we/xjdwvlkeeqovup4xgLyEFlUAkBWgdhr2h7DU1LIMT+yACwJFIr1ZT9frdyzIWLGdhvkbf5
- 4M+olYcZ7ty2syleh6BDCFaThr1m4qXL0Vg106bQjWGyFCdU8BJHrS05kwnJp1xK71lpuiYWg
- fHwRVSrgjJLIlgNalrkn9YMkm5/Q44rroClB6IUZqbe52lxMbLz9VurvBVC8EOwsp/NUp0ZC6
- z8I6C4DqjC2ohc=
+References: <pull.1103.v3.git.1640907369.gitgitgadget@gmail.com>
+ <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com> <f06de6c1b2fbd5c5a23b6755197a3683c7d18d2f.1642792341.git.gitgitgadget@gmail.com>
+ <220201.86v8xyapj9.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220201.86v8xyapj9.gmgdl@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 1 Feb 2022 08:54:54 -0800
+Message-ID: <CABPp-BHPZZuGoJO8PXCngBhStBJmDhbyCYOmR+CVZX5wv3O+4w@mail.gmail.com>
+Subject: Re: [PATCH v4 02/10] log: clean unneeded objects during `log --remerge-diff`
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>,
+        Johannes Altmanninger <aclopte@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On Tue, Feb 1, 2022 at 1:45 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+>
+> On Fri, Jan 21 2022, Elijah Newren via GitGitGadget wrote:
+>
+> > From: Elijah Newren <newren@gmail.com>
+> > [...]
+> > @@ -944,7 +945,12 @@ static int do_remerge_diff(struct rev_info *opt,
+> >       strbuf_release(&parent1_desc);
+> >       strbuf_release(&parent2_desc);
+> >       merge_finalize(&o, &res);
+> > -     /* TODO: clean up the temporary object directory */
+> > +
+> > +     /* Clean up the contents of the temporary object directory */
+> > +     if (opt->remerge_objdir)
+> > +             tmp_objdir_discard_objects(opt->remerge_objdir);
+> > +     else
+> > +             BUG("unable to remove temporary object directory");
+>
+> Re the die in 1/10 I don't think this will ever trigger the way this bug
+> suggests.
+>
+> If we didn't manage to remove the directory that'll be signalled with
+> the return code of tmp_objdir_discard_objects() which you're adding
+> here, but which doesn't have a meaningful return value.
+>
+> So shouldn't it first of all be returning the "int" like the
+> remove_dir_recursively() user in tmp_objdir_destroy_1() makes use of?
+>
+> What this bug is really about is:
+>
+>     BUG("our juggling of opt->remerge_objdir between here and builtin/log=
+.c is screwy")
+>
+> Or something, because if we failed to remove the director(ies) we'll
+> just ignore that here.
 
-I hereby announce that Git for Windows 2.35.1(2) is available from:
+Yeah, I think I'm suffering from leftover bits from earlier versions
+since this patch series has been waiting for 17 months now.  I
+switched it to
 
-    https://gitforwindows.org/
+    BUG("did a remerge diff without remerge_objdir?!?");
 
-Changes since Git for Windows v2.35.1 (January 29th 2022)
+>
+> > +void tmp_objdir_discard_objects(struct tmp_objdir *t)
+> > +{
+> > +     remove_dir_recursively(&t->path, REMOVE_DIR_KEEP_TOPLEVEL);
+> > +}
+>
+> I skimmed remove_dir_recurse() a bit, but didn't test this, does this
+> remove just the "de/eadbeef..." in "de/eadbeef..." or also "de/",
+> i.e. do we (and do we want) to keep the fanned-out 256 loose top-level
+> directories throughout the operation?
 
-Bug Fixes
+It will remove everything below t->path, but leave t->path.  As such,
+it'll nuke any of the 256 loose top-level directories that exist.
 
-  * A bug in FSCache that triggered by a patch that made it into Git
-    for Windows v2.35.0 was fixed.
-
-Git-2.35.1.2-64-bit.exe | 77768d0d1b01e84e8570d54264be87194aa424ec7e527883280b9da9761f0a2a
-Git-2.35.1.2-32-bit.exe | b5394b97899b0d1c4857f63b7ad6f6a7108f30ca7433ff338ccd57e7c3152336
-PortableGit-2.35.1.2-64-bit.7z.exe | c346a4888525de88a6391ec3640013532d0954910bc78950f07e850cacade245
-PortableGit-2.35.1.2-32-bit.7z.exe | 93f4a28a423250fff64b16f5c068a143d0f35100d055416c05609f1e890bf92d
-MinGit-2.35.1.2-64-bit.zip | e48a78b1b0b6ddbddb539e9ab2d9d99494e2859b6f2113bdb3a8303c00e8d1a4
-MinGit-2.35.1.2-32-bit.zip | 9ca4d38e3ee8b0eb830a17ec9379444155719d6cb1d3d4fe37e4c2b5991c920d
-MinGit-2.35.1.2-busybox-64-bit.zip | aad8fe5975cb94bb550efbb0b4b696388de1d078296e1f31c268d144f6a6b0ea
-MinGit-2.35.1.2-busybox-32-bit.zip | 6f80172dc7f22f4e028024dd3ec6a2ecc0178363f79a7006d3322b05bb6a8143
-Git-2.35.1.2-64-bit.tar.bz2 | ec1b015003f54e467eb50664b8b675b871b3258e81ad6e1a0d680966a8e3ad5a
-Git-2.35.1.2-32-bit.tar.bz2 | c07568acc519bd0082d16642b6e3dd6c5f87824a68b3cd50fb89b54f06c1732d
-
-Ciao,
-Johannes
+If someone wants to come along later and measure performance and
+determine if leaving those 256 loose top-level directories around
+improves things, I think that's fine, but I'm not going to look at it
+as part of this series.  I'm more curious about where tmp_objdir
+creates the temporary directory; when the intent is to migrate the
+objects into the main directory, it should probably be created on the
+same filesystem.  When the intent is scratch space, like it is for
+--remerge-diff, the tmp_objdir should probably be shoved in /dev/shm
+or something like that.  But again, that's outside of this series.
+This series already has had a long list of things keeping it from the
+light of day; there's no need to add frills to it as part of the
+initial submission.
