@@ -2,95 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9032AC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 15:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28FD0C433EF
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 16:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240681AbiBAPuG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 10:50:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44028 "EHLO
+        id S241146AbiBAQkX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 11:40:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240658AbiBAPuC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 10:50:02 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34ACCC061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 07:50:02 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id i187-20020a1c3bc4000000b0034d2ed1be2aso2328214wma.1
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 07:50:02 -0800 (PST)
+        with ESMTP id S233760AbiBAQkV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 11:40:21 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B29C061714
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 08:40:21 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id s5so55747662ejx.2
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 08:40:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=HZN4t4sPFiAuqBJZVrWcvMVijbfFBwGAh9BS6MOF2Xg=;
-        b=MGcONPpD9lJmAW3810Y/jEHGxIBK/2GKL95Z5GCXr04xpIBAyLNvQtLzJUkCFeWFcX
-         GbUdyRevcsUm9zemXrDd2bl5jDzBlqpce6uMpLXO040RH5tJeGoEc0FnAvZooFI2sp5n
-         LAkK/KTmHgrKOAgY4efgLJXDX12ITMEfNMSg5AE6wiYdTUVWZz/J2UN5E8XsXwoDntcV
-         XKr7j7PZ16kOSD1bSWKJ+byPmt5Osy6uqyKCpkp8eg0285U7aIRKj0gdCNadGKnufcuL
-         lwXbvGBcwdD6lqbtgRjHefxjy/J5TfbP+6z0SMMkMm2Ow1WHokoiQlSzIBfexzVOYW5u
-         h4Jg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=nCLI0/C0ud3nHrVPd5zwGrlrW91jH6ddzefKb0AmsA8=;
+        b=aXyiVdMXo3OBSa0yEiAalf+5VEZnXHXplrjDY+XLA3SjPtw8Quc/AqtycHuCfa+y6m
+         IaFgC5KzGQdt1lV9pO/9kxFAwc6raWIILMOKjDgnmXr3oUTDKjcp7/Nt5UFsYE9dTKI6
+         rR+mgp86/OujWlf/RSJWdjlEIv/1peR7r8M1JPViLoNwdoT6x2ONCStJR4GBWyfHN3fY
+         VvnZRCrWUjov+d87F9dcrnUOLA7HjvoNlsr7rfdpSSWqw+lG40pJ1xsTXla75+IDlV4f
+         43VVGR4t32F0bl4krPkpDSPZbZkydOZculTleCu1l1BElNWKZmvhMpsgm/WhmUUjQw+i
+         RmDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HZN4t4sPFiAuqBJZVrWcvMVijbfFBwGAh9BS6MOF2Xg=;
-        b=agT7cLWg16i2j2uVYem0gurGihj+6WjscuACNYErhcuBnp/TAnKcJcxGzkP2b3i/H4
-         37oqHOMSdl5P7si1wqsRsQLrsPyfzr9tFeWq1L3p2gP1U2g8eDqqAyw65gUPBkMiTmdE
-         aXGBrb97RQOWzTl757sR7QhaTUOHdkTb8wGDeoKIh7fMDSFubR0T2iI0FFyt2wl+eBFt
-         0M0lSPj3wOjKnj/RJjIb+14K9sC5gnqO9/SmnmWQAEj0a0G0lfuxPRsMIScA07XE009E
-         PQbz+vnvBquwGLyyWq6VszWgTPiAo+kffAuTSvX5ikUT+KYMFXN7njoxx8KZmf8R5LAM
-         EvOg==
-X-Gm-Message-State: AOAM532atUe1S+CWbdBmswsVi/G0shzq+svKrXWMevZY4G2nOhifYehQ
-        xQRS0tzdWm2cdXWwglK3g2snH1y6GHI=
-X-Google-Smtp-Source: ABdhPJwfovP5+KUXvael+HNS6kpz/Z6ahzAP+t5HLDr169UII0/n2evi6o7ol/YXoY0Nj9jt56oWOw==
-X-Received: by 2002:a1c:4b13:: with SMTP id y19mr2268619wma.129.1643730600679;
-        Tue, 01 Feb 2022 07:50:00 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b15sm14853574wrs.93.2022.02.01.07.50.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 07:50:00 -0800 (PST)
-Message-Id: <6c4d4260bfc565d4aec9776e4709fea3e531ad2b.1643730593.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1138.git.1643730593.gitgitgadget@gmail.com>
-References: <pull.1138.git.1643730593.gitgitgadget@gmail.com>
-From:   "Robert Coup via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Feb 2022 15:49:53 +0000
-Subject: [PATCH 6/6] doc/partial-clone: mention --refilter option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nCLI0/C0ud3nHrVPd5zwGrlrW91jH6ddzefKb0AmsA8=;
+        b=evnRoNQG8d6u4xIWJrtGEWufEev9bma/DzUF+WA+JbEsDuqt7+6xUo1n1MUupR3kFr
+         IdTrL/A3UuabIGsYnkR80lGwud8pWqeoJx4Wq1rYRmKan459q7fHodGJXe635JPJIQHy
+         T834utt3cWAKuFYWlheRuL0ZUFpnpjBC6p/d2TLKkn/RofbAaUCgMI3gOQiokbO/NXVS
+         PzuXx57qWxUIBXOhp/lJ/b67d3GMc2RPHs6UHqU/Wyqk6UUv1CuLIVM0AtyHy+tx9RlS
+         uLS3IBkaGSF33DJYOQpPNj+oKy+vGMCQhhF+QwUvS/LEKS+FrDC9FzWxVJXZGdNePLgE
+         m/xA==
+X-Gm-Message-State: AOAM532Ni8rYMUuhUcMJf6HngD5Z2v2GK6/Gi4Uywzr0AnqLNyKSzmhb
+        HnUCOKRhyfLTzde2fTmnH1FJKiHl+EOqhQCCMxzDuF48
+X-Google-Smtp-Source: ABdhPJxh5EWJFmki1mxFmp9g2zHoa+uVR1DPnXrBfa11UXrVsJMZAklNeryFfNGr1xgYhqWojrtR9n/ACQDQYXlrt9A=
+X-Received: by 2002:a17:907:7da8:: with SMTP id oz40mr15868277ejc.328.1643733619550;
+ Tue, 01 Feb 2022 08:40:19 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Robert Coup <robert@coup.net.nz>,
-        Robert Coup <robert@coup.net.nz>
+References: <pull.1103.v3.git.1640907369.gitgitgadget@gmail.com>
+ <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com> <0b94724311df34dd10debd43c466695ed406d790.1642792341.git.gitgitgadget@gmail.com>
+ <220201.86zgnb9bf9.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220201.86zgnb9bf9.gmgdl@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 1 Feb 2022 08:40:08 -0800
+Message-ID: <CABPp-BE1p4bvm40-w5UDczSG8Ws+rR5tvjBL4gq_cgvYa92Q+Q@mail.gmail.com>
+Subject: Re: [PATCH v4 01/10] show, log: provide a --remerge-diff capability
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sergey Organov <sorganov@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Neeraj Singh <nksingh85@gmail.com>,
+        Johannes Altmanninger <aclopte@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Robert Coup <robert@coup.net.nz>
+On Tue, Feb 1, 2022 at 1:35 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+>
+> On Fri, Jan 21 2022, Elijah Newren via GitGitGadget wrote:
+>
+> > From: Elijah Newren <newren@gmail.com>
+> > [...]
+> >  ifdef::git-log[]
+> > ---diff-merges=3D(off|none|on|first-parent|1|separate|m|combined|c|dens=
+e-combined|cc)::
+> > +--diff-merges=3D(off|none|on|first-parent|1|separate|m|combined|c|dens=
+e-combined|cc|remerge|r)::
+> >  --no-diff-merges::
+> >       Specify diff format to be used for merge commits. Default is
+> >       {diff-merges-default} unless `--first-parent` is in use, in which=
+ case
+> > @@ -64,6 +64,14 @@ ifdef::git-log[]
+> >       each of the parents. Separate log entry and diff is generated
+> >       for each parent.
+> >  +
+> > +--diff-merges=3Dremerge:::
+> > +--diff-merges=3Dr:::
+> > +--remerge-diff:::
+> > +     With this option, two-parent merge commits are remerged to
+> > +     create a temporary tree object -- potentially containing files
+> > +     with conflict markers and such.  A diff is then shown between
+> > +     that temporary tree and the actual merge commit.
+> > ++
+>
+> Re some previous discussion. I really think we should add something like
+> this paragraph to this:
+>
+>     The output emitted when this option is used is subject to change, and=
+ so
+>     is its interaction with other options (unless explicitly
+>     documented). I.e. many of the same caveats as the "OUTPUT STABILITY" =
+in
+>     the linkgit:git-range-diff[1] documentation describes apply here. In
+>     particular other diff filtering options, pathspec limitations etc. ma=
+y
+>     not produce the expected results, as some of those may apply to the
+>     "real" diff of the merge, and not on the generated "remerge-diff".
+>
+> I think that would nicely give us permission to develop this further
+> without having to think about all the option interaction etc.
+>
+> This is really useful right now, but I'd hate for it to get merged with
+> some bug/behavior that's not obvious to us now, and it being hard to fix
+> that because we'd have to consider the implicitly promised backwards
+> compatibility.
 
-Add the fetch --refilter option to the partial clone documentation.
+Sure I can add something.  I think the first sentence should be
+sufficient though.
 
-Signed-off-by: Robert Coup <robert@coup.net.nz>
----
- Documentation/technical/partial-clone.txt | 3 +++
- 1 file changed, 3 insertions(+)
+> >       int saved_dcctc =3D 0;
+> > +     struct tmp_objdir *remerge_objdir =3D NULL;
+> > +
+> > +     if (rev->remerge_diff) {
+> > +             remerge_objdir =3D tmp_objdir_create("remerge-diff");
+> > +             if (!remerge_objdir)
+> > +                     die(_("unable to create temporary object director=
+y"));
+>
+> I guess the s/die_errno/die/ here is better for now as we won't report
+> the wrong errno, but also lose the common case of errno being right. But
+> that can be fixed up with some other series to the tmp-objdir API.
+>
+> > [...]
+> > +# This test is ort-specific
+> > +test "${GIT_TEST_MERGE_ALGORITHM:-ort}" =3D ort || {
+> > +     skip_all=3D"GIT_TEST_MERGE_ALGORITHM !=3D ort"
+> > +     test_done
+> > +}
+>
+> FWIW this is still on a more complex pattern that it needs to be, see
+> this v1 discussion (which you seemed to ack):
+>
+> https://lore.kernel.org/git/CABPp-BE+4rZNP-5mT2MNOWR6y6BgEG6mt1r_qcrZtaro=
+m6aGsw@mail.gmail.com/
 
-diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
-index a0dd7c66f24..e246b0778e5 100644
---- a/Documentation/technical/partial-clone.txt
-+++ b/Documentation/technical/partial-clone.txt
-@@ -181,6 +181,9 @@ Fetching Missing Objects
-   currently fetches all objects referred to by the requested objects, even
-   though they are not necessary.
- 
-+- Fetching with `--refilter` will request a complete new filtered packfile from
-+  the remote, which can be used to change a filter without needing to
-+  dynamically fetch missing objects.
- 
- Using many promisor remotes
- ---------------------------
--- 
-gitgitgadget
+Um, I thought I made this change.  How did I lose it?
+
+Thanks for catching; will fix.
