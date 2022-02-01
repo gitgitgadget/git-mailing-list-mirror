@@ -2,139 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65327C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 20:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CABECC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 20:13:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237345AbiBAUGV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 15:06:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47604 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237273AbiBAUGV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 15:06:21 -0500
-Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E301C061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 12:06:21 -0800 (PST)
-Received: by mail-ua1-x934.google.com with SMTP id b16so15235011uaq.4
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 12:06:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=lnvANn3CZAJ7mr1DlyQ0YVzAdpifqDYXbgeSUKkMmNw=;
-        b=RmSwPVR6LG567SpDGkoD7vDGegAGsq0ezS0T0gjRHr2GLRSnGXmq50xbCMuyqshh7w
-         Vrbyg9uF9qR4ucCfBvPQpVLpH8LIdmPt6GpbXlQAzh1Pr/1cSWgVtPg2tLdRtAvtAPfS
-         ltYS4K4SWNZ18Y+YZDE6irbu2pu0BkQG2jjilg+ovKjtbLJTQRIQ0lXJA46CoNBROXZO
-         P33ygk/BOPC7NPFlckn8L+fHYhT+5t/gokyZ8U6qVSMnZ/RcmNL+E6tYqCb3weNMK+At
-         u7dhVNrSatD+UIxpMnueG69CAP8sQe9ZXgXYeH20Ba/ZHk0xHPGLnwMRLhA1kcAemw3C
-         TrGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=lnvANn3CZAJ7mr1DlyQ0YVzAdpifqDYXbgeSUKkMmNw=;
-        b=12L5/JCNXhxSrkm19J9JfoJi2VJF/xk7RJyHKvygThOz29imRdF11oXJM9jgAEArdn
-         ownL9bJ7Q9Tdb0Em4mAaVkIinYq+tsOPOCx6pt6tcYk3P4xCXpHtjdBYjWiLzy+bydeD
-         gQ5lhCuWlUpTcoSAVtXr/3eWydlpUv/0h5QqgRf1HICGR1sFJuG5qhUeETCtQ3hXIS75
-         VkSeqbI+oDMVbYzJDmo7HFsw14q/c5BMJ+VJbmvm2fFQoRKxJtWQNnF1Dk3nk/C+bGpa
-         5YM7TqcYn6mtd5wZXkcdRQAPMeYPb0yyz7c2+zUWw3cVbhg5GzvzJvN/DXvtyCgjHVFO
-         azYw==
-X-Gm-Message-State: AOAM530qb1yafjmN/5JSehz/NOVNudDtm0LpMkOIWGsM+n5FJGgJs5ym
-        3Hnm+j+Lvqm1bbHTuiNMVrun+Tioo3g/XSEitRAyjQ==
-X-Google-Smtp-Source: ABdhPJxoPI7HS5RmxFZcBoxlUykTt07z6OXvwXeQjgxYkAugxMnwt2wK3Z0wyeDDiGOPTUfLRtjLJrCp3F53m57hyVU=
-X-Received: by 2002:ab0:71c7:: with SMTP id n7mr10411072uao.15.1643745979998;
- Tue, 01 Feb 2022 12:06:19 -0800 (PST)
+        id S238838AbiBAUNm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 15:13:42 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51588 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238386AbiBAUNk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 15:13:40 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6D95C104155;
+        Tue,  1 Feb 2022 15:13:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fCicaKrvauezrl4urDe1lQSzR6zbtmQewPNDj4
+        q88Lo=; b=tDwOTyNp0NtzhpdARQ4HD+EKPR4d3OX5oV3vtn6I7XBnl3fCInwu6F
+        TnXNqfOK0EEvYtJJsbae+Mpo9TaufRDqEqlayBqB0/GZyaY8FU2uopZxyWJQnojT
+        SjWo8GjOnt++5/hU2VpenNG1J84168lLoaAGDjrUX8vD2HEtst0As=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 61F0E104154;
+        Tue,  1 Feb 2022 15:13:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C1208104153;
+        Tue,  1 Feb 2022 15:13:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Robert Coup via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        John Cai <johncai86@gmail.com>,
+        Robert Coup <robert@coup.net.nz>
+Subject: Re: [PATCH 0/6] [RFC] partial-clone: add ability to refetch with
+ expanded filter
+References: <pull.1138.git.1643730593.gitgitgadget@gmail.com>
+Date:   Tue, 01 Feb 2022 12:13:38 -0800
+In-Reply-To: <pull.1138.git.1643730593.gitgitgadget@gmail.com> (Robert Coup
+        via GitGitGadget's message of "Tue, 01 Feb 2022 15:49:47 +0000")
+Message-ID: <xmqqk0eecpl9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1209.git.git.1643651420.gitgitgadget@gmail.com>
- <1ded69d89709d23147b29f67122b659293414405.1643651420.git.gitgitgadget@gmail.com>
- <YfhUIJuO70va6gr8@nand.local> <xmqqzgnbh7rv.fsf@gitster.g>
-In-Reply-To: <xmqqzgnbh7rv.fsf@gitster.g>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 1 Feb 2022 21:06:08 +0100
-Message-ID: <CAFQ2z_OFRJh9cwxnbDzrshYPGOvJC6Rz1eHTF-aKURno+41Cvw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] t1405: mark test that checks existence as REFFILES
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 720A2EA2-839B-11EC-A56A-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 31, 2022 at 11:15 PM Junio C Hamano <gitster@pobox.com> wrote:
+"Robert Coup via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> If a filter is changed on a partial clone repository, for example from
+> blob:none to blob:limit=1m, there is currently no straightforward way to
+> bulk-refetch the objects that match the new filter for existing local
+> commits. This is because the client will report commits as "have" during
+> negotiation and any dependent objects won't be included in the transferred
+> pack.
+
+It sounds like a useful thing to have such a "refetch things"
+option.
+
+A lazy/partial clone is narrower than the full tree in the width
+dimension, while a shallow clone is shallower than the full history
+in the time dimension.  The latter already has the "--deepen"
+support to say "the commits listed in my shallow boundary list may
+claim that I already have these, but I actually don't have them;
+please stop lying to the other side and refetch what I should have
+fetched earlier".  I understand that this works in the other
+dimension to "--widen" things?
+
+Makes me wonder how well these two features work together (or if
+they are mutually exclusive, that is fine as well as a starting
+point).
+
+If you update the filter specification to make it narrower (e.g. you
+start from blob:limit=1m down to blob:limit=512k), would we transfer
+nothing (which would be ideal), or would we end up refetching
+everything that are smaller than 512k?
+
+> This patch series proposes adding a --refilter option to fetch & fetch-pack
+> to enable doing a full fetch with a different filter, as if the local has no
+> commits in common with the remote. It builds upon cbe566a071
+> ("negotiator/noop: add noop fetch negotiator", 2020-08-18).
+
+I guess the answer to the last question is ...
+
+> To note:
 >
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > On Mon, Jan 31, 2022 at 05:50:19PM +0000, Han-Wen Nienhuys via GitGitGa=
-dget wrote:
-> >> From: Han-Wen Nienhuys <hanwen@google.com>
-> >>
-> >> The reftable backend doesn't support mere existence of reflogs.
-> >
-> > Perhaps I'm missing something obvious, but this and the previous patch
-> > seem to be conflicting each other.
-> >
-> > My understanding of the previous change is that you wanted a reflog
-> > entry when the REFFILES prerequisite isn't met. But this patch says wha=
-t
-> > matches my understanding is that reftable and reflogs do not play
-> > together.
-> >
-> > If reflogs do not interact with the reftable backend, then what does
-> > this patch do?
->
-> One difference between the files and the reftable backend is that
-> with the files backend, you can say "I am not adding any entry yet,
-> but remember that reflog is enabled for this ref, while all other
-> refs reflog is not enabled", and the way to do so is to touch the
-> "$GIT_DIR/logs/refs/heads/frotz" file---this enables reflog for the
-> "frotz" branch, even if core.logAllRefUpdates is not set.
->
-> Because there is no generic reflog API that says "enable log for
-> this ref", a test that checks this feature with files backend would
-> do "touch .git/refs/heads/frotz".
+>  1. This will produce duplicated objects between the existing and newly
+>     fetched packs, but gc will clean them up.
 
-There is refs_create_reflog(), so the generic reflog API exists. The
-problem is that there is no sensible way to implement it in reftable.
+... it is not smart enough to stell them to exclude what we _ought_
+to have by telling them what the _old_ filter spec was.  That's OK
+for a starting point, I guess.  Hopefully, at the end of this
+operation, we should garbage collect the duplicated objects by
+default (with an option to turn it off)?
 
-One option is (reflog exists =3D=3D there exists at least one reflog entry
-for the ref). This messes up the test from this patch, because it
-creates a reflog, but because it doesn't populate the reflog, so we
-return false for git-reflog-exists.
+>  2. This series doesn't check that there's a new filter in any way, whether
+>     configured via config or passed via --filter=. Personally I think that's
+>     fine.
 
-It also turns out to mess up the tests in t3420, as follows:
+In other words, a repository that used to be a partial clone can
+become a full clone by using the option _and_ not giving any filter.
+I think that is an intuitive enough behaviour and a natural
+consequence to the extreme of what the feature is.  Compared to
+making a full "git clone", fetching from the old local (and narrow)
+repository into it and then discarding the old one, it would not
+have any performance or storage advantage, but it probably is more
+convenient.
 
-++ git stash show -p
-error: refs/stash@{0} is not a valid reference
+>  3. If a user fetches with --refilter applying a more restrictive filter
+>     than previously (eg: blob:limit=1m then blob:limit=1k) the eventual
+>     state is a no-op, since any referenced object already in the local
+>     repository is never removed. Potentially this could be improved in
+>     future by more advanced gc, possibly along the lines discussed at [2].
 
-I get
-
-  reflog_exists: refs/stash: 0
-
-and "git stash show -p" aborts with "error: refs/stash@{0} is not a
-valid reference".
-
-So I now went with the other option, ie. (reflog exists =3D=3D true), ie.
-every conceivable ref has a reflog (but most are empty). This makes
-t3420 pass.
-
-This behavior also confuses t1405, because in
-
-  $RUN delete-reflog HEAD &&
-  test_must_fail git reflog exists HEAD
-
-the last command now always returns true.
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+OK.  That matches my reaction to 1. above.
