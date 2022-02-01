@@ -2,107 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 125A2C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 19:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EC89C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 19:52:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242422AbiBAT15 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 14:27:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38872 "EHLO
+        id S233442AbiBATwo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 14:52:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242278AbiBAT14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 14:27:56 -0500
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7688C061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 11:27:55 -0800 (PST)
-Received: by mail-qt1-x82e.google.com with SMTP id h8so9314861qtk.13
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 11:27:55 -0800 (PST)
+        with ESMTP id S233141AbiBATwo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 14:52:44 -0500
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99C1C06173B
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 11:52:43 -0800 (PST)
+Received: by mail-io1-xd29.google.com with SMTP id p63so21782505iod.11
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 11:52:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version;
-        bh=kL2+d8/I80Mn3sAnVEthWScBIob1LWtuwyR/UQ6IzwM=;
-        b=KMLn1RF8XKfTAC5Dt+dxY0B+J6ZRHCYGny4wHUYUvOWH2j4WJbb1Tkm4Ghrcb/ZD9F
-         GMkFKC06fdm/0k5J+J2QOyKr6eQ4/3VudNkQHS5/HPZUfaZPYmK5+AaLCJdFc0fQ58aR
-         6mP2SzgqKl8QKevoDhqIJMca7dhKMPHtfe115pETTisDB/5S9q8h3YNWWkyLIjFEp7lv
-         NAZkXfHzfxjstTXPbl/EoQ7Jwe/YLAly4uz9Q8YnmMa5+Ix+1ahDjrI/OHOGOyHBJZDm
-         j+vOPhs/aE3HZGNCrHzs1i+H0QJ1eqgtfHhzLfJlmlKLaLpeGGL8pNtPY8HH8qR/SSlx
-         YtSw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=7YGNHkFVbkaM+/71BND1JNwPJBaNmrKwjDxFUw/jpEc=;
+        b=7yPMSYPRFBUsTTi15psHul55ICPUDh+0kh+Up8kN6MnSSGhoUFtJ7GULw37gsSxhx7
+         vMBHSBWh87bwCXaQvexH3BF9gahi7OQUX7JK7ZzmYd+/XhBO83hj+mrXY/EvpT07hmQp
+         ueftshG2ihKJOUad4KfDF9Iw+yz58mz8ZnGRa455SLKBAelZq5WyzSzX0KMu72NQPvB9
+         Sci45n6HduUCHaL3W185L2hP1jiDT91CPB+8CI+1lp9vLMQW8TDYwfKLNLlDO+vW0owv
+         fOf6nM3XEffYlHiv7PRW3E87Pgp00MIQOImb42lJ+J5SWsD3lwL/soC507LW3rBwJkOb
+         DrxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version;
-        bh=kL2+d8/I80Mn3sAnVEthWScBIob1LWtuwyR/UQ6IzwM=;
-        b=t9Oiit1NOIaQGCQNDeeHXR0MJgtaEHTQd4BN7FuKVXR6pUWOhM56vdADUzOaxJVg3K
-         sSalNfr8DKTbot7wTfU8AeFdbGqEE18o9rjKMycEW9rC1u+HHNL8iQUlWk3Iqpnbd5er
-         977NaGjtvQl66umYQwKAZQUlon5MOTtGDcnZ4g4mWMdfV0TrB6eC+6GOVbl2sEfL47pm
-         plfz+OmI5CJk+85qcyLJQ6pCzhNCU5FZFLnXomGaiS0uX1WlVwqMTPT6mZoCl9/LGn6K
-         w4rYF5CYgtvRIEJdtLc3QV0mRXfBaqP7aih0wLJvBY9cs8Q9VWrvhSTk8vmvn6FnCUYm
-         8TIw==
-X-Gm-Message-State: AOAM532MvUvNLADRaWkRK46cOSJfqL7bTVlFH0aJIxex4vq23lC5+94O
-        BKnKuVxSOxmJ7cDQheKsFoA=
-X-Google-Smtp-Source: ABdhPJyQ22XqaquBX7SkFD4fci4lP2Aj2mu7tN6mEIjtlLgUNQzMv8z2XN8Pz0ue5mXdw2tfOcEIew==
-X-Received: by 2002:a05:622a:489:: with SMTP id p9mr11849434qtx.11.1643743674974;
-        Tue, 01 Feb 2022 11:27:54 -0800 (PST)
-Received: from [192.168.1.211] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id d6sm10831464qtb.55.2022.02.01.11.27.54
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Feb 2022 11:27:54 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>,
-        =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [RFC v3] cat-file: add a --stdin-cmd mode
-Date:   Tue, 01 Feb 2022 14:27:54 -0500
-X-Mailer: MailMate Trial (1.14r5852)
-Message-ID: <674CD40F-7060-4892-97CD-1940AEF7C3D7@gmail.com>
-In-Reply-To: <YflzZsb/txsopusP@nand.local>
-References: <20220128183319.43496-1-johncai86@gmail.com>
- <CAP8UFD3sHvA3Gx9+d=VjQ11sEqWF47AEeo-m4bGsVO3OUJ4dLw@mail.gmail.com>
- <YflzZsb/txsopusP@nand.local>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=7YGNHkFVbkaM+/71BND1JNwPJBaNmrKwjDxFUw/jpEc=;
+        b=vHScpoOjwgmiXgqlRCBGCu8z+IXQoFWZCZyXmodNn+a1EUZdXMsJ2P5o1/CaeKt+rM
+         THwiRlP2kq7CbjYrPeVnXTChsrNF9Fs0zWm8VfkL/dzGK2Hsu386GgZDpe0cVnkzN7SF
+         ukl2dznlIdT5/1uD+n+4M/NIPPF++v9n3vHuY13v0tXE+tWXLprqDCs1C0f43STOjsMP
+         KtLBegv2ILiQhmJs9AcwgEANwXPugS7nTB7fRYqa3a3cv0PBYulummSiqTrHe3Y3tOOk
+         FsAzGnvDBu/Ht+oZc3OIp7LXeT70R8VkrUYAzRcxbDPmoC2S+x1iZX4zSquYZdO1lLqq
+         STJg==
+X-Gm-Message-State: AOAM532nprCfXw7usLjJ9a8azUlcZy3HtjkCo9BnW4a9IbOj1CcSFSPx
+        PUZlMoSdvIKj9Jr8WEvEvwx1iNjU4UYx/A==
+X-Google-Smtp-Source: ABdhPJxBEvHRFxZtQyiwNoVb8RN/Irmu3sLqvG0oh/BLwNrpjSJFggIccx0FMN+2qIUNYkEd0U44cw==
+X-Received: by 2002:a05:6602:1350:: with SMTP id i16mr15125935iov.153.1643745162988;
+        Tue, 01 Feb 2022 11:52:42 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id ay35sm14749571iob.3.2022.02.01.11.52.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Feb 2022 11:52:42 -0800 (PST)
+Date:   Tue, 1 Feb 2022 14:52:41 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+Cc:     git@vger.kernel.org
+Subject: Re: Getting rid of "hint: Using 'master' as the name for the initial
+ branch." when initializing a repository with pygit
+Message-ID: <YfmPiZZ/1RGzzfWE@nand.local>
+References: <20220201184128.GT3113@kunlun.suse.cz>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20220201184128.GT3113@kunlun.suse.cz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor,
-
-On 1 Feb 2022, at 12:52, Taylor Blau wrote:
-
-> On Tue, Feb 01, 2022 at 10:39:30AM +0100, Christian Couder wrote:
->> Also I think at this point this should probably not be an RFC patch
->> anymore but a regular one.
+On Tue, Feb 01, 2022 at 07:41:28PM +0100, Michal Suchánek wrote:
+> I noticed that in some environments the default branch warning is
+> displayed and not others because the git version varies.
 >
-> I think that this is due to my first "review" in [1], where I tried to
-> get an understanding of what John's concrete usage plans were, since I
-> couldn't figure out what they were on my own.
+> The warning is just noise in the test log so I would like to avoid it,
+> and I would like to find a solution that works for git that predates the
+> introduction of this warning and the option to silence it as well as
+> the future git versions in which the default is subject to change.
 >
-> I'm not sure that I've seen a response along the lines of "we need to
-> control when the output stream is flushed in order to do ..." yet, but I
-> would be interested to see one before moving too much further ahead of
-> where we already are.
+> AFAICT there is no clean way to do it. I can set up the global option to
+> whatever but I don't want to do that just to run tests.
 
-This would be useful when there is another process A interacting with a long
-running git cat-file process B that is retrieving object information from the odb
-interactively but also wants to use --buffer mode.
+If you have set the init.defaultBranch configuration, we will suppress
+the hint you're talking about.
 
-In this scenario, if A is asked to retrieve a large list of object metadata, it wants to
-use --buffer mode to be more efficient but it would need a way to ensure that all of the
-contents have been flushed to the output. If we want to keep B running to save startup time
-(since otherwise we might need to spawn many git cat-file processes), then having
-a flush command where we can guarantee a flush would be very handy.
+Alternatively, you can make sure that `git init` is invoked with the
+`-q` (quiet) flag, which suppresses that warning whether or not you have
+set the init.defaultBranch config.
 
->
-> (Apologies if such a response was written, and I missed it).
+(Here, I'm assuming that the library you're talking about invokes the
+git binary and respects its configuration. I'm not sure how much control
+you have over the flags that get passed down to the git binary, though).
 
-Nope, don't think I explained the need for a flush command very clearly.
+We could also make it possible to suppress just that advice (with
+another advice.* configuration option), but it seems redundant with the
+existence of the other two options I discussed above.
 
-thanks
->
-> Thanks,
-> Taylor
->
-> [1]: https://lore.kernel.org/git/YehomwNiIs0l83W7@nand.local/
+Thanks,
+Taylor
