@@ -2,84 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B805DC433EF
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 18:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70356C433EF
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 18:21:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241732AbiBASDt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 13:03:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46790 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233813AbiBASDs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 13:03:48 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8836AC061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 10:03:48 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id g15-20020a17090a67cf00b001b7d5b6bedaso3333025pjm.4
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 10:03:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:subject:message-id:mail-followup-to:mime-version
-         :content-disposition;
-        bh=xOo/c3zD163ZOvT9caGlz8RpVyS7pYjaHNSTwQv4Iqs=;
-        b=lZReE4YkApk4yJ+7QKRz8sFwSjG3KpZjLvKNawxPuHFgawKX36LY5n8TE9IJvTKVcZ
-         Tne9jtMl9Hb9pM+8lbjGu5Q4r5XUigIanhamLlZsweqFT7fKr4+/ABnhjcvgnQlY2AYG
-         v5WEmW77Hg+58DZgfyN6I6kmOnClC0depjEwjgn09zHR+vPZrFlF046/rOXN3HQhYMHt
-         m250o3k5ckXUuw+YdA1wq24GC3LJetK1eVV1V9Iu/eBOJbkEESpP1hJx6cHmbLvMNjhx
-         Cm0HKanvIS+iKmsuDIymVtF0Yl7RZ+uBULYlwF3hLlUdnv/JFEbKu2aR42fSm6gqbirT
-         072w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:mail-followup-to
-         :mime-version:content-disposition;
-        bh=xOo/c3zD163ZOvT9caGlz8RpVyS7pYjaHNSTwQv4Iqs=;
-        b=GgjVGbOL8NcF+0ebj9X1cANztImrVS8C7oh38QCesnpAsD760Xo9gGWxyCyPaVwDch
-         DmPwRwjdXuHvH28wMDlqb0d6WtxATa2/LmRRwAACaJ0VAfmwZkosuOrq/sxKLZDuHeN9
-         bqEPbcrxBPwKBaS+fkdP+nOK9apsTjB/eyqC2nDL7wk037QrTJQiwTd10CkOVHSoGJWx
-         uWxp+Emh20kR+bFhGmviF4rzlczpPjtzb45YKyaeD9wdXHyYVAbrYjMxR0wk5O23SqmB
-         di0fzOJ/RI5ramrYZBsHnuVEsw/u8z52vaKBJTld+tioQewr4pCa4zcOCAo+8mXoxxi2
-         EkWA==
-X-Gm-Message-State: AOAM533CwafDA2x8JgSmthvBqq8TOIHFdKBqHpgMKTsKyEvDzHqyaa11
-        2hItXEIw1UMKkue57oBa3Lic/8iJFcuhyw==
-X-Google-Smtp-Source: ABdhPJxpN1qArYrLbA6n6O0+KHkYO/hh5VUK8lwHH4Rl7zgAnFXO/2aLr3kcegNhS0eFZe/bmqa6ag==
-X-Received: by 2002:a17:902:dac4:: with SMTP id q4mr28378689plx.22.1643738627688;
-        Tue, 01 Feb 2022 10:03:47 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:b721:7974:9ebe:afb2])
-        by smtp.gmail.com with ESMTPSA id a13sm23934098pfv.97.2022.02.01.10.03.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 10:03:47 -0800 (PST)
-Date:   Tue, 1 Feb 2022 10:03:41 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org, newren@gmail.com
-Subject: Join us for Review Club!
-Message-ID: <Yfl1/ZN/taYwfGD0@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        newren@gmail.com
+        id S233585AbiBASVS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 13:21:18 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55301 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230372AbiBASVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 13:21:18 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A1270F97FA;
+        Tue,  1 Feb 2022 13:21:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=O+JGHyHvSBbXWMbCxrDYkkn2b+iFiH8fKVVrl3
+        JRfzw=; b=QDo+5/lE7AGVKlvhw8c6VExYlc5Fo87DEhQcoH43ljXqBGu05fbhQ+
+        adXQl9qW1vwytWHFqQSrgdd5UO3Fr4r4F07OGX+IsJv4+zBkR5lbIZjd3tpOzee2
+        KfAG9/dyvG/HS4GVNiiN7zC1W9atpPZwLT17DUkGwoR1mxvbwq/Tg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 99864F97F9;
+        Tue,  1 Feb 2022 13:21:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 093ECF97F8;
+        Tue,  1 Feb 2022 13:21:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 1/3] repo-settings: fix checking for
+ fetch.negotiationAlgorithm=default
+References: <pull.1131.v2.git.1643478692337.gitgitgadget@gmail.com>
+        <pull.1131.v3.git.1643734828.gitgitgadget@gmail.com>
+        <df0ec5ffe98a17e1ec7b572085e733d8748c0379.1643734828.git.gitgitgadget@gmail.com>
+Date:   Tue, 01 Feb 2022 10:21:15 -0800
+In-Reply-To: <df0ec5ffe98a17e1ec7b572085e733d8748c0379.1643734828.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Tue, 01 Feb 2022
+        17:00:26 +0000")
+Message-ID: <xmqq4k5ifnxg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID: BF0C335E-838B-11EC-8837-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi folks,
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I've been organizing a Review Club meeting at Google for a while now.
-We've been intending to open this up to a wider group, so this is the
-official invitation for anyone who's interested to join us! We meet
-every other Wednesday (tomorrow) at 14:00 Pacific time (UTC-8) via
-Google Meet.
+> diff --git a/repo-settings.c b/repo-settings.c
+> index 00ca5571a1a..38c10f9977b 100644
+> --- a/repo-settings.c
+> +++ b/repo-settings.c
+> @@ -85,6 +85,8 @@ void prepare_repo_settings(struct repository *r)
+>  			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_SKIPPING;
+>  		else if (!strcasecmp(strval, "noop"))
+>  			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_NOOP;
+> +		else if (!strcasecmp(strval, "default"))
+> +			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_DEFAULT;
+>  	}
 
-For tomorrow, we'll be discussing Elijah's "In-core git merge-tree"
-series [1].
+After this step, this function does:
 
-The goal of the meeting is to help reviewers learn from each other, and
-to get better quality feedback up to the list afterwards. Having a
-deadline is also a nice way to motivate reviewers :).
+ * fetch_negotiation_algorithm set to _DEFAULT
+ * experimental bit flips it to _SKIPPING
+ * config is read and skipping/noop/default overwrites it.
 
-Please email me (off-list is fine) if you have questions or if you want
-to join us.
+which is better than ignoring "default", but it strikes me as
+unnatural.  If it were done like this instead:
 
-Thanks!
+ * fetch_negotiation_algorithm is set to _DEFAULT
+ * config is read and skipping/noop/default overwrites it.
+ * experimental bit flips it to _SKIPPING only when it is still _DEFAULT
 
+this bug wouldn't have happened, I suspect.
 
-[1]: https://lore.kernel.org/git/pull.1122.v2.git.1643479633.gitgitgadget@gmail.com/
+More importantly, those who want to say "I want to keep up with the
+'possible future default', which is appropriately chosen by Git for
+opt-in experimenters" by setting feature.experimental to true, would
+be able to do so when the flow is reordered like so.
+
+Setting fetch.negotiationAlgorithm=default would be the way to do
+so.
+
+Let's read on and see later steps of this series achieves the same.
+Perhaps they may do the same reordering.
+
+Thanks.
