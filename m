@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD1FEC433FE
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 03:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFAFAC4332F
+	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 03:33:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233171AbiBADd5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S233176AbiBADd5 (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 31 Jan 2022 22:33:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47314 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233135AbiBADdv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Jan 2022 22:33:51 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3FF1C06173B
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 19:33:50 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id v13so29198345wrv.10
-        for <git@vger.kernel.org>; Mon, 31 Jan 2022 19:33:50 -0800 (PST)
+        with ESMTP id S233155AbiBADdw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Jan 2022 22:33:52 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83130C06173D
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 19:33:51 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id bg21-20020a05600c3c9500b0035283e7a012so713539wmb.0
+        for <git@vger.kernel.org>; Mon, 31 Jan 2022 19:33:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=AgZew7ky/nbRHYXi94LQzSIIx2HllTTTMJfHESY22Nc=;
-        b=ChAsD/EKse3Ym6EZuIJrq6LxxFedqZNn03tLaAkPNIXGE5ApoNz46WXJrnx4uWdBR1
-         1fa0bqUyC7JJDv1IRbqRthNgHlpbIPLO1j8jnvxD1389ROmNNhWwoXEDTWr7iAIn6AvW
-         09Bg80WZDJJ6UdegryokFjLyBs5MFBQdtyAk41E5TbUstxP0csAzioYlEUonezgvhqsI
-         EexbtzCaRqjLNEjT1FXteoAOsZisy5wWabTwTPKvZbXZV8GIQenYOHqYFlzjVs8jHXJy
-         5SRW1NOHZS10kx0eZo3b06OIf/DlCvJzsHxgL6A7Z4+ZwYY03zSAQwFG7ha33pRpSSNf
-         Qj4Q==
+        bh=s37iVId/FOEIMbqGP9swHK6j47nxc9iN9EDEFBnEQ/g=;
+        b=OvlDLGSwQxmbx+lEy75n1lDHg06Z1KX0RmRhq9tuWFsYjY2nb9sYF4HML7bDtFctyG
+         Ai0+W57/tyLGV18WRS12Qnm1SdXYc0VnnNBw3SGaE3J//QFgq6h/cIesPsgz4X3lEAVj
+         5Xa8zv4KroU4OOKD9CDfyNUvQY7jUcQpihDsIopkwmwgFs43juxFxBYHLyXDtAHxILvC
+         lKcaEiszl0TwWUGVcvQAGfJMZKje9zQ0xOVzTGMrWjRH5rRMcEsho0NssbFTkpZPkXKF
+         RTrSyXMwkxSxz05/y2SdQAxEzDd1/j0YiTeR7FkUK+iXi+DiftdyqlfQHGxCuxuu/WMC
+         GE+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AgZew7ky/nbRHYXi94LQzSIIx2HllTTTMJfHESY22Nc=;
-        b=3WSUISYPDJ4c0MAuCy2a8T5QDhh3gGQ5xkMllUfwP86sgReSJ8N9GOicLl4llAoDlk
-         NxS9PJyQhHPCSaa1gfTaI6jAhXGVLys+uSacTQAEWubeQTsuY2erypNJAAxXsKYf4dCo
-         YPG6XCTkNNRy5Ze2swHvjaIsroY3gZ475M95rEzlvHqoWAaQA+eZpt/vaU7/3mjyRvQ7
-         R0jUa/FzqPU8CBnkQiGSf7inQGgbULX5QwGTw9YWyLc2pucZcAEgwamh8TuUSsdW9+fp
-         a7H4NHlbeT71xGMq6gyCo/MR/dGq216zRfrKs04asYQnDmMtJ4wWlg+RXLFDIEHaNOc6
-         aIGQ==
-X-Gm-Message-State: AOAM530G3STxHFLRZSV0tFFN25KrGQHtAOl0xdhR3OieFE99+iyLhkW5
-        yTm0FdLaSo2jbc9AlE2fG0LBeNJj9aY=
-X-Google-Smtp-Source: ABdhPJyO3t8DyYM5eKVzMZ8+9tBs2qgGfr14RPfG+Xore3nWYCKv+wZ6lxuYFxqBKEwcaik4TvI7xA==
-X-Received: by 2002:adf:e18c:: with SMTP id az12mr19758540wrb.322.1643686429134;
+        bh=s37iVId/FOEIMbqGP9swHK6j47nxc9iN9EDEFBnEQ/g=;
+        b=bBrEDcVjXLrC4kiZ9RkOhk/2YBxz2pQ/iNitau86vNRbIMe8E9BnA8j+31/tkORv1j
+         +5ozqvh/F7ecmHcr6rc3iir4OUoRA3xObQcvtf4M+xc7IxF/sTI8AvuJggOKMFl2wxbD
+         KzXDDCL/TnNTCEJY354FtJtu9/5Pfew2TZuGXAJJayy4B/aIqzSCHV5Ft/KuXyZJEl1y
+         CGNN6vEwDdrA0Ps9WKMidbQtTSbEFskUujB9kSdcPYkaI3+7D54TU/JVvK5AP3OxhCUD
+         2VpKIdz7F/dGpLWcCohLQe2zsfZCvKBDgjwRRKNNGpI0Mjf0V2oJOh2Ehg8uC5x2i/bC
+         R47w==
+X-Gm-Message-State: AOAM530lo4pms5lySCvJ9A4yALcxOx01h5JUpgGyIGu16ckzdcfRZdJi
+        X6wQyGzwPUBmyEnazMDjZICADkH9PKE=
+X-Google-Smtp-Source: ABdhPJz1Q3Rflg6VSsV1RkHS+298rm82Et2yBAmAzgHahm708Po/zaaz6p6xBmAw6WC7Z4tYVzr2jQ==
+X-Received: by 2002:a7b:c402:: with SMTP id k2mr38744wmi.188.1643686429965;
         Mon, 31 Jan 2022 19:33:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z6sm810248wmf.37.2022.01.31.19.33.48
+        by smtp.gmail.com with ESMTPSA id m8sm13113469wrn.106.2022.01.31.19.33.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Jan 2022 19:33:48 -0800 (PST)
-Message-Id: <f217dba77a19714668f352825e5c91ee24f46779.1643686425.git.gitgitgadget@gmail.com>
+        Mon, 31 Jan 2022 19:33:49 -0800 (PST)
+Message-Id: <5c22a41c1f3b6edc941e8bcd0d77df87f1087f85.1643686425.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
 References: <pull.1093.v3.git.1639011433.gitgitgadget@gmail.com>
         <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
 From:   "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Feb 2022 03:33:43 +0000
-Subject: [PATCH v4 3/4] core.fsync: new option to harden the index
+Date:   Tue, 01 Feb 2022 03:33:44 +0000
+Subject: [PATCH v4 4/4] core.fsync: add a `derived-metadata` aggregate option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,142 +69,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Neeraj Singh <neerajsi@microsoft.com>
 
-This commit introduces the new ability for the user to harden
-the index. In the event of a system crash, the index must be
-durable for the user to actually find a file that has been added
-to the repo and then deleted from the working tree.
+This commit adds an aggregate option that currently includes the
+commit-graph file and pack metadata (indexes and bitmaps).
 
-We use the presence of the COMMIT_LOCK flag and absence of the
-alternate_index_output as a proxy for determining whether we're
-updating the persistent index of the repo or some temporary
-index. We don't sync these temporary indexes.
+The user may want to exclude this set from durability since they can be
+recomputed from other data if they wind up corrupt or missing.
+
+This is split out from the other patches in the series since it is
+an optional nice-to-have that might be controversial.
 
 Signed-off-by: Neeraj Singh <neerajsi@microsoft.com>
 ---
- Documentation/config/core.txt |  1 +
- cache.h                       |  4 +++-
- config.c                      |  1 +
- read-cache.c                  | 19 +++++++++++++------
- 4 files changed, 18 insertions(+), 7 deletions(-)
+ Documentation/config/core.txt | 6 +++---
+ cache.h                       | 7 ++++---
+ config.c                      | 1 +
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 4f1747ec871..8e5b7a795ab 100644
+index 8e5b7a795ab..21092f3a4d1 100644
 --- a/Documentation/config/core.txt
 +++ b/Documentation/config/core.txt
-@@ -561,6 +561,7 @@ core.fsync::
- * `pack` hardens objects added to the repo in packfile form.
+@@ -562,9 +562,9 @@ core.fsync::
  * `pack-metadata` hardens packfile bitmaps and indexes.
  * `commit-graph` hardens the commit graph file.
-+* `index` hardens the index when it is modified.
- * `objects` is an aggregate option that includes `loose-objects`, `pack`,
-   `pack-metadata`, and `commit-graph`.
- * `default` is an aggregate option that is equivalent to `objects,-loose-object`
+ * `index` hardens the index when it is modified.
+-* `objects` is an aggregate option that includes `loose-objects`, `pack`,
+-  `pack-metadata`, and `commit-graph`.
+-* `default` is an aggregate option that is equivalent to `objects,-loose-object`
++* `objects` is an aggregate option that includes `loose-objects` and `pack`.
++* `derived-metadata` is an aggregate option that includes `pack-metadata` and `commit-graph`.
++* `default` is an aggregate option that is equivalent to `objects,derived-metadata,-loose-object`
+ * `all` is an aggregate option that syncs all individual components above.
+ 
+ core.fsyncMethod::
 diff --git a/cache.h b/cache.h
-index b3cd7d928de..9f3c1ec4c42 100644
+index 9f3c1ec4c42..3327cf6af0b 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1004,6 +1004,7 @@ enum fsync_component {
- 	FSYNC_COMPONENT_PACK			= 1 << 1,
- 	FSYNC_COMPONENT_PACK_METADATA		= 1 << 2,
- 	FSYNC_COMPONENT_COMMIT_GRAPH		= 1 << 3,
-+	FSYNC_COMPONENT_INDEX			= 1 << 4,
- };
+@@ -1012,9 +1012,10 @@ enum fsync_component {
+ 				  FSYNC_COMPONENT_COMMIT_GRAPH)
  
- #define FSYNC_COMPONENTS_DEFAULT (FSYNC_COMPONENT_PACK | \
-@@ -1018,7 +1019,8 @@ enum fsync_component {
+ #define FSYNC_COMPONENTS_OBJECTS (FSYNC_COMPONENT_LOOSE_OBJECT | \
+-				  FSYNC_COMPONENT_PACK | \
+-				  FSYNC_COMPONENT_PACK_METADATA | \
+-				  FSYNC_COMPONENT_COMMIT_GRAPH)
++				  FSYNC_COMPONENT_PACK)
++
++#define FSYNC_COMPONENTS_DERIVED_METADATA (FSYNC_COMPONENT_PACK_METADATA | \
++					   FSYNC_COMPONENT_COMMIT_GRAPH)
+ 
  #define FSYNC_COMPONENTS_ALL (FSYNC_COMPONENT_LOOSE_OBJECT | \
  			      FSYNC_COMPONENT_PACK | \
- 			      FSYNC_COMPONENT_PACK_METADATA | \
--			      FSYNC_COMPONENT_COMMIT_GRAPH)
-+			      FSYNC_COMPONENT_COMMIT_GRAPH | \
-+			      FSYNC_COMPONENT_INDEX)
- 
- 
- /*
 diff --git a/config.c b/config.c
-index 224563c7b3e..325644e3c2c 100644
+index 325644e3c2c..64a8a4d7c2a 100644
 --- a/config.c
 +++ b/config.c
-@@ -1221,6 +1221,7 @@ static const struct fsync_component_entry {
- 	{ "pack", FSYNC_COMPONENT_PACK },
- 	{ "pack-metadata", FSYNC_COMPONENT_PACK_METADATA },
+@@ -1223,6 +1223,7 @@ static const struct fsync_component_entry {
  	{ "commit-graph", FSYNC_COMPONENT_COMMIT_GRAPH },
-+	{ "index", FSYNC_COMPONENT_INDEX },
+ 	{ "index", FSYNC_COMPONENT_INDEX },
  	{ "objects", FSYNC_COMPONENTS_OBJECTS },
++	{ "derived-metadata", FSYNC_COMPONENTS_DERIVED_METADATA },
  	{ "default", FSYNC_COMPONENTS_DEFAULT },
  	{ "all", FSYNC_COMPONENTS_ALL },
-diff --git a/read-cache.c b/read-cache.c
-index a0de70195c8..eb02439ab4b 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2837,7 +2837,7 @@ static int record_ieot(void)
-  * rely on it.
-  */
- static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
--			  int strip_extensions)
-+			  int strip_extensions, unsigned flags)
- {
- 	uint64_t start = getnanotime();
- 	struct hashfile *f;
-@@ -2851,6 +2851,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
- 	int drop_cache_tree = istate->drop_cache_tree;
- 	off_t offset;
-+	int csum_fsync_flag;
- 	int ieot_entries = 1;
- 	struct index_entry_offset_table *ieot = NULL;
- 	int nr, nr_threads;
-@@ -3081,7 +3082,13 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 			return -1;
- 	}
- 
--	finalize_hashfile(f, istate->oid.hash, FSYNC_COMPONENT_NONE, CSUM_HASH_IN_STREAM);
-+	csum_fsync_flag = 0;
-+	if (!alternate_index_output && (flags & COMMIT_LOCK))
-+		csum_fsync_flag = CSUM_FSYNC;
-+
-+	finalize_hashfile(f, istate->oid.hash, FSYNC_COMPONENT_INDEX,
-+			  CSUM_HASH_IN_STREAM | csum_fsync_flag);
-+
- 	if (close_tempfile_gently(tempfile)) {
- 		error(_("could not close '%s'"), get_tempfile_path(tempfile));
- 		return -1;
-@@ -3136,7 +3143,7 @@ static int do_write_locked_index(struct index_state *istate, struct lock_file *l
- 	 */
- 	trace2_region_enter_printf("index", "do_write_index", the_repository,
- 				   "%s", get_lock_file_path(lock));
--	ret = do_write_index(istate, lock->tempfile, 0);
-+	ret = do_write_index(istate, lock->tempfile, 0, flags);
- 	trace2_region_leave_printf("index", "do_write_index", the_repository,
- 				   "%s", get_lock_file_path(lock));
- 
-@@ -3230,7 +3237,7 @@ static int clean_shared_index_files(const char *current_hex)
- }
- 
- static int write_shared_index(struct index_state *istate,
--			      struct tempfile **temp)
-+			      struct tempfile **temp, unsigned flags)
- {
- 	struct split_index *si = istate->split_index;
- 	int ret, was_full = !istate->sparse_index;
-@@ -3240,7 +3247,7 @@ static int write_shared_index(struct index_state *istate,
- 
- 	trace2_region_enter_printf("index", "shared/do_write_index",
- 				   the_repository, "%s", get_tempfile_path(*temp));
--	ret = do_write_index(si->base, *temp, 1);
-+	ret = do_write_index(si->base, *temp, 1, flags);
- 	trace2_region_leave_printf("index", "shared/do_write_index",
- 				   the_repository, "%s", get_tempfile_path(*temp));
- 
-@@ -3349,7 +3356,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 			ret = do_write_locked_index(istate, lock, flags);
- 			goto out;
- 		}
--		ret = write_shared_index(istate, &temp);
-+		ret = write_shared_index(istate, &temp, flags);
- 
- 		saved_errno = errno;
- 		if (is_tempfile_active(temp))
+ };
 -- 
 gitgitgadget
-
