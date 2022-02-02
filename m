@@ -2,159 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7436C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 19:03:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57D5AC433F5
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 19:45:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346839AbiBBTDn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Feb 2022 14:03:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49336 "EHLO
+        id S1346946AbiBBTpi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Feb 2022 14:45:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231486AbiBBTDm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Feb 2022 14:03:42 -0500
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89999C061714
-        for <git@vger.kernel.org>; Wed,  2 Feb 2022 11:03:42 -0800 (PST)
-Received: by mail-qv1-xf29.google.com with SMTP id d8so495157qvv.2
-        for <git@vger.kernel.org>; Wed, 02 Feb 2022 11:03:42 -0800 (PST)
+        with ESMTP id S1346649AbiBBTph (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Feb 2022 14:45:37 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0687C061714
+        for <git@vger.kernel.org>; Wed,  2 Feb 2022 11:45:37 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id m4so659828ejb.9
+        for <git@vger.kernel.org>; Wed, 02 Feb 2022 11:45:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rnbdQOI20IiEpwVhe0Ych5hWodL9bzeB+L51zqGC0wE=;
-        b=P6l6QpMyxKMt+O1FvwHSVh4fwWE3MRzUcnLSV/me2AurwvnE8/1q/QxT2VUTD6L11Z
-         41agjFGgKhHDaLkX95JUs6Jtaicw/nyGmVrFSkb/9Q8/YGQ2+8xlmXrEJ2VUxoQSfMJ7
-         mIdI5l2QxhMCO4Mavx76bpwIr6nMzjYQEE0U6YMtF5HsKm/RxudK2w4q5qDN/XDr5Iry
-         dpKUaa6P94sc06IOFqGJuBewQXXyiElmDVT+tttcpMOcFLb7sNxL3MIr+KiQfCakV8iB
-         /wqBlnOueDKxjLs0N/A5m2x2jOt2qOJcPElDTmyHIlgPTe3xh45ThxD1WbaM1xlgQkmx
-         k8hg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=pU/36p9ZLRYnKGEFMgmNAzXYNkwah+n4xUa4BHwdrR8=;
+        b=b86ATt71wBUZpYB8kL0O9vfAez2/Olw43pGx6WqHFUkHMPg/EqA9Dqf0ovB2ax7YWC
+         jLTcuTaUUyPi1qOm0i8nTpjErwF9OB0wyCYrcd8bpXJ8+u1gUkkVkncYf3zSvKf1Xqjc
+         vSBO6Ltr1BLdVbs45UA5it27gTMBfPX3zu2xYQq3oJ+2Ukh6dO4n7Z9wKvUC4zeg1qli
+         TKLLiXTwSUVIX6TAPD2HaZzvf9+r+cEBOczYd1dHDAP1d5OPakeUdNt1Vhe2m6e3g1ji
+         /V7h8A5O2s7Pgc9yd8Z9rBZXTRrHy5LxQHPG4BYuv5EIL+Htj6JhNMLuJendPgs91+um
+         Cjtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=rnbdQOI20IiEpwVhe0Ych5hWodL9bzeB+L51zqGC0wE=;
-        b=4P8/T2hB5GNGL4TkoJKkByIPPyxx3kubd/8DMzPBySjxD+il941qyMbr76h1AQhFnh
-         Yr1tPlwmIoA8RWk8xB6hPInrxT1J+Y3XeljU5DhHdWa8t6WeVCgVwnqCKe0LrTe7LZD3
-         chOrT0ugBbRI3hPcMBPEsWg4m/2BwSxH/+LSi/HKuNS2mk+y0rR/gGMEradTyuKohruS
-         sedmWimXe1dReBLvPK8JmM0seCbe/sFxwgUlMjk189nmw0HQMlht98yLlfyLqjPZw7Os
-         WmvpMgXHDTV3Omj5LKOC0E8+9ixsnLlOqImgeWdEI46319UXsV2rD7t4Pf4DCoVwHJ4D
-         ZM7g==
-X-Gm-Message-State: AOAM531VDZ43KSHnEJFAHN0/waOb26uXVEx5rX1W0CjSAGUJZOf+aLSo
-        rOZqBCEYhwFgcXNwz16vOZpo+wQCZeU=
-X-Google-Smtp-Source: ABdhPJx73UMweZEavNTLpm7VUnhIHYBn5xGq06yj9L346u7huCnTaBKrHmQEKJuZK5HEryM6O5xCxA==
-X-Received: by 2002:ad4:5ded:: with SMTP id jn13mr27236611qvb.31.1643828621363;
-        Wed, 02 Feb 2022 11:03:41 -0800 (PST)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id y18sm5532383qtj.33.2022.02.02.11.03.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Feb 2022 11:03:40 -0800 (PST)
-Subject: Re: New `--reapply-cherry-picks` warning
-To:     =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>, git <git@vger.kernel.org>
-References: <CAHMHMxUZpR8MBj+9mSb1Cr3PBCsAx=6zLo9mKpeD_ehqDP4nvQ@mail.gmail.com>
-Cc:     steadmon@google.com
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <31e822be-b7c1-acb2-20d5-6db2200c3383@gmail.com>
-Date:   Wed, 2 Feb 2022 14:03:39 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=pU/36p9ZLRYnKGEFMgmNAzXYNkwah+n4xUa4BHwdrR8=;
+        b=UB9E9DOp/FbDlGwK3J8XIyqPLkwxVzrwKhiREAyMDb9awg6xL2HiqMeH3aQrz+zEFE
+         SQGpYxsdphhNVbY1TVKBjcoGi3jQ/bz59pHpCP9ZmdUQ3QCvvj8U+YAcF0FPO6RZ83+A
+         tgd+nSRggzMQTPEal4hiKum9/CZFeMAKh44+qNByho+R9alEffWRaIze4jEQmfyd4Klt
+         ftVNCsPTSrE/DLerpCOhLgVlnLaAe195/ev8gwtZwYg9ZE0wjKPIMzZdpnPXCvAb6etr
+         NMZYXiBd0zCyrDEeJZB+gdlueqV2bYATDAAm8DgxBkFx4tCqQ5l3hSQiwvxACFhKr805
+         XQuw==
+X-Gm-Message-State: AOAM530MEl1pJ+MgCtCeB/puqYeKVFkoE2jXSB/VcOs1fGhvpbC0Jlfc
+        xhkqkWdCJgTDcXDQGYhfQ9Q=
+X-Google-Smtp-Source: ABdhPJwuNQh97CC7wGdiCHUVAYchiWhzgTUsdE+FJSKtfET3qTAUsOcll/HdOgWDcgol8ulvPxK3og==
+X-Received: by 2002:a17:907:3e8a:: with SMTP id hs10mr26708576ejc.767.1643831135919;
+        Wed, 02 Feb 2022 11:45:35 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id g27sm16009416ejf.108.2022.02.02.11.45.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Feb 2022 11:45:35 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nFLZO-004fi2-Gn;
+        Wed, 02 Feb 2022 20:45:34 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t0051: use "skip_all" under !MINGW in single-test file
+Date:   Wed, 02 Feb 2022 20:44:16 +0100
+References: <patch-1.1-34ff968dcb8-20220201T203428Z-avarab@gmail.com>
+ <xmqq5ypycl7u.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqq5ypycl7u.fsf@gitster.g>
+Message-ID: <220202.86zgn96oip.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAHMHMxUZpR8MBj+9mSb1Cr3PBCsAx=6zLo9mKpeD_ehqDP4nvQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ntentos,
 
-Le 2022-02-02 à 03:56, Σταύρος Ντέντος a écrit :
-> Hello there,
-> 
+On Tue, Feb 01 2022, Junio C Hamano wrote:
 
-Hi !
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> Have this file added in 06ba9d03e34 (t0051: test GIT_TRACE to a
+>> windows named pipe, 2018-09-11) use the same "skip_all" pattern as an
+>> existing Windows-only test added in 0e218f91c29 (mingw: unset PERL5LIB
+>> by default, 2018-10-30) uses.
+>>
+>> This way TAP consumers like "prove" will show a nice summary when the
+>> test is skipped, e.g.:
+>
+> ... as opposed to?  A failure?  A different appearance of the log
+> message?  Something else?
 
-> I have noticed the new warning that's coming in the
-> https://github.com/git/git/commit/767a4ca648f8791c1fb623bd9f79fd8d7f026499
+In "prove" we go from simply showing "ok":
+=20=20=20=20
+    $ prove t0051-windows-named-pipe.sh
+    t0051-windows-named-pipe.sh .. ok=20=20=20
+    All tests successful.
+    Files=3D1, Tests=3D1,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.03 cu=
+sr  0.01 csys =3D  0.06 CPU)
+    Result: PASS
+=20=20=20=20
+To showing the skip message quoted here:
 
-Nice archeology work. It's always a good idea when mentioning specific 
-commits to CC the commit author (which I've done here).
+>>
+>>     $ prove t0051-windows-named-pipe.sh
+>>     [...]
+>>     t0051-windows-named-pipe.sh ... skipped: skipping Windows-specific t=
+ests
+>>     [...]
 
-> I am currently using the `[pull] rebase = true` option; and basically
-> that warning is also coming every time I am pulling.
+But YMMV. We're now making use of the right TAP-y way to communicate
+this to the consumer. I.e. skipping the whole test file, v.s. skipping
+individual tests (in this case there's only one test).
 
-OK, that would mean either:
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>
+>> A trivial UX improvement for the "prove" output, so that we'll show a
+>> notice in the same way as e.g. t0029-core-unsetenvvars.sh and
+>> t5580-unc-paths.sh do (which are both Windows-specific).
+>>
+>>  t/t0051-windows-named-pipe.sh | 7 ++++++-
+>>  1 file changed, 6 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/t/t0051-windows-named-pipe.sh b/t/t0051-windows-named-pipe.=
+sh
+>> index 10ac92d2250..412f413360d 100755
+>> --- a/t/t0051-windows-named-pipe.sh
+>> +++ b/t/t0051-windows-named-pipe.sh
+>> @@ -3,8 +3,13 @@
+>>  test_description=3D'Windows named pipes'
+>>=20=20
+>>  . ./test-lib.sh
+>> +if ! test_have_prereq MINGW
+>> +then
+>> +	skip_all=3D'skipping Windows-specific tests'
+>> +	test_done
+>> +fi
+>>=20=20
+>> -test_expect_success MINGW 'o_append write to named pipe' '
+>> +test_expect_success 'o_append write to named pipe' '
+>>  	GIT_TRACE=3D"$(pwd)/expect" git status >/dev/null 2>&1 &&
+>>  	{ test-tool windows-named-pipe t0051 >actual 2>&1 & } &&
+>>  	pid=3D$! &&
 
-1- each time you are pulling, the upstream branch *did* get some of your
-local commits somehow, so the warning is justified
-
-or 
-
-2- the upstream branch *did not* get some of your local commits, so the warning
-is shown but shouldn't be, and that's a bug.
-
-Which one is it?
-
-> I have tried doing `git pull --reapply-cherry-picks`; however, it
-> seems that the `git pull` cannot pass options to the underlying `git
-> rebase` invocation.
-
-Indeed, it can't. I agree it would be nice to be able to do that, and the 
-same for 'merge', I would say. Right now a lot of 'merge' options are 
-duplicated in 'git pull'.
-
-> 
-> I noticed that there is no way to "set" the `--reapply-cherry-picks`
-> in the gitconfig options.
-
-Yes, that would be a nice option to have indeed.
-
-> 
-> I prefer the rebase backend for the `git pull`; however, I see no way
-> of doing "what I want", with the exception of:
-> git fetch --all ; git rebase --reapply-cherry-picks
-> 
-> Which is two steps, technically.
-
-Careful, as this is not the exact equivalent of 'git pull --rebase', as
-the documentation for that option states [1]:
-
-    If there is a remote-tracking branch corresponding
-    to the upstream branch and the upstream branch was rebased 
-    since last fetched, the rebase uses that information to 
-    avoid rebasing non-local changes.
-
-(see also paragraphs 2-3 of [2], [3] [4] and [5]).
-
-> 
-> Also with every rebase I am doing, I'd have to remember that.
-> And it is probably not possible (by design) to do `alias.rebase =
-> rebase --reapply-cherry-picks` - which I understand.
-> (however, allowing aliases like `alias.x = x --cmd-opts` does not
-> sound "so bad" with me)
-
-Yes, that's considered "by design" that you can't alias an existing
-command using the exact command name. That is to make sure that scripts
-have consistent behaviour across users (other config options can still
-affect behaviour, but anyway that's the justification I've read before
-on the list). What I can suggest is using 're = rebase --reapply-cherry-picks'
-and then retrain your finger ;)
-
-> 
-> Would you consider adding a configuration option for the
-> `--reapply-cherry-picks`?
-> 
-> With regards,
-> Ntentos Stavros
-> 
-> 
-
-Cheers,
-Philippe.
-
-[1] https://git-scm.com/docs/git-pull#Documentation/git-pull.txt--r
-[2] https://git-scm.com/docs/git-rebase#_description
-[3] https://git-scm.com/docs/git-rebase#Documentation/git-rebase.txt---fork-point	
-[4] https://git-scm.com/docs/git-merge-base#Documentation/git-merge-base.txt---fork-point
-[5] https://git-scm.com/docs/git-merge-base#_discussion_on_fork_point_mode
