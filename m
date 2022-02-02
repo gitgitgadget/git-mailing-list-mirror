@@ -2,130 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B725FC433EF
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 15:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E78AC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 16:04:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345250AbiBBPDI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Feb 2022 10:03:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49960 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230216AbiBBPDH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Feb 2022 10:03:07 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3377DC061714
-        for <git@vger.kernel.org>; Wed,  2 Feb 2022 07:03:07 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id p12-20020a17090a2d8c00b001b833dec394so1221741pjd.0
-        for <git@vger.kernel.org>; Wed, 02 Feb 2022 07:03:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=coup.net.nz; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=r2FxEOPWPcQAtuxbPNFnA9IJ1AORqNaRm9k0Q4WqBv0=;
-        b=RCMTP5hsHRlvQlLRD6P4hSzerBFjvjx2vYyvqm7W572ho8eeINKuPyQupRV0joBdxP
-         zu30/us0DcnC7wkn8Q3HqUHDBjgsAjj2aQOHdM9l8toWuGntNVeQM0RAEoFsJNejq7b3
-         nTD+EI5ig1/X4bHgi9RVYrb/brPq7teSf+GB0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=r2FxEOPWPcQAtuxbPNFnA9IJ1AORqNaRm9k0Q4WqBv0=;
-        b=fwjEDjh58f1RAi+Uxe0VvqKhVZxSb43RrDa+P38IuCdrVK7nOFRE99LQltOoFat4ik
-         xpAI8YMUFkIb3/TKfom9rz8/gbh9dXYYkHlDX7yZxxPQN5TAJjyf5V5ZWUh35GaV8OZl
-         TNfPK8FSFl161YS9vf+8hOpMgiPurhRU303vDHyeJV2zPKiXouvqc7eJFDpo4Hy4jJMZ
-         7Wx0D8UaoUOJSVA4xoG6kyCHtMBO0cMykTMNArsZPwLuIohumscjBFJwoE+UAHzXBOGD
-         hwl1oVmFIpQIx+8sKEN8fSV+wrvoUkMHBmW4X8ZjzsUqV2JxwmGYy4hOq+x+xRMD1Nn1
-         hF9g==
-X-Gm-Message-State: AOAM532SVSWtjlzAFWCVyf+LW2hNPnepcDkHE0K7aAnqGK472vr8sb1B
-        UNJTuf46fI5FlT/VuZZAwm8Ka/n0fLyPBW3mIQEoDQ==
-X-Google-Smtp-Source: ABdhPJwh9XeQICzfZM4Vmupq4Z/dRVisUzFtu5CbXzqxElakKdyNA0Rjiv7glXeGk5jKgDRHUIdEeIA6u+LeWjaZKFU=
-X-Received: by 2002:a17:90b:4b88:: with SMTP id lr8mr8544816pjb.166.1643814186543;
- Wed, 02 Feb 2022 07:03:06 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1138.git.1643730593.gitgitgadget@gmail.com> <xmqqk0eecpl9.fsf@gitster.g>
-In-Reply-To: <xmqqk0eecpl9.fsf@gitster.g>
-From:   Robert Coup <robert@coup.net.nz>
-Date:   Wed, 2 Feb 2022 15:02:55 +0000
-Message-ID: <CACf-nVdmWyDnhJC=ikx85UST=u2ENAc4DhJJCp5c030Vb9=4+Q@mail.gmail.com>
-Subject: Re: [PATCH 0/6] [RFC] partial-clone: add ability to refetch with
- expanded filter
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Robert Coup via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        John Cai <johncai86@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S235773AbiBBQEx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Feb 2022 11:04:53 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:35951 "EHLO
+        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S242154AbiBBQEs (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 2 Feb 2022 11:04:48 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id CC2C65C01D3
+        for <git@vger.kernel.org>; Wed,  2 Feb 2022 11:04:47 -0500 (EST)
+Received: from imap46 ([10.202.2.96])
+  by compute5.internal (MEProxy); Wed, 02 Feb 2022 11:04:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hurrell.net; h=
+        cc:content-type:date:date:from:from:in-reply-to:message-id
+        :mime-version:reply-to:sender:subject:subject:to:to; s=fm1; bh=W
+        nRkfMNQVSjpYrXohfHbnQOmG9jBOKgaE9rK7+VAaJs=; b=cjgXRdRPJyNkbQmGq
+        Ov3yU+wiXR5hTUq2y7+GDqh419rJsaWF3ZEsGmcGzVE5rtjFnXP6U/IVQ0nVaOij
+        uJ07f/K+1t7VMAJqlKn6IpeLzNpWbCsQURCMfaBj17nNKjjCq5ddXSx0jPcJsfC4
+        pfzViEVNW79jw63QvvZRNmOiQZq4O4l6eKf7kq4A272dEwjcCOcTs+3kDvN+PZi3
+        kGh7tnewd1qcpqylOnL4QbTMw51DOtwUJOW124Ob7XeSGSE0WwBjj0QhpPz9P9f0
+        nNiBUcCjFouiq7IylXShwFOLnaRKrahFfO0/+y7nhiIh0AXqepz1SKLllLn7qsbF
+        wxCKQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:date:from:from
+        :in-reply-to:message-id:mime-version:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; bh=WnRkfMNQVSjpYrXohfHbnQOmG9jBOKgaE9rK7+VAa
+        Js=; b=k3y6OOsLGpXXFFocUx8h0TmwGmL1mu82WrZAs+eKk4AoXJfwJppeIiaD3
+        nIbaODi9zoQhJ6+xJs+RW+FCJEBDIS4NJpMEHXPo3/KNnYQOFbwdOBr2jF+fmYkt
+        UnIjw+5F5Q6aQ/8oGcd3xj4amNHXqQYOOb9aX4LnoGJvuVlC2xj0A+/dKPoDWzcV
+        /ym4DahpIX6/tb7aNy42yYo9WYHAfFy0jrDS1sKnzprMj7i3XjMAffABPdnrQsBp
+        BAfy/d0OzeuXq3WpVFfCM6WSeaOhRjF815TsZevEUQBf/WWRp1o5TeceN0c/cEXY
+        7Hv2J3OeMpS1eIVHjjunQMShN/CKg==
+X-ME-Sender: <xms:n6v6Ybc4yZeY5k9lCs5qmsfU4J6-W8CRH-godXuLdpgfQ1f0pljt5g>
+    <xme:n6v6YRIRy8xFpfyVr3B4scpVI-o9xZna3ou9RubKHQu71AP1c8bSFl2jkb5EWslju
+    oxuCqFOW2OK0Thw-hU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeehgdekgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkfffhvffutgesthdtredtre
+    ertdenucfhrhhomhepfdfirhgvghcujfhurhhrvghllhdfuceoghhrvghgsehhuhhrrhgv
+    lhhlrdhnvghtqeenucggtffrrghtthgvrhhnpeeigeffhfeivdduvddtvdeuleehvdettd
+    eiudejieektdffudetudekjeelieffhfenucffohhmrghinhepphgrthhhrdhinhenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheshh
+    hurhhrvghllhdrnhgvth
+X-ME-Proxy: <xmx:n6v6YRZmiZ3B7UwCi3ezpGvMqJ-YfAdlZihgetXjgfMtxdzBZe76Gw>
+    <xmx:n6v6YUsoK3ftwvo4aXM6fLujI5k2HxzV5CQgbyOuWIxdLt9waJu1iw>
+    <xmx:n6v6YWuTtsEHcauqGMFKQAVJDTv1Eh-vez75DkjC1LuLyl1VNHyWBw>
+    <xmx:n6v6YZjvfrYPFrklkwj8XPHuL_9NVD4BfVIxgBeCjs-ylLRqnDMc4g>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 8F76F1EE043B; Wed,  2 Feb 2022 11:04:47 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4585-ga9d9773056-fm-20220113.001-ga9d97730
+Mime-Version: 1.0
+Message-Id: <ee1dd453-e698-440a-911b-d14389e33715@beta.fastmail.com>
+Date:   Wed, 02 Feb 2022 17:04:26 +0100
+From:   "Greg Hurrell" <greg@hurrell.net>
+To:     git@vger.kernel.org
+Subject: git-checkout doesn't seem to respect config from include.path
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+Hi,
 
-Thanks for your input. Hopefully some of the other partial-clone
-interested folks will chime in too.
+Not sure if this is confined specifically to `git-checkout`, but that's
+the command I noticed the issue with:
 
-On Tue, 1 Feb 2022 at 20:13, Junio C Hamano <gitster@pobox.com> wrote:
->
-> It sounds like a useful thing to have such a "refetch things"
-> option.
+With the release of the v2.35.0 and the "zdiff3" setting for
+"merge.conflictStyle", I find myself wanting to use "zdiff3" on machines
+running the new version, and falling back to "diff3" on machines with an
+older version.
 
-Any improved suggestions on the argument name? I thought of
---refetch but `fetch --refetch` seemed more confusing to explain.
+To this end, I have a ~/.gitconfig that contains:
 
-> Makes me wonder how well these two features work together (or if
-> they are mutually exclusive, that is fine as well as a starting
-> point).
+    [merge]
+    	conflictStyle = zdiff3
+    [include]
+    	path = ~/.gitconfig.local
 
-I don't see any particular reason they can't work together - as you say,
-the filtering is orthogonal to shallow on a conceptual level. I haven't
-added a test for that scenario yet but will do for a v1.
+The idea is that I can use the same `~/.gitconfig` on every machine I
+use, but on machines that only have an older Git version, I drop in a
+~/.gitconfig.local with overrides like this:
 
-> If you update the filter specification to make it narrower (e.g. you
-> start from blob:limit=3D1m down to blob:limit=3D512k), would we transfer
-> nothing (which would be ideal), or would we end up refetching
-> everything that are smaller than 512k?
+    [merge]
+    	conflictStyle = diff3
 
-As you spot, the latter. I can't see a straightforward way of telling the
-server "I have these trees/blobs already" without generating (one way
-or the other) a list of millions of oids, then transferring & negotiating
-with it.
+`git config --get merge.conflictStyle` correctly reports that my setting is
+"diff3" on such machines, and `git config --get-all merge.conflictStyle`
+shows:
 
-> ... it is not smart enough to stell them to exclude what we _ought_
-> to have by telling them what the _old_ filter spec was.  That's OK
-> for a starting point, I guess.
+    diff3
+    zdiff3
 
-The client doesn't really know what the local repository *has* =E2=80=94
-potentially several filters could have been applied and used for fetches
-at different points in the commit history, as well as objects dynamically
-fetched in. Even a filter set in the config only applies to subsequent
-fetches, and only if --filter isn't used to override it.
+In other words, it knows that I have multiple values set, but it uses
+a last-one-wins policy.
 
-> Hopefully, at the end of this
-> operation, we should garbage collect the duplicated objects by
-> default (with an option to turn it off)?
+However, when I try to run a command like `git checkout -b something`,
+Git dies with:
 
-I haven't explicitly looked into invoking gc yet, but yes, it'd be a bit of
-a waste if it wasn't kicked off by default. Maybe reusing gc.auto
+    fatal: unknown style 'zdiff3' given for 'merge.conflictstyle'
 
-> In other words, a repository that used to be a partial clone can
-> become a full clone by using the option _and_ not giving any filter.
+So, it looks like something in `git-checkout`'s option processing is
+causing it to disregard the override set via "include.path". In fact, it
+even disregards a value passed in with `-c` like this:
 
-For that specific case I think you can already do it by removing the
-promisor flag in the remote config, potentially adding it back if you
-wanted to keep it partial again from that point forward.
+    git -c merge.conflictStyle=diff3 checkout -b something
 
-> I think that is an intuitive enough behaviour and a natural
-> consequence to the extreme of what the feature is.  Compared to
-> making a full "git clone", fetching from the old local (and narrow)
-> repository into it and then discarding the old one, it would not
-> have any performance or storage advantage, but it probably is more
-> convenient.
+Does this sound like a bug, or are my expectations off? I'd be happy to
+look into fixing this, but first would like to know whether it is
+expected behavior.
 
-It's certainly cleaner than abusing --deepen, or temporarily moving pack
-files out of the way, or starting over with a fresh clone & copying config.
-
-Thanks,
-
-Rob :)
+Cheers,
+Greg
