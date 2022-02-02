@@ -2,255 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4A8CC433EF
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 07:35:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6328DC433F5
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 08:32:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240383AbiBBHf2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Feb 2022 02:35:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60454 "EHLO
+        id S244953AbiBBIcz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Feb 2022 03:32:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239775AbiBBHfI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Feb 2022 02:35:08 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2B4CC06175C
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 23:34:54 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id k6-20020a05600c1c8600b003524656034cso3262998wms.2
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 23:34:54 -0800 (PST)
+        with ESMTP id S244946AbiBBIcx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Feb 2022 03:32:53 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76042C061714
+        for <git@vger.kernel.org>; Wed,  2 Feb 2022 00:32:53 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id u6so39037822lfm.10
+        for <git@vger.kernel.org>; Wed, 02 Feb 2022 00:32:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4vpK7gvSSTnnlTHW028zn/66BNp2/IopKxZgoFX/3Ek=;
-        b=m9zIqm9GYNfkjsOB2hqOSbb/Y0GE/saa5LcIlOcZG0dSHzf88hZZlXQ30+IkJOwPMb
-         x5zWGwouk5WadZj/CvkO8Vml1/1SzqDqJcQgR4zJ5S1B7Yv3/YHJOrrvjtk9tG8by3n7
-         tPGcj3rfq8Yx1Hx8Msv6ay5NgomDWdsAV/dIJsp9nbW3VtEOISaBmenMna5x4NbmTYF4
-         VEZbbbqXC+C7eqMnYD36NZoJ54iYDcEeL4UkBGT16Rvr9MjWodfgZBbhhG54nPNUgvuD
-         vCMrz507A2qtf7aZslbmcclhhG1/5KaaEmfzY8pkGgzV5IVb2bOg8Femg5WwSGjbjy5V
-         Hk0g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=aeNhfC+2bwptnat//qvZ/KCWNDrb7XTcAEsyhbSIPs8=;
+        b=KpIKYK+hXrwDno49k8XB+2U1S4SiwSoM8ndnykFdbfUWgCRJRLyWsAZFJyOmrSahSa
+         dlN+jhy791uejPUXcWim+gwP9XlEAckbnQc1oRBwTF6rs+ulHJWMAyPvC1Rw7HroYuA9
+         qLeEMnAQ8MMkTHd1ifvJBSoeQIfAuTjAqk3zsSmyREBErCH9dvGjsfpplTU9PCooOc8b
+         pO9X/yMK1r21xrbU/y3ngfHNDuUcI4jK3j4OV4CARQkfcxKCYCSV9DmIksRf5RR8LLHq
+         HX1IL+VoxHKz4f5SQT9yMaix9eXX0+lPvWMkOhJ5T/BZMRmCWiWW/ABUwt9rWpg8Vwnt
+         Hc3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4vpK7gvSSTnnlTHW028zn/66BNp2/IopKxZgoFX/3Ek=;
-        b=T1QejF9c13eB9fqtNcaA96rtGVuKr5MvTbz5QV/ID/15vTlKKPYhdizquWWFnDd4ZG
-         5n4jsBYWRi+QK36JWL0tRkSiwxYuZeqjLBur0J4s8qK2LORnixAUdLoHmWeDsxiR0doy
-         54DwH7KQovwlFjvNZR0UEYjxbgGanUUjwv/MDqjdK8A4eIvi793aVhDe/JK5lbg6RriX
-         kEKaU7zrnpt5PkV8oCEh3GpnFve4BGv2hClWS6ituGNfQxSELtAuPNqaKYg2EKzqRCPP
-         Xu+Qb1adE9oITH1btjHejAVbKSQFkjbUpGk/WIzPb3XXfTh4XUTDCKaoEPwUAkv/HhJx
-         yZyQ==
-X-Gm-Message-State: AOAM532C4i9uvVt7j68tMVcrZn/T73dV0FWr5CGFuiMVyxC3tFvxMkbg
-        MWwJODtbF9wWTMwcKg6KbWCLt+xi9k4=
-X-Google-Smtp-Source: ABdhPJxVmqV9/4EVogYJQIVK0wR+2uk4gEBAybkAp49SbNzk90yA+wYTop6F78DU0TyeYsrsVlISAQ==
-X-Received: by 2002:a1c:7416:: with SMTP id p22mr4945718wmc.30.1643787293332;
-        Tue, 01 Feb 2022 23:34:53 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o2sm4148212wmq.21.2022.02.01.23.34.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 23:34:52 -0800 (PST)
-Message-Id: <2188a8ca1e77f2f5f8249f8b810775205ad529a6.1643787281.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
-References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
-        <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Feb 2022 07:34:38 +0000
-Subject: [PATCH v3 12/15] merge-tree: provide easy access to `ls-files -u`
- style info
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aeNhfC+2bwptnat//qvZ/KCWNDrb7XTcAEsyhbSIPs8=;
+        b=xB4fY+6C9dDX5oGRrTYUrWmzIIjXc+VABDyZFr3128TWYV/73Zr28I+EuHIXhotltt
+         BEIaYCojhXJ7qWhpZP30tWTVGC+/7BFmnlvgzbBHVPYn/hpDA/p/KMMf7XtA4e5Rwrza
+         yaczSfZkXnUtIDMAfU6jHe27zDY6Yo2Z3EBiqixqq+Ocerd4d+Kyby0k3BTwcpO0kfCV
+         dUfXoVtEmx+Hg0Uw8AuBYJouvg88fNQLT0ABlQwAU/T6EIMge0cRZRvyug9KDWeY1Wq4
+         U8aOUumbUniDwsv70DdUWadfiSsRMkwuWrGmvH5udIPeVIhP3QDgBkomOkOIb/1u1vBh
+         kEeg==
+X-Gm-Message-State: AOAM531Fau2IYDeriA5uN1C/oiTFvfxFPk2cSAyUjJEND386vQZuSjNn
+        SAyXLjhb3YKt6G+NO7d0yv8Y2yDrVKCstp6h9b9txoEle2aIFg==
+X-Google-Smtp-Source: ABdhPJwsuhsLtCp9sG5l95UMgipPlkY8t2rMWW75eeE63CPOSn2U391uvJ5T9DvMj/iGZ8DyBoaXnmXyq4MRkunAwDc=
+X-Received: by 2002:a05:6512:68e:: with SMTP id t14mr22914853lfe.366.1643790771605;
+ Wed, 02 Feb 2022 00:32:51 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+References: <20220108085419.79682-1-chiyutianyi@gmail.com> <20220120112114.47618-1-chiyutianyi@gmail.com>
+ <220201.86wnie8eg0.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220201.86wnie8eg0.gmgdl@evledraar.gmail.com>
+From:   Han Xin <chiyutianyi@gmail.com>
+Date:   Wed, 2 Feb 2022 16:32:40 +0800
+Message-ID: <CAO0brD2Pe0aKSiBphZS861gC=nZk+q2GtXDN4pPjAQnPdns3TA@mail.gmail.com>
+Subject: Re: [PATCH v9 0/5] unpack large blobs in stream
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Han Xin <hanxin.hx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On Wed, Feb 2, 2022 at 5:28 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+>
+>
+> On Thu, Jan 20 2022, Han Xin wrote:
+>
+> > From: Han Xin <hanxin.hx@alibaba-inc.com>
+> >
+> > Changes since v8:
+> > * Rename "assert_no_loose ()" into "test_no_loose ()" in
+> >   "t5329-unpack-large-objects.sh". Remove "assert_no_pack ()" and use
+> >   "test_dir_is_empty" instead.
+> >
+> > * Revert changes to "create_tmpfile()" and error handling is now in
+> >   "start_loose_object_common()".
+> >
+> > * Remove "finalize_object_file_with_mtime()" which seems to be an overk=
+ill
+> >   for "write_loose_object()" now.
+> >
+> > * Remove the commit "object-file.c: remove the slash for directory_size=
+()",
+> >   it can be in a separate patch if necessary.
+> >
+> > Han Xin (4):
+> >   unpack-objects: low memory footprint for get_data() in dry_run mode
+> >   object-file.c: refactor write_loose_object() to several steps
+> >   object-file.c: add "stream_loose_object()" to handle large object
+> >   unpack-objects: unpack_non_delta_entry() read data in a stream
+> >
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (1):
+> >   object-file API: add a format_object_header() function
+>
+> I sent
+> https://lore.kernel.org/git/cover-00.10-00000000000-20220201T144803Z-avar=
+ab@gmail.com/
+> today which suggests splitting out the 5/5 cleanup you'd integrated.
+>
+> I then rebased these patches of yours on top of that, the result is
+> here:
+> https://github.com/avar/git/tree/han-xin-avar/unpack-loose-object-streami=
+ng-9
+>
+> The range-diff to your version is below. There's a few unrelated
+> fixes/nits in it.
+>
+> I think with/without basing this on top of my series above your patches
+> here look good with the nits pointed out in the diff below addressed
+> (and some don't need to be). I.e. the dependency on it is rather
+> trivial, and the two could be split up.
+>
+> What do you think is a good way to proceed? I could just submit the
+> below as a proposed v10 if you'd like & agree...
+>
 
-Much like `git merge` updates the index with information of the form
-    (mode, oid, stage, name)
-provide this output for conflicted files for merge-tree as well.
-Provide an --exclude-modes-oids-stages/-l option for users to exclude
-the mode, oid, and stage and only get the list of conflicted filenames.
+Yes, thanks for the suggestions, and I'm glad you're happy to do so.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-merge-tree.txt | 30 ++++++++++++++++++++++++------
- builtin/merge-tree.c             | 11 ++++++++++-
- t/t4301-merge-tree-write-tree.sh | 26 ++++++++++++++++++++++++--
- 3 files changed, 58 insertions(+), 9 deletions(-)
+Thanks.
+-Han Xin
 
-diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-index 160e8f44b62..55bb7bc61c1 100644
---- a/Documentation/git-merge-tree.txt
-+++ b/Documentation/git-merge-tree.txt
-@@ -38,6 +38,11 @@ See `OUTPUT` below for details.
- OPTIONS
- -------
- 
-+--exclude-oids-and-modes::
-+	Instead of writing a list of (mode, oid, stage, path) tuples
-+	to output for conflicted files, just provide a list of
-+	filenames with conflicts.
-+
- --[no-]messages::
- 	Write any informational messages such as "Auto-merging <path>"
- 	or CONFLICT notices to the end of stdout.  If unspecified, the
-@@ -55,7 +60,7 @@ simply one line:
- Whereas for a conflicted merge, the output is by default of the form:
- 
- 	<OID of toplevel tree>
--	<Conflicted file list>
-+	<Conflicted file info>
- 	<Informational messages>
- 
- These are discussed individually below.
-@@ -67,18 +72,23 @@ This is a tree object that represents what would be checked out in the
- working tree at the end of `git merge`.  If there were conflicts, then
- files within this tree may have embedded conflict markers.
- 
--Conflicted file list
-+Conflicted file info
- ~~~~~~~~~~~~~~~~~~~~
- 
--This is a sequence of lines containing a filename on each line, quoted
--as explained for the configuration variable `core.quotePath` (see
--linkgit:git-config[1]).
-+This is a sequence of lines with the format
-+
-+	<mode> <object> <stage> <filename>
-+
-+The filename will be quoted as explained for the configuration
-+variable `core.quotePath` (see linkgit:git-config[1]).  However, if
-+the `--exclude-oids-and-modes` option is passed, the mode, object, and
-+stage will be omitted.
- 
- Informational messages
- ~~~~~~~~~~~~~~~~~~~~~~
- 
- This always starts with a blank line to separate it from the previous
--section, and then has free-form messages about the merge, such as:
-+sections, and then has free-form messages about the merge, such as:
- 
-   * "Auto-merging <file>"
-   * "CONFLICT (rename/delete): <oldfile> renamed...but deleted in..."
-@@ -110,6 +120,14 @@ plumbing commands since the possibility of merge conflicts give it a
- much higher chance of the command not succeeding (and NEWTREE containing
- a bunch of stuff other than just a toplevel tree).
- 
-+git-merge-tree was written to provide users with the same information
-+that they'd have access to if using `git merge`:
-+  * what would be written to the working tree (the <OID of toplevel tree>)
-+  * the higher order stages that would be written to the index (the
-+    <Conflicted file info>)
-+  * any messages that would have been printed to stdout (the <Informational
-+    messages>)
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 54dae018203..dc52cd02dce 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -394,6 +394,7 @@ static int trivial_merge(const char *base,
- struct merge_tree_options {
- 	int mode;
- 	int show_messages;
-+	int exclude_modes_oids_stages;
- };
- 
- static int real_merge(struct merge_tree_options *o,
-@@ -450,7 +451,11 @@ static int real_merge(struct merge_tree_options *o,
- 		merge_get_conflicted_files(&result, &conflicted_files);
- 		for (i = 0; i < conflicted_files.nr; i++) {
- 			const char *name = conflicted_files.items[i].string;
--			if (last && !strcmp(last, name))
-+			struct stage_info *c = conflicted_files.items[i].util;
-+			if (!o->exclude_modes_oids_stages)
-+				printf("%06o %s %d\t",
-+				       c->mode, oid_to_hex(&c->oid), c->stage);
-+			else if (last && !strcmp(last, name))
- 				continue;
- 			write_name_quoted_relative(
- 				name, prefix, stdout, line_termination);
-@@ -485,6 +490,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 			    N_("do a trivial merge only"), 't'),
- 		OPT_BOOL(0, "messages", &o.show_messages,
- 			 N_("also show informational/conflict messages")),
-+		OPT_BOOL_F('l', "exclude-modes-oids-stages",
-+			   &o.exclude_modes_oids_stages,
-+			   N_("list conflicted files without modes/oids/stages"),
-+			   PARSE_OPT_NONEG),
- 		OPT_END()
- 	};
- 
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index 7113d060bc5..1572f460da0 100755
---- a/t/t4301-merge-tree-write-tree.sh
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -47,6 +47,7 @@ test_expect_success 'Content merge and a few conflicts' '
- 	expected_tree=$(cat .git/AUTO_MERGE) &&
- 
- 	# We will redo the merge, while we are still in a conflicted state!
-+	git ls-files -u >conflicted-file-info &&
- 	test_when_finished "git reset --hard" &&
- 
- 	test_expect_code 1 git merge-tree --write-tree side1 side2 >RESULT &&
-@@ -86,7 +87,7 @@ test_expect_success 'Barf on too many arguments' '
- '
- 
- test_expect_success 'test conflict notices and such' '
--	test_expect_code 1 git merge-tree --write-tree side1 side2 >out &&
-+	test_expect_code 1 git merge-tree --write-tree --exclude-modes-oids-stages side1 side2 >out &&
- 	sed -e "s/[0-9a-f]\{40,\}/HASH/g" out >actual &&
- 
- 	# Expected results:
-@@ -109,7 +110,7 @@ test_expect_success 'test conflict notices and such' '
- '
- 
- test_expect_success 'Just the conflicted files without the messages' '
--	test_expect_code 1 git merge-tree --write-tree --no-messages side1 side2 >out &&
-+	test_expect_code 1 git merge-tree --write-tree --no-messages --exclude-modes-oids-stages side1 side2 >out &&
- 	sed -e "s/[0-9a-f]\{40,\}/HASH/g" out >actual &&
- 
- 	test_write_lines HASH greeting whatever~side1 >expect &&
-@@ -117,4 +118,25 @@ test_expect_success 'Just the conflicted files without the messages' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'Check conflicted oids and modes without messages' '
-+	test_expect_code 1 git merge-tree --write-tree --no-messages side1 side2 >out &&
-+	sed -e "s/[0-9a-f]\{40,\}/HASH/g" out >actual &&
-+
-+	# Compare the basic output format
-+	q_to_tab >expect <<-\EOF &&
-+	HASH
-+	100644 HASH 1Qgreeting
-+	100644 HASH 2Qgreeting
-+	100644 HASH 3Qgreeting
-+	100644 HASH 1Qwhatever~side1
-+	100644 HASH 2Qwhatever~side1
-+	EOF
-+
-+	test_cmp expect actual &&
-+
-+	# Check the actual hashes against the `ls-files -u` output too
-+	tail -n +2 out | sed -e s/side1/HEAD/ >actual &&
-+	test_cmp conflicted-file-info actual
-+'
-+
- test_done
--- 
-gitgitgadget
+> 1:  553a9377eb3 ! 1:  61fcfe7b840 unpack-objects: low memory footprint fo=
+r get_data() in dry_run mode
+>     @@ Commit message
+>          unpack-objects: low memory footprint for get_data() in dry_run m=
+ode
+>
+>          As the name implies, "get_data(size)" will allocate and return a=
+ given
+>     -    size of memory. Allocating memory for a large blob object may ca=
+use the
+>     +    amount of memory. Allocating memory for a large blob object may =
+cause the
+>          system to run out of memory. Before preparing to replace calling=
+ of
+>          "get_data()" to unpack large blob objects in latter commits, ref=
+actor
+>          "get_data()" to reduce memory footprint for dry_run mode.
+>     @@ Commit message
+>
+>          Suggested-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>          Signed-off-by: Han Xin <hanxin.hx@alibaba-inc.com>
+>     +    Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gm=
+ail.com>
+>
+>       ## builtin/unpack-objects.c ##
+>      @@ builtin/unpack-objects.c: static void use(int bytes)
+>     @@ t/t5328-unpack-large-objects.sh (new)
+>      +
+>      +test_no_loose () {
+>      +  glob=3Ddest.git/objects/?? &&
+>     -+  echo "$glob" >expect &&
+>     -+  eval "echo $glob" >actual &&
+>     ++  echo $glob >expect &&
+>     ++  echo "$glob" >actual &&
+>      +  test_cmp expect actual
+>      +}
+>      +
 
+I have a small doubt with this, it works fine with dash, but not
+others like zsh. Wouldn't
+it be better to do compatibility, or would it introduce other issues
+that I don't know?
+
+Thanks.
+-Han Xin
