@@ -2,156 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10018C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 04:20:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87943C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 04:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244527AbiBBEUV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 23:20:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45890 "EHLO
+        id S244663AbiBBEws (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 23:52:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244509AbiBBEUT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 23:20:19 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACEB7C061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 20:20:19 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id r14so16376336qtt.5
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 20:20:19 -0800 (PST)
+        with ESMTP id S231474AbiBBEwr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 23:52:47 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30879C061714
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 20:52:46 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id w27-20020a9d5a9b000000b005a17d68ae89so18370945oth.12
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 20:52:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skydio.com; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Bt/GF3MsdeipqIkIf556XVst83kCip4A8Wk9y3XFqJY=;
-        b=yFgMWIwFkmW0OjPnD1VqMZDo38n10SntLK8yVPX/y/otmIIeLqDLKwnCB8n1HFLIfS
-         4buF6GDMbfSHN3ZTov67fEjKa6r5FeUr4mHVIO0AUhcsatpzrcel9vp8vNxxjHotkxUP
-         Vqxyskoqp2T2Q37mvp58S95T175MSsZNDYZYCXsZaYFmEmtGxlP3w64MIXDIsEuGSbaF
-         clM5mBkzCHKMy6qShq6b1iA1XUDTTCtlfC0ploOWaCEDMEBjJFnPM/pDWMVfaMqoTOwj
-         gzFvKLwu7qqbHz3QGfftqyI+xvT3sgWVh3CHFHgfGVh8tnhihvKcTOdaYuIxUmKUthUX
-         TN5w==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/C8uqoGt2wOZMX1U74eKr4c/wWEq+ENg7PQx309yKW8=;
+        b=ZsUiYSfYGapNlbqEfKJkoFvAhZdk7axjPfSixVXb6x2X9xV/yJdyCeX3KmrtusbfR8
+         BusBjk+ZJMezjoTDSL31HMYnIVdAtR3VBrwlTsnSUKSGq4zPYiXQtb4zrj/Q7ExIklT6
+         cxgjg13oecf8bSMYkeMFOQooRJxPWEBs/92SQUGAEgYFLFuop9t4AJpXMAxfLspRnBD9
+         xxwGCm9ZJqEiYMN+XzPB/bGrW+MeQ/Bz8180ZtkrnC/NhvEfzzv4WiasrJ68HfcFJaqK
+         kEX3Z4NGANdq8Ex14U/TitGr+LlOoVTclMkIamQmAo5/7YQwr6iexEDEtgu4lz5+xDse
+         jdfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Bt/GF3MsdeipqIkIf556XVst83kCip4A8Wk9y3XFqJY=;
-        b=idTNaLok6sqY4s3p2IAppQCD9ProC7n0fHdTPtmvPLtReWJlggYrvNUbHkLRmhfvq2
-         BfWWR1PhneutEfiy3ErqGNY5m37QXz5R06QdU7mRdTirYhXIoGYfSKpr5FYGIll5LHkO
-         QwPTGKdVjdjUjlhZLJyeLDC0UGLRi6iq1CojDp8RTE+ifz/A1/Eh+LCutsdAGbz2tiUe
-         1fOWn33qQYt0/Ypv8ssXuxnGfXKog4sKYUvNyTnxcq3BxiaN1d6lKVJm/p2/eptOks1H
-         uZ+ReDOWvwq2HF0ixq0nZBwV3AH8EaADemzrFk7GSi0ohuz14M4iVFcsuA3EfYZgGg18
-         zhrg==
-X-Gm-Message-State: AOAM531rWT0w86OVUfrQ+bb+aGapFwt77aYfIajJ1ATbM0D9zJ745G/P
-        hKnmjkt1szU6HmSqpLd0oR7Hfc9MycfzNw==
-X-Google-Smtp-Source: ABdhPJy+vjFyJ1Xl6E/DoHhNae4/zUSvZ6D9UQ2s9IVLQkEHykQM0BAq1cUiaUMsSr+YLF9E3ccg/Q==
-X-Received: by 2002:a05:622a:349:: with SMTP id r9mr21600672qtw.275.1643775618587;
-        Tue, 01 Feb 2022 20:20:18 -0800 (PST)
-Received: from jerry-desktop2.localdomain ([50.236.240.214])
-        by smtp.gmail.com with ESMTPSA id m130sm11087502qke.55.2022.02.01.20.20.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 20:20:18 -0800 (PST)
-From:   Jerry Zhang <jerry@skydio.com>
-To:     git@vger.kernel.org, gitster@pobox.com
-Cc:     Jerry Zhang <jerry@skydio.com>
-Subject: [PATCH V4 1/2] patch-id: Fix antipatterns in tests
-Date:   Tue,  1 Feb 2022 20:20:15 -0800
-Message-Id: <20220202042015.10115-1-jerry@skydio.com>
-X-Mailer: git-send-email 2.35.1.7.ge3b4973ce7
-In-Reply-To: <20220131235218.27392-1-jerry@skydio.com>
-References: <20220131235218.27392-1-jerry@skydio.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/C8uqoGt2wOZMX1U74eKr4c/wWEq+ENg7PQx309yKW8=;
+        b=hq50Js7AOfYXFiNG4ODKTHt2s/RderXhiigZhBH9gVA6xl19thJDcdSPtC6DxkbGBv
+         hs7HdiH7pbj1qzdb4xqrAg8OryjJQqilMb8NeNMsSorpDE+WrIZVEXCTbFPg3VAUyw8Q
+         XWSGYnirzdVkMbprSjLQiwSldgDScmooNIV7gum3WZk7AIKSShPjvFSS9HI4aibSPs55
+         ka0l6NO02TruDltHYwBaSlt/ODUfTXj3WuMzpONtG56p6LXSXhGIXBHAPkmxdcu3uuQX
+         AKaKPOuBu1KnTMczGkSKGW4TWSuvPJnBpv1OQtDaiVskXGhkmENuyNwh7AfFDmcgrMJZ
+         6jKQ==
+X-Gm-Message-State: AOAM5324URzAyk5gDX/5DkXtmhLgGE9XIPEr84uGSaYKgERyR1Q7MJif
+        aNe+ueTP5emR1YqWPZYt+SxiV8nPzsSbB8oHCNO9+nRdGqHZPg==
+X-Google-Smtp-Source: ABdhPJz4y4fPSonmvRDTy2Xy7fPLvXiffg4TOBBdbM8ToQoGjx0Okq4Zc91y8sB+8ddNYlSeh4pT5qoRqvtArqvvers=
+X-Received: by 2002:a05:6830:448c:: with SMTP id r12mr12374216otv.114.1643777565503;
+ Tue, 01 Feb 2022 20:52:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20220123060318.471414-1-shaoxuan.yuan02@gmail.com>
+ <20220130094357.515335-1-shaoxuan.yuan02@gmail.com> <20220130094357.515335-2-shaoxuan.yuan02@gmail.com>
+ <xmqq35l29mcu.fsf@gitster.g>
+In-Reply-To: <xmqq35l29mcu.fsf@gitster.g>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Date:   Wed, 2 Feb 2022 12:52:33 +0800
+Message-ID: <CAJyCBOTs-b98q7b7THCZvqS=yVqgoOm4XshoOAQyuusy6S6pBQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] t/lib-read-tree-m-3way: replace double quotes with
+ single quotes
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clean up the tests for patch-id by moving file preparation
-tasks inside the test body and redirecting files directly into
-stdin instead of using 'cat'.
+On Wed, Feb 2, 2022 at 7:51 AM Junio C Hamano <gitster@pobox.com> wrote:
+> The old one does not use "double quotes", though ;-)
+>
+> Also, the above belongs to the log message proper, as it would help
+> readers of "git log" in the future, as opposed to merely helping
+> reviewers only while the patch is under review (e.g. differences
+> between v1 and v2 is a good thing to write after "---", as "git log"
+> readers will not have access to v1, and will not even want to know
+> that there was v1).
 
-Signed-off-by: Jerry Zhang <jerry@skydio.com>
----
-V3->V4:
-- Quote the EOF marker correctly
+Thanks, think I should put the explanation message above the "---"
+so "git log" has it. It's a really helpful tip (I think I was too
+cautious to put
+more message above "---" so I just left it blank but a commit title).
 
- t/t4204-patch-id.sh | 64 ++++++++++++++++++++++-----------------------
- 1 file changed, 31 insertions(+), 33 deletions(-)
+> Documentation/SubmittingPatches has more hints on the log message
+> writing to help anybody who wants to participate in this project.
+>
+>  * The title summarizes what problem is being solved (yours is
+>    fine).
+>
+>  * Then the status quo is explained in the present tense.
+>
+>  * Readers are made to realize what is wrong about the status quo.
+>
+>  * The approach taken to solve that problem is outlined.
+>
+>  * Then orders are given to the codebase to "become like so" in
+>    imperative mood.
+>
+> Applying the above to this patch:
+>
+>         t/lib-read-tree-m-3way: modernize style
+>
+>         Many invocations of the test_expect_success command in this
+>         file are written in old style where the command, an optional
+>         prerequisite, and the test title are written on separate
+>         lines, and the executable script string begins on its own
+>         line, and these lines are pasted together with backslashes
+>         as necessary.
+>
+>         An invocation of the test_expect_success command in modern
+>         test scripts however writes the prerequisite and the title
+>         on the same line as the test_expect_success command itself,
+>         and ends the line with a single quote that begins the
+>         executable script string.
+>
+>         Update the style for uniformity.
+>
+> or something along that line, perhaps?
 
-diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
-index 80f4a65b28..2bc940a07e 100755
---- a/t/t4204-patch-id.sh
-+++ b/t/t4204-patch-id.sh
-@@ -164,42 +164,40 @@ test_expect_success 'patch-id respects config from subdir' '
- 		cd subdir &&
- 		test_patch_id irrelevant patchid.stable=true
- 	)
- '
- 
--cat >nonl <<\EOF
--diff --git i/a w/a
--index e69de29..2e65efe 100644
----- i/a
--+++ w/a
--@@ -0,0 +1 @@
--+a
--\ No newline at end of file
--diff --git i/b w/b
--index e69de29..6178079 100644
----- i/b
--+++ w/b
--@@ -0,0 +1 @@
--+b
--EOF
--
--cat >withnl <<\EOF
--diff --git i/a w/a
--index e69de29..7898192 100644
----- i/a
--+++ w/a
--@@ -0,0 +1 @@
--+a
--diff --git i/b w/b
--index e69de29..6178079 100644
----- i/b
--+++ w/b
--@@ -0,0 +1 @@
--+b
--EOF
--
- test_expect_success 'patch-id handles no-nl-at-eof markers' '
--	cat nonl | calc_patch_id nonl &&
--	cat withnl | calc_patch_id withnl &&
-+	cat >nonl <<-\EOF &&
-+	diff --git i/a w/a
-+	index e69de29..2e65efe 100644
-+	--- i/a
-+	+++ w/a
-+	@@ -0,0 +1 @@
-+	+a
-+	\ No newline at end of file
-+	diff --git i/b w/b
-+	index e69de29..6178079 100644
-+	--- i/b
-+	+++ w/b
-+	@@ -0,0 +1 @@
-+	+b
-+	EOF
-+	cat >withnl <<-\EOF &&
-+	diff --git i/a w/a
-+	index e69de29..7898192 100644
-+	--- i/a
-+	+++ w/a
-+	@@ -0,0 +1 @@
-+	+a
-+	diff --git i/b w/b
-+	index e69de29..6178079 100644
-+	--- i/b
-+	+++ w/b
-+	@@ -0,0 +1 @@
-+	+b
-+	EOF
-+	calc_patch_id nonl <nonl &&
-+	calc_patch_id withnl <withnl &&
- 	test_cmp patch-id_nonl patch-id_withnl
- '
- test_done
--- 
-2.32.0.1314.g6ed4fcc4cc
+Another thanks. I should've been reading throughout the details in
+Documentation/SubmittingPatches and I'm doing so.
 
+I will try to get the format straight as per the suggestions (learned
+a lot from them)
+and documentation then submit a v3 sooner :-)
+
+--
+Thanks,
+Shaoxuan
