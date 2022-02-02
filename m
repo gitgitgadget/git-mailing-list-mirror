@@ -2,74 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C85C7C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Feb 2022 23:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD02FC433F5
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 00:51:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243034AbiBAX5o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 18:57:44 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60820 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241096AbiBAX5h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 18:57:37 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 564C2FC859;
-        Tue,  1 Feb 2022 18:57:37 -0500 (EST)
+        id S231474AbiBBAvX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 19:51:23 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56159 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231303AbiBBAvW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 19:51:22 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 58B0C106B35;
+        Tue,  1 Feb 2022 19:51:21 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ago1a+gyscHTmOpIhj76tAZCnDje2+x0Xoocgg
-        Xms/c=; b=cndI0s/ywd+rTF2gMijw8jDcRQfFul6SQQ86kjdvh070o211pq5ZW2
-        pSp38hJ6rklChgPV+waKf5UiHI3oHdPhkpJVUQTxctiYP4T42x3kkPDuhfqDhNCL
-        jA/QRCVfdMclxt1e6w5YBZ+GUS1E/GVhvdxMapVFT5mBU8pgDl9yE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4CA6CFC855;
-        Tue,  1 Feb 2022 18:57:37 -0500 (EST)
+        :content-type; s=sasl; bh=MR9/atEyWzo7aJND15NFoLurURbPwcPq+U4b9c
+        XhATE=; b=MRl9z1ZZIlWy1PwQ2FSZEefvaeDG8pfPk5u6UPQsOU5K6NZ45r6/2r
+        eahEN8wLbMQbe1y+ewnZxAJHt2Y/urguYldDk2SG5hgn9tpbzUwCYHw7h16nXiR/
+        4it505EzeKCRIwufL4g60V6VtnzpMVT6Zk4jxaQUzemlmTUs74zsI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B278106B34;
+        Tue,  1 Feb 2022 19:51:21 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AF13AFC852;
-        Tue,  1 Feb 2022 18:57:36 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A7A21106B32;
+        Tue,  1 Feb 2022 19:51:20 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com
-Subject: Re: [PATCH v2 2/2] t/lib-read-tree-m-3way: replace spaces with tabs
-References: <20220123060318.471414-1-shaoxuan.yuan02@gmail.com>
-        <20220130094357.515335-1-shaoxuan.yuan02@gmail.com>
-        <20220130094357.515335-3-shaoxuan.yuan02@gmail.com>
-Date:   Tue, 01 Feb 2022 15:57:35 -0800
-In-Reply-To: <20220130094357.515335-3-shaoxuan.yuan02@gmail.com> (Shaoxuan
-        Yuan's message of "Sun, 30 Jan 2022 17:43:57 +0800")
-Message-ID: <xmqqv8xy87io.fsf@gitster.g>
+To:     "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, rsbecker@nexbridge.com, bagasdotme@gmail.com,
+        newren@gmail.com, avarab@gmail.com, nksingh85@gmail.com, ps@pks.im,
+        "Neeraj K. Singh" <neerajsi@microsoft.com>
+Subject: Re: [PATCH v4 2/4] core.fsync: introduce granular fsync control
+References: <pull.1093.v3.git.1639011433.gitgitgadget@gmail.com>
+        <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
+        <7a164ba95710b4231d07982fd27ec51022929b81.1643686425.git.gitgitgadget@gmail.com>
+Date:   Tue, 01 Feb 2022 16:51:19 -0800
+In-Reply-To: <7a164ba95710b4231d07982fd27ec51022929b81.1643686425.git.gitgitgadget@gmail.com>
+        (Neeraj Singh via GitGitGadget's message of "Tue, 01 Feb 2022 03:33:42
+        +0000")
+Message-ID: <xmqqr18m8514.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BB123D00-83BA-11EC-8F29-CB998F0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 3CB61730-83C2-11EC-820C-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> writes:
+"Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-> ---
->
-> This commit simply replaced indentation spaces with tabs.
-> e.g.
->
-> -    git update-index --add SS
-> +	git update-index --add SS
+> +core.fsync::
+> +	A comma-separated list of parts of the repository which should be
+> +	hardened via the core.fsyncMethod when created or modified. You can
+> +	disable hardening of any component by prefixing it with a '-'. Later
+> +	items take precedence over earlier ones in the list. For example,
+> +	`core.fsync=all,-pack-metadata` means "harden everything except pack
+> +	metadata." Items that are not hardened may be lost in the event of an
+> +	unclean system shutdown.
+> ++
+> +* `none` disables fsync completely. This must be specified alone.
+> +* `loose-object` hardens objects added to the repo in loose-object form.
+> +* `pack` hardens objects added to the repo in packfile form.
+> +* `pack-metadata` hardens packfile bitmaps and indexes.
+> +* `commit-graph` hardens the commit graph file.
+> +* `objects` is an aggregate option that includes `loose-objects`, `pack`,
+> +  `pack-metadata`, and `commit-graph`.
+> +* `default` is an aggregate option that is equivalent to `objects,-loose-object`
+> +* `all` is an aggregate option that syncs all individual components above.
 
-The same comment applies wrt where the message is placed.
+I am not quite sure if this is way too complex (e.g. what does it
+mean that we do not care much about loose-object safety while we do
+care about commit-graph files?) and at the same time it is too
+limited (e.g. if it makes sense to say a class of items deserve more
+protection than another class of items, don't we want to be able to
+say "class X is ultra-precious so use method A on them, while class
+Y is mildly precious and use method B on them, everything else are
+not that important and doing the default thing is just fine").
 
-I'd view "replace spaces with" as a way to achieve "indent with
-tabs".
+If we wanted to allow the "matrix" kind of flexibility, I think the
+way to do so would be
 
-    t/lib-read-tree-m-3way: indent with tabs
+	fsync.<class>.method = <value>
 
-    As Documentation/CodingGuidelines says, our shell scripts
-    (including tests) are to use HT for indentation, but this script
-    uses 4-column indent with SP.  Fix this.
+e.g.
 
-or something like that, perhaps?
+	[fsync "default"] method = none
+	[fsync "loose-object"] method = fsync
+	[fsync "pack-metadata"] method = writeout-only
+
+Where do we expect users to take the core.fsync settings from?  Per
+repository?  If it is from per user (i.e. $HOME/.gitconfig), do
+people tend to share it across systems (not necessarily over NFS)
+with the same contents?  If so, I am not sure if fsync.method that
+is way too close to the actual "implementation" is a good idea to
+begin with.  From end-user's point of view, it may be easier to
+express "class X is ultra-precious, and class Y and Z are mildly
+so", with something like fsync.<class>.level = <how-precious> and
+let the Git implementation on each platform choose the appropriate
+fsync method to protect the stuff at that precious-ness.
+
+Thanks.
+
+
+
+
+	
