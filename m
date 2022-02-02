@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F5FDC433EF
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 02:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B8A3C433FE
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 02:40:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231891AbiBBCiB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 21:38:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51208 "EHLO
+        id S243883AbiBBCiF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 21:38:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243840AbiBBChy (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S243834AbiBBChy (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 1 Feb 2022 21:37:54 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF7BEC061753
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 18:37:47 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id f17so35571161wrx.1
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 18:37:47 -0800 (PST)
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D11C4C061748
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 18:37:45 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id a13so35568543wrh.9
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 18:37:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=khScJrwqGJ2l/xtXNgvFZl64D7laxCe0xrzFbvngYV4=;
-        b=o3wVdItDNdmgPbY6basrIER1Uu4ZyjrzZvqYAxDPd2WfdwFuZeqJtWSC6L2K5VS5a5
-         rLqMPguQhwbCn5m9t7c1PP1eLsi0yjFpEC7ffvb/kfuSetv274nNEwYfpFHsST8cwX2L
-         mSvqtZEKlrP3W8SINgHne8or8AOntxWXBsHD3sEsQHErVm8VS9UU02oj3spYqoxAea7k
-         Bh9KqexPpKnOLTyqR3mwLNwmmBf4jHL7OqsuWaBYRoc6G9YOjd17yBIrQGQ8V/rAPhW8
-         AbRRcA4nR/7Ch5bvkS4l9kccy7ZOR6kr30MSeeVWCt8RCvKP/uklHEXfvqKCDjk7lOis
-         +jnA==
+        bh=Jt+pEdaNvy6+eLb7fLZGKq6uyZ8j2uRNVRhVEtft+jI=;
+        b=b8KIDNp0UWlsNMdm8Kr26A0O71QY7UvntiBVCRWSwfc48qRAeQ53wTx9CP9o0WAD/k
+         8t6ypd/gY01enI1ek1Hq+5eucHEy1TKpqf/Jyiah2albpiiHM5kkyuXJiPxgXm2njV3g
+         F/rw/ncYFlyQJmDFan7ALUQt2afFe6K7cEeO7EuK8NleFrHz3qNTIgZ1qqpMQiIBc2yY
+         WofvcVendkd5a/QDx9zzsAbpFgTRMGxPaglxlx921fQg1PUNkypBTTCiS5MAFiDzaF6B
+         +lIHRL/vyCOSCKuZs2r9gnWJ4k3/1+lGHj5cy4TSNuTSUtDS0KkGL+rSK/oaHmriS2B6
+         Wlsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=khScJrwqGJ2l/xtXNgvFZl64D7laxCe0xrzFbvngYV4=;
-        b=LkdocDf+T18ttCyTJUiOus7qo8UeGE9zEzaP9NxNw0pjO+wjOFfOiypRhijqgApvP0
-         CVYUfxYqmGP5DOzXpfyNg7KArE2DEq/je0FaRG3bpCVVmm1wFjGwUxYNhkZ9WhEyiLia
-         lEuyMG6jDO3tr6rhhrFykj/ac+Fi0lbxPQAi+x/gugtSI20Fywj+coKRyUbu5D1EdAKQ
-         D1lEeK3GQMxI25HoEjGIiVvtM2FuPACZHP5MW5P84GwpEHFv5fPoIVNEu5GGcJij24uy
-         bd4MZBzX1TI4aw1LEM1hMQd4j2FZchooyreLiBOro+z0rm3ILmsHHqYqw86qQP4qpJSu
-         FJ6Q==
-X-Gm-Message-State: AOAM53002bo2MjjKk8X3FvOntzoh3sm+d1cun8bCsrBIOpQUJokbN1sO
-        hOA8gzX94tbCyssuK6N9IGEOMaKwmgk=
-X-Google-Smtp-Source: ABdhPJyyMed5YvlLAtMnjjfee5p2NPaVGnASIhZXxa6AqFALsLJVOKISY7v2bxa0ndz7RVQnB4xQIw==
-X-Received: by 2002:a05:6000:1cc:: with SMTP id t12mr22957965wrx.424.1643769466158;
-        Tue, 01 Feb 2022 18:37:46 -0800 (PST)
+        bh=Jt+pEdaNvy6+eLb7fLZGKq6uyZ8j2uRNVRhVEtft+jI=;
+        b=wmQxo6zqcUgqGa+wha2jOF9/qu9ObWfAXzm/KgBS1mNMLkP4qgSaPqIvbvhkKKeip6
+         kKcLoLf1NfFHh04lBJ8HgZs0/TJXhoX8iwmHcHH/Bb8FCHvq30QKLrCwKsDOMzL/ZfmU
+         JjI5WkHldxD0INPytzEoZ5AjMfePY1XFSMsxP/e40uEzpZqIQIfXX9tEjKu5NII4ZVd/
+         TL3OAIhtvIk8D3GknTllEHhdfab9jDULf3CIeSejr+RD0DokJ5GDQtzMArdzNoDagGF+
+         NYPgOvUB/tbBedQ7Ye8iS3irKS1wfWfjqgoX8vb1bHGLQbMHt1aTcA976CvJeuGCOscQ
+         jTjw==
+X-Gm-Message-State: AOAM530Xo2Yvh7BEH4Ff69ejJCwE8uttD9B+o1Y7JlV68zrkm/nv1rzE
+        LgteWj3POS8Q8Uls6AYrPPckXSkxi0I=
+X-Google-Smtp-Source: ABdhPJwkWULXXd8eFqB6bENqm9k7l7gFFmd4qw8L8OH64Bzk5z82qHvoIfg8sRuUeMQVlpLBVO9hLQ==
+X-Received: by 2002:adf:de0b:: with SMTP id b11mr22924760wrm.608.1643769464271;
+        Tue, 01 Feb 2022 18:37:44 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j5sm374340wrq.31.2022.02.01.18.37.45
+        by smtp.gmail.com with ESMTPSA id b2sm18383576wri.88.2022.02.01.18.37.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 18:37:45 -0800 (PST)
-Message-Id: <ff9c14b0b7c11399ba27aae2a8541a1efa185884.1643769457.git.gitgitgadget@gmail.com>
+        Tue, 01 Feb 2022 18:37:43 -0800 (PST)
+Message-Id: <d3e4242a5bdf4cfc8a6ca3a8d2c9f4868bf6f729.1643769457.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1103.v5.git.1643769457.gitgitgadget@gmail.com>
 References: <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com>
         <pull.1103.v5.git.1643769457.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Feb 2022 02:37:35 +0000
-Subject: [PATCH v5 08/10] show, log: include conflict/warning messages in
- --remerge-diff headers
+Date:   Wed, 02 Feb 2022 02:37:33 +0000
+Subject: [PATCH v5 06/10] merge-ort: format messages slightly different for
+ use in headers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,308 +75,129 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Conflicts such as modify/delete, rename/rename, or file/directory are
-not representable via content conflict markers, and the normal output
-messages notifying users about these were dropped with --remerge-diff.
-While we don't want these messages randomly shown before the commit
-and diff headers, we do want them to still be shown; include them as
-part of the diff headers instead.
+When users run
+    git show --remerge-diff $MERGE_COMMIT
+or
+    git log -p --remerge-diff ...
+stdout is not an appropriate location to dump conflict messages, but we
+do want to provide them to users.  We will include them in the diff
+headers instead...but for that to work, we need for any multiline
+messages to replace newlines with both a newline and a space.  Add a new
+flag to signal when we want these messages modified in such a fashion,
+and use it in path_msg() to modify these messages this way.  Also, allow
+a special prefix to be specified for these headers.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- log-tree.c              |  51 ++++++++++++++
- merge-ort.c             |   1 +
- merge-ort.h             |  10 +++
- t/t4069-remerge-diff.sh | 144 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 206 insertions(+)
+ merge-ort.c       | 42 ++++++++++++++++++++++++++++++++++++++++--
+ merge-recursive.c |  4 ++++
+ merge-recursive.h |  2 ++
+ 3 files changed, 46 insertions(+), 2 deletions(-)
 
-diff --git a/log-tree.c b/log-tree.c
-index 8013edcc5d4..d93bafa5be3 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -19,6 +19,7 @@
- #include "line-log.h"
- #include "help.h"
- #include "range-diff.h"
-+#include "strmap.h"
- 
- static struct decoration name_decoration = { "object names" };
- static int decoration_loaded;
-@@ -905,6 +906,52 @@ static int do_diff_combined(struct rev_info *opt, struct commit *commit)
- 	return !opt->loginfo;
- }
- 
-+static void setup_additional_headers(struct diff_options *o,
-+				     struct strmap *all_headers)
-+{
-+	struct hashmap_iter iter;
-+	struct strmap_entry *entry;
-+
-+	/*
-+	 * Make o->additional_path_headers contain the subset of all_headers
-+	 * that match o->pathspec.  If there aren't any that match o->pathspec,
-+	 * then make o->additional_path_headers be NULL.
-+	 */
-+
-+	if (!o->pathspec.nr) {
-+		o->additional_path_headers = all_headers;
-+		return;
-+	}
-+
-+	o->additional_path_headers = xmalloc(sizeof(struct strmap));
-+	strmap_init_with_options(o->additional_path_headers, NULL, 0);
-+	strmap_for_each_entry(all_headers, &iter, entry) {
-+		if (match_pathspec(the_repository->index, &o->pathspec,
-+				   entry->key, strlen(entry->key),
-+				   0 /* prefix */, NULL /* seen */,
-+				   0 /* is_dir */))
-+			strmap_put(o->additional_path_headers,
-+				   entry->key, entry->value);
-+	}
-+	if (!strmap_get_size(o->additional_path_headers)) {
-+		strmap_clear(o->additional_path_headers, 0);
-+		FREE_AND_NULL(o->additional_path_headers);
-+	}
-+}
-+
-+static void cleanup_additional_headers(struct diff_options *o)
-+{
-+	if (!o->pathspec.nr) {
-+		o->additional_path_headers = NULL;
-+		return;
-+	}
-+	if (!o->additional_path_headers)
-+		return;
-+
-+	strmap_clear(o->additional_path_headers, 0);
-+	FREE_AND_NULL(o->additional_path_headers);
-+}
-+
- static int do_remerge_diff(struct rev_info *opt,
- 			   struct commit_list *parents,
- 			   struct object_id *oid,
-@@ -922,6 +969,8 @@ static int do_remerge_diff(struct rev_info *opt,
- 	/* Setup merge options */
- 	init_merge_options(&o, the_repository);
- 	o.show_rename_progress = 0;
-+	o.record_conflict_msgs_as_headers = 1;
-+	o.msg_header_prefix = "remerge";
- 
- 	ctx.abbrev = DEFAULT_ABBREV;
- 	format_commit_message(parent1, "%h (%s)", &parent1_desc, &ctx);
-@@ -938,10 +987,12 @@ static int do_remerge_diff(struct rev_info *opt,
- 	merge_incore_recursive(&o, bases, parent1, parent2, &res);
- 
- 	/* Show the diff */
-+	setup_additional_headers(&opt->diffopt, res.path_messages);
- 	diff_tree_oid(&res.tree->object.oid, oid, "", &opt->diffopt);
- 	log_tree_diff_flush(opt);
- 
- 	/* Cleanup */
-+	cleanup_additional_headers(&opt->diffopt);
- 	strbuf_release(&parent1_desc);
- 	strbuf_release(&parent2_desc);
- 	merge_finalize(&o, &res);
 diff --git a/merge-ort.c b/merge-ort.c
-index 481305d2bcf..43f980d2586 100644
+index 998e92ec593..481305d2bcf 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -4585,6 +4585,7 @@ redo:
- 	trace2_region_leave("merge", "process_entries", opt->repo);
+@@ -634,17 +634,49 @@ static void path_msg(struct merge_options *opt,
+ 		     const char *fmt, ...)
+ {
+ 	va_list ap;
+-	struct strbuf *sb = strmap_get(&opt->priv->output, path);
++	struct strbuf *sb, *dest;
++	struct strbuf tmp = STRBUF_INIT;
++
++	if (opt->record_conflict_msgs_as_headers && omittable_hint)
++		return; /* Do not record mere hints in tree */
++	sb = strmap_get(&opt->priv->output, path);
+ 	if (!sb) {
+ 		sb = xmalloc(sizeof(*sb));
+ 		strbuf_init(sb, 0);
+ 		strmap_put(&opt->priv->output, path, sb);
+ 	}
  
- 	/* Set return values */
-+	result->path_messages = &opt->priv->output;
- 	result->tree = parse_tree_indirect(&working_tree_oid);
- 	/* existence of conflicted entries implies unclean */
- 	result->clean &= strmap_empty(&opt->priv->conflicted);
-diff --git a/merge-ort.h b/merge-ort.h
-index c011864ffeb..fe599b87868 100644
---- a/merge-ort.h
-+++ b/merge-ort.h
-@@ -5,6 +5,7 @@
++	dest = (opt->record_conflict_msgs_as_headers ? &tmp : sb);
++
+ 	va_start(ap, fmt);
+-	strbuf_vaddf(sb, fmt, ap);
++	strbuf_vaddf(dest, fmt, ap);
+ 	va_end(ap);
  
- struct commit;
- struct tree;
-+struct strmap;
++	if (opt->record_conflict_msgs_as_headers) {
++		int i_sb = 0, i_tmp = 0;
++
++		/* Start with the specified prefix */
++		if (opt->msg_header_prefix)
++			strbuf_addf(sb, "%s ", opt->msg_header_prefix);
++
++		/* Copy tmp to sb, adding spaces after newlines */
++		strbuf_grow(sb, sb->len + 2*tmp.len); /* more than sufficient */
++		for (; i_tmp < tmp.len; i_tmp++, i_sb++) {
++			/* Copy next character from tmp to sb */
++			sb->buf[sb->len + i_sb] = tmp.buf[i_tmp];
++
++			/* If we copied a newline, add a space */
++			if (tmp.buf[i_tmp] == '\n')
++				sb->buf[++i_sb] = ' ';
++		}
++		/* Update length and ensure it's NUL-terminated */
++		sb->len += i_sb;
++		sb->buf[sb->len] = '\0';
++
++		strbuf_release(&tmp);
++	}
++
++	/* Add final newline character to sb */
+ 	strbuf_addch(sb, '\n');
+ }
  
- struct merge_result {
+@@ -4246,6 +4278,9 @@ void merge_switch_to_result(struct merge_options *opt,
+ 		struct string_list olist = STRING_LIST_INIT_NODUP;
+ 		int i;
+ 
++		if (opt->record_conflict_msgs_as_headers)
++			BUG("Either display conflict messages or record them as headers, not both");
++
+ 		trace2_region_enter("merge", "display messages", opt->repo);
+ 
+ 		/* Hack to pre-allocate olist to the desired size */
+@@ -4347,6 +4382,9 @@ static void merge_start(struct merge_options *opt, struct merge_result *result)
+ 	assert(opt->recursive_variant >= MERGE_VARIANT_NORMAL &&
+ 	       opt->recursive_variant <= MERGE_VARIANT_THEIRS);
+ 
++	if (opt->msg_header_prefix)
++		assert(opt->record_conflict_msgs_as_headers);
++
  	/*
-@@ -23,6 +24,15 @@ struct merge_result {
- 	 */
- 	struct tree *tree;
+ 	 * detect_renames, verbosity, buffer_output, and obuf are ignored
+ 	 * fields that were used by "recursive" rather than "ort" -- but
+diff --git a/merge-recursive.c b/merge-recursive.c
+index bc73c52dd84..9ec1e6d043a 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3714,6 +3714,10 @@ static int merge_start(struct merge_options *opt, struct tree *head)
  
-+	/*
-+	 * Special messages and conflict notices for various paths
-+	 *
-+	 * This is a map of pathnames to strbufs.  It contains various
-+	 * warning/conflict/notice messages (possibly multiple per path)
-+	 * that callers may want to use.
-+	 */
-+	struct strmap *path_messages;
-+
- 	/*
- 	 * Additional metadata used by merge_switch_to_result() or future calls
- 	 * to merge_incore_*().  Includes data needed to update the index (if
-diff --git a/t/t4069-remerge-diff.sh b/t/t4069-remerge-diff.sh
-index d7ab0f50066..fd6bce64781 100755
---- a/t/t4069-remerge-diff.sh
-+++ b/t/t4069-remerge-diff.sh
-@@ -60,6 +60,7 @@ test_expect_success 'remerge-diff with both a resolved conflict and an unrelated
- 	git log -1 --oneline ab_resolution >tmp &&
- 	cat <<-EOF >>tmp &&
- 	diff --git a/numbers b/numbers
-+	remerge CONFLICT (content): Merge conflict in numbers
- 	index a1fb731..6875544 100644
- 	--- a/numbers
- 	+++ b/numbers
-@@ -88,4 +89,147 @@ test_expect_success 'remerge-diff with both a resolved conflict and an unrelated
- 	test_cmp expect actual
- '
+ 	assert(opt->priv == NULL);
  
-+test_expect_success 'setup non-content conflicts' '
-+	git switch --orphan base &&
++	/* Not supported; option specific to merge-ort */
++	assert(!opt->record_conflict_msgs_as_headers);
++	assert(!opt->msg_header_prefix);
 +
-+	test_write_lines 1 2 3 4 5 6 7 8 9 >numbers &&
-+	test_write_lines a b c d e f g h i >letters &&
-+	test_write_lines in the way >content &&
-+	git add numbers letters content &&
-+	git commit -m base &&
-+
-+	git branch side1 &&
-+	git branch side2 &&
-+
-+	git checkout side1 &&
-+	test_write_lines 1 2 three 4 5 6 7 8 9 >numbers &&
-+	git mv letters letters_side1 &&
-+	git mv content file_or_directory &&
-+	git add numbers &&
-+	git commit -m side1 &&
-+
-+	git checkout side2 &&
-+	git rm numbers &&
-+	git mv letters letters_side2 &&
-+	mkdir file_or_directory &&
-+	echo hello >file_or_directory/world &&
-+	git add file_or_directory/world &&
-+	git commit -m side2 &&
-+
-+	git checkout -b resolution side1 &&
-+	test_must_fail git merge side2 &&
-+	test_write_lines 1 2 three 4 5 6 7 8 9 >numbers &&
-+	git add numbers &&
-+	git add letters_side1 &&
-+	git rm letters &&
-+	git rm letters_side2 &&
-+	git add file_or_directory~HEAD &&
-+	git mv file_or_directory~HEAD wanted_content &&
-+	git commit -m resolved
-+'
-+
-+test_expect_success 'remerge-diff with non-content conflicts' '
-+	git log -1 --oneline resolution >tmp &&
-+	cat <<-EOF >>tmp &&
-+	diff --git a/file_or_directory~HASH (side1) b/wanted_content
-+	similarity index 100%
-+	rename from file_or_directory~HASH (side1)
-+	rename to wanted_content
-+	remerge CONFLICT (file/directory): directory in the way of file_or_directory from HASH (side1); moving it to file_or_directory~HASH (side1) instead.
-+	diff --git a/letters b/letters
-+	remerge CONFLICT (rename/rename): letters renamed to letters_side1 in HASH (side1) and to letters_side2 in HASH (side2).
-+	diff --git a/letters_side2 b/letters_side2
-+	deleted file mode 100644
-+	index b236ae5..0000000
-+	--- a/letters_side2
-+	+++ /dev/null
-+	@@ -1,9 +0,0 @@
-+	-a
-+	-b
-+	-c
-+	-d
-+	-e
-+	-f
-+	-g
-+	-h
-+	-i
-+	diff --git a/numbers b/numbers
-+	remerge CONFLICT (modify/delete): numbers deleted in HASH (side2) and modified in HASH (side1).  Version HASH (side1) of numbers left in tree.
-+	EOF
-+	# We still have some sha1 hashes above; rip them out so test works
-+	# with sha256
-+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
-+
-+	git show --oneline --remerge-diff resolution >tmp &&
-+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'remerge-diff w/ diff-filter=U: all conflict headers, no diff content' '
-+	git log -1 --oneline resolution >tmp &&
-+	cat <<-EOF >>tmp &&
-+	diff --git a/file_or_directory~HASH (side1) b/file_or_directory~HASH (side1)
-+	remerge CONFLICT (file/directory): directory in the way of file_or_directory from HASH (side1); moving it to file_or_directory~HASH (side1) instead.
-+	diff --git a/letters b/letters
-+	remerge CONFLICT (rename/rename): letters renamed to letters_side1 in HASH (side1) and to letters_side2 in HASH (side2).
-+	diff --git a/numbers b/numbers
-+	remerge CONFLICT (modify/delete): numbers deleted in HASH (side2) and modified in HASH (side1).  Version HASH (side1) of numbers left in tree.
-+	EOF
-+	# We still have some sha1 hashes above; rip them out so test works
-+	# with sha256
-+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
-+
-+	git show --oneline --remerge-diff --diff-filter=U resolution >tmp &&
-+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'remerge-diff w/ diff-filter=R: relevant file + conflict header' '
-+	git log -1 --oneline resolution >tmp &&
-+	cat <<-EOF >>tmp &&
-+	diff --git a/file_or_directory~HASH (side1) b/wanted_content
-+	similarity index 100%
-+	rename from file_or_directory~HASH (side1)
-+	rename to wanted_content
-+	remerge CONFLICT (file/directory): directory in the way of file_or_directory from HASH (side1); moving it to file_or_directory~HASH (side1) instead.
-+	EOF
-+	# We still have some sha1 hashes above; rip them out so test works
-+	# with sha256
-+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
-+
-+	git show --oneline --remerge-diff --diff-filter=R resolution >tmp &&
-+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'remerge-diff w/ pathspec: limits to relevant file including conflict header' '
-+	git log -1 --oneline resolution >tmp &&
-+	cat <<-EOF >>tmp &&
-+	diff --git a/letters b/letters
-+	remerge CONFLICT (rename/rename): letters renamed to letters_side1 in HASH (side1) and to letters_side2 in HASH (side2).
-+	diff --git a/letters_side2 b/letters_side2
-+	deleted file mode 100644
-+	index b236ae5..0000000
-+	--- a/letters_side2
-+	+++ /dev/null
-+	@@ -1,9 +0,0 @@
-+	-a
-+	-b
-+	-c
-+	-d
-+	-e
-+	-f
-+	-g
-+	-h
-+	-i
-+	EOF
-+	# We still have some sha1 hashes above; rip them out so test works
-+	# with sha256
-+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
-+
-+	git show --oneline --remerge-diff --full-history resolution -- "letters*" >tmp &&
-+	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ 	/* Sanity check on repo state; index must match head */
+ 	if (repo_index_has_changes(opt->repo, head, &sb)) {
+ 		err(opt, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 0795a1d3ec1..b88000e3c25 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -46,6 +46,8 @@ struct merge_options {
+ 	/* miscellaneous control options */
+ 	const char *subtree_shift;
+ 	unsigned renormalize : 1;
++	unsigned record_conflict_msgs_as_headers : 1;
++	const char *msg_header_prefix;
+ 
+ 	/* internal fields used by the implementation */
+ 	struct merge_options_internal *priv;
 -- 
 gitgitgadget
 
