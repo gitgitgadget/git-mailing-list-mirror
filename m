@@ -2,92 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3170C433EF
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 22:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5505C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 22:13:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347738AbiBBWBW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Feb 2022 17:01:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33532 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230365AbiBBWBO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Feb 2022 17:01:14 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5738FC061714
-        for <git@vger.kernel.org>; Wed,  2 Feb 2022 14:01:14 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id s61-20020a17090a69c300b001b4d0427ea2so8114901pjj.4
-        for <git@vger.kernel.org>; Wed, 02 Feb 2022 14:01:14 -0800 (PST)
+        id S1347677AbiBBWN1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Feb 2022 17:13:27 -0500
+Received: from mail-qt1-f177.google.com ([209.85.160.177]:39898 "EHLO
+        mail-qt1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232664AbiBBWN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Feb 2022 17:13:26 -0500
+Received: by mail-qt1-f177.google.com with SMTP id e16so566831qtq.6
+        for <git@vger.kernel.org>; Wed, 02 Feb 2022 14:13:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=oCpGIJORd+Gdl6mJ5YldYXd+dJY3jWX1+1gQSlqei4U=;
-        b=KUuNUh6ods341bxUkLD24rQcnyYWxkTzV4jlX1YSjSMBjHUrbGkzT3ClZu911ZAaka
-         dmUdOBCPHK/N0oIaDDddDPgU8i1SjxZNNm+VAxSAskaXc/6swUpez+IYGApX5ShZixl3
-         8EADUjFIW3kimC7y591eqt3xr9hbPiBSH+mBrxFOYKAmWJu6IN8dlmNp7PwzasqwaK76
-         Xg7SKsEmWqAvL3DVUq86RZVhDzJ6/MI2ds0lCONnvccw/CXuC7/a656wG2zHBPFHSOmf
-         j8FiR4GD2d2sQJmEkB2GWS6mJOTgYNyUcjMdB/Y63fnxXSt0jNSk+W2qMwDw08uoVq+1
-         NduQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ayMlPT/hZbbKMdEm7cpjYZlAjIOfD+JgBhTTh1niwhs=;
+        b=TshHp2EhW6ZJDjrdsgm4UqzVUTy7eWAp0/Om7Zzy23lqg7S6oU2IKJQyd4NlrcL07B
+         kBcR4+IkNQbonbBAEvirgVyaz4rtkw7VPnuVR4ENbS11bY+2EX4g2LL6ozQBYOC/iYvZ
+         N/OS3hPkqYreHh7AgQ3OwP8KzfpAwPUVGi34ewMWK5o+CCUCmpw4Sx+q7gfuEBR1R1VO
+         789aHzG83tntwYj0gGwt3CeryuaMp5y2Lv6xSEA/I8P855TTzqNfI2MUxs9YjAjsXaF7
+         djWKQwVx/2af8oUj5Zqc9jOv/L/CrZbLS1UgndwJUYk3tdatCdSeQu4UnLIlGsbhe0CI
+         zYrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=oCpGIJORd+Gdl6mJ5YldYXd+dJY3jWX1+1gQSlqei4U=;
-        b=mVVP/0aRTkYKE+HJm4yHrRypVE16elIx62oB4uhwTKjrTa7jyrMJzPqKY+CledprrN
-         GnrVPsuJLFTkbIc/ZQ+10zuqisHz67FaQPB0JiPh/XEmuX6V3oGv++1s269n2jp1pyi2
-         DWDIilqypal3cOOCIvvG5bhBWG2UyDVBtSVsDnq+/hNMMh2SM8LrAV85gQnF7/TqZ6ey
-         Im/4vgASQwrmJqbF/0s3OcynzInwIAyjFbDW9OiJ+kV5Bu9dCVe1dSfkiBwBKGaIlHJ/
-         Wg/IK2n/lwgxeP/PbPtfIcLlEQv+boM+vXyZcO6LwW8V88TuDZFLRMIi+DgcAGhLakPA
-         KSqg==
-X-Gm-Message-State: AOAM532nC6GxWHvDzNHYy6wCfhMKnpIG7AVXpe48F9hKzDYzicTQfGiD
-        3AqC03CJ3P6LcNFyiGNnfW4=
-X-Google-Smtp-Source: ABdhPJwFy2vi07qsHrPVPDoZL7cczdfFBeg0SIrZICDMjFcuKIH0tzfHLdXjueh8yoNmRL8On//GoA==
-X-Received: by 2002:a17:902:8d81:: with SMTP id v1mr32723436plo.20.1643839273682;
-        Wed, 02 Feb 2022 14:01:13 -0800 (PST)
-Received: from localhost ([2620:15c:289:200:da7f:76ba:d0d5:da44])
-        by smtp.gmail.com with ESMTPSA id d8sm7219844pjz.32.2022.02.02.14.01.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Feb 2022 14:01:13 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v3 04/15] merge-tree: implement real merges
-References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
-        <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
-        <02c29f920d0d5fde6d85f7b86a69be92e3f0f34d.1643787281.git.gitgitgadget@gmail.com>
-        <xmqqy22tx8t1.fsf@gitster.g>
-        <CABPp-BGpD6g5QH3=4X_dCuSX0Bs0utHn5hyuU4_UiwNhU0h8sg@mail.gmail.com>
-Date:   Wed, 02 Feb 2022 14:01:12 -0800
-In-Reply-To: <CABPp-BGpD6g5QH3=4X_dCuSX0Bs0utHn5hyuU4_UiwNhU0h8sg@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 2 Feb 2022 13:56:56 -0800")
-Message-ID: <xmqqh79hvsgn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ayMlPT/hZbbKMdEm7cpjYZlAjIOfD+JgBhTTh1niwhs=;
+        b=XiA2ELIpSRBNQwU/vwBBvmKH9E0j+aEDIQvzOhUpQUShEg89ozn8LEtj1vUvCRmOWd
+         l0ZGV+GSF9zDY5p2aCmavyonkjGmEe8Bo8pyY0td4j8VjAKV31ju2fpTyhed9otrLbr8
+         Ln6h6UxDMyeXv6+ahuvgmQdXPihDUacpBukgjdSB1wSblwCmk/wL9w1VMivmtDTgoZrT
+         NYhSqyvsQoIogtsoWfA9V/GiNegEM1dnTMD8cfIbRsFvNqjgaQsKJugyU2ifYOmIet0r
+         D71h+nIb1bjoEyCTuFBsCOrijtyQjTo2EPRs7ikuJdOqwDH/CJqufGHO3igNG8/CEj9U
+         0BJA==
+X-Gm-Message-State: AOAM531cecVgMUO5v11EVXSnrzifTBKl/USIVWzW1t5f94Kq1rpyZxRT
+        UAajpyUc54z6cuZoKBsCWfBl52wMTAYHzB1J35m12Cqhfg4Zjg==
+X-Google-Smtp-Source: ABdhPJwbp88G3w23gDzt9Xa8YEnOZz1LoWOXPYYJvUZmlG6N5jjC3/ryCyCfLtp0XgtGrMI33n6MKfDm4sTe4cd8YMU=
+X-Received: by 2002:ac8:7e8c:: with SMTP id w12mr24828463qtj.342.1643839945783;
+ Wed, 02 Feb 2022 14:12:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAHMHMxUZpR8MBj+9mSb1Cr3PBCsAx=6zLo9mKpeD_ehqDP4nvQ@mail.gmail.com>
+ <31e822be-b7c1-acb2-20d5-6db2200c3383@gmail.com>
+In-Reply-To: <31e822be-b7c1-acb2-20d5-6db2200c3383@gmail.com>
+From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
+        <stdedos@gmail.com>
+Date:   Thu, 3 Feb 2022 00:11:48 +0200
+Message-ID: <CAHMHMxWGqPT50Xsj4kcigoKJy7h0dM3J4UHBeGPMrUA9cs=C-w@mail.gmail.com>
+Subject: Re: New `--reapply-cherry-picks` warning
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     git <git@vger.kernel.org>, steadmon@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Wed, 2 Feb 2022 at 21:03, Philippe Blain
+<levraiphilippeblain@gmail.com> wrote:
+>
+> ...
+>
+> > I am currently using the `[pull] rebase =3D true` option; and basically
+> > that warning is also coming every time I am pulling.
+>
+> OK, that would mean either:
+>
+> 1- each time you are pulling, the upstream branch *did* get some of your
+> local commits somehow, so the warning is justified
+>
+> or
+>
+> 2- the upstream branch *did not* get some of your local commits, so the w=
+arning
+> is shown but shouldn't be, and that's a bug.
+>
+> Which one is it?
 
-> Yes, you are reading right.  I think the cherry-pick/rebase
-> replacement actually deserves a separate command from what merges
-> should use; replaying a sequence of commits just has a number of UI
-> differences and abilities that I think pull it in a different
-> direction.
+No idea =F0=9F=98=85 I do a metric ton of pulls. "For fun", I also do
+--set-upstream=3Dmaster on branches I am working on; pulling master (and
+all of the branches) puts me at the latest point in time.
+It could very well have been the former, since "at some point", I did
+lose some changes.
 
-I completely disagree.  Each individual step in a sequence of
-replaying commits in order (or in reverse order) should be
-scriptable as a single merge-tree that takes "apply the change to go
-from A^ to A on X".  Sequencing and placing UI around it is a job
-for the script that drives merge-tree.
+However, it was "do" time; the debugging (and digging) came a little later.
+
+> > I noticed that there is no way to "set" the `--reapply-cherry-picks`
+> > in the gitconfig options.
+>
+> Yes, that would be a nice option to have indeed.
+
+Fingers crossed? :-D
+
+> > I prefer the rebase backend for the `git pull`; however, I see no way
+> > of doing "what I want", with the exception of:
+> > git fetch --all ; git rebase --reapply-cherry-picks
+> >
+> > Which is two steps, technically.
+>
+> Careful, as this is not the exact equivalent of 'git pull --rebase', as
+> the documentation for that option states [1]:
+>
+>     If there is a remote-tracking branch corresponding
+>     to the upstream branch and the upstream branch was rebased
+>     since last fetched, the rebase uses that information to
+>     avoid rebasing non-local changes.
+>
+> (see also paragraphs 2-3 of [2], [3] [4] and [5]).
+
+So ... the workaround is not a workaround :-(
+
+> > Also with every rebase I am doing, I'd have to remember that.
+> > And it is probably not possible (by design) to do `alias.rebase =3D
+> > rebase --reapply-cherry-picks` - which I understand.
+> > (however, allowing aliases like `alias.x =3D x --cmd-opts` does not
+> > sound "so bad" with me)
+>
+> Yes, that's considered "by design" that you can't alias an existing
+> command using the exact command name. That is to make sure that scripts
+> have consistent behaviour across users (other config options can still
+> affect behaviour, but anyway that's the justification I've read before
+> on the list). What I can suggest is using 're =3D rebase --reapply-cherry=
+-picks'
+> and then retrain your finger ;)
+
+True. OOOOR somehow things that affect such behaviors are also given
+an option counterpart?
+
+I am not talking about `fetch.all =3D true`; however, if an option
+warrants a warning, I'd say it deserves an option?
+> ....
+> >
+> > With regards,
+> > Ntentos Stavros
+> >
+> >
+>
+> Cheers,
+> Philippe.
+>
+> [1] https://git-scm.com/docs/git-pull#Documentation/git-pull.txt--r
+> [2] https://git-scm.com/docs/git-rebase#_description
+> [3] https://git-scm.com/docs/git-rebase#Documentation/git-rebase.txt---fo=
+rk-point
+> [4] https://git-scm.com/docs/git-merge-base#Documentation/git-merge-base.=
+txt---fork-point
+> [5] https://git-scm.com/docs/git-merge-base#_discussion_on_fork_point_mod=
+e
+
+With regards,
+Ntentos Stavros
