@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59DC1C433EF
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 21:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32795C433EF
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 21:04:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233357AbiBBVEF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Feb 2022 16:04:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48356 "EHLO
+        id S240027AbiBBVEI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Feb 2022 16:04:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231196AbiBBVEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Feb 2022 16:04:04 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A9B0C061714
-        for <git@vger.kernel.org>; Wed,  2 Feb 2022 13:04:04 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id g18so548802wrb.6
-        for <git@vger.kernel.org>; Wed, 02 Feb 2022 13:04:04 -0800 (PST)
+        with ESMTP id S231196AbiBBVEG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Feb 2022 16:04:06 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA479C061714
+        for <git@vger.kernel.org>; Wed,  2 Feb 2022 13:04:05 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id s18so893862wrv.7
+        for <git@vger.kernel.org>; Wed, 02 Feb 2022 13:04:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=v7vYFZU+A1HIPLmNPKAENI8rGDv/sAgHM/T/9+0SXcA=;
-        b=CZzrSZajh34im/UGMT0Uc1Ix5+ltIgxgR5ZQcLFN5RV0HlNNUhmID1WexTQZLdkIjd
-         5pw5LyXGs9f5VUbPj2ewSUOmbsepnp/fVTP9eMq1NzZpw/ZwHW815Fps3oigMz87Nlwn
-         X+3oCHN47T2i65W2ViULyI+eOIc81sUY6vdtPyzaQ4NOqc/GaOLxJn/d0fy1piJiUL+w
-         Xvl16yLiZDfRbuHYOTcaisd06pj7g5AMXnBkfQWiFHCbgvXDJBOfA+P/PtuDy6Q8JAjO
-         3aCunFXFL/tCg3QcI8czhJ2+pXtSTABXA/5+a83xPzkC6DeVE3Qnmf0SPIINWsa9/R+O
-         q32A==
+        bh=RKbpSuytatpembKr21M4AtX0toGhBPr1NoFfMMwLy/w=;
+        b=I814NsHLv43sbi1nr/yAyPILvr0o18AlL2pw2C94p51FI5NquzGoDLiexmiQinVTS7
+         naFeaKgy+qzUVd4Y0EQYSElmA8ClATfanvYKKN7IJBbcgz3dm52jSH8Fc2PWqwwPNvPg
+         UNi7vsDUYrLP9i0VjtlPEqavtGuOe2aCRB15jnUsDziqZq1a7aIdeb2NajNTKkZfu+yG
+         L4zG+QK4NK+vG+SGaxrSX3sGUE0cRpJgS4ppCWnUUIsajU3pRJYu6XnnDKwapqZwpaH7
+         oM90DkXXqq/2lkjn3BadJMpYKNRvS+Nlvwb87SdBWs0IF5VF3lxbGWA4F8WCi+j74ZpY
+         1nxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=v7vYFZU+A1HIPLmNPKAENI8rGDv/sAgHM/T/9+0SXcA=;
-        b=qRF6YKgQFRZevdURNHzTV3A22ydTPydLbLrEaoCgcVI2ij8X6vMFIIQXbxRwGZQlRE
-         iXHgStFgy2DeSsS3hMKbNIZhIaUoDuU398j6FGf9j5gnUQTufC286jmCt+xNAmKCXWBK
-         wEQn8cEQZH9BfSx3LtPy5HzhGCfy2qbAg4cSTnvfezY3ZRLezEutRG4GlppStI7pvuwW
-         IRYqpOVCJ/1LHzHHj+EM6RA9jsC+c6ovshg4n5l03tN4mFQqcvy8cbOXf7/7fL4xZV9n
-         nRRii+/GSQl6wP+yOl7yR6VI6UITrdVJIg5UBfO+tz4aYTY54KwBJn8ufgebehdNCMAc
-         KIdw==
-X-Gm-Message-State: AOAM530nCFZLNyPmqPq3TLFC4uXiySn+pp1mkTD/GnOtj3iFNqqrVIrR
-        IE1t1BDEa3KO9tnKby8C/C9iOLUvO98EpQ==
-X-Google-Smtp-Source: ABdhPJzEKeqE/kYhQSHOVEPWxMJkpBSRPXIu/fcEKLqfs49SnPZQD+7V6/IhbAXAP1UK2pojB1F0OQ==
-X-Received: by 2002:adf:e34c:: with SMTP id n12mr26899777wrj.263.1643835842737;
-        Wed, 02 Feb 2022 13:04:02 -0800 (PST)
+        bh=RKbpSuytatpembKr21M4AtX0toGhBPr1NoFfMMwLy/w=;
+        b=5mkdP6WOtZq48mt04AX/esQdUiVjY9uGnt7ufZgKE5KX5dHuvOSmIlvsaCLGLCL9D1
+         S2ieGMhfhqjG4vBzyjBgvI7RGeeY9ak/J+MHiX64oGCoKvI2atwvr5RyEMghh8XA0Yt/
+         uQ6ugu4vGESlAGPXGnTyAcMvcE0wuU6MnnFEJkeIDxuld8v1jWlbiwevOTN4mYgTUed2
+         xAJI4SdCxem38M7L7p4o3hBfdMNMdm4MwQZDvujw38MxGXh95C9OzjME9KW4GmlfC9du
+         RaO5ohTMpyppk60Q5YXvaTryaPE2UXMG+Q2MeAXyh+3pFCQ0b92h1wuJlMjal33rZ2Wr
+         lm5w==
+X-Gm-Message-State: AOAM533K/Q75hiZkJh089M01hG+NqaQbCBDubyZXjAILgGwYIpW6ucT2
+        Y3vVXiuf7/Ef51gf1GS5lxNlu4WF/WCcQQ==
+X-Google-Smtp-Source: ABdhPJxp22udXL+39n3rW/5Nf1LWrRUWjFSRBFlv9yYPN1ZBPRPVlLQ2bi7nyQozhfxQFLJ17sQHmA==
+X-Received: by 2002:adf:ce8f:: with SMTP id r15mr4310122wrn.543.1643835843908;
+        Wed, 02 Feb 2022 13:04:03 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l11sm17264592wry.50.2022.02.02.13.04.01
+        by smtp.gmail.com with ESMTPSA id l11sm17264592wry.50.2022.02.02.13.04.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 02 Feb 2022 13:04:02 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -53,12 +53,12 @@ To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/5] date.[ch] API: split from cache.h, add API docs, stop leaking memory
-Date:   Wed,  2 Feb 2022 22:03:48 +0100
-Message-Id: <cover-0.5-00000000000-20220202T195651Z-avarab@gmail.com>
+Subject: [PATCH 1/5] cache.h: remove always unused show_date_human() declaration
+Date:   Wed,  2 Feb 2022 22:03:49 +0100
+Message-Id: <patch-1.5-fb21bd7b2c5-20220202T195651Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.920.g34be1f84792
-In-Reply-To: <YZQHEiFnOdyxYX5t@coredump.intra.peff.net>
-References: <YZQHEiFnOdyxYX5t@coredump.intra.peff.net>
+In-Reply-To: <cover-0.5-00000000000-20220202T195651Z-avarab@gmail.com>
+References: <YZQHEiFnOdyxYX5t@coredump.intra.peff.net> <cover-0.5-00000000000-20220202T195651Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,53 +66,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a follow-up to a much smaller patch[1] discussed in November
-to make t0006-date.sh pass with SANITIZE=leak.
+There has never been a show_date_human() function on the "master"
+branch in git.git. This declaration was added in b841d4ff438 (Add
+`human` format to test-tool, 2019-01-28).
 
-In reply Jeff King pointed out that reaching into its private guts in
-the test helper felt ugly[2].
+A look at the ML history reveals that it was leftover cruft from an
+earlier version of that commit[1].
 
-So this series pursues a more thorough approach, creating a date.h,
-moving our date functions there out of cache.h, documenting the core
-functions, and finally adding and using a date_mode_release()
-function.
+1. https://lore.kernel.org/git/20190118061805.19086-5-ischis2@cox.net/
 
-It's definitely taking the long way around, but I think that the end
-result is worth it. I then have a follow-up series to plug memory
-leaks in revision.h, which will make use of this new API.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ cache.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-1. https://lore.kernel.org/git/patch-1.1-15f5bd3e4f4-20211116T183025Z-avarab@gmail.com/
-2. https://lore.kernel.org/git/YZQHEiFnOdyxYX5t@coredump.intra.peff.net/
-
-Ævar Arnfjörð Bjarmason (5):
-  cache.h: remove always unused show_date_human() declaration
-  date API: create a date.h, split from cache.h
-  date API: provide and use a DATE_MODE_INIT
-  date API: add basic API docs
-  date API: add and use a date_mode_release()
-
- archive-zip.c         |  1 +
- builtin/am.c          |  1 +
- builtin/commit.c      |  1 +
- builtin/fast-import.c |  1 +
- builtin/show-branch.c |  1 +
- builtin/tag.c         |  1 +
- cache.h               | 50 -----------------------------
- config.c              |  1 +
- date.c                |  9 ++++--
- date.h                | 73 +++++++++++++++++++++++++++++++++++++++++++
- http-backend.c        |  1 +
- ident.c               |  1 +
- object-name.c         |  1 +
- pretty.h              | 10 ++++++
- ref-filter.c          |  3 +-
- refs.c                |  1 +
- strbuf.c              |  1 +
- t/helper/test-date.c  |  5 ++-
- t/t0006-date.sh       |  2 ++
- 19 files changed, 110 insertions(+), 54 deletions(-)
- create mode 100644 date.h
-
+diff --git a/cache.h b/cache.h
+index 281f00ab1b1..49b46244c74 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1586,8 +1586,6 @@ struct date_mode *date_mode_from_type(enum date_mode_type type);
+ 
+ const char *show_date(timestamp_t time, int timezone, const struct date_mode *mode);
+ void show_date_relative(timestamp_t time, struct strbuf *timebuf);
+-void show_date_human(timestamp_t time, int tz, const struct timeval *now,
+-			struct strbuf *timebuf);
+ int parse_date(const char *date, struct strbuf *out);
+ int parse_date_basic(const char *date, timestamp_t *timestamp, int *offset);
+ int parse_expiry_date(const char *date, timestamp_t *timestamp);
 -- 
 2.35.0.913.g12b4baa2536
 
