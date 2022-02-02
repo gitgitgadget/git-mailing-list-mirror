@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25E05C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 02:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 996FFC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 02:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243814AbiBBChm (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S243817AbiBBChm (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 1 Feb 2022 21:37:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51132 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230424AbiBBChl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 21:37:41 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB12C061714
+        with ESMTP id S243812AbiBBChm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 21:37:42 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4C75C06173B
         for <git@vger.kernel.org>; Tue,  1 Feb 2022 18:37:41 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id k6-20020a05600c1c8600b003524656034cso2923184wms.2
+Received: by mail-wr1-x42d.google.com with SMTP id h21so35570807wrb.8
         for <git@vger.kernel.org>; Tue, 01 Feb 2022 18:37:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7Az0C1WStdk9jgQdH8cIbFc5CgfxqIuYseozqUILVnc=;
-        b=R342BqDTesgaIT2ttf/eUiPDE4PLCpItrrcYYlPMxiGP0Nqb6N56iUjPZcAgPDXpBX
-         hh2f6Nn9QylZPhontl6s9837VRjC/2YirfHlESgIrZifZUFlwz9RPFLxAJUosfXsdadq
-         VyFJ1wDCg28j5A02DPn/1HucCvsv2y2N70qh1bcUaSJkwXbr1Ksay8aRWlbafjPiHsbB
-         Yt86t8cNYqIcrX4jrDRqJTXKGqTkHJHx1hzwOPUD0JOIFAMptkk9r5sq3M963hxQWjyA
-         qQhQ8KHZueAy0ykGXaPk8+VqSdZdNcrYXPpKMIvyq/HEhmALqjMUC630azo/BvauBJQI
-         ilSA==
+        bh=YA/t2RR9P00m9Cz8VLtmYxgeduPrOT5/iFTuToguFVc=;
+        b=aE1y4yIlE5YPN3RiqgO5wOJmBxVZ9X1ggV+K2EhupDxXmdodD6Z/U024RZeC4eFQ3j
+         EnAbckAIoMjS8rf3HLHS93foeovd8zlWVjWpW9JO8/iK/DOwErUNm1I/EA2FbnohenOl
+         PGfccW37BQ0teWosLvhFeeIgXQKcl4Iclo1TBej1So/Hpu5uj8LsRuLRV/3/QKZraHgO
+         7AiWw/u7hRS4UiQmspqVhJrgORAvYBnbYxagmFfDn7mSKuJ4Z2BLNbPqfp3IiUv7thUb
+         scf5WO23M+NxkILFbgqfuxkGuHj7/4D4CbOmIIaZu4JmXuYsnmzoLUz7uj4oD1AIoaKF
+         DT+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7Az0C1WStdk9jgQdH8cIbFc5CgfxqIuYseozqUILVnc=;
-        b=aV65L2vGru2Vql4w5KtqJfaxADOPUSPo5oQwR/P/XxGIwDbB3Hnenr2U/wOs7RJObM
-         eaAQfyl9Y/catBee6zT0PGfSl/IKDGhbAuVIIS2ykaaA71DL2FqZ9fbNi+jDxaNbODzn
-         H4iGHIoMGPGkxGNPjN60vgEJscM6ZPMCq2m1Y2MZ4pJeMjvkkimndupiVfnKIWj3j5k+
-         CBd/im4x2mOFFEz2Y4QxJhJ/VETy/lhmPDGMTpW+s3b/UBpEwQ73q52rMmethkqKA4Hq
-         xn/tSS9taGQTemnFnGDy977T7lnU48Zqo/Wma6I74EwsFAq0MlDBjJmz57xrFmv2lkbw
-         LGnw==
-X-Gm-Message-State: AOAM531Elkc9AsCZFPWkQ4ElTaW/4wZgeVf9wscK3ybgaguXlgLKRRMx
-        kYY8ANsWSpGF6xT1nHFAxEFo4nu/Jb0=
-X-Google-Smtp-Source: ABdhPJw6QctUoW5CpLEhUkRnv/fdklFwxG5Mx8u/sZP0B/2nI9APpfC66I0uwR53YXAvdtYv6t0Hog==
-X-Received: by 2002:a05:600c:27d2:: with SMTP id l18mr4099598wmb.176.1643769459226;
-        Tue, 01 Feb 2022 18:37:39 -0800 (PST)
+        bh=YA/t2RR9P00m9Cz8VLtmYxgeduPrOT5/iFTuToguFVc=;
+        b=Mm8DO63NH98G/aRy1n5tscVcXwB94glPzb8MOV4eFS5GRYo3Mar+aeT+ZkOiD/baEY
+         5M3zXqjQCN1UJRZVUMlSDiAyKUqs7MGiGZUKRw/NwH1WapVUZjFCzkIrVTQIV6bcZT6c
+         ZxrcvLCSThmXOfEoWTUdPxd4FFlIrvY57wAoKIduIGCfZahjbovpHcCql1YZPqqvhDAL
+         d9tfAbCni0MFQYwoXLQr2lLYcuEgr0RMyX4r8cJy8F8EGjcvO23+TZT9bXCsAeYY76QU
+         jUru8RIK/icD2W3w7VmvkT/uWrxJr7SkjNhyntWgcmSUNmoNhMu3rjPsPfgZP5qM7DfA
+         oveg==
+X-Gm-Message-State: AOAM530XfY55WtUDgVqLLtxZ+6tbE7oFCVvCIzlGc9nWSyzrmAQS5MVK
+        FU0xy0erbci5gpJgqjQk7+nAlbpUDQY=
+X-Google-Smtp-Source: ABdhPJz8tNeXLPoWi1DP+4olR4IYhNg5mxf0DK7+3xdL2QPNaMnmmsBoMN7PG7jL9y7kWlphN0ne3Q==
+X-Received: by 2002:a5d:64ac:: with SMTP id m12mr23557779wrp.361.1643769460034;
+        Tue, 01 Feb 2022 18:37:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p2sm3378225wmc.33.2022.02.01.18.37.38
+        by smtp.gmail.com with ESMTPSA id a15sm15969626wrp.41.2022.02.01.18.37.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 18:37:38 -0800 (PST)
-Message-Id: <pull.1103.v5.git.1643769457.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com>
+        Tue, 01 Feb 2022 18:37:39 -0800 (PST)
+Message-Id: <0a260125266e3482558089f9bca4f17623df3e11.1643769457.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1103.v5.git.1643769457.gitgitgadget@gmail.com>
 References: <pull.1103.v4.git.1642792341.gitgitgadget@gmail.com>
+        <pull.1103.v5.git.1643769457.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Feb 2022 02:37:27 +0000
-Subject: [PATCH v5 00/10] Add a new --remerge-diff capability to show & log
+Date:   Wed, 02 Feb 2022 02:37:28 +0000
+Subject: [PATCH v5 01/10] show, log: provide a --remerge-diff capability
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,271 +66,378 @@ Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Neeraj Singh <nksingh85@gmail.com>,
         Johannes Altmanninger <aclopte@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are some patches to add a --remerge-diff capability to show & log,
-which works by comparing merge commits to an automatic remerge (note that
-the automatic remerge tree can contain files with conflict markers).
+From: Elijah Newren <newren@gmail.com>
 
-Changes since v4:
+When this option is specified, we remerge all (two parent) merge commits
+and diff the actual merge commit to the automatically created version,
+in order to show how users removed conflict markers, resolved the
+different conflict versions, and potentially added new changes outside
+of conflict regions in order to resolve semantic merge problems (or,
+possibly, just to hide other random changes).
 
- * Just a few minor tweaks -- comment on output being subject to change,
-   simpler test skipping check, and improved bug message
+This capability works by creating a temporary object directory and
+marking it as the primary object store.  This makes it so that any blobs
+or trees created during the automatic merge are easily removable
+afterwards by just deleting all objects from the temporary object
+directory.
 
-Changes since v3:
+There are a few ways that this implementation is suboptimal:
+  * `log --remerge-diff` becomes slow, because the temporary object
+    directory can fill with many loose objects while running
+  * the log output can be muddied with misplaced "warning: cannot merge
+    binary files" messages, since ll-merge.c unconditionally writes those
+    messages to stderr while running instead of allowing callers to
+    manage them.
+  * important conflict and warning messages are simply dropped; thus for
+    conflicts like modify/delete or rename/rename or file/directory which
+    are not representable with content conflict markers, there may be no
+    way for a user of --remerge-diff to know that there had been a
+    conflict which was resolved (and which possibly motivated other
+    changes in the merge commit).
+  * when fixing the previous issue, note that some unimportant conflict
+    and warning messages might start being included.  We should instead
+    make sure these remain dropped.
+Subsequent commits will address these issues.
 
- * Filter conflict headers according to pathspecs
- * Instead of always including conflict headers for all diff types, only
-   select them with --diff-filter=U OR whenever the associated diff in
-   question is selected
- * New testcases dealing with --diff-filter, pathspecs, and default history
-   simplification
- * Switched back from die_errno() to die()
-
-Changes NOT included (mostly because I'm not sure what to add or where):
-
- * Johannes Altimanninger suggested changing the ordering of the new headers
-   relative to other headers. He made a good point, but I also like having
-   the conflict messages next to the text, so I'm conflicted about what's
-   best.
- * (Technically not part of this feature, but kind of related.) Months ago,
-   Junio suggested documenting ${GIT_DIR}/AUTO_MERGE better
-   (https://lore.kernel.org/git/xmqqtuj4nepe.fsf@gitster.g/). I looked at
-   the time, but couldn't find a place to put it that made sense to me.
-
-Changes since v2 (of the restarted submission):
-
- * Numerous small improvements suggested by Johannes Altmanninger
- * Avoid including conflict messages from inner merges (due to example
-   pointed out by Ævar).
- * Added a "remerge" prefix to all the new diff headers (suggested by Junio
-   in a previous round, but I couldn't come up with a good name before. It
-   suddenly hit me that "remerge" is an obvious prefix to use, and even
-   helps explain what the rest of the line is for.)
-
-Changes since v1 (of the restarted submission, which technically was v2):
-
- * Restructured the series, so the first patch introduces the feature --
-   with a bunch of caveats. Subsequent patches clean up those caveats. This
-   avoids introducing not-yet-used functions, and hopefully makes review
-   easier.
- * added testcases
- * numerous small improvements suggested by Ævar and Junio
-
-Changes since original submission[1]:
-
- * Rebased on top of the version of ns/tmp-objdir that Neeraj submitted
-   (Neeraj's patches were based on v2.34, but ns/tmp-objdir got applied on
-   an old commit and does not even build because of that).
- * Modify ll-merge API to return a status, instead of printing "Cannot merge
-   binary files" on stdout[2] (as suggested by Peff)
- * Make conflict messages and other such warnings into diff headers of the
-   subsequent remerge-diff rather than appearing in the diff as file content
-   of some funny looking filenames (as suggested by Peff[3] and Junio[4])
- * Sergey ack'ed the diff-merges.c portion of the patches, but that wasn't
-   limited to one patch so not sure where to record that ack.
-
-[1]
-https://lore.kernel.org/git/pull.1080.git.git.1630376800.gitgitgadget@gmail.com/;
-GitHub wouldn't let me change the target branch for the PR, so I had to
-create a new one with the new base and thus the reason for not sending this
-as v2 even though it is. [2]
-https://lore.kernel.org/git/YVOZRhWttzF18Xql@coredump.intra.peff.net/,
-https://lore.kernel.org/git/YVOZty9D7NRbzhE5@coredump.intra.peff.net/ [3]
-https://lore.kernel.org/git/YVOXPTjsp9lrxmS6@coredump.intra.peff.net/ [4]
-https://lore.kernel.org/git/xmqqr1d7e4ug.fsf@gitster.g/
-
-=== FURTHER BACKGROUND (original cover letter material) ==
-
-Here are some example commits you can try this out on (with git show
---remerge-diff $COMMIT):
-
- * git.git conflicted merge: 07601b5b36
- * git.git non-conflicted change: bf04590ecd
- * linux.git conflicted merge: eab3540562fb
- * linux.git non-conflicted change: 223cea6a4f05
-
-Many more can be found by just running git log --merges --remerge-diff in
-your repository of choice and searching for diffs (most merges tend to be
-clean and unmodified and thus produce no diff but a search of '^diff' in the
-log output tends to find the examples nicely).
-
-Some basic high level details about this new option:
-
- * This option is most naturally compared to --cc, though the output seems
-   to be much more understandable to most users than --cc output.
- * Since merges are often clean and unmodified, this new option results in
-   an empty diff for most merges.
- * This new option shows things like the removal of conflict markers, which
-   hunks users picked from the various conflicted sides to keep or remove,
-   and shows changes made outside of conflict markers (which might reflect
-   changes needed to resolve semantic conflicts or cleanups of e.g.
-   compilation warnings or other additional changes an integrator felt
-   belonged in the merged result).
- * This new option does not (currently) work for octopus merges, since
-   merge-ort is specific to two-parent merges[1].
- * This option will not work on a read-only or full filesystem[2].
- * We discussed this capability at Git Merge 2020, and one of the
-   suggestions was doing a periodic git gc --auto during the operation (due
-   to potential new blobs and trees created during the operation). I found a
-   way to avoid that; see [2].
- * This option is faster than you'd probably expect; it handles 33.5 merge
-   commits per second in linux.git on my computer; see below.
-
-In regards to the performance point above, the timing for running the
-following command:
-
-time git log --min-parents=2 --max-parents=2 $DIFF_FLAG | wc -l
-
-
-in linux.git (with v5.4 checked out, since my copy of linux is very out of
-date) is as follows:
-
-DIFF_FLAG=--cc:            71m 31.536s
-DIFF_FLAG=--remerge-diff:  31m  3.170s
-
-
-Note that there are 62476 merges in this history. Also, output size is:
-
-DIFF_FLAG=--cc:            2169111 lines
-DIFF_FLAG=--remerge-diff:  2458020 lines
-
-
-So roughly the same amount of output as --cc, as you'd expect.
-
-As a side note: git log --remerge-diff, when run in various repositories and
-allowed to run all the way back to the beginning(s) of history, is a nice
-stress test of sorts for merge-ort. Especially when users run it for you on
-their repositories they are working on, whether intentionally or via a bug
-in a tool triggering that command to be run unexpectedly. Long story short,
-such a bug in an internal tool existed in December 2020 and this command was
-run on an internal repository and found a platform-specific bug in merge-ort
-on some really old merge commit from that repo. I fixed that bug (a
-STABLE_QSORT thing) while upstreaming all the merge-ort patches in the mean
-time, but it was nice getting extra testing. Having more folks run this on
-their repositories might be useful extra testing of the new merge strategy.
-
-Also, I previously mentioned --remerge-diff-only (a flag to show how
-cherry-picks or reverts differ from an automatic cherry-pick or revert, in
-addition to showing how merges differ from an automatic merge). This series
-does not include the patches to introduce that option; I'll submit them
-later.
-
-Two other things that might be interesting but are not included and which I
-haven't investigated:
-
- * some mechanism for passing extra merge options through (e.g.
-   -Xignore-space-change)
- * a capability to compare the automatic merge to a second automatic merge
-   done with different merge options. (Not sure if this would be of interest
-   to end users, but might be interesting while developing new a
-   --strategy-option, or maybe checking how changing some default in the
-   merge algorithm would affect historical merges in various repositories).
-
-[1] I have nebulous ideas of how an Octopus-centric ORT strategy could be
-written -- basically, just repeatedly invoking ort and trying to make sure
-nested conflicts can be differentiated. For now, though, a simple warning is
-printed that octopus merges are not handled and no diff will be shown. [2]
-New blobs/trees can be written by the three-way merging step. These are
-written to a temporary area (via tmp-objdir.c) under the git object store
-that is cleaned up at the end of the operation, with the new loose objects
-from the remerge being cleaned up after each individual merge.
-
-Elijah Newren (10):
-  show, log: provide a --remerge-diff capability
-  log: clean unneeded objects during `log --remerge-diff`
-  ll-merge: make callers responsible for showing warnings
-  merge-ort: capture and print ll-merge warnings in our preferred
-    fashion
-  merge-ort: mark a few more conflict messages as omittable
-  merge-ort: format messages slightly different for use in headers
-  diff: add ability to insert additional headers for paths
-  show, log: include conflict/warning messages in --remerge-diff headers
-  merge-ort: mark conflict/warning messages from inner merges as
-    omittable
-  diff-merges: avoid history simplifications when diffing merges
-
- Documentation/diff-options.txt |  14 +-
- apply.c                        |   5 +-
- builtin/checkout.c             |  12 +-
- builtin/log.c                  |  15 ++
- diff-merges.c                  |  14 ++
- diff.c                         | 124 +++++++++++++-
- diff.h                         |   3 +-
- ll-merge.c                     |  40 +++--
- ll-merge.h                     |   9 +-
- log-tree.c                     | 118 ++++++++++++-
- merge-blobs.c                  |   5 +-
- merge-ort.c                    |  55 ++++++-
- merge-ort.h                    |  10 ++
- merge-recursive.c              |   9 +-
- merge-recursive.h              |   2 +
- notes-merge.c                  |   5 +-
- rerere.c                       |   9 +-
- revision.h                     |   6 +-
- t/t4069-remerge-diff.sh        | 291 +++++++++++++++++++++++++++++++++
- t/t6404-recursive-merge.sh     |   9 +-
- t/t6406-merge-attr.sh          |   9 +-
- tmp-objdir.c                   |   5 +
- tmp-objdir.h                   |   6 +
- 23 files changed, 727 insertions(+), 48 deletions(-)
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/diff-options.txt | 14 +++++-
+ builtin/log.c                  | 14 ++++++
+ diff-merges.c                  | 12 +++++
+ log-tree.c                     | 59 ++++++++++++++++++++++
+ revision.h                     |  3 +-
+ t/t4069-remerge-diff.sh        | 91 ++++++++++++++++++++++++++++++++++
+ 6 files changed, 191 insertions(+), 2 deletions(-)
  create mode 100755 t/t4069-remerge-diff.sh
 
-
-base-commit: 4e44121c2d7bced65e25eb7ec5156290132bec94
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1103%2Fnewren%2Fremerge-diff-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1103/newren/remerge-diff-v5
-Pull-Request: https://github.com/gitgitgadget/git/pull/1103
-
-Range-diff vs v4:
-
-  1:  0b94724311d !  1:  0a260125266 show, log: provide a --remerge-diff capability
-     @@ Documentation/diff-options.txt: ifdef::git-log[]
-      +	create a temporary tree object -- potentially containing files
-      +	with conflict markers and such.  A diff is then shown between
-      +	that temporary tree and the actual merge commit.
-     +++
-     ++The output emitted when this option is used is subject to change, and
-     ++so is its interaction with other options (unless explicitly
-     ++documented).
-      ++
-       --diff-merges=combined:::
-       --diff-merges=c:::
-     @@ t/t4069-remerge-diff.sh (new)
-      +. ./test-lib.sh
-      +
-      +# This test is ort-specific
-     -+test "${GIT_TEST_MERGE_ALGORITHM:-ort}" = ort || {
-     ++if test "${GIT_TEST_MERGE_ALGORITHM}" != ort
-     ++then
-      +	skip_all="GIT_TEST_MERGE_ALGORITHM != ort"
-      +	test_done
-     -+}
-     ++fi
-      +
-      +test_expect_success 'setup basic merges' '
-      +	test_write_lines 1 2 3 4 5 6 7 8 9 >numbers &&
-  2:  f06de6c1b2f !  2:  ed0d60de24c log: clean unneeded objects during `log --remerge-diff`
-     @@ log-tree.c: static int do_remerge_diff(struct rev_info *opt,
-      +	if (opt->remerge_objdir)
-      +		tmp_objdir_discard_objects(opt->remerge_objdir);
-      +	else
-     -+		BUG("unable to remove temporary object directory");
-     ++		BUG("did a remerge diff without remerge_objdir?!?");
-       
-       	return !opt->loginfo;
-       }
-  3:  8d6c3d48f0e =  3:  ba4de88f2c4 ll-merge: make callers responsible for showing warnings
-  4:  de8e8f88fa4 =  4:  d7a1f4e1f9f merge-ort: capture and print ll-merge warnings in our preferred fashion
-  5:  6b535a4d55a =  5:  cbde4e5d372 merge-ort: mark a few more conflict messages as omittable
-  6:  e2441608c63 =  6:  d3e4242a5bd merge-ort: format messages slightly different for use in headers
-  7:  62734beb693 =  7:  4d79da6e20a diff: add ability to insert additional headers for paths
-  8:  17eccf7e0d6 =  8:  ff9c14b0b7c show, log: include conflict/warning messages in --remerge-diff headers
-  9:  b3e7656cfc6 =  9:  aa63860cd0f merge-ort: mark conflict/warning messages from inner merges as omittable
- 10:  ea5df61cf35 = 10:  59d12f213b2 diff-merges: avoid history simplifications when diffing merges
-
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index c89d530d3d1..7e27841a95b 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -34,7 +34,7 @@ endif::git-diff[]
+ endif::git-format-patch[]
+ 
+ ifdef::git-log[]
+---diff-merges=(off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc)::
++--diff-merges=(off|none|on|first-parent|1|separate|m|combined|c|dense-combined|cc|remerge|r)::
+ --no-diff-merges::
+ 	Specify diff format to be used for merge commits. Default is
+ 	{diff-merges-default} unless `--first-parent` is in use, in which case
+@@ -64,6 +64,18 @@ ifdef::git-log[]
+ 	each of the parents. Separate log entry and diff is generated
+ 	for each parent.
+ +
++--diff-merges=remerge:::
++--diff-merges=r:::
++--remerge-diff:::
++	With this option, two-parent merge commits are remerged to
++	create a temporary tree object -- potentially containing files
++	with conflict markers and such.  A diff is then shown between
++	that temporary tree and the actual merge commit.
+++
++The output emitted when this option is used is subject to change, and
++so is its interaction with other options (unless explicitly
++documented).
+++
+ --diff-merges=combined:::
+ --diff-merges=c:::
+ -c:::
+diff --git a/builtin/log.c b/builtin/log.c
+index f75d87e8d7f..846ba0f995a 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -35,6 +35,7 @@
+ #include "repository.h"
+ #include "commit-reach.h"
+ #include "range-diff.h"
++#include "tmp-objdir.h"
+ 
+ #define MAIL_DEFAULT_WRAP 72
+ #define COVER_FROM_AUTO_MAX_SUBJECT_LEN 100
+@@ -406,6 +407,14 @@ static int cmd_log_walk(struct rev_info *rev)
+ 	struct commit *commit;
+ 	int saved_nrl = 0;
+ 	int saved_dcctc = 0;
++	struct tmp_objdir *remerge_objdir = NULL;
++
++	if (rev->remerge_diff) {
++		remerge_objdir = tmp_objdir_create("remerge-diff");
++		if (!remerge_objdir)
++			die(_("unable to create temporary object directory"));
++		tmp_objdir_replace_primary_odb(remerge_objdir, 1);
++	}
+ 
+ 	if (rev->early_output)
+ 		setup_early_output();
+@@ -449,6 +458,9 @@ static int cmd_log_walk(struct rev_info *rev)
+ 	rev->diffopt.no_free = 0;
+ 	diff_free(&rev->diffopt);
+ 
++	if (rev->remerge_diff)
++		tmp_objdir_destroy(remerge_objdir);
++
+ 	if (rev->diffopt.output_format & DIFF_FORMAT_CHECKDIFF &&
+ 	    rev->diffopt.flags.check_failed) {
+ 		return 02;
+@@ -1943,6 +1955,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		die(_("--name-status does not make sense"));
+ 	if (rev.diffopt.output_format & DIFF_FORMAT_CHECKDIFF)
+ 		die(_("--check does not make sense"));
++	if (rev.remerge_diff)
++		die(_("--remerge-diff does not make sense"));
+ 
+ 	if (!use_patch_format &&
+ 		(!rev.diffopt.output_format ||
+diff --git a/diff-merges.c b/diff-merges.c
+index 5060ccd890b..0af4b3f9191 100644
+--- a/diff-merges.c
++++ b/diff-merges.c
+@@ -17,6 +17,7 @@ static void suppress(struct rev_info *revs)
+ 	revs->combined_all_paths = 0;
+ 	revs->merges_imply_patch = 0;
+ 	revs->merges_need_diff = 0;
++	revs->remerge_diff = 0;
+ }
+ 
+ static void set_separate(struct rev_info *revs)
+@@ -45,6 +46,12 @@ static void set_dense_combined(struct rev_info *revs)
+ 	revs->dense_combined_merges = 1;
+ }
+ 
++static void set_remerge_diff(struct rev_info *revs)
++{
++	suppress(revs);
++	revs->remerge_diff = 1;
++}
++
+ static diff_merges_setup_func_t func_by_opt(const char *optarg)
+ {
+ 	if (!strcmp(optarg, "off") || !strcmp(optarg, "none"))
+@@ -57,6 +64,8 @@ static diff_merges_setup_func_t func_by_opt(const char *optarg)
+ 		return set_combined;
+ 	else if (!strcmp(optarg, "cc") || !strcmp(optarg, "dense-combined"))
+ 		return set_dense_combined;
++	else if (!strcmp(optarg, "r") || !strcmp(optarg, "remerge"))
++		return set_remerge_diff;
+ 	else if (!strcmp(optarg, "m") || !strcmp(optarg, "on"))
+ 		return set_to_default;
+ 	return NULL;
+@@ -110,6 +119,9 @@ int diff_merges_parse_opts(struct rev_info *revs, const char **argv)
+ 	} else if (!strcmp(arg, "--cc")) {
+ 		set_dense_combined(revs);
+ 		revs->merges_imply_patch = 1;
++	} else if (!strcmp(arg, "--remerge-diff")) {
++		set_remerge_diff(revs);
++		revs->merges_imply_patch = 1;
+ 	} else if (!strcmp(arg, "--no-diff-merges")) {
+ 		suppress(revs);
+ 	} else if (!strcmp(arg, "--combined-all-paths")) {
+diff --git a/log-tree.c b/log-tree.c
+index 644893fd8cf..84ed864fc81 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "commit-reach.h"
+ #include "config.h"
+ #include "diff.h"
+ #include "object-store.h"
+@@ -7,6 +8,7 @@
+ #include "tag.h"
+ #include "graph.h"
+ #include "log-tree.h"
++#include "merge-ort.h"
+ #include "reflog-walk.h"
+ #include "refs.h"
+ #include "string-list.h"
+@@ -902,6 +904,51 @@ static int do_diff_combined(struct rev_info *opt, struct commit *commit)
+ 	return !opt->loginfo;
+ }
+ 
++static int do_remerge_diff(struct rev_info *opt,
++			   struct commit_list *parents,
++			   struct object_id *oid,
++			   struct commit *commit)
++{
++	struct merge_options o;
++	struct commit_list *bases;
++	struct merge_result res = {0};
++	struct pretty_print_context ctx = {0};
++	struct commit *parent1 = parents->item;
++	struct commit *parent2 = parents->next->item;
++	struct strbuf parent1_desc = STRBUF_INIT;
++	struct strbuf parent2_desc = STRBUF_INIT;
++
++	/* Setup merge options */
++	init_merge_options(&o, the_repository);
++	o.show_rename_progress = 0;
++
++	ctx.abbrev = DEFAULT_ABBREV;
++	format_commit_message(parent1, "%h (%s)", &parent1_desc, &ctx);
++	format_commit_message(parent2, "%h (%s)", &parent2_desc, &ctx);
++	o.branch1 = parent1_desc.buf;
++	o.branch2 = parent2_desc.buf;
++
++	/* Parse the relevant commits and get the merge bases */
++	parse_commit_or_die(parent1);
++	parse_commit_or_die(parent2);
++	bases = get_merge_bases(parent1, parent2);
++
++	/* Re-merge the parents */
++	merge_incore_recursive(&o, bases, parent1, parent2, &res);
++
++	/* Show the diff */
++	diff_tree_oid(&res.tree->object.oid, oid, "", &opt->diffopt);
++	log_tree_diff_flush(opt);
++
++	/* Cleanup */
++	strbuf_release(&parent1_desc);
++	strbuf_release(&parent2_desc);
++	merge_finalize(&o, &res);
++	/* TODO: clean up the temporary object directory */
++
++	return !opt->loginfo;
++}
++
+ /*
+  * Show the diff of a commit.
+  *
+@@ -936,6 +983,18 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
+ 	}
+ 
+ 	if (is_merge) {
++		int octopus = (parents->next->next != NULL);
++
++		if (opt->remerge_diff) {
++			if (octopus) {
++				show_log(opt);
++				fprintf(opt->diffopt.file,
++					"diff: warning: Skipping remerge-diff "
++					"for octopus merges.\n");
++				return 1;
++			}
++			return do_remerge_diff(opt, parents, oid, commit);
++		}
+ 		if (opt->combine_merges)
+ 			return do_diff_combined(opt, commit);
+ 		if (opt->separate_merges) {
+diff --git a/revision.h b/revision.h
+index 5578bb4720a..13178e6b8f3 100644
+--- a/revision.h
++++ b/revision.h
+@@ -195,7 +195,8 @@ struct rev_info {
+ 			combine_merges:1,
+ 			combined_all_paths:1,
+ 			dense_combined_merges:1,
+-			first_parent_merges:1;
++			first_parent_merges:1,
++			remerge_diff:1;
+ 
+ 	/* Format info */
+ 	int		show_notes;
+diff --git a/t/t4069-remerge-diff.sh b/t/t4069-remerge-diff.sh
+new file mode 100755
+index 00000000000..d7ab0f50066
+--- /dev/null
++++ b/t/t4069-remerge-diff.sh
+@@ -0,0 +1,91 @@
++#!/bin/sh
++
++test_description='remerge-diff handling'
++
++. ./test-lib.sh
++
++# This test is ort-specific
++if test "${GIT_TEST_MERGE_ALGORITHM}" != ort
++then
++	skip_all="GIT_TEST_MERGE_ALGORITHM != ort"
++	test_done
++fi
++
++test_expect_success 'setup basic merges' '
++	test_write_lines 1 2 3 4 5 6 7 8 9 >numbers &&
++	git add numbers &&
++	git commit -m base &&
++
++	git branch feature_a &&
++	git branch feature_b &&
++	git branch feature_c &&
++
++	git branch ab_resolution &&
++	git branch bc_resolution &&
++
++	git checkout feature_a &&
++	test_write_lines 1 2 three 4 5 6 7 eight 9 >numbers &&
++	git commit -a -m change_a &&
++
++	git checkout feature_b &&
++	test_write_lines 1 2 tres 4 5 6 7 8 9 >numbers &&
++	git commit -a -m change_b &&
++
++	git checkout feature_c &&
++	test_write_lines 1 2 3 4 5 6 7 8 9 10 >numbers &&
++	git commit -a -m change_c &&
++
++	git checkout bc_resolution &&
++	git merge --ff-only feature_b &&
++	# no conflict
++	git merge feature_c &&
++
++	git checkout ab_resolution &&
++	git merge --ff-only feature_a &&
++	# conflicts!
++	test_must_fail git merge feature_b &&
++	# Resolve conflict...and make another change elsewhere
++	test_write_lines 1 2 drei 4 5 6 7 acht 9 >numbers &&
++	git add numbers &&
++	git merge --continue
++'
++
++test_expect_success 'remerge-diff on a clean merge' '
++	git log -1 --oneline bc_resolution >expect &&
++	git show --oneline --remerge-diff bc_resolution >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'remerge-diff with both a resolved conflict and an unrelated change' '
++	git log -1 --oneline ab_resolution >tmp &&
++	cat <<-EOF >>tmp &&
++	diff --git a/numbers b/numbers
++	index a1fb731..6875544 100644
++	--- a/numbers
++	+++ b/numbers
++	@@ -1,13 +1,9 @@
++	 1
++	 2
++	-<<<<<<< b0ed5cb (change_a)
++	-three
++	-=======
++	-tres
++	->>>>>>> 6cd3f82 (change_b)
++	+drei
++	 4
++	 5
++	 6
++	 7
++	-eight
++	+acht
++	 9
++	EOF
++	# Hashes above are sha1; rip them out so test works with sha256
++	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >expect &&
++
++	git show --oneline --remerge-diff ab_resolution >tmp &&
++	sed -e "s/[0-9a-f]\{7,\}/HASH/g" tmp >actual &&
++	test_cmp expect actual
++'
++
++test_done
 -- 
 gitgitgadget
+
