@@ -2,195 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B951C433EF
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 03:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B4DEC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 04:20:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244087AbiBBDmy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 22:42:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37568 "EHLO
+        id S244353AbiBBETu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 23:19:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244079AbiBBDmq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 22:42:46 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D967C061714
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 19:42:46 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id v13so35688591wrv.10
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 19:42:46 -0800 (PST)
+        with ESMTP id S244287AbiBBETt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 23:19:49 -0500
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ED4BC061771
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 20:19:49 -0800 (PST)
+Received: by mail-qv1-xf2e.google.com with SMTP id s6so17932096qvv.11
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 20:19:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=rgJ1bGWHoX5jLI+AEm7XGvjVUoCRS4eCLowx47sFg3c=;
-        b=YQa19jqsRCftiMw53MDUWiDYNE2fFiATTasxff4LLD6m/rAmKJne8278Xbfeufdbut
-         rv3eezAP7Az61pDdgwZLNGUp5lDJQrHDgmOEfxjo+KxBZvrmRvIhndSIcdEwTs/ynbDv
-         u3hZqqJFLuRxAPoQeReI0k/sS0Fd2F1sqecPg1ZEvflztfI2ACjfR1+Iq5FbANQBzNNH
-         NNROfXp70jDY9/htv2PE4ZJovpSdSRhwawn3ZsXKDH9cev6p7MrfeMKurGjndm67GH3P
-         d91v3ODRNLA9z8vm+Zrz2pRt22e9n38Are561nIj8X/fKw+Sryw4KQ7H2f6jK+2IJUzC
-         poyQ==
+        d=skydio.com; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zWPVWVanRlDqGTH554jQJ/QSUrrMWnnQ1ycUH33VMZ8=;
+        b=ec47SZ7kdtMckJlnru32OGqNgK6+s909BTDJ+ijuLXacLwAQoaz43PhPe676E3g+cE
+         1Z29qcd4Wx05+X5DhqUwtNzmepPxGXh0I04cvWeASu6YY255OIPnCyPUGwc95hAKGYjx
+         82zClLYr97w1n7DgskEGht5qWE3oqKKsxDAxw1fn88pI/8x72IZj5p3G2o04E1nR2e/v
+         qVKQoLrcwUadXEg7o9W0zm0HT89iob7LGlQlYaYQGL1DDiJd+dtG6G2XM8q3KVIbPExN
+         dFHXDX26q/4SN8aGQJI8B4OljcrR9KdObK4VI6Kzd0QeAxamID+eo/YSoPieZpNHZe1c
+         yUEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rgJ1bGWHoX5jLI+AEm7XGvjVUoCRS4eCLowx47sFg3c=;
-        b=2JHJ4ND8lBwCS6eYiI5wX+hvr5nl39xptsOKcvl9EbfTgtWoxwfW5ahfgDAqFBOD4b
-         ChlfuVvvzW1O/pyHeu0mbPzWEqNSWXJ3Yx0BXJtn31z9WGWRZKBUVvEJm6152g/e2d3Y
-         ZQUogyBmWAdsNpDVxgJdMATtzPEXbodQMC2+IG85rD1enkHyqT7zWLgNtgjxruxBlama
-         7JwjS8r9HEEVjblNcxdSIKB/Y4j0ZrA88Hbl9Gie3CXVOUWdcBywnP12129UeczPIC9U
-         VgHoxoRruwy6wCsyyVy2LpTzUMAJNmRrO0p4DLRcs43hTnGxEfeXV6f7QFY5Nv/tpkuA
-         f3pQ==
-X-Gm-Message-State: AOAM531Fg5bZutzVP2VPhqKFNeh3UUXBlj+1V3/2CouYsjij2NhtWLmn
-        em2DLDCMds0VJdbX2m5yaDBcj4QwdhQ=
-X-Google-Smtp-Source: ABdhPJxVU0JJGOIc1VjmCcgABdNGe1p4PcP62+8+nDjk77PT2tGTcz7dbvbDHeWANSkXi418tAdyNg==
-X-Received: by 2002:a05:6000:1c9:: with SMTP id t9mr22772782wrx.401.1643773365010;
-        Tue, 01 Feb 2022 19:42:45 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n10sm20331774wrf.96.2022.02.01.19.42.44
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zWPVWVanRlDqGTH554jQJ/QSUrrMWnnQ1ycUH33VMZ8=;
+        b=As//abhCUh9s+9z8LzvCqY6jMbs0mZR+xyIIVd9GnRHDgzpWF3pS8xpbRqRjXF6SWg
+         S08mANYRzphkZ68SBdUn1T9aMUQojAQxEconl/Homx/unekKPlIyVntDOokFBUJN0L9g
+         mSJVN+OH0qRYid7ng+KF0A+utpSKFwt5fLEculHJ4kc2VrYX0D2kdEXfs4MvXfKeeSeq
+         m/4lhIuzzsnmE3GRNTOabGX/wY4eCXy0Cof4DMXQ/DUN2Az5PEa2jW+Noqj3wlHD9spG
+         0NFFxHGPmQxKxOWm69YCkZ7+YXuSjJT8UJx5dKcQLoz6Ysv0QbDYmK5111e3GFAhhrcu
+         rGmA==
+X-Gm-Message-State: AOAM532vhs3eAWnWI7RS/fnT+rYTZOlEvegnv1frXzY2XIz9XuaL6YPi
+        AruXmgS0TMWIGhuYmzwkXLf7AZkBJuRkwg==
+X-Google-Smtp-Source: ABdhPJw077jpxrYWjG5xKudkN4RRfCjmFHQOthBCIQB7rX7oyy/onOjdklUg/ovrhG04zgCHo7ufng==
+X-Received: by 2002:ad4:5be8:: with SMTP id k8mr25586345qvc.38.1643775588165;
+        Tue, 01 Feb 2022 20:19:48 -0800 (PST)
+Received: from jerry-desktop2.localdomain ([50.236.240.214])
+        by smtp.gmail.com with ESMTPSA id d22sm5284228qkn.112.2022.02.01.20.19.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 19:42:44 -0800 (PST)
-Message-Id: <7500a4d2e44008b1d8df9cc8b24b67ff973a98ae.1643773361.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1131.v4.git.1643773361.gitgitgadget@gmail.com>
-References: <pull.1131.v3.git.1643734828.gitgitgadget@gmail.com>
-        <pull.1131.v4.git.1643773361.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Feb 2022 03:42:40 +0000
-Subject: [PATCH v4 3/3] repo-settings: rename the traditional default
- fetch.negotiationAlgorithm
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 01 Feb 2022 20:19:47 -0800 (PST)
+From:   Jerry Zhang <jerry@skydio.com>
+To:     git@vger.kernel.org, gitster@pobox.com
+Cc:     Jerry Zhang <jerry@skydio.com>
+Subject: [PATCH V5 2/2] patch-id: fix scan_hunk_header on diffs with 1 line of before/after
+Date:   Tue,  1 Feb 2022 20:19:45 -0800
+Message-Id: <20220202041945.10077-1-jerry@skydio.com>
+X-Mailer: git-send-email 2.35.1.7.ge3b4973ce7
+In-Reply-To: <20220131235244.27429-1-jerry@skydio.com>
+References: <20220131235244.27429-1-jerry@skydio.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Normally diffs will contain a hunk header of the format
+"@@ -2,2 +2,15 @@ code". However when there is only 1 line of
+change, the unified diff format allows for the second comma
+separated value to be omitted in either before or after
+line counts.
 
-Give the traditional default fetch.negotiationAlgorithm the name
-'consecutive'.  Also allow a choice of 'default' to have Git decide
-between the choices (currently, picking 'skipping' if
-feature.experimental is true and 'consecutive' otherwise).  Update the
-documentation accordingly.
+This can produce hunk headers that look like
+"@@ -2 +2,18 @@ code" or "@@ -2,2 +2 @@ code".
+As a result, scan_hunk_header mistakenly returns the line
+number as line count, which then results in unpredictable
+parsing errors with the rest of the patch, including giving
+multiple lines of output for a single commit.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Fix by explicitly setting line count to 1 when there is
+no comma, and add a test.
+
+apply.c contains this same logic except it is correct. A
+worthwhile future project might be to unify these two diff
+parsers so they both benefit from fixes.
+
+Signed-off-by: Jerry Zhang <jerry@skydio.com>
 ---
- Documentation/config/fetch.txt | 25 +++++++++++++------------
- fetch-negotiator.c             |  2 +-
- repo-settings.c                |  7 +++++--
- repository.h                   |  2 +-
- t/t5500-fetch-pack.sh          |  2 +-
- 5 files changed, 21 insertions(+), 17 deletions(-)
+V4->V5:
+- Quote the EOF marker correctly
 
-diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
-index 63748c02b72..cd65d236b43 100644
---- a/Documentation/config/fetch.txt
-+++ b/Documentation/config/fetch.txt
-@@ -56,18 +56,19 @@ fetch.output::
- 	OUTPUT in linkgit:git-fetch[1] for detail.
+ builtin/patch-id.c  |  9 +++++++--
+ t/t4204-patch-id.sh | 31 ++++++++++++++++++++++++++++++-
+ 2 files changed, 37 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index 822ffff51f..881fcf3273 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -30,26 +30,31 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
  
- fetch.negotiationAlgorithm::
--	Control how information about the commits in the local repository is
--	sent when negotiating the contents of the packfile to be sent by the
--	server. Set to "skipping" to use an algorithm that skips commits in an
--	effort to converge faster, but may result in a larger-than-necessary
--	packfile; or set to "noop" to not send any information at all, which
--	will almost certainly result in a larger-than-necessary packfile, but
--	will skip the negotiation step.
--	The default is "default" which instructs Git to use the default algorithm
--	that never skips commits (unless the server has acknowledged it or one
--	of its descendants). If `feature.experimental` is enabled, then this
--	setting defaults to "skipping".
--	Unknown values will cause 'git fetch' to error out.
-+	Control how information about the commits in the local repository
-+	is sent when negotiating the contents of the packfile to be sent by
-+	the server.  Set to "consecutive" to use an algorithm that walks
-+	over consecutive commits checking each one.  Set to "skipping" to
-+	use an algorithm that skips commits in an effort to converge
-+	faster, but may result in a larger-than-necessary packfile; or set
-+	to "noop" to not send any information at all, which will almost
-+	certainly result in a larger-than-necessary packfile, but will skip
-+	the negotiation step.  Set to "default" to override settings made
-+	previously and use the default behaviour.  The default is normally
-+	"consecutive", but if `feature.experimental` is true, then the
-+	default is "skipping".  Unknown values will cause 'git fetch' to
-+	error out.
- +
- See also the `--negotiate-only` and `--negotiation-tip` options to
- linkgit:git-fetch[1].
-diff --git a/fetch-negotiator.c b/fetch-negotiator.c
-index 273390229fe..874797d767b 100644
---- a/fetch-negotiator.c
-+++ b/fetch-negotiator.c
-@@ -18,7 +18,7 @@ void fetch_negotiator_init(struct repository *r,
- 		noop_negotiator_init(negotiator);
- 		return;
- 
--	case FETCH_NEGOTIATION_DEFAULT:
-+	case FETCH_NEGOTIATION_CONSECUTIVE:
- 		default_negotiator_init(negotiator);
- 		return;
+ 	q = p + 4;
+ 	n = strspn(q, digits);
+ 	if (q[n] == ',') {
+ 		q += n + 1;
++		*p_before = atoi(q);
+ 		n = strspn(q, digits);
++	} else {
++		*p_before = 1;
  	}
-diff --git a/repo-settings.c b/repo-settings.c
-index 41e1c30845f..b4fbd16cdcc 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -26,7 +26,7 @@ void prepare_repo_settings(struct repository *r)
- 	/* Defaults */
- 	r->settings.index_version = -1;
- 	r->settings.core_untracked_cache = UNTRACKED_CACHE_KEEP;
--	r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_DEFAULT;
-+	r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_CONSECUTIVE;
++
+ 	if (n == 0 || q[n] != ' ' || q[n+1] != '+')
+ 		return 0;
  
- 	/* Booleans config or default, cascades to other settings */
- 	repo_cfg_bool(r, "feature.manyfiles", &manyfiles, 0);
-@@ -81,12 +81,15 @@ void prepare_repo_settings(struct repository *r)
+ 	r = q + n + 2;
+ 	n = strspn(r, digits);
+ 	if (r[n] == ',') {
+ 		r += n + 1;
++		*p_after = atoi(r);
+ 		n = strspn(r, digits);
++	} else {
++		*p_after = 1;
  	}
+ 	if (n == 0)
+ 		return 0;
  
- 	if (!repo_config_get_string(r, "fetch.negotiationalgorithm", &strval)) {
-+		int fetch_default = r->settings.fetch_negotiation_algorithm;
- 		if (!strcasecmp(strval, "skipping"))
- 			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_SKIPPING;
- 		else if (!strcasecmp(strval, "noop"))
- 			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_NOOP;
-+		else if (!strcasecmp(strval, "consecutive"))
-+			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_CONSECUTIVE;
- 		else if (!strcasecmp(strval, "default"))
--			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_DEFAULT;
-+			r->settings.fetch_negotiation_algorithm = fetch_default;
- 		else
- 			die("unknown fetch negotiation algorithm '%s'", strval);
- 	}
-diff --git a/repository.h b/repository.h
-index 2b5cf97f31e..ca837cb9e91 100644
---- a/repository.h
-+++ b/repository.h
-@@ -20,7 +20,7 @@ enum untracked_cache_setting {
- };
+-	*p_before = atoi(q);
+-	*p_after = atoi(r);
+ 	return 1;
+ }
  
- enum fetch_negotiation_setting {
--	FETCH_NEGOTIATION_DEFAULT,
-+	FETCH_NEGOTIATION_CONSECUTIVE,
- 	FETCH_NEGOTIATION_SKIPPING,
- 	FETCH_NEGOTIATION_NOOP,
- };
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 41ea9f25de6..ee6d2dde9f3 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -968,7 +968,7 @@ test_expect_success 'use ref advertisement to prune "have" lines sent' '
- test_expect_success 'same as last but with config overrides' '
- 	test_negotiation_algorithm_default \
- 		-c feature.experimental=true \
--		-c fetch.negotiationAlgorithm=default
-+		-c fetch.negotiationAlgorithm=consecutive
+ static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
+ 			   struct strbuf *line_buf, int stable)
+diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
+index 2bc940a07e..a730c0db98 100755
+--- a/t/t4204-patch-id.sh
++++ b/t/t4204-patch-id.sh
+@@ -36,11 +36,11 @@ test_expect_success 'patch-id output is well-formed' '
+ calc_patch_id () {
+ 	patch_name="$1"
+ 	shift
+ 	git patch-id "$@" >patch-id.output &&
+ 	sed "s/ .*//" patch-id.output >patch-id_"$patch_name" &&
+-	test_line_count -gt 0 patch-id_"$patch_name"
++	test_line_count -eq 1 patch-id_"$patch_name"
+ }
+ 
+ get_top_diff () {
+ 	git log -p -1 "$@" -O bar-then-foo --
+ }
+@@ -198,6 +198,35 @@ test_expect_success 'patch-id handles no-nl-at-eof markers' '
+ 	EOF
+ 	calc_patch_id nonl <nonl &&
+ 	calc_patch_id withnl <withnl &&
+ 	test_cmp patch-id_nonl patch-id_withnl
  '
- 
- test_expect_success 'ensure bogus fetch.negotiationAlgorithm yields error' '
++
++test_expect_success 'patch-id handles diffs with one line of before/after' '
++	cat >diffu1 <<-\EOF &&
++	diff --git a/bar b/bar
++	index bdaf90f..31051f6 100644
++	--- a/bar
++	+++ b/bar
++	@@ -2 +2,2 @@
++	 b
++	+c
++	diff --git a/car b/car
++	index 00750ed..2ae5e34 100644
++	--- a/car
++	+++ b/car
++	@@ -1 +1,2 @@
++	 3
++	+d
++	diff --git a/foo b/foo
++	index e439850..7146eb8 100644
++	--- a/foo
++	+++ b/foo
++	@@ -2 +2,2 @@
++	 a
++	+e
++	EOF
++	calc_patch_id diffu1 <diffu1 &&
++	test_config patchid.stable true &&
++	calc_patch_id diffu1stable <diffu1
++'
+ test_done
 -- 
-gitgitgadget
+2.32.0.1314.g6ed4fcc4cc
+
