@@ -2,125 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66A0DC433EF
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 21:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BE5EC433F5
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 21:22:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347499AbiBBVWh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Feb 2022 16:22:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52596 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347497AbiBBVWc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Feb 2022 16:22:32 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E575C06173B
-        for <git@vger.kernel.org>; Wed,  2 Feb 2022 13:22:32 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id jx6so1450566ejb.0
-        for <git@vger.kernel.org>; Wed, 02 Feb 2022 13:22:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=FZCb57K3dNoPILDBE49CZt0EZ/3L16QAZixSVV4LPXU=;
-        b=ZUueOpwDY01kdHCXWWJrzGpduFyQGwOi+3qH8hIlOlfSuOqYgFUWOQ9NTZTQYWRMZc
-         Na0dy60M4g+DfMc2UpCeNAXCJrsCRiZ9yPx8aeT8vjlPRote+EkRrhOUo4DZAcvT0TwQ
-         FIem+SRci+E7Vkxy/zQ0n+ll1K+dD9JdK5XDko1xAdewuLGBvg49DZ3fgdBJMJHzGm7d
-         1okm6NHSn/5R57JSMlKHZFZ4pUJ+FjalY1aOxChzRijE6OVzUq8rZSkJ5J/ZGDnYpUcV
-         slEWllfySmaT2oKoSPB2dbGm8tTo/ejaGFi2xOz28gDJg33GY25ca32BWv2Yu4D2Xtl+
-         SR2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=FZCb57K3dNoPILDBE49CZt0EZ/3L16QAZixSVV4LPXU=;
-        b=zXe79C+XbDK4O2VZVOL5qyMJpsNaDc3nu/EA0IxNtOcnNT+CsWkEIc89ZPdgIk7pJq
-         8LIwYZKWbIoa3ocPGPsw5nH/QNKCRMxucUyNHWlswKAskyvhndmAPyR33q8Ahja6qD4y
-         gMBrWKoPz/E6xt48TFgX5CtEPO9XpocpCAJFO2dBL+qUpKp7gy5WugJjn6O5MR7yb1j8
-         QSvYbwBXyWKHvwLdSKFKSivbg8F9YFjwSIa8mBAhc7Tuwm5QevoBxn80IaXSMqm64XXc
-         3lenth4yBIMxUErcUS1x9SMfZ170luyb62XdUziUBtVx2NPPiiqFg81vj2bTXL0SjaLE
-         v5/g==
-X-Gm-Message-State: AOAM5328+3mK80LUWI/rbMEnE0nW1bGcXvJ7rHY4q0iLupeI0jnVjheF
-        O8bV1ApccfKdaJTUQXby76yLqP2gkzwi1A==
-X-Google-Smtp-Source: ABdhPJwqXm5pXG3zUWVOm8KwUWJts9TzMhe8q107RvcRPxX43zq7/yweM2I9o0dJjJ6f1OYD+se0ZQ==
-X-Received: by 2002:a17:906:3903:: with SMTP id f3mr26392437eje.705.1643836950546;
-        Wed, 02 Feb 2022 13:22:30 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v3sm20647591edy.21.2022.02.02.13.22.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Feb 2022 13:22:30 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nFN5B-004hc1-El;
-        Wed, 02 Feb 2022 22:22:29 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 2/5] date API: create a date.h, split from cache.h
-Date:   Wed, 02 Feb 2022 22:19:17 +0100
-References: <YZQHEiFnOdyxYX5t@coredump.intra.peff.net>
- <cover-0.5-00000000000-20220202T195651Z-avarab@gmail.com>
- <patch-2.5-7de62956db4-20220202T195651Z-avarab@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <patch-2.5-7de62956db4-20220202T195651Z-avarab@gmail.com>
-Message-ID: <220202.86v8xx6k16.gmgdl@evledraar.gmail.com>
+        id S1347493AbiBBVWx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Feb 2022 16:22:53 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52719 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238553AbiBBVWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Feb 2022 16:22:52 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 30B0B10FA73;
+        Wed,  2 Feb 2022 16:22:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=pO80Vknj1Bwb8xd/fH13Bkj6RZKz7ytL+AbUMSOlgt0=; b=uzlr
+        4QKywXnDTBeTO4Km8SIqjajReVQQs2g/9LSjA0hLwCStZtZPmTDMEbmrxTgpZLnO
+        kZuBpud/oyX90578ZHn+r9QH+2FcGkh/H9sheiM9lDizcvZp7vY83i6uCsFSsDXA
+        bkHofvwWm9SMQh47FrGqAyUWdGviWK267ScbMEo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 278F810FA72;
+        Wed,  2 Feb 2022 16:22:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 84BCE10FA71;
+        Wed,  2 Feb 2022 16:22:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 04/15] merge-tree: implement real merges
+References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
+        <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
+        <02c29f920d0d5fde6d85f7b86a69be92e3f0f34d.1643787281.git.gitgitgadget@gmail.com>
+Date:   Wed, 02 Feb 2022 13:22:50 -0800
+Message-ID: <xmqqy22tx8t1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4717FEDA-846E-11EC-A2EA-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Wed, Feb 02 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> @@ -392,7 +395,46 @@ struct merge_tree_options {
+>  static int real_merge(struct merge_tree_options *o,
+>  		      const char *branch1, const char *branch2)
+>  {
+> -	die(_("real merges are not yet implemented"));
+> +	struct commit *parent1, *parent2;
+> +	struct commit_list *common;
+> +	struct commit_list *merge_bases = NULL;
+> +	struct commit_list *j;
+> +	struct merge_options opt;
+> +	struct merge_result result = { 0 };
+> +
+> +	parent1 = get_merge_parent(branch1);
+> +	if (!parent1)
+> +		help_unknown_ref(branch1, "merge-tree",
+> +				 _("not something we can merge"));
+> +
+> +	parent2 = get_merge_parent(branch2);
+> +	if (!parent2)
+> +		help_unknown_ref(branch2, "merge-tree",
+> +				 _("not something we can merge"));
+> +
+> +	init_merge_options(&opt, the_repository);
+> +
+> +	opt.show_rename_progress = 0;
+> +
+> +	opt.branch1 = branch1;
+> +	opt.branch2 = branch2;
+> +
+> +	/*
+> +	 * Get the merge bases, in reverse order; see comment above
+> +	 * merge_incore_recursive in merge-ort.h
+> +	 */
+> +	common = get_merge_bases(parent1, parent2);
+> +	if (!common)
+> +		die(_("refusing to merge unrelated histories"));
 
-> Move the declaration of the date.c functions from cache.h, and adjust
-> the relevant users to include the new date.h header.
->
-> The show_ident_date() function belonged in pretty.h (it's defined in
-> pretty.c), its two users outside of pretty.c didn't strictly need to
-> include pretty.h, as they get it indirectly, but let's add it to them
-> anyway.
->
-> Similarly, the change to "builtin/{fast-import,show-branch,tag}.c"
-> isn't needed as far as the compiler is concerned, but since they all
-> use the "DATE_MODE()" macro we now define in date.h, let's have them
-> include it.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  archive-zip.c         |  1 +
->  builtin/am.c          |  1 +
->  builtin/commit.c      |  1 +
->  builtin/fast-import.c |  1 +
->  builtin/show-branch.c |  1 +
->  builtin/tag.c         |  1 +
->  cache.h               | 48 -------------------------------------------
->  config.c              |  1 +
->  date.c                |  1 +
->  date.h                | 43 ++++++++++++++++++++++++++++++++++++++
->  http-backend.c        |  1 +
->  ident.c               |  1 +
->  object-name.c         |  1 +
->  pretty.h              | 10 +++++++++
->  refs.c                |  1 +
->  strbuf.c              |  1 +
->  t/helper/test-date.c  |  1 +
->  17 files changed, 67 insertions(+), 48 deletions(-)
->  create mode 100644 date.h
+It appears to me that "merge-tree" in this mode, with the above
+code, cannot be used as a workhorse to implement server-side
+cherry-pick (or revert), which needs to allow the user to specify an
+arbitrary "common ancestor", instead of computing on its own.
 
-I managed to notice just after hitting "send" that I'd forgotten to
-"make hdr-check". This commit will need the below fix-up. I'll hold off
-on a v2 for now for any further comments though:
+To replay the change made by commit A on top of commit X (i.e.
+"cherry-pick A on X"), we have to be able to say "compute the
+three-way merge between A and X, pretending as if A^ were their
+common ancestor".  The story is the same for revert---we compute
+three-way merge between A^ and X, pretending as if A were their
+common ancestor.
 
-diff --git a/reflog-walk.h b/reflog-walk.h
-index f26408f6cc1..e9e00ffd479 100644
---- a/reflog-walk.h
-+++ b/reflog-walk.h
-@@ -5,6 +5,7 @@
-=20
- struct commit;
- struct reflog_walk_info;
-+struct date_mode;
-=20
- void init_reflog_walk(struct reflog_walk_info **info);
- int add_reflog_for_walk(struct reflog_walk_info *info,
+The above interface into this function, sadly, does not seem to
+allow such a request, unless I am missing something.
+
+And if I am correct, it is a shame---after all, the point of the
+merge-trees command is to take three trees and run a three-way
+merge, and not being able to merge three "trees" and require
+"commits" makes this mode much less useful than its potential.
