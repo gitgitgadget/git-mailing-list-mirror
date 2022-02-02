@@ -2,120 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CD40C433FE
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 19:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7436C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 19:03:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237323AbiBBTAC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Feb 2022 14:00:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48474 "EHLO
+        id S1346839AbiBBTDn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Feb 2022 14:03:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49336 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231486AbiBBTAB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Feb 2022 14:00:01 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E131CC061714
-        for <git@vger.kernel.org>; Wed,  2 Feb 2022 11:00:01 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id s5-20020a635245000000b0034ea48b7094so147689pgl.12
-        for <git@vger.kernel.org>; Wed, 02 Feb 2022 11:00:01 -0800 (PST)
+        with ESMTP id S231486AbiBBTDm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Feb 2022 14:03:42 -0500
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89999C061714
+        for <git@vger.kernel.org>; Wed,  2 Feb 2022 11:03:42 -0800 (PST)
+Received: by mail-qv1-xf29.google.com with SMTP id d8so495157qvv.2
+        for <git@vger.kernel.org>; Wed, 02 Feb 2022 11:03:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=btrTZQJtyW24YlIynIFH9EzqmX+vIrILFDvOGLa71js=;
-        b=VaUyPODirl9N516zm38qepOsTM9eTGexN8un8iQbe9rnTXpXGD/166xa2jhBBx9rZ1
-         5gVDeZgxUyETkD/9OoMcVU+kJeWgEebsMw/+pOy2N75CRgEQeNrq/vD4SktVuHQMWjTi
-         gVXRYgwNhnVxgpUt5HY7Y2jNHcdLxTHo+CR7tqH7kPz66Au569s8N6BQ4ars6tRXxgxT
-         wauFBGbu7F8eGJE2JguucrzsJvN0SnJOspYOpLB33ID+vAm25M8WMmDIj2o7rMzdGdAT
-         rAw1pov3RuMHyY0gWF9G72s1ua+RuTqlyBATLTCdhvClb587IwHpsZefs3GZc+ljHsH2
-         xQIQ==
+        d=gmail.com; s=20210112;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rnbdQOI20IiEpwVhe0Ych5hWodL9bzeB+L51zqGC0wE=;
+        b=P6l6QpMyxKMt+O1FvwHSVh4fwWE3MRzUcnLSV/me2AurwvnE8/1q/QxT2VUTD6L11Z
+         41agjFGgKhHDaLkX95JUs6Jtaicw/nyGmVrFSkb/9Q8/YGQ2+8xlmXrEJ2VUxoQSfMJ7
+         mIdI5l2QxhMCO4Mavx76bpwIr6nMzjYQEE0U6YMtF5HsKm/RxudK2w4q5qDN/XDr5Iry
+         dpKUaa6P94sc06IOFqGJuBewQXXyiElmDVT+tttcpMOcFLb7sNxL3MIr+KiQfCakV8iB
+         /wqBlnOueDKxjLs0N/A5m2x2jOt2qOJcPElDTmyHIlgPTe3xh45ThxD1WbaM1xlgQkmx
+         k8hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=btrTZQJtyW24YlIynIFH9EzqmX+vIrILFDvOGLa71js=;
-        b=LbzSPcpsm0Yst4LI82u9mLmc8gVASnzWoVLzzYriO9wjCdl04p4qjVnuU/WlvZUE1m
-         SIzbKaMFQhKPJlcLvBP15QJu1pgqF/MCTEgimlFn24qZCkHQAXlhbQNt/6VFew+gK3KS
-         jK2/0zBoj96sSQx84qJ2i7O4kpd1R3R8v89PGQ7VaP9MW8rHBaQOWL1fJNaoJBh1lxVP
-         0xDu4b9l/RTW1m0rxvEIqFEmiSSDzJeWqmc5zF5s2ef8TM4kWN2z8hSFgVvSZGPGM/gN
-         0G5/q1NpH0F6/xUr8bWqk/00j63K+5AJ7j3Hx9p638uGstJeL+fiu+wPwPuPc+RyvtjG
-         NUVg==
-X-Gm-Message-State: AOAM532yTWbAFH/WtK/2RBtxFy2aImREk4ihnW6HvEJDvq1wE9EmSHnS
-        HCTsHXvjHR9U9hldXA13umenYl8psl52yyn58eAD
-X-Google-Smtp-Source: ABdhPJzGSmUhfA+O50INm8YwsepC09fl/3SuRTVJdOyinY+G2VULVpPd0IRLMWHRHNVFnQtUeMLcwLkQBT0IEs6+LjjW
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90b:682:: with SMTP id
- m2mr9718048pjz.22.1643828401242; Wed, 02 Feb 2022 11:00:01 -0800 (PST)
-Date:   Wed,  2 Feb 2022 10:59:57 -0800
-In-Reply-To: <pull.1138.git.1643730593.gitgitgadget@gmail.com>
-Message-Id: <20220202185957.1928631-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <pull.1138.git.1643730593.gitgitgadget@gmail.com>
-X-Mailer: git-send-email 2.35.0.263.gb82422642f-goog
-Subject: Re: [PATCH 0/6] [RFC] partial-clone: add ability to refetch with
- expanded filter
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitgitgadget@gmail.com
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, stolee@gmail.com,
-        me@ttaylorr.com, christian.couder@gmail.com, johncai86@gmail.com,
-        robert@coup.net.nz
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rnbdQOI20IiEpwVhe0Ych5hWodL9bzeB+L51zqGC0wE=;
+        b=4P8/T2hB5GNGL4TkoJKkByIPPyxx3kubd/8DMzPBySjxD+il941qyMbr76h1AQhFnh
+         Yr1tPlwmIoA8RWk8xB6hPInrxT1J+Y3XeljU5DhHdWa8t6WeVCgVwnqCKe0LrTe7LZD3
+         chOrT0ugBbRI3hPcMBPEsWg4m/2BwSxH/+LSi/HKuNS2mk+y0rR/gGMEradTyuKohruS
+         sedmWimXe1dReBLvPK8JmM0seCbe/sFxwgUlMjk189nmw0HQMlht98yLlfyLqjPZw7Os
+         WmvpMgXHDTV3Omj5LKOC0E8+9ixsnLlOqImgeWdEI46319UXsV2rD7t4Pf4DCoVwHJ4D
+         ZM7g==
+X-Gm-Message-State: AOAM531VDZ43KSHnEJFAHN0/waOb26uXVEx5rX1W0CjSAGUJZOf+aLSo
+        rOZqBCEYhwFgcXNwz16vOZpo+wQCZeU=
+X-Google-Smtp-Source: ABdhPJx73UMweZEavNTLpm7VUnhIHYBn5xGq06yj9L346u7huCnTaBKrHmQEKJuZK5HEryM6O5xCxA==
+X-Received: by 2002:ad4:5ded:: with SMTP id jn13mr27236611qvb.31.1643828621363;
+        Wed, 02 Feb 2022 11:03:41 -0800 (PST)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id y18sm5532383qtj.33.2022.02.02.11.03.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Feb 2022 11:03:40 -0800 (PST)
+Subject: Re: New `--reapply-cherry-picks` warning
+To:     =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
+        <stdedos@gmail.com>, git <git@vger.kernel.org>
+References: <CAHMHMxUZpR8MBj+9mSb1Cr3PBCsAx=6zLo9mKpeD_ehqDP4nvQ@mail.gmail.com>
+Cc:     steadmon@google.com
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <31e822be-b7c1-acb2-20d5-6db2200c3383@gmail.com>
+Date:   Wed, 2 Feb 2022 14:03:39 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
+MIME-Version: 1.0
+In-Reply-To: <CAHMHMxUZpR8MBj+9mSb1Cr3PBCsAx=6zLo9mKpeD_ehqDP4nvQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robert Coup via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> If a filter is changed on a partial clone repository, for example from
-> blob:none to blob:limit=1m, there is currently no straightforward way to
-> bulk-refetch the objects that match the new filter for existing local
-> commits. This is because the client will report commits as "have" during
-> negotiation and any dependent objects won't be included in the transferred
-> pack. Another use case is discussed at [1].
+Hi Ntentos,
 
-Reporting commits as "have" can be solved by forcing the noop
-negotiator, but there is another issue (which you seem to have
-discovered, glancing through your patches) in that fetch will abort (and
-report success) if all wanted commits are present, even if not all
-objects directly or indirectly referenced by those commits are present.
-
-> This patch series proposes adding a --refilter option to fetch & fetch-pack
-> to enable doing a full fetch with a different filter, as if the local has no
-> commits in common with the remote. It builds upon cbe566a071
-> ("negotiator/noop: add noop fetch negotiator", 2020-08-18).
-
-Thanks - I think this is a useful feature. This is useful even in a
-non-partial-clone repo, to repair objects that were, say, accidentally
-deleted from the local object store.
-
-If it's acceptable to have a separate command to configure the new
-filter in the repo config (or to delete it, if we want to convert a
-partial clone into a regular repo), I think it's clearer to name this
-option "--repair" or something like that, and explain it as a fetch that
-does not take into account the contents of the local object store (not
-as a fetch that changes the filter).
-
-Having said that, the overall feature is worth having. While we decide
-on the name, the implementation of this will not change much. I'll try
-to review the implementation by the end of this week (but other reviews
-are welcome too, needless to say).
-
-> To note:
+Le 2022-02-02 à 03:56, Σταύρος Ντέντος a écrit :
+> Hello there,
 > 
->  1. This will produce duplicated objects between the existing and newly
->     fetched packs, but gc will clean them up.
 
-Noted. This might be an argument for naming the option "--repair", since
-the user would probably understand that there would be duplicate
-objects.
+Hi !
 
->  2. This series doesn't check that there's a new filter in any way, whether
->     configured via config or passed via --filter=. Personally I think that's
->     fine.
+> I have noticed the new warning that's coming in the
+> https://github.com/git/git/commit/767a4ca648f8791c1fb623bd9f79fd8d7f026499
 
-Agreed.
+Nice archeology work. It's always a good idea when mentioning specific 
+commits to CC the commit author (which I've done here).
 
->  3. If a user fetches with --refilter applying a more restrictive filter
->     than previously (eg: blob:limit=1m then blob:limit=1k) the eventual
->     state is a no-op, since any referenced object already in the local
->     repository is never removed. Potentially this could be improved in
->     future by more advanced gc, possibly along the lines discussed at [2].
+> I am currently using the `[pull] rebase = true` option; and basically
+> that warning is also coming every time I am pulling.
 
-That's true.
+OK, that would mean either:
+
+1- each time you are pulling, the upstream branch *did* get some of your
+local commits somehow, so the warning is justified
+
+or 
+
+2- the upstream branch *did not* get some of your local commits, so the warning
+is shown but shouldn't be, and that's a bug.
+
+Which one is it?
+
+> I have tried doing `git pull --reapply-cherry-picks`; however, it
+> seems that the `git pull` cannot pass options to the underlying `git
+> rebase` invocation.
+
+Indeed, it can't. I agree it would be nice to be able to do that, and the 
+same for 'merge', I would say. Right now a lot of 'merge' options are 
+duplicated in 'git pull'.
+
+> 
+> I noticed that there is no way to "set" the `--reapply-cherry-picks`
+> in the gitconfig options.
+
+Yes, that would be a nice option to have indeed.
+
+> 
+> I prefer the rebase backend for the `git pull`; however, I see no way
+> of doing "what I want", with the exception of:
+> git fetch --all ; git rebase --reapply-cherry-picks
+> 
+> Which is two steps, technically.
+
+Careful, as this is not the exact equivalent of 'git pull --rebase', as
+the documentation for that option states [1]:
+
+    If there is a remote-tracking branch corresponding
+    to the upstream branch and the upstream branch was rebased 
+    since last fetched, the rebase uses that information to 
+    avoid rebasing non-local changes.
+
+(see also paragraphs 2-3 of [2], [3] [4] and [5]).
+
+> 
+> Also with every rebase I am doing, I'd have to remember that.
+> And it is probably not possible (by design) to do `alias.rebase =
+> rebase --reapply-cherry-picks` - which I understand.
+> (however, allowing aliases like `alias.x = x --cmd-opts` does not
+> sound "so bad" with me)
+
+Yes, that's considered "by design" that you can't alias an existing
+command using the exact command name. That is to make sure that scripts
+have consistent behaviour across users (other config options can still
+affect behaviour, but anyway that's the justification I've read before
+on the list). What I can suggest is using 're = rebase --reapply-cherry-picks'
+and then retrain your finger ;)
+
+> 
+> Would you consider adding a configuration option for the
+> `--reapply-cherry-picks`?
+> 
+> With regards,
+> Ntentos Stavros
+> 
+> 
+
+Cheers,
+Philippe.
+
+[1] https://git-scm.com/docs/git-pull#Documentation/git-pull.txt--r
+[2] https://git-scm.com/docs/git-rebase#_description
+[3] https://git-scm.com/docs/git-rebase#Documentation/git-rebase.txt---fork-point	
+[4] https://git-scm.com/docs/git-merge-base#Documentation/git-merge-base.txt---fork-point
+[5] https://git-scm.com/docs/git-merge-base#_discussion_on_fork_point_mode
