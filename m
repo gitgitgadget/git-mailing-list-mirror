@@ -2,119 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E78AC433EF
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 16:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1B75C433EF
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 16:05:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235773AbiBBQEx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Feb 2022 11:04:53 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:35951 "EHLO
-        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S242154AbiBBQEs (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 2 Feb 2022 11:04:48 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id CC2C65C01D3
-        for <git@vger.kernel.org>; Wed,  2 Feb 2022 11:04:47 -0500 (EST)
-Received: from imap46 ([10.202.2.96])
-  by compute5.internal (MEProxy); Wed, 02 Feb 2022 11:04:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hurrell.net; h=
-        cc:content-type:date:date:from:from:in-reply-to:message-id
-        :mime-version:reply-to:sender:subject:subject:to:to; s=fm1; bh=W
-        nRkfMNQVSjpYrXohfHbnQOmG9jBOKgaE9rK7+VAaJs=; b=cjgXRdRPJyNkbQmGq
-        Ov3yU+wiXR5hTUq2y7+GDqh419rJsaWF3ZEsGmcGzVE5rtjFnXP6U/IVQ0nVaOij
-        uJ07f/K+1t7VMAJqlKn6IpeLzNpWbCsQURCMfaBj17nNKjjCq5ddXSx0jPcJsfC4
-        pfzViEVNW79jw63QvvZRNmOiQZq4O4l6eKf7kq4A272dEwjcCOcTs+3kDvN+PZi3
-        kGh7tnewd1qcpqylOnL4QbTMw51DOtwUJOW124Ob7XeSGSE0WwBjj0QhpPz9P9f0
-        nNiBUcCjFouiq7IylXShwFOLnaRKrahFfO0/+y7nhiIh0AXqepz1SKLllLn7qsbF
-        wxCKQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:date:from:from
-        :in-reply-to:message-id:mime-version:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; bh=WnRkfMNQVSjpYrXohfHbnQOmG9jBOKgaE9rK7+VAa
-        Js=; b=k3y6OOsLGpXXFFocUx8h0TmwGmL1mu82WrZAs+eKk4AoXJfwJppeIiaD3
-        nIbaODi9zoQhJ6+xJs+RW+FCJEBDIS4NJpMEHXPo3/KNnYQOFbwdOBr2jF+fmYkt
-        UnIjw+5F5Q6aQ/8oGcd3xj4amNHXqQYOOb9aX4LnoGJvuVlC2xj0A+/dKPoDWzcV
-        /ym4DahpIX6/tb7aNy42yYo9WYHAfFy0jrDS1sKnzprMj7i3XjMAffABPdnrQsBp
-        BAfy/d0OzeuXq3WpVFfCM6WSeaOhRjF815TsZevEUQBf/WWRp1o5TeceN0c/cEXY
-        7Hv2J3OeMpS1eIVHjjunQMShN/CKg==
-X-ME-Sender: <xms:n6v6Ybc4yZeY5k9lCs5qmsfU4J6-W8CRH-godXuLdpgfQ1f0pljt5g>
-    <xme:n6v6YRIRy8xFpfyVr3B4scpVI-o9xZna3ou9RubKHQu71AP1c8bSFl2jkb5EWslju
-    oxuCqFOW2OK0Thw-hU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeehgdekgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkfffhvffutgesthdtredtre
-    ertdenucfhrhhomhepfdfirhgvghcujfhurhhrvghllhdfuceoghhrvghgsehhuhhrrhgv
-    lhhlrdhnvghtqeenucggtffrrghtthgvrhhnpeeigeffhfeivdduvddtvdeuleehvdettd
-    eiudejieektdffudetudekjeelieffhfenucffohhmrghinhepphgrthhhrdhinhenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheshh
-    hurhhrvghllhdrnhgvth
-X-ME-Proxy: <xmx:n6v6YRZmiZ3B7UwCi3ezpGvMqJ-YfAdlZihgetXjgfMtxdzBZe76Gw>
-    <xmx:n6v6YUsoK3ftwvo4aXM6fLujI5k2HxzV5CQgbyOuWIxdLt9waJu1iw>
-    <xmx:n6v6YWuTtsEHcauqGMFKQAVJDTv1Eh-vez75DkjC1LuLyl1VNHyWBw>
-    <xmx:n6v6YZjvfrYPFrklkwj8XPHuL_9NVD4BfVIxgBeCjs-ylLRqnDMc4g>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 8F76F1EE043B; Wed,  2 Feb 2022 11:04:47 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4585-ga9d9773056-fm-20220113.001-ga9d97730
-Mime-Version: 1.0
-Message-Id: <ee1dd453-e698-440a-911b-d14389e33715@beta.fastmail.com>
-Date:   Wed, 02 Feb 2022 17:04:26 +0100
-From:   "Greg Hurrell" <greg@hurrell.net>
-To:     git@vger.kernel.org
-Subject: git-checkout doesn't seem to respect config from include.path
-Content-Type: text/plain
+        id S1345746AbiBBQF1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Feb 2022 11:05:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36184 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345786AbiBBQFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Feb 2022 11:05:22 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E26C06174A
+        for <git@vger.kernel.org>; Wed,  2 Feb 2022 08:05:13 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id c192so15633432wma.4
+        for <git@vger.kernel.org>; Wed, 02 Feb 2022 08:05:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=oN7OhmOWC0CngAuJ8/UPEc35WO8UjB6SUxTdHbldhBk=;
+        b=WQWFreHVYGhUKtGr6bLubrmg4oBRLRN5vkNPlK027IZ8rsyFDb0ur/yAm6XB+PcCNt
+         fUpq3zOSY/hotKxHfnlZm+gPUBgq4vBi9Wm3/2AiyO55+Ax15nkDvP0+exTwdECwED+x
+         ciYvj87vUYZQ0hBk+9tJ3CQ4HdLEJFCzIP4z6p4kFHkcM9kvF3xzuhdLvjoK4ThRvEld
+         icm27kXNks0HSm7c0hyhbBVirX6fUSs03MLKcGU31Rb/Cxxaac3sgesuasBdGacQqwPe
+         OxlNSbUcITWSAEhzEHUB6nIDUG4x0oH6LlPTHSFHOgsIkcSCaDtP81Dr7qnVwGe1jrVG
+         iWew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=oN7OhmOWC0CngAuJ8/UPEc35WO8UjB6SUxTdHbldhBk=;
+        b=CHC7Mvx7DqnE3TrVw50pz8Q2Uac0iBJiHWELYnEwaXYdXALjHpccpx7ZYmuGTg3rw1
+         kjOYZ1fHWpo5zRcntvSjrhVKqhcfCMXg+lXT4q0vQV+0PSc6y9MbZ+HuC9ser9yUWZ9d
+         vb/M7Z/IRytMo+EuPfv/EiTdS1K9qCrqInnF0RT7zjhS3U+bWPlrZOK2NP+92zZofVvy
+         QrYV9BG4hoyQr1asM3CStbTUAoPizk57Rzp9SEwyJO1opot5RnaWIli/Py8TnZ7zy89w
+         w0AmQrsEMIVD/ElkHCUqNTlyAfznTHWYj0vpY95/1j+8tJph3u2AyxPpI3x//x1Ti9ar
+         MGRw==
+X-Gm-Message-State: AOAM533ogp1COA25Gi7EuhFDaeLQ2NtVZ48YCxDvmkm2JcIlGyeFWQrY
+        gotXLZCqFDWfU4D/1y2pREc=
+X-Google-Smtp-Source: ABdhPJxhJFQx59KHpxrK7Zrkj613opF2j9I8eB976ldK3CcumKdPPUOKXB1d9XE7HymzPXaQ/NeZOw==
+X-Received: by 2002:a05:600c:687:: with SMTP id a7mr6878864wmn.104.1643817911887;
+        Wed, 02 Feb 2022 08:05:11 -0800 (PST)
+Received: from [192.168.3.156] ([92.173.128.58])
+        by smtp.googlemail.com with ESMTPSA id r2sm20870419wrz.76.2022.02.02.08.05.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Feb 2022 08:05:11 -0800 (PST)
+Message-ID: <29731fdd-ca0c-a3f6-84c7-7429ccef5673@gmail.com>
+Date:   Wed, 2 Feb 2022 17:05:10 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v4 1/4] i18n: factorize more 'incompatible options'
+ messages
+Content-Language: fr
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Jean-No=c3=abl_Avila_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
+References: <pull.1123.v3.git.1643580113.gitgitgadget@gmail.com>
+ <pull.1123.v4.git.1643666870.gitgitgadget@gmail.com>
+ <2eac2ef502b86d0c15513c8d0e69928ce2140b1f.1643666870.git.gitgitgadget@gmail.com>
+ <xmqqv8xzh6iw.fsf@gitster.g>
+From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <avila.jn@gmail.com>
+In-Reply-To: <xmqqv8xzh6iw.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Le 31/01/2022 à 23:41, Junio C Hamano a écrit :
+> "Jean-Noël Avila via GitGitGadget"  <gitgitgadget@gmail.com> writes:
+>
+>> +inline void die_for_incompatible_opt3(int opt1, const char *opt1_name,
+>> +				      int opt2, const char *opt2_name,
+>> +				      int opt3, const char *opt3_name)
+>> +{
+>> +	die_for_incompatible_opt4(opt1, opt1_name,
+>> +				  opt2, opt2_name,
+>> +				  opt3, opt3_name,
+>> +				  0, "");
+>> +}
+> I haven't seen a non-static inline function defined in a common
+> header files.  Does this actually work?  In my build, ld choked on
+> this one.
 
-Not sure if this is confined specifically to `git-checkout`, but that's
-the command I noticed the issue with:
 
-With the release of the v2.35.0 and the "zdiff3" setting for
-"merge.conflictStyle", I find myself wanting to use "zdiff3" on machines
-running the new version, and falling back to "diff3" on machines with an
-older version.
+This is quite subtle: "inline" is just a hint to the compiler but the
 
-To this end, I have a ~/.gitconfig that contains:
+compiler can choose not to inline, so there must be an external symbol
 
-    [merge]
-    	conflictStyle = zdiff3
-    [include]
-    	path = ~/.gitconfig.local
+to link to (which is not the case with this code).
 
-The idea is that I can use the same `~/.gitconfig` on every machine I
-use, but on machines that only have an older Git version, I drop in a
-~/.gitconfig.local with overrides like this:
 
-    [merge]
-    	conflictStyle = diff3
+My tests and the CI builds went smoothly, so I guess all these compilers
 
-`git config --get merge.conflictStyle` correctly reports that my setting is
-"diff3" on such machines, and `git config --get-all merge.conflictStyle`
-shows:
+luckily chose to inline, but not yours.
 
-    diff3
-    zdiff3
 
-In other words, it knows that I have multiple values set, but it uses
-a last-one-wins policy.
+With "static", we ensure that either it is inlined or there is a static
 
-However, when I try to run a command like `git checkout -b something`,
-Git dies with:
+function (in which case, this bit of code will be duplicated across
 
-    fatal: unknown style 'zdiff3' given for 'merge.conflictstyle'
+compilation units).
 
-So, it looks like something in `git-checkout`'s option processing is
-causing it to disregard the override set via "include.path". In fact, it
-even disregards a value passed in with `-c` like this:
 
-    git -c merge.conflictStyle=diff3 checkout -b something
 
-Does this sound like a bug, or are my expectations off? I'd be happy to
-look into fixing this, but first would like to know whether it is
-expected behavior.
-
-Cheers,
-Greg
