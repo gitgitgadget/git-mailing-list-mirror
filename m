@@ -2,134 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E160DC433F5
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 21:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66A0DC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 21:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347384AbiBBVFH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Feb 2022 16:05:07 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50875 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241103AbiBBVFG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Feb 2022 16:05:06 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BE19B17FEEB;
-        Wed,  2 Feb 2022 16:05:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NiVs+67+MnGL5PkFrrfkFIk2vMzTJb7yuL8T0g
-        NqK60=; b=V1dDXHItCEfupqD7kFz9KxH6smKclgSLrAIpq5n+vZzNo1e0GU60Gl
-        SDBRCuPgTXHrzgK/ANYCykP/cntGcu8b2fBHD2EbURzHi2akJj8wd4rCpwOYG5bM
-        XWnpUcY6d8Yl4WB8BneIm4mlf7fxk0rF2kc7CxjvWJtty8asq8QRc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B715317FEEA;
-        Wed,  2 Feb 2022 16:05:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 937EB17FEE8;
-        Wed,  2 Feb 2022 16:05:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Viaceslavus via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Viaceslavus <vaceslavkozin619@gmail.com>
-Subject: Re: [PATCH] forbid a hard reset before the initial commit
-References: <pull.1137.git.1643802721612.gitgitgadget@gmail.com>
-Date:   Wed, 02 Feb 2022 13:05:01 -0800
-In-Reply-To: <pull.1137.git.1643802721612.gitgitgadget@gmail.com> (Viaceslavus
-        via GitGitGadget's message of "Wed, 02 Feb 2022 11:52:01 +0000")
-Message-ID: <xmqq4k5hyo76.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S1347499AbiBBVWh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Feb 2022 16:22:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52596 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347497AbiBBVWc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Feb 2022 16:22:32 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E575C06173B
+        for <git@vger.kernel.org>; Wed,  2 Feb 2022 13:22:32 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id jx6so1450566ejb.0
+        for <git@vger.kernel.org>; Wed, 02 Feb 2022 13:22:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=FZCb57K3dNoPILDBE49CZt0EZ/3L16QAZixSVV4LPXU=;
+        b=ZUueOpwDY01kdHCXWWJrzGpduFyQGwOi+3qH8hIlOlfSuOqYgFUWOQ9NTZTQYWRMZc
+         Na0dy60M4g+DfMc2UpCeNAXCJrsCRiZ9yPx8aeT8vjlPRote+EkRrhOUo4DZAcvT0TwQ
+         FIem+SRci+E7Vkxy/zQ0n+ll1K+dD9JdK5XDko1xAdewuLGBvg49DZ3fgdBJMJHzGm7d
+         1okm6NHSn/5R57JSMlKHZFZ4pUJ+FjalY1aOxChzRijE6OVzUq8rZSkJ5J/ZGDnYpUcV
+         slEWllfySmaT2oKoSPB2dbGm8tTo/ejaGFi2xOz28gDJg33GY25ca32BWv2Yu4D2Xtl+
+         SR2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=FZCb57K3dNoPILDBE49CZt0EZ/3L16QAZixSVV4LPXU=;
+        b=zXe79C+XbDK4O2VZVOL5qyMJpsNaDc3nu/EA0IxNtOcnNT+CsWkEIc89ZPdgIk7pJq
+         8LIwYZKWbIoa3ocPGPsw5nH/QNKCRMxucUyNHWlswKAskyvhndmAPyR33q8Ahja6qD4y
+         gMBrWKoPz/E6xt48TFgX5CtEPO9XpocpCAJFO2dBL+qUpKp7gy5WugJjn6O5MR7yb1j8
+         QSvYbwBXyWKHvwLdSKFKSivbg8F9YFjwSIa8mBAhc7Tuwm5QevoBxn80IaXSMqm64XXc
+         3lenth4yBIMxUErcUS1x9SMfZ170luyb62XdUziUBtVx2NPPiiqFg81vj2bTXL0SjaLE
+         v5/g==
+X-Gm-Message-State: AOAM5328+3mK80LUWI/rbMEnE0nW1bGcXvJ7rHY4q0iLupeI0jnVjheF
+        O8bV1ApccfKdaJTUQXby76yLqP2gkzwi1A==
+X-Google-Smtp-Source: ABdhPJwqXm5pXG3zUWVOm8KwUWJts9TzMhe8q107RvcRPxX43zq7/yweM2I9o0dJjJ6f1OYD+se0ZQ==
+X-Received: by 2002:a17:906:3903:: with SMTP id f3mr26392437eje.705.1643836950546;
+        Wed, 02 Feb 2022 13:22:30 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id v3sm20647591edy.21.2022.02.02.13.22.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Feb 2022 13:22:30 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nFN5B-004hc1-El;
+        Wed, 02 Feb 2022 22:22:29 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 2/5] date API: create a date.h, split from cache.h
+Date:   Wed, 02 Feb 2022 22:19:17 +0100
+References: <YZQHEiFnOdyxYX5t@coredump.intra.peff.net>
+ <cover-0.5-00000000000-20220202T195651Z-avarab@gmail.com>
+ <patch-2.5-7de62956db4-20220202T195651Z-avarab@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <patch-2.5-7de62956db4-20220202T195651Z-avarab@gmail.com>
+Message-ID: <220202.86v8xx6k16.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C9F32576-846B-11EC-BCE6-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Viaceslavus via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Viacelaus <vaceslavkozin619@gmail.com>
+On Wed, Feb 02 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> Move the declaration of the date.c functions from cache.h, and adjust
+> the relevant users to include the new date.h header.
 >
-> Performing 'git reset --hard' on empty repo with staged files
-> may have the only one possible result - deleting all staged files.
+> The show_ident_date() function belonged in pretty.h (it's defined in
+> pretty.c), its two users outside of pretty.c didn't strictly need to
+> include pretty.h, as they get it indirectly, but let's add it to them
+> anyway.
+>
+> Similarly, the change to "builtin/{fast-import,show-branch,tag}.c"
+> isn't needed as far as the compiler is concerned, but since they all
+> use the "DATE_MODE()" macro we now define in date.h, let's have them
+> include it.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  archive-zip.c         |  1 +
+>  builtin/am.c          |  1 +
+>  builtin/commit.c      |  1 +
+>  builtin/fast-import.c |  1 +
+>  builtin/show-branch.c |  1 +
+>  builtin/tag.c         |  1 +
+>  cache.h               | 48 -------------------------------------------
+>  config.c              |  1 +
+>  date.c                |  1 +
+>  date.h                | 43 ++++++++++++++++++++++++++++++++++++++
+>  http-backend.c        |  1 +
+>  ident.c               |  1 +
+>  object-name.c         |  1 +
+>  pretty.h              | 10 +++++++++
+>  refs.c                |  1 +
+>  strbuf.c              |  1 +
+>  t/helper/test-date.c  |  1 +
+>  17 files changed, 67 insertions(+), 48 deletions(-)
+>  create mode 100644 date.h
 
-Sure.  It has the only one possible result, which is a sign that the
-command is well designed to give a robust and predictable end user
-experience.
+I managed to notice just after hitting "send" that I'd forgotten to
+"make hdr-check". This commit will need the below fix-up. I'll hold off
+on a v2 for now for any further comments though:
 
-I know you wanted to say "there is only one possible result, and
-that result cannot be anything but bad. You Git folks are stupid to
-design a command that only can have a bad result, so I'll fix that
-stupidity for you".
-
-But the thing is, not everybody agrees with your "deleting all files
-that added to the index when asked to 'reset --hard' is bad".  It is
-the most obvious way to go back to the "pristine" state, and after
-all, that is what "reset --hard" is about.
-
-Many readers on the list are non-native speakers.  You must be
-careful with your rhetorics, because they often will not be taken in
-the way you meant them to be taken by them.  When you can say "doing
-X does Y" and convey the core of what you want to say, do so,
-instead of saying "doing X has only one possible result, which is
-Y". You may lose the "you Git folks are stupid" part of the message,
-but you're better off not to sound rude anyway ;-)
-
-> Such behaviour may be unexpected or even dangerous. With this
-> commit, when running 'git reset --hard', git will check for the
-> existence of commits in the repo; in case of absence of such, and
-> also if there are any files staged, git will die with an error.
-
-This directly contradicts with, and likely will regress the fix made
-by, what 166ec2e9 (reset: allow reset on unborn branch, 2013-01-14)
-wanted to do.  I do not think we want this change in its current
-form.
-
-When starting a new project on a hosting provider like GitHub these
-days, you can have them create the initial commit that records the
-copy of the license file, and the first thing you do on your local
-machine after leaving the browser to create the repository over
-there is to clone from it.  After that, you'd populate the working
-tree with the rest of the project files, and record the result.  If
-you say "reset --hard" before committing, you'll equally lose all
-the newly added files, but because the history is not empty, the
-approach taken by this patch would not work to protect you, I
-suspect.  It almost always is a mistake to special case an empty
-repository or an empty history.
-
-Having said all that, I am sympathetic to the cause to make it
-harder to discard a lot of work by mistake.  It is just that
-disabling "reset --hard" only when it is trying to go back to an
-empty tree is not an effective way to do so.  It is even less so
-when you do not give any escape hatch in case the user knew what
-they were doing and really meant to go back to the pristine state.
-
-    Side note.  Yes, "git diff --cached | git apply -R --index" or
-    "git rm --cached -r ." as a workaround, but when the user wanted
-    to do "reset --hard", we should have a way to let them do so.
-
-Off the top of my head, here are a couple of possible ways to
-improve the design of this change (note: I am not saying that I'll
-unconditionally take such a patch that implements any of these):
-
- * Detect if we are being interactive, and offer Yes/No choice to
-   give an interactive user a chance to abort when we detect a
-   "risky" situation.  Don't do anything if we are not interactive,
-   and don't make it impossible to do things that we may (mis)detect
-   as risky.
-
- * Instead of "we are going back to the state without any commit
-   yet", use a better heuristics, such as "we'd lose a newly added
-   path (i.e. the path exists in the index and in the working tree
-   but does not exist in HEAD)" as a sign to flag the situation as
-   possibly risky.  Or limit that further to protect only when we'd
-   lose more than N-percent of the paths in the index that way.
-
-But both are hard problems.
-
-Many existing scripts do rely on "reset --hard" to be a robust and
-predictable way to go back to the pristine state, and they will be
-very upset if we misdetect and prompt the user who is not sitting in
-front of the keyboard.
+diff --git a/reflog-walk.h b/reflog-walk.h
+index f26408f6cc1..e9e00ffd479 100644
+--- a/reflog-walk.h
++++ b/reflog-walk.h
+@@ -5,6 +5,7 @@
+=20
+ struct commit;
+ struct reflog_walk_info;
++struct date_mode;
+=20
+ void init_reflog_walk(struct reflog_walk_info **info);
+ int add_reflog_for_walk(struct reflog_walk_info *info,
