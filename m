@@ -2,98 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8734C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 09:01:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4CDFC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 09:34:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239388AbiBBJA7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Feb 2022 04:00:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51512 "EHLO
+        id S245483AbiBBJeA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Feb 2022 04:34:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232444AbiBBJAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Feb 2022 04:00:54 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FA16C061714
-        for <git@vger.kernel.org>; Wed,  2 Feb 2022 01:00:53 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id k18so37009708wrg.11
-        for <git@vger.kernel.org>; Wed, 02 Feb 2022 01:00:53 -0800 (PST)
+        with ESMTP id S233545AbiBBJd7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Feb 2022 04:33:59 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B447C061714
+        for <git@vger.kernel.org>; Wed,  2 Feb 2022 01:33:59 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id w25so39747534edt.7
+        for <git@vger.kernel.org>; Wed, 02 Feb 2022 01:33:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=5My0lSFjAIjMBlbKzqRp++UufEU6BqNcaklTLPXy4k4=;
-        b=BbXDmlZYMx1YyI+nk91vgGvORRzfMIXIDFv+Z3+YeJjlk42sXx+8BS7lY9lC5sT9ve
-         XLUS5URfGsq0sSfbIFDvZ/mc2dUyd0gLUH8wjGVRCItOqTO8fkX8AyvJsGXxETxc737U
-         0e0NELWW9URrARKBZmMECeY5KadThldZf1vFeLhoZOCE0kyIp3/DSA0doMAsL+mbn3Cf
-         qYTf5vurmRStefiHytDuyCYnhOsXnjYz1yjQeQzaNE/Vuq2rGRSMJwCScqWnbqPzIkeS
-         /BrQU3uZmRmMA2nsAjH8JV4Dmf6soJZ1Wwru3gsVtA66C2QT1bsWKfxmvZ4rKlEFBrce
-         QlUA==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=1baTQo2x5F/X6fZMaDJcdAkloBcO509bgoPDTHvfcYA=;
+        b=UTYUTWgJXOG+Sx/39fdO4L4wF7RB0M3qVTYeInv2Q9brmqEcn/Hdva8/BW03Yvd/Ru
+         PZchRwdlWX6oCyqbuDY019Csk0ZC9p7DWAiXcuT94yfjXH2dLUqyon3Xd5QuQp27qipR
+         7vl5HbnrNCSd6ez1dJAfST5WkhI7iRFBh9PoEOeqv2RRMVvoIgCYctjvd7R2+ay7JeJI
+         dOXWyrCBV9OTPF7E0kN907HKYEj7lf0ByW6AraFjQGgsJ0tFa54uKS486WAhlZAfMUA1
+         49dNQk22zsmEZMzisWjM68C+xE5zb3acKisKUc3IRi+sHMlcrnl/v6H8liNYfEDisc8A
+         mvYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=5My0lSFjAIjMBlbKzqRp++UufEU6BqNcaklTLPXy4k4=;
-        b=nlBELtXu/JorxQ4TtLfWFg0SEyYQeDG0w1y/xG7KwQoJJfIORWqMFb4Y/r4GVkr9nq
-         0KBFwH8vDP/Uk6KgiQSJxxAWbK5Llpjy/qY51lVTi28AfjvupMkF9S1o/e4A4dowbrx0
-         +aC4nKlQ/9QS9X5uYXCgyn0ei0x5agAIgvUWKDgDri4XkJOzK+6TPjAHgdEz/a/LGraE
-         KRYyDUM/08z2TYqCW/Iqs+U7FkfSv0lxmCCuO0hrYXDzK9QkLDnQnXyWc2f6elhT7jHy
-         An0T7vqWCp2XkKTL09tZjObp1lf1receewwbschPDmP9Z7y6TLLbEaE0AlX0B78Yn0vm
-         9JFQ==
-X-Gm-Message-State: AOAM533U0Jc80ay+C+OMb2q7csyxq80ojFA0oilvG5LB5Y4KC41l0BZh
-        rwOPyjqUavkxCEdcJ3vN1Ynj4AY1ulo=
-X-Google-Smtp-Source: ABdhPJyz8NCPOHHUEJf6sSE1mQKQd//ezsficVkKMz+mLEew8VbrsSfp5zLcLSz55eIVAVA/YbLV3g==
-X-Received: by 2002:adf:fa8f:: with SMTP id h15mr23985644wrr.235.1643792452006;
-        Wed, 02 Feb 2022 01:00:52 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t5sm17382177wrw.92.2022.02.02.01.00.51
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=1baTQo2x5F/X6fZMaDJcdAkloBcO509bgoPDTHvfcYA=;
+        b=OvhaexQ/k5Ceo6VrbSovcfpz7IfkG5tAFLY0cfm9OxJbd5qMBpZI1r2eUtmXAa4AiG
+         xdi7vVJ4u+ad8tMiEj+SLQbWBlGF+OP839ZChPG6zPK6DSmv/lKYYyzVX5NR443orp2V
+         QXxH21vJ+uNcwI1uBN62X17Lc8TiLQqBe2rZzG1MrPmMfb3RvL7ZZEaU1iJKkdhCkTxe
+         iTpiFVlKVZs7TKnye30sOjM+NpfRp3BMMr8xbvW45XhdjOd7BicrJHlbwAGsdQlBx87v
+         LtvVXB0io3ivnAmwRea3cjXjXghKedlmQei9WSvf/MJ3kluE5FCK80N0u4ubZcwUQQ0K
+         2Z/A==
+X-Gm-Message-State: AOAM533W8BbWRe1bDZYzr0RLWEXJjM2O/4gQrksCIU5Bzl0gDUjZbQDA
+        XjFLUDcMAjPfZUHq4kWjeRbb1+UbXb6bbQ==
+X-Google-Smtp-Source: ABdhPJx4icP5blJVpsX5oOPXTwpEmb0iQ8Q8Uq4dfnm/YCryIXNu5lEWRQlXqBnywpfFFH6DhvIFRg==
+X-Received: by 2002:aa7:cb17:: with SMTP id s23mr29081555edt.282.1643794437523;
+        Wed, 02 Feb 2022 01:33:57 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id z19sm6151935eja.18.2022.02.02.01.33.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Feb 2022 01:00:51 -0800 (PST)
-Message-Id: <pull.1207.git.git.1643792450866.gitgitgadget@gmail.com>
-From:   "lgl via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Feb 2022 09:00:50 +0000
-Subject: [PATCH] fix typo in git-mktree.txt
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 02 Feb 2022 01:33:57 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nFC1U-004R7Q-EK;
+        Wed, 02 Feb 2022 10:33:56 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     lgl via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, liginity <liginity@outlook.com>
+Subject: Re: [PATCH] fix typo in git-mktree.txt
+Date:   Wed, 02 Feb 2022 10:33:38 +0100
+References: <pull.1207.git.git.1643792450866.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <pull.1207.git.git.1643792450866.gitgitgadget@gmail.com>
+Message-ID: <220202.86sft18vej.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     lgl <liginity@outlook.com>, liginity <liginity@outlook.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: liginity <liginity@outlook.com>
 
-fix a typo: change "as" to "a".
+On Wed, Feb 02 2022, lgl via GitGitGadget wrote:
 
-Signed-off-by: Liginity Lee <liginity@outlook.com>
----
-    fix typo in git-mktree.txt
-    
-    fix a typo: change "as" to "a".
-    
-    Signed-off-by: Liginity Lee liginity@outlook.com
+> From: liginity <liginity@outlook.com>
+>
+> fix a typo: change "as" to "a".
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1207%2Fliginity%2Fpatch-mktree-documentation-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1207/liginity/patch-mktree-documentation-v1
-Pull-Request: https://github.com/git/git/pull/1207
-
- Documentation/git-mktree.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-mktree.txt b/Documentation/git-mktree.txt
-index 27fe2b32e10..76b44f4da10 100644
---- a/Documentation/git-mktree.txt
-+++ b/Documentation/git-mktree.txt
-@@ -31,7 +31,7 @@ OPTIONS
- 
- --batch::
- 	Allow building of more than one tree object before exiting.  Each
--	tree is separated by as single blank line. The final new-line is
-+	tree is separated by a single blank line. The final new-line is
- 	optional.  Note - if the `-z` option is used, lines are terminated
- 	with NUL.
- 
-
-base-commit: 5d01301f2b865aa8dba1654d3f447ce9d21db0b5
--- 
-gitgitgadget
+Looks good, for what it's worth that typo was introduced in f1cf2d8b146
+(mktree --batch: build more than one tree object, 2009-05-14)! So a very
+old one.
