@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AD65C433EF
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 03:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B951C433EF
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 03:42:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244090AbiBBDmt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 22:42:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37562 "EHLO
+        id S244087AbiBBDmy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 22:42:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243201AbiBBDmq (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S244079AbiBBDmq (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 1 Feb 2022 22:42:46 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8771C06173B
-        for <git@vger.kernel.org>; Tue,  1 Feb 2022 19:42:45 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id e2so35828825wra.2
-        for <git@vger.kernel.org>; Tue, 01 Feb 2022 19:42:45 -0800 (PST)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D967C061714
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 19:42:46 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id v13so35688591wrv.10
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 19:42:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ASn63U8F+OkDGGw5wemyJAhE/Gh5KOJXeDjOG5jAW0s=;
-        b=lISPrXYP8wJVh+nxKznnrD97s0yvRv8ivyuleywqYW0IhBnTbgpCTIZMF5+iRCa4yA
-         UrdG9VuSwHgqVb3aI3l10skS9h4jX2L6/eI6rLDob9ScFOJ1wK7OUXe2V6ZYUq++B80M
-         FElccwex9BHga3KNMoftQygk4gmOKyI54ZeGDeQjOZF/XvdhXFQsdYBx6G1CcQedHG5U
-         fYojyPZmJEgT0ANdHTWzV9T2faf0iRuiAnk3jAYB2nhzdZd3QPGP+/wz890xop2Cyzy7
-         bjDL1m3s+wOWXnSz0l3i3bqVsioEPJoK3/ZQEP2wUAQSXegysMEHxqNcLwuJRTazYvnG
-         aD5g==
+        bh=rgJ1bGWHoX5jLI+AEm7XGvjVUoCRS4eCLowx47sFg3c=;
+        b=YQa19jqsRCftiMw53MDUWiDYNE2fFiATTasxff4LLD6m/rAmKJne8278Xbfeufdbut
+         rv3eezAP7Az61pDdgwZLNGUp5lDJQrHDgmOEfxjo+KxBZvrmRvIhndSIcdEwTs/ynbDv
+         u3hZqqJFLuRxAPoQeReI0k/sS0Fd2F1sqecPg1ZEvflztfI2ACjfR1+Iq5FbANQBzNNH
+         NNROfXp70jDY9/htv2PE4ZJovpSdSRhwawn3ZsXKDH9cev6p7MrfeMKurGjndm67GH3P
+         d91v3ODRNLA9z8vm+Zrz2pRt22e9n38Are561nIj8X/fKw+Sryw4KQ7H2f6jK+2IJUzC
+         poyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ASn63U8F+OkDGGw5wemyJAhE/Gh5KOJXeDjOG5jAW0s=;
-        b=2uqIMOztRL2aVKjbXaKSWGiHMvfWUqeKua65NqZA6dcJBkYd3U2cGs7FZD9M37FT0i
-         Q762j6n820tFukhdIE4eOG8jzrp/J9KNCjpfmxCb/cnsHDo8b885tgnLS3Se1nzQBDe7
-         anhz9Tm3qXSOoc15kGh9h+h+RzaYrpr4QcO0EIPjWbifHEbGbkO5qf8+DjEXq0GKCCDz
-         iqXoJN7zHNMfKSxEfZiRF8uH4l5SRr3DpUi8L8setQSWddoq1d2kz0EIG3w2A3Jxrabk
-         lDvIrwfQCTDS/ygdyS1OZFj20VgnaTrAow88B39JNaKOKSXGywHuysD6yY9gdfdi79cY
-         8wng==
-X-Gm-Message-State: AOAM533vje/I70664+Eq6Ba/QVBraRSDX7JqcAOfPz1aqvi8nzrwOWeL
-        7GIDqC+sdenLexWqSl5qlJn1pDAAZwY=
-X-Google-Smtp-Source: ABdhPJybPKSJc7IDmpESpES8nJpwZhralEnQOO9hN0XC66dveso7P3XIxAEZqTPEN8H9Yp+ilSn7aA==
-X-Received: by 2002:adf:f7d2:: with SMTP id a18mr14852661wrq.685.1643773364218;
-        Tue, 01 Feb 2022 19:42:44 -0800 (PST)
+        bh=rgJ1bGWHoX5jLI+AEm7XGvjVUoCRS4eCLowx47sFg3c=;
+        b=2JHJ4ND8lBwCS6eYiI5wX+hvr5nl39xptsOKcvl9EbfTgtWoxwfW5ahfgDAqFBOD4b
+         ChlfuVvvzW1O/pyHeu0mbPzWEqNSWXJ3Yx0BXJtn31z9WGWRZKBUVvEJm6152g/e2d3Y
+         ZQUogyBmWAdsNpDVxgJdMATtzPEXbodQMC2+IG85rD1enkHyqT7zWLgNtgjxruxBlama
+         7JwjS8r9HEEVjblNcxdSIKB/Y4j0ZrA88Hbl9Gie3CXVOUWdcBywnP12129UeczPIC9U
+         VgHoxoRruwy6wCsyyVy2LpTzUMAJNmRrO0p4DLRcs43hTnGxEfeXV6f7QFY5Nv/tpkuA
+         f3pQ==
+X-Gm-Message-State: AOAM531Fg5bZutzVP2VPhqKFNeh3UUXBlj+1V3/2CouYsjij2NhtWLmn
+        em2DLDCMds0VJdbX2m5yaDBcj4QwdhQ=
+X-Google-Smtp-Source: ABdhPJxVU0JJGOIc1VjmCcgABdNGe1p4PcP62+8+nDjk77PT2tGTcz7dbvbDHeWANSkXi418tAdyNg==
+X-Received: by 2002:a05:6000:1c9:: with SMTP id t9mr22772782wrx.401.1643773365010;
+        Tue, 01 Feb 2022 19:42:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p190sm3498856wmp.16.2022.02.01.19.42.43
+        by smtp.gmail.com with ESMTPSA id n10sm20331774wrf.96.2022.02.01.19.42.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Feb 2022 19:42:43 -0800 (PST)
-Message-Id: <23f692b81be26072f44609df8c78d1b8d81f01d3.1643773361.git.gitgitgadget@gmail.com>
+        Tue, 01 Feb 2022 19:42:44 -0800 (PST)
+Message-Id: <7500a4d2e44008b1d8df9cc8b24b67ff973a98ae.1643773361.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1131.v4.git.1643773361.gitgitgadget@gmail.com>
 References: <pull.1131.v3.git.1643734828.gitgitgadget@gmail.com>
         <pull.1131.v4.git.1643773361.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Feb 2022 03:42:39 +0000
-Subject: [PATCH v4 2/3] repo-settings: fix error handling for unknown values
+Date:   Wed, 02 Feb 2022 03:42:40 +0000
+Subject: [PATCH v4 3/3] repo-settings: rename the traditional default
+ fetch.negotiationAlgorithm
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,53 +72,125 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-In commit af3a67de01 ("negotiator: unknown fetch.negotiationAlgorithm
-should error out", 2018-08-01), error handling for an unknown
-fetch.negotiationAlgorithm was added with the code die()ing.  This was
-also added to the documentation for the fetch.negotiationAlgorithm
-option, to make it explicit that the code would die on unknown values.
-
-This behavior was lost with commit aaf633c2ad ("repo-settings: create
-feature.experimental setting", 2019-08-13).  Restore it so that the
-behavior again matches the documentation.
+Give the traditional default fetch.negotiationAlgorithm the name
+'consecutive'.  Also allow a choice of 'default' to have Git decide
+between the choices (currently, picking 'skipping' if
+feature.experimental is true and 'consecutive' otherwise).  Update the
+documentation accordingly.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- repo-settings.c       | 2 ++
- t/t5500-fetch-pack.sh | 7 +++++++
- 2 files changed, 9 insertions(+)
+ Documentation/config/fetch.txt | 25 +++++++++++++------------
+ fetch-negotiator.c             |  2 +-
+ repo-settings.c                |  7 +++++--
+ repository.h                   |  2 +-
+ t/t5500-fetch-pack.sh          |  2 +-
+ 5 files changed, 21 insertions(+), 17 deletions(-)
 
+diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
+index 63748c02b72..cd65d236b43 100644
+--- a/Documentation/config/fetch.txt
++++ b/Documentation/config/fetch.txt
+@@ -56,18 +56,19 @@ fetch.output::
+ 	OUTPUT in linkgit:git-fetch[1] for detail.
+ 
+ fetch.negotiationAlgorithm::
+-	Control how information about the commits in the local repository is
+-	sent when negotiating the contents of the packfile to be sent by the
+-	server. Set to "skipping" to use an algorithm that skips commits in an
+-	effort to converge faster, but may result in a larger-than-necessary
+-	packfile; or set to "noop" to not send any information at all, which
+-	will almost certainly result in a larger-than-necessary packfile, but
+-	will skip the negotiation step.
+-	The default is "default" which instructs Git to use the default algorithm
+-	that never skips commits (unless the server has acknowledged it or one
+-	of its descendants). If `feature.experimental` is enabled, then this
+-	setting defaults to "skipping".
+-	Unknown values will cause 'git fetch' to error out.
++	Control how information about the commits in the local repository
++	is sent when negotiating the contents of the packfile to be sent by
++	the server.  Set to "consecutive" to use an algorithm that walks
++	over consecutive commits checking each one.  Set to "skipping" to
++	use an algorithm that skips commits in an effort to converge
++	faster, but may result in a larger-than-necessary packfile; or set
++	to "noop" to not send any information at all, which will almost
++	certainly result in a larger-than-necessary packfile, but will skip
++	the negotiation step.  Set to "default" to override settings made
++	previously and use the default behaviour.  The default is normally
++	"consecutive", but if `feature.experimental` is true, then the
++	default is "skipping".  Unknown values will cause 'git fetch' to
++	error out.
+ +
+ See also the `--negotiate-only` and `--negotiation-tip` options to
+ linkgit:git-fetch[1].
+diff --git a/fetch-negotiator.c b/fetch-negotiator.c
+index 273390229fe..874797d767b 100644
+--- a/fetch-negotiator.c
++++ b/fetch-negotiator.c
+@@ -18,7 +18,7 @@ void fetch_negotiator_init(struct repository *r,
+ 		noop_negotiator_init(negotiator);
+ 		return;
+ 
+-	case FETCH_NEGOTIATION_DEFAULT:
++	case FETCH_NEGOTIATION_CONSECUTIVE:
+ 		default_negotiator_init(negotiator);
+ 		return;
+ 	}
 diff --git a/repo-settings.c b/repo-settings.c
-index 38c10f9977b..41e1c30845f 100644
+index 41e1c30845f..b4fbd16cdcc 100644
 --- a/repo-settings.c
 +++ b/repo-settings.c
-@@ -87,6 +87,8 @@ void prepare_repo_settings(struct repository *r)
- 			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_NOOP;
- 		else if (!strcasecmp(strval, "default"))
- 			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_DEFAULT;
-+		else
-+			die("unknown fetch negotiation algorithm '%s'", strval);
+@@ -26,7 +26,7 @@ void prepare_repo_settings(struct repository *r)
+ 	/* Defaults */
+ 	r->settings.index_version = -1;
+ 	r->settings.core_untracked_cache = UNTRACKED_CACHE_KEEP;
+-	r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_DEFAULT;
++	r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_CONSECUTIVE;
+ 
+ 	/* Booleans config or default, cascades to other settings */
+ 	repo_cfg_bool(r, "feature.manyfiles", &manyfiles, 0);
+@@ -81,12 +81,15 @@ void prepare_repo_settings(struct repository *r)
  	}
  
- 	/*
+ 	if (!repo_config_get_string(r, "fetch.negotiationalgorithm", &strval)) {
++		int fetch_default = r->settings.fetch_negotiation_algorithm;
+ 		if (!strcasecmp(strval, "skipping"))
+ 			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_SKIPPING;
+ 		else if (!strcasecmp(strval, "noop"))
+ 			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_NOOP;
++		else if (!strcasecmp(strval, "consecutive"))
++			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_CONSECUTIVE;
+ 		else if (!strcasecmp(strval, "default"))
+-			r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_DEFAULT;
++			r->settings.fetch_negotiation_algorithm = fetch_default;
+ 		else
+ 			die("unknown fetch negotiation algorithm '%s'", strval);
+ 	}
+diff --git a/repository.h b/repository.h
+index 2b5cf97f31e..ca837cb9e91 100644
+--- a/repository.h
++++ b/repository.h
+@@ -20,7 +20,7 @@ enum untracked_cache_setting {
+ };
+ 
+ enum fetch_negotiation_setting {
+-	FETCH_NEGOTIATION_DEFAULT,
++	FETCH_NEGOTIATION_CONSECUTIVE,
+ 	FETCH_NEGOTIATION_SKIPPING,
+ 	FETCH_NEGOTIATION_NOOP,
+ };
 diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 666502ed832..41ea9f25de6 100755
+index 41ea9f25de6..ee6d2dde9f3 100755
 --- a/t/t5500-fetch-pack.sh
 +++ b/t/t5500-fetch-pack.sh
-@@ -971,6 +971,13 @@ test_expect_success 'same as last but with config overrides' '
- 		-c fetch.negotiationAlgorithm=default
+@@ -968,7 +968,7 @@ test_expect_success 'use ref advertisement to prune "have" lines sent' '
+ test_expect_success 'same as last but with config overrides' '
+ 	test_negotiation_algorithm_default \
+ 		-c feature.experimental=true \
+-		-c fetch.negotiationAlgorithm=default
++		-c fetch.negotiationAlgorithm=consecutive
  '
  
-+test_expect_success 'ensure bogus fetch.negotiationAlgorithm yields error' '
-+	test_when_finished rm -rf clientv0 &&
-+	cp -r client clientv0 &&
-+	test_must_fail git -C clientv0 --fetch.negotiationAlgorithm=bogus \
-+		       fetch origin server_has both_have_2
-+'
-+
- test_expect_success 'filtering by size' '
- 	rm -rf server client &&
- 	test_create_repo server &&
+ test_expect_success 'ensure bogus fetch.negotiationAlgorithm yields error' '
 -- 
 gitgitgadget
-
