@@ -2,121 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E03F3C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 01:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC6F0C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Feb 2022 01:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243725AbiBBBmf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Feb 2022 20:42:35 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60215 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243698AbiBBBme (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Feb 2022 20:42:34 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 68FD4177A53;
-        Tue,  1 Feb 2022 20:42:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bx2EMU/NPwGIXfY512zmSaDilq95Az5EsR+lOo
-        IKAGk=; b=dD0a0Q3+R4F1B9uybtubu0Mg5Ry2zoSz/aJbIk2J36Ln0ubK/ilznv
-        kyKfXwj4JJtBpZKLQbERgMPBvmqiilX//O/Zs2zSBPW2kYiF6dw/5hCgztdzUVVu
-        6Rpwg0hX27qiJIRxTqr3m9ec/FAOuTz9VoyyrBqDKtAKJcrQc3jWk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61C61177A52;
-        Tue,  1 Feb 2022 20:42:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C8D03177A4E;
-        Tue,  1 Feb 2022 20:42:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, rsbecker@nexbridge.com, bagasdotme@gmail.com,
-        newren@gmail.com, avarab@gmail.com, nksingh85@gmail.com, ps@pks.im,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Subject: Re: [PATCH v4 2/4] core.fsync: introduce granular fsync control
-References: <pull.1093.v3.git.1639011433.gitgitgadget@gmail.com>
-        <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com>
-        <7a164ba95710b4231d07982fd27ec51022929b81.1643686425.git.gitgitgadget@gmail.com>
-        <xmqqr18m8514.fsf@gitster.g>
-Date:   Tue, 01 Feb 2022 17:42:30 -0800
-In-Reply-To: <xmqqr18m8514.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        01 Feb 2022 16:51:19 -0800")
-Message-ID: <xmqqy22u6o3d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S243729AbiBBBpb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Feb 2022 20:45:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39896 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243698AbiBBBpa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Feb 2022 20:45:30 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C48C061714
+        for <git@vger.kernel.org>; Tue,  1 Feb 2022 17:45:30 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id d8so17748718qvv.2
+        for <git@vger.kernel.org>; Tue, 01 Feb 2022 17:45:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=khhie17eomZjSqevlI1fUsslbZa1dHaWP/w9HmYT0Q4=;
+        b=DdxtHFkFo0HFk8hWdTDqkCMG+u8y7qITpOVbyfHRZ+jsAfIKLsTZ2pbwuGPpnfUzWJ
+         LixZNWIDsE5ibBtgUPG+Digg1Blnu+hC5TXYEY4XlsyBF0Ae6G5BOkJ3C4TBTVpFX7qK
+         T6mQkkVxF1aewnyjGDAmYttinK9nmfpWXYpMd3/fqM0mVfAbLKAWHjGVdbQQA9x3iMQ9
+         ztvZgwxYEXSP4cUlrrEWTZUpx+9g1lLVy9xaYtAxYJu64gtWsq4eMiEvSqUXGBGWO8TI
+         D4NVM2d0kuW7dMNrXUOzjGNfUjCL20wKK1Afy3/7MsY8w5K41T7J61bLlWRSVeDJVdtn
+         JrTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=khhie17eomZjSqevlI1fUsslbZa1dHaWP/w9HmYT0Q4=;
+        b=4/gvWz9fs/FlYkWgtjIqKLDbK9dospShwXjTIiGNd+3zPHW+1TBcboTHs5fv0bl1fV
+         5SOVvDbHW9BQ8+yIW4Neeqlv9aCWaiD90u5FDd2HghkmAFjAzaBXkjBTTsHtTu+bMkzk
+         sDA1Er781xD0Q2uz2yOX6zdn+L5ZeLh/Hlk5NDj5XhvogCKhD7Ub477JmljQARiaB0PI
+         raUA2loKudWwH0HqQMINXIcNnLY5aoopbgkQ+2E1MFd2c5fk8X6HUlk2jf6yWttjPnMq
+         /aw7l0GskrR1Geqbah1VtUhHi8PQYZ7c6/Eb2Ak/TNdM7UbEZr1HM+86ri12WKo2WhcY
+         gS+A==
+X-Gm-Message-State: AOAM532225x/DCElCqu0sHtk/jXMoQO/G829/iRwkzVNLiyIfF20L8dl
+        QR95j3klr4haaPL9dhK5HqdV/g==
+X-Google-Smtp-Source: ABdhPJxntE/Y4Icfc1r6YJj0S6zBF+LkHvVy1aLnNwJRyhaz4QfM7p0f8i/35yQQOJjIh7I1XdOckA==
+X-Received: by 2002:a05:6214:27ce:: with SMTP id ge14mr24910144qvb.24.1643766329556;
+        Tue, 01 Feb 2022 17:45:29 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id bk19sm10024006qkb.125.2022.02.01.17.45.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Feb 2022 17:45:28 -0800 (PST)
+Date:   Tue, 1 Feb 2022 20:45:27 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     John Cai <johncai86@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Eric Wong <e@80x24.org>
+Subject: Re: [RFC v3] cat-file: add a --stdin-cmd mode
+Message-ID: <YfniNw/PoBeei+33@nand.local>
+References: <20220128183319.43496-1-johncai86@gmail.com>
+ <CAP8UFD3sHvA3Gx9+d=VjQ11sEqWF47AEeo-m4bGsVO3OUJ4dLw@mail.gmail.com>
+ <YflzZsb/txsopusP@nand.local>
+ <674CD40F-7060-4892-97CD-1940AEF7C3D7@gmail.com>
+ <YfmUiXJ//ZC5NZU+@nand.local>
+ <3FE1D509-8AD0-4F0E-9298-DFD3552A98EF@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 633EFDE8-83C9-11EC-88C7-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3FE1D509-8AD0-4F0E-9298-DFD3552A98EF@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> I am not quite sure if this is way too complex (e.g. what does it
-> mean that we do not care much about loose-object safety while we do
-> care about commit-graph files?) and at the same time it is too
-> limited (e.g. if it makes sense to say a class of items deserve more
-> protection than another class of items, don't we want to be able to
-> say "class X is ultra-precious so use method A on them, while class
-> Y is mildly precious and use method B on them, everything else are
-> not that important and doing the default thing is just fine").
+On Tue, Feb 01, 2022 at 08:34:06PM -0500, John Cai wrote:
+> > So maybe a signal isn't the way to go. But I don't think `--stdin-cmd`
+> > is the simplest approach either. At the very least, I don't totally
+> > understand your plan after implementing a flush command. You mention
+> > that it would be nice to implement other commands, but I'm not totally
+> > convinced by your examples[1].
 >
-> If we wanted to allow the "matrix" kind of flexibility,...
+> I agree that if flush were the only use case for a new flag, it might not
+> be worth it. But, the flush command is only one of the use cases that a
+> --stdin-cmd (now changed to --batch-command per Phillip's suggestion)
+>
+> There are two other commands in this RFC
+>
+> object <rev>
+> info <rev>
+>
+> These are described in [1] that are also a motivation for a command
+> interface.
+> The description in [1] explains why a command interface would be necessary.
 
-To continue with the thinking aloud...
+This seems like a more realistic and well-motivated proposal, IMHO. I am
+a little curious that having the ability to switch between asking for an
+object's contents and its metadata would lead to saving thousands of
+processes per server.
 
-Sometimes configuration flexibility is truly needed, but often it is
-just a sign of designer being lazy and not thinking it through as an
-end-user facing problem.  In other words, "I am giving enough knobs
-to you, so it is up to you to express your policy in whatever way
-you want with the knobs provided" is a very irresponsible thing to
-tell end-users.
+(Apropos of this series, I am curious: how long does GitLab keep a pair
+of cat-file programs running for each repository?)
 
-And this one smells like the case of a lazy design.
+In any case, I'll take a closer look over the aforementioned version and
+let you know what my thoughts are, probably tomorrow.
 
-It may be that it makes sense in some workflows to protect
-commit-graph files less than object files and pack.idx files can be
-corrupted as long as pack.pack files are adequately protected
-because the former can be recomputed from the latter, but in no
-workflows, the reverse would be true.  Yet the design gives such
-needless flexibility, which makes it hard for lay end-users to
-choose the best combination and allows them to protect .idx files
-more than .pack files by mistake, for example.
+> 1. https://lore.kernel.org/git/20220128183319.43496-1-johncai86@gmail.com/
 
-I am wondering if the classification itself introduced by this step
-actually can form a natural and linear progression of safe-ness.  By
-default, we'd want _all_ classes of things to be equally safe, but
-at one level down, there is "protect things that are not
-recomputable, but recomputable things can be left to the system"
-level, and there would be even riskier "protect packs as it would
-hurt a _lot_ to lose them, but losing loose ones will typically lose
-only the most recent work, and they are less valuable" level.
-
-If we, as the Git experts, spend extra brain cycles to come up with
-an easy to understand spectrum of performance vs durability
-trade-off, end-users won't have to learn the full flexibility and
-easily take the advice from experts.  They just need to say what
-level of durability they want (or how much durability they can risk
-in exchange for an additional throughput), and leave the rest to us.
-
-On the core.fsyncMethod side, the same suggestion applies.
-
-Once we know the desired level of performance vs durability
-trade-off from the user, we, as the impolementors, should know the
-best method, for each class of items, to achieve that durability on
-each platform when writing it to the storage, without exposing the
-low level details of the implementation that only the Git folks need
-to be aware of.
-
-So, from the end-user UI perspective, I'd very much prefer if we can
-just come up with a single scalar variable, (say "fsync.durability"
-that ranges from "conservative" to "performance") that lets our
-users express the level of durability desired.  The combination of
-core.fsyncMethod and core.fsync are one variable too many, and the
-latter being a variable that takes a list of things as its value
-makes it even worse to sell to the end users.
-
-
+Thanks,
+Taylor
