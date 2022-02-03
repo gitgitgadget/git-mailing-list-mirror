@@ -2,82 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73E2DC433F5
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 18:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F0DBC433EF
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 18:16:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353173AbiBCSP1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 13:15:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54684 "EHLO
+        id S1353313AbiBCSQV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 13:16:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbiBCSP0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 13:15:26 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75201C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 10:15:25 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id i186so2947752pfe.0
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 10:15:25 -0800 (PST)
+        with ESMTP id S243349AbiBCSQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 13:16:16 -0500
+Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CCF4C061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 10:16:16 -0800 (PST)
+Received: by mail-ua1-x92b.google.com with SMTP id a24so6655468uat.10
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 10:16:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Y2xGRVLLKNmDGp5y31ZyHinSFmn60QTmXvqf1y6SXqQ=;
-        b=dU2Ofq0zH62i9M6oZWlf1oBHVpEfjmg/WAE1lwMnySfx6CAJ09hpHHCuxvyq6Z3OnM
-         kSjR7zCxZzHelLy014tSTzxZVUWx59v5ID91RolZw2uE9x0ZZD+r09knh4zeCyIOJye2
-         +oKPnqz28g0VlwmC9RoSi4CDv+V26QdPXdSUgVUPLeTpBs3al0CyPKRfgrFHMaYz5Vw9
-         WftDkUMLbf7y4/FugSfxamjEx/+4aya/OTAP6pMmfoJE2o7Ka9zhBYgc7WMXALVKHyBi
-         ++U/P5oXvZSfSl4r/FQdjJ3x5btQBudQYq6QjdRE8Iew+9k4FhwFrXl6hWRce7twu/U3
-         Yw2g==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4iICLMnitFpX+vv6vrIhJ4MgS9YkQsJ7p8XwDyoDQgc=;
+        b=UZCnmnZDwyzisVKegalhRIfwtKGPHlwTYztB1AUsGA/kt5807znkqq21AcSn+KvOXE
+         NUhHYPuEA073lAkM68pyn6TC80WItd0bghiX4o5Q70g5nRX39o923syaAklr+3ILx853
+         Gsn6AZ7voa6d3pRZl/OZmbGftlcmP1oT2WScW3kg14KA81cVbekt8SV3IphjFVdM/7Nm
+         gDdFhl8Msietaw3eTE1TTY+Z73w66/EJG3E5rl/V9dUoNmrG/TJhEIRqaV+Fi4Jk4e5N
+         NpaTMXJzuz1tj+7hvFbNlWmx/hUwNkoj+XH5ChpfkVApTSgh/7mCo7ChFaKCMxVEA7lw
+         fYNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Y2xGRVLLKNmDGp5y31ZyHinSFmn60QTmXvqf1y6SXqQ=;
-        b=VgMsHkQRPg6Hy2HMg6N+AKP9ozx0SJSMgYVnoZffupml1QT/ACXe4SE8EjlDo4ZV3f
-         /xXjvgGhcgO392JYUGKT8xPmls2p5JcaDCifo1T8IDn3OSXOmRQyvzbSsScbraOGrYBN
-         M3jsB1Ak06X6mMLARqTyJoavQhwSQupqNCnWd1SpK0BLuZ+riDx1oY2Yy0IEa1p8Xpxb
-         iyTUN4HAg0is0kZWYNzuL3uGs6tUHgLP6mZ+8IF2k2G96cP2VEG1a2iOb+6Pg1p7oQWO
-         9M9KL6x6Rtu6FQX8PyJXca3p4vLlMZ/da84XhKAbZgwopF4T/vCjau0Jdih+nMkIA/Pu
-         ACAA==
-X-Gm-Message-State: AOAM531HTIL4lCbtdOZXoCCyCii2TbYEwNDXdTBHC2qt4x6N/MA3d3d5
-        ZD0zM1sgQj8RIb4xiG53gzQ=
-X-Google-Smtp-Source: ABdhPJzq8hoxlFfBRDgJJ4sclsOBK5u0Qw9RCU3KxQt7V81SQ8XzhwcAXs1Gwffe3goAEkXp6gkZSg==
-X-Received: by 2002:a65:4c87:: with SMTP id m7mr28988295pgt.509.1643912124965;
-        Thu, 03 Feb 2022 10:15:24 -0800 (PST)
-Received: from localhost ([2620:15c:289:200:b5c2:580b:9b41:56b2])
-        by smtp.gmail.com with ESMTPSA id e17sm18808103pfv.101.2022.02.03.10.15.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 10:15:24 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     <rsbecker@nexbridge.com>
-Cc:     =?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?= 
-        <avarab@gmail.com>,
-        =?utf-8?Q?'Jean-No=C3=ABl_Avila'?= <avila.jn@gmail.com>,
-        <git@vger.kernel.org>
-Subject: Re: [Question] Translation Dictionary
-References: <016401d81547$728834e0$57989ea0$@nexbridge.com>
-        <0c47248d-13b8-9d80-b03f-8ac6fd4ac91e@gmail.com>
-        <220203.86sft05kzm.gmgdl@evledraar.gmail.com>
-        <02f101d81901$c1ac8400$45058c00$@nexbridge.com>
-Date:   Thu, 03 Feb 2022 10:15:24 -0800
-In-Reply-To: <02f101d81901$c1ac8400$45058c00$@nexbridge.com>
-        (rsbecker@nexbridge.com's message of "Thu, 3 Feb 2022 08:27:08 -0500")
-Message-ID: <xmqqwnibvmtf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4iICLMnitFpX+vv6vrIhJ4MgS9YkQsJ7p8XwDyoDQgc=;
+        b=nYfgnT3LyOTQ8e9IThZ2dgR8Dc/TuDqWwP51TJ0meI6Lj2TJgu88ZYhz96txu5QrST
+         sdLQ0DY4Px3Aq4rdv9wBpuGPobjxB3mdNxhQinB9NCb+znxwmDq02MkOxXHn3lMVW5fb
+         eIps+2HGp5Pc3pkE2395f1LiEnCaNNAmbFJJ60blb2wcOVc4I+uppiquIG9wje/aW9Vd
+         9InwmmjqxWNGYNv6DYdYULFCDrFtVIPAdlx818fh/dkFIuxHg9DKkLOgxMJLOMignSBJ
+         DK8iCdeUqd35YJg5oCHIykeCWJgBjDt8DSEfETbFpI5i6BwJdDb8DTGJUtjy0788PRmj
+         UCTw==
+X-Gm-Message-State: AOAM531jWGUD0dor2T283YhRLVap7pcRZ7TiPwoMpyYrGsEkXZQdEzw3
+        VOvssk93AaLZ0vRSqnemD8kdmANxAttRjA9PNhdURg==
+X-Google-Smtp-Source: ABdhPJwADRLco7Zp8T30GWroi80D+Uzrm8eaMQYq6PkhJVKVEtv/Q9Yr9ZzBugMH0QziYit4tU/9HZgyKFnIE9puUac=
+X-Received: by 2002:a67:e09e:: with SMTP id f30mr14546022vsl.16.1643912175627;
+ Thu, 03 Feb 2022 10:16:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1210.git.git.1643660136530.gitgitgadget@gmail.com>
+ <pull.1210.v2.git.git.1643719616840.gitgitgadget@gmail.com>
+ <220201.86ilty9vq2.gmgdl@evledraar.gmail.com> <xmqq8ruub35i.fsf@gitster.g>
+ <CAFQ2z_Oxq67XO20oG7Tokk48wm5ZzHRR3GDi4PG5wg7FMJ89aA@mail.gmail.com> <220203.8635kz6d2o.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220203.8635kz6d2o.gmgdl@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 3 Feb 2022 19:16:04 +0100
+Message-ID: <CAFQ2z_NWM0F1uY==rCrc2pvJYjgPyOHz5aLFLSng-DvgiQVxqw@mail.gmail.com>
+Subject: Re: [PATCH v2] refs.h: make all flags arguments unsigned
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<rsbecker@nexbridge.com> writes:
+On Thu, Feb 3, 2022 at 7:05 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+> > I proposed both options because a distinct typename lets me jump to
+> > the definition of the flags easily through ctags.
+>
+> I'm not sure I understand you here. I use ctags (via Emacs) and it's
 
-> I would even suggest that gitglossary(7) might ultimately be
-> deprecated particularly on systems without 'man(1)'.
+"I proposed both options" (ie. enum or typedef) , so we are in
+resounding agreement.
 
-Yes, I think the entries in the "git help -w glossay" are good
-things to have in the dictionary.  I thought there are folks who are
-already translating our manual pages (perhaps with po4a if I recall
-correctly but I may be misremembering)?
+> > Another idea is to mark the type of the flags by its name, eg.
+> > transaction_flags, resolve_flags, reftype_flags etc. This wouldn't
+> > help with ctags, but it does help with readability.
+>
+> Yes, enums or not, what I was also pointing out in
+> https://lore.kernel.org/git/220201.86ilty9vq2.gmgdl@evledraar.gmail.com/
+> is that changing just one logical set of flags at a time would make this
+> much easier to review.
+>
+> It doesn't matter for the end result as long as we end up with "unsigned
+> int" everywhere, but would with enums.
 
-Thanks.
+Not sure if you need to review it in that detail. If you change a
+definition in the .h file,  the compiler will complain about all
+mismatches. So it doesn't need human verification once you know it
+compiles.
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
