@@ -2,139 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA930C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 15:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5848C433FE
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 16:03:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344987AbiBCPyb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 10:54:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49034 "EHLO
+        id S1352098AbiBCQDA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 11:03:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234764AbiBCPya (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 10:54:30 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9017C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 07:54:29 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id o1-20020a1c4d01000000b0034d95625e1fso7465359wmh.4
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 07:54:29 -0800 (PST)
+        with ESMTP id S244351AbiBCQC7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 11:02:59 -0500
+Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25759C061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 08:02:59 -0800 (PST)
+Received: by mail-ua1-x934.google.com with SMTP id a24so5943591uat.10
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 08:02:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:references:cc:from:in-reply-to
-         :content-transfer-encoding;
-        bh=1qmk3+wVENvaibILocwV8tbaxaXpAMFX/0uXZ2NhPpw=;
-        b=kQZ4rzIDK5lkY1sqNcSR5iEjd0bodGYXGwlBrZT9b1jPgzaC0gTjGpdFXxcv2ak3dA
-         rBSlKsgZfMTdiRRXHbsFaWl48eWPailNK73yt6Rlp3KuNG5hq6pzgYpF0gp+6RS+sqC3
-         Wxhi60PsZYxhJyBrQ7bfVvQY6Kn8FLMAMY6O/2nAKZjcBItwTA7rLXuS9bWUbAsHlleH
-         Zhgrlp/lRzY2TmzdB00NiGludQu19jInrHEDHFEoH7NId3W6nD6fB/nSuuamSWBpeigG
-         wzBWK4AKGFXOAgNg+iKCK9kfQEgmTnIdw5JYxjIPHJTbFDP3s0tpF38+LMPMNQ4GXJMm
-         gMTQ==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=LCzIdva4ZlBiw/0K0GYywGOqaPWGRLIoMiTyaoq4PWU=;
+        b=XfUga6b4o5HlwVljH5wRzvHZvpWazeTrUlGIb1JG6y90nF0PPfsYYBv3kagV70HDjp
+         G0Wg37sPAExnzQj39Tel/47zlIuv3rTO+wgz3hcgzyVgdxNjqie3vfOvcbhNkJWzAGoM
+         St63ZDdI+XoiRftWxplNO9EWGJf/HLK36bsQv8s6Nc6jy+PGrInmuodSgeVNDodu/Lc7
+         IzhpBfz14QawfPBizxSVFnv6ZAd0ocyBxlLYrvQCRc+2b21FqiiNRKO4JSSoTsLjFwgO
+         t4P9o3mMaWSnp6NyicLmQHgmetgjDp0eKXaki1aGECMlEAueC4dEIrJcw8oCpYsL8BGJ
+         SQsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:references:cc:from:in-reply-to
-         :content-transfer-encoding;
-        bh=1qmk3+wVENvaibILocwV8tbaxaXpAMFX/0uXZ2NhPpw=;
-        b=DF85FRfHCtI1OkbyJb+cxzfOz/gXGQruvu6Ppcg7WMvTfGhR3sVYPDt/7QdSaP/yRi
-         zOV9wc1bAgBWffz9FBZcTxdP5JpubZMWIXCD+4hS4rsCZv/m8R2tXz7PkaL2AhGh407z
-         MPuneEaNueBqfkONN3ZB22tkivUMQKUtGP+Uu4WGb0sBVPHWkN4RhjcRo55Go/EstXxW
-         y2WaIktMR0efO7NyFN5nekptu1pZMjTRSoGqq6eV3fZGqGHPlCr1RapzOa3WRBDVqtd9
-         qiss4DxVOMqSM/DJw1+PLQvuk9nbok2dAi771lC5L5ofI3ynXvaY0qmeuGyjnQ9Dn/4e
-         2JLQ==
-X-Gm-Message-State: AOAM531EB1AFrEZ+QfdkeRZ2dc7XIni8jcIp1IFEX7QX1GSn3Xp5WBZt
-        g0iIIWkEHr+PZTfKoGj+um4=
-X-Google-Smtp-Source: ABdhPJxMQAqeUh38zOug/sXhESLQQomDhf2OdJkEhNO2GNJ89MVSndqvLb6yVYQ/aNNNkjzh/zPULg==
-X-Received: by 2002:a1c:ed09:: with SMTP id l9mr5610587wmh.142.1643903668372;
-        Thu, 03 Feb 2022 07:54:28 -0800 (PST)
-Received: from [192.168.1.240] ([31.185.185.186])
-        by smtp.gmail.com with ESMTPSA id k20sm8537468wmi.36.2022.02.03.07.54.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Feb 2022 07:54:28 -0800 (PST)
-Message-ID: <0b8222c2-7337-7e8f-33d1-7926462daac1@gmail.com>
-Date:   Thu, 3 Feb 2022 15:54:23 +0000
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=LCzIdva4ZlBiw/0K0GYywGOqaPWGRLIoMiTyaoq4PWU=;
+        b=I+6LPbUsL76LrLuK2zmOV6qwAcUAz9qCDLvqE606LDV4Lp4ZhHWrral3BRj7Mb0leZ
+         YJEKnoOXqiThPNFvueuoD1vByGY/Yn7SZULDj91qUtRn3ziW+a+chmyKsAHGgd2kPBlJ
+         7vnfDCq+PwxVop0SzNzm3WEskeg1QKFknOx2sShnjm8C9HefAZ1HS3rznOfV3ebeZP32
+         jr0sXPwBz8pd9hplqgSVIdDjX+pGPGHucNsqbLOddx2iDoWvgr84H2n/iBjwUc1sJnVI
+         bRzGC8lbf7VFcKSQ77maJYDtPV3xEvpRwdTvtrR2/PxFJkKSOkfsEIeEgH6LKZiaoYPu
+         34BA==
+X-Gm-Message-State: AOAM532JxNHJOAlDxDLpB6IO7J1kYzw1F4Gq2rmVRBjpf9AgGZMIFREk
+        zynYAYOKEmDZSmcCzjkusSPe31+0yuXzJiLb00MPLkr3kgU=
+X-Google-Smtp-Source: ABdhPJww0vMoNbJ6WMemJDsDYoX01AtQXNtDY/I8gq0+WC6TR4t10q1VncW1KJuYnHcskiU33//2cP2PpRX5FxU1jBE=
+X-Received: by 2002:a05:6102:5596:: with SMTP id dc22mr14515161vsb.70.1643904177966;
+ Thu, 03 Feb 2022 08:02:57 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: git-checkout doesn't seem to respect config from include.path
-Content-Language: en-GB-large
-To:     Greg Hurrell <greg@hurrell.net>, git@vger.kernel.org
-References: <ee1dd453-e698-440a-911b-d14389e33715@beta.fastmail.com>
-Cc:     "Brian M. Carlson" <sandals@crustytoothpaste.net>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <ee1dd453-e698-440a-911b-d14389e33715@beta.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1209.git.git.1643651420.gitgitgadget@gmail.com>
+ <1ded69d89709d23147b29f67122b659293414405.1643651420.git.gitgitgadget@gmail.com>
+ <YfhUIJuO70va6gr8@nand.local> <xmqqzgnbh7rv.fsf@gitster.g>
+ <CAFQ2z_OFRJh9cwxnbDzrshYPGOvJC6Rz1eHTF-aKURno+41Cvw@mail.gmail.com>
+ <xmqqa6facn9i.fsf@gitster.g> <220201.861r0m9t8n.gmgdl@evledraar.gmail.com> <xmqqsft2b5jl.fsf@gitster.g>
+In-Reply-To: <xmqqsft2b5jl.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 3 Feb 2022 17:02:47 +0100
+Message-ID: <CAFQ2z_NSCvRbj1bxirxhqSWD+LadzCa8VNOsxGCmFCNT3GUU0g@mail.gmail.com>
+Subject: Re: [PATCH 2/3] t1405: mark test that checks existence as REFFILES
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Greg
+On Tue, Feb 1, 2022 at 11:12 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+> > We could surely add magic record types, but how would such a dance be
+> > performed while keeping compatibility with existing JGit clients?
+>
+> Yes.  It is exactly the point of the question I asked.  If it is
+> simple and easy to add such a new type that is ignored/skipped by
+> existing clients, then we can go that route.  If it is simple and
+> easy to add a new bit per ref that existing clients would not barf,
+> we can use that as an alternative implementation strategy.
 
-On 02/02/2022 16:04, Greg Hurrell wrote:
-> Hi,
-> 
-> Not sure if this is confined specifically to `git-checkout`, but that's
-> the command I noticed the issue with:
-> 
-> With the release of the v2.35.0 and the "zdiff3" setting for
-> "merge.conflictStyle", I find myself wanting to use "zdiff3" on machines
-> running the new version, and falling back to "diff3" on machines with an
-> older version.
-> 
-> To this end, I have a ~/.gitconfig that contains:
-> 
->      [merge]
->      	conflictStyle = zdiff3
->      [include]
->      	path = ~/.gitconfig.local
-> 
-> The idea is that I can use the same `~/.gitconfig` on every machine I
-> use, but on machines that only have an older Git version, I drop in a
-> ~/.gitconfig.local with overrides like this:
-> 
->      [merge]
->      	conflictStyle = diff3
-> 
-> `git config --get merge.conflictStyle` correctly reports that my setting is
-> "diff3" on such machines, and `git config --get-all merge.conflictStyle`
-> shows:
-> 
->      diff3
->      zdiff3
-> 
-> In other words, it knows that I have multiple values set, but it uses
-> a last-one-wins policy.
-> 
-> However, when I try to run a command like `git checkout -b something`,
-> Git dies with:
-> 
->      fatal: unknown style 'zdiff3' given for 'merge.conflictstyle'
+I'm not sure that there are any JGit clients: I committed reftable
+support at the end of 2019. Before that time, we were running it
+internally at Google, but only ref storage, and without the posix
+part. Reflogs were never stored in refable, and I actually found a
+couple of bugs in Shawn's Java code.
 
-I think what is happening is that git parses each line of the config 
-file as it reads it so the old version of git sees "zdiff3" and errors 
-out before it reads the include line. I'm afraid I don't have any useful 
-suggestions for avoiding this other than switching the include around so 
-that it contains zdiff3 and is only included by newer versions of git.
+Gerrit has increasingly started using Git as a database, and the
+packed/loose system is just not a very good database, so that
+motivates the work reftable in general. But the folks who run Gerrit
+on a POSIX filesystem want to be sure that isn't a fringe feature, so
+they only want to start using it once Git itself supports it. So there
+is a chicken & egg problem.
 
-> So, it looks like something in `git-checkout`'s option processing is
-> causing it to disregard the override set via "include.path". In fact, it
-> even disregards a value passed in with `-c` like this:
-> 
->      git -c merge.conflictStyle=diff3 checkout -b something
+It's sad that we have to introduce an existence bit to make things
+work, but overall it is probably easier for me to do than trying to
+make sense of sequencer.c and how it uses refs/stash@{0}.
 
-I think the values passed with -c are parsed after all the config files 
-so the override works. What we really want in this case is to store the 
-string value for each config option as we read each config source and 
-then parse those values at the end, unfortunately I think that would 
-break multi-valued config keys.
+Technically, the only obstacle I see is that we'd need to treat an
+existence entry especially for the purpose of compaction/gc: we can
+discard older entries, but we shouldn't discard the existence bit, no
+matter how old it is.
 
-Best Wishes
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
 
-Phillip
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-> Does this sound like a bug, or are my expectations off? I'd be happy to
-> look into fixing this, but first would like to know whether it is
-> expected behavior.
-> 
-> Cheers,
-> Greg
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
