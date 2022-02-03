@@ -2,125 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 053B5C4332F
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 21:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 468BEC433FE
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 21:42:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355387AbiBCVmg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 16:42:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46252 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355391AbiBCVki (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 16:40:38 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D9D8C06174A
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 13:40:32 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id f80-20020a1c1f53000000b0035399b8bedcso7829599wmf.0
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 13:40:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Op9YF+9+OfnrsPN3KXmysjV7ltAH6TWBKYkETUIM3/A=;
-        b=NFgJdE5kO6y8vbO3os9F5nCMno3tDbQ+htLrG501H8nTbjt1DPa8uw/psXVcpvj2wk
-         S7YAnyahmeDeIGb/8iWQPx1GfoXJWpRF6Rw7kISk3bkHwJnjHTYumL2wnJ5gB+BDQhle
-         S0LAqeJ929Hrr6dPFMYQ8NWs1YjyV+DtYZP/QaD1Z/wsFMuULkc3WKad00CZGHFv1oPc
-         lxbhiJWZAf2cKDcfRWWEHhnjXkN44n/qyxfCHqIO1EpS41KHaU3H1BsGqTrLe2AyQyfl
-         efqNGjzFEVPGdhvQ6fIGNBY2SMLn2qbCYN7txdizc8ocJJ7x2/VKCsdqzwIGVL3o03aE
-         dsfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Op9YF+9+OfnrsPN3KXmysjV7ltAH6TWBKYkETUIM3/A=;
-        b=GKN6PVbXQaIJSRP1TJBdtnLKOGD8f85OJPVgnt3nGiug36250vn3VrcLKal4gq8Pp0
-         m7IAUoE+bJ8435M6vwZQMC35JphG03UqM/8IVRc1wlEEfj3M8+kv8GSeMZpBi1+35KTj
-         uHhRpm6aG5Jym2aAnf5WCsQ4hdldWD5wNTTHyeqQGRTj+AwV2q907PvOyF+Gki5LjfkU
-         84bwzxlr7zIdNR3AuRpvNoUIKXUvYmbZL1qCPhYrsSCNCSBbHdxwtsI0JnSRfqhTH5zH
-         K4h3mIdffuVsj+eSHoASgMIC5GLUz9TmmjlQBhIY4iQRBIeEl5ETa6ejhamqV4EjDMqj
-         IFEw==
-X-Gm-Message-State: AOAM532hcUqvhMWmoxif8mSgNMYMWkfzoMpxNScwh14VyCtp8Zhg2wIE
-        HdtIDIaqWLfpy3zWQAUaflr8C/s1O7ixog==
-X-Google-Smtp-Source: ABdhPJzVz0OcMGtpkXr3qsecQX6Y0XICpEQnyNcRzIFK9IA/LsMY3zJnGIPP39n4G8/CS02J6V/BAQ==
-X-Received: by 2002:a05:600c:4ca8:: with SMTP id g40mr12210089wmp.55.1643924430626;
-        Thu, 03 Feb 2022 13:40:30 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i13sm10637wrf.3.2022.02.03.13.40.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 13:40:30 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v9 6/9] progress.c: use dereferenced "progress" variable, not "(*p_progress)"
-Date:   Thu,  3 Feb 2022 22:40:16 +0100
-Message-Id: <patch-v9-6.9-ab24cb78d73-20220203T213350Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.939.g42bf83caa3d
-In-Reply-To: <cover-v9-0.9-00000000000-20220203T213350Z-avarab@gmail.com>
-References: <cover-v6-0.8-00000000000-20211102T122507Z-avarab@gmail.com> <cover-v9-0.9-00000000000-20220203T213350Z-avarab@gmail.com>
+        id S1355401AbiBCVms (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 16:42:48 -0500
+Received: from [106.75.175.44] ([106.75.175.44]:63374 "EHLO ts3card.com"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1355391AbiBCVmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 16:42:47 -0500
+Message-ID: <20220204054247643063@ts3card.com>
+From:   =?utf-8?B?44OI44Oo44K/44OV44Kh44Kk44OK44Oz44K55qCq5byP5Lya56S+?= 
+        <info@ts3card.com>
+To:     <git@vger.kernel.org>
+Subject: =?utf-8?B?44CQVFMzIFRTIENVQklDQ0FSROOAkemHjeimgQ==?=
+        =?utf-8?B?OuW/heOBmuOBiuiqreOBv+OBj+OBoOOBleOBhA==?=
+Date:   Fri, 4 Feb 2022 05:42:35 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: base64
+X-mailer: Iuwyx 9
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 98a13647408 (trace2: log progress time and throughput,
-2020-05-12) stop_progress() dereferences a "struct progress **"
-parameter in several places. Extract a dereferenced variable to reduce
-clutter and make it clearer who needs to write to this parameter.
+4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
+4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
+4pSB4pSBDQoNCuKYheOAgi46KjpUUyBDVUJJQyBDQVJE5Lya5ZOh5YCL5Lq65oOF5aCx5aSJ5pu0
+44CC4piF44CCLjoqOg0KDQrilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHi
+lIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHilIHi
+lIHilIHilIHilIHilIHilIHilIHilIENCg0KDQpUUyBDVUJJQyBDQVJE5Lya5ZOh5qijDQoNCuOB
+k+OBruOBn+OBs+OBr+OAgVRTIENVQklDIENBUkRF44Oh44O844Or44K144O844OT44K544KS44GU
+5Yip55So44GE44Gf44Gg44GN44GC44KK44GM44Go44GG44GU44GW44GE44G+44GZ44CCDQoNCuW9
+k+ekvuOBr+OCu+OCreODpeODquODhuOCo+OCt+OCueODhuODoOOBruWkp+W5heOBquOCouODg+OD
+l+OCsOODrOODvOODieOCkuWun+aWveOBl+OBpuOBhOOCi+OBn+OCgeOAgeWAi+S6uuaDheWgseOB
+rg0K5YaN6KqN6Ki844GM5a6M5LqG44GZ44KL44G+44Gn44CBVFMgQ1VCSUMgQ0FSROODoeODs+OD
+kOODvOOBruOCteODvOODk+OCueOBr+OBmeOBueOBpuWBnOatouOBleOCjOOBvuOBmeOAgg0KDQrm
+nKzml6XjgYvjgonjgIFUUyBDVUJJQyBDQVJE44Oh44Oz44OQ44O844Gu44Om44O844K244O844GM
+6YCa5bi45L2/55So44GX44Gf44GE5aC05ZCI44Gv44CBMjTmmYLplpPku6XlhoXjgasNCuS7peS4
+i+OBruWAi+S6uuaDheWgseaUueWWhOiqjeiovOOCkuihjOOBhuW/heimgeOBjOOBguOCiuOBvuOB
+meaJv+iqjeW+jOOBq+OBruOBv+S9v+eUqOOBp+OBjeOBvuOBmSANCg0K44Ot44Kw44Kk44Oz6KqN
+6Ki8Omh0dHBzOi8vbXktdHMzY2FyZC1jb20uamFjY3NpY21jbHViLnRvcA0KDQrjgZPjga7jgrXj
+g7zjg5Pjgrnjga/jgIFUUyBDVUJJQyBDQVJE44Oh44OO44OQ44O85bCC55So44Gu6YCa55+l44K1
+44O844OT44K544Gn44GZ44CC44GT44Gu44Oh44O844Or44Gu5YaF5a65DQrjgavjgZTms6jmhI/j
+gYTjgZ/jgaDjgY3jgIHkuI3lv4XopoHjgarntJvlpLHjgpLpgb/jgZHjgabjgY/jgaDjgZXjgYTj
+gIINCg0K4pSP4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
+4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
+4pSB4pSB4pSTDQoNCuOAgOKWoOacrOODoeODvOODq+OBr+mAgeS/oeWwgueUqOOBruOBn+OCgeOA
+geOBk+OBoeOCieOBruODoeODvOODq+OCouODieODrOOCueOBq+OBlOi/lOS/oeOBhOOBn+OBoOOB
+hOOBpuOCgg0K44CA44CA5a++5b+c44Gv44GE44Gf44GX44GL44Gt44G+44GZ44Gu44Gn44GU5LqG
+5om/44GP44Gg44GV44GE44CCDQrjgIDjgIDjgarjgYrjgIHmnKzjg6Hjg7zjg6vjgavjgaTjgYTj
+gabjgYrlv4PlvZPjgZ/jgorjgYzjgarjgYTloLTlkIjjgavjga/jgIENCuOAgCDjgYrmiYvmlbDj
+gafjgZnjgYzjgIHkuIvoqJjjgYrllY/jgYTlkIjjgo/jgZvlhYjjgb7jgafjgYrpm7voqbHjgavj
+gabpgKPntaHjgpLjgYrpoZjjgYTjgYTjgZ/jgZfjgb7jgZnjgIINCg0K44CAPT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQrj
+gIDilqDnmbrooYzvvJpUUyBDVUJJQyBDQVJE44CM44OG44Kj44O844Ko44K544Kt44Ol44O844OT
+44OD44Kv44Kr44O844OJ44CNDQrjgIDjgIDjgIDjgIDjgIAgaHR0cHM6Ly90c2N1YmljLmNvbS8N
+CuOAgOOAgOOAgOOAgOOAgOODiOODqOOCv+ODleOCoeOCpOODiuODs+OCueagquW8j+S8muekvg0K
+44CA44CA44CA44CA44CA44CSNDUxLTYwMTTjgIDmhJvnn6XnnIzlkI3lj6TlsYvluILopb/ljLrn
+iZvls7bnlLo255WqMeWPtw0KDQrjgIDilqDmnKzjg6Hjg7zjg6vjgavjgaTjgYTjgabjga7jgYrl
+lY/jgYTlkIjjgo/jgZvvvJoNCuKXj1RPWU9UQSwgREFJSEFUU1UsIOOCuOOCp+ODvOODoOOCuSwg
+44OI44Oo44K/44Os44Oz44K/44Kr44O8IEZEQ+OBrg0K44CA44CA44CA44CA44CA44CAVFMgQ1VC
+SUMgQ0FSRCwgVFMgQ1VCSUMgVklFVyBDQVJE44KS44GK5oyB44Gh44Gu5pa544Gv44GT44Gh44KJ
+DQrjgIDjgIDjgIDjgIDjgIDjgIDjgqTjg7Pjg5Xjgqnjg6Hjg7zjgrfjg6fjg7Pjg4fjgrnjgq8N
+CuOAgOOAgOOAgOOAgOOAgOOAgFsg5p2x5LqsIF3jgIAwM++8jTU2MTfvvI0yNTExDQrjgIDjgIDj
+gIDjgIDjgIDjgIBb5ZCN5Y+k5bGLXeOAgDA1Mu+8jTIzOe+8jTI1MTENCig5OjAw772eMTc6MzAg
+5bm05Lit54Sh5LyRIOW5tOacq+W5tOWni+mZpOOBjykNCuKXj+S4iuiomOS7peWkluOBruOCq+OD
+vOODieS8muWToeOBleOBvuOBr+OAgeOBiuaJi+aMgeOBoeOBruOCq+ODvOODieWIuOmdouijj+OB
+q+iomOi8ieOBrg0K44CA44CA44CA44CA44CA44CA44Kr44O844OJ44Gr6Zai44GZ44KL44GK5ZWP
+44GE5ZCI44KP44Gb6Zu76Kmx55Wq5Y+344Gr44GK44GL44GR44GP44Gg44GV44GEDQrjgIDjgIDj
+gIDjgIDjgIANCuKUl+KUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKU
+geKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKUgeKU
+geKUgeKUgeKUgeKUmw0K
 
-Now instead of using "*p_progress" several times in stop_progress() we
-check it once for NULL and then use a dereferenced "progress" variable
-thereafter. This uses the same pattern as the adjacent
-stop_progress_msg() function, see ac900fddb7f (progress: don't
-dereference before checking for NULL, 2020-08-10).
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- progress.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/progress.c b/progress.c
-index 680c6a8bf93..6e7daa3f8a2 100644
---- a/progress.c
-+++ b/progress.c
-@@ -319,21 +319,24 @@ static void finish_if_sparse(struct progress *progress)
- 
- void stop_progress(struct progress **p_progress)
- {
-+	struct progress *progress;
-+
- 	if (!p_progress)
- 		BUG("don't provide NULL to stop_progress");
-+	progress = *p_progress;
- 
--	finish_if_sparse(*p_progress);
-+	finish_if_sparse(progress);
- 
--	if (*p_progress) {
-+	if (progress) {
- 		trace2_data_intmax("progress", the_repository, "total_objects",
--				   (*p_progress)->total);
-+				   progress->total);
- 
--		if ((*p_progress)->throughput)
-+		if (progress->throughput)
- 			trace2_data_intmax("progress", the_repository,
- 					   "total_bytes",
--					   (*p_progress)->throughput->curr_total);
-+					   progress->throughput->curr_total);
- 
--		trace2_region_leave("progress", (*p_progress)->title, the_repository);
-+		trace2_region_leave("progress", progress->title, the_repository);
- 	}
- 
- 	stop_progress_msg(p_progress, _("done"));
--- 
-2.35.1.939.g42bf83caa3d
 
