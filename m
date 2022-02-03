@@ -2,242 +2,514 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A99BC433FE
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 08:16:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83F4BC433EF
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 08:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349459AbiBCIQV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 03:16:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57742 "EHLO
+        id S1349551AbiBCIje (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 03:39:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234443AbiBCIQU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 03:16:20 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12ACDC061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 00:16:20 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id d10so6042275eje.10
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 00:16:20 -0800 (PST)
+        with ESMTP id S1349552AbiBCIjc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 03:39:32 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0B18C06173B
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 00:39:31 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id o12so6183060eju.13
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 00:39:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=I5AQNMjVz1XnOPFlSBQ3ux4D5+Ri1g28QaNyqx3i7KY=;
-        b=BJSQ7THYeCE6TjrBzsJZ0wp5Y2ti19HcJeTOq5+OGdwIXmo07esB34G+sjaLKQA73O
-         QrwHw0ZCMetKv4cPMwFrhBTV1X3Nf6jMYejPvoCsipg7eA/lZg9sB1YHFKVP9aWKm0v/
-         Jo2QMSQYGEFFGG2gwUtWgsYRhnx5yIa8malB3/jBfZIhY4rEv1IlfTgSph+lZCzVc6wH
-         JNlEEiFEHtnT8Cqi+TMThpgKPK6DbhUOu4JaPy4+zAt+RaOQuc/GUgNOeYTGqpBJ6YBN
-         3xMMEMRIL2MNG9YkCDkMYSuvVCU2wPUDUU9VFSOq4PYGnzNKiacGoZiyEsPIgiA48jQI
-         a+Jg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=uq0wBDrcozCKUi6uALTChWtsPqS1YcVjR/OlpvB0JY0=;
+        b=oVL9x9Mq8vtfChqlAqBI558Bucr3wBw5nUjnIbZopGBIaEu5/RoM1h8khh4PZHldyt
+         7cgEQG7vTrFEy6Pcb7X0FqbZ5UblJkdFKmzfMjE/B85VvNQAF2ByyZKzxE295gtwyCJ4
+         dJD+iGQnzTtfCS08DG6Q2A3ppHnD05baqnxYqQoQzbKzc23p1wVX1d+NJ3ThfffEddCQ
+         PqvyMia8rUegRxkLN20FAfHwL/NuFlCue0yByTvewDyS9YuJoH9X/tEyMbenpW1UrMBH
+         +GE/hlitlCvNaLvTsDZdK5oop4gaQPdUvx/XSXgUcMVHVIhM3OnMosTGh8bUXUG39o3L
+         ZWwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=I5AQNMjVz1XnOPFlSBQ3ux4D5+Ri1g28QaNyqx3i7KY=;
-        b=7RaHqsBTJucw+K7F/W6msL4hiRhJu4w/4paFV/311CuiiTDKeyYZ4FWXt7XsG/+nII
-         UBEFSdP1PY2QRAFFlt2e/KjgWVSh3oNDZf/GqorJbkhZTxf+O/oQCUQSoyTIhv7VFfKQ
-         bz1nggXfGTvrqfbOkSYKzil/InygbRs6Gv+InxYlHyDJCBlOQNyKfiF7hftrcsdah7fq
-         /xc2WewmqtmoVyNt3PXbnX0K1aHJYaPlHNeoDdAK7Y52TmQM+dRzxF1s8ToobXLm3Air
-         e3bHwNdsEuypNgo3QE6Li07f2D1TY3MbT8rlyazDBpLBXwWkNA8HuEgkt1hDDLg9PBc8
-         fbOg==
-X-Gm-Message-State: AOAM533g6hWcrDhdR+LNCZY5iWsUwE2SE5H9idHeK3yv6qXuxk7YxVlh
-        oJrjwi5q3oGGjWQ/aZhjX/pckA/UKoc9xQ==
-X-Google-Smtp-Source: ABdhPJxwPwvF2hQkeCft/4nNODbXPQS+66sL4kTvERQo4CvFqDGVbN8gSYjQXBefh/FIHWM074Vjmg==
-X-Received: by 2002:a17:907:96aa:: with SMTP id hd42mr28926663ejc.74.1643876178130;
-        Thu, 03 Feb 2022 00:16:18 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p13sm16467231ejx.191.2022.02.03.00.16.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 00:16:17 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nFXHs-004sg2-OT;
-        Thu, 03 Feb 2022 09:16:16 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrn@google.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        pc44800@gmail.com, Shourya Shukla <periperidip@gmail.com>
-Subject: Re: [PATCH v5 9/9] submodule: move core cmd_update() logic to C
-Date:   Thu, 03 Feb 2022 09:15:19 +0100
-References: <cover-v4-0.7-00000000000-20220127T143552Z-avarab@gmail.com>
- <cover-v5-0.9-00000000000-20220128T125206Z-avarab@gmail.com>
- <patch-v5-9.9-e8e57606ee9-20220128T125206Z-avarab@gmail.com>
- <kl6l4k5g246p.fsf@chooglen-macbookpro.roam.corp.google.com>
- <220203.865ypw7jw6.gmgdl@evledraar.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <220203.865ypw7jw6.gmgdl@evledraar.gmail.com>
-Message-ID: <220203.861r0k74bz.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uq0wBDrcozCKUi6uALTChWtsPqS1YcVjR/OlpvB0JY0=;
+        b=mg7lFHLxFtJvQoL4V6+fQSf+QtMWWApX8v/17w0ShvWgbYwG0P6FRuSpkyTmhk3I7H
+         0mhLjQTe/58NvzD2NS4PpgwFT4QmjU/btlwE/FLbw1U/f4W3/YQGjJI7/Q7Ixw4ZbRj9
+         U0uAh9zNYORWZH52KMT8LOmDtVkI/KC3CzbGgVA8mhpM0KvT6RhdVMFmhLFhPBMzJn/d
+         RNsTzTL0IVXObANhKWEvtsf6lxea48G9UND0joGiPsSqkGLIRUl1t1qCcv5lTPqT13YC
+         17OkGR77PGA7AFlSIwhlkyXBlsEeqNquAfiXOg6O+Zb2RPIeUEw1sdOh6a58ynC3OqyP
+         YcFQ==
+X-Gm-Message-State: AOAM532fA4MB8wDHGCPAqIaOIZi0rxS7+0vo1AOvdztzAow1ajZMGCoc
+        dEdQUvuCIAxHUl0B3rVKTop+K60VGBiQEwZlIn0=
+X-Google-Smtp-Source: ABdhPJxfqYTC5h3xAlbuhOPm0JheSXP7DbZKrX97EuSFqEjhSNj+7PsGyzi2cFBJ1KI9bULIpCGRAcvzQgGH5b6z7wk=
+X-Received: by 2002:a17:906:4c47:: with SMTP id d7mr21454264ejw.192.1643877570127;
+ Thu, 03 Feb 2022 00:39:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
+ <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com> <c322e4c6938b7270b6e90998994642074a2813e0.1643479633.git.gitgitgadget@gmail.com>
+ <xmqqr18lvts0.fsf@gitster.g> <CABPp-BGd38Yb_LaJWLG+oiTit0CVRkE-5vmviGfoUOtBFP6yMg@mail.gmail.com>
+ <220203.86iltw7nhm.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220203.86iltw7nhm.gmgdl@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 3 Feb 2022 00:39:18 -0800
+Message-ID: <CABPp-BHKpOPM85bRiYmtZ6YT7AK_jpn6aen+o9jeNM6Jwbns=A@mail.gmail.com>
+Subject: Re: [PATCH v2 11/13] merge-tree: provide easy access to `ls-files -u`
+ style info
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Feb 2, 2022 at 5:22 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+>
+> On Wed, Feb 02 2022, Elijah Newren wrote:
+>
+> > On Wed, Feb 2, 2022 at 1:32 PM Junio C Hamano <gitster@pobox.com> wrote=
+:
+> >>
+> >> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >>
+> >> > @@ -450,7 +451,11 @@ static int real_merge(struct merge_tree_options=
+ *o,
+> >> >               merge_get_conflicted_files(&result, &conflicted_files)=
+;
+> >> >               for (i =3D 0; i < conflicted_files.nr; i++) {
+> >> >                       const char *name =3D conflicted_files.items[i]=
+.string;
+> >> > -                     if (last && !strcmp(last, name))
+> >> > +                     struct stage_info *c =3D conflicted_files.item=
+s[i].util;
+> >> > +                     if (!o->exclude_modes_oids_stages)
+> >> > +                             printf("%06o %s %d\t",
+> >> > +                                    c->mode, oid_to_hex(&c->oid), c=
+->stage);
+> >> > +                     else if (last && !strcmp(last, name))
+> >> >                               continue;
+> >> >                       write_name_quoted_relative(
+> >> >                               name, prefix, stdout, line_termination=
+);
+> >>
+> >> OK.  The addition (and disabling of the deduping) is quite trivial.
+> >> We do not even have to worry about line termination since the extra
+> >> pieces of info are prepended to the pathname.  Nice.
+> >>
+> >> > @@ -485,6 +490,10 @@ int cmd_merge_tree(int argc, const char **argv,=
+ const char *prefix)
+> >> >                           N_("do a trivial merge only"), 't'),
+> >> >               OPT_BOOL(0, "messages", &o.show_messages,
+> >> >                        N_("also show informational/conflict messages=
+")),
+> >> > +             OPT_BOOL_F('l', "exclude-modes-oids-stages",
+> >> > +                        &o.exclude_modes_oids_stages,
+> >> > +                        N_("list conflicted files without modes/oid=
+s/stages"),
+> >> > +                        PARSE_OPT_NONEG),
+> >>
+> >> Why does "-l" give shorter output than without it?  "-l" strongly
+> >> hints a longer output than without, at least to me.  Just wondering
+> >> if this will not become a source of confusion to future scripting
+> >> users.
+> >
+> > Here's another example where I was struggling with naming.  Something
+> > like ls-tree's `--name-only` would have been nice, but I was worried
+> > it'd be confusing since it only affected the conflicted info section
+> > and does not suppress the printing of the toplevel tree or the
+> > informational messages sections.  And the name
+> > --exclude-modes-oids-stages was long enough that I wanted a short flag
+> > for it, and just used the first letter of the description ("list
+> > conflicted files...").  I'm happy to change either the long or the
+> > short name for this flag if anyone has suggestions.
+>
+> There's always sidestepping it by replacing it with a --format :)
 
-On Thu, Feb 03 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Another solution that occurred to me, and I was _really_ close to
+doing it for v3, was to just flat drop this patch entirely and not
+include any such option.  But...
 
-> On Wed, Feb 02 2022, Glen Choo wrote:
->
->> - Junio pointed out that this conflicts with
->>   es/superproject-aware-submodules [2]. I'm not sure which should be
->>   based on which. If this does end up being based on
->>   es/superproject-aware-submodules, it would probably be easier to
->>   rebase as a series of smaller patches. Atharva noted that the
->>   conflicts are mild though, so maybe it's not so bad.
->
-> I think it makes sense to get this series through first, i.e. the
-> (supposedly) no-behavior-changing one, and then one that introduces new
-> submodule behavior.
->
-> Particularly because for es/superproject-aware-submodules the main
-> selling point is a performance improvement, which as I noted in the
-> review for it I've been unable to observe once the C<->sh layer goes
-> away.
->
-> I'm not saying it's not there, just that I don't think it's been shown
-> so far, IIRC there was some reference to some Google-internal network FS
-> that might or might not be helped by it...
->
->> - Besides making sure that the sh -> c is faithful, a thorough review
->>   should hopefully catch unintentional mistakes. The size of this patch
->>   makes such mistakes difficult to spot. For instance, here's something
->>   I spotted only after trying to split the patch myself..
->>
->>   > +static int module_update(int argc, const char **argv, const char *p=
-refix)
->>   > +{
->>   > +	const char *update =3D NULL;
->>   > +	struct pathspec pathspec;
->>   > +	struct update_data opt =3D UPDATE_DATA_INIT;
->>   > +
->>   > +	struct option module_update_clone_options[] =3D {
->>   [...]
->>   > +	};
->>   > +
->>   > +	const char *const git_submodule_helper_usage[] =3D {
->>   > +		N_("git submodule--helper update-clone [--prefix=3D<path>] [<path=
->...]"),
->>   > +		NULL
->>   > +	};
->>   > +
->>   > +	update_clone_config_from_gitmodules(&opt.max_jobs);
->>   > +	git_config(git_update_clone_config, &opt.max_jobs);
->>
->>   Notice that we copy-pasted the option parsing from update-clone into
->>   module_update() but forgot to update the names.
->>
->> My ideal patch organization would be something like:
->>
->> - wrap some existing command in "git submodule--helper update" (probably
->>   run-update-procedure)
->> - absorb the surrounding sh code into "git submodule--helper
->>   update" one command at-a-time i.e. deprecating and removing the
->>   commands one at a time - instead of deprecating and removing them all
->>   at once (like this patch), or deprecating all at once and removing
->>   them one at a time (like v1).
->
-> I do think atomic changes that don't leave dead code for removal later
-> are easier to read & reason about, whatever else is reorganized.
->
-> I.e. not to have something where we replace all the running code, and
-> then remove already-unused code later.
->
-> On that topic, I noticed this series could/should have [1] fixed up into
-> it.
->
->> - If you think this alternative organization would be helpful for you
->>   too, I will attempt it. This will take a while, but by the end you and
->>   I will have effectively reviewed all of the code, so it should be easy
->>   to finish up the review.
->
-> I think it might, but I really don't know. We'll just have to see, so if
-> you want to take a stab at it that would be great.
->
-> Maybe it's a good way forward. E.g. as af first small step we could turn:
->
->     while read -r quickabort sha1 just_cloned sm_path
->     [...]
->     die_if_unmatched "$quickabort" "$sha1"
->
-> into version where we fold that die_if_unmatched() logic into the C
-> code, and then ensure-core-worktree etc.
+  * "Which files had conflicts?" seems like such an obvious question
+  * I've used `git ls-files -u | awk {print\$4} | uniq` a lot in the
+past after `git merge` (Or `git rebase`) to get this info (yeah, it
+turns out `git diff --name-only --diff-filter=3DU` is 4 fewer
+characters)
+  * "display the list of files where conflicts were present in the web
+UI" was listed as an early usecase[1]
 
-Sorry, that one makes no sense since it's an artifact of the shellscript
-implementation.
+[1] https://lore.kernel.org/git/YYlqpuzv+bmZaFzz@nand.local/
 
-But I tested the below on top of master, and it passes all tests, which
-isn't very promising...
+So it seemed like making that question easy to answer was worthwhile.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4a0890954e9..e749008f13a 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2783,40 +2783,6 @@ static int push_check(int argc, const char **argv, c=
-onst char *prefix)
- 	return 0;
- }
-=20
--static int ensure_core_worktree(int argc, const char **argv, const char *p=
-refix)
--{
--	const char *path;
--	const char *cw;
--	struct repository subrepo;
--
--	if (argc !=3D 2)
--		BUG("submodule--helper ensure-core-worktree <path>");
--
--	path =3D argv[1];
--
--	if (repo_submodule_init(&subrepo, the_repository, path, null_oid()))
--		die(_("could not get a repository handle for submodule '%s'"), path);
--
--	if (!repo_config_get_string_tmp(&subrepo, "core.worktree", &cw)) {
--		char *cfg_file, *abs_path;
--		const char *rel_path;
--		struct strbuf sb =3D STRBUF_INIT;
--
--		cfg_file =3D repo_git_path(&subrepo, "config");
--
--		abs_path =3D absolute_pathdup(path);
--		rel_path =3D relative_path(abs_path, subrepo.gitdir, &sb);
--
--		git_config_set_in_file(cfg_file, "core.worktree", rel_path);
--
--		free(cfg_file);
--		free(abs_path);
--		strbuf_release(&sb);
--	}
--
--	return 0;
--}
--
- static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -3391,7 +3357,6 @@ static struct cmd_struct commands[] =3D {
- 	{"update-module-mode", module_update_module_mode, 0},
- 	{"update-clone", update_clone, 0},
- 	{"run-update-procedure", run_update_procedure, 0},
--	{"ensure-core-worktree", ensure_core_worktree, 0},
- 	{"relative-path", resolve_relative_path, 0},
- 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
- 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 652861aa66a..460cbd4e265 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -387,8 +387,6 @@ cmd_update()
- 	do
- 		die_if_unmatched "$quickabort" "$sha1"
-=20
--		git submodule--helper ensure-core-worktree "$sm_path" || exit 1
--
- 		displaypath=3D$(git submodule--helper relative-path "$prefix$sm_path" "$=
-wt_prefix")
-=20
- 		if test $just_cloned -eq 1
+> Anyway, I'd mentioned that in an earlier review in
+> <220124.864k5tigto.gmgdl@evledraar.gmail.com>. FWIW here's an experiment
+> to do that that I polished up (mostly copied from the ls-tree WIP code
+> I'd written already).
+>
+> I don't know if it will ever be useful, or if you think it's
+> worthwhile/simpler, but in either case I think in doing this I spotted
+> the following issues or otherwise noted inconsistencies in the pre-image:
+>
+>    The docs say that "<stage> <path>" is SP-separated, but it's
+>    actually TAB-separated, the rest is SP-separated.
+
+Yeah, good catch.  However, it doesn't actually say they are
+SP-separated; it's ambiguous about the spacing.  Which probably isn't
+a good thing, but it was kind of copied from the ls-files manual:
+
+"""
+       git ls-files just outputs the filenames unless --stage is specified =
+in
+       which case it outputs:
+
+           [<tag> ]<mode> <object> <stage> <file>
+"""
+
+(which also uses a tab between <stage> and <file> and a space
+otherwise, but the output above may lead you to believe otherwise.)
+
+>  * That you de-dupe --exclude-modes-oids-stages is a bit of a hidden feat=
+ure,
+>    but argubly initiative. Should it by optional? In any case my formatti=
+ng
+>    experiment makes it optional, since it then needs to be generalized to=
+ de-dupe
+>    after we've formatted.
+
+I think without de-duping the flag isn't helpful enough to bother
+implementing.  Requiring two flags also seems painful, given the
+common case scenario.
+
+I hope I'm not coming across as dismissive.  I think eventually adding
+a --format and --dedupe (the combination of which might be implied by
+whatever flag is used now) might be useful additions.  Maybe --abbrev
+too...eventually.  But I'm worried that it's distracting from focusing
+on usecases.  In particular, I'm worried it leads to "well, script
+writers technically can get what they want because we provided
+everything" rather than focusing on making the most common things easy
+to get, and then extending the command for flexibility as needed
+later.
+
+I'd really rather that early versions _just_ focus on actual usecases
+as far as UI is concerned (and thus I was really happy to see Dscho
+and Taylor concentrate on that side; I think Christian might have been
+talking about that angle some but it was hard to differentiate from
+the "merge-tree on steroids" spitballing).  While I want to be careful
+to avoid preventing UI flexibility, I think building it in from the
+beginning tends to lead to a design that is less usable.  (e.g. the
+possible loss of de-duping that would naturally have arisen from
+looking at things from the other angle.)  It's just a bias I have.
+
+>  * Perhaps we should support --abbrev as ls-tree does? The below diff sho=
+ws
+>    it's easy enough.
+
+This one is less problematic to me, but I'd still rather that the UI
+side of things focused on the usecases for early versions.
+
+>  * The dance you have with sed-ing out the hash in the tests could be mad=
+e much
+>    easier with "sed 1d <out >actual" and --no-messages for some existing =
+tests.
+
+Ignoring the first line is semantically different than verifying it
+looks like a hash.  It also only works on the first line, and hashes
+appear in multiple places, so you'd need a variety of different sed
+commands for different parts of the output, which doesn't seem any
+easier at all to me; I think using the same replacement everywhere is
+simpler.  But perhaps I should turn it into a shell function that I
+use in each case.
+
+> diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-t=
+ree.txt
+> index 6a2ed475106..e906d1dc9bf 100644
+> --- a/Documentation/git-merge-tree.txt
+> +++ b/Documentation/git-merge-tree.txt
+> @@ -44,10 +44,9 @@ OPTIONS
+>         newline.  Also begin the messages section with a NUL character
+>         instead of a newline.  See OUTPUT below for more information.
+>
+> ---exclude-oids-and-modes::
+> -       Instead of writing a list of (mode, oid, stage, path) tuples
+> -       to output for conflicted files, just provide a list of
+> -       filenames with conflicts.
+> +--conflict-format::
+> +       Override the default "%(objectmode) %(objectname)
+> +       %(stage)%x09%(path)" format.
+>
+>  --[no-]messages::
+>         Write any informational messages such as "Auto-merging <path>"
+> @@ -89,13 +88,13 @@ Conflicted file info
+>
+>  This is a sequence of lines with the format
+>
+> -       <mode> <object> <stage> <filename>
+> +       %(objectmode) %(objectname) %(stage)%x09%(path)
+>
+>  The filename will be quoted as explained for the configuration
+> -variable `core.quotePath` (see linkgit:git-config[1]).  However, if
+> -the `--exclude-oids-and-modes` option is passed, the mode, object, and
+> -stage will be omitted.  If `-z` is passed, the "lines" are terminated
+> -by a NUL character instead of a newline character.
+> +variable `core.quotePath` (see linkgit:git-config[1]).
+> +
+> +If `-z` is passed, the "lines" are terminated by a NUL character
+> +instead of a newline character.
+>
+>  Informational messages
+>  ~~~~~~~~~~~~~~~~~~~~~~
+> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+> index 58c0ddc5a32..14fed95a8ce 100644
+> --- a/builtin/merge-tree.c
+> +++ b/builtin/merge-tree.c
+> @@ -395,9 +395,64 @@ struct merge_tree_options {
+>         int mode;
+>         int allow_unrelated_histories;
+>         int show_messages;
+> -       int exclude_modes_oids_stages;
+> +       const char *conflict_format;
+> +       int unique_conflicts;
+> +       int abbrev;
+>  };
+>
+> +struct expand_conflict_data {
+> +       const char *prefix;
+> +       struct string_list_item *item;
+> +       struct strbuf *scratch;
+> +       int abbrev;
+> +       struct strbuf *sb_tmp;
+> +};
+> +static size_t expand_conflict_format(struct strbuf *sb,
+> +                                    const char *start,
+> +                                    void *context)
+> +{
+> +       struct expand_conflict_data *data =3D context;
+> +       struct string_list_item *item =3D data->item;
+> +       struct stage_info *info =3D item->util;
+> +       const char *end;
+> +       const char *p;
+> +       size_t len;
+> +
+> +       len =3D strbuf_expand_literal_cb(sb, start, NULL);
+> +       if (len)
+> +               return len;
+> +
+> +       if (*start !=3D '(')
+> +               die(_("bad format as of '%s'"), start);
+> +       end =3D strchr(start + 1, ')');
+> +       if (!end)
+> +               die(_("format element '%s' does not end in ')'"), start);
+> +       len =3D end - start + 1;
+> +
+> +       if (skip_prefix(start, "(objectmode)", &p)) {
+> +               strbuf_addf(sb, "%06o", info->mode);
+> +       } else if (skip_prefix(start, "(objectname)", &p)) {
+> +               strbuf_addstr(sb, find_unique_abbrev(&info->oid, data->ab=
+brev));
+> +       } else if (skip_prefix(start, "(stage)", &p)) {
+> +               strbuf_addf(sb, "%d", info->stage);
+> +       } else if (skip_prefix(start, "(path)", &p)) {
+> +               const char *name =3D item->string;
+> +
+> +               if (data->prefix)
+> +                       name =3D relative_path(name, data->prefix, data->=
+scratch);
+> +               strbuf_addstr(sb, name);
+> +
+> +               strbuf_reset(data->sb_tmp);
+> +               /* The relative_path() function resets "scratch" */
+> +
+> +       } else {
+> +               unsigned int errlen =3D (unsigned long)len;
+> +               die(_("bad format specifier %%%.*s"), errlen, start);
+> +       }
+> +
+> +       return len;
+> +}
+> +
+>  static int real_merge(struct merge_tree_options *o,
+>                       const char *branch1, const char *branch2,
+>                       const char *prefix)
+> @@ -446,23 +501,43 @@ static int real_merge(struct merge_tree_options *o,
+>         puts(oid_to_hex(&result.tree->object.oid));
+>         if (!result.clean) {
+>                 struct string_list conflicted_files =3D STRING_LIST_INIT_=
+NODUP;
+> -               const char *last =3D NULL;
+> -               int i;
+> +               struct string_list_item *item;
+> +               char *last =3D NULL;
+> +               struct strbuf sb =3D STRBUF_INIT;
+> +               struct strbuf tmp =3D STRBUF_INIT;
+>
+>                 merge_get_conflicted_files(&result, &conflicted_files);
+> -               for (i =3D 0; i < conflicted_files.nr; i++) {
+> -                       const char *name =3D conflicted_files.items[i].st=
+ring;
+> -                       struct stage_info *c =3D conflicted_files.items[i=
+].util;
+> -                       if (!o->exclude_modes_oids_stages)
+> -                               printf("%06o %s %d\t",
+> -                                      c->mode, oid_to_hex(&c->oid), c->s=
+tage);
+> -                       else if (last && !strcmp(last, name))
+> +               for_each_string_list_item(item, &conflicted_files) {
+> +                       struct expand_conflict_data ctx =3D {
+> +                               .prefix =3D prefix,
+> +                               .item =3D item,
+> +                               .abbrev =3D o->abbrev,
+> +                               .scratch =3D &sb,
+> +                               .sb_tmp =3D &tmp,
+> +                       };
+> +
+> +                       strbuf_expand(&sb, o->conflict_format, expand_con=
+flict_format, &ctx);
+> +                       strbuf_addch(&sb, line_termination);
+> +
+> +                       if (o->unique_conflicts && last && !strcmp(last, =
+sb.buf)) {
+> +                               free(last);
+> +                               last =3D strbuf_detach(&sb, NULL);
+>                                 continue;
+> -                       write_name_quoted_relative(
+> -                               name, prefix, stdout, line_termination);
+> -                       last =3D name;
+> +                       }
+> +
+> +                       fwrite(sb.buf, sb.len, 1, stdout);
+> +
+> +                       if (o->unique_conflicts) {
+> +                               free(last);
+> +                               last =3D strbuf_detach(&sb, NULL);
+> +                       } else {
+> +                               strbuf_reset(&sb);
+> +                       }
+>                 }
+>                 string_list_clear(&conflicted_files, 1);
+> +               strbuf_release(&sb);
+> +               strbuf_release(&tmp);
+> +               free(last);
+>         }
+>         if (o->show_messages) {
+>                 putchar(line_termination);
+> @@ -474,7 +549,11 @@ static int real_merge(struct merge_tree_options *o,
+>
+>  int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+>  {
+> -       struct merge_tree_options o =3D { .show_messages =3D -1 };
+> +       struct merge_tree_options o =3D {
+> +               .show_messages =3D -1,
+> +               .conflict_format =3D "%(objectmode) %(objectname) %(stage=
+)%x09%(path)",
+> +               .unique_conflicts =3D 1,
+> +       };
+>         int expected_remaining_argc;
+>         int original_argc;
+>
+> @@ -493,14 +572,15 @@ int cmd_merge_tree(int argc, const char **argv, con=
+st char *prefix)
+>                          N_("also show informational/conflict messages"))=
+,
+>                 OPT_SET_INT('z', NULL, &line_termination,
+>                             N_("separate paths with the NUL character"), =
+'\0'),
+> -               OPT_BOOL_F('l', "exclude-modes-oids-stages",
+> -                          &o.exclude_modes_oids_stages,
+> -                          N_("list conflicted files without modes/oids/s=
+tages"),
+> -                          PARSE_OPT_NONEG),
+> +               OPT_STRING(0, "conflict-format", &o.conflict_format, N_("=
+format"),
+> +                          N_("specify a custom format to use for conflic=
+ted files")),
+> +               OPT_BOOL(0, "unique-conflicts", &o.unique_conflicts,
+> +                        N_("omit duplicate --conflict-format lines")),
+
+The latter of which you didn't include in the manual?  Also,
+unique_conflicts seems like something that is trivial to understand
+from the coding perspective, but probably require quite a bit more
+explanation from the manual.  For example, if objectname is included
+in the format, unique-conflicts is essentially a no-op.  And that's
+the default...so, you'd probably have to spend time in the manual
+explaining under what circumstances it's useful.  I'm also not sure if
+a user who wanted (mode, path) would want unique_conflicts to default
+to 1; it may be something only meaningful in the particular case of
+"just give me conflicted filenames".
+
+>                 OPT_BOOL_F(0, "allow-unrelated-histories",
+>                            &o.allow_unrelated_histories,
+>                            N_("allow merging unrelated histories"),
+>                            PARSE_OPT_NONEG),
+> +               OPT__ABBREV(&o.abbrev),
+>                 OPT_END()
+>         };
+>
+> diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-=
+tree.sh
+> index 4de089d976d..e6354b2d284 100755
+> --- a/t/t4301-merge-tree-write-tree.sh
+> +++ b/t/t4301-merge-tree-write-tree.sh
+> @@ -93,7 +93,7 @@ test_expect_success 'Barf on too many arguments' '
+>  '
+>
+>  test_expect_success 'test conflict notices and such' '
+> -       test_expect_code 1 git merge-tree --write-tree --exclude-modes-oi=
+ds-stages side1 side2 >out &&
+> +       test_expect_code 1 git merge-tree --write-tree --conflict-format=
+=3D"%(path)" side1 side2 >out &&
+>         sed -e "s/[0-9a-f]\{40,\}/HASH/g" out >actual &&
+>
+>         # Expected results:
+> @@ -115,8 +115,35 @@ test_expect_success 'test conflict notices and such'=
+ '
+>         test_cmp expect actual
+>  '
+>
+> +test_expect_success 'merge-tree --unique-conflicts is the default' '
+> +       test_expect_code 1 git merge-tree --write-tree --conflict-format=
+=3D"%(path)" --no-messages side1 side2 >out &&
+> +       sed 1d <out >actual &&
+> +       cat >expect <<-\EOF &&
+> +       greeting
+> +       whatever~side1
+> +       EOF
+> +       test_cmp expect actual &&
+> +
+> +       test_expect_code 1 git merge-tree --write-tree --conflict-format=
+=3D"%(path)" --no-messages side1 side2 >out2 &&
+> +       sed 1d <out2 >actual2 &&
+> +       test_cmp actual actual2
+> +'
+> +
+> +test_expect_success 'merge-tree --no-unique-conflicts' '
+> +       test_expect_code 1 git merge-tree --write-tree --conflict-format=
+=3D"%(path)" --no-unique-conflicts --no-messages side1 side2 >out &&
+> +       sed 1d <out >actual &&
+> +       cat >expect <<-\EOF &&
+> +       greeting
+> +       greeting
+> +       greeting
+> +       whatever~side1
+> +       whatever~side1
+> +       EOF
+> +       test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'Just the conflicted files without the messages' '
+> -       test_expect_code 1 git merge-tree --write-tree --no-messages --ex=
+clude-modes-oids-stages side1 side2 >out &&
+> +       test_expect_code 1 git merge-tree --write-tree --no-messages --co=
+nflict-format=3D"%(path)" side1 side2 >out &&
+>         sed -e "s/[0-9a-f]\{40,\}/HASH/g" out >actual &&
+>
+>         test_write_lines HASH greeting whatever~side1 >expect &&
