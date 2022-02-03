@@ -2,108 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 742F2C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 14:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA930C433F5
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 15:54:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351173AbiBCO3z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 09:29:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57414 "EHLO
+        id S1344987AbiBCPyb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 10:54:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238253AbiBCO3y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 09:29:54 -0500
-Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6402FC061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 06:29:54 -0800 (PST)
-Received: by mail-ua1-x932.google.com with SMTP id b16so5514960uaq.4
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 06:29:54 -0800 (PST)
+        with ESMTP id S234764AbiBCPya (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 10:54:30 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9017C061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 07:54:29 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id o1-20020a1c4d01000000b0034d95625e1fso7465359wmh.4
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 07:54:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=0upiRTdIQUViawZd8VxT1EWFDN4gEUT6todjuiuMoSc=;
-        b=eVe9e0t9n1hKu99APR9SkfqrtubdQ75SwjOQUAoskUtaPVLntOtIeY7NSYSq0bHarg
-         cEXh586RMKxvKDev5LN5SGaQEgiQEhlnSkfkXmXisbGYommbwojezfpcmmE1vjZCci8d
-         zmVCU5qtMVu3WX3TJAvbz0ctJ6qx2cdcU3qiDAPnempuQjy9wkw64LnjUJvApjDK30sN
-         FdjUD13VpdLO1ZpmBIPhyDOaqotk0PttTI4MfaHZQwCeY3vXRcFreGGsJLPQZUVCcauH
-         DiVoSYTEuM8IU7MBop0rF1/YDm0Jp6UlqwXjS0nYkNXvqxjTmedq341DDc73qGQsVkl/
-         0ZUA==
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:references:cc:from:in-reply-to
+         :content-transfer-encoding;
+        bh=1qmk3+wVENvaibILocwV8tbaxaXpAMFX/0uXZ2NhPpw=;
+        b=kQZ4rzIDK5lkY1sqNcSR5iEjd0bodGYXGwlBrZT9b1jPgzaC0gTjGpdFXxcv2ak3dA
+         rBSlKsgZfMTdiRRXHbsFaWl48eWPailNK73yt6Rlp3KuNG5hq6pzgYpF0gp+6RS+sqC3
+         Wxhi60PsZYxhJyBrQ7bfVvQY6Kn8FLMAMY6O/2nAKZjcBItwTA7rLXuS9bWUbAsHlleH
+         Zhgrlp/lRzY2TmzdB00NiGludQu19jInrHEDHFEoH7NId3W6nD6fB/nSuuamSWBpeigG
+         wzBWK4AKGFXOAgNg+iKCK9kfQEgmTnIdw5JYxjIPHJTbFDP3s0tpF38+LMPMNQ4GXJMm
+         gMTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0upiRTdIQUViawZd8VxT1EWFDN4gEUT6todjuiuMoSc=;
-        b=MHzDiV4K1WBqd+eXMGfeTYb9sUgEZwlEMngKbNclmYlHe+cqR1r0B+xbSNkSQ+KOhU
-         893oG0IoMiA3E7D1L1UYZFg3pA+MTSr8c0sdT21hPR5l8O4F1dF5gX/8iqVxEYJ71fIT
-         CmzjRXTvVZBDdsE5T5MeHJdtWnoH48JnyW8mni2RDJ/vQb3++rEzq4W4FBmemlzGwJIa
-         Wu6pVS9YvOI4kovMkwEMjb7GfvT8zE698o2WzC7DGFI933YYIrCfPwQqNzgCG1mhV6ka
-         CQzJWMqtvpiT0zqlbdivTrkls/dFpjlcNwFy10UiyhNFaUpVEWRlpoacEwkUf+vWuwFo
-         4L0g==
-X-Gm-Message-State: AOAM531jvjqgg4Lv0w0F8wgOVpndt8lacwRSRJmRDCD8RGkovRM+ESIl
-        Pct8tOXNcfYN9qdSi+UPKAp2msWTNjQeQICH+xr1VA==
-X-Google-Smtp-Source: ABdhPJypqzDSjyUwIqy061J4YEGOAbtIptUFSmdgprdYPzgY2qx/96GjiYdg83L1xQndg/0g1AyhTKJJDqxQx+DlqjI=
-X-Received: by 2002:a67:e096:: with SMTP id f22mr14338094vsl.8.1643898593442;
- Thu, 03 Feb 2022 06:29:53 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:references:cc:from:in-reply-to
+         :content-transfer-encoding;
+        bh=1qmk3+wVENvaibILocwV8tbaxaXpAMFX/0uXZ2NhPpw=;
+        b=DF85FRfHCtI1OkbyJb+cxzfOz/gXGQruvu6Ppcg7WMvTfGhR3sVYPDt/7QdSaP/yRi
+         zOV9wc1bAgBWffz9FBZcTxdP5JpubZMWIXCD+4hS4rsCZv/m8R2tXz7PkaL2AhGh407z
+         MPuneEaNueBqfkONN3ZB22tkivUMQKUtGP+Uu4WGb0sBVPHWkN4RhjcRo55Go/EstXxW
+         y2WaIktMR0efO7NyFN5nekptu1pZMjTRSoGqq6eV3fZGqGHPlCr1RapzOa3WRBDVqtd9
+         qiss4DxVOMqSM/DJw1+PLQvuk9nbok2dAi771lC5L5ofI3ynXvaY0qmeuGyjnQ9Dn/4e
+         2JLQ==
+X-Gm-Message-State: AOAM531EB1AFrEZ+QfdkeRZ2dc7XIni8jcIp1IFEX7QX1GSn3Xp5WBZt
+        g0iIIWkEHr+PZTfKoGj+um4=
+X-Google-Smtp-Source: ABdhPJxMQAqeUh38zOug/sXhESLQQomDhf2OdJkEhNO2GNJ89MVSndqvLb6yVYQ/aNNNkjzh/zPULg==
+X-Received: by 2002:a1c:ed09:: with SMTP id l9mr5610587wmh.142.1643903668372;
+        Thu, 03 Feb 2022 07:54:28 -0800 (PST)
+Received: from [192.168.1.240] ([31.185.185.186])
+        by smtp.gmail.com with ESMTPSA id k20sm8537468wmi.36.2022.02.03.07.54.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Feb 2022 07:54:28 -0800 (PST)
+Message-ID: <0b8222c2-7337-7e8f-33d1-7926462daac1@gmail.com>
+Date:   Thu, 3 Feb 2022 15:54:23 +0000
 MIME-Version: 1.0
-References: <pull.1210.git.git.1643660136530.gitgitgadget@gmail.com>
- <pull.1210.v2.git.git.1643719616840.gitgitgadget@gmail.com>
- <220201.86ilty9vq2.gmgdl@evledraar.gmail.com> <xmqq8ruub35i.fsf@gitster.g>
-In-Reply-To: <xmqq8ruub35i.fsf@gitster.g>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Thu, 3 Feb 2022 15:29:42 +0100
-Message-ID: <CAFQ2z_Oxq67XO20oG7Tokk48wm5ZzHRR3GDi4PG5wg7FMJ89aA@mail.gmail.com>
-Subject: Re: [PATCH v2] refs.h: make all flags arguments unsigned
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: git-checkout doesn't seem to respect config from include.path
+Content-Language: en-GB-large
+To:     Greg Hurrell <greg@hurrell.net>, git@vger.kernel.org
+References: <ee1dd453-e698-440a-911b-d14389e33715@beta.fastmail.com>
+Cc:     "Brian M. Carlson" <sandals@crustytoothpaste.net>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <ee1dd453-e698-440a-911b-d14389e33715@beta.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 2, 2022 at 12:03 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
-> > The post-image LGTM, but I'm also a bit "meh" on the churn just for
-> > signed->unsigned, especially given the conflict with my in-flight
-> > ab/no-errno-from-resolve-ref-unsafe. But it's not too bad, and if Junio
-> > hasn't complained about it...
->
-> I won't complain myself.  I'd still try to help newer developers,
-> but my intention is to make it the responsibility for individual
-> developers to make sure their topic works well with topics in
-> flight ;-)
+Hi Greg
 
-I'm sending v3 based on seen.
+On 02/02/2022 16:04, Greg Hurrell wrote:
+> Hi,
+> 
+> Not sure if this is confined specifically to `git-checkout`, but that's
+> the command I noticed the issue with:
+> 
+> With the release of the v2.35.0 and the "zdiff3" setting for
+> "merge.conflictStyle", I find myself wanting to use "zdiff3" on machines
+> running the new version, and falling back to "diff3" on machines with an
+> older version.
+> 
+> To this end, I have a ~/.gitconfig that contains:
+> 
+>      [merge]
+>      	conflictStyle = zdiff3
+>      [include]
+>      	path = ~/.gitconfig.local
+> 
+> The idea is that I can use the same `~/.gitconfig` on every machine I
+> use, but on machines that only have an older Git version, I drop in a
+> ~/.gitconfig.local with overrides like this:
+> 
+>      [merge]
+>      	conflictStyle = diff3
+> 
+> `git config --get merge.conflictStyle` correctly reports that my setting is
+> "diff3" on such machines, and `git config --get-all merge.conflictStyle`
+> shows:
+> 
+>      diff3
+>      zdiff3
+> 
+> In other words, it knows that I have multiple values set, but it uses
+> a last-one-wins policy.
+> 
+> However, when I try to run a command like `git checkout -b something`,
+> Git dies with:
+> 
+>      fatal: unknown style 'zdiff3' given for 'merge.conflictstyle'
 
-> Between "enum" and #define that is stored in "unsigned", neither
-> gives us much type safety in C; "enum" may be somewhat worse by
-> giving a false sense of having a type safety that does not really
-> exist, than "unsigned int" that is more honestly defeats such a
-> false sense of safety.  So I have no strong preference either way.
+I think what is happening is that git parses each line of the config 
+file as it reads it so the old version of git sees "zdiff3" and errors 
+out before it reads the include line. I'm afraid I don't have any useful 
+suggestions for avoiding this other than switching the include around so 
+that it contains zdiff3 and is only included by newer versions of git.
 
-Neither gives true type safety, and I don't know if an enum is kosher
-at all; shouldn't the value always be one of the enumerees, strictly
-speaking?
+> So, it looks like something in `git-checkout`'s option processing is
+> causing it to disregard the override set via "include.path". In fact, it
+> even disregards a value passed in with `-c` like this:
+> 
+>      git -c merge.conflictStyle=diff3 checkout -b something
 
-I proposed both options because a distinct typename lets me jump to
-the definition of the flags easily through ctags.
+I think the values passed with -c are parsed after all the config files 
+so the override works. What we really want in this case is to store the 
+string value for each config option as we read each config source and 
+then parse those values at the end, unfortunately I think that would 
+break multi-valued config keys.
 
-Another idea is to mark the type of the flags by its name, eg.
-transaction_flags, resolve_flags, reftype_flags etc. This wouldn't
-help with ctags, but it does help with readability.
+Best Wishes
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+Phillip
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+> Does this sound like a bug, or are my expectations off? I'd be happy to
+> look into fixing this, but first would like to know whether it is
+> expected behavior.
+> 
+> Cheers,
+> Greg
