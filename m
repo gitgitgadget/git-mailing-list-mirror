@@ -2,59 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 042E6C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 16:20:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7915C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 16:24:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352166AbiBCQUt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 11:20:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55220 "EHLO
+        id S241086AbiBCQYF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 11:24:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244826AbiBCQUs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 11:20:48 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C141C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 08:20:48 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id s5so10417172ejx.2
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 08:20:48 -0800 (PST)
+        with ESMTP id S234500AbiBCQYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 11:24:04 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E1F3C061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 08:24:04 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id d10so10414997eje.10
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 08:24:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=NDSP8t7/E4TLhw/wIka7+gghaOfiEwhA/CmB15LpXqQ=;
-        b=UF55ArvVhxm5VvQn8Z3gWb1RwFSWMTVKIkARLEY47qy6TtrtysJrMbRnvjYF+ZTuYW
-         yPA+/mGInxlTLgSiizUvv8PD+GmeQCShRr1iW5yGqSoqBNYcx0xeVfKhuANZaFAc4ItP
-         LdiSu4HI4NIyQwS1GARWfmaW8MjU3yrYG2a9iGjM7YnyXcJyV4R4Q+d/O2c+HR6yS2LN
-         YHtl6hAmhg0eHhnKYb18rBvlelEyg7zj2I2LNMGOpuvatG1FFJMnh3N5K7JUWNvyfbn/
-         CpImp67L/EumkgXRaRelG0ZYUvdnLSogbZmF6yZOXJ//X/y5xnebZkz8qcgXFZqj5IlM
-         GAgg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=7KnnBJOJ6vX1vVyRAMOjPXVVG31+j3ABLxGEziY08D4=;
+        b=TYjEe28HaKoAVvJKoKQAUc3Vq1aUAJy6serQPpifasU2f7iMmaKPi56oezKwlhqoS/
+         zqOqSSD6f0X1IqgHCl0urPggBHsYRgUE1nogKyLUPmL/8j7KVYW3Y7s76GNXoW7xLVTL
+         Doe1UpgH0/+gAMxhOHguIcBZE5nekcVVyG8NGjBv+7J+7NDusy9YzV9rPgGzldNaN2Z0
+         CDZiuk4uoCBJdSIaACw2G+QASkPccMUkcS3G2QXyAAdzAgHnzEISnttQEbYbyiXNBfGu
+         KEcmstAM+e4Gi+mIB7iUmpyLBKMcl49uSOyHIus+6/koksQmdFQC4pvphDAz0OOAq7Zo
+         E4/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=NDSP8t7/E4TLhw/wIka7+gghaOfiEwhA/CmB15LpXqQ=;
-        b=F9rSqWYSF6jDs8of2+xt+nt4pvOrmSE/r9OONxAsBTxr8BY6mloEw5TgxSUrSTzGAB
-         yxr9oLZnKrR58G98R3gvapNhXDQZ8btI9tDPZyrPomOsYGP8njmzQ2iy/MJQE8k6XiEE
-         FQwFmBcliW2s/NnYs1mnfPgB9gxRqYYDq9b7FChQBCUUNSVhl0XzSFCcUxBGUKiQ8rua
-         6wxUBzqT6fmnGxuS/ZgiqyVXfkpYt9klDLo9vw6vl09TKM8IAnLyA/N1TfP7KwJtLJJW
-         Z5x8ZWlGFIuyEiX9GLXrP+OfsgL0wBzydYEkUbmgiwjR4/KvYF8knPK+gyhlBmBPAn9w
-         o6Fg==
-X-Gm-Message-State: AOAM530ypglsK12I4BgsCK+g72zc3/ZIHKhqqigtUjZA4Q26qs2/jl8i
-        M3bYK2QJIgO5JXvGzKMhASmunBPSjk1xAoXoR0M=
-X-Google-Smtp-Source: ABdhPJwATbB2DqxrHk85RQunh0dETkZc2iril/G3FoACpjrhAcLXkHrzUGr5GTZ2mvs+PONTKVkc1Zy2J0vRwniW2Oo=
-X-Received: by 2002:a17:906:4c47:: with SMTP id d7mr23094196ejw.192.1643905246722;
- Thu, 03 Feb 2022 08:20:46 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
- <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com> <63f42df21aec5bda50e4414493eb59dcb64e5558.1643787281.git.gitgitgadget@gmail.com>
- <220203.86a6f87lbl.gmgdl@evledraar.gmail.com> <CABPp-BHKZnmaq3NM5_D6pwkw2+91EsdJ-uqjfFPBYiUSE28k1g@mail.gmail.com>
- <CABPp-BHZYUmWBvzgFkRYddnUJQWrtah=JJ-yaW9Km8+qWcCfUw@mail.gmail.com> <220203.86wnic5lba.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220203.86wnic5lba.gmgdl@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 3 Feb 2022 08:20:35 -0800
-Message-ID: <CABPp-BF8VoQ7F7yvfzrpQEZwErxHzb9x8M_R9PrrM7vWzw=wSw@mail.gmail.com>
-Subject: Re: [PATCH v3 03/15] merge-tree: add option parsing and initial shell
- for real merge function
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=7KnnBJOJ6vX1vVyRAMOjPXVVG31+j3ABLxGEziY08D4=;
+        b=oeRCmpzZ7oQ6c3R+yjOVyf4Da7WZotPBiX6uOL29ckvmsBi8sk6SZ/oXq8bpnkaNOr
+         2b9z/+4xS73GMbiPnycCM8wt2Wsbo47EO6oXvfCIgTr5qp5JJyHAPTBi7jzyqlWoQ5D5
+         Dw1jzDCvd8GyXDkR8pJOQmKdNJ5FpeysnSEMHCH2gpA48aa/P+hHJCfisAXizWrUxdrC
+         i0yc+YrqkT5vBA8ovMlb4A07nEjA6Afe2zqn0VKZlJYIEzektr+EP/TOj6ESO98urNpo
+         U4wYcEY35VUD95FXOPJFkMlB5MEwbYFMf1rRr4fibRw66FWomad3+pCS8pgJHq9x9kvi
+         d7uQ==
+X-Gm-Message-State: AOAM533OGK7DqTCe1h1fPzPiKrG0A1sSr15RZWq1DITNuKkW6oy37MAM
+        8LfYojKyItBM8OJ5GrCzCD3M2S2K929sbg==
+X-Google-Smtp-Source: ABdhPJySLGKgCuNs3Wx9fkZGnAQGL9TQbS6TVm3DiSChH1ByxMgdtVPpahC1DzN50rbHvcf+Ma0I1Q==
+X-Received: by 2002:a17:907:6ea7:: with SMTP id sh39mr29578800ejc.380.1643905442099;
+        Thu, 03 Feb 2022 08:24:02 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id f4sm17018328ejh.93.2022.02.03.08.24.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Feb 2022 08:24:01 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nFets-0054hD-Qn;
+        Thu, 03 Feb 2022 17:24:00 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Christian Couder <chriscool@tuxfamily.org>,
@@ -63,52 +61,149 @@ Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v3 08/15] merge-ort: allow update messages to be written
+ to different file stream
+Date:   Thu, 03 Feb 2022 17:19:15 +0100
+References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
+ <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
+ <04c3bdc44d2c76ffc82a95db3ca4fd07270f94cf.1643787281.git.gitgitgadget@gmail.com>
+ <220203.86ee4k7lo8.gmgdl@evledraar.gmail.com>
+ <CABPp-BHye_Zyw=x8B+QoSxWA1b0xyVL9==7kA4CD0q3eTrk8cQ@mail.gmail.com>
+ <220203.86o83o5jr2.gmgdl@evledraar.gmail.com>
+ <CABPp-BEKuXHELVx4=5JJTj5HVOKZ=Y-4G4BK47BCZYYRSrkFsQ@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <CABPp-BEKuXHELVx4=5JJTj5HVOKZ=Y-4G4BK47BCZYYRSrkFsQ@mail.gmail.com>
+Message-ID: <220203.86fsoz6hr3.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 3, 2022 at 1:52 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
->
-> On Thu, Feb 03 2022, Elijah Newren wrote:
->
-[...]
-> > ...also, even if we did require the `--write-tree` flag, we'd still
-> > have to look at argc.  Since the option parsing handles both modes,
-> > someone could leave off --write-tree, but include a bunch of other
-> > options that only make sense with --write-tree.  Individually checking
-> > the setting of every extra flag along with write_tree is a royal pain
-> > and I don't want to repeat that for each new option added.  Simply
-> > checking argc allows you to provide an error message if the user does
-> > that.
-> >
-> > (And I think it's sad that in Git we often forgot to warn and notify
-> > users of options that are only functional with certain other
-> > arguments; it makes it harder for users to figure out, and has in the
-> > past even made it harder for other developers to figure out what was
-> > meant and how things are to be used.  I think I've seen multiple Git
-> > devs be confused over ls-files --directory and --no-empty-directory
-> > options, assuming they'd do something sensible for tracked files, when
-> > in fact those arguments are simply ignored because they are only
-> > modifiers for how untracked files are treated.)
->
-> There's a much simpler way to do what you're trying to do here which is
-> to only parse --write-tree, and as soon as you have that pass off two
-> one function or the other, and have those functions call
-> parse_options().
 
-But that makes --write-tree a mandatory argument when trying to use
-that mode, right?  If so, that is not a simpler way to do what I'm
-trying to do at all; it breaks my intended usage.
+On Thu, Feb 03 2022, Elijah Newren wrote:
 
---write-tree is a documentation-only construct that users should never
-have to pass.
+> On Thu, Feb 3, 2022 at 2:26 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
+arab@gmail.com> wrote:
+>>
+>> On Thu, Feb 03 2022, Elijah Newren wrote:
+>>
+>> > On Wed, Feb 2, 2022 at 6:01 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
+<avarab@gmail.com> wrote:
+> [...]
+>> >> I would get it if the point was to actually use the full usage.c
+>> >> machinery, but we're just either calling warning(), or printing a
+>> >> formatted string to a file FILE *. There's no need to go through usag=
+e.c
+>> >> for that, and adding an API to it that behaves like this new
+>> >> warning_fp() is really confusing.
+>> >
+>> > Because the formatted string being printed to the file won't have the
+>> > same "warning: " prefix that is normally added to stuff in usage?
+>>
+>> But the pre-image doesn't add that either. We're just calling
+>> vfprintf(), not our own vreportf().
+>
+> Right, I'm saying that I thought you were reporting the original patch
+> as buggy because it doesn't produce the same message when given a
+> different stream; it'll omit the "warning: " prefix.  And I was
+> agreeing that it was buggy for those reasons.
+>
+> Or was there a different reason you didn't like that function being in us=
+age.c?
 
-Also, what happens if we remove the --trivial-merge flag and its whole
-mode after a sufficient deprecation period?  Would the --write-tree
-parameter remain required in your model to select the only existing
-mode, simply due to us having gone through a transition period?
+Maybe it was accidentally a bug report :) But no, I was just observing
+that it was odd that it was in usage.c when it seemingly had almost
+nothing to do with what that API accomplishes.
+
+But maybe the underlying issue is that the "warning: " part is missing
+here. But I didn't mean to report that/missed it.
+
+>> > That's a fair point; that does have a bit of a consistency problem.
+>> > And I'd rather the messages were consistent regardless of where they
+>> > are printed.
+>>
+>> I think that makes sense, that's why I added die_message() recently. If
+>> you meant to print a "warning: " prefix I think it would also be fine in
+>> this case to just do it inline. See prior art at:
+>>
+>>     git grep '"(fatal|error|warning):' -- '*.c'
+>
+> So, making diff_warn_rename_limit() stop using warning(), and just
+> always directly writing out and including "warning:" in its message?
+>
+> I'm wondering if that might cause problems if there are any existing
+> callers of diff_warn_rename_limit() that might also be using
+> set_warn_routine() (e.g. perhaps apply.c?).  Of course, those callers
+> probably couldn't handle anything other than the default stream.
+> Hmm...
+
+Using set_warn_routine() is the "right" way to do it currently, and with
+or without a "warning: " prefix the current API use is "wrong" if the
+purpose is to have it behave nicely with the pluggable usage.c API.
+
+But of course that may not be the goal at all, i.e. I think here we've
+probably stopped caring about usage.c's formatting, logging
+etc. entirely, and are just emitting a string.
+
+Just like serve.c emits "E <msg>" or whatever (and not with error()).
+
+>> >> diff --git a/diff.c b/diff.c
+>> >> index 28368110147..4cf67e93dea 100644
+>> >> --- a/diff.c
+>> >> +++ b/diff.c
+>> >> @@ -6377,14 +6377,21 @@ static const char rename_limit_advice[] =3D
+>> >>  N_("you may want to set your %s variable to at least "
+>> >>     "%d and retry the command.");
+>> >>
+>> >> +#define warning_fp(out, fmt, ...) do { \
+>> >> +       if (out =3D=3D stderr) \
+>> >> +               warning(fmt, __VA_ARGS__); \
+>> >> +       else \
+>> >> +               fprintf(out, fmt, __VA_ARGS__); \
+>> >> +} while (0)
+>> >> +
+>> >>  void diff_warn_rename_limit(const char *varname, int needed, int deg=
+raded_cc,
+>> >>                             FILE *out)
+>> >>  {
+>> >>         fflush(stdout);
+>> >>         if (degraded_cc)
+>> >> -               warning_fp(out, _(degrade_cc_to_c_warning));
+>> >> +               warning_fp(out, _(degrade_cc_to_c_warning), NULL);
+>> >>         else if (needed)
+>> >> -               warning_fp(out, _(rename_limit_warning));
+>> >> +               warning_fp(out, _(rename_limit_warning), NULL);
+>> >
+>> > Why do the only callers have a NULL parameter here?  Is this one of
+>> > those va_list/va_args things I never bothered to properly learn?
+>>
+>> That's wrong (I blame tiredness last night),an actual working version is
+>> produced below. Clang accepted my broken code, but gcc rightly yells
+>> about it:
+>
+> Well, seeing the new code makes me feel better as it makes more sense
+> to me now.  ;-)
+>
+>> Note that both your pre-image, my macro version and Johannes's
+>> linked-to-above are technically buggy in that they treat a
+>> non-formatting format as a formatting format. I.e. we should use
+>> warning("%s", msg) in that case, not warning(msg).
+>>
+>> See 927dc330705 (advice.h: add missing __attribute__((format)) & fix
+>> usage, 2021-07-13) for a similar bug/fix.
+>
+> Good point.
+>
+> Man, what a can of worms this all is.  Maybe I really should just drop
+> patches 5, 6, and 8 for now...
+
+Yeah, I really think it's worth it to just sprinkle a tiny bit of
+if/else (or a macro) here and print to stderr inline or not. We can make
+some use of some usage.c when there's good reason to do so, but this bit
+just seems like a needless digression.
+
+I hope all of this has helped somewhat ...
