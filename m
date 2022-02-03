@@ -2,189 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B125C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 16:55:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24538C433F5
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 17:00:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242823AbiBCQzJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 11:55:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35070 "EHLO
+        id S1352488AbiBCRAg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 12:00:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233754AbiBCQzG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 11:55:06 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06154C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 08:55:06 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id u18so7204292edt.6
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 08:55:05 -0800 (PST)
+        with ESMTP id S1352482AbiBCRAf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 12:00:35 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86E18C061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 09:00:35 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id me13so10720167ejb.12
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 09:00:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+zXjAQ4yMOWtowauN12aDQDDFO6pAn2t8VIbeBcZLLs=;
-        b=Y0caM5zTs8MnOly/m6oYkxvaG85CeGvZVtR39qq2Kyc+DABlwAyUOC/yYWl19E/4GX
-         6nSfYCBK8gneIEkQtPp1HN35KuovCQKYMHk9ohypj71jyw53M58i9jG3qqrj95Zfxm3I
-         cvxpAIGJ0Ap/NZnxEI79njWsaZFv2r2A6j8iqTybPLZg7RktiqepnZ8jN3wFAtzsBa50
-         mMNEkT3jbeNFYg0B8iXseUxAv6MXXFWyxHxIkg+KO9/Z0avMjTcAExA4sXCVVRTNY0yz
-         xAhH2ay+5aBPsgtjbeyzIVh5HWy2JJWJ1d/7AUeta1bXWW0lEofA1lCC0VoQQyoz+LFo
-         y1Yg==
+         :cc:content-transfer-encoding;
+        bh=irgKnP4XQpO53PmGEgxka1+h6T6wAbIlOCwFq8z2KsY=;
+        b=PASRMjYaa3nkkDLk0PhOLth7pfoqJ5Pwiv6C5lx9UZ9gKRvkj7ql5T9BTn3cA4EMSK
+         lYunQ1TveRXoXCgP4p2it58nHo44BdsXSBS8oehm7tFRwNAf+9EFFakITcAoD7ZnED2C
+         T9dB/xAZiLtAi9QdXPH73uBVKJ14voTVH5ZMdKX8Le7rdj801oHY7KWla0vbN+CGn/CP
+         uIKqeeUU+2l8DstY28G5SE6wJlWIXdPu9bRuME5tgEW5KcqovWOcsHm+7DXzqYPQWc2V
+         patMDF9krtJ78QckiXX+J/mdCUWEiqsi7bDStWGZzYUz/IKYrp9KFqscz5smVjQr5Ind
+         1Z/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+zXjAQ4yMOWtowauN12aDQDDFO6pAn2t8VIbeBcZLLs=;
-        b=z0h0qVpUu1Oo94+waJLQJalHZsGHBv1y4SzvQ/DlAYmOEHZ5+g5HVpkQHQ4jdy6H91
-         y9G7HWPsJx3hubBdHgmSYYhpeHAFdT7UPYiV0C46z7WjutyjiwKMDsx0dTKz7PqvGOGt
-         n1nHgihwKO5QzivcTbMCIF/YN3A3AxHTuwzKLj8E0a1Pdq0gw1j4ouLL6cU31jdPj2Yk
-         S/scoRv99kW4j6KVTufU/xOshRYKQ+l++xX3JEm/Fnrxkee62agK2A5Va9WCOs5erDBD
-         RInr8fTp8wnhKNGOlDQIwCYX6V06Oyi/cfiH/2j8JYlhnSzXislZOys4u1sK7YVr45Cb
-         JzNA==
-X-Gm-Message-State: AOAM530Wr3anq6xQSJYGAZT17Ajs8YQUTAAf3HBYC2IYWZOirHeb8eGF
-        4z5WHB0XoQWPUCEOpd7mWfOY3JchUI5ayHtfXvA=
-X-Google-Smtp-Source: ABdhPJyoW5qTb/v0DvbuM9Uhl/NlXRaYZySqs10pXAlISqYpaZZcPnx7xb3Y59lyT74EoPFYO/kMh9nW1lmDRoN3mO8=
-X-Received: by 2002:a05:6402:350d:: with SMTP id b13mr36163729edd.192.1643907304515;
- Thu, 03 Feb 2022 08:55:04 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=irgKnP4XQpO53PmGEgxka1+h6T6wAbIlOCwFq8z2KsY=;
+        b=KZ+jsvi95cZbImsAgPfHHyaCMS4uwOEb4erZJ9qWJxGV5+fldlDDeP3O4ITTA8IInZ
+         /IQl+yG+phYQcpBJvK10126ar6x7spX73JrL/JR+EHqHQbeufYVuEq0I511NXX0tUL+4
+         kYjIFG9DitFLIvWBvGO5aU2NKOzzEotywJ5zzSEW6HbLWUcDwyqoEVIiOt3ij/jTAmOR
+         XdfC1ed/obUE/bJ0iVBJKDohFtL1Jni66j21unh4caQLzmYh7mjTC8kmWaGTvOrV7til
+         u04M8OihGl2YcaL4AiAnjwxgsiJnTVUThXnAJ/eGwWKM8a5npXqVchndGZ+BSfedw9Pq
+         By6Q==
+X-Gm-Message-State: AOAM530dt5IwByVY26CZj9i97jaljn6bjVwXTyY0w87Nm/KGDsCrbD3g
+        u8tW3AQhdYGHmYqd1S2WCTTjCmpiTVEjf1YZMcA=
+X-Google-Smtp-Source: ABdhPJxdgiPM1uM1k+hjmIj3pmKr+avh64FIHvsMLVLy3A5iQkpz/4t7m1aApPG2lWfSuK3DEnbWL2aPhFFIxh0HkEQ=
+X-Received: by 2002:a17:906:4c47:: with SMTP id d7mr23231085ejw.192.1643907633792;
+ Thu, 03 Feb 2022 09:00:33 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
- <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com> <02c29f920d0d5fde6d85f7b86a69be92e3f0f34d.1643787281.git.gitgitgadget@gmail.com>
- <xmqqy22tx8t1.fsf@gitster.g> <CABPp-BGpD6g5QH3=4X_dCuSX0Bs0utHn5hyuU4_UiwNhU0h8sg@mail.gmail.com>
- <xmqqh79hvsgn.fsf@gitster.g> <CABPp-BEaemkGGm0cSofP0gau7YN-y6HFoi0yJbHA8+iGjxsYSA@mail.gmail.com>
- <20220203104241.yvfragan6ucecfjl@gmail.com>
-In-Reply-To: <20220203104241.yvfragan6ucecfjl@gmail.com>
+ <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com> <04c3bdc44d2c76ffc82a95db3ca4fd07270f94cf.1643787281.git.gitgitgadget@gmail.com>
+ <220203.86ee4k7lo8.gmgdl@evledraar.gmail.com> <CABPp-BHye_Zyw=x8B+QoSxWA1b0xyVL9==7kA4CD0q3eTrk8cQ@mail.gmail.com>
+ <220203.86o83o5jr2.gmgdl@evledraar.gmail.com> <CABPp-BEKuXHELVx4=5JJTj5HVOKZ=Y-4G4BK47BCZYYRSrkFsQ@mail.gmail.com>
+ <220203.86fsoz6hr3.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220203.86fsoz6hr3.gmgdl@evledraar.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 3 Feb 2022 08:54:52 -0800
-Message-ID: <CABPp-BH_TiJaDpn2+VVjCb83NEFjL9teSk06+YiZyFGiTu8Lpg@mail.gmail.com>
-Subject: Re: [PATCH v3 04/15] merge-tree: implement real merges
-To:     Johannes Altmanninger <aclopte@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+Date:   Thu, 3 Feb 2022 09:00:22 -0800
+Message-ID: <CABPp-BFFcFxWL+FRSf9ANwHU1mp_oWcsfLOwvBAuv-J3oNh3SA@mail.gmail.com>
+Subject: Re: [PATCH v3 08/15] merge-ort: allow update messages to be written
+ to different file stream
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Christian Couder <christian.couder@gmail.com>,
         =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Thu, Feb 3, 2022 at 2:42 AM Johannes Altmanninger <aclopte@gmail.com> wrote:
+On Thu, Feb 3, 2022 at 8:24 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 >
-> On Wed, Feb 02, 2022 at 04:18:39PM -0800, Elijah Newren wrote:
-> > On Wed, Feb 2, 2022 at 2:01 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > >
-> > > Elijah Newren <newren@gmail.com> writes:
-> > >
-> > > > Yes, you are reading right.  I think the cherry-pick/rebase
-> > > > replacement actually deserves a separate command from what merges
-> > > > should use; replaying a sequence of commits just has a number of UI
-> > > > differences and abilities that I think pull it in a different
-> > > > direction.
-> > >
-> > > I completely disagree.  Each individual step in a sequence of
-> > > replaying commits in order (or in reverse order) should be
-> > > scriptable as a single merge-tree that takes "apply the change to go
-> > > from A^ to A on X".  Sequencing and placing UI around it is a job
-> > > for the script that drives merge-tree.
+> On Thu, Feb 03 2022, Elijah Newren wrote:
+>
+> > On Thu, Feb 3, 2022 at 2:26 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> >>
+> >> On Thu, Feb 03 2022, Elijah Newren wrote:
+> >>
+> >> > On Wed, Feb 2, 2022 at 6:01 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
+n <avarab@gmail.com> wrote:
+> > [...]
+> >> >> I would get it if the point was to actually use the full usage.c
+> >> >> machinery, but we're just either calling warning(), or printing a
+> >> >> formatted string to a file FILE *. There's no need to go through us=
+age.c
+> >> >> for that, and adding an API to it that behaves like this new
+> >> >> warning_fp() is really confusing.
+> >> >
+> >> > Because the formatted string being printed to the file won't have th=
+e
+> >> > same "warning: " prefix that is normally added to stuff in usage?
+> >>
+> >> But the pre-image doesn't add that either. We're just calling
+> >> vfprintf(), not our own vreportf().
 > >
-> > Adding such an ability to merge-tree would be trivial -- it basically
-> > involves just two things: (1) accepting one extra argument, and (2)
-> > calling merge_incore_nonrecursive() instead of
-> > merge_incore_recursive().
+> > Right, I'm saying that I thought you were reporting the original patch
+> > as buggy because it doesn't produce the same message when given a
+> > different stream; it'll omit the "warning: " prefix.  And I was
+> > agreeing that it was buggy for those reasons.
 > >
-> > However, I think forking a subprocess for every merge of a series of
-> > commits is a completely unreasonable overhead, so even if we provide
-> > such an option to merge-tree, I still want a separate plumbing-ish
-> > tool that does non-worktree/non-index replaying of commits which is
-> > not written as a driver of merge-tree.  That other tool should just
-> > call merge_incore_nonrecursive() directly.  And such a tool, since it
-> > should handle an arbitrary number of commits, should certainly be able
-> > to handle just one commit.  From that angle, it feels like adding
-> > another mode to merge-tree would just be a partial duplication of the
-> > other tool.
+> > Or was there a different reason you didn't like that function being in =
+usage.c?
 >
-> I wonder how the UI of a tool that does non-worktree/non-index cherry-picks
-> will look like.  I'd expect it to produce the same output as merge-tree,
-> except cherry-pick should probably output a commit OID, not a tree.
+> Maybe it was accidentally a bug report :) But no, I was just observing
+> that it was odd that it was in usage.c when it seemingly had almost
+> nothing to do with what that API accomplishes.
 >
-> Maybe we want a unified command that produces commits from any sequence of
-> merge/cherry-pick/revert/reword steps. The obvious UI would use something
-> like the rebase-todo list as input.  For example:
+> But maybe the underlying issue is that the "warning: " part is missing
+> here. But I didn't mean to report that/missed it.
 >
->         $ echo '
->         pick commit1
->         reword commit2  # edit commit message in $GIT_EDITOR
->         merge commit3 -m "log message"
->         ' | git create-commit commit0
->         <OID of final commit>
+> >> > That's a fair point; that does have a bit of a consistency problem.
+> >> > And I'd rather the messages were consistent regardless of where they
+> >> > are printed.
+> >>
+> >> I think that makes sense, that's why I added die_message() recently. I=
+f
+> >> you meant to print a "warning: " prefix I think it would also be fine =
+in
+> >> this case to just do it inline. See prior art at:
+> >>
+> >>     git grep '"(fatal|error|warning):' -- '*.c'
+> >
+> > So, making diff_warn_rename_limit() stop using warning(), and just
+> > always directly writing out and including "warning:" in its message?
+> >
+> > I'm wondering if that might cause problems if there are any existing
+> > callers of diff_warn_rename_limit() that might also be using
+> > set_warn_routine() (e.g. perhaps apply.c?).  Of course, those callers
+> > probably couldn't handle anything other than the default stream.
+> > Hmm...
 >
-> we start from commit0 and apply steps one-by-one. Obviously, one unsolved
-> problem is how to pass parameters like commit messages if no editor should
-> be invoked (my sketch uses -m).
-> If any of the steps fails when merging merge, then we get the tree with
-> conflicts
+> Using set_warn_routine() is the "right" way to do it currently, and with
+> or without a "warning: " prefix the current API use is "wrong" if the
+> purpose is to have it behave nicely with the pluggable usage.c API.
 >
->         $ echo '
->         pick commit1
->         pick commit2
->         pick commit-that-does-not-apply
->         ' | git create-commit commit0
->         <OID of commit after step 2>
->         <OID of toplevel tree after failed merge>
->         <Conflicted file info>
->         <Informational messages>
+> But of course that may not be the goal at all, i.e. I think here we've
+> probably stopped caring about usage.c's formatting, logging
+> etc. entirely, and are just emitting a string.
 >
-> Replaying a series of commits might look like this:
+> Just like serve.c emits "E <msg>" or whatever (and not with error()).
 >
->         $ echo 'pick commit1 ^commit0' | git create-commit new-base
+> >> >> diff --git a/diff.c b/diff.c
+> >> >> index 28368110147..4cf67e93dea 100644
+> >> >> --- a/diff.c
+> >> >> +++ b/diff.c
+> >> >> @@ -6377,14 +6377,21 @@ static const char rename_limit_advice[] =3D
+> >> >>  N_("you may want to set your %s variable to at least "
+> >> >>     "%d and retry the command.");
+> >> >>
+> >> >> +#define warning_fp(out, fmt, ...) do { \
+> >> >> +       if (out =3D=3D stderr) \
+> >> >> +               warning(fmt, __VA_ARGS__); \
+> >> >> +       else \
+> >> >> +               fprintf(out, fmt, __VA_ARGS__); \
+> >> >> +} while (0)
+> >> >> +
+> >> >>  void diff_warn_rename_limit(const char *varname, int needed, int d=
+egraded_cc,
+> >> >>                             FILE *out)
+> >> >>  {
+> >> >>         fflush(stdout);
+> >> >>         if (degraded_cc)
+> >> >> -               warning_fp(out, _(degrade_cc_to_c_warning));
+> >> >> +               warning_fp(out, _(degrade_cc_to_c_warning), NULL);
+> >> >>         else if (needed)
+> >> >> -               warning_fp(out, _(rename_limit_warning));
+> >> >> +               warning_fp(out, _(rename_limit_warning), NULL);
+> >> >
+> >> > Why do the only callers have a NULL parameter here?  Is this one of
+> >> > those va_list/va_args things I never bothered to properly learn?
+> >>
+> >> That's wrong (I blame tiredness last night),an actual working version =
+is
+> >> produced below. Clang accepted my broken code, but gcc rightly yells
+> >> about it:
+> >
+> > Well, seeing the new code makes me feel better as it makes more sense
+> > to me now.  ;-)
+> >
+> >> Note that both your pre-image, my macro version and Johannes's
+> >> linked-to-above are technically buggy in that they treat a
+> >> non-formatting format as a formatting format. I.e. we should use
+> >> warning("%s", msg) in that case, not warning(msg).
+> >>
+> >> See 927dc330705 (advice.h: add missing __attribute__((format)) & fix
+> >> usage, 2021-07-13) for a similar bug/fix.
+> >
+> > Good point.
+> >
+> > Man, what a can of worms this all is.  Maybe I really should just drop
+> > patches 5, 6, and 8 for now...
 >
-> I'm concluding that this is a difficult UI problem
+> Yeah, I really think it's worth it to just sprinkle a tiny bit of
+> if/else (or a macro) here and print to stderr inline or not. We can make
+> some use of some usage.c when there's good reason to do so, but this bit
+> just seems like a needless digression.
+>
+> I hope all of this has helped somewhat ...
 
-I agree.  I've got a lot of thoughts on it, and some work in progress
-towards it (https://github.com/newren/git/tree/replay -- _very_ hacky,
-not even close to alpha quality, lots of fixup commits, todo comments,
-random brain dump files added to the tree, based on a previous round
-of this patch series, not updated for weeks, etc., etc.)
-
-> and having a merge-tree
-> command that accepts a "common ancestor" parameter could make it easier
-> to experiment.  Of course that depends on who is experimenting.
-
-I think that would result in experiments and eventually full-blown
-scripts designed around forking subprocesses for every merge, and
-pushes us back into the world of having a scripted-rebase again.  Yes,
-I know people can transliterate shell back to C; it seems to always be
-done as a half-way measure with the forking just being done from C or
-have other UI-warts guided by the shell design.  In fact, *that* was
-the primary reason for me not providing a merge-tree option based on
-merge_incore_nonrecursive(), despite how trivial it'd be to provide
-it.  If someone wanted a merge_incore_nonrecursive() mode for
-merge-tree for reasons other than attempting to build a
-rebase/cherry-pick replacement based on it, then I'd be much happier
-to provide it.
-
-If someone wants to experiment with what a plumbing-ish
-rebase/cherry-pick would look like, the _right_ way to do it would be
-making using of merge_incore_nonrecursive() directly.  If they want
-example code, I already provided some a year and a half ago and got it
-merged into git.git in the form of t/helper/test-fast-rebase.c.  My
-"replay" branch is based on that code, but (a) moves it from t/helper
-to a real builtin, (b) removes the hardcoded very strict input, (c)
-removes the line of code doing the index & working tree updates, and
-(d) modifies the output to be a more plumbing-ish style.
-
-We'll certainly have discussions on what that should look like.  But a
-plumbing-ish replacement for merge was much simpler, and made sense to
-do first.  I would prefer to concentrate on getting that hammered down
-first.  Then I'll start discussions on a plumbing-ish
-rebase/cherry-pick.  And if that doesn't fulfill all the needs that
-folks think they want out of merge-tree, then we can add a
-merge_incore_nonrecursive()-based mode to merge-tree.  It's all
-coming, but having fought transliterations-of-scripts in
-merge-recursive.c, sequencer.c, stash.c, rebase.c, etc. for years I
-really, really don't want any more of that.  Let's end that insanity.
+Absolutely; thanks for reviewing!  These parts may just end up in me
+dropping some patches for now (since they're not actually being used
+anyway), but I think it's all good feedback.
