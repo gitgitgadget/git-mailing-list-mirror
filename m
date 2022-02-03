@@ -2,106 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C83A8C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 13:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E685C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 14:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350808AbiBCN1z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 08:27:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43252 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232730AbiBCN1y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 08:27:54 -0500
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40997C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 05:27:54 -0800 (PST)
-Received: by mail-ot1-x32d.google.com with SMTP id b17-20020a9d4791000000b005a17fc2dfc1so2589029otf.1
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 05:27:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=delphia.com; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=CZFGM11ayr929OURPRZR2+0il9YZlYchWm0oOJk5k8M=;
-        b=b3qFEkWdJ2qyCxNAZ2dqNt6f1fFJMVJqqdTToLIkyY83GQphnGbMi2TZ9pdz/+KYFL
-         fNDrSBS1Mo1sIdMdg8hJvxXFmYZOODVGCjibp0FFTBswb5Cxv/CTLYsyPPC7JWQ01KkV
-         iDnNMUxH6QOIl6XFOmuCpfQC5/lPrXFgYdyxg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=CZFGM11ayr929OURPRZR2+0il9YZlYchWm0oOJk5k8M=;
-        b=WjeZuLWy6CwTesFe6at7686Q0lClf0krGBECZBnrNO6kqANf3W+o3wPgvt/8JEn/e5
-         hkv/z2+SVy/raRcYIGFnisu7kI0EtM0HVR7ZBf+VNr8/mExYzT92OLlHcJuu39T0X81I
-         2ip1FDiQpcu2pGnx5zMivzekakQoh9lF4aLF6VjhV8X41FFiD82ygXH9cISxWnp54yyh
-         sbPAfZw61EAIrIQ/lURJd3uCKLyG7EKghQLdp4ORAgCW7WTMRQ24doqRq6KppQkN+Bzv
-         EVCqDuJ7/Hvk7p8eIM1vDJyplTm5EzdgAVN3HWBoL0cKp2tbG3MTBLsihjqNF53kjN7B
-         w3Zw==
-X-Gm-Message-State: AOAM531rpxlFnoClddC2eSTfXAL2LgvNvsZnJ/8/1AphQBN3x0n5lMNN
-        YbB2RbIYk9byo2Y/1XbLslIqDtpMu1AA2JVgCJTWrhqZOg==
-X-Google-Smtp-Source: ABdhPJx5XuKsy6LLrunz9blzO9zB2386m6ixWuYlGAUADXHrMxGxxUw/SXVqV1T57vhvIBOTMPu/aC8VODol/EfECc4=
-X-Received: by 2002:a9d:7382:: with SMTP id j2mr15880178otk.291.1643894873451;
- Thu, 03 Feb 2022 05:27:53 -0800 (PST)
+        id S1351046AbiBCOMQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 09:12:16 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:35237 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1351018AbiBCOMP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 09:12:15 -0500
+Received: from host-92-7-140-211.as13285.net ([92.7.140.211] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nFcqL-0001mT-Bz; Thu, 03 Feb 2022 14:12:14 +0000
+Message-ID: <730fb307-3bc7-b52f-49c1-d83b5ab55c95@iee.email>
+Date:   Thu, 3 Feb 2022 14:12:13 +0000
 MIME-Version: 1.0
-References: <CA+RO+X6Lat5-AZ+BoHwW8xzhXuNOTjQewyNAvzOjWF_Md0x_yA@mail.gmail.com>
-In-Reply-To: <CA+RO+X6Lat5-AZ+BoHwW8xzhXuNOTjQewyNAvzOjWF_Md0x_yA@mail.gmail.com>
-From:   Zhuo Cheng Du <zhuo@delphia.com>
-Date:   Thu, 3 Feb 2022 08:27:42 -0500
-Message-ID: <CA+RO+X4GAXVEA44nqaAKVxAxxzGQkf66kLrwadw3qcsZhULJgQ@mail.gmail.com>
-Subject: Re: Git Bug Report: 'git stash pop' always put newly added files into
- staging area
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: Git in GSoC 2022?
+Content-Language: en-GB
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Git Community <git@vger.kernel.org>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi there,
+On 26/01/2022 18:29, Kaartic Sivaraam wrote:
+> If we are interested in participating we need:
+>
+>   - Volunteers who are wiling to act as mentors. I would be
+>     willing to be volunteer myself as a mentor for one student.
+>  
+>   - Microprojects: I believe we could repurpose the Outreachy
+>     microproject ideas[2] for GSoC too. If others have suggestions
+>     for microproject ideas, please share them.
+>
+>   - Project ideas: There are two mentioned in SoC-2021-Ideas[3]
+>     but both were picked by GSoC students the previous year. So,
+>     we would need new ones this year.
+Git Demonstration Repositories
+=============================
 
-Just an update, I have upgraded git to the latest version (2.35.1),
-and this bug still exists.
+One idea/concept that I've had that might be suitable for a project
+either here or within the Google Season of Docs is to generate
+demonstration repositories that match the examples used in the
+documentation and parts of the test suite to help users explore and
+understand the concepts that are being documented in the man pages.
 
-Thanks,
-Zhuo
+It's more than a classic coding problem because it impinges on a lot of
+subjective and admin areas but should be fairly beneficial for users.
 
-On Wed, Feb 2, 2022 at 1:50 PM Zhuo Cheng Du <zhuo@delphia.com> wrote:
+The two examples that come to mind are the --show-pulls repo [1], and
+the 'history simplification' repo [2].
+
+Using the test suite as the repo generator ensures the Demo Repos are
+reproducible/deterministic.
+
+My latest thinking is that the repos would be held in-tree under
+/Documentation/RepoBundles and have been exported as bundles by an
+explicit test_export_function. Of key importance in the project is to
+minimise/eliminate any extra maintainer actions, so once a patch with a
+repo export is accepted, the flow through the delivery process to user
+installs is essentially the same as the man pages.
+
+Not sure if that's fleshed out enough, or if it's at the wrong level for
+GSoC, or If I'm right as a Mentor, but I'd be happy to co-mentor.
+
 >
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 1. Create a brand new file, e.g. 'touch a.py'
-> 2. Add it to worktree with 'git add a.py'
-> 3. stash the file with 'git stash'
-> 4. pop the stashed change with 'git stash pop', WITHOUT the --index option
->
-> What did you expect to happen? (Expected behavior)
-> I expect the file 'a.py' to be in unstaged area since I did not pass
-> the '--index' option to 'git stash pop'
->
-> What happened instead? (Actual behavior)
-> The file is found in staged are are after 'git stash pop', potentially
-> causing merge-conflict in certain scenarios
->
-> What's different between what you expected and what actually happened?
-> I want the file to be found in unstaged area. The 'git stash
-> push'/'git stash pop' combo works as expected if the file is already
-> added to worktree prior to this maneuver. I think the behavior should
-> be consistent for brand new files as well.
->
-> Anything else you want to add:
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
->
->
-> [System Info]
-> git version:
-> git version 2.31.0
-> cpu: x86_64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> uname: Darwin 21.3.0 Darwin Kernel Version 21.3.0: Wed Jan  5 21:37:58
-> PST 2022; root:xnu-8019.80.24~20/RELEASE_X86_64 x86_64
-> compiler info: clang: 12.0.0 (clang-1200.0.32.29)
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): /bin/zsh
->
->
-> [Enabled Hooks]
+>     Taylor showed interest in a bitmap-related project during
+>     the Outreachy application period [4]. Taylor, are you still
+>     interested in mentoring a bitmap-related project? Would it
+>     be possible for you to do so for the upcoming GSoC?
+--
+Philip
+[1] Git log --show-pulls
+{the sha1
+https://github.com/git/git/commit/8d049e182e2e213a012e2d6839becfe0e2de79db,
+ get the t/tnnnn t/t6012-rev-list-simplify.sh,
+ get the docs rev-list #L582-707}
+
+[2] git rev list History simplification
+{get the man page #Lnn
+https://github.com/git/git/blob/master/Documentation/rev-list-options.txt#L386-L425,
+ get the Chuck Li https://github.com/ChuckTest/git-history-test.git,
+ get the gfw
+https://groups.google.com/d/msgid/git-users/11286f4a-c961-4d12-91a0-f49e34d8691bn%40googlegroups.com}
