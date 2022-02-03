@@ -2,99 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C701CC433EF
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 18:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AEF2C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 18:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353508AbiBCSbN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 13:31:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58532 "EHLO
+        id S1353520AbiBCSdP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 13:33:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353509AbiBCSbL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 13:31:11 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBBD6C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 10:31:11 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id c9so2863193plg.11
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 10:31:11 -0800 (PST)
+        with ESMTP id S231788AbiBCSdP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 13:33:15 -0500
+Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com [IPv6:2607:f8b0:4864:20::929])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0F06C061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 10:33:14 -0800 (PST)
+Received: by mail-ua1-x929.google.com with SMTP id w21so6770119uan.7
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 10:33:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=5ZW5JOgd1oZQyyTjtvEOnr77cygQPkEGlMzP4sVa5DA=;
-        b=hQACeH4gFsSa+YBOr9LQrzSO2Ll9LYNaI5ElKaiM4NPy7Cpr2z95EXgyt5P7ips0tc
-         EAFl0MmfrPwBLpNZj6MOLQr9MB5R8QT0R0n0gsrZIb+26120y9xxfAjplu6jFejfzP/m
-         X+FH6uZ1hTjlLOLLtcbyoNLg8D7BKmILnjNR56UFH8PsX+HjyFCUnqAk+fe71qYQb9Qr
-         hEpI30cqlRaVSlrR6DXBeUbP3xOZtWQMvroZqkub7jyXwelSit8XYwOcRzodaEXibI/x
-         3ogSpUDQwEdW6c82dwwP5jEM+FN8GaOmxlSLaTZXzcHutbbgrWIlEdF1yhNNXsBnKE6P
-         eRiw==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4vF2Sl2r9JXy+SGWlgTi5M781OCbeD2o3XztMZi7/ys=;
+        b=FOYlxNgKEGy85qI0t8kxftPlTVn8B5WvNK9QRJOXUQ/5O6fu0O+XUdxCBb62uCjDKc
+         gUEu2+u2AU30f44t+dPzM7zAxnHUPL5a9eKYgopAcaFw9bzebGB9qFxYdBQbG9AsgsgA
+         2RNua6iPZ1f7LxYOpT04lZr4fmpVsOShkQhB0RJcOBHTz5cT9RZ/UnzlWUJEKkGereHX
+         W3dxAg8c8s9zZdHpJwHAKvOr4vy/jygiNEUoGOQZkn+e3OUGzQb6GzY9+Inc9YK797Ar
+         WhZEW9K5LIygw3lAmXGfoSDj4HCgeNHgb/pKkFnxkYV/ijn7wIOTqfnR8qBq2ofRUSWb
+         mgbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=5ZW5JOgd1oZQyyTjtvEOnr77cygQPkEGlMzP4sVa5DA=;
-        b=XV5+R3c4LhexYIMICDT8je/ZRr+26vXfASuTelh4Kt50GpWKuZiXAqq469ItOxodaI
-         LVeiQKjZHRWrfGtTTwXCC1hW61mX+L2Wm0J0zRlEx9jwbIsmjvYgjpwku2RzAk8yzzUA
-         FthmwVvWaviX1S4kFZSFygAzYldQFsTuSTHcSlG/Erl5GAzD37XYb61AIOGgqqkwK7cr
-         UBPm/Ed6gLyJvuvjuqrxOiM65kf5mTXAHI4Jam+i/U9Bui9fBnIWaXMhh7Lrcp0+PhkO
-         7W/Kjg41fZm6LxuqLgUwD5yemf5ik1zZmzD4p+dAkOBZmF8R98LYRytzdsHBST/g261b
-         gLXA==
-X-Gm-Message-State: AOAM530PL8HVnz+w/7ZiOqI32zhMxsNYCHp+CdzHaAbYvyK4L8cnNH7N
-        t0SiYOeAyF1iTnczuPyPhOWz+6164Cg=
-X-Google-Smtp-Source: ABdhPJyyBPBOmKCWfcGoTs3u9jDVJU9Ua42bxpM3nxe6RddnEwj9Wu4tLYZCQYr+vWwAIgnMPGcalg==
-X-Received: by 2002:a17:90a:7f8d:: with SMTP id m13mr15229405pjl.70.1643913071302;
-        Thu, 03 Feb 2022 10:31:11 -0800 (PST)
-Received: from localhost ([2620:15c:289:200:b5c2:580b:9b41:56b2])
-        by smtp.gmail.com with ESMTPSA id q1sm10633473pjd.48.2022.02.03.10.31.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 10:31:10 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4vF2Sl2r9JXy+SGWlgTi5M781OCbeD2o3XztMZi7/ys=;
+        b=n0A4eovI9pNuYam7Aym2QLFkfDyISGvrX8rCNToTD0V86Eeyb/FGQJlUtE2D9e1Uxo
+         daKC7u4AmWQKGHQScao8d0xnivIZClMOqzq8p+iNG8o4TFpolvsVIIPoHHbgE8Sfrnyh
+         o3iD5MAaGy59yMTHRACHiGdUVYhFjT7rNP7Z7s7lRyXpS5WLh4+VjtpF6zysqNEkSpKd
+         inylPjSeUAv3icWn2iOvlU8FPkT44hv/Dqch7FjPXicQ8Ueqb7yIOu75GyK0GXMBm+cg
+         wFwqHt//s9CYTPUiamCymcJzBhtpICi8ML28RZg7+SrzaAmLmU1+CdW3CColhVJ7G6Zf
+         QXkw==
+X-Gm-Message-State: AOAM533BgxirfNYg08rZOPT+kBnDdyZm501TnFS6bRAMEKWr2TOPKV+e
+        TehqoGfUA1u6ahesdKLkrmMIgxJZTeFPa6CVX5VNRTp7uHk=
+X-Google-Smtp-Source: ABdhPJy5eti27D5REkBtbNiDm+byQYzuLS561xZzyk1Rg9kZvqUhW25S4+O8/ODsmYTkB+0cb3rm4/RQuuqT0aqZ7dk=
+X-Received: by 2002:ab0:2a07:: with SMTP id o7mr14944826uar.39.1643913193964;
+ Thu, 03 Feb 2022 10:33:13 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.1210.git.git.1643660136530.gitgitgadget@gmail.com>
+ <pull.1210.v2.git.git.1643719616840.gitgitgadget@gmail.com>
+ <220201.86ilty9vq2.gmgdl@evledraar.gmail.com> <xmqq8ruub35i.fsf@gitster.g>
+ <CAFQ2z_Oxq67XO20oG7Tokk48wm5ZzHRR3GDi4PG5wg7FMJ89aA@mail.gmail.com>
+ <220203.8635kz6d2o.gmgdl@evledraar.gmail.com> <xmqqo83nvm8w.fsf@gitster.g>
+In-Reply-To: <xmqqo83nvm8w.fsf@gitster.g>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 3 Feb 2022 19:33:02 +0100
+Message-ID: <CAFQ2z_Mmfp4wrHNo92ke7i7UF2bDL9v4oddRC4UKN0R9h2C-6Q@mail.gmail.com>
+Subject: Re: [PATCH v2] refs.h: make all flags arguments unsigned
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 3/3] t5312: prepare for reftable
-References: <pull.1209.git.git.1643651420.gitgitgadget@gmail.com>
-        <b2c6e14c7e7752c9e42cb38372edc8971895932f.1643651420.git.gitgitgadget@gmail.com>
-        <220201.865ypy9te7.gmgdl@evledraar.gmail.com>
-        <CAFQ2z_OUqMx7WiTYHGrb5A0K1d_zNVTspM+6trw+u2rqRPjYwA@mail.gmail.com>
-Date:   Thu, 03 Feb 2022 10:31:10 -0800
-In-Reply-To: <CAFQ2z_OUqMx7WiTYHGrb5A0K1d_zNVTspM+6trw+u2rqRPjYwA@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Thu, 3 Feb 2022 15:24:12 +0100")
-Message-ID: <xmqqk0ebvm35.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
-
-> On Tue, Feb 1, 2022 at 10:19 PM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
+On Thu, Feb 3, 2022 at 7:27 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > Yes, enums or not, what I was also pointing out in
+> > https://lore.kernel.org/git/220201.86ilty9vq2.gmgdl@evledraar.gmail.com=
+/
+> > is that changing just one logical set of flags at a time would make thi=
+s
+> > much easier to review.
 >
->> > -test_expect_success 'pack-refs does not drop broken refs during deletion' '
->> > +test_expect_success REFFILES  'pack-refs does not drop broken refs during deletion' '
->> >       git update-ref -d refs/heads/other &&
->> >       git rev-parse refs/heads/main >actual &&
->> >       test_cmp expect actual
->>
->> The setup for these is reffiles-specific, but it seems to me this is
->> something we'd really like to test with reftable rather than skipping it
->> entirely.
->>
->> I.e. the scenario described in the "we create..." comment in this file
->> is something that might happen with reftable too, no?
+> Another thing to consider is how to make this play better with other
+> topics in flight.  Basing a huge single patch on top of 'seen' is a
+> way to ensure that the patch will never be useful.  There won't be a
+> good time when such a topic can graduate.  The topic will also have
+> a hard time keeping up with what new topics add while waiting for
+> what happen to be in 'seen' today (some of which may even go away
+> without graduating) all graduate.
 >
-> That is tested in the 3 tests right above the ones I marked with
-> REFFILES ('pack-refs does not silently delete broken loose ref'). The
-> tests at the bottom check what happens if you have a missing SHA1 in a
-> packed-refs file. The reftable backend does not have a packed-refs, so
-> there is nothing to test.
+> Limiting the scope to small and more stable subset of flags that are
+> in 'master' and does not conflict (e.g. no new bit defined to the
+> set of flags, no existing bit gets removed, no new callers that use
+> the bitset introduced) with other topics would incrementally improve
+> the code base, and makes progress in the sense that it reduces the
+> remaining work.
 
-Yup.  The patch posted looked good to me.
+OK. But do we agree we want to use enums? Me and AEvar are in favor,
+anyone against?
 
-Thanks for writing and reviewing.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
