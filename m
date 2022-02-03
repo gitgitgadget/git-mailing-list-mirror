@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67D59C433EF
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 09:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 264FDC433FE
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 09:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236857AbiBCJER (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 04:04:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40128 "EHLO
+        id S234903AbiBCJM2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 04:12:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231674AbiBCJEP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 04:04:15 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11D89C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 01:04:15 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id ah7so6439371ejc.4
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 01:04:14 -0800 (PST)
+        with ESMTP id S231503AbiBCJM2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 04:12:28 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E48DC061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 01:12:27 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id k25so6499635ejp.5
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 01:12:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=MXtjNq/nSlWWGG/S72+9o/cEyFAJjo/pbjuW5qmkzQg=;
-        b=ODNaeHcmPKW/fw4Q6Ts9lh8sFdx2+QVHDeQUFQz53EAUxfXy1/4uOIE73MTb+KcTM9
-         Ye6f0Op6mjQfgfiqadWDw8dI0Ww5kbca8CLuNdl3F7LidHFBD44clUcj6v5W1XJW8qVz
-         VWZfv9XvoKEExsg6dxHHdqERFx7WK+Fdv0fvo3jN7J/UkvxyW7xsMZzjbjBaC9+iz6VL
-         KaPhsGFNm2ZamqHmS4ewxKpvNNYWrvg0tV6ZzDnb5AbIWJx4pa+WZqqmFKfOcYYf+sNu
-         /t0fiz3n8SsEHlRzQ5HUFjA28Vn2JsReWUUE/ajQdlEbtqNkEiMzQJQDKaUE5Zb+EeTA
-         JNyw==
+        bh=CbpmpqpvaquQhW6ZeO66HEvGxtaanpogZFnc6Qsb/hA=;
+        b=oB+VX/W5K6m/oyb/lwbhEPCPbE6+fTuFAGRO8K7gCDdKQSV0PxMxZIVuHGzyJOoIIl
+         I62Ji3p9/0GJGIJbweljlZxG/r48OoM7DidlO/YNb66ujZ6Ktdt9OWUbrYXLf/inR7N2
+         yj7U3ijBazC+9H6yjmbN4KCwY69XTIWseFgKQpNhE1j+2IDImefYXdSD38NycT00sWQr
+         M5JW0IVfbrBYYD8be4Q2HDl37cea7HbbMN5PU5yQBdOwptK/y8udgGCM0EbyzMkgohwv
+         4tnUNdSIJvvs5Su2vcFGSu/H4Xhr8l2AVk7IX08DtK1gjsOaeQGYYd4hYsVsKuARKXXU
+         OVLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MXtjNq/nSlWWGG/S72+9o/cEyFAJjo/pbjuW5qmkzQg=;
-        b=Cl4oJzJ5WJbGvndR0BlNIDRNg3wBkd8naC3A56jUk0GnSi3uIuTdrVisRIswPwekcZ
-         qV65aQ/0pYQI2NlVEcOHAgrr9Aoa6pH+4xnu+5qROgYGD0Y02bEkEY8HfWC8mievLHa+
-         vIUwzqSSJBuc3NAp5TpFnBuDy/vEOTX11gB3qmZMvyPGYazowdR/xu9+DCwol1HRSmJe
-         QtdlMjfuaF+t881GHOQTLaEfzqA5qk6Uwj7YDWwWXTtsadfKCG2vGQctzjjrnEIwEwm7
-         ghsrYi2oB3IhrBh2LKELToolyNQsQNfCs1yndh5g4pyQjWgfbdgBq8e09zBzNaMxJWry
-         LAtA==
-X-Gm-Message-State: AOAM530Jh/Yb9P2LuzoIshpHOAG9wXbPznkDFBceYchEG+E61xdxihJA
-        FAB3DM1njezs+Sxv58TaX7FaH3nOG30DVqwTi38=
-X-Google-Smtp-Source: ABdhPJygisPTjMaaieh/ZDKWgsuReGIqd1GJJvBdEZY429rRAAnIVEy10idJ9Ke4MgyWBHR24NBzrgy39Y3/dfSDyr8=
-X-Received: by 2002:a17:907:7da8:: with SMTP id oz40mr22875133ejc.328.1643879053528;
- Thu, 03 Feb 2022 01:04:13 -0800 (PST)
+        bh=CbpmpqpvaquQhW6ZeO66HEvGxtaanpogZFnc6Qsb/hA=;
+        b=ZHXrqpZn/qrGacedyYGdTuMOtggVgUqtgIcm8Ut9nE3N0HERboTMXx8Jqf/CroK6XJ
+         PoyfUchx7fjH+BCrcru8ec0kx/sU2b76PXV7dlPQSyWV0t3hqY1iQOM4u2N76C4a3uOQ
+         FfbUc7ZFBSUYf/Jzui6AYAvj8W87yCUIi6sft7VTnAXAY1ToXMPZLWbMNI+eQKxA0JJ9
+         rbxp1C2Rd0fViCESMLDMBZPJis8Vi1ANPRoFtrVf6jTmkO7fHMceEU2+a/5TzrYo+G2C
+         T42J7ZA0VxJMGdm3W0oBJDYV0D2ZpdlVX8N5Z44SkofVidYAZcyOEXe4/chCQDlFNOSA
+         tnLw==
+X-Gm-Message-State: AOAM5328mDkYPXnY5GgkWihoVgLFD2oUf95X7gVKMKWKs231mIHU9tAN
+        +xaS9a765NB8gRj1XQH1bzS+aQpt2MHKi5qefG8=
+X-Google-Smtp-Source: ABdhPJxUEpncdktVmlF7T3wf9lu8Jq9A93p4SnoC+s4JEREsvJQvlmsDTeIdJI9CBD8XY+g0YfkEMo+sxZSz7Euy7kM=
+X-Received: by 2002:a17:906:4793:: with SMTP id cw19mr22614715ejc.100.1643879545840;
+ Thu, 03 Feb 2022 01:12:25 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
- <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com> <63f42df21aec5bda50e4414493eb59dcb64e5558.1643787281.git.gitgitgadget@gmail.com>
- <220203.86a6f87lbl.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220203.86a6f87lbl.gmgdl@evledraar.gmail.com>
+ <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com> <04c3bdc44d2c76ffc82a95db3ca4fd07270f94cf.1643787281.git.gitgitgadget@gmail.com>
+ <220203.86ee4k7lo8.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220203.86ee4k7lo8.gmgdl@evledraar.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 3 Feb 2022 01:04:01 -0800
-Message-ID: <CABPp-BHKZnmaq3NM5_D6pwkw2+91EsdJ-uqjfFPBYiUSE28k1g@mail.gmail.com>
-Subject: Re: [PATCH v3 03/15] merge-tree: add option parsing and initial shell
- for real merge function
+Date:   Thu, 3 Feb 2022 01:12:14 -0800
+Message-ID: <CABPp-BHye_Zyw=x8B+QoSxWA1b0xyVL9==7kA4CD0q3eTrk8cQ@mail.gmail.com>
+Subject: Re: [PATCH v3 08/15] merge-ort: allow update messages to be written
+ to different file stream
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -70,95 +70,180 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 2, 2022 at 6:09 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+On Wed, Feb 2, 2022 at 6:01 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
 ab@gmail.com> wrote:
 >
 > On Wed, Feb 02 2022, Elijah Newren via GitGitGadget wrote:
 >
 > > From: Elijah Newren <newren@gmail.com>
 > >
-> > Let merge-tree accept a `--write-tree` parameter for choosing real
-> > merges instead of trivial merges, and accept an optional
-> > `--trivial-merge` option to get the traditional behavior.  Note that
-> > these accept different numbers of arguments, though, so these names
-> > need not actually be used.
->
-> Maybe that ship has sailed, but just my 0.02: I thought this whole thing
-> was much less confusing with your initial merge-tree-ort proposal at
-> https://lore.kernel.org/git/CABPp-BEeBpJoU4yXdfA6vRAYVAUbd2gRhEV6j4VEqoqc=
-u=3DFGSw@mail.gmail.com/;
-> I.e. the end-state of merge-tree.c is that you end up reading largely
-> unrelated code (various static functions only used by one side or
-> another).
-
-Christian's merge-tree-ort proposal?
-
-> But maybe that's all water under the bridge etc, however...
->
-> >  int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+> > This modifies the new display_update_messages() function to allow
+> > printing to somewhere other than stdout.  It also consolidates the
+> > location of the diff_warn_rename_limit() message with the rest of the
+> > CONFLICT and other update messages to all go to the same stream.
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  merge-ort.c | 9 +++++----
+> >  merge-ort.h | 3 ++-
+> >  2 files changed, 7 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/merge-ort.c b/merge-ort.c
+> > index 82d2faf5bf9..d28d1721d14 100644
+> > --- a/merge-ort.c
+> > +++ b/merge-ort.c
+> > @@ -4236,7 +4236,8 @@ static int record_conflicted_index_entries(struct=
+ merge_options *opt)
+> >  }
+> >
+> >  void merge_display_update_messages(struct merge_options *opt,
+> > -                                struct merge_result *result)
+> > +                                struct merge_result *result,
+> > +                                FILE *stream)
 > >  {
-> > -     if (argc !=3D 4)
-> > -             usage(merge_tree_usage);
-> > -     return trivial_merge(argc, argv);
-> > +     struct merge_tree_options o =3D { 0 };
-> > +     int expected_remaining_argc;
-> > +
-> > +     const char * const merge_tree_usage[] =3D {
-> > +             N_("git merge-tree [--write-tree] <branch1> <branch2>"),
-> > +             N_("git merge-tree [--trivial-merge] <base-tree> <branch1=
-> <branch2>"),
-> > +             NULL
-> > +     };
-> > +     struct option mt_options[] =3D {
-> > +             OPT_CMDMODE(0, "write-tree", &o.mode,
-> > +                         N_("do a real merge instead of a trivial merg=
-e"),
-> > +                         'w'),
-> > +             OPT_CMDMODE(0, "trivial-merge", &o.mode,
-> > +                         N_("do a trivial merge only"), 't'),
-> > +             OPT_END()
-> > +     };
-> > +
-> > +     /* Parse arguments */
-> > +     argc =3D parse_options(argc, argv, prefix, mt_options,
-> > +                          merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTI=
-ON);
-> > +     if (o.mode) {
-> > +             expected_remaining_argc =3D (o.mode =3D=3D 'w' ? 2 : 3);
-> > +             if (argc !=3D expected_remaining_argc)
-> > +                     usage_with_options(merge_tree_usage, mt_options);
-> > +     } else {
-> > +             if (argc < 2 || argc > 3)
-> > +                     usage_with_options(merge_tree_usage, mt_options);
-> > +             o.mode =3D (argc =3D=3D 2 ? 'w' : 't');
-> > +     }
+> >       struct merge_options_internal *opti =3D result->priv;
+> >       struct hashmap_iter iter;
+> > @@ -4263,13 +4264,13 @@ void merge_display_update_messages(struct merge=
+_options *opt,
+> >       for (i =3D 0; i < olist.nr; ++i) {
+> >               struct strbuf *sb =3D olist.items[i].util;
+> >
+> > -             printf("%s", sb->buf);
+> > +             strbuf_write(sb, stream);
+> >       }
+> >       string_list_clear(&olist, 0);
+> >
+> >       /* Also include needed rename limit adjustment now */
+> >       diff_warn_rename_limit("merge.renamelimit",
+> > -                            opti->renames.needed_limit, 0, stderr);
+> > +                            opti->renames.needed_limit, 0, stream);
 >
-> Do we really need to make this interface more special-casey by
-> auto-guessing based on argc what argument you want? I.e. instead of
-> usage like:
->
->         N_("git merge-tree [--write-tree] <branch1> <branch2>"),
->         N_("git merge-tree [--trivial-merge] <base-tree> <branch1> <branc=
-h2>"),
->
-> Wouldn't it be simpler to just have the equivalent of:
->
->         # old
->         git merge-tree ...
->         # new
->         git merge-tree --new-thing ...
->
-> And not have to look at ... to figure out if we're dispatching to the
-> new or old thing.
+> At the tip of this series I tried to s/stream/stderr/g this, and
+> t4301-merge-tree-write-tree.sh passes, doesn't this warning_fp() special
+> behavior need a test somewhere?
 
-You seem to be focusing on code simplicity?  Sure, that'd be simpler
-code, it'd just be a less useful feature.
+That's a fair point, but...this gets back to my cover letter comments
+about patches 5, 6, and 8.  They implement a code feature that seems
+useful in general...but which Dscho and Christian didn't like using in
+this particular command; they just wanted all output on stdout.
 
-I think passing --write-tree all the time would be an annoyance.  I
-don't see why anyone would ever use the other mode.  However, for as
-long as both exist in the manual, it makes the manual easier to
-explain to users, and example testcases more self-documenting by
-having the flag there.  That's the sole purpose of the flag.
+So, it's hard to add a test, because there's no code anywhere that
+exercises it in this series anymore.  I originally wanted this feature
+in my remerge-diff series, but the idea of conflict headers made me
+punt it to this series.  I wanted it for this series, but Dscho and
+Christian didn't.  I could have punted again, but decided the
+underlying want kept coming up and decided to not excise it --
+especially since Dscho was helping improve it.  And Junio commented
+that he liked the idea[1].
 
-I'm never going to actually use it when I invoke it from the command
-line.  And I suspect most would leave it off.
+[1] https://lore.kernel.org/git/xmqqh79hx8g1.fsf@gitster.g/
+
+But yeah, it does leave it feeling slightly odd that we implemented a
+feature that nothing is currently using.  Maybe these 3 should be
+split off into their own series?  Still wouldn't have a test yet,
+though.
+
+> I assumed that warning_fp() would be using vreportf() in usage.c, but
+> it's not, it's just falling back to the equivalent of fprintf(out, ...),
+> no? I don't really see why 05/15 and parts of 06/15 & this are needed
+> over a much simpler simple helper macro like the below. applied on top
+> of this series.
+
+That macro is simple?  I thought I basically understood Dscho's code,
+but looking at what you did with diff_warn_rename_limit(), I think I'm
+lost.
+
+> I would get it if the point was to actually use the full usage.c
+> machinery, but we're just either calling warning(), or printing a
+> formatted string to a file FILE *. There's no need to go through usage.c
+> for that, and adding an API to it that behaves like this new
+> warning_fp() is really confusing.
+
+Because the formatted string being printed to the file won't have the
+same "warning: " prefix that is normally added to stuff in usage?
+
+That's a fair point; that does have a bit of a consistency problem.
+And I'd rather the messages were consistent regardless of where they
+are printed.
+
+> I.e. an API in usage.c that allowed warning to a given FD would be
+> trying to replace the "2" in the write_in_full() call in vreportf(), I
+> would think.
+
+Hmm, makes sense.
+
+> diff --git a/diff.c b/diff.c
+> index 28368110147..4cf67e93dea 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -6377,14 +6377,21 @@ static const char rename_limit_advice[] =3D
+>  N_("you may want to set your %s variable to at least "
+>     "%d and retry the command.");
+>
+> +#define warning_fp(out, fmt, ...) do { \
+> +       if (out =3D=3D stderr) \
+> +               warning(fmt, __VA_ARGS__); \
+> +       else \
+> +               fprintf(out, fmt, __VA_ARGS__); \
+> +} while (0)
+> +
+>  void diff_warn_rename_limit(const char *varname, int needed, int degrade=
+d_cc,
+>                             FILE *out)
+>  {
+>         fflush(stdout);
+>         if (degraded_cc)
+> -               warning_fp(out, _(degrade_cc_to_c_warning));
+> +               warning_fp(out, _(degrade_cc_to_c_warning), NULL);
+>         else if (needed)
+> -               warning_fp(out, _(rename_limit_warning));
+> +               warning_fp(out, _(rename_limit_warning), NULL);
+
+Why do the only callers have a NULL parameter here?  Is this one of
+those va_list/va_args things I never bothered to properly learn?
+
+>         else
+>                 return;
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 64ba60e5c71..d70ce142861 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -475,7 +475,6 @@ int error(const char *err, ...) __attribute__((format=
+ (printf, 1, 2)));
+>  int error_errno(const char *err, ...) __attribute__((format (printf, 1, =
+2)));
+>  void warning(const char *err, ...) __attribute__((format (printf, 1, 2))=
+);
+>  void warning_errno(const char *err, ...) __attribute__((format (printf, =
+1, 2)));
+> -void warning_fp(FILE *out, const char *warn, ...) __attribute__((format =
+(printf, 2, 3)));
+>
+>  #ifndef NO_OPENSSL
+>  #ifdef APPLE_COMMON_CRYPTO
+> diff --git a/usage.c b/usage.c
+> index 0bfd2c603c0..c7d233b0de9 100644
+> --- a/usage.c
+> +++ b/usage.c
+> @@ -253,20 +253,6 @@ void warning(const char *warn, ...)
+>         va_end(params);
+>  }
+>
+> -void warning_fp(FILE *out, const char *warn, ...)
+> -{
+> -       va_list params;
+> -
+> -       va_start(params, warn);
+> -       if (out =3D=3D stderr)
+> -               warn_routine(warn, params);
+> -       else {
+> -               vfprintf(out, warn, params);
+> -               fputc('\n', out);
+> -       }
+> -       va_end(params);
+> -}
+> -
+>  /* Only set this, ever, from t/helper/, when verifying that bugs are cau=
+ght. */
+>  int BUG_exit_code;
