@@ -2,65 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8A70C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 17:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A808C433F5
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 17:43:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352958AbiBCRkX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 12:40:23 -0500
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:44861 "EHLO
+        id S1353023AbiBCRnF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 12:43:05 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27]:33337 "EHLO
         out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1352956AbiBCRkU (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 3 Feb 2022 12:40:20 -0500
+        by vger.kernel.org with ESMTP id S1353035AbiBCRnC (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 3 Feb 2022 12:43:02 -0500
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id AF9515C0183;
-        Thu,  3 Feb 2022 12:40:19 -0500 (EST)
+        by mailout.nyi.internal (Postfix) with ESMTP id B8F6F5C011D;
+        Thu,  3 Feb 2022 12:43:01 -0500 (EST)
 Received: from imap46 ([10.202.2.96])
-  by compute2.internal (MEProxy); Thu, 03 Feb 2022 12:40:19 -0500
+  by compute2.internal (MEProxy); Thu, 03 Feb 2022 12:43:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hurrell.net; h=
         cc:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; bh=6FGvQCUMjt0+UFqrYtFQeKkvZSp1sOCaPyvu3E
-        B1sU4=; b=SDjbDti3JVOXMueMsOQBM5xP5/f3qQKRdcQCCsrC8MtBj7oNH2nRO5
-        sVY/Q3K+vKcDO5XLpJBU3laFHolpKx/sYcUgbxgjbXH41x7NvBM+/rSKH4glbqLY
-        gc1jOdH+FY0sq/PV3CCjNi3zU5L/ljiYutrHBXPoNyMro4tkCIpqtBnK55wFqquH
-        tBzQ6nSeL00wA4SQgPcCDtrZrUerFC2FNiJdgAbbtBHDwoISh62ybKUlBOY7XUqP
-        6Uz5cPzQo0fFCxkOuslLIfT5QRE2FX7QBvJuLOjQNver+Z/IQDtqP74qFzvw57AS
-        5muar9je3hunuFZc2vyfxjY/h/aHrB2Q==
+        :subject:to:to; s=fm1; bh=+5reLBrBhvxA+Ug1stojAkd7Ez/1r7obpopKXk
+        xQjV0=; b=jE3/HbLJv1JRMWzHDOHzTA9H9WWfMwYxnI7LYi2q/A+ZyMtxMV4pu7
+        2/NYt2fClJwTj62H6BEYuGHXt4RYNAMnjbz/POnh6olO/+RsD8zMw0rG1smwxe8y
+        zqX/QqXCzkfNZQc5lvhwltdloxgbNuV7yVh5GZeQY+q6PbvXFZPO7aB6zqt3Y8uK
+        ZWetNT5amBj8hbemgnt6n0CSz/4QBn2oIUaQAywdgChJUWO3oPfWK1ORe/q2aqwK
+        Ivo57ugON8JqC87XIPNoARO7p0HpRlRH5DkmVR29RvGNZiGYyGFPh7qTkQecOtKk
+        SiRcQJj0Zb7//2J2sqbCjNhxZ2e1+YqA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=6FGvQCUMjt0+UFqrY
-        tFQeKkvZSp1sOCaPyvu3EB1sU4=; b=TarDyc3JUfVDFiaB3qEv71GkbiYW8jz1b
-        /98Afr6vCbi1znLCEfIBE6T0dF7LovTxkolZP8xFlsiHDXcLG7JhUH0sQe6nAtXo
-        OwY47Zh/kDjlYxLvLML2cU9/6s0WE6Ls/N5UdklmB0si+PAywqg+v4Rf6BJBYUop
-        zMjr2aN8ZROdF8oAtphXb6ZybQEGoa+NW+Nv067lWqRdB1DnLE5qySL++OmmNMc2
-        /x9JUCnHzUv/XZn0c9MYpu0meZXAQ+p/r5xgHyXv0LwlwwZ5QMdc7OFOJCfnkblk
-        C3dX9e8cDVKph7bcLEbwo5gvJN16H7qlT0WI+DA+RNfbZHlPtnpYw==
-X-ME-Sender: <xms:gxP8YarcBLU5wm267Ax902B734dz1uxzeXz7kJOPIznaYA4ovCmgcw>
-    <xme:gxP8YYrMAJInWPsIpPZcV0DTUp0zEDrIxso9rL3EUR0zQDuYVJd69efwYtPUrHus8
-    kFc5CcNMflwA-PZO30>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeejgddutddvucetufdoteggodetrfdotf
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=+5reLBrBhvxA+Ug1s
+        tojAkd7Ez/1r7obpopKXkxQjV0=; b=PqKA4v800/z9ffxRrHdlydZRfsGX4ZbGz
+        VUrUvKLZVcSOfWv4HVl55qHEN4FJNMTtQ6QGuFFP7XZL+E4JCo/BkeCiXgAn6KYw
+        vZBVnlfrukC83kruKm6j6el8Ny/yD29HmDBQ/AkmTyxRdqtXfPAzwbgkxC5o1bjW
+        0QAbYNo5k/v3EG4oiCZx/CpG8NB8IUmSkaxAXdT56j+/pFvtpK7f2g4LI968TrrX
+        gQqfP53HBISd9x7VGStX79D27O7NPLLbuXclVBWZS9dqbGWsRuVResQHt8pgH31m
+        skefz7y5YelVYaY5bj0x1jFT4mNiRz7wLEUe/G73rGJ3+RCPtJ82w==
+X-ME-Sender: <xms:JRT8YSYKzfLv_fAAtCEuQPY-tNc3qkA2ukXbvzCl-PnxzSLaiGXE9g>
+    <xme:JRT8YVaSaS-QsObGCHARdltK8qvMWr-3HROLht9izfmI5x8W5nwXAyryxqMEXaO0m
+    itNgO7alkXEXavu1A0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeejgddutdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtsehttd
     ertderredtnecuhfhrohhmpedfifhrvghgucfjuhhrrhgvlhhlfdcuoehgrhgvgheshhhu
     rhhrvghllhdrnhgvtheqnecuggftrfgrthhtvghrnhepuedttdevtdejiedtgfefveevfe
     elkeetudeljedtjeeuhffhkeekveetfeevvdehnecuvehluhhsthgvrhfuihiivgeptden
     ucfrrghrrghmpehmrghilhhfrhhomhepghhrvghgsehhuhhrrhgvlhhlrdhnvght
-X-ME-Proxy: <xmx:gxP8YfNqsxQTss17VdqfJW0soCgYHw79qRiLpsQO7eSvGPq8VPChcw>
-    <xmx:gxP8YZ5HYpmfek3fYmulVM-Ep0f0vmHB3X_msOK5-gnIOQZmcjZJuQ>
-    <xmx:gxP8YZ42HOEKxSC5yv4jP79Bmxxqz-FfUOkbc2khYwUWe_sjXuWJRg>
-    <xmx:gxP8YWjT-aQJTg6Nk6BaEcFs7zEbA4OlX47KNpNlEjQCEac_5wjGGg>
+X-ME-Proxy: <xmx:JRT8Yc_qFHw8wt1XOk4Cn2x_1ZDxr1j4VqvQoEZEdBv8WfNwztiegQ>
+    <xmx:JRT8YUpgld1MymFox1g_y86zwQ7WbpuqBt8kaFXjxh8K_6OsX0woAA>
+    <xmx:JRT8Ydo_mLlj36Wk_VOzRcYjn0HjMGriqdzkRnk00uyOPT64OS5O1A>
+    <xmx:JRT8YcTywKUDbwMDgggA-Qync5iBQTJlu457OTYn0GE8Y8UkCTtprw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 363051EE0439; Thu,  3 Feb 2022 12:40:19 -0500 (EST)
+        id 857241EE0439; Thu,  3 Feb 2022 12:43:01 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.5.0-alpha0-4586-g104bd556f9-fm-20220203.002-g104bd556
 Mime-Version: 1.0
-Message-Id: <3f1972f3-c764-41e9-9853-8f1c303d4f6b@beta.fastmail.com>
-In-Reply-To: <0b8222c2-7337-7e8f-33d1-7926462daac1@gmail.com>
+Message-Id: <606851c7-110d-486e-9e39-0a00444caad8@beta.fastmail.com>
+In-Reply-To: <3f1972f3-c764-41e9-9853-8f1c303d4f6b@beta.fastmail.com>
 References: <ee1dd453-e698-440a-911b-d14389e33715@beta.fastmail.com>
  <0b8222c2-7337-7e8f-33d1-7926462daac1@gmail.com>
-Date:   Thu, 03 Feb 2022 18:39:58 +0100
+ <3f1972f3-c764-41e9-9853-8f1c303d4f6b@beta.fastmail.com>
+Date:   Thu, 03 Feb 2022 18:42:40 +0100
 From:   "Greg Hurrell" <greg@hurrell.net>
 To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
@@ -70,42 +71,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 3, 2022, at 4:54 PM, Phillip Wood wrote:
-> Hi Greg
-> 
-> On 02/02/2022 16:04, Greg Hurrell wrote:
-> 
-> > `git config --get merge.conflictStyle` correctly reports that my setting is
-> > "diff3" on such machines, and `git config --get-all merge.conflictStyle`
-> > shows:
-> > 
-> >      diff3
-> >      zdiff3
-> > 
-> > In other words, it knows that I have multiple values set, but it uses
-> > a last-one-wins policy.
-> > 
-> > However, when I try to run a command like `git checkout -b something`,
-> > Git dies with:
-> > 
-> >      fatal: unknown style 'zdiff3' given for 'merge.conflictstyle'
-> 
-> I think what is happening is that git parses each line of the config 
-> file as it reads it so the old version of git sees "zdiff3" and errors 
-> out before it reads the include line.
+Minor correction to what I said here:
 
-That gave me the idea of moving the `include.path` setting higher up in
-the file, to see if `git checkout` would consult that value first, but
-it doesn't work; `git config merge.conflictStyle` shows the value from
-the file indicated in `include.path`, but a command like `git checkout`
-still dies based on the value in ~/.gitconfig.
+On Thu, Feb 3, 2022, at 6:39 PM, Greg Hurrell wrote:
+> 
+> That gave me the idea of moving the `include.path` setting higher up in
+> the file, to see if `git checkout` would consult that value first, but
+> it doesn't work; `git config merge.conflictStyle` shows the value from
+> the file indicated in `include.path`
 
-Overall this points to the general problem that it is not only hard to
-make a single config that works on different machines, but it's hard to
-make a _combination_ of files that works on different machines.
-
-For now, I think my workaround is going to be templating out
-machine-specific files.
+It only did that because I forgot to remove the original `include.path`
+from the bottom of the config. Once I removed that, `git config` showed
+the value from ~/.gitconfig. `git checkout` behaved the same either way.
 
 Greg
 
