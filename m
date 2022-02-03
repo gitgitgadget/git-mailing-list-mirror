@@ -2,183 +2,250 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2A8FC433F5
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 12:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B6FDC433EF
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 12:41:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350535AbiBCMha (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 07:37:30 -0500
-Received: from mail-eopbgr20087.outbound.protection.outlook.com ([40.107.2.87]:24199
-        "EHLO EUR02-VE1-obe.outbound.protection.outlook.com"
+        id S1350557AbiBCMlJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 07:41:09 -0500
+Received: from mail-eopbgr80082.outbound.protection.outlook.com ([40.107.8.82]:44867
+        "EHLO EUR04-VI1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S230213AbiBCMh3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 07:37:29 -0500
+        id S230213AbiBCMlI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 07:41:08 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Dikf/bIFv67tCCxcLCpMwl384laElTvX0UYQSnAiexsChBMOGl4PaUUyluF3i5adaqwMB43LrlrFbtuL9YvdlqURekfEoVHLfeqln6HpOaS4A9DZ2kBkrO72oeoSaZZNHYEbyEqPIu71wu4jE8X+I2FQP6HaFBxIRwy/L6IhimKn6VV+UjYQtONvIXtQrlpFjvDgeGaLgiGyIkoIxNQ8Xy8eg86Lx8WK/apYmuVSh705V11Pw3B3SYLyhx0Ls8ZtGJ/REkf5UW5GC43Jbozu04QQS6Ti/QIdPLKyrsP6MJ8CSZyHyWAlxepULdE2nyILXkD0nQcOONV99tN4po3qbw==
+ b=CMuFmbpDU5BpJfugrffQZsrscpxe+ni4GhBf8NFsEK7ZtKwHjUhc8QWre6XePp5K7Fr+g6zRBxhr0uDclFThQCqWGg0R2py+mOqpWq5vr+2wOY8eeSaUoFaSKAY0yGGN64LJ+4sgeYuvn2PMkryWf+WT4VYO2CmIYr+pm2P4GQsale7uSY63+XmY1lOWZ+10quOFaEmaMjYqU6sz+adyh4iYjlW0eCCbLGe2IKfIthjq+qJC63j7n9fx9Fk17uReUviQzirYZBek7bmbT2iD4j76vbtZbdYmja1OizpId/s5rvaTBvKnwMAxRLjaa0Nc4qxht81dAdKb3Lv6boFSgQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LShF5t8k8rDPTOOfvwx5x7n+lufAF53Dvhu1avfc4iE=;
- b=bjBEMSXi3OfpTJ5vSuRfyXHzwx37/RTRbjGtWg/epIZ+t8GGpsEycdWqiT2TG4UnpYxMzilMyRP73oszmh8tjfkH3jZG/NJzeooGFdgaMQ1Z27rc4dsaGQka4xnbyt4M1a7uCawVxjme8wlRTS2HMFixtBLerEnEhiyOR18Lc2D4/EI/bcEWRIdVM8AUffiUMAQZrJPvgsXyr0B0pB7aUpQg9nDzuy/R+ilBuzJWnC+RsHUNcpD5xGWIVjX+5yAwIPSKRV0qTz6h7zcTyCY5DS94vikcZNWgOuGnVdwFrX2hM0CEf/xNdoSx3rCpS45WArLT2BDhEff544JlfbS6Kg==
+ bh=kW9cXk68uDKCOxeHOu1peW0bBSLbPEzCs6Mb87jU3Yg=;
+ b=ns/qUaLWMRHFBVEX2rk5q5j2Zg8DzAqQxBf3nFSYurX0lq0fybMOWtF5fS3clMwma6llFU3Qu6kCmw+0qYmYVsltNYL+Xv52Ec0RnIBf/wK3mSMB9BE2Q1nlEhJ9l/VVXUnP4O3vtVhtD/BWkvQ1jBXyxK6lUZ78mf7tb4rmskfnFBljQA4guseEBe3bFKxkpagqxw7x6Y0W6sZVViyKoxv+ecgjqjqkes2Cz63nEhZ8a2KIv502gF2e0SKQRY/cb7AHZIRfvf5JctM+Df99nXtai4QiFBRrTgiEWjbgFDmPrjKubXhcMVUw7qElJF3wBktHzENaG01r2LlrOgKg8w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LShF5t8k8rDPTOOfvwx5x7n+lufAF53Dvhu1avfc4iE=;
- b=OotMpex7gfPNj8fZ2kDEbVmsmonMqzl1O7vnV8hYGQ/RvAPTTMVERJzbr6y6x7HC4jqMz50p2o177xjKo2to9CfWxV4HWj+8+Gab6UdZfgWPrHEvFBBuWBrdpYo63+70pBhJa/8JBZ4eBt1o9aQ8h0SSgxFz9raNAXPKgQrfO2A=
+ bh=kW9cXk68uDKCOxeHOu1peW0bBSLbPEzCs6Mb87jU3Yg=;
+ b=Q5+5JnooL0XUzXPPCRfAOShquV3iisKN1GRWF9uj98bu90eKozM/rjbk3JLk0S6TEVXh8/PM4QumAQYHbE0qPOqTTUT9M2MTuJuP/sHaGDrB+QIt+FYEsNWfaxB73nwSZBnBWeAJ7htXBQJRDojlKnEjakQOVNh8tD7t0qD/gwo=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=gigacodes.de;
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by DB6PR1001MB1398.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:4:b6::16) with
+ by AM6PR10MB2053.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:209:37::28) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4930.21; Thu, 3 Feb
- 2022 12:37:27 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4951.11; Thu, 3 Feb
+ 2022 12:41:05 +0000
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::486c:1c10:65ef:90f9]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::486c:1c10:65ef:90f9%7]) with mapi id 15.20.4930.022; Thu, 3 Feb 2022
- 12:37:26 +0000
+ 12:41:05 +0000
+Date:   Thu, 3 Feb 2022 13:41:04 +0100
 From:   Fabian Stelzer <fs@gigacodes.de>
-To:     git@vger.kernel.org
-Cc:     Fabian Stelzer <fs@gigacodes.de>,
-        Henning Schild <henning.schild@siemens.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Hans Jerry Illikainen <hji@dyntopia.com>
-Subject: [PATCH] gpg-interface: fix for gpgsm v2.3
-Date:   Thu,  3 Feb 2022 13:37:24 +0100
-Message-Id: <20220203123724.47529-1-fs@gigacodes.de>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: FR3P281CA0028.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:1c::19) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+To:     Matthias Maier <tamiko-GITVGER@43-1.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Using principal wildcards in gpg.ssh.allowedSignersFile
+Message-ID: <20220203124104.77ioij3jqqqyoc54@fs>
+References: <87zgoziwfo.fsf@gentoo.org>
+ <20211217094235.i2fwildp7rcjcgtz@fs>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20211217094235.i2fwildp7rcjcgtz@fs>
+X-ClientProxiedBy: AS9PR06CA0152.eurprd06.prod.outlook.com
+ (2603:10a6:20b:45c::21) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  (2603:10a6:102:12e::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 9f28f79a-7586-45d3-1a18-08d9e711ef6e
-X-MS-TrafficTypeDiagnostic: DB6PR1001MB1398:EE_
-X-Microsoft-Antispam-PRVS: <DB6PR1001MB1398D15FBB82E9DA1E9FB244B6289@DB6PR1001MB1398.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
+X-MS-Office365-Filtering-Correlation-Id: 056b7a7b-490f-40a3-43bd-08d9e71271ac
+X-MS-TrafficTypeDiagnostic: AM6PR10MB2053:EE_
+X-Microsoft-Antispam-PRVS: <AM6PR10MB2053A7AD8332EC0A650B6EA0B6289@AM6PR10MB2053.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Oob-TLC-OOBClassifiers: OLM:4303;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: F8iSoNJTm0E7hezXJol+iIIryR08khlAn/vV2y9MlywntWpF04JO7jQOfGbopO1kAiDDet7efBXQixaTVDc+Yg7k3uaModsD4NNGnNzVag7uJJDl4bmf9mZKA2gw+WlvgGKQTFpZeqS2YOveqF0KvAduY8jhZaxuzWcdgOdPBWQlnA8B8/s4H8jnGzNfEw8pT4iUPkq46Js1sL/h94p+psJefwf1rbf0u+qyMOZF2J5jvBz5pn4oPftKUNsFY5Ru6mfVeDXWhDbI9puSltXOqie8qOwWmDrRyv6PkRK2NMQ53hacse/A9yt6VOFgI8Z+shzKCF4EZEd3aQgqEYx3nyWEDP/fBXQ3csdeDDKdbzAeERGU+GXuoMCv/8CrdDKer7H5jb9S8sSgYgaI07I9cK5Ie68AtVI4c3ISQEclLWPoJYfUVp8y0KyLWaszBsp/OX0l3Upg5Ogso9eypkatX/g3twaEbFT7QicKaiDl5cgkY3VYVFMxViAA02uAa7zZTBTMm1HFt/zoGMpoG5Geg0yb8GxG7SzNlPJkpUahwqsQD4y00RH7fRvxF3caFwh8/kF7GxiyZHh1KDW71olHiLVxTjTf8N8rvrKQeYti/GmkFvr8wcbK3oUUD+vY0UOPAfMxzAhs+enmMypsE3gXHQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(4636009)(346002)(136003)(376002)(366004)(396003)(39830400003)(86362001)(2616005)(508600001)(1076003)(4326008)(5660300002)(6486002)(6506007)(8936002)(26005)(6512007)(6916009)(316002)(54906003)(66476007)(66556008)(8676002)(2906002)(186003)(36756003)(83380400001)(38100700002)(66946007);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: mfUpdNpNGICpi+PDcs5RrFt1YqViCXxRdRmVtUY5D8BqEDgzLGaBwcy8IhnzsFQBV0oYNJ9hmD8molCQsitM+yCfjueOc43wXF+Fsb41MoRjHdTQYL6I1hduHDLnuvoZxE8zcAlwQJBafYY3mKTSOkVGczoaw5o1iuroCVhgqcDflRKrRzc0JKnDRAisF5SONMIbgpo6IRUE4jdKdhM1SZRRe/bJeuU9Q0pJ9rJz7fQaxide4TsegM+CmkGX8eraQf/tGYPY3vVCfMzW5Kkm09xvUFNxJNHK1Ch6YuHEzCK5DErObu2Lqt4XcUxRKj28P+O+oDLlqB4Yvy0VIPXdOHPV5FPU6gH0OJyulPN++j71YhkffPmzLxNqyFFDzpajyFV3Nl6tFEeqGXcvny93ZnYYxhsLQrkmnMf00chU6Q9XDzf3Ilj+BWsspJl5KQKcAGRQPVB6kN0JdEkpk0eaFF9+abL31XFWdu+Pmok3oraA/HLEF+Up1fNvoYPBJRkuF1Ww0Ps+3jfKq/g6I2FwlJ96Az7EVsmX5nz9dszpwK+BpiWjSy5cHFUrf1nVCBSvAQPKoFUiKmr88xOrJ+thSdfiWcW5zR/ep6HE9TBa8wxe5jHzDF5DVqqH+3ZWo68gJkU2QRAhI9A+7rEcHByhyMjnMx8UMZWLs4VYlqustz3kESNATQkpBSsfVqzOJLws6PeIG11R2w2HDAja6xweX58zItCDrbsQeIWhZJkSWZA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(7916004)(4636009)(396003)(376002)(346002)(39840400004)(366004)(136003)(9686003)(6512007)(6506007)(5660300002)(8676002)(66556008)(8936002)(2906002)(66476007)(66946007)(4326008)(53546011)(508600001)(86362001)(966005)(316002)(186003)(33716001)(83380400001)(6486002)(38100700002)(6916009)(1076003)(26005);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?i4G8Q26CHlKICazOGWLAwBD5D4nzrJKu/TiilwPCkDpAQxxwnnkBI/gKBY/L?=
- =?us-ascii?Q?8vyNS/m4MP9UAdBJcgccvPmNOcyWFl3Cerf4fdtXOH2OXwR3KO3HfIvrEgDE?=
- =?us-ascii?Q?u7T9P7UTBADyMS6iKblozxEqjssZIK56UzIvds8/qvGmV59RGrALm8kA3389?=
- =?us-ascii?Q?4T2w/Yw2xVF4l3wFz66nups8yBxhBAdlU++S6c4uVVtiEraBjVBJ657FvRhs?=
- =?us-ascii?Q?TYE4ih+nhcBAfH+98eW+U9Sc81ZbpJEOWUiyOb9xqubVxvSv9m5fryDr6NaE?=
- =?us-ascii?Q?IdvQ6i7PiBVE6o7AMfv0Jfp5z0885P2nSAqkLw1NYaFjA2mhVQW4zmTaNaHQ?=
- =?us-ascii?Q?I7xqGa9eaAywVX55LiEnzAUliJ4AZ+Bo3/ECF5aYWf41DSPc8vlwEtpFZ66r?=
- =?us-ascii?Q?GE1MA2tYFyWqh/sx2Jemh5UGP/IFBTTU3o1xigR+fqUxkY/ytWHc9Fo4VuvB?=
- =?us-ascii?Q?pI0Z0sdJeLCMY8JxQcWBg4PZmY/eVZP97t2NcV8mW0DbFOHQssXcTgrIPUAR?=
- =?us-ascii?Q?vYl37w8A+8FUh812mHjsH77U3BVVNr56YO6TGbwiQdHu7C1GKstJAlbY0ghs?=
- =?us-ascii?Q?Z91Z0pLaDKZuKoyP21/6FYoAXmFL/hTOvDWEkIc2yot9tUalBNRol/BIYCb3?=
- =?us-ascii?Q?S9tl0VqZvAEcohkMe6lHav8bhx7o9z5KMuxUFlx+JxT6Kl3tEXF+luEyrbij?=
- =?us-ascii?Q?g52Yj6nD9mtYWB/3iq4xTHgw0FBMKX/QYPyvKC+UVYDwZk+Za1N+ZtYSDTlX?=
- =?us-ascii?Q?hn4nK0T9TfIposA0KmYqPj2UcnSk8WSlaL1s1aNMIYkkVlDBuHa28rrPJ8JL?=
- =?us-ascii?Q?lPKZxFAT50+sPjy9cxyygI5+BgmSg9aNGZmW+0mpL3ntzfIt6oqAVQb2GCYz?=
- =?us-ascii?Q?g94PCLRg80gUIVR1UgHwJarFUDYcF44ZCISWB55Jjc/snLJe5/D/Qjg+J8vH?=
- =?us-ascii?Q?9GTDyMsruNeRkO3mjwF3upeSUzCDJCl904RBu+LtzLwMm5JsOTAqmhta+Me3?=
- =?us-ascii?Q?HSqSkZy7eL+ByWITYxxu2nRAcTS2QMGpDPz/xQXfuF2Vc/Lf41Fq6As3lQ/W?=
- =?us-ascii?Q?NIQrS+yaoV4dM3dAtd5shLA8wg2vGUtU+eAdATYIHvZzvFne4/fnglkXxlRY?=
- =?us-ascii?Q?mt1ABhwpzJzj9mZAkFkUegwslOWSQycpGyglvFrTjb3lCB8WomGHDrVifdnK?=
- =?us-ascii?Q?fkGqtmEct4eptacfbnIBQaH2yE1GYm/XfD5EnBgP3ZtCeJ996KskXJXYSinq?=
- =?us-ascii?Q?bi8fYTSfJlW25YFbnvP/N53BcDLAaB8eEqPqa+M1FHdTARP1AaepkzCqePDZ?=
- =?us-ascii?Q?EiTPkC+8dckcITNj8lfsMTOvf0JkiA8Peid8fRrArvkqjYbUS+f1b6ilIrIF?=
- =?us-ascii?Q?InZ2EMn3XhBvApW1vocSOl677RPdfjN7C7abVjCMKUdW7lsRkTMMH6iu9HxU?=
- =?us-ascii?Q?OYT+1u/JeJCZCmgv+f9BfvbdnMAfbaLibVSL2OuJEiKt8kW2cd95znWabUfa?=
- =?us-ascii?Q?WAsX8anCoIMWth/QXj7w1T+OIoRoKjlIEI6WwEcHOOB84YKQN3zewSzxONqE?=
- =?us-ascii?Q?4c4+f+GGngbkIGUMs/jB/RjZjVbh57ou3sF3lXlFdDkQYh4+rcPPI0zmUy/n?=
- =?us-ascii?Q?+oNgN0OV8FIAZ+px2MnKXeHBVAUcv2FFf+HnAXPl2eXdBccJmdZuXBnKiAgf?=
- =?us-ascii?Q?/HGWI0bGy+veF6wI1rU/J0pDcoE=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MklFbkZrWDhpV1hhUHNvaXVhOVlzbDdkQ1ZVWFlDaHduY0p1RnVFNGp2RXNi?=
+ =?utf-8?B?cWVDdVlkdE01bWtRdFVFelJZQ2Y4ZlJOWm9sMFg0aHA3QkIyQ3FLYU84SUZK?=
+ =?utf-8?B?RUY1WWk2SGlxS1ZYWGY4Y2tvbVc4dHZqMHVvbzIvUytLV1RpQkxnVzRvSG9s?=
+ =?utf-8?B?clBQdlg2Y2t6enFJZDRzR0JaSVhOQkNMbGFsZTFvYmlvaVAzRnJyMUM3Rm8w?=
+ =?utf-8?B?TkQyS283K0FOU3NybFg4WmZFOEUxYU5HOVBDRVlEaW5ITWtWaFlMdFRPMVo1?=
+ =?utf-8?B?dDdPWHhVelczQjNqNWtuNGcyMGF2d0pxWXJ0UnBoRGFpTVFqSm1qMVpHdlV2?=
+ =?utf-8?B?QlpQM1Q1aUpibE90OUpDSXd5VklRWHFOMW15T0swN1hkQ0xMdWZqb1ZzRys4?=
+ =?utf-8?B?b1M2Z0tpM3NQaDJNY1cxUmdaSGd0ZXloa3dLK2NJaHNrdkpjR01Yek5vZEhl?=
+ =?utf-8?B?MGIvb3k0L0tNQ2ZYYUY5WUlLS2FEZytCNnRQdE54czNVekdLOWN3MGpVK3pU?=
+ =?utf-8?B?QkhiSWZmSFhnUC9Ka0M5RzkzMHBrYlFBNTVjeVNJN2hFUkVMdEs0bnVDNjdv?=
+ =?utf-8?B?SklEaDJ2U3RrQjNxaTR5aHRlMThjUGdibU40SW02clM3dG9GM1l5NzdMMWVH?=
+ =?utf-8?B?VklBcUZJcjNTRWZLSTVwamhPbE9ZTys4TUswN0FXZkdqZFhKT1h4a2pMVzg0?=
+ =?utf-8?B?dG9CYTdXVnpmYjdSVXdSZjl0RVlJaHl3Lzd0MXpEblRoekxEeFA5RmZXUjIr?=
+ =?utf-8?B?UEV2RUFNVGozNWFWK3VGc3pDK3hCcTBDK01McFk1NmdUZFlCREtWbkprRnhQ?=
+ =?utf-8?B?K3E2N0VMQnhaZXVMcnZ4RTY3aFJjWjNuTUdnbVVueXhOb2dUVDRmSVZ4UG1T?=
+ =?utf-8?B?SEZmdzlLN01taUtzRk13cERFT3Z5dnNpRGU2SElZZk4vQTFIMk9VVXNjMWRZ?=
+ =?utf-8?B?SWdzdzg3QkZzb2p0QnJxNW9heFhCY1ZhTXJRb1k0bFUxRFdIQS90ZHBKWE9H?=
+ =?utf-8?B?UUo0NktReFFndjZFU29WTE03VTFFSm4rY3J6NERaN0JZV3BMelh3VmNEdW5n?=
+ =?utf-8?B?Um9VY0lYQ0ZLWWVmaWd1S0lkd2d6UTkydHVYbW1NUVZBRzlidTBEbWRYa29O?=
+ =?utf-8?B?Yy9ndDFVNk4zcDJIWk5FeWttd1RHNzd6WVY2ckhHUnB6T0ZWcFdxUzVPd3Q0?=
+ =?utf-8?B?MCtuTkhTWmtxZ3JKVzJ3N0dJRERxZGhNS0hCRVFldkNCUFJKVGJEL01xZGVi?=
+ =?utf-8?B?b3BsTDFLeGJlSmk0eS8xUmJGeVZiN0hMRC9FQ0tOOVBBbDlyRVdWdSs4TXJJ?=
+ =?utf-8?B?WWM5aFZ4TStNZ3M4MW91VjFGcW4wZVNzMFVac2ErdzJ3ZEZWVXR3Y08za3Mz?=
+ =?utf-8?B?cGpTVjNpVmpSckZTUHpKRW1xbktFdjFSVFFOTHRXZWMvRVFtYWZJUFdneXUz?=
+ =?utf-8?B?RG9qVis2QjFEc2hmT0dhSDk2UTc5cXc4dis3anZ3b3dNekFqN1k2RDJVZ0p1?=
+ =?utf-8?B?Ny9sejhuRERvT1lKWFdFNFlhT3hnZllzNVBzRW9RSzBhUVVjSWNTK1JWMzMr?=
+ =?utf-8?B?czNweTRWN2FuQ3BDWU1NU241cVp6cHZlWGw0d0NZQURLSThoY21YOGxxbnNn?=
+ =?utf-8?B?NEdMVjVKWUt0ZXlzcHBNOHZIMm9mMnhNN2xwTnYzd1JKTGhRVTVXVnhKc2d6?=
+ =?utf-8?B?cTRYODNWNEhwRVFjUXVTZk5CZDZONHFaRVRGZXdreUhKSXhwTWMvaFArSHZ3?=
+ =?utf-8?B?bTY2T0ZzS2NMbGpFYUpIZmVZRmhrSEM2OGQ2OE5EaWxxUzJ0akc0dk5LS3FC?=
+ =?utf-8?B?OGtlY0RTN3BoWUI5OVBMaHdvMitkVEEwM0hia0RPdE5GUDdhTzFRTnRxRDRT?=
+ =?utf-8?B?S2xreDRUenBxblRmR1BHSXNnbzI3MHB2bXNWV0Z0ZTJkaEdXR01UclZ2bHNB?=
+ =?utf-8?B?SUhUa0NtRjM4ZW13MWdWdWtMdjVHQU93NXgrYXF1TkNYNW9oNHozcWY1L2h3?=
+ =?utf-8?B?UU44ZWVqODZERE1Eam94TzJqM3hYOUdvVWhHNURGNlUrNkF2TG5YMXdXUXJK?=
+ =?utf-8?B?RjAydVZjY2gza2JWR1BsbzA4RVk0dGtqQ3ZXNElnNjR5R1k5c3krZXl0M0x4?=
+ =?utf-8?B?bXovOGZha0RTRUlEc25OdUtEbkFhTWlWZi9lY25CVFdZL3NyT1ZzRmQ0aEhI?=
+ =?utf-8?B?Mlo1Tzl5cFNCckFkWEZ0Q1RiaHlmK3dzUVpLV1VmN1ArbGFaU2RsVDJSQVoy?=
+ =?utf-8?Q?iEk84soQ6t7BMohlUh7akYIy9lTfU6C9cwp4lFAH4E=3D?=
 X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9f28f79a-7586-45d3-1a18-08d9e711ef6e
+X-MS-Exchange-CrossTenant-Network-Message-Id: 056b7a7b-490f-40a3-43bd-08d9e71271ac
 X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Feb 2022 12:37:26.8316
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Feb 2022 12:41:05.3428
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 72eHELQy0jPcsb2PftrgYy7hitcpeRgA24RL0zEgv24zUwmwSfddjDXDVsRrnoQqWoZ0RLtNuS1EjSAKgqaG7NV3Y2qUhIkEnR8V1V7PpRc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR1001MB1398
+X-MS-Exchange-CrossTenant-UserPrincipalName: lekEk+AATYoWQLTUju7If9d5i5QMx87pRrpH5Dm4fE3AycvJdJFqoTkTrz98d4VarUMwF81yWg0+w9rOh3K7lO2Ka9Ijz9O1Cz+1eZa4Ndk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR10MB2053
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-gpgsm v2.3 changed some details about its output:
- - instead of displaying `fingerprint:` for keys it will print `sha1
-   fpr:` and `sha2 fpr:`
- - some wording of errors has changed
- - signing will omit an extra debug output line before the [GNUPG]: tag
+On 17.12.2021 10:42, Fabian Stelzer wrote:
+>On 17.12.2021 00:20, Matthias Maier wrote:
+>>Dear all,
+>>
+>>I am experimenting with git version 2.34.1 (and OpenSSH 8.8_p1) a bit
+>>trying to set up a repository with SSH signatures for commits instead of
+>>pgp. I have also tested the current "git next" branch.
+>>
+>>The straight-forward setup (by having an "allowed_signers" file
+>>naming individual e-mails and pubkeys) works as anticipated.
+>>
+>>However, when trying to combine this with an SSH certificate authority
+>>(which would be the use case I have in mind) I am not able to use an
+>>e-mail wildcard in the "allowed_signers" file but have to specify full
+>>e-mails instead. This, unfortunately, defeats a bit the purpose of
+>>having an SSH certificate authority in the first place...
+>>
+>
+>Thanks for your report. I tested the described behaviour and I think 
+>this is a bug in openssh. find-principals will never match on a CA 
+>cert with wildcard principals whereas wildcards for non-CA keys work 
+>just fine. I've emailed the openssh maintainer about it and will 
+>prepare a patch.
 
-This change adjusts the gpgsm test prerequisite to work with v2.3 as
-well by accepting `sha1 fpr:` as well as `fingerprint:` and allows both
-variants of errors for unknown certs.
-Checking for successful signature creation will omit the leading NL in
-its search string.
----
+Just for reference to the git list:
+This issue was fixed with 
+https://github.com/openssh/openssh-portable/commit/15b7199a1fd37eff4c695e09d573f3db9f4274b7
+which should be in the next openssh release.
 
-I am not a user of gpgsm but noticed that the GPGSM test prereq was disabled 
-on my runs so i investigated. The `fix` seems rather trivial and I tried to 
-test this as thorough as possible. I ran the test suite on machines 
-available to me (fedora35, centos8) and did a full CI run on github without 
-any issues.
-But if you actually use gpgsm with git please give this a go and let me know 
-if I missed anything.
-
-
- gpg-interface.c | 2 +-
- t/lib-gpg.sh    | 4 ++--
- t/t4202-log.sh  | 5 ++++-
- 3 files changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/gpg-interface.c b/gpg-interface.c
-index b52eb0e2e0..299e7f588a 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -939,7 +939,7 @@ static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
- 			   signature, 1024, &gpg_status, 0);
- 	sigchain_pop(SIGPIPE);
- 
--	ret |= !strstr(gpg_status.buf, "\n[GNUPG:] SIG_CREATED ");
-+	ret |= !strstr(gpg_status.buf, "[GNUPG:] SIG_CREATED ");
- 	strbuf_release(&gpg_status);
- 	if (ret)
- 		return error(_("gpg failed to sign the data"));
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index 3e7ee1386a..6c2dd4b14b 100644
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -73,8 +73,8 @@ test_lazy_prereq GPGSM '
- 		--import "$TEST_DIRECTORY"/lib-gpg/gpgsm_cert.p12 &&
- 
- 	gpgsm --homedir "${GNUPGHOME}" -K |
--	grep fingerprint: |
--	cut -d" " -f4 |
-+	grep -E "(fingerprint|sha1 fpr):" |
-+	cut -d":" -f2- | tr -d " " |
- 	tr -d "\\n" >"${GNUPGHOME}/trustlist.txt" &&
- 
- 	echo " S relax" >>"${GNUPGHOME}/trustlist.txt" &&
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 5049559861..08556493ce 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -1931,7 +1931,10 @@ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 miss
- 	git merge --no-ff -m msg signed_tag_x509_nokey &&
- 	GNUPGHOME=. git log --graph --show-signature -n1 plain-x509-nokey >actual &&
- 	grep "^|\\\  merged tag" actual &&
--	grep "^| | gpgsm: certificate not found" actual
-+	(
-+		grep "^| | gpgsm: certificate not found" actual ||
-+		grep "^| | gpgsm: failed to find the certificate: Not found" actual
-+	)
- '
- 
- test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 bad signature' '
--- 
-2.34.1
-
+>>Steps to reproduce:
+>>
+>>====================
+>>Set up a minimal CA:
+>>====================
+>>
+>> $ mkdir /tmp/signing-test
+>> $ cd /tmp/signing-test
+>>
+>>
+>>A)  Set up two test pubkeys:
+>>
+>> $ ssh-keygen -t ed25519 -C "ca key" -f id_ca
+>> [...]
+>> $ ssh-keygen -t ed25519 -C "user key" -f id_user
+>> [...]
+>>
+>>
+>>B)  Sign user key creating an SSH certificate:
+>> [...]
+>>
+>>C)  Create allowed signers file:
+>>
+>> $ (printf '*@43-1.org cert-authority,namespaces="file,git" '; cat id_ca.pub) > allowed_signers
+>>
+>> ! Important: I used a wild card "*@43-1.org" for the principal!
+>>
+>>
+>>D) Test setup:
+>>
+>> $ echo this is some random text > test.txt
+>> $ ssh-keygen -Y sign -f id_user-cert.pub -n file test.txt
+>> Signing file test.txt
+>> Write signature to test.txt.sig
+>>
+>> $ ssh-keygen -Y find-principals -f allowed_signers -n file -s test.txt.sig
+>> tamiko@43-1.org
+>
+>Are you sure the allowed_signers file was exactly what you generated 
+>before for this command? If I follow your steps this will not produce 
+>a principal for me with neither openssh-8.8.1, nor master. Can you run 
+>this with `-vvv` which will show a bit more ssh internal output?
+>In the openssh code for find-principals wildcard principals are 
+>filtered for CA certs. I'm not sure why and have asked them about it.
+>
+>By the way, find-principals will not consider the namespace parameter.
+>This has another bug in the current master producing a segfault for 
+>which I've already sent a patch. But this should be unrelated to your 
+>issue.
+>
+>>
+>> $ ssh-keygen -Y verify -f allowed_signers -I "tamiko@43-1.org" -n file -s test.txt.sig < test.txt
+>> Good "file" signature for tamiko@43-1.org with ED25519-CERT key SHA256:noSSfVeVlrYi6vGgK+jRPvyBnIV4ccVA0iW4IXYdXDQ
+>>
+>>
+>>=======================
+>>Set up a git repository
+>>=======================
+>>
+>>E) Set up an empty repository somewhere
+>>
+>> $ cd /tmp
+>> $ git init signing-test-repo
+>> $ cd signing-test-repo
+>>
+>> and modify .git/config to look like this:
+>>
+>>       [core]
+>>               repositoryformatversion = 0
+>>               filemode = true
+>>               bare = false
+>>               logallrefupdates = true
+>>       [commit]
+>>               gpgsign = true
+>>       [user]
+>>               signingkey = /tmp/signing-test/id_user-cert.pub
+>>       [gpg]
+>>               format = ssh
+>>       [gpg "ssh"]
+>>               allowedSignersFile = /tmp/signing-test/allowed_signers
+>>
+>>
+>>F) make a commit
+>>
+>> $ git commit -a --allow-empty -m "my shiny new ssh key signed commit"
+>>
+>> $ git log --show-signature
+>> Good "git" signature with ED25519-CERT key SHA256:noSSfVeVlrYi6vGgK+jRPvyBnIV4ccVA0iW4IXYdXDQ
+>> /tmp/signing-test/allowed_signers:1: no valid principals found
+>> No principal matched.
+>> Author: Matthias Maier <tamiko@43-1.org>
+>> Date:   Mon Dec 13 23:51:03 2021 -0600
+>
+>Just FYI: if you add GIT_TRACE=1 to the git commands you can see the 
+>executed ssh-keygen commands, which can help to see whats going on.
+>
+>>
+>>
+>>G) modify allowd_signers entry to read "tamiko@43-1.org" instead of the wildcard "*@43-1.org":
+>>
+>> $ git log --show-signature
+>> Good "git" signature for tamiko@43-1.org with ED25519-CERT key SHA256:noSSfVeVlrYi6vGgK+jRPvyBnIV4ccVA0iW4IXYdXDQ
+>> Author: Matthias Maier <tamiko@43-1.org>
+>> Date:   Mon Dec 13 23:51:03 2021 -0600
