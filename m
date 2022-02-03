@@ -2,131 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B29EC433EF
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 18:07:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3873C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 18:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353174AbiBCSHs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 13:07:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52864 "EHLO
+        id S1352999AbiBCSK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 13:10:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353146AbiBCSHr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 13:07:47 -0500
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69733C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 10:07:47 -0800 (PST)
-Received: by mail-pf1-x42e.google.com with SMTP id y5so1951135pfe.4
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 10:07:47 -0800 (PST)
+        with ESMTP id S232248AbiBCSK4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 13:10:56 -0500
+Received: from mail-ua1-x933.google.com (mail-ua1-x933.google.com [IPv6:2607:f8b0:4864:20::933])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F197C061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 10:10:56 -0800 (PST)
+Received: by mail-ua1-x933.google.com with SMTP id 60so6740197uae.1
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 10:10:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=edO67G3hmmX3DJlAI9V5pV+KLwpbZHq8mWnbgPVKSAc=;
-        b=IGKr/TGULHmfpbeLakI/WgZ54ugWWJucAZ1Ws6gsQ0N8ZseZLP2CfiRCaqYUTrAi3d
-         1qUEGDZCgye+11yagqID2BR6+KJ9XUNQTHF2KtYzbDWKjY193VBykFeL0jPIpxNiveBx
-         ntzlniDkUs8A51oI0qhoVtIS98jFxwUyC1wcH5M8PG9Zgn1JKpOh2tPJnUD5gJWBWzuv
-         4IqnF8CHTdH/nND85v4otrV7roAgaHzT+lpRqJ8eW9Um6KkN0dP4k564H2lynietDvMZ
-         u3W9hDX7Cc2yYYNWVByFCbwWFoKA0ZT6Pbaa0Yf2yr3ca1/wjfV8ND6/x0nEfCr01te1
-         U2zw==
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=yswOX3ouJ1hykZ9zBJCrGzrUVpGdsEdgCdMvjG0FRwk=;
+        b=cHESiLTQMovgpYutFbDwFLXidsX4I4p2Q1qLKHy+SZQGO8SLHbs20adaz9gyTefXFi
+         KNm/Q6XUPnhcZS4BRp95g7Trn2zO0GmGj3rdUCFFck941BXaoBic6sqKva8ZKfvKTT7Y
+         tzs00fYuKCDL7FzTm5T5TXhM4RrfUhyEPE0dzRqhBVRnULinT7IpHh27gQm0ybi5AmNa
+         G3YrC+0PMp39uGXQRwbvDyVXM/36qD8nJwP5p6LijnI8F3Jn39saLBTsnJ+yadZYgaNU
+         4BDbJHgCObQDzm/gyJJOjpMbYL0+/mX6CBk6+5fgU5Y24V300MzzF/N0zauONS0sBeyY
+         ldpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=edO67G3hmmX3DJlAI9V5pV+KLwpbZHq8mWnbgPVKSAc=;
-        b=cErLbJooiboXrNb4+tDGP5KZ6w2InJjbOlQ50nYNn3w5yxXziV1ygxX1tAl0usBJPP
-         TbEVxqeUyyLWwe9M4FT7iYJa9LKtjkHPy/gs34H4sIoPVVJ72F8FlOyzc7naRZOcvEfi
-         9UHNrwyrPBeZc9Fo7+3Cbr3J2Xyff5MiHMksI38My07ZUuQsgVmRx6axL6Ja+WAn9EGR
-         b0IjCz1/WOKQhgGqfCQP8BkdJwb4CKvA7vMAimoGvsUGjxGVIbZ2yRNUqomMGNuxoKle
-         e8c4l3L4JgY9/aWhJtcTpNI/QCSIje3WWeUkQUwaqOkH2pK2NJ97ZeqR3OGaF0tUZVX4
-         +jpg==
-X-Gm-Message-State: AOAM530DcosDgAnUTrtNuwHI2OpogYX/iM+l/hXxcIQFNvadRrv6g2fC
-        O1TuxpsIEXfL/HQtsF+ji48=
-X-Google-Smtp-Source: ABdhPJyDG9ekfJIfwnFqXFDaDTgfPGLgAist98A7qsuXHOb+0bIT1W2jyvrJ3ZsQQ2leQKnREDVw9Q==
-X-Received: by 2002:a65:4547:: with SMTP id x7mr29234311pgr.467.1643911666757;
-        Thu, 03 Feb 2022 10:07:46 -0800 (PST)
-Received: from localhost ([2620:15c:289:200:b5c2:580b:9b41:56b2])
-        by smtp.gmail.com with ESMTPSA id u12sm26955756pfi.1.2022.02.03.10.07.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 10:07:46 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Greg Hurrell <greg@hurrell.net>, git@vger.kernel.org,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>
-Subject: Re: git-checkout doesn't seem to respect config from include.path
-References: <ee1dd453-e698-440a-911b-d14389e33715@beta.fastmail.com>
-        <0b8222c2-7337-7e8f-33d1-7926462daac1@gmail.com>
-Date:   Thu, 03 Feb 2022 10:07:45 -0800
-In-Reply-To: <0b8222c2-7337-7e8f-33d1-7926462daac1@gmail.com> (Phillip Wood's
-        message of "Thu, 3 Feb 2022 15:54:23 +0000")
-Message-ID: <xmqq1r0jx1qm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yswOX3ouJ1hykZ9zBJCrGzrUVpGdsEdgCdMvjG0FRwk=;
+        b=kWNCALMc/I5CW3W26zVmE1F1RVVDx7kNSou5Y2piyqdUa4Ka1lvXXhOwGNJPDRjogn
+         cE9fAMQ7qvz+7Uawn5sZJnmEDsxMowdWPES1qzrUiWklcvEXvqHUmUtT3nCU4aITPvGB
+         bLwnh1Ft5EljzlTBovtWDBVX7VA7na28eMEHUdGSUjK7s1aSzkC0F+IJjtFuPSAMReCA
+         IiGZsD3BAYqakcQdDRqVkwxVoHfRGDJtOBh49NRBZ+7xe3WgdkLkdVbqV+CB0JOHYqmc
+         wy5cM8D3Dm5kJ7EZignPG1CQiPTAYioKi/DFFXUwRrBnwR8v5kW1n8Cn761QpKB4utug
+         UYYQ==
+X-Gm-Message-State: AOAM530bQM8iQnSSbW+GS699623o0qqkC+1NnEp1AWdc2vs0OWwKT0ph
+        pTfUn39rMbBz1PEw2PEcF7xzZPPawE4lhcv+ZOhgZw==
+X-Google-Smtp-Source: ABdhPJzdFecB2ItqoFpUnyr9Mi65YREwLjSauW/xx4aia938f3MrHD5NX8fXZ7eXhJr/Rq4+mssNn9/Wrx4Z3pY1kiQ=
+X-Received: by 2002:ab0:6946:: with SMTP id c6mr14189682uas.134.1643911855157;
+ Thu, 03 Feb 2022 10:10:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1209.git.git.1643651420.gitgitgadget@gmail.com>
+ <1ded69d89709d23147b29f67122b659293414405.1643651420.git.gitgitgadget@gmail.com>
+ <YfhUIJuO70va6gr8@nand.local> <xmqqzgnbh7rv.fsf@gitster.g>
+ <CAFQ2z_OFRJh9cwxnbDzrshYPGOvJC6Rz1eHTF-aKURno+41Cvw@mail.gmail.com>
+ <xmqqa6facn9i.fsf@gitster.g> <220201.861r0m9t8n.gmgdl@evledraar.gmail.com>
+ <xmqqsft2b5jl.fsf@gitster.g> <CAFQ2z_NSCvRbj1bxirxhqSWD+LadzCa8VNOsxGCmFCNT3GUU0g@mail.gmail.com>
+ <220203.867dab6dmp.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220203.867dab6dmp.gmgdl@evledraar.gmail.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 3 Feb 2022 19:10:43 +0100
+Message-ID: <CAFQ2z_MkZBtjViTsDNuKLYUXzFXJM6sPLOvXdiRAZrs84pggUw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] t1405: mark test that checks existence as REFFILES
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, lucamilanesio <luca.milanesio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Thu, Feb 3, 2022 at 6:53 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+> >> Yes.  It is exactly the point of the question I asked.  If it is
+> >> simple and easy to add such a new type that is ignored/skipped by
+> >> existing clients, then we can go that route.  If it is simple and
+> >> easy to add a new bit per ref that existing clients would not barf,
+> >> we can use that as an alternative implementation strategy.
+> >
+> > I'm not sure that there are any JGit clients: I committed reftable
+> > support at the end of 2019. Before that time, we were running it
+> > internally at Google, but only ref storage, and without the posix
+> > part. Reflogs were never stored in refable, and I actually found a
+> > couple of bugs in Shawn's Java code.
+> >
+> > Gerrit has increasingly started using Git as a database, and the
+> > packed/loose system is just not a very good database, so that
+> > motivates the work reftable in general. But the folks who run Gerrit
+> > on a POSIX filesystem want to be sure that isn't a fringe feature, so
+> > they only want to start using it once Git itself supports it. So there
+> > is a chicken & egg problem.
+> >
+> > It's sad that we have to introduce an existence bit to make things
+> > work, but overall it is probably easier for me to do than trying to
+> > make sense of sequencer.c and how it uses refs/stash@{0}.
+> >
+> > Technically, the only obstacle I see is that we'd need to treat an
+> > existence entry especially for the purpose of compaction/gc: we can
+> > discard older entries, but we shouldn't discard the existence bit, no
+> > matter how old it is.
+>
+> Ah, that's very informative. I had been assuming (or misremembered) that
+> reftable was already seeing production use at Google. Perhaps I
+> remembering the now-dead Google Code (or whatever it was called). Maybe
+> not.
 
-> ... What we really want in this case is to
-> store the string value for each config option as we read each config
-> source and then parse those values at the end, unfortunately I think
-> that would break multi-valued config keys.
+We use the format (the JGit code) at Google, but we only use it to
+store refs, that is, the refname =3D> {SHA1, symref, tag} mapping. We
+currently don't store reflog data in reftable, and the bugs I found
+were just in the reflog parts.
 
-Thanks for raising, and looking into, the issue.
+We store the tables in bigtable (among others), so the part that does
+the POSIX file locking is new (basically, everything in
+reftable/stack.c and its equivalent in JGit).
 
-While the original "callback functions are called for each and every
-configuration item defined in the files and it is the responsibility
-for these callback functions to implement the semantics like the
-last one wins" design that uses git_config() makes it harder, but I
-think we are already halfway there, with the more recent API update
-in 2014 (!) that allows config_get_value() to go directly get a
-value given a key without writing callback functions.
+So we are locked into the format to some degree.
 
-I think builtin/add.c predates the configset API work (of course, it
-is natural that we can "git add" way before 2014), and mostly uses
-git_config(add_config) callback as a way to parse its configuration,
-because it needs to tell other subsystems (like diff, merge, etc.)
-that are even older to pay attention to the configuration variables
-they care about.
+For the existence bit, I think I could simply record a $zeroid =3D>
+$zeroid ref update in ref log and treat that specially.
 
-So it may be a major surgery to switch to the newer
-config_get_value() API.
+> In any case, not being locked into the format as specified is very
+> nice. So is it basically seeing no (production) use anywhere as far as
+> you know? Whether that's in production at Google, or some third parties
+> via JGit-something (maybe as editor libraries?).
 
-For a "last one wins" variable, config_get_value() will only look at
-the last item, so any garbage value Git does not recognize would not
-trigger a fatal error.
+I think our friends at Gerritforge have been experimenting with it,
+but not in a production setting, AFAIK. Luca might confirm.
 
-Such an update is both good and bad.  Surely it makes the scenario
-that triggered this discussion more pleasant by not dying, but it
-makes it too pleasant by not even giving the user a chance to notice
-a possible typo.
+> Taking a bit of a step back.
+>
+> I do think that generally speaking parts of this series are putting the
+> cart before the horse in seemingly trying to get the test suite clean
+> before we have the integration in-tree.
+>
+> Not everything you have here, but some of it.
+>
+> I know I'm the one who started encouraging you to work towards getting
+> the test mode passing, but I think that while it's good to mark some
+> obviously file-only tests beforehand, anything where we have different
+> behavior under reftable should really come after.
 
-A incremental improvement that we can immediately make is probably
-to teach the current xdiff-interface.c::git_xmerge_config() parser
-to react to an unknown value differently.  It should not die() but
-just ignore the unknown value, and issue a warning.  This should be
-doable with minimum impact to the code.
+(I can't parse your last sentence)
 
-Completely untested.  The first test that would be interesting to
-run is how many tests this changes breaks to gauge how good test
-coverage we have ;-)
+> Of course that will mean we'll have some interim period where our test
+> suite is a dumpster fire under GIT_TEST_REFTABLE=3Dtrue, and I think
 
- xdiff-interface.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+It's actually not that bad. By my last count, there were 38 files with
+test failures.
 
-diff --git c/xdiff-interface.c w/xdiff-interface.c
-index 2e3a5a2943..523b04960a 100644
---- c/xdiff-interface.c
-+++ w/xdiff-interface.c
-@@ -322,8 +322,8 @@ int git_xmerge_config(const char *var, const char *value, void *cb)
- 		 * git-completion.bash when you add new merge config
- 		 */
- 		else
--			die("unknown style '%s' given for '%s'",
--			    value, var);
-+			warning("ignored unknown style '%s' given for '%s'",
-+				value, var);
- 		return 0;
- 	}
- 	return git_default_config(var, value, cb);
+> that's fine, as long as we work towards getting it passing, and as long
+> as the non-stability of the nascent backend is very prominently
+> advertised in the interim.
+>
+> I.e. I think *the* issue with the original series you had in this regard
+> was that git-init.txt (or whatever it was) basically just discussed
+> enabling reftable matter-of-factly, when we were still failing
+> tens/hundreds of tests, which is just setting up a big bear trap for
+> users to step into.
+
+I read that comment, and I removed that long ago. Right now the only
+way to get a reftable is to say GIT_TEST_REFTABLE=3D1 on init.
+
+> But if we just changed those docs a bit to note "!!WARNING WARNING!!
+> EXPERIMENTAL AND UNSTABLE !!WARNING WARNING!!" or whatever we could
+> merge the API integration parts sooner than later, even with a lot of
+> known-broken tests.
+>
+> We could then whitelist the broken parts, and work on narrowing that set
+> down. Similar what the SANITIZE=3Dleak mode is currently doing for memory
+> leaks.
+>
+> I think that would make things a lot easier when reviewing submissions
+> like these, in that we have reftable/* in-tree already, but with the
+> "real" integration we could check how files/reftable backends behave,
+> add the diverging behavior to tests etc.
+>
+> What do you think?
+
+Sounds more fun than the current model :-)
+
+The latest version of the code is here:
+https://github.com/hanwen/git/tree/merged-seen-20220117
+
+What do you need besides the "RFC: reftable backend" commit?
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
