@@ -2,107 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EF47C433EF
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 21:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8AA5C433F5
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 21:38:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240416AbiBCVdz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 16:33:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44702 "EHLO
+        id S238655AbiBCViM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 16:38:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233983AbiBCVdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 16:33:54 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A9E2C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 13:33:54 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id p125so3361775pga.2
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 13:33:54 -0800 (PST)
+        with ESMTP id S231713AbiBCViL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 16:38:11 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05F85C061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 13:38:11 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id l24-20020a17090aec1800b001b55738f633so6517645pjy.1
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 13:38:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=tvoMDnkT/D9TGm0oT1qoYHektnEg3j+Grtkl6HdVZx8=;
-        b=Pw3wulIakbVyVYopW/4kNGcQzyEjaNq7wTZzjNiD+1phDVAAsy4aIgYACY/bHMkB8q
-         asbxBsSqUflTtrcvsewLaYxgQpqTy53lWrIVmVUWHjG5EvdYHWW0DfC2fzeN+DIxZQqY
-         yZjN6B3tIEUYgIBExqPvlii+6TGdonKBoK4cs0p5TsRBqkxxJYwFO1Clmou/oq8OXuVW
-         2qMtcpd/DqLQl5kzpWTnprU3kaOwKWJeuQcLQic/OByzMAQRn6SbykllGB4jPFjIeodz
-         Pl2oEfrvUiLbUqteshty0NTU6Px2nnhyUe3LqoaYqmyDo2NEzWCbtAfGlnloNM6l2Q3I
-         7LEg==
+         :user-agent:mime-version;
+        bh=4mbFDlH0h8XY0hGNhLZlQWN8H96rerVWBSXLuVOp9Ss=;
+        b=EMLvcHWIXSnNOkr7p3zrKID4YhKi4DHTYVR1XBq9SxQw2MDQOLkIHw/Za+/7UtYw8p
+         COOzDJGECNjOaM2u97KdjnNHGkvpL4kH82tNsRIx2+YRgGKTExKadJuhyHzJHc21GZyK
+         senPmKc2RXio7ad4+uablBDGQBnoBnnmkL5Xr+ZNlPlDXo4OUt7tFMWe3PxXEsDYX1H6
+         YAJg5TS7PvIEGzhKqh1II6fMHzxPjlJi33AsfJWkJmnPky1nDXFR5i/CPpJssSbA+slB
+         IT110kmLkccm32EdF38hp64CnOV0OiuL4YnploSJZnMrOKE06+Vcfeq21mQsy90hgedH
+         EGWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=tvoMDnkT/D9TGm0oT1qoYHektnEg3j+Grtkl6HdVZx8=;
-        b=CqLI/cmDKSowDX4hvSqM2IyzXB3L4h3+fQGn/oFfIb4G57EfQPPJZcZGBSglGyaTLY
-         qGVHoZ+tC2bFGxL3JcDHjnNqmmNc1j3Xyto271vx7EK2LXNCYwBJyoU+ND0izBJYptCP
-         +YBLjXgn3coY3Jma7uXTahLbwtOKcorGQPdQACDkZG3xapRTvl7aM5W3bXq9p+duCwOP
-         R5kX1YqqxhulYbdtr+YMLwcQcPUMUUHmcAuvTVXrV+KEdfpORiMDneEZQfdTA1GVDUdd
-         PDzX8gGhJvSSTOwbfT0En1N7CTVc3Xd2tkC/gAHMYN3WtrRAnED1f/T4nT3ZMcF338XG
-         kzfQ==
-X-Gm-Message-State: AOAM530o1DfwySMe5suyn7uzls9Me86X3Hbyyjj5iTiJxiX4A7DvTeE4
-        GZhRco+pMBZOucdUYeysTKvc90jkUNA=
-X-Google-Smtp-Source: ABdhPJyJiCemjYsO72Qnli2czJFEoxQ+RY1Ztf+/ew7bsa+TLcrOEgHxlbMInptgbV4lwCQ3G8Wo2A==
-X-Received: by 2002:a63:e302:: with SMTP id f2mr743pgh.451.1643924033687;
-        Thu, 03 Feb 2022 13:33:53 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4mbFDlH0h8XY0hGNhLZlQWN8H96rerVWBSXLuVOp9Ss=;
+        b=ukJBWoyXvUE7xvd1bsrU/sldOLZKtvxNivZ/bjJw8mmSo4jko8jqvGM1r1lu3ZgaAV
+         PKAAiiv4y39fAyixa7BpkArC3V7MDo14k1XLym8gYFlnoVw7p3UKm7WEvE8mqY5CEvwt
+         yxYdFL4jOWAMNmEt4VEh5eEHYkpB84JMcBSsoFWFdRfzdzasgKU4YcuKxcdXeE1eManO
+         awnPCvOBrHa6fiPD3qaqcNgSlbxc/03CR780AaPLt2CObxSmAjFb47cnch7bkxAmTu3o
+         2hl25meJ8i9BWtA3AbFoDR8dIb5+L3hB2XpQMA/cirmIgLPM+DVjBDeFYNAkda4EpceL
+         FrOw==
+X-Gm-Message-State: AOAM533Ut4awIJp69bO73UKhn4jAyyPg42M7swjghIb3BXWuEs3Gmfja
+        hzIefsEbDfmb2j+lwlJyxuQw/WOtEMs=
+X-Google-Smtp-Source: ABdhPJw7Rgh8BNdx03uiSbYUgKUFWscfqEPcFbxWjK8aP8DiOJuB8pLn/v2j8w6mexKKNUZOH1uj+Q==
+X-Received: by 2002:a17:902:e5cb:: with SMTP id u11mr36780016plf.146.1643924290430;
+        Thu, 03 Feb 2022 13:38:10 -0800 (PST)
 Received: from localhost ([2620:15c:289:200:b5c2:580b:9b41:56b2])
-        by smtp.gmail.com with ESMTPSA id s2sm19119697pgl.21.2022.02.03.13.33.53
+        by smtp.gmail.com with ESMTPSA id c12sm30614625pfl.130.2022.02.03.13.38.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 13:33:53 -0800 (PST)
+        Thu, 03 Feb 2022 13:38:10 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <avila.jn@gmail.com>
-Cc:     rsbecker@nexbridge.com,
-        =?utf-8?B?J8OGdmFyIEFybmZqw7Zyw7A=?= Bjarmason' 
-        <avarab@gmail.com>, git@vger.kernel.org
-Subject: Re: [Question] Translation Dictionary
-References: <016401d81547$728834e0$57989ea0$@nexbridge.com>
-        <02f101d81901$c1ac8400$45058c00$@nexbridge.com>
-        <xmqqwnibvmtf.fsf@gitster.g> <11498572.Kui42GGras@cayenne>
-Date:   Thu, 03 Feb 2022 13:33:52 -0800
-In-Reply-To: <11498572.Kui42GGras@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-        "Thu, 03 Feb 2022 20:59:08 +0100")
-Message-ID: <xmqq1r0jskhr.fsf@gitster.g>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     Fabian Stelzer <fs@gigacodes.de>, git@vger.kernel.org,
+        Henning Schild <henning.schild@siemens.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Hans Jerry Illikainen <hji@dyntopia.com>
+Subject: Re: [PATCH] gpg-interface: fix for gpgsm v2.3
+References: <20220203123724.47529-1-fs@gigacodes.de>
+        <Yfw0kapgSSWO3Pyx@pobox.com>
+Date:   Thu, 03 Feb 2022 13:38:09 -0800
+In-Reply-To: <Yfw0kapgSSWO3Pyx@pobox.com> (Todd Zullinger's message of "Thu, 3
+        Feb 2022 15:01:21 -0500")
+Message-ID: <xmqqsfszr5q6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-Noël AVILA <avila.jn@gmail.com> writes:
+Todd Zullinger <tmz@pobox.com> writes:
 
-> On Thursday, 3 February 2022 19:15:24 CET Junio C Hamano wrote:
->> <rsbecker@nexbridge.com> writes:
->> 
->> > I would even suggest that gitglossary(7) might ultimately be
->> > deprecated particularly on systems without 'man(1)'.
->> 
->
-> I'd rather gitglossary and `git glossary` did not compete and they could share 
-> their translations.
->
->
->> Yes, I think the entries in the "git help -w glossay" are good
->> things to have in the dictionary.  I thought there are folks who are
->> already translating our manual pages (perhaps with po4a if I recall
->> correctly but I may be misremembering)?
->> 
->> Thanks.
->> 
->
-> Yes, there are. You can find the project at 
-> https://github.com/jnavila/git-manpages-l10n
->
-> The Portuguese is fully translated, gitglossary included.
->
-> This makes me think that translating gitglossary should come first, in order to 
-> set the standard for the other manpages.
+>     -	ret |= !strstr(gpg_status.buf, "\n[GNUPG:] SIG_CREATED ");
+>     +	string_list_split_in_place(&lines, gpg_status.buf, '\n', -1);
+>     +	ret |= !unsorted_string_list_has_string(&lines, "[GNUPG:] SIG_CREATED ");
 
-Yup, and if we can come up with a way to mechanically share the list
-of items (i.e. what to include and not include in the glossary) and
-their translations between "git glossary" and "git help glossary",
-that would be great.
+Is "SIG_CREATED " supposed to be at the end of that line?  I thought
+that has_string() asks for an exact match, and unfortunately(?)
+there is not the string_list_has_string_that_has_this_prefix()
+function.  So...
 
-Thanks.
