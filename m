@@ -2,71 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 690D8C433EF
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 23:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61156C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 23:29:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355923AbiBCXGt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 18:06:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37406 "EHLO
+        id S1354766AbiBCX3B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 18:29:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347868AbiBCXGs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 18:06:48 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D4F5C06173B
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 15:06:48 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id g15-20020a17090a67cf00b001b7d5b6bedaso4438912pjm.4
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 15:06:48 -0800 (PST)
+        with ESMTP id S238196AbiBCX3A (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 18:29:00 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE65AC061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 15:29:00 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id o16-20020a17090aac1000b001b62f629953so11448621pjq.3
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 15:29:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=tUnYy86Y2qj2stQ3Z+tZiYyfeW2zX8aMPQdkYjqUH6A=;
-        b=MCfXlla5F9XCDkurWJ9tQN9XRuszCo+/H0X6FEZ/MtkcRzuCk374Rv6U/VBKn+NG1o
-         KDrH/tDRR10Bn8yFFrcM7QYLZ5l4bzWYqJbVJk0EpRyzHffxtwHMoNdwxDh2SUjgASHp
-         O2lifstlsivKMuyRk+3ef7jyubSuKc0954ObUo1UTGdplyizo1l5/oWOPDr1BuvJnrPM
-         6ZcvrTdg33s1TDfD8+zJCFp/bGTQSp29YpEpn0LdgIZDRSJOp91CKFI2swR3kmotFbgF
-         JeXam+cQ8DvlSnoXfSW/uo/ewTa5+FE/TCeyihh1mCxtdUyZmppa2yssLH2heAnSxJDP
-         u1Ig==
+        bh=6GRN6ZIf1FonHYJ20PMxQiNeWp2Xlc35lKEM2rxrJA4=;
+        b=UwjXH1SooiTNgSLG1OAo7EkbXHiiQLzmoR13Ztqipgph/x/IfQ0WH0f5D8aGtDxf2w
+         frGlvD4jJVdzA8Q3qde1kI5Ad/KcT+0q23lg5asKye/09jdEtJcZV+pQ14YI9o4hmbx5
+         Ur+cEP8nsSIhkgwUBwwD2ueu2i4H0e8KRlWJp3PJTDrjUrQ3iCAm2lLFdKpVT8x22tNi
+         5Kd7gKjgRoU5dNSYYjhSDndUUnig3SHcYg6H0+Ebf8j5PanEpVjonNbFzg2oN9WYl/f5
+         0biibzxx0fErg7Mh8wDoADOJveFDcP0niwSBvlFry91yNzWOQnbpxu26d75wCxTygCEV
+         cEMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=tUnYy86Y2qj2stQ3Z+tZiYyfeW2zX8aMPQdkYjqUH6A=;
-        b=Q5MnckSjTdyaE0rV9b7mQXLlHYpYPXcHlREvMk688uZsX90GXAsoAYfO+lp2YSfz96
-         vqB0YS4OXOpj+on9JKgQ3fTAsRuLVXa2n4vNMLRF7+rDmDtAUgD+f18bxLxzMKLonWPj
-         xcZ8hSAScIlu7OiMCU3VT6y6zyzcE9YrtPC4cmQifbcSYcUFRUjyHjJ/aYkVQjTtE0qR
-         mJsl5+wqm0zksLtboEs7DK0EbuWXhUSD4C61RJ1Mrug0QK4f7uwlbMylD0Fj8Mzz9cDm
-         j74LM8z/1p11zD2obll9X55q5q2YN2tHzAxz0ZEUnoElpUy9n2ECg5+ULpNqxxYTyiH3
-         BuDQ==
-X-Gm-Message-State: AOAM532fLbCGuFwZla2uCAft/q+qkK9463gu8jC6d0sSCZ6a2PF5aOxt
-        SKxITUoajh8gLajg8IwZdxY=
-X-Google-Smtp-Source: ABdhPJyPxf5l1PQbutU0AIbLC23BpOpfgSmjBJqE4QAfGcHUX7ldNWxdq3DwXcmRYYg2q6GBhNsv6w==
-X-Received: by 2002:a17:902:c406:: with SMTP id k6mr355687plk.96.1643929607491;
-        Thu, 03 Feb 2022 15:06:47 -0800 (PST)
+        bh=6GRN6ZIf1FonHYJ20PMxQiNeWp2Xlc35lKEM2rxrJA4=;
+        b=IFJi1yG0STVStnhgTEGHVHk1RzurXkoU+3+jgsDc4ydopeOuL7cxZ5ptGDhMPgzl7L
+         Dvng2kD3Q/bsP8KlRjyH+sBhmYJYnEqCogtjC9GT0/CAoQyG9Vx+9SnfH8ItvRokCQLY
+         +NmmEU27Z0RBtK8HgWHo9g2JqFxVdOBuh42Y80OpfvlUUusbevsgmeuQViYB+STUHpNc
+         Xa1ulUNXOWEzL3mL0c/m0/YM2SF9LZUYNd5ly5fKIhM/bMsEEegTz4dh1ODSnGjSmANd
+         rxGRhYI/kQx/gsG6lRLV9I+4pgm35psfnKBJyR5H0c4LqX/357W8Rgs43l7ccDanZZtL
+         Np0A==
+X-Gm-Message-State: AOAM530IY6f9zohBXshkMnwmQTPSi53oOwVak1D5XASjwl+ugd/WR/mc
+        ItkXqk9aQMUYx7XKT6UkkQKG0uiSZXE=
+X-Google-Smtp-Source: ABdhPJzkQCxvFmxK4dZwnfF9Iku4LKngOs4JSNNbYDu1QGcGwd6beM+KalUx0BwjDBwFZcZ5nx7+6Q==
+X-Received: by 2002:a17:903:3049:: with SMTP id u9mr215003pla.2.1643930940228;
+        Thu, 03 Feb 2022 15:29:00 -0800 (PST)
 Received: from localhost ([2620:15c:289:200:b5c2:580b:9b41:56b2])
-        by smtp.gmail.com with ESMTPSA id ga21sm4014572pjb.2.2022.02.03.15.06.47
+        by smtp.gmail.com with ESMTPSA id f3sm109365pfe.43.2022.02.03.15.28.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 15:06:47 -0800 (PST)
+        Thu, 03 Feb 2022 15:28:59 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+To:     Lessley Dennington <lessleydennington@gmail.com>
+Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com,
+        johannes.schindelin@gmail.com, Elijah Newren <newren@gmail.com>,
         Taylor Blau <me@ttaylorr.com>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 2/3] t1405: mark test that checks existence as REFFILES
-References: <pull.1209.git.git.1643651420.gitgitgadget@gmail.com>
-        <1ded69d89709d23147b29f67122b659293414405.1643651420.git.gitgitgadget@gmail.com>
-        <YfhUIJuO70va6gr8@nand.local> <xmqqzgnbh7rv.fsf@gitster.g>
-        <CAFQ2z_OFRJh9cwxnbDzrshYPGOvJC6Rz1eHTF-aKURno+41Cvw@mail.gmail.com>
-        <xmqqa6facn9i.fsf@gitster.g>
-        <220201.861r0m9t8n.gmgdl@evledraar.gmail.com>
-        <xmqqsft2b5jl.fsf@gitster.g>
-        <CAFQ2z_NSCvRbj1bxirxhqSWD+LadzCa8VNOsxGCmFCNT3GUU0g@mail.gmail.com>
-Date:   Thu, 03 Feb 2022 15:06:46 -0800
-In-Reply-To: <CAFQ2z_NSCvRbj1bxirxhqSWD+LadzCa8VNOsxGCmFCNT3GUU0g@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Thu, 3 Feb 2022 17:02:47 +0100")
-Message-ID: <xmqq4k5fr1mh.fsf@gitster.g>
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v5 0/3] completion: sparse-checkout updates
+References: <pull.1108.v4.git.1643318514.gitgitgadget@gmail.com>
+        <pull.1108.v5.git.1643921091.gitgitgadget@gmail.com>
+        <xmqqo83nr59i.fsf@gitster.g>
+        <7033ab1b-7d90-d83c-fc65-33801c6348cc@gmail.com>
+Date:   Thu, 03 Feb 2022 15:28:59 -0800
+In-Reply-To: <7033ab1b-7d90-d83c-fc65-33801c6348cc@gmail.com> (Lessley
+        Dennington's message of "Thu, 3 Feb 2022 14:17:12 -0800")
+Message-ID: <xmqqy22rpm10.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,27 +71,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+Lessley Dennington <lessleydennington@gmail.com> writes:
 
-> Technically, the only obstacle I see is that we'd need to treat an
-> existence entry especially for the purpose of compaction/gc: we can
-> discard older entries, but we shouldn't discard the existence bit, no
-> matter how old it is.
+> On 2/3/22 1:48 PM, Junio C Hamano wrote:
+>> "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
+>> writes:
+>> 
+>>> This series is based on en/sparse-checkout-set.
+>> This has been a very helpful note, but after the topic was merged to
+>> 'master' on Jan 3rd, it has become a tad stale.  Let me apply the
+>> topic directly on v2.35.0 instead.
+>> Thanks.
+>
+> Thank you for the heads up! I will remove from future versions.
 
-I was hoping that we already have a type of block that can be used
-to record an attribute on the ref (other than its value) and it
-would be just the matter of stealing one unused bit from such a
-record per ref to say "when answering 'does this ref have reflog?'
-say yes even when there is no log record for that refname".  Or the
-table format is extensible enough that we can add such a block
-without breaking existing clients.
+No problem.
 
-If we have to implement the "this ref has (enabled) reflog, even
-though there may not be any log record for it right now" bit as a
-fake log record, then yes, we'd have to teach the log iterator to
-skip such an entry and we'd have to teach the expiry logic that they
-are not to be expired.  It certainly is a sad design than being able
-to express the bit in a more direct way (like file backend does,
-which is "presence of the reflog file gives the precense of the log,
-contents of the reflog file are the actual logs).
+FWIW, the tip of 'seen' seems to be failing the CI; I haven't looked
+into the cause of the breakage.
 
+  https://github.com/git/git/actions/runs/1792151138
+
+There is another CI job running on 'seen', whose only difference from
+the above version is that this topic has been temporarily ejected:
+
+  https://github.com/git/git/actions/runs/1792296432
+
+We'll see if that fails the same way (in which this topic may not
+have anything to do with the breakage) or if it passes.
+
+Thanks.
