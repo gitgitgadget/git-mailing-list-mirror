@@ -2,87 +2,242 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C798C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 07:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A99BC433FE
+	for <git@archiver.kernel.org>; Thu,  3 Feb 2022 08:16:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232950AbiBCHtD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 02:49:03 -0500
-Received: from out5-smtp.messagingengine.com ([66.111.4.29]:50739 "EHLO
-        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229746AbiBCHtD (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 3 Feb 2022 02:49:03 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 998935C018A;
-        Thu,  3 Feb 2022 02:49:02 -0500 (EST)
-Received: from imap46 ([10.202.2.96])
-  by compute2.internal (MEProxy); Thu, 03 Feb 2022 02:49:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hurrell.net; h=
-        cc:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; bh=9U37CiIfKSKlgL4iTQU8nKo4jtosavV2qS8Q6z
-        bXDSQ=; b=VsqUMDzcLlrH+OskZY1zkeNKuBHCiV2MEqJl/3E2MosbufYozo4G7E
-        KCg9r4JWoQbjPSF4C0AfcJ9e0lzzMCtHNzZ75qxL6IS6IRoZQ8ApAltS6s7SCCnI
-        xTv6+Txkjf4BHTIkKDlekYUpYY4d7U4Q1jcK4TJsYmz2CUycUETPKbzZPeQImxSt
-        F8kDW9TuDINhnMD2CmqnuU4cb1IekOdj7uwRd5LktJ/5nxU4gVvcHadx1EX9ewNp
-        VjZdQlEUEp3W9NLiFwcQ94ykRQ0CbK8xRkejG0B6QuNwNpBa5pqNdt97kJTn5qfj
-        VKhAgg60qhhJCPTieJQdw3T7j51qrmqQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=9U37CiIfKSKlgL4iT
-        QU8nKo4jtosavV2qS8Q6zbXDSQ=; b=V9oeXgcDbqS5Q77jtw09mcOh98jiHQX7p
-        9KPQzDEpcWhidmYNmmI1+/UVoupXxFRyKaM8agJ3WxrBOm7aFYk8bWLe2uLY5qY2
-        iU23z3cKcHSunFHqJzXoP3hck2a0cqGLGo5anDt8OiFJ5ypLlHom6XJFjvry5gsm
-        d3AirP0DQkL3czd/xIQ8cIsHr6Q6//+m6FsMUwmfRHR5mxMcRRCcWZX9tlM3AAlx
-        3tgBgtDTn1PLLTAPg7wYHviy4edBCUdsoJewRDJMBd2MnQqAP+sLdrqCv5ZeEJYq
-        CS+g2SL3vPkRJLlFX+uBmw2cxpd16qGY1axSJrKvdYxAo+rdfSfFg==
-X-ME-Sender: <xms:7oj7YanSwVWm2wBFinj1xV7wbCohLGkHbMj8xMF2uN2qHwqNcMfq1w>
-    <xme:7oj7YR2kjLAzORM5Qbuqksb7sQ62MDzvNlVGojswp2IAjFY7Qkz1Po3RgYkluSYsx
-    2Qd28ADcqHUd6f2QdY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeeigdduuddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtsehttd
-    ertderredtnecuhfhrohhmpedfifhrvghgucfjuhhrrhgvlhhlfdcuoehgrhgvgheshhhu
-    rhhrvghllhdrnhgvtheqnecuggftrfgrthhtvghrnhepuedttdevtdejiedtgfefveevfe
-    elkeetudeljedtjeeuhffhkeekveetfeevvdehnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepghhrvghgsehhuhhrrhgvlhhlrdhnvght
-X-ME-Proxy: <xmx:7oj7YYpGcO-YLFjvs5qs2YDNl31Kop6JA_w_VK-Ln_Wj4BfrM1IkGw>
-    <xmx:7oj7YelwScqb-rc0zlddtKtqi2go78TyLkGYrfRrQ2d1CBYsWIqNfQ>
-    <xmx:7oj7YY0txn0k3T7k4MmR___dN1dB6GOA2yGjh9-FI2hMMogM0NKBGQ>
-    <xmx:7oj7YZhdBEcHbzzR29oj64nB4lIRiBVhYrB9wjtc5eIZUxIwl6lPNw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 4B9631EE043A; Thu,  3 Feb 2022 02:49:02 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4585-ga9d9773056-fm-20220113.001-ga9d97730
-Mime-Version: 1.0
-Message-Id: <6a898459-ee74-49b1-96cb-98fd766d082d@beta.fastmail.com>
-In-Reply-To: <YfsMYTo1tND5JKNx@camp.crustytoothpaste.net>
-References: <ee1dd453-e698-440a-911b-d14389e33715@beta.fastmail.com>
- <YfsMYTo1tND5JKNx@camp.crustytoothpaste.net>
-Date:   Thu, 03 Feb 2022 08:48:42 +0100
-From:   "Greg Hurrell" <greg@hurrell.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org
-Subject: Re: git-checkout doesn't seem to respect config from include.path
-Content-Type: text/plain
+        id S1349459AbiBCIQV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 03:16:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57742 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234443AbiBCIQU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 03:16:20 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12ACDC061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 00:16:20 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id d10so6042275eje.10
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 00:16:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=I5AQNMjVz1XnOPFlSBQ3ux4D5+Ri1g28QaNyqx3i7KY=;
+        b=BJSQ7THYeCE6TjrBzsJZ0wp5Y2ti19HcJeTOq5+OGdwIXmo07esB34G+sjaLKQA73O
+         QrwHw0ZCMetKv4cPMwFrhBTV1X3Nf6jMYejPvoCsipg7eA/lZg9sB1YHFKVP9aWKm0v/
+         Jo2QMSQYGEFFGG2gwUtWgsYRhnx5yIa8malB3/jBfZIhY4rEv1IlfTgSph+lZCzVc6wH
+         JNlEEiFEHtnT8Cqi+TMThpgKPK6DbhUOu4JaPy4+zAt+RaOQuc/GUgNOeYTGqpBJ6YBN
+         3xMMEMRIL2MNG9YkCDkMYSuvVCU2wPUDUU9VFSOq4PYGnzNKiacGoZiyEsPIgiA48jQI
+         a+Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=I5AQNMjVz1XnOPFlSBQ3ux4D5+Ri1g28QaNyqx3i7KY=;
+        b=7RaHqsBTJucw+K7F/W6msL4hiRhJu4w/4paFV/311CuiiTDKeyYZ4FWXt7XsG/+nII
+         UBEFSdP1PY2QRAFFlt2e/KjgWVSh3oNDZf/GqorJbkhZTxf+O/oQCUQSoyTIhv7VFfKQ
+         bz1nggXfGTvrqfbOkSYKzil/InygbRs6Gv+InxYlHyDJCBlOQNyKfiF7hftrcsdah7fq
+         /xc2WewmqtmoVyNt3PXbnX0K1aHJYaPlHNeoDdAK7Y52TmQM+dRzxF1s8ToobXLm3Air
+         e3bHwNdsEuypNgo3QE6Li07f2D1TY3MbT8rlyazDBpLBXwWkNA8HuEgkt1hDDLg9PBc8
+         fbOg==
+X-Gm-Message-State: AOAM533g6hWcrDhdR+LNCZY5iWsUwE2SE5H9idHeK3yv6qXuxk7YxVlh
+        oJrjwi5q3oGGjWQ/aZhjX/pckA/UKoc9xQ==
+X-Google-Smtp-Source: ABdhPJxwPwvF2hQkeCft/4nNODbXPQS+66sL4kTvERQo4CvFqDGVbN8gSYjQXBefh/FIHWM074Vjmg==
+X-Received: by 2002:a17:907:96aa:: with SMTP id hd42mr28926663ejc.74.1643876178130;
+        Thu, 03 Feb 2022 00:16:18 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id p13sm16467231ejx.191.2022.02.03.00.16.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Feb 2022 00:16:17 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nFXHs-004sg2-OT;
+        Thu, 03 Feb 2022 09:16:16 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrn@google.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        pc44800@gmail.com, Shourya Shukla <periperidip@gmail.com>
+Subject: Re: [PATCH v5 9/9] submodule: move core cmd_update() logic to C
+Date:   Thu, 03 Feb 2022 09:15:19 +0100
+References: <cover-v4-0.7-00000000000-20220127T143552Z-avarab@gmail.com>
+ <cover-v5-0.9-00000000000-20220128T125206Z-avarab@gmail.com>
+ <patch-v5-9.9-e8e57606ee9-20220128T125206Z-avarab@gmail.com>
+ <kl6l4k5g246p.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <220203.865ypw7jw6.gmgdl@evledraar.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <220203.865ypw7jw6.gmgdl@evledraar.gmail.com>
+Message-ID: <220203.861r0k74bz.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 2, 2022, at 11:57 PM, brian m. carlson wrote:
-> This definitely doesn't sound like the expected behavior here.  It's not
-> clear to me why this is happening, but it probably shouldn't be.  It
-> doesn't appear that we fail to call the config callback, since we've
-> been doing that since 2010.
-> 
-> What version of Git are you using that's not working?
 
-Initially noticed on v2.30.2, but you can reproduce it to similar
-effect on v2.35.0 (ie. add an invalid "merge.conflictStyle" value
-like "fizzbuzz" to ~/.gitconfig, and a valid one like "diff3" to
-a file pulled in via "include.path", and you'll see the same
-behavior).
+On Thu, Feb 03 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Cheers,
-Greg
+> On Wed, Feb 02 2022, Glen Choo wrote:
+>
+>> - Junio pointed out that this conflicts with
+>>   es/superproject-aware-submodules [2]. I'm not sure which should be
+>>   based on which. If this does end up being based on
+>>   es/superproject-aware-submodules, it would probably be easier to
+>>   rebase as a series of smaller patches. Atharva noted that the
+>>   conflicts are mild though, so maybe it's not so bad.
+>
+> I think it makes sense to get this series through first, i.e. the
+> (supposedly) no-behavior-changing one, and then one that introduces new
+> submodule behavior.
+>
+> Particularly because for es/superproject-aware-submodules the main
+> selling point is a performance improvement, which as I noted in the
+> review for it I've been unable to observe once the C<->sh layer goes
+> away.
+>
+> I'm not saying it's not there, just that I don't think it's been shown
+> so far, IIRC there was some reference to some Google-internal network FS
+> that might or might not be helped by it...
+>
+>> - Besides making sure that the sh -> c is faithful, a thorough review
+>>   should hopefully catch unintentional mistakes. The size of this patch
+>>   makes such mistakes difficult to spot. For instance, here's something
+>>   I spotted only after trying to split the patch myself..
+>>
+>>   > +static int module_update(int argc, const char **argv, const char *p=
+refix)
+>>   > +{
+>>   > +	const char *update =3D NULL;
+>>   > +	struct pathspec pathspec;
+>>   > +	struct update_data opt =3D UPDATE_DATA_INIT;
+>>   > +
+>>   > +	struct option module_update_clone_options[] =3D {
+>>   [...]
+>>   > +	};
+>>   > +
+>>   > +	const char *const git_submodule_helper_usage[] =3D {
+>>   > +		N_("git submodule--helper update-clone [--prefix=3D<path>] [<path=
+>...]"),
+>>   > +		NULL
+>>   > +	};
+>>   > +
+>>   > +	update_clone_config_from_gitmodules(&opt.max_jobs);
+>>   > +	git_config(git_update_clone_config, &opt.max_jobs);
+>>
+>>   Notice that we copy-pasted the option parsing from update-clone into
+>>   module_update() but forgot to update the names.
+>>
+>> My ideal patch organization would be something like:
+>>
+>> - wrap some existing command in "git submodule--helper update" (probably
+>>   run-update-procedure)
+>> - absorb the surrounding sh code into "git submodule--helper
+>>   update" one command at-a-time i.e. deprecating and removing the
+>>   commands one at a time - instead of deprecating and removing them all
+>>   at once (like this patch), or deprecating all at once and removing
+>>   them one at a time (like v1).
+>
+> I do think atomic changes that don't leave dead code for removal later
+> are easier to read & reason about, whatever else is reorganized.
+>
+> I.e. not to have something where we replace all the running code, and
+> then remove already-unused code later.
+>
+> On that topic, I noticed this series could/should have [1] fixed up into
+> it.
+>
+>> - If you think this alternative organization would be helpful for you
+>>   too, I will attempt it. This will take a while, but by the end you and
+>>   I will have effectively reviewed all of the code, so it should be easy
+>>   to finish up the review.
+>
+> I think it might, but I really don't know. We'll just have to see, so if
+> you want to take a stab at it that would be great.
+>
+> Maybe it's a good way forward. E.g. as af first small step we could turn:
+>
+>     while read -r quickabort sha1 just_cloned sm_path
+>     [...]
+>     die_if_unmatched "$quickabort" "$sha1"
+>
+> into version where we fold that die_if_unmatched() logic into the C
+> code, and then ensure-core-worktree etc.
+
+Sorry, that one makes no sense since it's an artifact of the shellscript
+implementation.
+
+But I tested the below on top of master, and it passes all tests, which
+isn't very promising...
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 4a0890954e9..e749008f13a 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2783,40 +2783,6 @@ static int push_check(int argc, const char **argv, c=
+onst char *prefix)
+ 	return 0;
+ }
+=20
+-static int ensure_core_worktree(int argc, const char **argv, const char *p=
+refix)
+-{
+-	const char *path;
+-	const char *cw;
+-	struct repository subrepo;
+-
+-	if (argc !=3D 2)
+-		BUG("submodule--helper ensure-core-worktree <path>");
+-
+-	path =3D argv[1];
+-
+-	if (repo_submodule_init(&subrepo, the_repository, path, null_oid()))
+-		die(_("could not get a repository handle for submodule '%s'"), path);
+-
+-	if (!repo_config_get_string_tmp(&subrepo, "core.worktree", &cw)) {
+-		char *cfg_file, *abs_path;
+-		const char *rel_path;
+-		struct strbuf sb =3D STRBUF_INIT;
+-
+-		cfg_file =3D repo_git_path(&subrepo, "config");
+-
+-		abs_path =3D absolute_pathdup(path);
+-		rel_path =3D relative_path(abs_path, subrepo.gitdir, &sb);
+-
+-		git_config_set_in_file(cfg_file, "core.worktree", rel_path);
+-
+-		free(cfg_file);
+-		free(abs_path);
+-		strbuf_release(&sb);
+-	}
+-
+-	return 0;
+-}
+-
+ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+@@ -3391,7 +3357,6 @@ static struct cmd_struct commands[] =3D {
+ 	{"update-module-mode", module_update_module_mode, 0},
+ 	{"update-clone", update_clone, 0},
+ 	{"run-update-procedure", run_update_procedure, 0},
+-	{"ensure-core-worktree", ensure_core_worktree, 0},
+ 	{"relative-path", resolve_relative_path, 0},
+ 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
+ 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 652861aa66a..460cbd4e265 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -387,8 +387,6 @@ cmd_update()
+ 	do
+ 		die_if_unmatched "$quickabort" "$sha1"
+=20
+-		git submodule--helper ensure-core-worktree "$sm_path" || exit 1
+-
+ 		displaypath=3D$(git submodule--helper relative-path "$prefix$sm_path" "$=
+wt_prefix")
+=20
+ 		if test $just_cloned -eq 1
