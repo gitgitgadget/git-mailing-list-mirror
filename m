@@ -2,74 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27105C433F5
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 17:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76DD3C433F5
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 17:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240649AbiBDRJk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Feb 2022 12:09:40 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54306 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233731AbiBDRJi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Feb 2022 12:09:38 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 23D23118440;
-        Fri,  4 Feb 2022 12:04:31 -0500 (EST)
+        id S1376826AbiBDRQG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Feb 2022 12:16:06 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53016 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234482AbiBDRQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Feb 2022 12:16:06 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C28C216B5D9;
+        Fri,  4 Feb 2022 12:16:05 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7nZ+0uVpkeTmaYdbO7O+pceeOH5ztoN4kby43a
-        HUD2s=; b=TKqSyWypwHj/o98ut72F4FiPyycyKA3SCS9XNF2KswTNiGZgrIFRCj
-        Us3gf/tPD4j3ibTrx7kUbbBm0IZeLoRTuqoafXMlHDLvU99G2LYcstIehVi/evB4
-        YPLJqwUYhAhCzWRY820NgGiDiRMxJCrvXLtTAYNm+WCCaQ/u/kcn0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 19D6E11843F;
-        Fri,  4 Feb 2022 12:04:31 -0500 (EST)
+        :content-type; s=sasl; bh=jEQLcvcD8tNYMp9fyl4Vhba87I9ai/O5C2Icgn
+        aC7wk=; b=aHhKBxkC6DkXvN5iHaX8h1/GCnB9WkeegsM7mSMMQN4QEBgQhmYkyY
+        LDPl/exGcxrJXFpik2BZI2gqGA6JtBcwfv2Noll9lPAnfeWIArM1yrpAAQVHjOBp
+        KGCV/0IaPHS3nGiB8vpbXCL8mmnA67QLfT4AY7sqEEHyQmldSZa1o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BA7E816B5D8;
+        Fri,  4 Feb 2022 12:16:05 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.133.2.91])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6DC9611843E;
-        Fri,  4 Feb 2022 12:04:30 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 28A8C16B5D5;
+        Fri,  4 Feb 2022 12:16:03 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        johannes.schindelin@gmail.com, Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
-Subject: Re: [PATCH v6 0/3] completion: sparse-checkout updates
-References: <pull.1108.v5.git.1643921091.gitgitgadget@gmail.com>
-        <pull.1108.v6.git.1643945198.gitgitgadget@gmail.com>
-        <CABPp-BGM0xu=Hgd_uKevAbpCtxR9ZY5NX=PWNn2Bqw8SaOJvLQ@mail.gmail.com>
-Date:   Fri, 04 Feb 2022 09:04:29 -0800
-In-Reply-To: <CABPp-BGM0xu=Hgd_uKevAbpCtxR9ZY5NX=PWNn2Bqw8SaOJvLQ@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 3 Feb 2022 22:05:36 -0800")
-Message-ID: <xmqq1r0io95u.fsf@gitster.g>
+To:     Joel Holdsworth <jholdsworth@nvidia.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Luke Diamand <luke@diamand.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
+        Dorgon Chang <dorgonman@hotmail.com>,
+        Joachim Kuebart <joachim.kuebart@gmail.com>,
+        Daniel Levin <dendy.ua@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Ben Keene <seraphire@gmail.com>,
+        Andrew Oakley <andrew@adoakley.name>
+Subject: Re: [PATCH v3 00/21] git-p4: Various code tidy-ups
+References: <20220116160550.514637-1-jholdsworth@nvidia.com>
+        <xmqqr197xi0b.fsf@gitster.g>
+        <BL0PR12MB4849847CD8385F0FABD9AE95C8289@BL0PR12MB4849.namprd12.prod.outlook.com>
+        <xmqq8rurskmw.fsf@gitster.g>
+        <BL0PR12MB4849C71DFC2628C00EF79196C8299@BL0PR12MB4849.namprd12.prod.outlook.com>
+Date:   Fri, 04 Feb 2022 09:16:01 -0800
+In-Reply-To: <BL0PR12MB4849C71DFC2628C00EF79196C8299@BL0PR12MB4849.namprd12.prod.outlook.com>
+        (Joel Holdsworth's message of "Fri, 4 Feb 2022 12:27:50 +0000")
+Message-ID: <xmqqiltumu26.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 848B73E0-85DC-11EC-B786-CB998F0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 216F9EBA-85DE-11EC-BE16-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Joel Holdsworth <jholdsworth@nvidia.com> writes:
 
->> Changes since V5
->> ================
->>
->>  * Fix incorrect conditional that was causing failure of non-cone mode test
->>    (and causing 'seen' CI to fail).
->>  * Remove __git_comp_directories indentation changes between the second and
->>    third commits.
->
-> This round looks good to me:
->
-> Reviewed-by: Elijah Newren <newren@gmail.com>
->
-> Nice work!
+> Makes sense. And I suppose the cover letter would have to list out
+> the dependencies? - because otherwise you won't see any merge
+> commits in the emails.
 
-Thanks, both.  Will queue.  Let's mark it to be merged down to
-'next' soonish.
+Yes, more importantly, I wouldn't know unless you tell me where to
+apply your patches (well, I usually can guess correctly, but I do
+not want to guess and be incorrect, which would waste everybody's
+time).
+
+Thanks.
