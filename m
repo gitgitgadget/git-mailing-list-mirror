@@ -2,101 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C610C433F5
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 17:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 811D0C433EF
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 17:56:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376877AbiBDR2J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Feb 2022 12:28:09 -0500
-Received: from mout.web.de ([217.72.192.78]:33815 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234250AbiBDR2I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Feb 2022 12:28:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1643995676;
-        bh=KpE1hyuDXuhQE++JIJpkWLd9bryka1XgHd4IMjV5kpg=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=Dcb0eIOs8EAWhXsMZ54LnDHzOkBHLF+bCOMyt7fq/DfAp+kmZX2o8W4hyJtbJXoWn
-         b/1ymMA727ULNoAaruvMePgfw2eskB+IKR972Yt4guvRQRoUgCMKXDFXuPDfCWi8y8
-         2bgOf8Xprrme2zHOMxxwzxHUD5XYpGeSQL9/tgfY=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.22.121]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MZjIb-1mkKdv2Ach-00WYBv; Fri, 04
- Feb 2022 18:27:56 +0100
-Message-ID: <deaf8988-f831-b924-77d7-4973473846d8@web.de>
-Date:   Fri, 4 Feb 2022 18:27:55 +0100
+        id S1377165AbiBDR4L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Feb 2022 12:56:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38466 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231603AbiBDR4K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Feb 2022 12:56:10 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A38F0C061714
+        for <git@vger.kernel.org>; Fri,  4 Feb 2022 09:56:10 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id s13so21677156ejy.3
+        for <git@vger.kernel.org>; Fri, 04 Feb 2022 09:56:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=xZZ+N+ie3i+ugzCjkB7J0sDap6yZ0p4Ks7AfEfDfkNc=;
+        b=JXigntwZ0WPxbYOFUCEbxjJUb95pwkXtzzW0Dn56TfniNJcOH0n3a5MSvZLC73cAZQ
+         r0dGVXB6krdSohrFe8cdyE4HhV8x0nEc4hWiHMj/s0/9RB4CH2G65rbXNARSkl8VmfJj
+         BN9ZDl4PkBt8ba4oWjdlLVpQaZzhHoUG80vxBLnGXCyuzXrpwqaTr7SsrAEqc2Hy63Nv
+         UHqJRBfrn5ew0N8JYF8J+qlTl82y01FElbw9UqFD17NrwaGMVnWx8dw+eAn4bJTpmANC
+         tr8ss8nCh1CGFfKr1SHGRu/Luq3goU+zIXJQo5MzWhP1i0IPDz98jEtnFA9zbf7/BvtZ
+         /hjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xZZ+N+ie3i+ugzCjkB7J0sDap6yZ0p4Ks7AfEfDfkNc=;
+        b=Cj+fo+fCkTode9C/cNfYLokJsn2WQAnSoQomGUrgOvsdEzCFb6+FkqO99Q0/S3patl
+         iEzBTF1MbkbPu55U4ed7Z2axFu0MTc5/RwzNJpn4MBdT0ZKVhO/m+YBFM+FNt7uCIkOm
+         Yjp+6hTxGisNqSnUJ9TXvjkh1qA5IxL5mYLrhv51/ipzIgAnxFJLq/WI/pLgzmLNj/X3
+         2HjZfqBeVo4/PYbOuaFu+AISPSmvewUj0oEUGyPhEnyPE3OK4iRhKnt9sOWpkFJIOt/Y
+         oGa1zLJLTHFHiYPbk77AaBhYDyKuVpF+VVPKvlVVL+PRMAlPQI6wKtxQf/OfUH/YKRQn
+         Ga4A==
+X-Gm-Message-State: AOAM533eiGE7SO269Asxh0GrZDUu/GzAcT7dTVUrStEf/ic1ac9D+9tD
+        be+PvTfpGNdAr1zUfQLMrwL2c3Y9Qri9/5LvXVs=
+X-Google-Smtp-Source: ABdhPJxdCi1Lm5UrjgQKJb7nqRnoWrtoxKZr28kVUu9hSb0GeAZMK6E2e7NbqvyGPlCaNjYxcz8cGTjDp5MAB3jE7QU=
+X-Received: by 2002:a17:907:60d6:: with SMTP id hv22mr52057ejc.476.1643997369085;
+ Fri, 04 Feb 2022 09:56:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.5.1
-Subject: Re: What's cooking in git.git (Jan 2022, #07; Mon, 24)
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
+References: <pull.1108.v5.git.1643921091.gitgitgadget@gmail.com>
+ <pull.1108.v6.git.1643945198.gitgitgadget@gmail.com> <CABPp-BGM0xu=Hgd_uKevAbpCtxR9ZY5NX=PWNn2Bqw8SaOJvLQ@mail.gmail.com>
+ <xmqq1r0io95u.fsf@gitster.g>
+In-Reply-To: <xmqq1r0io95u.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 4 Feb 2022 09:55:57 -0800
+Message-ID: <CABPp-BGN+rErYFmMbUwxcwSOvCQbJMzB43-VRtim7tXtkuKvCQ@mail.gmail.com>
+Subject: Re: [PATCH v6 0/3] completion: sparse-checkout updates
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        johannes.schindelin@gmail.com, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <xmqq35lc53e9.fsf@gitster.g>
- <YfRu0G9aNQxT3vtl@camp.crustytoothpaste.net> <xmqqiltvpjc7.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqiltvpjc7.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:qd+tvhJe1YK/mMLmsgLNXqlfazNKgzpBil2ImJX0VaU5uOtNtLe
- SP2kEjW6aYT4wEw6myK4umOAHdkEKqd1HNiEnoYG3PWQ4Hc7Xs3ScdKHYfqj17Cx2wVbOFK
- 7yjWG4IttIU9Cwh1lJ0A7GAJYEmi5rUn5OSXj8T0fbO+y1B5UzrUhdHoBQFULdcDntdJzT0
- V7IbR76mE2vvql1acVu/Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0xXK/xrV684=:dz+9UdQQf61t8yoW4PIu8v
- b3rpiu8CtNoLjhgJbw9O5JhvInryNrUvK7WmSnxmFceRoL26zxCmpSI1vwCttXa/6xc05eAFo
- weazuWmrNQ5i78wKtlRKEej8TjERkKu+XZDKL1pk1ebl5F9bdWceaX4r1dZdxPjAzUFU1nlJt
- sHkiT4m18hhSPq7JNUmaBjwjb965nLe0Yp09rS28YmddxK/p8QaxB5NYT5P5wpMHta9e0e6U/
- Ia2pY9u1zlLW5hc35fp7LqMmkvRedz49PumiPgQmhRYn9+yxj6dsD9fobrkrWcWGj5mtqflmA
- pykKU7EpNQ/bWx9xV/JPq+7FhO15MY/CWNDLpqWYnGLd1pWqQ7IRHwHH5YlFKzcXYNrEJmUhC
- o7B3d51KCb/AX3atp9cvZSeaoC+Uk9fzmjAC+vwZxlbEzNuftFju97XuFFUi+0RPkwYqk2k6L
- uyVkqO4HsZNvaQUk7ecLI/glwpfSlfDKnoAoU61dpE4XP8US5VnOzz9YFtSIi+j7+MV9PwvWd
- pBxvcn5Ywcd/FRZSyn6u9gB1sNZNMfwZ5+rJwGYnblsnA1xL5wRKUNEQf4nx0WC15pB+c3AAH
- nCB4YTFnEftra0l+2WPOR8amYlpoSS1KZySI0LgWO75d6h8X5xDesLlr1ErY7VvAe4Q2qBJrh
- s/KQYC1ZvYf9vboASH3UxowuXAAI92Sbh5nIiPSB2yknbJzub2Dr3SHggg6RehHTi6wzpUQjl
- MayyBNDO0fErftua8CA2a3mjoDvF+HSUn1zT+X5qUnO4zSxbh5lLN1BI1khyB7H43WBAqzgRZ
- lZgxgTR+Yx1jC01nFyjv+yfnZKa7thUdBc0iW/R2M7XNBHZZZNzoyn9zG6bA8PTxdrycrsF9w
- jNyMbM5u7sx1lXY/3RtFB5dS2BonLOSAZTU4UKOPGv0vMQRQy1kn3XDbJ9IeQBjeY8eS5kfJ9
- gHonxjsVqEDsM8w6wuzYVuXmKjuqWsgscpIHtHo/sqYV4hzSN4G36msBALE4LE8fYqIqWZ125
- 97kiKmI4UgHDfAut+S99sI6gLBxvzZ+sysqmraYP2AYc9SWP5C5JpxFj8diE04juWg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 04.02.22 um 01:27 schrieb Junio C Hamano:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Fri, Feb 4, 2022 at 9:04 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->>> * bc/csprng-mktemps (2022-01-17) 2 commits
->>>  - wrapper: use a CSPRNG to generate random file names
->>>  - wrapper: add a helper to generate numbers from a CSPRNG
->>>
->>>  Pick a better random number generator and use it when we prepare
->>>  temporary filenames.
->>>
->>>  Are we solving the right problem?
->>>  cf. <220118.86zgntpegy.gmgdl@evledraar.gmail.com>
->>>  source: <20220117215617.843190-1-sandals@crustytoothpaste.net>
->>
->> It sounds like folks would prefer we drop this series.  I'm not plannin=
-g
->> to send an alternate approach here.
+> Elijah Newren <newren@gmail.com> writes:
 >
-> I personally am OK with these two patches, by the way.  There was an
-> interesting thought experiment to see if we can only rely on
-> mkstemp() and mkdtemp() that we assume are already secure enough,
-> but swapping the not-particularly-good linear conguential generator
-> used in git_mkstemps_mode() with a better algorithm that is
-> externally supported, making the security issue somebody else's
-> problem, is a good incremental improvement, I would think.
+> >> Changes since V5
+> >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >>
+> >>  * Fix incorrect conditional that was causing failure of non-cone mode=
+ test
+> >>    (and causing 'seen' CI to fail).
+> >>  * Remove __git_comp_directories indentation changes between the secon=
+d and
+> >>    third commits.
+> >
+> > This round looks good to me:
+> >
+> > Reviewed-by: Elijah Newren <newren@gmail.com>
+> >
+> > Nice work!
+>
+> Thanks, both.  Will queue.  Let's mark it to be merged down to
+> 'next' soonish.
 
-We can use mkdtemp(3) in diff.c to get rid of the prefix currently added
-to temporary filenames, but using mkstemp(3) to create files with custom
-permissions with proper umask(2) handling is painful.  Replacing the RNG
-in git_mkstemps_mode(), as this series does, is simpler overall.
+=C3=86var had a good comment about code coverage on Windows that we might
+want to address first[1].  (Namely, splitting one test into two -- one
+that tests a path with backslashes that can be skipped on windows, and
+a separate test that checks paths with spaces, tabs, and non-ascii
+that can be run on all platforms.)
 
-> Unless I hear differently from others, I am planning to mark the
-> topic for 'next' in my draft of the "What's cooking" report.
+But other than that, yeah, this should be ready for 'next'.
 
-Great!
-
-Ren=C3=A9
+[1] https://lore.kernel.org/git/220204.86h79f45nf.gmgdl@evledraar.gmail.com=
+/
