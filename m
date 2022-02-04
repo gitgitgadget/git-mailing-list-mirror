@@ -2,118 +2,339 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D0E7C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 02:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B440C433EF
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 03:26:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345674AbiBDCn5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 21:43:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57256 "EHLO
+        id S1356712AbiBDD0m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 22:26:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230467AbiBDCn4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 21:43:56 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F9FCC061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 18:43:56 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id d1so3931945plh.10
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 18:43:56 -0800 (PST)
+        with ESMTP id S233095AbiBDD0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 22:26:41 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29F61C061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 19:26:41 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id f80-20020a1c1f53000000b0035399b8bedcso8236044wmf.0
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 19:26:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=LYjw8iq2gol9BAOqkuzO2VZwGR3OGrg/P7ccIWre77Y=;
-        b=m4LtGZaFlHnM1X61YWwZ/kieiOG7QUaQkzrh3dlnmkwFEjCsARFfhnz3Fkh93HBQ/h
-         fxJ89UaN7Hd399gJI8nsCpWqUN1/keqt58OIgsK/yqNFQBfewTqmrEotfs/nQsQNPQQr
-         Td4bEZyqj3b0wmApfMBtY3joVqzepCs3fVO2fJQATPbwpAP0V1OZ4c1P2kNf50RRKxVg
-         sinc6CI5Vztnmo+vuOYmsNa2aBr1k1pj6i6/P+GXb01o8wMGRBnT/aA8OngpjGI3KvFE
-         qTn3MjN+XgEq9GSCUoZn5vK6EI7k9NyPKHCeHF9BpPPg6oh/VJl/nh6TNymG1ArDvU9Z
-         TSDA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=wTKCUaXeW7Vq3F4MQCtkqAl6AylW5lND67AabQ/Xueo=;
+        b=qZocY41MqKnkBioA9rumbK3M4TVD7UblKRbcjYT6lLwrWIQXLKoWcdZOjmPBaTZDid
+         6NBICSgfFOiXrWPSjSKzMqHwTXtpfdc0Ezq20WvJdHaw1DQs5D1FAPdSjTnr8GD/z7iJ
+         BJ2zMSAOGN6UlNiJkdmJrbbfUELIwHNMUTDSqMZQra8D+Hf5GE+GZM+K/1dLLY0SygHS
+         A0/ZuckZw/3ykjMUVcIHN1f1AzA8JLafL+1qpf+KL2XcmyVg4V94H1eTTRPX52kWquZM
+         NTQWEJDHuvWxJhjFwwge/7F2Vt/7zIt3ExgkK+Sc7Burgijh6oJpRtwb73KsOJNr1o3y
+         MNQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
-         :content-transfer-encoding;
-        bh=LYjw8iq2gol9BAOqkuzO2VZwGR3OGrg/P7ccIWre77Y=;
-        b=w+aULAsYvuuBEaiyIJiaw5FIXFGZCVmwkJ+6iLoItBunNN0fIYeSdmm5NrqKxSBKXo
-         MuePMfkgceTrkFH4t88DnQF2USGsMCCAbL3HZDtkzOb6t9/g7BT5xMloPOPFweZy3POo
-         c3auIcRPtJ7cxaLkDN8zHAWJ2smtxjwhUGK8sWmTwQO4p1IbxES/WVpUDDRlJ0F0s39b
-         BTKCc8gnn3Ab7uIulOMa9LMDypVqKJI8v6orOT2xATwJQ1UhSdmtshtywWbslRIE6Ahz
-         4RHdHtn6+1MabqbWQzaqU6gCIfhx+jr44oKYDlvRMM8uq3+UqI1VEf2XtMz1YyRUHcyc
-         xG+w==
-X-Gm-Message-State: AOAM530GguvLRtdcsVCw4NgQYPv8m9Br0Z4R6gAUQTWRaXleU/YsuYqG
-        xb3dhLnSQ8TGdQBv9ENkWYrkc4y30ZRe/w==
-X-Google-Smtp-Source: ABdhPJwT7QpEHE0pKObmtH2Es2S1kItGRzdci3iv0Rb0Q6fld0U0vVq1Gs8LPYiuiWADQgewhqumYw==
-X-Received: by 2002:a17:90b:4b0a:: with SMTP id lx10mr807499pjb.16.1643942635914;
-        Thu, 03 Feb 2022 18:43:55 -0800 (PST)
-Received: from ?IPV6:2601:602:9e81:12c0:51c6:c5ef:caca:5a98? ([2601:602:9e81:12c0:51c6:c5ef:caca:5a98])
-        by smtp.gmail.com with ESMTPSA id k8sm277011pgc.89.2022.02.03.18.43.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Feb 2022 18:43:55 -0800 (PST)
-Message-ID: <cb6f65b5-4e02-08af-bea6-141fb6227927@gmail.com>
-Date:   Thu, 3 Feb 2022 18:43:53 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.5.1
-Subject: Re: [PATCH v5 0/3] completion: sparse-checkout updates
-Content-Language: en-US
-From:   Lessley Dennington <lessleydennington@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com,
-        johannes.schindelin@gmail.com, Elijah Newren <newren@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <pull.1108.v4.git.1643318514.gitgitgadget@gmail.com>
- <pull.1108.v5.git.1643921091.gitgitgadget@gmail.com>
- <xmqqo83nr59i.fsf@gitster.g> <7033ab1b-7d90-d83c-fc65-33801c6348cc@gmail.com>
- <xmqqy22rpm10.fsf@gitster.g> <eb442213-d369-fdcd-c3a3-05239bccb5bf@gmail.com>
-In-Reply-To: <eb442213-d369-fdcd-c3a3-05239bccb5bf@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=wTKCUaXeW7Vq3F4MQCtkqAl6AylW5lND67AabQ/Xueo=;
+        b=y1GVpxkzZdFfDcIvCC8vOCPfG9Me6U/lc3+fdm8T5gWGEdr7f1mR6HSRBePfyHKpNk
+         spaqqNGtri9fR9JX+1NoLfdt0/kf4X2lJLOt4sGOe0EVKvqppUNqgYDDUFsMVxPuFDEl
+         dMElYPQfCH/PzD9IL79IKllBZhK4wg9YBw096205LxPuqzdmGy0YuiLv5qxyvRRElW8T
+         7IRiibW9pLJpGuSOoda6y6WEwebs9m3Aa1+wYMy1geRzdTkf0lO26fIaUh5HIHKkscMc
+         PHJrlt53kd2OQFldNY6n4vgkyER2OLqvoLIsSDlLpz4A1zPavPjbk4djOycq1LVGpOEX
+         M0VA==
+X-Gm-Message-State: AOAM531SaUdDyQm8H0p3ApaqJoLu0jt7u8B4rolz1wATqNWbv7TuXQ6A
+        3MywWRhBMs420g6RTxUSO6nUfocFYJY=
+X-Google-Smtp-Source: ABdhPJxgpo2BMMBos0NP9eqcjLfV8Tw2lXmB6ja8QMKgiNATHCBO6gokrmG6kNPhj0EzFVWC7tAfPQ==
+X-Received: by 2002:a7b:c942:: with SMTP id i2mr545058wml.166.1643945199150;
+        Thu, 03 Feb 2022 19:26:39 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f8sm632849wry.12.2022.02.03.19.26.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Feb 2022 19:26:38 -0800 (PST)
+Message-Id: <pull.1108.v6.git.1643945198.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1108.v5.git.1643921091.gitgitgadget@gmail.com>
+References: <pull.1108.v5.git.1643921091.gitgitgadget@gmail.com>
+From:   "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 04 Feb 2022 03:26:35 +0000
+Subject: [PATCH v6 0/3] completion: sparse-checkout updates
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     stolee@gmail.com, gitster@pobox.com, johannes.schindelin@gmail.com,
+        Elijah Newren <newren@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This change updates custom tab completion for the sparse-checkout command.
+Specifically, it corrects the following issues with the current method:
+
+ 1. git sparse-checkout <TAB> results in an incomplete list of subcommands
+    (it is missing reapply and add).
+ 2. Options for subcommands are not tab-completable.
+ 3. git sparse-checkout set <TAB> and git sparse-checkout add <TAB> show
+    both file names and directory names. While this may be a less surprising
+    behavior for non-cone mode, we want to only show directories in cone
+    mode.
+
+The first commit in this series is an intermediate step that fixes issues 1
+and 2 above and introduces a simple fix for issue 3 with some performance
+and unusual character-related caveats. The next commit adds a new
+__gitcomp_directories method that fixes the performance-related caveat from
+the first commit by completing just a single level of directories. The final
+commit modifies __gitcomp_directories to handle unusual characters in
+directory names.
 
 
-On 2/3/22 3:59 PM, Lessley Dennington wrote:
-> 
-> 
-> On 2/3/22 3:28 PM, Junio C Hamano wrote:
->> Lessley Dennington <lessleydennington@gmail.com> writes:
->>
->>> On 2/3/22 1:48 PM, Junio C Hamano wrote:
->>>> "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
->>>> writes:
->>>>
->>>>> This series is based on en/sparse-checkout-set.
->>>> This has been a very helpful note, but after the topic was merged to
->>>> 'master' on Jan 3rd, it has become a tad stale.  Let me apply the
->>>> topic directly on v2.35.0 instead.
->>>> Thanks.
->>>
->>> Thank you for the heads up! I will remove from future versions.
->>
->> No problem.
->>
->> FWIW, the tip of 'seen' seems to be failing the CI; I haven't looked
->> into the cause of the breakage.
->>
->>    https://github.com/git/git/actions/runs/1792151138
->>
->> There is another CI job running on 'seen', whose only difference from
->> the above version is that this topic has been temporarily ejected:
->>
->>    https://github.com/git/git/actions/runs/1792296432
->>
->> We'll see if that fails the same way (in which this topic may not
->> have anything to do with the breakage) or if it passes.
->>
->> Thanks.
-> 
-> I just merged seen locally and was able to repro the failure. I will
-> submit a fix ASAP.
+Changes since V5
+================
 
-GitGitGadget CI has passed with the fix, but it is not responding to the
-/submit command. As a heads up, fix may not be submitted until folks who
-are a bit more knowledgeable about GGG than I are available to help
-troubleshoot.
+ * Fix incorrect conditional that was causing failure of non-cone mode test
+   (and causing 'seen' CI to fail).
+ * Remove __git_comp_directories indentation changes between the second and
+   third commits.
+
+
+Changes since V4
+================
+
+ * Clarify that completing on files and directories is a less-surprising
+   behavior in non-cone mode (rather than definitely the correct behavior)
+   in commit message and cover letter.
+ * Add explicit --no-cone to non-cone mode sparse-checkout completion test.
+ * Replace use of __git_complete_index_file with a new version of
+   __gitcomp_directories that is able to handle unusual characters.
+ * Ensure that users running git sparse-checkout set --cone get cone
+   mode-style completion whether or not they already have the cone mode
+   config set.
+ * Refactor creation of sparse-checkout test repo into a sparse-checkout
+   setup test.
+
+
+Changes since V3
+================
+
+ * Update commit descriptions to begin with completion instead of
+   sparse-checkout.
+ * Remove explicit completion of --help, as this is inconsistent with the
+   rest of the completion script.
+ * Use __gitcomp_builtin to auto-complete subcommand options (and remove
+   option completion test from previous iterations, as it is no longer
+   necessary).
+ * Use __git_complete_index_file helper function in place of __gitcomp
+   "$(git ls-tree -d -r HEAD --name-only).
+ * If in cone-mode sparse checkout, only show directory completions. If in
+   non-cone mode sparse checkout show both files and directories.
+
+
+Changes since V2
+================
+
+ * Change use of $prev to $subcommand in _git_sparse_checkout() method in
+   git-completion.bash.
+ * State explicitly that directory completion applies in both cone and
+   non-cone mode in 'sparse-checkout: custom tab completion' commit
+ * Add new patch with __gitcomp_directories method to improve performance by
+   only outputting directories at the current level.
+
+
+Changes since V1
+================
+
+ * Rebase onto en/sparse-checkout-set.
+ * Add subcommand options (including --no-cone) for set and reapply.
+ * Extend 'sparse-checkout completes subcommand options' test to validate
+   new set/reapply subcommand options.
+ * No longer set index.sparse to false in 'sparse-checkout completes
+   directory names' test.
+ * Refactor creation of sparse-checkout repo into a setup test.
+
+Thanks, Lessley
+
+Lessley Dennington (3):
+  completion: address sparse-checkout issues
+  completion: improve sparse-checkout cone mode directory completion
+  completion: handle unusual characters for sparse-checkout
+
+ contrib/completion/git-completion.bash |  44 ++++++++--
+ t/t9902-completion.sh                  | 117 +++++++++++++++++++++++++
+ 2 files changed, 153 insertions(+), 8 deletions(-)
+
+
+base-commit: dfac9b609f86cd4f6ce896df9e1172d2a02cde48
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1108%2Fldennington%2Fsparse-checkout-bash-completion-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1108/ldennington/sparse-checkout-bash-completion-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/1108
+
+Range-diff vs v5:
+
+ 1:  a1c46c763fd ! 1:  23390000dd3 completion: address sparse-checkout issues
+     @@ contrib/completion/git-completion.bash: _git_sparse_checkout ()
+      +		__gitcomp_builtin sparse-checkout_$subcommand "" "--"
+       		;;
+      +	set,*|add,*)
+     -+		if [ $(__git config core.sparseCheckoutCone) ] ||
+     -+		[ "$(__git_find_on_cmdline --cone)" ]; then
+     ++		if [ "$(__git config core.sparseCheckoutCone)" == "true" ] ||
+     ++		[ -n "$(__git_find_on_cmdline --cone)" ]; then
+      +			__gitcomp "$(git ls-tree -d -r HEAD --name-only)"
+      +		fi
+       	esac
+ 2:  5b8d53402ae ! 2:  10a190ce6a1 completion: improve sparse-checkout cone mode directory completion
+     @@ contrib/completion/git-completion.bash: _git_show_branch ()
+       
+      +__gitcomp_directories ()
+      +{
+     -+     local _tmp_dir _tmp_completions
+     ++	local _tmp_dir _tmp_completions
+      +
+     -+     # Get the directory of the current token; this differs from dirname
+     -+     # in that it keeps up to the final trailing slash.  If no slash found
+     -+     # that's fine too.
+     -+     [[ "$cur" =~ .*/ ]]
+     -+     _tmp_dir=$BASH_REMATCH
+     ++	# Get the directory of the current token; this differs from dirname
+     ++	# in that it keeps up to the final trailing slash.  If no slash found
+     ++	# that's fine too.
+     ++	[[ "$cur" =~ .*/ ]]
+     ++	_tmp_dir=$BASH_REMATCH
+      +
+     -+     # Find possible directory completions, adding trailing '/' characters
+     -+     _tmp_completions="$(git ls-tree -d --name-only HEAD $_tmp_dir |
+     -+         sed -e s%$%/%)"
+     ++	# Find possible directory completions, adding trailing '/' characters
+     ++	_tmp_completions="$(git ls-tree -d --name-only HEAD $_tmp_dir |
+     ++		sed -e s%$%/%)"
+      +
+     -+     if [[ -n "$_tmp_completions" ]]; then
+     -+         # There were some directory completions, so find ones that
+     -+         # start with "$cur", the current token, and put those in COMPREPLY
+     -+         local i=0 c IFS=$' \t\n'
+     -+         for c in $_tmp_completions; do
+     -+             if [[ $c == "$cur"* ]]; then
+     -+                 COMPREPLY+=("$c")
+     -+             fi
+     -+         done
+     -+     elif [[ "$cur" =~ /$ ]]; then
+     -+         # No possible further completions any deeper, so assume we're at
+     -+         # a leaf directory and just consider it complete
+     -+         __gitcomp_direct_append "$cur "
+     -+     fi
+     ++	if [[ -n "$_tmp_completions" ]]; then
+     ++		# There were some directory completions, so find ones that
+     ++		# start with "$cur", the current token, and put those in COMPREPLY
+     ++		local i=0 c IFS=$' \t\n'
+     ++		for c in $_tmp_completions; do
+     ++		if [[ $c == "$cur"* ]]; then
+     ++			COMPREPLY+=("$c")
+     ++		fi
+     ++		done
+     ++	elif [[ "$cur" =~ /$ ]]; then
+     ++		# No possible further completions any deeper, so assume we're at
+     ++		# a leaf directory and just consider it complete
+     ++		__gitcomp_direct_append "$cur "
+     ++	fi
+      +}
+      +
+       _git_sparse_checkout ()
+     @@ contrib/completion/git-completion.bash: _git_show_branch ()
+       	local subcommands="list init set disable add reapply"
+      @@ contrib/completion/git-completion.bash: _git_sparse_checkout ()
+       	set,*|add,*)
+     - 		if [ $(__git config core.sparseCheckoutCone) ] ||
+     - 		[ "$(__git_find_on_cmdline --cone)" ]; then
+     + 		if [ "$(__git config core.sparseCheckoutCone)" == "true" ] ||
+     + 		[ -n "$(__git_find_on_cmdline --cone)" ]; then
+      -			__gitcomp "$(git ls-tree -d -r HEAD --name-only)"
+      +			__gitcomp_directories
+       		fi
+ 3:  ddf5e583dd7 ! 3:  e805dbb58cc completion: handle unusual characters for sparse-checkout
+     @@ contrib/completion/git-completion.bash: _git_show_branch ()
+       
+       __gitcomp_directories ()
+       {
+     --     local _tmp_dir _tmp_completions
+     --
+     --     # Get the directory of the current token; this differs from dirname
+     --     # in that it keeps up to the final trailing slash.  If no slash found
+     --     # that's fine too.
+     --     [[ "$cur" =~ .*/ ]]
+     --     _tmp_dir=$BASH_REMATCH
+     --
+     --     # Find possible directory completions, adding trailing '/' characters
+     --     _tmp_completions="$(git ls-tree -d --name-only HEAD $_tmp_dir |
+     --         sed -e s%$%/%)"
+     --
+     --     if [[ -n "$_tmp_completions" ]]; then
+     --         # There were some directory completions, so find ones that
+     --         # start with "$cur", the current token, and put those in COMPREPLY
+     --         local i=0 c IFS=$' \t\n'
+     --         for c in $_tmp_completions; do
+     --             if [[ $c == "$cur"* ]]; then
+     --                 COMPREPLY+=("$c")
+     --             fi
+     --         done
+     --     elif [[ "$cur" =~ /$ ]]; then
+     --         # No possible further completions any deeper, so assume we're at
+     --         # a leaf directory and just consider it complete
+     --         __gitcomp_direct_append "$cur "
+     --     fi
+     +-	local _tmp_dir _tmp_completions
+      +	local _tmp_dir _tmp_completions _found=0
+     -+
+     -+	# Get the directory of the current token; this differs from dirname
+     -+	# in that it keeps up to the final trailing slash.  If no slash found
+     -+	# that's fine too.
+     -+	[[ "$cur" =~ .*/ ]]
+     -+	_tmp_dir=$BASH_REMATCH
+     -+
+     + 
+     + 	# Get the directory of the current token; this differs from dirname
+     + 	# in that it keeps up to the final trailing slash.  If no slash found
+     +@@ contrib/completion/git-completion.bash: __gitcomp_directories ()
+     + 	[[ "$cur" =~ .*/ ]]
+     + 	_tmp_dir=$BASH_REMATCH
+     + 
+     +-	# Find possible directory completions, adding trailing '/' characters
+     +-	_tmp_completions="$(git ls-tree -d --name-only HEAD $_tmp_dir |
+     +-		sed -e s%$%/%)"
+     +-
+     +-	if [[ -n "$_tmp_completions" ]]; then
+     +-		# There were some directory completions, so find ones that
+     +-		# start with "$cur", the current token, and put those in COMPREPLY
+     +-		local i=0 c IFS=$' \t\n'
+     +-		for c in $_tmp_completions; do
+      +	# Find possible directory completions, adding trailing '/' characters,
+      +	# de-quoting, and handling unusual characters.
+      +	while IFS= read -r -d $'\0' c ; do
+      +		# If there are directory completions, find ones that start
+      +		# with "$cur", the current token, and put those in COMPREPLY
+     -+		if [[ $c == "$cur"* ]]; then
+     + 		if [[ $c == "$cur"* ]]; then
+     +-			COMPREPLY+=("$c")
+      +			COMPREPLY+=("$c/")
+      +			_found=1
+     -+		fi
+     + 		fi
+     +-		done
+     +-	elif [[ "$cur" =~ /$ ]]; then
+      +	done < <(git ls-tree -z -d --name-only HEAD $_tmp_dir)
+      +
+      +	if [[ $_found == 0 ]] && [[ "$cur" =~ /$ ]]; then
+     -+		# No possible further completions any deeper, so assume we're at
+     -+		# a leaf directory and just consider it complete
+     -+		__gitcomp_direct_append "$cur "
+     -+	fi
+     - }
+     - 
+     - _git_sparse_checkout ()
+     + 		# No possible further completions any deeper, so assume we're at
+     + 		# a leaf directory and just consider it complete
+     + 		__gitcomp_direct_append "$cur "
+      
+       ## t/t9902-completion.sh ##
+      @@ t/t9902-completion.sh: test_expect_success 'cone mode sparse-checkout completes directory names' '
+
+-- 
+gitgitgadget
