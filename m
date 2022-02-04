@@ -2,143 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64F4BC433F5
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 18:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D56AC433F5
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 18:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377392AbiBDSJ5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Feb 2022 13:09:57 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:58833 "EHLO
-        out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1377397AbiBDSJ4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 4 Feb 2022 13:09:56 -0500
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 9F46C5C0199;
-        Fri,  4 Feb 2022 13:09:55 -0500 (EST)
-Received: from imap46 ([10.202.2.96])
-  by compute2.internal (MEProxy); Fri, 04 Feb 2022 13:09:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=artagnon.com; h=
-        cc:cc:content-transfer-encoding:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm1; bh=p1ioNMfD+ewri4
-        Zecs8npBAp9TIhKc0DVYlvOu8xFaQ=; b=j/cqao7Oi/sxKDrcpGbnEK5A7S4KEE
-        FGvrOCTcg46KdtClt5KKV6dZyiNt0SvpOCA0lqHL0uEhd0Jk5Xn9cv0mAZje6Ios
-        uhMmpfOFmvy+pqs6oKP1fihXXPXlfmmNjEZAE4UxnGV5exYTSxtHirTKbSylLwO4
-        CB3U9SznG4YoVQoVr6eFqUUtc3RoYiVJN9vcdMcK9l+Fq1FnJpcZ5GqpBPkj3uKX
-        ykDsZWkzrlSppc2yP2LYfD5WE17yRa5Gar4ybOseGXiK/Ydr1oKjtppOdShdANpz
-        3bR6FhaUp4i12G0r+WFW6MRZMH1YHFEPPZaL8tchWDptjKDmE0aCV37A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; bh=p1ioNMfD+ewri4Zecs8npBAp9TIhKc0DVYlvOu8xF
-        aQ=; b=DE8ybd9Xv2z2FPWPSvp+69gQxSPAXpPj6kH8Pn6qgrUZuL+4LQUCN55yz
-        BuVPDwB+vGSVtetNxU675lmDlDd3cFjpxPrkQ9/Uf+qZEajiHbhzQkCk8ehMs9Ks
-        gzS0P9qPKIrIXD7VOYVgoEATdvDRcbrA72vUcITpmU+WvQ7OHoU6jOcVbHEmP6Ij
-        KkWme7eJuYTyI/IHi4KvqZiPC25SsafkhCqpJHBp+KCpQX21OGtaY6s5QaHJaXPL
-        iyNtzqtNUgeP5IL/3nVJy2BI+Kw7o5xZ3kjXE32CnDaTJOBLDwVWmiQePBKDAzQt
-        G5MEvXiWwgAGI91wxvAnL8LOT1Nrg==
-X-ME-Sender: <xms:82v9YfS1dcGL6luNjQazfgsn0v4a3aGwJr8JLW3pjdyAXkoFFijslg>
-    <xme:82v9YQzNfb0t_9qWQ0J0Rx1AGTwohSrIYQx2eLdOTTtFfL_pZ-rMMPDiGgJCWy_rS
-    2IebiWix_bW-PKs9p0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrgeelgddutdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvffutgfgsehtqhertderreejnecuhfhrohhmpedftfgr
-    mhhkuhhmrghrucftrghmrggthhgrnhgurhgrfdcuoehrsegrrhhtrghgnhhonhdrtghomh
-    eqnecuggftrfgrthhtvghrnhepkeevueekieduleekgfelteduheffkeegveffheeljeeg
-    keevteeiteekvedvvdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomheprhesrghrthgrghhnohhnrdgtohhm
-X-ME-Proxy: <xmx:82v9YU1uORtI-Q1HmxQwT9aM7qr8RC-E-BhDrDsSKnJN56Ks3szNGw>
-    <xmx:82v9YfCQbOryFZLQ4t-Npn4osN9aYdlexk9Tbk_iMFQJNvIv4k5s8g>
-    <xmx:82v9YYga9VOtMc9prLZGWPCja14uYbzlZlEEkNkOatkK3ad3OqqA7g>
-    <xmx:82v9YbvwhRiOdarWp7Vos-i5AnQMA8y1Le4kCeOo4l7Ty9vBlCiaEQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 5FAA31EE007B; Fri,  4 Feb 2022 13:09:55 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4586-g104bd556f9-fm-20220203.002-g104bd556
+        id S1377395AbiBDSKM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Feb 2022 13:10:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41870 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1377394AbiBDSKM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Feb 2022 13:10:12 -0500
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F03AAC061714
+        for <git@vger.kernel.org>; Fri,  4 Feb 2022 10:10:11 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id w62-20020a25c741000000b0061ad4f39f40so6721526ybe.21
+        for <git@vger.kernel.org>; Fri, 04 Feb 2022 10:10:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=3ULCAzgnJni7dQPbIkPXdNAwrzLWmqRDac7Dm035Ohk=;
+        b=KHJO6NcyBlM6ioST9OW3kFYy8VBucL+2KO6swXkx2kcVJ/zRD5szDjSYzkKg3LObnk
+         PtFVjgvO9ZIJMzq7Ip4rD5gYQwIQWoDey+2ISWNAJ8lzDccm6uEyPNCbfGLv+sORjwJx
+         TK0ldQEWKswzAtp5dYjEV58pFUyasKw4EWHzoJvPFkoZmNHN+MelMryV4fQec/QFpu8p
+         B0rdJKGiknFPHX7T1YYhWYEs01JoFv4QWrowOp4yOCIkeAqH9aoHpKOuEWPw5g2Txcuv
+         YpVu5GijJRg/DYKwVJd18lIwdHu0qGdeAvQuppK/gz+N1VqCXiADhG9XEPjgeeAas69j
+         RR8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=3ULCAzgnJni7dQPbIkPXdNAwrzLWmqRDac7Dm035Ohk=;
+        b=wQuxPrMcWJBO3+s4pLZwvzam5qGwJLqfiYXNai60rvx7rkAAi0wdveQ5wO7Td/30kI
+         uG60dfnKbo6JE2CMCp5oPc0q8C6cCFmtTpp9kUm2D3nphQw5q0v3/nrGH7m2lKZJ6vVZ
+         TlWSdRmhbZYUNlM19Zn8DDs/aU/CJxQ4094TPpI4l5y+z3sz3gtKw+1G+y52Wu4GjX8I
+         +35X7PVDFykU6WcXpW29zyNTBSIs3auaYVlmtVz6hIMW8MaHxjmcczJIAWKJHljQM65e
+         fb6cLpvj4pN4YQ4AqhjF6sknd5Xz6uYkvjEzHXa50crWAen/fIjIfEfhLeY4CnAQjFpT
+         1b8g==
+X-Gm-Message-State: AOAM533klB/2G7FjPrRNmyabYUpKb7BltdniENTyGTCkMUpRGOhBzvqe
+        hEWRWFF2fPbws0xfkhtp2FlXppOGERvhAQ==
+X-Google-Smtp-Source: ABdhPJwwoibx/8YraIzI9Cyx/uQ56MP9WSTWxUeoCFRIHlvXjhmSNNEPiy87wsZ5uyyT/bRFwCW+Kg9DBllwhA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a81:ad48:: with SMTP id
+ l8mr75514ywk.480.1643998211194; Fri, 04 Feb 2022 10:10:11 -0800 (PST)
+Date:   Fri, 04 Feb 2022 10:10:09 -0800
+In-Reply-To: <xmqqmtj6obft.fsf@gitster.g>
+Message-Id: <kl6ltudezeny.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
-Message-Id: <e04aa856-07e2-474f-88ec-af5d47d9f640@www.fastmail.com>
-In-Reply-To: <20987dc6-e0c7-6ca2-19fd-2b323b3f6d9f@web.de>
-References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
- <xmqqilus3ctf.fsf@gitster.g>
- <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
- <20987dc6-e0c7-6ca2-19fd-2b323b3f6d9f@web.de>
-Date:   Fri, 04 Feb 2022 19:09:35 +0100
-From:   "Ramkumar Ramachandra" <r@artagnon.com>
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        "Git List" <git@vger.kernel.org>
-Cc:     "Christian Couder" <christian.couder@gmail.com>,
-        "Miriam R." <mirucam@gmail.com>,
-        "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/4] bisect--helper: double-check run command on exit code 126
- and 127
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20220124204442.39353-1-chooglen@google.com> <20220129000446.99261-1-chooglen@google.com>
+ <20220129000446.99261-6-chooglen@google.com> <kl6lwnibzbb6.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <xmqqmtj6obft.fsf@gitster.g>
+Subject: Re: [PATCH v8 5/6] branch: add --recurse-submodules option for branch creation
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe wrote:
-> The workaround used by this patch is to run the command on a known-good
-> revision and abort if we still get the same error code.  This adds one
-> step to runs with scripts that use exit codes 126 and 127, but keeps
-> them supported, with one exception: It won't work with commands that
-> cannot recognize the (manually marked) known-good revision as such.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Glen Choo <chooglen@google.com> writes:
 >
-> Run commands that use low exit codes are unaffected.  Typos are report=
-ed
-> after executing the missing command twice and three checkouts (the fir=
-st
-> step, the known good revision and back to the revision of the first
-> step).
+> As long as the log message of this new thing does not have to be
+> retained, I can squash it in for you.
+>
+> And in this case, we can lose the message below---it just talks
+> about a mistake in the version that was submitted, and will become
+> irrelevant once the change is squashed in.
+>
 
-I'm happy with the description of this patch. It doesn't add an extra st=
-ep for an overwhelming majority of users, while not breaking backward co=
-mpatibility.
-=20
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -1089,6 +1089,44 @@ static int bisect_visualize(struct bisect_terms=
- *terms, const char **argv, int a
-> +static int get_first_good(const char *refname, const struct object_id=
- *oid,
-> +   int flag, void *cb_data)
-> +{
-> + oidcpy(cb_data, oid);
-> + return 1;
+Yes, the intention was to lose the message.
 
-I assume you return 1 here to stop the for_each_glob_ref() iteration, af=
-ter copying the oid.
-
-> @@ -1113,6 +1152,30 @@ static int bisect_run(struct bisect_terms *term=
-s, const char **argv, int argc)
-> + int rc =3D verify_good(terms, run_args.v);
-> + is_first_run =3D 0;
-> + if (rc < 0) {
-> + error(_("unable to verify '%s' on good"
-> + " revision"), command.buf);
-
-Perhaps in a subsequent patch, we can consider sha1_abbrev() to print ni=
-cer messages everywhere in bisect.
-
-> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-> index fc18796517..5382e5d216 100755
-> --- a/t/t6030-bisect-porcelain.sh
-> +++ b/t/t6030-bisect-porcelain.sh
-> @@ -290,7 +290,7 @@ test_expect_success 'bisect run accepts exit code =
-126 as bad' '
-> -test_expect_failure POSIXPERM 'bisect run fails with non-executable t=
-est script' '
-> +test_expect_success POSIXPERM 'bisect run fails with non-executable t=
-est script' '
-
-> -test_expect_failure 'bisect run fails with missing test script' '
-> +test_expect_success 'bisect run fails with missing test script' '
-
-Yes, these are precisely the two problems I had.
-
-Thanks.
-
-Warm regards,
-Ram
+Thanks so much for being accommodating :)
