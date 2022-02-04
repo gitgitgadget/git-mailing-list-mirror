@@ -2,100 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 811D0C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 17:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBBDAC433F5
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 18:02:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377165AbiBDR4L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Feb 2022 12:56:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38466 "EHLO
+        id S1377323AbiBDSCh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Feb 2022 13:02:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231603AbiBDR4K (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Feb 2022 12:56:10 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A38F0C061714
-        for <git@vger.kernel.org>; Fri,  4 Feb 2022 09:56:10 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id s13so21677156ejy.3
-        for <git@vger.kernel.org>; Fri, 04 Feb 2022 09:56:10 -0800 (PST)
+        with ESMTP id S241744AbiBDSCg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Feb 2022 13:02:36 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE4E6C061714
+        for <git@vger.kernel.org>; Fri,  4 Feb 2022 10:02:36 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id r9-20020a6560c9000000b00343fa9529e5so3271638pgv.18
+        for <git@vger.kernel.org>; Fri, 04 Feb 2022 10:02:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=xZZ+N+ie3i+ugzCjkB7J0sDap6yZ0p4Ks7AfEfDfkNc=;
-        b=JXigntwZ0WPxbYOFUCEbxjJUb95pwkXtzzW0Dn56TfniNJcOH0n3a5MSvZLC73cAZQ
-         r0dGVXB6krdSohrFe8cdyE4HhV8x0nEc4hWiHMj/s0/9RB4CH2G65rbXNARSkl8VmfJj
-         BN9ZDl4PkBt8ba4oWjdlLVpQaZzhHoUG80vxBLnGXCyuzXrpwqaTr7SsrAEqc2Hy63Nv
-         UHqJRBfrn5ew0N8JYF8J+qlTl82y01FElbw9UqFD17NrwaGMVnWx8dw+eAn4bJTpmANC
-         tr8ss8nCh1CGFfKr1SHGRu/Luq3goU+zIXJQo5MzWhP1i0IPDz98jEtnFA9zbf7/BvtZ
-         /hjQ==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=I4sm5N66uBxVzfadAcJYyC/pTFmjSFwFE++8+A0F8Lw=;
+        b=F7+wi/uJIqekNh658txvdQbMy8kCKbQ99ta9R/dgWyr8C3JMtHshp4FR8+z2Gcz1W1
+         QD5aYN3TOvFHcbSfSuCRvYTNAPmGO3CDi3fHvNS+Qz137oJJu/mHMSpCRL/PZWY72jN8
+         ZM1db12ifOAU4SI9/BdeOOQnew7rzH56ASku+qFTe1dCeFTPguHHK1KVALuiHJb+NDje
+         XM9q6FbgWGOcFgJf8v6rygud0nop4jAY0TmowXMFKV3Ty2BKC+g/yLhXWhgGViTWA59B
+         hU+MvCjs35bMLyfYX7hGWlg4JmzBfSMk5QCpMJbD8YJvE3R89IMlsk5mr92+OfI3swdA
+         JPag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xZZ+N+ie3i+ugzCjkB7J0sDap6yZ0p4Ks7AfEfDfkNc=;
-        b=Cj+fo+fCkTode9C/cNfYLokJsn2WQAnSoQomGUrgOvsdEzCFb6+FkqO99Q0/S3patl
-         iEzBTF1MbkbPu55U4ed7Z2axFu0MTc5/RwzNJpn4MBdT0ZKVhO/m+YBFM+FNt7uCIkOm
-         Yjp+6hTxGisNqSnUJ9TXvjkh1qA5IxL5mYLrhv51/ipzIgAnxFJLq/WI/pLgzmLNj/X3
-         2HjZfqBeVo4/PYbOuaFu+AISPSmvewUj0oEUGyPhEnyPE3OK4iRhKnt9sOWpkFJIOt/Y
-         oGa1zLJLTHFHiYPbk77AaBhYDyKuVpF+VVPKvlVVL+PRMAlPQI6wKtxQf/OfUH/YKRQn
-         Ga4A==
-X-Gm-Message-State: AOAM533eiGE7SO269Asxh0GrZDUu/GzAcT7dTVUrStEf/ic1ac9D+9tD
-        be+PvTfpGNdAr1zUfQLMrwL2c3Y9Qri9/5LvXVs=
-X-Google-Smtp-Source: ABdhPJxdCi1Lm5UrjgQKJb7nqRnoWrtoxKZr28kVUu9hSb0GeAZMK6E2e7NbqvyGPlCaNjYxcz8cGTjDp5MAB3jE7QU=
-X-Received: by 2002:a17:907:60d6:: with SMTP id hv22mr52057ejc.476.1643997369085;
- Fri, 04 Feb 2022 09:56:09 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1108.v5.git.1643921091.gitgitgadget@gmail.com>
- <pull.1108.v6.git.1643945198.gitgitgadget@gmail.com> <CABPp-BGM0xu=Hgd_uKevAbpCtxR9ZY5NX=PWNn2Bqw8SaOJvLQ@mail.gmail.com>
- <xmqq1r0io95u.fsf@gitster.g>
-In-Reply-To: <xmqq1r0io95u.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 4 Feb 2022 09:55:57 -0800
-Message-ID: <CABPp-BGN+rErYFmMbUwxcwSOvCQbJMzB43-VRtim7tXtkuKvCQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/3] completion: sparse-checkout updates
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        johannes.schindelin@gmail.com, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=I4sm5N66uBxVzfadAcJYyC/pTFmjSFwFE++8+A0F8Lw=;
+        b=qo2NUzhtbxcO1lO+wc7jozQMtbnhGhlmIWOfVIpkRD+HsiMpzf3ylO4EqAopevan0Z
+         PZghCGMtvzn/cJhxa6xI493+pQQXgyx4N1vDWHp0J7uA5fRIJlCUqP6SsHKtnrb3y9W/
+         iYJcVMV1zM+RlHaWvercqe3I1ZdbuLxBOo6rZTsPQ8CW3N25pDvQv0AXVhAT4sWxgN+5
+         GDAuBT09ByXms9gd/MfcIs/CxnxzkXvjgVRgVIkP6AVIEcJn6n/ShUxHMs0k9vf9eDlg
+         sSnKdJcGkmGDLARXeWPNfbQbxP5UZoj86BCr9RhZ1T2bKMEAUMaPP4i3VV4pdg7AhCJx
+         jfnw==
+X-Gm-Message-State: AOAM5330ilAejWDlcg+ieAGySLj6kTCc2w3rtZCZ6fsHPqhlpYwVyJso
+        Vw9Fq/pSiDst90vT29hmsH0S689uTBMee1tkAB34
+X-Google-Smtp-Source: ABdhPJzDPOGE/cdlLqBtVH/lZx02MfmzsevyT3ifSzu7f1BAjWdadSnGYlw0cVVtDElnEMi5OKvoOcp1GeoBpVdE6o6K
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:1a4f:: with SMTP id
+ h15mr4240638pfv.50.1643997756097; Fri, 04 Feb 2022 10:02:36 -0800 (PST)
+Date:   Fri,  4 Feb 2022 10:02:30 -0800
+In-Reply-To: <a3c1999936d241fdec2a958cd5a4ebc21f4c7aec.1643730593.git.gitgitgadget@gmail.com>
+Message-Id: <20220204180230.2346654-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <a3c1999936d241fdec2a958cd5a4ebc21f4c7aec.1643730593.git.gitgitgadget@gmail.com>
+X-Mailer: git-send-email 2.35.0.263.gb82422642f-goog
+Subject: Re: [PATCH 2/6] fetch-pack: add partial clone refiltering
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitgitgadget@gmail.com
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, stolee@gmail.com,
+        me@ttaylorr.com, christian.couder@gmail.com, johncai86@gmail.com,
+        robert@coup.net.nz
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 4, 2022 at 9:04 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> >> Changes since V5
-> >> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >>
-> >>  * Fix incorrect conditional that was causing failure of non-cone mode=
- test
-> >>    (and causing 'seen' CI to fail).
-> >>  * Remove __git_comp_directories indentation changes between the secon=
-d and
-> >>    third commits.
-> >
-> > This round looks good to me:
-> >
-> > Reviewed-by: Elijah Newren <newren@gmail.com>
-> >
-> > Nice work!
->
-> Thanks, both.  Will queue.  Let's mark it to be merged down to
-> 'next' soonish.
+"Robert Coup via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> @@ -312,19 +312,21 @@ static int find_common(struct fetch_negotiator *negotiator,
+>  		const char *remote_hex;
+>  		struct object *o;
+>  
+> -		/*
+> -		 * If that object is complete (i.e. it is an ancestor of a
+> -		 * local ref), we tell them we have it but do not have to
+> -		 * tell them about its ancestors, which they already know
+> -		 * about.
+> -		 *
+> -		 * We use lookup_object here because we are only
+> -		 * interested in the case we *know* the object is
+> -		 * reachable and we have already scanned it.
+> -		 */
+> -		if (((o = lookup_object(the_repository, remote)) != NULL) &&
+> -				(o->flags & COMPLETE)) {
+> -			continue;
+> +		if (!args->refilter) {
+> +			/*
+> +			* If that object is complete (i.e. it is an ancestor of a
+> +			* local ref), we tell them we have it but do not have to
+> +			* tell them about its ancestors, which they already know
+> +			* about.
+> +			*
+> +			* We use lookup_object here because we are only
+> +			* interested in the case we *know* the object is
+> +			* reachable and we have already scanned it.
+> +			*/
+> +			if (((o = lookup_object(the_repository, remote)) != NULL) &&
+> +					(o->flags & COMPLETE)) {
+> +				continue;
+> +			}
 
-=C3=86var had a good comment about code coverage on Windows that we might
-want to address first[1].  (Namely, splitting one test into two -- one
-that tests a path with backslashes that can be skipped on windows, and
-a separate test that checks paths with spaces, tabs, and non-ascii
-that can be run on all platforms.)
-
-But other than that, yeah, this should be ready for 'next'.
-
-[1] https://lore.kernel.org/git/220204.86h79f45nf.gmgdl@evledraar.gmail.com=
-/
+The approach that I would have expected is to not call
+mark_complete_and_common_ref(), filter_refs(), everything_local(), and
+find_common(), but your approach here is to ensure that
+mark_complete_and_common_ref() and find_common() do not do anything.
+Comparing the two approaches, the advantage of yours is that we only
+need to make the change once to support both protocol v0 and v2
+(although the change looks more substantial than just skipping function
+calls), but it makes the code more difficult to read in that we now have
+function calls that do nothing. What do you think about my approach?
