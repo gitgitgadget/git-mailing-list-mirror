@@ -2,101 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A03CC433EF
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 06:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B3BEC433EF
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 06:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242487AbiBDGGB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Feb 2022 01:06:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45124 "EHLO
+        id S232326AbiBDGIU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Feb 2022 01:08:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349254AbiBDGFu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Feb 2022 01:05:50 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE42C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 22:05:49 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id p15so16050811ejc.7
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 22:05:49 -0800 (PST)
+        with ESMTP id S229905AbiBDGIU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Feb 2022 01:08:20 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB9FC061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 22:08:19 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id k25so15963450ejp.5
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 22:08:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qg2niVgVwIfOPhdhCTmuyP86NeDFDyEVKit8mpfAeRA=;
-        b=lKlNJNPaG689bIMR565VRElvSccD8zOyapQ1h12HDzLtbwcEU28w12iH4+7c/t3EXq
-         bLxh6uIN/5Ky1b6C4EFKMc3UpxpeiDAVwbCZOnZuWtDwEo+HnucV388f7Y2E+R2L3tub
-         3Kq64+1BwmbD2OA7jBONglsfI0niCUf5Q2Vc2RljKspyxHdd+92iNT5WamUaiYilAbLN
-         Brct1srNB3rSSjtAZVEXqiN0Thy3pfygtKtoPJK/2H9rWecTcAkkiEzV0KiD37ryNi9C
-         RSZSkdjdn4HHaVS2XWOJuIFOfvBRS1lDzZ+pnNuYochD7ZAq+HivGeALFCGtgfgqkxUf
-         pLvw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=/3HPhhj09iZ2758Bq0XO+mj790fbP8mrX3nSiTVGLmg=;
+        b=Md0/lJgtypwOroIXcwOpBerAdFzyeKYRT3iox47RhXmCNyzhHwSU2UiwBBTzDBanoP
+         wI2J7xgGmMk4uNzkRFjTBsb5YcV+IZkTPh8FOKtoRJFi1d19viNGANY9ujzRi+vPkZ4Z
+         DM5+7TMc7SrLS2cERr+bFtE+cuEupQRDmCtZ+DHeVnmO3m/GKYHLtpPAVba0iC0/QSwx
+         bhyiM5zIg4pB9420cBBJrtsrw+rVlb3LeeXSIWyiWjjePEIWsGPqcPzCovCSgSquTGDe
+         AZWX9tA+NhNYvN+vE8krxV+AhVcRBy3oBP0QjPqBwwoinXv2L+T0RJqwueREGNhWxH8H
+         DWcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qg2niVgVwIfOPhdhCTmuyP86NeDFDyEVKit8mpfAeRA=;
-        b=oRU0CjEmvA/83UKhTijLT+xSIeNFJeKXVaGgqnRa+/jeViAf5VCIIhsWU7UwZ37uvs
-         c+NMuYt0eltikNLbeP/DQFkBemeLlZmhcvByxBeNlqMRAvtyauUTB7Lg3eMNBBpMkN0d
-         idsz5vaxaLRiCFbkCssMJ2S6Ic4C0wPSBA/yOHIDyvFQH6lB0i91cYV0Qi/1LZH2p0NT
-         51SUreEqxaVdcNYxbGB+FW9ktvsfHzOrRSqg8wmc8nWy7xswt84Bcp8oAndrUxlNs7Kl
-         Szj+p1foM4uiDAMvsT/jJsrMmOxUinCWL/t4EvmN2XVWo30lmOpRQ9FItDvLUhZsxnrE
-         p6ng==
-X-Gm-Message-State: AOAM5324gneMiiMP5WdEuwBi2XskIPYsGx6e3YLOarOAbUMe8K0Y0na+
-        /VdCekYGU9JhyrZFTi3/UXo/8rUCqAH3Qn2XLyZoGaBK
-X-Google-Smtp-Source: ABdhPJwibv8P6XPxH8bBWZFiAwzWgg9IFqOebDzO9fUyQCn5z8IvgqG3ZKDV7O5XehfrnwFXqs7vJosQTaoHZXMGN1Q=
-X-Received: by 2002:a17:907:7388:: with SMTP id er8mr1130482ejc.269.1643954748010;
- Thu, 03 Feb 2022 22:05:48 -0800 (PST)
+         :message-id:subject:to;
+        bh=/3HPhhj09iZ2758Bq0XO+mj790fbP8mrX3nSiTVGLmg=;
+        b=c/JOYFM/DuNRBBQIPO4lvkgAZD3Uji7l5lXuwHR0zwsVHkDW/ksPwJsAyrQRwmyTCm
+         jL2rZRpDMRzh5I+qb2q8kac3Y1ygyNJUhQ3HHL1KfitMtv2Ex9D8Z23/aJUPZIsmhJem
+         rHdbY2JrEioFaKQAMeIVlxSZefWQfzs5rRGTycS8yFQAwNkBhdLlug/5FNCDhj7buhEN
+         oxdYegv2TIhbq4hzTbzg1b1a5biukAiDO0uyzXuALcoO69wYAYDqLRKACo/mFSOMmtZt
+         r/6MdSwtgSXedKMzh+s66+PS8UOMEcIZR/dDcXd7kFAvJvOkEVoiVFmhf8C+q5Wlvrk3
+         qoyg==
+X-Gm-Message-State: AOAM532LpYLRg26RKIAAXDrbPKZZTuIynY4luuHSdIPcRrOqvPI4sWC0
+        OEoa/pCWXLwnyNrAPmKVppQ+lA1atWv6QR0pjOA=
+X-Google-Smtp-Source: ABdhPJyktdFWAGTbN3GhsnllkBwLNsUwIZx/7BiT/deG+/5lQbMjpZXI9wT/Cd6YMGRbGM8jPDl+qu/kYeDm2ApedNk=
+X-Received: by 2002:a17:907:60d6:: with SMTP id hv22mr1193210ejc.476.1643954898366;
+ Thu, 03 Feb 2022 22:08:18 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1108.v5.git.1643921091.gitgitgadget@gmail.com> <pull.1108.v6.git.1643945198.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1108.v6.git.1643945198.gitgitgadget@gmail.com>
+References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
+ <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com> <02c29f920d0d5fde6d85f7b86a69be92e3f0f34d.1643787281.git.gitgitgadget@gmail.com>
+ <YfywEBIIJWLPM2kr@google.com>
+In-Reply-To: <YfywEBIIJWLPM2kr@google.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 3 Feb 2022 22:05:36 -0800
-Message-ID: <CABPp-BGM0xu=Hgd_uKevAbpCtxR9ZY5NX=PWNn2Bqw8SaOJvLQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/3] completion: sparse-checkout updates
-To:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        johannes.schindelin@gmail.com, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
+Date:   Thu, 3 Feb 2022 22:08:07 -0800
+Message-ID: <CABPp-BEVXa9rP7J_hNrWxOziWGAZ6YpP302dLOvNbAVumth3JQ@mail.gmail.com>
+Subject: Re: [PATCH v3 04/15] merge-tree: implement real merges
+To:     Josh Steadmon <steadmon@google.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Feb 3, 2022 at 8:48 PM Josh Steadmon <steadmon@google.com> wrote:
+>
+> On 2022.02.02 07:34, Elijah Newren via GitGitGadget wrote:
+[...]
+> > +USAGE NOTES
+> > +-----------
+> > +
+> > +git-merge-tree was written to be low-level plumbing, similar to
+> > +hash-object, mktree, commit-tree, update-ref, and mktag.  Thus, it could
+> > +be used as a part of a series of steps such as
+> > +
+> > +       NEWTREE=$(git merge-tree --write-tree $BRANCH1 $BRANCH2)
+> > +       test $? -eq 0 || die "There were conflicts..."
+> > +       NEWCOMMIT=$(git commit-tree $NEWTREE -p $BRANCH1 -p $BRANCH2)
+> > +       git update-ref $BRANCH1 $NEWCOMMIT
+> > +
+> > +However, it does not quite fit into the same category of low-level
+> > +plumbing commands since the possibility of merge conflicts give it a
+> > +much higher chance of the command not succeeding.
+>
+> I found this final paragraph confusing. It seems to be hinting at some
+> conclusion it expects readers to make, but I haven't been able to figure
+> out what. Could this be made more explicit, or perhaps dropped
+> altogether?
 
-On Thu, Feb 3, 2022 at 7:26 PM Lessley Dennington via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> This change updates custom tab completion for the sparse-checkout command.
-> Specifically, it corrects the following issues with the current method:
->
->  1. git sparse-checkout <TAB> results in an incomplete list of subcommands
->     (it is missing reapply and add).
->  2. Options for subcommands are not tab-completable.
->  3. git sparse-checkout set <TAB> and git sparse-checkout add <TAB> show
->     both file names and directory names. While this may be a less surprising
->     behavior for non-cone mode, we want to only show directories in cone
->     mode.
->
-> The first commit in this series is an intermediate step that fixes issues 1
-> and 2 above and introduces a simple fix for issue 3 with some performance
-> and unusual character-related caveats. The next commit adds a new
-> __gitcomp_directories method that fixes the performance-related caveat from
-> the first commit by completing just a single level of directories. The final
-> commit modifies __gitcomp_directories to handle unusual characters in
-> directory names.
->
->
-> Changes since V5
-> ================
->
->  * Fix incorrect conditional that was causing failure of non-cone mode test
->    (and causing 'seen' CI to fail).
->  * Remove __git_comp_directories indentation changes between the second and
->    third commits.
-
-This round looks good to me:
-
-Reviewed-by: Elijah Newren <newren@gmail.com>
-
-Nice work!
+Yep, I'll drop it.
