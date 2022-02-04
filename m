@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3B04C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 23:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40A16C433EF
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 23:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378359AbiBDXtI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Feb 2022 18:49:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49422 "EHLO
+        id S1377990AbiBDXtK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Feb 2022 18:49:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378312AbiBDXs5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Feb 2022 18:48:57 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6122E009522
-        for <git@vger.kernel.org>; Fri,  4 Feb 2022 15:48:52 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id c192so5605016wma.4
-        for <git@vger.kernel.org>; Fri, 04 Feb 2022 15:48:52 -0800 (PST)
+        with ESMTP id S1378304AbiBDXs4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Feb 2022 18:48:56 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10DBFE00951D
+        for <git@vger.kernel.org>; Fri,  4 Feb 2022 15:48:51 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id h6so1027330wrb.9
+        for <git@vger.kernel.org>; Fri, 04 Feb 2022 15:48:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BxKz5Qkm6uSJ3ElwfffUCwT8sAUW4dv7wwfq98QSexE=;
-        b=p4E2FX+v3yDT/3Hx8xpfqHLdXnIIzc7UnXu9KYSfdMLusV40E6Ndbo5vm7zzrnnXiI
-         HOsnHJNy3Z1YNaBKWydYSd7X3Y6OGecFmBHQRhUyDh9uoTemrMqFd0pE7W85XGF1K3pK
-         T0wQqfBrEWtXqN0PPJwRq5uu6Uz8STHb3hHSLcaBO5/d25XDRshzfdispaghxuVszSl2
-         nwQJHNNV5AEUbu2YCpYIrbwDnO6Keb4jTD7wQktxpEFOG8igWuRrEaUF1I9SihRGJJbN
-         1dfSLJhXUYiWd6mCDp39ebrDu9B8i8Zew8+rXqBrupJ+Ry5JKtEvHwgpht261naAC9Nh
-         rTtg==
+        bh=fRBYgCiTCMIwKE5VUsHTcHEgDSJNmhABMKwhFQpfx8Q=;
+        b=RCY1MCj4oSR/UFNY3ytuhMEH0lLgjNjIGmruTF0dP0ahsQJYduSKXbjy7/OTVSaiQG
+         Wv/z5wstJXT1PwB9j2bGRnolIF/BV+dMXy+Tb4RuB4ktefXHXqSwMFQ8BC5Advtwm8On
+         LP6zZdKdsuH3dtnvlAEcNUAjc+afPKIePSf+cMSiwIIquh/MAqm25nTPoyBsevddWPIg
+         Z3N8hHaf//hRm/6hOFm9Tov7gnhKmS5Vj233od0RDmornsa6paPH3ZEyt9Jg65Ny2hsj
+         0g0YdGAucuKiFZQsLruvGkD8P0NhESw9SFUOfDeZPSz+Q8Jne6F2IwITgXwm2SSSn8Jx
+         pAAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BxKz5Qkm6uSJ3ElwfffUCwT8sAUW4dv7wwfq98QSexE=;
-        b=VKW9Mn1UspNdkU/IFc56+oRcKb8tUVPN7ebpLHb0hHIG7C9vaLDPMMb7n/54skern3
-         MhlZ+G4AJNdSn3yoUaxJAy0Tbh3RMh/H/0AFPzU4U1g0t+4KNQNMFq0hx/XMG+yIYdVw
-         15pYicsXVDPnxKkljfmOX49moPQB3Q0QDAxREvsRSQmFU+nW2PurhUD5zdnZIKPpG3iN
-         mgDuPXnGtD+SIWWF9+cOu76Nis/qA0ewQgQxqNnp0UvVu7v0ZdPt8k854ijdHtjR6TDi
-         2Y9FEMA7CffHmVaHd2yFIYw0C+E7dm0XSYrdIhqv3zmUeyexxkV7crgEU2mcKUaIlagL
-         hm+Q==
-X-Gm-Message-State: AOAM530Kmoq95jkHo0dmzAPpug3ka+zIUZkYUd8fWVGhKx8s/RkC1sbD
-        jkcMxS7uNm1wdUCgJ1LNF4w/yCkRtd2YUQ==
-X-Google-Smtp-Source: ABdhPJxzJ0tJfGH46dCuSChqwZNu0gEmIR+uJaudmcKRqrMK4Wy9Mt6jSElA4ewZBEL6pRbTRtiIvA==
-X-Received: by 2002:a1c:4e03:: with SMTP id g3mr4194158wmh.157.1644018531028;
-        Fri, 04 Feb 2022 15:48:51 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t16sm2724042wmq.21.2022.02.04.15.48.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=fRBYgCiTCMIwKE5VUsHTcHEgDSJNmhABMKwhFQpfx8Q=;
+        b=H9MmE1XGRJe8FTQkBm05tJurf9EC3k+7xqUs/JJiv02hGTUzXO2SdausYrsx82mAmr
+         GuQbK69HAX+NIGpuWydSVlldJpqLPJlW5FSj9CsE5kUZ+LLS00DKT3N/sV6zCDNGDF8B
+         N7m+AJTC+bC7N5Nj8PcGVuktdD0iAxLydR+tHDBsg+c8/+IlR4K7sT9sRrGt6AmOeOi+
+         eVlmBuPA2i7x1EeaJ18AYrtzE0xXMrMwC5drjHFLYCbH0IxfEsNbyPsZ1AkZFmqHGS8t
+         q5NvTHVfrAiLHSi8bL8jXziDDlRAl1ZpA7rIUCwNThavnmmhqjqpIooEfRki21bqAMHR
+         vaug==
+X-Gm-Message-State: AOAM531Ky5ikM0PKTxj4fl4rq/MDB4lZFTbYzlKn9dvYt0knTGJRjTVc
+        GRkB5oG5HRY/BjDCFVHZIQ9FyqLjUpOXyg==
+X-Google-Smtp-Source: ABdhPJzRyAlSCXqVnmszSLKQhDWKnEfkY1OItkhfetkeVm0Bqf94HTOUOnmKIh14GvdezoEStLaJBA==
+X-Received: by 2002:a05:6000:18a2:: with SMTP id b2mr976673wri.310.1644018530137;
         Fri, 04 Feb 2022 15:48:50 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id t16sm2724042wmq.21.2022.02.04.15.48.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Feb 2022 15:48:49 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 12/12] object-file API: pass an enum to read_object_with_reference()
-Date:   Sat,  5 Feb 2022 00:48:34 +0100
-Message-Id: <patch-v3-12.12-d2d355e6bb8-20220204T234435Z-avarab@gmail.com>
+Subject: [PATCH v3 11/12] object-file.c: add a literal version of write_object_file_prepare()
+Date:   Sat,  5 Feb 2022 00:48:33 +0100
+Message-Id: <patch-v3-11.12-ad1a777f454-20220204T234435Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.940.ge7a5b4b05f2
 In-Reply-To: <cover-v3-00.12-00000000000-20220204T234435Z-avarab@gmail.com>
 References: <cover-v2-00.11-00000000000-20220204T135005Z-avarab@gmail.com> <cover-v3-00.12-00000000000-20220204T234435Z-avarab@gmail.com>
@@ -70,193 +70,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the read_object_with_reference() function to take an "enum
-object_type". It was not prepared to handle an arbitrary "const
-char *type", as it was itself calling type_from_string().
+Split off a *_literally() variant of the write_object_file_prepare()
+function. To do this create a new "hash_object_body()" static helper.
 
-Let's change the only caller that passes in user data to use
-type_from_string(), and convert the rest to use e.g. "OBJ_TREE"
-instead of "tree_type".
-
-The "cat-file" caller is not on the codepath that
-handles"--allow-unknown", so the type_from_string() there is safe. Its
-use of type_from_string() doesn't functionally differ from that of the
-pre-image.
+We now defer the type_name() call until the very last moment in
+format_object_header() for those callers that aren't "hash-object
+--literally".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/cat-file.c     | 11 +++++++----
- builtin/fast-import.c  |  6 +++---
- builtin/grep.c         |  4 ++--
- builtin/pack-objects.c |  2 +-
- cache.h                |  2 +-
- object-file.c          |  5 ++---
- tree-walk.c            |  6 +++---
- 7 files changed, 19 insertions(+), 17 deletions(-)
+ object-file.c | 39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index d94050e6c18..3c5bc505e0a 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -154,7 +154,10 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		break;
- 
- 	case 0:
--		if (type_from_string(exp_type) == OBJ_BLOB) {
-+	{
-+		enum object_type exp_type_id = type_from_string(exp_type);
-+
-+		if (exp_type_id == OBJ_BLOB) {
- 			struct object_id blob_oid;
- 			if (oid_object_info(the_repository, &oid, NULL) == OBJ_TAG) {
- 				char *buffer = read_object_file(&oid, &type,
-@@ -176,10 +179,10 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 			 * fall-back to the usual case.
- 			 */
- 		}
--		buf = read_object_with_reference(the_repository,
--						 &oid, exp_type, &size, NULL);
-+		buf = read_object_with_reference(the_repository, &oid,
-+						 exp_type_id, &size, NULL);
- 		break;
--
-+	}
- 	default:
- 		die("git cat-file: unknown option: %s", exp_type);
- 	}
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 123df7d9a53..c52e807f56e 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -2483,7 +2483,7 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
- 		unsigned long size;
- 		char *buf = read_object_with_reference(the_repository,
- 						       &commit_oid,
--						       commit_type, &size,
-+						       OBJ_COMMIT, &size,
- 						       &commit_oid);
- 		if (!buf || size < the_hash_algo->hexsz + 6)
- 			die("Not a valid commit: %s", p);
-@@ -2555,7 +2555,7 @@ static void parse_from_existing(struct branch *b)
- 		char *buf;
- 
- 		buf = read_object_with_reference(the_repository,
--						 &b->oid, commit_type, &size,
-+						 &b->oid, OBJ_COMMIT, &size,
- 						 &b->oid);
- 		parse_from_commit(b, buf, size);
- 		free(buf);
-@@ -2651,7 +2651,7 @@ static struct hash_list *parse_merge(unsigned int *count)
- 			unsigned long size;
- 			char *buf = read_object_with_reference(the_repository,
- 							       &n->oid,
--							       commit_type,
-+							       OBJ_COMMIT,
- 							       &size, &n->oid);
- 			if (!buf || size < the_hash_algo->hexsz + 6)
- 				die("Not a valid commit: %s", from);
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 9e34a820ad4..75e07b5623a 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -482,7 +482,7 @@ static int grep_submodule(struct grep_opt *opt,
- 		object_type = oid_object_info(subrepo, oid, NULL);
- 		obj_read_unlock();
- 		data = read_object_with_reference(subrepo,
--						  oid, tree_type,
-+						  oid, OBJ_TREE,
- 						  &size, NULL);
- 		if (!data)
- 			die(_("unable to read tree (%s)"), oid_to_hex(oid));
-@@ -651,7 +651,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 		int hit, len;
- 
- 		data = read_object_with_reference(opt->repo,
--						  &obj->oid, tree_type,
-+						  &obj->oid, OBJ_TREE,
- 						  &size, NULL);
- 		if (!data)
- 			die(_("unable to read tree (%s)"), oid_to_hex(&obj->oid));
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index ba2006f2212..c4df3df3141 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1802,7 +1802,7 @@ static void add_preferred_base(struct object_id *oid)
- 		return;
- 
- 	data = read_object_with_reference(the_repository, oid,
--					  tree_type, &size, &tree_oid);
-+					  OBJ_TREE, &size, &tree_oid);
- 	if (!data)
- 		return;
- 
-diff --git a/cache.h b/cache.h
-index 2027803c49a..0e7fc8b7c2f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1561,7 +1561,7 @@ int cache_name_stage_compare(const char *name1, int len1, int stage1, const char
- 
- void *read_object_with_reference(struct repository *r,
- 				 const struct object_id *oid,
--				 const char *required_type,
-+				 enum object_type required_type,
- 				 unsigned long *size,
- 				 struct object_id *oid_ret);
- 
 diff --git a/object-file.c b/object-file.c
-index c75c12dd0ba..6cbdb836cb7 100644
+index b1cb78c4419..c75c12dd0ba 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1737,16 +1737,15 @@ void *read_object_file_extended(struct repository *r,
- 
- void *read_object_with_reference(struct repository *r,
- 				 const struct object_id *oid,
--				 const char *required_type_name,
-+				 enum object_type required_type,
- 				 unsigned long *size,
- 				 struct object_id *actual_oid_return)
- {
--	enum object_type type, required_type;
-+	enum object_type type;
- 	void *buffer;
- 	unsigned long isize;
- 	struct object_id actual_oid;
- 
--	required_type = type_from_string(required_type_name);
- 	oidcpy(&actual_oid, oid);
- 	while (1) {
- 		int ref_length = -1;
-diff --git a/tree-walk.c b/tree-walk.c
-index 3a94959d64a..506234b4b81 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -89,7 +89,7 @@ void *fill_tree_descriptor(struct repository *r,
- 	void *buf = NULL;
- 
- 	if (oid) {
--		buf = read_object_with_reference(r, oid, tree_type, &size, NULL);
-+		buf = read_object_with_reference(r, oid, OBJ_TREE, &size, NULL);
- 		if (!buf)
- 			die("unable to read tree %s", oid_to_hex(oid));
+@@ -1784,21 +1784,40 @@ void *read_object_with_reference(struct repository *r,
  	}
-@@ -605,7 +605,7 @@ int get_tree_entry(struct repository *r,
- 	unsigned long size;
- 	struct object_id root;
+ }
  
--	tree = read_object_with_reference(r, tree_oid, tree_type, &size, &root);
-+	tree = read_object_with_reference(r, tree_oid, OBJ_TREE, &size, &root);
- 	if (!tree)
- 		return -1;
++static void hash_object_body(const struct git_hash_algo *algo, git_hash_ctx *c,
++			     const void *buf, unsigned long len,
++			     struct object_id *oid,
++			     char *hdr, int *hdrlen)
++{
++	algo->init_fn(c);
++	algo->update_fn(c, hdr, *hdrlen);
++	algo->update_fn(c, buf, len);
++	algo->final_oid_fn(oid, c);
++}
++
+ static void write_object_file_prepare(const struct git_hash_algo *algo,
+ 				      const void *buf, unsigned long len,
+-				      const char *type, struct object_id *oid,
++				      enum object_type type, struct object_id *oid,
+ 				      char *hdr, int *hdrlen)
+ {
+ 	git_hash_ctx c;
  
-@@ -677,7 +677,7 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
- 			unsigned long size;
- 			tree = read_object_with_reference(r,
- 							  &current_tree_oid,
--							  tree_type, &size,
-+							  OBJ_TREE, &size,
- 							  &root);
- 			if (!tree)
- 				goto done;
+ 	/* Generate the header */
+-	*hdrlen = format_object_header_literally(hdr, *hdrlen, type, len);
++	*hdrlen = format_object_header(hdr, *hdrlen, type, len);
+ 
+ 	/* Sha1.. */
+-	algo->init_fn(&c);
+-	algo->update_fn(&c, hdr, *hdrlen);
+-	algo->update_fn(&c, buf, len);
+-	algo->final_oid_fn(oid, &c);
++	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
++}
++
++static void write_object_file_prepare_literally(const struct git_hash_algo *algo,
++				      const void *buf, unsigned long len,
++				      const char *type, struct object_id *oid,
++				      char *hdr, int *hdrlen)
++{
++	git_hash_ctx c;
++
++	*hdrlen = format_object_header_literally(hdr, *hdrlen, type, len);
++	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
+ }
+ 
+ /*
+@@ -1858,7 +1877,7 @@ static void hash_object_file_literally(const struct git_hash_algo *algo,
+ 	char hdr[MAX_HEADER_LEN];
+ 	int hdrlen = sizeof(hdr);
+ 
+-	write_object_file_prepare(algo, buf, len, type, oid, hdr, &hdrlen);
++	write_object_file_prepare_literally(algo, buf, len, type, oid, hdr, &hdrlen);
+ }
+ 
+ void hash_object_file(const struct git_hash_algo *algo, const void *buf,
+@@ -2029,7 +2048,7 @@ int write_object_file_flags(const void *buf, unsigned long len,
+ 	/* Normally if we have it in the pack then we do not bother writing
+ 	 * it out into .git/objects/??/?{38} file.
+ 	 */
+-	write_object_file_prepare(the_hash_algo, buf, len, type_name(type), oid, hdr,
++	write_object_file_prepare(the_hash_algo, buf, len, type, oid, hdr,
+ 				  &hdrlen);
+ 	if (freshen_packed_object(oid) || freshen_loose_object(oid))
+ 		return 0;
+@@ -2046,8 +2065,8 @@ int write_object_file_literally(const void *buf, unsigned long len,
+ 	/* type string, SP, %lu of the length plus NUL must fit this */
+ 	hdrlen = strlen(type) + MAX_HEADER_LEN;
+ 	header = xmalloc(hdrlen);
+-	write_object_file_prepare(the_hash_algo, buf, len, type, oid, header,
+-				  &hdrlen);
++	write_object_file_prepare_literally(the_hash_algo, buf, len, type,
++					    oid, header, &hdrlen);
+ 
+ 	if (!(flags & HASH_WRITE_OBJECT))
+ 		goto cleanup;
 -- 
 2.35.1.940.ge7a5b4b05f2
 
