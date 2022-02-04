@@ -2,121 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB753C433F5
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 00:42:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 846E1C433EF
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 01:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244554AbiBDAmg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 19:42:36 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62085 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236660AbiBDAmf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 19:42:35 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36E6711B011;
-        Thu,  3 Feb 2022 19:42:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=omrg+TXvdhSX
-        wpVxhHdpjaaBzZd5UzrYBDQF5a1uzWE=; b=KpjfL1KsJijtkKpue+4+SZTYpoJb
-        aGXOwkQ6LxbJDu/hZSV6/Q2ZNB1YnTZbkDQQe80Sd6myQp7xO4nwI0S+y05UuZAg
-        WuZeBIL7nsqDz8Upv6R4YZktUvu/XLx+jk+bDX+y+rEgJ46ULGYzHvOKG1NtJ0qB
-        wjt1qPLWwZEe4Os=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C3ED11B010;
-        Thu,  3 Feb 2022 19:42:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.133.2.91])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 795A911B00F;
-        Thu,  3 Feb 2022 19:42:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Ramkumar Ramachandra <r@artagnon.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        "Miriam R." <mirucam@gmail.com>
-Subject: Re: [PATCH v2 4/4] bisect--helper: double-check run command on exit
- code 126 and 127
-References: <1edfc6ff-4db8-447f-9eb7-85843258a286@www.fastmail.com>
-        <xmqqilus3ctf.fsf@gitster.g>
-        <fead25d6-6f5f-487a-ad4c-0657fe9785fd@www.fastmail.com>
-        <20987dc6-e0c7-6ca2-19fd-2b323b3f6d9f@web.de>
-Date:   Thu, 03 Feb 2022 16:42:33 -0800
-In-Reply-To: <20987dc6-e0c7-6ca2-19fd-2b323b3f6d9f@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 18 Jan 2022 13:46:32 +0100")
-Message-ID: <xmqqa6f7pime.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 57E75270-8553-11EC-AB4D-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S1353229AbiBDBKe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 20:10:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36804 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233042AbiBDBKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 20:10:33 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54B6CC061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 17:10:33 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id v14-20020a170902e8ce00b0014b48e8e498so2180945plg.2
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 17:10:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=3XWsXh6s8rZcIH0Yoy9ZwNRrsd0Df6UoSxtRuKAjcWw=;
+        b=CKi1H+EUGlY/HTQ4ZrKkJNEWHC54yENvJs2T99H3RX9uGeYRthv/5TApdaiWetH+xF
+         ijTvQ8LZRhQ4Yw5bHIDZWg8RY3hIrFri8isXT40jYWCFVECBlGzi3Y2wWXHOyyW8GJGy
+         d8h8g4QAxlC04krRKO5rFPYunjGlVQBmPc7ViToW2tePDDUtMRJJ/bHXQcl3rmTvn2/m
+         JvP7vL0juKwdHbmRooEwaMyy7FVgSYU55bQVMRh8OnEUbUgL8HxNvmi0/keiPkItpukO
+         W/POeyy3kCObLzs8i96Cn3LrmKvVzZliYCb+wTE8YgV7+XaR8fL0gQeczF2HIoV/DBZz
+         yERQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=3XWsXh6s8rZcIH0Yoy9ZwNRrsd0Df6UoSxtRuKAjcWw=;
+        b=SSnv5YMGaQIfx/Nk84w31AdFlEleelVe+edjw8XYXRXmQQBByx8OUT72PSSlxEKG+f
+         pPAnYdHcmRiiX5I09JR2DT8btxEy7wYWvHtF9TveMzWCttobTbrhwEY55MrGppwENBxA
+         gV7yZfyYzrBXVSaMBF1zh4e6yXXamU+/lpsX4AF6Ws94vxH15+INn7fPv9QXike0elEW
+         esVJBQ3+Tl79a1Cyu4E3do3hMqrh9uczvuT11TXvq2qAxCmQzQgI1hRPDnyy0XVsZhSj
+         uexmHTpqzmbraYCLubXd6us2WrYE0xa1EIPi6NmraXNWQZP4HkXvgYNjpxELN1OB1MvQ
+         Gy/g==
+X-Gm-Message-State: AOAM532wLD3x6EJAB7JYcfM1OpOO5kG9vbNl0hW44sXxoAvwc5hTl+7H
+        LVoaLiTs8/J9qK6pEF/fisFjBGXF8p6Wt4BHRpc97IvOG5dOdoVpwCczeQ6HsJf6+vuW+l5/eDt
+        I+KwrwcMpCfMpaZ6FEm1w6yAgFOqSvg9/DMVQL6dqBtzbJ8ESNtPMk7F+2OPQG8k=
+X-Google-Smtp-Source: ABdhPJwFD29AXtC97m0FqtlDW2XvwLuCxW2hesIgMR1XCmaheocSyL52tNqgdB+rUapHT6cMWhs+Zrn1yBfOdQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:903:244e:: with SMTP id
+ l14mr528606pls.148.1643937032618; Thu, 03 Feb 2022 17:10:32 -0800 (PST)
+Date:   Thu, 03 Feb 2022 17:10:21 -0800
+In-Reply-To: <20220129000446.99261-6-chooglen@google.com>
+Message-Id: <kl6lwnibzbb6.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20220124204442.39353-1-chooglen@google.com> <20220129000446.99261-1-chooglen@google.com>
+ <20220129000446.99261-6-chooglen@google.com>
+Subject: Re: [PATCH v8 5/6] branch: add --recurse-submodules option for branch creation
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> When a run command cannot be executed or found, shells return exit code
-> 126 or 127, respectively.  Valid run commands are allowed to return
-> these codes as well to indicate bad revisions, though, for historical
-> reasons.  This means typos can cause bogus bisect runs that go over the
-> full distance and end up reporting invalid results.
->
-> The best solution would be to reserve exit codes 126 and 127, like
-> 71b0251cdd (Bisect run: "skip" current commit if script exit code is
-> 125., 2007-10-26) did for 125, and abort bisect run when we get them.
-> That might be inconvenient for those who relied on the documentation
-> stating that 126 and 127 can be used for bad revisions, though.
+I tested this series some more and found a silly bug.
+Let me know if I should just send v9 instead.
 
-I think the basic idea is sound and useful.  How happy are we who
-was involved in the discussion with this result?
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
 
-> +static int get_first_good(const char *refname, const struct object_id =
-*oid,
-> +			  int flag, void *cb_data)
-> +{
-> +	oidcpy(cb_data, oid);
-> +	return 1;
-> +}
+Subject: [PATCH] submodule-config.c: remove accidental pointer reuse
 
-OK, this iterates and stops at the first one.
+List entries allocated by traverse_tree_submodules() are sharing the
+.name_entry pointer, but each of them needs their own pointer. Fix this.
 
-> +static int verify_good(const struct bisect_terms *terms,
-> +		       const char **quoted_argv)
-> +{
-> +	int rc;
-> +	enum bisect_error res;
-> +	struct object_id good_rev;
-> +	struct object_id current_rev;
-> +	char *good_glob =3D xstrfmt("%s-*", terms->term_good);
-> +	int no_checkout =3D ref_exists("BISECT_HEAD");
-> +
-> +	for_each_glob_ref_in(get_first_good, good_glob, "refs/bisect/",
-> +			     &good_rev);
-> +	free(good_glob);
-> +
-> +	if (read_ref(no_checkout ? "BISECT_HEAD" : "HEAD", &current_rev))
-> +		return -1;
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+ submodule-config.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
- * Could the current_rev already be marked as "good", in which case
-   we can avoid cost of rewriting working tree files to a
-   potentially distant revision?  I often do manual tests to mark
-   "bisect good" or "bisect bad" before using "bisect run".
-
- * Can we have *no* rev that is marked as "good"?  I think we made
-   it possible to say "my time is more valuable than machine cycles,
-   so I'll only tell you that this revision is broken and give you
-   no limit on the bottom side of the history.  still assume that
-   there was only one good-to-bad transition in the history and find
-   it" by supplying only one "bad" and no "good" when starting to
-   bisect.  And in such a case, ...
-
-> +	res =3D bisect_checkout(&good_rev, no_checkout);
-
-... this would feed an uninitialized object_id to bisect_checkout.
-
-Thanks.
+diff --git a/submodule-config.c b/submodule-config.c
+index 24b8d1a700..c9f54bc72d 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -757,7 +757,8 @@ static void traverse_tree_submodules(struct repository *r,
+ 		if (S_ISGITLINK(name_entry->mode) &&
+ 		    is_tree_submodule_active(r, root_tree, tree_path)) {
+ 			st_entry = xmalloc(sizeof(*st_entry));
+-			st_entry->name_entry = name_entry;
++			st_entry->name_entry = xmalloc(sizeof(*st_entry->name_entry));
++			*st_entry->name_entry = *name_entry;
+ 			st_entry->submodule =
+ 				submodule_from_path(r, root_tree, tree_path);
+ 			st_entry->repo = xmalloc(sizeof(*st_entry->repo));
+-- 
+2.35.0.263.gb82422642f-goog
