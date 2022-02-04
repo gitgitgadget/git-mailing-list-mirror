@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F4231C433F5
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 12:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C508C433EF
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 12:34:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237679AbiBDMan (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Feb 2022 07:30:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47992 "EHLO
+        id S1358496AbiBDMe0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Feb 2022 07:34:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1358691AbiBDMak (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Feb 2022 07:30:40 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99830C061714
-        for <git@vger.kernel.org>; Fri,  4 Feb 2022 04:30:39 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id s13so19016416ejy.3
-        for <git@vger.kernel.org>; Fri, 04 Feb 2022 04:30:39 -0800 (PST)
+        with ESMTP id S234861AbiBDMeZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Feb 2022 07:34:25 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 400AEC061714
+        for <git@vger.kernel.org>; Fri,  4 Feb 2022 04:34:25 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id jx6so19196911ejb.0
+        for <git@vger.kernel.org>; Fri, 04 Feb 2022 04:34:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=511o/7csseknJypTMdDQxbtsWeQSlRSnn5AmOjdaDoI=;
-        b=GmX11idCARZ+WnoPWnOWFBQOyhkae95+g49XpePxbqsflW32GIdECeTEN1/Ldi2nf2
-         dmZmdNx8mgi5KhnVvcbsUOXWWFX99t/QWM8qSiKrYnpUssqVDZpyc3cKb69l9S3bBe23
-         Pjr1lkHaH3j7lbAbownFI4X3PVyl3Gt+leWdnWN59hdA4boZgkg0S7uWtt8oRFVlGU8V
-         BNikZ/hEge083bDdy2lmMfcpIyL9MGyA7OsxLXfyYszdC9Pf3NCQwE1PCeyflTQRA+el
-         bbr1wbur5yjGS/gC72ClDgxLW5EqW3rzgiVyBh2J+/LTdgj69pG091E+QFYDAH4xhi+g
-         brhA==
+        bh=+tUQ598yfoPzK1/07Brn+IpFRJ8L8+/HiIQvtbm36fo=;
+        b=aO61F0eCTfZeosVcHp+GMMIsZYDLJPqFdxMSZ6+/hSiDjztoM71IismY3VtUVO1uAs
+         M9NZMnP6gWf+Ve1efFSps82FYvYe7sH0D2FD6H5GiK/p0SDY+rhqe0fDnTpvP0hvyayJ
+         EogffK5/5wiQwlOK5/4o7S8Z3fUT7gKFAWzUzLQYIEetG8uQ3tRElPxAbjW6eujmavJH
+         s1r9NcgNv3eG6UgeYCA+Qi1k+2FuEXkfPUAo0bNNMfOWCpMtBWffgtkGPeiQnKobgjhe
+         xh1nZazbMPq2ULjzYZBFTrMedxnlGCFACgkzKmQQRcF9biFJuRb84u7ZSfpX0zXGJYke
+         bOtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=511o/7csseknJypTMdDQxbtsWeQSlRSnn5AmOjdaDoI=;
-        b=KJTqRipHmlDYnOMRL1IDJY3Wp4lo08XQaG2DURZdxYB0gB8sOSDoMA1rt0FXWrja8I
-         uhuMfOF/7m0RUPU3pmKbzTAOcuz9xVbCbcQGchs8UZ91fJH1N42RJmZN13vCdytgYva/
-         WhUJLXLNv5nxZaGfzKKIuq28TnFdt+0FihkVHY4nAiQMqObJECtULDWULGUS61KjW0wY
-         9nl+R/krW1fhC/a0ZL0Jtkc3JGMavTChN8T/S7DGyOkkOtFJMjLHTGXH2Mb0Q1VZR6Fy
-         rz2av3xkvxzWd0YMwWQPfjprINgPKFKHS6liD5nsV3qCWmm3Ey7AZVyULZj0bg0As4wU
-         RLOw==
-X-Gm-Message-State: AOAM53144ExEfULgkj3u+IrzEkhhkMjBkSzwRv9EVLjqSOdi55/p06zd
-        EectZUKIbGr3D5EZxZLEbDc=
-X-Google-Smtp-Source: ABdhPJz6ZzUQP+R7C0QkfEzeO9OAgO4h63sXPfzY5HDGexwp6ZHMvFN7PxnG8wy2jefUygBvtnlu5Q==
-X-Received: by 2002:a17:907:724c:: with SMTP id ds12mr2297816ejc.203.1643977838058;
-        Fri, 04 Feb 2022 04:30:38 -0800 (PST)
+        bh=+tUQ598yfoPzK1/07Brn+IpFRJ8L8+/HiIQvtbm36fo=;
+        b=L8/aTvmU5EzA9nIRamkpBlxnpmVSCOEn1bkXY4cCP/m8OD9VS+6czluXNK1jhAQcie
+         D6PsPVS/x5Bd97NdxyYTdyCQArUSsNl96FOhpVyD7mWV9fs2QsncA61NJcBaO0IuZejY
+         DHCkXJWwBvGjj1cOfRjl2eGHU2/hszMiRBAzvjqD/+H5CiZTtzdQlC5uMZBEkELTiDmZ
+         8b2sXTABKJXxl/iUn8LHnkYk84dqGDlDTb6cgZDGwXH8XTXrkp4DHx1hKEs+v0E0kVeq
+         UKbPq5dAL+l9OADAiZGFnMBObrwzf78JELLqEw33QoOXuadoPiol0EbP4N3OLjF1B9hc
+         jfHA==
+X-Gm-Message-State: AOAM5321q5/EokxAx7xoFoBCEzAtkYZy43Z5RN05M+W55Z2MyUpNyL4C
+        8cihi/2s+CKKioHdMACr758=
+X-Google-Smtp-Source: ABdhPJxH5YjqWxcoU53fP+8lsYkLdmPXOj0V1Scq+PvAj9SjN3FvO+Q3lH4W+62xXYIcOktYudBaQA==
+X-Received: by 2002:a17:906:6a05:: with SMTP id qw5mr2321260ejc.90.1643978063699;
+        Fri, 04 Feb 2022 04:34:23 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id by4sm758302edb.107.2022.02.04.04.30.37
+        by smtp.gmail.com with ESMTPSA id h15sm625267ejg.144.2022.02.04.04.34.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Feb 2022 04:30:37 -0800 (PST)
+        Fri, 04 Feb 2022 04:34:23 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nFxjZ-0064MA-3F;
-        Fri, 04 Feb 2022 13:30:37 +0100
+        id 1nFxnC-0064VN-IE;
+        Fri, 04 Feb 2022 13:34:22 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-Subject: ja/i18n-common-messages (was: What's cooking in git.git (Feb 2022,
- #01; Thu, 3))
-Date:   Fri, 04 Feb 2022 13:29:11 +0100
+Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: ps/avoid-unnecessary-hook-invocation-with-packed-refs (was: What's
+ cooking in git.git (Feb 2022, #01; Thu, 3))
+Date:   Fri, 04 Feb 2022 13:31:53 +0100
 References: <xmqqr18jnr2t.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
 In-reply-to: <xmqqr18jnr2t.fsf@gitster.g>
-Message-ID: <220204.86iltu3jbm.gmgdl@evledraar.gmail.com>
+Message-ID: <220204.86ee4i3j5d.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -71,23 +71,32 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Feb 03 2022, Junio C Hamano wrote:
 
-> * ja/i18n-common-messages (2022-01-31) 5 commits
->  - i18n: fix some misformated placeholders in command synopsis
->  - i18n: remove from i18n strings that do not hold translatable parts
->  - i18n: factorize "invalid value" messages
->  - SQUASH???
->  - i18n: factorize more 'incompatible options' messages
+> * ps/avoid-unnecessary-hook-invocation-with-packed-refs (2022-01-17) 6 commits
+>  - refs: skip hooks when deleting uncovered packed refs
+>  - refs: do not execute reference-transaction hook on packing refs
+>  - refs: demonstrate excessive execution of the reference-transaction hook
+>  - refs: allow skipping the reference-transaction hook
+>  - refs: allow passing flags when beginning transactions
+>  - refs: extract packed_refs_delete_refs() to allow control of transaction
 >
->  Unify more messages to help l10n.
+>  Because a deletion of ref would need to remove it from both the
+>  loose ref store and the packed ref store, a delete-ref operation
+>  that logically removes one ref may end up invoking ref-transaction
+>  hook twice, which has been corrected.
 >
->  Will merge to 'next' after squashing the fix-up in.
->  source: <pull.1123.v4.git.1643666870.gitgitgadget@gmail.com>
+>  Will merge to 'next'?
+>  source: <cover.1642406989.git.ps@pks.im>
 
-I had a comment on the API direction in parse-options.c, which I think
-should be done differently, but I also think it would be fine to just
-change it up later:
+I think so, I didn't reply but I consider the feedback I had on it fully
+addressed. In particular the "is this the right direction?" comment
+replied to at https://lore.kernel.org/git/YeUhMPSlC%2FX6HRBF@ncase/
 
-https://lore.kernel.org/git/220201.86a6fa9tmr.gmgdl@evledraar.gmail.com/
+I'm not digging it up now, but I think Han-Wen correctly noted that we
+have a "packed" backend for no particular good reason, and much of that
+is die/stub functions, we should really just have a unified "the file
+stuff" backend.
 
-I replied to v2 instead of v4 due to some (now fixed) mail delays at the
-time, but that comment still applies to the latest version.
+So from an API perspective messaging upwards about loose->packed or
+whatever is as irrelevant as having a psql backend and messaging about
+VACUUM, which is essentially paraphrasing what Patrick correctly points
+out there.
