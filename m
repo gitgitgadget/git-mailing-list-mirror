@@ -2,75 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 788DEC433EF
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 04:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 470D9C433F5
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 04:28:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356854AbiBDEXM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 23:23:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50840 "EHLO
+        id S244549AbiBDE2Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 23:28:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231477AbiBDEXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 23:23:11 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12824C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 20:23:11 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id s5so15410263ejx.2
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 20:23:11 -0800 (PST)
+        with ESMTP id S233844AbiBDE2Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 23:28:24 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7A7FC061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 20:28:23 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id u24so10497006eds.11
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 20:28:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=DnK5IggHJbEkXtUDc3K1I2rStP1XJqdTaHxSFh5Bx/8=;
-        b=lAmeaSFSeNRBlQSmlkFk4V+5jBcptcL85cB+AxkkudiF8QU6NZO3nhQXSQ8hrMJX42
-         PkdHsCXeQS+HJgxNKXNHo7GxDbQPN2R34fdoRQod47uc3gmnqej3HCT96cb0XdNVWHPw
-         86BKFkshSm7UcgunoUeZBJKIRg2OslM8rkRG+56KHRgAt/EVR+DaE+nv+vNWo70dA1zs
-         BWpFGWPG4YxcSnSKFkHHFIfPSaHncDWufKs5zuX4fcoXA6Exw85Wj2ncoQSAHin3ERBB
-         1Uk7ejB5gs5vHuGo90uTMoh8vJH5dADuBC8IrIWxCzpercde1vjBkzyFK7J6iim8SPci
-         kIGg==
+        bh=q58cchLonvmKm+4IaF+kTndtB/hSox+0odYU5cm5ASQ=;
+        b=P3LJdwaCmOnJ76iFCmODXiDkL7/QegF4lcsCbsItfUsKj18gLbJsaLM7lxL0WWTsmk
+         7BlM1bKkUeJTAP2JuUZGX7bFSEJwi1AvIt2sNKHvxsxSgDT45aOyDQoWFjxtOWoVh72U
+         tzKj6MuMTcgf58wyxg+Zw3sEIJ4EEaXnrxWbVHDzglymeAqBSAOpS/r2/7XyIgMbg96y
+         8iTOszaQ2xWPCPAwSKTVjWQ+0TiJ4cTmm5fzyJ29kMLxF+dKrpiYjFhY3O6IOy6iKsaG
+         C0BfH5aqc4xNegKeLGD72p1ElWyiUB5Kst8gA35bVC9AwEqVA71Qn31Ekvl0V5IOegin
+         CM+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=DnK5IggHJbEkXtUDc3K1I2rStP1XJqdTaHxSFh5Bx/8=;
-        b=luVI2SjCWrlhVzCginupCfTr9WcjbQB+Y1XWTTjV58kOzifon88JYKNqEpgarFyYl8
-         Gh/whbEofOfJ68yATwlO8jltU5DtNqSi2uRFklCoK0P4oErt8hLEZQCz1vIQaSoFo1te
-         ys9f7AWmGIswmytZzIVJ36m9ZgEyzpI4jCGil5ntX4LbIszriUfv/KechJwM8xsuSgoF
-         OP/yAK+m0ilC2iinUlNQpD2UnfKiIAWTIi69eTum7wl2FJaH0eUn6lpT9QhNKHH2V/5s
-         EE2jfhIZ1+LNWFAyibwgh4BfGFE3ns3jYDMqt0grwLHqwpkvewehqo1qSbuKq67krf04
-         2Dsg==
-X-Gm-Message-State: AOAM530CuwHW3CSyUQp8mcKPW/514NzMcmYpp6UKkxLrLLBv82iKH9cm
-        7E7nKbqNPpuesaTBMLCTMV4=
-X-Google-Smtp-Source: ABdhPJwYCdPKElUpO/ONr2iiehTntU0esPMMhox5S+CkG8BjuyQ14x0JZyZbkYDA74E98+OrsPW+Mg==
-X-Received: by 2002:a17:907:8a1b:: with SMTP id sc27mr933264ejc.300.1643948589299;
-        Thu, 03 Feb 2022 20:23:09 -0800 (PST)
+        bh=q58cchLonvmKm+4IaF+kTndtB/hSox+0odYU5cm5ASQ=;
+        b=NNcwDoRGoGzBSbY/U9JNxmuaj0eNZJkX6PtCDHZn11+8OQzhAQGioHnfUO+7Jg/xqY
+         uDngvGSieK0o7AoSEAmsj9nnKG7xiygBivDNM0l+d7D6+iCaZKG1FRahkd7ZMew/SgVb
+         rntkDocXsOBhRz8eUFyxzWXFeHn+aBlzKx4su4SC3WmcOCY6YMhalL/jI+ril14nljfa
+         uFnmaUPgi5K8xkZJ86volAYIIakjvlQ5op6leq+i0/ksmX9CrFQFjd1NvrWs5XrBmLqS
+         GMQ8sC4Y7OH3Mw2I/MZVj3XV9NH5pcGf5cnnVu3GZf+oARZYoKQqpMQwfOaMSYsc6E9C
+         Aq1w==
+X-Gm-Message-State: AOAM531ZHGcE49RLiii+zF9RW9UbUFxfNKHFbRpg+E3+q0iZZWokxsrN
+        TqavpbGgvgBxi0jDNzN4of2x0VzduTtqGg==
+X-Google-Smtp-Source: ABdhPJzdPcEDqLuAOW10vgCC2s08PtvDmW9Jteb6seF6CrZfQ0HAqDHagg1TMg+EmVvHrSvGWxFzsA==
+X-Received: by 2002:a05:6402:548:: with SMTP id i8mr1278113edx.60.1643948902087;
+        Thu, 03 Feb 2022 20:28:22 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id gu2sm235064ejb.221.2022.02.03.20.23.08
+        by smtp.gmail.com with ESMTPSA id lo15sm247975ejb.28.2022.02.03.20.28.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Feb 2022 20:23:08 -0800 (PST)
+        Thu, 03 Feb 2022 20:28:21 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nFq7o-005n6z-5F;
-        Fri, 04 Feb 2022 05:23:08 +0100
+        id 1nFqCr-005nJk-0E;
+        Fri, 04 Feb 2022 05:28:21 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Lessley Dennington <lessleydennington@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com,
-        johannes.schindelin@gmail.com, Elijah Newren <newren@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v5 0/3] completion: sparse-checkout updates
-Date:   Fri, 04 Feb 2022 05:21:26 +0100
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        johannes.schindelin@gmail.com, Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>
+Subject: Re: [PATCH v5 3/3] completion: handle unusual characters for
+ sparse-checkout
+Date:   Fri, 04 Feb 2022 05:25:38 +0100
 References: <pull.1108.v4.git.1643318514.gitgitgadget@gmail.com>
  <pull.1108.v5.git.1643921091.gitgitgadget@gmail.com>
- <xmqqo83nr59i.fsf@gitster.g>
- <7033ab1b-7d90-d83c-fc65-33801c6348cc@gmail.com>
- <xmqqy22rpm10.fsf@gitster.g>
- <eb442213-d369-fdcd-c3a3-05239bccb5bf@gmail.com>
- <cb6f65b5-4e02-08af-bea6-141fb6227927@gmail.com>
+ <ddf5e583dd71a729d6fb0513aed9fc4eb6ebbdd7.1643921091.git.gitgitgadget@gmail.com>
+ <CABPp-BFD51BTsG7gQFD4BuqVLLBV2iJOKnrnya89otoGonzVvA@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <cb6f65b5-4e02-08af-bea6-141fb6227927@gmail.com>
-Message-ID: <220204.86leyr45w3.gmgdl@evledraar.gmail.com>
+In-reply-to: <CABPp-BFD51BTsG7gQFD4BuqVLLBV2iJOKnrnya89otoGonzVvA@mail.gmail.com>
+Message-ID: <220204.86h79f45nf.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -79,64 +78,63 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Feb 03 2022, Lessley Dennington wrote:
+On Thu, Feb 03 2022, Elijah Newren wrote:
 
-> On 2/3/22 3:59 PM, Lessley Dennington wrote:
->>=20
->> On 2/3/22 3:28 PM, Junio C Hamano wrote:
->>> Lessley Dennington <lessleydennington@gmail.com> writes:
->>>
->>>> On 2/3/22 1:48 PM, Junio C Hamano wrote:
->>>>> "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
->>>>> writes:
->>>>>
->>>>>> This series is based on en/sparse-checkout-set.
->>>>> This has been a very helpful note, but after the topic was merged to
->>>>> 'master' on Jan 3rd, it has become a tad stale.=C2=A0 Let me apply the
->>>>> topic directly on v2.35.0 instead.
->>>>> Thanks.
->>>>
->>>> Thank you for the heads up! I will remove from future versions.
->>>
->>> No problem.
->>>
->>> FWIW, the tip of 'seen' seems to be failing the CI; I haven't looked
->>> into the cause of the breakage.
->>>
->>> =C2=A0=C2=A0 https://github.com/git/git/actions/runs/1792151138
->>>
->>> There is another CI job running on 'seen', whose only difference from
->>> the above version is that this topic has been temporarily ejected:
->>>
->>> =C2=A0=C2=A0 https://github.com/git/git/actions/runs/1792296432
->>>
->>> We'll see if that fails the same way (in which this topic may not
->>> have anything to do with the breakage) or if it passes.
->>>
->>> Thanks.
->> I just merged seen locally and was able to repro the failure. I will
->> submit a fix ASAP.
+> On Thu, Feb 3, 2022 at 12:44 PM Lessley Dennington via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Lessley Dennington <lessleydennington@gmail.com>
+>> +# use FUNNYNAMES to avoid running on Windows, which doesn't permit back=
+slashes in paths
+>> +test_expect_success FUNNYNAMES 'cone mode sparse-checkout completes dir=
+ectory names with special characters' '
+>> +       # reset sparse-checkout
+>> +       git -C sparse-checkout sparse-checkout disable &&
+>> +       (
+>> +               cd sparse-checkout &&
+>> +               mkdir "directory with spaces" &&
+>> +               mkdir "$(printf "directory\twith\ttabs")" &&
+>> +               mkdir "directory\with\backslashes" &&
+>> +               mkdir "directory-with-=C3=A1ccent" &&
+>> +               >"directory with spaces/randomfile" &&
+>> +               >"$(printf "directory\twith\ttabs")/randomfile" &&
+>> +               >"directory\with\backslashes/randomfile" &&
+>> +               >"directory-with-=C3=A1ccent/randomfile" &&
+>> +               git add . &&
+>> +               git commit -m "Add directories containing unusual charac=
+ters" &&
+>> +               git sparse-checkout set --cone "directory with spaces" \
+>> +                       "$(printf "directory\twith\ttabs")" "directory\w=
+ith\backslashes" \
+>> +                       "directory-with-=C3=A1ccent" &&
+>> +               test_completion "git sparse-checkout add dir" <<-\EOF
+>> +               directory with spaces/
+>> +               directory       with    tabs/
+>> +               directory\with\backslashes/
+>> +               directory-with-=C3=A1ccent/
+>> +               EOF
+>> +       )
+>> +'
 >
-> GitGitGadget CI has passed with the fix, but it is not responding to the
-> /submit command. As a heads up, fix may not be submitted until folks who
-> are a bit more knowledgeable about GGG than I are available to help
-> troubleshoot.
+> I'm glad you tested with lots of special characters -- spaces, tabs,
+> backslashes, and accents.  Newlines might also be nice, but probably
+> makes the test hard.  Anyway, looks good to me, other than the
+> indentation change.
 
-Just an FYI: If you're blocked on GGG it takes 1 minute to click through
-to generate an app password for your GMail account.
+This looks like its over-skipping tests, the comment says Windows
+doesn't like \ in paths, but there's a lo more being skipped here than
+that.
 
-Then you can use it with git-send-email with config like e.g. this one
-I've got:
-=20=20=20=20
-    $ git config -l|grep -F sendemail.|perl -pe 's/pass=3D\K.*/WORD/g'
-    sendemail.smtpserver=3Dsmtp.gmail.com
-    sendemail.smtpencryption=3Dssl
-    sendemail.smtpuser=3Davarab@gmail.com
-    sendemail.confirm=3Dalways
-    sendemail.smtppass=3DWORD
-    sendemail.xmailer=3Dtrue
-    sendemail.to=3Dgit@vger.kernel.org
-    sendemail.security.to=3Dgit-security@googlegroups.com
-    sendemail.test.to=3Davarab@gmail.com
+Shouldn't e.g. "directory-with-=C3=A1ccent/" be pulled out into another tes=
+t,
+leaving the directory\with\backslashes/ etc. as non-Windows?
 
-Then you can submit your patches with git-format-patch + git-send-email.
+Another useful method is to just try to create those paths
+unconditionally, but with "mkdir" etc., and if that works run the test
+with git. After all if the OS can create a given path, but we're not
+handling it that's our bug.
+
+But if the FS just doesn't support the path we'd catch that in the
+"mkdir" (or whatever), which we can assume behaves sanely on that
+platform (or we're horribly broken anyway...).
+
