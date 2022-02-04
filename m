@@ -2,248 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB0B1C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 04:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 788DEC433EF
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 04:23:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1356913AbiBDELO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 23:11:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48266 "EHLO
+        id S1356854AbiBDEXM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 23:23:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240714AbiBDELN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 23:11:13 -0500
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D51C061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 20:11:13 -0800 (PST)
-Received: by mail-qt1-x82d.google.com with SMTP id h8so4716773qtk.13
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 20:11:13 -0800 (PST)
+        with ESMTP id S231477AbiBDEXL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 23:23:11 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12824C061714
+        for <git@vger.kernel.org>; Thu,  3 Feb 2022 20:23:11 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id s5so15410263ejx.2
+        for <git@vger.kernel.org>; Thu, 03 Feb 2022 20:23:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version;
-        bh=Frd2pppSuWvY338Tu8o4JzXOjp0A71adIn7mzgQQuFg=;
-        b=C/aIcBqyXfO56TjpmqtjSqcwfVplxgkHvh0qlxDqW5REPWnsW5MV69CMuLTCexQ13U
-         IV41HcsNiANlgKxTQ6hSa8kT/12/qdUERs9BP3ouY2N1O0iLrU1VuCzWswow46nOjbZL
-         lNLcNrZkntXxvk07zp4urefyiKmByjC+iOGYqKWCza6yQ4Obfhke1/fljrS1iKY9Rq4S
-         n1jWW4PmQQ86h+/G9dhWWM7tAsBVwlb5eG1/Pz9E6tnYKxicY7uuiScZq8eCiWiUTgws
-         P0zCpwCoszgAKQC2Cqyn4SiUNV4/mMCJzFVJlbgRrJUsuv55Kkdu6A+eC0NFLwCiMAI9
-         stoQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=DnK5IggHJbEkXtUDc3K1I2rStP1XJqdTaHxSFh5Bx/8=;
+        b=lAmeaSFSeNRBlQSmlkFk4V+5jBcptcL85cB+AxkkudiF8QU6NZO3nhQXSQ8hrMJX42
+         PkdHsCXeQS+HJgxNKXNHo7GxDbQPN2R34fdoRQod47uc3gmnqej3HCT96cb0XdNVWHPw
+         86BKFkshSm7UcgunoUeZBJKIRg2OslM8rkRG+56KHRgAt/EVR+DaE+nv+vNWo70dA1zs
+         BWpFGWPG4YxcSnSKFkHHFIfPSaHncDWufKs5zuX4fcoXA6Exw85Wj2ncoQSAHin3ERBB
+         1Uk7ejB5gs5vHuGo90uTMoh8vJH5dADuBC8IrIWxCzpercde1vjBkzyFK7J6iim8SPci
+         kIGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version;
-        bh=Frd2pppSuWvY338Tu8o4JzXOjp0A71adIn7mzgQQuFg=;
-        b=jvKs1jJyEmDWHx/voNreMMK6X359OjcCXKo1P8IGp1XkwMVi2B8LaCLqg0rduy1/ly
-         ynQ5rypVIs3Px8qcwj9fyyDvvuN/6yykdCqpPdiNgRu3DkIl8rllNbUOZojGNiWEurMa
-         UDz3R/ogjRW8pmKrogajNwpmsEmP+yb/zTgT14OZF6/CBSR9LgS7Nn45pSqex3Y1CWaY
-         baqqlpMYszSVJoOYIKI34XxdBSIGsTGF9lECWNX81G8YqLof17RICxVal4V7O/jCLGuD
-         o5sKL+jYA2blIdV6u2AveilecE5fUFmsTJ7ygmSl/3hrPh7nEbTh+1rT/E/OIz2PCdkA
-         sa2g==
-X-Gm-Message-State: AOAM530nCEHXqEXEk0qKJmeaQ7ldflOGEWISZ9MmX4tDFHx1qRw9FTpy
-        Cl4L7UxZi656tIR8j6zWlJM=
-X-Google-Smtp-Source: ABdhPJxkrPn/doyG0yJBZFe9w6Fe3UB7po/qACtLJM1anH6tR5gx81R+5UL9U4d/hye7ELSQv6XvhQ==
-X-Received: by 2002:ac8:5891:: with SMTP id t17mr859928qta.285.1643947872751;
-        Thu, 03 Feb 2022 20:11:12 -0800 (PST)
-Received: from [192.168.1.211] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id x4sm445134qkm.47.2022.02.03.20.11.11
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 03 Feb 2022 20:11:12 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, phillip.wood123@gmail.com,
-        avarab@gmail.com, e@80x24.org, bagasdotme@gmail.com
-Subject: Re: [PATCH 2/2] catfile.c: add --batch-command mode
-Date:   Thu, 03 Feb 2022 23:11:10 -0500
-X-Mailer: MailMate Trial (1.14r5852)
-Message-ID: <74E01F50-D5B4-41F0-A6F0-BBCA462ED74A@gmail.com>
-In-Reply-To: <xmqqo83nsoxs.fsf@gitster.g>
-References: <pull.1212.git.git.1643915286.gitgitgadget@gmail.com>
- <ebd2a1356017905245744babf32c5b78a0af1639.1643915286.git.gitgitgadget@gmail.com>
- <xmqqo83nsoxs.fsf@gitster.g>
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=DnK5IggHJbEkXtUDc3K1I2rStP1XJqdTaHxSFh5Bx/8=;
+        b=luVI2SjCWrlhVzCginupCfTr9WcjbQB+Y1XWTTjV58kOzifon88JYKNqEpgarFyYl8
+         Gh/whbEofOfJ68yATwlO8jltU5DtNqSi2uRFklCoK0P4oErt8hLEZQCz1vIQaSoFo1te
+         ys9f7AWmGIswmytZzIVJ36m9ZgEyzpI4jCGil5ntX4LbIszriUfv/KechJwM8xsuSgoF
+         OP/yAK+m0ilC2iinUlNQpD2UnfKiIAWTIi69eTum7wl2FJaH0eUn6lpT9QhNKHH2V/5s
+         EE2jfhIZ1+LNWFAyibwgh4BfGFE3ns3jYDMqt0grwLHqwpkvewehqo1qSbuKq67krf04
+         2Dsg==
+X-Gm-Message-State: AOAM530CuwHW3CSyUQp8mcKPW/514NzMcmYpp6UKkxLrLLBv82iKH9cm
+        7E7nKbqNPpuesaTBMLCTMV4=
+X-Google-Smtp-Source: ABdhPJwYCdPKElUpO/ONr2iiehTntU0esPMMhox5S+CkG8BjuyQ14x0JZyZbkYDA74E98+OrsPW+Mg==
+X-Received: by 2002:a17:907:8a1b:: with SMTP id sc27mr933264ejc.300.1643948589299;
+        Thu, 03 Feb 2022 20:23:09 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id gu2sm235064ejb.221.2022.02.03.20.23.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Feb 2022 20:23:08 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nFq7o-005n6z-5F;
+        Fri, 04 Feb 2022 05:23:08 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Lessley Dennington <lessleydennington@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lessley Dennington via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com,
+        johannes.schindelin@gmail.com, Elijah Newren <newren@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v5 0/3] completion: sparse-checkout updates
+Date:   Fri, 04 Feb 2022 05:21:26 +0100
+References: <pull.1108.v4.git.1643318514.gitgitgadget@gmail.com>
+ <pull.1108.v5.git.1643921091.gitgitgadget@gmail.com>
+ <xmqqo83nr59i.fsf@gitster.g>
+ <7033ab1b-7d90-d83c-fc65-33801c6348cc@gmail.com>
+ <xmqqy22rpm10.fsf@gitster.g>
+ <eb442213-d369-fdcd-c3a3-05239bccb5bf@gmail.com>
+ <cb6f65b5-4e02-08af-bea6-141fb6227927@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <cb6f65b5-4e02-08af-bea6-141fb6227927@gmail.com>
+Message-ID: <220204.86leyr45w3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio, thanks for the review!
 
-On 3 Feb 2022, at 14:57, Junio C Hamano wrote:
+On Thu, Feb 03 2022, Lessley Dennington wrote:
 
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> On 2/3/22 3:59 PM, Lessley Dennington wrote:
+>>=20
+>> On 2/3/22 3:28 PM, Junio C Hamano wrote:
+>>> Lessley Dennington <lessleydennington@gmail.com> writes:
+>>>
+>>>> On 2/3/22 1:48 PM, Junio C Hamano wrote:
+>>>>> "Lessley Dennington via GitGitGadget" <gitgitgadget@gmail.com>
+>>>>> writes:
+>>>>>
+>>>>>> This series is based on en/sparse-checkout-set.
+>>>>> This has been a very helpful note, but after the topic was merged to
+>>>>> 'master' on Jan 3rd, it has become a tad stale.=C2=A0 Let me apply the
+>>>>> topic directly on v2.35.0 instead.
+>>>>> Thanks.
+>>>>
+>>>> Thank you for the heads up! I will remove from future versions.
+>>>
+>>> No problem.
+>>>
+>>> FWIW, the tip of 'seen' seems to be failing the CI; I haven't looked
+>>> into the cause of the breakage.
+>>>
+>>> =C2=A0=C2=A0 https://github.com/git/git/actions/runs/1792151138
+>>>
+>>> There is another CI job running on 'seen', whose only difference from
+>>> the above version is that this topic has been temporarily ejected:
+>>>
+>>> =C2=A0=C2=A0 https://github.com/git/git/actions/runs/1792296432
+>>>
+>>> We'll see if that fails the same way (in which this topic may not
+>>> have anything to do with the breakage) or if it passes.
+>>>
+>>> Thanks.
+>> I just merged seen locally and was able to repro the failure. I will
+>> submit a fix ASAP.
 >
->> Subject: Re: [PATCH 2/2] catfile.c: add --batch-command mode
->
-> "cat-file: add --batch-command mode" perhaps.  The patch touching
-> the file "catfile.c" (which does not even exist) is an irrelevant
-> implementation detail to spend 2 extra bytes in "git shortlog"
-> output.
->
->> From: John Cai <johncai86@gmail.com>
->>
->> Add new flag --batch-command that will accept commands and arguments
->> from stdin, similar to git-update-ref --stdin.
->>
->> At GitLab, we use a pair of long running cat-file processes when
->> accessing object content. One for iterating over object metadata with
->> --batch-check, and the other to grab object contents with --batch.
->>
->> However, if we had --batch-command, we wouldnt need to keep both
->> processes around, and instead just have one process where we can flip
->> between getting object info, and getting object contents. This means we
->> can get rid of roughly half of long lived git cat-file processes. This
->> can lead to huge savings since on a given server there could be hundreds
->> of git cat-file processes running.
->
-> Hmph, why hundreds, not two you listed?
->
-> Do you mean "we have two per repository, but by combining, we can do
-> with just one per repository, halving the number of processes"?
+> GitGitGadget CI has passed with the fix, but it is not responding to the
+> /submit command. As a heads up, fix may not be submitted until folks who
+> are a bit more knowledgeable about GGG than I are available to help
+> troubleshoot.
 
-Yes, exactly. I'll reword this in the next version to be more clear.
+Just an FYI: If you're blocked on GGG it takes 1 minute to click through
+to generate an app password for your GMail account.
 
->
->> git cat-file --batch-command
->>
->> would enter an interactive command mode whereby the user can enter in
->> commands and their arguments:
->>
->> <command> [arg1] [arg2] NL
->>
->> This patch adds the basic structure for add command which can be
->> extended in the future to add more commands.
->>
->> This patch also adds the following commands:
->>
->> contents <object> NL
->> info <object> NL
->>
->> The contents command takes an <object> argument and prints out the object
->> contents.
->>
->> The info command takes a <object> argument and prints out the object
->> metadata.
->>
->> In addition, we need a set of commands that enable a "read session".
->>
->> When a separate process (A) is connected to a git cat-file process (B)
->
-> This description misleads readers into thinking as if we have just
-> created a daemon process that is running, and an unrelated process
-> can connect to it, which obviously poses a question about securing
-> the connection.  It is my understanding that what this creates is
-> just a consumer process (A) starts the cat-file process (B) locally
-> on its behalf under process (A)'s privilege, and they talk over pipe
-> without allowing any third-party to participate in the exchange, so
-> we should avoid misleading users by saying "is connected to" here.
+Then you can use it with git-send-email with config like e.g. this one
+I've got:
+=20=20=20=20
+    $ git config -l|grep -F sendemail.|perl -pe 's/pass=3D\K.*/WORD/g'
+    sendemail.smtpserver=3Dsmtp.gmail.com
+    sendemail.smtpencryption=3Dssl
+    sendemail.smtpuser=3Davarab@gmail.com
+    sendemail.confirm=3Dalways
+    sendemail.smtppass=3DWORD
+    sendemail.xmailer=3Dtrue
+    sendemail.to=3Dgit@vger.kernel.org
+    sendemail.security.to=3Dgit-security@googlegroups.com
+    sendemail.test.to=3Davarab@gmail.com
 
-Yes this understanding is correct. Will fix wording in next version
-
->
->> and is interactively writing to and reading from it in --buffer mode,
->> (A) needs to be able to know when the buffer is flushed to stdout.
->
-> If A and B are talking over a pair pipes, in order to avoid
-> deadlocking, both ends need to be able to control whose turn it is
-> to speak (and it is turn for the other side to listen).  A needs to
-> be able to _control_ (not "know") when the buffer it uses to write
-> to B gets flushed, in order to reliably say "I am done for now, it
-> is your turn to speak" and be assured that it reaches B.  The story
-> is the same for the other side.  When a request by A needs to be
-> responded with multiple lines of output, B needs to be able to say
-> "And that concludes my response, and I am ready to accept a new
-> request from you" and make sure it reaches A.  "know when..." is
-> probably a wrong phrase here.
-
-Correct, "know" is not exactly right. _control_ would be the more accurate description.
->
->> Currently, from (A)'s perspective, the only way is to either 1. exit
->> (B)'s process or 2. send an invalid object to stdin. 1. is not ideal
->> from a performance perspective as it will require spawning a new cat-file
->> process each time, and 2. is hacky and not a good long term solution.
->
-> Writing enumeration as bulletted or enumerated list would make it
-> much easier to read, I would think.
->
->     From (A)'s perspective, the only way is to either
->
->     1. exit (B)'s process or
->     2. send an invalid object to stdin.
->
->     1. is not ideal from a performance perspective, as it will
->     require spawning a new cat-file process each time, and 2. is
->     hacky and not a good long term solution.
->
-> I am not sure what you exactly mean by "exit" in the above.  Do you
-> mean "kill" instead?
-
-Yes
-
->
->> With the following commands, process (A) can begin a "session" and
->> send a list of object names over stdin. When "get contents" or "get info"
->> is issued, this list of object names will be fed into batch_one_object()
->> to retrieve either info or contents. Finally an fflush() will be called
->> to end the session.
->>
->> begin NL
->> get contents NL
->> get info NL
->>
->> These can be used in the following way:
->>
->> begin
->> <sha1>
->> <sha1>
->> <sha1>
->> <sha1>
->> get info
->>
->> begin
->> <sha1>
->> <sha1>
->> <sha1>
->> <sha1>
->> get contents
->>
->> With this mechanism, process (A) can be guaranteed to receive all of the
->> output even in --buffer mode.
->
-> OK, so do these "get blah" serve both as command and an implicit
-> "flush"?
-
-yes, that's the idea.
-
->
-> With an implicit "flush", do we really need "begin"?
->
-> Also, from the point of view of extensibility, not saying what kind
-> of operation is started when given "begin" is probably not a good
-> idea.  "get info" and "get contents" may happen to be the only
-> commands that are supported right now, and the parameters to them
-> may happen to be just list of object names and nothing else, but
-> what happens when a new "git frotz" command is added and its
-> operation is extended with something other than object names and
-> pathnames?  The way to parse these parameter lines for the "get"
-> would be different for different commands, and if "cat-file" knows
-> upfront what is to be done to these parameters, it can even start
-> prefetching and precomputing to reduce latency observed by the
-> client before the final "get info" command is given.
->
-> So, from that point of view,
->
->     begin <cmd>
->     <parameter>
->     <parameter>
->     ...
->     end
->
-> may be a better design, no?
-
-Good point. Now I'm wondering if we can simplify where commands get queued up
-and a "get" will execute them along with an implicit flush.
-
-<cmd> <parameter>
-<cmd> <parameter>
-<cmd> <parameter>
-get
+Then you can submit your patches with git-format-patch + git-send-email.
