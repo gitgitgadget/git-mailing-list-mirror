@@ -2,97 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 846E1C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 01:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2447AC433F5
+	for <git@archiver.kernel.org>; Fri,  4 Feb 2022 01:17:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353229AbiBDBKe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Feb 2022 20:10:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36804 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233042AbiBDBKd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Feb 2022 20:10:33 -0500
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54B6CC061714
-        for <git@vger.kernel.org>; Thu,  3 Feb 2022 17:10:33 -0800 (PST)
-Received: by mail-pl1-x649.google.com with SMTP id v14-20020a170902e8ce00b0014b48e8e498so2180945plg.2
-        for <git@vger.kernel.org>; Thu, 03 Feb 2022 17:10:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=3XWsXh6s8rZcIH0Yoy9ZwNRrsd0Df6UoSxtRuKAjcWw=;
-        b=CKi1H+EUGlY/HTQ4ZrKkJNEWHC54yENvJs2T99H3RX9uGeYRthv/5TApdaiWetH+xF
-         ijTvQ8LZRhQ4Yw5bHIDZWg8RY3hIrFri8isXT40jYWCFVECBlGzi3Y2wWXHOyyW8GJGy
-         d8h8g4QAxlC04krRKO5rFPYunjGlVQBmPc7ViToW2tePDDUtMRJJ/bHXQcl3rmTvn2/m
-         JvP7vL0juKwdHbmRooEwaMyy7FVgSYU55bQVMRh8OnEUbUgL8HxNvmi0/keiPkItpukO
-         W/POeyy3kCObLzs8i96Cn3LrmKvVzZliYCb+wTE8YgV7+XaR8fL0gQeczF2HIoV/DBZz
-         yERQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=3XWsXh6s8rZcIH0Yoy9ZwNRrsd0Df6UoSxtRuKAjcWw=;
-        b=SSnv5YMGaQIfx/Nk84w31AdFlEleelVe+edjw8XYXRXmQQBByx8OUT72PSSlxEKG+f
-         pPAnYdHcmRiiX5I09JR2DT8btxEy7wYWvHtF9TveMzWCttobTbrhwEY55MrGppwENBxA
-         gV7yZfyYzrBXVSaMBF1zh4e6yXXamU+/lpsX4AF6Ws94vxH15+INn7fPv9QXike0elEW
-         esVJBQ3+Tl79a1Cyu4E3do3hMqrh9uczvuT11TXvq2qAxCmQzQgI1hRPDnyy0XVsZhSj
-         uexmHTpqzmbraYCLubXd6us2WrYE0xa1EIPi6NmraXNWQZP4HkXvgYNjpxELN1OB1MvQ
-         Gy/g==
-X-Gm-Message-State: AOAM532wLD3x6EJAB7JYcfM1OpOO5kG9vbNl0hW44sXxoAvwc5hTl+7H
-        LVoaLiTs8/J9qK6pEF/fisFjBGXF8p6Wt4BHRpc97IvOG5dOdoVpwCczeQ6HsJf6+vuW+l5/eDt
-        I+KwrwcMpCfMpaZ6FEm1w6yAgFOqSvg9/DMVQL6dqBtzbJ8ESNtPMk7F+2OPQG8k=
-X-Google-Smtp-Source: ABdhPJwFD29AXtC97m0FqtlDW2XvwLuCxW2hesIgMR1XCmaheocSyL52tNqgdB+rUapHT6cMWhs+Zrn1yBfOdQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:903:244e:: with SMTP id
- l14mr528606pls.148.1643937032618; Thu, 03 Feb 2022 17:10:32 -0800 (PST)
-Date:   Thu, 03 Feb 2022 17:10:21 -0800
-In-Reply-To: <20220129000446.99261-6-chooglen@google.com>
-Message-Id: <kl6lwnibzbb6.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220124204442.39353-1-chooglen@google.com> <20220129000446.99261-1-chooglen@google.com>
- <20220129000446.99261-6-chooglen@google.com>
-Subject: Re: [PATCH v8 5/6] branch: add --recurse-submodules option for branch creation
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1343892AbiBDBRs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Feb 2022 20:17:48 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51468 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231357AbiBDBRr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Feb 2022 20:17:47 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE6601127F5;
+        Thu,  3 Feb 2022 20:17:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=J3LmichZzko8MFdPLH0ctKCv1NUHz5AeFANeid
+        tieHM=; b=FUgPwS8BJPvmxaEuxbqDlGv41s3dudRkf7btM2qL1TDRYatLZB+59m
+        U/7PQyLwmw8LDSKrrBRDnxxq7kyLnr5rVd83aHM0hiy1Jh0NcaPM8+R/3x+FS8v/
+        xnJ/bOYdhVVYOGss72ML5OZ0aDyQpj70gdFqQhjB7ctz/2rIJw/DE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C4ABA1127F4;
+        Thu,  3 Feb 2022 20:17:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.133.2.91])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2A7811127F3;
+        Thu,  3 Feb 2022 20:17:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Chen BoJun <bojun.cbj@gmail.com>
+Cc:     git@vger.kernel.org, Chen Bojun <bojun.cbj@alibaba-inc.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Teng Long <dyroneteng@gmail.com>
+Subject: Re: [PATCH v2] receive-pack: purge temporary data if no command is
+ ready to run
+References: <pull.1124.git.1642987616372.gitgitgadget@gmail.com>
+        <20220129063538.24038-1-bojun.cbj@gmail.com>
+Date:   Thu, 03 Feb 2022 17:17:44 -0800
+In-Reply-To: <20220129063538.24038-1-bojun.cbj@gmail.com> (Chen BoJun's
+        message of "Sat, 29 Jan 2022 14:35:38 +0800")
+Message-ID: <xmqq5ypvpgzr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 42908D2E-8558-11EC-86AD-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Chen BoJun <bojun.cbj@gmail.com> writes:
 
-I tested this series some more and found a silly bug.
-Let me know if I should just send v9 instead.
+> +	/*
+> +	 * If there is no command ready to run, should return directly to destroy
+> +	 * temporary data in the quarantine area.
+> +	 */
+> +	for (cmd = commands; cmd && cmd->error_string; cmd = cmd->next)
+> +		; /* nothing */
+> +	if (!cmd)
+> +		return;
+> +
+>  	/*
+>  	 * Now we'll start writing out refs, which means the objects need
+>  	 * to be in their final positions so that other processes can see them.
 
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
+One thing I notice is that the first thing we do, after making the
+new objects available to us, is to check if we are making any
+conflicting update, e.g.
 
-Subject: [PATCH] submodule-config.c: remove accidental pointer reuse
+    git push origin master:master next:master
 
-List entries allocated by traverse_tree_submodules() are sharing the
-.name_entry pointer, but each of them needs their own pointer. Fix this.
+would try to update the same ref with different objects, and will be
+rejected.
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- submodule-config.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+This check can _almost_ be doable without being able to access the
+new objects, and as a follow-on work, it might not be a bad little
+project to see how we can move the call to check_aliased_updates()
+before this loop we are adding in this patch (#leftoverbits).
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 24b8d1a700..c9f54bc72d 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -757,7 +757,8 @@ static void traverse_tree_submodules(struct repository *r,
- 		if (S_ISGITLINK(name_entry->mode) &&
- 		    is_tree_submodule_active(r, root_tree, tree_path)) {
- 			st_entry = xmalloc(sizeof(*st_entry));
--			st_entry->name_entry = name_entry;
-+			st_entry->name_entry = xmalloc(sizeof(*st_entry->name_entry));
-+			*st_entry->name_entry = *name_entry;
- 			st_entry->submodule =
- 				submodule_from_path(r, root_tree, tree_path);
- 			st_entry->repo = xmalloc(sizeof(*st_entry->repo));
--- 
-2.35.0.263.gb82422642f-goog
+Thanks.
