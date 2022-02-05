@@ -2,103 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CAE2C433EF
-	for <git@archiver.kernel.org>; Sat,  5 Feb 2022 07:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE9E7C433EF
+	for <git@archiver.kernel.org>; Sat,  5 Feb 2022 08:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379401AbiBEHTi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Feb 2022 02:19:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53926 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229835AbiBEHTh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Feb 2022 02:19:37 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01ECDC061346
-        for <git@vger.kernel.org>; Fri,  4 Feb 2022 23:19:34 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id z7so11659449ljj.4
-        for <git@vger.kernel.org>; Fri, 04 Feb 2022 23:19:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=GUjbe/eWcEFL+kLVZGgDfYDD1eC/U4Vs65br7ABXeoE=;
-        b=bGW5KvrpqXf1DC702DUix4rUxZDDb6W7D9n7c9TAXYBAvqhdk6mI/IEAD9RLmXEp6T
-         K44tAlqNIlO6PT6yvC0u1+QSxbDPhI9PtFePHeJJoIvuJUNK7nO8UFXtniI6SfaafxAO
-         JJm/Gtd07SCIQbYVph5unBgf/8eSRQbyEAdAVd12+Kz+D/T0RAMZa5asKGjUqW2E3MQl
-         NgR0FMYgMVa08arKhFRwu1FfL3eHq5r3womgmDZIa9LkCnoMg9l6CO3oOYftKSTDoLsM
-         jOVnuna8F9UBeT3bAUCssLRP+Ip5hvGJfbqyJwfGMOwtBav+Yb4TxLK0uASjzRisdOXa
-         1r3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GUjbe/eWcEFL+kLVZGgDfYDD1eC/U4Vs65br7ABXeoE=;
-        b=v5XAL7E7Qi78ojuA2HKihj+pXWy8Eokr3ME9onwN4d/WG+KvB1+uHZcuxDPo6uKRwI
-         JF0UYUtZVmkSAstkTb7m1WPsFj+kD8FpkADv2p7SHuOB+ATKrE7XvDJChKmmaRhw+Qw3
-         QS1wM2Gj0mSXNbMyVPtBry8LpJWEnpGyQQmT73jbGhIFCFXUM0w8JP/Wfh5XLdZ0CTwD
-         HITWKSKyt5GMk8YCL+W1bq7+C3PNMNiDvAK3nEDYs7S7FQITnX7sIUmp/QzD5FO2UeJE
-         8b99UKEB4Z6VEHELzzb+VONYi3Et9BFb3Hxx+k2grCCzdKI2TrbXAvKZYYkJQWrG3Bkr
-         2vRA==
-X-Gm-Message-State: AOAM530KeP9+oH3rjroJPvKBbO8sq8Nhd1zsffPD+Pao+HT+i+cE1qGs
-        9ysEwrXO2NIXSXgnuLb9i4DUHgQmKaNyi69TQZA=
-X-Google-Smtp-Source: ABdhPJx09Br6/pMA0UPoC/gVqh0PwCV9UGOra4uDj+KPwvvGhGk/6bnPrGpORxvErADC/R/U1mmg3ugRMuENNHfs+u0=
-X-Received: by 2002:a05:651c:1213:: with SMTP id i19mr1772160lja.116.1644045573356;
- Fri, 04 Feb 2022 23:19:33 -0800 (PST)
+        id S1379668AbiBEIAK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Feb 2022 03:00:10 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52605 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1379458AbiBEIAK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Feb 2022 03:00:10 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CD695179273;
+        Sat,  5 Feb 2022 03:00:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JW5wORwY0vvF1FILaVkKEiWT/DuKvIZnyUhm12
+        0Gj0w=; b=qGrZUZcnZG8FnTGYQ4uujJyYOI0rrgvmWzjCsHrxssEYs6B0ole9Yb
+        +834tHoa2tAxIUJ8iofzeAXUSPYAj9rb66d9TZx7TmGBEyrR5FIXpK61yWqDI0SN
+        sTzll96GfO7xuYql9M6A4JBd8AYlLZLpRGnx66D6sgLwZQijfAHB8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C7256179272;
+        Sat,  5 Feb 2022 03:00:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.213.122])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2307F17925E;
+        Sat,  5 Feb 2022 03:00:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2022, #01; Thu, 3)
+References: <xmqqr18jnr2t.fsf@gitster.g>
+        <6916de1c-12f6-6f45-99c7-ffe8dd08b244@sunshineco.com>
+Date:   Sat, 05 Feb 2022 00:00:05 -0800
+In-Reply-To: <6916de1c-12f6-6f45-99c7-ffe8dd08b244@sunshineco.com> (Eric
+        Sunshine's message of "Fri, 4 Feb 2022 02:00:18 -0500")
+Message-ID: <xmqq5yptlp4q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1124.git.1642987616372.gitgitgadget@gmail.com>
- <20220129063538.24038-1-bojun.cbj@gmail.com> <xmqq5ypvpgzr.fsf@gitster.g>
-In-Reply-To: <xmqq5ypvpgzr.fsf@gitster.g>
-From:   Bojun Chen <bojun.cbj@gmail.com>
-Date:   Sat, 5 Feb 2022 15:19:22 +0800
-Message-ID: <CADuS7Apcr0r6F1UQf1WKmVuW+SM_wD1MBPA9Szvd1pF9zJjsUw@mail.gmail.com>
-Subject: Re: [PATCH v2] receive-pack: purge temporary data if no command is
- ready to run
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Chen Bojun <bojun.cbj@alibaba-inc.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Teng Long <dyroneteng@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A21B471E-8659-11EC-9FB3-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B42=E6=9C=884=E6=97=
-=A5=E5=91=A8=E4=BA=94 09:17=E5=86=99=E9=81=93=EF=BC=9A
->
-> Chen BoJun <bojun.cbj@gmail.com> writes:
->
-> > +     /*
-> > +      * If there is no command ready to run, should return directly to=
- destroy
-> > +      * temporary data in the quarantine area.
-> > +      */
-> > +     for (cmd =3D commands; cmd && cmd->error_string; cmd =3D cmd->nex=
-t)
-> > +             ; /* nothing */
-> > +     if (!cmd)
-> > +             return;
-> > +
-> >       /*
-> >        * Now we'll start writing out refs, which means the objects need
-> >        * to be in their final positions so that other processes can see=
- them.
->
-> One thing I notice is that the first thing we do, after making the
-> new objects available to us, is to check if we are making any
-> conflicting update, e.g.
->
->     git push origin master:master next:master
->
-> would try to update the same ref with different objects, and will be
-> rejected.
->
-> This check can _almost_ be doable without being able to access the
-> new objects, and as a follow-on work, it might not be a bad little
-> project to see how we can move the call to check_aliased_updates()
-> before this loop we are adding in this patch (#leftoverbits).
->
-> Thanks.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Thanks for your suggestion, I agree with you. But I'm confused should
-I continue in this patch or start a new patch.
+> On 2/4/22 12:22 AM, Junio C Hamano wrote:
+>> * en/keep-cwd (2022-01-26) 1 commit
+>>    (merged to 'next' on 2022-01-26 at b2518a683c)
+>>   + sequencer, stash: fix running from worktree subdir
+>>   Fix a regression in 2.35 that roke the use of "rebase" and "stash"
+>>   in a secondary worktree.
+>
+> s/roke/broke/
+
+Thanks. I think I'll need to update the draft release notes as part
+of the next batch to merge topics to 'master'.
