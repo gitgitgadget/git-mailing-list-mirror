@@ -2,96 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7896C433EF
-	for <git@archiver.kernel.org>; Sat,  5 Feb 2022 08:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E2FC433F5
+	for <git@archiver.kernel.org>; Sat,  5 Feb 2022 11:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379680AbiBEIE0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Feb 2022 03:04:26 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58754 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348499AbiBEIEZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Feb 2022 03:04:25 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A9201792AA;
-        Sat,  5 Feb 2022 03:04:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=skLUGmbyuwW/
-        BqIRQaN1n1a2FMX+ETMxA34mN7+IVcY=; b=tc6nq4rHvtnC4wXwhvPcQvQh//N1
-        TfeKvZi7cEdoqkXArXhm3CheWYXnz3exIBxasKWtYXp8Os6Z+9H6ZTW7aOvEYlbT
-        lPfYENsreKUOc+p82fwnJbXWAseRoDgtmgkFWe4D46pVvSPS2ETMgJRF92dY+Opi
-        5jLq4nwNYeD5fWg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 780301792A9;
-        Sat,  5 Feb 2022 03:04:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.213.122])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BAB9D1792A8;
-        Sat,  5 Feb 2022 03:04:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Bojun Chen <bojun.cbj@gmail.com>
-Cc:     git@vger.kernel.org, Chen Bojun <bojun.cbj@alibaba-inc.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Teng Long <dyroneteng@gmail.com>
-Subject: Re: [PATCH v2] receive-pack: purge temporary data if no command is
- ready to run
-References: <pull.1124.git.1642987616372.gitgitgadget@gmail.com>
-        <20220129063538.24038-1-bojun.cbj@gmail.com>
-        <xmqqczk6b3pt.fsf@gitster.g>
-        <CADuS7AoAbtbC3RKrXR=SGvfs7C-n57Y9zkaGne_XrfyJh46zXg@mail.gmail.com>
-Date:   Sat, 05 Feb 2022 00:04:21 -0800
-In-Reply-To: <CADuS7AoAbtbC3RKrXR=SGvfs7C-n57Y9zkaGne_XrfyJh46zXg@mail.gmail.com>
-        (Bojun Chen's message of "Sat, 5 Feb 2022 15:17:32 +0800")
-Message-ID: <xmqqwni9kad6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        id S243046AbiBELYJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Feb 2022 06:24:09 -0500
+Received: from mail-pj1-f42.google.com ([209.85.216.42]:39661 "EHLO
+        mail-pj1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241305AbiBELYJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Feb 2022 06:24:09 -0500
+Received: by mail-pj1-f42.google.com with SMTP id v13-20020a17090ac90d00b001b87bc106bdso1534687pjt.4
+        for <git@vger.kernel.org>; Sat, 05 Feb 2022 03:24:09 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FQsxsqlsTqJ7qlRQBQQWLptB6jkcjyPo0MCLHVWi5bs=;
+        b=w1DsBV/kkhUdauNFO54FqlZvGfg9Wb+sq5fAFbWvp8wPJVE61Mpm835bglBDJ/MKdd
+         4TXd/KyLq4TSo1ExDzf0eJQukitlGh0PoPdW9AoHcVAWekDEgfjtdeBxZCV2jY3U53fX
+         IosNspaPY6gatwcT7OtiWUyroFyp8VGSTdiBrCOotODr8/ubELaCcvG1szCBNUGV2yFR
+         64ZzByYFytswn8fRQZtisZ2xFiujeGqtFM6eN8OXjxoMlEZav0GGyhu2yWgrMhWCnC/s
+         jIKXslgWS6QbYmxOm5Xr0jgmaFsBEN2ZOZ9N9980/ippwlXJiX9ZgobtumbEmIv9dx44
+         qtng==
+X-Gm-Message-State: AOAM532avCvIQQ3pMsM4to+ZmZuH6q9VjG4+HJ6rfMR5HIXjOIxHNGp8
+        DGsYBttj07M2NlPVKglDG2DT6iGFkW6IrOlyt286rKaKC0M=
+X-Google-Smtp-Source: ABdhPJxPBj1JRp22E739whEtnu08hA4+E50YZZ+qZ47T7kn2WOUAdT4Ic+Uc62FtV7LzPYvNTTFOKi7WLzmKSWkSTMQ=
+X-Received: by 2002:a17:903:249:: with SMTP id j9mr7692682plh.145.1644060248716;
+ Sat, 05 Feb 2022 03:24:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3A78B12C-865A-11EC-99AF-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <CAPig+cQVNdmHQnhORqh2XtJSMhcOymR99pmKTWOAyhoQ10khSw@mail.gmail.com>
+ <20220127200341.333996-1-newren@gmail.com>
+In-Reply-To: <20220127200341.333996-1-newren@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 5 Feb 2022 06:23:57 -0500
+Message-ID: <CAPig+cSi8_90=-Fvt_fq=VtOW_HzifNhrk1gaa6F1GrEonng+Q@mail.gmail.com>
+Subject: Re: [Bug] Rebase from worktree subdir is broken (was Re: [PATCH v5
+ 07/11] rebase: do not attempt to remove startup_info->original_cwd)
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Glen Choo <chooglen@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bojun Chen <bojun.cbj@gmail.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B42=E6=9C=882=E6=
-=97=A5=E5=91=A8=E4=B8=89 06:51=E5=86=99=E9=81=93=EF=BC=9A
->>
->> Chen BoJun <bojun.cbj@gmail.com> writes:
->>
->> > From: Chen Bojun <bojun.cbj@alibaba-inc.com>
->> >
->> > When pushing a hidden ref, e.g.:
->> >
->> >     $ git push origin HEAD:refs/hidden/foo
->> >
->> > "receive-pack" will reject our request with an error message like th=
-is:
->> >
->> >     ! [remote rejected] HEAD -> refs/hidden/foo (deny updating a hid=
-den ref)
->> >
->> > The remote side ("git-receive-pack") will not create the hidden ref =
-as
->> > expected, but the pack file sent by "git-send-pack" is left inside t=
-he
->> > remote repository. I.e. the quarantine directory is not purged as it
->> > should be.
->>
->> I was puzzled by the reference to "pushing a hidden ref" at the
->> beginning of the proposed log message, as it wasn't quite clear that
->> it was merely an easy-to-reproduce recipe to fall into such a
->> situation where all ref updates are rejected.
->>
+On Thu, Jan 27, 2022 at 3:03 PM Elijah Newren <newren@gmail.com> wrote:
+> On Wed, Jan 26, 2022 at 9:53 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > As far as I know, there is no reason to set GIT_DIR and GIT_WORK_TREE,
+> > in general, when in a linked worktree since each worktree has its own
+> > .git file ("gitfile") which tells Git commands where the repository is
+> > and signals that that directory itself (which contains the .git file)
+> > is indeed a Git worktree.
 >
-> Thanks for the suggestion. Do I have to rewrite this commit message on =
-the v3?
+> Oh, interesting.  Not setting GIT_DIR either does sound a bit better.
+>
+> ...though after digging for a while, it turns out to be a bit more
+> involved than I thought.  Although the below patch passes our current
+> testsuite and fixes the reported bug, I'm worried I've missed some cases
+> not tested by the testsuite.
+>
+> Not sure if we want to pursue this, drop it, or something else.  Thoughts?
 
-If you can make it more clear that "hidden refs" is merely one
-sample scenario that may mark all elements on the commands list
-as failed, that would be great.
+It's an enticing idea, though I have no deep knowledge about all the
+possible interactions which may be impacted by such a change. Duy had
+a deep understanding of how all this worked, and probably Peff, as
+well, but they aren't around to offer opinions.
+
+set_git_dir() has been setting the GIT_DIR environment variable ever
+since it (the function) was introduced by d7ac12b25d (Add
+set_git_dir() function, 2007-08-01). Unfortunately, the commit message
+doesn't explain why it does so.
+
+More below...
+
+> -- >8 --
+> Subject: [RFC/POC PATCH] setup: do not pre-emptively set GIT_DIR based on discovery
+>
+> Some comments on the various code changes:
+>    * clone/push/fetch related:
+>      * there are *many* subprocesses involved in fetch/push and friends,
+>        and they typically need to know the GIT_DIR they are operating on
+>      * this involves: fetch-patch.c, connected.c, bundle.c, clone.c,
+>        transport-helper.c, receive-pack.c, upload-pack.c
+>      * this accounts for the majority of this patch
+>      * much of this work could be avoided by having enter_repo() call
+>        xsetenv(GIT_DIR_ENVIRONMENT, ".", 1) just after its set_git_dir()
+>        call, but I don't know if that'd be considered a half measure
+
+It does feel a bit like a bandaid to insert new code at these
+locations to set GIT_DIR manually. It's not clear to readers why
+GIT_DIR is needed for these specific cases, nor what the impact is
+when it is not set. Thus, one wonders if such a blanket approach is
+indeed required or if a more narrow and directed fix can be applied,
+such as calling subprograms with an explicit --git-dir= rather than
+setting GIT_DIR with its potentially more broad and
+difficult-to-reason-about impact.
+
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> @@ -836,13 +836,18 @@ static void dissociate_from_references(void)
+>  {
+> +       struct strvec env = STRVEC_INIT;
+> +       strvec_pushf(&env, GIT_DIR_ENVIRONMENT "=%s", the_repository->gitdir);
+
+Minor inconsistency: all the other similar changes in this patch use
+"%s=%s" and then pass in GIT_DIR_ENVIRONMENT to be interpolated by
+`%s`.
+
+> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> @@ -930,12 +930,12 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+> -                               const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
+> +                               const char *gitdir = the_repository->gitdir;
+>                                 if (arg[2] == 'g') {    /* --git-dir */
+> -                                       if (gitdir) {
+> +                                       if (strcmp(gitdir, ".git")) {
+> @@ -945,9 +945,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+> -                                       if (!gitdir && !prefix)
+> -                                               gitdir = ".git";
+> -                                       if (gitdir) {
+> +                                       if (strcmp(gitdir, ".git") || !prefix) {
+
+The meaning here becomes more obscure with this change applied. In the
+original code, it was obvious enough that non-NULL `gitdir` meant that
+the GIT_DIR environment variable had a value, but
+`strcmp(gitdir,".git")` probably doesn't convey much to readers of
+this code? Assigning the result of the strcmp() to a well-named
+variable could go a long way toward making the meaning clearer. Or, an
+in-code comment might be warranted.
+
+> diff --git a/environment.c b/environment.c
+> @@ -327,7 +327,6 @@ char *get_graft_file(struct repository *r)
+>  static void set_git_dir_1(const char *path)
+>  {
+> -       xsetenv(GIT_DIR_ENVIRONMENT, path, 1);
+>         setup_git_env(path);
+>  }
