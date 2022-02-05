@@ -2,64 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 465D8C433EF
-	for <git@archiver.kernel.org>; Sat,  5 Feb 2022 17:42:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C70CC433F5
+	for <git@archiver.kernel.org>; Sat,  5 Feb 2022 22:36:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1380779AbiBERmI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Feb 2022 12:42:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57114 "EHLO
+        id S1379967AbiBEWgN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Feb 2022 17:36:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235159AbiBERmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Feb 2022 12:42:07 -0500
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04FF2C061348
-        for <git@vger.kernel.org>; Sat,  5 Feb 2022 09:42:06 -0800 (PST)
-Received: by mail-yb1-xb2d.google.com with SMTP id 124so27688392ybw.6
-        for <git@vger.kernel.org>; Sat, 05 Feb 2022 09:42:05 -0800 (PST)
+        with ESMTP id S229894AbiBEWgM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Feb 2022 17:36:12 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9079BC061348
+        for <git@vger.kernel.org>; Sat,  5 Feb 2022 14:36:11 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id ka4so30465300ejc.11
+        for <git@vger.kernel.org>; Sat, 05 Feb 2022 14:36:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=EU543TGTWNWGOTMH/q9VZ223KzA5nyDo755GzX8sGJ0=;
-        b=Xz4ELbuPlCfiArE76qJouIlLQNPHOTcEMMEW7h0kuIWILuIL5yp/oufNyMxtNvdPqu
-         JzP6JFzJFC2HsJP2fhem2aPUOIwppeq3QTWhFeBgpnvQVrvbwXNgLVNdWs3mYfRZ2f3O
-         1/LbtoSEdB2DK6SVIMU2ox3ehN9STg7bgAq77/KS07OmyrGFID4tyD5jjd+zZB7Qy3yS
-         x1y7wfyBS5qu4RZfIo/fNXjP4kJ60od9xf28mHaPrPJZqrGFjpRFSHQPR/GObwUTXtXp
-         fpCFKe5FFw7IXeYNcOOrDgw51w0MAJ2bUR4LECmtx1h1C3B3e9MJcrvCgn5WFSOD+lz+
-         aazw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fq5X/MFVlLFMffx/FhsIDNFyop3RgLI3h6u0AmwuyuE=;
+        b=Jd9cgJ7r6TllGyCBWw43Qy5cidIR89eztBmDSV8fJItR6/JKT0mEQT4GfpfKhGBp2M
+         DekRhLCXOs8wENSVA/lRLjxqaSLbFvvy209OZ/f0dYfzA2YSn/YA220IEd6MOjfLOWwi
+         KVt+8S/apCUQBBk39w5PTe2IaJZPLEfk0ACN4NUtEmzQKubDzCxxeq2mC2PYKQ8TO8fz
+         bjO9fjpQ0NcsDyg6BqGQPtubNDjvSeAwjMbMXWUkkh9VQBKjrmOvnDH4yNIz3MJv1aVZ
+         7ct/SHqKMH5Rbr9pV7yDZf5HN4KT0gBOXvCYasCvcHAkljteqUE6kzoPGS9VnrW3ierd
+         IRaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=EU543TGTWNWGOTMH/q9VZ223KzA5nyDo755GzX8sGJ0=;
-        b=ucWMtV2xJXkTC1N5j2XO7i6pH31dh7Zt4hZhL016IJ2UoiNLOHDzS/gAfWZDT+temK
-         LFYVxn1ZPyHkwTl1U6xqieDFE2TUdWmZXV4RG7jD+61qet/fN8fp4TIbxy5uq8JQtuTu
-         2e8kv7pbzRBVpO/NGMVWOCSEdsPViP9uVF2R+c8PVHl4yhXOJ1fOwPkj4Vhxjb9FtjHT
-         A1ndrSLWHen7pgJyjb/qLNclTAb9zEpdf1/Af3ccVu8drABVltwjp1LU7dwb6/J2mzku
-         3VPuvdjvNk3pfOvB9AyEswkoiN7az2lst5acKNmSy13SUdJTQ5+GTLclVRQaRWieMov5
-         5ZJw==
-X-Gm-Message-State: AOAM531e3CM6/FgMI6JRIX8RS96VqpbU5Bv1yNQZKQdGek0iSaaqTBgM
-        MtUy2bPODDTD2dQ3TeVke4v3tw5zRRoOHibiSZSWhlBiyCIZtw==
-X-Google-Smtp-Source: ABdhPJz/1m8WZm1ofldS9LHNP2YQcGaokznqOgUrwx8gke2LFfgCMI1crVfMTOEK1/U+kFFowCVo14XpogrIAQl5m4g=
-X-Received: by 2002:a5b:c6:: with SMTP id d6mr1845218ybp.273.1644082924400;
- Sat, 05 Feb 2022 09:42:04 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fq5X/MFVlLFMffx/FhsIDNFyop3RgLI3h6u0AmwuyuE=;
+        b=mGlTSEmWaxBQ6kQGzMQRy7kPGjc9S8FSAitAY9EQqlXJ40Tk4JDjB5+0+Qmy5kCg8J
+         ReNOf8ApVe8IFTThycDeUYIw3MZky4kLJWTFCWBiLl2IcNB1ZYy/6j9TtG0f1qysEWqF
+         bcnG5o4AE0QiEKYPJ2/COqQlX49YptBDSOBWM9Abg+J7q3WBB1IDX8KSIcsJbZRtgcp3
+         op938mLi0caWoCyJ1z+ORYUg+QCsrwsfHdvcgICH/fIMAHMZ5W9kXZiG0TcJyVsWc/TZ
+         YHXFEBLIgld5o5MI6ks6+i7nbHNJa4u8Wvgg2xdtlRW5pKxBLfJJh52P55dfV+CGnVEY
+         EYfA==
+X-Gm-Message-State: AOAM532d4PKXbwIMHbL7Yo5XLyxT7zXjoluI2zRv9dzjaJ0ApRs+xFcG
+        I4zLoxXlOINbpx+EJKfV637GlgHEmKEfOTimBbg=
+X-Google-Smtp-Source: ABdhPJzz77G0jCE/hY58N+4R6OgHVvYmVajONgHJOYVDfxtoRQ+o9sVNH9+6ws1B59IYbweRzYsJKWrYF1P8uYJNe3s=
+X-Received: by 2002:a17:906:4793:: with SMTP id cw19mr4478490ejc.100.1644100569934;
+ Sat, 05 Feb 2022 14:36:09 -0800 (PST)
 MIME-Version: 1.0
-From:   Samarth Mayya <samarthmayya@gmail.com>
-Date:   Sat, 5 Feb 2022 23:11:53 +0530
-Message-ID: <CADy+vq_H-McBmPpFbdvkajoruK3fkn9=yALORjku=upT6cQjkw@mail.gmail.com>
-Subject: Summer of Code
-To:     git@vger.kernel.org
+References: <CAPig+cQVNdmHQnhORqh2XtJSMhcOymR99pmKTWOAyhoQ10khSw@mail.gmail.com>
+ <20220127200341.333996-1-newren@gmail.com> <CAPig+cSi8_90=-Fvt_fq=VtOW_HzifNhrk1gaa6F1GrEonng+Q@mail.gmail.com>
+ <CAPig+cRCN=QQHupg1eOx9YvsLhgn+dDN6eYvQL6JhzknCa_3=w@mail.gmail.com>
+In-Reply-To: <CAPig+cRCN=QQHupg1eOx9YvsLhgn+dDN6eYvQL6JhzknCa_3=w@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 5 Feb 2022 14:35:58 -0800
+Message-ID: <CABPp-BEd6ZoOSaA1agmaDX8q2Q7fAvoDfiPPTbKv6AatLvsHaw@mail.gmail.com>
+Subject: Re: [Bug] Rebase from worktree subdir is broken (was Re: [PATCH v5
+ 07/11] rebase: do not attempt to remove startup_info->original_cwd)
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Glen Choo <chooglen@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Derrick Stolee <stolee@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Mentors,
-I am an undergrad student who is totally new to open source, and would
-like to begin my open source journey through GSoC. Could you please
-give me your valuable opinion on what I should do in order to
-strengthen my chances of getting selected?
-Thank you,
-Yours sincerely,
-Samarth Mayya
-(Bachelors of Technology Undergrad,
-Computer Science,
-NITK Surathkal)
+On Sat, Feb 5, 2022 at 3:42 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Sat, Feb 5, 2022 at 6:23 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > On Thu, Jan 27, 2022 at 3:03 PM Elijah Newren <newren@gmail.com> wrote:
+> > > Some comments on the various code changes:
+> > >    * clone/push/fetch related:
+> > >      * there are *many* subprocesses involved in fetch/push and friends,
+> > >        and they typically need to know the GIT_DIR they are operating on
+> > >      * this involves: fetch-patch.c, connected.c, bundle.c, clone.c,
+> > >        transport-helper.c, receive-pack.c, upload-pack.c
+> > >      * this accounts for the majority of this patch
+> >
+> > It does feel a bit like a bandaid to insert new code at these
+> > locations to set GIT_DIR manually. It's not clear to readers why
+> > GIT_DIR is needed for these specific cases, nor what the impact is
+> > when it is not set. Thus, one wonders if such a blanket approach is
+> > indeed required or if a more narrow and directed fix can be applied,
+> > such as calling subprograms with an explicit --git-dir= rather than
+> > setting GIT_DIR with its potentially more broad and
+> > difficult-to-reason-about impact.
+>
+> I meant to ask here what was the nature of the various failures you
+> were seeing without GIT_DIR being set, and whether you had considered
+> tackling those failures with --git-dir= instead of GIT_DIR. If so,
+> were the problems too difficult to overcome by --git-dir= alone?
+> Fleshing out the commit message with such information might be
+> worthwhile.
+
+clone, receive-pack, etc. will often spawn subprocesses such as
+repack, or index-pack.  Those kinds of commands will not have been
+invoked from within a particular git directory, so discovery in the
+subprocess either doesn't find the git directory or finds the wrong
+one (e.g. testcases where you're in a repo and do `git clone .
+my-clone` would cause subprocesses to use discovery and find the outer
+git repo rather than the 'my-clone' they are supposed to be working
+on).
+
+I didn't look at just --git-dir=.  I probably could have, but since I
+was just trying to get a feel for how big of a change it was, and
+there's the possibility of nested subprocesses (clone forking some
+http-fetch thingy, which forks an index-pack subprocess, etc.), so I
+just did the environment variable to save the work from diving down
+the hierarchy.
+
+I agree that if we want to make this kind of change, a better commit
+message would probably be in order, and perhaps trying out --git-dir=
+instead of setting the environment variable.  However, after seeing
+the patch myself and thinking about it for another week, this just
+doesn't seem like a change that's worth it to me.  If someone else
+wants to pick up the patch and run with it, they should feel free, but
+I'm not motivated enough to do so.
+
+> By the way, I also didn't mean to imply that the
+> "difficult-to-reason-about GIT_DIR interaction in relation to
+> subprograms" problem is new to this patch; it isn't. That problem has
+> been around for ages (at least since 2007-08-01) but it wasn't as
+> obvious since the setting of GIT_DIR was so far removed from other
+> code which runs subprograms, thus readers likely wouldn't be thinking
+> about GIT_DIR when reading the code which runs subprograms. This patch
+> only makes the problem more obvious since readers now see the
+> sequence:
+>
+>     (1) set GIT_DIR
+>     (2) launch subprogram
+>
+> So, a reader is more likely to wonder why GIT_DIR is needed for the
+> subprogram and what possible wider side-effects it might have.
+
+Yes, well put.
