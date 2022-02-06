@@ -2,145 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7000C433F5
-	for <git@archiver.kernel.org>; Sun,  6 Feb 2022 21:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 534EDC433EF
+	for <git@archiver.kernel.org>; Sun,  6 Feb 2022 21:40:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242741AbiBFVin (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Feb 2022 16:38:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51604 "EHLO
+        id S242659AbiBFVka (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Feb 2022 16:40:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231922AbiBFVin (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Feb 2022 16:38:43 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5314EC06173B
-        for <git@vger.kernel.org>; Sun,  6 Feb 2022 13:38:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1644183515;
-        bh=00St5oGBpqbhFGsQQQm1phsqCFMB0heDYWH2weIkFIg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=a0Vxg8hlw9beH96GQ+JVKT6ADJst8DMoKQpuORYkZ5oEcseI+iUFMLd0ODANDc+SC
-         84ejv5HYcI+4gVZMKI2msDdpOeBN2A0TmO76DKcNHUl+vcpsmhhZrAnxn06HOTXLPs
-         ZTKjkkAneGLIgTQluPO6PfTLUoumBGHwQCH2L2wc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.196.48] ([89.1.212.206]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MHGCu-1nTyOZ2M7s-00DEaF; Sun, 06
- Feb 2022 22:38:35 +0100
-Date:   Sun, 6 Feb 2022 22:38:33 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Derrick Stolee <stolee@gmail.com>
-cc:     Taylor Blau <me@ttaylorr.com>,
-        Matthew John Cheetham via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Matthew John Cheetham <mjcheetham@outlook.com>
-Subject: Re: [PATCH 3/5] scalar: teach `diagnose` to gather packfile info
-In-Reply-To: <0a52155c-4605-d96f-965a-104a399ae86e@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202062234520.347@tvgsbejvaqbjf.bet>
-References: <pull.1128.git.1643186507.gitgitgadget@gmail.com> <330b36de799f82425c22bec50e6e42f0e495cab8.1643186507.git.gitgitgadget@gmail.com> <YfHOo8Mf3RP4j0Y6@nand.local> <0a52155c-4605-d96f-965a-104a399ae86e@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S231922AbiBFVk3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Feb 2022 16:40:29 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED9FEC06173B
+        for <git@vger.kernel.org>; Sun,  6 Feb 2022 13:40:28 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id h7so36489170ejf.1
+        for <git@vger.kernel.org>; Sun, 06 Feb 2022 13:40:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=lGqZH3dH/+16/+hqLC7k517LBa6T97vbm3aks93KyGk=;
+        b=V8+VufkSD7fqXJE3NCgnFJLXgtXijn5z1aDugtjrpOyGfMfDHs3Au4jdusW2lvLGO9
+         K3o/H/NsrgwDKg6qN2yj/EcwV66uSbWBfk1JUnA7RtaSyrcaduOlgeRXuZc1wIsjrHwx
+         bgpXNgEGJmV2BUEvOmTlKRjkYe+WD4uTfNaw6uWszoZC0IB4inXN25tu+n+YKkSGqrv2
+         HaNjAB1K83miqP5u3yra2G488cVz/PnmtNGbOanKf7/ryBqMnh2QJRQ33+GCZT2c4ADz
+         LaCJMY092tNbqWWK3vorgM5n9gCG+PzhUqRnsDnb+aasNXjv10CS9e7wsv3MIi9sKore
+         Kg8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=lGqZH3dH/+16/+hqLC7k517LBa6T97vbm3aks93KyGk=;
+        b=yl/GHhL4AqWz4PDVyekeK6BhvOULILkRxxi+nHgoQ3gyJ42jIdCwL18CW08Q4xeGQY
+         erFmtYFFchUGYN5iL3BeqlRP4PUH4gRjfikqg0L1iPabFZckfUXYl6sCIh03afPIckG9
+         DYbceJGZtpXPvYRBbMk+x9C9iWYkAvogelDZuVDKvHyC/5kNBeq7LNSDj95n2Sqadc/D
+         iwjKjRjzQ9NckU9DeKBFOyen12SMPq0PTua1qslTw7uOz6Z2zKkOWRRdht1dvP4++vbI
+         IK/7W2+bNdY1S4F6LuHAA5x4J0Hn9gfgegsOIRoic5mHO56AoYHa5gznLf6tG1Pj8AWG
+         /VVw==
+X-Gm-Message-State: AOAM5301JJFg2zSXRw55AQ3UzDYJ7UVf6lafkjqP/X1TjrffVmVI6DI3
+        gUMna12SVeU0cSCtxDiiXo8=
+X-Google-Smtp-Source: ABdhPJzAddokAuNdpv9kjWk/27CauhdaLYbkSsFq3BBH5GItpYUSeB0H8YNve5mWwXmplKr7kGDQxQ==
+X-Received: by 2002:a17:907:e9f:: with SMTP id ho31mr7563812ejc.646.1644183627404;
+        Sun, 06 Feb 2022 13:40:27 -0800 (PST)
+Received: from szeder.dev (94-21-146-211.pool.digikabel.hu. [94.21.146.211])
+        by smtp.gmail.com with ESMTPSA id qb30sm2941169ejc.27.2022.02.06.13.40.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Feb 2022 13:40:26 -0800 (PST)
+Date:   Sun, 6 Feb 2022 22:40:24 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 1/2] t1510: remove need for "test_untraceable", retain
+ coverage
+Message-ID: <20220206214024.GC1936@szeder.dev>
+References: <patch-1.1-9f735bd0d49-20211129T200950Z-avarab@gmail.com>
+ <cover-v2-0.2-00000000000-20211201T200801Z-avarab@gmail.com>
+ <patch-v2-1.2-91402624777-20211201T200801Z-avarab@gmail.com>
+ <20211202191635.GB1991@szeder.dev>
+ <YbMiK1wHzBfYvK2a@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:3DZb7yjTN72fp+MYZTmh7scuQkN1omfvSMDIc1TkMKot1sOwDbh
- 8DFadFQbj8E1vITB+0mgIQaaPi5sQW6kHgzXE4jZ9inEZrAJElBFuBVvCUttuyeVz8IsYjL
- 8m2m8QvVOp78o8mUJj/t/WuEn9s8gDg8MH6WaLyKMZcCw/eSllWrcM/YQaYLxghGhHlxmPT
- 3FN8aQIcbMuYBNCHCEmlQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nvsVIx0MRpE=:Mi1glZfQpLKgOu870egvqh
- a7AXujaOvevtNNQ6zVigMcSf/cDil0DUsMuWV5HRAFC1jtw6qlMcBeQ+Ja9s7rjciwSokFSF3
- vuDUEyPXfJkWorM/bDpF46RD/4V3ycYoNrj6lBaYDHDmadcQmmYGDr5FoSRjI+bgo8X0Ii94m
- 27F5C95BAYHGJGhc5lhkk2Ug+DZs3ULh5D1+44G3yH90WDBQ/p4fuZGehKm4ZHReLFIcsr1Zz
- W7sSFfm4TDdwOTdx7P1FG7eN7gX5+OkFYLWtukSp0MK33PGxPPnbwPBUpXJLKQmRjFAAQ3E6/
- gfaiMFFGI0JcUYxxjUfZnrgLT6chq/0HSpyPJ+sH2dClonb323dVAvI6dZDoyhn+nIjczCotM
- H2QXPRiUiD6/DioSGuYVrsO05LlLgM8ek51+hFTbskFvfDrDvisYdfS4KyHYYR5ZoIKdh2SqT
- jXDv0qZo/xe6G6nhzaqVJhKwXj7WTBsiYDmHKRWsIekA38jRLe944XSieBWNBzqrI8I4pt62Z
- rVww44vpxIn0UPEWNooqlKCe8uFuuRyL6P0Jbz4HAT5xQteqtAe0woEVrBHRm4n1EiAVQVRf9
- J+R3R0hb5Bil52lrTfqzgd+uprefwIdOKfRJosQL0EFaEs3qx5MQJCVznmRSmX7I4VS4JEGVq
- +Uqz5mdCgceG38OpoJzn+0MtCd3rNbFRHQ0UW5oFML/9eDe8ZBK3d/4RjFfMONqtzkzT9VRYs
- CQ4W//N8hLAAlXaR7AmJqwOEhnqxCZmAK0TzwaQF25bv14+4Lm90eaDo7BizDXTG+isebHTTB
- ZFiKDtdIMYxqSdH3ymD08v5EA7Na4FhAhdv9kT8rYC2IPy24UambE+qz4gfJ0i8QEUhYknwr8
- 4yHZ9oGCsKfF1oh7KGY207pnNjjfmsoZ/ZVsmClbnziyXjLLe4B+iv4dNQTKdei/tYeBYh9Pk
- Fz0+5u/ueefUYbTuuVOSu8EigOFFluUOL/EMwXckdDj8Osyuse8bAdvSoN9j+DlrqoNqbmmqT
- Tqng73zrNVpHyxaYo6PbOLMeEL2uYLrlBejVtCQm6gnpnwSfQ9HYyBvjJCBfOhemuWkuw9oeR
- KBiz1kxy4jXY8M=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YbMiK1wHzBfYvK2a@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee & Taylor,
+On Fri, Dec 10, 2021 at 04:47:23AM -0500, Jeff King wrote:
+> On Thu, Dec 02, 2021 at 08:16:35PM +0100, SZEDER Gábor wrote:
+> 
+> > > @@ -62,7 +59,7 @@ test_repo () {
+> > >  			export GIT_WORK_TREE
+> > >  		fi &&
+> > >  		rm -f trace &&
+> > > -		GIT_TRACE_SETUP="$(pwd)/trace" git symbolic-ref HEAD >/dev/null &&
+> > > +		GIT_TRACE_SETUP="$(pwd)/trace" git symbolic-ref HEAD >/dev/null 2>>stderr &&
+> > 
+> > I suspect that it's lines like this that make Peff argue for
+> > BASH_XTRACEFD :)
+> > 
+> > While this is not a compound command, it does contain a command
+> > substitution, and the trace generated when executing the command in
+> > that command substitution goes to the command's stderr, and then,
+> > because of the redirection, to the 'stderr' file.
+> 
+> Better still, the behavior varies between shells:
 
-On Thu, 27 Jan 2022, Derrick Stolee wrote:
+Indeed, although POSIX seems to be quite clear about what should
+happen in this case: the specs for simple commands [1] state that
+redirections should be performed before variable assignments are
+expanded for, among other things, command substitution.
 
-> On 1/26/2022 5:43 PM, Taylor Blau wrote:
-> > On Wed, Jan 26, 2022 at 08:41:45AM +0000, Matthew John Cheetham via Gi=
-tGitGadget wrote:
-> >> From: Matthew John Cheetham <mjcheetham@outlook.com>
-> >>
-> >> Teach the `scalar diagnose` command to gather file size information
-> >> about pack files.
-> >>
-> >> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
-> >> ---
-> >>  contrib/scalar/scalar.c          | 39 ++++++++++++++++++++++++++++++=
-++
-> >>  contrib/scalar/t/t9099-scalar.sh |  2 ++
-> >>  2 files changed, 41 insertions(+)
-> >>
-> >> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-> >> index e26fb2fc018..690933ffdf3 100644
-> >> --- a/contrib/scalar/scalar.c
-> >> +++ b/contrib/scalar/scalar.c
-> >> @@ -653,6 +653,39 @@ cleanup:
-> >>  	return res;
-> >>  }
-> >>
-> >> +static void dir_file_stats(struct strbuf *buf, const char *path)
-> >> +{
-> >> +	DIR *dir =3D opendir(path);
-> >> +	struct dirent *e;
-> >> +	struct stat e_stat;
-> >> +	struct strbuf file_path =3D STRBUF_INIT;
-> >> +	size_t base_path_len;
-> >> +
-> >> +	if (!dir)
-> >> +		return;
-> >> +
-> >> +	strbuf_addstr(buf, "Contents of ");
-> >> +	strbuf_add_absolute_path(buf, path);
-> >> +	strbuf_addstr(buf, ":\n");
-> >> +
-> >> +	strbuf_add_absolute_path(&file_path, path);
-> >> +	strbuf_addch(&file_path, '/');
-> >> +	base_path_len =3D file_path.len;
-> >> +
-> >> +	while ((e =3D readdir(dir)) !=3D NULL)
-> >
-> > Hmm. Is there a reason that this couldn't use
-> > for_each_file_in_pack_dir() with a callback that just does the stat()
-> > and buffer manipulation?
-> >
-> > I don't think it's critical either way, but it would eliminate some of
-> > the boilerplate that is shared between this implementation and the one
-> > that already exists in for_each_file_in_pack_dir().
->
-> It's helpful to see if there are other crud files in the pack
-> directory. This method is also extended in microsoft/git to
-> scan the alternates directory (which we expect to exist as the
-> "shared objects cache).
->
-> We might want to modify the implementation in this series to
-> run dir_file_stats() on each odb in the_repository. This would
-> give us the data for the shared object cache for free while
-> being more general to other Git repos. (It would require us to
-> do some reaction work in microsoft/git and be a change of
-> behavior, but we are the only ones who have looked at these
-> diagnose files before, so that change will be easy to manage.)
+>   $ bash -c 'set -x; FOO=$(echo foo) echo main >stdout 2>stderr; set +x; grep . stdout stderr'
+>   ++ echo foo
+>   + FOO=foo
+>   + echo main
+>   + set +x
+>   stdout:main
+> 
+>   $ dash -c 'set -x; FOO=$(echo foo) echo main >stdout 2>stderr; set +x; grep . stdout stderr'
+>   + FOO=foo echo main
+>   + set +x
+>   stdout:main
+>   stderr:+ echo foo
 
-Good points all around. I went with the `for_each_file_in_pack_dir()`
-approach, and threw in the now very simple change to also enumerate the
-alternates, if there are any.
+So in case of these commands the shell should first redirect stdout
+and stderr, then expand the command substitution, thus it should write
+the trace for the 'echo foo' within to stderr _while_ stderr is
+redirected.  It seems that dash, for once, does conform to POSIX.
 
-And yes, that will require some reaction work in microsoft/git, but for an
-obvious improvement like this one, I don't grumble about the extra burden.
+Although the standard-conform behavior is potentially more problematic
+for us, because it would cause test failure with tracing enabled when
+used like this:
 
-Ciao,
-Dscho
+  GIT_TRACE="$(pwd)/trace" git cmd --opts 2>actual.err &&
+  test_cmp expected.err actual.err
+
+because the "+ pwd" trace output from the command substitution would
+go to 'err.actual'; 9b2ac68f27 (t5526: use $TRASH_DIRECTORY to specify
+the path of GIT_TRACE log file, 2018-02-24) fixed a case like this.
+
+
+[1] https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01
+
