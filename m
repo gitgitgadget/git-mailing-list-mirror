@@ -2,130 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 534EDC433EF
-	for <git@archiver.kernel.org>; Sun,  6 Feb 2022 21:40:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E5A7C433F5
+	for <git@archiver.kernel.org>; Sun,  6 Feb 2022 22:39:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242659AbiBFVka (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Feb 2022 16:40:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52258 "EHLO
+        id S240197AbiBFWjM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Feb 2022 17:39:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231922AbiBFVk3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Feb 2022 16:40:29 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED9FEC06173B
-        for <git@vger.kernel.org>; Sun,  6 Feb 2022 13:40:28 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id h7so36489170ejf.1
-        for <git@vger.kernel.org>; Sun, 06 Feb 2022 13:40:28 -0800 (PST)
+        with ESMTP id S239688AbiBFWjL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Feb 2022 17:39:11 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94FCBC061355
+        for <git@vger.kernel.org>; Sun,  6 Feb 2022 14:39:10 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id m14so21608024wrg.12
+        for <git@vger.kernel.org>; Sun, 06 Feb 2022 14:39:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=lGqZH3dH/+16/+hqLC7k517LBa6T97vbm3aks93KyGk=;
-        b=V8+VufkSD7fqXJE3NCgnFJLXgtXijn5z1aDugtjrpOyGfMfDHs3Au4jdusW2lvLGO9
-         K3o/H/NsrgwDKg6qN2yj/EcwV66uSbWBfk1JUnA7RtaSyrcaduOlgeRXuZc1wIsjrHwx
-         bgpXNgEGJmV2BUEvOmTlKRjkYe+WD4uTfNaw6uWszoZC0IB4inXN25tu+n+YKkSGqrv2
-         HaNjAB1K83miqP5u3yra2G488cVz/PnmtNGbOanKf7/ryBqMnh2QJRQ33+GCZT2c4ADz
-         LaCJMY092tNbqWWK3vorgM5n9gCG+PzhUqRnsDnb+aasNXjv10CS9e7wsv3MIi9sKore
-         Kg8Q==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Uo6VeR463A8bpTnDe4txbUadyp7c2hS7RwvOwDAMeOI=;
+        b=dCNGMXNIMdLaT/YxRzx8sRuXGOYQc9S+i6T284x0aa672lVRKLq2iNwwtY7cTNUNCO
+         kzUAjBqOUFwLt67fmZpRUhyL1zzUJWZCfI6yCV8zCL0EELfChL7ijqz+gNWXm4UJhVFq
+         dnSJK+ZROs4qYU08oIThS/OoXcaEcwuROanhv35tAUdZbCUVhlHl17a9cDvZZEz8SaV3
+         o1c1CHkbbOIZKIF6Y8pW0Fpg0/vi1AbdUCgKDzN0GgMvgUyl5eP9wq3IeQS8ymQeXP2D
+         vSDCSK8KmE+lZ8cDa0qeSpuEoHGUW5LEO+BVzZu3mEZD3dx7JZHwru2oVBYvUqsAiWKg
+         ieTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=lGqZH3dH/+16/+hqLC7k517LBa6T97vbm3aks93KyGk=;
-        b=yl/GHhL4AqWz4PDVyekeK6BhvOULILkRxxi+nHgoQ3gyJ42jIdCwL18CW08Q4xeGQY
-         erFmtYFFchUGYN5iL3BeqlRP4PUH4gRjfikqg0L1iPabFZckfUXYl6sCIh03afPIckG9
-         DYbceJGZtpXPvYRBbMk+x9C9iWYkAvogelDZuVDKvHyC/5kNBeq7LNSDj95n2Sqadc/D
-         iwjKjRjzQ9NckU9DeKBFOyen12SMPq0PTua1qslTw7uOz6Z2zKkOWRRdht1dvP4++vbI
-         IK/7W2+bNdY1S4F6LuHAA5x4J0Hn9gfgegsOIRoic5mHO56AoYHa5gznLf6tG1Pj8AWG
-         /VVw==
-X-Gm-Message-State: AOAM5301JJFg2zSXRw55AQ3UzDYJ7UVf6lafkjqP/X1TjrffVmVI6DI3
-        gUMna12SVeU0cSCtxDiiXo8=
-X-Google-Smtp-Source: ABdhPJzAddokAuNdpv9kjWk/27CauhdaLYbkSsFq3BBH5GItpYUSeB0H8YNve5mWwXmplKr7kGDQxQ==
-X-Received: by 2002:a17:907:e9f:: with SMTP id ho31mr7563812ejc.646.1644183627404;
-        Sun, 06 Feb 2022 13:40:27 -0800 (PST)
-Received: from szeder.dev (94-21-146-211.pool.digikabel.hu. [94.21.146.211])
-        by smtp.gmail.com with ESMTPSA id qb30sm2941169ejc.27.2022.02.06.13.40.26
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Uo6VeR463A8bpTnDe4txbUadyp7c2hS7RwvOwDAMeOI=;
+        b=6fr6EDUlmyx4GuFeamyScIm4P2ETnzIzgYsKfGKMlgg5+vxkH2vv49a9LPlCNVUMF2
+         rgjEjqwpsiqxRKB5+B1wNt/N51r2l1neMDeQl93dbumjh94mCzoVoE3aExA8Zbq+AFfl
+         CBprpnuzccSAne8aVOyLGXl0nv+l97ALchVjDJjC+mGDnHwkxgWSoImpv45g5LyZSKE+
+         YB5y7fOO5cLTinNDkS5qtvrV9M3uSJwZJfsxrVB1ZIoxj+DMeU9zCLhVMdHfAmofms1t
+         wMYc0mVc1RIVrlUT40L9vEPfbqwGTMi+G7sE68wwut2HCFaEgBTovTEvz31Fq0JE2zqM
+         oUiA==
+X-Gm-Message-State: AOAM533rhQHmP4ZyHhbJhg1vCRIetKmqWgzE0KVEcU2xVvd+Cste1FMS
+        IHfc+AM/z9yNG9MDuYq94usTqRvYH+0=
+X-Google-Smtp-Source: ABdhPJxt70YPjEp9YZ7ZqU/2QqDB5cdlOk5D7YxRtC7GfXiSPdShJoJEbGZGUYKtx2bG5xzZA+Xa+w==
+X-Received: by 2002:a5d:610f:: with SMTP id v15mr1493074wrt.602.1644187149105;
+        Sun, 06 Feb 2022 14:39:09 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b10sm5647136wrd.8.2022.02.06.14.39.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Feb 2022 13:40:26 -0800 (PST)
-Date:   Sun, 6 Feb 2022 22:40:24 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 1/2] t1510: remove need for "test_untraceable", retain
- coverage
-Message-ID: <20220206214024.GC1936@szeder.dev>
-References: <patch-1.1-9f735bd0d49-20211129T200950Z-avarab@gmail.com>
- <cover-v2-0.2-00000000000-20211201T200801Z-avarab@gmail.com>
- <patch-v2-1.2-91402624777-20211201T200801Z-avarab@gmail.com>
- <20211202191635.GB1991@szeder.dev>
- <YbMiK1wHzBfYvK2a@coredump.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Sun, 06 Feb 2022 14:39:08 -0800 (PST)
+Message-Id: <600da8d465ef8e83c20cdf6fec85aff08eb65551.1644187146.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com>
+References: <pull.1128.git.1643186507.gitgitgadget@gmail.com>
+        <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 06 Feb 2022 22:39:02 +0000
+Subject: [PATCH v2 2/6] scalar: validate the optional enlistment argument
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YbMiK1wHzBfYvK2a@coredump.intra.peff.net>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 10, 2021 at 04:47:23AM -0500, Jeff King wrote:
-> On Thu, Dec 02, 2021 at 08:16:35PM +0100, SZEDER Gábor wrote:
-> 
-> > > @@ -62,7 +59,7 @@ test_repo () {
-> > >  			export GIT_WORK_TREE
-> > >  		fi &&
-> > >  		rm -f trace &&
-> > > -		GIT_TRACE_SETUP="$(pwd)/trace" git symbolic-ref HEAD >/dev/null &&
-> > > +		GIT_TRACE_SETUP="$(pwd)/trace" git symbolic-ref HEAD >/dev/null 2>>stderr &&
-> > 
-> > I suspect that it's lines like this that make Peff argue for
-> > BASH_XTRACEFD :)
-> > 
-> > While this is not a compound command, it does contain a command
-> > substitution, and the trace generated when executing the command in
-> > that command substitution goes to the command's stderr, and then,
-> > because of the redirection, to the 'stderr' file.
-> 
-> Better still, the behavior varies between shells:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Indeed, although POSIX seems to be quite clear about what should
-happen in this case: the specs for simple commands [1] state that
-redirections should be performed before variable assignments are
-expanded for, among other things, command substitution.
+The `scalar` command needs a Scalar enlistment for many subcommands, and
+looks in the current directory for such an enlistment (traversing the
+parent directories until it finds one).
 
->   $ bash -c 'set -x; FOO=$(echo foo) echo main >stdout 2>stderr; set +x; grep . stdout stderr'
->   ++ echo foo
->   + FOO=foo
->   + echo main
->   + set +x
->   stdout:main
-> 
->   $ dash -c 'set -x; FOO=$(echo foo) echo main >stdout 2>stderr; set +x; grep . stdout stderr'
->   + FOO=foo echo main
->   + set +x
->   stdout:main
->   stderr:+ echo foo
+These is subcommands can also be called with an optional argument
+specifying the enlistment. Here, too, we traverse parent directories as
+needed, until we find an enlistment.
 
-So in case of these commands the shell should first redirect stdout
-and stderr, then expand the command substitution, thus it should write
-the trace for the 'echo foo' within to stderr _while_ stderr is
-redirected.  It seems that dash, for once, does conform to POSIX.
+However, if the specified directory does not even exist, or is not a
+directory, we should stop right there, with an error message.
 
-Although the standard-conform behavior is potentially more problematic
-for us, because it would cause test failure with tracing enabled when
-used like this:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ contrib/scalar/scalar.c          | 6 ++++--
+ contrib/scalar/t/t9099-scalar.sh | 5 +++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-  GIT_TRACE="$(pwd)/trace" git cmd --opts 2>actual.err &&
-  test_cmp expected.err actual.err
-
-because the "+ pwd" trace output from the command substitution would
-go to 'err.actual'; 9b2ac68f27 (t5526: use $TRASH_DIRECTORY to specify
-the path of GIT_TRACE log file, 2018-02-24) fixed a case like this.
-
-
-[1] https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01
+diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
+index 1ce9c2b00e8..00dcd4b50ef 100644
+--- a/contrib/scalar/scalar.c
++++ b/contrib/scalar/scalar.c
+@@ -43,9 +43,11 @@ static void setup_enlistment_directory(int argc, const char **argv,
+ 		usage_with_options(usagestr, options);
+ 
+ 	/* find the worktree, determine its corresponding root */
+-	if (argc == 1)
++	if (argc == 1) {
+ 		strbuf_add_absolute_path(&path, argv[0]);
+-	else if (strbuf_getcwd(&path) < 0)
++		if (!is_directory(path.buf))
++			die(_("'%s' does not exist"), path.buf);
++	} else if (strbuf_getcwd(&path) < 0)
+ 		die(_("need a working directory"));
+ 
+ 	strbuf_trim_trailing_dir_sep(&path);
+diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-scalar.sh
+index 2e1502ad45e..9d83fdf25e8 100755
+--- a/contrib/scalar/t/t9099-scalar.sh
++++ b/contrib/scalar/t/t9099-scalar.sh
+@@ -85,4 +85,9 @@ test_expect_success 'scalar delete with enlistment' '
+ 	test_path_is_missing cloned
+ '
+ 
++test_expect_success '`scalar [...] <dir>` errors out when dir is missing' '
++	! scalar run config cloned 2>err &&
++	grep "cloned. does not exist" err
++'
++
+ test_done
+-- 
+gitgitgadget
 
