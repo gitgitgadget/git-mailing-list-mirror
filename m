@@ -2,78 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ABD1C433F5
-	for <git@archiver.kernel.org>; Sun,  6 Feb 2022 19:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60C4DC433EF
+	for <git@archiver.kernel.org>; Sun,  6 Feb 2022 20:04:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239505AbiBFTip (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Feb 2022 14:38:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44192 "EHLO
+        id S242621AbiBFUEl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Feb 2022 15:04:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240959AbiBFTio (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Feb 2022 14:38:44 -0500
-Received: from mail-ua1-x936.google.com (mail-ua1-x936.google.com [IPv6:2607:f8b0:4864:20::936])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7409AC0401C7
-        for <git@vger.kernel.org>; Sun,  6 Feb 2022 11:38:41 -0800 (PST)
-Received: by mail-ua1-x936.google.com with SMTP id r8so19838528uaj.0
-        for <git@vger.kernel.org>; Sun, 06 Feb 2022 11:38:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=yguXfSXlM9k/wf7AiDaLB+YFMGC1mjMKOMPb6hE7Gqc=;
-        b=kiHLdnm0KFsZFyaR66A8SDCIBBeuVEmXCHnmUFig5dSJKXPEHhBaRDkWURkUteQ85+
-         KzYqrrb9JGLN0k6TL8hH5Bwm+8aSwDGXdT+iRkBcPzB4Z4ezoiKBdHh2V0IUJrnOmmu5
-         fZT++OVfr1Pe7X214UmiIAj1Ux9ZUbYOjNCLRqBNHPVzBPhRHHVgZgaEgw7UwvT5K37o
-         LbJUdByvO6NYgttTAn/h6TgpB5GzxRwZ7dHzUrw1fXA92JT66hP5BSzYc+OiYvUNoOon
-         SEYq41n2uVmUYTU6DAbS2mBLGhxYx+A9iCNGTePUOO+cLzuEdI3xP6B0w76fEwKmDSj5
-         rInQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=yguXfSXlM9k/wf7AiDaLB+YFMGC1mjMKOMPb6hE7Gqc=;
-        b=dSo5GMffJlUAJHaEJYYVFew1QFPTqPwtoxPFWa/QWlDIUnMmgntgeDuVjRdUMmvFPo
-         1PxV9Ad12BcC3PyJtyaHrhWTjLWpP35qUK9KqVqVK1ogFfU9bMOeyGG1OGxIUwgjoK4v
-         1TY5QSGXVpkyvZMLWNJgb0w7d7Hnw23jJaSApNG2mDAkqpLjQV/Ont0HpvyEpsuaaCYY
-         aUdUOtOCJRpedzim6W/bqgtr4lehGGo2vTX6SKDRTEfdDvbaNZv8l+MLeUdLjrnZlDyh
-         HMUP/55mp6Nv5PReHM8MDiPgmQqjPlAaI9ZdFmSyvJvYcmiz9SbNvfRl4Ml0sjmRxV+T
-         DFQQ==
-X-Gm-Message-State: AOAM530k9fzpqKttDlsbasPo8a01gXo6q76z/skZJ7woZ67zpvJ8w3XF
-        ERzAK39SQvAE/rgKS9hg7yrwEbWufFjB3m91mbv22OL4FVU=
-X-Google-Smtp-Source: ABdhPJyPjFS5VUPWzB03vnu5C7/nECpfmzZI4mXc+OHNBTvNtFGh/HaPgPRiBMzQL4WjH0/aHDfkzwN5VDkKxoLivR0=
-X-Received: by 2002:ab0:7646:: with SMTP id s6mr1737447uaq.75.1644176320489;
- Sun, 06 Feb 2022 11:38:40 -0800 (PST)
+        with ESMTP id S231982AbiBFUEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Feb 2022 15:04:40 -0500
+X-Greylist: delayed 120 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 06 Feb 2022 12:04:39 PST
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 510A0C06173B
+        for <git@vger.kernel.org>; Sun,  6 Feb 2022 12:04:39 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2736105AE6;
+        Sun,  6 Feb 2022 15:02:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EUan4xEYLDp8JRl8V5xjGXc9yEPouzKI4lLBXk
+        t+/0Q=; b=fVGmsAzog0pZapB2016/QX0QssRHABxcn38KPFZTf9IeFCviJ+1dBa
+        0tXinEiZcLxx0jlZETOPzQfT14OVuhYuwVCf0G/+VSZZCRM6H37KYSv9bfytJTFN
+        9kBY9xxgoVZtcjC2dVmYwqQK2tGg3iTHmLp6UuhWYEnVhMNTXdr5o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C9D3D105AE4;
+        Sun,  6 Feb 2022 15:02:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.213.122])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4CDC2105AE1;
+        Sun,  6 Feb 2022 15:02:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     "Gamblin, Todd" <gamblin2@llnl.gov>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Commit SHA1 == SHA1 checksum?
+References: <ED97E252-CABA-41BB-B18C-819A5EF305E3@llnl.gov>
+        <121ce485-bea8-3168-aa35-d11eb13022da@iee.email>
+        <xmqq1r0gjo6h.fsf@gitster.g>
+        <eca83634-ee91-89bd-567e-6b0807b5ff79@iee.email>
+Date:   Sun, 06 Feb 2022 12:02:34 -0800
+In-Reply-To: <eca83634-ee91-89bd-567e-6b0807b5ff79@iee.email> (Philip Oakley's
+        message of "Sun, 6 Feb 2022 19:25:27 +0000")
+Message-ID: <xmqqee4fix0l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAO8o=D7LKUp_Bf54hbVNumhpNKnDO3UKgyOMU_0d0Er87a2zJQ@mail.gmail.com>
-In-Reply-To: <CAO8o=D7LKUp_Bf54hbVNumhpNKnDO3UKgyOMU_0d0Er87a2zJQ@mail.gmail.com>
-From:   Noam Raphael <noamraph@gmail.com>
-Date:   Sun, 6 Feb 2022 21:38:29 +0200
-Message-ID: <CAO8o=D4yuKheOO1UL7o0u89i=yp3c4KjhLjKPGBptE3-NXObEg@mail.gmail.com>
-Subject: Fwd: $LOCAL and $REMOTE swapped for rebase mergetool
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: BA0BF5E2-8787-11EC-9F09-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Philip Oakley <philipoakley@iee.email> writes:
 
-When using `git mergetool` with `git merge`, the variables $BASE,
-$REMOTE, $LOCAL and $MERGED behave as I would expect.
+> I think part of Todd's question was how the tag and uncompressed archive
+> 'checksums' (e.g. hashes) relate to each other and where those
+> guarantees come from.
 
-However, when using `git rebase` instead of `git merge`, $LOCAL and
-$REMOTE are swapped - instead of $LOCAL being the local content before
-the commit and $REMOTE being the content being rebased, it's the other
-way round. This doesn't seem consistent with the git-mergetool man
-page.
+There is no such linkage, and there are no guarantees.  The trust
+you may or may not have on the PGP key that signs the tag and the
+checksums of the tarball is the only source of such assurance.
 
-This causes 3-way diff tools to swap the meaning of what's on the left
-pane and what's on the right pane. I had to work around this with the
-new 4-way diff tool that I wrote (https://github.com/noamraph/meld,
-check it out!) since it assumes the diff between BASE and REMOTE
-should be applied to LOCAL, and this doesn't hold.
+More importantly, I do not think there can be any such linkage
+between the Git tree and release tarball for a few fundamental
+reasons:
 
-I think that at least the documentation should be updated. Or perhaps
-the behavior should change - this actually seems to me like a bug.
+ * We add generated files to "git archive" output when creating the
+   release tarball for builder's convenience, so if you did
 
-Cheers,
-Noam
+       rm -fr temp && git init temp
+       tar Cxf temp git-$VERSION.tar
+       git -C temp add . && git -C temp write-tree
+
+   the tree object name that you get out of the last step will not
+   match the tree object of the version from my archive (interested
+   parties can study "make dist" for more details).
+
+ * Even if we did not add any files to "git archive" output when
+   creating a release tarball, a tarball that contains all the
+   directories and files from a given git revision is *NOT* unique.
+   We do not add randomness to the "git archive" output, just to
+   make them unstable, but we have made fixes and improvements to
+   the archive generation logic in the past, and we do reserve the
+   rights to do so in the future.  And it is not just limited to
+   "git archive" binary, but how it is driven, e.g. "tar.umask"
+   settings can affect the mode bits.
