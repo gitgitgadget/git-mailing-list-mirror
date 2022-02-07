@@ -2,108 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 180EDC433EF
-	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 02:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F96FC433F5
+	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 06:07:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348691AbiBGCWi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Feb 2022 21:22:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45374 "EHLO
+        id S242731AbiBGGEm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Feb 2022 01:04:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348679AbiBGCWh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Feb 2022 21:22:37 -0500
-Received: from mail-vk1-xa36.google.com (mail-vk1-xa36.google.com [IPv6:2607:f8b0:4864:20::a36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73C53C061A73
-        for <git@vger.kernel.org>; Sun,  6 Feb 2022 18:22:36 -0800 (PST)
-Received: by mail-vk1-xa36.google.com with SMTP id o15so7039505vki.2
-        for <git@vger.kernel.org>; Sun, 06 Feb 2022 18:22:36 -0800 (PST)
+        with ESMTP id S241714AbiBGDgz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Feb 2022 22:36:55 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A39CC061A73
+        for <git@vger.kernel.org>; Sun,  6 Feb 2022 19:36:52 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id u6so3210662lfc.3
+        for <git@vger.kernel.org>; Sun, 06 Feb 2022 19:36:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=90OlMBKyaqrgtmiKjxtutZDp1k6ivdhqDTXlnfxD75Y=;
-        b=OTHBWKdT4XOmIHZPnYBxPqBdyXePky7p2J+uh4KJ7d0nlxnAAnrc6UwxVbpvUeQbSB
-         TqK+20FSn5JcQ7iV6fxTxfYne8etBNlr1SY+434EYlxjbcB37kUL2FtUqDHVzSiIvRiH
-         aSOEEmLfHcFFShDJH6aTuybzblvwNal0adL/YDQmuKP5lVjEdKPEJQNWbAJ1s6JVJzWp
-         pSJGdspiGvmQ9J9MM8GFk3IRRAPnwfxPXSBctNunvNAhlRUDmSp/AWTfvUs20SJ1mkvA
-         30j7gNJc2U4rw+9y97nPwY5UvbcVudAgdTj6bVZ6JJW30DbVU8v9WHZtyWgWfX9Jzq31
-         JF0Q==
+        bh=LfPZZ65oIwdMk5+PcsG9fHW7IXZIFjNUXAWnP2JJxXE=;
+        b=Xu4K0pvVZwMlueAXTSw5I4LM05XF7YUbW+M9ZFD5IeOfLwzGqGSUkr3P/vacWcbWWt
+         YNfA4F5Gx4UPem5VNTsfWwFEjtcQo6b5sMxfHwXI/H3OD7Ew2iCoQd2Z1O+lB/4tyg6Z
+         M0nXjtPjhev7tLe/OGpV5R/jbYlaHBfKh7QBO440X2SrITG0+LlxVuLGajfDDAffMdxS
+         IDpQdwOfsTAbNprDhUsLFv9/E4N9K7TbmKQGJXUyAmut4iOO0ivz36iPITlKv0yDbva3
+         pWtx9LaUo05uQ5+JyxlbiXC6zfdndJg+2NWDgVueSjwhdqnycTMhHErLLzE1UoRDem1O
+         64sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=90OlMBKyaqrgtmiKjxtutZDp1k6ivdhqDTXlnfxD75Y=;
-        b=CX519CsTfSfSiCbeu8c8Di3gT6SsODlrjZWwECKU/amCQhCmjMerSAwuDQ/hDIFHI8
-         +egQAMoAOHieERgd5v1r4ivlpxYmgQ82rZSxzS6jTP4KoGWalbUPgs4xm/xsZ0imdLxr
-         eUOyRxIgKneMj2sCay5Iw7wliwX5V1lKZ1ZWHBR3SWvU7yi4Ps3X7cB/eCEKI6wDdTMN
-         BB0gIvn/tFH6Q8qgqEbdwSu/ySBOI0Dd7tvyJwMmy09T9O4ne/i3BXyTb9WVHXrfUtDB
-         bWQgseGwc+NpSWGLT8GusXfI826vH1rb8vXo0a3hIkwmbSymK4VrEzy1J9meFhzj60FC
-         172Q==
-X-Gm-Message-State: AOAM530d/orEBWTKzKw0fLowDIVYLgWqCIpFqreP8bQFtZrzSRkEne5d
-        DJAYf9Woy4ICxHgNOnHKYM7eX77Jwm3dWF0ylHs=
-X-Google-Smtp-Source: ABdhPJxL8Mqs77NIhOeZhgFnEXSBEBC2GjbETFBJdTVwn7iKpHwHfWJU9ETZXK7jx9c7CjyUsZU7jXd3uE5drtoHt0U=
-X-Received: by 2002:a05:6122:130e:: with SMTP id e14mr4017504vkp.26.1644200554883;
- Sun, 06 Feb 2022 18:22:34 -0800 (PST)
+        bh=LfPZZ65oIwdMk5+PcsG9fHW7IXZIFjNUXAWnP2JJxXE=;
+        b=DkpqAnRCu2xd6WcSRRJ6/rGeyErYzqieuRUcwMDjlm3CeuVsNjmXV3EDER7M9wcl5l
+         SR0QYEzgyGobDihnje4BEG5sKmiohPqYTw+MK3VG2PNuik2/7hcIKxFJifwNTV44dE6B
+         8RiXr4y7nOzDX0LLI+DFvaVwYPGNCln2Lr4qyFxK6Ml8SMoPPk9qe0Lg3W2DY/AV9Mpp
+         D6MINFwqfewt5sb1tGwVZELUSvzgB4RPdsAjntl79tDQIK3b6f4HO8pIOTDzdMn85pC+
+         NUay7yonZ6ePmLXb2lxCyfflOkzYuByFrAb56iz6oA64x+kuQca6xMf0cVgl+buh9N/3
+         YKsw==
+X-Gm-Message-State: AOAM531tXlc3Vg+f2KAOqLnIqdHbE2j7wsG06+fh8Ap0AagVGv9gsrYA
+        lq0lplcY1GKraBDaos61VWsrSrgi0lieYYksgEuNy2SYJVQ=
+X-Google-Smtp-Source: ABdhPJx9oxtjDuqfJ4ex6QIhG/WqjpY5ngzb3n308CF/Q7R9BsRvdeUoKJnQ86T97gMABRH6L5s6Mmv9YRx1XGxrqSQ=
+X-Received: by 2002:a05:6512:686:: with SMTP id t6mr6960524lfe.567.1644205010804;
+ Sun, 06 Feb 2022 19:36:50 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1641978175.git.dyroneteng@gmail.com> <bcfbc935b80b889273e3e54fec2a896e44acd2b5.1641978175.git.dyroneteng@gmail.com>
- <220113.86wnj4w228.gmgdl@evledraar.gmail.com> <CADMgQSQXLydvgpW+Vm_b-rkSWAuj9FezwveY-iRZnKfsGkOpCA@mail.gmail.com>
- <220114.86ilumttn2.gmgdl@evledraar.gmail.com> <CADMgQSQzqW9m1XM7_EE09eBhkheMj6QCZ+pVjtHWW2HY=u_o2g@mail.gmail.com>
- <220204.865ypu3hqm.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220204.865ypu3hqm.gmgdl@evledraar.gmail.com>
-From:   Teng Long <dyroneteng@gmail.com>
-Date:   Mon, 7 Feb 2022 10:22:23 +0800
-Message-ID: <CADMgQSSNQFHhf3=K+PiaoonBnheoDcoKpWy9-zjSu90d9rDY2w@mail.gmail.com>
-Subject: Re: [PATCH v10 6/9] ls-tree.c: support --object-only option for "git-ls-tree"
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, tenglong.tl@alibaba-inc.com,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+References: <pull.1124.git.1642987616372.gitgitgadget@gmail.com>
+ <20220129063538.24038-1-bojun.cbj@gmail.com> <xmqqczk6b3pt.fsf@gitster.g> <CADuS7AoAbtbC3RKrXR=SGvfs7C-n57Y9zkaGne_XrfyJh46zXg@mail.gmail.com>
+In-Reply-To: <CADuS7AoAbtbC3RKrXR=SGvfs7C-n57Y9zkaGne_XrfyJh46zXg@mail.gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Mon, 7 Feb 2022 11:36:39 +0800
+Message-ID: <CANYiYbHbFmjbMOCKc=UTDEwcL1bpGRrKRafFCUuYxvuHYVkhTg@mail.gmail.com>
+Subject: Re: [PATCH v2] receive-pack: purge temporary data if no command is
+ ready to run
+To:     Bojun Chen <bojun.cbj@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Chen Bojun <bojun.cbj@alibaba-inc.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Teng Long <dyroneteng@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 4, 2022 at 9:04 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
-
-> I'm not saying we shouldn't have that, but that in any case a sequence of=
-:
+On Sat, Feb 5, 2022 at 4:15 PM Bojun Chen <bojun.cbj@gmail.com> wrote:
 >
->  1. Add a --format option
->  2. Add a --object-only alias for a --format (what my RFC 7/7 does)
->  3. Add a custom more optimized --object-only implementation
+> Junio C Hamano <gitster@pobox.com> =E4=BA=8E2022=E5=B9=B42=E6=9C=882=E6=
+=97=A5=E5=91=A8=E4=B8=89 06:51=E5=86=99=E9=81=93=EF=BC=9A
+> >
+> > Chen BoJun <bojun.cbj@gmail.com> writes:
+> >
+> > > From: Chen Bojun <bojun.cbj@alibaba-inc.com>
+> > >
+> > > When pushing a hidden ref, e.g.:
+> > >
+> > >     $ git push origin HEAD:refs/hidden/foo
+> > >
+> > > "receive-pack" will reject our request with an error message like thi=
+s:
+> > >
+> > >     ! [remote rejected] HEAD -> refs/hidden/foo (deny updating a hidd=
+en ref)
+> > >
+> > > The remote side ("git-receive-pack") will not create the hidden ref a=
+s
+> > > expected, but the pack file sent by "git-send-pack" is left inside th=
+e
+> > > remote repository. I.e. the quarantine directory is not purged as it
+> > > should be.
+> >
+> > I was puzzled by the reference to "pushing a hidden ref" at the
+> > beginning of the proposed log message, as it wasn't quite clear that
+> > it was merely an easy-to-reproduce recipe to fall into such a
+> > situation where all ref updates are rejected.
+> >
 >
-> Would make the patch progression much easier to read, and we'd consider
-> the correctness of --object-only (1 and 2) separate from the
-> optimization question (3).
->
-> But maybe we won't need (3) at all in the end, i.e. is (1 and 2) fast
-> enough for it not to matter (I think probably "yes", but I don't have a
-> strong opinion on that).
+> Thanks for the suggestion. Do I have to rewrite this commit message on th=
+e v3?
 
-Sorry for the late reply, I had a vacation in the last two weeks (Chinese
-New Year).
+You can start your commit message like this:
 
-I have to say it's a very valuable recommendation and at the same time
-I recognise that
-spending more time on organizing commits ahead is important and make
-small steps(or commits) sufficiently.
+    receive-pack: purge temporary data if no command is ready to run
 
-> Now would be a good time :)
->
-> I was reminded of this because Junio's proposed it for next at
-> https://lore.kernel.org/git/xmqqr18jnr2t.fsf@gitster.g/
->
-> I think per the above & other replies of mine (including not matters of
-> code arrangement opinion, but e.g. the doc formatting bug) we'll need at
-> least one more re-roll of this. Thanks for sticking with this & working
-> on this!
->
-> I'll indicate that in a reply to that "What's Cooking" report.
+    When pushing to "receive-pack", commands may have already been
+    marked with error_string or skip_update before being fed to the
+    "pre-receive" hook. E.g.:
 
-Thanks for mentioning that. I will back work on it this week.
+     * inconsistent push options for signed push.
+     * not permited shallow updates.
+     * encounter connectivity issues.
+     * push to hidden references.
 
-Thanks.
+    Take pushing to hidden references as an example.
+
+    In order to reduce the size of reference advertisement for git-push
+    from a client which does not support protocol v2 and push negotiation,
+    the administrator may set certain config variables to hide some
+    references like:
+
+        $ git config --system --add receive.hideRefs refs/merge-requests
+
+    Then, if a user made a push like this:
+
+        $ git push origin HEAD:refs/merge-requests/123/head
+
+    ...
+
+--
+Jiang Xin
