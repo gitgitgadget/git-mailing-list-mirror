@@ -2,35 +2,36 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05900C433F5
-	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 20:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26A9CC433F5
+	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 20:02:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239932AbiBGUCF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Feb 2022 15:02:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39520 "EHLO
+        id S235255AbiBGUCY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Feb 2022 15:02:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237656AbiBGUAU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Feb 2022 15:00:20 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CF35C0401DA
-        for <git@vger.kernel.org>; Mon,  7 Feb 2022 12:00:19 -0800 (PST)
+        with ESMTP id S241454AbiBGUAL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Feb 2022 15:00:11 -0500
+X-Greylist: delayed 304 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 07 Feb 2022 12:00:09 PST
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F5D3C0401E2
+        for <git@vger.kernel.org>; Mon,  7 Feb 2022 12:00:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1644264017;
-        bh=WohQMNlWySmGRIX8JKIyRGCajPISsbJ624f0U5fdIiE=;
+        s=dbaedf251592; t=1644264007;
+        bh=oiu2t/UZli3QoFRDdWlEBNHS7fBbcvgCRM64WeqYYC0=;
         h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=cmH6pwRJ7MaQ8OqfHhUHK+U3XkFPGaoi+s0SF9RbWdwp8IXC9F1UCVwhjlUdFKhGH
-         MWIC9LPBo6Dkeulo61zrZvJreAdVD0ezgJ594odBfzJ+Q6p6r1VyUJob0zKp1k26Z1
-         sTWezefDzgKcI2qzixhxeaObAKQE1GM4BLh7sVn0=
+        b=W2APpHJIrCNbb2p470zzBVBbuDSb7EozpgAf+H1fsHHku6scTcr7UAeGOAvTUhaoS
+         I1TWgVpzaloyT0zS9SKwfLFe8wkXFXUmgrNPs02JAtYPqo3tsUu5g9C8Du2cAdD8X3
+         ajJXCpJ1pnEYU0OxRnL9DjdGeZXJzv/zmCUHJf1E=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.29] ([79.203.27.158]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mv3Yg-1o81o10ZLU-00r1Bh; Mon, 07
- Feb 2022 20:55:13 +0100
-Message-ID: <ef70b87e-989b-e99c-b4ca-2b91c05defcf@web.de>
-Date:   Mon, 7 Feb 2022 20:55:12 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mkmvd-1o2pnV2sBz-00mIKa; Mon, 07
+ Feb 2022 20:55:02 +0100
+Message-ID: <d1e333b6-3ec1-8569-6ea9-4abd3dee1947@web.de>
+Date:   Mon, 7 Feb 2022 20:55:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.5.1
-Subject: Re: [PATCH v2 3/6] Implement `scalar diagnose`
+Subject: Re: [PATCH v2 1/6] archive: optionally add "virtual" files
 Content-Language: en-US
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -39,337 +40,211 @@ Cc:     Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 References: <pull.1128.git.1643186507.gitgitgadget@gmail.com>
  <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com>
- <0d570137bb6aef675f4f5d74d140ace1dfba5eb7.1644187146.git.gitgitgadget@gmail.com>
+ <49ff3c1f2b32b16df2b4216aa016d715b6de46bc.1644187146.git.gitgitgadget@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <0d570137bb6aef675f4f5d74d140ace1dfba5eb7.1644187146.git.gitgitgadget@gmail.com>
+In-Reply-To: <49ff3c1f2b32b16df2b4216aa016d715b6de46bc.1644187146.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:tJDZc8eMyC0p2A3zrekMqkKgxfFNBSfxq4QCecsBuItOhO8ZpNo
- 0pHvtAlq4iY4IyOzNMUq4JnEWgQnRhXOpTz3Jx4Ifc3nBAreDGvCZxiE3a0rDsO6DNkONnI
- VtM/RHbMPM9e14yxapzrKfZ+udXD42sLZ2BrEdzX9PEg+ULi1Fzk4yOcbK7Dv9JsZHNkJlw
- pe3J97C0tKrBTEBNgM0EA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:oMjj8AmLyTE=:weuleYTQ3n47IYKVqk4MgK
- pgqLAdv0qL9fpVIVo3Zi+FsKxuVSukDQ7lUzySwQ/1JmIdcWgA7wwRxlQ/OATbPQRkQsWucqT
- CcAGHbPzOpGY3rFGTJIeYT53ChVbi82b7bJogZ6VUFu+Iw/HsLd+AaiEc2rc/u60kwXVcucTA
- N+SRPj/KreXpFmWy5KpW8OO9kd1w/w4kswRcOrf2Gbbidp7HziIqi6fyt+GjF195yYcYkboKx
- cTcpvZPNRqjBqJacngDxhJYAhvUmZABW1uKnQLPxfmAaybOpxHG5EJdWOxT7/vr5iG8xpXGIa
- qD+pO98utIghYwOXRzxelvu8gJ/m2BFjgkTaQuaRry+gpgh9ltvRPR3MpXdnwEbYpHyVH3NOp
- ZXrl1mF9BSUnnShBxdBb5+QjXrWqJB6yGUMd1k75UdDKbc05eqtePErHM3sap3ov/nY4/F3hX
- Svawpo/cMHtspQyoM488rCkuL4g2rOgVEhn4g0fE7jcP0W7D2pIjI2itl/EI5SOX0nObYy3Z4
- Ch4rJUVJ1gr1L1SIINhGDsqWcTfB3UrjVDVEdVcHVDuwYdGaLFXsQ1aWzCGnLtNTEFUkmV0wR
- 2G+6/bSu9FxWyMMqbuRWw62E++bUWaa7L+IxTt8422aRxlaiBjS0dc3O9catx3swLG5AqRU4Y
- +R1lk9m56h9Erv62naP/HiST0Gwv+/d0tSZ0CeaP4A741bn8t7bE6swyV9qCaPNeWpEI8380Q
- xYSZVwrkuTGg+2nNDqv2/Swj7Ln0TvVO2EMQj0cYVrAZ/QoI5VCo31PgEaQd/Zl4WRcp25pk3
- jbsif3mZzMe8/vhaJn9XKeNLqNzE8JAfIg5cGMYUKCUo71JpVgfTl7v3CI/WwBQd3XLvUkBBV
- 8ETtjoYBYU+YR18aN85zorhqDVF+KWBXB7WcxvwrtbDWDnZiUR+AOG7wSnisSkLpwllzyIuE5
- nP1KbLqcgPxMaLFJ5FWV0RpTLWWH196vV8YuI693bzOXp4oOzufUp3uUTbEfSA0Eccqgt5ID/
- NbgySYeegw027qteG3npD1PV0SdErl6FFMRA0p8RUR/Clh6I7d7s4MD7uLq7ZjZay86b3TRKn
- AEjkePrxTTih7E=
+X-Provags-ID: V03:K1:HlHey4RzPos1v4nSAofl0T1ETTXrTh83TPwxKNacp/hkSI/HuC1
+ djYz8bHoHKH1z1/uK8OTou7WS59TFaciRHKifH9i1pALSsKnXSflEm4geynkch3DODbt22H
+ lTuuTChuEizTEhPCrS6ia542HYq8zLK2qajgMyQeCvHRP953Bwh8nt2xtIUr0Aobwbn5RiH
+ FpHbd99iQ4JFs8P5ZV7Xg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+YsgcD1lKZ0=:YsqPIQj+DmyUtF4emA9DaU
+ 24Djb8EH3JVQ39PgYWhONqg1ov4FrkwWDVNzC1gz2x15YM+rlOwPY1GUq6gXR5oD1nviVyv+4
+ kBPCEMU0MnLicEg6Dq3oc6uBX7mr42bIvOiumq3ySQRoLqn6U0wcBe3WjX/U5NHEUiGUB9vnr
+ oQKMYN08rZL+yxDb2MtFQCETFETsukdjyp0VO8ATjbKeqGCW1FzXjRcAzYGDHrKRcKIwUqsvI
+ lXsIUpyUwZRrioF56grT2nZTeSE6R6rRDdylTYUBb2kWr21IHO3D3Y4MxNYNK9OyeKrcirM/j
+ 4GuRrvs0j90JYdSb7eytH6i1zF8v8le+a6yNhD6TOt3LuzTFPpOWQZzZ/kbVV+zc98o1EX1z9
+ PeIF/dXGRwqqF5qaogbGARrs5WFQOfTdpVAKT0nJS/rUkL/HVQqaYVV+KougdeLZZCYMJWzBI
+ AOFr6bmD+blFgnXnfJOeS0LINS9N/M9DF2zDJtFZvaADJu+C3XBzPZ4urKWA1lrCfk9z8zPj5
+ 68iS4oHv32pWJc1JmDN2tbYckEfwPKzg7/3Ifuiu0LNql4VJN3GQ4rPY4wZ2t63Y64PR+p3gR
+ pRNcNdpzEnv2c2LkY91kdax2cW8pDZPeM0/Ove0vhR5+VB8ge13w6tMMcdEMBHMa3aSDbtspC
+ YyZOXA1wnAWEP2rrj12VnEbJ8QRnGN3TlFAGAEVn4J7u7hDwNKzTClszhK6sF63E+Sx/RRcM1
+ YcvPdQitXxvztRptvm5HL8JbWtC/pgIBwwObzw3gq416ysJDqI5Tuz+kMx4cE/vd8SKFrfdA0
+ BU/moGXjqtAHyBk15uiV9djr7vRkg0rxiUzAAVZ5/9ACEB6mC+fRdAYcoCsrc/9Nl2XsSWhlM
+ IUQIUyNaoqgVP8P1whPZvMac84hLM+kLSlPD6Rm10/wUsjflVjk+EfV3STsiZNRjSdvpsBhxR
+ oCfi59tJN/bz/TFijdlFp7k8zB1HAwlMqmlqBoTPTnDrfxMJosW3S7mdo+KLM8Z/dERPOHvce
+ e4DT1jnH7kEXZr8CicsAfLT5Z7SpJ/Hk06L2UWyGMK7QRcCkTA/bRnsqUiKO5P0Fzg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
 Am 06.02.22 um 23:39 schrieb Johannes Schindelin via GitGitGadget:
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> Over the course of Scalar's development, it became obvious that there is
-> a need for a command that can gather all kinds of useful information
-> that can help identify the most typical problems with large
-> worktrees/repositories.
->
-> The `diagnose` command is the culmination of this hard-won knowledge: it
-> gathers the installed hooks, the config, a couple statistics describing
-> the data shape, among other pieces of information, and then wraps
-> everything up in a tidy, neat `.zip` archive.
->
-> Note: originally, Scalar was implemented in C# using the .NET API, where
-> we had the luxury of a comprehensive standard library that includes
-> basic functionality such as writing a `.zip` file. In the C version, we
-> lack such a commodity. Rather than introducing a dependency on, say,
-> libzip, we slightly abuse Git's `archive` command: Instead of writing
-> the `.zip` file directly, we stage the file contents in a Git index of a
-> temporary, bare repository, only to let `git archive` have at it, and
-> finally removing the temporary repository.
->
-> Also note: Due to the frequently-spawned `git hash-object` processes,
-> this command is quite a bit slow on Windows. Should it turn out to be a
-> big problem, the lack of a batch mode of the `hash-object` command could
-> potentially be worked around via using `git fast-import` with a crafted
-> `stdin`.
-
-The two paragraphs above are not in sync with the patch.
-
+> With the `--add-file-with-content=3D<path>:<content>` option, `git
+> archive` now supports use cases where relatively trivial files need to
+> be added that do not exist on disk.
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  contrib/scalar/scalar.c          | 143 +++++++++++++++++++++++++++++++
->  contrib/scalar/scalar.txt        |  12 +++
->  contrib/scalar/t/t9099-scalar.sh |  14 +++
->  3 files changed, 169 insertions(+)
+>  Documentation/git-archive.txt | 11 ++++++++
+>  archive.c                     | 51 +++++++++++++++++++++++++++++------
+>  t/t5003-archive-zip.sh        | 12 +++++++++
+>  3 files changed, 66 insertions(+), 8 deletions(-)
 >
-> diff --git a/contrib/scalar/scalar.c b/contrib/scalar/scalar.c
-> index 00dcd4b50ef..30ce0799c7a 100644
-> --- a/contrib/scalar/scalar.c
-> +++ b/contrib/scalar/scalar.c
-> @@ -11,6 +11,7 @@
->  #include "dir.h"
->  #include "packfile.h"
->  #include "help.h"
-> +#include "archive.h"
+> diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.t=
+xt
+> index bc4e76a7834..1b52a0a65a1 100644
+> --- a/Documentation/git-archive.txt
+> +++ b/Documentation/git-archive.txt
+> @@ -61,6 +61,17 @@ OPTIONS
+>  	by concatenating the value for `--prefix` (if any) and the
+>  	basename of <file>.
 >
->  /*
->   * Remove the deepest subdirectory in the provided path string. Path mu=
-st not
-> @@ -261,6 +262,44 @@ static int unregister_dir(void)
->  	return res;
->  }
->
-> +static int add_directory_to_archiver(struct strvec *archiver_args,
-> +					  const char *path, int recurse)
-> +{
-> +	int at_root =3D !*path;
-> +	DIR *dir =3D opendir(at_root ? "." : path);
-> +	struct dirent *e;
-> +	struct strbuf buf =3D STRBUF_INIT;
-> +	size_t len;
-> +	int res =3D 0;
-> +
-> +	if (!dir)
-> +		return error(_("could not open directory '%s'"), path);
-> +
-> +	if (!at_root)
-> +		strbuf_addf(&buf, "%s/", path);
-> +	len =3D buf.len;
-> +	strvec_pushf(archiver_args, "--prefix=3D%s", buf.buf);
-> +
-> +	while (!res && (e =3D readdir(dir))) {
-> +		if (!strcmp(".", e->d_name) || !strcmp("..", e->d_name))
-> +			continue;
-> +
-> +		strbuf_setlen(&buf, len);
-> +		strbuf_addstr(&buf, e->d_name);
-> +
-> +		if (e->d_type =3D=3D DT_REG)
-> +			strvec_pushf(archiver_args, "--add-file=3D%s", buf.buf);
-> +		else if (e->d_type !=3D DT_DIR)
-> +			res =3D -1;
-> +		else if (recurse)
-> +		     add_directory_to_archiver(archiver_args, buf.buf, recurse);
-> +	}
-> +
-> +	closedir(dir);
-> +	strbuf_release(&buf);
-> +	return res;
-> +}
-> +
->  /* printf-style interface, expects `<key>=3D<value>` argument */
->  static int set_config(const char *fmt, ...)
->  {
-> @@ -501,6 +540,109 @@ cleanup:
->  	return res;
->  }
->
-> +static int cmd_diagnose(int argc, const char **argv)
-> +{
-> +	struct option options[] =3D {
-> +		OPT_END(),
-> +	};
-> +	const char * const usage[] =3D {
-> +		N_("scalar diagnose [<enlistment>]"),
-> +		NULL
-> +	};
-> +	struct strbuf zip_path =3D STRBUF_INIT;
-> +	struct strvec archiver_args =3D STRVEC_INIT;
-> +	char **argv_copy =3D NULL;
-> +	int stdout_fd =3D -1, archiver_fd =3D -1;
-> +	time_t now =3D time(NULL);
-> +	struct tm tm;
-> +	struct strbuf path =3D STRBUF_INIT, buf =3D STRBUF_INIT;
-> +	size_t off;
-> +	int res =3D 0;
-> +
-> +	argc =3D parse_options(argc, argv, NULL, options,
-> +			     usage, 0);
-> +
-> +	setup_enlistment_directory(argc, argv, usage, options, &zip_path);
-> +
-> +	strbuf_addstr(&zip_path, "/.scalarDiagnostics/scalar_");
-> +	strbuf_addftime(&zip_path,
-> +			"%Y%m%d_%H%M%S", localtime_r(&now, &tm), 0, 0);
-> +	strbuf_addstr(&zip_path, ".zip");
-> +	switch (safe_create_leading_directories(zip_path.buf)) {
-> +	case SCLD_EXISTS:
-> +	case SCLD_OK:
-> +		break;
-> +	default:
-> +		error_errno(_("could not create directory for '%s'"),
-> +			    zip_path.buf);
-> +		goto diagnose_cleanup;
-> +	}
-> +	stdout_fd =3D dup(1);
-> +	if (stdout_fd < 0) {
-> +		res =3D error_errno(_("could not duplicate stdout"));
-> +		goto diagnose_cleanup;
-> +	}
-> +
-> +	archiver_fd =3D xopen(zip_path.buf, O_CREAT | O_WRONLY | O_TRUNC, 0666=
-);
-> +	if (archiver_fd < 0 || dup2(archiver_fd, 1) < 0) {
-> +		res =3D error_errno(_("could not redirect output"));
-> +		goto diagnose_cleanup;
-> +	}
-> +
-> +	init_zip_archiver();
-> +	strvec_pushl(&archiver_args, "scalar-diagnose", "--format=3Dzip", NULL=
-);
-> +
-> +	strbuf_reset(&buf);
-> +	strbuf_addstr(&buf,
-> +		      "--add-file-with-content=3Ddiagnostics.log:"
-> +		      "Collecting diagnostic info\n\n");
-> +	get_version_info(&buf, 1);
-> +
-> +	strbuf_addf(&buf, "Enlistment root: %s\n", the_repository->worktree);
-> +	off =3D strchr(buf.buf, ':') + 1 - buf.buf;
-> +	write_or_die(stdout_fd, buf.buf + off, buf.len - off);
-> +	strvec_push(&archiver_args, buf.buf);
+> +--add-file-with-content=3D<path>:<content>::
+> +	Add the specified contents to the archive.  Can be repeated to add
+> +	multiple files.  The path of the file in the archive is built
+> +	by concatenating the value for `--prefix` (if any) and the
+> +	basename of <file>.
+> ++
+> +The `<path>` cannot contain any colon, the file mode is limited to
+> +a regular file, and the option may be subject platform-dependent
 
-Fun trick to reuse the buffer for both the ZIP entry and stdout. :)  I'd
-have omitted the option from buf and added it like this, for simplicity:
+s/subject/& to/
 
-	strvec_pushf(&archiver_args,
-		     "--add-file-with-content=3Ddiagnostics.log:%s", buf.buf);
-
-Just a thought.
-
+> +command-line limits. For non-trivial cases, write an untracked file
+> +and use `--add-file` instead.
 > +
-> +	if ((res =3D add_directory_to_archiver(&archiver_args, ".git", 0)) ||
-> +	    (res =3D add_directory_to_archiver(&archiver_args, ".git/hooks", 0=
-)) ||
-> +	    (res =3D add_directory_to_archiver(&archiver_args, ".git/info", 0)=
-) ||
-> +	    (res =3D add_directory_to_archiver(&archiver_args, ".git/logs", 1)=
-) ||
-> +	    (res =3D add_directory_to_archiver(&archiver_args, ".git/objects/i=
-nfo", 0)))
-> +		goto diagnose_cleanup;
-> +
-> +	strvec_pushl(&archiver_args, "--prefix=3D",
-> +		     oid_to_hex(the_hash_algo->empty_tree), "--", NULL);
-> +
-> +	/* `write_archive()` modifies the `argv` passed to it. Let it. */
-> +	argv_copy =3D xmemdupz(archiver_args.v,
-> +			     sizeof(char *) * archiver_args.nr);
 
-Leaking the whole thing would be fine as well for this command, but
-cleaning up is tidier, of course.
+We could use that option in Git's own Makefile to add the file named
+"version", which contains $GIT_VERSION.  Hmm, but it also contains a
+terminating newline, which would be a bit tricky (but not impossible) to
+add.  Would it make sense to add one automatically if it's missing (e.g.
+with strbuf_complete_line)?  Not sure.
 
-> +	res =3D write_archive(archiver_args.nr, (const char **)argv_copy, NULL=
-,
-> +			    the_repository, NULL, 0);
-
-Ah -- no shell means no command line length limits. :)
-
-> +	if (res) {
-> +		error(_("failed to write archive"));
-> +		goto diagnose_cleanup;
-> +	}
-> +
-> +	if (!res)
-> +		printf("\n"
-> +		       "Diagnostics complete.\n"
-> +		       "All of the gathered info is captured in '%s'\n",
-> +		       zip_path.buf);
-
-Is this message appended to the ZIP file or does it go to stdout?
-
-In any case: mixing write(2) and stdio(3) is not a good idea.  Using
-fwrite(3) instead of write_or_die above and doing the stdout dup(2)
-dance only tightly around the write_archive call would help, I think.
-
-> +
-> +diagnose_cleanup:
-> +	if (archiver_fd >=3D 0) {
-> +		close(1);
-> +		dup2(stdout_fd, 1);
-> +	}
-> +	free(argv_copy);
-> +	strvec_clear(&archiver_args);
-> +	strbuf_release(&zip_path);
-> +	strbuf_release(&path);
-> +	strbuf_release(&buf);
-> +
-> +	return res;
-> +}
-> +
->  static int cmd_list(int argc, const char **argv)
->  {
->  	if (argc !=3D 1)
-> @@ -802,6 +944,7 @@ static struct {
->  	{ "reconfigure", cmd_reconfigure },
->  	{ "delete", cmd_delete },
->  	{ "version", cmd_version },
-> +	{ "diagnose", cmd_diagnose },
->  	{ NULL, NULL},
+>  --worktree-attributes::
+>  	Look for attributes in .gitattributes files in the working tree
+>  	as well (see <<ATTRIBUTES>>).
+> diff --git a/archive.c b/archive.c
+> index a3bbb091256..172efd690c3 100644
+> --- a/archive.c
+> +++ b/archive.c
+> @@ -263,6 +263,7 @@ static int queue_or_write_archive_entry(const struct=
+ object_id *oid,
+>  struct extra_file_info {
+>  	char *base;
+>  	struct stat stat;
+> +	void *content;
 >  };
 >
-> diff --git a/contrib/scalar/scalar.txt b/contrib/scalar/scalar.txt
-> index f416d637289..22583fe046e 100644
-> --- a/contrib/scalar/scalar.txt
-> +++ b/contrib/scalar/scalar.txt
-> @@ -14,6 +14,7 @@ scalar register [<enlistment>]
->  scalar unregister [<enlistment>]
->  scalar run ( all | config | commit-graph | fetch | loose-objects | pack=
--files ) [<enlistment>]
->  scalar reconfigure [ --all | <enlistment> ]
-> +scalar diagnose [<enlistment>]
->  scalar delete <enlistment>
+>  int write_archive_entries(struct archiver_args *args,
+> @@ -337,7 +338,13 @@ int write_archive_entries(struct archiver_args *arg=
+s,
+>  		strbuf_addstr(&path_in_archive, basename(path));
 >
->  DESCRIPTION
-> @@ -129,6 +130,17 @@ reconfigure the enlistment.
->  With the `--all` option, all enlistments currently registered with Scal=
-ar
->  will be reconfigured. Use this option after each Scalar upgrade.
+>  		strbuf_reset(&content);
+> -		if (strbuf_read_file(&content, path, info->stat.st_size) < 0)
+> +		if (info->content)
+> +			err =3D write_entry(args, &fake_oid, path_in_archive.buf,
+> +					  path_in_archive.len,
+> +					  info->stat.st_mode,
+> +					  info->content, info->stat.st_size);
+> +		else if (strbuf_read_file(&content, path,
+> +					  info->stat.st_size) < 0)
+>  			err =3D error_errno(_("could not read '%s'"), path);
+>  		else
+>  			err =3D write_entry(args, &fake_oid, path_in_archive.buf,
+> @@ -493,6 +500,7 @@ static void extra_file_info_clear(void *util, const =
+char *str)
+>  {
+>  	struct extra_file_info *info =3D util;
+>  	free(info->base);
+> +	free(info->content);
+>  	free(info);
+>  }
 >
-> +Diagnose
-> +~~~~~~~~
+> @@ -514,14 +522,38 @@ static int add_file_cb(const struct option *opt, c=
+onst char *arg, int unset)
+>  	if (!arg)
+>  		return -1;
+>
+> -	path =3D prefix_filename(args->prefix, arg);
+> -	item =3D string_list_append_nodup(&args->extra_files, path);
+> -	item->util =3D info =3D xmalloc(sizeof(*info));
+> +	info =3D xmalloc(sizeof(*info));
+>  	info->base =3D xstrdup_or_null(base);
+> -	if (stat(path, &info->stat))
+> -		die(_("File not found: %s"), path);
+> -	if (!S_ISREG(info->stat.st_mode))
+> -		die(_("Not a regular file: %s"), path);
 > +
-> +diagnose [<enlistment>]::
-> +    When reporting issues with Scalar, it is often helpful to provide t=
-he
-> +    information gathered by this command, including logs and certain
-> +    statistics describing the data shape of the current enlistment.
-> ++
-> +The output of this command is a `.zip` file that is written into
-> +a directory adjacent to the worktree in the `src` directory.
+> +	if (strcmp(opt->long_name, "add-file-with-content")) {
+
+Equivalent to:
+
+	if (!strcmp(opt->long_name, "add-file")) {
+
+I mention that because the inequality check confused me a bit at first.
+
+> +		path =3D prefix_filename(args->prefix, arg);
+> +		if (stat(path, &info->stat))
+> +			die(_("File not found: %s"), path);
+> +		if (!S_ISREG(info->stat.st_mode))
+> +			die(_("Not a regular file: %s"), path);
+> +		info->content =3D NULL; /* read the file later */
+> +	} else {
+> +		const char *colon =3D strchr(arg, ':');
+> +		char *p;
 > +
->  Delete
->  ~~~~~~
+> +		if (!colon)
+> +			die(_("missing colon: '%s'"), arg);
+> +
+> +		p =3D xstrndup(arg, colon - arg);
+> +		if (!args->prefix)
+> +			path =3D p;
+> +		else {
+> +			path =3D prefix_filename(args->prefix, p);
+> +			free(p);
+> +		}
+> +		memset(&info->stat, 0, sizeof(info->stat));
+> +		info->stat.st_mode =3D S_IFREG | 0644;
+> +		info->content =3D xstrdup(colon + 1);
+> +		info->stat.st_size =3D strlen(info->content);
+> +	}
+> +	item =3D string_list_append_nodup(&args->extra_files, path);
+> +	item->util =3D info;
+> +
+>  	return 0;
+>  }
 >
-> diff --git a/contrib/scalar/t/t9099-scalar.sh b/contrib/scalar/t/t9099-s=
-calar.sh
-> index 9d83fdf25e8..bbd07a44426 100755
-> --- a/contrib/scalar/t/t9099-scalar.sh
-> +++ b/contrib/scalar/t/t9099-scalar.sh
-> @@ -90,4 +90,18 @@ test_expect_success '`scalar [...] <dir>` errors out =
-when dir is missing' '
->  	grep "cloned. does not exist" err
->  '
+> @@ -554,6 +586,9 @@ static int parse_archive_args(int argc, const char *=
+*argv,
+>  		{ OPTION_CALLBACK, 0, "add-file", args, N_("file"),
+>  		  N_("add untracked file to archive"), 0, add_file_cb,
+>  		  (intptr_t)&base },
+> +		{ OPTION_CALLBACK, 0, "add-file-with-content", args,
+> +		  N_("file"), N_("add untracked file to archive"), 0,
+                      ^^^^
+"<file>" seems wrong, because there is no actual file.  It should rather
+be "<name>:<content>" for the virtual one, right?
+
+> +		  add_file_cb, (intptr_t)&base },
+>  		OPT_STRING('o', "output", &output, N_("file"),
+>  			N_("write the archive to this file")),
+>  		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
+> diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
+> index 1e6d18b140e..8ff1257f1a0 100755
+> --- a/t/t5003-archive-zip.sh
+> +++ b/t/t5003-archive-zip.sh
+> @@ -206,6 +206,18 @@ test_expect_success 'git archive --format=3Dzip --a=
+dd-file' '
+>  check_zip with_untracked
+>  check_added with_untracked untracked untracked
 >
-> +SQ=3D"'"
-> +test_expect_success UNZIP 'scalar diagnose' '
-> +	scalar clone "file://$(pwd)" cloned --single-branch &&
-> +	scalar diagnose cloned >out &&
-> +	sed -n "s/.*$SQ\\(.*\\.zip\\)$SQ.*/\\1/p" <out >zip_path &&
-> +	zip_path=3D$(cat zip_path) &&
-> +	test -n "$zip_path" &&
-> +	unzip -v "$zip_path" &&
-> +	folder=3D${zip_path%.zip} &&
-> +	test_path_is_missing "$folder" &&
-> +	unzip -p "$zip_path" diagnostics.log >out &&
-> +	test_file_not_empty out
+> +test_expect_success UNZIP 'git archive --format=3Dzip --add-file-with-c=
+ontent' '
+> +	git archive --format=3Dzip >with_file_with_content.zip \
+> +		--add-file-with-content=3Dhello:world $EMPTY_TREE &&
+> +	test_when_finished "rm -rf tmp-unpack" &&
+> +	mkdir tmp-unpack && (
+> +		cd tmp-unpack &&
+> +		"$GIT_UNZIP" ../with_file_with_content.zip &&
+> +		test_path_is_file hello &&
+> +		test world =3D $(cat hello)
+> +	)
 > +'
 > +
->  test_done
+>  test_expect_success 'git archive --format=3Dzip --add-file twice' '
+>  	echo untracked >untracked &&
+>  	git archive --format=3Dzip --prefix=3Done/ --add-file=3Duntracked \
