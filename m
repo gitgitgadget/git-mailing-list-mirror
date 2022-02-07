@@ -2,175 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01A89C4321E
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 01:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 519E8C433EF
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 01:06:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239476AbiBHBFS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Feb 2022 20:05:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46346 "EHLO
+        id S241870AbiBHBF1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Feb 2022 20:05:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343716AbiBGXuC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Feb 2022 18:50:02 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E32B4C061355
-        for <git@vger.kernel.org>; Mon,  7 Feb 2022 15:50:01 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id k1so11089999wrd.8
-        for <git@vger.kernel.org>; Mon, 07 Feb 2022 15:50:01 -0800 (PST)
+        with ESMTP id S245418AbiBGXCJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Feb 2022 18:02:09 -0500
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6144DC061355
+        for <git@vger.kernel.org>; Mon,  7 Feb 2022 15:02:08 -0800 (PST)
+Received: by mail-qk1-x72f.google.com with SMTP id 13so12300600qkd.13
+        for <git@vger.kernel.org>; Mon, 07 Feb 2022 15:02:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Z/eTfqeDYSMb5AY37vp+R/cP595Jzlv0gw2+Yn+Qu8Q=;
-        b=GLkqyhRZUWj2B3Kg17NsDfbt/2tE+ByT3Klphwytjb7ReksexAHnA28IGZCWxDGBpc
-         IldVIY9T+4kGX4E4B6XyuVaDb5Ue57wnnKKLWqgnUzC/DrnnNptn8Gruk+hejkxJLpOA
-         esyeMifGGBMbiqCI/lp3JEg4HiP0NQ/cVMIXvHzsnkQ3NnCA0jDYUoOCtMBLin9zLSoN
-         JRmRC8M2UkDYPOkRsMpzfbEYE8Eg1A8XGZTpgIxkw5qFNHEkZhsqTA3UCcFpC1sU3Wa2
-         R5WtNR/WySnl34emFCNUrgQZhlOWcGkORdMvHGwzCQ8M/HtQR5H44jJ7X7HbsqT2TYmV
-         ZHRA==
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=1blxxYPLjMyWvmvRXnEcDMEn+4s+7F/gR9e2/c4wPZs=;
+        b=PwDdOyZi+b8iKCdft6sEzSHFw8Yn/6b2VtxNdxusAia9fpSbZwfoZrh8EocwG52D6j
+         7pVCLRuB8RXcQO7SUCKe7ldaSc1OMGrsgw9+etnG/InrCzqI3X5XjLy0TvDHgT87ygMM
+         a8I3KW5RFkJI0heOsao6JPNaLis5D3FNz70aU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Z/eTfqeDYSMb5AY37vp+R/cP595Jzlv0gw2+Yn+Qu8Q=;
-        b=uRmqCjOv1eX0F/rqU0M3tHiPRXj7vLn9hkv/Mm0SUkg26saEYhFZAROBJ9rtQCbxkB
-         ZGHAy9h1mW83EUT4Os1za6GCTOZxBRfsjv+SHDvsnYQeDzDFFi9WhU9HIXobXLpWf08b
-         4ijPXC8lqAK1wAh5yob3whDH9Qb/lwtaInMwCk0fQ98hiHmybuBrVZhIKCY/v77BXIQD
-         C1l3eY/cwOWkAYPGeJEax7Q11TaTif9Vp9WZDtvmulWw0V+CVkGfNiYR/ypBcT9MoNtt
-         PG8wO1EBPh8vcKoR7IB3Og963T6l5KnU7H+tpBhXCT/NFWMW2SmMBuxEmXTrVWUflmmW
-         2o/A==
-X-Gm-Message-State: AOAM5338HNAZiumZOLgxop0goR94yeImHdfHzJABzVxU1JPVdGCkq8rx
-        l0LYejUkiqo0D3+zz6CJKWnQiNalTsY=
-X-Google-Smtp-Source: ABdhPJztIxutd/T0eJlLJBWo3Ymdx2Nfp8G3uQRIolV7GxKAw7m3U/DAomMw8+wnpGq0nu9h7MEXOw==
-X-Received: by 2002:adf:e350:: with SMTP id n16mr1305333wrj.160.1644277799342;
-        Mon, 07 Feb 2022 15:49:59 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 1sm554537wmk.16.2022.02.07.15.49.58
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=1blxxYPLjMyWvmvRXnEcDMEn+4s+7F/gR9e2/c4wPZs=;
+        b=vXTXB+e9bdcr8j2n/Q30o7WIEDBdXnRrtlofVxj8In6kjLRdQj5G7hNXXEZiBZ7mJQ
+         dhnEPPlvSNoq96grJQJzevNJYkALZ92i9MVJPLxGWw6o/BAeQ9tymjok6f0y3cZluK8y
+         AFhIZlGmPFK7otnuo3arJ4jVJGjhIcuB5LfiZuc6zFKMaxhmIks1SXcFrKe122XPCfqp
+         wnPPkBOdVRYLIS2N9ikKxyvOjeAg83+qv3Y+xlzhbuS+k9/333BMWYFsrvqAGwEe7j+L
+         M4OUU72MRgsc0SrCFyqn5eyqQlJLosHE79znVzQ4SApkCpcSrHu6Acs8ovlgjz0SpEOW
+         MrKg==
+X-Gm-Message-State: AOAM531YWmQ6DjWvJbfCkXtmOIRs0lI+kqrjzk8C1yRHXMYuR7zRsb0W
+        iDzSNV9GTGYNlrOGwRY4hfQaMQ==
+X-Google-Smtp-Source: ABdhPJwR4F0paTVoEjOdfHXcPz0v5jDeUcZFpM3NQg2yK7RgM0dmhx0gQ6iA7YtGzPxBynZEO1UXqA==
+X-Received: by 2002:a05:620a:2809:: with SMTP id f9mr1215049qkp.527.1644274927445;
+        Mon, 07 Feb 2022 15:02:07 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-127.dsl.bell.ca. [216.209.220.127])
+        by smtp.gmail.com with ESMTPSA id l9sm6331920qkp.38.2022.02.07.15.02.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Feb 2022 15:49:58 -0800 (PST)
-Message-Id: <25d1a2963f2934753de4fb6899429301637377c9.1644277797.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1139.git.1644277797.gitgitgadget@gmail.com>
-References: <pull.1139.git.1644277797.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Feb 2022 23:49:56 +0000
-Subject: [PATCH 1/2] checkout/fetch/pull/pack-objects: allow `-h` outside a
- repository
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 07 Feb 2022 15:02:07 -0800 (PST)
+Date:   Mon, 7 Feb 2022 18:02:05 -0500
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        "Gamblin, Todd" <gamblin2@llnl.gov>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Commit SHA1 == SHA1 checksum?
+Message-ID: <20220207230205.m5dibcb52u7qemq4@meerkat.local>
+References: <ED97E252-CABA-41BB-B18C-819A5EF305E3@llnl.gov>
+ <121ce485-bea8-3168-aa35-d11eb13022da@iee.email>
+ <xmqq1r0gjo6h.fsf@gitster.g>
+ <eca83634-ee91-89bd-567e-6b0807b5ff79@iee.email>
+ <xmqqee4fix0l.fsf@gitster.g>
+ <20220207133244.kpyczjsxriepjtdt@meerkat.local>
+ <xmqqczjyiecs.fsf@gitster.g>
+ <20220207213449.ljqjhdx4f45a3lx5@meerkat.local>
+ <xmqqzgn2gumr.fsf@gitster.g>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzgn2gumr.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Mon, Feb 07, 2022 at 02:49:16PM -0800, Junio C Hamano wrote:
+> Given a signed commit or a signed tag that points at a commit, your
+> enhanced "git archive" would create a .tar file with the contents of
+> the tree object, and adds copies signed objects that tells what tree
+> object the archive ought to have.  E.g. if you start from a signed
+> tag, "git cat-file tag $tag" output would allow you to learn the
+> object name of the tagged object, and to verify the PGP signature
+> embedded in the tag, but it is likely that the tagged object is a
+> commit, not a tree, so you'd also need to include "git cat-file
+> commit $tag^{commit}". 
 
-When we taught these commands about the sparse index, we did not account
-for the fact that the `cmd_*()` functions _can_ be called without a
-gitdir, namely when `-h` is passed to show the usage.
+Correct, unless it's a snapshot of a signed commit, not of a tag (cgit, for
+example, makes them available for download). In this case we only need to have
+the cat-file contents of the commit.
 
-A plausible approach to address this is to move the
-`prepare_repo_settings()` calls right after the `parse_options()` calls:
-The latter will never return when it handles `-h`, and therefore it is
-safe to assume that we have a `gitdir` at that point, as long as the
-built-in is marked with the `RUN_SETUP` flag.
+> So you'd store the raw contents of the tag
+> (so that we have a hash-protected record of commit object name), and
+> the commit (so that we have a hash-protected record of tree object
+> name).
+> 
+> You as the recipient will find these in the tarball:
+> 
+>  - the files that are supposed to be the contents of tree X.
+> 
+>  - the raw contents of the commit C that is supposed to record the
+>    tree X.
+> 
+>  - the raw contents of the tag T that is supposed to point at the
+>    commit C.
+> 
+> Starting from the contents of tag T, which is PGP signed, you know
+> that the signer wanted to call commit C with the name of the tag T.
+> Then the raw contents that alledgedly are from commit C, you can
+> "git hash-object -t commit" it to verify that it indeed hashes down
+> to C (hence, it what the signer wanted to give you), and find the
+> name of the tree object X the commit records.  And when you added
+> all the blobs contained in the tarball (and nothing else) to the
+> index and ran write-tree on the resulting index, you would know what
+> tree object the tarball contained, and if it hashes down to X, you
+> know that the cryptographic hash chain starting from PGP signature
+> on T attests that that tarball matches what the signer wanted you
+> to have.
 
-However, it is unfortunately not that simple. In `cmd_pack_objects()`,
-for example, the repo settings need to be fully populated so that the
-command-line options `--sparse`/`--no-sparse` can override them, not the
-other way round.
+Exactly right. It would be slightly more complicated for things like openssh
+signatures, since then you have to worry about where the allowed_signers file
+comes from, but these are implementation minutae. Even if we start with just
+support for PGP signatures, that would already be a great improvement over
+where things are with snapshot downloads right now.
 
-Therefore, we choose to imitate the strategy taken in `cmd_diff()`,
-where we simply do not bother to prepare and initialize the repo
-settings unless we have a `gitdir`.
-
-This fixes https://github.com/git-for-windows/git/issues/3688
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/checkout.c     | 7 ++++---
- builtin/fetch.c        | 7 +++++--
- builtin/pack-objects.c | 8 +++++---
- builtin/pull.c         | 6 ++++--
- 4 files changed, 18 insertions(+), 10 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index cc804ba8e1e..1c13d7fedb3 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1602,9 +1602,10 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	opts->show_progress = -1;
- 
- 	git_config(git_checkout_config, opts);
--
--	prepare_repo_settings(the_repository);
--	the_repository->settings.command_requires_full_index = 0;
-+	if (the_repository->gitdir) {
-+		prepare_repo_settings(the_repository);
-+		the_repository->settings.command_requires_full_index = 0;
-+	}
- 
- 	opts->track = BRANCH_TRACK_UNSPECIFIED;
- 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 5f06b21f8e9..e0a05de10ee 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -2014,11 +2014,14 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	git_config(git_fetch_config, NULL);
--	prepare_repo_settings(the_repository);
--	the_repository->settings.command_requires_full_index = 0;
-+	if (the_repository->gitdir) {
-+		prepare_repo_settings(the_repository);
-+		the_repository->settings.command_requires_full_index = 0;
-+	}
- 
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_fetch_options, builtin_fetch_usage, 0);
-+
- 	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
- 		int *sfjc = submodule_fetch_jobs_config == -1
- 			    ? &submodule_fetch_jobs_config : NULL;
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index ba2006f2212..87cb7b45c37 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3976,9 +3976,11 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	read_replace_refs = 0;
- 
- 	sparse = git_env_bool("GIT_TEST_PACK_SPARSE", -1);
--	prepare_repo_settings(the_repository);
--	if (sparse < 0)
--		sparse = the_repository->settings.pack_use_sparse;
-+	if (the_repository->gitdir) {
-+		prepare_repo_settings(the_repository);
-+		if (sparse < 0)
-+			sparse = the_repository->settings.pack_use_sparse;
-+	}
- 
- 	reset_pack_idx_option(&pack_idx_opts);
- 	git_config(git_pack_config, NULL);
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 100cbf9fb85..d15007d93f3 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -994,8 +994,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		set_reflog_message(argc, argv);
- 
- 	git_config(git_pull_config, NULL);
--	prepare_repo_settings(the_repository);
--	the_repository->settings.command_requires_full_index = 0;
-+	if (the_repository->gitdir) {
-+		prepare_repo_settings(the_repository);
-+		the_repository->settings.command_requires_full_index = 0;
-+	}
- 
- 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
- 
--- 
-gitgitgadget
-
+Best regards,
+-K
