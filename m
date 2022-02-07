@@ -2,179 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92545C433F5
-	for <git@archiver.kernel.org>; Sun,  6 Feb 2022 22:47:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3FF1C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 01:57:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344070AbiBFWrr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Feb 2022 17:47:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44958 "EHLO
+        id S1348342AbiBGB53 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Feb 2022 20:57:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232490AbiBFWrq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Feb 2022 17:47:46 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F07C06173B
-        for <git@vger.kernel.org>; Sun,  6 Feb 2022 14:47:44 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id c192so8650145wma.4
-        for <git@vger.kernel.org>; Sun, 06 Feb 2022 14:47:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=Ku53glgdwgC22ARRi588zxruTHU0Nsl1GOUfdeXiFWE=;
-        b=TVDHJ0fm5P5KpXIGcV+0yz5G5cOgDObi3vRlhOP845PxlVhkPpSQHEa3DiweM0f43B
-         //ITTAmaUxfkjiTLVOC8Fz0imxMKkodRZ1vfs4hPhfb4WSheuseEcKPi8kySqkG4pMOF
-         /EbgN4KCpJlAV6rD6qPkbaNU9YzcgnT6kZwwONS+KeccjGVJrqGvDyGXopS94AY5O3lR
-         84T9xuFTi0uT3EwqTLsWnv9TSL/rxUTbvONGr8a2G1yL0S6u4oTNFAiLbB9lkuI7tngL
-         4vHFW6ubd9cEPtMFJdGshShw3fGzK9DxNOCeiIuo1/laZ38jAC53m+ljr9cDpFy9PsBK
-         pf9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=Ku53glgdwgC22ARRi588zxruTHU0Nsl1GOUfdeXiFWE=;
-        b=kfiJ5RZU4GgfTRieqmhenBTg4nZqS7jVAroIAJQlQLmFbIqvHsExirdDXCigNh9EZr
-         P4kLYauu4yE5sRytZq0mqsasIEfklj2HWgJbKM2kxwBL6giPn3sh3Sso4ETlbXV2O0k5
-         M0tPmz0fQ7k/O2waWI1OuTIcxR5SAmNsjfSIS4eP3GMwpbtW/aM2h82SGsNSC3eHTHzT
-         ZJgJSeUPnqzdWprMrcjy6yJCuItNj1vaWBekRdZJUCNqECMMN8/p79dkN83pkcWHTsda
-         kNMedlwGoXsTo1K4Wt3g5d9NLv5F3e8vymhbGB1D5cXMoYSnAgOqPdY9XevhDsiEaP5c
-         tAXQ==
-X-Gm-Message-State: AOAM531KtbNOL6uWWQauLfvKrTmAz7Lu+o4QzkmdKvYc9zFI1l//V0Bl
-        BkjjcVtsCoidjavDdmM2XMM=
-X-Google-Smtp-Source: ABdhPJwWeTWa9YvtUJ1socQxwwZs/3lr5PEZci6EHKLoiqu6Cz7O705SWXVWFBXyqwmmJCQxxXOJLw==
-X-Received: by 2002:a05:600c:4f84:: with SMTP id n4mr8669512wmq.106.1644187663010;
-        Sun, 06 Feb 2022 14:47:43 -0800 (PST)
-Received: from szeder.dev (94-21-146-211.pool.digikabel.hu. [94.21.146.211])
-        by smtp.gmail.com with ESMTPSA id az16sm7431842wmb.15.2022.02.06.14.47.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Feb 2022 14:47:42 -0800 (PST)
-Date:   Sun, 6 Feb 2022 23:47:40 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Hongyi Zhao <hongyi.zhao@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        =?utf-8?B?Sm/Do28=?= Victor Bonfim 
-        <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
-Subject: Re: [PATCH v2 2/2] completion: add a GIT_COMPLETION_SHOW_ALL_COMMANDS
-Message-ID: <20220206224740.GD1936@szeder.dev>
-References: <patch-1.1-5f18305ca08-20220125T124757Z-avarab@gmail.com>
- <cover-v2-0.2-00000000000-20220202T111228Z-avarab@gmail.com>
- <patch-v2-2.2-2e2e3569e02-20220202T111228Z-avarab@gmail.com>
- <20220206133026.GB1936@szeder.dev>
- <xmqq8runiwow.fsf@gitster.g>
+        with ESMTP id S233750AbiBGB51 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Feb 2022 20:57:27 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2982EC061A73
+        for <git@vger.kernel.org>; Sun,  6 Feb 2022 17:57:27 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CD9AA1088FF;
+        Sun,  6 Feb 2022 20:57:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=C5JlnPyplWh1
+        DTUYCr3yqDlntFxEEghNyy0XyxLLlEk=; b=I2824KJpCOqY16pfDcG29+RdcOIB
+        c57x++41Nu7Zv70MQweWyU6PbP90sSfTfrP8dPyTGLv+S3RVI90oXlTrBPq0mEVe
+        NRMQXVLOAteArG81tX2pz5s+u6JqYiIsDRBE2+yv57dB/ph+Fjymp0xPa7FQ3Qvu
+        5+GVGEK40JoN/gs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C27F21088FE;
+        Sun,  6 Feb 2022 20:57:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.145.213.122])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 24CCC1088FD;
+        Sun,  6 Feb 2022 20:57:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH] hash-object: fix a trivial leak in --path
+References: <patch-1.1-53863df1455-20220205T000422Z-avarab@gmail.com>
+Date:   Sun, 06 Feb 2022 17:57:23 -0800
+In-Reply-To: <patch-1.1-53863df1455-20220205T000422Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat, 5 Feb
+ 2022 01:04:29 +0100")
+Message-ID: <xmqq4k5bigl8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq8runiwow.fsf@gitster.g>
+X-Pobox-Relay-ID: 4B2ECC6C-87B9-11EC-8DED-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 06, 2022 at 12:09:35PM -0800, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> > To complete only rarely used plumbing commands in a non-intrusive way,
-> > in my experience, it's best to first attempt to complete only
-> > porcelains and aliases, and fall back to complete all commands,
-> > plumbing included, only when no porcelains match the current word to
-> > be completed.  E.g.:
-> >
-> >   $ git d<TAB>
-> >   describe   diff   difftool
-> >   $ git diff-<TAB>
-> >   diff-files   diff-index   diff-tree
-> 
-> So after getting
-> 
->     $ git diff<TAB>
->     diff difftool
-> 
-> you _have_ to know, if you are not happy with these two, that the
-> next letter in the name of the command you forgot is a dash,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Yeah, it can only save a couple of keystrokes, but it's not really
-useful when you want to use it to jog your memory.  I naively assumed
-that if you use plumbing, then you know what you are doing and which
-command you want to execute :)
+> diff --git a/builtin/hash-object.c b/builtin/hash-object.c
+> index c7b3ad74c60..db9b2535271 100644
+> --- a/builtin/hash-object.c
+> +++ b/builtin/hash-object.c
+> @@ -92,6 +92,7 @@ int cmd_hash_object(int argc, const char **argv, cons=
+t char *prefix)
+>  	int nongit =3D 0;
+>  	unsigned flags =3D HASH_FORMAT_CHECK;
+>  	const char *vpath =3D NULL;
+> +	char *vpath_free =3D NULL;
+>  	const struct option hash_object_options[] =3D {
+>  		OPT_STRING('t', NULL, &type, N_("type"), N_("object type")),
+>  		OPT_BIT('w', NULL, &flags, N_("write the object into the object data=
+base"),
+> @@ -114,8 +115,10 @@ int cmd_hash_object(int argc, const char **argv, c=
+onst char *prefix)
+>  	else
+>  		prefix =3D setup_git_directory_gently(&nongit);
+> =20
+> -	if (vpath && prefix)
+> -		vpath =3D prefix_filename(prefix, vpath);
+> +	if (vpath && prefix) {
+> +		vpath_free =3D prefix_filename(prefix, vpath);
+> +		vpath =3D vpath_free;
+> +	}
+> =20
+>  	git_config(git_default_config, NULL);
+> =20
+> @@ -156,5 +159,7 @@ int cmd_hash_object(int argc, const char **argv, co=
+nst char *prefix)
+>  	if (stdin_paths)
+>  		hash_stdin_paths(type, no_filters, flags, literally);
+> =20
+> +	free(vpath_free);
+> +
 
-> to be
-> able to say
-> 
->     $ git diff-<TAB>
-> 
-> which is a bit unfortunate, but I agree that it is much nicer than
-> getting all the plumbing when trying to complete "git d<TAB>".
-> 
-> I wonder if we can do better, and teach the completion logic an
-> ability to say this: "I gave 'diff and difftool' after being asked
-> for 'git diff<TAB>' and then the user is asking the same again
-> without choosing either. Perhaps I should add less frequent one to
-> the mix"?
-> 
-> I.e. the end-user session may look like
-> 
->     $ git diff<TAB>
->     diff difftool
->     $ git diff<TAB>
->     diff difftool diff-files diff-index diff-tree
-> 
-> ?
+Heh.
 
-Hrm, interesting, but dunno.  When completing commands in __git_main()
-we could save the current word to be completed in a variable, and when
-completing commands the next time we could check whether the current
-word is still the same, and then include plumbing as well.  However,
-when the current word can't be uniquely completed, then we have to
-press TAB twice to get the list of possible completion, so we have to
-preserve the last two current words, and only list plumbing when both
-match.
+This is not wrong per-se, but we are about to exit and clean-up, so
+having leak-checker complain about this and having us spend brain
+cycles to worry about it is a sad thing.
 
-  ---   >8   ---
+Will queue.  Thanks.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 377d6c5494..cda6b48c4e 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3455,8 +3455,17 @@ __git_main ()
- 			then
- 				__gitcomp "$GIT_TESTING_PORCELAIN_COMMAND_LIST"
- 			else
--				__gitcomp "$(__git --list-cmds=list-mainporcelain,others,nohelpers,alias,list-complete,config)"
-+				echo >>/tmp/COMPLOG "__git_main() cur: '$cur' last: '$__git_last_command_cur' last2: '$__git_last_command_cur2'"
-+				if test "$cur" = "$__git_last_command_cur" &&
-+				   test "$cur" = "$__git_last_command_cur2"
-+				then
-+					__gitcomp "$(__git --list-cmds=main,others,nohelpers,alias,list-complete)"
-+				else
-+					__gitcomp "$(__git --list-cmds=list-mainporcelain,others,nohelpers,alias,list-complete,config)"
-+				fi
- 			fi
-+			__git_last_command_cur2=$__git_last_command_cur
-+			__git_last_command_cur=$cur
- 			;;
- 		esac
- 		return
 
-  ---   8<   ---
-
-Superficial testing shows that it appears to work in common cases, but
-we'll have to think it through when and how to clear these variables.
-E.g.:
-
-  $ git d<TAB><TAB>
-  describe   diff   difftool
-  # Oh, but I wanted to disable the pager
-  $ git --no-p<TAB>
-  # this completes the option uniquely
-  $ git --no-pager d<TAB><TAB>
-  daemon     diff         diff-index   diff-tree
-  describe   diff-files   difftool
-
-I think here it should list only porcelains, but because both those
-last_cur variables still contain 'd', it lists plumbing as well.
-
-And, of course, 'git <TAB><TAB>' in a newly started terminal should
-list only porcelains, but it lists plumbing as well.
-
+>  	return 0;
+>  }
+> diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+> index 64b340f2272..ac5ad8c7402 100755
+> --- a/t/t1007-hash-object.sh
+> +++ b/t/t1007-hash-object.sh
+> @@ -2,6 +2,7 @@
+> =20
+>  test_description=3D"git hash-object"
+> =20
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+> =20
+>  echo_without_newline() {
