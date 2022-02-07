@@ -2,65 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3A1BC47080
-	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 06:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80C3CC433EF
+	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 07:06:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237016AbiBGGj4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Feb 2022 01:39:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51724 "EHLO
+        id S235633AbiBGHF6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Feb 2022 02:05:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1381708AbiBGGKF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Feb 2022 01:10:05 -0500
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70EECC043184
-        for <git@vger.kernel.org>; Sun,  6 Feb 2022 22:10:04 -0800 (PST)
-Received: by mail-yb1-xb2d.google.com with SMTP id y129so572531ybe.7
-        for <git@vger.kernel.org>; Sun, 06 Feb 2022 22:10:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=uMntZ6Ed8257cCICzh9Y98I78P07/3Ibf39QRjoakmQ=;
-        b=ScK75BUyOID+oz+0XOYhMsK9m7qoSfHTgXFDPN7LmbJhqkCDRa+IxdH4EVfw4XAvFl
-         z3TGl5ULTX/7SJVGT6KeskxvFfNfSIY2bdf5VQwjGhjVzYkj+Tm8bU6mwT606GEPtj5X
-         NVRAKNWdpOYl24xD/1Reh5o3zaLa8OQ4S+ktVkSC2BAWwzgcBVZeoV+D5zjqPEoY4Ff5
-         vMUAYK4EAJCmoB4+VFER9BGRGlSLh9WxtkDuKL2QcQwoog03+LjT9qPt1EwqtZp9Wcor
-         WNjSU+GNQuT4HjWh/6aHFCywzvWs/OXzWhllk4/EpWw41AIhCKS0NmHpu1JbL1G9KGHB
-         i4YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=uMntZ6Ed8257cCICzh9Y98I78P07/3Ibf39QRjoakmQ=;
-        b=kTxtsraq6V2KBWaASM5EQx4xRBZZpB1/fEx84qq8Akm/qnqbyqy5opJrUuxaEPme58
-         f0OR3ah3vVTVXJ599YjqK99lnBzjK3g3bzZPMq0hiikpXAXjkSX8w4m8aFsQnZ62IAlr
-         QIwVGS5A2RA+vU0YSooAbjD/q2Q2fR5iJxzmRN66pdPXGMSjp43fIkJlof3yspxIwluT
-         Tl+pQJFX+NAVrjPVXJljxb5ZJ+/k2PC/qoWnQNku3vH9EL00XT9hWpSGEE/2d76bHZT5
-         FCmDpCsQv0SQY63vYgT/hrZtc09CzXg8VyYGakC9W5IVHPVmHuwVQYB2UdTSWvNYou0N
-         MmhA==
-X-Gm-Message-State: AOAM530+Mqaa79VxvQNdD0SwFkou6tKry6SATraJcaIT8PIidzRBAmsL
-        OX64SrO8uEKcBH+CZUxE99Fd9oFv5p/B4ZvAZnHFOR89u/w=
-X-Google-Smtp-Source: ABdhPJxs35I73C9rCQucSK600iie2tgJTLgxOEI8AuF4pp89NM6P+Rtj5AQYNcPTow+qprmRqnBU297EvB7sgeWaQLE=
-X-Received: by 2002:a25:4643:: with SMTP id t64mr8888379yba.424.1644214203616;
- Sun, 06 Feb 2022 22:10:03 -0800 (PST)
+        with ESMTP id S242505AbiBGHDh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Feb 2022 02:03:37 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 006BCC043186
+        for <git@vger.kernel.org>; Sun,  6 Feb 2022 23:03:35 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4BC7711458C;
+        Mon,  7 Feb 2022 02:03:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=3peVimB+zomS
+        pvmVJFAf+X4Agd7DoSkGlpn7/Pat+TM=; b=mQHJdfeFneMZRpfxAmKcWKMrgytV
+        BBRWgiXFYiuzj4HQFGSrZ2KtBVMLLwXVPhbJAk/Yk+Pflk7zP48MG1u90BXNdKz+
+        rIGRKipG85vi4fOFl4q/Lj7tLC5Lu7GvB1b3X1SeE+8XT0A0BglMgytcRRvyFHC0
+        eqIm+020lbBhnx4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4249C11458B;
+        Mon,  7 Feb 2022 02:03:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A806D114589;
+        Mon,  7 Feb 2022 02:03:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Hongyi Zhao <hongyi.zhao@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        =?utf-8?Q?Jo=C3=A3o?= Victor Bonfim 
+        <JoaoVictorBonfim+Git-Mail-List@protonmail.com>
+Subject: Re: [PATCH v2 2/2] completion: add a GIT_COMPLETION_SHOW_ALL_COMMANDS
+References: <patch-1.1-5f18305ca08-20220125T124757Z-avarab@gmail.com>
+        <cover-v2-0.2-00000000000-20220202T111228Z-avarab@gmail.com>
+        <patch-v2-2.2-2e2e3569e02-20220202T111228Z-avarab@gmail.com>
+        <20220206133026.GB1936@szeder.dev> <xmqq8runiwow.fsf@gitster.g>
+        <20220206224740.GD1936@szeder.dev>
+Date:   Sun, 06 Feb 2022 23:03:33 -0800
+In-Reply-To: <20220206224740.GD1936@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Sun, 6 Feb 2022 23:47:40 +0100")
+Message-ID: <xmqq1r0fjgze.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-From:   Samarth Mayya <samarthmayya@gmail.com>
-Date:   Mon, 7 Feb 2022 11:39:52 +0530
-Message-ID: <CADy+vq-O09DqzjQ_Fc1nicGkF-JN35z+U3HBdmqXaHD59xtjPg@mail.gmail.com>
-Subject: [GSoC][newbie]
-To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 10E0551E-87E4-11EC-8182-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Mentors,
-In a prior mail, I had conveyed that I am new to Open Source, and
-would like to start by contributing to Git (and thereby, try for a
-GSoC selection as well).
-Going forward with that, I would like to know if there are any
-microprojects that would suit a newbie like me, so that I can get a
-good grasp over Git.
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-Thank you,
-Yours sincerely,
-Samarth Mayya
+> Superficial testing shows that it appears to work in common cases, but
+> we'll have to think it through when and how to clear these variables.
+> E.g.:
+>
+>   $ git d<TAB><TAB>
+>   describe   diff   difftool
+>   # Oh, but I wanted to disable the pager
+>   $ git --no-p<TAB>
+>   # this completes the option uniquely
+>   $ git --no-pager d<TAB><TAB>
+>   daemon     diff         diff-index   diff-tree
+>   describe   diff-files   difftool
+>
+> I think here it should list only porcelains, but because both those
+> last_cur variables still contain 'd', it lists plumbing as well.
+
+Yup, it always is tricky to "invalidate" a cached value.
+
