@@ -2,112 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B350EC433EF
-	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 21:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2212C433EF
+	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 21:46:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241161AbiBGVez (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Feb 2022 16:34:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54654 "EHLO
+        id S242110AbiBGVqc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Feb 2022 16:46:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241184AbiBGVex (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Feb 2022 16:34:53 -0500
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A140CC06109E
-        for <git@vger.kernel.org>; Mon,  7 Feb 2022 13:34:52 -0800 (PST)
-Received: by mail-qv1-xf30.google.com with SMTP id d8so12533140qvv.2
-        for <git@vger.kernel.org>; Mon, 07 Feb 2022 13:34:52 -0800 (PST)
+        with ESMTP id S242070AbiBGVqb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Feb 2022 16:46:31 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42CC9C0612A4
+        for <git@vger.kernel.org>; Mon,  7 Feb 2022 13:46:30 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id m6so44112560ybc.9
+        for <git@vger.kernel.org>; Mon, 07 Feb 2022 13:46:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=40a/ahk9imMxQAtGwx2mZdR8pwZR51HWz+JBxaU4yu0=;
-        b=g2yk3+D0NAzcLNuObUgS65O3SnLDJw1BWGp140vu+GyIr5q2tyO5wIVOlfIEAhsPDW
-         k/yhiQ/j3b/KGfszeBiNRf3rFdIx0W7xpJN7mwZgX9BXDT+XFzckH2nYrb0zJLKn9Kpn
-         3vcZv2NKa1jgLhvT/sdham03rNzlyOzB/ynCI=
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZSzwcsRwL1Q1MFf2Xih5x2COeOLuyyeiVanU9+vwSPA=;
+        b=gb/bO/AZi16w6airo6mlxfchxCWnzWthDMz95dwpt9A+VYkGQ1vsYGDrGAzHO9Us0Q
+         I3jifYDBlsMROSuQsGJkhTF0f/JTDPJdQqOMHREV0cNCsWK5vv/r7j6NdYpdE/gJYMk5
+         u7I9elE1HEg9B1QgDAq3EB3Bmp96U/MnlAT8FOOBM8+kcw7WfUMO2uZLa+Hk4kHBEvm5
+         HjlPKYI5yRahhRKgxs1ryquoqMWmYhO+tmlkZ2O/VPcJgdX1YNMkKgfPAPU9hYJ6+4Lz
+         W89rRpXAgZo7Qn6PyBd63HKplwZGI+zBfZhrvbu3R6dLmb24g0mIb4acZfGCYMHmKCaX
+         n8lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=40a/ahk9imMxQAtGwx2mZdR8pwZR51HWz+JBxaU4yu0=;
-        b=vT0xQWDhi0ie6Bt3wqGAJtGyKSVriG8RYo7klRe6Qjna/rL5hEM2Jj1a4KokQ1sCWJ
-         Lr/4z3g7sVpjVsfPFJw0LXhwjyIVm09U+YOdQMgMmxPeM4cmwBDdE5+i8fzLB/98Vstv
-         u4B55EQOdGsfv5P0/5zz6+Ev1SJ52MFNRGyqAaMZamEHdUuICOOYO78tfSaYoQ3BXsxV
-         C7y6LBXAAajb6N7RXt4NOcspQhsHR7qh1WiZMiLSLm61fsvfjmAHTVpen2SYnkHegkcD
-         pMKzHNILUg3I+vPk5VWK5Eafl+mdgXFhWB3l+3yzDImL7e3ZdL0C7v80tCzNjLisZra8
-         RLfQ==
-X-Gm-Message-State: AOAM532pwktUdVqrU71+it4KzgS1IIJUuzdUTI7/C0uBTkTlHTGBXovC
-        nVHsfN0wzuyKa2DoxogtXIhKUg==
-X-Google-Smtp-Source: ABdhPJywsRY8yT6/+uwtU15XOI6PmuY6kFyT+yPqHZWbeRZUvRt84jzIzO6gqnkOg2BEyGk5IK7kmA==
-X-Received: by 2002:ad4:5961:: with SMTP id eq1mr1161188qvb.20.1644269691759;
-        Mon, 07 Feb 2022 13:34:51 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-127.dsl.bell.ca. [216.209.220.127])
-        by smtp.gmail.com with ESMTPSA id e9sm6593195qtx.37.2022.02.07.13.34.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Feb 2022 13:34:51 -0800 (PST)
-Date:   Mon, 7 Feb 2022 16:34:49 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        "Gamblin, Todd" <gamblin2@llnl.gov>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Commit SHA1 == SHA1 checksum?
-Message-ID: <20220207213449.ljqjhdx4f45a3lx5@meerkat.local>
-References: <ED97E252-CABA-41BB-B18C-819A5EF305E3@llnl.gov>
- <121ce485-bea8-3168-aa35-d11eb13022da@iee.email>
- <xmqq1r0gjo6h.fsf@gitster.g>
- <eca83634-ee91-89bd-567e-6b0807b5ff79@iee.email>
- <xmqqee4fix0l.fsf@gitster.g>
- <20220207133244.kpyczjsxriepjtdt@meerkat.local>
- <xmqqczjyiecs.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZSzwcsRwL1Q1MFf2Xih5x2COeOLuyyeiVanU9+vwSPA=;
+        b=6Zj3NhK2NZzXXTyeRqMs1jPS5Nl5g0XHSWpBhavrakq64YpIBVw+0O37i9WlgWL4z5
+         5qM/AnkTH4/ORuJKaeF3MhjH+m4vCIt9TBgeQKi4Yl9onQyueNz3ewzuTg3NeWXg4MWo
+         euO1EHY+dX6kD9qIZLkkqyqdkHGDSGN2EOEJ8mKt62D91lt84+xYNfbRrCnH+zwCKkoh
+         IsbzbBISA0P1WRT2K3YM+KAVkeHJZaGuHm0qXgFJTjTxPZ3JJzilEPO633WqfN9TcXyF
+         v2OL5cGbMll5yWzBwIN2h9yuH4PW5VLNYlcua7NC/d4hVBkK8pCZZzpwL8MsgUbDkl9/
+         Jt1A==
+X-Gm-Message-State: AOAM532wMunBHoZVwRADSL1jYzif0pjwkkFwyCdhhQWCJW5Kahzm5BUJ
+        mdScA2kOSUCZA0gpfHs0pi49GqKzoTJ4qgNXQ420CPb4kH6WWg==
+X-Google-Smtp-Source: ABdhPJxT7pKutJQjLdieFOq/Azs88YBinWxXCf0pgZSmofbNMLvFrHgcmlnBkm9vZjX4vfThh1nzDudNmu4gWP+WcLI=
+X-Received: by 2002:a81:b61a:: with SMTP id u26mr2102572ywh.14.1644270389467;
+ Mon, 07 Feb 2022 13:46:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqczjyiecs.fsf@gitster.g>
+References: <CAPQu=HaH+E5-t4A671GFFLMbiHo=LWP=pucxBG=tT6QjhUXv=w@mail.gmail.com>
+ <CAPQu=HZu0bq0fdnhDN-r5xeQ_caEfSBe5_xAp52LA4sFGXqbQw@mail.gmail.com> <CAOjrSZtfE+SyZAXkyvb3eJ+ZNvkxzqyDmuTRd5WTq4JgcmKiRA@mail.gmail.com>
+In-Reply-To: <CAOjrSZtfE+SyZAXkyvb3eJ+ZNvkxzqyDmuTRd5WTq4JgcmKiRA@mail.gmail.com>
+From:   Paolo Benvenuto <paolobenve@gmail.com>
+Date:   Mon, 7 Feb 2022 16:45:53 -0500
+Message-ID: <CAPQu=HagWL4zoaWqNeO+GOGx8FChurZDNPXJUHmYv54UXwfHzQ@mail.gmail.com>
+Subject: Re: feature request: add a way to debug ssh connection
+To:     Matt Rogers <mattr94@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 07, 2022 at 12:57:55PM -0800, Junio C Hamano wrote:
-> You are solving a different problem: "I have this tar archive; what
-> git tree object would I get if I extract this archive to an empty
-> directory and said 'git add . && git write-tree'?".
-> 
-> I agree that one is computable.
+ok!
 
-So, I was brainstorming about this today, and I'm curious if you think this
-would be a useful feature to have, maybe even natively?
+don Paolo Benvenuto
 
-E.g. here's a scenario:
-
-"git archive -S <signed-object>" creates an additional file that is added to
-the generated tar/zip archive -- for example, a ${prefix}.GIT_ARCHIVE_SIG. That
-file contains the raw contents of the signed tag and/or the signed commit.
-
-"git verify-archive" would look for a toplevel .GIT_ARCHIVE_SIG file. If it's
-present, it would verify the signature on these "detached" signed objects to
-get a trusted tree hash. Then it would compute the tree hash of the tar
-archive (minus the .GIT_ARCHIVE_SIG file) to see if it matches.
-
-In my mind, that would provide the following benefits over the current
-practice of detached .sig files:
-
-1. environments like github/git.kernel.org would be able to create verifiable
-   snapshot archives using an existing set of signed objects
-2. packagers would be able to perform cryptographic verification without
-   needing to track any extra sources like corresponding .sig files; they
-   would just need to add a build-time dependency on git (plus whatever it
-   calls for cryptographic verification, such as gnupg or openssh)
-3. this would automatically support all git-native signature mechanisms like
-   openssh and whatever else gets added in the future
-
-Does this idea have any merit, or is it too fragile/crazy to bother?
-
-> Of course, even that reverse problem will break once we consider the
-> release tarball generation procedure where we _add_ some generated
-> files that are not in the Git tree, for builder's convenience.
-
-Yes, but it's increasingly rare and many build instructions now specifically
-allow for things like "first, run autoconf if you don't already have a
-configure file", etc.
-
--K
+Il giorno lun 7 feb 2022 alle ore 10:31 Matt Rogers
+<mattr94@gmail.com> ha scritto:
+>
+> Welcome to the git mailing list!
+>
+> Have you tried doing something like using
+>
+> `GIT_SSH_COMAND="<whatever your ssh program is> -v" git push"
+>
+> as recommended in this thread[1]?
+>
+> [1]: https://stackoverflow.com/q/25388499/7869583
