@@ -2,147 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03757C433EF
-	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 14:32:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEB40C433EF
+	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 14:51:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234504AbiBGO2p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Feb 2022 09:28:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54298 "EHLO
+        id S1347795AbiBGOuV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Feb 2022 09:50:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1390862AbiBGOBa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Feb 2022 09:01:30 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96F72C0401C2
-        for <git@vger.kernel.org>; Mon,  7 Feb 2022 06:01:29 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id o1-20020a1c4d01000000b0034d95625e1fso14423501wmh.4
-        for <git@vger.kernel.org>; Mon, 07 Feb 2022 06:01:29 -0800 (PST)
+        with ESMTP id S1392432AbiBGOai (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Feb 2022 09:30:38 -0500
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9FBEC0401C1
+        for <git@vger.kernel.org>; Mon,  7 Feb 2022 06:30:37 -0800 (PST)
+Received: by mail-qv1-xf2c.google.com with SMTP id d8so11479701qvv.2
+        for <git@vger.kernel.org>; Mon, 07 Feb 2022 06:30:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=zxBoS4vySYsGyHJRVAzaESvpY2vGcSdGOmSRhJ8aAxw=;
-        b=HuJyjQPFBjHJRgp7YwTQkkQ1XKtINcTNd5hSFrDSMpbZvvJtayx2567z3tuXImGBFr
-         LpZTo6Z5hjGR3iP9ikXrwWWM1XOhe8MN94lI2aBYpBdrIeYifKJ4WfTTLKdFmkrbIK+3
-         mSEpBGXx6tCokUxOBUv3A6zajyQrXJuF3SZ28OQP3J7dKTub5hjt/13wKD5ZflHfNQLf
-         Ln3T6SiMII8vTSaOc1CHJkbEp0QOPjJNSpN0WoiGU9buh0YhsfaHpqdtgUlTS4RvYOyz
-         hLCPRK1NHGVRySgAC/PFsvX5hrPzGS44BSS3hBanRUe3h3V2v1wFDPIx7GtHuTwMsyPN
-         kTqw==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=K6WlhOmI/17RZcb2egJVO4ve9PTX15gAq9bMwHUlviE=;
+        b=FgbObxLTKr1gGRWdKzZElWOwqiQ/u1E3bfny48kSEF3Ydcsnq3Shz3JWmLnmtQP3p6
+         fZfiwalqHtYv+I+ijjDOpgr4ruS6k0Nz/UHOklwoB/uUnQWLmsRhTMzoAa3ce8s6I1YT
+         dYFUdBXHQh91CiE3xFr98pOcxMGeUQlTfbKzlfuucLmieYAEjuqrP+sxj4G/e+QH0sTM
+         95yPumMV7/WPAA3reWBq6lBfsChIvYJowVOhMbDl8eRLViTLSCBq6vEKOD9MyKoysYA2
+         CBo4mQcMigcZGxvHj8FO9UvSR13NXGs53Z7pRsmGB1oQv4bZuNcpd6Tgpq0Hfa4HEvTD
+         RAzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=zxBoS4vySYsGyHJRVAzaESvpY2vGcSdGOmSRhJ8aAxw=;
-        b=afH4GPbfbB5gU3cjVwlcIDPUtfMt76MSw0CuLU+uYlESCjUsUXjysXbPWPWJ9qucT5
-         rw8xi+9+dSXM3GisCZUhYMT+MIbscMByuLtuhjZ/1cPYFAmHQ14yBinio1A46K1UDWbk
-         ztPu3NxvGO6C8s+YD+jkstkHQpVInkzlCuTL5heO/cImSTnMYGZrsaZuSMJJI7us+dF1
-         4kciEuA/MsrFaFeFJ88Pc7kOTvXg5Tv4yGcOTK9eFdN4mICsEt0upurlocXwWf6GxohT
-         nu7aJDwQ270RS2OZIyFAzna1Ti5IYxJXaWCq8BsZ0DgrXUkJzXtyhUesmE7ViA/2ZWlp
-         7t7g==
-X-Gm-Message-State: AOAM530dxHWS9v6Au6ZCMp+lNN1btCNxxw2s7YzyCWu73cfY8h4tq9gr
-        K6hdHIHiLg8b0+oc+oBz8bQz4L9MT+k=
-X-Google-Smtp-Source: ABdhPJxHMwSI3470v8r08kbt718h95EUgwDn7yXrYagqxuE9lFbIDa0caaJk7HGn61ZuP+QZuz7jCg==
-X-Received: by 2002:a1c:29c3:: with SMTP id p186mr14574843wmp.22.1644242487784;
-        Mon, 07 Feb 2022 06:01:27 -0800 (PST)
-Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id f16sm10712754wmg.28.2022.02.07.06.01.27
+        bh=K6WlhOmI/17RZcb2egJVO4ve9PTX15gAq9bMwHUlviE=;
+        b=ezLQzPrpR1fay463dQkXt87rvXnGjrpXq9EnZzon6BSRBV5jZITp5fG+3E51iqoMP7
+         sQHCxZ6Bh6Gyc9I2GihFvnuKTRvYq3y3R9cQTubv6H/LemrEFu84FeVRLnWp6Y8pkdqD
+         ZjHetQyqiy9AyF8mKCApy4jkOeo7clHKOxiCFJTdEjkzLv5lxqbO6ThibakbVYuGl08m
+         ZkaEsbCIzVBYXL5GQJrSjmZwDjSf+MIn3Lfm5MCfshhIjd4Fxio1sbhnTVWoz7nBLTY1
+         Vo3oYGGAiRbgRg25m3CbaB1jrNbB2peq+PwZpQQ/2DudOa3I7oK1dSprrCKbSL7+/0mm
+         gXHw==
+X-Gm-Message-State: AOAM533V2/qIjUWvRcdZcAaYMABuuallfUHMazauY+f1M+VZDQabo2Xa
+        WSm2fuSqlMn+jJmDFz2AM3c=
+X-Google-Smtp-Source: ABdhPJwEvEhbMShRqrgxZjfdk5ko54pvx2gH35zuq5BNrt3FHVNFC049+4OeQVHROGGFU9FP6TxMKA==
+X-Received: by 2002:ad4:5b8a:: with SMTP id 10mr10633035qvp.18.1644244236902;
+        Mon, 07 Feb 2022 06:30:36 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:2d61:adc7:f4c3:dd65? ([2600:1700:e72:80a0:2d61:adc7:f4c3:dd65])
+        by smtp.gmail.com with ESMTPSA id w22sm5984539qtk.7.2022.02.07.06.30.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Feb 2022 06:01:27 -0800 (PST)
-Message-ID: <bb0532ca-f718-15d1-7328-fd0e062eae06@gmail.com>
-Date:   Mon, 7 Feb 2022 14:01:26 +0000
+        Mon, 07 Feb 2022 06:30:36 -0800 (PST)
+Message-ID: <93747eca-08d6-0be9-08c7-42c81340b788@gmail.com>
+Date:   Mon, 7 Feb 2022 09:30:35 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: git-checkout doesn't seem to respect config from include.path
+Subject: Re: [PATCH v5 5/5] worktree: copy sparse-checkout patterns and config
+ on add
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Greg Hurrell <greg@hurrell.net>, git@vger.kernel.org,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>
-References: <ee1dd453-e698-440a-911b-d14389e33715@beta.fastmail.com>
- <0b8222c2-7337-7e8f-33d1-7926462daac1@gmail.com> <xmqq1r0jx1qm.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqq1r0jx1qm.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Sean Allred <allred.sean@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com>
+ <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
+ <85779dfaed39220e18129e823aff9c95ade5985b.1643641259.git.gitgitgadget@gmail.com>
+ <CAPig+cQOieO3cmZv42G_8XRiMwkh4v3cO1AYg5VR9SiPNMwxhw@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CAPig+cQOieO3cmZv42G_8XRiMwkh4v3cO1AYg5VR9SiPNMwxhw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+On 2/6/2022 6:30 AM, Eric Sunshine wrote:
+> On Mon, Jan 31, 2022 at 10:01 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> +       /*
+>> +        * If we are using worktree config, then copy all current config
+>> +        * values from the current worktree into the new one, that way the
+>> +        * new worktree behaves the same as this one.
+>> +        */
+> 
+> As an aid for future readers, it might be helpful to extend this
+> content to explain _why_ the new worktree should behave the same as
+> the current one. Reproducing the important bits from the commit
+> message here in the comment could make it more useful.
 
-On 03/02/2022 18:07, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> ... What we really want in this case is to
->> store the string value for each config option as we read each config
->> source and then parse those values at the end, unfortunately I think
->> that would break multi-valued config keys.
-> 
-> Thanks for raising, and looking into, the issue.
-> 
-> While the original "callback functions are called for each and every
-> configuration item defined in the files and it is the responsibility
-> for these callback functions to implement the semantics like the
-> last one wins" design that uses git_config() makes it harder, but I
-> think we are already halfway there, with the more recent API update
-> in 2014 (!) that allows config_get_value() to go directly get a
-> value given a key without writing callback functions.
-> 
-> I think builtin/add.c predates the configset API work (of course, it
-> is natural that we can "git add" way before 2014), and mostly uses
-> git_config(add_config) callback as a way to parse its configuration,
-> because it needs to tell other subsystems (like diff, merge, etc.)
-> that are even older to pay attention to the configuration variables
-> they care about.
-> 
-> So it may be a major surgery to switch to the newer
-> config_get_value() API.
-> 
-> For a "last one wins" variable, config_get_value() will only look at
-> the last item, so any garbage value Git does not recognize would not
-> trigger a fatal error.
-> 
-> Such an update is both good and bad.  Surely it makes the scenario
-> that triggered this discussion more pleasant by not dying, but it
-> makes it too pleasant by not even giving the user a chance to notice
-> a possible typo.
-> 
-> A incremental improvement that we can immediately make is probably
-> to teach the current xdiff-interface.c::git_xmerge_config() parser
-> to react to an unknown value differently.  It should not die() but
-> just ignore the unknown value, and issue a warning.  This should be
-> doable with minimum impact to the code.
+Here, I think I disagree. The comment is intentionally short to say
+"we need to be careful here" but the reason behind it can be found
+in the commit message from history spelunking.
 
-I think that would be worthwhile, the warning is potentially confusing 
-though if a bad value is followed by a good value then we will warn 
-about the bad value but use the good one.
-
-Best Wishes
-
-Phillip
-
-> Completely untested.  The first test that would be interesting to
-> run is how many tests this changes breaks to gauge how good test
-> coverage we have ;-)
+>> +                           git_config_set_multivar_in_file_gently(
+>> +                                       to_file, "core.bare", NULL, "true", 0))
+>> +                               error(_("failed to unset 'core.bare' in '%s'"), to_file);
+>> +                       if (!git_configset_get_value(&cs, "core.worktree", &str_value) &&
 > 
->   xdiff-interface.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git c/xdiff-interface.c w/xdiff-interface.c
-> index 2e3a5a2943..523b04960a 100644
-> --- c/xdiff-interface.c
-> +++ w/xdiff-interface.c
-> @@ -322,8 +322,8 @@ int git_xmerge_config(const char *var, const char *value, void *cb)
->   		 * git-completion.bash when you add new merge config
->   		 */
->   		else
-> -			die("unknown style '%s' given for '%s'",
-> -			    value, var);
-> +			warning("ignored unknown style '%s' given for '%s'",
-> +				value, var);
->   		return 0;
->   	}
->   	return git_default_config(var, value, cb);
+> In patch [2/5] you used git_configset_get_string_tmp() to retrieve
+> this setting, but here you're using git_configset_get_value(). Is
+> there a reason for the inconsistency?
 
+I'm not sure why I chose to use one over the other, but looking at
+the code, it seems that my use in patch 2 is the only use of
+git_configset_get_string_tmp() that is not internal to config.c.
+
+I should convert the one in patch 2 to use git_configset_get_value()
+and then we can remove the declaration of git_configset_get_string_tmp()
+in config.h.
+
+>> +               git worktree add ../there3 main &&
+>> +               cd ../there3 &&
+>> +               git status
+>> +       ) &&
+> 
+> Is this some debugging code you forgot to remove or was `git status`
+> failing due to the bug(s) fixed by this patch series? I'm guessing the
+> latter since you also use `git status` in more tests below. Anyhow,
+> it's not very clear what the `git-status` is meant to be testing. An
+> in-code comment _might_ help. Even better, perhaps, would be to add a
+> new single-purpose test or a well-named function which explicitly
+> checks the conditions you want to test (i.e. that git-config doesn't
+> report core.bare as true or core.worktree as having a value).
+
+Basically, in the old code any Git command would immediately fail
+because of the interpretation of core.bare or core.worktree. So
+this check is just a check that a basic Git command doesn't fail
+
+>> +               git config --worktree bogus.key value &&
+>> +               git config --unset core.bare &&
+> 
+> Why is this being unset? (Genuine question. Am I missing something obvious?)
+
+I'm moving it out of the common config file. Earlier commands
+enabled it in the config.worktree file for this working tree.
+
+Thanks,
+-Stolee
