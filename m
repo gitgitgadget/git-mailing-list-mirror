@@ -2,76 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DECBAC433FE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C74BFC4332F
 	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 12:04:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235971AbiBGMDV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Feb 2022 07:03:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34270 "EHLO
+        id S238489AbiBGMDS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Feb 2022 07:03:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1390525AbiBGLy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Feb 2022 06:54:57 -0500
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3557AC03FEC5
-        for <git@vger.kernel.org>; Mon,  7 Feb 2022 03:54:31 -0800 (PST)
-Received: by mail-yb1-xb33.google.com with SMTP id p5so38963801ybd.13
-        for <git@vger.kernel.org>; Mon, 07 Feb 2022 03:54:31 -0800 (PST)
+        with ESMTP id S1358790AbiBGLOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Feb 2022 06:14:44 -0500
+Received: from mail-ua1-x92e.google.com (mail-ua1-x92e.google.com [IPv6:2607:f8b0:4864:20::92e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFDDEC0401DD
+        for <git@vger.kernel.org>; Mon,  7 Feb 2022 03:14:24 -0800 (PST)
+Received: by mail-ua1-x92e.google.com with SMTP id b37so22078322uad.12
+        for <git@vger.kernel.org>; Mon, 07 Feb 2022 03:14:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wCKCrFFR/H/DPkq9FBBUfSI/88ATvl4B6z6Lz9DIa5A=;
-        b=KHkw7tWmeLr1Bk9TPP7v/VKt3ayT5KXwv+nZhaFQLB0LTKAUAPW7wsDVBJYb8wbtov
-         XXVpEXrsQCB3wN0NsQVZxFEJ6E1MaxVYANWNkia7Y5LcJxwZit7rQ5rKOFyQMXYtRz/B
-         YpgLef0J5N9XPz8faTXkVE1Kb69gIklIK2mSvbCKXn1FlV2du0TWfoc6kIqnN38LMCGK
-         DcSfYHF15kXT1WP2807jZfPp54jbo4KZaaBJYz/yk/DRHhuvmmfxsssEx+amILkLKHnS
-         20Yp4UYmeC5khgdRN9gn5Ip9ZQpX6P3B57fu1zNViPMxCfPouHLvCXWAFHNZIvH0uuNf
-         o8Vw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=NTQ7XpbnbdODMC8eqeCRRMMZRTbSGsDzAHkJPEAfmjg=;
+        b=oE8NEJ5M+KPdkhBZxynbEgHaVzmpkqdVWnPowcfh9LQDiVxlgtA7jK1s/TJE1eR1fh
+         FUragkvlo4F49BrDrfC9q2XxmCFPX8Q3UwUFH2YwoFqSCu0ceyzULRKpdrPtoPa/CT8j
+         BD9miS/TolF7GCUNGm1HxubddFlYGaBZynfknZMVZjZHkoq3Msz4RuIu0lzAh/+d3oCf
+         UXtEAOBQdefW7z5E6N5kCkcw7GNjdtRFnYBSj5dC76TRz62bpZW5ioy1IqKSav+/Iz3k
+         9g/IR0Vos+9vAIIowI/3tfijy6K9WgXGVpdOI1BQ9tvNj8nCJNv90rauKhZV6cMOM3dR
+         XpxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wCKCrFFR/H/DPkq9FBBUfSI/88ATvl4B6z6Lz9DIa5A=;
-        b=iQp8aqnQKhqRuu+CFMSYTuCGMAPxWGOaVcK37wV5Ajvprhe1Zx10RWdFWQGBXjW/Ys
-         lL4H7dcsCfRvu/9tiX9Nx7kO1S93tPN2alu/afzYELNRJS4cvSy/cejniQtjalKzQnAq
-         pRugGfhyOZqBF2qn2PuzlT8ELmZO1Remb8WhZG4OPBkXhQCH9p56w9HRbgUBIBhjwiXG
-         ltekVnQBRVTedVCq2zIQs8r5uCOyyDgC76t6PZHxUBxoGznuL35PLPPCIKUqfBo1Z3fK
-         LCes99z8gOrRiVnE4Oa+eDy5rn7XBXwMhRYG+gDohJCwSw15kuFc5tgzU5hji0PLtph5
-         /Osg==
-X-Gm-Message-State: AOAM533Mzylkb0IjCBac9mbdblvw4NjTzVxARqCGBSZniauuhGMUzwe0
-        3vXNelvIVPXPiJ2ucGEpagKEbbp0QnI5pz1i/2o=
-X-Google-Smtp-Source: ABdhPJx/6QcZIuFMmTvEZIJG9QSkMWMh4QLcvUpvglx19mlcmRQDfEl9tbuAC3QnZAGLAdFzVzjv+MmunoXyRBHUQZo=
-X-Received: by 2002:a25:a1a1:: with SMTP id a30mr9902519ybi.50.1644234870308;
- Mon, 07 Feb 2022 03:54:30 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=NTQ7XpbnbdODMC8eqeCRRMMZRTbSGsDzAHkJPEAfmjg=;
+        b=zwH1eknlhHIBwlSWv101+9tT0rSg9s6PMXb/yemNOeN6Nkr79AuEdgVHONdjMvLJJ4
+         rPF0P9oh5V3DCVZi6y8oRA/r17QEYdAHv5AFyr0s+7MyLKmpHdF7zNmEbiPES4pmdFYt
+         fVyVj3pSu71BSiqLlv4PEK+WDkD+6TmhnSqmVz5CgTvJQyvtA3nIbM89e5iOd1UPyFX2
+         d+UAuBwtlhFlao6i3FQrpQtX3hJ3zksFrX/Yia09K8us/KQ6bqe0M9EQM1PROr4IGSsx
+         GnRpFp6TU3pLnbxM3n95W5hjyPLpYiizS3zvI97/XqFJn4N5/wZtW7/t5z6iujZ5f1dp
+         /j+A==
+X-Gm-Message-State: AOAM533xUE9RBTRQqKu9hMu4EBqx86lGZeWkJsLqtxPSGD88Kt+GN12o
+        8bjucleLfxr/YSGUJEk15BFB7uc6fLzvcoowxC20YDWpYwQ=
+X-Google-Smtp-Source: ABdhPJybV32/U+2u7dJawVFjfAWNOvd2nrfmANFY+GehwOHmdqWOQxGID8nQctJE0kNxPQZCJEhSKW1WoANzhBmu7mw=
+X-Received: by 2002:ab0:604e:: with SMTP id o14mr3133867ual.71.1644232450044;
+ Mon, 07 Feb 2022 03:14:10 -0800 (PST)
 MIME-Version: 1.0
-References: <20220123060318.471414-1-shaoxuan.yuan02@gmail.com>
- <20220202064300.3601-1-shaoxuan.yuan02@gmail.com> <20220202064300.3601-2-shaoxuan.yuan02@gmail.com>
-In-Reply-To: <20220202064300.3601-2-shaoxuan.yuan02@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 7 Feb 2022 12:54:19 +0100
-Message-ID: <CAP8UFD0c=TeBwcyWo_GKLKV7Y8837beHLk7JGqfF9_DU79NWig@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] t/lib-read-tree-m-3way: indent with tabs
-To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+From:   Alexander Kanavin <alex.kanavin@gmail.com>
+Date:   Mon, 7 Feb 2022 12:13:59 +0100
+Message-ID: <CANNYZj8L_-hhKGNvNfiSU4T2W0g8ZRJ-gJJ30PgRo=ycCGSObQ@mail.gmail.com>
+Subject: [bug] forcing build settings on rhel7 without specific checks is not appropriate
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 6, 2022 at 10:51 PM Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> wrote:
->
-> As Documentation/CodingGuidelines says, our shell scripts
-> (including tests) are to use HT for indentation, but this script
+Hello,
 
-Documentation/CodingGuidelines talks about "tabs" for indentation not
-"HT", so it would be more consistent to talk about "tabs" here too, or
-at least to say something like "are to use HT (horizontal tab) for
-indentation".
+there was a recent change where a couple of compiler settings are
+forced on rhel7:
 
-> uses 4-column indent with SP. Fix this.
+# centos7/rhel7 provides gcc 4.8.5 and zlib 1.2.7.
+ifneq ($(findstring .el7.,$(uname_R)),)
+    BASIC_CFLAGS += -std=c99
+    NO_UNCOMPRESS2 = YesPlease
+endif
 
-Same for "SP" here vs "space" in our doc. (Also note that `man ascii`
-talks about "HT" and "SPACE", not "SP".)
+I believe this is not the right way to do it: the makefile should
+check for the actual compiler and zstd versions and make the decision
+based on that. Yocto project uses a much newer (cross)compiler and
+zlib for cross-builds, and those settings are not only unnecessary,
+but actively harm reproducibility, as cross-binaries built on
+rhel7/centos7 are then not the same as binaries built on other
+distributions. So we ended up reverting the change:
+https://lists.openembedded.org/g/openembedded-core/message/161456
 
-> Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Thanks,
+Alex
