@@ -2,109 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4394FC4707A
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB9BEC4707E
 	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 01:06:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240470AbiBHBFX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Feb 2022 20:05:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46328 "EHLO
+        id S241106AbiBHBFZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Feb 2022 20:05:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343712AbiBGXuB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Feb 2022 18:50:01 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FAE7C061355
-        for <git@vger.kernel.org>; Mon,  7 Feb 2022 15:50:00 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id n8so11005361wmk.3
-        for <git@vger.kernel.org>; Mon, 07 Feb 2022 15:50:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=+yXXkkIXclFH64qj0B7QIRjbZQDdYOHXKrzRUNUzGFI=;
-        b=HHm9K7neLXf1+4YUu/9kdTs37pv1sbUdaovY3wtf9Xtzpcz4KuEclknYFcZmqQ3sYu
-         F01yTxdZmcVbBCcBGF0q8K3K1yI6vZ8zgDqhTL1ugzQLvDlsYA4ABCChlN6ObrnDQdt7
-         XaIFRbaQTFK9c8mVL+z5TT1pwd8WR3uywVcP4ccXoAptwJTcPb1uTzfT2UEQqoDzEgbM
-         Py5wT1CwgFUQgdKKSfAxotRqx81+DliBAgxx45TXLxk10gKPbUYcD8hN6Az6ZN0QlAAI
-         K1WwosK8G2wSm29BzfvyNS20K8t0bZJBjguAnBPTbbJXdw5OcPxizy+320pvGhnnpiUB
-         UA2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+yXXkkIXclFH64qj0B7QIRjbZQDdYOHXKrzRUNUzGFI=;
-        b=y+wwD6B5DN6K7dILDuZ0303p7r6K6aTy7RsFZpY7VcdORxlljBO+xZr+3xvrzhMCAc
-         plt6akBIu0XUFIHS6d9VD34gKubAD6N08PnhxgNsgiskBObQD2vjnT1mfELvBpHh393k
-         K+zvkC1sDPGmURyj50zwvBlTZGMFcGyqKJ3SFUH3zHCjEfILCB1R4l3/lt+mFA1UQP9Y
-         ZpsxUvtVUtdupKb9xP2B7CQz2O+ip7P0xsc33rjTLPLxMEVFKIMXmXIUEv+GXHLiQX2W
-         bzdS+DN7lWp9OV3Yru2pXBUSpwOfu3FYnoez9tNchPGt7JwexLy1drFt2MyXMwfcYuqv
-         FLyQ==
-X-Gm-Message-State: AOAM531KiYpeU7GLV4FQvtXAp6Tmvr21yvCErf7j5E3TUxUqOEzHp7kv
-        POZa8t7KUtGFQSLDZcagU8AxdJMCZek=
-X-Google-Smtp-Source: ABdhPJx7JjnKLYTIG+QwCxe/Zvt99SfU/32fi5dBQMXkdmIcrHElQHbxNdZKBAFQlRPV7klpr3uDPA==
-X-Received: by 2002:a05:600c:1ca8:: with SMTP id k40mr983185wms.62.1644277798528;
-        Mon, 07 Feb 2022 15:49:58 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r2sm662913wmq.0.2022.02.07.15.49.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Feb 2022 15:49:57 -0800 (PST)
-Message-Id: <pull.1139.git.1644277797.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Feb 2022 23:49:55 +0000
-Subject: [PATCH 0/2] checkout/fetch/pull/pack-objects: allow -h outside a repository again
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S234881AbiBGXka (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Feb 2022 18:40:30 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD09EC061355
+        for <git@vger.kernel.org>; Mon,  7 Feb 2022 15:40:28 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5BB0B17D134;
+        Mon,  7 Feb 2022 18:40:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=i79oKJadQjH7CnehnHbcONbcG3yu6OX+L32IPy
+        KcH5s=; b=eI1j6sLqFnqVPpaSlObOxTHniIn9vEZcom8SwpLKgwd0GzT7Ge+FXY
+        vDcsouczzo1gKZxalWvRAjUg6hEU1qP14QwSdb55OfyJS00awMAIJQVFyWqY4KHm
+        CfqcGgEGHZvQHai4GWSRvJ/5D4U2YRZoF9jlWDfsa0S8OQZxOgth0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 546FC17D133;
+        Mon,  7 Feb 2022 18:40:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B76E717D132;
+        Mon,  7 Feb 2022 18:40:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH 2/3] t1405: mark test that checks existence as REFFILES
+References: <pull.1209.git.git.1643651420.gitgitgadget@gmail.com>
+        <1ded69d89709d23147b29f67122b659293414405.1643651420.git.gitgitgadget@gmail.com>
+        <YfhUIJuO70va6gr8@nand.local> <xmqqzgnbh7rv.fsf@gitster.g>
+        <CAFQ2z_OFRJh9cwxnbDzrshYPGOvJC6Rz1eHTF-aKURno+41Cvw@mail.gmail.com>
+        <xmqqa6facn9i.fsf@gitster.g>
+        <220201.861r0m9t8n.gmgdl@evledraar.gmail.com>
+        <xmqqsft2b5jl.fsf@gitster.g>
+        <CAFQ2z_NSCvRbj1bxirxhqSWD+LadzCa8VNOsxGCmFCNT3GUU0g@mail.gmail.com>
+        <xmqq4k5fr1mh.fsf@gitster.g>
+        <CAFQ2z_Nb=wY_+B1ub0XDgZnvgCHGmFu1rjMuKgbFFir0=1PHtw@mail.gmail.com>
+        <CAFQ2z_PE_ERoocVjUGCqcFxTDUy79PFbkCVh-y+At7KvXx8TtQ@mail.gmail.com>
+Date:   Mon, 07 Feb 2022 15:40:24 -0800
+In-Reply-To: <CAFQ2z_PE_ERoocVjUGCqcFxTDUy79PFbkCVh-y+At7KvXx8TtQ@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Mon, 7 Feb 2022 17:52:36 +0100")
+Message-ID: <xmqq35kugs9j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 530BBABA-886F-11EC-A9F7-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As reported in https://github.com/git-for-windows/git/issues/3688, calling
-git fetch -h outside a repository now results in a very ugly
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
- BUG: repo-settings.c:23: Cannot add settings for uninitialized repository
+>> It also has less chances of creating complicated control flows
+>> (especially in JGit which wasn't designed for this bit from the
+>> start): the tables have to be written in lexicographic order, so you
+>> only can write this bit after you know if reflog entries were written
+>> for a certain ref.
+>
+> Correction. I wish the table blocks were written in lexicographic
+> order, but they are written in order 'g', ['i',] 'o', ['i'], 'g',
+> ['i']. Since the 'g' block is last within a table, we could add a new
+> section at the end.  My point that this is considerable work to think
+> through how to make this work with JGit still stands, though.
 
+As long as a fake/NULL entry in the reflog is invisible to iterators
+and does not count as part of numbered entries when reflog@{23}
+notation is used, I think it is perfectly fine to take that
+approach, instead of "separate bit".  I brought it up only as a
+possible alternative (i.e. "if bit is on or any entry exists, we do
+have log for the ref") in case ignoring the fake entry is impossible.
 
-The reason is that the prepare_repo_settings() calls (that we introduced to
-support sparse index) assume that there is a gitdir, but the hack to allow
-parse_options() to handle -h even outside a repository invalidates that
-assumption.
-
-One strategy I considered was to move the prepare_repo_settings() calls
-after parse_options(). This would work because when parse_options() handles
--h, it exits without returning.
-
-However, this strategy failed in my tests because e.g. cmd_unpack_objects()
-does need the pack_use_sparse to be populated correctly before even parsing
-the options so that it can be overridden via --sparse/--no-sparse.
-
-Hence the current strategy where the code that prepares the repo settings
-and then accesses them is guarded behind the condition that we must have a
-gitdir to do so.
-
-Note: There are other instances where prepare_repo_settings() is called
-before parse_options(), e.g. in cmd_status(), in seen there are even more
-instances (e.g. cmd_checkout_index()). All of those instances that are not
-touched by this here patch do have special code to handle -h early, though,
-before calling prepare_repo_settings() let alone parse_options().
-
-Johannes Schindelin (2):
-  checkout/fetch/pull/pack-objects: allow `-h` outside a repository
-  t0012: verify that built-ins handle `-h` even without gitdir
-
- builtin/checkout.c     | 7 ++++---
- builtin/fetch.c        | 7 +++++--
- builtin/pack-objects.c | 8 +++++---
- builtin/pull.c         | 6 ++++--
- t/t0012-help.sh        | 7 ++++++-
- 5 files changed, 24 insertions(+), 11 deletions(-)
-
-
-base-commit: 4c53a8c20f8984adb226293a3ffd7b88c3f4ac1a
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1139%2Fdscho%2Fprepare_repo_settings-after-parse_options-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1139/dscho/prepare_repo_settings-after-parse_options-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1139
--- 
-gitgitgadget
