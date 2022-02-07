@@ -2,150 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC561C433EF
-	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 02:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A173C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Feb 2022 02:15:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244009AbiBGCLm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Feb 2022 21:11:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42376 "EHLO
+        id S238232AbiBGCPU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Feb 2022 21:15:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231342AbiBGCLm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Feb 2022 21:11:42 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D0FC061A73
-        for <git@vger.kernel.org>; Sun,  6 Feb 2022 18:11:41 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 95DA4108A15;
-        Sun,  6 Feb 2022 21:11:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vMRu2idLHti4
-        NnvOaUlclZNdxoNHpPINnQrNcFAEwC0=; b=OVD7yRr8V+g+zC9xR5kHAD78Ep/y
-        TfBG4Q6iqNuGJLAJRywb1B4e8CzLQiP5Eo7K2Bf7KTH9zDr8h5xmfHmcN2WPRW2X
-        Ah9s0iKtS4XEYXrnnx1NXz+qE1ThxmHVhJuKOU5uF0uutcacd67v2QPTuX1C4QxA
-        wavSxjBWGSsSG3Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E0B5108A13;
-        Sun,  6 Feb 2022 21:11:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.145.213.122])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DEFB3108A12;
-        Sun,  6 Feb 2022 21:11:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] ls-remote & transport API: release "struct
- transport_ls_refs_options"
-References: <patch-1.1-e80e8f64eae-20220205T000809Z-avarab@gmail.com>
-Date:   Sun, 06 Feb 2022 18:11:39 -0800
-In-Reply-To: <patch-1.1-e80e8f64eae-20220205T000809Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat, 5 Feb
- 2022 01:08:14 +0100")
-Message-ID: <xmqqwni7h1d0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1348600AbiBGCPS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Feb 2022 21:15:18 -0500
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5D7BC061A73
+        for <git@vger.kernel.org>; Sun,  6 Feb 2022 18:15:17 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id s11so10109509ybl.7
+        for <git@vger.kernel.org>; Sun, 06 Feb 2022 18:15:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=xEOGINRNIWut8In+43EHxMQeUJBKB6B4qd4rUh7k8fw=;
+        b=Ug0WQntfI7fshl2nQheV6ATVbQuMRhcoubebgs6BLruURQGODlkQ9oZGxHitgoLE37
+         S3V7yUcnM09XeIZvmgMky5S7zc1++358+jsUyMSB6wfTYN7a74Sj4G6Ye5Ag9s3vwWJ6
+         YkZy9/dSBIYkd7CRzPsqaBEKprzCItvrG+/NxvjvbBKQMzv5zvzFRK4nQ2HYjXQcqrjN
+         9VvAjWXnHI8dsSLD2BjgPM0mEqIFnx2q7p++MX6nbGc1zJaa4MFfVHiJ+ItoZDKxJFtw
+         YEFq3nrzAMXruTM1d1hz9adMaw+sEdb4ETFVITavpRIKKoj0oCUmZlF9Up7rlsGCThGn
+         k9Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=xEOGINRNIWut8In+43EHxMQeUJBKB6B4qd4rUh7k8fw=;
+        b=FRIINPwTq+f1210CgFcPkqzWNt4I++UzvD8nhL9K2a3UxC/7MBfN23P77xL+GLe5Ng
+         Sixbfm1qapjOM4QbbFZuKQffemhQPZW6gkEt8+GEZhbolonYzuZQc7/tFiVEaX9NY60z
+         FpKxbTttByRAEgczHnS+7kVYWWFVGCS94QCyFOGXa1+14kkOKB5lTxty0SucUX9cz0oI
+         b8ml42dmKczgDvsBFKvZC+2V+V2dHg//KN0qZEDtECRwJpb3fkMgXU7YRWhrDNhtyNL8
+         pmCEhAZkDjZN0NgXq2VReQM8pzH+t22sIDh72sVhb/017+YDXDpGKJvTTn3xB1bR6xe5
+         4dKA==
+X-Gm-Message-State: AOAM530Ryg4Fqcw0SLdbeizT4rOPKb99jzcz1rhUcyXxq6WHzc727xX/
+        PaYgJE7NWJSqQqxV0sxktjGf0Jp6zyWFiXXITeiUOX0iEqqKUw==
+X-Google-Smtp-Source: ABdhPJwU2VMr19y8qyXb2heRaqLU5vsLukEgEUM7dyJ8U7JF7Q0JBcJYk35ROZZJpm8n59QSzo+kE/Xes1zZ1W4C5vo=
+X-Received: by 2002:a81:ce08:: with SMTP id t8mr2752161ywi.145.1644200116938;
+ Sun, 06 Feb 2022 18:15:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 494179C0-87BB-11EC-9BF7-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <CAPQu=HaH+E5-t4A671GFFLMbiHo=LWP=pucxBG=tT6QjhUXv=w@mail.gmail.com>
+In-Reply-To: <CAPQu=HaH+E5-t4A671GFFLMbiHo=LWP=pucxBG=tT6QjhUXv=w@mail.gmail.com>
+From:   Paolo Benvenuto <paolobenve@gmail.com>
+Date:   Sun, 6 Feb 2022 21:14:41 -0500
+Message-ID: <CAPQu=HZu0bq0fdnhDN-r5xeQ_caEfSBe5_xAp52LA4sFGXqbQw@mail.gmail.com>
+Subject: feature request: add a way to debug ssh connection
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+I'm using git (2.25.1 on xubuntu 20.04), and I access to my remote via
+ssh in order to authenticate with ssh key and not to have to use the
+username/password pair.
 
-> Fix a memory leak in codepaths that use the "struct
-> transport_ls_refs_options" API. Since the introduction of the struct
-> in 39835409d10 (connect, transport: encapsulate arg in struct,
-> 2021-02-05) the caller has been responsible for freeing it.
->
-> That commit in turn migrated code originally added in
-> 402c47d9391 (clone: send ref-prefixes when using protocol v2,
-> 2018-07-20) and b4be74105fe (ls-remote: pass ref prefixes when
-> requesting a remote's refs, 2018-03-15). Only some of those codepaths
-> were releasing the allocated resources of the struct, now all of them
-> will.
->
-> Mark the "t/t5511-refspec.sh" test as passing when git is compiled
-> with SANITIZE=3Dleak. They'll now be listed as running under the
-> "GIT_TEST_PASSING_SANITIZE_LEAK=3Dtrue" test mode (the "linux-leaks" CI
-> target). Previously 24/47 tests would fail.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  builtin/clone.c     | 13 ++++++-------
->  builtin/fetch.c     |  2 +-
->  builtin/ls-remote.c |  3 ++-
->  connect.c           |  4 ++--
->  t/t5511-refspec.sh  |  1 +
->  transport.c         |  8 +++++++-
->  transport.h         | 10 +++++++---
->  7 files changed, 26 insertions(+), 15 deletions(-)
+Now, mi internet connection is very slow and unstable, and possibly
+has other problems - I'm in Cuba.
 
-This ...
+Doing "git push" I often cannot connect to remote, sometimes it
+connects, sometimes it doesn't.
 
-> +void transport_ls_refs_options_release(struct transport_ls_refs_option=
-s *opts)
-> +{
-> +	strvec_clear(&opts->ref_prefixes);
-> +	free((char *)opts->unborn_head_target);
-> +}
-> +
+"git push -v" adds verbosity only with reference to git
 
-... addition is very much welcomed.  And instead of different code
-paths doing "we used this member, so clear only that" ad-hoc, making
-them all call it makes it very much pleasant read.
+I think a "--ssh-verbose" options would be very useful and very simple
+to implement. The only thing it must do is adding the -v option to the
+ssh command (when it is used).
 
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 727e16e0aea..8564e5f603f 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -1233,7 +1233,8 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
->  	}
->  	else {
->  		const char *branch;
-> -		char *ref;
-> +		const char *ref;
-> +		char *ref_free =3D NULL;
-> =20
->  		if (option_branch)
->  			die(_("Remote branch %s not found in upstream %s"),
-> @@ -1250,17 +1251,16 @@ int cmd_clone(int argc, const char **argv, cons=
-t char *prefix)
->  		    skip_prefix(transport_ls_refs_options.unborn_head_target,
->  				"refs/heads/", &branch)) {
->  			ref =3D transport_ls_refs_options.unborn_head_target;
-> -			transport_ls_refs_options.unborn_head_target =3D NULL;
->  			create_symref("HEAD", ref, reflog_msg.buf);
->  		} else {
->  			branch =3D git_default_branch_name(0);
-> -			ref =3D xstrfmt("refs/heads/%s", branch);
-> +			ref_free =3D xstrfmt("refs/heads/%s", branch);
-> +			ref =3D ref_free;
->  		}
-> =20
->  		if (!option_bare)
->  			install_branch_config(0, branch, remote_name, ref);
-> -
-> -		free(ref);
-> +		free(ref_free);
->  	}
+Also, if the user repeats it, it would add a repeated -v option to ssh command.
 
-It is a bit unfortunate that "ref" has to be sometimes a borrowed
-pointer and some other times own the storage, only to allow us write
-the call that uses the variable only once.  But under the
-constraints of the current code, I think this is the best we could
-do.
+Thank you for your work on git!
 
-In our code base, we would usually call the auxiliary variable
-"to_free", because its "ref"-ness does not matter and its sole
-reason to exist is to be the "other owner" of the piece of memory,
-to relieve the "ref" variable from the responsibility of releasing
-resources.  With it, "ref" consistently borrows from somebody else,
-either "to_free", or the .unborn_head_target member, and does not
-have to be (and should not be) freed itself.
+don Paolo Benvenuto
