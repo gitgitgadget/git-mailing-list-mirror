@@ -2,203 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23EC3C43219
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 22:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 821D9C433EF
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 22:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1387124AbiBHWYk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 17:24:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50180 "EHLO
+        id S1387538AbiBHWYm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 17:24:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1387238AbiBHWJT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 17:09:19 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFF7CC0612B8
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 14:09:17 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 37FB2105938;
-        Tue,  8 Feb 2022 17:09:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mcsccxvlap8+iS5NM5VCiHF00kki/CWajqc+XR
-        6HF2U=; b=D9woibfnLQnExRv/dzTR4p/68p9P4dDvmE4JTR7mVR6EAddoGvy7C/
-        /TXMB4vhQRrlc0BiK3zQz8otEynpfa0kiLeC4ghasvDy2yC8EQ3xCRoiuhmQv/mr
-        GG0x2+yRn/vJYsOXuj+KZDRPfFutfbzF0fUPIoRPjltd5YUcVekzw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F1C9105936;
-        Tue,  8 Feb 2022 17:09:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8B3EA105935;
-        Tue,  8 Feb 2022 17:09:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, sunshine@sunshineco.com,
-        allred.sean@gmail.com, Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
-        derrickstolee@github.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v6 2/6] worktree: create init_worktree_config()
-References: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
-        <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com>
-        <5d0cc242d92c68bf239f9e17eab9c80ec6b2d469.1644269583.git.gitgitgadget@gmail.com>
-Date:   Tue, 08 Feb 2022 14:09:13 -0800
-In-Reply-To: <5d0cc242d92c68bf239f9e17eab9c80ec6b2d469.1644269583.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Mon, 07 Feb 2022
-        21:32:59 +0000")
-Message-ID: <xmqq1r0dc8om.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1386596AbiBHU6I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 15:58:08 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40716C0612B8
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 12:58:08 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id m14so481371wrg.12
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 12:58:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=SNpIy/07GQZSBrZ5H2sk7/nd388dliKlQOi7EWsbFEw=;
+        b=aAo2Pab2NZNBLqNB+rZlAIPQGIhhVpinFVJBgGfYk1D9AB3HNzBqlMjFzZrwM5jAZG
+         OvFkBDb8QbYryVMHnbHXP1UPC1VV9AxZQEgl7flNacr6HKdeuL1BbeAeRWvz7NE7dBbK
+         ldjhliMkAUgpSHWeJw4zsjKakJKqqgha92+qvFzU13UMj9XaHR48DdI2QYAu1TmUdN9i
+         UUGme24HoTmzxsI2hP64eoHIaez4upzhXFf0VJdpfh1aGI9sPbQ1Af73loOuEQle9gPz
+         YM/JdSvZaQ5svHfIZxGcQ5wx3OlOVfCN1YShp+qe6wXunS7LLCqagglyU7Y57/WDOcJ+
+         fVrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=SNpIy/07GQZSBrZ5H2sk7/nd388dliKlQOi7EWsbFEw=;
+        b=IbyZyZh7tz5AKp/6qTCvtNjzDAcCzgpcWdaDozbK/yr12OSiYo9gz/Tq5U49lKtnSB
+         69f0jKKFqGb5A09if3USDBynSg5KvIPVx+KlcIUSNgEQ81W1YGAq+KhUw2i57WJ1adlO
+         ghgI/35BOLE5FXvhKHsWs4oFzcBtN55KbEgSEVVasgoBrA5PfamQ6663s/bDaWAY8mCe
+         yeFRUmB+uNYc5eZM1QJIfqN+MCYC/7Vc1j2Fp+2y6DVPG0Vv2bj++HBOJiQiXr2Q3W9+
+         KFagOIOh3Ov0amfGAW+kRGYkjkOu4oCIyMPbB1I7oB7vc7/YPN40wg0yAL4XvcXtseyU
+         Zzhw==
+X-Gm-Message-State: AOAM533Z+nhU6fycAOqeM8xWioAYxfj8ty/IAQRKABQIvVNOrZRvaox9
+        KlekwdlKLJSXUsG/WoI583WVibAzgp8=
+X-Google-Smtp-Source: ABdhPJysCFSfcTC12WxFs/mb1blsnOuq55tj4sGAumNYHp2VFGQVFYONnmUsXGe5NAhjfjwdotAmgw==
+X-Received: by 2002:a05:6000:150:: with SMTP id r16mr4927978wrx.59.1644353886709;
+        Tue, 08 Feb 2022 12:58:06 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y8sm15628298wrd.32.2022.02.08.12.58.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Feb 2022 12:58:06 -0800 (PST)
+Message-Id: <fa6294387ab223d56e6ab66448f1ebe1ec370cd7.1644353884.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1212.v3.git.git.1644353884.gitgitgadget@gmail.com>
+References: <pull.1212.v2.git.git.1644251611.gitgitgadget@gmail.com>
+        <pull.1212.v3.git.git.1644353884.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 08 Feb 2022 20:58:02 +0000
+Subject: [PATCH v3 1/3] cat-file: rename cmdmode to transform_mode
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C062B48A-892B-11EC-B64A-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     me@ttaylorr.com, phillip.wood123@gmail.com, avarab@gmail.com,
+        e@80x24.org, bagasdotme@gmail.com, gitster@pobox.com,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: John Cai <johncai86@gmail.com>
 
-> +static int move_config_setting(const char *key, const char *value,
-> +			       const char *from_file, const char *to_file)
-> +{
-> +	if (git_config_set_in_file_gently(to_file, key, value))
-> +		return error(_("unable to set %s in '%s'"), key, to_file);
-> +	if (git_config_set_in_file_gently(from_file, key, NULL))
-> +		return error(_("unable to unset %s in '%s'"), key, from_file);
-> +	return 0;
-> +}
+In the next patch, we will add an enum on the batch_options struct that
+indicates which type of batch operation will be used: --batch,
+--batch-check and the soon to be  --batch-command that will read
+commands from stdin. --batch-command mode might get confused with
+the cmdmode flag.
 
-Interesting.
+There is value in renaming cmdmode in any case. cmdmode refers to how
+the result output of the blob will be transformed, either according to
+--filter or --textconv. So transform_mode is a more descriptive name
+for the flag.
 
-The verb "move" in its name made me expect a "get (and remove)
-whatever value(s) defined out of the old file, and set them
-identically in the new file" sequence, but that is not what is done
-here.  "set to this new single value in the new file and unset from
-the old one".
+Rename cmdmode to transform_mode in cat-file.c
 
-I can see the need to say "move it only when its value is X",
-so having the caller to extract the value before deciding to call
-the function (hence not "moving from old") does make sense, but then
-the function is misnamed---it is not "moving", it is doing something
-else.
+Signed-off-by: John Cai <johncai86@gmail.com>
+---
+ builtin/cat-file.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-> +int init_worktree_config(struct repository *r)
-> +{
-> +	int res = 0;
-> +	int bare = 0;
-> +	struct config_set cs = { { 0 } };
-> +	const char *core_worktree;
-> +	char *common_config_file;
-> +	char *main_worktree_file;
-> +
-> +	/*
-> +	 * If the extension is already enabled, then we can skip the
-> +	 * upgrade process.
-> +	 */
-> +	if (repository_format_worktree_config)
-> +		return 0;
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 7b3f42950ec..5f015e71096 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -24,7 +24,7 @@ struct batch_options {
+ 	int buffer_output;
+ 	int all_objects;
+ 	int unordered;
+-	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
++	int transform_mode; /* may be 'w' or 'c' for --filters or --textconv */
+ 	const char *format;
+ };
+ 
+@@ -302,19 +302,19 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+ 	if (data->type == OBJ_BLOB) {
+ 		if (opt->buffer_output)
+ 			fflush(stdout);
+-		if (opt->cmdmode) {
++		if (opt->transform_mode) {
+ 			char *contents;
+ 			unsigned long size;
+ 
+ 			if (!data->rest)
+ 				die("missing path for '%s'", oid_to_hex(oid));
+ 
+-			if (opt->cmdmode == 'w') {
++			if (opt->transform_mode == 'w') {
+ 				if (filter_object(data->rest, 0100644, oid,
+ 						  &contents, &size))
+ 					die("could not convert '%s' %s",
+ 					    oid_to_hex(oid), data->rest);
+-			} else if (opt->cmdmode == 'c') {
++			} else if (opt->transform_mode == 'c') {
+ 				enum object_type type;
+ 				if (!textconv_object(the_repository,
+ 						     data->rest, 0100644, oid,
+@@ -326,7 +326,7 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+ 					die("could not convert '%s' %s",
+ 					    oid_to_hex(oid), data->rest);
+ 			} else
+-				BUG("invalid cmdmode: %c", opt->cmdmode);
++				BUG("invalid transform_mode: %c", opt->transform_mode);
+ 			batch_write(opt, contents, size);
+ 			free(contents);
+ 		} else {
+@@ -529,7 +529,7 @@ static int batch_objects(struct batch_options *opt)
+ 	strbuf_expand(&output, opt->format, expand_format, &data);
+ 	data.mark_query = 0;
+ 	strbuf_release(&output);
+-	if (opt->cmdmode)
++	if (opt->transform_mode)
+ 		data.split_on_whitespace = 1;
+ 
+ 	/*
+@@ -742,7 +742,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 	/* Return early if we're in batch mode? */
+ 	if (batch.enabled) {
+ 		if (opt_cw)
+-			batch.cmdmode = opt;
++			batch.transform_mode = opt;
+ 		else if (opt && opt != 'b')
+ 			usage_msg_optf(_("'-%c' is incompatible with batch mode"),
+ 				       usage, options, opt);
+-- 
+gitgitgadget
 
-OK.
-
-> +	if ((res = git_config_set_gently("extensions.worktreeConfig", "true")))
-> +		return error(_("failed to set extensions.worktreeConfig setting"));
-
-OK.
-
-> +	common_config_file = xstrfmt("%s/config", r->commondir);
-> +	main_worktree_file = xstrfmt("%s/config.worktree", r->commondir);
-> +
-> +	git_configset_init(&cs);
-> +	git_configset_add_file(&cs, common_config_file);
-> +
-> +	/*
-> +	 * If core.bare is true in the common config file, then we need to
-> +	 * move it to the main worktree's config file or it will break all
-> +	 * worktrees. If it is false, then leave it in place because it
-> +	 * _could_ be negating a global core.bare=true.
-> +	 */
-
-Is the assumption that the secondary worktrees are never bare, but
-the primary one could be (iow, adding worktrees to a bare repository
-would leave the original bare repository as the primary "worktree"
-that does not have "working tree")?  I am trying to see what downsides
-it tries to avoid by not moving the core.bare==false setting.  Shouldn't
-core.bare be set to false when "worktree add" creates a new one anyway,
-if the secondaries are never bare?
-
-> +	if (!git_configset_get_bool(&cs, "core.bare", &bare) && bare) {
-> +		if ((res = move_config_setting("core.bare", "true",
-> +					       common_config_file,
-> +					       main_worktree_file)))
-> +			goto cleanup;
-> +	}
-
-> +	/*
-> +	 * If core.worktree is set, then the main worktree is located
-> +	 * somewhere different than the parent of the common Git dir.
-
-OK.  We do not want to share the working tree for the primary worktree
-among secondary worktrees.  For the primary, common and uncommon are
-the same, so it may not matter, but mention of "common Git dir" here
-may confuse readers?  Unless overridden by the config, the parent of
-the git dir is the root of the working tree, no?
-
-> +	 * Relocate that value to avoid breaking all worktrees with this
-> +	 * upgrade to worktree config.
-> +	 */
-
-And if it is not set, then working tree of each worktree is the
-parent of the per-worktree Git dir, so they will automatically
-become separate, which makes sense.
-
-> +	if (!git_configset_get_value(&cs, "core.worktree", &core_worktree)) {
-> +		if ((res = move_config_setting("core.worktree", core_worktree,
-> +					       common_config_file,
-> +					       main_worktree_file)))
-> +			goto cleanup;
-> +	}
-> +
-> +	/*
-> +	 * Ensure that we use worktree config for the remaining lifetime
-> +	 * of the current process.
-> +	 */
-> +	repository_format_worktree_config = 1;
-> +
-> +cleanup:
-> +	git_configset_clear(&cs);
-> +	free(common_config_file);
-> +	free(main_worktree_file);
-> +	return res;
-> +}
-> diff --git a/worktree.h b/worktree.h
-> index 9e06fcbdf3d..e9e839926b0 100644
-> --- a/worktree.h
-> +++ b/worktree.h
-> @@ -183,4 +183,25 @@ void strbuf_worktree_ref(const struct worktree *wt,
->  			 struct strbuf *sb,
->  			 const char *refname);
->  
-> +/**
-> + * Enable worktree config for the first time. This will make the following
-> + * adjustments:
-> + *
-> + * 1. Add extensions.worktreeConfig=true in the common config file.
-> + *
-> + * 2. If the common config file has a core.worktree value, then that value
-> + *    is moved to the main worktree's config.worktree file.
-> + *
-> + * 3. If the common config file has a core.bare enabled, then that value
-> + *    is moved to the main worktree's config.worktree file.
-> + *
-> + * If extensions.worktreeConfig is already true, then this method
-> + * terminates early without any of the above steps. The existing config
-> + * arrangement is assumed to be intentional.
-> + *
-> + * Returns 0 on success. Reports an error message and returns non-zero
-> + * if any of these steps fail.
-> + */
-> +int init_worktree_config(struct repository *r);
-> +
->  #endif
