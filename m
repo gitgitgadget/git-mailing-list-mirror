@@ -2,172 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D7D1C433EF
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 11:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A82CC433F5
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 11:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376465AbiBHLca (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 06:32:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40612 "EHLO
+        id S1376557AbiBHLck (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 06:32:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357050AbiBHLV7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 06:21:59 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC26CC03FEC9
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 03:21:57 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id k3-20020a1ca103000000b0037bdea84f9cso1368525wme.1
-        for <git@vger.kernel.org>; Tue, 08 Feb 2022 03:21:57 -0800 (PST)
+        with ESMTP id S1356776AbiBHLA0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 06:00:26 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D2C4C03FEC0
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 03:00:25 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id q7so1803527wrc.13
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 03:00:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=f4NL/D5bJHBH54sFIOk/5UVjCJf0p+Be5/HI96ORygQ=;
-        b=TUV35y6lLGOylUn73e/ChxgFQYa3Aja7O2T6KHi5SlBb4nVSPcIs23LyFocIHajzN5
-         mGN2KNFFBCb+b2e4laM6xqPZ73ohQxW9x7V+xdegiyCFwyi5NLrpCNNTdJ5js+LpEOgJ
-         GYoBC3YAdaTzewo+tco2ADleLO50OXidFgs+cSTnlCd/Ln+b64SwZ/NOTgVBC/LolNmR
-         GCDWcJyBhTcGsi6edF1sy9zSDobjdtjq4sAemVTuby6wbGkQG/6KGMK7AFMPY8AMNJft
-         gHyzFN9xk7yMi8EFsK0hq4rMq0mDO2jiXPznPOVeyzzCEqflVka8Z9RaB8payLVUOFbS
-         6Drw==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=InJ1oh4NHGFS6O/MuhQyzPZd5QRob16xThlJceKWzT4=;
+        b=Zjt3DAbV18wJo5kzAOCeYtZEvD24IpkV2QuIhZ1BJfafyDXuPQOif3CSTTCFA8vN2w
+         nfjmOOxo1x/zIaIHJAwsDI7pfzs+DYDilh487idQSoaM6oZAjGtmbZfcvuNEfIJ8HpH+
+         dlVmKEuZOCAq5gwr9skktkOyuvng7GBBLguxWw/Xu6SjphBPI8fmTh1fKgnQl6i0vwBp
+         wql+ZDamzetnEIVXj3aB8ltrJ1f4k6INtXtcMtYA+iO9IGZ7aUfXuECIu57/7O/+J28M
+         w9DecZ8qIpAFY1301ZicR1kgHobOLHdTOeCg7b5blX46lxKDofZcDDA/AvyEHnk+GyVP
+         NUWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=f4NL/D5bJHBH54sFIOk/5UVjCJf0p+Be5/HI96ORygQ=;
-        b=D6DxbsbMJ/Uoq4Swchsf1BDtICNplSo7jb6IBTPfFCSjpRzgvGcc2j+AVERI6DA+TY
-         FSai7aRr06WxmhExQ4KzDNgjrgP8xTmAov0JfEgPjco+o9hjSqn8gKV1MLcdBz1JpnSH
-         z3ROql5yi1UHml8bHR2u8K5GQQfRpj+RwiLKb/+zhoaue901jZ3NgDOzMrpw4rNMcNPk
-         HdHltRCU86kqL2EGKl6rXBhevgNyIbUSglFhJOS/ZuWfjN9BOTnR9rFCpUc9z0UBK6es
-         vU9me26AsME1KDsc3o9+24yIewE4wRRt05L95kgFLXTjj5XFIK51BrxE/OlCWEqukUv4
-         nT1w==
-X-Gm-Message-State: AOAM530eS2uDM+x0mM3iNjo0fMLPLFHNMdpYNNDASBOvP+jNocn7o7PZ
-        6FReseqxPapJ5Kl/w+svwVQnEEzGtzY=
-X-Google-Smtp-Source: ABdhPJw8JPDkK5R++slFCW6uVnG/lA8TK4KX6sRugdCFZ2ZJM+74/8FcLW0wjak2jiv/qiX2DiLJOg==
-X-Received: by 2002:a05:600c:4e93:: with SMTP id f19mr683010wmq.195.1644319316130;
-        Tue, 08 Feb 2022 03:21:56 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e9sm14339983wrg.60.2022.02.08.03.21.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 03:21:55 -0800 (PST)
-Message-Id: <6e9cdd10a70801da5124db1f55770d05c002671d.1644319314.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1139.v2.git.1644319314.gitgitgadget@gmail.com>
-References: <pull.1139.git.1644277797.gitgitgadget@gmail.com>
-        <pull.1139.v2.git.1644319314.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Feb 2022 11:21:53 +0000
-Subject: [PATCH v2 1/2] checkout/fetch/pull/pack-objects: allow `-h` outside a
- repository
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=InJ1oh4NHGFS6O/MuhQyzPZd5QRob16xThlJceKWzT4=;
+        b=0r4vNYCSYGX6gqj0AqWttuhiyg0hGjMigdGSbYYJG93hn0126nj7xbuBtyXF8FRJsP
+         DnVD09QLceE4/nxFmsz75PPGOKtJKVIqoA4HPFfl2s0RaZLsQ6qIZyzooiYZ2+OoD/m7
+         og2L02IrsO0e6A54GpGnhdL7bNp6X/nrOYx4cl26sGkp947naUW9renHx8gywWIfOHNM
+         slFHmnpA1AYnK+20EcB4tjMy4Z+hSTHFk/vYOIFWClRicP6gbMEPQ0epHWvHE/TxB/VH
+         vUeoLl5IMerl+sd1SvR6Omo3yZJ+946Bnyx7dGRbDaiEr4lHnYwyrGagTyc6FB8+3+eF
+         wTXQ==
+X-Gm-Message-State: AOAM530JENkJ+pvyGP8iP270kE+fX0cvEri6ZrLzzDCe/LAKZjkTgMbs
+        0OwtlB6yW5rzKOSrpJ7T2v4vxCN2Mfk=
+X-Google-Smtp-Source: ABdhPJz9gvjKnUzl+T8gGIds0jkAfEkccp6TJztrw+KGNd+1PmYovGwsy9tINad1Q1F8E2dPYvcrew==
+X-Received: by 2002:a5d:4c4f:: with SMTP id n15mr2989352wrt.125.1644318023840;
+        Tue, 08 Feb 2022 03:00:23 -0800 (PST)
+Received: from [192.168.1.201] ([31.185.185.186])
+        by smtp.googlemail.com with ESMTPSA id l20sm1872998wmq.22.2022.02.08.03.00.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Feb 2022 03:00:23 -0800 (PST)
+Message-ID: <83ab0f7d-96d5-8730-edd7-693f10b09002@gmail.com>
+Date:   Tue, 8 Feb 2022 11:00:21 +0000
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/2] cat-file: add --batch-command mode
+Content-Language: en-US
+To:     Jonathan Tan <jonathantanmy@google.com>, gitgitgadget@gmail.com
+Cc:     git@vger.kernel.org, me@ttaylorr.com, avarab@gmail.com,
+        e@80x24.org, bagasdotme@gmail.com, gitster@pobox.com,
+        sunshine@sunshineco.com, johncai86@gmail.com
+References: <1b63164ad4d9ec6b5fa6f733b6095b2779298b36.1644251611.git.gitgitgadget@gmail.com>
+ <20220207233422.14094-1-jonathantanmy@google.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20220207233422.14094-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Jonathan and John
 
-When we taught these commands about the sparse index, we did not account
-for the fact that the `cmd_*()` functions _can_ be called without a
-gitdir, namely when `-h` is passed to show the usage.
+On 07/02/2022 23:34, Jonathan Tan wrote:
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> However, if we had --batch-command, we wouldn't need to keep both
+>> processes around, and instead just have one --batch-command process
+>> where we can flip between getting object info, and getting object
+>> contents. Since we have a pair of cat-file processes per repository,
+>> this means we can get rid of roughly half of long lived git cat-file
+>> processes. Given there are many repositories being accessed at any given
+>> time, this can lead to huge savings since on a given server.
+> 
+> One other benefit is that with explicit flushes, in a partial clone,
+> this makes it possible to batch prefetch objects.
 
-A plausible approach to address this is to move the
-`prepare_repo_settings()` calls right after the `parse_options()` calls:
-The latter will never return when it handles `-h`, and therefore it is
-safe to assume that we have a `gitdir` at that point, as long as the
-built-in is marked with the `RUN_SETUP` flag.
+Jonathan is there any overlap between what this series is trying to do 
+and your proposal for a batch command[1]? For example would extending 
+this series to get blob sizes be useful to you?
 
-However, it is unfortunately not that simple. In `cmd_pack_objects()`,
-for example, the repo settings need to be fully populated so that the
-command-line options `--sparse`/`--no-sparse` can override them, not the
-other way round.
+Best Wishes
 
-Therefore, we choose to imitate the strategy taken in `cmd_diff()`,
-where we simply do not bother to prepare and initialize the repo
-settings unless we have a `gitdir`.
+Phillip
 
-This fixes https://github.com/git-for-windows/git/issues/3688
+[1] 
+https://lore.kernel.org/git/20220207190320.2960362-1-jonathantanmy@google.com/
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/checkout.c     | 7 ++++---
- builtin/fetch.c        | 6 ++++--
- builtin/pack-objects.c | 8 +++++---
- builtin/pull.c         | 6 ++++--
- 4 files changed, 17 insertions(+), 10 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index cc804ba8e1e..1c13d7fedb3 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1602,9 +1602,10 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	opts->show_progress = -1;
- 
- 	git_config(git_checkout_config, opts);
--
--	prepare_repo_settings(the_repository);
--	the_repository->settings.command_requires_full_index = 0;
-+	if (the_repository->gitdir) {
-+		prepare_repo_settings(the_repository);
-+		the_repository->settings.command_requires_full_index = 0;
-+	}
- 
- 	opts->track = BRANCH_TRACK_UNSPECIFIED;
- 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 5f06b21f8e9..c8ca4262de6 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -2014,8 +2014,10 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	git_config(git_fetch_config, NULL);
--	prepare_repo_settings(the_repository);
--	the_repository->settings.command_requires_full_index = 0;
-+	if (the_repository->gitdir) {
-+		prepare_repo_settings(the_repository);
-+		the_repository->settings.command_requires_full_index = 0;
-+	}
- 
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_fetch_options, builtin_fetch_usage, 0);
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index ba2006f2212..87cb7b45c37 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3976,9 +3976,11 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	read_replace_refs = 0;
- 
- 	sparse = git_env_bool("GIT_TEST_PACK_SPARSE", -1);
--	prepare_repo_settings(the_repository);
--	if (sparse < 0)
--		sparse = the_repository->settings.pack_use_sparse;
-+	if (the_repository->gitdir) {
-+		prepare_repo_settings(the_repository);
-+		if (sparse < 0)
-+			sparse = the_repository->settings.pack_use_sparse;
-+	}
- 
- 	reset_pack_idx_option(&pack_idx_opts);
- 	git_config(git_pack_config, NULL);
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 100cbf9fb85..d15007d93f3 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -994,8 +994,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		set_reflog_message(argc, argv);
- 
- 	git_config(git_pull_config, NULL);
--	prepare_repo_settings(the_repository);
--	the_repository->settings.command_requires_full_index = 0;
-+	if (the_repository->gitdir) {
-+		prepare_repo_settings(the_repository);
-+		the_repository->settings.command_requires_full_index = 0;
-+	}
- 
- 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
- 
--- 
-gitgitgadget
+>> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+>> index bef76f4dd06..618dbd15338 100644
+>> --- a/Documentation/git-cat-file.txt
+>> +++ b/Documentation/git-cat-file.txt
+>> @@ -96,6 +96,25 @@ OPTIONS
+>>   	need to specify the path, separated by whitespace.  See the
+>>   	section `BATCH OUTPUT` below for details.
+>>   
+>> +--batch-command::
+>> +	Enter a command mode that reads commands and arguments from stdin.
+>> +	May not be combined with any other options or arguments except
+>> +	`--textconv` or `--filters`, in which case the input lines also need to
+>> +	specify the path, separated by whitespace.  See the section
+>> +	`BATCH OUTPUT` below for details.
+>> +
+>> +contents <object>::
+>> +	Print object contents for object reference <object>
+>> +
+>> +info <object>::
+>> +	Print object info for object reference <object>
+>> +
+>> +flush::
+>> +	Execute all preceding commands that were issued since the beginning or
+>> +	since the last flush command was issued. Only used with --buffer. When
+>> +	--buffer is not used, commands are flushed each time without issuing
+>> +	`flush`.
+> 
+> The way this is formatted leads me to think that "contents", etc. are
+> CLI arguments, not things written to stdin. Some of the commit message
+> probably needs to go here.
+> 
+> I just looked at the commit message and documentation for now.
+> 
+> If you have time and are interested, we at Google are thinking of a more
+> comprehensive "batch" process [1].
+> 
+> [1] https://lore.kernel.org/git/20220207190320.2960362-1-jonathantanmy@google.com/
 
