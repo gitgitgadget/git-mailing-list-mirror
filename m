@@ -2,90 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2910FC433F5
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 17:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85D8DC433EF
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 18:09:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1385135AbiBHR5z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 12:57:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41072 "EHLO
+        id S1350651AbiBHSJ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 13:09:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1385129AbiBHR5p (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 12:57:45 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C8A6C033246
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 09:56:59 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id n9-20020a17090a73c900b001b5cafefa27so2776990pjk.2
-        for <git@vger.kernel.org>; Tue, 08 Feb 2022 09:56:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=MAyv0p07aAqBsLkP8Eu1c3kTRS4ARMBVjM3CtBbBwOM=;
-        b=f4Fy8isJPzchodLKubWYO/4Caoi7s+Bij/XqDskebUicvq0wAeqNQ2ZcfaxZklrR75
-         3SlXPcEPGM0h2ZcqRmnh/T9CMTA9ALLi8T5qI84FNtWBeoBAoTLq9hE6cXjLsWSQbp8V
-         mepzBZE0llv3q0jTkHBDk/xQWZZwUJgWOojwlbbFRRKO+8oldPryhe+2DYf/xpIca0oT
-         JdiZY/U4eYFI1S5rD7gdLoAcxim/edtjW+y/1FE/wZM2FJJTsc0F+k5AhAwh0gC5ShcG
-         2Crj1RjUQToigobpCS/09NPJdSJmZHA2/dAsvw7IZziF7+Fbu1wivJ3QF4Hnya5pJTie
-         3PvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=MAyv0p07aAqBsLkP8Eu1c3kTRS4ARMBVjM3CtBbBwOM=;
-        b=CpUZBRB7qoPDlOYrkfRQTwDR+hV1jo3H1S/6gGCQDwxxdO4y8hiK6Pmgsd8psPlVYT
-         DKd9xv0jYJMdISeibDBhUuPMn9VjELa/hU/RJo3g5yelKjoRXfd3Nh0KYqTojnAyKFxN
-         IrrjzFae9cVWdTC3x72J6xBuRPaMqboiDLEXYdXSAbbWPpVkT1ZA7kKtMV6qxziifqGH
-         rWtWarvkAAeQFjaVV2+xGgrz1jOQ3hohos3Bra06ig1RHwEorDE/xnbuLsRkuCktg2ON
-         Cc2Rk9b9g52Sv+DWgoL47TQf11KQ89IAAowa5SQrxVHmukpedj4hFBFrMENXFrftfpA3
-         HjRw==
-X-Gm-Message-State: AOAM532LMh6hCh5hhjCoZFmaMQzYuO8ButlAuNFZsywSc4wKnO61L25g
-        l146TTbVCXL6dHEV27Hk5kzkik3lEmNqRm97Zxlm
-X-Google-Smtp-Source: ABdhPJwDk/ODNeeM+G7VW+obBjHr6Xg/PZM9Qx8L3+h6FThrGC1kQ8HK7Hb6P3fl3txXHh99w4RRXfen7ZZWyiXAuR0m
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:16c1:: with SMTP id
- l1mr5583023pfc.52.1644343018972; Tue, 08 Feb 2022 09:56:58 -0800 (PST)
-Date:   Tue,  8 Feb 2022 09:56:51 -0800
-In-Reply-To: <83ab0f7d-96d5-8730-edd7-693f10b09002@gmail.com>
-Message-Id: <20220208175651.155629-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <83ab0f7d-96d5-8730-edd7-693f10b09002@gmail.com>
-X-Mailer: git-send-email 2.35.0.263.gb82422642f-goog
+        with ESMTP id S233848AbiBHSJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 13:09:56 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BDA1C061578
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 10:09:56 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DEE5616B12F;
+        Tue,  8 Feb 2022 13:09:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EC3svJ/vK7cwBC8K0AeDFomz+cQrF48yGtobMh
+        l/o/o=; b=nV8cwt9m6f8GOkuivPsvX6Oa+Q/E0yv94KyrwY8y3dWTG1a1GkGX5e
+        /ltSO3OeOHpEWCHj9gj7UNlORxRBEMrJ39mPKW6XfPNMQ3O8hlEYd3ikVC3PGX0z
+        5MGL34i0rnDb9D7MrKcCaVAQHPXyKmElt5YqyEWsMAyHP0W/PiYmw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CAE4516B12E;
+        Tue,  8 Feb 2022 13:09:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2721216B129;
+        Tue,  8 Feb 2022 13:09:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     phillip.wood123@gmail.com, git@vger.kernel.org, johncai86@gmail.com
 Subject: Re: [PATCH v2 2/2] cat-file: add --batch-command mode
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     phillip.wood123@gmail.com
-Cc:     git@vger.kernel.org, johncai86@gmail.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <83ab0f7d-96d5-8730-edd7-693f10b09002@gmail.com>
+        <20220208175651.155629-1-jonathantanmy@google.com>
+Date:   Tue, 08 Feb 2022 10:09:51 -0800
+In-Reply-To: <20220208175651.155629-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Tue, 8 Feb 2022 09:56:51 -0800")
+Message-ID: <xmqq5yppdyc0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 50507E64-890A-11EC-9946-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-> Jonathan is there any overlap between what this series is trying to do 
-> and your proposal for a batch command[1]? For example would extending 
-> this series to get blob sizes be useful to you?
-> 
-> Best Wishes
-> 
-> Phillip
-> 
-> [1] 
-> https://lore.kernel.org/git/20220207190320.2960362-1-jonathantanmy@google.com/
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-There is overlap, yes. I'm not sure of the best way to resolve it,
-though. John mentions a substantial reduction ("roughly half") of Git
-processes [1], and if they foresee needing to access things other than
-object info and contents, it might be better to start with something
-more extensible, like my proposal for a specific batch command. (If not,
-they will encounter another increase in the number of processes.) If
-they think that they can make do with this patch for the time being, I
-think that's fine too: once this is merged (which will be earlier than
-any extensible batch command, for sure), they (and anyone else who needs
-batched object info and contents without the overhead of initializing
-all the data structures in Git) can make use of this improvement.
+> There is overlap, yes. I'm not sure of the best way to resolve it,
+> though. John mentions a substantial reduction ("roughly half") of Git
+> processes [1], and if they foresee needing to access things other than
+> object info and contents, it might be better to start with something
+> more extensible, like my proposal for a specific batch command.
 
-As for getting blob sizes, I think that --batch-check can already give
-it to us. If that is the case, the series is fine as-is (at least in
-that aspect).
+I agree that it would be ideal to have just one way generic and
+extensible enough.  I do not know if there are much difference in
+that area between the two approaches, though.  The RFC I saw did
+look more complex and rigidly specified with framing and such, but
+that is only the syntax part---in the way in which interaction
+between two processes happen, I didn't quite see fundamental
+differences.  I'd expect it wouldn't be too much trouble to add new
+commands to code written using either approach (although I haven't
+seen yours yet ;-).
 
-[1] https://lore.kernel.org/git/1b63164ad4d9ec6b5fa6f733b6095b2779298b36.1644251611.git.gitgitgadget@gmail.com/
+Thanks.
