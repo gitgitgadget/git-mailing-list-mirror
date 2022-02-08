@@ -2,119 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18B04C3525C
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07B69C46467
 	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 13:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377014AbiBHNOx (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1350549AbiBHNOx (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 8 Feb 2022 08:14:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52148 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350296AbiBHMPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 07:15:12 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43264C03FEC0
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 04:15:12 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id h14-20020a17090a130e00b001b88991a305so1883686pja.3
-        for <git@vger.kernel.org>; Tue, 08 Feb 2022 04:15:12 -0800 (PST)
+        with ESMTP id S1350292AbiBHMPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 07:15:09 -0500
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D1C6C03FEC0
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 04:15:09 -0800 (PST)
+Received: by mail-pf1-x42c.google.com with SMTP id x65so4023213pfx.12
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 04:15:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=k61gPCyYa++t62hfIn5SzAt1sRF/aZFfvQC8DVdwMaY=;
-        b=JDR2JUGoYm2gk4M2hoarMeAVJEYp9XiulIUOZTBG4++sM+RAoq5XlKTnpwQfiR+q8y
-         zQjDclP4FyWO+mjQh6oA8ZX9iSHJRoedbtN5s3JqiK3Ka7mgzYJhTb74fM261tMJkL9D
-         GxdpaNQrlaBNkaBQBCr5rCgFclCgOvBS9H4DxJBzys2xLnaOyAJ3nNzL8tuzXhRc86r9
-         ZJnRF387tTyyGx0Q1x+Wk5vB4k7X5Cmc6gUBV1w/Qdv5D9+Io0C5eD2xi30QlYMaGqyj
-         WdKnWuxKTKXl/P+vWOtoo92e+WjtD2CHnq4Xr5MQCoz7vNhPhLskgZRIxs5/30ofFkgw
-         ApIg==
+        bh=qoJ3meIlcealGFNuBKdJlsA7z7DtO3lQHLko6cPEYgw=;
+        b=aaEtO/WQTCbLar4PTACn6dtI0SqPr0qosuiiGarSHbfNUIK1s9mp3pQgzEYGzyXxK3
+         7QLEq+jTErwM1bm6HTsE+bgHQcvTrm+25Y7VGPqVVKFPPhPpQM2n0u7nM4G5ELl0Gidv
+         mPzlYkKXbkOEiyZOcbI7K6ybPLtbfdl/3zHz6ODqF3c3wn3fUDYiaC7dR9NK2Fop8Zw8
+         FEoO8uQYT35nuvF7pVrD/cNMAy8T9VbsARTsPmkYUGF5BD6gQPkFtenLnbZ5Ey/cQ2QU
+         5zGdRjjabkjBz7EUAHw4sIjyHjGujCVGrdBilcFAjaF076CKx02+fBtI9dzJghTRChkI
+         T8Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=k61gPCyYa++t62hfIn5SzAt1sRF/aZFfvQC8DVdwMaY=;
-        b=IrIJj+MdPDC1s/23XJR0ZTsqDllQ7Zai1JKMtv4hOkSfs01qJMrh9j7D+jDYyLXCeq
-         8aQkI22Qmy7dupCyCxM5RnnvKjXCIi7ZEhwgPJA8I1EPS6/lYn7s5qAYDVIQu7EHajnb
-         B/scgnYZwn0hRmDsfiPUQPt22DL6UmJuWwRx4Fq34Fs9zY+99HGLHDxRMI9wP0oG0MUL
-         F6AQ407yGYBR9C5mXiGJ5XYxmBRgzsgurpv3hMfD8MHdg0vTGMbEd2hNn1R3Jo24Y9sk
-         ISSHo8og7Tg7vlh0K/BN8uHUJLj8Qlu1FqRtnGVE2TF+znfDHGMg6AOFnA0NGcAeNB4/
-         pN/A==
-X-Gm-Message-State: AOAM533BYEGsyXmeX3CXlmtL/S8rDm03Ccbtndui0gcgIJT+hzgR1MWL
-        5vIhMbZ7V3xztHJVkRsZ0hk=
-X-Google-Smtp-Source: ABdhPJzzg0KsF9pshmB8UKhgovK37RLMMPSiMGwHe2VyrqIngFu/F5gPvic9AjYjdtMMkFfRCHpgsA==
-X-Received: by 2002:a17:902:cacb:: with SMTP id y11mr4333032pld.96.1644322511665;
-        Tue, 08 Feb 2022 04:15:11 -0800 (PST)
+        bh=qoJ3meIlcealGFNuBKdJlsA7z7DtO3lQHLko6cPEYgw=;
+        b=P1s8EcprIYU5zpL5zOxek0L+QQvSMIDKYEpobhkeKfT5+E/nyR5T2Cb0CdalKGLdPq
+         qCSDjgHT91C9KgAE+7mDWhyW0XtfQ1mjSYONbgwGbjGc+9+rG8MltWdSdEhPUFS2uxzL
+         Dyu0PQpV9q0ECZJ72y6sB4xxLfxmnTwarsTOcT+mn+Acg+dc9zyDr96sau/N2QSCDDwz
+         gBpwToXoJJlpDHN78rfCeVln/Ghsyxw/f51DOYt8vsnXFXAvUU/2CczaDZ/atcGd7c7L
+         1NcqS+7en+WeR/lY5T2ctmLKVAv1ccZS0X3hpE8xEptTqQ00Dm9/4uEg/wi9G1KLeVYx
+         DIwA==
+X-Gm-Message-State: AOAM531oOQaBegPYB0cvaDg1yISaoPTz8/CN1erdlWU+eTbMuzUODeSx
+        9eTgAb89BfXrTRaKzPu/CnE=
+X-Google-Smtp-Source: ABdhPJyHpGqTNPlJuEEqt76vac5Rr8KaqiWW4Z5MfJMc4HpMT046f9E3KhMcGibwHA/lKRu6V0ddhw==
+X-Received: by 2002:a63:69c1:: with SMTP id e184mr3237479pgc.495.1644322508921;
+        Tue, 08 Feb 2022 04:15:08 -0800 (PST)
 Received: from code-infra-dev-cbj.ea134 ([140.205.70.44])
-        by smtp.gmail.com with ESMTPSA id t3sm16973344pfg.28.2022.02.08.04.15.09
+        by smtp.gmail.com with ESMTPSA id t3sm16973344pfg.28.2022.02.08.04.15.06
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Feb 2022 04:15:11 -0800 (PST)
+        Tue, 08 Feb 2022 04:15:08 -0800 (PST)
 From:   Teng Long <dyroneteng@gmail.com>
 To:     dyroneteng@gmail.com
 Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
         git@vger.kernel.org, gitster@pobox.com, martin.agren@gmail.com,
-        peff@peff.net, tenglong.tl@alibaba-inc.com,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH v11 10/13] cocci: allow padding with `strbuf_addf()`
-Date:   Tue,  8 Feb 2022 20:14:35 +0800
-Message-Id: <c04320b8018000f1f789b069a49236de798e9a92.1644319434.git.dyroneteng@gmail.com>
+        peff@peff.net, tenglong.tl@alibaba-inc.com
+Subject: [PATCH v11 09/13] ls-tree: introduce struct "show_tree_data"
+Date:   Tue,  8 Feb 2022 20:14:34 +0800
+Message-Id: <46e10a5392ace1b1caef1eb8f7dfc4b60779ff55.1644319434.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.34.1.403.gb35f2687cf.dirty
 In-Reply-To: <cover.1644319434.git.dyroneteng@gmail.com>
 References: <cover.1644319434.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-A convenient way to pad strings is to use something like
-`strbuf_addf(&buf, "%20s", "Hello, world!")`.
+"show_tree_data" is a struct that packages the necessary fields for
+"show_tree()". This commit is a pre-prepared commit for supporting
+"--format" option and it does not affect any existing functionality.
 
-However, the Coccinelle rule that forbids a format `"%s"` with a
-constant string argument cast too wide a net, and also forbade such
-padding.
-
-The original rule was introduced by commit:
-
-    28c23cd4c39 (strbuf.cocci: suggest strbuf_addbuf() to add one strbuf to an other, 2019-01-25)
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- contrib/coccinelle/strbuf.cocci | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/ls-tree.c | 43 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 28 insertions(+), 15 deletions(-)
 
-diff --git a/contrib/coccinelle/strbuf.cocci b/contrib/coccinelle/strbuf.cocci
-index d9ada69b43..0970d98ad7 100644
---- a/contrib/coccinelle/strbuf.cocci
-+++ b/contrib/coccinelle/strbuf.cocci
-@@ -15,7 +15,7 @@ constant fmt !~ "%";
- @@
- expression E;
- struct strbuf SB;
--format F =~ "s";
-+format F =~ "^s$";
- @@
- - strbuf_addf(E, "%@F@", SB.buf);
- + strbuf_addbuf(E, &SB);
-@@ -23,7 +23,7 @@ format F =~ "s";
- @@
- expression E;
- struct strbuf *SBP;
--format F =~ "s";
-+format F =~ "^s$";
- @@
- - strbuf_addf(E, "%@F@", SBP->buf);
- + strbuf_addbuf(E, SBP);
-@@ -44,7 +44,7 @@ struct strbuf *SBP;
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 8baab7c83e..293b8f9dfb 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -34,6 +34,14 @@ static unsigned int shown_fields;
+ #define FIELD_DEFAULT 29 /* 11101 size is not shown to output by default */
+ #define FIELD_LONG_DEFAULT  (FIELD_DEFAULT | FIELD_SIZE)
  
- @@
- expression E1, E2;
--format F =~ "s";
-+format F =~ "^s$";
- @@
- - strbuf_addf(E1, "%@F@", E2);
- + strbuf_addstr(E1, E2);
++struct show_tree_data {
++	unsigned mode;
++	enum object_type type;
++	const struct object_id *oid;
++	const char *pathname;
++	struct strbuf *base;
++};
++
+ static const  char * const ls_tree_usage[] = {
+ 	N_("git ls-tree [<options>] <tree-ish> [<path>...]"),
+ 	NULL
+@@ -93,17 +101,15 @@ static int show_recursive(const char *base, size_t baselen, const char *pathname
+ 	return 0;
+ }
+ 
+-static int show_default(const struct object_id *oid, enum object_type type,
+-			const char *pathname, unsigned mode,
+-			struct strbuf *base)
++static int show_default(struct show_tree_data *data)
+ {
+-	size_t baselen = base->len;
++	size_t baselen = data->base->len;
+ 
+ 	if (shown_fields & FIELD_SIZE) {
+ 		char size_text[24];
+-		if (type == OBJ_BLOB) {
++		if (data->type == OBJ_BLOB) {
+ 			unsigned long size;
+-			if (oid_object_info(the_repository, oid, &size) == OBJ_BAD)
++			if (oid_object_info(the_repository, data->oid, &size) == OBJ_BAD)
+ 				xsnprintf(size_text, sizeof(size_text), "BAD");
+ 			else
+ 				xsnprintf(size_text, sizeof(size_text),
+@@ -111,18 +117,18 @@ static int show_default(const struct object_id *oid, enum object_type type,
+ 		} else {
+ 			xsnprintf(size_text, sizeof(size_text), "-");
+ 		}
+-		printf("%06o %s %s %7s\t", mode, type_name(type),
+-		find_unique_abbrev(oid, abbrev), size_text);
++		printf("%06o %s %s %7s\t", data->mode, type_name(data->type),
++		find_unique_abbrev(data->oid, abbrev), size_text);
+ 	} else {
+-		printf("%06o %s %s\t", mode, type_name(type),
+-		find_unique_abbrev(oid, abbrev));
++		printf("%06o %s %s\t", data->mode, type_name(data->type),
++		find_unique_abbrev(data->oid, abbrev));
+ 	}
+-	baselen = base->len;
+-	strbuf_addstr(base, pathname);
+-	write_name_quoted_relative(base->buf,
++	baselen = data->base->len;
++	strbuf_addstr(data->base, data->pathname);
++	write_name_quoted_relative(data->base->buf,
+ 				   chomp_prefix ? ls_tree_prefix : NULL, stdout,
+ 				   line_termination);
+-	strbuf_setlen(base, baselen);
++	strbuf_setlen(data->base, baselen);
+ 	return 1;
+ }
+ 
+@@ -132,6 +138,13 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+ 	int recurse = 0;
+ 	size_t baselen;
+ 	enum object_type type = object_type(mode);
++	struct show_tree_data data = {
++		.mode = mode,
++		.type = type,
++		.oid = oid,
++		.pathname = pathname,
++		.base = base,
++	};
+ 
+ 	if (type == OBJ_TREE && show_recursive(base->buf, base->len, pathname))
+ 		recurse = READ_TREE_RECURSIVE;
+@@ -151,7 +164,7 @@ static int show_tree(const struct object_id *oid, struct strbuf *base,
+ 	}
+ 
+ 	if (shown_fields >= FIELD_DEFAULT)
+-		show_default(oid, type, pathname, mode, base);
++		show_default(&data);
+ 
+ 	return recurse;
+ }
 -- 
 2.34.1.403.gb35f2687cf.dirty
 
