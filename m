@@ -2,67 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 926BDC433FE
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 13:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F5BEC433EF
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 13:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243250AbiBHNPR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 08:15:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38530 "EHLO
+        id S1359203AbiBHNlK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 08:41:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376594AbiBHNMb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 08:12:31 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF7ACC03FECE
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 05:12:29 -0800 (PST)
+        with ESMTP id S1357113AbiBHNlJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 08:41:09 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4095AC03FECE
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 05:41:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1644325943;
-        bh=+w1cS9XTW7dsU61BspVIPNUNiYDY5VmEhvlU0ALp8c4=;
+        s=badeba3b8450; t=1644327659;
+        bh=qOr/Ls3D7C1+GFQChNoIA85mBmh93XW3zviRTM/0N54=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=d+CUht9vOESWzziXMKP4OBlXTmaqgTgQG87ZUs1E0Q7xdqa5i2c1KZ0heAx4n9YMo
-         UONt79n1TO6zNBMC5pYNxKt0/ns/kyXKYqXEcHJC2MGyIQzcEsbOqNjvxKv/LEXrPU
-         tkH5R1CA8mU5G0OZdsJqHIs+Xp7OfQGS099eN/3I=
+        b=bNpfKuciLI2bsC0Il5YKB2tfZSxenAYWJJFG9+tpeQDZFdkWM1Io+JlFrBwZaRz0o
+         wF3RB2KlrJKSXw8c3Ca/seGPFDZLMBR85Km7CekqYN96hTl05/fZtO+odkrOCEW0tP
+         YyZqk0uW4YSRwvrTWpEl5IdBkVwHYMV4QtgPgo7Q=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.196.48] ([89.1.212.206]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MF3HU-1nWnQF19Gy-00FRTF; Tue, 08
- Feb 2022 14:12:23 +0100
-Date:   Tue, 8 Feb 2022 14:12:21 +0100 (CET)
+Received: from [172.27.196.48] ([89.1.212.206]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MC34X-1nTmfG2p5x-00CSka; Tue, 08
+ Feb 2022 14:40:59 +0100
+Date:   Tue, 8 Feb 2022 14:40:58 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/6] archive: optionally add "virtual" files
-In-Reply-To: <xmqqbkzigspr.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2202081406520.347@tvgsbejvaqbjf.bet>
-References: <pull.1128.git.1643186507.gitgitgadget@gmail.com> <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com> <49ff3c1f2b32b16df2b4216aa016d715b6de46bc.1644187146.git.gitgitgadget@gmail.com> <d1e333b6-3ec1-8569-6ea9-4abd3dee1947@web.de>
- <xmqqbkzigspr.fsf@gitster.g>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2] t0051: use "skip_all" under !MINGW in single-test
+ file
+In-Reply-To: <patch-v2-1.1-1bc93bcba4b-20220204T134208Z-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202081437450.347@tvgsbejvaqbjf.bet>
+References: <patch-1.1-34ff968dcb8-20220201T203428Z-avarab@gmail.com> <patch-v2-1.1-1bc93bcba4b-20220204T134208Z-avarab@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-136162339-1644325943=:347"
-X-Provags-ID: V03:K1:XbyXF6YgPYBuVwRj7F6PZ+sK01xQFaVtrrwW9JfJQWJfbTZvbWE
- e5dmDQLq8j+C/RjxgLxd/t8FduoemDOY42i/mWyk0ZPYu/aH+VHe1e9HY3P/YUAfy6u1y5z
- 0YvAidmkcfdySq2tOCGr7icxcF32S12/rh7Qs4zf6jOCMpDJQvYZnr3WsBTXBbOuz5VFRKc
- DB2Ffdnv98m+k/UU+Ohvg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:H8YRbTTZnjU=:cVr0qhsHnyrXXvy2Ul/lcj
- 25YykDDORQtK/4yG+Bsf9vMus1AjLnx/V4Mva75wsN0GXAN9mcTV3Z8/iruvqj3Ve58XJEEFf
- qm+785BJt0zntghMFnp1OLN7YAuv2EvzSLJgzAxllkqHr2vIxnsnILHt8Wk1kEFTDTefaNqzb
- C8gi/3nHAdWYhNIZ/K7loUDeAxAEwWctJvuePCJ0Gcgrpef4w9myOZR0/HxmRvbK8nHpYwG8U
- sAZcWlOzecXS12o17xEtj0efW5ugQKMzcAz1sJBzo5b6Aiu54X8LJ7yKv0ZV+H1OWY6tNwqRz
- zGlViD2TVnV5SEjxb+lFALwknM5rY0er8jq512DUOrkgx+kO9Zi+Kn3gUJxyXHdnODECzPt2J
- DvroidbCkKDI3h4sViJltuJrfmMOPFj+9uq3XsQ8i0b/K3p3NNlDuux1dPTX+XsBkz0WmMr8r
- kWzfwwlvpKRKGJ/7esxQtb47Xu1nvkBxFlCbi6jmIQnd63K+TQoLhlOLB93EpTTMLtPuWbhf3
- OBKw/ZO1ypnV70cSzvz6bMMQAewkuo5WdSAzy4vgLiy5Mg2MsOjrXK1BMKIzTHJDyV5XWdube
- JJJSHvrYpfQhji5UvTWaPM3zwj6PXA9Tu8PhorNY0K6oUK4qF7Z0w7BC3DFpr7zYw5MhcErof
- D6gZJeoXWcsCd9HQSMgRL7Scptg7QcBjJVkQ7S4Wil5ZLGnMAL3KvfNduwN0J/7Amcss9sD2c
- lkH/i4zLcKHYuGcqh0/+b0sQNBPVUe3D/w+fLvp2PaJXIwzTmitiTQ9YE9aG+Cg4U3jJ+KX3r
- OIVDQOxEr+nSvz0lCicljmBM/ZgxcU8J6tfoTsBjMWjXEndQmFFA0lzZrIPdxEqiyqTBs1i9c
- miKGR2vXm/fJ51TZnSQePu2M3IAEkQz6JmLn6hamsFPlN6jqC1JIv/D5JiUeLEOPYLJuxnhuI
- mH/+H7md2GLc01X5v0m8RtWwe4HDcCuR7NgdhFWrwRq/lDUtyU04xapi8R/O7KlGcIQ4x1Vpq
- NTmoPML5JstrQCaFzyY6Wf/urEzhTMS/BwwWwh6shjerjcOJhCMj4MfWZoU8L0CnL9198TshP
- uBLGPqLPEh8lkQ=
+Content-Type: multipart/mixed; boundary="8323328-262443756-1644327659=:347"
+X-Provags-ID: V03:K1:RSbsk0pNDH7OzAGz/UZcdsL7hx5i7yK6jSw+TXU4iJOcSMajKgR
+ KeG+v4YTTgpTFDo4rBRoWSLxm719i9g1SARn7K289VhlzGR3b9dKmzr5N5ZcbcWj1JqUbDM
+ KOSvJav8TZJbg7HJC7RBsVv/v0AbrhaKcBodwyqMfQvp05O1BmO5sJ5JUh+UnHZTgavnKAQ
+ 0YaOM4CKI8O3wDgR71d2w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eOPac7HfvQk=:2aQ8aeQZu92WEmRMvzbwWq
+ bCcylmGXDYSfHP3to6c4wPT9sGdHAQfaz8jBccUTydCrKbMtpyVJUw0vPwNFkpJMOGHGrj2/y
+ CWZzk9sKxfymjLLkwdGsI1ZClwZUpgNFluFTjE5a8wm35l4xtzgaqb/vNrNmoSxnEDPTFPwOG
+ oe6Vtw3ml+iLGiGQar1lAyGTmb87KHi6YieIDbzKe8vU3NRQHXQjPadN+i80mStfjUqO5bNyi
+ XUtW/uDQD/jlHkeI1g8OmKApe1SUy6Z7ENmxi6L7dVJITcl72nYwuuw9o8E+eRpfdDD9oeDkF
+ 3llrVrabGHrj2m2KLUhUlMYSazKrPwcl3mzRrFnRJldRppFkZtI///JLKn0XLOCT3vK2kURkh
+ 5YODeIDn3i+9BHnswFzIeTAge612J+0qgdp7jDYdVcjSxBUNonKlFbbC9TduFzZkPZzN+kR3w
+ IitFPoKrMTXeRreMR2FO8RwGlm+EZdHNaKKIn3KW/Z7TQodHsqZVWgm6eGkLh+bURGeRllS1X
+ GSo9tny+vcpuNwUpWqni7pjmFgXmaZJXHJUtMCxLbDP0HnL7dmrdyD2I4zbU9I5VZmtaFV/7X
+ yZ+F+GV3oJA8zcWiE3vytkQ1DTbFolXB/izav56Ty65XeUtVGLrm+B/Qt03w4WsDpYdVlL/96
+ h56HYB3EAVDWjzbkYOuqMA7HwJuVcM8SRiJz5XhMlYrBd6sAfQVMm9hJOKXU1oKNw3N+HaK9S
+ YUYY4BjwnxGCrgINoMtuOcrlXvuqdbZH1cvgL2hJkiuo+QHKavVhIAuZkZKSqKaPRF2ORtgG6
+ uONA1199QG8ThTNgwCKpbrJrViikF5UASOkI6RB4NXLqYBDz5yWkcFjeZVGGx9h1f0KLIGrHL
+ DL0/4Ecwrl+N75tECaKb2CLABiJUE/xrMkaBf4dfzGmJnb/ow6on0PrRfMPZfi2lgNFpBldyT
+ VL26Nl7zgEBA0aUTzxB25VEKmFIkshWfhoVnAM4/hnRN1of2IhTwwKT4uLEpY5105wN3BDKpZ
+ EmWRXrhG17INBC1BBuLBTpRdGn9PoVUtW+y9R5nAdGFvArblzStpa0g3386PJonjHr+s7Z7T9
+ 4PYEvG44BtAO3M=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -70,60 +68,113 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-136162339-1644325943=:347
+--8323328-262443756-1644327659=:347
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
+Hi =C3=86var,
 
-On Mon, 7 Feb 2022, Junio C Hamano wrote:
+On Fri, 4 Feb 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+> Have this file added in 06ba9d03e34 (t0051: test GIT_TRACE to a
+> windows named pipe, 2018-09-11) use the same "skip_all" pattern as an
+> existing Windows-only test added in 0e218f91c29 (mingw: unset PERL5LIB
+> by default, 2018-10-30) uses.
+
+This is not a nit, even if I won't insist on changing it in this instance:
+This sentence is unnecessarily convoluted and therefore harder to read
+than it has to be. Please pay attention to readability next time you craft
+a commit message.
+
+The rest of the commit message as well as the diff look good to me.
+
+Thanks,
+Johannes
+
 >
-> > We could use that option in Git's own Makefile to add the file named
-> > "version", which contains $GIT_VERSION.  Hmm, but it also contains a
-> > terminating newline, which would be a bit tricky (but not impossible) =
-to
-> > add.  Would it make sense to add one automatically if it's missing (e.=
-g.
-> > with strbuf_complete_line)?  Not sure.
+> This way TAP consumers like "prove" will show a nice summary when the
+> test is skipped. Instead of:
 >
-> I do not think it is a good UI to give raw file content from the
-> command line, which will be usable only for trivial, even single
-> liner files, and forces people to learn two parallel option, one
-> for trivial ones and the other for contents with meaningful size.
+>     $ prove t0051-windows-named-pipe.sh
+>     [...]
+>     t0051-windows-named-pipe.sh .. ok
+>     [...]
+>
+> We will prominently show a "skipped" notice:
+>
+>     $ prove t0051-windows-named-pipe.sh
+>     [...]
+>     t0051-windows-named-pipe.sh ... skipped: skipping Windows-specific t=
+ests
+>     [...]
+>
+> This is because we are now making use of the right TAP-y way to
+> communicate this to the consumer. I.e. skipping the whole test file,
+> v.s. skipping individual tests (in this case there's only one test).
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+> Range-diff against v1:
+> 1:  34ff968dcb8 ! 1:  1bc93bcba4b t0051: use "skip_all" under !MINGW in =
+single-test file
+>     @@ Commit message
+>          by default, 2018-10-30) uses.
+>
+>          This way TAP consumers like "prove" will show a nice summary wh=
+en the
+>     -    test is skipped, e.g.:
+>     +    test is skipped. Instead of:
+>     +
+>     +        $ prove t0051-windows-named-pipe.sh
+>     +        [...]
+>     +        t0051-windows-named-pipe.sh .. ok
+>     +        [...]
+>     +
+>     +    We will prominently show a "skipped" notice:
+>
+>              $ prove t0051-windows-named-pipe.sh
+>              [...]
+>              t0051-windows-named-pipe.sh ... skipped: skipping Windows-s=
+pecific tests
+>              [...]
+>
+>     +    This is because we are now making use of the right TAP-y way to
+>     +    communicate this to the consumer. I.e. skipping the whole test =
+file,
+>     +    v.s. skipping individual tests (in this case there's only one t=
+est).
+>     +
+>          Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
+mail.com>
+>
+>       ## t/t0051-windows-named-pipe.sh ##
+>
+>  t/t0051-windows-named-pipe.sh | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t0051-windows-named-pipe.sh b/t/t0051-windows-named-pipe.=
+sh
+> index 10ac92d2250..412f413360d 100755
+> --- a/t/t0051-windows-named-pipe.sh
+> +++ b/t/t0051-windows-named-pipe.sh
+> @@ -3,8 +3,13 @@
+>  test_description=3D'Windows named pipes'
+>
+>  . ./test-lib.sh
+> +if ! test_have_prereq MINGW
+> +then
+> +	skip_all=3D'skipping Windows-specific tests'
+> +	test_done
+> +fi
+>
+> -test_expect_success MINGW 'o_append write to named pipe' '
+> +test_expect_success 'o_append write to named pipe' '
+>  	GIT_TRACE=3D"$(pwd)/expect" git status >/dev/null 2>&1 &&
+>  	{ test-tool windows-named-pipe t0051 >actual 2>&1 & } &&
+>  	pid=3D$! &&
+> --
+> 2.35.1.940.ge7a5b4b05f2
+>
+>
 
-Nevertheless, it is still the most elegant way that I can think of to
-generate a diagnostic `.zip` file without messing up the very things that
-are to be diagnosed: the repository and the worktree.
-
-> "--add-blob=3D<path>:<blob-object-name>" may be another option, useful
-> when you have done "hash-object -w" already, and can be used to add
-> single-liner, or an entire novel.
-
-This would mess with the repository. Granted, it is unlikely that adding a
-tiny blob will all of a sudden work around a bug that the user wanted to
-report, but less big mutations have been known to subtly change a bug's
-manifested symptoms.
-
-So I really do not want to do that, not in `scalar diagnose.
-
-> In any case, "--add-file=3D<file>", which we already have, would be
-> more appropriate feature to use to record our "version" file, so
-> there is no need to change our Makefile for it.
-
-Same here. It is bad enough that `scalar diagnose` has to create a
-directory in the current enlistment. Let's not make the situation even
-worse.
-
-The most elegant solution would have been that streaming `--add-file` mode
-suggested by Ren=C3=A9, I think, but that's too involved to implement just=
- to
-benefit `scalar diagnose`. It's not like we can simply stream the contents
-via `stdin`, as there are more than one "virtual" file we need to add to
-that `.zip` file.
-
-Ciao,
-Dscho
-
---8323328-136162339-1644325943=:347--
+--8323328-262443756-1644327659=:347--
