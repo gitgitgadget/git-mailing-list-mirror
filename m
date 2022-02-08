@@ -2,517 +2,451 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96E29C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 22:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AF75C4321E
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 22:25:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386729AbiBHWZj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 17:25:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60870 "EHLO
+        id S1387598AbiBHWZo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 17:25:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386597AbiBHU6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 15:58:09 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D8A9C0612C3
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 12:58:07 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id s18so532611wrv.7
-        for <git@vger.kernel.org>; Tue, 08 Feb 2022 12:58:07 -0800 (PST)
+        with ESMTP id S1386336AbiBHUJv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 15:09:51 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61D5EC0613CB
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 12:09:50 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id s18so347755wrv.7
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 12:09:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=+ilJI8qjYT5O0jP0+P6xBhzNH8RvO+iRxnyQb4Q1x6g=;
-        b=IHdDl7TrJ0SfpR3a0ZqVu+BVmpYIwqCSA1jnj1bZjpiJOUhCcmffop3BjpTwdl5PZo
-         qYfjnuyt++CGct5MEeB9hPryE4lVFOpihUteEJ0mmirlCCXGE8WxkDxJciJGjcIMWV0g
-         38AwFr3cnSLXeyq1f70jJqgc3PEj3dZXhxknzBOA5rfJ96eG/DQ4OyReyYSd/OCN5nKY
-         BOYVDruyqOh5QjWN2Y0SATmpggFt59IErEe0H9Zu+ljoASmkBDghl8RGtMIj+rkShKpb
-         6h4qF9Wedgi+KKS2TeXYuBTxEAGDn03OzA7Lk8rO9KjsJ/Zxv6ExkRAM6AZmA75n1SUT
-         RBcw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=8J/n4RpowF6IqoUxLaNtgScn+d11Z+3sHMlEvPPvaBE=;
+        b=lfRnCAicxwTJbK5KM+5MvAnfma5Z9LVzMV+agoujuSpG7nDX5RjcrFbf1YL4AOszV3
+         BNkry7PWXVp5klDYeyshpkGebY+6CAIMOyFD1HUN0C/BJOlhgH9lHQ0doPTb5joGbxbA
+         Y/osJDb3XiktG6Wfc0MREj1SZKJkPvc3E5QrdPoDW1T77v1g9k3axZRBbRTNUV9mg63+
+         6JH3i5Z0wvT3j6jWdV2mIrZI+Rw9pMK+AoOYPYXNoFnxuo5u6VHzjYVQRO8zcz2qqPIL
+         ypIGQWpqBLhIibBYG5qZy4/YHRLP2u+KEOwLBGYRi9onxOEiSVIe8JK+Pw4LBEixsxGn
+         hLWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=+ilJI8qjYT5O0jP0+P6xBhzNH8RvO+iRxnyQb4Q1x6g=;
-        b=CvfjNvKToXUB1yo4XHQZ44yntQCX510ukBVnTlkbMLs0z2HroXC9uEhDx5X5gk9lIT
-         3zVSNEbQOBkQuVjmMzhMmwE8BqXnZruIVqUEPJVlLLBsEAA8JlrCs2aSKvAm9lOnd05k
-         NydEW8btv5u0J2HSBdaxxfKM8MWPKoQDaRI4Ws5AueHjNoc2oC23GNPdPcrHyZcYypno
-         ZJZCxWbqCLnNV6F8Iywfk6bE2rIoxRdgKX7JWhXuhSE/Aeuu7p6gNv8dj5swpMKUFAyh
-         8I5DRXgZAVOhzeZ+9hZe83FYhmd+2FAIBVVANm8W8C3Sty1qlzKc1V//3T/CR0aUhhV+
-         mmGA==
-X-Gm-Message-State: AOAM532vKkJ1USaH+0Y/5wMKMPmaVLCT0I4byi06fQGUo6OATCrkXB7p
-        rnRPsl8hM51dLDVC7nxItT32s9w7RFo=
-X-Google-Smtp-Source: ABdhPJzBkLY/h4Gs8Mqlmngjcqe9iJ5gsl3s55lqxSnSr4HC3GvrQI+SHO6BxVGZYkY/F6wU2u592Q==
-X-Received: by 2002:a05:6000:1aca:: with SMTP id i10mr4869614wry.22.1644353885810;
-        Tue, 08 Feb 2022 12:58:05 -0800 (PST)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=8J/n4RpowF6IqoUxLaNtgScn+d11Z+3sHMlEvPPvaBE=;
+        b=mA9jivlziH9aE+pn104zZMCuN+07Yk/bnF14a6zdkZ9Tk9WMzw1EUsTJjiq0YBRq/C
+         hfx6d48ez1BKCLpIu26nb1G6wujZXPfnjeH5d4BIGuInCkejqQl05dRf7/JaUY5Iz3Gv
+         0+pnJOLV8nAo9236sTHsn11UDefKEG6CRTFajK4t6uuGch98Hjn9LmHHS5WsayPu/3rV
+         WNSJN6GnU9SYy9q4K1wlCOarHkxWaHdzGaSaO5+tmYg3NI0oIT67/s283874XAVzQzPM
+         U+cJSYtDPkoqYxNMMviwLfuFpiFzI5hkK5T9vI9D2a+xxD+L+Mi2cQfUnKUdLk2Ih34h
+         fJ0A==
+X-Gm-Message-State: AOAM530aT5gc0XcEACfnvi4iQHsp64n/EQU09WXR4bTqzxcESEuR3I+Z
+        0WgbVYj49kScEPkVbzBOfHJTIcl+erg=
+X-Google-Smtp-Source: ABdhPJw0djs0Sxn6cHydwPlFfAs7bGWCd7tRsiBrF9m9JGRlrKUu75tGI2impse4ObzMyic+DY50EQ==
+X-Received: by 2002:adf:fb4a:: with SMTP id c10mr4678340wrs.243.1644350988619;
+        Tue, 08 Feb 2022 12:09:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s26sm195927wmh.47.2022.02.08.12.58.05
+        by smtp.gmail.com with ESMTPSA id i20sm3917283wra.62.2022.02.08.12.09.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 12:58:05 -0800 (PST)
-Message-Id: <pull.1212.v3.git.git.1644353884.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1212.v2.git.git.1644251611.gitgitgadget@gmail.com>
-References: <pull.1212.v2.git.git.1644251611.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Feb 2022 20:58:01 +0000
-Subject: [PATCH v3 0/3] Add cat-file --batch-command flag
-MIME-Version: 1.0
+        Tue, 08 Feb 2022 12:09:47 -0800 (PST)
+Message-Id: <395baf11c9f7f9a54de24ab99c2242933b3c25a7.1644350985.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1214.git.git.1644350985.gitgitgadget@gmail.com>
+References: <pull.1214.git.git.1644350985.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 08 Feb 2022 20:09:45 +0000
+Subject: [PATCH 2/2] Treat MERGE_AUTOSTASH and friends as a pseudoref
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     me@ttaylorr.com, phillip.wood123@gmail.com, avarab@gmail.com,
-        e@80x24.org, bagasdotme@gmail.com, gitster@pobox.com,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        John Cai <johncai86@gmail.com>
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The feature proposal of adding a command interface to cat-file was first
-discussed in [A]. In [B], Taylor expressed the need for a fuller proposal
-before moving forward with a new flag. An RFC was created [C] and the idea
-was discussed more thoroughly, and overall it seemed like it was headed in
-the right direction.
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-This patch series consolidates the feedback from these different threads.
+In t7600-merge.sh, we can see
 
-This patch series has three parts:
+        git stash show -p MERGE_AUTOSTASH
 
- 1. preparation patch to rename a variable
- 2. adding an enum to keep track of batch modes
- 3. logic to handle --batch-command flag, adding contents, info, flush
-    commands
+which yields
 
-Changes since v2:
+        error: MERGE_AUTOSTASH is not a valid reference
 
- * added enum to keep track of which batch mode we are in (thanks to Junio's
-   feedback)
- * fixed array allocation logic (thanks to Junio's feedback)
- * added code to flush commands when --batch-commands receives an EOF and
-   exits (thanks to Phillip's feedback)
- * fixed docs formatting (thanks to Jonathan's feedback)
+in reftable. stash.c further confirms the stash should be treated as a
+revision, by calling setup_revisions() on the first argument to
+show_stash()
 
-Changes since v1:
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ branch.c         |  2 +-
+ builtin/commit.c |  2 +-
+ builtin/merge.c  | 29 ++++++++++++++---------------
+ builtin/rebase.c | 34 ++++++++++++++++++++++++++++------
+ path.c           |  1 -
+ path.h           |  3 +--
+ sequencer.c      | 46 +++++++++++++++++++++-------------------------
+ 7 files changed, 66 insertions(+), 51 deletions(-)
 
- * simplified "session" mechanism. "flush" will execute all commands that
-   were entered in since the last "flush" when in --buffer mode
- * when not in --buffer mode, each command is executed and flushed each time
- * rename cmdmode to transform_mode instead of just mode
- * simplified command parsing logic
- * changed rename of cmdmode to transform_mode
- * clarified verbiage in commit messages
-
-A. https://lore.kernel.org/git/xmqqk0hitnkc.fsf@gitster.g/ B.
-https://lore.kernel.org/git/YehomwNiIs0l83W7@nand.local/ C.
-https://lore.kernel.org/git/e75ba9ea-fdda-6e9f-4dd6-24190117d93b@gmail.com/
-
-John Cai (3):
-  cat-file: rename cmdmode to transform_mode
-  cat-file: introduce batch_command enum to replace print_contents
-  cat-file: add --batch-command mode
-
- Documentation/git-cat-file.txt |  24 ++++
- builtin/cat-file.c             | 154 ++++++++++++++++++++++--
- t/t1006-cat-file.sh            | 207 ++++++++++++++++++++++++++++++++-
- 3 files changed, 373 insertions(+), 12 deletions(-)
-
-
-base-commit: 38062e73e009f27ea192d50481fcb5e7b0e9d6eb
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1212%2Fjohn-cai%2Fjc-cat-file-batch-command-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1212/john-cai/jc-cat-file-batch-command-v3
-Pull-Request: https://github.com/git/git/pull/1212
-
-Range-diff vs v2:
-
- 1:  2d9a0b06ce5 ! 1:  fa6294387ab cat-file: rename cmdmode to transform_mode
-     @@ Metadata
-       ## Commit message ##
-          cat-file: rename cmdmode to transform_mode
-      
-     -    When introducing a new flag --batch-command, we will add a flag on the
-     -    batch_options struct that indicates whether or not an interactive
-     -    command mode will be used that reads commands and arguments off of
-     -    stdin.
-     +    In the next patch, we will add an enum on the batch_options struct that
-     +    indicates which type of batch operation will be used: --batch,
-     +    --batch-check and the soon to be  --batch-command that will read
-     +    commands from stdin. --batch-command mode might get confused with
-     +    the cmdmode flag.
-      
-     -    An intuitive name for this flag would be "command", which can get
-     -    confusing with the already existing cmdmode.
-     -
-     -    cmdmode refers to how the result output of the blob will be transformed,
-     -    either according to --filter or --textconv. So transform_mode is a more
-     -    descriptive name for the flag, and will not get confused with the new
-     -    command flag to be added in the next commit.
-     +    There is value in renaming cmdmode in any case. cmdmode refers to how
-     +    the result output of the blob will be transformed, either according to
-     +    --filter or --textconv. So transform_mode is a more descriptive name
-     +    for the flag.
-      
-          Rename cmdmode to transform_mode in cat-file.c
-      
- -:  ----------- > 2:  ae2dfa512a7 cat-file: introduce batch_command enum to replace print_contents
- 2:  1b63164ad4d ! 3:  1ab5524ee87 cat-file: add --batch-command mode
-     @@ Commit message
-          contents. Since we have a pair of cat-file processes per repository,
-          this means we can get rid of roughly half of long lived git cat-file
-          processes. Given there are many repositories being accessed at any given
-     -    time, this can lead to huge savings since on a given server.
-     +    time, this can lead to huge savings.
-      
-          git cat-file --batch-command
-      
-          will enter an interactive command mode whereby the user can enter in
-          commands and their arguments that get queued in memory:
-      
-     -    <command1> [arg1] [arg2] NL
-     -    <command2> [arg1] [arg2] NL
-     +    <command1> [arg1] [arg2] LF
-     +    <command2> [arg1] [arg2] LF
-      
-          When --buffer mode is used, commands will be queued in memory until a
-          flush command is issued that execute them:
-      
-     -    flush NL
-     +    flush LF
-      
-          The reason for a flush command is that when a consumer process (A)
-          talks to a git cat-file process (B) and interactively writes to and
-     @@ Commit message
-          With this mechanism of queueing up commands and letting (A) issue a
-          flush command, process (A) can control when the buffer is flushed and
-          can guarantee it will receive all of the output when in --buffer mode.
-     +    --batch-command also will not allow (B) to flush to stdout until a flush
-     +    is received.
-      
-          This patch adds the basic structure for adding command which can be
-          extended in the future to add more commands. It also adds the following
-          two commands (on top of the flush command):
-      
-     -    contents <object> NL
-     -    info <object> NL
-     +    contents <object> LF
-     +    info <object> LF
-      
-          The contents command takes an <object> argument and prints out the object
-          contents.
-     @@ Commit message
-      
-          These can be used in the following way with --buffer:
-      
-     -    contents <sha1> NL
-     -    object <sha1> NL
-     -    object <sha1> NL
-     -    contents <sha1> NL
-     +    info <sha1> LF
-     +    contents <sha1> LF
-     +    contents <sha1> LF
-     +    info <sha1> LF
-          flush
-     -    contents <sha1> NL
-     +    info <sha1> LF
-          flush
-      
-          When used without --buffer:
-      
-     -    contents <sha1> NL
-     -    object <sha1> NL
-     -    object <sha1> NL
-     -    contents <sha1> NL
-     -    contents <sha1> NL
-     +    info <sha1> LF
-     +    contents <sha1> LF
-     +    contents <sha1> LF
-     +    info <sha1> LF
-     +    info <sha1> LF
-      
-          Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-          Signed-off-by: John Cai <johncai86@gmail.com>
-     @@ Documentation/git-cat-file.txt: OPTIONS
-      +	`--textconv` or `--filters`, in which case the input lines also need to
-      +	specify the path, separated by whitespace.  See the section
-      +	`BATCH OUTPUT` below for details.
-     -+
-     +++
-     ++--
-      +contents <object>::
-     -+	Print object contents for object reference <object>
-     ++	Print object contents for object reference <object>. This corresponds to
-     ++	the output of --batch.
-      +
-      +info <object>::
-     -+	Print object info for object reference <object>
-     ++	Print object info for object reference <object>. This corresponds to the
-     ++	output of --batch-check.
-      +
-      +flush::
-     -+	Execute all preceding commands that were issued since the beginning or
-     -+	since the last flush command was issued. Only used with --buffer. When
-     -+	--buffer is not used, commands are flushed each time without issuing
-     -+	`flush`.
-     ++	Used in --buffer mode to execute all preceding commands that were issued
-     ++	since the beginning or since the last flush was issued. When --buffer
-     ++	is used, no output will come until flush is issued. When --buffer is not
-     ++	used, commands are flushed each time without issuing `flush`.
-     ++--
-     +++
-      +
-       --batch-all-objects::
-       	Instead of reading a list of objects on stdin, perform the
-       	requested batch operation on all objects in the repository and
-      
-       ## builtin/cat-file.c ##
-     -@@ builtin/cat-file.c: struct batch_options {
-     - 	int unordered;
-     - 	int transform_mode; /* may be 'w' or 'c' for --filters or --textconv */
-     - 	const char *format;
-     -+	int command;
-     +@@
-     + #include "object-store.h"
-     + #include "promisor-remote.h"
-     + 
-     +-enum batch_command {
-     +-	BATCH_COMMAND_CONTENTS,
-     +-	BATCH_COMMAND_INFO,
-     ++enum batch_mode {
-     ++	BATCH_MODE_CONTENTS,
-     ++	BATCH_MODE_INFO,
-     ++	BATCH_MODE_PARSE_CMDS,
-       };
-       
-     - static const char *force_path;
-     + struct batch_options {
-     + 	int enabled;
-     + 	int follow_symlinks;
-     +-	enum batch_command command_mode;
-     ++	enum batch_mode batch_mode;
-     + 	int buffer_output;
-     + 	int all_objects;
-     + 	int unordered;
-     +@@ builtin/cat-file.c: static void batch_object_write(const char *obj_name,
-     + 	strbuf_addch(scratch, '\n');
-     + 	batch_write(opt, scratch->buf, scratch->len);
-     + 
-     +-	if (opt->command_mode == BATCH_COMMAND_CONTENTS) {
-     ++	if (opt->batch_mode == BATCH_MODE_CONTENTS) {
-     + 		print_object_or_die(opt, data);
-     + 		batch_write(opt, "\n", 1);
-     + 	}
-      @@ builtin/cat-file.c: static int batch_unordered_packed(const struct object_id *oid,
-       				      data);
-       }
-     @@ builtin/cat-file.c: static int batch_unordered_packed(const struct object_id *oi
-      +			     struct strbuf *output,
-      +			     struct expand_data *data)
-      +{
-     -+	opt->print_contents = 1;
-     ++	opt->batch_mode = BATCH_MODE_CONTENTS;
-      +	batch_one_object(line, output, opt, data);
-      +}
-      +
-     @@ builtin/cat-file.c: static int batch_unordered_packed(const struct object_id *oi
-      +			   struct strbuf *output,
-      +			   struct expand_data *data)
-      +{
-     -+	opt->print_contents = 0;
-     ++	opt->batch_mode = BATCH_MODE_INFO;
-      +	batch_one_object(line, output, opt, data);
-      +}
-      +
-     @@ builtin/cat-file.c: static int batch_unordered_packed(const struct object_id *oi
-      +		struct strbuf *output,
-      +		struct expand_data *data,
-      +		struct queued_cmd *cmds,
-     -+		int queued)
-     ++		int nr)
-      +{
-      +	int i;
-     -+	for(i = 0; i < queued; i++){
-     ++	for (i = 0; i < nr; i++)
-      +		cmds[i].fn(opt, cmds[i].line, output, data);
-     -+	}
-     ++
-      +	fflush(stdout);
-      +}
-      +
-     @@ builtin/cat-file.c: static int batch_unordered_packed(const struct object_id *oi
-      +	struct strbuf input = STRBUF_INIT;
-      +	struct queued_cmd *cmds = NULL;
-      +	size_t alloc = 0, nr = 0;
-     -+	int queued = 0;
-      +
-      +	while (!strbuf_getline(&input, stdin)) {
-      +		int i;
-      +		const struct parse_cmd *cmd = NULL;
-     -+		const char *p, *cmd_end;
-     ++		const char *p = NULL, *cmd_end;
-      +		struct queued_cmd call = {0};
-      +
-      +		if (!input.len)
-     @@ builtin/cat-file.c: static int batch_unordered_packed(const struct object_id *oi
-      +				die(_("flush is only for --buffer mode"));
-      +			if (*cmd_end)
-      +				die(_("flush takes no arguments"));
-     -+			if (!queued)
-     -+				die(_("nothing to flush"));
-     -+			flush_batch_calls(opt, output, data, cmds, queued);
-     -+			queued = 0;
-     ++			if (!nr)
-     ++				error(_("nothing to flush"));
-     ++
-     ++			flush_batch_calls(opt, output, data, cmds, nr);
-     ++			nr = 0;
-      +			continue;
-      +		}
-      +
-     @@ builtin/cat-file.c: static int batch_unordered_packed(const struct object_id *oi
-      +			cmd->fn(opt, p, output, data);
-      +			continue;
-      +		}
-     -+
-     -+		queued++;
-     -+		if (queued > nr) {
-     -+			ALLOC_GROW(cmds, nr+1, alloc);
-     -+			nr++;
-     -+		}
-     -+
-     ++		
-     ++		ALLOC_GROW(cmds, nr + 1, alloc);
-      +		call.fn = cmd->fn;
-      +		call.line = xstrdup(p);
-     -+		cmds[queued-1] = call;
-     ++		cmds[nr++] = call;
-      +	}
-     ++
-     ++	if (opt->buffer_output && nr)
-     ++		flush_batch_calls(opt, output, data, cmds, nr);
-     ++
-      +	free(cmds);
-      +	strbuf_release(&input);
-      +}
-     @@ builtin/cat-file.c: static int batch_unordered_packed(const struct object_id *oi
-       {
-       	struct strbuf input = STRBUF_INIT;
-      @@ builtin/cat-file.c: static int batch_objects(struct batch_options *opt)
-     - 	struct expand_data data;
-     - 	int save_warning;
-     - 	int retval = 0;
-     -+	const int command = opt->command;
-     + 	 * If we are printing out the object, then always fill in the type,
-     + 	 * since we will want to decide whether or not to stream.
-     + 	 */
-     +-	if (opt->command_mode == BATCH_COMMAND_CONTENTS)
-     ++	if (opt->batch_mode == BATCH_MODE_CONTENTS)
-     + 		data.info.typep = &data.type;
-       
-     - 	if (!opt->format)
-     - 		opt->format = "%(objectname) %(objecttype) %(objectsize)";
-     + 	if (opt->all_objects) {
-      @@ builtin/cat-file.c: static int batch_objects(struct batch_options *opt)
-       	save_warning = warn_on_object_refname_ambiguity;
-       	warn_on_object_refname_ambiguity = 0;
-       
-     -+	if (command) {
-     ++	if (opt->batch_mode == BATCH_MODE_PARSE_CMDS) {
-      +		batch_objects_command(opt, &output, &data);
-      +		goto cleanup;
-      +	}
-     @@ builtin/cat-file.c: static int batch_objects(struct batch_options *opt)
-       	strbuf_release(&output);
-       	warn_on_object_refname_ambiguity = save_warning;
-      @@ builtin/cat-file.c: static int batch_option_callback(const struct option *opt,
-     + 	}
-       
-       	bo->enabled = 1;
-     - 	bo->print_contents = !strcmp(opt->long_name, "batch");
-     -+	bo->command = !strcmp(opt->long_name, "batch-command");
-     +-
-     + 	if (!strcmp(opt->long_name, "batch"))
-     +-		bo->command_mode = BATCH_COMMAND_CONTENTS;
-     ++		bo->batch_mode = BATCH_MODE_CONTENTS;
-     + 	if (!strcmp(opt->long_name, "batch-check"))
-     +-		bo->command_mode = BATCH_COMMAND_INFO;
-     ++		bo->batch_mode = BATCH_MODE_INFO;
-     ++	if (!strcmp(opt->long_name, "batch-command"))
-     ++		bo->batch_mode = BATCH_MODE_PARSE_CMDS;
-     + 
-       	bo->format = arg;
-       
-     - 	return 0;
-      @@ builtin/cat-file.c: int cmd_cat_file(int argc, const char **argv, const char *prefix)
-       			N_("like --batch, but don't emit <contents>"),
-       			PARSE_OPT_OPTARG | PARSE_OPT_NONEG,
-     @@ t/t1006-cat-file.sh: $content"
-       	test_cmp expect actual
-           '
-       
-     -+    test -z "$content" ||
-     -+    test_expect_success "--batch-command output of $type content is correct" '
-     -+	maybe_remove_timestamp "$batch_output" $no_ts >expect &&
-     -+	maybe_remove_timestamp "$(test_write_lines "contents $sha1" \
-     -+	| git cat-file --batch-command)" $no_ts >actual &&
-     -+	test_cmp expect actual
-     -+    '
-     -+
-     -+    test_expect_success "--batch-command output of $type info is correct" '
-     -+	echo "$sha1 $type $size" >expect &&
-     -+	test_write_lines "info $sha1" | git cat-file --batch-command >actual &&
-     -+	test_cmp expect actual
-     -+    '
-     ++    for opt in --buffer --no-buffer
-     ++    do
-     ++	test -z "$content" ||
-     ++		test_expect_success "--batch-command $opt output of $type content is correct" '
-     ++		maybe_remove_timestamp "$batch_output" $no_ts >expect &&
-     ++		maybe_remove_timestamp "$(test_write_lines "contents $sha1" \
-     ++		| git cat-file --batch-command $opt)" $no_ts >actual &&
-     ++		test_cmp expect actual
-     ++	'
-     ++
-     ++	test_expect_success "--batch-command $opt output of $type info is correct" '
-     ++		echo "$sha1 $type $size" >expect &&
-     ++		test_write_lines "info $sha1" \
-     ++		| git cat-file --batch-command $opt >actual &&
-     ++		test_cmp expect actual
-     ++	'
-     ++    done
-      +
-           test_expect_success "custom --batch-check format" '
-       	echo "$type $sha1" >expect &&
-     @@ t/t1006-cat-file.sh: $content"
-      +	exec 9<>output &&
-      +	test_when_finished 'rm output; exec 9<&-'
-      +	(
-     ++		# TODO - Ideally we'd pipe the output of cat-file
-     ++		# through "sed s'/$/\\/'" to make sure that that read
-     ++		# would consume all the available
-     ++		# output. Unfortunately we cannot do this as we cannot
-     ++		# control when sed flushes its output. We could write
-     ++		# a test helper in C that appended a '\' to the end of
-     ++		# each line and flushes its output after every line.
-      +		git cat-file --buffer --batch-command <input 2>err &
-      +		echo $! &&
-      +		wait $!
-     @@ t/t1006-cat-file.sh: $content"
-      +	test_write_lines "info $sha1" flush "info $sha1" >input
-      +	# TODO - consume all available input, not just one
-      +	# line (see above).
-     -+	# check output is flushed on exit
-      +	read actual <&9 &&
-      +	echo "$actual" >actual &&
-      +	test_cmp expect actual &&
-     @@ t/t1006-cat-file.sh: test_expect_success 'cat-file --batch-all-objects --batch-c
-      +
-      +test_expect_success 'batch-command flush empty queue' '
-      +	echo flush >cmd &&
-     -+	test_expect_code 128 git cat-file --batch-command --buffer <cmd 2>err &&
-     -+	grep -E "^fatal:.*nothing to flush.*" err
-     ++	test_expect_code 0 git cat-file --batch-command --buffer <cmd 2>err &&
-     ++	grep -E "^error:.*nothing to flush.*" err
-      +'
-       
-       test_done
-
+diff --git a/branch.c b/branch.c
+index 6b31df539a5..f506f56de09 100644
+--- a/branch.c
++++ b/branch.c
+@@ -637,7 +637,7 @@ void remove_merge_branch_state(struct repository *r)
+ 	unlink(git_path_merge_msg(r));
+ 	unlink(git_path_merge_mode(r));
+ 	unlink(git_path_auto_merge(r));
+-	save_autostash(git_path_merge_autostash(r));
++	save_autostash(MERGE_AUTOSTASH);
+ }
+ 
+ void remove_branch_state(struct repository *r, int verbose)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 33ca9e99c80..ef05ecf39df 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1855,7 +1855,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 				     &oid, flags);
+ 	}
+ 
+-	apply_autostash(git_path_merge_autostash(the_repository));
++	apply_autostash(MERGE_AUTOSTASH);
+ 
+ 	UNLEAK(err);
+ 	UNLEAK(sb);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index a94a03384ae..81f4fa83c24 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -492,7 +492,7 @@ static void finish(struct commit *head_commit,
+ 	/* Run a post-merge hook */
+ 	run_hooks_l("post-merge", squash ? "1" : "0", NULL);
+ 
+-	apply_autostash(git_path_merge_autostash(the_repository));
++	apply_autostash(MERGE_AUTOSTASH);
+ 	strbuf_release(&reflog_message);
+ }
+ 
+@@ -1318,8 +1318,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	if (abort_current_merge) {
+ 		int nargc = 2;
+ 		const char *nargv[] = {"reset", "--merge", NULL};
+-		struct strbuf stash_oid = STRBUF_INIT;
+-
++		struct object_id stash_oid;
++		char hex[GIT_MAX_HEXSZ + 1] = { 0 };
+ 		if (orig_argc != 2)
+ 			usage_msg_opt(_("--abort expects no arguments"),
+ 			      builtin_merge_usage, builtin_merge_options);
+@@ -1327,17 +1327,17 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		if (!file_exists(git_path_merge_head(the_repository)))
+ 			die(_("There is no merge to abort (MERGE_HEAD missing)."));
+ 
+-		if (read_oneliner(&stash_oid, git_path_merge_autostash(the_repository),
+-		    READ_ONELINER_SKIP_IF_EMPTY))
+-			unlink(git_path_merge_autostash(the_repository));
++		if (!read_ref(MERGE_AUTOSTASH, &stash_oid)) {
++			oid_to_hex_r(hex, &stash_oid);
++			delete_ref("merge --abort", MERGE_AUTOSTASH, NULL, 0);
++		}
+ 
+ 		/* Invoke 'git reset --merge' */
+ 		ret = cmd_reset(nargc, nargv, prefix);
+ 
+-		if (stash_oid.len)
+-			apply_autostash_oid(stash_oid.buf);
++		if (hex[0])
++			apply_autostash_oid(hex);
+ 
+-		strbuf_release(&stash_oid);
+ 		goto done;
+ 	}
+ 
+@@ -1567,13 +1567,13 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		}
+ 
+ 		if (autostash)
+-			create_autostash(the_repository,
+-					 git_path_merge_autostash(the_repository));
++			create_autostash(the_repository, MERGE_AUTOSTASH);
+ 		if (checkout_fast_forward(the_repository,
+ 					  &head_commit->object.oid,
+ 					  &commit->object.oid,
+ 					  overwrite_ignore)) {
+-			apply_autostash(git_path_merge_autostash(the_repository));
++			apply_autostash(MERGE_AUTOSTASH);
++
+ 			ret = 1;
+ 			goto done;
+ 		}
+@@ -1638,8 +1638,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		die_ff_impossible();
+ 
+ 	if (autostash)
+-		create_autostash(the_repository,
+-				 git_path_merge_autostash(the_repository));
++		create_autostash(the_repository, MERGE_AUTOSTASH);
+ 
+ 	/* We are going to make a new commit. */
+ 	git_committer_info(IDENT_STRICT);
+@@ -1722,7 +1721,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		else
+ 			fprintf(stderr, _("Merge with strategy %s failed.\n"),
+ 				use_strategies[0]->name);
+-		apply_autostash(git_path_merge_autostash(the_repository));
++		apply_autostash(MERGE_AUTOSTASH);
+ 		ret = 2;
+ 		goto done;
+ 	} else if (best_strategy == wt_strategy)
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index b29ad2b65e7..e84c21ab8fc 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -414,6 +414,17 @@ static const char *state_dir_path(const char *filename, struct rebase_options *o
+ 	return path.buf;
+ }
+ 
++static const char *state_pseudoref(const char *suffix,
++				   struct rebase_options *opts)
++{
++	static struct strbuf pseudo_ref = STRBUF_INIT;
++	strbuf_reset(&pseudo_ref);
++	strbuf_addstr(&pseudo_ref, strrchr(opts->state_dir, '/') + 1);
++	strbuf_addstr(&pseudo_ref, "/");
++	strbuf_addstr(&pseudo_ref, suffix);
++	return pseudo_ref.buf;
++}
++
+ /* Initialize the rebase options from the state directory. */
+ static int read_basic_state(struct rebase_options *opts)
+ {
+@@ -544,10 +555,11 @@ static int finish_rebase(struct rebase_options *opts)
+ {
+ 	struct strbuf dir = STRBUF_INIT;
+ 	int ret = 0;
++	const char *autostash_ref = state_pseudoref("autostash", opts);
+ 
+ 	delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+ 	unlink(git_path_auto_merge(the_repository));
+-	apply_autostash(state_dir_path("autostash", opts));
++	apply_autostash(autostash_ref);
+ 	/*
+ 	 * We ignore errors in 'git maintenance run --auto', since the
+ 	 * user should see them.
+@@ -559,6 +571,9 @@ static int finish_rebase(struct rebase_options *opts)
+ 		replay.action = REPLAY_INTERACTIVE_REBASE;
+ 		ret = sequencer_remove_state(&replay);
+ 	} else {
++		if (delete_ref("cleanup autostash", autostash_ref, NULL,
++			       REF_SKIP_REFNAME_VERIFICATION))
++			die("failed cleaning up autostash ref");
+ 		strbuf_addstr(&dir, opts->state_dir);
+ 		if (remove_dir_recursively(&dir, 0))
+ 			ret = error(_("could not remove '%s'"),
+@@ -760,8 +775,11 @@ static int run_specific_rebase(struct rebase_options *opts, enum action action)
+ 			finish_rebase(opts);
+ 	} else if (status == 2) {
+ 		struct strbuf dir = STRBUF_INIT;
+-
+-		apply_autostash(state_dir_path("autostash", opts));
++		const char *autostash_ref = state_pseudoref("autostash", opts);
++		apply_autostash(autostash_ref);
++		if (delete_ref("cleanup autostash", autostash_ref, NULL,
++			       REF_SKIP_REFNAME_VERIFICATION))
++			die("failed cleaning up autostash ref");
+ 		strbuf_addstr(&dir, opts->state_dir);
+ 		remove_dir_recursively(&dir, 0);
+ 		strbuf_release(&dir);
+@@ -1310,13 +1328,18 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		goto cleanup;
+ 	}
+ 	case ACTION_QUIT: {
+-		save_autostash(state_dir_path("autostash", &options));
++		const char *autostash_ref =
++			state_pseudoref("autostash", &options);
++		save_autostash(autostash_ref);
+ 		if (options.type == REBASE_MERGE) {
+ 			struct replay_opts replay = REPLAY_OPTS_INIT;
+ 
+ 			replay.action = REPLAY_INTERACTIVE_REBASE;
+ 			ret = sequencer_remove_state(&replay);
+ 		} else {
++			if (delete_ref("deleted autostash_ref", autostash_ref,
++				       NULL, REF_SKIP_REFNAME_VERIFICATION))
++				die("failed to cleanup autostash ref");
+ 			strbuf_reset(&buf);
+ 			strbuf_addstr(&buf, options.state_dir);
+ 			ret = remove_dir_recursively(&buf, 0);
+@@ -1670,8 +1693,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 
+ 	if (options.autostash)
+ 		create_autostash(the_repository,
+-				 state_dir_path("autostash", &options));
+-
++				 state_pseudoref("autostash", &options));
+ 
+ 	if (require_clean_work_tree(the_repository, "rebase",
+ 				    _("Please commit or stash them."), 1, 1)) {
+diff --git a/path.c b/path.c
+index 2c895471d90..f69a912a279 100644
+--- a/path.c
++++ b/path.c
+@@ -1552,7 +1552,6 @@ REPO_GIT_PATH_FUNC(merge_msg, "MERGE_MSG")
+ REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
+ REPO_GIT_PATH_FUNC(merge_mode, "MERGE_MODE")
+ REPO_GIT_PATH_FUNC(merge_head, "MERGE_HEAD")
+-REPO_GIT_PATH_FUNC(merge_autostash, "MERGE_AUTOSTASH")
+ REPO_GIT_PATH_FUNC(auto_merge, "AUTO_MERGE")
+ REPO_GIT_PATH_FUNC(fetch_head, "FETCH_HEAD")
+ REPO_GIT_PATH_FUNC(shallow, "shallow")
+diff --git a/path.h b/path.h
+index b68691a86b8..e1cf1db98ba 100644
+--- a/path.h
++++ b/path.h
+@@ -175,7 +175,6 @@ struct path_cache {
+ 	const char *merge_rr;
+ 	const char *merge_mode;
+ 	const char *merge_head;
+-	const char *merge_autostash;
+ 	const char *auto_merge;
+ 	const char *fetch_head;
+ 	const char *shallow;
+@@ -188,11 +187,11 @@ const char *git_path_merge_msg(struct repository *r);
+ const char *git_path_merge_rr(struct repository *r);
+ const char *git_path_merge_mode(struct repository *r);
+ const char *git_path_merge_head(struct repository *r);
+-const char *git_path_merge_autostash(struct repository *r);
+ const char *git_path_auto_merge(struct repository *r);
+ const char *git_path_fetch_head(struct repository *r);
+ const char *git_path_shallow(struct repository *r);
+ 
++#define MERGE_AUTOSTASH "MERGE_AUTOSTASH"
+ 
+ int ends_with_path_components(const char *path, const char *components);
+ 
+diff --git a/sequencer.c b/sequencer.c
+index 35006c0cea6..d61ad1e215d 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -160,7 +160,6 @@ static GIT_PATH_FUNC(rebase_path_quiet, "rebase-merge/quiet")
+ static GIT_PATH_FUNC(rebase_path_signoff, "rebase-merge/signoff")
+ static GIT_PATH_FUNC(rebase_path_head_name, "rebase-merge/head-name")
+ static GIT_PATH_FUNC(rebase_path_onto, "rebase-merge/onto")
+-static GIT_PATH_FUNC(rebase_path_autostash, "rebase-merge/autostash")
+ static GIT_PATH_FUNC(rebase_path_strategy, "rebase-merge/strategy")
+ static GIT_PATH_FUNC(rebase_path_strategy_opts, "rebase-merge/strategy_opts")
+ static GIT_PATH_FUNC(rebase_path_allow_rerere_autoupdate, "rebase-merge/allow_rerere_autoupdate")
+@@ -4085,7 +4084,7 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
+ 	return -1;
+ }
+ 
+-void create_autostash(struct repository *r, const char *path)
++void create_autostash(struct repository *r, const char *pseudoref)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct lock_file lock_file = LOCK_INIT;
+@@ -4117,10 +4116,10 @@ void create_autostash(struct repository *r, const char *path)
+ 		strbuf_reset(&buf);
+ 		strbuf_add_unique_abbrev(&buf, &oid, DEFAULT_ABBREV);
+ 
+-		if (safe_create_leading_directories_const(path))
+-			die(_("Could not create directory for '%s'"),
+-			    path);
+-		write_file(path, "%s", oid_to_hex(&oid));
++		refs_update_ref(get_main_ref_store(r), "create_autostash",
++				pseudoref, &oid, null_oid(), 0,
++				UPDATE_REFS_DIE_ON_ERR);
++
+ 		printf(_("Created autostash: %s\n"), buf.buf);
+ 		if (reset_head(r, &ropts) < 0)
+ 			die(_("could not reset --hard"));
+@@ -4174,33 +4173,30 @@ static int apply_save_autostash_oid(const char *stash_oid, int attempt_apply)
+ 	return ret;
+ }
+ 
+-static int apply_save_autostash(const char *path, int attempt_apply)
++static int apply_save_autostash(const char *pseudoref, int attempt_apply)
+ {
+-	struct strbuf stash_oid = STRBUF_INIT;
++	struct object_id oid;
++	char hex[GIT_MAX_HEXSZ + 1] = { 0 };
+ 	int ret = 0;
+ 
+-	if (!read_oneliner(&stash_oid, path,
+-			   READ_ONELINER_SKIP_IF_EMPTY)) {
+-		strbuf_release(&stash_oid);
++	if (read_ref(pseudoref, &oid))
+ 		return 0;
+-	}
+-	strbuf_trim(&stash_oid);
+ 
+-	ret = apply_save_autostash_oid(stash_oid.buf, attempt_apply);
++	ret = apply_save_autostash_oid(oid_to_hex_r(hex, &oid), attempt_apply);
+ 
+-	unlink(path);
+-	strbuf_release(&stash_oid);
++	delete_ref("save autostash", pseudoref, NULL,
++		   REF_SKIP_REFNAME_VERIFICATION);
+ 	return ret;
+ }
+ 
+-int save_autostash(const char *path)
++int save_autostash(const char *pseudoref)
+ {
+-	return apply_save_autostash(path, 0);
++	return apply_save_autostash(pseudoref, 0);
+ }
+ 
+-int apply_autostash(const char *path)
++int apply_autostash(const char *pseudoref)
+ {
+-	return apply_save_autostash(path, 1);
++	return apply_save_autostash(pseudoref, 1);
+ }
+ 
+ int apply_autostash_oid(const char *stash_oid)
+@@ -4222,7 +4218,7 @@ static int checkout_onto(struct repository *r, struct replay_opts *opts,
+ 		.default_reflog_action = "rebase"
+ 	};
+ 	if (reset_head(r, &ropts)) {
+-		apply_autostash(rebase_path_autostash());
++		apply_autostash("rebase-merge/autostash");
+ 		sequencer_remove_state(opts);
+ 		return error(_("could not detach HEAD"));
+ 	}
+@@ -4556,7 +4552,7 @@ cleanup_head_ref:
+ 				run_command(&hook);
+ 			}
+ 		}
+-		apply_autostash(rebase_path_autostash());
++		apply_autostash("rebase-merge/autostash");
+ 
+ 		if (!opts->quiet) {
+ 			if (!opts->verbose)
+@@ -5635,7 +5631,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 		todo_list_add_exec_commands(todo_list, commands);
+ 
+ 	if (count_commands(todo_list) == 0) {
+-		apply_autostash(rebase_path_autostash());
++		apply_autostash("rebase-merge/autostash");
+ 		sequencer_remove_state(opts);
+ 
+ 		return error(_("nothing to do"));
+@@ -5646,12 +5642,12 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 	if (res == -1)
+ 		return -1;
+ 	else if (res == -2) {
+-		apply_autostash(rebase_path_autostash());
++		apply_autostash("rebase-merge/autostash");
+ 		sequencer_remove_state(opts);
+ 
+ 		return -1;
+ 	} else if (res == -3) {
+-		apply_autostash(rebase_path_autostash());
++		apply_autostash("rebase-merge/autostash");
+ 		sequencer_remove_state(opts);
+ 		todo_list_release(&new_todo);
+ 
 -- 
 gitgitgadget
