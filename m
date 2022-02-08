@@ -2,105 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AFF3C433EF
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 17:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2910FC433F5
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 17:57:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348380AbiBHRoh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 12:44:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35990 "EHLO
+        id S1385135AbiBHR5z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 12:57:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbiBHRoe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 12:44:34 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 773A4C061578
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 09:44:33 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F100E119FFB;
-        Tue,  8 Feb 2022 12:44:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=itXVXQpsI1qIpy4w3fNDflagNEnEf5Rd16eAeE
-        72MGg=; b=nvw2U6OHmTCmtd3+ogV80PgzzYRQGteEF97G1S2y20f9oDUDKTqlCf
-        iTiP6pVcRi9DQcWxMOiVYA/2oYt131J+14jT9w5PuQkayEU8JyCQ+yHgXPgHD7Ij
-        5kvQCrey5ufHG7BCvA1j7CffmcxRaH6HPiy+KEqQkJd3cLhaj3A0k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E679B119FFA;
-        Tue,  8 Feb 2022 12:44:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4CDB7119FF9;
-        Tue,  8 Feb 2022 12:44:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/6] archive: optionally add "virtual" files
-References: <pull.1128.git.1643186507.gitgitgadget@gmail.com>
-        <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com>
-        <49ff3c1f2b32b16df2b4216aa016d715b6de46bc.1644187146.git.gitgitgadget@gmail.com>
-        <d1e333b6-3ec1-8569-6ea9-4abd3dee1947@web.de>
-        <xmqqbkzigspr.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2202081406520.347@tvgsbejvaqbjf.bet>
-Date:   Tue, 08 Feb 2022 09:44:28 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2202081406520.347@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 8 Feb 2022 14:12:21 +0100 (CET)")
-Message-ID: <xmqqbkzhdzib.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C4A1B5B6-8906-11EC-BDFC-CB998F0A682E-77302942!pb-smtp2.pobox.com
+        with ESMTP id S1385129AbiBHR5p (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 12:57:45 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C8A6C033246
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 09:56:59 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id n9-20020a17090a73c900b001b5cafefa27so2776990pjk.2
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 09:56:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=MAyv0p07aAqBsLkP8Eu1c3kTRS4ARMBVjM3CtBbBwOM=;
+        b=f4Fy8isJPzchodLKubWYO/4Caoi7s+Bij/XqDskebUicvq0wAeqNQ2ZcfaxZklrR75
+         3SlXPcEPGM0h2ZcqRmnh/T9CMTA9ALLi8T5qI84FNtWBeoBAoTLq9hE6cXjLsWSQbp8V
+         mepzBZE0llv3q0jTkHBDk/xQWZZwUJgWOojwlbbFRRKO+8oldPryhe+2DYf/xpIca0oT
+         JdiZY/U4eYFI1S5rD7gdLoAcxim/edtjW+y/1FE/wZM2FJJTsc0F+k5AhAwh0gC5ShcG
+         2Crj1RjUQToigobpCS/09NPJdSJmZHA2/dAsvw7IZziF7+Fbu1wivJ3QF4Hnya5pJTie
+         3PvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=MAyv0p07aAqBsLkP8Eu1c3kTRS4ARMBVjM3CtBbBwOM=;
+        b=CpUZBRB7qoPDlOYrkfRQTwDR+hV1jo3H1S/6gGCQDwxxdO4y8hiK6Pmgsd8psPlVYT
+         DKd9xv0jYJMdISeibDBhUuPMn9VjELa/hU/RJo3g5yelKjoRXfd3Nh0KYqTojnAyKFxN
+         IrrjzFae9cVWdTC3x72J6xBuRPaMqboiDLEXYdXSAbbWPpVkT1ZA7kKtMV6qxziifqGH
+         rWtWarvkAAeQFjaVV2+xGgrz1jOQ3hohos3Bra06ig1RHwEorDE/xnbuLsRkuCktg2ON
+         Cc2Rk9b9g52Sv+DWgoL47TQf11KQ89IAAowa5SQrxVHmukpedj4hFBFrMENXFrftfpA3
+         HjRw==
+X-Gm-Message-State: AOAM532LMh6hCh5hhjCoZFmaMQzYuO8ButlAuNFZsywSc4wKnO61L25g
+        l146TTbVCXL6dHEV27Hk5kzkik3lEmNqRm97Zxlm
+X-Google-Smtp-Source: ABdhPJwDk/ODNeeM+G7VW+obBjHr6Xg/PZM9Qx8L3+h6FThrGC1kQ8HK7Hb6P3fl3txXHh99w4RRXfen7ZZWyiXAuR0m
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:16c1:: with SMTP id
+ l1mr5583023pfc.52.1644343018972; Tue, 08 Feb 2022 09:56:58 -0800 (PST)
+Date:   Tue,  8 Feb 2022 09:56:51 -0800
+In-Reply-To: <83ab0f7d-96d5-8730-edd7-693f10b09002@gmail.com>
+Message-Id: <20220208175651.155629-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <83ab0f7d-96d5-8730-edd7-693f10b09002@gmail.com>
+X-Mailer: git-send-email 2.35.0.263.gb82422642f-goog
+Subject: Re: [PATCH v2 2/2] cat-file: add --batch-command mode
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     phillip.wood123@gmail.com
+Cc:     git@vger.kernel.org, johncai86@gmail.com,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
+> Jonathan is there any overlap between what this series is trying to do 
+> and your proposal for a batch command[1]? For example would extending 
+> this series to get blob sizes be useful to you?
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+> [1] 
+> https://lore.kernel.org/git/20220207190320.2960362-1-jonathantanmy@google.com/
 
->> > We could use that option in Git's own Makefile to add the file named
->> > "version", which contains $GIT_VERSION.  Hmm, but it also contains a
->> > terminating newline, which would be a bit tricky (but not impossible) to
->> > add.  Would it make sense to add one automatically if it's missing (e.g.
->> > with strbuf_complete_line)?  Not sure.
->>
->> I do not think it is a good UI to give raw file content from the
->> command line, which will be usable only for trivial, even single
->> liner files, and forces people to learn two parallel option, one
->> for trivial ones and the other for contents with meaningful size.
->
-> Nevertheless, it is still the most elegant way that I can think of to
-> generate a diagnostic `.zip` file without messing up the very things that
-> are to be diagnosed: the repository and the worktree.
+There is overlap, yes. I'm not sure of the best way to resolve it,
+though. John mentions a substantial reduction ("roughly half") of Git
+processes [1], and if they foresee needing to access things other than
+object info and contents, it might be better to start with something
+more extensible, like my proposal for a specific batch command. (If not,
+they will encounter another increase in the number of processes.) If
+they think that they can make do with this patch for the time being, I
+think that's fine too: once this is merged (which will be earlier than
+any extensible batch command, for sure), they (and anyone else who needs
+batched object info and contents without the overhead of initializing
+all the data structures in Git) can make use of this improvement.
 
-Puzzled.  Are you feeding contents of a .zip file from the command
-line?
+As for getting blob sizes, I think that --batch-check can already give
+it to us. If that is the case, the series is fine as-is (at least in
+that aspect).
 
-I was mostly worried about busting command line argument limit by
-trying to feed too many bytes, as the ceiling is fairly low on some
-platforms.  Another worry was that when <contents> can have
-arbitrary bytes, with --opt=<path>:<contents> syntax, the input
-becomes ambiguous (i.e. "which colon is the <path> separator?"),
-without some way to escape a colon in the payload.
-
-For a single-liner, --add-file-with-contents=<path>:<contents> would
-be an OK way, and my comment was not a strong objection against this
-new option existing.  It was primarily an objection against changing
-the way to add the 'version' file in our "make dist" procedure to
-use it anyway.
-
-But now I think about it more, I am becoming less happy about it
-existing in the first place.
-
-This will throw another monkey wrench to Konstantin's plan [*] to
-make "git archive" output verifiable with the signature on original
-Git objects, but it is not a new problem ;-)
-
-
-[Reference]
-
-* https://lore.kernel.org/git/20220207213449.ljqjhdx4f45a3lx5@meerkat.local/
+[1] https://lore.kernel.org/git/1b63164ad4d9ec6b5fa6f733b6095b2779298b36.1644251611.git.gitgitgadget@gmail.com/
