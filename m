@@ -2,179 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F5BEC433EF
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 13:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06CAAC433EF
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 14:33:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359203AbiBHNlK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 08:41:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39270 "EHLO
+        id S1358577AbiBHOdN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 09:33:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1357113AbiBHNlJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 08:41:09 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4095AC03FECE
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 05:41:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1644327659;
-        bh=qOr/Ls3D7C1+GFQChNoIA85mBmh93XW3zviRTM/0N54=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bNpfKuciLI2bsC0Il5YKB2tfZSxenAYWJJFG9+tpeQDZFdkWM1Io+JlFrBwZaRz0o
-         wF3RB2KlrJKSXw8c3Ca/seGPFDZLMBR85Km7CekqYN96hTl05/fZtO+odkrOCEW0tP
-         YyZqk0uW4YSRwvrTWpEl5IdBkVwHYMV4QtgPgo7Q=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.27.196.48] ([89.1.212.206]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MC34X-1nTmfG2p5x-00CSka; Tue, 08
- Feb 2022 14:40:59 +0100
-Date:   Tue, 8 Feb 2022 14:40:58 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2] t0051: use "skip_all" under !MINGW in single-test
- file
-In-Reply-To: <patch-v2-1.1-1bc93bcba4b-20220204T134208Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202081437450.347@tvgsbejvaqbjf.bet>
-References: <patch-1.1-34ff968dcb8-20220201T203428Z-avarab@gmail.com> <patch-v2-1.1-1bc93bcba4b-20220204T134208Z-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S230420AbiBHOdM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 09:33:12 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 634DBC03FECE
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 06:33:12 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id s24so13051918oic.6
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 06:33:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=FG5OCOBU1/lNu7N1PgOkhP7LybVC6puOTUpsiBgaY4w=;
+        b=WRQSEMvBWp/VLpbASILMDMYLyF9N0cV+gm5/d0XCcWCCGBz/kDBNQTjUxQG9zEUQot
+         I9Qq9rHUM1zoW+jU5kpj9sDzZhSvfDhaAq/7UDDre3Sv70ukLqnw+Ihbq12PsBUtaPcs
+         i0sUJ39dnk9Vs0biG9h8XwqZnL5k6xni6VGn8jRvGvwK1IGyV6zd58dk3P3NMBQpIDpB
+         gctnTuHAYaBKlN5bphvQBaKdWwdEEBeWAveDnxUf7KbT0pFpdw1k/Qf+cbaQLpAF9Mvv
+         iYib/2B5I0OLH0e5g24UC+UfM6+MTi/8ROuKmHvDE3oimH1FweNSu++dZGLGd+Vp5U4t
+         9SQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=FG5OCOBU1/lNu7N1PgOkhP7LybVC6puOTUpsiBgaY4w=;
+        b=afEMRGu0mmj9hwRmMdvI55/tTkOwjrS024DHKTB4GHqdCLYNIVQbA9kwFuWl5w6jmo
+         N9Sdq0U8U8WOAX3Q5IS2WekhPgpvDA0EVKcubLhm34kaDHq5k0RV/aX+oz6Y6s0tTZRJ
+         OUdX9BZsTtTy0Ab91jo1ngbsf5fq7QpyYXLx/5FTE/8zaFS4cLOBf+liyG4+T7JkEiNb
+         4c01Z5cSFaocskjjbunAXyOYW26zPfA/BnhADOxiAcMqVuTuCmoEkJpQLyWkdhFQ0eiX
+         r71kl0ACpZ9v2J3OHVMiJ06biEYHci4/pYFwa1Qtcy5hotWwjyT5pXf8InPEhtnAuEZi
+         r5sw==
+X-Gm-Message-State: AOAM53345Gev3mwzFi2+87wCNjj1JIb0Xzc3KcfaiVAuKb9f6g/g1cRQ
+        G7O+T4yChjRCfN6HPEBNXeE=
+X-Google-Smtp-Source: ABdhPJxXh7GJkFLdzwdO+w8S4G8OwPnSPiNjiC/TBAUeQFIvbOwGiFGbeWFIeIcjO9Kfddli03t9HQ==
+X-Received: by 2002:a54:4583:: with SMTP id z3mr646796oib.103.1644330791558;
+        Tue, 08 Feb 2022 06:33:11 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:ac5b:5b34:9736:bce3? ([2600:1700:e72:80a0:ac5b:5b34:9736:bce3])
+        by smtp.gmail.com with ESMTPSA id a10sm5199732otb.58.2022.02.08.06.33.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Feb 2022 06:33:10 -0800 (PST)
+Message-ID: <9c79d950-8d42-829f-7a92-6dbbeabbdf73@gmail.com>
+Date:   Tue, 8 Feb 2022 09:33:06 -0500
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-262443756-1644327659=:347"
-X-Provags-ID: V03:K1:RSbsk0pNDH7OzAGz/UZcdsL7hx5i7yK6jSw+TXU4iJOcSMajKgR
- KeG+v4YTTgpTFDo4rBRoWSLxm719i9g1SARn7K289VhlzGR3b9dKmzr5N5ZcbcWj1JqUbDM
- KOSvJav8TZJbg7HJC7RBsVv/v0AbrhaKcBodwyqMfQvp05O1BmO5sJ5JUh+UnHZTgavnKAQ
- 0YaOM4CKI8O3wDgR71d2w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eOPac7HfvQk=:2aQ8aeQZu92WEmRMvzbwWq
- bCcylmGXDYSfHP3to6c4wPT9sGdHAQfaz8jBccUTydCrKbMtpyVJUw0vPwNFkpJMOGHGrj2/y
- CWZzk9sKxfymjLLkwdGsI1ZClwZUpgNFluFTjE5a8wm35l4xtzgaqb/vNrNmoSxnEDPTFPwOG
- oe6Vtw3ml+iLGiGQar1lAyGTmb87KHi6YieIDbzKe8vU3NRQHXQjPadN+i80mStfjUqO5bNyi
- XUtW/uDQD/jlHkeI1g8OmKApe1SUy6Z7ENmxi6L7dVJITcl72nYwuuw9o8E+eRpfdDD9oeDkF
- 3llrVrabGHrj2m2KLUhUlMYSazKrPwcl3mzRrFnRJldRppFkZtI///JLKn0XLOCT3vK2kURkh
- 5YODeIDn3i+9BHnswFzIeTAge612J+0qgdp7jDYdVcjSxBUNonKlFbbC9TduFzZkPZzN+kR3w
- IitFPoKrMTXeRreMR2FO8RwGlm+EZdHNaKKIn3KW/Z7TQodHsqZVWgm6eGkLh+bURGeRllS1X
- GSo9tny+vcpuNwUpWqni7pjmFgXmaZJXHJUtMCxLbDP0HnL7dmrdyD2I4zbU9I5VZmtaFV/7X
- yZ+F+GV3oJA8zcWiE3vytkQ1DTbFolXB/izav56Ty65XeUtVGLrm+B/Qt03w4WsDpYdVlL/96
- h56HYB3EAVDWjzbkYOuqMA7HwJuVcM8SRiJz5XhMlYrBd6sAfQVMm9hJOKXU1oKNw3N+HaK9S
- YUYY4BjwnxGCrgINoMtuOcrlXvuqdbZH1cvgL2hJkiuo+QHKavVhIAuZkZKSqKaPRF2ORtgG6
- uONA1199QG8ThTNgwCKpbrJrViikF5UASOkI6RB4NXLqYBDz5yWkcFjeZVGGx9h1f0KLIGrHL
- DL0/4Ecwrl+N75tECaKb2CLABiJUE/xrMkaBf4dfzGmJnb/ow6on0PrRfMPZfi2lgNFpBldyT
- VL26Nl7zgEBA0aUTzxB25VEKmFIkshWfhoVnAM4/hnRN1of2IhTwwKT4uLEpY5105wN3BDKpZ
- EmWRXrhG17INBC1BBuLBTpRdGn9PoVUtW+y9R5nAdGFvArblzStpa0g3386PJonjHr+s7Z7T9
- 4PYEvG44BtAO3M=
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH v6 0/6] Sparse checkout: fix bug with worktree of bare
+ repo
+Content-Language: en-US
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Sean Allred <allred.sean@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
+ <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com>
+ <CABPp-BG4m6i+yobjnD6UC5S5n3k-HbB7Y5uUNEvrD79ErOoYHg@mail.gmail.com>
+ <CAPig+cT7GwyhPOBdqDDh8jGm+mWK1x9Gt4Zebcw34dgFyaufkw@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <CAPig+cT7GwyhPOBdqDDh8jGm+mWK1x9Gt4Zebcw34dgFyaufkw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 2/8/2022 12:02 AM, Eric Sunshine wrote:
+> On Mon, Feb 7, 2022 at 11:14 PM Elijah Newren <newren@gmail.com> wrote:
+>> On Mon, Feb 7, 2022 at 1:33 PM Derrick Stolee via GitGitGadget
+>> <gitgitgadget@gmail.com> wrote:
+>>> Updates in v6
+>>>  * Updated documentation to use "working tree" over "worktree" and "" over
+>>>    ""
+>>
+>> Not sure what "" over "" means.
+> 
+> Probably related to my review comment[1] about spelling it
+> "$GIT_DIR/worktrees/<id>/" rather than
+> "$GIT_DIR/worktrees/<worktree-name>/".
+> 
+>>>  * Delay some allocations to avoid leaking memory in error conditions.
+>>>  * Use "main worktree" over "base worktree" in comments.
+>>>  *
+>>
+>> Was the empty bullet point meant to cover the new patch 6?
+> 
+> The "Updates in v6" section was botched a bit. If you look closely,
+> the remaining bullet points actually ended up in the "Updates in v5"
+> section. The complete "Updates in v6" section should have been
+> (approximately):
 
---8323328-262443756-1644327659=:347
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Whoops on mixing them up. Sorry about that.
+ 
+>  * Updated documentation to use "working tree" over "worktree" and
+>    "<id>" over "<worktree-name>"
 
-Hi =C3=86var,
+this is the issue for the empty quotes. GGG thought these were HTML
+tags, so made them disappear. I should have used `<id>` and `<worktree-name>`.
 
-On Fri, 4 Feb 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>  * Delay some allocations to avoid leaking memory in error conditions.
+>  * Use "main worktree" over "base worktree" in comments.
+>  * Removed use of git_configset_get_string_tmp() and added a patch that
+>    removes its public declaration.
+>  * Fragile variables are replaced with better ones.
+>  * Variable names and code style improved.
+>  * Several test cleanups in patch 5.
+> 
+> [1]: https://lore.kernel.org/git/pull.1101.v4.git.1643136134.gitgitgadget@gmail.com/T/#m4926177771017bbea82c33e9e03e6a9a004ebf24
 
-> Have this file added in 06ba9d03e34 (t0051: test GIT_TRACE to a
-> windows named pipe, 2018-09-11) use the same "skip_all" pattern as an
-> existing Windows-only test added in 0e218f91c29 (mingw: unset PERL5LIB
-> by default, 2018-10-30) uses.
-
-This is not a nit, even if I won't insist on changing it in this instance:
-This sentence is unnecessarily convoluted and therefore harder to read
-than it has to be. Please pay attention to readability next time you craft
-a commit message.
-
-The rest of the commit message as well as the diff look good to me.
-
-Thanks,
-Johannes
-
->
-> This way TAP consumers like "prove" will show a nice summary when the
-> test is skipped. Instead of:
->
->     $ prove t0051-windows-named-pipe.sh
->     [...]
->     t0051-windows-named-pipe.sh .. ok
->     [...]
->
-> We will prominently show a "skipped" notice:
->
->     $ prove t0051-windows-named-pipe.sh
->     [...]
->     t0051-windows-named-pipe.sh ... skipped: skipping Windows-specific t=
-ests
->     [...]
->
-> This is because we are now making use of the right TAP-y way to
-> communicate this to the consumer. I.e. skipping the whole test file,
-> v.s. skipping individual tests (in this case there's only one test).
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
-> Range-diff against v1:
-> 1:  34ff968dcb8 ! 1:  1bc93bcba4b t0051: use "skip_all" under !MINGW in =
-single-test file
->     @@ Commit message
->          by default, 2018-10-30) uses.
->
->          This way TAP consumers like "prove" will show a nice summary wh=
-en the
->     -    test is skipped, e.g.:
->     +    test is skipped. Instead of:
->     +
->     +        $ prove t0051-windows-named-pipe.sh
->     +        [...]
->     +        t0051-windows-named-pipe.sh .. ok
->     +        [...]
->     +
->     +    We will prominently show a "skipped" notice:
->
->              $ prove t0051-windows-named-pipe.sh
->              [...]
->              t0051-windows-named-pipe.sh ... skipped: skipping Windows-s=
-pecific tests
->              [...]
->
->     +    This is because we are now making use of the right TAP-y way to
->     +    communicate this to the consumer. I.e. skipping the whole test =
-file,
->     +    v.s. skipping individual tests (in this case there's only one t=
-est).
->     +
->          Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
-mail.com>
->
->       ## t/t0051-windows-named-pipe.sh ##
->
->  t/t0051-windows-named-pipe.sh | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/t/t0051-windows-named-pipe.sh b/t/t0051-windows-named-pipe.=
-sh
-> index 10ac92d2250..412f413360d 100755
-> --- a/t/t0051-windows-named-pipe.sh
-> +++ b/t/t0051-windows-named-pipe.sh
-> @@ -3,8 +3,13 @@
->  test_description=3D'Windows named pipes'
->
->  . ./test-lib.sh
-> +if ! test_have_prereq MINGW
-> +then
-> +	skip_all=3D'skipping Windows-specific tests'
-> +	test_done
-> +fi
->
-> -test_expect_success MINGW 'o_append write to named pipe' '
-> +test_expect_success 'o_append write to named pipe' '
->  	GIT_TRACE=3D"$(pwd)/expect" git status >/dev/null 2>&1 &&
->  	{ test-tool windows-named-pipe t0051 >actual 2>&1 & } &&
->  	pid=3D$! &&
-> --
-> 2.35.1.940.ge7a5b4b05f2
->
->
-
---8323328-262443756-1644327659=:347--
+Thanks for cleaning up my cover letter!
+-Stolee
