@@ -2,204 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDE80C433F5
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 01:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DDAAC46467
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 01:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241776AbiBHBXJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Feb 2022 20:23:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56396 "EHLO
+        id S231752AbiBHBsI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Feb 2022 20:48:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241844AbiBHBWh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Feb 2022 20:22:37 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6223AC03CA4D
-        for <git@vger.kernel.org>; Mon,  7 Feb 2022 17:18:30 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id qe15so5210679pjb.3
-        for <git@vger.kernel.org>; Mon, 07 Feb 2022 17:18:30 -0800 (PST)
+        with ESMTP id S231460AbiBHBnV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Feb 2022 20:43:21 -0500
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D168BC061355
+        for <git@vger.kernel.org>; Mon,  7 Feb 2022 17:43:20 -0800 (PST)
+Received: by mail-oo1-xc36.google.com with SMTP id 189-20020a4a03c6000000b003179d7b30d8so5381297ooi.2
+        for <git@vger.kernel.org>; Mon, 07 Feb 2022 17:43:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=etjFwJy+nHUNyJL0y3DC7h4VX3LKqUcj19jdYhoAxJE=;
-        b=AcGPjH4YcA0Z5e66WpV/2z2pL9oQa48noemqHRXwvFmpl9OpJepsn+7QKO8X4+pkLy
-         rV8NzawD9n1vz4xWOLRUkEhVqjA4xfMyGKnbWhXBXW7QGlKje+4rXFf5Q9MFDxWWCL4m
-         +gZ38X/bvRC3KoRxpn5m8M+Z2nxVCG5LpgSiwOU2h6IPf9ddTp3G/+GtCx67qg+RPe00
-         M38mw4t9qvHhui/7q9V3hhrg9JCFcLvH3uDgcdxch0VYuQwC/D2z/N7sHXdGLCpdvEkx
-         itvaXW1wa6MhMOOLuNYsp2btdofdRNvDTjsu2rirPfX95fIHPl51BE0AO+gz7HCRW/Nh
-         a1eQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zSy01yubTS2o8Q7vWu031K8rstskzVWtbAl+5y1hTgA=;
+        b=LKSRxQ6vWQdLiqrOzNpsImW9cjJUqAecfR6qCFMYJI6a0qQOiwb/aXsQI8PcsIizUp
+         g6MGoWu0F85zBcGbdm/mhClYxqEbWGiJ3q4JkOuzymwI/ivGmPp67FBfd1HljVB5Y3C1
+         VG8J1eM7Msr9IekLFPoRamWm5lvScrBKuslKHpu/tBjnvdkzWjLloStRkmw4XQJEa7GL
+         3nsROxumksx257naaAvTT8mOhSUacojOrrbydm993yqi7IuXOVLINyvZJ6B4/kRmkdWD
+         YyYqFcgZjVmPowvQic8oJnTAm7Y6zu8o0678iVL2txVapN8gsx9GKEC17RN0H2KokooP
+         pIEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=etjFwJy+nHUNyJL0y3DC7h4VX3LKqUcj19jdYhoAxJE=;
-        b=LiAwQipSvY9JHP0PpTZafiGfTQsQQt57OW5cbNu8ArvleiNEyEJ0I2YAFb6UBkIS4N
-         O2L/vDpUvRRqujLS9ued9OpduxVXPggOEWFd6u5yuJYo0+oGAqB3Prnljx6fXENiJX0p
-         tIkLr+/Mjy6T8DckzOVIHMKgQqDnoDjXv21wk89ktK/osC/Io/6ulM/65FP8bCna+srp
-         jDQ46ZU7rFTLiQeXUxTARuNElwu5Q1Zmz5tRjE/6kVOqw5bHtvw12+Gm1aMykdYiHzs/
-         Vi3F+VBEgkZ41Kr+kRSq7OlJAvZ3H5xh3/2OydFgvmB4+lFY8tZSfJpf+//gBlmA4DMP
-         urIA==
-X-Gm-Message-State: AOAM531loLslwX1s9etOuz48pZLGwpoLx4FphltLC1LfLWHYpCnK32oo
-        E8E5/fqbDEvMYIZHQ/eVTBM=
-X-Google-Smtp-Source: ABdhPJygKKSjlovcF2yjNOdfoFUF+XRUTu3es6C61thBdCDp93bAkG7wFYxvbjDqw96gQmRcnggm/w==
-X-Received: by 2002:a17:902:f64a:: with SMTP id m10mr2043255plg.46.1644283109596;
-        Mon, 07 Feb 2022 17:18:29 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:c3a3:275c:6d99:cf07])
-        by smtp.gmail.com with ESMTPSA id m14sm13795015pfc.170.2022.02.07.17.18.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Feb 2022 17:18:29 -0800 (PST)
-Date:   Mon, 7 Feb 2022 17:18:26 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Albert Cui <albertcui@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v6 0/5] teach submodules to know they're submodules
-Message-ID: <YgHE4iaV8QHRw64U@google.com>
-References: <20211117005701.371808-1-emilyshaffer@google.com>
- <20220203215914.683922-1-emilyshaffer@google.com>
- <220204.86pmo34d2m.gmgdl@evledraar.gmail.com>
- <YgF5V2Y0Btr8B4cd@google.com>
- <xmqqk0e6gt5j.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zSy01yubTS2o8Q7vWu031K8rstskzVWtbAl+5y1hTgA=;
+        b=xs+rLvMr5Wp26Htd5YU1bVh8a4o6K32iRP6k1HnEne8qeZPR5zw/EWrmUw4k06K776
+         /Y1XpvEylG9wc0sWa8rvPQ7w5dDX3YrAywXpZ1ITrX/Zi1JiiqvEc8ctdC0qNA3WREL+
+         4Wvgnknv3G0oywjEJrZhbiIX9e5MqnlXB2dUuvq6u/2mDbSzcAKN4v9om03LiFqCZPDE
+         iIA7t3MniZunbQ5m4kz/5n9YwlUk4Mxd8LZXa6+xeQXxgPHkWhqSNgS/oqGSsY2vGJT0
+         /CdshBQ2ZkgEB9Ll6C8UfItZQHTTkZUHsyyPfvXXAXROUQeDIPQlHWDbZYhf80HlUTFP
+         IgRQ==
+X-Gm-Message-State: AOAM531zu7sHNozatvRKELbmg1wUYDehBzG/JQDvMROKsK1bO7ktxjNL
+        GQ+T1ZCLTYr0Lp//lHjiPQFuhMKNUSNahLM3e6vTmEYbLr7BGg==
+X-Google-Smtp-Source: ABdhPJyt9df4T1qQEScYP8Yh0r3RHm/uzdsmhukVtBpoCqrqondhZgtksNp9PqTfSdiwrQKCXyVL18RdiJYykx4jft4=
+X-Received: by 2002:a05:6870:d452:: with SMTP id j18mr607175oag.174.1644284600118;
+ Mon, 07 Feb 2022 17:43:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqk0e6gt5j.fsf@gitster.g>
+References: <20220123060318.471414-1-shaoxuan.yuan02@gmail.com>
+ <20220202064300.3601-1-shaoxuan.yuan02@gmail.com> <CAP8UFD2e6xEQa7045Mup8LAHBs=B9EwwvZcLMsp43OM-dsY9eQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD2e6xEQa7045Mup8LAHBs=B9EwwvZcLMsp43OM-dsY9eQ@mail.gmail.com>
+From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Date:   Tue, 8 Feb 2022 09:43:08 +0800
+Message-ID: <CAJyCBOQ2+KNpLZxEvZ010wYNKGa=k8p9UMUVpzj8K-oDitDdsg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] t/lib-read-tree-m-3way: modernize style
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi Christian,
 
->> Here's a few examples:
->>
->> 1. Suppose I track my $HOME directory as a git repository.  Within my
->>    home directory, I have a src/git/ subdirectory with a clone of
->>    git.git, but I never intended to treat this as a submodule.
->>
->>    If I run "git rev-parse --show-superproject-working-tree", then it
->>    will discover my home directory repository, run ls-files in there
->>    to see if it has GITLINK entries, and either see one for src/git if
->>    I had "git add"ed it by mistake or not see one.  In either case,
->>    it would it would view my src/git/ directory as being a submodule
->>    of my home directory even though I hadn't intended it to be so.
+On Mon, Feb 7, 2022 at 7:42 PM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> I am not sure about this one.  If you added an unrelated one with
-> "git add" by mistake, you'd want to know about the mistake sooner
-> rather than later, no?
-
-My point with this example is that it's useful to have a definition of
-what is a submodule repository, to make it unambiguous whether this
-repository is a submodule or whether it's just a repository that
-happens to have been cloned inside of a git-managed worktree.
-
-For the specific example of having run "git add", I don't have any
-very strong opinions.
-
-[...]
->> 2. Suppose I have a copy of a repository such as
->>    https://gerrit.googlesource.com/gerrit/, with all its submodules.
->>    I am in the plugins/replication/ directory.
-[...]
->>                         So for example, if I had run "git rm --cached
->>    plugins/replication" to _prepare to_ remove the plugins/replication
->>    submodule, then "git rev-parse --show-superproject-working-tree"
->>    will produce the wrong result.
+> On Fri, Feb 4, 2022 at 6:00 AM Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> wrote:
+> >
+> > Many invocations of the test_expect_success command in this
+> > file are written in old style where the command, an optional
+> > prerequisite, and the test title are written on separate
+> > lines, and the executable script string begins on its own
+> > line, and these lines are pasted together with backslashes
+> > as necessary.
 >
-> Yes, looking only at the index of the superproject will have that
-> problem, but don't other things in the superproject point at the
-> submodule, too, e.g. submodule.<name>.* configuration variables?
+> It's not very clear here if "these lines" means only the separate
+> lines with the command, an optional prerequisite, and the test title,
+> or if it also means the first (or maybe many) line(s) of the
+> executable script string.
 
-What all of those suggested alternatives have in common is that they
-are pointers from another repository to the submodule.
+"these lines" here means every occurrence of the "the command, an optional
+prerequisite, and the test title" and "the executable script string"
+(four parts) put together.
 
-This would be the first time in git history that we are saying a
-property of a repository depends on having to examine files outside of
-it.  I guess the main question I'd have is, why _wouldn't_ I want a
-submodule to be able to point to the superproject containing it?  I
-can think of many advantages to having that linkage, and the main
-disadvantage I can think of is that it is a change.
-
-I don't think that submodule.<name>.* is an adequate substitute for
-having this setting, because it requires
-- finding the superproject
-- mapping the <name> to a path, using .gitmodules
-- comparing the path to the submodule location
-
-which would be complex, slow, and error-prone.
-
-The one thing that I think could approach being an adequate substitute
-is examining the path to the current repository and stripping off path
-components until we find modules/; then the parent is the containing
-superproject.  That would only work for absorbed submodules, though,
-and it would be less explicit than having a config item.
-
-> And then, after removing them to truly dissociate the submodule from
-> the superproject, "git rev-parse --show-superproject-working-tree"
-> may stop saying that it is a submodule, but this series wants to
-> make it irrelevant what the command says.  Until you unset the
-> configuration variable in the submodule, it will stay to be a
-> submodule of the superproject, but the superproject no longer thinks
-> it is responsible for the submodule.  You'll have to deal with an
-> inconsistent state during the transition either way, so I am not
-> sure it is the best solution to introduce an extra setting that can
-> easily go out of sync.
-
-This hints at a reason why one wouldn't want the linkage back ---
-dealing with the ambiguity of inconsistencies (what if a submodule
-declares a superproject but the superproject does not declare the
-submodule?).
-
-I would not expect that ambiguity to be much of a problem,
-because the typical way to use superproject linkage would be to
-print output from commands like "git status": for example,
-
-	This is a submodule of ../../gerrit; you can run
-
-		git -C ../../gerrit status
-
-	to get the status of the superproject.
-
-An inconsistency could occur due to the user using "mv" (instead of
-"git mv") to move a submodule to a path a different number of path
-components from its superproject.  One way to handle that would be to
-make submodules record a boolean setting reflecting whether they are a
-submodule, instead of the path to the superproject.  (This would be
-similar to settings like core.bare.)  Alternatively, if the path to
-the superproject is recorded and if "git fsck" is able to notice such
-an inconsistency, then the user should be able to have an okay
-experience repairing it.
-
-[...]
->>    If "git status" runs "git rev-parse
->>    --show-superproject-working-tree", then git would walk up the
->>    filesystem above my mawk/ directory, looking for another .git dir.
->>    We can reach an NFS automounter directory and just hang.  Even
->>    without an NFS automounter, we'd expect this to take a while
->>    because, unlike normal repository discovery, we have no reason to
->>    believe that the walk is going to quickly discover a .git directory
->>    and terminate.  So this would violate user expectations.
+> > An invocation of the test_expect_success command in modern
+> > test scripts however writes the prerequisite and the title
+> > on the same line as the test_expect_success command itself,
+> > and ends the line with a single quote that begins the
+> > executable script string.
 >
-> It would be a problem, but I do not know if "this is a submodule of
-> that superproject" link is the only solution, let alone the most
-> effective one.  It seems to me that you are looking more for
-> something like GIT_CEILING_DIRECTORIES.
+> It could also be 'test_expect_failure' instead of 'test_expect_success'.
 
-Who is the "you" addressed here?  The end user can use
-GIT_CEILING_DIRECTORIES if they are expecting to run git commands
-within an NFS automounter directory and outside of any git repository,
-but they'd be right to be surprised if that suddenly became required
-when inside git repositories.  I don't think we should assume that
-running an extra .git discovery walk is cost-free to users who are not
-using submodules and an acceptable burden to impose on them for the
-sake of submodule users.
+Agree, it should be put in a more general way, for example, "test functions
+such as 'test_expect_success' and 'test_expect_failure' ", for accuracy.
 
-Thanks and hope that helps,
-Jonathan
+> > Update the style for uniformity.
+> >
+> > Signed-off-by: Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+>
+> >  for p in M? Z/M?
+> >  do
+> >      echo This is modified $p in the branch A. >$p
+> > -    test_expect_success \
+> > -       'change in branch A (modification)' \
+> > -        "git update-index $p"
+> > +    test_expect_success 'change in branch A (modification)' '
+> > +        git update-index $p
+> > +    '
+>
+> The above is not just about moving single quotes from one line to
+> another, but it changes some double quotes to single quotes, which
+> means that $p might not be interpreted in the same way. This is not
+> just a style issue and it should be explained in the commit message
+> why it's ok to make this change.
+
+Yes, I learned the reason behind from Eric[1] and I also went through
+t/test-lib.sh and t/test-lib-functions.sh to see it myself.
+And the reason should be written in the commit message for a potential
+explanation.
+
+Overall, thanks for the review, and I will ship a v4 along with the
+modifications.
+
+[1]: https://lore.kernel.org/git/CAPig+cS5tOr2NRJmAC1BNQPKYyeLXy0iy36q35-y7rFkrWewJw@mail.gmail.com/
+
+--
+Thanks,
+Shaoxuan
