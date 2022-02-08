@@ -2,501 +2,255 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 29E61C4707A
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 13:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3342CC433F5
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 13:15:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350578AbiBHNOy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 08:14:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52160 "EHLO
+        id S239491AbiBHNPQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 08:15:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350309AbiBHMPQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 07:15:16 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC9BC03FEC0
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 04:15:14 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id b3so45003pfg.7
-        for <git@vger.kernel.org>; Tue, 08 Feb 2022 04:15:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=H5zHk9dk8E6C5fSYiDHkj/hWgwjz7j0RBjHbuYJuqy0=;
-        b=f2nwIbeaGzwvAA1u61WZSF6BzwXqAj3DnF/DuCBRVJoD+JjAMmkDYlqiMQ2WP6wcFE
-         wotO6fY9PLoJbjowQi1a/UlFUn0kbwzDFfIx8AEXUm1V6hJ/ibUOke9uZzwnP7wuUqo1
-         GIYMz/8G8NS5/Dx2bJLWbmcNzJTqqeheGpqxkXvLo5ytokzQsDCO0BxD4iPw7Enn8GrM
-         u33UuEnkRxd+xP0K4DZxS5lDIWRrml3tEpwLWNeIbyhhJ2LApgVuuKqwtlRKhXIwZS7B
-         Xs8xlVgifBTWXG3HnsgRDSR5kutlygD7GF6W43e+Pz5kSkV9TtnrKn9WxyU4JKxW6Fnr
-         fCUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=H5zHk9dk8E6C5fSYiDHkj/hWgwjz7j0RBjHbuYJuqy0=;
-        b=GGgesVUkyzPjuEQSwfOjbnp1CIm+jUoZVqmTSSHwYDBXXK2Jc7wwyn3NET/oWPpebB
-         1UACvSlbQYehx1xlmxnrgTiMYyzCYnDVdQAyR3iLN/JFAH36DBwTiDE6/3lsb0yhHUtq
-         S+5zchTvWr3Fn22Z3jCfr5Bi770HdHv8O3sQxU0/qsLwQ1Rww6DrFszo3IqLkmcNsQhP
-         l7Ps1cz7ILyShw/5CCjs9HZzwLSleQGAHxdwoCS9JmnD7Tf9OQju6tT4kndrDhmkjG1C
-         KFAAomjFKgMtfLf3ztUilah6pCPspMUnFmW0yJE2m2wNVtaeeHMbQwEkfLMcQS+rlbnv
-         i90A==
-X-Gm-Message-State: AOAM531Jnm04Z8i+4RUuUVUfApcDzGsYjLAIcxAfIZiSpTqALhkbl68s
-        ZGfc4Lj126ntZVysIZMajjPOXP2PY70gfg==
-X-Google-Smtp-Source: ABdhPJzpSlkC7YwikhflyIkRuCLTNNv1lKFlhAIrvYyjwIdt6B7GGp1/nItomqb6++1HQONeJ9i3NA==
-X-Received: by 2002:a05:6a00:1342:: with SMTP id k2mr4178716pfu.20.1644322514265;
-        Tue, 08 Feb 2022 04:15:14 -0800 (PST)
-Received: from code-infra-dev-cbj.ea134 ([140.205.70.44])
-        by smtp.gmail.com with ESMTPSA id t3sm16973344pfg.28.2022.02.08.04.15.11
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Feb 2022 04:15:13 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     dyroneteng@gmail.com
-Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, congdanhqx@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, martin.agren@gmail.com,
-        peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v11 11/13] ls-tree.c: introduce "--format" option
-Date:   Tue,  8 Feb 2022 20:14:36 +0800
-Message-Id: <5936004f1386388740ded0208ebeb8c5d0c88ef2.1644319434.git.dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.34.1.403.gb35f2687cf.dirty
-In-Reply-To: <cover.1644319434.git.dyroneteng@gmail.com>
-References: <cover.1644319434.git.dyroneteng@gmail.com>
+        with ESMTP id S239810AbiBHMzA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 07:55:00 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A138AC03FEC0
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 04:54:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1644324895;
+        bh=ltg76oZ0JIcwUPR8cE+e1YriJHrzOUOSSYI8HGDeulU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=AWMTUs59VpFqVbSgXi7reidLPH25XQpi7V7Tk0V9iUH6aXoAXmCX+g9BcprfkeYs8
+         wlUqe0o9Py0E2tzm0xHHGGAoIlbP/tp9IvXfe23x5ZjC+QIbjqnm1RR1OxwiNPUfHE
+         NPCsVFWVodqvUCrAdblDjroOfR9HL5BGHB0ZzmxE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.27.196.48] ([89.1.212.206]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIMbO-1nVhlb0RFc-00EPlT; Tue, 08
+ Feb 2022 13:54:55 +0100
+Date:   Tue, 8 Feb 2022 13:54:53 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 1/6] archive: optionally add "virtual" files
+In-Reply-To: <d1e333b6-3ec1-8569-6ea9-4abd3dee1947@web.de>
+Message-ID: <nycvar.QRO.7.76.6.2202081310480.347@tvgsbejvaqbjf.bet>
+References: <pull.1128.git.1643186507.gitgitgadget@gmail.com> <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com> <49ff3c1f2b32b16df2b4216aa016d715b6de46bc.1644187146.git.gitgitgadget@gmail.com> <d1e333b6-3ec1-8569-6ea9-4abd3dee1947@web.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-735070010-1644324895=:347"
+X-Provags-ID: V03:K1:16uPY9OF8+Y2NmRdZ9RKt25QfKB/7U2b6kzxVXOLmfOExKr1lqt
+ IjRKKFx35cNG//NWN58vnree/s8K13I60SqU84utacQpBoRS+GpmXrKtv5/dCDqY/kun6UY
+ r2dUTAESaxMgEE4jqocCKRMkAqA9czLF6qpQ/YfDU7hd2Y81MCq/DszisqVg9fray8Nkg8c
+ 9eeVX/EJ/Qxdt+HZ7DX7Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:r6x5UZP0s4k=:zzedxFzACy5wHrQUSFzsX1
+ v8WrLOvv2Qr2LVN6gjat/VcElLrledaDYtT9R/2F80cu3Mk96vNkz9uNVL2BqAl51zqsKb9Qe
+ 4Gg8BGcvcu8+usC5cORrIcTE01fJPXCBM9nvnCRwZJfRAFZbyJ4TISDQO13W0F5B9NcFCRt99
+ ZiVQSwDKeDgu5jIYDH7rKE1TK7ftRyeKJw5aG4pcme9ulDJIqN/iYmLXNgMfUgiB9BGVyjh/t
+ 6634D3ItrtyuSPBgXLEfnhrQ6DGxyGsKX4vtd8qmc7OYFFNraii1GqRNj/GlIF2RmsvImn/+Y
+ xqHri7FczEUsTlBtQVyja0AmChiY3pUwZWqSfUZvrSmRPmo9bKdtk4PUmEpmeCLMKd95PiwCr
+ jSk0kWDFTbSW7s6CcvUSl4QmxferBrk0YXTiWbTwYHMJ0EAcpIbEndVezM3DURwz4695e8cnA
+ sb7r8RegxqPg8EKfh2K1BJao0SyNus9X7dLQUxfztVhrcHWrYti0R6NVpcGAHtH2hpLtxw3ps
+ zhi11CJKnHDwFvEwITywKPQjbYALs+CpY0khQ8w/dj+WqpwtFIhMTjjxQqD/tErx6SNof7INs
+ 82YMWowtVhAemgee8J99IIdO/bT2hTEuVmilTZxgtbPL7ZWyszGqeNoaM7W9k6jHSPVqowPWp
+ wzsQ5nm6+vWj2rfEXJ5tOltSh6r99APTTQJZ2haKPqZEwgpwOJ5W3DeE9vru2aNMeMq9yXYtO
+ I0eEzhgw32KlZHn/pkHf5mHu7BlHipeoAL4Uwwoacg52mc2qFHdgDePRdB+zsT0KSQJuVN/n5
+ Pcv4KDDbll0nhYDaIoGf7DoqRaXtoohXwz7enNCtK9e+2VOtYs503WUjnrv0/5qcq6Q0/pZmn
+ fRLTQY8kTuUbr0lRG7wHEAKDV5EwEJEENxvUBj2HlNHreBsQDWQR3Niha9/JUBlhY/Z3BhHy/
+ PEwyNeEhQraDgGg9tQZx6wET0TNKzmpIr2sDaGEk7C9/op4Z3wPULFem23UzHjSMIFewv9WPl
+ U4iROXIYtYHVQr6eTHt24r+mGY/ivlkROWCUMRxBCJr/5PRVmxzYnZGMsufrCUmOyjOzrFRyq
+ I3xaWxKVrXLXhw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Add a --format option to ls-tree. It has an existing default output,
-and then --long and --name-only options to emit the default output
-along with the objectsize and, or to only emit object paths.
+--8323328-735070010-1644324895=:347
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Rather than add --type-only, --object-only etc. we can just support a
---format using a strbuf_expand() similar to "for-each-ref
---format". We might still add such options in the future for
-convenience.
+Hi Ren=C3=A9,
 
-The --format implementation is slower than the existing code, but this
-change does not cause any performance regressions. We'll leave the
-existing show_tree() unchanged, and only run show_tree_fmt() in if
-a --format different than the hardcoded built-in ones corresponding to
-the existing modes is provided.
+On Mon, 7 Feb 2022, Ren=C3=A9 Scharfe wrote:
 
-I.e. something like the "--long" output would be much slower with
-this, mainly due to how we need to allocate various things to do with
-quote.c instead of spewing the output directly to stdout.
-
-The new option of '--format' comes from Ævar Arnfjörð Bjarmasonn's
-idea and suggestion, this commit makes modifications in terms of the
-original discussion on community [1].
-
-Here is the statistics about performance tests:
-
-1. Default format (hitten the builtin formats):
-
-    "git ls-tree <tree-ish>" vs "--format='%(mode) %(type) %(object)%x09%(file)'"
-
-    $hyperfine --warmup=10 "/opt/git/master/bin/git ls-tree -r HEAD"
-    Benchmark 1: /opt/git/master/bin/git ls-tree -r HEAD
-    Time (mean ± σ):     105.2 ms ±   3.3 ms    [User: 84.3 ms, System: 20.8 ms]
-    Range (min … max):    99.2 ms … 113.2 ms    28 runs
-
-    $hyperfine --warmup=10 "/opt/git/ls-tree-oid-only/bin/git ls-tree -r --format='%(mode) %(type) %(object)%x09%(file)'  HEAD"
-    Benchmark 1: /opt/git/ls-tree-oid-only/bin/git ls-tree -r --format='%(mode) %(type) %(object)%x09%(file)'  HEAD
-    Time (mean ± σ):     106.4 ms ±   2.7 ms    [User: 86.1 ms, System: 20.2 ms]
-    Range (min … max):   100.2 ms … 110.5 ms    29 runs
-
-2. Default format includes object size (hitten the builtin formats):
-
-    "git ls-tree -l <tree-ish>" vs "--format='%(mode) %(type) %(object) %(size:padded)%x09%(file)'"
-
-    $hyperfine --warmup=10 "/opt/git/master/bin/git ls-tree -r -l HEAD"
-    Benchmark 1: /opt/git/master/bin/git ls-tree -r -l HEAD
-    Time (mean ± σ):     335.1 ms ±   6.5 ms    [User: 304.6 ms, System: 30.4 ms]
-    Range (min … max):   327.5 ms … 348.4 ms    10 runs
-
-    $hyperfine --warmup=10 "/opt/git/ls-tree-oid-only/bin/git ls-tree -r --format='%(mode) %(type) %(object) %(size:padded)%x09%(file)'  HEAD"
-    Benchmark 1: /opt/git/ls-tree-oid-only/bin/git ls-tree -r --format='%(mode) %(type) %(object) %(size:padded)%x09%(file)'  HEAD
-    Time (mean ± σ):     337.2 ms ±   8.2 ms    [User: 309.2 ms, System: 27.9 ms]
-    Range (min … max):   328.8 ms … 349.4 ms    10 runs
-
-Links:
-	[1] https://public-inbox.org/git/RFC-patch-6.7-eac299f06ff-20211217T131635Z-avarab@gmail.com/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
- Documentation/git-ls-tree.txt |  59 ++++++++++++++--
- builtin/ls-tree.c             | 129 +++++++++++++++++++++++++++++++++-
- t/t3104-ls-tree-format.sh     |  81 +++++++++++++++++++++
- 3 files changed, 262 insertions(+), 7 deletions(-)
- create mode 100755 t/t3104-ls-tree-format.sh
-
-diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
-index db02d6d79a..db29a9efb5 100644
---- a/Documentation/git-ls-tree.txt
-+++ b/Documentation/git-ls-tree.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git ls-tree' [-d] [-r] [-t] [-l] [-z]
--	    [--name-only] [--name-status] [--full-name] [--full-tree] [--abbrev[=<n>]]
-+	    [--name-only] [--name-status] [--full-name] [--full-tree] [--abbrev[=<n>]] [--format=<format>]
- 	    <tree-ish> [<path>...]
- 
- DESCRIPTION
-@@ -74,6 +74,16 @@ OPTIONS
- 	Do not limit the listing to the current working directory.
- 	Implies --full-name.
- 
-+--format=<format>::
-+	A string that interpolates `%(fieldname)` from the result
-+	being shown. It also interpolates `%%` to `%`, and
-+	`%xx` where `xx` are hex digits interpolates to character
-+	with hex code `xx`; for example `%00` interpolates to
-+	`\0` (NUL), `%09` to `\t` (TAB) and `%0a` to `\n` (LF).
-+	When specified, `--format` cannot be combined with other
-+	format-altering options, including `--long`, `--name-only`
-+	and `--object-only`.
-+
- [<path>...]::
- 	When paths are given, show them (note that this isn't really raw
- 	pathnames, but rather a list of patterns to match).  Otherwise
-@@ -82,16 +92,29 @@ OPTIONS
- 
- Output Format
- -------------
--        <mode> SP <type> SP <object> TAB <file>
-+
-+The output format of `ls-tree` is determined by either the `--format`
-+option, or other format-altering options such as `--name-only` etc.
-+(see `--format` above).
-+
-+The use of certain `--format` directives is equivalent to using those
-+options, but invoking the full formatting machinery can be slower than
-+using an appropriate formatting option.
-+
-+In cases where the `--format` would exactly map to an existing option
-+`ls-tree` will use the appropriate faster path. Thus the default format
-+is equivalent to:
-+
-+        %(objectmode) %(objecttype) %(objectname)%x09%(path)
- 
- This output format is compatible with what `--index-info --stdin` of
- 'git update-index' expects.
- 
- When the `-l` option is used, format changes to
- 
--        <mode> SP <type> SP <object> SP <object size> TAB <file>
-+        %(objectmode) %(objecttype) %(objectname) %(objectsize:padded)%x09%(path)
- 
--Object size identified by <object> is given in bytes, and right-justified
-+Object size identified by <objectname> is given in bytes, and right-justified
- with minimum width of 7 characters.  Object size is given only for blobs
- (file) entries; for other entries `-` character is used in place of size.
- 
-@@ -100,6 +123,34 @@ quoted as explained for the configuration variable `core.quotePath`
- (see linkgit:git-config[1]).  Using `-z` the filename is output
- verbatim and the line is terminated by a NUL byte.
- 
-+Customized format:
-+
-+It is possible to print in a custom format by using the `--format` option,
-+which is able to interpolate different fields using a `%(fieldname)` notation.
-+For example, if you only care about the "objectname" and "path" fields, you
-+can execute with a specific "--format" like
-+
-+        git ls-tree --format='%(objectname) %(path)' <tree-ish>
-+
-+FIELD NAMES
-+-----------
-+
-+Various values from structured fields can be used to interpolate
-+into the resulting output. For each outputing line, the following
-+names can be used:
-+
-+objectmode::
-+	The mode of the object.
-+objecttype::
-+	The type of the object (`blob` or `tree`).
-+objectname::
-+	The name of the object.
-+objectsize[:padded]::
-+	The size of the object ("-" if it's a tree).
-+	It also supports a padded format of size with "%(size:padded)".
-+path::
-+	The pathname of the object.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 293b8f9dfb..1c71e5d543 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -33,7 +33,10 @@ static unsigned int shown_fields;
- #define FIELD_MODE (1 << 4)
- #define FIELD_DEFAULT 29 /* 11101 size is not shown to output by default */
- #define FIELD_LONG_DEFAULT  (FIELD_DEFAULT | FIELD_SIZE)
+> Am 06.02.22 um 23:39 schrieb Johannes Schindelin via GitGitGadget:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > With the `--add-file-with-content=3D<path>:<content>` option, `git
+> > archive` now supports use cases where relatively trivial files need to
+> > be added that do not exist on disk.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  Documentation/git-archive.txt | 11 ++++++++
+> >  archive.c                     | 51 +++++++++++++++++++++++++++++-----=
 -
-+static const char *format;
-+static const char *default_format = "%(objectmode) %(objecttype) %(objectname)%x09%(path)";
-+static const char *long_format = "%(objectmode) %(objecttype) %(objectname) %(objectsize:padded)%x09%(path)";
-+static const char *name_only_format = "%(path)";
- struct show_tree_data {
- 	unsigned mode;
- 	enum object_type type;
-@@ -55,6 +58,72 @@ enum {
- 
- static int cmdmode = MODE_UNSPECIFIED;
- 
-+static void expand_objectsize(struct strbuf *line, const struct object_id *oid,
-+			      const enum object_type type, unsigned int padded)
-+{
-+	if (type == OBJ_BLOB) {
-+		unsigned long size;
-+		if (oid_object_info(the_repository, oid, &size) < 0)
-+			die(_("could not get object info about '%s'"),
-+			    oid_to_hex(oid));
-+		if (padded)
-+			strbuf_addf(line, "%7"PRIuMAX, (uintmax_t)size);
-+		else
-+			strbuf_addf(line, "%"PRIuMAX, (uintmax_t)size);
-+	} else if (padded) {
-+		strbuf_addf(line, "%7s", "-");
-+	} else {
-+		strbuf_addstr(line, "-");
-+	}
-+}
-+
-+static size_t expand_show_tree(struct strbuf *sb, const char *start,
-+			       void *context)
-+{
-+	struct show_tree_data *data = context;
-+	const char *end;
-+	const char *p;
-+	unsigned int errlen;
-+	size_t len = strbuf_expand_literal_cb(sb, start, NULL);
-+
-+	if (len)
-+		return len;
-+	if (*start != '(')
-+		die(_("bad ls-tree format: as '%s'"), start);
-+
-+	end = strchr(start + 1, ')');
-+	if (!end)
-+		die(_("bad ls-tree format: element '%s' does not end in ')'"), start);
-+
-+	len = end - start + 1;
-+	if (skip_prefix(start, "(objectmode)", &p)) {
-+		strbuf_addf(sb, "%06o", data->mode);
-+	} else if (skip_prefix(start, "(objecttype)", &p)) {
-+		strbuf_addstr(sb, type_name(data->type));
-+	} else if (skip_prefix(start, "(objectsize:padded)", &p)) {
-+		expand_objectsize(sb, data->oid, data->type, 1);
-+	} else if (skip_prefix(start, "(objectsize)", &p)) {
-+		expand_objectsize(sb, data->oid, data->type, 0);
-+	} else if (skip_prefix(start, "(objectname)", &p)) {
-+		strbuf_add_unique_abbrev(sb, data->oid, abbrev);
-+	} else if (skip_prefix(start, "(path)", &p)) {
-+		const char *name = data->base->buf;
-+		const char *prefix = chomp_prefix ? ls_tree_prefix : NULL;
-+		struct strbuf quoted = STRBUF_INIT;
-+		struct strbuf sbuf = STRBUF_INIT;
-+		strbuf_addstr(data->base, data->pathname);
-+		name = relative_path(data->base->buf, prefix, &sbuf);
-+		quote_c_style(name, &quoted, NULL, 0);
-+		strbuf_addbuf(sb, &quoted);
-+		strbuf_release(&sbuf);
-+		strbuf_release(&quoted);
-+	} else {
-+		errlen = (unsigned long)len;
-+		die(_("bad ls-tree format: %%%.*s"), errlen, start);
-+	}
-+	return len;
-+}
-+
- static int parse_shown_fields(void)
- {
- 	if (cmdmode == MODE_NAME_ONLY) {
-@@ -101,6 +170,38 @@ static int show_recursive(const char *base, size_t baselen, const char *pathname
- 	return 0;
- }
- 
-+static int show_tree_fmt(const struct object_id *oid, struct strbuf *base,
-+			 const char *pathname, unsigned mode, void *context)
-+{
-+	size_t baselen;
-+	int recurse = 0;
-+	struct strbuf sb = STRBUF_INIT;
-+	enum object_type type = object_type(mode);
-+
-+	struct show_tree_data data = {
-+		.mode = mode,
-+		.type = type,
-+		.oid = oid,
-+		.pathname = pathname,
-+		.base = base,
-+	};
-+
-+	if (type == OBJ_TREE && show_recursive(base->buf, base->len, pathname))
-+		recurse = READ_TREE_RECURSIVE;
-+	if (type == OBJ_TREE && recurse && !(ls_options & LS_SHOW_TREES))
-+		return recurse;
-+	if (type == OBJ_BLOB && (ls_options & LS_TREE_ONLY))
-+		return 0;
-+
-+	baselen = base->len;
-+	strbuf_expand(&sb, format, expand_show_tree, &data);
-+	strbuf_addch(&sb, line_termination);
-+	fwrite(sb.buf, sb.len, 1, stdout);
-+	strbuf_release(&sb);
-+	strbuf_setlen(base, baselen);
-+	return recurse;
-+}
-+
- static int show_default(struct show_tree_data *data)
- {
- 	size_t baselen = data->base->len;
-@@ -174,6 +275,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	struct object_id oid;
- 	struct tree *tree;
- 	int i, full_tree = 0;
-+	read_tree_fn_t fn = show_tree;
- 	const struct option ls_tree_options[] = {
- 		OPT_BIT('d', NULL, &ls_options, N_("only show trees"),
- 			LS_TREE_ONLY),
-@@ -194,6 +296,9 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "full-tree", &full_tree,
- 			 N_("list entire tree; not just current directory "
- 			    "(implies --full-name)")),
-+		OPT_STRING_F(0, "format", &format, N_("format"),
-+					 N_("format to use for the output"),
-+					 PARSE_OPT_NONEG),
- 		OPT__ABBREV(&abbrev),
- 		OPT_END()
- 	};
-@@ -214,6 +319,10 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	    ((LS_TREE_ONLY|LS_RECURSIVE) & ls_options))
- 		ls_options |= LS_SHOW_TREES;
- 
-+	if (format && cmdmode)
-+		usage_msg_opt(
-+			_("--format can't be combined with other format-altering options"),
-+			ls_tree_usage, ls_tree_options);
- 	if (argc < 1)
- 		usage_with_options(ls_tree_usage, ls_tree_options);
- 	if (get_oid(argv[0], &oid))
-@@ -237,6 +346,20 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	tree = parse_tree_indirect(&oid);
- 	if (!tree)
- 		die("not a tree object");
--	return !!read_tree(the_repository, tree,
--			   &pathspec, show_tree, NULL);
-+	/*
-+	 * The generic show_tree_fmt() is slower than show_tree(), so
-+	 * take the fast path if possible.
-+	 */
-+	if (format && (!strcmp(format, default_format))) {
-+		fn = show_tree;
-+	} else if (format && (!strcmp(format, long_format))) {
-+		shown_fields = shown_fields | FIELD_SIZE;
-+		fn = show_tree;
-+	} else if (format && (!strcmp(format, name_only_format))) {
-+		shown_fields = FIELD_PATH_NAME;
-+		fn = show_tree;
-+	} else if (format)
-+		fn = show_tree_fmt;
-+
-+	return !!read_tree(the_repository, tree, &pathspec, fn, NULL);
- }
-diff --git a/t/t3104-ls-tree-format.sh b/t/t3104-ls-tree-format.sh
-new file mode 100755
-index 0000000000..e08c83dc47
---- /dev/null
-+++ b/t/t3104-ls-tree-format.sh
-@@ -0,0 +1,81 @@
-+#!/bin/sh
-+
-+test_description='ls-tree --format'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success 'ls-tree --format usage' '
-+	test_expect_code 129 git ls-tree --format=fmt -l HEAD &&
-+	test_expect_code 129 git ls-tree --format=fmt --name-only HEAD &&
-+	test_expect_code 129 git ls-tree --format=fmt --name-status HEAD
-+'
-+
-+test_expect_success 'setup' '
-+	mkdir dir &&
-+	test_commit dir/sub-file &&
-+	test_commit top-file
-+'
-+
-+test_ls_tree_format () {
-+	format=$1 &&
-+	opts=$2 &&
-+	fmtopts=$3 &&
-+	shift 2 &&
-+	git ls-tree $opts -r HEAD >expect.raw &&
-+	sed "s/^/> /" >expect <expect.raw &&
-+	git ls-tree --format="> $format" -r $fmtopts HEAD >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'ls-tree --format=<default-like>' '
-+	test_ls_tree_format \
-+		"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
-+		""
-+'
-+
-+test_expect_success 'ls-tree --format=<long-like>' '
-+	test_ls_tree_format \
-+		"%(objectmode) %(objecttype) %(objectname) %(objectsize:padded)%x09%(path)" \
-+		"--long"
-+'
-+
-+test_expect_success 'ls-tree --format=<name-only-like>' '
-+	test_ls_tree_format \
-+		"%(path)" \
-+		"--name-only"
-+'
-+
-+test_expect_success 'ls-tree combine --format=<default-like> and -t' '
-+	test_ls_tree_format \
-+	"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
-+	"-t" \
-+	"-t"
-+'
-+
-+test_expect_success 'ls-tree combine --format=<default-like> and --full-name' '
-+	test_ls_tree_format \
-+	"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
-+	"--full-name" \
-+	"--full-name"
-+'
-+
-+test_expect_success 'ls-tree combine --format=<default-like> and --full-tree' '
-+	test_ls_tree_format \
-+	"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
-+	"--full-tree" \
-+	"--full-tree"
-+'
-+
-+test_expect_success 'ls-tree hit fast-path with --format=<default-like>' '
-+	git ls-tree -r HEAD >expect &&
-+	git ls-tree --format="%(objectmode) %(objecttype) %(objectname)%x09%(path)" -r HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-tree hit fast-path with --format=<name-only-like>' '
-+	git ls-tree -r --name-only HEAD >expect &&
-+	git ls-tree --format="%(path)" -r HEAD >actual &&
-+	test_cmp expect actual
-+'
-+test_done
--- 
-2.34.1.403.gb35f2687cf.dirty
+> >  t/t5003-archive-zip.sh        | 12 +++++++++
+> >  3 files changed, 66 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/Documentation/git-archive.txt b/Documentation/git-archive=
+.txt
+> > index bc4e76a7834..1b52a0a65a1 100644
+> > --- a/Documentation/git-archive.txt
+> > +++ b/Documentation/git-archive.txt
+> > @@ -61,6 +61,17 @@ OPTIONS
+> >  	by concatenating the value for `--prefix` (if any) and the
+> >  	basename of <file>.
+> >
+> > +--add-file-with-content=3D<path>:<content>::
+> > +	Add the specified contents to the archive.  Can be repeated to add
+> > +	multiple files.  The path of the file in the archive is built
+> > +	by concatenating the value for `--prefix` (if any) and the
+> > +	basename of <file>.
+> > ++
+> > +The `<path>` cannot contain any colon, the file mode is limited to
+> > +a regular file, and the option may be subject platform-dependent
+>
+> s/subject/& to/
 
+Thanks.
+
+> > +command-line limits. For non-trivial cases, write an untracked file
+> > +and use `--add-file` instead.
+> > +
+>
+> We could use that option in Git's own Makefile to add the file named
+> "version", which contains $GIT_VERSION.
+
+We could do that, that opportunity is a side effect of this patch series.
+
+> Hmm, but it also contains a terminating newline, which would be a bit
+> tricky (but not impossible) to add.  Would it make sense to add one
+> automatically if it's missing (e.g. with strbuf_complete_line)?  Not
+> sure.
+
+It is really easy:
+
+	LF=3D'
+	'
+
+	git archive --add-file-with-content=3Dversion:"$GIT_VERSION$LF" ...
+
+(That's shell script, in the Makefile it would need those `\`
+continuations.)
+
+> >  --worktree-attributes::
+> >  	Look for attributes in .gitattributes files in the working tree
+> >  	as well (see <<ATTRIBUTES>>).
+> > diff --git a/archive.c b/archive.c
+> > index a3bbb091256..172efd690c3 100644
+> > --- a/archive.c
+> > +++ b/archive.c
+> > @@ -263,6 +263,7 @@ static int queue_or_write_archive_entry(const stru=
+ct object_id *oid,
+> >  struct extra_file_info {
+> >  	char *base;
+> >  	struct stat stat;
+> > +	void *content;
+> >  };
+> >
+> >  int write_archive_entries(struct archiver_args *args,
+> > @@ -337,7 +338,13 @@ int write_archive_entries(struct archiver_args *a=
+rgs,
+> >  		strbuf_addstr(&path_in_archive, basename(path));
+> >
+> >  		strbuf_reset(&content);
+> > -		if (strbuf_read_file(&content, path, info->stat.st_size) < 0)
+> > +		if (info->content)
+> > +			err =3D write_entry(args, &fake_oid, path_in_archive.buf,
+> > +					  path_in_archive.len,
+> > +					  info->stat.st_mode,
+> > +					  info->content, info->stat.st_size);
+> > +		else if (strbuf_read_file(&content, path,
+> > +					  info->stat.st_size) < 0)
+> >  			err =3D error_errno(_("could not read '%s'"), path);
+> >  		else
+> >  			err =3D write_entry(args, &fake_oid, path_in_archive.buf,
+> > @@ -493,6 +500,7 @@ static void extra_file_info_clear(void *util, cons=
+t char *str)
+> >  {
+> >  	struct extra_file_info *info =3D util;
+> >  	free(info->base);
+> > +	free(info->content);
+> >  	free(info);
+> >  }
+> >
+> > @@ -514,14 +522,38 @@ static int add_file_cb(const struct option *opt,=
+ const char *arg, int unset)
+> >  	if (!arg)
+> >  		return -1;
+> >
+> > -	path =3D prefix_filename(args->prefix, arg);
+> > -	item =3D string_list_append_nodup(&args->extra_files, path);
+> > -	item->util =3D info =3D xmalloc(sizeof(*info));
+> > +	info =3D xmalloc(sizeof(*info));
+> >  	info->base =3D xstrdup_or_null(base);
+> > -	if (stat(path, &info->stat))
+> > -		die(_("File not found: %s"), path);
+> > -	if (!S_ISREG(info->stat.st_mode))
+> > -		die(_("Not a regular file: %s"), path);
+> > +
+> > +	if (strcmp(opt->long_name, "add-file-with-content")) {
+>
+> Equivalent to:
+>
+> 	if (!strcmp(opt->long_name, "add-file")) {
+>
+> I mention that because the inequality check confused me a bit at first.
+
+Good point. For some reason I thought it would be clearer to handle
+everything but `--add-file-with-content` here, but that "everything but"
+is only `--add-file`, so I sowed more confusion. Sorry about that.
+
+>
+> > +		path =3D prefix_filename(args->prefix, arg);
+> > +		if (stat(path, &info->stat))
+> > +			die(_("File not found: %s"), path);
+> > +		if (!S_ISREG(info->stat.st_mode))
+> > +			die(_("Not a regular file: %s"), path);
+> > +		info->content =3D NULL; /* read the file later */
+> > +	} else {
+> > +		const char *colon =3D strchr(arg, ':');
+> > +		char *p;
+> > +
+> > +		if (!colon)
+> > +			die(_("missing colon: '%s'"), arg);
+> > +
+> > +		p =3D xstrndup(arg, colon - arg);
+> > +		if (!args->prefix)
+> > +			path =3D p;
+> > +		else {
+> > +			path =3D prefix_filename(args->prefix, p);
+> > +			free(p);
+> > +		}
+> > +		memset(&info->stat, 0, sizeof(info->stat));
+> > +		info->stat.st_mode =3D S_IFREG | 0644;
+> > +		info->content =3D xstrdup(colon + 1);
+> > +		info->stat.st_size =3D strlen(info->content);
+> > +	}
+> > +	item =3D string_list_append_nodup(&args->extra_files, path);
+> > +	item->util =3D info;
+> > +
+> >  	return 0;
+> >  }
+> >
+> > @@ -554,6 +586,9 @@ static int parse_archive_args(int argc, const char=
+ **argv,
+> >  		{ OPTION_CALLBACK, 0, "add-file", args, N_("file"),
+> >  		  N_("add untracked file to archive"), 0, add_file_cb,
+> >  		  (intptr_t)&base },
+> > +		{ OPTION_CALLBACK, 0, "add-file-with-content", args,
+> > +		  N_("file"), N_("add untracked file to archive"), 0,
+>                       ^^^^
+> "<file>" seems wrong, because there is no actual file.  It should rather
+> be "<name>:<content>" for the virtual one, right?
+
+Or `<path>:<content>`. Yes.
+
+Again, thank you for your clear and helpful review,
+Dscho
+
+--8323328-735070010-1644324895=:347--
