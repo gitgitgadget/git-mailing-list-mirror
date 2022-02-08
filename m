@@ -2,89 +2,181 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 094DDC433FE
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 22:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7464C433EF
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 22:25:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1386358AbiBHWZS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 17:25:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49412 "EHLO
+        id S1387578AbiBHWZV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 17:25:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386332AbiBHUJt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 15:09:49 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 704A7C0613CB
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 12:09:48 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id k1so339023wrd.8
-        for <git@vger.kernel.org>; Tue, 08 Feb 2022 12:09:48 -0800 (PST)
+        with ESMTP id S1386334AbiBHUJu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 15:09:50 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 648B6C0612C0
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 12:09:49 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id y6-20020a7bc186000000b0037bdc5a531eso1369750wmi.0
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 12:09:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=RmjVCgJjoZL8H97Rh/Ja3+Jod5QLmJ3Z1ZQvmqVb+FE=;
-        b=OyBLLQa5qIoNltk/7oxPIjKcZNYhbYEArgVL1PUBhXCnI/ZzQQRUOdCK5hiJhJ5pZN
-         7vCfPr6qI/pOP3tdPiWr8DJqGKQLjkCPOqU3CEdgBYCDktgd6sq3S8CqvcLuNrc2Sb0t
-         YOzdTP83OJ/8nJulJokKSoKFXsoE2zkCS3puEursr1MYqfXv8y5cAkCsYwu1IWrzTtEG
-         JOxQJVc8s3iSQZuEH8s3OL0EzJrH0U7A0ZJ6fN4sqTcd57kGWvRMmUVZl5XrO0EwYnCb
-         oA+pmo/ZOb864sCeeypcqRs2QfIb2x6hVlVtIgYWImQ+ckEIQ6LbOTM2+DHvWIqhpkgW
-         IvLQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=53UCkH8yeSwITRvUoTGg6vH7r7CEFF2W1pSrTYmMFPg=;
+        b=c5loMF6DTYCKz9SMNwbKJfQS6tuo0XX/Eeyvxkt8VI7wze9k+Bejl2G72Iu0rqqNYq
+         4wj+vSUg+ueviJkCM72VSOMiX5d89qDSzg1tWhBQZ62BoD/NgQm5FWXWtgkpvAWThQuW
+         yZpLSbDOpMKT0pCXQy8eLzAfdggkcOvoBZUsxdRL6i6oBgHOgrooTQ7xva+s0QRDJ+WY
+         c86NSrfsSWbKMsyAXmJ2kgIa+RRu0F/8SIt4x+rzd/b4b9pGA+yktidUOfG0lyqP5fXQ
+         at5inKzWlKsmd02ofFXrUwwZxm5NdomxKQ8S1VU9PyIJqn9RkvObdJL1jFYGkJU4J9vf
+         HiFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=RmjVCgJjoZL8H97Rh/Ja3+Jod5QLmJ3Z1ZQvmqVb+FE=;
-        b=h9wf/vINsEfyTwDDdKMgoA85w0wBybEMSvt4RHxW2Wwuki3saJ7GiJsZvhhP7UCV/l
-         WOasuPqa3U8ZloseiSvFjshfCN4E4F/Y9GU4IGnLfW//zZBxMyumez8czDt7UIF5iFaN
-         r2iEU9QuNsVIM7Qr+kPd15bRyCCsjBpIv+UKGgMOoEFXK3FmCPnEeM+kT67TJuItcptg
-         jfaaJinAf3T2HIhjVGnDIOmS95Uqxp62XaT628aYUt7BaklMyzYbTpYZtK1QuvuebP0I
-         Vv186bO0Lpy7MiKKo31BPMvp6cKFWtv/eeowAWgi4m9e9c9spV/749msHUx7ZWcQo3/g
-         fLTA==
-X-Gm-Message-State: AOAM532G0HG1WpOgMw+55gnfgw1iSbHoNOtJqpxjChFfvjtqWt2wnwRM
-        Atn77VTlO3e6NUDVSWaWjXi0oZ45Yxc=
-X-Google-Smtp-Source: ABdhPJy06Kv1gdQhOwicTZKzlJY2c2zPj2FdIheDq+gYTLBVv4XVbcc4FxoaEvbbRgcJ7iX9O6niWQ==
-X-Received: by 2002:adf:d849:: with SMTP id k9mr4714389wrl.366.1644350986646;
-        Tue, 08 Feb 2022 12:09:46 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=53UCkH8yeSwITRvUoTGg6vH7r7CEFF2W1pSrTYmMFPg=;
+        b=tm5M+JzLgl1M381VacAHkQF7kP+yzX36wkm633Sr5dmPdFc/1tCONBIlxCPdjqhQvv
+         Xrf1LZ/XkpmqjGQNXsPeiFmTvCuqRnS+9hr/wg9QQZH49/YMw+yREmHvwyYdRhXGQAmc
+         aKaWY4/wcfeLpvexpj1wRYef0z7hfth6czibOY/au2HHRCNjSJ3NMxNTuPXLduigSFrn
+         A7Mml5qH5RKtTzKFOGfqQVObgDO1CEAw0ELdDwzcBm5QYrDeV6tk1k4lgiEOj+7ydij4
+         uI1PwsRZeaDH3IZ++PKBnxDpID3RC84mU7EU12TmLfN5ARuUeKdmwQCgsuaeaF1Q51O2
+         E6hA==
+X-Gm-Message-State: AOAM532jPnzVHaqiHrqm/TkgwKr29HmmTfNqM8UqAbaPNXv8br17z8Di
+        +lg1BnmLBhscuuisQNuibnxXgNmSTVM=
+X-Google-Smtp-Source: ABdhPJxK7X5qB5qAP2CCgFM59MHwFFqnYg9ZtXCjDsQUk1thEqUq7CdslPDN2s9eUZ7++k45jjQgrA==
+X-Received: by 2002:a05:600c:686:: with SMTP id a6mr2322975wmn.161.1644350987617;
+        Tue, 08 Feb 2022 12:09:47 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o125sm458311wme.37.2022.02.08.12.09.45
+        by smtp.gmail.com with ESMTPSA id bd25sm3072874wmb.6.2022.02.08.12.09.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 08 Feb 2022 12:09:46 -0800 (PST)
-Message-Id: <pull.1214.git.git.1644350985.gitgitgadget@gmail.com>
+Message-Id: <fc1bd0621085f331b804c83df7a03cb1d4872fcd.1644350985.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1214.git.git.1644350985.gitgitgadget@gmail.com>
+References: <pull.1214.git.git.1644350985.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Feb 2022 20:09:43 +0000
-Subject: [PATCH 0/2] Prepare (auto)stash for reftable
+Date:   Tue, 08 Feb 2022 20:09:44 +0000
+Subject: [PATCH 1/2] t3420: prepare for reftable
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>
+Cc:     Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stashes are stored as hex OIDs in files under .git/ but are accessed as
-refs.
+From: Han-Wen Nienhuys <hanwen@google.com>
 
-This series consistently treats stashes (AUTOMERGE_STASH,
-rebase-merge/autostash etc.) as refs.
+Check for autostash existence using rev-parse; remove the autostash
+using test-tool.
 
-Han-Wen Nienhuys (2):
-  t3420: prepare for reftable
-  Treat MERGE_AUTOSTASH and friends as a pseudoref
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ t/t3420-rebase-autostash.sh | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
- branch.c                    |  2 +-
- builtin/commit.c            |  2 +-
- builtin/merge.c             | 29 +++++++++++------------
- builtin/rebase.c            | 34 ++++++++++++++++++++++-----
- path.c                      |  1 -
- path.h                      |  3 +--
- sequencer.c                 | 46 +++++++++++++++++--------------------
- t/t3420-rebase-autostash.sh | 31 +++++++++++++------------
- 8 files changed, 82 insertions(+), 66 deletions(-)
-
-
-base-commit: a9cd6a0c5981a7d3c9865cf1966243c82f93e58e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1214%2Fhanwen%2Freftable-stash-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1214/hanwen/reftable-stash-v1
-Pull-Request: https://github.com/git/git/pull/1214
+diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+index 43fcb68f27e..e6466290e03 100755
+--- a/t/t3420-rebase-autostash.sh
++++ b/t/t3420-rebase-autostash.sh
+@@ -79,7 +79,7 @@ create_expected_failure_merge () {
+ 
+ testrebase () {
+ 	type=$1
+-	dotest=$2
++	test_type=$2
+ 
+ 	test_expect_success "rebase$type: dirty worktree, --no-autostash" '
+ 		test_config rebase.autostash true &&
+@@ -133,9 +133,10 @@ testrebase () {
+ 		test_when_finished git branch -D rebased-feature-branch &&
+ 		echo dirty >>file3 &&
+ 		test_must_fail git rebase$type related-onto-branch &&
+-		test_path_is_file $dotest/autostash &&
++		git rev-parse $test_type/autostash &&
+ 		test_path_is_missing file3 &&
+-		rm -rf $dotest &&
++		test-tool ref-store main delete-refs REF_SKIP_REFNAME_VERIFICATION msg $test_type/autostash &&
++		rm -rf .git/$test_type &&
+ 		git reset --hard &&
+ 		git checkout feature-branch
+ 	'
+@@ -147,12 +148,12 @@ testrebase () {
+ 		test_when_finished git branch -D rebased-feature-branch &&
+ 		echo dirty >>file3 &&
+ 		test_must_fail git rebase$type related-onto-branch &&
+-		test_path_is_file $dotest/autostash &&
++		git rev-parse $test_type/autostash &&
+ 		test_path_is_missing file3 &&
+ 		echo "conflicting-plus-goodbye" >file2 &&
+ 		git add file2 &&
+ 		git rebase --continue &&
+-		test_path_is_missing $dotest/autostash &&
++		test_must_fail git rev-parse $test_type/autostash &&
+ 		grep dirty file3 &&
+ 		git checkout feature-branch
+ 	'
+@@ -164,10 +165,10 @@ testrebase () {
+ 		test_when_finished git branch -D rebased-feature-branch &&
+ 		echo dirty >>file3 &&
+ 		test_must_fail git rebase$type related-onto-branch &&
+-		test_path_is_file $dotest/autostash &&
++		git rev-parse $test_type/autostash &&
+ 		test_path_is_missing file3 &&
+ 		git rebase --skip &&
+-		test_path_is_missing $dotest/autostash &&
++		test_must_fail git rev-parse $test_type/autostash &&
+ 		grep dirty file3 &&
+ 		git checkout feature-branch
+ 	'
+@@ -179,10 +180,10 @@ testrebase () {
+ 		test_when_finished git branch -D rebased-feature-branch &&
+ 		echo dirty >>file3 &&
+ 		test_must_fail git rebase$type related-onto-branch &&
+-		test_path_is_file $dotest/autostash &&
++		git rev-parse $test_type/autostash &&
+ 		test_path_is_missing file3 &&
+ 		git rebase --abort &&
+-		test_path_is_missing $dotest/autostash &&
++		test_must_fail git rev-parse $test_type/autostash &&
+ 		grep dirty file3 &&
+ 		git checkout feature-branch
+ 	'
+@@ -195,11 +196,11 @@ testrebase () {
+ 		echo dirty >>file3 &&
+ 		git diff >expect &&
+ 		test_must_fail git rebase$type related-onto-branch &&
+-		test_path_is_file $dotest/autostash &&
++		git rev-parse $test_type/autostash &&
+ 		test_path_is_missing file3 &&
+ 		git rebase --quit &&
+ 		test_when_finished git stash drop &&
+-		test_path_is_missing $dotest/autostash &&
++		test_must_fail git rev-parse $test_type/autostash &&
+ 		! grep dirty file3 &&
+ 		git stash show -p >actual &&
+ 		test_cmp expect actual &&
+@@ -214,7 +215,7 @@ testrebase () {
+ 		echo dirty >file4 &&
+ 		git add file4 &&
+ 		git rebase$type unrelated-onto-branch >actual 2>&1 &&
+-		test_path_is_missing $dotest &&
++		test_must_fail git rev-parse $test_type/autostash &&
+ 		git reset --hard &&
+ 		grep unrelated file4 &&
+ 		! grep dirty file4 &&
+@@ -257,9 +258,9 @@ test_expect_success "rebase: noop rebase" '
+ 	git checkout feature-branch
+ '
+ 
+-testrebase " --apply" .git/rebase-apply
+-testrebase " --merge" .git/rebase-merge
+-testrebase " --interactive" .git/rebase-merge
++testrebase " --apply" rebase-apply
++testrebase " --merge" rebase-merge
++testrebase " --interactive" rebase-merge
+ 
+ test_expect_success 'abort rebase -i with --autostash' '
+ 	test_when_finished "git reset --hard" &&
 -- 
 gitgitgadget
+
