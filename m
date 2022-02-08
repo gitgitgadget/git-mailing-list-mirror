@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A76CEC433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C444DC433F5
 	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 08:40:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350668AbiBHIkV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 03:40:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36936 "EHLO
+        id S1350688AbiBHIkX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 03:40:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350480AbiBHIkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 03:40:12 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF397C03FECA
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 00:40:04 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id d5-20020a623605000000b004e01ccd08abso735088pfa.10
-        for <git@vger.kernel.org>; Tue, 08 Feb 2022 00:40:04 -0800 (PST)
+        with ESMTP id S1350652AbiBHIkN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 03:40:13 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93772C03FEDB
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 00:40:09 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id z3-20020a170903408300b0014d891103aaso1941585plc.0
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 00:40:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc:content-transfer-encoding;
-        bh=d5OdSxOJpSIJ8Imz8Plwa6pJa7oLeJV7xRwU926Etao=;
-        b=JzCr4ouGq2rmGB3cJ8DTjSEBlfkxOHmgbZ/kLv5OU5d0aeZAfZ7FVYqWtEuPdIOO1W
-         UIgyAHpYJcRZGiP9PkdwkJXFAo8/ewZYMa7cKwFbRriF/ITswswFp+g0SibfjKM6MvB6
-         LMRFaxSrG/S+5BGDTGdqxXW0gXl96oT6SaqjSXKa4adEPdLJ4esf9IW0AiwZhloefovD
-         wlFB0yQCb23GpAypih7PRtpi2GWZFO76SPzw3buwGkYdTBI2TATIw9bPv8X8eIuLirz4
-         5XcnZn4jGCdG3nFvCVdF6Hprz5VHPhSsFan5DLgRWd5MkPcmyvVeHs0Jd7Jd2yUnO4R3
-         ID+w==
+        bh=EN32OlSdIPLW/h0ox/yybskI+VjrxA2w7zI+99muzsA=;
+        b=a6DouT54OftLNNSO0Av49QOEDTtPxqSo03HAbbjWT33oSOWBOyCnfEommhcim5mAXG
+         6EMLH6308rbPrJFMjV1drgcL/JWffcPXrTAR1GU/6ipkuOKE6iAJKnmdA12+t0ap1usX
+         3z+Kww+UzRfxGMlTWgd7tRwL1hp8ZU3vIJrQT3kq660pYHF7aZeZmPpYXeefBBfTYu/n
+         XLq8+XXaZZIsLVDrjBvfoRMWzRRHD9dHyhNX7lmwpjViUjR4DLnpY8h+0ZgfSh0umFVg
+         w7rXY8db5hIp+Oye6SMIkOPcifgyXKUUrwIQVTqARVjwdPA7dej3GVRZFAX4ALpUCNGW
+         RN5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc:content-transfer-encoding;
-        bh=d5OdSxOJpSIJ8Imz8Plwa6pJa7oLeJV7xRwU926Etao=;
-        b=1uKbI3/BmKe/lJ3sZN5Rq4gKWZ86XP+7wkDz4d1dQ9PVAqM/uhVNEFKxDmmuhoN+SO
-         OF0wnq83SqU3UuYrWAwskkB5VWW9ygTx5wRsUwNTLh3Y5iWVKjdu7B/wJk1hqpCj6Fz7
-         mtcMa3JJVYHkkzVs7EsiwBndkT7cAPdP7xX9796cj+D4zMduMq+qEqAR4/GyRidzgpBQ
-         5NN60hiEwUZGwdP5mMcQfgDCiIJwtBuyF++oA9DyOZcy4i2+nydRq2/Jt13fZ1apWGOU
-         6Y1Yy+I/YlQDo3+wo3U875MfEGJxFt2PE8HCM7AI/tb4cSWhN9jf0OSKK91ydxdO3/du
-         L8Gg==
-X-Gm-Message-State: AOAM532+ZY8n64sBntDwBEXdIFyu4d2DAlYCHo61Pu+A08mGwmjmLV6k
-        uCKOcE8kCxKF8a48rRp0Ws2UNYKYsN6D6SqxD4tNAyKF4PKtg6iOhP8O3lA92oaXu0I/75Ad7nY
-        hIzB4UDrZ/Ki4oj8eBcCWAqneHXeGCa2c8J1Txs/aSrutV8zFNYvhPsDNXNOotrU=
-X-Google-Smtp-Source: ABdhPJzSpfvrXHj+tmEqGfJxrEzbQkwek8Xb/HkJu4UQP2MltN12VgGzpWuaeC8mbln98puMYbhl3yqSiXymRA==
+        bh=EN32OlSdIPLW/h0ox/yybskI+VjrxA2w7zI+99muzsA=;
+        b=FNczJalXIOa3VqVYtRef/FC1hGF06iBBvLT6siIXwfTJeMaCIQy6OW0Iyu26LkAkfC
+         2JKquqLLRjsBsJqDoivnO3v3WcoQeNd4LwL05iH0s7pUPppHnAX3i9OmywT8Nea2Mwzd
+         RPYkhHwfaPNFuXeNZFoRfLsVPY/KiIpexAOviGyYIAF+z453BS2bnBPfXVI59XM7anq2
+         KoDwRmueEtlvns/JGlbCA7iMSr0Cb+zyUfuENtJ0vPk337y3MMjAZxhfY5Zs8I8ZZk2n
+         SEhBHi00mOjaIQdueCRNngCd4yHasO2iSxnr8JD9nwzXIu+zOXIMSHoARYGL5oI4p+52
+         Gj6w==
+X-Gm-Message-State: AOAM532RHAXs0/jEH2wJJTl8LVFEJEpr/5/5LQoNUt9Z22kW0xOFcx3N
+        9YJJJQma/OWYmPWcD1AJeHwtHeHGc6AuNt+vQxMexYUDZTcUDhoi81oEVRqz+8udsLCIOeWYqrr
+        9uXeQQbt238n6LLeAFddL18k3x3Wv0BJLAbc3bOnz8u6Uu5aKyOriCAnzLZCbarc=
+X-Google-Smtp-Source: ABdhPJxau1HTrGeZq5Wj9Ui9dVtRCFalVxgUpnMkLIyRw/Ym5uBfIawBZYss4Th/Vu8KqV29hiiwFttbputkDw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a63:4717:: with SMTP id
- u23mr2729402pga.74.1644309604179; Tue, 08 Feb 2022 00:40:04 -0800 (PST)
-Date:   Tue,  8 Feb 2022 16:39:39 +0800
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:10c1:: with SMTP id
+ d1mr3392382pfu.84.1644309608880; Tue, 08 Feb 2022 00:40:08 -0800 (PST)
+Date:   Tue,  8 Feb 2022 16:39:41 +0800
 In-Reply-To: <20220208083952.35036-1-chooglen@google.com>
-Message-Id: <20220208083952.35036-4-chooglen@google.com>
+Message-Id: <20220208083952.35036-6-chooglen@google.com>
 Mime-Version: 1.0
 References: <cover-v5-0.9-00000000000-20220128T125206Z-avarab@gmail.com> <20220208083952.35036-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.0.263.gb82422642f-goog
-Subject: [PATCH v6 03/16] submodule--helper: allow setting superprefix for init_submodule()
+Subject: [PATCH v6 05/16] builtin/submodule--helper.c: reformat designated initializers
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -72,66 +72,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Atharva Raykar <raykar.ath@gmail.com>
 
-We allow callers of the `init_submodule()` function to optionally
-override the superprefix from the environment.
+The second hunk here will make a subsequent commit's diff smaller, and
+let's do the first and third hunks while we're at it so that we
+consistently format all of these.
 
-We need to enable this option because in our conversion of the update
-command that will follow, the '--init' option will be handled through
-this API. We will need to change the superprefix at that time to ensure
-the display paths show correctly in the output messages.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Shourya Shukla <periperidip@gmail.com>
 Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/submodule--helper.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ builtin/submodule--helper.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 5efceb9d46..09cda67c1e 100644
+index db71e6f4ec..9f79bdf4d5 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -606,18 +606,22 @@ static int module_foreach(int argc, const char **argv=
-, const char *prefix)
-=20
- struct init_cb {
- 	const char *prefix;
-+	const char *superprefix;
- 	unsigned int flags;
+@@ -1654,7 +1654,10 @@ struct module_clone_data {
+ 	unsigned int require_init: 1;
+ 	int single_branch;
  };
- #define INIT_CB_INIT { 0 }
+-#define MODULE_CLONE_DATA_INIT { .reference =3D STRING_LIST_INIT_NODUP, .s=
+ingle_branch =3D -1 }
++#define MODULE_CLONE_DATA_INIT { \
++	.reference =3D STRING_LIST_INIT_NODUP, \
++	.single_branch =3D -1, \
++}
 =20
- static void init_submodule(const char *path, const char *prefix,
--			   unsigned int flags)
-+			   const char *superprefix, unsigned int flags)
+ struct submodule_alternate_setup {
+ 	const char *submodule_name;
+@@ -2047,7 +2050,9 @@ struct update_data {
+ 	unsigned int nofetch: 1;
+ 	unsigned int just_cloned: 1;
+ };
+-#define UPDATE_DATA_INIT { .update_strategy =3D SUBMODULE_UPDATE_STRATEGY_=
+INIT }
++#define UPDATE_DATA_INIT { \
++	.update_strategy =3D SUBMODULE_UPDATE_STRATEGY_INIT, \
++}
+=20
+ static void next_submodule_warn_missing(struct submodule_update_clone *suc=
+,
+ 		struct strbuf *out, const char *displaypath)
+@@ -3013,7 +3018,9 @@ struct add_data {
+ 	unsigned int progress: 1;
+ 	unsigned int dissociate: 1;
+ };
+-#define ADD_DATA_INIT { .depth =3D -1 }
++#define ADD_DATA_INIT { \
++	.depth =3D -1, \
++}
+=20
+ static void append_fetch_remotes(struct strbuf *msg, const char *git_dir_p=
+ath)
  {
- 	const struct submodule *sub;
- 	struct strbuf sb =3D STRBUF_INIT;
- 	char *upd =3D NULL, *url =3D NULL, *displaypath;
-=20
--	displaypath =3D get_submodule_displaypath(path, prefix);
-+	/* try superprefix from the environment, if it is not passed explicitly *=
-/
-+	if (!superprefix)
-+		superprefix =3D get_super_prefix();
-+	displaypath =3D do_get_submodule_displaypath(path, prefix, superprefix);
-=20
- 	sub =3D submodule_from_path(the_repository, null_oid(), path);
-=20
-@@ -691,7 +695,7 @@ static void init_submodule(const char *path, const char=
- *prefix,
- static void init_submodule_cb(const struct cache_entry *list_item, void *c=
-b_data)
- {
- 	struct init_cb *info =3D cb_data;
--	init_submodule(list_item->name, info->prefix, info->flags);
-+	init_submodule(list_item->name, info->prefix, info->superprefix, info->fl=
-ags);
- }
-=20
- static int module_init(int argc, const char **argv, const char *prefix)
 --=20
 2.33.GIT
 
