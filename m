@@ -2,99 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB3EBC35270
-	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 22:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72EE0C433F5
+	for <git@archiver.kernel.org>; Tue,  8 Feb 2022 23:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1387607AbiBHWZq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 17:25:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42538 "EHLO
+        id S233885AbiBHXDb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 18:03:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1386972AbiBHViE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 16:38:04 -0500
-Received: from rdns0.boathire-vimyard.com (unknown [185.104.112.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D3B0C0612B8
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 13:38:02 -0800 (PST)
-Received: from boathire-vimyard.com (ec2-44-202-68-102.compute-1.amazonaws.com [44.202.68.102])
-        by rdns0.boathire-vimyard.com (Postfix) with ESMTPSA id D73828CB56
-        for <git@vger.kernel.org>; Wed,  9 Feb 2022 00:37:58 +0300 (MSK)
-Authentication-Results: rdns0.boathire-vimyard.com;
-        spf=pass (sender IP is 44.202.68.102) smtp.mailfrom=venom@boathire-vimyard.com smtp.helo=boathire-vimyard.com
-Received-SPF: pass (rdns0.boathire-vimyard.com: connection is authenticated)
-From:   John Mark <venom@boathire-vimyard.com>
-To:     git@vger.kernel.org
-Subject: NON-BINDING LOAN PROPOSAL FROM A.K.C VENTURES
-Date:   08 Feb 2022 21:37:58 +0000
-Message-ID: <20220208213758.9021C147640F98D9@boathire-vimyard.com>
+        with ESMTP id S233841AbiBHXDa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 18:03:30 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED064C06173B
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 15:03:27 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id k25so2014381ejp.5
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 15:03:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rl2pcbyahNa7ffvxsCNdez0malCgTL3EFfXYWPa9J2M=;
+        b=CAjsxVybs3l6c/QiX71fbioMFeDi/u8Gif0oYokAxHRqkL3S+GOnnMFi/qlMwdAV+s
+         DdopdjOes5IkDFuWKwGAUSmxVC5yZKGMY3H5ckfFXLzl+loDSbtd0NxElhfCPwf01r0S
+         wNCkLv/qcPcO6SGFhQDwwaRtgmHB2DQz4gwdSZq9v+ByFsiMyZyGHCRuD2QmlrtTsE3+
+         IlEmRpbcyU349GcyXIg+36zeNaozNOIGukprCGUGAaoP6UMwuDZu/kteIrb34es6Fa88
+         Yu/kTGW/zjIm0Jz2D9tlFgGmW7GnxRXHL0fv4se35cIjzDUN5j0FaLCXzQXPDATLIZjK
+         Cp/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rl2pcbyahNa7ffvxsCNdez0malCgTL3EFfXYWPa9J2M=;
+        b=ZjhhuJ9VgrJabx51d3z7MjLcL9zEyv0XiEGxNuIiyM1iubkaxujg6CWetBKR1Hxz02
+         AApPhMl2jDrSFjNYMe3gHcFKtiuguomDyBOIprTCVkiATxvUq3n2eKwBb063qBcgAxLe
+         PJzpfQXpb2A9DNvM9otCPDwK8hbZwpLQCfmBaW89U4l/2p8qjqNNaHK23hIaCDXzVIyT
+         Jr8qG6SrF9H7xUmqwe8aDTKJurdXchsRsTHwKN7+Autc1DKbrXDGDrmRskMHeV318sqc
+         cEYjzW+XskoaJdNDoTpfjN+QVp7HSda3Bkh3lr8r1ESpJ9pWbJE+BAVlyapCrKMg6UeE
+         t2yA==
+X-Gm-Message-State: AOAM533iSrZn1XGXyLQgWiB7YV2m3sF8j+U05nGTl28wlDXtfh09TKDb
+        QUv7cusKzfePFqNPraXZEVhCkUFi/mej35hwOKQ=
+X-Google-Smtp-Source: ABdhPJwJOEp5J5Dep+dHH8D3NN/lQ3gtXf8cD2Uy740WDj2RiB0oY2Wgix75Areziw+dHbJzzx3HGiX400L5gQDsoHE=
+X-Received: by 2002:a17:907:1115:: with SMTP id qu21mr5545897ejb.192.1644361406264;
+ Tue, 08 Feb 2022 15:03:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
-        boundary="----=_NextPart_000_0012_E5BD79A2.664C50DF"
+References: <pull.1132.git.1643328752.gitgitgadget@gmail.com> <eddbdde222a01113d8facdcb17d6ec85676edbe7.1643328752.git.gitgitgadget@gmail.com>
+In-Reply-To: <eddbdde222a01113d8facdcb17d6ec85676edbe7.1643328752.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 8 Feb 2022 15:03:14 -0800
+Message-ID: <CABPp-BHvGOH5copWukeTy55dXDz1yq47VJcrZRj_b8cZgTy_VQ@mail.gmail.com>
+Subject: Re: [PATCH 06/11] bisect--helper: make `--bisect-state` optional
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
+On Fri, Jan 28, 2022 at 3:52 PM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> In preparation for making `git bisect` a real built-in, let's prepare
+> the `bisect--helper` built-in to handle `git bisect--helper good` and
+> `git bisect--helper bad`, i.e. do not require the `--bisect-state`
+> option to be passed explicitly.
+>
+> To prepare for converting `bisect--helper` to a full built-in
+> implementation of `git bisect` (which must not require the
+> `--bisect-state` option to be specified at all), let's move the handling
+> toward the end of the `switch (cmdmode)` block.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/bisect--helper.c | 23 ++++++++++++++++-------
+>  1 file changed, 16 insertions(+), 7 deletions(-)
+>
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index cc5a9ca41b9..219fa99cd0b 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -26,8 +26,8 @@ static const char * const git_bisect_helper_usage[] = {
+>         N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
+>                                             " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
+>         N_("git bisect--helper --bisect-next"),
+> -       N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
+> -       N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
+> +       N_("git bisect--helper [--bisect-state] (bad|new) [<rev>]"),
+> +       N_("git bisect--helper [--bisect-state] (good|old) [<rev>...]"),
+>         N_("git bisect--helper --bisect-replay <filename>"),
+>         N_("git bisect--helper --bisect-skip [(<rev>|<range>)...]"),
+>         N_("git bisect--helper --bisect-visualize"),
+> @@ -1210,6 +1210,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>                              git_bisect_helper_usage,
+>                              PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_UNKNOWN);
+>
+> +       if (!cmdmode && argc > 0) {
+> +               set_terms(&terms, "bad", "good");
+> +               get_terms(&terms);
+> +               if (!check_and_set_terms(&terms, argv[0]))
+> +                       cmdmode = BISECT_STATE;
+> +       }
+> +
+>         if (!cmdmode)
+>                 usage_with_options(git_bisect_helper_usage, options);
+>
+> @@ -1218,11 +1225,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>                 set_terms(&terms, "bad", "good");
+>                 res = bisect_start(&terms, argv, argc);
+>                 break;
+> -       case BISECT_STATE:
+> -               set_terms(&terms, "bad", "good");
+> -               get_terms(&terms);
+> -               res = bisect_state(&terms, argv, argc);
+> -               break;
+>         case BISECT_TERMS:
+>                 if (argc > 1)
+>                         return error(_("--bisect-terms requires 0 or 1 argument"));
+> @@ -1265,6 +1267,13 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+>                 get_terms(&terms);
+>                 res = bisect_run(&terms, argv, argc);
+>                 break;
+> +       case BISECT_STATE:
+> +               if (!terms.term_good) {
+> +                       set_terms(&terms, "bad", "good");
+> +                       get_terms(&terms);
+> +               }
+> +               res = bisect_state(&terms, argv, argc);
+> +               break;
+>         default:
+>                 BUG("unknown subcommand %d", cmdmode);
+>         }
+> --
+> gitgitgadget
 
-------=_NextPart_000_0012_E5BD79A2.664C50DF
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Does it make sense to also include something like this:
 
-We look forward to hearing from you at your earliest convinence
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 405cf76f2a..fbf56649d7 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -60,7 +60,7 @@ case "$#" in
+        start)
+                git bisect--helper --bisect-start "$@" ;;
+        bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
+-               git bisect--helper --bisect-state "$cmd" "$@" ;;
++               git bisect--helper "$cmd" "$@" ;;
+        skip)
+                git bisect--helper --bisect-skip "$@" || exit;;
+        next)
 
-------=_NextPart_000_0012_E5BD79A2.664C50DF
-Content-Type: application/octet-stream; name="Loan.docx"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="Loan.docx"
-
-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
-CAAAAAA=
-
-------=_NextPart_000_0012_E5BD79A2.664C50DF--
-
+to prove that you've made it optional?  (Well, assuming one has run
+the tests with that change, but I did...)
