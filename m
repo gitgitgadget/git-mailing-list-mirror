@@ -2,117 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F04BC433EF
-	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 23:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19886C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 23:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236986AbiBIXKa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Feb 2022 18:10:30 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:36912 "EHLO
+        id S230243AbiBIXhQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Feb 2022 18:37:16 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:48992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236886AbiBIXK1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Feb 2022 18:10:27 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17C4EE018E6E
-        for <git@vger.kernel.org>; Wed,  9 Feb 2022 15:10:29 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id s7so8043533edd.3
-        for <git@vger.kernel.org>; Wed, 09 Feb 2022 15:10:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version;
-        bh=q73c2+Di/e0506JQqG5onG+TBwAOoHf6EQstq+MKIdE=;
-        b=RLCGUqLJt+ifFsfqzxR7Stk5A05jOEdT5n2hzEn8lUf24GtbZ9wC296fiAbfKiNBz5
-         jTmLUbVKiRRpO8MzNAM5Ll+rMro2E0ad3HJnRDY8m5PLIYkjMP2qMdWm6GcAdiemWtDd
-         BMouiiW+rKJwfej6pxA6LtHiEndN6NUryCl10Xqo/VqgZTQgS6TyM1rJpxvvSO6Z6XdH
-         S1JVA/RXIfiekdhdYvCy8rk7t6kjXWAE/ff43nQ5sY9n4jlN0+SeNC7Yt5U4CVezqKPU
-         97snLt6rbQjCn9FMlY4UjC/Nr7rSxFuPVfXITbLO0jPOFHVmhHDnUemc+stIdP5yuXuy
-         S1WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version;
-        bh=q73c2+Di/e0506JQqG5onG+TBwAOoHf6EQstq+MKIdE=;
-        b=0OLAPzR44eW44bswAhqTebDZDu8+s4L5538o6X+xNkF6PLivYGGJH05eFmMuItCC37
-         +AdAsiuEoNP26pCngUC3YX36sF7OjpxkOAg55yaJm3Le9b5gFrmz27KOKUt3xJ4xMYph
-         OXoU71QeIpClu+jFOusdXZ6bXS10jFy+szZJl3YSPYdynTkMJ/Gm+8NqLRlHB9e6Tl82
-         ia34C2L3mfitI+3pRP0qBv3cQKbRfkZ0e0K9p+gtas7kiG93PV3+0FXMF45uxWvJtJL0
-         IpTGMz7pjtrWqiup6lBz8eAzRXYEJvwFxY4cX0E9oQtWUHb1KXJFCRUm9DPz71dktj/p
-         GU0g==
-X-Gm-Message-State: AOAM530zi4hS/IS7Jyu6R/mhUaU+UTsk/VXlTSohnFwesSacdDjj7GXQ
-        Z5m90KZo38Hd2N0rNyRM/UFxF4+RLXA=
-X-Google-Smtp-Source: ABdhPJxVICWJxMfrsOXalLXPJrF21igLdS7UxNlZDCm1ihLxzGMNAI1Y7L84Vj7DM1KHsPXpgvLt/w==
-X-Received: by 2002:a05:6402:7ce:: with SMTP id u14mr5349849edy.35.1644448227565;
-        Wed, 09 Feb 2022 15:10:27 -0800 (PST)
-Received: from [10.200.48.220] (guest-pat-13-128.njit.edu. [128.235.13.128])
-        by smtp.gmail.com with ESMTPSA id r22sm8756354edt.51.2022.02.09.15.10.25
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Feb 2022 15:10:27 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, phillip.wood123@gmail.com,
-        avarab@gmail.com, e@80x24.org, bagasdotme@gmail.com,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v3 0/3] Add cat-file --batch-command flag
-Date:   Wed, 09 Feb 2022 18:10:24 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <A1234067-820F-4828-B3A1-17BE6944E18F@gmail.com>
-In-Reply-To: <691561CD-A3CF-457F-ACD0-E45153EBB829@gmail.com>
-References: <pull.1212.v2.git.git.1644251611.gitgitgadget@gmail.com>
- <pull.1212.v3.git.git.1644353884.gitgitgadget@gmail.com>
- <xmqqa6ez7m6t.fsf@gitster.g> <691561CD-A3CF-457F-ACD0-E45153EBB829@gmail.com>
+        with ESMTP id S230198AbiBIXhP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Feb 2022 18:37:15 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E7B1E05046F
+        for <git@vger.kernel.org>; Wed,  9 Feb 2022 15:37:18 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3271C190818;
+        Wed,  9 Feb 2022 18:37:18 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yjasIf4tBHMU0J8SBGDUObkYo8Pj6T3I1bRLco
+        TKKm4=; b=FvqIY8mD5R38D1CBU1w3GROlixv3PZpTMv6F3La+FJDCqbhlx3ZqW4
+        ZrBcYvFTp1npoR1hPIT0eq/lP0hO8rL0m4d7EKMp75vqYX1gzEyFl60GTkeIPJV+
+        /3QEFK8yOyoN7asFxJk3TsCBk5O98y0fc2ox1RdKFDvZtSEqvcLbg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B4CE190817;
+        Wed,  9 Feb 2022 18:37:18 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 85A14190816;
+        Wed,  9 Feb 2022 18:37:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        newren@gmail.com
+Subject: Re: [PATCH v3] clone, submodule: pass partial clone filters to
+ submodules
+References: <20220209224406.495563-1-jonathantanmy@google.com>
+Date:   Wed, 09 Feb 2022 15:37:14 -0800
+In-Reply-To: <20220209224406.495563-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Wed, 9 Feb 2022 14:44:06 -0800")
+Message-ID: <xmqqfsor628l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 3680AFCA-8A01-11EC-94B8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9 Feb 2022, at 17:22, John Cai wrote:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> Hi Junio
+> Josh Steadmon <steadmon@google.com> writes:
+>>  Documentation/config/clone.txt     |  5 ++++
+>>  Documentation/git-clone.txt        |  7 ++++-
+>>  Documentation/git-submodule.txt    |  6 ++++-
+>>  builtin/clone.c                    | 36 ++++++++++++++++++++++++--
+>>  builtin/submodule--helper.c        | 30 +++++++++++++++++++---
+>>  git-submodule.sh                   | 17 ++++++++++++-
+>>  t/t5617-clone-submodules-remote.sh | 41 ++++++++++++++++++++++++++++++
+>>  t/t7814-grep-recurse-submodules.sh | 41 ++++++++++++++++++++++++++++++
+>>  8 files changed, 175 insertions(+), 8 deletions(-)
 >
-> On 9 Feb 2022, at 16:40, Junio C Hamano wrote:
+> Thanks for this patch. "clone" currently calls "submodule update" in
+> order to perform the clone in the submodule, and "submodule update" then
+> calls "submodule--helper", so I would expect changes in all 3 files.
+> Looking at the summary above, that indeed is the case.
 >
->> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->>> John Cai (3):
->>>   cat-file: rename cmdmode to transform_mode
->>>   cat-file: introduce batch_command enum to replace print_contents
->>>   cat-file: add --batch-command mode
->>>
->>>  Documentation/git-cat-file.txt |  24 ++++
->>>  builtin/cat-file.c             | 154 ++++++++++++++++++++++--
->>>  t/t1006-cat-file.sh            | 207 ++++++++++++++++++++++++++++++++-
->>>  3 files changed, 373 insertions(+), 12 deletions(-)
->>
->> Does t1006-cat-file.sh pass the --stress test?  I have no time to
->> test it for you but I've seen "make test" got stuck and this is the
->> only cat-file related change in flight.
+>> @@ -544,4 +544,45 @@ test_expect_failure 'grep saves textconv cache in the appropriate repository' '
+>>  	test_path_is_file "$sub_textconv_cache"
+>>  '
+>>  
+>> +test_expect_success 'grep partially-cloned submodule' '
 >
-> Yes it looks like there are some failures. Thanks for pointing this out. It
-> looks like the flush test is getting stuck. I can actually reproduce it on my
-> end when I do a make clean in t/ and then run the test. Will investigate.
-
-I believe this was the culprit, as the stress tests that failed passed once I
-removed this:
-
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 9428a04482..a20c8dae85 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -237,7 +237,7 @@ run_buffer_test_flush () {
-        size=$3
-
-        mkfifo input &&
--       test_when_finished 'rm input; exec 8<&-' &&
-+       test_when_finished 'rm input' &&
-        mkfifo output &&
-        exec 9<>output &&
-        test_when_finished 'rm output; exec 9<&-'
-
-I was closing a file descriptor 8 that was never opened. But, I don't fully
-understand why that would create problems.
-
+> [snip]
 >
-> thanks!
+>> +		# Verify that we actually fetched data from the promisor remote:
+>> +		grep \"category\":\"promisor\",\"key\":\"fetch_count\",\"value\":\"1\" trace2.log >/dev/null
+>
+> No need to redirect to /dev/null, but probably not worth a reroll on its
+> own.
+
+I can strip it while queuing, then.
+
+> This patch looks good to me.
+> Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
+
+Agreed.  Thanks, both.
+
