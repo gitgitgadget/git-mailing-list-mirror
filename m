@@ -2,127 +2,228 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4661C4332F
-	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 02:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BFF8C433EF
+	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 02:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344268AbiBIClB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 21:41:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39734 "EHLO
+        id S1344313AbiBIClG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 21:41:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245157AbiBIC1W (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 21:27:22 -0500
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD720C0613CC
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 18:27:21 -0800 (PST)
-Received: by mail-qt1-x82b.google.com with SMTP id x5so720229qtw.10
-        for <git@vger.kernel.org>; Tue, 08 Feb 2022 18:27:21 -0800 (PST)
+        with ESMTP id S243162AbiBIBd6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 20:33:58 -0500
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19BDCC061576
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 17:33:58 -0800 (PST)
+Received: by mail-qt1-x82e.google.com with SMTP id b5so644341qtq.11
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 17:33:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=VbXdUfibz2P0NORh1ap3OT6NpLwKwTyIs1CdInTAUO8=;
-        b=VR4Gu39eIyYfWNdQrT1vwl4VQkBCxxiEwf4Z78qdpSueVRY0eNgTYQQwQahXODFDue
-         lKrZ+A8cnYzBrp+6T/n1I7hLS1LeW2pU/BT+ltzaZPuFDvpJZs7/KKJq3sWA1gLyI6fX
-         R1rW8lvFLk90P25AWa/wZPLKuKwMTCNOnFz1Z4M7NHJpYls3kZOh+Iz4aiT8V+E8WL8l
-         OD8/1HmLZZrbb2EXSXn4TS5pFatCCKATi+q+T1GOmGePsgvDyCH7m5/bE53cK31pO5Zv
-         C1j3XemlTkEhzeEvxmK/OjX6a4KX7FK9d9VlX86So14IpeyxE+99fqvxcIapUI9jkMdf
-         HEAw==
+        d=edwardthomson-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wStj/ummu2DQ07xNGCVlAb1xEFi0L4dzEUuc14YjDEQ=;
+        b=i4H2YHbhrB4VpLEhVfna0jbBZGqTMVaZyQqrPlKmCcBB5AUp6x7Lyd3fMUAd2TJHzc
+         +UZ8Ng/ZUSMWyW+WFifk043poHkKPXFeUC6cYtxKgHjKu8boZT/fXmVMdKPWLXeUvhBj
+         vGDPIGxSOdhIw/pfZZma3ys2aI9YDXiUn7vqJ8Ybmv66dTi2TmNf5pOYMNRBmlPDDF6b
+         vx2VjL4ElF3yqfRdiqqPdd9qSMcW570vTqF3Z6WOxfqHbMJKsYD9HiEyJsJbQNRvB1z0
+         kN2xlkGjIF0wLWo0Ml0HKk3wqOl40ffoYc1jzpTnY0kD9kmLl6blRrLrMyF4CFCNLECx
+         hDjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=VbXdUfibz2P0NORh1ap3OT6NpLwKwTyIs1CdInTAUO8=;
-        b=AJ8kvFhE2PWYjB0GARhIUOOxzCwXc4q01rIQUhGUWhl5qW+VEL0J+xJnnzVmITMWfw
-         vjlFBOBYmO6VzBvaSIXWrTVcG6rdCov1lJ7Yvsaj7I1uHwy07Tkf1OfEg7ts2IhnGOWA
-         2qVzDk8R9Gx6oB5tL5DItHcR+v/UPowWB85D0gRtxS6h2yXecnAlgfrUA/4BWV5kqIso
-         sUgbWN+q2ncBTvkO4/WkHOfZe+x0tGfaL1oo3c9AmWa7w6+MmI7Et+qBCdUAJsUdBPKS
-         c1QUOBA+YtdALycKfZLRaDBsdJ/EexiBCsmDMSRsiRkMdK32v1vgXJW19A5Ed6VvqL8P
-         1PCg==
-X-Gm-Message-State: AOAM533TmhQk862KB++jQg64kDp8eJ/C8yEun8imjiWlDAetz8u6op8v
-        vrjd1tm8aORLkfTbHoORNhE=
-X-Google-Smtp-Source: ABdhPJyoLNrDBq+7EwwA2ZiWmMqwS+30daDMKV/vzWGk5CrQa8znCsmq1XheHlcaDyrfxvnIsQmFnQ==
-X-Received: by 2002:a05:622a:199c:: with SMTP id u28mr47674qtc.221.1644373640161;
-        Tue, 08 Feb 2022 18:27:20 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:999a:e20e:62a:aacd? ([2600:1700:e72:80a0:999a:e20e:62a:aacd])
-        by smtp.gmail.com with ESMTPSA id y5sm8035864qkp.37.2022.02.08.18.27.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Feb 2022 18:27:19 -0800 (PST)
-Message-ID: <ab6021a8-cbb9-3261-8e08-bb4a83287473@gmail.com>
-Date:   Tue, 8 Feb 2022 21:27:16 -0500
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wStj/ummu2DQ07xNGCVlAb1xEFi0L4dzEUuc14YjDEQ=;
+        b=vaxXDsKkIqMK3jPGwg8w6q8mCi3Np/gyf9pMfUFamvOMBPdrfB4z1C52wVzYlVFU0l
+         X/cdfvn5RT1oRgBa26n+h7vOxvs8dV2dxurxTqBBN/kOefmjDWyKpwMU2jTS8MXcOdn+
+         4ULPnrsEG1SoZj0S+c13bRA356tPhuILRX1hWLwrHmC8H4xuN/+reFIeq/f3R1MPA+Vc
+         qm8GMUXIyQcHYXpri0a9ykJmmpWD/PscezIVJDW+uIuOEcC6xPMUVnRrUcm7IzwegxF7
+         8R8be6B5o/ctvco6XpVGaveKfhWsnW3xUtwsTwgISh2qkM4uPr/iuh19yfELZAXeWwFy
+         juqg==
+X-Gm-Message-State: AOAM530Tb0wVN55q8uX3mX2m3QKePgC+hC8EhfNh50kR2FF5tIf+/+il
+        7e7S8rnUPcEncfGr7sgBwGpoeRNtd2lokZhX
+X-Google-Smtp-Source: ABdhPJzTMkylqkaKMTwWuxmBx8jJCjSjB4yqZJfoZnZH35F1RMriyRz8amwENTX7w7hVorZqoszNGA==
+X-Received: by 2002:a05:622a:1189:: with SMTP id m9mr4906896qtk.573.1644370436809;
+        Tue, 08 Feb 2022 17:33:56 -0800 (PST)
+Received: from abe733c6e288 ([50.234.189.46])
+        by smtp.gmail.com with ESMTPSA id v22sm8199164qta.60.2022.02.08.17.33.56
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 08 Feb 2022 17:33:56 -0800 (PST)
+Date:   Wed, 9 Feb 2022 01:33:54 +0000
+From:   Edward Thomson <ethomson@edwardthomson.com>
+To:     git@vger.kernel.org
+Cc:     johannes.schindelin@gmx.de
+Subject: [PATCH 1/1] xdiff: provide indirection to git functions
+Message-ID: <20220209013354.GB7@abe733c6e288>
+References: <20220209012951.GA7@abe733c6e288>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Subject: Re: [PATCH v6 3/6] config: add repo_config_set_worktree_gently()
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com,
-        allred.sean@gmail.com, Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>,
-        derrickstolee@github.com, Derrick Stolee <dstolee@microsoft.com>
-References: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
- <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com>
- <cf9e86fe3a403d0ceaff9fdf484a9bf6b07799ac.1644269583.git.gitgitgadget@gmail.com>
- <xmqqv8xpato3.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqv8xpato3.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220209012951.GA7@abe733c6e288>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/8/2022 5:18 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-...
->> @@ -3181,14 +3196,28 @@ void git_config_set_multivar_in_file(const char *config_filename,
->>  int git_config_set_multivar_gently(const char *key, const char *value,
->>  				   const char *value_pattern, unsigned flags)
->>  {
->> -	return git_config_set_multivar_in_file_gently(NULL, key, value, value_pattern,
->> -						      flags);
->> +	return repo_config_set_multivar_gently(the_repository, key, value,
->> +					       value_pattern, flags);
->> +}
-> 
-> Is this an unrelated "morally no-op" change?
+Provide an indirection layer into the git-specific functionality and
+utilities in `git-xdiff.h`, prefixing those types and functions with
+`xdl_` (and `XDL_` for macros).  This allows other projects that use
+git's xdiff implementation to keep up-to-date; they can now take all the
+files _except_ `git-xdiff.h`, which they have customized for their own
+environment.
 
-This one is to match the pattern of how "git_*" methods should
-depend on their "repo_*" counterparts (with "the_repository" inserted
-properly). So, it's part of the standard process for creating these
-"repo_*" variants.
+Signed-off-by: Edward Thomson <ethomson@edwardthomson.com>
+---
+ xdiff/git-xdiff.h | 14 ++++++++++++++
+ xdiff/xdiff.h     |  8 +++-----
+ xdiff/xdiffi.c    | 20 ++++++++++----------
+ xdiff/xinclude.h  |  2 +-
+ 4 files changed, 28 insertions(+), 16 deletions(-)
+ create mode 100644 xdiff/git-xdiff.h
 
->>  void git_config_set_multivar(const char *key, const char *value,
->>  			     const char *value_pattern, unsigned flags)
->>  {
->> -	git_config_set_multivar_in_file(NULL, key, value, value_pattern,
->> +	git_config_set_multivar_in_file(git_path("config"),
->> +					key, value, value_pattern,
->>  					flags);
->>  }
-> 
-> Is this an unrelated "morally no-op" change?
-> 
-> It might have value to make caller more explicit by reducing the use
-> of "I give NULL, you use 'config' for me", but that doesn't sound
-> related to the addition of set_per_worktree_config_gently() helper.
+diff --git a/xdiff/git-xdiff.h b/xdiff/git-xdiff.h
+new file mode 100644
+index 0000000000..5d47576551
+--- /dev/null
++++ b/xdiff/git-xdiff.h
+@@ -0,0 +1,14 @@
++#ifndef GIT_XDIFF_H
++#define GIT_XDIFF_H
++
++#define xdl_malloc(x) xmalloc(x)
++#define xdl_free(ptr) free(ptr)
++#define xdl_realloc(ptr,x) xrealloc(ptr,x)
++
++#define xdl_regex_t regex_t
++#define xdl_regmatch_t regmatch_t
++#define xdl_regexec_buf(p, b, s, n, m, f) regexec_buf(p, b, s, n, m, f)
++
++#define XDL_BUG(msg) BUG(msg)
++
++#endif
+diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
+index 72e25a9ffa..fb47f63fbf 100644
+--- a/xdiff/xdiff.h
++++ b/xdiff/xdiff.h
+@@ -27,6 +27,8 @@
+ extern "C" {
+ #endif /* #ifdef __cplusplus */
+ 
++#include "git-xdiff.h"
++
+ /* xpparm_t.flags */
+ #define XDF_NEED_MINIMAL (1 << 0)
+ 
+@@ -82,7 +84,7 @@ typedef struct s_xpparam {
+ 	unsigned long flags;
+ 
+ 	/* -I<regex> */
+-	regex_t **ignore_regex;
++	xdl_regex_t **ignore_regex;
+ 	size_t ignore_regex_nr;
+ 
+ 	/* See Documentation/diff-options.txt. */
+@@ -119,10 +121,6 @@ typedef struct s_bdiffparam {
+ } bdiffparam_t;
+ 
+ 
+-#define xdl_malloc(x) xmalloc(x)
+-#define xdl_free(ptr) free(ptr)
+-#define xdl_realloc(ptr,x) xrealloc(ptr,x)
+-
+ void *xdl_mmfile_first(mmfile_t *mmf, long *size);
+ long xdl_mmfile_size(mmfile_t *mmf);
+ 
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index 69689fab24..af31b7f4b3 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -832,7 +832,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			/* Shift the group backward as much as possible: */
+ 			while (!group_slide_up(xdf, &g))
+ 				if (group_previous(xdfo, &go))
+-					BUG("group sync broken sliding up");
++					XDL_BUG("group sync broken sliding up");
+ 
+ 			/*
+ 			 * This is this highest that this group can be shifted.
+@@ -848,7 +848,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 				if (group_slide_down(xdf, &g))
+ 					break;
+ 				if (group_next(xdfo, &go))
+-					BUG("group sync broken sliding down");
++					XDL_BUG("group sync broken sliding down");
+ 
+ 				if (go.end > go.start)
+ 					end_matching_other = g.end;
+@@ -873,9 +873,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 			 */
+ 			while (go.end == go.start) {
+ 				if (group_slide_up(xdf, &g))
+-					BUG("match disappeared");
++					XDL_BUG("match disappeared");
+ 				if (group_previous(xdfo, &go))
+-					BUG("group sync broken sliding to match");
++					XDL_BUG("group sync broken sliding to match");
+ 			}
+ 		} else if (flags & XDF_INDENT_HEURISTIC) {
+ 			/*
+@@ -916,9 +916,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 
+ 			while (g.end > best_shift) {
+ 				if (group_slide_up(xdf, &g))
+-					BUG("best shift unreached");
++					XDL_BUG("best shift unreached");
+ 				if (group_previous(xdfo, &go))
+-					BUG("group sync broken sliding to blank line");
++					XDL_BUG("group sync broken sliding to blank line");
+ 			}
+ 		}
+ 
+@@ -927,11 +927,11 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
+ 		if (group_next(xdf, &g))
+ 			break;
+ 		if (group_next(xdfo, &go))
+-			BUG("group sync broken moving to next group");
++			XDL_BUG("group sync broken moving to next group");
+ 	}
+ 
+ 	if (!group_next(xdfo, &go))
+-		BUG("group sync broken at end of file");
++		XDL_BUG("group sync broken at end of file");
+ 
+ 	return 0;
+ }
+@@ -1011,11 +1011,11 @@ static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
+ }
+ 
+ static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
+-	regmatch_t regmatch;
++	xdl_regmatch_t regmatch;
+ 	int i;
+ 
+ 	for (i = 0; i < xpp->ignore_regex_nr; i++)
+-		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
++		if (!xdl_regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
+ 				 &regmatch, 0))
+ 			return 1;
+ 
+diff --git a/xdiff/xinclude.h b/xdiff/xinclude.h
+index a4285ac0eb..bf66dc0a87 100644
+--- a/xdiff/xinclude.h
++++ b/xdiff/xinclude.h
+@@ -24,6 +24,7 @@
+ #define XINCLUDE_H
+ 
+ #include "git-compat-util.h"
++#include "git-xdiff.h"
+ #include "xmacros.h"
+ #include "xdiff.h"
+ #include "xtypes.h"
+@@ -32,5 +33,4 @@
+ #include "xdiffi.h"
+ #include "xemit.h"
+ 
+-
+ #endif /* #if !defined(XINCLUDE_H) */
+-- 
+2.35.0
 
-Here, you're right. This one should have followed the same pattern
-of having the "git_*" equivalent call the "repo_*" method, but
-instead I incorrectly inlined some of the code.
-
-The proper body should be
-
-void git_config_set_multivar(const char *key, const char *value,
-			     const char *value_pattern, unsigned flags)
-{
-	repo_config_set_multivar_gently(the_repository, key, value,
-					value_pattern, flags);
-}
-
-to follow convention.
-
-Thanks,
--Stolee
