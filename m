@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17482C433F5
-	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 11:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFD54C433F5
+	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 11:58:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231922AbiBIL60 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Feb 2022 06:58:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57812 "EHLO
+        id S231954AbiBIL62 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Feb 2022 06:58:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231719AbiBIL5m (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229973AbiBIL5m (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 9 Feb 2022 06:57:42 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A222E00FEC6
-        for <git@vger.kernel.org>; Wed,  9 Feb 2022 02:59:20 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id q7so3249561wrc.13
-        for <git@vger.kernel.org>; Wed, 09 Feb 2022 02:59:20 -0800 (PST)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F0B2E00FEC4
+        for <git@vger.kernel.org>; Wed,  9 Feb 2022 02:59:19 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id h6so3296290wrb.9
+        for <git@vger.kernel.org>; Wed, 09 Feb 2022 02:59:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+7zGhFiGdhL/eHr/1nzwaaUo2iooJ/gzY8byscpxzG0=;
-        b=CFKnHh+VL6FcQd5BjU9hKOyyjzqqSRRw3G3fuus2t/b1QFgzzEUIuqJ/1chiSt8dZj
-         KdzIaNwPXrSQ33r1i8H/xZHITRgvtj2k1HpNSkdTgBRy1KZK6jrzOQOk1P/4dVw5+gMy
-         KXMlgw4sx8vcrAq8kkB0w39Sd53S3wYPfIWUTJ6pzLELMzUszy3NI0misMbiAMRuwVbm
-         F3LHCYX6IvFaDxNPOxVz3ps0nNognIH7aOOfq2rNFkz/0TnydgYUrnD9C4Kc2mWcCdgG
-         0cpjPT1HEqFimPpaRckRFrBWzu4yrpVLHZ2Yc/L1cA0GXqC/nrJ3MrlnF9FVBLbJfBMP
-         2Rww==
+        bh=zeh2b0qmlLamc9C66LjbDoUaY/NfxvM6VlNOo80stEs=;
+        b=ICW5nBp975kXT6FTUg8jaHqsNuq246UZEApgjhBbdGy7XKJLjz+M1j3YbDvwZqwZwu
+         t/OhNax9ESLCZAb2T3NuwHunpPIhNG2nRUL/NilkpBXKWXD4HGEZxLZVQB6QVHb/3KCT
+         y/pIPBfgIthftOVF7pgUrt4ORO8U6MjJ9x68cqH8nJVu7hkLcq/WY81yXTOZmoEZyjT/
+         u9Vy8Eq6eFmgLHMnPVj7yKtlSW1jXmYJEvK5pGRUYTPjL1L840WZZLsw+FDm7gbPeQjI
+         W/7D8Jztu/4F9RFxHWjXv8kLCIi/X79Sr7kYGrl2r6KLi2vkYMA2XxHzBizrqVAGTKMR
+         LklA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+7zGhFiGdhL/eHr/1nzwaaUo2iooJ/gzY8byscpxzG0=;
-        b=MvhVqk1/wXCnnLHBWsGzN8U+eR/7lAHL0GkqGsE/x+vYzKWLu1oci3tAz8zAjNIF0w
-         z67Di6alsINy0zbFC4gnVltuY0elC3VYtio5kPzMci4ABA0Eu9meAURM3Go7pGM+LKjX
-         9Ve8ry7vd51KxjNj8i5EpY4vFlk0oFWwkOiWiikIQdc7DY/pN56IKH23qd8YxcRXUCKK
-         zKJPymR6H53ypZ70a9sR94tzxgO95SSmHDwk8xwnouhXgsQAfzdZvqadiAUA1uG6QRM2
-         F21B2q6k33lQZMJ6oAuPiEDX62t11uGJlwy3B+KCgQkcbx7ZgSihPvjiEsVQ3Xj+t0LY
-         gYuw==
-X-Gm-Message-State: AOAM532a9J8sZTHQOZXb708MjULSJdBTcbgWCb7nvjx2ZG3A16edcsJe
-        p2U1W1XEeRFA8W9hVbr1H6+AbqxNHUM=
-X-Google-Smtp-Source: ABdhPJzGeXXbbRC2FdC6VGVMws430KnYibMxjsk6k6HKTM16sLc0dXolQD4plo/nx1PBD5MYuMZltA==
-X-Received: by 2002:adf:edd0:: with SMTP id v16mr1666145wro.373.1644404358729;
-        Wed, 09 Feb 2022 02:59:18 -0800 (PST)
+        bh=zeh2b0qmlLamc9C66LjbDoUaY/NfxvM6VlNOo80stEs=;
+        b=gDxLxjAxlZqa+xsOpRh58fZ1QgIm9i0QKRd8bbm0b8Hx5irSy8SyngnoB9+O2gpmS0
+         xP07D/sHg5mhgyAfk1EB/qOcPxTIkBbalAgPfXPhee9pd4JZx8jD32vpgTxXSpcMI9i5
+         LqtkePmr9z56H6M8PBYPbiFcEwjvNI9Xx+2Qt9JTZizrXLQD3XurP2iEz3o2WxjtBoAZ
+         E444PD/Li0lwJAHAhDwwrdikPmJcsjmft9XoMwmSus2SjZS/NYMWKqiE+pjV7vjRj3Dq
+         n7srvvxnwwGJ/y4GyGnboejpn6+fXbV6PVBsR80aKFw16CC9Di3fA45gQGYZubnByPaz
+         TkLw==
+X-Gm-Message-State: AOAM532n07PuXY3kTuV1Ojhxd5GdzJse8OD6vcyF5lrwPWJt2ZXNUmPQ
+        QcqIIpXSdQKo69Dv+Zo2yj6VUgPsdjE=
+X-Google-Smtp-Source: ABdhPJwyHXGBBlcm4iV7loh+R/ywTgakbF76WIZ0yqH03ADJzywF8h/ihDfVj4tBnVS6z2AGz4W8zA==
+X-Received: by 2002:a5d:6c67:: with SMTP id r7mr1626984wrz.518.1644404357869;
+        Wed, 09 Feb 2022 02:59:17 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h17sm4187199wmm.15.2022.02.09.02.59.18
+        by smtp.gmail.com with ESMTPSA id u7sm3852875wrm.15.2022.02.09.02.59.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Feb 2022 02:59:18 -0800 (PST)
-Message-Id: <8655bb0348d7344ae85c8d521fb1ec7a5f4188d2.1644404356.git.gitgitgadget@gmail.com>
+        Wed, 09 Feb 2022 02:59:17 -0800 (PST)
+Message-Id: <b8f88f1b9f84fb3f8d71a75c49f33e3426f103c0.1644404356.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1140.git.1644404356.gitgitgadget@gmail.com>
 References: <pull.1140.git.1644404356.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Feb 2022 10:59:14 +0000
-Subject: [PATCH 2/3] xdiff: refactor a function
+Date:   Wed, 09 Feb 2022 10:59:13 +0000
+Subject: [PATCH 1/3] xdiff: handle allocation failure in patience diff
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,79 +67,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Rather than having to remember exactly what to free after an
-allocation failure use the standard "goto out" pattern. This will
-simplify the next commit that starts handling currently unhandled
-failures.
+Other users of libxdiff such as libgit2 need to be able to handle
+allocation failures. As NULL is a valid return value the function
+signature is changed to be able report allocation failures.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- xdiff/xmerge.c | 36 ++++++++++++++++--------------------
- 1 file changed, 16 insertions(+), 20 deletions(-)
+ xdiff/xpatience.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index fff0b594f9a..48c5e9e3f35 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -684,35 +684,30 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
- int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
- 		xmparam_t const *xmp, mmbuffer_t *result)
+diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+index c5d48e80aef..3e3d99f8922 100644
+--- a/xdiff/xpatience.c
++++ b/xdiff/xpatience.c
+@@ -198,7 +198,7 @@ static int binary_search(struct entry **sequence, int longest,
+  * item per sequence length: the sequence with the smallest last
+  * element (in terms of line2).
+  */
+-static struct entry *find_longest_common_sequence(struct hashmap *map)
++static int find_longest_common_sequence(struct hashmap *map, struct entry **res)
  {
--	xdchange_t *xscr1, *xscr2;
--	xdfenv_t xe1, xe2;
--	int status;
-+	xdchange_t *xscr1 = NULL, *xscr2 = NULL;
-+	xdfenv_t xe1 = { 0 }, xe2 = { 0 };
-+	int status = -1;
- 	xpparam_t const *xpp = &xmp->xpp;
+ 	struct entry **sequence = xdl_malloc(map->nr * sizeof(struct entry *));
+ 	int longest = 0, i;
+@@ -211,6 +211,9 @@ static struct entry *find_longest_common_sequence(struct hashmap *map)
+ 	 */
+ 	int anchor_i = -1;
  
- 	result->ptr = NULL;
- 	result->size = 0;
++	if (!sequence)
++		return -1;
++
+ 	for (entry = map->first; entry; entry = entry->next) {
+ 		if (!entry->line2 || entry->line2 == NON_UNIQUE)
+ 			continue;
+@@ -230,8 +233,9 @@ static struct entry *find_longest_common_sequence(struct hashmap *map)
  
--	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0) {
--		return -1;
--	}
--	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0) {
--		xdl_free_env(&xe1);
--		return -1;
--	}
-+	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0)
-+		goto out;
-+
-+	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0)
-+		goto out;
-+
- 	if (xdl_change_compact(&xe1.xdf1, &xe1.xdf2, xpp->flags) < 0 ||
- 	    xdl_change_compact(&xe1.xdf2, &xe1.xdf1, xpp->flags) < 0 ||
--	    xdl_build_script(&xe1, &xscr1) < 0) {
--		xdl_free_env(&xe1);
--		return -1;
--	}
-+	    xdl_build_script(&xe1, &xscr1) < 0)
-+		goto out;
-+
- 	if (xdl_change_compact(&xe2.xdf1, &xe2.xdf2, xpp->flags) < 0 ||
- 	    xdl_change_compact(&xe2.xdf2, &xe2.xdf1, xpp->flags) < 0 ||
--	    xdl_build_script(&xe2, &xscr2) < 0) {
--		xdl_free_script(xscr1);
--		xdl_free_env(&xe1);
--		xdl_free_env(&xe2);
--		return -1;
--	}
-+	    xdl_build_script(&xe2, &xscr2) < 0)
-+		goto out;
-+
- 	status = 0;
- 	if (!xscr1) {
- 		result->ptr = xdl_malloc(mf2->size);
-@@ -727,6 +722,7 @@ int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
- 				      &xe2, xscr2,
- 				      xmp, result);
+ 	/* No common unique lines were found */
+ 	if (!longest) {
++		*res = NULL;
+ 		xdl_free(sequence);
+-		return NULL;
++		return 0;
  	}
-+ out:
- 	xdl_free_script(xscr1);
- 	xdl_free_script(xscr2);
  
+ 	/* Iterate starting at the last element, adjusting the "next" members */
+@@ -241,8 +245,9 @@ static struct entry *find_longest_common_sequence(struct hashmap *map)
+ 		entry->previous->next = entry;
+ 		entry = entry->previous;
+ 	}
++	*res = entry;
+ 	xdl_free(sequence);
+-	return entry;
++	return 0;
+ }
+ 
+ static int match(struct hashmap *map, int line1, int line2)
+@@ -358,14 +363,16 @@ static int patience_diff(mmfile_t *file1, mmfile_t *file2,
+ 		return 0;
+ 	}
+ 
+-	first = find_longest_common_sequence(&map);
++	result = find_longest_common_sequence(&map, &first);
++	if (result)
++		goto out;
+ 	if (first)
+ 		result = walk_common_sequence(&map, first,
+ 			line1, count1, line2, count2);
+ 	else
+ 		result = fall_back_to_classic_diff(&map,
+ 			line1, count1, line2, count2);
+-
++ out:
+ 	xdl_free(map.entries);
+ 	return result;
+ }
 -- 
 gitgitgadget
 
