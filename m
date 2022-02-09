@@ -2,164 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B07A3C433F5
-	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 18:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C712C433EF
+	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 18:04:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238607AbiBISEY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Feb 2022 13:04:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55148 "EHLO
+        id S233325AbiBISEt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Feb 2022 13:04:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238461AbiBISES (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Feb 2022 13:04:18 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2581C05CB87
-        for <git@vger.kernel.org>; Wed,  9 Feb 2022 10:04:20 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id y3so9766240ejf.2
-        for <git@vger.kernel.org>; Wed, 09 Feb 2022 10:04:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=37xMKqZXjw5fKI0aD4I3+IqYkgH5FsN0xE81pbDG8oI=;
-        b=kItcnCPlGZH5bEmeuhVLoJAN1gJ6b8RH7+xwj8yakAREfciBiWih3oaXUX5a71dqJE
-         44Y9e1oLLwImXnTnhTEZBzSG7dT4ve4n92CRCcM07XEJtfC+S9ej1gUpvo9N/mP540S/
-         vpTipbW+zJTAJdLod1KQXGFx3rFqt7TxwSb5hGN0eeeK9DfmWwz9HNoEECWHME7nzrEy
-         4EkZ0Beuwk6J36nVy0fYxcW1o8vYL1WbOmbBmVH8YydRswGk/b6agW3mO6kUBHyswP7J
-         tSHwI9eOXWXyiffuoq3V0bztAj58XSpAO/f46hY+b/L+hp6rfaLPE6k3F1vsf1Yu4U1T
-         pZ4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=37xMKqZXjw5fKI0aD4I3+IqYkgH5FsN0xE81pbDG8oI=;
-        b=sv3kwdCQ0nHrAa1R5xXwP8Vs0wKltmQibQD+Ms6QieR1oF2/pZaEI+NGsej+ozvpMi
-         F6RbFNVkYm/aHw4+2LEyUHxbk9b0v7Ar7QMMNBpFLME3HVVX7jY1luPXlSvAq4bvRPfm
-         DFDsxU1AtPqhtKRQoRJcIVqu3yD6UVgL+abosdyl9r4SSOJEoL2BZKLG3IkFAoXWw4F7
-         FdA/qF9UbavMFztxtW2INGd9m1k6cK8rl7qRFQyMeiqY2erPrIjAeY43jWuER5KH9rm7
-         PvZP1oEdKfvyHDT2woQ+ro2J1XqDKGQZfY8Ry7rP6U6le4pNdTHOC/PWNfLU9cHQc1YK
-         msMw==
-X-Gm-Message-State: AOAM533HIuWQvuDmOaPd3+e2WRF1UXaEHhUl20T10QeoC9Icjo2qMoFn
-        KOZGaZhd4vIOra+eEqa/G0wsvhMIHN7SeYxfmk0=
-X-Google-Smtp-Source: ABdhPJyThPN7wCidAaxOoObjHor8qCNRwlKYmcAXNHiroAm2BYpQ+rxnaOiwBubkQo2CkVhtIASVAZg2IUgtaZqazGQ=
-X-Received: by 2002:a17:906:4fcb:: with SMTP id i11mr2521335ejw.269.1644429859287;
- Wed, 09 Feb 2022 10:04:19 -0800 (PST)
+        with ESMTP id S236412AbiBISEq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Feb 2022 13:04:46 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91391C05CB8C
+        for <git@vger.kernel.org>; Wed,  9 Feb 2022 10:04:47 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2DF05FC9AC;
+        Wed,  9 Feb 2022 13:04:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=I4h+3M6FJAoKLwfxZZyyBzA9SyCTctqDczM8l2
+        Aqw+U=; b=qgzqTzjPOI42bBl+qkBOUuoDq6TFfIYgGuY9GjxG/OK7U7TZI8Lpvm
+        M0ymXp7D+TXNqz3cLP9eEOTHzjvuXf0cqJOjIn3ChCi0x+dCpIl2sxaf51b7VNsv
+        Y4ELUDR2SsaDefaNh3GmHXaVxC3WZm1GgPCxwgpHwKR+qys6253LU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2325DFC9AB;
+        Wed,  9 Feb 2022 13:04:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 74798FC9AA;
+        Wed,  9 Feb 2022 13:04:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/3] xdiff: refactor a function
+References: <pull.1140.git.1644404356.gitgitgadget@gmail.com>
+        <8655bb0348d7344ae85c8d521fb1ec7a5f4188d2.1644404356.git.gitgitgadget@gmail.com>
+Date:   Wed, 09 Feb 2022 10:04:43 -0800
+In-Reply-To: <8655bb0348d7344ae85c8d521fb1ec7a5f4188d2.1644404356.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Wed, 09 Feb 2022 10:59:14
+        +0000")
+Message-ID: <xmqqmtiz9aro.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
- <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com> <0260ff6cac0c76c6d66187d77defef1edd4c6fb5.1644269583.git.gitgitgadget@gmail.com>
- <xmqqo83hatm1.fsf@gitster.g>
-In-Reply-To: <xmqqo83hatm1.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 9 Feb 2022 10:04:07 -0800
-Message-ID: <CABPp-BGj7DZY8D-Ps3fhcRik_gSGoDyoFokuUMRN_Q7Z2cbEfw@mail.gmail.com>
-Subject: Re: [PATCH v6 1/6] Documentation: add extensions.worktreeConfig details
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Sean Allred <allred.sean@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: C2BD43F6-89D2-11EC-93F7-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 8, 2022 at 2:20 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > diff --git a/Documentation/config/extensions.txt b/Documentation/config/extensions.txt
-> > index 4e23d73cdca..bccaec7a963 100644
-> > --- a/Documentation/config/extensions.txt
-> > +++ b/Documentation/config/extensions.txt
-> > @@ -6,3 +6,34 @@ extensions.objectFormat::
-> >  Note that this setting should only be set by linkgit:git-init[1] or
-> >  linkgit:git-clone[1].  Trying to change it after initialization will not
-> >  work and will produce hard-to-diagnose issues.
-> > +
-> > +extensions.worktreeConfig::
-> > +     If enabled, then worktrees will load config settings from the
-> > +     `$GIT_DIR/config.worktree` file in addition to the
-> > +     `$GIT_COMMON_DIR/config` file. Note that `$GIT_COMMON_DIR` and
-> > +     `$GIT_DIR` are the same for the main working tree, while other
-> > +     working trees have `$GIT_DIR` equal to
-> > +     `$GIT_COMMON_DIR/worktrees/<id>/`. The settings in the
->
-> The mixed use of "worktree" and "working tree" in this paragraph
-> might confuse readers into thinking that the paragraph is being
-> careful to make distinction between the two.  All references to
-> "working tree" in the above paragraph should actually be "worktree",
-> I would think.
->
->         Side note: "working tree" is in the glossary-content.txt,
->         but "worktree", which is one "working tree" + repository
->         metadata (i.e. ".git/") that may be partially shared with
->         other "worktree"s of a single repository, is not defined.
->
-> This is a tangent, but I wonder why we chose to use a different
-> filename (i.e. not "config" but "config.worktree") for this.  If we
-> were redoing multi-worktree support from scratch, we would not reuse
-> the $GIT_DIR used by the primary worktree as $GIT_COMMON_DIR, so
-> that all worktrees would share a single $GIT_COMMON_DIR and
-> $GIT_COMMON_DIR/config that has stuff that is shared among all the
-> worktrees, while per worktree stuff is in $GIT_DIR/config even for
-> the primary worktree.  But that is all water under the bridge now.
->
-> Other than the terminology gotcha, looked sensible.  Migrating
-> automatically and/or noticing a suspicious setting may be needed to
-> help end users, but that would not be within the scope of this step.
->
-> Attached is a "how about this?" glossary update suggestion.  Most of
-> the existing mention of "working tree" are fine as-is because they
-> only care about what is in the "working tree", but some should be
-> changed to "worktree" to stress the fact that they care not just the
-> "working tree" part but also the repository metadata part that is
-> associated with that single "working tree".  The first hunk says
-> worktree but it is clear that it is interested only in the "working
-> tree" files.
->
->  Documentation/glossary-content.txt | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
->
-> diff --git c/Documentation/glossary-content.txt w/Documentation/glossary-content.txt
-> index c077971335..d816512c6a 100644
-> --- c/Documentation/glossary-content.txt
-> +++ w/Documentation/glossary-content.txt
-> @@ -312,7 +312,7 @@ Pathspecs are used on the command line of "git ls-files", "git
->  ls-tree", "git add", "git grep", "git diff", "git checkout",
->  and many other commands to
->  limit the scope of operations to some subset of the tree or
-> -worktree.  See the documentation of each command for whether
-> +working tree.  See the documentation of each command for whether
->  paths are relative to the current directory or toplevel.  The
->  pathspec syntax is as follows:
->  +
-> @@ -446,7 +446,7 @@ exclude;;
->         interface than the <<def_plumbing,plumbing>>.
->
->  [[def_per_worktree_ref]]per-worktree ref::
-> -       Refs that are per-<<def_working_tree,worktree>>, rather than
-> +       Refs that are per-<<def_worktree,worktree>>, rather than
->         global.  This is presently only <<def_HEAD,HEAD>> and any refs
->         that start with `refs/bisect/`, but might later include other
->         unusual refs.
-> @@ -669,3 +669,12 @@ The most notable example is `HEAD`.
->         The tree of actual checked out files.  The working tree normally
->         contains the contents of the <<def_HEAD,HEAD>> commit's tree,
->         plus any local changes that you have made but not yet committed.
-> +
-> +[[def_work_tree]]worktree::
-> +       A repository can have zero (i.e. bare repository) or one or
-> +       more worktrees attached to it. One "worktree" consists of a
-> +       "working tree" and repository metadata, most of which are
-> +       shared among other worktrees of a single repository, and
-> +       some of which are maintained separately per worktree
-> +       (e.g. the index, HEAD, per-worktree refs and per-worktree
-> +       configuration file)
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-We could also add pseudorefs to the list of things maintained
-separately in the final parenthetical comment, but otherwise looks
-good.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Rather than having to remember exactly what to free after an
+> allocation failure use the standard "goto out" pattern. This will
+> simplify the next commit that starts handling currently unhandled
+> failures.
+
+It sound like this is meant to be a no-op clean-up; let's see.
+
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  xdiff/xmerge.c | 36 ++++++++++++++++--------------------
+>  1 file changed, 16 insertions(+), 20 deletions(-)
+>
+> diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+> index fff0b594f9a..48c5e9e3f35 100644
+> --- a/xdiff/xmerge.c
+> +++ b/xdiff/xmerge.c
+> @@ -684,35 +684,30 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
+>  int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
+>  		xmparam_t const *xmp, mmbuffer_t *result)
+>  {
+> -	xdchange_t *xscr1, *xscr2;
+> -	xdfenv_t xe1, xe2;
+> -	int status;
+> +	xdchange_t *xscr1 = NULL, *xscr2 = NULL;
+> +	xdfenv_t xe1 = { 0 }, xe2 = { 0 };
+> +	int status = -1;
+>  	xpparam_t const *xpp = &xmp->xpp;
+>  
+>  	result->ptr = NULL;
+>  	result->size = 0;
+>  
+> -	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0) {
+> -		return -1;
+> -	}
+> -	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0) {
+> -		xdl_free_env(&xe1);
+> -		return -1;
+> -	}
+
+OK, xdl_do_diff() calls xdl_free_env(xe) before an error return (I
+didn't check if patience and histogram also do so correctly), so the
+original was not leaking xe1 or xe2.
+
+> +	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0)
+> +		goto out;
+> +
+> +	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0)
+> +		goto out;
+> +
+
+And this does not change that.
+
+>  	if (xdl_change_compact(&xe1.xdf1, &xe1.xdf2, xpp->flags) < 0 ||
+>  	    xdl_change_compact(&xe1.xdf2, &xe1.xdf1, xpp->flags) < 0 ||
+> -	    xdl_build_script(&xe1, &xscr1) < 0) {
+> -		xdl_free_env(&xe1);
+> -		return -1;
+> -	}
+> +	    xdl_build_script(&xe1, &xscr1) < 0)
+> +		goto out;
+> +
+
+Here, as xdl_build_script() does free the script it failed to build,
+but not the xe it was given, the original is correct to free xe1.
+
+We jump from here to leave the freeing of xe1 to the clean-up part.
+
+>  	if (xdl_change_compact(&xe2.xdf1, &xe2.xdf2, xpp->flags) < 0 ||
+>  	    xdl_change_compact(&xe2.xdf2, &xe2.xdf1, xpp->flags) < 0 ||
+> -	    xdl_build_script(&xe2, &xscr2) < 0) {
+> -		xdl_free_script(xscr1);
+> -		xdl_free_env(&xe1);
+> -		xdl_free_env(&xe2);
+> -		return -1;
+> -	}
+> +	    xdl_build_script(&xe2, &xscr2) < 0)
+> +		goto out;
+
+Ditto for xe2 here.
+
+>  	status = 0;
+>  	if (!xscr1) {
+>  		result->ptr = xdl_malloc(mf2->size);
+> @@ -727,6 +722,7 @@ int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
+>  				      &xe2, xscr2,
+>  				      xmp, result);
+>  	}
+> + out:
+>  	xdl_free_script(xscr1);
+>  	xdl_free_script(xscr2);
+
+And after the post-context of this hunk, we do free_env() both xe1
+and xe2, so we should be doing the same thing as before.
+
+Looking good.
+
