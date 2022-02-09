@@ -2,104 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6976DC433EF
-	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 02:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68B1BC4332F
+	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 02:41:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232858AbiBIClR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 21:41:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35816 "EHLO
+        id S1344585AbiBIClV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 21:41:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244510AbiBICKL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 21:10:11 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C322DC06157B
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 18:10:09 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id d27so1467382wrc.6
-        for <git@vger.kernel.org>; Tue, 08 Feb 2022 18:10:09 -0800 (PST)
+        with ESMTP id S244556AbiBICKO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 21:10:14 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E84A7C06157B
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 18:10:12 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id f17so1515158wrx.1
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 18:10:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=GYLeYxeB9iv6OPu+nus91iRygcXpxfKTGo4gFyHO3uY=;
-        b=Jg2dlqzySVm+n2pLb5RDzoXwRAJ6kva7JvHoz/aBxH9e7PJHnNdbZIMu/Bslna7pHg
-         +8yXXW8Da8SrppkzU3fONAiPcnBeIfQJ0tIfwqXS4LYjJxTrhuWwmJK9ifB4pDHjarmh
-         uBVvFhSsxzenfFSpimsFUubuLKbG7ZaX4FB+yxUUmaMolW5vtpt6D9KOvLHXQ7logwu1
-         gqeFYggIDZIn5SIbT77qFhMxoR5D1xnblvMalvqDvyyC/94+tP4mvsBq5bK0mLef3Fzb
-         hlVh170qDDKvHk+FqBJ01HUTI4XehI4aXqx4kiUKKzZyVB1ixg/WwiXdRSlGcgDcUJyX
-         rH3Q==
+        bh=8dz2MG61I0cw4Qg6/QDjdBJMAzkX4CKpnVH6dToB5No=;
+        b=mP3O82+g/W0ojO9o0YX1Nsn4ZsLlhwW03hc/nRW80ArUyHYGHbckET5UbPlqp/zKE7
+         dmwsWQvy8vELXfurwDdIEsHNmZ2BC1NE+KB0UefQsEtlGEW7JVc/UCCtv1GrtQkSwvop
+         zG1LIFZDz4ah2xubMxf8y1zVbJIEEZ93TEdwwbBANbtB9TVuCCm5cTfgo2OdwU6HKwgM
+         hccbVYLA54kTa/4aehCOZSruk3uzDsQCx+i/4/evpRO8ahAtqGmrwuJlpVqCdZcEcFFR
+         wlbl1ZamF2jm50OYhOBx4ZCGdVwLOaM7taFR44Gzyzjk3JU6eLOzPiYF5lK5PSPXcYys
+         W6Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=GYLeYxeB9iv6OPu+nus91iRygcXpxfKTGo4gFyHO3uY=;
-        b=st06jq1Hd0BeyWUWZwV4tTcmnu8O7RTH8+wPJIbQlTlp6+fwf4e3rAGoPpo2pR+JH0
-         ejh2CHytVUmAttw4Wnej9O8m1hMP+5Akti2GmOj0a4TXeGJCF66knuB2JW9XUL+uu+VX
-         4kS8/wXGOVC3hYt82xoUWMVORX6RsbHznz/7DJx7u4svXONZcmJcEywkdu7/NMKEAZnO
-         R5pG9u7BRWYMmNq2exBd9mb855yjc7h5wOuTOXygoT7jkDfutarLKGD+D59tIlS38aU+
-         GwivJ5ajOXPExHyTIoThQ6T/uf7NPsGSwZPINwIzjbguAYTm/SjxLcA+OFyqLBLHDDYj
-         pHqA==
-X-Gm-Message-State: AOAM531ORGPp2+tMmGdldGJOaBTf28vzOZ376sNlDumV3FYjklMHc4Y0
-        LL5E2TqouKPdBbwc2RCy1gYM8LvFNdU=
-X-Google-Smtp-Source: ABdhPJyKjm7tpEo40Og2xMQig1VaYKVjcdQCizI3ZTu70WMv3ic9HpbFH6vmLVfIW8EfTomUwA5oww==
-X-Received: by 2002:a5d:410c:: with SMTP id l12mr158619wrp.597.1644372608069;
-        Tue, 08 Feb 2022 18:10:08 -0800 (PST)
+        bh=8dz2MG61I0cw4Qg6/QDjdBJMAzkX4CKpnVH6dToB5No=;
+        b=Dbt1JVuiLhv4fhtcSgNf3UC7w3xUQKMFsuUtZgDgVhHJ0wymd9JNloQmkjPelPVL3v
+         Dp3SnPEND1PmWwXQB/kmW9SNDmcbmLdGPowuaBl4zHT4l4CdIKK3HdoSo9JAKCgLtWx8
+         STL4LhWbwzp1ZEbr8gbUfYGFjypt9m0gswSNvhOql4FqFUdb7/peLBV39EWLe+ipwBBY
+         n1OtBvWkSplxJ52Ex3G5ko1Mnj+C8v8kOpPHg2SA3Rm4hZtvV/3EeS/K7NKSm1Fry/cd
+         b0aCiSQqk2eGAy7y9nvZy+kKkXYa+C7qacXg1yyJqG3pe56t/wbVM9NM+Ym2DtOhi16w
+         Bnpw==
+X-Gm-Message-State: AOAM533iH2eHauN0lma3W2Ii8z66DNC/FDo9OLbW5kYV3FYNJi/Dz5Bf
+        fAIfFUP6EQx/yVzPGCNaPz8YIU1LmDg=
+X-Google-Smtp-Source: ABdhPJxmCtG+OK8JzMwAIo5tIDsoF2lFNPXEIsvKpxWzN20vVJOmL0BafdNgOtyqSPp0f9o4vieo8w==
+X-Received: by 2002:adf:e5ca:: with SMTP id a10mr168074wrn.151.1644372611286;
+        Tue, 08 Feb 2022 18:10:11 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h18sm1035162wmq.8.2022.02.08.18.10.07
+        by smtp.gmail.com with ESMTPSA id x10sm2615520wmj.17.2022.02.08.18.10.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Feb 2022 18:10:07 -0800 (PST)
-Message-Id: <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
+        Tue, 08 Feb 2022 18:10:10 -0800 (PST)
+Message-Id: <d76faa1f16e8b5f8eb13284fdb162525fcbcb22e.1644372606.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
 References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
+        <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 09 Feb 2022 02:10:02 +0000
-Subject: [PATCH v2 0/4] [RFC] repack: add --filter=
+Date:   Wed, 09 Feb 2022 02:10:06 +0000
+Subject: [PATCH v2 4/4] tests for repack --filter mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>
+Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series makes partial clone more useful by making it possible to
-run repack to remove objects from a repository (replacing it with promisor
-objects). This is useful when we want to offload large blobs from a git
-server onto another git server, or even use an http server through a remote
-helper.
+From: John Cai <johncai86@gmail.com>
 
-In [A], a --refilter option on fetch and fetch-pack is being discussed where
-either a less restrictive or more restrictive filter can be used. In the
-more restrictive case, the objects that already exist will not be deleted.
-But, one can imagine that users might want the ability to delete objects
-when they apply a more restrictive filter in order to save space, and this
-patch series would also allow that.
+This patch adds tests to test both repack --filter functionality in
+isolation (in t7700-repack.sh) as well as how it can be used to offload
+large blobs (in t0410-partial-clone.sh)
 
-There are a couple of things we need to adjust to make this possible. This
-patch has three parts.
+There are several scripts added so we can test the process of using a
+remote helper to upload blobs to an http server.
 
- 1. Allow --filter in pack-objects without --stdout
- 2. Add a --filter flag for repack
- 3. Allow missing promisor objects in upload-pack
- 4. Tests that demonstrate the ability to offload objects onto an http
-    remote
+- t/lib-httpd/list.sh lists blobs uploaded to the http server.
+- t/lib-httpd/upload.sh uploads blobs to the http server.
+- t/t0410/git-remote-testhttpgit a remote helper that can access blobs
+  onto from an http server. Copied over from t/t5801/git-remote-testhttpgit
+  and modified to upload blobs to an http server.
+- t/t0410/lib-http-promisor.sh convenience functions for uploading
+  blobs
 
-cc: Christian Couder christian.couder@gmail.com cc: Derrick Stolee
-stolee@gmail.com cc: Robert Coup robert@coup.net.nz
-
-A.
-https://lore.kernel.org/git/pull.1138.git.1643730593.gitgitgadget@gmail.com/
-
-John Cai (4):
-  pack-objects: allow --filter without --stdout
-  repack: add --filter=<filter-spec> option
-  upload-pack: allow missing promisor objects
-  tests for repack --filter mode
-
- Documentation/git-repack.txt   |   5 +
- builtin/pack-objects.c         |   2 -
- builtin/repack.c               |  22 +++--
+Based-on-patch-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: John Cai <johncai86@gmail.com>
+---
  t/lib-httpd.sh                 |   2 +
  t/lib-httpd/apache.conf        |   8 ++
  t/lib-httpd/list.sh            |  43 +++++++++
@@ -107,151 +91,456 @@ John Cai (4):
  t/t0410-partial-clone.sh       |  81 ++++++++++++++++
  t/t0410/git-remote-testhttpgit | 170 +++++++++++++++++++++++++++++++++
  t/t7700-repack.sh              |  20 ++++
- upload-pack.c                  |   5 +
- 11 files changed, 395 insertions(+), 9 deletions(-)
+ 7 files changed, 370 insertions(+)
  create mode 100644 t/lib-httpd/list.sh
  create mode 100644 t/lib-httpd/upload.sh
  create mode 100755 t/t0410/git-remote-testhttpgit
 
-
-base-commit: 38062e73e009f27ea192d50481fcb5e7b0e9d6eb
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1206%2Fjohn-cai%2Fjc-repack-filter-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1206/john-cai/jc-repack-filter-v2
-Pull-Request: https://github.com/git/git/pull/1206
-
-Range-diff vs v1:
-
- 1:  0eec9b117da = 1:  f43b76ca650 pack-objects: allow --filter without --stdout
- -:  ----------- > 2:  6e7c8410b8d repack: add --filter=<filter-spec> option
- -:  ----------- > 3:  40612b9663b upload-pack: allow missing promisor objects
- 2:  a3166381572 ! 4:  d76faa1f16e repack: add --filter=<filter-spec> option
-     @@ Metadata
-      Author: John Cai <johncai86@gmail.com>
-      
-       ## Commit message ##
-     -    repack: add --filter=<filter-spec> option
-     +    tests for repack --filter mode
-      
-     -    Currently, repack does not work with partial clones. When repack is run
-     -    on a partially cloned repository, it grabs all missing objects from
-     -    promisor remotes. This also means that when gc is run for repository
-     -    maintenance on a partially cloned repository, it will end up getting
-     -    missing objects, which is not what we want.
-     -
-     -    In order to make repack work with partial clone, teach repack a new
-     -    option --filter, which takes a <filter-spec> argument. repack will skip
-     -    any objects that are matched by <filter-spec> similar to how the clone
-     -    command will skip fetching certain objects.
-     -
-     -    The final goal of this feature, is to be able to store objects on a
-     -    server other than the regular git server itself.
-     +    This patch adds tests to test both repack --filter functionality in
-     +    isolation (in t7700-repack.sh) as well as how it can be used to offload
-     +    large blobs (in t0410-partial-clone.sh)
-      
-          There are several scripts added so we can test the process of using a
-     -    remote helper to upload blobs to an http server:
-     +    remote helper to upload blobs to an http server.
-      
-          - t/lib-httpd/list.sh lists blobs uploaded to the http server.
-          - t/lib-httpd/upload.sh uploads blobs to the http server.
-     @@ Commit message
-          Based-on-patch-by: Christian Couder <chriscool@tuxfamily.org>
-          Signed-off-by: John Cai <johncai86@gmail.com>
-      
-     - ## Documentation/git-repack.txt ##
-     -@@ Documentation/git-repack.txt: depth is 4095.
-     - 	a larger and slower repository; see the discussion in
-     - 	`pack.packSizeLimit`.
-     - 
-     -+--filter=<filter-spec>::
-     -+	Omits certain objects (usually blobs) from the resulting
-     -+	packfile. See linkgit:git-rev-list[1] for valid
-     -+	`<filter-spec>` forms.
-     -+
-     - -b::
-     - --write-bitmap-index::
-     - 	Write a reachability bitmap index as part of the repack. This
-     -
-     - ## builtin/repack.c ##
-     -@@ builtin/repack.c: struct pack_objects_args {
-     - 	const char *depth;
-     - 	const char *threads;
-     - 	const char *max_pack_size;
-     -+	const char *filter;
-     - 	int no_reuse_delta;
-     - 	int no_reuse_object;
-     - 	int quiet;
-     -@@ builtin/repack.c: static void prepare_pack_objects(struct child_process *cmd,
-     - 		strvec_pushf(&cmd->args, "--threads=%s", args->threads);
-     - 	if (args->max_pack_size)
-     - 		strvec_pushf(&cmd->args, "--max-pack-size=%s", args->max_pack_size);
-     -+	if (args->filter)
-     -+		strvec_pushf(&cmd->args, "--filter=%s", args->filter);
-     - 	if (args->no_reuse_delta)
-     - 		strvec_pushf(&cmd->args, "--no-reuse-delta");
-     - 	if (args->no_reuse_object)
-     -@@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix)
-     - 				N_("limits the maximum number of threads")),
-     - 		OPT_STRING(0, "max-pack-size", &po_args.max_pack_size, N_("bytes"),
-     - 				N_("maximum size of each packfile")),
-     -+		OPT_STRING(0, "filter", &po_args.filter, N_("args"),
-     -+				N_("object filtering")),
-     - 		OPT_BOOL(0, "pack-kept-objects", &pack_kept_objects,
-     - 				N_("repack objects in packs marked with .keep")),
-     - 		OPT_STRING_LIST(0, "keep-pack", &keep_pack_list, N_("name"),
-     -@@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix)
-     - 		if (line.len != the_hash_algo->hexsz)
-     - 			die(_("repack: Expecting full hex object ID lines only from pack-objects."));
-     - 		string_list_append(&names, line.buf);
-     -+		if (po_args.filter) {
-     -+			char *promisor_name = mkpathdup("%s-%s.promisor", packtmp,
-     -+							line.buf);
-     -+			write_promisor_file(promisor_name, NULL, 0);
-     -+		}
-     - 	}
-     - 	fclose(out);
-     - 	ret = finish_command(&cmd);
-     -
-       ## t/lib-httpd.sh ##
-      @@ t/lib-httpd.sh: prepare_httpd() {
-       	install_script error-smart-http.sh
-     @@ t/t0410-partial-clone.sh: test_expect_success 'fetching of missing objects from
-      +	git -C server rev-list --objects --all --missing=print >objects &&
-      +	grep "$sha" objects
-      +'
-     ++
-     ++test_expect_success 'fetch does not cause server to fetch missing objects' '
-     ++	rm -rf origin server client &&
-     ++	test_create_repo origin &&
-     ++	dd if=/dev/zero of=origin/file1 bs=801k count=1 &&
-     ++	git -C origin add file1 &&
-     ++	git -C origin commit -m "large blob" &&
-     ++	sha="$(git -C origin rev-parse :file1)" &&
-     ++	expected="?$(git -C origin rev-parse :file1)" &&
-     ++	git clone --bare --no-local origin server &&
-     ++	git -C server remote add httpremote "testhttpgit::${PWD}/server" &&
-     ++	git -C server config remote.httpremote.promisor true &&
-     ++	git -C server config --remove-section remote.origin &&
-     ++	git -C server rev-list --all --objects --filter-print-omitted \
-     ++		--filter=blob:limit=800k | perl -ne "print if s/^[~]//" \
-     ++		>large_blobs.txt &&
-     ++	upload_blobs_from_stdin server <large_blobs.txt &&
-     ++	git -C server -c repack.writebitmaps=false repack -a -d \
-     ++		--filter=blob:limit=800k &&
-     ++	git -C server config uploadpack.allowmissingpromisor true &&
-     ++	git clone -c remote.httpremote.url="testhttpgit::${PWD}/server" \
-     ++	-c remote.httpremote.fetch='+refs/heads/*:refs/remotes/httpremote/*' \
-     ++	-c remote.httpremote.promisor=true --bare --no-local \
-     ++	--filter=blob:limit=800k server client &&
-     ++	git -C client rev-list --objects --all --missing=print >client_objects &&
-     ++	grep "$expected" client_objects &&
-     ++	git -C server rev-list --objects --all --missing=print >server_objects &&
-     ++	grep "$expected" server_objects
-     ++'
-      +
-       # DO NOT add non-httpd-specific tests here, because the last part of this
-       # test script is only executed when httpd is available and enabled.
-
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 782891908d7..fc6587c6d39 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -136,6 +136,8 @@ prepare_httpd() {
+ 	install_script error-smart-http.sh
+ 	install_script error.sh
+ 	install_script apply-one-time-perl.sh
++	install_script upload.sh
++	install_script list.sh
+ 
+ 	ln -s "$LIB_HTTPD_MODULE_PATH" "$HTTPD_ROOT_PATH/modules"
+ 
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 497b9b9d927..1ea382750f0 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -129,6 +129,8 @@ ScriptAlias /broken_smart/ broken-smart-http.sh/
+ ScriptAlias /error_smart/ error-smart-http.sh/
+ ScriptAlias /error/ error.sh/
+ ScriptAliasMatch /one_time_perl/(.*) apply-one-time-perl.sh/$1
++ScriptAlias /upload/ upload.sh/
++ScriptAlias /list/ list.sh/
+ <Directory ${GIT_EXEC_PATH}>
+ 	Options FollowSymlinks
+ </Directory>
+@@ -156,6 +158,12 @@ ScriptAliasMatch /one_time_perl/(.*) apply-one-time-perl.sh/$1
+ <Files ${GIT_EXEC_PATH}/git-http-backend>
+ 	Options ExecCGI
+ </Files>
++<Files upload.sh>
++  Options ExecCGI
++</Files>
++<Files list.sh>
++  Options ExecCGI
++</Files>
+ 
+ RewriteEngine on
+ RewriteRule ^/dumb-redir/(.*)$ /dumb/$1 [R=301]
+diff --git a/t/lib-httpd/list.sh b/t/lib-httpd/list.sh
+new file mode 100644
+index 00000000000..e63406be3b2
+--- /dev/null
++++ b/t/lib-httpd/list.sh
+@@ -0,0 +1,43 @@
++#!/bin/sh
++
++# Used in the httpd test server to be called by a remote helper to list objects.
++
++FILES_DIR="www/files"
++
++OLDIFS="$IFS"
++IFS='&'
++set -- $QUERY_STRING
++IFS="$OLDIFS"
++
++while test $# -gt 0
++do
++	key=${1%%=*}
++	val=${1#*=}
++
++	case "$key" in
++	"sha1") sha1="$val" ;;
++	*) echo >&2 "unknown key '$key'" ;;
++	esac
++
++	shift
++done
++
++if test -d "$FILES_DIR"
++then
++	if test -z "$sha1"
++	then
++		echo 'Status: 200 OK'
++		echo
++		ls "$FILES_DIR" | tr '-' ' '
++	else
++		if test -f "$FILES_DIR/$sha1"-*
++		then
++			echo 'Status: 200 OK'
++			echo
++			cat "$FILES_DIR/$sha1"-*
++		else
++			echo 'Status: 404 Not Found'
++			echo
++		fi
++	fi
++fi
+diff --git a/t/lib-httpd/upload.sh b/t/lib-httpd/upload.sh
+new file mode 100644
+index 00000000000..202de63b2dc
+--- /dev/null
++++ b/t/lib-httpd/upload.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++
++# In part from http://codereview.stackexchange.com/questions/79549/bash-cgi-upload-file
++# Used in the httpd test server to for a remote helper to call to upload blobs.
++
++FILES_DIR="www/files"
++
++OLDIFS="$IFS"
++IFS='&'
++set -- $QUERY_STRING
++IFS="$OLDIFS"
++
++while test $# -gt 0
++do
++	key=${1%%=*}
++	val=${1#*=}
++
++	case "$key" in
++	"sha1") sha1="$val" ;;
++	"type") type="$val" ;;
++	"size") size="$val" ;;
++	"delete") delete=1 ;;
++	*) echo >&2 "unknown key '$key'" ;;
++	esac
++
++	shift
++done
++
++case "$REQUEST_METHOD" in
++POST)
++	if test "$delete" = "1"
++	then
++		rm -f "$FILES_DIR/$sha1-$size-$type"
++	else
++		mkdir -p "$FILES_DIR"
++		cat >"$FILES_DIR/$sha1-$size-$type"
++	fi
++
++	echo 'Status: 204 No Content'
++	echo
++	;;
++
++*)
++	echo 'Status: 405 Method Not Allowed'
++	echo
++esac
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index f17abd298c8..0724043ffb7 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -30,6 +30,31 @@ promise_and_delete () {
+ 	delete_object repo "$HASH"
+ }
+ 
++upload_blob() {
++	SERVER_REPO="$1"
++	HASH="$2"
++
++	test -n "$HASH" || die "Invalid argument '$HASH'"
++	HASH_SIZE=$(git -C "$SERVER_REPO" cat-file -s "$HASH") || {
++		echo >&2 "Cannot get blob size of '$HASH'"
++		return 1
++	}
++
++	UPLOAD_URL="http://127.0.0.1:$LIB_HTTPD_PORT/upload/?sha1=$HASH&size=$HASH_SIZE&type=blob"
++
++	git -C "$SERVER_REPO" cat-file blob "$HASH" >object &&
++	curl --data-binary @object --include "$UPLOAD_URL"
++}
++
++upload_blobs_from_stdin() {
++	SERVER_REPO="$1"
++	while read -r blob
++	do
++		echo "uploading $blob"
++		upload_blob "$SERVER_REPO" "$blob" || return
++	done
++}
++
+ test_expect_success 'extensions.partialclone without filter' '
+ 	test_create_repo server &&
+ 	git clone --filter="blob:none" "file://$(pwd)/server" client &&
+@@ -668,6 +693,62 @@ test_expect_success 'fetching of missing objects from an HTTP server' '
+ 	grep "$HASH" out
+ '
+ 
++PATH="$TEST_DIRECTORY/t0410:$PATH"
++
++test_expect_success 'fetch of missing objects through remote helper' '
++	rm -rf origin server &&
++	test_create_repo origin &&
++	dd if=/dev/zero of=origin/file1 bs=801k count=1 &&
++	git -C origin add file1 &&
++	git -C origin commit -m "large blob" &&
++	sha="$(git -C origin rev-parse :file1)" &&
++	expected="?$(git -C origin rev-parse :file1)" &&
++	git clone --bare --no-local origin server &&
++	git -C server remote add httpremote "testhttpgit::${PWD}/server" &&
++	git -C server config remote.httpremote.promisor true &&
++	git -C server config --remove-section remote.origin &&
++	git -C server rev-list --all --objects --filter-print-omitted \
++		--filter=blob:limit=800k | perl -ne "print if s/^[~]//" \
++		>large_blobs.txt &&
++	upload_blobs_from_stdin server <large_blobs.txt &&
++	git -C server -c repack.writebitmaps=false repack -a -d \
++		--filter=blob:limit=800k &&
++	git -C server rev-list --objects --all --missing=print >objects &&
++	grep "$expected" objects &&
++	HTTPD_URL=$HTTPD_URL git -C server show $sha &&
++	git -C server rev-list --objects --all --missing=print >objects &&
++	grep "$sha" objects
++'
++
++test_expect_success 'fetch does not cause server to fetch missing objects' '
++	rm -rf origin server client &&
++	test_create_repo origin &&
++	dd if=/dev/zero of=origin/file1 bs=801k count=1 &&
++	git -C origin add file1 &&
++	git -C origin commit -m "large blob" &&
++	sha="$(git -C origin rev-parse :file1)" &&
++	expected="?$(git -C origin rev-parse :file1)" &&
++	git clone --bare --no-local origin server &&
++	git -C server remote add httpremote "testhttpgit::${PWD}/server" &&
++	git -C server config remote.httpremote.promisor true &&
++	git -C server config --remove-section remote.origin &&
++	git -C server rev-list --all --objects --filter-print-omitted \
++		--filter=blob:limit=800k | perl -ne "print if s/^[~]//" \
++		>large_blobs.txt &&
++	upload_blobs_from_stdin server <large_blobs.txt &&
++	git -C server -c repack.writebitmaps=false repack -a -d \
++		--filter=blob:limit=800k &&
++	git -C server config uploadpack.allowmissingpromisor true &&
++	git clone -c remote.httpremote.url="testhttpgit::${PWD}/server" \
++	-c remote.httpremote.fetch='+refs/heads/*:refs/remotes/httpremote/*' \
++	-c remote.httpremote.promisor=true --bare --no-local \
++	--filter=blob:limit=800k server client &&
++	git -C client rev-list --objects --all --missing=print >client_objects &&
++	grep "$expected" client_objects &&
++	git -C server rev-list --objects --all --missing=print >server_objects &&
++	grep "$expected" server_objects
++'
++
+ # DO NOT add non-httpd-specific tests here, because the last part of this
+ # test script is only executed when httpd is available and enabled.
+ 
+diff --git a/t/t0410/git-remote-testhttpgit b/t/t0410/git-remote-testhttpgit
+new file mode 100755
+index 00000000000..e5e187243ed
+--- /dev/null
++++ b/t/t0410/git-remote-testhttpgit
+@@ -0,0 +1,170 @@
++#!/bin/sh
++# Copyright (c) 2012 Felipe Contreras
++# Copyright (c) 2020 Christian Couder
++
++# This is a git remote helper that can be used to store blobs on an http server
++
++# The first argument can be a url when the fetch/push command was a url
++# instead of a configured remote. In this case, use a generic alias.
++if test "$1" = "testhttpgit::$2"; then
++	alias=_
++else
++	alias=$1
++fi
++url=$2
++
++unset GIT_DIR
++
++h_refspec="refs/heads/*:refs/testhttpgit/$alias/heads/*"
++t_refspec="refs/tags/*:refs/testhttpgit/$alias/tags/*"
++
++if test -n "$GIT_REMOTE_TESTHTTPGIT_NOREFSPEC"
++then
++	h_refspec=""
++	t_refspec=""
++fi
++
++die () {
++	echo >&2 "fatal: $*"
++	echo "fatal: $*" >>/tmp/t0430.txt
++	echo >>/tmp/t0430.txt
++	exit 1
++}
++
++force=
++
++mark_count_tmp=$(mktemp -t git-remote-http-mark-count_XXXXXX) || die "Failed to create temp file"
++echo "1" >"$mark_count_tmp"
++
++get_mark_count() {
++	mark=$(cat "$mark_count_tmp")
++	echo "$mark"
++	mark=$((mark+1))
++	echo "$mark" >"$mark_count_tmp"	
++}
++
++export_blob_from_file() {
++	file="$1"
++	echo "blob"
++	echo "mark :$(get_mark_count)"
++	size=$(wc -c <"$file") || return
++	echo "data $size"
++	cat "$file" || return
++	echo
++}
++
++while read line
++do
++	case $line in
++	capabilities)
++		echo 'import'
++		echo 'export'
++		test -n "$h_refspec" && echo "refspec $h_refspec"
++		test -n "$t_refspec" && echo "refspec $t_refspec"
++		test -n "$GIT_REMOTE_TESTHTTPGIT_SIGNED_TAGS" && echo "signed-tags"
++		test -n "$GIT_REMOTE_TESTHTTPGIT_NO_PRIVATE_UPDATE" && echo "no-private-update"
++		echo 'option'
++		echo
++		;;
++	list)
++		git -C "$url" for-each-ref --format='? %(refname)' 'refs/heads/' 'refs/tags/'
++		head=$(git -C "$url" symbolic-ref HEAD)
++		echo "@$head HEAD"
++		echo
++		;;
++	import*)
++		# read all import lines
++		while true
++		do
++			ref="${line#* }"
++			refs="$refs $ref"
++			read line
++			test "${line%% *}" != "import" && break
++		done
++
++		echo "refs: $refs" >>/tmp/t0430.txt
++
++		if test -n "$GIT_REMOTE_TESTHTTPGIT_FAILURE"
++		then
++			echo "feature done"
++			exit 1
++		fi
++
++		echo "feature done"
++
++		tmpdir=$(mktemp -d -t git-remote-http-import_XXXXXX) || die "Failed to create temp directory"
++
++		for ref in $refs
++		do
++			get_url="$HTTPD_URL/list/?sha1=$ref"
++			echo "curl url: $get_url" >>/tmp/t0430.txt
++			echo "curl output: $tmpdir/$ref" >>/tmp/t0430.txt
++			curl -s -o "$tmpdir/$ref" "$get_url" ||
++				die "curl '$get_url' failed"
++			echo "exporting from: $tmpdir/$ref" >>/tmp/t0430.txt
++			export_blob_from_file "$tmpdir/$ref" ||
++				die "failed to export blob from '$tmpdir/$ref'"
++			echo "done exporting" >>/tmp/t0430.txt
++		done
++
++		echo "done"
++		;;
++	export)
++		if test -n "$GIT_REMOTE_TESTHTTPGIT_FAILURE"
++		then
++			# consume input so fast-export doesn't get SIGPIPE;
++			# git would also notice that case, but we want
++			# to make sure we are exercising the later
++			# error checks
++			while read line; do
++				test "done" = "$line" && break
++			done
++			exit 1
++		fi
++
++		before=$(git -C "$url" for-each-ref --format=' %(refname) %(objectname) ')
++
++		git -C "$url" fast-import \
++			${force:+--force} \
++			${testhttpgitmarks:+"--import-marks=$testhttpgitmarks"} \
++			${testhttpgitmarks:+"--export-marks=$testhttpgitmarks"} \
++			--quiet
++
++		# figure out which refs were updated
++		git -C "$url" for-each-ref --format='%(refname) %(objectname)' |
++		while read ref a
++		do
++			case "$before" in
++			*" $ref $a "*)
++				continue ;;	# unchanged
++			esac
++			if test -z "$GIT_REMOTE_TESTHTTPGIT_PUSH_ERROR"
++			then
++				echo "ok $ref"
++			else
++				echo "error $ref $GIT_REMOTE_TESTHTTPGIT_PUSH_ERROR"
++			fi
++		done
++
++		echo
++		;;
++	option\ *)
++		read cmd opt val <<-EOF
++		$line
++		EOF
++		case $opt in
++		force)
++			test $val = "true" && force="true" || force=
++			echo "ok"
++			;;
++		*)
++			echo "unsupported"
++			;;
++		esac
++		;;
++	'')
++		exit
++		;;
++	esac
++done
++
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index e489869dd94..78cc1858cb6 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -237,6 +237,26 @@ test_expect_success 'auto-bitmaps do not complain if unavailable' '
+ 	test_must_be_empty actual
+ '
+ 
++test_expect_success 'repack with filter does not fetch from remote' '
++	rm -rf server client &&
++	test_create_repo server &&
++	git -C server config uploadpack.allowFilter true &&
++	git -C server config uploadpack.allowAnySHA1InWant true &&
++	echo content1 >server/file1 &&
++	git -C server add file1 &&
++	git -C server commit -m initial_commit &&
++	expected="?$(git -C server rev-parse :file1)" &&
++	git clone --bare --no-local server client &&
++	git -C client config remote.origin.promisor true &&
++	git -C client -c repack.writebitmaps=false repack -a -d --filter=blob:none &&
++	git -C client rev-list --objects --all --missing=print >objects &&
++	grep "$expected" objects &&
++	git -C client repack -a -d &&
++	expected="$(git -C server rev-parse :file1)" &&
++	git -C client rev-list --objects --all --missing=print >objects &&
++	grep "$expected" objects
++'
++
+ objdir=.git/objects
+ midx=$objdir/pack/multi-pack-index
+ 
 -- 
 gitgitgadget
