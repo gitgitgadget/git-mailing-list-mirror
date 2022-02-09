@@ -2,228 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BFF8C433EF
-	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 02:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23B0EC43217
+	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 02:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344313AbiBIClG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Feb 2022 21:41:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55674 "EHLO
+        id S1344338AbiBIClI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Feb 2022 21:41:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243162AbiBIBd6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Feb 2022 20:33:58 -0500
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19BDCC061576
-        for <git@vger.kernel.org>; Tue,  8 Feb 2022 17:33:58 -0800 (PST)
-Received: by mail-qt1-x82e.google.com with SMTP id b5so644341qtq.11
-        for <git@vger.kernel.org>; Tue, 08 Feb 2022 17:33:58 -0800 (PST)
+        with ESMTP id S244535AbiBICKM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Feb 2022 21:10:12 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF7B9C061353
+        for <git@vger.kernel.org>; Tue,  8 Feb 2022 18:10:11 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id m26so538550wms.0
+        for <git@vger.kernel.org>; Tue, 08 Feb 2022 18:10:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=edwardthomson-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wStj/ummu2DQ07xNGCVlAb1xEFi0L4dzEUuc14YjDEQ=;
-        b=i4H2YHbhrB4VpLEhVfna0jbBZGqTMVaZyQqrPlKmCcBB5AUp6x7Lyd3fMUAd2TJHzc
-         +UZ8Ng/ZUSMWyW+WFifk043poHkKPXFeUC6cYtxKgHjKu8boZT/fXmVMdKPWLXeUvhBj
-         vGDPIGxSOdhIw/pfZZma3ys2aI9YDXiUn7vqJ8Ybmv66dTi2TmNf5pOYMNRBmlPDDF6b
-         vx2VjL4ElF3yqfRdiqqPdd9qSMcW570vTqF3Z6WOxfqHbMJKsYD9HiEyJsJbQNRvB1z0
-         kN2xlkGjIF0wLWo0Ml0HKk3wqOl40ffoYc1jzpTnY0kD9kmLl6blRrLrMyF4CFCNLECx
-         hDjA==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=s/VMTgp8zVGz57OURNC4xxkpH68NzGiQBA3psJDzlsw=;
+        b=YJQ709tZzkbOJSjIcZ1uGQ4YFjVM/8BL8E7TCUoI/03cDZBV8bjUrfHD5RW7M6nYzh
+         u/3xForsuspjnOrltuiCFUmmqQ2Vewwi/cUf1FytidzLqYHja4Z0uguZXHs9hBnQyDR2
+         kgjm9vqLeHnbiDjfCCIT5G492yq5c4A7hJ6mSIK5lp2rZ3/q4+zZs/Qc0n8amVmi7BHl
+         LMZP8ryeP+gHr7V7HN+jQ5tX2PwPFEz5Z4fliu6x+dVSeR90O3aSJMumnaijOj/kOkib
+         VzZlVRRPlsoHiv2m6q1r0YGM3eZQ0dtcbQZAj/8ANzdVbdXhsO/Rglwqvq0GeFAoFtB/
+         VJGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wStj/ummu2DQ07xNGCVlAb1xEFi0L4dzEUuc14YjDEQ=;
-        b=vaxXDsKkIqMK3jPGwg8w6q8mCi3Np/gyf9pMfUFamvOMBPdrfB4z1C52wVzYlVFU0l
-         X/cdfvn5RT1oRgBa26n+h7vOxvs8dV2dxurxTqBBN/kOefmjDWyKpwMU2jTS8MXcOdn+
-         4ULPnrsEG1SoZj0S+c13bRA356tPhuILRX1hWLwrHmC8H4xuN/+reFIeq/f3R1MPA+Vc
-         qm8GMUXIyQcHYXpri0a9ykJmmpWD/PscezIVJDW+uIuOEcC6xPMUVnRrUcm7IzwegxF7
-         8R8be6B5o/ctvco6XpVGaveKfhWsnW3xUtwsTwgISh2qkM4uPr/iuh19yfELZAXeWwFy
-         juqg==
-X-Gm-Message-State: AOAM530Tb0wVN55q8uX3mX2m3QKePgC+hC8EhfNh50kR2FF5tIf+/+il
-        7e7S8rnUPcEncfGr7sgBwGpoeRNtd2lokZhX
-X-Google-Smtp-Source: ABdhPJzTMkylqkaKMTwWuxmBx8jJCjSjB4yqZJfoZnZH35F1RMriyRz8amwENTX7w7hVorZqoszNGA==
-X-Received: by 2002:a05:622a:1189:: with SMTP id m9mr4906896qtk.573.1644370436809;
-        Tue, 08 Feb 2022 17:33:56 -0800 (PST)
-Received: from abe733c6e288 ([50.234.189.46])
-        by smtp.gmail.com with ESMTPSA id v22sm8199164qta.60.2022.02.08.17.33.56
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 Feb 2022 17:33:56 -0800 (PST)
-Date:   Wed, 9 Feb 2022 01:33:54 +0000
-From:   Edward Thomson <ethomson@edwardthomson.com>
-To:     git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de
-Subject: [PATCH 1/1] xdiff: provide indirection to git functions
-Message-ID: <20220209013354.GB7@abe733c6e288>
-References: <20220209012951.GA7@abe733c6e288>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=s/VMTgp8zVGz57OURNC4xxkpH68NzGiQBA3psJDzlsw=;
+        b=prHtE4bgqmImSr5vzuWow5Wwwp+PiLjhNvRnU90F/cPbsZPt4YNsNNzkS+Dzk9kwt4
+         DMfhjLcTcB2YcNltdqhjYocev6K4kEqHybc/RdihbKQyqaY/icvpSZ+TV1T20XXbY/U4
+         Hs/QDSzqP4y2ZRWb7ElvZjcHgUawGsMtDz2WzcpKAnif5oES1u+Me6qtCYPoyXZ98gcz
+         foI8R4/o3hU/Sdx3B6fJPcVSipdLxdX4eMcMY9fTxHxLSezig9oPxWXupHbMDSEzHv9L
+         MpMJd+mn4rjF9RJfraKmbVNbnzLkOegs4beOErGSrmRIk7hFISmoYzOUrEGBTXRditMb
+         OjbA==
+X-Gm-Message-State: AOAM5300EnaMZoNdprS1d9Va3j2FT/WZogRZmbtrq2phw6j5fCBBniv9
+        BV4K0FARAwd+BoUjuP+5XKhdbqOCHP4=
+X-Google-Smtp-Source: ABdhPJzLRg7Q42a0Za8Dft+R01gvxdJu4RbhLGxpFDYp/Psq+x6t7+nM3X8Hj8GP7c6nPezNuNZPdw==
+X-Received: by 2002:a7b:cb54:: with SMTP id v20mr629145wmj.2.1644372610382;
+        Tue, 08 Feb 2022 18:10:10 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l10sm14152623wrz.20.2022.02.08.18.10.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Feb 2022 18:10:10 -0800 (PST)
+Message-Id: <40612b9663b8d20e8cfa25ccfce76c7f97e4934d.1644372606.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
+References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
+        <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 09 Feb 2022 02:10:05 +0000
+Subject: [PATCH v2 3/4] upload-pack: allow missing promisor objects
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220209012951.GA7@abe733c6e288>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+To:     git@vger.kernel.org
+Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Provide an indirection layer into the git-specific functionality and
-utilities in `git-xdiff.h`, prefixing those types and functions with
-`xdl_` (and `XDL_` for macros).  This allows other projects that use
-git's xdiff implementation to keep up-to-date; they can now take all the
-files _except_ `git-xdiff.h`, which they have customized for their own
-environment.
+From: John Cai <johncai86@gmail.com>
 
-Signed-off-by: Edward Thomson <ethomson@edwardthomson.com>
+When a git server (A) is being used alongside an http server (B) remote
+that stores large blobs, and a client fetches objects from both (A) as
+well as (B), we do not want (A) to fetch missing objects during object
+traversal.
+
+Add a config value uploadpack.allowmissingpromisor that, when set to
+true, will allow (A) to skip fetching missing objects.
+
+Based-on-patch-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- xdiff/git-xdiff.h | 14 ++++++++++++++
- xdiff/xdiff.h     |  8 +++-----
- xdiff/xdiffi.c    | 20 ++++++++++----------
- xdiff/xinclude.h  |  2 +-
- 4 files changed, 28 insertions(+), 16 deletions(-)
- create mode 100644 xdiff/git-xdiff.h
+ upload-pack.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/xdiff/git-xdiff.h b/xdiff/git-xdiff.h
-new file mode 100644
-index 0000000000..5d47576551
---- /dev/null
-+++ b/xdiff/git-xdiff.h
-@@ -0,0 +1,14 @@
-+#ifndef GIT_XDIFF_H
-+#define GIT_XDIFF_H
-+
-+#define xdl_malloc(x) xmalloc(x)
-+#define xdl_free(ptr) free(ptr)
-+#define xdl_realloc(ptr,x) xrealloc(ptr,x)
-+
-+#define xdl_regex_t regex_t
-+#define xdl_regmatch_t regmatch_t
-+#define xdl_regexec_buf(p, b, s, n, m, f) regexec_buf(p, b, s, n, m, f)
-+
-+#define XDL_BUG(msg) BUG(msg)
-+
-+#endif
-diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-index 72e25a9ffa..fb47f63fbf 100644
---- a/xdiff/xdiff.h
-+++ b/xdiff/xdiff.h
-@@ -27,6 +27,8 @@
- extern "C" {
- #endif /* #ifdef __cplusplus */
+diff --git a/upload-pack.c b/upload-pack.c
+index 8acc98741bb..39b56650b77 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -112,6 +112,7 @@ struct upload_pack_data {
+ 	unsigned allow_ref_in_want : 1;				/* v2 only */
+ 	unsigned allow_sideband_all : 1;			/* v2 only */
+ 	unsigned advertise_sid : 1;
++	unsigned allow_missing_promisor : 1;
+ };
  
-+#include "git-xdiff.h"
-+
- /* xpparm_t.flags */
- #define XDF_NEED_MINIMAL (1 << 0)
- 
-@@ -82,7 +84,7 @@ typedef struct s_xpparam {
- 	unsigned long flags;
- 
- 	/* -I<regex> */
--	regex_t **ignore_regex;
-+	xdl_regex_t **ignore_regex;
- 	size_t ignore_regex_nr;
- 
- 	/* See Documentation/diff-options.txt. */
-@@ -119,10 +121,6 @@ typedef struct s_bdiffparam {
- } bdiffparam_t;
- 
- 
--#define xdl_malloc(x) xmalloc(x)
--#define xdl_free(ptr) free(ptr)
--#define xdl_realloc(ptr,x) xrealloc(ptr,x)
--
- void *xdl_mmfile_first(mmfile_t *mmf, long *size);
- long xdl_mmfile_size(mmfile_t *mmf);
- 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 69689fab24..af31b7f4b3 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -832,7 +832,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			/* Shift the group backward as much as possible: */
- 			while (!group_slide_up(xdf, &g))
- 				if (group_previous(xdfo, &go))
--					BUG("group sync broken sliding up");
-+					XDL_BUG("group sync broken sliding up");
- 
- 			/*
- 			 * This is this highest that this group can be shifted.
-@@ -848,7 +848,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 				if (group_slide_down(xdf, &g))
- 					break;
- 				if (group_next(xdfo, &go))
--					BUG("group sync broken sliding down");
-+					XDL_BUG("group sync broken sliding down");
- 
- 				if (go.end > go.start)
- 					end_matching_other = g.end;
-@@ -873,9 +873,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 			 */
- 			while (go.end == go.start) {
- 				if (group_slide_up(xdf, &g))
--					BUG("match disappeared");
-+					XDL_BUG("match disappeared");
- 				if (group_previous(xdfo, &go))
--					BUG("group sync broken sliding to match");
-+					XDL_BUG("group sync broken sliding to match");
- 			}
- 		} else if (flags & XDF_INDENT_HEURISTIC) {
- 			/*
-@@ -916,9 +916,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 
- 			while (g.end > best_shift) {
- 				if (group_slide_up(xdf, &g))
--					BUG("best shift unreached");
-+					XDL_BUG("best shift unreached");
- 				if (group_previous(xdfo, &go))
--					BUG("group sync broken sliding to blank line");
-+					XDL_BUG("group sync broken sliding to blank line");
- 			}
- 		}
- 
-@@ -927,11 +927,11 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
- 		if (group_next(xdf, &g))
- 			break;
- 		if (group_next(xdfo, &go))
--			BUG("group sync broken moving to next group");
-+			XDL_BUG("group sync broken moving to next group");
- 	}
- 
- 	if (!group_next(xdfo, &go))
--		BUG("group sync broken at end of file");
-+		XDL_BUG("group sync broken at end of file");
- 
- 	return 0;
- }
-@@ -1011,11 +1011,11 @@ static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
- }
- 
- static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
--	regmatch_t regmatch;
-+	xdl_regmatch_t regmatch;
- 	int i;
- 
- 	for (i = 0; i < xpp->ignore_regex_nr; i++)
--		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
-+		if (!xdl_regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
- 				 &regmatch, 0))
- 			return 1;
- 
-diff --git a/xdiff/xinclude.h b/xdiff/xinclude.h
-index a4285ac0eb..bf66dc0a87 100644
---- a/xdiff/xinclude.h
-+++ b/xdiff/xinclude.h
-@@ -24,6 +24,7 @@
- #define XINCLUDE_H
- 
- #include "git-compat-util.h"
-+#include "git-xdiff.h"
- #include "xmacros.h"
- #include "xdiff.h"
- #include "xtypes.h"
-@@ -32,5 +33,4 @@
- #include "xdiffi.h"
- #include "xemit.h"
- 
--
- #endif /* #if !defined(XINCLUDE_H) */
+ static void upload_pack_data_init(struct upload_pack_data *data)
+@@ -309,6 +310,8 @@ static void create_pack_file(struct upload_pack_data *pack_data,
+ 		strvec_push(&pack_objects.args, "--delta-base-offset");
+ 	if (pack_data->use_include_tag)
+ 		strvec_push(&pack_objects.args, "--include-tag");
++	if (pack_data->allow_missing_promisor)
++		strvec_push(&pack_objects.args, "--missing=allow-promisor");
+ 	if (pack_data->filter_options.choice) {
+ 		const char *spec =
+ 			expand_list_objects_filter_spec(&pack_data->filter_options);
+@@ -1315,6 +1318,8 @@ static int upload_pack_config(const char *var, const char *value, void *cb_data)
+ 		data->allow_ref_in_want = git_config_bool(var, value);
+ 	} else if (!strcmp("uploadpack.allowsidebandall", var)) {
+ 		data->allow_sideband_all = git_config_bool(var, value);
++	} else if (!strcmp("uploadpack.allowmissingpromisor", var)) {
++		data->allow_missing_promisor = git_config_bool(var, value);
+ 	} else if (!strcmp("core.precomposeunicode", var)) {
+ 		precomposed_unicode = git_config_bool(var, value);
+ 	} else if (!strcmp("transfer.advertisesid", var)) {
 -- 
-2.35.0
+gitgitgadget
 
