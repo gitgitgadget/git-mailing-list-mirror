@@ -2,93 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52218C433EF
-	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 18:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8EAAC433FE
+	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 18:41:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239256AbiBIS0u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Feb 2022 13:26:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47250 "EHLO
+        id S240198AbiBISlh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Feb 2022 13:41:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234387AbiBIS0s (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Feb 2022 13:26:48 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25D71C0613C9
-        for <git@vger.kernel.org>; Wed,  9 Feb 2022 10:26:49 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B77AD17675F;
-        Wed,  9 Feb 2022 13:26:48 -0500 (EST)
+        with ESMTP id S240286AbiBISkc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Feb 2022 13:40:32 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8352EC0401EF
+        for <git@vger.kernel.org>; Wed,  9 Feb 2022 10:40:08 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9795110F06C;
+        Wed,  9 Feb 2022 13:40:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l/fON05bklIZtlV8ZNBEFVSvyybFUFKvI66C2q
-        dEfkY=; b=Rwb6akxPhsz2F6JM60Pq5b+BJpxASBNxGfNV2D4pzZv5laDSzY5w33
-        QuQMq2G5oXsexQ93BHdPU9Tv2LtPHOB3gysQLj0kvxxYWakom+iwNxcbNgkiq7ut
-        itbumkltWgO1/wl2j4Kml0nsYMmio0QwjStG18Ve2Jn6vsk4J7o/o=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AFFAC17675E;
-        Wed,  9 Feb 2022 13:26:48 -0500 (EST)
+        :content-type; s=sasl; bh=mRFAOeCiIy5gi+72CBo5rbciRwoH8QTL6Ktqez
+        1kiZg=; b=hy7lzQ8DvxQE0ZLO5vstAVUXlksRtT0ZcjyHIagT5bKFbXLJI2K0Zc
+        mVzpLiCxaLSSSglB14VpALQcZOlE4hYZbV6g7AGrCZZo/GEEhp0CaJWfAswq0K6i
+        Sfrvum0lmdgyN5nMyUBD1riI2ov0yhJABAogXOkaF9pCo1B1LRths=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7648610F06B;
+        Wed,  9 Feb 2022 13:40:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.185.212.55])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C3D1A17675D;
-        Wed,  9 Feb 2022 13:26:44 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5EFDF10F06A;
+        Wed,  9 Feb 2022 13:40:05 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     git@vger.kernel.org, paulus@ozlabs.org
-Subject: Re: [PATCH 3/3] gitk: set log.graph=false when running `git log`
-References: <20220209162350.169971-1-alexhenrie24@gmail.com>
-        <20220209162350.169971-3-alexhenrie24@gmail.com>
-Date:   Wed, 09 Feb 2022 10:26:43 -0800
-In-Reply-To: <20220209162350.169971-3-alexhenrie24@gmail.com> (Alex Henrie's
-        message of "Wed, 9 Feb 2022 09:23:49 -0700")
-Message-ID: <xmqqzgmz7v6k.fsf@gitster.g>
+To:     Elijah Newren <newren@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Sean Allred <allred.sean@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v6 1/6] Documentation: add extensions.worktreeConfig
+ details
+References: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
+        <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com>
+        <0260ff6cac0c76c6d66187d77defef1edd4c6fb5.1644269583.git.gitgitgadget@gmail.com>
+        <xmqqo83hatm1.fsf@gitster.g>
+        <11bf1541-c46a-fcf5-f8d4-0d144b942d59@gmail.com>
+        <xmqqmtj09cuz.fsf@gitster.g>
+        <CABPp-BHKr3xPStXE6HXUBB0KR=6Y1-CSjDc1DTDdd63uYvK7uQ@mail.gmail.com>
+Date:   Wed, 09 Feb 2022 10:40:03 -0800
+In-Reply-To: <CABPp-BHKr3xPStXE6HXUBB0KR=6Y1-CSjDc1DTDdd63uYvK7uQ@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 9 Feb 2022 09:51:46 -0800")
+Message-ID: <xmqqv8xn7ukc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D5B619DA-89D5-11EC-9698-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: B2E92B8E-89D7-11EC-98F2-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-> ---
->  gitk-git/gitk | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+> But testing just now, I think the pseudorefs are already per-worktree.
+> I just did a merge in a secondary worktree, and then observed from the
+> primary worktree that a .git/worktrees/<id>/MERGE_HEAD was created,
+> not a .git/MERGE_HEAD.  (Maybe the glossary could just spell out that
+> these are under $GIT_DIR and _not_ $GIT_COMMON_DIR to avoid potential
+> confusion?)
 
-This may handle "gitk", but what about thousands other scripts
-people have developed around "git log", I have to wonder.
-
-
-
-> diff --git a/gitk-git/gitk b/gitk-git/gitk
-> index 23d9dd1fe0..1d8a5ff622 100755
-> --- a/gitk-git/gitk
-> +++ b/gitk-git/gitk
-> @@ -411,8 +411,9 @@ proc start_rev_list {view} {
->      }
->  
->      if {[catch {
-> -        set fd [open [concat | git log --no-color -z --pretty=raw $show_notes \
-> -                        --parents --boundary $args "--" $files] r]
-> +        set fd [open [concat | git -c log.graph=false log --no-color -z \
-> +                        --pretty=raw $show_notes --parents --boundary $args \
-> +                        "--" $files] r]
->      } err]} {
->          error_popup "[mc "Error executing git log:"] $err"
->          return 0
-> @@ -559,8 +560,9 @@ proc updatecommits {} {
->          set args $vorigargs($view)
->      }
->      if {[catch {
-> -        set fd [open [concat | git log --no-color -z --pretty=raw $show_notes \
-> -                        --parents --boundary $args "--" $vfilelimit($view)] r]
-> +        set fd [open [concat | git -c log.graph=false log --no-color -z \
-> +                        --pretty=raw $show_notes --parents --boundary $args \
-> +                        "--" $vfilelimit($view)] r]
->      } err]} {
->          error_popup "[mc "Error executing git log:"] $err"
->          return
+I actually think the longer-term direction is to describe that these
+are always per-worktree, without referring to $GIT_DIR or giving any
+hints that these may be represented as a file in the filesystem.
+That would leave the door open for the reftable backend to take them
+over as well as the normal refs.
