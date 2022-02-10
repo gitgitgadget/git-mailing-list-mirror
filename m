@@ -2,131 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EFBAC433EF
-	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 22:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2EC1C433EF
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 22:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344853AbiBJWMX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 17:12:23 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:45892 "EHLO
+        id S1344994AbiBJWc5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 17:32:57 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241989AbiBJWMX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 17:12:23 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2ABAF7C
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:12:23 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id 9so9881187pfx.12
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:12:23 -0800 (PST)
+        with ESMTP id S238570AbiBJWc4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 17:32:56 -0500
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD0E010AA
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:32:56 -0800 (PST)
+Received: by mail-oo1-xc2a.google.com with SMTP id r15-20020a4ae5cf000000b002edba1d3349so8237004oov.3
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:32:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=621+nWvJb+ZwB/1DysjUJ7LkWet/lRDtB5dCLX5T0bQ=;
-        b=Fm3mTivSeCk6dGQAY57h/FRQ309a8QUXI+hDCGV5amSIfhtkbv5UwybCcN1YtJZrR7
-         K9CWiwTXluw/7zbhm4W63h4d5wbXJlJGnPhtRdXLG4RacAvUoS9mZWF4e2uBAwVRXkT4
-         9JrD85FNYUrDRTuwZxIHWWV0gt8z7/0jcIzadXhmZ2aLvP7fuWhN1nm3t5HKsmh4hrOL
-         6ccOH05nteB7pic2//MEoAi/rIz11ir5UVQD6Savx7gMca29xJK1UvNMHi1mexjvu2ok
-         ZQ5NHeMLIOYYgo9kj5ZFvOr26qVMGq+2xzkvFTtQF9z2E880bvYjd52pugm/tMOA1vAc
-         JTaQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=We8UXtJ7NiAy647/w51fIZU4m3nOLlChvmZbpdRdB30=;
+        b=FAMrGDiJUVDy8w+zgffPG6Jy9vyM0lPWGVuTYxic4rGM8Jo3Oo0ahPHachedGaqZWD
+         fZoOHd7eJ2WixNNHE9Ko/gPb67EHhdRsdg+gX+rIUt//Q5l0BBrXl/ZGnaJdCAtopVJ8
+         +o/nRSSv2058ZKDA6282WsSAW6jt6k7yOd0TsqutdpedObOab1uR58YwoEdMOtV8KJOC
+         Y+LfKTGUn33MxLpZBng5e5fUt2LmIVOXL7yDDvI9ABQbzvO5eh4rLhfmgdPexjILCweN
+         nVcdcZIIQrUQCJrA6MWsi8iNfx3Csonnva07HBZfH5hwntnZV9gStGq4zEPXfyRzVYvM
+         pTXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=621+nWvJb+ZwB/1DysjUJ7LkWet/lRDtB5dCLX5T0bQ=;
-        b=OghWIp1R5GQagM8YBRjY7PlmY7CfidYlzqOzBtJjBldBKXD506HLr67lOi/PUj421D
-         LgrFhOIyku2mGqw7paabUvDJdB6iFrCGPA8t3sEi76ct7lcodXMGrnidtv0jXbmtc4J5
-         iKpZpKlW1Nj8Nqlnhkt6F/mua2aMPfWfGDr/MNBProWaV+w66ukgzTR3I4MKF9wqGKNe
-         HRe3wOZx1DB94/M08gPVKfrAtlvatqFwFW36WJfSctAj5UGyVOTxOEaWcLIK6ua0rifX
-         MZ34KoRFA3s3K18rpRKW860O601ZXher6uNWHN/hrz0M1tFEYf08Ir5IS+2ZauX04GeN
-         XaeQ==
-X-Gm-Message-State: AOAM532vyXlcrpPKCpZMToEZmg+uPzEPGT0rmCoj0dix/uD4LB/pQDWV
-        Q5i1rgguM0V6x1IJv7L3111Rgw==
-X-Google-Smtp-Source: ABdhPJyJYEIivCms/jmMkCNjuGx+hFD/d9+qvpDE+7Pb4O2lkPs+W1MVqn1aBTEC9j3MX9cAmYGbrA==
-X-Received: by 2002:a65:688e:: with SMTP id e14mr1164520pgt.219.1644531142988;
-        Thu, 10 Feb 2022 14:12:22 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:2ffe:b88a:5bb7:a099])
-        by smtp.gmail.com with ESMTPSA id p20sm174623pgd.21.2022.02.10.14.12.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Feb 2022 14:12:21 -0800 (PST)
-Date:   Thu, 10 Feb 2022 14:12:16 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Albert Cui <albertcui@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v6 0/5] teach submodules to know they're submodules
-Message-ID: <YgWNwIE4ZLSWAr6n@google.com>
-References: <20211117005701.371808-1-emilyshaffer@google.com>
- <20220203215914.683922-1-emilyshaffer@google.com>
- <220204.86pmo34d2m.gmgdl@evledraar.gmail.com>
- <YgF5V2Y0Btr8B4cd@google.com>
- <xmqqk0e6gt5j.fsf@gitster.g>
- <YgHE4iaV8QHRw64U@google.com>
- <xmqqy22lcj2m.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=We8UXtJ7NiAy647/w51fIZU4m3nOLlChvmZbpdRdB30=;
+        b=jOMo/vvWCAxm4p++abj7WSkiwtgHhLsNf1QMzAUmuZrCdIybyIpYSILB+/iuOUQBbq
+         sIdxTzC5LrCExL0U3uscKsep/TWeuFucIQYVTnaHjZGMc/4yfAEkYUWXFpaZRX79CW1I
+         sdwrFYl7xbuqjf4v9QuSsLW2ksYwEtum5r63D/ds+e/KX/LaLt5GZ8qm+LLUDQbNhh0P
+         KoPLvbJNDJjBiEfzE7NTF+mbiflhtBnqUNTYwzBvm2Z8X3eeqsK3MBBtd9YDH3xuihz+
+         Ig5Tt2K6TmyWKwpBvWxzGEa7rIdHIsgtTisiKsQYU1ru+Nyjwka6IohcMFVCYmd8EpnP
+         JFrw==
+X-Gm-Message-State: AOAM5304Abd9W/L77Lw2Rakc7iodtm/dBcoDilX2gLpcABICrxh0/Uuk
+        LdfUOmtzW/FFtSla4XvZhAu9VIGXa5A4wUy9fVMqs8lsPlo=
+X-Google-Smtp-Source: ABdhPJw9NdQTrJGyGwB/Wu0J8uuYKsqY7oMwAONaSQ4CfmyYsSicZ+KLtdS7EoaRIl7V5A7w4EpgWlEb+mzDEw5UeGA=
+X-Received: by 2002:a05:6870:13cc:: with SMTP id 12mr381138oat.56.1644532376072;
+ Thu, 10 Feb 2022 14:32:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy22lcj2m.fsf@gitster.g>
+References: <20220208231911.725273-1-calvinwan@google.com> <20220208235631.732466-1-calvinwan@google.com>
+ <e21c4f77-061c-d125-97cb-1a8cb7692e56@iee.email>
+In-Reply-To: <e21c4f77-061c-d125-97cb-1a8cb7692e56@iee.email>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Thu, 10 Feb 2022 14:32:45 -0800
+Message-ID: <CAFySSZAAq4Q-BXeKHBozcX1byxhma6oKT0JnvOScYJkQ0fFi0w@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v2=5D_fetch_=E2=80=94object=2Dinfo=2Dformat=3A_client_o?=
+        =?UTF-8?Q?ption_for_object=2Dinfo?=
+To:     Philip Oakley <philipoakley@iee.email>, git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 08, 2022 at 10:24:49AM -0800, Junio C Hamano wrote:
-> 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
-> > My point with this example is that it's useful to have a definition of
-> > what is a submodule repository, to make it unambiguous whether this
-> > repository is a submodule or whether it's just a repository that
-> > happens to have been cloned inside of a git-managed worktree.
-> 
-> OK, together with the other "no need to let NFS automounter worry
-> about parent directories", it makes a very successful argument for a
-> single bit (i.e. this is a free-standing repository and is not a
-> submodule, so no need to auto-discover if it is one).  I think the
-> "Alternatively" you later mention to solve ambiguity with just a
-> single bit, without "this is a submodule of that superproject"
-> linkage, is essentially the same?
+Yes it does, thank you!
 
-That resolution - "teach submodules to know they're submodules, but not
-whose submodule they are" - would still count as a success to me. The
-reason I proposed a path instead of a boolean here was simply because
-storing a path is a boolean (by whether it's present or not) *and*
-additional information (the path to the superproject), and it seemed
-silly to me to opt for less information. Or, to put it another way - "am
-I a submodule?" seems pretty vital, and "yes, and I belong to xyz" is an
-optimization on top of that. So I don't terribly mind sending this as
-just a boolean, if we feel that the effort to keep it up outweighs the
-benefit of saving us a filesystem walk.
 
-I'm not completely convinced that it does, though - would the addition
-of a 'git fsck' check for this config be satisfactory? In other words,
-is the problem that the execution of this series wasn't thorough enough
-and it should be refined, or that the concept itself is beyond saving?
-
- - Emily
-
-> 
-> But I do not think it argues for the need to say "a config, not
-> filesystem layout, must be the single source of truth to say which
-> superproject this repository belongs as its submodule".
-> 
-> > This would be the first time in git history that we are saying a
-> > property of a repository depends on having to examine files outside of
-> > it.
-> 
-> Well, path-based configuration inclusion, with configuration driven
-> hooks, I do not think the distinction matters much anymore in these
-> days.
-> 
-> > I guess the main question I'd have is, why _wouldn't_ I want a
-> > submodule to be able to point to the superproject containing it?
-> 
-> Because with (the absense of) a single "this is freestanding" bit, 
-> by default the filesystem layout can already "point" at it?
+On Wed, Feb 9, 2022 at 4:48 AM Philip Oakley <philipoakley@iee.email> wrote=
+:
+>
+> On 08/02/2022 23:56, Calvin Wan wrote:
+> > Add =E2=80=98=E2=80=94object-info-format=E2=80=99 option to fetch. This=
+ option allows
+> > the client to make an object-info [1] command request to a server
+> > that supports protocol v2.
+> >
+> > The transport implementation uses vtables [2], similar to how Git
+> > fetches refs, to determine whether a process needs to be taken over
+> > before sending the object-info request. Different protocols
+> > require different setups for making requests.
+> >
+> > [1] https://lore.kernel.org/git/20210420233830.2181153-1-bga@google.com=
+/
+> > [2] https://lore.kernel.org/git/26f276956001a120cc9105b0071762c2fd4a45c=
+5.15=3D
+> > 13287544.git.jonathantanmy@google.com/
+> >
+> > Helped-by: Jonathan Tan <jonathantanmy@google.com>
+> > Signed-off-by: Calvin Wan <calvinwan@google.com>
+> >
+> > ---
+> > Please ignore the patch above. It was sent with a stale patch message.
+> >  builtin/fetch.c              | 26 ++++++++++++
+> >  fetch-pack.c                 | 53 +++++++++++++++++++++++
+> >  fetch-pack.h                 |  7 ++++
+> >  t/t5583-fetch-object-info.sh | 81 ++++++++++++++++++++++++++++++++++++
+> >  transport-helper.c           | 12 ++++++
+> >  transport-internal.h         |  1 +
+> >  transport.c                  | 59 ++++++++++++++++++++++++++
+> >  transport.h                  |  1 +
+> >  8 files changed, 240 insertions(+)
+> >  create mode 100755 t/t5583-fetch-object-info.sh
+> >
+> > diff --git a/builtin/fetch.c b/builtin/fetch.c
+> > index 5f06b21f8e..b48d9e93d0 100644
+> > --- a/builtin/fetch.c
+> > +++ b/builtin/fetch.c
+> > @@ -29,6 +29,9 @@
+> >  #include "commit-graph.h"
+> >  #include "shallow.h"
+> >  #include "worktree.h"
+> > +#include "protocol.h"
+> > +#include "pkt-line.h"
+> > +#include "connect.h"
+> >
+> >  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+> >
+> > @@ -37,6 +40,7 @@ static const char * const builtin_fetch_usage[] =3D {
+> >       N_("git fetch [<options>] <group>"),
+> >       N_("git fetch --multiple [<options>] [(<repository> | <group>)...=
+]"),
+> >       N_("git fetch --all [<options>]"),
+> > +     N_("git fetch --object-info-format=3D[<arguments>] <remote> [<obj=
+ect-ids>]"),
+> >       NULL
+> >  };
+>
+> Doesn't this also need a matching Documentarian update for the option?
+> --
+> Philip
