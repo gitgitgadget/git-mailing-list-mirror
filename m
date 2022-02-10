@@ -2,93 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19886C433F5
-	for <git@archiver.kernel.org>; Wed,  9 Feb 2022 23:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13EDCC433F5
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 01:23:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230243AbiBIXhQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Feb 2022 18:37:16 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:48992 "EHLO
+        id S231947AbiBJBXg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Feb 2022 20:23:36 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:43678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230198AbiBIXhP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Feb 2022 18:37:15 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E7B1E05046F
-        for <git@vger.kernel.org>; Wed,  9 Feb 2022 15:37:18 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3271C190818;
-        Wed,  9 Feb 2022 18:37:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yjasIf4tBHMU0J8SBGDUObkYo8Pj6T3I1bRLco
-        TKKm4=; b=FvqIY8mD5R38D1CBU1w3GROlixv3PZpTMv6F3La+FJDCqbhlx3ZqW4
-        ZrBcYvFTp1npoR1hPIT0eq/lP0hO8rL0m4d7EKMp75vqYX1gzEyFl60GTkeIPJV+
-        /3QEFK8yOyoN7asFxJk3TsCBk5O98y0fc2ox1RdKFDvZtSEqvcLbg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2B4CE190817;
-        Wed,  9 Feb 2022 18:37:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 85A14190816;
-        Wed,  9 Feb 2022 18:37:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        newren@gmail.com
-Subject: Re: [PATCH v3] clone, submodule: pass partial clone filters to
- submodules
-References: <20220209224406.495563-1-jonathantanmy@google.com>
-Date:   Wed, 09 Feb 2022 15:37:14 -0800
-In-Reply-To: <20220209224406.495563-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Wed, 9 Feb 2022 14:44:06 -0800")
-Message-ID: <xmqqfsor628l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231614AbiBJBXd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Feb 2022 20:23:33 -0500
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D3C51EEF5
+        for <git@vger.kernel.org>; Wed,  9 Feb 2022 17:23:30 -0800 (PST)
+Received: by mail-oi1-x22e.google.com with SMTP id r27so4440003oiw.4
+        for <git@vger.kernel.org>; Wed, 09 Feb 2022 17:23:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=luBKkWlxg/AKllEqU/x/YOr2VdI6MMftnacC0bS30X8=;
+        b=cISAKOgZiCzpt3yPkv1xqsQsppmU2ztOSxhFzEI5ElckKS+voAyj0+YyXudFYEl2hz
+         c9Jy5HTwh139dD7L9Hz0OnV/dfGXGuXQbsvcThbLJWOFiNz8bd4jftqaBGoqt8xgRb62
+         D89rtAaScnGv7RtkFb4tNGwlasNGkvd7nPGMz/+iZJW2X4QygRsmbrnZnvThpId6YWgJ
+         p9W88UXw6e2P1UCtqTNdpsA4hpaa5aEfjke9cdvHOnFDPB8JiAvX0IyU31t0vD5KmExx
+         7AK1sHPXsPYG88o8OiMhXon0Ky6jRkE/7aOb14KIiBLBvpNLhRuGQY8ZAlTNVbYGOKsw
+         Ic6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=luBKkWlxg/AKllEqU/x/YOr2VdI6MMftnacC0bS30X8=;
+        b=iSIT0NlFmoPiQmQ44WJ56y6aGpw6eN7gnzREKaX7W4zGYTEBmRdI7ah9Vmf4lo8i+t
+         MQagJqsWIPekb0d+AmxFjUY/gqAlUmuTsP/ILuaFqmtn7hbyyDmeCL15sSMEMssCjiho
+         HxBamekX9RXhblB3w7UyqTylpCYOyntRSeXDHLd973noSdYrgmMSdVEsVHwCizsJmkf2
+         GgEQKDLMnagCMizzEbwAIic9J5pPP2iteE+ai51p0uAG589El6+yaG7I5ssd6EAo7yrv
+         GErPGcxIIypvqtKRbkwLwOpuGeQBPanmVrl0aLzx46/44c0sEpb3xkUiqMMEu4YDMnP8
+         AmdA==
+X-Gm-Message-State: AOAM531QIMJFQZhiILW7HhhPp+0Ixk0kj+Se4oFkvPceuSOyuPdPKS59
+        LhELzMaJjCMagY3KSJVMaNBnCBtKJ3A=
+X-Google-Smtp-Source: ABdhPJxy8nnuEym25794Iih0nTBj5KXSKUEXbbHUlSNi8u9CtZ7qswcestNBXo57AutQw9roXFHR9g==
+X-Received: by 2002:a17:90a:8b06:: with SMTP id y6mr131357pjn.214.1644455892586;
+        Wed, 09 Feb 2022 17:18:12 -0800 (PST)
+Received: from [192.168.43.80] (subs02-180-214-232-83.three.co.id. [180.214.232.83])
+        by smtp.gmail.com with ESMTPSA id u17sm14736434pgi.14.2022.02.09.17.18.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Feb 2022 17:18:12 -0800 (PST)
+Message-ID: <81e8a217-356d-65cd-3a89-f20ef9c1a5d7@gmail.com>
+Date:   Thu, 10 Feb 2022 08:18:07 +0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3680AFCA-8A01-11EC-94B8-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Subject: Re: [PATCH] t/t0015-hash.sh: removed unnecessary '\' at line end
+Content-Language: en-US
+To:     Jaydeep P Das <jaydeepjd.8914@gmail.com>, git@vger.kernel.org
+References: <20220208092339.651761-1-jaydeepjd.8914@gmail.com>
+ <20220208092339.651761-2-jaydeepjd.8914@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <20220208092339.651761-2-jaydeepjd.8914@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On 08/02/22 16.23, Jaydeep P Das wrote:
+> From: Jaydeep Das <jaydeepjd.8914@gmail.com>
+> 
+> The `|` at line end already imples that the statement is not over.
+> So a `\` after that is redundant.
+> 
+> Signed-off-by: Jaydeep P Das <jaydeepjd.8914@gmail.com>
+> ---
+>   t/t0015-hash.sh | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/t/t0015-hash.sh b/t/t0015-hash.sh
+> index 291e9061f3..086822fc45 100755
+> --- a/t/t0015-hash.sh
+> +++ b/t/t0015-hash.sh
+> @@ -15,7 +15,7 @@ test_expect_success 'test basic SHA-1 hash values' '
+>   	grep c12252ceda8be8994d5fa0290a47231c1d16aae3 actual &&
+>   	printf "abcdefghijklmnopqrstuvwxyz" | test-tool sha1 >actual &&
+>   	grep 32d10c7b8cf96570ca04ce37f2a19d84240d3a89 actual &&
+> -	perl -e "$| = 1; print q{aaaaaaaaaa} for 1..100000;" | \
+> +	perl -e "$| = 1; print q{aaaaaaaaaa} for 1..100000;" |
+>   		test-tool sha1 >actual &&
+>   	grep 34aa973cd4c4daa4f61eeb2bdbad27316534016f actual &&
+>   	printf "blob 0\0" | test-tool sha1 >actual &&
+> @@ -38,10 +38,10 @@ test_expect_success 'test basic SHA-256 hash values' '
+>   	printf "abcdefghijklmnopqrstuvwxyz" | test-tool sha256 >actual &&
+>   	grep 71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73 actual &&
+>   	# Try to exercise the chunking code by turning autoflush on.
+> -	perl -e "$| = 1; print q{aaaaaaaaaa} for 1..100000;" | \
+> +	perl -e "$| = 1; print q{aaaaaaaaaa} for 1..100000;" |
+>   		test-tool sha256 >actual &&
+>   	grep cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0 actual &&
+> -	perl -e "$| = 1; print q{abcdefghijklmnopqrstuvwxyz} for 1..100000;" | \
+> +	perl -e "$| = 1; print q{abcdefghijklmnopqrstuvwxyz} for 1..100000;" |
+>   		test-tool sha256 >actual &&
+>   	grep e406ba321ca712ad35a698bf0af8d61fc4dc40eca6bdcea4697962724ccbde35 actual &&
+>   	printf "blob 0\0" | test-tool sha256 >actual &&
 
-> Josh Steadmon <steadmon@google.com> writes:
->>  Documentation/config/clone.txt     |  5 ++++
->>  Documentation/git-clone.txt        |  7 ++++-
->>  Documentation/git-submodule.txt    |  6 ++++-
->>  builtin/clone.c                    | 36 ++++++++++++++++++++++++--
->>  builtin/submodule--helper.c        | 30 +++++++++++++++++++---
->>  git-submodule.sh                   | 17 ++++++++++++-
->>  t/t5617-clone-submodules-remote.sh | 41 ++++++++++++++++++++++++++++++
->>  t/t7814-grep-recurse-submodules.sh | 41 ++++++++++++++++++++++++++++++
->>  8 files changed, 175 insertions(+), 8 deletions(-)
->
-> Thanks for this patch. "clone" currently calls "submodule update" in
-> order to perform the clone in the submodule, and "submodule update" then
-> calls "submodule--helper", so I would expect changes in all 3 files.
-> Looking at the summary above, that indeed is the case.
->
->> @@ -544,4 +544,45 @@ test_expect_failure 'grep saves textconv cache in the appropriate repository' '
->>  	test_path_is_file "$sub_textconv_cache"
->>  '
->>  
->> +test_expect_success 'grep partially-cloned submodule' '
->
-> [snip]
->
->> +		# Verify that we actually fetched data from the promisor remote:
->> +		grep \"category\":\"promisor\",\"key\":\"fetch_count\",\"value\":\"1\" trace2.log >/dev/null
->
-> No need to redirect to /dev/null, but probably not worth a reroll on its
-> own.
+Looks OK.
 
-I can strip it while queuing, then.
+Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-> This patch looks good to me.
-> Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
-
-Agreed.  Thanks, both.
-
+-- 
+An old man doll... just what I always wanted! - Clara
