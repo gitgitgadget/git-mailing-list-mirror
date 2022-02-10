@@ -2,43 +2,43 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE25CC433EF
-	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 16:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51AB1C433FE
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 16:48:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244781AbiBJQs1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 11:48:27 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60640 "EHLO
+        id S244757AbiBJQs2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 11:48:28 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244842AbiBJQsG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 11:48:06 -0500
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2042.outbound.protection.outlook.com [40.107.223.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6929F9F
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 08:47:39 -0800 (PST)
+        with ESMTP id S244767AbiBJQry (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 11:47:54 -0500
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1anam02on2073.outbound.protection.outlook.com [40.107.96.73])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9187B1BA
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 08:47:31 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=k2323cEmAAYeUKNYg3s8PxseAr1CoZdGCDul2MnNUxu6hpeJ8VFZKwt2aEIjfGHHdhYAXBkrYiXNEd5X/BawSFeLETC6wrkE+RytT1HBy2+i7DIDg36Nj2WzbsRg+TFa9svhW8LdNn4vH5K2t6Qf/BM6yRoLlfdhTovROTLoAuz2z2GX0/9ook+RWDkFc9xaAmwbZkpUsEYKbE/rDP9S/VZQRUaDPzCPF4bRwc+eHZphsPd8e+b6h1PFBRk8pd8h1tBUJ26vhZK5+WHVjK05+BDmosyS9R6/5Y7vmZcAmCIw1MrJ7aRefNYDMoEtTxBQJbzHOpH3K/sS/0hyDfOl/g==
+ b=hNuuHx6Ufa92FQxNYhwDo4v26mrQJsKOT2NBQfTXR7F3ZRd0ojenc+JqzN0rC/nGJFIHqV1WZFi+FdjFkaT1g4XAEFJ31iKVRWhwmGwMHTUdb+hzuAXz1KQ2PbE+HFurH+9hw9oaW9InkawYhSFBVS71q7sAyxwxZ1+a65R0dykPtUHbX0yiHDhFbe4kWlM8RDlO+B+DcZFNqQ9sNdFfhTiAH2ta/HpaGvYVfxSeka70pqWWAmgrsW5wdlnGoLJmnxBHsZ0w8NrclfYajvxINb4p34dyLSAk49UhLQL6PWcn0SRFNkcILNUsg0/llVmCNCewhK/GtmEFwQnt0F7q5g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=L89DHETEHa56fZqTNaJVqXgv3Uvx/r5UUOjO+6ZFg6E=;
- b=lJWQXa6yp8vDHu+g9VxL19oNv+BJOatId6eX8EbQ82dmMTVwyXkzPYLFcGadtg2mae17H1LwZpSdZFQTRo7yBaGQIJqs/JZ3FUNW8X6lx4JAHH+TpDeAjyWylUvarBMQH2MicruYDYhkFoPJP0gPCR3lW6u0MxtJ6TeX1JLEBMFUV0qwLpU/xO+6QfKVzgOso21XQNlTJjgs4/Y2RhsJ7PU0MavEaTB4tEl93D8Z8DPWOI6ronzl+gIqADC7VdxjaOyfVvCJ2qtLR9GL7oDhXRw79avmwFMfqcUKDbD6aE8B6xNi/Fprs6YR01p2QI+QcBYgk6jNH4hbtH4Pms5D5Q==
+ bh=VulX7N5EUIsHl83/dgACB2S0sanWGbfzugzkQbV3IoA=;
+ b=j/VZm5MQ61ubvUOTjzJgrMr8RSt42fITldWP9vagKUrsIIYTYMGm7fRBgHu+fCDESBCHA2Pge19kcawhQCYce1opKBOoubS3+xIcbqs+SyxFl/q7gTWxKeNeEf+lOrZRCeTUfkCo5knTB1NprU1JRiG90arBhLroDAAQj9xVER0DrCzm6EdTFV4o9VVFIu8eh1QTqwC5usbG71cb8QNF04nKm9RGZkty+0SlMHh/SQVC33EGb47hrmmeyGxI/3kNu12xYvJG237VYnCbd4xvynDQumAWUIQUweWuM01xFm9A+r/k8Ioe/l30acFmHJEMnUg0C96UtB9oEAU6pLZHlg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=L89DHETEHa56fZqTNaJVqXgv3Uvx/r5UUOjO+6ZFg6E=;
- b=MuWRi1pD1y9GAwD6k7TgT9LHnCVskPPCLUC5BKh5tSpeec7UVQ+IzVuVL5yQ0bRz0ewm5O2X7lOnRKc8XwcmQXtAApwgBG5hBmnvXGUojZhk2qe5mHpylfJcNIFzqsKa/ZeZlnPbpD6JRoGVu+K2kAwZV1q2bBZQzuv6Xq84GbZfHPvzZsaz51DH+380IRYaPYnXDWSZlC2/DG3TSDhBkyLZdS6jBHzqKvUpzwzaDvpLGwAjncEm7vPbHOFf2DmzLP1nDJoYzjMkZ/2/CmuZ5QRT0VECO1llIzUUi28u1HiNLwWv2ATPNU0Zp7zmc23WNl5e7za9l+nktM1ZdonY2w==
+ bh=VulX7N5EUIsHl83/dgACB2S0sanWGbfzugzkQbV3IoA=;
+ b=pZDVV1v57dHrX6JE2Sti1RZ0ix98ZwREsPcULldXl8R1zzp6cN1qi84WGMZKfS1UY3nKdTkJ9JMnoeJ8ATK+so3MCUIVQxraVdCIG19vh0TiwttLTcNRNa0WRpEkg4FxCnY310C1mFqAsjbFbxPVN15GGP/AR8wW2u8VqAgVZFBA6sVmIhiIeY4IrjpLJTLrleuPtMykN+U0uiMW9PBzoJJB7licL9oyqHt+5/h5d+NE+YU+IFN1R7nBYXJmodlPsdWXaNsvgSJDoUKORIJ/YKMv1WHOIOPxweu6PiiQIHRma53t+UEzUEvHO5C12O28gnm4YgD05VW+/dXIb4hUyw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
- by DM5PR12MB2421.namprd12.prod.outlook.com (2603:10b6:4:b4::26) with
+ by BN6PR12MB1362.namprd12.prod.outlook.com (2603:10b6:404:1a::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4975.11; Thu, 10 Feb
- 2022 16:47:37 +0000
+ 2022 16:47:30 +0000
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::dca7:5323:3:cc10]) by BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::dca7:5323:3:cc10%2]) with mapi id 15.20.4951.021; Thu, 10 Feb 2022
- 16:47:37 +0000
+ 16:47:30 +0000
 From:   Joel Holdsworth <jholdsworth@nvidia.com>
 To:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -51,9 +51,9 @@ Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
         Ben Keene <seraphire@gmail.com>,
         Andrew Oakley <andrew@adoakley.name>,
         Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH v4 22/22] git-p4: sort imports
-Date:   Thu, 10 Feb 2022 16:46:27 +0000
-Message-Id: <20220210164627.279520-23-jholdsworth@nvidia.com>
+Subject: [PATCH v4 18/22] git-p4: compare to singletons with "is" and "is not"
+Date:   Thu, 10 Feb 2022 16:46:23 +0000
+Message-Id: <20220210164627.279520-19-jholdsworth@nvidia.com>
 X-Mailer: git-send-email 2.35.GIT
 In-Reply-To: <20220210164627.279520-1-jholdsworth@nvidia.com>
 References: <20220210164627.279520-1-jholdsworth@nvidia.com>
@@ -64,104 +64,101 @@ X-ClientProxiedBy: AM0PR04CA0069.eurprd04.prod.outlook.com
  (2603:10b6:208:1c2::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 17e6b23f-847d-4834-d1fe-08d9ecb50b4f
-X-MS-TrafficTypeDiagnostic: DM5PR12MB2421:EE_
-X-Microsoft-Antispam-PRVS: <DM5PR12MB2421CABFC31080BB98955777C82F9@DM5PR12MB2421.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:2803;
+X-MS-Office365-Filtering-Correlation-Id: c3380726-7b71-4e1a-408c-08d9ecb5069b
+X-MS-TrafficTypeDiagnostic: BN6PR12MB1362:EE_
+X-Microsoft-Antispam-PRVS: <BN6PR12MB13629993F7EAF82CBEEF4055C82F9@BN6PR12MB1362.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1148;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: OuloFAm0MYG3WbrKmKiDTer6p4rDhe4LyOs3XoliWZiyAy+MbulvsRKvhW67DvLTSQSaK7qtSjmLcvqHz3NZIq7qUJRpr6xilEZEYyJbtay6Ve3F3GpK/TMOQWI+itN2STxSH9uXrQFnA7sOGHoG9Sl4EGA4QrnE8cxCMBWF/iBfNGR+Zs1NpKrmNfHYSsH5TkrR9Mqgn8mRZ2EaqR07Cusb5+MOsNlrl94NiVP2Xu6cfr6fyPx3ujUZfT/dg6HZyI3qd84+EwBV+sx6UNAvi8TEykuJyzWwNf971dV+OKyMQQOnF7lUIWSVM/aOQz8mVLlKR0a5Xg3mdw/ZNZlU6lNfyj9tgpz90JV+1jLZcaEBIHAxdAB3AgfUJFAf37wVOaLRY3LOS8CtIQUcIgCIJGtvKlkkv+z+1JdrefNljVZUphemZh4ei2Mgh89rQxUmFu3XWGECF5tI/nMXFvnTXL+ywgQ/etWl/Z2vsT1Ev0Wdo49UzDNT7xkHWt73eu3hXov6PCvF/0tt9nP3Tb1hG2rbPot0wbjvzwV0nrTTU4KzObiteckQ9z1Ri6T16pJ8wxWmCK5jFKthQLKxdwUHCgEnmeWq19l+KeVgNGwBy7vKmXkfoNpFSpwCkfDcllEV+0jbwjhjgW2WfuJUQhfpIpn2lvinkN4ZB5z6zt5eARNAqCVeul8zKXiigLT0MqMnp0sOEMHs4xT/TTtoYu8SkA==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(38100700002)(38350700002)(2906002)(52116002)(86362001)(6666004)(508600001)(6486002)(6512007)(55236004)(6506007)(4744005)(186003)(8936002)(8676002)(66556008)(66946007)(7416002)(5660300002)(110136005)(1076003)(316002)(4326008)(36756003)(54906003)(83380400001)(66476007)(2616005)(26005)(107886003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: p2W+8jLa7yY3p7LTWDoARNECdve9xM2/p1bP/1A7ejv2fXYf+fiZfTgo8sARLQ4Viw1tAvTp8ONdNMA5+dXswEbz9mjClvOk1oUJG+BIa1706CuBycEUEiI973CstAJPXCtHP1yW/2ipxs2ZziyVh3f5Zy3cCrOyfMYno9zrC3IfhmVR0zMC3TtoTu4FEUKI6+fVtUcBc3j6id7NiMRqtiLj7+zO6hXJiVY7VaWFBGuI/8lwpJ/8hS2f9ub602Hu//tXP+AjafgXmyJq/VqYtWZF5U4K/8hhL+sd56ohPKm6v0JIkC4ffdB8qto8e499mcpIGnh7AKZVOzec7Jo4SMT61ku9/wsYETnk/GZkmaCJrQYo0l++8o/MYdm2bX1s/243AFqV8CX+7xK8M1Ki6MiRigtilkMnwZq0935ElX6X4O8PHsxtv7eFB1mDParoeX4cH3Ozo/MiRXaE51NwoBQU1uiAwnuSBt4EUbGFuO/P4xWLYHx96sVEjvBOvcB+3p3hF9QscFF6uyLFHgtTDTNNo089EMVhi7L5oWHwPMdRzaMeMzPn9+3x00bWvsKKvy5escY4pKwTlrXawqgADzi0Z1f+yqZmTceHvs73Yd9uuPBswdbijGA8sc3vhV7OfSH1srgsvwUFT25lor1zvqCDMkB1zn2cOp54JAEb3SW1IdnFk/Q199ieSBM06nxAuTapzp/7xKkH/3odlmX4D1sT8mviHvSyvAVdtwViGohnKfArq9ZRFQY84RGdUohfOgqq14uxA5p8+bKuI6B/KvU1fQbnCEWtcH65aBmimYg=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(86362001)(6486002)(966005)(7416002)(2906002)(8676002)(66946007)(52116002)(6506007)(8936002)(83380400001)(2616005)(38100700002)(38350700002)(4326008)(1076003)(107886003)(508600001)(66556008)(66476007)(5660300002)(6512007)(36756003)(55236004)(6666004)(316002)(110136005)(54906003)(26005)(186003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?9ilGKSxAF7VLjhM3uI17Xg7AvM/OfLg3EEBqkSYIaNibhwATMV6iQtS41VFc?=
- =?us-ascii?Q?/TNRf9J41y0rqPNUuizZ7rwQ/AuVLEUj5R7i8OEzGtBatwKGh+J8itozZRKW?=
- =?us-ascii?Q?Noasb4xqGsR+RHoYJJ6HDb2FvkeV7Qio13XNcuTNV1MQWPIbtJ+JNF/FZ/Ro?=
- =?us-ascii?Q?JgQL/gu8IuJAODIs8aJicNk2Z9koCzGvEMtWwNsEWXX/z4FsRfBbH20KGu5t?=
- =?us-ascii?Q?rYELh4AEOINKA75/jzZP+6ihi2ncxTIywqNuj7BXsp6UyUjivmyIdL26h6DK?=
- =?us-ascii?Q?SIfqbh/Yn4hcgf/sqmqhi4lQaCEtZiHn8uaCsl8hIvqIBq+OTofnlpZ5GWgk?=
- =?us-ascii?Q?Jpcum4THQ24Tzn5OsL8LzKyeSA7nsKnT4TBGFpeT9vtP7Nd0BHn/q1yz38v8?=
- =?us-ascii?Q?F7rsboqA7vQG7YBTgXxM285gtXwq2T8BBAgXhV193xG4bLUATJuev15+MXw5?=
- =?us-ascii?Q?SBDbSma83DtNme31JFM5L+CTomcOWKOkItcD1QBEGCmf0TsOgXNlL/l39e39?=
- =?us-ascii?Q?TdzwYr7zkou/AuVJbew90CpO0wKMD1MA4vPEgboEJNYDF2FCfbI9w9TUvSzD?=
- =?us-ascii?Q?shKAFFYBH0FHT3bv7KJRYARzHrXlP8CFpkx3u2U90ERBy81mY899OrYH0sZa?=
- =?us-ascii?Q?JbwEATiu3uKid87v31qtoDVACJO5QbVPDvXMCOm/CO0fHRdKKzl1sPpyUIVy?=
- =?us-ascii?Q?8aYfkFXjsC3tN6zRJyxk8qTCYOtj277FxKfAD3sJHerFG6a7zqUIZOyv34SN?=
- =?us-ascii?Q?R0rBCcFDhLySBRN03FUkAwvK0v7JaPK4dDhNOVHdioxtnsrcA6Ez6n0w7dPm?=
- =?us-ascii?Q?2uqtTwHUNLXpML/lc9uAvU5JMT/x2qv4VvkF4Jfehp8OapAwzYpciUjOWosd?=
- =?us-ascii?Q?ElcIHQh9+U0la/9dX9dAhCzGOmsSm4pDDSxd0tRNDySs7yEjeNuuXnVLLN9m?=
- =?us-ascii?Q?qNpxG0SV8dejDKJO0uXmwfAgEkRIlhkdbxci7Qwo3wsVSFZhH/mpWv4dGewg?=
- =?us-ascii?Q?ouVBTBzmESZGJgxmffIFJFIpEJH+sqjAxP8I13LPwK6hA0RAFoAU5A2GLdWb?=
- =?us-ascii?Q?0KXJbd12Gb1Hd5Awq7H9fm+YSSoH/B48nMjFFYviJmWrK7lUaOy0uGR3KnMM?=
- =?us-ascii?Q?95KA/aWuGnDLPpbTz5aBdqi8pcwggYqzRu9s6+D2z1EVWhIIutYwzLONMrXF?=
- =?us-ascii?Q?1jwji0A5BAeHRjS4+KsG8dD2bSQnCzdYr6hCADD/lPd6UtJoiB3rULPRKuyV?=
- =?us-ascii?Q?gQbwjEN1ltOTHSuVU2WoQevTeuKms+sSGqYC7Kx4Tc3twV/CYuRf9rWmSE+8?=
- =?us-ascii?Q?PzhzGiPgwxKMQJ7NmKUXiQu425d86RbbYscaW/1OOQi4NbW6X7oORAsD2dek?=
- =?us-ascii?Q?hS5Szfk/SyIDZMPMbFBwWyeDgYZITo1V5lAHGhzz//3xuLY8wTdXvHkfYYg/?=
- =?us-ascii?Q?HXO4lmbeFNy8KKtZyEA5O3XB2pP6TqOmXi5oizxkLAMlbey7KcgWXmpyrgMC?=
- =?us-ascii?Q?suLnfIjBsk9HiqBow5JfUNCQyWjvy3GNulMdE9il0hkc7TC9/yF4TIh8HFOU?=
- =?us-ascii?Q?ZXhnpMExzpZdkEMNUKPjbjk88Zsn56vOg02HQwhf1GYh/qhHaChZWrtERPrq?=
- =?us-ascii?Q?Vr3JXfw8yX/8q6jP9cTRvxY=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?N3a2pKtWtNoDtm+CjfYBhEAI7LxWKq4GX8ySuMSF/c8r2zrqjIU/P4gqb9E6?=
+ =?us-ascii?Q?RCdZRdJYhaJ3/wKyw4iGbEOrARHY+YF8F89dfyvweH25MOGtUTboizQgvOTk?=
+ =?us-ascii?Q?pu3jByNOLb0gaFopTSZ3LjO/cvI3d0oBzO94t2t4fBn5/W4NNpzi+cHoevzz?=
+ =?us-ascii?Q?9JDOZ1/bRKEPJUL+jlqNwAX5yS3u8IEqaeGVFiK2mswc1NGAMAr69rfyXn38?=
+ =?us-ascii?Q?kp+weQX+qfelL5w0C2e3At1zjEaf+EqdfBGcMzcGtBSWMKT4h0KDlBw+IirV?=
+ =?us-ascii?Q?8BUjG/6hbEO4FHui2mmB1sPJDgYhts1M4Zbj1beLFjg4T2vBvorlhk4qJsnC?=
+ =?us-ascii?Q?c5ZKrqMZrXxggIVTEUorSXTb5Aizu3ioooJJoCcdtjk0GD+r/l1/Y5YoNhow?=
+ =?us-ascii?Q?joxu6aftnaDQZ13I4KM1vSaI2F2oAt+WnJX1TdXBbcqoQtOY84J7LS4QvMM3?=
+ =?us-ascii?Q?wpcGA7eIqDYbQVGC4iwVtSqrhMnjedirhuEAJtdCr18ZAsfFGqg/6KCK2SxB?=
+ =?us-ascii?Q?2ZB6g0yEahIPcrEGsROlOACMOAMNlHlnV0Gnm22SS18dVeGMm/wG0m54hw2E?=
+ =?us-ascii?Q?AOi/UuddIBUTArRzkXHsjnqlzhYxMGFoJiElXkex2ypZxRlIj/++VEg+13Cp?=
+ =?us-ascii?Q?u4UBzZ+LnMENcUBh61m9xxYurTiLd5uXJoWo7eKZsC38aZUKLhBYDkFkZpw9?=
+ =?us-ascii?Q?h6v5QTTjgWGq1sSoorsSkt/XhtQf/d3j7s53lx/PAK0mmIJRHVaXV4k3VskP?=
+ =?us-ascii?Q?eXYHXTRWHa9jmDWv7SceGWC+G7RC+UBD2038wEX40BBMW3SEjy4zrezPFM1p?=
+ =?us-ascii?Q?pxAHW2s3t5O+5SXZ7MXb5qRnkDtFiColHPE6y4wMAu2+zQaTtv4VM+IAO4un?=
+ =?us-ascii?Q?hxlyW+mNBfA8h4E3ChgDh7QlzpMU9ZEVcW/UUUf3W5RMthZUiX+Z0kUHwrOw?=
+ =?us-ascii?Q?+grwz4eP4nh/e+huOm+Qs++S2kUZCnxyqvGidHjKOcvD7/g7jIgELY8gPeUx?=
+ =?us-ascii?Q?11eU1X9mMA1rmNWyTWHk5XhgQHl15Xapdmr7pcnKBVXbsdA3UXWiN4uk8VL2?=
+ =?us-ascii?Q?ZFVqGXgnWnZwF46VOtZ7V01an6s7fwgChstvasYoym7OC8Gs/JT4sZMiITyJ?=
+ =?us-ascii?Q?Ibu1OBh0eqlLm3I4r0Iyz3cdTuwhiVOXjcDBY70byaea7YIrk57L7sF+AFvv?=
+ =?us-ascii?Q?JnaJWUuBZ+U2sRW94su0XxY5HqpDh+vrxjj2ok1wLL78l9nEreMew14CMkzq?=
+ =?us-ascii?Q?QB3jy9YrbpbSt/yXagqmWZtv8AFzLQH6IbUswV5XYqn02x9mQmEQVKh2eXxW?=
+ =?us-ascii?Q?hzTLbEk9lUbi2Tv4a1APjWnvETCIPF6oVBDyERVT3cioVtIMasOxxRg1y/nN?=
+ =?us-ascii?Q?R8rnqmgYRXFJZXni/lQbNJRJj3FL5Vrh3+zGFzwkateoSyQ/isrSf7UMkCdc?=
+ =?us-ascii?Q?BPuC/d8WjMybgQJu+xZxFjvgYCF7zhWbV2n7/mx4Ctw0Qg8GiE697BdFY7pm?=
+ =?us-ascii?Q?pAmyz/tsuZD8lB1Kfj9AAk+/5J7UGnLDKkett16bwsiINQKMPgx/EDjshoLo?=
+ =?us-ascii?Q?F4MDdXDWgkD2kF6SJGcK9oHA0i1lqBJkDFL/vJGGe0nkdXblYUjXLK+yZCVx?=
+ =?us-ascii?Q?FCmgEY/B8b9VnX207yUsuRE=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 17e6b23f-847d-4834-d1fe-08d9ecb50b4f
+X-MS-Exchange-CrossTenant-Network-Message-Id: c3380726-7b71-4e1a-408c-08d9ecb5069b
 X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Feb 2022 16:47:37.5620
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Feb 2022 16:47:29.6052
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xA01ggCxA0LjgaPLacY+oiUeRkNk13rJLgM/+b8bCfELOUNfQ4LVkVXBlv5LE8Omhc9bSHMvFx6MsztK4/r74w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR12MB2421
+X-MS-Exchange-CrossTenant-UserPrincipalName: +Hn+Ks3w8EoP9rZL0LZhtjXIYab3Ct26inAIVsM8JVeePtP+0s3EGDsbUxK2MyVc3xrrySO0/VQtsKYeiCaikA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR12MB1362
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+PEP8 recommends that comparisons with singletons such as None should be
+done with "is" and "is not", and never equality operators.
+
+This guideline is described here:
+https://www.python.org/dev/peps/pep-0008/#programming-recommendations
+
+Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
 ---
- git-p4.py | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ git-p4.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index c3239cdabc..ea1d09f69f 100755
+index a25adc8bae..2f2450f7d9 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -30,26 +30,28 @@
- # pylint: disable=wrong-import-order
- # pylint: disable=wrong-import-position
- #
-+
- import sys
- if sys.version_info.major < 3 and sys.version_info.minor < 7:
-     sys.stderr.write("git-p4: requires Python 2.7 or later.\n")
-     sys.exit(1)
--import os
--import optparse
-+
-+import ctypes
-+import errno
- import functools
-+import glob
- import marshal
--import subprocess
--import tempfile
--import time
-+import optparse
-+import os
- import platform
- import re
- import shutil
- import stat
-+import subprocess
-+import tempfile
-+import time
- import zipfile
- import zlib
--import ctypes
--import errno
--import glob
+@@ -857,7 +857,7 @@ def p4Where(depotPath):
+             if data[:space] == depotPath:
+                 output = entry
+                 break
+-    if output == None:
++    if output is None:
+         return ""
+     if output["code"] == "error":
+         return ""
+@@ -879,7 +879,7 @@ def currentGitBranch():
  
- # On python2.7 where raw_input() and input() are both availble,
- # we want raw_input's semantics, but aliased to input for python3
+ 
+ def isValidGitDir(path):
+-    return git_dir(path) != None
++    return git_dir(path) is not None
+ 
+ 
+ def parseRevision(ref):
+@@ -4425,7 +4425,7 @@ def main():
+     global verbose
+     verbose = cmd.verbose
+     if cmd.needsGit:
+-        if cmd.gitdir == None:
++        if cmd.gitdir is None:
+             cmd.gitdir = os.path.abspath(".git")
+             if not isValidGitDir(cmd.gitdir):
+                 # "rev-parse --git-dir" without arguments will try $PWD/.git
 -- 
 2.35.GIT
 
