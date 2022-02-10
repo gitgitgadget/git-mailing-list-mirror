@@ -2,98 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE2CDC433F5
-	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 19:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F00A4C433F5
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 19:34:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343940AbiBJTXg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 14:23:36 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58732 "EHLO
+        id S240377AbiBJTeE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 14:34:04 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234293AbiBJTXf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 14:23:35 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D682B1020
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 11:23:36 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2FA521197EE;
-        Thu, 10 Feb 2022 14:23:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Uow9RJhpskl3
-        gwqSzA0QMB4FpRyxjfBRr+QDlTJ/CcQ=; b=Enutc+Pyw+R+ey39gfNu0WeO/KFJ
-        NTR2PYQtr9Km2M1yRHS+9ODN93X//j93Zu52tEvfNgE8bW7d9LsWrTfhgt2Qf/7N
-        0Jt1yiOPOTg3iF0nZhZ/ngtZ7frM8ohrCTkKAkEs+y6xxvnGOZzv4/QolbpWMCsz
-        h079DDLdLdxahMQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 242121197ED;
-        Thu, 10 Feb 2022 14:23:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8670B1197EC;
-        Thu, 10 Feb 2022 14:23:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/6] archive: optionally add "virtual" files
-References: <pull.1128.git.1643186507.gitgitgadget@gmail.com>
-        <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com>
-        <49ff3c1f2b32b16df2b4216aa016d715b6de46bc.1644187146.git.gitgitgadget@gmail.com>
-        <d1e333b6-3ec1-8569-6ea9-4abd3dee1947@web.de>
-        <xmqqbkzigspr.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2202081406520.347@tvgsbejvaqbjf.bet>
-        <xmqqbkzhdzib.fsf@gitster.g>
-        <b49d396d-a433-51a4-2d19-55e175af571a@web.de>
-        <xmqqk0e364h7.fsf@gitster.g>
-        <6f3d288a-8c2f-0d63-ea17-f6c038a9fa3e@web.de>
-Date:   Thu, 10 Feb 2022 11:23:34 -0800
-In-Reply-To: <6f3d288a-8c2f-0d63-ea17-f6c038a9fa3e@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 10 Feb 2022 20:10:35 +0100")
-Message-ID: <xmqqk0e2frux.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F1175C08-8AA6-11EC-86D3-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229628AbiBJTeD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 14:34:03 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F242D62
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 11:34:03 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id q16-20020a170902edd000b0014d6be8d4b7so2081374plk.18
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 11:34:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=GIRPnrHULHqTPaJl2XHjp18gUoZLEsysfhh6+ViTvm4=;
+        b=ZJXETu0ztckNkdtGt9SWF6md/iBjF+LAfIJo1ZIXWP6zC7yZA0UkyJtp3O2WHf9cGp
+         AEx8NizV/nAjsM4PzRSShAg6DO3eg+8GyxF8QJcpHiQxjrpEczJEYKox/TBLY+Bl7Wt/
+         SGF6r9MzAWI6V74gxfDDlt3hR8AAR7M6cDfN2rJDvUMdWCyDK3v9RMpEA/8ZNd1Zbwg/
+         elxq1HcFZpNjurdp++B0zjkeCwmC6okME8KrUZFtaCPnq907bkGGzt7imjYqUUFT5FC7
+         9Dzt28THVmf4xij5VO8tV2DWpkCyjfrN54rSPWQSU/geyZlzSl6tHMMTDvZ8PtllZch9
+         HsKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=GIRPnrHULHqTPaJl2XHjp18gUoZLEsysfhh6+ViTvm4=;
+        b=phqyumKXNm3ZUi0ajLLVAM6LNbAx2cMXBEPud/U2lQuDPO8UAEVTZfs/RnjpJVaSw9
+         iWMzQ3JkCk2u/dJM6GfQ63lC2SkCxFOlFHgy7ThUKeIZo9E7UJkpI6SMReoeyIdG/JRD
+         DjTaBX5HHqkE0ZNJ2E7IJN0LWCMaf7Q5DCM9/nCMKDOtXO5DzotU9eo8JHntBKDPz25r
+         dnMZB5+IrEfSnox7tSGntGqzWu1fCebwJkcNAVVzXPIe3wuIg8m0ARX3gTfg02UL1m3X
+         CeMCBPykYwrrpqlQH9wM6eDwZGPrs+varWb5KqxaNV5zpVWr5x7/J9c3B/oB+Ff+6S7L
+         j6AA==
+X-Gm-Message-State: AOAM533Uw5puja+Ggkj43abNJcYSTBjbmwY/xK0mMpTiKUDMpcMR7Z9E
+        hponJVH9X7DYp/+y8L7ZEj2y6psibZ64dlprCHcX
+X-Google-Smtp-Source: ABdhPJzTmhYn+RqIEzQN3m/2hVAA/bW7QSmOtBOY6yUmtzs5dq94lADDp+WuIIHDViMNiwP9mDviusQm83xeUN86q0AW
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a63:1262:: with SMTP id
+ 34mr7347395pgs.194.1644521643004; Thu, 10 Feb 2022 11:34:03 -0800 (PST)
+Date:   Thu, 10 Feb 2022 11:33:59 -0800
+In-Reply-To: <20220210044152.78352-7-chooglen@google.com>
+Message-Id: <20220210193359.664132-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.265.g69c8d7142f-goog
+Subject: Re: [PATCH 6/8] submodule: extract get_fetch_task()
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Glen Choo <chooglen@google.com> writes:
+> Extract the index iterating code into an iterator function,
+> get_fetch_task(), so that get_next_submodule() is agnostic of how
+> to find submodules. This prepares for a subsequent commit will teach the
+> fetch machinery to also iterate through the list of changed
+> submodules (in addition to the index).
 
->> Yes, which is exactly how this (and existing --add-file) makes
->> Konstantin's plan much less useful.
-> People added untracked files to archives before --add-file existed.
->
-> --add-file-with-content could be used to add the .GIT_ARCHIVE_SIG file.
->
-> Additional untracked files would need a manifest to specify which files
-> are (not) covered by the signed commit/tag.  Or the .GIT_ARCHIVE_SIG
-> files could be added just after the signed files as a rule, before any
-> other untracked files, as some kind of a separator.
+The transformation looks correct, but there are several things that
+would have made it much easier to review.
 
-Or if people do not _exclude_ tracked files from the archive, then
-the verifier who has a tarball and a Git tree object can consult the
-tree object to see which ones are added untracked cruft.
+> @@ -1507,41 +1505,17 @@ static int get_next_submodule(struct child_process *cp,
 
-> Just listing untracked files and verifying the others might still be
-> useful.  Warning about untracked files shadowing tracked ones would be
-> very useful.
+[snip]
 
-Yup.
+> -		if (task->repo) {
+> -			struct strbuf submodule_prefix = STRBUF_INIT;
+> -			child_process_init(cp);
+> -			cp->dir = task->repo->gitdir;
+> -			prepare_submodule_repo_env_in_gitdir(&cp->env_array);
+> -			cp->git_cmd = 1;
+> -			if (!spf->quiet)
+> -				strbuf_addf(err, _("Fetching submodule %s%s\n"),
+> -					    spf->prefix, ce->name);
+> -			strvec_init(&cp->args);
+> -			strvec_pushv(&cp->args, spf->args.v);
+> -			strvec_push(&cp->args, default_argv);
+> -			strvec_push(&cp->args, "--submodule-prefix");
+> -
+> -			strbuf_addf(&submodule_prefix, "%s%s/",
+> -						       spf->prefix,
+> -						       task->sub->path);
+> -			strvec_push(&cp->args, submodule_prefix.buf);
+> -
+> -			spf->count++;
+> -			*task_cb = task;
+> -
+> -			strbuf_release(&submodule_prefix);
+> -			return 1;
+> -		} else {
+> +		if (!task->repo) {
+>  			struct strbuf empty_submodule_path = STRBUF_INIT;
+>  
+>  			fetch_task_release(task);
+> @@ -1562,7 +1536,44 @@ static int get_next_submodule(struct child_process *cp,
+>  					    ce->name);
+>  			}
+>  			strbuf_release(&empty_submodule_path);
+> +			continue;
+>  		}
+> +		if (!spf->quiet)
+> +			strbuf_addf(err, _("Fetching submodule %s%s\n"),
+> +				    spf->prefix, ce->name);
+> +
+> +		spf->count++;
+> +		return task;
+> +	}
+> +	return NULL;
+> +}
 
-> Some equivalent to the .GIT_ARCHIVE_SIG file containing a signature of
-> the untracked files could optionally be added at the end to allow full
-> verification -- but would require signing at archive creation time.
+You could have retained the "if (task->repo) { } else { }" structure
+instead of adding a "continue;".
 
-Yeah, and at that point, it is not much more convenient than just
-signing the whole archive (sans the SIG part, obviously), which is
-what people have always done ;-)
+Also, the "if (!spf->quiet)" could be moved into get_next_submodule(),
+but I see why it's there (it needs ce->name, which we otherwise don't
+need), so leaving it where it is in this patch is fine too.
+
+> +		strbuf_addf(&submodule_prefix, "%s%s/", spf->prefix,
+> +			    task->sub->path);
+
+It would have been clearer if this line wasn't rewrapped.
+
+As a reviewer, sometimes it's hard to make the tradeoff between asking
+the author to make formatting changes versus leaving it alone because
+the reviewer has already inspected the changes and decided that any
+errors are only in formatting, not in logic. In this case, though,
+because there is only one more patch in the series and the formatting
+change I'm suggesting here won't really affect it that much, I think
+it's better if you make the formatting change for the benefit of other
+reviewers who are currently reviewing this patch set, and anyone looking
+at this commit in the future.
