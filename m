@@ -2,142 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B6C5C433F5
-	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 15:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D456C433F5
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 16:35:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243798AbiBJPuv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 10:50:51 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41170 "EHLO
+        id S244240AbiBJQfy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 11:35:54 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243796AbiBJPuu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 10:50:50 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83D3EBC6
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 07:50:50 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id cn6so11641785edb.5
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 07:50:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0JK5JaJ6r9HfabxwpnGSnjQWPMSbYsxmoVQQ+jgpbb0=;
-        b=nnMDTSQYqzLE2Q/p9wL+41ixdkPHpKsk+9E+av3JEMgqlBip3PmXCy7KJEtND4jTsh
-         GGagbdi9ZhZ4dEPmLpl9MqGxyU9bqXI7W/zTM5IyXWaoJ1oRkazBEWWyl4YGb6xPbv94
-         PsoFJ/00pKJNOYTdSETL/D24IbDBDP/uRamSfkyB++U0/s5I3PrCFxpyrlERS/M43zoB
-         A6AOLzlsobtf1Dzm/0P++hDevP+k5pAfGvxOObvKZSYEbxwIYFqEcP+uBHR3WVP01A32
-         ZwwpOFSz+Md1QgbQOJeqr9SztedRB7PHJM1jNg158sXVST9cvfPT6l8IbtU/EXWf4527
-         yKGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0JK5JaJ6r9HfabxwpnGSnjQWPMSbYsxmoVQQ+jgpbb0=;
-        b=XJ5ccQsjMfkkVilcqXmDV7fyPIjBdZqw5ciCDb6h84JDDJpZERErEf2hby5yX63Dxy
-         CPoZwg16s2saIw7iJdvlRVzUh0UIcweshIJW1LFEK3qTexWd/OuW2mSX3JpNUF7663sH
-         E2ow/24c4/fsFub8iaawFtvbJx3bGOpo0e7zzvdEl7ZUv4P5eppye4QhT7aq7Al9ZDCn
-         SeF61igaC3ZCEA7lTspyHXwib6MglqYVBZws+uHxDwMWFVWgxIn/hf8Q6RPIurzSnLNl
-         5SCcXXbB9n8oDJLKJ0VI05WEmPhH7X7yx86bg0ZlwLJ8w8fFrlDLF0n4e5F0JL4Z2UGn
-         E0Rg==
-X-Gm-Message-State: AOAM533CWDw6JAiSFqSIULfu2RfbkvG34eVuIEQ1n4ncPV9hc83X26Ue
-        9jYu4OS+RWfPNnYfmBm8zL09043q8rd/Bom72Ks=
-X-Google-Smtp-Source: ABdhPJxsJJE3VuOtK5YBxCjXYI/ExJXZwokUggVdicZzDfbna1QugDri5JxICpe13hJBixLIfuTal1d66gkLqUVP9xE=
-X-Received: by 2002:a05:6402:2691:: with SMTP id w17mr8901421edd.126.1644508248849;
- Thu, 10 Feb 2022 07:50:48 -0800 (PST)
-MIME-Version: 1.0
-References: <xmqqczjvxy3o.fsf@gitster.g>
-In-Reply-To: <xmqqczjvxy3o.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 10 Feb 2022 07:50:37 -0800
-Message-ID: <CABPp-BHrFb_AA2OAiR7Bmq7vQuyG2Wme_PdjPdY8j-tp3VJfJg@mail.gmail.com>
-Subject: Re: [PATCH] glossary: describe "worktree"
-To:     Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S232641AbiBJQfx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 11:35:53 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55303128
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 08:35:54 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D69517FDB7;
+        Thu, 10 Feb 2022 11:35:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jWNvY0NOPEuCkFR5lnPaizY3ZYaTNXopE87cv7
+        lEzyI=; b=RKJpPi0hDETo0p0kneItNRd7NjBwiJ3VyWIyVGPfCv2vIiL8uS8ffz
+        2MDY/bJa4sZV1waWkP2kF9RSfJIdeXogAaLoELvdULZeQJlv06DszPGgUl9PbVLr
+        5uTEY2/90+8um04WvGMzWDX92dLFXjyzZ6ktbrlWNgBwOtfkkxW4g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 447EE17FDB6;
+        Thu, 10 Feb 2022 11:35:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A138717FDB5;
+        Thu, 10 Feb 2022 11:35:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] glossary: describe "worktree"
+References: <xmqqczjvxy3o.fsf@gitster.g>
+        <CABPp-BHrFb_AA2OAiR7Bmq7vQuyG2Wme_PdjPdY8j-tp3VJfJg@mail.gmail.com>
+Date:   Thu, 10 Feb 2022 08:35:47 -0800
+In-Reply-To: <CABPp-BHrFb_AA2OAiR7Bmq7vQuyG2Wme_PdjPdY8j-tp3VJfJg@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 10 Feb 2022 07:50:37 -0800")
+Message-ID: <xmqqiltmwufw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 80C1854E-8A8F-11EC-9640-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 9, 2022 at 6:19 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> We have description on "per worktree ref", but "worktree" is not
-> described in the glossary.  We do have "working tree", though.
->
-> Casually put, a "working tree" is what your editor and compiler
-> interacts with.  "worktree" is a mechanism to allow one or more
-> "working tree"s to be attached to a repository and used to check out
-> different commits and branches independently, which includes not
-> just a "working tree" but also repository metadata like HEAD, the
-> index to support simultaneous use of them.  Historically, we used
-> these terms interchangeably but we have been trying to use "working
-> tree" when we mean it, instead of "worktree".
->
-> Most of the existing references to "working tree" in the glossary do
-> refer primarily to the working tree portion, except for one that
-> said refs like HEAD and refs/bisect/* are per "working tree", but it
-> is more precise to say they are per "worktree".
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
->  * Mostly unchanged from the version in the original discussion
->    https://lore.kernel.org/git/xmqqo83hatm1.fsf@gitster.g/ except
->    that we now mention that pseudorefs are also per worktree.
->
->    One thing that makes me worried somewhat is what I did not touch,
->    namely, how pseudo refs are defined.  I know MERGE_HEAD is very
->    special and it may be impossible to coax it into refs API for
->    writing, so the text there makes sense for it, but there are
->    other all-caps-and-directly-under-dot-git-directory files like
->    ORIG_HEAD and CHERRY_PICK_HEAD that are written using the refs
->    API, so the description would have to be updated there.
+Elijah Newren <newren@gmail.com> writes:
 
-I'm not quite following; why would the description need to be updated?
- Sure MERGE_HEAD is written without using the refs API, but we didn't
-mention how the pseduorefs were written in the description, and all of
-MERGE_HEAD, CHERRY_PICK_HEAD, ORIG_HEAD, REVERT_HEAD get written
-per-worktree so doesn't "pseudorefs like MERGE_HEAD" cover it as far
-as the reader is concerned?
-
->  Documentation/glossary-content.txt | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
+>>    One thing that makes me worried somewhat is what I did not touch,
+>>    namely, how pseudo refs are defined.  I know MERGE_HEAD is very
+>>    special and it may be impossible to coax it into refs API for
+>>    writing, so the text there makes sense for it, but there are
+>>    other all-caps-and-directly-under-dot-git-directory files like
+>>    ORIG_HEAD and CHERRY_PICK_HEAD that are written using the refs
+>>    API, so the description would have to be updated there.
 >
-> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-> index c077971335..9eb8920552 100644
-> --- a/Documentation/glossary-content.txt
-> +++ b/Documentation/glossary-content.txt
-> @@ -312,7 +312,7 @@ Pathspecs are used on the command line of "git ls-files", "git
->  ls-tree", "git add", "git grep", "git diff", "git checkout",
->  and many other commands to
->  limit the scope of operations to some subset of the tree or
-> -worktree.  See the documentation of each command for whether
-> +working tree.  See the documentation of each command for whether
->  paths are relative to the current directory or toplevel.  The
->  pathspec syntax is as follows:
->  +
-> @@ -446,7 +446,7 @@ exclude;;
->         interface than the <<def_plumbing,plumbing>>.
->
->  [[def_per_worktree_ref]]per-worktree ref::
-> -       Refs that are per-<<def_working_tree,worktree>>, rather than
-> +       Refs that are per-<<def_worktree,worktree>>, rather than
->         global.  This is presently only <<def_HEAD,HEAD>> and any refs
->         that start with `refs/bisect/`, but might later include other
->         unusual refs.
-> @@ -669,3 +669,12 @@ The most notable example is `HEAD`.
->         The tree of actual checked out files.  The working tree normally
->         contains the contents of the <<def_HEAD,HEAD>> commit's tree,
->         plus any local changes that you have made but not yet committed.
-> +
-> +[[def_work_tree]]worktree::
-> +       A repository can have zero (i.e. bare repository) or one or
-> +       more worktrees attached to it. One "worktree" consists of a
-> +       "working tree" and repository metadata, most of which are
-> +       shared among other worktrees of a single repository, and
-> +       some of which are maintained separately per worktree
-> +       (e.g. the index, HEAD and pseudorefs like MERGE_HEAD,
-> +       per-worktree refs and per-worktree configuration file).
-> --
-> 2.35.1-102-g2b9c120970
+> I'm not quite following; why would the description need to be updated?
+>  Sure MERGE_HEAD is written without using the refs API, but we didn't
+> mention how the pseduorefs were written in the description, and all of
+> MERGE_HEAD, CHERRY_PICK_HEAD, ORIG_HEAD, REVERT_HEAD get written
+> per-worktree so doesn't "pseudorefs like MERGE_HEAD" cover it as far
+> as the reader is concerned?
 
-The text looks good to me.
+Here is how pseudo refs are defined.
+
+[[def_pseudoref]]pseudoref::
+	Pseudorefs are a class of files under `$GIT_DIR` which behave
+	like refs for the purposes of rev-parse, but which are treated
+	specially by git.  Pseudorefs both have names that are all-caps,
+	and always start with a line consisting of a
+	<<def_SHA1,SHA-1>> followed by whitespace.  So, HEAD is not a
+	pseudoref, because it is sometimes a symbolic ref.  They might
+	optionally contain some additional data.  `MERGE_HEAD` and
+	`CHERRY_PICK_HEAD` are examples.  Unlike
+	<<def_per_worktree_ref,per-worktree refs>>, these files cannot
+	be symbolic refs, and never have reflogs.  They also cannot be
+	updated through the normal ref update machinery.  Instead,
+	they are updated by directly writing to the files.  However,
+	they can be read as if they were refs, so `git rev-parse
+	MERGE_HEAD` will work.
+
+Points that may need to be looked at in the world where files
+backend is not the only ref backend are:
+
+ - "are ... files under `$GIT_DIR`" may no longer be true, once some
+   of them are stored in reftable, for example.
+
+ - "followed by whitespace" may be an irrelevant detail for the
+   purpose of this paragraph.
+
+ - CHERRY_PICK_HEAD, as written in sequencer.c::do_pick_commit(),
+   use update_ref() to write a named file out, so "followed by
+   whitesspace" (and other cruft, like MERGE_HEAD does) certainly
+   does not apply.
+
+ - Also "cannot be updated through the normal ref update machinery"
+   is no longer true.  sequencer.c::do_pick_commit() even calls
+   update_ref() with REF_NO_DEREF to ensure "cannot be symbolic
+   refs".
+
+ - "never have reflogs" would make sense for the current set of
+   pseudorefs (does reflog on CHERRY_PICK_HEAD, for example, have
+   real use case?), but I do not know if it stays that way.  I do
+   not care too deeply either way, but I want to avoid over
+   specifying things.
+
+What worries me the most is that we cannot simply say "all-caps
+names that end with '_HEAD' all behave like refs except that they
+will not be symrefs without reflog." MERGE_HEAD is the only known
+exception if I am not mistaken, and I am OK to single it out as an
+oddball.  The current description however gives that there are a lot
+more differences _among_ pseudorefs.
+
+
