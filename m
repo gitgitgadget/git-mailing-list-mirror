@@ -2,43 +2,43 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFB9EC433F5
-	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 16:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E21C433EF
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 16:47:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244430AbiBJQr3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 11:47:29 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59808 "EHLO
+        id S244745AbiBJQrc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 11:47:32 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244749AbiBJQrY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 11:47:24 -0500
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1anam02on2052.outbound.protection.outlook.com [40.107.96.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C975E9A
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 08:47:23 -0800 (PST)
+        with ESMTP id S244764AbiBJQrZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 11:47:25 -0500
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2056.outbound.protection.outlook.com [40.107.223.56])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57923125
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 08:47:25 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hTgNRZtMKb+GpABbnNYlZ90rtE3CBUBEy4HlUeotm6LJ8sNnwcBDtwxXj0QjKE7rTW8HxJMz2rkW+69ELJidC57XvxuMjl03fLudO7TXH4oJLZfyvSnk1pfMk4ygBBgyVPA3irEKb/vxBwAZ4Ni4jSgghpJDQ+9rcX4ntBdlaIuKKaIP+wWWWqbqQUeFPXuXGrj2dv7Xzz+9rb33qbzgoIWua3fQZR1nzIU1NcLWVO0hBbe2K/oY9ByTB2p4229XWEzwDZHFZFHZAOTVrKlEcXMBbiMrxOWMlOFkz8SGl1sQX9AQOANeZVKyIyp2lqgZLQYG2uib5TgctkUU09AkgA==
+ b=BXvzKT2BWw9PXhEQ826aq/IhpjLZOWyaCOHGr6eDzUex5MarBUzTKffgfyX2IgWANeUB/IQ/2Fu9lx7ZFQOFU1UX2R0ss0qwp78dkZSzXgVroSfpG2DfjbcC7BzmmBJrQr8/+4JlSNVSDfoYYUOVcGvYuKRcANd/gU3T/UINBt5MHQXGvMHQ6oI4gpcc/qp+KDnmyZy9cixgsTF+8QzqCAA9N56uByQLl3Z7R5vmLKQxJWqE32cj/deu2Ad7OtnOrz/RiLGl8Vs6jbMP52vDwBH2+tuvTVqBSOsb8Rlh3HyO7163vCxdMJKv+Q8mTRE4y4P3T+2di7plVv/n/GUFPg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=P+rg5RLz5bUn6qjy5mptT1Pe3NBOyqVw5KJqdmUPPXk=;
- b=oP6bmUoaNFu11XjpH5x/oASfFiok+bWssKVzRPfHgi7tYeGNCl1o0bmILvNk5pcfCiStwtcVLU1ifaA3Jj/ktP3yrJ8rRH3mciABQ+D7sQgtCpty12kRHzZU+bvfT3qNw/N/FF/R8uL4krgd1+QrrikbTwXgx7gbMBVzjosKTa+EojlqdrgydctdUi/i5TsYLgsp7lhzGcAyo0wBm3RH6+u3FfdbXrnR/Epb+YSmxNwEWp6sq8OGCL35P2LfIhAp6aaUAsRbwTPgosbr+tO4ZSW+3U2Yei4J5lNg/Csf0Hup+wmi3DUP7m5KJQNSKMGbJ69AjXRxoAlrAeutOC/k6g==
+ bh=uxqyfLwjbbjgCetgAPvO0qejjvkS60cCpu07r0cBQmo=;
+ b=lT37w6I/bgE6S0ogpklxV+sTzERyzHxxuL+IFeShB1GlLDloRjLfTPptY+LCyMeb9hPO7aZ5WBTl+UkGEySsonrh1OuQA/zmTAq6WparI16jBTnD/FGSahHdLLXrqlkU9p1kisXDu4yAcfF/TepM6aA8PiYDr4sebaYu/qbZHPFZPw83dbjY47Sj7wUM96MLgZ2xWJO1T7qcSr0WQWK5WCJ7pxxpavcL0Sl+WLgETb13o+3npp4U/XUtLB5ZeNgeGBnLKY4zzz6Kht1Wv4UMfJ71jXJ2J1tKxaOoHfLdfNxCFjTNFKTaloxxgYMPBiNQ6/YiMqqsJBmZNzjOM4wOnA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=P+rg5RLz5bUn6qjy5mptT1Pe3NBOyqVw5KJqdmUPPXk=;
- b=VtiYMZ59X7ScnAyGm5Qy/YgWM2CzJTDjMLYtJX5MurSjYmZBQvbmYv8fK5x/HIRDzU79zGXHNY14KdgTz8ohLfAorIEJ2/uP4hHpnMRw682RDuhP5JV+3Biu0BS8GPIedBHd1CYEE7fVQmaPLDxftT6e35kjtPV5m6H0MEHhhq3jqYRUTLqR3LoO1QUnBe+j61P/4hnW51WYx/ymw4KO7YuYeynfv4iOHfN0e4glcUaKrXDwYj09svaTzeUVvjK6xLMTMMz6fDtX48pj29oCr6RWQAhxrWauGn+PCdsEv/QnEJMxuETwY5cVXSoL4Za61gZ3Or5MgnbTiq3ItCSJ0w==
+ bh=uxqyfLwjbbjgCetgAPvO0qejjvkS60cCpu07r0cBQmo=;
+ b=TxoAHC5Qu8xiuXLi5LB/EFQBoee44uw/ePtnP5hNuVzjPfX4bAGG3XlH6isNSoFEcKNpGxdBudDIPNFmuuObKjuB/KAy05JmpFt3ZoNhe169Yu6usGjKVH9rFVkkYuzTQG2beLF9bNyWA34tUWYZxIfUkrHWzs69f4y1g7yyJTnldzu9qBrCf3kPZxKe1WOQI3e75zr+KLJ+l6EnX1zkpuq6YoByWexrvrqbHQX0vh/0HOlMqKfg9FFp5z7yAPFJWtSfPX5YklbSA4z6xR5OD2eBJgkIg331EpL58VVVRmbpcvx4KXcnAX7vENGnSHcJCCAKiTVPW+PKpAr7pTQipg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com (2603:10b6:208:1c2::17)
- by BN6PR12MB1362.namprd12.prod.outlook.com (2603:10b6:404:1a::11) with
+ by DM5PR12MB2421.namprd12.prod.outlook.com (2603:10b6:4:b4::26) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4975.11; Thu, 10 Feb
- 2022 16:47:22 +0000
+ 2022 16:47:23 +0000
 Received: from BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::dca7:5323:3:cc10]) by BL0PR12MB4849.namprd12.prod.outlook.com
  ([fe80::dca7:5323:3:cc10%2]) with mapi id 15.20.4951.021; Thu, 10 Feb 2022
- 16:47:22 +0000
+ 16:47:23 +0000
 From:   Joel Holdsworth <jholdsworth@nvidia.com>
 To:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -51,9 +51,9 @@ Cc:     Tzadik Vanderhoof <tzadik.vanderhoof@gmail.com>,
         Ben Keene <seraphire@gmail.com>,
         Andrew Oakley <andrew@adoakley.name>,
         Joel Holdsworth <jholdsworth@nvidia.com>
-Subject: [PATCH v4 14/22] git-p4: remove spaces between dictionary keys and colons
-Date:   Thu, 10 Feb 2022 16:46:19 +0000
-Message-Id: <20220210164627.279520-15-jholdsworth@nvidia.com>
+Subject: [PATCH v4 15/22] git-p4: ensure every comment has a single #
+Date:   Thu, 10 Feb 2022 16:46:20 +0000
+Message-Id: <20220210164627.279520-16-jholdsworth@nvidia.com>
 X-Mailer: git-send-email 2.35.GIT
 In-Reply-To: <20220210164627.279520-1-jholdsworth@nvidia.com>
 References: <20220210164627.279520-1-jholdsworth@nvidia.com>
@@ -64,94 +64,128 @@ X-ClientProxiedBy: AM0PR04CA0069.eurprd04.prod.outlook.com
  (2603:10b6:208:1c2::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 51d5fc3c-b6e9-4426-d096-08d9ecb50205
-X-MS-TrafficTypeDiagnostic: BN6PR12MB1362:EE_
-X-Microsoft-Antispam-PRVS: <BN6PR12MB136285E27A35A645DAA9CDB5C82F9@BN6PR12MB1362.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:407;
+X-MS-Office365-Filtering-Correlation-Id: 17c32402-3ba1-4f9b-3425-08d9ecb5032b
+X-MS-TrafficTypeDiagnostic: DM5PR12MB2421:EE_
+X-Microsoft-Antispam-PRVS: <DM5PR12MB24218B9D9EBCD8743F734BEBC82F9@DM5PR12MB2421.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:357;
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: NmBrsPCNCcXRiMsztWPH4dEgFxGQ6SgD/hvuJUPcFrqmG9UZPRwtFF/tnmt9zbSRMWj7jHKHC0SUklRz43MEaza1aFOd7qbfIF4LQXTguN3CJd2EEv5k5tWPPZZSOG577lrBdT73IO5dCJbLcGYVFXR0CacgFE+/m56Nfhf8TCPPO4gspXDK5BBYNKOx724eblpeargDWzlpf1ypwZUFNoAQwg4nj+x1Y7TC0QtqV0iCXWVmpW0Cfta2WzwQVifl4ZtaMSkLAsfFMAnxi6yqEY9qPUh4ylrnqP42ar61bO7KuDYp5V6bPYXgR70qo5OW0Zk15OwjsNAWKJmgq//Ef4K/wfTyXlvKOvzSMI/RyzfOT6Dx9p9JWYf3FVJA41uCGkYYgGo6eaapqtXiDT4C684YRVb51bRdTCQeu0L4ZzSG+m/Sf5HRje5binfBfSHPhUPQh5mnIxuoFESqv9qLqgA4hZ1X4tT08qIZkpyq/Jxc/FbUMSUX4VKkfRY1C984nDGKJXWcolW0AhmH3w4aLVqQ8pdQTWJODLM/6nQttJ8dfuLFhWOomC8jMiGXZy5jDxO0AVAoZUjqawnWKeg69gQ7ZDyH3SzcDnEZwYy2iavCTyg0yxjdOw3j7coZvoifBDn/9W6VU29fI4bBuruWJnn/9TyUjt9xIKAv3TthLbJeyI4ez0fy6w2pCmv11xIyGmpqdB6N3M/5EnjxgJeYRg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(86362001)(6486002)(4744005)(7416002)(2906002)(8676002)(66946007)(52116002)(6506007)(8936002)(83380400001)(2616005)(38100700002)(38350700002)(4326008)(1076003)(107886003)(508600001)(66556008)(66476007)(5660300002)(6512007)(36756003)(55236004)(6666004)(316002)(110136005)(54906003)(26005)(186003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: lq5ZInSuj6ZNd7iXaaaqXUBCbpOnaL1KNvG4M2qSGtsNnM6mEA31SfCHAsWXBM8AVTUMHvGKnGbKR5Y+o6bjITuVQj9EQON9Ufyd72Os6leKnFuF9BMp1gtThkBo391F8lNkI2AFkeY+2eAGHKEoy1tgGy6XWDCtHJtvF1hi/XUZbjksoVQCIhngq+xavcJhlZVJaifGvMlRf1tzUZjko6fcbRB72/G3Q4RgEfqOyDm//C8gP2crb95Qd5Dud/sqZD306eOUG2FSLiWZ55HnwWrgtDE7B/dc7ylUaZJibdy6wfL2vovTvJUsyRwh1yP1H5W37ypK4dlY7MbCX6+BAY3g6RTQWdJ+/my0uR5qLnj18e+Bt8wW3bGx60NPiYB7Fwsmjw1tefihr2W0ohbv1neD8aKqAoy+gdqGb7jmrgT4v8so9qGpruHQvk0ln1LoEb0bAL9I4dvXEaXy+cZxGBLI4+SlfT8+n1S3H2S3iQEZCAsS1TxdrzBSieVlxJVprzbpa55wdKb4YISfdWG6EY21cX960zbXRiKM2WBxTow5A4gJHH2dXDX3ZFLtztfiC/Rmosm5S3p4Cr9LUmpJpB1P5TUvKjzTz3sjnISQN4a5BDbgdHm/LqP+gHaypWp8XQiSi4QE2yh6JZj3MfTiIE2DK8g7dXDr3GJjjcDB0UCoW3c4LXOPs4vjVcGlhSyZztZ7bF+xXVwZdl0TeZSMz5R5tXX/NXuis1gbO/VBOp0CwiG5JsmOriV0NoQ9GkMwIKKYGjY3JiIu7dsUipo6xgPFrfxE3yCO5wM9tyzowhk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR12MB4849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(38100700002)(38350700002)(2906002)(52116002)(86362001)(508600001)(6486002)(6512007)(55236004)(6506007)(186003)(8936002)(8676002)(66556008)(66946007)(7416002)(5660300002)(110136005)(1076003)(316002)(4326008)(36756003)(966005)(54906003)(83380400001)(66476007)(2616005)(26005)(107886003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?qBT006r+AJSdu86MByQOHLmpw01eus5+FpYDpZNs5C14S8zVloI7piUMKV5e?=
- =?us-ascii?Q?B096X0+0WJQlrcd+f0Wv3E5T2yexrxHCKPNUtCJkAdZ9cKHVoPlngXnKkIPS?=
- =?us-ascii?Q?Qg8GDifRufOE6LnGTzAHYz2qSpIJOQ0aV/JHXE4z6sZQ95FlZbZ6EHvGBNXV?=
- =?us-ascii?Q?2UtuWN6ht9VK3MFNoKXg6GakswqNrGEcTGP8g0bcs1J/CRsCAGBi3XvM1Vuk?=
- =?us-ascii?Q?66x50EvoywssPujF6bQHx9BwaFWVjDh68Y0mC6Ed/MO99XmTEetJ5aF6QeDN?=
- =?us-ascii?Q?lBsL+xTrV8aGM28Omky0JT93H1zZFHVsAWCocs3mHukiPMEFCr8QtfA+YJhW?=
- =?us-ascii?Q?eGiQGJIL5o1xDoL/KotPCoA0mHnuPO8Oa1ziMtb0HAdG4r6ucUdn+X1ck+Yo?=
- =?us-ascii?Q?jHC4ixeRDIVr+8iBtXNASB2YO5MnNR4uULfho34S2h+TdIUac34CtIy0AmJp?=
- =?us-ascii?Q?OYMLTP6N7Z1FtE8Dy5T9Wv+syb4yK2tn2zQN9yGGyUSHJ+Pyp9L8hLNfmFUO?=
- =?us-ascii?Q?Sm1Cus7QtX/ud83OdeFXo60Q13z9RyDu+sastDNiDPgeeqFPY9kfbOnDhSLk?=
- =?us-ascii?Q?63+eTuHDm1Ajp6PzWO743hYrdRIERupS6T2AFjv2a96kaK1DDpel0rxXqYAX?=
- =?us-ascii?Q?BZkS/E+6RsYhr6T5v2sanuE5uQHFGPtFHsCw9+pcO+6oySUaswMHGn0VAsUk?=
- =?us-ascii?Q?gBxKHzC0H+keI5wUGkfe/CXv94rWZ3YzKmOW+gjUjhTAxi9JyDBVSEKKywxc?=
- =?us-ascii?Q?1NIjg3C4ILFjNk1OFACQ++mtYnywHsK2K6rpdONMljnfPeEPxCmToabJWc+n?=
- =?us-ascii?Q?u8C7IvfR+jXBlhnQmU4m7QvMEkjHdDGHh9Jo9ezsCvOUj9IzgO+njRZcD+AM?=
- =?us-ascii?Q?2JRAHktcatuhGDCAdSt/qBGXbod13rDNGJKEQ/BMIwKWALa1v5ZzdhaubdlC?=
- =?us-ascii?Q?XLTOUVllCoBS7ufq5SJpwMMvXw49EwPCa9g+5Br+GcmwFry23kiJcgkVuWGE?=
- =?us-ascii?Q?t6r74kIVTMfMjrfn7TB1vRZvAYN8kA5I90dBXy61qRas5rDsxBe0YYLen5qX?=
- =?us-ascii?Q?vQbIKxjzwIBtO6u+mEvZWVlx+AHiOeOClg++cwwsL2DeeS0hf2Qxr6DGRr0O?=
- =?us-ascii?Q?mdB1C/G01x88D7+7JWsq/B+jIBn/+HFH3JgrhF0Nc/uy4Rt2J1iKVA/69S61?=
- =?us-ascii?Q?oUigwd4vmWdo+ibMziySGTh7hAg94ylBSWDC8m86Wdpjr2WhcrPTDdAAZvzU?=
- =?us-ascii?Q?4gjs1yUD7p8vdg80GcDEheaHC3SJxd4OiB3REYG+EetdyVxY9S/HU2Uwu83K?=
- =?us-ascii?Q?gRNmz6stVxELOe3dplKA43ziWqjT+pakQdyOwbp5nVU5MbJu4VA89F8hEc2e?=
- =?us-ascii?Q?Vz2wsroja6lhCCb2coM2i9Aw2wUZYYMSQDLgT+4YRcO5XgzYoUvP2Eos8sb4?=
- =?us-ascii?Q?41gCO8a3mGSriFxPGEC75H0tn6R7ehc5qXYkG83tTNhuKegKh4nj5dwrcxBi?=
- =?us-ascii?Q?xE9aNI97LSckar1HERX40wMrgWaXL3a7f+H/Nl5RK218IYd5c9fPv29DeKGm?=
- =?us-ascii?Q?5baBb4P/RdE6eNq9FfWk3yO6BEHpkBBPLoEgoAdjjxvr2jk1PJD4VvUPeHMU?=
- =?us-ascii?Q?qbeNkMs7JFPJ27r4V8pHJeQ=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?RnTPov+O9DCxM/daj+HmbGb9hQiss8nkaosl8d07geRob4vjMlys1Wz5a1op?=
+ =?us-ascii?Q?5KIJHXnJFNgw8AOxGGvYoyO8AshVyLFHlC2pUBsJSkZSXzSxN1cbV0HercUP?=
+ =?us-ascii?Q?CXUahr6/LhGH9PjVJVmNlRIGjOg8Ho8pJucJkdWx6uLjHQfJz29bPBBbGU3Y?=
+ =?us-ascii?Q?2l0YGo+8LPEn8J5FAxVgjX7uXSK+NOsHYBTUQMrgmL8w5+10HhWXb2suxAhv?=
+ =?us-ascii?Q?+6eTgI+xDFjK5XfZfIGReJgva2TCyJMvP5QGC8hmwl+CcpQIX1fru6NYryvv?=
+ =?us-ascii?Q?/Zc7NRgScblKEVc+Dy5MVxej6Fs1H7i+1RdP8cRbxy+TQLH6D7kLMXkOQLh7?=
+ =?us-ascii?Q?7XN+z40o0pQixUjg6AbHkzGmdVq/bEhfakJv9GOL6DdHGw75YzD3dyoI2V9q?=
+ =?us-ascii?Q?JgjFW+1bM65ZLNrxsZPmMiHhoITAsF+e/h8Xm5v42Jgvvtidr43CfDdQxAQg?=
+ =?us-ascii?Q?3JOFu7D/cXons7+AaQ7D163VE/aQ/+gPVhIREr4Hz48oAlXfDT8OLvQ+b9o2?=
+ =?us-ascii?Q?lDBL4HZ6K5Eecje342YXvzu0G5kd8p4ZoE5cOMheXtQCyQ2x2ucqQ33pDAs8?=
+ =?us-ascii?Q?Ep342HJfLF9zLWope7m2AksXNsv1psDsilh7Os553otJ/y3WF0/5xPUTMzXq?=
+ =?us-ascii?Q?i6TAvUhLfuzjK3N/FCSQoRZpn5Y+JIkmLvOwdsQiPcdNYq8DEqp4vKH9IkxJ?=
+ =?us-ascii?Q?uvlYHlgPFeuataqOQDW77xftsG/+ntfb3lQ4wtwpWSpDXc0crVrraxE0g+QD?=
+ =?us-ascii?Q?S4yLNIh5oCzaQTNiet7U8aU6NtsFdpfjf5H2XTPRF2CDHvA9HuykcgpssEVj?=
+ =?us-ascii?Q?GeyRkFeIAhmRAu8jh3hCn+4TZZal5f0VHiW4DgclTbeHz4qE1EmsLhhKdh57?=
+ =?us-ascii?Q?14D4G9ynhfju1azyKW2bSpkj+b9wIfmP7XuZonCicSJfqdkDV24fDE0NCLYg?=
+ =?us-ascii?Q?uhnxX+psYFVeZIQHbHrIhyVBCMzQBt7+FQ39+tXx4M/dqLO7vTZk1UWBHpxS?=
+ =?us-ascii?Q?AJU36IT0OJPNZON43Oiuxxna8lSaT9xutr7nr4cy8+LC/jPyVrJfUpShjPS3?=
+ =?us-ascii?Q?OQOcCo51ZIQVYvAMqTNIJkuYcxm+hotZU2F4jSKJAozdJrpHH/Mnlxadim6f?=
+ =?us-ascii?Q?Kon6sVJmTw+gZAsKMnxfa/8ix8Yecgx7c1/zFFQee8AsafS1UCZFrEwr3/LD?=
+ =?us-ascii?Q?5zwhS+9waKRdXdc0a+whilBjtpnaejv+2s5bU1v84NqXzNe2qKUGAhBm7hsD?=
+ =?us-ascii?Q?PJYwdl8MVwqcx2mnbeZ9lBJEbealDEX2lUusQrM9nwkf5Jt9+i0H4PVIonaf?=
+ =?us-ascii?Q?P6ig65NJ+fKainhce/LIIA/XxwY86YUxOAIxAbpcWiIF0lUJOqk5U1AqkuD9?=
+ =?us-ascii?Q?I0CwP5MZgTvVQPoWcPHBkLmtdqd5vOlT+lFp4GXF8Dz+Mhn23LsvFinhZ5tr?=
+ =?us-ascii?Q?roGEbLA1i20P4XtIx4cAaFs5vG1AI5SY1yRv58UyeVzItdZzAw3sxvCKPW2T?=
+ =?us-ascii?Q?bsqNdOH81iZZ4NNU03egtzWEBbrQAp2M2J2APYbsOf9GcZ+u0jAIAtNUEGXb?=
+ =?us-ascii?Q?jbmAEpTI2U0quM4+Oc7wi1mSPwgJ1jNVxuNPwVvY834d6IvnLoVhyBVyNiKl?=
+ =?us-ascii?Q?IeDQkqolXfnrLUY5kjKh40E=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 51d5fc3c-b6e9-4426-d096-08d9ecb50205
+X-MS-Exchange-CrossTenant-Network-Message-Id: 17c32402-3ba1-4f9b-3425-08d9ecb5032b
 X-MS-Exchange-CrossTenant-AuthSource: BL0PR12MB4849.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Feb 2022 16:47:21.9306
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Feb 2022 16:47:23.7440
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gnRzg+MKjWDSS2EgaPUr1pt3IPHuGoawifSGCydr7N0YWSVmRBDQq7yRn/g7EM/OfrxHuk/1MB3Q0Pu/jM5wcQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR12MB1362
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2MSTz5cfjBVQebHDcYvPKkz4vY924AwsBB/3U9/+hEFwt+HeDU+xFeKC+kcocETX4aKRm7XRVeQiuGYlDTljNA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR12MB2421
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PEP8 makes no specific recommendation about spaces preceding colons in
-dictionary declarations, but all the code examples contained with it
-declare dictionaries with a single space after the colon, and none
-before.
+PEP8 recommends that every comment should begin with a single '#'
+character.
+
+This guideline is described here:
+https://www.python.org/dev/peps/pep-0008/#comments
 
 Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
 ---
- git-p4.py | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ git-p4.py | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 471a26744a..167bc19775 100755
+index 167bc19775..88c2b5213e 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -4379,13 +4379,13 @@ def printUsage(commands):
+@@ -895,7 +895,7 @@ def branchExists(ref):
+ def extractLogMessageFromGitCommit(commit):
+     logMessage = ""
  
+-    ## fixme: title is first line of commit, not 1st paragraph.
++    # fixme: title is first line of commit, not 1st paragraph.
+     foundTitle = False
+     for log in read_pipe_lines(["git", "cat-file", "commit", commit]):
+         if not foundTitle:
+@@ -3485,7 +3485,7 @@ def getBranchMapping(self):
+                     continue
+                 source = paths[0]
+                 destination = paths[1]
+-                ## HACK
++                # HACK
+                 if p4PathStartsWith(source, self.depotPaths[0]) and p4PathStartsWith(destination, self.depotPaths[0]):
+                     source = source[len(self.depotPaths[0]):-4]
+                     destination = destination[len(self.depotPaths[0]):-4]
+@@ -3644,7 +3644,7 @@ def importChanges(self, changes, origin_revision=0):
+                 if self.detectBranches:
+                     branches = self.splitFilesIntoBranches(description)
+                     for branch in branches.keys():
+-                        ## HACK  --hwn
++                        # HACK  --hwn
+                         branchPrefix = self.depotPaths[0] + branch + "/"
+                         self.branchPrefixes = [branchPrefix]
  
- commands = {
--    "submit" : P4Submit,
--    "commit" : P4Submit,
--    "sync" : P4Sync,
--    "rebase" : P4Rebase,
--    "clone" : P4Clone,
--    "branches" : P4Branches,
--    "unshelve" : P4Unshelve,
-+    "submit": P4Submit,
-+    "commit": P4Submit,
-+    "sync": P4Sync,
-+    "rebase": P4Rebase,
-+    "clone": P4Clone,
-+    "branches": P4Branches,
-+    "unshelve": P4Unshelve,
- }
+@@ -4035,7 +4035,7 @@ def run(self, args):
+             self.getLabels()
  
+         if self.detectBranches:
+-            ## FIXME - what's a P4 projectName ?
++            # FIXME - what's a P4 projectName ?
+             self.projectName = self.guessProjectName()
  
+             if self.hasOrigin:
+@@ -4048,7 +4048,7 @@ def run(self, args):
+             for b in self.p4BranchesInGit:
+                 if b != "master":
+ 
+-                    ## FIXME
++                    # FIXME
+                     b = b[len(self.projectName):]
+                 self.createdBranches.add(b)
+ 
+@@ -4154,7 +4154,7 @@ def __init__(self):
+         self.cloneBare = False
+ 
+     def defaultDestination(self, args):
+-        ## TODO: use common prefix of args?
++        # TODO: use common prefix of args?
+         depotPath = args[0]
+         depotDir = re.sub("(@[^@]*)$", "", depotPath)
+         depotDir = re.sub("(#[^#]*)$", "", depotDir)
 -- 
 2.35.GIT
 
