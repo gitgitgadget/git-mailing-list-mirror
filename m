@@ -2,142 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A38AC433FE
-	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 14:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B6C5C433F5
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 15:50:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243182AbiBJOsY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 09:48:24 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60810 "EHLO
+        id S243798AbiBJPuv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 10:50:51 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243170AbiBJOsY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 09:48:24 -0500
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29ACBD82
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 06:48:25 -0800 (PST)
-Received: by mail-ot1-x334.google.com with SMTP id s6-20020a0568301e0600b0059ea5472c98so3927952otr.11
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 06:48:25 -0800 (PST)
+        with ESMTP id S243796AbiBJPuu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 10:50:50 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83D3EBC6
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 07:50:50 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id cn6so11641785edb.5
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 07:50:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=agDQRWwKTV1r9m8TSso5V3HusrrnoOPeG6yb8nsB6WQ=;
-        b=naBKow3f/UnjuhkIrutlHobW9nwRxvjj3RkNu2MQ8F1be7y5ByStjAphY9CDXHYQZS
-         GgNywD4aX+b+lPgF3A5f1dEd45ETI18+v0jAY3K0GfUtsKA32QVaGlplTbGCP7dTl+Bn
-         7uE9C3rskmxtiPRHU6X/DEjoFGGSPvgfg4MTnXhsRkexBZtxT7TH/yqqPrqgfXndVvDp
-         6fhLPll2NsTFmkLqpyhbXvmW/cW1hur0lWeZ6kKK//E6FrT7d5OoElxKv72te2rEDsUd
-         EEPi9PbBP1QOHKrU1s3N/LTkJfWnOw7+eBzgKGDZ57hx5jRnE4bwub4gKn8Pdm1dbPCw
-         /g/A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0JK5JaJ6r9HfabxwpnGSnjQWPMSbYsxmoVQQ+jgpbb0=;
+        b=nnMDTSQYqzLE2Q/p9wL+41ixdkPHpKsk+9E+av3JEMgqlBip3PmXCy7KJEtND4jTsh
+         GGagbdi9ZhZ4dEPmLpl9MqGxyU9bqXI7W/zTM5IyXWaoJ1oRkazBEWWyl4YGb6xPbv94
+         PsoFJ/00pKJNOYTdSETL/D24IbDBDP/uRamSfkyB++U0/s5I3PrCFxpyrlERS/M43zoB
+         A6AOLzlsobtf1Dzm/0P++hDevP+k5pAfGvxOObvKZSYEbxwIYFqEcP+uBHR3WVP01A32
+         ZwwpOFSz+Md1QgbQOJeqr9SztedRB7PHJM1jNg158sXVST9cvfPT6l8IbtU/EXWf4527
+         yKGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=agDQRWwKTV1r9m8TSso5V3HusrrnoOPeG6yb8nsB6WQ=;
-        b=Ik07skF0VckwrMiRDjqXOuFK5ChM6lZMXnkL42jtc5/PDyt6dyz24dm0NdGE+KhMAg
-         ILhc9U1A3lkohR1lDk2n8XYqii+uptgkOi6RVZj8thYGt0anNVSEQ/4J1lEb95szUqgd
-         mPQChKTuxNPNxZqIECHRAxCN+NUZxM6FpsX/Zx3/K4k5+fobr52IOX1da3E4jCeAQN2i
-         tK4WwqRG+YX2TlV+4lOFJYjZ2NUXgMSVy3fpNBDOatw6wyeZrb7aUvRiQF4dSJbiFCyf
-         rvV+pNuuMh9qIH14P3q+agV/XgEkmwNVyzXvUAz4SN64o4PX4gZwDLSYDHLEUIs/essH
-         YHTw==
-X-Gm-Message-State: AOAM5315qMxo10QBKkWA+TZW45x5QYLHOJ4Hq5pBinZT7nY5EXcPBCnh
-        Cu92mJpJ5tvS7yAMtK8JXg8=
-X-Google-Smtp-Source: ABdhPJxDPAlMkzQiEbOxGxlVF4gpdU1/4RcdNxZg9D0PrfSGanXVAn7LGMHMRYGBd+kLrlCSq4SXgg==
-X-Received: by 2002:a9d:6c13:: with SMTP id f19mr3021366otq.87.1644504504440;
-        Thu, 10 Feb 2022 06:48:24 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:9556:7d7f:ddbf:443c? ([2600:1700:e72:80a0:9556:7d7f:ddbf:443c])
-        by smtp.gmail.com with ESMTPSA id z20sm275055oap.17.2022.02.10.06.48.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Feb 2022 06:48:23 -0800 (PST)
-Message-ID: <2b88fa25-ec40-6416-05c8-81789a415844@gmail.com>
-Date:   Thu, 10 Feb 2022 09:48:22 -0500
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0JK5JaJ6r9HfabxwpnGSnjQWPMSbYsxmoVQQ+jgpbb0=;
+        b=XJ5ccQsjMfkkVilcqXmDV7fyPIjBdZqw5ciCDb6h84JDDJpZERErEf2hby5yX63Dxy
+         CPoZwg16s2saIw7iJdvlRVzUh0UIcweshIJW1LFEK3qTexWd/OuW2mSX3JpNUF7663sH
+         E2ow/24c4/fsFub8iaawFtvbJx3bGOpo0e7zzvdEl7ZUv4P5eppye4QhT7aq7Al9ZDCn
+         SeF61igaC3ZCEA7lTspyHXwib6MglqYVBZws+uHxDwMWFVWgxIn/hf8Q6RPIurzSnLNl
+         5SCcXXbB9n8oDJLKJ0VI05WEmPhH7X7yx86bg0ZlwLJ8w8fFrlDLF0n4e5F0JL4Z2UGn
+         E0Rg==
+X-Gm-Message-State: AOAM533CWDw6JAiSFqSIULfu2RfbkvG34eVuIEQ1n4ncPV9hc83X26Ue
+        9jYu4OS+RWfPNnYfmBm8zL09043q8rd/Bom72Ks=
+X-Google-Smtp-Source: ABdhPJxsJJE3VuOtK5YBxCjXYI/ExJXZwokUggVdicZzDfbna1QugDri5JxICpe13hJBixLIfuTal1d66gkLqUVP9xE=
+X-Received: by 2002:a05:6402:2691:: with SMTP id w17mr8901421edd.126.1644508248849;
+ Thu, 10 Feb 2022 07:50:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v6 3/6] config: add repo_config_set_worktree_gently()
-Content-Language: en-US
+References: <xmqqczjvxy3o.fsf@gitster.g>
+In-Reply-To: <xmqqczjvxy3o.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 10 Feb 2022 07:50:37 -0800
+Message-ID: <CABPp-BHrFb_AA2OAiR7Bmq7vQuyG2Wme_PdjPdY8j-tp3VJfJg@mail.gmail.com>
+Subject: Re: [PATCH] glossary: describe "worktree"
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, sunshine@sunshineco.com,
-        allred.sean@gmail.com, Elijah Newren <newren@gmail.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>,
-        derrickstolee@github.com, Derrick Stolee <dstolee@microsoft.com>
-References: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
- <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com>
- <cf9e86fe3a403d0ceaff9fdf484a9bf6b07799ac.1644269583.git.gitgitgadget@gmail.com>
- <xmqqv8xpato3.fsf@gitster.g> <ab6021a8-cbb9-3261-8e08-bb4a83287473@gmail.com>
- <xmqqzgn07wwf.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqzgn07wwf.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/9/2022 12:49 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->> On 2/8/2022 5:18 PM, Junio C Hamano wrote:
->>> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> ...
->>>> @@ -3181,14 +3196,28 @@ void git_config_set_multivar_in_file(const char *config_filename,
->>>>  int git_config_set_multivar_gently(const char *key, const char *value,
->>>>  				   const char *value_pattern, unsigned flags)
->>>>  {
->>>> -	return git_config_set_multivar_in_file_gently(NULL, key, value, value_pattern,
->>>> -						      flags);
->>>> +	return repo_config_set_multivar_gently(the_repository, key, value,
->>>> +					       value_pattern, flags);
->>>> +}
->>>
->>> Is this an unrelated "morally no-op" change?
->>
->> This one is to match the pattern of how "git_*" methods should
->> depend on their "repo_*" counterparts (with "the_repository" inserted
->> properly). So, it's part of the standard process for creating these
->> "repo_*" variants.
-> 
-> If only one of repo_config_set_multivar_gently() and
-> git_config_set_multivar_gently() existed and we were completing the
-> pair, then I would understand the explanation, but the title says
-> that it is adding repo_config_set_worktree_gently(), which is not,
-> and that is where the "unrelated" comes from.
-> 
-> It needs to be a separate preparatory step to add
-> repo_config_set_multivar_gently() before we add
-> repo_config_set_worktree_gently(), perhaps?
+On Wed, Feb 9, 2022 at 6:19 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> We have description on "per worktree ref", but "worktree" is not
+> described in the glossary.  We do have "working tree", though.
+>
+> Casually put, a "working tree" is what your editor and compiler
+> interacts with.  "worktree" is a mechanism to allow one or more
+> "working tree"s to be attached to a repository and used to check out
+> different commits and branches independently, which includes not
+> just a "working tree" but also repository metadata like HEAD, the
+> index to support simultaneous use of them.  Historically, we used
+> these terms interchangeably but we have been trying to use "working
+> tree" when we mean it, instead of "worktree".
+>
+> Most of the existing references to "working tree" in the glossary do
+> refer primarily to the working tree portion, except for one that
+> said refs like HEAD and refs/bisect/* are per "working tree", but it
+> is more precise to say they are per "worktree".
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * Mostly unchanged from the version in the original discussion
+>    https://lore.kernel.org/git/xmqqo83hatm1.fsf@gitster.g/ except
+>    that we now mention that pseudorefs are also per worktree.
+>
+>    One thing that makes me worried somewhat is what I did not touch,
+>    namely, how pseudo refs are defined.  I know MERGE_HEAD is very
+>    special and it may be impossible to coax it into refs API for
+>    writing, so the text there makes sense for it, but there are
+>    other all-caps-and-directly-under-dot-git-directory files like
+>    ORIG_HEAD and CHERRY_PICK_HEAD that are written using the refs
+>    API, so the description would have to be updated there.
 
-True, they could be split. The reason to create the _multivar_
-version is for the case that worktree config is not specified,
-so that is the only caller at the moment.
+I'm not quite following; why would the description need to be updated?
+ Sure MERGE_HEAD is written without using the refs API, but we didn't
+mention how the pseduorefs were written in the description, and all of
+MERGE_HEAD, CHERRY_PICK_HEAD, ORIG_HEAD, REVERT_HEAD get written
+per-worktree so doesn't "pseudorefs like MERGE_HEAD" cover it as far
+as the reader is concerned?
 
-> A bit higher level question is if the public part of "config-set"
-> API functions should gain an "easy" (in the sense of curl_easy_* set
-> of API functions) API to allow the callers to say "I do not care to
-> find out if per-worktree configuration is in use, or this particular
-> variable is meant to be per-worktree, just set it to this value".
-> 
-> On this question, I am of two minds.  As certain variables (like
-> core.sparseCheckout) should always be per-worktree just like certain
-> refs (like HEAD) should always be per-worktree, I can understand the
-> viewpoint that the callers _ought_ to know and explicitly say that
-> they want to get/set in the per-worktree configuration file, but at
-> the same time, I would think the callers should not have to care.
-> So, I dunno.
+>  Documentation/glossary-content.txt | 13 +++++++++++--
+>  1 file changed, 11 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+> index c077971335..9eb8920552 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -312,7 +312,7 @@ Pathspecs are used on the command line of "git ls-files", "git
+>  ls-tree", "git add", "git grep", "git diff", "git checkout",
+>  and many other commands to
+>  limit the scope of operations to some subset of the tree or
+> -worktree.  See the documentation of each command for whether
+> +working tree.  See the documentation of each command for whether
+>  paths are relative to the current directory or toplevel.  The
+>  pathspec syntax is as follows:
+>  +
+> @@ -446,7 +446,7 @@ exclude;;
+>         interface than the <<def_plumbing,plumbing>>.
+>
+>  [[def_per_worktree_ref]]per-worktree ref::
+> -       Refs that are per-<<def_working_tree,worktree>>, rather than
+> +       Refs that are per-<<def_worktree,worktree>>, rather than
+>         global.  This is presently only <<def_HEAD,HEAD>> and any refs
+>         that start with `refs/bisect/`, but might later include other
+>         unusual refs.
+> @@ -669,3 +669,12 @@ The most notable example is `HEAD`.
+>         The tree of actual checked out files.  The working tree normally
+>         contains the contents of the <<def_HEAD,HEAD>> commit's tree,
+>         plus any local changes that you have made but not yet committed.
+> +
+> +[[def_work_tree]]worktree::
+> +       A repository can have zero (i.e. bare repository) or one or
+> +       more worktrees attached to it. One "worktree" consists of a
+> +       "working tree" and repository metadata, most of which are
+> +       shared among other worktrees of a single repository, and
+> +       some of which are maintained separately per worktree
+> +       (e.g. the index, HEAD and pseudorefs like MERGE_HEAD,
+> +       per-worktree refs and per-worktree configuration file).
+> --
+> 2.35.1-102-g2b9c120970
 
-This is an interesting idea. This would require creating a list
-of "should be per-worktree" config keys that are checked within
-the different *_config_set_* methods.
-
-The biggest technical hurdle is that the multivar versions might
-need to send a subset of the given config into the worktree
-config and the rest to the common config.
-
-Let's see how this progresses in the future, and whether we
-have more config that we believe _must_ be stored on a per-
-worktree basis. At that point, we can see whether the current
-"distributed responsibility" model is too cumbersome.
-
-Thanks,
--Stolee
+The text looks good to me.
