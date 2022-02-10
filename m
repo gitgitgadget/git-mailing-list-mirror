@@ -2,229 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1DCBC433EF
-	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 22:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F3BFC433F5
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 22:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345269AbiBJWvm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 17:51:42 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38996 "EHLO
+        id S1345289AbiBJWxP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 17:53:15 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345155AbiBJWvl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 17:51:41 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92E7FB75
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:51:41 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id h13-20020a17090ac38d00b001b8d61ec280so2232370pjt.1
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:51:41 -0800 (PST)
+        with ESMTP id S238083AbiBJWxP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 17:53:15 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 839B8273D
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:53:15 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id a39so12085175pfx.7
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:53:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=ReIQwhagC9wVx7XWKttziwoRAX3M5nQznQBo7fdMD2Q=;
-        b=LSz+lextb2+AQFcwhRpT8xfPr8GMTzCBi9OjrrQ/tXzGQwWiir5LEfXEQe+vrex60T
-         yEW1mpwBDMFj5yrlfnfACDM8sDBBZMmMSDtZ+9yboC99mL+Ekh/MH12vzv+/abJoeCQp
-         /7ciq4EHUMH1iUFq1xf2sdTn5GoLMKtq5mFkNAk9pmXIFeJzaqCa8yyEA6+mfJWFRaG3
-         A1XZBUgHq0Qoy4PRi5WSJ2HNQxWaYhrGmZ7lIYS1ItDi1aDwCi21cWwsY1/De8AktcwZ
-         OzMkrPYA9/9n8BuQWlgShWy/74rpeK/hVUj4+/CvWI7e9nODV0sbAJGoZUU2D0B0MfvR
-         5llQ==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=qspXvMp+fwAGu7gYTxyvxMOluGLKl3Do0wgyOUiAmT0=;
+        b=p6HdAkJwacOvZMjnmn4TuHjBNyNNtXwauPOOAXPoRPULXs+56DfFVqKncqJuS8MPoE
+         ZOzmwzJSKA247LZjUPOXjf2rpFeLxKsVs+HlO10XfVju3gUCax29GCfpZfPNDGBd4DUR
+         RS4JmSTYtC/ZbQXO6JObVW4icuwK7QqpbvrFC2ziBjN0cWvduvMtHapuXG3lezRby8WP
+         AGQ4FmX2CmUlAXcZo1HxVvpe7n0btBgPcIAjh/SpUuvMlz4Vo6JkY0/BwVc4JC+Q+ckT
+         gsYVQlkvQW196WpVWWFITVqTiMJSw+HckwbP9kL3hAK/bO80tuY8M+HuVrti64ox3ome
+         uJaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=ReIQwhagC9wVx7XWKttziwoRAX3M5nQznQBo7fdMD2Q=;
-        b=rMdiTHB87+4QfcK1urZIWnmmo8RxPNidAXtGItSCL/mqpDu6kshr+orROApX828Z6J
-         mOW6vR/9/1oUdHUYvBAJyzkRyZ88Eh1xEkhRj3WCTQA47/hiy1bQOVjfJSf3Y9f8Fmug
-         5tbSjsuPMVEPOQAkNiNNG2vIdY3Dy5XA6hBqc/yrss8oPEVlWyuc4zWmoRjbvByoRQZd
-         J3bm/LWZRueac5akDWjXDe260jAgGKc8eG2Q3OCV0bPeNJFv/lmphi+utqEiwa0lLA4i
-         q1vsW2NsESJZUqab0R4lkLRf8JZnTi88UoT1Ix25ZtI0buoC/kT6ls0qG8eku40UEfkY
-         Q0qw==
-X-Gm-Message-State: AOAM531Q8S5O7ITOR6zLdP5UfPkNsWO67BxvmR7yBhD5XvphDmD71mXa
-        C1nJhHh7pxpLVDHrSAaih0RczMGknZjBuLXclYmz
-X-Google-Smtp-Source: ABdhPJy+U65dK5o4XbcuRLj318FUOC3f64nB+DTCL1gddj8TxlWry6iov0iTd7nsp43OOgPhBobjuuF6GjIYX2/rh5xq
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90a:f308:: with SMTP id
- ca8mr5102796pjb.222.1644533501028; Thu, 10 Feb 2022 14:51:41 -0800 (PST)
-Date:   Thu, 10 Feb 2022 14:51:37 -0800
-In-Reply-To: <20220210044152.78352-8-chooglen@google.com>
-Message-Id: <20220210225137.688066-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.35.1.265.g69c8d7142f-goog
-Subject: Re: [PATCH 7/8] fetch: fetch unpopulated, changed submodules
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=qspXvMp+fwAGu7gYTxyvxMOluGLKl3Do0wgyOUiAmT0=;
+        b=u74ajuQSfhbFyirkSxRJJevhJksLBZVcrun/Cqjaud7ljl2BXBDZYGZyAzgcliapXM
+         neUnQA7GRnYYq8oZlWKBHrAYZ3Rli5wHHDVWbfH3ACLn0JCfVH3ep4yM+FtZamYTjOUF
+         SN3445TKhtQY3QZCzlOOG+7ofOOuxKzkNE33qG5NW5MVJ5Q/3ZIf3K5gzdhEC05VUUkY
+         yohm2WsEUG12qVhDGDoKipCMq/j7JszJNZ4Uq4NFtKxzQoSAmvxEpcihrdkkP2l4Debd
+         OaFKE9OULKDxYFwAlCslTzrhxPTDtU8tKRZCyKflkCoZUy+bnCNhlD+4HJfGH3C7EpAc
+         j0Iw==
+X-Gm-Message-State: AOAM530GwLRiiynKuXdd+4Scu2Rm4AStn6Y0aSErpBCPX3l6E8h1fhMB
+        RP6/OpPqfncLWYbhilsbhTg=
+X-Google-Smtp-Source: ABdhPJxsO89L7s6baEwCSpXMpJ6rkyTGAJiP8MZNT67ObarIgvPzZYjP7r+gV/v6YTSM3U5cN4EIiQ==
+X-Received: by 2002:a05:6a00:c83:: with SMTP id a3mr9813259pfv.36.1644533594890;
+        Thu, 10 Feb 2022 14:53:14 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:e390:aa3f:5258:75e2])
+        by smtp.gmail.com with ESMTPSA id d22sm24050215pfl.71.2022.02.10.14.53.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Feb 2022 14:53:14 -0800 (PST)
+Date:   Thu, 10 Feb 2022 14:53:11 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Albert Cui <albertcui@google.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v6 0/5] teach submodules to know they're submodules
+Message-ID: <YgWXVybMBIyKSvN9@google.com>
+References: <20211117005701.371808-1-emilyshaffer@google.com>
+ <20220203215914.683922-1-emilyshaffer@google.com>
+ <220204.86pmo34d2m.gmgdl@evledraar.gmail.com>
+ <YgF5V2Y0Btr8B4cd@google.com>
+ <xmqqk0e6gt5j.fsf@gitster.g>
+ <YgHE4iaV8QHRw64U@google.com>
+ <xmqqy22lcj2m.fsf@gitster.g>
+ <YgWNwIE4ZLSWAr6n@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YgWNwIE4ZLSWAr6n@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-> submodule.c has a seemingly-unrelated change that teaches the "find
-> changed submodules" rev walk to call is_repository_shallow(). This fixes
-> what I believe is a legitimate bug - the rev walk would fail on a
-> shallow repo.
-> 
-> Our test suite did not catch this prior to this commit because we skip
-> the rev walk if .gitmodules is not found, and thus the test suite did
-> not attempt the rev walk on a shallow clone. After this commit,
-> we always attempt to find changed submodules (regardless of whether
-> there is a .gitmodules file), and the test suite noticed the bug.
+Emily Shaffer wrote:
+> On Tue, Feb 08, 2022 at 10:24:49AM -0800, Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Is this bug present without the other code introduced in this patch? If
-yes, it's better to put the bugfix in a separate patch with a test that
-would have failed but now passes.
+>>> My point with this example is that it's useful to have a definition of
+>>> what is a submodule repository, to make it unambiguous whether this
+>>> repository is a submodule or whether it's just a repository that
+>>> happens to have been cloned inside of a git-managed worktree.
+>>
+>> OK, together with the other "no need to let NFS automounter worry
+>> about parent directories", it makes a very successful argument for a
+>> single bit (i.e. this is a free-standing repository and is not a
+>> submodule, so no need to auto-discover if it is one).  I think the
+>> "Alternatively" you later mention to solve ambiguity with just a
+>> single bit, without "this is a submodule of that superproject"
+>> linkage, is essentially the same?
+>
+> That resolution - "teach submodules to know they're submodules, but not
+> whose submodule they are" - would still count as a success to me.
 
-Some more high-level comments:
+Thanks, both.  Sounds like a good path forward.
 
-> @@ -1273,10 +1277,6 @@ static void calculate_changed_submodule_paths(struct repository *r,
->  	struct strvec argv = STRVEC_INIT;
->  	struct string_list_item *name;
->  
-> -	/* No need to check if there are no submodules configured */
-> -	if (!submodule_from_path(r, NULL, NULL))
-> -		return;
+[...]
+>                              So I don't terribly mind sending this as
+> just a boolean, if we feel that the effort to keep it up outweighs the
+> benefit of saving us a filesystem walk.
+>
+> I'm not completely convinced that it does, though
 
-I think this is removed because "no submodules configured" here actually
-means "no submodules configured in the index", but submodules may be
-configured in the superproject commits we're fetching.
+Personally, I'm convinced --- e.g., life gets painful enough when
+core.worktree ends up pointing to the wrong path, so being able to
+avoid that complexity seems like a nice outcome.
 
-I wonder if this should be mentioned in the commit message, but I'm OK
-either way.
+>                                                  - would the addition
+> of a 'git fsck' check for this config be satisfactory? In other words,
+> is the problem that the execution of this series wasn't thorough enough
+> and it should be refined, or that the concept itself is beyond saving?
 
->  struct submodule_parallel_fetch {
-> -	int count;
-> +	int index_count;
-> +	int changed_count;
+For the absorbed case, the path to the superproject should be pretty
+stable, and in that case it's probably possible to make this robust
+enough.  (That said, the path to the superproject gitdir would
+typically just be "../..", at least as long as we have the other patch
+to escape slashes in the submodule name.)  In the non-absorbed case,
+it seems likely to get messy fast because a user can "mv" the
+submodule around.
 
-Here (and elsewhere) we're checking both the index and the superproject
-commits for .gitmodules. Do we still need to check the index?
+Another kind of case that gets interesting is when there are multiple
+superproject worktrees and multiple submodule worktrees.  Does the
+relative path become a per-worktree variable?  Using a boolean saves
+us from having to think through it.
 
-> @@ -1495,6 +1499,15 @@ get_fetch_task(struct submodule_parallel_fetch *spf,
->  		if (!task)
->  			continue;
->  
-> +		/*
-> +		 * We might have already considered this submodule
-> +		 * because we saw it when iterating the changed
-> +		 * submodule names.
-> +		 */
-> +		if (string_list_lookup(&spf->seen_submodule_names,
-> +				       task->sub->name))
-> +			continue;
-
-[snip]
-> +		/*
-> +		 * We might have already considered this submodule
-> +		 * because we saw it in the index.
-> +		 */
-> +		if (string_list_lookup(&spf->seen_submodule_names, item.string))
-> +			continue;
-
-Hmm...it's odd that the checks happen in both places, when theoretically
-we would do one after the other, so this check would only need to be in
-one place. Maybe this is because of how we had to implement it (looping
-over everything every time when we get the next fetch task) but if it's
-easy to avoid, that would be great.
-
-> +# Cleans up after tests that checkout branches other than the main ones
-> +# in the tests.
-> +checkout_main_branches() {
-> +	git -C downstream checkout --recurse-submodules super &&
-> +	git -C downstream/submodule checkout --recurse-submodules sub &&
-> +	git -C downstream/submodule/subdir/deepsubmodule checkout --recurse-submodules deep
-> +}
-
-If we need to clean up in this way, I think it's better if we store a
-pristine copy somewhere (e.g. pristine-downstream), delete downstream,
-and copy it over when we need to.
-
-> +# Test that we can fetch submodules in other branches by running fetch
-> +# in a branch that has no submodules.
-> +test_expect_success 'setup downstream branch without submodules' '
-> +	(
-> +		cd downstream &&
-> +		git checkout --recurse-submodules -b no-submodules &&
-> +		rm .gitmodules &&
-> +		git rm submodule &&
-> +		git add .gitmodules &&
-> +		git commit -m "no submodules" &&
-> +		git checkout --recurse-submodules super
-> +	)
-> +'
-
-The tip of the branch indeed doesn't have any submodules, but when
-fetching this branch, we might end up fetching some of the tip's
-ancestors (depending on the repo we're fetching into), which do have
-submodules. If we need a branch without submodules, I think that all
-ancestors should not have submodules too.
-
-That might be an argument for creating our own downstream and upstream
-repos instead of reusing the existing ones.
-
-> +test_expect_success "'--recurse-submodules=on-demand' should fetch submodule commits if the submodule is changed but the index has no submodules" '
-> +	test_when_finished "checkout_main_branches" &&
-> +	git -C downstream fetch --recurse-submodules &&
-> +	# Create new superproject commit with updated submodules
-> +	add_upstream_commit &&
-> +	(
-> +		cd submodule &&
-> +		(
-> +			cd subdir/deepsubmodule &&
-> +			git fetch &&
-
-Hmm...I thought submodule/subdir/deepsubmodule is upstream. Why is it
-fetching?
-
-> +	# Fetch the new superproject commit
-> +	(
-> +		cd downstream &&
-> +		git switch --recurse-submodules no-submodules &&
-> +		git fetch --recurse-submodules=on-demand >../actual.out 2>../actual.err &&
-> +		git checkout --recurse-submodules origin/super 2>../actual-checkout.err
-
-This patch set is about fetching, so the checkout here seems odd. To
-verify that the fetch happened successfully, I think that we should
-obtain the hashes of the commits that we expect to be fetched from
-upstream, and then verify that they are present downstream.
-
-> +	# Assert that we can checkout the superproject commit with --recurse-submodules
-> +	! grep -E "error: Submodule .+ could not be updated" actual-checkout.err
-
-Negative greps are error-prone, since they will also appear to work if
-the message was just misspelled. We should probably check that the
-expected commit is present instead.
-
-> +# Test that we properly fetch the submodules in the index as well as
-> +# submodules in other branches.
-> +test_expect_success 'setup downstream branch with other submodule' '
-> +	mkdir submodule2 &&
-> +	(
-> +		cd submodule2 &&
-> +		git init &&
-> +		echo sub2content >sub2file &&
-> +		git add sub2file &&
-> +		git commit -a -m new &&
-> +		git branch -M sub2
-> +	) &&
-> +	git checkout -b super-sub2-only &&
-> +	git submodule add "$pwd/submodule2" submodule2 &&
-> +	git commit -m "add sub2" &&
-> +	git checkout super &&
-> +	(
-> +		cd downstream &&
-> +		git fetch --recurse-submodules origin &&
-> +		git checkout super-sub2-only &&
-> +		# Explicitly run "git submodule update" because sub2 is new
-> +		# and has not been cloned.
-> +		git submodule update --init &&
-> +		git checkout --recurse-submodules super
-> +	)
-> +'
-
-I couldn't see the submodule in the index to be fetched; maybe it's
-there somewhere but it's not obvious to me. Also, why do we
-need to run "git submodule update"? This patch set concerns itself with
-fetching existing submodules, not cloning new ones.
-
-> +test_expect_success "'--recurse-submodules' should fetch submodule commits in changed submodules and the index" '
-
-Same comment about where in the index is the submodule to be fetched.
+Thanks for the clear explanations,
+Jonathan
