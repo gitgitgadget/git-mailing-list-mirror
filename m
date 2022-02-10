@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 485ECC433F5
-	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 12:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B34FC433EF
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 12:30:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241537AbiBJM2U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 07:28:20 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46620 "EHLO
+        id S241204AbiBJMay (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 07:30:54 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241541AbiBJM2T (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 07:28:19 -0500
+        with ESMTP id S237067AbiBJMax (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 07:30:53 -0500
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4469E34
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 04:28:19 -0800 (PST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 14F805C009E;
-        Thu, 10 Feb 2022 07:28:19 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 10 Feb 2022 07:28:19 -0500
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD91121B8
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 04:30:54 -0800 (PST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id E2E9E5C019F;
+        Thu, 10 Feb 2022 07:23:40 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Thu, 10 Feb 2022 07:23:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=oxykHxvSU6aItsfh9KyImFXEsg639j+oG6cbc6
-        GCuys=; b=Si0PKL2crcNq3PfyQpDA1DJccLZ+DSCCjQa57DYyuyBc/2s7Vf22RR
-        NjJcAU3ihAQdoi6wYnz2Imv56fefg3AkGfmmxbgm77MrPEDvlvcDANxi12zrtWDE
-        seCc0eWRO9U5J6XIQpRPwas7o/rIVAUPInCEkb+kbaudRdjegAiXPH/5BkHgp38o
-        iW3rGGt9CnQGFNeLeF6MAB0FQutEWCmvZ8E/96FjxCg1I8G7sYLaKlNJ/bpUAUnc
-        85cEe9rnFu+mbXO3/lSGUupWZ+c9Nj0Gv4aZpRAintwkEuuwNv4vAVHbxxjhX2Xf
-        F0kkZazkjM4y5T7WDH7atBgsOirLPCsw==
+        :subject:to:to; s=fm3; bh=2zfIgB5o5/nNFbkpU57MGQgF84aQui4IPvOBF+
+        DvK98=; b=FLIO18NJ/fr1M7RNNFc4XM1DSZ///4cTVxzI9BzCAfrrGbw4aHMVwV
+        KdfJ9lxNdsk9tiW3kqsVGeOUgrO7mIJ3kT5CZ+af9LSdDGJPoPdyBOZvoN6WqO/2
+        IpVYjXHodEQ0zpBT+nP89R5x0GtZtAnnBeIHRv//SksYJvUibbH35e+nu7k/sVvj
+        uNilRhntCrzoFIiIaC/LAJMJ6w5R244mEVE7fLyepwannQ+o/Suz38dOgiBiKDTu
+        HOOLZJXS2hnIWQAHAEIs0nh4ahwdS9C19I4CWXqMWkfneWKSvfhISBaDjFP5mpKO
+        U3RqNrHFL9pn8+BRRPWVw8g9VvjnQr7Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=oxykHxvSU6aItsfh9
-        KyImFXEsg639j+oG6cbc6GCuys=; b=kkHNVSKtVbUhMBVRlOdnRR0P56RrZ88CU
-        UjRrF1F8nIHXw4jCGeKxerofju5B4H3wMcyly7RYeQ39iBDcv5MVSYzuX3jYse2e
-        xNGR0YIxYw+zKl/kxuWmEA8yCCvBSVpuJhE/DlC4vyF5Iezm6u0+FvYIBOiZJsne
-        wD+ydwgSdFpj2s/9RWfKwSIow82gODSBVmyQ++ovgp+5HPxA0PJ0eAhxOcW0l7O8
-        tYeQa7ZvF9JGL6+TvUqsEk+/pAjT4OrwN+lRJ41y5OcupNUAzgEuARsbywXax53W
-        LBHX8w8aA8ctYvOrTF9AiTA6683KvvskVDVENMTYYo0hfwjEcGfow==
-X-ME-Sender: <xms:4gQFYledms69udhKd1n-MgdTRrjjk05uNmOFbT6fflgHRYMxS7iHeQ>
-    <xme:4gQFYjNEW6eH-2WhAb4SjV5p7TLmapRs_MRvWJmQ4xm6ZU8m1V8Ljzcj6ai6SPhzC
-    jwT-hj54i4N4Q7kow>
-X-ME-Received: <xmr:4gQFYugzhlGscEefAxWFnBL6iyrBSf-fOMKh7vrh9ZUiWIMk8hvx7_BKCT6ESP03OVK24rByUTruXmiqwpnpKUhTmCvBn-Ad5hTC6rQX6O93nkzEFJBCZTI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddriedugdeflecutefuodetggdotefrodftvf
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=2zfIgB5o5/nNFbkpU
+        57MGQgF84aQui4IPvOBF+DvK98=; b=M+6OorkOZ3aZNaUNxefuKWuV8thBXV4nE
+        3Cjh5Fl25GHfRJD7DtKU6ckFLpgIiFdqGvV//u+V+nVOUTM0aIDA8KBf95sfoV6I
+        UdhD77521uJ3yfmvFHou+i30JfaHASlJxkscAZXVR1GZ9kgzrJz5y7e2NZ8HPh6v
+        YlxJnyPjhcVGs2FXtehjKKNeh0nSuTYfWOSHS056cxidri0EkQuqtjLHmA0engeI
+        UCP8l6kcRyObFFPe/LaLDB7oMYbQsCBvPrejYhMUnfY3ivJaRPmBItgBHnOBhRck
+        dWm7x0EO5wlrZzCc6az6ddU0bwEvjya/Mky9O5/gE98DvDBv+o4sA==
+X-ME-Sender: <xms:zAMFYqWj1u_tWiqHryCk0p3_vCRz-dimGhhh8HbMD5wr9Mj33ipCgQ>
+    <xme:zAMFYmkHfC__eRLFVnewqsvH1k1uI9gKdxyy5G4uw1w6nYFLVrZICjEL3uJBrTF60
+    hqh1ND5QS7UdqRHTw>
+X-ME-Received: <xmr:zAMFYubVo4Dp22f61BpHFY8vM0dIf27Xt0ZhLdsW0SR1Lra7H0AkbvvkR6MmiB0ZMqUIYfN7hlc_Fri9FY8QNnVqNOLoBOjyNEPm0e12C2uUU5fa-YOPLyA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddriedugdefkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhrihgt
@@ -52,136 +52,113 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddriedugdeflecutefuodetggdote
     ephefgjeeuveejteduhefgffefffdvjeefjeeivdekfffgkeeugfehveetueefleeknecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimh
-X-ME-Proxy: <xmx:4gQFYu_1iZevPpJDrl-PRFp9AgWQc4ONueziOBTzXWFvEy7XwcH5yA>
-    <xmx:4gQFYhs1Sq_zxZCTnWwstINfyDsGFxBVGFotfjtH-HM1UzVkZ2JIEw>
-    <xmx:4gQFYtF6GS4RQ-Gf44068t2S8rYfymEd3pgTwfkK3w-cPat31sBUXQ>
-    <xmx:4wQFYq6qPt4SiOO_Lr1JHYC8gitGZpLJYs6opZJOVfOy1-k3qf1NDQ>
+X-ME-Proxy: <xmx:zAMFYhUj2uB8p1CkzxKDUQjdH8V8C5l70ECHzyswm8x9vp0D-WRm6w>
+    <xmx:zAMFYkmSBYJ-WCGN2er75Ab1QJfYJdU82Dldk0fbP5G-pUg06I358Q>
+    <xmx:zAMFYmd7_wdmFo35wzoyEQW9hV5womI_R-Oysa8r7Q1bVlRpxfvHjw>
+    <xmx:zAMFYpw_63DQA4-W31-MIFjhxiW3xcsz0nN6tH14LvKruIgrvnfG3g>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Feb 2022 07:28:17 -0500 (EST)
+ 10 Feb 2022 07:23:39 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 2ca441bc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 10 Feb 2022 12:28:17 +0000 (UTC)
-Date:   Thu, 10 Feb 2022 13:28:16 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id f9d70873 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 10 Feb 2022 12:23:38 +0000 (UTC)
+Date:   Thu, 10 Feb 2022 13:23:36 +0100
 From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v3 2/2] fetch: skip computing output width when not printing
- anything
-Message-ID: <ef1fd07be5e4c50fc096a4a373fbcdc36dd4cbea.1644495978.git.ps@pks.im>
-References: <cover.1643806143.git.ps@pks.im>
- <cover.1644495978.git.ps@pks.im>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 2/2] fetch: skip computing output width when not
+ printing anything
+Message-ID: <YgUDyLhO7UykfbF/@ncase>
+References: <cover.1643364888.git.ps@pks.im>
+ <cover.1643806143.git.ps@pks.im>
+ <4b9bbcf7958da6db2be771f910974a6bffb2d94a.1643806143.git.ps@pks.im>
+ <CAP8UFD0r2ZnGCAjkQcLfEZCvxHVFGSWeAC7vSat7V7-=rhiGeQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cEwsGKrfGhf8HRl9"
+        protocol="application/pgp-signature"; boundary="7ZgJ+Beug7xTIw2S"
 Content-Disposition: inline
-In-Reply-To: <cover.1644495978.git.ps@pks.im>
+In-Reply-To: <CAP8UFD0r2ZnGCAjkQcLfEZCvxHVFGSWeAC7vSat7V7-=rhiGeQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---cEwsGKrfGhf8HRl9
+--7ZgJ+Beug7xTIw2S
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When updating references via git-fetch(1), then by default we report to
-the user which references have been changed. This output is formatted in
-a nice table such that the different columns are aligned. Because the
-first column contains abbreviated object IDs we thus need to iterate
-over all refs which have changed and compute the minimum length for
-their respective abbreviated hashes. While this effort makes sense in
-most cases, it is wasteful when the user passes the `--quiet` flag: we
-don't print the summary, but still compute the length.
+On Wed, Feb 09, 2022 at 07:10:38PM +0100, Christian Couder wrote:
+> On Wed, Feb 2, 2022 at 5:13 PM Patrick Steinhardt <ps@pks.im> wrote:
+>=20
+> > Skip computing the summary width when the user asked for us to be quiet.
+>=20
+> There is a --quiet option for git fetch, so here we can expect that it
+> will be used to test this speedup...
+>=20
+> > This gives us a small speedup of nearly 10% when doing a dry-run
+> > mirror-fetch in a repository with thousands of references being updated:
+> >
+> >     Benchmark 1: git fetch --prune --dry-run +refs/*:refs/* (HEAD~)
+> >       Time (mean =C2=B1 =CF=83):     34.048 s =C2=B1  0.233 s    [User:=
+ 30.739 s, System: 4.640 s]
+> >       Range (min =E2=80=A6 max):   33.785 s =E2=80=A6 34.296 s    5 runs
+> >
+> >     Benchmark 2: git fetch --prune --dry-run +refs/*:refs/* (HEAD)
+> >       Time (mean =C2=B1 =CF=83):     30.768 s =C2=B1  0.287 s    [User:=
+ 27.534 s, System: 4.565 s]
+> >       Range (min =E2=80=A6 max):   30.432 s =E2=80=A6 31.181 s    5 runs
+> >
+> >     Summary
+> >       'git fetch --prune --dry-run +refs/*:refs/* (HEAD)' ran
+> >         1.11 =C2=B1 0.01 times faster than 'git fetch --prune --dry-run=
+ +refs/*:refs/* (HEAD~)'
+>=20
+> ...but --prune and --dry-run are used for testing. It would be nice if
+> this discrepancy was explained a bit.
+>=20
+> Otherwise the commit message and code look good to me.
 
-Skip computing the summary width when the user asked for us to be quiet.
-This gives us a speedup of nearly 10% when doing a mirror-fetch in a
-repository with thousands of references being updated:
+Yeah, I was hiding away the `--quiet` flag here by accident. I used
+`--prune` and `--dry-run` to trigger more lines to be printed to console
+and to not take into account the time it takes to update local refs and
+fetch objects. But doing so without these flags also demonstrates what I
+want to:
 
-    Benchmark 1: git fetch --quiet +refs/*:refs/* (HEAD~)
+    Benchmark 1: git fetch --quiet +refs/*:refs/* (pks-fetch-pack-optim-v1~)
       Time (mean =C2=B1 =CF=83):     96.078 s =C2=B1  0.508 s    [User: 91.=
 378 s, System: 10.870 s]
       Range (min =E2=80=A6 max):   95.449 s =E2=80=A6 96.760 s    5 runs
 
-    Benchmark 2: git fetch --quiet +refs/*:refs/* (HEAD)
+    Benchmark 2: git fetch --quiet +refs/*:refs/* (pks-fetch-pack-optim-v1)
       Time (mean =C2=B1 =CF=83):     88.214 s =C2=B1  0.192 s    [User: 83.=
 274 s, System: 10.978 s]
       Range (min =E2=80=A6 max):   87.998 s =E2=80=A6 88.446 s    5 runs
 
-    Summary
-      'git fetch --quiet +refs/*:refs/* (HEAD)' ran
-        1.09 =C2=B1 0.01 times faster than 'git fetch --quiet +refs/*:refs/=
-* (HEAD~)'
+So again, I'll update the commit message.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/fetch.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Thanks for your feedback!
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 5b3b18a72f..7ef305c66d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1094,12 +1094,15 @@ static int store_updated_refs(const char *raw_url, =
-const char *remote_name,
- 	struct ref *rm;
- 	char *url;
- 	int want_status;
--	int summary_width =3D transport_summary_width(ref_map);
-+	int summary_width =3D 0;
-=20
- 	rc =3D open_fetch_head(&fetch_head);
- 	if (rc)
- 		return -1;
-=20
-+	if (verbosity >=3D 0)
-+		summary_width =3D transport_summary_width(ref_map);
-+
- 	if (raw_url)
- 		url =3D transport_anonymize_url(raw_url);
- 	else
-@@ -1345,7 +1348,6 @@ static int prune_refs(struct refspec *rs, struct ref =
-*ref_map,
- 	int url_len, i, result =3D 0;
- 	struct ref *ref, *stale_refs =3D get_stale_heads(rs, ref_map);
- 	char *url;
--	int summary_width =3D transport_summary_width(stale_refs);
- 	const char *dangling_msg =3D dry_run
- 		? _("   (%s will become dangling)")
- 		: _("   (%s has become dangling)");
-@@ -1374,6 +1376,8 @@ static int prune_refs(struct refspec *rs, struct ref =
-*ref_map,
- 	}
-=20
- 	if (verbosity >=3D 0) {
-+		int summary_width =3D transport_summary_width(stale_refs);
-+
- 		for (ref =3D stale_refs; ref; ref =3D ref->next) {
- 			struct strbuf sb =3D STRBUF_INIT;
- 			if (!shown_url) {
---=20
-2.35.1
+Patrick
 
-
---cEwsGKrfGhf8HRl9
+--7ZgJ+Beug7xTIw2S
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIFBN8ACgkQVbJhu7ck
-PpSxZA/+N/I5KRii5EhtEd2xiFOnVEapTRCtwUN9/SOufQKe6GAFOqg2h63yzLNb
-8fWx2D7L9/aGWnZjN7tnJ5x087jJ9J54bBUjh09bHn4iEC+1/5YkrEvoTFyWYjxS
-ft6JbK219BjHQNXd0PiLSbpEJqKpd/zu9VM6H9jA/roM9JIDM4fBuu4jg52hNJio
-PSQbF1p6FGUMgAq68LFZnBe2kxwkod5zIcc2u9BnuupblAim3x51/LuX8I1iq3ut
-MMjiSildqlNUbc82zDKUZuS7iiVQZUhj5t0Et79d8CCuEY66+lwoNq/aChguYrrx
-4eZB3I/c7N2Z9xYp2I8BUPe7Dru1JgVwtQsO2nn7aW4fpOtVk5jz3EJua0CtwDI+
-JL+2vtu0kEUZGGuOX8mrddcyAyuOqM7dF161NwGhvqXqHGaWdiOSLLxgdpm0xI4G
-6dylGg4fOvXhI9GvaLpy9dcA0tWnba8l96P2PLVysLSU1wq8WspHdjjmtAeSCr4C
-tX1sJsj28JcO1nT/t0f0KUzxYz8CUINrANn/ya80uW+Q3vE+ZlnhcM8pC9vMtsYl
-urKhC7yHcbqBSz1jZevZxzbp96WuhB45y+BpGnvcSByD6V5nSh7xeCgTnH7GVivS
-mXmyjzLwRloEfyAoE6d3Dw6gq/HBzQXNsdtyfwwduA4e186SIY4=
-=Uzpm
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIFA8gACgkQVbJhu7ck
+PpQPzg/+IPCLFyoM6PMaoxiIg1KaZC1j87sh6vvpmfGqm0MrRSEq8b3Cg3/GTM6z
+B+eHdOlj3xX8bycVWIH5Xu4/aj2WIrKAKdwJDwIZ0Y2iibGfbiXrcvZK/yj77rGP
+tRkrwc8C1M8Sj10X5zoyTXNXWdi3cDgteeFOithi8qUR7BO0jnbeMMbRied+lynI
+8VJC3XizCAGlFQsr7UC1IccnOCh725CMZJCsobqkgYQ4cc/xOb7TkTAnXkCnN3Wd
+UKx2U1cluCEvK1pdPm+CbdH4U80AZZ3FDZdIr4lyVHp7728DR9a/rTuukc20olz9
+OvI67xDzowCQJkKJ1jb1aKZNAr3PMz3jCFx+eN7Ohq/ykX0pEqKEOm0xuyuisQtz
+KX3MWF1xaL8wqJQnPz42Ja/rCBa1q/bEv6ZrFnc0Gucr7a1r7mAKw8Pc8VZtTUXA
+8gIhBAlCrwXiQ/+qy6VfMeUzF642BuBD1lyRqZgbXfGmThUaQgpdzN32Rug3bsu7
+wPsPY/vyoNABbOm2lAzyOM1/2l18MsiO/ErRVKXH5eXvB5uqLmqN9RJLK1XMQkRu
+wF+zUkALcx9sCjoH3CdMYEYKKrfwTLra9wTVevpbZXgU/yWSeLmSdRpNdOfVj5+N
+7L0PI8a4FSCk8eAcyBe4zXBHtvzfgtLMLbrtOC4kcGwbHikSeMs=
+=604Z
 -----END PGP SIGNATURE-----
 
---cEwsGKrfGhf8HRl9--
+--7ZgJ+Beug7xTIw2S--
