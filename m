@@ -2,122 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D456C433F5
-	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 16:35:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 343A7C433F5
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 16:45:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244240AbiBJQfy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 11:35:54 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46008 "EHLO
+        id S244658AbiBJQpv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 11:45:51 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232641AbiBJQfx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 11:35:53 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55303128
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 08:35:54 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D69517FDB7;
-        Thu, 10 Feb 2022 11:35:51 -0500 (EST)
+        with ESMTP id S240434AbiBJQpt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 11:45:49 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64312122
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 08:45:50 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B442B1184E1;
+        Thu, 10 Feb 2022 11:45:49 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jWNvY0NOPEuCkFR5lnPaizY3ZYaTNXopE87cv7
-        lEzyI=; b=RKJpPi0hDETo0p0kneItNRd7NjBwiJ3VyWIyVGPfCv2vIiL8uS8ffz
-        2MDY/bJa4sZV1waWkP2kF9RSfJIdeXogAaLoELvdULZeQJlv06DszPGgUl9PbVLr
-        5uTEY2/90+8um04WvGMzWDX92dLFXjyzZ6ktbrlWNgBwOtfkkxW4g=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 447EE17FDB6;
-        Thu, 10 Feb 2022 11:35:51 -0500 (EST)
+        :content-type; s=sasl; bh=PcHs3AV6rA7oKfT/WFyKXU0S7fs2WWCKs7gGm+
+        xZmlQ=; b=qOuxmP8E4uzDAZ8eh3qy0RqrzfcLlt5K2fOxOXdnKBPkCYce7eMGtn
+        6z0nOb16LKF/Llqg2O+IwNvcBWlb+pB8lj6TfVP3yupIRungXd9UkIR0V2fm/0Vo
+        1V6qzNZcRphJbgNvn3dpnGCyyXOSaCfS/mqNBTlRO3wwjcMotQZXw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA1351184E0;
+        Thu, 10 Feb 2022 11:45:49 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.185.212.55])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A138717FDB5;
-        Thu, 10 Feb 2022 11:35:48 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0A3081184DF;
+        Thu, 10 Feb 2022 11:45:48 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] glossary: describe "worktree"
-References: <xmqqczjvxy3o.fsf@gitster.g>
-        <CABPp-BHrFb_AA2OAiR7Bmq7vQuyG2Wme_PdjPdY8j-tp3VJfJg@mail.gmail.com>
-Date:   Thu, 10 Feb 2022 08:35:47 -0800
-In-Reply-To: <CABPp-BHrFb_AA2OAiR7Bmq7vQuyG2Wme_PdjPdY8j-tp3VJfJg@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 10 Feb 2022 07:50:37 -0800")
-Message-ID: <xmqqiltmwufw.fsf@gitster.g>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sunshine@sunshineco.com,
+        allred.sean@gmail.com, Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+        derrickstolee@github.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v6 3/6] config: add repo_config_set_worktree_gently()
+References: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
+        <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com>
+        <cf9e86fe3a403d0ceaff9fdf484a9bf6b07799ac.1644269583.git.gitgitgadget@gmail.com>
+        <xmqqv8xpato3.fsf@gitster.g>
+        <ab6021a8-cbb9-3261-8e08-bb4a83287473@gmail.com>
+        <xmqqzgn07wwf.fsf@gitster.g>
+        <2b88fa25-ec40-6416-05c8-81789a415844@gmail.com>
+Date:   Thu, 10 Feb 2022 08:45:47 -0800
+In-Reply-To: <2b88fa25-ec40-6416-05c8-81789a415844@gmail.com> (Derrick
+        Stolee's message of "Thu, 10 Feb 2022 09:48:22 -0500")
+Message-ID: <xmqqczjuwtz8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 80C1854E-8A8F-11EC-9640-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: E69CF014-8A90-11EC-AAE8-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
->>    One thing that makes me worried somewhat is what I did not touch,
->>    namely, how pseudo refs are defined.  I know MERGE_HEAD is very
->>    special and it may be impossible to coax it into refs API for
->>    writing, so the text there makes sense for it, but there are
->>    other all-caps-and-directly-under-dot-git-directory files like
->>    ORIG_HEAD and CHERRY_PICK_HEAD that are written using the refs
->>    API, so the description would have to be updated there.
->
-> I'm not quite following; why would the description need to be updated?
->  Sure MERGE_HEAD is written without using the refs API, but we didn't
-> mention how the pseduorefs were written in the description, and all of
-> MERGE_HEAD, CHERRY_PICK_HEAD, ORIG_HEAD, REVERT_HEAD get written
-> per-worktree so doesn't "pseudorefs like MERGE_HEAD" cover it as far
-> as the reader is concerned?
+> True, they could be split. The reason to create the _multivar_
+> version is for the case that worktree config is not specified,
+> so that is the only caller at the moment.
 
-Here is how pseudo refs are defined.
+Sorry, but I am not following this part.
 
-[[def_pseudoref]]pseudoref::
-	Pseudorefs are a class of files under `$GIT_DIR` which behave
-	like refs for the purposes of rev-parse, but which are treated
-	specially by git.  Pseudorefs both have names that are all-caps,
-	and always start with a line consisting of a
-	<<def_SHA1,SHA-1>> followed by whitespace.  So, HEAD is not a
-	pseudoref, because it is sometimes a symbolic ref.  They might
-	optionally contain some additional data.  `MERGE_HEAD` and
-	`CHERRY_PICK_HEAD` are examples.  Unlike
-	<<def_per_worktree_ref,per-worktree refs>>, these files cannot
-	be symbolic refs, and never have reflogs.  They also cannot be
-	updated through the normal ref update machinery.  Instead,
-	they are updated by directly writing to the files.  However,
-	they can be read as if they were refs, so `git rev-parse
-	MERGE_HEAD` will work.
+> This is an interesting idea. This would require creating a list
+> of "should be per-worktree" config keys that are checked within
+> the different *_config_set_* methods.
 
-Points that may need to be looked at in the world where files
-backend is not the only ref backend are:
+Yes.
 
- - "are ... files under `$GIT_DIR`" may no longer be true, once some
-   of them are stored in reftable, for example.
+> The biggest technical hurdle is that the multivar versions might
+> need to send a subset of the given config into the worktree
+> config and the rest to the common config.
 
- - "followed by whitespace" may be an irrelevant detail for the
-   purpose of this paragraph.
+Yes, instead of having the caller do it.
 
- - CHERRY_PICK_HEAD, as written in sequencer.c::do_pick_commit(),
-   use update_ref() to write a named file out, so "followed by
-   whitesspace" (and other cruft, like MERGE_HEAD does) certainly
-   does not apply.
+> Let's see how this progresses in the future, and whether we
+> have more config that we believe _must_ be stored on a per-
+> worktree basis. At that point, we can see whether the current
+> "distributed responsibility" model is too cumbersome.
 
- - Also "cannot be updated through the normal ref update machinery"
-   is no longer true.  sequencer.c::do_pick_commit() even calls
-   update_ref() with REF_NO_DEREF to ensure "cannot be symbolic
-   refs".
-
- - "never have reflogs" would make sense for the current set of
-   pseudorefs (does reflog on CHERRY_PICK_HEAD, for example, have
-   real use case?), but I do not know if it stays that way.  I do
-   not care too deeply either way, but I want to avoid over
-   specifying things.
-
-What worries me the most is that we cannot simply say "all-caps
-names that end with '_HEAD' all behave like refs except that they
-will not be symrefs without reflog." MERGE_HEAD is the only known
-exception if I am not mistaken, and I am OK to single it out as an
-oddball.  The current description however gives that there are a lot
-more differences _among_ pseudorefs.
-
+It is not too distributed, which is a saving grace.  The callers
+know they are setting core.sparseCheckout* and they are responsible
+to call the per-worktree version.  It would be like having in ref
+API an update_HEAD() helper for modifying HEAD, instead of having a
+more generic update_ref() that can modify any ref and pass "HEAD" as
+an argument to the latter.  The caller needs to know a bit more
+details about what needs to happen when dealing with a special thing,
+but the special case knowledge is fairly concentrated.
 
