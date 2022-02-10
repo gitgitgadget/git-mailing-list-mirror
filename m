@@ -2,664 +2,229 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5587BC433F5
-	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 22:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1DCBC433EF
+	for <git@archiver.kernel.org>; Thu, 10 Feb 2022 22:51:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345253AbiBJWtt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 17:49:49 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37784 "EHLO
+        id S1345269AbiBJWvm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 17:51:42 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345111AbiBJWts (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 17:49:48 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB57FB76
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:49:45 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id r27so7671718oiw.4
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:49:45 -0800 (PST)
+        with ESMTP id S1345155AbiBJWvl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 17:51:41 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92E7FB75
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:51:41 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id h13-20020a17090ac38d00b001b8d61ec280so2232370pjt.1
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 14:51:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=6VOCnsL0s6HmO9mp0MHqmBIgPLGW5X3/moXoiqhw1bo=;
-        b=AcrJtcKFDC3hxWdO2g8Ea/1zzaE0wki238n11W6rcQpFsXOGuV0mpDFo6QFqLk5UKv
-         HF8fD1yDa2oLvlYc0dKSvUQTsVi5u7zvxPaRoOqqkRaPLy6+PKrr13MTxj1hpxHKPNSO
-         JZ9+zWrBsqUhZYpjCL+3WA2B1Bp3+Y5m++9LLEBEGlf3OlueYTxTCTciFle2Qxmgiv4F
-         j6MFVVbfuo8bznaxmgIqqsop36j4CT9ptgCAToGHvwzhgEV9w2lU73/y0AUlGvHV/ywl
-         qiXRnZu5Khuz7oMT7VBOgz1xSy0OKwixK+LGdg2M8Ft61PQJAuvwZiYvoo9iHzZzq7E7
-         mAgw==
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=ReIQwhagC9wVx7XWKttziwoRAX3M5nQznQBo7fdMD2Q=;
+        b=LSz+lextb2+AQFcwhRpT8xfPr8GMTzCBi9OjrrQ/tXzGQwWiir5LEfXEQe+vrex60T
+         yEW1mpwBDMFj5yrlfnfACDM8sDBBZMmMSDtZ+9yboC99mL+Ekh/MH12vzv+/abJoeCQp
+         /7ciq4EHUMH1iUFq1xf2sdTn5GoLMKtq5mFkNAk9pmXIFeJzaqCa8yyEA6+mfJWFRaG3
+         A1XZBUgHq0Qoy4PRi5WSJ2HNQxWaYhrGmZ7lIYS1ItDi1aDwCi21cWwsY1/De8AktcwZ
+         OzMkrPYA9/9n8BuQWlgShWy/74rpeK/hVUj4+/CvWI7e9nODV0sbAJGoZUU2D0B0MfvR
+         5llQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6VOCnsL0s6HmO9mp0MHqmBIgPLGW5X3/moXoiqhw1bo=;
-        b=yYUsmnxz7UJ2+frsFxbjoLR4i6vm7IydLvNa6vzV/ktLTbtydHYn2cIjqRW7fMbE4C
-         9RBna01REIa7YYlzd9BT8gYgh5KFr3Rg4gEdNL3BMfkng7nvqzuOLmZNFeTHSeDl/ezr
-         VaMGyD2Equ2QJ92INN80SmmJJ4J/i7p8YZA8/b97mLXDs+dMqt8abAlOAoyukVE/IIak
-         SFolsd7sSjs5VYBOsJrc7yn9A1/iRlv1F7v5sBH8j/1E+YhShZyqLO2R6j5AAQZaqptV
-         5Iwi/MhIyziOuvU/l32E9QhMBxlUxerf5nOjNTUppO46SpiGJvGwmwgLjI6NedOLdow/
-         bAAg==
-X-Gm-Message-State: AOAM531cGMTz8mZ0LErdzN7fR32Z82jQCDoVTrsxGEFrEjq3UvcRpICi
-        NnRSxPCxXOc/2a54+W9EpvJcJltw74QOe8u51kIfHA==
-X-Google-Smtp-Source: ABdhPJyn66YOQtKhJsQXX7njAKGl9MierhP1sD8JHlhlO0vKitlGDNQF61Y+PJKc/prW19cJBkg4WkjT/N2VCdPqawI=
-X-Received: by 2002:a05:6808:2025:: with SMTP id q37mr2035653oiw.31.1644533384830;
- Thu, 10 Feb 2022 14:49:44 -0800 (PST)
-MIME-Version: 1.0
-References: <20220208231911.725273-1-calvinwan@google.com> <2B98F5EC-5F69-4DE1-89BF-33FCD1B03573@gmail.com>
-In-Reply-To: <2B98F5EC-5F69-4DE1-89BF-33FCD1B03573@gmail.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Thu, 10 Feb 2022 14:49:34 -0800
-Message-ID: <CAFySSZCZfekrdBH1NMArgPLdF4o1KQVY251BLyFgRxp=pDgEOA@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=5BPATCH=5D_fetch_=E2=80=94object=2Dinfo=2Dformat=3A_client_opti?=
-        =?UTF-8?Q?on_for_object=2Dinfo?=
-To:     John Cai <johncai86@gmail.com>, git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=ReIQwhagC9wVx7XWKttziwoRAX3M5nQznQBo7fdMD2Q=;
+        b=rMdiTHB87+4QfcK1urZIWnmmo8RxPNidAXtGItSCL/mqpDu6kshr+orROApX828Z6J
+         mOW6vR/9/1oUdHUYvBAJyzkRyZ88Eh1xEkhRj3WCTQA47/hiy1bQOVjfJSf3Y9f8Fmug
+         5tbSjsuPMVEPOQAkNiNNG2vIdY3Dy5XA6hBqc/yrss8oPEVlWyuc4zWmoRjbvByoRQZd
+         J3bm/LWZRueac5akDWjXDe260jAgGKc8eG2Q3OCV0bPeNJFv/lmphi+utqEiwa0lLA4i
+         q1vsW2NsESJZUqab0R4lkLRf8JZnTi88UoT1Ix25ZtI0buoC/kT6ls0qG8eku40UEfkY
+         Q0qw==
+X-Gm-Message-State: AOAM531Q8S5O7ITOR6zLdP5UfPkNsWO67BxvmR7yBhD5XvphDmD71mXa
+        C1nJhHh7pxpLVDHrSAaih0RczMGknZjBuLXclYmz
+X-Google-Smtp-Source: ABdhPJy+U65dK5o4XbcuRLj318FUOC3f64nB+DTCL1gddj8TxlWry6iov0iTd7nsp43OOgPhBobjuuF6GjIYX2/rh5xq
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a17:90a:f308:: with SMTP id
+ ca8mr5102796pjb.222.1644533501028; Thu, 10 Feb 2022 14:51:41 -0800 (PST)
+Date:   Thu, 10 Feb 2022 14:51:37 -0800
+In-Reply-To: <20220210044152.78352-8-chooglen@google.com>
+Message-Id: <20220210225137.688066-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.265.g69c8d7142f-goog
+Subject: Re: [PATCH 7/8] fetch: fetch unpopulated, changed submodules
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Maybe just --object-info and then provide a different flag for the <argum=
-ents> perhaps?
-I agree. --object-info is a better name for the option. And with
-<arguments>, there is also probably a better name -- will look into
-the codebase and see what other options do.
+Glen Choo <chooglen@google.com> writes:
+> submodule.c has a seemingly-unrelated change that teaches the "find
+> changed submodules" rev walk to call is_repository_shallow(). This fixes
+> what I believe is a legitimate bug - the rev walk would fail on a
+> shallow repo.
+> 
+> Our test suite did not catch this prior to this commit because we skip
+> the rev walk if .gitmodules is not found, and thus the test suite did
+> not attempt the rev walk on a shallow clone. After this commit,
+> we always attempt to find changed submodules (regardless of whether
+> there is a .gitmodules file), and the test suite noticed the bug.
 
-> should object_info_format be cleared at some point?
-I don't see why it needs to be cleared. The command only uses this
-variable once in object-info.
+Is this bug present without the other code introduced in this patch? If
+yes, it's better to put the bugfix in a separate patch with a test that
+would have failed but now passes.
 
-Thank you for your input!
+Some more high-level comments:
 
-On Wed, Feb 9, 2022 at 11:09 AM John Cai <johncai86@gmail.com> wrote:
->
-> Hi Calvin,
->
-> On 8 Feb 2022, at 18:19, Calvin Wan wrote:
->
-> > Add =E2=80=98=E2=80=94object-info-format=E2=80=99 option to fetch. This=
- option allows
-> > the client to make an object-info [1] command request to a server
-> > that supports protocol v2.
-> >
-> > The transport implementation uses vtables [2], similar to how Git
-> > fetches refs, to determine whether a process needs to be taken over
-> > before sending the object-info request. Different protocols
-> > require different setups for making requests.
-> >
-> > [1] https://lore.kernel.org/git/20210420233830.2181153-1-bga@google.com=
-/
-> > [2] https://lore.kernel.org/git/26f276956001a120cc9105b0071762c2fd4a45c=
-5.1513287544.git.jonathantanmy@google.com/
-> >
-> > Helped-by: Jonathan Tan <jonathantanmy@google.com>
-> > Signed-off-by: Calvin Wan <calvinwan@google.com>
-> >
-> > ---
-> >  builtin/fetch.c              | 80 ++++++++++++++++++++----------
-> >  fetch-pack.c                 | 53 ++++++++++++++++++++
-> >  fetch-pack.h                 |  7 +++
-> >  t/t5583-fetch-object-info.sh | 95 ++++++++++++++++++++++++++++++++++++
-> >  transport-helper.c           | 12 +++++
-> >  transport-internal.h         |  1 +
-> >  transport.c                  | 63 ++++++++++++++++++++++++
-> >  transport.h                  |  1 +
-> >  8 files changed, 286 insertions(+), 26 deletions(-)
-> >  create mode 100755 t/t5583-fetch-object-info.sh
-> >
-> > diff --git a/builtin/fetch.c b/builtin/fetch.c
-> > index 5f06b21f8e..991063072b 100644
-> > --- a/builtin/fetch.c
-> > +++ b/builtin/fetch.c
-> > @@ -29,6 +29,9 @@
-> >  #include "commit-graph.h"
-> >  #include "shallow.h"
-> >  #include "worktree.h"
-> > +#include "protocol.h"
-> > +#include "pkt-line.h"
-> > +#include "connect.h"
-> >
-> >  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
-> >
-> > @@ -37,6 +40,7 @@ static const char * const builtin_fetch_usage[] =3D {
-> >       N_("git fetch [<options>] <group>"),
-> >       N_("git fetch --multiple [<options>] [(<repository> | <group>)...=
-]"),
-> >       N_("git fetch --all [<options>]"),
-> > +     N_("git fetch --object-info-format=3D[<arguments>] <remote> [<obj=
-ect-ids>]"),
->
-> --object-info-format seems to be more like a command, rather than a forma=
-tting
-> option. When a flag ends with "format", it feels like it is specifying ho=
-w to
-> transform the output kind of like git for-each-ref --format. So --object-=
-info-format looks
-> feels like it's meant to transform the object-info output. Maybe just --o=
-bject-info
-> and then provide a different flag for the <arguments> perhaps?
->
-> Would be interested in hearing what others think from a UI perspective.
->
-> >       NULL
-> >  };
-> >
-> > @@ -85,6 +89,7 @@ static struct string_list negotiation_tip =3D STRING_=
-LIST_INIT_NODUP;
-> >  static int fetch_write_commit_graph =3D -1;
-> >  static int stdin_refspecs =3D 0;
-> >  static int negotiate_only;
-> > +static struct string_list object_info_format =3D STRING_LIST_INIT_NODU=
-P;
->
-> should object_info_format be cleared at some point?
->
-> >
-> >  static int git_fetch_config(const char *k, const char *v, void *cb)
-> >  {
-> > @@ -220,6 +225,8 @@ static struct option builtin_fetch_options[] =3D {
-> >                N_("write the commit-graph after fetching")),
-> >       OPT_BOOL(0, "stdin", &stdin_refspecs,
-> >                N_("accept refspecs from stdin")),
-> > +     OPT_STRING_LIST(0, "object-info-format", &object_info_format, N_(=
-"option"),
-> > +              N_("command request arguments")),
-> >       OPT_END()
-> >  };
-> >
-> > @@ -2000,6 +2007,8 @@ int cmd_fetch(int argc, const char **argv, const =
-char *prefix)
-> >       struct remote *remote =3D NULL;
-> >       int result =3D 0;
-> >       int prune_tags_ok =3D 1;
-> > +     struct oid_array oids =3D OID_ARRAY_INIT;
-> > +     struct object_id oid;
-> >
-> >       packet_trace_identity("fetch");
-> >
-> > @@ -2019,6 +2028,7 @@ int cmd_fetch(int argc, const char **argv, const =
-char *prefix)
-> >
-> >       argc =3D parse_options(argc, argv, prefix,
-> >                            builtin_fetch_options, builtin_fetch_usage, =
-0);
-> > +
-> >       if (recurse_submodules !=3D RECURSE_SUBMODULES_OFF) {
-> >               int *sfjc =3D submodule_fetch_jobs_config =3D=3D -1
-> >                           ? &submodule_fetch_jobs_config : NULL;
-> > @@ -2057,34 +2067,52 @@ int cmd_fetch(int argc, const char **argv, cons=
-t char *prefix)
-> >       if (dry_run)
-> >               write_fetch_head =3D 0;
-> >
-> > -     if (all) {
-> > -             if (argc =3D=3D 1)
-> > -                     die(_("fetch --all does not take a repository arg=
-ument"));
-> > -             else if (argc > 1)
-> > -                     die(_("fetch --all does not make sense with refsp=
-ecs"));
-> > -             (void) for_each_remote(get_one_remote_for_fetch, &list);
-> > -     } else if (argc =3D=3D 0) {
-> > -             /* No arguments -- use default remote */
-> > -             remote =3D remote_get(NULL);
-> > -     } else if (multiple) {
-> > -             /* All arguments are assumed to be remotes or groups */
-> > -             for (i =3D 0; i < argc; i++)
-> > -                     if (!add_remote_or_group(argv[i], &list))
-> > -                             die(_("no such remote or remote group: %s=
-"),
-> > -                                 argv[i]);
-> > -     } else {
-> > -             /* Single remote or group */
-> > -             (void) add_remote_or_group(argv[0], &list);
-> > -             if (list.nr > 1) {
-> > -                     /* More than one remote */
-> > -                     if (argc > 1)
-> > -                             die(_("fetching a group and specifying re=
-fspecs does not make sense"));
-> > +     if (object_info_format.nr > 0) {
-> > +             if (argc =3D=3D 0 || argc =3D=3D 1) {
-> > +                     die(_("must supply remote and object ids when usi=
-ng --object-info-format"));
-> >               } else {
-> > -                     /* Zero or one remotes */
-> >                       remote =3D remote_get(argv[0]);
-> > -                     prune_tags_ok =3D (argc =3D=3D 1);
-> > -                     argc--;
-> > -                     argv++;
-> > +                     for (i =3D 1; i < argc; i++) {
-> > +                             if (get_oid(argv[i], &oid))
-> > +                                     return error(_("malformed object =
-name '%s'"), argv[i]);
-> > +                             oid_array_append(&oids, &oid);
-> > +                     }
-> > +             }
-> > +             gtransport =3D prepare_transport(remote, 0);
-> > +             gtransport->server_options =3D &object_info_format;
-> > +             result =3D transport_fetch_object_info(gtransport, &oids)=
-;
-> > +
-> > +             return result;
-> > +     } else {
-> > +             if (all) {
-> > +                     if (argc =3D=3D 1)
-> > +                             die(_("fetch --all does not take a reposi=
-tory argument"));
-> > +                     else if (argc > 1)
-> > +                             die(_("fetch --all does not make sense wi=
-th refspecs"));
-> > +                     (void) for_each_remote(get_one_remote_for_fetch, =
-&list);
-> > +             } else if (argc =3D=3D 0) {
-> > +                     /* No arguments -- use default remote */
-> > +                     remote =3D remote_get(NULL);
-> > +             } else if (multiple) {
-> > +                     /* All arguments are assumed to be remotes or gro=
-ups */
-> > +                     for (i =3D 0; i < argc; i++)
-> > +                             if (!add_remote_or_group(argv[i], &list))
-> > +                                     die(_("no such remote or remote g=
-roup: %s"),
-> > +                                         argv[i]);
-> > +             } else {
-> > +                     /* Single remote or group */
-> > +                     (void) add_remote_or_group(argv[0], &list);
-> > +                     if (list.nr > 1) {
-> > +                             /* More than one remote */
-> > +                             if (argc > 1)
-> > +                                     die(_("fetching a group and speci=
-fying refspecs does not make sense"));
-> > +                     } else {
-> > +                             /* Zero or one remotes */
-> > +                             remote =3D remote_get(argv[0]);
-> > +                             prune_tags_ok =3D (argc =3D=3D 1);
-> > +                             argc--;
-> > +                             argv++;
-> > +                     }
-> >               }
-> >       }
-> >
-> > diff --git a/fetch-pack.c b/fetch-pack.c
-> > index dd6ec449f2..d1c5254aa8 100644
-> > --- a/fetch-pack.c
-> > +++ b/fetch-pack.c
-> > @@ -1265,6 +1265,59 @@ static void write_fetch_command_and_capabilities=
-(struct strbuf *req_buf,
-> >       packet_buf_delim(req_buf);
-> >  }
-> >
-> > +static void write_object_info_command_and_capabilities(struct strbuf *=
-req_buf,
-> > +                                              const struct string_list=
- *server_options)
-> > +{
-> > +     const char *hash_name;
-> > +
-> > +     if (server_supports_v2("object-info", 1))
-> > +             packet_buf_write(req_buf, "command=3Dobject-info");
-> > +     if (server_supports_v2("agent", 0))
-> > +             packet_buf_write(req_buf, "agent=3D%s", git_user_agent_sa=
-nitized());
-> > +     if (advertise_sid && server_supports_v2("session-id", 0))
-> > +             packet_buf_write(req_buf, "session-id=3D%s", trace2_sessi=
-on_id());
-> > +     if (server_options && server_options->nr &&
-> > +         server_supports_v2("server-option", 1)) {
-> > +             int i;
-> > +             for (i =3D 0; i < server_options->nr; i++)
-> > +                     packet_buf_write(req_buf, "server-option=3D%s",
-> > +                                      server_options->items[i].string)=
-;
-> > +     }
-> > +
-> > +     if (server_feature_v2("object-format", &hash_name)) {
-> > +             int hash_algo =3D hash_algo_by_name(hash_name);
-> > +             if (hash_algo_by_ptr(the_hash_algo) !=3D hash_algo)
-> > +                     die(_("mismatched algorithms: client %s; server %=
-s"),
-> > +                         the_hash_algo->name, hash_name);
-> > +             packet_buf_write(req_buf, "object-format=3D%s", the_hash_=
-algo->name);
-> > +     } else if (hash_algo_by_ptr(the_hash_algo) !=3D GIT_HASH_SHA1) {
-> > +             die(_("the server does not support algorithm '%s'"),
-> > +                 the_hash_algo->name);
-> > +     }
-> > +     packet_buf_delim(req_buf);
-> > +}
-> > +
-> > +void send_object_info_request(int fd_out, struct object_info_args *arg=
-s)
-> > +{
-> > +     struct strbuf req_buf =3D STRBUF_INIT;
-> > +     int i;
-> > +
-> > +     write_object_info_command_and_capabilities(&req_buf, args->server=
-_options);
-> > +
-> > +     if (string_list_has_string(args->server_options, "size"))
-> > +             packet_buf_write(&req_buf, "size");
-> > +
-> > +     for (i =3D 0; i < args->oids->nr; i++) {
-> > +             packet_buf_write(&req_buf, "oid %s\n", oid_to_hex(&args->=
-oids->oid[i]));
-> > +     }
-> > +
-> > +     packet_buf_flush(&req_buf);
-> > +     if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
-> > +             die_errno(_("unable to write request to remote"));
-> > +
-> > +     strbuf_release(&req_buf);
-> > +}
-> > +
-> >  static int send_fetch_request(struct fetch_negotiator *negotiator, int=
- fd_out,
-> >                             struct fetch_pack_args *args,
-> >                             const struct ref *wants, struct oidset *com=
-mon,
-> > diff --git a/fetch-pack.h b/fetch-pack.h
-> > index 7f94a2a583..2ad5ec5c64 100644
-> > --- a/fetch-pack.h
-> > +++ b/fetch-pack.h
-> > @@ -68,6 +68,11 @@ struct fetch_pack_args {
-> >       unsigned connectivity_checked:1;
-> >  };
-> >
-> > +struct object_info_args {
-> > +     const struct string_list *server_options;
-> > +     const struct oid_array *oids;
-> > +};
-> > +
-> >  /*
-> >   * sought represents remote references that should be updated from.
-> >   * On return, the names that were found on the remote will have been
-> > @@ -101,4 +106,6 @@ void negotiate_using_fetch(const struct oid_array *=
-negotiation_tips,
-> >   */
-> >  int report_unmatched_refs(struct ref **sought, int nr_sought);
-> >
-> > +void send_object_info_request(int fd_out, struct object_info_args *arg=
-s);
-> > +
-> >  #endif
-> > diff --git a/t/t5583-fetch-object-info.sh b/t/t5583-fetch-object-info.s=
-h
-> > new file mode 100755
-> > index 0000000000..93b09da3b1
-> > --- /dev/null
-> > +++ b/t/t5583-fetch-object-info.sh
-> > @@ -0,0 +1,95 @@
-> > +#!/bin/sh
-> > +
-> > +test_description=3D'test git fetch object-info version 2'
-> > +
-> > +TEST_NO_CREATE_REPO=3D1
-> > +
-> > +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
-> > +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +initial_directory=3D$pwd
-> > +
-> > +# Test fetch object-info with 'git://' transport
-> > +#
-> > +. "$TEST_DIRECTORY"/lib-git-daemon.sh
-> > +start_git_daemon --export-all --enable=3Dreceive-pack
-> > +daemon_parent=3D$GIT_DAEMON_DOCUMENT_ROOT_PATH/parent
-> > +
-> > +
-> > +test_expect_success 'create repo to be served by git-daemon' '
-> > +     git init "$daemon_parent" &&
-> > +     test_commit -C "$daemon_parent" message1 a.txt
-> > +'
-> > +
-> > +test_expect_success 'fetch object-info with git:// using protocol v2' =
-'
-> > +     test_when_finished "cd '$initial_directory'" &&
-> > +
-> > +     cd "$daemon_parent" &&
-> > +
-> > +     cat >actual <<-EOF &&
-> > +     $(GIT_TRACE_PACKET=3D1 git -c protocol.version=3D2 fetch --object=
--info-format=3Dsize "$GIT_DAEMON_URL/parent" $(git rev-parse message1:a.txt=
-))
-> > +     EOF
-> > +
-> > +     cat >expect <<-EOF &&
-> > +     $(git rev-parse message1:a.txt) $(wc -c <a.txt | xargs)
-> > +     EOF
-> > +
-> > +     test_cmp expect actual
-> > +'
-> > +stop_git_daemon
-> > +
-> > +# Test protocol v2 with 'http://' transport
-> > +#
-> > +. "$TEST_DIRECTORY"/lib-httpd.sh
-> > +start_httpd
-> > +
-> > +test_expect_success 'create repo to be served by http:// transport' '
-> > +     git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-> > +     git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config http.receiv=
-epack true &&
-> > +     test_commit -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" message1 a=
-.txt
-> > +'
-> > +
-> > +test_expect_success 'fetch object-info with http:// using protocol v2'=
- '
-> > +     test_when_finished "cd '$initial_directory'" &&
-> > +
-> > +     cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-> > +
-> > +     cat >actual <<-EOF &&
-> > +     $(git -c protocol.version=3D2 fetch --object-info-format=3Dsize "=
-$HTTPD_URL/smart/http_parent" $(git rev-parse message1:a.txt))
-> > +     EOF
-> > +
-> > +     cat >expect <<-EOF &&
-> > +     $(git rev-parse message1:a.txt) $(wc -c <a.txt | xargs)
-> > +     EOF
-> > +
-> > +     test_cmp expect actual
-> > +'
-> > +
-> > +# Test fetch object-info with 'file://' transport
-> > +#
-> > +
-> > +test_expect_success 'create repo to be serbed by file:// transport' '
-> > +     git init server &&
-> > +     test_commit -C server message1 a.txt &&
-> > +     git -C server config protocol.version 2
-> > +'
-> > +
-> > +test_expect_success 'fetch object-info with file:// using protocol v2'=
- '
-> > +     test_when_finished "cd '$initial_directory'" &&
-> > +
-> > +     cd server &&
-> > +
-> > +     cat >actual <<-EOF &&
-> > +     $(git fetch --object-info-format=3Dsize "file://$(pwd)" $(git rev=
--parse message1:a.txt))
-> > +     EOF
-> > +
-> > +     cat >expect <<-EOF &&
-> > +     $(git rev-parse message1:a.txt) $(wc -c <a.txt | xargs)
-> > +     EOF
-> > +
-> > +     test_cmp expect actual
-> > +'
-> > +
-> > +test_done
-> > \ No newline at end of file
-> > diff --git a/transport-helper.c b/transport-helper.c
-> > index a0297b0986..9ecda03dde 100644
-> > --- a/transport-helper.c
-> > +++ b/transport-helper.c
-> > @@ -671,6 +671,17 @@ static int connect_helper(struct transport *transp=
-ort, const char *name,
-> >  static struct ref *get_refs_list_using_list(struct transport *transpor=
-t,
-> >                                           int for_push);
-> >
-> > +static int fetch_object_info(struct transport *transport, struct oid_a=
-rray *oids)
-> > +{
-> > +     get_helper(transport);
-> > +
-> > +     if (process_connect(transport, 0)) {
-> > +             do_take_over(transport);
-> > +             return transport->vtable->fetch_object_info(transport, oi=
-ds);
-> > +     }
-> > +     return -1;
-> > +}
-> > +
-> >  static int fetch_refs(struct transport *transport,
-> >                     int nr_heads, struct ref **to_fetch)
-> >  {
-> > @@ -1269,6 +1280,7 @@ static struct transport_vtable vtable =3D {
-> >       .get_refs_list  =3D get_refs_list,
-> >       .fetch_refs     =3D fetch_refs,
-> >       .push_refs      =3D push_refs,
-> > +     .fetch_object_info =3D fetch_object_info,
-> >       .connect        =3D connect_helper,
-> >       .disconnect     =3D release_helper
-> >  };
-> > diff --git a/transport-internal.h b/transport-internal.h
-> > index c4ca0b733a..04fa015011 100644
-> > --- a/transport-internal.h
-> > +++ b/transport-internal.h
-> > @@ -59,6 +59,7 @@ struct transport_vtable {
-> >        * use. disconnect() releases these resources.
-> >        **/
-> >       int (*disconnect)(struct transport *connection);
-> > +     int (*fetch_object_info)(struct transport *transport, struct oid_=
-array *oids);
-> >  };
-> >
-> >  #endif
-> > diff --git a/transport.c b/transport.c
-> > index 2a3e324154..0e1bf3c4cd 100644
-> > --- a/transport.c
-> > +++ b/transport.c
-> > @@ -445,6 +445,62 @@ static int fetch_refs_via_pack(struct transport *t=
-ransport,
-> >       return ret;
-> >  }
-> >
-> > +static int fetch_object_info(struct transport *transport, struct oid_a=
-rray *oids)
-> > +{
-> > +     int ret =3D 0;
-> > +     struct git_transport_data *data =3D transport->data;
-> > +     struct object_info_args args;
-> > +     struct packet_reader reader;
-> > +
-> > +     memset(&args, 0, sizeof(args));
-> > +     args.server_options =3D transport->server_options;
-> > +     args.oids =3D oids;
-> > +
-> > +     connect_setup(transport, 0);
-> > +     packet_reader_init(&reader, data->fd[0], NULL, 0,
-> > +                     PACKET_READ_CHOMP_NEWLINE |
-> > +                     PACKET_READ_GENTLE_ON_EOF |
-> > +                     PACKET_READ_DIE_ON_ERR_PACKET);
-> > +     data->version =3D discover_version(&reader);
-> > +
-> > +     if (data->version =3D=3D protocol_unknown_version)
-> > +             BUG("unknown protocol version");
-> > +     else if (data->version <=3D protocol_v1)
-> > +             die_if_server_options(transport);
-> > +
-> > +     switch (data->version) {
-> > +     case protocol_v2:
-> > +             send_object_info_request(data->fd[1], &args);
-> > +             break;
-> > +     case protocol_v1:
-> > +     case protocol_v0:
-> > +             die(_("wrong protocol version. expected v2"));
-> > +     case protocol_unknown_version:
-> > +             BUG("unknown protocol version");
-> > +     }
-> > +
-> > +     if (packet_reader_read(&reader) !=3D PACKET_READ_NORMAL) {
-> > +             die(_("error reading object info header"));
-> > +     }
-> > +     if (strcmp(reader.line, "size")) {
-> > +             die(_("expected 'size', received '%s'"), reader.line);
-> > +     }
-> > +     while (packet_reader_read(&reader) =3D=3D PACKET_READ_NORMAL) {
-> > +             printf("%s\n", reader.line);
-> > +     }
-> > +
-> > +     close(data->fd[0]);
-> > +
-> > +     if (data->fd[1] >=3D 0) {
-> > +             close(data->fd[1]);
-> > +     }
-> > +     if (finish_connect(data->conn))
-> > +             ret =3D -1;
-> > +     data->conn =3D NULL;
-> > +
-> > +     return ret;
-> > +}
-> > +
-> >  static int push_had_errors(struct ref *ref)
-> >  {
-> >       for (; ref; ref =3D ref->next) {
-> > @@ -890,6 +946,7 @@ static struct transport_vtable taken_over_vtable =
-=3D {
-> >       .get_refs_list  =3D get_refs_via_connect,
-> >       .fetch_refs     =3D fetch_refs_via_pack,
-> >       .push_refs      =3D git_transport_push,
-> > +     .fetch_object_info =3D fetch_object_info,
-> >       .disconnect     =3D disconnect_git
-> >  };
-> >
-> > @@ -1043,6 +1100,7 @@ static struct transport_vtable builtin_smart_vtab=
-le =3D {
-> >       .get_refs_list  =3D get_refs_via_connect,
-> >       .fetch_refs     =3D fetch_refs_via_pack,
-> >       .push_refs      =3D git_transport_push,
-> > +     .fetch_object_info =3D fetch_object_info,
-> >       .connect        =3D connect_git,
-> >       .disconnect     =3D disconnect_git
-> >  };
-> > @@ -1420,6 +1478,11 @@ const struct ref *transport_get_remote_refs(stru=
-ct transport *transport,
-> >       return transport->remote_refs;
-> >  }
-> >
-> > +int transport_fetch_object_info(struct transport *transport, struct oi=
-d_array *oids) {
-> > +     transport->vtable->fetch_object_info(transport, oids);
-> > +     return 1;
-> > +}
-> > +
-> >  int transport_fetch_refs(struct transport *transport, struct ref *refs=
-)
-> >  {
-> >       int rc;
-> > diff --git a/transport.h b/transport.h
-> > index 3f16e50c19..1c807591de 100644
-> > --- a/transport.h
-> > +++ b/transport.h
-> > @@ -278,6 +278,7 @@ const struct ref *transport_get_remote_refs(struct =
-transport *transport,
-> >   * This can only be called after fetching the remote refs.
-> >   */
-> >  const struct git_hash_algo *transport_get_hash_algo(struct transport *=
-transport);
-> > +int transport_fetch_object_info(struct transport *transport, struct oi=
-d_array *oids);
-> >  int transport_fetch_refs(struct transport *transport, struct ref *refs=
-);
-> >
-> >  /*
-> >
-> > base-commit: b23dac905bde28da47543484320db16312c87551
-> > --
-> > 2.33.0.664.g0785eb7698
+> @@ -1273,10 +1277,6 @@ static void calculate_changed_submodule_paths(struct repository *r,
+>  	struct strvec argv = STRVEC_INIT;
+>  	struct string_list_item *name;
+>  
+> -	/* No need to check if there are no submodules configured */
+> -	if (!submodule_from_path(r, NULL, NULL))
+> -		return;
+
+I think this is removed because "no submodules configured" here actually
+means "no submodules configured in the index", but submodules may be
+configured in the superproject commits we're fetching.
+
+I wonder if this should be mentioned in the commit message, but I'm OK
+either way.
+
+>  struct submodule_parallel_fetch {
+> -	int count;
+> +	int index_count;
+> +	int changed_count;
+
+Here (and elsewhere) we're checking both the index and the superproject
+commits for .gitmodules. Do we still need to check the index?
+
+> @@ -1495,6 +1499,15 @@ get_fetch_task(struct submodule_parallel_fetch *spf,
+>  		if (!task)
+>  			continue;
+>  
+> +		/*
+> +		 * We might have already considered this submodule
+> +		 * because we saw it when iterating the changed
+> +		 * submodule names.
+> +		 */
+> +		if (string_list_lookup(&spf->seen_submodule_names,
+> +				       task->sub->name))
+> +			continue;
+
+[snip]
+> +		/*
+> +		 * We might have already considered this submodule
+> +		 * because we saw it in the index.
+> +		 */
+> +		if (string_list_lookup(&spf->seen_submodule_names, item.string))
+> +			continue;
+
+Hmm...it's odd that the checks happen in both places, when theoretically
+we would do one after the other, so this check would only need to be in
+one place. Maybe this is because of how we had to implement it (looping
+over everything every time when we get the next fetch task) but if it's
+easy to avoid, that would be great.
+
+> +# Cleans up after tests that checkout branches other than the main ones
+> +# in the tests.
+> +checkout_main_branches() {
+> +	git -C downstream checkout --recurse-submodules super &&
+> +	git -C downstream/submodule checkout --recurse-submodules sub &&
+> +	git -C downstream/submodule/subdir/deepsubmodule checkout --recurse-submodules deep
+> +}
+
+If we need to clean up in this way, I think it's better if we store a
+pristine copy somewhere (e.g. pristine-downstream), delete downstream,
+and copy it over when we need to.
+
+> +# Test that we can fetch submodules in other branches by running fetch
+> +# in a branch that has no submodules.
+> +test_expect_success 'setup downstream branch without submodules' '
+> +	(
+> +		cd downstream &&
+> +		git checkout --recurse-submodules -b no-submodules &&
+> +		rm .gitmodules &&
+> +		git rm submodule &&
+> +		git add .gitmodules &&
+> +		git commit -m "no submodules" &&
+> +		git checkout --recurse-submodules super
+> +	)
+> +'
+
+The tip of the branch indeed doesn't have any submodules, but when
+fetching this branch, we might end up fetching some of the tip's
+ancestors (depending on the repo we're fetching into), which do have
+submodules. If we need a branch without submodules, I think that all
+ancestors should not have submodules too.
+
+That might be an argument for creating our own downstream and upstream
+repos instead of reusing the existing ones.
+
+> +test_expect_success "'--recurse-submodules=on-demand' should fetch submodule commits if the submodule is changed but the index has no submodules" '
+> +	test_when_finished "checkout_main_branches" &&
+> +	git -C downstream fetch --recurse-submodules &&
+> +	# Create new superproject commit with updated submodules
+> +	add_upstream_commit &&
+> +	(
+> +		cd submodule &&
+> +		(
+> +			cd subdir/deepsubmodule &&
+> +			git fetch &&
+
+Hmm...I thought submodule/subdir/deepsubmodule is upstream. Why is it
+fetching?
+
+> +	# Fetch the new superproject commit
+> +	(
+> +		cd downstream &&
+> +		git switch --recurse-submodules no-submodules &&
+> +		git fetch --recurse-submodules=on-demand >../actual.out 2>../actual.err &&
+> +		git checkout --recurse-submodules origin/super 2>../actual-checkout.err
+
+This patch set is about fetching, so the checkout here seems odd. To
+verify that the fetch happened successfully, I think that we should
+obtain the hashes of the commits that we expect to be fetched from
+upstream, and then verify that they are present downstream.
+
+> +	# Assert that we can checkout the superproject commit with --recurse-submodules
+> +	! grep -E "error: Submodule .+ could not be updated" actual-checkout.err
+
+Negative greps are error-prone, since they will also appear to work if
+the message was just misspelled. We should probably check that the
+expected commit is present instead.
+
+> +# Test that we properly fetch the submodules in the index as well as
+> +# submodules in other branches.
+> +test_expect_success 'setup downstream branch with other submodule' '
+> +	mkdir submodule2 &&
+> +	(
+> +		cd submodule2 &&
+> +		git init &&
+> +		echo sub2content >sub2file &&
+> +		git add sub2file &&
+> +		git commit -a -m new &&
+> +		git branch -M sub2
+> +	) &&
+> +	git checkout -b super-sub2-only &&
+> +	git submodule add "$pwd/submodule2" submodule2 &&
+> +	git commit -m "add sub2" &&
+> +	git checkout super &&
+> +	(
+> +		cd downstream &&
+> +		git fetch --recurse-submodules origin &&
+> +		git checkout super-sub2-only &&
+> +		# Explicitly run "git submodule update" because sub2 is new
+> +		# and has not been cloned.
+> +		git submodule update --init &&
+> +		git checkout --recurse-submodules super
+> +	)
+> +'
+
+I couldn't see the submodule in the index to be fetched; maybe it's
+there somewhere but it's not obvious to me. Also, why do we
+need to run "git submodule update"? This patch set concerns itself with
+fetching existing submodules, not cloning new ones.
+
+> +test_expect_success "'--recurse-submodules' should fetch submodule commits in changed submodules and the index" '
+
+Same comment about where in the index is the submodule to be fetched.
