@@ -2,162 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6D0AC433F5
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 14:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91FDDC433F5
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 15:19:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345638AbiBKO4z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 09:56:55 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50856 "EHLO
+        id S1351337AbiBKPTg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 10:19:36 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242929AbiBKO4y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 09:56:54 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8BF8131
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 06:56:51 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id t36so5890948pfg.0
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 06:56:51 -0800 (PST)
+        with ESMTP id S243391AbiBKPTf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 10:19:35 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCB90CE0
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 07:19:33 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id h6so15787023wrb.9
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 07:19:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=coup.net.nz; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zpMAH3uy0TKW8B8F4XA3YHVybRXw8DijFr2Fc238zXg=;
-        b=P5Gqi+DR3iLB3DyeK8QPufd5z//O1MHilq86VpZt4nMfuh6bUNpTYOMj7xtPUgkTFq
-         ilVybm+shW6ukozvCqPBKFLHpj/sMAKs/YivSysahr6mMi6Ate36xd3RgYSuvEdYzExZ
-         UA9ipqbh2my8B0FYPNEZewIt8svvHOmM2BBbQ=
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+mDqTd/LKxaMxp1X3r7mlTN47RB8NaRa/Pze87wiMFo=;
+        b=WGYU+R/MjNk942q8reyS+F460afdtOvppUoL655kuYR9f5hqxuRB9DuiQziJKyzqKu
+         FF7w5XsPuNC/UJfdJr8No8s1UVCB6xr8oaNUqhbfTUVu7rNqlsI+p2FjkkhgoM67UPfb
+         N/4Pj7QUW9ScMt0qVzwI8xFFzsFqO10sO4fO3hOVWtoI8sxh7hUPj3Ynr9Acl5ydsWCf
+         l6ytrzprgJRcGlILxUP+EBQldloIL1RWe7LFtlQiqas9IREWIQhcRYdzWz+12cKUvQvY
+         e9bVU1Anja8huWEHVHr5JdWRHBc3esISJ2wK8W2nkm/NWDkBVnSF4hEUHCwn8O4cCjk1
+         Uebg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zpMAH3uy0TKW8B8F4XA3YHVybRXw8DijFr2Fc238zXg=;
-        b=Aldom+vbIWoNb6KMTFNSllw36VRa/wyoxo/q1rFDsIJnsREg7ORolpYgNGim8tVOug
-         y/p1zyvAll06zSKpAnLqTvprAojMx4Ppo/4He2I2svdK7okIJqMH9ql0s5Wf/IDQnyQO
-         l6uF7ixShEbiiO8l3LxAfiRCm4ufmhfXPdPFv66XktRZaDX5CV5cKp3C6KW3viF5STWk
-         vAFr/8YXvoIfMssOHex9AxcO3n6UoPIp3MyPwsphlMys2JGLiyCovEgYu7GQy7ARrm1H
-         1zUaTHhSOIgDQeSKNQpnP+JAH2yPKxKkOSdHi9EexywFCZV3ukJu9fR3v2R+7dyrUVOx
-         jgUQ==
-X-Gm-Message-State: AOAM531DA2mw+hZYF5pJ1LVqupeEw7eZcbU3c4trg5XV4Ka8krC2PEKj
-        fpPJdoRhacUh69bXwuOFzspXomVg7V0MkrImjluoUyjdiCn6KA==
-X-Google-Smtp-Source: ABdhPJxjF9RKtu0GDvULbaX4ApCA0ogESfTMgd7lSvhHeQTxB1AqKHvwAJH9hsDtsq1G8IrRdfa4xcCIJtRXE9fj1qc=
-X-Received: by 2002:a05:6a00:1345:: with SMTP id k5mr1997748pfu.29.1644591411203;
- Fri, 11 Feb 2022 06:56:51 -0800 (PST)
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=+mDqTd/LKxaMxp1X3r7mlTN47RB8NaRa/Pze87wiMFo=;
+        b=Y+pagsjV2NjgELPBtWpfOH//Frt//cRDSLlEB6DS/hzyl2LNADvl+/4/D045HPof4v
+         mEk3IaHh5Y3rNJ4b3xNa03/LDeRaxXcENM0E0ydoLZG6HIzy7U5OIHGAzI/0g9tmYzBz
+         2J56wneNX0m7Z6vMQNtCU78F/hm7umEMatoLQIBgl1QRUfqzAE29V0OELg8A9DvydUBb
+         kwwrBjz370fgSDDeyI5RezvZ2jSWJA1r1VFXSWfPu4g6I5H4WGbIAwzq03fdvlxYANQ0
+         hf8YBFkb/SP2VlZerQc6NR2jvoe7632LL0eCu5ZETAecCAp9Gb0pUQWUhiRBvb5mdDF/
+         NjqQ==
+X-Gm-Message-State: AOAM530R7WnODz8w9cjmGRBVkZWkUulCDOJwlwWG4D7pg3hX6cx2PmFN
+        4RNr0l8iUMmgKE7vs1wwMVI=
+X-Google-Smtp-Source: ABdhPJyZG5nfuX8YKD6Y3/WXN1mP8RIY4Dj7fX+etjEd8A9tCZ6jPQ1sY5fSRRehqH8V2H47ctIGYQ==
+X-Received: by 2002:a5d:4528:: with SMTP id j8mr1763131wra.544.1644592771772;
+        Fri, 11 Feb 2022 07:19:31 -0800 (PST)
+Received: from [192.168.1.240] ([31.185.185.186])
+        by smtp.gmail.com with ESMTPSA id a18sm18436959wrg.13.2022.02.11.07.19.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Feb 2022 07:19:31 -0800 (PST)
+Message-ID: <9c5b3acb-aabc-3a0d-f4e7-e10cec410dbe@gmail.com>
+Date:   Fri, 11 Feb 2022 15:19:29 +0000
 MIME-Version: 1.0
-References: <a3c1999936d241fdec2a958cd5a4ebc21f4c7aec.1643730593.git.gitgitgadget@gmail.com>
- <20220204180230.2346654-1-jonathantanmy@google.com>
-In-Reply-To: <20220204180230.2346654-1-jonathantanmy@google.com>
-From:   Robert Coup <robert@coup.net.nz>
-Date:   Fri, 11 Feb 2022 14:56:40 +0000
-Message-ID: <CACf-nVePhtm_HAzAKzcap0E8kiyyEJPY_+N+bbPcYPVUkjweFg@mail.gmail.com>
-Subject: Re: [PATCH 2/6] fetch-pack: add partial clone refiltering
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     gitgitgadget@gmail.com, git@vger.kernel.org, stolee@gmail.com,
-        me@ttaylorr.com, christian.couder@gmail.com, johncai86@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/3] xdiff: refactor a function
+Content-Language: en-GB-large
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1140.git.1644404356.gitgitgadget@gmail.com>
+ <8655bb0348d7344ae85c8d521fb1ec7a5f4188d2.1644404356.git.gitgitgadget@gmail.com>
+ <xmqqmtiz9aro.fsf@gitster.g> <xmqq8rujxmkf.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqq8rujxmkf.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Hi Junio
 
-Thanks for taking a look at this.
+On 10/02/2022 06:28, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>>>   int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
+>>>   		xmparam_t const *xmp, mmbuffer_t *result)
+>>>   {
+>>> -	xdchange_t *xscr1, *xscr2;
+>>> -	xdfenv_t xe1, xe2;
+>>> -	int status;
+>>> +	xdchange_t *xscr1 = NULL, *xscr2 = NULL;
+>>> +	xdfenv_t xe1 = { 0 }, xe2 = { 0 };
+>>> +	int status = -1;
+>>>   	xpparam_t const *xpp = &xmp->xpp;
+>>>   
+>>>   	result->ptr = NULL;
+>>>   	result->size = 0;
+>>>   
+>>> -	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0) {
+>>> -		return -1;
+>>> -	}
+>>> -	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0) {
+>>> -		xdl_free_env(&xe1);
+>>> -		return -1;
+>>> -	}
+>>
+>> OK, xdl_do_diff() calls xdl_free_env(xe) before an error return (I
+>> didn't check if patience and histogram also do so correctly), so the
+>> original was not leaking xe1 or xe2.
+> 
+> After I wrote the above, I took a brief look at patience and histogram,
+> and it does not seem to release resources held by "env" when it signals
+> a failure by returning a negative value.  So it seems that the original
+> used with patience or histogram were leaking env when it failed, and
+> this patch plugs that small leak.
+> 
+> If that is indeed the case, please note it in the proposed log
+> message.
 
-On Fri, 4 Feb 2022 at 18:02, Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> The approach that I would have expected is to not call
-> mark_complete_and_common_ref(), filter_refs(), everything_local(), and
-> find_common(), but your approach here is to ensure that
-> mark_complete_and_common_ref() and find_common() do not do anything.
+Oh well spotted, xdl_do_diff() only frees "env" if the myers algorithm 
+has an error, if the patience or histogram algorithms have an error then 
+they do not free "env" and it is not freed by xdl_do_diff(). This patch 
+inadvertently fixes that leak when merging but not when calling 
+xdl_do_diff() to compact conflicts in zealous mode or when doing a plain 
+diff. I think the simplest fix is to have xdl_do_diff() free "env" when 
+there is an error what ever algorithm is used.
 
-v0: find_common() definitely still does something: during refiltering it sk=
-ips
-checking the local object db, but it's still responsible for sending
-the "wants".
+I'll try to put a patch together to fix the other cases. If we fix this 
+leak in xdl_do_diff() then maybe we should go back to returning -1 in 
+the hunk above and explain in the log message why that is ok.
 
-filter_refs() is necessary under v0 & v2 so the remote refs all get marked =
-as
-matched, otherwise we end up erroring after the transfer with
-"error: no such remote ref refs/heads/main" etc.
+Best Wishes
 
-> Comparing the two approaches, the advantage of yours is that we only
-> need to make the change once to support both protocol v0 and v2
-> (although the change looks more substantial than just skipping function
-> calls), but it makes the code more difficult to read in that we now have
-> function calls that do nothing. What do you think about my approach?
+Phillip
 
-My original approach was to leave the negotiator in place, and just conditi=
-onal
-around it in do_fetch_pack_v2 =E2=80=94 this worked ok for protocol v2 but =
-the v0
-implementation didn't work. After that I switched to forcing noop in [1/6]
-which made both implementations match (& tidier imo).
-
-To make the test pass and skip those calls I need a patch like the below
-=E2=80=94 filter_refs() is still required during refiltering for the ref-ma=
-tching. To me
-this looks more complicated, but I'm happy to defer to your thinking.
-
-Thanks,
-
-Rob :)
-
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index dd67044165..870bfba267 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1125,15 +1125,16 @@ static struct ref *do_fetch_pack(struct
-fetch_pack_args *args,
-        negotiator =3D &negotiator_alloc;
-        if (is_refiltering) {
-                fetch_negotiator_init_noop(negotiator);
-+               filter_refs(args, &ref, sought, nr_sought);
-        } else {
-                fetch_negotiator_init(r, negotiator);
--       }
-
--       mark_complete_and_common_ref(negotiator, args, &ref);
--       filter_refs(args, &ref, sought, nr_sought);
--       if (!is_refiltering && everything_local(args, &ref)) {
--               packet_flush(fd[1]);
--               goto all_done;
-+               mark_complete_and_common_ref(negotiator, args, &ref);
-+               filter_refs(args, &ref, sought, nr_sought);
-+               if (everything_local(args, &ref)) {
-+                       packet_flush(fd[1]);
-+                       goto all_done;
-+               }
-        }
-        if (find_common(negotiator, args, fd, &oid, ref) < 0)
-                if (!args->keep_pack)
-@@ -1615,13 +1616,18 @@ static struct ref *do_fetch_pack_v2(struct
-fetch_pack_args *args,
-                        if (args->depth > 0 || args->deepen_since ||
-args->deepen_not)
-                                args->deepen =3D 1;
-
--                       /* Filter 'ref' by 'sought' and those that
-aren't local */
--                       mark_complete_and_common_ref(negotiator, args, &ref=
-);
--                       filter_refs(args, &ref, sought, nr_sought);
--                       if (!args->refilter && everything_local(args, &ref)=
-)
--                               state =3D FETCH_DONE;
--                       else
-+                       if (args->refilter) {
-+                               filter_refs(args, &ref, sought, nr_sought);
-                                state =3D FETCH_SEND_REQUEST;
-+                       } else {
-+                               /* Filter 'ref' by 'sought' and those
-that aren't local */
-+
-mark_complete_and_common_ref(negotiator, args, &ref);
-+                               filter_refs(args, &ref, sought, nr_sought);
-+                               if (everything_local(args, &ref))
-+                                       state =3D FETCH_DONE;
-+                               else
-+                                       state =3D FETCH_SEND_REQUEST;
-+                       }
-
-                        mark_tips(negotiator, args->negotiation_tips);
-                        for_each_cached_alternate(negotiator,
+> Thanks.
