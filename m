@@ -2,102 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 926C6C433F5
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 21:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14CA0C433EF
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 21:31:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240745AbiBKV1O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 16:27:14 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48066 "EHLO
+        id S1353659AbiBKVbN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 16:31:13 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229945AbiBKV1N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 16:27:13 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AA3CC5D
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 13:27:11 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B9622123E46;
-        Fri, 11 Feb 2022 16:27:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Vn1Ah2Vmu0cR
-        PQzPi5sSxaix6NGVhh+rA57C4bLBoFs=; b=Le+iO4hTwd0UKxKgHf8+IAl77fv9
-        ywrfDmPTusQTu6jTys1LESN6+jdlVNCgCH7g5Gi0RFkg50ziuqrWbM7jPRTHiTVr
-        gm7Cr0Vz17RzmXATKZo6PaL+fLP+DRptjASK7eDkhCs4wcvXllF/rtpUWapUAQLx
-        p5m8XBvAY6Nkzj4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A4D3C123E45;
-        Fri, 11 Feb 2022 16:27:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D6E51123E44;
-        Fri, 11 Feb 2022 16:27:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/6] archive: optionally add "virtual" files
-References: <pull.1128.git.1643186507.gitgitgadget@gmail.com>
-        <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com>
-        <49ff3c1f2b32b16df2b4216aa016d715b6de46bc.1644187146.git.gitgitgadget@gmail.com>
-        <d1e333b6-3ec1-8569-6ea9-4abd3dee1947@web.de>
-        <xmqqbkzigspr.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2202081406520.347@tvgsbejvaqbjf.bet>
-        <xmqqbkzhdzib.fsf@gitster.g>
-        <b49d396d-a433-51a4-2d19-55e175af571a@web.de>
-        <xmqqk0e364h7.fsf@gitster.g>
-        <6f3d288a-8c2f-0d63-ea17-f6c038a9fa3e@web.de>
-        <xmqqk0e2frux.fsf@gitster.g>
-        <f83ed995-6dff-bc41-8782-48ac9f1a2651@web.de>
-Date:   Fri, 11 Feb 2022 13:27:06 -0800
-In-Reply-To: <f83ed995-6dff-bc41-8782-48ac9f1a2651@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Fri, 11 Feb 2022 20:16:43 +0100")
-Message-ID: <xmqqk0e19jrp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S1353650AbiBKVbM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 16:31:12 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E944EC57
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 13:31:06 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id co28so18404832edb.1
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 13:31:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version;
+        bh=LdVV64/qrmtpyHUeE1ho3jXTe3AK4Iv0DDXAAS+ZzOU=;
+        b=MmtzCNTjCtUYqB5VhjJOufJVhJz7XiLSNVaIS3tdpN1JyXDR8z8124KPwCeUGW4ue0
+         6Vrre21Nw25iXnKinjD+8LThPE+DQOUlmOaVVyrkXjGVbiUH6og5N/Vjd1GXYYVLf4wx
+         L6ZB8+wEkRk4/c18sl6fPs0Y3UCGVR1Te+I1svWkHl3tMIpn4V9GrOzVUy8H7sPAtmn9
+         kXbZzhyZFj2S+dzvyG45XNpiQBhcZlYfa8FBvaGcdYdlqFTMyHBKPJM2pAgLgKWCBR0B
+         mfpVAJYUIFBtdLkFxVmBnFlfayoEs0WXHMcp2YAHzlyvrDPTucL4+UHYAif+lAy2Vewc
+         3/Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version;
+        bh=LdVV64/qrmtpyHUeE1ho3jXTe3AK4Iv0DDXAAS+ZzOU=;
+        b=aU7PJED3s+gu6yTNpsivyjInCqCtqbdhphFFAkkNqEd2EPalhRCG7yv37tJvhhO0JJ
+         mQYb/Kf7gp6duAiniR06fnPgLyH7kQH7op0CXInp8riT6OmoOhvNBa2rldQWuqFENLUW
+         NinPlpG2pPA8YjuKvqqoLL6gwvKS2t8nFQFkaKl7rBRS4BwaBw59cxhuR8vzw9xAr8sP
+         IEbxwMTQfgImlUGtpu+aB6iJ9m2Cu4bOmVltdtnZmWHVjb5yBWSdX85eYB1rwcIxx8mI
+         Yq+hijDfVyOcAu6yWAu48GbXU+h7olBxxwJ4y1ee8sKYtaGgZwGDlN9vCgamJXlj7EVP
+         qUxg==
+X-Gm-Message-State: AOAM5300CAtMNU/wAjOpa3iFE56P3NgCKspTnhsBgz6PkG5WczxzNQJx
+        KMOXqL+8aYC5Q6mGyY/wtFU=
+X-Google-Smtp-Source: ABdhPJyqSIuJSGl4SSteqOYHWaJCueldbo2kV3Uu+T27YlJuEbGbCjMpSt6K/rSn05DuUq+uQ1136A==
+X-Received: by 2002:a05:6402:5216:: with SMTP id s22mr3904038edd.359.1644615064732;
+        Fri, 11 Feb 2022 13:31:04 -0800 (PST)
+Received: from [10.37.129.2] (guest-pat-13-128.njit.edu. [128.235.13.128])
+        by smtp.gmail.com with ESMTPSA id m23sm10078221eda.66.2022.02.11.13.31.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 Feb 2022 13:31:04 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, avarab@gmail.com,
+        e@80x24.org, bagasdotme@gmail.com,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v4 3/3] cat-file: add --batch-command mode
+Date:   Fri, 11 Feb 2022 16:30:58 -0500
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <06C925DC-DAAC-4BA6-8CFA-E4ACF2039BB6@gmail.com>
+In-Reply-To: <xmqqpmnt9ngx.fsf@gitster.g>
+References: <pull.1212.v3.git.git.1644353884.gitgitgadget@gmail.com>
+ <pull.1212.v4.git.git.1644465706.gitgitgadget@gmail.com>
+ <6c51324a6623b62c385ec707a773c21375596584.1644465706.git.gitgitgadget@gmail.com>
+ <0b40d1bb-4db1-002f-d665-f51db6c2882c@gmail.com> <xmqq5ypmwt1m.fsf@gitster.g>
+ <9B08BF05-1C35-4C4F-9C76-CC34A8E7D0F0@gmail.com> <xmqqpmnt9ngx.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5D998718-8B81-11EC-B4D4-5E84C8D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Hi Junio
 
->> Or if people do not _exclude_ tracked files from the archive, then
->> the verifier who has a tarball and a Git tree object can consult the
->> tree object to see which ones are added untracked cruft.
+On 11 Feb 2022, at 15:07, Junio C Hamano wrote:
+
+> John Cai <johncai86@gmail.com> writes:
 >
-> True, but if you have the tree objects then you probably also have the
-> blobs and don't need the archive?  Or is this some kind of sparse
-> checkout scenario?
+>> Let me see if I understand you. What I'm hearing is that it's hard to test a git
+>> processes (A) that read/write from/to pipes without knowing exactly how (A) will
+>> behave. By necessity, the test logic will have embedded some logic in it that
+>> assumes certain behavior from (A), which might or might not be the case.
+>>
+>> This can lead to a hanging test if, say, it is waiting around for (A) to output
+>> data when due to a bug in the code, it never does. Did I get that right?
+>
+> Exactly.  And we've seen such tests that are designed to hang, when
+> they detect bugs, which made us very unhappy and we fixed them not
+> to hang but reliably fail.  Otherwise, such tests weren't very
+> useful in unattended CI environment, which we do not want to wait
+> for 3 hours to timeout and leave later steps in the same script
+> untested.
 
-My phrasing was too loose.  This is a "how to verify a distro
-tarball" (without having a copy of the project repository, but with
-some common tools like "git") scenario.
+That makes sense. Do you have an example of one of these tests? I'd like to see
+how it was converted from a test that hung to a test that failed reliably. As
+I'm thinking about converting run_buffer_test_flush() and run_buffer_test_no_flush()
+into tests that fail rather than hang, I'm having a hard time avoiding the
+pattern of A writes to B and waits for B to respond.
 
-The verifier has a tarball.  In addition, the verifier knows the
-object name of the Git tree object the tarball was taken from, and
-somehow trusts that the object name is genuine.  We can do either
-"untar + git-add . && git write-tree" or its equivalent to see how
-the contents hashes to the expected tree (or not).
-
-How the verifier trusts the object name is out of scope (it may come
-from a copy of a signed tag object and a copy of the commit object
-that the tag points at and the contents of signed tag object, with
-its known format, would allow you to write a stand alone tool to
-verify the PGP signature).
-
-Line-end normalization and smudge filter rules may get in the way,
-if we truly did "untar" to the filesystem, but I thought "git
-archive" didn't do smudge conversion and core.crlf handling when
-creating the archive?
-
-
+>
+> Thanks.
