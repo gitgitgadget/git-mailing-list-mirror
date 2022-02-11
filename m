@@ -2,80 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C65DC433EF
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C70C6C433EF
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347060AbiBKUHS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 15:07:18 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51800 "EHLO
+        id S239618AbiBKUIm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 15:08:42 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243388AbiBKUHR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 15:07:17 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BD12CFE
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:07:15 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0635A18785D;
-        Fri, 11 Feb 2022 15:07:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mAdl1zldbnGFO5OHXDbkZyxkUtUU9LdnCSZxio
-        5qwSE=; b=kUfivKSGN3Bwxbsw/0mYlP3hXQoP4WTZA3abWCTgbS5rMHswhbJeJU
-        UaoZwoJdscenrx/6h8PrgkWwvoAiD2UIlgNekOdoHwjDpBLOZCELjXRDGt445Ouq
-        iDDvl6JGjNSCHWs7xNAoePK6/8nCn/n9HM63N8Ei/kaAQgvk6o6/M=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id F25E118785C;
-        Fri, 11 Feb 2022 15:07:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ACD2618785B;
-        Fri, 11 Feb 2022 15:07:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     John Cai <johncai86@gmail.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, avarab@gmail.com,
-        e@80x24.org, bagasdotme@gmail.com,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v4 3/3] cat-file: add --batch-command mode
-References: <pull.1212.v3.git.git.1644353884.gitgitgadget@gmail.com>
-        <pull.1212.v4.git.git.1644465706.gitgitgadget@gmail.com>
-        <6c51324a6623b62c385ec707a773c21375596584.1644465706.git.gitgitgadget@gmail.com>
-        <0b40d1bb-4db1-002f-d665-f51db6c2882c@gmail.com>
-        <xmqq5ypmwt1m.fsf@gitster.g>
-        <9B08BF05-1C35-4C4F-9C76-CC34A8E7D0F0@gmail.com>
-Date:   Fri, 11 Feb 2022 12:07:10 -0800
-In-Reply-To: <9B08BF05-1C35-4C4F-9C76-CC34A8E7D0F0@gmail.com> (John Cai's
-        message of "Fri, 11 Feb 2022 12:45:51 -0500")
-Message-ID: <xmqqpmnt9ngx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S236919AbiBKUIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 15:08:40 -0500
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D437C55
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:08:39 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id c15so13927989ljf.11
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:08:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fUuxiwj5L5hH1+DHPt/m3ww+ohpSztkNazFO84YSHMU=;
+        b=Op71jzBCdGlZAWMejP7TPGBwjtvCPvLwdZGivWHbVwIH0EPctC0ZoVPt+dASWyRt51
+         C5Im8DwNXvb34Mf3Eu3SJqrgs4DEbR6KUmoY3dUhZBTf+EfHUYV5HrDdltq4/SfsDlcR
+         IMrOXrcQCNL4I9omwiQ+D/v0xRARSJJYpz1hkpmDtAnw4PZOBsfP44DARmME/424BkY0
+         jLx1PdACeO2y4e26T4F6gjhiV6/Tkzi7AkjM6jgUkCaFhw2KJW6lYqNvLXq9qha5QsPk
+         UIa0kbdn2czhY40pJ3iGvK6bHPTyXwWHchShTeI4yoN4JnmUlSSOmTiqglvsWYzeAudL
+         ASHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fUuxiwj5L5hH1+DHPt/m3ww+ohpSztkNazFO84YSHMU=;
+        b=o9MZ/WxDI4F27ATHWz8uZt/w5Prk6XXGBMaJXVbEahw0CiifHE1PZp3Li0wLyGVPXb
+         Fgp7DWnj3UZ3Ysa9Ehywlo8zIvoaLNkBJvGueqjvUZlWXCA2N7w6xkcgKdOYx2X/HaTZ
+         2roxafHoaphTfG+wuLT0NE/a7MUMBxM9lrRDZhLM6fxisl2l8wgyr4Br9dbq4Zegii/U
+         oz3sFbOb8jQLkBVWu6ig3pAsyuH/g+iZL277eXv1rUby1gOGPFLncsBDeuHcfeJG/Vak
+         60t6EOn9Rv059OvIo4COQScqLg5wNrY8UOuLhScwSJOkpjdcvpRR7fJowCMfSE0Ruhga
+         Dg/A==
+X-Gm-Message-State: AOAM5325O6YhFPfBpzs6/wiXGABB70f/TnGvsDhF45Wtc/iA7u6x3Xs7
+        j8tYJbpY0GRo898FEjv5xJPYPp0Kfx4Hz/o206nkaCyW
+X-Google-Smtp-Source: ABdhPJxv0JCaFGMCIrInNvm0+MWj/yveGXPs07WBKj/H1MQ0eT65x3oXGS/s6skCP5Y/Mnexlu1UeoKjB9iJ/kBAXPA=
+X-Received: by 2002:a2e:a307:: with SMTP id l7mr1895191lje.363.1644610117337;
+ Fri, 11 Feb 2022 12:08:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 32DB5962-8B76-11EC-BA6C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+References: <20220211163627.598166-1-alexhenrie24@gmail.com>
+ <20220211163627.598166-4-alexhenrie24@gmail.com> <xmqq1r09clxl.fsf@gitster.g>
+ <CAMMLpeTBstt8qo2q6r=YCEi-h-G-EkjY=d7kHKeepzTvz1gmJg@mail.gmail.com> <xmqq5yplb46m.fsf@gitster.g>
+In-Reply-To: <xmqq5yplb46m.fsf@gitster.g>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Fri, 11 Feb 2022 13:08:26 -0700
+Message-ID: <CAMMLpeTWvN45jTmoFHBS2+E+wEuBKTAnxXh3+RWzJc0O2rYy2A@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] gitk: pass --no-graph to `git log`
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>, paulus@ozlabs.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-John Cai <johncai86@gmail.com> writes:
-
-> Let me see if I understand you. What I'm hearing is that it's hard to test a git
-> processes (A) that read/write from/to pipes without knowing exactly how (A) will
-> behave. By necessity, the test logic will have embedded some logic in it that
-> assumes certain behavior from (A), which might or might not be the case.
+On Fri, Feb 11, 2022 at 12:20 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> This can lead to a hanging test if, say, it is waiting around for (A) to output
-> data when due to a bug in the code, it never does. Did I get that right?
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+> > What if we make log.graph=true also require feature.experimental=true?
+>
+> No.  feature.experimental is to give people an opt-in opportunity
+> for features that we are considering to enable by default.
+>
+> > The log.graph option would really be a useful feature for people who
+> > use Git exclusively from the CLI without any external tools. It seems
+> > that the main challenge is how to give others time to adjust.
+>
+> Those who want to see log by default must need to twaek their
+> configuration.  Instead of doing "git config log.graph true" and
+> breaking tools, they can do "git config alias.mylog 'log --graph'"
+> with the same ease, without breaking anything.
+>
+> So...
 
-Exactly.  And we've seen such tests that are designed to hang, when
-they detect bugs, which made us very unhappy and we fixed them not
-to hang but reliably fail.  Otherwise, such tests weren't very
-useful in unattended CI environment, which we do not want to wait
-for 3 hours to timeout and leave later steps in the same script
-untested.
+Yeah, that's not a bad solution. I actually have `git graph` aliased to
+`git log --graph --abbrev-commit --pretty=oneline` for this purpose.
+If a lot of people are doing that, maybe a new command should be added
+to Git itself. It seems like there's not much demand for that at the
+moment though.
 
-Thanks.
+-Alex
