@@ -2,122 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80E10C433EF
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 16:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E04C7C433F5
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 16:53:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351859AbiBKQvw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 11:51:52 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50952 "EHLO
+        id S1351723AbiBKQxm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 11:53:42 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351856AbiBKQvp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 11:51:45 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F7DDAA
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 08:51:25 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37054111D59;
-        Fri, 11 Feb 2022 11:51:25 -0500 (EST)
+        with ESMTP id S1343720AbiBKQxl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 11:53:41 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9D6C21F
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 08:53:40 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4B569186AB8;
+        Fri, 11 Feb 2022 11:53:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=FpDJS/9Des7M
-        m74WiaQmVkncFHMXuTxrE5LPw0jbgUE=; b=kJy2dLbcGGybq7yMYb2nWliGU90d
-        zyKRHe42vkvNMCaySLydGzJnyf2L1yWjB9auSMrFMkntnj1keOOodRIJCF8kUvJk
-        qZ9eipJSQDzaAeZzWf5R66NIRqEXxSttB7SmSzpZVlVbINDzO/0iOjEs1bpZuVlx
-        9QZQQPVduGLgy5s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2CCC8111D58;
-        Fri, 11 Feb 2022 11:51:25 -0500 (EST)
+        :content-type; s=sasl; bh=jPjMLsVTlJMzhLSH532sgMnMmyfSoyPOjmz7k6
+        DS90E=; b=V8KgJP9xLjql8c0hyQAOTsUwxI/0O2SOmJAPQZlO1nRWhLIg4lOaCJ
+        K1Ka0pi/rBn7Nvj1TblOzlb4Q8vFX5y4I6c2UKIHo+6i66yAwNTbELYbB1/T6YjW
+        azhCfRhZnDvr5m2bJqvIfNIzUg/S1985/YfpBwPqEv4b1LMDgQBW8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 31BE1186AB7;
+        Fri, 11 Feb 2022 11:53:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.185.212.55])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7DC24111D54;
-        Fri, 11 Feb 2022 11:51:24 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 833CE186AB6;
+        Fri, 11 Feb 2022 11:53:37 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Subject: Re: ds/sparse-checkout-requires-per-worktree-config (was Re: What's
- cooking in git.git (Feb 2022, #02; Wed, 9))
-References: <xmqqa6ez60l8.fsf@gitster.g>
-        <f36712f5-28bd-42d7-3ea1-f4afa328be07@gmail.com>
-Date:   Fri, 11 Feb 2022 08:51:23 -0800
-In-Reply-To: <f36712f5-28bd-42d7-3ea1-f4afa328be07@gmail.com> (Derrick
-        Stolee's message of "Fri, 11 Feb 2022 08:40:05 -0500")
-Message-ID: <xmqqfsope48k.fsf@gitster.g>
+To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [GSoC] [PATCH 1/1] t0001: replace "test [-d|-f]" with
+ test_path_is_* functions
+References: <20220121102109.433457-1-shaoxuan.yuan02@gmail.com>
+        <20220121102109.433457-2-shaoxuan.yuan02@gmail.com>
+        <Yer/oEZK6TBFSsde@nand.local> <xmqqr190g6gd.fsf@gitster.g>
+        <CAJyCBORHE2+UMKYFfKArgK68fAT=pKVabVmfifzg--rHAFkaqg@mail.gmail.com>
+        <xmqqo83fw5yc.fsf@gitster.g>
+        <CAJyCBOTBcvgAcSaQ4xs-V=M-im_Umf3ymsWzCAGEmrj6b38pEA@mail.gmail.com>
+        <xmqqv8xmvdoa.fsf@gitster.g>
+        <CAJyCBOR7KbRxuXJUJ2TrffAjj=rwB3H-Ys9tVUuWGjUKf_LHsw@mail.gmail.com>
+Date:   Fri, 11 Feb 2022 08:53:36 -0800
+In-Reply-To: <CAJyCBOR7KbRxuXJUJ2TrffAjj=rwB3H-Ys9tVUuWGjUKf_LHsw@mail.gmail.com>
+        (Shaoxuan Yuan's message of "Fri, 11 Feb 2022 17:56:21 +0800")
+Message-ID: <xmqqbkzde44v.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D8FBE918-8B5A-11EC-91F3-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2844D782-8B5B-11EC-854C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Shaoxuan Yuan <shaoxuan.yuan02@gmail.com> writes:
 
-> On 2/9/2022 7:12 PM, Junio C Hamano wrote:
+> On Fri, Feb 11, 2022 at 1:23 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> FWIW, I have the posted patch plus the following SQUASH??? fix-up
 >
->> * ds/sparse-checkout-requires-per-worktree-config (2022-02-08) 6 commi=
-ts
->> ...
->>  Will merge to 'next'?
->>  cf. <20220204081336.3194538-1-newren@gmail.com>
->>  cf. <CAPig+cRrRxuTeByhKkLs_KDaWY8-r4+jrwT83A-r+sBQsmebMw@mail.gmail.c=
-om>
->>  source: <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com>
->
-> You and I have had a good discussion about the latest version. I
-> think we've mostly landed on finding ways to improve documentation
-> in other ways (including the patch you submitted), but here are
-> the things that I see as still outstanding:
+> I'm not so sure what does "SQUASH???" mean especially the three
+> question marks, i.e. is it just an incidental text or a commit message
+> convention?
+> Is it for the convenience of grepping through the
+> "git log" outputs (cause I found the commit 50d631c71c right away by
+> grepping through the "git log" output)?
 
-Thanks for a clearly written summary.  Very much appreciated.
+It is primarily to remind me not to merge the branch down to 'next'
+without dealing with it.
 
-With the maintainer hat on, I agree that all are good points.  From
-a reviewer's point of view, I do not care too deeply about 1 or 2
-myself though.
+> Yeah, I think wrapping it around is a good idea :-)
 
-> 0. Eric mentioned earlier that he was interested in looking again,
->    but has not signaled that his review is complete.
->
-> 1. You and Eric disagree about the use of "worktree" and "working
->    tree" in the documentation. I could revert the change to these
->    docs from v5 to v6.
->
-> 2. You mention that the changes in config.c could be split into
->    two (first, create repo_config_set_multivar_gently() and then
->    create repo_config_set_worktree_gently()).
->
-> 3. Jean-No=C3=ABl noticed an improvement to reduce work on translators.
->    The diff below could be squashed into patch 5 OR I could submit
->    it as a forward fix.
->
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index c6eb636329a..7c272078dc9 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -384,11 +384,13 @@ static int add_worktree(const char *path, const c=
-har *refname,
->  			    bare &&
->  			    git_config_set_multivar_in_file_gently(
->  					to_file, "core.bare", NULL, "true", 0))
-> -				error(_("failed to unset 'core.bare' in '%s'"), to_file);
-> +				error(_("failed to unset '%s' in '%s'"),
-> +				      "core.bare", to_file);
->  			if (!git_configset_get_value(&cs, "core.worktree", &core_worktree) =
-&&
->  			    git_config_set_in_file_gently(to_file,
->  							  "core.worktree", NULL))
-> -				error(_("failed to unset 'core.worktree' in '%s'"), to_file);
-> +				error(_("failed to unset '%s' in '%s'"),
-> +				      "core.worktree", to_file);
-> =20
->  			git_configset_clear(&cs);
->  		}
->
-> Thanks,
-> -Stolee
+Then will squash it in and merge it down.
+
+Thanks.
