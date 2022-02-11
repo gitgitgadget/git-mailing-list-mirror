@@ -2,67 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4950C433F5
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 03:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 820AEC433EF
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 03:18:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231373AbiBKDNu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 22:13:50 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43282 "EHLO
+        id S232438AbiBKDSE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Feb 2022 22:18:04 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbiBKDNt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 22:13:49 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3D971105
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 19:13:48 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id f24-20020aa782d8000000b004bc00caa4c0so5663963pfn.3
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 19:13:48 -0800 (PST)
+        with ESMTP id S229534AbiBKDSD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Feb 2022 22:18:03 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 653061105
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 19:18:03 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id b5-20020a1709027e0500b0014ca986e6d8so2633025plm.13
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 19:18:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=0X/3mFuVgfrU3uhTnCNOXZ8LTT7Rd9/TqANVo94XUvg=;
-        b=Bl04dXz+XELx8z3gIFq/zJqbOnS2zY9M3SKjNidvqGr7/wkPVUg7jajmEDqFTzMaJO
-         ezkV9BsJjp7CfXpxu44K7kAIKHrMuViutclQ4iPOpV0njuj1LPOqE9MnSslO0DFK5p9c
-         sPnuAxB/wCKXKcLibsKcY/ZQyd/cMN8P0VvSwtoJfyzZB/NuEt2/RagYKAXIvUWbkJzg
-         ordyDqnvdhmd+cDGt3/Cc9Cq78bJhGNgSsMCf63Hm+zuVUpBcDNSXsi+6k5YmcRor9+d
-         ssriCm0Lfnk/hXsbFRl08ar245T0Inr1KdTXxURy2uuuRmoGTb4HEM/+cQfPTFdSu8Yi
-         9iFA==
+        bh=Ij8cqt9xNHy6UBZ4rsoBD4/t5Qjv8QKEEkeLavYkqqA=;
+        b=Fm0ANakfU5yqt87SO/im3LtuwIEbah/bwEaEmj+nDJKpSQuCYG+V7nZ35gDtgHpRqv
+         kIEPHmi6yKeq+GHRCNk7xnUYb01JKV3UVIwaujGwxBSQ5hDxY0HNz7hzTdO7lh+4zDtY
+         M3sPyPnhU+31GDRoOtvdjz09DGBUUmSpJi1apf6R9fHRKrMohfg3N4Onz+yHda+vz9Ug
+         AUOuPRlb9vTrNAHWW0sZsuY77dhcwRTFvZqFaqWZ9YV3xZ2CTli6iD7XFAtLFPoEuC8A
+         lfuO2Lf84M92Ibc+F9jIVFjVqPPbC/fyq9bBi0a3SUA1jmNFxHd/eRFyRasyY6u0utg/
+         k9Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=0X/3mFuVgfrU3uhTnCNOXZ8LTT7Rd9/TqANVo94XUvg=;
-        b=TymvGZezPGazCQ5WbMVJ0kz8uGe2id0yqCz31GaD9K9oSYODAXQ3que/Quy3JRQ/z9
-         04R+Cz4qx7KdD3jEk1Dcy8o8ptDoplEqtKvwQQlkdgrQqsZaomVtDZwZS19ilvcnhTKH
-         CxG95iOagBHfCEIrd+vqZ51E6A6+Ahp752Km8KWsBdOVfAdHv49ZTL/TZ3RCfAp7aBtx
-         aSSnrucaRUhvf8DqAcmhi5wKziOj34reKloJe/SXlREkCpsEDq2CgYFXj0cUXDLKtHif
-         YjiMwIQQPNEZp8WCb8N46yGyUgfWDwPco7wOWfuS1xSYGo4fnMIgjePlp+vly9WQbpQ6
-         Msdw==
-X-Gm-Message-State: AOAM530D0hsw1aIcrwJ/wcqHala6w6V8I6TUGw54328fCdiIZZKu3ZW8
-        N6yhMiVnBYpzo8cLCHtYW/J4hV576U8bHQ==
-X-Google-Smtp-Source: ABdhPJzhG0pQBBsHJhLldGzxW/9w+X6R5DK6u/tu9J/i+HNl3CsrEtyUVvmvBZj+4qw0omfEV8bMWVe+W5AsqA==
+        bh=Ij8cqt9xNHy6UBZ4rsoBD4/t5Qjv8QKEEkeLavYkqqA=;
+        b=PhdZRwvJBPr+pBGcYEwkrHCwHQDBOVutSaMl38mlLao+zWxZIHPmioGcvHBMEGxCy7
+         fyfwvfAKMwDM6g/XTmJJaT1rd5hZmy+8lZGYFJs0zc7bRLUnhDFeqcNIwAH2zTLV1QTI
+         ONN+K0Rc0IBfW8DzdrTRCdcuPNlqteWeyi2Lp8ZRq+VcwfASDBmLHEePMXaOwhRSUMv3
+         kZ2/mEeTYjnSXwjbN83e4/GLlHYpAmTb8FgbzjuTVlw5LAFMLYcxFDpQDpBD7Cf1jrq9
+         sbXV7RtVr1L62EgUjSTHOItfNRCYB3tlWOgxpnY1KkCe7VnFzlmR1x/TADdTRV8cBOho
+         tZtQ==
+X-Gm-Message-State: AOAM531yNGAUlMBdNCIoHJt6E6D6+AsOXpfDJuP1aufXdtRxtA8Df+yo
+        9lqHE6GSmZrLTpn3tJ0/z/YRyBKa0WQl+g==
+X-Google-Smtp-Source: ABdhPJwzuY+awy2e7E72z0rEIUP4PiM1SHhG6eK8Xxj/ezdSJ//kAcFjMAr4o5TaEcy+Cl7gndq/3j/iHCWi2Q==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a63:7882:: with SMTP id
- t124mr8607565pgc.406.1644549228361; Thu, 10 Feb 2022 19:13:48 -0800 (PST)
-Date:   Fri, 11 Feb 2022 11:13:32 +0800
-In-Reply-To: <xmqqpmnue3ig.fsf@gitster.g>
-Message-Id: <kl6lr18adrj7.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:21c9:: with SMTP id
+ t9mr10559850pfj.48.1644549482743; Thu, 10 Feb 2022 19:18:02 -0800 (PST)
+Date:   Fri, 11 Feb 2022 11:18:00 +0800
+In-Reply-To: <20220210230422.690368-1-jonathantanmy@google.com>
+Message-Id: <kl6lo83edrbr.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
-References: <20220210044152.78352-1-chooglen@google.com> <20220210044152.78352-9-chooglen@google.com>
- <xmqqpmnue3ig.fsf@gitster.g>
+References: <20220210230422.690368-1-jonathantanmy@google.com>
 Subject: Re: [PATCH 8/8] submodule: fix bug and remove add_submodule_odb()
 From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
 > Glen Choo <chooglen@google.com> writes:
->
 >> add_submodule_odb() is a hack - it adds a submodule's odb as an
 >> alternate, allowing the submodule's objects to be read via
 >> the_repository. Its last caller is submodule_has_commits(), which calls
@@ -70,14 +68,57 @@ Junio C Hamano <gitster@pobox.com> writes:
 >> necessary because check_has_commit() used the_repository's odb, but this
 >> is longer true as of 13a2f620b2 (submodule: pass repo to
 >> check_has_commit(), 2021-10-08).
+>> 
+>> Removing add_submodule_odb() reveals a bug in check_has_commit(), where
+>> check_has_commit() will segfault if the submodule is missing (e.g. the
+>> user has not init-ed the submodule). This happens because the
+>> submodule's struct repository cannot be initialized, but
+>> check_has_commit() tries to cleanup the uninitialized struct anyway.
+>> This was masked by add_submodule_odb(), because add_submodule_odb()
+>> fails when the submodule is missing, causing the caller to return early
+>> and avoid calling check_has_commit().
+>> 
+>> Fix the bug and remove the call to add_submodule_odb(). Since
+>> add_submodule_odb() has no more callers, remove it too.
+>> 
+>> Note that submodule odbs can still by added as alternates via
+>> add_submodule_odb_by_path().
+>> 
+>> Signed-off-by: Glen Choo <chooglen@google.com>
+>> ---
+>> This bug only exists because we can't call repo_clear() twice on the
+>> same struct repository. So instead of just fixing this site, an
+>> alternative (and maybe better) fix would be to fix repo_clear(). If
+>> others think that's a good idea, I'll do that instead.
 >
-> Yes!  I wonder if we can do this much earlier in the series (or even
-> an independent clean-up that the rest of the series depends on) and
-> have it graduate earlier?
+> Reading the first paragraph of the commit message, I'm given the
+> impression that this is the last site in which we attempt to add a
+> submodule ODB as an alternate, but that is not true. This is indeed the
+> last usage of add_submodule_odb(), but add_submodule_odb_by_path() still
+> exists.
+>
+> I think the primary point of this commit is to fix a latent bug in
+> check_has_commit(), and add_submodule_odb()'s role here is just hiding
+> it. Its hacky behavior does not play a role.
+>
+> I would write the commit message like this:
+>
+>   submodule: fix latent check_has_commit() bug
+>
+>   check_has_commit() will attempt to clear a non-initialized struct
+>   repository if initialization fails. This bug is masked by its only
+>   caller, submodule_has_commits(), first calling add_submodule_odb().
+>   The latter fails if the repo does not exist, making
+>   submodule_has_commits() exit early and not invoke check_has_commit()
+>   in a situation in which initialization would fail.
+>
+>   Fix this bug, and because calling add_submodule_odb() is no longer
+>   necessary as of 13a2f620b2 (submodule: pass repo to
+>   check_has_commit(), 2021-10-08), remove that call too.
+>
+>   This is the last caller of add_submodule_odb(), so remove that
+>   function. (Adding submodule ODBs as alternates is still present in the
+>   form of add_submodule_odb_by_path().)
 
-This patch is totally conflict-free and dependency-free with regard to
-the rest of the series, so there's almost no overhead to sending this as
-an independent clean up.
-
-And since you seem interested in seeing this graduate early, I'll send
-it out independently :)
+Hm.. that is a good point, the commit message seems to promise more than
+what it actually delivers. I'll take your suggestion, thanks!
