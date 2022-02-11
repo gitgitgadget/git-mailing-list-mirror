@@ -2,146 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E12C6C433F5
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14566C433F5
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:56:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235408AbiBKUiY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 15:38:24 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38478 "EHLO
+        id S1353467AbiBKU40 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 15:56:26 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234402AbiBKUiT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 15:38:19 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F9ABD47
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:38:15 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id k13so18739416lfg.9
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:38:15 -0800 (PST)
+        with ESMTP id S232904AbiBKU4Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 15:56:25 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37B3CBA4
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:23 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id s10so3656846wrb.1
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PnO9+CWmfbiO4HbpQ7AIR+960TmlGSv3gGqx8Y0ozuI=;
-        b=PBtndQrYMCYU77cY7EccyuV6KqTKeJ63FUrC5N7Xva2C7X99WWBhgbygtyS0bKHOW5
-         HoiMpxgaGbxxAXErT0rWJh7ht869b7aw98yZC8roiGYJUPM9D6x2RGa9WVLzbXzMqFa8
-         r+d5YorkeF2p8Y5vPgpn4MxPFVfYWhV2dBGAZTLgX7hZjNqVWOylPUikhnhYX4MrLX02
-         zpTjpWWhmC0GOQCNbhXBoQ4ki8edMQqgs4Gpnx7XUPdZ0kj6BOiWT/4/gmCRSTS9no9r
-         tnNcgRn2sUOuk1lrVY5N0pTAQ+N6MfbpQyPo0gKb+ZD1UlBFeV3SlMAU08O9ACDgHdqm
-         G0eg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=RRpz92VGuvw0YR2fhpzZ+/QaEGfxZA1ikNoqwNpxXPw=;
+        b=HaByYoJL9fTSzHxbHXyTXPmRw5r6/qrOMTcl6zyZsDvroAoI3ErLurvjSQMJ0y7Mn9
+         D4cpCjKZeZ58Or+tT30/PHSSmILh/DCGmFiJY28RWj3mNSpuGX4C8cHZ+KMAvO2NaxkK
+         9VJJ5thlafDuD/l94nahvEBnVHPf+05Z8+8BqaT1psAZ+2X0AyfoM9AP5kkbePMWt/cc
+         YEk8MloEwF0dfcokqho3C0hMav31jsGA/2Azxkfq939oPWY5ifpzCe48Jkdxph+sKBvB
+         OdkxXlLt1ioJQOCbscd4vbQTujUT7JfR4LLIBnU78Btlb2Z/pMM3RF3nxrLVDW7a99gO
+         105Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PnO9+CWmfbiO4HbpQ7AIR+960TmlGSv3gGqx8Y0ozuI=;
-        b=Aaxym4N0Jf3Vs0xYXWN6qn0/MkD/i0PO1k3YSg9d507xGeQJA4AyW5f3CwPs6Wf0iy
-         A3T8ocTviryDYabCVT7w3td7xbOLIyUf5yp2bDcydwt8xfPfyf431hWLE/kW3qfRRiJr
-         XlYNtUqfM9rRV+MjEd4IgyFxfvOtRkUH+Hh7RkmSkyMZYnEHteW3j6hElRl/v7q/0DSi
-         WCdO3Z9vH4YcdoTfdzsZ0kk6sSQTuqGyf74WObLBL26AHxRYx26OXZYRzWl/4MQDGbqZ
-         OjAsBCkAcFFH/HTsupJueG3vP3QkqM//Glh85bT+iT4/lkz5TU3F+oeC7SoxzSXqSFq5
-         bidg==
-X-Gm-Message-State: AOAM532scO2XCkukzUBYIYRLP+m9CEVezTIgg3oDpuZ6Y5I8Cr3048A4
-        j+GUe4P2vVypqB/TQddt0TVM5c5CXf6CeSGgGR4=
-X-Google-Smtp-Source: ABdhPJxHVNaDzHmjFuye8Yvh2pcumq+Mij5FtN66k54LkTPO6nEMSNo5oOm5WB+moCrceIcXR/vAX+zy6wXpifEQVU4=
-X-Received: by 2002:a19:7518:: with SMTP id y24mr2265186lfe.557.1644611893464;
- Fri, 11 Feb 2022 12:38:13 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=RRpz92VGuvw0YR2fhpzZ+/QaEGfxZA1ikNoqwNpxXPw=;
+        b=uO3tksNq5fw56Uj8Gcnf854PrkISC1fE50AVF26QyZqAfqeNZOU+anEEPmLtEea6F9
+         gML1uhTM0An7ZuOuwsMrY0YRoq5jrPymBjxJ17FwUzZS3YNsLY2oNeE9vYEtTe3wKtuL
+         opdh1TYmaHvcGeXDSzADW2juDto7UHY7NYK1X79M9VierH6rEWNbSSbB+pyPos3wx9wR
+         7ITEYoG8TBPTG/tTqHdOHopC39iV3YnJmdyJjBUgfbXy5Yf0jEOYYTpC6+J5dkeDJLqI
+         NaOS3pvPFGYnfh0z5Gq53628Yy8zPhtOEk6D9MInnZGHTDkXFkNuX4JOlPta9cuVNnti
+         J7WA==
+X-Gm-Message-State: AOAM5315M5bG6mEEKkK3LGbAe/WKfNTunLOIA87Dmnv1djHWgft/I39T
+        2W9CnsTylSQSgD4TLmrKbhW8UKBQ64Y=
+X-Google-Smtp-Source: ABdhPJz7mTeB+1orxzjmBk38iaqYFLSTN19KJ+SA3XP97et5lJQVWmChUaxRfwkIAG6DXVFih/aUMA==
+X-Received: by 2002:a5d:5541:: with SMTP id g1mr2620224wrw.515.1644612981628;
+        Fri, 11 Feb 2022 12:56:21 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k34sm4048356wms.35.2022.02.11.12.56.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Feb 2022 12:56:21 -0800 (PST)
+Message-Id: <a5ecabb4d02eb0eb7167f2b4e6be2d4f89d2bba5.1644612979.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
+        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 11 Feb 2022 20:55:50 +0000
+Subject: [PATCH v5 01/30] fsmonitor: enhance existing comments, clarify
+ trivial response handling
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1093.v3.git.1639011433.gitgitgadget@gmail.com>
- <pull.1093.v4.git.1643686424.gitgitgadget@gmail.com> <7a164ba95710b4231d07982fd27ec51022929b81.1643686425.git.gitgitgadget@gmail.com>
- <xmqqr18m8514.fsf@gitster.g>
-In-Reply-To: <xmqqr18m8514.fsf@gitster.g>
-From:   Neeraj Singh <nksingh85@gmail.com>
-Date:   Fri, 11 Feb 2022 12:38:02 -0800
-Message-ID: <CANQDOdcXssVBAbUU_+_0GKEUey0c9tdC3Oq8Kky_kLdW6uLeYQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/4] core.fsync: introduce granular fsync control
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Neeraj Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>,
-        "Neeraj K. Singh" <neerajsi@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apologies in advance for the delayed reply.  I've finally been able to
-return to Git after an absence.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-On Tue, Feb 1, 2022 at 4:51 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Neeraj Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > +core.fsync::
-> > +     A comma-separated list of parts of the repository which should be
-> > +     hardened via the core.fsyncMethod when created or modified. You can
-> > +     disable hardening of any component by prefixing it with a '-'. Later
-> > +     items take precedence over earlier ones in the list. For example,
-> > +     `core.fsync=all,-pack-metadata` means "harden everything except pack
-> > +     metadata." Items that are not hardened may be lost in the event of an
-> > +     unclean system shutdown.
-> > ++
-> > +* `none` disables fsync completely. This must be specified alone.
-> > +* `loose-object` hardens objects added to the repo in loose-object form.
-> > +* `pack` hardens objects added to the repo in packfile form.
-> > +* `pack-metadata` hardens packfile bitmaps and indexes.
-> > +* `commit-graph` hardens the commit graph file.
-> > +* `objects` is an aggregate option that includes `loose-objects`, `pack`,
-> > +  `pack-metadata`, and `commit-graph`.
-> > +* `default` is an aggregate option that is equivalent to `objects,-loose-object`
-> > +* `all` is an aggregate option that syncs all individual components above.
->
-> I am not quite sure if this is way too complex (e.g. what does it
-> mean that we do not care much about loose-object safety while we do
-> care about commit-graph files?) and at the same time it is too
-> limited (e.g. if it makes sense to say a class of items deserve more
-> protection than another class of items, don't we want to be able to
-> say "class X is ultra-precious so use method A on them, while class
-> Y is mildly precious and use method B on them, everything else are
-> not that important and doing the default thing is just fine").
->
-> If we wanted to allow the "matrix" kind of flexibility, I think the
-> way to do so would be
->
->         fsync.<class>.method = <value>
->
-> e.g.
->
->         [fsync "default"] method = none
->         [fsync "loose-object"] method = fsync
->         [fsync "pack-metadata"] method = writeout-only
->
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ fsmonitor.c | 64 ++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 41 insertions(+), 23 deletions(-)
 
-I don't believe it makes sense to offer a full matrix of what to fsync
-and what method to use, since the method is a property of the
-filesystem and OS the repo is running on, while the list of things to
-fsync is more a selection of what the user values. So if I'm hosting
-on APFS on macOS or NTFS on Windows, I'd want to set the fsyncMethod
-to batch so that I can get good performance at the safety level I
-choose.  If I'm working on my maintainer repo, I'd maybe not want to
-fsync anything, but I'd want to fsync everything when working on my
-developer repo.
+diff --git a/fsmonitor.c b/fsmonitor.c
+index ab9bfc60b34..448d0ee33f5 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -168,29 +168,15 @@ static int query_fsmonitor(int version, const char *last_update, struct strbuf *
+ 
+ 	if (result)
+ 		trace2_data_intmax("fsm_hook", NULL, "query/failed", result);
+-	else {
++	else
+ 		trace2_data_intmax("fsm_hook", NULL, "query/response-length",
+ 				   query_result->len);
+ 
+-		if (fsmonitor_is_trivial_response(query_result))
+-			trace2_data_intmax("fsm_hook", NULL,
+-					   "query/trivial-response", 1);
+-	}
+-
+ 	trace2_region_leave("fsm_hook", "query", NULL);
+ 
+ 	return result;
+ }
+ 
+-int fsmonitor_is_trivial_response(const struct strbuf *query_result)
+-{
+-	static char trivial_response[3] = { '\0', '/', '\0' };
+-
+-	return query_result->len >= 3 &&
+-		!memcmp(trivial_response,
+-			&query_result->buf[query_result->len - 3], 3);
+-}
+-
+ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+ {
+ 	int i, len = strlen(name);
+@@ -238,6 +224,7 @@ void refresh_fsmonitor(struct index_state *istate)
+ 	struct strbuf last_update_token = STRBUF_INIT;
+ 	char *buf;
+ 	unsigned int i;
++	int is_trivial = 0;
+ 
+ 	if (!core_fsmonitor || istate->fsmonitor_has_run_once)
+ 		return;
+@@ -283,6 +270,7 @@ void refresh_fsmonitor(struct index_state *istate)
+ 					query_success = 0;
+ 				} else {
+ 					bol = last_update_token.len + 1;
++					is_trivial = query_result.buf[bol] == '/';
+ 				}
+ 			} else if (hook_version < 0) {
+ 				hook_version = HOOK_INTERFACE_VERSION1;
+@@ -294,16 +282,38 @@ void refresh_fsmonitor(struct index_state *istate)
+ 		if (hook_version == HOOK_INTERFACE_VERSION1) {
+ 			query_success = !query_fsmonitor(HOOK_INTERFACE_VERSION1,
+ 				istate->fsmonitor_last_update, &query_result);
++			if (query_success)
++				is_trivial = query_result.buf[0] == '/';
+ 		}
+ 
++		if (is_trivial)
++			trace2_data_intmax("fsm_hook", NULL,
++					   "query/trivial-response", 1);
++
+ 		trace_performance_since(last_update, "fsmonitor process '%s'", core_fsmonitor);
+ 		trace_printf_key(&trace_fsmonitor, "fsmonitor process '%s' returned %s",
+ 			core_fsmonitor, query_success ? "success" : "failure");
+ 	}
+ 
+-	/* a fsmonitor process can return '/' to indicate all entries are invalid */
+-	if (query_success && query_result.buf[bol] != '/') {
+-		/* Mark all entries returned by the monitor as dirty */
++	/*
++	 * The response from FSMonitor (excluding the header token) is
++	 * either:
++	 *
++	 * [a] a (possibly empty) list of NUL delimited relative
++	 *     pathnames of changed paths.  This list can contain
++	 *     files and directories.  Directories have a trailing
++	 *     slash.
++	 *
++	 * [b] a single '/' to indicate the provider had no
++	 *     information and that we should consider everything
++	 *     invalid.  We call this a trivial response.
++	 */
++	if (query_success && !is_trivial) {
++		/*
++		 * Mark all pathnames returned by the monitor as dirty.
++		 *
++		 * This updates both the cache-entries and the untracked-cache.
++		 */
+ 		buf = query_result.buf;
+ 		for (i = bol; i < query_result.len; i++) {
+ 			if (buf[i] != '\0')
+@@ -318,11 +328,16 @@ void refresh_fsmonitor(struct index_state *istate)
+ 		if (istate->untracked)
+ 			istate->untracked->use_fsmonitor = 1;
+ 	} else {
+-
+-		/* We only want to run the post index changed hook if we've actually changed entries, so keep track
+-		 * if we actually changed entries or not */
++		/*
++		 * We failed to get a response or received a trivial response,
++		 * so invalidate everything.
++		 *
++		 * We only want to run the post index changed hook if
++		 * we've actually changed entries, so keep track if we
++		 * actually changed entries or not.
++		 */
+ 		int is_cache_changed = 0;
+-		/* Mark all entries invalid */
++
+ 		for (i = 0; i < istate->cache_nr; i++) {
+ 			if (istate->cache[i]->ce_flags & CE_FSMONITOR_VALID) {
+ 				is_cache_changed = 1;
+@@ -330,7 +345,10 @@ void refresh_fsmonitor(struct index_state *istate)
+ 			}
+ 		}
+ 
+-		/* If we're going to check every file, ensure we save the results */
++		/*
++		 * If we're going to check every file, ensure we save
++		 * the results.
++		 */
+ 		if (is_cache_changed)
+ 			istate->cache_changed |= FSMONITOR_CHANGED;
+ 
+-- 
+gitgitgadget
 
-> Where do we expect users to take the core.fsync settings from?  Per
-> repository?  If it is from per user (i.e. $HOME/.gitconfig), do
-> people tend to share it across systems (not necessarily over NFS)
-> with the same contents?  If so, I am not sure if fsync.method that
-> is way too close to the actual "implementation" is a good idea to
-> begin with.  From end-user's point of view, it may be easier to
-> express "class X is ultra-precious, and class Y and Z are mildly
-> so", with something like fsync.<class>.level = <how-precious> and
-> let the Git implementation on each platform choose the appropriate
-> fsync method to protect the stuff at that precious-ness.
->
-
-I expect the vast majority of users to have whatever setting is baked
-into their build of Git.  For the users that want to do something
-different, I expect them to have core.fsyncMethod and core.fsync
-configured per-user for the majority of their repos. Some repos might
-have custom settings that override the per-user settings: 1) Ephemeral
-repos that don't contain unique data would probably want to set
-core.fsync=none. 2) Repos hosting on NFS or on a different FS may have
-a stricter core.fsyncmethod setting.
-
-(More more text to follow in reply to your next email).
