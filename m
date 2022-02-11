@@ -2,131 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57DB0C433EF
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 13:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A719C433EF
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 13:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350615AbiBKNkL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 08:40:11 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58618 "EHLO
+        id S1350659AbiBKNtQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 08:49:16 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238948AbiBKNkL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 08:40:11 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABBCA95
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 05:40:08 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id q8so9553606oiw.7
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 05:40:08 -0800 (PST)
+        with ESMTP id S239783AbiBKNtL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 08:49:11 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2E61EB
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 05:49:10 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id c192so5483648wma.4
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 05:49:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=WK+Us/EY2udE98NZy83UXlXk8p7movXdBxpU4d17E8E=;
-        b=i9zxyPEjI+O769+yIKi1eZGSe6oWgpIk/l6YZEm8GSmUHdgs+fuaQ8CXYVDO+2Rteh
-         +vQpUVc2uSkxyocLl9HMV+gxAB3rmwPHhxRWk/6MWGFEUfLfbNBA1Pry+k72HgqbdHup
-         xEEStCaBYqYPw3cXcOYDbudmS7QzLwmbfsNwELSTTjkwZUrPXKNSMrm/2KYlA9U8j+6q
-         kzXoH7wt4nNs5fdMMsXhE7nPabk5gpbBKLpEvQ7sOtLjvv6VjNvNAzXn40nJ9jIeHXZe
-         5oTwh+rVfR6Jb0/Sux+sz3WrLXTZQzF8IO7n31VOIgJKPfrqi9YMby2Km8btAUdxYoKv
-         Pypg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NjqlPMrZvlUlcemtvhAaIZnR3e3Ycy+e1zxnyJlmlRk=;
+        b=UwkWab5xN1fi4fWZr54Jdmpubs+174hD6x+++TuHK9ezlcbbBRsek+xA99o+yeE+qO
+         Mc9NWHZ1Oc1NQ4fnWA7qYnSc0dctO130eaG2sFoJXy8c5fdl0jYPanzEX4v/+eGSWI8S
+         qWW3VOjM3hebfmJKyILoO1wj1UvgG41f3n0LZtG9dbtsOUQ2XJj9LygzBVFkq6Xo6/vh
+         nr4vaEd5PtZGJEXNpq4EOOYCkgWcb1Hz+CTGJh1zQC9Txt+r+Dk/Op6fkbFngtxTJOB6
+         622qBDa+96ZhW99LAVBIhBJg96QU3mPMm0ZsvLSiYq6IuKsavZPojCdZL5kk97fHWh1x
+         /Rqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=WK+Us/EY2udE98NZy83UXlXk8p7movXdBxpU4d17E8E=;
-        b=OJqSiMFLVOCAC1+jOEDU21moWkEy6At8TLUCF1+pceDHzwrXeru4klkHk+PS4PF1Li
-         TZz6s60TexjWt1L25MNYz0oCmbp1qkImNbr8so408Tt6vVOfwmVppsQleZbBQG2m1Yz4
-         mdMKacwSnANhpaaBvjbPcK4w55/ZEdXeagsMKocoGAfFRzqnrG/RpWfeZviMY7qvUcgp
-         CFrcvWM4SQLWx0bhXstn5RmfGuUZxAg+RqaMPW446LvYdpTL4sqf900sDA9z/SrCSwyv
-         GvQ7a7hYJaIsS0S9HGPqZJ3RYB4v+QdsCLJDeCuid1+bCxkFDgv8sJO6tEt88fUTe2Er
-         ZcNA==
-X-Gm-Message-State: AOAM530nDnrrkbdAK/gMksS42tn4BMlTEKfIuG0R6PxDvSJHB7i8Uh0x
-        OBcc5jNjehSh3IU4FZY31Pg=
-X-Google-Smtp-Source: ABdhPJz/tlrlZ3RWBAWhDVhKNaX1FCxFtEZVT/FspVYXneS9kMTLBaH8ZLlsbXAdXU+x29KA+2POyQ==
-X-Received: by 2002:a05:6808:159c:: with SMTP id t28mr175771oiw.230.1644586807844;
-        Fri, 11 Feb 2022 05:40:07 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:407:1519:6db3:88c? ([2600:1700:e72:80a0:407:1519:6db3:88c])
-        by smtp.gmail.com with ESMTPSA id p7sm2681078otf.8.2022.02.11.05.40.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Feb 2022 05:40:07 -0800 (PST)
-Message-ID: <f36712f5-28bd-42d7-3ea1-f4afa328be07@gmail.com>
-Date:   Fri, 11 Feb 2022 08:40:05 -0500
+        bh=NjqlPMrZvlUlcemtvhAaIZnR3e3Ycy+e1zxnyJlmlRk=;
+        b=ZZLHJ7P16bm1Tffdwva8XX/JlIfgOtFfyWGaFOCQZiyk6JZWMxnCPTFe4gaglqCFwr
+         YMsZXViR570JSOYi9hDU9HbPTru7D8XJ5BM7GazChA0Bk2kARUkjtwcBhIELhCd+TIP6
+         aEqTdTu/Pnigv0oqEwR0wfdXAg65et7WLE4OVXCT5cn5kzv1zWQMuEnFsyixHDwNObQc
+         Yeb8Q5PN01aiPF49DEwYmUn4oR5z9M7Kuc5xFB37rj2A+Od/izH3DFUhWT9qFaWi3FRh
+         bPkrpNkTScxYGuSAbPj+ScxgDNaY5eJYUYWwSlpKuce+QTiuBf1NS78mvT9tu5P/i0XT
+         veew==
+X-Gm-Message-State: AOAM531yAFHGnNp6Uq1QnbAKKufRWMZ36xBtA3niVGlTLcktUMs+2N/r
+        bFNXi+Xo7ZblQbkT2muiZpw7W3hicjQNgnKX
+X-Google-Smtp-Source: ABdhPJwz9LkIxvPIoLxLHD7kqXy4U9cf6CFMVxfSfny6DtRAUbr+qpxysqFyFk19dFCJJrPMZbjh0A==
+X-Received: by 2002:a05:600c:601a:: with SMTP id az26mr396442wmb.2.1644587348965;
+        Fri, 11 Feb 2022 05:49:08 -0800 (PST)
+Received: from localhost.localdomain (176.248.7.93.rev.sfr.net. [93.7.248.176])
+        by smtp.gmail.com with ESMTPSA id u15sm22987110wrs.18.2022.02.11.05.49.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Feb 2022 05:49:08 -0800 (PST)
+From:   COGONI Guillaume <cogoni.guillaume@gmail.com>
+To:     git@vger.kernel.org
+Cc:     git.jonathan.bressat@gmail.com, guillaume.cogoni@gmail.com,
+        matthieu.moy@univ-lyon1.fr,
+        COGONI Guillaume <cogoni.guillaume@gmail.com>
+Subject: [PATCH] t/t3903-stash.sh: replace test [-d|-f] with test_path_is_*
+Date:   Fri, 11 Feb 2022 14:46:55 +0100
+Message-Id: <20220211134655.1149320-1-cogoni.guillaume@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: ds/sparse-checkout-requires-per-worktree-config (was Re: What's
- cooking in git.git (Feb 2022, #02; Wed, 9))
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>
-References: <xmqqa6ez60l8.fsf@gitster.g>
-From:   Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqa6ez60l8.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/9/2022 7:12 PM, Junio C Hamano wrote:
+Use test_path_is_* to replace test [-d|-f] because that give more
+explicit debugging information. And it doesn't change the semantics.
 
-> * ds/sparse-checkout-requires-per-worktree-config (2022-02-08) 6 commits
->  - config: make git_configset_get_string_tmp() private
->  - worktree: copy sparse-checkout patterns and config on add
->  - sparse-checkout: set worktree-config correctly
->  - config: add repo_config_set_worktree_gently()
->  - worktree: create init_worktree_config()
->  - Documentation: add extensions.worktreeConfig details
-> 
->  "git sparse-checkout" wants to work with per-worktree configration,
->  but did not work well in a worktree attached to a bare repository.
-> 
->  Will merge to 'next'?
->  cf. <20220204081336.3194538-1-newren@gmail.com>
->  cf. <CAPig+cRrRxuTeByhKkLs_KDaWY8-r4+jrwT83A-r+sBQsmebMw@mail.gmail.com>
->  source: <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com>
+Signed-off-by: COGONI Guillaume <cogoni.guillaume@gmail.com>
+Co-authored-by: BRESSAT Jonathan <git.jonathan.bressat@gmail.com>
+---
+ t/t3903-stash.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-You and I have had a good discussion about the latest version. I
-think we've mostly landed on finding ways to improve documentation
-in other ways (including the patch you submitted), but here are
-the things that I see as still outstanding:
-
-0. Eric mentioned earlier that he was interested in looking again,
-   but has not signaled that his review is complete.
-
-1. You and Eric disagree about the use of "worktree" and "working
-   tree" in the documentation. I could revert the change to these
-   docs from v5 to v6.
-
-2. You mention that the changes in config.c could be split into
-   two (first, create repo_config_set_multivar_gently() and then
-   create repo_config_set_worktree_gently()).
-
-3. Jean-Noël noticed an improvement to reduce work on translators.
-   The diff below could be squashed into patch 5 OR I could submit
-   it as a forward fix.
-
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index c6eb636329a..7c272078dc9 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -384,11 +384,13 @@ static int add_worktree(const char *path, const char *refname,
- 			    bare &&
- 			    git_config_set_multivar_in_file_gently(
- 					to_file, "core.bare", NULL, "true", 0))
--				error(_("failed to unset 'core.bare' in '%s'"), to_file);
-+				error(_("failed to unset '%s' in '%s'"),
-+				      "core.bare", to_file);
- 			if (!git_configset_get_value(&cs, "core.worktree", &core_worktree) &&
- 			    git_config_set_in_file_gently(to_file,
- 							  "core.worktree", NULL))
--				error(_("failed to unset 'core.worktree' in '%s'"), to_file);
-+				error(_("failed to unset '%s' in '%s'"),
-+				      "core.worktree", to_file);
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 686747e55a..d0a4613371 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -390,7 +390,7 @@ test_expect_success SYMLINKS 'stash file to symlink' '
+ 	rm file &&
+ 	ln -s file2 file &&
+ 	git stash save "file to symlink" &&
+-	test -f file &&
++	test_path_is_file file &&
+ 	test bar = "$(cat file)" &&
+ 	git stash apply &&
+ 	case "$(ls -l file)" in *" file -> file2") :;; *) false;; esac
+@@ -401,7 +401,7 @@ test_expect_success SYMLINKS 'stash file to symlink (stage rm)' '
+ 	git rm file &&
+ 	ln -s file2 file &&
+ 	git stash save "file to symlink (stage rm)" &&
+-	test -f file &&
++	test_path_is_file file &&
+ 	test bar = "$(cat file)" &&
+ 	git stash apply &&
+ 	case "$(ls -l file)" in *" file -> file2") :;; *) false;; esac
+@@ -413,7 +413,7 @@ test_expect_success SYMLINKS 'stash file to symlink (full stage)' '
+ 	ln -s file2 file &&
+ 	git add file &&
+ 	git stash save "file to symlink (full stage)" &&
+-	test -f file &&
++	test_path_is_file file &&
+ 	test bar = "$(cat file)" &&
+ 	git stash apply &&
+ 	case "$(ls -l file)" in *" file -> file2") :;; *) false;; esac
+@@ -487,7 +487,7 @@ test_expect_failure 'stash directory to file' '
+ 	rm -fr dir &&
+ 	echo bar >dir &&
+ 	git stash save "directory to file" &&
+-	test -d dir &&
++	test_path_is_dir dir &&
+ 	test foo = "$(cat dir/file)" &&
+ 	test_must_fail git stash apply &&
+ 	test bar = "$(cat dir)" &&
+@@ -500,10 +500,10 @@ test_expect_failure 'stash file to directory' '
+ 	mkdir file &&
+ 	echo foo >file/file &&
+ 	git stash save "file to directory" &&
+-	test -f file &&
++	test_path_is_file file &&
+ 	test bar = "$(cat file)" &&
+ 	git stash apply &&
+-	test -f file/file &&
++	test_path_is_file file/file &&
+ 	test foo = "$(cat file/file)"
+ '
  
- 			git_configset_clear(&cs);
- 		}
+-- 
+2.25.1
 
-Thanks,
--Stolee
