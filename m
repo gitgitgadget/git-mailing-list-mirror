@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 593B6C433F5
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 187C8C433F5
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:56:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353568AbiBKU4j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 15:56:39 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49562 "EHLO
+        id S1353611AbiBKU4w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 15:56:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353485AbiBKU4a (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 15:56:30 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65151B5
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:28 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id u1so3424885wrg.11
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:28 -0800 (PST)
+        with ESMTP id S1353514AbiBKU4b (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 15:56:31 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F14A4CFC
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:29 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id s10so3657201wrb.1
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=6enTMMANNAxK1CGL3Ldk/yaPqbhSNHnwYfXVeNCe1iY=;
-        b=IBhGLf/IT+46TT/HXIEaoh0tvSN/U4qUP6MMH+AjTz7mFPoYCkg/5HPeL2objpgu7H
-         vHXQaKnflnD1RE2pSLFGxPhb2pSqtGvfX+8q67nzEUeaZNauFqOVHrBTDnBUiHGaHSpC
-         Yn2h3NVlMWW/tLMxGDxvshN4RfDZi3dQuneiwryCic/2M73+Vyk7hpR+cxiCb2udRmSd
-         2gppk28tKKF8UyhaiAPCVFWKIBZE3cKqSm+etHvSU1VBwIucbzw3mBi6o80BM7CCZiit
-         t6CS8GHoxaznqHT8OLG0VfDQ4NvJAjLh5KvLJbUBQpMVdsxLjGgP5IbJXJQ0WEmSph7X
-         OwDQ==
+        bh=dlvkZAttyPi8xzLxTX0k7UH8DRN8Z/IbRQPwhiWRp1k=;
+        b=JXAt1nTHxFhcolMY/mjbeuC6L8f8+WBOXq7j7st4NdBRS76KMEJq/a1Jxse3yDiCib
+         8jPADO7D6vMgHUCZD1XJpxFrfBUICucwmlaE20woE0JcL9SBV8LaHkdvKw1edo2IyshL
+         j38n90pkHNIKMF5Jf/0zMRTI35B5xoFrt8lixvhTq++2L3Mu/oGbyewmlA2H/XjEUVdF
+         wVs/Vn99GSZmen+uPIPEKXy79vjabc3vj4lGjIKLUzwC7OSD4p3hgzRvL1FJdi//8x//
+         smeqxIoOOAp+mw5TTvVcj6txolTLdC7lhEC0WXZIoue46vHqu/59GmyIQvBtada9aEqv
+         DAag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6enTMMANNAxK1CGL3Ldk/yaPqbhSNHnwYfXVeNCe1iY=;
-        b=6MOFcF2lZ1T9NGoX9Uj/nOoevTK8CT2vEMJNkCm6xFU7jASXgol+RRlrspEiUBlGsE
-         9kROxNAjZKXKR2DAB6ti5stW6vDdi6L2F8WQm6sxparCL31me5me+jeVw7GhjARXVllA
-         O5zahBqkc2LtFOaCzSjaImIE7iSTYxE+LNsOiNw++t6ARcn+N7/QnZGqO9Cg2ZCOXyNk
-         8i2SpuT8trmPqEr3P+aKSjuxrB4AJzmMfjINaRYTBJeT6tjyzZB3srSBr2mLYAyCskaP
-         uDkrf6igcFg8EjQ5mwEvZvceISC+/lubp3zTO7CUZ0+U4ijsW+e2s5TSEH0Vy6LFc8cR
-         2aeg==
-X-Gm-Message-State: AOAM533tcOWKJYsdKjdknelFcf4jremEqA9WzxQaGaKdZO4pPLoGlP3I
-        cjhu4xOl42SbhvJEUQ52zmy8D4FvJNo=
-X-Google-Smtp-Source: ABdhPJyKUyC0sLeLU2mrdCn9wv+kg233YMvCmdml1tA6p6s5QIMxETiyBjJpVvNZSQBBjuNSHyNNDA==
-X-Received: by 2002:a5d:5989:: with SMTP id n9mr2686599wri.63.1644612986829;
-        Fri, 11 Feb 2022 12:56:26 -0800 (PST)
+        bh=dlvkZAttyPi8xzLxTX0k7UH8DRN8Z/IbRQPwhiWRp1k=;
+        b=pjUB07uVxBVzoUp0hRYsdLNEQ/6aSChuZ4bcCA9hGKFxdgE5SBYVKWDuVV1umw7taX
+         GKWxADce5hqVCiGoYEcIA1u8tHMfIqqt9Ruod37gK14Ri2aNPaf9iKdUxFhWqPgEboxl
+         Pc1u+UIecBgmKXOou4gRLkJ23U+OZPb/+BQgnV1o1u9IMTZPh0kX+jby/eSweojHCXTN
+         vtq+Er98wJ7HHx7ZkaMLPQZTdnWmTWdy2YRlB8+IoJx2efmtZ0toeXV9Ey85q8lLO/Gn
+         6CXmrjCMsnxDyXggPe+rVT6l9yKdm22qVSVIzOimue3tkEuiO0QNfEI4Y0ENpMUYJrSx
+         8wOg==
+X-Gm-Message-State: AOAM532V7PaumyehpzGqxPKO1nQdUCbu+j2KCzKe9dL0wqgJxKHpGpGY
+        hmZIwgkiFjyUA5hBXROd+E3YO58zW7Q=
+X-Google-Smtp-Source: ABdhPJz5EyGrEyrjYZtCuql8YX6/I8ofmREWCPoWsPkaFdDn9Pgji/fsHNVPLxd+vhInmTvIWvGNtQ==
+X-Received: by 2002:adf:e0c3:: with SMTP id m3mr2566048wri.216.1644612988388;
+        Fri, 11 Feb 2022 12:56:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b7sm11533215wrp.23.2022.02.11.12.56.26
+        by smtp.gmail.com with ESMTPSA id e4sm2535685wrp.25.2022.02.11.12.56.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Feb 2022 12:56:26 -0800 (PST)
-Message-Id: <9f00ada3dd35a5dde09dbf1527f0a8987392b05b.1644612979.git.gitgitgadget@gmail.com>
+        Fri, 11 Feb 2022 12:56:28 -0800 (PST)
+Message-Id: <7de3d01ccccb7afce6a9b66bb834402541d1ae1c.1644612979.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
 References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
         <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 11 Feb 2022 20:55:56 +0000
-Subject: [PATCH v5 07/30] fsmonitor--daemon: implement 'stop' and 'status'
- commands
+Date:   Fri, 11 Feb 2022 20:55:58 +0000
+Subject: [PATCH v5 09/30] compat/fsmonitor/fsm-listen-darwin: stub in backend
+ for Darwin
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,90 +72,77 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Implement `stop` and `status` client commands to control and query the
-status of a `fsmonitor--daemon` server process (and implicitly start a
-server process if necessary).
-
-Later commits will implement the actual server and monitor the file
-system.
+Stub in empty implementation of fsmonitor--daemon
+backend for Darwin (aka MacOS).
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c | 51 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ compat/fsmonitor/fsm-listen-darwin.c | 20 ++++++++++++++++++++
+ config.mak.uname                     | 10 ++++++++++
+ contrib/buildsystems/CMakeLists.txt  |  3 +++
+ 3 files changed, 33 insertions(+)
+ create mode 100644 compat/fsmonitor/fsm-listen-darwin.c
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index f0498793379..5e3178b8bdd 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -7,10 +7,55 @@
- #include "khash.h"
- 
- static const char * const builtin_fsmonitor__daemon_usage[] = {
-+	N_("git fsmonitor--daemon stop"),
-+	N_("git fsmonitor--daemon status"),
- 	NULL
- };
- 
- #ifdef HAVE_FSMONITOR_DAEMON_BACKEND
-+/*
-+ * Acting as a CLIENT.
-+ *
-+ * Send a "quit" command to the `git-fsmonitor--daemon` (if running)
-+ * and wait for it to shutdown.
-+ */
-+static int do_as_client__send_stop(void)
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+new file mode 100644
+index 00000000000..c84e3344ab9
+--- /dev/null
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -0,0 +1,20 @@
++#include "cache.h"
++#include "fsmonitor.h"
++#include "fsm-listen.h"
++
++int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
 +{
-+	struct strbuf answer = STRBUF_INIT;
-+	int ret;
-+
-+	ret = fsmonitor_ipc__send_command("quit", &answer);
-+
-+	/* The quit command does not return any response data. */
-+	strbuf_release(&answer);
-+
-+	if (ret)
-+		return ret;
-+
-+	trace2_region_enter("fsm_client", "polling-for-daemon-exit", NULL);
-+	while (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
-+		sleep_millisec(50);
-+	trace2_region_leave("fsm_client", "polling-for-daemon-exit", NULL);
-+
-+	return 0;
++	return -1;
 +}
 +
-+static int do_as_client__status(void)
++void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
 +{
-+	enum ipc_active_state state = fsmonitor_ipc__get_state();
-+
-+	switch (state) {
-+	case IPC_STATE__LISTENING:
-+		printf(_("fsmonitor-daemon is watching '%s'\n"),
-+		       the_repository->worktree);
-+		return 0;
-+
-+	default:
-+		printf(_("fsmonitor-daemon is not watching '%s'\n"),
-+		       the_repository->worktree);
-+		return 1;
-+	}
 +}
- 
- int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- {
-@@ -28,6 +73,12 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_fsmonitor__daemon_usage, options);
- 	subcmd = argv[0];
- 
-+	if (!strcmp(subcmd, "stop"))
-+		return !!do_as_client__send_stop();
 +
-+	if (!strcmp(subcmd, "status"))
-+		return !!do_as_client__status();
++void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
++{
++}
 +
- 	die(_("Unhandled subcommand '%s'"), subcmd);
- }
++void fsm_listen__loop(struct fsmonitor_daemon_state *state)
++{
++}
+diff --git a/config.mak.uname b/config.mak.uname
+index 9c88e1b244e..d65a5eb807c 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -157,6 +157,16 @@ ifeq ($(uname_S),Darwin)
+ 			MSGFMT = /usr/local/opt/gettext/bin/msgfmt
+ 		endif
+ 	endif
++
++	# The builtin FSMonitor on MacOS builds upon Simple-IPC.  Both require
++	# Unix domain sockets and PThreads.
++	ifndef NO_PTHREADS
++	ifndef NO_UNIX_SOCKETS
++	FSMONITOR_DAEMON_BACKEND = darwin
++	endif
++	endif
++
++	BASIC_LDFLAGS += -framework CoreServices
+ endif
+ ifeq ($(uname_S),SunOS)
+ 	NEEDS_SOCKET = YesPlease
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 1525a81109c..7da31c38f48 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -289,6 +289,9 @@ if(SUPPORTS_SIMPLE_IPC)
+ 	if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+ 		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
+ 		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-win32.c)
++	elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
++		add_compile_definitions(HAVE_FSMONITOR_DAEMON_BACKEND)
++		list(APPEND compat_SOURCES compat/fsmonitor/fsm-listen-darwin.c)
+ 	endif()
+ endif()
  
 -- 
 gitgitgadget
