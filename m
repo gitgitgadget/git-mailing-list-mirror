@@ -2,135 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DB51C433EF
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 19:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D340AC433F5
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 19:22:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352778AbiBKTU7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 14:20:59 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44304 "EHLO
+        id S1350999AbiBKTWB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 14:22:01 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350999AbiBKTU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 14:20:56 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39449CEC
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 11:20:55 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id k10so10839403ljq.2
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 11:20:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4L+Dh9C/qk8qriJSwVQe2C7pzfzrNKKJXdvnYy7+szE=;
-        b=PMpeMMdVhVHBxcqKQY4DrhaBeKxlpv3o8O5GvtiXT105Yd5aTP5V0NkO3UNyxCh9GK
-         HAAshxZN/FYi2gOl33Iv8srRJt+cJAAM6J5hlgXOvfWkr4bwHFrIAmBWUgkM11Y/s4oa
-         vXDRQzqX96sW2u3ppDT3ySoNbx/B/AV1Aoq/5XNNzkS/rY/HBZl6w4ubJ31eXdoIASOZ
-         SPri6DM7vkfEB2VUgI6hybKIwLqHjW4l+0HHV8sN48hWKNTUN9G+ArPBN5AXxRbWbq4C
-         yzjvqQcHcWCjAGw0L/eHJNohL8Vv8zdK9HAvGOLvt6AkyJUk2eKiwsomLh7IEOihIf1s
-         hrLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4L+Dh9C/qk8qriJSwVQe2C7pzfzrNKKJXdvnYy7+szE=;
-        b=dO36ryB0lz3SMbaRZuMREQ6v4ztlqQe9kOMsrC1MtiqYwNBIh/LH4/Ul31xasdZEQa
-         EdDkBsKlSD6fQSR115bytxAEjhRK4UimuyL9DChfNWnklAmx5U0IwZNls4JFltQg1RNP
-         n7j3uSOOauqgh/4biK2hzrvMJvBKzvx2IEbDWW4p5PkWaYZBNK0CNckTmjj8FkuBkf7o
-         sYtynAvcP/HsBRVVY8wlTgkx0eavjdbHcWWTmvg5P/XqlVQJkchNnFew2OvMQNGjnXC+
-         yBZ8pXomChUNqMNvRnnT85y39al9tl9l59BG33IxdQlohNGpgXSU+OApFmTX1A9yC2X4
-         C8Bw==
-X-Gm-Message-State: AOAM531WVn7xd8b4pV7XbUEYYQf+8BYGjDhcRQcGrJ5LROt+bIPGv3t+
-        +BcOwZSkcwOc5mMCWtbZ43pxpCBA+WLyAYcu4cQ=
-X-Google-Smtp-Source: ABdhPJzKgFolOmfVJtKVEZAxfU/Ezqr/ULtU8BRcTD+nYPK8gVM1uDz6JXD9K04y+5sX1KhCXOdvz7MEKcbTXBg59KA=
-X-Received: by 2002:a2e:a307:: with SMTP id l7mr1793410lje.363.1644607253335;
- Fri, 11 Feb 2022 11:20:53 -0800 (PST)
+        with ESMTP id S1347561AbiBKTV6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 14:21:58 -0500
+X-Greylist: delayed 305 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 11 Feb 2022 11:21:56 PST
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E451DCEC
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 11:21:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1644607315;
+        bh=OkMZWC9sMLwG0VId7e1RySpjndROXAqJfl91R4Ovfq0=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=ZsSbyVrXGi6Vv+daNpRYcvz0vqdXtoUkpRrZCPSutwAQEcirQTfWq9IJaGcgmFg2Z
+         eD2kaRL4utzv5okV4tMTzOVZn2ZQ8y8Nm+nlw6M9zrewGCKHUPOeaVskEk+LzDsOaU
+         GAzm618zAJzAD3uT8MbCMSageq5i3wW7ZQycxfP4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.29] ([79.203.27.158]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MLAVa-1nZiaU2J4E-00Ibuc; Fri, 11
+ Feb 2022 20:16:44 +0100
+Message-ID: <f83ed995-6dff-bc41-8782-48ac9f1a2651@web.de>
+Date:   Fri, 11 Feb 2022 20:16:43 +0100
 MIME-Version: 1.0
-References: <20220211163627.598166-1-alexhenrie24@gmail.com>
- <20220211163627.598166-2-alexhenrie24@gmail.com> <xmqqa6exb51o.fsf@gitster.g>
-In-Reply-To: <xmqqa6exb51o.fsf@gitster.g>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Fri, 11 Feb 2022 12:20:42 -0700
-Message-ID: <CAMMLpeQ_L+ogWtVj53gLB9ouVZeQ9-cr8oT63fGD4jJ_R4xj5Q@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] log: add a --no-graph option
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.6.0
+Subject: Re: [PATCH v2 1/6] archive: optionally add "virtual" files
+Content-Language: en-US
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>, paulus@ozlabs.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.1128.git.1643186507.gitgitgadget@gmail.com>
+ <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com>
+ <49ff3c1f2b32b16df2b4216aa016d715b6de46bc.1644187146.git.gitgitgadget@gmail.com>
+ <d1e333b6-3ec1-8569-6ea9-4abd3dee1947@web.de> <xmqqbkzigspr.fsf@gitster.g>
+ <nycvar.QRO.7.76.6.2202081406520.347@tvgsbejvaqbjf.bet>
+ <xmqqbkzhdzib.fsf@gitster.g> <b49d396d-a433-51a4-2d19-55e175af571a@web.de>
+ <xmqqk0e364h7.fsf@gitster.g> <6f3d288a-8c2f-0d63-ea17-f6c038a9fa3e@web.de>
+ <xmqqk0e2frux.fsf@gitster.g>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqk0e2frux.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:SzFygK6++/iFk1AUAyFLybmNSaUmUze7V/o09WSkvc/y4rblx/j
+ xGzxaeXneryM+dfau1WsUflSH2bYaK8RkLVBdkLExQeXbqcij9FFbGkux0M20l4eU3nUVTI
+ BuTKf/7zq9FGzHGLhxFolG0zplES/EOe47L60buMLGEGHuMPnckbxsy55OFG51RRAALhDdd
+ QBcphrYE/u31Zvoz9V33A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4VMS8K5Upeo=:W+RiwDDyZM8qrkyE1l7dE6
+ 0ghcWmbDLycm8wGBTi/1QgNirzxZzbkCSovcLp73AoCLCPGGcV3OIvfYX3TamwlRiy/PfiVwG
+ Xm4D/SPsxHDPtNxV67hF82aacBFCTW15/hhaPYLb+atcw94B9zgatmZ3l5rhWYCvMBFmDHIdp
+ +Q0CMYGMtWDCUp9WIXc+Zg79+YP3XCN63DjVYgFgQ2ykgI4nC4SZ70VemPbuBAufHsxKiX/iv
+ Ivoef/67OBeVrTPBC4MsyBPjEeznJYQkhmLbD08TPwH3BIyunvuXPUcwQUb8yrzNabqOFPUvJ
+ Z+nkQDRY6Zpbxvge8ucKxZV18QqazsTJbjGKKFXveZPKdTYY7+/ulTXKs+6CEerwyJVuqBw8d
+ Eoa5mHDc0+fivSI3YWqX2nyGNRSp26nIBvcU8Dp//8eaVOo9rTuSSA5WD5Gywp2i/gEi1sXdO
+ rTWg05KwZULulYgJ4pHRv6eizFIiNYmYt3BPW/Dh548+2C6UBgjIZsw2u164jtmyygaJNc39P
+ dxJa4L/+6r/VGG19yAbF6JAwQhtTpOUS7FzD4lbCeGe6kFjWEWceitrbtcZFH8Sm7Byfpp4Cx
+ RpPLAsevh6ibiy0DS+8UrPxuFA+8Lb1WqaFwqO+0VGATai1pFIDZ1s8gm33nXHe5SdWUWqqUr
+ Q3Zz3iSog7wqFc3HpOQlWBYo5/5VxByHnQtyHKwJatavJc5Vy37RxekDdh/ncdSwN1NB1kNYm
+ FWbpFxngjfjd2Ir0GLCCJmBpu8w42OXDuXkA+abOQce42nhCBY7h/ZZU15DNOu6nvB+K6Cwsj
+ lJkXdtxjMIL5DA1U06XtM8/yKX8UduQf1Cn2hIjft4PBCoOPvkrHzSKygeq0QS0lgngVeumsQ
+ YcwpY7NW99xaleNqIc8EwKISe2NBPC1ISI01aPWwWjB3zJagvCHARqGFNrVmp6P5Qj4MjwfoK
+ aYGLIijxAl0Kd0vI5WiOY0vhTNiF5O+e8Bydhy1O6VQR4LfdtNFyHpxNanlOFjltHOOtuYNx5
+ kePLtxi9NBbmr1Nd64P9f95NwKShPv6rSay12xvSLrMpp8MKBU9M/fuu3aDx//B2Cw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 11, 2022 at 12:02 PM Junio C Hamano <gitster@pobox.com> wrote:
+Am 10.02.22 um 20:23 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
-> Alex Henrie <alexhenrie24@gmail.com> writes:
->
-> > --- a/builtin/blame.c
-> > +++ b/builtin/blame.c
-> > @@ -934,6 +934,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
-> >               parse_revision_opt(&revs, &ctx, options, blame_opt_usage);
-> >       }
-> >  parse_done:
-> > +     revision_opts_finish(&revs);
->
-> This ...
->
-> > diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-> > index e7f7af5de3..228d782754 100644
-> > --- a/builtin/shortlog.c
-> > +++ b/builtin/shortlog.c
-> > @@ -388,6 +388,7 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
-> >               parse_revision_opt(&rev, &ctx, options, shortlog_usage);
-> >       }
-> >  parse_done:
-> > +     revision_opts_finish(&rev);
-> >       argc = parse_options_end(&ctx);
-> >
-> >       if (nongit && argc > 1) {
->
-> ... and this.  It is a bit scary that we have to make sure all the
-> users of parse_revision_opt() users need to call this new helper.
-> Didn't we recently gain new documentation to help novices write
-> their first revision-traversal-API-using program?  Does it need to
-> be updated for this change (I didn't check)?
+>>> Yes, which is exactly how this (and existing --add-file) makes
+>>> Konstantin's plan much less useful.
 
-I don't see any documentation on how to use parse_revision_opt
-directly; I only see documentation on how to use setup_revisions,
-whose interface did not change.
+A harder obstacle to verification would be end-of-line conversion.
+Retrying a failed signature check after applying convert_to_git() might
+work, but not for files that have mixed line endings in the repository
+and end up being homogenized during checkout (and thus archiving).
 
-Another approach would be to make a parse_rev_options_step function
-that wraps parse_options_step and does the final steps when
-parse_options_step returns PARSE_OPT_DONE. Would that be better?
-
-> > diff --git a/revision.c b/revision.c
-> > index 816061f3d9..a39fd1c278 100644
-> > --- a/revision.c
-> > +++ b/revision.c
-> > @@ -2424,10 +2424,11 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
-> >               revs->pretty_given = 1;
-> >               revs->abbrev_commit = 1;
-> >       } else if (!strcmp(arg, "--graph")) {
-> > -             revs->topo_order = 1;
-> > -             revs->rewrite_parents = 1;
-> >               graph_clear(revs->graph);
-> >               revs->graph = graph_init(revs);
-> > +     } else if (!strcmp(arg, "--no-graph")) {
-> > +             graph_clear(revs->graph);
-> > +             revs->graph = NULL;
-> >       } else if (!strcmp(arg, "--encode-email-headers")) {
-> >               revs->encode_email_headers = 1;
-> >       } else if (!strcmp(arg, "--no-encode-email-headers")) {
-> > @@ -2524,8 +2525,6 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
-> >                       unkv[(*unkc)++] = arg;
-> >               return opts;
-> >       }
-> > -     if (revs->graph && revs->track_linear)
-> > -             die(_("options '%s' and '%s' cannot be used together"), "--show-linear-break", "--graph");
-> >
-> >       return 1;
-> >  }
+>> People added untracked files to archives before --add-file existed.
+>>
+>> --add-file-with-content could be used to add the .GIT_ARCHIVE_SIG file.
+>>
+>> Additional untracked files would need a manifest to specify which files
+>> are (not) covered by the signed commit/tag.  Or the .GIT_ARCHIVE_SIG
+>> files could be added just after the signed files as a rule, before any
+>> other untracked files, as some kind of a separator.
 >
-> As a later "--no" can clear an earlier "--graph", we cannot
-> incrementally check if options are compatible, until the end, at
-> which time we can be sure that "--graph" is being asked.
+> Or if people do not _exclude_ tracked files from the archive, then
+> the verifier who has a tarball and a Git tree object can consult the
+> tree object to see which ones are added untracked cruft.
 
-Exactly. This is intentional, to avoid erroring out unnecessarily.
+True, but if you have the tree objects then you probably also have the
+blobs and don't need the archive?  Or is this some kind of sparse
+checkout scenario?
 
--Alex
+>> Some equivalent to the .GIT_ARCHIVE_SIG file containing a signature of
+>> the untracked files could optionally be added at the end to allow full
+>> verification -- but would require signing at archive creation time.
+>
+> Yeah, and at that point, it is not much more convenient than just
+> signing the whole archive (sans the SIG part, obviously), which is
+> what people have always done ;-)
+
+Indeed.
+
+Ren=C3=A9
