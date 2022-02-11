@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB644C433EF
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:57:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2291BC433F5
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:57:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353591AbiBKU51 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 15:57:27 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49636 "EHLO
+        id S1353615AbiBKU53 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 15:57:29 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353617AbiBKU4w (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1353555AbiBKU4w (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 11 Feb 2022 15:56:52 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54CD0D89
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0D9CD8B
         for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:45 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id v12so17246261wrv.2
+Received: by mail-wr1-x435.google.com with SMTP id w11so17198071wra.4
         for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5yNSyAaB0Fw1qxk/ETTZ28zRlk4xlGsS1KF+lI4My2k=;
-        b=KO1dquaPDGOccngpz9d9O3qEIK3IjqRO2eJc8Y/EmU4HY7AsUPVJHKRqZEKwtmN6Xo
-         E021ATz6hfEqE4gqmIEAk8oRn4YPeVhUHP+2I05kxKIpO6JRcDOvQQlIP0MIUWMuL2vW
-         LQJK4ONWZaY/zBVA1TudXkxdU1NMWNC4QSJNqtXybwm4lxsn0Vg8mIUoMPWnt/4rTTwD
-         6LDQp8oDE/+u7n9o6Qtql9v6QJG0erN4GTPxTlua/Z9tTg5jvyoTKhHBi3zv+cQSr5C5
-         BifGwqbzUU03tUI0v7vudlx+uc3WzI3E+iaPsWkaPz+dVrfpLMReSOLx18gJTnJ4kQrS
-         jgVA==
+        bh=N6NEAnIeFxtgSrL3f9Vngd0RTpjHfgeeC0abZfHdDjg=;
+        b=fQEiHBryG0Va24s7fl3JI5GCF+GY/D29l8Z6wRmFqThGAFkIqTFQS5qZgKhIOJT9Zr
+         TqdVpmplCzO2vAAOMxG13+u7HFJMmYuYRJ3+mZPm+6W3uDQnrR2Z6GRjGQLgum0wBfNI
+         zV0H/owsrFfVOOpisDyofn2sLMpYbmtIyatJbKMAhZitFhNFTZJcrlJ8Mz9MEeG6CRQS
+         EV1Up4JvUhkkxlio120jKQdDvtoToZSLvuDw/o8/4jIxl/1seUHLADDnwXAs+jxiUKyk
+         Pl9CfymGspTuSiMEDxxTklQs62/RdMqeCQLxlFkOF61YXIBmAScgmIHy1bqtl0sTl06s
+         Flvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5yNSyAaB0Fw1qxk/ETTZ28zRlk4xlGsS1KF+lI4My2k=;
-        b=lOmniY+KBXNRicJVA7Mu/l7dq77YSyKiUKO+Gsi09xhGxJUuEQ8c6TGYa+zW3smPHo
-         s47Z789UgdDnAaqtQqxuMC8VIn9nIvGCtSqH3RvYXlnOsqAUi0r1L50zOdpaQ1th5b1/
-         11s3KCfECONJerO8p1zswyEQK7n8K3nrmfp0sIx0pZQSRImIzPoLbQEtFVrp1SKuaBQo
-         8tTbPpVljuDhrzCDJ0d9i9N3O5trXwf0OIQQ3x3jV1EyU1pLEgYJFZ/XTHfZF01iWP7F
-         UdehlCelxvq3nv1f/bBTT5D7Qhy3S1FQUWjUcWvsdkiFL6+9Et7C1mTR0QcZ6rhQ9EK3
-         d0Hw==
-X-Gm-Message-State: AOAM532DvhDh1+E/NfBUIzG9yat5HY+mxYBCev/9G0/miNZ0D21oi9ps
-        kSrHXUSRRuUeIvQ85M9AptiWx5ajg4g=
-X-Google-Smtp-Source: ABdhPJxe7jidEPeS/s1PPGknlmF98WcRYnFVuziLLW5dsj/4TV3+7ODWHIQqP4Md1e7b0tohXkyySg==
-X-Received: by 2002:a5d:6d06:: with SMTP id e6mr2721463wrq.66.1644613003531;
-        Fri, 11 Feb 2022 12:56:43 -0800 (PST)
+        bh=N6NEAnIeFxtgSrL3f9Vngd0RTpjHfgeeC0abZfHdDjg=;
+        b=Pa+nLYbvVbWXJAW1d4V7iK+iIzAgmyTcXW40rYkjRW9ngJS+X66O+l9y15W4cMoRO8
+         JIyBsl3ZAnYFia5B/mRPPS7aM+1U7vjg1x4PPxCzGmh1lFO08l9bRnLaPxVTbPkwNZWz
+         hudUmTVjjXfsbuUDZJbu/LvAWyaQh6FGvhsoZ0CbhzEwDky8Ctjm8+Z1ZtrCAG7KkxDV
+         gPkwmI0xwMqGIvDdPn99JqEcKoNV26LIxRp773QxfIOWRwkOaOHgSGRVQOE8GA8woSIW
+         IiYMCDp3cT+ZoR6QnIPu/IYQ9b/eKJVCvWj8bGHXdv0Zc/hlq1QTtMR/VaiE4nLtbLPj
+         7VEA==
+X-Gm-Message-State: AOAM5338fYuowoFw4WzfcqgLnGLxTV+cZzNlynJUDKRcRuiA6x3/2INd
+        q7ck0EXm8LLHae7+T5qhPAiB+oz7HDg=
+X-Google-Smtp-Source: ABdhPJwRLvOJ9P4I1XAOYTy/MCXkwaR//tdb2T0+22e0DbgaP5jybQtcM7D7n9mKBSzFtW8dy6Zotg==
+X-Received: by 2002:adf:eb04:: with SMTP id s4mr2593880wrn.20.1644613004333;
+        Fri, 11 Feb 2022 12:56:44 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e13sm25961863wrq.35.2022.02.11.12.56.42
+        by smtp.gmail.com with ESMTPSA id r2sm13076704wrt.65.2022.02.11.12.56.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 11 Feb 2022 12:56:43 -0800 (PST)
-Message-Id: <f47a763dc260c57c6f411cde7b4b8826732a8c7a.1644612979.git.gitgitgadget@gmail.com>
+Message-Id: <aec44a21afda7f058aca274dcb93c1eec442784a.1644612979.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
 References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
         <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 11 Feb 2022 20:56:16 +0000
-Subject: [PATCH v5 27/30] fsmonitor--daemon: use a cookie file to sync with
- file system
+Date:   Fri, 11 Feb 2022 20:56:17 +0000
+Subject: [PATCH v5 28/30] fsmonitor: force update index after large responses
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,364 +71,143 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon client threads to create a cookie file
-inside the .git directory and then wait until FS events for the
-cookie are observed by the FS listener thread.
+Measure the time taken to apply the FSMonitor query result
+to the index and the untracked-cache.
 
-This helps address the racy nature of file system events by
-blocking the client response until the kernel has drained any
-event backlog.
+Set the `FSMONITOR_CHANGED` bit on `istate->cache_changed` when
+FSMonitor returns a very large repsonse to ensure that the index is
+written to disk.
 
-This is especially important on MacOS where kernel events are
-only issued with a limited frequency.  See the `latency` argument
-of `FSeventStreamCreate()`.  The kernel only signals every `latency`
-seconds, but does not guarantee that the kernel queue is completely
-drained, so we may have to wait more than one interval.  If we
-increase the frequency, the system is more likely to drop events.
-We avoid these issues by having each client thread create a unique
-cookie file and then wait until it is seen in the event stream.
+Normally, when the FSMonitor response includes a tracked file, the
+index is always updated.  Similarly, the index might be updated when
+the response alters the untracked-cache (when enabled).  However, in
+cases where neither of those cause the index to be considered changed,
+the FSMonitor response is wasted.  Subsequent Git commands will make
+requests with the same token and receive the same response.
 
-Co-authored-by: Kevin Willford <Kevin.Willford@microsoft.com>
-Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+If that response is very large, performance may suffer.  It would be
+more efficient to force update the index now (and the token in the
+index extension) in order to reduce the size of the response received
+by future commands.
+
+This was observed on Windows after a large checkout.  On Windows, the
+kernel emits events for the files that are changed as they are
+changed.  However, it might delay events for the containing
+directories until the system is more idle (or someone scans the
+directory (so it seems)).  The first status following a checkout would
+get the list of files.  The subsequent status commands would get the
+list of directories as the events trickled out.  But they would never
+catch up because the token was not advanced because the index wasn't
+updated.
+
+This list of directories caused `wt_status_collect_untracked()` to
+unnecessarily spend time actually scanning them during each command.
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c | 228 +++++++++++++++++++++++++++++++++++-
- fsmonitor--daemon.h         |   5 +
- 2 files changed, 232 insertions(+), 1 deletion(-)
+ fsmonitor.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 962b24569e1..6011fe42ee0 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -94,6 +94,149 @@ static int do_as_client__status(void)
- 	}
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 4287aad6bbb..8e3499d0667 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -219,6 +219,45 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+ 	untracked_cache_invalidate_path(istate, name, 0);
  }
  
-+enum fsmonitor_cookie_item_result {
-+	FCIR_ERROR = -1, /* could not create cookie file ? */
-+	FCIR_INIT = 0,
-+	FCIR_SEEN,
-+	FCIR_ABORT,
-+};
-+
-+struct fsmonitor_cookie_item {
-+	struct hashmap_entry entry;
-+	const char *name;
-+	enum fsmonitor_cookie_item_result result;
-+};
-+
-+static int cookies_cmp(const void *data, const struct hashmap_entry *he1,
-+		     const struct hashmap_entry *he2, const void *keydata)
-+{
-+	const struct fsmonitor_cookie_item *a =
-+		container_of(he1, const struct fsmonitor_cookie_item, entry);
-+	const struct fsmonitor_cookie_item *b =
-+		container_of(he2, const struct fsmonitor_cookie_item, entry);
-+
-+	return strcmp(a->name, keydata ? keydata : b->name);
-+}
-+
-+static enum fsmonitor_cookie_item_result with_lock__wait_for_cookie(
-+	struct fsmonitor_daemon_state *state)
-+{
-+	/* assert current thread holding state->main_lock */
-+
-+	int fd;
-+	struct fsmonitor_cookie_item *cookie;
-+	struct strbuf cookie_pathname = STRBUF_INIT;
-+	struct strbuf cookie_filename = STRBUF_INIT;
-+	enum fsmonitor_cookie_item_result result;
-+	int my_cookie_seq;
-+
-+	CALLOC_ARRAY(cookie, 1);
-+
-+	my_cookie_seq = state->cookie_seq++;
-+
-+	strbuf_addf(&cookie_filename, "%i-%i", getpid(), my_cookie_seq);
-+
-+	strbuf_addbuf(&cookie_pathname, &state->path_cookie_prefix);
-+	strbuf_addbuf(&cookie_pathname, &cookie_filename);
-+
-+	cookie->name = strbuf_detach(&cookie_filename, NULL);
-+	cookie->result = FCIR_INIT;
-+	hashmap_entry_init(&cookie->entry, strhash(cookie->name));
-+
-+	hashmap_add(&state->cookies, &cookie->entry);
-+
-+	trace_printf_key(&trace_fsmonitor, "cookie-wait: '%s' '%s'",
-+			 cookie->name, cookie_pathname.buf);
-+
-+	/*
-+	 * Create the cookie file on disk and then wait for a notification
-+	 * that the listener thread has seen it.
-+	 */
-+	fd = open(cookie_pathname.buf, O_WRONLY | O_CREAT | O_EXCL, 0600);
-+	if (fd >= 0) {
-+		close(fd);
-+		unlink(cookie_pathname.buf);
-+
-+		/*
-+		 * NEEDSWORK: This is an infinite wait (well, unless another
-+		 * thread sends us an abort).  I'd like to change this to
-+		 * use `pthread_cond_timedwait()` and return an error/timeout
-+		 * and let the caller do the trivial response thing.
-+		 */
-+		while (cookie->result == FCIR_INIT)
-+			pthread_cond_wait(&state->cookies_cond,
-+					  &state->main_lock);
-+	} else {
-+		error_errno(_("could not create fsmonitor cookie '%s'"),
-+			    cookie->name);
-+
-+		cookie->result = FCIR_ERROR;
-+	}
-+
-+	hashmap_remove(&state->cookies, &cookie->entry, NULL);
-+
-+	result = cookie->result;
-+
-+	free((char*)cookie->name);
-+	free(cookie);
-+	strbuf_release(&cookie_pathname);
-+
-+	return result;
-+}
-+
 +/*
-+ * Mark these cookies as _SEEN and wake up the corresponding client threads.
-+ */
-+static void with_lock__mark_cookies_seen(struct fsmonitor_daemon_state *state,
-+					 const struct string_list *cookie_names)
-+{
-+	/* assert current thread holding state->main_lock */
-+
-+	int k;
-+	int nr_seen = 0;
-+
-+	for (k = 0; k < cookie_names->nr; k++) {
-+		struct fsmonitor_cookie_item key;
-+		struct fsmonitor_cookie_item *cookie;
-+
-+		key.name = cookie_names->items[k].string;
-+		hashmap_entry_init(&key.entry, strhash(key.name));
-+
-+		cookie = hashmap_get_entry(&state->cookies, &key, entry, NULL);
-+		if (cookie) {
-+			trace_printf_key(&trace_fsmonitor, "cookie-seen: '%s'",
-+					 cookie->name);
-+			cookie->result = FCIR_SEEN;
-+			nr_seen++;
-+		}
-+	}
-+
-+	if (nr_seen)
-+		pthread_cond_broadcast(&state->cookies_cond);
-+}
-+
-+/*
-+ * Set _ABORT on all pending cookies and wake up all client threads.
-+ */
-+static void with_lock__abort_all_cookies(struct fsmonitor_daemon_state *state)
-+{
-+	/* assert current thread holding state->main_lock */
-+
-+	struct hashmap_iter iter;
-+	struct fsmonitor_cookie_item *cookie;
-+	int nr_aborted = 0;
-+
-+	hashmap_for_each_entry(&state->cookies, &iter, cookie, entry) {
-+		trace_printf_key(&trace_fsmonitor, "cookie-abort: '%s'",
-+				 cookie->name);
-+		cookie->result = FCIR_ABORT;
-+		nr_aborted++;
-+	}
-+
-+	if (nr_aborted)
-+		pthread_cond_broadcast(&state->cookies_cond);
-+}
-+
- /*
-  * Requests to and from a FSMonitor Protocol V2 provider use an opaque
-  * "token" as a virtual timestamp.  Clients can request a summary of all
-@@ -391,6 +534,9 @@ static void fsmonitor_free_token_data(struct fsmonitor_token_data *token)
-  *     We should create a new token and start fresh (as if we just
-  *     booted up).
-  *
-+ * [2] Some of those lost events may have been for cookie files.  We
-+ *     should assume the worst and abort them rather letting them starve.
++ * The number of pathnames that we need to receive from FSMonitor
++ * before we force the index to be updated.
 + *
-  * If there are no concurrent threads readering the current token data
-  * series, we can free it now.  Otherwise, let the last reader free
-  * it.
-@@ -412,6 +558,8 @@ static void with_lock__do_force_resync(struct fsmonitor_daemon_state *state)
- 	state->current_token_data = new_one;
- 
- 	fsmonitor_free_token_data(free_me);
++ * Note that any pathname within the set of received paths MAY cause
++ * cache-entry or istate flag bits to be updated and thus cause the
++ * index to be updated on disk.
++ *
++ * However, the response may contain many paths (such as ignored
++ * paths) that will not update any flag bits.  And thus not force the
++ * index to be updated.  (This is fine and normal.)  It also means
++ * that the token will not be updated in the FSMonitor index
++ * extension.  So the next Git command will find the same token in the
++ * index, make the same token-relative request, and receive the same
++ * response (plus any newly changed paths).  If this response is large
++ * (and continues to grow), performance could be impacted.
++ *
++ * For example, if the user runs a build and it writes 100K object
++ * files but doesn't modify any source files, the index would not need
++ * to be updated.  The FSMonitor response (after the build and
++ * relative to a pre-build token) might be 5MB.  Each subsequent Git
++ * command will receive that same 100K/5MB response until something
++ * causes the index to be updated.  And `refresh_fsmonitor()` will
++ * have to iterate over those 100K paths each time.
++ *
++ * Performance could be improved if we optionally force update the
++ * index after a very large response and get an updated token into
++ * the FSMonitor index extension.  This should allow subsequent
++ * commands to get smaller and more current responses.
++ *
++ * The value chosen here does not need to be precise.  The index
++ * will be updated automatically the first time the user touches
++ * a tracked file and causes a command like `git status` to
++ * update an mtime to be updated and/or set a flag bit.
++ *
++ * NEEDSWORK: Does this need to be a config value?
++ */
++static int fsmonitor_force_update_threshold = 100;
 +
-+	with_lock__abort_all_cookies(state);
- }
- 
- void fsmonitor_force_resync(struct fsmonitor_daemon_state *state)
-@@ -487,6 +635,8 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
- 	int hash_ret;
- 	int do_trivial = 0;
- 	int do_flush = 0;
-+	int do_cookie = 0;
-+	enum fsmonitor_cookie_item_result cookie_result;
- 
- 	/*
- 	 * We expect `command` to be of the form:
-@@ -547,6 +697,7 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
- 			 * We have a V2 valid token:
- 			 *     "builtin:<token_id>:<seq_nr>"
- 			 */
-+			do_cookie = 1;
+ void refresh_fsmonitor(struct index_state *istate)
+ {
+ 	struct strbuf query_result = STRBUF_INIT;
+@@ -362,25 +401,39 @@ apply_results:
+ 	 *     information and that we should consider everything
+ 	 *     invalid.  We call this a trivial response.
+ 	 */
++	trace2_region_enter("fsmonitor", "apply_results", istate->repo);
++
+ 	if (query_success && !is_trivial) {
+ 		/*
+ 		 * Mark all pathnames returned by the monitor as dirty.
+ 		 *
+ 		 * This updates both the cache-entries and the untracked-cache.
+ 		 */
++		int count = 0;
++
+ 		buf = query_result.buf;
+ 		for (i = bol; i < query_result.len; i++) {
+ 			if (buf[i] != '\0')
+ 				continue;
+ 			fsmonitor_refresh_callback(istate, buf + bol);
+ 			bol = i + 1;
++			count++;
  		}
- 	}
- 
-@@ -555,6 +706,30 @@ static int do_handle_client(struct fsmonitor_daemon_state *state,
- 	if (!state->current_token_data)
- 		BUG("fsmonitor state does not have a current token");
- 
-+	/*
-+	 * Write a cookie file inside the directory being watched in
-+	 * an effort to flush out existing filesystem events that we
-+	 * actually care about.  Suspend this client thread until we
-+	 * see the filesystem events for this cookie file.
-+	 *
-+	 * Creating the cookie lets us guarantee that our FS listener
-+	 * thread has drained the kernel queue and we are caught up
-+	 * with the kernel.
-+	 *
-+	 * If we cannot create the cookie (or otherwise guarantee that
-+	 * we are caught up), we send a trivial response.  We have to
-+	 * assume that there might be some very, very recent activity
-+	 * on the FS still in flight.
-+	 */
-+	if (do_cookie) {
-+		cookie_result = with_lock__wait_for_cookie(state);
-+		if (cookie_result != FCIR_SEEN) {
-+			error(_("fsmonitor: cookie_result '%d' != SEEN"),
-+			      cookie_result);
-+			do_trivial = 1;
+-		if (bol < query_result.len)
++		if (bol < query_result.len) {
+ 			fsmonitor_refresh_callback(istate, buf + bol);
++			count++;
 +		}
-+	}
+ 
+ 		/* Now mark the untracked cache for fsmonitor usage */
+ 		if (istate->untracked)
+ 			istate->untracked->use_fsmonitor = 1;
 +
- 	if (do_flush)
- 		with_lock__do_force_resync(state);
- 
-@@ -775,7 +950,9 @@ static int handle_client(void *data,
- 	return result;
- }
- 
--#define FSMONITOR_COOKIE_PREFIX ".fsmonitor-daemon-"
-+#define FSMONITOR_DIR           "fsmonitor--daemon"
-+#define FSMONITOR_COOKIE_DIR    "cookies"
-+#define FSMONITOR_COOKIE_PREFIX (FSMONITOR_DIR "/" FSMONITOR_COOKIE_DIR "/")
- 
- enum fsmonitor_path_type fsmonitor_classify_path_workdir_relative(
- 	const char *rel)
-@@ -928,6 +1105,9 @@ void fsmonitor_publish(struct fsmonitor_daemon_state *state,
- 		}
++		if (count > fsmonitor_force_update_threshold)
++			istate->cache_changed |= FSMONITOR_CHANGED;
++
++		trace2_data_intmax("fsmonitor", istate->repo, "apply_count",
++				   count);
++
+ 	} else {
+ 		/*
+ 		 * We failed to get a response or received a trivial response,
+@@ -409,6 +462,8 @@ apply_results:
+ 		if (istate->untracked)
+ 			istate->untracked->use_fsmonitor = 0;
  	}
- 
-+	if (cookie_names->nr)
-+		with_lock__mark_cookies_seen(state, cookie_names);
++	trace2_region_leave("fsmonitor", "apply_results", istate->repo);
 +
- 	pthread_mutex_unlock(&state->main_lock);
- }
+ 	strbuf_release(&query_result);
  
-@@ -1019,7 +1199,9 @@ static int fsmonitor_run_daemon(void)
- 
- 	memset(&state, 0, sizeof(state));
- 
-+	hashmap_init(&state.cookies, cookies_cmp, NULL, 0);
- 	pthread_mutex_init(&state.main_lock, NULL);
-+	pthread_cond_init(&state.cookies_cond, NULL);
- 	state.error_code = 0;
- 	state.current_token_data = fsmonitor_new_token_data();
- 
-@@ -1044,6 +1226,44 @@ static int fsmonitor_run_daemon(void)
- 		state.nr_paths_watching = 2;
- 	}
- 
-+	/*
-+	 * We will write filesystem syncing cookie files into
-+	 * <gitdir>/<fsmonitor-dir>/<cookie-dir>/<pid>-<seq>.
-+	 *
-+	 * The extra layers of subdirectories here keep us from
-+	 * changing the mtime on ".git/" or ".git/foo/" when we create
-+	 * or delete cookie files.
-+	 *
-+	 * There have been problems with some IDEs that do a
-+	 * non-recursive watch of the ".git/" directory and run a
-+	 * series of commands any time something happens.
-+	 *
-+	 * For example, if we place our cookie files directly in
-+	 * ".git/" or ".git/foo/" then a `git status` (or similar
-+	 * command) from the IDE will cause a cookie file to be
-+	 * created in one of those dirs.  This causes the mtime of
-+	 * those dirs to change.  This triggers the IDE's watch
-+	 * notification.  This triggers the IDE to run those commands
-+	 * again.  And the process repeats and the machine never goes
-+	 * idle.
-+	 *
-+	 * Adding the extra layers of subdirectories prevents the
-+	 * mtime of ".git/" and ".git/foo" from changing when a
-+	 * cookie file is created.
-+	 */
-+	strbuf_init(&state.path_cookie_prefix, 0);
-+	strbuf_addbuf(&state.path_cookie_prefix, &state.path_gitdir_watch);
-+
-+	strbuf_addch(&state.path_cookie_prefix, '/');
-+	strbuf_addstr(&state.path_cookie_prefix, FSMONITOR_DIR);
-+	mkdir(state.path_cookie_prefix.buf, 0777);
-+
-+	strbuf_addch(&state.path_cookie_prefix, '/');
-+	strbuf_addstr(&state.path_cookie_prefix, FSMONITOR_COOKIE_DIR);
-+	mkdir(state.path_cookie_prefix.buf, 0777);
-+
-+	strbuf_addch(&state.path_cookie_prefix, '/');
-+
- 	/*
- 	 * Confirm that we can create platform-specific resources for the
- 	 * filesystem listener before we bother starting all the threads.
-@@ -1056,6 +1276,7 @@ static int fsmonitor_run_daemon(void)
- 	err = fsmonitor_run_daemon_1(&state);
- 
- done:
-+	pthread_cond_destroy(&state.cookies_cond);
- 	pthread_mutex_destroy(&state.main_lock);
- 	fsm_listen__dtor(&state);
- 
-@@ -1063,6 +1284,11 @@ done:
- 
- 	strbuf_release(&state.path_worktree_watch);
- 	strbuf_release(&state.path_gitdir_watch);
-+	strbuf_release(&state.path_cookie_prefix);
-+
-+	/*
-+	 * NEEDSWORK: Consider "rm -rf <gitdir>/<fsmonitor-dir>"
-+	 */
- 
- 	return err;
- }
-diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
-index 20a815d80f8..c16ef095688 100644
---- a/fsmonitor--daemon.h
-+++ b/fsmonitor--daemon.h
-@@ -45,6 +45,11 @@ struct fsmonitor_daemon_state {
- 
- 	struct fsmonitor_token_data *current_token_data;
- 
-+	struct strbuf path_cookie_prefix;
-+	pthread_cond_t cookies_cond;
-+	int cookie_seq;
-+	struct hashmap cookies;
-+
- 	int error_code;
- 	struct fsmonitor_daemon_backend_data *backend_data;
- 
+ 	/* Now that we've updated istate, save the last_update_token */
 -- 
 gitgitgadget
 
