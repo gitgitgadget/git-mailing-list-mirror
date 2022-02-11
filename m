@@ -2,123 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 820AEC433EF
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 03:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E70B1C433EF
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 07:16:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232438AbiBKDSE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Feb 2022 22:18:04 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44392 "EHLO
+        id S235564AbiBKHQQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 02:16:16 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbiBKDSD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Feb 2022 22:18:03 -0500
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 653061105
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 19:18:03 -0800 (PST)
-Received: by mail-pl1-x649.google.com with SMTP id b5-20020a1709027e0500b0014ca986e6d8so2633025plm.13
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 19:18:03 -0800 (PST)
+        with ESMTP id S231591AbiBKHQP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 02:16:15 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F6810A4
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 23:16:14 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id 62-20020a17090a09c400b001b80b0742b0so5261209pjo.8
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 23:16:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=Ij8cqt9xNHy6UBZ4rsoBD4/t5Qjv8QKEEkeLavYkqqA=;
-        b=Fm0ANakfU5yqt87SO/im3LtuwIEbah/bwEaEmj+nDJKpSQuCYG+V7nZ35gDtgHpRqv
-         kIEPHmi6yKeq+GHRCNk7xnUYb01JKV3UVIwaujGwxBSQ5hDxY0HNz7hzTdO7lh+4zDtY
-         M3sPyPnhU+31GDRoOtvdjz09DGBUUmSpJi1apf6R9fHRKrMohfg3N4Onz+yHda+vz9Ug
-         AUOuPRlb9vTrNAHWW0sZsuY77dhcwRTFvZqFaqWZ9YV3xZ2CTli6iD7XFAtLFPoEuC8A
-         lfuO2Lf84M92Ibc+F9jIVFjVqPPbC/fyq9bBi0a3SUA1jmNFxHd/eRFyRasyY6u0utg/
-         k9Bw==
+        bh=kF5+mknEtQ58orouC+7FmHh6i69QYIV5Sunjl6x3a5o=;
+        b=DHzy8ov4enILx0Iw1kXF3oHQXSe6cxFHHpqLo3W/7ASKmPx3mMDl7T371jj03ZjQQn
+         noXVn4eqRjBZ46OcDGtou441qowegnmTt9qmtwDuHHm3PofXlgnL/mFG20hH1EXqrK+n
+         RGgOvpbFh58gqmSFh7+jkdnRnzPnd/FjBuSNZ8TPPdF8Bel6j3PP0BfmZlya/dD0A98r
+         0nT28NI7rh1BlFpy52S0mNNrNRytaXhDlfmSemqI+rfLVkeBRaZeoj643ocXwgj5E4j9
+         q5uFjD9tlFgC9VcRrmA6y3G57QYqnz6obFtAo/q/mDiO4R2AM5gNvomunFwVJtR6NEK0
+         kNHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=Ij8cqt9xNHy6UBZ4rsoBD4/t5Qjv8QKEEkeLavYkqqA=;
-        b=PhdZRwvJBPr+pBGcYEwkrHCwHQDBOVutSaMl38mlLao+zWxZIHPmioGcvHBMEGxCy7
-         fyfwvfAKMwDM6g/XTmJJaT1rd5hZmy+8lZGYFJs0zc7bRLUnhDFeqcNIwAH2zTLV1QTI
-         ONN+K0Rc0IBfW8DzdrTRCdcuPNlqteWeyi2Lp8ZRq+VcwfASDBmLHEePMXaOwhRSUMv3
-         kZ2/mEeTYjnSXwjbN83e4/GLlHYpAmTb8FgbzjuTVlw5LAFMLYcxFDpQDpBD7Cf1jrq9
-         sbXV7RtVr1L62EgUjSTHOItfNRCYB3tlWOgxpnY1KkCe7VnFzlmR1x/TADdTRV8cBOho
-         tZtQ==
-X-Gm-Message-State: AOAM531yNGAUlMBdNCIoHJt6E6D6+AsOXpfDJuP1aufXdtRxtA8Df+yo
-        9lqHE6GSmZrLTpn3tJ0/z/YRyBKa0WQl+g==
-X-Google-Smtp-Source: ABdhPJwzuY+awy2e7E72z0rEIUP4PiM1SHhG6eK8Xxj/ezdSJ//kAcFjMAr4o5TaEcy+Cl7gndq/3j/iHCWi2Q==
+        bh=kF5+mknEtQ58orouC+7FmHh6i69QYIV5Sunjl6x3a5o=;
+        b=l3lj6NSM4yKkBM55jqU7ZAA0mlNTVCjqiaCh6AaYopfe8V8bj4TP0/3iX8A7XXUbgh
+         M4iON4uswtwr4lOjip7mYezUFSlP1ygXAncPLMBxF7AqC9VRCwmyfkx4AhfA2hnF9X7D
+         5OF+aq053GT/TE8H5KVAUm8aiqxUaP9YLQd058EKO6GFPR8x7dQUeB3ASKGmgTSEuC+u
+         TCm8QYtTViZqlg1FISxCwaRmjFOWQTz5rnvzEwzhwSCxLKBSe2WOlCC2nJURHGcB1Pcy
+         xIEpqdrazqO8v60l4Zgb38mF+DVOUl/VI4LjpmsKgN8yNfmDWXqXSF7rBp6LCR+lQnPQ
+         omag==
+X-Gm-Message-State: AOAM531qCMesVzgD8SWQ/mtMSuxJx2kc+FcH72VLfZ9slRjrPHv8vWiw
+        5ltE5fwvVVsULh+KB0rCeaKxU3us5CY2Bw==
+X-Google-Smtp-Source: ABdhPJys7CdPCmVKpbxp+wQOEi9ErbQQbe/zNJZ8leqGgWUesasreV6RwWlpWnyY149fnuBORI158FHb6rcBsA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:21c9:: with SMTP id
- t9mr10559850pfj.48.1644549482743; Thu, 10 Feb 2022 19:18:02 -0800 (PST)
-Date:   Fri, 11 Feb 2022 11:18:00 +0800
-In-Reply-To: <20220210230422.690368-1-jonathantanmy@google.com>
-Message-Id: <kl6lo83edrbr.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a17:902:bd01:: with SMTP id
+ p1mr401524pls.29.1644563773713; Thu, 10 Feb 2022 23:16:13 -0800 (PST)
+Date:   Fri, 11 Feb 2022 15:15:58 +0800
+In-Reply-To: <xmqqtud6e3r8.fsf@gitster.g>
+Message-Id: <kl6lbkzdyitt.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
-References: <20220210230422.690368-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 8/8] submodule: fix bug and remove add_submodule_odb()
+References: <20220210044152.78352-1-chooglen@google.com> <20220210044152.78352-8-chooglen@google.com>
+ <xmqqtud6e3r8.fsf@gitster.g>
+Subject: Re: [PATCH 7/8] fetch: fetch unpopulated, changed submodules
 From:   Glen Choo <chooglen@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Glen Choo <chooglen@google.com> writes:
->> add_submodule_odb() is a hack - it adds a submodule's odb as an
->> alternate, allowing the submodule's objects to be read via
->> the_repository. Its last caller is submodule_has_commits(), which calls
->> add_submodule_odb() to prepare for check_has_commit(). This used to be
->> necessary because check_has_commit() used the_repository's odb, but this
->> is longer true as of 13a2f620b2 (submodule: pass repo to
->> check_has_commit(), 2021-10-08).
->> 
->> Removing add_submodule_odb() reveals a bug in check_has_commit(), where
->> check_has_commit() will segfault if the submodule is missing (e.g. the
->> user has not init-ed the submodule). This happens because the
->> submodule's struct repository cannot be initialized, but
->> check_has_commit() tries to cleanup the uninitialized struct anyway.
->> This was masked by add_submodule_odb(), because add_submodule_odb()
->> fails when the submodule is missing, causing the caller to return early
->> and avoid calling check_has_commit().
->> 
->> Fix the bug and remove the call to add_submodule_odb(). Since
->> add_submodule_odb() has no more callers, remove it too.
->> 
->> Note that submodule odbs can still by added as alternates via
->> add_submodule_odb_by_path().
->> 
->> Signed-off-by: Glen Choo <chooglen@google.com>
->> ---
->> This bug only exists because we can't call repo_clear() twice on the
->> same struct repository. So instead of just fixing this site, an
->> alternative (and maybe better) fix would be to fix repo_clear(). If
->> others think that's a good idea, I'll do that instead.
+>> +static struct fetch_task *
+>> +get_fetch_task_from_changed(struct submodule_parallel_fetch *spf,
+>> +			    const char **default_argv, struct strbuf *err)
+>> +{
 >
-> Reading the first paragraph of the commit message, I'm given the
-> impression that this is the last site in which we attempt to add a
-> submodule ODB as an alternate, but that is not true. This is indeed the
-> last usage of add_submodule_odb(), but add_submodule_odb_by_path() still
-> exists.
+>> @@ -1553,7 +1628,10 @@ static int get_next_submodule(struct child_process *cp, struct strbuf *err,
+>>  {
+>>  	struct submodule_parallel_fetch *spf = data;
+>>  	const char *default_argv = NULL;
+>> -	struct fetch_task *task = get_fetch_task(spf, &default_argv, err);
+>> +	struct fetch_task *task =
+>> +		get_fetch_task_from_index(spf, &default_argv, err);
+>> +	if (!task)
+>> +		task = get_fetch_task_from_changed(spf, &default_argv, err);
 >
-> I think the primary point of this commit is to fix a latent bug in
-> check_has_commit(), and add_submodule_odb()'s role here is just hiding
-> it. Its hacky behavior does not play a role.
->
-> I would write the commit message like this:
->
->   submodule: fix latent check_has_commit() bug
->
->   check_has_commit() will attempt to clear a non-initialized struct
->   repository if initialization fails. This bug is masked by its only
->   caller, submodule_has_commits(), first calling add_submodule_odb().
->   The latter fails if the repo does not exist, making
->   submodule_has_commits() exit early and not invoke check_has_commit()
->   in a situation in which initialization would fail.
->
->   Fix this bug, and because calling add_submodule_odb() is no longer
->   necessary as of 13a2f620b2 (submodule: pass repo to
->   check_has_commit(), 2021-10-08), remove that call too.
->
->   This is the last caller of add_submodule_odb(), so remove that
->   function. (Adding submodule ODBs as alternates is still present in the
->   form of add_submodule_odb_by_path().)
+> Hmph, intersting.  So if "from index" grabbed some submodules
+> already, then the "from the changes in the superproject, we know
+> these submodules need refreshing" is not happen at all?  I am afraid
+> that I am still not following this...
 
-Hm.. that is a good point, the commit message seems to promise more than
-what it actually delivers. I'll take your suggestion, thanks!
+Hm, perhaps the following will help:
+
+- get_next_submodule() is an iterator, specifically, it is a
+  get_next_task_fn passed to run_processes_parallel_tr2(). It gets
+  called until it is exhausted.
+- Since get_next_submodule() is an iterator, I've implemented
+  get_fetch_task_from_index() and get_fetch_task_from_changed() as
+  iterators (they return NULL when they are exhausted).
+
+So in practice:
+
+- We repeatedly call get_next_submodule(), which tries to get a fetch
+  task by calling the get_fetch_task_* functions.
+- If get_fetch_task_from_index() returns non-NULL, get_next_submodule()
+  uses that fetch task.
+- Eventually, we will have considered every submodule in the index. At
+  that point, get_fetch_task_from_index() is exhausted and always
+  returns NULL.
+- Since get_fetch_task_from_index() returns NULL, get_next_submodule()
+  now gets its fetch tasks from get_fetch_task_from_changed().
+- Eventually, we will also have considered every changed submodule, and
+  get_fetch_task_from_changed() is exhausted.
+- get_next_submodule() has now been exhausted and we are done.
+
+As for the other questions, I'll dig a bit deeper before getting back to
+you with answers.
