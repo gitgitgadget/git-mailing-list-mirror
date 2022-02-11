@@ -2,115 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D340AC433F5
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 19:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CAF99C433EF
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 19:45:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350999AbiBKTWB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 14:22:01 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44864 "EHLO
+        id S1352980AbiBKTpK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 14:45:10 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347561AbiBKTV6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 14:21:58 -0500
-X-Greylist: delayed 305 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 11 Feb 2022 11:21:56 PST
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E451DCEC
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 11:21:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1644607315;
-        bh=OkMZWC9sMLwG0VId7e1RySpjndROXAqJfl91R4Ovfq0=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=ZsSbyVrXGi6Vv+daNpRYcvz0vqdXtoUkpRrZCPSutwAQEcirQTfWq9IJaGcgmFg2Z
-         eD2kaRL4utzv5okV4tMTzOVZn2ZQ8y8Nm+nlw6M9zrewGCKHUPOeaVskEk+LzDsOaU
-         GAzm618zAJzAD3uT8MbCMSageq5i3wW7ZQycxfP4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.27.158]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MLAVa-1nZiaU2J4E-00Ibuc; Fri, 11
- Feb 2022 20:16:44 +0100
-Message-ID: <f83ed995-6dff-bc41-8782-48ac9f1a2651@web.de>
-Date:   Fri, 11 Feb 2022 20:16:43 +0100
+        with ESMTP id S1348914AbiBKTpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 14:45:09 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33D0938F
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 11:45:08 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id j38-20020a9d1926000000b0059fa6de6c71so6805528ota.10
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 11:45:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=JIC4hgoBo3PZ7N9W2JdDOPQrVWnvOiP5P/ONODXEt/o=;
+        b=RGR7aj6P4D0QRkitGsoSfMaagt82W2ptSW474/i76e0UVSdzNayGEkqFbZH1aKqfa4
+         qfeTOxZhrAb8KWh0TlzAs9TlR8uyvRZ7NHkYqkwVyL+2cFAUFoGwrtgVrPLywjDr/Xwi
+         VqGF8O9sfB6jDD6FUC7/biFhjtOYAxpXh3x3n/vF7ya8Z+RQwwDq1ZB882n1s+U+FuTK
+         QPrU7d1TmtBogVQ7P4Gjv1nGufTs6RWQoBFk7mI63aCeg/FMBBarQqGaSgS3S5lAXdjV
+         m/HugUMiyRzt2b+iS2Zck8tjwvoPapLANZlyJFJVWZZqFQxGM7kUxi/McLOws7jweGaH
+         rcbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=JIC4hgoBo3PZ7N9W2JdDOPQrVWnvOiP5P/ONODXEt/o=;
+        b=BT08A/zrtQLy3Q0cLMVVw5m1w9Jz9gy5DvATSeZhqL3tD+NhWNcqT9nLUAPicjlN3f
+         a+S3E3zO0lsWxtFgKFVRnemzY/Ldp1uLAum/ftBug6phLbAb1jVHWxlkAAkDA5Fb1DiB
+         HEuobn3l6Cq800vpwibQ2g1y5KqKl+s4oYoezUF6I8vlnQ6VDbwqg5e/ja05Jsa9unjy
+         7XHVuKtKr283DPe2rjEHWCTdnHnDxlE20YvZlQtynigUktLV8O0aV2N5+fr7ziid90D4
+         00C+lQSOI+TLf/4hN9IB8Pf1z8oOcTMLfeaDWo60UbJCHwZUUcjv4v7vx3vPbK6JzeO4
+         8dPg==
+X-Gm-Message-State: AOAM530KtesaB6Z+peLO45TTCXJgVTtfGuZocvxQj75vHKD/FHQ1O12f
+        nCKCTLfGQMz+EXKSqylGq7SFrJkm2vVeGfe8ShXiFhDNxo4=
+X-Google-Smtp-Source: ABdhPJy/i+UJOeKO9hp3jvuHFl3Gq53LlM3lFax4Q/dKfoXy9/siXc5UJGkV79Xqmjfr+BD1GmjTlYdf9z6YVk4FrSA=
+X-Received: by 2002:a05:6830:1084:: with SMTP id y4mr1129656oto.42.1644608707319;
+ Fri, 11 Feb 2022 11:45:07 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.0
-Subject: Re: [PATCH v2 1/6] archive: optionally add "virtual" files
-Content-Language: en-US
+References: <20220210233346.1009735-1-calvinwan@google.com> <xmqqo83dcnxq.fsf@gitster.g>
+In-Reply-To: <xmqqo83dcnxq.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Fri, 11 Feb 2022 11:44:56 -0800
+Message-ID: <CAFySSZDk3s_yD-WOajEucXFiirOJVB2Sa=KMCYHOMRwpkK5VmQ@mail.gmail.com>
+Subject: Re: Review process improvements: drafting a ReviewingPatches doc
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1128.git.1643186507.gitgitgadget@gmail.com>
- <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com>
- <49ff3c1f2b32b16df2b4216aa016d715b6de46bc.1644187146.git.gitgitgadget@gmail.com>
- <d1e333b6-3ec1-8569-6ea9-4abd3dee1947@web.de> <xmqqbkzigspr.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2202081406520.347@tvgsbejvaqbjf.bet>
- <xmqqbkzhdzib.fsf@gitster.g> <b49d396d-a433-51a4-2d19-55e175af571a@web.de>
- <xmqqk0e364h7.fsf@gitster.g> <6f3d288a-8c2f-0d63-ea17-f6c038a9fa3e@web.de>
- <xmqqk0e2frux.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqk0e2frux.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:SzFygK6++/iFk1AUAyFLybmNSaUmUze7V/o09WSkvc/y4rblx/j
- xGzxaeXneryM+dfau1WsUflSH2bYaK8RkLVBdkLExQeXbqcij9FFbGkux0M20l4eU3nUVTI
- BuTKf/7zq9FGzHGLhxFolG0zplES/EOe47L60buMLGEGHuMPnckbxsy55OFG51RRAALhDdd
- QBcphrYE/u31Zvoz9V33A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4VMS8K5Upeo=:W+RiwDDyZM8qrkyE1l7dE6
- 0ghcWmbDLycm8wGBTi/1QgNirzxZzbkCSovcLp73AoCLCPGGcV3OIvfYX3TamwlRiy/PfiVwG
- Xm4D/SPsxHDPtNxV67hF82aacBFCTW15/hhaPYLb+atcw94B9zgatmZ3l5rhWYCvMBFmDHIdp
- +Q0CMYGMtWDCUp9WIXc+Zg79+YP3XCN63DjVYgFgQ2ykgI4nC4SZ70VemPbuBAufHsxKiX/iv
- Ivoef/67OBeVrTPBC4MsyBPjEeznJYQkhmLbD08TPwH3BIyunvuXPUcwQUb8yrzNabqOFPUvJ
- Z+nkQDRY6Zpbxvge8ucKxZV18QqazsTJbjGKKFXveZPKdTYY7+/ulTXKs+6CEerwyJVuqBw8d
- Eoa5mHDc0+fivSI3YWqX2nyGNRSp26nIBvcU8Dp//8eaVOo9rTuSSA5WD5Gywp2i/gEi1sXdO
- rTWg05KwZULulYgJ4pHRv6eizFIiNYmYt3BPW/Dh548+2C6UBgjIZsw2u164jtmyygaJNc39P
- dxJa4L/+6r/VGG19yAbF6JAwQhtTpOUS7FzD4lbCeGe6kFjWEWceitrbtcZFH8Sm7Byfpp4Cx
- RpPLAsevh6ibiy0DS+8UrPxuFA+8Lb1WqaFwqO+0VGATai1pFIDZ1s8gm33nXHe5SdWUWqqUr
- Q3Zz3iSog7wqFc3HpOQlWBYo5/5VxByHnQtyHKwJatavJc5Vy37RxekDdh/ncdSwN1NB1kNYm
- FWbpFxngjfjd2Ir0GLCCJmBpu8w42OXDuXkA+abOQce42nhCBY7h/ZZU15DNOu6nvB+K6Cwsj
- lJkXdtxjMIL5DA1U06XtM8/yKX8UduQf1Cn2hIjft4PBCoOPvkrHzSKygeq0QS0lgngVeumsQ
- YcwpY7NW99xaleNqIc8EwKISe2NBPC1ISI01aPWwWjB3zJagvCHARqGFNrVmp6P5Qj4MjwfoK
- aYGLIijxAl0Kd0vI5WiOY0vhTNiF5O+e8Bydhy1O6VQR4LfdtNFyHpxNanlOFjltHOOtuYNx5
- kePLtxi9NBbmr1Nd64P9f95NwKShPv6rSay12xvSLrMpp8MKBU9M/fuu3aDx//B2Cw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.02.22 um 20:23 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Thank you for the suggestion Junio!
+
+I will start us off by showcasing an individual review by Jonathan Tan
+I received recently[1]. Overall, I appreciate how thorough Jonathan
+was with his review. It covers everything from overall architecture of
+the code to small stylistic nuances in the commit message. The review
+can be generally separated into two sections: one that goes line by
+line through the entire changeset and suggests possible improvements,
+and then another section that summarizes the overall direction the
+patch author should take to move the patch into a mergeable state.
+
+For an individual review, I am glad the following was included in the revie=
+w:
+1. Stylistic improvement for the commit message
+2. Suggestions for clarifying the patch context
+3. Rule for referencing merged code
+4. Variable name correctness
+5. Showcases where certain functions/variables/classes should belong
+for better structure
+6. Suggestions for code that can be refactored
+7. Makes considerations about edge cases
+8. Determines whether the test cases are sufficient and if not,
+suggests new test cases
+9. Stylistic improvements of the test cases
+10. Suggestions for overall architecture of the patch
+
+Some items I think that were missing:
+1. The review does not answer whether the overall idea of this patch
+is worth merging. (There is some loss of context here since internally
+here at Google this feature has been deemed worthy and the legwork for
+the server side of this patch has already been merged up).
+2. Jonathan jumps straight into the review. A brief summary at the
+beginning to bring context and to tell the patch author what he/she
+did well would be nice.
+
+I do many things wrong in my patch, but at no point is Jonathan
+demeaning towards me. He assumes the best intentions, and makes his
+best effort to help me improve my patch. To be able to clearly see the
+path forward and to see my patch welcomed on the list motivates me to
+continue working on this patch.
+
+[1] https://lore.kernel.org/git/CAFySSZCZfekrdBH1NMArgPLdF4o1KQVY251BLyFgRx=
+p=3DpDgEOA@mail.gmail.com/T/#m5a033fd28089d41befc937e8adbb133874eee528
+
+
+
+
+
+On Fri, Feb 11, 2022 at 9:28 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->>> Yes, which is exactly how this (and existing --add-file) makes
->>> Konstantin's plan much less useful.
-
-A harder obstacle to verification would be end-of-line conversion.
-Retrying a failed signature check after applying convert_to_git() might
-work, but not for files that have mixed line endings in the repository
-and end up being homogenized during checkout (and thus archiving).
-
->> People added untracked files to archives before --add-file existed.
->>
->> --add-file-with-content could be used to add the .GIT_ARCHIVE_SIG file.
->>
->> Additional untracked files would need a manifest to specify which files
->> are (not) covered by the signed commit/tag.  Or the .GIT_ARCHIVE_SIG
->> files could be added just after the signed files as a rule, before any
->> other untracked files, as some kind of a separator.
+> calvinwan@google.com writes:
 >
-> Or if people do not _exclude_ tracked files from the archive, then
-> the verifier who has a tarball and a Git tree object can consult the
-> tree object to see which ones are added untracked cruft.
-
-True, but if you have the tree objects then you probably also have the
-blobs and don't need the archive?  Or is this some kind of sparse
-checkout scenario?
-
->> Some equivalent to the .GIT_ARCHIVE_SIG file containing a signature of
->> the untracked files could optionally be added at the end to allow full
->> verification -- but would require signing at archive creation time.
+> > In continuation of Emily=E2=80=99s "Review process improvements"[1], I =
+am
+> > drafting a ReviewingPatches doc to help standardize the review process
+> > here on the git mailing list and to provide a rubric/checklist for new
+> > reviewers. In order to do so, I am looking to compile examples and
+> > input from everyone by asking the list a set of questions biweekly.
+> > Please contextualize your answer in terms of whether this was a
+> > maintainer, individual, or drive-by review.
 >
-> Yeah, and at that point, it is not much more convenient than just
-> signing the whole archive (sans the SIG part, obviously), which is
-> what people have always done ;-)
-
-Indeed.
-
-Ren=C3=A9
+> Often people other than the patch contributors themselves find
+> others' reviews a useful learning opportunity.  I take it that your
+> "contextualize" request is asking for comments like "As the
+> maintainer, I found this review by an area expert very helpful
+> because ...", as well as "I sent this patch and a drive-by typofix
+> at this URL was not very helpful"?
+>
+> When soliciting input from the list, it would probably make it
+> easier for others if you led by example by sending your answers,
+> to show the level of detail you'd find useful.
