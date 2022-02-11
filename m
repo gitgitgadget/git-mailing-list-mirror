@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E36C7C4332F
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:57:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B1D3C433EF
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:57:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1353634AbiBKU5L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 15:57:11 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49628 "EHLO
+        id S1353660AbiBKU5P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 15:57:15 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353579AbiBKU4v (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1353580AbiBKU4v (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 11 Feb 2022 15:56:51 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A76CD65
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:37 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id i19so4761477wmq.5
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:37 -0800 (PST)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9568AD5F
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:36 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id o24so14521710wro.3
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8+AgGU8TVF/ZjHBuGCfxCzotLqwQQ/VqMskDBsu1QcY=;
-        b=CeXaUSCfGqZmbAG/MONw8Iq9NSl1mKaA5f9wNNZWzO6JxUzjmKPXu/sEmEqW1zKLZa
-         vxhKJMb8E7b7ff2nypSPBrrht+uyvON/3MqKIJS0WeYMDqi72wlpvucshQeT4hlselqN
-         btpFacKVPMxpPtw1a0R/O0fhBxcorUEY2IKCAgAkN192K0mIWE/YHl3X/8exRcdkbBm6
-         /s7z4a5l+mur4DCW07uR1pNpgmSbyKGZ+YUnf/OIZFeqWZT8sA+D9+ANEMjJ353ATOO4
-         dwkJX9y0VzGs1lL/X/NjnZy9pR75IW7vfh3f45c2Hov2/IpCpXldizE9fTBaHTriMCZO
-         BFWg==
+        bh=HfoOR6IKLJgzyxYDtlbjOqyeVhHCKUqnSoicoP+h94s=;
+        b=JIMwF/yHe/0D0YbgboKPh3oXDXE3TZ0ouewRLSU4EmTTeGKm2OreXL9ZgPbsU9CzzM
+         inTLEw6A23IX8jQmMsf3BqNM3mUhlxAsZnkeIQwnYxKpawZfDO/xMxY/RuGA9bv0l5kT
+         KlGOt9tddyGH8ZutnaTOtlJjoZgJzqkSQXaWgwvzcmC+CV8UPLWn/Xo3hdRZVEInSPgs
+         nladtgOMKci7nb75t1/n6xasRgPwCSJOhvsF2b4kshAdgDGQy4myfYjxO2K0Mkc2ZeDa
+         olQQi52oR1/dfA+gwEcvSC3vUTQS61kGoOJdPgIkArvw6Bl4/iulG1Tdc2FHoOmKhbZ3
+         SdjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8+AgGU8TVF/ZjHBuGCfxCzotLqwQQ/VqMskDBsu1QcY=;
-        b=ovheJkGcnKz6CuMhUEYVWGv6akKzNzG8+1UUkli11ZAVkVR6IubhT0K9mqyA3NiQt1
-         rk5KyqDyQze8nYrSl9dwNd+aKSmPMHXIKEfyPRtvIT7Rc10GbmKbI51AnomuXzeBb3s0
-         3gNd6gUKljHJ5ZiZf4aU/v3QnNG4cyET4R3tEpxEoRJ11HEqEDmnPFaSVzeziGhKACmW
-         V9lhcXzKLotw7CgAd1HzD1iIeXDGX5Tb7lB1ABiX7yb0LphE2l6yvc+7CWDJgD01lVjq
-         gUDqDtZ5JND+gJIfTM75QugzLoAsjbengRURQJnBXN03jJN91XcZrnzMtRSnpUiHlosk
-         IfeQ==
-X-Gm-Message-State: AOAM533YVbkNArTo6NpaaGjnyIimE2ccGlpGtGHZINIlCjdnZZaEH6JJ
-        pB++P5xhRqQRiHrBR2F2WcFY6kbM7Uk=
-X-Google-Smtp-Source: ABdhPJyqo/jDfjG7p9g86Y4SaEfqUm0lnC3+sQc+7cpEiHwrKmp/gBJ9wdAXru+2GwPOZ+ky3Smm+w==
-X-Received: by 2002:a05:600c:3d99:: with SMTP id bi25mr1753365wmb.84.1644612995934;
-        Fri, 11 Feb 2022 12:56:35 -0800 (PST)
+        bh=HfoOR6IKLJgzyxYDtlbjOqyeVhHCKUqnSoicoP+h94s=;
+        b=JPa2yF2+m3BRwAKRGfeWrQ548iz44ZJ4fC9HpU7yENPURwVqxZqa1xPzz3r9ryv2Qu
+         IhTPsPOMltFPNDSQhk6Ui+YA0zT+Q1rSLMUvKDCb+Ivh+tZ1lYGMQgnz+yrbuczFgYGe
+         p1HMBb0aqJDXV0hj3bk2dqjik/ampEjHIkf8YfaXZ72qOLMIveTITYLsrXWea/ZgVfaI
+         Be5r0D3lnuFwWBrQWXN+x6wjHmAfR01LfDC3LMMJwecrQBPsMPEJjV4XpkwtomRQASOc
+         ElxPVoKNUOPXTGlIdmhxC8ythQ62Fa8SBo0hFrAlOZr796uQWv2PSlUhoDEcc8f/HthD
+         rAiw==
+X-Gm-Message-State: AOAM532rjHgSvC5jjA88oKBVhve+6DLpV953wokXfYcmifkRbaX4TgZY
+        4IUHJNK75LBAmhbw44D/nYlqJ+LvFyg=
+X-Google-Smtp-Source: ABdhPJwexNt4ZAPeo9t1M6rPQB0Q1L1cncPfApmNrI6z5oSCGHHdzL4klJPu979J4mIIbkGCoIMucQ==
+X-Received: by 2002:a5d:4888:: with SMTP id g8mr2725502wrq.65.1644612994987;
+        Fri, 11 Feb 2022 12:56:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o14sm4411614wms.4.2022.02.11.12.56.35
+        by smtp.gmail.com with ESMTPSA id l12sm4680445wmd.44.2022.02.11.12.56.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Feb 2022 12:56:35 -0800 (PST)
-Message-Id: <3de1c43beaf0c558572e1eaefbf1e266753f20a1.1644612979.git.gitgitgadget@gmail.com>
+        Fri, 11 Feb 2022 12:56:34 -0800 (PST)
+Message-Id: <162e357db7211e72c8a39e722e8432baf710c70d.1644612979.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
 References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
         <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 11 Feb 2022 20:56:07 +0000
-Subject: [PATCH v5 18/30] fsmonitor--daemon: implement handle_client callback
+Date:   Fri, 11 Feb 2022 20:56:06 +0000
+Subject: [PATCH v5 17/30] compat/fsmonitor/fsm-listen-darwin: implement
+ FSEvent listener on MacOS
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,362 +72,427 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon to respond to IPC requests from client
-Git processes and respond with a list of modified pathnames
-relative to the provided token.
+Implement file system event listener on MacOS using FSEvent,
+CoreFoundation, and CoreServices.
 
+Co-authored-by: Kevin Willford <Kevin.Willford@microsoft.com>
+Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fsmonitor--daemon.c | 312 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 310 insertions(+), 2 deletions(-)
+ compat/fsmonitor/fsm-listen-darwin.c | 382 ++++++++++++++++++++++++++-
+ 1 file changed, 381 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 34603f23053..4c88171e06c 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -7,6 +7,7 @@
- #include "fsmonitor--daemon.h"
- #include "simple-ipc.h"
- #include "khash.h"
-+#include "pkt-line.h"
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index f424253d3eb..2aefdc14d89 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -1,4 +1,4 @@
+-#if defined(__GNUC__)
++#ifndef __clang__
+ /*
+  * It is possible to #include CoreFoundation/CoreFoundation.h when compiling
+  * with clang, but not with GCC as of time of writing.
+@@ -97,20 +97,400 @@ void FSEventStreamRelease(FSEventStreamRef stream);
+ #include "cache.h"
+ #include "fsmonitor.h"
+ #include "fsm-listen.h"
++#include "fsmonitor--daemon.h"
++
++struct fsmonitor_daemon_backend_data
++{
++	CFStringRef cfsr_worktree_path;
++	CFStringRef cfsr_gitdir_path;
++
++	CFArrayRef cfar_paths_to_watch;
++	int nr_paths_watching;
++
++	FSEventStreamRef stream;
++
++	CFRunLoopRef rl;
++
++	enum shutdown_style {
++		SHUTDOWN_EVENT = 0,
++		FORCE_SHUTDOWN,
++		FORCE_ERROR_STOP,
++	} shutdown_style;
++
++	unsigned int stream_scheduled:1;
++	unsigned int stream_started:1;
++};
++
++static void log_flags_set(const char *path, const FSEventStreamEventFlags flag)
++{
++	struct strbuf msg = STRBUF_INIT;
++
++	if (flag & kFSEventStreamEventFlagMustScanSubDirs)
++		strbuf_addstr(&msg, "MustScanSubDirs|");
++	if (flag & kFSEventStreamEventFlagUserDropped)
++		strbuf_addstr(&msg, "UserDropped|");
++	if (flag & kFSEventStreamEventFlagKernelDropped)
++		strbuf_addstr(&msg, "KernelDropped|");
++	if (flag & kFSEventStreamEventFlagEventIdsWrapped)
++		strbuf_addstr(&msg, "EventIdsWrapped|");
++	if (flag & kFSEventStreamEventFlagHistoryDone)
++		strbuf_addstr(&msg, "HistoryDone|");
++	if (flag & kFSEventStreamEventFlagRootChanged)
++		strbuf_addstr(&msg, "RootChanged|");
++	if (flag & kFSEventStreamEventFlagMount)
++		strbuf_addstr(&msg, "Mount|");
++	if (flag & kFSEventStreamEventFlagUnmount)
++		strbuf_addstr(&msg, "Unmount|");
++	if (flag & kFSEventStreamEventFlagItemChangeOwner)
++		strbuf_addstr(&msg, "ItemChangeOwner|");
++	if (flag & kFSEventStreamEventFlagItemCreated)
++		strbuf_addstr(&msg, "ItemCreated|");
++	if (flag & kFSEventStreamEventFlagItemFinderInfoMod)
++		strbuf_addstr(&msg, "ItemFinderInfoMod|");
++	if (flag & kFSEventStreamEventFlagItemInodeMetaMod)
++		strbuf_addstr(&msg, "ItemInodeMetaMod|");
++	if (flag & kFSEventStreamEventFlagItemIsDir)
++		strbuf_addstr(&msg, "ItemIsDir|");
++	if (flag & kFSEventStreamEventFlagItemIsFile)
++		strbuf_addstr(&msg, "ItemIsFile|");
++	if (flag & kFSEventStreamEventFlagItemIsHardlink)
++		strbuf_addstr(&msg, "ItemIsHardlink|");
++	if (flag & kFSEventStreamEventFlagItemIsLastHardlink)
++		strbuf_addstr(&msg, "ItemIsLastHardlink|");
++	if (flag & kFSEventStreamEventFlagItemIsSymlink)
++		strbuf_addstr(&msg, "ItemIsSymlink|");
++	if (flag & kFSEventStreamEventFlagItemModified)
++		strbuf_addstr(&msg, "ItemModified|");
++	if (flag & kFSEventStreamEventFlagItemRemoved)
++		strbuf_addstr(&msg, "ItemRemoved|");
++	if (flag & kFSEventStreamEventFlagItemRenamed)
++		strbuf_addstr(&msg, "ItemRenamed|");
++	if (flag & kFSEventStreamEventFlagItemXattrMod)
++		strbuf_addstr(&msg, "ItemXattrMod|");
++	if (flag & kFSEventStreamEventFlagOwnEvent)
++		strbuf_addstr(&msg, "OwnEvent|");
++	if (flag & kFSEventStreamEventFlagItemCloned)
++		strbuf_addstr(&msg, "ItemCloned|");
++
++	trace_printf_key(&trace_fsmonitor, "fsevent: '%s', flags=%u %s",
++			 path, flag, msg.buf);
++
++	strbuf_release(&msg);
++}
++
++static int ef_is_root_delete(const FSEventStreamEventFlags ef)
++{
++	return (ef & kFSEventStreamEventFlagItemIsDir &&
++		ef & kFSEventStreamEventFlagItemRemoved);
++}
++
++static int ef_is_root_renamed(const FSEventStreamEventFlags ef)
++{
++	return (ef & kFSEventStreamEventFlagItemIsDir &&
++		ef & kFSEventStreamEventFlagItemRenamed);
++}
++
++static int ef_is_dropped(const FSEventStreamEventFlags ef)
++{
++	return (ef & kFSEventStreamEventFlagMustScanSubDirs ||
++		ef & kFSEventStreamEventFlagKernelDropped ||
++		ef & kFSEventStreamEventFlagUserDropped);
++}
++
++static void fsevent_callback(ConstFSEventStreamRef streamRef,
++			     void *ctx,
++			     size_t num_of_events,
++			     void *event_paths,
++			     const FSEventStreamEventFlags event_flags[],
++			     const FSEventStreamEventId event_ids[])
++{
++	struct fsmonitor_daemon_state *state = ctx;
++	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	char **paths = (char **)event_paths;
++	struct fsmonitor_batch *batch = NULL;
++	struct string_list cookie_list = STRING_LIST_INIT_DUP;
++	const char *path_k;
++	const char *slash;
++	int k;
++	struct strbuf tmp = STRBUF_INIT;
++
++	/*
++	 * Build a list of all filesystem changes into a private/local
++	 * list and without holding any locks.
++	 */
++	for (k = 0; k < num_of_events; k++) {
++		/*
++		 * On Mac, we receive an array of absolute paths.
++		 */
++		path_k = paths[k];
++
++		/*
++		 * If you want to debug FSEvents, log them to GIT_TRACE_FSMONITOR.
++		 * Please don't log them to Trace2.
++		 *
++		 * trace_printf_key(&trace_fsmonitor, "Path: '%s'", path_k);
++		 */
++
++		/*
++		 * If event[k] is marked as dropped, we assume that we have
++		 * lost sync with the filesystem and should flush our cached
++		 * data.  We need to:
++		 *
++		 * [1] Abort/wake any client threads waiting for a cookie and
++		 *     flush the cached state data (the current token), and
++		 *     create a new token.
++		 *
++		 * [2] Discard the batch that we were locally building (since
++		 *     they are conceptually relative to the just flushed
++		 *     token).
++		 */
++		if (ef_is_dropped(event_flags[k])) {
++			if (trace_pass_fl(&trace_fsmonitor))
++				log_flags_set(path_k, event_flags[k]);
++
++			fsmonitor_force_resync(state);
++			fsmonitor_batch__free_list(batch);
++			string_list_clear(&cookie_list, 0);
++
++			/*
++			 * We assume that any events that we received
++			 * in this callback after this dropped event
++			 * may still be valid, so we continue rather
++			 * than break.  (And just in case there is a
++			 * delete of ".git" hiding in there.)
++			 */
++			continue;
++		}
++
++		switch (fsmonitor_classify_path_absolute(state, path_k)) {
++
++		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
++		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
++			/* special case cookie files within .git or gitdir */
++
++			/* Use just the filename of the cookie file. */
++			slash = find_last_dir_sep(path_k);
++			string_list_append(&cookie_list,
++					   slash ? slash + 1 : path_k);
++			break;
++
++		case IS_INSIDE_DOT_GIT:
++		case IS_INSIDE_GITDIR:
++			/* ignore all other paths inside of .git or gitdir */
++			break;
++
++		case IS_DOT_GIT:
++		case IS_GITDIR:
++			/*
++			 * If .git directory is deleted or renamed away,
++			 * we have to quit.
++			 */
++			if (ef_is_root_delete(event_flags[k])) {
++				trace_printf_key(&trace_fsmonitor,
++						 "event: gitdir removed");
++				goto force_shutdown;
++			}
++			if (ef_is_root_renamed(event_flags[k])) {
++				trace_printf_key(&trace_fsmonitor,
++						 "event: gitdir renamed");
++				goto force_shutdown;
++			}
++			break;
++
++		case IS_WORKDIR_PATH:
++			/* try to queue normal pathnames */
++
++			if (trace_pass_fl(&trace_fsmonitor))
++				log_flags_set(path_k, event_flags[k]);
++
++			/*
++			 * Because of the implicit "binning" (the
++			 * kernel calls us at a given frequency) and
++			 * de-duping (the kernel is free to combine
++			 * multiple events for a given pathname), an
++			 * individual fsevent could be marked as both
++			 * a file and directory.  Add it to the queue
++			 * with both spellings so that the client will
++			 * know how much to invalidate/refresh.
++			 */
++
++			if (event_flags[k] & kFSEventStreamEventFlagItemIsFile) {
++				const char *rel = path_k +
++					state->path_worktree_watch.len + 1;
++
++				if (!batch)
++					batch = fsmonitor_batch__new();
++				fsmonitor_batch__add_path(batch, rel);
++			}
++
++			if (event_flags[k] & kFSEventStreamEventFlagItemIsDir) {
++				const char *rel = path_k +
++					state->path_worktree_watch.len + 1;
++
++				strbuf_reset(&tmp);
++				strbuf_addstr(&tmp, rel);
++				strbuf_addch(&tmp, '/');
++
++				if (!batch)
++					batch = fsmonitor_batch__new();
++				fsmonitor_batch__add_path(batch, tmp.buf);
++			}
++
++			break;
++
++		case IS_OUTSIDE_CONE:
++		default:
++			trace_printf_key(&trace_fsmonitor,
++					 "ignoring '%s'", path_k);
++			break;
++		}
++	}
++
++	fsmonitor_publish(state, batch, &cookie_list);
++	string_list_clear(&cookie_list, 0);
++	strbuf_release(&tmp);
++	return;
++
++force_shutdown:
++	fsmonitor_batch__free_list(batch);
++	string_list_clear(&cookie_list, 0);
++
++	data->shutdown_style = FORCE_SHUTDOWN;
++	CFRunLoopStop(data->rl);
++	strbuf_release(&tmp);
++	return;
++}
++
++/*
++ * NEEDSWORK: Investigate the proper value for the `latency` argument
++ * in the call to `FSEventStreamCreate()`.  I'm not sure that this
++ * needs to be a config setting or just something that we tune after
++ * some testing.
++ *
++ * With a latency of 0.1, I was seeing lots of dropped events during
++ * the "touch 100000" files test within t/perf/p7519, but with a
++ * latency of 0.001 I did not see any dropped events.  So the
++ * "correct" value may be somewhere in between.
++ *
++ * https://developer.apple.com/documentation/coreservices/1443980-fseventstreamcreate
++ */
  
- static const char * const builtin_fsmonitor__daemon_usage[] = {
- 	N_("git fsmonitor--daemon start [<options>]"),
-@@ -351,6 +352,311 @@ void fsmonitor_force_resync(struct fsmonitor_daemon_state *state)
- 	pthread_mutex_unlock(&state->main_lock);
+ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ {
++	FSEventStreamCreateFlags flags = kFSEventStreamCreateFlagNoDefer |
++		kFSEventStreamCreateFlagWatchRoot |
++		kFSEventStreamCreateFlagFileEvents;
++	FSEventStreamContext ctx = {
++		0,
++		state,
++		NULL,
++		NULL,
++		NULL
++	};
++	struct fsmonitor_daemon_backend_data *data;
++	const void *dir_array[2];
++
++	CALLOC_ARRAY(data, 1);
++	state->backend_data = data;
++
++	data->cfsr_worktree_path = CFStringCreateWithCString(
++		NULL, state->path_worktree_watch.buf, kCFStringEncodingUTF8);
++	dir_array[data->nr_paths_watching++] = data->cfsr_worktree_path;
++
++	if (state->nr_paths_watching > 1) {
++		data->cfsr_gitdir_path = CFStringCreateWithCString(
++			NULL, state->path_gitdir_watch.buf,
++			kCFStringEncodingUTF8);
++		dir_array[data->nr_paths_watching++] = data->cfsr_gitdir_path;
++	}
++
++	data->cfar_paths_to_watch = CFArrayCreate(NULL, dir_array,
++						  data->nr_paths_watching,
++						  NULL);
++	data->stream = FSEventStreamCreate(NULL, fsevent_callback, &ctx,
++					   data->cfar_paths_to_watch,
++					   kFSEventStreamEventIdSinceNow,
++					   0.001, flags);
++	if (data->stream == NULL)
++		goto failed;
++
++	/*
++	 * `data->rl` needs to be set inside the listener thread.
++	 */
++
++	return 0;
++
++failed:
++	error("Unable to create FSEventStream.");
++
++	FREE_AND_NULL(state->backend_data);
+ 	return -1;
  }
  
-+/*
-+ * Format an opaque token string to send to the client.
-+ */
-+static void with_lock__format_response_token(
-+	struct strbuf *response_token,
-+	const struct strbuf *response_token_id,
-+	const struct fsmonitor_batch *batch)
-+{
-+	/* assert current thread holding state->main_lock */
-+
-+	strbuf_reset(response_token);
-+	strbuf_addf(response_token, "builtin:%s:%"PRIu64,
-+		    response_token_id->buf, batch->batch_seq_nr);
-+}
-+
-+/*
-+ * Parse an opaque token from the client.
-+ * Returns -1 on error.
-+ */
-+static int fsmonitor_parse_client_token(const char *buf_token,
-+					struct strbuf *requested_token_id,
-+					uint64_t *seq_nr)
-+{
-+	const char *p;
-+	char *p_end;
-+
-+	strbuf_reset(requested_token_id);
-+	*seq_nr = 0;
-+
-+	if (!skip_prefix(buf_token, "builtin:", &p))
-+		return -1;
-+
-+	while (*p && *p != ':')
-+		strbuf_addch(requested_token_id, *p++);
-+	if (!*p++)
-+		return -1;
-+
-+	*seq_nr = (uint64_t)strtoumax(p, &p_end, 10);
-+	if (*p_end)
-+		return -1;
-+
-+	return 0;
-+}
-+
-+KHASH_INIT(str, const char *, int, 0, kh_str_hash_func, kh_str_hash_equal)
-+
-+static int do_handle_client(struct fsmonitor_daemon_state *state,
-+			    const char *command,
-+			    ipc_server_reply_cb *reply,
-+			    struct ipc_server_reply_data *reply_data)
-+{
-+	struct fsmonitor_token_data *token_data = NULL;
-+	struct strbuf response_token = STRBUF_INIT;
-+	struct strbuf requested_token_id = STRBUF_INIT;
-+	struct strbuf payload = STRBUF_INIT;
-+	uint64_t requested_oldest_seq_nr = 0;
-+	uint64_t total_response_len = 0;
-+	const char *p;
-+	const struct fsmonitor_batch *batch_head;
-+	const struct fsmonitor_batch *batch;
-+	intmax_t count = 0, duplicates = 0;
-+	kh_str_t *shown;
-+	int hash_ret;
-+	int do_trivial = 0;
-+	int do_flush = 0;
-+
-+	/*
-+	 * We expect `command` to be of the form:
-+	 *
-+	 * <command> := quit NUL
-+	 *            | flush NUL
-+	 *            | <V1-time-since-epoch-ns> NUL
-+	 *            | <V2-opaque-fsmonitor-token> NUL
-+	 */
-+
-+	if (!strcmp(command, "quit")) {
-+		/*
-+		 * A client has requested over the socket/pipe that the
-+		 * daemon shutdown.
-+		 *
-+		 * Tell the IPC thread pool to shutdown (which completes
-+		 * the await in the main thread (which can stop the
-+		 * fsmonitor listener thread)).
-+		 *
-+		 * There is no reply to the client.
-+		 */
-+		return SIMPLE_IPC_QUIT;
-+
-+	} else if (!strcmp(command, "flush")) {
-+		/*
-+		 * Flush all of our cached data and generate a new token
-+		 * just like if we lost sync with the filesystem.
-+		 *
-+		 * Then send a trivial response using the new token.
-+		 */
-+		do_flush = 1;
-+		do_trivial = 1;
-+
-+	} else if (!skip_prefix(command, "builtin:", &p)) {
-+		/* assume V1 timestamp or garbage */
-+
-+		char *p_end;
-+
-+		strtoumax(command, &p_end, 10);
-+		trace_printf_key(&trace_fsmonitor,
-+				 ((*p_end) ?
-+				  "fsmonitor: invalid command line '%s'" :
-+				  "fsmonitor: unsupported V1 protocol '%s'"),
-+				 command);
-+		do_trivial = 1;
-+
-+	} else {
-+		/* We have "builtin:*" */
-+		if (fsmonitor_parse_client_token(command, &requested_token_id,
-+						 &requested_oldest_seq_nr)) {
-+			trace_printf_key(&trace_fsmonitor,
-+					 "fsmonitor: invalid V2 protocol token '%s'",
-+					 command);
-+			do_trivial = 1;
-+
-+		} else {
-+			/*
-+			 * We have a V2 valid token:
-+			 *     "builtin:<token_id>:<seq_nr>"
-+			 */
-+		}
-+	}
-+
-+	pthread_mutex_lock(&state->main_lock);
-+
-+	if (!state->current_token_data)
-+		BUG("fsmonitor state does not have a current token");
-+
-+	if (do_flush)
-+		with_lock__do_force_resync(state);
-+
-+	/*
-+	 * We mark the current head of the batch list as "pinned" so
-+	 * that the listener thread will treat this item as read-only
-+	 * (and prevent any more paths from being added to it) from
-+	 * now on.
-+	 */
-+	token_data = state->current_token_data;
-+	batch_head = token_data->batch_head;
-+	((struct fsmonitor_batch *)batch_head)->pinned_time = time(NULL);
-+
-+	/*
-+	 * FSMonitor Protocol V2 requires that we send a response header
-+	 * with a "new current token" and then all of the paths that changed
-+	 * since the "requested token".  We send the seq_nr of the just-pinned
-+	 * head batch so that future requests from a client will be relative
-+	 * to it.
-+	 */
-+	with_lock__format_response_token(&response_token,
-+					 &token_data->token_id, batch_head);
-+
-+	reply(reply_data, response_token.buf, response_token.len + 1);
-+	total_response_len += response_token.len + 1;
-+
-+	trace2_data_string("fsmonitor", the_repository, "response/token",
-+			   response_token.buf);
-+	trace_printf_key(&trace_fsmonitor, "response token: %s",
-+			 response_token.buf);
-+
-+	if (!do_trivial) {
-+		if (strcmp(requested_token_id.buf, token_data->token_id.buf)) {
-+			/*
-+			 * The client last spoke to a different daemon
-+			 * instance -OR- the daemon had to resync with
-+			 * the filesystem (and lost events), so reject.
-+			 */
-+			trace2_data_string("fsmonitor", the_repository,
-+					   "response/token", "different");
-+			do_trivial = 1;
-+
-+		} else if (requested_oldest_seq_nr <
-+			   token_data->batch_tail->batch_seq_nr) {
-+			/*
-+			 * The client wants older events than we have for
-+			 * this token_id.  This means that the end of our
-+			 * batch list was truncated and we cannot give the
-+			 * client a complete snapshot relative to their
-+			 * request.
-+			 */
-+			trace_printf_key(&trace_fsmonitor,
-+					 "client requested truncated data");
-+			do_trivial = 1;
-+		}
-+	}
-+
-+	if (do_trivial) {
-+		pthread_mutex_unlock(&state->main_lock);
-+
-+		reply(reply_data, "/", 2);
-+
-+		trace2_data_intmax("fsmonitor", the_repository,
-+				   "response/trivial", 1);
-+
-+		strbuf_release(&response_token);
-+		strbuf_release(&requested_token_id);
-+		return 0;
-+	}
-+
-+	/*
-+	 * We're going to hold onto a pointer to the current
-+	 * token-data while we walk the list of batches of files.
-+	 * During this time, we will NOT be under the lock.
-+	 * So we ref-count it.
-+	 *
-+	 * This allows the listener thread to continue prepending
-+	 * new batches of items to the token-data (which we'll ignore).
-+	 *
-+	 * AND it allows the listener thread to do a token-reset
-+	 * (and install a new `current_token_data`).
-+	 */
-+	token_data->client_ref_count++;
-+
-+	pthread_mutex_unlock(&state->main_lock);
-+
-+	/*
-+	 * The client request is relative to the token that they sent,
-+	 * so walk the batch list backwards from the current head back
-+	 * to the batch (sequence number) they named.
-+	 *
-+	 * We use khash to de-dup the list of pathnames.
-+	 *
-+	 * NEEDSWORK: each batch contains a list of interned strings,
-+	 * so we only need to do pointer comparisons here to build the
-+	 * hash table.  Currently, we're still comparing the string
-+	 * values.
-+	 */
-+	shown = kh_init_str();
-+	for (batch = batch_head;
-+	     batch && batch->batch_seq_nr > requested_oldest_seq_nr;
-+	     batch = batch->next) {
-+		size_t k;
-+
-+		for (k = 0; k < batch->nr; k++) {
-+			const char *s = batch->interned_paths[k];
-+			size_t s_len;
-+
-+			if (kh_get_str(shown, s) != kh_end(shown))
-+				duplicates++;
-+			else {
-+				kh_put_str(shown, s, &hash_ret);
-+
-+				trace_printf_key(&trace_fsmonitor,
-+						 "send[%"PRIuMAX"]: %s",
-+						 count, s);
-+
-+				/* Each path gets written with a trailing NUL */
-+				s_len = strlen(s) + 1;
-+
-+				if (payload.len + s_len >=
-+				    LARGE_PACKET_DATA_MAX) {
-+					reply(reply_data, payload.buf,
-+					      payload.len);
-+					total_response_len += payload.len;
-+					strbuf_reset(&payload);
-+				}
-+
-+				strbuf_add(&payload, s, s_len);
-+				count++;
-+			}
-+		}
-+	}
-+
-+	if (payload.len) {
-+		reply(reply_data, payload.buf, payload.len);
-+		total_response_len += payload.len;
-+	}
-+
-+	kh_release_str(shown);
-+
-+	pthread_mutex_lock(&state->main_lock);
-+
-+	if (token_data->client_ref_count > 0)
-+		token_data->client_ref_count--;
-+
-+	if (token_data->client_ref_count == 0) {
-+		if (token_data != state->current_token_data) {
-+			/*
-+			 * The listener thread did a token-reset while we were
-+			 * walking the batch list.  Therefore, this token is
-+			 * stale and can be discarded completely.  If we are
-+			 * the last reader thread using this token, we own
-+			 * that work.
-+			 */
-+			fsmonitor_free_token_data(token_data);
-+		}
-+	}
-+
-+	pthread_mutex_unlock(&state->main_lock);
-+
-+	trace2_data_intmax("fsmonitor", the_repository, "response/length", total_response_len);
-+	trace2_data_intmax("fsmonitor", the_repository, "response/count/files", count);
-+	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
-+
-+	strbuf_release(&response_token);
-+	strbuf_release(&requested_token_id);
-+	strbuf_release(&payload);
-+
-+	return 0;
-+}
-+
- static ipc_server_application_cb handle_client;
- 
- static int handle_client(void *data,
-@@ -358,7 +664,7 @@ static int handle_client(void *data,
- 			 ipc_server_reply_cb *reply,
- 			 struct ipc_server_reply_data *reply_data)
+ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
  {
--	/* struct fsmonitor_daemon_state *state = data; */
-+	struct fsmonitor_daemon_state *state = data;
- 	int result;
- 
- 	/*
-@@ -369,10 +675,12 @@ static int handle_client(void *data,
- 	if (command_len != strlen(command))
- 		BUG("FSMonitor assumes text messages");
- 
-+	trace_printf_key(&trace_fsmonitor, "requested token: %s", command);
++	struct fsmonitor_daemon_backend_data *data;
 +
- 	trace2_region_enter("fsmonitor", "handle_client", the_repository);
- 	trace2_data_string("fsmonitor", the_repository, "request", command);
++	if (!state || !state->backend_data)
++		return;
++
++	data = state->backend_data;
++
++	if (data->stream) {
++		if (data->stream_started)
++			FSEventStreamStop(data->stream);
++		if (data->stream_scheduled)
++			FSEventStreamInvalidate(data->stream);
++		FSEventStreamRelease(data->stream);
++	}
++
++	FREE_AND_NULL(state->backend_data);
+ }
  
--	result = 0; /* TODO Do something here. */
-+	result = do_handle_client(state, command, reply, reply_data);
+ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ {
++	struct fsmonitor_daemon_backend_data *data;
++
++	data = state->backend_data;
++	data->shutdown_style = SHUTDOWN_EVENT;
++
++	CFRunLoopStop(data->rl);
+ }
  
- 	trace2_region_leave("fsmonitor", "handle_client", the_repository);
- 
+ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+ {
++	struct fsmonitor_daemon_backend_data *data;
++
++	data = state->backend_data;
++
++	data->rl = CFRunLoopGetCurrent();
++
++	FSEventStreamScheduleWithRunLoop(data->stream, data->rl, kCFRunLoopDefaultMode);
++	data->stream_scheduled = 1;
++
++	if (!FSEventStreamStart(data->stream)) {
++		error("Failed to start the FSEventStream");
++		goto force_error_stop_without_loop;
++	}
++	data->stream_started = 1;
++
++	CFRunLoopRun();
++
++	switch (data->shutdown_style) {
++	case FORCE_ERROR_STOP:
++		state->error_code = -1;
++		/* fall thru */
++	case FORCE_SHUTDOWN:
++		ipc_server_stop_async(state->ipc_server_data);
++		/* fall thru */
++	case SHUTDOWN_EVENT:
++	default:
++		break;
++	}
++	return;
++
++force_error_stop_without_loop:
++	state->error_code = -1;
++	ipc_server_stop_async(state->ipc_server_data);
++	return;
+ }
 -- 
 gitgitgadget
 
