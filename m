@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F75FC433EF
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 10:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C56C1C433EF
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 10:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348745AbiBKKHV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 05:07:21 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43262 "EHLO
+        id S1348809AbiBKKJN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 05:09:13 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232868AbiBKKHV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 05:07:21 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80AECE7E
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 02:07:20 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id k80-20020a628453000000b004e042d3910eso6198361pfd.5
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 02:07:20 -0800 (PST)
+        with ESMTP id S1348792AbiBKKJM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 05:09:12 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F75CE7E
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 02:09:12 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id z14-20020a170902ccce00b0014d7a559635so3048976ple.16
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 02:09:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
         bh=PJzaST5OMxVEUCFrzvAcnWTH9nDPK91yD0xD0wLWp7o=;
-        b=Ozz51F2FXUlDmYBxZs9eyyNYPw/00OHrXhKZJ0l20V3d+6MCs0mFdpVcJOL4gOknbd
-         Go7Mt1UXoNldgEDNfy95elX9ftzTR9nweROC7l7d6FNmP2MQMASSWMg97vkH3MzoRVcf
-         1nE+xlLfVvL0ywBgRtvcsAynOvXZiWjwq8Rc4bjfWdJm1+YmkIRg2cO+8J+eLc7xOewI
-         46CgoZAJu53WbzzTf1vtY85eFsXRpx6Zmk/dch4iEsq8rI41L6i5lTt/XOjJL1tW5hX2
-         D8bQiFLSPAK1/g1jXMYC0YmzAZmF80aYwYWTLGpz3DJG2D4rq1A9IbIz0fW3ql3X0nkK
-         eubA==
+        b=FsANYRKGuoQfQKge4/2ihodIC78BkqKjNCAKOGfLRI9uu7rMUV5O7eKzrvVzf7Qh06
+         DpeZQKSYuW69LZnc2gwp/k2P4hYAjaptbdOnW/Vw6lBAgVCZJp2bzA48TeMdguxFIT5R
+         uWh7W/0jSK7T2mpSy/CeH5608kxQVGyEjLO1DQF5h0J9csKWzHjdvDwv9lFuahEEOBNr
+         VMTHdfjUMCsnYD+aW3mVEPvDFKtZIsTCD8nQ85Dyjkw8JGKFV/BI2Qd4E4RHhfFfOZQ6
+         vjzGOq5TGG0+Pn/jNwrd1/bVS33L8C7wEo/aowgtKEzR84zBUmjMqMUgnTLyOm2sR6qq
+         lBjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
         bh=PJzaST5OMxVEUCFrzvAcnWTH9nDPK91yD0xD0wLWp7o=;
-        b=XvoSsrgeY5W1qOV76DT2i9/gy3hc3mK0n3AnxjxXrdRvO6ODGH3B/95+xEix6txDDy
-         a3Gb1VW7hJrRZON/r07Et/InigBPW9gzFfVud6S3Ui9LLEMkNaXDFLoyDClDuhKZBHqx
-         94eoA5Lhc25oN6PLRKiQ5VAnHeJWEzDJ69PSuA6wwoQq/JFgUoKhk2tD+ZYRTwCnSAcR
-         JfydURNBApaYsxnj2Kp8Z6+QZhY2CrKwvXzCpwVcxr2irt7TO/bU3kd2b6i7G9zSduh8
-         bBH7vdkxUIlq1PXqrlxQocxJ6eWQ94JyIZkNObpnhF0lsP+K+pXonubCv1fHTKGkEN59
-         EPNA==
-X-Gm-Message-State: AOAM533x/hea3Y+zuwWtdaSOBHVCTi6EPCHwb/q9/k86ljXncYH7tnfj
-        5saZ/tBPj3c7fo+EIizCsf7W9dmdaffiDg==
-X-Google-Smtp-Source: ABdhPJxUobG519SePl+Nb0FnypXf8GX7EXctKBAWtbZ/CM88HLW2RabLTJin1pOhyf74QrFMmVu/ibt0uUUT6A==
+        b=R1m273q41Cp/oR1Z4YN483tCImBWoDHUlqSUnpZaYGyKSsoI8qNeeOPIvOryByuszT
+         kocmhomIef+g6J39JVWDffgm9XladP2+s4LJ41OesnWkGYpBh46NFo0bpTdwvN+lu2MJ
+         M22bNWzIOShZerUU6h1jTVSRhSlUxxKnHg7h/1Vg63SBNaVe21U/6XR2USIttkgHKgXu
+         4pZrW4MKlpTW0+b1BxlgPiSM7WRbFjxIndxFXakPHpGKNK5yNY/OjIlErngSptbQNO8s
+         06PVNQw5ai+lQAcG4lHr01etuUJUJnpgovo11x8KVcSUQibIJIBp1p/yQ95LDnoX8mbJ
+         S7QQ==
+X-Gm-Message-State: AOAM531Njls6pQyjJ0chMLkpXRbVtQcI2C+Cm5OUb7t9LxWkqd+LJNCa
+        RNyEI8kAQuJLmRW1Rzj/B6qZ4wMZ/71ggQ==
+X-Google-Smtp-Source: ABdhPJxwOVJ5HgNefYix1C9L11aVoMe7vYj8az2la8fnhoenLxshmwW8RFOn+EUcr4JqEYghDg9wLsVL+98FvA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:e2d3:: with SMTP id
- l19mr719038plc.103.1644574039290; Fri, 11 Feb 2022 02:07:19 -0800 (PST)
-Date:   Fri, 11 Feb 2022 18:07:01 +0800
+ (user=chooglen job=sendgmr) by 2002:a62:b618:: with SMTP id
+ j24mr997283pff.42.1644574151364; Fri, 11 Feb 2022 02:09:11 -0800 (PST)
+Date:   Fri, 11 Feb 2022 18:09:09 +0800
 In-Reply-To: <20220210191533.659570-1-jonathantanmy@google.com>
-Message-Id: <kl6l7da1yawq.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-Id: <kl6l5yplyat6.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
 References: <20220210191533.659570-1-jonathantanmy@google.com>
 Subject: Re: [PATCH 3/8] submodule: make static functions read submodules from commits
