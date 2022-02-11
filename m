@@ -2,108 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E70B1C433EF
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 07:16:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3566C433EF
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 07:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235564AbiBKHQQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 02:16:16 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38216 "EHLO
+        id S1347789AbiBKHqu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 02:46:50 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231591AbiBKHQP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Feb 2022 02:16:15 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69F6810A4
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 23:16:14 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id 62-20020a17090a09c400b001b80b0742b0so5261209pjo.8
-        for <git@vger.kernel.org>; Thu, 10 Feb 2022 23:16:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=kF5+mknEtQ58orouC+7FmHh6i69QYIV5Sunjl6x3a5o=;
-        b=DHzy8ov4enILx0Iw1kXF3oHQXSe6cxFHHpqLo3W/7ASKmPx3mMDl7T371jj03ZjQQn
-         noXVn4eqRjBZ46OcDGtou441qowegnmTt9qmtwDuHHm3PofXlgnL/mFG20hH1EXqrK+n
-         RGgOvpbFh58gqmSFh7+jkdnRnzPnd/FjBuSNZ8TPPdF8Bel6j3PP0BfmZlya/dD0A98r
-         0nT28NI7rh1BlFpy52S0mNNrNRytaXhDlfmSemqI+rfLVkeBRaZeoj643ocXwgj5E4j9
-         q5uFjD9tlFgC9VcRrmA6y3G57QYqnz6obFtAo/q/mDiO4R2AM5gNvomunFwVJtR6NEK0
-         kNHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=kF5+mknEtQ58orouC+7FmHh6i69QYIV5Sunjl6x3a5o=;
-        b=l3lj6NSM4yKkBM55jqU7ZAA0mlNTVCjqiaCh6AaYopfe8V8bj4TP0/3iX8A7XXUbgh
-         M4iON4uswtwr4lOjip7mYezUFSlP1ygXAncPLMBxF7AqC9VRCwmyfkx4AhfA2hnF9X7D
-         5OF+aq053GT/TE8H5KVAUm8aiqxUaP9YLQd058EKO6GFPR8x7dQUeB3ASKGmgTSEuC+u
-         TCm8QYtTViZqlg1FISxCwaRmjFOWQTz5rnvzEwzhwSCxLKBSe2WOlCC2nJURHGcB1Pcy
-         xIEpqdrazqO8v60l4Zgb38mF+DVOUl/VI4LjpmsKgN8yNfmDWXqXSF7rBp6LCR+lQnPQ
-         omag==
-X-Gm-Message-State: AOAM531qCMesVzgD8SWQ/mtMSuxJx2kc+FcH72VLfZ9slRjrPHv8vWiw
-        5ltE5fwvVVsULh+KB0rCeaKxU3us5CY2Bw==
-X-Google-Smtp-Source: ABdhPJys7CdPCmVKpbxp+wQOEi9ErbQQbe/zNJZ8leqGgWUesasreV6RwWlpWnyY149fnuBORI158FHb6rcBsA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:bd01:: with SMTP id
- p1mr401524pls.29.1644563773713; Thu, 10 Feb 2022 23:16:13 -0800 (PST)
-Date:   Fri, 11 Feb 2022 15:15:58 +0800
-In-Reply-To: <xmqqtud6e3r8.fsf@gitster.g>
-Message-Id: <kl6lbkzdyitt.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220210044152.78352-1-chooglen@google.com> <20220210044152.78352-8-chooglen@google.com>
- <xmqqtud6e3r8.fsf@gitster.g>
-Subject: Re: [PATCH 7/8] fetch: fetch unpopulated, changed submodules
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229789AbiBKHqt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Feb 2022 02:46:49 -0500
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5FAE2D4
+        for <git@vger.kernel.org>; Thu, 10 Feb 2022 23:46:48 -0800 (PST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id 79E483200AC9
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 02:46:46 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Fri, 11 Feb 2022 02:46:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+        :content-type:date:date:from:from:in-reply-to:message-id
+        :mime-version:reply-to:sender:subject:subject:to:to; s=fm3; bh=T
+        veHNyXcAr9Il534VmfpwwUcorfIAlP1UBvocuWI9WU=; b=g2Du0GzSin/dYbR1K
+        8MaV7lhl47wTOAVnFKlvWHl58oiT4UOfPEFpitak1yBbJvu0XocvXBnhIVLKlZqg
+        mRkBlXUESC3n0uzBE4nIh1SFLyzcm1y1vMUhL/fJsTDWrnbvg5FmfgDQEMcCFf6L
+        juD46pcS/Oh9QfnVB+SzNvtO7xBe6H5DYueQHvuMaARi4NahAzXQM3xiBYFfc81i
+        EjjWNbvNlz08nMcFwetS4fPaLHtN7Vv+gLbUawug6oT6yulqR18duP5wr8yS7szS
+        SoqT2lrP9U1vW8nhefaMCr2yrG51uMUs3+YJJY/rKqiDBzSEgKqwKTpNLl/N5FMW
+        2u6EA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:date:from:from
+        :in-reply-to:message-id:mime-version:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; bh=TveHNyXcAr9Il534VmfpwwUcorfIAlP1UBvocuWI9
+        WU=; b=Gn7slzPMCdyaVi7icsDPCO0inZaVQ30XaV+eaYEYhnuRcxkqOpVuVkiSr
+        z/p31mTEqLBqyY8KGa83N/giGhcLUrvh1wUA2LNenFR/ZPiAZ9/bya2f3MpYQ8Zo
+        rg2eizFtbUVyMxI08haycMjEKsobLHKhzB8cIAiuckrW354kwGhwwBU9eJgNTXYs
+        wznHMM+AGrRTVjm+qKSfNyFbjYlDmMsoD/q3reue3+uMV/VY+OVVFku2pwoqcMDk
+        LCDejYdCwHYsWfsex3FG3PbihNo/bcYrsFrlM39paG0F1XEzXr7FEJFPKGTLAMvp
+        vVNVjHUA93Y7dg61qutwUEWXjyAsA==
+X-ME-Sender: <xms:ZRQGYsXwTdrS98oMQ9sVywXS0dBvXvDCNnK_-14wPiuILijZr5qfdg>
+    <xme:ZRQGYgmeEg3oW3Gl3VfyW5UW9Ot03BSR3l6cnMvOtMXMCK9yWFRgH7vOGR97_bbZu
+    lJloaA7pf_gHQN7mw>
+X-ME-Received: <xmr:ZRQGYga4lcBThD1IfN60LdIrR0SK076VG4Kx4I3KUChf900lqJxJaepWlvTMd-GiAYc2IggRkKbQbR5S71w24fo0I2457voDj-s7mAa083hTMta4ozwf2Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddriedvgddutdeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:ZRQGYrUqgKEuZZCDXmZAI4k4SczR0pK1Y1H0XbO9nDaqqq0uSHhxAg>
+    <xmx:ZRQGYmmREHuaHxOTHZ-oiXaISpVEz3vENrNpdhx_jCkk_P00EW_mMw>
+    <xmx:ZRQGYgfcZOQSPDGrAlOkAeoJeq78EtGnzadVRgVZ_Ds4vYIw96Q65Q>
+    <xmx:ZhQGYgQpnx0wb4UgV-4KjonD6dqYnWoXeuYDqqT42_-kqFAlmENShA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 11 Feb 2022 02:46:45 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id f4ff24ef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        for <git@vger.kernel.org>;
+        Fri, 11 Feb 2022 07:46:40 +0000 (UTC)
+Date:   Fri, 11 Feb 2022 08:46:39 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/6] fetch: improve atomicity of `--atomic` flag
+Message-ID: <cover.1644565025.git.ps@pks.im>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="TGdtEoOnMVg4Mq/b"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
->> +static struct fetch_task *
->> +get_fetch_task_from_changed(struct submodule_parallel_fetch *spf,
->> +			    const char **default_argv, struct strbuf *err)
->> +{
->
->> @@ -1553,7 +1628,10 @@ static int get_next_submodule(struct child_process *cp, struct strbuf *err,
->>  {
->>  	struct submodule_parallel_fetch *spf = data;
->>  	const char *default_argv = NULL;
->> -	struct fetch_task *task = get_fetch_task(spf, &default_argv, err);
->> +	struct fetch_task *task =
->> +		get_fetch_task_from_index(spf, &default_argv, err);
->> +	if (!task)
->> +		task = get_fetch_task_from_changed(spf, &default_argv, err);
->
-> Hmph, intersting.  So if "from index" grabbed some submodules
-> already, then the "from the changes in the superproject, we know
-> these submodules need refreshing" is not happen at all?  I am afraid
-> that I am still not following this...
+--TGdtEoOnMVg4Mq/b
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hm, perhaps the following will help:
+Hi,
 
-- get_next_submodule() is an iterator, specifically, it is a
-  get_next_task_fn passed to run_processes_parallel_tr2(). It gets
-  called until it is exhausted.
-- Since get_next_submodule() is an iterator, I've implemented
-  get_fetch_task_from_index() and get_fetch_task_from_changed() as
-  iterators (they return NULL when they are exhausted).
+in c7b190dabd (fetch: implement support for atomic reference updates,
+2021-01-12), I have added a new `--atomic` flag to git-fetch(1) which is
+supposed to make it an all-or-nothing operation: either all refs are
+updated, or none is. I have recently discovered though that there were
+two oversights: neither pruning of refs via `--prune` nor the tag
+backfill mechanism are currently covered by this flag, which breaks the
+promise.
 
-So in practice:
+This patch series extends coverage of the `--atomic` flag to fix my
+oversights. It applies on top of ps/avoid-unnecessary-hook-invocation-with-=
+packed-refs
+merged to v2.35.1 due to a semantic conflict in tests: I use the reftx
+hook to verify some things work as expected, and above branch causes us
+to not execute the hook for packed-refs anymore.
 
-- We repeatedly call get_next_submodule(), which tries to get a fetch
-  task by calling the get_fetch_task_* functions.
-- If get_fetch_task_from_index() returns non-NULL, get_next_submodule()
-  uses that fetch task.
-- Eventually, we will have considered every submodule in the index. At
-  that point, get_fetch_task_from_index() is exhausted and always
-  returns NULL.
-- Since get_fetch_task_from_index() returns NULL, get_next_submodule()
-  now gets its fetch tasks from get_fetch_task_from_changed().
-- Eventually, we will also have considered every changed submodule, and
-  get_fetch_task_from_changed() is exhausted.
-- get_next_submodule() has now been exhausted and we are done.
+It is structured as follows:
 
-As for the other questions, I'll dig a bit deeper before getting back to
-you with answers.
+    - Patch 1 adds multiple tests which demonstrate issues with
+      backfilling and the lacking atomicity.
+
+    - Patch 2 and 3 do some preliminary refactorings which set the stage
+      for improved atomicity.
+
+    - Patch 4 fixes a bug with backfilling tags: we don't return an
+      error code to the user if the backfill fails.
+
+    - Patch 5 and 6 then finally extend the atomicity guarantees.
+
+I'm not yet all that happy with patch 5: it currently has to reach into
+the `ref_transaction` struct to be able to filter out any updates which
+have already been queued such that we don't accidentally queue the same
+tag update twice. I first wanted to get some feedback on this patch
+series though, and in case it is agreed that it fixes a real issue I may
+introduce a new non-internal API which allows iterating over queued
+updates.
+
+Patrick
+
+Patrick Steinhardt (6):
+  fetch: increase test coverage of fetches
+  fetch: backfill tags before setting upstream
+  fetch: control lifecycle of FETCH_HEAD in a single place
+  fetch: report errors when backfilling tags fails
+  fetch: make `--atomic` flag cover backfilling of tags
+  fetch: make `--atomic` flag cover pruning of refs
+
+ builtin/fetch.c      | 190 +++++++++++++++++++++++++++++--------------
+ t/t5503-tagfollow.sh |  78 ++++++++++++++++++
+ t/t5510-fetch.sh     |  31 +++++++
+ 3 files changed, 236 insertions(+), 63 deletions(-)
+
+--=20
+2.35.1
+
+
+--TGdtEoOnMVg4Mq/b
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIGFF4ACgkQVbJhu7ck
+PpRyIQ/+I8AkMx8ZljKBvq30lwRhr5iOoK89YwJ3isFdB8bG0zD5PLTE0im2M8zR
+tLrWpxrWHBpwp0C8w4hKCFoYyl973zRyNPgEqTvrWP6k+vwgu+8fzRfwQoKwPw9T
+ckE7XDHdaJ2z8CsYuMTrngfiZES1GXuEfA5jQV9wrGPmfgBZ3w1vO4yRSPciOTD5
+VEDqK4K0+LqiLbi42ThkJ6rNJnzBF8ZFnxWZYoYzH7F0gSjwuaxiBBGQV544htwt
+lM63IJiEw6TizSHGfPYEFVyQJ8OP7dM07BD+qSZgP8A8dWrc/axnk1n+KTLAADPX
+7t4ZyOe5st0SJcAEpgfciMrneUDyNsPAm1LUE3/C5SDadMV612Ls9wYqDl06Tax3
+fk6s3kKRw2cGa5l+1I9dkZASq3l49eUMHlzN6maZ9coWgT5vBqzkCSaF8O3J9eaB
+bsOErGAFbKzQjKlku65xeoLZtVkDRCeINI0eFRjDswp9G0AwRSQmaBftP4G3SCU9
+rdKD79Lcamrp/BmTgCXpmwt0PZR6SzzS9zsjKLilvfniQq5JQBq1NfmQI9fYVnG6
+k3RPdUubUUw9r2X8YBUHSO2U1HqLDJxf6o4pLGQvv6a9k0FZ4vRxsBrEveVRG0/H
+q7zBpgo4lePQ6QBDtpfW2SwJa4BIMwDHsezuCJGMgO51gN9gPnU=
+=26Rx
+-----END PGP SIGNATURE-----
+
+--TGdtEoOnMVg4Mq/b--
