@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A84A9C433F5
-	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED0E5C433FE
+	for <git@archiver.kernel.org>; Fri, 11 Feb 2022 20:57:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350877AbiBKU5V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Feb 2022 15:57:21 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49968 "EHLO
+        id S1350609AbiBKU5X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Feb 2022 15:57:23 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353596AbiBKU4v (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1353600AbiBKU4v (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 11 Feb 2022 15:56:51 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43F46D79
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:40 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id i14so17128974wrc.10
-        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:40 -0800 (PST)
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DA91D7C
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:41 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id l123-20020a1c2581000000b0037b9d960079so8022509wml.0
+        for <git@vger.kernel.org>; Fri, 11 Feb 2022 12:56:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=sUcQ+26rC1Ux3D+ncgijGHdy4wd4gB4DkrREXrn3jmQ=;
-        b=E0yHazpYEwac+aO+0Cqlv2TbCL8xrlDFbLo32WC3IRYJ0SeQChUqAF7AAnht1ye2WC
-         OLaMb4hH+DWofcwMWci2b7p4Tx08ao2KUHSjaKqU4hZ5JjV/U0pebpNjND9EtubbCiZx
-         LzZeHxSicXBmW7GBsllw5R2t6T42wTkMVwca2BQohMaoSNJ3i/sMtKnWuho+jAdT9/NW
-         mqRR3nPBJFhqfx2hTNInctqAUO32COn/rKeVgwswJOIJ+LaB1lBv0/l1REL4/3lRFAJG
-         c/Z2nt+mpSyD8FjvcCxE/xLFWDElgCtI6HdNKUxOdwQTLNCVQvoASj5tHlo4DvmB7fYx
-         FKwA==
+        bh=h+Ll16drRrZ0MQ3JZUEyAlGPlME6mRvqakNQhG3XdjE=;
+        b=AcmwlRm2Y0BqJwU3/4yCUmU6gYI0+sC5mgwXQf7jVRvatllpuELt2z9okpZPH5oWLi
+         EmF+h6/Er1BEFov6lxN+lXC6d7rqcuB6+tyyl2MviBkLLyNg2/VLbsFASKPyyzSWHLc9
+         5mh8rJ++viKSjOJqLqyfm/4hP3fYMruwMB3Z4Igg4O5P5LzDqeluEacFev/L8VCqL+f9
+         4AZTyer4qaaNnZdJmO74LNvzJFnLRZc2jBMPbTecDxG1p/OSf1oBMI5OrlVmWDJCyXaq
+         mZbdrsygJPSjCvnPDDjPKp8USaTrQmLRNlAvOeC2Ni/hmsg4cNg18epXt1HVgCWh0Vjk
+         VkWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sUcQ+26rC1Ux3D+ncgijGHdy4wd4gB4DkrREXrn3jmQ=;
-        b=fDRDiU2b0wRWnyddypxSAiNqLtt/gpmUrhX/Y0jHW47VPhNmp9pH0U5mSUmClq1iV+
-         tx7ngD3jXcvaDQpOiaxUO9XCRk5qIWLOXoHXNPLeHwgWItx/HBjYtigCx/QFZSPDTz4d
-         wE+wNoczW3tqB2Jc1SyMjSbOVsE11thWMvFEqBV33oTrXcpOBEVHHAN5oRl0xnITIw11
-         oo/VEpNkGYYU7fInhsAKuUu+876yTYkQu/2rfOXc8usaSsJao5JGAb0yRs+hlE+yvT1S
-         2rJvAt0/EYG9VuFSGLmIVtEzKFRPZr8gZrodGx+TSlHcRbrFO6aYXlxoSaZ2YY7kCU5/
-         xRUg==
-X-Gm-Message-State: AOAM531dr1Yp3PBFPHN5pZTroudIxIQmjb0v2i38PFlMTR1tnI0p06R/
-        FJo9Qsv11q2ZC6T2Vk5KCauyC/Moum4=
-X-Google-Smtp-Source: ABdhPJz7r28t5KeD9T6ZevemGydGT7OUAJyHxOOzAF2RNNpkwH6pLYcLmMnMF69BCjkXHsr0gj+0zQ==
-X-Received: by 2002:a05:6000:251:: with SMTP id m17mr2747745wrz.88.1644612998340;
-        Fri, 11 Feb 2022 12:56:38 -0800 (PST)
+        bh=h+Ll16drRrZ0MQ3JZUEyAlGPlME6mRvqakNQhG3XdjE=;
+        b=xADIfzMfZMUEZ3jmWPJtoaA7D189R1+ChEePHDwuPIK/Hsspzjy+8YBi2diy5uU/11
+         Tqh/b0dsEskmZFREo7ycOIPHhVIzdemEAslcI3TIfq24iIpehyGZAnse2NSIjpqcw7xp
+         giGKMDaPwwkAOiwoJcJGQU1hrB+ojykQKFkeF4Myw5En525PafFWCGa0sJA3fowE3ATd
+         nMAf64ozOljnzAFOQassgJP1gN44TdEGQdYxJOXaKc8sy1zsF0TUzNuCajt2LZHjHZPp
+         bCCg2mbNLPQcW08D9wIBooq9NlERWbmYOb6r9UoVpeoAhcJGYRcZnmWWml8N42oksm1L
+         Aaww==
+X-Gm-Message-State: AOAM530g+vjMFSnvyzZWSU2hZcdje9zzdUPV6sGx6gLNxzeFdjNiMxDa
+        wkQBIZ1a/6AkLW6ePEGl9bazYKtUlYU=
+X-Google-Smtp-Source: ABdhPJy8DMrOpgwU8kyvu9Gvy6rYNjw6Q1CskcBk26HH58jikeO3VJTG8uN1tqNJs4W3NFPwLEKnXg==
+X-Received: by 2002:a05:600c:511e:: with SMTP id o30mr1778252wms.36.1644613000103;
+        Fri, 11 Feb 2022 12:56:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o12sm25913402wry.115.2022.02.11.12.56.37
+        by smtp.gmail.com with ESMTPSA id l12sm4680571wmd.44.2022.02.11.12.56.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Feb 2022 12:56:37 -0800 (PST)
-Message-Id: <d93310a7c64b4b02e05c3da3c7d52fca39be759b.1644612979.git.gitgitgadget@gmail.com>
+        Fri, 11 Feb 2022 12:56:39 -0800 (PST)
+Message-Id: <6cba1d950b013410ecc6ffc15bfcba02c51d6de2.1644612979.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
 References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
         <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 11 Feb 2022 20:56:10 +0000
-Subject: [PATCH v5 21/30] t7527: create test for fsmonitor--daemon
+Date:   Fri, 11 Feb 2022 20:56:12 +0000
+Subject: [PATCH v5 23/30] t/helper/test-chmtime: skip directories on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,529 +71,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
+Teach `test-tool.exe chmtime` to ignore errors when setting the mtime
+on a directory on Windows.
+
+NEEDSWORK: The Windows version of `utime()` (aka `mingw_utime()`) does
+not properly handle directories because it uses `_wopen()`.  It should
+be converted to using `CreateFileW()` and backup semantics at a minimum.
+Since I'm already in the middle of a large patch series, I did not want
+to destabilize other callers of `utime()` right now.  The problem has
+only been observed in the t/perf/p7519 test when the test repo contains
+an empty directory on disk.
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/t7527-builtin-fsmonitor.sh | 511 +++++++++++++++++++++++++++++++++++
- 1 file changed, 511 insertions(+)
- create mode 100755 t/t7527-builtin-fsmonitor.sh
+ t/helper/test-chmtime.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-new file mode 100755
-index 00000000000..5f7b8e54233
---- /dev/null
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -0,0 +1,511 @@
-+#!/bin/sh
-+
-+test_description='built-in file system watcher'
-+
-+. ./test-lib.sh
-+
-+if ! test_have_prereq FSMONITOR_DAEMON
-+then
-+	skip_all="fsmonitor--daemon is not supported on this platform"
-+	test_done
-+fi
-+
-+stop_daemon_delete_repo () {
-+	r=$1
-+	git -C $r fsmonitor--daemon stop >/dev/null 2>/dev/null
-+	rm -rf $1
-+	return 0
-+}
-+
-+start_daemon () {
-+	case "$#" in
-+		1) r="-C $1";;
-+		*) r="";
-+	esac
-+
-+	git $r fsmonitor--daemon start || return $?
-+	git $r fsmonitor--daemon status || return $?
-+
-+	return 0
-+}
-+
-+# Is a Trace2 data event present with the given catetory and key?
-+# We do not care what the value is.
-+#
-+have_t2_data_event () {
-+	c=$1
-+	k=$2
-+
-+	grep -e '"event":"data".*"category":"'"$c"'".*"key":"'"$k"'"'
-+}
-+
-+test_expect_success 'explicit daemon start and stop' '
-+	test_when_finished "stop_daemon_delete_repo test_explicit" &&
-+
-+	git init test_explicit &&
-+	start_daemon test_explicit &&
-+
-+	git -C test_explicit fsmonitor--daemon stop &&
-+	test_must_fail git -C test_explicit fsmonitor--daemon status
-+'
-+
-+test_expect_success 'implicit daemon start' '
-+	test_when_finished "stop_daemon_delete_repo test_implicit" &&
-+
-+	git init test_implicit &&
-+	test_must_fail git -C test_implicit fsmonitor--daemon status &&
-+
-+	# query will implicitly start the daemon.
-+	#
-+	# for test-script simplicity, we send a V1 timestamp rather than
-+	# a V2 token.  either way, the daemon response to any query contains
-+	# a new V2 token.  (the daemon may complain that we sent a V1 request,
-+	# but this test case is only concerned with whether the daemon was
-+	# implicitly started.)
-+
-+	GIT_TRACE2_EVENT="$(pwd)/.git/trace" \
-+		test-tool -C test_implicit fsmonitor-client query --token 0 >actual &&
-+	nul_to_q <actual >actual.filtered &&
-+	grep "builtin:" actual.filtered &&
-+
-+	# confirm that a daemon was started in the background.
-+	#
-+	# since the mechanism for starting the background daemon is platform
-+	# dependent, just confirm that the foreground command received a
-+	# response from the daemon.
-+
-+	have_t2_data_event fsm_client query/response-length <.git/trace &&
-+
-+	git -C test_implicit fsmonitor--daemon status &&
-+	git -C test_implicit fsmonitor--daemon stop &&
-+	test_must_fail git -C test_implicit fsmonitor--daemon status
-+'
-+
-+test_expect_success 'implicit daemon stop (delete .git)' '
-+	test_when_finished "stop_daemon_delete_repo test_implicit_1" &&
-+
-+	git init test_implicit_1 &&
-+
-+	start_daemon test_implicit_1 &&
-+
-+	# deleting the .git directory will implicitly stop the daemon.
-+	rm -rf test_implicit_1/.git &&
-+
-+	# [1] Create an empty .git directory so that the following Git
-+	#     command will stay relative to the `-C` directory.
-+	#
-+	#     Without this, the Git command will override the requested
-+	#     -C argument and crawl out to the containing Git source tree.
-+	#     This would make the test result dependent upon whether we
-+	#     were using fsmonitor on our development worktree.
-+	#
-+	sleep 1 &&
-+	mkdir test_implicit_1/.git &&
-+
-+	test_must_fail git -C test_implicit_1 fsmonitor--daemon status
-+'
-+
-+test_expect_success 'implicit daemon stop (rename .git)' '
-+	test_when_finished "stop_daemon_delete_repo test_implicit_2" &&
-+
-+	git init test_implicit_2 &&
-+
-+	start_daemon test_implicit_2 &&
-+
-+	# renaming the .git directory will implicitly stop the daemon.
-+	mv test_implicit_2/.git test_implicit_2/.xxx &&
-+
-+	# See [1] above.
-+	#
-+	sleep 1 &&
-+	mkdir test_implicit_2/.git &&
-+
-+	test_must_fail git -C test_implicit_2 fsmonitor--daemon status
-+'
-+
-+test_expect_success 'cannot start multiple daemons' '
-+	test_when_finished "stop_daemon_delete_repo test_multiple" &&
-+
-+	git init test_multiple &&
-+
-+	start_daemon test_multiple &&
-+
-+	test_must_fail git -C test_multiple fsmonitor--daemon start 2>actual &&
-+	grep "fsmonitor--daemon is already running" actual &&
-+
-+	git -C test_multiple fsmonitor--daemon stop &&
-+	test_must_fail git -C test_multiple fsmonitor--daemon status
-+'
-+
-+# These tests use the main repo in the trash directory
-+
-+test_expect_success 'setup' '
-+	>tracked &&
-+	>modified &&
-+	>delete &&
-+	>rename &&
-+	mkdir dir1 &&
-+	>dir1/tracked &&
-+	>dir1/modified &&
-+	>dir1/delete &&
-+	>dir1/rename &&
-+	mkdir dir2 &&
-+	>dir2/tracked &&
-+	>dir2/modified &&
-+	>dir2/delete &&
-+	>dir2/rename &&
-+	mkdir dirtorename &&
-+	>dirtorename/a &&
-+	>dirtorename/b &&
-+
-+	cat >.gitignore <<-\EOF &&
-+	.gitignore
-+	expect*
-+	actual*
-+	EOF
-+
-+	git -c core.fsmonitor=false add . &&
-+	test_tick &&
-+	git -c core.fsmonitor=false commit -m initial &&
-+
-+	git config core.fsmonitor true
-+'
-+
-+# The test already explicitly stopped (or tried to stop) the daemon.
-+# This is here in case something else fails first.
-+#
-+redundant_stop_daemon () {
-+	git fsmonitor--daemon stop
-+	return 0
-+}
-+
-+test_expect_success 'update-index implicitly starts daemon' '
-+	test_when_finished redundant_stop_daemon &&
-+
-+	test_must_fail git fsmonitor--daemon status &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/.git/trace_implicit_1" \
-+		git update-index --fsmonitor &&
-+
-+	git fsmonitor--daemon status &&
-+	test_might_fail git fsmonitor--daemon stop &&
-+
-+	# Confirm that the trace2 log contains a record of the
-+	# daemon starting.
-+	test_subcommand git fsmonitor--daemon start <.git/trace_implicit_1
-+'
-+
-+test_expect_success 'status implicitly starts daemon' '
-+	test_when_finished redundant_stop_daemon &&
-+
-+	test_must_fail git fsmonitor--daemon status &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/.git/trace_implicit_2" \
-+		git status >actual &&
-+
-+	git fsmonitor--daemon status &&
-+	test_might_fail git fsmonitor--daemon stop &&
-+
-+	# Confirm that the trace2 log contains a record of the
-+	# daemon starting.
-+	test_subcommand git fsmonitor--daemon start <.git/trace_implicit_2
-+'
-+
-+edit_files () {
-+	echo 1 >modified
-+	echo 2 >dir1/modified
-+	echo 3 >dir2/modified
-+	>dir1/untracked
-+}
-+
-+delete_files () {
-+	rm -f delete
-+	rm -f dir1/delete
-+	rm -f dir2/delete
-+}
-+
-+create_files () {
-+	echo 1 >new
-+	echo 2 >dir1/new
-+	echo 3 >dir2/new
-+}
-+
-+rename_files () {
-+	mv rename renamed
-+	mv dir1/rename dir1/renamed
-+	mv dir2/rename dir2/renamed
-+}
-+
-+file_to_directory () {
-+	rm -f delete
-+	mkdir delete
-+	echo 1 >delete/new
-+}
-+
-+directory_to_file () {
-+	rm -rf dir1
-+	echo 1 >dir1
-+}
-+
-+verify_status () {
-+	git status >actual &&
-+	GIT_INDEX_FILE=.git/fresh-index git read-tree master &&
-+	GIT_INDEX_FILE=.git/fresh-index git -c core.fsmonitor=false status >expect &&
-+	test_cmp expect actual &&
-+	echo HELLO AFTER &&
-+	cat .git/trace &&
-+	echo HELLO AFTER
-+}
-+
-+# The next few test cases confirm that our fsmonitor daemon sees each type
-+# of OS filesystem notification that we care about.  At this layer we just
-+# ensure we are getting the OS notifications and do not try to confirm what
-+# is reported by `git status`.
-+#
-+# We run a simple query after modifying the filesystem just to introduce
-+# a bit of a delay so that the trace logging from the daemon has time to
-+# get flushed to disk.
-+#
-+# We `reset` and `clean` at the bottom of each test (and before stopping the
-+# daemon) because these commands might implicitly restart the daemon.
-+
-+clean_up_repo_and_stop_daemon () {
-+	git reset --hard HEAD
-+	git clean -fd
-+	git fsmonitor--daemon stop
-+	rm -f .git/trace
-+}
-+
-+test_expect_success 'edit some files' '
-+	test_when_finished clean_up_repo_and_stop_daemon &&
-+
-+	(
-+		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
-+		export GIT_TRACE_FSMONITOR &&
-+
-+		start_daemon
-+	) &&
-+
-+	edit_files &&
-+
-+	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
-+
-+	grep "^event: dir1/modified$"  .git/trace &&
-+	grep "^event: dir2/modified$"  .git/trace &&
-+	grep "^event: modified$"       .git/trace &&
-+	grep "^event: dir1/untracked$" .git/trace
-+'
-+
-+test_expect_success 'create some files' '
-+	test_when_finished clean_up_repo_and_stop_daemon &&
-+
-+	(
-+		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
-+		export GIT_TRACE_FSMONITOR &&
-+
-+		start_daemon
-+	) &&
-+
-+	create_files &&
-+
-+	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
-+
-+	grep "^event: dir1/new$" .git/trace &&
-+	grep "^event: dir2/new$" .git/trace &&
-+	grep "^event: new$"      .git/trace
-+'
-+
-+test_expect_success 'delete some files' '
-+	test_when_finished clean_up_repo_and_stop_daemon &&
-+
-+	(
-+		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
-+		export GIT_TRACE_FSMONITOR &&
-+
-+		start_daemon
-+	) &&
-+
-+	delete_files &&
-+
-+	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
-+
-+	grep "^event: dir1/delete$" .git/trace &&
-+	grep "^event: dir2/delete$" .git/trace &&
-+	grep "^event: delete$"      .git/trace
-+'
-+
-+test_expect_success 'rename some files' '
-+	test_when_finished clean_up_repo_and_stop_daemon &&
-+
-+	(
-+		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
-+		export GIT_TRACE_FSMONITOR &&
-+
-+		start_daemon
-+	) &&
-+
-+	rename_files &&
-+
-+	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
-+
-+	grep "^event: dir1/rename$"  .git/trace &&
-+	grep "^event: dir2/rename$"  .git/trace &&
-+	grep "^event: rename$"       .git/trace &&
-+	grep "^event: dir1/renamed$" .git/trace &&
-+	grep "^event: dir2/renamed$" .git/trace &&
-+	grep "^event: renamed$"      .git/trace
-+'
-+
-+test_expect_success 'rename directory' '
-+	test_when_finished clean_up_repo_and_stop_daemon &&
-+
-+	(
-+		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
-+		export GIT_TRACE_FSMONITOR &&
-+
-+		start_daemon
-+	) &&
-+
-+	mv dirtorename dirrenamed &&
-+
-+	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
-+
-+	grep "^event: dirtorename/*$" .git/trace &&
-+	grep "^event: dirrenamed/*$"  .git/trace
-+'
-+
-+test_expect_success 'file changes to directory' '
-+	test_when_finished clean_up_repo_and_stop_daemon &&
-+
-+	(
-+		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
-+		export GIT_TRACE_FSMONITOR &&
-+
-+		start_daemon
-+	) &&
-+
-+	file_to_directory &&
-+
-+	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
-+
-+	grep "^event: delete$"     .git/trace &&
-+	grep "^event: delete/new$" .git/trace
-+'
-+
-+test_expect_success 'directory changes to a file' '
-+	test_when_finished clean_up_repo_and_stop_daemon &&
-+
-+	(
-+		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace" &&
-+		export GIT_TRACE_FSMONITOR &&
-+
-+		start_daemon
-+	) &&
-+
-+	directory_to_file &&
-+
-+	test-tool fsmonitor-client query --token 0 >/dev/null 2>&1 &&
-+
-+	grep "^event: dir1$" .git/trace
-+'
-+
-+# The next few test cases exercise the token-resync code.  When filesystem
-+# drops events (because of filesystem velocity or because the daemon isn't
-+# polling fast enough), we need to discard the cached data (relative to the
-+# current token) and start collecting events under a new token.
-+#
-+# the 'test-tool fsmonitor-client flush' command can be used to send a
-+# "flush" message to a running daemon and ask it to do a flush/resync.
-+
-+test_expect_success 'flush cached data' '
-+	test_when_finished "stop_daemon_delete_repo test_flush" &&
-+
-+	git init test_flush &&
-+
-+	(
-+		GIT_TEST_FSMONITOR_TOKEN=true &&
-+		export GIT_TEST_FSMONITOR_TOKEN &&
-+
-+		GIT_TRACE_FSMONITOR="$(pwd)/.git/trace_daemon" &&
-+		export GIT_TRACE_FSMONITOR &&
-+
-+		start_daemon test_flush
-+	) &&
-+
-+	# The daemon should have an initial token with no events in _0 and
-+	# then a few (probably platform-specific number of) events in _1.
-+	# These should both have the same <token_id>.
-+
-+	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000001:0" >actual_0 &&
-+	nul_to_q <actual_0 >actual_q0 &&
-+
-+	touch test_flush/file_1 &&
-+	touch test_flush/file_2 &&
-+
-+	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000001:0" >actual_1 &&
-+	nul_to_q <actual_1 >actual_q1 &&
-+
-+	grep "file_1" actual_q1 &&
-+
-+	# Force a flush.  This will change the <token_id>, reset the <seq_nr>, and
-+	# flush the file data.  Then create some events and ensure that the file
-+	# again appears in the cache.  It should have the new <token_id>.
-+
-+	test-tool -C test_flush fsmonitor-client flush >flush_0 &&
-+	nul_to_q <flush_0 >flush_q0 &&
-+	grep "^builtin:test_00000002:0Q/Q$" flush_q0 &&
-+
-+	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000002:0" >actual_2 &&
-+	nul_to_q <actual_2 >actual_q2 &&
-+
-+	grep "^builtin:test_00000002:0Q$" actual_q2 &&
-+
-+	touch test_flush/file_3 &&
-+
-+	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000002:0" >actual_3 &&
-+	nul_to_q <actual_3 >actual_q3 &&
-+
-+	grep "file_3" actual_q3
-+'
-+
-+# The next few test cases create repos where the .git directory is NOT
-+# inside the one of the working directory.  That is, where .git is a file
-+# that points to a directory elsewhere.  This happens for submodules and
-+# non-primary worktrees.
-+
-+test_expect_success 'setup worktree base' '
-+	git init wt-base &&
-+	echo 1 >wt-base/file1 &&
-+	git -C wt-base add file1 &&
-+	git -C wt-base commit -m "c1"
-+'
-+
-+test_expect_success 'worktree with .git file' '
-+	git -C wt-base worktree add ../wt-secondary &&
-+
-+	(
-+		GIT_TRACE2_PERF="$(pwd)/trace2_wt_secondary" &&
-+		export GIT_TRACE2_PERF &&
-+
-+		GIT_TRACE_FSMONITOR="$(pwd)/trace_wt_secondary" &&
-+		export GIT_TRACE_FSMONITOR &&
-+
-+		start_daemon wt-secondary
-+	) &&
-+
-+	git -C wt-secondary fsmonitor--daemon stop &&
-+	test_must_fail git -C wt-secondary fsmonitor--daemon status
-+'
-+
-+# NEEDSWORK: Repeat one of the "edit" tests on wt-secondary and
-+# confirm that we get the same events and behavior -- that is, that
-+# fsmonitor--daemon correctly watches BOTH the working directory and
-+# the external GITDIR directory and behaves the same as when ".git"
-+# is a directory inside the working directory.
-+
-+test_expect_success 'cleanup worktrees' '
-+	stop_daemon_delete_repo wt-secondary &&
-+	stop_daemon_delete_repo wt-base
-+'
-+
-+test_done
+diff --git a/t/helper/test-chmtime.c b/t/helper/test-chmtime.c
+index 524b55ca496..dc28890a183 100644
+--- a/t/helper/test-chmtime.c
++++ b/t/helper/test-chmtime.c
+@@ -134,6 +134,21 @@ int cmd__chmtime(int argc, const char **argv)
+ 		}
+ 
+ 		if (utb.modtime != sb.st_mtime && utime(argv[i], &utb) < 0) {
++#ifdef GIT_WINDOWS_NATIVE
++			if (S_ISDIR(sb.st_mode)) {
++				/*
++				 * NEEDSWORK: The Windows version of `utime()`
++				 * (aka `mingw_utime()`) does not correctly
++				 * handle directory arguments, since it uses
++				 * `_wopen()`.  Ignore it for now since this
++				 * is just a test.
++				 */
++				fprintf(stderr,
++					("Failed to modify time on directory %s. "
++					 "Skipping\n"), argv[i]);
++				continue;
++			}
++#endif
+ 			fprintf(stderr, "Failed to modify time on %s: %s\n",
+ 			        argv[i], strerror(errno));
+ 			return 1;
 -- 
 gitgitgadget
 
