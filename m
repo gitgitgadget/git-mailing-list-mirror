@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80E4AC433EF
-	for <git@archiver.kernel.org>; Sat, 12 Feb 2022 20:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2175AC433EF
+	for <git@archiver.kernel.org>; Sat, 12 Feb 2022 20:35:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231664AbiBLUfQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231667AbiBLUfQ (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 12 Feb 2022 15:35:16 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53458 "EHLO
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231610AbiBLUfG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Feb 2022 15:35:06 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B814606E8
+        with ESMTP id S231625AbiBLUfK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Feb 2022 15:35:10 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD433606E9
         for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:35:02 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id u1so6910243wrg.11
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:35:01 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id x3-20020a05600c21c300b0037c01ad715bso5332263wmj.2
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:35:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Ap4ZqYlnkgb+ZsEVT3Um4/EicxMnYbd2hGinYTe7EAw=;
-        b=HkwDNONTQHTCmGfa92iYdZA6Dd9zV5cyXxSJBhmQSQTO6Ki9ntGvUu10qa3zmoifec
-         skxJZlxMexnzOdcJxOuAPZPlNIeZunSwVH0c5/mkH60YrkteDBJXLzfzC7rtcoh1TWIw
-         HPcujELjUQ/X2QZ++YTHDn8Wa9nMHN+Tbo5303uSjtYf31jKDX1q0TwGklzPoy2Nj9H5
-         AAem9Om1HR5c7jBDYQDBOVY+sbleljYMLrwCuHGR2mgIJWhJuDFiLyZYrMqLZRliyu1/
-         uYqdfC9zGCFlkIzgwXPjQr1rnoDyPskrqObq2HUXEgDdI5yRjWZft8q1epr8ttQ9/rX6
-         7k9g==
+        bh=CzqPmuiPlwT6a7QL+zHW/5Pt51e4bTxme/XtkOQKvGs=;
+        b=FnnOhvQAm/15PmhSUpli638iZI9n8r+nXZKeG8LDlEjRSRokfvIwGRGyZf0BwtL/nN
+         pavaCEvfDKEa32f7JFtJdUlCIsR/mxeylSBKI9HaZSWvvLMdC2wqn66o6R1mutOEYLbs
+         U/AKf8oRVojGrdquU9EoVDxTwo7Z0AphrpOP2Gf0pZV9QWDqDLPOA33cqVPOVMZ4e4jC
+         H4AFxCOFl34s0pyZFIKrrH/eysWb6pfuOkaUhvA4b07Dz6Tj3clADDQMNH3plMpoKyLH
+         aM6xnCJnkd9icgIqQLt4UOJgEtjFSAPv7JX/49BOs0l691lkEHKnW8CKh5bCZ4zMqLON
+         TtuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Ap4ZqYlnkgb+ZsEVT3Um4/EicxMnYbd2hGinYTe7EAw=;
-        b=JK+1+vCRkHnoFT+x2dTYQZNvoMvCWkAxl9iJp3Akd6CC/ypNNWyHrVMwHKTunABXE5
-         0TwJ8AvVW3OV04zEWHc2LxXEmREd4PIX+2XgChlAdH40ZTj0mgLjf6EkqsqjdDObHAzL
-         Xa4qXQomT1tt+tu5dn0ToldSpABzqiNryWSqfFJ99mSbL1cc9DGi1yut1tjEI2nI4zS6
-         0bJHwBlSx5kF/py26xMC8fQUF6c4mfCO5GGZirfd/sf2FY9hq8/poX7/nImK2isljtWv
-         kEpjolx5BfgdhvL3tVSjMCfikDocPARd+sKepVAiGPGbDCGdBbmmBoeuZccHvIGFr4fR
-         mvJQ==
-X-Gm-Message-State: AOAM532q1ECWVv7Iqs6mrcKt1SwVa4agS4dLD4oo+cwsngxrjEwg5BYj
-        OJ+EmGNZy1CFd1Y+KSWrUcSYv3/NF1g=
-X-Google-Smtp-Source: ABdhPJzGo34LPIGcNFWwTLQmRkv0T3/90GUJx7VQEq3nxGf2Fixg3a+jxL0Euu1O2TfWxZjTERf64Q==
-X-Received: by 2002:a05:6000:2c8:: with SMTP id o8mr5917811wry.663.1644698100503;
-        Sat, 12 Feb 2022 12:35:00 -0800 (PST)
+        bh=CzqPmuiPlwT6a7QL+zHW/5Pt51e4bTxme/XtkOQKvGs=;
+        b=CH8n0ksK/YEURbQXEoqlx0S9NwGVZprEHH0B7HHLyFVpb4WzEEwFJ60ZZFJH3wBmk7
+         0P9CvjilIZaY5RoXT3bYVNaWZwW0hSEKP9GumanyKrr/wrdM+rOp7ImcHn5bu5e82DYb
+         lEaHnD4c8nxQhHr8jCK2vBSN8V8bVR78oi+Uc5NaQtUwGbYuCQ8ltpGPp/ia/1gMyiqL
+         mSLBomKfb2KnhREna4llwWI1koGztfHi9Xvb+ihDn0pyx+a3ZKgjB3NiR8LROfGH0YwT
+         ko/Mc3iFupcClzHuo9adrfR01+gqgk6TWK+qd0GdLljiRrzW2mTWRZIaeqooajspCdHy
+         Zlew==
+X-Gm-Message-State: AOAM533IJIZ8/1S03pyDAtMlzOq0NKZtTd6jR1VRC/a2zWDVqAjQK2VL
+        EVle5iErSpT6aAkZBLoWcL+8HEDhP7U=
+X-Google-Smtp-Source: ABdhPJyyTm4zQT9N3DUlo+ProclEGXGLhx56Ptjucz1X2ulKP1wg0qF7bRDQDdtRN0MbifbtsGFTuA==
+X-Received: by 2002:a7b:c381:: with SMTP id s1mr5352219wmj.114.1644698101331;
+        Sat, 12 Feb 2022 12:35:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d14sm9507471wri.93.2022.02.12.12.34.59
+        by smtp.gmail.com with ESMTPSA id h18sm8321704wmq.8.2022.02.12.12.35.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 12 Feb 2022 12:35:00 -0800 (PST)
-Message-Id: <f3ad7add5154d9d33291df997350b2b5db88260e.1644698093.git.gitgitgadget@gmail.com>
+Message-Id: <6058190d1b16a689ac5e4b4c077b594acf13acea.1644698093.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>
 References: <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
         <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 12 Feb 2022 20:34:48 +0000
-Subject: [PATCH v4 07/12] merge-ort: provide a merge_get_conflicted_files()
- helper function
+Date:   Sat, 12 Feb 2022 20:34:49 +0000
+Subject: [PATCH v4 08/12] merge-tree: provide a list of which files have
+ conflicts
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,97 +80,129 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-After a merge, this function allows the user to extract the same
-information that would be printed by `ls-files -u`, which means
-files with their mode, oid, and stage.
+Callers of `git merge-tree --write-tree` will often want to know which
+files had conflicts.  While they could potentially attempt to parse the
+CONFLICT notices printed, those messages are not meant to be machine
+readable.  Provide a simpler mechanism of just printing the files (in
+the same format as `git ls-files` with quoting, but restricted to
+unmerged files) in the output before the free-form messages.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 31 +++++++++++++++++++++++++++++++
- merge-ort.h | 21 +++++++++++++++++++++
- 2 files changed, 52 insertions(+)
+ Documentation/git-merge-tree.txt |  8 ++++++++
+ builtin/merge-tree.c             | 24 ++++++++++++++++++++++--
+ t/t4301-merge-tree-write-tree.sh | 11 +++++++++++
+ 3 files changed, 41 insertions(+), 2 deletions(-)
 
-diff --git a/merge-ort.c b/merge-ort.c
-index ebaed98d53a..e1b647b0a40 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -4274,6 +4274,37 @@ void merge_display_update_messages(struct merge_options *opt,
- 	trace2_region_leave("merge", "display messages", opt->repo);
- }
+diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
+index 869c38f8223..9f7eb03c6eb 100644
+--- a/Documentation/git-merge-tree.txt
++++ b/Documentation/git-merge-tree.txt
+@@ -67,6 +67,7 @@ simply one line:
+ Whereas for a conflicted merge, the output is by default of the form:
  
-+void merge_get_conflicted_files(struct merge_result *result,
-+				struct string_list *conflicted_files)
-+{
-+	struct hashmap_iter iter;
-+	struct strmap_entry *e;
-+	struct merge_options_internal *opti = result->priv;
+ 	<OID of toplevel tree>
++	<Conflicted file list>
+ 	<Informational messages>
+ 
+ These are discussed individually below.
+@@ -78,6 +79,13 @@ This is a tree object that represents what would be checked out in the
+ working tree at the end of `git merge`.  If there were conflicts, then
+ files within this tree may have embedded conflict markers.
+ 
++Conflicted file list
++~~~~~~~~~~~~~~~~~~~~
 +
-+	strmap_for_each_entry(&opti->conflicted, &iter, e) {
-+		const char *path = e->key;
-+		struct conflict_info *ci = e->value;
++This is a sequence of lines containing a filename on each line, quoted
++as explained for the configuration variable `core.quotePath` (see
++linkgit:git-config[1]).
++
+ Informational messages
+ ~~~~~~~~~~~~~~~~~~~~~~
+ 
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index d44e8d087b1..cb4169d2271 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -11,6 +11,9 @@
+ #include "blob.h"
+ #include "exec-cmd.h"
+ #include "merge-blobs.h"
++#include "quote.h"
++
++static int line_termination = '\n';
+ 
+ struct merge_list {
+ 	struct merge_list *next;
+@@ -400,7 +403,8 @@ struct merge_tree_options {
+ };
+ 
+ static int real_merge(struct merge_tree_options *o,
+-		      const char *branch1, const char *branch2)
++		      const char *branch1, const char *branch2,
++		      const char *prefix)
+ {
+ 	struct commit *parent1, *parent2;
+ 	struct commit_list *common;
+@@ -444,6 +448,22 @@ static int real_merge(struct merge_tree_options *o,
+ 		o->show_messages = !result.clean;
+ 
+ 	puts(oid_to_hex(&result.tree->object.oid));
++	if (!result.clean) {
++		struct string_list conflicted_files = STRING_LIST_INIT_NODUP;
++		const char *last = NULL;
 +		int i;
 +
-+		VERIFY_CI(ci);
-+
-+		for (i = MERGE_BASE; i <= MERGE_SIDE2; i++) {
-+			struct stage_info *si;
-+
-+			if (!(ci->filemask & (1ul << i)))
++		merge_get_conflicted_files(&result, &conflicted_files);
++		for (i = 0; i < conflicted_files.nr; i++) {
++			const char *name = conflicted_files.items[i].string;
++			if (last && !strcmp(last, name))
 +				continue;
-+
-+			si = xmalloc(sizeof(*si));
-+			si->stage = i+1;
-+			si->mode = ci->stages[i].mode;
-+			oidcpy(&si->oid, &ci->stages[i].oid);
-+			string_list_append(conflicted_files, path)->util = si;
++			write_name_quoted_relative(
++				name, prefix, stdout, line_termination);
++			last = name;
 +		}
++		string_list_clear(&conflicted_files, 1);
 +	}
-+	/* string_list_sort() uses a stable sort, so we're good */
-+	string_list_sort(conflicted_files);
-+}
-+
- void merge_switch_to_result(struct merge_options *opt,
- 			    struct tree *head,
- 			    struct merge_result *result,
-diff --git a/merge-ort.h b/merge-ort.h
-index e5aec45b18f..ddcc39d7270 100644
---- a/merge-ort.h
-+++ b/merge-ort.h
-@@ -2,6 +2,7 @@
- #define MERGE_ORT_H
+ 	if (o->show_messages) {
+ 		printf("\n");
+ 		merge_display_update_messages(&opt, &result);
+@@ -511,7 +531,7 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
  
- #include "merge-recursive.h"
-+#include "hash.h"
+ 	/* Do the relevant type of merge */
+ 	if (o.mode == MODE_REAL)
+-		return real_merge(&o, argv[0], argv[1]);
++		return real_merge(&o, argv[0], argv[1], prefix);
+ 	else
+ 		return trivial_merge(argv[0], argv[1], argv[2]);
+ }
+diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
+index 25adcf36bdf..0964c1145e6 100755
+--- a/t/t4301-merge-tree-write-tree.sh
++++ b/t/t4301-merge-tree-write-tree.sh
+@@ -117,6 +117,8 @@ test_expect_success 'test conflict notices and such' '
+ 	#   "whatever" has *both* a modify/delete and a file/directory conflict
+ 	cat <<-EOF >expect &&
+ 	HASH
++	greeting
++	whatever~side1
  
- struct commit;
- struct tree;
-@@ -88,6 +89,26 @@ void merge_switch_to_result(struct merge_options *opt,
- void merge_display_update_messages(struct merge_options *opt,
- 				   struct merge_result *result);
+ 	Auto-merging greeting
+ 	CONFLICT (content): Merge conflict in greeting
+@@ -140,4 +142,13 @@ do
+ 	'
+ done
  
-+struct stage_info {
-+	struct object_id oid;
-+	int mode;
-+	int stage;
-+};
++test_expect_success 'Just the conflicted files without the messages' '
++	test_expect_code 1 git merge-tree --write-tree --no-messages side1 side2 >out &&
++	anonymize_hash out >actual &&
 +
-+/*
-+ * Provide a list of path -> {struct stage_info*} mappings for
-+ * all conflicted files.  Note that each path could appear up to three
-+ * times in the list, corresponding to 3 different stage entries.  In short,
-+ * this basically provides the info that would be printed by `ls-files -u`.
-+ *
-+ * result should have been populated by a call to
-+ * one of the merge_incore_[non]recursive() functions.
-+ *
-+ * conflicted_files should be empty before calling this function.
-+ */
-+void merge_get_conflicted_files(struct merge_result *result,
-+				struct string_list *conflicted_files);
++	test_write_lines HASH greeting whatever~side1 >expect &&
 +
- /* Do needed cleanup when not calling merge_switch_to_result() */
- void merge_finalize(struct merge_options *opt,
- 		    struct merge_result *result);
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 gitgitgadget
 
