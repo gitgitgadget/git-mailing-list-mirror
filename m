@@ -2,159 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF25DC433F5
-	for <git@archiver.kernel.org>; Sat, 12 Feb 2022 14:49:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39DC8C433F5
+	for <git@archiver.kernel.org>; Sat, 12 Feb 2022 18:13:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235730AbiBLOt5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Feb 2022 09:49:57 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55284 "EHLO
+        id S229463AbiBLSNC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Feb 2022 13:13:02 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229551AbiBLOtz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Feb 2022 09:49:55 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A69E214
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 06:49:46 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id z13so2318066edc.12
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 06:49:46 -0800 (PST)
+        with ESMTP id S229436AbiBLSNB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Feb 2022 13:13:01 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFEBB5007C
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 10:12:54 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id c5-20020a17090a1d0500b001b904a7046dso13445147pjd.1
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 10:12:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=NWvpedEuAdTo6gdvLYNsJTHDrhDBd0pPBkxprAKahPI=;
-        b=KEmeKZRUbjUyZDuk+S5HJdfcC9aFut1tR2VRuRU4yRSIkGRRLd7kwIfZlwD1y9Lefp
-         Yb/AUOnX6ILzA+qp+mOcu4AG1hNx94hr+YHRfmKfPT4PVAv0zD72zmiPxdybcyRRAKgz
-         A6qAq5bQ4QzvZwFbzSIVZw4LVQIipxQ3mWLxejL+geBQPmmlmt2Jchdj3JYsrIecaOCN
-         agj3z71nEBaWMds/2FXyWzcDim/jF0C1gnO6ABhZep1P5IbzgOptTRnRdWSqQIlbzNB+
-         BJCV0Ft+tohXUDcNMLoKzhBuR/H9f7u3vEoNawdQYQF5U4K3oYvNthvmfA4JYCN8lpEL
-         Lu4Q==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=R7jcVzbUS+WJL+PhCHC4J+F60gufl+eAEeCan6eo3WQ=;
+        b=MP+av9584mYsjusMrqEBOEqUTL6XPzWUN/kHhdRlpRv/x+iqXhnba7kx4m/pcirdt5
+         MqQwcHJzbYHhHo8HtLH+E9P9n10oWnvbU11+xw9T8/jxgxOSt5Ju7XF5Q7TCOwhXJQfM
+         6H4dOTfi/VdTLkSjHy5ijwvQlQ/b3+5XCEEnotw8jwbVBHVS5KIDjCjvrby5a37uPUbI
+         zWkw3rjkEaTVodFB7TsBg6aJZlztTgvdnKpiS8ItqJbZBTAYzZkhel4ot+cfhMdvGoRE
+         UjsT89YfxGWon0PHNL6xwMEsG/FnH5vCz8T58s4RH85MJYTlewSbBRZSAd3KW8y8ADVc
+         f4pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=NWvpedEuAdTo6gdvLYNsJTHDrhDBd0pPBkxprAKahPI=;
-        b=ehOuoWDil65z2WMtuLECQpDKs/xtUB1iO2gm2kXmoRrxDjzsgHxeWehbPBp8gVnhXC
-         RIzp8+BCm0cuyCCnTfCuk+M1rhTj8Afts5VvfGZBpk4VYhcU3hozKxJCqn5qe5GjHwf3
-         m7+Gd+HJhnWXz74852zfDU3zI22NLZwWWaPR7MWKCtUXWLklNl/4HsfAgEarLClTUEyN
-         3sc3LI8ihCWPe3Nn6HD5ZrZZTdnpQY6oVS3P2fwi9WgS2n0smzPuS3SR59Dx/rv5CPnz
-         A+x0EDZAm2ZHKUUDozt/K5kT28P1+MWEny7aXnrKpso+dmgUQfSD/l2qxaGzmhR/pW+D
-         KMCA==
-X-Gm-Message-State: AOAM533DE019XPH4mwW4kaINyWBhR7qMc5O/mM3Eq0BfHBoEy1yVBcaX
-        pGeN89QdoH0l2QPSgdBysyHIwisBpzn8gQ==
-X-Google-Smtp-Source: ABdhPJzgBqKrB3S0QSw/3fvDwL89/S0Ly0HRw1mxz1baL2Bvp+6Nu1XeWjRiRR8qlXFSw1sbBm5RjA==
-X-Received: by 2002:a05:6402:34d3:: with SMTP id w19mr6899338edc.377.1644677384630;
-        Sat, 12 Feb 2022 06:49:44 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ek21sm9933861edb.27.2022.02.12.06.49.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Feb 2022 06:49:44 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nItiZ-000SJA-LH;
-        Sat, 12 Feb 2022 15:49:43 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=R7jcVzbUS+WJL+PhCHC4J+F60gufl+eAEeCan6eo3WQ=;
+        b=IeYtwNZ6CCdoqj+xJithwjrK1CqWxcmLg+9Pl1Vg2AEqHrKpX+kb72+C+CCciE6D3W
+         uT7cJ66YecPZ7mokbEyHpfqrqCW6VRwhQVKhH9ZMPug7sM/wtOZdUAm0MUin9cKcB8dm
+         NJHocT/tj6J8QvLVp4E+s23WH5URayZYH48Qq+KqWfMr0/ubU4LGzLlF6RICUGegjbd0
+         hpxG9B28ROi8OIDGIig/Fcv1aIGFrcZRcUiOdsZwpWqrop8+DAdPv3WGUpmQY329gsut
+         zV7MmZtZUZEwMobmfoRIxcdIcIf/KEWFpSTlneVRm1kOlkYG3ZDk7ESp3pjuXotvCHT0
+         54QA==
+X-Gm-Message-State: AOAM531UCX7MmNFsLkNabznPtMuCdSGuFVALoeuRs5IPKLjZQKkvMyGz
+        ntrceV6yTQQCL+62Ap7xdKkduKamo7U=
+X-Google-Smtp-Source: ABdhPJz1iWqNttAMT4p26ux5HV09V5hdGRd0TW5PwW/j2oS7xmus3eaa2mDplEmpMMQF542wfdbfwg==
+X-Received: by 2002:a17:903:244a:: with SMTP id l10mr6842283pls.32.1644689574393;
+        Sat, 12 Feb 2022 10:12:54 -0800 (PST)
+Received: from [192.168.0.108] ([183.82.176.65])
+        by smtp.gmail.com with ESMTPSA id v20sm8759468pju.9.2022.02.12.10.12.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 12 Feb 2022 10:12:53 -0800 (PST)
+Subject: Re: Git in GSoC 2022?
+To:     Philip Oakley <philipoakley@iee.email>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
         Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrn@google.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        pc44800@gmail.com, Shourya Shukla <periperidip@gmail.com>
-Subject: Re: [PATCH v7 00/20] submodule: convert the rest of 'update' to C
-Date:   Sat, 12 Feb 2022 15:45:00 +0100
-References: <20220208083952.35036-1-chooglen@google.com>
- <20220210092833.55360-1-chooglen@google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20220210092833.55360-1-chooglen@google.com>
-Message-ID: <220212.868rugxhq0.gmgdl@evledraar.gmail.com>
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Git Community <git@vger.kernel.org>
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+ <730fb307-3bc7-b52f-49c1-d83b5ab55c95@iee.email>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <3b112eee-8110-baf6-d7e7-cb25b03c32ff@gmail.com>
+Date:   Sat, 12 Feb 2022 23:42:49 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <730fb307-3bc7-b52f-49c1-d83b5ab55c95@iee.email>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 03/02/22 7:42 pm, Philip Oakley wrote:
+> On 26/01/2022 18:29, Kaartic Sivaraam wrote:
+>>
+>>    - Project ideas: There are two mentioned in SoC-2021-Ideas[3]
+>>      but both were picked by GSoC students the previous year. So,
+>>      we would need new ones this year.
+> Git Demonstration Repositories
+> =============================
+> 
+> One idea/concept that I've had that might be suitable for a project
+> either here or within the Google Season of Docs is to generate
+> demonstration repositories that match the examples used in the
+> documentation and parts of the test suite to help users explore and
+> understand the concepts that are being documented in the man pages.
+> 
+> It's more than a classic coding problem because it impinges on a lot of
+> subjective and admin areas but should be fairly beneficial for users.
+> 
 
-On Thu, Feb 10 2022, Glen Choo wrote:
+This does sound like a good idea.
 
-> This reroll contains another 'easy' preparatory patch and the fixups I
-> alluded to in v6 [1]. This isn't the split-up I described in the
-> footnote of v6, but it gets the big patch (patch 17) to what I think is
-> a reviewable state.
+> The two examples that come to mind are the --show-pulls repo [1], and
+> the 'history simplification' repo [2].
+> 
+> Using the test suite as the repo generator ensures the Demo Repos are
+> reproducible/deterministic.
+> 
+> My latest thinking is that the repos would be held in-tree under
+> /Documentation/RepoBundles and have been exported as bundles by an
+> explicit test_export_function. Of key importance in the project is to
+> minimise/eliminate any extra maintainer actions, so once a patch with a
+> repo export is accepted, the flow through the delivery process to user
+> installs is essentially the same as the man pages.
 >
-> The diff between v7 and v5 is no longer just NEEDSWORK comments, but I
-> think it is easier to reason about. Patch 17 resembles v5 the most (I
-> will include a diff in a reply to that patch); everything after patch 17
-> is fixups (I did not squash them in because they would grow the diff
-> even more).
->
-> I will also leave a review on patch 17 since the changes were not
-> originally authored by me.
->
-> [1] https://lore.kernel.org/git/20220208083952.35036-1-chooglen@google.com
->
-> Changes in v7:
-> - Split the last patch of v6 (the big one) into patches 16-17.
-> - Patch 16 moves logic out of run_update_procedure() (because the
->   command is going away), removing some noise from patch 17. This makes
->   the update_strategy parsing easier to reason about, but at the cost of
->   growing the diff vis-a-vis v5
-> - Patches 18-20 are fixups that address NEEDSWORK comments from earlier
->   patches. Once maintaining a small diff vis-a-vis v5 stops making
->   sense, I will squash them in.
->
-> Atharva Raykar (6):
->   submodule--helper: get remote names from any repository
->   submodule--helper: refactor get_submodule_displaypath()
->   submodule--helper: allow setting superprefix for init_submodule()
->   submodule--helper: run update using child process struct
->   builtin/submodule--helper.c: reformat designated initializers
->   submodule: move core cmd_update() logic to C
->
-> Glen Choo (11):
->   submodule--helper: remove update-module-mode
->   submodule--helper: reorganize code for sh to C conversion
->   submodule--helper run-update-procedure: remove --suboid
->   submodule--helper run-update-procedure: learn --remote
->   submodule--helper: remove ensure-core-worktree
->   submodule--helper update-clone: learn --init
->   submodule--helper: move functions around
->   submodule--helper: reduce logic in run_update_procedure()
->   fixup! submodule--helper run-update-procedure: remove --suboid
->   fixup! submodule--helper run-update-procedure: learn --remote
->   fixup! submodule: move core cmd_update() logic to C
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (3):
->   builtin/submodule--helper.c: rename option variables to "opt"
->   submodule--helper: don't use bitfield indirection for parse_options()
->   submodule tests: test for init and update failure output
 
-Thanks a lot for picking this up! This split-up is much easier to read
-than my v5, particularly with the end diff-stat of the "main" patch
-being:
+We could possibly include this one in the idea list but I suppose we might
+need a more concrete idea on what needs to be done as part of this project.
+That would help very much with guiding the student during the project
+period.
 
- 2 files changed, 201 insertions(+), 216 deletions(-)
+We also need to know if the end result of such a project would be an
+acceptable contribution to the project. What it would take for the contribution
+to be acceptable? etc.
 
-Instead of:
+Just to make it clear, I'm trying to think through on what we need to do to
+make this a GSoC idea proposal.
+  
+> Not sure if that's fleshed out enough, or if it's at the wrong level for
+> GSoC, or If I'm right as a Mentor, but I'd be happy to co-mentor.
+> 
 
- 2 files changed, 356 insertions(+), 388 deletions(-)
+That's nice. Thanks for volunteering.
 
-I think sending a version of this with the fixups squashed in as a v8
-would be good, and perhaps addressing some of my comments.
+On a related note, the organization registrations are now open for this year.
+The deadline is February 21 - 18:00 UTC. I'm not sure if anyone else is
+planning on applying for Git. In case no one else beats me to it, I plan on
+applying for Git around February 15 17:00 UTC.
 
-I don't know if my suggested split-up of "prep fixes" into another
-series would be a good thing to pursue overall, perhaps Junio will chime
-in on how he'd be most comfortable in merging this down. I'd think
-splitting such trivial fixes into their own series be easier to review,
-but perhaps not.
-
-For the Signed-off-by question on v6, I think you should add your SOB to
-all the patches you submit. See this in SubmittingPatches:
-=20=20=20=20
-    Notice that you can place your own `Signed-off-by` trailer when
-    forwarding somebody else's patch with the above rules for
-    D-C-O.  Indeed you are encouraged to do so.
-
-Just running "git rebase -i -x 'git commit --amend --no-edit -s'" should
-do it.
-=20=20=20=20
+-- 
+Sivaraam
