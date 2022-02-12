@@ -2,76 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D2EFC433F5
-	for <git@archiver.kernel.org>; Sat, 12 Feb 2022 20:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8198C433EF
+	for <git@archiver.kernel.org>; Sat, 12 Feb 2022 20:48:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231766AbiBLUnk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Feb 2022 15:43:40 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56560 "EHLO
+        id S231793AbiBLUs5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Feb 2022 15:48:57 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231600AbiBLUnj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Feb 2022 15:43:39 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D9125F8E9
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:43:34 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id cf2so21304583edb.9
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:43:34 -0800 (PST)
+        with ESMTP id S231600AbiBLUs4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Feb 2022 15:48:56 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48E05606E5
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:48:52 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id cf2so21314992edb.9
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:48:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=zDzvBUAmyhAuAQNojDrnX0zsLxbgHsGEPIWDn2WipPk=;
-        b=WXej3WDB4eT+nD0f6PEbwS1iFQ2fjK9fOijL/kJb942BIY+E9qUmtJHJdIDKbgreZV
-         4dA41oDhLsme0npVsgsH0SSISBKkntkoF/oI+wqrqvEmWg2xBrcIWblis61uFeEgKAd2
-         n4QKihq/ehGDzXFmzHq7CGZI5nQ4iXpppL1U4eeg84wwwuk8t4uyaUXh0jOOSOwzimMC
-         0b5cy6kP/Ca8h8yjCr2elpiGOlTIqYasLi6Ss+YTyxEB1IhUUKpRu3mMC3/Wumu8C1LD
-         JcSinoxlK4Q17/lBpSO1dMQAThEdG+yWxnBKKPkV4UCsUvpgtQeyZxckQdoNvOWjYdB2
-         Phkg==
+        bh=NKhV39bWYSZt0ws1C8Na+lHv+7axTtvxOsM/FWfVbcI=;
+        b=T6yldQ93MtC6EElYUGF0biEpTlsitXdS12GdH2JxLbz0UYMM2ut/rxw8F3XisGKFTI
+         apUZpA4Jx3kxyxpnur1HEOB1kqYiCgev/71366hdEGtwDY0v4tWM1PZPmQm1jl22qfh9
+         qN+AR4N7nkKKzMC3rbzgoCFnqOzebwlMhFgqXCu6zVVFlP/+3uBqJSMIMYZCV5QrUo6J
+         upFcRkmtuMXiOhtvdE+x3bc9Ie3vT82Eaf0W3WKLkGbHmRIWCaNp617FPRwijhUcwGwd
+         ZxN1YlS7FO9gHp+V1d06rptYWdNyhyETOgDKhPUaZVLMgiT7NOD58pgznp+zSVxA14bL
+         4EZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=zDzvBUAmyhAuAQNojDrnX0zsLxbgHsGEPIWDn2WipPk=;
-        b=MGMMF9IqV8nwF/eNWhuf/Lg7LcA7EnMRGKS7tkuEGQ94/f0eRN3QdFOX5quVuu8GZI
-         I2dspjFL7BDT0h3HTof5eXsNOvKB9INAFzjKPyQMnmuin0dVXboVhqgREkW2y0ykdOBU
-         eQdnrRTCFlOjYorIb0KpMt4RgUdAbRIPC3lidDYPA6erP8KyJ7rCxK1K3gDJdJ/kEWQ7
-         8sMpfczwT2ohmRLUGbvNBrXwj+9U3/3rMgN2fDbmfSTf8WRBWgLSPoL3mVWqaC9peC0D
-         ow3m2H+cjhC2GPiUnUWXC9R/Xyx4qGrluGZCpUe5RaASa0cVXqezLJRV8wDy/iF+kEj4
-         rT6A==
-X-Gm-Message-State: AOAM532q8cWcTd+vR2ztaLfLKv+Yg/fJTm3jRhuKIeeWbsAgTGpjyds2
-        mOwZNPm1CmLtNyAjMo3GlreAk8z5fqZ3dg==
-X-Google-Smtp-Source: ABdhPJz85j407SamVSgs0/4SYdEoy+21N5yWeekWc+UDu7Q5HG+bbmI53c4WJ87sxxF3XLFvGzU0DQ==
-X-Received: by 2002:a05:6402:6d1:: with SMTP id n17mr8075960edy.321.1644698612625;
-        Sat, 12 Feb 2022 12:43:32 -0800 (PST)
+        bh=NKhV39bWYSZt0ws1C8Na+lHv+7axTtvxOsM/FWfVbcI=;
+        b=7XDdcUGFWd3UKKO3bFD8yKFyJNn7v5s82lc5ALzmy0PgASDfuhHpIYzbl6byrCVNZO
+         4+mCgUgWSznZIaBXzKlFA0XPHvfrXE2CeH9/UQXUOcOqBC7WTZGwtJKXJi0M6qCK5XKB
+         6Mg32qTydAzz25vdZfiywhZSUKeRmFEDTjYHvOjwpld3pqeTgnMBHWp9ZN3FEVzhmPQE
+         n48GQfuAqz1VgAsU9pSBIEWeponm4LPiS41BYToeSxFt8WJKa/0y6URr5tB5nd4mNYmB
+         vnjt+sRXDu+CsGcuh+ATKWiDS3wx4rRPXtBWR49XeNheRYpyMIywhdK7iBCLetuHbaaB
+         g0UQ==
+X-Gm-Message-State: AOAM530p8HKCRGjpm7ILgFi0jRxS/zthXINJKMTRcDXj9iBNcoG+NM0s
+        duP2QscDPb1Wu5gJz5rm9UY=
+X-Google-Smtp-Source: ABdhPJw0xk8hf8E4ZJly+v2z5GqLC5efa8ssBD8Nc50YnMjwcIZZq7CQmJeVWWC4/mU3CDgmrZzECQ==
+X-Received: by 2002:a50:bf4f:: with SMTP id g15mr8160661edk.362.1644698930611;
+        Sat, 12 Feb 2022 12:48:50 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id h7sm6471077ejb.40.2022.02.12.12.43.32
+        by smtp.gmail.com with ESMTPSA id h26sm9146524eje.146.2022.02.12.12.48.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Feb 2022 12:43:32 -0800 (PST)
+        Sat, 12 Feb 2022 12:48:49 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nIzEx-000UV6-6U;
-        Sat, 12 Feb 2022 21:43:31 +0100
+        id 1nIzK5-000Ulm-2e;
+        Sat, 12 Feb 2022 21:48:49 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Albert Cui <albertcui@google.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v6 0/5] teach submodules to know they're submodules
-Date:   Sat, 12 Feb 2022 21:35:48 +0100
-References: <20211117005701.371808-1-emilyshaffer@google.com>
-        <20220203215914.683922-1-emilyshaffer@google.com>
-        <220204.86pmo34d2m.gmgdl@evledraar.gmail.com>
-        <YgF5V2Y0Btr8B4cd@google.com>
+        Git List <git@vger.kernel.org>,
+        Hamza Mahfooz <someguy@effective-light.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [v2.35.0 regression] some PCRE hangs under UTF-8 locale (was:
+ [PATCH 1/2] grep/pcre2: use PCRE2_UTF even with ASCII patterns)
+Date:   Sat, 12 Feb 2022 21:46:33 +0100
+References: <5fa6962e-3c1c-6dbc-f6d7-589151a9baec@web.de>
+ <20220129172542.GB2581@szeder.dev>
+ <dca59178-6e9b-315b-06ee-8e3201aa391c@web.de>
+ <20220130090422.GA4769@szeder.dev>
+ <b74f781c-548b-5254-d3d1-fc1873c70e10@web.de>
+ <220131.868ruvbovo.gmgdl@evledraar.gmail.com>
+ <1425e548-c1bb-3cff-d75d-c3760abb6129@web.de>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <YgF5V2Y0Btr8B4cd@google.com>
-Message-ID: <220212.864k53yfws.gmgdl@evledraar.gmail.com>
+In-reply-to: <1425e548-c1bb-3cff-d75d-c3760abb6129@web.de>
+Message-ID: <220212.86zgmvx13i.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -80,87 +80,80 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Feb 07 2022, Jonathan Nieder wrote:
+On Sat, Feb 05 2022, Ren=C3=A9 Scharfe wrote:
 
-> Hi,
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Thu, Feb 03 2022, Emily Shaffer wrote:
->
->>> To be honest, I'm not all that interested in performance
->>> - I want the config added for correctness, instead.
+> Am 31.01.22 um 22:01 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 >>
->> And I'm honestly still at the point of not even being against this whole
->> thing, although it probably sounds like that. I'm really not.
+>> On Sun, Jan 30 2022, Ren=C3=A9 Scharfe wrote:
 >>
->> I just genuinely don't get where this is headed. I.e. for the last
->> iteration I did a demo patch on top that showed that there was no case
->> added by the series where the on-the-fly discovery wasn't equivalent to
->> the set-in-config value[4].
+>>> Am 30.01.22 um 10:04 schrieb SZEDER G=C3=A1bor:
+>>>> On Sun, Jan 30, 2022 at 08:55:02AM +0100, Ren=C3=A9 Scharfe wrote:
+>>>>> e0c6029 (Fix inifinite loop when a single byte newline is searched in
+>>>>> JIT., 2020-05-29) [1] sounds like it might have fixed it.  It's part =
+of
+>>>>> version 10.36.
+>>>>
+>>>> I saw this hang on two Ubuntu 20.04 based boxes, which predate that
+>>>> fix you mention only by a month or two, and apparently the almost two
+>>>> years since then was not enough for this fix to trickle down into
+>>>> updated 20.04 pcre packages, because:
+>>>>
+>>>>> Do you still get the error when you disable JIT, i.e. when you use the
+>>>>> pattern "(*NO_JIT)^\s" instead?
+>>>>
+>>>> No, with this pattern it works as expected.
+>>>>
+>>>> So is there a more convenient way to disable PCRE JIT in Git?  FWIW,
+>>>> (non-git) 'grep -P' works with the same patterns.
+>>>
+>>> I don't know a better way.  We could do it automatically, though:
+>>>
+>>> --- >8 ---
+>>> Subject: [PATCH] grep: disable JIT on PCRE2 before 10.36 to avoid endle=
+ss loop
+>>>
+>>> Commit e0c6029 (Fix inifinite loop when a single byte newline is
+>>> searched in JIT., 2020-05-29) of PCRE2 adds the following point to its
+>>> ChangeLog for version 10.36:
+>>>
+>>>   2. Fix inifinite loop when a single byte newline is searched in JIT w=
+hen
+>>>   invalid utf8 mode is enabled.
+>>>
+>>> Avoid that bug on older versions (which are still reportedly found in
+>>> the wild) by disabling the JIT when handling UTF-8.
+>>>
+>>> Reported-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+>>> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+>>> ---
+>>> Not sure how to test it.  Killing git grep after a second or so seems a
+>>> bit clumsy.  timeout(1) from GNU coreutils at least allows doing that
+>>> from the shell, but it's not a standard tool.  Perhaps we need a new
+>>> test helper for that purpose?
 >
-> Here's a few examples:
-
-I've read the downthread, but it's probably best to reply to this...
-
-> 1. Suppose I track my $HOME directory as a git repository.  Within my
->    home directory, I have a src/git/ subdirectory with a clone of
->    git.git, but I never intended to treat this as a submodule.
+> https://mywiki.wooledge.org/BashFAQ/068 offers a Perl-based Shell
+> function or aborting a program if it takes too long:
 >
->    If I run "git rev-parse --show-superproject-working-tree", then it
->    will discover my home directory repository, run ls-files in there
->    to see if it has GITLINK entries, and either see one for src/git if
->    I had "git add"ed it by mistake or not see one.  In either case,
->    it would it would view my src/git/ directory as being a submodule
->    of my home directory even though I hadn't intended it to be so.
+>    doalarm() { perl -e 'alarm shift; exec @ARGV' -- "$@"; }
 >
-> 2. Suppose I have a copy of a repository such as
->    https://gerrit.googlesource.com/gerrit/, with all its submodules.
->    I am in the plugins/replication/ directory.
+> It doesn't waste time when the program finishes faster and seems to work
+> fine with git grep.
 >
->    If I run "git rev-parse --show-superproject-working-tree", then it
->    will discover my gerrit repository, run ls-files in there to see if
->    it has GITLINK entries, and use the result to decide whether the
->    cwd is a submodule.  So for example, if I had run "git rm --cached
->    plugins/replication" to _prepare to_ remove the plugins/replication
->    submodule, then "git rev-parse --show-superproject-working-tree"
->    will produce the wrong result.
-
-These both seem like valid edge cases, but they're still going to be the
-same edge case on the "parent" side even with a proposed cache (whether
-it's a boolean or a path).
-
-I.e. the question here is really not one of caching, but of what it
-means for Y to be a submodule of X.
-
-I assumed that we'd prefer a 1=3D1 relationship between the parent
-reporting that Y is a submodule of it, and Y reporting that it is a
-submodule (of the parent at some <path>).
-
-If that's the case we can walk up and ask parent .git's whether they
-think the <path> is their submodule.
-
-If it's not the case perhaps a config is needed, but then that surely
-has wider implications. I.e. won't it be the case that we can't add the
-config after-the-fact as this series proposes in those some ambiguous
-cases?xo
-
-> 3. Suppose I am not using submodules at all.  I have a clone of
->    mawk.git and I am working there.
+> I can't actually test the effectiveness of the patch because PCRE2's
+> JIT doesn't work on my development machine at all (Apple M1), as I just
+> discovered. :-/  While we know that disabling JIT helps, we didn't
+> actually determine, yet, if e0c6029 (Fix inifinite loop when a single
+> byte newline is searched in JIT., 2020-05-29) really fixes the "^\s"
+> bug.
 >
->    If I run "git rev-parse --show-superproject-working-tree", then I'm
->    presumably interested in doing something submodule-specific;
->    nothing wrong with that.  But the series we're responding to is
->    meant to support a wider variety of operations --- for example,
->    suppose I am running a plain "git status" operation.
->
->    If "git status" runs "git rev-parse
->    --show-superproject-working-tree", then git would walk up the
->    filesystem above my mawk/ directory, looking for another .git dir.
->    We can reach an NFS automounter directory and just hang.  Even
->    without an NFS automounter, we'd expect this to take a while
->    because, unlike normal repository discovery, we have no reason to
->    believe that the walk is going to quickly discover a .git directory
->    and terminate.  So this would violate user expectations.
+> So I have to abandon this patch, unfortunately.  Any volunteer to pick
+> it up?
 
-We have a /a/b/c/d.git mounted, but not a parent /a/b/, and walking
-upwards causes it to be mounted?
+We can test it in CI, and have a proposed patch from Hamza Mahfooz to do
+so. See
+https://lore.kernel.org/git/211220.865yrjszg4.gmgdl@evledraar.gmail.com/
+
+There's been some minor changes to the main.yml since then, but I think
+you should be able to just pick that patch up, adjust it, apply whatever
+changes you want to test on top, and push it to github.
+
