@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65E3BC433F5
-	for <git@archiver.kernel.org>; Sat, 12 Feb 2022 20:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A408C433F5
+	for <git@archiver.kernel.org>; Sat, 12 Feb 2022 20:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231584AbiBLUfB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Feb 2022 15:35:01 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53394 "EHLO
+        id S231600AbiBLUfD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Feb 2022 15:35:03 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231411AbiBLUfA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Feb 2022 15:35:00 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2152606E3
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:34:56 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id m126-20020a1ca384000000b0037bb8e379feso9267476wme.5
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:34:56 -0800 (PST)
+        with ESMTP id S231585AbiBLUfB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Feb 2022 15:35:01 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED3B1606E5
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:34:57 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id d14-20020a05600c34ce00b0037bf4d14dc7so7763343wmq.3
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 12:34:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HsHj2KxDWTA9QM6TZSN11NDwemvgrQd3pHbka8fElO8=;
-        b=N8150CHXpvX+hJss65r04LNIIvsPN7iqWPEmjtAJYYZZLDgI1CWaLwZIwJQAMksMHO
-         EzXcGP22UQmMWzHNkqD1lHga7XPnTO1ywmTfBWBG7Spe0CcGCaPK/MF7QUFSjLS08399
-         uFlN8JxTjTfGITG1HK67yWNiiViIt+Wo2pF0khCZa4RRjKt6yvJnn9w2kEhlBaWwd0Jl
-         9wLKx89m0uduBftT3GxC05Nxh+Qbf//mjeJYV24eguYBJSSjkAIPeImPub9IsdIM3PTS
-         kpoDLJRagGwpsGVUYKdAdHFE9Fkv9N4FQbNkekKshkDOK8Gy+wn1XnS+CQoQLJcxWBYp
-         8djQ==
+        bh=s/FNUD3Nfv1aJ56di/sqnJE/jJBUPQEIKWoIKlAJYVg=;
+        b=AJy5Hf7MNeXX1+PKGDxKUWgB1mvD/x00HlWELiq3kfRdk444k5PIBhMeDdQ3jzvxLN
+         DZmRTNWSEIKtDoOpWDxxyF7P6Bbh+DnhCQ647VQVrlgu6gKR9z37HpptTyUdymwlSsps
+         ZO3HownZG3RAWWUW0aivwuT6PK7FU2XxDGE/lxoNDWv38dKaLgPI4hF7wcHnRqzurR59
+         q4eTT+K3JVadhMqzPj5aEEmQsW7jcOcFVCEJp0wltEpmwlpYQ6MIHGYjHN5v1tqBa3jp
+         fgNfPTf2EH3ssdlqkngAo3VTM8rcKv2008lng+BaO3BJK49++mH+bbCTs04nDgRqrQ/z
+         RWsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HsHj2KxDWTA9QM6TZSN11NDwemvgrQd3pHbka8fElO8=;
-        b=lTOlmCsslKIhLtnJZXYUX2Rg6tGqw5R/XCBonc/7lxlna9rgt9sdchocNWPR4C73vk
-         C3l/1t3TDYqxyXqEjweDswf3L6/iicBvgXp2Xgghur1tE86KbKjWG+WEwijiznhKJ6NR
-         0QF4kxxZrnnzswvPosr2ADXdh3r4qfR84vYGgbveVmhV7yQdPtEtg6KpQdvFjGOT5mEf
-         6Be+hAAyax5ngrS7qHC01NSxnjjLwWM52Br3VMoRYjRFrV1ru8+mJ/WqQ9mbMay1QQcB
-         CnPZzJ/hPHruEODj8heWJQW64P35NWuHElcihC7hM8rbfhPA0RbgaSUea1VjqsG0/4Ih
-         sexQ==
-X-Gm-Message-State: AOAM53133aEGk7Z4spdH7u0bpRd6/5KkAEZ2iPPxmsrVdsbcY91DHoC6
-        t7OXPgTJmbb4qBt34vdgKX8ucFz73iA=
-X-Google-Smtp-Source: ABdhPJyBZrvYZR/s2/qRblP7koajMY+cbvOVfK5/um2iwUBEMoafUKqlatYsG4Dr9qHQJw6ACcGTRQ==
-X-Received: by 2002:a7b:c184:: with SMTP id y4mr5287388wmi.117.1644698095352;
-        Sat, 12 Feb 2022 12:34:55 -0800 (PST)
+        bh=s/FNUD3Nfv1aJ56di/sqnJE/jJBUPQEIKWoIKlAJYVg=;
+        b=M3jEywMTExAbD4Sru/836Qzr7/BZgZWBuHx4de4eVNxjE4czQSbjCEC1H++6neX/eQ
+         xIU6ZEKh2+HxWKdAHIkwA/8y3dd213oU3EiREoHfwAJoKRjaMGM6ZQ/Z2TU2nqbG1WAs
+         FeY8lyfT1ibR+jqt8fQbAwvZ459JagCOaQCipv13us4pc2vO2ZNYUcNbw6JX4vVpKkw4
+         VvJnW0XslG8cz2ciJckzNaKFxGWNgNsk+1GwAj9/nJQpRlHOoe1/SyaYW3xfX3SAGm92
+         EVR+GVjCgTr7O2v778ZZcVFZnFxyntk6A9JIAPy9ZXDFAIiHyPySjkADK71n4i93tbsu
+         J5tQ==
+X-Gm-Message-State: AOAM531KVj4isRnAq7277lFH7TQYsb3jL7GjQKjRwua6UOivj8+M8SAE
+        Mr2AgiJupEMByQOnmTBpxP1LqTTzQmc=
+X-Google-Smtp-Source: ABdhPJwMsgulaUFKl17jkU/i1Nq/S3ay+2jiJk5TDwzMJB15ZKl1Fua2jk3CA+z8tbuNDWbFnTiU4g==
+X-Received: by 2002:a05:600c:3641:: with SMTP id y1mr5210607wmq.44.1644698096270;
+        Sat, 12 Feb 2022 12:34:56 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a10sm818619wrt.59.2022.02.12.12.34.54
+        by smtp.gmail.com with ESMTPSA id s7sm8309103wrw.71.2022.02.12.12.34.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Feb 2022 12:34:54 -0800 (PST)
-Message-Id: <4a7cd5542bb2f89b4874e4115542ccee9c4639af.1644698093.git.gitgitgadget@gmail.com>
+        Sat, 12 Feb 2022 12:34:55 -0800 (PST)
+Message-Id: <4780ff6784d426bf0a96859ef9bf9c14e87d5f50.1644698093.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>
 References: <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
         <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 12 Feb 2022 20:34:42 +0000
-Subject: [PATCH v4 01/12] merge-tree: rename merge_trees() to
- trivial_merge_trees()
+Date:   Sat, 12 Feb 2022 20:34:43 +0000
+Subject: [PATCH v4 02/12] merge-tree: move logic for existing merge into new
+ function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,57 +80,46 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-merge-recursive.h defined its own merge_trees() function, different than
-the one found in builtin/merge-tree.c.  That was okay in the past, but
-we want merge-tree to be able to use the merge-ort functions, which will
-end up including merge-recursive.h.  Rename the function found in
-builtin/merge-tree.c to avoid the conflict.
+In preparation for adding a non-trivial merge capability to merge-tree,
+move the existing merge logic for trivial merges into a new function.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/merge-tree.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/merge-tree.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 5dc94d6f880..06f9eee9f78 100644
+index 06f9eee9f78..914ec960b7e 100644
 --- a/builtin/merge-tree.c
 +++ b/builtin/merge-tree.c
-@@ -28,7 +28,7 @@ static void add_merge_entry(struct merge_list *entry)
- 	merge_result_end = &entry->next;
+@@ -366,15 +366,12 @@ static void *get_tree_descriptor(struct repository *r,
+ 	return buf;
  }
  
--static void merge_trees(struct tree_desc t[3], const char *base);
-+static void trivial_merge_trees(struct tree_desc t[3], const char *base);
- 
- static const char *explanation(struct merge_list *entry)
+-int cmd_merge_tree(int argc, const char **argv, const char *prefix)
++static int trivial_merge(int argc, const char **argv)
  {
-@@ -225,7 +225,7 @@ static void unresolved_directory(const struct traverse_info *info,
- 	buf2 = fill_tree_descriptor(r, t + 2, ENTRY_OID(n + 2));
- #undef ENTRY_OID
+ 	struct repository *r = the_repository;
+ 	struct tree_desc t[3];
+ 	void *buf1, *buf2, *buf3;
  
--	merge_trees(t, newbase);
-+	trivial_merge_trees(t, newbase);
- 
- 	free(buf0);
- 	free(buf1);
-@@ -342,7 +342,7 @@ static int threeway_callback(int n, unsigned long mask, unsigned long dirmask, s
- 	return mask;
- }
- 
--static void merge_trees(struct tree_desc t[3], const char *base)
-+static void trivial_merge_trees(struct tree_desc t[3], const char *base)
- {
- 	struct traverse_info info;
- 
-@@ -378,7 +378,7 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+-	if (argc != 4)
+-		usage(merge_tree_usage);
+-
  	buf1 = get_tree_descriptor(r, t+0, argv[1]);
  	buf2 = get_tree_descriptor(r, t+1, argv[2]);
  	buf3 = get_tree_descriptor(r, t+2, argv[3]);
--	merge_trees(t, "");
-+	trivial_merge_trees(t, "");
- 	free(buf1);
- 	free(buf2);
- 	free(buf3);
+@@ -386,3 +383,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 	show_result();
+ 	return 0;
+ }
++
++int cmd_merge_tree(int argc, const char **argv, const char *prefix)
++{
++	if (argc != 4)
++		usage(merge_tree_usage);
++	return trivial_merge(argc, argv);
++}
 -- 
 gitgitgadget
 
