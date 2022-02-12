@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54B2AC433EF
-	for <git@archiver.kernel.org>; Sat, 12 Feb 2022 14:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32CA0C433F5
+	for <git@archiver.kernel.org>; Sat, 12 Feb 2022 14:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235865AbiBLOb4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Feb 2022 09:31:56 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49444 "EHLO
+        id S236108AbiBLOeP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Feb 2022 09:34:15 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231486AbiBLObz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Feb 2022 09:31:55 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED864B0B
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 06:31:49 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id s7so20557071edd.3
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 06:31:49 -0800 (PST)
+        with ESMTP id S231486AbiBLOeN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Feb 2022 09:34:13 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42929B0B
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 06:34:10 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id w10so1947158edd.11
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 06:34:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=929BqBwUrZMPif7XXFfAOhZxW+vUbgD7g1yyaWGqhJY=;
-        b=XmVD82j3hoHet9kpxoq9kUo+VGFvXPWrZNy3mvbOral4c5bcu1BkyrMpKqq0qFk7ui
-         Du1HPmKoWvCxFqpFe2imuppEZb7MS5uKodLouz0wPsoOQJ3WqsM/kyqzJhyM5p6LwyM3
-         KVlQwY+SGqYPcBa1d/C8aZY0WYHNLn5tEyQscV+ug5OLhZI56J+3qenZaiXS2UMMCwcK
-         E5zl9A2HSOuVcokZtiUUnYS+0VSr/DFQ5VsoJiR2oW3Oa7FxXFmbuseh7Fio32IIdSg+
-         AhW9tP+0AGds2iop2OgLyb52A0n3gLh5A92yJdgMFOOjnRfHnVsQPA/FsRApjvdXGhSH
-         pEUQ==
+        bh=VNiqVIj68JYrwSXxXM53avreQ3VkK9eS9nverVfEp5s=;
+        b=i6w7jtiWcnTrISwHh0lXdMX7WqmwriUlUgSZ4cAoSxhCDCJbzLiNB3qfNDa8bGdeZr
+         ptufMLys+1n8bNS4nAyZnTP8AddZW7HHR9mILEkDqWcSuqcMDyYB4xZjWYgXv4622zGE
+         fBTaK3cMxiQxEa/szm0GdlDVzNQNgEwR9ASF53bwFCXEq+qgPLSupQLU3ECjfZZ/nSnu
+         XzbpUFeoooqS6pD9FvstOQgYQA/hgycHMR9GQ3W8Y1BsmYs5nCCe3xFUjYKj7rUAyDDj
+         LiSNL8lb0VggPDUUIQ9DZAJ8YfVfyI0no/zY277ZG3+ETl3iROJOKGlZEdxnYuRJ1Z8c
+         KUSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=929BqBwUrZMPif7XXFfAOhZxW+vUbgD7g1yyaWGqhJY=;
-        b=wwgJcCcZDlEj8Xzb6K57Ke4kY7rKNu89Neu83ZEW710FHtbEl7BGLzC2Mc3kqU8lYj
-         3JbHxVcNVLGmOjQqH6vK5hsApA+HbLdCX6UPoe20OkCjsm6CiciLweSWKdTx5cFXWtta
-         d2E28k+f9su3bnv3gJ3VYxvesVhQNyhnAeNJiZUuo9cODWisLEEHBQRBfvS0EPFah7yS
-         aio1bgNGnFvRTk/5nc1sSmFADMxxllPkxgh13dt0TZfqmzrVmOHvWXp2swtU9TD8B4cg
-         vlQDJjGnWmE6J0Q64nR1LCoqfO4/E6/6AqaKpFxTrbsC9fHZMV/RKIeiXoXmId+MqOAk
-         9OpQ==
-X-Gm-Message-State: AOAM531BwBne+ipdSVsZzdIweUY+k8YjQenZBvwIuzYgpqP/i4+CwrUC
-        iS2G+V8DGhCQMZg/xj9AvcOfaE4yqUWaDw==
-X-Google-Smtp-Source: ABdhPJxIgq0YyUiuzrtAQ38CjHsWk3VHBzenRWwcr5XDSfokwOFhIhekw3Hvj4dbnSx6jNv7CtWamA==
-X-Received: by 2002:aa7:c3da:: with SMTP id l26mr3743256edr.294.1644676308128;
-        Sat, 12 Feb 2022 06:31:48 -0800 (PST)
+        bh=VNiqVIj68JYrwSXxXM53avreQ3VkK9eS9nverVfEp5s=;
+        b=2c8xp9Xcb+hELARECUJHk0yhWeSAxdqmpmC8fD9hYli4QO4yk10MQOG+y73KWppKrr
+         QlyqyekiZGYzb9aknxD/Ackz2hZMmi205QtyO5wfq3iKcYOIEnZT5hJ5KkuJv20PA2MR
+         XfYxfhh2ZCGV7x5Bzrt2qFXefAGR4sypvc7RHDi67YyZZSmlzlJXN1FJxH2D/exSvjmw
+         TfSdWKhCkdgnvkZhAqxw7YW2AzIGDwQkOlQ2rxDtCR75YJKDBLHAQ/bBPMfY8aJOxJvl
+         OMvyL/5cEXC9ss1KAYADqeoMgJMqlqPbEO1v2DnZPYFB6PsGtrd7Xxm7uUVN/HfdIyB3
+         0vVw==
+X-Gm-Message-State: AOAM531OmB16Q4yvZrsRRhGQwQ8mu116TMkd0gBgjHTEfRrfq4aS4NsN
+        BiFrBnJfJ7MIe3xp/fIY1HWn/GMPKy6JCQ==
+X-Google-Smtp-Source: ABdhPJxCpq1vL4V5bUJZs9UD/8t4e03CPHhQ5oMsxcxkoc63trsb4J6IWmEdGqW7C1g4CB6SUfX3Uw==
+X-Received: by 2002:a05:6402:3509:: with SMTP id b9mr6807417edd.192.1644676448579;
+        Sat, 12 Feb 2022 06:34:08 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g2sm12426135edt.44.2022.02.12.06.31.47
+        by smtp.gmail.com with ESMTPSA id 22sm59106eja.165.2022.02.12.06.34.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Feb 2022 06:31:47 -0800 (PST)
+        Sat, 12 Feb 2022 06:34:08 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nItRC-000RRw-Qz;
-        Sat, 12 Feb 2022 15:31:46 +0100
+        id 1nItTT-000RYm-Bp;
+        Sat, 12 Feb 2022 15:34:07 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Glen Choo <chooglen@google.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -60,15 +60,15 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrn@google.com>,
         Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
         pc44800@gmail.com, Shourya Shukla <periperidip@gmail.com>
-Subject: Re: [PATCH v7 03/20] submodule--helper: allow setting superprefix
- for init_submodule()
-Date:   Sat, 12 Feb 2022 15:30:51 +0100
+Subject: Re: [PATCH v7 04/20] submodule--helper: run update using child
+ process struct
+Date:   Sat, 12 Feb 2022 15:33:11 +0100
 References: <20220208083952.35036-1-chooglen@google.com>
  <20220210092833.55360-1-chooglen@google.com>
- <20220210092833.55360-4-chooglen@google.com>
+ <20220210092833.55360-5-chooglen@google.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20220210092833.55360-4-chooglen@google.com>
-Message-ID: <220212.8635koyx4d.gmgdl@evledraar.gmail.com>
+In-reply-to: <20220210092833.55360-5-chooglen@google.com>
+Message-ID: <220212.86y22gxig0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -81,13 +81,10 @@ On Thu, Feb 10 2022, Glen Choo wrote:
 
 > From: Atharva Raykar <raykar.ath@gmail.com>
 >
-> We allow callers of the `init_submodule()` function to optionally
-> override the superprefix from the environment.
->
-> We need to enable this option because in our conversion of the update
-> command that will follow, the '--init' option will be handled through
-> this API. We will need to change the superprefix at that time to ensure
-> the display paths show correctly in the output messages.
+> We switch to using the run-command API function that takes a
+> 'struct child process', since we are using a lot of the options. This
+> will also make it simple to switch over to using 'capture_command()'
+> when we start handling the output of the command completely in C.
 >
 > Mentored-by: Christian Couder <christian.couder@gmail.com>
 > Mentored-by: Shourya Shukla <periperidip@gmail.com>
@@ -95,95 +92,87 @@ On Thu, Feb 10 2022, Glen Choo wrote:
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
->  builtin/submodule--helper.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
+>  builtin/submodule--helper.c | 34 ++++++++++++++++------------------
+>  1 file changed, 16 insertions(+), 18 deletions(-)
 >
 > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 5efceb9d46..09cda67c1e 100644
+> index 09cda67c1e..db71e6f4ec 100644
 > --- a/builtin/submodule--helper.c
 > +++ b/builtin/submodule--helper.c
-> @@ -606,18 +606,22 @@ static int module_foreach(int argc, const char **ar=
-gv, const char *prefix)
+> @@ -2344,47 +2344,45 @@ static int fetch_in_submodule(const char *module_=
+path, int depth, int quiet, str
 >=20=20
->  struct init_cb {
->  	const char *prefix;
-> +	const char *superprefix;
->  	unsigned int flags;
->  };
->  #define INIT_CB_INIT { 0 }
->=20=20
->  static void init_submodule(const char *path, const char *prefix,
-> -			   unsigned int flags)
-> +			   const char *superprefix, unsigned int flags)
+>  static int run_update_command(struct update_data *ud, int subforce)
 >  {
->  	const struct submodule *sub;
->  	struct strbuf sb =3D STRBUF_INIT;
->  	char *upd =3D NULL, *url =3D NULL, *displaypath;
+> -	struct strvec args =3D STRVEC_INIT;
+> -	struct strvec child_env =3D STRVEC_INIT;
+> +	struct child_process cp =3D CHILD_PROCESS_INIT;
+>  	char *oid =3D oid_to_hex(&ud->oid);
+>  	int must_die_on_failure =3D 0;
+> -	int git_cmd;
 >=20=20
-> -	displaypath =3D get_submodule_displaypath(path, prefix);
-> +	/* try superprefix from the environment, if it is not passed explicitly=
- */
-> +	if (!superprefix)
-> +		superprefix =3D get_super_prefix();
-> +	displaypath =3D do_get_submodule_displaypath(path, prefix, superprefix);
+>  	switch (ud->update_strategy.type) {
+>  	case SM_UPDATE_CHECKOUT:
+> -		git_cmd =3D 1;
+> -		strvec_pushl(&args, "checkout", "-q", NULL);
+> +		cp.git_cmd =3D 1;
+> +		strvec_pushl(&cp.args, "checkout", "-q", NULL);
+>  		if (subforce)
+> -			strvec_push(&args, "-f");
+> +			strvec_push(&cp.args, "-f");
+>  		break;
+>  	case SM_UPDATE_REBASE:
+> -		git_cmd =3D 1;
+> -		strvec_push(&args, "rebase");
+> +		cp.git_cmd =3D 1;
+> +		strvec_push(&cp.args, "rebase");
+>  		if (ud->quiet)
+> -			strvec_push(&args, "--quiet");
+> +			strvec_push(&cp.args, "--quiet");
+>  		must_die_on_failure =3D 1;
+>  		break;
+>  	case SM_UPDATE_MERGE:
+> -		git_cmd =3D 1;
+> -		strvec_push(&args, "merge");
+> +		cp.git_cmd =3D 1;
+> +		strvec_push(&cp.args, "merge");
+>  		if (ud->quiet)
+> -			strvec_push(&args, "--quiet");
+> +			strvec_push(&cp.args, "--quiet");
+>  		must_die_on_failure =3D 1;
+>  		break;
+>  	case SM_UPDATE_COMMAND:
+> -		git_cmd =3D 0;
+> -		strvec_push(&args, ud->update_strategy.command);
+> +		cp.use_shell =3D 1;
+> +		strvec_push(&cp.args, ud->update_strategy.command);
+>  		must_die_on_failure =3D 1;
+>  		break;
+>  	default:
+>  		BUG("unexpected update strategy type: %s",
+>  		    submodule_strategy_to_string(&ud->update_strategy));
+>  	}
+> -	strvec_push(&args, oid);
+> +	strvec_push(&cp.args, oid);
 >=20=20
->  	sub =3D submodule_from_path(the_repository, null_oid(), path);
->=20=20
-> @@ -691,7 +695,7 @@ static void init_submodule(const char *path, const ch=
-ar *prefix,
->  static void init_submodule_cb(const struct cache_entry *list_item, void =
-*cb_data)
->  {
->  	struct init_cb *info =3D cb_data;
-> -	init_submodule(list_item->name, info->prefix, info->flags);
-> +	init_submodule(list_item->name, info->prefix, info->superprefix, info->=
-flags);
->  }
->=20=20
->  static int module_init(int argc, const char **argv, const char *prefix)
+> -	prepare_submodule_repo_env(&child_env);
+> -	if (run_command_v_opt_cd_env(args.v, git_cmd ? RUN_GIT_CMD : RUN_USING_=
+SHELL,
+> -				     ud->sm_path, child_env.v)) {
+> +	cp.dir =3D xstrdup(ud->sm_path);
+> +	prepare_submodule_repo_env(&cp.env_array);
+> +	if (run_command(&cp)) {
+>  		switch (ud->update_strategy.type) {
+>  		case SM_UPDATE_CHECKOUT:
+>  			printf(_("Unable to checkout '%s' in submodule path '%s'"),
 
-Note/nit on existing (pre this series) code, I wonder why we ended up
-with this init_submodule() v.s. init_submodule_cb() indirection,
-v.s. just doing:
+If this series is re-arranged so that this comes first, this compiles
+just fine & passes all tests.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 09cda67c1ea..aa82abeb37a 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -611,9 +611,14 @@ struct init_cb {
- };
- #define INIT_CB_INIT { 0 }
-=20
--static void init_submodule(const char *path, const char *prefix,
--			   const char *superprefix, unsigned int flags)
-+static void init_submodule_cb(const struct cache_entry *list_item, void *c=
-b_data)
- {
-+	const char *path =3D list_item->name;
-+	struct init_cb *info =3D cb_data;
-+	const char *prefix =3D info->prefix;
-+	const char *superprefix =3D info->superprefix ? info->superprefix :
-+		get_super_prefix();
-+	unsigned int flags =3D info->flags;
- 	const struct submodule *sub;
- 	struct strbuf sb =3D STRBUF_INIT;
- 	char *upd =3D NULL, *url =3D NULL, *displaypath;
-@@ -692,12 +697,6 @@ static void init_submodule(const char *path, const cha=
-r *prefix,
- 	free(upd);
- }
-=20
--static void init_submodule_cb(const struct cache_entry *list_item, void *c=
-b_data)
--{
--	struct init_cb *info =3D cb_data;
--	init_submodule(list_item->name, info->prefix, info->superprefix, info->fl=
-ags);
--}
--
- static int module_init(int argc, const char **argv, const char *prefix)
- {
- 	struct init_cb info =3D INIT_CB_INIT;
+So I wonder if we can peel this and perhaps other such easy to review
+prep changes off into its own series, since this one has grown to 20
+patches.
 
-Maybe it's worth it to declare the variables in the argument list
-v.s. the function.
+We could then hopefully fast-track those easy-to-review prep changes,
+which would make the "real" series to follow smaller and easier to
+review/grok.
