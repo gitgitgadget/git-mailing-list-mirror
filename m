@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14BCFC43217
-	for <git@archiver.kernel.org>; Sun, 13 Feb 2022 00:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6A62C433F5
+	for <git@archiver.kernel.org>; Sun, 13 Feb 2022 00:40:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232745AbiBMAkN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Feb 2022 19:40:13 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46014 "EHLO
+        id S232770AbiBMAkQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Feb 2022 19:40:16 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232725AbiBMAkJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Feb 2022 19:40:09 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F3A6005A
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 16:40:04 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id d27so17366330wrb.5
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 16:40:04 -0800 (PST)
+        with ESMTP id S232728AbiBMAkK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Feb 2022 19:40:10 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA5D60061
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 16:40:06 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id j26so10314390wrb.7
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 16:40:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wMtVOKdIdUvfblmdEHAlxd8ozSGdUKNBlb2K8VUene8=;
-        b=HeFjaF+Cs4f+6Fphp61yCsYtdIqiGVGhe2RCCkX0UTSRQg/01UuRr8Ysfg/UGBqrpE
-         6HMDiz3pAc9t959Ztuo+BYWjULvdS3X6CERfFZDed1AFdLuHBjIj6RTTNh9Y9dseHV4E
-         N2Dcms5sAT7iChR4Dg4d9DERh6tAOitzKUZ2ZXjg7tb5gzl7v2ImJqhYSYbjbUC4Jc3M
-         TKBeIHzJ3as18KeYL6b5im9UKV8f6SeFVS95xQ9YyGhUssgB8o6S91mwtrU0nDERx5jy
-         TK1IAtqxW3N7nAtMEVSNbIWLaO+Kw1Y0t1lPeNQj1SCL9T6vTXixaqzx/oQXVzSbYL+m
-         27XQ==
+        bh=brGviHVD/ER7adMOJxV+OlzowtgFiRjqrVrbut9m81o=;
+        b=SINSBP7wMys/sjgbGKngC+cxzWcEeWEI0iTNMvRJErnUPnBgMf95Bg1ecL+oNXA83D
+         ccxbwJQcejp9JpqRQn4iz9HYcVablvYfTKJoM+54RMxSS+CjKqtps01RF31SG8afFyeM
+         ivclkk/f3XGAC82SCRcKXYWG+Nexxjw6UqmWgs3RFoL1NkQurhS6duyNniEpbI8pDZjB
+         wolt9FAHMObW2Q1OahcJNqeqpZ6MnJM0WZONRq+F5Y9BbwhIiSSM20EeicO8WiluMeT7
+         dqRCOJqYXo1JiUkoNJONJTIBV17s225nVSQlTQ8Cb2Uxr0hkA/rK1QgaWL9UK5XLNNhY
+         RiMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wMtVOKdIdUvfblmdEHAlxd8ozSGdUKNBlb2K8VUene8=;
-        b=dONBgwCieijg3oA2tl12gCF6nF7WzQaEb6yu3HAU6DBukq+IlxjuSx3zCINcSo1KPo
-         obbCOWjAQ8BWrJKf5VLI0EthuE+aWsDKofwHfcaw0mZa4vUMc8NZr8MT9GcNdgKDJ2PO
-         l1O1C0Tg8uTmrwD30nQwifbVtQgJGLF964QOS+cGQvpSN9OXLzgoLJcrELGyJXH2mysT
-         vfSd9NoX06np7np8wcns1XKLBvk/ZyM2RgG5Z5k8Z9PO6yzH8PwhpXkVVhDmnlnYCKsC
-         ApJZxgbJDjsBf4PAyZn6PvcEbQ1ijBnyummrOC5xnUwZ5XnRrotFQHWsGWlWpyJeHhIz
-         tQ2A==
-X-Gm-Message-State: AOAM533jCTYQKrYKo89+VZ7VkTsAXDnjngxx64JnVWTWYhpWBJgGdkzY
-        sHuhwG7b01WzZHGMW2T1GJXyF10xZBI=
-X-Google-Smtp-Source: ABdhPJycP0OjteDeKmUHER1i/58I3Sofc5fLgxirifix6BOFV2GWb7695IKXYFNUcD4ohNJs7atIYA==
-X-Received: by 2002:adf:d0c9:: with SMTP id z9mr6249147wrh.245.1644712802690;
-        Sat, 12 Feb 2022 16:40:02 -0800 (PST)
+        bh=brGviHVD/ER7adMOJxV+OlzowtgFiRjqrVrbut9m81o=;
+        b=c5a+6fxq1UTC8BQOikAfeHBgGmHYpZ3RcUATcBk8LRLCsjxZYzSGG+msLKlMTCHe37
+         s0C1meaASX8VdKuvDHdkI4RU9cD7wJKrW6VWqXb/Shgny4qUkxw8zQ0eWfpHldVEjmdR
+         gKoO/PIv9Mm9eLbmJCXRGpHA98PlQWVi7l6zi4M+H4dZqDXSs7JrWGL2hluijog8sAuT
+         UXBudx304+GNZTXvMjOqAZb70JVYhQoZDQ7nJE/y/2wuPaVsWOFD+V6PxO46eR7spKOj
+         IPa9FFxcHJjIe3fgyF2AgtRMfBSoStDra4w8gWj2fHyiv+QT3A6hwRry68af1xR1045E
+         XE5w==
+X-Gm-Message-State: AOAM532smPIn7wTNaeMngzMh+TaZM5rK3rZj7ToK9xsPMMymGjgNGQzZ
+        KI2dLtf5rZ1FMskhzGWrsRIrT+/7LDQ=
+X-Google-Smtp-Source: ABdhPJxRk/UQWYiOocThS3k4oSZdk6bXTggHxcMItM+glMOwWumN6Sr6KdVjCu4Strlu4rJFgwFDxg==
+X-Received: by 2002:a5d:4bc7:: with SMTP id l7mr6362135wrt.230.1644712804455;
+        Sat, 12 Feb 2022 16:40:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o10sm13937436wrc.98.2022.02.12.16.40.02
+        by smtp.gmail.com with ESMTPSA id o16sm13298260wrn.87.2022.02.12.16.40.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Feb 2022 16:40:02 -0800 (PST)
-Message-Id: <5e27cad17a7080170f476684610391bd56024f36.1644712798.git.gitgitgadget@gmail.com>
+        Sat, 12 Feb 2022 16:40:03 -0800 (PST)
+Message-Id: <502da48b8f43e2c5a67d5519ac7aacf80accd818.1644712798.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1118.git.1644712797.gitgitgadget@gmail.com>
 References: <pull.1118.git.1644712797.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 13 Feb 2022 00:39:54 +0000
-Subject: [PATCH 4/7] sparse-checkout: error or warn when given individual
- files
+Date:   Sun, 13 Feb 2022 00:39:56 +0000
+Subject: [PATCH 6/7] sparse-checkout: reject arguments in cone-mode that look
+ like patterns
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,185 +69,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The set and add subcommands accept multiple positional arguments.
-The meaning of these arguments differs slightly in the two modes:
+In sparse-checkout add/set under cone mode, the arguments passed are
+supposed to be directories rather than gitignore-style patterns.
+However, given the amount of effort spent in the manual discussing
+patterns, it is easy for users to assume they need to pass patterns such
+as
+   /foo/*
+or
+   !/bar/*/
+or perhaps they really do ignore the directory rule and specify a
+random gitignore-style pattern like
+   *.c
 
-Cone mode only accepts directories.  If given a file, it would
-previously treat it as a directory, causing not just the file itself to
-be included but all sibling files as well -- likely against users'
-expectations.  Throw an error if the specified path is a file in the
-index.  Provide a --skip-checks argument to allow users to override
-(e.g. for the case when the given path IS a directory on another
-branch).
+To help catch such mistakes, throw an error if any of the positional
+arguments:
+  * starts with any of '/!'
+  * contains any of '*\?[]'
 
-Non-cone mode accepts general gitignore patterns.  However, it has an
-O(N*M) performance baked into its design, where all N index files must
-be matched against all M sparse-checkout patterns with EVERY call to
-unpack_trees() that updates the working tree.  As such, it is important
-to keep the number of patterns small, and thus we should warn users to
-prefer passing directories and more generic glob patterns to get the
-paths they want instead of listing each individual file.  (The
---skip-checks argument can also be used to bypass this warning.)  Also,
-even when users do want to specify individual files, they will often
-want to do so by providing a leading '/' (to avoid selecting the same
-filename in all subdirectories), in which case this error message would
-never trigger anyway.
+Inform users they can pass --skip-checks if they have a directory that
+really does have such special characters in its name.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/sparse-checkout.c          | 43 +++++++++++++++++++++++++-----
- t/t1091-sparse-checkout-builtin.sh | 16 ++++++++++-
- 2 files changed, 52 insertions(+), 7 deletions(-)
+ builtin/sparse-checkout.c          | 16 ++++++++++++++--
+ t/t1091-sparse-checkout-builtin.sh |  2 +-
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index bec423d5af9..8f8d2bd6ba5 100644
+index 0f9e737ed97..6e0af166f80 100644
 --- a/builtin/sparse-checkout.c
 +++ b/builtin/sparse-checkout.c
-@@ -1,4 +1,5 @@
- #include "builtin.h"
-+#include "cache.h"
- #include "config.h"
- #include "dir.h"
- #include "parse-options.h"
-@@ -681,8 +682,11 @@ static int modify_pattern_list(int argc, const char **argv, int use_stdin,
- 	return result;
- }
- 
--static void sanitize_paths(int argc, const char **argv, const char *prefix)
-+static void sanitize_paths(int argc, const char **argv,
-+			   const char *prefix, int skip_checks)
- {
-+	int i;
-+
- 	if (!argc)
+@@ -704,10 +704,22 @@ static void sanitize_paths(int argc, const char **argv,
+ 	if (skip_checks)
  		return;
  
-@@ -691,26 +695,49 @@ static void sanitize_paths(int argc, const char **argv, const char *prefix)
- 		 * The args are not pathspecs, so unfortunately we
- 		 * cannot imitate how cmd_add() uses parse_pathspec().
- 		 */
--		int i;
- 		int prefix_len = strlen(prefix);
- 
- 		for (i = 0; i < argc; i++)
- 			argv[i] = prefix_path(prefix, prefix_len, argv[i]);
- 	}
-+
-+	if (skip_checks)
-+		return;
-+
+-	if (!core_sparse_checkout_cone)
+-		for (i = 0; i < argc; i++)
 +	for (i = 0; i < argc; i++) {
-+		struct cache_entry *ce;
-+		struct index_state *index = the_repository->index;
-+		int pos = index_name_pos(index, argv[i], strlen(argv[i]));
-+
-+		if (pos < 0)
-+			continue;
-+		ce = index->cache[pos];
-+		if (S_ISSPARSEDIR(ce->ce_mode))
-+			continue;
-+
-+		if (core_sparse_checkout_cone)
-+			die(_("\"%s\" is not a directory; to treat it as a directory anyway, rerun with --skip-checks"), argv[i]);
-+		else
-+			warning(_("path \"%s\" is an individual file; passing directories or less specific patterns is recommended (see NON-CONE PROBLEMS in the git-sparse-checkout manual)."), argv[i]);
++		if (core_sparse_checkout_cone) {
++			if (argv[i][0] == '/')
++				die(_("specify directories rather than patterns (no leading slash)"));
++			if (argv[i][0] == '!')
++				die(_("specify directories rather than patterns.  If your directory starts with a '!', pass --skip-checks"));
++			if (strchr(argv[i], '*') ||
++			    strchr(argv[i], '?') ||
++			    strchr(argv[i], '[') ||
++			    strchr(argv[i], ']'))
++				die(_("specify directories rather than patterns.  If your directory really has any of '*?[]' in it, pass --skip-checks"));
++		} else {
+ 			if (argv[i][0] == '#')
+ 				die(_("paths beginning with a '#' must be preceeded by a backslash"));
++		}
 +	}
- }
  
- static char const * const builtin_sparse_checkout_add_usage[] = {
--	N_("git sparse-checkout add (--stdin | <patterns>)"),
-+	N_("git sparse-checkout add [--skip-checks] (--stdin | <patterns>)"),
- 	NULL
- };
- 
- static struct sparse_checkout_add_opts {
-+	int skip_checks;
- 	int use_stdin;
- } add_opts;
- 
- static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
- {
- 	static struct option builtin_sparse_checkout_add_options[] = {
-+		OPT_BOOL_F(0, "skip-checks", &add_opts.skip_checks,
-+			   N_("skip some sanity checks on the given paths that might give false positives"),
-+			   PARSE_OPT_NONEG),
- 		OPT_BOOL(0, "stdin", &add_opts.use_stdin,
- 			 N_("read patterns from standard in")),
- 		OPT_END(),
-@@ -726,19 +753,20 @@ static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
- 			     builtin_sparse_checkout_add_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN);
- 
--	sanitize_paths(argc, argv, prefix);
-+	sanitize_paths(argc, argv, prefix, add_opts.skip_checks);
- 
- 	return modify_pattern_list(argc, argv, add_opts.use_stdin, ADD);
- }
- 
- static char const * const builtin_sparse_checkout_set_usage[] = {
--	N_("git sparse-checkout set [--[no-]cone] [--[no-]sparse-index] (--stdin | <patterns>)"),
-+	N_("git sparse-checkout set [--[no-]cone] [--[no-]sparse-index] [--skip-checks] (--stdin | <patterns>)"),
- 	NULL
- };
- 
- static struct sparse_checkout_set_opts {
- 	int cone_mode;
- 	int sparse_index;
-+	int skip_checks;
- 	int use_stdin;
- } set_opts;
- 
-@@ -752,6 +780,9 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
- 			 N_("initialize the sparse-checkout in cone mode")),
- 		OPT_BOOL(0, "sparse-index", &set_opts.sparse_index,
- 			 N_("toggle the use of a sparse index")),
-+		OPT_BOOL_F(0, "skip-checks", &set_opts.skip_checks,
-+			   N_("skip some sanity checks on the given paths that might give false positives"),
-+			   PARSE_OPT_NONEG),
- 		OPT_BOOL_F(0, "stdin", &set_opts.use_stdin,
- 			   N_("read patterns from standard in"),
- 			   PARSE_OPT_NONEG),
-@@ -780,7 +811,7 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
- 		argv = default_patterns;
- 		argc = default_patterns_nr;
- 	} else {
--		sanitize_paths(argc, argv, prefix);
-+		sanitize_paths(argc, argv, prefix, set_opts.skip_checks);
- 	}
- 
- 	return modify_pattern_list(argc, argv, set_opts.use_stdin, REPLACE);
+ 	for (i = 0; i < argc; i++) {
+ 		struct cache_entry *ce;
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index b9e6987f5a6..1d95fa47258 100755
+index 32b77415679..343ce16a534 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -580,7 +580,7 @@ test_expect_success 'different sparse-checkouts with worktrees' '
- '
- 
- test_expect_success 'set using filename keeps file on-disk' '
--	git -C repo sparse-checkout set a deep &&
-+	git -C repo sparse-checkout set --skip-checks a deep &&
+@@ -691,7 +691,7 @@ test_expect_success BSLASHPSPEC 'pattern-checks: escaped characters' '
+ 	git -C escaped reset --hard $COMMIT &&
+ 	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist" zglob[!a]? &&
+ 	git -C escaped sparse-checkout init --cone &&
+-	git -C escaped sparse-checkout set zbad\\dir/bogus "zdoes*not*exist" "zdoes*exist" "zglob[!a]?" &&
++	git -C escaped sparse-checkout set --skip-checks zbad\\dir/bogus "zdoes*not*exist" "zdoes*exist" "zglob[!a]?" &&
  	cat >expect <<-\EOF &&
  	/*
  	!/*/
-@@ -843,4 +843,18 @@ test_expect_success 'add from subdir pays attention to prefix' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'by default, cone mode will error out when passed files' '
-+	git -C repo sparse-checkout reapply --cone &&
-+	test_must_fail git -C repo sparse-checkout add .gitignore 2>error &&
-+
-+	grep ".gitignore.*is not a directory" error
-+'
-+
-+test_expect_success 'by default, non-cone mode will warn on individual files' '
-+	git -C repo sparse-checkout reapply --no-cone &&
-+	git -C repo sparse-checkout add .gitignore 2>warning &&
-+
-+	grep "passing directories or less specific patterns is recommended" warning
-+'
-+
- test_done
 -- 
 gitgitgadget
 
