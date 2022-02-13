@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6A62C433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5CE4C433EF
 	for <git@archiver.kernel.org>; Sun, 13 Feb 2022 00:40:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232770AbiBMAkQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Feb 2022 19:40:16 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46024 "EHLO
+        id S232755AbiBMAkO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Feb 2022 19:40:14 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232728AbiBMAkK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Feb 2022 19:40:10 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA5D60061
-        for <git@vger.kernel.org>; Sat, 12 Feb 2022 16:40:06 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id j26so10314390wrb.7
+        with ESMTP id S232727AbiBMAkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Feb 2022 19:40:09 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 290686005E
+        for <git@vger.kernel.org>; Sat, 12 Feb 2022 16:40:05 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id k3-20020a1ca103000000b0037bdea84f9cso8616459wme.1
         for <git@vger.kernel.org>; Sat, 12 Feb 2022 16:40:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=brGviHVD/ER7adMOJxV+OlzowtgFiRjqrVrbut9m81o=;
-        b=SINSBP7wMys/sjgbGKngC+cxzWcEeWEI0iTNMvRJErnUPnBgMf95Bg1ecL+oNXA83D
-         ccxbwJQcejp9JpqRQn4iz9HYcVablvYfTKJoM+54RMxSS+CjKqtps01RF31SG8afFyeM
-         ivclkk/f3XGAC82SCRcKXYWG+Nexxjw6UqmWgs3RFoL1NkQurhS6duyNniEpbI8pDZjB
-         wolt9FAHMObW2Q1OahcJNqeqpZ6MnJM0WZONRq+F5Y9BbwhIiSSM20EeicO8WiluMeT7
-         dqRCOJqYXo1JiUkoNJONJTIBV17s225nVSQlTQ8Cb2Uxr0hkA/rK1QgaWL9UK5XLNNhY
-         RiMA==
+        bh=87B8g00aRBUIF982wcafTYUkZmMVb2hLgP1kfIXtpRo=;
+        b=jm8tU4drgVxHtrsOcP+GeJ/xUnOnUJJkpvsSoxbQ89Hz0+oBvLQZfVuIOw9oMIIlJE
+         l5GtYtLOA1iUUY77soMMCA0PngW5+5wyUrAGbnHaPqsQ2Dlv/QXxg2lCx6S4hvy75+h7
+         W8dWCKFlN7yoScGlPBCzDcXyGH3ZqA4/1wNSYdBE5bTW1idodES7ku7d2rsscv8ytHBs
+         2QtOTIDMvk71B8/HL8I5jQO6rdhP4TyyaPUQlfOt64bzuookjeuyI5LIMQuFNkiPFPet
+         y69fAtFB0bBv+KZE97WQFcOnJtCo2uvbLFDBMy98B/co6ZENC8AntVesftOo3fCCOuIL
+         W17g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=brGviHVD/ER7adMOJxV+OlzowtgFiRjqrVrbut9m81o=;
-        b=c5a+6fxq1UTC8BQOikAfeHBgGmHYpZ3RcUATcBk8LRLCsjxZYzSGG+msLKlMTCHe37
-         s0C1meaASX8VdKuvDHdkI4RU9cD7wJKrW6VWqXb/Shgny4qUkxw8zQ0eWfpHldVEjmdR
-         gKoO/PIv9Mm9eLbmJCXRGpHA98PlQWVi7l6zi4M+H4dZqDXSs7JrWGL2hluijog8sAuT
-         UXBudx304+GNZTXvMjOqAZb70JVYhQoZDQ7nJE/y/2wuPaVsWOFD+V6PxO46eR7spKOj
-         IPa9FFxcHJjIe3fgyF2AgtRMfBSoStDra4w8gWj2fHyiv+QT3A6hwRry68af1xR1045E
-         XE5w==
-X-Gm-Message-State: AOAM532smPIn7wTNaeMngzMh+TaZM5rK3rZj7ToK9xsPMMymGjgNGQzZ
-        KI2dLtf5rZ1FMskhzGWrsRIrT+/7LDQ=
-X-Google-Smtp-Source: ABdhPJxRk/UQWYiOocThS3k4oSZdk6bXTggHxcMItM+glMOwWumN6Sr6KdVjCu4Strlu4rJFgwFDxg==
-X-Received: by 2002:a5d:4bc7:: with SMTP id l7mr6362135wrt.230.1644712804455;
-        Sat, 12 Feb 2022 16:40:04 -0800 (PST)
+        bh=87B8g00aRBUIF982wcafTYUkZmMVb2hLgP1kfIXtpRo=;
+        b=5PY88dJfJoFSQJbNlCBmdDxYLStqZ7F3GutNqCGK/vV+HkVLRJJ0bH8m3XRVVD21At
+         ahCjk1jNH9jsoMLHoe/36JsZrfwQImoqLKFek0Hvs1hUglsudHpq85dfcBvTl/tjlDLZ
+         4u39E67RQ8NLsaXGbX+8vGPNki3mNbhoKxbRGHw3ELtyBPZK6k1jC4P5SKuUbdl5WSXB
+         zNVX7VKOBFQaHak9Q+Yl/DTDHpLmy64KfNxmcG/un3iybxNAP5XtQg8Ma+mpGD/byY7V
+         UhLdTCK1hD9gzSmcVWOwELK6WFrM6t82V+A4qGRdJSqKMPlY+lekurolu0Q6dJoYZKyy
+         oWZw==
+X-Gm-Message-State: AOAM533DTPsGwVeiXWYrkhEI8oSbi2WXBB32mPBomAoMbXEV7LHL21WT
+        kvYaKW+RhPT2qcRFvyrp/hjZr4/wH+E=
+X-Google-Smtp-Source: ABdhPJw0hLdttstIcnrCwkRrlNqf0YoBZqXqMZ8+tbsaiTI/N+YdwznXgV2ii6qFiZypWsxoaMCA+g==
+X-Received: by 2002:a05:600c:601a:: with SMTP id az26mr5663234wmb.2.1644712803587;
+        Sat, 12 Feb 2022 16:40:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o16sm13298260wrn.87.2022.02.12.16.40.03
+        by smtp.gmail.com with ESMTPSA id k34sm6869991wms.35.2022.02.12.16.40.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 12 Feb 2022 16:40:03 -0800 (PST)
-Message-Id: <502da48b8f43e2c5a67d5519ac7aacf80accd818.1644712798.git.gitgitgadget@gmail.com>
+Message-Id: <265cbe36b2df5a9a076877fe3ddc3880a64a9217.1644712798.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1118.git.1644712797.gitgitgadget@gmail.com>
 References: <pull.1118.git.1644712797.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 13 Feb 2022 00:39:56 +0000
-Subject: [PATCH 6/7] sparse-checkout: reject arguments in cone-mode that look
- like patterns
+Date:   Sun, 13 Feb 2022 00:39:55 +0000
+Subject: [PATCH 5/7] sparse-checkout: reject non-cone-mode patterns starting
+ with a '#'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,74 +69,53 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-In sparse-checkout add/set under cone mode, the arguments passed are
-supposed to be directories rather than gitignore-style patterns.
-However, given the amount of effort spent in the manual discussing
-patterns, it is easy for users to assume they need to pass patterns such
-as
-   /foo/*
-or
-   !/bar/*/
-or perhaps they really do ignore the directory rule and specify a
-random gitignore-style pattern like
-   *.c
+In sparse-checkout add/set, in cone mode any specified directories will
+be transformed into appropriate patterns.  In non-cone mode, the
+non-option arguments are treated as patterns.
 
-To help catch such mistakes, throw an error if any of the positional
-arguments:
-  * starts with any of '/!'
-  * contains any of '*\?[]'
-
-Inform users they can pass --skip-checks if they have a directory that
-really does have such special characters in its name.
+Since .git/info/sparse-checkout will ignore any patterns starting with a
+'#' (they are just gitignore patterns), if the user passes an argument
+starting with a '#' to sparse-checkout add/set in non-cone mode, it
+would just be treated as a comment and ignored.  Error out in such
+cases, informing the user that they need to backslash escape it.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/sparse-checkout.c          | 16 ++++++++++++++--
- t/t1091-sparse-checkout-builtin.sh |  2 +-
- 2 files changed, 15 insertions(+), 3 deletions(-)
+ builtin/sparse-checkout.c          | 5 +++++
+ t/t1091-sparse-checkout-builtin.sh | 6 ++++++
+ 2 files changed, 11 insertions(+)
 
 diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 0f9e737ed97..6e0af166f80 100644
+index 8f8d2bd6ba5..0f9e737ed97 100644
 --- a/builtin/sparse-checkout.c
 +++ b/builtin/sparse-checkout.c
-@@ -704,10 +704,22 @@ static void sanitize_paths(int argc, const char **argv,
+@@ -704,6 +704,11 @@ static void sanitize_paths(int argc, const char **argv,
  	if (skip_checks)
  		return;
  
--	if (!core_sparse_checkout_cone)
--		for (i = 0; i < argc; i++)
-+	for (i = 0; i < argc; i++) {
-+		if (core_sparse_checkout_cone) {
-+			if (argv[i][0] == '/')
-+				die(_("specify directories rather than patterns (no leading slash)"));
-+			if (argv[i][0] == '!')
-+				die(_("specify directories rather than patterns.  If your directory starts with a '!', pass --skip-checks"));
-+			if (strchr(argv[i], '*') ||
-+			    strchr(argv[i], '?') ||
-+			    strchr(argv[i], '[') ||
-+			    strchr(argv[i], ']'))
-+				die(_("specify directories rather than patterns.  If your directory really has any of '*?[]' in it, pass --skip-checks"));
-+		} else {
- 			if (argv[i][0] == '#')
- 				die(_("paths beginning with a '#' must be preceeded by a backslash"));
-+		}
-+	}
- 
++	if (!core_sparse_checkout_cone)
++		for (i = 0; i < argc; i++)
++			if (argv[i][0] == '#')
++				die(_("paths beginning with a '#' must be preceeded by a backslash"));
++
  	for (i = 0; i < argc; i++) {
  		struct cache_entry *ce;
+ 		struct index_state *index = the_repository->index;
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 32b77415679..343ce16a534 100755
+index 1d95fa47258..32b77415679 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -691,7 +691,7 @@ test_expect_success BSLASHPSPEC 'pattern-checks: escaped characters' '
- 	git -C escaped reset --hard $COMMIT &&
- 	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist" zglob[!a]? &&
- 	git -C escaped sparse-checkout init --cone &&
--	git -C escaped sparse-checkout set zbad\\dir/bogus "zdoes*not*exist" "zdoes*exist" "zglob[!a]?" &&
-+	git -C escaped sparse-checkout set --skip-checks zbad\\dir/bogus "zdoes*not*exist" "zdoes*exist" "zglob[!a]?" &&
- 	cat >expect <<-\EOF &&
- 	/*
- 	!/*/
+@@ -857,4 +857,10 @@ test_expect_success 'by default, non-cone mode will warn on individual files' '
+ 	grep "passing directories or less specific patterns is recommended" warning
+ '
+ 
++test_expect_success 'paths starting with hash must be escaped in non-cone mode' '
++	test_must_fail git -C repo sparse-checkout set --no-cone "#funny-path" 2>error &&
++
++	grep "paths beginning.*#.*must be preceeded by a backslash" error
++'
++
+ test_done
 -- 
 gitgitgadget
 
