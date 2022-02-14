@@ -2,80 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D9AFC433F5
-	for <git@archiver.kernel.org>; Mon, 14 Feb 2022 20:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E748C433F5
+	for <git@archiver.kernel.org>; Mon, 14 Feb 2022 20:45:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229868AbiBNUS4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Feb 2022 15:18:56 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:33660 "EHLO
+        id S229479AbiBNUpb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Feb 2022 15:45:31 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:33576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229864AbiBNUSz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Feb 2022 15:18:55 -0500
-Received: from mail-vk1-xa4a.google.com (mail-vk1-xa4a.google.com [IPv6:2607:f8b0:4864:20::a4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06EB8F9F91
-        for <git@vger.kernel.org>; Mon, 14 Feb 2022 12:18:40 -0800 (PST)
-Received: by mail-vk1-xa4a.google.com with SMTP id b26-20020ac5c4fa000000b0031fa5646ccaso3055095vkl.22
-        for <git@vger.kernel.org>; Mon, 14 Feb 2022 12:18:40 -0800 (PST)
+        with ESMTP id S229495AbiBNUp2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Feb 2022 15:45:28 -0500
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE63C15C67D
+        for <git@vger.kernel.org>; Mon, 14 Feb 2022 12:42:22 -0800 (PST)
+Received: by mail-oo1-f41.google.com with SMTP id t75-20020a4a3e4e000000b002e9c0821d78so20827910oot.4
+        for <git@vger.kernel.org>; Mon, 14 Feb 2022 12:42:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=n/mC4aHCWk5H1wKiZbSUn4NMJT4x831eVO/YZfRAyqw=;
-        b=Qq8eMEcE2njI4SBjH4EIX6CWcEMP0/Uz1qQGXUMl0njJWOX4w9z32V120dKKDS3xXC
-         C4n78zc5cJSc8hjHkqBRQARD5Cq16DpznDKz2hDGFf2ysdZKteEtWlQ6xsdlXthJSdEN
-         O0IEBW504JPTKlkZhvZTof46S0LxfPJVwFIi2PDAPdyAWHoAuQ1gIZ3BsCnpl1+eSPVM
-         3Zuk1xLJ+7s014KUi7FM+XJLDuR0IDsp6ZXGgOrxmH+o2Sbw0WHRQtLnddBu1EtCYbGw
-         BviOaAji8jQBfbQ1A0y+7GU/sdGk/Wy1eONmniNyryIh8HAiOnQQDmLFkWmEtd3HkDVx
-         GAwg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=VoqHHU+QxJdEfI0kmCk1CAG4PDNh9U2hdOX9fQrr8Fo=;
+        b=ecrpyBrrCpFFzrrUnq4DN4//pyWXYKNszTJBJjniyqJq6Q7QZlsUZ3glKzhRvlg6Tk
+         V6zOkQk3HYMpov12/QJBzdcdZtiPGRkfVWn7i5XvFXYY05TaxS9xC03E0a7zlyBMPz1Q
+         NlscOZsWMX6XgR9xUvnlMA/YgInKdR/N5oLayZuXrdy5TUJ/2Pk9qZ5IibAId84CKL3l
+         SXFTEs2Fnpfh6PDK2VTZ+XtNjIXDktzgwD5GCt/RQh1DYFNB1iFTJpxNMWY2tiFFykzH
+         uKNQtuwOluDRtg9Ooe8Jly/Gsu9L9BIVpYqL+Hj/ya4Evv4XNe5gx8/+r3HjTdyokhMF
+         963Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=n/mC4aHCWk5H1wKiZbSUn4NMJT4x831eVO/YZfRAyqw=;
-        b=6nepwCd/tEglLEMllBvkZyrkErzLEzCbLQAZ6BLgKPGh9GuYECYmVUEn6vYistXApk
-         C1SE8RoHI8JtoL2GMOUVMBUlxJ+9AKcrWAtqchm8eGCMB6PFd/fjOmDjpSQkawKihJSI
-         3WlDwcBIYIix2H5zP0Que3dCuB8u/nrfVdISmKejMCk2/TuDOEaNXSdDM641q/e5RWgY
-         cJM1XTz5yDVZCwvmusOCiB4ZXccixOCd4vgbcbI3PYqkcu7SrO/wt8sgtfe4JV1QPVkE
-         FvKkB8x0EQ/UYYK16DRdl/PrYmMBWlpELajE7XlurGWBoPCvCQkzCgLNQTkKGboKtrdv
-         F4JA==
-X-Gm-Message-State: AOAM533ggWY25Au4RUc4Q9SYdNK3ZjUSq/LTC+H2z9nCPjRKSXR8lnyb
-        V/fE0E5zF3EG7kTNcKlqQXnWjQOOkb8lp06QQVhj
-X-Google-Smtp-Source: ABdhPJz0mGFWl7JEd91Tuxd0Q/G3ADQSlZHbWA7U9Otrk8kNubQ7JrYgKx2nhHfdHW6JNrBLAcgdAiQWzYeySx+GJ67i
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:aa7:82c1:: with SMTP id
- f1mr319676pfn.60.1644868921801; Mon, 14 Feb 2022 12:02:01 -0800 (PST)
-Date:   Mon, 14 Feb 2022 12:01:54 -0800
-In-Reply-To: <xmqq5ypj6rw6.fsf@gitster.g>
-Message-Id: <20220214200155.1412357-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.35.1.265.g69c8d7142f-goog
-Subject: Re: What's cooking in git.git (Feb 2022, #03; Sat, 12)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=VoqHHU+QxJdEfI0kmCk1CAG4PDNh9U2hdOX9fQrr8Fo=;
+        b=Y8g+FYkWNtMqJvTAwNTYmoAqfCoCIt3vP3+ZP8VlTQOgBhcnQUiuAd+hbVPejf+ct9
+         gMF+/zwe7bTIqMB6V+Qb3d9lYMgKUZ5EzzMrvqj3wH1N3FXoTOQBLsF+iRE714QOluxy
+         7uSLPcQ8JU9pJp50RbnLK/rhM+ZDVAkvKJPK20SCtCNifFRR1K4kZOK8v5DlSR3zvKpq
+         zxHPAeOcalfQgDtFp/9vLC/XIDXi63A8esvJKbuVkPbXjhobqQn/RmGTLwaTHhJ28BXL
+         k4lqgNDbiB6wiwv+ac4hEMXEfzM+ZfM+uIduOopg5/1iK2jW83bAuOU9UbCjfaP0sJEs
+         yo8Q==
+X-Gm-Message-State: AOAM530X0jnMbRu0NVDEH4vTayoEPzwsWzrlnjpk024GRQsBtH9YBZh9
+        NfUiiKyP1++WGdqjqM1s4rAWia7ldhuJ
+X-Google-Smtp-Source: ABdhPJwo/KH66bGkR19KCVcCIMLYR02BkAZK0QYC2I10Uc/+x7JxMwCkgyuYyf6bFHijBGyGilB0gw==
+X-Received: by 2002:a05:6870:5606:: with SMTP id m6mr220654oao.343.1644871230026;
+        Mon, 14 Feb 2022 12:40:30 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:eccf:bfbc:c638:47f4? ([2600:1700:e72:80a0:eccf:bfbc:c638:47f4])
+        by smtp.gmail.com with ESMTPSA id c29sm12881238otk.16.2022.02.14.12.40.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Feb 2022 12:40:29 -0800 (PST)
+Message-ID: <3dd526a6-9160-97cd-05a3-769f5871587d@github.com>
+Date:   Mon, 14 Feb 2022 15:40:26 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] dir: force untracked cache with core.untrackedCache
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com
+References: <pull.1058.git.1644860224151.gitgitgadget@gmail.com>
+ <xmqqzgmt19w6.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqzgmt19w6.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-> * gc/recursive-fetch-with-unused-submodules (2022-02-10) 8 commits
->  - submodule: fix bug and remove add_submodule_odb()
->  - fetch: fetch unpopulated, changed submodules
->  - submodule: extract get_fetch_task()
->  - t5526: use grep to assert on fetches
->  - t5526: introduce test helper to assert on fetches
->  - submodule: make static functions read submodules from commits
->  - submodule: store new submodule commits oid_array in a struct
->  - submodule: inline submodule_commits() into caller
+On 2/14/2022 3:16 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
->  When "git fetch --recurse-submodules" grabbed submodule commits
->  that would be needed to recursively check out newly fetched commits
->  in the superproject, it only paid attention to submodules that are
->  in the current checkout of the superproject.  We now do so for all
->  submodules that have been run "git submodule init" on.
+>> From: Derrick Stolee <derrickstolee@github.com>
+>>
+>> The GIT_FORCE_UNTRACKED_CACHE environment variable writes the untracked
+>> cache more frequently than the core.untrackedCache config variable. This
+>> is due to how read_directory() handles the creation of an untracked
+>> cache. The old mechanism required using something like 'git update-index
+>> --untracked-cache' before the index would actually contain an untracked
+>> cache. This was noted as a performance problem on macOS in the past, and
+>> this is a resolution for that issue.
 > 
->  Will merge to 'next'?
->  source: <20220210044152.78352-1-chooglen@google.com>
+> "The old mechanism" meaning "core.untrackedCache does not add a new
+> one; it only updates an existing one"?  What "this" refers to that
+> was noted as a problem on macOS is not quite clear; is "writing
+> untracked cache is a performance problem"? And the last "this" which
+> is a resolution is "not to add untrackedCache merely because the
+> configuration variable says we are allowed to use it"?
 
-This should wait at least until a v2 that addresses comments from both
-of us, I believe.
+Right. I can see how that is confusing. Here's another attempt:
+
+   The GIT_FORCE_UNTRACKED_CACHE environment variable writes the untracked
+   cache more frequently than the core.untrackedCache config variable. This
+   is due to how read_directory() handles the creation of an untracked
+   cache.
+
+   Before this change, Git would not create the untracked cache extension
+   for an index that did not already have one. Users would need to run a
+   command such as 'git update-index --untracked-cache' before the index
+   would actually contain an untracked cache.
+
+   In particular, users noticed that the untracked cache would not appear
+   even with core.untrackedCache=true. Some users reported setting
+   GIT_FORCE_UNTRACKED_CACHE=1 in their engineering system environment to
+   ensure the untracked cache would be created.
+ 
+>> The decision to not write the untracked cache without an environment
+>> variable tracks back to fc9ecbeb9 (dir.c: don't flag the index as dirty
+>> for changes to the untracked cache, 2018-02-05). The motivation of that
+>> change is that writing the index is expensive, and if the untracked
+>> cache is the only thing that needs to be written, then it is more
+>> expensive than the benefit of the cache. However, this also means that
+>> the untracked cache never gets populated, so the user who enabled it via
+>> config does not actually get the extension until running 'git
+>> update-index --untracked-cache' manually or using the environment
+>> variable.
+> 
+> OK.  It was invented solely as a test mechanism it seems, but at
+> least to the workflow of Microsoft folks, once we spent cycles to
+> prepare UNTR data, it helps their future use of the index to spend
+> a bit more cycle to write it out, instead of discarding.
+> 
+> I have to wonder if there are workflows that are sufficiently
+> different from what Microsoft folks use that the write-out cost of
+> more frequent updates to the untracked cache outweigh the runtime
+> performance boost of not having to run around and readdir() for
+> untracked files?
+
+I think the only difference here is the transition state from no cache
+to an existing cache. From then on, the cache is kept up-to-date with
+the same frequency as without this change.
+
+> ad0fb659 (repo-settings: parse core.untrackedCache, 2019-08-13)
+> explains that unset core.untrackedCache means "keep", and "true"
+> means untracked cache is "automatically added", which this change is
+> not invalidated, so I guess there is no need to update anything in
+> the documentation for this change.  In fact, we might be able to
+> sell this change as a bugfix (i.e. "I set the configuration to
+> 'true' but it wasn't written out when it should have").
+
+Yes, I believe this to be the case. Hopefully the rewritten
+paragraphs above make this more clear.
+
+Thanks,
+-Stolee
