@@ -2,120 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D238C433F5
-	for <git@archiver.kernel.org>; Mon, 14 Feb 2022 20:57:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF80EC433F5
+	for <git@archiver.kernel.org>; Mon, 14 Feb 2022 21:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229921AbiBNU5K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Feb 2022 15:57:10 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43842 "EHLO
+        id S230107AbiBNVDU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Feb 2022 16:03:20 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbiBNU4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Feb 2022 15:56:52 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F999FABF1
-        for <git@vger.kernel.org>; Mon, 14 Feb 2022 12:56:31 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 130B3182267;
-        Mon, 14 Feb 2022 15:16:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=tkX2Bojv197Nnqnt0BRMuFBe8zBn7wM1YRzDYF
-        rptdg=; b=ctiKZjH7YMrUYj1ezfPutt6Lu0OOHa5l2RGTVkwvCog6CraV12Xsat
-        D8gGBgvk59tYXXfyaED/Jax1fSOBQtAxOKZRYwP7QWmx2IOh8oVCyy1RlhlBg2EJ
-        F9vAyvibZPxA+V7b5bTZ+7ygyq9Y/esMTO5tNhK2epRVcSmAO38BI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E6065182266;
-        Mon, 14 Feb 2022 15:16:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4758A182265;
-        Mon, 14 Feb 2022 15:16:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] dir: force untracked cache with core.untrackedCache
-References: <pull.1058.git.1644860224151.gitgitgadget@gmail.com>
-Date:   Mon, 14 Feb 2022 12:16:41 -0800
-In-Reply-To: <pull.1058.git.1644860224151.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Mon, 14 Feb 2022 17:37:04
-        +0000")
-Message-ID: <xmqqzgmt19w6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230104AbiBNVDT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Feb 2022 16:03:19 -0500
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66117F8B9A
+        for <git@vger.kernel.org>; Mon, 14 Feb 2022 13:03:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1644872590; x=1676408590;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=jBt1BGF0S1j8N9vzeAKvwjiLe3m7Ck38xBur0sAfhUU=;
+  b=PvutTnNdkZQ7hVdZyxsrMOSNH+ZrBTUvE23Hee84CHitPMTkmYCtt8QM
+   NPitf+TNpSjtw/0JTAZ+EmpPgBgbi8fkp2ql5hLGRYWhFstuSzTi+o+ji
+   R7frds3olPMIWGeGb2zSuQFnFa2TKT+H0feOLzSMgMtpmgpvavx+QsLz4
+   y7nz0ZnOtnyk4WXAk76DTdNIRdhi8lntq/4cWZfws1I50YtS6IpnOYUhI
+   fX3E3WCVEVe2d0TU/+ynbV4na8U4LMlcanliDuYqBy95o5AHI+hAbXY+c
+   Nt3Bx6eOSkjWY1MO5c9KPSuZt3jf3abq5Bh7NX5G6vdCBqdGi6tmmVq/W
+   Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10258"; a="249931959"
+X-IronPort-AV: E=Sophos;i="5.88,368,1635231600"; 
+   d="scan'208";a="249931959"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2022 13:02:59 -0800
+X-IronPort-AV: E=Sophos;i="5.88,368,1635231600"; 
+   d="scan'208";a="587359139"
+Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.10])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2022 13:02:59 -0800
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     git@vger.kernel.org
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH] name-rev: test showing failure with non-monotonic commit dates
+Date:   Mon, 14 Feb 2022 13:01:36 -0800
+Message-Id: <20220214210136.1532574-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.35.1.129.gb80121027d12
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 06304D0A-8DD3-11EC-AF07-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> The GIT_FORCE_UNTRACKED_CACHE environment variable writes the untracked
-> cache more frequently than the core.untrackedCache config variable. This
-> is due to how read_directory() handles the creation of an untracked
-> cache. The old mechanism required using something like 'git update-index
-> --untracked-cache' before the index would actually contain an untracked
-> cache. This was noted as a performance problem on macOS in the past, and
-> this is a resolution for that issue.
+If a commit in a sequence of linear history has a non-monotonically
+increasing commit timestamp, git name-rev will not properly name the
+commit.
 
-"The old mechanism" meaning "core.untrackedCache does not add a new
-one; it only updates an existing one"?  What "this" refers to that
-was noted as a problem on macOS is not quite clear; is "writing
-untracked cache is a performance problem"? And the last "this" which
-is a resolution is "not to add untrackedCache merely because the
-configuration variable says we are allowed to use it"?
+However, if you use --annotate-stdin then the commit does actually get
+picked up and named properly.
 
-> The decision to not write the untracked cache without an environment
-> variable tracks back to fc9ecbeb9 (dir.c: don't flag the index as dirty
-> for changes to the untracked cache, 2018-02-05). The motivation of that
-> change is that writing the index is expensive, and if the untracked
-> cache is the only thing that needs to be written, then it is more
-> expensive than the benefit of the cache. However, this also means that
-> the untracked cache never gets populated, so the user who enabled it via
-> config does not actually get the extension until running 'git
-> update-index --untracked-cache' manually or using the environment
-> variable.
+Analyzing the source, it appears to be caused by the cutoff logic which
+is some sort of heuristic which relies on monotonically increasing
+commit dates.
 
-OK.  It was invented solely as a test mechanism it seems, but at
-least to the workflow of Microsoft folks, once we spent cycles to
-prepare UNTR data, it helps their future use of the index to spend
-a bit more cycle to write it out, instead of discarding.
+This seems like the cutoff using commit date is some sort of heuristic
+which reduces the cost of describing something.. but --annotate-stdin
+and --all don't use it.
 
-I have to wonder if there are workflows that are sufficiently
-different from what Microsoft folks use that the write-out cost of
-more frequent updates to the untracked cache outweigh the runtime
-performance boost of not having to run around and readdir() for
-untracked files?
+In the example setup I could do:
 
-ad0fb659 (repo-settings: parse core.untrackedCache, 2019-08-13)
-explains that unset core.untrackedCache means "keep", and "true"
-means untracked cache is "automatically added", which this change is
-not invalidated, so I guess there is no need to update anything in
-the documentation for this change.  In fact, we might be able to
-sell this change as a bugfix (i.e. "I set the configuration to
-'true' but it wasn't written out when it should have").
+echo "<commit id>" | git name-rev --annotate-stdin
 
-> diff --git a/dir.c b/dir.c
-> index d91295f2bcd..79a5f6918c8 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -2936,7 +2936,9 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
->  
->  		if (force_untracked_cache < 0)
->  			force_untracked_cache =
-> -				git_env_bool("GIT_FORCE_UNTRACKED_CACHE", 0);
-> +				git_env_bool("GIT_FORCE_UNTRACKED_CACHE", -1);
-> +		if (force_untracked_cache < 0)
-> +			force_untracked_cache = (istate->repo->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE);
->  		if (force_untracked_cache &&
->  			dir->untracked == istate->untracked &&
->  		    (dir->untracked->dir_opened ||
->
-> base-commit: b80121027d1247a0754b3cc46897fee75c050b44
+and get the expected result without the cutoff logic, and it seems at
+least on small repositories to be as fast as the normal attempt, except
+it produces accurate results.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ t/t6120-describe.sh | 62 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
+
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 9781b92aeddf..e9f897e42591 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -488,6 +488,68 @@ test_expect_success 'name-rev covers all conditions while looking at parents' '
+ 	)
+ '
+ 
++# A-B-C-D-E-main
++#
++# Where C has a non-monotonically increasing commit timestamp w.r.t. other
++# commits
++test_expect_success 'non-monotonic commit dates setup' '
++	git init non-monotonic &&
++	(
++		cd non-monotonic &&
++
++		echo A >file &&
++		git add file &&
++		GIT_COMMITTER_DATE="2020-01-01 18:00" git commit -m A &&
++
++		echo B >file &&
++		git add file &&
++		GIT_COMMITTER_DATE="2020-01-02 18:00" git commit -m B &&
++
++		echo C >file &&
++		git add file &&
++		GIT_COMMITTER_DATE="2005-01-01 18:00" git commit -m C &&
++
++		echo D >file &&
++		git add file &&
++		GIT_COMMITTER_DATE="2020-01-04 18:00" git commit -m D &&
++
++		echo E >file &&
++		git add file &&
++		GIT_COMMITTER_DATE="2020-01-05 18:00" git commit -m E
++	)
++'
++
++test_expect_failure 'name-rev commit timestamp prevents naming commits' '
++	(
++		cd non-monotonic &&
++
++		B=$(git rev-parse main~3) &&
++
++		echo "$B main~3" >expect &&
++		git name-rev $B >actual &&
++
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'name-rev --all works with non-monotonic' '
++	(
++		cd non-monotonic &&
++
++		cat >expect <<EOF &&
++main
++main~1
++main~2
++main~3
++main~4
++EOF
++
++		git log --pretty=%H | git name-rev --annotate-stdin --name-only >actual &&
++
++		test_cmp expect actual
++	)
++'
++
+ #               B
+ #               o
+ #                \
+-- 
+2.35.1.129.gb80121027d12
+
