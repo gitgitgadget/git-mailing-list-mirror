@@ -2,156 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF80EC433F5
-	for <git@archiver.kernel.org>; Mon, 14 Feb 2022 21:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E5DBC433F5
+	for <git@archiver.kernel.org>; Mon, 14 Feb 2022 21:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230107AbiBNVDU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Feb 2022 16:03:20 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43306 "EHLO
+        id S230319AbiBNVGf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Feb 2022 16:06:35 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230104AbiBNVDT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Feb 2022 16:03:19 -0500
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66117F8B9A
-        for <git@vger.kernel.org>; Mon, 14 Feb 2022 13:03:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1644872590; x=1676408590;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=jBt1BGF0S1j8N9vzeAKvwjiLe3m7Ck38xBur0sAfhUU=;
-  b=PvutTnNdkZQ7hVdZyxsrMOSNH+ZrBTUvE23Hee84CHitPMTkmYCtt8QM
-   NPitf+TNpSjtw/0JTAZ+EmpPgBgbi8fkp2ql5hLGRYWhFstuSzTi+o+ji
-   R7frds3olPMIWGeGb2zSuQFnFa2TKT+H0feOLzSMgMtpmgpvavx+QsLz4
-   y7nz0ZnOtnyk4WXAk76DTdNIRdhi8lntq/4cWZfws1I50YtS6IpnOYUhI
-   fX3E3WCVEVe2d0TU/+ynbV4na8U4LMlcanliDuYqBy95o5AHI+hAbXY+c
-   Nt3Bx6eOSkjWY1MO5c9KPSuZt3jf3abq5Bh7NX5G6vdCBqdGi6tmmVq/W
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10258"; a="249931959"
-X-IronPort-AV: E=Sophos;i="5.88,368,1635231600"; 
-   d="scan'208";a="249931959"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2022 13:02:59 -0800
-X-IronPort-AV: E=Sophos;i="5.88,368,1635231600"; 
-   d="scan'208";a="587359139"
-Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.10])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2022 13:02:59 -0800
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
-Cc:     Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH] name-rev: test showing failure with non-monotonic commit dates
-Date:   Mon, 14 Feb 2022 13:01:36 -0800
-Message-Id: <20220214210136.1532574-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.35.1.129.gb80121027d12
+        with ESMTP id S230017AbiBNVG1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Feb 2022 16:06:27 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 386D8133197
+        for <git@vger.kernel.org>; Mon, 14 Feb 2022 13:06:07 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 95262187472;
+        Mon, 14 Feb 2022 14:50:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=4wIRFsjfCasl
+        Bvcjx9PcVrq6X3VAjF2ZzfagzISnSu4=; b=HnsdD6iOtv23a0XcZHDk30B+CChE
+        yfuiVP519LRV+OeuO+ZK19brgxhkagihe8BFTXvcGbkfG9XihXUPkzxKco914BDn
+        w0kmBa4NDCKbR0OggBk5HaFQpxE8oZ2HCFf06lExfsuWDJpW1phrdw5fqT/6TfIO
+        N/JLJtwJked9QH4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8C8D5187471;
+        Mon, 14 Feb 2022 14:50:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D5C7E187470;
+        Mon, 14 Feb 2022 14:50:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH] mailmap: change primary address for Derrick Stolee
+References: <pull.1142.git.1644857153590.gitgitgadget@gmail.com>
+        <220214.86leydxt77.gmgdl@evledraar.gmail.com>
+Date:   Mon, 14 Feb 2022 11:50:30 -0800
+In-Reply-To: <220214.86leydxt77.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 14 Feb 2022 18:17:19 +0100")
+Message-ID: <xmqqczjp2po9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 5E258696-8DCF-11EC-BFCE-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-If a commit in a sequence of linear history has a non-monotonically
-increasing commit timestamp, git name-rev will not properly name the
-commit.
+> On Mon, Feb 14 2022, Derrick Stolee via GitGitGadget wrote:
+>
+>> From: Derrick Stolee <derrickstolee@github.com>
+>>
+>> Stolee transitioned from Microsoft to GitHub in July 2020, but continu=
+ed
+>> to use <dstolee@microsoft.com> because it was a valid address. He also
+>> used <stolee@gmail.com> to communicate with the mailing list since
+>> writing plaintext emails is difficult in Outlook. However, recent issu=
+es
+>> with GMail delaying mailing list messages created a need to change his
+>> primary email address.
 
-However, if you use --annotate-stdin then the commit does actually get
-picked up and named properly.
+"I prefer this address to be the one shown" is a good enough
+justification for these entries ;-).
 
-Analyzing the source, it appears to be caused by the cutoff logic which
-is some sort of heuristic which relies on monotonically increasing
-commit dates.
+> Yeah that sucks. You might be interested in the tips I had for working
+> around it in
+> https://lore.kernel.org/git/220202.86leyt8uly.gmgdl@evledraar.gmail.com=
+/;
+> and others have suggested subscribing an alias address for the GMail
+> address.
+>
+>> diff --git a/.mailmap b/.mailmap
+>> index 9c6a446bdfb..07db36a9bb9 100644
+>> --- a/.mailmap
+>> +++ b/.mailmap
+>> @@ -59,8 +59,9 @@ David Reiss <dreiss@facebook.com> <dreiss@dreiss-vmw=
+are.(none)>
+>>  David S. Miller <davem@davemloft.net>
+>>  David Turner <novalis@novalis.org> <dturner@twopensource.com>
+>>  David Turner <novalis@novalis.org> <dturner@twosigma.com>
+>> -Derrick Stolee <dstolee@microsoft.com> <stolee@gmail.com>
+>> -Derrick Stolee <dstolee@microsoft.com> Derrick Stolee via GitGitGadge=
+t <gitgitgadget@gmail.com>
+>> +Derrick Stolee <derrickstolee@github.com> <stolee@gmail.com>
+>> +Derrick Stolee <derrickstolee@github.com> Derrick Stolee via GitGitGa=
+dget <gitgitgadget@gmail.com>
+>> +Derrick Stolee <derrickstolee@github.com> <dstolee@microsoft.com>
+>
+> FWIW I think only the addition of that last line is needed since the
+> .mailmap syntax supports mapping A->B, followed by B->C.
 
-This seems like the cutoff using commit date is some sort of heuristic
-which reduces the cost of describing something.. but --annotate-stdin
-and --all don't use it.
+I suspect that another reason of retiring the two entries that may
+not be captured in the log message is so that people does not have
+to know the person is reachable both at microsoft and github.
 
-In the example setup I could do:
+It is somewhat sad that we need to carry these "via GitGitGadget"
+entries in the file, but we are fortunate that the mailmap supports
+the "differentiate two authors with the same e-mail with the human
+readable name" feature so that we can label v2.25.0~3^2 and
+v2.25.1~20^2~1 with the rigth authors.  If my counting is correct,
+these two are the only ones that we mistakenly made GGG as the
+author of a change.
 
-echo "<commit id>" | git name-rev --annotate-stdin
 
-and get the expected result without the cutoff logic, and it seems at
-least on small repositories to be as fast as the normal attempt, except
-it produces accurate results.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- t/t6120-describe.sh | 62 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 62 insertions(+)
 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 9781b92aeddf..e9f897e42591 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -488,6 +488,68 @@ test_expect_success 'name-rev covers all conditions while looking at parents' '
- 	)
- '
- 
-+# A-B-C-D-E-main
-+#
-+# Where C has a non-monotonically increasing commit timestamp w.r.t. other
-+# commits
-+test_expect_success 'non-monotonic commit dates setup' '
-+	git init non-monotonic &&
-+	(
-+		cd non-monotonic &&
-+
-+		echo A >file &&
-+		git add file &&
-+		GIT_COMMITTER_DATE="2020-01-01 18:00" git commit -m A &&
-+
-+		echo B >file &&
-+		git add file &&
-+		GIT_COMMITTER_DATE="2020-01-02 18:00" git commit -m B &&
-+
-+		echo C >file &&
-+		git add file &&
-+		GIT_COMMITTER_DATE="2005-01-01 18:00" git commit -m C &&
-+
-+		echo D >file &&
-+		git add file &&
-+		GIT_COMMITTER_DATE="2020-01-04 18:00" git commit -m D &&
-+
-+		echo E >file &&
-+		git add file &&
-+		GIT_COMMITTER_DATE="2020-01-05 18:00" git commit -m E
-+	)
-+'
-+
-+test_expect_failure 'name-rev commit timestamp prevents naming commits' '
-+	(
-+		cd non-monotonic &&
-+
-+		B=$(git rev-parse main~3) &&
-+
-+		echo "$B main~3" >expect &&
-+		git name-rev $B >actual &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'name-rev --all works with non-monotonic' '
-+	(
-+		cd non-monotonic &&
-+
-+		cat >expect <<EOF &&
-+main
-+main~1
-+main~2
-+main~3
-+main~4
-+EOF
-+
-+		git log --pretty=%H | git name-rev --annotate-stdin --name-only >actual &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
- #               B
- #               o
- #                \
--- 
-2.35.1.129.gb80121027d12
+
 
