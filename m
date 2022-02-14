@@ -2,131 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4F2FC433EF
-	for <git@archiver.kernel.org>; Mon, 14 Feb 2022 17:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3F19C433F5
+	for <git@archiver.kernel.org>; Mon, 14 Feb 2022 17:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238021AbiBNRhQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Feb 2022 12:37:16 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59230 "EHLO
+        id S238469AbiBNRvt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Feb 2022 12:51:49 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232032AbiBNRhP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Feb 2022 12:37:15 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FFA36541F
-        for <git@vger.kernel.org>; Mon, 14 Feb 2022 09:37:07 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id d27so24301147wrb.5
-        for <git@vger.kernel.org>; Mon, 14 Feb 2022 09:37:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=sH0vqWgkO3Yes59EijZ1YDQtYpjte7smnD8X21uyTV4=;
-        b=ob2JUInd8LMeYZd8oUvnqUE/1Na8/20epM6RO9iu29LqbXOtJWQdW0cqRII4MRdjog
-         k5ONmXOD8G4tYBywyWGmr0dBqhyIzfPHA3UF3+IvQO4jdnvtaJV3GiwIw/P+MRQWBqG2
-         E4xlP6VOv4rjLN2z9MltY8DW3Qq53HsM5bqeM7+Cu9u7XvHs6M0fvEjaVvvffV+1TGN7
-         F6p/oJCPjKYS4Fw0wgdRJSpdUovQMl6zhpMNdGD3fVAREedx/amjNgi5WoWg6LuzkGZA
-         k01ssQf3V7NMMKmP2Vlg6z9zcFCNF7NC7toA3zXxLKVt9/981aOAU+lVgzbl38JwIiO/
-         upuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=sH0vqWgkO3Yes59EijZ1YDQtYpjte7smnD8X21uyTV4=;
-        b=7KOPC8NhwhtzQ7GOU1dGC7iIgSAs2Ab7yzqgfveEUS7Lv7nS7zyv0SvhUhIFU/wvtF
-         8JXcpPxSeePXpk849OJtXwxv5C2Vjour2jtNNP661d5IKWp+CupTOWl54t/D7U6At3qI
-         3hb2Ztqflw9CBzcCrgyp2+xRwYzk7VQQC+Qos/5lQQVKHSMrWbKFdI3JIBF4MgjUWumQ
-         RVCitBGZRdra7gT1djEFqlxV/v3yK4d6p8oREYrDHSpHgJKuBhcLf1JZqtjTxuIsy/eZ
-         9c6w/NkNnd7fEpBFipMkn99G+6Lq6kwt4mG5mAB1uyutjs+LZcRpb2CtzxobjtbrMQD1
-         Hn6Q==
-X-Gm-Message-State: AOAM5320m4+ZZjaj64JWIiIwOkTx48UrbBykTt8m5isY+lHk5NR+ny8Q
-        LrGxgFed8ZW52/f4ohwYZxi5ecKtqKs=
-X-Google-Smtp-Source: ABdhPJzm7/Ek7q79tLcY7gCThwww3qbYyyVeHQtK9Fae2YMq4qPHJ4L+WKL6Q/lz1wEUETH2opEr6g==
-X-Received: by 2002:a05:6000:168c:: with SMTP id y12mr63853wrd.265.1644860225655;
-        Mon, 14 Feb 2022 09:37:05 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p8sm23747893wro.106.2022.02.14.09.37.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Feb 2022 09:37:05 -0800 (PST)
-Message-Id: <pull.1058.git.1644860224151.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 14 Feb 2022 17:37:04 +0000
-Subject: [PATCH] dir: force untracked cache with core.untrackedCache
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S1346837AbiBNRvq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Feb 2022 12:51:46 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 795D32AC6
+        for <git@vger.kernel.org>; Mon, 14 Feb 2022 09:51:38 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E4F701866C4;
+        Mon, 14 Feb 2022 12:51:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4UUHf+r90Nw4U9N9KJEnu1+YSRybs1iEkriCzE
+        cI4fI=; b=Dz16UwIhMJ89NhOTsP9TET8cv9cwfcqN7esbq3rFET/6lxw2tF48RT
+        KCsYEf/Dd2wThssVyCv67wn0NDZzWnGSf2EXvDL+LfsQOCguY9DGrw/N73WyxHeI
+        wKSKe93XVGf6ITzLegSEiylOJV/Y4azQi4BrAsVoMfhlfOmsUY+hY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D75ED1866C3;
+        Mon, 14 Feb 2022 12:51:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 461B418669E;
+        Mon, 14 Feb 2022 12:51:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v4 04/12] merge-tree: implement real merges
+References: <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
+        <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>
+        <d7b51da94e65db79aa59ca331e178741d3c50bc2.1644698093.git.gitgitgadget@gmail.com>
+Date:   Mon, 14 Feb 2022 09:51:33 -0800
+In-Reply-To: <d7b51da94e65db79aa59ca331e178741d3c50bc2.1644698093.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Sat, 12 Feb 2022
+        20:34:45 +0000")
+Message-ID: <xmqqwnhx2v6i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, pclouds@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C06944AC-8DBE-11EC-9BF6-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The GIT_FORCE_UNTRACKED_CACHE environment variable writes the untracked
-cache more frequently than the core.untrackedCache config variable. This
-is due to how read_directory() handles the creation of an untracked
-cache. The old mechanism required using something like 'git update-index
---untracked-cache' before the index would actually contain an untracked
-cache. This was noted as a performance problem on macOS in the past, and
-this is a resolution for that issue.
+> +<branch1>.  The result of this second form is is similar to what
 
-The decision to not write the untracked cache without an environment
-variable tracks back to fc9ecbeb9 (dir.c: don't flag the index as dirty
-for changes to the untracked cache, 2018-02-05). The motivation of that
-change is that writing the index is expensive, and if the untracked
-cache is the only thing that needs to be written, then it is more
-expensive than the benefit of the cache. However, this also means that
-the untracked cache never gets populated, so the user who enabled it via
-config does not actually get the extension until running 'git
-update-index --untracked-cache' manually or using the environment
-variable.
+I haven't read the rest of the patches, but this like somehow stood
+out in the interdiff.
 
-We have had a version of this change in the microsoft/git fork for a few
-major releases now. It has been working well to get users into a good
-state. Yes, that first index write is slow, but the remaining index
-writes are much faster than they would be without this change.
-
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
-    dir: force untracked cache with core.untrackedCache
-    
-    We have seen users in the wild that have had core.untrackedCache
-    enabled, but never actually have an untracked cache created for them. We
-    have a test in t7063 that shows git status should write the untracked
-    cache, so I'm not exactly sure how users are in this state for long.
-    
-    This patch fixes the situation. I also know of another group that sets
-    GIT_FORCE_UNTRACKED_CACHE=1 in their developer environment in order to
-    get this behavior.
-    
-    -Stolee
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1058%2Fderrickstolee%2Funtracked-cache-write-more-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1058/derrickstolee/untracked-cache-write-more-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1058
-
- dir.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/dir.c b/dir.c
-index d91295f2bcd..79a5f6918c8 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2936,7 +2936,9 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
- 
- 		if (force_untracked_cache < 0)
- 			force_untracked_cache =
--				git_env_bool("GIT_FORCE_UNTRACKED_CACHE", 0);
-+				git_env_bool("GIT_FORCE_UNTRACKED_CACHE", -1);
-+		if (force_untracked_cache < 0)
-+			force_untracked_cache = (istate->repo->settings.core_untracked_cache == UNTRACKED_CACHE_WRITE);
- 		if (force_untracked_cache &&
- 			dir->untracked == istate->untracked &&
- 		    (dir->untracked->dir_opened ||
-
-base-commit: b80121027d1247a0754b3cc46897fee75c050b44
--- 
-gitgitgadget
