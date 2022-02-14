@@ -2,117 +2,150 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB8EAC433FE
-	for <git@archiver.kernel.org>; Mon, 14 Feb 2022 10:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86B9AC433F5
+	for <git@archiver.kernel.org>; Mon, 14 Feb 2022 11:47:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349573AbiBNKx1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Feb 2022 05:53:27 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43676 "EHLO
+        id S1352357AbiBNLrd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Feb 2022 06:47:33 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1349299AbiBNKxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Feb 2022 05:53:14 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3E2D6D94F
-        for <git@vger.kernel.org>; Mon, 14 Feb 2022 02:17:49 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id z12-20020a17090a1fcc00b001b63e477f9fso10659707pjz.3
-        for <git@vger.kernel.org>; Mon, 14 Feb 2022 02:17:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=6cus1VSLnAqqPVndZz/sgp0A+OrXLeo0yM2fV3K6Oa0=;
-        b=eswK2JISJHoTLZ8Nl2y3by9sPwhJtFzte7Ho/NEptrcJyO0Y6eeZY9tFLsv/HP+vpS
-         6v7uInG9HmaY41OtS/kQRWYbL+s9zJaJP7OCWrTUEtwe001egaUH5PyC4AbjaRVcTpo5
-         rM9WIl9389S/WHIARLtphMdQCdlHumZs6/m1nloPxA3fD1B92rP6uMNiPeDYGzwpXN/U
-         GHA78YU97wgF+wBhi/odq/4pWIzOBNaUf0R1QX7MdVVxnFGpi79aPzi/tvG7macZanSS
-         3XVB7k+bJlaNWL7oLI6rl9Su8ti8fdWD7ItQaLWxTuaiY7n7FSmjyKsFsx/15010zV3Q
-         29Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=6cus1VSLnAqqPVndZz/sgp0A+OrXLeo0yM2fV3K6Oa0=;
-        b=Gp23LVl968Y4nLzJ+ga/Kmpbv6l7KgKTy+G/6DU6EwIqAcfsiRM01ckze9HGTK/s7Y
-         c6J4WQIoPwlF755c6SRceQIKD9So8GArLMX4htc+rls/8jQsYApgDwRANOqIpN/vQW0q
-         +m5ObgeInIcogu2tXh86Kr42cvOM3NOUu8f+H1ym9gUKKHECd5nTHoYMnLUmgUG1QQ0M
-         tHQ0tfS+lhfA7wiB1V/NJ1kzRsfxzR7M1undcLblS3h1u1K4XYop95WOVY3xyeYPx1yQ
-         G3wKUspr4Xrw+Kg74eQq5kjVSwh3Z9woGmRWyUxgTgAOkrSlKU7rk8cC9jKdrcH1D26X
-         nYXA==
-X-Gm-Message-State: AOAM530yzJmUkl+hPzZxj2At1L5ZagvF6B+/pHsKoLucGBlmGk3ONvgm
-        x0aT4w0WlJ07IGkVIQFZAe/FPfR5e8cfvtFYsufbZtZD+3nFdpEy4XYmjsEWDlQTvcvlLJ9BIAL
-        zJPIGJhXeGFcA7QwP7ctg8XlQFqxkLFOGJynQe/Ra4EkAO52VQIXrjbw1ev3PNek=
-X-Google-Smtp-Source: ABdhPJytoFEsf7ZnEBBI/p3SIzC24G0cGBIoF+EBfGx4bxz7M9YvCw6QuIzcElf3aTnmD9zq2yn7tLBRoz9U1A==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:7486:: with SMTP id
- h6mr13733375pll.92.1644833868996; Mon, 14 Feb 2022 02:17:48 -0800 (PST)
-Date:   Mon, 14 Feb 2022 18:17:32 +0800
-In-Reply-To: <20220210044152.78352-8-chooglen@google.com>
-Message-Id: <kl6lczjp7nwj.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220210044152.78352-1-chooglen@google.com> <20220210044152.78352-8-chooglen@google.com>
-Subject: Re: [PATCH 7/8] fetch: fetch unpopulated, changed submodules
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S1352936AbiBNLqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Feb 2022 06:46:09 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B433A1A0
+        for <git@vger.kernel.org>; Mon, 14 Feb 2022 03:44:33 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DE1A117E528;
+        Mon, 14 Feb 2022 06:44:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=hefda7oSnJ0DBJgnXUNmkssdaMzAYRnNNZkI1+dLick=; b=kbrC
+        s60vm7bJXyDrWi2r7fvsuN4M/lPUZ4bCVX9FGfssU8J+PF4Rew0V0kE3hjrpxIBz
+        9DGIM1y1l17qw+YwiIzigcp/T1zMoHPmCwmNs2ztJjJQi5PVh74SLhUiLZjsoJ2i
+        aBccRWj8uFk9+XiMrFXHM9jAZYQSS4SA7O+trVY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D716617E526;
+        Mon, 14 Feb 2022 06:44:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E114717E522;
+        Mon, 14 Feb 2022 06:44:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     Viaceslavus via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Viaceslavus <vaceslavkozin619@gmail.com>
+Subject: Re: [PATCH v2] hard reset safe mode
+References: <pull.1137.git.1643802721612.gitgitgadget@gmail.com>
+        <pull.1137.v2.git.1644618404948.gitgitgadget@gmail.com>
+        <xmqqee4980qz.fsf@gitster.g>
+        <c81e1226-2184-0f16-b81d-c11d894b4654@gmail.com>
+Date:   Mon, 14 Feb 2022 03:44:25 -0800
+Message-ID: <xmqqleyd4qqu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 767B0A5C-8D8B-11EC-A18B-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Bagas Sanjaya <bagasdotme@gmail.com> writes:
 
-> Teach "git fetch" to fetch cloned, changed submodules regardless of
-> whether they are populated (this is in addition to the current behavior
-> of fetching populated submodules).
+> I think it's better just to error out when there are staged changes.
+> The message will be something like:
+> "error: there are staged changes that will be hard-reset. Please
+> commit or stash them before resetting. If you want to remove all
+> changes from index, you can do so by running 'git reset'."
 
-Reviewers (and myself) have rightfully asked why "git fetch" should
-continue to bother looking for submodules in the index if it already
-fetches all of the changed submodules. The reasons for this are twofold:
+I do prefer not to have interactive prompt at all, as we _will_ get
+it wrong when we shouldn't be doing the warning or prompting (i.e.
+when no user is sitting in front of the terminal).
 
-1. The primary reason is that --recurse-submodules, aka
---recurse-submodules=yes does an unconditional fetch in each of the
-submodules regardless of whether they have been changed by a
-superproject commit. This is the behavior of e.g. from
- t/t5526-fetch-submodules.sh:101:
+Another thing that I would be very opposed to in the posted patch is
+the special casing of an initial commit.  If typing 10,000 lines of
+material to create a new file, doing "git add", and changing mind
+and saying "git reset --hard" to lose the new file is painful before
+creating the first commit, doing exactly the same in a project after
+10 years with 10,000 commits will hurt exactly the same way.  You'd
+"lose" the 10,000 lines of material you prepared to the "accident"
+either way.
 
-  test_expect_success "fetch --recurse-submodules recurses into submodules" '
-    # Creates commits in the submodules but NOT the superproject
-    add_upstream_commit &&
-    (
-      cd downstream &&
-      git fetch --recurse-submodules >../actual.out 2>../actual.err
-    ) &&
-    test_must_be_empty actual.out &&
-    # Assert that the new submodule commits have been fetched and that
-    # no superproject commit was fetched
-    verify_fetch_result actual.err
-  '
+One more thing the posted patch is designed in a wrong way is that
+it cares about the state of _other_ branches; even if you "git reset
+--hard" on an unborn branch, if there are some commits on other
+branches that has nothing to do with your current state, it will do
+what it was told to do regardless of "safe mode".  The "damage"
+caused by such an "accident" would be the same for the end-user,
+whether there is an unrelated branch with a commit or there isn't.
+You'd "lose" the 10,000 lines of material you prepared to the
+"accident" regardless.
 
-Thus, we continue to check the index to implement this unconditional
-fetching behavior.
+So, I am strongly opposed to the posted patch.  "git reset --hard"
+is designed to bring the index and the working tree to the pristine
+state in a predictable way, and making it work differently depending
+on a setting, or if it is on an unborn branch, or if there are
+commits on any branch, goes very against its spirit.
 
-2. In the --recurse-submodule=on-demand case, it can be correct to
-ignore the index because "on-demand" only requires us to fetch changed
-submodules. But in the event that a submodule is both changed and
-populated, we may prefer to read the index instead of the superproject
-commit, because the contents of the index are more obvious and more
-actionable to the user.
+After all, "reset --hard" is called *HARD* for a reason.  It is not
+"unsafe".  It is designed to give you pristine state no matter what
+and it tries very hard to do so, by even removing an untracked file
+that is squatting the path at which the pristine state wants a
+directory.
 
-For example, we print the path of the submodule when attempting to fetch
-a submodule for debugging purposes:
+In other words, those who type "git reset --hard" WITHOUT wishing to
+go back to the pristine state by clearing the deck may be using a
+wrong command.
 
-- For a populated submodule, we print "Fetching submodule <path>"
-- For an unpopulated submodule, we print "Fetching submodule <path> at
-  commit foo"
+I wonder if "git reset" (i.e. mixed, not hard) is what they want to
+use, instead.  It is the command to use when: "I've made a mess in
+the index after doing 'add -p' and other things, and want to get the
+index into pristine state, while keeping the working tree files".
 
-Presumably, the user would prefer to see the "populated submodule"
-message because it's easier to work with, e.g. "git -C <path>
-<fix-the-problem>" instead of "git checkout --recurse-submodules
-<commit-with-submodule> && git <fix-the-problem>".
+After doing so, the first thing they can do is to "git diff" to
+compare what they truly do not want to have anywhere and "git
+checkout -- <path>" to update the whole file to the state in the
+index, or "git checkout -p -- <path>" to update them piecemeal.
 
-The latter is not a sufficient reason to read the index and then the
-changed submodule list (because we could try to read the changed
-submodule configuration from index), but since we need to support
---recurse-submodules=yes, this implementation is convenient for
-achieving both goals.
+Or perhaps they want "git stash".  That would clear the deck and
+give them the pristine state justlike "git reset --hard" would, but
+if they found that they did so by mistake, they can immediately
+unstash.
+
+Having said all that, because "reset" is mostly about the index and
+not about the working tree (the core of the Git's philosophy is that
+the index is all that matters and the working tree files are just
+ephemeral means to the end, which is to update the index with good
+contents and to make tree out of it), I can see us adding another
+mode, perhaps called "reset --clear", that is almost like "reset
+--hard" with one distinction, for end-user's interactive use.
+
+If you did this sequence:
+
+    $ git reset --hard    ;# start from a pristine state
+
+    $ date >new-file-a    ;# create a new file
+    $ date >new-file-b    ;# create another new file
+    $ git add new-file-a  ;# just add one of them
+
+    $ git reset --hard    ;# get back to the pristine state
+
+the second reset will make sure that neither of these two files are
+in the index, but it also removes only one of the files in the
+working tree, while leaving the other file in the working tree.
+
+The fact that new-file-a has been "git add"ed means that after
+losing new-file-a, its contents *can* be recovered (i.e. it is one
+of the loose objects that is no longer reachable, and "git fsck
+--lost-found" could theoretically give it back to you).
+
+But new-file-b has never been added, so losing it is a more grave
+loss.  So the behaviour to remove new-file-a that was in the index
+while leaving new-file-b alone is somewhat justifiable, but not by a
+large margin.  A new "reset --clear" mode _could_ make paths in the
+index that do not appear in the resetted-to treeish (either HEAD or
+an empty tree if the branch is unborn) untracked, while leaving their
+working tree files alone.
