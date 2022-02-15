@@ -2,206 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B522FC433EF
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 15:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1448C433EF
+	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 15:05:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239549AbiBOPDU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 10:03:20 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55762 "EHLO
+        id S239552AbiBOPFY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 10:05:24 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238083AbiBOPDT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 10:03:19 -0500
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2832D1EAEE
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 07:03:09 -0800 (PST)
-Received: by mail-oi1-x232.google.com with SMTP id l5so923497oii.13
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 07:03:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=LLByN5Pmajk0igACSuvPun2Iwx0O925FsGdQpHP7kiY=;
-        b=cwIw8Wer+B1zmKMfwifbUOQu9m2arndevQeuBei+34gBoppvrirzsp6JJUYWGb2ujU
-         9/gvSB6XcxdHPPmDjlwJ29nhr9QfKmArXXo9QENV2v+EcBGPTK/Z+5xvCK5gJn7pEMDF
-         MHitOVsM7kcxAaih/JPixdl8wccddCk6fyoNEPRnbXHErR/VChcVN02oa5KIF+WOAV/z
-         FEFY29rnGZJ6F7jI4N1f7CI2qpVW2vKXUtwaSUrY9Kz7qCOqOCe0bIMP2lEKgraEFqId
-         rRKODFWVZgCs009TG5FUhutQOhWVNtMMW1ygzQrYJO2r1nRQyUGJ+e4MYmDtHkvAjxvr
-         Hnqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=LLByN5Pmajk0igACSuvPun2Iwx0O925FsGdQpHP7kiY=;
-        b=VE6qU0cEeIkKonGbFfNmX1qktyA4Gm0fMrc4AxPdL886N6eeuomAcBx6+IIK48ZjrV
-         C69dFM4MPnosDG4mCAJvzznwv9GIli1gcg/IPoHx+8SX9dzxxZvRGeoZgRtkrQYaDffJ
-         +zHOULEvu2Dhxzmcb/BjJK/u8Y7yiuIMIpQUBwb6Pn9A3i8sJlC0PN0jAE7frHnWROVJ
-         BDOB7UrvikF3ybFlBfwC/kxg5a5UEbxyDh53G9aJbLKDKGpujrcMR5OgaTqijuYrCUet
-         RLJ01oVsGEHHLDaKxaevztKX2JO27qh9wuF4NMI4+YfAP4ccLJMPPY8QVC8c1Vdwc9i3
-         KVUQ==
-X-Gm-Message-State: AOAM533DCtFmWjF4NEENtfcswYe+1LUe7IG4+pVb6L04f5LezupFwhqw
-        rh9d7KdJrYwJDZUoMFtedKUKsth51ex8
-X-Google-Smtp-Source: ABdhPJxAzTVTPvGQdfz+ZQnPH0Ma68dBkRJ9prZb5SvzKW2dcTylR1OciXRAXr/ABvRdrb/wDDTGMw==
-X-Received: by 2002:a05:6808:1999:: with SMTP id bj25mr1771353oib.23.1644937388148;
-        Tue, 15 Feb 2022 07:03:08 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id t21sm13847635otj.26.2022.02.15.07.03.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Feb 2022 07:03:07 -0800 (PST)
-Message-ID: <2c3b4204-5560-7031-c05e-3b709c85d753@github.com>
-Date:   Tue, 15 Feb 2022 10:03:06 -0500
+        with ESMTP id S234944AbiBOPFX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 10:05:23 -0500
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C89DD108560
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 07:05:12 -0800 (PST)
+Received: from host-92-7-140-211.as13285.net ([92.7.140.211] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nJzOA-00091r-7e; Tue, 15 Feb 2022 15:05:10 +0000
+Message-ID: <f58ad14f-f4bf-0f0a-24ba-98ab80bf0dc5@iee.email>
+Date:   Tue, 15 Feb 2022 15:05:08 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: [PATCH 4/7] sparse-checkout: error or warn when given individual
- files
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Victoria Dye <vdye@github.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
-References: <pull.1118.git.1644712797.gitgitgadget@gmail.com>
- <5e27cad17a7080170f476684610391bd56024f36.1644712798.git.gitgitgadget@gmail.com>
- <72d39c4a-fd16-846c-2a5e-8b9ba0c1ab07@github.com>
- <CABPp-BE8aG3R4ASngqwyvRemp5WW=O0UWWSTesJ2hoch_av_kQ@mail.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CABPp-BE8aG3R4ASngqwyvRemp5WW=O0UWWSTesJ2hoch_av_kQ@mail.gmail.com>
+Subject: Re: Git in GSoC 2022?
+Content-Language: en-GB
+To:     Christian Couder <christian.couder@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Git Community <git@vger.kernel.org>
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+ <730fb307-3bc7-b52f-49c1-d83b5ab55c95@iee.email>
+ <3b112eee-8110-baf6-d7e7-cb25b03c32ff@gmail.com>
+ <CAP8UFD1BYm-_p=JYw3GELsk1=hR9-o7cxEowtnrKPumi0Gk8kg@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CAP8UFD1BYm-_p=JYw3GELsk1=hR9-o7cxEowtnrKPumi0Gk8kg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/14/2022 11:17 PM, Elijah Newren wrote:
-> On Mon, Feb 14, 2022 at 7:56 AM Derrick Stolee <derrickstolee@github.com> wrote:
+Hi Christian,
+
+On 13/02/2022 09:33, Christian Couder wrote:
+> On Sat, Feb 12, 2022 at 7:12 PM Kaartic Sivaraam
+> <kaartic.sivaraam@gmail.com> wrote:
+>> On 03/02/22 7:42 pm, Philip Oakley wrote:
+>>> My latest thinking is that the repos would be held in-tree under
+>>> /Documentation/RepoBundles and have been exported as bundles by an
+>>> explicit test_export_function. Of key importance in the project is to
+>>> minimise/eliminate any extra maintainer actions, so once a patch with a
+>>> repo export is accepted, the flow through the delivery process to user
+>>> installs is essentially the same as the man pages.
+>> We could possibly include this one in the idea list but I suppose we might
+>> need a more concrete idea on what needs to be done as part of this project.
+>> That would help very much with guiding the student during the project
+>> period.
 >>
->> On 2/12/2022 7:39 PM, Elijah Newren via GitGitGadget wrote:
->>> From: Elijah Newren <newren@gmail.com>
->>>
->>> The set and add subcommands accept multiple positional arguments.
->>> The meaning of these arguments differs slightly in the two modes:
->>>
->>> Cone mode only accepts directories.  If given a file, it would
->>> previously treat it as a directory, causing not just the file itself to
->>> be included but all sibling files as well -- likely against users'
->>> expectations.  Throw an error if the specified path is a file in the
->>> index.  Provide a --skip-checks argument to allow users to override
->>> (e.g. for the case when the given path IS a directory on another
->>> branch).
+>> We also need to know if the end result of such a project would be an
+>> acceptable contribution to the project. What it would take for the contribution
+>> to be acceptable? etc.
+> Yeah, I think this is the main issue with this idea. We have a section
+> named "Note about refactoring projects versus projects that implement
+> new features" in
+> https://git.github.io/General-Application-Information/ explaining why
+> projects implementing new things can be a bad idea, and what can be
+> done about it.
+
+I tend to agree. To me, it has all the hall marks of an allegedly
+simple  'systems' project. The main issues in the mini-project being to
+ensure all stakeholders are aligned so that the final coding is easy. I
+hadn't mentioned the number of go-arounds in my head before I settled on
+using individual bundles as the likely best chance of success for the
+example repos.
+
+For these type of ideas, the 'show me the code' mantra, can easily lead
+to misunderstanding, mistaking the toy implementation for concept ("map
+is not territory" ;-).
+
+Maybe we do need a 'mini-projects' category to capture these
+non-refactoring ideas.
+
+>
+>> Just to make it clear, I'm trying to think through on what we need to do to
+>> make this a GSoC idea proposal.
 >>
->> I agree that this is likely to be an improvement for users. The
->> sparse-checkout builtin isn't integrated with the sparse index
->> yet. At least not integrated upstream: we have commits in microsoft/git
->> that we plan to send when other things in flight are merged. This
->> change likely introduces a new opportunity for the index to expand,
->> so I will keep that in mind when upstreaming.
-> 
-> Actually, I thought about that during development, and my presumption
-> was that we would not expand the index.  We've survived a few years
-> without reporting any argument errors to the user and folks seem to
-> usually get things right, so while I think it adds value to report on
-> likely errors, I don't think it's important for us to catch and warn
-> on every potential misuse.  I think the probable errors are the ones
-> where they specify a <file> that exists in both the working tree and
-> index.  The remaining ones are less probable, and also possibly quite
-> expensive to catch.  I'm not sure it's worth the cost to try to report
-> those.
+>>> Not sure if that's fleshed out enough, or if it's at the wrong level for
+>>> GSoC, or If I'm right as a Mentor, but I'd be happy to co-mentor.
+>> That's nice. Thanks for volunteering.
+> Yeah, thanks for volunteering anyway!
 
-Since we start with only the files at root, if a user specifies a
-directory at least two levels deep, then we don't have enough information
-in the index to find that directory without parsing trees. Doing a simple
-index_name_pos() call would expand the sparse index to a full one.
+Given that I'd suggested the min-project, I thought it worthwhile ;-)
+>
+>> On a related note, the organization registrations are now open for this year.
+>> The deadline is February 21 - 18:00 UTC. I'm not sure if anyone else is
+>> planning on applying for Git. In case no one else beats me to it, I plan on
+>> applying for Git around February 15 17:00 UTC.
+> I was thinking about applying for Git, but I am glad that you plan to
+> do it. I will try to add some project ideas to SoC-2022-Ideas.md
+> before February 15.
+>
+> Thanks,
+> Christian.
 
-The checks of this kind typically follow this pattern:
+A similar mini-project, could be to add a `git branch
+--show-description` and `git branch --show-all-descriptions` along the
+lines of the aliases:
+    brshow = config --get-regexp 'branch.*.description'
+    brshow1 = !git config --get "branch.$(git rev-parse --abbrev-ref
+HEAD).description"
 
-	int pos = index_name_pos(index, name, strlen(name));
-	if (pos >= 0)
-		/* we have 'name' in the index! */
-	else
-		/* we don't have 'name' in the index! */
+Fairly simple coding, if acceptable (with ensuing discussions about
+whether branch descriptions are useful ..)
 
-(Of course, there is some special logic for directories to see if they
-exist, since 'pos' is a position within the list of files, unless it
-points to a sparse directory entry.)
-
-A different method that checks only for existence could find a sparse
-directory and then search trees for the contained path. Returning a
-boolean answer provides a mechanism for not expanding the index.
-
-But we are getting sidetracked. I'll worry about this later. The
-important thing is that we can solve this problem, so it shouldn't block
-your feature.
-
->>> Non-cone mode accepts general gitignore patterns.  However, it has an
->>> O(N*M) performance baked into its design, where all N index files must
->>> be matched against all M sparse-checkout patterns with EVERY call to
->>> unpack_trees() that updates the working tree.  As such, it is important
->>> to keep the number of patterns small, and thus we should warn users to
->>> prefer passing directories and more generic glob patterns to get the
->>> paths they want instead of listing each individual file.  (The
->>> --skip-checks argument can also be used to bypass this warning.)  Also,
->>> even when users do want to specify individual files, they will often
->>> want to do so by providing a leading '/' (to avoid selecting the same
->>> filename in all subdirectories), in which case this error message would
->>> never trigger anyway.
->>
->> I think the case of "I want only one file from this directory" and "I
->> want files with the given name pattern" are the main reason to still
->> use non-cone-mode. Users with this need usually have a directory full
->> of large files, and they choose which of those large files they need
->> using sparse-checkout. The repository reorganization required to use
->> cone mode for this use is perhaps too great (or they haven't thought
->> about doing it). For this reason, I would prefer that we do not do
->> these checks when not in cone mode.
-> 
-> If they "only want one file from this directory", isn't the correct
-> way to specify that by mentioning the path with a leading slash?
-> Otherwise, they'd potentially grab files with similar names from many
-> directories, right?  So, even in that usecase, we should still error
-> out if they specify a <filename> rather than /<filename>.  Perhaps my
-> reasoning should lead with that and I should fix up the warning
-> message a bit, but I still think we should probably give a warning
-> even for those who are explicitly wanting the usecase you mention.
-
-Checking for the leading slash can be a big help to make sure users
-are getting the matches they expect.
-
-> Also, note this is a warning and not an error -- and the warning can
-> be suppressed with --skip-checks.
-
-I want to avoid surprising users with new warnings for things they
-have been doing for years, especially if these tasks run as part of
-a script that checks stderr output as a failure condition.
-
->>> +test_expect_success 'by default, cone mode will error out when passed files' '
->>> +     git -C repo sparse-checkout reapply --cone &&
->>> +     test_must_fail git -C repo sparse-checkout add .gitignore 2>error &&
->>> +
->>> +     grep ".gitignore.*is not a directory" error
->>> +'
->>> +
->>> +test_expect_success 'by default, non-cone mode will warn on individual files' '
->>> +     git -C repo sparse-checkout reapply --no-cone &&
->>> +     git -C repo sparse-checkout add .gitignore 2>warning &&
->>> +
->>> +     grep "passing directories or less specific patterns is recommended" warning
->>> +'
->>
->> So I would expect this second test to have
->>
->>         test_must_be_empty warning
->>
->> to show that no warning occurs when specifying a file in non-cone-mode.
-> 
-> or perhaps
-> 
-> grep "please specify a leading slash to select a single file" warning
-> 
-> ?
-
-Right. Whatever matches the behavior we land on.
-
-Thanks,
--Stolee
+Philip
