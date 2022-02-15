@@ -2,259 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA3CFC433EF
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 22:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7F51C433EF
+	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 23:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242704AbiBOW7B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 17:59:01 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34852 "EHLO
+        id S243477AbiBOXSm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 18:18:42 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237929AbiBOW6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 17:58:55 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 101C4DAAD4
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 14:58:44 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id o3so352012qtm.12
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 14:58:44 -0800 (PST)
+        with ESMTP id S231588AbiBOXSl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 18:18:41 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29D3DC1C9E
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 15:18:31 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id g39so488141lfv.10
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 15:18:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version;
-        bh=6QOTk3VjRm4Jd6QxVxjOTwQ8BZ/Oz4ibhuqPb9E5lVk=;
-        b=ipqFIcOIlh3+AgkVnA4+lpqsQ6SJeuxZoVji3CPRBq9/Yc5YAcaULadA100dungj02
-         3O+g8gpihbdBwDEorJU25iuGg6nIxQ838z8YFhr3cpeWdfHplUCPpeSJLwc38LZsmOil
-         USRJT//tqXHwepvApH7fA7W1pkVlojRBAWI0K6Ag2qdtDSX+TdsBei+rMrBhg5iF2hkT
-         xLCn6cNZ2By9FtA5BYqFlv5ysawCFd29BOThU9RrOw8GESJyV1VnNGZBSVSkaPzadUjv
-         ajTw68TBks4hx6+CFSj+Iftq9ENBH03S3Mdsipb+APbQSxn9GCOhxJ+hMFBQVQi4Pg6e
-         wwiw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2JywiGcCp/+J3vEqMWMhvBYx3DYCNVszlv1DBa8VwbI=;
+        b=kjpT6tgiPXmiaYZaanQuLbZocJ3KXrHfRz1J5fKim9P7k/sDY2dCoGoUQ51Y49YVzN
+         Z4GtQDVo8AQB8T8p3WMiQGXK1NoBJnJ3VQeYGW24Cs0BlXbTdLjSgV3T4DPU15tjPlzn
+         3tOJT9PcSVhlw/ytaRQvlu+11OD2dMm06LqkbNb5z5f4ECS7o+jHQepi/P1LD4FNTxB+
+         FHBNm3Kcy7094qxc5aNv+5GTuLnKJP+WwNc5Wf6HPrNz85cXgDYSIChn3bzi6v8Clwf8
+         C4uUAGOxj7VhMLYu91y9lxicrVtXi1I3ENfHZKk15qxdeGWFDrHoljSNkK92x3gqmbld
+         a+JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version;
-        bh=6QOTk3VjRm4Jd6QxVxjOTwQ8BZ/Oz4ibhuqPb9E5lVk=;
-        b=JJfdOcPt15OQu1Ax3u3+ZwxuwuKfe0g3TeMG4ObI5c6gAbkQ7r3zW8cySjU1GX502n
-         pVPFOHeyr2k5AzmbdwSTHOg9yk1UV5n0h3xH5FHVFJ8l9Stry5e1ndCWWBuVznLCVp+Y
-         8XnlpcgU37yjvgg0UlgF+/7YhzkNxWpe0kLVcJr7Xc8dspaRzur94a+kQb/g1op34Lzc
-         YO/uagha2Nq8ri0pP+teb4e5kBbAKVmRVaRPr/DKtyuNFNk2dH6n7QviIazqGWcevY0p
-         l7EXyjotrtpKN0kX/FU18ae19VLr0iCvccp7bHHuf60Ae5G4mgGouKy6omoaptZGh82E
-         /PLA==
-X-Gm-Message-State: AOAM533uCPLVSyFd094YFjhavgOP/L9mRL/WEkvPvg43Deq0rnOj/y6U
-        5qvP9Q+RGjAegfuGnIC4eEw=
-X-Google-Smtp-Source: ABdhPJy8jMo19aGQDNKSAFNc4ffcPLmECUM+2S+PzvuUFqHZEDR/4HFBssygJNl7fbUYDFeogCmN6A==
-X-Received: by 2002:a05:622a:1ba6:b0:2d0:6f2:d309 with SMTP id bp38-20020a05622a1ba600b002d006f2d309mr172883qtb.389.1644965923192;
-        Tue, 15 Feb 2022 14:58:43 -0800 (PST)
-Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id w5sm17838680qko.34.2022.02.15.14.58.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Feb 2022 14:58:42 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Wong <e@80x24.org>, Bagas Sanjaya <bagasdotme@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v6 4/4] cat-file: add --batch-command mode
-Date:   Tue, 15 Feb 2022 17:58:41 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <1FF9283F-C823-4D26-A39B-6506B900CEB2@gmail.com>
-In-Reply-To: <CAPig+cTwLhn1GZ_=6s0FXL0z=Q=p1w9ZGK0hAV8wfK9RsQYjnA@mail.gmail.com>
-References: <pull.1212.v5.git.git.1644609683.gitgitgadget@gmail.com>
- <pull.1212.v6.git.git.1644862988.gitgitgadget@gmail.com>
- <a6dd5d72fce8cec430c0ec5da2dd9f0969a7fd91.1644862989.git.gitgitgadget@gmail.com>
- <CAPig+cTwLhn1GZ_=6s0FXL0z=Q=p1w9ZGK0hAV8wfK9RsQYjnA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2JywiGcCp/+J3vEqMWMhvBYx3DYCNVszlv1DBa8VwbI=;
+        b=cxkMlIsX5Bh4BQld8R2tSJOqzFp3iEbgHuAOvd5HMyJ8SLOhXpUMWXMvs7ZGD+IMBH
+         AWBh2h4dkCodNajxSX758297KA66K6wHzEgScdwfUM8/muAIwYybeDiTM3gsCAzldjHS
+         8Y5NCf5doN+AiTv6rI16nMfb5TiBJBc5ysh4bEbHNmLbltLPNiQUbpUnFScM2qqY9kqS
+         H2uw5wzUe6pNMROiSi6nSQ2LSk6UPvN3sKR+Kg6HFei6Yp+0PSW3vrU68Aj8LkwqEFZm
+         6Q3nLdl25hXHRE1lH6Cm/bewkBbdN0/8OGg/PSTvDikpKWgqIxGLUS6548Yi9Kti+IQV
+         tY8Q==
+X-Gm-Message-State: AOAM5301YxvSUtxvWKyRSBWRcpUbKRfrFaHsa6ou1MU6hZXN79/Fe5fR
+        OgILivYKL9TaPrVafVnW+nceYVQ9RSq55rMi7Mo=
+X-Google-Smtp-Source: ABdhPJxp6sdhWv0MgDkwFONjsWP2s2/pRm9HwVHHqK2xAHq5FJJYZoAIaTQdQfUOTSwpHoYU47iI+kIxakwE511mdvc=
+X-Received: by 2002:a05:6512:a89:b0:442:d4fa:9bad with SMTP id
+ m9-20020a0565120a8900b00442d4fa9badmr12048lfu.93.1644967109329; Tue, 15 Feb
+ 2022 15:18:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+ <YfGpjm8mCkWIPM6V@nand.local> <CAP8UFD1Mqv=MUcdjjhTpOkP0yWpnv9Jr=aB5G+4XmAqWsJBX4g@mail.gmail.com>
+ <CAP8UFD2FfJA1ruhxzv3tcxhsssHBeHGCbGFDiz+-fFmpx39Gqg@mail.gmail.com>
+In-Reply-To: <CAP8UFD2FfJA1ruhxzv3tcxhsssHBeHGCbGFDiz+-fFmpx39Gqg@mail.gmail.com>
+From:   Hariom verma <hariom18599@gmail.com>
+Date:   Wed, 16 Feb 2022 04:48:17 +0530
+Message-ID: <CA+CkUQ9VTs7n9B+ApH1BYC=Uq4yvrZm0fsG0RJB8PVg_BBSCfw@mail.gmail.com>
+Subject: Re: Git in GSoC 2022?
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Git Community <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi,
 
-Thanks for taking another look!
+On Mon, Feb 14, 2022 at 2:59 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> I added the "Unify ref-filter formats with other pretty formats" to
+> continue Hariom Verma's work during GSoC 2020. I would be happy to
+> co-mentor it if someone is interested to co-mentor it with me.
 
-On 15 Feb 2022, at 14:39, Eric Sunshine wrote:
+Since I worked on this for quite some time. I maybe am able to provide
+some insights. If it's not too late, I would like to co-mentor it with
+you.
 
-> On Mon, Feb 14, 2022 at 1:23 PM John Cai via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> Add a new flag --batch-command that accepts commands and arguments
->> from stdin, similar to git-update-ref --stdin.
->
-> Some relatively minor comments below. Not sure any of them are serious
-> enough to warrant a reroll...
->
->> The contents command takes an <object> argument and prints out the object
->> contents.
->>
->> The info command takes a <object> argument and prints out the object
->> metadata.
->
-> s/a <object>/an <object>/
->
->> Signed-off-by: John Cai <johncai86@gmail.com>
->> ---
->> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
->> @@ -96,6 +96,33 @@ OPTIONS
->> +contents `<object>`::
->> +       Print object contents for object reference `<object>`. This corresponds to
->> +       the output of `--batch`.
->> +
->> +info `<object>`::
->> +       Print object info for object reference `<object>`. This corresponds to the
->> +       output of `--batch-check`.
->
-> Sorry if I wasn't clear in my earlier review, but when I suggested
-> s/<object>/`<object>`/, I was referring only to the body of each item,
-> not to the item itself (for which we do not -- I think -- ever use
-> `<...>`). So:
->
->     content <object>::
->         Print object contents ... `<object>`. ...
->
-> As mentioned in my earlier review, I think the SYNOPSIS also needs an
-> update to mention --batch-command.
-
-:face-palm: yes I forgot about that in the last version.
-
->
->> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
->> @@ -513,6 +514,129 @@ static int batch_unordered_packed(const struct object_id *oid,
->> +static void dispatch_calls(struct batch_options *opt,
->> +               struct strbuf *output,
->> +               struct expand_data *data,
->> +               struct queued_cmd *cmd,
->> +               int nr)
->> +{
->> +       int i;
->> +
->> +       for (i = 0; i < nr; i++){
->
-> Style: for (...) {
->
->> +               cmd[i].fn(opt, cmd[i].line, output, data);
->> +               free(cmd[i].line);
->> +       }
->> +
->> +       fflush(stdout);
->> +}
->
-> If I recall correctly, Junio suggested calling free() within this
-> loop, but this feels like an incorrect separation of concerns since it
-> doesn't also reset the caller's `nr` to 0. If (for some reason),
-> dispatch_calls() is invoked twice in a row without resetting `nr` to 0
-> in between the calls, then the dispatched commands will be called with
-> a pointer to freed memory.
->
-> One somewhat ugly way to fix this potential problem would be for this
-> function to clear `nr`:
->
->     static void dispatch_calls(..., int *nr)
->     {
->         for (...) {
->             cmd[i].fn(...);
->             free(cmd[i].line);
->         }
->         *nr = 0;
->         flush(stdout);
->     }
->
-> But, as this is a private helper, the code as presented in the patch
-> may be "good enough" even though it's a bit fragile.
-
-What you suggested makes sense from a separation of concerns point of view. I'm
-still learning what looks ugly in C :), but I think this is easier to read
-overall than what I had before.
-
->
->> +static void batch_objects_command(struct batch_options *opt,
->> +                                   struct strbuf *output,
->> +                                   struct expand_data *data)
->> +{
->> +       while (!strbuf_getline(&input, stdin)) {
->> +               if (!input.len)
->> +                       die(_("empty command in input"));
->> +               if (isspace(*input.buf))
->> +                       die(_("whitespace before command: '%s'"), input.buf);
->> +
->> +               if (skip_prefix(input.buf, "flush", &cmd_end)) {
->> +                       if (!opt->buffer_output)
->> +                               die(_("flush is only for --buffer mode"));
->> +                       if (*cmd_end)
->> +                               die(_("flush takes no arguments"));
->
-> I didn't articulate it in my previous review since the thought was
-> only half-formed, but given "flushify", this will incorrectly complain
-> that "flush takes no arguments" instead of complaining "unknown
-> command: flushify" as is done below (or it will incorrectly complain
-> "flush is only for --buffer mode" if --buffer wasn't specified).
->
-> If I'm reading the code correctly, it seems as if these problems could
-> be avoided by treating `flush` as just another parse_cmd::commands[]
-> item so that it gets all the same parsing/checking as the other
-> commands rather than parsing it separately here.
-
-This is a good idea. I like the reduced complexity.
-
->
->> +                       dispatch_calls(opt, output, data, queued_cmd, nr);
->> +                       nr = 0;
->> +                       continue;
->> +               }
->> +
->> +               for (i = 0; i < ARRAY_SIZE(commands); i++) {
->> +                       if (!skip_prefix(input.buf, commands[i].prefix, &cmd_end))
->> +                               continue;
->> +
->> +                       cmd = &commands[i];
->> +                       if (cmd->takes_args) {
->> +                               if (*cmd_end != ' ')
->> +                                       die(_("%s requires arguments"),
->> +                                           commands[i].prefix);
->> +
->> +                               p = cmd_end + 1;
->> +                       } else if (*cmd_end) {
->> +                               die(_("%s takes no arguments"),
->> +                                   commands[i].prefix);
->> +                       }
->
-> Good. Appears to be correctly handling the full matrix of
-> command-requires-arguments and the actual input having or not having
-> arguments.
->
->> +                       break;
->> +               }
->> +
->> +               if (!cmd)
->> +                       die(_("unknown command: '%s'"), input.buf);
->
-> If you treat `flush` as just another parse_cmd::commands[], then right
-> here is where you would handle it (I think):
->
->     if (strcmp(cmd->prefix, "flush")) {
->         dispatch_calls(opt, output, data, queued_cmd, nr);
->         nr = 0;
->         continue;
->     }
->
->> +               if (!opt->buffer_output) {
->> +                       cmd->fn(opt, p, output, data);
->> +                       continue;
->> +               }
->> +
->> +               ALLOC_GROW(queued_cmd, nr + 1, alloc);
->> +               call.fn = cmd->fn;
->> +               call.line = xstrdup_or_null(p);
->> +               queued_cmd[nr++] = call;
->> +       }
->> +
->> +       if (opt->buffer_output &&
->> +           nr &&
->> +           !git_env_bool("GIT_TEST_CAT_FILE_NO_FLUSH_ON_EXIT", 0))
->> +               dispatch_calls(opt, output, data, queued_cmd, nr);
->> +
->> +       free(queued_cmd);
->> +       strbuf_release(&input);
->> +}
+Thanks,
+Hariom
