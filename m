@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FFD8C433F5
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 14:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B522FC433EF
+	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 15:03:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239243AbiBOOyP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 09:54:15 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40014 "EHLO
+        id S239549AbiBOPDU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 10:03:20 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239261AbiBOOyH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 09:54:07 -0500
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F0CA90FE5
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 06:53:43 -0800 (PST)
-Received: by mail-oo1-xc2a.google.com with SMTP id r15-20020a4ae5cf000000b002edba1d3349so23552405oov.3
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 06:53:43 -0800 (PST)
+        with ESMTP id S238083AbiBOPDT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 10:03:19 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2832D1EAEE
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 07:03:09 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id l5so923497oii.13
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 07:03:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=RW3h0V0waApFtQr4Y2E8Pc7Ksh7QcF6woObKbhJK1KM=;
-        b=RP/gV9gpWNqYhyMKwiyHLcqTl3ZxgQlMIiEewPqN7fsDI7L0pJDNA8Px8BpOC+9fqk
-         FKE9l58GNO3gD2jIKcPtmjfW8k2GcktHqr9dYMgOcjehREPp+sAA62slMS8mkcezKXLv
-         +L1McFqLIQLzd/QP8Gpoe4A7aim3CXLBye2McnVd0KSVx/4ejNxV3SU/nj0rvT2J5Gfw
-         teaZjFzxK2yUhgizMK8vl+OpB76IeN8XwreOOw+Zcob4C+2pPzNI+BQWv/6hiQDqOl2b
-         3ITyYCs8QJws34IyrrTSzHLCt8AWEWvRNTGcJZDUVdpQEijynGO/PX3e8WSeCUsNxP4c
-         dbfw==
+        bh=LLByN5Pmajk0igACSuvPun2Iwx0O925FsGdQpHP7kiY=;
+        b=cwIw8Wer+B1zmKMfwifbUOQu9m2arndevQeuBei+34gBoppvrirzsp6JJUYWGb2ujU
+         9/gvSB6XcxdHPPmDjlwJ29nhr9QfKmArXXo9QENV2v+EcBGPTK/Z+5xvCK5gJn7pEMDF
+         MHitOVsM7kcxAaih/JPixdl8wccddCk6fyoNEPRnbXHErR/VChcVN02oa5KIF+WOAV/z
+         FEFY29rnGZJ6F7jI4N1f7CI2qpVW2vKXUtwaSUrY9Kz7qCOqOCe0bIMP2lEKgraEFqId
+         rRKODFWVZgCs009TG5FUhutQOhWVNtMMW1ygzQrYJO2r1nRQyUGJ+e4MYmDtHkvAjxvr
+         Hnqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=RW3h0V0waApFtQr4Y2E8Pc7Ksh7QcF6woObKbhJK1KM=;
-        b=rXwHm8BCDZuoKmoisbii2Sao7wQUNRkGPbGKakLx+107srLAoCRzIBfW8ggVyrdwiR
-         dg8bFr8TwbyF0z4azWoleAiSV7UyzuXK+goQssb4W+9fe+2DXhOJPBxnGoEhwQOBTY3+
-         jAG+XDIIrU55qa4f5PvvylBgyTw3ES4Wj2Qj4qBd1YLBSfpmUUbisk+9kvraJFcm0ltn
-         V/o1OO7CcZW1kFrnM5wee98kovf03ZXb1Kq8Od2MlD8uLvoxhtJsU36LkPvLH8dGejYK
-         egVitopzXcLGEh9kkAj0FxAJ1Uvljxr/Jf9OOKUjqlTRmiPycDmpBgla62HuLNE7iDyS
-         YLUA==
-X-Gm-Message-State: AOAM5335P0osnFZhkuqCF4MIF2f9gPuDcNG+T0iGwzuxHeo8x+PN3prh
-        5W5v31sgRMslCyM+WBVQ9sTI
-X-Google-Smtp-Source: ABdhPJyhFaAMb9vCaKNTukZ921ewkgF33fTeshbSIvmz0rZv18GWl8WJV3+QJhDrbj8DFt2kYFUuHA==
-X-Received: by 2002:a05:6870:772e:b0:d2:8c2a:7c75 with SMTP id dw46-20020a056870772e00b000d28c2a7c75mr1448497oab.202.1644936822497;
-        Tue, 15 Feb 2022 06:53:42 -0800 (PST)
+        bh=LLByN5Pmajk0igACSuvPun2Iwx0O925FsGdQpHP7kiY=;
+        b=VE6qU0cEeIkKonGbFfNmX1qktyA4Gm0fMrc4AxPdL886N6eeuomAcBx6+IIK48ZjrV
+         C69dFM4MPnosDG4mCAJvzznwv9GIli1gcg/IPoHx+8SX9dzxxZvRGeoZgRtkrQYaDffJ
+         +zHOULEvu2Dhxzmcb/BjJK/u8Y7yiuIMIpQUBwb6Pn9A3i8sJlC0PN0jAE7frHnWROVJ
+         BDOB7UrvikF3ybFlBfwC/kxg5a5UEbxyDh53G9aJbLKDKGpujrcMR5OgaTqijuYrCUet
+         RLJ01oVsGEHHLDaKxaevztKX2JO27qh9wuF4NMI4+YfAP4ccLJMPPY8QVC8c1Vdwc9i3
+         KVUQ==
+X-Gm-Message-State: AOAM533DCtFmWjF4NEENtfcswYe+1LUe7IG4+pVb6L04f5LezupFwhqw
+        rh9d7KdJrYwJDZUoMFtedKUKsth51ex8
+X-Google-Smtp-Source: ABdhPJxAzTVTPvGQdfz+ZQnPH0Ma68dBkRJ9prZb5SvzKW2dcTylR1OciXRAXr/ABvRdrb/wDDTGMw==
+X-Received: by 2002:a05:6808:1999:: with SMTP id bj25mr1771353oib.23.1644937388148;
+        Tue, 15 Feb 2022 07:03:08 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id v31sm14085460ott.25.2022.02.15.06.53.41
+        by smtp.gmail.com with ESMTPSA id t21sm13847635otj.26.2022.02.15.07.03.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Feb 2022 06:53:42 -0800 (PST)
-Message-ID: <d0e7c17b-b293-623e-b0cb-ddc6980886ca@github.com>
-Date:   Tue, 15 Feb 2022 09:53:40 -0500
+        Tue, 15 Feb 2022 07:03:07 -0800 (PST)
+Message-ID: <2c3b4204-5560-7031-c05e-3b709c85d753@github.com>
+Date:   Tue, 15 Feb 2022 10:03:06 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: [PATCH 3/7] sparse-checkout: pay attention to prefix for {set,
- add}
+Subject: Re: [PATCH 4/7] sparse-checkout: error or warn when given individual
+ files
 Content-Language: en-US
 To:     Elijah Newren <newren@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
@@ -63,120 +63,145 @@ Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Derrick Stolee <stolee@gmail.com>,
         Lessley Dennington <lessleydennington@gmail.com>
 References: <pull.1118.git.1644712797.gitgitgadget@gmail.com>
- <679f869ff11b5c3e61081018f7eafa81c334f3d1.1644712798.git.gitgitgadget@gmail.com>
- <b97d569c-3b5a-a2c8-cdf5-08d74406a29e@github.com>
- <CABPp-BHXZ-XLxY0a3wCATfdq=6-EjW62RzbxKAoFPeXfJswD2w@mail.gmail.com>
+ <5e27cad17a7080170f476684610391bd56024f36.1644712798.git.gitgitgadget@gmail.com>
+ <72d39c4a-fd16-846c-2a5e-8b9ba0c1ab07@github.com>
+ <CABPp-BE8aG3R4ASngqwyvRemp5WW=O0UWWSTesJ2hoch_av_kQ@mail.gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CABPp-BHXZ-XLxY0a3wCATfdq=6-EjW62RzbxKAoFPeXfJswD2w@mail.gmail.com>
+In-Reply-To: <CABPp-BE8aG3R4ASngqwyvRemp5WW=O0UWWSTesJ2hoch_av_kQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/14/2022 10:52 PM, Elijah Newren wrote:
-> On Mon, Feb 14, 2022 at 7:50 AM Derrick Stolee <derrickstolee@github.com> wrote:
+On 2/14/2022 11:17 PM, Elijah Newren wrote:
+> On Mon, Feb 14, 2022 at 7:56 AM Derrick Stolee <derrickstolee@github.com> wrote:
 >>
 >> On 2/12/2022 7:39 PM, Elijah Newren via GitGitGadget wrote:
 >>> From: Elijah Newren <newren@gmail.com>
 >>>
->>> In cone mode, non-option arguments to set & add are clearly paths, and
->>> as such, we should pay attention to prefix.
+>>> The set and add subcommands accept multiple positional arguments.
+>>> The meaning of these arguments differs slightly in the two modes:
 >>>
->>> In non-cone mode, it is not clear that folks intend to provide paths
->>> since the inputs are gitignore-style patterns.  Paying attention to
->>> prefix would prevent folks from doing things like
->>>    git sparse-checkout add /.gitattributes
->>>    git sparse-checkout add '/toplevel-dir/*'
->>> In fact, the former will result in
->>>    fatal: '/.gitattributes' is outside repository...
->>> while the later will result in
->>>    fatal: Invalid path '/toplevel-dir': No such file or directory
->>> despite the fact that both are valid gitignore-style patterns that would
->>> select real files if added to the sparse-checkout file.  However, these
->>> commands can be run successfully from the toplevel directory, and many
->>> gitignore-style patterns ARE paths, and bash completion seems to be
->>> suggesting directories and files, so perhaps for consistency we pay
->>> attention to the prefix?  It's not clear what is okay here, but maybe
->>> that's yet another reason to deprecate non-cone mode as we will do later
->>> in this series.
->>>
->>> For now, incorporate prefix into the positional arguments for either
->>> cone or non-cone mode.  For additional discussion of this issue, see
->>> https://lore.kernel.org/git/29f0410e-6dfa-2e86-394d-b1fb735e7608@gmail.com/
+>>> Cone mode only accepts directories.  If given a file, it would
+>>> previously treat it as a directory, causing not just the file itself to
+>>> be included but all sibling files as well -- likely against users'
+>>> expectations.  Throw an error if the specified path is a file in the
+>>> index.  Provide a --skip-checks argument to allow users to override
+>>> (e.g. for the case when the given path IS a directory on another
+>>> branch).
 >>
->> Perhaps this was covered in the issue, but for non-cone mode, it
->> matters if there is a leading slash or not in the pattern. Will
->> this change make it impossible for a user to input that distinction?
->>
->> Will there still be a difference between:
->>
->>         git sparse-checkout set --no-cone /.vs/
->>
->> and
->>
->>         git sparse-checkout set --no-cone .vs/
->>
->> ?
+>> I agree that this is likely to be an improvement for users. The
+>> sparse-checkout builtin isn't integrated with the sparse index
+>> yet. At least not integrated upstream: we have commits in microsoft/git
+>> that we plan to send when other things in flight are merged. This
+>> change likely introduces a new opportunity for the index to expand,
+>> so I will keep that in mind when upstreaming.
 > 
-> If you are in the toplevel directory, you can run either of these and
-> they have the same meaning they traditionally had.
-> 
-> Before this patch, if you are in a subdirectory, the first of those
-> would have specified a toplevel ".vs" directory, and the second would
-> have specified a ".vs/" directory in the toplevel OR any subdirectory.
-> Those choices might be what the user wanted, or both of those could be
-> a nasty surprise for the user.
-> 
-> After this patch, if you are in a subdirectory, the first of those
-> throw an error:
->     $ git sparse-checkout set --no-cone /.vs/
->     fatal: Invalid path '/.vs': No such file or directory
-> (which might be an annoyance, but how would you possibly specify a
-> leading slash on a path that needs to be prefixed anyway?)  The second
-> will specify a SUBDIR/.vs/ from the toplevel directory (which again,
-> might be what the user wanted, or might be a nasty surprise if they
-> were trying to specify a pattern relative to the root).
-> 
-> Does this change make sense?  For some users, sure -- especially those
-> with the idea that you specify paths for non-cone mode (though
-> bash-completion may guide folks to presume that).  But for those who
-> understand that non-cone mode is all about patterns and that we have a
-> single toplevel file where everything must be recorded, it's possibly
-> detrimental to them.  To me, I wonder if it seems fraught with nasty
-> surprises for us to do anything other than throw an error when
-> --no-cone is specified and we are in a subdirectory.  Perhaps I should
-> do that instead of this change here.
+> Actually, I thought about that during development, and my presumption
+> was that we would not expand the index.  We've survived a few years
+> without reporting any argument errors to the user and folks seem to
+> usually get things right, so while I think it adds value to report on
+> likely errors, I don't think it's important for us to catch and warn
+> on every potential misuse.  I think the probable errors are the ones
+> where they specify a <file> that exists in both the working tree and
+> index.  The remaining ones are less probable, and also possibly quite
+> expensive to catch.  I'm not sure it's worth the cost to try to report
+> those.
 
-I'd be in favor of this second approach of requiring the base directory.
+Since we start with only the files at root, if a user specifies a
+directory at least two levels deep, then we don't have enough information
+in the index to find that directory without parsing trees. Doing a simple
+index_name_pos() call would expand the sparse index to a full one.
 
->>> Helped-by: Junio Hamano <gitster@pobox.com>
->>> Signed-off-by: Elijah Newren <newren@gmail.com>
+The checks of this kind typically follow this pattern:
+
+	int pos = index_name_pos(index, name, strlen(name));
+	if (pos >= 0)
+		/* we have 'name' in the index! */
+	else
+		/* we don't have 'name' in the index! */
+
+(Of course, there is some special logic for directories to see if they
+exist, since 'pos' is a position within the list of files, unless it
+points to a sparse directory entry.)
+
+A different method that checks only for existence could find a sparse
+directory and then search trees for the contained path. Returning a
+boolean answer provides a mechanism for not expanding the index.
+
+But we are getting sidetracked. I'll worry about this later. The
+important thing is that we can solve this problem, so it shouldn't block
+your feature.
+
+>>> Non-cone mode accepts general gitignore patterns.  However, it has an
+>>> O(N*M) performance baked into its design, where all N index files must
+>>> be matched against all M sparse-checkout patterns with EVERY call to
+>>> unpack_trees() that updates the working tree.  As such, it is important
+>>> to keep the number of patterns small, and thus we should warn users to
+>>> prefer passing directories and more generic glob patterns to get the
+>>> paths they want instead of listing each individual file.  (The
+>>> --skip-checks argument can also be used to bypass this warning.)  Also,
+>>> even when users do want to specify individual files, they will often
+>>> want to do so by providing a leading '/' (to avoid selecting the same
+>>> filename in all subdirectories), in which case this error message would
+>>> never trigger anyway.
 >>
->> This could probably use a
+>> I think the case of "I want only one file from this directory" and "I
+>> want files with the given name pattern" are the main reason to still
+>> use non-cone-mode. Users with this need usually have a directory full
+>> of large files, and they choose which of those large files they need
+>> using sparse-checkout. The repository reorganization required to use
+>> cone mode for this use is perhaps too great (or they haven't thought
+>> about doing it). For this reason, I would prefer that we do not do
+>> these checks when not in cone mode.
+> 
+> If they "only want one file from this directory", isn't the correct
+> way to specify that by mentioning the path with a leading slash?
+> Otherwise, they'd potentially grab files with similar names from many
+> directories, right?  So, even in that usecase, we should still error
+> out if they specify a <filename> rather than /<filename>.  Perhaps my
+> reasoning should lead with that and I should fix up the warning
+> message a bit, but I still think we should probably give a warning
+> even for those who are explicitly wanting the usecase you mention.
+
+Checking for the leading slash can be a big help to make sure users
+are getting the matches they expect.
+
+> Also, note this is a warning and not an error -- and the warning can
+> be suppressed with --skip-checks.
+
+I want to avoid surprising users with new warnings for things they
+have been doing for years, especially if these tasks run as part of
+a script that checks stderr output as a failure condition.
+
+>>> +test_expect_success 'by default, cone mode will error out when passed files' '
+>>> +     git -C repo sparse-checkout reapply --cone &&
+>>> +     test_must_fail git -C repo sparse-checkout add .gitignore 2>error &&
+>>> +
+>>> +     grep ".gitignore.*is not a directory" error
+>>> +'
+>>> +
+>>> +test_expect_success 'by default, non-cone mode will warn on individual files' '
+>>> +     git -C repo sparse-checkout reapply --no-cone &&
+>>> +     git -C repo sparse-checkout add .gitignore 2>warning &&
+>>> +
+>>> +     grep "passing directories or less specific patterns is recommended" warning
+>>> +'
 >>
->>   Reported-by: Lessley Dennington <lessleydennington@gmail.com>
+>> So I would expect this second test to have
+>>
+>>         test_must_be_empty warning
+>>
+>> to show that no warning occurs when specifying a file in non-cone-mode.
 > 
-> It'd be more of a "Report-Formalized-by:" if we were to include such a
-> tag.  Check the history here:
-> https://lore.kernel.org/git/52d638fc-e7e7-1b0a-482b-cff7c9500b92@gmail.com/
+> or perhaps
 > 
-> In short: I was the original reporter; I noted the issue while
-> reviewing her completion series.  The bug was not related to her
-> series, but her series did prompt me to check and discover the issue.
-> She didn't want the issue to get lost, and decided to make a formal
-> report.
-
-That makes sense. I wasn't caught up with that conversation.
-
->> These tests could use a non-cone-mode version to demonstrate the behavior
->> in that mode.
+> grep "please specify a leading slash to select a single file" warning
 > 
-> Fair enough, though I hesitated in part because I wasn't sure we even
-> wanted to make that change, and I figured getting that answer might be
-> useful before writing the tests.
+> ?
 
-Understandable.
+Right. Whatever matches the behavior we land on.
 
 Thanks,
 -Stolee
