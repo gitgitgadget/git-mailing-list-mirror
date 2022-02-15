@@ -2,106 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44237C433F5
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 09:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEEA5C433EF
+	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 09:34:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235909AbiBOJb7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 04:31:59 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59808 "EHLO
+        id S235937AbiBOJew (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 04:34:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:45220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234391AbiBOJb6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 04:31:58 -0500
+        with ESMTP id S235024AbiBOJev (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 04:34:51 -0500
 Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E206AA038
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 01:31:49 -0800 (PST)
-Received: by mail-pl1-x649.google.com with SMTP id z3-20020a170903408300b0014d891103aaso7991024plc.0
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 01:31:49 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC812B717F
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 01:34:41 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id t14-20020a1709027fce00b0014d5ddc9dfbso7958437plb.22
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 01:34:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc:content-transfer-encoding;
-        bh=NLUoJfCcVYzwFJEmJtiDkNnklhpi6KEoDApmmLUeYec=;
-        b=r9tGNAwHdBXAP0T9hL25X/Cklw9yhVgzDkujKmFnx31SXP777tDmEBLqJQ0yt/rSy+
-         a13dO72OPrkDX15pmz0IV1CYOQCwPYAhoVmyk85lWydIaNNVN0Z/JRBqOz84lXEVNcVe
-         zM+QUdG2s8pdKUx7rSUHFCxEsJnYiOcfFU5GByGwNf7kd32YK1vPk4kaVZ14nhHcbBFo
-         BDEc0fizaQcl7rcDuqYOtQRunS1pjrZUQphSybE4NWTcPPF5zuAw5fWb1E7fAzNdvB+J
-         8ihRBbvWZky2B4mN+GJWUBugXQvd7dk7ihqNIrKy2KZeE0HmCFDIQEn+YSmvCkaF/gD3
-         DhvA==
+        bh=dTeAkOLczizTPTu/F/S0j3xhGrsTWwSOiQ6OT7DwLxQ=;
+        b=U8X3aH+ANnYZn21/evqe5tMpT60fsQ2eIg2yaeVyy6tozuB2f1yLHukVvAYON8IdXP
+         ZqW37xIy5X33uGXLr3j+2OeYcstPamJOMpEAW0NFHCCL1GNJ3VmE/28XAxw7a8ts2cbw
+         hW/d8LbT7PRpDf2nQCAt3irljHMDl0+TSAwUGP8BLj1TppMzqRZdWZwZjbl/gInD6zOU
+         m2+uoKiojM3uWKzsQ+mW5L05xfCjQBRQ9omY4LiLBE676PZk1KuaMXQzZ/9twaamlO9R
+         Y8tFsg7uVsc1j+ruwhCd5VcElQIXSWVOkPTOoQTuTfg0h7aQAlGWRxH8571rv8edBSgH
+         nzAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc:content-transfer-encoding;
-        bh=NLUoJfCcVYzwFJEmJtiDkNnklhpi6KEoDApmmLUeYec=;
-        b=6uoffrxkf7He4Ixsy6Ja3wI21ddkXDd7hI2bejH3AxTUZQ6HRDWlGueDF51vziZLaT
-         JsINnc6Z5on+jiirPUWAaJGh5dX3fYK5es/wAa2m6Ee5Vx+WOWTHxH8HABqL4JGqLllF
-         CHVY3AKEcS2yiyZ2M8jfx6lvRXQQz7ikt84LpZxcl/BkeZmCOhbIaTkT81o2uXRl5DB3
-         FoH7qwWDBRwYh0OsXdWp91H/s67K/fAyxuNqF0+VUYJZEwTGh+++j1nwdiYOaIJGebmx
-         2aGdr3ZfWfZWcxHjmz4mwseGpspXEnDZa1L1DdMFABvr+K9cHp8h4pdVSTZ1uq+hkEgm
-         x4Cw==
-X-Gm-Message-State: AOAM53224+xpi3rEtvBF0oR/O8oq7I0UNQ74M/LQ4/b7ZOEVOfvpNSLx
-        AmsAsdlvuOLh+tvz3XzgD+nF5I3TJ05FMg==
-X-Google-Smtp-Source: ABdhPJx/ZmXo7ondPjzPBoRHknFk+3BTCYlx+X0MJplNROPBNrRJ6iBTiM4LNxurQIZYP9TOxDJWDrQd7sXQUA==
+        bh=dTeAkOLczizTPTu/F/S0j3xhGrsTWwSOiQ6OT7DwLxQ=;
+        b=VSkXBSIL01hVV5BLoPU4jk4ptXEczp2yoB+hDI2Do332M8OTjyPn2xqgY8hXRniQ43
+         0RA9B1543OxCeKFA1qGBCZe5QMB11NnckcCCg9616lhvxLU06eqptvLmhyvuC1KHeT58
+         UR9XltZV5TH92JGQIS1Ut6zACeRDhqc3sLb5LEmp0BQhDOr5OtV+5/E/6CmYCZwVpfM/
+         9y+G8WKpAeBt3t0kyonvE0P/t8LBDSxQ+Z6SgEUnKfKZYeYD0wPBcs3mn+VPKBIHYBpe
+         s6laXVj2LIYUub8Y9OHyHKqdS044tgnb6XcUBsD0VVtpcqVne5S+ti4/GUW44wjkfg8l
+         j/Vg==
+X-Gm-Message-State: AOAM532k1uuMtpughUYRa8knBTjBWZMFr/0AvBJ6PzigdY8sn47ABZy8
+        G5bHoaOJ9Yvhi65iAT2YPc/A1IcVWAWifA==
+X-Google-Smtp-Source: ABdhPJwZVUwEvLvFcSKeMsr9R0+C5WwkHAXSNT4L8p0HdlWWOLY6mPKFULGIVIUylEhgSVtlEyD9jDxx1QQb+w==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:a50f:b0:1b8:e6ad:f63c with SMTP
- id a15-20020a17090aa50f00b001b8e6adf63cmr355544pjq.1.1644917508200; Tue, 15
- Feb 2022 01:31:48 -0800 (PST)
-Date:   Tue, 15 Feb 2022 17:31:32 +0800
-In-Reply-To: <xmqq1r054aiw.fsf@gitster.g>
-Message-Id: <kl6l35kk79xn.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:24d1:: with SMTP id
+ d17mr2996617pfv.81.1644917681070; Tue, 15 Feb 2022 01:34:41 -0800 (PST)
+Date:   Tue, 15 Feb 2022 17:34:38 +0800
+In-Reply-To: <220214.86h791xsza.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6lzgms5v80.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
 References: <20220208083952.35036-1-chooglen@google.com> <20220210092833.55360-1-chooglen@google.com>
  <xmqqv8xj71mt.fsf@gitster.g> <xmqqr18770pc.fsf@gitster.g> <kl6la6et76bb.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqq1r054aiw.fsf@gitster.g>
+ <220214.86h791xsza.gmgdl@evledraar.gmail.com>
 Subject: Re: [PATCH v7 00/20] submodule: convert the rest of 'update' to C
 From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Atharva Raykar <raykar.ath@gmail.com>,
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Atharva Raykar <raykar.ath@gmail.com>,
         Christian Couder <christian.couder@gmail.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Jonathan Nieder <jrn@google.com>,
         Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        pc44800@gmail.com, Shourya Shukla <periperidip@gmail.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+        pc44800@gmail.com, Shourya Shukla <periperidip@gmail.com>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Glen Choo <chooglen@google.com> writes:
+> On Tue, Feb 15 2022, Glen Choo wrote:
 >
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>>> This seems to heavily conflict with "clone, submodule: pass partial
+>>>> clone filters to submodules, 2022-02-04" by Josh Steadmon
+>>>> <690d2316ad518ea4551821b2b3aa652996858475.1644034886.git.steadmon@goog=
+le.com>
+>>>> in both builtins/submodule--helper.c and git-submodule.sh.
+>>>>
+>>>> It also removes the code that "submodule: record superproject gitdir
+>>>> during 'update', 2022-02-03" by Emily Shaffer
+>>>> <20220203215914.683922-5-emilyshaffer@google.com>, so what the other
+>>>> topic ends up adding to the shell script needs to eventually be
+>>>> redone in the C code.
+>>>>
+>>>> I think "superproject aware" topic would see a reroll due to a
+>>>> slight redesign.  I am not sure how solid the design of the
+>>>> "pass down partial clone filter" topic is at this moment.
+>>
 >> Hm, I haven't looked at where the conflicts are yet, but I'll get to it
 >> as I'm reviewing the rest of the feedback.
->>
->> And on that note, what do you think of =C3=86var's suggestion to split o=
-ff
->> the 'easy to review' and 'obvious' patches into their own preparatory
->> series? I wonder if this would make it harder or easier to manage the
->> conflicts.
 >
-> It depends on how small an interaction the "obvious and easy" part
-> has with topics in flight.  In the best case, if there aren't any
-> the preparatory series may even graduate before the other topics
-> that interfere with the main part of this series becomes ready.
+> To save you some time, my v4 CL summarizes the semantic conflict between
+> the two:
+> https://lore.kernel.org/git/cover-v4-0.7-00000000000-20220127T143552Z-ava=
+rab@gmail.com/
 >
-> In a worse case, what the preparatory work to lay more solid
-> foundation wants to do may contradict what some of these topics in
-> flight want to do.  Such semantic conflicts need to be resolved
-> before the main part (and these interfering topics) can move
-> forward, and with "split off", the core of the contradicting wish
-> may become easier to see and what needs to be resolved may become
-> clearer.
->
-> So, I do not think of a way for such a split to make things harder
-> for later.  Of course, the "easy to review" and "obvious" part has
-> to be justifiable on its own, i.e. "a larger series wants to build
-> on this foundation and for it to work this part must be done in this
-> way", when the other topics wants to do the part in question
-> differently, becomes a much weaker justification.  But if it is
-> truly "obvious", it is unlikely that the benefit of the change
-> becomes harder to justify.
+> I.e. Atharva Raykar had working C code to do what an older version of
+> that superproject config series was doing, but the semantics changed in
+> a later version. It needs some new usage of path.c (or similar) API
+> adjusted, but I didn't (and still don't) have time to look into it.
 
-Thanks for sharing your thought process. That makes sense, I'll do
-that :)
+Ah, thanks for the reminder. That should help.
+
+>>> I can merge this to seen minus the above two topics and get it
+>>> compile, but it also seems to have some interaction with 961b130d
+>>> (branch: add --recurse-submodules option for branch creation,
+>>> 2022-01-28) and makes the t3207, tests added by that other topic,
+>>> fail X-<.
+>>
+>> Oof, that's embarrassing of me, let me take a look at that. There's a
+>> nontrivial chance that the "branch --recurse-submodules" tests caught an
+>> actual regression.
+>
+> FWIW one thing I did as an extra sanity check was to run the whole test
+> suite with --tee with/without this series (or rather, my earlier
+> version), and diffing the full test-results output (which you'll need to
+> save in-between the two runs, and IIRC hack t/Makefile to stop removing
+> it on successful runs).
+>
+> There's a lot of differences in output due to general issues in the test
+> suite output not being reproducable (writing timestamps etc.), but I
+> could not find any issues with the "git submodule" output being
+> different, of course we may not have tests, or it may be piped to
+> /dev/null....
+>
+> But I've found it to be a helpful additional validation technique for
+> this series & others where I'm not as confident in the test coverage.
+
+Thanks for the tip! I hadn't considered trying this, but this makes a
+lot of sense. I can see this being even more useful for this series
+since it's supposed to be a faithful conversion of sh->c.
