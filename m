@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49EAFC433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B941C433FE
 	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 15:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241115AbiBOP76 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 10:59:58 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56066 "EHLO
+        id S241122AbiBOP77 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 10:59:59 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241084AbiBOP7y (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241088AbiBOP7y (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 15 Feb 2022 10:59:54 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5720BDE4C
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 07:59:41 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id h6so32894105wrb.9
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 07:59:41 -0800 (PST)
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95348BDE62
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 07:59:44 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id i14so32845370wrc.10
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 07:59:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WCRJGBzKu4QyjQLrcDwJxN00AqoRiU+DAZFB0l/UuiE=;
-        b=AJK0Y3RAkaqr7U4LjaZFuqc0XmlDNZApJq6JlT3PCeYob53uE38SIQYSbc14qxY22d
-         uagAo0W4Kox2s6V5uY6i2FOdtvwxGzypc3O4ZqA3+JlNHIY/2DVaxyGWd6hdxO8dNjgB
-         OzzEst/IFr/OkZAOev7S4sdngHHVjUVS8KyLmFbYwQPhzpLplTCJaOP3k+aaXXc7GDKl
-         zR+i7Cs3Xp/3GBCiC0YZrp06X65SclFdQGJKvO6UPqPAldHJRlt4InYukP6gKA+x289z
-         WqI+wWBv+S6dA1lXlwXKDFMb0hqCTWAtVQdG0WPjMev/IzbZcgzLbgv3pOuiWjTqIfRK
-         /Aew==
+        bh=rKlKildQJZ1+OIIunPCbX80u3V0q8AF3Opxe15VhUHs=;
+        b=JtoQxUs9HMe7PnmlVaEfws8HTjdy3W/2nOutTZd7c4s3ZJl0Wf4fHegy55g1Z6YE6m
+         RHjcYnnw+7XVGl3DGCEILpZ4mjPVDl3JwbeIed4KDfFmAkVF6JsPksuN+xdB4QlaxH7D
+         83p2xtj6C/lDuC7TO3G3FR8RPRCRuxdkn1k3LgUq6B/ISnADOJr71tKGHu0P4wc8sZMT
+         XnOdcb67V+ix7eT4NvT6AKAe5svgXgrMo+wRxNhzQ633QpJpz1gjS3cYHi9vAsNv4tl6
+         w1GAn+A7nPNsOjwChrbH7Wzo4hpCxXRjHouotFGHZyTOi5+KdoMAsnISzXoXcHA3mHA1
+         6STw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WCRJGBzKu4QyjQLrcDwJxN00AqoRiU+DAZFB0l/UuiE=;
-        b=YNMcIlBGBZYbvL8IDczrZF6gV1xDee45R0tSAPilom4a07cq6ecCpcwYkpaJhl1LCA
-         4lBV7gcq5S+jCFo+5XnQW7v7FzqBWwMv9yLfFcxQWv+gm4YeZTUb6IfE8TwvrI0MLaL3
-         g2TTXK1rWyGxtV5GW21f9DbIDe6XUIHaAIN1UwQ0SfUDdakQoSEI6/KAp/v+1a/Xl8oN
-         lWdA6vYfMhnR+F7fiMc8Gg2SBcrn6F96UbcEA/uSbHY679l/0F5tySo85l/zZX5jmvj3
-         YItkd6lRyZgux6IiK+biy2ceXHLbK5ZAGXSBoifg5OG9YL/Zy5LKsvEEhdLzy3K/ocX9
-         NBMA==
-X-Gm-Message-State: AOAM531wb3IyF18E0bvU3Qxwd41yDHBCBGmWpKlVVIOATEjpQRhe5x5R
-        +d0FQAEwTHgc/vY2woV4TKtgT+bMJvI=
-X-Google-Smtp-Source: ABdhPJxe5yC5R5mHlX+Q+uHYRkhZWMgqTtzrbE6Cwif1kJezhIOheIcuNMh+me6LarxjeSZNnYOzaw==
-X-Received: by 2002:adf:eed0:: with SMTP id a16mr3710084wrp.163.1644940780014;
-        Tue, 15 Feb 2022 07:59:40 -0800 (PST)
+        bh=rKlKildQJZ1+OIIunPCbX80u3V0q8AF3Opxe15VhUHs=;
+        b=osbYTC4rxzAnBhRp83lru54PT4MEioqea8718XGZw11YbuDI+A7OqMvV3CpTiYmK7U
+         FdL0FjV/v7VdyBFSoaBZLBBoDBwHuWQ+u8zpO6sobqoKoZqyqQZOJj5AZfnoFhK6wrjk
+         pDXIUvjVx4bzqFTY46NgHWcf0gqN0xb73V55lKy+pUk6Jd2r4i8kRR02z6rFE6q5hiIl
+         ++m/RqZYTi3GliVWGWwlPOnUkGIzb9Imx4tcZMaFQ41Jt3BkyvTdAy27FY4efJrP00My
+         nWmoL+IPsjQXS5//MYbnJQfPfRrHSmNFKFuBkaXj9nzmwmK4oDZK43BtCbGH+nzgB4b4
+         RoCQ==
+X-Gm-Message-State: AOAM530wkF9G9Rv0N3q1dhiNLIgFzFecGOxBZnMyIgikYrzztF/fiqjv
+        qBu2Jv7AIXVjEM1+cUCmMdaKbCMJs5o=
+X-Google-Smtp-Source: ABdhPJz8dfKuwyWyelRE9kXE413wkl9kdQjlSLYStNwx9L0RVAgqlCoWkXA3+EdVQrJKlAj12Qc0Tw==
+X-Received: by 2002:a5d:4c89:: with SMTP id z9mr3922987wrs.365.1644940783065;
+        Tue, 15 Feb 2022 07:59:43 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m8sm9688160wms.4.2022.02.15.07.59.39
+        by smtp.gmail.com with ESMTPSA id d14sm16623913wrv.50.2022.02.15.07.59.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Feb 2022 07:59:39 -0800 (PST)
-Message-Id: <9efdbe28223e371dc22b4ba32fc791729af5577a.1644940773.git.gitgitgadget@gmail.com>
+        Tue, 15 Feb 2022 07:59:42 -0800 (PST)
+Message-Id: <4e856d60e385d64158f17ec1226f97eb323bc55e.1644940774.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
 References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Feb 2022 15:59:14 +0000
-Subject: [PATCH 04/23] t/helper/fsmonitor-client: create stress test
+Date:   Tue, 15 Feb 2022 15:59:17 +0000
+Subject: [PATCH 07/23] fsmonitor-settings: virtual repos are incompatible with
+ FSMonitor
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,163 +67,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create a stress test to hammer on the fsmonitor daemon.
-Create a client-side thread pool of n threads and have
-each of them make m requests as fast as they can.
-
-NEEDSWORK: This is just the client-side thread pool and
-is useful for interactive testing and experimentation.
-We need to add a script test to drive this.
+Virtual repos, such as GVFS (aka VFS for Git), are incompatible
+with FSMonitor.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/helper/test-fsmonitor-client.c | 105 +++++++++++++++++++++++++++++++
- 1 file changed, 105 insertions(+)
+ compat/fsmonitor/fsm-settings-win32.c | 26 ++++++++++++++++++++++++++
+ fsmonitor-settings.c                  |  5 +++++
+ fsmonitor-settings.h                  |  1 +
+ t/t7519-status-fsmonitor.sh           |  9 +++++++++
+ 4 files changed, 41 insertions(+)
 
-diff --git a/t/helper/test-fsmonitor-client.c b/t/helper/test-fsmonitor-client.c
-index f7a5b3a32fa..9dd2f9af553 100644
---- a/t/helper/test-fsmonitor-client.c
-+++ b/t/helper/test-fsmonitor-client.c
-@@ -7,6 +7,8 @@
- #include "cache.h"
- #include "parse-options.h"
- #include "fsmonitor-ipc.h"
-+#include "thread-utils.h"
-+#include "trace2.h"
+diff --git a/compat/fsmonitor/fsm-settings-win32.c b/compat/fsmonitor/fsm-settings-win32.c
+index 176a6f5726c..7caa79570af 100644
+--- a/compat/fsmonitor/fsm-settings-win32.c
++++ b/compat/fsmonitor/fsm-settings-win32.c
+@@ -3,7 +3,33 @@
+ #include "repository.h"
+ #include "fsmonitor-settings.h"
  
- #ifndef HAVE_FSMONITOR_DAEMON_BACKEND
- int cmd__fsmonitor_client(int argc, const char **argv)
-@@ -79,20 +81,120 @@ static int do_send_flush(void)
- 	return 0;
- }
- 
-+struct hammer_thread_data
-+{
-+	pthread_t pthread_id;
-+	int thread_nr;
-+
-+	int nr_requests;
-+	const char *token;
-+
-+	int sum_successful;
-+	int sum_errors;
-+};
-+
-+static void *hammer_thread_proc(void *_hammer_thread_data)
-+{
-+	struct hammer_thread_data *data = _hammer_thread_data;
-+	struct strbuf answer = STRBUF_INIT;
-+	int k;
-+	int ret;
-+
-+	trace2_thread_start("hammer");
-+
-+	for (k = 0; k < data->nr_requests; k++) {
-+		strbuf_reset(&answer);
-+
-+		ret = fsmonitor_ipc__send_query(data->token, &answer);
-+		if (ret < 0)
-+			data->sum_errors++;
-+		else
-+			data->sum_successful++;
-+	}
-+
-+	strbuf_release(&answer);
-+	trace2_thread_exit();
-+	return NULL;
-+}
-+
 +/*
-+ * Start a pool of client threads that will each send a series of
-+ * commands to the daemon.
++ * GVFS (aka VFS for Git) is incompatible with FSMonitor.
 + *
-+ * The goal is to overload the daemon with a sustained series of
-+ * concurrent requests.
++ * Granted, core Git does not know anything about GVFS and we
++ * shouldn't make assumptions about a downstream feature, but users
++ * can install both versions.  And this can lead to incorrect results
++ * from core Git commands.  So, without bringing in any of the GVFS
++ * code, do a simple config test for a published config setting.  (We
++ * do not look at the various *_TEST_* environment variables.)
 + */
-+static int do_hammer(const char *token, int nr_threads, int nr_requests)
++static enum fsmonitor_reason is_virtual(struct repository *r)
 +{
-+	struct hammer_thread_data *data = NULL;
-+	int k;
-+	int sum_join_errors = 0;
-+	int sum_commands = 0;
-+	int sum_errors = 0;
++	const char *const_str;
 +
-+	if (!token || !*token)
-+		token = get_token_from_index();
-+	if (nr_threads < 1)
-+		nr_threads = 1;
-+	if (nr_requests < 1)
-+		nr_requests = 1;
++	if (!repo_config_get_value(r, "core.virtualfilesystem", &const_str))
++		return FSMONITOR_REASON_VIRTUAL;
 +
-+	CALLOC_ARRAY(data, nr_threads);
-+
-+	for (k = 0; k < nr_threads; k++) {
-+		struct hammer_thread_data *p = &data[k];
-+		p->thread_nr = k;
-+		p->nr_requests = nr_requests;
-+		p->token = token;
-+
-+		if (pthread_create(&p->pthread_id, NULL, hammer_thread_proc, p)) {
-+			warning("failed to create thread[%d] skipping remainder", k);
-+			nr_threads = k;
-+			break;
-+		}
-+	}
-+
-+	for (k = 0; k < nr_threads; k++) {
-+		struct hammer_thread_data *p = &data[k];
-+
-+		if (pthread_join(p->pthread_id, NULL))
-+			sum_join_errors++;
-+		sum_commands += p->sum_successful;
-+		sum_errors += p->sum_errors;
-+	}
-+
-+	fprintf(stderr, "HAMMER: [threads %d][requests %d] [ok %d][err %d][join %d]\n",
-+		nr_threads, nr_requests, sum_commands, sum_errors, sum_join_errors);
-+
-+	free(data);
-+
-+	/*
-+	 * TODO Decide if/when to return an error or call die().
-+	 */
-+	return 0;
++	return FSMONITOR_REASON_ZERO;
 +}
 +
- int cmd__fsmonitor_client(int argc, const char **argv)
+ enum fsmonitor_reason fsm_os__incompatible(struct repository *r)
  {
- 	const char *subcmd;
- 	const char *token = NULL;
-+	int nr_threads = 1;
-+	int nr_requests = 1;
- 
- 	const char * const fsmonitor_client_usage[] = {
- 		N_("test-helper fsmonitor-client query [<token>]"),
- 		N_("test-helper fsmonitor-client flush"),
-+		N_("test-helper fsmonitor-client hammer [<token>] [<threads>] [<requests>]"),
- 		NULL,
- 	};
- 
- 	struct option options[] = {
- 		OPT_STRING(0, "token", &token, N_("token"),
- 			   N_("command token to send to the server")),
++	enum fsmonitor_reason reason;
 +
-+		OPT_INTEGER(0, "threads", &nr_threads, N_("number of client threads")),
-+		OPT_INTEGER(0, "requests", &nr_requests, N_("number of requests per thread")),
++	reason = is_virtual(r);
++	if (reason)
++		return reason;
 +
- 		OPT_END()
- 	};
- 
-@@ -116,6 +218,9 @@ int cmd__fsmonitor_client(int argc, const char **argv)
- 	if (!strcmp(subcmd, "flush"))
- 		return !!do_send_flush();
- 
-+	if (!strcmp(subcmd, "hammer"))
-+		return !!do_hammer(token, nr_threads, nr_requests);
-+
- 	die("Unhandled subcommand: '%s'", subcmd);
+ 	return FSMONITOR_REASON_ZERO;
  }
- #endif
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index e445572354e..bb2ddd2457f 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -156,6 +156,11 @@ static void create_reason_message(struct repository *r,
+ 			      _("bare repos are incompatible with fsmonitor"));
+ 		return;
+ 
++	case FSMONITOR_REASON_VIRTUAL:
++		strbuf_addstr(buf_reason,
++			      _("virtual repos are incompatible with fsmonitor"));
++		return;
++
+ 	default:
+ 		BUG("Unhandled case in create_reason_message '%d'", s->reason);
+ 	}
+diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+index b52bf8edaf1..c169683bf2d 100644
+--- a/fsmonitor-settings.h
++++ b/fsmonitor-settings.h
+@@ -16,6 +16,7 @@ enum fsmonitor_mode {
+ enum fsmonitor_reason {
+ 	FSMONITOR_REASON_ZERO = 0,
+ 	FSMONITOR_REASON_BARE = 1,
++	FSMONITOR_REASON_VIRTUAL = 2,
+ };
+ 
+ void fsm_settings__set_ipc(struct repository *r);
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index 3c4e6f5f89c..d7540931a16 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -81,6 +81,15 @@ test_expect_success FSMONITOR_DAEMON 'run fsmonitor-daemon in bare repo' '
+ 	grep "bare repos are incompatible with fsmonitor" actual
+ '
+ 
++test_expect_success MINGW,FSMONITOR_DAEMON 'run fsmonitor-daemon in virtual repo' '
++	test_when_finished "rm -rf ./fake-virtual-clone actual" &&
++	git init fake-virtual-clone &&
++	test_must_fail git -C ./fake-virtual-clone \
++			   -c core.virtualfilesystem=true \
++			   fsmonitor--daemon run 2>actual &&
++	grep "virtual repos are incompatible with fsmonitor" actual
++'
++
+ test_expect_success 'setup' '
+ 	mkdir -p .git/hooks &&
+ 	: >tracked &&
 -- 
 gitgitgadget
 
