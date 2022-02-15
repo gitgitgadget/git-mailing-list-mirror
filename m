@@ -2,119 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F3C5C433FE
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 08:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26FCCC433EF
+	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 09:12:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235214AbiBOIye (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 03:54:34 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35552 "EHLO
+        id S235673AbiBOJMr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 04:12:47 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235202AbiBOIyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 03:54:32 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF501114FEC
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 00:54:21 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id m17so6036065edc.13
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 00:54:21 -0800 (PST)
+        with ESMTP id S233369AbiBOJMq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 04:12:46 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F1E1220DB
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 01:12:36 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id qk11so22405164ejb.2
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 01:12:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=9Ys/Nz3cgblY6R9CVA7a0sC3T+FBwkCpb9ejW5uM4zI=;
-        b=nP0JgYxZxypzAEa+4cRlaFR6f+N53ql9vah3iHrsEzbWQ1hz23lch2BUovawnPkztn
-         8pimCysUi1UktddBNAEDSGcq8uLd6EeTpmFb6AvQHC0xISmoF6Q0GZZF4dsbuFClSVVM
-         srka42+iKmlUPiNfmtI4RcUu8nrbqJVqtHaXvg8mELLPqK9SPXRwdLsbooEsRc78mUWn
-         MUL2yhLgp6Mrzu8cqZWgQnpzMb8PJpipsOo0G0vvrHbb5TvtEDKZ6AwjmIMRdLCHn644
-         hKuPs6zvoGT1scH11K+qDz21+H6u6K5N/Jr0W6EaOqAYzQEjRAvlvRmUCFwbhLjUdhQ8
-         QvVA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=n4Hw3cSOr/4GKw3vqjKb6MTNVo7gZVWdG9ibdNFAOBo=;
+        b=fZ3cY3sYDsG7KiuRzK5QMMXDzPycwQphPw9Tpkz3jO9bbTdRuYSzofQEUhB4eCQnqm
+         /ZDF+HRU+I0NtOXPhoaPpErbe8V3bO6B4zaTzWsX0o+h4XmPNCm//Jszoj5EWZ6Pkoa4
+         TwpYxQguAQYK12D8IkXPLtzyfT+F/jQDfTeGPS3dfJjoVl/Km2Oz0mGAdZD+zd2/O/Pk
+         TwTRyMXwdKpeXkJb44BqsG2AGRQtHZp5E7kkkK/Bv+4UaSR744kmmRDTFEzqQTe55J3R
+         En2tAYb7BNN+i3m6bfieHVhQMBEIUbW4JVcnQ1GnS/tU/aobWCO5B0C62CEf2Dp3s6Mw
+         oxsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=9Ys/Nz3cgblY6R9CVA7a0sC3T+FBwkCpb9ejW5uM4zI=;
-        b=bEMln2DFee9m14do+GRzRbhBJOT8IcAsE6g+ji6pOsyZdfZPdRnAEFDlFrIou6M0zw
-         q7rcIb+IlR9wcpHCSBNdWMmnE3qnu6KBNv4NvhZw8blrmysNirYHUj4kGAOgfmDAEI1p
-         oX7D76U1Mzg+S2OvmzoWy61wfhRgosNtSbtyZhyewbjMVmhG1Klyr4uo0QO7FnG/0K38
-         R8KOAPJC0mnQ6IckFdMP58nkfDoiUfn/fWb7emppaGAs4mZ8eneBvcfvu1z2uCnnR1nk
-         bNV8jz3HNUP4FjKm6sHlTYDdZdR6nEpR9PV1sCtWl3askXwHVEF3SU0ASW1DovzTwU0I
-         tqsg==
-X-Gm-Message-State: AOAM533uRGXqcS5d2/2msvO6hlRyr4LMODNhQkf3dXTkQQs38psBr2kZ
-        jMoPV/INw3R3jgq1cIiOzhn+sqnakv8=
-X-Google-Smtp-Source: ABdhPJwmkDWtUj8fFd+tewOVeDPhnkVt6CZ4q1K7yUbA/Vbs1nXjW/J3Q+uSKfY3OWU8XPqEayt10A==
-X-Received: by 2002:a05:6402:2987:: with SMTP id eq7mr2804612edb.330.1644915260198;
-        Tue, 15 Feb 2022 00:54:20 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id t12sm1802570ejd.27.2022.02.15.00.54.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Feb 2022 00:54:19 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nJtbG-002FH7-F4;
-        Tue, 15 Feb 2022 09:54:18 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v4 04/12] merge-tree: implement real merges
-Date:   Tue, 15 Feb 2022 09:46:54 +0100
-References: <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
- <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>
- <d7b51da94e65db79aa59ca331e178741d3c50bc2.1644698093.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <d7b51da94e65db79aa59ca331e178741d3c50bc2.1644698093.git.gitgitgadget@gmail.com>
-Message-ID: <220215.864k50y0g5.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=n4Hw3cSOr/4GKw3vqjKb6MTNVo7gZVWdG9ibdNFAOBo=;
+        b=kWEZw7BvWzy8EfYNmgXP9o4jWwqVP7jdamrAgCF3LWb5134H07HDJfQc4l7j3+ZbQK
+         ztnDpEI3Ul+GGJLHb/3tNJfmSqkxslz27kNwT3lmThvGHsr1Qg1aVbMXCyg2XMP4uwFp
+         ZH8o9cDE0RWDYM/hcusmpJS1OCgcKvDv3ACcmbAhCA+5K54ku4gzsS8swYXG5tJdYPeM
+         ynWD5TYo2uvnpLtlf3opgIaxJkjKxJIwv5GEjJShZXI+iZVXqEYDMlNzehmyGuJb0kgM
+         GVecLeUOTP6tT/AeB+GK0pFWgOu8P3r5nS5hNkmxNBjbGwsgcpt7i4taD+MC5K0IPKo1
+         47Gw==
+X-Gm-Message-State: AOAM531nMULDM2E//MvCCoVqjfJzRlLw0ELTUpGCaSFAjlLz1ZFawmTO
+        wsYTeIgC+j/lYg/PEjzgxenuC+RPZapRDZl0IHw5hLuK
+X-Google-Smtp-Source: ABdhPJwRrxPwnZprP4XS2gNwaHx0Txxw79lG/bKhyIsQtdPOyR9ECb/Y1SjNVnSKiozltM/DfjTyELCNQqKmYY8+hyw=
+X-Received: by 2002:a17:906:2811:: with SMTP id r17mr2150583ejc.31.1644916354901;
+ Tue, 15 Feb 2022 01:12:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1644565025.git.ps@pks.im> <682f16117b743bec59c533e15ae5a88d39250222.1644565025.git.ps@pks.im>
+In-Reply-To: <682f16117b743bec59c533e15ae5a88d39250222.1644565025.git.ps@pks.im>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 15 Feb 2022 10:12:23 +0100
+Message-ID: <CAP8UFD3Fc9315jsbTFNzGunLyrm0P=zDLda2F=7O_5+B-ZtBOA@mail.gmail.com>
+Subject: Re: [PATCH 6/6] fetch: make `--atomic` flag cover pruning of refs
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Feb 11, 2022 at 9:25 AM Patrick Steinhardt <ps@pks.im> wrote:
+>
+> When fetching with the `--prune` flag we will delete any local
+> references matching the fetch refspec which have disappeared on the
+> remote. This step is not currently covered by the `--atomic` flag: we
+> delete branches even though updating of local references has failed,
+> which means that the fetch is not an all-or-nothing operation.
 
-On Sat, Feb 12 2022, Elijah Newren via GitGitGadget wrote:
+It could perhaps be seen as a regression by some users though, if
+updating of local references doesn't work anymore when deleting a
+local reference matching the fetch refspec fails.
 
-> +# This test is ort-specific
-> +if test "${GIT_TEST_MERGE_ALGORITHM}" != "ort"
+> Fix this bug by passing in the global transaction into `prune_refs()`:
+> if one is given, then we'll only queue up deletions and not commit them
+> right away.
+>
+> This change also improves performance when pruning many branches in a
+> repository with a big packed-refs file: every references is pruned in
+> its own transaction, which means that we potentially have to rewrite
+> the packed-refs files for every single reference we're about to prune.
 
-Nit: Needless braces, left over from an earlier version where you used ${VAR:+...} ?
+Yeah, I wonder if there could be a performance improvement in the
+previous patch too as it looks like tag backfilling wasn't atomic too.
 
-> +test_expect_success 'Clean merge' '
-> +	git merge-tree --write-tree side1 side3 >RESULT &&
-> +	q_to_tab <<-EOF >expect &&
-> +	100644 blob $(git rev-parse side1:greeting)Qgreeting
-> +	100644 blob $(git rev-parse side1:numbers)Qsequence
-> +	100644 blob $(git rev-parse side1:whatever)Qwhatever
-> +	EOF
-> +
-> +	git ls-tree $(cat RESULT) >actual &&
+> The following benchmark demonstrates this: it performs a pruning fetch
+> from a repository with a single reference into a repository with 100k
+> references, which causes us to prune all but one reference. This is of
+> course a very artificial setup, but serves to demonstrate the impact of
+> only having to write the packed-refs file once:
+>
+>     Benchmark 1: git fetch --prune --atomic +refs/*:refs/* (HEAD~)
+>       Time (mean =C2=B1 =CF=83):      2.366 s =C2=B1  0.021 s    [User: 0=
+.858 s, System: 1.508 s]
+>       Range (min =E2=80=A6 max):    2.328 s =E2=80=A6  2.407 s    10 runs
+>
+>     Benchmark 2: git fetch --prune --atomic +refs/*:refs/* (HEAD)
+>       Time (mean =C2=B1 =CF=83):      1.369 s =C2=B1  0.017 s    [User: 0=
+.715 s, System: 0.641 s]
+>       Range (min =E2=80=A6 max):    1.346 s =E2=80=A6  1.400 s    10 runs
+>
+>     Summary
+>       'git fetch --prune --atomic +refs/*:refs/* (HEAD)' ran
+>         1.73 =C2=B1 0.03 times faster than 'git fetch --prune --atomic +r=
+efs/*:refs/* (HEAD~)'
 
-Nit: to avoid the "cat":
-
-    oid=$(git merge-tree ...) &&
-    [...]
-    git ls-tree $oid [...]
-
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'Content merge and a few conflicts' '
-> +	git checkout side1^0 &&
-> +	test_must_fail git merge side2 &&
-> +	expected_tree=$(cat .git/AUTO_MERGE) &&
-
-Let's do "git rev-parse AUTO_MERGE", to avoid needing REFFILES here.
-
-> [...]
-> +	# greeting should have a merge conflict
-> +	git show ${expected_tree}:greeting >tmp &&
-> +	cat tmp | sed -e s/HEAD/side1/ >expect &&
-
-Nit: More needless "cat", can just be: "sed ... <tmp >expect".
+Nice!
