@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79B9CC433EF
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 06:19:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E048DC433F5
+	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 06:43:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232750AbiBOGTq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 01:19:46 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47004 "EHLO
+        id S232564AbiBOGng (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 01:43:36 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiBOGTp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 01:19:45 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC71109A66
-        for <git@vger.kernel.org>; Mon, 14 Feb 2022 22:19:32 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id p9so19126975ejd.6
-        for <git@vger.kernel.org>; Mon, 14 Feb 2022 22:19:31 -0800 (PST)
+        with ESMTP id S229556AbiBOGng (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 01:43:36 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA775C24A3
+        for <git@vger.kernel.org>; Mon, 14 Feb 2022 22:43:26 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id h18so8194572edb.7
+        for <git@vger.kernel.org>; Mon, 14 Feb 2022 22:43:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=tlyvvNjLr0KguvayQx5ovFvMRUkUrfa/YnBD8RNtYEo=;
-        b=RQAgUsn5nWeET5AhGafymnh7J4o8pE1pygX7kUZPhs8dic18sFEFqva/xnxum4Al0o
-         4qVb3RWdP3DfD6x5ONx0xrICi3d+7/QdMquDVyrn2DzHtL3b3IfC+E7KCmSWyP11lmBY
-         G0fXvz4zZaBrazxtWb4L/qqxBnQdXSM2tFGQmYbyUp3JstUtWOu/q7wJLy0lemfKc68+
-         I6F6qpR+Zxvb/kOGP3htnfEflg8tR1Sh5B1F8Kt9CaFLEXS0ctLdTslNiyb/7Hot5EOF
-         M8n8B5T0HbeGI4Wi9/wT+Gj+IGRhS7/6KBTVYs+H6V9GYEz6mOKLaoXMNiWyo65oB1u9
-         ZJ6w==
+        bh=cJ3iyu7BedDuxl1EejJvuJvWdxiFWUpxke6eI0e6YYQ=;
+        b=VkbfiABDF6Wq1Qbk86rwDaEKr1sqMdLf1yF9+LuGXRzDHjx0b8YJNdvjc1KghVKy+D
+         oegpDjFGFM2ytjpvGx0qlkUHmiFZWQiIe6edzPzOubIol57kRDtQ//eQZOZlMp9xSL0h
+         CmEon7iTf1j+oOcT5ZGURcB4reGlPOMgwMQngWZeGcTA1M/Lbbo7JQRz0nDYjjypAdZL
+         imGutfgt5DdLDOb7RVFoFfOmwPZxbf1rK5ekOcfBENnZRvmftSutamZQACw7cHDyaY5L
+         xhVWUwFWhKkzbwEAB84S9M3oje1xqr0tQU5M0gRylSmYv6lhT++KecfBVYqs26FKhrnN
+         RX8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=tlyvvNjLr0KguvayQx5ovFvMRUkUrfa/YnBD8RNtYEo=;
-        b=dV3tRddwIVQaTy14fX68QIxF8h/Amcn9jawTWXWc5ZDKXabZYddeU3LO7lGRxmm5zw
-         FLnatyX1ObFVF0aspmuar1B07+C2Bf42dJijKyhhL5gzhrz6uNQ7El4sV0qA9xSrjM7G
-         ldXlMxheFOGpnbPf+ungzYnDsdYVLa8xfl+P1/Cxhr9w1TCG1AVOqGKt/ObGVpAqbGVQ
-         PzNVMR+TZv516a9nEhf7fqr+eJ1qLwvWTHFu4Cw50Aw4CDV9M5hg9854u1Yvgi7djbZe
-         qIyXe/AsyjfdzsZqPrPztIfNk0boUk/JIsEy7owwTOH7hbespaSUoQlHQYIctPqXWsMC
-         jAGQ==
-X-Gm-Message-State: AOAM531BAZrwZVsRdIHdZzaBVkRF18qebK6bS4EXL2ZGb/eYqsffsmCV
-        Blj3ZZJ190hWDNIQip4Ba1spUG3Ugd0ZVx2nygzJhlDDRmA=
-X-Google-Smtp-Source: ABdhPJydUT+YJBsHXNW9ojHbX6J4WP4qcRDW6snUh1879SVaCQKHRdW6A0+jqLdG/LxyD/zKLOhANdseDaduXkYZIhI=
-X-Received: by 2002:a17:906:4fc5:: with SMTP id i5mr1678897ejw.729.1644905970335;
- Mon, 14 Feb 2022 22:19:30 -0800 (PST)
+        bh=cJ3iyu7BedDuxl1EejJvuJvWdxiFWUpxke6eI0e6YYQ=;
+        b=OxefoTnsJ8KvtT96kHgPEgtNU1zJc0f3ymu6wK/y4LkwczuvKRs3QPc/ixbnUXgwtx
+         sslg5zsMsiZTdvE+FTQil+XCDdsC9OU0bm6izvAaqb9Dzrzs0ICxjSPs5fuNJvHSFjQK
+         j6ifam1MVc0AcAtO4YWeVLR7GQubwWH9TSaSy+ZRaMGRBkth6uEwCkrmW6ygJT6ITPIX
+         f8kfo36FbYCqBx/TAy1rzn+9ktm0SsZNnrKGWcYYlH8Af7HBNsTnxyRBT/19gzUuPVaU
+         aW0th2lmX77Eri+bZpsWNDLQkZrswP/9j1Bx2omiMqxiQ1Rb8CXcvSYc8NPPFAB9Y1uy
+         +heg==
+X-Gm-Message-State: AOAM532QMAOu3KzYfWWMDu+/XC59JDTDaCPWI0PqrCf/cykXwsKoKxUX
+        XVdFSF0qfkTUU8nalXHGcDdyxG7yJ2kpIrpl/fY=
+X-Google-Smtp-Source: ABdhPJxrFtQu68g2+7YBmEyoDyn6Z7pYrseT5zzwsi2+X0bCLeiOpY4aDx53BSKzQC0EzU247rYoqOm28eiXcO4DWfI=
+X-Received: by 2002:a05:6402:2989:: with SMTP id eq9mr2410688edb.51.1644907405362;
+ Mon, 14 Feb 2022 22:43:25 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1644565025.git.ps@pks.im> <e133c14f569116156bbd3e0ca4874e8eb54b76b8.1644565025.git.ps@pks.im>
-In-Reply-To: <e133c14f569116156bbd3e0ca4874e8eb54b76b8.1644565025.git.ps@pks.im>
+References: <cover.1644565025.git.ps@pks.im> <64c94e7a28d83fbaa1b6308b034d07c7be10e767.1644565025.git.ps@pks.im>
+In-Reply-To: <64c94e7a28d83fbaa1b6308b034d07c7be10e767.1644565025.git.ps@pks.im>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 15 Feb 2022 07:19:19 +0100
-Message-ID: <CAP8UFD2HswmXhqYTAMxQ0iYFtsErMS=DB18iv52Ujs=cAW9ytw@mail.gmail.com>
-Subject: Re: [PATCH 1/6] fetch: increase test coverage of fetches
+Date:   Tue, 15 Feb 2022 07:43:14 +0100
+Message-ID: <CAP8UFD3RpeMcfTDV89gRjhaOsjjbPv3x_pFPqF-gO4Kpv51VtQ@mail.gmail.com>
+Subject: Re: [PATCH 2/6] fetch: backfill tags before setting upstream
 To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -57,107 +57,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 11, 2022 at 8:38 PM Patrick Steinhardt <ps@pks.im> wrote:
+On Fri, Feb 11, 2022 at 5:12 PM Patrick Steinhardt <ps@pks.im> wrote:
 >
-> The `--atomic` flag is missing test coverage for pruning of deleted
-> references and backfilling of tags, and of course both aren't covered
-> correctly by this flag.
-
-It's not clear to me what "both aren't covered correctly by this flag"
-actually means here. If it means that pruning of deleted references
-and backfilling of tags don't work correctly when --atomic is used,
-then it could be stated more clearly. Otherwise this seems to just be
-repeating the first part of the sentence.
-
-> Furthermore, we don't have tests demonstrating
-> error cases for backfilling tags.
+> The fetch code flow is a bit hard to understand right now:
 >
-> Add tests to cover those testing gaps.
+>     1. We optionally prune all references which have vanished on the
+>        remote side.
+>     2. We fetch and update all other references locally.
+>     3. We update the upstream branch in the gitconfig.
+>     4. We backfill tags pointing into the history we have just fetched.
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> It is quite confusing that we fetch objects and update references in
+> both (2) and (4), which is further stressed by the point that we require
 
-> +test_expect_success 'atomic fetch with failing backfill' '
-> +       git init clone3 &&
+s/require/use/
+
+> a `skip` label which jumps from (3) to (4) in case we fail to update the
+
+s/`skip` label/`skip` goto label/
+s/which jumps/to jump/
+
+> gitconfig as expected.
+>
+> Reorder the code to first update all local references, and only after we
+> have done so update the upstream branch information. This improves the
+> code flow and furthermore makes it easier to refactor the way we update
+> references together.
+
+> @@ -1536,7 +1536,7 @@ static void backfill_tags(struct transport *transport, struct ref *ref_map,
+>  static int do_fetch(struct transport *transport,
+>                     struct refspec *rs)
+>  {
+> -       struct ref *ref_map;
+> +       struct ref *ref_map = NULL;
+>         int autotags = (transport->remote->fetch_tags == 1);
+>         int retcode = 0;
+>         const struct ref *remote_refs;
+> @@ -1618,11 +1618,22 @@ static int do_fetch(struct transport *transport,
+>                 }
+>         }
+>         if (fetch_and_consume_refs(transport, ref_map, worktrees)) {
+> -               free_refs(ref_map);
+>                 retcode = 1;
+>                 goto cleanup;
+>         }
+>
+> +       /* if neither --no-tags nor --tags was specified, do automated tag
+> +        * following ... */
+
+Maybe while at it this could be changed to use our usual style for
+multi-line comments:
+
+       /*
+        * If neither --no-tags nor --tags was specified, do automated tag
+        * following...
+        */
+
+> +       if (tags == TAGS_DEFAULT && autotags) {
+> +               struct ref *tags_ref_map = NULL, **tail = &tags_ref_map;
 > +
-> +       # We want to test whether a failure when backfilling tags correctly
-> +       # aborts the complete transaction when `--atomic` is passed: we should
-> +       # neither create the branch nor should we create the tag when either
-> +       # one of both fails to update correctly.
-> +       #
-> +       # To trigger failure we simply abort when backfilling a tag.
-> +       write_script clone3/.git/hooks/reference-transaction <<-\EOF &&
-> +               #!/bin/sh
+> +               find_non_local_tags(remote_refs, &tags_ref_map, &tail);
+> +               if (tags_ref_map)
+> +                       backfill_tags(transport, tags_ref_map, worktrees);
 > +
-> +               while read oldrev newrev reference
-> +               do
-> +                       if test "$reference" = refs/tags/tag1
-> +                       then
-> +                               exit 1
-> +                       fi
-> +               done
-> +       EOF
-> +
-> +       test_must_fail git -C clone3 fetch --atomic .. $B:refs/heads/something &&
-> +
-> +       # Creation of the tag has failed, so ideally refs/heads/something
-> +       # should not exist. The fact that it does is demonstrates that there is
+> +               free_refs(tags_ref_map);
+> +       }
 
-s/The fact that it does is demonstrates/The fact that it does demonstrates/
+> @@ -1676,21 +1687,9 @@ static int do_fetch(struct transport *transport,
+>                                   "you need to specify exactly one branch with the --set-upstream option"));
+>                 }
+>         }
+> -skip:
 
-> +       # missing coverage in the `--atomic` flag.
-
-Maybe s/missing coverage/a bug/ would make things clearer.
-
-> +       test $B = "$(git -C clone3 rev-parse --verify refs/heads/something)"
-> +'
-
-As this patch series is about fixing buggy parts of the behavior with
---atomic, I think it would make more sense to use test_expect_failure,
-instead of test_expect_success, in this test, and to check that we
-have the correct behavior, instead of checking that we have the buggy
-behavior.
-
-Of course when later in this patch series the buggy behavior is fixed,
-then test_expect_failure should be replaced with test_expect_success.
-
-> +test_expect_success 'atomic fetch with backfill should use single transaction' '
-> +       git init clone4 &&
-> +
-> +       # Fetching with the `--atomic` flag should update all references in a
-> +       # single transaction, including backfilled tags. We thus expect to see
-> +       # a single reference transaction for the created branch and tags.
-> +       cat >expected <<-EOF &&
-> +               prepared
-> +               $ZERO_OID $B refs/heads/something
-> +               $ZERO_OID $S refs/tags/tag2
-> +               committed
-> +               $ZERO_OID $B refs/heads/something
-> +               $ZERO_OID $S refs/tags/tag2
-> +               prepared
-> +               $ZERO_OID $T refs/tags/tag1
-> +               committed
-> +               $ZERO_OID $T refs/tags/tag1
-> +       EOF
-
-The comment says that we expect to see a single reference transaction,
-but the expected file we create seems to show 2 transactions. So I
-think here too, we should use test_expect_failure, instead of
-test_expect_success, and check that we have the correct behavior
-instead of a buggy one.
-
-> +       write_script clone4/.git/hooks/reference-transaction <<-\EOF &&
-
-Here there is no #!/bin/sh while other uses of write_script in your
-patch have it. If it's not necessary, it could be removed in the other
-uses.
-
-> +               ( echo "$*" && cat ) >>actual
-> +       EOF
-> +
-> +       git -C clone4 fetch --atomic .. $B:refs/heads/something &&
-> +       test_cmp expected clone4/actual
-> +'
-
-I took a quick look at the 2 other tests after this one, and I think
-test_expect_failure should be used there too, instead of
-test_expect_success.
+I like that it's removing one goto label and making the code simpler.
