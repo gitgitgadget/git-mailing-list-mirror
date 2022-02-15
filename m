@@ -2,143 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE3B5C433F5
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 08:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F3C5C433FE
+	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 08:54:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235484AbiBOIc6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 03:32:58 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38408 "EHLO
+        id S235214AbiBOIye (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 03:54:34 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235468AbiBOIcw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 03:32:52 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A86FC3313
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 00:32:32 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id q7so30644922wrc.13
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 00:32:32 -0800 (PST)
+        with ESMTP id S235202AbiBOIyc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 03:54:32 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF501114FEC
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 00:54:21 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id m17so6036065edc.13
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 00:54:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ZH+9Cxv/6UJbd1oWmz8Bh/o11mstupjqCb9ozi3qAfo=;
-        b=hj/PKsHTvb+Bq6sJWH4Iz6evIXl84smJdAwhng02PORXXMgyoeYVljCD4QcILZUbdO
-         AbLxB+zd5n0zF9B+nL+hUg2EnuZaaHMDl5pGe8aWOKypUKZyOJ4VVAVdFJzrwsvJaT1y
-         Kk6NF6DVUZhL1EMFaCu89hrEZomQRccwYUkqiJ4P4wfVPPUlhxVVKyfvjUbqKEwHvsu9
-         MJ0IdbfVg/X0/pbJm7FHOqOBd912A2/ALHIrbyoVcwwNpWopjPIUpxiFxOb3s3rJufR5
-         BGsjE1DHL+d5S1uRO7gLRs5ym4GWCzf/h4HxCl4FXM+oSZFnF1fNsUQsG73vHoPvRQt8
-         VT/Q==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=9Ys/Nz3cgblY6R9CVA7a0sC3T+FBwkCpb9ejW5uM4zI=;
+        b=nP0JgYxZxypzAEa+4cRlaFR6f+N53ql9vah3iHrsEzbWQ1hz23lch2BUovawnPkztn
+         8pimCysUi1UktddBNAEDSGcq8uLd6EeTpmFb6AvQHC0xISmoF6Q0GZZF4dsbuFClSVVM
+         srka42+iKmlUPiNfmtI4RcUu8nrbqJVqtHaXvg8mELLPqK9SPXRwdLsbooEsRc78mUWn
+         MUL2yhLgp6Mrzu8cqZWgQnpzMb8PJpipsOo0G0vvrHbb5TvtEDKZ6AwjmIMRdLCHn644
+         hKuPs6zvoGT1scH11K+qDz21+H6u6K5N/Jr0W6EaOqAYzQEjRAvlvRmUCFwbhLjUdhQ8
+         QvVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZH+9Cxv/6UJbd1oWmz8Bh/o11mstupjqCb9ozi3qAfo=;
-        b=L6HURZUw3oQkq5WnLM7Aeutw8pP/lHF5GnRfDhVt5N+HiCC4kH5oBUU7Zo3qq5JQ+U
-         tKPqswZAePwsKH1MIKueyz/wsPvlIRV1uIHgeqp5QIS+uSiOu3f7FqaKrTv6G6EZjzBO
-         aIfO9pSuYrWh+v0Vr2119TaUJ8VccU3mWlgZqGl0LPW30Yjpnmgsxr/m2AP/xl48U6vJ
-         HcgCEVEr+3S18E/BUtyJUgw51oeh8aRjFUYp1lnfe7duVKlF/hOg2E8Z3c8vv8bcvwyz
-         RGx9ru4u4dL4UqdLyoKqa8lGBjKiGig7h9FRetlDDK2PxwsGf1I7XKlyecTIuU7Exz43
-         R3Gg==
-X-Gm-Message-State: AOAM532MWbKS9FchCXxrxKT1zvAhVOwtvcyrms2sGNHVPZCl/Es3IPHU
-        u+GxYzcrSTMX/t7le0nn0DcjPi17pdk=
-X-Google-Smtp-Source: ABdhPJzeOtvco1Dt3on0THjMLXNLJzrVRWWzm3HrhGWYRqBDkRhjq4YQOPeh2epywrEKesPML764rQ==
-X-Received: by 2002:adf:cd0f:: with SMTP id w15mr2164868wrm.335.1644913950481;
-        Tue, 15 Feb 2022 00:32:30 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b16sm17128780wmj.32.2022.02.15.00.32.29
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=9Ys/Nz3cgblY6R9CVA7a0sC3T+FBwkCpb9ejW5uM4zI=;
+        b=bEMln2DFee9m14do+GRzRbhBJOT8IcAsE6g+ji6pOsyZdfZPdRnAEFDlFrIou6M0zw
+         q7rcIb+IlR9wcpHCSBNdWMmnE3qnu6KBNv4NvhZw8blrmysNirYHUj4kGAOgfmDAEI1p
+         oX7D76U1Mzg+S2OvmzoWy61wfhRgosNtSbtyZhyewbjMVmhG1Klyr4uo0QO7FnG/0K38
+         R8KOAPJC0mnQ6IckFdMP58nkfDoiUfn/fWb7emppaGAs4mZ8eneBvcfvu1z2uCnnR1nk
+         bNV8jz3HNUP4FjKm6sHlTYDdZdR6nEpR9PV1sCtWl3askXwHVEF3SU0ASW1DovzTwU0I
+         tqsg==
+X-Gm-Message-State: AOAM533uRGXqcS5d2/2msvO6hlRyr4LMODNhQkf3dXTkQQs38psBr2kZ
+        jMoPV/INw3R3jgq1cIiOzhn+sqnakv8=
+X-Google-Smtp-Source: ABdhPJwmkDWtUj8fFd+tewOVeDPhnkVt6CZ4q1K7yUbA/Vbs1nXjW/J3Q+uSKfY3OWU8XPqEayt10A==
+X-Received: by 2002:a05:6402:2987:: with SMTP id eq7mr2804612edb.330.1644915260198;
+        Tue, 15 Feb 2022 00:54:20 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id t12sm1802570ejd.27.2022.02.15.00.54.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Feb 2022 00:32:30 -0800 (PST)
-Message-Id: <286c22e5ecdd1e19cc4ca53126b2616085de6133.1644913943.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1118.v2.git.1644913943.gitgitgadget@gmail.com>
-References: <pull.1118.git.1644712797.gitgitgadget@gmail.com>
-        <pull.1118.v2.git.1644913943.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 15 Feb 2022 08:32:23 +0000
-Subject: [PATCH v2 6/6] sparse-checkout: reject arguments in cone-mode that
- look like patterns
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
+        Tue, 15 Feb 2022 00:54:19 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nJtbG-002FH7-F4;
+        Tue, 15 Feb 2022 09:54:18 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
         Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 04/12] merge-tree: implement real merges
+Date:   Tue, 15 Feb 2022 09:46:54 +0100
+References: <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
+ <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>
+ <d7b51da94e65db79aa59ca331e178741d3c50bc2.1644698093.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <d7b51da94e65db79aa59ca331e178741d3c50bc2.1644698093.git.gitgitgadget@gmail.com>
+Message-ID: <220215.864k50y0g5.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
 
-In sparse-checkout add/set under cone mode, the arguments passed are
-supposed to be directories rather than gitignore-style patterns.
-However, given the amount of effort spent in the manual discussing
-patterns, it is easy for users to assume they need to pass patterns such
-as
-   /foo/*
-or
-   !/bar/*/
-or perhaps they really do ignore the directory rule and specify a
-random gitignore-style pattern like
-   *.c
+On Sat, Feb 12 2022, Elijah Newren via GitGitGadget wrote:
 
-To help catch such mistakes, throw an error if any of the positional
-arguments:
-  * starts with any of '/!'
-  * contains any of '*\?[]'
+> +# This test is ort-specific
+> +if test "${GIT_TEST_MERGE_ALGORITHM}" != "ort"
 
-Inform users they can pass --skip-checks if they have a directory that
-really does have such special characters in its name.
+Nit: Needless braces, left over from an earlier version where you used ${VAR:+...} ?
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/sparse-checkout.c          | 16 ++++++++++++++--
- t/t1091-sparse-checkout-builtin.sh |  2 +-
- 2 files changed, 15 insertions(+), 3 deletions(-)
+> +test_expect_success 'Clean merge' '
+> +	git merge-tree --write-tree side1 side3 >RESULT &&
+> +	q_to_tab <<-EOF >expect &&
+> +	100644 blob $(git rev-parse side1:greeting)Qgreeting
+> +	100644 blob $(git rev-parse side1:numbers)Qsequence
+> +	100644 blob $(git rev-parse side1:whatever)Qwhatever
+> +	EOF
+> +
+> +	git ls-tree $(cat RESULT) >actual &&
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 74d64ada9f9..a30c77e7a1a 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -710,10 +710,22 @@ static void sanitize_paths(int argc, const char **argv,
- 	if (skip_checks)
- 		return;
- 
--	if (!core_sparse_checkout_cone)
--		for (i = 0; i < argc; i++)
-+	for (i = 0; i < argc; i++) {
-+		if (core_sparse_checkout_cone) {
-+			if (argv[i][0] == '/')
-+				die(_("specify directories rather than patterns (no leading slash)"));
-+			if (argv[i][0] == '!')
-+				die(_("specify directories rather than patterns.  If your directory starts with a '!', pass --skip-checks"));
-+			if (strchr(argv[i], '*') ||
-+			    strchr(argv[i], '?') ||
-+			    strchr(argv[i], '[') ||
-+			    strchr(argv[i], ']'))
-+				die(_("specify directories rather than patterns.  If your directory really has any of '*?[]' in it, pass --skip-checks"));
-+		} else {
- 			if (argv[i][0] == '#')
- 				die(_("paths beginning with a '#' must be preceeded by a backslash"));
-+		}
-+	}
- 
- 	for (i = 0; i < argc; i++) {
- 		struct cache_entry *ce;
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 3c811724d5d..72157fc6f1f 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -673,7 +673,7 @@ test_expect_success BSLASHPSPEC 'pattern-checks: escaped characters' '
- 	git -C escaped reset --hard $COMMIT &&
- 	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist" zglob[!a]? &&
- 	git -C escaped sparse-checkout init --cone &&
--	git -C escaped sparse-checkout set zbad\\dir/bogus "zdoes*not*exist" "zdoes*exist" "zglob[!a]?" &&
-+	git -C escaped sparse-checkout set --skip-checks zbad\\dir/bogus "zdoes*not*exist" "zdoes*exist" "zglob[!a]?" &&
- 	cat >expect <<-\EOF &&
- 	/*
- 	!/*/
--- 
-gitgitgadget
+Nit: to avoid the "cat":
+
+    oid=$(git merge-tree ...) &&
+    [...]
+    git ls-tree $oid [...]
+
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'Content merge and a few conflicts' '
+> +	git checkout side1^0 &&
+> +	test_must_fail git merge side2 &&
+> +	expected_tree=$(cat .git/AUTO_MERGE) &&
+
+Let's do "git rev-parse AUTO_MERGE", to avoid needing REFFILES here.
+
+> [...]
+> +	# greeting should have a merge conflict
+> +	git show ${expected_tree}:greeting >tmp &&
+> +	cat tmp | sed -e s/HEAD/side1/ >expect &&
+
+Nit: More needless "cat", can just be: "sed ... <tmp >expect".
