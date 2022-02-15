@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79E85C433EF
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 17:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F009AC433F5
+	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 17:24:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242475AbiBORYH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 12:24:07 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60372 "EHLO
+        id S242481AbiBORYK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 12:24:10 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242465AbiBORYC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 12:24:02 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36BDCDA85E
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 09:23:52 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id gj12-20020a17090b108c00b001b89b5f3dd4so2894544pjb.6
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 09:23:52 -0800 (PST)
+        with ESMTP id S242476AbiBORYF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 12:24:05 -0500
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8CE4DB4BD
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 09:23:54 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id i205-20020a2522d6000000b00622c778ac7cso14651554ybi.3
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 09:23:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=aYnNqElXZZv/TrOWzr/fEOBK7uQ0ce/iC+53j9ReqQw=;
-        b=WtoqbW6v20058XfIOJ7oKCMUwiMPMuC9mVPNfKiqw8TK/6yx+GdOeerlENFEYz73UE
-         GoAWONb7GwVU3v4IaiE8x+Us1OhEqVByvDD3Z9j6h2A3NOv2kPg5mMpIL32qh1M1HzFS
-         lQoFsQrMVRCAaCQANNYpN4VnB5jcDXhhruGYS/J3tuOzmirDsNTJlsbFnv5vyjFLE7jE
-         L6CSDqMVkppqfpDPbPjctsi75nlSNqIeOGyCD56FGzwknQeggfj1cw/rTAv63SaLmGxF
-         VwRZwMj9ehsXGqMTRETDO03ZWTGCiNq6rUNAS916IwQOcntoyN4jXWEc5EfMG3zkLNAv
-         gxSA==
+        bh=3zCaOJUSDmEdWokesmEQSHK4M8N82lefIJd6zevwVPs=;
+        b=OpRBRe+HHmRvSGg+JydPLjAgsYkvK9IxI6Svs7KO44rO/tApCglpD6IVtYMm77a19X
+         Q1J4JSpOngEQyEp+h3bEAvi0VGxiJSXlZjCAPxMhJuxQ0jJxUGJTOALLylKC68ivdXS4
+         QD4JOr5AH/CzwgRYiWvmSZrHUjMUXuZMnsJ0c+7pxhP2UfmebDxUQ2JRzvdDQhCK23nU
+         r4ecYrOw5R2EElQDUXv4jrZF1vF8ORJ7pJGKmGB9/d8ddWbmTtlyTB1XHcacXfXWNlxJ
+         LOssJflq+yiaF+zOFsKI4PXQHVcdsRkclSYU49icDXD68hIeadj5e5gP8nEGbwVrjvyp
+         4D4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=aYnNqElXZZv/TrOWzr/fEOBK7uQ0ce/iC+53j9ReqQw=;
-        b=BmpqERnRXzpRLlgrKRN3LSOBDg1eHj+fhIUX9buP6/8RDxgVoW904TrNpwArcKESf7
-         dGXsq+JYBMMLUUHmqGVcOCrAdMjLihaTTIF3Azz7uMBs9IDSPTSL/RXMgmJXe4Ttrwbf
-         i5qHIszqENiLMkhMndtgg4UfK6nr2wSd1zOBLfRGf89iiOYEjLuZ8lpakSkT2LypqXNV
-         AQaGlI714tWCq10F8Ziy7ICqZZm1QO2hWiOWXjS4qt6or8bDfnjtHuGJeOWaCBXl4Biy
-         d+ESZy1tGmA97NthLBTOMKAH0lVYg3Rfh1FhPn8ltP2Eh4K4iLj0oWkl/XDd/HdB//lq
-         T/LA==
-X-Gm-Message-State: AOAM533xqNNqztfd7C3+OD2qTTesI9hMpzKIJSJeHdsp0me08+ev9Q1K
-        x6YLTeolhAP3f9rQaW6Df2o8UpJ17G/MMtYCCGCUfVu3BVDskwIgLpEmSIdsDsPH77Ec+EKmcd8
-        FfS6Wt13mx9HPDBKwd+IDtQNwqvVEg/CHpI4ke4Jlw7Y/C4DZyEw18zbf0O+/YNo=
-X-Google-Smtp-Source: ABdhPJx5aI7zZbj6aSVvgKhoKTG2o9ZFZyr2IWFQSrj416LMPfCvWacWfUyKDLV0lLpsFUKiS0q3wbG6VrePOA==
+        bh=3zCaOJUSDmEdWokesmEQSHK4M8N82lefIJd6zevwVPs=;
+        b=un/EsbAoUg8mIkjLZEopH0X+HBgj6wPbOyCJ/rm4WrBXd96rId0mQ5HKV6rBhT/7SZ
+         Jlw2JgQeaY/Ni0KhAHv85+b3wB8XpwtjhGYVKWKCHLut6YgYk3Cx2vlm8KmSRk9W7R39
+         opx7NwiZNEkzQyavAY4/s00BB+fxbKn4PF/RhG2wymyHn51DofxT+0cBfWfNw/SsNUsC
+         RAKCYYvQkH5QqoWT8a0rCPvYGvJ4HyAV0mPopLQcZ/GqufVH2HTouixfcaCaK6Kucl15
+         Mum2h1AdLAQ+6O4ppqG8lAzmRwo3uZfjG3Wg6+fAsnKAbD2h0QDPZ/c26Z2S7mE/Qwzv
+         Uv+A==
+X-Gm-Message-State: AOAM5319wsswhhJ3yf/9BJOBaYN1yxXmRbNPSdHOYsuM0ou5d60Kinay
+        NM7L1CsIsKOkFXP6ARD9FJnDOTQ14xsTQ9ONymqJniszSnT39uzKjr5tBnIr8JvxIWzTLeZS6w2
+        SV8w23hpER/UuyWYZ6R89G1LxkaSUfxaEz2pFUadUtuYnlaOPfF/0uw+zjoxqk3Y=
+X-Google-Smtp-Source: ABdhPJyGor97RmG8WpOK0FffZcOX5UT8V+aGrOY1MCulAWs+BqBxtlrLT5x4u8uXScd9vs0jzjUQI/icanIoRA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:2449:: with SMTP id
- d9mr2170129pfj.70.1644945831608; Tue, 15 Feb 2022 09:23:51 -0800 (PST)
-Date:   Wed, 16 Feb 2022 01:23:11 +0800
+ (user=chooglen job=sendgmr) by 2002:a25:904:: with SMTP id
+ 4mr2243422ybj.326.1644945833843; Tue, 15 Feb 2022 09:23:53 -0800 (PST)
+Date:   Wed, 16 Feb 2022 01:23:12 +0800
 In-Reply-To: <20220215172318.73533-1-chooglen@google.com>
-Message-Id: <20220215172318.73533-3-chooglen@google.com>
+Message-Id: <20220215172318.73533-4-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220210044152.78352-1-chooglen@google.com> <20220215172318.73533-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.265.g69c8d7142f-goog
-Subject: [PATCH v2 2/9] t5526: use grep to assert on fetches
+Subject: [PATCH v2 3/9] submodule: make static functions read submodules from commits
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -62,296 +62,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a previous commit, we replaced test_cmp invocations with
-verify_fetch_result(). Finish the process of removing test_cmp by using
-grep in verify_fetch_result() instead.
+A future commit will teach "fetch --recurse-submodules" to fetch
+unpopulated submodules. To prepare for this, teach the necessary static
+functions how to read submodules from superproject commits using a
+"treeish_name" argument (instead of always reading from the index and
+filesystem) but do not actually change where submodules are read from.
+Submodules will be read from commits when we fetch unpopulated
+submodules.
 
-This makes the tests less sensitive to changes because, instead of
-checking the whole stderr, we only grep for the lines of the form
-
-* "<old-head>..<new-head>\s+branch\s+-> origin/branch"
-* "Fetching submodule <submodule-path>" (if fetching a submodule)
-
-when we expect the repo to have fetched. If we expect the repo to not
-have fetched, grep to make sure the lines are absent. Also, simplify the
-assertions by using grep patterns that match only the relevant pieces of
-information, e.g. <old-head> is irrelevant because we only want to know
-if the fetch was performed, so we don't need to know where the branch
-was before the fetch.
+The changed function signatures follow repo_submodule_init()'s argument
+order, i.e. "path" then "treeish_name". Where needed, reorder the
+arguments of functions that already take "path" and "treeish_name" to be
+consistent with this convention.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- t/t5526-fetch-submodules.sh | 131 +++++++++++++-----------------------
- 1 file changed, 48 insertions(+), 83 deletions(-)
+ submodule.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 0e93df1665..cb18f0ac21 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -20,49 +20,52 @@ pwd=$(pwd)
- add_upstream_commit() {
- 	(
- 		cd submodule &&
--		head1=$(git rev-parse --short HEAD) &&
- 		echo new >> subfile &&
- 		test_tick &&
- 		git add subfile &&
- 		git commit -m new subfile &&
--		head2=$(git rev-parse --short HEAD) &&
--		echo "Fetching submodule submodule" > ../expect.err.sub &&
--		echo "From $pwd/submodule" >> ../expect.err.sub &&
--		echo "   $head1..$head2  sub        -> origin/sub" >> ../expect.err.sub
-+		git rev-parse --short HEAD >../subhead
- 	) &&
- 	(
- 		cd deepsubmodule &&
--		head1=$(git rev-parse --short HEAD) &&
- 		echo new >> deepsubfile &&
- 		test_tick &&
- 		git add deepsubfile &&
- 		git commit -m new deepsubfile &&
--		head2=$(git rev-parse --short HEAD) &&
--		echo "Fetching submodule submodule/subdir/deepsubmodule" > ../expect.err.deep
--		echo "From $pwd/deepsubmodule" >> ../expect.err.deep &&
--		echo "   $head1..$head2  deep       -> origin/deep" >> ../expect.err.deep
-+		git rev-parse --short HEAD >../deephead
- 	)
+diff --git a/submodule.c b/submodule.c
+index 5ace18a7d9..7032dcabb8 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -932,6 +932,7 @@ struct has_commit_data {
+ 	struct repository *repo;
+ 	int result;
+ 	const char *path;
++	const struct object_id *super_oid;
+ };
+ 
+ static int check_has_commit(const struct object_id *oid, void *data)
+@@ -940,7 +941,7 @@ static int check_has_commit(const struct object_id *oid, void *data)
+ 	struct repository subrepo;
+ 	enum object_type type;
+ 
+-	if (repo_submodule_init(&subrepo, cb->repo, cb->path, null_oid())) {
++	if (repo_submodule_init(&subrepo, cb->repo, cb->path, cb->super_oid)) {
+ 		cb->result = 0;
+ 		goto cleanup;
+ 	}
+@@ -968,9 +969,10 @@ static int check_has_commit(const struct object_id *oid, void *data)
+ 
+ static int submodule_has_commits(struct repository *r,
+ 				 const char *path,
++				 const struct object_id *super_oid,
+ 				 struct oid_array *commits)
+ {
+-	struct has_commit_data has_commit = { r, 1, path };
++	struct has_commit_data has_commit = { r, 1, path, super_oid };
+ 
+ 	/*
+ 	 * Perform a cheap, but incorrect check for the existence of 'commits'.
+@@ -1017,7 +1019,7 @@ static int submodule_needs_pushing(struct repository *r,
+ 				   const char *path,
+ 				   struct oid_array *commits)
+ {
+-	if (!submodule_has_commits(r, path, commits))
++	if (!submodule_has_commits(r, path, null_oid(), commits))
+ 		/*
+ 		 * NOTE: We do consider it safe to return "no" here. The
+ 		 * correct answer would be "We do not know" instead of
+@@ -1277,7 +1279,7 @@ static void calculate_changed_submodule_paths(struct repository *r,
+ 		if (!path)
+ 			continue;
+ 
+-		if (submodule_has_commits(r, path, commits)) {
++		if (submodule_has_commits(r, path, null_oid(), commits)) {
+ 			oid_array_clear(commits);
+ 			*name->string = '\0';
+ 		}
+@@ -1402,12 +1404,13 @@ static const struct submodule *get_non_gitmodules_submodule(const char *path)
  }
  
- # Verifies that the expected repositories were fetched. This is done by
--# concatenating the files expect.err.[super|sub|deep] in the correct
--# order and comparing it to the actual stderr.
-+# checking that the branches of [super|sub|deep] were updated to
-+# [super|sub|deep]head if the corresponding file exists.
- #
--# If a repo should not be fetched in the test, its corresponding
--# expect.err file should be rm-ed.
-+# If the [super|sub|deep] head file does not exist, this verifies that
-+# the corresponding repo was not fetched. Thus, if a repo should not be
-+# fetched in the test, its corresponding head file should be
-+# rm-ed.
- verify_fetch_result() {
- 	ACTUAL_ERR=$1 &&
--	rm -f expect.err.combined &&
--	if [ -f expect.err.super ]; then
--		cat expect.err.super >>expect.err.combined
-+	# Each grep pattern is guaranteed to match the correct repo
-+	# because each repo uses a different name for their branch i.e.
-+	# "super", "sub" and "deep".
-+	if [ -f superhead ]; then
-+		grep -E "\.\.$(cat superhead)\s+super\s+-> origin/super" $ACTUAL_ERR
-+	else
-+		! grep "super" $ACTUAL_ERR
- 	fi &&
--	if [ -f expect.err.sub ]; then
--		cat expect.err.sub >>expect.err.combined
-+	if [ -f subhead ]; then
-+		grep "Fetching submodule submodule" $ACTUAL_ERR &&
-+		grep -E "\.\.$(cat subhead)\s+sub\s+-> origin/sub" $ACTUAL_ERR
-+	else
-+		! grep "Fetching submodule submodule" $ACTUAL_ERR
- 	fi &&
--	if [ -f expect.err.deep ]; then
--		cat expect.err.deep >>expect.err.combined
--	fi &&
--	test_cmp expect.err.combined $ACTUAL_ERR
-+	if [ -f deephead ]; then
-+		grep "Fetching submodule submodule/subdir/deepsubmodule" $ACTUAL_ERR &&
-+		grep -E "\.\.$(cat deephead)\s+deep\s+-> origin/deep" $ACTUAL_ERR
-+	else
-+		! grep "Fetching submodule submodule/subdir/deepsubmodule" $ACTUAL_ERR
-+	fi
+ static struct fetch_task *fetch_task_create(struct repository *r,
+-					    const char *path)
++					    const char *path,
++					    const struct object_id *treeish_name)
+ {
+ 	struct fetch_task *task = xmalloc(sizeof(*task));
+ 	memset(task, 0, sizeof(*task));
+ 
+-	task->sub = submodule_from_path(r, null_oid(), path);
++	task->sub = submodule_from_path(r, treeish_name, path);
+ 	if (!task->sub) {
+ 		/*
+ 		 * No entry in .gitmodules? Technically not a submodule,
+@@ -1439,11 +1442,12 @@ static void fetch_task_release(struct fetch_task *p)
  }
  
- test_expect_success setup '
-@@ -274,13 +277,10 @@ test_expect_success "Recursion doesn't happen when no new commits are fetched in
- '
+ static struct repository *get_submodule_repo_for(struct repository *r,
+-						 const char *path)
++						 const char *path,
++						 const struct object_id *treeish_name)
+ {
+ 	struct repository *ret = xmalloc(sizeof(*ret));
  
- test_expect_success "Recursion stops when no new submodule commits are fetched" '
--	head1=$(git rev-parse --short HEAD) &&
- 	git add submodule &&
- 	git commit -m "new submodule" &&
--	head2=$(git rev-parse --short HEAD) &&
--	echo "From $pwd/." > expect.err.super &&
--	echo "   $head1..$head2  super      -> origin/super" >>expect.err.super &&
--	rm expect.err.deep &&
-+	git rev-parse --short HEAD >superhead &&
-+	rm deephead &&
- 	(
- 		cd downstream &&
- 		git fetch >../actual.out 2>../actual.err
-@@ -291,15 +291,12 @@ test_expect_success "Recursion stops when no new submodule commits are fetched"
+-	if (repo_submodule_init(ret, r, path, null_oid())) {
++	if (repo_submodule_init(ret, r, path, treeish_name)) {
+ 		free(ret);
+ 		return NULL;
+ 	}
+@@ -1464,7 +1468,7 @@ static int get_next_submodule(struct child_process *cp,
+ 		if (!S_ISGITLINK(ce->ce_mode))
+ 			continue;
  
- test_expect_success "Recursion doesn't happen when new superproject commits don't change any submodules" '
- 	add_upstream_commit &&
--	head1=$(git rev-parse --short HEAD) &&
- 	echo a > file &&
- 	git add file &&
- 	git commit -m "new file" &&
--	head2=$(git rev-parse --short HEAD) &&
--	echo "From $pwd/." > expect.err.super &&
--	echo "   $head1..$head2  super      -> origin/super" >> expect.err.super &&
--	rm expect.err.sub &&
--	rm expect.err.deep &&
-+	git rev-parse --short HEAD >superhead &&
-+	rm subhead &&
-+	rm deephead &&
- 	(
- 		cd downstream &&
- 		git fetch >../actual.out 2>../actual.err
-@@ -318,12 +315,9 @@ test_expect_success "Recursion picks up config in submodule" '
- 		)
- 	) &&
- 	add_upstream_commit &&
--	head1=$(git rev-parse --short HEAD) &&
- 	git add submodule &&
- 	git commit -m "new submodule" &&
--	head2=$(git rev-parse --short HEAD) &&
--	echo "From $pwd/." > expect.err.super &&
--	echo "   $head1..$head2  super      -> origin/super" >> expect.err.super &&
-+	git rev-parse --short HEAD >superhead &&
- 	(
- 		cd downstream &&
- 		git fetch >../actual.out 2>../actual.err &&
-@@ -345,20 +339,13 @@ test_expect_success "Recursion picks up all submodules when necessary" '
- 			git fetch &&
- 			git checkout -q FETCH_HEAD
- 		) &&
--		head1=$(git rev-parse --short HEAD^) &&
- 		git add subdir/deepsubmodule &&
- 		git commit -m "new deepsubmodule" &&
--		head2=$(git rev-parse --short HEAD) &&
--		echo "Fetching submodule submodule" > ../expect.err.sub &&
--		echo "From $pwd/submodule" >> ../expect.err.sub &&
--		echo "   $head1..$head2  sub        -> origin/sub" >> ../expect.err.sub
-+		git rev-parse --short HEAD >../subhead
- 	) &&
--	head1=$(git rev-parse --short HEAD) &&
- 	git add submodule &&
- 	git commit -m "new submodule" &&
--	head2=$(git rev-parse --short HEAD) &&
--	echo "From $pwd/." > expect.err.super &&
--	echo "   $head1..$head2  super      -> origin/super" >> expect.err.super &&
-+	git rev-parse --short HEAD >superhead &&
- 	(
- 		cd downstream &&
- 		git fetch >../actual.out 2>../actual.err
-@@ -376,13 +363,9 @@ test_expect_success "'--recurse-submodules=on-demand' doesn't recurse when no ne
- 			git fetch &&
- 			git checkout -q FETCH_HEAD
- 		) &&
--		head1=$(git rev-parse --short HEAD^) &&
- 		git add subdir/deepsubmodule &&
- 		git commit -m "new deepsubmodule" &&
--		head2=$(git rev-parse --short HEAD) &&
--		echo Fetching submodule submodule > ../expect.err.sub &&
--		echo "From $pwd/submodule" >> ../expect.err.sub &&
--		echo "   $head1..$head2  sub        -> origin/sub" >> ../expect.err.sub
-+		git rev-parse --short HEAD >../subhead
- 	) &&
- 	(
- 		cd downstream &&
-@@ -395,12 +378,9 @@ test_expect_success "'--recurse-submodules=on-demand' doesn't recurse when no ne
- '
+-		task = fetch_task_create(spf->r, ce->name);
++		task = fetch_task_create(spf->r, ce->name, null_oid());
+ 		if (!task)
+ 			continue;
  
- test_expect_success "'--recurse-submodules=on-demand' recurses as deep as necessary (and ignores config)" '
--	head1=$(git rev-parse --short HEAD) &&
- 	git add submodule &&
- 	git commit -m "new submodule" &&
--	head2=$(git rev-parse --short HEAD) &&
--	echo "From $pwd/." > expect.err.super &&
--	echo "   $head1..$head2  super      -> origin/super" >>expect.err.super &&
-+	git rev-parse --short HEAD >superhead &&
- 	(
- 		cd downstream &&
- 		git config fetch.recurseSubmodules false &&
-@@ -421,15 +401,12 @@ test_expect_success "'--recurse-submodules=on-demand' recurses as deep as necess
+@@ -1487,7 +1491,7 @@ static int get_next_submodule(struct child_process *cp,
+ 			continue;
+ 		}
  
- test_expect_success "'--recurse-submodules=on-demand' stops when no new submodule commits are found in the superproject (and ignores config)" '
- 	add_upstream_commit &&
--	head1=$(git rev-parse --short HEAD) &&
- 	echo a >> file &&
- 	git add file &&
- 	git commit -m "new file" &&
--	head2=$(git rev-parse --short HEAD) &&
--	echo "From $pwd/." > expect.err.super &&
--	echo "   $head1..$head2  super      -> origin/super" >> expect.err.super &&
--	rm expect.err.sub &&
--	rm expect.err.deep &&
-+	git rev-parse --short HEAD >superhead &&
-+	rm subhead &&
-+	rm deephead &&
- 	(
- 		cd downstream &&
- 		git fetch --recurse-submodules=on-demand >../actual.out 2>../actual.err
-@@ -445,13 +422,10 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' overrides global config
- 	) &&
- 	add_upstream_commit &&
- 	git config --global fetch.recurseSubmodules false &&
--	head1=$(git rev-parse --short HEAD) &&
- 	git add submodule &&
- 	git commit -m "new submodule" &&
--	head2=$(git rev-parse --short HEAD) &&
--	echo "From $pwd/." > expect.err.super &&
--	echo "   $head1..$head2  super      -> origin/super" >>expect.err.super &&
--	rm expect.err.deep &&
-+	git rev-parse --short HEAD >superhead &&
-+	rm deephead &&
- 	(
- 		cd downstream &&
- 		git config fetch.recurseSubmodules on-demand &&
-@@ -473,13 +447,10 @@ test_expect_success "'submodule.<sub>.fetchRecurseSubmodules=on-demand' override
- 	) &&
- 	add_upstream_commit &&
- 	git config fetch.recurseSubmodules false &&
--	head1=$(git rev-parse --short HEAD) &&
- 	git add submodule &&
- 	git commit -m "new submodule" &&
--	head2=$(git rev-parse --short HEAD) &&
--	echo "From $pwd/." > expect.err.super &&
--	echo "   $head1..$head2  super      -> origin/super" >>expect.err.super &&
--	rm expect.err.deep &&
-+	git rev-parse --short HEAD >superhead &&
-+	rm deephead &&
- 	(
- 		cd downstream &&
- 		git config submodule.submodule.fetchRecurseSubmodules on-demand &&
-@@ -499,15 +470,12 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
- 		cd submodule &&
- 		git checkout -q HEAD^^
- 	) &&
--	head1=$(git rev-parse --short HEAD) &&
- 	git add submodule &&
- 	git commit -m "submodule rewound" &&
--	head2=$(git rev-parse --short HEAD) &&
--	echo "From $pwd/." > expect.err.super &&
--	echo "   $head1..$head2  super      -> origin/super" >> expect.err.super &&
--	rm expect.err.sub &&
-+	git rev-parse --short HEAD >superhead &&
-+	rm subhead &&
- 	# This file does not exist, but rm -f for readability
--	rm -f expect.err.deep &&
-+	rm -f deephead &&
- 	(
- 		cd downstream &&
- 		git fetch >../actual.out 2>../actual.err
-@@ -526,14 +494,11 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' works also without .git
- 		git fetch --recurse-submodules
- 	) &&
- 	add_upstream_commit &&
--	head1=$(git rev-parse --short HEAD) &&
- 	git add submodule &&
- 	git rm .gitmodules &&
- 	git commit -m "new submodule without .gitmodules" &&
--	head2=$(git rev-parse --short HEAD) &&
--	echo "From $pwd/." >expect.err.super &&
--	echo "   $head1..$head2  super      -> origin/super" >>expect.err.super &&
--	rm expect.err.deep &&
-+	git rev-parse --short HEAD >superhead &&
-+	rm deephead &&
- 	(
- 		cd downstream &&
- 		rm .gitmodules &&
+-		task->repo = get_submodule_repo_for(spf->r, task->sub->path);
++		task->repo = get_submodule_repo_for(spf->r, task->sub->path, null_oid());
+ 		if (task->repo) {
+ 			struct strbuf submodule_prefix = STRBUF_INIT;
+ 			child_process_init(cp);
 -- 
 2.33.GIT
 
