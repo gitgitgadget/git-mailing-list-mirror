@@ -2,94 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 085FAC433EF
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 20:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 880C7C433EF
+	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 20:38:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242869AbiBOUfI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 15:35:08 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53114 "EHLO
+        id S244116AbiBOUiW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 15:38:22 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbiBOUfH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 15:35:07 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 154A8D76C2
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 12:34:57 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id y18so85741plb.11
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 12:34:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=h+8SDKzBvPSnZEzvspKX3BO2tlk/4EqZxU29S2KdXGw=;
-        b=pD1JjuhsemTc5nLZN8O2UKWeHxip1gvr7C8XhEyS1NFGDyEOnojAoYopvhaaSh9SeK
-         6oWwFbX/QO1wmQWfcv+GP+fjF9ZD+92JCbOeQlBaLJMaeh2qTB/XrPsaFG4XtTxG1LuL
-         SSAVKDdRKSDZs3MCrVkwdbNvdLXi8ZjaFlz5z2M0+G+DkI0D/eDgsLe9Hdb9V52Hlv3V
-         NX/K5K9G2AOpH04xI3gaRbTk+s2HmiUlcUtePjM4Sufm/muAYL52sX89dOsbiFaz3iVf
-         +8OHLzvlmUtSO7fhyMbMWfzhod6fYkQIe2ntea/edHuFj+uSgMEy8FHqBSGS7g6q66MU
-         h7uA==
+        with ESMTP id S234014AbiBOUiV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 15:38:21 -0500
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43712D76EC
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 12:38:11 -0800 (PST)
+Received: by mail-pf1-f177.google.com with SMTP id c4so234099pfl.7
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 12:38:11 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=h+8SDKzBvPSnZEzvspKX3BO2tlk/4EqZxU29S2KdXGw=;
-        b=ItxsCg3lDeqrPGkn63kBSt+eNqnYcGMn3k2oC7s6HRq/u17Pa3doUrE0mD68lj3EqM
-         thOflC0lgHNCuBRcqh7ubnenS1WdLEK531T+vDt+R4zYbvMxQoXoIWQlbz8IVxVvy2UG
-         GGEwfP2+xpzy2syj/K4h/ekGKI1OyVI6yAgfNHxrvb7CTlAKbBw8uCLLQUoDeKUW/KdV
-         cll2Oj4V2J0Qk0t12dvPqn9FhdW7OVbDt7R91rtR1D6ZHXK+g6Cyc1gY36lzaDooDNWG
-         EbbyqfBYpV+ECqt10byQu1qMuqex/BuOodjMiczUVrCaC5w0Z9sor/DzhkeRyMxmCX4d
-         lghg==
-X-Gm-Message-State: AOAM530YZR5V6Yk/t4mz8IPeVywg223Oz2ySaK7IFE2TmBZAqKQuQ31h
-        SZ0nMr64Uj8tNYMaGjjak8sV7O5HCY4yUQ==
-X-Google-Smtp-Source: ABdhPJzsvEs6oigOpxrtD0hhWDaW/l41q/WBePuwxCErpbHFSrDCi7w4p0CUtAfTxacW1Y+ZDhcEBg==
-X-Received: by 2002:a17:902:7442:: with SMTP id e2mr622881plt.104.1644957296361;
-        Tue, 15 Feb 2022 12:34:56 -0800 (PST)
-Received: from [192.168.133.232] ([106.198.32.168])
-        by smtp.gmail.com with ESMTPSA id d22sm40397891pfl.71.2022.02.15.12.34.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Feb 2022 12:34:56 -0800 (PST)
-Subject: Re: Git in GSoC 2022?
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Git Community <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
- <YfGpjm8mCkWIPM6V@nand.local>
- <CAP8UFD1Mqv=MUcdjjhTpOkP0yWpnv9Jr=aB5G+4XmAqWsJBX4g@mail.gmail.com>
- <CAP8UFD2FfJA1ruhxzv3tcxhsssHBeHGCbGFDiz+-fFmpx39Gqg@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <01183a76-24c5-4308-76e3-953a0b76df67@gmail.com>
-Date:   Wed, 16 Feb 2022 02:04:52 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XWXXLm1wWGVZlV21uBTFI1a37ttYie4Lcb7sFEHJoVA=;
+        b=0RImLOsKtHIIyGpWTw6xqMI8z1OGJ0XZcXtgucXG0U3W/G1hrJE/msGoKYWtBK7tf9
+         7jwzpQygDyrm5+MxYEC/+flRU6UKSVqHuKlU9TNukH/de66QB252vUnP2+bQ4KyYrdL1
+         gA0WFhCUJXQhZaG4gYBq2CGV+DQOTAuw15REjE3mBc4oiKVAnTsgkjQd2OyARWuxgg/q
+         IP6ovn2i/spuweeTthp6IYfN/rgzypvtVj4cejllYxxwanxOr7cxWawZjAQITdmGfEYf
+         Jr9101AXhMwRdYyHRLmlo/Qr2DWsZGSs8Bo2/I83s0r3nGQCaoJAx4zljWpQBRKQXM8W
+         vkAw==
+X-Gm-Message-State: AOAM530VhnECrFwmhCroE3aKzpabyN53BRdonW7xh2IhhNVZI7Yhr1yM
+        wJKAcYmr0LFQwcUbAWz4XhUXT0cx+/s+1dLHoZM=
+X-Google-Smtp-Source: ABdhPJznkZssonZpeuiMYaKL1g5kLIwvbrofOwG59OVyjmmTnrXtMEd9H88jKGonpJRiEeFoCxJTCwAuwyxXtqhuYhg=
+X-Received: by 2002:a63:2f82:: with SMTP id v124mr535969pgv.139.1644957490344;
+ Tue, 15 Feb 2022 12:38:10 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD2FfJA1ruhxzv3tcxhsssHBeHGCbGFDiz+-fFmpx39Gqg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
+ <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com> <0260ff6cac0c76c6d66187d77defef1edd4c6fb5.1644269583.git.gitgitgadget@gmail.com>
+ <xmqqo83hatm1.fsf@gitster.g> <11bf1541-c46a-fcf5-f8d4-0d144b942d59@gmail.com>
+In-Reply-To: <11bf1541-c46a-fcf5-f8d4-0d144b942d59@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 15 Feb 2022 15:37:59 -0500
+Message-ID: <CAPig+cSY7E_XQC1gHzDJxoDGGmgWDmNz9Ys=CwbhLkCt+DQf-A@mail.gmail.com>
+Subject: Re: [PATCH v6 1/6] Documentation: add extensions.worktreeConfig details
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Sean Allred <allred.sean@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/02/22 7:05 pm, Christian Couder wrote:
-> On Thu, Jan 27, 2022 at 10:32 AM Christian Couder
-> <christian.couder@gmail.com> wrote:
->> On Wed, Jan 26, 2022 at 9:05 PM Taylor Blau <me@ttaylorr.com> wrote:
-> 
->> I am also available and interested in mentoring and I can reuse a
->> project prepared for the last Outreachy round too.
-> 
-> I added the "Unify ref-filter formats with other pretty formats" to
-> continue Hariom Verma's work during GSoC 2020. I would be happy to
-> co-mentor it if someone is interested to co-mentor it with me.
-> 
+On Tue, Feb 8, 2022 at 9:34 PM Derrick Stolee <stolee@gmail.com> wrote:
+> On 2/8/2022 5:20 PM, Junio C Hamano wrote:
+> > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >> +extensions.worktreeConfig::
+> >> +    If enabled, then worktrees will load config settings from the
+> >> +    `$GIT_DIR/config.worktree` file in addition to the
+> >> +    `$GIT_COMMON_DIR/config` file. Note that `$GIT_COMMON_DIR` and
+> >> +    `$GIT_DIR` are the same for the main working tree, while other
+> >> +    working trees have `$GIT_DIR` equal to
+> >> +    `$GIT_COMMON_DIR/worktrees/<id>/`. The settings in the
+> >
+> > The mixed use of "worktree" and "working tree" in this paragraph
+> > might confuse readers into thinking that the paragraph is being
+> > careful to make distinction between the two.  All references to
+> > "working tree" in the above paragraph should actually be "worktree",
+> > I would think.
+>
+> I generally agree. This was changed in the most-recent re-roll
+> based on a request by Eric [1]. I'm happy to take whichever
+> version the two of you settle on.
+>
+> [1] https://lore.kernel.org/git/CAPig+cS-3CxxyPGcy_vkeN_WYTRo1b-ZhJNdPy8ARZSNKkF1Xg@mail.gmail.com/
 
-I would be willing to co-mentor it with you. In case anyone else
-prefers to co-mentor this one, that's fine too. I can leave it
-to them :)
+"request" is perhaps too strong a word considering that I led in with:
 
--- 
-Sivaraam
+    A few minor comments, which can be addressed later or not
+    at all, and likely are not worth holding up the series...
+
+I mentioned "worktree vs. working tree" only to point out the
+terminology inconsistency being introduced by the new patch; the same
+sort of inconsistency which had bothered Michael Haggerty enough to do
+something about it in bc483285b7 (Documentation/git-worktree:
+consistently use term "linked working tree", 2015-07-20).
+
+I, personally, prefer the term "worktree" for both convenience and
+because it better encapsulates the overall "thing" which is
+manipulated by the git-worktree command unlike the term "working tree"
+which, as Junio points out, has (perhaps) a more narrow meaning. As
+such, I would not be opposed to a patch series which changes "working
+tree" to "worktree" in documentation where appropriate, but that's
+outside the scope of this series.
