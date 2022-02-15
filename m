@@ -2,84 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63C52C433EF
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 09:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB830C433F5
+	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 14:51:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235677AbiBOJro (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 04:47:44 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55928 "EHLO
+        id S233786AbiBOOvZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 09:51:25 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231445AbiBOJrm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 04:47:42 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E693E6843
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 01:47:30 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id 62-20020a17090a09c400b001b80b0742b0so12756794pjo.8
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 01:47:30 -0800 (PST)
+        with ESMTP id S239336AbiBOOun (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 09:50:43 -0500
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F86812CC29
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 06:48:47 -0800 (PST)
+Received: by mail-oo1-xc35.google.com with SMTP id f11-20020a4abb0b000000b002e9abf6bcbcso23485358oop.0
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 06:48:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=aFIxwiSboHFIfNBkmop3xD+q9Hwn4whQ2PksUeH+GHk=;
-        b=Sc0me/db9JHz81MPiy1oaGmwbekitHtV5yKPndPYufykplSnT/P5W9m0pFOPZjz/Yc
-         UVl90M80tkDENNIwZ8C+nXa6YKso8i2Q5CTHOoQ+t7ap/tND1s0S9H2Q7o7AKc5qpCml
-         lebth1bri/iiMld5WeLGlfQkg45J6oM/QmZQF8LJ/Wpsq1N+Gniqk1PGw6bwaBKpLFWm
-         oFXwM1VfYGmJLb9voORwOdEua3SbHKRSZ3Ua/CyYBi0NENypfWEjNZv7KvFLXEjo13/Z
-         AUhDZ8hX0PzrJcxRQ3MCpQIFKHKi+eCyz2KPyhxRyBbxzbPb55ll2Oc+wUCqKLfqKxdz
-         cmbQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=lm5KlCR+mtpCUfL+R6RkuokxTeZHpfplAznG06ZNNH0=;
+        b=a/MgEVhQLGC0uraq/wfIZeys3IdWBv0JRqievte/4VadhrKBByLWxUhafcCV2/GGVc
+         iaASTFvetb7Mn4dqMSwhpqE+xRaTlnFaeA/9jXGT4BCzdCebT9TBlWqroh90SxCtEnmI
+         LKfbfgppRVTYojDN0vTTuNItkKjasqAOWEQXBaihVO9rm7dFBpBGxi1aJmyS3k6PuLx4
+         37184A7AE1Z4W+aBUE+XbTkW6O2dqvaOel18DTtemIkrGhgB0hEQQyPbnc/igTZR/P0w
+         zFSetd0aSkBGpLczOpyLzXelnm3S7FwrtpzGtRKo4kszCEWD8A47vqe+U4Q4Mta057qQ
+         1gCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=aFIxwiSboHFIfNBkmop3xD+q9Hwn4whQ2PksUeH+GHk=;
-        b=XZIjCTb3vyUmf0a18igZtn0Sf+3dRk0sv2wkj2NJ4axvO8f7MONapUpFMCUa/1UmPY
-         Mm3Cr2jkSOaB1gOlG4PPEyDsd21p7lXCGjgLf+M+U/QFhKhAvViwcR+HaDTrGyejnYrZ
-         JDx4GeKV0pIhsxLEFaGc1XDQP52hGs63ufz4RnJT+7JUjFYjc5HgNPZF4TPYy7SzhtnO
-         /Ptv4F5p2gX0NbhTIwoUz4dVPjF+ZXXM+qBUBvhMvM/LhJot6aHPBjrWwJwahNK+jP6W
-         CoRaiyXJl3ZTcYz18D+O1oKMwm45H9vRYhhiJU0ojq+MnDrk9zhKnLG0lrzT5aZBV/44
-         lXVg==
-X-Gm-Message-State: AOAM531qdX6iKYtMqbAGmT1UHJUR639cKg4Tp06eUj6ZAoWdeGJVkMfl
-        4ISm9kw4PMsH2wFD3yUHfOAodJbcP/Y6Iw==
-X-Google-Smtp-Source: ABdhPJz488KmKeFuux07QlPD9vOTPsRRIo76fjs4BKGj0pFPQTt0pBLe87aMte+cZCZtVs9CVwmA3wSYyUGFQg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:1514:: with SMTP id
- q20mr3521560pfu.82.1644918449625; Tue, 15 Feb 2022 01:47:29 -0800 (PST)
-Date:   Tue, 15 Feb 2022 17:47:27 +0800
-In-Reply-To: <kl6la6et76bb.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <kl6lwnhw5umo.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220208083952.35036-1-chooglen@google.com> <20220210092833.55360-1-chooglen@google.com>
- <xmqqv8xj71mt.fsf@gitster.g> <xmqqr18770pc.fsf@gitster.g> <kl6la6et76bb.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v7 00/20] submodule: convert the rest of 'update' to C
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Atharva Raykar <raykar.ath@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrn@google.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        pc44800@gmail.com, Shourya Shukla <periperidip@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=lm5KlCR+mtpCUfL+R6RkuokxTeZHpfplAznG06ZNNH0=;
+        b=G3HHzS8+7tEkWUNTOIJLQi/mX39rGSqtLb7pG1Ahn0uvIRTKZd0x0zAryo7QMo95vW
+         0aIM/leomblubdxigry3hTtgkxN5AG/b+9LvA38FH1e9OCqBpZxliFzlhUkn6kScE+mW
+         lIPt87cJPwNPEuwCMDgCblNLpWo910iCouirYPietAKjwBWx+5+9/TUoqzWrypP+kAYf
+         pHaxzzBEi9eY68/e3JqHFYDDcdaMLk+yAJQI7TpMg7sjEbIvu/npCPtb+3I+idhvWIrZ
+         zLfw6x/vkrwD9Qh2WfbtNcvV/9b2+vh3Lt2k3JPOcS1mxKjceVut0y5/1FRNLGvyRQNI
+         +6/Q==
+X-Gm-Message-State: AOAM5300D+q0cudAJQmDDc9BDextTwJPsTsa7+iywnY4jk+ZxM0D8x5j
+        ZFn84mGWpyCgF4KLgDRAHwN9
+X-Google-Smtp-Source: ABdhPJz1MxK++JyhLBfqaPFaPm5YrnobOadP7EAAIBCBNTeq0jxBWXAVJLEnL8li14oyGPG6oYFG1g==
+X-Received: by 2002:a05:6870:a603:: with SMTP id e3mr1532435oam.87.1644936520348;
+        Tue, 15 Feb 2022 06:48:40 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id a8sm14003296otj.47.2022.02.15.06.48.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Feb 2022 06:48:40 -0800 (PST)
+Message-ID: <42d2a9fe-a3f2-f841-dcd1-27a0440521b6@github.com>
+Date:   Tue, 15 Feb 2022 09:48:38 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] name-rev: test showing failure with non-monotonic commit
+ dates
+Content-Language: en-US
+To:     Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git mailing list <git@vger.kernel.org>
+References: <20220214210136.1532574-1-jacob.e.keller@intel.com>
+ <xmqqr18515jr.fsf@gitster.g>
+ <CA+P7+xrN0zPWfxO1roWzR+MBHntTv8jr9OGdNcN9RPA=ebK24A@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CA+P7+xrN0zPWfxO1roWzR+MBHntTv8jr9OGdNcN9RPA=ebK24A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+On 2/14/2022 5:07 PM, Jacob Keller wrote:
+> On Mon, Feb 14, 2022 at 1:50 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Jacob Keller <jacob.e.keller@intel.com> writes:
+>>
+>>> From: Jacob Keller <jacob.keller@gmail.com>
+>>>
+>>> If a commit in a sequence of linear history has a non-monotonically
+>>> increasing commit timestamp, git name-rev will not properly name the
+>>> commit.
+>>>
+>>> However, if you use --annotate-stdin then the commit does actually get
+>>> picked up and named properly.
+>>
+>> IIRC, this is to be expected.
+>>
+> 
+> Right. I figured this is somehow expected behavior...
+> 
+>> When preparing to answer --annotate-stdin request, the command has
+>> to dig down to the root of the history, which would be too expensive
+>> in some repositories and wants to stop traversal early when it knows
+>> particular commits it needs to describe.
+>>
+> 
+> And this method of cutting the search relies on monotonic commit times right?
+> 
+> Is there any other method we could use (commit graph?) or perhaps to
+> add an option so that you could go "git name-rev --no-cutoff <commid
+> id>"? That would potentially allow working around this particular
+> problem on repositories where its known to be problematic.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> I can merge this to seen minus the above two topics and get it
->> compile, but it also seems to have some interaction with 961b130d
->> (branch: add --recurse-submodules option for branch creation,
->> 2022-01-28) and makes the t3207, tests added by that other topic,
->> fail X-<.
->
-> Oof, that's embarrassing of me, let me take a look at that. There's a
-> nontrivial chance that the "branch --recurse-submodules" tests caught an
-> actual regression.
+I initially thought that generation numbers could help. The usual way
+is to use a priority queue that explores by generation, not commit
+date. This approach was immediately stifled by these lines:
 
-Looks like this is the case - t3207 caught a regression in how "git
-submodule update" sets the refspec of nested submodules.
+	memset(&queue, 0, sizeof(queue)); /* Use the prio_queue as LIFO */
+	prio_queue_put(&queue, start_commit);
 
-Looks like our concerns about the test suite are well-founded..
+So the queue is really a stack.
+ 
+> Alternatively is there some other way to apply the cutoff heuristic
+> only in some cases? I get the sense this is intended to allow cutting
+> off merged branches? i.e. not applying it when history is linear? I'd
+> have to study it further but the existing algorithm seems to break
+> because as it goes up the history it has found an "older" commit, so
+> it stops trying to blame that line...?
+
+It is still possible that the cutoff could be altered to use generation
+numbers instead of commit dates, but I haven't looked closely enough to
+be sure.
+
+Here is a very basic attempt. With GIT_TEST_COMMIT_GRAPH=1, your
+test_expect_failure turns into a success.
+
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 138e3c30a2b..f7ad1dd8b4d 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -9,6 +9,7 @@
+ #include "prio-queue.h"
+ #include "hash-lookup.h"
+ #include "commit-slab.h"
++#include "commit-graph.h"
+ 
+ /*
+  * One day.  See the 'name a rev shortly after epoch' test in t6120 when
+@@ -27,6 +28,7 @@ struct rev_name {
+ define_commit_slab(commit_rev_name, struct rev_name);
+ 
+ static timestamp_t cutoff = TIME_MAX;
++static timestamp_t generation_cutoff = 0;
+ static struct commit_rev_name rev_names;
+ 
+ /* How many generations are maximally preferred over _one_ merge traversal? */
+@@ -151,7 +153,10 @@ static void name_rev(struct commit *start_commit,
+ 	struct rev_name *start_name;
+ 
+ 	parse_commit(start_commit);
+-	if (start_commit->date < cutoff)
++	if (generation_cutoff && generation_cutoff < GENERATION_NUMBER_INFINITY) {
++		if (commit_graph_generation(start_commit) < generation_cutoff)
++			return;
++	} else if (start_commit->date < cutoff)
+ 		return;
+ 
+ 	start_name = create_or_update_name(start_commit, taggerdate, 0, 0,
+@@ -599,6 +604,8 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 		if (commit) {
+ 			if (cutoff > commit->date)
+ 				cutoff = commit->date;
++			if (generation_cutoff > commit_graph_generation(commit))
++				generation_cutoff = commit_graph_generation(commit);
+ 		}
+ 
+ 		if (peel_tag) {
+
+Thanks,
+-Stolee
