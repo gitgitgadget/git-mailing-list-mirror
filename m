@@ -2,106 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CAACC433EF
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 13:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16C10C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 13:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233766AbiBPNyU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 08:54:20 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33408 "EHLO
+        id S234794AbiBPN7O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 08:59:14 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbiBPNyT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 08:54:19 -0500
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D17D1E8BD3
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 05:54:07 -0800 (PST)
-Received: by mail-io1-xd29.google.com with SMTP id e79so2264583iof.13
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 05:54:07 -0800 (PST)
+        with ESMTP id S234797AbiBPN7L (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 08:59:11 -0500
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F21B20207A
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 05:58:59 -0800 (PST)
+Received: by mail-io1-xd2f.google.com with SMTP id h16so2291923iol.11
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 05:58:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Af5rpQBPoNTspUbkQ8RaMfMDUvj8i9CgEP+sbz9TFqw=;
-        b=IjbtRE/F4ra/OS2oUxAHha61GA/NEyK2ZPhFHJ98Oav5iwZcSLNd8pmF8leTkUNhJw
-         IDttpnk7UnCvOsccuK1++GG8E9sS++037uwLBb/65RhVUaj4tV1v2NpAVsPaVtLtLS6Q
-         ahtwhKFYQJYO4/bp6Z0n+qdW2cRx+81yD9yEVz4oiTh/YQxqANj5/kpCIfmU/M3qIZIH
-         ERSVsv196x9JLy7TYEpx3CO20l4eEULkvCc/M6saLsM9uD1nvW+IzlocYfAxCCbs0XgE
-         a/Mnia2d/jZKKWF0sp4JgsXc6d3TY0p5l0ThZNHYRheQNBWteL/72WTLGonbEdQg7cQR
-         Qp6w==
+        bh=c2ZCVg3nuwgUr+HmZQ1BCx05tXRe3VuLnIRAp0IVCTs=;
+        b=I9kDA4KKiEuyG5XkBGQtvv7hwotfVFwHGXfpiv6OEQJSysr8MQ8kFmKfpbvf1vx2Sq
+         xq5I6hoqT9DOu4+pjpj/AK7CukMnyPlDi1xoa/dCaeOo4ccmOADdMM36WQUJn4pmmfRQ
+         x3hO26R8HooIGvhiID2G68HJGNB87ewf2ds3s/3WZrZncFCr3x7jBhvH9rl7IloMdyH2
+         Qn8klgE5I7vPBE1NYc8OMGbKcqQSV7LPgdPxLka1W1wMCycfFKatLCfQXl3htDlwRnKc
+         sa6S/95HkHVPQHVWQlA86/qo/rTLS3ptJhEuLs7FR0pAwdsAdTdiC1o4pOxA+arZi1yS
+         cA+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Af5rpQBPoNTspUbkQ8RaMfMDUvj8i9CgEP+sbz9TFqw=;
-        b=GClcM3qMSqWWbZEZ9IAtu61JTzGZKFoyICBJdBIRkCOiI/d4ut+8tZXztzt9Rw0YXq
-         BKgWG1Y3iRqF+wy7QLXCeBC/Ele3cqPNosPJjNDOw/txAbONGd3wVoSRtSD3UiVhtUlF
-         fjy3upSyKZNToTaRnflQjPpZmLhp2jG1NByhqH/tPLVZIjQRTOcq1iEsCpKEI57Xo5OR
-         s39B/zXEKSFCJm0ntSYd5+lvgGG+lwiTJAjZjGTbAaUENMpZffrdf4ygbOd0RjlutVSx
-         kRb/9NyGJohngNxyKZZnFhOU7EqFJ/oj5GZBu6t76vYwJfND5sTaROjMmEh8fNyz/Doc
-         Rcgg==
-X-Gm-Message-State: AOAM533+C39Mog8nUuudwSEouQOwVfjgmPpYYBTWSmIIWMrbunMXPHbz
-        9VOFFj2db+W0WkFme8vj1w1sCx+x+Caq
-X-Google-Smtp-Source: ABdhPJx/jQqafqGhAFhnX/3eLIPoB6qX8IRtN9U6rVx+qn4wtdJamq9XL3mo7HbVKycGFqufFYXbug==
-X-Received: by 2002:a02:a793:0:b0:311:c031:ea76 with SMTP id e19-20020a02a793000000b00311c031ea76mr1766776jaj.80.1645019646719;
-        Wed, 16 Feb 2022 05:54:06 -0800 (PST)
+        bh=c2ZCVg3nuwgUr+HmZQ1BCx05tXRe3VuLnIRAp0IVCTs=;
+        b=BDT/G9uQp23tIUbvJrho/gXlQwpH2Cadt/KbEPLXNdBPOiqR+C/rGMDLFadxe7SZA/
+         VfsvtTjupIORKqG3qfl/LoLlyvoa/CBM1HO36L77TQ/Jzn1ObEZ+azUEeKVO1b7ZSpGN
+         W3HoNLXxGMLGpsniJ/tGpX8YDgtz0xXAcAOUd6zzh7xsFo9s+5oedaezZXKzGsEXFbJ9
+         CrnSKqFCVQlCs5FtqbUnZQ/IHXBkNs2LRdr1mxj+w8ShzLa4sLUaO6fJ1zqZpxR1W5ka
+         11RtMl9O0Dgeo52LNBGwjvLmvN3HcD0DhS4cQaTp/iqUa5rEhTgaPVDRJLN6+xM5cTn9
+         8j9g==
+X-Gm-Message-State: AOAM531SJELwBVJ/zxd/IlVmR/JJ3oGk9nw+3KEsXYvS/r0qvicqc7GM
+        dx6hoiUTvQIpvXNwivZjK3YX
+X-Google-Smtp-Source: ABdhPJwJQckU5eOy25URrM7Q7CIF8BZY4mptL3ZCT/NMi8xXftu91tdcb40gttT497ZR51jLVF/D2g==
+X-Received: by 2002:a6b:c905:0:b0:63d:a716:2684 with SMTP id z5-20020a6bc905000000b0063da7162684mr1904066iof.114.1645019939027;
+        Wed, 16 Feb 2022 05:58:59 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id p13sm26666459iod.51.2022.02.16.05.54.06
+        by smtp.gmail.com with ESMTPSA id 5sm16873265ilq.59.2022.02.16.05.58.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Feb 2022 05:54:06 -0800 (PST)
-Message-ID: <51efdb1e-00f1-e4c0-97df-478cc5982b49@github.com>
-Date:   Wed, 16 Feb 2022 08:54:05 -0500
+        Wed, 16 Feb 2022 05:58:58 -0800 (PST)
+Message-ID: <3769f426-6263-527b-be46-986ad0904cb4@github.com>
+Date:   Wed, 16 Feb 2022 08:58:57 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.0
-Subject: Re: ds/sparse-checkout-requires-per-worktree-config (Was: Re: What's
- cooking in git.git (Feb 2022, #04; Tue, 15))
+Subject: Re: [PATCH v5 5/5] worktree: copy sparse-checkout patterns and config
+ on add
 Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>
-References: <xmqqk0dwyrcv.fsf@gitster.g>
- <CABPp-BHxg+KE7W0jLfHC+DfjRyNoigv4qSEgJyehnUZNLUzZCg@mail.gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Sean Allred <allred.sean@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.1101.v4.git.1643136134.gitgitgadget@gmail.com>
+ <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
+ <85779dfaed39220e18129e823aff9c95ade5985b.1643641259.git.gitgitgadget@gmail.com>
+ <CAPig+cQOieO3cmZv42G_8XRiMwkh4v3cO1AYg5VR9SiPNMwxhw@mail.gmail.com>
+ <93747eca-08d6-0be9-08c7-42c81340b788@gmail.com>
+ <CAPig+cS6Of=1OOw-6MOCBJVW6_FxtGw_ciUR=RTYakdy=1Z_hA@mail.gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CABPp-BHxg+KE7W0jLfHC+DfjRyNoigv4qSEgJyehnUZNLUzZCg@mail.gmail.com>
+In-Reply-To: <CAPig+cS6Of=1OOw-6MOCBJVW6_FxtGw_ciUR=RTYakdy=1Z_hA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/16/2022 12:06 AM, Elijah Newren wrote:
-> On Tue, Feb 15, 2022 at 12:01 PM Junio C Hamano <gitster@pobox.com> wrote:
+On 2/15/2022 5:01 PM, Eric Sunshine wrote:
+> On Mon, Feb 7, 2022 at 9:30 AM Derrick Stolee <stolee@gmail.com> wrote:
+>> On 2/6/2022 6:30 AM, Eric Sunshine wrote:
+>>> On Mon, Jan 31, 2022 at 10:01 AM Derrick Stolee via GitGitGadget
+>>> <gitgitgadget@gmail.com> wrote:
+>>>> +               git config --worktree bogus.key value &&
+>>>> +               git config --unset core.bare &&
+>>>
+>>> Why is this being unset? (Genuine question. Am I missing something obvious?)
 >>
->> * ds/sparse-checkout-requires-per-worktree-config (2022-02-08) 6 commits
->>  - config: make git_configset_get_string_tmp() private
->>  - worktree: copy sparse-checkout patterns and config on add
->>  - sparse-checkout: set worktree-config correctly
->>  - config: add repo_config_set_worktree_gently()
->>  - worktree: create init_worktree_config()
->>  - Documentation: add extensions.worktreeConfig details
->>
->>  "git sparse-checkout" wants to work with per-worktree configration,
->>  but did not work well in a worktree attached to a bare repository.
->>
->>  Will merge to 'next'?
->>  cf. <20220204081336.3194538-1-newren@gmail.com>
->>  cf. <CAPig+cRrRxuTeByhKkLs_KDaWY8-r4+jrwT83A-r+sBQsmebMw@mail.gmail.com>
->>  source: <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com>
+>> I'm moving it out of the common config file. Earlier commands
+>> enabled it in the config.worktree file for this working tree.
 > 
-> With v6, Eric seems to also be happy with the series (cf.
-> <CAPig+cQTRGuuspz2g5LZr4Oh8bQCr4FUDV0tirs+ZPwhtAaJVw@mail.gmail.com>).
-> So, I think it's ready to merge down.
+> But won't the `git worktree add` commands which immediately follow
+> this bit automatically drop `core.bare=true` from the common config
+> file? Or am I misthinking on this? Or are you just trying to be
+> explicit here with the manual removal?
 
-I agree. Thanks for the close looks at this.
+Ah. Here we are testing that bogus.key gets copied from the
+config.worktree file, but core.bare and core.worktree do _not_.
 
-I think I will send a forward fix that attempts to clear up
-the "worktree" versus "working tree" changes across all of
-git-worktree.txt and related docs, now that Eric corrected my
-interpretation of his comments [1].
+This is kind of like the case where we run two 'git worktree add'
+commands in a row. The first one moves core.bare and core.worktree
+into the config.worktree file. The second one attempts to copy the
+config.worktree file into the new worktree (but must filter out
+these config keys).
 
 Thanks,
 -Stolee
-
-[1] https://lore.kernel.org/git/CAPig+cR+n=LQg5AJQgGQXuYStN90-jExWnE45sS1EXo+O8dQgQ@mail.gmail.com/
