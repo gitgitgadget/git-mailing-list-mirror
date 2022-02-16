@@ -2,73 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41431C433EF
-	for <git@archiver.kernel.org>; Tue, 15 Feb 2022 23:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 766BCC433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 00:01:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241208AbiBOX4z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 18:56:55 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33820 "EHLO
+        id S244750AbiBPABV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 19:01:21 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:45670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234732AbiBOX4y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 18:56:54 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A0D2C9A06
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 15:56:43 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1555E129178;
-        Tue, 15 Feb 2022 18:56:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=13qe8qnEU+Zdc0hVZIdI05VSKRHa6U8s+y844i
-        3OQGw=; b=f491MeDnvs7wpZkmzPJHHAjQYpVu6WLgkpVS24UzJDQ+jNoAzg3+Xe
-        pW3FWFS61CSe70OScPcEVPYhOQ8ecauoGDFUmQ6vDWjR3+rfBXPwDUJ0XC1CHdfG
-        zJaG+KyQm3nrDZl6D8O0N/y06h7Ovl4kN+pnNCGBHPBJwKxgCnNK8=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0B552129177;
-        Tue, 15 Feb 2022 18:56:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 66CDB129176;
-        Tue, 15 Feb 2022 18:56:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Chen BoJun <bojun.cbj@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2022, #03; Sat, 12)
-References: <xmqq5ypj6rw6.fsf@gitster.g>
-        <20220215020923.38168-1-bojun.cbj@gmail.com>
-Date:   Tue, 15 Feb 2022 15:56:38 -0800
-In-Reply-To: <20220215020923.38168-1-bojun.cbj@gmail.com> (Chen BoJun's
-        message of "Tue, 15 Feb 2022 10:09:23 +0800")
-Message-ID: <xmqqfsojznt5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229445AbiBPABT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 19:01:19 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 927C7CA70D
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 16:01:08 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id i14so633377wrc.10
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 16:01:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=N4xinuDeLit5puR27/XM8JydghcY/G0i3Y5TsZ1lQM8=;
+        b=hcp9tpOIFoVcSn6EYhzR/nFco7bP0rIG16o9a2GZNhrGBrJ5Nx/9n6T36v/lJ5T383
+         kvDZ7UtTKKxQyDUIfdwV8GrdUAb2uLwDh7FSLYgwobnSe/WJ1bg6qN8KaDV4fr/qR3ME
+         9MEBo+Dk73RPj/qgN+X11djStW2Q30VLDyCv1nhAlbgbPqxsu3v5Kmo3Xb7slROG/Kmu
+         QcI/Z9Dd5uKcKBigk9plF744IZkTjewOkCA5rY7nbukrRTQMZjpkqG9z/YS2UjdZNAIR
+         HCrhHbJcIG2H2mMTdMMIfw+R8domt7tQ8aYca+7NVz1j3WL+Qm7fPzNEdGGjj6prSYLX
+         qV+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=N4xinuDeLit5puR27/XM8JydghcY/G0i3Y5TsZ1lQM8=;
+        b=vHZQ16JUZASQpuoAKn7mPqL/Ju4OAnzLXR7+SHRWq479jP0ArAfRdSz8cQiJ/knu3F
+         godqew2lvM/8Q4iw4c/w8g8nROtlvh0gVgldz4M4BciIOESiDu7B1K5PSHe1BWemkCAK
+         UMWuyR1xo5RjHyhoCRP1sj7FgWG+4KowDMR/2sBltTIN0AKN2TznKfe9DiSzu+9Gwfu7
+         b+TQJXoq4nBzBv7gZA2ZIe9QSyNfmKDFSPBhGD4Bhis+5SE8cJfBCGkpq09w52AWF6jO
+         KHTEGcCAi/1f8xCwMcSohP5B9NsXn2ftmSorVFj3fFZNRcaMq9yg4GSF1l8ynFIO9eXe
+         rQIg==
+X-Gm-Message-State: AOAM533XsYBh+X3H/ism0FRtWOVq1tGt5QkB75wTYep0YYH3yPpk1B57
+        cAAG8Mt1ljvMb4JABVRlWZraOwGYwuE=
+X-Google-Smtp-Source: ABdhPJyhQtdy4w5DfR5oQVV0V1p6TBvljrogNsHkVhxz3v1DDGo36kvcjHs/AiCiHCdSYEK/zPiLPQ==
+X-Received: by 2002:adf:f001:0:b0:1e4:b7b1:87c1 with SMTP id j1-20020adff001000000b001e4b7b187c1mr310195wro.238.1644969666769;
+        Tue, 15 Feb 2022 16:01:06 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id a12sm17260542wru.99.2022.02.15.16.01.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Feb 2022 16:01:06 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, J Smith <dark.panda@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v11 00/10] grep: simplify & delete "init" & "config" code
+Date:   Wed, 16 Feb 2022 01:00:29 +0100
+Message-Id: <cover-v11-00.10-00000000000-20220216T000006Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1028.g9479bb34b83
+In-Reply-To: <cover-v10-0.9-00000000000-20220204T211534Z-avarab@gmail.com>
+References: <cover-v10-0.9-00000000000-20220204T211534Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EAB45222-8EBA-11EC-B85C-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Chen BoJun <bojun.cbj@gmail.com> writes:
+This series makes using the grep.[ch] API easier, by having it follow
+the usual pattern of being initialized with:
 
->> * cb/clear-quarantine-early-on-all-ref-update-errors (2022-02-01) 1 commit
->>  - receive-pack: purge temporary data if no command is ready to run
->>
->>  Check if "receive-pack" will do any ref updates (various conditions
->>  could reject a push) before received objects are taken out of the
->>  temporary directory used for quarantine purposes, so that a push
->>  that is known-to-fail will not leave crufts that a future "gc"
->>  needs to clean up.
->>
->>  Will merge to 'next'.
->>  source: <20220129063538.24038-1-bojun.cbj@gmail.com>
->
-> I noticed that the merged patch was v2, not v3 which I sent last week. Apart 
-> from a more complete commit message, there is no change in patch v3. So merge 
-> patch v2 is OK.
+    defaults -> config -> command-line
 
-Sorry, my mistake.  The log message in the updated one reads a lot
-better.
+This is to make some follow-up work easier, this is a net code
+deletion if we exclude newly added tests.
+
+Changes since v9:
+
+  * A new 3/10 and 4/10 hopefully address the comments about the test
+    code. I ended up just adding a helper to reduce the existing and
+    new verbosity of the tests, which should make it easier to reason
+    about them.
+
+Ævar Arnfjörð Bjarmason (10):
+  grep.h: remove unused "regex_t regexp" from grep_opt
+  log tests: check if grep_config() is called by "log"-like cmds
+  grep tests: create a helper function for "BRE" or "ERE"
+  grep tests: add missing "grep.patternType" config tests
+  built-ins: trust the "prefix" from run_builtin()
+  grep.c: don't pass along NULL callback value
+  grep API: call grep_config() after grep_init()
+  grep.h: make "grep_opt.pattern_type_option" use its enum
+  grep.c: do "if (bool && memchr())" not "if (memchr() && bool)"
+  grep: simplify config parsing and option parsing
+
+ builtin/grep.c    |  27 +++----
+ builtin/log.c     |  13 +++-
+ builtin/ls-tree.c |   2 +-
+ git.c             |   1 +
+ grep.c            | 113 ++++------------------------
+ grep.h            |  31 ++++++--
+ revision.c        |   4 +-
+ t/t4202-log.sh    |  24 ++++++
+ t/t7810-grep.sh   | 186 ++++++++++++++++++++++++++--------------------
+ 9 files changed, 195 insertions(+), 206 deletions(-)
+
+Range-diff against v10:
+ 1:  184f7e0c5bd =  1:  67af9123727 grep.h: remove unused "regex_t regexp" from grep_opt
+ 2:  ac397cc6a18 =  2:  b275d23f0a8 log tests: check if grep_config() is called by "log"-like cmds
+ 3:  3464c76cfd7 <  -:  ----------- grep tests: add missing "grep.patternType" config tests
+ -:  ----------- >  3:  b0f91bf7e4a grep tests: create a helper function for "BRE" or "ERE"
+ -:  ----------- >  4:  9906edd4f58 grep tests: add missing "grep.patternType" config tests
+ 4:  c6ada96298a =  5:  7389f767388 built-ins: trust the "prefix" from run_builtin()
+ 5:  1f09de53e07 =  6:  38bfa0ed5f9 grep.c: don't pass along NULL callback value
+ 6:  ce646154538 =  7:  a4c1ee91dc9 grep API: call grep_config() after grep_init()
+ 7:  6446b4f0f33 =  8:  fa0da3a9fba grep.h: make "grep_opt.pattern_type_option" use its enum
+ 8:  df8ba5aba68 =  9:  243ceccc1ad grep.c: do "if (bool && memchr())" not "if (memchr() && bool)"
+ 9:  ccbdfa48315 = 10:  38bc5dc9461 grep: simplify config parsing and option parsing
+-- 
+2.35.1.1028.g9479bb34b83
+
