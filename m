@@ -2,90 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27745C433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 15:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEBA5C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 15:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234946AbiBPPlE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 10:41:04 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44328 "EHLO
+        id S235747AbiBPPz5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 10:55:57 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230491AbiBPPlD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 10:41:03 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6082905A5
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 07:40:47 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id k25so168190ejp.5
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 07:40:47 -0800 (PST)
+        with ESMTP id S234139AbiBPPz4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 10:55:56 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73BED29690D
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 07:55:43 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id a23so290520eju.3
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 07:55:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=qe0unW/41Xtzn3wdiODhkwm/ZZVPBnbzZe/ODJfhGis=;
-        b=BX0Mf+e1CHIxENk8kFNwgyvJFhmeACGH+hUaNdAIWlZOs64f7m7pAc/155zae1o69Q
-         f+ydFkkSF8yXDk7mKdSBfa+f5x/n2mOgkyPdsExffUojoJv5dE9eyfac+7BronmC+Jbj
-         b2YxYQhJHOp9pHf5UAjt1oYW2d4x20N6eW288A/4Jo/XfKDYiCxUiD5Mu6Pz5BTJfULX
-         gV3Hv6Jca22EQkjy7OKSZco272s6TfbqDB/uvVnFI+4fzmocjbvyE2ISvKhTvzNlJgyD
-         hk+KS9tgsA1bV47CXF+KVPPgJAfCRQ/PP9lVBSC9Z5Nn6X/dDt3WaYr99mdqngHTMMrY
-         +O/w==
+        bh=T/BERg0n57wSpMtiksWTUjYBUapOwQ0b9YPq9O06Wdc=;
+        b=M++/Jp1mqWFjZaHokiIchgxle3mV8Fxp2bdbyxGuFyHzjddgGCrlnT731eumnOr29e
+         TzPmPruTu/l2vu3Yd5FlgBdXSpUy3kyLV5Pb8f/9RfQRzvdZy6OtWnNb27R2kniwJBau
+         qQ2tD/fnAB34AxLc1IrinApeES6/uV0fmvPNccc7c3i8R7vIpELQ21PqUy7iLpHbwiFy
+         bfy3OQBDRrt1WLohd05QzDCv3YhpatQeRBexLGl0j9D1BsAGb1dbb9RylYoFzdD0KzZn
+         ircgpOuagUUVbyVHkNLiIgszum64Pi9shU/gNe9ZVnZ0ERog4zWTeZB2olFmc+2lQeH0
+         NEBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=qe0unW/41Xtzn3wdiODhkwm/ZZVPBnbzZe/ODJfhGis=;
-        b=doK7WBHsDBuHxti9k3XR+5h9ITf079Sls84gA7A+7rLwHd39xxkwIs/2NgzreDd/+P
-         c47DGaTGM33q90c5fJ3fremMS7NisnkstLp8URJGtJqElwMDMKBV2onDiE3HDiPw1ZTV
-         M+qYRnvD/H8Nu8e8nbhhRhzZWgr5+HAKr2A7RHRiGyR2ww9x0WfnbtBRlkna/PpcRO6c
-         xk4EFmqapGuZXx7tWP1bZHB6u7NhyNv+CDqW1HujHhPJLYRY+iqfISmXGfHUEqwbcG2J
-         AhYcEau9EKO+vsNYbX6PZhvwzVRPJjGshf2f7vl2V7r2V5iE6+w62hvkvUJZVWatEPv9
-         4EXQ==
-X-Gm-Message-State: AOAM532rydRaKljaOk1k9uwHW2vN5HH4/07g9+T8aIY4Xp/VZ9vjQqhw
-        mlpsv4/tLi19fzNOicjWUdsAufQHHp0jH405d2M=
-X-Google-Smtp-Source: ABdhPJzQuA/DYrMoL4FuK5aA2MzRPGuzutJuOHYuzDdwcC6PuT6deUE/F0ImD+LNm8CwOWJnm1gmxxX0UpF7pIW63fs=
-X-Received: by 2002:a17:906:5c4:b0:6cd:8d9c:3c7d with SMTP id
- t4-20020a17090605c400b006cd8d9c3c7dmr2885604ejt.554.1645026046195; Wed, 16
- Feb 2022 07:40:46 -0800 (PST)
+        bh=T/BERg0n57wSpMtiksWTUjYBUapOwQ0b9YPq9O06Wdc=;
+        b=c/HxIR6/+Vc6ONGDZVcR6OFT+rCDDtU3rEZJ1XKZhkgl/AGTnbgCy0rfNn3KwTc6it
+         eKLq91TrMZQAbHTrgZyUw9HgjmeLeOebvPP0UG1CXC/mPSXSo7VMpGyvmHGJBE8yh6jZ
+         2EUZQtw+r2aoS5zkt7l2Hc4JrB42egdMFHO2mYosfZ1rOProEgfcsGO3c5ERYHB5s2ry
+         kObiRo/ldmGZsLP9v+N1BI5Cvu62fdETEluFeN1n1VR4X9H3yCkUnyvRdh89jISh1oD6
+         v2VMHlBPL6FiHEkM75OB+TlcAitiF9Kcf9Yvvp5R4HRVV0KhgUDAD3R8pEqOWJQC8H+/
+         ZM4Q==
+X-Gm-Message-State: AOAM533wp25lVMAzUDeNehveSlE8tXzRRE0wI2KEuArzl1QeOSA/KSoa
+        HhpqSnxKegsR1DPyHG6HTtsySWC2PGvm5jM4YTrefrl6
+X-Google-Smtp-Source: ABdhPJx4x8KzIAlEiF4fqpgNT0J+JDvWfHBD9slEico9jdCLo2eKqvuCcTrF9LVSYCK8IbFkZsn1tbXBnRbfroMEXAY=
+X-Received: by 2002:a17:906:fca5:b0:6b4:6d25:ac19 with SMTP id
+ qw5-20020a170906fca500b006b46d25ac19mr2675443ejb.485.1645026941869; Wed, 16
+ Feb 2022 07:55:41 -0800 (PST)
 MIME-Version: 1.0
 References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
- <YfGpjm8mCkWIPM6V@nand.local> <CAP8UFD1Mqv=MUcdjjhTpOkP0yWpnv9Jr=aB5G+4XmAqWsJBX4g@mail.gmail.com>
- <CAP8UFD2FfJA1ruhxzv3tcxhsssHBeHGCbGFDiz+-fFmpx39Gqg@mail.gmail.com> <CA+CkUQ9VTs7n9B+ApH1BYC=Uq4yvrZm0fsG0RJB8PVg_BBSCfw@mail.gmail.com>
-In-Reply-To: <CA+CkUQ9VTs7n9B+ApH1BYC=Uq4yvrZm0fsG0RJB8PVg_BBSCfw@mail.gmail.com>
+ <730fb307-3bc7-b52f-49c1-d83b5ab55c95@iee.email> <3b112eee-8110-baf6-d7e7-cb25b03c32ff@gmail.com>
+ <CAP8UFD1BYm-_p=JYw3GELsk1=hR9-o7cxEowtnrKPumi0Gk8kg@mail.gmail.com> <65abccbe-eaae-5d68-c738-b7f9a3844bbc@gmail.com>
+In-Reply-To: <65abccbe-eaae-5d68-c738-b7f9a3844bbc@gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 16 Feb 2022 16:40:35 +0100
-Message-ID: <CAP8UFD0cNLUSbiABnj3UTrAk36DTePNctNWn8U3wrXMGjA6HFg@mail.gmail.com>
+Date:   Wed, 16 Feb 2022 16:55:30 +0100
+Message-ID: <CAP8UFD3prsevU_8zCXQu_BpZH+NHm+HD04RiBvOXkZkDoi+yjg@mail.gmail.com>
 Subject: Re: Git in GSoC 2022?
-To:     Hariom verma <hariom18599@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Git Community <git@vger.kernel.org>,
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git Community <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.email>,
         Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+        ZheNing Hu <adlternative@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Victoria Dye <vdye@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Wed, Feb 16, 2022 at 12:18 AM Hariom verma <hariom18599@gmail.com> wrote:
+On Tue, Feb 15, 2022 at 9:32 PM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
 >
-> Hi,
->
-> On Mon, Feb 14, 2022 at 2:59 PM Christian Couder
-> <christian.couder@gmail.com> wrote:
+> On 13/02/22 3:03 pm, Christian Couder wrote:
+> > On Sat, Feb 12, 2022 at 7:12 PM Kaartic Sivaraam
+> > <kaartic.sivaraam@gmail.com> wrote:
 > >
-> > I added the "Unify ref-filter formats with other pretty formats" to
-> > continue Hariom Verma's work during GSoC 2020. I would be happy to
-> > co-mentor it if someone is interested to co-mentor it with me.
+> >> On a related note, the organization registrations are now open for this year.
+> >> The deadline is February 21 - 18:00 UTC. I'm not sure if anyone else is
+> >> planning on applying for Git. In case no one else beats me to it, I plan on
+> >> applying for Git around February 15 17:00 UTC.
+> >
+> > I was thinking about applying for Git, but I am glad that you plan to
+> > do it. I will try to add some project ideas to SoC-2022-Ideas.md
+> > before February 15.
 >
-> Since I worked on this for quite some time. I maybe am able to provide
-> some insights. If it's not too late, I would like to co-mentor it with
-> you.
+> Thanks for adding it! I've applied for Git in GSoC 2022. The application
+> information could be found here:
+>
+>    https://git.github.io/SoC-2022-Org-Application/
 
-Great! I am happy to co-mentor it with you!
+Thanks for applying!
 
-Kaartic, I hope it's ok for you.
+> Let me know in case anything needs to be tweaked. I mentioned that we have
+> 5 mentors available counting Stolee, Victoria, Christian, Taylor and myself.
+> Also, I've invited Christian as an Org Admin. In case anyone else would like
+> to volunteer to be an Org Admin, do let me know.
 
-Thanks both,
-Christian.
+Thanks, I accepted the invite!
+
+Not sure we can invite possible mentors yet.
+
+> On a lighter note, the application structure was a bit different than
+> previous years due to the new website. They say that it supports persisting
+> the organization information which should mean less work while applying for
+> GSoC in upcoming years.
+
+Nice!
