@@ -2,95 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E01A1C433EF
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 15:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27745C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 15:40:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232984AbiBPPkR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 10:40:17 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43938 "EHLO
+        id S234946AbiBPPlE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 10:41:04 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:44328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230491AbiBPPkR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 10:40:17 -0500
-Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B730B28F97F
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 07:40:04 -0800 (PST)
-Received: by mail-vk1-xa2e.google.com with SMTP id j17so1103449vkd.12
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 07:40:04 -0800 (PST)
+        with ESMTP id S230491AbiBPPlD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 10:41:03 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6082905A5
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 07:40:47 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id k25so168190ejp.5
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 07:40:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=koordinates.com; s=google;
+        d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=xdbOHaHMLooD/aIC6TvgsjyzyqxfS38KCAX64e9n3FM=;
-        b=Qo1oP2BjTntGKnyhfHdHmnA61QOdpqd0LmbnhmFmPnB+KSWprCYZNHCaLMaWmItKTo
-         fTVWJ8uvR8QVIcZHsFubHjt5+tvWYgRUm8Hd8U4HMisqphjOmHM+XYXw8b6EcSEZfYAh
-         KTUMkFFHz9lqt3Ed/mgpKdn9ZaMMSo9hkwraWL7aZg2RymnHTlcpIw0Vmc2xsPG1NS6C
-         IbGpzwxtsDt3aKvvSrmEbuMXYfWSwCMN7/szQmiQJsX9gGEQ7JJSK2W9sbqRtpMVwbaN
-         li1i2EexQSzMcc2TIW3M/VoBMGjIuxPSusO51G3HUc/CmDIJpXWqfVJZN3v5x08TNS0G
-         DB8Q==
+        bh=qe0unW/41Xtzn3wdiODhkwm/ZZVPBnbzZe/ODJfhGis=;
+        b=BX0Mf+e1CHIxENk8kFNwgyvJFhmeACGH+hUaNdAIWlZOs64f7m7pAc/155zae1o69Q
+         f+ydFkkSF8yXDk7mKdSBfa+f5x/n2mOgkyPdsExffUojoJv5dE9eyfac+7BronmC+Jbj
+         b2YxYQhJHOp9pHf5UAjt1oYW2d4x20N6eW288A/4Jo/XfKDYiCxUiD5Mu6Pz5BTJfULX
+         gV3Hv6Jca22EQkjy7OKSZco272s6TfbqDB/uvVnFI+4fzmocjbvyE2ISvKhTvzNlJgyD
+         hk+KS9tgsA1bV47CXF+KVPPgJAfCRQ/PP9lVBSC9Z5Nn6X/dDt3WaYr99mdqngHTMMrY
+         +O/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=xdbOHaHMLooD/aIC6TvgsjyzyqxfS38KCAX64e9n3FM=;
-        b=gw0udOJVU6LM/rCeEq7KypgK36TTXegW2o2hBM7N5HgkEn4mmMGXWsrZdeVUFVgRrd
-         aC1PuK61qmY/tg5ZsVu7B6T9KeENxCZxzasAvPAz8DypnCf53vR2veXi34h+E2xPx9VL
-         66oYLq2/AEZiXC/t3UiPzay/Ib84Q06F0yGTKEApBwyJneCcMKXlt6yg9Jyupx5v8pty
-         tqBcOv0Yc0xm5Qv1BGRVB96I/lzShYjjT2Ih4yNGG1hxyxjP7bvjvvSJ2pdnS+UDOrjl
-         iBgv8JQyrZYJXMmePzM5dq10ZTd8oJQmXCyXx4eF1peft8sw7fbKoShp+gK1gaB+MAAK
-         4+Iw==
-X-Gm-Message-State: AOAM530aDS6PhXOCozj31oS45N4pGD7FN7nnv7Opg8x1mORmyfUHIBGe
-        SJon0v8JMu4PHNDFfDOP4uTa41Ya+Iz9+gqMXxtsqN+QokHfbp9e
-X-Google-Smtp-Source: ABdhPJwI/stXI7S73TW5GM/89iViBqZ1TFLkLxNF5AgYNZjGW4f/xEChXx1pGzWrhHO+Zzt+sZghFcEA+FcQnoMc9pQ=
-X-Received: by 2002:a05:6122:90b:b0:321:1905:7121 with SMTP id
- j11-20020a056122090b00b0032119057121mr1260450vka.5.1645026003793; Wed, 16 Feb
- 2022 07:40:03 -0800 (PST)
+        bh=qe0unW/41Xtzn3wdiODhkwm/ZZVPBnbzZe/ODJfhGis=;
+        b=doK7WBHsDBuHxti9k3XR+5h9ITf079Sls84gA7A+7rLwHd39xxkwIs/2NgzreDd/+P
+         c47DGaTGM33q90c5fJ3fremMS7NisnkstLp8URJGtJqElwMDMKBV2onDiE3HDiPw1ZTV
+         M+qYRnvD/H8Nu8e8nbhhRhzZWgr5+HAKr2A7RHRiGyR2ww9x0WfnbtBRlkna/PpcRO6c
+         xk4EFmqapGuZXx7tWP1bZHB6u7NhyNv+CDqW1HujHhPJLYRY+iqfISmXGfHUEqwbcG2J
+         AhYcEau9EKO+vsNYbX6PZhvwzVRPJjGshf2f7vl2V7r2V5iE6+w62hvkvUJZVWatEPv9
+         4EXQ==
+X-Gm-Message-State: AOAM532rydRaKljaOk1k9uwHW2vN5HH4/07g9+T8aIY4Xp/VZ9vjQqhw
+        mlpsv4/tLi19fzNOicjWUdsAufQHHp0jH405d2M=
+X-Google-Smtp-Source: ABdhPJzQuA/DYrMoL4FuK5aA2MzRPGuzutJuOHYuzDdwcC6PuT6deUE/F0ImD+LNm8CwOWJnm1gmxxX0UpF7pIW63fs=
+X-Received: by 2002:a17:906:5c4:b0:6cd:8d9c:3c7d with SMTP id
+ t4-20020a17090605c400b006cd8d9c3c7dmr2885604ejt.554.1645026046195; Wed, 16
+ Feb 2022 07:40:46 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com> <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
-From:   Robert Coup <robert.coup@koordinates.com>
-Date:   Wed, 16 Feb 2022 15:39:47 +0000
-Message-ID: <CAFLLRpJ1aDyLb4qAoQwYDyGdP1_PH8kzLAQCKJpQwiYiapZ5Aw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] [RFC] repack: add --filter=
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+ <YfGpjm8mCkWIPM6V@nand.local> <CAP8UFD1Mqv=MUcdjjhTpOkP0yWpnv9Jr=aB5G+4XmAqWsJBX4g@mail.gmail.com>
+ <CAP8UFD2FfJA1ruhxzv3tcxhsssHBeHGCbGFDiz+-fFmpx39Gqg@mail.gmail.com> <CA+CkUQ9VTs7n9B+ApH1BYC=Uq4yvrZm0fsG0RJB8PVg_BBSCfw@mail.gmail.com>
+In-Reply-To: <CA+CkUQ9VTs7n9B+ApH1BYC=Uq4yvrZm0fsG0RJB8PVg_BBSCfw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 16 Feb 2022 16:40:35 +0100
+Message-ID: <CAP8UFD0cNLUSbiABnj3UTrAk36DTePNctNWn8U3wrXMGjA6HFg@mail.gmail.com>
+Subject: Re: Git in GSoC 2022?
+To:     Hariom verma <hariom18599@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Git Community <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John,
+Hi,
 
-On Wed, 9 Feb 2022 at 02:41, John Cai via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Wed, Feb 16, 2022 at 12:18 AM Hariom verma <hariom18599@gmail.com> wrote:
 >
-> This patch series makes partial clone more useful by making it possible to
-> run repack to remove objects from a repository (replacing it with promisor
-> objects). This is useful when we want to offload large blobs from a git
-> server onto another git server, or even use an http server through a remote
-> helper.
+> Hi,
 >
-> In [A], a --refilter option on fetch and fetch-pack is being discussed where
-> either a less restrictive or more restrictive filter can be used. In the
-> more restrictive case, the objects that already exist will not be deleted.
-> But, one can imagine that users might want the ability to delete objects
-> when they apply a more restrictive filter in order to save space, and this
-> patch series would also allow that.
+> On Mon, Feb 14, 2022 at 2:59 PM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> >
+> > I added the "Unify ref-filter formats with other pretty formats" to
+> > continue Hariom Verma's work during GSoC 2020. I would be happy to
+> > co-mentor it if someone is interested to co-mentor it with me.
+>
+> Since I worked on this for quite some time. I maybe am able to provide
+> some insights. If it's not too late, I would like to co-mentor it with
+> you.
 
-This all makes sense to me, and the implementation is remarkably short -
-gluing together capabilities that are already there, and writing tests.
+Great! I am happy to co-mentor it with you!
 
-*But*, running `repack --filter` drops objects from the object db.
-That seems like
-a capability Git shouldn't idly expose without people understanding the
-consequences - mostly that they really have another copy elsewhere or they
-will lose data, and it won't necessarily be obvious for a long time. Otherwise
-it is a footgun.
+Kaartic, I hope it's ok for you.
 
-I don't know whether that is just around naming (--delete-filter /
---drop-filter /
---expire-filter ?), and/or making the documentation very explicit that
-this isn't so
-much "omitting certain objects from a packfile" as irretrievably
-deleting objects.
-
-Rob :)
+Thanks both,
+Christian.
