@@ -2,118 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C851AC433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 07:20:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23775C433EF
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 07:43:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229596AbiBPHUM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 02:20:12 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:51140 "EHLO
+        id S230356AbiBPHno (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 02:43:44 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:53752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbiBPHUK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 02:20:10 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F46CE02F5
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 23:19:57 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1A36F18F5CE;
-        Wed, 16 Feb 2022 02:19:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=x4OUh8I0TBYV8bJcwEFlORvkHfqMMa67+Wo/H8
-        VG3Lo=; b=L/GXYNbZeoUE9l1EhsN8A2YOcibBQTywxMbAOLcMuKEPnChn56MKXf
-        Hl2p28RcP3tCSJ/EWHgBFwxj3UdgIREsPZObePP4h5QrfPGPuI4ry8AOzZa8KItz
-        yJMnWZP5ZfgZ1bZ1By2MhyjfJcDIfU4GkUyqQMfDhkurugnvVHySE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 07B2418F5CD;
-        Wed, 16 Feb 2022 02:19:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 57DC218F5CC;
-        Wed, 16 Feb 2022 02:19:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 0/5] sparse checkout: fix a few bugs and check
- argument validity for set/add
-References: <pull.1118.v2.git.1644913943.gitgitgadget@gmail.com>
-        <pull.1118.v3.git.1644985283.gitgitgadget@gmail.com>
-Date:   Tue, 15 Feb 2022 23:19:53 -0800
-In-Reply-To: <pull.1118.v3.git.1644985283.gitgitgadget@gmail.com> (Elijah
-        Newren via GitGitGadget's message of "Wed, 16 Feb 2022 04:21:18
-        +0000")
-Message-ID: <xmqqo837uvl2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229468AbiBPHnn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 02:43:43 -0500
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3858F27FF0
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 23:43:23 -0800 (PST)
+Received: from bsmtp.bon.at (unknown [192.168.181.102])
+        by bsmtp5.bon.at (Postfix) with ESMTPS id 4Jz84T17BWz5vHh
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:00:57 +0100 (CET)
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp.bon.at (Postfix) with ESMTPSA id 4Jz83s0rbvz5tl9;
+        Wed, 16 Feb 2022 08:00:24 +0100 (CET)
+Message-ID: <9ce63b16-cf75-3404-88cf-0623194db07b@kdbg.org>
+Date:   Wed, 16 Feb 2022 08:00:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D685439A-8EF8-11EC-8D6F-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v2 0/2] Improvements to tests and docs for .gitattributes
+ eol
+Content-Language: en-US
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20220111021507.531736-1-sandals@crustytoothpaste.net>
+ <20220214020827.1508706-1-sandals@crustytoothpaste.net>
+ <xmqqilth2u28.fsf@gitster.g> <20220214204631.mquj645jt5qajwku@tb-raspi4>
+ <xmqq8rud0ytj.fsf@gitster.g> <9ab7761a-ff63-f809-47af-033825e5779e@kdbg.org>
+ <YgwtMhuODDcVWEd6@camp.crustytoothpaste.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Cc:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+In-Reply-To: <YgwtMhuODDcVWEd6@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Am 15.02.22 um 23:46 schrieb brian m. carlson:
+> On 2022-02-15 at 07:05:44, Johannes Sixt wrote:
+>> Sorry, I don't find this description clear at all due to the many 'or's
+>> and 'and's and no indication which parts belong together. The original
+>> text was clear (but, of course, not helpful if it was wrong).
+>>
+>> I suggest to rewrite the paragraph into format with bullet points:
+>>
+>>    ... only if one of the following is true:
+>>
+>>   - is set and foo or bar
+>>   - is unspecified and either
+>>       - this
+>>       - or that
+>>   - is set to auto but not...
+>>
+>> or something along the lines. I can't propose actual text because I have
+>> no clue what the truth is.
+> 
+> Unfortunately, the fact is that this behaviour is complicated.  I can
+> try a reroll with a bulleted list, though.
 
-> Patch to resolve textual and semantic conflict with
-> ds/sparse-checkout-requires-per-worktree-config:
->
-> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-> remerge CONFLICT (content): Merge conflict in t/t1091-sparse-checkout-builtin.sh
-> index 3c6adeb885..3a95d2996d 100755
-> --- a/t/t1091-sparse-checkout-builtin.sh
-> +++ b/t/t1091-sparse-checkout-builtin.sh
-> @@ -275,24 +275,8 @@ test_expect_success 'sparse-index enabled and disabled' '
->      diff -u sparse full | tail -n +3 >actual &&
->      test_cmp expect actual &&
->  
-> -<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 286c22e5ec (sparse-checkout: reject arguments in cone-mode that look like patterns)
->      git -C repo config --list >config &&
-> -    ! grep index.sparse config
-> -|||||||||||||||||||||||||||||||| 89bece5c8c
-> -        diff -u sparse full | tail -n +3 >actual &&
-> -        test_cmp expect actual &&
-> -
-> -        git -C repo config --list >config &&
-> -        ! grep index.sparse config
-> -    )
-> -================================
-> -        diff -u sparse full | tail -n +3 >actual &&
-> -        test_cmp expect actual &&
-> -
-> -        git -C repo config --list >config &&
-> -        test_cmp_config -C repo false index.sparse
-> -    )
-> ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 3ce1138272 (config: make git_configset_get_string_tmp() private)
-> +    test_cmp_config -C repo false index.sparse
->  '
+Just so you know where my confusion arises from: Your updated text has
+the structure (as I read it)
 
-The above is quite straight-forward.
+   if ... set or unspecified or if auto then ... detected ... and LF
 
->  test_expect_success 'cone mode: init and set' '
-> @@ -532,6 +516,7 @@ test_expect_success 'reapply can handle config options' '
->      cat >expect <<-\EOF &&
->      core.sparsecheckout=true
->      core.sparsecheckoutcone=true
-> +    index.sparse=false
->      EOF
->      test_cmp expect actual &&
->  
-> @@ -539,6 +524,8 @@ test_expect_success 'reapply can handle config options' '
->      git -C repo config --worktree --list >actual &&
->      cat >expect <<-\EOF &&
->      core.sparsecheckout=true
-> +    core.sparsecheckoutcone=false
-> +    index.sparse=false
->      EOF
->      test_cmp expect actual &&
+It is unclear whether the 'then' conditions apply only to 'if auto'.
+Even if the additional 'if' in the middle makes me think that the
+'then's apply only to the 'auto' case, it is sufficently vage because in
+my mental model there is not much difference between an 'unset' and a
+set-to-'auto' attribute, and I wonder why the 'then's should not apply
+to the 'unset' case as well.
 
-These differences are a bit nasty, but of course understandable once
-it is shown X-<.
+Moreover, after re-reading the text, I notice that text may be read as
+"this attribute has an effect only if <conditions>" where <conditions>
+basically means "always except for when the 'if auto' case is not met",
+right? Would it perhaps be better to write "has no effect if <very
+specific condition>"?
 
-Thanks.
+-- Hannes
