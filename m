@@ -2,121 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36F72C433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 16:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88442C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 16:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236476AbiBPQi3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 11:38:29 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34338 "EHLO
+        id S236688AbiBPQvO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 11:51:14 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235505AbiBPQi3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 11:38:29 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91F0325BD4B
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:38:16 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id a23so576681eju.3
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:38:16 -0800 (PST)
+        with ESMTP id S234383AbiBPQvN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 11:51:13 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B4B290593
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:51:00 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id hw13so601260ejc.9
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:51:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=c4r45OVLn+3chrzksLXeuzWiVeqKzhtule9tizEIQaM=;
-        b=Yqg8bQXy4yxUYJVU8bw4bAoxSgzXZ7wJQh5EbZfbPsrGbbTCI4T+8o9kSM9Y5PBuJu
-         4dKkXXVwn73gZhLcDVbI+cqCCJucrQ8c6jzYTDzkS/lAiNZBn5+kFG6j+hrC1WKQBt0q
-         G9HhPyaUTmAKnrjtKgMEzshaX7yJqXvu0tI1AeSHjR5vwRqb72Y2HnObjC99w19hQ/oE
-         aD+o7c51QSAGob2XDzL8M9/K+HEM1cQMc5hUuOv/qIoxLbRCzvBWNfvD6i0Hzwqg9S3j
-         8QMTZJz7ejFKFs2X419//dTW+0wxE7kgZu9xdXiZSomkQfvHyPeoFPQAUq4e9j7eYgj9
-         Mr8g==
+        bh=WXzsTah1bU0rf3E2rNx6WXEojUeZiGgaQx8+istGixQ=;
+        b=LigkXUV4Yx+x5hAU5uuhiO08k8PfuhqITlL1rPx/7gC+/eIMpMC8Ws+p9ppSMWxkTj
+         eizVldZrKDmAL7/geq3Dt+xuC/iW8fMuIF1qmJP6XmMsrlcQHteaMRUV63VQTsghiRJ2
+         Fc6I0VE1jX6oVnsCRvodtupvqN39HcEUEl+avL4OTAGfiyJgDoh8GzUNum9aA/s3Ox6o
+         JtrjygOcehkzRwoEPCEcUBO5gKc8pplUfEtx75M1nUnhSqesqvXS7Sa2nk+fc3UivsYq
+         qmBu5vibP1gRe1KUigslz+CszrbVUskRgwQNFYxqoFKP+6UnvaUgm0HLF6cPpsGcYbZO
+         XzhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=c4r45OVLn+3chrzksLXeuzWiVeqKzhtule9tizEIQaM=;
-        b=sGunu/DSQ3llGjV3iH5BFEKhxHUvouOX4N+9wLmqoZfAt4iGPENig3idfExm+0Nsdb
-         74XTH0KiOHgNBZJ9H/FeAmrCD40ky7vnXBMC+wR2NZpA9goGi+g7uflKEZEN2kg+HJPP
-         +c0W+N4e0rLJe++GQ5KEdWoEnLF/g7w9CQpIFLHQAASs+K8MgIQbueKPdM3w+PcR1DGz
-         tIEHjVmaYAu5eJpBclAJN947TGaaz0nY2hFbCDxEYMC1H4NclrWoB/XMPM9fd7ycg+lN
-         TTkqcm06Q14a+ksKWh6TIyBOqFLpMu8xUiP+QrZf76/4sMBdqo/HKZpEI88LW0j0avcu
-         N65g==
-X-Gm-Message-State: AOAM5304asInh9mJfNVqVHvkaJS8czlfC6aPc7XYwU494SRjHzHSH5+n
-        kJalKMv1D5GPZdb3Q2/3Zje45hFJij39yq9IHHGqflF6Kj1gWg==
-X-Google-Smtp-Source: ABdhPJxp1sds5j/9NdAE10TI1RnVCJM/ej/U54lpCO5akMOKnS4eccz9f2QJBNZezei3r+nWxnQ4obTnlQNZ9H87Uq4=
-X-Received: by 2002:a17:906:3a18:b0:6cd:ba45:995f with SMTP id
- z24-20020a1709063a1800b006cdba45995fmr3096097eje.328.1645029495108; Wed, 16
- Feb 2022 08:38:15 -0800 (PST)
+        bh=WXzsTah1bU0rf3E2rNx6WXEojUeZiGgaQx8+istGixQ=;
+        b=C2HkxMkGZ5SQWByMdoUE/vCtOWu9oA9chpKsjsLTVnwOYuJMvcyhJv4aX4GlcfCGJc
+         UrP9cUZJ0icwEyOmYnSVlwT6cmtkOxoTYWE845LqW6lQlY8cK4GV48HmMOsTyMQeytTH
+         Ni2qtg9AJ3b32cgXrWNCKClPAjbcqt8qPiD1v4A+QgeUms+dYkYOb/ySEJ3cNxPIVfcq
+         cQb9Quklefb6gN02XqDqC7W0WTTKLAFfIrWWnzfJc8cGBeBBt2Ug8u+oXNkonMLYA1qt
+         pSB6as1ZZ6jeZ94qyHpv9vqgDK+eh9YipNeiWjfCp4g1PzIsicfHL2sFKIP/sYPlARDi
+         rJEw==
+X-Gm-Message-State: AOAM533gbns0dJ1504VIi7A78DRd1vU+eeY6cDqYDLCXSYZT1UcXo9hT
+        E1gLyPtYOms5apiKVgLhv+LarqmE5vtwFmngSTFdzhOTmXs=
+X-Google-Smtp-Source: ABdhPJxlJtqzE4Ng58Y8wsuUQdQoArhkPRO8eZrpyMXwGeTQ+SL9aFOJoGoWJQyL3U0eThaAwQqY52mnIBn45GZt3Sg=
+X-Received: by 2002:a17:906:a855:b0:6cd:ba20:39c5 with SMTP id
+ dx21-20020a170906a85500b006cdba2039c5mr2987842ejb.100.1645030259138; Wed, 16
+ Feb 2022 08:50:59 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqqk0dwyrcv.fsf@gitster.g> <CABPp-BFOw48k0M3U+fef1J57wHt2uq4hbKo-vnjAj56nYY6m2Q@mail.gmail.com>
- <220216.867d9vuorn.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220216.867d9vuorn.gmgdl@evledraar.gmail.com>
+References: <cover-0.2-00000000000-20220216T105250Z-avarab@gmail.com> <patch-1.2-1c6c7f0f52f-20220216T105250Z-avarab@gmail.com>
+In-Reply-To: <patch-1.2-1c6c7f0f52f-20220216T105250Z-avarab@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 16 Feb 2022 08:38:03 -0800
-Message-ID: <CABPp-BGG1nOedrcRz+w3PvXmHkJakv+8OZnvgT=ZcszqUsvyog@mail.gmail.com>
-Subject: Re: en/present-despite-skipped (Was: Re: What's cooking in git.git
- (Feb 2022, #04; Tue, 15))
+Date:   Wed, 16 Feb 2022 08:50:47 -0800
+Message-ID: <CABPp-BHYR8a9YyPGGrUhjMbzPws286FeHjyNcOmgk=8XnwOiVg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] diff.[ch]: have diff_free() call clear_pathspec(opts.pathspec)
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 16, 2022 at 1:47 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Wed, Feb 16, 2022 at 7:34 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
 >
-> On Tue, Feb 15 2022, Elijah Newren wrote:
+> Have the diff_free() function call clear_pathspec(). Since the
+> diff_flush() function calls this all its callers can be simplified to
+> rely on it instead.
 >
-> > On Tue, Feb 15, 2022 at 12:01 PM Junio C Hamano <gitster@pobox.com> wro=
-te:
-> >>
-> >> * en/present-despite-skipped (2022-01-14) 6 commits
-> >>  - Accelerate clear_skip_worktree_from_present_files() by caching
-> >>  - Update documentation related to sparsity and the skip-worktree bit
-> >>  - repo_read_index: clear SKIP_WORKTREE bit from files present in work=
-tree
-> >>  - unpack-trees: fix accidental loss of user changes
-> >>  - t1011: add testcase demonstrating accidental loss of user modificat=
-ions
-> >>  - Merge branch 'vd/sparse-clean-etc' into en/present-despite-skipped
-> >>  (this branch uses vd/sparse-clean-etc.)
-> >>
-> >>  In sparse-checkouts, files mis-marked as missing from the working tre=
-e
-> >>  could lead to later problems.  Such files were hard to discover, and
-> >>  harder to correct.  Automatically detecting and correcting the markin=
-g
-> >>  of such files has been added to avoid these problems.
-> >>
-> >>  Will merge to 'next'?
-> >>  cf. <20220204081336.3194538-1-newren@gmail.com>
-> >>  source: <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
-> >
-> > Is there anything specific you're looking for here?
-> >
-> > I think it's ready, as I said two weeks ago in the link you provided
-> > above.  All reviewer feedback was addressed to reviewers' satisfaction
-> > over a month ago, so I'm not sure what else to do here...
+> When I added the diff_free() function in e900d494dcf (diff: add an API
+> for deferred freeing, 2021-02-11) I simply missed this, or wasn't
+> interested in it. Let's consolidate this now. This means that any
+> future callers (and I've got revision.c in mind) that embed a "struct
+> diff_options" can simply call diff_free() instead of needing know that
+> it has an embedded pathspec.
 >
-> FWIW I gave it some light reading just now & left some comments on it.
+> This does fix a bunch of leaks, but I can't mark any test here as
+> passing under the SANITIZE=3Dleak testing mode because in
+> 886e1084d78 (builtin/: add UNLEAKs, 2017-10-01) an UNLEAK(rev) was
+> added, which plasters over the memory
+> leak. E.g. "t4011-diff-symlink.sh" would report fewer leaks with this
+> fix, but because of the UNLEAK() reports none.
 >
-> I don't think any of them should be blocking on it being merged down to
-> "next", but perhaps some of them suggest worthwhile follow-ups. In
-> particular the suggested documentation changes & the behavior/error
-> checking around the lstat() and index iteration in the new path_found().
+> I'll eventually loop around to removing that UNLEAK(rev) annotation as
+> I'll fix deeper issues with the revisions API leaking. This is one
+> small step on the way there, a new freeing function in revisions.c
+> will want to call this diff_free().
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  add-interactive.c | 6 +++---
+>  blame.c           | 3 ---
+>  builtin/reset.c   | 1 -
+>  diff.c            | 1 +
+>  notes-merge.c     | 2 --
+>  5 files changed, 4 insertions(+), 9 deletions(-)
+>
+> diff --git a/add-interactive.c b/add-interactive.c
+> index 6498ae196f1..e1ab39cce30 100644
+> --- a/add-interactive.c
+> +++ b/add-interactive.c
+> @@ -797,14 +797,14 @@ static int run_revert(struct add_i_state *s, const =
+struct pathspec *ps,
+>         diffopt.flags.override_submodule_config =3D 1;
+>         diffopt.repo =3D s->r;
+>
+> -       if (do_diff_cache(&oid, &diffopt))
+> +       if (do_diff_cache(&oid, &diffopt)) {
+> +               diff_free(&diffopt);
+>                 res =3D -1;
+> -       else {
+> +       } else {
+>                 diffcore_std(&diffopt);
+>                 diff_flush(&diffopt);
+>         }
+>         free(paths);
+> -       clear_pathspec(&diffopt.pathspec);
+>
+>         if (!res && write_locked_index(s->r->index, &index_lock,
+>                                        COMMIT_LOCK) < 0)
+> diff --git a/blame.c b/blame.c
+> index 206c295660f..401990726e7 100644
+> --- a/blame.c
+> +++ b/blame.c
+> @@ -1403,7 +1403,6 @@ static struct blame_origin *find_origin(struct repo=
+sitory *r,
+>                 }
+>         }
+>         diff_flush(&diff_opts);
+> -       clear_pathspec(&diff_opts.pathspec);
+>         return porigin;
+>  }
+>
+> @@ -1447,7 +1446,6 @@ static struct blame_origin *find_rename(struct repo=
+sitory *r,
+>                 }
+>         }
+>         diff_flush(&diff_opts);
+> -       clear_pathspec(&diff_opts.pathspec);
+>         return porigin;
+>  }
+>
+> @@ -2328,7 +2326,6 @@ static void find_copy_in_parent(struct blame_scoreb=
+oard *sb,
+>         } while (unblamed);
+>         target->suspects =3D reverse_blame(leftover, NULL);
+>         diff_flush(&diff_opts);
+> -       clear_pathspec(&diff_opts.pathspec);
+>  }
+>
+>  /*
+> diff --git a/builtin/reset.c b/builtin/reset.c
+> index b97745ee94e..24968dd6282 100644
+> --- a/builtin/reset.c
+> +++ b/builtin/reset.c
+> @@ -274,7 +274,6 @@ static int read_from_tree(const struct pathspec *path=
+spec,
+>                 return 1;
+>         diffcore_std(&opt);
+>         diff_flush(&opt);
+> -       clear_pathspec(&opt.pathspec);
+>
+>         return 0;
+>  }
+> diff --git a/diff.c b/diff.c
+> index c862771a589..0aef3db6e10 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -6345,6 +6345,7 @@ void diff_free(struct diff_options *options)
+>
+>         diff_free_file(options);
+>         diff_free_ignore_regex(options);
+> +       clear_pathspec(&options->pathspec);
+>  }
+>
+>  void diff_flush(struct diff_options *options)
+> diff --git a/notes-merge.c b/notes-merge.c
+> index b4a3a903e86..7ba40cfb080 100644
+> --- a/notes-merge.c
+> +++ b/notes-merge.c
+> @@ -175,7 +175,6 @@ static struct notes_merge_pair *diff_tree_remote(stru=
+ct notes_merge_options *o,
+>                        oid_to_hex(&mp->remote));
+>         }
+>         diff_flush(&opt);
+> -       clear_pathspec(&opt.pathspec);
+>
+>         *num_changes =3D len;
+>         return changes;
+> @@ -261,7 +260,6 @@ static void diff_tree_local(struct notes_merge_option=
+s *o,
+>                        oid_to_hex(&mp->local));
+>         }
+>         diff_flush(&opt);
+> -       clear_pathspec(&opt.pathspec);
+>  }
+>
+>  static void check_notes_merge_worktree(struct notes_merge_options *o)
+> --
+> 2.35.1.1028.g2d2d4be19de
 
-You do seem to like waiting until after things merge down to review
-(Junio merged this 7 hours before your email here).  ;-)
-
-I can include the documentation changes along with my switching of the
-default mode in sparse-checkout (i.e. my breaking up and resubmitting
-[1] in a separate series), especially since the sparse-checkout
-documentation is be heavily modified in that series anyway.  I think
-the lstat stuff deserves a separate xlstat in wrapper.[ch] if we
-really want that kind of check everywhere, and seems like a bigger
-separate refactor.  I'm guessing by index iteration it was the part
-where you got confused on char* vs. char **, and there aren't any
-changes needed; let me know if my guess on that is wrong.
-
-[1] https://lore.kernel.org/git/e30119b96dfaf9fdb82039cab84f8b81caacc1de.16=
-44712798.git.gitgitgadget@gmail.com/
+I have occasionally found it surprising that we have places where
+callers are responsible for free'ing a single piece of some struct
+despite the fact that we have a function for free'ing memory
+associated with that struct.  Thanks for getting rid of another one of
+these.
