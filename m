@@ -2,85 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEAECC433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 18:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA04BC433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 19:02:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237845AbiBPSuK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 13:50:10 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55180 "EHLO
+        id S237987AbiBPTC1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 14:02:27 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237719AbiBPSuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 13:50:09 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07B0A2AE061
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 10:49:56 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B0E8117C0CC;
-        Wed, 16 Feb 2022 13:49:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=NS7QbJHnzJtG
-        /+3YIGMDjIdNk6vT0k1LXuDDydvFJu4=; b=BZFwLm5LgmZJGO0AoNvHSwyveJ9l
-        RjTX9sh0l55cUvHv0G8/oVjDri7PiHoRsn6zHUITXfJA9/kCJ2MPZoSRG0J9BMsj
-        y3Zw14kvXiGxUo9qRO/SfiMTLfMwZ2U1qEgNgxxAzxXHEB9gcJkud0qfZLjOCOud
-        nFIZxs3i8TRzIck=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A8B7417C0CB;
-        Wed, 16 Feb 2022 13:49:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1138B17C0C9;
-        Wed, 16 Feb 2022 13:49:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v3 5/5] sparse-checkout: reject arguments in cone-mode
- that look like patterns
-References: <pull.1118.v2.git.1644913943.gitgitgadget@gmail.com>
-        <pull.1118.v3.git.1644985283.gitgitgadget@gmail.com>
-        <2008542d0c718bbe43388297307a791f94bc73e1.1644985283.git.gitgitgadget@gmail.com>
-        <220216.8635kjuob0.gmgdl@evledraar.gmail.com>
-        <CABPp-BEBX4tWwqkG=7+rcZa_EJzOC2+Rg214av_+-yymHTQGQw@mail.gmail.com>
-        <af439020-8314-9171-4300-94a5102c8a38@github.com>
-Date:   Wed, 16 Feb 2022 10:49:52 -0800
-In-Reply-To: <af439020-8314-9171-4300-94a5102c8a38@github.com> (Victoria Dye's
-        message of "Wed, 16 Feb 2022 09:20:08 -0800")
-Message-ID: <xmqqpmnmsl2n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S237979AbiBPTCV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 14:02:21 -0500
+X-Greylist: delayed 129378 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 16 Feb 2022 11:02:08 PST
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC3DCAEF3C
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 11:02:07 -0800 (PST)
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4JzS4W3gWmz5tl9;
+        Wed, 16 Feb 2022 20:02:03 +0100 (CET)
+Message-ID: <108f009b-daa3-4ef4-755e-7c9f86f898c5@kdbg.org>
+Date:   Wed, 16 Feb 2022 20:02:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3AABF5CA-8F59-11EC-B335-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v2 0/2] Improvements to tests and docs for .gitattributes
+ eol
+Content-Language: en-US
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20220111021507.531736-1-sandals@crustytoothpaste.net>
+ <20220214020827.1508706-1-sandals@crustytoothpaste.net>
+ <xmqqilth2u28.fsf@gitster.g> <20220214204631.mquj645jt5qajwku@tb-raspi4>
+ <xmqq8rud0ytj.fsf@gitster.g> <9ab7761a-ff63-f809-47af-033825e5779e@kdbg.org>
+ <YgwtMhuODDcVWEd6@camp.crustytoothpaste.net>
+ <9ce63b16-cf75-3404-88cf-0623194db07b@kdbg.org>
+ <YgzRyKZwsPw6rTyT@camp.crustytoothpaste.net>
+Cc:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+From:   Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <YgzRyKZwsPw6rTyT@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
+Am 16.02.22 um 11:28 schrieb brian m. carlson:
+> The situation is that eol is in effect if and only if:
+> 
+> * text is set;
+> * text is unspecified; or
+> * text is auto, the file is detected as text, and the file has LF line
+>   endings in the index.
+> 
+> Alternately, it has no effect if and only if:
+> 
+> * text is unset;
+> * text is auto and the file is detected as binary; or
+> * text is auto and the file is detected as text and has CRLF line
+>   endings.
+> 
+> I'm not sure one reads significantly easier than the other.  I slightly
+> prefer the former because it has fewer conditions with multiple nested
+> entries, though.
 
->> I considered strtok, but strtok & strtok_r are documented as modifying
->> their argument.  Perhaps they don't modify the argument if they don't
->> find any of the listed tokens, but I didn't want to rely on that since
->> I found no guarantees in the documentation.
->
-> Maybe `strpbrk` would work? Unless I'm misunderstanding, it should
-> consolidate the condition to one line without potentially modifying the
-> arguments. E.g.:=20
->
-> 	if (!strpbrk(argv[i], "*?[]"))
-> 		die(_("specify directories rather than patterns.  If your directory r=
-eally has any of '*?[]' in it, pass --skip-checks"));
+I agree that the first version is easier to understand.
 
-Yes, either that or strspn() are good match for the problem (I
-suspect =C3=86var actually meant strspn() not strtok() in the first
-place, though ;-).
-
+-- Hannes
