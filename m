@@ -2,88 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76439C433EF
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 03:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79B6BC433EF
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 03:01:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343937AbiBPDAf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 22:00:35 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40128 "EHLO
+        id S1343942AbiBPDBb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 22:01:31 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240388AbiBPDAe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 22:00:34 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E95EFBF2D
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 19:00:23 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EEE011DF0A;
-        Tue, 15 Feb 2022 22:00:20 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=jDbwxHiHhVl21iHLlNdLR2hYeG1vCB+WF7OMbV
-        Ook6Q=; b=KAZOu+QHEKQYtns9N+z2Z5DT0t+Ky8mo8ew4jiuyTA1Ql9s9FRdPpR
-        m1uxO3Huc7oa2iJIQu/JXKGwCiwqEFybw0y68/EEhgJrh5/pZo5pb3Gdk7gflFat
-        YrMhyfCV9xFwe175cdrKZHchlC4pE9gSgKysW1qeU2Nc3LSt4Cym8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 95B7011DF09;
-        Tue, 15 Feb 2022 22:00:20 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C61111DF08;
-        Tue, 15 Feb 2022 22:00:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S240388AbiBPDBa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 22:01:30 -0500
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28711FBF2D
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 19:01:19 -0800 (PST)
+Received: by mail-pl1-f173.google.com with SMTP id 10so952731plj.1
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 19:01:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iKnj/jQUd6dOImyiAR1ak/M6UvtzMwqYJawunUbbI+U=;
+        b=KsggevAICEYaiafc9ernNKVRZJ2ko0mcWynDj1aAPvvOkI0Zan9PtS7i6TipZRJVEl
+         UuZqUESq9VsQPOThBS4+CxbVo8CRDUdEaZs0O5PVEFa0mnUOEizTwknt81gacui1Ka7Q
+         mOqbF2LIsKZGx9EDJnUlj48vtchGlvZ7YGAtLFb+ado+98ANgY/X5O97XaNcHeCffG2f
+         3Dx1b51LWCOnM0FPWV0KtXywLcDI20VXbiWPO3GD0lYObn3SHJ/ynfmlytUALYuBPnPh
+         YX2LwNCOn8L3dunzlL+McDyMaME/wbEYM37PPe+JB1lpzf+XjVP2jG9YYLmIPZghfRSR
+         AlzQ==
+X-Gm-Message-State: AOAM533lwOeXnbEoa6OnjR/fDSnrgD0HILrrhtaWBgAsMFK1io+JMfCs
+        jTM2Fr/km/0ANmZQ7HKrr64olnHL1sHTD9MF567ZT9Yw7i10FQ==
+X-Google-Smtp-Source: ABdhPJyILbqLoEHdwrz8sMRVtShqchs7dWIoPgGR2M2JZFVW4n5kpz7GgrChz9iQXOekTRK8rD/a7XcLypM9A+il/BU=
+X-Received: by 2002:a17:902:a713:b0:14d:8f49:84cd with SMTP id
+ w19-20020a170902a71300b0014d8f4984cdmr333738plq.145.1644980478460; Tue, 15
+ Feb 2022 19:01:18 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.1212.v6.git.git.1644862988.gitgitgadget@gmail.com>
+ <pull.1212.v7.git.git.1644972810.gitgitgadget@gmail.com> <aebaf7e3fe1d4448037d2caf03f3de393908ff9a.1644972810.git.gitgitgadget@gmail.com>
+ <xmqqfsojy50b.fsf@gitster.g> <BE7471F8-0141-49ED-A34B-04D69BE18D96@gmail.com>
+In-Reply-To: <BE7471F8-0141-49ED-A34B-04D69BE18D96@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 15 Feb 2022 22:01:07 -0500
+Message-ID: <CAPig+cQUwErXaZR-xZ8u9iz4kpEkE4G5QaxNRCuUx_Xt0rQ_-g@mail.gmail.com>
+Subject: Re: [PATCH v7 4/4] cat-file: add --batch-command mode
 To:     John Cai <johncai86@gmail.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, phillip.wood123@gmail.com,
-        avarab@gmail.com, e@80x24.org, bagasdotme@gmail.com,
-        Eric Sunshine <sunshine@sunshineco.com>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Wong <e@80x24.org>, Bagas Sanjaya <bagasdotme@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v7 4/4] cat-file: add --batch-command mode
-References: <pull.1212.v6.git.git.1644862988.gitgitgadget@gmail.com>
-        <pull.1212.v7.git.git.1644972810.gitgitgadget@gmail.com>
-        <aebaf7e3fe1d4448037d2caf03f3de393908ff9a.1644972810.git.gitgitgadget@gmail.com>
-        <xmqqfsojy50b.fsf@gitster.g>
-        <BE7471F8-0141-49ED-A34B-04D69BE18D96@gmail.com>
-Date:   Tue, 15 Feb 2022 19:00:18 -0800
-In-Reply-To: <BE7471F8-0141-49ED-A34B-04D69BE18D96@gmail.com> (John Cai's
-        message of "Tue, 15 Feb 2022 21:48:31 -0500")
-Message-ID: <xmqq4k4zwm65.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 938357AE-8ED4-11EC-9C99-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-John Cai <johncai86@gmail.com> writes:
+On Tue, Feb 15, 2022 at 9:48 PM John Cai <johncai86@gmail.com> wrote:
+> On 15 Feb 2022, at 20:28, Junio C Hamano wrote:
+> > and make the caller do
+> >
+> >     dispatch_calls(opt, ..., nr);
+> >     nr = 0;
+> >
+> > instead of passing a pointer to nr like the posted patch?
+>
+> Yeah, this is what I had before but there was discussion about separation of concerns in [1]. But perhaps it's preferable compared to passing a pointer to nr.
+>
+> 1. https://lore.kernel.org/git/CAPig+cTwLhn1GZ_=6s0FXL0z=Q=p1w9ZGK0hAV8wfK9RsQYjnA@mail.gmail.com/
 
-> Yeah, this is what I had before but there was discussion about
-> separation of concerns in [1]. But perhaps it's preferable
-> compared to passing a pointer to nr.
+My biggest concern when mentioning it during review was that if a
+caller forgets to do `nr = 0`, then a sequence such as:
 
-Oh, I see.
+    dispatch_calls(...);
+    ...
+    dispatch_calls(...);
 
-I do not see any issue with separation of concerns here, actually.
+will send dangling pointers to the command handlers in the second
+dispatch_calls() invocation because the first call to dispatch_calls()
+did free(cmd[i].line). In that sense, it's an accident waiting to
+happen if people modifying this code in the future aren't paying close
+attention.
 
-As long as "dispatch_calls() consumes all the cmd[] before it
-returns to the caller" is clearly understood between the function
-and its caller(s) [*], clearing of "nr" the caller has is entirely
-caller's problem.  It becomes needed only because this caller
-decides to reuse cmd[] array.
-
-	Side note: you do have a comment before the function to tell
-	what to expect out of the helper for its callers, right?
-
-If it were just "accumulate many cmd[] and call the function once"
-caller, it would care to maintain the correct "nr" only up to the
-point where the function is called (because <cmd[], nr> pair is the
-way the function takes the list of commands and it needs a correct
-"nr"), but not after making the call, as the only thing left to do
-would be to free the cmd[] array itself, which does not even need
-"nr".
-
+That said, I don't feel too strongly about it and mentioned in my
+review that it might be "good enough" as-is (with the caller having to
+remember to `nr = 0`) since it's a local helper function.
