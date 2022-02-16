@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA1AC433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 10:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83DAEC433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 10:15:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232752AbiBPKPk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 05:15:40 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:54484 "EHLO
+        id S232757AbiBPKPl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 05:15:41 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:54592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232723AbiBPKP3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 05:15:29 -0500
+        with ESMTP id S232740AbiBPKPb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 05:15:31 -0500
 Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B98B1BE062
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 02:15:16 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id v12so2628513wrv.2
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 02:15:16 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 592F22AC906
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 02:15:17 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id w11so2614007wra.4
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 02:15:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=UfWdj/2T0vGo78iWFHoh4nkFyc6mFt6U4riKUx33tuI=;
-        b=AuzkpUBKhiF/LG8f3Vkbw3cnjl4hhLR9nZK+mP7NM2hnVizlKn3ldZYTux76V4FVMd
-         SnPxdl/JcGzjfA5b1LXYlakD6mxqLl7hJbMoMHim/bjO//wHFj34yPFf+ZRIrtPnuYJx
-         cZVnuMshYG607Zs0T1IMSCBTLYTcj41QzPzXyEFgW3RkNOCBwgO0KngiX06Lij7zEo/+
-         vGe6SY7a3N6vTX+zIEoax6tgd79qFwVdS21RzyhbsJRKWg9c4AbfqU3NTCK6nHIymOZR
-         WhDsIRvgkDgMvBxRQw2DZyEQTTN0+EGIZp8VqF9IKsNRzPSHnruxwH8olD5s2+a1rUnD
-         g8ZQ==
+        bh=fbkoO+oY2DNBCw+/7YmdbNGXh6pRof0tA0Qh0Ob21jw=;
+        b=KXZ4I8woX4X4UYolFN0BefUY4HT7Yy1u3eAsFsGamANX63pTbek/jlbWsXEUtOai86
+         cDn3/8td9F4gMhjp8uiIU6vbBWjKO8oJ1/3KIhCHcWA864CkirPAKLhNOm/qL343rgm1
+         mB3VlfPuUH1wUXOTq5/d20Xj5sqS+IhQcOCR/aX7Kk6I4CwSxElMxv9ni2ZSWl+7wNY/
+         G8uPW/3WkbW5/rixVxK8eB8kBAU9GkcEJFDQs1w5IJ5CE7CslVRt0sthohkxl+oJ7DOB
+         Ufg0V/ArqoMG9+DfaHhWXTI1oylL1zljxJRzzEAhfSWfHkp8RF1fNFCQSKB9Hk1xrvPf
+         wFUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UfWdj/2T0vGo78iWFHoh4nkFyc6mFt6U4riKUx33tuI=;
-        b=r9SDgbZDqg0kAOt4tTe3GFGBjBssJqzw8WYpVbQU9mATE4Vtk7sC1jJgEmP8racRZB
-         70LaMIgkIcFcmLEnkeVKFd9Y2VB3TxRZFivAN7VRZ3CkPM8sX3Akl4qfIBCi37zeisfj
-         CNlD3qptjc857LmnoUjrkLXppMaequ5JX3BZZc0sOL585phXaxjvc7Osr9a/XeY4qVjP
-         xiZbbDx9XMzAm3ZJQBqKoI5pHwez4w3jHY4AiyiO/YRGe2IZAAdS03djz950aKDRteri
-         q/sVJkYiZ+f+u0QfQUxdlVoCXDKUySVEHJXqsSk3dE537Xo63Nbqy/QbQGCRKr4OPnaI
-         KBqA==
-X-Gm-Message-State: AOAM532D4iZhHuw93lXV6AK8zRV0ieoYIkYK57J/RXWlPrzFGjlTNYuw
-        3VXcosJnwdF4/+Zn+MeoRtucwg3z9ng=
-X-Google-Smtp-Source: ABdhPJzmqrPAfpGS1v7wLmIKDf80na3lYf7IEP6BTpkZDWPcPbwaUEP9WCYkZP08qZ6EJ/B4EkbegA==
-X-Received: by 2002:adf:ebc1:0:b0:1e6:1109:5a1c with SMTP id v1-20020adfebc1000000b001e611095a1cmr1791699wrn.228.1645006514163;
-        Wed, 16 Feb 2022 02:15:14 -0800 (PST)
+        bh=fbkoO+oY2DNBCw+/7YmdbNGXh6pRof0tA0Qh0Ob21jw=;
+        b=jrYFLQOKpkEqfoF5uactg/hepL7BMNfny37+lS6zMcANOd39Zw+VnEUkKqQ/sQnH6h
+         h3xAagqpuiDkm1+PJHCJNUY61Vy6WaRf6kAvImx8vOtvBZOnMJkwWzeXf5nXAIKoBmFQ
+         5c/eMLwcBiMSRZPXSAJtwPOqRE4CWSLXvgRA9PnXMn00IUTELYML61UlEhnyPmtETyrm
+         OErcY6PH8JwbqpeqwCMNg7iTG39hqhvrnqA4be0kVoBYH39V/R/g1xYQrv2eTPy3OXXL
+         GpYt41TgYQAXyGKjCFGsEEdhFFd4augVMNObNQb4j7C6o6469PEgkFhmrlyne6DYAaxf
+         VImw==
+X-Gm-Message-State: AOAM530ewyzVBi+2hT7CufVG3irpws4K2zj63V+2FmfIOyzjZa4VmQwy
+        tBc1svABZqWvkNnYHCDBYGv7i3QOq9Y=
+X-Google-Smtp-Source: ABdhPJxe+CvZbKL4PP8s+7lACBR7qG0c00A1uN6Xhg6yEu4E2kpXsu0w1FWgsHs6ST6+rYo2uo77lQ==
+X-Received: by 2002:adf:d20f:0:b0:1e6:30c9:4aec with SMTP id j15-20020adfd20f000000b001e630c94aecmr1696823wrh.577.1645006515827;
+        Wed, 16 Feb 2022 02:15:15 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o14sm17719767wms.4.2022.02.16.02.15.13
+        by smtp.gmail.com with ESMTPSA id y6sm11382288wrd.30.2022.02.16.02.15.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Feb 2022 02:15:13 -0800 (PST)
-Message-Id: <073a45e9e8563686b43cb4f9beb4295523fb797f.1645006510.git.gitgitgadget@gmail.com>
+        Wed, 16 Feb 2022 02:15:15 -0800 (PST)
+Message-Id: <7e705d771b041ae0d455a4296e2955a24e264779.1645006510.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1140.v2.git.1645006510.gitgitgadget@gmail.com>
 References: <pull.1140.git.1644404356.gitgitgadget@gmail.com>
         <pull.1140.v2.git.1645006510.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 16 Feb 2022 10:15:08 +0000
-Subject: [PATCH v2 3/4] xdiff: refactor a function
+Date:   Wed, 16 Feb 2022 10:15:09 +0000
+Subject: [PATCH v2 4/4] xdiff: handle allocation failure when merging
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,87 +69,38 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Use the standard "goto out" pattern rather than repeating very similar
-code after checking for each error. This will simplify the next commit
-that starts handling allocation failures that are currently ignored.
-On error xdl_do_diff() frees the environment so we need to take care
-to avoid a double free in that case. xdl_build_script() does not
-assign a result unless it is successful so there is no possibility of
-a double free if it fails.
+Other users of xdiff such as libgit2 need to be able to handle
+allocation failures. These allocation failures were previously
+ignored.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- xdiff/xmerge.c | 35 ++++++++++++++++-------------------
- 1 file changed, 16 insertions(+), 19 deletions(-)
+ xdiff/xmerge.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index fff0b594f9a..d43abe05b95 100644
+index d43abe05b95..af40c88a5b3 100644
 --- a/xdiff/xmerge.c
 +++ b/xdiff/xmerge.c
-@@ -684,35 +684,30 @@ static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
- int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
- 		xmparam_t const *xmp, mmbuffer_t *result)
- {
--	xdchange_t *xscr1, *xscr2;
-+	xdchange_t *xscr1 = NULL, *xscr2 = NULL;
- 	xdfenv_t xe1, xe2;
--	int status;
-+	int status = -1;
- 	xpparam_t const *xpp = &xmp->xpp;
+@@ -708,13 +708,18 @@ int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
+ 	    xdl_build_script(&xe2, &xscr2) < 0)
+ 		goto out;
  
- 	result->ptr = NULL;
- 	result->size = 0;
- 
--	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0) {
-+	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0)
- 		return -1;
--	}
--	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0) {
--		xdl_free_env(&xe1);
--		return -1;
--	}
-+
-+	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0)
-+		goto free_xe1; /* avoid double free of xe2 */
-+
- 	if (xdl_change_compact(&xe1.xdf1, &xe1.xdf2, xpp->flags) < 0 ||
- 	    xdl_change_compact(&xe1.xdf2, &xe1.xdf1, xpp->flags) < 0 ||
--	    xdl_build_script(&xe1, &xscr1) < 0) {
--		xdl_free_env(&xe1);
--		return -1;
--	}
-+	    xdl_build_script(&xe1, &xscr1) < 0)
-+		goto out;
-+
- 	if (xdl_change_compact(&xe2.xdf1, &xe2.xdf2, xpp->flags) < 0 ||
- 	    xdl_change_compact(&xe2.xdf2, &xe2.xdf1, xpp->flags) < 0 ||
--	    xdl_build_script(&xe2, &xscr2) < 0) {
--		xdl_free_script(xscr1);
--		xdl_free_env(&xe1);
--		xdl_free_env(&xe2);
--		return -1;
--	}
-+	    xdl_build_script(&xe2, &xscr2) < 0)
-+		goto out;
-+
- 	status = 0;
+-	status = 0;
  	if (!xscr1) {
  		result->ptr = xdl_malloc(mf2->size);
-@@ -727,11 +722,13 @@ int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
- 				      &xe2, xscr2,
- 				      xmp, result);
- 	}
-+ out:
- 	xdl_free_script(xscr1);
- 	xdl_free_script(xscr2);
- 
--	xdl_free_env(&xe1);
- 	xdl_free_env(&xe2);
-+ free_xe1:
-+	xdl_free_env(&xe1);
- 
- 	return status;
- }
++		if (!result->ptr)
++			goto out;
++		status = 0;
+ 		memcpy(result->ptr, mf2->ptr, mf2->size);
+ 		result->size = mf2->size;
+ 	} else if (!xscr2) {
+ 		result->ptr = xdl_malloc(mf1->size);
++		if (!result->ptr)
++			goto out;
++		status = 0;
+ 		memcpy(result->ptr, mf1->ptr, mf1->size);
+ 		result->size = mf1->size;
+ 	} else {
 -- 
 gitgitgadget
-
