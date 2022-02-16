@@ -2,107 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEBA5C433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 15:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62398C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 16:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235747AbiBPPz5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 10:55:57 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52870 "EHLO
+        id S235841AbiBPQDK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 11:03:10 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234139AbiBPPz4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 10:55:56 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73BED29690D
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 07:55:43 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id a23so290520eju.3
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 07:55:43 -0800 (PST)
+        with ESMTP id S233934AbiBPQDD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 11:03:03 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA57E1EFC53
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:02:51 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id c6so1973848edk.12
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:02:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=T/BERg0n57wSpMtiksWTUjYBUapOwQ0b9YPq9O06Wdc=;
-        b=M++/Jp1mqWFjZaHokiIchgxle3mV8Fxp2bdbyxGuFyHzjddgGCrlnT731eumnOr29e
-         TzPmPruTu/l2vu3Yd5FlgBdXSpUy3kyLV5Pb8f/9RfQRzvdZy6OtWnNb27R2kniwJBau
-         qQ2tD/fnAB34AxLc1IrinApeES6/uV0fmvPNccc7c3i8R7vIpELQ21PqUy7iLpHbwiFy
-         bfy3OQBDRrt1WLohd05QzDCv3YhpatQeRBexLGl0j9D1BsAGb1dbb9RylYoFzdD0KzZn
-         ircgpOuagUUVbyVHkNLiIgszum64Pi9shU/gNe9ZVnZ0ERog4zWTeZB2olFmc+2lQeH0
-         NEBQ==
+         :cc:content-transfer-encoding;
+        bh=0uNdjCRihoYw2QAC5A3Ov5dsP2Q4uKTaUP2MWZM63oQ=;
+        b=cuWnjQiSJe8i0yBeE+cAUTC1CM9o3x1WwVvYVn54fZcXtdRti2iWEo4Rvus6PeXLON
+         kbE/gbP/70t80JJC7MqvXjFhbaf14XffzsDzPQuP47qIzhybYNc4UTFhu6qHl1apJ1wy
+         pgXk66N/Ym+PYCqv7Hv16A6PPApzgJXQ869JCf7PwSmb6uuySKWqEn/Uf+KXQvOIA1u1
+         OG9KJSuaNyrQy2hP7yKzsJ7xM8jpOscc5hnaZRsAO2Bl3qbzEJMgSsa26SqleqIdsqj7
+         bTBTvqdzXkBwKa418KdiwX56dtlQk+mI9hprFQ66i3bz9IdlLPtDMJ3vaIO0M8Hecily
+         iKBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=T/BERg0n57wSpMtiksWTUjYBUapOwQ0b9YPq9O06Wdc=;
-        b=c/HxIR6/+Vc6ONGDZVcR6OFT+rCDDtU3rEZJ1XKZhkgl/AGTnbgCy0rfNn3KwTc6it
-         eKLq91TrMZQAbHTrgZyUw9HgjmeLeOebvPP0UG1CXC/mPSXSo7VMpGyvmHGJBE8yh6jZ
-         2EUZQtw+r2aoS5zkt7l2Hc4JrB42egdMFHO2mYosfZ1rOProEgfcsGO3c5ERYHB5s2ry
-         kObiRo/ldmGZsLP9v+N1BI5Cvu62fdETEluFeN1n1VR4X9H3yCkUnyvRdh89jISh1oD6
-         v2VMHlBPL6FiHEkM75OB+TlcAitiF9Kcf9Yvvp5R4HRVV0KhgUDAD3R8pEqOWJQC8H+/
-         ZM4Q==
-X-Gm-Message-State: AOAM533wp25lVMAzUDeNehveSlE8tXzRRE0wI2KEuArzl1QeOSA/KSoa
-        HhpqSnxKegsR1DPyHG6HTtsySWC2PGvm5jM4YTrefrl6
-X-Google-Smtp-Source: ABdhPJx4x8KzIAlEiF4fqpgNT0J+JDvWfHBD9slEico9jdCLo2eKqvuCcTrF9LVSYCK8IbFkZsn1tbXBnRbfroMEXAY=
-X-Received: by 2002:a17:906:fca5:b0:6b4:6d25:ac19 with SMTP id
- qw5-20020a170906fca500b006b46d25ac19mr2675443ejb.485.1645026941869; Wed, 16
- Feb 2022 07:55:41 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0uNdjCRihoYw2QAC5A3Ov5dsP2Q4uKTaUP2MWZM63oQ=;
+        b=6oyTdD4lakmYoqrF/2hz02svNsZ/OkCtOidhKTbXr8c74Dwtb8CFibRFyqwUElj9lW
+         7SdSl4MzTXq8LUWOfQaGB/v3PYtOc3v87YdcABW7G0GCyV0dB7kL+VPykXxjn1a1uhBf
+         47xPIIj0dnF/gsr9LpdnJ+CNzG22xqzbuKf8lDXNMZBJnlQ/bqb+9oByaxvB8oJR7bNH
+         A5iS6l4Z50J2TngQack8H6HjsV6oqcHWuYMU5TouLbxj/dLOQfJhI56eT8A2FKOQTavy
+         LMqNcWmY5Rr/DU7PvdxSy0pQvL8bwAvUF6n04EUymQLIOxZxPGut4+WfKp5LELArjfpC
+         Ghyw==
+X-Gm-Message-State: AOAM530Hv6reS/s+yAf4NvZ6S6xPsEmj9u84oJSiSA9ZQwFsqp8Sc24F
+        /wCQIP0g0HpBJTZTb6TatVov6QTXRhG7yvGD9sI=
+X-Google-Smtp-Source: ABdhPJxbgRAkORgLBtaawgCDbUum3BehnJYj0iUb6Tt/UzOZA8KjkLZR3DaG4F0ptz2zrkZp7/0zEH1oIb+MJOXqB7M=
+X-Received: by 2002:a50:9ea2:0:b0:409:5438:debf with SMTP id
+ a31-20020a509ea2000000b004095438debfmr3739843edf.126.1645027370144; Wed, 16
+ Feb 2022 08:02:50 -0800 (PST)
 MIME-Version: 1.0
-References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
- <730fb307-3bc7-b52f-49c1-d83b5ab55c95@iee.email> <3b112eee-8110-baf6-d7e7-cb25b03c32ff@gmail.com>
- <CAP8UFD1BYm-_p=JYw3GELsk1=hR9-o7cxEowtnrKPumi0Gk8kg@mail.gmail.com> <65abccbe-eaae-5d68-c738-b7f9a3844bbc@gmail.com>
-In-Reply-To: <65abccbe-eaae-5d68-c738-b7f9a3844bbc@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 16 Feb 2022 16:55:30 +0100
-Message-ID: <CAP8UFD3prsevU_8zCXQu_BpZH+NHm+HD04RiBvOXkZkDoi+yjg@mail.gmail.com>
-Subject: Re: Git in GSoC 2022?
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Git Community <git@vger.kernel.org>,
-        Philip Oakley <philipoakley@iee.email>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>,
+References: <pull.1114.git.1642092230.gitgitgadget@gmail.com>
+ <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com> <d50d804af4e17ff1613ae40e3b5cf1b1bd0986a0.1642175983.git.gitgitgadget@gmail.com>
+ <220216.86sfsjur8m.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220216.86sfsjur8m.gmgdl@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 16 Feb 2022 08:02:38 -0800
+Message-ID: <CABPp-BGD4m-QzQ+qqLc4QzP6-HcJDi2RAmzf+=dhxpvPjrRVEQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/5] t1011: add testcase demonstrating accidental loss
+ of user modifications
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>,
         Derrick Stolee <stolee@gmail.com>,
-        Victoria Dye <vdye@github.com>
+        Lessley Dennington <lessleydennington@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 15, 2022 at 9:32 PM Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
+On Wed, Feb 16, 2022 at 12:53 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> On 13/02/22 3:03 pm, Christian Couder wrote:
-> > On Sat, Feb 12, 2022 at 7:12 PM Kaartic Sivaraam
-> > <kaartic.sivaraam@gmail.com> wrote:
-> >
-> >> On a related note, the organization registrations are now open for this year.
-> >> The deadline is February 21 - 18:00 UTC. I'm not sure if anyone else is
-> >> planning on applying for Git. In case no one else beats me to it, I plan on
-> >> applying for Git around February 15 17:00 UTC.
-> >
-> > I was thinking about applying for Git, but I am glad that you plan to
-> > do it. I will try to add some project ideas to SoC-2022-Ideas.md
-> > before February 15.
+> On Fri, Jan 14 2022, Elijah Newren via GitGitGadget wrote:
 >
-> Thanks for adding it! I've applied for Git in GSoC 2022. The application
-> information could be found here:
+> > From: Elijah Newren <newren@gmail.com>
+> > [...]
+> > +     test_path_is_file init.t &&
+> > +     grep -q dirty init.t
+> > [...]
+> > +     test_path_is_file init.t &&
+> > +     grep -q dirty init.t
 >
->    https://git.github.io/SoC-2022-Org-Application/
+> Maybe I'm missing something, but can these two just be:
+>
+>     grep dirty init.t
+>
+> I.e. won't grep report errors appropriately here, e.g.:
+>
+>     $ grep foo t
+>     grep: t: Is a directory
+>     $ grep foo x
+>     grep: x: No such file or directory
+>
+> The only prior art I could find was the same pattern in your c449947a79d
+> (directory rename detection: files/directories in the way of some
+> renames, 2018-04-19).
+>
+> It's probably good to lose the "-q" too, unless this output is way too
+> verbose without it. In any case the errors wouldn't be affected.
 
-Thanks for applying!
-
-> Let me know in case anything needs to be tweaked. I mentioned that we have
-> 5 mentors available counting Stolee, Victoria, Christian, Taylor and myself.
-> Also, I've invited Christian as an Org Admin. In case anyone else would like
-> to volunteer to be an Org Admin, do let me know.
-
-Thanks, I accepted the invite!
-
-Not sure we can invite possible mentors yet.
-
-> On a lighter note, the application structure was a bit different than
-> previous years due to the new website. They say that it supports persisting
-> the organization information which should mean less work while applying for
-> GSoC in upcoming years.
-
-Nice!
+Fair point.  I believe my original test during development was just
+test_path_is_file, then I came back later and decided I should check
+the contents weren't lost.  A test_cmp might be a better choice to
+replace both of these, because we don't really want to check that it
+just has "dirty" somewhere in the file, but that it's been left alone
+and only has those contents.
