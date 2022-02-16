@@ -2,70 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C240C433EF
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 00:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CDF3C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 01:00:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245195AbiBPA5W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 19:57:22 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42114 "EHLO
+        id S230361AbiBPBAt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 20:00:49 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234391AbiBPA5W (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 19:57:22 -0500
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7936D9D073
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 16:57:10 -0800 (PST)
-Received: by mail-pj1-f44.google.com with SMTP id h7-20020a17090a648700b001b927560c2bso960295pjj.1
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 16:57:10 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XUe5JNFmeTZ72N4b+tS8yAn1Wbka7V6XnszNlhr9gd4=;
-        b=ZHpqZXdQyXT3f9koZsN4slJlDjhmLq5czChKZek+if1dL/BFdI8NkI8gWXiXgo8YGV
-         e+zGYBMI6UT2I03P3REm0yHtZ2SBpMH1Z5NvKtzGDJVM4qoHGt7Y5LPf3irwio7eJkwI
-         6Z8wz8+5Fwfn5AO6gfPXf0wouXYNpHDCxtGn1r66/MU7o74BzkKWfhFrDjJmG0rYVAV2
-         PkHxEjuXRAb7BV8aJbIpsKPtDRGw+lGsGKtOitMBaMJEnYtoqjvFRLcpN2ykyky1CJYR
-         LJqju3lMldgJMAxhay1pfub70zyj48zQ9aZqND7lE8AzvQeoL1d+N2sYdYGobMExVTcf
-         NZWA==
-X-Gm-Message-State: AOAM532lIQUE1zhFC3sVtcVQpn09zd8YBK/GRCJcpK3vDeXbAZ2Z0KOO
-        gjB3pXTgZfEFaBhH71ny1vMAUAtft2iQ2wHFby4=
-X-Google-Smtp-Source: ABdhPJy5OU/YCcHj2lVqBUdQlaCB0G7i20GiCI1oN+q0EjuTie4iWjOKLWlDefiCis412LIe4ElhVqeFBmjX5lgVEoI=
-X-Received: by 2002:a17:902:ccc2:: with SMTP id z2mr1636241ple.145.1644973029924;
- Tue, 15 Feb 2022 16:57:09 -0800 (PST)
+        with ESMTP id S245223AbiBPBAm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 20:00:42 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4799CE98D0
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 17:00:31 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 95725129771;
+        Tue, 15 Feb 2022 20:00:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xPDbndLfjFAdeSYx+aO4UUYbNdUXHU5UmVMek1
+        FpG8I=; b=EDFQ6m4yFytez1nwThkIsJYVq+CpOy4C33dgUKXoNpmy41rYG4Rehr
+        TGNYcDpNMgdy9ZMHya0AYGEztOxdeKysg8mx3LgFJ38ZuhTSEnxUcST6Hxpqb43v
+        nF1HfZx5ZgM0trU60EVYbH6oS1YI7GUjblNJhXE7PJa9EESLJp1NU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8DA13129770;
+        Tue, 15 Feb 2022 20:00:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EC32212976F;
+        Tue, 15 Feb 2022 20:00:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 00/23] Builtin FSMonitor Part 3
+References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
+Date:   Tue, 15 Feb 2022 17:00:28 -0800
+In-Reply-To: <pull.1143.git.1644940773.gitgitgadget@gmail.com> (Jeff Hostetler
+        via GitGitGadget's message of "Tue, 15 Feb 2022 15:59:10 +0000")
+Message-ID: <xmqqv8xfy6ab.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1101.v5.git.1643641259.gitgitgadget@gmail.com>
- <pull.1101.v6.git.1644269583.gitgitgadget@gmail.com> <CABPp-BG4m6i+yobjnD6UC5S5n3k-HbB7Y5uUNEvrD79ErOoYHg@mail.gmail.com>
- <CAPig+cT7GwyhPOBdqDDh8jGm+mWK1x9Gt4Zebcw34dgFyaufkw@mail.gmail.com>
- <CABPp-BGZoGwpMaqo2px1SqOBk1xLHtwkkBBAaqU5sNfTvKD1og@mail.gmail.com> <CAPig+cQWnuG+-eWyih7-Q75PeFjQRHN58SWWhFQWHU2=R6GfyA@mail.gmail.com>
-In-Reply-To: <CAPig+cQWnuG+-eWyih7-Q75PeFjQRHN58SWWhFQWHU2=R6GfyA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 15 Feb 2022 19:56:58 -0500
-Message-ID: <CAPig+cQTRGuuspz2g5LZr4Oh8bQCr4FUDV0tirs+ZPwhtAaJVw@mail.gmail.com>
-Subject: Re: [PATCH v6 0/6] Sparse checkout: fix bug with worktree of bare repo
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>,
-        Sean Allred <allred.sean@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D5E37B44-8EC3-11EC-9237-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 8, 2022 at 12:42 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Tue, Feb 8, 2022 at 12:18 AM Elijah Newren <newren@gmail.com> wrote:
-> > So, you clearly also read the patches in this round.  Do they also
-> > look good to you?   :-)
->
-> I have not yet looked at either the patches or the range-diff, and I
-> only scanned my eye quickly over the cover letter, but the empty
-> bullet point made me stop and look a bit more carefully at that part
-> (and only that part) of the cover letter. Not sure yet when I'll have
-> time to carefully read this round.
+"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I've now read through the series and, I think, left only one or two
-minor not-actionable comments.
+> Here is part 3 of my builtin FSMonitor series.
+>
+> Part 3 builds upon part 2 (jh/builtin-fsmonitor-part2) which is currently in
+> "seen", so this series should be considered a preview until part 2 moves to
+> "next". (And part 2 should not graduate to "master" without this part.)
+>
+> Part 2 established the client code (used by commands like git status) and an
+> MVP implementation of the FSMonitor daemon. This was sufficient to test the
+> concepts and basic functionality.
+
+Sounds like part 2 is sufficiently done to be eligible for being in
+'master', waiting for an improved daemon, no?  
+
+Have people been reviewing the patches in part 2?  I haven't had a
+chance to take a deeper look myself.
+
+Thanks.
+
