@@ -2,53 +2,40 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FE6FC433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 02:48:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76439C433EF
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 03:00:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343831AbiBPCsp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 21:48:45 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39138 "EHLO
+        id S1343937AbiBPDAf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 22:00:35 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237229AbiBPCso (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 21:48:44 -0500
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0690CFBA71
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 18:48:34 -0800 (PST)
-Received: by mail-qk1-x72c.google.com with SMTP id d84so601759qke.8
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 18:48:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=W0syWmH7e9XwQ64CbsdECMP030Bd/ovsLivX96Adx8A=;
-        b=jzHgpcRwu0wNGlzTigoMJSSzBG+HUmE6EIvu6lEA+WGQvsk9YrcOCgFqTSomeJhdaf
-         PmRK6lHkRza0diXJy7GmcCyNJ72AnOgadWNy7OToXE3yGZf/6NcUDk8H2WGW5Z8SkKWQ
-         mGAvLsIS5sefp4JJI3Sp2THDQAcuob6L2R/jx5+vD/H3PpfBTVfQU0OTXP2LkSj4CvI7
-         io1jGOj3I6YSv/fvQw33st2eCnZsx8w/aHqxGKkhg2/KEiNDXfcn3Bp01TmNx1EpPaxm
-         joX51jbwJ7xizYbhMnwuIwz4jlKy6J8JMii3iGVEizZDVMkajO9OGwsBHsmL4dbzDXvH
-         siUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=W0syWmH7e9XwQ64CbsdECMP030Bd/ovsLivX96Adx8A=;
-        b=qbmUWVkZtPmIUiveIfAcgMOLtM/zrGAI5HoRhzmBC2jKOwHiFw6M9oKWxCiXHw9ojI
-         j0TcjBNU7znHy8h5pfByAoGVx+m7RMkhgBvfh0ChMxwdXekO0QPTjB10TslnO3HKChK7
-         9Hp6+3i5Ts/3KrCxGd5b9Dx1lO8bQYV+YYCtsBOSUvLG5Tv/mc3FJ3ipR4EVBzQrb6I4
-         V0lhSCZ3jO89I5kkQGO0Pp5jIWlaIyH1ufQvhRVotJ1TJAgdxzITeK5MFNRcb3T9nVBi
-         bVhkNHa2rcfFGwF6UdymLzluuT8nUUqjA8k7E88EkaLVE4QLVF6yfiAnhAqf2Vxy3nsM
-         sKrg==
-X-Gm-Message-State: AOAM533V/znw5uXsxAbPRqQaz8XKJQKNJa8HYY79ll4PUDso8XborWXn
-        dWFFFwbYml84VIXXfF+BpGY=
-X-Google-Smtp-Source: ABdhPJyQCLf6+TwCdyWw2Mr3WwLHecMKAnM3cgJtp+g04e9csrbu5m1qpicugWcawbSlTR53acXBTA==
-X-Received: by 2002:a37:62cd:0:b0:47e:c51d:9035 with SMTP id w196-20020a3762cd000000b0047ec51d9035mr408256qkb.282.1644979713074;
-        Tue, 15 Feb 2022 18:48:33 -0800 (PST)
-Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id r2sm21291292qta.15.2022.02.15.18.48.31
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Feb 2022 18:48:32 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S240388AbiBPDAe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 22:00:34 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E95EFBF2D
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 19:00:23 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EEE011DF0A;
+        Tue, 15 Feb 2022 22:00:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jDbwxHiHhVl21iHLlNdLR2hYeG1vCB+WF7OMbV
+        Ook6Q=; b=KAZOu+QHEKQYtns9N+z2Z5DT0t+Ky8mo8ew4jiuyTA1Ql9s9FRdPpR
+        m1uxO3Huc7oa2iJIQu/JXKGwCiwqEFybw0y68/EEhgJrh5/pZo5pb3Gdk7gflFat
+        YrMhyfCV9xFwe175cdrKZHchlC4pE9gSgKysW1qeU2Nc3LSt4Cym8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 95B7011DF09;
+        Tue, 15 Feb 2022 22:00:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0C61111DF08;
+        Tue, 15 Feb 2022 22:00:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     John Cai <johncai86@gmail.com>
 Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, me@ttaylorr.com, phillip.wood123@gmail.com,
         avarab@gmail.com, e@80x24.org, bagasdotme@gmail.com,
@@ -56,94 +43,47 @@ Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Christian Couder <christian.couder@gmail.com>
 Subject: Re: [PATCH v7 4/4] cat-file: add --batch-command mode
-Date:   Tue, 15 Feb 2022 21:48:31 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <BE7471F8-0141-49ED-A34B-04D69BE18D96@gmail.com>
-In-Reply-To: <xmqqfsojy50b.fsf@gitster.g>
 References: <pull.1212.v6.git.git.1644862988.gitgitgadget@gmail.com>
- <pull.1212.v7.git.git.1644972810.gitgitgadget@gmail.com>
- <aebaf7e3fe1d4448037d2caf03f3de393908ff9a.1644972810.git.gitgitgadget@gmail.com>
- <xmqqfsojy50b.fsf@gitster.g>
+        <pull.1212.v7.git.git.1644972810.gitgitgadget@gmail.com>
+        <aebaf7e3fe1d4448037d2caf03f3de393908ff9a.1644972810.git.gitgitgadget@gmail.com>
+        <xmqqfsojy50b.fsf@gitster.g>
+        <BE7471F8-0141-49ED-A34B-04D69BE18D96@gmail.com>
+Date:   Tue, 15 Feb 2022 19:00:18 -0800
+In-Reply-To: <BE7471F8-0141-49ED-A34B-04D69BE18D96@gmail.com> (John Cai's
+        message of "Tue, 15 Feb 2022 21:48:31 -0500")
+Message-ID: <xmqq4k4zwm65.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+X-Pobox-Relay-ID: 938357AE-8ED4-11EC-9C99-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+John Cai <johncai86@gmail.com> writes:
 
+> Yeah, this is what I had before but there was discussion about
+> separation of concerns in [1]. But perhaps it's preferable
+> compared to passing a pointer to nr.
 
-On 15 Feb 2022, at 20:28, Junio C Hamano wrote:
+Oh, I see.
 
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> +static void dispatch_calls(struct batch_options *opt,
->> +		struct strbuf *output,
->> +		struct expand_data *data,
->> +		struct queued_cmd *cmd,
->> +		size_t *nr)
->> +{
->> +	int i;
->> +
->> +	if (!opt->buffer_output)
->> +		die(_("flush is only for --buffer mode"));
->> +
->> +	for (i =3D 0; i < *nr; i++) {
->
-> If you updated the max number of items *nr to size_t, don't you need
-> to use 'i' with the same type to count up to it?
->
->> +		cmd[i].fn(opt, cmd[i].line, output, data);
->> +		free(cmd[i].line);
->> +	}
->> +
->> +	*nr =3D 0;
->> +	fflush(stdout);
->> +}
->
-> Wouldn't it be easier to reason about what the caller/callee are
-> responsible for, if the function signature looked more like:
->
->     static size_t dispatch_calls(struct batch_options *opt,
->     			     ...
->     			     struct queued_cmd cmd[], size_t nr)
->     {
->     	size_t i;
->
->     	for (i =3D 0; i < nr; i++)
->     		... do stuff ...;
->
->     	return updated_nr;
->     }
->
-> and make the caller do
->
->     nr =3D dispatch_calls(opt, ..., nr);
->
-> or if the function *never* leaves anything in the queue when it
-> returns, then
->
->     static void dispatch_calls(struct batch_options *opt,
->     			     ...
->     			     struct queued_cmd cmd[], size_t nr)
->     {
->     	size_t i;
->
->     	for (i =3D 0; i < nr; i++)
->     		... do stuff ...;
->     }
->
-> and make the caller do
->
->     dispatch_calls(opt, ..., nr);
->     nr =3D 0;
->
-> instead of passing a pointer to nr like the posted patch?
+I do not see any issue with separation of concerns here, actually.
 
-Yeah, this is what I had before but there was discussion about separation=
- of concerns in [1]. But perhaps it's preferable compared to passing a po=
-inter to nr.
+As long as "dispatch_calls() consumes all the cmd[] before it
+returns to the caller" is clearly understood between the function
+and its caller(s) [*], clearing of "nr" the caller has is entirely
+caller's problem.  It becomes needed only because this caller
+decides to reuse cmd[] array.
 
-1. https://lore.kernel.org/git/CAPig+cTwLhn1GZ_=3D6s0FXL0z=3DQ=3Dp1w9ZGK0=
-hAV8wfK9RsQYjnA@mail.gmail.com/
+	Side note: you do have a comment before the function to tell
+	what to expect out of the helper for its callers, right?
+
+If it were just "accumulate many cmd[] and call the function once"
+caller, it would care to maintain the correct "nr" only up to the
+point where the function is called (because <cmd[], nr> pair is the
+way the function takes the list of commands and it needs a correct
+"nr"), but not after making the call, as the only thing left to do
+would be to free the cmd[] array itself, which does not even need
+"nr".
 
