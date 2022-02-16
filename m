@@ -2,70 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A3CCC433EF
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 09:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44ABFC433EF
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 09:37:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232119AbiBPJYM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 04:24:12 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:35344 "EHLO
+        id S232087AbiBPJhd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 04:37:33 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:55054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232136AbiBPJYL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 04:24:11 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E44C21B31C0
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 01:23:53 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id p15so3142882ejc.7
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 01:23:53 -0800 (PST)
+        with ESMTP id S229660AbiBPJhc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 04:37:32 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D1A65CD
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 01:37:20 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id f17so2904316edd.2
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 01:37:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=T/gDywfUWxbRRBzjSbI4JmTVzlNaykOOMsVg/hL2TGE=;
-        b=azmW+ZJhJjFFjOhwSzMWMuDWOsth118GAOmXGPSFDB5vz1da9mVinisER/J/o9hfOq
-         FpBKx/QgTSwQD6ZpY23JOQFs4fJPglyKzAI6Ro31nfvaG5cLkoH6xsIRj4qYWvDbXf9x
-         vZ8AqGl/H0r0fbOrJjAic7SKFB5KK3/BgmERYzwYEZ10oGoRwEA5XhGDjTXubVPB10QL
-         6N/Ryo/X5JIkQrH9BleHQaarZIymoxVRgCOacqVCZqA53uCgV4+iWkjofUGk2qxVC4GQ
-         vanGPDSPRr+mlFIFFf+e6BvJGtCW5L9fJOktwn0+2RlVldnbmeRsTuNgweT/5I1k5V+m
-         s4Hw==
+        bh=85JCM1jvQ1gWWwhgwK4xnNuGpezrA8/7P00mRkpC0Q8=;
+        b=S8xIIOJE2mLVeSwCjXOl0KG5CPO6C0eK+b4QJnFWXWmCtqTXTd5q2bzv8eBE4Qcs6d
+         rrMs/s24Q93gEItnAFLz7Kp3kK489QBB4UreCiz21kG/fRIjrwZyAghga5qUxNqnkqp1
+         iB7BcRZ9OMtNn1M1NP+zjpd9Nx0ddcBpcpJcvv5DMIZLxBr7XBcB0vfSTYmYLqdPI7hR
+         RIGX0sJhDv5XrDB8auqrxT/zS4XGTeFDBXAPZeDam6DM4KYkvn9XfHEqebc2hADUccBP
+         U+qlKwLvd4MqIoGVw1G3pKQYhTI6dP5uCCOWInLgHQ3RNL5dm9o7zew0tFjwrOYx/wsZ
+         MgJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=T/gDywfUWxbRRBzjSbI4JmTVzlNaykOOMsVg/hL2TGE=;
-        b=p0zmixQ6K+eqGHURWIOVW0MOc9kiMWE2bRN8gJP9v7RnB3268G6eTfTm4GTBEbXcPj
-         IF43K4dH+uqcJUzdkRFUMgbb9qPadUf9CaoHb3Cbym0hH+8XxJJss5e4eKVL6iL/T7Kz
-         qhc3AvEm3NqmXJt5SFp21/DlQz/rftBNC591luhOxRNbEjQq+ZyCemKxO8gL5RzQpzRD
-         VdPGbSPiyvSfIfaF+I94YmwImSWVqc/rQJ1+CrfYY1s99wH518gfjdPalDuzTCid6C5j
-         mn+4q/LLAddRNLnzNwga3ZlH/rT3+ELarMzYUCd2EWU2E4UM94acactNmjpXQLzisM6U
-         U0uA==
-X-Gm-Message-State: AOAM531PSiQpX8fvbFDNMN4RyboQ5ri4V72izIVP3NwgdL3NVEYtJ7LQ
-        6DOOyRpypL+ApNPu/ZQSH5g7YwefogtVPg==
-X-Google-Smtp-Source: ABdhPJzS8gE4I+5r4REyJD0k4cwJa/pYIcsTYCRYmheHotQv2zTOZMebKeG0rFerBWzC3c11oDDwEg==
-X-Received: by 2002:a17:906:b2c6:b0:6a9:4bc4:2ec2 with SMTP id cf6-20020a170906b2c600b006a94bc42ec2mr1556312ejb.718.1645003405339;
-        Wed, 16 Feb 2022 01:23:25 -0800 (PST)
+        bh=85JCM1jvQ1gWWwhgwK4xnNuGpezrA8/7P00mRkpC0Q8=;
+        b=1t6v6QMNtTZ+JiLudUvNxU0MDFbt/dGQua3mzb54BtK9IE25ANOZ9Oi1MOQNQeu8Pw
+         0UzlDKn7UbhQUSGe6vLT98LbNI4mxmMNx3oCW+Rne920pxde4KS8y8Xq5vmtH0xuPwGZ
+         OfMzo42DzBjuhJjJGM+L1QWeoOdIgASRnCjamlGr4pFu37I5LLmOYoYPFMVopW7oYKAS
+         tQ4ZUv0YTVEaL+obXkB1npNPkJ1fqyRupPWWc8ae3un842zxhjCqELKzSKXYLpDsSvNM
+         0Of2WgN+cgwcKBfBsTliIQAe/FDtdCa4fiDZwV1zSKBLYe4zLRL7s3vWbGRG5yqbey73
+         jF3w==
+X-Gm-Message-State: AOAM533/bUKrfgFLnJiuYKPndKz+vsSlkZX2tdhBMGK4KeW3+mG4bTY2
+        KNchulRbH4gR7r/T9mlWkjBggOtWgfy6Bg==
+X-Google-Smtp-Source: ABdhPJwBmI1ugn2sq9LijikbngcEmyY+r2nT7kq9neO9tClzeWD5ZmoRwEU+PE26w5/bTZ0CfGgvTQ==
+X-Received: by 2002:a50:fe14:0:b0:410:8621:6e0c with SMTP id f20-20020a50fe14000000b0041086216e0cmr1930016edt.356.1645004238717;
+        Wed, 16 Feb 2022 01:37:18 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id x10sm1361958edd.20.2022.02.16.01.23.24
+        by smtp.gmail.com with ESMTPSA id m17sm4022122ejn.118.2022.02.16.01.37.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Feb 2022 01:23:24 -0800 (PST)
+        Wed, 16 Feb 2022 01:37:17 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nKGWy-0039Ia-97;
-        Wed, 16 Feb 2022 10:23:24 +0100
+        id 1nKGkP-003A4n-Eg;
+        Wed, 16 Feb 2022 10:37:17 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
         Derrick Stolee <stolee@gmail.com>,
         Lessley Dennington <lessleydennington@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 4/5] Update documentation related to sparsity and the
- skip-worktree bit
-Date:   Wed, 16 Feb 2022 10:15:25 +0100
+Subject: Re: [PATCH v2 5/5] Accelerate
+ clear_skip_worktree_from_present_files() by caching
+Date:   Wed, 16 Feb 2022 10:32:12 +0100
 References: <pull.1114.git.1642092230.gitgitgadget@gmail.com>
  <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
- <0af00779128e594aff0ee4ec5378addeac8e88a2.1642175983.git.gitgitgadget@gmail.com>
+ <05ac964e630a2e72eebaa1818a8807cd7a7d4f7e.1642175983.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <0af00779128e594aff0ee4ec5378addeac8e88a2.1642175983.git.gitgitgadget@gmail.com>
-Message-ID: <220216.86k0dvupv7.gmgdl@evledraar.gmail.com>
+In-reply-to: <05ac964e630a2e72eebaa1818a8807cd7a7d4f7e.1642175983.git.gitgitgadget@gmail.com>
+Message-ID: <220216.86fsojup82.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -76,105 +76,113 @@ X-Mailing-List: git@vger.kernel.org
 On Fri, Jan 14 2022, Elijah Newren via GitGitGadget wrote:
 
 > From: Elijah Newren <newren@gmail.com>
->
-> Make several small updates, to address a few documentation issues
-> I spotted:
->   * sparse-checkout focused on "patterns" even though the inputs (and
->     outputs in the case of `list`) are directories in cone-mode
->   * The description section of the sparse-checkout documentation
->     was a bit sparse (no pun intended), and focused more on internal
->     mechanics rather than end user usage.  This made sense in the
->     early days when the command was even more experimental, but let's
->     adjust a bit to try to make it more approachable to end users who
->     may want to consider using it.  Keep the scary backward
->     compatibility warning, though; we're still hard at work trying to
->     fix up commands to behave reasonably in sparse checkouts.
->   * both read-tree and update-index tried to describe how to use the
->     skip-worktree bit, but both predated the sparse-checkout command.
->     The sparse-checkout command is a far easier mechanism to use and
->     for users trying to reduce the size of their working tree, we
->     should recommend users to look at it instead.
->   * The update-index documentation pointed out that assume-unchanged
->     and skip-worktree sounded similar but had different purposes.
->     However, it made no attempt to explain the differences, only to
->     point out that they were different.  Explain the differences.
->   * The update-index documentation focused much more on (internal?)
->     implementation details than on end-user usage.  Try to explain
->     its purpose better for users of update-index, rather than
->     fellow developers trying to work with the SKIP_WORKTREE bit.
->   * Clarify that when core.sparseCheckout=true, we treat a file's
->     presence in the working tree as being an override to the
->     SKIP_WORKTREE bit (i.e. in sparse checkouts when the file is
->     present we ignore the SKIP_WORKTREE bit).
->
-> Note that this commit, like many touching documentation, is best viewed
-> with the `--color-words` option to diff/log.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  Documentation/git-read-tree.txt       | 12 +++--
->  Documentation/git-sparse-checkout.txt | 76 ++++++++++++++++-----------
->  Documentation/git-update-index.txt    | 57 +++++++++++++++-----
->  3 files changed, 98 insertions(+), 47 deletions(-)
->
-> diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-> index 8c3aceb8324..99bb387134d 100644
-> --- a/Documentation/git-read-tree.txt
-> +++ b/Documentation/git-read-tree.txt
-> @@ -375,9 +375,14 @@ have finished your work-in-progress), attempt the merge again.
->  SPARSE CHECKOUT
->  ---------------
+> [...]
+> +static int path_found(const char *path, const char **dirname, size_t *dir_len,
+> +		      int *dir_found)
+> +{
+> +	struct stat st;
+> +	char *newdir;
+> +	char *tmp;
+> +
+> +	/*
+> +	 * If dirname corresponds to a directory that doesn't exist, and this
+> +	 * path starts with dirname, then path can't exist.
+> +	 */
+> +	if (!*dir_found && !memcmp(path, *dirname, *dir_len))
+> +		return 0;
+> +
+> +	/*
+> +	 * If path itself exists, return 1.
+> +	 */
+> +	if (!lstat(path, &st))
+> +		return 1;
+> +
+> +	/*
+> +	 * Otherwise, path does not exist so we'll return 0...but we'll first
+> +	 * determine some info about its parent directory so we can avoid
+> +	 * lstat calls for future cache entries.
+> +	 */
+> +	newdir = strrchr(path, '/');
+> +	if (!newdir)
+> +		return 0; /* Didn't find a parent dir; just return 0 now. */
+> +
+> +	/*
+> +	 * If path starts with directory (which we already lstat'ed and found),
+> +	 * then no need to lstat parent directory again.
+> +	 */
+> +	if (*dir_found && *dirname && memcmp(path, *dirname, *dir_len))
+> +		return 0;
+
+I really don't care/just asking, but there was a discussion on another
+topic about guarding calls to the mem*() family when n=0:
+https://lore.kernel.org/git/xmqq1r24gsph.fsf@gitster.g/
+
+Is this the same sort of redundancy where we could lose the "&&
+*dirname" part, or is it still important because a "\0" dirname would
+have corresponding non-0 *dir_len?
+
+More generally ... (see below)...
+
+> +
+> +	/* Free previous dirname, and cache path's dirname */
+> +	*dirname = path;
+> +	*dir_len = newdir - path + 1;
+> +
+> +	tmp = xstrndup(path, *dir_len);
+> +	*dir_found = !lstat(tmp, &st);
+
+In most other places we're a bit more careful about lstat() error handling, e.g.:
+    
+    builtin/init-db.c:              if (lstat(path->buf, &st_git)) {
+    builtin/init-db.c-                      if (errno != ENOENT)
+    builtin/init-db.c-                              die_errno(_("cannot stat '%s'"), path->buf);
+    builtin/init-db.c-              }
+    
+Shouldn't we do the same here and at least error() on return values of
+-1 with an accompanying errno that isn't ENOENT?
+
+
+> +	free(tmp);
+> +
+> +	return 0;
+> +}
+> +
+>  void clear_skip_worktree_from_present_files(struct index_state *istate)
+>  {
+> +	const char *last_dirname = NULL;
+> +	size_t dir_len = 0;
+> +	int dir_found = 1;
+> +
+>  	int i;
+> +
+>  	if (!core_apply_sparse_checkout)
+>  		return;
 >  
-> +Note: The `update-index` and `read-tree` primitives for supporting the
-> +skip-worktree bit predated the introduction of
-> +linkgit:git-sparse-checkout[1].  Users are encouraged to use
-> +`sparse-checkout` in preference to these low-level primitives.
+>  restart:
+>  	for (i = 0; i < istate->cache_nr; i++) {
+>  		struct cache_entry *ce = istate->cache[i];
+> -		struct stat st;
+>  
+> -		if (ce_skip_worktree(ce) && !lstat(ce->name, &st)) {
+> +		if (ce_skip_worktree(ce) &&
+> +		    path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
 
-I was honestly a bit confused about whether we were really referring to
-the git-update-index and git-read-tree commands here, or some
-sparse-checkout (re-)usage of the same as "primitives", but reading it
-again & the commit message we're just talking about the commands here.
+...(continued from above) is the "path is zero" part of this even
+reachable? I tried with this on top and ran your tests (and the rest of
+t*sparse*.sh) successfully:
+	
+	diff --git a/sparse-index.c b/sparse-index.c
+	index eed170cd8f7..f89c944d8cd 100644
+	--- a/sparse-index.c
+	+++ b/sparse-index.c
+	@@ -403,6 +403,7 @@ void clear_skip_worktree_from_present_files(struct index_state *istate)
+	 	for (i = 0; i < istate->cache_nr; i++) {
+	 		struct cache_entry *ce = istate->cache[i];
+	 
+	+		assert(*ce->name);
+	 		if (ce_skip_worktree(ce) &&
+	 		    path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
+	 			if (S_ISSPARSEDIR(ce->ce_mode)) {
 
-So this really just wants to assure readers that they're advised to use
-the shiny porcelain command instead of the plumbing.
-
-I think we should refer to these as e.g. "linkgit:git-update-index[1]"
-not "`update-index`" here, and call them e.g. "plumbing commands"
-instead of "primitives" here, which will address that (the reader
-wonders "what's a primitive?").
-
-> -Initialize and modify the sparse-checkout configuration, which reduces
-> -the checkout to a set of paths given by a list of patterns.
-> +This command is used to create sparse checkouts, which means that it
-> +changes the working tree from having all tracked files present, to only
-> +have a subset of them.  It can also switch which subset of files are
-> +present, or undo and go back to having all tracked files present in the
-> +working copy.
-
-In terms of prose I think it's preferred to keep matter-of-fact "Slices
-and dices apples, making them easier to eat" instead of "This command
-slices and dices apples, which means that it's easier to eat them".
-
-I've forgotten what the linguisting term for that is, but it's more
-consistent with our docs, and makes for easier reading.
-
-> +The subset of files is chosen by providing a list of directories in
-> +cone mode (which is recommended), or by providing a list of patterns
-> +in non-cone mode.
-
-As someone with light familiarity with sparse-checkout:
-
-I'm still not sure if this is telling me that it's preferred to list
-directories v.s. patterns, or if it's telling me it's better to operate
-in "cone mode" v.s. "non-cone mode", or some combination of the two.
-
-IOW I think peeling out that "(which is recommended)" and making it
-clearly refer to which (or both?) of the two we're talking about would
-be much better.
-
-> +When in a sparse-checkout, other Git commands behave a bit differently.
-> +For example, switching branches will not update paths outside the
-> +sparse-checkout directories/patterns, and `git commit -a` will not record
-> +paths outside the sparse-checkout directories/patterns as deleted.
-
-(I didn't read through the rest in any detail)
+I.e. isn't this undue paranoia about the cache API giving us zero-length
+paths?
