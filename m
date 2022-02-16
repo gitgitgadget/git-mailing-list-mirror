@@ -2,70 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44ABFC433EF
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 09:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0000C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 09:44:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232087AbiBPJhd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 04:37:33 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:55054 "EHLO
+        id S232383AbiBPJo3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 04:44:29 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:36444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229660AbiBPJhc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 04:37:32 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4D1A65CD
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 01:37:20 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id f17so2904316edd.2
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 01:37:20 -0800 (PST)
+        with ESMTP id S232284AbiBPJoZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 04:44:25 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AF36296918
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 01:44:13 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id w3so2889904edu.8
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 01:44:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=85JCM1jvQ1gWWwhgwK4xnNuGpezrA8/7P00mRkpC0Q8=;
-        b=S8xIIOJE2mLVeSwCjXOl0KG5CPO6C0eK+b4QJnFWXWmCtqTXTd5q2bzv8eBE4Qcs6d
-         rrMs/s24Q93gEItnAFLz7Kp3kK489QBB4UreCiz21kG/fRIjrwZyAghga5qUxNqnkqp1
-         iB7BcRZ9OMtNn1M1NP+zjpd9Nx0ddcBpcpJcvv5DMIZLxBr7XBcB0vfSTYmYLqdPI7hR
-         RIGX0sJhDv5XrDB8auqrxT/zS4XGTeFDBXAPZeDam6DM4KYkvn9XfHEqebc2hADUccBP
-         U+qlKwLvd4MqIoGVw1G3pKQYhTI6dP5uCCOWInLgHQ3RNL5dm9o7zew0tFjwrOYx/wsZ
-         MgJw==
+        bh=MNr+x/70q4QPu0fFk7U/0fsXCrMTQSQJuovssV14gKU=;
+        b=lZAsmduj87KgVdRHSupLUh7+t7iVK4ynYho1rvwN4nSF9sc4vYUlz+Ud8/eAuFibWa
+         ale7PL4Ltk18zi0wuOHdq3ncWxX1AXU+eE1IDukfk9UQSKgswJuGXuwqNPeDLy88JzY5
+         PoJP6fk8cBbljD7ChCZo0Y6DuMczZep0Lc69X8tVhi2ijnv3fevFRYCtAIUUJpSAGv1t
+         DIjT0Q/QgF1qoUCcCP2DXBlGxmn5R3Ynm914zZPHncyrFjwpo4IRnjl6GRL+J+gdiMkx
+         UMIgwAP5nXW476gdDEHuJyx8vO1TEazYoGZSYNjOsK7XRECzUXizIDDxkX6UkYuIr34I
+         IXAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=85JCM1jvQ1gWWwhgwK4xnNuGpezrA8/7P00mRkpC0Q8=;
-        b=1t6v6QMNtTZ+JiLudUvNxU0MDFbt/dGQua3mzb54BtK9IE25ANOZ9Oi1MOQNQeu8Pw
-         0UzlDKn7UbhQUSGe6vLT98LbNI4mxmMNx3oCW+Rne920pxde4KS8y8Xq5vmtH0xuPwGZ
-         OfMzo42DzBjuhJjJGM+L1QWeoOdIgASRnCjamlGr4pFu37I5LLmOYoYPFMVopW7oYKAS
-         tQ4ZUv0YTVEaL+obXkB1npNPkJ1fqyRupPWWc8ae3un842zxhjCqELKzSKXYLpDsSvNM
-         0Of2WgN+cgwcKBfBsTliIQAe/FDtdCa4fiDZwV1zSKBLYe4zLRL7s3vWbGRG5yqbey73
-         jF3w==
-X-Gm-Message-State: AOAM533/bUKrfgFLnJiuYKPndKz+vsSlkZX2tdhBMGK4KeW3+mG4bTY2
-        KNchulRbH4gR7r/T9mlWkjBggOtWgfy6Bg==
-X-Google-Smtp-Source: ABdhPJwBmI1ugn2sq9LijikbngcEmyY+r2nT7kq9neO9tClzeWD5ZmoRwEU+PE26w5/bTZ0CfGgvTQ==
-X-Received: by 2002:a50:fe14:0:b0:410:8621:6e0c with SMTP id f20-20020a50fe14000000b0041086216e0cmr1930016edt.356.1645004238717;
-        Wed, 16 Feb 2022 01:37:18 -0800 (PST)
+        bh=MNr+x/70q4QPu0fFk7U/0fsXCrMTQSQJuovssV14gKU=;
+        b=ixtL8EhaO+a9GXdvWAUAgDGVDxz20pDjSiGRiJAEiJ95XoCBs1xv2fVCkN/aGiGoXv
+         yiJa3e1U4IxynNZR+yGWljkFgytU+nq7d8Ewi/E6XjuohVtbDoeB4x52RLniATHvjfhh
+         hXdPUpBPQZ7QctJeV6ECzUQ07qz8c/tZWem5NOGZvAegE2p9v2TV3vRjJbOBSuynlL4C
+         wROZSnWjRYjdEQgsIfjMENRhOpIGKRFrhOU9wR63oNtQDm7wYyxYWMn0ktGeY1fEtYOJ
+         i58yTAB9jpJcT73dTBQpQwm1kFUSfHCwIihK3Qi+lQ37sSfLTBwfbpx4/9u5RWYlkBEd
+         yifA==
+X-Gm-Message-State: AOAM530xf++AiyjwQMDMforKAlaYzZlf7gHbxJUGDUChBLXv6rY+wsyg
+        jhEd9/WLJUkEsMBwnVEfszk=
+X-Google-Smtp-Source: ABdhPJws14E2anVqTUEO1teHSJIcp5b/ajNftSur/ehbZhLzT732Zwjldu9ahUEx5QjjXWaZ+NUAfw==
+X-Received: by 2002:a50:aac8:0:b0:410:ae77:c484 with SMTP id r8-20020a50aac8000000b00410ae77c484mr1961478edc.431.1645004651707;
+        Wed, 16 Feb 2022 01:44:11 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id m17sm4022122ejn.118.2022.02.16.01.37.17
+        by smtp.gmail.com with ESMTPSA id v23sm12898797ejy.177.2022.02.16.01.44.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Feb 2022 01:37:17 -0800 (PST)
+        Wed, 16 Feb 2022 01:44:10 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nKGkP-003A4n-Eg;
-        Wed, 16 Feb 2022 10:37:17 +0100
+        id 1nKGr4-003AR1-99;
+        Wed, 16 Feb 2022 10:44:10 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 5/5] Accelerate
- clear_skip_worktree_from_present_files() by caching
-Date:   Wed, 16 Feb 2022 10:32:12 +0100
-References: <pull.1114.git.1642092230.gitgitgadget@gmail.com>
- <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
- <05ac964e630a2e72eebaa1818a8807cd7a7d4f7e.1642175983.git.gitgitgadget@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 7/9] fetch: fetch unpopulated, changed submodules
+Date:   Wed, 16 Feb 2022 10:39:14 +0100
+References: <20220215220229.1633486-1-jonathantanmy@google.com>
+ <kl6lr1835poe.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <kl6lee435g72.fsf@chooglen-macbookpro.roam.corp.google.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <05ac964e630a2e72eebaa1818a8807cd7a7d4f7e.1642175983.git.gitgitgadget@gmail.com>
-Message-ID: <220216.86fsojup82.gmgdl@evledraar.gmail.com>
+In-reply-to: <kl6lee435g72.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <220216.86bkz7uowl.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -73,116 +70,122 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Jan 14 2022, Elijah Newren via GitGitGadget wrote:
+On Wed, Feb 16 2022, Glen Choo wrote:
 
-> From: Elijah Newren <newren@gmail.com>
-> [...]
-> +static int path_found(const char *path, const char **dirname, size_t *dir_len,
-> +		      int *dir_found)
-> +{
-> +	struct stat st;
-> +	char *newdir;
-> +	char *tmp;
-> +
-> +	/*
-> +	 * If dirname corresponds to a directory that doesn't exist, and this
-> +	 * path starts with dirname, then path can't exist.
-> +	 */
-> +	if (!*dir_found && !memcmp(path, *dirname, *dir_len))
-> +		return 0;
-> +
-> +	/*
-> +	 * If path itself exists, return 1.
-> +	 */
-> +	if (!lstat(path, &st))
-> +		return 1;
-> +
-> +	/*
-> +	 * Otherwise, path does not exist so we'll return 0...but we'll first
-> +	 * determine some info about its parent directory so we can avoid
-> +	 * lstat calls for future cache entries.
-> +	 */
-> +	newdir = strrchr(path, '/');
-> +	if (!newdir)
-> +		return 0; /* Didn't find a parent dir; just return 0 now. */
-> +
-> +	/*
-> +	 * If path starts with directory (which we already lstat'ed and found),
-> +	 * then no need to lstat parent directory again.
-> +	 */
-> +	if (*dir_found && *dirname && memcmp(path, *dirname, *dir_len))
-> +		return 0;
+> Glen Choo <chooglen@google.com> writes:
+>
+>> Jonathan Tan <jonathantanmy@google.com> writes:
+>>
+>>> Glen Choo <chooglen@google.com> writes:
+>>>> +	# Create new superproject commit with updated submodules
+>>>> +	add_upstream_commit &&
+>>>> +	(
+>>>> +		cd submodule &&
+>>>> +		(
+>>>> +			cd subdir/deepsubmodule &&
+>>>> +			git fetch &&
+>>>> +			git checkout -q FETCH_HEAD
+>>>> +		) &&
+>>>> +		git add subdir/deepsubmodule &&
+>>>> +		git commit -m "new deep submodule"
+>>>> +	) &&
+>>>> +	git add submodule &&
+>>>> +	git commit -m "new submodule" &&
+>>>
+>>> I thought add_upstream_commit() would do this, but apparently it just
+>>> adds commits to the submodules (which works for the earlier tests that
+>>> just tested that the submodules were fetched, but not for this one). I
+>>> think that all this should go into its own function.
+>
+> I'm testing out a function that does exactly what these lines do, i.e.
+> create a superproject commit containing a submodule change containing a
+> deepsubmodule change. That works pretty well and it makes sense in the
+> context of the tests.
+>
+>>> Also, I understand that "git fetch" is there to pick up the commit we
+>>> made in add_upstream_commit, but this indirection is unnecessary in a
+>>> test, I think. Can we not use add_upstream_commit and just create our
+>>> own in subdir/deepsubmodule? (This might conflict with subsequent tests
+>>> that use the old scheme, but I think that it should be fine.)
+>
+> We can avoid the "git fetch" if we first need to fix an inconsistency in
+> how the submodules are set up. Right now, we have:
+>
+>   test_expect_success setup '
+>     mkdir deepsubmodule &&
+>     [...]
+>     mkdir submodule &&
+>     (
+>     [...]
+>       git submodule add "$pwd/deepsubmodule" subdir/deepsubmodule &&
+>       git commit -a -m new &&
+>       git branch -M sub
+>     ) &&
+>     git submodule add "$pwd/submodule" submodule &&
+>     [...]
+>     (
+>       cd downstream &&
+>       git submodule update --init --recursive
+>     )
+>   '
+>
+> resulting in a directory structure like:
+>
+> $pwd
+> |_submodule
+>   |_subdir
+>     |_deepsubmodule
+> |_deepsubmodule
+>
+> and upstream/downstream dependencies like:
+>
+> upstream                             downstream            
+> --------                             ----------
+> $pwd/deepsubmodule                   $pwd/downstream/submodule/subdir/deepsubmodule (SUT)
+>                                      $pwd/submodule/subdir/deepsubmodule
+>
+>
+> So we can't create the commit in submodule/subdir/deepsubmodule, because
+> that's not where our SUT would fetch from.
+>
+> Instead, we could fix this by having a more consistent
+> upstream/downstream structure:
+>
+> $pwd
+> |_submodule
+>   |_subdir
+>     |_deepsubmodule
+>
+> upstream                             downstream            
+> --------                             ----------
+> $pwd/submodule/subdir/deepsubmodule  $pwd/downstream/submodule/subdir/deepsubmodule (SUT)
+>
+> This seems more convenient to test, but before I commit to this, is
+> there a downside to this that I'm not seeing?
 
-I really don't care/just asking, but there was a discussion on another
-topic about guarding calls to the mem*() family when n=0:
-https://lore.kernel.org/git/xmqq1r24gsph.fsf@gitster.g/
+Won't this sort of arrangement create N copies of e.g. a zlib.git or
+some other common library that might be used by N submodules.
 
-Is this the same sort of redundancy where we could lose the "&&
-*dirname" part, or is it still important because a "\0" dirname would
-have corresponding non-0 *dir_len?
+But I haven't read all the context, I'm assuming you're talking about
+how we store in-tree a/b and x/y/b submodules now, we store those in
+.git/ both as .git/modules/b.git or whatever? I can't remember ... :)
 
-More generally ... (see below)...
+Whatever we do now I do think the caveat I've noted above is interesting
+when it comes to submodule design, e.g. if both git.git and
+some-random-thing.git both bring in the same sha1collisiondetection.git
+from the same github URL should those be the same in our underlying
+storage?
 
-> +
-> +	/* Free previous dirname, and cache path's dirname */
-> +	*dirname = path;
-> +	*dir_len = newdir - path + 1;
-> +
-> +	tmp = xstrndup(path, *dir_len);
-> +	*dir_found = !lstat(tmp, &st);
+I think the answer to that would ideally be both "yes" and
+"no".
 
-In most other places we're a bit more careful about lstat() error handling, e.g.:
-    
-    builtin/init-db.c:              if (lstat(path->buf, &st_git)) {
-    builtin/init-db.c-                      if (errno != ENOENT)
-    builtin/init-db.c-                              die_errno(_("cannot stat '%s'"), path->buf);
-    builtin/init-db.c-              }
-    
-Shouldn't we do the same here and at least error() on return values of
--1 with an accompanying errno that isn't ENOENT?
+I.e. "yes" because it's surely handy for "git fetch", now you don't need to
+fetch the same stuff twice in the common case of just updating all our
+recursive submodules.
 
+And also "no" because maybe some users would really consider them
+different. E.g. the you may want to "cd git/" and adjust the git.git one
+and create a branch there for some hotfix it needs, which would not be
+needed/wanted by some-random-thing.git.
 
-> +	free(tmp);
-> +
-> +	return 0;
-> +}
-> +
->  void clear_skip_worktree_from_present_files(struct index_state *istate)
->  {
-> +	const char *last_dirname = NULL;
-> +	size_t dir_len = 0;
-> +	int dir_found = 1;
-> +
->  	int i;
-> +
->  	if (!core_apply_sparse_checkout)
->  		return;
->  
->  restart:
->  	for (i = 0; i < istate->cache_nr; i++) {
->  		struct cache_entry *ce = istate->cache[i];
-> -		struct stat st;
->  
-> -		if (ce_skip_worktree(ce) && !lstat(ce->name, &st)) {
-> +		if (ce_skip_worktree(ce) &&
-> +		    path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
-
-...(continued from above) is the "path is zero" part of this even
-reachable? I tried with this on top and ran your tests (and the rest of
-t*sparse*.sh) successfully:
-	
-	diff --git a/sparse-index.c b/sparse-index.c
-	index eed170cd8f7..f89c944d8cd 100644
-	--- a/sparse-index.c
-	+++ b/sparse-index.c
-	@@ -403,6 +403,7 @@ void clear_skip_worktree_from_present_files(struct index_state *istate)
-	 	for (i = 0; i < istate->cache_nr; i++) {
-	 		struct cache_entry *ce = istate->cache[i];
-	 
-	+		assert(*ce->name);
-	 		if (ce_skip_worktree(ce) &&
-	 		    path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
-	 			if (S_ISSPARSEDIR(ce->ce_mode)) {
-
-I.e. isn't this undue paranoia about the cache API giving us zero-length
-paths?
+Hrm...
