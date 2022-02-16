@@ -2,106 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0C64C433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 21:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 705A1C433EF
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 22:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235716AbiBPVtL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 16:49:11 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54228 "EHLO
+        id S236510AbiBPWHa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 17:07:30 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233724AbiBPVtK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 16:49:10 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94C4D2A795F
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 13:48:57 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF5D4F8E61;
-        Wed, 16 Feb 2022 16:48:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=DQX1MoafHVpH
-        iTbaNRgoEFs1CaEj8NNSbGwx7WCtVx0=; b=SlGhSi2/HvOTV9+98Kpq0NWobVzJ
-        oR4XMpQkfkSDVS9zdbYvW+gSqzXWZX8JcyzlIAO7Sls0hIxRrgnks0tsqyECOFUC
-        h+QwaoK6L6An97D8ZBQ4/aXPSov5GR7Vhzu6lD+OdkVXq5x35FY/oj2vRIxW7pvV
-        QrxD5GBFsDM1WPs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D7661F8E60;
-        Wed, 16 Feb 2022 16:48:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 499EEF8E5F;
-        Wed, 16 Feb 2022 16:48:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/2] diff.[ch]: have diff_free() call
- clear_pathspec(opts.pathspec)
-References: <cover-0.2-00000000000-20220216T105250Z-avarab@gmail.com>
-        <patch-1.2-1c6c7f0f52f-20220216T105250Z-avarab@gmail.com>
-Date:   Wed, 16 Feb 2022 13:48:55 -0800
-In-Reply-To: <patch-1.2-1c6c7f0f52f-20220216T105250Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 16 Feb
- 2022 11:56:28 +0100")
-Message-ID: <xmqqh78ycwjc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S233779AbiBPWH2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 17:07:28 -0500
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B54FF20190E
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 14:07:14 -0800 (PST)
+Received: by mail-qv1-xf2f.google.com with SMTP id fh9so4702878qvb.1
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 14:07:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:mime-version:content-disposition;
+        bh=/2f7ah8wtBy5ReONBJDIHrSlpYQgIyP2LRpiuTHeu40=;
+        b=EmZS6Qvxg79O0PYZXvYZmKCjPRP9nkTODPNgfA15evFLt/OGwnSW+S1xaf70fx5OcU
+         ari6gKQux3mCyA39zJDXyFAtTCan0zMvFNkOTaHQB5V4z0AZqs0iFNAWZ9OEQlIQ7Qpa
+         Oth5V0yH4XsYS9XDm0p4ulGWQ0JZLu9eb1bs8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition;
+        bh=/2f7ah8wtBy5ReONBJDIHrSlpYQgIyP2LRpiuTHeu40=;
+        b=GXcvZ1nQv8iADyJETIbA3zr1Rby7xgD7/kNdthaokabgDCtT/ZxExY7cM359t2eZo5
+         gk4uP8KsXN9s4N4qcDdBqB9Hm8StR0dkRvYbv7a/jYnacwBpL8LpEq6Bnm9/fNm80AfC
+         xWH9zXonMwRhvo9dUqN7z79xiX11PcsBziv+5yE2JPRhbljNwp2q9BeEL1XhXx6GKoxx
+         gFMxqOfqUnft4UkUeCXvUA3zWd6XMYxcdZK/k2RydIX33DktSJ4ZbNZRlY367ATLz+hk
+         61ycqx9Iek8KrGrelRfkyQJPfTPTLQc+y56X++zvM3Pc7eyxgJ+VQF+1h7dtbkAGTjjR
+         EABQ==
+X-Gm-Message-State: AOAM5318UPt/mDuNJLhh9jn9tSHPCtTa068Rshg3sWFbh3tP2vNYTTxA
+        IBbqHYw4aORnnh2NMJMUG/bPcx35dnHY+A==
+X-Google-Smtp-Source: ABdhPJyDbi2FRxjgzO6LBKVJQu/zPxzH9YgJrYCH9vBLEcZCFpQZr/rfvgG8QCtP90X83LgP5jpiJA==
+X-Received: by 2002:a0c:c2cf:0:b0:42c:3b31:86ba with SMTP id c15-20020a0cc2cf000000b0042c3b3186bamr597259qvi.127.1645049233449;
+        Wed, 16 Feb 2022 14:07:13 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-127.dsl.bell.ca. [216.209.220.127])
+        by smtp.gmail.com with ESMTPSA id y15sm19606879qko.95.2022.02.16.14.07.12
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Feb 2022 14:07:12 -0800 (PST)
+Date:   Wed, 16 Feb 2022 17:07:10 -0500
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     git@vger.kernel.org
+Subject: Supporting --depth when cloning from a bundle
+Message-ID: <20220216220710.td4vp6mile5m6hjn@meerkat.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3D8A7D70-8F72-11EC-A62D-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Hello, all:
 
-> diff --git a/diff.c b/diff.c
-> index c862771a589..0aef3db6e10 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -6345,6 +6345,7 @@ void diff_free(struct diff_options *options)
-> =20
->  	diff_free_file(options);
->  	diff_free_ignore_regex(options);
-> +	clear_pathspec(&options->pathspec);
->  }
-> =20
->  void diff_flush(struct diff_options *options)
+It would be pretty handy if it was possible to do shallow clones from a bundle
+file. For example, this would be nice for CI environments that first download
+a clone.bundle file from a locally cached location, clone from it, and then
+fetch any remaining objects from remote.
 
-Interesting.  As diff_flush() is the way to conclude the diff
-session whose state was kept in the diff_options structure, it
-probably makes sense to allow pathspec to be also cleared from
-there.  It is somewhat surprising that we didn't do this when we
-introduced diff_free(), but better late than never ;-)
+E.g., in my mind this outta work:
 
-> diff --git a/notes-merge.c b/notes-merge.c
-> index b4a3a903e86..7ba40cfb080 100644
-> --- a/notes-merge.c
-> +++ b/notes-merge.c
-> @@ -175,7 +175,6 @@ static struct notes_merge_pair *diff_tree_remote(st=
-ruct notes_merge_options *o,
->  		       oid_to_hex(&mp->remote));
->  	}
->  	diff_flush(&opt);
-> -	clear_pathspec(&opt.pathspec);
-> =20
->  	*num_changes =3D len;
->  	return changes;
-> @@ -261,7 +260,6 @@ static void diff_tree_local(struct notes_merge_opti=
-ons *o,
->  		       oid_to_hex(&mp->local));
->  	}
->  	diff_flush(&opt);
-> -	clear_pathspec(&opt.pathspec);
->  }
-> =20
->  static void check_notes_merge_worktree(struct notes_merge_options *o)
+$ wget https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/clone.bundle
+$ git clone --depth 1 clone.bundle linux -b master
 
+Right now, this operation succeeds as-is without any errors, but the resulting
+git repository isn't actually shallow.
 
-Looks quite sensible.  Will queue.  Thanks.
+Oh, it would be even awesomer if the bundle files could be used directly with
+--reference, e.g.:
 
+$ git clone --reference clone.bundle --dissociate \
+  https://git.kernel.org/.../torvalds/linux.git linux
+
+Any reason that can't work?
+
+-K
