@@ -2,234 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8422C433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 02:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B59B1C433EF
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 02:24:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343701AbiBPCUv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 21:20:51 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59654 "EHLO
+        id S1343661AbiBPCYL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 21:24:11 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343668AbiBPCUq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 21:20:46 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 578DEBF97D
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 18:20:35 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0D555174F3C;
-        Tue, 15 Feb 2022 21:20:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=22GZAmXNMpGa
-        zSvDiwiL+Di5z3pGcDH8SsJ0TPfogIA=; b=cfU3wMKs2KE0umCujs10bNLDGQzf
-        u3NUk+VJdedoTOdgbbeGcNTQmkW48t1zP3CWRy788j0hEKoXWIY4nFMnieFYIeS+
-        L/SwDm2ki0kh5OEdj8ee6522v99xJPqY2RfUh1asZSKI7GvcQozgWhdF3KC63oh8
-        HeZe8Qoey9j82tg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 05176174F3B;
-        Tue, 15 Feb 2022 21:20:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 59255174F39;
-        Tue, 15 Feb 2022 21:20:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, J Smith <dark.panda@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v11 00/10] grep: simplify & delete "init" & "config" code
-References: <cover-v10-0.9-00000000000-20220204T211534Z-avarab@gmail.com>
-        <cover-v11-00.10-00000000000-20220216T000006Z-avarab@gmail.com>
-Date:   Tue, 15 Feb 2022 18:20:31 -0800
-In-Reply-To: <cover-v11-00.10-00000000000-20220216T000006Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 16 Feb
- 2022 01:00:29
-        +0100")
-Message-ID: <xmqqh78zwo0g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S239898AbiBPCYK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 21:24:10 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A30DD2051
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 18:23:59 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id w3so1407614edu.8
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 18:23:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qkw08YlX8BZbhg3yl0HSRv7tZPn3RxP3T0ECTDIm7yo=;
+        b=oFkf0V+rGbiKTx/RWZLgD0QVwvtgzNzeEv2Il9Ssv3YCZ+nZSqa33X0wItJQ9Q6bN0
+         fftiS/H5tMgIrwP1iX1aAviqRKcF+7zffOMfWo/QZzFXl2DprQN0+jyK7PN4v1HkTabM
+         u69S1Mt/H7qz0j3idUQkKuuoWJryqXwMtvHQDEjAYe7m5OpvQli6ii5NJ5ZnChYZSkGm
+         6Ha0eo6Gbkeho5gLfbtok4EDw/r2eZhFkBP+zvocM0lPJ+zRjKbqx/O0qwDZZ1oPnKkQ
+         tvoqVm2zarnSVgdvLaoqrdxaYDMAT9nTOGqwRGRBK/v2pFgAsTtr7H8sJMrEy9YCWAx/
+         FTvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qkw08YlX8BZbhg3yl0HSRv7tZPn3RxP3T0ECTDIm7yo=;
+        b=agyfOIL8MpN4XQMcSFSxavnksaEIwfqumwx85coLSrGhKpmaSlkfrSBrYfc1l0e/7H
+         5lU6EeBEIqJQUJND9A+CuLlZhmJGvaCLKC0MAnJgksxdrRlt/AhstOweZVo2OA8utDHM
+         Ycg80RzsrOsHohOP6P40DGDaPsDLOkp0xrWoqcCAWTsMJ42oqqtPwps5mhCbmDspyKAP
+         XezgUbfE8HgWj5S4C1CQ7UdpCHAizw49ZDCVW0F9cTVTr7Eo2pcKzrDUNnzE64jGB0Of
+         rIZdkiiHx5TZduh/pn0EJ10SxiYxZEYRalMMx5R5DehP4807VPZ37LSscAFxyFQCNtlx
+         Q2XQ==
+X-Gm-Message-State: AOAM532EXJLTVzUi2DFNDS0yp6GyjD5DLGTmvkOEhmt4vKvXoyrGxIM3
+        DWxwiCW+RmdaljU/US1c8Kt15FquF+AyaYqPWzk=
+X-Google-Smtp-Source: ABdhPJxTQGFetbeqpWdtB+6SHkJHgW5xj3NHCQr6KvcKlEz7ZZtxc5U5BOAru4iJBftuvKx/u3J8cNOvlMlljDqG3DQ=
+X-Received: by 2002:a05:6402:354f:b0:406:c518:56f1 with SMTP id
+ f15-20020a056402354f00b00406c51856f1mr674983edd.309.1644978237500; Tue, 15
+ Feb 2022 18:23:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 04569A28-8ECF-11EC-B8E6-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1118.git.1644712797.gitgitgadget@gmail.com>
+ <265cbe36b2df5a9a076877fe3ddc3880a64a9217.1644712798.git.gitgitgadget@gmail.com>
+ <xmqqsfsl2utb.fsf@gitster.g> <CABPp-BEhsp4=dzCkSpyu4Bd7Q=hP1Ec6W09-zX2+N+5_-ytk8A@mail.gmail.com>
+ <xmqqr183y5yh.fsf@gitster.g>
+In-Reply-To: <xmqqr183y5yh.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 15 Feb 2022 18:23:45 -0800
+Message-ID: <CABPp-BFymV-bQVfT7u1phO1N8MHu03SfbVa6Q+CDKeJL21Fbwg@mail.gmail.com>
+Subject: Re: [PATCH 5/7] sparse-checkout: reject non-cone-mode patterns
+ starting with a '#'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On Tue, Feb 15, 2022 at 5:07 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > If this were the only special character case, I'd totally agree, but I
+> > do worry a bit that escaping this particular case might lead users to
+> > expect us to escape and fix other special characters from '*?[]!\'.
+>
+> Sorry, but I do not quite get why it is a problem.  I understand
+> that the idea behind this "rejection" is that "#" is special only
+> when it appears in files (as comment introducer) and must be
+> prefixed with "\", right?
+>
+> Do any of the wildcard characters mean different things depending on
+> where they appear?  Isn't '*' a wildcard to match 0-or-more-bytes
+> whether it appears in files or on the command line, and need to
+> prefixed with "\" to make it non-special regardless of where it is
+> found?
+>
+> > If users have files with those characters and specify an argument with
+> > one of those, are we to automatically escape them as well?  If we
+> > don't escape the other characters but do escape '#', aren't we being
+> > inconsistent?
+>
+> I do not quite get where you are seeing an inconsistency.  Do you
+> mean that it is inconsistent that "# comment" is only allowed in
+> files but not on the command line?
 
->   * A new 3/10 and 4/10 hopefully address the comments about the test
->     code. I ended up just adding a helper to reduce the existing and
->     new verbosity of the tests, which should make it easier to reason
->     about them.
+I don't understand what distinction you are trying to make between the
+file or the command line; for non-cone mode, all positional arguments
+to sparse-checkout {add,set} are taken as-is and inserted into the
+$GIT_DIR/info/sparse-checkout file directly.
 
-Here is an excerpt plus comments on "git diff @{1}" after queuing
-the new series.  I found only a few minor "Huh?", none of them a
-huge deal.
+I don't like just assuming that users are specifying paths rather than
+patterns, when non-cone mode is all about specifying patterns rather
+than paths; it just feels broken to me.  However, since comments can
+never match anything and part of the point of the sparse-checkout
+command is so that users don't have to edit or look at the
+$GIT_DIR/info/sparse-checkout file, it seemed worth flagging.
 
-Will queue; thanks.
+With all the special characters in non-cone mode ('*?[]!#\') and the
+years of training we've given to users to edit
+$GITDIR/info/sparse-checkout directly, there's really not much we can
+check for; this was the only thing I could think of that seemed
+reasonable to flag in non-cone mode.  However, it's really not all
+that important to me, so I'll just drop this patch.
 
-+test_pattern_type () {
-+	H=3D$1 &&
-+	HC=3D$2 &&
-+	L=3D$3 &&
-+	type=3D$4 &&
-+	shift 4 &&
-+
-+	expected_str=3D &&
-+	case "$type" in
-+	BRE)
-+		expected_str=3D"${HC}ab:a+bc"
-+		;;
-+	ERE)
-+		expected_str=3D"${HC}ab:abc"
-+		;;
-+	FIX)
-+		expected_str=3D"${HC}ab:a+b*c"
-+		;;
-+	*)
-+		BUG "unknown pattern type '$type'"
-+		;;
-+	esac &&
+>  If so, a way to make it
+> consistent may be to allow "# comment" even from the command line
+> ;-)
 
-Excellent.  I always had to think twice when commenting on earlier
-rounds of the patches which expected strings corresponded to what
-pattern type.  Now we have a clearly defined table.
-
-+	config_str=3D"$@" &&
-
-This forces each element of $@ to lose its identity, and makes it a
-single string separated by a whitespace, so it is less misleading to
-write
-
-	config_str=3D"$*"
-
-instead, but it is not a huge deal.
-
-+	test_expect_success "grep $L with '$config_str' interpreted as $type" '
-+		echo $expected_str >expected &&
-+		git $config_str grep "a+b*c" $H ab >actual &&
-+		test_cmp expected actual
-+	'
-
-We must leave $config_str unquoted (because we do want the string
-split at $IFS), but not quoting "$expected_str" looks a bit yucky
-(because we have no intention to let $IFS to split it).
-
-+}
-+
-
-+	test_pattern_type "$H" "$HC" "$L" BRE -c grep.extendedRegexp=3Dfalse
-+	test_pattern_type "$H" "$HC" "$L" ERE -c grep.extendedRegexp=3Dtrue
-+	test_pattern_type "$H" "$HC" "$L" BRE -c grep.patternType=3Dbasic
-+	test_pattern_type "$H" "$HC" "$L" ERE -c grep.patternType=3Dextended
-+	test_pattern_type "$H" "$HC" "$L" FIX -c grep.patternType=3Dfixed
-=20
-This part demonstrates the beauty of the new helper very well ;-)
-
-s/FIX/FIXED/ would be more grammatically correct.  It would break
-alignment above and I suspect that was why the patch chose to say
-"FIX" instead, but I am not sure if the alignment here is so
-valuable.
-
-+	test_pattern_type "$H" "$HC" "$L" ERE \
-+		-c grep.patternType=3Ddefault \
-+		-c grep.extendedRegexp=3Dtrue
-+	test_pattern_type "$H" "$HC" "$L" ERE \
-+		-c grep.extendedRegexp=3Dtrue \
-+		-c grep.patternType=3Ddefault
-+	test_pattern_type "$H" "$HC" "$L" ERE \
-+		-c grep.patternType=3Dextended \
-+		-c grep.extendedRegexp=3Dfalse
-+	test_pattern_type "$H" "$HC" "$L" BRE \
-+		-c grep.patternType=3Dbasic \
-+		-c grep.extendedRegexp=3Dtrue
-+	test_pattern_type "$H" "$HC" "$L" ERE \
-+		-c grep.extendedRegexp=3Dfalse \
-+		-c grep.patternType=3Dextended
-+	test_pattern_type "$H" "$HC" "$L" BRE \
-+		-c grep.extendedRegexp=3Dtrue \
-+		-c grep.patternType=3Dbasic
-
-OK.  A bit redundant, knowing the implementation that parses the two
-variables independently just like any other two variables, but these
-are correct, which counts even more ;-).
-
-+	# grep.extendedRegexp is last-one-wins
-+	test_pattern_type "$H" "$HC" "$L" BRE \
-+		-c grep.extendedRegexp=3Dtrue \
-+		-c grep.extendedRegexp=3Dfalse
-+
-+	# grep.patternType=3Dbasic pays no attention to grep.extendedRegexp
-+	test_pattern_type "$H" "$HC" "$L" BRE \
-+		-c grep.extendedRegexp=3Dtrue \
-+		-c grep.patternType=3Dbasic \
-+		-c grep.extendedRegexp=3Dfalse
-+
-+	# grep.patternType=3Dextended pays no attention to grep.extendedRegexp
-+	test_pattern_type "$H" "$HC" "$L" ERE \
-+		-c grep.extendedRegexp=3Dtrue \
-+		-c grep.patternType=3Dextended \
-+		-c grep.extendedRegexp=3Dfalse
-
-All correct.
-
-+	# grep.extendedRegexp is used with a last-one-wins grep.patternType=3Dd=
-efault
-+	test_pattern_type "$H" "$HC" "$L" ERE \
-+		-c grep.patternType=3Dfixed \
-+		-c grep.extendedRegexp=3Dtrue \
-+		-c grep.patternType=3Ddefault
-
-Nice.
-
-+	# grep.extendedRegexp is used with earlier grep.patternType=3Ddefault
-+	test_pattern_type "$H" "$HC" "$L" ERE \
-+		-c grep.extendedRegexp=3Dfalse \
-+		-c grep.patternType=3Ddefault \
-+		-c grep.extendedRegexp=3Dtrue
-
-OK.  I would have expected "the last" instead of "earlier".  Because
-these two variables are independently "the last one wins", just like
-any two variables that are "the last one wins", the relative order
-of their appearance does not matter.
-
-+	# grep.extendedRegexp is used with a last-one-loses grep.patternType=3D=
-default
-+	test_pattern_type "$H" "$HC" "$L" ERE \
-+		-c grep.extendedRegexp=3Dfalse \
-+		-c grep.extendedRegexp=3Dtrue \
-+		-c grep.patternType=3Ddefault
-
-I am not sure what last-one-loses mean here.  Both variables are
-independently last-one-wins, so at the end of the parsing,
-grep.extendedRegexp has 'true' (because it is the last value seen
-for the variable) while grep.patternType has 'default' (again, it is
-the last value seen for the variable).
-
-+	# grep.extendedRegexp and grep.patternType are both last-one-wins indep=
-endently
-+	test_pattern_type "$H" "$HC" "$L" BRE \
-+		-c grep.patternType=3Ddefault \
-+		-c grep.extendedRegexp=3Dtrue \
-+		-c grep.patternType=3Dbasic
-
-The title of this one gets the gist of the mistakes in the code in
-earlier rounds.
-
-+	# grep.patternType=3Dextended and grep.patternType=3Ddefault
-+	test_pattern_type "$H" "$HC" "$L" BRE \
-+		-c grep.patternType=3Dextended \
-+		-c grep.patternType=3Ddefault
-+
-+	# grep.patternType=3D[extended -> default -> fixed] (BRE)" '
-+	test_pattern_type "$H" "$HC" "$L" FIX \
-+		-c grep.patternType=3Dextended \
-+		-c grep.patternType=3Ddefault \
-+		-c grep.patternType=3Dfixed
-=20
-OK.
-
- 	test_expect_success "grep --count $L" '
- 		echo ${HC}ab:3 >expected &&
+Yes, dropping this patch would keep things consistent, and continue
+allowing "# comment" from the command line (even if users are unlikely
+to ever look at said comment).  I'll do that.
