@@ -2,204 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10C4EC433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 16:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 268C9C433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 16:34:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233783AbiBPQbL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 11:31:11 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36212 "EHLO
+        id S236116AbiBPQeo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 11:34:44 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236439AbiBPQbJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 11:31:09 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 959842AED8A
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:30:55 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id p14so450968ejf.11
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:30:55 -0800 (PST)
+        with ESMTP id S229836AbiBPQen (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 11:34:43 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDA4E253BF1
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:34:30 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id f3so4237458wrh.7
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 08:34:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=k+sdNVR3qvwZ+O4e8iDzCsA+VsVZ7bLQ/TZHAJW1F+0=;
-        b=Da3JgUQ4d2v6Kpj7HF/UyecVp7IAUrN/6LEdsDxXiHd7AreduNL5s8Gjrp1H4XzotP
-         JkbtMYUUCXAC9syg+Zlpv0JobFSk6/sc2MZEKbTtYvrmbVlvX/2pzsKkeQ/hTdWMZL77
-         3I0Yc1DQjI486aLWDUMyYHJPBdrFF5oSraiwHXnOfY9AjRuup1s903+skgG4/c+4ARXf
-         WiSVeAApI/x7ZTKyAs7cMc6IMSKiikfHu7o2zU+yRvUYmsrz1TarwRjJAGgABmJzG1ms
-         Tka63W1HnGSLikQSVyMXiGmX9Ead/NnXyh+PcA/8qYos4k4ipvAJUOpq8pMrD8tuBulj
-         RhUg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=hCn69NOG7xRDMFGpkX43xIwrDVfVC0eXVdNFJbB3fG0=;
+        b=RYHazmXfRYJu2PVYzkUX7rcWj7yFXTL4LxWC4023iD/bz0nwPLB04rwrtHanqNnyah
+         AuIUOv4bUTfjAIMGOslse7jyFG9FJoRxiZ710fZm0JGbrPDfskSJ4rxT4LBl+myt+fE9
+         MzPsM0xSFsR7Twfcu9oHJx7YmJwoiRQ+FdeVUe7FBazEUIrIK+ZjE8eWeRwhX/etKRA2
+         LASkitJ+IPfGDKaJPhuyN/H8bEIcH6zj0BI+cWFCqnRlQRb3SwrRexkfhpolxpeMrp4S
+         OmCG6YNldTlZA3jnQfsprqUcrBx+t+qpDCHgGJrem2x1CWvpS9nA+iIqlBvm29AFkH8f
+         Wk2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=k+sdNVR3qvwZ+O4e8iDzCsA+VsVZ7bLQ/TZHAJW1F+0=;
-        b=vvgbx/P0a+J130wkQsFRLPi09Hrsr0p6EG8RFSG1EMq5H1QOmeSLzSZb/Px5fXJdYy
-         9mL1SqRfCUV5f8FlFjfczO0GjEQvgeBnWmBogtPb7uEiksObqrgAlzjzHYRB+Ami5eZ3
-         oHduIxUeXspRwW7dhGIVhjErLz670My/qJB5KgV75LlgX+jNnQob61m4DeP1pXuUsgj1
-         8e7AhiDqKjoWwK2km8gOVYEZYc0e0hbTBYl9/UDOcCRMAy7XF8BzLZkbKjn8LULSmMpJ
-         0BdoOMCwXgLpTO4KkcPmKLwb4l6kn8pqtVB54rRFx8MdNpcIgfV+y8S+dSVfpmuHuiUp
-         h/zg==
-X-Gm-Message-State: AOAM5307YWWlSe9O2akRRE9q1bT94p3lXv3rtmn74TjOe9kSs66LCD9H
-        BkzLHid6lCAo6KzDHju77XJy7S8P8Mg/4CUYmNZymt/CybM=
-X-Google-Smtp-Source: ABdhPJwSfJraVZ6m+3qX565QT+17QrcbsFyao5S83rKPXawiiQJtr5Y+1gUrQ+WRZO/K7icu13vqspr/UtYzelNAgwE=
-X-Received: by 2002:a17:906:350d:b0:6b9:5871:8f34 with SMTP id
- r13-20020a170906350d00b006b958718f34mr2927581eja.493.1645029054066; Wed, 16
- Feb 2022 08:30:54 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=hCn69NOG7xRDMFGpkX43xIwrDVfVC0eXVdNFJbB3fG0=;
+        b=AsoQZBxH1WNT1tJDiXyAwo4CBm98HHwE3pg80ECqQYMD702xnyN5gUuvWackkemxZk
+         heNaQUZw4yQugIGuIwTUQV2s7JOeuSDfVG1yxwPet6fT6nysGY5dbM3cq2+DkKtm5HU8
+         jeRX9MmVVzWl13L1tRylKEcQgtnUSQmt6h5L0nri5qzNNuX4nBDC4pH1mPpNaqK7Paev
+         SXAu8dz1P13OOk8/yjSuiieQc0yddvrvhiocq//rEQt6rbWt+UIIBPWtdvVdYcZUzNwW
+         YAFkFhMnhoSNRnUQ1xiH1ZTN7V93W7nB6LL++n7iTcJ8Lenslj7mA/+vEeKENkc2Fgdq
+         IrAA==
+X-Gm-Message-State: AOAM531qEdduoTXoAiIYtYUKdBLdkABgK48f08+zH9umY/Q3jBvLKmGk
+        8A+qmTS1HkIKEI5GzvRRDXzYExIOwjQ=
+X-Google-Smtp-Source: ABdhPJyU4Q+CwKAz/3Qfter8hmirpiEcnJ8h+pMNU25pSNd2timW8GWdYECaqcAPYznyttBkZhG+Ww==
+X-Received: by 2002:adf:9141:0:b0:1e3:1379:4cc6 with SMTP id j59-20020adf9141000000b001e313794cc6mr2965236wrj.249.1645029269022;
+        Wed, 16 Feb 2022 08:34:29 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z17sm18223545wml.38.2022.02.16.08.34.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Feb 2022 08:34:28 -0800 (PST)
+Message-Id: <pull.1070.git.git.1645029267415.gitgitgadget@gmail.com>
+From:   "Merlin (they/them) via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 16 Feb 2022 16:34:27 +0000
+Subject: [PATCH] docs: update coding guidelines to be more inclusive
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1114.git.1642092230.gitgitgadget@gmail.com>
- <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com> <05ac964e630a2e72eebaa1818a8807cd7a7d4f7e.1642175983.git.gitgitgadget@gmail.com>
- <220216.86fsojup82.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220216.86fsojup82.gmgdl@evledraar.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 16 Feb 2022 08:30:42 -0800
-Message-ID: <CABPp-BEog_CBEjx3FBGdUAhjwrPPDuP54HWQssAWnGeUnr0cBg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] Accelerate clear_skip_worktree_from_present_files()
- by caching
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Victoria Dye <vdye@github.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     "Merlin (they/them)" <merlinpatt+githubgit@gmail.com>,
+        "Merlin (they/them) Patterson" <merlinpatt+githubgit@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 16, 2022 at 1:37 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Fri, Jan 14 2022, Elijah Newren via GitGitGadget wrote:
->
-> > From: Elijah Newren <newren@gmail.com>
-> > [...]
-> > +static int path_found(const char *path, const char **dirname, size_t *=
-dir_len,
-> > +                   int *dir_found)
-> > +{
-> > +     struct stat st;
-> > +     char *newdir;
-> > +     char *tmp;
-> > +
-> > +     /*
-> > +      * If dirname corresponds to a directory that doesn't exist, and =
-this
-> > +      * path starts with dirname, then path can't exist.
-> > +      */
-> > +     if (!*dir_found && !memcmp(path, *dirname, *dir_len))
-> > +             return 0;
-> > +
-> > +     /*
-> > +      * If path itself exists, return 1.
-> > +      */
-> > +     if (!lstat(path, &st))
-> > +             return 1;
-> > +
-> > +     /*
-> > +      * Otherwise, path does not exist so we'll return 0...but we'll f=
-irst
-> > +      * determine some info about its parent directory so we can avoid
-> > +      * lstat calls for future cache entries.
-> > +      */
-> > +     newdir =3D strrchr(path, '/');
-> > +     if (!newdir)
-> > +             return 0; /* Didn't find a parent dir; just return 0 now.=
- */
-> > +
-> > +     /*
-> > +      * If path starts with directory (which we already lstat'ed and f=
-ound),
-> > +      * then no need to lstat parent directory again.
-> > +      */
-> > +     if (*dir_found && *dirname && memcmp(path, *dirname, *dir_len))
-> > +             return 0;
->
-> I really don't care/just asking, but there was a discussion on another
-> topic about guarding calls to the mem*() family when n=3D0:
-> https://lore.kernel.org/git/xmqq1r24gsph.fsf@gitster.g/
->
-> Is this the same sort of redundancy where we could lose the "&&
-> *dirname" part, or is it still important because a "\0" dirname would
-> have corresponding non-0 *dir_len?
+From: "Merlin (they/them) Patterson" <merlinpatt+githubgit@gmail.com>
 
-No, dirname is a char**, not a char*.  I need to make sure *dirname is
-non-NULL before passing to memcmp or we get segfaults (and *dirname
-will be NULL the first time it gets to this line, so the check is
-critical).
+These changes make this documentation more inclusive.
+Using "male" and "female" as examples of gender is unnecessary.
+The use of "it" shouldn't be used to refer to people even in an
+  example of what not to use. People are never "it"s.
+There's no need to specify a person or group of people that
+  learned "they" is only plural.
 
-> More generally ... (see below)...
->
-> > +
-> > +     /* Free previous dirname, and cache path's dirname */
-> > +     *dirname =3D path;
-> > +     *dir_len =3D newdir - path + 1;
-> > +
-> > +     tmp =3D xstrndup(path, *dir_len);
-> > +     *dir_found =3D !lstat(tmp, &st);
->
-> In most other places we're a bit more careful about lstat() error handlin=
-g, e.g.:
->
->     builtin/init-db.c:              if (lstat(path->buf, &st_git)) {
->     builtin/init-db.c-                      if (errno !=3D ENOENT)
->     builtin/init-db.c-                              die_errno(_("cannot s=
-tat '%s'"), path->buf);
->     builtin/init-db.c-              }
->
-> Shouldn't we do the same here and at least error() on return values of
-> -1 with an accompanying errno that isn't ENOENT?
+Signed-off-by: Merlin (they/them) Patterson <merlinpatt+githubgit@gmail.com>
+---
+    docs: Update CodingGuidelines to be more inclusive
+    
+    These changes make this documentation more inclusive.
+    
+     * Using "male" and "female" as examples of gender is unnecessary.
+     * The use of "it" shouldn't be used to refer to people even in an
+       example of what not to use. People are never "it"s.
+     * There's no need to specify a person or group of people that learned
+       "they" is only plural.
 
-If we should do that everywhere, should we have an xlstat in wrapper.[ch]?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1070%2Fmerlinpatt%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1070/merlinpatt/patch-1-v1
+Pull-Request: https://github.com/git/git/pull/1070
 
-> > +     free(tmp);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> >  void clear_skip_worktree_from_present_files(struct index_state *istate=
-)
-> >  {
-> > +     const char *last_dirname =3D NULL;
-> > +     size_t dir_len =3D 0;
-> > +     int dir_found =3D 1;
-> > +
-> >       int i;
-> > +
-> >       if (!core_apply_sparse_checkout)
-> >               return;
-> >
-> >  restart:
-> >       for (i =3D 0; i < istate->cache_nr; i++) {
-> >               struct cache_entry *ce =3D istate->cache[i];
-> > -             struct stat st;
-> >
-> > -             if (ce_skip_worktree(ce) && !lstat(ce->name, &st)) {
-> > +             if (ce_skip_worktree(ce) &&
-> > +                 path_found(ce->name, &last_dirname, &dir_len, &dir_fo=
-und)) {
->
-> ...(continued from above) is the "path is zero" part of this even
-> reachable? I tried with this on top and ran your tests (and the rest of
-> t*sparse*.sh) successfully:
->
->         diff --git a/sparse-index.c b/sparse-index.c
->         index eed170cd8f7..f89c944d8cd 100644
->         --- a/sparse-index.c
->         +++ b/sparse-index.c
->         @@ -403,6 +403,7 @@ void clear_skip_worktree_from_present_files(s=
-truct index_state *istate)
->                 for (i =3D 0; i < istate->cache_nr; i++) {
->                         struct cache_entry *ce =3D istate->cache[i];
->
->         +               assert(*ce->name);
->                         if (ce_skip_worktree(ce) &&
->                             path_found(ce->name, &last_dirname, &dir_len,=
- &dir_found)) {
->                                 if (S_ISSPARSEDIR(ce->ce_mode)) {
->
-> I.e. isn't this undue paranoia about the cache API giving us zero-length
-> paths?
+ Documentation/CodingGuidelines | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-Nope, not related at all, for two reasons: the code above was checking
-for NULL pointers rather than NUL characters, and the argument I was
-checking was last_dirname, not ce->name.
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 711cb9171e0..ffd7fa9c0f4 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -552,9 +552,9 @@ Writing Documentation:
+  Documentation/SubmittingPatches file).
+ 
+  In order to ensure the documentation is inclusive, avoid assuming
+- that an unspecified example person is male or female, and think
+- twice before using "he", "him", "she", or "her".  Here are some
+- tips to avoid use of gendered pronouns:
++ the gender of an example person, and think twice before using
++ "he", "him", "she", or "her". Here are some tips to avoid the use
++ of gendered pronouns:
+ 
+   - Prefer succinctness and matter-of-factly describing functionality
+     in the abstract.  E.g.
+@@ -566,8 +566,8 @@ Writing Documentation:
+      --short:: Use this to emit output in the short-format.
+      --short:: You can use this to get output in the short-format.
+      --short:: A user who prefers shorter output could....
+-     --short:: Should a person and/or program want shorter output, he
+-               she/they/it can...
++     --short:: Should a person and/or program want shorter output,
++               he/she/they can...
+ 
+     This practice often eliminates the need to involve human actors in
+     your description, but it is a good practice regardless of the
+@@ -586,15 +586,13 @@ Writing Documentation:
+       versions.
+ 
+   - If you still need to refer to an example person that is
+-    third-person singular, you may resort to "singular they" to avoid
++    third-person singular, you may resort to singular "they" to avoid
+     "he/she/him/her", e.g.
+ 
+       A contributor asks their upstream to pull from them.
+ 
+     Note that this sounds ungrammatical and unnatural to those who
+-    learned that "they" is only used for third-person plural, e.g.
+-    those who learn English as a second language in some parts of the
+-    world.
++    learned that "they" is only used for third-person plural.
+ 
+  Every user-visible change should be reflected in the documentation.
+  The same general rule as for code applies -- imitate the existing
+
+base-commit: 225bc32a989d7a22fa6addafd4ce7dcd04675dbf
+-- 
+gitgitgadget
