@@ -2,120 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6979BC433EF
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 09:57:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACB74C433EF
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 10:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232486AbiBPJ52 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 04:57:28 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:42184 "EHLO
+        id S232721AbiBPKP1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 05:15:27 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:54312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232504AbiBPJ51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 04:57:27 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17BDC2A4A22
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 01:57:10 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id m17so2893603edc.13
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 01:57:10 -0800 (PST)
+        with ESMTP id S232709AbiBPKPZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 05:15:25 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1AD72FFE3
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 02:15:12 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id d27so2608704wrb.5
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 02:15:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=yT060BSxEcs/6eHRxydwL3zgSQbl/4qpJrOwKiDvBGo=;
-        b=iyqU+DEcxEJIbBGAGE7LwvtOMglZqfOIYeeLQFywuQTVirOcJ6Io6bdOp4W2CpnnW3
-         n2aJZzj1IIZA0db7C1RkBuGWP/5QyOq5kSFOyXfkIUNPRIa+9xN0KCDFcbbMK/LFZ6UF
-         jn57DBA023LhRtP5jY0i4TAeOCOvwEr+yMDShdNIL7GNdmG4PK4ktG1iSW05BLA5Ha97
-         wPXb8fLRVGOnUwbJvId8rA0LJ8zj9jxzcnuHjj1dq2vURy4cHGEPYhn5BdXJhy36e/T+
-         kkhMkdKkKn1mX8tXL57vTbHpJPRpwOd0kqfNVIYH/tfW3V080ccQhCHohVCUJDJ7Ybvm
-         Tljw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=gUeNrre0sxkva+iWqqKIxadUF66gXACgWN2tmBoWztM=;
+        b=GMTVMeCz99bU+HN5F8m/vCTive8x3CXmQWob9GOVD3Su7d/hSN45wB0Ny/nnMw8uJZ
+         qKTT7zp3k78yoMbzrLh8tvcOi67IGe2gknBI+46jY/hbupNT/G/fU7eMP1Xa5pCi8tmB
+         YiTxasGBwZGZnrG3v/rQqJWw3Q04LcraqYnQFYJSaWkeCwW8A3HKK3UR4Hd+zAXmn8TI
+         ks3KDxLyXqXM6hqxxj/H696T3b5nCnWE0DU+HHCVbPv42BKcWR+FLrzAQIqM0kZvx/Gg
+         /IJ4WWN8vo/IIuq55czPs+HYmYdaeqg3YT2CqFn79Lj03Qdk4UWlyLgVujf3RmaWKRnE
+         8hEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=yT060BSxEcs/6eHRxydwL3zgSQbl/4qpJrOwKiDvBGo=;
-        b=NbQNTby3k/62mWZnTFQxNPU2BgIhGKgBbWh+6eQPGT6XPeFpfJE9m+12HksS9MCtxQ
-         kXrfoo1lUnzmoraYM5/lQw1gCa7gd3MmCzNWBWNfUuLzrTPpuARHNIPVDqT60iuR2C3x
-         dfQhWjDD4cc1qQSUv2gBXlZr5eNBsjeQonP4j0mSMe2LtbbP+B+cT2dI2rRKWYGIVq9D
-         KzC3vLfONP6r9uhj6Bm/OHEgWynzrdRfaNyEDxVCYM6WFjr7F2k9y9ETr28K7J92VMkM
-         kvS8VWYIzFTD0dnDIbqZ/WB9p8STQUpAf5UX7sG1PQcImfh13j581ev3/GHAfClI7Fdw
-         Fv3w==
-X-Gm-Message-State: AOAM5323kFjUhsTpG/nKJW90PmpKn9dLYVZaXni/1bvdgvupss9xAGoy
-        r/wI7F3KR8J1tPtcG9wV4P6xtKTPbsYzxA==
-X-Google-Smtp-Source: ABdhPJwCB0IZS3shpxsQlDzU/s1UyciEZM6/Sz/SwueloX3q3UBSM78GsHASMBaWBNhO5Py65PzPrQ==
-X-Received: by 2002:a05:6402:40c2:b0:404:17cf:78fe with SMTP id z2-20020a05640240c200b0040417cf78femr2093212edb.204.1645005428334;
-        Wed, 16 Feb 2022 01:57:08 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id h19sm1369217edt.6.2022.02.16.01.57.07
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=gUeNrre0sxkva+iWqqKIxadUF66gXACgWN2tmBoWztM=;
+        b=iu3WedftPJt283rb14miZej2DrEO7sB7MPT12VLH8aUSO/OMGkT/I+UYhX6QIawdxq
+         NLhhcphaMswgxfZuaDu+Bd3k7cMeoD7UrFSCWveXLHToB0g3uFYU8M0/CZOZ5793NpIb
+         UgM9DqqDyjH5l+oz0YVYlG9TbyJB2dS+DZXnsGViOYWtAsG5mkiaCoZchciyaZPujlK6
+         +JkZXzQ9tsVkha1tLORQfFUXxRlv5ABORzHlwNjAj+FLtpMSD/f9Fi8y7y0HJrCcSoVx
+         Rxzz8Wi1FNfzmoR/LKIoQmH8K6siGXzXlBvOdIQuL0A7LcplyZx1pouPBjNkpkFNdXEV
+         1YSw==
+X-Gm-Message-State: AOAM531Z1FQU40vdpKlR12B6eCowyx/nE1QAh3GB7ahifKpJr44OzVIH
+        eEw20uXlvB/GPrPHGg2tA3JquhoWfDQ=
+X-Google-Smtp-Source: ABdhPJzhGvmuiAHOlbgxa7rNBNo8OL3jybHDa0iw5KTnWnQ/td9mW1VghtwOkMoSbWnYayzSEsElBg==
+X-Received: by 2002:a5d:45c4:0:b0:1e4:a672:586b with SMTP id b4-20020a5d45c4000000b001e4a672586bmr1651566wrs.388.1645006511227;
+        Wed, 16 Feb 2022 02:15:11 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q23sm16074648wmj.44.2022.02.16.02.15.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Feb 2022 01:57:07 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nKH3b-003B7W-9V;
-        Wed, 16 Feb 2022 10:57:07 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v3 5/5] sparse-checkout: reject arguments in cone-mode
- that look like patterns
-Date:   Wed, 16 Feb 2022 10:53:15 +0100
-References: <pull.1118.v2.git.1644913943.gitgitgadget@gmail.com>
- <pull.1118.v3.git.1644985283.gitgitgadget@gmail.com>
- <2008542d0c718bbe43388297307a791f94bc73e1.1644985283.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <2008542d0c718bbe43388297307a791f94bc73e1.1644985283.git.gitgitgadget@gmail.com>
-Message-ID: <220216.8635kjuob0.gmgdl@evledraar.gmail.com>
+        Wed, 16 Feb 2022 02:15:10 -0800 (PST)
+Message-Id: <pull.1140.v2.git.1645006510.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1140.git.1644404356.gitgitgadget@gmail.com>
+References: <pull.1140.git.1644404356.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 16 Feb 2022 10:15:05 +0000
+Subject: [PATCH v2 0/4] xdiff: handle allocation failures
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Edward Thomson <ethomson@edwardthomson.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks to Junio for his comments on V1.
 
-On Wed, Feb 16 2022, Elijah Newren via GitGitGadget wrote:
+Changes since V1:
 
-> From: Elijah Newren <newren@gmail.com>
->
-> In sparse-checkout add/set under cone mode, the arguments passed are
-> supposed to be directories rather than gitignore-style patterns.
-> However, given the amount of effort spent in the manual discussing
-> patterns, it is easy for users to assume they need to pass patterns such
-> as
->    /foo/*
-> or
->    !/bar/*/
-> or perhaps they really do ignore the directory rule and specify a
-> random gitignore-style pattern like
->    *.c
->
-> To help catch such mistakes, throw an error if any of the positional
-> arguments:
->   * starts with any of '/!'
->   * contains any of '*\?[]'
+ * Patch 1 is new and addresses a memory leak noticed by Junio
+ * Patch 2 is unchanged
+ * Patch 3 now avoids a double free of xe1 on error
+ * Patch 4 reworked handling of the return value
 
-But not "\" itself, we're just escaping the "?" here?...
+V1 Cover Letter: Other users of xdiff such as libgit2 need to be able to
+handle allocation failures. This series fixes the few cases where we are not
+doing this already.
 
-> +	if (core_sparse_checkout_cone) {
-> +		for (i = 0; i < argc; i++) {
-> +			if (argv[i][0] == '/')
-> +				die(_("specify directories rather than patterns (no leading slash)"));
-> +			if (argv[i][0] == '!')
-> +				die(_("specify directories rather than patterns.  If your directory starts with a '!', pass --skip-checks"));
-> +			if (strchr(argv[i], '*') ||
-> +			    strchr(argv[i], '?') ||
-> +			    strchr(argv[i], '[') ||
-> +			    strchr(argv[i], ']'))
-> +				die(_("specify directories rather than patterns.  If your directory really has any of '*?[]' in it, pass --skip-checks"));
+Edward's patch[1] reminded me that I had these waiting to be submitted.
 
-Isn't this nested || a reinvention of a simpler strtok() or strtok_r()
-call? I.e. (untested):
+[1] https://lore.kernel.org/git/20220209013354.GB7@abe733c6e288/
 
-	const char *p;
-	const char *wildcards = "*?[]";
-	if (strtok_r(argv[i], wildcards, &p))
-		die(_("specify... has ony of '%s' in it...", wildcards));
+Phillip Wood (4):
+  xdiff: fix a memory leak
+  xdiff: handle allocation failure in patience diff
+  xdiff: refactor a function
+  xdiff: handle allocation failure when merging
 
-That would also allow parameterizing the set of characters for
-translators.
+ xdiff/xdiffi.c     | 33 +++++++++++++++++----------------
+ xdiff/xhistogram.c |  3 ---
+ xdiff/xmerge.c     | 42 ++++++++++++++++++++++--------------------
+ xdiff/xpatience.c  | 21 ++++++++++++---------
+ 4 files changed, 51 insertions(+), 48 deletions(-)
+
+
+base-commit: 38062e73e009f27ea192d50481fcb5e7b0e9d6eb
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1140%2Fphillipwood%2Fwip%2Fxdiff-handle-allocation-failures-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1140/phillipwood/wip/xdiff-handle-allocation-failures-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1140
+
+Range-diff vs v1:
+
+ -:  ----------- > 1:  3fcb6c80367 xdiff: fix a memory leak
+ 1:  b8f88f1b9f8 = 2:  fec1f4a4152 xdiff: handle allocation failure in patience diff
+ 2:  8655bb0348d ! 3:  073a45e9e85 xdiff: refactor a function
+     @@ Metadata
+       ## Commit message ##
+          xdiff: refactor a function
+      
+     -    Rather than having to remember exactly what to free after an
+     -    allocation failure use the standard "goto out" pattern. This will
+     -    simplify the next commit that starts handling currently unhandled
+     -    failures.
+     +    Use the standard "goto out" pattern rather than repeating very similar
+     +    code after checking for each error. This will simplify the next commit
+     +    that starts handling allocation failures that are currently ignored.
+     +    On error xdl_do_diff() frees the environment so we need to take care
+     +    to avoid a double free in that case. xdl_build_script() does not
+     +    assign a result unless it is successful so there is no possibility of
+     +    a double free if it fails.
+      
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+     @@ xdiff/xmerge.c: static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
+       		xmparam_t const *xmp, mmbuffer_t *result)
+       {
+      -	xdchange_t *xscr1, *xscr2;
+     --	xdfenv_t xe1, xe2;
+     --	int status;
+      +	xdchange_t *xscr1 = NULL, *xscr2 = NULL;
+     -+	xdfenv_t xe1 = { 0 }, xe2 = { 0 };
+     + 	xdfenv_t xe1, xe2;
+     +-	int status;
+      +	int status = -1;
+       	xpparam_t const *xpp = &xmp->xpp;
+       
+     @@ xdiff/xmerge.c: static int xdl_do_merge(xdfenv_t *xe1, xdchange_t *xscr1,
+       	result->size = 0;
+       
+      -	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0) {
+     --		return -1;
+     ++	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0)
+     + 		return -1;
+      -	}
+      -	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0) {
+      -		xdl_free_env(&xe1);
+      -		return -1;
+      -	}
+     -+	if (xdl_do_diff(orig, mf1, xpp, &xe1) < 0)
+     -+		goto out;
+      +
+      +	if (xdl_do_diff(orig, mf2, xpp, &xe2) < 0)
+     -+		goto out;
+     ++		goto free_xe1; /* avoid double free of xe2 */
+      +
+       	if (xdl_change_compact(&xe1.xdf1, &xe1.xdf2, xpp->flags) < 0 ||
+       	    xdl_change_compact(&xe1.xdf2, &xe1.xdf1, xpp->flags) < 0 ||
+     @@ xdiff/xmerge.c: int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
+       	xdl_free_script(xscr1);
+       	xdl_free_script(xscr2);
+       
+     +-	xdl_free_env(&xe1);
+     + 	xdl_free_env(&xe2);
+     ++ free_xe1:
+     ++	xdl_free_env(&xe1);
+     + 
+     + 	return status;
+     + }
+ 3:  3e935abba1d ! 4:  7e705d771b0 xdiff: handle allocation failure when merging
+     @@ Commit message
+      
+       ## xdiff/xmerge.c ##
+      @@ xdiff/xmerge.c: int xdl_merge(mmfile_t *orig, mmfile_t *mf1, mmfile_t *mf2,
+     - 	status = 0;
+     + 	    xdl_build_script(&xe2, &xscr2) < 0)
+     + 		goto out;
+     + 
+     +-	status = 0;
+       	if (!xscr1) {
+       		result->ptr = xdl_malloc(mf2->size);
+     -+		if (!result->ptr) {
+     -+			status = -1;
+     ++		if (!result->ptr)
+      +			goto out;
+     -+		}
+     ++		status = 0;
+       		memcpy(result->ptr, mf2->ptr, mf2->size);
+       		result->size = mf2->size;
+       	} else if (!xscr2) {
+       		result->ptr = xdl_malloc(mf1->size);
+     -+		if (!result->ptr) {
+     -+			status = -1;
+     ++		if (!result->ptr)
+      +			goto out;
+     -+		}
+     ++		status = 0;
+       		memcpy(result->ptr, mf1->ptr, mf1->size);
+       		result->size = mf1->size;
+       	} else {
+
+-- 
+gitgitgadget
