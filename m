@@ -2,83 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6B43C433FE
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 23:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76BDDC433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 23:42:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238568AbiBPXjc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 18:39:32 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47058 "EHLO
+        id S238575AbiBPXmR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 18:42:17 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238561AbiBPXja (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 18:39:30 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225DB1A276E
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 15:39:18 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id z10-20020a634c0a000000b0036c5eb39076so1949376pga.18
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 15:39:18 -0800 (PST)
+        with ESMTP id S230469AbiBPXmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 18:42:16 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3FC99F39E
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 15:42:02 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id d5-20020a623605000000b004e01ccd08abso2178918pfa.10
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 15:42:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=iO7jmuartNCWZevhS48yfgRYOpZLeeg87TBHdSUtGXs=;
-        b=Zz5JwNhEkZmTPxhThQmHpb/KqRjn+dhxdVyg+gHazFIQZruN26YwKf+1xm7ChYrch8
-         sZyaFlRnt/kZ7AUhLA5sT8wm2MXWrSsBaLGfwQZV0d0h23/V+8kFXH5TxaOlfluMf0CX
-         rlutT6FyZT6jyKk+KSYf1/S2ElzzT3wWHof4jgV4Lv6an21kUoERFsJ8MDDr2xkpRMPl
-         pxb9pDHd4so/B6QwNfRzyJGaYCnLQTXjZ2W/y+Vw0++G5rGKok9jLQOII+5153rpH9j4
-         NZf7tM6VdvMQx9RGAJ3pL3X3c5fpknMI2IpL3w+ozmDHu2r4sS1ryB2DDg7bYthuQK2w
-         /Iqw==
+        bh=vgTC7hxNuMwAsNSCxYUKxtmTGBDZdg9MHLK1M+ReTUs=;
+        b=e7F9C2gPnKASDi32liXyqtrZUp/k6AoXGCE64fsF2RGPB9nVST/Ml5MYeV17SNke0R
+         icQuIfR+ig3EH3mFKfxQvkoKNOMAF7/BfcfkvmS/ARS9zN6+PKlgAbzGCgy7IUExgzRa
+         h8jXzYqS1OWwX/LpRKbXXJ2yEmIiHTVUYo/wg4xD4ZllI3dUAkMSuN+GAEZsY4p9L7Tq
+         JWFDT/+P/Qgb11ZuqFr1HI8qHVN9vm67E5ie3i68/mY5UF8wUNcAk83RTbFSN/BPzqJi
+         k+o3ClFykFnZkC0J2PnmXsjWIVj7gNQAmFvAqWCOfrOKPBj3dMQMeZx4SMAYWdp1YYwh
+         22kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
          :from:to:cc;
-        bh=iO7jmuartNCWZevhS48yfgRYOpZLeeg87TBHdSUtGXs=;
-        b=WfJM57OxfBqT0TLX+7fiCgdJ+fFOmRwJHth6uA1m7n/sIupVnS1nvJPkqHeeY9ZUNp
-         2FcrvMF4pRT2UeswEfvz7pFNlIlOn/Mt+fje32oGShIxZ8qTww0SLPKZG2q7E8ICkX5w
-         XSaY9lX1+vGyQcApJdibKGdCRFjB/HjLfmQEl/MH1Lwf0A0tk6akcsINRSgRPf3Dvizh
-         S8CddD41nEJE1H0gjTA8E6a8DaZScYAOvdQ89Er2R2a0dZPo1Z/8t0VBydmierONu4Zx
-         4hF/jAu2OM8eY3sKfIe11q9RBzMoqpzuX6Mr+Em0N+fVwxsERn2Lhc/2uUnHYpmyrQT/
-         qPFw==
-X-Gm-Message-State: AOAM531eVtVVDTi/9wfb5gjh/keyU1b6zvAjsrH5Wh48CsZMauqH3Zzh
-        ZXAG3wTsYe84xSU1FkyH+MycjN5hyU8cAGfUdj7G
-X-Google-Smtp-Source: ABdhPJy6ocDFOs1fx9HTIRFpCq17S3Ea/It1U2Q3hayDfoHldPStJH4gZmfD3VQPNNO7fV8+MCSKDrVItS0yLEhPhLhl
+        bh=vgTC7hxNuMwAsNSCxYUKxtmTGBDZdg9MHLK1M+ReTUs=;
+        b=CQz4OzcA5uHxUWwxlusb1N72Olt8gW6Wy1/n7MROkv42oFnWnmUc0OiwXqKbYw8G6D
+         Wx/kKtovJgveAdw2+oxBhTUHRGx4RcT41vljC15rg8B9F6zKQII0YnuQoPkHFp6n3qmY
+         ZXRcswnLHL3VNlhqVEl+BvegYJT6r9pvzBFW5WLEdBdCwCAgRWql7jqevwOFDrtr21Rl
+         lASjhWNWRwY8ZZ4TISmImSr0itejEnos1kVF7LdfTocmolFORdZDU0UYns5P0hmgCM5n
+         9fo72FFrvtwCKDHFJ5D0I/z+6SayiTzR41uhikeXVVyv9CG7ZR+o+jKOUFlQsuErHe0A
+         8GBQ==
+X-Gm-Message-State: AOAM532zlUi2AM104xmSFe7kK7Td4XPNFlyeI4LzE7gBUphtl98PgY4v
+        26dtMEtvjjJqZ1nsFZg1kM2qlBSvaaX8CkhTHHRn
+X-Google-Smtp-Source: ABdhPJxfnNFmi6gPjx9T/6YrYTTirSirGpY5zVzKplMdVwWi5w6zgfK+/60/dVX3err2FTDh/14gM5WnMjP5Fln3fOK6
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:a92:b0:4e0:57a7:2d5d with
- SMTP id b18-20020a056a000a9200b004e057a72d5dmr398412pfl.81.1645054757655;
- Wed, 16 Feb 2022 15:39:17 -0800 (PST)
-Date:   Wed, 16 Feb 2022 15:39:15 -0800
-In-Reply-To: <682f16117b743bec59c533e15ae5a88d39250222.1644565025.git.ps@pks.im>
-Message-Id: <20220216233915.1975217-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a65:6c15:0:b0:364:e7ce:8624 with
+ SMTP id y21-20020a656c15000000b00364e7ce8624mr297560pgu.14.1645054921874;
+ Wed, 16 Feb 2022 15:42:01 -0800 (PST)
+Date:   Wed, 16 Feb 2022 15:41:57 -0800
+In-Reply-To: <CAP8UFD1bdLESqzbZcYKYfib836vrDTfyCmYfT-9B-1ToJB0EWg@mail.gmail.com>
+Message-Id: <20220216234157.1976077-1-jonathantanmy@google.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.35.1.265.g69c8d7142f-goog
-Subject: Re: [PATCH 6/6] fetch: make `--atomic` flag cover pruning of refs
+Subject: Re: [PATCH 5/6] fetch: make `--atomic` flag cover backfilling of tags
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Patrick Steinhardt <ps@pks.im>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index 93a0db3c68..afa6bf9f7d 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -349,11 +349,9 @@ test_expect_success 'fetch --atomic --prune executes a single reference transact
->  	cat >expected <<-EOF &&
->  		prepared
->  		$ZERO_OID $ZERO_OID refs/remotes/origin/scheduled-for-deletion
-> -		committed
-> -		$ZERO_OID $ZERO_OID refs/remotes/origin/scheduled-for-deletion
-> -		prepared
->  		$ZERO_OID $head_oid refs/remotes/origin/new-branch
->  		committed
-> +		$ZERO_OID $ZERO_OID refs/remotes/origin/scheduled-for-deletion
->  		$ZERO_OID $head_oid refs/remotes/origin/new-branch
->  	EOF
+Christian Couder <christian.couder@gmail.com> writes:
+> > Fix this by pulling up creation of the reference transaction such that
+> > we can pass the same transaction to both the code which updates local
+> > references and to the code which backfills tags. This allows us to only
+> > commit the transaction in case both actions succeed.
+> 
+> Maybe this could be seen as a regression by users who are mostly
+> interested in the local references though.
 
-I think that there is a comment above this change that needs to be
-deleted too.
-
-Overall, I think that this patch set is a good change, and I have no
-further comments. (Regarding patch 5, I can't think of a better way to
-know what refs are duplicates.)
+I don't think we need to worry about this - as far as I know,
+backfilling of tags only happens when the server doesn't support
+include-tag, which was introduced in 2009 (and in my experience, they
+all do). And in the rare case that backfilling happens, I think the user
+would want to have atomicity in the also rare case that the first fetch
+succeeds and the second fails.
