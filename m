@@ -2,111 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 351ABC433EF
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 03:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE873C433EF
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 03:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343948AbiBPDBv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 22:01:51 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41196 "EHLO
+        id S1344017AbiBPDFw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 22:05:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240388AbiBPDBs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 22:01:48 -0500
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8416F28988
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 19:01:36 -0800 (PST)
-Received: by mail-oo1-xc2c.google.com with SMTP id f11-20020a4abb0b000000b002e9abf6bcbcso1051660oop.0
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 19:01:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OAfpUlTzy0qMDOl/3Q9/sM7eV4T88P5FTVmRL+Ovnug=;
-        b=bN1GWcmr8uMM+LY1MCsZj3cvoW9MosZooCInh9uX0XPpxNpdvX2PVDMaKfQGosk5If
-         6wpGCz244ujfFKusiEclYgg4ij+uKHvI8GsHDDNQzvwS6lKD2PE7c56WV3kE+3ITgGAw
-         3cFClzGcVESEjcHyTHnm3DnxWe0n/4LCaspgQozGMyyP15cWyjcrLMeSB2yI5PUD463f
-         EX3gQS90EqThuD38+7gprySskTVYfykbnbk3xq19goOFicjGyjy1L6Z2gj3dNNJgDjlM
-         8W78KLGx8AEXQKVITJ67H6btA+qMLWPTevjNs9OYw5y26FDJ7xa8JuuoEWAqhZCNal2u
-         cuNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OAfpUlTzy0qMDOl/3Q9/sM7eV4T88P5FTVmRL+Ovnug=;
-        b=279n2ChSSP+4TVK6bZIMQWbJmjU78fqw3S7jY3NGltzkBEb4NbBXuMyRu1MQXxUoFf
-         IyEpoHT0JehpJffJFtsH6cYjQnJMSOESb+mY3LsTTtPzjB13AOHDGolUs/7zuyLZhpKO
-         nmJXz/hgjofUdbrmOYN3qdG2KQIacO9Y4iP5bST5g4GDpG7VvHDrxBTnQu0Kn/EyFUtC
-         c4epq2oJyLc1VQMXk+xTQaz/XWfQ7D8mui93bOUiSmeyZUZgYfRULKQWhtji92xjsNHp
-         C/soY2gW3iBwyBS0j3qlsFZB7w7Py8slQxoJ4IhRoHKQPF3RePmhPmnpegrU6idZIMQv
-         dgfQ==
-X-Gm-Message-State: AOAM533zPla5YKcJ5dXXpBOqS6zDxcQvWzHgzLAJ6foxuCmO2tTCOEOn
-        tpWQok0j3joChR8EysL/845JilbShbNThwOO9lk=
-X-Google-Smtp-Source: ABdhPJzm3tSpOQgF8/58LxvRLqiuhnN+KT1sumSCLaJ8Y+FRUbYK+EdKEyuExNxf7nHhEZ01dMSZ5hUg2J/4JXBkwAE=
-X-Received: by 2002:a05:6870:210a:b0:ce:c0c9:709 with SMTP id
- f10-20020a056870210a00b000cec0c90709mr2552820oae.347.1644980495900; Tue, 15
- Feb 2022 19:01:35 -0800 (PST)
+        with ESMTP id S1344000AbiBPDFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 22:05:45 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D005AFDFAF
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 19:05:34 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7E23218E03D;
+        Tue, 15 Feb 2022 22:05:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=MaxNd0l9e92VgjuI655Fs7xMtUvm187/EwuBth
+        ewtIU=; b=WcJG9X2FAe4DmtnbUBHjOlmSYsuy28non/kRe0EZYQaHYEmZzMm8r/
+        4B3BtlQct+TLkqKqnVdtjezmynM2E5LpoTTEfRsUy4ApeY0hIn6jMELj7dQVPGXL
+        YYBOcnLWjKvysGv4qdyhLI1zc6j+H6agPQiJCGicGBWg1u7kx3Zss=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 762EA18E03C;
+        Tue, 15 Feb 2022 22:05:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.185.212.55])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D414818E03B;
+        Tue, 15 Feb 2022 22:05:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>
+Subject: Re: [PATCH 5/7] sparse-checkout: reject non-cone-mode patterns
+ starting with a '#'
+References: <pull.1118.git.1644712797.gitgitgadget@gmail.com>
+        <265cbe36b2df5a9a076877fe3ddc3880a64a9217.1644712798.git.gitgitgadget@gmail.com>
+        <xmqqsfsl2utb.fsf@gitster.g>
+        <CABPp-BEhsp4=dzCkSpyu4Bd7Q=hP1Ec6W09-zX2+N+5_-ytk8A@mail.gmail.com>
+        <xmqqr183y5yh.fsf@gitster.g>
+        <CABPp-BFymV-bQVfT7u1phO1N8MHu03SfbVa6Q+CDKeJL21Fbwg@mail.gmail.com>
+Date:   Tue, 15 Feb 2022 19:05:30 -0800
+In-Reply-To: <CABPp-BFymV-bQVfT7u1phO1N8MHu03SfbVa6Q+CDKeJL21Fbwg@mail.gmail.com>
+        (Elijah Newren's message of "Tue, 15 Feb 2022 18:23:45 -0800")
+Message-ID: <xmqqzgmrv7d1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAJyCBOTuNn24_WvHv-xQsCdtr9-4_fdrMrOC7ZApg1xFp4RNWQ@mail.gmail.com>
- <d6286f84-642d-7448-0d2e-dd4c20bdb289@gmail.com> <e81f044d-8c3a-90df-ff9e-719b613807d6@gmail.com>
-In-Reply-To: <e81f044d-8c3a-90df-ff9e-719b613807d6@gmail.com>
-From:   Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Date:   Wed, 16 Feb 2022 11:01:24 +0800
-Message-ID: <CAJyCBOSPqP4Rh5ZQhj-DexXXtkwCJTT3tL7DToREfsRR6Hozxg@mail.gmail.com>
-Subject: Re: [GSoC] Interest in "More Sparse Index Integrations" project idea
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, vdye@github.com,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>, kaartic.sivaraam@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4D5E235C-8ED5-11EC-8348-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 15, 2022 at 2:45 AM Philippe Blain
-<levraiphilippeblain@gmail.com> wrote:
-> Or even better (you do not have to guess the number of commits in
-> each series):
+Elijah Newren <newren@gmail.com> writes:
+
+>> I do not quite get where you are seeing an inconsistency.  Do you
+>> mean that it is inconsistent that "# comment" is only allowed in
+>> files but not on the command line?
 >
-> git log --oneline --graph 3c0e4178277^-
->
-> (see [1]). Why that syntax seems to completely ignore '--graph',
-> though is beyond me!
+> I don't understand what distinction you are trying to make between the
+> file or the command line; for non-cone mode, all positional arguments
+> to sparse-checkout {add,set} are taken as-is and inserted into the
+> $GIT_DIR/info/sparse-checkout file directly.
 
-I read the [1] and this "<rev>^-" syntax seems to exclude the first
-parent of <rev>.
-In another word, it only gets the part of history within the checked-out
-new branch, i.e. "This is typically useful for merge commits where you
-can just pass <commit>^- to get all the commits in the branch that was
-merged in merge commit <commit> (including <commit> itself)."
+If so, then '# comment" from the command line would be a valid way
+to spell a comment, no?  It sounds like the right thing to do here
+is just passing it through to $GIT_DIR/info/sparse-checkout and let
+it become comment, instead of warning, \-quoting, or rejecting.
 
-It seems that the checked-out branch has a linear clean history,
-and that's why it looks like "completely ignore '--graph'". Actually, it does
-not ignore "--graph", e.g.
+> I don't like just assuming that users are specifying paths rather than
+> patterns, when non-cone mode is all about specifying patterns rather
+> than paths; it just feels broken to me.
 
-with "--graph":
-
-* 3c0e417827 Merge branch 'ds/fetch-pull-with-sparse-index'
-* 408c51f0b4 test-read-cache: remove --table, --expand options
-* c2a2940510 t1091/t3705: remove 'test-tool read-cache --table'
-* 3a9a6ac5d9 t1092: replace 'read-cache --table' with 'ls-files --sparse'
-* 78087097b8 ls-files: add --sparse option
-* 5a4e0547e2 fetch/pull: use the sparse index
-
-w/out "--graph":
-
-3c0e417827 Merge branch 'ds/fetch-pull-with-sparse-index'
-408c51f0b4 test-read-cache: remove --table, --expand options
-c2a2940510 t1091/t3705: remove 'test-tool read-cache --table'
-3a9a6ac5d9 t1092: replace 'read-cache --table' with 'ls-files --sparse'
-78087097b8 ls-files: add --sparse option
-5a4e0547e2 fetch/pull: use the sparse index
-
-Look at the asterisks prefixing every commit in the with "--graph" part.
-If you init a new repo and add a few commits to form a linear history,
-you will get a similar result by "git log --oneline --graph".
-
-> [1] https://git-scm.com/docs/gitrevisions#Documentation/gitrevisions.txt-emltrevgt-ltngtemegemHEAD-HEAD-2em
-
--- 
-Thanks & Regards,
-Shaoxuan
+Oh, I don't like such an assumption, either.  If the user gives a
+pathspec, we do assume that is a collection of patterns.  If we are
+taking patterns from the command line, treating them as patterns is
+the right thing to do.  I do not see how that interacts with what a
+path or pattern that begins with a pound should be handled, though.
