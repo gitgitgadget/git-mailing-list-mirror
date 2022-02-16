@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CE60C433EF
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 04:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21B2EC433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 05:01:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238662AbiBPEw0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 23:52:26 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49796 "EHLO
+        id S241845AbiBPFCH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 00:02:07 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239277AbiBPEwZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 23:52:25 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36F3BA2F0F
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 20:52:14 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id g7so1858110edb.5
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 20:52:14 -0800 (PST)
+        with ESMTP id S239040AbiBPFCE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 00:02:04 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BD8F13E94
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 21:01:53 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id qk11so1916409ejb.2
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 21:01:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=42v1FnVOh9whrA3naRBDS5uY3V8g05k3aALEl9IzJkM=;
-        b=UuoqqJGqgqwObgq+kX3GwSypc/o1bRtmfcsecsLB2CLA8mO0MZyQkeFTXUqUZicpXa
-         xQQOxz1EdjUaKsQj9OUILaQJRoAl24KQrDCi1N0D1gBdiD4CuOZsKlF3zEyV7YsUkfZg
-         h5zU+l2AQKxU1z8R0CUrThbSF5PTT3A5184hZna1OpeBPlElohztE/4bRnCGf6FmDNZ6
-         1WJtLSEycENbrsTbivfWC3KF4kWFGrChjMIiQTliAryzdRN9dPJz7tpPK+jcsqu8Qu69
-         ETd/Ry64Cuj7i4N5EOIrMFsod4uEaPidfua1Lbmci7xcskryO5NS0zyRvlqQE4mQc1Ap
-         Vssg==
+        bh=H371mldLe4RtWvo0ghC9IVeDySuoYMWEtKSz7XQ9P4k=;
+        b=ExB7CqQ19/E5jc65Wepw9OaRihaFgdbfu87swfABM0cqV/ohmRP0KH3+fZL6o6Qg5K
+         2Nc/maHEFPyaxamh2+PY6Z9M6/WfBhptlqAJ1GEAHQSEAdnDMmvub7u7JFBnRz+Gdt7s
+         pvvTPx1u4735L5/uGvYHFOXJsaXbn0PWN1SlznMlGbKECuHUaYXVA2imWDMXS9IIZicL
+         J4lS1bgp3TcnUEadHYfk7eT7z2Luzs9nxKWo6Fdx1V6bNFvDusJJRGSeo4yNh9Asr9+0
+         b/J4OaHO3WsUxBWxclbgF0HRIhJ1QwA4rVHkNHD6MZBWqIcwEPSHHSvWcfUq/kEhzlEt
+         ILHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=42v1FnVOh9whrA3naRBDS5uY3V8g05k3aALEl9IzJkM=;
-        b=YG8lyEQM9OClQbeaLSn7fpwVUrNjIdIpF/XsbIPiaTFhVknr1yPWsP5p2UOWiCLIlI
-         NfgW1QCMD3tm850i4AhYIBc0GZRCOA9aohS0FwqeEkCVVArFUuZMOFgz8Mv3YkgcjAl8
-         Gz0hiDelLwJ5gygyRzwcr+wlO+q6ysS9OSZ0BP7tSe9QLHbeigkQqJhElpgz9e9eV86O
-         spMD/V0R/0zDRygKWU8ZsqhIEMmAexETCHEnmNp3Csm0cJVt0VZRb817+garCbIxWwDK
-         ZxFGHQ6LqgK4LmETPC9KQf4FrGyEu5UH51qx8JJb5E/TUEw0jsQZpwZT6np9MbLvqpKT
-         xrcA==
-X-Gm-Message-State: AOAM530HTyu4FWHPYhFInDfPrRQQTh6BVvw8OU6C1WisMm2Ib1qIsZRD
-        lOYSOl3eMOX9yfMH6i6xOFg4SnI5MGlTG1SGIlo=
-X-Google-Smtp-Source: ABdhPJzbzJCCp4ng2jTVVdckdQQeekYPWGbIX5S8pPMkUVgQJsgC9XZH0dVe+pDspsn99WX8RKIawcakgILrIz6XRy4=
-X-Received: by 2002:a05:6402:354f:b0:406:c518:56f1 with SMTP id
- f15-20020a056402354f00b00406c51856f1mr1065094edd.309.1644987132810; Tue, 15
- Feb 2022 20:52:12 -0800 (PST)
+        bh=H371mldLe4RtWvo0ghC9IVeDySuoYMWEtKSz7XQ9P4k=;
+        b=PZW97RoGSyNBWHdRRKqdIxmZF+ZqPIWi8LX4bQATr5mLKBUbruuOxaYVT52vRZ2i5U
+         s1fQrM7nuQ6HtHp6YAfZwh3HUAodGiwdzhAw+m2/1Qa/asQeoghkx8NiGdkKhBIGOEuc
+         +Eurpgs6C/qFwiFxh1uKIRGTU6Nt3UefKWZcLWCiYDhQqRlRwVk0voXOeTbEbKhufQsj
+         cFPr7UeN4HPdQxj8gxxzI9arAywx7Z78irH1gUP7beffzwfDop84F1QqCwShrzcKj72k
+         oZjW3NaXg+y7FJ+AWGGqETvxLi4LodAIQveS9EaKyYLzU+TDKNPg/DXDBoqP1qJH03jC
+         RNNg==
+X-Gm-Message-State: AOAM533lwCTBZY6nQZQ149a/+Huu4poYwZqYpHoIGgBv6IFSipIAt3O8
+        eIF4UdW8Ik+5begfjJGEVfSBmvKYuxdEv3LY3N4=
+X-Google-Smtp-Source: ABdhPJysKLmeAXgHY/gtRICIztHbdaAZ7iareg+oNe8351FhZ7hEsYhraiLZ/uOxO4J8+AFkVAxsP5QkmMPM01xjf0c=
+X-Received: by 2002:a17:907:11c1:b0:6cf:723b:37af with SMTP id
+ va1-20020a17090711c100b006cf723b37afmr947495ejb.476.1644987711656; Tue, 15
+ Feb 2022 21:01:51 -0800 (PST)
 MIME-Version: 1.0
 References: <xmqqk0dwyrcv.fsf@gitster.g>
 In-Reply-To: <xmqqk0dwyrcv.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 15 Feb 2022 20:52:01 -0800
-Message-ID: <CABPp-BFOw48k0M3U+fef1J57wHt2uq4hbKo-vnjAj56nYY6m2Q@mail.gmail.com>
-Subject: en/present-despite-skipped (Was: Re: What's cooking in git.git (Feb
- 2022, #04; Tue, 15))
+Date:   Tue, 15 Feb 2022 21:01:40 -0800
+Message-ID: <CABPp-BG+-ZAX7DcKNc=Z9sXNAJKUEDvrESesJsH91=ze2zLm5A@mail.gmail.com>
+Subject: js/apply-partial-clone-filters-recursively (Was: Re: What's cooking
+ in git.git (Feb 2022, #04; Tue, 15))
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Josh Steadmon <steadmon@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,26 +62,16 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Feb 15, 2022 at 12:01 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> * en/present-despite-skipped (2022-01-14) 6 commits
->  - Accelerate clear_skip_worktree_from_present_files() by caching
->  - Update documentation related to sparsity and the skip-worktree bit
->  - repo_read_index: clear SKIP_WORKTREE bit from files present in worktree
->  - unpack-trees: fix accidental loss of user changes
->  - t1011: add testcase demonstrating accidental loss of user modifications
->  - Merge branch 'vd/sparse-clean-etc' into en/present-despite-skipped
->  (this branch uses vd/sparse-clean-etc.)
+> * js/apply-partial-clone-filters-recursively (2022-02-09) 1 commit
+>  - clone, submodule: pass partial clone filters to submodules
 >
->  In sparse-checkouts, files mis-marked as missing from the working tree
->  could lead to later problems.  Such files were hard to discover, and
->  harder to correct.  Automatically detecting and correcting the marking
->  of such files has been added to avoid these problems.
+>  "git clone --filter=... --recurse-submodules" only makes the
+>  top-level a partial clone, while submodules are fully cloned.  This
+>  behaviour is changed to pass the same filter down to the submodules.
 >
 >  Will merge to 'next'?
->  cf. <20220204081336.3194538-1-newren@gmail.com>
->  source: <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
+>  source: <690d2316ad518ea4551821b2b3aa652996858475.1644034886.git.steadmon@google.com>
 
-Is there anything specific you're looking for here?
-
-I think it's ready, as I said two weeks ago in the link you provided
-above.  All reviewer feedback was addressed to reviewers' satisfaction
-over a month ago, so I'm not sure what else to do here...
+I think so.  Sorry for letting it slip through the crack, but v2
+addressed all my feedback.  Further, v3 was Reviewed-by Jonathan Tan
+as well.  I think it's ready to merge down.
