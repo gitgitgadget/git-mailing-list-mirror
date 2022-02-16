@@ -2,99 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E79DC433F5
-	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 00:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BF4AC433F5
+	for <git@archiver.kernel.org>; Wed, 16 Feb 2022 00:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245166AbiBPAvj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Feb 2022 19:51:39 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52880 "EHLO
+        id S245176AbiBPAxq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Feb 2022 19:53:46 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245154AbiBPAvg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Feb 2022 19:51:36 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48DF863E6
-        for <git@vger.kernel.org>; Tue, 15 Feb 2022 16:51:25 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8ECDD18D251;
-        Tue, 15 Feb 2022 19:51:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AceYkjqwdHZPJdkgKXS+8TIpII7r3B7FKo7FVv
-        +62qw=; b=DpQr0Kr9MzhHbBedD/L28qwma3Bg7xdx2q0AFDbzf3X9Dao5ZiHiZE
-        BI7wuAG7gQCoZgH1mpjrv6MS/ETAf3br+xu9Zm2jMCA3xpqQ047jAfZqUv88ZVRk
-        Dk/xM5v4gKWE9DaNBi/VZkjqYtBdA3kU1NYVA8emkmETLozwgLdMs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 86FDE18D250;
-        Tue, 15 Feb 2022 19:51:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.185.212.55])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9F1FE18D24D;
-        Tue, 15 Feb 2022 19:51:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] name-rev: test showing failure with non-monotonic
- commit dates
-References: <20220214210136.1532574-1-jacob.e.keller@intel.com>
-        <xmqqr18515jr.fsf@gitster.g>
-        <CA+P7+xrN0zPWfxO1roWzR+MBHntTv8jr9OGdNcN9RPA=ebK24A@mail.gmail.com>
-        <42d2a9fe-a3f2-f841-dcd1-27a0440521b6@github.com>
-Date:   Tue, 15 Feb 2022 16:51:20 -0800
-In-Reply-To: <42d2a9fe-a3f2-f841-dcd1-27a0440521b6@github.com> (Derrick
-        Stolee's message of "Tue, 15 Feb 2022 09:48:38 -0500")
-Message-ID: <xmqq1r03zl9z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S236240AbiBPAxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Feb 2022 19:53:45 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C49D1C7D4F
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 16:53:33 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id q7so749237wrc.13
+        for <git@vger.kernel.org>; Tue, 15 Feb 2022 16:53:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=SNpIy/07GQZSBrZ5H2sk7/nd388dliKlQOi7EWsbFEw=;
+        b=JnMBN6oaP5Y7ECnetei3gASVaTigmcPdil4sM+KFvgxWfpS86lmsBGfjA0ojpQOiES
+         /YSiTFnPki03VJczMtmMbxrAxeDwbHGKvrHFBgkoc5YHy86HzT3hXKJyxtRsVUPoLF5T
+         rb83ONaN7k43VWPPJFv2jmkydgbKG07Qh+ovH5AFAOB8fEf+dnfx8b7ctVsjHVxOaQWv
+         x0rgc/Ix3C6A+4X5DmAGyf9ZfrsJK/PygQnMN14FbtvzB+rNTf4V/AuCdxgFxbe7/4fd
+         GuP5QIf+9B1weq+W68M1oYMBTmcpH9Vmhjwir45i/r6/gA6givkSuJc85Tu870CwX9jr
+         rhRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=SNpIy/07GQZSBrZ5H2sk7/nd388dliKlQOi7EWsbFEw=;
+        b=mhRSJg/Ywvs2QAAAEUvGUjfYBy0+cW96vwD3EmnVmA2ZIQb/RB1Y7ozQU9vc1f5q6l
+         +G8PoCaNTIptW7sVEH3zGBcEgF/2Eu/qWlY6HZavPR+/ZXnYjkD5zWlZD2o+wFFjUmH/
+         X3OwWuRZRkUR01Lw4V9xUc3jHR9b3E7p2fS7FrP4pMRbsMkHxgw3rUiCEkqvuw4TuoXH
+         rh/pt+Rc9PpgznYvYa3bGBJ3X8t7VWT2mXpvfKUvPVXaZ1hJ8B0LCwJvgFcF3zeD5URH
+         qQKTVsBfs2C3//8+m1e7WxgMOBY3VF6URZ1iL8WuRC8Vc96HP1gD5huNYMuqptMPpQq5
+         Tgog==
+X-Gm-Message-State: AOAM533hE3ffKd9V1HP5oEI3eC06H9TXUH8dToyoTnrec5Vi34Mb+SNB
+        W0fWUSyfCf8wuM0MnKWrgp7I5aKnrO4=
+X-Google-Smtp-Source: ABdhPJzgF8uESX6RocpMOGAXjojpePN1nh0KogX1Ygcec2+n88morwQUGxSNFK7rxOe/HBGoIKDtNg==
+X-Received: by 2002:a5d:64c8:0:b0:1d9:1020:1b45 with SMTP id f8-20020a5d64c8000000b001d910201b45mr341912wri.393.1644972812085;
+        Tue, 15 Feb 2022 16:53:32 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p8sm27930522wro.106.2022.02.15.16.53.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Feb 2022 16:53:31 -0800 (PST)
+Message-Id: <fa6294387ab223d56e6ab66448f1ebe1ec370cd7.1644972810.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1212.v7.git.git.1644972810.gitgitgadget@gmail.com>
+References: <pull.1212.v6.git.git.1644862988.gitgitgadget@gmail.com>
+        <pull.1212.v7.git.git.1644972810.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 16 Feb 2022 00:53:27 +0000
+Subject: [PATCH v7 1/4] cat-file: rename cmdmode to transform_mode
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8F1066EC-8EC2-11EC-BAD8-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+To:     git@vger.kernel.org
+Cc:     me@ttaylorr.com, phillip.wood123@gmail.com, avarab@gmail.com,
+        e@80x24.org, bagasdotme@gmail.com, gitster@pobox.com,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+From: John Cai <johncai86@gmail.com>
 
-> I initially thought that generation numbers could help. The usual way
-> is to use a priority queue that explores by generation, not commit
-> date. This approach was immediately stifled by these lines:
->
-> 	memset(&queue, 0, sizeof(queue)); /* Use the prio_queue as LIFO */
-> 	prio_queue_put(&queue, start_commit);
->
-> So the queue is really a stack.
+In the next patch, we will add an enum on the batch_options struct that
+indicates which type of batch operation will be used: --batch,
+--batch-check and the soon to be  --batch-command that will read
+commands from stdin. --batch-command mode might get confused with
+the cmdmode flag.
 
-Hmph, I am not sure if stifled is a word, but I agree that this one
-is not solvable by "we have a priority queue that explores by commit
-date, and using generation numbers instead of commit date will give
-us a more stable result when clock skews are involved", because the
-traversal is not the usual "we pop the newest commit seen so far to
-dig into older history".
+There is value in renaming cmdmode in any case. cmdmode refers to how
+the result output of the blob will be transformed, either according to
+--filter or --textconv. So transform_mode is a more descriptive name
+for the flag.
 
-However.
+Rename cmdmode to transform_mode in cat-file.c
 
-> It is still possible that the cutoff could be altered to use generation
-> numbers instead of commit dates, but I haven't looked closely enough to
-> be sure.
+Signed-off-by: John Cai <johncai86@gmail.com>
+---
+ builtin/cat-file.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-In "name-rev [--tags] C", we look for a tag to use in describing the
-given commit C as an ancestry path starting at the tag T (e.g. T~4,
-T~2^2).  There can be multiple such tags (e.g. it is likely that a
-commit that is v1.0~2 is also reachable from tag v2.0, even though
-it would require more hops).  We try to and find a tag that gives
-the "simplest" path.  For that purpose, it is no use to consider any
-tag that is not a descendant of the given commit, because doing an
-ancestry traversal starting from such a tag will never reach the
-commit.  In a world where everybody's clock is in sync, if commit
-was made at time X, any tag that was made before time X will not be
-a descendant of the commit, so we do not add such a tag to the
-candidate pool.
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 7b3f42950ec..5f015e71096 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -24,7 +24,7 @@ struct batch_options {
+ 	int buffer_output;
+ 	int all_objects;
+ 	int unordered;
+-	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
++	int transform_mode; /* may be 'w' or 'c' for --filters or --textconv */
+ 	const char *format;
+ };
+ 
+@@ -302,19 +302,19 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+ 	if (data->type == OBJ_BLOB) {
+ 		if (opt->buffer_output)
+ 			fflush(stdout);
+-		if (opt->cmdmode) {
++		if (opt->transform_mode) {
+ 			char *contents;
+ 			unsigned long size;
+ 
+ 			if (!data->rest)
+ 				die("missing path for '%s'", oid_to_hex(oid));
+ 
+-			if (opt->cmdmode == 'w') {
++			if (opt->transform_mode == 'w') {
+ 				if (filter_object(data->rest, 0100644, oid,
+ 						  &contents, &size))
+ 					die("could not convert '%s' %s",
+ 					    oid_to_hex(oid), data->rest);
+-			} else if (opt->cmdmode == 'c') {
++			} else if (opt->transform_mode == 'c') {
+ 				enum object_type type;
+ 				if (!textconv_object(the_repository,
+ 						     data->rest, 0100644, oid,
+@@ -326,7 +326,7 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
+ 					die("could not convert '%s' %s",
+ 					    oid_to_hex(oid), data->rest);
+ 			} else
+-				BUG("invalid cmdmode: %c", opt->cmdmode);
++				BUG("invalid transform_mode: %c", opt->transform_mode);
+ 			batch_write(opt, contents, size);
+ 			free(contents);
+ 		} else {
+@@ -529,7 +529,7 @@ static int batch_objects(struct batch_options *opt)
+ 	strbuf_expand(&output, opt->format, expand_format, &data);
+ 	data.mark_query = 0;
+ 	strbuf_release(&output);
+-	if (opt->cmdmode)
++	if (opt->transform_mode)
+ 		data.split_on_whitespace = 1;
+ 
+ 	/*
+@@ -742,7 +742,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
+ 	/* Return early if we're in batch mode? */
+ 	if (batch.enabled) {
+ 		if (opt_cw)
+-			batch.cmdmode = opt;
++			batch.transform_mode = opt;
+ 		else if (opt && opt != 'b')
+ 			usage_msg_optf(_("'-%c' is incompatible with batch mode"),
+ 				       usage, options, opt);
+-- 
+gitgitgadget
 
-I think the idea of "cutoff" heuristic is exactly what generation
-numbers can improve, in an imperfect world where there are imperfect
-clocks.
