@@ -2,107 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60358C433EF
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 22:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56F28C433EF
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 22:27:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343828AbiBQWQx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 17:16:53 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38284 "EHLO
+        id S1343853AbiBQW1Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 17:27:24 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230212AbiBQWQw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 17:16:52 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8A11165C32
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 14:16:36 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 666681871DF;
-        Thu, 17 Feb 2022 17:16:36 -0500 (EST)
+        with ESMTP id S239453AbiBQW1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 17:27:23 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB4853B77
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 14:27:07 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1CF23104158;
+        Thu, 17 Feb 2022 17:27:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CESjKiLbCfTbEHVO9qfh+IHNw9SdBV2aPRrDz+
-        UQK2M=; b=QZONGdCFLQW/i8FxMPwI6OQcBq/eKfrN+Hdb8uE7v4+7FQUtuTi8lT
-        t+JZWsSFR6C7p+tpmtSDbcdovFGBSe+YWfVyAnlI80oecLZcy/mY2bN/3WmnadD6
-        cEtV/b2JJoXjGHle1l5t61PL6D4IHMlPR9ZrZUVl6lC0p7lLsPDbI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5E8081871DE;
-        Thu, 17 Feb 2022 17:16:36 -0500 (EST)
+        :content-type; s=sasl; bh=nRRD/nOR55jop6QEVcnsHXsSCRSf2hppMPsGxs
+        pwpNg=; b=H0xsU0WirFBqKC+w774ho+Ox04IwPcMAqLgn2vjOILukjZZJuzXwQC
+        pIt3z/sTc+54lUCF2XMCqEUgye8kX+Gis1qhYwzgvRcDHso4l8bKVXcvnlcuKwnW
+        EGAB1XZooCHOfbUHiZeBweTy0lI02hgQiENAX5TySWGED8FsWSllY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B52CA104156;
+        Thu, 17 Feb 2022 17:27:05 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CAA191871DB;
-        Thu, 17 Feb 2022 17:16:33 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 36B55104154;
+        Thu, 17 Feb 2022 17:27:04 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 4/7] fetch: report errors when backfilling tags fails
+Subject: Re: [PATCH v2 6/7] fetch: make `--atomic` flag cover backfilling of
+ tags
 References: <cover.1645102965.git.ps@pks.im>
-        <bc1e396ae0ad380dffd7962cc223cc63e6facffe.1645102965.git.ps@pks.im>
-Date:   Thu, 17 Feb 2022 14:16:32 -0800
-In-Reply-To: <bc1e396ae0ad380dffd7962cc223cc63e6facffe.1645102965.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Thu, 17 Feb 2022 14:04:28 +0100")
-Message-ID: <xmqqo8356svz.fsf@gitster.g>
+        <331ee40e57df1f07fe725dc679dd934c777d4eab.1645102965.git.ps@pks.im>
+Date:   Thu, 17 Feb 2022 14:27:02 -0800
+In-Reply-To: <331ee40e57df1f07fe725dc679dd934c777d4eab.1645102965.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Thu, 17 Feb 2022 14:04:36 +0100")
+Message-ID: <xmqqiltd6seh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 43EACE36-903F-11EC-950D-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: BBAB64A2-9040-11EC-BAFD-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> +static int backfill_tags(struct transport *transport,
-> ...
->  }
+> Fix this by pulling up creation of the reference transaction such that
+> we can pass the same transaction to both the code which updates local
+> references and to the code which backfills tags. This allows us to only
+> commit the transaction in case both actions succeed.
 
-The change to this function is quite straight-forward.
+OK, having done the FETCH_HEAD thing, the idea is quite similar.
+Instead of letting two invocations to store_updated_refs() to
+independently open and close separate transactions, we control
+everything centrally in do_fetch().
 
->  static int do_fetch(struct transport *transport,
-> @@ -1632,8 +1634,16 @@ static int do_fetch(struct transport *transport,
->  		struct ref *tags_ref_map = NULL, **tail = &tags_ref_map;
->  
->  		find_non_local_tags(remote_refs, &tags_ref_map, &tail);
-> -		if (tags_ref_map)
-> -			backfill_tags(transport, tags_ref_map, &fetch_head, worktrees);
-> +		if (tags_ref_map) {
-> +			/*
-> +			 * If backfilling of tags fails then we want to tell
-> +			 * the user so, but we have to continue regardless to
-> +			 * populate upstream information of the references we
-> +			 * have already fetched above.
-> +			 */
+Makes sense.
 
-OK.  Unless atomic, using the available information on successfully
-updated ones would be fine.  Perhaps under --atomic mode, a failure
-to commit the ref transaction will also prevent the upstream
-information from getting updated?  We'll see soon enough.
-
-> +			if (backfill_tags(transport, tags_ref_map, &fetch_head, worktrees))
-> +				retcode = 1;
-> +		}
-
->  		free_refs(tags_ref_map);
->  	}
-> diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
-> index 6ffe2a5719..c057c49e80 100755
-> --- a/t/t5503-tagfollow.sh
-> +++ b/t/t5503-tagfollow.sh
-> @@ -233,9 +233,7 @@ test_expect_success 'backfill failure causes command to fail' '
->  		done
+> @@ -197,12 +194,10 @@ test_expect_success 'atomic fetch with backfill should use single transaction' '
+>  		prepared
+>  		$ZERO_OID $B refs/heads/something
+>  		$ZERO_OID $S refs/tags/tag2
+> +		$ZERO_OID $T refs/tags/tag1
+>  		committed
+>  		$ZERO_OID $B refs/heads/something
+>  		$ZERO_OID $S refs/tags/tag2
+> -		prepared
+> -		$ZERO_OID $T refs/tags/tag1
+> -		committed
+>  		$ZERO_OID $T refs/tags/tag1
 >  	EOF
->  
-> -	# Even though we fail to create refs/tags/tag1 the below command
-> -	# unexpectedly succeeds.
-> -	git -C clone5 fetch .. $B:refs/heads/something &&
-> +	test_must_fail git -C clone5 fetch .. $B:refs/heads/something &&
 
 OK.
 
->  	test $B = $(git -C clone5 rev-parse --verify refs/heads/something) &&
->  	test $S = $(git -C clone5 rev-parse --verify tag2) &&
->  	test_must_fail git -C clone5 rev-parse --verify tag1
+Unlike the "expect the behaviour at the end of the series from the
+beginning with known-to-fail tests" pattern I cautioned against in
+an earlier step, this is a good way to show how the behaviour
+changes.
+
+Thanks.
