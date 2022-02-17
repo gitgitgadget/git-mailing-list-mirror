@@ -2,96 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49F9BC433F5
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 22:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6C2EC433EF
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 22:52:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229737AbiBQWvs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 17:51:48 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:55668 "EHLO
+        id S229769AbiBQWwo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 17:52:44 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:60860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbiBQWvr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 17:51:47 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 666097806A
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 14:51:29 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 355E911150C;
-        Thu, 17 Feb 2022 17:51:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sJN49i/ONWrRqmL+MORbKg/UKTYY1s9ox75LDj
-        WsfG4=; b=B7Rpg/KbZpm2XXFRJ3ZCWEzo9CnV5m588AjqqTkeRnaQbwqmcZJEPd
-        C6zZ1US/7thxFnjZRuOamWfYxM3JxkXTsAHg/MvJ+Fdth1rjRymOXQu8tc3YGFlk
-        3xbpYxz1glyNbz774B/wvw9oIRxcx2lcruZxoFT73y7XsGOfDonQA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2BA0411150B;
-        Thu, 17 Feb 2022 17:51:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8DFAB11150A;
-        Thu, 17 Feb 2022 17:51:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2] dir: force untracked cache with core.untrackedCache
-References: <pull.1058.git.1644860224151.gitgitgadget@gmail.com>
-        <pull.1058.v2.git.1645131630140.gitgitgadget@gmail.com>
-Date:   Thu, 17 Feb 2022 14:51:27 -0800
-In-Reply-To: <pull.1058.v2.git.1645131630140.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Thu, 17 Feb 2022 21:00:29
-        +0000")
-Message-ID: <xmqq5ypd6r9s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229496AbiBQWwk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 17:52:40 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17C89F68E7
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 14:52:22 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id a19so11296100qvm.4
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 14:52:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=edwardthomson-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=HN1xUZ8ExDJ8QnNO8Umnyv0LpAc3hjJNWzOp/MF6GzI=;
+        b=W9YuqtqzV+xwTw9vUHF4nL8JrG9KAHPtyDSeY9ACsFO7mP1yX/n/361mUYD3nTWNnH
+         HgUTTyX6t3RpR432PcWJ1SBlKW6dPboGSAXoSZaYPU9BXPU1xPBni/MF/VXNpm10eXdz
+         mkuaPLcF1VWGRp8nkX00EQoo+o7d2RssxFXkFMgxpY4rjfvxlspySovPWF0AevLJUL8D
+         IXF/Z8Xj17DiiVALpPcvM14If8N/SNzm+Tu7k84ROSycrIggPDgyJZkTd/NWqhGy8kt8
+         6vTw4URryU5kwS+X1SQVY46f1e0WcaQJrNghcljy6Y9KpFZCj93yK+P7z8i8bkiynwUz
+         nBOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=HN1xUZ8ExDJ8QnNO8Umnyv0LpAc3hjJNWzOp/MF6GzI=;
+        b=tmMRq/Mw+7RBaYmM0ifcoG0i0tk6RV0DqOYukrDDrho9tGAkAvRLv8jjeIysnDknoL
+         NaZX6bSPJAAfwa1P5PyxfCLweo2Lcj5u8ZNPBb3yXqbIjg9QgL5gbBmz71MosIqWIw4e
+         dAYdrN5ge//YxIVCby349pkCxXoK4HrVLGWWd8C1sNhiyR4uutdtMR2+2yBHr70gIt7w
+         yX4IfxLt4WTn+WDG80pXYFqUqDQJJtsZ26ez5OLmgBjt1Bnndr1/qMWN6LUoM4a9SlAV
+         jdTpcULjnXWwuzwYjJtiCXFtM8LDA1EeP8fVC2m2MB3EeLCdYmuJmXxFDr0fKDWb28B1
+         WboA==
+X-Gm-Message-State: AOAM530hF0aeiigBu8XAKIeB8ypTYpJnKD0DedMgWueCQSLPp8KVKjmC
+        /ibCI81O8OsvmrIRLSh5ebetLcPU/3zoQ3AU
+X-Google-Smtp-Source: ABdhPJy506hWCxJr9jkyV/kFCHwE3uc86WOR7dZMu/HmPhGa0n51HlUnZ4WO2kxHxkn/1rsE9WxRoQ==
+X-Received: by 2002:a05:622a:54e:b0:2d1:83db:25e1 with SMTP id m14-20020a05622a054e00b002d183db25e1mr4346355qtx.110.1645138341612;
+        Thu, 17 Feb 2022 14:52:21 -0800 (PST)
+Received: from edef91d97c94 ([50.234.189.46])
+        by smtp.gmail.com with ESMTPSA id t15sm16374392qkp.48.2022.02.17.14.52.20
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Feb 2022 14:52:20 -0800 (PST)
+Date:   Thu, 17 Feb 2022 22:52:18 +0000
+From:   Edward Thomson <ethomson@edwardthomson.com>
+To:     git@vger.kernel.org
+Cc:     johannes.schindelin@gmx.de,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH v2 0/1] xdiff: provide indirection to git functions
+Message-ID: <20220217225218.GA7@edef91d97c94>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 247D0942-9044-11EC-AA7B-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hello (again) from libgit2; this is a v2 of changes to xdiff to allow
+us to work together more easily.  As discussed in the previous patch
+(https://lore.kernel.org/git/20220209012951.GA7@abe733c6e288/) this
+adds a simple abstraction layer in `git-xdiff.h`.
 
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> The GIT_FORCE_UNTRACKED_CACHE environment variable writes the untracked
-> cache more frequently than the core.untrackedCache config variable. This
-> is due to how read_directory() handles the creation of an untracked
-> cache.
->
-> Before this change, Git would not create the untracked cache extension
-> for an index that did not already have one. Users would need to run a
-> command such as 'git update-index --untracked-cache' before the index
-> would actually contain an untracked cache.
->
-> In particular, users noticed that the untracked cache would not appear
-> even with core.untrackedCache=true. Some users reported setting
-> GIT_FORCE_UNTRACKED_CACHE=1 in their engineering system environment to
-> ensure the untracked cache would be created.
->
-> The decision to not write the untracked cache without an environment
-> variable tracks back to fc9ecbeb9 (dir.c: don't flag the index as dirty
-> for changes to the untracked cache, 2018-02-05). The motivation of that
-> change is that writing the index is expensive, and if the untracked
-> cache is the only thing that needs to be written, then it is more
-> expensive than the benefit of the cache. However, this also means that
-> the untracked cache never gets populated, so the user who enabled it via
-> config does not actually get the extension until running 'git
-> update-index --untracked-cache' manually or using the environment
-> variable.
->
-> We have had a version of this change in the microsoft/git fork for a few
-> major releases now. It has been working well to get users into a good
-> state. Yes, that first index write is slow, but the remaining index
-> writes are much faster than they would be without this change.
->
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
+Other xdiff users, like libgit2, can specify their own compatibility
+functions in this header file.
 
-Will queue.
+Cheers-
+-ed
 
-Thanks.
+Edward Thomson (1):
+  xdiff: provide indirection to git functions
+
+ xdiff/git-xdiff.h | 16 ++++++++++++++++
+ xdiff/xdiff.h     |  8 +++-----
+ xdiff/xdiffi.c    | 20 ++++++++++----------
+ xdiff/xinclude.h  |  2 +-
+ xdiff/xmerge.c    |  4 ++--
+ 5 files changed, 32 insertions(+), 18 deletions(-)
+ create mode 100644 xdiff/git-xdiff.h
+
+--
+2.35.1
