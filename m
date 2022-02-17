@@ -2,255 +2,348 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25D9AC433EF
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 06:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D9E6C433FE
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 08:27:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235865AbiBQGzQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 01:55:16 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48920 "EHLO
+        id S237559AbiBQI13 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 03:27:29 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235830AbiBQGzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 01:55:10 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25BFD27F298
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 22:54:56 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id u2so6093924wrw.1
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 22:54:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=JUZpigJx7CL2piKB9j7OB1j0JGFx2ejxjC82vGxYfAY=;
-        b=XEkq18JP+nahGAmd6TUuNfCzQjKlA/Ez7KDVlE1NFaYK+bd2r9++6Q3v7tkBPBpQ2T
-         rdLMO1HMPapcYRELlo/2FRAIo7Zk6LOGRJ/iVSbJKJ+iB+fayAjPJENzK1kWmJS9v9dA
-         M7Grnb9ONomqnMZEdwmGYH67Uij7P1c4P6Bwni9UoLA6zYRx46W/CMkB5suLJfNaiZPl
-         DEMc3nSSglvw2qHxgdD3HCV+pUvwjxD6GZIAFaI8q180q6GD4kNQ3vEMVgPFf+gzTKgL
-         Wn79kpzvK2pgXvxIG4ZxgCpwsJuAYutjL2TZkH5IKvccIrr1QTXvbY1maVeL7rRdHoIa
-         fZdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JUZpigJx7CL2piKB9j7OB1j0JGFx2ejxjC82vGxYfAY=;
-        b=NYwp0OPMAqbl6gUpUZbl4f00CUVGYDEWCugt6t30QOS/7XQNczLukkpo+pSVeQ77Fp
-         vacaLmylqvYr4TzygNlx1zgp4ozYUoVVnbIb2cD6eu3Cv9fFNY2/BljyeDn7ZdY4EbX2
-         eorrmQgDiF1PWWX58hYPjiBkjsg2+dhwlK+qdBzuIkkm9I+WlHwUYdbUT38u+STnTdoH
-         5JQbJyUNFnRsNhyf+XWNIBFVxlju3slBjI9DekdMKD9u/ZEEHJjGcUBwqPSZTobCY1ax
-         yKZ3g/jb+q1yxjJYO2xCb3nU+z0JIl3+zujdx4XjrjwPiXO9A6NBlQETWKaGUgJuBbfT
-         dNbQ==
-X-Gm-Message-State: AOAM533LW4yf+KLiqZ4BoPJv68ZbS5Z6creOtZtVvWcZ0WHYdhkWCF7h
-        CkvFxM0TLT6u2tNE6jijjFpv7O8lceU=
-X-Google-Smtp-Source: ABdhPJyGJcDf5r6YHESuwDv/mp8DNR+jgGObvDXeIdxrAtG1wbVurS59XBE55uq/sad6yOoP0UKVYA==
-X-Received: by 2002:a5d:6c62:0:b0:1e8:d8a7:f7de with SMTP id r2-20020a5d6c62000000b001e8d8a7f7demr701918wrz.38.1645080894559;
-        Wed, 16 Feb 2022 22:54:54 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p2sm31165128wrt.101.2022.02.16.22.54.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Feb 2022 22:54:54 -0800 (PST)
-Message-Id: <1fdebc1953fcc30a6a08b3efd62dcdb31f7e4704.1645080889.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1118.v4.git.1645080889.gitgitgadget@gmail.com>
-References: <pull.1118.v3.git.1644985283.gitgitgadget@gmail.com>
-        <pull.1118.v4.git.1645080889.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 17 Feb 2022 06:54:48 +0000
-Subject: [PATCH v4 4/5] sparse-checkout: error or warn when given individual
- files
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S237476AbiBQI11 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 03:27:27 -0500
+X-Greylist: delayed 122 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 17 Feb 2022 00:27:12 PST
+Received: from 119-17-144-94.771190.mel.nbn.aussiebb.net (119-17-144-94.771190.mel.nbn.aussiebb.net [119.17.144.94])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D34B32557A5
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 00:27:12 -0800 (PST)
+Received: from [192.168.0.17]
+        by 119-17-144-94.771190.mel.nbn.aussiebb.net with esmtp (Exim 4.95)
+        (envelope-from <git@davebarr.dev>)
+        id 1nKc85-0004g1-M1
+        for git@vger.kernel.org;
+        Thu, 17 Feb 2022 08:27:10 +0000
+Message-ID: <aa98051b-5cf4-c910-c410-04b75c948354@davebarr.dev>
+Date:   Thu, 17 Feb 2022 19:27:04 +1100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.6.0
+From:   David Barr <git@davebarr.dev>
+Subject: Re: [PATCH] blame: add --ignore-revs-blob and blame.ignoreRevsBlob
 To:     git@vger.kernel.org
-Cc:     Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+References: <pull.1204.git.git.1642846032807.gitgitgadget@gmail.com>
+Content-Language: en-US
+In-Reply-To: <pull.1204.git.git.1642846032807.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+On 22/1/2022 21:07, David Barr via GitGitGadget wrote:
+> From: David Barr <git@davebarr.dev>
+> 
+> In a bare repository, there isn't a simple way to
+> ignore revisions via a file without extracting it
+> to a temporary file.
+> 
+> This patch provides a command-line option and
+> config variable, similar to --ignore-revs-file
+> and blame.ignoreRevsFile, which reads the list
+> of revisions to ignore from a blob in the
+> repository.
+> 
+> Signed-off-by: David Barr <git@davebarr.dev>
+> ---
 
-The set and add subcommands accept multiple positional arguments.
-The meaning of these arguments differs slightly in the two modes:
+Looks like this patch might have gotten lost in the noise.
 
-Cone mode only accepts directories.  If given a file, it would
-previously treat it as a directory, causing not just the file itself to
-be included but all sibling files as well -- likely against users'
-expectations.  Throw an error if the specified path is a file in the
-index.  Provide a --skip-checks argument to allow users to override
-(e.g. for the case when the given path IS a directory on another
-branch).
+Could anyone take a look?
 
-Non-cone mode accepts general gitignore patterns.  There are many
-reasons to avoid this mode, but one possible reason to use it instead of
-cone mode: to be able to select individual files within a directory.
-However, if a file is passed to set/add in non-cone mode, you won't be
-selecting a single file, you'll be selecting a file with the same name
-in any directory.  Thus users will likely want to prefix any paths they
-specify with a leading '/' character; warn users if the patterns they
-specify exactly name a file because it means they are likely missing
-such a missing leading slash.
-
-Reviewed-by: Derrick Stolee <derrickstolee@github.com>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/sparse-checkout.c          | 43 +++++++++++++++++++++++++-----
- t/t1091-sparse-checkout-builtin.sh | 16 ++++++++++-
- 2 files changed, 52 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index a2192a69219..64583fa704f 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -1,4 +1,5 @@
- #include "builtin.h"
-+#include "cache.h"
- #include "config.h"
- #include "dir.h"
- #include "parse-options.h"
-@@ -684,8 +685,11 @@ static int modify_pattern_list(int argc, const char **argv, int use_stdin,
- 	return result;
- }
- 
--static void sanitize_paths(int argc, const char **argv, const char *prefix)
-+static void sanitize_paths(int argc, const char **argv,
-+			   const char *prefix, int skip_checks)
- {
-+	int i;
-+
- 	if (!argc)
- 		return;
- 
-@@ -694,7 +698,6 @@ static void sanitize_paths(int argc, const char **argv, const char *prefix)
- 		 * The args are not pathspecs, so unfortunately we
- 		 * cannot imitate how cmd_add() uses parse_pathspec().
- 		 */
--		int i;
- 		int prefix_len = strlen(prefix);
- 
- 		if (!core_sparse_checkout_cone)
-@@ -703,20 +706,44 @@ static void sanitize_paths(int argc, const char **argv, const char *prefix)
- 		for (i = 0; i < argc; i++)
- 			argv[i] = prefix_path(prefix, prefix_len, argv[i]);
- 	}
-+
-+	if (skip_checks)
-+		return;
-+
-+	for (i = 0; i < argc; i++) {
-+		struct cache_entry *ce;
-+		struct index_state *index = the_repository->index;
-+		int pos = index_name_pos(index, argv[i], strlen(argv[i]));
-+
-+		if (pos < 0)
-+			continue;
-+		ce = index->cache[pos];
-+		if (S_ISSPARSEDIR(ce->ce_mode))
-+			continue;
-+
-+		if (core_sparse_checkout_cone)
-+			die(_("\"%s\" is not a directory; to treat it as a directory anyway, rerun with --skip-checks"), argv[i]);
-+		else
-+			warning(_("pass a leading slash before paths such as \"%s\" if you want a single file (see NON-CONE PROBLEMS in the git-sparse-checkout manual)."), argv[i]);
-+	}
- }
- 
- static char const * const builtin_sparse_checkout_add_usage[] = {
--	N_("git sparse-checkout add (--stdin | <patterns>)"),
-+	N_("git sparse-checkout add [--skip-checks] (--stdin | <patterns>)"),
- 	NULL
- };
- 
- static struct sparse_checkout_add_opts {
-+	int skip_checks;
- 	int use_stdin;
- } add_opts;
- 
- static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
- {
- 	static struct option builtin_sparse_checkout_add_options[] = {
-+		OPT_BOOL_F(0, "skip-checks", &add_opts.skip_checks,
-+			   N_("skip some sanity checks on the given paths that might give false positives"),
-+			   PARSE_OPT_NONEG),
- 		OPT_BOOL(0, "stdin", &add_opts.use_stdin,
- 			 N_("read patterns from standard in")),
- 		OPT_END(),
-@@ -732,19 +759,20 @@ static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
- 			     builtin_sparse_checkout_add_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN);
- 
--	sanitize_paths(argc, argv, prefix);
-+	sanitize_paths(argc, argv, prefix, add_opts.skip_checks);
- 
- 	return modify_pattern_list(argc, argv, add_opts.use_stdin, ADD);
- }
- 
- static char const * const builtin_sparse_checkout_set_usage[] = {
--	N_("git sparse-checkout set [--[no-]cone] [--[no-]sparse-index] (--stdin | <patterns>)"),
-+	N_("git sparse-checkout set [--[no-]cone] [--[no-]sparse-index] [--skip-checks] (--stdin | <patterns>)"),
- 	NULL
- };
- 
- static struct sparse_checkout_set_opts {
- 	int cone_mode;
- 	int sparse_index;
-+	int skip_checks;
- 	int use_stdin;
- } set_opts;
- 
-@@ -758,6 +786,9 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
- 			 N_("initialize the sparse-checkout in cone mode")),
- 		OPT_BOOL(0, "sparse-index", &set_opts.sparse_index,
- 			 N_("toggle the use of a sparse index")),
-+		OPT_BOOL_F(0, "skip-checks", &set_opts.skip_checks,
-+			   N_("skip some sanity checks on the given paths that might give false positives"),
-+			   PARSE_OPT_NONEG),
- 		OPT_BOOL_F(0, "stdin", &set_opts.use_stdin,
- 			   N_("read patterns from standard in"),
- 			   PARSE_OPT_NONEG),
-@@ -786,7 +817,7 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
- 		argv = default_patterns;
- 		argc = default_patterns_nr;
- 	} else {
--		sanitize_paths(argc, argv, prefix);
-+		sanitize_paths(argc, argv, prefix, set_opts.skip_checks);
- 	}
- 
- 	return modify_pattern_list(argc, argv, set_opts.use_stdin, REPLACE);
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index c1f86b0e02e..3b39329266b 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -562,7 +562,7 @@ test_expect_success 'different sparse-checkouts with worktrees' '
- '
- 
- test_expect_success 'set using filename keeps file on-disk' '
--	git -C repo sparse-checkout set a deep &&
-+	git -C repo sparse-checkout set --skip-checks a deep &&
- 	cat >expect <<-\EOF &&
- 	/*
- 	!/*/
-@@ -839,4 +839,18 @@ test_expect_success 'set from subdir in non-cone mode throws an error' '
- 	grep "run from the toplevel directory in non-cone mode" error
- '
- 
-+test_expect_success 'by default, cone mode will error out when passed files' '
-+	git -C repo sparse-checkout reapply --cone &&
-+	test_must_fail git -C repo sparse-checkout add .gitignore 2>error &&
-+
-+	grep ".gitignore.*is not a directory" error
-+'
-+
-+test_expect_success 'by default, non-cone mode will warn on individual files' '
-+	git -C repo sparse-checkout reapply --no-cone &&
-+	git -C repo sparse-checkout add .gitignore 2>warning &&
-+
-+	grep "pass a leading slash before paths.*if you want a single file" warning
-+'
-+
- test_done
--- 
-gitgitgadget
+>      blame: Add --ignore-revs-blob and blame.ignoreRevsBlob
+>      
+>      In a bare repository, there isn't a simple way to ignore revisions via a
+>      file without extracting it to a temporary file.
+>      
+>      This patch provides a command-line option and config variable, similar
+>      to --ignore-revs-file and blame.ignoreRevsFile, which reads the list of
+>      revisions to ignore from a blob in the repository.
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1204%2Fdavebarrau%2Fadd-ignore-revs-blob-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1204/davebarrau/add-ignore-revs-blob-v1
+> Pull-Request: https://github.com/git/git/pull/1204
+> 
+>   Documentation/blame-options.txt | 10 ++--
+>   Documentation/config/blame.txt  |  7 ++-
+>   builtin/blame.c                 | 23 ++++++++-
+>   oidset.c                        | 84 ++++++++++++++++++++++++++-------
+>   oidset.h                        |  2 +
+>   t/t8013-blame-ignore-revs.sh    | 19 ++++++++
+>   6 files changed, 124 insertions(+), 21 deletions(-)
+> 
+> diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+> index 9a663535f44..d6e59c57983 100644
+> --- a/Documentation/blame-options.txt
+> +++ b/Documentation/blame-options.txt
+> @@ -132,9 +132,13 @@ take effect.
+>   --ignore-revs-file <file>::
+>   	Ignore revisions listed in `file`, which must be in the same format as an
+>   	`fsck.skipList`.  This option may be repeated, and these files will be
+> -	processed after any files specified with the `blame.ignoreRevsFile` config
+> -	option.  An empty file name, `""`, will clear the list of revs from
+> -	previously processed files.
+> +	processed after any files specified with the `blame.ignoreRevsFile` or
+> +	`blame.ignoreRevsBlob` config options.  An empty file name, `""`, will
+> +	clear the list of revs from previously processed files.
+> +
+> +--ignore-revs-blob <blob>::
+> +	Like `--ignore-revs-file`, but consider the value as a reference to a blob
+> +	in the repository.
+>   
+>   --color-lines::
+>   	Color line annotations in the default format differently if they come from
+> diff --git a/Documentation/config/blame.txt b/Documentation/config/blame.txt
+> index 4d047c17908..109ca796de0 100644
+> --- a/Documentation/config/blame.txt
+> +++ b/Documentation/config/blame.txt
+> @@ -25,7 +25,12 @@ blame.ignoreRevsFile::
+>   	line, in linkgit:git-blame[1].  Whitespace and comments beginning with
+>   	`#` are ignored.  This option may be repeated multiple times.  Empty
+>   	file names will reset the list of ignored revisions.  This option will
+> -	be handled before the command line option `--ignore-revs-file`.
+> +	be handled before the command line options `--ignore-revs-file` and
+> +	`--ignore-revs-blob`.
+> +
+> +blame.ignoreRevsBlob::
+> +	Like `blame.ignoreRevsFile`, but consider the value as a reference to
+> +	a blob in the repository.
+>   
+>   blame.markUnblamableLines::
+>   	Mark lines that were changed by an ignored revision that we could not
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 7fafeac4081..c70c99cfda5 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -54,6 +54,7 @@ static int show_progress;
+>   static char repeated_meta_color[COLOR_MAXLEN];
+>   static int coloring_mode;
+>   static struct string_list ignore_revs_file_list = STRING_LIST_INIT_NODUP;
+> +static struct string_list ignore_revs_blob_list = STRING_LIST_INIT_NODUP;
+>   static int mark_unblamable_lines;
+>   static int mark_ignored_lines;
+>   
+> @@ -711,6 +712,16 @@ static int git_blame_config(const char *var, const char *value, void *cb)
+>   		string_list_insert(&ignore_revs_file_list, str);
+>   		return 0;
+>   	}
+> +	if (!strcmp(var, "blame.ignorerevsblob")) {
+> +		const char *str;
+> +		int ret;
+> +
+> +		ret = git_config_string(&str, var, value);
+> +		if (ret)
+> +			return ret;
+> +		string_list_insert(&ignore_revs_blob_list, str);
+> +		return 0;
+> +	}
+>   	if (!strcmp(var, "blame.markunblamablelines")) {
+>   		mark_unblamable_lines = git_config_bool(var, value);
+>   		return 0;
+> @@ -822,6 +833,7 @@ static int peel_to_commit_oid(struct object_id *oid_ret, void *cbdata)
+>   
+>   static void build_ignorelist(struct blame_scoreboard *sb,
+>   			     struct string_list *ignore_revs_file_list,
+> +			     struct string_list *ignore_revs_blob_list,
+>   			     struct string_list *ignore_rev_list)
+>   {
+>   	struct string_list_item *i;
+> @@ -835,6 +847,13 @@ static void build_ignorelist(struct blame_scoreboard *sb,
+>   			oidset_parse_file_carefully(&sb->ignore_list, i->string,
+>   						    peel_to_commit_oid, sb);
+>   	}
+> +	for_each_string_list_item(i, ignore_revs_blob_list) {
+> +		if (!strcmp(i->string, ""))
+> +			oidset_clear(&sb->ignore_list);
+> +		else
+> +			oidset_parse_blob(&sb->ignore_list, i->string,
+> +						    peel_to_commit_oid, sb);
+> +	}
+>   	for_each_string_list_item(i, ignore_rev_list) {
+>   		if (get_oid_committish(i->string, &oid) ||
+>   		    peel_to_commit_oid(&oid, sb))
+> @@ -878,6 +897,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+>   		OPT_BIT('w', NULL, &xdl_opts, N_("ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
+>   		OPT_STRING_LIST(0, "ignore-rev", &ignore_rev_list, N_("rev"), N_("ignore <rev> when blaming")),
+>   		OPT_STRING_LIST(0, "ignore-revs-file", &ignore_revs_file_list, N_("file"), N_("ignore revisions from <file>")),
+> +		OPT_STRING_LIST(0, "ignore-revs-blob", &ignore_revs_blob_list, N_("blob"), N_("ignore revisions from <blob>")),
+>   		OPT_BIT(0, "color-lines", &output_option, N_("color redundant metadata from previous line differently"), OUTPUT_COLOR_LINE),
+>   		OPT_BIT(0, "color-by-age", &output_option, N_("color lines by age"), OUTPUT_SHOW_AGE_WITH_COLOR),
+>   		OPT_BIT(0, "minimal", &xdl_opts, N_("spend extra cycles to find better match"), XDF_NEED_MINIMAL),
+> @@ -1084,8 +1104,9 @@ parse_done:
+>   	sb.reverse = reverse;
+>   	sb.repo = the_repository;
+>   	sb.path = path;
+> -	build_ignorelist(&sb, &ignore_revs_file_list, &ignore_rev_list);
+> +	build_ignorelist(&sb, &ignore_revs_file_list, &ignore_revs_blob_list, &ignore_rev_list);
+>   	string_list_clear(&ignore_revs_file_list, 0);
+> +	string_list_clear(&ignore_revs_blob_list, 0);
+>   	string_list_clear(&ignore_rev_list, 0);
+>   	setup_scoreboard(&sb, &o);
+>   
+> diff --git a/oidset.c b/oidset.c
+> index b36a2bae864..0cca63700da 100644
+> --- a/oidset.c
+> +++ b/oidset.c
+> @@ -1,5 +1,6 @@
+>   #include "cache.h"
+>   #include "oidset.h"
+> +#include "object-store.h"
+>   
+>   void oidset_init(struct oidset *set, size_t initial_size)
+>   {
+> @@ -41,6 +42,29 @@ void oidset_parse_file(struct oidset *set, const char *path)
+>   	oidset_parse_file_carefully(set, path, NULL, NULL);
+>   }
+>   
+> +static int read_oidset_line(struct strbuf sb, struct object_id *oid)
+> +{
+> +       const char *p;
+> +       const char *name;
+> +
+> +       /*
+> +	* Allow trailing comments, leading whitespace
+> +	* (including before commits), and empty or whitespace
+> +	* only lines.
+> +	*/
+> +       name = strchr(sb.buf, '#');
+> +       if (name)
+> +	       strbuf_setlen(&sb, name - sb.buf);
+> +       strbuf_trim(&sb);
+> +       if (!sb.len)
+> +	       return 0;
+> +
+> +       if (parse_oid_hex(sb.buf, oid, &p) || *p != '\0')
+> +	       die("invalid object name: %s", sb.buf);
+> +
+> +       return 1;
+> +}
+> +
+>   void oidset_parse_file_carefully(struct oidset *set, const char *path,
+>   				 oidset_parse_tweak_fn fn, void *cbdata)
+>   {
+> @@ -52,23 +76,8 @@ void oidset_parse_file_carefully(struct oidset *set, const char *path,
+>   	if (!fp)
+>   		die("could not open object name list: %s", path);
+>   	while (!strbuf_getline(&sb, fp)) {
+> -		const char *p;
+> -		const char *name;
+> -
+> -		/*
+> -		 * Allow trailing comments, leading whitespace
+> -		 * (including before commits), and empty or whitespace
+> -		 * only lines.
+> -		 */
+> -		name = strchr(sb.buf, '#');
+> -		if (name)
+> -			strbuf_setlen(&sb, name - sb.buf);
+> -		strbuf_trim(&sb);
+> -		if (!sb.len)
+> +		if (!read_oidset_line(sb, &oid))
+>   			continue;
+> -
+> -		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
+> -			die("invalid object name: %s", sb.buf);
+>   		if (fn && fn(&oid, cbdata))
+>   			continue;
+>   		oidset_insert(set, &oid);
+> @@ -78,3 +87,46 @@ void oidset_parse_file_carefully(struct oidset *set, const char *path,
+>   	fclose(fp);
+>   	strbuf_release(&sb);
+>   }
+> +
+> +static void read_oidset_string(struct oidset *set, oidset_parse_tweak_fn fn,
+> +			       void *cbdata, const char *buf, unsigned long size)
+> +{
+> +	struct object_id oid;
+> +	struct strbuf **lines;
+> +	struct strbuf **line;
+> +
+> +	lines = strbuf_split_buf(buf, size, '\n', 0);
+> +
+> +	for (line = lines; *line; line++) {
+> +		if (!read_oidset_line(**line, &oid))
+> +			continue;
+> +		if (fn && fn(&oid, cbdata))
+> +			continue;
+> +		oidset_insert(set, &oid);
+> +	}
+> +	strbuf_list_free(lines);
+> +}
+> +
+> +void oidset_parse_blob(struct oidset *set, const char *name,
+> +				 oidset_parse_tweak_fn fn, void *cbdata)
+> +{
+> +	struct object_id oid;
+> +	char *buf;
+> +	unsigned long size;
+> +	enum object_type type;
+> +
+> +	if (!name) {
+> +		return;
+> +	}
+> +	if (get_oid(name, &oid) < 0) {
+> +		die("unable to read object id for %s", name);
+> +	}
+> +	buf = read_object_file(&oid, &type, &size);
+> +	if (!buf)
+> +		die("unable to read oidset file at %s", name);
+> +	if (type != OBJ_BLOB)
+> +		die("oidset file is not a blob: %s", name);
+> +
+> +	read_oidset_string(set, fn, cbdata, buf, size);
+> +	free(buf);
+> +}
+> diff --git a/oidset.h b/oidset.h
+> index ba4a5a2cd3a..bad9246a150 100644
+> --- a/oidset.h
+> +++ b/oidset.h
+> @@ -84,6 +84,8 @@ void oidset_parse_file(struct oidset *set, const char *path);
+>   typedef int (*oidset_parse_tweak_fn)(struct object_id *, void *);
+>   void oidset_parse_file_carefully(struct oidset *set, const char *path,
+>   				 oidset_parse_tweak_fn fn, void *cbdata);
+> +void oidset_parse_blob(struct oidset *set, const char *path,
+> +				 oidset_parse_tweak_fn fn, void *cbdata);
+>   
+>   struct oidset_iter {
+>   	kh_oid_set_t *set;
+> diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
+> index b18633dee1b..9d38a473a39 100755
+> --- a/t/t8013-blame-ignore-revs.sh
+> +++ b/t/t8013-blame-ignore-revs.sh
+> @@ -115,6 +115,25 @@ test_expect_success ignore_revs_from_configs_and_files '
+>   	test_cmp expect actual
+>   '
+>   
+> +# Ignore X from the config option, Y from a file.
+> +test_expect_success ignore_revs_from_configs_and_blobs '
+> +	git rev-parse X >ignore_x &&
+> +	git rev-parse Y >ignore_y &&
+> +	git add ignore_x ignore_y &&
+> +	git commit -m ignore &&
+> +	git config --add blame.ignoreRevsBlob HEAD:ignore_x &&
+> +	git blame --line-porcelain file --ignore-revs-blob HEAD:ignore_y >blame_raw 2>&1 &&
+> +	git config --unset blame.ignoreRevsBlob HEAD:ignore_x &&
+> +
+> +	grep -E "^[0-9a-f]+ [0-9]+ 1" blame_raw | sed -e "s/ .*//" >actual &&
+> +	git rev-parse A >expect &&
+> +	test_cmp expect actual &&
+> +
+> +	grep -E "^[0-9a-f]+ [0-9]+ 2" blame_raw | sed -e "s/ .*//" >actual &&
+> +	git rev-parse B >expect &&
+> +	test_cmp expect actual
+> +'
+> +
+>   # Override blame.ignoreRevsFile (ignore_x) with an empty string.  X should be
+>   # blamed now for lines 1 and 2, since we are no longer ignoring X.
+>   test_expect_success override_ignore_revs_file '
+> 
+> base-commit: 297ca895a27a6bbdb7906371d533f72a12ad25b2
 
