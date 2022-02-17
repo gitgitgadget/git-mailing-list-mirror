@@ -2,147 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D96BC433F5
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 16:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BF44C433EF
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 16:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242977AbiBQQNu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 11:13:50 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36760 "EHLO
+        id S242987AbiBQQOg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 11:14:36 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239199AbiBQQNt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 11:13:49 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FAAC16A5B5
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 08:13:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645114407;
-        bh=hlUxnWjLdA2XS9ZfqyJpxFaflITYT4gWFtIHjRHHWe8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FYrbTTw/B0c+XSQ5D84O1gBomlVvyb3RuzmTvExQsc94dW0FQVc6sVwuLJVBxF+tI
-         EdOMh8eHXNAwGoEJAXDcOaoOSsvrCb3Cu6sjwMLtArov1SIwLIgZzt3WBIbMVn8FRp
-         rpQBFkt/VOFcJf1CLX1MQcSzf4ELMqHbhXpdLd6o=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MSKy8-1niprS3XjM-00SjWM; Thu, 17
- Feb 2022 17:13:26 +0100
-Date:   Thu, 17 Feb 2022 17:13:25 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v5 02/30] fsmonitor-ipc: create client routines for
- git-fsmonitor--daemon
-In-Reply-To: <365964b766400654a9978092f8fe5cfaa525fd3b.1644612979.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202171710270.348@tvgsbejvaqbjf.bet>
-References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <365964b766400654a9978092f8fe5cfaa525fd3b.1644612979.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S239199AbiBQQOe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 11:14:34 -0500
+Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8204E16A5B2
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 08:14:19 -0800 (PST)
+Received: by mail-vs1-xe30.google.com with SMTP id g20so6789436vsb.9
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 08:14:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=koordinates.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ctLlRRyXqq9/tSXhvM8ia/jkpwBTWvCfBRhsV1B76es=;
+        b=TdvdSxxYrC7cyMCt1BjSuivvUl6BgedXX/Mx4qys6RcGkeQVZShUh7rp9QPnzdpb9+
+         lbFYvu+Wjc2fBW0tL2Hy7fXWk8IuXX9KDHG6ee9q8RwwWEreOqMH748ayQOmOGEOzsus
+         hTGznE+J4NTR2l9/inCFvDvKcy/+TonZgvuURb4rd8scuECQu95DlvZFDWQbhzuynkKd
+         CgWw/r1g5tA5LQEXGFWPqEpYFS/MJlsAda+TXMafgKVcAyTWcpciRoVx10LaMUmDykYg
+         7qzukqOFJ+vqh0cEoAf3CejErD3KZWv3UkAJde49hi7GJVVLsb2v9DCXbDLFxwYbnWOI
+         C2jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ctLlRRyXqq9/tSXhvM8ia/jkpwBTWvCfBRhsV1B76es=;
+        b=Ffbb5ogVhBfYtrgqtzH0RvLFiL+sP+xhYdXo8BL7MLB0FlK1bpX8lUEhFKKqfxWyJZ
+         Reie/GZ8f6bZK6W7zVIy6gbZNbPZx4IxjiwsPYnqCtT4vVM2d8eH0nn5eS6JHQeWv81v
+         8EeytZvUEUKzFevLM4qr8ntGEUPvKHK6x5UkKGh46KP1qU9rDfRH7g6teovN2wgWlgDm
+         GaARryJVnRC4gW1FieXruBKmLAXXgxUeySEezOtGNuV6hZdJ7zSLx+bXCoRxdVSw+c92
+         SVR0ZmuGoifKVh8+WgNzPz5NlC+WkUR8SO7KUKhO74WBOqZ4Dt9ek8wO5fvoOjiT6CU7
+         WrNA==
+X-Gm-Message-State: AOAM530EPnoHICyLscPJpH2jli26xsu1wePfU81uAQ+PvuYh53Q8QOk8
+        MC5wDFn9clQqWoydqC0c+bBqzXyq8Y2Pk92W4eRPx/PcUCWbA3db
+X-Google-Smtp-Source: ABdhPJx9MsT7bI+8Gyjx0qZxcCSk36eopF1KMbBKDmvRueqJXUkq/1PDG+0EhlHNm7AdDxQS9N4lnrm44sW4V9Qdn7U=
+X-Received: by 2002:a67:e14d:0:b0:31b:9356:40ff with SMTP id
+ o13-20020a67e14d000000b0031b935640ffmr1525325vsl.51.1645114458579; Thu, 17
+ Feb 2022 08:14:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Gyt4kZoHEE93pvBwhf17Cx/w3yUWMM8acvUMf2AzW2U27jL8b2P
- 4tPvejERFNOh1KU/ZU3G2lCooSc/1GtqYl9satoR6lKnnvS7df9K9TO5iPSPqYCK25gEK3y
- s4Y3NRD05t5oASJ5knztUA98jf2Ync1NZa+x7DFZ3bzvt9aulr9pt2ErOo301LeblEhjZFy
- pzjd1XxDeN1X0Tu3yNfnw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Z1iSuYOPouk=:C/jdidURQs/SDjMqEyjiyV
- F6vTZ1uU8RlI2ewnYA4chZ8ZvmDjuTvD0ztNUqnOXLAPnI2rwLDwjyl/8e7CQSAnxdrJYJZZr
- UpaVGnaYsj2Z/X9Xdc16lwKPmjoL8toJSordzyp/2Fx4EUhBKdu6m8RHYYcLQf7UMeP2wRJu5
- XiAwvJJ8kq1ipIRW5tmiIbmy10iei7psBGGdECafF79G85U82h67ROEAbfUexnMZZZ9xb7wa9
- bBJZf5KKDuFXdc8IzB4xQlBX0bCzpOlksNTSO3qADFwjvouRv0DFcYYNBGNqhOYnEe37DPZoo
- J6gNGKtEhZZJCQtxSYXiryqZVhU8Y7bXOF5vWuTfJPOlyd3ziJAMcWz1NeOS1mz4YhkNt5/V6
- Y4keK6+qUFyFZHfe2FaZ+WBnzvaTXCn3LrdFQt5Ki4RWB3Yv89fzMDc2vsDhtJwVcgKMbKIFU
- JDIEc02SfSK3Z8ylmgoZg4GBGw+Klq/AZj6FvFHa/U48cK8gkvrL7x/AfRwmLXypUqTE1kRcI
- IO8WGDGzY0XgOM8JVFmH4iHYwmnmSSSXtuwMwjkKlrkZa2WK9C77hBE2tAyhY3jGJr+4BNRcf
- 9Ime+2eoRGz5aHp9j/kLGkjHewjAEAD6Q3fSfRvqBE77fYjrQzCdyz3QhFnHshfqx2VWtC7qe
- /t6uI3V2a1BzF6X/brV85x9omwwpMeUFLZfN5lrWQ848PctOXulnQzwzlKN5xjAjO2RpDzevO
- Lf+zi/ItHxje5rauBt8J4RLYPNHTn7AlWxTSJCFFjl9s0QiWD36wazqPX6R7thZxBRcyy44jP
- QbHkK6CwQzcS5MRqdy32vNrBfBwoAlsOEKKi4LH93f0Sz4wrs+RXQdSqMeAQXqkTnyC1b9Byb
- gMsCuxcfcWs/O/NDHZ2DWWM72ZHTCJVymU8bFJh8y1AEBJ2hPeaLF2Sv9u+NgqZIQuLTeZudp
- H3LskDrm8y/uRD1kyJf8auPhZQZXcxILRp0fOXBDxoy5NctPaI3WN6ZEhVMAfk65jm8ylupkW
- j7ZvlAhUBPMf6mvcPieJcw02Lke81fKEfghpI3W+zbLXcxBN06O738z6XYCTq/dxs+3wHWE6P
- p1d7SgxTzXYcco=
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
+ <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com> <d76faa1f16e8b5f8eb13284fdb162525fcbcb22e.1644372606.git.gitgitgadget@gmail.com>
+In-Reply-To: <d76faa1f16e8b5f8eb13284fdb162525fcbcb22e.1644372606.git.gitgitgadget@gmail.com>
+From:   Robert Coup <robert.coup@koordinates.com>
+Date:   Thu, 17 Feb 2022 16:14:02 +0000
+Message-ID: <CAFLLRp+9TmMKu5UpaN4sUr+o_9AGAVvtis0e87VMJsCva67q3w@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] tests for repack --filter mode
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+Hi John,
 
-On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
+Minor, but should we use oid rather than sha1 in the list.sh/upload.sh
+scripts? wrt sha256 slowly coming along the pipe.
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+> index e489869dd94..78cc1858cb6 100755
+> --- a/t/t7700-repack.sh
+> +++ b/t/t7700-repack.sh
+> @@ -237,6 +237,26 @@ test_expect_success 'auto-bitmaps do not complain if unavailable' '
+>         test_must_be_empty actual
+>  '
 >
-> Create fsmonitor_ipc__*() client routines to spawn the built-in file
-> system monitor daemon and send it an IPC request using the `Simple
-> IPC` API.
->
-> Stub in empty fsmonitor_ipc__*() functions for unsupported platforms.
+> +test_expect_success 'repack with filter does not fetch from remote' '
+> +       rm -rf server client &&
+> +       test_create_repo server &&
+> +       git -C server config uploadpack.allowFilter true &&
+> +       git -C server config uploadpack.allowAnySHA1InWant true &&
+> +       echo content1 >server/file1 &&
+> +       git -C server add file1 &&
+> +       git -C server commit -m initial_commit &&
+> +       expected="?$(git -C server rev-parse :file1)" &&
+> +       git clone --bare --no-local server client &&
+> +       git -C client config remote.origin.promisor true &&
+> +       git -C client -c repack.writebitmaps=false repack -a -d --filter=blob:none &&
 
-This looks very straight-forward, thanks to your design of the Simple IPC.
+Does writing bitmaps have any effect/interaction here?
 
-Just one thing:
+> +       git -C client rev-list --objects --all --missing=print >objects &&
+> +       grep "$expected" objects &&
 
-> diff --git a/fsmonitor-ipc.c b/fsmonitor-ipc.c
-> new file mode 100644
-> index 00000000000..01c8c25bf50
-> --- /dev/null
-> +++ b/fsmonitor-ipc.c
-> @@ -0,0 +1,171 @@
-> +#include "cache.h"
-> +#include "fsmonitor.h"
-> +#include "simple-ipc.h"
-> +#include "fsmonitor-ipc.h"
-> +#include "run-command.h"
-> +#include "strbuf.h"
-> +#include "trace2.h"
-> +
-> +#ifdef HAVE_FSMONITOR_DAEMON_BACKEND
-> +
-> [...]
-> +
-> +#else
-> +
-> +/*
-> + * A trivial implementation of the fsmonitor_ipc__ API for unsupported
-> + * platforms.
-> + */
-> +
-> +int fsmonitor_ipc__is_supported(void)
-> +{
-> +	return 0;
-> +}
-> +
-> +const char *fsmonitor_ipc__get_path(void)
-> +{
-> +	return NULL;
-> +}
-> +
-> +enum ipc_active_state fsmonitor_ipc__get_state(void)
-> +{
-> +	return IPC_STATE__OTHER_ERROR;
-> +}
-> +
-> +int fsmonitor_ipc__send_query(const char *since_token,
-> +			      struct strbuf *answer)
-> +{
-> +	return -1;
-> +}
-> +
-> +int fsmonitor_ipc__send_command(const char *command,
-> +				struct strbuf *answer)
-> +{
-> +	return -1;
-> +}
-> +
-> +#endif
+This is testing the object that was cloned initially is gone after the
+repack, ok.
 
-Not a big deal (read: I won't mind if you leave the code as-is), but I
-usually find it easier to read the shorter, more trivial arm of
-conditional if/else arms first. In this instance, the dummy implementation
-for platforms that are not (yet) supported looks more trivial to me.
+> +       git -C client repack -a -d &&
+> +       expected="$(git -C server rev-parse :file1)" &&
+> +       git -C client rev-list --objects --all --missing=print >objects &&
+> +       grep "$expected" objects
 
-Thanks,
-Dscho
+But I'm not sure what you're testing here? A repack wouldn't fetch
+missing objects for a promisor pack anyway... and because there's no
+'^' in the pattern the grep will succeed regardless of whether the
+object is missing/present.
+
+Rob :)
