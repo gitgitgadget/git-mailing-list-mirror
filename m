@@ -2,90 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FB9FC433EF
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 15:18:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB717C433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 15:45:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242279AbiBQPSg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 10:18:36 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35980 "EHLO
+        id S242724AbiBQPpQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 10:45:16 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238461AbiBQPSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 10:18:35 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4422C1598E5
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 07:18:21 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id qk11so8123921ejb.2
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 07:18:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+5pLtHUVYnGmc7s8Amd2eTHNr/MtvuEfjZdOuAq0ZF8=;
-        b=iTeBP7mrU0h6mKe1do0bhrhHy4p2eu2PFifInix/IAdw55nAcf1xMTxqC0imuodIM2
-         wm3mn9T/vR8DIOHHHoUJMow+NfNfoPLMhNmHNHBhd7A9Y1Gq8o3D7S+mv1K393QeWC4y
-         ZznZvFEu+O5B7LyCJGw5QL+V7DSkvoQfNzEke8TNam7/XRCCrUxCnmqCwUV/8Dl95cpl
-         xVWSZFW4OA3ZtSTiNE1TNDII1fPs9wFk55WHH7+WeWIshsxhKULl2zULuHuR65bJpZWk
-         K1UYs7L940QLiuC2CG3oKyJcNXGmSc2nX7x1xEt3QvqiIlI6wZ4HHCdrqn4No4jh1ObN
-         K2Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+5pLtHUVYnGmc7s8Amd2eTHNr/MtvuEfjZdOuAq0ZF8=;
-        b=dj4xENiQJV92UpjTCiRz+e6EIgngghLroTFK4GO3VjiKnNlI2tc0Y0BNs0D3Rv+Q+v
-         NpSuPHEUDJ+YVYNn2JHmT0uEEm3TrCGaUECAqfQmyXPw1goYegL5JR30ZEa3DfBVqv9N
-         ZwB+WbBS79INd+NVGb4ZdbUwU1ABc8TTPIzsmk61hhRd/Qp2iNgOBlrFKKUsR/0WEmZt
-         F0Hp2MDwGN2BybMLBAjBbpEduyJVnfo9QUUCm11df5NySWhrueZqVLftBvTNIzqJAez3
-         mhjKq1zBfJr3W2draRs8jVWlfnJ0aPo2ZiYmq9XitGCGTgKz1UBci0cH7iS5DtXZatTg
-         VPvA==
-X-Gm-Message-State: AOAM530E1D8Jzyhb3QLcwCvDsp+BbkSzNJ3Opn2KZWfPBC0Jd21zK2iV
-        zqiQtjld1d+A2fWeYbgonGncHgRGlbcj2BAEuaM=
-X-Google-Smtp-Source: ABdhPJwqoG5Gpj1W8SzC64tVZeMUdUKj7oR73WAL4sZm/LPrjb1Ae3SCXSpIEpgBbfgpBrzeYwEjLtD2UAZ0/lsdBJo=
-X-Received: by 2002:a17:907:366:b0:6ba:fff6:4fc7 with SMTP id
- rs6-20020a170907036600b006bafff64fc7mr2687281ejb.756.1645111099727; Thu, 17
- Feb 2022 07:18:19 -0800 (PST)
+        with ESMTP id S242510AbiBQPpO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 10:45:14 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68442B1025
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 07:44:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1645112697;
+        bh=5lLNw3y6SeEnM9C08KjthoYTXC8cIJnpBDeaWLNmSpc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=VZz/8PyljAoFdEj0tXOHM0eYFZAyUPxI3rSI2ON+gnFv/+wur27bPuSZTM665ByPr
+         8JdTAbyLi7e062iT0sA+Qo3mxW1H9c9dfKbB3v0NrLOeg4880OpDlVIiyJH1MIDE5x
+         iKfcDk09npivWSZsphMiZGE3ciQR2u6UQ8tKZnpM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MSbxD-1nj5IP4Bgn-00Swvp; Thu, 17
+ Feb 2022 16:44:57 +0100
+Date:   Thu, 17 Feb 2022 16:44:55 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Edward Thomson <ethomson@edwardthomson.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] xdiff: share xdiff between git and libgit2
+In-Reply-To: <20220209012951.GA7@abe733c6e288>
+Message-ID: <nycvar.QRO.7.76.6.2202171644090.348@tvgsbejvaqbjf.bet>
+References: <20220209012951.GA7@abe733c6e288>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <cover.1645102965.git.ps@pks.im> <b4ca3f1f3baacde2aea7bae4f583f68c211a557a.1645102965.git.ps@pks.im>
-In-Reply-To: <b4ca3f1f3baacde2aea7bae4f583f68c211a557a.1645102965.git.ps@pks.im>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 17 Feb 2022 16:18:07 +0100
-Message-ID: <CAP8UFD2kr6WJvv7eoDvytx5Q982XBXTpSTUQw5hXmRrDm-UuBw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] fetch: increase test coverage of fetches
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:8vv6cyLrxTa0matiJZ/UqIvEPzKaBS9rsaEqFtbg5LEB1pesrLZ
+ 8zNfHaW96+PWCZFny5fMJs+ktN/PEv1xabpmfliWC5Qq2wNEzn6YZssQeysaS+x3l8bCl+z
+ sT0vwy3dVl4XKirXTMg0o9ik4Rwm7WjFlyzai8jLaZTkpbQGpTtxkFA2zZ54U4vAfcSWmIt
+ C/vrU5MAjJ2wly263bRNw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FtdmAuZTmZw=:tONGt/Pb+OZtgJEmfeZIlV
+ aY8AlqgCRhT2f5QJYRInIpLwXeiMwNSghRPcQNeNZ0jZk/58Be73AImiazzvuylWvr5LbwfUk
+ gxOgg6nFq966u7SnYIkRUhPlmWAoiMztTnpn/dkhKojgwoKNuapuvWyH2909tCVCPfvUW50YB
+ 9LjPeVJcooOT/cv/HC33ujwD6mhkkWeGsIBQKYjG07JppuAwYMiKOnlD5MnbhBlJl2Y+K8bWI
+ gXkKpcwLGo89PxnUmX2Y8NbEaescmBgapjnPql66bcpPFSDcYnM2/3Y9XzFJ4CRupQHS05Kva
+ B55F3B2eikS/L0kVPnnr/iMyDbw50HSLyVCEKEjAFcn/xMSVrFYxdYvoteEFEXRo8XrWY4D2o
+ LjpR2fWGvzfM/sz1BOPS9gxvnT0ebz/UlFCNJEv09ZIu5MC6EqT/i6isxlJkqEmxglU86j52i
+ PAjvo0ENa+uLA8gKrQr4jl3eqoqmijCqNAMNXzqIPbBV4mcVWIrKjcRGx3xZLYNOvgg25ED+J
+ 8HKbgywGHLRVsgJlYN60FCClDYtCo3IWdaBeJ201iTC/uRwBQvc8Q4ai/D5GzoJOxVPfi+Oje
+ qLbkzHCVP72gbVUKnD5Dfi1eFmTHi1VhT8G277JS5rnvSEMW5rTAC+Rcsn7qVPMMwq3w0v9/O
+ AEu8GPOieVT6eaOv0XmjiWQC9BZchBI7FoTH/8uk+73iu8tgLmf8yDPjGPZfzIg3y2Rbf54j8
+ /8BR7pTrsibIGpzKxXYxSEEopJnm/iYNVzL/tSzkr/TwrBZE6Z13jvM5CpyB0UBs2bEIwGPrT
+ PhMWj8bSl1Ca05vF2M7Bp+sdo92131MussdIp1CGAxPOKm4V85YKpsravrVUer+7MmZtTsEgK
+ l0yUYGNDL12tlkWIFiCeoF+PpyHQ4mFQ+LiWzGndjVa2ZEkb/KlcjYFL3vUfLP7LTZwFU8PG3
+ wr+YOHUl/BCYFRC+bOJXkZfYt0WlB+FgYo2wE7DNx+lwtBqUvW0gUoNZbte45I4Y/2HOw0IEU
+ uDScXKr5kn+bNst+wDlL5I0EbDewYIZYHZIWc+0wAleQ5iBtXlSx0RxNzWUiUu4SsN/vS1klW
+ oKlhLTjEjWxFgM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 17, 2022 at 2:04 PM Patrick Steinhardt <ps@pks.im> wrote:
+Hi Ed,
 
-> +test_expect_success 'atomic fetch with failing backfill' '
-> +       git init clone3 &&
-> +
-> +       # We want to test whether a failure when backfilling tags correctly
-> +       # aborts the complete transaction when `--atomic` is passed: we should
-> +       # neither create the branch nor should we create the tag when either
-> +       # one of both fails to update correctly.
-> +       #
-> +       # To trigger failure we simply abort when backfilling a tag.
-> +       write_script clone3/.git/hooks/reference-transaction <<-\EOF &&
-> +               while read oldrev newrev reference
-> +               do
-> +                       if test "$reference" = refs/tags/tag1
-> +                       then
-> +                               exit 1
-> +                       fi
+On Wed, 9 Feb 2022, Edward Thomson wrote:
 
-Maybe the following could save a few lines:
+> Hello from libgit2, where we borrowed your xdiff a few years ago and
+> have watched as we both hacked on it independently.  (For us, mostly it
+> was around tightening some things up around warnings and signed/unsigned
+> mismatches.)  However, we'd love to share a common xdiff implementation,
+> and we're happy if git is the home for that.
 
-                       test "$reference" = refs/tags/tag1 && exit 1
+Great!
 
-It would make the code look a bit different than in another hook
-script written below though, so not a big deal.
+> The next patch adds an indirection point, `git-xdiff.h`, that contains
+> the git-specific functionality in xdiff.  This keeps the core of xdiff
+> to standard functions.  Other xdiff users, like libgit2, can specify
+> their own compatibility functions in this header file.
 
-> +               done
-> +       EOF
+I like this direction and looked over the patch: ACK!
 
-Overall it looks good, and I like the improved commit message!
+> I hope that this allows us to make progress on a common xdiff; we'd love
+> to go back to building it without warnings, but we'd like to not do that
+> in isolation.
+
+Yes, let's combine efforts.
+
+Thank you for kicking this off,
+Dscho
