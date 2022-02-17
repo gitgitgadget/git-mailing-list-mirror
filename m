@@ -2,66 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4A85C433EF
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 16:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BFABC433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 16:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242989AbiBQQOk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 11:14:40 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40702 "EHLO
+        id S243054AbiBQQRD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 11:17:03 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239199AbiBQQOj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 11:14:39 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EF5016A5B2
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 08:14:24 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id b5-20020a631b05000000b00373bd90134dso555757pgb.22
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 08:14:24 -0800 (PST)
+        with ESMTP id S243052AbiBQQRC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 11:17:02 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DB6817E976
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 08:16:47 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id q40-20020a17090a17ab00b001bafa89b70aso3256685pja.2
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 08:16:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc:content-transfer-encoding;
-        bh=LzGMXWZC9C3Q/C5PWk7+ulkDLUVbPywhb5amZtUR4CE=;
-        b=b/sFsvGhuxBpj+/n3FrY5ZNF542GlDkI6c0Nvt16pIiIrHC39N54PkBgv23hESykoc
-         Lb8zB3ki3ai7Lnzctg2fJBCS/tpNcygq73WxIJgEa0HEk/+kcT51sfXT/yxywIDkrnz+
-         2JDz2YoDilRp2E0ahdAytY8czbE6RoIobqPLM1F+ssCvIqvgELpAzRpcriG2+mIDbjA1
-         5fTB+o9mt+N3fZRbfVSNUpr5Wc4j63VY016mmJQl+N3St2p/Pm90yc8SDXxReNFQ+mo6
-         trr7Jx3T+jPDDhUpbB7WaUSYTF9WPWQ+eKZwLDzXydsTs7q/IrSSL3WG+56tcujXvewc
-         LK3A==
+        bh=bC3mdI5xX0j+UdXvvlkopKAp0075rHMBZYyP5NHYO6U=;
+        b=mPyxpK4ZFQ8/59xOZDl5pqO5gyQgMX7BkCVIOSHwBUZujR78igcNNWx9gsPuLYdjcC
+         umhMsmsrMqRbx44P18RqR9a2XSd0DCLFlC+eJGnOVazEO6R3slLsku8uPQbHbID8wxqN
+         7BYRUAf4voqM3JMpdWbqHuDWmt4JnZb2mbfOD8IM3Y1yEOMC8vS9N5tAUjyikSb3aolw
+         dgzxHSlHyIxZzOEZlPhGZPfUExfI/RKRq4IvoZ39uLVef9IChEf679nNop51FhEMC+H7
+         0jmxrDA1cJN6UJLOZ+yptMaxqZofRJI/R6O+A/BidLdAYzMrUSUuuB921Dm/y5UKrCzR
+         QLFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc:content-transfer-encoding;
-        bh=LzGMXWZC9C3Q/C5PWk7+ulkDLUVbPywhb5amZtUR4CE=;
-        b=MMAEBomeOdTZNycSrouw/FmZ+LpWzN+z//vzK6zgvjGSTIu9o5+5RGMTr9CAks67xG
-         OPR2TvL95Dbr6SQsjsWkwB7klIH7hM0HqiBUfJVHQy+o5l3L8iGc9wOlgaslvg7tDL4P
-         9KUkX7D0dAjJujycH5XhDmNLG21hKNDxH5vQzP8USl6FI4uvviHcy7MVTgYJSranNESU
-         dVBjr0TB34yY4Ui2CKkm6XRVy9VVqj6ZyI32sV1ndohoPnkga8D7NhW/+/06phUKrjcj
-         0eYd4fCBc4yw6Rw5aU3Dl0uJY2N/ovtSoA4RnyaVXJXx/W4+C0nw8DsXQX7XIEClXPYa
-         lLsw==
-X-Gm-Message-State: AOAM530Aw28qvetn/MV6M0lp6r3O7Uzjk45IVsti1DhZ/KLbRX7ogaXA
-        6EQsoaWvN8qIHwrXXJqsmhAY+4hgPXtCvg==
-X-Google-Smtp-Source: ABdhPJw1FPMANwJ+0uXNKWABPTbdAn3QhFRdJG3OcCcNRu2AVMfdvyy2P9NCguHXhve21knsoyAn2pWCPn3XJQ==
+        bh=bC3mdI5xX0j+UdXvvlkopKAp0075rHMBZYyP5NHYO6U=;
+        b=Mob1I+KfcKWwAb3LtKx3B6hmgF4Ed+Z/sopruTSROLu13nGq3dQ7OPDgZZliz5CO9S
+         qu/h+lBF6v9uPYk7kz43BRZWU/ctzmsuXYdtE5yD9j/NBvArMzrT+voDoOw94znKuK4T
+         bfoVBsfSNvGmyVEX00gFWvOB3uxTl9T+mX+d1FJvSfEyqECkW6tDWYJo5sig71NBsks+
+         ERdUiJi/i6PsU12KN104VdbZvLuB4Rcw+pKQL0JXtuT6UU65ArAJJr+Lj+M+cl/ZZqEK
+         V+aXEvf7wc+GdBvU8j1JSR3noTs2g6rX+WK63mErfwHBCXq++E5q+UhVZO4efXOGbuoA
+         k26w==
+X-Gm-Message-State: AOAM531CwGwZpeJ67V9g0ZboP0EXts6M9r11hQ5rbCH5QIur952+ca0L
+        SVl9xd3i43B4lnjYjq2szzUvkuvPeYLQvg==
+X-Google-Smtp-Source: ABdhPJx6R8lwA28s/H+aQ6RTRp+QjXSIJx4DhG2eqQLuiUrYwLHFdp6PtNiL6RhuD+mV7MB+WOWW9z4loyUSmA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
  (user=chooglen job=sendgmr) by 2002:a17:90a:7f93:b0:1b9:ef73:b2df with SMTP
- id m19-20020a17090a7f9300b001b9ef73b2dfmr34775pjl.0.1645114463451; Thu, 17
- Feb 2022 08:14:23 -0800 (PST)
-Date:   Fri, 18 Feb 2022 00:14:07 +0800
-In-Reply-To: <220217.86r181j1g3.gmgdl@evledraar.gmail.com>
-Message-Id: <kl6l1r015v3k.fsf@chooglen-macbookpro.roam.corp.google.com>
+ id m19-20020a17090a7f9300b001b9ef73b2dfmr35612pjl.0.1645114606397; Thu, 17
+ Feb 2022 08:16:46 -0800 (PST)
+Date:   Fri, 18 Feb 2022 00:16:44 +0800
+In-Reply-To: <220217.86iltdj12w.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6ly2294ger.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
-References: <20220208083952.35036-1-chooglen@google.com> <20220210092833.55360-1-chooglen@google.com>
- <220212.868rugxhq0.gmgdl@evledraar.gmail.com> <kl6l4k4y59p4.fsf@chooglen-macbookpro.roam.corp.google.com>
- <220217.86r181j1g3.gmgdl@evledraar.gmail.com>
-Subject: Re: [PATCH v7 00/20] submodule: convert the rest of 'update' to C
+References: <20220210044152.78352-1-chooglen@google.com> <20220215172318.73533-1-chooglen@google.com>
+ <20220215172318.73533-3-chooglen@google.com> <220215.86r183x043.gmgdl@evledraar.gmail.com>
+ <kl6ltucz5wys.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <220216.86y22bt8gp.gmgdl@evledraar.gmail.com> <kl6l7d9u5eay.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <220217.86iltdj12w.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH v2 2/9] t5526: use grep to assert on fetches
 From:   Glen Choo <chooglen@google.com>
 To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Jonathan Nieder <jrn@google.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        pc44800@gmail.com, Shourya Shukla <periperidip@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -74,81 +71,268 @@ X-Mailing-List: git@vger.kernel.org
 >
 >> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >>
->>> On Thu, Feb 10 2022, Glen Choo wrote:
+>>> On Wed, Feb 16 2022, Glen Choo wrote:
 >>>
->>>> Atharva Raykar (6):
->>>>   submodule--helper: get remote names from any repository
->>>>   submodule--helper: refactor get_submodule_displaypath()
->>>>   submodule--helper: allow setting superprefix for init_submodule()
->>>>   submodule--helper: run update using child process struct
->>>>   builtin/submodule--helper.c: reformat designated initializers
->>>>   submodule: move core cmd_update() logic to C
+>>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >>>>
->>>> Glen Choo (11):
->>>>   submodule--helper: remove update-module-mode
->>>>   submodule--helper: reorganize code for sh to C conversion
->>>>   submodule--helper run-update-procedure: remove --suboid
->>>>   submodule--helper run-update-procedure: learn --remote
->>>>   submodule--helper: remove ensure-core-worktree
->>>>   submodule--helper update-clone: learn --init
->>>>   submodule--helper: move functions around
->>>>   submodule--helper: reduce logic in run_update_procedure()
->>>>   fixup! submodule--helper run-update-procedure: remove --suboid
->>>>   fixup! submodule--helper run-update-procedure: learn --remote
->>>>   fixup! submodule: move core cmd_update() logic to C
+>>>>> On Wed, Feb 16 2022, Glen Choo wrote:
+>>>>>
+>>>>>> In a previous commit, we replaced test_cmp invocations with
+>>>>>> verify_fetch_result(). Finish the process of removing test_cmp by us=
+ing
+>>>>>> grep in verify_fetch_result() instead.
+>>>>>>
+>>>>>> This makes the tests less sensitive to changes because, instead of
+>>>>>> checking the whole stderr, we only grep for the lines of the form
+>>>>>>
+>>>>>> * "<old-head>..<new-head>\s+branch\s+-> origin/branch"
+>>>>>> * "Fetching submodule <submodule-path>" (if fetching a submodule)
+>>>>>>
+>>>>>> when we expect the repo to have fetched. If we expect the repo to no=
+t
+>>>>>> have fetched, grep to make sure the lines are absent. Also, simplify=
+ the
+>>>>>> assertions by using grep patterns that match only the relevant piece=
+s of
+>>>>>> information, e.g. <old-head> is irrelevant because we only want to k=
+now
+>>>>>> if the fetch was performed, so we don't need to know where the branc=
+h
+>>>>>> was before the fetch.
+>>>>>
+>>>>> I tried ejecting 1/9 and 2/9 out of this series locally, and it passe=
+s
+>>>>> all tests until the new tests you add in 7/9.
+>>>>>
+>>>>> As ugly as some of the pre-image is, I wonder if dropping these first
+>>>>> two and biting the bullet and just continuing with the test_cmp is
+>>>>> better.
+>>>>>
+>>>>> The test_cmp is going to catch issues that even the cleverest grep
+>>>>> combinations won't, e.g. in the submodule-in-C series I discovered a =
+bug
+>>>>> where all of our testing & the existing series hadn't spotted that we
+>>>>> were dropping a \n at the end in one of the messages.
 >>>>
->>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (3):
->>>>   builtin/submodule--helper.c: rename option variables to "opt"
->>>>   submodule--helper: don't use bitfield indirection for parse_options(=
-)
->>>>   submodule tests: test for init and update failure output
+>>>> I think there are two schools of thought on how to test informational
+>>>> messages:
+>>>>
+>>>> - assert an exact match on the exact output that we generate
+>>>> - assert that the output contains the pieces of information we care
+>>>>   about
+>>>>
+>>>> These two approaches are virtually opposites on two axes - the former
+>>>> will catch unintentional changes (like you've noted)[...]
 >>>
->>> I think sending a version of this with the fixups squashed in as a v8
->>> would be good, and perhaps addressing some of my comments.
+>>> Yes, and to be fair I'm thoroughly in the "assert an exact match" camp,
+>>> i.e. "let's just use test_cmp", and not everyone would agree with that.
 >>>
->>> I don't know if my suggested split-up of "prep fixes" into another
->>> series would be a good thing to pursue overall, perhaps Junio will chim=
-e
->>> in on how he'd be most comfortable in merging this down. I'd think
->>> splitting such trivial fixes into their own series be easier to review,
->>> but perhaps not.
+>>> I mean, I don't think we should test_cmp every single instance of a
+>>> command, but for things that are *the tests* concerning themselves with
+>>> what the output should be, yes we should do that.
 >>
->> Combing through the patches again, I couldn't really convince myself
->> that the patch 4..9 prep fixes make sense as obvious standalone fixes,
->> except maybe:
+>> That's a good point I hadn't considered, which is that if we want any
+>> hope of catching unintentional changes in our test suite, we'd want
+>> _some_ test to check the output. For "git fetch --recurse-submodules",
+>> it makes the most sense for that test to live in this file.
 >>
->> - patch 4 submodule--helper: run update using child process struct
->> - patch 8 submodule tests: test for init and update failure output
->> - patch 9:  087bf43aba submodule--helper: remove update-module-mode
+>> By eliminating all instances of test_cmp in this file in particular, we
+>> lose assurances that we don't introduce accidental changes. It makes
+>> sense to at least have some tests explicitly for output.
 >>
->> But, since the 'final' patch (ignoring the fixup!-s) is consuming a huge
->> chunk of the work anyway, here's an alternative patch organization with
->> the fixup!-s squashed:
+>>>
+>>>> [...] and the latter saves on maintenance effort and tends to be less =
+noisy in tests.
+>>>
+>>> I also don't think you're right about the other approach "sav[ing] on
+>>> [future] maintenance effort" in this case.
+>>>
+>>> If I was needing to adjust some of this output I'd spend way longer on
+>>> trying to carefully reason that some series of "grep" invocations were
+>>> really doing the right thing, and probably end up doing the equivalent
+>>> of a "test_cmp" for myself out of general paranoia, whereas adjusting
+>>> the output.
 >>
->> =3D Move 'easy' and 'obviously correct' code from sh->C
->> - patches 8-9   Cleanup and introduce tests
->> - patches 1-4   Refactor existing functions, which enables..
->> - patches 10-14 Move 'obviously correct' pieces of logic from sh-> C
+>> That's fair. I've optimized the tests for readability by putting
+>> complicated logic in the test helper. But any diligent test reader would
+>> need to read the test helper to convince themselves of its correctness.
+>> In this case, I agree that the helper is too complex.
 >>
->> =3D Finalize move from sh->C
->> i.e. combine "run-update-procedure" and "update-clone" into "update"
->> - patches 5,7     Cleanup and prep
->> - patches 6,15-16 Shrinking the diff
->> - patch 17        Implement "git submodule--helper update"=20
+>>>> Personally, I'm a bit torn between both approaches in general because =
+I
+>>>> want tests to be maintainable (testing the exact output is a bit of an
+>>>> antipattern at Google), but I'm not very comfortable with the fact tha=
+t
+>>>> unintended changes can sneak through.
+>>>
+>>> Yes, anyway whatever one thinks in general what I meant to point out
+>>> here with "biting the bullet" is that whatever one thinks in general
+>>> about the right approch for new tests, this series in particular seems
+>>> to be creating more work for itself than it needs by refactoring the
+>>> test_cmp in existing tests just to add a few new ones.
+>>>
+>>> I.e. even if you'd like to not use test_cmp-alike for the new tests,
+>>> wouldn't it be simpler to just leave the old ones in place and use your
+>>> new helper for your new tests?
 >>
->> I'll send this if there are no objections :)
+>> I'm not sure about this - avoiding changing old tests leads to
+>> fragmentation in the test suite and even the same file. I find it very
+>> challenging to read/modify files like this, because there is no longer a
+>> consistent style for the file, and I have to figure out which is the
+>> "good" way to write tests.
+>>
+>> This suggestion makes sense if there's some qualitative difference
+>> between the new tests and old ones besides just 'being new'. This isn't
+>> true for this series, so I'd prefer to keep things consistent.
+>>
+>>>> So I don't think there's a correct answer in general. Maybe an
+>>>> acceptable rule of thumb is that test_cmp is good until it starts
+>>>> getting in the way of reading and writing understandable tests.
+>>>>
+>>>> If we agree on that rule, then for this patch, I think replacing
+>>>> test_cmp is the way to go, primarily because it lets us ignore the 'ol=
+d
+>>>> head' of the branch before the fetch, e.g. in the quoted example..
+>>>
+>>> [...]
+>>>
+>>>>>>  test_expect_success setup '
+>>>>>> @@ -274,13 +277,10 @@ test_expect_success "Recursion doesn't happen =
+when no new commits are fetched in
+>>>>>>  '
+>>>>>> =20
+>>>>>>  test_expect_success "Recursion stops when no new submodule commits =
+are fetched" '
+>>>>>> -	head1=3D$(git rev-parse --short HEAD) &&
+>>>>>>  	git add submodule &&
+>>>>>>  	git commit -m "new submodule" &&
+>>>>>> -	head2=3D$(git rev-parse --short HEAD) &&
+>>>>>> -	echo "From $pwd/." > expect.err.super &&
+>>>>>> -	echo "   $head1..$head2  super      -> origin/super" >>expect.err.=
+super &&
+>>>>>
+>>>>> ...as opposed to if we just rolled the generation of this into some
+>>>>> utility printf function.
+>>>>
+>>>> we'd still have to deal with $head1 if we use test_cmp. That's fine fo=
+r
+>>>> this test, because it's pretty simple, but it gets pretty janky later
+>>>> on:
+>>>>
+>>>>   @@ -345,20 +339,13 @@ test_expect_success "Recursion picks up all su=
+bmodules when necessary" '
+>>>>         git fetch &&
+>>>>         git checkout -q FETCH_HEAD
+>>>>       ) &&
+>>>>   -		head1=3D$(git rev-parse --short HEAD^) &&
+>>>>       git add subdir/deepsubmodule &&
+>>>>       git commit -m "new deepsubmodule" &&
+>>>>   -		head2=3D$(git rev-parse --short HEAD) &&
+>>>>   -		echo "Fetching submodule submodule" > ../expect.err.sub &&
+>>>>   -		echo "From $pwd/submodule" >> ../expect.err.sub &&
+>>>>   -		echo "   $head1..$head2  sub        -> origin/sub" >> ../expect.e=
+rr.sub
+>>>>   +		git rev-parse --short HEAD >../subhead
+>>>>     ) &&
+>>>>   -	head1=3D$(git rev-parse --short HEAD) &&
+>>>>     git add submodule &&
+>>>>     git commit -m "new submodule" &&
+>>>>   -	head2=3D$(git rev-parse --short HEAD) &&
+>>>>   -	echo "From $pwd/." > expect.err.super &&
+>>>>   -	echo "   $head1..$head2  super      -> origin/super" >> expect.err=
+.super &&
+>>>>   +	git rev-parse --short HEAD >superhead &&
+>>>>     (
+>>>>       cd downstream &&
+>>>>       git fetch >../actual.out 2>../actual.err
+>>>>
+>>>> In this example, we have two $head1 variables in different subshells,
+>>>> one of which is HEAD, but the other is HEAD^. The reason why we want
+>>>> HEAD^ isn't obvious (IIRC it's because the submodule upstream is 2
+>>>> commits ahead because we add the deepsubmodule in a separate commit), =
+in
+>>>> my opinion, and I got tripped up quite a few times trying to read and
+>>>> understand the test. That's a lot of effort to spend on irrelevant
+>>>> information - the test actually cares about what it fetched, not where
+>>>> the ref used to be.
+>>>>
+>>>> So for that reason, I'd prefer to remove test_cmp for this test.
+>>>
+>>> I agree that it's pretty irrelevant, but I also think we'd be throwing
+>>> the baby out with the bath water by entirely doing away with test_cmp
+>>> here, there's an easier way to do this.
+>> [...]
+>>> Instead let's just test once somewhere that when we run submodule
+>>> fetching that submodules are indeed updated appropriately. Surely other
+>>> submodule tests will break if the "update" code is made to NOOP, or
+>>> update to the wrong HEAD>
+>>>
+>>> Then for all these test_cmp tests we can just sed-away the
+>>> $head1..$head2 with something like (untested):
+>>>
+>>>     sed -n -e 's/[^.]*\.\.[^.]*/OLD..NEW/g'
+>>>
+>>> I.e. let's just skip this entire ceremony with asserting the old/new
+>>> HEAD unless it's really needed (and then we can probably do it once
+>>> outside a test_cmp).
+>>>
+>>> If you grep through the test suite for "sed" adjacent to "test_cmp"
+>>> you'll find a lot of such examples of munging the output before
+>>> test_cmp-ing it.
+>>
+>> Makes sense, I hadn't considered this (though I have seen the pattern in
+>> the test suite, oops). The most compelling argument in favor of this is
+>> that this could remove a lot of the complexity of verify_fetch_result(),
+>> which is impeding test readability.
+>>
+>>> I.e. none of these tests surely need to test that we updated from
+>>> $head1..$head2 again and again with the corresponding verbosity in test
+>>> setup and shelling out to "git rev-parse --short HEAD" or whatever.
+>>
+>> I find the converse (we are testing the formatting over and over again)
+>> less convincing. In these tests, we really are checking for $head2 in
+>> the stderr to verify that the correct thing was fetched. I'm not
+>> convinced that we should be relying on _other_ submodule tests to tell
+>> us that submodule fetch is broken. Which brings me back to the original
+>> motivation of this patch..
+>>
+>>>
+>>> That's perfectly fine here, since the actual point of the test_cmp is t=
+o
+>>> check the formatting/order etc. of the output itself, not to continuall=
+y
+>>> re-assert that submodule updating still works, and that we get the righ=
+t
+>>> OIDs.
+>>
+>> which is that these tests actually are continually re-asserting the
+>> submodule updating works correctly in the different circumstances, and
+>> since we use the stderr to check this, test_cmp adds unwarranted noise.
+>>
+>> But you are correct in that the point of test_cmp is to check
+>> formatting/order etc. There is value in using test_cmp for this purpose,
+>> and getting rid of it entirely creates a hole in our test coverage.
+>> (This wouldn't mean that we'd need to use test_cmp _everywhere_ though,
+>> only that we need to use test_cmp _somewhere_.)
+>>
+>> As it stands:
+>>
+>> +   test_cmp can improve the readability of the test helpers and
+>>     debuggability of tests vs grep
+>> +/- test_cmp can catch formatting changes that are hard to catch
+>>     otherwise, though at the cost of being sensitive to _any_ formatting
+>>     changes
+>> -   test_cmp needs some munging to eliminate unnecessary information
+>>
+>> so on the whole, I think it's worth trying to use test_cmp in the test
+>> helper. We may not _need_ it everywhere, but if it would be nice to use
+>> it in as many places as possible.
 >
-> Yes that sounds good, or rather, I haven't re-looked at that in detail,
-> but I think if you think it makes sense we should go for it.
+> I think whatever you opt to go for here makes sense. I just wanted to
+> provide the feedback in case it was helpful, i.e. when reading it I
+> found these conversions a bit odd, wondered if they were strictly needed
+> etc.
 >
-> Or rather, we should really be aiming to produce a patch series that
-> makes sense in its current iteration, as opposed to optimizing for a
-> diff against some ad-hoc re-roll I produced a few versions ago :)
+> Thanks!
 
-Agreed, makes sense.
-
-> Thanks again for working on this & picking this up. It's great to see
-> progress in this area!
-
-Thanks to you too for getting the ball rolling and lending me your
-thoughts :)
+The additional perspective was indeed helpful, thanks!
