@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76FCFC433F5
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 11:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DCD8C433EF
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 11:18:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239675AbiBQLNr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 06:13:47 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35240 "EHLO
+        id S239675AbiBQLTH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 06:19:07 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239696AbiBQLNo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 06:13:44 -0500
+        with ESMTP id S232210AbiBQLTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 06:19:06 -0500
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 759FD1ED1CF
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 03:13:23 -0800 (PST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id CE5EF3200C17;
-        Thu, 17 Feb 2022 06:13:20 -0500 (EST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C271114FD8
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 03:18:51 -0800 (PST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 6EF143200E82;
+        Thu, 17 Feb 2022 06:18:51 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 17 Feb 2022 06:13:21 -0500
+  by compute4.internal (MEProxy); Thu, 17 Feb 2022 06:18:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=oLZFOzqj3GFSeYgDOVnD1/m2cRgAF4iicH0Byz
-        zh2pA=; b=sKjd93YZo9bJQaN6p676N4b9yzc3PQRsZMvWXqiLoJQIL1Z0LkJ3Mx
-        K04GaI7q7PaXiCP+6PQLIzV1j/jodByFBwZiBf0ru4+21icmBxSwxPiufiT245z0
-        YKfdVCIP+SECjfupUDvGHgTOfwBW98u+zOqtXDWBdMfdGhNALUKI2aFkUFZxusPr
-        I09x3qSbbYFeaJoB+sX3jgpj7AWWSMfAoYmMPfeUq+rQfxZrx5ILPei0c4K3F4IS
-        dffB9iJKCZ7Ns7+A2OvmfRKhcJnfouRRFJDt2oHH4y0N59iRr63CabmyKFBKbxE4
-        WSYfUzPvm+E7ON4CEDSWbVTQbTmQR8Og==
+        :subject:to:to; s=fm3; bh=ajplbKvydvVxuSKcbIFWqRCCHqnDRNI8bZZ51W
+        5WbOs=; b=ZnDcz9QTo98SPgM+Sxcwzmu03iIDFnJSS86W93yFDt1jDUyPqBNUkg
+        WprL1pR6G4UuxJnHQCbVhvvAZrM5wEz1t0mwHihshnQJ+xNbITVBG2e+pdgbsPGn
+        TkyofUkpGX/r2/OdWE+Asghtz2DwwZWa0+wtuxAlJH98DqauEz7Bf5kTgkodHUBr
+        JS6YeOcnKU4ft8fNl4p8tgxOQxAT2OUfyv0bzZmCyXSq9j4bm380t+OXgQopT1Lm
+        LNtL3mbNezJDt3IaGouEs3yXVBXLye6t9aqnTebNY2zPbeCQmxidG7dMhpnW0nis
+        bAZ8XsD7rf2fSFgjEhN6DfCMn7UJsjXA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=oLZFOzqj3GFSeYgDO
-        VnD1/m2cRgAF4iicH0Byzzh2pA=; b=VAVHVilDaJ/mloli6CcIx0n0dYASyWdIo
-        8jKEtB2xDMLvrZTytLd9NpxcSGitoLyt45Ip95DMwTnWRAdpc/OyPf2GoYOroNYc
-        jO5X+RB7TInD0ty7l8ma9Y4VsILPPnL7rhSkhUsxacC8Xi7grHH4FNa6gOomfI+5
-        QhTPOI6H978QNjPxMJJcHacOocS0wDopKYkHwTaA1LE7MjCA/goI5pLBMjO4xDsM
-        pxvYMmOcUueDYZK5bqnidEzNSqJiTFZWl8kquGxM+IU4yyY5yI8iKCkA3MSwMgi3
-        nukgamTdsoWSztxFEE3m6Tn0GPoqXpAHyWSK3oV5Tjk2+WQVosymA==
-X-ME-Sender: <xms:zy0OYsKJJ7M9cboI96WkIb7oM0ozr-S7Ei9JAm0hFrI_0o0HKa0U4A>
-    <xme:zy0OYsIPaFBZLlzC7gNyuY1VYldb0Vj7jfZrNolv8ODqytWzBhWMdtqqBs41_JnDc
-    1d4AmuYqfESKPNnOA>
-X-ME-Received: <xmr:zy0OYstZr3SX83AItfckVxQeIeGAibU6aG9ENZoIAYXFuVfpq-GUiazZj5bnSankpTXsFLtU3iC_Wj4-thumCxiDIwrBlLYSB5WLfXBOfEnjxfx3NNnDcc0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgddvgecutefuodetggdotefrodftvf
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=ajplbKvydvVxuSKcb
+        IFWqRCCHqnDRNI8bZZ51W5WbOs=; b=nS+0Bkig3oA4yaFrVEqnRv0vApHehnPtt
+        xYDxbunn/4lZirKKk7cCRwIsFtScsxXBMURCGvGji94gmd1mqyanuAqBHFcwRlau
+        xKTcjIIUzioN2RXGJtBthctLVk+313Nxsn8Aw9NrK31sam1eSjqwMU1zinsOcSk1
+        VRd8ZYnAGbuB+LHHnu5sr8dlMhwBr3UMVP4wJOjZ9U/XnkUlRuElPF1cGdiHbO7+
+        bykoMEvoHfR61UhF0WtMIXl4N/SZiSSxAVVhOYddcWU7EzGVXF6mjHrsvK8Sncsk
+        xAIT6HctJNMbNQNKV94Mwx8lc3FlLwy0r1joYbXHaL/tvEGxd5gJA==
+X-ME-Sender: <xms:Gi8OYkbsLNzaiRfVAAsR6cYTEIbXjZgheIV6ns9yOP-NlB4PLKVhag>
+    <xme:Gi8OYvaZ5edjhvzDIbWT-G6p8cXDpDFSDmS2o3WikOWAmUZGH8asauOg2DEa2big4
+    6mUYodkwszVf4LxYQ>
+X-ME-Received: <xmr:Gi8OYu_pPT89kKR1GxrETMgzpxQbhte_BLlh-AcAU3XYlJJDvcnfCvF6iMOeq7PWIjjp2_k3h-eJSSO_4mDR7LJbSgOO_fcMWAdX8SroOVOrkbMCVRSQuVc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgddvhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
@@ -52,194 +52,114 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgddvgecutefuodetggdote
     epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimh
-X-ME-Proxy: <xmx:zy0OYpYJXU-8eRr26CrBMCbls2b9j0NvtBO-K42Ft8GB2qH8MLIRug>
-    <xmx:zy0OYjadxYf0qLzGaMuUICHUsbZjHwOOYadlzmJs17MaPT4LHJvEpA>
-    <xmx:zy0OYlAQEZ0NFkSXOBl2hGzCg8wNupIiT2pEgSyIXpTjRbA5IpTwOw>
-    <xmx:0C0OYkDFAyt4cmqqjYHPZK-v55aDO6AjHvAhuPgaaR0-w8tQgF32NA>
+X-ME-Proxy: <xmx:Gi8OYurAwLxhGe7g6w-xkfnZHuks85T0CLqBaqpLATt4z5PV69NKcg>
+    <xmx:Gi8OYvojYIsSmYqbibxRM4sgJt-C_5k_mlwe7XPcCU5lawHTkGRkSg>
+    <xmx:Gi8OYsSJoC_btZsoVnRUZhwBfQmZH0t0WZVmg0wzqjyClm4hg-x_kA>
+    <xmx:Gy8OYuS1HgQCiNoUZogtJYKhEdh2Xj7FAJlD4YUEF2PRaCtstQegAw>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Feb 2022 06:13:18 -0500 (EST)
+ 17 Feb 2022 06:18:50 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 84f1013a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 17 Feb 2022 11:13:15 +0000 (UTC)
-Date:   Thu, 17 Feb 2022 12:13:14 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id d48f3615 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 17 Feb 2022 11:18:48 +0000 (UTC)
+Date:   Thu, 17 Feb 2022 12:18:47 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH 1/6] fetch: increase test coverage of fetches
-Message-ID: <Yg4tyssgW9OAu6K/@ncase>
+Subject: Re: [PATCH 3/6] fetch: control lifecycle of FETCH_HEAD in a single
+ place
+Message-ID: <Yg4vF/ph9yQRTdMM@ncase>
 References: <cover.1644565025.git.ps@pks.im>
- <e133c14f569116156bbd3e0ca4874e8eb54b76b8.1644565025.git.ps@pks.im>
- <CAP8UFD2HswmXhqYTAMxQ0iYFtsErMS=DB18iv52Ujs=cAW9ytw@mail.gmail.com>
+ <4059d5034bd9137ffca4929ed5bd8b7ce75ea09c.1644565025.git.ps@pks.im>
+ <CAP8UFD32MQSVQ2uUhmO29jFz=LfqvN8U7e-a=sDgQAxUh+Gadw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="aMTTlTRenS8RARIm"
+        protocol="application/pgp-signature"; boundary="nzStJSFQyYrK8otP"
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD2HswmXhqYTAMxQ0iYFtsErMS=DB18iv52Ujs=cAW9ytw@mail.gmail.com>
+In-Reply-To: <CAP8UFD32MQSVQ2uUhmO29jFz=LfqvN8U7e-a=sDgQAxUh+Gadw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---aMTTlTRenS8RARIm
+--nzStJSFQyYrK8otP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 15, 2022 at 07:19:19AM +0100, Christian Couder wrote:
-> On Fri, Feb 11, 2022 at 8:38 PM Patrick Steinhardt <ps@pks.im> wrote:
+On Tue, Feb 15, 2022 at 08:32:56AM +0100, Christian Couder wrote:
+> On Sat, Feb 12, 2022 at 5:49 PM Patrick Steinhardt <ps@pks.im> wrote:
 > >
-> > The `--atomic` flag is missing test coverage for pruning of deleted
-> > references and backfilling of tags, and of course both aren't covered
-> > correctly by this flag.
->=20
-> It's not clear to me what "both aren't covered correctly by this flag"
-> actually means here. If it means that pruning of deleted references
-> and backfilling of tags don't work correctly when --atomic is used,
-> then it could be stated more clearly. Otherwise this seems to just be
-> repeating the first part of the sentence.
-
-Yeah, the commit message was a bit lazy to be honest. I've reworded it
-to hopefully make clearer what one is looking at.
-
-> > Furthermore, we don't have tests demonstrating
-> > error cases for backfilling tags.
+> > There are two different locations where we're appending to FETCH_HEAD:
+> > first when storing updated references, and second when backfilling tags.
+> > Both times we open the file, append to it and then commit it into place,
+> > which is essentially duplicate work.
 > >
-> > Add tests to cover those testing gaps.
+> > Improve the lifecycle of updating FETCH_HEAD by opening and committing
+> > it once in `do_fetch()`, where we pass the structure down to code which
+>=20
+> s/down to code/down to the code/
+>=20
+> > wants to append to it.
+>=20
+> > @@ -1601,6 +1596,10 @@ static int do_fetch(struct transport *transport,
+> >         if (!update_head_ok)
+> >                 check_not_current_branch(ref_map, worktrees);
 > >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
->=20
-> > +test_expect_success 'atomic fetch with failing backfill' '
-> > +       git init clone3 &&
+> > +       retcode =3D open_fetch_head(&fetch_head);
+> > +       if (retcode)
+> > +               goto cleanup;
 > > +
-> > +       # We want to test whether a failure when backfilling tags corre=
-ctly
-> > +       # aborts the complete transaction when `--atomic` is passed: we=
- should
-> > +       # neither create the branch nor should we create the tag when e=
-ither
-> > +       # one of both fails to update correctly.
-> > +       #
-> > +       # To trigger failure we simply abort when backfilling a tag.
-> > +       write_script clone3/.git/hooks/reference-transaction <<-\EOF &&
-> > +               #!/bin/sh
+> >         if (tags =3D=3D TAGS_DEFAULT && autotags)
+> >                 transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "=
+1");
+> >         if (prune) {
+> > @@ -1617,7 +1616,8 @@ static int do_fetch(struct transport *transport,
+> >                                    transport->url);
+> >                 }
+> >         }
+> > -       if (fetch_and_consume_refs(transport, ref_map, worktrees)) {
 > > +
-> > +               while read oldrev newrev reference
-> > +               do
-> > +                       if test "$reference" =3D refs/tags/tag1
-> > +                       then
-> > +                               exit 1
-> > +                       fi
-> > +               done
-> > +       EOF
-> > +
-> > +       test_must_fail git -C clone3 fetch --atomic .. $B:refs/heads/so=
-mething &&
-> > +
-> > +       # Creation of the tag has failed, so ideally refs/heads/somethi=
-ng
-> > +       # should not exist. The fact that it does is demonstrates that =
-there is
+> > +       if (fetch_and_consume_refs(transport, ref_map, &fetch_head, wor=
+ktrees)) {
+> >                 retcode =3D 1;
+> >                 goto cleanup;
+> >         }
 >=20
-> s/The fact that it does is demonstrates/The fact that it does demonstrate=
-s/
+> I think the following (if it works) would be more consistent with
+> what's done for open_fetch_head() above:
 >=20
-> > +       # missing coverage in the `--atomic` flag.
->=20
-> Maybe s/missing coverage/a bug/ would make things clearer.
->=20
-> > +       test $B =3D "$(git -C clone3 rev-parse --verify refs/heads/some=
-thing)"
-> > +'
->=20
-> As this patch series is about fixing buggy parts of the behavior with
-> --atomic, I think it would make more sense to use test_expect_failure,
-> instead of test_expect_success, in this test, and to check that we
-> have the correct behavior, instead of checking that we have the buggy
-> behavior.
->=20
-> Of course when later in this patch series the buggy behavior is fixed,
-> then test_expect_failure should be replaced with test_expect_success.
+> retcode =3D fetch_and_consume_refs(transport, ref_map, &fetch_head, workt=
+rees)
+> if (retcode)
+>       goto cleanup;
 
-The downside of using `test_expect_failure` is that one cannot easily
-see what exactly is broken in the testcase. Yes, you can document it,
-but when using `test_expect_success` the huge advantage is that you can
-see exactly what behaviour is changing in subsequent commits by just having=
- a look
-at the diff of the test which adapts it from its initially-broken state
-to the newly-fixed behaviour.
-
-> > +test_expect_success 'atomic fetch with backfill should use single tran=
-saction' '
-> > +       git init clone4 &&
-> > +
-> > +       # Fetching with the `--atomic` flag should update all reference=
-s in a
-> > +       # single transaction, including backfilled tags. We thus expect=
- to see
-> > +       # a single reference transaction for the created branch and tag=
-s.
-> > +       cat >expected <<-EOF &&
-> > +               prepared
-> > +               $ZERO_OID $B refs/heads/something
-> > +               $ZERO_OID $S refs/tags/tag2
-> > +               committed
-> > +               $ZERO_OID $B refs/heads/something
-> > +               $ZERO_OID $S refs/tags/tag2
-> > +               prepared
-> > +               $ZERO_OID $T refs/tags/tag1
-> > +               committed
-> > +               $ZERO_OID $T refs/tags/tag1
-> > +       EOF
->=20
-> The comment says that we expect to see a single reference transaction,
-> but the expected file we create seems to show 2 transactions. So I
-> think here too, we should use test_expect_failure, instead of
-> test_expect_success, and check that we have the correct behavior
-> instead of a buggy one.
-
-Same comment as above. I've also amended the commit message to say why
-we're introducing the tests like this.
-
-> > +       write_script clone4/.git/hooks/reference-transaction <<-\EOF &&
->=20
-> Here there is no #!/bin/sh while other uses of write_script in your
-> patch have it. If it's not necessary, it could be removed in the other
-> uses.
-
-Good point, I always forget that the shebang is added automatically by
-this helper.
-
-> > +               ( echo "$*" && cat ) >>actual
-> > +       EOF
-> > +
-> > +       git -C clone4 fetch --atomic .. $B:refs/heads/something &&
-> > +       test_cmp expected clone4/actual
-> > +'
->=20
-> I took a quick look at the 2 other tests after this one, and I think
-> test_expect_failure should be used there too, instead of
-> test_expect_success.
+The code here is really quite fragile, and I'm not much of a fan how we
+need to retain `retcode` across the calls. But we can't change it like
+you propose because the preceding call to `prune_refs()` may have
+already set `retcode =3D 1`, and we must not clobber that value in case
+the fetch succeeds. The effect is thus that we have `retcode =3D=3D 1` if
+either `prune_refs()` or `fetch_and_consume_refs()` fails.
 
 Patrick
 
---aMTTlTRenS8RARIm
+--nzStJSFQyYrK8otP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIOLckACgkQVbJhu7ck
-PpSxzg/+OiT6JWgs59DuamwMusoF3z3wlpEpdKfTp6EcaBGjTixYcfNnheUGMGXP
-8E1+C5+5ptT6Hq49I6k/2+qtgfr7wqxOE4BEdNGok9dS0m04GPjmi6xeGWzF/eLw
-3Js1Ps9u0MVJeI6r5xbH7FFpqKKJvvPs891niEAFPEZkvrVD7gPUBipIxrH+jIzt
-MOSaA+aUvyb5eiFEWfn49hrB7PHADy7JbB16M0i++MhuCzGhKJBsAv/uiS+3fwI+
-0eK850ot2vcayeXP6MUMEHJD7bPqrIl5OLDuisS4aMbOzCCyMc1qHKD8OOewiKEc
-QpvBvXGGmcPV+xFMPc0LQoygfVv9Q3zNaQOCyxXTphNP6UN766S0dJmNkkzNiWOu
-Y9F9NmRAxD3DDimOW2b4sc760+sRIufrXooW88LntXPV32lJyMSOjaNK6EzX/VK3
-rHJsmleqIaVPK984ICg+l9V005qOOmtgrW/QoDlVCgZN+P0InefE56GkoW/8qFnK
-6zbjdoalWdA20QtXa2eCuVncmtIVXvv/3tfHjkeQ2xIz6MjCbHrQMIB6TX9mzTeb
-0wI78MnShQpw1Lo0hNva6b3nGMGaus33XS2LLfJR0ZKY8jrq3uVAtQTUJ5rkw1Yl
-8S2Ef40XD4qoIGPnUT446XR4eEQfAKaeTHEIYBfaNIxlf38mquE=
-=QmOt
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIOLxYACgkQVbJhu7ck
+PpTfEg/8C0olbY2vM+HyOIC9+/uHR7boqtB5Yj6nQnCb74xJyp5HnRnb5RCnK7y2
+T+v1V5/DIKOphcqLVfR81HFkZ/EP2z4QhGkjqW15bBxfqybczVA7v+Bc+4bIFnCk
+Eo56GXCjYlr6IsUjqlxQjY9297wgWNg2glJJeWGtvo40Qz6iSPLVGpAyzj6TUkk9
+1TewosGGohucOfMRtoIr8VBPJkFDfSiVnC/qosBpzeqHhKhkBxX3xEXeTUpmXF+P
+t4Vepjr9RBLk0YK/gIBZlBVhJaimA6s4r69TOK8+yp75JaryxaZ3ntGAJ5VnXTMS
+EFLknfaDD5oLs2RlEQjb9ZK/Gld2X7n//fKF/RekO6CNj6kMditvezMN6Cgj7Q0q
+1/VyUu5kaToA0EUqte7/d+CXj6BPKFKmwqBjyy+dvAUfEy4gTdLX7vDG8YbXmgCS
+Ep58Vt35wbWA5hk3djz/rbLtaKw8OLUl+IZ+Xduf4vjwKeL/M0nR4aywYH1RswoY
+GPQ4765fkrQV4O6DiRlgeJdYMejnirDK+paoV6Maoc+zpwR/QfkhWpga+q3uNIM8
+ILmZyILcI+hxK3wVVufQ2sMYrGTJQ7xNdOM94RUwn5LTldgTbHZgwINCdPsiDRh0
+VHN8wn0aUh1ZUksZ0N/PxjLtunXe23a6v1iXGiK2K209wJlSRm8=
+=eVge
 -----END PGP SIGNATURE-----
 
---aMTTlTRenS8RARIm--
+--nzStJSFQyYrK8otP--
