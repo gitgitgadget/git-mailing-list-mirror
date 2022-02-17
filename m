@@ -2,78 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E480C433EF
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 13:04:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3426BC433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 13:04:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240647AbiBQNEp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 08:04:45 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37394 "EHLO
+        id S240651AbiBQNEt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 08:04:49 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240645AbiBQNEm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 08:04:42 -0500
+        with ESMTP id S240653AbiBQNEq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 08:04:46 -0500
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DF462AA3B9
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:04:28 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 565112AAB0C
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:04:32 -0800 (PST)
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id 7B7EA32009C3;
-        Thu, 17 Feb 2022 08:04:27 -0500 (EST)
+        by mailout.west.internal (Postfix) with ESMTP id A03633201F1A;
+        Thu, 17 Feb 2022 08:04:31 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 17 Feb 2022 08:04:27 -0500
+  by compute2.internal (MEProxy); Thu, 17 Feb 2022 08:04:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=r8qcQX699VAEksUUmt0wxPRM5rf1BTkJqer3Vz
-        aV/Xk=; b=UsJ5JENNRqB3oThvcPecZ4uYvoKU3w6cwwB08wCjmk/6w2AbDTbuXO
-        H3LqCgJXdlsAb2QFhhHy9ifH53Ked2quCH71tJ3eMGRzomp5Rv0PRxabOeWtx8fB
-        7/WVvtyHwgMGFLfI+0N+j0fAgFPbe4H3g+QrGQUpg+sqHfXWFrvqIKpgaNQsY1Lc
-        8srV0bHZdmpa7MrjdmeZtVkMmt3Ey7HBaBS8/cmblby5gV0F/RkNK7pCPg9WQdWv
-        xTpn3mDagtQDMR8cRLbh/PDrITGyVAFuDmyYtRHZzboZ+/mm40aaczMbVvm6LR2F
-        xqGBeS8RV+azK0/B20bPXOy1JQtVrE9Q==
+        :subject:to:to; s=fm3; bh=ojpnatN9COzHUpgWNPQvrM4iHs6kgHeiqlXYaF
+        PjvlA=; b=SXLKmxizVv4u3RhLraVGLWhmlseZwmTGkR69wYbSoL4TcpRvb77hGV
+        khxD97fXimw8QFrCkaPdzCiW564SKp6zH6kPE4ncrWuIqBZfrSvZm+QOF3cJOFIQ
+        hmlI3Q+En0FuSV7FDcB1LIeuBbzBXaHObc3exmA0oqITZG4lnt6QrLbIaBOESK5D
+        MNldc/fKGMeq2XGn9lNibFlXJsSavKwO3Fm2+rarnZD+xBJUhB48KaZvtNL0YfRx
+        IVcogZv977FgTXka0u3LNv/g5FDWi57kA4LbMMF4sRhsYUfulTqYhHflhiGXK0oT
+        otwRG9/SVd3GEX3jrEHBfjHSijmLRazQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=r8qcQX699VAEksUUm
-        t0wxPRM5rf1BTkJqer3VzaV/Xk=; b=A/l3oYNZQBkx4WqvMlJs9cPAnzNDctAOe
-        ZgVJiB0uILXTL2P7M2mgX5xM4YgYasBqNxW+OK5L2rZrK9+y/2ift/rSOhjO3wad
-        AE1QHJMikOz7XcRIkgyhVEVHat/vCf+ic3cvSvxvH/BKD+6dcurLE4/qe32HhqeA
-        ENAc/D6C04yx6VsjaIUhn1afQB2IOhFjOgFi6PZ+MSJlmUuU43aExVDVuXIW/KKl
-        1lFmHaLHOoJW+JbcHQo18fg2lnhXC3jC/unJKhXuBZn6vXjEy1tAnyJRy0DS7LLL
-        vzfYQEkdQ39FV1+fRLZn6Ytvb4Iu/3BDUeMMGbSiS1qXIsYU2cwFw==
-X-ME-Sender: <xms:2kcOYq9wybmqGBdEkKewU3vYUmEFRj3S1WdhFmpPx4I_QOtMLSF-hA>
-    <xme:2kcOYqtQTAHdMAu-BONGemD9IyrSe_KMP02SQh48h56qhc9i4BMJCpRfD2JsE-U3j
-    pMMhNMg768T6HCTpg>
-X-ME-Received: <xmr:2kcOYgBT_LxUZKs9DkNyO5lprRZj4xsPuC5fxmZjfVZoiwbG4VuR4YWcmHf8SC2yf6gqO3G22W8Ri7y7nOlw1Uql-r-pMNQ6THa1dPF9I7X5Xym8fQ8m_PA>
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=ojpnatN9COzHUpgWN
+        PQvrM4iHs6kgHeiqlXYaFPjvlA=; b=h08oGFG5udvC0FSMaY0eUhbAHe/c1EfAJ
+        rWbeEqAN70G2jOd7+rDRGBwpj78G/DD8OiYgQhYA9IyU+3G1tdQhZmw66HsyRE1o
+        RHb1qDhlchZO8UHVaNPXK//d+vlpkEdSBcPIVbn9appvvlMNVLsrxuK6RSCmV1a7
+        mv2KoJgvXiSho+WY+3Wvb80GUDX1l1aWIIRaRz5drXyB6/QdPS0BhrzTf7h+Oqbz
+        eu82F1gA69UOOS9kX6nyvJoinzugPlLRFmC7Evbe8NMglCjYxhSjyXbMpb1NvXGa
+        pjAYPsh283wHLz/nV0K6OPh1oko7LAmUO/6aSIeQZjqVFHjShdKbA==
+X-ME-Sender: <xms:30cOYlT26LQ0450Ow8uQhyjmFHOrxEoEyruP8u57xYhSzeiMuGOOBg>
+    <xme:30cOYux15okl8nHhhlhLl9TfpIOsFheXxmrXNEuCe7NRpW4i5t99KjsF8i4x0P4Yb
+    8ILMCkfe6iWQiKAeQ>
+X-ME-Received: <xmr:30cOYq2VAhp_eSojfXyU8p7uFHKh4fb6I5ciX4m5FQ834xp0oEz-ZUXPDk66u9Dr2zmAqJzwmNzPLWD6kk5IvbA2nl9zAZRAuh6YEy-boI2u6hBYO70WXG0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgdegiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimh
-X-ME-Proxy: <xmx:2kcOYifD5PIIo6JXOpdoQ0n_3BlEGTAzknXdNsQpWSTvi7JV6Cu0tg>
-    <xmx:2kcOYvPl8-giSb3_HHov_EXIVzsXXyk8xI9QRFF6KUkvmoWoAJt0kA>
-    <xmx:2kcOYsnWW4fnyP8xHFS3Tq9w30i8Ilz1I7ia-tqPkhL_sg27H-iRcw>
-    <xmx:20cOYoaeLGmLjAU6cRtLnon1SCJOte6F1-AwGqYiPycDz9xLvZRxcA>
+X-ME-Proxy: <xmx:30cOYtCU8quc5eyHU-8OwtSEl_HemwWjexRTMhwOYNITvqyiQkQByQ>
+    <xmx:30cOYugAAPSFIAQHBEZKQaLtKRNM3l1E7H3RXHvIjFKNCUY2KM6uLw>
+    <xmx:30cOYhpvl2tqCMoOJNaRYXnak5vH7yLx_BIOXV8_lhm9_vcYDLb70w>
+    <xmx:30cOYhtD42r-l2_Zhb2afdQy0gjLBFBxZkbmV0QTFrdLOXbvQwCgXA>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Feb 2022 08:04:25 -0500 (EST)
+ 17 Feb 2022 08:04:30 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 2d9b6163 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 17 Feb 2022 13:04:25 +0000 (UTC)
-Date:   Thu, 17 Feb 2022 14:04:24 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 0d24620c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 17 Feb 2022 13:04:29 +0000 (UTC)
+Date:   Thu, 17 Feb 2022 14:04:28 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Christian Couder <christian.couder@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 3/7] fetch: control lifecycle of FETCH_HEAD in a single
- place
-Message-ID: <0b9d04622d095f97246ae2603e2cb5312a68def3.1645102965.git.ps@pks.im>
+Subject: [PATCH v2 4/7] fetch: report errors when backfilling tags fails
+Message-ID: <bc1e396ae0ad380dffd7962cc223cc63e6facffe.1645102965.git.ps@pks.im>
 References: <cover.1645102965.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="FRLQ+f+2NpPuVYo0"
+        protocol="application/pgp-signature"; boundary="cWCeKSp2fQzZ+L0z"
 Content-Disposition: inline
 In-Reply-To: <cover.1645102965.git.ps@pks.im>
 Precedence: bulk
@@ -81,198 +80,124 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---FRLQ+f+2NpPuVYo0
+--cWCeKSp2fQzZ+L0z
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-There are two different locations where we're appending to FETCH_HEAD:
-first when storing updated references, and second when backfilling tags.
-Both times we open the file, append to it and then commit it into place,
-which is essentially duplicate work.
+When the backfilling of tags fails we do not report this error to the
+caller, but only report it implicitly at a later point when reporting
+updated references. This leaves callers unable to act upon the
+information of whether the backfilling succeeded or not.
 
-Improve the lifecycle of updating FETCH_HEAD by opening and committing
-it once in `do_fetch()`, where we pass the structure down to the code
-which wants to append to it.
+Refactor the function to return an error code and pass it up the
+callstack. This causes us to correctly propagate the error back to the
+user of git-fetch(1).
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fetch.c | 35 +++++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ builtin/fetch.c      | 26 ++++++++++++++++++--------
+ t/t5503-tagfollow.sh |  4 +---
+ 2 files changed, 19 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 904ca9f1ca..f8adb40b45 100644
+index f8adb40b45..d304314f16 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -1084,9 +1084,8 @@ N_("it took %.2f seconds to check forced updates; you=
- can use\n"
-=20
- static int store_updated_refs(const char *raw_url, const char *remote_name,
- 			      int connectivity_checked, struct ref *ref_map,
--			      struct worktree **worktrees)
-+			      struct fetch_head *fetch_head, struct worktree **worktrees)
- {
--	struct fetch_head fetch_head;
- 	int url_len, i, rc =3D 0;
- 	struct strbuf note =3D STRBUF_INIT, err =3D STRBUF_INIT;
- 	struct ref_transaction *transaction =3D NULL;
-@@ -1096,10 +1095,6 @@ static int store_updated_refs(const char *raw_url, c=
-onst char *remote_name,
- 	int want_status;
- 	int summary_width =3D transport_summary_width(ref_map);
-=20
--	rc =3D open_fetch_head(&fetch_head);
--	if (rc)
--		return -1;
--
- 	if (raw_url)
- 		url =3D transport_anonymize_url(raw_url);
- 	else
-@@ -1206,7 +1201,7 @@ static int store_updated_refs(const char *raw_url, co=
-nst char *remote_name,
- 				strbuf_addf(&note, "'%s' of ", what);
- 			}
-=20
--			append_fetch_head(&fetch_head, &rm->old_oid,
-+			append_fetch_head(fetch_head, &rm->old_oid,
- 					  rm->fetch_head_status,
- 					  note.buf, url, url_len);
-=20
-@@ -1246,9 +1241,6 @@ static int store_updated_refs(const char *raw_url, co=
-nst char *remote_name,
- 		}
- 	}
-=20
--	if (!rc)
--		commit_fetch_head(&fetch_head);
--
- 	if (rc & STORE_REF_ERROR_DF_CONFLICT)
- 		error(_("some local refs could not be updated; try running\n"
- 		      " 'git remote prune %s' to remove any old, conflicting "
-@@ -1268,7 +1260,6 @@ static int store_updated_refs(const char *raw_url, co=
-nst char *remote_name,
- 	strbuf_release(&err);
- 	ref_transaction_free(transaction);
- 	free(url);
--	close_fetch_head(&fetch_head);
- 	return rc;
- }
-=20
-@@ -1309,6 +1300,7 @@ static int check_exist_and_connected(struct ref *ref_=
-map)
-=20
- static int fetch_and_consume_refs(struct transport *transport,
- 				  struct ref *ref_map,
-+				  struct fetch_head *fetch_head,
- 				  struct worktree **worktrees)
- {
- 	int connectivity_checked =3D 1;
-@@ -1331,7 +1323,7 @@ static int fetch_and_consume_refs(struct transport *t=
-ransport,
-=20
- 	trace2_region_enter("fetch", "consume_refs", the_repository);
- 	ret =3D store_updated_refs(transport->url, transport->remote->name,
--				 connectivity_checked, ref_map, worktrees);
-+				 connectivity_checked, ref_map, fetch_head, worktrees);
- 	trace2_region_leave("fetch", "consume_refs", the_repository);
-=20
- out:
-@@ -1503,7 +1495,9 @@ static struct transport *prepare_transport(struct rem=
-ote *remote, int deepen)
+@@ -1495,12 +1495,12 @@ static struct transport *prepare_transport(struct r=
+emote *remote, int deepen)
  	return transport;
  }
 =20
--static void backfill_tags(struct transport *transport, struct ref *ref_map,
-+static void backfill_tags(struct transport *transport,
-+			  struct ref *ref_map,
-+			  struct fetch_head *fetch_head,
- 			  struct worktree **worktrees)
+-static void backfill_tags(struct transport *transport,
+-			  struct ref *ref_map,
+-			  struct fetch_head *fetch_head,
+-			  struct worktree **worktrees)
++static int backfill_tags(struct transport *transport,
++			 struct ref *ref_map,
++			 struct fetch_head *fetch_head,
++			 struct worktree **worktrees)
  {
- 	int cannot_reuse;
-@@ -1525,7 +1519,7 @@ static void backfill_tags(struct transport *transport=
-, struct ref *ref_map,
+-	int cannot_reuse;
++	int retcode, cannot_reuse;
+=20
+ 	/*
+ 	 * Once we have set TRANS_OPT_DEEPEN_SINCE, we can't unset it
+@@ -1519,12 +1519,14 @@ static void backfill_tags(struct transport *transpo=
+rt,
  	transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, NULL);
  	transport_set_option(transport, TRANS_OPT_DEPTH, "0");
  	transport_set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, NULL);
--	fetch_and_consume_refs(transport, ref_map, worktrees);
-+	fetch_and_consume_refs(transport, ref_map, fetch_head, worktrees);
+-	fetch_and_consume_refs(transport, ref_map, fetch_head, worktrees);
++	retcode =3D fetch_and_consume_refs(transport, ref_map, fetch_head, worktr=
+ees);
 =20
  	if (gsecondary) {
  		transport_disconnect(gsecondary);
-@@ -1544,6 +1538,7 @@ static int do_fetch(struct transport *transport,
- 		TRANSPORT_LS_REFS_OPTIONS_INIT;
- 	int must_list_refs =3D 1;
- 	struct worktree **worktrees =3D get_worktrees();
-+	struct fetch_head fetch_head =3D { 0 };
-=20
- 	if (tags =3D=3D TAGS_DEFAULT) {
- 		if (transport->remote->fetch_tags =3D=3D 2)
-@@ -1601,6 +1596,10 @@ static int do_fetch(struct transport *transport,
- 	if (!update_head_ok)
- 		check_not_current_branch(ref_map, worktrees);
-=20
-+	retcode =3D open_fetch_head(&fetch_head);
-+	if (retcode)
-+		goto cleanup;
-+
- 	if (tags =3D=3D TAGS_DEFAULT && autotags)
- 		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
- 	if (prune) {
-@@ -1619,7 +1618,8 @@ static int do_fetch(struct transport *transport,
- 		if (retcode !=3D 0)
- 			retcode =3D 1;
+ 		gsecondary =3D NULL;
  	}
--	if (fetch_and_consume_refs(transport, ref_map, worktrees)) {
 +
-+	if (fetch_and_consume_refs(transport, ref_map, &fetch_head, worktrees)) {
- 		retcode =3D 1;
- 		goto cleanup;
- 	}
-@@ -1633,11 +1633,13 @@ static int do_fetch(struct transport *transport,
++	return retcode;
+ }
+=20
+ static int do_fetch(struct transport *transport,
+@@ -1632,8 +1634,16 @@ static int do_fetch(struct transport *transport,
+ 		struct ref *tags_ref_map =3D NULL, **tail =3D &tags_ref_map;
 =20
  		find_non_local_tags(remote_refs, &tags_ref_map, &tail);
- 		if (tags_ref_map)
--			backfill_tags(transport, tags_ref_map, worktrees);
-+			backfill_tags(transport, tags_ref_map, &fetch_head, worktrees);
+-		if (tags_ref_map)
+-			backfill_tags(transport, tags_ref_map, &fetch_head, worktrees);
++		if (tags_ref_map) {
++			/*
++			 * If backfilling of tags fails then we want to tell
++			 * the user so, but we have to continue regardless to
++			 * populate upstream information of the references we
++			 * have already fetched above.
++			 */
++			if (backfill_tags(transport, tags_ref_map, &fetch_head, worktrees))
++				retcode =3D 1;
++		}
 =20
  		free_refs(tags_ref_map);
  	}
+diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
+index 6ffe2a5719..c057c49e80 100755
+--- a/t/t5503-tagfollow.sh
++++ b/t/t5503-tagfollow.sh
+@@ -233,9 +233,7 @@ test_expect_success 'backfill failure causes command to=
+ fail' '
+ 		done
+ 	EOF
 =20
-+	commit_fetch_head(&fetch_head);
-+
- 	if (set_upstream) {
- 		struct branch *branch =3D branch_get("HEAD");
- 		struct ref *rm;
-@@ -1693,6 +1695,7 @@ static int do_fetch(struct transport *transport,
- 	}
-=20
- cleanup:
-+	close_fetch_head(&fetch_head);
- 	free_refs(ref_map);
- 	free_worktrees(worktrees);
- 	return retcode;
+-	# Even though we fail to create refs/tags/tag1 the below command
+-	# unexpectedly succeeds.
+-	git -C clone5 fetch .. $B:refs/heads/something &&
++	test_must_fail git -C clone5 fetch .. $B:refs/heads/something &&
+ 	test $B =3D $(git -C clone5 rev-parse --verify refs/heads/something) &&
+ 	test $S =3D $(git -C clone5 rev-parse --verify tag2) &&
+ 	test_must_fail git -C clone5 rev-parse --verify tag1
 --=20
 2.35.1
 
 
---FRLQ+f+2NpPuVYo0
+--cWCeKSp2fQzZ+L0z
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIOR9cACgkQVbJhu7ck
-PpTIrRAAoBrxR5Y7SoJ5fkLfs1z+5DF1SvxWt2HZYstDKjoCQ+ZdAWLUKXQU34SM
-J2Mqo1s2n6CNljK1rewpScELfejgKkqBHKs6m0IuzmAyq73ofdh2mhkbVOinTtZ1
-2dr1TOEwVwMCZCqGIAAobYTAG2hNolTmNT28DQxARwVb5dtGJ/OqszgimkrorlXw
-P+4dcmfpygN1m1pgLtluZPCLlasrINGb10itciAHl+9vxzoIqTp0QzWjrwwy1wNv
-X1eyp/UjJVqs9sDRoxBri5Y+Re80kXz8C1dWnPTtOuc0avcCkBmnw2ld6zE7AhAu
-jhksuXZvUGc7MbzOw6BeSuSPcab3NUztoYqZ/ydqV6xvLhtpSe1ntoCfHdaTIEtK
-kmRLta0QMmnQf9MJ/zlN0cQlENPgb5xxI34EbkRZofVijq3I3XSRNd2BMv+JfAD+
-UeCBBI7E51lDF2xtaUsdVu1KCv/3/jvuFQzkslJxsgxguKUv2u0BEPStBa7ozxJm
-iNqjcLbOiCtqladYvSSejSn0QZEhsd4dqBbddhr0Oru+dEHMjjqL9okF3PDdEXkI
-5f9DNxiasLTFDgBuApam9Ep+D8lJqCxB8aSgW0opIwlQmU8RGBuVvOPjq/pfh1d7
-LSCCk6IdtjqfCA9pZ8bPuVKnDl6ve1EWUsW9n73qNz8fq7/OkVI=
-=yb43
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIOR9sACgkQVbJhu7ck
+PpT24Q/+MK1loxLVKgqn0tLZbDU7BlzSSuU3FEdGag228rpxKAiYyXJBGXuoZsT2
+L0ZxOysf4K+Jz9ODOtuwik6GiERWIr+tYlr7WUdMnzWWHpleZ1gGBbo4/IJTL9Lb
+ErRDQ3xvAmRc5WkguZufoQJVE3e40EKD/hhKF1y+TMcRhBkZYX/4Nsufoup/mR04
+SOki305+YligrYMwOQiepWd+BNN9ofVm/EzdZTwCtkFMBncmo1F5IDgv96Ly9IxA
+mgSuzw4Wgho5nwzzTw8iro7R/aWbob2QoOUoS10NvXX83khVw/PG11UKBgAjb5Zg
+M8vny8AWdRvfW/VIhc1iDmypA9l6rhNisXU0ShTuMzcPX7rc3Z6l0TXN2+BqlimI
+MUV+3XWrdmwJKawAOcc9REbGQmqspNmfPnKH/Umvn0bw1EY+2m3nS5r0aDV9Qgt7
+6ZliwwReU2lsL3j9xRLXuXG9YzJL/ed+8nhRi4VX2Il4pfo2sBgly1LT6jfoICOh
+/uvK72ZZjrbQHEceID97GLoRF+fhwYq8gHijuo4RsZaauRb8n0d7fuzfMWLh82uN
+HhHH01PuW1wroFH9x239VZ1rxXo2M8ylVy3EolqxDtRnJy7ADZYIKIRGJ+ZhPM3H
+47+6bTxy1yhl/iNvH6HFvk359dTRiW98mkZaWwBMm27IFGgcYVY=
+=XuDJ
 -----END PGP SIGNATURE-----
 
---FRLQ+f+2NpPuVYo0--
+--cWCeKSp2fQzZ+L0z--
