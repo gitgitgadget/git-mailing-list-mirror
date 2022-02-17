@@ -2,61 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F1ECC433EF
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 01:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69131C433EF
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 01:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231194AbiBQBn2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 20:43:28 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:53044 "EHLO
+        id S231258AbiBQBqw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 20:46:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230501AbiBQBn1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 20:43:27 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31ABB2128B6
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:43:13 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id c6so4243936edk.12
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:43:13 -0800 (PST)
+        with ESMTP id S230504AbiBQBqv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 20:46:51 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1474B2CCA5
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:46:38 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id hw13so3357579ejc.9
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:46:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=FQH4m0RJuPvYN1WrLTYPHPQTkEYEIxv4LIBYPEkNXfg=;
-        b=fMLwHLbeDEuf4OsvMrklFvBKRLlweDamty1INDEbwVK2l3jjovb3gd9TRx0G5zA4iQ
-         qDMu+QaMFAh5KFazcpulB4HWcN9U2AwO6Q38DFcBSwCF1YXIvvHKSZCFXSFjtR6lF8oL
-         nQhLc6Bq9AEgat3yY8ADYSj3cDs8FYwTbR8RxEH1pE30KUab/WTdk3FAvGRuIwHDi6yI
-         EdJ0txTBTqxiPpVJlcZpKH+dh+4qyqR7+T3ridfHiRlkapmFkhwh8UawiPz6yGGMS+fo
-         vi/r/n4O3xHD/6176WE92AFQd6evNOtluTCrwxTq6l/EPTMKxLhmfIio7hnQglvZnnvN
-         omgA==
+        bh=ImIkRYKx4YUXgh8+/zg4oSvF3gpf9P4amJ9+rn4zjdg=;
+        b=XwJq7xGxmIQkNqDTHpkX5Qcvr/AHz2GGYx4mFqVRBr9MWZI9FEybc9dwRh2RWdpHkz
+         85v0v1S6bF65ka0eYoyc6Xe5AzAfXdPqey5vq1l+EV2pBcrhRPoqjHA1RKSPXskcq8/E
+         5n02lRIaXANw9m/hGmvUBHvrtuPJHjo0BqpgPS7lZ1rRwRGf/9V6gCg02VL4S9oYQJJv
+         X35JwA77vJFrV3Wx75/YNMrhQA0eoixuYX18NjGpFcGezlCK2yfNOlQx0t+6/7VpbYXw
+         RFgosDzNxRcGNH/G6DjMO6yGha+gcxI7LRXUlA3GUGvTxPHlWt2RKySb9SHPfyzUPGLY
+         uS8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=FQH4m0RJuPvYN1WrLTYPHPQTkEYEIxv4LIBYPEkNXfg=;
-        b=mdf/65qF0SLHkc3LtoQ4hcCRk/uY4Z9yxizkbJQ13cHmpHhIDR5NOyNUZC+7aGCYPj
-         NzGBtl5AbDZ7QQ4pbnjCGce2UuMMXozbTaDEGV4VgqpQBMoNEJ8aCwdPWeYsQb9lvgZ9
-         kTvkYzjrExQ/2BmNAGQ5Kw4JKRYJi85CzBKTUoi0zbgYw5kkl3e52Vk+TFDrc7JP5iW4
-         Db3AnNLEb3ZxMDaAUKpepOL2XcuyzW5wYc3GNWVUcDsBx2iGU2IW8MOPT1ZaUlcpoFZR
-         AWJQSCT+kkD/udaJM+gLUc/p80IqqXhQcr6/Q7/u3QeY2EvDtKS6NHAVC00nkujeXlzV
-         Fzfw==
-X-Gm-Message-State: AOAM533DQVT3d58uf8f4Kkty/xoRxuxKS/jNhhK8MSZtQiho/L9Z0aEn
-        oAcEzSR81OqIRrZo1ie5wwghZFH/xLWhrays+RkhsxMpW48=
-X-Google-Smtp-Source: ABdhPJxBR4/4aUL3+W/u+jBewS4cEbN89i5tJBWNXxUle9v4y2Z0RQfn9zkx9PE6Ol6ZGB9uV9wc2SL/X2Mw2Dguyrg=
-X-Received: by 2002:aa7:cc12:0:b0:410:cb7b:a9ba with SMTP id
- q18-20020aa7cc12000000b00410cb7ba9bamr463266edt.196.1645062191739; Wed, 16
- Feb 2022 17:43:11 -0800 (PST)
+        bh=ImIkRYKx4YUXgh8+/zg4oSvF3gpf9P4amJ9+rn4zjdg=;
+        b=YJ8Zgs1MiXQE0NOCWFjnqih933TmTSdd9K4ezlpXsAMX5CXClYU2tK1Ym1ISi9g0O6
+         82eS636QMOBXvjVy0RnOvU2Yv8pR1AGwOCrQHAuVb5sd1OMjra2n0iUuKjUBhhrPH2u2
+         sGl9X+Ul/t5urNc2qV6oUhoZdRMJbXVBOE5if5LZiJKttfF4ytOvHfYDp546GB/FWT+r
+         fXKiaVOPeN1HfZQB8A34KBebL8LiNYWulVGTlc1pGYbEk+0balgqEtWJrfX+gjHqQ+Yh
+         Pj2ZBi5MGm0gDgX7Ai4dG7ozeTxusxGQ8TV/gocOml4lbFGvHjxrd+EW7ZPVJV1Fy5m4
+         rAsw==
+X-Gm-Message-State: AOAM530WxG0W4DQxyaA4AT/rVzIqB5U76BTwKhDnQZsH8xCd1vQou6qz
+        2VJ6NJKV2TLCqCVTnK2KIxlNlHYUygEdL+DksaY=
+X-Google-Smtp-Source: ABdhPJyEWuWrSuQPOzx5UoZb0yrcQke2IwTbpTRTQRdSax47PoSsBRZiQUASr9GxYO3JHKdIabVVdhPlaRm0QTlaX3Q=
+X-Received: by 2002:a17:906:3a18:b0:6cd:ba45:995f with SMTP id
+ z24-20020a1709063a1800b006cdba45995fmr629310eje.328.1645062396608; Wed, 16
+ Feb 2022 17:46:36 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1118.v2.git.1644913943.gitgitgadget@gmail.com>
  <pull.1118.v3.git.1644985283.gitgitgadget@gmail.com> <2008542d0c718bbe43388297307a791f94bc73e1.1644985283.git.gitgitgadget@gmail.com>
  <220216.8635kjuob0.gmgdl@evledraar.gmail.com> <CABPp-BEBX4tWwqkG=7+rcZa_EJzOC2+Rg214av_+-yymHTQGQw@mail.gmail.com>
- <af439020-8314-9171-4300-94a5102c8a38@github.com>
-In-Reply-To: <af439020-8314-9171-4300-94a5102c8a38@github.com>
+ <af439020-8314-9171-4300-94a5102c8a38@github.com> <xmqqpmnmsl2n.fsf@gitster.g>
+In-Reply-To: <xmqqpmnmsl2n.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 16 Feb 2022 17:43:00 -0800
-Message-ID: <CABPp-BG8j=cNRDcsm3s7U2F8u3FCvoOLAbeuQTyv+2u1o1-fVA@mail.gmail.com>
+Date:   Wed, 16 Feb 2022 17:46:25 -0800
+Message-ID: <CABPp-BH2Jy8esb52JBZvFOk9CcBMk41oDzDZX6t3G+M9tiao4w@mail.gmail.com>
 Subject: Re: [PATCH v3 5/5] sparse-checkout: reject arguments in cone-mode
  that look like patterns
-To:     Victoria Dye <vdye@github.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Victoria Dye <vdye@github.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <stolee@gmail.com>,
@@ -68,79 +69,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 16, 2022 at 9:20 AM Victoria Dye <vdye@github.com> wrote:
+On Wed, Feb 16, 2022 at 10:49 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Elijah Newren wrote:
-> > On Wed, Feb 16, 2022 at 1:57 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
-> >>
-> >> On Wed, Feb 16 2022, Elijah Newren via GitGitGadget wrote:
-> >>
-> >>> From: Elijah Newren <newren@gmail.com>
-> >>>
-> >>> In sparse-checkout add/set under cone mode, the arguments passed are
-> >>> supposed to be directories rather than gitignore-style patterns.
-> >>> However, given the amount of effort spent in the manual discussing
-> >>> patterns, it is easy for users to assume they need to pass patterns s=
-uch
-> >>> as
-> >>>    /foo/*
-> >>> or
-> >>>    !/bar/*/
-> >>> or perhaps they really do ignore the directory rule and specify a
-> >>> random gitignore-style pattern like
-> >>>    *.c
-> >>>
-> >>> To help catch such mistakes, throw an error if any of the positional
-> >>> arguments:
-> >>>   * starts with any of '/!'
-> >>>   * contains any of '*\?[]'
-> >>
-> >> But not "\" itself, we're just escaping the "?" here?...
-> >
-> > Nah, I just missed that one.  I should add it below.
-> >
-> >>> +     if (core_sparse_checkout_cone) {
-> >>> +             for (i =3D 0; i < argc; i++) {
-> >>> +                     if (argv[i][0] =3D=3D '/')
-> >>> +                             die(_("specify directories rather than =
-patterns (no leading slash)"));
-> >>> +                     if (argv[i][0] =3D=3D '!')
-> >>> +                             die(_("specify directories rather than =
-patterns.  If your directory starts with a '!', pass --skip-checks"));
-> >>> +                     if (strchr(argv[i], '*') ||
-> >>> +                         strchr(argv[i], '?') ||
-> >>> +                         strchr(argv[i], '[') ||
-> >>> +                         strchr(argv[i], ']'))
-> >>> +                             die(_("specify directories rather than =
-patterns.  If your directory really has any of '*?[]' in it, pass --skip-ch=
-ecks"));
-> >>
-> >> Isn't this nested || a reinvention of a simpler strtok() or strtok_r()
-> >> call? I.e. (untested):
-> >>
-> >>         const char *p;
-> >>         const char *wildcards =3D "*?[]";
-> >>         if (strtok_r(argv[i], wildcards, &p))
-> >>                 die(_("specify... has ony of '%s' in it...", wildcards=
-));
-> >>
-> >> That would also allow parameterizing the set of characters for
-> >> translators.
-> >
-> > I considered strtok, but strtok & strtok_r are documented as modifying
-> > their argument.  Perhaps they don't modify the argument if they don't
-> > find any of the listed tokens, but I didn't want to rely on that since
-> > I found no guarantees in the documentation.
+> Victoria Dye <vdye@github.com> writes:
 >
-> Maybe `strpbrk` would work? Unless I'm misunderstanding, it should
-> consolidate the condition to one line without potentially modifying the
-> arguments. E.g.:
->
->         if (!strpbrk(argv[i], "*?[]"))
->                 die(_("specify directories rather than patterns.  If your=
+> >> I considered strtok, but strtok & strtok_r are documented as modifying
+> >> their argument.  Perhaps they don't modify the argument if they don't
+> >> find any of the listed tokens, but I didn't want to rely on that since
+> >> I found no guarantees in the documentation.
+> >
+> > Maybe `strpbrk` would work? Unless I'm misunderstanding, it should
+> > consolidate the condition to one line without potentially modifying the
+> > arguments. E.g.:
+> >
+> >       if (!strpbrk(argv[i], "*?[]"))
+> >               die(_("specify directories rather than patterns.  If your=
  directory really has any of '*?[]' in it, pass --skip-checks"));
+>
+> Yes, either that or strspn() are good match for the problem (I
+> suspect =C3=86var actually meant strspn() not strtok() in the first
+> place, though ;-).
 
-Ah, perfect -- thanks for the pointer!  (Though I think the logic
-needs to be reversed; error if we find any of those characters rather
-than error if we don't.)
+After reading up on it, I think you mean strcspn() rather than
+strspn(), yes?  Either way, strpbrk() seems more direct to me, so I'll
+use it.
