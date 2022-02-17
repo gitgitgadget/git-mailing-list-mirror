@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55926C433EF
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 01:32:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5967DC433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 01:34:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230438AbiBQBcY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 20:32:24 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50250 "EHLO
+        id S230444AbiBQBev (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 20:34:51 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229569AbiBQBcX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 20:32:23 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B81C0137005
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:32:09 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id gb39so3377523ejc.1
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:32:09 -0800 (PST)
+        with ESMTP id S229569AbiBQBeu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 20:34:50 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51FB22A8D14
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:34:37 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id p15so3317845ejc.7
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:34:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Sp8ejbq/3LnzFXX59RBt1aiPXO/yjzMrgsYYMesR6kw=;
-        b=dbrrUCgpDk8wK9bZBjhJ8YJwi7Zi1ZaDdujh9mS1PixVoLSOs0NC0ifwtCyIHx8zzI
-         vGajQlaGf25ELRgkBgVru/8hnEQspxGX0U/lpHN2oxiI0L/kFf60XzZE5g1PetXoWKUJ
-         B80vvyxRixwPWXRvYMVxEIzzVnWZmTQNMvZzI/F0w/zBnxCKDXiFd2Xu58F/DZkR60Et
-         +1EbFM5NbcVVSWmn18R7zTyZwHH2VavKys0fb7lyLRJlZBanSN6GBAeFDmFz5p0VJ/pQ
-         b7X9BSYbAyxfcZ5WD+ZThh+SwFmy5jFePiNgOAB6v9SBVq+LGk+ATnDmo4aBFTgGd1h8
-         gpSw==
+        bh=eqcOFfzkVieIC1a1BpOVQ7o81OCqiHQaBwg9ycyNcRs=;
+        b=nvTzEzdGvIwcfySsxDqyfK7oreKvfSlXoDik042FW+X761iUnO3AJqqgo6+WvRL6CC
+         ULS4b3nHUmKeBCTzswH6zTg2XmkPyNGPXvTw8je4iYXClz0aU3Du0zhSaHKh9ZeqskBI
+         m4BbTMLlllamgnFgt5B7T1qkvXvWfYBDxEGyLE30Esyqmtgd9cXa1WgNon5pAo/vOrxN
+         W4I6slte8eaMYmx4SldzDLMSqm6GcSEDg6YZV3E8iKcqtoRIWwbyNMDJ61YWSkNhoFy9
+         zOZqWkkcXL7DgSV07xnhXqY2MSbh5eZNp5UbD7jKRdZ9XW/+vFT2uBqreR35UmeFVbYf
+         rLWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Sp8ejbq/3LnzFXX59RBt1aiPXO/yjzMrgsYYMesR6kw=;
-        b=2AllQlw4fFSj3UGQ3TNrC7LShtZfzJZoYHnSyErcmqJhphgDEiX9SM6ATFI/dxZ1yU
-         Nn0hHg7cUT0g3ei3W+5FURoKWrIgSR7p+RB1HxWlBiP0FXBgLjkyhsT/+lfu5f+WAGOi
-         RqvaViSh+v4OgyDJi5lzBCwlLS9/7eRZaQB3EmhWf3eoFEbXW5fMtVnsZCuQ4256uPBG
-         DJJQzlslVIBCqU56OcdBjJ80PNgFz4Cw+MDPXmdZfnRhB225CI67gktqUt9SqZeovqSF
-         uHlAdEyltQyUIp5usbDJfbsqA6rLaQNEkqIoyrek4ey8ZdvjFeMU/dpyPlkBfNzx7nrp
-         aDiQ==
-X-Gm-Message-State: AOAM531XEgYQBkZzqtExCBT1qgISF8nSFD0yLr4QcG3AdSuqQnmuwsmh
-        conxZCEljjpRhfQY8fuH+pb3wsd+GIofywIbu/3mPfGr6g0=
-X-Google-Smtp-Source: ABdhPJxcatfRd7Mxv3TsFpHy6f53yejIdC59zVO+wjGD8apR+3+/MjYEeyTcliD0nG5M/rAxIxV8uKvy6pleUtrmeWk=
-X-Received: by 2002:a17:906:350d:b0:6b9:5871:8f34 with SMTP id
- r13-20020a170906350d00b006b958718f34mr550979eja.493.1645061528129; Wed, 16
- Feb 2022 17:32:08 -0800 (PST)
+        bh=eqcOFfzkVieIC1a1BpOVQ7o81OCqiHQaBwg9ycyNcRs=;
+        b=ZFb5C4GuX75l/Azg2QziC3xoRDhAaBizaql8yJ6yZRKM9LcJrJCwgYsUqygPrIixIr
+         RfWpbkS3YyFqrqhr8vnZULZ923rkz6QNmREMCdR8JPLRFSkCloNJjAkAqoSS8v4E4/wl
+         cxU/E+215IwEy33DN84WttmFRaWvHKKr4kqVcWlQnINnBxbAqresPLvh5TiwI2QZe+ST
+         ZskdbvkLusmV4dsabtPbEmiVT5Rbl4O2uAtAgOIsnzyGGumstOhqeOy/GGs8piPk0i5/
+         P0sCNh9VQCmRhAYVC22m0JXLPcEQSqyJIHei83H3GR+08qI9VgL/E7biY+uitLgH1jSd
+         fh+w==
+X-Gm-Message-State: AOAM533xwYgeUvpY8iBTUSYLPz/nKfBYpnjUI0HqOPh48z5OhsItPA2B
+        0weVaiz+GK5cl88QPMzL34PMlDjEW4Sg3cXGJdHrUnNv/Vg=
+X-Google-Smtp-Source: ABdhPJzmdyvXi1LDGRCSRCKpJ9qHTTntSxdQfsD8T28g9IzBrwli2fq2oi+IA7ngvoENWHEDLKrwk64+4PuR7ceWudw=
+X-Received: by 2002:a17:906:a855:b0:6cd:ba20:39c5 with SMTP id
+ dx21-20020a170906a85500b006cdba2039c5mr572682ejb.100.1645061675843; Wed, 16
+ Feb 2022 17:34:35 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1644565025.git.ps@pks.im> <54fdee845bea7f67f46817417f8e5a504bd39665.1644565025.git.ps@pks.im>
-In-Reply-To: <54fdee845bea7f67f46817417f8e5a504bd39665.1644565025.git.ps@pks.im>
+References: <cover.1644565025.git.ps@pks.im> <55dbe19a1a4d05d84c81356af1a3f04b65f8aa7b.1644565025.git.ps@pks.im>
+In-Reply-To: <55dbe19a1a4d05d84c81356af1a3f04b65f8aa7b.1644565025.git.ps@pks.im>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 16 Feb 2022 17:31:56 -0800
-Message-ID: <CABPp-BFC-BavQEreJQ+APhxSNHenij568Mr-0ME+YF+7gzwtBQ@mail.gmail.com>
-Subject: Re: [PATCH 4/6] fetch: report errors when backfilling tags fails
+Date:   Wed, 16 Feb 2022 17:34:23 -0800
+Message-ID: <CABPp-BFM67LzZFL=w-iA7vButaBKokpetDR5dr8TTnbSCmBdeA@mail.gmail.com>
+Subject: Re: [PATCH 5/6] fetch: make `--atomic` flag cover backfilling of tags
 To:     Patrick Steinhardt <ps@pks.im>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -58,103 +58,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 11, 2022 at 12:03 PM Patrick Steinhardt <ps@pks.im> wrote:
+On Mon, Feb 14, 2022 at 1:32 AM Patrick Steinhardt <ps@pks.im> wrote:
 >
-> When the backfilling of tags fails we do not report this error to the
-> caller, but only report it implicitly at a later point when reporting
-> updated references. This leaves callers unable to act upon the
-> information of whether the backfilling succeeded or not.
+> When fetching references from a remote we by default also fetch all tags
+> which point into the history we have fetched. This is a separate step
+> performed after updating local references because it requires us to walk
+> over the history on the client-side to determine whether the remote has
+> announced any tags which point to one of the fetched commits.
 >
-> Refactor the function to return an error code and pass it up the
-> callstack. This causes us to correctly propagate the error back to the
-> user of git-fetch(1).
+> This backfilling of tags isn't covered by the `--atomic` flag: right
+> now, it only applies to the step where we update our local references.
+> This is an oversight at the time the flag was introduced: its purpose is
+> to either update all references or none, but right now we happily update
+> local references even in the case where backfilling failed.
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/fetch.c      | 29 +++++++++++++++++++++--------
->  t/t5503-tagfollow.sh |  4 +---
->  2 files changed, 22 insertions(+), 11 deletions(-)
+> Fix this by pulling up creation of the reference transaction such that
+> we can pass the same transaction to both the code which updates local
+> references and to the code which backfills tags. This allows us to only
+> commit the transaction in case both actions succeed.
 >
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 627847e2f8..1eda0b68ff 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1495,12 +1495,12 @@ static struct transport *prepare_transport(struct remote *remote, int deepen)
->         return transport;
->  }
+> Note that we also have to start passing the transaction into
+> `find_non_local_tags()`: this function is responsible for finding all
+> tags which we need to backfill. Right now, it will happily return tags
+> which we have already been updated with our local references. But when
+> we use a single transaction for both local references and backfilling
+> then it may happen that we try to queue the same reference update twice
+> to the transaction, which consequentially triggers a bug. We thus have
+> to skip over any tags which have already been queued. Unfortunately,
+> this requires us to reach into internals of the reference transaction to
+> access queued updates, but there is no non-internal interface right now
+> which would allow us to access this information.
+
+I like the changes you are making here in general, but I do agree that
+reaching into refs-internal feels a bit icky.  I'm not familiar with
+the refs API nor the fetching code, so feel free to ignore these
+ideas, but I'm just throwing them out there as possibilities to avoid
+reaching into refs-internal:
+
+  - you are trying to check for existing transactions to avoid
+duplicates, but those existing transactions came from elsewhere in the
+same code we control.  Could we store a strset or strmap of the items
+being updated (in addition to storing them in the transaction), and
+then use the strset/strmap to filter out which tags we need to
+backfill?  Or would that require plumbing an extra variable through an
+awful lot of callers to get the information into the right places?
+
+  - would it make sense to add a flag to the transaction API to allow
+duplicates if both updates update the ref to the same value?  (I'm
+guessing you're updating to the same value, right?)
+
+  - should we just add something to the refs API along the lines of
+"transaction_includes_update_for()" or something like that?
+
+[...]
+> @@ -361,12 +362,28 @@ static void find_non_local_tags(const struct ref *refs,
+>         const struct ref *ref;
+>         struct refname_hash_entry *item = NULL;
+>         const int quick_flags = OBJECT_INFO_QUICK | OBJECT_INFO_SKIP_FETCH_OBJECT;
+> +       int i;
 >
-> -static void backfill_tags(struct transport *transport,
-> -                         struct ref *ref_map,
-> -                         struct fetch_head *fetch_head,
-> -                         struct worktree **worktrees)
-> +static int backfill_tags(struct transport *transport,
-> +                        struct ref *ref_map,
-> +                        struct fetch_head *fetch_head,
-> +                        struct worktree **worktrees)
->  {
-> -       int cannot_reuse;
-> +       int retcode, cannot_reuse;
+>         refname_hash_init(&existing_refs);
+>         refname_hash_init(&remote_refs);
+>         create_fetch_oidset(head, &fetch_oids);
 >
->         /*
->          * Once we have set TRANS_OPT_DEEPEN_SINCE, we can't unset it
-> @@ -1519,12 +1519,14 @@ static void backfill_tags(struct transport *transport,
->         transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, NULL);
->         transport_set_option(transport, TRANS_OPT_DEPTH, "0");
->         transport_set_option(transport, TRANS_OPT_DEEPEN_RELATIVE, NULL);
-> -       fetch_and_consume_refs(transport, ref_map, fetch_head, worktrees);
-> +       retcode = fetch_and_consume_refs(transport, ref_map, fetch_head, worktrees);
->
->         if (gsecondary) {
->                 transport_disconnect(gsecondary);
->                 gsecondary = NULL;
->         }
+>         for_each_ref(add_one_refname, &existing_refs);
 > +
-> +       return retcode;
->  }
->
->  static int do_fetch(struct transport *transport,
-> @@ -1628,8 +1630,19 @@ static int do_fetch(struct transport *transport,
->                 struct ref *tags_ref_map = NULL, **tail = &tags_ref_map;
->
->                 find_non_local_tags(remote_refs, &tags_ref_map, &tail);
-> -               if (tags_ref_map)
-> -                       backfill_tags(transport, tags_ref_map, &fetch_head, worktrees);
-> +               if (tags_ref_map) {
-> +                       /*
-> +                        * If backfilling tags succeeds we used to not return
-> +                        * an error code to the user at all. Instead, we
-> +                        * silently swallowed that error and updated the local
-> +                        * state of the repository. We now notify the user of
-> +                        * any such errors, but we continue to make sure that
-> +                        * FETCH_HEAD and the upstream branch are configured as
-> +                        * expected.
-> +                        */
+> +       /*
+> +        * If we already have a transaction, then we need to filter out all
+> +        * tags which have already been queued up.
+> +        */
+> +       for (i = 0; transaction && i < transaction->nr; i++) {
+> +               if (!starts_with(transaction->updates[i]->refname, "refs/tags/") ||
+> +                   !(transaction->updates[i]->flags & REF_HAVE_NEW))
+> +                       continue;
+> +               (void) refname_hash_add(&existing_refs,
+> +                                       transaction->updates[i]->refname,
+> +                                       &transaction->updates[i]->new_oid);
 
-nit: I'd prefer to see code comments explain what we currently do, and
-move history lessons to the commit message.
-
-
-> +                       if (backfill_tags(transport, tags_ref_map, &fetch_head, worktrees))
-> +                               retcode = 1;
-> +               }
->
->                 free_refs(tags_ref_map);
->         }
-> diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
-> index 888305ad4d..549f908b90 100755
-> --- a/t/t5503-tagfollow.sh
-> +++ b/t/t5503-tagfollow.sh
-> @@ -237,9 +237,7 @@ test_expect_success 'backfill failure causes command to fail' '
->                 done
->         EOF
->
-> -       # Even though we fail to create refs/tags/tag1 the below command
-> -       # unexpectedly succeeds.
-> -       git -C clone5 fetch .. $B:refs/heads/something &&
-> +       test_must_fail git -C clone5 fetch .. $B:refs/heads/something &&
->         test $B = $(git -C clone5 rev-parse --verify refs/heads/something) &&
->         test $S = $(git -C clone5 rev-parse --verify tag2) &&
->         test_must_fail git -C clone5 rev-parse --verify tag1
-> --
-> 2.35.1
->
+Why the typecast here?
