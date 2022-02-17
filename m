@@ -2,110 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 575D1C433EF
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 22:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F02DC433EF
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 22:58:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229527AbiBQW5K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 17:57:10 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:57556 "EHLO
+        id S229527AbiBQW6Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 17:58:24 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:35334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbiBQW5J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 17:57:09 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A08D5DC5
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 14:56:53 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C22BC10452D;
-        Thu, 17 Feb 2022 17:56:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=OjFtrC0x1pef
-        LcKCABVDsVg9L7vMCd/sFH6qSdCPv8c=; b=WFMcj1uu5SEtytPl87AcQiU+ZKT/
-        hQgTEzUMv5uMmUlJ4Aw/WDH0DGuvtbqz5PzJqYaS3YIVEsie5P7NseunubXXaf3V
-        4koLZ9y+MDgT0yYdf3mOyW0mgzHeNTZtFaNlPG3b0BGgKpL/ZExzPZQdyiSS2te9
-        485pc2BM6eFYXmk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BA43A10452C;
-        Thu, 17 Feb 2022 17:56:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 209A3104528;
-        Thu, 17 Feb 2022 17:56:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Hamza Mahfooz <someguy@effective-light.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [v2.35.0 regression] some PCRE hangs under UTF-8 locale
-References: <5fa6962e-3c1c-6dbc-f6d7-589151a9baec@web.de>
-        <20220129172542.GB2581@szeder.dev>
-        <dca59178-6e9b-315b-06ee-8e3201aa391c@web.de>
-        <20220130090422.GA4769@szeder.dev>
-        <b74f781c-548b-5254-d3d1-fc1873c70e10@web.de>
-        <220131.868ruvbovo.gmgdl@evledraar.gmail.com>
-        <1425e548-c1bb-3cff-d75d-c3760abb6129@web.de>
-        <220212.86zgmvx13i.gmgdl@evledraar.gmail.com>
-        <4e391e2e-6561-3c2e-0306-c860a37356bc@web.de>
-Date:   Thu, 17 Feb 2022 14:56:50 -0800
-In-Reply-To: <4e391e2e-6561-3c2e-0306-c860a37356bc@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Thu, 17 Feb 2022 22:14:29 +0100")
-Message-ID: <xmqq1r016r0t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229471AbiBQW6X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 17:58:23 -0500
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 941F522B734
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 14:58:07 -0800 (PST)
+Received: by mail-qk1-x735.google.com with SMTP id de39so6217293qkb.13
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 14:58:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=edwardthomson-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=w+c3gRijEUbjivQX8XdqI5sJkYm39GGdOiU1dvCWgj0=;
+        b=ojVKXpg+aQDd8voc0LCauvslnkgJQJLBDWu0fSi9DEfOl3g40ufhlvJEfDP8RZ4ZCq
+         HjVt8dwE4Kc8qYYaF1zqMdUg17V+6aVUqOjZVFFBpn8Bhvhq9Gtnwxtbpi5eTRs6wDtQ
+         jDXgC2WHdyGNK4K57JCXSsdZ/Tw3j1h6ZcfMBVLUlMxe+PZ7kIdlBdyrqHohbRPhfa7W
+         fRrfTGhHoTago9/pHDQ6Zhr9fWjBubpzX8O1L1uBN2VeKCZMxbxezfbI7hoLsYobaE+4
+         M+8brhGkM+ViuhTwaAG0vhMwSi1HIhavLmcMtZEY9IA0cORV0ZSGMyhgvkKAmy0+ROTt
+         Yzaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=w+c3gRijEUbjivQX8XdqI5sJkYm39GGdOiU1dvCWgj0=;
+        b=cNx+jjHis8naLdigdz+MtADP2/qGhT70V12eGcKIzb2KHOQgPS03qee0m1ejQBO28J
+         7tKqDG5uTawG98vVFuqJrWCBJYd+lPL1AWia5nqUq3tcf6iwB4rvBgnl10lYLpR+s5/A
+         o/DNmuiX2PbSLU9MZx1sP/465wMVcCnq6gbY35bjrEowDngM8N2oQUPFWqr8CYHh8Atp
+         DsSGI7nVD5VZsgP72hToJUgwn8s+4rK1zGrR4TqcBMQAqLWhDZumfucnHZ4d5WFTbdd5
+         a+9yLCOumoAFBG41cTXVU6CWHhcttNt3xK3JlBCrQjXQpnd+TiYz1PYaM68vmc0+06Kk
+         UkGA==
+X-Gm-Message-State: AOAM533ZvqB9n/plgZEyaWf3H176PtvnHyKP9D9GisACWfAGtBkAge0B
+        fDFu5ENY05vu04nZXeZ9o+xJKqb/kxRyAMuR
+X-Google-Smtp-Source: ABdhPJxf0snnms8HadbFc9xZ1t8U9t/pRjKwZwpJq9Uph+59kJ2pDEP5t0FAQr62Cs18YsYI9z6EHQ==
+X-Received: by 2002:a37:9b84:0:b0:4e0:fb74:da92 with SMTP id d126-20020a379b84000000b004e0fb74da92mr3022479qke.245.1645138686670;
+        Thu, 17 Feb 2022 14:58:06 -0800 (PST)
+Received: from edef91d97c94 ([50.234.189.46])
+        by smtp.gmail.com with ESMTPSA id bi5sm20000442qkb.116.2022.02.17.14.58.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Feb 2022 14:58:06 -0800 (PST)
+Date:   Thu, 17 Feb 2022 22:58:04 +0000
+From:   Edward Thomson <ethomson@edwardthomson.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Git ML <git@vger.kernel.org>
+Subject: Re: [PATCH 1/1] xdiff: provide indirection to git functions
+Message-ID: <20220217225804.GC7@edef91d97c94>
+References: <20220209012951.GA7@abe733c6e288>
+ <20220209013354.GB7@abe733c6e288>
+ <220216.86wnhvvgeh.gmgdl@evledraar.gmail.com>
+ <7e6385f8-f25d-69f5-edae-6f5d6f785046@gmail.com>
+ <220216.86leybszht.gmgdl@evledraar.gmail.com>
+ <20220217012847.GA8@e5e602f6ad40>
+ <220217.86ee41izpq.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E5578CB4-9044-11EC-B683-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <220217.86ee41izpq.gmgdl@evledraar.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Thu, Feb 17, 2022 at 10:29:23AM +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> [I'm assuming that dropping the list from CC was a mistake, re-CC-ing]
 
-> Subject: [PATCH] grep: fix triggering PCRE2_NO_START_OPTIMIZE workaroun=
-d
->
-> PCRE2 bug 2642 was fixed in version 10.36.  Our 95ca1f987e (grep/pcre2:
-> better support invalid UTF-8 haystacks, 2021-01-24) worked around it on
-> older versions by setting the flag PCRE2_NO_START_OPTIMIZE.  797c359978
-> (grep/pcre2: use compile-time PCREv2 version test, 2021-02-18) switched
-> it around to set the flag on 10.36 and higher instead, while it claimed
-> to use "the same test done at compile-time".
->
-> Switch the condition back to apply the workaround on PCRE2 versions
-> _before_ 10.36.
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  grep.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/grep.c b/grep.c
-> index 5bec7fd793..ef34d764f9 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -386,7 +386,7 @@ static void compile_pcre2_pattern(struct grep_pat *=
-p, const struct grep_opt *opt
->  	if (!opt->ignore_locale && is_utf8_locale() && !literal)
->  		options |=3D (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
->
-> -#ifdef GIT_PCRE2_VERSION_10_36_OR_HIGHER
-> +#ifndef GIT_PCRE2_VERSION_10_36_OR_HIGHER
->  	/* Work around https://bugs.exim.org/show_bug.cgi?id=3D2642 fixed in =
-10.36 */
+It was; many apologies, I don't use mutt very often any more.  Thanks!
 
-Oh, that's embarrassing.  The #ifdef and the comment sit next to
-each other and they make contradicting statement.
+> As for the "new person to our codebase..." I don't think you're wrong
+> there, but that's an asthetic preference, not something that's required
+> for the stated aims of this series of dropping in compatibility shims.
 
->  	if (PCRE2_MATCH_INVALID_UTF && options & (PCRE2_UTF | PCRE2_CASELESS)=
-)
->  		options |=3D PCRE2_NO_START_OPTIMIZE;
-> --
-> 2.35.1
+Sure, but avoiding a prefix is also not a technical decision but an
+aesthetic and ergonomic one.
+
+Is using a prefix here great?  No, it's not great, it's shit.  But it's
+shit that's easy to reason about.
+
+If somebody sees a call to `xdl_free` in some code, they say "wtf is
+this `xdl_free` nonsense?"  And they grep around and figure it out and
+understand the way that this project handles heap allocations.  It's
+very transparent.
+
+If somebody sees a call to `free` in their code, they say "great,
+`free`".  But it merely *appears* very transparent; in fact, there's
+some magic behind the scenes that turns a `free` into a `git__free`
+without you knowing it.  You've not learned the way that this project
+handles heap allocations, but you also don't know that there's anything
+that you needed to learn.  These are the sorts of things that you think
+you understand but only discover when you _need_ to discover it because
+something's gone very wrong.
+
+In my experience, calling a function what it _isn't_ is the sort of thing
+that a developer discovers the hard way, and that often leads to them
+not trusting the codebase because it doesn't do what it says it does.
+
+Cheers-
+-ed
