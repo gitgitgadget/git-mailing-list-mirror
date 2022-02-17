@@ -2,157 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23CCFC433F5
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 11:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E10DC433EF
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 11:05:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233614AbiBQLCG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 06:02:06 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36292 "EHLO
+        id S236623AbiBQLFp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 06:05:45 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231536AbiBQLB1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 06:01:27 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E7D2B0B09
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 02:59:15 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id e3so8372199wra.0
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 02:59:15 -0800 (PST)
+        with ESMTP id S233614AbiBQLFo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 06:05:44 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F020D2256
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 03:05:29 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id j9-20020a05600c190900b0037bff8a24ebso5858434wmq.4
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 03:05:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:date:mime-version:user-agent:reply-to:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=CnDZTe+auw/r+NNzl4bwAVodfPlcni2fVDjCRVfpb2k=;
-        b=TSkvJBAb0wmXMVwQ/LvB5o7e9nQ+6G4bIp2rZSlYC22ygseSFaq4skT5G9KJjTNAG8
-         2vZSvxkuhyc4TKtUR0U2iYuasV5W6gIrFWRl4O2mSpWFKvFeu1QTlSj7mrlqOr2440f6
-         2ESsp8JqFl+cvGVCDnBqvOmadGb4V6U7nyeM+9sfeYGi39OGDaoJ7QY93NQVIEEkLMER
-         dSx/kwcbh7jXz1EJo93zMtSfVUKla0hBY45YpR65r7vKzCJAP5rKonaFgzTPqVKzlLo0
-         xshd32/Xc4QFk4OpGBdCR5yeITVJ8Ui/P7xOaMvD2Gpv8TMUx61bk9IKDQt2CXjTPZMa
-         yTVQ==
+        bh=C1gBVfF0UupXuPdZ73lyh5DHDCLgYNZc5gMM0eJ7zng=;
+        b=FHW7+DoiAhiZYJNlDFL1vsCruancxGp9m4CrGPS1ok8ZVxCrpme9nOxR7l6Cq1S/GA
+         kzL8tkksw+ufhZU4yOWnqmP6d7j3b9BvxSgAwrvW7gsyp4cKGiFjEgEkv0trM1mwa2iJ
+         wRrE3YyH2VDb2novGItxel6j+gSUcW+3z+TTZo146bJK2Al3NCRQp/RRJZwPcJCdn7SB
+         1pXBWT3eaoigNNSvNOIlS/GXXMWK7iKmJuk7rQe1FVCnBzswpOPhsaVmkQaKzEVymjuj
+         EH1EaMcoG4c/UJtoyCi2D1yFeAa4b5ZlvE0MdXrSivuc1UolEoAKCYDvl+1ZDO5+76Ua
+         Swww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
          :subject:content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=CnDZTe+auw/r+NNzl4bwAVodfPlcni2fVDjCRVfpb2k=;
-        b=TFAKDvTDBukbxl8hFsxuf+HJwDcCKH2np52bQuTrGlTKSEUIhkDpINpd7e5gP/3P8R
-         umcgcF/18ufJDVPblJvEjWAjrwEs9QnGHXn9Qu/lcY2o2z0YuYCcml8MRn0GnWKHd7Ou
-         DCuHhNTkQU7AVf7UrsQr3V8csjSz4sGG+LnlrMBC6Y2IqXWQUdixljKzC/01Tmp6ES6h
-         WKY89jH1dQNerJqK/51rkAQcOfChjB5Aoy27h+kn9cRhOXbtibSzYH1VASWSAqpHQIRZ
-         Asp5z3dd0TZu0ULRA1ZBAkCa/4vs966nxy7foGvNRLFFRnkrkWjYa6xLqqHVun073xTa
-         cFjg==
-X-Gm-Message-State: AOAM532W9FtiQ7ZjnmRiIrAZRnvwSqziAtJgO9TpqPrJ+GwfL+tNoYWz
-        dD3NMZ6jlZj+sE2q/ntSAac=
-X-Google-Smtp-Source: ABdhPJySDyaRpt43rQBUCe04ENecw/o39gVOKeb5Zcv5LwGDikRWqRUQQ22kTS7k3+3vZ3rXiQFmOQ==
-X-Received: by 2002:a5d:64ac:0:b0:1e7:1415:2548 with SMTP id m12-20020a5d64ac000000b001e714152548mr1892311wrp.267.1645095553811;
-        Thu, 17 Feb 2022 02:59:13 -0800 (PST)
+        bh=C1gBVfF0UupXuPdZ73lyh5DHDCLgYNZc5gMM0eJ7zng=;
+        b=mBHK8ivrzriLo3d9tcSshCoGduEAXRPDW3BhCUhZqvqWaQxlNvAjP3T+kYy9XiNcae
+         rMQ8d5EKH78CKjIsx1wNiUG1W87XsaAknzk+3iu4aCpFFRQIVwTaowp5G4FUIH7uxLkE
+         92vdoLCEHU1B9ntpzqFAfFjAZcssoPWz45a0YPLFbah606/OpEq9iGyOVLPa5ZEUojsH
+         4p8orLvdwOZYfUz56EhRlLfzHe6U3YTxLX3XMviuE1Ca+IacgNbBTkNE0WJcynbdjrlz
+         7WjGuzOkiUIKoRnKt69t3wl6johp7O5sPyv45rELzWRfZfb6ZwFDVlbuoyUBPPhy/Ke/
+         AAKg==
+X-Gm-Message-State: AOAM5325EWadslylA/HGKzpHzlc1+4XtgTlx+vX3mR8cxBLnM8Huegd1
+        sSoqCUnRqw8/+Cx7uoEyp4I=
+X-Google-Smtp-Source: ABdhPJwJTUs1raVXKCTput0yOedOzGs+nX3GP0HG/pVi5GCWCb07zS0l5sdzAd5mvcWBS6rwttAkkQ==
+X-Received: by 2002:a05:600c:4ed1:b0:37b:bb72:9ecd with SMTP id g17-20020a05600c4ed100b0037bbb729ecdmr2126396wmq.177.1645095928128;
+        Thu, 17 Feb 2022 03:05:28 -0800 (PST)
 Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id f14sm1049358wmq.3.2022.02.17.02.59.13
+        by smtp.googlemail.com with ESMTPSA id ay38sm1500136wmb.3.2022.02.17.03.05.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Feb 2022 02:59:13 -0800 (PST)
-Message-ID: <f6c31ac8-b675-99c8-1577-07c26619e277@gmail.com>
-Date:   Thu, 17 Feb 2022 10:59:12 +0000
+        Thu, 17 Feb 2022 03:05:27 -0800 (PST)
+Message-ID: <08f1cc5f-672f-f806-49d9-a6d6be3d2a8b@gmail.com>
+Date:   Thu, 17 Feb 2022 11:05:26 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/3] terminal: set VMIN and VTIME in non-canonical mode
+Subject: Re: [PATCH v2 1/4] xdiff: fix a memory leak
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1146.git.1645008873.gitgitgadget@gmail.com>
- <02009172e081ab5c4de8e2476c1142f97b41698e.1645008873.git.gitgitgadget@gmail.com>
- <xmqqpmnmcwwu.fsf@gitster.g>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
+References: <pull.1140.git.1644404356.gitgitgadget@gmail.com>
+ <pull.1140.v2.git.1645006510.gitgitgadget@gmail.com>
+ <3fcb6c8036794a16c4aa9285e3ef70da02e2bc80.1645006510.git.gitgitgadget@gmail.com>
+ <220216.86tuczt7js.gmgdl@evledraar.gmail.com>
+ <10c8dfa8-ab98-4a46-8baa-97857bb914b0@gmail.com>
+ <220216.86h78yuar0.gmgdl@evledraar.gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqpmnmcwwu.fsf@gitster.g>
+In-Reply-To: <220216.86h78yuar0.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/02/2022 21:40, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 16/02/2022 14:38, Ævar Arnfjörð Bjarmason wrote:
+> [...]
+>>> More generally I think this patch is taking the wrong approach, why are
+>>> we trying to the members of a stack variable in xdl_do_diff(), when that
+>>> variable isn't ours, but is created by our caller? Why aren't they
+>>> dealing with it?
 >>
->> If VMIN and VTIME are both set to zero then the terminal performs
->> non-blocking reads which means that read_key_without_echo() returns
->> EOF if there is no key press pending. This results in the user being
->> unable to select anything when running "git add -p".  Fix this by
->> explicitly setting VMIN and VTIME when enabling non-canonical mode.
+>> They are not dealing with it because they do not initialize it - it is
+>> an "out" parameter that is used to return data to the caller. This
+>> patch changes the logic to "whoever initializes it is responsible for
+>> freeing it if there is an error". By doing that we localize the error
+>> handling to xdl_do_diff() and can leave the callers unchanged.
 > 
-> Makes sense.
-> 
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   compat/terminal.c | 10 +++++++++-
->>   1 file changed, 9 insertions(+), 1 deletion(-)
->>
->> diff --git a/compat/terminal.c b/compat/terminal.c
->> index 20803badd03..d882dfa06e3 100644
->> --- a/compat/terminal.c
->> +++ b/compat/terminal.c
->> @@ -57,6 +57,10 @@ static int disable_bits(tcflag_t bits)
->>   	t = old_term;
->>   
->>   	t.c_lflag &= ~bits;
->> +	if (bits & ICANON) {
->> +		t.c_cc[VMIN] = 1;
->> +		t.c_cc[VTIME] = 0;
->> +	}
-> 
-> Quite sensible.  I wonder if we can simplify the "are we looking at
-> an ESC that is the first byte of a multi-byte control sequence?"
-> logic in the caller by using inter-character delay, but it is
-> probably better to go one step at a time like this patch does.
+> Yes, I'm saying that we're needlessly piling on complexity by continuing
+> with this pattern in the xdiff/ codebase. I think it's fair to question
+> the direction in general.
 
-I wondered about that too, but we'd need to keep the poll() for windows 
-I think (at least in the case where it is using the windows console 
-rather that mintty) so I'm not sure that it ends up any simpler than 
-special casing poll on macos.
-
->>   	if (!tcsetattr(term_fd, TCSAFLUSH, &t))
->>   		return 0;
->>   
->> @@ -159,7 +163,11 @@ static int disable_bits(DWORD bits)
->>   
->>   		if (bits & ENABLE_LINE_INPUT) {
->>   			string_list_append(&stty_restore, "icanon");
->> -			strvec_push(&cp.args, "-icanon");
->> +			/*
->> +			 * POSIX allows VMIN and VTIME to overlap with VEOF and
->> +			 * VEOL - let's hope that is not the case on windows.
->> +			 */
->> +			strvec_pushl(&cp.args, "-icanon", "min", "1", "time", "0", NULL);
-> 
-> Interesting.  So each call to read_key_without_echo() ends up being
-> a run_command("stty -icanon min 1 time 0") followed by a read
-> followed by another "stty".
-> 
-> At least while in -icanon mode, VEOF and VEOL do not take effect,
-> and the potential overlap would not matter.  It really depends on
-> what happens upon restore.
-
-Indeed, we could run another stty process so we can remember the 
-original VEOF and VEOL but that's more complexity and forking.
-
-> Do we have similar "let's hope" on the tcsetattr() side, too?
-
-We're OK there because we modify a copy of the original attributes when 
-changing the settings and use the unmodified originals when restoring them.
+I think if there were a lot of these bugs that needed fixing then the 
+wholesale changes to the way memory is managed you seem to be suggesting 
+would be worth it. However I think the existing code is mostly correct 
+so such a change would be a lot of churn and would absorb a lot of 
+reviewer time that would be better spent elsewhere compared to fixing up 
+the code we have.
 
 Best Wishes
 
 Phillip
-
->>   		}
->>   
->>   		if (bits & ENABLE_ECHO_INPUT) {
-> 
-> Thanks.
-
