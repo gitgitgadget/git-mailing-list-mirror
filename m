@@ -2,159 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14ADBC433F5
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 19:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06627C433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 19:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244935AbiBQTEL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 14:04:11 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38858 "EHLO
+        id S245022AbiBQTKb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 14:10:31 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238291AbiBQTEK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 14:04:10 -0500
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5051F8093D
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 11:03:55 -0800 (PST)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 7BC343F4823;
-        Thu, 17 Feb 2022 14:03:54 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        with ESMTP id S243867AbiBQTK3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 14:10:29 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBB7C8594F
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 11:10:11 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8DB07102737;
+        Thu, 17 Feb 2022 14:10:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UatyEBAuhlicTA0R9jooVx5os6SZIi4ttlqlMb
+        UYW98=; b=xeSf9dk7DhWWxjRxZkjTSbRdqFlrW620sgttJ+O8blnrmc8XAavVCx
+        LkbJ5edBniy68AkOpQ/wxZzh/NwOI/JUM4n0zNRD+oF/uAqVr5TvNEyaVuALqelE
+        IX1DSwpB7E3cus58PrjKTJd2r8DNNcif40tl5T7zg9cJQ0HxkhE38=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7CB93102735;
+        Thu, 17 Feb 2022 14:10:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 2F4C43F483A;
-        Thu, 17 Feb 2022 14:03:54 -0500 (EST)
-Subject: Re: [PATCH v5 24/30] t/perf/p7519: speed up test on Windows
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
- <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
- <fcf843a0d42f3a6b1d226b42014835c3e410fc7d.1644612979.git.gitgitgadget@gmail.com>
- <xmqqk0dub8ex.fsf@gitster.g>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <66663b27-952e-5072-3123-6a091c56d315@jeffhostetler.com>
-Date:   Thu, 17 Feb 2022 14:03:53 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 70F1810272A;
+        Thu, 17 Feb 2022 14:10:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH] glossary: describe "worktree"
+References: <xmqqczjvxy3o.fsf@gitster.g>
+        <CABPp-BHrFb_AA2OAiR7Bmq7vQuyG2Wme_PdjPdY8j-tp3VJfJg@mail.gmail.com>
+        <xmqqiltmwufw.fsf@gitster.g>
+        <CAFQ2z_OgVcaty1wMX0O0mj-PYSAphKAkXgTCW+uJKDAuCwLn4w@mail.gmail.com>
+        <xmqqh796tw34.fsf@gitster.g>
+        <CAFQ2z_Pvje9LM0iyiP87S-L754zepEE_9k=_4Oa0w1Lo_pb=TQ@mail.gmail.com>
+        <xmqqczjuttyw.fsf@gitster.g>
+        <CAFQ2z_O=WguSAJDD4DRpwtX54A5dWQZQPCuQDR81idknQgchaA@mail.gmail.com>
+Date:   Thu, 17 Feb 2022 11:10:07 -0800
+In-Reply-To: <CAFQ2z_O=WguSAJDD4DRpwtX54A5dWQZQPCuQDR81idknQgchaA@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Thu, 17 Feb 2022 11:00:12 +0100")
+Message-ID: <xmqqtucx8g34.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqk0dub8ex.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 398ED6C2-9025-11EC-92E2-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
+> For FETCH_HEAD, doing
+>
+>   git fetch host refs/changes/23/123/1 && git checkout FETCH_HEAD
+>
+> is the standard idiom for downloading a change from Gerrit. I suspect
+> there might be other similar idioms. This means we have to read them
+> through the refs machinery.
 
-On 2/16/22 8:15 PM, Junio C Hamano wrote:
-> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> +touch_files () {
->> +	n=$1
->> +	d="$n"_files
->> +
->> +	(cd $d ; test_seq 1 $n | xargs touch )
->> +}
->> +
->>   test_expect_success "one time repo setup" '
->>   	# set untrackedCache depending on the environment
->>   	if test -n "$GIT_PERF_7519_UNTRACKED_CACHE"
->> @@ -119,10 +126,11 @@ test_expect_success "one time repo setup" '
->>   	fi &&
->>   
->>   	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
->> -	for i in $(test_seq 1 10); do touch 10_files/$i || return 1; done &&
->> -	for i in $(test_seq 1 100); do touch 100_files/$i || return 1; done &&
->> -	for i in $(test_seq 1 1000); do touch 1000_files/$i || return 1; done &&
->> -	for i in $(test_seq 1 10000); do touch 10000_files/$i || return 1; done &&
->> +	touch_files 1 &&
-> 
-> This causes touch_files to chdir to 1_files and run "touch 1" in
-> there, but because there is no such directory (we have 1_file/
-> directory, but not 1_files/ directory), it would fail.
-> 
->> +	touch_files 10 &&
->> +	touch_files 100 &&
->> +	touch_files 1000 &&
->> +	touch_files 10000 &&
-> 
-> Apparently nobody has run this perf script recently since part #2
-> was posted.
-> 
->>   	git add 1_file 10_files 100_files 1000_files 10000_files &&
-> 
-> The original introduced at bb7cc7e7 (t/perf/fsmonitor: separate one
-> time repo initialization, 2020-10-26) created an empty directory 1_file
-> and without creating anything in it, ran "git add" on it.
-> 
-> If we are not doing anything to 1_file directory anyway, perhaps we
-> can get rid of it to avoid the breakage in "make perf"?
-> 
-> If we have a chance to reroll this series, we can squash in
-> something like this, perhaps (it does not deserve to be a separate
-> step).
+This merely means we have to read them through the object-name
+machinery around get_oid().  Historically that was done by calling
+repo_dwin_ref() from get_oid_basic(), which is where refs machinery
+enters the picture, and because we had only files backend, it was OK
+and convenient to treat .git/FETCH_HEAD and .git/refs/heads/master
+in the same codepath.  But there is no reason for the arrangement to
+stay that way.  .git/FOOBAR_HEAD files can be read as a file (we can
+say we let files-backend to handle it, but we can also extract a helper
+function out of it and make it clear that it truly has no dependence
+on the refs machinery) while .git/refs/* can be read from the refs
+machinery that may be backed by reftable backend.
 
-Good catch!
+> I think the most sensible approach is to pass the read/write through
+> refs_* functions, but special-case the storage, so it doesn't go
+> through reftable. We already do this for FETCH_HEAD and MERGE_HEAD in
+> refs_read_raw_refs.
 
-It looks to me like there was an oversight/typo in the original
-89afd5f5ad (t/perf: add fsmonitor perf test for git diff, 2020-10-20).
-They created the "1_file" directory and didn't put anything in it.
-Then later when they test it, they say "0_files" in the test name
-and "1_file" in the "git diff" command.
+I think we are more or less on the same page.  I do not think these
+files behave like refs (they have no reflog, and they do not serve
+as anchoring points for the purpose of gc/fsck) and we need a
+special code path, which might be identical to the current ref-files
+backend code, to handle them no matter what backend is used for true
+refs.
 
-I don't think it's worth keeping an empty directory here, since there
-won't be anything in the index after the add and since the directory
-is empty the untracked cache won't have anything to scan.
-
-My version (without the typo) would have created 1 file in the directory
-but I don't think that's worth keeping either, since we create thousands
-of files in steps right after it.
-
-I'll make a note to remove it.
-
-Jeff
-
-
-
-> 
-> --- >8 ---
-> Subject: [PATCH] p7519: leave 1_file directory empty
-> 
-> The step "t/perf/p7519: speed up test on Windows" in the topic
-> builtin-fsmonitor-part-2 (not in 'next' yet) attempts to create one
-> file in 1_files directory, but the original introduced at bb7cc7e7
-> (t/perf/fsmonitor: separate one time repo initialization,
-> 2020-10-26):
-> 
->   (1) created 1_file directory,
-> 
->   (2) left the directory empty, and
-> 
->   (3) a later test expected (and still expects) that there is nothing
->       in the directory.
-> 
-> Revert the behaviour back to what the original wanted to do.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->   t/perf/p7519-fsmonitor.sh | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-> index 9a2288a622..a1c552129c 100755
-> --- a/t/perf/p7519-fsmonitor.sh
-> +++ b/t/perf/p7519-fsmonitor.sh
-> @@ -126,7 +126,7 @@ test_expect_success "one time repo setup" '
->   	fi &&
->   
->   	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
-> -	touch_files 1 &&
-> +	: 1_file directory should be left empty &&
->   	touch_files 10 &&
->   	touch_files 100 &&
->   	touch_files 1000 &&
-> 
+> This means we need a formal definition of which refs should be treated
+> as files. Maybe we could do as follows:
+>
+> Pseudorefs are
+>   1) all uppercase toplevel names except for HEAD
+>   2) all refs that are not under refs/* (for example:
+> rebase-{merge,apply}/autostash)
+>
+> Pseudorefs are always stored as files containing a hex object_id.
+>
+> Pseudorefs can be read or written through refs_* functions, but given
+> the storage guarantees, it's also valid to read/write them outside
+> refs_* functions
+>
+> It is forbidden to make cross-ref transactions that involve pseudorefs.
