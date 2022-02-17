@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94DCFC433FE
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 13:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F931C433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 13:04:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240641AbiBQNEh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 08:04:37 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37330 "EHLO
+        id S240644AbiBQNEo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 08:04:44 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240621AbiBQNEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 08:04:35 -0500
+        with ESMTP id S240621AbiBQNEi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 08:04:38 -0500
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A8A82AA3B9
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:04:21 -0800 (PST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id B6BB23201DDC;
-        Thu, 17 Feb 2022 08:04:20 -0500 (EST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5FA22A8D04
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:04:24 -0800 (PST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id 2E2903201F24;
+        Thu, 17 Feb 2022 08:04:24 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 17 Feb 2022 08:04:21 -0500
+  by compute5.internal (MEProxy); Thu, 17 Feb 2022 08:04:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=sw2cR2H/8Pt8Fhj7CzRoX18HQtQgRVvb1FqLUJ
-        3zCyM=; b=S32iC8N0FTQBC1Z5CZrIKEiG3WVDKxHvte5hUHD0pcJCFKHc3h5blu
-        gAtiOKMOCKl+SqNlVkeOFmm4RMk9i/QJva/ohwZSjRZm/5B2sMZw4RkdBCwtAoHY
-        /Pt/YNTeVvnQd/qyENHxamt1ORHtCpFnJ+4d4Kmf3AsrnSj96y9Dy5bBa08JNk1V
-        b2+dXRWFIlAxHEsQpEUsx/bY6tPOvv3yeol7C52jRkerUCnB9ibV0RyvwSBYwfQ5
-        +fEx72r4xO+aDmVh2J0ASXfZe+6zJmp8gTeoZMnMmmMqo1Q6mrmsbdYTtvuOlBeP
-        yPHm2s1E/i5vlUDv6dGk7DXhfJpQM5uQ==
+        :subject:to:to; s=fm3; bh=nXghBgG2ii8dUuVHCrZ/YenptqzpimxbU08Sj/
+        5RgKA=; b=jB4RAvHKpvF6n4tOsBAD81ehWASkF3v+9YsGAy+DJPkwsNHVaWI9Cj
+        a5h5Y+QUGJNiHbhG7DGh+ZfYrSxdzrmICPGP2lH5anNlThBy+QBz05smhCEVst02
+        F3wjgezXCgoCEBAKiG1veD6Wwsrcrcp195bkDIs0va2/Y+fs6p4e4h7lwJrU5UrS
+        1stgUIzJSTir5NBLLU+ih9CIwJ6/6K9onlL6mzggwrcIejsXW2A0e87jy8R1qUFc
+        P1NSl52jRdzSh8eINp0Tpdwng+IZRSgQgcjpnSTsXx+rrfNuCoUvsnJ6cAsgp0Hd
+        jeLxIxXWWt24Ypugol6neirFlMv0zjMw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=sw2cR2H/8Pt8Fhj7C
-        zRoX18HQtQgRVvb1FqLUJ3zCyM=; b=EoLPZyfnd9rn1pKRqabUy7RJvJnXgcqSP
-        L6x/+CfyXpYmcfDK3JHe0nihijyQQD1GcH4xd1m3gpQqqKzb625TvTyNqTsNGVNb
-        sT+EuXz/Hs62MlJ6YwZtZ54FKjOcJj0pPEkXjwVradcpvSpoctYEh4kCHQ0qVhSL
-        55W6/6fUk9ZfXj1TbIRFqlCxISKpa7Y3B8LudD/qf8rbAme60TFkV6kvOMHQfxO+
-        KCsheBH7HQNtyhsNlymrgu3URPSFrJ+tqzGajD5exdWoxr19oM+RBb+e39NuHue9
-        nD03Iv2dHEy2/re8iexdTgTNPwnNHHDrSoKuQ/nfhWto0JnIa9faQ==
-X-ME-Sender: <xms:00cOYnxQ3TKKPfl4AODdGoJ0lzexGFVWLjkRNTZBgTRD4Aykh1Hs1g>
-    <xme:00cOYvTI0IB8_2-a8TfwZuPeKPUGk5vFsOnNv-6nFeukIeCJFuqe_aaXHvKqXjNfu
-    E6F1fcOALMkikw_9Q>
-X-ME-Received: <xmr:00cOYhUgwT3ABiA2aEKO3Ai5ffo8CNGS5BvSq9xpZ3x8tYwecp_YJnlqyVZkVjsDdp64h-o6J2poJjsY_zNqY43f8zRY4kejeU2Y2UP63RSXrO5oA50KRNw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgdegjecutefuodetggdotefrodftvf
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=nXghBgG2ii8dUuVHC
+        rZ/YenptqzpimxbU08Sj/5RgKA=; b=KP7i6+CMpcKjWLKXjmvPmPjYkeihmUo6E
+        8etb04ZPwg1jOqFjjrfZ1AnaP/+NkSO0ctf1NpuWKQ7FvDscqsu2SPDcEJ676VUZ
+        TGdX7ZyCTDi3UAQqf0V1HYogd+IkkOU2mQINdaxYA915FwXX+YNRyFEESfcrqQio
+        L8O2252arFUG4t+9l7DHVfz2y9st3ygOOZhWdEKY0icgZhtOI7+8HmHc9ytxL6P1
+        hEeInbhRCaCSvuh0q+Z5UOE/XTi1311pG5aEDHRDpfMZWyWaOylUl3bx26G1Kz81
+        C3y++1U2Mrrzc1gCDl8AsdGbi5NfavDBX/LkV+gLD6Z8jzf9+Xrng==
+X-ME-Sender: <xms:10cOYoKbcA-x-RAIeCgnmqvr6mJ5A0YLy2GDEHG8Tu_39uIX0G1GEQ>
+    <xme:10cOYoIedx5Cp8OuUIyj0yXt0zE6pEZWbIz9f4m189mQD32EYp_SO_ciLlzp_njcH
+    PD3ARfsYKX9sOKd3Q>
+X-ME-Received: <xmr:10cOYoshWdHi2tHnkpcpGDvjzqa4b1hg7cz6p8wKwAmG01t-Fy7175eEccdaQm_ND4n2yX6zxyTD7bxQz9MTpSCqbApH56Owek9WnaSDSXIa3_-RM5tdNzY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgdegiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
@@ -52,27 +52,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgdegjecutefuodetggdote
     epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimh
-X-ME-Proxy: <xmx:00cOYhjzTNyNB5UMYsiH8QmTAtJNUUjp7LGbJHaJMuIxFCJWdx04qQ>
-    <xmx:00cOYpDVjhXFE040HhOmY6Vk5GALFUsmWeIQE-7EnA5C9M_L_mCqOA>
-    <xmx:00cOYqLqVsOGLrAKHmS6zLeDkx-ulfCnd8SMqdxAa3-nSLY1xvZUNA>
-    <xmx:00cOYsMEqYiwZawhR9PMg5LCupU8KAZp6Ah05P5HuWxPGMA0-lERXQ>
+X-ME-Proxy: <xmx:10cOYlaWHfK-fHKIFL0rM__3fogtCZm2kxOFnINadC5ty0oMvjB2HQ>
+    <xmx:10cOYvYKNhNIc2rrPatrqJM0wULQv-2xD50szADFODBXgJSkf6_Uqg>
+    <xmx:10cOYhBLiqunhelVtyttz-w15fcrg2tgVmX16dCIaDraDdwGldMzWA>
+    <xmx:10cOYulAHycTqsFmIYWVySTnP7RA2RjxyujVzPzWGprPijhxu6OafQ>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Feb 2022 08:04:18 -0500 (EST)
+ 17 Feb 2022 08:04:22 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 4405b10e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 17 Feb 2022 13:04:17 +0000 (UTC)
-Date:   Thu, 17 Feb 2022 14:04:16 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 8d427bc5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 17 Feb 2022 13:04:21 +0000 (UTC)
+Date:   Thu, 17 Feb 2022 14:04:20 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Christian Couder <christian.couder@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 1/7] fetch: increase test coverage of fetches
-Message-ID: <b4ca3f1f3baacde2aea7bae4f583f68c211a557a.1645102965.git.ps@pks.im>
+Subject: [PATCH v2 2/7] fetch: backfill tags before setting upstream
+Message-ID: <b0a067bbc1e7b9d3ad76acd437d8095c5a48c5d7.1645102965.git.ps@pks.im>
 References: <cover.1645102965.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="X6kBdmhR7o198X3t"
+        protocol="application/pgp-signature"; boundary="DeWDIVtMv0KG16L9"
 Content-Disposition: inline
 In-Reply-To: <cover.1645102965.git.ps@pks.im>
 Precedence: bulk
@@ -80,192 +80,139 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---X6kBdmhR7o198X3t
+--DeWDIVtMv0KG16L9
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When using git-fetch(1) with the `--atomic` flag the expectation is that
-either all of the references are updated, or alternatively none are in
-case the fetch fails. While we already have tests for this, we do not
-have any tests which exercise atomicity either when pruning deleted refs
-or when backfilling tags. This gap in test coverage hides that we indeed
-don't handle atomicity correctly for both of these cases.
+The fetch code flow is a bit hard to understand right now:
 
-Add test cases which cover these testing gaps to demonstrate the broken
-behaviour. Note that tests are not marked as `test_expect_failure`: this
-is done to explicitly demonstrate the current known-wrong behaviour, and
-they will be fixed up as soon as we fix the underlying bugs.
+    1. We optionally prune all references which have vanished on the
+       remote side.
+    2. We fetch and update all other references locally.
+    3. We update the upstream branch in the gitconfig.
+    4. We backfill tags pointing into the history we have just fetched.
 
-While at it this commit also adds another test case which demonstrates
-that backfilling of tags does not return an error code in case the
-backfill fails. This bug will also be fixed by a subsequent commit.
+It is quite confusing that we fetch objects and update references in
+both (2) and (4), which is further stressed by the point that we use a
+`skip` goto label to jump from (3) to (4) in case we fail to update the
+gitconfig as expected.
+
+Reorder the code to first update all local references, and only after we
+have done so update the upstream branch information. This improves the
+code flow and furthermore makes it easier to refactor the way we update
+references together.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t5503-tagfollow.sh | 81 ++++++++++++++++++++++++++++++++++++++++++++
- t/t5510-fetch.sh     | 33 ++++++++++++++++++
- 2 files changed, 114 insertions(+)
+ builtin/fetch.c | 35 ++++++++++++++++++-----------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
-index 195fc64dd4..6ffe2a5719 100755
---- a/t/t5503-tagfollow.sh
-+++ b/t/t5503-tagfollow.sh
-@@ -160,4 +160,85 @@ test_expect_success 'new clone fetch main and tags' '
- 	test_cmp expect actual
- '
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 6f5e157863..904ca9f1ca 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1536,7 +1536,7 @@ static void backfill_tags(struct transport *transport=
+, struct ref *ref_map,
+ static int do_fetch(struct transport *transport,
+ 		    struct refspec *rs)
+ {
+-	struct ref *ref_map;
++	struct ref *ref_map =3D NULL;
+ 	int autotags =3D (transport->remote->fetch_tags =3D=3D 1);
+ 	int retcode =3D 0;
+ 	const struct ref *remote_refs;
+@@ -1620,11 +1620,24 @@ static int do_fetch(struct transport *transport,
+ 			retcode =3D 1;
+ 	}
+ 	if (fetch_and_consume_refs(transport, ref_map, worktrees)) {
+-		free_refs(ref_map);
+ 		retcode =3D 1;
+ 		goto cleanup;
+ 	}
 =20
-+test_expect_success 'atomic fetch with failing backfill' '
-+	git init clone3 &&
++	/*
++	 * If neither --no-tags nor --tags was specified, do automated tag
++	 * following.
++	 */
++	if (tags =3D=3D TAGS_DEFAULT && autotags) {
++		struct ref *tags_ref_map =3D NULL, **tail =3D &tags_ref_map;
 +
-+	# We want to test whether a failure when backfilling tags correctly
-+	# aborts the complete transaction when `--atomic` is passed: we should
-+	# neither create the branch nor should we create the tag when either
-+	# one of both fails to update correctly.
-+	#
-+	# To trigger failure we simply abort when backfilling a tag.
-+	write_script clone3/.git/hooks/reference-transaction <<-\EOF &&
-+		while read oldrev newrev reference
-+		do
-+			if test "$reference" =3D refs/tags/tag1
-+			then
-+				exit 1
-+			fi
-+		done
-+	EOF
++		find_non_local_tags(remote_refs, &tags_ref_map, &tail);
++		if (tags_ref_map)
++			backfill_tags(transport, tags_ref_map, worktrees);
 +
-+	test_must_fail git -C clone3 fetch --atomic .. $B:refs/heads/something &&
++		free_refs(tags_ref_map);
++	}
 +
-+	# Creation of the tag has failed, so ideally refs/heads/something
-+	# should not exist. The fact that it does demonstrates that there is
-+	# a bug in the `--atomic` flag.
-+	test $B =3D "$(git -C clone3 rev-parse --verify refs/heads/something)"
-+'
-+
-+test_expect_success 'atomic fetch with backfill should use single transact=
-ion' '
-+	git init clone4 &&
-+
-+	# Fetching with the `--atomic` flag should update all references in a
-+	# single transaction, including backfilled tags. We thus expect to see
-+	# a single reference transaction for the created branch and tags.
-+	cat >expected <<-EOF &&
-+		prepared
-+		$ZERO_OID $B refs/heads/something
-+		$ZERO_OID $S refs/tags/tag2
-+		committed
-+		$ZERO_OID $B refs/heads/something
-+		$ZERO_OID $S refs/tags/tag2
-+		prepared
-+		$ZERO_OID $T refs/tags/tag1
-+		committed
-+		$ZERO_OID $T refs/tags/tag1
-+	EOF
-+
-+	write_script clone4/.git/hooks/reference-transaction <<-\EOF &&
-+		( echo "$*" && cat ) >>actual
-+	EOF
-+
-+	git -C clone4 fetch --atomic .. $B:refs/heads/something &&
-+	test_cmp expected clone4/actual
-+'
-+
-+test_expect_success 'backfill failure causes command to fail' '
-+	git init clone5 &&
-+
-+	write_script clone5/.git/hooks/reference-transaction <<-EOF &&
-+		while read oldrev newrev reference
-+		do
-+			if test "\$reference" =3D refs/tags/tag1
-+			then
-+				# Create a nested tag below the actual tag we
-+				# wanted to write, which causes a D/F conflict
-+				# later when we want to commit refs/tags/tag1.
-+				# We cannot just `exit 1` here given that this
-+				# would cause us to die immediately.
-+				git update-ref refs/tags/tag1/nested $B
-+				exit \$!
-+			fi
-+		done
-+	EOF
-+
-+	# Even though we fail to create refs/tags/tag1 the below command
-+	# unexpectedly succeeds.
-+	git -C clone5 fetch .. $B:refs/heads/something &&
-+	test $B =3D $(git -C clone5 rev-parse --verify refs/heads/something) &&
-+	test $S =3D $(git -C clone5 rev-parse --verify tag2) &&
-+	test_must_fail git -C clone5 rev-parse --verify tag1
-+'
-+
- test_done
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index ef0da0a63b..70d51f343b 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -343,6 +343,39 @@ test_expect_success 'fetch --atomic --append appends t=
-o FETCH_HEAD' '
- 	test_cmp expected atomic/.git/FETCH_HEAD
- '
+ 	if (set_upstream) {
+ 		struct branch *branch =3D branch_get("HEAD");
+ 		struct ref *rm;
+@@ -1644,7 +1657,7 @@ static int do_fetch(struct transport *transport,
+ 			if (!rm->peer_ref) {
+ 				if (source_ref) {
+ 					warning(_("multiple branches detected, incompatible with --set-upstre=
+am"));
+-					goto skip;
++					goto cleanup;
+ 				} else {
+ 					source_ref =3D rm;
+ 				}
+@@ -1658,7 +1671,7 @@ static int do_fetch(struct transport *transport,
+ 				warning(_("could not set upstream of HEAD to '%s' from '%s' when "
+ 					  "it does not point to any branch."),
+ 					shortname, transport->remote->name);
+-				goto skip;
++				goto cleanup;
+ 			}
 =20
-+test_expect_success 'fetch --atomic --prune executes a single reference tr=
-ansaction only' '
-+	test_when_finished "rm -rf \"$D\"/atomic" &&
-+
-+	cd "$D" &&
-+	git branch scheduled-for-deletion &&
-+	git clone . atomic &&
-+	git branch -D scheduled-for-deletion &&
-+	git branch new-branch &&
-+	head_oid=3D$(git rev-parse HEAD) &&
-+
-+	# Fetching with the `--atomic` flag should update all references in a
-+	# single transaction. It is currently missing coverage of pruned
-+	# references though, and as a result those may be committed to disk
-+	# even if updating references fails later.
-+	cat >expected <<-EOF &&
-+		prepared
-+		$ZERO_OID $ZERO_OID refs/remotes/origin/scheduled-for-deletion
-+		committed
-+		$ZERO_OID $ZERO_OID refs/remotes/origin/scheduled-for-deletion
-+		prepared
-+		$ZERO_OID $head_oid refs/remotes/origin/new-branch
-+		committed
-+		$ZERO_OID $head_oid refs/remotes/origin/new-branch
-+	EOF
-+
-+	write_script atomic/.git/hooks/reference-transaction <<-\EOF &&
-+		( echo "$*" && cat ) >>actual
-+	EOF
-+
-+	git -C atomic fetch --atomic --prune origin &&
-+	test_cmp expected atomic/actual
-+'
-+
- test_expect_success '--refmap=3D"" ignores configured refspec' '
- 	cd "$TRASH_DIRECTORY" &&
- 	git clone "$D" remote-refs &&
+ 			if (!strcmp(source_ref->name, "HEAD") ||
+@@ -1678,21 +1691,9 @@ static int do_fetch(struct transport *transport,
+ 				  "you need to specify exactly one branch with the --set-upstream opti=
+on"));
+ 		}
+ 	}
+-skip:
+-	free_refs(ref_map);
+-
+-	/* if neither --no-tags nor --tags was specified, do automated tag
+-	 * following ... */
+-	if (tags =3D=3D TAGS_DEFAULT && autotags) {
+-		struct ref **tail =3D &ref_map;
+-		ref_map =3D NULL;
+-		find_non_local_tags(remote_refs, &ref_map, &tail);
+-		if (ref_map)
+-			backfill_tags(transport, ref_map, worktrees);
+-		free_refs(ref_map);
+-	}
+=20
+ cleanup:
++	free_refs(ref_map);
+ 	free_worktrees(worktrees);
+ 	return retcode;
+ }
 --=20
 2.35.1
 
 
---X6kBdmhR7o198X3t
+--DeWDIVtMv0KG16L9
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIOR88ACgkQVbJhu7ck
-PpSQbg/9EsrV/qYwB9fe7DEQVqoF7UuJqRSDJMe5wjA5ANMxYpAe38g4257QgcoN
-pCLI+7VOlhon//a4751WIvJudTP0puXHPmcT7liUaONfrnOcMsbmZjk/GaYsbYNC
-4THxTe1Lub4Jz98d4IW6UO+n6KOba4afUnnxo4d3dmyTn0gFvVBBljFH3r0zP9Hk
-mmsAUTSXckGEvzS6aAe6W1UJwdiPu1LsWTBfBXPKdVPrzqk8tKtLdGeIRU3RwwRT
-iAQy3RkmlhwWJuv1fj8devLeQ2E5D6r7x7qnu6AtIAHAd42eym0vVArVEd7MRBLq
-TNOKEosSCbseypOj8adv7tVaakR9nFrEhindI0HALsAkraPo7Pq4DNFIbV4grNne
-w3iDwh7vx0n2TVRvvGmc2pCm15RDVMsrvsAjjRPfcZ0hpcsj2+D18n30r3Lp0+81
-3k04f98OqU2ni9pHHtmAi90QG61JTCRDp+A9AjQiZ1au9NxrGpLle/I63koklpFf
-/fkBur2AtO20a1GEwizhXY7rRkaHmc3A2xrmQB5MooE0vytIb2NCskDlxP/CByE1
-u7zf+GmIRmFK1dvau2hQL1vP3Sy6dueUfhkC1TRlLdcXq+qpPoh/OZ87i2BO2c5L
-WdbNRQoIvxXh6zoWrY7C6CoYam3YgxiEA5dNxtoiDNU8Lm0IXo0=
-=TttN
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIOR9MACgkQVbJhu7ck
+PpRyew/+J2jr+HbmqY6c++OOSJs570VJ7Hm/1Owwt/cPZt8RRcIiQIW5K9yFnWcb
+3uPQlf2ZAbtnJuN//vX7TSYipP19z3WVgaNl3tWU3DWSECYEZMU/Aq+ZpLgRXc24
+QRKyAI33vNdiLTz8OwPj+Lb63LbFwoczmKean8C0ZG4z8Q/LEEqLvlS/Wnpx0xHk
+w7Hq5/M98QIK6z+zkSrILFeoHi7/tbQUSi9qZJiMedV8jCbwynC3Q0l0QxicuOxR
+f+AQRymobLZVn2yfD+M5i4/btksH6RyuaYU/KJUZwOXC7sijT7k97hYAzx+q9mWa
+RhdW3ziuFWlZi8U499HoOrC/f/kI2ecXrUPcEYOUuMjhh+uBf9+NaTQ1/37KBZL/
+T3mjji5uouQqGwAGqZ3uIohO7u6gmVwsJ/2c3z/lQeTSUNkSRHaJuRQbnjiN025j
+HVb2L3cOKox6R34xSlfCn34m4/Hbu9ZeRjLWLdK2xsGONOJMEZKZxNcDviRPAYQJ
+bM75TGXo/qNlKDSUlFD6Isc6q2/rAxAd5jA3UzdGbmuFVTDS9Qz+ZVXpq0GODyz2
+DxsGciz86jnK9gOitaNC9NTCmE6zg0VwQpBy0IhtZ6giAEL1vYqqR2ektkJk/wsr
+fA3LU+BrA5TOAkZN1FD+PtxT2UOuI5fyirkvNX+yfXRM9M89AAQ=
+=XX9e
 -----END PGP SIGNATURE-----
 
---X6kBdmhR7o198X3t--
+--DeWDIVtMv0KG16L9--
