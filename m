@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9176C43219
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 13:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CC78C4321E
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 13:55:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241489AbiBQNzu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 08:55:50 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42344 "EHLO
+        id S241490AbiBQNzw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 08:55:52 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241126AbiBQNzn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 08:55:43 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FF2F2731CB
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:55:29 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id k127-20020a1ca185000000b0037bc4be8713so6253147wme.3
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:55:28 -0800 (PST)
+        with ESMTP id S241395AbiBQNzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 08:55:44 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744BB272DA3
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:55:30 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id d27so9177101wrc.6
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:55:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=W5Yj2jthDENAX/pjHPe/3jF4bTw09ifuA6lPu72S2Y4=;
-        b=d+zqP5JpXU3b2S6IZycsthQ/BsrBt9JgY8IkKb1IUPibVct2paNEpBowCALNNcP7p7
-         n4hWXpH3lt/7Za9XAeFlZbk9qG0L7OyFzUjaqK5VLcwcojT9vZpfIbKUdYs/tm6Rslj5
-         SaVHaARZcPIWQYyVG4kImDuv3C5axRJj2ZF7Lw1p+xWmtI9ACSKdXM57XTrCEbt8z0W4
-         9To3j22Uzl4XffoZYrLp1ozmIBLeJbWwCujenPNfvQ7u/2rbV0khVcCa3BLdJLBRORfo
-         Nd3Iejt+/vHWjGMJcy3Hk7yrgSzSXtWvO14j3qFOQjb4NBfnXbdJ19cK7D+3BUHNCzBW
-         N3BQ==
+        bh=7x4uCn/FbLLnXOpxQxwOKZWEYHfXkWZ+5D871Kaw7Sg=;
+        b=ki40QNa9LV6p2wyfiyyL4eP0MlLXUnVheJrIcSEVHbKfyXssh1zCSOjx63CKwefHF6
+         nlMGhDCsAimQNW/rcL9gdZw305ONdnRZkyWY50R3tMxUdZgxK1+r038K8fKZyYdLl+k0
+         UZ1/RIJlPeicD4SkwIW9+i1/gFVeBFCTPyeyLp5AtWeIZSWApmFZ1yNL8CHuyZR4flZ3
+         iZqhXQNju8bJxIcv7kk3EGy2o4W41IE7MLD6iOWmo/fx4VhS+VnBn8jPj4TcFkMZ8Q6U
+         9uJ7fX8jLtbLVlZGS6sgxOz91P9C6GKAHezwCX4G1H8kAA5crLryflgTkqJSJ8smQMEU
+         e0gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=W5Yj2jthDENAX/pjHPe/3jF4bTw09ifuA6lPu72S2Y4=;
-        b=VCVH3U8KcM9HR6fQ9Iu4FYz+LkjwjaIBAEu4DjphEOvP8m1c+aLu4UtLE4fIQ7mZXp
-         ijQNWbr0A8bE4VJKs1445iWWzuwV5zFc0FA8ZFw0yoMpzA2J5OzsR8WenCPHCdshLbrQ
-         awqlVlS37eSiQEV2nPB129VWXDgY7Id9KkZZGehxtQtsTRFTa/gEe20SuDuDrr/alzvA
-         DUQebLkEwWCuHVfnPnkxCnrK4SonZqJijVQZsbMQsXGnaFCL1/N2IuhT7k1xkmZm+fM2
-         Q5Co1DAB63T4bo9VxVAUBJWww69MTzoOJxKzsSGcvYm5RoIWm0TcawRMWbiaPRpf2Auf
-         RLdQ==
-X-Gm-Message-State: AOAM5315e1ljGkk2o7vRjBal888eiJZt6WegCVj76HumDVVE8FtGsG8k
-        HeB/9D+kepOqVbbdkMGDqSIGTBqxqMY=
-X-Google-Smtp-Source: ABdhPJwnjhk8V/z8/s5GaMvdQ6htIrBbdfpseht4j5WjyGmVlGUwcXIVJlMUyqJjZeo53D3yW4xBLQ==
-X-Received: by 2002:a05:600c:154f:b0:37d:f2e5:d89b with SMTP id f15-20020a05600c154f00b0037df2e5d89bmr2841261wmg.92.1645106126659;
-        Thu, 17 Feb 2022 05:55:26 -0800 (PST)
+        bh=7x4uCn/FbLLnXOpxQxwOKZWEYHfXkWZ+5D871Kaw7Sg=;
+        b=h2uFYu8W7ikzWrqNZ+0CHpuFwQeq+5DTh/i+DMTNbEzwEMB9D0NoXvF1TRVIvIo7W4
+         fXNC4HfNibFrFqWU4W8K837mVGvEdBiO1E7lOriGdGHw4L4jSOCAlt2zNr8V5107tnWl
+         D3jrutFjbll1iGvE6Kb5M2q7Dy/79BZS2qx+hUrjSJmiEpxYogrIsnDjY8sP0lrmbU3O
+         eNZTQbF9q11oW/04ORZ9eWIpVB9TGETPS4OH7xlGiFeKnznbG6f0cC29MzcNPdx+QGnQ
+         rGApzCESMYKQLLVH0nc+4Sk87rAeUP2PIF+K5qTU4l6cQ6PE6R2MrM6oG5HPk0XNyzE2
+         wviA==
+X-Gm-Message-State: AOAM53200KqbDZF6Fqy0fRx4emOp0aEixC0o6pl9iOG4kpJYfK5QrVpo
+        Im4BITcEpukaQgfYb9EKYceZlGeZi7w=
+X-Google-Smtp-Source: ABdhPJxbkcEg7RBYqV90+MppIw1WLf9AjkRKFx2wvFClLFDqPPNDOBfkXtxxEN09bcFrO9TPChp1BQ==
+X-Received: by 2002:adf:e4c2:0:b0:1e3:3e5d:bd65 with SMTP id v2-20020adfe4c2000000b001e33e5dbd65mr2466305wrm.422.1645106128839;
+        Thu, 17 Feb 2022 05:55:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o16sm1314707wmc.25.2022.02.17.05.55.26
+        by smtp.gmail.com with ESMTPSA id g4sm13754420wri.88.2022.02.17.05.55.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Feb 2022 05:55:26 -0800 (PST)
-Message-Id: <80d29e8f269bf0888d5b1db5f941d1a9bf89c86a.1645106124.git.gitgitgadget@gmail.com>
+        Thu, 17 Feb 2022 05:55:28 -0800 (PST)
+Message-Id: <4c1a19fc4aef2742e2733b804221186aa164f721.1645106124.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1185.v2.git.git.1645106124.gitgitgadget@gmail.com>
 References: <pull.1185.git.git.1642010868.gitgitgadget@gmail.com>
         <pull.1185.v2.git.git.1645106124.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 17 Feb 2022 13:55:18 +0000
-Subject: [PATCH v2 1/7] Documentation: object_id_len goes up to 31
+Date:   Thu, 17 Feb 2022 13:55:19 +0000
+Subject: [PATCH v2 2/7] reftable: reject 0 object_id_len
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,27 +68,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-The value is stored in a 5-bit field, so we can't support more without
-a format version upgrade.
+The spec says 2 <= object_id_len <= 31. We are lenient and allow 1,
+but we forbid 0, so we can we can be sure that we never read a
+0-length key.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- Documentation/technical/reftable.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ reftable/reader.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/technical/reftable.txt b/Documentation/technical/reftable.txt
-index d7c3b645cfb..6a67cc4174f 100644
---- a/Documentation/technical/reftable.txt
-+++ b/Documentation/technical/reftable.txt
-@@ -443,7 +443,7 @@ Obj block format
- Object blocks are optional. Writers may choose to omit object blocks,
- especially if readers will not use the object name to ref mapping.
- 
--Object blocks use unique, abbreviated 2-32 object name keys, mapping to
-+Object blocks use unique, abbreviated 2-31 byte object name keys, mapping to
- ref blocks containing references pointing to that object directly, or as
- the peeled value of an annotated tag. Like ref blocks, object blocks use
- the file's standard block size. The abbreviation length is available in
+diff --git a/reftable/reader.c b/reftable/reader.c
+index 00906e7a2de..54b4025105c 100644
+--- a/reftable/reader.c
++++ b/reftable/reader.c
+@@ -155,6 +155,11 @@ static int parse_footer(struct reftable_reader *r, uint8_t *footer,
+ 	r->log_offsets.is_present = (first_block_typ == BLOCK_TYPE_LOG ||
+ 				     r->log_offsets.offset > 0);
+ 	r->obj_offsets.is_present = r->obj_offsets.offset > 0;
++	if (r->obj_offsets.is_present && !r->object_id_len) {
++		err = REFTABLE_FORMAT_ERROR;
++		goto done;
++	}
++
+ 	err = 0;
+ done:
+ 	return err;
 -- 
 gitgitgadget
 
