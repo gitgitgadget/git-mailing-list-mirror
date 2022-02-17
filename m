@@ -2,30 +2,30 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68E87C433EF
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 16:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAD27C433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 16:50:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243412AbiBQQq0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 11:46:26 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33222 "EHLO
+        id S243433AbiBQQuc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 11:50:32 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239915AbiBQQqZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 11:46:25 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5D82F67
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 08:46:10 -0800 (PST)
+        with ESMTP id S243184AbiBQQu3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 11:50:29 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E5D5CD5C7
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 08:50:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645116364;
-        bh=HTwL2Qsq80goQhVTQ3kGcvI1ea84vUm98Yyq4o0jTyU=;
+        s=badeba3b8450; t=1645116607;
+        bh=euDl46H3kooSAWWIuqDLypCseuoT+Pq2XZ1lFNrmrBQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=AHExGxSdnpDO9cEEGR1sf6+E8ggEFfMgrGvMTtezrHuVBlCn9WzKPfCRmuBE868Zp
-         /i4XI4UXgnVgGGQYMc/OA0yQYNqoSzKiKkX9HeqddZtCxb9ama7b4MMC8+RsZAoBUt
-         R6zuNjLAhvcSbNJFozopO7mdGgOBMODXWQwEFeyk=
+        b=T6cLdnd/B+3OY4rCeCvsLTIaeiS1+oRpHB3fOGEFcBx17V4rCOFZlH9ioC2X2NGsR
+         SGysecKVnsbviIEbHO+2KagU6r5ok73tYmgxf63A45KlKUToiwW5OvY8/REgb6K+JN
+         bYyqzVFwgnCkorLG/4e+Ro+96vlnBqh3vE8CkYVA=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MiacR-1nx5D92Mop-00flx2; Thu, 17
- Feb 2022 17:46:04 +0100
-Date:   Thu, 17 Feb 2022 17:46:02 +0100 (CET)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mn2aN-1o1SqO1sJz-00k9kX; Thu, 17
+ Feb 2022 17:50:07 +0100
+Date:   Thu, 17 Feb 2022 17:50:05 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
@@ -35,34 +35,34 @@ cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v5 10/30] fsmonitor--daemon: implement 'run' command
-In-Reply-To: <6fe5a2bc79eec132b6455d53196906036d0f4a80.1644612979.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202171744410.348@tvgsbejvaqbjf.bet>
-References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <6fe5a2bc79eec132b6455d53196906036d0f4a80.1644612979.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v5 11/30] fsmonitor--daemon: implement 'start' command
+In-Reply-To: <69fc0998286cbc791f199710a68a2028080e1632.1644612979.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202171748010.348@tvgsbejvaqbjf.bet>
+References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <69fc0998286cbc791f199710a68a2028080e1632.1644612979.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:F0RXyrs91gawacn21BwboUswE4Kx8J8kWb+gGOXpNqJetXDehIH
- LBjIH1bFOnsBCwYO0A5wNIXF24F/PsuFrAojYs3/MWFqOjUwEZhmpT4KBOT50zX7OqX/Cui
- OCYfKVQ1i67Ey6ZBBAXWpP6xwDfSEeLZ+z8gUmpxY5gk7zYyKGud41OknjLFAQUjUoMCS45
- IytdFXxOoKMEmRjfO7lLg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NMeFxo1nG+0=:BIEgNPY4PhPdp99+oIDFU5
- v85JYHjCDF5QduvjL8Ya7isNib8daxSq2tV3Iph0I+CKXMTaPi4WGpX4BfuknkZeVVXC7ufdB
- DCdqoAM3I2nSHdGbKgLUz5njeJuVrvljTJBiBAvbA6L1ztuG0/Oa5Tii7oDJCrrXnXUZlW2vM
- nTtxeuCJK2ay2vNKEZ8DDGrBhZYS6s3ri4ZgmklbT/R8lq/Coke2x9fVATxyblvWTwKSVnBtf
- xwysiu3WrOT5rT5qqlrIZfsthVv28VCmXuAgpWivzsztv2PcgxLHI5LOYjzVudJSnmdZzgHFq
- KkQNgbXnjUP7BobydhTQ7o/57FlK6gck9jQhyTgwCk5img7T4MOjoEaXUX1crQHZ5Jx1j4oYS
- Ik95SNyujsJphsmkMcDRS6ljAOnroWwGkPBdep9fe/sU91vhpCw7fZSSTWD7ai1/gerFgfGWu
- vEERW+IlLlXGOtPO8/+GtpkmNr6uiylUJmYC88vqAZtI/hrsp69M0rPg6Zser8uVXhXpUucNE
- Kxt3TwoSpf5nLiu46/B2/N0+I6ftYc4XXbYZaY6qGGoWQZsdpa8+D9YtfgV0x+PXVbDPgKp+Y
- kw3Vbf24cYf5g5PpO0UW54SURnY32PmNwAgchovah/CLqVdehVigBnc66tw0mjuxPsdD+ZZbZ
- vR8ul8IJKny94Qj/K30/+T9jNska5f1Ic/Zt6mSp7dhws6Cnbk1Z3CayKFz9Mcw82pJxSE03W
- t0BknvGB7taN4+A08HIwbHaAoExeMzHTP8VlhscvOAKdDkLcEUItGcNKhQWSLG8yiXCjV6yEY
- 3/iByrfYhvt7i4p3Mn6x1UWtynI92I/Am3mr7aehAl/6XP9VJmsdQTXVsgq3htCzgtO2MiPKy
- KUHAayc5eNV1xfpAqb35FOfSundRQz0E2TcQ3qUX3JqLq4SQi5QsZyk+1QYh9QEv/rneGgPb3
- OBer/JZ3rZRzKHr+UnjeCXdS6THO8gjFttM6BhpYrhEJhMAwaqedpBSdeaZNHJmh2uvjqnVN0
- t55RYE17Nh/4o4NkQitzB2S2xp66K9jUyn+crIsnUfqadiJwxhyXeWNKiL4dQBPAR1zDK1W56
- kdMbzMwAoh02wU=
+X-Provags-ID: V03:K1:QiEYUAIa7zsgfccLCtjDsTgmRTQLtzSHAjjIFgEpLCdC0Ab7lM2
+ 7C+qjsem6w5zpBnyvI7h6VQCAJAEXyQ4dWjWKFXz5e6CEnFj78GkwNMpDZYelnhwz9MazRk
+ zQ/XWi8N/THElyUdta0y/kVtHOXR/QTVqj3ob1aynaenjBvNBBkZ/XQk+Yt99jR3BidfuIM
+ NvxzKCx88QDM3JRxYxvnQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SCc+2qerRPA=:YfsAO8QeWYwcMxMyngrNQw
+ M4g4Rpem2+6qECMmJVlb+vWuasRf3BM5V3IPwF7j3a4Cp6vIK6hYVA38ZtpeqO/fkmKpoqBC/
+ 47ZeeSQKW0N8WLYnTxJxbuS0MO6tjcFE0/vQgnjO/yAiEIFiX7dR5KCymYpBn3+7Qi6e9kZap
+ 64peX5Ae/npwcQhdR9NWa6BF7IeucijKy3PNdm/V3wVhImXE/xQrLgg89UisZYwBow+7RRmGh
+ 4g96K5OEXiFpsb7o3iFKytbtdbuLyyhsydIAPhWn2lfZXJNk/Ryweqkf422m2tXjPAAYY5mpC
+ j5n2icT5EfIGe9PemN4dlgYRWnPl/K0Kuy8949iBfv8lrszjgFwmNzVOypHcoYKkiVc0i8h52
+ j6letT/ZgWfA9dALu8BtVyWqfUwHi39UZUXvtqZONsVQzqP3TsOXsPxXG78d8RPFI9Rvartf9
+ WmiV0tsAm3jfQexVYNFCMHs7VvBMtESpcFeyDoHMWvV4y0Uo7J0svIrjOpeqWWWTGvw7T3q9y
+ yQTpC+9TNR3RZDTQPxwP+sxsuQ380DgZBaMe7gI59V9YruuT0PMm2BIHCQG7RXRpfnF/9M8Df
+ 4+oFCSw0KVLinAHVorJMYcL5g0c7KGoQwRbp45VopFeFpxV2GKn2mEQOONPoJQimk9kB6vNns
+ dYNGhURLhiEkr8e5AHekpe5V/QBs9p3HlX31ZwBx371MBflJOyoFE6ggAV2JG2xjYRluzVgh6
+ /m0iGMwYR/5ohC0sg3Xh/pDrj/4JZMF0KtgkZlqbJC7p55xSmLpz67e1o9iXXxERdH5RSDa3p
+ Pq7EogNpJG7E7NixXg1pmeszFGtI3oSa0oztwcuXdL2xCq4Rvl48ISJgxJ/UshSZT9u/a4Zic
+ T2V0cggYXFGA+0APaLS3o6hPHMIHJcWfovJPAuSw6vzfee9MXYxiy1NfmQAHsexcecgXFXZOD
+ EDlhzwMM6uJL6o6Xi1g3wXVgBi75C1g1seAyAaRIoy/FrF3FOZyGJAepLton0aWMIx4kaSKuK
+ Bqo6V15rb+H88yd6Lac/I5+QImIfnf1o10BUpn9baYsJDBv8POAgl0JcL/PN0EXXX5id6fyY7
+ GUFYq8y5fELVd0=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -71,25 +71,41 @@ Hi Jeff,
 
 On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
 
-> +static int try_to_run_foreground_daemon(void)
+> +static int try_to_start_background_daemon(void)
 > +{
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	enum start_bg_result sbgr;
+> +
 > +	/*
-> +	 * Technically, we don't need to probe for an existing daemon
-> +	 * process, since we could just call `fsmonitor_run_daemon()`
-> +	 * and let it fail if the pipe/socket is busy.
-> +	 *
-> +	 * However, this method gives us a nicer error message for a
-> +	 * common error case.
+> +	 * Before we try to create a background daemon process, see
+> +	 * if a daemon process is already listening.  This makes it
+> +	 * easier for us to report an already-listening error to the
+> +	 * console, since our spawn/daemon can only report the success
+> +	 * of creating the background process (and not whether it
+> +	 * immediately exited).
 > +	 */
 > +	if (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
 > +		die("fsmonitor--daemon is already running '%s'",
 > +		    the_repository->worktree);
 > +
-> +	printf(_("running fsmonitor-daemon in '%s'\n"),
+> +	printf(_("starting fsmonitor-daemon in '%s'\n"),
 > +	       the_repository->worktree);
 > +	fflush(stdout);
 
-Do we want to print this to `stderr` instead?
+Just like for the patch before, my question whether `stdout` or `stderr`
+is preferable here?
+
+> +	cp.git_cmd = 1;
+> +
+> +	strvec_push(&cp.args, "fsmonitor--daemon");
+> +	strvec_push(&cp.args, "run");
+> +	strvec_push(&cp.args, "--free-console");
+
+We could call this function `--detached` or `--detach`, too, to indicate
+the intention.
+
+I am fine with the code as-is, just wanted to make sure that these
+questions are on record ;-)
 
 Ciao,
 Dscho
