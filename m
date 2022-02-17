@@ -2,83 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FC41C433F5
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 09:14:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4EC9C433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 09:18:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233991AbiBQJO0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 04:14:26 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35158 "EHLO
+        id S238526AbiBQJS7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 04:18:59 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238014AbiBQJOR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 04:14:17 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EC45279097
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 01:14:03 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id qx21so5536132ejb.13
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 01:14:03 -0800 (PST)
+        with ESMTP id S232258AbiBQJS6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 04:18:58 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 616B1241DAE
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 01:18:40 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id lw4so5579684ejb.12
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 01:18:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=A4JktxGrT3/Nf80nwTMxLcXn2cLR/iQH8pVwVuWRMtM=;
-        b=VG57jQhfPoNhG6mUehbsezdHYZ77zkdv+dy+uAb26G5GY8kOwFDRcAdHlgQZubeuHM
-         dwdCDB6OHcU0P5knciRi8UsXGPbQlG473xwWULc58uxhn/MU+8eDj61itBDe/CqIyDnB
-         OFBvzAbgRSm3Wy8AKIM0+Oe4M14X+jK6tGI4v09wwLDUMsNEtTSnqa4rBBgLmwoJHY4Q
-         0puaVsXdDzlNuRUKr0SoDKLUFGhCSFoG2li25ZSLvyrn8mYvVGuG+YIsOzGkrRzHvPx4
-         yeQqFyfjFKCQ1XrKrW5sT49liDfgENoPVxNjgCk8bSCewAF2rSNF+OFPllfnzk7nQn+r
-         HHkA==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WvHkUmHCc49hhnLp0RPhDD/AmC2AKFSaJut7nf+N/CI=;
+        b=YM/OIX/GpJWuhdtD1iOi4E4P7kUGLOw7OGHbMHlmBvCdF9r36Om1F1bGKMn6URFvnW
+         vlRGoWVdT8dziUnzqEQjawPTFxSpscpFVL5rggu6KXLF43W4LL24Gr7w56XFZM+XIkfw
+         4lzwxzX+gjJsRL6FhKptNItU9ixdeCXnrHI9jptBN/FOViyKMsnDvSZf5mboRxFEy1sw
+         iUcheQLOYyTCdyMZiMhDk4f58LNCMzgUlMJaRK5x8kFBznnpXXppbhbagAdFB7pKhxyu
+         UpMjh5Bp+Rdxt9li1ajs6YzubwGAdjseSj2BN28LfUFQp5m3mh5huOQvVwS5qByainif
+         llSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=A4JktxGrT3/Nf80nwTMxLcXn2cLR/iQH8pVwVuWRMtM=;
-        b=TXGId8vJTAs0xbvPbJVvFX8gxnspXkzXiJP0mpjTRDJEVeGKTKPuJyPyhbNfDuSlwP
-         YXSVj3b7+vVDAqep0uOAfvjqUjRbNpgqcA8xw+cEr8OFb1ppMejwhM3vLrSh7K0TSieB
-         +2fQ+NzOsTf2X40+lTBg/HiVEXAhMhsDXRi70ALiorycISFVr1HvasA4i/woY4s3efoB
-         JnlLNjB/AtLw5gC7x4gumA9F3xcJoG/VukCUrL6Pqagkunl+vYBnfy5YVypBgT9vvkAB
-         MHJIDTwHqtNT6ibP2Er3EhsWg3SGfgAWL0FV754QQPz+7k3gXkH0sgcwQ8SZLyEDnjVA
-         GeMg==
-X-Gm-Message-State: AOAM532y2NF6PX8w1NbBONDtFwDGUU3bE8RiVuOkxv8/7qFxCPaTHorG
-        HA+CtxrINsaPxSG8hiNmo+ZR++kxx8RoCw==
-X-Google-Smtp-Source: ABdhPJxmN+VsYCRh5zKoKbbq/QioTPN4GePB2gOMG7q3hx7kIHPqmP3QmOLBXOWfMqOAgq/3ypnl8w==
-X-Received: by 2002:a17:906:249b:b0:6ce:98d3:9d65 with SMTP id e27-20020a170906249b00b006ce98d39d65mr1534101ejb.601.1645089241655;
-        Thu, 17 Feb 2022 01:14:01 -0800 (PST)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=WvHkUmHCc49hhnLp0RPhDD/AmC2AKFSaJut7nf+N/CI=;
+        b=m7hGY/1/2MWwOU9YpuI6XQaDREEEUvuJzXHTmBQgsvDwzCnSbwuePupoyicw/XisH2
+         Tm7+LiU3Z8VNsWTn7ooROhOqbzsDAYxeOMl2j3hvsSLPjzZ3opNbXG5tC30vHBfsR8Zb
+         wn1GoDMA0CC9WMrelYE9q75dTErk25m3iDJtsVAQo1yQmOrCZY23H8Of89+467p2jjmn
+         HB25Ru3+fQFZARLuzEUNlIISckfv2G8yOdQL6E35pcflpsze4IJnNWyq45DiIhrsKHq5
+         43+Yuh/HIJHebzBQReUX7Gv/vD2PLXS/oC/8oZDcylO9/sLPMfnDfOfKZZuTUlvt4yEM
+         jdow==
+X-Gm-Message-State: AOAM5311HncO1ZY4i2Q9NTBWdofaOJMievSW54zFRuBAn9hop7WNQtFe
+        L9QklEqF7QFt4VJSQIF7SCPtWEWRNWwBSw==
+X-Google-Smtp-Source: ABdhPJxSv+1VY326ZTEcC26Er46Io9tVZnuPUf+Kan3nggccGn+KLXXb+44eDhr4as7UQTgxZ5wIww==
+X-Received: by 2002:a17:906:7751:b0:6ce:e3c:81a6 with SMTP id o17-20020a170906775100b006ce0e3c81a6mr1539220ejn.278.1645089518577;
+        Thu, 17 Feb 2022 01:18:38 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id y11sm926155ejk.210.2022.02.17.01.14.01
+        by smtp.gmail.com with ESMTPSA id k7sm947102eje.162.2022.02.17.01.18.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Feb 2022 01:14:01 -0800 (PST)
+        Thu, 17 Feb 2022 01:18:37 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nKcrQ-003fD5-Gq;
-        Thu, 17 Feb 2022 10:14:00 +0100
+        id 1nKcvs-003fPo-Qx;
+        Thu, 17 Feb 2022 10:18:36 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v4 0/5] sparse checkout: fix a few bugs and check
- argument validity for set/add
-Date:   Thu, 17 Feb 2022 10:13:36 +0100
-References: <pull.1118.v3.git.1644985283.gitgitgadget@gmail.com>
- <pull.1118.v4.git.1645080889.gitgitgadget@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Nieder <jrn@google.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        pc44800@gmail.com, Shourya Shukla <periperidip@gmail.com>
+Subject: Re: [PATCH v7 00/20] submodule: convert the rest of 'update' to C
+Date:   Thu, 17 Feb 2022 10:17:08 +0100
+References: <20220208083952.35036-1-chooglen@google.com>
+ <20220210092833.55360-1-chooglen@google.com>
+ <220212.868rugxhq0.gmgdl@evledraar.gmail.com>
+ <kl6l4k4y59p4.fsf@chooglen-macbookpro.roam.corp.google.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <pull.1118.v4.git.1645080889.gitgitgadget@gmail.com>
-Message-ID: <220217.86v8xdj1nr.gmgdl@evledraar.gmail.com>
+In-reply-to: <kl6l4k4y59p4.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <220217.86r181j1g3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Feb 17 2022, Elijah Newren via GitGitGadget wrote:
+On Thu, Feb 17 2022, Glen Choo wrote:
 
-> Changes since v3:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
->  * Use strpbrk() instead of multiple strchr(), fix commit message relative
->    to backslashes.
+>> On Thu, Feb 10 2022, Glen Choo wrote:
+>>
+>>> Atharva Raykar (6):
+>>>   submodule--helper: get remote names from any repository
+>>>   submodule--helper: refactor get_submodule_displaypath()
+>>>   submodule--helper: allow setting superprefix for init_submodule()
+>>>   submodule--helper: run update using child process struct
+>>>   builtin/submodule--helper.c: reformat designated initializers
+>>>   submodule: move core cmd_update() logic to C
+>>>
+>>> Glen Choo (11):
+>>>   submodule--helper: remove update-module-mode
+>>>   submodule--helper: reorganize code for sh to C conversion
+>>>   submodule--helper run-update-procedure: remove --suboid
+>>>   submodule--helper run-update-procedure: learn --remote
+>>>   submodule--helper: remove ensure-core-worktree
+>>>   submodule--helper update-clone: learn --init
+>>>   submodule--helper: move functions around
+>>>   submodule--helper: reduce logic in run_update_procedure()
+>>>   fixup! submodule--helper run-update-procedure: remove --suboid
+>>>   fixup! submodule--helper run-update-procedure: learn --remote
+>>>   fixup! submodule: move core cmd_update() logic to C
+>>>
+>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (3):
+>>>   builtin/submodule--helper.c: rename option variables to "opt"
+>>>   submodule--helper: don't use bitfield indirection for parse_options()
+>>>   submodule tests: test for init and update failure output
+>>
+>> I think sending a version of this with the fixups squashed in as a v8
+>> would be good, and perhaps addressing some of my comments.
+>>
+>> I don't know if my suggested split-up of "prep fixes" into another
+>> series would be a good thing to pursue overall, perhaps Junio will chime
+>> in on how he'd be most comfortable in merging this down. I'd think
+>> splitting such trivial fixes into their own series be easier to review,
+>> but perhaps not.
+>
+> Combing through the patches again, I couldn't really convince myself
+> that the patch 4..9 prep fixes make sense as obvious standalone fixes,
+> except maybe:
+>
+> - patch 4 submodule--helper: run update using child process struct
+> - patch 8 submodule tests: test for init and update failure output
+> - patch 9:  087bf43aba submodule--helper: remove update-module-mode
+>
+> But, since the 'final' patch (ignoring the fixup!-s) is consuming a huge
+> chunk of the work anyway, here's an alternative patch organization with
+> the fixup!-s squashed:
+>
+> =3D Move 'easy' and 'obviously correct' code from sh->C
+> - patches 8-9   Cleanup and introduce tests
+> - patches 1-4   Refactor existing functions, which enables..
+> - patches 10-14 Move 'obviously correct' pieces of logic from sh-> C
+>
+> =3D Finalize move from sh->C
+> i.e. combine "run-update-procedure" and "update-clone" into "update"
+> - patches 5,7     Cleanup and prep
+> - patches 6,15-16 Shrinking the diff
+> - patch 17        Implement "git submodule--helper update"=20
+>
+> I'll send this if there are no objections :)
 
-I read this v4, and then left a couple of replies on the v2 by mistake,
-but they apply to the code in v4. Sorry about the mix-up.
+Yes that sounds good, or rather, I haven't re-looked at that in detail,
+but I think if you think it makes sense we should go for it.
+
+Or rather, we should really be aiming to produce a patch series that
+makes sense in its current iteration, as opposed to optimizing for a
+diff against some ad-hoc re-roll I produced a few versions ago :)
+
+Thanks again for working on this & picking this up. It's great to see
+progress in this area!
