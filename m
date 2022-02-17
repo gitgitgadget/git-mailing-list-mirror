@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1268C433FE
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 13:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47C7DC433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 13:55:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235260AbiBQNzy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 08:55:54 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42612 "EHLO
+        id S241499AbiBQNz4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 08:55:56 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:42756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241417AbiBQNzq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 08:55:46 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C52D273774
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:55:32 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id f3so9027341wrh.7
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:55:32 -0800 (PST)
+        with ESMTP id S241479AbiBQNzs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 08:55:48 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3EA7272DA3
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:55:33 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id d27so9196109wrb.5
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 05:55:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NsrdF5h2PxUorHU1VNro3oVuNlc4F0V+1ZFMTw9yO6Y=;
-        b=AhZRJYmZ3o3t9VkIVYJdzNnmPOt9yCpALcPjUAgLgFqR6oaimmNFuDH9kbhlR7o5jR
-         cFTIut+PEqMCujwd+l0lzZGOdTCUBsXR2Xz7LLNuDzXcF3KhluotmXcs9gG+7kbY0ZR3
-         wsXcEy2D6m4DeWsKwc+EMwRtqKfQv+fe2H00Xww7D5PlOrM4RpKZtpegasjPB+LDTesi
-         mKwW2rbolVais4KHNKSX8XVqq5ryh/ZU7CriOgGD6xkhBGgfDwjwLe/FZNTQGjegjaup
-         KwhZviFnzNPv6Div3MGc2G6PRdPIgGVjLkv3CaYF83S+uPc2pNWnwV6RoghfftHaUGE5
-         xPUQ==
+        bh=MNyfzPgLuL1AhBGd7/JnxDDNU29085If/CkNixlO+Tg=;
+        b=Pg0udte9IQFcqcsixdxh3iAkpKkZvmb1/7at0TY93/8OYw5jaIvvhcMUMcG4YnK/WA
+         6MYvqY2kHW1+h4L4lxGkdvLCUPcBHajQRQ+iORRoagPRdhJqpvOwWfjB40XGOaBjF/il
+         E81Sdq9ZHF997hcz3TClG+144PWE22QXMD9k4GUnZdee+6WgpGGJJ9bfextEL2LlAfMv
+         LY4gpW60Heh1Pscz+kZ2cSFXbYt5whrdYogcoSEVtnBRiAf/ML8QXOMxqlSdEm8ZtPCe
+         ktmIwEvQJkozUD1+rN3NTASZSq+wpDmckS+VcdCnukOCvN1cfRKkwKZ7BrwV5sVQCha5
+         KLfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NsrdF5h2PxUorHU1VNro3oVuNlc4F0V+1ZFMTw9yO6Y=;
-        b=ogW0prNZoSzfYjp9OU8xgG5+O9gzI08R+nE1LGj4/yPneNDJjFfOVDI2ryaRMu65i7
-         CBJ5TDLIClsGlAlWDYSSBb19dCBaaXlCe2ec8Y5t7n0rkmVgVykjuWXAzPAsxDDriP44
-         grkFuFXaKOrABcwd5z4Jnvbd/FhItO4VlBNqbIUkwIIv/3V4Tp5xINbpyv487010IJIj
-         nvqjt2od4IQi0fFyv53T9iPdn/nBTojifGn+talsTyCQxXsbZt11ZOs9GmtxyEs+duOd
-         qL4+U2mEAnv/CJsLDhZtm5i+cJjJZ6NLmyVjrlLVdz3iQDVTXVmIpfrWvgvCp6FEhs7W
-         h4pQ==
-X-Gm-Message-State: AOAM532IxCbaNDwSRXC3nJawrCVtzgnltfud2UQJr6PtzARw9Q8e1u8V
-        GAd/aAd8b1WCP7x09sWmi2c967dnTS0=
-X-Google-Smtp-Source: ABdhPJwtOpDqCPlYoKupYqPV93+m7Qa0H0RGf+X5ciHy7fpp9dJaWgpHoqAHpLUN3csXYZKknLnZgQ==
-X-Received: by 2002:a5d:4b4c:0:b0:1dc:f34a:548 with SMTP id w12-20020a5d4b4c000000b001dcf34a0548mr2417797wrs.554.1645106130918;
-        Thu, 17 Feb 2022 05:55:30 -0800 (PST)
+        bh=MNyfzPgLuL1AhBGd7/JnxDDNU29085If/CkNixlO+Tg=;
+        b=PrJiaRI3Ch6Yo83pZv4WNPRv7mWs/cOYj1CjaSSyKDbcLjiNLm//QBUG8h9j2w+wu+
+         ddgDcOjjgzGnR8wQhQNRACxqChCgfJigjjAbAGk0MJiQi7dfNHtEn5gpCcUEKZN+JB04
+         j+R9oT/SWY1tqNgy3pmgOBnGLHn1x+4UZZuhgxRqsuyC1pMjm00fohJ4uAsXu15AgxuS
+         +EaFStvZ2lDVr8N+LlVVwnrUR/Alwd3/Vowi7MvPZ01K8D2ZvdeIqSgAtoxRdYMeVYuf
+         3O90+wvQCJJIXFRXC0YK8lfjwfbfcfqcm3jBCOt8eddcziVUL7C1nMFXNzxMcGLJf/rN
+         C+Gw==
+X-Gm-Message-State: AOAM533hppiw+9+a6/76HIdyO5UiLyt9jwWV3Yowa7d6haxScObMGs4Z
+        mlXoi1rMms95L6e3xi1/ilv9UNMD8vg=
+X-Google-Smtp-Source: ABdhPJze3++BcbDH2DcS8qefgAjU/K2ilbycq/PHSs9HlOJqP4jqMjY6Pi716p1t21PAzQtR3wZ3sg==
+X-Received: by 2002:a5d:62c3:0:b0:1e3:2d29:fc3f with SMTP id o3-20020a5d62c3000000b001e32d29fc3fmr2414795wrv.331.1645106132023;
+        Thu, 17 Feb 2022 05:55:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z2sm20630336wrn.60.2022.02.17.05.55.30
+        by smtp.gmail.com with ESMTPSA id x1sm9949734wrn.12.2022.02.17.05.55.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Feb 2022 05:55:30 -0800 (PST)
-Message-Id: <ba036ee8543b2dc28ac046eb0c8c0aef9e751c80.1645106124.git.gitgitgadget@gmail.com>
+        Thu, 17 Feb 2022 05:55:31 -0800 (PST)
+Message-Id: <2bd3d44ba57ddb43c09367b45a8f056233d465e9.1645106124.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1185.v2.git.git.1645106124.gitgitgadget@gmail.com>
 References: <pull.1185.git.git.1642010868.gitgitgadget@gmail.com>
         <pull.1185.v2.git.git.1645106124.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 17 Feb 2022 13:55:21 +0000
-Subject: [PATCH v2 4/7] reftable: avoid writing empty keys at the block layer
+Date:   Thu, 17 Feb 2022 13:55:22 +0000
+Subject: [PATCH v2 5/7] reftable: ensure that obj_id_len is >= 2 on writing
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,127 +68,85 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-The public interface (reftable_writer) already ensures that keys are
-written in strictly increasing order, and an empty key by definition
-fails this check.
-
-However, by also enforcing this at the block layer, it is easier to
-verify that records (which are written into blocks) never have to
-consider the possibility of empty keys.
+When writing the same hash many times, we might decide to use a
+length-1 object ID prefix for the ObjectID => ref table, which is out
+of spec.
 
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 ---
- reftable/block.c      | 27 +++++++++++++++++----------
- reftable/block_test.c |  5 +++++
- reftable/writer.c     |  3 +--
- 3 files changed, 23 insertions(+), 12 deletions(-)
+ reftable/readwrite_test.c | 37 +++++++++++++++++++++++++++++++++++++
+ reftable/writer.c         |  4 +++-
+ 2 files changed, 40 insertions(+), 1 deletion(-)
 
-diff --git a/reftable/block.c b/reftable/block.c
-index 2170748c5e9..4a095afe1e2 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -88,8 +88,9 @@ uint8_t block_writer_type(struct block_writer *bw)
- 	return bw->buf[bw->header_off];
+diff --git a/reftable/readwrite_test.c b/reftable/readwrite_test.c
+index fd5922e55f6..35142eb070e 100644
+--- a/reftable/readwrite_test.c
++++ b/reftable/readwrite_test.c
+@@ -667,6 +667,42 @@ static void test_write_empty_table(void)
+ 	strbuf_release(&buf);
  }
  
--/* adds the reftable_record to the block. Returns -1 if it does not fit, 0 on
--   success */
-+/* Adds the reftable_record to the block. Returns -1 if it does not fit, 0 on
-+   success. Returns REFTABLE_API_ERROR if attempting to write a record with
-+   empty key. */
- int block_writer_add(struct block_writer *w, struct reftable_record *rec)
- {
- 	struct strbuf empty = STRBUF_INIT;
-@@ -105,8 +106,14 @@ int block_writer_add(struct block_writer *w, struct reftable_record *rec)
- 	int is_restart = 0;
- 	struct strbuf key = STRBUF_INIT;
- 	int n = 0;
-+	int err = -1;
- 
- 	reftable_record_key(rec, &key);
-+	if (!key.len) {
-+		err = REFTABLE_API_ERROR;
-+		goto done;
++static void test_write_object_id_min_length(void)
++{
++	struct reftable_write_options opts = {
++		.block_size = 75,
++	};
++	struct strbuf buf = STRBUF_INIT;
++	struct reftable_writer *w =
++		reftable_new_writer(&strbuf_add_void, &buf, &opts);
++	uint8_t hash[GIT_SHA1_RAWSZ] = {42};
++	struct reftable_ref_record ref = {
++		.update_index = 1,
++		.value_type = REFTABLE_REF_VAL1,
++		.value.val1 = hash,
++	};
++	int err;
++	int i;
++
++	reftable_writer_set_limits(w, 1, 1);
++
++	/* Write the same hash in many refs. If there is only 1 hash, the
++	 * disambiguating prefix is length 0 */
++	for (i = 0; i < 256; i++) {
++		char name[256];
++		snprintf(name, sizeof(name), "ref%05d", i);
++		ref.refname = name;
++		err = reftable_writer_add_ref(w, &ref);
++		EXPECT_ERR(err);
 +	}
 +
- 	n = reftable_encode_key(&is_restart, out, last, key,
- 				reftable_record_val_type(rec));
- 	if (n < 0)
-@@ -118,16 +125,11 @@ int block_writer_add(struct block_writer *w, struct reftable_record *rec)
- 		goto done;
- 	string_view_consume(&out, n);
- 
--	if (block_writer_register_restart(w, start.len - out.len, is_restart,
--					  &key) < 0)
--		goto done;
--
--	strbuf_release(&key);
--	return 0;
--
-+	err = block_writer_register_restart(w, start.len - out.len, is_restart,
-+					    &key);
- done:
- 	strbuf_release(&key);
--	return -1;
-+	return err;
- }
- 
- int block_writer_finish(struct block_writer *w)
-@@ -332,6 +334,9 @@ int block_iter_next(struct block_iter *it, struct reftable_record *rec)
- 	if (n < 0)
- 		return -1;
- 
-+	if (!key.len)
-+		return REFTABLE_FORMAT_ERROR;
++	err = reftable_writer_close(w);
++	EXPECT_ERR(err);
++	EXPECT(writer_stats(w)->object_id_len == 2);
++	reftable_writer_free(w);
++	strbuf_release(&buf);
++}
 +
- 	string_view_consume(&in, n);
- 	n = reftable_record_decode(rec, key, extra, in, it->br->hash_size);
- 	if (n < 0)
-@@ -358,6 +363,8 @@ int block_reader_first_key(struct block_reader *br, struct strbuf *key)
- 	int n = reftable_decode_key(key, &extra, empty, in);
- 	if (n < 0)
- 		return n;
-+	if (!key->len)
-+		return -1;
- 
+ static void test_write_empty_key(void)
+ {
+ 	struct reftable_write_options opts = { 0 };
+@@ -772,5 +808,6 @@ int readwrite_test_main(int argc, const char *argv[])
+ 	RUN_TEST(test_write_empty_key);
+ 	RUN_TEST(test_write_empty_table);
+ 	RUN_TEST(test_log_overflow);
++	RUN_TEST(test_write_object_id_min_length);
  	return 0;
  }
-diff --git a/reftable/block_test.c b/reftable/block_test.c
-index fa2ee092ec0..cb88af4a563 100644
---- a/reftable/block_test.c
-+++ b/reftable/block_test.c
-@@ -42,6 +42,11 @@ static void test_block_read_write(void)
- 	block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
- 			  header_off, hash_size(GIT_SHA1_FORMAT_ID));
- 
-+	rec.u.ref.refname = "";
-+	rec.u.ref.value_type = REFTABLE_REF_DELETION;
-+	n = block_writer_add(&bw, &rec);
-+	EXPECT(n == REFTABLE_API_ERROR);
-+
- 	for (i = 0; i < N; i++) {
- 		char name[100];
- 		uint8_t hash[GIT_SHA1_RAWSZ];
 diff --git a/reftable/writer.c b/reftable/writer.c
-index 944c2329ab5..d54215a50dc 100644
+index d54215a50dc..5e4e6e93416 100644
 --- a/reftable/writer.c
 +++ b/reftable/writer.c
-@@ -240,14 +240,13 @@ static int writer_add_record(struct reftable_writer *w,
- 
- 	writer_reinit_block_writer(w, reftable_record_type(rec));
- 	err = block_writer_add(w->block_writer, rec);
--	if (err < 0) {
-+	if (err == -1) {
- 		/* we are writing into memory, so an error can only mean it
- 		 * doesn't fit. */
- 		err = REFTABLE_ENTRY_TOO_BIG_ERROR;
- 		goto done;
+@@ -515,7 +515,9 @@ static void object_record_free(void *void_arg, void *key)
+ static int writer_dump_object_index(struct reftable_writer *w)
+ {
+ 	struct write_record_arg closure = { .w = w };
+-	struct common_prefix_arg common = { NULL };
++	struct common_prefix_arg common = {
++		.max = 1,		/* obj_id_len should be >= 2. */
++	};
+ 	if (w->obj_index_tree) {
+ 		infix_walk(w->obj_index_tree, &update_common, &common);
  	}
- 
--	err = 0;
- done:
- 	strbuf_release(&key);
- 	return err;
 -- 
 gitgitgadget
 
