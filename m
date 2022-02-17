@@ -2,110 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06627C433F5
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 19:10:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C23FDC433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 19:21:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245022AbiBQTKb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 14:10:31 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49938 "EHLO
+        id S245108AbiBQTVX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 14:21:23 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243867AbiBQTK3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 14:10:29 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBB7C8594F
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 11:10:11 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8DB07102737;
-        Thu, 17 Feb 2022 14:10:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UatyEBAuhlicTA0R9jooVx5os6SZIi4ttlqlMb
-        UYW98=; b=xeSf9dk7DhWWxjRxZkjTSbRdqFlrW620sgttJ+O8blnrmc8XAavVCx
-        LkbJ5edBniy68AkOpQ/wxZzh/NwOI/JUM4n0zNRD+oF/uAqVr5TvNEyaVuALqelE
-        IX1DSwpB7E3cus58PrjKTJd2r8DNNcif40tl5T7zg9cJQ0HxkhE38=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7CB93102735;
-        Thu, 17 Feb 2022 14:10:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S244868AbiBQTVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 14:21:22 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72BBFC3C37
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 11:21:07 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 96EFA3F4837;
+        Thu, 17 Feb 2022 14:21:06 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 70F1810272A;
-        Thu, 17 Feb 2022 14:10:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] glossary: describe "worktree"
-References: <xmqqczjvxy3o.fsf@gitster.g>
-        <CABPp-BHrFb_AA2OAiR7Bmq7vQuyG2Wme_PdjPdY8j-tp3VJfJg@mail.gmail.com>
-        <xmqqiltmwufw.fsf@gitster.g>
-        <CAFQ2z_OgVcaty1wMX0O0mj-PYSAphKAkXgTCW+uJKDAuCwLn4w@mail.gmail.com>
-        <xmqqh796tw34.fsf@gitster.g>
-        <CAFQ2z_Pvje9LM0iyiP87S-L754zepEE_9k=_4Oa0w1Lo_pb=TQ@mail.gmail.com>
-        <xmqqczjuttyw.fsf@gitster.g>
-        <CAFQ2z_O=WguSAJDD4DRpwtX54A5dWQZQPCuQDR81idknQgchaA@mail.gmail.com>
-Date:   Thu, 17 Feb 2022 11:10:07 -0800
-In-Reply-To: <CAFQ2z_O=WguSAJDD4DRpwtX54A5dWQZQPCuQDR81idknQgchaA@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Thu, 17 Feb 2022 11:00:12 +0100")
-Message-ID: <xmqqtucx8g34.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 459AE3F4143;
+        Thu, 17 Feb 2022 14:21:06 -0500 (EST)
+Subject: Re: [PATCH v5 03/30] fsmonitor: config settings are
+ repository-specific
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
+ <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+ <384516ce1a190d836324b2c2262d611090207357.1644612979.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2202171725060.348@tvgsbejvaqbjf.bet>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <456172c1-9648-c01b-c747-c6d77ae570bf@jeffhostetler.com>
+Date:   Thu, 17 Feb 2022 14:21:05 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 398ED6C2-9025-11EC-92E2-CB998F0A682E-77302942!pb-smtp2.pobox.com
+In-Reply-To: <nycvar.QRO.7.76.6.2202171725060.348@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> For FETCH_HEAD, doing
->
->   git fetch host refs/changes/23/123/1 && git checkout FETCH_HEAD
->
-> is the standard idiom for downloading a change from Gerrit. I suspect
-> there might be other similar idioms. This means we have to read them
-> through the refs machinery.
 
-This merely means we have to read them through the object-name
-machinery around get_oid().  Historically that was done by calling
-repo_dwin_ref() from get_oid_basic(), which is where refs machinery
-enters the picture, and because we had only files backend, it was OK
-and convenient to treat .git/FETCH_HEAD and .git/refs/heads/master
-in the same codepath.  But there is no reason for the arrangement to
-stay that way.  .git/FOOBAR_HEAD files can be read as a file (we can
-say we let files-backend to handle it, but we can also extract a helper
-function out of it and make it clear that it truly has no dependence
-on the refs machinery) while .git/refs/* can be read from the refs
-machinery that may be backed by reftable backend.
+On 2/17/22 11:27 AM, Johannes Schindelin wrote:
+> Hi Jeff,
+> 
+> 
+> On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Move fsmonitor config settings to a new and opaque
+>> `struct fsmonitor_settings` structure.  Add a lazily-loaded pointer
+>> to this into `struct repo_settings`
+>>
+>> Create an `enum fsmonitor_mode` type in `struct fsmonitor_settings` to
+>> represent the state of fsmonitor.  This lets us represent which, if
+>> any, fsmonitor provider (hook or IPC) is enabled.
+>>
+>> Create `fsm_settings__get_*()` getters to lazily look up fsmonitor-
+>> related config settings.
+>>
+>> Get rid of the `core_fsmonitor` global variable.  Move the code to
+>> lookup the existing `core.fsmonitor` config value into the fsmonitor
+>> settings.
+>>
+>> Create a hook pathname variable in `struct fsmonitor-settings` and
+>> only set it when in hook mode.
+>>
+>> Extend the definition of `core.fsmonitor` to be either a boolean
+>> or a hook pathname.  When true, the builtin FSMonitor is used.
+>> When false or unset, no FSMonitor (neither builtin nor hook) is
+>> used.
+>>
+>> The existing `core_fsmonitor` global variable was used to store the
+>> pathname to the fsmonitor hook *and* it was used as a boolean to see
+>> if fsmonitor was enabled.  This dual usage and global visibility leads
+>> to confusion when we add the IPC-based provider.  So lets hide the
+>> details in fsmonitor-settings.c and let it decide which provider to
+>> use in the case of multiple settings.  This avoids cluttering up
+>> repo-settings.c with these private details.
+>>
+>> A future commit in builtin-fsmonitor series will add the ability to
+>> disqualify worktrees for various reasons, such as being mounted from a
+>> remote volume, where fsmonitor should not be started.  Having the
+>> config settings hidden in fsmonitor-settings.c allows such worktree
+>> restrictions to override the config values used.
+> 
+> Apart from my forward-compatibility concern regarding interpreting
+> `core.fsmonitor` as a Boolean, this looks good. Just one thing:
+> 
+>> diff --git a/fsmonitor.h b/fsmonitor.h
+>> index f20d72631d7..f9201411aa7 100644
+>> --- a/fsmonitor.h
+>> +++ b/fsmonitor.h
+>> @@ -3,6 +3,7 @@
+>>
+>>   #include "cache.h"
+>>   #include "dir.h"
+>> +#include "fsmonitor-settings.h"
+>>
+>>   extern struct trace_key trace_fsmonitor;
+>>
+>> @@ -57,7 +58,11 @@ int fsmonitor_is_trivial_response(const struct strbuf *query_result);
+>>    */
+>>   static inline int is_fsmonitor_refreshed(const struct index_state *istate)
+>>   {
+>> -	return !core_fsmonitor || istate->fsmonitor_has_run_once;
+>> +	struct repository *r = istate->repo ? istate->repo : the_repository;
+> 
+> I see this repeated a few times. Would it maybe make sense to change the
+> signature of the `fsm_settings__*()` functions to accept an index instead
+> of a repository?
 
-> I think the most sensible approach is to pass the read/write through
-> refs_* functions, but special-case the storage, so it doesn't go
-> through reftable. We already do this for FETCH_HEAD and MERGE_HEAD in
-> refs_read_raw_refs.
+I think is just me being paranoid -- testing istate->repo for null
+and assuming the_repository if necessary.  I'm wondering if it is
+always safe to just do
 
-I think we are more or less on the same page.  I do not think these
-files behave like refs (they have no reflog, and they do not serve
-as anchoring points for the purpose of gc/fsck) and we need a
-special code path, which might be identical to the current ref-files
-backend code, to handle them no matter what backend is used for true
-refs.
+	fsm_mode = fsm_settings__get_mode(istate->repo);
 
-> This means we need a formal definition of which refs should be treated
-> as files. Maybe we could do as follows:
->
-> Pseudorefs are
->   1) all uppercase toplevel names except for HEAD
->   2) all refs that are not under refs/* (for example:
-> rebase-{merge,apply}/autostash)
->
-> Pseudorefs are always stored as files containing a hex object_id.
->
-> Pseudorefs can be read or written through refs_* functions, but given
-> the storage guarantees, it's also valid to read/write them outside
-> refs_* functions
->
-> It is forbidden to make cross-ref transactions that involve pseudorefs.
+(or maybe put the null check inside the fsm_settings__*() functions.
+
+
+changing the signature of those fsm_* functions seems wrong since they
+are associated with a repo and not an index.
+
+Jeff
+
+
