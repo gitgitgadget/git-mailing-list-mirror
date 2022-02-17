@@ -2,123 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CD25C433EF
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 18:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14ADBC433F5
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 19:03:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244513AbiBQSmU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 13:42:20 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40670 "EHLO
+        id S244935AbiBQTEL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 14:04:11 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244496AbiBQSmT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 13:42:19 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C6A9DFBE
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 10:42:04 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C68210F623;
-        Thu, 17 Feb 2022 13:42:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wDLBR/y2oTQbHcm/dHXcdjHLBC4M6ZOh/9/VAG
-        cYRPM=; b=do8FCL7azn0trn4g2Y25fvBvh0ecWOj80eTlrlJ+nrU2zz1WZtZ9JJ
-        OSJZ38ZL2dInX+0ZoCsCN/eBnNEL+UbVgeb3RenSU1WMw1KOhOcygK7/G+pnmoOM
-        r3kdQjDwFoQ9lYpxyfIc8wAp8aeGO57EAgk8Zic/VWNLXUJjNYtIM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2125C10F622;
-        Thu, 17 Feb 2022 13:42:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S238291AbiBQTEK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 14:04:10 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5051F8093D
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 11:03:55 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 7BC343F4823;
+        Thu, 17 Feb 2022 14:03:54 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3057410F61D;
-        Thu, 17 Feb 2022 13:42:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Erlend Aasland <Erlend-A@innova.no>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] branch: delete now accepts '-' as branch name
-References: <pull.1217.git.git.1645020495014.gitgitgadget@gmail.com>
-        <xmqqbkz6vjkj.fsf@gitster.g>
-        <00720bfb-c7b7-aaf2-e846-19b08d7b9cf4@sunshineco.com>
-        <400A4D37-74EA-4F3B-BA3B-99FFDAE3CB3C@innova.no>
-        <CAPig+cR0Ks2bnTRqs3uF4M+3q+n9X6pApBQ9HQTUq=zK5TpuXQ@mail.gmail.com>
-Date:   Thu, 17 Feb 2022 10:41:59 -0800
-In-Reply-To: <CAPig+cR0Ks2bnTRqs3uF4M+3q+n9X6pApBQ9HQTUq=zK5TpuXQ@mail.gmail.com>
-        (Eric Sunshine's message of "Thu, 17 Feb 2022 12:13:10 -0500")
-Message-ID: <xmqqiltd9vyg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 2F4C43F483A;
+        Thu, 17 Feb 2022 14:03:54 -0500 (EST)
+Subject: Re: [PATCH v5 24/30] t/perf/p7519: speed up test on Windows
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
+ <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+ <fcf843a0d42f3a6b1d226b42014835c3e410fc7d.1644612979.git.gitgitgadget@gmail.com>
+ <xmqqk0dub8ex.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <66663b27-952e-5072-3123-6a091c56d315@jeffhostetler.com>
+Date:   Thu, 17 Feb 2022 14:03:53 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4BD96922-9021-11EC-9FB6-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <xmqqk0dub8ex.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> Perhaps. Perhaps not. I may be misreading Junio's responses in this
-> thread, but it didn't seem like he was necessarily opposed to the
-> change.
 
-I do not care too much about this issue to expend my political
-capital on enforcing my preference ;-)
+On 2/16/22 8:15 PM, Junio C Hamano wrote:
+> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> +touch_files () {
+>> +	n=$1
+>> +	d="$n"_files
+>> +
+>> +	(cd $d ; test_seq 1 $n | xargs touch )
+>> +}
+>> +
+>>   test_expect_success "one time repo setup" '
+>>   	# set untrackedCache depending on the environment
+>>   	if test -n "$GIT_PERF_7519_UNTRACKED_CACHE"
+>> @@ -119,10 +126,11 @@ test_expect_success "one time repo setup" '
+>>   	fi &&
+>>   
+>>   	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
+>> -	for i in $(test_seq 1 10); do touch 10_files/$i || return 1; done &&
+>> -	for i in $(test_seq 1 100); do touch 100_files/$i || return 1; done &&
+>> -	for i in $(test_seq 1 1000); do touch 1000_files/$i || return 1; done &&
+>> -	for i in $(test_seq 1 10000); do touch 10000_files/$i || return 1; done &&
+>> +	touch_files 1 &&
+> 
+> This causes touch_files to chdir to 1_files and run "touch 1" in
+> there, but because there is no such directory (we have 1_file/
+> directory, but not 1_files/ directory), it would fail.
+> 
+>> +	touch_files 10 &&
+>> +	touch_files 100 &&
+>> +	touch_files 1000 &&
+>> +	touch_files 10000 &&
+> 
+> Apparently nobody has run this perf script recently since part #2
+> was posted.
+> 
+>>   	git add 1_file 10_files 100_files 1000_files 10000_files &&
+> 
+> The original introduced at bb7cc7e7 (t/perf/fsmonitor: separate one
+> time repo initialization, 2020-10-26) created an empty directory 1_file
+> and without creating anything in it, ran "git add" on it.
+> 
+> If we are not doing anything to 1_file directory anyway, perhaps we
+> can get rid of it to avoid the breakage in "make perf"?
+> 
+> If we have a chance to reroll this series, we can squash in
+> something like this, perhaps (it does not deserve to be a separate
+> step).
 
-FWIW, my preference in an ideal world would be to limit "-" as a
-short-hand to go back to previous (i.e. "checkout -"), which can be
-justified with similarity to "cd -", but do not add any more use.
-If we could, I would even deprecate "merge -", "rebase -", etc. that
-can not be justified with similarity to "cd -", but I think we came
-too far for that.
+Good catch!
 
-"-" cannot be used as a universal "the branch we last 'git checkout'
-out of" notation because some commands and people expect "-" to be
-something else, like "read from the standard input".  The only two
-reasons this pops up from time to time is because "checkout -"
-exists and because "@{-N}" notation, which is accepted everywhere
-uniformly and does not have problems "-" has, is not very well
-known.
+It looks to me like there was an oversight/typo in the original
+89afd5f5ad (t/perf: add fsmonitor perf test for git diff, 2020-10-20).
+They created the "1_file" directory and didn't put anything in it.
+Then later when they test it, they say "0_files" in the test name
+and "1_file" in the "git diff" command.
 
-> A documentation update as in [1] would be a good idea, though,
-> if resubmitted.
+I don't think it's worth keeping an empty directory here, since there
+won't be anything in the index after the add and since the directory
+is empty the untracked cache won't have anything to scan.
 
-Yeah, [1] talked about both "@{-1}" and "-", but limiting it to the
-former may make sense.  It feels a bit odd that we single out "git
-branch" and describe "@{-1}" there, when the notation is universally
-available, though.
+My version (without the typo) would have created 1 file in the directory
+but I don't think that's worth keeping either, since we create thousands
+of files in steps right after it.
 
-    $ git grep -l '@{-' -- Documentation/ :\!Documentation/\*/\*
+I'll make a note to remove it.
 
-shows hits only in check-ref-format, checkout, switch, and worktree,
-but the mention in "revisions.txt" is included in all commands in
-the "log" family of commands.  If we add one to "branch", we should
-at least teach "@{-1}" to the documentation of merge, rebase, and
-revert.  The hits we see here
+Jeff
 
-    $ git grep -l -B1 '"@{-' \*.c
-    builtin/checkout.c
-    builtin/merge.c
-    builtin/rebase.c
-    builtin/revert.c
-    builtin/worktree.c
 
-all are about replacing "-" the user typed with "@{-1}".
 
-Continuing the "thinking aloud" a bit, I _think_ this tells us these
-things:
-
- * @{-1} has way too many letters to type to be liked by users, who
-   won't learn or remember what they do not appreciate (and do not
-   blame them---it is a bad notation).
-
- * @{-<n>} may have been a generalized way that satisfied geeky mind
-   while being implemented, but the users only need the "last one"
-   and no such generalization.
-
-If it is too late for a more easy-to-type-and-pleasant-to-eyes
-notation, perhaps "@-", that does not have downsides of "-" or
-"@{-1}", I have to wonder.
-
-Thanks.
-
+> 
+> --- >8 ---
+> Subject: [PATCH] p7519: leave 1_file directory empty
+> 
+> The step "t/perf/p7519: speed up test on Windows" in the topic
+> builtin-fsmonitor-part-2 (not in 'next' yet) attempts to create one
+> file in 1_files directory, but the original introduced at bb7cc7e7
+> (t/perf/fsmonitor: separate one time repo initialization,
+> 2020-10-26):
+> 
+>   (1) created 1_file directory,
+> 
+>   (2) left the directory empty, and
+> 
+>   (3) a later test expected (and still expects) that there is nothing
+>       in the directory.
+> 
+> Revert the behaviour back to what the original wanted to do.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   t/perf/p7519-fsmonitor.sh | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
+> index 9a2288a622..a1c552129c 100755
+> --- a/t/perf/p7519-fsmonitor.sh
+> +++ b/t/perf/p7519-fsmonitor.sh
+> @@ -126,7 +126,7 @@ test_expect_success "one time repo setup" '
+>   	fi &&
+>   
+>   	mkdir 1_file 10_files 100_files 1000_files 10000_files &&
+> -	touch_files 1 &&
+> +	: 1_file directory should be left empty &&
+>   	touch_files 10 &&
+>   	touch_files 100 &&
+>   	touch_files 1000 &&
+> 
