@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F155C433F5
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 11:27:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D16BCC433EF
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 11:37:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239724AbiBQL1e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 06:27:34 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:41370 "EHLO
+        id S239991AbiBQLiH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 06:38:07 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239713AbiBQL1d (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 06:27:33 -0500
+        with ESMTP id S239961AbiBQLhy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 06:37:54 -0500
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A80BC15C645
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 03:27:18 -0800 (PST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id C3B323200C20;
-        Thu, 17 Feb 2022 06:27:17 -0500 (EST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 395E624F18
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 03:37:36 -0800 (PST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id 2C5A23201D5E;
+        Thu, 17 Feb 2022 06:37:35 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 17 Feb 2022 06:27:18 -0500
+  by compute1.internal (MEProxy); Thu, 17 Feb 2022 06:37:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=vFspHzlxRfiJWzerstlxJr6TBSodBx7EnNxSmu
-        h7eVc=; b=EP86ITFlWft0R4mg0BwAj5G6yLTUwPHHp6ofEaBDBj0ZZ1Jxj6bArk
-        WHzmWKa079tLaDdAcgPd2RiLzHLZNZGNycrfNG/K48zHg5AcnAdvA7+537yogM3l
-        +0kwIldTjD0kumyOoTAQOj0l3zcwJcSKF5UxlWLqlrYT7Sj2c7QJh68wQeCup2Dc
-        Uf4cslEJqmUPasNrX1oZoti49Zt/R/okYdOYSKKeJQjyztzx71prQ0RwpcSHVfaE
-        woXV3iLACBiGvr0Vqlb7rO+ycGqZrCJw5SnU845MQaxfCiTXlKkFQmCTi9PWGjCZ
-        1mFmYad+HwNoDelbRlgcP2TNQmhJvf7A==
+        :subject:to:to; s=fm3; bh=bShHKkJaO73VgrkuCksUG/yi0LbfjESbtFZvDQ
+        Xa6Ao=; b=tR6+SxsKc6/+ETuk+qcysaGQkIhsYqz1Cewucjci1Hpv0LqLH+gvd5
+        SrQmG+E47gzTDIQRF/JKk5XNuiqY4k6ntqHHD9NM6dNJmF+hHKnB8VtrqLvF9fai
+        d4OIbsRQFMlydphapfBTd+bGXTZl0Lc9RbNrAbhePIDuI2L4QFcAJezwLmYvn0ua
+        jxKlKMPTE/ENMD1PERFVCNxKKr2G7kUqjUgn8CMlpsuOtebnjsIwsM0AyQ/tNF2p
+        k++w44U401AtoXOasgw44YxLohprsDRN0MryCc3ISjxsjIRws1zhRW45wz8To7Jr
+        kjVYIpqzsX7xLI6N6IV71PVAU93SpQWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=vFspHzlxRfiJWzers
-        tlxJr6TBSodBx7EnNxSmuh7eVc=; b=Rk8aozBqCpv4Ym9zmE4mqKySKFDCPgTin
-        wKpoveVkaLnNFb8sOSZKez70MfQ+dRG9/Z8bupH8yP/wlccqHBJ+MdZiBhYtBjkj
-        eZspg6S3yntnDhFND4/3WJ5jWNiVkPt9vhTR5mglRj+BoQ+/B/6liZbrL0lOQv67
-        eoJkIMMP/jfs8A280x1PeSAjFM/kpgVVlu/6Zb44f+TrmiGILM3BGKnYOwkMAcaR
-        BqR03FbD6Tbh8UdA41OrMLL0Ik1sJBDxh/VE8aXczy3+AWTNqYkewSS60l3tLBHL
-        lM2vv95jckxMYEsJ46/UYQjIhBSuhuISLzbQemA+6ZUEmf5hMhl9g==
-X-ME-Sender: <xms:FTEOYjv4iaBo81eITyluyMVjQIISbFJS020lHcsOtnR4xB-BN6cnXw>
-    <xme:FTEOYkfPHZizKUTl2Y4vCn-PAsg4wj28FI-EmcGOGkVOLitwSLA59xw3iDpSpmB2T
-    dZXeF-65vIUwtwy5A>
-X-ME-Received: <xmr:FTEOYmxjvysus-9ft_UNfeX50jXOf_4CA9RlL-B76YY1Fun3BxaukX1vpiExsTSZNyvQSn-6OFGTp3-0UjK0FFBxqTKY39omiNSAPGGMqIIexYpVrARvFtc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgddvjecutefuodetggdotefrodftvf
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=bShHKkJaO73VgrkuC
+        ksUG/yi0LbfjESbtFZvDQXa6Ao=; b=X5PgU0NPPK11G++0WH3WXRA2GGEECavWs
+        kwCBMCbK2K+MwJ3gSshOVMwzxBspzxCixna40pf/DPV66TDfWppsmY7sG5FSSTwR
+        eUyZBmU2mVzfdopi2xKjIvay3L4wzlvV+rB+Q8JnfIsc1Yp2TJi/TsSGg/2nk5ks
+        EAykAvhmbrPWy//mctqxWUvrJbWBynA+aeFwBCNmtzz4EzutN/xMDGBY9RerlM5m
+        4/WV56CLiey4qAtNXdrEKMeTyGpie0Qaj2h3msEd4GD/ZoK0qPYV2exIkxtBIDhV
+        ZSERBa31x1Lbb2zqnlWp+D4jF/RY51DkQcbUba/5ILmFAM3Bw55vA==
+X-ME-Sender: <xms:fjMOYs-VEpP2v_Ik6BIaZknDL7hsAnO7QunkeOCnwITZYMqTbiFNTg>
+    <xme:fjMOYkvfSzb-ecdmib1N44y9kpY7Vis8KOHCgnkVABntSt201JqncA8HLbZtYNFZZ
+    jMTsCo0l5LjPQlSGw>
+X-ME-Received: <xmr:fjMOYiDNbyNeWsMFCRORRd0CjQQXSUQPw4bLps_uImV04Bff185psOt__N5Pd1gh3CGjpoRq-PwERHJ96WwaN6xHjpIl2T_JE5HU2SWB8U54KqhKDsUjJAE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgddvlecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
@@ -52,95 +52,121 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrjeekgddvjecutefuodetggdote
     epheeghfdtfeeuffehkefgffduleffjedthfdvjeektdfhhedvlefgtefgvdettdfhnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimh
-X-ME-Proxy: <xmx:FTEOYiPJQyg9EXBQfLQSDqLr8530Trw92KefC1o1E5ETgYDGYdIdMA>
-    <xmx:FTEOYj_aGQ4yLx7RDqZHyGAs8xX49O3c6h-peHUdvipWtcJeTZBpWA>
-    <xmx:FTEOYiUjEZCk9wgumL75_dMb8yZHF9PYJQxlD3UMnrMY1rlqs6EsKg>
-    <xmx:FTEOYgECVR3MAbl8E1yyPCJLQcUbLvuOGPVDb7Z2j_PCdHP8w-OXuQ>
+X-ME-Proxy: <xmx:fjMOYseCSKcBAes_YJeVAy1R_g1LEtJsCxbx0J_Q6XbbVaRnJUk0Jw>
+    <xmx:fjMOYhM9Fr2BJUL9QLOxbBYP-W4q1qU6mLhyXnfkNJIrqpfFnuPG-w>
+    <xmx:fjMOYmmvwcXmUNordlgeJJfw5oI3xjiGJKDdSFxqUVbGP7McnYeAzg>
+    <xmx:fjMOYjVuva8rK5mlQUxJiZFnBPBaflJOQLFD4OMhhaLffxlSeUi4-g>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Feb 2022 06:27:16 -0500 (EST)
+ 17 Feb 2022 06:37:33 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id f2f936ab (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 17 Feb 2022 11:27:15 +0000 (UTC)
-Date:   Thu, 17 Feb 2022 12:27:13 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 2d8f3ec9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 17 Feb 2022 11:37:32 +0000 (UTC)
+Date:   Thu, 17 Feb 2022 12:37:31 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Christian Couder <christian.couder@gmail.com>
 Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH 4/6] fetch: report errors when backfilling tags fails
-Message-ID: <Yg4xEQmXyzSeYZ1k@ncase>
+Subject: Re: [PATCH 5/6] fetch: make `--atomic` flag cover backfilling of tags
+Message-ID: <Yg4ze+TMUWEQmszJ@ncase>
 References: <cover.1644565025.git.ps@pks.im>
- <54fdee845bea7f67f46817417f8e5a504bd39665.1644565025.git.ps@pks.im>
- <CAP8UFD0MQCpFfWg2FP3S1VpDAxCwp3WGucFPn7K9BZ7UnckNLw@mail.gmail.com>
+ <55dbe19a1a4d05d84c81356af1a3f04b65f8aa7b.1644565025.git.ps@pks.im>
+ <CAP8UFD1bdLESqzbZcYKYfib836vrDTfyCmYfT-9B-1ToJB0EWg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="GzB+FVxxPZAZx+lv"
+        protocol="application/pgp-signature"; boundary="0Vl95ZHpWy1jXZbC"
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD0MQCpFfWg2FP3S1VpDAxCwp3WGucFPn7K9BZ7UnckNLw@mail.gmail.com>
+In-Reply-To: <CAP8UFD1bdLESqzbZcYKYfib836vrDTfyCmYfT-9B-1ToJB0EWg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---GzB+FVxxPZAZx+lv
+--0Vl95ZHpWy1jXZbC
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 15, 2022 at 08:52:14AM +0100, Christian Couder wrote:
-> On Fri, Feb 11, 2022 at 9:03 PM Patrick Steinhardt <ps@pks.im> wrote:
+On Tue, Feb 15, 2022 at 09:11:55AM +0100, Christian Couder wrote:
+> On Mon, Feb 14, 2022 at 10:13 PM Patrick Steinhardt <ps@pks.im> wrote:
 > >
-> > When the backfilling of tags fails we do not report this error to the
-> > caller, but only report it implicitly at a later point when reporting
-> > updated references.
->=20
-> Probably stupid question: are we sure that it's a bug and not a feature?
-
-Good question, and I don't have a definitive answer for it. But to me it
-very much smells like a bug: if I ask for a fetch and the fetch fails to
-populate some of the data I have asked for, then I want to get a
-notification on that failure.
-
-> > This leaves callers unable to act upon the
-> > information of whether the backfilling succeeded or not.
+> > When fetching references from a remote we by default also fetch all tags
+> > which point into the history we have fetched. This is a separate step
+> > performed after updating local references because it requires us to walk
+> > over the history on the client-side to determine whether the remote has
+> > announced any tags which point to one of the fetched commits.
 > >
-> > Refactor the function to return an error code and pass it up the
-> > callstack. This causes us to correctly propagate the error back to the
-> > user of git-fetch(1).
+> > This backfilling of tags isn't covered by the `--atomic` flag: right
+> > now, it only applies to the step where we update our local references.
+> > This is an oversight at the time the flag was introduced: its purpose is
+> > to either update all references or none, but right now we happily update
+> > local references even in the case where backfilling failed.
 >=20
-> Even if it would have been the right behavior when backfilling tags
-> was implemented to return an error when backfilling tags fails, I
-> think it's interesting to ask ourselves if this change could be seen
-> as a regression by some users.
+> Also it looks like the backfilling of tags itself isn't atomic, right?
+> Some tags could be backfilled while others aren't.
 
-Yeah, it's not all that clear-cut because auto-following of tags is a
-bit obscure. But our default behaviour is to fetch tags pointing into
-the history, and if a user didn't want that they should've passed
-`--no-tags` to git-fetch(1). So conversely, we should assume that a user
-is asking for auto-filling of tags if we're not told otherwise, which
-also means that it is a failure if this fails.
+Right.
 
-At least that's my take, but I'm happy to hear arguments against my
-viewpoint.
+> > Fix this by pulling up creation of the reference transaction such that
+> > we can pass the same transaction to both the code which updates local
+> > references and to the code which backfills tags. This allows us to only
+> > commit the transaction in case both actions succeed.
+>=20
+> Maybe this could be seen as a regression by users who are mostly
+> interested in the local references though.
+
+Even though the commit message discern "local references" and
+"backfilled tags", ultimately they're the same. Both are references that
+end up in your local refdb, so from the point of the user there is no
+real difference here. Documentation of the `--atomic` flag only says
+that "either all refs are updared, or on error, no refs are updated". I
+think that the current behaviour does not fit the description.
+
+> > Note that we also have to start passing the transaction into
+> > `find_non_local_tags()`: this function is responsible for finding all
+> > tags which we need to backfill. Right now, it will happily return tags
+> > which we have already been updated with our local references. But when
+>=20
+> s/we have/have/
+>=20
+> > we use a single transaction for both local references and backfilling
+> > then it may happen that we try to queue the same reference update twice
+> > to the transaction, which consequentially triggers a bug. We thus have
+>=20
+> s/consequentially/consequently/
+>=20
+> > to skip over any tags which have already been queued. Unfortunately,
+> > this requires us to reach into internals of the reference transaction to
+> > access queued updates, but there is no non-internal interface right now
+> > which would allow us to access this information.
+>=20
+> This makes me wonder if such a non-internal interface should be
+> implemented first. Or if some function to queue a reference update
+> could check if the same reference update has already been queued.
+
+Yeah. I noted that ommission in the cover letter already, but didn't yet
+want to fix that before getting some initial feedback. I'll add
+something like a `for_each_queued_reference_update()` in v2 of this
+series though.
 
 Patrick
 
---GzB+FVxxPZAZx+lv
+--0Vl95ZHpWy1jXZbC
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIOMRAACgkQVbJhu7ck
-PpSAJQ/7BZjSy00+/1PvmYyi3Co5EAB0SxuFCSVw7nyMDL762wHJq0P4Cl+TfBJK
-b3nFobhw6LYHNmLoxHY15j1LWduXy/MXhX1cRxkjtoR3ISwzEuPWuxJgXTMsD0UW
-Jev9AMx+4KtcluoE5LHMFIU20czcPW+gemul1cSYKGHrhD0gmyxkbVRTmYxQjoOz
-qeFS2fuU1XRU0fQjHlNb1xTnKVrDupvuiGIy2GjQH2HJgvVeQ3SfjC7vWTqdQ9O0
-WpAi3GVDJAXR70UiDaToTIMfszrylyUBcJNvSmv6G0DxrZnoHWO+QZZuSeJnESbf
-3of3k9+f0DMz3EAdXkOLgAhH0DGm+P6P1m9pMZpOEU8giu4UjjWqcZNoW1Y204a2
-myqW+aTJfDkTWvZh8BILalukxJtwxHqd/nM7/E3lKh6kxQImciKPVIfyOYRni8NE
-k428Q6cC6lhhv2FfQEIa0Af8xSXvTOcKME8wBH/yRcGobNZl2v+7wOg7yPNra+WD
-P1TlR1zDILr2pEyX8lg6v0IOXJ4+2vHFtwKu0w6F1xBLrrWGwASrQb03a4EczYrl
-rR8Eh4ZEo5XAT/Uc8q9Auh+oX7bCkSKBrDG0h5iPuDxRh02vtOpsQmrajvod5QRn
-1F0AiPOzpR12aShFWV/TlS/JL74nASHEvF6PITJHdv7K5tJ0VUU=
-=YErx
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIOM3oACgkQVbJhu7ck
+PpRJlA//X2aO0P+2rmWicQv1vYj1o5NONO8A+mx05rfYuX83Ekm9S8iC2zKqb0y+
+z6p1FV4tBVxq4JaFqf1IoplabpntShx2aHsFOcUO5oTRdN3tLDk1gXDRBuHMcOWS
+hnguFlWDR0xNZsQxIvOP8WjkLEAzkqrSeFSuoHny9RjqmpokSpF45FOG9kaOs6fz
+6J4LTp3z2F+CPG0fDs/ARN6E2IS242M/4RM63bqKwu3+lOJ7UewfIUWPK8KVrD3V
+UUZ6DOhDwM//nZgeRz5U9WDe1mvuplmkDq27HWDCahqzOI8KaslmTncxsVPj3z7c
+3xRM/7eiZsdgxVeoL1hV23czj19ADSOBwCOyCWlzUYiHjJS6TG8M2fQ6Tv46jSyw
+7ZfmX2UgkxEar8AITlubWaTSl48YaQ8bM4AZFEyRdcbUYKR6WyYhL3HPiAN4uxVz
+YwOkMq5QH/qsKjZ436+hkonc8WY6qIDMULJkjo1zlUZDraEvdvjdPFFE7FoKcmbY
+7ZnABpEpxzOA/gIMa2c9+oQ+hXaPXUkScysn0fdk7ZhOyrdPUolYLypdGjPiwFue
+ZWnUE76xSBF97rpuhTugSiaayw5dN7hwSfcKnHPnO0bpeOb8q7Ka2ANNflphtMaS
+Yw6kzMv4LZflcDJbegfBmd9r2VxV94Mv+ViRv8MZc/JwqyrfKL4=
+=A8M3
 -----END PGP SIGNATURE-----
 
---GzB+FVxxPZAZx+lv--
+--0Vl95ZHpWy1jXZbC--
