@@ -2,137 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5967DC433F5
-	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 01:34:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3F15C433EF
+	for <git@archiver.kernel.org>; Thu, 17 Feb 2022 01:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbiBQBev (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Feb 2022 20:34:51 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59740 "EHLO
+        id S230520AbiBQBkq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Feb 2022 20:40:46 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:45658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229569AbiBQBeu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Feb 2022 20:34:50 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51FB22A8D14
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:34:37 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id p15so3317845ejc.7
-        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:34:37 -0800 (PST)
+        with ESMTP id S230501AbiBQBkq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Feb 2022 20:40:46 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E666420190E
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:40:32 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id bg10so3381978ejb.4
+        for <git@vger.kernel.org>; Wed, 16 Feb 2022 17:40:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eqcOFfzkVieIC1a1BpOVQ7o81OCqiHQaBwg9ycyNcRs=;
-        b=nvTzEzdGvIwcfySsxDqyfK7oreKvfSlXoDik042FW+X761iUnO3AJqqgo6+WvRL6CC
-         ULS4b3nHUmKeBCTzswH6zTg2XmkPyNGPXvTw8je4iYXClz0aU3Du0zhSaHKh9ZeqskBI
-         m4BbTMLlllamgnFgt5B7T1qkvXvWfYBDxEGyLE30Esyqmtgd9cXa1WgNon5pAo/vOrxN
-         W4I6slte8eaMYmx4SldzDLMSqm6GcSEDg6YZV3E8iKcqtoRIWwbyNMDJ61YWSkNhoFy9
-         zOZqWkkcXL7DgSV07xnhXqY2MSbh5eZNp5UbD7jKRdZ9XW/+vFT2uBqreR35UmeFVbYf
-         rLWA==
+         :cc:content-transfer-encoding;
+        bh=T5As2NC8ZWlZpIb3Fb+Xq53EGU50XkqAZIFFtil7OUA=;
+        b=RDYqf+SeaeGp0LvJYjDt8D9w4TVha8lYoPaYRJHaSulXEHLFFSk/3JHYt+cF+wyGup
+         6tO3pzqvr0XEe/IlLBw/WA3349K2RCVwM7ie1GPhgDsCN2f58bun5A2NVBCXwY8fUixI
+         71VL4DxJXkzCjDvjJd0D1SC4dHmWc1TNiBS3tlptscEmHBYUpz0QWQP+SoO+Ou4esY6D
+         qtDdfYDs3T3TNJ8pfYgc2ssfZdespP+2uC3cB2P1wS2EXGOqURr8Zys8dZ1g93KFH0Yn
+         S+88I8njOGVBmTZ21jeIdv4ZdVSbbrMg+/9ZL+1KO42bl+3uK7U4dEMipR68Ms85ikXQ
+         yioA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eqcOFfzkVieIC1a1BpOVQ7o81OCqiHQaBwg9ycyNcRs=;
-        b=ZFb5C4GuX75l/Azg2QziC3xoRDhAaBizaql8yJ6yZRKM9LcJrJCwgYsUqygPrIixIr
-         RfWpbkS3YyFqrqhr8vnZULZ923rkz6QNmREMCdR8JPLRFSkCloNJjAkAqoSS8v4E4/wl
-         cxU/E+215IwEy33DN84WttmFRaWvHKKr4kqVcWlQnINnBxbAqresPLvh5TiwI2QZe+ST
-         ZskdbvkLusmV4dsabtPbEmiVT5Rbl4O2uAtAgOIsnzyGGumstOhqeOy/GGs8piPk0i5/
-         P0sCNh9VQCmRhAYVC22m0JXLPcEQSqyJIHei83H3GR+08qI9VgL/E7biY+uitLgH1jSd
-         fh+w==
-X-Gm-Message-State: AOAM533xwYgeUvpY8iBTUSYLPz/nKfBYpnjUI0HqOPh48z5OhsItPA2B
-        0weVaiz+GK5cl88QPMzL34PMlDjEW4Sg3cXGJdHrUnNv/Vg=
-X-Google-Smtp-Source: ABdhPJzmdyvXi1LDGRCSRCKpJ9qHTTntSxdQfsD8T28g9IzBrwli2fq2oi+IA7ngvoENWHEDLKrwk64+4PuR7ceWudw=
-X-Received: by 2002:a17:906:a855:b0:6cd:ba20:39c5 with SMTP id
- dx21-20020a170906a85500b006cdba2039c5mr572682ejb.100.1645061675843; Wed, 16
- Feb 2022 17:34:35 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=T5As2NC8ZWlZpIb3Fb+Xq53EGU50XkqAZIFFtil7OUA=;
+        b=BdK8qkD0oSoqam+94R+TCDINhlipI7Kvwnpdq0vfaIs67HBV71ssMFNGJqTYsFtf5a
+         qjtH34je0Udlj9m1w+8W/D4jhrpcMyMhv0NA25H0Zk3pcA7fi1/yKa3g8u5vU8J9JnzG
+         3dLiBHRjAMtuzKbXOzpnB8o8SkRSRl5BH6yQXj5nnaIOeP+rHWUL12k0s7+EGOOC9/PR
+         GSvWV81bu4JIpibpeaZNwzHet/SYkCPo5fl6OxKE0kdAYjz5qYQ10wlBMdpirrX/J1eS
+         wnK/GAmenCKtW2fsT+sKWj9RpfpzH10peLOX/wFViZb9FQNlU+Jp8raEQFE9WT7QBVpG
+         aDtQ==
+X-Gm-Message-State: AOAM530cGbgvZ8m9inqN1lb3MiUK96+qvsKaReoBw7wWao6utnDOrHQK
+        cNiDws0+Va8ETE67ai4xJJ87D/poDq6ULFIeBvPxSx6Ss+Y=
+X-Google-Smtp-Source: ABdhPJxBh0b6fXVrKKfT/OEX2F7d5TcdzMNTgbJBz2iWv8mE1fvbOoB+7ihud1E9C8Mhey9zpgWUkzWcz1iV6+nSKDY=
+X-Received: by 2002:a17:906:350d:b0:6b9:5871:8f34 with SMTP id
+ r13-20020a170906350d00b006b958718f34mr569559eja.493.1645062031419; Wed, 16
+ Feb 2022 17:40:31 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1644565025.git.ps@pks.im> <55dbe19a1a4d05d84c81356af1a3f04b65f8aa7b.1644565025.git.ps@pks.im>
-In-Reply-To: <55dbe19a1a4d05d84c81356af1a3f04b65f8aa7b.1644565025.git.ps@pks.im>
+References: <cover.1644565025.git.ps@pks.im> <682f16117b743bec59c533e15ae5a88d39250222.1644565025.git.ps@pks.im>
+In-Reply-To: <682f16117b743bec59c533e15ae5a88d39250222.1644565025.git.ps@pks.im>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 16 Feb 2022 17:34:23 -0800
-Message-ID: <CABPp-BFM67LzZFL=w-iA7vButaBKokpetDR5dr8TTnbSCmBdeA@mail.gmail.com>
-Subject: Re: [PATCH 5/6] fetch: make `--atomic` flag cover backfilling of tags
+Date:   Wed, 16 Feb 2022 17:40:19 -0800
+Message-ID: <CABPp-BE9_RVu28C-6QuY2qDYaEExeqCqph0e37DgiFtPZRHY2A@mail.gmail.com>
+Subject: Re: [PATCH 6/6] fetch: make `--atomic` flag cover pruning of refs
 To:     Patrick Steinhardt <ps@pks.im>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 14, 2022 at 1:32 AM Patrick Steinhardt <ps@pks.im> wrote:
+On Fri, Feb 11, 2022 at 12:25 AM Patrick Steinhardt <ps@pks.im> wrote:
 >
-> When fetching references from a remote we by default also fetch all tags
-> which point into the history we have fetched. This is a separate step
-> performed after updating local references because it requires us to walk
-> over the history on the client-side to determine whether the remote has
-> announced any tags which point to one of the fetched commits.
+> When fetching with the `--prune` flag we will delete any local
+> references matching the fetch refspec which have disappeared on the
+> remote. This step is not currently covered by the `--atomic` flag: we
+> delete branches even though updating of local references has failed,
+> which means that the fetch is not an all-or-nothing operation.
 >
-> This backfilling of tags isn't covered by the `--atomic` flag: right
-> now, it only applies to the step where we update our local references.
-> This is an oversight at the time the flag was introduced: its purpose is
-> to either update all references or none, but right now we happily update
-> local references even in the case where backfilling failed.
+> Fix this bug by passing in the global transaction into `prune_refs()`:
+> if one is given, then we'll only queue up deletions and not commit them
+> right away.
 >
-> Fix this by pulling up creation of the reference transaction such that
-> we can pass the same transaction to both the code which updates local
-> references and to the code which backfills tags. This allows us to only
-> commit the transaction in case both actions succeed.
+> This change also improves performance when pruning many branches in a
+> repository with a big packed-refs file: every references is pruned in
+> its own transaction, which means that we potentially have to rewrite
+> the packed-refs files for every single reference we're about to prune.
 >
-> Note that we also have to start passing the transaction into
-> `find_non_local_tags()`: this function is responsible for finding all
-> tags which we need to backfill. Right now, it will happily return tags
-> which we have already been updated with our local references. But when
-> we use a single transaction for both local references and backfilling
-> then it may happen that we try to queue the same reference update twice
-> to the transaction, which consequentially triggers a bug. We thus have
-> to skip over any tags which have already been queued. Unfortunately,
-> this requires us to reach into internals of the reference transaction to
-> access queued updates, but there is no non-internal interface right now
-> which would allow us to access this information.
+> The following benchmark demonstrates this: it performs a pruning fetch
+> from a repository with a single reference into a repository with 100k
+> references, which causes us to prune all but one reference. This is of
+> course a very artificial setup, but serves to demonstrate the impact of
+> only having to write the packed-refs file once:
+>
+>     Benchmark 1: git fetch --prune --atomic +refs/*:refs/* (HEAD~)
+>       Time (mean =C2=B1 =CF=83):      2.366 s =C2=B1  0.021 s    [User: 0=
+.858 s, System: 1.508 s]
+>       Range (min =E2=80=A6 max):    2.328 s =E2=80=A6  2.407 s    10 runs
+>
+>     Benchmark 2: git fetch --prune --atomic +refs/*:refs/* (HEAD)
+>       Time (mean =C2=B1 =CF=83):      1.369 s =C2=B1  0.017 s    [User: 0=
+.715 s, System: 0.641 s]
+>       Range (min =E2=80=A6 max):    1.346 s =E2=80=A6  1.400 s    10 runs
+>
+>     Summary
+>       'git fetch --prune --atomic +refs/*:refs/* (HEAD)' ran
+>         1.73 =C2=B1 0.03 times faster than 'git fetch --prune --atomic +r=
+efs/*:refs/* (HEAD~)'
 
-I like the changes you are making here in general, but I do agree that
-reaching into refs-internal feels a bit icky.  I'm not familiar with
-the refs API nor the fetching code, so feel free to ignore these
-ideas, but I'm just throwing them out there as possibilities to avoid
-reaching into refs-internal:
-
-  - you are trying to check for existing transactions to avoid
-duplicates, but those existing transactions came from elsewhere in the
-same code we control.  Could we store a strset or strmap of the items
-being updated (in addition to storing them in the transaction), and
-then use the strset/strmap to filter out which tags we need to
-backfill?  Or would that require plumbing an extra variable through an
-awful lot of callers to get the information into the right places?
-
-  - would it make sense to add a flag to the transaction API to allow
-duplicates if both updates update the ref to the same value?  (I'm
-guessing you're updating to the same value, right?)
-
-  - should we just add something to the refs API along the lines of
-"transaction_includes_update_for()" or something like that?
+Very nice!
 
 [...]
-> @@ -361,12 +362,28 @@ static void find_non_local_tags(const struct ref *refs,
->         const struct ref *ref;
->         struct refname_hash_entry *item = NULL;
->         const int quick_flags = OBJECT_INFO_QUICK | OBJECT_INFO_SKIP_FETCH_OBJECT;
-> +       int i;
->
->         refname_hash_init(&existing_refs);
->         refname_hash_init(&remote_refs);
->         create_fetch_oidset(head, &fetch_oids);
->
->         for_each_ref(add_one_refname, &existing_refs);
-> +
-> +       /*
-> +        * If we already have a transaction, then we need to filter out all
-> +        * tags which have already been queued up.
-> +        */
-> +       for (i = 0; transaction && i < transaction->nr; i++) {
-> +               if (!starts_with(transaction->updates[i]->refname, "refs/tags/") ||
-> +                   !(transaction->updates[i]->flags & REF_HAVE_NEW))
-> +                       continue;
-> +               (void) refname_hash_add(&existing_refs,
-> +                                       transaction->updates[i]->refname,
-> +                                       &transaction->updates[i]->new_oid);
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 93a0db3c68..afa6bf9f7d 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -349,11 +349,9 @@ test_expect_success 'fetch --atomic --prune executes=
+ a single reference transact
+>         cat >expected <<-EOF &&
+>                 prepared
+>                 $ZERO_OID $ZERO_OID refs/remotes/origin/scheduled-for-del=
+etion
+> -               committed
+> -               $ZERO_OID $ZERO_OID refs/remotes/origin/scheduled-for-del=
+etion
+> -               prepared
+>                 $ZERO_OID $head_oid refs/remotes/origin/new-branch
+>                 committed
 
-Why the typecast here?
+Up to here this is just what I expected.
+
+> +               $ZERO_OID $ZERO_OID refs/remotes/origin/scheduled-for-del=
+etion
+>                 $ZERO_OID $head_oid refs/remotes/origin/new-branch
+
+But now scheduled-for-deletion and new-branch are both listed again
+even with your fixes?  Is this some peculiarity of the reference
+transaction hook that it lists the refs again after the
+prepared...committed block?  (It may well be; I'm not that familiar
+with this area of the code.)
