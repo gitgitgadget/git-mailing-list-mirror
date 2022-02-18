@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E7EBC433EF
-	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 18:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F4C4C433F5
+	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 18:23:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239181AbiBRSXh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Feb 2022 13:23:37 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50036 "EHLO
+        id S239185AbiBRSXi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Feb 2022 13:23:38 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239172AbiBRSXg (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239169AbiBRSXg (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 18 Feb 2022 13:23:36 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62D1648E42
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:23:18 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id f3so15812366wrh.7
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:23:18 -0800 (PST)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5616D48E6B
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:23:19 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id i14so15923623wrc.10
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:23:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SNpIy/07GQZSBrZ5H2sk7/nd388dliKlQOi7EWsbFEw=;
-        b=fF+8V4W9BhV4mM7LT6Ph2VtqW6ingO7e/Uc5ZuCjeWaaXMXso+ugptT0APbYS/Hsyw
-         dwODCh+l7yfvjUqciJmC0SdFyW1G0C0Uo900Cu+z1g0eEa2kJMSdnJrKcoYrezEyznDD
-         MmANpNHByP2Miru8LWFZR9GPy4Zh20EYz6vvCxzPLu1y0IeEKkT05Z6GJKBMIwOzPCOY
-         L2B5CyeYnj98+oPIoQp4yKvgvQWItzhv3VgqhyLo1rCBsifXwaTfdVVp3CP8Yd9x9Dhz
-         5WKuwk/uCkc31wXm/p+g41Nat1lBwnGipo+so4k45H9NHV8cm8S3/lDhXr7PFEz0Pg35
-         gYbA==
+        bh=ielkz8QHotBtE/FrvWE7acgciQk61gjydC4noInf6m0=;
+        b=BjCubyFVFk9cVSoRY2gnLGSx2FAYLJxZd/kC5XrK94ynKiLpg3iALMA0BWsg8QhyAu
+         S1lYh0/vvdRgX98FWQJzwKzNai2obkvfokyza/Jl4CcMy6BPYNIMv9AQ7WMIORYZJakB
+         +/UdvHjy3XCyoD/ZzGl6Ef7j9TnB9iIQbplW/Ih0PNtOOBCO89rrnMVYYaILLQeMdIRr
+         MrtWzIV+4pN8pFwQGeLCJQqt83vICS2f0p+1cidYBCokdExwTKJe9JKcYwKPQpSzyDL6
+         Qc+tjqMuYZi3Epg2f+V8ig3alIPOMQP/grbDGtrISLrepA6MtGGw56AXoL6/nqYnXDbn
+         bkdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SNpIy/07GQZSBrZ5H2sk7/nd388dliKlQOi7EWsbFEw=;
-        b=M0sB+sm+x9Dz9/KBMhgRWcW0KYncsncj9nITUVsUOzWvaZbt7bj+k+vdAoBBS2GMjJ
-         C0o+2tKb//FkJ0Xs7DFWGLY5aIIRFN+3o/uLHhVzjQWMTEbC5a9SOU2MC+2or3AM37OK
-         PbgG2BXyQ2I2m/pJSM9Qshng+vqH7IHBXM0Ptv5qFJpDGpk307lPWTUBGWeSDx5s3k2p
-         kKcZZZ9hAlXWm34AjdgeV/xf2IKkS8E0Y6bU3wskOkyTMGIiN4B9ThSuGNzqkQtCNnFi
-         UuTdUcEjov5nel+WBWG5zyvXTBoG7OU44LZ/j1UJ4DPzSXgrZnwZGU9A7B9QFOAKQKgY
-         ir1g==
-X-Gm-Message-State: AOAM532lp3fIxM1/cj5SF3RdPpz/zQHERgMrGILGjasnZeM7SRS5GfkZ
-        TMg5FJkzGx5eQGf1h3FzgVben7YDNEs=
-X-Google-Smtp-Source: ABdhPJz+dj2gVcoqk1QjPIT+evQ5ncLOfGI477CmFU01u507a+4wD6elAI40SYq1hbxFlV/xu5eaug==
-X-Received: by 2002:adf:8069:0:b0:1e3:24d2:21d2 with SMTP id 96-20020adf8069000000b001e324d221d2mr7100139wrk.415.1645208596806;
-        Fri, 18 Feb 2022 10:23:16 -0800 (PST)
+        bh=ielkz8QHotBtE/FrvWE7acgciQk61gjydC4noInf6m0=;
+        b=LSR6nW4Aofh2gu+jezCf/JkfV9oFY+k/eoL2n5vCQM34PmnnxlFBp4lYs0NxxriNLN
+         O3DZvaCOfjWAbsuHZC7W5Y3fokOZoV41ed8iKInf8vEiUCk9aJEMZtmBG/ZD6TYz3AdX
+         W3MqlaJUR5qs8iRMIzdcadflIywojGGbSbIZQgbiWu4pvnhCL4GEq2xn4NHfvLgfzvaK
+         rIbHWcaPHK/ogvbVwb6U3mdiqqRe5G+f2C34eOXikLQymyJetl6NfK1jo0SoaV8uYpL6
+         KQGNJ4PjHJDNcijhE72xpkumwFGC4t5ZE8M4v3XMpIoza9669AdC2qiBu4oZoQdUD75H
+         cG5Q==
+X-Gm-Message-State: AOAM533CYAupIg2nsDIDOzyC30tO7gdwqGwl0AXKyo8LxeNPVrfBVq4Q
+        xcFbZVfeSLg5b8tqrqKC8WgCBZ5YhXQ=
+X-Google-Smtp-Source: ABdhPJxQYUz7bGGR1byFbEMpBbePCFaqk3tKuJkJlEi44ZEbAmQBfOYLOtLziGSZpifi56zmkYPhJw==
+X-Received: by 2002:adf:e951:0:b0:1e6:85e6:65d9 with SMTP id m17-20020adfe951000000b001e685e665d9mr6783027wrn.412.1645208597702;
+        Fri, 18 Feb 2022 10:23:17 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n16sm12572026wrm.19.2022.02.18.10.23.16
+        by smtp.gmail.com with ESMTPSA id 129-20020a1c0287000000b0037bc55c8fabsm166325wmc.12.2022.02.18.10.23.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Feb 2022 10:23:16 -0800 (PST)
-Message-Id: <76d6e4fe517ed78dc86ca70d6da5aa67f06bd5cf.1645208594.git.gitgitgadget@gmail.com>
+        Fri, 18 Feb 2022 10:23:17 -0800 (PST)
+Message-Id: <12084a335cb9128db5d122dea9f74edc86b64595.1645208594.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1212.v10.git.git.1645208594.gitgitgadget@gmail.com>
 References: <pull.1212.v9.git.git.1645045157.gitgitgadget@gmail.com>
         <pull.1212.v10.git.git.1645208594.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 18 Feb 2022 18:23:11 +0000
-Subject: [PATCH v10 1/4] cat-file: rename cmdmode to transform_mode
+Date:   Fri, 18 Feb 2022 18:23:12 +0000
+Subject: [PATCH v10 2/4] cat-file: introduce batch_mode enum to replace
+ print_contents
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,87 +72,75 @@ X-Mailing-List: git@vger.kernel.org
 
 From: John Cai <johncai86@gmail.com>
 
-In the next patch, we will add an enum on the batch_options struct that
-indicates which type of batch operation will be used: --batch,
---batch-check and the soon to be  --batch-command that will read
-commands from stdin. --batch-command mode might get confused with
-the cmdmode flag.
+A future patch introduces a new --batch-command flag. Including --batch
+and --batch-check, we will have a total of three batch modes. print_contents
+is the only boolean on the batch_options sturct used to distinguish
+between the different modes. This makes the code harder to read.
 
-There is value in renaming cmdmode in any case. cmdmode refers to how
-the result output of the blob will be transformed, either according to
---filter or --textconv. So transform_mode is a more descriptive name
-for the flag.
+To reduce potential confusion, replace print_contents with an enum to
+help readability and clarity.
 
-Rename cmdmode to transform_mode in cat-file.c
-
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- builtin/cat-file.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ builtin/cat-file.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 7b3f42950ec..5f015e71096 100644
+index 5f015e71096..5e38af82af1 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -24,7 +24,7 @@ struct batch_options {
+@@ -17,10 +17,15 @@
+ #include "object-store.h"
+ #include "promisor-remote.h"
+ 
++enum batch_mode {
++	BATCH_MODE_CONTENTS,
++	BATCH_MODE_INFO,
++};
++
+ struct batch_options {
+ 	int enabled;
+ 	int follow_symlinks;
+-	int print_contents;
++	enum batch_mode batch_mode;
  	int buffer_output;
  	int all_objects;
  	int unordered;
--	int cmdmode; /* may be 'w' or 'c' for --filters or --textconv */
-+	int transform_mode; /* may be 'w' or 'c' for --filters or --textconv */
- 	const char *format;
- };
+@@ -386,7 +391,7 @@ static void batch_object_write(const char *obj_name,
+ 	strbuf_addch(scratch, '\n');
+ 	batch_write(opt, scratch->buf, scratch->len);
  
-@@ -302,19 +302,19 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 	if (data->type == OBJ_BLOB) {
- 		if (opt->buffer_output)
- 			fflush(stdout);
--		if (opt->cmdmode) {
-+		if (opt->transform_mode) {
- 			char *contents;
- 			unsigned long size;
+-	if (opt->print_contents) {
++	if (opt->batch_mode == BATCH_MODE_CONTENTS) {
+ 		print_object_or_die(opt, data);
+ 		batch_write(opt, "\n", 1);
+ 	}
+@@ -536,7 +541,7 @@ static int batch_objects(struct batch_options *opt)
+ 	 * If we are printing out the object, then always fill in the type,
+ 	 * since we will want to decide whether or not to stream.
+ 	 */
+-	if (opt->print_contents)
++	if (opt->batch_mode == BATCH_MODE_CONTENTS)
+ 		data.info.typep = &data.type;
  
- 			if (!data->rest)
- 				die("missing path for '%s'", oid_to_hex(oid));
+ 	if (opt->all_objects) {
+@@ -635,7 +640,14 @@ static int batch_option_callback(const struct option *opt,
+ 	}
  
--			if (opt->cmdmode == 'w') {
-+			if (opt->transform_mode == 'w') {
- 				if (filter_object(data->rest, 0100644, oid,
- 						  &contents, &size))
- 					die("could not convert '%s' %s",
- 					    oid_to_hex(oid), data->rest);
--			} else if (opt->cmdmode == 'c') {
-+			} else if (opt->transform_mode == 'c') {
- 				enum object_type type;
- 				if (!textconv_object(the_repository,
- 						     data->rest, 0100644, oid,
-@@ -326,7 +326,7 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 					die("could not convert '%s' %s",
- 					    oid_to_hex(oid), data->rest);
- 			} else
--				BUG("invalid cmdmode: %c", opt->cmdmode);
-+				BUG("invalid transform_mode: %c", opt->transform_mode);
- 			batch_write(opt, contents, size);
- 			free(contents);
- 		} else {
-@@ -529,7 +529,7 @@ static int batch_objects(struct batch_options *opt)
- 	strbuf_expand(&output, opt->format, expand_format, &data);
- 	data.mark_query = 0;
- 	strbuf_release(&output);
--	if (opt->cmdmode)
-+	if (opt->transform_mode)
- 		data.split_on_whitespace = 1;
+ 	bo->enabled = 1;
+-	bo->print_contents = !strcmp(opt->long_name, "batch");
++
++	if (!strcmp(opt->long_name, "batch"))
++		bo->batch_mode = BATCH_MODE_CONTENTS;
++	else if (!strcmp(opt->long_name, "batch-check"))
++		bo->batch_mode = BATCH_MODE_INFO;
++	else
++		BUG("%s given to batch-option-callback", opt->long_name);
++
+ 	bo->format = arg;
  
- 	/*
-@@ -742,7 +742,7 @@ int cmd_cat_file(int argc, const char **argv, const char *prefix)
- 	/* Return early if we're in batch mode? */
- 	if (batch.enabled) {
- 		if (opt_cw)
--			batch.cmdmode = opt;
-+			batch.transform_mode = opt;
- 		else if (opt && opt != 'b')
- 			usage_msg_optf(_("'-%c' is incompatible with batch mode"),
- 				       usage, options, opt);
+ 	return 0;
 -- 
 gitgitgadget
 
