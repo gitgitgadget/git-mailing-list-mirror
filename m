@@ -2,54 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0350C433F5
-	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 23:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E234C433F5
+	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 23:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240188AbiBRXbM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Feb 2022 18:31:12 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52244 "EHLO
+        id S240243AbiBRX54 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Feb 2022 18:57:56 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240182AbiBRXbL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Feb 2022 18:31:11 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D680EB164
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 15:30:54 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CC9511A1C0;
-        Fri, 18 Feb 2022 18:30:53 -0500 (EST)
+        with ESMTP id S240256AbiBRX5z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Feb 2022 18:57:55 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A4208AE55
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 15:57:37 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4220B184976;
+        Fri, 18 Feb 2022 18:57:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=PW4E5uOCleVF
-        w16KDHwUqzl7UQCMJB/Lg5ao42cHIfA=; b=fxC8q8gaCiwhc8+naKpwsvPAGBPU
-        Ps55f1DZbHtU2NYEDzSvjalAs8VY0FWBOHC0dmkZsLSHqI8z+e9rhML/bheeeXTo
-        ESs0MwiJwFhsdNONVMBZWk2AVFkOg2PQnk0k/HJMZ4If3gRswutRwc87B3pk87ew
-        kyDQhhDZOvutFds=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74CDF11A1B7;
-        Fri, 18 Feb 2022 18:30:53 -0500 (EST)
+        :content-type:content-transfer-encoding; s=sasl; bh=SNEXGw5JHzu7
+        z2hHYpByskNf9J4RE0463ocGrPJZtmA=; b=cRBWfz3G5YKXaSga8T8NIWzpDL4z
+        3J+jpWob5ffZvpdWWS7FYSxM+Zc7E52EgdYyM3CgVKnCKFnkst/M+F1fLg6b82GG
+        YlhJsF7dPl2vTf4rLLxleO+2G0UNqBzh2f+Tl9WhJLVCp3ND96YU07RP/cW9NiKb
+        sVxH99xnhI/bPRE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 29050184975;
+        Fri, 18 Feb 2022 18:57:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DC09C11A1AE;
-        Fri, 18 Feb 2022 18:30:52 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8C178184974;
+        Fri, 18 Feb 2022 18:57:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/4] test-lib: make $GIT_BUILD_DIR an absolute path
-References: <cover-0.4-00000000000-20220218T205753Z-avarab@gmail.com>
-        <patch-2.4-4c53c6157ac-20220218T205753Z-avarab@gmail.com>
-Date:   Fri, 18 Feb 2022 15:30:51 -0800
-In-Reply-To: <patch-2.4-4c53c6157ac-20220218T205753Z-avarab@gmail.com>
+Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH 1/2] merge: don't run post-hook logic on --no-verify
+References: <cover-0.2-00000000000-20220218T203834Z-avarab@gmail.com>
+        <patch-1.2-9b5144daee6-20220218T203834Z-avarab@gmail.com>
+Date:   Fri, 18 Feb 2022 15:57:32 -0800
+In-Reply-To: <patch-1.2-9b5144daee6-20220218T203834Z-avarab@gmail.com>
  (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 18 Feb
- 2022 22:01:43 +0100")
-Message-ID: <xmqqee3zycpg.fsf@gitster.g>
+ 2022 21:43:51 +0100")
+Message-ID: <xmqqa6enybgz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D024F31C-9112-11EC-93EE-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 8A3854F8-9116-11EC-A1FD-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,71 +58,51 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Change the GIT_BUILD_DIR from a path like "/path/to/build/t/.." to
-> "/path/to/build". The "TEST_DIRECTORY" here is already made an
-> absolute path a few lines above this.
->
-> This will be helpful to LSAN_OPTIONS which will want to strip the
-> build directory path from filenames, which we couldn't do if we had a
-> "/.." in there.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
-> ---
->  t/test-lib.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 3212966a82f..4f523b82ce5 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -34,7 +34,7 @@ then
->  	# elsewhere
->  	TEST_OUTPUT_DIRECTORY=3D$TEST_DIRECTORY
->  fi
-> -GIT_BUILD_DIR=3D"$TEST_DIRECTORY"/..
-> +GIT_BUILD_DIR=3D"${TEST_DIRECTORY%/t}"
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 133831d42fd..fab553e3bc4 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -845,15 +845,18 @@ static void prepare_to_commit(struct commit_list =
+*remoteheads)
+>  	struct strbuf msg =3D STRBUF_INIT;
+>  	const char *index_file =3D get_index_file();
+> =20
+> -	if (!no_verify && run_commit_hook(0 < option_edit, index_file, "pre-m=
+erge-commit", NULL))
+> -		abort_commit(remoteheads, NULL);
+> -	/*
+> -	 * Re-read the index as pre-merge-commit hook could have updated it,
+> -	 * and write it out as a tree.  We must do this before we invoke
+> -	 * the editor and after we invoke run_status above.
+> -	 */
+> -	if (hook_exists("pre-merge-commit"))
+> -		discard_cache();
+> +	if (!no_verify) {
+> +		if (run_commit_hook(0 < option_edit, index_file,
+> +				    "pre-merge-commit", NULL))
+> +			abort_commit(remoteheads, NULL);
+> +		/*
+> +		 * Re-read the index as pre-merge-commit hook could have updated it,
+> +		 * and write it out as a tree.  We must do this before we invoke
+> +		 * the editor and after we invoke run_status above.
+> +		 */
+> +		if (hook_exists("pre-merge-commit"))
+> +			discard_cache();
+> +	}
 
-This makes perfect sense in the normal case, but the provision the
-code that precedes this part has, i.e.
+The updated code not just is more correct, but it is much easier to
+follow.
 
-    if test -z "$TEST_DIRECTORY"
-    then
-            # We allow tests to override this, in case they want to run t=
-ests
-            # outside of t/, e.g. for running tests on the test library
-            # itself.
-            TEST_DIRECTORY=3D$(pwd)
-    else
-            # ensure that TEST_DIRECTORY is an absolute path so that it
-            # is valid even if the current working directory is changed
-            TEST_DIRECTORY=3D$(cd "$TEST_DIRECTORY" && pwd) || exit 1
-    fi
+I wonder if run_commit_hook() can return "I failed to run the hook",
+"I ran the hook and the hook failed", "I successfully run the hook",
+and "I didn't find the hook", instead of the current "yes/no".  That
+would allow us to express this part in an even cleaner way, I would
+think.
 
-to allow TEST_DIRECTORY to be set externally robs the guarantee that
-you can sensibly strip "/t" from its tail and expect everything to
-work correctly.  The only thing the original requires on such an
-externally given TEST_DIRECTORY is that one level above it is usable
-as GIT_BUILD_DIR.
+Looking good.
 
-IOW,
+Thanks.
 
-	GIT_BUILD_DIR=3D"$(cd "$TEST_DIRECTORY/.." && pwd)"
-
-would give you what you want to achieve in either code path, as long
-as the original was working correctly for whatever value that is
-given to TEST_DIRECTORY externally.
-
-So, perhaps
-
-	if test -z "$TEST_DIRECTORY"
-	then
-		TEST_DIRECTORY=3D$(pwd)
-		GIT_BUILD_DIR=3D${TEST_DIRECTORY%/t}
-	else
-		TEST_DIRECTORY=3D$(cd "$TEST_DIRECTORY" && pwd) &&
-		GIT_BUILD_DIR=3D$(cd "$TEST_DIRECTORY/.." && pwd)
-	fi
-
-or something like that?  I dunno.
-
+>  	read_cache_from(index_file);
+>  	strbuf_addbuf(&msg, &merge_msg);
+>  	if (squash)
