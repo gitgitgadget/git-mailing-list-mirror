@@ -2,158 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FF20C433F5
-	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 18:48:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEB79C433EF
+	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 18:58:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239445AbiBRSsi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Feb 2022 13:48:38 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47148 "EHLO
+        id S231891AbiBRS6X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Feb 2022 13:58:23 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237417AbiBRSsg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Feb 2022 13:48:36 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0A8512AC3
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:48:19 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 112601183B9;
-        Fri, 18 Feb 2022 13:48:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mVQukM8qhUoWnrrEq5oWx7oSE74XUFjouZR5RV
-        Q1Vac=; b=B6Wq+9bLzpy4ivRaoYbIb1e65jiY0k1WkN17d1GFr2tvPehAIbPQAW
-        cOrijhuvnF+EmrR7+Z9VNVP8kJ2S9I62i+qnK59kaInGFYoib+11/YtjUZZx/LGD
-        V6KlMrrgwn40Y1lvrgsqQ5j6v6R7Fb9Kodc61vH6qH5dnrUAjaDJI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 07CF51183B8;
-        Fri, 18 Feb 2022 13:48:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6963A1183B7;
-        Fri, 18 Feb 2022 13:48:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     COGONI Guillaume <cogoni.guillaume@gmail.com>
-Cc:     avarab@gmail.com, git.jonathan.bressat@gmail.com,
-        git@vger.kernel.org, guillaume.cogoni@gmail.com,
-        matthieu.moy@univ-lyon1.fr
-Subject: Re: [PATCH v2 2/2] Add new tests functions like test_path_is_*
-References: <220215.86a6erwzee.gmgdl@evledraar.gmail.com>
-        <20220218171224.262698-1-cogoni.guillaume@gmail.com>
-        <20220218171224.262698-3-cogoni.guillaume@gmail.com>
-Date:   Fri, 18 Feb 2022 10:48:15 -0800
-In-Reply-To: <20220218171224.262698-3-cogoni.guillaume@gmail.com> (COGONI
-        Guillaume's message of "Fri, 18 Feb 2022 18:12:24 +0100")
-Message-ID: <xmqqbkz4105s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231382AbiBRS6X (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Feb 2022 13:58:23 -0500
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE0534655
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:58:06 -0800 (PST)
+Received: by mail-qv1-xf36.google.com with SMTP id fh9so16559722qvb.1
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:58:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=ITt4wCaJ45MbATVasL4OCqilWLQMOfeZ6brwUGT+ZqE=;
+        b=pQZV+n0q57F2xiGJc9flsCD0N9Ip7Cm9yFbSeiPfY/fe1Z+0SCRNdk+VrPFzeAqCWV
+         yBs8hP1N2dUGw6L4JcHrmDr7BYGd7qrmrgWOYzvRp8I+xi2zPjcmKBWNd7BpsDCwbDh5
+         bw9cN/lRoxD9FFKtOslOEICWLHtd0nTQcGxQDC6QJFphRlFxpHxzv90gu2ASaUchSj0b
+         41pLpXvabsmfoE6S2EZci9sPFx3kG6cbf7neUAsck3cU5WzKU9vlL89UdALOKP2c7I3z
+         v0H2i7C4XlNIt1UrhoUE/tdDhFZ7x3eXNo2mPyTiqr/jj6uqnLlogSvKmlEuDRsNDi9L
+         aMMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=ITt4wCaJ45MbATVasL4OCqilWLQMOfeZ6brwUGT+ZqE=;
+        b=JUDU6sBmdv9ZX2CMtMI30BwmYL6kQrhKhLp/4dYeAdklH3AuWADmceCGQ5le8uUGBV
+         f9PbVbNk0ujFCh5G4Zkpe8ITsDU1JcFvl5aUecCHPZzuOTN2ca1twVHet4kH5dckwDzV
+         f3goNNh9o3nVGDv7pXPgnavezh646FtJU7N8hBp/+GyGPbnhXT8CpZ7AX0Av+OkNnWqr
+         MRq90bd9tXYaCWRU8ut9gie+vcSngwV5OO1nYp91pQgYiULiZQlmVIwsVevNNt3Si+xl
+         GVu5odJhWD4LMJEEANqJhD9C9GHdV2BZvBfiv2kJuP9lN8FeAXNmoHU6JIxon/rLobmS
+         K7jQ==
+X-Gm-Message-State: AOAM530hFQbmQOitA0+qax6IrQLTWYtbHlPR8Mnh45+KRqv39WK9xVxX
+        o0vfz6FkPwMknqWTmNcF2MAwng==
+X-Google-Smtp-Source: ABdhPJwjdaKu38XWV2sUcoKSD4cLDHhOXPEiSc98XNIPBLcpPocUo7duYVOBPb/Eis+kcrVo/8Ckpg==
+X-Received: by 2002:a05:6214:21ad:b0:42d:3631:4e8b with SMTP id t13-20020a05621421ad00b0042d36314e8bmr6819427qvc.123.1645210685270;
+        Fri, 18 Feb 2022 10:58:05 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i20sm3912743qtr.38.2022.02.18.10.58.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Feb 2022 10:58:04 -0800 (PST)
+Date:   Fri, 18 Feb 2022 13:58:03 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Git at SFC <git@sfconservancy.org>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [ANNOUNCE] New Git PLC Member
+Message-ID: <Yg/sO63nhhtAXWvn@nand.local>
+References: <CAP8UFD2XxP9r3PJ4GQjxUbV=E1ASDq1NDgB-h+S=v-bZQ7DYwQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 554D0AA2-90EB-11EC-A3F5-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD2XxP9r3PJ4GQjxUbV=E1ASDq1NDgB-h+S=v-bZQ7DYwQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-COGONI Guillaume <cogoni.guillaume@gmail.com> writes:
+On Fri, Feb 18, 2022 at 07:34:12PM +0100, Christian Couder wrote:
+> We are happy to announce that Taylor Blau is now on the committee.
+> Welcome to him!
 
-> Subject: Re: [PATCH v2 2/2] Add new tests functions like test_path_is_*
+Thanks, Christian, and the rest of the PLC for this opportunity. I look
+forward to serving on the PLC alongside you, Ævar, and Junio.
 
-I'd retitle the commit to "tests: allow testing if a path is truly
-a file or a directory", to follow the convention to highlight that
-this change is about the tests.
+On a practical note, it feels like we are somewhat overdue for a "Git +
+SFC status update", the last one being back from 2018 in [1]. I'll see
+if I can gather some more up-to-date information from Conservancy and
+send out an updated status report, hopefully soon.
 
-> Add test_path_is_file_not_symlink(), test_path_is_dir_not_symlink()
-> and test_path_is_symlink(). Case of use for the first one
-> in test t/t3903-stash.sh to replace "test -f" because that function
-> explicitly want the file not to be a symlink by parsing the output
-> of "ls -l". Make the code more readable and give more friendly error
-> message.
+Thanks,
+Taylor
 
-Interesting.  I'll mention why I think you want to rewrite that "by
-parsing the output of 'ls -l'" later.
-
-I initially didn't like the "is file and not symlink" suggestion I
-made, simply because it looked like it is asking for combinatorial
-explosion, but because the only types of filesystem entities that
-are not symlink that we care about are files and directories, so we
-only need two new variants that say "_not_symlink" in the name,
-it is probably not too bad.
-
-> @@ -390,10 +390,9 @@ test_expect_success SYMLINKS 'stash file to symlink' '
->  	rm file &&
->  	ln -s file2 file &&
->  	git stash save "file to symlink" &&
-> -	test -f file &&
-> +	test_path_is_file_not_symlink file &&
-
-And this is exactly the new helper is meant to be used.  It was
-originally a regular file, the test tentatively made it into a
-symbolic link, but that tentative change is supposed to be reverted
-by the "stash save", so we do want it to be a true regular file.
-
->  	test bar = "$(cat file)" &&
-> -	git stash apply &&
-> -	case "$(ls -l file)" in *" file -> file2") :;; *) false;; esac
-> +	git stash apply
-
-However, the removal of the "make sure file is a symbolic link and
-it points at file2" is not justifiable with the proposed commit
-message.  If the original code were like this ...
-
-	test bar = "$(cat file)" &&
-	case "$(ls -l file)" in *" file -> file2") false;; esac &&
-	git stash apply &&
-	case "$(ls -l file)" in *" file -> file2") :;; *) false ;;esac
-
-
-... the test _before_ "stash apply" is checking if "file" is a
-regular file, the "ls -l" output is used to make sure file is not a
-symbolic link that points at file2.  But that is not the original
-code did, which invalidates the part of the proposed commit log
-message.
-
-The "ls -l" parsing the original does is to check how "stash apply"
-recovers the stashed state, where "file" wants to be a symbolic link
-and it wants to be pointing at "file2".
-
-It seems we have test_readlink() available these days, so with a
-separate clean-up patch, you may want to make the final version
-to read something like this, perhaps?
-
-	test_path_is_file_not_symlink file &&
-        test bar ="$(cat file") &&
-	git stash apply &&
-	test "$(test_readlink file)" = file2
-
-I am not sure what test_readlink which is a one-liner Perl script
-does when it is fed a non symbolic link, so I do not know if the
-"path is truly a file and not a symlink" can be done as
-
-	test -f file &&	! test_readlink file &&
-
-I think the other two hunks to this file have identical issues.
-
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 85385d2ede..61fc5f37e3 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -856,6 +856,16 @@ test_path_is_file () {
->  	fi
->  }
->  
-> +test_path_is_file_not_symlink () {
-> +	test "$#" -ne 1 && BUG "1 param"
-> +	test_path_is_file "$1" &&
-> +	if ! test ! -h "$1"
-
-Why not
-
-	if test -h "$1"
-
-instead???  I think "is truly a dir not a symlink" has the same
-"Huh?" puzzle.
-
-Thanks.
-
-
+[1]: https://lore.kernel.org/git/20180306231609.GA1632@sigill.intra.peff.net/
