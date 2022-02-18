@@ -2,81 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDCEEC433EF
-	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 02:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E89EEC433F5
+	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 02:49:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231453AbiBRCOr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Feb 2022 21:14:47 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:56362 "EHLO
+        id S231663AbiBRCti (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Feb 2022 21:49:38 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:36092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231425AbiBRCOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Feb 2022 21:14:47 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 206C925B2D2
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 18:14:31 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id f37so2633067lfv.8
-        for <git@vger.kernel.org>; Thu, 17 Feb 2022 18:14:31 -0800 (PST)
+        with ESMTP id S231656AbiBRCth (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Feb 2022 21:49:37 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BAD23FDAE
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 18:49:22 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id k13-20020a65434d000000b00342d8eb46b4so3960015pgq.23
+        for <git@vger.kernel.org>; Thu, 17 Feb 2022 18:49:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KFuWKGvyxK2cIygi9PT/o5v6AtSyihqPgKvgrlZtBUc=;
-        b=URCbtzGD1ykeLRAYheKb4bVQluQXCBTXJhrrUlUDPHSVWeWE/i3BDAuiLJrcTMvcH0
-         KFqb9fnh7eUsY9VH1mSFB9b/QoPlRrSK4jpe7Bs01MAe7geWplSbcYMmj8jw6bZJTYIP
-         7nzcDeGAZ8TFzhEN5LO/lmkwhHHm/8WdETe0A2kA7lM0KjUBVwa5EBcyi5i8oGITwjq1
-         pxDGw5d2sZGDy+jSsW9CqL7fZSvLZxp3qflTHC+Ypkl1geHF+ngzJBlU5+n55TzhvQ7B
-         3HIkFXkOg9S4y7rcuPHLVUq2zTTMst5XbyUpDTIDXG1XoUu/fC9x5XFvkxVv7jLDE+OH
-         H48g==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
+        bh=hxBzXoExqempkiHIEZ5FGjftmMKXhwL2kyUkRdaSw8E=;
+        b=er9KxPUCVWTASPfZVvYr6lqoWfZK0JeWbFlxJ44/pjxfS1T4O3p1BL+CyM/JXgAQZw
+         Ejb+R1894WBjzcmcQM1YXSEr0WQtphaTtujVij80jAyQ8Xtk8P2i/2HboGdQL4P9lz+Y
+         S/+pBB2iJ1DqbcqohiaerMy6S16DVBIG066Bp2QA+vtnQalZYqXEAlfs2igJeinNj5YB
+         FmLRKY2ynYV7yEUAXUseuVUxUJHXh8koDO1csWxEive+KmGiypMYwaIFsQdXEK1Fmlp2
+         VbKElfOMa2wGFN0smreXS9FGKy4HhuAMg/SfIYla1DjE+/U8famrsE1yfOYWetzpOXS1
+         CP9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KFuWKGvyxK2cIygi9PT/o5v6AtSyihqPgKvgrlZtBUc=;
-        b=DC98AvrHP57p/khIeRCkoIYLep+H+9OMKKm11FW5EjVYPzRZo2P6ai1WpwzB189Esb
-         EZ76F+y6dkHYMa1ymGK4skTJ/hK5JIUshcOpeDLcQCkJ9vCMViiQqnzNgOL/EV8qmlIg
-         /Kjx4Wl2A+l0a52mc1blpW3vxwt504i0hIfcOlJUcaoyyas8/Jz9YCKK2wQkc6UHMKS6
-         9ikQjq3Xp3t8HJSMgeiOyRMFAVM6j3fVMsWxECExpBG5PZQDBvLQNaCGWHTpXkkeqIMd
-         p8nbWxY3i2QT9ZYi3g9eLWdqZ9+WBT7jkaJxux77ZCjJT7go4Vt1kUTrWBDBlUFrbt/X
-         +wHA==
-X-Gm-Message-State: AOAM533dMG7lL9g3z2kCZ91niZ7lypWTE+qvnk3zq2LcqBG/gYM8fpK0
-        6dIbIuhtKuxELNd+0Zins1lgpTl7YCTec2iLUI4=
-X-Google-Smtp-Source: ABdhPJxezzflzo79JfPm0M+1/Ugca9Q4Prv0eWGwru/R+QZ6s914X+MkipTCt7+ONgTJFkEn1cquIiCkAE8XU3NI1a8=
-X-Received: by 2002:ac2:4f8d:0:b0:432:75c6:c8d0 with SMTP id
- z13-20020ac24f8d000000b0043275c6c8d0mr3967358lfs.90.1645150469157; Thu, 17
- Feb 2022 18:14:29 -0800 (PST)
-MIME-Version: 1.0
-References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
- <YfGpjm8mCkWIPM6V@nand.local> <CAP8UFD1Mqv=MUcdjjhTpOkP0yWpnv9Jr=aB5G+4XmAqWsJBX4g@mail.gmail.com>
- <CAP8UFD2FfJA1ruhxzv3tcxhsssHBeHGCbGFDiz+-fFmpx39Gqg@mail.gmail.com>
- <CA+CkUQ9VTs7n9B+ApH1BYC=Uq4yvrZm0fsG0RJB8PVg_BBSCfw@mail.gmail.com>
- <CAP8UFD0cNLUSbiABnj3UTrAk36DTePNctNWn8U3wrXMGjA6HFg@mail.gmail.com> <0a29bbcf-5c36-3884-96c6-60f9b930ce5f@gmail.com>
-In-Reply-To: <0a29bbcf-5c36-3884-96c6-60f9b930ce5f@gmail.com>
-From:   Hariom verma <hariom18599@gmail.com>
-Date:   Fri, 18 Feb 2022 07:44:17 +0530
-Message-ID: <CA+CkUQ8=uMbzhJ2-mqss17PakJBuqjqpxCXetdZmd+Nd6F41UQ@mail.gmail.com>
-Subject: Re: Git in GSoC 2022?
-To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Git Community <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to;
+        bh=hxBzXoExqempkiHIEZ5FGjftmMKXhwL2kyUkRdaSw8E=;
+        b=dOl1pArJEEtvKAQyrS/REl6tsP8RhZec4SBL7bLazwvb3lc9MSjdN1R2nJElt1lpC7
+         Kj4TKXdF6sW7x5MHU5p7o92oAdsofJBYjirW2FwOGv+Ekr0eVqndWQ6RqW8oV6BfUkIf
+         ekHXchLXc8ptM56cTRO8oDt6XqeE0v4HtQ+pdGYrtVXq7yIMRcyLLqHcC7XEOLg4uS1F
+         /OsEn3LS0GpdAeXGZQQrSgFla/BajGByzxMFnHTmJ12heg1bkUdLMLwCYokOrW7He0J5
+         KN8eiz3bIIHh9LtwrOC8bwwpvyYIjGaRvpiSVmiWYEscJn8yrR41GhYX0cOHKYdXu1yA
+         DxiA==
+X-Gm-Message-State: AOAM532EPxnXvxzjxXXhcm6zX0JtNsE84FsXlCty0gP/NYZROcADYZO2
+        M0lf7v6UwdQLMXsesC+Y0LC3+MOtMMt8+g==
+X-Google-Smtp-Source: ABdhPJwo3lMcjDVdXspsdwORBmtb5NlT7QnC5Ffqwa8cC4DQT+chEDJB6/c8dzeXz/7YAFCA9u5RTgk4XV9xgA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:aa7:85c2:0:b0:4cb:b95a:887f with SMTP id
+ z2-20020aa785c2000000b004cbb95a887fmr5701298pfn.74.1645152561429; Thu, 17 Feb
+ 2022 18:49:21 -0800 (PST)
+Date:   Fri, 18 Feb 2022 10:49:18 +0800
+In-Reply-To: <xmqqley93rkw.fsf@gitster.g>
+Message-Id: <kl6lv8xc51ox.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <xmqqley93rkw.fsf@gitster.g>
+Subject: gc/recursive-fetch-with-unused-submodules (was Re: What's cooking in
+ git.git (Feb 2022, #05; Thu, 17))
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 17, 2022 at 10:48 PM Kaartic Sivaraam
-<kaartic.sivaraam@gmail.com> wrote:
->
-> Yeah. That's great! Hariom, would you mind opening a PR to mention yourself
-> as a mentor in SoC-2022-Ideas.md [1] ?
->
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yeah, sure. Done.
-(https://github.com/git/git.github.io/pull/559)
+> * gc/recursive-fetch-with-unused-submodules (2022-02-10) 8 commits
+>  - submodule: fix bug and remove add_submodule_odb()
+>  - fetch: fetch unpopulated, changed submodules
+>  - submodule: extract get_fetch_task()
+>  - t5526: use grep to assert on fetches
+>  - t5526: introduce test helper to assert on fetches
+>  - submodule: make static functions read submodules from commits
+>  - submodule: store new submodule commits oid_array in a struct
+>  - submodule: inline submodule_commits() into caller
+>
+>  When "git fetch --recurse-submodules" grabbed submodule commits
+>  that would be needed to recursively check out newly fetched commits
+>  in the superproject, it only paid attention to submodules that are
+>  in the current checkout of the superproject.  We now do so for all
+>  submodules that have been run "git submodule init" on.
+>
+>  Will merge to 'next'?
+>  source: <20220210044152.78352-1-chooglen@google.com>
 
-Thanks
-Hariom
+I'm working on another version that should hopefully address some
+reviewer feedback on v2. I'd prefer to hold off until that version is
+reviewed :)
