@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 572BDC433F5
-	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 17:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 569E4C433F5
+	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 17:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236997AbiBRRLU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Feb 2022 12:11:20 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56920 "EHLO
+        id S238174AbiBRRMx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Feb 2022 12:12:53 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232300AbiBRRLU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Feb 2022 12:11:20 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D42C53B59
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 09:11:03 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id x5so10806603wrg.13
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 09:11:03 -0800 (PST)
+        with ESMTP id S231364AbiBRRMw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Feb 2022 12:12:52 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A9C143EEE
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 09:12:35 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id o24so15683876wro.3
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 09:12:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
         bh=wJevBzooktxUjmnNILAY743f9t+P1mcxh3v384VaHUM=;
-        b=qA0G7jW5aENm3YtoSakwfR8cr5Az+hqTjysW2TTbXSkOLoKL/nKBqDfJOssPwSWg74
-         I4w8MqwQ0fp8Vkxl1RZ4tvee7rikGWzBywiRDPTSeM1bLbE/TVQWlVCoS29YhOGaa7zf
-         Kr851SxWsNSkrz5OHShIkDMJHlHhMlhklJPz3l3FlOuOO4EeUIyJZlr5LxKA4BZ97w5H
-         /htnHraqSXA2mkfHkAXE9Uec9BDvWxuUHMV8MaHlKzwvvVtnoqOL+UQw3RLsEWkY0VRG
-         0mXhdy1M450phhIZaWqRoqkMSlIww6ciuR59FkdbT4EimyJxy4BFMuwDRzoemf2mzT62
-         4fUQ==
+        b=XVUNAkB7HyF4QREV815w93NKqDq/36cjBUsTxp3hgAnOctan+ToUfSFkz6yOyse1su
+         GnE/fCDN1oSyRdfKVZPi1UxV39Qg9UOSaUfA5TZ9SC/ESwykz/vIs5u5+Y4MBgb4VwUr
+         dLbjVhOYGd+0XmXMBSuEnyKAkpnBr+Aves9kvNXOhzw9cEdPDSAqw15A1Vj/Z1DJKn1K
+         YJu0Hn39Zxbj4ZjvI++IAh/+osQ39SSijVmVBm42nXljFIuUw5+h9ZzDJZrwhGwilEZl
+         BLgr2g2INNeqYKal9qESx7mxwqN7GdBtu9M4FKm7FcW/jQH32bhO2umNHBksPrK2Dhdx
+         sTYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
         bh=wJevBzooktxUjmnNILAY743f9t+P1mcxh3v384VaHUM=;
-        b=35HKvw2wB/fVPv2H7/GLeDIFYuPiZZXJSnfYxg5GZ4TTMBFB3QxbQkBxZnO5XgIOoo
-         gG9JQ505Axw/J7CnqLg822OWNXTi5jAfF1FcwaeNMgKWXfwyOTGNvS3JCWI81py7e3/M
-         xVVK/KNgI0fVOd+g0DIzBk9+GSMxH/OKkCqdg/LAMtZcocf4i3ffvcVleArGC0Ik11Nd
-         9BobVwE/8EvAsfkKABtt7cpZAZUPcbx4gwRccRewlROIabXw1gSjn8KxPL83ovcMdZwU
-         7iUjzl4fWLk0v5o4YCcCwr9kfvbiDzwwik/MjktwmJqI2Bn69mXCh70NwySJ1FFtaPKd
-         l8lA==
-X-Gm-Message-State: AOAM5303vKdIYrvkT/X07u7PIKrKMmL9N9l0ClDtrXiXzPbl7gvhrdgf
-        POpj+GdiJRRPKr/ShOiEY00=
-X-Google-Smtp-Source: ABdhPJxh3tWNSadoyF3vtwp0HZjQJwOxpK8DsYyCdybv39fjp3MwLKwqAwsSmpKmc5zVUUh4B5AvJw==
-X-Received: by 2002:a5d:5850:0:b0:1e2:86fd:5aa6 with SMTP id i16-20020a5d5850000000b001e286fd5aa6mr6429235wrf.553.1645204261809;
-        Fri, 18 Feb 2022 09:11:01 -0800 (PST)
+        b=PpfGoPuJ1fyiyZJJHiA+7Fl9TPPuhnuT/53muIBxtedIGnXbxC85ASb3NeKrD6P8uD
+         XE2bjxPRliQV+Prjqa+irtYp7SPn0n7tvnk48PZ+6idNbSKwVevWUY504ILY3MC5w8JQ
+         aGid7z/Iq/S5iPgtMAamVeofKWD9vXU/kixsR/1NIT6U8jNRkOe0zs10TGhEXP+Z0eP3
+         5XHKx4tJioIweZCqLKtCZtzE5V+oTXlhqaMIGTO9S7nZY59EUDatdyfxJE3KqY2Sybz7
+         ddvx8rxLksiskCIZqkF6hbK7D749prIlHbfDuAO+pzxVx3gXPw9WlFAK5ieqQgqtTb0m
+         dxjw==
+X-Gm-Message-State: AOAM531OcG/xPbFh5ItJ2tVN7IAHhIVuTeb8EHLXECXNK+OCgLLAweAH
+        WqdcY0SAzZu6YB1WZM3PgHs=
+X-Google-Smtp-Source: ABdhPJxk7W7DU/SsiriOFeCUrJdfqPaCp0x+P9jhboc823k2hg9QI7c6AwdhA93/HYn0zzGP3IRiEQ==
+X-Received: by 2002:a5d:66c8:0:b0:1e3:36c0:91d8 with SMTP id k8-20020a5d66c8000000b001e336c091d8mr6959808wrw.536.1645204354138;
+        Fri, 18 Feb 2022 09:12:34 -0800 (PST)
 Received: from localhost.localdomain (176.248.7.93.rev.sfr.net. [93.7.248.176])
-        by smtp.gmail.com with ESMTPSA id 14sm12237892wrb.34.2022.02.18.09.11.01
+        by smtp.gmail.com with ESMTPSA id h6sm14332wmq.8.2022.02.18.09.12.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Feb 2022 09:11:01 -0800 (PST)
+        Fri, 18 Feb 2022 09:12:33 -0800 (PST)
 From:   COGONI Guillaume <cogoni.guillaume@gmail.com>
 To:     avarab@gmail.com
 Cc:     cogoni.guillaume@gmail.com, git.jonathan.bressat@gmail.com,
         git@vger.kernel.org, gitster@pobox.com, guillaume.cogoni@gmail.com,
         matthieu.moy@univ-lyon1.fr
 Subject: [PATCH v2 0/2] replace test [-f|-d] with more verbose functions
-Date:   Fri, 18 Feb 2022 18:10:47 +0100
-Message-Id: <20220218171049.262341-1-cogoni.guillaume@gmail.com>
+Date:   Fri, 18 Feb 2022 18:12:22 +0100
+Message-Id: <20220218171224.262698-1-cogoni.guillaume@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <220215.86a6erwzee.gmgdl@evledraar.gmail.com>
 References: <220215.86a6erwzee.gmgdl@evledraar.gmail.com>
