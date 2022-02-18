@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D84CC433EF
-	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 18:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D116DC433EF
+	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 18:40:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239342AbiBRSlL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Feb 2022 13:41:11 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48050 "EHLO
+        id S239344AbiBRSlM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Feb 2022 13:41:12 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237396AbiBRSlJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Feb 2022 13:41:09 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D9CD2A072E
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:40:52 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id d27so16036358wrb.5
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:40:52 -0800 (PST)
+        with ESMTP id S239338AbiBRSlK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Feb 2022 13:41:10 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A0E2A0730
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:40:53 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id az26-20020a05600c601a00b0037c078db59cso7029843wmb.4
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 10:40:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=xXUcoebB+cPE6f+bi5P9KkPMLq0GTO/olLS7UT1kOJY=;
-        b=c+8WmNC4qY1gRHZHnbXxk5TtDjupmD0i8EN9OVdzX5Z3b+DiLL1tPtsBqm+8xsi09Q
-         EKQroZCw1Y3uCRE/R3h/zvNVMg0AST6ykWcxYF9N1gsgGYM0gKIokplDvFgQq9qNPzOe
-         r6JgDbzyOCCKtWTqXcJl43J7trk36C1/taNKsZY91QRQZkBlnG2bfbhAhZK2gW9ToxLo
-         XoHrNVjhA9jI+WhidC8Gk8oLaNbNfGM5J7s+xkA/jz9CYugDYoVmupOyvmtgGH/3QHFc
-         1VyT4khUqergaA1tsU5Ya+Df9HlX7w9SijyqLhGSa/VMzG2pgkB0araTYxkk7SNlL5zQ
-         hSCQ==
+        bh=65UJj9XuaXpL/f3Pdi5qxi0MhgzQ0qOg3PfJ+oetn3g=;
+        b=e83STtHMenrbm1bSBGnjSUwvm+fJejw698SyR0iRg7N4Q2DqgRPl8KISFlhpFfu2kT
+         4c1BfiYoCTE6qAS0vd14p9tiSCoUNU9MwLgQuNlSrJp1VN22V4barAnidYolR0tC/oBU
+         cJQp8fmIKjR3HImCbyGHeQiE4u/TEKiQ0LE+kWDLCy66eurQzlK7doPu59IaJpvQ28vU
+         C354QBHG4skkbYiWxoZ55Qxzt8eg3bM3QdQhDc6e9epse6gfZSPUNlfY8J0V8o1+x9R9
+         ekbTT/nf6Vx/7HvA+6goWVuIWcZw/zOjPyE2fgZARa/43uyEGhhibfFsJb1iwp+ESMBx
+         ZQKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=xXUcoebB+cPE6f+bi5P9KkPMLq0GTO/olLS7UT1kOJY=;
-        b=c6dx45djRJscyewBuPlyZX8iA4ki5cZeCzDHSMYd0h0ZtDq+H7JDypxMxESEWY6O+2
-         AJlDn7/9BjHd5u8d48QmrAupltPRCUI5QsT7MD1bJz0PxniD4R9sAIR01OqytGnb45dP
-         2ps49b9VfZh618dRAfYOH+uOZhmFATTKk2bBoibLiisFXAKrV8lzNLi3etQ3iydGx0ba
-         3wSFhdfbanX6/hvR/lGvZOjHwmwa4U3Ou81ubLHfZ8B0mGAd6h8l05abs3HX804IpOqe
-         WHAkXcfPvkFVYkCDFWVva7D1+mymFLcOSD07sg22AF77BinHu1vuM2Xpg0INak5ep3UG
-         xHqw==
-X-Gm-Message-State: AOAM5334eY39gmBkygHSpid+icFg65XuqsPEFSpMyq6Pd+7qA42iGVQD
-        gd1C/nC+O6xzf6xwgiWDXq+rx2SAa14=
-X-Google-Smtp-Source: ABdhPJztcjXufPsR5p3XiqVtGyRjIxxLKOt8tM5O0pRghQQvW6mgZRCDMBKUvd8YcfKkA3QwVP8fNg==
-X-Received: by 2002:a5d:5262:0:b0:1e3:15c1:cbad with SMTP id l2-20020a5d5262000000b001e315c1cbadmr6911234wrc.534.1645209650821;
-        Fri, 18 Feb 2022 10:40:50 -0800 (PST)
+        bh=65UJj9XuaXpL/f3Pdi5qxi0MhgzQ0qOg3PfJ+oetn3g=;
+        b=B6o3U7nbnFrPbEoWnPPSam4oFeY3823M6wyGQHs2AdhPK/UHTJBDp14Qx/Z/ok+uyS
+         Nw9UyMi2PImGSPczPd7a6ITBZvCxIaFl9QnO9eXhaxV9m8XeSTGEu1k7cQptOxu9KPz2
+         ppVAjsbrF6SUaWEGr1emTs1fwXoxQgIxlDbUHnA4ntb4ite3ZAs40v08AAASrfzQ7FR/
+         lNm+Zg3BiRTgDQDNKG6+YgQvHBj1EJMpbTfF8qmkd3RlAVBBg/bAtBU2NMgr3wHK5cIo
+         gNcv5zZRsecLUWIa3H5y9vQWsb7ehLxCtZc8jduO2Ap8Q9jLZeo247KNiyd6d2wbNkse
+         puPQ==
+X-Gm-Message-State: AOAM533+nTJrWYk20jsW3kIgt9fHzKxXnAQCXS6C6Ni/2mGrzscOMPWT
+        zHto853SrkgMNOBTXG/tH1cyF3iw26g=
+X-Google-Smtp-Source: ABdhPJyUGh23/II1NqkhdLzstD+n6HFheFgT6B0hVryeM8CbdgKJxNYXQmpLzPeWOCagdPiCYTP1uA==
+X-Received: by 2002:a05:600c:3b21:b0:37b:c3e4:2118 with SMTP id m33-20020a05600c3b2100b0037bc3e42118mr11433157wms.66.1645209651592;
+        Fri, 18 Feb 2022 10:40:51 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b4sm34450464wrw.100.2022.02.18.10.40.50
+        by smtp.gmail.com with ESMTPSA id f13sm22204145wri.82.2022.02.18.10.40.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Feb 2022 10:40:50 -0800 (PST)
-Message-Id: <e4c0047a17ca1b5f824acfb209884a59a93ea523.1645209647.git.gitgitgadget@gmail.com>
+        Fri, 18 Feb 2022 10:40:51 -0800 (PST)
+Message-Id: <bcc1eae053124f6e68f60a7a02cbee4744a022f0.1645209647.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1218.git.git.1645209647.gitgitgadget@gmail.com>
 References: <pull.1218.git.git.1645209647.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 18 Feb 2022 18:40:46 +0000
-Subject: [PATCH 2/3] reflog: call reflog_delete from reflog.c
+Date:   Fri, 18 Feb 2022 18:40:47 +0000
+Subject: [PATCH 3/3] stash: call reflog_delete from reflog.c
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,83 +65,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: John Cai <johncai86@gmail.com>
 
-Now that reflog is libified into reflog.c, we can call reflog_delete
-from the reflog.c library.
+Now that cmd_reflog_delete has been libified an exported it into a new
+reflog.c library so we can call it directly from builtin/stash.c. This
+not only gives us a performance gain since we don't need to create a
+subprocess, but it also allows us to use the ref transactions api in the
+future.
 
 Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- builtin/reflog.c | 42 ++----------------------------------------
- 1 file changed, 2 insertions(+), 40 deletions(-)
+ builtin/stash.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 65198320cd2..03d347e5832 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -316,12 +316,10 @@ static const char * reflog_delete_usage[] = {
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 9638c56303e..d0967b3d3c3 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -17,6 +17,7 @@
+ #include "diffcore.h"
+ #include "exec-cmd.h"
+ #include "entry.h"
++#include "reflog.h"
  
- static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ #define INCLUDE_ALL_FILES 2
+ 
+@@ -635,18 +636,9 @@ static int reflog_is_empty(const char *refname)
+ static int do_drop_stash(struct stash_info *info, int quiet)
  {
--	struct cmd_reflog_expire_cb cmd = { 0 };
- 	int i, status = 0;
- 	unsigned int flags = 0;
- 	int verbose = 0;
- 
--	reflog_expiry_should_prune_fn *should_prune_fn = should_expire_reflog_ent;
- 	const struct option options[] = {
- 		OPT_BIT(0, "dry-run", &flags, N_("do not actually prune any entries"),
- 			EXPIRE_REFLOGS_DRY_RUN),
-@@ -337,48 +335,12 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, options, reflog_delete_usage, 0);
- 
--	if (verbose)
--		should_prune_fn = should_expire_reflog_ent_verbose;
+ 	int ret;
+-	struct child_process cp_reflog = CHILD_PROCESS_INIT;
 -
- 	if (argc < 1)
- 		return error(_("no reflog specified to delete"));
- 
--	for (i = 0; i < argc; i++) {
--		const char *spec = strstr(argv[i], "@{");
--		char *ep, *ref;
--		int recno;
--		struct expire_reflog_policy_cb cb = {
--			.dry_run = !!(flags & EXPIRE_REFLOGS_DRY_RUN),
--		};
+-	/*
+-	 * reflog does not provide a simple function for deleting refs. One will
+-	 * need to be added to avoid implementing too much reflog code here
+-	 */
 -
--		if (!spec) {
--			status |= error(_("not a reflog: %s"), argv[i]);
--			continue;
--		}
--
--		if (!dwim_log(argv[i], spec - argv[i], NULL, &ref)) {
--			status |= error(_("no reflog for '%s'"), argv[i]);
--			continue;
--		}
--
--		recno = strtoul(spec + 2, &ep, 10);
--		if (*ep == '}') {
--			cmd.recno = -recno;
--			for_each_reflog_ent(ref, count_reflog_ent, &cmd);
--		} else {
--			cmd.expire_total = approxidate(spec + 2);
--			for_each_reflog_ent(ref, count_reflog_ent, &cmd);
--			cmd.expire_total = 0;
--		}
-+	for (i = 0; i < argc; i++)
-+		status |= reflog_delete(argv[i], flags, verbose);
- 
--		cb.cmd = cmd;
--		status |= reflog_expire(ref, flags,
--					reflog_expiry_prepare,
--					should_prune_fn,
--					reflog_expiry_cleanup,
--					&cb);
--		free(ref);
--	}
- 	return status;
- }
- 
+-	cp_reflog.git_cmd = 1;
+-	strvec_pushl(&cp_reflog.args, "reflog", "delete", "--updateref",
+-		     "--rewrite", NULL);
+-	strvec_push(&cp_reflog.args, info->revision.buf);
+-	ret = run_command(&cp_reflog);
++	ret = reflog_delete(info->revision.buf,
++			    EXPIRE_REFLOGS_REWRITE | EXPIRE_REFLOGS_REWRITE,
++			    0);
+ 	if (!ret) {
+ 		if (!quiet)
+ 			printf_ln(_("Dropped %s (%s)"), info->revision.buf,
 -- 
 gitgitgadget
-
