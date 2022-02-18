@@ -2,96 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDED1C433FE
-	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 21:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BECA5C433EF
+	for <git@archiver.kernel.org>; Fri, 18 Feb 2022 22:32:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239598AbiBRVCS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Feb 2022 16:02:18 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52884 "EHLO
+        id S240131AbiBRWcf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Feb 2022 17:32:35 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233324AbiBRVCQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Feb 2022 16:02:16 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 163D628B619
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 13:01:58 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id e3so16576542wra.0
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 13:01:58 -0800 (PST)
+        with ESMTP id S237959AbiBRWce (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Feb 2022 17:32:34 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 843E51D314
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 14:32:17 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id b9-20020a63e709000000b00362f44b02aeso5419048pgi.17
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 14:32:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=li+HO9LUlhnZ0IAHiHiMVInKYWDY4qzUmyKsPgj2b8c=;
-        b=Vv1QGREmif2cpg8a4p3f2uoUqx5v82UrobXlCIzCMIW31jKw6cAhV2LMHp2yvuFpHx
-         r9/M75vd7FqNVZLX15jx5qzw3IfPRDqzDwdGwqBHetypvri9VcCNKd9UyriqA8Oq5cU9
-         1IgrWuEDPO76fPIutOK91+C4DkdK2Ld0q6y0abwr3s9bTEXdph7HdTCkPTFlTJGNEptS
-         k+s3DBfhsh72NX406MOl6YACRXXgEmc5w1WURCRrNhC4LO8gV5u6KZt7kyDqIfum0oOg
-         CoqLRGKHDqgnkSILf/Udt1Zwoq6jE2PtoTNBs2QL8RSxCCy6fMCuST28lcHWq8WTIdZt
-         QZYA==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=OVb9ZGxwHN5KLCsJCCY5v6HBCSCfhByqJ2g1MKcN0VA=;
+        b=ooNzdXkFNFIaRi37qcgz83WTzUPoWwqs40muGqcj/q2dUPMEAzBe5GdaC+ts8agx3l
+         gulVPvphFy4c7JkA0WKDijbZ0ptLoFIpa7821KNvnu7YzWo/xKKxXh2oAW5eqZs89Y31
+         sLGgPN25c9PuglebSxf8JIKb2LCDB/1MyGgKTq6ORYy/qVJc8U9LNCo49iO7nSpQ5ZLj
+         HSGSZtrIB2gNNDPKgII6XTjxth+0EAsbAQaPCfePyJo+O7Topueq6AVllkljYSqC60/i
+         fz92+dY4JrlcVLCWMKBazRI7MMOxW3mLsuSumJa6Ala5QbRl+LHVkyET/CyTiTxkVSZO
+         /n6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=li+HO9LUlhnZ0IAHiHiMVInKYWDY4qzUmyKsPgj2b8c=;
-        b=VMW/r4t0Cg+ORfxi7ysKK8kRCYg/v4usGs7y5rnZcd3f8KEZ8P/TCD5IHz5MTpdv73
-         8ICH2lZD8dSge0Jsnt4j+Lkx1qYgssQu1f397od+nvjJtYh7/Mmjz31i5lu4xm+Vc+hi
-         mghQu9frnpaF8+8z9MDQ8Uxm6ZAummZWTfsjAA0KA+tdBclAF4adpqszpeiuv/kbMvcD
-         IxptjnC8eyBmdfys1lS9unf22x+8h4Cmbe/vXk6MWSMTKca9/n0dnhmrinVL2r2Es+zM
-         U/zWfnmsR8bnGVV/DJ/w9s6SYbsQf+HzadBvfLda/VdgnYvaTSVRcHsJMYShWE7g0e0T
-         Q/mQ==
-X-Gm-Message-State: AOAM5304V1GF0wkCtllqIKUPbBfo8SbCkFMfceSFnFsfca3eqMC1UQQp
-        sVE5ktM+3in+h4pXfp9Cu+IXcHs0nfSWng==
-X-Google-Smtp-Source: ABdhPJwKmPnLwoOnDBUecmX8qyX+8Vn+kTwihY4Sn3bBAEy8IECUPHKfditOkTMw71DUnQ1EUJ3DGQ==
-X-Received: by 2002:adf:ec03:0:b0:1e4:98f6:2563 with SMTP id x3-20020adfec03000000b001e498f62563mr7313565wrn.168.1645218116387;
-        Fri, 18 Feb 2022 13:01:56 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n15sm14238018wri.33.2022.02.18.13.01.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Feb 2022 13:01:55 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=OVb9ZGxwHN5KLCsJCCY5v6HBCSCfhByqJ2g1MKcN0VA=;
+        b=l6B54AdhfHgKzhatRQ+gWK02Faq4CBKqzAOuMsFdjmRJzrhuqeB6WEHiC30SEBClq0
+         mDpR3vok+Ff/4Pp3qLxGvPUFMmUv32+zA/9wlryX85oWtNSjpYk4txpqr+Wq4kmbFwXk
+         vtCpLArWSrAh9EPOIVOZ9I6m4q4zuxPD8VVDsPY9TdzrncWpKcbugH/FiAbn4LZrTKIy
+         LIei3wimI9sPds7pAbkVRB6P5gtkki73OFNHSFGLg6GCAuE5L1/kcWIsjLQM2wZM3OdK
+         TLXYkrrnai4EKbGR2mcNauLINWnW7j+CkzA6CGEjVMLQb6vWLYrfvlFQp4BMmRjYhV2s
+         82aA==
+X-Gm-Message-State: AOAM5339AYln9FCnR4ijLUiSSnbjVYQ8eLibkCoeKQxUw9iqOPdAWGC3
+        WVBx7m4dmO8G0AkQAcgCWxYqPRbCx6qZwlESrcyap4JFh24lk+Efc6XBylIt/UYpn1hQTvDCEcH
+        JiUmH6G3touwopCyEU5070RPlEd20wgFQ7Bmg8WmHKkTL8BE41XcZ8Vg1xKdGcfPvl9ablJTaCj
+        Mr
+X-Google-Smtp-Source: ABdhPJzYXkbjTiQR3hxT/7g/vF3ocwuOVaGOZtWiJ1H/MkpGCdV/fn8e89ZrloseNPk3mFjjSF/bAI1Eu1fBzfvIXBOg
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:2305:b0:4e1:56d7:a69b with
+ SMTP id h5-20020a056a00230500b004e156d7a69bmr9911981pfh.11.1645223536798;
+ Fri, 18 Feb 2022 14:32:16 -0800 (PST)
+Date:   Fri, 18 Feb 2022 14:32:11 -0800
+Message-Id: <20220218223212.1139366-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.473.g83b2b277ed-goog
+Subject: [PATCH] ls-files: support --recurse-submodules --stage
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 2/4] test-lib: make $GIT_BUILD_DIR an absolute path
-Date:   Fri, 18 Feb 2022 22:01:43 +0100
-Message-Id: <patch-2.4-4c53c6157ac-20220218T205753Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.35.1.1031.g277d4562d2e
-In-Reply-To: <cover-0.4-00000000000-20220218T205753Z-avarab@gmail.com>
-References: <cover-0.4-00000000000-20220218T205753Z-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     Jonathan Tan <jonathantanmy@google.com>, avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the GIT_BUILD_DIR from a path like "/path/to/build/t/.." to
-"/path/to/build". The "TEST_DIRECTORY" here is already made an
-absolute path a few lines above this.
+e77aa336f1 ("ls-files: optionally recurse into submodules", 2016-10-10)
+taught ls-files the --recurse-submodules argument, but only in a limited
+set of circumstances. In particular, --stage was unsupported, perhaps
+because there was no repo_find_unique_abbrev(), which was only
+introduced in 8bb95572b0 ("sha1-name.c: add
+repo_find_unique_abbrev_r()", 2019-04-16). This function is needed for
+using --recurse-submodules with --stage.
 
-This will be helpful to LSAN_OPTIONS which will want to strip the
-build directory path from filenames, which we couldn't do if we had a
-"/.." in there.
+Now that we have repo_find_unique_abbrev(), teach support for this
+combination of arguments.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- t/test-lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I got the similar-hashing object contents from =C3=86var's work in [1].
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 3212966a82f..4f523b82ce5 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -34,7 +34,7 @@ then
- 	# elsewhere
- 	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
- fi
--GIT_BUILD_DIR="$TEST_DIRECTORY"/..
-+GIT_BUILD_DIR="${TEST_DIRECTORY%/t}"
- 
- # Prepend a string to a VAR using an arbitrary ":" delimiter, not
- # adding the delimiter if VAR is empty. I.e. a generalized:
--- 
-2.35.1.1031.g277d4562d2e
+[1] https://lore.kernel.org/git/patch-v7-1.6-28c01b7f8a5-20220111T130811Z-a=
+varab@gmail.com/
+---
+ Documentation/git-ls-files.txt         |  2 +-
+ builtin/ls-files.c                     |  4 ++--
+ t/t3007-ls-files-recurse-submodules.sh | 20 +++++++++++++++++++-
+ 3 files changed, 22 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.tx=
+t
+index 48cc7c0b6f..0dabf3f0dd 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -156,7 +156,7 @@ a space) at the start of each line:
+=20
+ --recurse-submodules::
+ 	Recursively calls ls-files on each active submodule in the repository.
+-	Currently there is only support for the --cached mode.
++	Currently there is only support for the --cached and --stage modes.
+=20
+ --abbrev[=3D<n>]::
+ 	Instead of showing the full 40-byte hexadecimal object
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index f7ea56cc63..e791b65e7e 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -244,7 +244,7 @@ static void show_ce(struct repository *repo, struct dir=
+_struct *dir,
+ 			printf("%s%06o %s %d\t",
+ 			       tag,
+ 			       ce->ce_mode,
+-			       find_unique_abbrev(&ce->oid, abbrev),
++			       repo_find_unique_abbrev(repo, &ce->oid, abbrev),
+ 			       ce_stage(ce));
+ 		}
+ 		write_eolinfo(repo->index, ce, fullname);
+@@ -726,7 +726,7 @@ int cmd_ls_files(int argc, const char **argv, const cha=
+r *cmd_prefix)
+ 		setup_work_tree();
+=20
+ 	if (recurse_submodules &&
+-	    (show_stage || show_deleted || show_others || show_unmerged ||
++	    (show_deleted || show_others || show_unmerged ||
+ 	     show_killed || show_modified || show_resolve_undo || with_tree))
+ 		die("ls-files --recurse-submodules unsupported mode");
+=20
+diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recu=
+rse-submodules.sh
+index 4a08000713..3d2da360d1 100755
+--- a/t/t3007-ls-files-recurse-submodules.sh
++++ b/t/t3007-ls-files-recurse-submodules.sh
+@@ -34,6 +34,25 @@ test_expect_success 'ls-files correctly outputs files in=
+ submodule' '
+ 	test_cmp expect actual
+ '
+=20
++test_expect_success '--stage' '
++	# In order to test hash abbreviation, write two objects that have the
++	# same first 4 hexadecimal characters in their (SHA-1) hashes.
++	echo brocdnra >submodule/c &&
++	git -C submodule commit -am "update c" &&
++	echo brigddsv >submodule/c &&
++	git -C submodule commit -am "update c again" &&
++
++	cat >expect <<-\EOF &&
++	100644 6da7 0	.gitmodules
++	100644 7898 0	a
++	100644 6178 0	b/b
++	100644 dead9 0	submodule/c
++	EOF
++
++	git ls-files --stage --recurse-submodules --abbrev=3D4 >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'ls-files correctly outputs files in submodule with -z=
+' '
+ 	lf_to_nul >expect <<-\EOF &&
+ 	.gitmodules
+@@ -292,7 +311,6 @@ test_incompatible_with_recurse_submodules () {
+ test_incompatible_with_recurse_submodules --deleted
+ test_incompatible_with_recurse_submodules --modified
+ test_incompatible_with_recurse_submodules --others
+-test_incompatible_with_recurse_submodules --stage
+ test_incompatible_with_recurse_submodules --killed
+ test_incompatible_with_recurse_submodules --unmerged
+=20
+--=20
+2.35.1.473.g83b2b277ed-goog
 
