@@ -2,69 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE91BC433EF
-	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 21:45:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55E77C433EF
+	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 22:31:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231154AbiBSVqQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Feb 2022 16:46:16 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38870 "EHLO
+        id S239019AbiBSWbe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Feb 2022 17:31:34 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbiBSVqP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Feb 2022 16:46:15 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14D89D63
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 13:45:56 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id p14so23190443ejf.11
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 13:45:56 -0800 (PST)
+        with ESMTP id S236557AbiBSWbd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Feb 2022 17:31:33 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50D3B46B36
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 14:31:13 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id a23so23424902eju.3
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 14:31:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=JJPd51Awv9jORzhMAdo8KNj8TsLna+74j1M1Vi3/HmQ=;
-        b=nryDiMThxmAOb3jt/FYUULIbBePAlnbM60+o7G87lI5nIPW/+42yk6cd6Wbii/mX+L
-         LW2Kc5YoBJH4G4V8gNrrkQJplMHveOxS/laQcu9iaRnVrCA8aeFrpONPtqsilBeW2VFT
-         3J4L6x+s6CBjgUY30I6Go3dT/6VxdYRjX2L1qdF8Vh51XeIcUxqS11XVxDbZ6Shvqhv8
-         aqpUB5wc/htcSUgUZYxwYxOY4J7cAPLentltANTwMB/5esQmRmUb5jtean0J8htG9VtI
-         dVGxyg4x84ERbVkpPUXsvPLf+M+D7REUKosfwG8g44UG24MoU453Xmn8tzEY/esiIxBE
-         1hwA==
+         :message-id:mime-version;
+        bh=cQXVrz2uWDao+S7hq4PBEh7EIag3et/FVcKb2dNLOtA=;
+        b=ldWh4hD9gBP9zt0mH+jT3dbLLWVjBH/Rc6mgm5YU0ZhZJ5/SvtRwfiuJOY6XBTvk1S
+         k/Wnt5T77kuyUB6hWEEKn6OyN6bKF5eP4EhUlb7CExTBbY8aF851p1GhboUrEMJRMHnf
+         Fl33Xha9hAnfed75XXcq/mRNsbOMf9ei9ejx1+iQ+GpCO/edQKXEnub/FrHjrhIz8HG4
+         Kxmcy1jJBNuyb5uKgw8TNS4bwetk9CiRsFN/sTrS2iAklDuoxMSUFIX4FTbrJzqSSpV2
+         GEN8Z7h0JYBkdOyJVBVEkfOIYPm+RdBt2sOZ020rCzCCqd3uqg04IEOoPaE+87pBhz9o
+         kEaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=JJPd51Awv9jORzhMAdo8KNj8TsLna+74j1M1Vi3/HmQ=;
-        b=1gUfEzKZTApUxBFTlFNwYvWpSGHAo4/js/AxJt5aQeUvKJDBajowa3pscUcnz4mhur
-         OW+5uM+3BVNV+71EHk6FXvBbvEiScSrsaVM9CFNkki+lEpPfbozoBQBxB4z/4srxZben
-         fACLo39PosSYCFNiA7Gcq3ugm7nn0H0NSmf3UkbHJKMqHQPGY/z2tl63upaUyTpZWmPI
-         IV+Z4SikECotBCETuvF5gQQGhui6FwHvfmJN2skFgwARDaej2PoqT9bcuJszR/rG2Olg
-         O53ouLdW+vZPq3GedXZv/dsj/GMiSsoBGviCTI2mgfxOfnBa0d3VeEpBp3qx2TbyhPs1
-         Vnrw==
-X-Gm-Message-State: AOAM530bBgzzvNOBO/Igq8BGUZppi7uvJWpiQmHSeNQYaf89+yRhjRCr
-        N1vYkmM2QLOhsE2ZiT7BWauJw1J9QxiaDw==
-X-Google-Smtp-Source: ABdhPJxB3O/1mFAAIVwQWyIJt19te7p5vhLJ6yACIsV/2CqK5k3T7BsbSyB3fmEjvFN85jPT3UPWZQ==
-X-Received: by 2002:a17:906:bcf8:b0:6cf:6223:8995 with SMTP id op24-20020a170906bcf800b006cf62238995mr10933009ejb.467.1645307154059;
-        Sat, 19 Feb 2022 13:45:54 -0800 (PST)
+         :in-reply-to:message-id:mime-version;
+        bh=cQXVrz2uWDao+S7hq4PBEh7EIag3et/FVcKb2dNLOtA=;
+        b=IFJ6Z9RZAq0XFifsQ2QDexyakJh2hhIct4AcpgRjoGjqIqx2NVCcwqUU1xfFKb2fd9
+         n+gO2A+XJuBpXw3+ctZYZIJog26FZM8weKXkyMLGRg14wyGvLWaqHn+RHGvFvE1i70lu
+         1JUrM6OJ4rfZPwPezPolEPty01A0/yfr8SeUz7QF22J4XF2aNUBewbC8TyQEK7LXPz7O
+         rwOMfTDxFvZB2HVd84cnStTRkrb7Pn+nYA7etL1fjrqVERtDnqanOkU4D2hGm7c8a+R6
+         BghTPpHlC2HxWcPK8ZAbW5vtbpmsxMndCcSMOh8lnn0Z9EvS8WwlvPm0Ab+Um80LIhFQ
+         bB9w==
+X-Gm-Message-State: AOAM532meuh9AetGGHvtAErw8FqRThnZDLXQl82HEYsl1eevpXtsBeG4
+        Ipo0kAEzaUdd696sUsMrObQeQqRbyfh8+g==
+X-Google-Smtp-Source: ABdhPJwIcXAQfqGspMn1qA3e+U9/FRdpU+2GHLEqA9BwDjCW0P2jMpnBlOlIK5MUQBisu4LBna4Pyg==
+X-Received: by 2002:a17:906:1e91:b0:6ae:99d9:93b1 with SMTP id e17-20020a1709061e9100b006ae99d993b1mr10971358ejj.111.1645309871373;
+        Sat, 19 Feb 2022 14:31:11 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id j21sm3541354ejj.193.2022.02.19.13.45.53
+        by smtp.gmail.com with ESMTPSA id u4sm3591902ejn.216.2022.02.19.14.31.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Feb 2022 13:45:53 -0800 (PST)
+        Sat, 19 Feb 2022 14:31:10 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nLXY9-005FZP-56;
-        Sat, 19 Feb 2022 22:45:53 +0100
+        id 1nLYFy-005HCb-Ci;
+        Sat, 19 Feb 2022 23:31:10 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/2] merge-ort: fix small memory leak in
- detect_and_process_renames()
-Date:   Sat, 19 Feb 2022 22:44:19 +0100
+Subject: Re: [PATCH 2/2] merge-ort: fix small memory leak in unique_path()
+Date:   Sat, 19 Feb 2022 23:22:44 +0100
 References: <pull.1152.git.1645290601.gitgitgadget@gmail.com>
- <f0308de28e49fb9bb1239fdcbc839097f5afa62a.1645290601.git.gitgitgadget@gmail.com>
+ <73bc1e5c5dffbe9c132ea786dd414ef2159967e3.1645290601.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <f0308de28e49fb9bb1239fdcbc839097f5afa62a.1645290601.git.gitgitgadget@gmail.com>
-Message-ID: <220219.86sfsecyy6.gmgdl@evledraar.gmail.com>
+In-reply-to: <73bc1e5c5dffbe9c132ea786dd414ef2159967e3.1645290601.git.gitgitgadget@gmail.com>
+Message-ID: <220219.86o832cwup.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -74,117 +72,85 @@ On Sat, Feb 19 2022, Elijah Newren via GitGitGadget wrote:
 
 > From: Elijah Newren <newren@gmail.com>
 >
-> detect_and_process_renames() detects renames on both sides of history
-> and then combines these into a single diff_queue_struct.  The combined
-> diff_queue_struct needs to be able to hold the renames found on either
-> side, and since it knows the (maximum) size it needs, it pre-emptively
-> grows the array to the appropriate size:
+> The struct strmap paths member of merge_options_internal is perhaps the
+> most central data structure to all of merge-ort.  Because all the paths
+> involved in the merge need to be kept until the merge is complete, this
+> "paths" data structure traditionally took responsibility for owning all
+> the allocated paths.  When the merge is over, those paths were free()d
+> as part of free()ing this strmap.
 >
-> 	ALLOC_GROW(combined.queue,
-> 		   renames->pairs[1].nr + renames->pairs[2].nr,
-> 		   combined.alloc);
+> In commit 6697ee01b5d3 (merge-ort: switch our strmaps over to using
+> memory pools, 2021-07-30), we changed the allocations for pathnames to
+> come from a memory pool.  That meant the ownership changed slightly;
+> there were no individual free() calls to make, instead the memory pool
+> owned all those paths and they were free()d all at once.
 >
-> It then collects the items from each side:
->
-> 	collect_renames(opt, &combined, MERGE_SIDE1, ...)
-> 	collect_renames(opt, &combined, MERGE_SIDE2, ...)
->
-> Note, though, that collect_renames() sometimes determines that some
-> pairs are unnecessary and does not include them in the combined array.
-> When it is done, detect_and_process_renames() frees this memory:
->
-> 	if (combined.nr) {
->                 ...
-> 		free(combined.queue);
->         }
->
-> The problem is that sometimes even when there are pairs, none of them are
-> necessary.  Instead of checking combined.nr, we should check
-> combined.alloc.  Doing so fixes the following memory leak, as reported
-> by valgrind:
->
-> =3D=3DPID=3D=3D 192 bytes in 1 blocks are definitely lost in loss record =
-107 of 134
-> =3D=3DPID=3D=3D    at 0xADDRESS: malloc
-> =3D=3DPID=3D=3D    by 0xADDRESS: realloc
-> =3D=3DPID=3D=3D    by 0xADDRESS: xrealloc (wrapper.c:126)
-> =3D=3DPID=3D=3D    by 0xADDRESS: detect_and_process_renames (merge-ort.c:=
-3134)
-> =3D=3DPID=3D=3D    by 0xADDRESS: merge_ort_nonrecursive_internal (merge-o=
-rt.c:4610)
-> =3D=3DPID=3D=3D    by 0xADDRESS: merge_ort_internal (merge-ort.c:4709)
-> =3D=3DPID=3D=3D    by 0xADDRESS: merge_incore_recursive (merge-ort.c:4760)
-> =3D=3DPID=3D=3D    by 0xADDRESS: merge_ort_recursive (merge-ort-wrappers.=
-c:57)
-> =3D=3DPID=3D=3D    by 0xADDRESS: try_merge_strategy (merge.c:753)
-> =3D=3DPID=3D=3D    by 0xADDRESS: cmd_merge (merge.c:1676)
-> =3D=3DPID=3D=3D    by 0xADDRESS: run_builtin (git.c:461)
-> =3D=3DPID=3D=3D    by 0xADDRESS: handle_builtin (git.c:713)
-> =3D=3DPID=3D=3D    by 0xADDRESS: run_argv (git.c:780)
-> =3D=3DPID=3D=3D    by 0xADDRESS: cmd_main (git.c:911)
-> =3D=3DPID=3D=3D    by 0xADDRESS: main (common-main.c:52)
->
-> Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-ort.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/merge-ort.c b/merge-ort.c
-> index d85b1cd99e9..4f5abc558c5 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -3175,7 +3175,7 @@ simple_cleanup:
->  		free(renames->pairs[s].queue);
->  		DIFF_QUEUE_CLEAR(&renames->pairs[s]);
->  	}
-> -	if (combined.nr) {
-> +	if (combined.alloc) {
->  		int i;
->  		for (i =3D 0; i < combined.nr; i++)
->  			pool_diff_free_filepair(&opt->priv->pool,
+> Unfortunately unique_path() was written presuming the pre-memory-pool
+> model, and allocated a path on the heap and left it in the strmap for
+> later free()ing.  Modify it to return a path allocated from the memory
+> pool instead.
 
-This looks correct in that it'll work, but I still don't get why the
-pre-image or post-image is going through this indirection of checking
-"alloc" at all. Wouldn't this be correct & more straightforward (the
-memset part is optional, just did it for good measure)?:
+This seems like a rather obvious fix to the leak, as the other side
+wasn't ready to have the detached strbuf handed to it, and instead is
+assuming everything is mempools.
+
+The downside is a bit of heap churn here since you malloc() & use the
+strbuf just to ask for that size from the mempool, and then free() the
+strbuf (of course we had that before, we just weren't free-ing).
+
+So this is just an aside & I have no idea if it's worth it, but FWIW you
+can have your cake & eat it too here memory-allocation wise and avoid
+the strbuf allocation entirely, and just use your mem-pool.
+
+Like this:
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 40ae4dc4e92..a01f28586a1 100644
+index 40ae4dc4e92..1111916d5cb 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -3092,12 +3092,12 @@ static int detect_and_process_renames(struct merge_=
-options *opt,
- 				      struct tree *side1,
- 				      struct tree *side2)
- {
--	struct diff_queue_struct combined;
-+	struct diff_queue_struct combined =3D { 0 };
- 	struct rename_info *renames =3D &opt->priv->renames;
- 	int need_dir_renames, s, clean =3D 1;
- 	unsigned detection_run =3D 0;
-+	int i;
-=20
--	memset(&combined, 0, sizeof(combined));
- 	if (!possible_renames(renames))
- 		goto cleanup;
-=20
-@@ -3181,13 +3181,10 @@ static int detect_and_process_renames(struct merge_=
-options *opt,
- 		free(renames->pairs[s].queue);
- 		DIFF_QUEUE_CLEAR(&renames->pairs[s]);
- 	}
--	if (combined.alloc) {
--		int i;
--		for (i =3D 0; i < combined.nr; i++)
--			pool_diff_free_filepair(&opt->priv->pool,
--						combined.queue[i]);
--		free(combined.queue);
--	}
+@@ -731,6 +731,16 @@ static char *unique_path(struct merge_options *opt,
+ 	int suffix = 0;
+ 	size_t base_len;
+ 	struct strmap *existing_paths = &opt->priv->paths;
++	/*
++	 * pre-size path + ~ + branch + _%d + "\0". Hopefully 6 digits
++	 * of suffix is enough for everyone?
++	 */
++	const size_t max_suffix = 6;
++	const size_t expected_len = strlen(path) + 1 + strlen(branch) + 1 +
++		max_suffix + 1;
 +
-+	for (i =3D 0; i < combined.nr; i++)
-+		pool_diff_free_filepair(&opt->priv->pool, combined.queue[i]);
-+	free(combined.queue);
-=20
- 	return clean;
++	ret = mem_pool_alloc(&opt->priv->pool, expected_len);
++	strbuf_attach(&newpath, ret, 0, expected_len);
+ 
+ 	strbuf_addf(&newpath, "%s~", path);
+ 	add_flattened_path(&newpath, branch);
+@@ -741,10 +751,10 @@ static char *unique_path(struct merge_options *opt,
+ 		strbuf_addf(&newpath, "_%d", suffix++);
+ 	}
+ 
+-	/* Track the new path in our memory pool */
+-	ret = mem_pool_alloc(&opt->priv->pool, newpath.len + 1);
+-	memcpy(ret, newpath.buf, newpath.len + 1);
+-	strbuf_release(&newpath);
++	if (newpath.alloc > expected_len)
++		BUG("we assumed too much thinking '%s~%s' would fit in %lu, ended up %lu ('%s')",
++		    path, branch, expected_len, newpath.alloc, newpath.buf);
++
+ 	return ret;
  }
+ 
+
+A bit nasty for sure, but if you're willing to BUG() out if we ever go
+above 999999 suffix tries or whatever (which would be trivial to add to
+the loop there) it's rather straightforward.
+
+I.e. we know the size of the buffer ahead of time, except for that loop
+that'll add "_%d" to the end, and that can be made bounded.
+
+Obviously your solution's a lot simpler, so I think this is only
+something you should consider if you think it matters for the
+performance numbers linked to from 6697ee01b5d3. I'm not familiar enough
+with merge-ort.c to know if it is in this case, or if this would be
+pointless micro-optimization on a non-hot codepath.
+
