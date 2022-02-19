@@ -2,132 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86034C433F5
-	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 17:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 250B0C433EF
+	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 18:14:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242697AbiBSRaf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Feb 2022 12:30:35 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:45640 "EHLO
+        id S242750AbiBSSPN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Feb 2022 13:15:13 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239016AbiBSRae (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Feb 2022 12:30:34 -0500
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09F5670060
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 09:30:15 -0800 (PST)
-Received: by mail-qv1-xf2b.google.com with SMTP id e22so21333641qvf.9
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 09:30:14 -0800 (PST)
+        with ESMTP id S232963AbiBSSPM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Feb 2022 13:15:12 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24FB56EF3D
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 10:14:53 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id g1so5077707pfv.1
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 10:14:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ud0z6bdKTsPBFazh0kBc6lQu5riblHz+yqtxreGQT2Q=;
-        b=G5IfKSiiAfe3d6tGnBjomV2h3Cb1VRTjG0IPAwGdLHF9kIO078dfty7eru9d31Yiy+
-         0oP01HIK9ZG557Fm/YpiCbU5jT4BGMQm6MihYlxf0B08VJNX6qYdvZWvRPPNcDGuqjOq
-         00VWA97VbQkoO8/BYodmHmCt6L6G/M5vypyXMJ7TwcICO70wz/9lu2WxcW5UwCqdcTrL
-         v0TUHKBGwGmuQit71JjP33hYCdB0S91ZN2bQMrfbU+wP3d7b9EPmhqiptJqviGOZdLCe
-         daQSuTilvgIAyhAL+XuNJmsxhakOzXpoNktu078RVuNtwzlFdwtAOioFe0/AJEcIUKcv
-         ++cA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=XljllSzzgjPhFQVlLSnxn9QClrr+88alOwOkkFlSVtI=;
+        b=DWUDKykvuJCj/t39Dmu7O/kULeAFQ7zgfnx1w6TBoB9aXr8Eoa0WtDvwU5X4bn7sQK
+         bRcFmpgkh/foeGQttpwtgCz6QpKhU2UkZ7NDFkdOahMAGdhB+iXP4bpe08KuF5DoahzK
+         TAmPWJTSQ6DcJliILvWPESgXIdjBmQkjLjEaKfnbPoGO8eNtB7lUc470owB+qqEgEKIB
+         oKRREY0UnrbKYezBGqKnqT0mKJof9bwX0ImcZOPX38n+jZM8llkU/q+9GRPzgGKdxGz6
+         VU1Nvehnsiyj15441laIial9r1ILyNlOP/nRfMVECk8aUvU+scC5PQOLbgzzK+ExXByX
+         2YPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ud0z6bdKTsPBFazh0kBc6lQu5riblHz+yqtxreGQT2Q=;
-        b=jMSL2Pxm//Gan6PLgeGClgaqYWmC3NdFqsjKEZYN5L+GCHFBnv5eEfoCzfhYnkQqHs
-         BOO77UxEfxFVLoD+0v9cqgLVRAr6L5vgSPyXV9FmPSfB+H0plgSSXeYPBRehIZz04Vwi
-         gDBlS2khJFgeQ6dCd37rTe5eI7DvXRiUvzwHIJzGK2iarFNU28p6prMJq+MLt3Bq74GB
-         sbJj63kjcUUMh1Iko0C6qsf1MZDi0JfmA0LdQLK4zYlvI70Pymk/bv2MAqVilCDLlpor
-         +DJKpMX46lM3hu12ZDMNhFncmoVfpSO3HFNyh3B949fqXgzC6pjWQqAALtKAZdJcV0tJ
-         oVgg==
-X-Gm-Message-State: AOAM530jtzG+22Kz2JzIGB2LyEyb5XBW7ce5OVBQ2CDFCWlk0k1+K79F
-        Q5CQc8+HZHmj2cC8mOKsxqUqcYE0QXw=
-X-Google-Smtp-Source: ABdhPJxntZdj/+3MTlhMZ7StroA2XbZT3+jLFksiaeojyCDqha7g3wzMfv0fSoysghbkHiNKhOjQZg==
-X-Received: by 2002:a05:622a:1a8c:b0:2b4:b4e7:69f4 with SMTP id s12-20020a05622a1a8c00b002b4b4e769f4mr11716204qtc.642.1645291813800;
-        Sat, 19 Feb 2022 09:30:13 -0800 (PST)
-Received: from localhost.localdomain (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id b8sm27091132qtx.79.2022.02.19.09.30.11
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 19 Feb 2022 09:30:13 -0800 (PST)
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Josh Steadmon <steadmon@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH] t5617,t7814: remove unnecessary 'uploadpack.allowanysha1inwant'
-Date:   Sat, 19 Feb 2022 12:30:10 -0500
-Message-Id: <20220219173010.2859-1-levraiphilippeblain@gmail.com>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <690d2316ad518ea4551821b2b3aa652996858475.1644034886.git.steadmon@google.com>
-References: <690d2316ad518ea4551821b2b3aa652996858475.1644034886.git.steadmon@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=XljllSzzgjPhFQVlLSnxn9QClrr+88alOwOkkFlSVtI=;
+        b=FIHMsQ3vwHOTXrYX9eCYdjeuqzvPsRn2OY6oFgXhluTYIZhAi1uTygTeeiu7Xb96md
+         lM5vOgR6AtOqXW5RHr+4AM5Ds2PUVqR2oxAh1HKTVvnW265XUArGGag6pmwZ9KQjTH7l
+         7IQaYBsl88qzju4dhLx21kv+PaKkF3L1CGUMvWrdxaUgQcOq8ws0uRd85WfCfFw8zslZ
+         X1CZKMKc8e4Jbl9ieVdac6TUzzgvgnhqJvK5N0tg33a5CswVJbz4z463UmOsjlfyiWb0
+         yS5mPTsCp8wKCs5X4RagsWwIKCp6TQEYbe0Xu5BjnO6WT/T0QFscCLe8Z0RQNcjjGaUK
+         q0Bw==
+X-Gm-Message-State: AOAM532RNWgauOpsojefXo31mUm5GPHBbKdn93bwrClRINnSM+hiyPS4
+        VRI6RvdjIWusFp4v/VP5C3dZOs0WVaQ=
+X-Google-Smtp-Source: ABdhPJwkeBh8QRmzMCuMK6cQIiXFe7BBMUE4lB75UAfvIU/vjhBPQbte3l9M4En3eMJijqcJ7r80Dg==
+X-Received: by 2002:a63:cc52:0:b0:372:7f35:cf84 with SMTP id q18-20020a63cc52000000b003727f35cf84mr10489320pgi.211.1645294492435;
+        Sat, 19 Feb 2022 10:14:52 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:ff0a:b48a:1cb8:3654])
+        by smtp.gmail.com with ESMTPSA id y23sm6748247pfa.67.2022.02.19.10.14.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 19 Feb 2022 10:14:51 -0800 (PST)
+Date:   Sat, 19 Feb 2022 10:14:49 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jose Lopes <jabolopes@google.com>,
+        Jeff Hostetler <jeffhostetler@github.com>
+Subject: Re: [PATCH v2 3/5] repo_read_index: clear SKIP_WORKTREE bit from
+ files present in worktree
+Message-ID: <YhEzmdhxHC3W8ijE@google.com>
+References: <pull.1114.git.1642092230.gitgitgadget@gmail.com>
+ <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
+ <11d46a399d26c913787b704d2b7169cafc28d639.1642175983.git.gitgitgadget@gmail.com>
+ <YhBCsg2DCEd9FXjE@google.com>
+ <CABPp-BHU4VYXF8kNvZEwBLu2BYP2Q1c9dYMW_8QfNmvGjB1ZOA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABPp-BHU4VYXF8kNvZEwBLu2BYP2Q1c9dYMW_8QfNmvGjB1ZOA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The tests added in the previous commit configure the "server"
-repository with 'uploadpack.allowfilter', in order for it to act as a
-promisor remote, and also with 'uploadpack.allowanysha1inwant'.
+Hi,
 
-This second setting is unnecessary as it only affects protocol v0
-operations; protocol v2, the default since eb049759fb (protocol:
-re-enable v2 protocol by default, 2020-09-25), allows any OID in want
-without any configuration needed.
+Elijah Newren wrote:
 
-Remove this config from both tests.
+> And, of course, you're trying to do more than just detect
+> inconsistencies -- you want the vfs to fully control the sparsity
+> patterns and expand them based on dynamic file accesses by the user.
+> That dynamic bit doesn't play well with the non-vfs workaround.
+>
+>
+> Does that sound right?
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
+You captured some of it.  There's a bit more: typically when using
+sparse checkout the traditional way, you will not have files in your
+working directory that do not match the sparse checkout pattern.  That
+way, the disk usage in the working copy is nice and small.  But with a
+vfsd like described in [2], having other files in the working
+directory does not cost disk usage because the corresponding data even
+in compressed (git object) form does not have to be present locally
+until the files are accessed.  So a vfsd gives an end user the
+illusion that all files are present, whereas git only operates on a
+small subset (the working set).
 
-Notes:
-    This is based on the version in next: f05da2b48b (clone, submodule: pass
-    partial clone filters to submodules, 2022-02-04).
-    
-    Both tests still pass.
-    
-    I wondered if it would be best to add '-c protocol.version=2' later on in the
-    tests, to allow runnning these tests with GIT_TEST_PROTOCOL_VERSION, but I was
-    not sure.
-    
-    Note that as I remarked in [1] last summer, the fact that
-    'allow{Tip,Reachable,Any}Sha1InWant' have no effect under protocol v2 is still
-    missing from the documentation...
-    
-    [1] https://lore.kernel.org/git/1a98c659-e7db-50a6-faf3-b3b4c15df679@gmail.com/
+With this change, git would start operating on all the files.
 
- t/t5617-clone-submodules-remote.sh | 3 +--
- t/t7814-grep-recurse-submodules.sh | 4 +---
- 2 files changed, 2 insertions(+), 5 deletions(-)
+[...]
+> Side note: I thought Microsoft's vfs was first named GVFS and then
+> based on naming collisions renamed to VFS for Git.  Sounds like you
+> have something that is probably a bit different, but which you are
+> also calling VFS for Git?
 
-diff --git a/t/t5617-clone-submodules-remote.sh b/t/t5617-clone-submodules-remote.sh
-index ca8f80083a..3fc93b1f8d 100755
---- a/t/t5617-clone-submodules-remote.sh
-+++ b/t/t5617-clone-submodules-remote.sh
-@@ -31,8 +31,7 @@ test_expect_success 'setup' '
- # bare clone giving "srv.bare" for use as our server.
- test_expect_success 'setup bare clone for server' '
- 	git clone --bare "file://$(pwd)/." srv.bare &&
--	git -C srv.bare config --local uploadpack.allowfilter 1 &&
--	git -C srv.bare config --local uploadpack.allowanysha1inwant 1
-+	git -C srv.bare config --local uploadpack.allowfilter 1
- '
- 
- test_expect_success 'clone with --no-remote-submodules' '
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index a4476dc492..1c9aec06a3 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -563,9 +563,7 @@ test_expect_success 'grep partially-cloned submodule' '
- 		git commit -m "Update submodule" &&
- 		test_tick &&
- 		git config --local uploadpack.allowfilter 1 &&
--		git config --local uploadpack.allowanysha1inwant 1 &&
--		git -C sub config --local uploadpack.allowfilter 1 &&
--		git -C sub config --local uploadpack.allowanysha1inwant 1
-+		git -C sub config --local uploadpack.allowfilter 1
- 	) &&
- 	# Clone the superproject & submodule, then make sure we can lazy-fetch submodule objects.
- 	git clone --filter=blob:none --also-filter-submodules \
+No, sorry for the lack of clarity.  When I say "VFS for Git", I
+genuinely mean https://vfsforgit.org/, which was authored by Microsoft
+and to my understanding is still used by Microsoft's Windows team and
+is available for anyone to use.  (That page currently returns a cert
+error because their SSL cert expired 10 days ago.  But hopefully it
+conveys the idea, and the content is still there if you go through the
+interstitial.)
 
-base-commit: f05da2b48b48a46db65fc768b3ffecaf996dd655
--- 
-2.29.2
+I agree that it can be kind of confusing to talk about that alongside
+VFSes in general, but I didn't choose the name. :)
 
+[...]
+> On Fri, Feb 18, 2022 at 5:07 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+
+>>  a. We could guard it with a config option.  It would still be a
+>>     regression for VFS for Git users, but they'd be able to use the
+>>     config option to restore the expected behavior.
+[...]
+>>  b. We could distinguish between the vfsd and the "interrupted and
+>>     forgot to update SKIP_WORKTREE bits in the index" cases somehow.
+>>     This sounds complex.
+>>
+>>  c. Something else?
+>>
+>> (b) and (c) aren't sounding obviously good, so (a) seems tempting.
+>> What do you think?
+>
+> Yeah, I'm having a hard time coming up with a way that either the VFS
+> could recognize these special Git present-despite-skip-worktree checks
+> and treat them differently, or having Git recognize that it is running
+> under a special VFS that likes to aggressively and automagically
+> expand the sparsity patterns.  So (a) seems tempting to me too.
+
+Thanks.  In a way it feels like giving up (isn't it better when things
+automagically Just Work?), but I think it's the right thing to do.
+
+> Got any name suggestions?  core.avoidPresentDespiteSkipWorktreeCheck
+> (defaulting to false)?  core.sparsityConsistencyCheck (defaulting to
+> true)?
+>
+> Did your team want to implement that on top of
+> en/present-despite-skipped since you can verify if it works for you,
+> or did you want me to take a stab at it?  Should be a pretty simple
+> change.
+
+Monday is a holiday here; it shouldn't be hard to get a patch out
+later this week.  Happy to write one but I also won't be at all offended
+if someone else writes it first.
+
+Ideally the config name should describe the intent from the user's
+perspective instead of the implementation.  So something like
+"sparsecheckout.expectFilesOutsideSparsePattern".
+
+Thanks,
+Jonathan
+
+>> [2] see
+>> https://lore.kernel.org/git/20220207190320.2960362-1-jonathantanmy@google.com/
+>> for what I mean by "vfsd"
