@@ -2,160 +2,219 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E276CC433EF
-	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 15:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2F15C433F5
+	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 16:43:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241710AbiBSPMA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Feb 2022 10:12:00 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:38170 "EHLO
+        id S241036AbiBSQna (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Feb 2022 11:43:30 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239155AbiBSPL7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Feb 2022 10:11:59 -0500
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B125EB1
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 07:11:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1645283476;
-        bh=aRVA3tHgpbKz7mCtm4brmnTJATg8MTaQRRaOAvFHOT4=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=meMhhLEhVBsKblaHoDhJLcOblSVmZl4npk6ATx8NnQLX/m1R/boAXpUi/hCHeQyAF
-         V1WnGI9v1CQoyldimDCW8VXexlkB/7ex7rP4pTunNkqajWZCRtF6Ca0NQEs10I4sSS
-         AmVuiFjPjxiOOrThVxcy6kwAqpbFx5TYSfeG0oVo=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.29] ([79.203.16.203]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MW9vU-1nkIsI0d7i-00XfuB; Sat, 19
- Feb 2022 16:11:16 +0100
-Message-ID: <c052b97e-e788-f63a-15c5-b1fbb6a480e8@web.de>
-Date:   Sat, 19 Feb 2022 16:11:15 +0100
+        with ESMTP id S232069AbiBSQn3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Feb 2022 11:43:29 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 712945F4DD
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 08:43:09 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id bg10so22339516ejb.4
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 08:43:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=H6OGUlBz+AptJjmMz37BRjaC8vLcLLtI2bBRXCgrlng=;
+        b=PPNUL5t+FQR9C+mvOZnRsJrt7IT5q8l7Nn6QanvFPiJwX1Hh7V3vhVUxHK71MH59rW
+         bXeaaUiSBW/aOd/a5ySOc3MU0U9XYERXbpNOPWWTOS/EBiCXDyIXVkvKjhoQQAxguMdU
+         /dqCXuUJdqt9+QkTF+rBLoB6bJCqPM+B7/EuZlTBen/vROm6x8GjpQfTxC/e/KoLA4Ry
+         p89rM0eX70fLWxXf6yfl6cekeeGoNR+u90Q3tJIuH3/8KK8YE1qg4mbUSxANAxXpmB78
+         6mQb1v262YPx6SexzLOHzmpO9jugiY4csyyEk+gCcyAYux/An8sr5sfsspsJpztgw1rc
+         jcqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=H6OGUlBz+AptJjmMz37BRjaC8vLcLLtI2bBRXCgrlng=;
+        b=yGI56JqCA+GgXPzUUFKcwDDhXiSePR7CdZvOIRPm8htfDlABRGd370w26xPNZeSLOP
+         mRa4oBbUGU3kPOzbfLVY9iTNfeo1VzetJjyGP+I9UXpxH/M5FcQ2qI5lDYysBM2U7dpq
+         O3FD/mYypYEj93APJ22nA7kVUX2sGWl+9sssHHT/ntgHm4K3mi1X+ZvgFQDxnJ63b7vz
+         EXNM5IngIIHQwI7L06lTuUHQLtnTLvFFH4WLrQbnFIB64o3s9UhecUoJ0jrQqwehDJdB
+         CvTEepW1bPcNGmId/T1RnTD8seazoOC9U23vusbOKLDEv3EGdrcuEJAh10HAIjIMAc2C
+         xRJA==
+X-Gm-Message-State: AOAM531dXL4l1jA34Ygbn6Qod+cHQJnqeQI6FWM0RdNcykD2gvhaQKjk
+        H1Myc5vAUIGsIVnQHwTraYCgwM03ZCnKw+V3pv0=
+X-Google-Smtp-Source: ABdhPJw4pS6CHaGkEuVEUu8XJioIL2HDa8z3FqVZUrYUkCmFgRU7t50zNkOq8EqOxZJly1WSHMcGDE6cGSVktNwn1DE=
+X-Received: by 2002:a17:906:350d:b0:6b9:5871:8f34 with SMTP id
+ r13-20020a170906350d00b006b958718f34mr10291806eja.493.1645288987713; Sat, 19
+ Feb 2022 08:43:07 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.0
-Subject: Re: master doesn't compile on xlc 21.01 anymore (old AIX compiler)
- (was: [PATCH v7 14/16] reftable: make reftable_record a tagged union)
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Neeraj Singh <nksingh85@gmail.com>,
-        Han-Wen Nienhuys <hanwenn@gmail.com>
-References: <pull.1152.v6.git.git.1642691534.gitgitgadget@gmail.com>
- <pull.1152.v7.git.git.1643051624.gitgitgadget@gmail.com>
- <047bbb75fcbb67c41d307bf5fa44587a76cc0777.1643051624.git.gitgitgadget@gmail.com>
- <220124.86ilu8hqag.gmgdl@evledraar.gmail.com>
- <CAFQ2z_M7s9Y_FH5x+qJxyZO0iHq+b_mf8=-dKcmADzFEoGLJUg@mail.gmail.com>
- <220124.86a6fkhk8s.gmgdl@evledraar.gmail.com>
- <220219.86wnhrc8us.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <220219.86wnhrc8us.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:boRe6yS8FtR42a3jlF3MiqMf/x7jF+qnLXtyN4wohlYGVeulmDy
- NtnIOP75fSGbh37j9I6pf7LzDclKbU5+ASpXCCTZYOTJ11uZg5LRc8kf30tPF3JcJDL2Zej
- ChaSRuZdcUh+4QAJfFOYFLiIKgamX4PXbcB9a7pPI1oQNY4fbasV3vSP16C59yFEiCQw/vJ
- 03IF//QlQl3elL7y2LiXw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NZcnC1Vmoac=:1+HL8Klr496U+NS6kOwqs9
- Zk+Z0dfTGNibjzaTXm+wvjqp87JjKG0orAeW5WPWk3iACbO2Kt8GaZZ1wJGSeExpz3ujG3ab1
- 9ZFQKa2YsD7c7d/bsV4ptlTHzo9wm8WPYaj8s8B2fbFlR48mcpMZP1AMtHNW6/ko6BiBdAX/o
- ahsP8eX9Snp2uJAig4gVX92WMZ6dZb73w60G9z40/pB0OztJDhESN+HXNvuEvRfW4O/GtR5j4
- F7Zh3ec3X4cwRmbH4gFinG8caKYkbzQbaMnXpMbau5CL38viE5KPMqTEo8KQLESDL68utA8xQ
- H+ixRNYi2GIfSe7uDF5UF6CwryeAd+b7iRM+cB41pJq5dKx0A7VZhQNAyfE+RdS2bLQEG0BY/
- S22Q/Loz6r5iBRXPnsr2Qoy6ngU33YrSzQHmnI3e0TIIZfqp7LQ92uUYyEVLkMBDbCiMFaURL
- xwiop4Hv+8n/z5h3T+P7Xn+C0HFqflEvC9QClxUXnoihcjbKZ8VgMBDrS1PBf5S1XYH8NO9pa
- OaOJb8JVyZt/kEeuoiDf+R+z7xFb0c3cI4YehXuvqEbiFoFoCS8P0KE+wV7zba+pR/A30kjmh
- G4U37MUOWby316biekPGI5SLZUtUuV5xWU9y8F75sw0a1+rbm5LOwf5DqsZqlaKwNalF4ZChj
- P8r6ntXaEAna0Lih2uqOdPwHJ9OaWvA0UWPDJZkM43mIYLhmmA+BcvTA9NEQFvyvQE93liK9x
- 4Vb7rFZppxc4kZq/1irCVnA6jV1EybVELzIr4f/Z61wmlFSggycrhG8zE3jwmTgcgw+LXgJW7
- xPDSQiN6NDRRkSfyGn49VIM0pN8H+nLTIeEP2ptkvqTn+C/wGNmTu/VgsJQP9v0yvYvPm9CRu
- jxcqgMIX1XoZysY7ljKHUjWEKaRNdQPEdPx7s8nFYev17Zn8ztMe3NNTk/mN/XUjrlZzFqfj7
- zZFViSH6jOoF43Ug/hjdawfxZAmPPHp4k9jXKhgdzJ69b9t+fBAhLjCs6ljP4HiK32KFD8s/n
- tvtx8OvrNhz2o8VaQsL1eECLQv4nSCV1skBinxBlwbliOuYCDw90wf11PCxKKuxn4g==
+References: <pull.1114.git.1642092230.gitgitgadget@gmail.com>
+ <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com> <11d46a399d26c913787b704d2b7169cafc28d639.1642175983.git.gitgitgadget@gmail.com>
+ <YhBCsg2DCEd9FXjE@google.com>
+In-Reply-To: <YhBCsg2DCEd9FXjE@google.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 19 Feb 2022 08:42:56 -0800
+Message-ID: <CABPp-BHU4VYXF8kNvZEwBLu2BYP2Q1c9dYMW_8QfNmvGjB1ZOA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] repo_read_index: clear SKIP_WORKTREE bit from
+ files present in worktree
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jose Lopes <jabolopes@google.com>,
+        Jeff Hostetler <jeffhostetler@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.02.22 um 13:54 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+On Fri, Feb 18, 2022 at 5:07 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
 >
-> On Mon, Jan 24 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> (cc-ing Jonathan Tan, Jose Lopes, and Jeff Hostetler, vfs experts)
+> Hi Elijah,
 >
->> On Mon, Jan 24 2022, Han-Wen Nienhuys wrote:
->>
->>> On Mon, Jan 24, 2022 at 8:44 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->>> <avarab@gmail.com> wrote:
->>>
->>>> I didn't test the v6 on xlc on AIX 7.1, but found that it refuses to
->>>> compile this code (but the one on AIX 7.2 is OK with it):
->>>>
->>>>     "reftable/generic.c", line 135.26: 1506-196 (S) Initialization be=
-tween types "char*" and "struct reftable_ref_record" is not allowed.
->>>>     "reftable/generic.c", line 147.26: 1506-196 (S) Initialization be=
-tween types "char*" and "struct reftable_log_record" is not allowed.
->>>>     "reftable/writer.c", line 261.26: 1506-196 (S) Initialization bet=
-ween types "char*" and "struct reftable_ref_record" is not allowed.
->>>>     "reftable/writer.c", line 312.26: 1506-196 (S) Initialization bet=
-ween types "char*" and "struct reftable_log_record" is not allowed.
->>>>     "reftable/writer.c", line 406.45: 1506-196 (S) Initialization bet=
-ween types "unsigned long long" and "struct reftable_index_record" is not =
-allowed.
->>>>
->>>
->>>> I.e. you're dereferencing a struct type here to get at its first memb=
-er,
->>>
->>> No, that's not what I'm doing.
->>>
->>>>> +   struct reftable_record rec =3D {
->>>>> +             .type =3D BLOCK_TYPE_REF,
->>>>> +             .u.ref =3D *ref,
->>>>> +     };
->>>
->>> reftable_record is tagged union, and u.ref is a reftable_ref_record. I
->>> intend to shallow-copying the parameter (a reftable_record called
->>> 'ref') into 'rec.u.ref' , precisely as it is written.
->>>
->>> Does this patch pass the unittests?
->>
->> No, sorry about that. It fails. I didn't have time to run them earlier
->> (and it takes a while on that platform).
->>
->> I don't know how to work around it then...
+> Elijah Newren wrote[1]:
 >
-> Just a reminder that now with this landed on master we've hard broken
-> compilation on that version of xlc:
+> > The fix is short (~30 lines), but the description is not.  Sorry.
+> >
+> > There is a set of problems caused by files in what I'll refer to as the
+> > "present-despite-SKIP_WORKTREE" state.  This commit aims to not just fix
+> > these problems, but remove the entire class as a possibility -- for
+> > those using sparse checkouts.  But first, we need to understand the
+> > problems this class presents.  A quick outline:
+> >
+> >    * Problems
+> >      * User facing issues
+> >      * Problem space complexity
+> >      * Maintenance and code correctness challenges
+> >    * SKIP_WORKTREE expectations in Git
+> >    * Suggested solution
+> >    * Pros/Cons of suggested solution
+> >    * Notes on testcase modifications
 >
->     avar@gcc111:[/home/avar]xlc -qversion
->     IBM XL C/C++ for AIX, V12.1 (5765-J02, 5725-C72)
->     Version: 12.01.0000.0000
+> Thanks for a clear explanation!  This is very helpful.
 >
-> The error is:
+> > === User facing issues ===
+> >
+> > There are various ways for users to get files to be present in the
+> > working copy despite having the SKIP_WORKTREE bit set for that file in
+> > the index.  This may come from:
+> >   * various git commands not really supporting the SKIP_WORKTREE bit[1,2]
+> >   * users grabbing files from elsewhere and writing them to the worktree
+> >     (perhaps even cached in their editor)
+> >   * users attempting to "abort" a sparse-checkout operation with a
+> >     not-so-early Ctrl+C (updating $GIT_DIR/info/sparse-checkout and the
+> >     working tree is not atomic)[3].
+> >
+> > Once users have present-despite-SKIP_WORKTREE files, any modifications
+> > users make to these files will be ignored, possibly to users' confusion.
+> [...]
+> > The suggests a simple solution: present-despite-SKIP_WORKTREE files
+> > should not exist, for those using sparse-checkouts.
 >
->     "reftable/generic.c", line 133.26: 1506-196 (S) Initialization betwe=
-en types "char*" and "struct reftable_ref_record" is not allowed.
->     "reftable/generic.c", line 145.26: 1506-196 (S) Initialization betwe=
-en types "char*" and "struct reftable_log_record" is not allowed.
+> This patch just reached "next", so at $DAYJOB a test for our vfsd[2]
+> noticed this change.  The trick behind a Git-based virtual filesystem
+> is typically:
 >
-> Is there really no workaround we can think of for this?
+> - since we control the filesystem, we can pretend all files are
+>   already present.  On access, we obtain the file content from the git
+>   object store.  On write, we update the sparse-checkout pattern so
+>   that Git knows to start tracking the file.
+>
+> - by keeping the sparse-checkout pattern narrow, we minimize the time
+>   commands like "git status" need to spend looking for changes in
+>   unmodified files.  Controlling the filesystem means we don't need to
+>   worry about changes to files that don't match that pattern (since
+>   any modification would also trigger a sparse-checkout pattern
+>   update).
 
-The code is hard to read for me in general due to its many types and
-function dispatch tables, but this compiler seems to have an even harder
-time.  Where does it even get that char pointer type from?
+Sorry for the headache.
 
-Can it compile this?
+Let me try to restate the problem I'm solving, then attempt to put
+your above situation into my own words, to verify I'm understanding...
 
-	struct reftable_record rec =3D {
-		.type =3D BLOCK_TYPE_REF,
-		.u =3D {
-			.ref =3D *ref
-		},
-	};
+So the primary challenge I was trying to address with this patch
+series, was that keeping the filesystem and the "sparsity" state
+in-sync was just *difficult*.  Things like checkout-index or even
+diff+apply will write to the working tree without even thinking about
+updating the sparsity state in the index to match.  And that's only
+looking at Git-related commands.  People can write new copies of files
+manually in a myriad of ways.  Detecting and handling that
+inconsistent state between the working tree and index wasn't as easy
+as it looked.
 
-If it can't, what about this?
+One way to solve this problem would be to have a vfs, where any time
+someone writes to a file, you update the index to clear the
+SKIP_WORKTREE bit for the written file.  Sounds like you have such a
+thing. (...or close to it, since you'd update the sparsity patterns,
+and the tooling to check mismatches of sparsity patterns and the index
+state are good and those get updated nicely.  We just struggle to have
+something that correctly updates between index and working tree
+mismatches of sparsity state).  So, that basically means you wouldn't
+benefit from this change.
 
-	struct reftable_record rec =3D {
-		.type =3D BLOCK_TYPE_REF,
-	};
-	rec.u.ref =3D *ref;
+But for those of us without some kind of vfs that detects writes and
+auto-updates either the sparsity patterns or the SKIP_WORKTREE bit in
+the index, we want something that will manually check the working tree
+to see if files have been written and update the index accordingly.
 
-Ren=C3=A9
+And, of course, you're trying to do more than just detect
+inconsistencies -- you want the vfs to fully control the sparsity
+patterns and expand them based on dynamic file accesses by the user.
+That dynamic bit doesn't play well with the non-vfs workaround.
+
+
+Does that sound right?
+
+> If I understand the intent behind this change correctly, it's
+> incompatible with that trick.  How would you recommend handling that?
+> In the not too far away future, I'd expect something like the "VFS
+> projection hook" to handle this use case, but in the meantime, I would
+> expect this change to break VFS for Git performance.  A few options:
+
+Side note: I thought Microsoft's vfs was first named GVFS and then
+based on naming collisions renamed to VFS for Git.  Sounds like you
+have something that is probably a bit different, but which you are
+also calling VFS for Git?  Is there some potential confusion here, or
+are you banking on Microsoft eventually dropping their project?  Or
+that you'll both keep your projects internal and not share them so the
+naming collision doesn't matter?  Just curious...
+
+>  a. We could guard it with a config option.  It would still be a
+>     regression for VFS for Git users, but they'd be able to use the
+>     config option to restore the expected behavior.  (Or
+>     alternatively, such a config option could be disabled by default,
+>     but I suspect that would defeat the purpose described for the
+>     patch.)
+>
+>  b. We could distinguish between the vfsd and the "interrupted and
+>     forgot to update SKIP_WORKTREE bits in the index" cases somehow.
+>     This sounds complex.
+>
+>  c. Something else?
+>
+> (b) and (c) aren't sounding obviously good, so (a) seems tempting.
+> What do you think?
+
+Yeah, I'm having a hard time coming up with a way that either the VFS
+could recognize these special Git present-despite-skip-worktree checks
+and treat them differently, or having Git recognize that it is running
+under a special VFS that likes to aggressively and automagically
+expand the sparsity patterns.  So (a) seems tempting to me too.
+
+Got any name suggestions?  core.avoidPresentDespiteSkipWorktreeCheck
+(defaulting to false)?  core.sparsityConsistencyCheck (defaulting to
+true)?
+
+Did your team want to implement that on top of
+en/present-despite-skipped since you can verify if it works for you,
+or did you want me to take a stab at it?  Should be a pretty simple
+change.
+
+> Thanks,
+> Jonathan
+>
+> [1] https://lore.kernel.org/git/11d46a399d26c913787b704d2b7169cafc28d639.1642175983.git.gitgitgadget@gmail.com/
+> [2] see
+> https://lore.kernel.org/git/20220207190320.2960362-1-jonathantanmy@google.com/
+> for what I mean by "vfsd"
