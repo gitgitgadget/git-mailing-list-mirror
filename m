@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92202C433F5
-	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 10:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 922F0C433EF
+	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 10:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241959AbiBSKmG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Feb 2022 05:42:06 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43916 "EHLO
+        id S242015AbiBSKmH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Feb 2022 05:42:07 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240893AbiBSKmF (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239701AbiBSKmF (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 19 Feb 2022 05:42:05 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CDF536E09
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC52F36E30
         for <git@vger.kernel.org>; Sat, 19 Feb 2022 02:41:46 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id d27so18601429wrb.5
+Received: by mail-wr1-x42f.google.com with SMTP id f3so18443360wrh.7
         for <git@vger.kernel.org>; Sat, 19 Feb 2022 02:41:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HfUmCH5zea+xhiTD4lmOCJxbb74mPNGl5gEvmxg7XFA=;
-        b=Yft4dG4I7BRXYIGe69XHGCFZnBcnP9apfLtpnsyYjGAvw8KIgV6cvz7NaaBulpTALg
-         uC6DyS3s27jVKTOKDp0+OtwPwv677cGh0Phk6LlN1TMCQVj0iW1o2HL9iu0G/WHHV7dp
-         mcAYrRuM4gaozkxiu+x1U+qIUsZvM6hvhdqvfR/Pcfz5WFd1RNqn01eyfcQIhAYdiO0C
-         nBMfW0qnWPb0XXO+WMg3kKeW+0ons9BMFQo//GgMJLa8HWPcKh5pYSpzeQH9ySC8wC+a
-         VcwmJp72wq/HqRkkss3QKFp1MCdu9f3ZhGPcIFsKFlCZU7wLPxWqcLeWuyT+HVioDXcE
-         Wnug==
+        bh=J8QbbgX/LYOMsosM2kglX2uwXEHX5ICqDuZSxdMSspc=;
+        b=JWJ2AfHDhdSbJuQpBhQBa/fClexPPdYoKzxE2d3ZoTmALFmT2F7AU5HGb/mL2Ul5ff
+         Zd/R5f6H49E3qJyXi2px6NY+2Q+z7uZKTjbKNkyDxM1HK1N7Ec0FFt3fdi/IToDSNkX/
+         bE6d0u2MllsPNDczIF8oVQ4flJYXvrClaso+zmF3GW0O+HqLoJBWmWR6gi7DYzCIjmN/
+         VR2WxqEWwIH33uXGwXdsx/Eptk9XVER04BZj9HykP/dkbioXOIYd/vXxddzCCmwVSyGU
+         H0vWEsnyx7oIEOUAmlUTmE6WQutyxCWBHLK1HerePOqCZ2WSG8VSpscu62WOLM0CRHVG
+         d+3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HfUmCH5zea+xhiTD4lmOCJxbb74mPNGl5gEvmxg7XFA=;
-        b=raRB5sp2Xzs0IewXdAyw+oGfTJ0zIa5VD6IAi79W8XfGDFU0uJyIAFIxwqwnW8/S6x
-         lCUCugz08lIay+YJrTHMlJqle9gPj3OPEbJTsjgOOdhC359cHwUyv5KPv1nQi97YCKwk
-         E8o5rlDpyOIrHDWDlYG38CGNAj0xtzGt7sbF5+a0GMfSfHDip6ubr0d1mCkNLrEn8y8H
-         Q6pZxPvN9bXTeebvSxPxUW5K0hK+SjcMIGkT5+5xdDmHDtUcZUhQquTTUbLS/bMlxRTz
-         9kzPPthYRFpURsRP9V+yR4hRfzra3lf6c36Ts5VUI8VnucXwZmPrwJvy0bHLx4wWDUTJ
-         8v3w==
-X-Gm-Message-State: AOAM531oltMMr0X89DU1HRKCB0nm9owvRaU5Pwf+no/g45DOWJbBb0ld
-        jrfHAo3rUczge7eH8cGcckW52hgFL7W/AA==
-X-Google-Smtp-Source: ABdhPJyWBt4sG4kYA5mJnzIVScJ5aULJeYJa5zaT2z03nJhGmV+qGz9oU4rpuOki0Y7ARI6bB723KQ==
-X-Received: by 2002:a05:6000:10cf:b0:1e6:ac26:ce6 with SMTP id b15-20020a05600010cf00b001e6ac260ce6mr9180717wrx.354.1645267304241;
+        bh=J8QbbgX/LYOMsosM2kglX2uwXEHX5ICqDuZSxdMSspc=;
+        b=FF6YP9aecQvfkEyiHkY2ubpsHRWtHWIL+sfmuhESL+tFW0M8/eyYmfuSnoh9V2lcMi
+         XA7+Z9SlG9N7a0eVxQnUhxOLvpGOL/WCj1lvGOwxrYhBNbVgKslGvQgHIavYtjVEVKQ3
+         g19OFXe1qbkl0H74HFGEgjHk+nlG8DxY3MkHhMr6I1sCn09SVeVxz4xEdaiNjRIq9EBl
+         qlp8VCnZsnuL2/WkDjdCVEiGFyw/ekD0TxqBGaPE84gQUWRi2HS6AQUFHLTenu2xlI89
+         X+3xmVP0mkbMnkSnJlBS05D911mWT2zY41K6lkt8IS622BqKmOEBJC/az+4ogIsIPyiv
+         YlXA==
+X-Gm-Message-State: AOAM531X8qFKYD5wIcKpHdKHhmS2RC+KgvBqV9vrA8tLKyRNEZS4UjE3
+        aIn2a02cilkXuEX3S2g9+ojVtPCIjYPZAw==
+X-Google-Smtp-Source: ABdhPJyRkRPGW53YuqEHzPQB99mfuSsy3BA6hcTRpZlbbTneX7QbBXbiSzA74pTC2NDma/Hd3CeCKw==
+X-Received: by 2002:a5d:4b43:0:b0:1e4:2deb:59e6 with SMTP id w3-20020a5d4b43000000b001e42deb59e6mr8775705wrs.515.1645267304988;
         Sat, 19 Feb 2022 02:41:44 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 1sm21623928wrz.75.2022.02.19.02.41.43
+        by smtp.gmail.com with ESMTPSA id 1sm21623928wrz.75.2022.02.19.02.41.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Feb 2022 02:41:43 -0800 (PST)
+        Sat, 19 Feb 2022 02:41:44 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,12 +54,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/3] C99: remove dead !HAVE_VARIADIC_MACROS code
-Date:   Sat, 19 Feb 2022 11:41:07 +0100
-Message-Id: <cover-v3-0.3-00000000000-20220219T103752Z-avarab@gmail.com>
+Subject: [PATCH v3 1/3] git-compat-util.h: clarify GCC v.s. C99-specific in comment
+Date:   Sat, 19 Feb 2022 11:41:08 +0100
+Message-Id: <patch-v3-1.3-1a15fe4fd74-20220219T103752Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1129.g03fd99ecb8d
-In-Reply-To: <cover-v2-0.2-00000000000-20220128T110330Z-avarab@gmail.com>
-References: <cover-v2-0.2-00000000000-20220128T110330Z-avarab@gmail.com>
+In-Reply-To: <cover-v3-0.3-00000000000-20220219T103752Z-avarab@gmail.com>
+References: <cover-v2-0.2-00000000000-20220128T110330Z-avarab@gmail.com> <cover-v3-0.3-00000000000-20220219T103752Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,195 +67,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A too-late re-roll of the v2[1], sorry. But this should address all
-issues raised the last time around.
+Change a comment added in e208f9cc757 (make error()'s constant return
+value more visible, 2012-12-15). It's not correct that this is GCC-ism
+anymore, it's code that uses standard C99 features.
 
-Since v2 I've:
+The comment being changed here pre-dates the HAVE_VARIADIC_MACROS
+define, which we got in e05bed960d3 (trace: add 'file:line' to all
+trace output, 2014-07-12).
 
- * Improved the documentation of the now onnly-macros. I opted to just
-   quote the argument list of the old C functions for explanation.
+The original implementation of an error() macro) in e208f9cc757 used a
+GCC-ism with the paste operator (see the commit message for mention of
+it), but that was dropped later by 9798f7e5f9 (Use __VA_ARGS__ for all
+of error's arguments, 2013-02-08), giving us the C99-portable version
+we have now.
 
- * Some miscellanious commit message grammar fixes.
+While we could remove the __GNUC__ define here, it might cause issues
+for other compilers or static analysis systems, so let's not. See
+87fe5df365 (inline constant return from error() function, 2014-05-06)
+for one such issue.
 
- * Whitespace fixes in 2/3.
+See also e05bed960d3 (trace: add 'file:line' to all trace output,
+2014-07-12) for another comment about GNUC's handling of __VA_ARGS__.
 
- * There's a new 3/3 which removes an indirection used to define
-   __FILE__, instead we now use __FILE__ directly.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ git-compat-util.h | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-1. https://lore.kernel.org/git/cover-v2-0.2-00000000000-20220128T110330Z-avarab@gmail.com/
-
-Ævar Arnfjörð Bjarmason (3):
-  git-compat-util.h: clarify GCC v.s. C99-specific in comment
-  C99: remove hardcoded-out !HAVE_VARIADIC_MACROS code
-  trace.h: remove never-used TRACE_CONTEXT
-
- Documentation/CodingGuidelines |   3 +
- banned.h                       |   5 --
- git-compat-util.h              |  16 +---
- trace.c                        |  80 +-----------------
- trace.h                        | 145 ++++++++++++++-------------------
- trace2.c                       |  39 ---------
- trace2.h                       |  25 ------
- usage.c                        |  15 +---
- 8 files changed, 67 insertions(+), 261 deletions(-)
-
-Range-diff against v2:
-1:  31079a71ecb = 1:  1a15fe4fd74 git-compat-util.h: clarify GCC v.s. C99-specific in comment
-2:  966d96505cb ! 2:  bd0f969be55 C99: remove hardcoded-out !HAVE_VARIADIC_MACROS code
-    @@ Commit message
-         C99: remove hardcoded-out !HAVE_VARIADIC_MACROS code
-     
-         Remove the "else" branches of the HAVE_VARIADIC_MACROS macro, which
-    -    has been unconditionally omitted since 765dc168882 (git-compat-util:
-    +    have been unconditionally omitted since 765dc168882 (git-compat-util:
-         always enable variadic macros, 2021-01-28).
-     
-    -    Since they were hardcoded out anyone trying to compile a version of
-    +    Since were always omitted, anyone trying to use a compiler without
-    +    variadic macro support to compile a git since version
-         git v2.31.0 or later would have had a compilation error. 10 months
-         across a few releases since then should have been enough time for
-         anyone who cared to run into that and report the issue.
-    @@ trace.h: void trace_command_performance(const char **argv);
-     - */
-     -void trace_strbuf(struct trace_key *key, const struct strbuf *data);
-     -
-    - /**
-    +-/**
-     - * Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
-    -+ * Macros to add the file:line of the calling code, instead of that of
-    -+ * the trace function itself.
-    -  *
-    +- *
-     - * Example:
-     - * ------------
-     - * uint64_t t = 0;
-    @@ trace.h: void trace_command_performance(const char **argv);
-     - * should be used.
-     - */
-     -
-    + /*
-    +  * TRACE_CONTEXT may be set to __FUNCTION__ if the compiler supports it. The
-    +  * default is __FILE__, as it is consistent with assert(), and static function
-    +@@ trace.h: void trace_performance_leave(const char *format, ...);
-    + # define TRACE_CONTEXT __FILE__
-    + #endif
-    + 
-     -/*
-    -- * TRACE_CONTEXT may be set to __FUNCTION__ if the compiler supports it. The
-    -- * default is __FILE__, as it is consistent with assert(), and static function
-    -- * names are not necessarily unique.
-    -- *
-    -- * __FILE__ ":" __FUNCTION__ doesn't work with GNUC, as __FILE__ is supplied
-    -- * by the preprocessor as a string literal, and __FUNCTION__ is filled in by
-    -- * the compiler as a string constant.
-    -- */
-    --#ifndef TRACE_CONTEXT
-    --# define TRACE_CONTEXT __FILE__
-    --#endif
-    --
-    --/*
-    ++/**
-    ++ * Macros to add the file:line of the calling code, instead of that of
-    ++ * the trace function itself.
-    ++ *
-       * Note: with C99 variadic macros, __VA_ARGS__ must include the last fixed
-       * parameter ('format' in this case). Otherwise, a call without variable
-       * arguments will have a surplus ','. E.g.:
-     @@ trace.h: void trace_performance_leave(const char *format, ...);
-    -  *
-    -  * which is invalid (note the ',)'). With GNUC, '##__VA_ARGS__' drops the
-       * comma, but this is non-standard.
-    +  */
-    + 
-    ++/**
-    ++ * trace_printf(), accepts "const char *format, ...".
-     + *
-    -+ * TRACE_CONTEXT may be set to __FUNCTION__ if the compiler supports it. The
-    -+ * default is __FILE__, as it is consistent with assert(), and static function
-    -+ * names are not necessarily unique.
-    -+ *
-    -+ * __FILE__ ":" __FUNCTION__ doesn't work with GNUC, as __FILE__ is supplied
-    -+ * by the preprocessor as a string literal, and __FUNCTION__ is filled in by
-    -+ * the compiler as a string constant.
-    ++ * Prints a formatted message, similar to printf.
-     + */
-    -+#ifndef TRACE_CONTEXT
-    -+# define TRACE_CONTEXT __FILE__
-    -+#endif
-    ++#define trace_printf(...) trace_printf_key(&trace_default_key, __VA_ARGS__)
-     +
-     +/**
-    -+ * Prints a formatted message, similar to printf.
-    -  */
-    -+#define trace_printf(...) trace_printf_key(&trace_default_key, __VA_ARGS__)
-    - 
-    ++ * trace_printf_key(), accepts "struct trace_key *key, const char *format, ...".
-    ++ */
-      #define trace_printf_key(key, ...)					    \
-      	do {								    \
-    + 		if (trace_pass_fl(key))					    \
-     @@ trace.h: void trace_performance_leave(const char *format, ...);
-      					    __VA_ARGS__);		    \
-      	} while (0)
-    @@ trace.h: void trace_performance_leave(const char *format, ...);
-     -#define trace_printf(...) trace_printf_key(&trace_default_key, __VA_ARGS__)
-     -
-     +/**
-    ++ * trace_argv_printf(), accepts "struct trace_key *key, const char *format, ...)".
-    ++ *
-     + * Prints a formatted message, followed by a quoted list of arguments.
-     + */
-      #define trace_argv_printf(argv, ...)					    \
-    @@ trace.h: void trace_performance_leave(const char *format, ...);
-      	} while (0)
-      
-     +/**
-    ++ * trace_strbuf(), accepts "struct trace_key *key, const struct strbuf *data".
-    ++ *
-     + * Prints the strbuf, without additional formatting (i.e. doesn't
-     + * choke on `%` or even `\0`).
-     + */
-    @@ trace.h: void trace_performance_leave(const char *format, ...);
-      	} while (0)
-      
-     +/**
-    ++ * trace_performance(), accepts "uint64_t nanos, const char *format, ...".
-    ++ *
-     + * Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
-     + *
-     + * Example:
-    @@ trace.h: void trace_performance_leave(const char *format, ...);
-      	} while (0)
-      
-     +/**
-    ++ * trace_performance_since(), accepts "uint64_t start, const char *format, ...".
-    ++ *
-     + * Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled.
-     + *
-     + * Example:
-    @@ trace.h: void trace_performance_leave(const char *format, ...);
-      	do {								    \
-      		if (trace_pass_fl(&trace_perf_key))			    \
-     @@ trace.h: void trace_performance_leave(const char *format, ...);
-    - 						   __VA_ARGS__);	    \
-    + 					     __VA_ARGS__);		    \
-      	} while (0)
-      
-    -+
-    - /* backend functions, use non-*fl macros instead */
-    - __attribute__((format (printf, 4, 5)))
-    - void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
-    ++/**
-    ++ * trace_performance_leave(), accepts "const char *format, ...".
-    ++ */
-    + #define trace_performance_leave(...)					    \
-    + 	do {								    \
-    + 		if (trace_pass_fl(&trace_perf_key))			    \
-     @@ trace.h: static inline int trace_pass_fl(struct trace_key *key)
-      	return key->fd || !key->initialized;
-      }
--:  ----------- > 3:  27ea260bbea trace.h: remove never-used TRACE_CONTEXT
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 876907b9df4..2d9b75a021a 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -534,9 +534,7 @@ void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+ /*
+  * Let callers be aware of the constant return value; this can help
+  * gcc with -Wuninitialized analysis. We restrict this trick to gcc, though,
+- * because some compilers may not support variadic macros. Since we're only
+- * trying to help gcc, anyway, it's OK; other compilers will fall back to
+- * using the function as usual.
++ * because other compilers may be confused by this.
+  */
+ #if defined(__GNUC__)
+ static inline int const_error(void)
 -- 
 2.35.1.1129.g03fd99ecb8d
 
