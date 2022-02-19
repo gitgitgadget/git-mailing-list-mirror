@@ -2,133 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C73CC433F5
-	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 10:47:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52249C433EF
+	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 11:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232282AbiBSKre (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Feb 2022 05:47:34 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60792 "EHLO
+        id S238581AbiBSLaN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Feb 2022 06:30:13 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230177AbiBSKrc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Feb 2022 05:47:32 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3D5C54BD4
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 02:47:13 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id u18so19720412edt.6
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 02:47:13 -0800 (PST)
+        with ESMTP id S232777AbiBSLaJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Feb 2022 06:30:09 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1DAB19FB27
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 03:29:50 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id m27so6924719wrb.4
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 03:29:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=DRXQJJ7yaeLkCzNWxaDZk6ROn7Zv+nuJv0VA1wR/9wo=;
-        b=WnC/D/6KJ5Lh2zr8fyaWCICakNP9qoNHDzZ2nxCE3WfWivgHQTr5Yo70EsXiOuDG+s
-         BJh5Yam+BfmAJFlThR/SWtiVCMzsX1KNwRDbHwBYwu7xutQkHC7qePJWWrRqxAzqwrWL
-         mgka3OK+crMzMO/THKmzL6HM/yBdCI//vq5XYDhCDPsqqdgtz6ov3GQ5ATMbxcXM4gfB
-         7Cftnvzzvfb1qcJMYP8Lfk1Yg0i1ujbmilG5wPtnO4x4dMCszjI7YoVYz+eEEi7bkHEn
-         2xfb9Eh1KqaAzhWZ/3w2ATzAhcUcVS8urk5FWtpMU7fOjP2/fe/Kb+Mh3JPzhe6Zo2KV
-         n31g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ngmu4/EJFsKCO0dY9NcciwUJjrcXqNDn4Zl/KFJLwM0=;
+        b=bdRHO7qXMHUzYjOjKL3yZZgJZEoEhCSBusk05DualOfXRcQ9im5YzkE/Q1YOg9l/We
+         bAqJ6iV7/mBDTvnXnZhSpnmCJVbzcuQzAPcYt/1MiNFIawu1cDYLjGGBwzfDLtXGOy8Y
+         JmdfuuTJTrp3/IXaNvUKtLWNLaiUDhtvKr4RhIcZNjVWIyUlkwQTfTVDMhB11BLgB81b
+         USe6kPnbgCHzR7Oa1CH3JtPSQeptA94xgCQIQ3CMA3bwB5Z5X5Lw6YE2AYpxADmRsTl0
+         ojSuhtMGoHjxmiYg7R/HMRlohQOv/LQifKSacp/U8XmLRr+PZSzocfRqbFKYsvgx+s3b
+         tTTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=DRXQJJ7yaeLkCzNWxaDZk6ROn7Zv+nuJv0VA1wR/9wo=;
-        b=hhZxsukQNDC44IwmdgF97SxJX93EwOFPvmJOJZ5IfajL+BvgvWYEDyohr5SRqSp9lT
-         EiiFNvQ7Ze01M5XAJFQ99LVzuvhRCId9QG88K3Nbuv4nT5/qM4cLTmlKDpyWEhHqfDtR
-         FuyxTbSU8HhRfyXrJGJULB+pJPbCbSEKfbR8Ex0P8vJ6Hm2+Eit0Izf5WPSqhZkseHSQ
-         locWOk5nKM4pK4YfgsvLy8YiHSaN8x3u2cMByVrtAojSwXCRABJl5grBXVjGexG8VDsH
-         L6X7UymvGPBaXDssoC+HmEw+emXffcqZ6JDBgsBNCb+UORpH0Sp6KXdMDdg++8tuWRfx
-         r+3Q==
-X-Gm-Message-State: AOAM531kR8ysPZ67vz/BcPTxIu+mO6HuUkruZHkwCR1yUw25CgCA6zbU
-        g3xdRNstwYKxizLppWu+wl4=
-X-Google-Smtp-Source: ABdhPJy0DH1D29GmBND0CvvjT99TcVt/n3NfmotzGrFC4MZrmzh2PYKvBtjDfC0cYFHd9RLG+Hsk5A==
-X-Received: by 2002:a05:6402:796:b0:410:7b10:c951 with SMTP id d22-20020a056402079600b004107b10c951mr12155213edy.317.1645267631466;
-        Sat, 19 Feb 2022 02:47:11 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bn15sm3120422ejb.93.2022.02.19.02.47.10
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ngmu4/EJFsKCO0dY9NcciwUJjrcXqNDn4Zl/KFJLwM0=;
+        b=XMmJg0cqXzEapI4i7ErgvOsa2iC4Vgwl+BcWvIXCcvMrJknevNiy0dVwhg9u8NmglH
+         0PGsus4X+bQYdHVX41GDAJafuURsPp1s56Lzd+7xaw5O0N7VwGGsWYap3fRXE1kXMhAr
+         tnoK3Q8Qs1w3CIfiql6FwQE2rlXf4uFW4dPNTcPdxWNEyRr9xB/IB+KO4qLgkhS2rSsi
+         eFfkO1DfAz/n76b7fFmU2TFhV1uBMOgORrbyaNaY8OOcATY9SIfCQW9c5nYl4ay1DNwQ
+         TSWoTybB7RVxYhN4VojpnA2l8Sjc7kLOJdpmA0SBdn3qWDHAFwadNqBcZn5w66WDqEkX
+         JJRg==
+X-Gm-Message-State: AOAM5327LHfj3KNsP9iAYiNfxspiMdL2p/EuschNVsYMx/3GXcsheqx7
+        1hikwfqKbVKfv3eXgh0jwV1vaEqddhuHeQ==
+X-Google-Smtp-Source: ABdhPJyLjuVqegw50G0v7atUDwsp2FCU04cuD+ybDpg6TIwQ3Aj/L7cSiaE8upqwIwaXrmSvjlqIsQ==
+X-Received: by 2002:a5d:634b:0:b0:1e3:3226:8e27 with SMTP id b11-20020a5d634b000000b001e332268e27mr8861723wrw.428.1645270189173;
+        Sat, 19 Feb 2022 03:29:49 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id u12sm29464695wrw.32.2022.02.19.03.29.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Feb 2022 02:47:10 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nLNGf-004sYd-RT;
-        Sat, 19 Feb 2022 11:47:09 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH 2/2] hooks: fix a TOCTOU in "did we run a hook?" heuristic
-Date:   Sat, 19 Feb 2022 11:46:33 +0100
-References: <cover-0.2-00000000000-20220218T203834Z-avarab@gmail.com>
- <patch-2.2-d01d088073b-20220218T203834Z-avarab@gmail.com>
- <YhBtI6PY5s/nC8og@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <YhBtI6PY5s/nC8og@nand.local>
-Message-ID: <220219.861qzzdtg2.gmgdl@evledraar.gmail.com>
+        Sat, 19 Feb 2022 03:29:48 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/4] test-lib: add GIT_XSAN_OPTIONS, inherit [AL]SAN_OPTIONS
+Date:   Sat, 19 Feb 2022 12:29:40 +0100
+Message-Id: <patch-v2-1.4-01e63a72231-20220219T112653Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1130.g7c6dd716f26
+In-Reply-To: <cover-v2-0.4-00000000000-20220219T112653Z-avarab@gmail.com>
+References: <cover-0.4-00000000000-20220218T205753Z-avarab@gmail.com> <cover-v2-0.4-00000000000-20220219T112653Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Change our ASAN_OPTIONS and LSAN_OPTIONS to set defaults for those
+variables, rather than punting out entirely if we already have them in
+the environment.
 
-On Fri, Feb 18 2022, Taylor Blau wrote:
+We do want to take any user-provided settings over our own, but we can
+do do that by prepending our defaults to the variable. The
+libsanitizer options parsing has "last option wins" semantics.
 
-> On Fri, Feb 18, 2022 at 09:43:52PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index b9ed0374e30..bc5d34bc31f 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -725,11 +725,13 @@ static int prepare_to_commit(const char *index_fil=
-e, const char *prefix,
->>  	int clean_message_contents =3D (cleanup_mode !=3D COMMIT_MSG_CLEANUP_N=
-ONE);
->>  	int old_display_comment_prefix;
->>  	int merge_contains_scissors =3D 0;
->> +	int invoked_hook;
->>
->>  	/* This checks and barfs if author is badly specified */
->>  	determine_author_info(author_ident);
->>
->> -	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit"=
-, NULL))
->> +	if (!no_verify && run_commit_hook(use_editor, index_file, &invoked_hoo=
-k,
->> +					  "pre-commit", NULL))
->>  		return 0;
->>
->>  	if (squash_message) {
->> @@ -1052,10 +1054,10 @@ static int prepare_to_commit(const char *index_f=
-ile, const char *prefix,
->>  		return 0;
->>  	}
->>
->> -	if (!no_verify && hook_exists("pre-commit")) {
->> +	if (!no_verify && invoked_hook) {
->>  		/*
->> -		 * Re-read the index as pre-commit hook could have updated it,
->> -		 * and write it out as a tree.  We must do this before we invoke
->> +		 * Re-read the index as the pre-commit-commit hook was invoked
->> +		 * and could have updated it. We must do this before we invoke
->>  		 * the editor and after we invoke run_status above.
->>  		 */
->>  		discard_cache();
->
-> Sanity checking my own understating of this race: if we ran the
-> pre-commit hook and it modified the index, but hook_exists() returns
-> false later on (e.g., because the hook itself went away, the directory
-> became unreadable, etc.), then we won't call discard_cache() when we
-> should have?
+It's now possible to do e.g.:
 
-Yes, it's that obscure.
+    LSAN_OPTIONS=report_objects=1 ./t0006-date.sh
 
-> If so, OK. This definitely seems like a pretty niche race, but
-> independent of that I think the change here is an improvement in
-> readability, and makes it clearer that calling discard_cache() depends
-> on whether or not we *ran* the pre-commit hook, not whether we (still)
-> *have* a pre-commit hook.
+And not have the "report_objects=1" setting overwrite our sensible
+default of "abort_on_error=1", but by prepending to the list we ensure
+that:
 
-Yeah, that's the main reason to do it. I found this really hard to
-follow before, why didn't we just remember if we have/ran the thing? Now
-we do.
+    LSAN_OPTIONS=report_objects=1:abort_on_error=0 ./t0006-date.sh
+
+Will take the desired "abort_on_error=0" over our default.
+
+See b0f4c9087e1 (t: support clang/gcc AddressSanitizer, 2014-12-08)
+for the original pattern being altered here, and
+85b81b35ff9 (test-lib: set LSAN_OPTIONS to abort by default,
+2017-09-05) for when LSAN_OPTIONS was added in addition to the
+then-existing ASAN_OPTIONS.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/test-lib.sh | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index e4716b0b867..7e6978d1817 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -36,17 +36,33 @@ then
+ fi
+ GIT_BUILD_DIR="$TEST_DIRECTORY"/..
+ 
++# Prepend a string to a VAR using an arbitrary ":" delimiter, not
++# adding the delimiter if VAR or VALUE is empty. I.e. a generalized:
++#
++#	VAR=$1${VAR:+${1:+$2}$VAR}
++#
++# Usage (using ":" as the $2 delimiter):
++#
++#	prepend_var VAR : VALUE
++prepend_var () {
++	eval "$1=$3\${$1:+${3:+$2}\$$1}"
++}
++
++# If [AL]SAN is in effect we want to abort so that we notice
++# problems. The GIT_XSAN_OPTIONS variable can be used to set common
++# defaults shared between [AL]SAN_OPTIONS.
++prepend_var GIT_XSAN_OPTIONS : abort_on_error=1
++
+ # If we were built with ASAN, it may complain about leaks
+ # of program-lifetime variables. Disable it by default to lower
+ # the noise level. This needs to happen at the start of the script,
+ # before we even do our "did we build git yet" check (since we don't
+ # want that one to complain to stderr).
+-: ${ASAN_OPTIONS=detect_leaks=0:abort_on_error=1}
++prepend_var ASAN_OPTIONS : $GIT_XSAN_OPTIONS
++prepend_var ASAN_OPTIONS : detect_leaks=0
+ export ASAN_OPTIONS
+ 
+-# If LSAN is in effect we _do_ want leak checking, but we still
+-# want to abort so that we notice the problems.
+-: ${LSAN_OPTIONS=abort_on_error=1}
++prepend_var LSAN_OPTIONS : $GIT_XSAN_OPTIONS
+ export LSAN_OPTIONS
+ 
+ if test ! -f "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
+-- 
+2.35.1.1130.g7c6dd716f26
+
