@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1003CC433F5
-	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 06:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92881C433EF
+	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 06:36:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241362AbiBSGf0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Feb 2022 01:35:26 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:49122 "EHLO
+        id S237616AbiBSGhH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Feb 2022 01:37:07 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232507AbiBSGfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Feb 2022 01:35:25 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44E76DD968
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 22:35:06 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id p9so19900964ejd.6
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 22:35:06 -0800 (PST)
+        with ESMTP id S230412AbiBSGhG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Feb 2022 01:37:06 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09EFEA740
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 22:36:45 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id gb39so19935560ejc.1
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 22:36:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=l3l1bXhe+uRNyFsTj89QPYOlzZzW4SGbiIHSoHI5d4w=;
-        b=nGy+HSqt8khhXuRx0Sir6/246sRRBuA91A5F7MpWnacunlTQWKed6EslB9t2k6XreW
-         USsc9vjzxs9jrAfvrLmricCzmMb0/5sfsuHShj6GlHTbTciCEAkLv+upCi0H08IwE/a3
-         IVplgY3v48QT4KLI5h5F9tlpjqySK7LPOg4z1S2VBcwHqId16X2lGm33CGBjiuuBKj7v
-         kf+yFmEdp+J3m8UrYX2zc3B9s5npMwEfyfno2aZLYjDrzxhk7kJRmVJo4y8TnztJOUOY
-         /y7asw0++RbaK5MKNuW3iwR+qnU8DQi9+DzWGWXfssJSPrHBj+Fz7J2S10ZxhSCnIAqe
-         PYTQ==
+        bh=RCv2CuWoy6pRn0/hEuYuXrtyzATbnyJJSOmIyNY8KBE=;
+        b=inqPR+f/vnJXfcQQH7r6mkARawWouMYPiIG0RDUIPt96JxJIT6mTAED2bELxc1oeeH
+         GwUYR3tIbd8MJSJX3duOT6frXX8R7k+smmaXLNpd0KRBpwMfWSx+bHIx0V1qPwubkkRL
+         Fdm0srmdPztgzYDTKSznQ37bHr/BBwghTj0JWrF8BSGUfSN8icZyyGrmXzDRXaskQrq+
+         t9d5P7T7Zq01YdKaUCGtgE2FWTtDhLQl0xks+CsB2gL7fhvFNS1p9C6T1ci+0Eo1q7K/
+         ylstkybxxRU/t7iggAIFW3sTf8Ac7N68JfCgU2tLhWbk3tv32bjnkD7z+laQ1pMGxpEY
+         XQWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=l3l1bXhe+uRNyFsTj89QPYOlzZzW4SGbiIHSoHI5d4w=;
-        b=AUK7WO6EPUSCstAtkRoTyv+hC62HoDkETTnnklvDyYYOPzp6Q7OI+IAhRJyw9VVlx6
-         he495z7EJv1Y3jXfLJ6Cvpm/mvzEN1mImj5qK1HsmPS4W8QwDaSZgninjZjVwLvzREMr
-         Av7A5iCVi47y8q2aJ2G9F5TW+mvirMofrpS1woQZKjQq485kMNmQYXr/AfgcClfCLeEn
-         VT/u06q1gNMZXqxv7b5CijmtJeF8pgY69OrrGp20McvwMOd1akHGGhb1upeFaRQ8C2uZ
-         T8RLd8ZHFjm4PAAao87SRJk5i3nr4fy90GawwwnR3oJPvnTotMJcggCKWqaEyvT4xntI
-         UpxA==
-X-Gm-Message-State: AOAM531OPJyodosLrn86Esu4V3ggmA93AQRfCVBRq1EOnUsNB4q92kG3
-        dchJsirA5ubP4lkAkRcILOZraz6wmPl1nw==
-X-Google-Smtp-Source: ABdhPJyIJ97T03QixPXcrR83SzD2uIHoan9izf+/qXHrP+ZyrRJoGeI2Q21yWvJDz0l874pc1d0eNA==
-X-Received: by 2002:a17:907:9956:b0:6cf:cd25:c5a7 with SMTP id kl22-20020a170907995600b006cfcd25c5a7mr8671251ejc.635.1645252504541;
-        Fri, 18 Feb 2022 22:35:04 -0800 (PST)
+        bh=RCv2CuWoy6pRn0/hEuYuXrtyzATbnyJJSOmIyNY8KBE=;
+        b=JlSyaSPCEUD743gqLcEtdK6O0hMfa5CvnpuEztVoL3nGD7r5GV/C04vzoI5FNFeiPZ
+         eros1me015Kn+808HkX8YTdnK/toK4p6Qg57XSUbN2Awy4CAcNFe6cV3fo5e/HF+PqoP
+         MV87LVqituV3QPOERdUneejr2yta2fMcRZYs9Z3DquCSMqtNx4XcRXEBhgudc+8Oayv7
+         DhOz0IIa460ILwYsQqlyKRHZciiV9cCrbq9ni6KsqKTYK2fGLRBVBU+i+9BZMhVEOgUO
+         z/p35xy0uZwLM3Vbz/2nUvf5HU051XYF5MOkb/flcr1ZZ9iLRNh8OjhAySn3r5rvfL8h
+         Ik9Q==
+X-Gm-Message-State: AOAM532QSx4eNhMDzdcYHlYcn2cS7o7gB/n82YHzJ9QkO06e6qiu9pFF
+        XnC4UXGnmucRWA+kIaVPLa9BRfD2eFYymA==
+X-Google-Smtp-Source: ABdhPJzh1epeLvYZ9yjBP6atUB+Ao6xd63Daloub7PW84dLo403YVTf4QcyKsot9sp7YqO0Ln6XSOg==
+X-Received: by 2002:a17:907:76fc:b0:6ce:a836:34a1 with SMTP id kg28-20020a17090776fc00b006cea83634a1mr9197463ejc.663.1645252604057;
+        Fri, 18 Feb 2022 22:36:44 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id q10sm2932123ejn.3.2022.02.18.22.35.03
+        by smtp.gmail.com with ESMTPSA id r10sm2947825ejy.148.2022.02.18.22.36.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Feb 2022 22:35:03 -0800 (PST)
+        Fri, 18 Feb 2022 22:36:43 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nLJKh-004pqW-7Y;
-        Sat, 19 Feb 2022 07:35:03 +0100
+        id 1nLJMJ-004puu-09;
+        Sat, 19 Feb 2022 07:36:43 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, me@ttaylorr.com, phillip.wood123@gmail.com,
@@ -59,14 +59,14 @@ Cc:     git@vger.kernel.org, me@ttaylorr.com, phillip.wood123@gmail.com,
         Jonathan Tan <jonathantanmy@google.com>,
         Christian Couder <christian.couder@gmail.com>,
         John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v10 3/4] cat-file: add remove_timestamp helper
-Date:   Sat, 19 Feb 2022 07:33:52 +0100
+Subject: Re: [PATCH v10 4/4] cat-file: add --batch-command mode
+Date:   Sat, 19 Feb 2022 07:35:30 +0100
 References: <pull.1212.v9.git.git.1645045157.gitgitgadget@gmail.com>
  <pull.1212.v10.git.git.1645208594.gitgitgadget@gmail.com>
- <bf74b6cd75bd886c1b5954693beeaccdfd2e51ec.1645208594.git.gitgitgadget@gmail.com>
+ <c6ea1214062381e2c669959e9084adead5600510.1645208594.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <bf74b6cd75bd886c1b5954693beeaccdfd2e51ec.1645208594.git.gitgitgadget@gmail.com>
-Message-ID: <220219.86a6ene548.gmgdl@evledraar.gmail.com>
+In-reply-to: <c6ea1214062381e2c669959e9084adead5600510.1645208594.git.gitgitgadget@gmail.com>
+Message-ID: <220219.865ypbe51h.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -77,89 +77,41 @@ X-Mailing-List: git@vger.kernel.org
 On Fri, Feb 18 2022, John Cai via GitGitGadget wrote:
 
 > From: John Cai <johncai86@gmail.com>
->
-> maybe_remove_timestamp() takes arguments, but it would be useful to have
-> a function that reads from stdin and strips the timestamp. This would
-> allow tests to pipe data into a function to remove timestamps, and
-> wouldn't have to always assign a variable. This is especially helpful
-> when the data is multiple lines.
->
-> Keep maybe_remove_timestamp() the same, but add a remove_timestamp
-> helper that reads from stdin.
->
-> The tests in the next patch will make use of this.
->
-> Signed-off-by: John Cai <johncai86@gmail.com>
-> ---
->  t/t1006-cat-file.sh | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index 145eee11df9..2d52851dadc 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -105,13 +105,18 @@ strlen () {
->  }
->  
->  maybe_remove_timestamp () {
-> -    if test -z "$2"; then
-> -        echo_without_newline "$1"
-> -    else
-> -	echo_without_newline "$(printf '%s\n' "$1" | sed -e 's/ [0-9][0-9]* [-+][0-9][0-9][0-9][0-9]$//')"
-> -    fi
-> +	if test -z "$2"; then
-> +		echo_without_newline "$1"
-> +	else
-> +		echo_without_newline "$(printf '%s\n' "$1" | remove_timestamp)"
-> +	fi
->  }
->  
-> +remove_timestamp () {
-> +	sed -e 's/ [0-9][0-9]* [-+][0-9][0-9][0-9][0-9]$//'
-> +}
+> [....]
+> +    for opt in --buffer --no-buffer
+> +    do
+> +	test -z "$content" ||
+> +		test_expect_success "--batch-command $opt output of $type content is correct" '
+> +		maybe_remove_timestamp "$batch_output" $no_ts >expect &&
+> +		maybe_remove_timestamp "$(test_write_lines "contents $sha1" |
+> +		git cat-file --batch-command $opt)" $no_ts >actual &&
+> +		test_cmp expect actual
+> +	'
 > +
+> [...]
+> +test_expect_success '--batch-command with multiple command calls gives correct format' '
+> +	remove_timestamp >expect <<-EOF &&
+> +	$hello_sha1 blob $hello_size
+> +	$hello_content
+> +	$commit_sha1 commit $commit_size
+> +	$commit_content
+> +	$tag_sha1 tag $tag_size
+> +	$tag_content
+> +	deadbeef missing
+> +	EOF
 > +
->  run_tests () {
->      type=$1
->      sha1=$2
+> +	git cat-file --batch-command --buffer >actual_raw <<-EOF &&
+> +	contents $hello_sha1
+> +	contents $commit_sha1
+> +	contents $tag_sha1
+> +	contents deadbeef
+> +	flush
+> +	EOF
+> +
+> +	remove_timestamp <actual_raw >actual &&
+> +	test_cmp expect actual
+> +'
 
-I may have missed some previous discussions, but is there a reason this
-echo_without_newline dance is needed? At this point this on top passes
-all tests for me on both dash and bash:
-
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 2d52851dadc..8266a939f99 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -104,18 +104,19 @@ strlen () {
-     echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
- }
- 
--maybe_remove_timestamp () {
--	if test -z "$2"; then
--		echo_without_newline "$1"
--	else
--		echo_without_newline "$(printf '%s\n' "$1" | remove_timestamp)"
--	fi
--}
--
- remove_timestamp () {
- 	sed -e 's/ [0-9][0-9]* [-+][0-9][0-9][0-9][0-9]$//'
- }
- 
-+maybe_remove_timestamp () {
-+	if test -n "$2"
-+	then
-+		echo "$1" | remove_timestamp
-+		return 0
-+	fi
-+
-+	echo "$1"
-+}
- 
- run_tests () {
-     type=$1
-
-The move is another comment, if we're adding a remove_timestamp() let's
-define it before maybe_remove_timestamp() which uses it, even though in
-this case we can get away with it...
+Re my comment on 3/4; I then tried my suggested change to
+maybe_remove_timestamp on this patch, and it also works on this
+commit...
