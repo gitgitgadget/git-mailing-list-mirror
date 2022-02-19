@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 756C5C433F5
-	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 05:52:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32F4FC433F5
+	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 06:04:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238592AbiBSFxH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Feb 2022 00:53:07 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36632 "EHLO
+        id S241337AbiBSGEq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Feb 2022 01:04:46 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236043AbiBSFxF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Feb 2022 00:53:05 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274EC1693AB
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 21:52:46 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id k25so19715596ejp.5
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 21:52:46 -0800 (PST)
+        with ESMTP id S232729AbiBSGEq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Feb 2022 01:04:46 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10AD650B32
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 22:04:28 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id p9so19795794ejd.6
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 22:04:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=t8JreeTypaNTbeltxweJS+3goo9gTgNhnGAZXoAQswM=;
-        b=m3JoAHVnVzzQuinJv05iu9I4PBR1V7Mz+F5WVb1zwJT0sqUflE6lqit2xaeP3URI5o
-         HT2X3JT9J6/wks39C6VM9aLGbj8/NtWqNiBire4j50Im4wFxExBlVbS7CKJuqfCN3MD3
-         nopmsZ+5ZAOjmwRQL6TwHuahVzoFiGs0xo6zRUCEGLoxUpsDMmEAm8jmJf1b5MZJ1Ina
-         7YVuGw5pbfnXzbxkjik/hnc9rHP/jiOvdns/SdbXQJaXILhJ972r28LOy0FV6sakI3Qi
-         Rw/YtR7qSEtp7jHJiWnY3D1/2sakeIkZr0sGR98tAQaeDxcc8dYqO9M537l7SSfepQxO
-         orMA==
+        bh=IPrO7hVm1KKy9OWMx7Dw1wCIIvqq65DDoCazk1A5kME=;
+        b=dymcNsXzNkFqr+5T3jIIskb8/fMNzryHG1XDjPSvGT8+XhQBxFvYuLkGPBDl5BGVw4
+         u6kCh68KGloxHNp1gZ1YvrQ94putnrDa8Vi7UoYTq5MaQ7EAb40Y/1qIAFpjVZ4BO/2y
+         nv9NCeUUQm1ttSTeyduEHVDIXSL1SJMKiKGe+f0XPIB9OSTs98aaHtPa2lRGgauTDhfR
+         s31slF3aDgaecePckpRzEtvuZtfeKnPvIckGhPy+wdodfN6U6ySAlH2ZxbE56tU+ruIX
+         zemjatE2uvy9dGraTJUWKshCIc8Qe+S/k6mcnVQRLgq60tbQaV8YVR8CQTuplcRyoBsB
+         mURw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=t8JreeTypaNTbeltxweJS+3goo9gTgNhnGAZXoAQswM=;
-        b=MhXgOREPIlkHCGF0pAdXjhneW+qVytuWE1gQ+MLeTOVpcIUtAOAv9wjFvgXWv+NIGX
-         xKE4Lp1A+Fk/lWa50xYUQtE59ZrrFQoxklKKuCuN3usyhqKlDD1OzzykScoNcBAkZyTv
-         tbev3OgwGRp+R+v4LmBhJ98umJYaYv8s02E2hxpJ4uJ7+K4Dv6eeImqnUVTuo+KIUk3a
-         BYRYLZE7v0bu7G/Ya92UCAn7kw4lg0PAjdzl6F9wxJpgp3yTAFD9YA8dhKoSNlOMvBl0
-         PicneUpmPX5h34GaN0Gtq2GtorCMnKvXFEcyB/z2i69DJQZWmcptNG2ccUpOktDOoaax
-         wSOA==
-X-Gm-Message-State: AOAM533arFY98Ns/wK9+Qs3G6cJPuuIMbAf4he8gHSTBxbu+azwZo7rY
-        bPvSp7CvYx9KYmZ9pEqj6s4=
-X-Google-Smtp-Source: ABdhPJwIVzMpl5Q2dGPpWA+3j8M92glG4vQ0JxzfBSCCjRh68pPCDOwxrkH33GAEN9yL3CxbKxig8A==
-X-Received: by 2002:a17:906:2a1b:b0:6ce:a15b:a561 with SMTP id j27-20020a1709062a1b00b006cea15ba561mr9163535eje.403.1645249964638;
-        Fri, 18 Feb 2022 21:52:44 -0800 (PST)
+        bh=IPrO7hVm1KKy9OWMx7Dw1wCIIvqq65DDoCazk1A5kME=;
+        b=mYBWsoWjc9qTrFAeEEw2sWJ9Og4t5Prfi+rBdDO7u2veNlHGqSJ6/hBOqw9GMivXdn
+         ZyykibF5U/8tc1HBarMs7XseM7NZSpDO2Qn5RX7/Uw8lgmCQFa95j5DzwNavAVkfoKlC
+         mqLEVKKryZDHhTgc8glLWFY9udUXMve6BeXhjsOeJ4VaVZSyp87ynn8LvFNrzUbQgquz
+         gSDeoK7z8qYruqqj1Xik9RW20JoVEhq9fMAoyXrGSomUjK/lzsWd29qfVp70yQUvMH5F
+         JkLx99QYGF8LhpLrIFB+E28q328iqhWtHqgCTUVKRnWwQxI4xzR9xqG/upU2gQwVytXO
+         1/Pg==
+X-Gm-Message-State: AOAM5330cvlcyTx2xsqlRWL072L9OQYM9iMKN3nCwVFyN7Iv9zWPI8Hh
+        Eb8VXsjqXIhFoP5sVMeDPtq2D81di2L61w==
+X-Google-Smtp-Source: ABdhPJyl08RwJbXiMuRB/W0WflqufreqSWpnhLlGuItGYxmWUEC8DExkiEoKmzJSpm7htsY87NR/JQ==
+X-Received: by 2002:a17:906:8457:b0:6cf:3c6:dbf3 with SMTP id e23-20020a170906845700b006cf03c6dbf3mr9227514ejy.286.1645250666403;
+        Fri, 18 Feb 2022 22:04:26 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id eo14sm5345372edb.46.2022.02.18.21.52.43
+        by smtp.gmail.com with ESMTPSA id x12sm5381222edv.57.2022.02.18.22.04.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Feb 2022 21:52:44 -0800 (PST)
+        Fri, 18 Feb 2022 22:04:25 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nLIfj-004ns2-Eb;
-        Sat, 19 Feb 2022 06:52:43 +0100
+        id 1nLIr2-004oOK-VD;
+        Sat, 19 Feb 2022 07:04:24 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Teng Long <dyroneteng@gmail.com>
 Cc:     Johannes.Schindelin@gmx.de, congdanhqx@gmail.com,
         git@vger.kernel.org, gitster@pobox.com, martin.agren@gmail.com,
         peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v11 11/13] ls-tree.c: introduce "--format" option
-Date:   Sat, 19 Feb 2022 06:44:29 +0100
+Subject: Re: [PATCH v11 08/13] ls-tree: slightly refactor `show_tree()`
+Date:   Sat, 19 Feb 2022 06:56:47 +0100
 References: <cover.1644319434.git.dyroneteng@gmail.com>
- <5936004f1386388740ded0208ebeb8c5d0c88ef2.1644319434.git.dyroneteng@gmail.com>
+ <41e8ed50476a5afd6009db1a69c7a39b04e038b0.1644319434.git.dyroneteng@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <5936004f1386388740ded0208ebeb8c5d0c88ef2.1644319434.git.dyroneteng@gmail.com>
-Message-ID: <220219.86r17ze72s.gmgdl@evledraar.gmail.com>
+In-reply-to: <41e8ed50476a5afd6009db1a69c7a39b04e038b0.1644319434.git.dyroneteng@gmail.com>
+Message-ID: <220219.86mtine6jb.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -72,64 +72,71 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Feb 08 2022, Teng Long wrote:
 
-> +	if (*start != '(')
-> +		die(_("bad ls-tree format: as '%s'"), start);
+> This is a non-functional change, we use a new int "shown_fields" to mark
+> which columns to output, and `parse_shown_fields()` to calculate the
+> value of "shown_fields".
+>
+> This has the advantage of making the show_tree logic simpler and more
+> readable, as well as making it easier to extend new options (for example,
+> if we want to add a "--object-only" option, we just need to add a similar
+> "if (shown_fields == FIELD_OBJECT_NAME)" short-circuit logic in
+> "show_tree()").
 
-My typo surely, but I think I menat "as of" not just "as" there:
+I think this and the 09/13 really don't make sense in combination.
 
-    $ ./git ls-tree --format="%[blah)" -r HEAD
-    fatal: bad ls-tree format: as of '[blah)'
+Now, I clearly prefer to put options for the command into its own little
+struct to pass around, I think it makes for easier reading than the
+globals you end up with.
+
+But tastes differ, and some built-ins use one, and some the other
+pattern.
+
+But this is really the worst of both worlds, let's just pick one or the
+other, not effectively some some ptions in that struct in 09/13, and
+some in globals here...
+
+> +static unsigned int shown_fields;
+> +#define FIELD_PATH_NAME 1
+> +#define FIELD_SIZE (1 << 1)
+> +#define FIELD_OBJECT_NAME (1 << 2)
+> +#define FIELD_TYPE (1 << 3)
+> +#define FIELD_MODE (1 << 4)
+> +#define FIELD_DEFAULT 29 /* 11101 size is not shown to output by default */
+
+Why do we need some FIELD_DEFAULT here as opposed to just having it by
+an enum field with a valu of 0?
+
+> +enum {
+> +	MODE_UNSPECIFIED = 0,
+> +	MODE_NAME_ONLY,
+> +	MODE_LONG,
+> +};
+> +
+> +static int cmdmode = MODE_UNSPECIFIED;
+
+let's name this enum type and use it, see e.g. builtin/help.c's "static
+enum help_action" for an example.
 
 > +
-> +	end = strchr(start + 1, ')');
-> +	if (!end)
-> +		die(_("bad ls-tree format: element '%s' does not end in ')'"), start);
-
-Or actually:
-
-    $ ./git ls-tree --format="%(blah]" -r HEAD
-    fatal: bad ls-tree format: element '(blah]' does not end in ')'
-
-We could rather say for the first one:
-
-    $ ./git ls-tree --format="%[blah)" -r HEAD
-    fatal: bad ls-tree format: element '[blah)' does not start with '('
-
-> [...]
-> +		errlen = (unsigned long)len;
-> +		die(_("bad ls-tree format: %%%.*s"), errlen, start);
-
-I wondered why that %% is there (and I probably wrote this in the first
-place, I didn't check:). But it makes sense, because strbuf_expand()
-skips past the % for us, and we'd like to say e.g. %(foobar) here, not
-(foobar) or whatever.
-
-> new file mode 100755
-> index 0000000000..e08c83dc47
-> --- /dev/null
-> +++ b/t/t3104-ls-tree-format.sh
-> @@ -0,0 +1,81 @@
-> +#!/bin/sh
+> +static int parse_shown_fields(void)
+> +{
+> +	if (cmdmode == MODE_NAME_ONLY) {
+> +		shown_fields = FIELD_PATH_NAME;
+> +		return 0;
+> +	}
 > +
-> +test_description='ls-tree --format'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=true
-
-I notice now after commenting on your 13/13 that you should add
-TEST_PASSES_SANITIZE_LEAK=true to it (assuming it doesn't leak, which I
-don't think it does, but test with SANITIZE=leak first!)
-
-> +test_ls_tree_format () {
-> +	format=$1 &&
-> +	opts=$2 &&
-> +	fmtopts=$3 &&
-> +	shift 2 &&
-> +	git ls-tree $opts -r HEAD >expect.raw &&
-> +	sed "s/^/> /" >expect <expect.raw &&
-> +	git ls-tree --format="> $format" -r $fmtopts HEAD >actual &&
-> +	test_cmp expect actual
+> +	if (!ls_options || (ls_options & LS_RECURSIVE)
+> +	    || (ls_options & LS_SHOW_TREES)
+> +	    || (ls_options & LS_TREE_ONLY))
+> +		shown_fields = FIELD_DEFAULT;
+> +	if (cmdmode == MODE_LONG)
+> +		shown_fields = FIELD_LONG_DEFAULT;
+> +	return 1;
 > +}
 
-I also forgot I wrote this, but also per my comment on 13/13 you can
-just add your tests added in 13/13 to this file, then we'll assert that
--r etc. work the same for both.
+I still don't really get why we can't just use the one MODE_*
+here. E.g. doesn't MODE_LONG map to FIELD_LONG_DEFAULT, MODE_NAME_ONLY
+to FIELD_PATH_NAME etc?
+
+Is this all so we can do "shown_fields & FIELD_SIZE" in show_default()
+as opposed to e.g. checking "default format or long format?" ?
