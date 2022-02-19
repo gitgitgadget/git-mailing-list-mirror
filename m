@@ -2,81 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7A84C433F5
-	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 03:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44F98C433F5
+	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 04:08:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241272AbiBSDvu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Feb 2022 22:51:50 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:45978 "EHLO
+        id S241287AbiBSEIZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Feb 2022 23:08:25 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235431AbiBSDvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Feb 2022 22:51:49 -0500
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57CA13F89D
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 19:51:29 -0800 (PST)
-Received: by mail-qv1-xf33.google.com with SMTP id h9so18683205qvm.0
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 19:51:29 -0800 (PST)
+        with ESMTP id S241282AbiBSEIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Feb 2022 23:08:23 -0500
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7663F255A1
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 20:08:05 -0800 (PST)
+Received: by mail-qv1-xf29.google.com with SMTP id x3so18681831qvd.8
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 20:08:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=oCaJlbNJqKfANTaWA2yTErbn5Gd2yxZo8AVq3AVrZtw=;
-        b=ZSsRf7XT0OVy8tHz8qjDJdtzom/Q1UcahcnCultUL82knT1Fvsdg2uQVmaTnUU1b89
-         3ElkaHUfx6ufuUJyKyVZ029SETtkONBAVksTHVMi2JXthtOc/9Zqv2GCvBlQfAM0Yavb
-         4GZNf/2DZ3ANT+U9jfD5zchlONRZ68o03oa4TAd88luiLSu08vRwYvOxsZKrf2CLILw1
-         vBps5BbnyDNY/Q2yitjHSApcWFOY0XBibF2r75NDTz+T4WMzVrzpCkhfI6JVWGDlkH5h
-         fsSyaMN7KvYU+X/wIKMtHy2TZ2KwHFUg2ymGy2HuWBCaIrkT2KMq++F6D6iMrAfk7jPq
-         xbuw==
+        bh=jrWo15vzbVEGAIwFMNhXXu0WKaI1u60vtBq0r64i5gg=;
+        b=pOCkwgGfu5byRegHqDgyDN44vyBvZWT3jjw4+D1UotHUmGYWBjH39PmxreIWah6dqY
+         9z6fOSiOppNW7Kwt7Licqk/L/s/6lg9S2aowHqjF8gfgDP3hXIGPY2JWoVIlS+q78TQS
+         buojzoeiZg9+jXaj5MYO3YM6ajLe2R98JsSSep+J0U3NW6jY5o6rhQM8mKK8AO/U9E3t
+         rkfkl+Kp/dh6mihWxHqDkxwczzGjUtC6KzEvMwxVGTbE7ZRD/50tVwB4xD++Ke6Q+sLF
+         g7P8nqBTh9cZW4zAR7rtIW2K6OOA2N0UcGqdXbd4B+zGE4ksMu9/Gevk5rUxT4027dDP
+         uypw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to;
-        bh=oCaJlbNJqKfANTaWA2yTErbn5Gd2yxZo8AVq3AVrZtw=;
-        b=NFLTnxBkKWjkIbGArfmuzazknWe81wetpiqs3ZFQxciAPJGH5qAhWFD0CjSITLIa1A
-         /LqXrZc/9Zifaey3P6FQTdx9+jbN0bLVUc47wr0im4fUAFeqO/AHEv7baN5E2ttP9mAW
-         Z89lRG34GTUeyR9EMht1B8FccIzAZSrVDzzqPaNHMUaN0RnLFj9WgyxlIEL/xfP69B3r
-         nStdh/ObvEiwvMZz+O61dLo0ccKpF3wr/5FA06BCqAHEJTeLq+1hHRUh5xn1dS3XN/i5
-         nshCIgxX4je/+lyaw2l4vr+tQbq6eMPdWCzUWSB2+lFgTTDEQRBHEwbX/DmaBIO3K8ER
-         apCw==
-X-Gm-Message-State: AOAM532DOxD8L0n04EflPojqFf7BkXfKcKvzV6eIMllk02CdMPGHZRBF
-        Djoto+uuOGTY49K+/s4uIBvQpbcEbMF3bQ==
-X-Google-Smtp-Source: ABdhPJwXAl7/8ztxKGAgjoVsdePjkOmdLB+sj+RGyASAiH7HDPVxnXYbfL8Rc7qmubNxmYVN1K8u/w==
-X-Received: by 2002:a05:622a:13ca:b0:2dc:4f1:fafd with SMTP id p10-20020a05622a13ca00b002dc04f1fafdmr9644466qtk.423.1645242688491;
-        Fri, 18 Feb 2022 19:51:28 -0800 (PST)
+        bh=jrWo15vzbVEGAIwFMNhXXu0WKaI1u60vtBq0r64i5gg=;
+        b=tkbKrW6RNLKFSLJSB5T1lCu9uBLxLHPGtJDxzB10rpC1tIXZwd+l5LFhCiQGNXzHYf
+         rHTBoEAADnBQVTMhNdlFzjeysvk9PQaAaghoksdZB+nEj4OMJ7RIsqkSv4GLnzEgb5xZ
+         WpEivcyhcDQvb9ORrWc2jVhXMC0dybCFsmGPL72EEs+uXv+zDTAnR32zf6DCsLdmgql9
+         QrUgv5BMcQvZ0LNQd/7alO6mz7fosl0Fjp1sGQ1Nbj87tegxphR1QQ2srTNex2YljrSi
+         khb5oCz7k3QyM2roMLo8R5nFLlgftl45xFbOvPR99pyBghNbPKXbc6YWQGRSgAK9uG6l
+         egnw==
+X-Gm-Message-State: AOAM5310/kTWwOWT6P7imqQHY4tXC0rlzehRgrVo/QCJnco8D5QLlY+o
+        kh0Y+IlklZrEF40E4T0mjgJBmc4UtdrIUw==
+X-Google-Smtp-Source: ABdhPJzFIzQz0jz1iJTS+paInAZwY/QhZXh2lQD8YXpzJHblACqr35Oc1kmr6SGfMlW+3HNsbzclWA==
+X-Received: by 2002:a0c:ff21:0:b0:42c:42f:6c24 with SMTP id x1-20020a0cff21000000b0042c042f6c24mr8306657qvt.14.1645243684631;
+        Fri, 18 Feb 2022 20:08:04 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id u17sm23544094qkp.90.2022.02.18.19.51.28
+        by smtp.gmail.com with ESMTPSA id 13sm26419916qtz.87.2022.02.18.20.08.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Feb 2022 19:51:28 -0800 (PST)
-Date:   Fri, 18 Feb 2022 22:51:27 -0500
+        Fri, 18 Feb 2022 20:08:04 -0800 (PST)
+Date:   Fri, 18 Feb 2022 23:08:03 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/4] test-lib: add XSAN_OPTIONS, inherit [AL]SAN_OPTIONS
-Message-ID: <YhBpP0idXDB2a0Sy@nand.local>
-References: <cover-0.4-00000000000-20220218T205753Z-avarab@gmail.com>
- <patch-1.4-75c8f7a719c-20220218T205753Z-avarab@gmail.com>
- <xmqqley7yd6e.fsf@gitster.g>
- <YhBY8oD/xJZUQsj9@nand.local>
- <220219.86ley7fu3k.gmgdl@evledraar.gmail.com>
- <YhBclvZUYcsTabye@nand.local>
- <220219.86czjjftde.gmgdl@evledraar.gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH 2/2] hooks: fix a TOCTOU in "did we run a hook?" heuristic
+Message-ID: <YhBtI6PY5s/nC8og@nand.local>
+References: <cover-0.2-00000000000-20220218T203834Z-avarab@gmail.com>
+ <patch-2.2-d01d088073b-20220218T203834Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <220219.86czjjftde.gmgdl@evledraar.gmail.com>
+In-Reply-To: <patch-2.2-d01d088073b-20220218T203834Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 19, 2022 at 04:02:23AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> Once you get to tweaking some more advanced options it makes sense to
-> share a lot for both. One change I have locally on top of this is e.g.:
+On Fri, Feb 18, 2022 at 09:43:52PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index b9ed0374e30..bc5d34bc31f 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -725,11 +725,13 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  	int clean_message_contents = (cleanup_mode != COMMIT_MSG_CLEANUP_NONE);
+>  	int old_display_comment_prefix;
+>  	int merge_contains_scissors = 0;
+> +	int invoked_hook;
+>
+>  	/* This checks and barfs if author is badly specified */
+>  	determine_author_info(author_ident);
+>
+> -	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit", NULL))
+> +	if (!no_verify && run_commit_hook(use_editor, index_file, &invoked_hook,
+> +					  "pre-commit", NULL))
+>  		return 0;
+>
+>  	if (squash_message) {
+> @@ -1052,10 +1054,10 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  		return 0;
+>  	}
+>
+> -	if (!no_verify && hook_exists("pre-commit")) {
+> +	if (!no_verify && invoked_hook) {
+>  		/*
+> -		 * Re-read the index as pre-commit hook could have updated it,
+> -		 * and write it out as a tree.  We must do this before we invoke
+> +		 * Re-read the index as the pre-commit-commit hook was invoked
+> +		 * and could have updated it. We must do this before we invoke
+>  		 * the editor and after we invoke run_status above.
+>  		 */
+>  		discard_cache();
 
-Makes sense. I run the tests with sanitization quite often, but rarely
-use any fanciful options like you.
+Sanity checking my own understating of this race: if we ran the
+pre-commit hook and it modified the index, but hook_exists() returns
+false later on (e.g., because the hook itself went away, the directory
+became unreadable, etc.), then we won't call discard_cache() when we
+should have?
+
+If so, OK. This definitely seems like a pretty niche race, but
+independent of that I think the change here is an improvement in
+readability, and makes it clearer that calling discard_cache() depends
+on whether or not we *ran* the pre-commit hook, not whether we (still)
+*have* a pre-commit hook.
 
 Thanks,
 Taylor
