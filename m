@@ -2,71 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E75DC433F5
-	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 05:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5924CC433EF
+	for <git@archiver.kernel.org>; Sat, 19 Feb 2022 05:47:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234299AbiBSFbg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Feb 2022 00:31:36 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52464 "EHLO
+        id S235927AbiBSFmf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Feb 2022 00:42:35 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229839AbiBSFbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Feb 2022 00:31:34 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9815C19FACE
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 21:31:15 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id s24so12499090edr.5
-        for <git@vger.kernel.org>; Fri, 18 Feb 2022 21:31:15 -0800 (PST)
+        with ESMTP id S229839AbiBSFme (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Feb 2022 00:42:34 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B8773B02B
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 21:42:15 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id lw4so19659399ejb.12
+        for <git@vger.kernel.org>; Fri, 18 Feb 2022 21:42:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Ap3wPzC57A+zZJjgQuJSkMQuNDAmVo6dmLk6dMK08Io=;
-        b=Kxx5g41MpC3kkpA0RptMGIN6gW+iic25YD1W+Gh5dpv9astZAulTAfCA0V2b+OPCdv
-         jg/ZDFt6E6dTIn9IvVTUuCPXDgKFFoBmRcXdf/xs69UQkn4W/cFOWKwtANCWoFuYbhll
-         2Zhm79WiT/7il6EbihpOrILzIG04/ktxeVBt4SY2yf6SMfnAkfOXOqUf/H1aXyD0JYEu
-         SBIsGpNC9fhugvV+p9NSadYsUntCRM81CgymMJeAeWy4XP3BrVsBPgAlkuTfw4nV8gcR
-         u8u1CXWyspS2MXXflTUEwUmhQ5fNRzqNQQhPfwYStv0JbNWLFGYedllNxkbA8Q20A2mi
-         Q/4g==
+         :message-id:mime-version;
+        bh=BVmA+PP2JVhZV3UQ3fkuY4upVlZKkr5jLKAXl7il9ng=;
+        b=YbGeworHX0TSPaXE595CgJMDdCswU2Z1iEfWmcVrmzFK1fupzSO1A+jkqOYadN8TLH
+         NjP/PwOXsMm9OT3WCBT0mC5LUUS+xamHzrk7/e5Bvs84OgiGP0W0u/IBkqa+GV64PTsz
+         iYbEo5SQZpH5ntJThzdDbkYm1I2R3JwdzL2LPlHCFHwTWAys3hnWOnkH8TFQbDOV2FS/
+         iV79bk8yiBecJyIIu/jQbHD505LYHxq6atWxvvR+aXr6fmxXM4ziTK1YsBaFfVK/JyR4
+         ARxVRmLtTRFmcBwT4PO7zQjfLjWiUFBrlQYWw1JrYGiv03zg+2SC1ZbiYV5QfHFwJ8IX
+         guYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Ap3wPzC57A+zZJjgQuJSkMQuNDAmVo6dmLk6dMK08Io=;
-        b=Qr2K+KyM6Hg0N7Jseij4iUAO4bcMF/j573kLOVDZ7Y1UFqRVnfRlBH1KeH0Bgy8Mld
-         K1o4Q5ZRZCQ2RAUCW94cMPLuwfti50FmovvqOaKgmAWwGrGeMnuVQbjEGFbr375ld3Vd
-         o5maf+v51S45GTTOiMZA7qFpuY2HFU41im7FN43zpJYleZsBHylfDFPfluXWiHtgRkvV
-         khB8pEYPIL+QMIWD3IrRKMCaMJ26G9ZKjS+XifjThfSFBi6/I4cI5HzGhtfJ7MiIhPos
-         m8zEYYf8IqiQAEdYWgx6gjLWTO/ZCqFUecgxUtsvGdWXa/YRBQuzbuxZAqEQBiZczLRJ
-         ampw==
-X-Gm-Message-State: AOAM530v3HJdinkoqcZ7yaA7w24P+7do1x4uBRbNNCicvi45kfqGWGnT
-        tszGIl1JEh+/qYjDkLjb2dI=
-X-Google-Smtp-Source: ABdhPJxGGcFY1BfXBF0TcapCEcHFpvgbwu3uFg8kYLL6J32rFtdEJAHV4bOEBtZFB+na3WGsQ227sQ==
-X-Received: by 2002:aa7:c98a:0:b0:410:b8fa:6faa with SMTP id c10-20020aa7c98a000000b00410b8fa6faamr11700094edt.117.1645248673724;
-        Fri, 18 Feb 2022 21:31:13 -0800 (PST)
+         :in-reply-to:message-id:mime-version;
+        bh=BVmA+PP2JVhZV3UQ3fkuY4upVlZKkr5jLKAXl7il9ng=;
+        b=DtpGlpZTsdjQY5SzsiiE4xTu6df7l4G8O4AVJgCPj7DJM1OwvP9gzRdU5l1pSJKCgC
+         4/qdbSPwDM/0IkBqFS+72YC+GVuWYFbuc3S14wyrJxrsBmkO4t9YZfeB4j3vp/Lv/eDd
+         ix3EuWW0C8n4/cfV7x1lWKzavmCoOb6VjxdbgE+MzvdgtBpQxQwyepTcc/G+9HDCceN2
+         1eFxgluAlZCY4hPSFV5vRgZnrE/tdeKCr5XOj3Vsn/kCQ0nH0hJzCU1ePaicc5JKZQym
+         P4xWcUMjzDe5A3/gnBURuFHZZd860dg5qldahEb95MFykWj5tXatQesBnVP3tul1cuXv
+         gjRA==
+X-Gm-Message-State: AOAM532aA5gXBO8mVV7J+WPnEXKDi9aM4LwNj4pkvT39yznpTXxCP0Nr
+        Zs+rX+PPEtNYJMOT3lkW+R8=
+X-Google-Smtp-Source: ABdhPJxwen/T0sV+A+Zb8H8WVCe3SGUSJaGvKiKxlKGnm5kFjbeROaJtlQEv5wMDj0vyufq1Qgge3w==
+X-Received: by 2002:a17:906:2bd7:b0:6cd:f89d:c828 with SMTP id n23-20020a1709062bd700b006cdf89dc828mr9155785ejg.232.1645249333502;
+        Fri, 18 Feb 2022 21:42:13 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id fy37sm2722329ejc.219.2022.02.18.21.31.12
+        by smtp.gmail.com with ESMTPSA id ha3sm2889532ejb.157.2022.02.18.21.42.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Feb 2022 21:31:12 -0800 (PST)
+        Fri, 18 Feb 2022 21:42:13 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nLIKu-004mdb-53;
-        Sat, 19 Feb 2022 06:31:12 +0100
+        id 1nLIVY-004nOT-4k;
+        Sat, 19 Feb 2022 06:42:12 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Teng Long <dyroneteng@gmail.com>
 Cc:     Johannes.Schindelin@gmx.de, congdanhqx@gmail.com,
         git@vger.kernel.org, gitster@pobox.com, martin.agren@gmail.com,
         peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v11 13/13] ls-tree.c: support --object-only option for
- "git-ls-tree"
-Date:   Sat, 19 Feb 2022 06:24:36 +0100
+Subject: Re: [PATCH v11 12/13] ls-tree: introduce function "fast_path()"
+Date:   Sat, 19 Feb 2022 06:32:21 +0100
 References: <cover.1644319434.git.dyroneteng@gmail.com>
- <e6d98f2560281e46e4ef2121692a54f796919b59.1644319434.git.dyroneteng@gmail.com>
+ <6d264977491b3645292bba5f91479ab1623e8b80.1644319434.git.dyroneteng@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <e6d98f2560281e46e4ef2121692a54f796919b59.1644319434.git.dyroneteng@gmail.com>
-Message-ID: <220219.86zgmne82n.gmgdl@evledraar.gmail.com>
+In-reply-to: <6d264977491b3645292bba5f91479ab1623e8b80.1644319434.git.dyroneteng@gmail.com>
+Message-ID: <220219.86v8xbe7kb.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -74,279 +72,115 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Feb 08 2022, Teng Long wrote:
 
-> We usually pipe the output from `git ls-trees` to tools like
-> `sed` or `cut` when we only want to extract some fields.
+> The generic "show_tree_fmt()" is slower than "show_tree()", so
+> we want to take the fast path if possible.
 >
-> When we want only the pathname component, we can pass
-> `--name-only` option to omit such a pipeline, but there are no
-> options for extracting other fields.
+> when "--format=<format>" is passed, "fast_path()" will determine
+> whether to use "show_tree()" or insist on using "show_tree_fmt()"
+> by a try of finding out if the built-int format is hit.
 >
-> Teach the "--object-only" option to the command to only show the
-> object name. This option cannot be used together with
-> "--name-only" or "--long" , they are mutually exclusive (actually
-> "--name-only" and "--long" can be combined together before, this
-> commit by the way fix this bug).
+> This commit take out the related codes from "cmd_ls_tree()" and
+> package them into a new funtion "fast_path()".
 >
-> In terms of performance, there is no loss comparing to the
-> "master" (2ae0a9c), here are the
-> results of the performance tests in my environment based on linux
-> repository:
+> Explain it a little bit further, whether fast_path is hit or not,
+> the final correctness should not break. Abstracting a separate method
+> helps improve the readability of "cmd_ls_tree()" and the cohesiveness
+> and extensibility of fast path logic.
 
-I think given the re-arrangement in this v11 it would make sense to
-change the commit messageto say:
+This whole commit message sounds a bit like "we're introducing this fast
+path", but really it got added in 11/13, and this is just a refactoring
+to split that into a function to slightly reduce the size of
+cmd_ls_tree() itself.
 
- * This is an alias for --format=3D%(objectname)
- * Per benchmark XYZ it's faster
+Which I really don't mind, but it would be better if the commit message
+said so, e.g.:
 
-I.e. this:
+    In a preceding commit a fast path selection was added to cmd_ls_tree(),
+    split it into a utility function because ...
 
->     $hyperfine --warmup=3D10 "/opt/git/master/bin/git ls-tree -r HEAD"
->     Benchmark 1: /opt/git/master/bin/git ls-tree -r HEAD
->     Time (mean =C2=B1 =CF=83):     105.8 ms =C2=B1   2.7 ms    [User: 85.=
-7 ms, System: 20.0 ms]
->     Range (min =E2=80=A6 max):   101.5 ms =E2=80=A6 111.3 ms    28 runs
->
->     $hyperfine --warmup=3D10 "/opt/git/ls-tree-oid-only/bin/git ls-tree -=
-r HEAD"
->     Benchmark 1: /opt/git/ls-tree-oid-only/bin/git ls-tree -r HEAD
->     Time (mean =C2=B1 =CF=83):     105.0 ms =C2=B1   3.0 ms    [User: 83.=
-7 ms, System: 21.2 ms]
->     Range (min =E2=80=A6 max):    99.3 ms =E2=80=A6 109.5 ms    27 runs
->
->     $hyperfine --warmup=3D10 "/opt/git/master/bin/git ls-tree -r -l HEAD"
->     Benchmark 1: /opt/git/master/bin/git ls-tree -r -l HEAD
->     Time (mean =C2=B1 =CF=83):     337.4 ms =C2=B1  10.9 ms    [User: 308=
-.3 ms, System: 29.0 ms]
->     Range (min =E2=80=A6 max):   323.0 ms =E2=80=A6 355.0 ms    10 runs
->
->     $hyperfine --warmup=3D10 "/opt/git/ls-tree-oid-only/bin/git ls-tree -=
-r -l HEAD"
->     Benchmark 1: /opt/git/ls-tree-oid-only/bin/git ls-tree -r -l HEAD
->     Time (mean =C2=B1 =CF=83):     337.6 ms =C2=B1   6.2 ms    [User: 309=
-.4 ms, System: 28.1 ms]
->     Range (min =E2=80=A6 max):   330.4 ms =E2=80=A6 349.9 ms    10 runs
+But I got stuck on "..." because I couldn't find a reason :)
 
-Is surely more relevant if compared to master & that --format.
+I.e. in 13/13 this isn't used at all, except by adding a new brace arm
+to it, but then it could still live in cmd_ls_tree().
+
+Personally I think the pre-image is a bit easier to read, but then again
+I wrote that so I'm biased. I don't mind changing this, but structurally
+for the series it seems better to squash it in if you'd want to keep it.
 
 > Signed-off-by: Teng Long <dyroneteng@gmail.com>
 > ---
->  Documentation/git-ls-tree.txt |  7 ++++-
->  builtin/ls-tree.c             | 16 ++++++++++-
->  t/t3104-ls-tree-format.sh     | 12 +++++++++
->  t/t3105-ls-tree-oid.sh        | 51 +++++++++++++++++++++++++++++++++++
->  4 files changed, 84 insertions(+), 2 deletions(-)
->  create mode 100755 t/t3105-ls-tree-oid.sh
+>  builtin/ls-tree.c | 23 ++++++++++++++---------
+>  1 file changed, 14 insertions(+), 9 deletions(-)
 >
-> diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
-> index db29a9efb5..21045dd163 100644
-> --- a/Documentation/git-ls-tree.txt
-> +++ b/Documentation/git-ls-tree.txt
-> @@ -10,7 +10,7 @@ SYNOPSIS
->  --------
->  [verse]
->  'git ls-tree' [-d] [-r] [-t] [-l] [-z]
-> -	    [--name-only] [--name-status] [--full-name] [--full-tree] [--abbrev=
-[=3D<n>]] [--format=3D<format>]
-> +	    [--name-only] [--name-status] [--object-only] [--full-name] [--full=
--tree] [--abbrev[=3D<n>]] [--format=3D<format>]
->  	    <tree-ish> [<path>...]
->=20=20
->  DESCRIPTION
-> @@ -59,6 +59,11 @@ OPTIONS
->  --name-only::
->  --name-status::
->  	List only filenames (instead of the "long" output), one per line.
-> +	Cannot be combined with `--object-only`.
-> +
-> +--object-only::
-> +	List only names of the objects, one per line. Cannot be combined
-> +	with `--name-only` or `--name-status`.
-
-Hrm, I regret that in my version of v11 11/13 I didn't add to all of these =
-something like:
-=20=20=20=20
-    This is equivalent to specifying `--format=3D...`, but for both this
-    option and that exact format the command takes a hand-optimized
-    codepath instead of going through the generic formatting mechanism.
-
-Or whatever, and perhaps have everything after ", but for[...]" part of
-the generic FORMAT section (no need to say it for every option).
-=20=20=20=20
->=20=20
->  --abbrev[=3D<n>]::
->  	Instead of showing the full 40-byte hexadecimal object
 > diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-> index ba96bcf602..9819a24186 100644
+> index 1c71e5d543..ba96bcf602 100644
 > --- a/builtin/ls-tree.c
 > +++ b/builtin/ls-tree.c
-> @@ -20,6 +20,7 @@ static int line_termination =3D '\n';
->  #define LS_SHOW_TREES (1 << 2)
->  #define LS_NAME_ONLY (1 << 3)
->  #define LS_SHOW_SIZE (1 << 4)
-> +#define LS_OBJECT_ONLY (1 << 5)
->  static int abbrev;
->  static int ls_options;
->  static struct pathspec pathspec;
-> @@ -37,6 +38,7 @@ static const char *format;
->  static const char *default_format =3D "%(objectmode) %(objecttype) %(obj=
-ectname)%x09%(path)";
->  static const char *long_format =3D "%(objectmode) %(objecttype) %(object=
-name) %(objectsize:padded)%x09%(path)";
->  static const char *name_only_format =3D "%(path)";
-> +static const char *object_only_format =3D "%(objectname)";
->  struct show_tree_data {
->  	unsigned mode;
->  	enum object_type type;
-> @@ -53,6 +55,7 @@ static const  char * const ls_tree_usage[] =3D {
->  enum {
->  	MODE_UNSPECIFIED =3D 0,
->  	MODE_NAME_ONLY,
-> +	MODE_OBJECT_ONLY,
->  	MODE_LONG,
->  };
->=20=20
-> @@ -67,6 +70,8 @@ static int fast_path(void){
->  	} else if (!strcmp(format, name_only_format)) {
->  		shown_fields =3D FIELD_PATH_NAME;
->  		return 1;
-> +	} else if (!strcmp(format, object_only_format)) {
-> +		shown_fields =3D FIELD_OBJECT_NAME;
->  	}
->  	return 0;
->  }
-> @@ -143,7 +148,10 @@ static int parse_shown_fields(void)
->  		shown_fields =3D FIELD_PATH_NAME;
->  		return 0;
->  	}
-> -
-> +	if (cmdmode =3D=3D MODE_OBJECT_ONLY) {
-> +		shown_fields =3D FIELD_OBJECT_NAME;
-> +		return 0;
+> @@ -58,6 +58,19 @@ enum {
+>  
+>  static int cmdmode = MODE_UNSPECIFIED;
+>  
+> +static int fast_path(void){
+> +	if (!strcmp(format, default_format)) {
+> +		return 1;
+> +	} else if (!strcmp(format, long_format)) {
+> +		shown_fields = shown_fields | FIELD_SIZE;
+> +		return 1;
+> +	} else if (!strcmp(format, name_only_format)) {
+> +		shown_fields = FIELD_PATH_NAME;
+> +		return 1;
 > +	}
->  	if (!ls_options || (ls_options & LS_RECURSIVE)
->  	    || (ls_options & LS_SHOW_TREES)
->  	    || (ls_options & LS_TREE_ONLY))
-> @@ -267,6 +275,10 @@ static int show_tree(const struct object_id *oid, st=
-ruct strbuf *base,
->  	if (type =3D=3D OBJ_BLOB && (ls_options & LS_TREE_ONLY))
->  		return 0;
->=20=20
-> +	if (shown_fields =3D=3D FIELD_OBJECT_NAME) {
-> +		printf("%s%c", find_unique_abbrev(oid, abbrev), line_termination);
-> +		return recurse;
-> +	}
->  	if (shown_fields =3D=3D FIELD_PATH_NAME) {
->  		baselen =3D base->len;
->  		strbuf_addstr(base, pathname);
-> @@ -304,6 +316,8 @@ int cmd_ls_tree(int argc, const char **argv, const ch=
-ar *prefix)
->  			    MODE_NAME_ONLY),
->  		OPT_CMDMODE(0, "name-status", &cmdmode, N_("list only filenames"),
->  			    MODE_NAME_ONLY),
-> +		OPT_CMDMODE(0, "object-only", &cmdmode, N_("list only objects"),
-> +			    MODE_OBJECT_ONLY),
->  		OPT_SET_INT(0, "full-name", &chomp_prefix,
->  			    N_("use full path names"), 0),
->  		OPT_BOOL(0, "full-tree", &full_tree,
-> diff --git a/t/t3104-ls-tree-format.sh b/t/t3104-ls-tree-format.sh
-> index e08c83dc47..c0ffc8e1c3 100755
-> --- a/t/t3104-ls-tree-format.sh
-> +++ b/t/t3104-ls-tree-format.sh
-> @@ -46,6 +46,12 @@ test_expect_success 'ls-tree --format=3D<name-only-lik=
-e>' '
->  		"--name-only"
->  '
+> +	return 0;
+> +}
 
-This looks much better/less complex than in earlier rounds.
+Just in terms of arranging things if you add a static function and it's
+only used in one other function, here in cmd_ls_tree(), it's more
+readable to add it immediately before that function.
 
-> +test_expect_success 'ls-tree --format=3D<object-only-like>' '
-> +	test_ls_tree_format \
-> +		"%(objectname)" \
-> +		"--object-only"
-> +'
-> +
->  test_expect_success 'ls-tree combine --format=3D<default-like> and -t' '
->  	test_ls_tree_format \
->  	"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
-> @@ -78,4 +84,10 @@ test_expect_success 'ls-tree hit fast-path with --form=
-at=3D<name-only-like>' '
->  	git ls-tree --format=3D"%(path)" -r HEAD >actual &&
->  	test_cmp expect actual
->  '
-> +
-> +test_expect_success 'ls-tree hit fast-path with --format=3D<object-only-=
-like>' '
-> +	git ls-tree -r --object-only HEAD >expect &&
-> +	git ls-tree --format=3D"%(objectname)" -r HEAD >actual &&
-> +	test_cmp expect actual
-> +'
->  test_done
+>  static void expand_objectsize(struct strbuf *line, const struct object_id *oid,
+>  			      const enum object_type type, unsigned int padded)
+>  {
+> @@ -350,15 +363,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+>  	 * The generic show_tree_fmt() is slower than show_tree(), so
+>  	 * take the fast path if possible.
+>  	 */
+> -	if (format && (!strcmp(format, default_format))) {
+> -		fn = show_tree;
+> -	} else if (format && (!strcmp(format, long_format))) {
+> -		shown_fields = shown_fields | FIELD_SIZE;
+> -		fn = show_tree;
+> -	} else if (format && (!strcmp(format, name_only_format))) {
+> -		shown_fields = FIELD_PATH_NAME;
+> -		fn = show_tree;
+> -	} else if (format)
+> +	if (format && !fast_path())
+>  		fn = show_tree_fmt;
+>  
+>  	return !!read_tree(the_repository, tree, &pathspec, fn, NULL);
 
-So, you and I came up with independent tests for these two.
+Also in terms of structure wouldn't it be better to end up with this:
 
-I wonder if this can be re-arranged so that we can share the tests, and
-perhaps test all for both the --format and --object-onnly in some
-for-loop, or maybe it's not worth it.
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 9819a241869..47f7e2136b0 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -355,8 +355,6 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 	if (get_oid(argv[0], &oid))
+ 		die("Not a valid object name %s", argv[0]);
+ 
+-	parse_shown_fields();
+-
+ 	/*
+ 	 * show_recursive() rolls its own matching code and is
+ 	 * generally ignorant of 'struct pathspec'. The magic mask
+@@ -373,6 +371,8 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 	tree = parse_tree_indirect(&oid);
+ 	if (!tree)
+ 		die("not a tree object");
++
++	parse_shown_fields();
+ 	/*
+ 	 * The generic show_tree_fmt() is slower than show_tree(), so
+ 	 * take the fast path if possible.
 
-> diff --git a/t/t3105-ls-tree-oid.sh b/t/t3105-ls-tree-oid.sh
-> new file mode 100755
-> index 0000000000..992bb26bfa
-> --- /dev/null
-> +++ b/t/t3105-ls-tree-oid.sh
-> @@ -0,0 +1,51 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'git ls-tree objects handling.'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup' '
-> +test_commit A &&
-> +test_commit B &&
-> +mkdir -p C &&
-> +test_commit C/D.txt &&
-> +find *.txt path* \( -type f -o -type l \) -print |
-> +xargs git update-index --add &&
-> +tree=3D$(git write-tree) &&
-> +echo $tree
-> +'
-> +
-> +test_expect_success 'usage: --object-only' '
-> +git ls-tree --object-only $tree >current &&
-> +git ls-tree $tree >result &&
-> +cut -f1 result | cut -d " " -f3 >expected &&
-> +test_cmp current expected
-> +'
-> +
-> +test_expect_success 'usage: --object-only with -r' '
-> +git ls-tree --object-only -r $tree >current &&
-> +git ls-tree -r $tree >result &&
-> +cut -f1 result | cut -d " " -f3 >expected &&
-> +test_cmp current expected
-> +'
-> +
-> +test_expect_success 'usage: --object-only with --abbrev' '
-> +git ls-tree --object-only --abbrev=3D6 $tree >current &&
-> +git ls-tree --abbrev=3D6 $tree >result &&
-> +cut -f1 result | cut -d " " -f3 >expected &&
-> +test_cmp current expected
-> +'
-> +
-> +test_expect_success 'usage: incompatible options: --name-only with --obj=
-ect-only' '
-> +test_expect_code 129 git ls-tree --object-only --name-only $tree
-> +'
-> +
-> +test_expect_success 'usage: incompatible options: --name-status with --o=
-bject-only' '
-> +test_expect_code 129 git ls-tree --object-only --name-status $tree
-> +'
-> +
-> +test_expect_success 'usage: incompatible options: --long with --object-o=
-nly' '
-> +test_expect_code 129 git ls-tree --object-only --long $tree
-> +'
-> +
-> +test_done
-
-This whole test block seems to have lost its indentation since the v10.
+I.e. have the whole "shown_fields" decisions be near one another.
