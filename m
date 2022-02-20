@@ -2,88 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8872C433F5
-	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 17:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9193CC433F5
+	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 17:54:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244267AbiBTRJu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 12:09:50 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33548 "EHLO
+        id S239393AbiBTRy4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 12:54:56 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbiBTRJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 12:09:48 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE7574551C
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:09:26 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id a8so27267378ejc.8
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:09:26 -0800 (PST)
+        with ESMTP id S232701AbiBTRyx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 12:54:53 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39E814D9EA
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:54:31 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id k1so23274615wrd.8
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:54:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=TwAMoo3jHt7Uj41gunJIRPFV6ttZ9acB5WAFt9r5SnI=;
-        b=nHGpgu+PoCkT/CgjSCHCqxeTy0j7jsAFSQ0uw++j/7VpXhnOOHa6CA9vXNhAqJu3J0
-         iwTUhmLBsx4QjDknt1gmP+xWPswJc0/fHxhnLPw9sQZbDXqkORHBviZ8n6UYjCDiN77h
-         /+5LpA53wuLOE882slUZa/6FwNJX/PNIWwBxU76Z1c2i9zXEddPcxdvVTltVz9Euqci9
-         j3TfHs0jimQe09rpHJDaFHMLiUKMLrqhhGpuQLzDhRSoBt0frE9VPZ4uxk0cISD7V5Ja
-         AqsfTz0Lg8rYVBPvD2CX3QAzuL7LVQOdnCH01/WTm9Aks1KisVwRGMbSYZgV6ZcquMIb
-         DBHg==
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=sLYNOEnMmtGba/Ow8Cj+woXbGSlqY4h1q2tBYfUoSR8=;
+        b=BOLYMa+Xzglc18tgp27umykRBmOzAVJnPh5RSH6qlma7m1+plz1K34WZE6Rsty663Z
+         3iCJQgyMl4N5oMY9o2rfWJ0WZfn9JD66PZSJICMYUrUmNNIVh8K25rr9MeA6yBj28x/R
+         ho7KQ0tOn6YqJvUfRPEAPQ3Izhzd9/fq3AIXxYmkOoyJfpJ+E9RMlandlcilu/Kai/6D
+         7EzjGk8lZFmUKu0UzIQlWIaDNVp90Yr6qjXXW1aYVbBCUQIGzJefhipQRqqwK7TyqSzw
+         iPlpvByp6nOtVGQMc6t++141KfjraVlGKo18DEgADSKVLO9zzKJEse54VCc5iys8ehG4
+         dKzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=TwAMoo3jHt7Uj41gunJIRPFV6ttZ9acB5WAFt9r5SnI=;
-        b=5koNXzXe/7dbkjqkUYNtNmCTxuKBWeR/4hwLO/9fFWaQ+9DuqQ+x18anPAHMtsTLah
-         AKr3lWV3XgtTBSjyoOsLL5KxXXiXPiFxLb/SmqryQhN1XtOsHnUV6jHN0tzDH7FzDch/
-         KVwvgKcf2WvlIQ4XJSmOzCClbGIFeoiXhYdXzJvyHInl9vTOVNK/JiEKXx/DCeHRoNxq
-         bJgAJ0E+0jjKJqK92ANe+skOiYPs4kLcvu3ew0TGPUCYHkMu1dcWT0K1A0/6hQ2HGgt+
-         6Vxwsl64Hazzr6zH5fxSnYRCoT5dJwyahriPVD5E4kMUOaYDssc2UIAVASDYqzNxQHHa
-         b9Sg==
-X-Gm-Message-State: AOAM531byzITH9p4fkjM1dKDU8Nl9PRxvUfJPUwr3S6cnBFdZvARlpuS
-        5uFRDEvqIE4tg5Qfe29xnByEtWNMTxs2efH/S/2gIpt5YyRVRQ==
-X-Google-Smtp-Source: ABdhPJzdV4ZedG2XcmIOp4lNl6RsP/Tdqbb0QcVZbs7D3TWWM1Uapxax90uiVbF7N92Er8rf/LgeQdmO8vKGM78VD+E=
-X-Received: by 2002:a17:907:334c:b0:6cd:76b7:3948 with SMTP id
- yr12-20020a170907334c00b006cd76b73948mr14132391ejb.55.1645376964972; Sun, 20
- Feb 2022 09:09:24 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=sLYNOEnMmtGba/Ow8Cj+woXbGSlqY4h1q2tBYfUoSR8=;
+        b=hiPMyHLFSot/eK2sKpPWh0FzLTIBhJcSeNAPTk1OtdryfpGqTA6wMqcNwGSIbWlUUf
+         d1qDrR2IYJZnE8QyYOj3x3Uygdg8ALNI1uPYYOrcPww/vyVBit6QmG9DqejpOvhdnJs1
+         +9FC0p9qcCcY8Pwnpg+eOYxNM66r7YprUOUlpd9+TRQGQN1NGV1EuRXROk99cawZe2O5
+         3/xb2UNMs70hcBeE2CSbyfcz/s0zB1OeE6foJ7gIunqL1e1pmpPSV3aIPloISy8Idcd9
+         aAevYjse2QL7b+IPptm142qt2EHuo/tmjlV26doWI9sWkhrJOMGI0oyzSyvBOSRd/Ebm
+         MlRw==
+X-Gm-Message-State: AOAM533PSlFMfKTocYbxp6BVgQIlXsrbW2vgW4Z0x66rCALWSJak+jPs
+        qmmnlZF9Zd/SLdvPxFjAmrndO2xOlXg=
+X-Google-Smtp-Source: ABdhPJwFyFY/wEeLqY8KGweEfxbQgkjdo5/hJICh2EDIa8ci5/sTJngRXMnDDk+iry87/WkpNgSQYg==
+X-Received: by 2002:a5d:54c8:0:b0:1e3:3944:637f with SMTP id x8-20020a5d54c8000000b001e33944637fmr12983898wrv.100.1645379669017;
+        Sun, 20 Feb 2022 09:54:29 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o10sm40407089wrc.98.2022.02.20.09.54.28
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 20 Feb 2022 09:54:28 -0800 (PST)
+Message-Id: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 20 Feb 2022 17:54:16 +0000
+Subject: [PATCH 00/11] Updates to worktree code and docs
 MIME-Version: 1.0
-From:   Shubham Mishra <shivam828787@gmail.com>
-Date:   Sun, 20 Feb 2022 22:39:13 +0530
-Message-ID: <CAC316V7M8bziK207tuFbctAqDdz+GC8OGaxM+B0earJtqDvBSg@mail.gmail.com>
-Subject: [GSOC] Student Introduction - Reachability bitmap Improvements
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
 To:     git@vger.kernel.org
-Cc:     me@ttaylorr.com
-Content-Type: text/plain; charset="UTF-8"
+Cc:     "mailto:sunshine@sunshineco.com" 
+        <[sunshine@sunshineco.com]@vger.kernel.org>,
+        "mailto:gitster@pobox.com" <[gitster@pobox.com]@vger.kernel.org>,
+        "Elijah Newren [ ]" <newren@gmail.com>,
+        "=?UTF-8?Q?Jean-No=C3=ABl?= AVILA [ ]" <jn.avila@free.fr>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-I am Interested in Project - "Reachability bitmap Improvements".
+This is built on top of ds/sparse-checkout-requires-per-worktree-config and
+includes some forward fixes for comments from that series.
 
-I am Shubham from India, I am a 2021 graduate from Delhi University
-and currently working as a Software Engineer at Microsoft. I am Open
-source enthusiastic, I have been contributing to the Open Source
-projects since a while. I was GSoC 2020 and SoK 2020 Student with KDE,
-I was Linux Foundation mentee where I contributed to one of Anuket's
-projects.
+ * Patch 1 combines two translatable messages into one. (Thanks, Jean-Noël)
+ * Patches 2-4 extract methods from the already-busy add_worktree() method.
+   (Thanks, Eric)
+ * Patches 5-11 update git-worktree.txt to use 'worktree' over 'working
+   tree'. This involves some rewrapping of the paragraphs, so the diffs are
+   not obviously just a find and replace. I split the changes mostly by
+   section of the file to keep the diffs from being too large.
 
-I always find myself fascinated by the softwares like linux kernel,
-git, or simple commands like ping. Which impacts the life of almost
-every software developer around the globe.
+Thanks, -Stolee
 
-I am going through the blog [1] and I love the technique we are using
-to fasten the queries. I have still not decided which one idea to pick
-out of many mentioned under "Reachability bitmap Improvements" but I
-think I will figure that out soon.
-Can someone please tell me if a micro-project - "avoid pipes in git
-related commands in test scripts" mentioned [2] is still available to
-take? I have also gone through - MyFirstContribution.txt and
-CodingGuidelines.txt docs and am looking forward to start sending
-patches :). If any of you think I need to know something more, I will
-be glad to get your suggestions.
+Derrick Stolee (11):
+  worktree: combine two translatable messages
+  worktree: extract copy_filtered_worktree_config()
+  worktree: extract copy_sparse_checkout()
+  worktree: extract checkout_worktree()
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+
+ Documentation/git-worktree.txt | 271 ++++++++++++++++-----------------
+ builtin/worktree.c             | 138 +++++++++--------
+ 2 files changed, 210 insertions(+), 199 deletions(-)
 
 
-[1] https://github.blog/2015-09-22-counting-objects
-[2] https://git.github.io/SoC-2022-Microprojects/
-
-(Sorry, if you received this mail multiple times, my previous attempts
-failed due to html in gmail as default)
-Thanks,
-Shubham
+base-commit: 3ce113827287079dced9aaf9c5d1e1734ecaa265
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1154%2Fderrickstolee%2Fworktree-forward-fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1154/derrickstolee/worktree-forward-fixes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1154
+-- 
+gitgitgadget
