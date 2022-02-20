@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FD79C433F5
-	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 17:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 942C0C433EF
+	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 17:54:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244371AbiBTRzK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 12:55:10 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35244 "EHLO
+        id S244424AbiBTRzM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 12:55:12 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242712AbiBTRy7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 12:54:59 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B44527F2
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:54:38 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id i14so23240101wrc.10
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:54:38 -0800 (PST)
+        with ESMTP id S243094AbiBTRzA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 12:55:00 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BB41527F4
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:54:39 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id i14so23240171wrc.10
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:54:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=y4G3BuvzZ27u99w4kESd3Mky5xmGxr3j5yjlpmhWy70=;
-        b=pl8dQvbTmxWjR5x/zkpp7XFPWlntn/xGTIddU7RsYX6DAxMkqFNGFG+gJ/XYCB9xab
-         cdjJXPKrXrFdndEsh3iFCm4i2a3MiIXQMFVM6p5fu3dfu8EUWr1ZnkiOZXd5Vr8Hi/CG
-         ZLcpBLlGUh9N3IJtoMNT662k8qAgpcuE2mGUpEZrH9AgtXcSbh1MO4B0KwdKKB5nYYZa
-         T4b0bRRaIQ/2B7kKmuVAtl6+GP1jRTNbbXWl5weQvkRUQx8v4tKsHHEEGfZCXz7fTT77
-         a7c7KBlUJjNgj3FOg7f1Gv5Xq/HXmMuLhkBFEVSvu0yXSk87gdaWpvAP9fFxAUCSd/DY
-         iOHA==
+        bh=0xrbPnWhZW4u2QEiFDiwjjeWdO8w4GIc7RxbHMBZa+E=;
+        b=nCtju7FdI4Aze3yDX2AjvCo2DXg0gkrYvs15jJAECMnPMYoTGuV7U8wSL0HOFc+c81
+         9dcYSKsJeuLvjUnEbnLsYmg0wCIgX5GX7wb1iLMHAQ+cCW/JlE3wUSeVs2t7UojxaEbl
+         JY5D2HUlorGJlm170m8t8QHoVBgpLrcCZQ3swYLpjFDhNSKWQsX1Uz4xyuOTlSDdYMtg
+         rPc5iQRL31mmJp4RugaQqQJEpjoCbmH1FAPW7lHzMp/g+yKysjegWEWNCeIb9+yEzzss
+         KIZ9Jzb+mMB75XurpCi8mvirtzNtYeqL+4I7D4D3c0LeFb/CXocfj9WwOyg+ZIMsgp+d
+         oi2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=y4G3BuvzZ27u99w4kESd3Mky5xmGxr3j5yjlpmhWy70=;
-        b=jGBJzbr6jbH8fuyQr5pWEzVifG49eGqObiPTDRGMdsNgcyxfCrAjXlGPOEXLnMaOya
-         SSoGezzsfKZlun6wFrpVTyRa3QJd4WhN0uJvXgGmDYQrdXKfb1CU6ZVPSkmu1/ZRy/zZ
-         CbufeUFKSVfAQIXNguoq+aPRFGyNveeotQev5+s4G+Oy0+MmwQJS9NruQVA489yhscom
-         iL9XwhcXJDYMOJn+IDaVQ+WiVrD95Ts/f3Jz7R2ohYQnV4Y4rvmANl3jxfA4MKshXM2L
-         RPN6EMQWcrokYzJKwZPfN+7JE1vpUghN/lIEGFo1UleTX85TXzISFUDnJp/JxrrbkfhV
-         f/Yw==
-X-Gm-Message-State: AOAM532RfwA2uShaSZnLWL5MjsXBQkBYvoP+7j4QaifihlOl8QDCrxl7
-        kgbfs9ZFpkS5l8bGp5naoNk+Q18uljs=
-X-Google-Smtp-Source: ABdhPJyY4dEJnTeLoPenX20kdl39j/RhhiGGkXCaek5jF8F4uz/30aHeDqFTOAGiVxgew9gOUkKs5g==
-X-Received: by 2002:a05:6000:1e0d:b0:1e4:bb5d:4bd6 with SMTP id bj13-20020a0560001e0d00b001e4bb5d4bd6mr13200812wrb.676.1645379676589;
-        Sun, 20 Feb 2022 09:54:36 -0800 (PST)
+        bh=0xrbPnWhZW4u2QEiFDiwjjeWdO8w4GIc7RxbHMBZa+E=;
+        b=vYm4Aeuj9Id3Jk7TvhHzw25UyLxvK57BlMxIJ1E+plh7LxiDoEdP1ZrXyrO7lf+Weq
+         H4y5nhKZrgn4eHWcTSrHVeHZmJh+CY1Rxc4zs8hV/nIdQ5dBcjHUBUSr6ce3FujdtJjJ
+         +10JWCGLTD1o6Qkgj3mNyz/eWRUaYEofHJd9L5dQsApLw+IOZz6VCwn5KiIIoEgfhVtd
+         sfKuLrJ1mp9qQLy2lOCRUuKaHKxRO9Xz1n7WguJDiQDM5+YkTmt1Fdm+JEEX+QHcl9mY
+         Y+Q/X8hu5B1Sa2urCd67jE1WSYBZbABuEBpU0EECQDcNHUYD34O0Y6jE57d1wJvW39co
+         Rf2w==
+X-Gm-Message-State: AOAM532m8ci+Clrcd/UbLkM+WNCjUR5T12ErgoG2Ogpwe9XF11Li3pBc
+        npZ5/R8Cs9nMJaaBUTJeqDxtoEIY2zg=
+X-Google-Smtp-Source: ABdhPJwICpAXYlC7UZoG2BED/Azqrin8/0e/Cy89iM2QdTaIiJT84HXFzgQL9oFSqskcbbRRgaN8RQ==
+X-Received: by 2002:adf:f1d2:0:b0:1e4:aef2:76a8 with SMTP id z18-20020adff1d2000000b001e4aef276a8mr12671555wro.445.1645379677720;
+        Sun, 20 Feb 2022 09:54:37 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w18sm30341951wrl.62.2022.02.20.09.54.35
+        by smtp.gmail.com with ESMTPSA id n19-20020a05600c4f9300b0037c06fe68casm5504373wmq.44.2022.02.20.09.54.36
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Feb 2022 09:54:35 -0800 (PST)
-Message-Id: <e7e579d2995288de13a2328e592e61f2b6dfaf63.1645379667.git.gitgitgadget@gmail.com>
+        Sun, 20 Feb 2022 09:54:37 -0800 (PST)
+Message-Id: <23e74c87116175924bfc389eb07fa96b4040fa0d.1645379667.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
 References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 20 Feb 2022 17:54:24 +0000
-Subject: [PATCH 08/11] worktree: use 'worktree' over 'working tree'
+Date:   Sun, 20 Feb 2022 17:54:25 +0000
+Subject: [PATCH 09/11] worktree: use 'worktree' over 'working tree'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,62 +76,58 @@ It is helpful to distinguish between a 'working tree' and a 'worktree'.
 A worktree contains a working tree plus additional metadata. This
 metadata includes per-worktree refs and worktree-specific config.
 
-This is the fourth of multiple changes to git-worktree.txt, restricted
-to the REFS section.
-
-This section previously described "per working tree" refs but they are
-now replaced with "per-worktree" refs, which matches the definition in
-glossary-content.txt.
+This is the fifth of multiple changes to git-worktree.txt, restricted to
+the CONFIGURATION FILE section.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-worktree.txt | 31 +++++++++++++++----------------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ Documentation/git-worktree.txt | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 10021c85e77..54a2c335fd5 100644
+index 54a2c335fd5..8821e56c6ec 100644
 --- a/Documentation/git-worktree.txt
 +++ b/Documentation/git-worktree.txt
-@@ -255,24 +255,23 @@ have two worktrees, at `/abc/def/ghi` and `/abc/def/ggg`, then `ghi` or
+@@ -283,12 +283,12 @@ which will handle refs correctly.
  
- REFS
- ----
--In multiple working trees, some refs may be shared between all working
--trees and some refs are local. One example is `HEAD` which is different for each
--working tree. This section is about the sharing rules and how to access
--refs of one working tree from another.
--
--In general, all pseudo refs are per working tree and all refs starting
--with `refs/` are shared. Pseudo refs are ones like `HEAD` which are
--directly under `$GIT_DIR` instead of inside `$GIT_DIR/refs`. There are
--exceptions, however: refs inside `refs/bisect` and `refs/worktree` are not
--shared.
--
--Refs that are per working tree can still be accessed from another
--working tree via two special paths, `main-worktree` and `worktrees`. The
--former gives access to per-working tree refs of the main working tree,
--while the latter to all linked working trees.
-+In multiple worktrees, some refs may be shared between all worktrees and
-+some refs are local. One example is `HEAD` which is different for each
-+worktree. This section is about the sharing rules and how to access
-+refs of one worktree from another.
-+
-+In general, all pseudo refs are per-worktree and all refs starting with
-+`refs/` are shared. Pseudo refs are ones like `HEAD` which are directly
-+under `$GIT_DIR` instead of inside `$GIT_DIR/refs`. There are exceptions,
-+however: refs inside `refs/bisect` and `refs/worktree` are not shared.
-+
-+Refs that are per-worktree can still be accessed from another worktree via
-+two special paths, `main-worktree` and `worktrees`. The former gives
-+access to per-worktree refs of the main worktree, while the latter to all
-+linked worktrees.
+ CONFIGURATION FILE
+ ------------------
+-By default, the repository `config` file is shared across all working
+-trees. If the config variables `core.bare` or `core.worktree` are
+-present in the common config file and `extensions.worktreeConfig` is
+-disabled, then they will be applied to the main working tree only.
++By default, the repository `config` file is shared across all worktrees.
++If the config variables `core.bare` or `core.worktree` are present in the
++common config file and `extensions.worktreeConfig` is disabled, then they
++will be applied to the main worktree only.
  
- For example, `main-worktree/HEAD` or `main-worktree/refs/bisect/good`
--resolve to the same value as the main working tree's `HEAD` and
-+resolve to the same value as the main worktree's `HEAD` and
- `refs/bisect/good` respectively. Similarly, `worktrees/foo/HEAD` or
- `worktrees/bar/refs/bisect/bad` are the same as
- `$GIT_COMMON_DIR/worktrees/foo/HEAD` and
+-In order to have configuration specific to working trees, you can turn
++In order to have configuration specific to worktrees, you can turn
+ on the `worktreeConfig` extension, e.g.:
+ 
+ ------------
+@@ -302,16 +302,16 @@ versions will refuse to access repositories with this extension.
+ 
+ Note that in this file, the exception for `core.bare` and `core.worktree`
+ is gone. If they exist in `$GIT_DIR/config`, you must move
+-them to the `config.worktree` of the main working tree. You may also
+-take this opportunity to review and move other configuration that you
+-do not want to share to all working trees:
++them to the `config.worktree` of the main worktree. You may also take this
++opportunity to review and move other configuration that you do not want to
++share to all worktrees:
+ 
+  - `core.worktree` should never be shared.
+ 
+  - `core.bare` should not be shared if the value is `core.bare=true`.
+ 
+- - `core.sparseCheckout` is recommended per working tree, unless you
+-   are sure you always use sparse checkout for all working trees.
++ - `core.sparseCheckout` is recommended per worktree, unless you are sure
++   you always use sparse checkout for all worktrees.
+ 
+ See the documentation of `extensions.worktreeConfig` in
+ linkgit:git-config[1] for more details.
 -- 
 gitgitgadget
 
