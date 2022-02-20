@@ -2,140 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFFE5C433EF
-	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 22:31:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3515FC433EF
+	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 22:37:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242815AbiBTWcN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 17:32:13 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:54278 "EHLO
+        id S243751AbiBTWhh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 17:37:37 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242065AbiBTWcM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 17:32:12 -0500
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7583DE9A
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 14:31:49 -0800 (PST)
-Received: by mail-io1-xd29.google.com with SMTP id r7so8565269iot.3
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 14:31:49 -0800 (PST)
+        with ESMTP id S230144AbiBTWhh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 17:37:37 -0500
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B36F40A27
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 14:37:15 -0800 (PST)
+Received: by mail-io1-xd2c.google.com with SMTP id 195so3779450iou.0
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 14:37:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=cD+r4rFe7UeKri/8lrw7TgrlXa9c9Yyz/CQUfCB1Buo=;
-        b=4b4IiUm0niSgHRBTpd9OSPuqMwmYatI8Lx/lXSDT7PiY2JSuReBV/9V0sJTRctoplZ
-         eKULgEsTaBY65p6LakXurr+76Yl8Jcigaj/YNaBk7MZqYVkHjlaeHkaoqwkzUNHArREm
-         P89XbsXJPqYfYX8YI9E6Fkka3lD7LknLHFn94XpzjxIpW/TUm6gmwBTkMiYXe1qIhStv
-         33qgmWt5E62Ax+wAQ5mfuAbAqrG2wEnlvshOcSwS95rqwwwxKqGhzfhjH7reFg4GrM5U
-         P8MrPqNgxMDiGgq9tY7mLC2dntbJ1/Of5t3a48ASEbW9EZcchShW1eAGcw38hp5Yn7qk
-         zsfg==
+        bh=s4eF32V4L7XafqH+00PItQNdI9rL7SGS5/ImA9GG+Og=;
+        b=Juo1zpvTSZ9CwfVc8eVbjD5YkmQWKMzYQizsbdb90tT5jEZNGkkQa1csMvsvj9bEz3
+         t+rgDK4lqVZHF/qsEcU77HlktaOQc/brxSauepz8KJBNsAb5tRCQPhQg+aJvLQz39Z7b
+         Yl+SeGMJYeOy+VcFDZQqz2GtjAq9gKNaKQDp2wvHYqNYIcCn8KvsEn/KfFwO9Jijv1AF
+         vyjWmLA7aMAgbaHxl+Gd6OwZu7YW+I2i4XoH3YHsoURs0MhGOkRUlyjFL416dxguFQng
+         f0ehK4bGURz5a4Fekrrp0w/JSr6b+e/X2cZXvKWLro15MP3iNcsHK7HLzCnmulpLy7kV
+         jwPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=cD+r4rFe7UeKri/8lrw7TgrlXa9c9Yyz/CQUfCB1Buo=;
-        b=oQJIjLdOghGsMi6E45fLEJFaeFnmmA4ibmO/pA4+jolfKydq+saHyzss0fMRwj0Ikg
-         bpzpPC3/kyOl8KpXrqwApxDsM1iV21nzZDjlAvg/NeOkekx5NTWMezRETogZpZnMe4e0
-         XPz+N9b+u3A6Iqmg0L30HsXV6J5nknx0lwKmCWABVlbqKWm3qkS3jIkUpevKRLnlUarD
-         WeWj3VfJJSKNF/CE52C7X/IQnl1s9JtfqT/ZuH4RcLVhhaQCKp55ZoJwApbV01wMmGzw
-         czl6DLS8jhgau7whaqrZJcELtIKLwkqTmcEK0CBf1tlvJJYRpF5R1wVCoSxYT2ALZesV
-         4sQQ==
-X-Gm-Message-State: AOAM530kvdG4Qd62YN25JfvOejLUROuVXqdmhug40UFXoot7EsBwCmaj
-        ZRUeRTqlBwr0c17CK7Y9ItN6LBJUpyY7TXOT
-X-Google-Smtp-Source: ABdhPJwyyRX44ahrq28D0rALPUPakNBgc63YF9eQ8dw3whxp2SXPlwvB6lgL2/BVDtKz9e7U439x0w==
-X-Received: by 2002:a5d:8508:0:b0:62f:1fc2:d5d2 with SMTP id q8-20020a5d8508000000b0062f1fc2d5d2mr13305403ion.13.1645396308844;
-        Sun, 20 Feb 2022 14:31:48 -0800 (PST)
+        bh=s4eF32V4L7XafqH+00PItQNdI9rL7SGS5/ImA9GG+Og=;
+        b=jvP29qny9R/xXuGA0Y3NLTwdES/ic0L3aKa4AY8WowoMR7K24m8TmuwCgZnfIqkwZ2
+         WzbbMRRhhJukwWWGbX4n9osrlLv7t9Kt75TgxfhmTkxTyrAv99/rON9nlr9h3KSkUmt6
+         8byxLcaOTyruORxkcxlHBlYlSVYAtV/VhSHwBYPNR0DGgB/d2fu4WHmMbBhY7vxh8PR6
+         apBNWCfEldjOyw8JsvsogPQHTXojNZDBNoxYtQ/Usz2bkPqYSZQ3v1S1cdofknlIYcpv
+         gry5C0PuoFAqNcEO1bIp6L+rY8NHzvNZggM6frpRsLbyhufgERIIKD8MQSg3GGwDOb8j
+         wybg==
+X-Gm-Message-State: AOAM530FfIzVaUI7jYZHXOJsQHmiRKG9BBqMfJE1/v2iBIwwgiH85Fpg
+        +/eShaxcqLRln6RybYVrEcSQWViZSXHVBssL
+X-Google-Smtp-Source: ABdhPJxSJ6PJfHuz2b37dvZAfWMDhxy/x/PTDr8RAa51agclDucfKflhK4x85KsgAoMpXfUX4loEJw==
+X-Received: by 2002:a02:aa85:0:b0:314:c152:4c89 with SMTP id u5-20020a02aa85000000b00314c1524c89mr6915818jai.93.1645396634771;
+        Sun, 20 Feb 2022 14:37:14 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s15sm1410478ilq.66.2022.02.20.14.31.48
+        by smtp.gmail.com with ESMTPSA id i6sm1532457ioj.46.2022.02.20.14.37.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Feb 2022 14:31:48 -0800 (PST)
-Date:   Sun, 20 Feb 2022 17:31:48 -0500
+        Sun, 20 Feb 2022 14:37:13 -0800 (PST)
+Date:   Sun, 20 Feb 2022 17:37:13 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 09/11] worktree: use 'worktree' over 'working tree'
-Message-ID: <YhLBVJ9guBF/9/A0@nand.local>
+Subject: Re: [PATCH 11/11] worktree: use 'worktree' over 'working tree'
+Message-ID: <YhLCmWlmf+9MbECN@nand.local>
 References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
- <23e74c87116175924bfc389eb07fa96b4040fa0d.1645379667.git.gitgitgadget@gmail.com>
+ <91773337675b05b0c0e323211899c64d5b8102e6.1645379667.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <23e74c87116175924bfc389eb07fa96b4040fa0d.1645379667.git.gitgitgadget@gmail.com>
+In-Reply-To: <91773337675b05b0c0e323211899c64d5b8102e6.1645379667.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 20, 2022 at 05:54:25PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> It is helpful to distinguish between a 'working tree' and a 'worktree'.
-> A worktree contains a working tree plus additional metadata. This
-> metadata includes per-worktree refs and worktree-specific config.
->
-> This is the fifth of multiple changes to git-worktree.txt, restricted to
-> the CONFIGURATION FILE section.
->
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  Documentation/git-worktree.txt | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
->
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-> index 54a2c335fd5..8821e56c6ec 100644
-> --- a/Documentation/git-worktree.txt
-> +++ b/Documentation/git-worktree.txt
-> @@ -283,12 +283,12 @@ which will handle refs correctly.
->
->  CONFIGURATION FILE
->  ------------------
-> -By default, the repository `config` file is shared across all working
-> -trees. If the config variables `core.bare` or `core.worktree` are
-> -present in the common config file and `extensions.worktreeConfig` is
-> -disabled, then they will be applied to the main working tree only.
-> +By default, the repository `config` file is shared across all worktrees.
-> +If the config variables `core.bare` or `core.worktree` are present in the
-> +common config file and `extensions.worktreeConfig` is disabled, then they
-> +will be applied to the main worktree only.
->
-> -In order to have configuration specific to working trees, you can turn
-> +In order to have configuration specific to worktrees, you can turn
+On Sun, Feb 20, 2022 at 05:54:27PM +0000, Derrick Stolee via GitGitGadget wrote:
+> @@ -404,14 +404,14 @@ $ git worktree list --verbose
+>  /path/to/linked-worktree              abcd1234 [master]
+>  /path/to/locked-worktree-no-reason    abcd5678 (detached HEAD) locked
+>  /path/to/locked-worktree-with-reason  1234abcd (brancha)
+> -	locked: working tree path is mounted on a portable device
+> +	locked: worktree path is mounted on a portable device
 
-Also not the fault of this patch, but I wonder if this would be more
-clearly worded as:
+I thought this might have been an over-zealous find-and-replace, since I
+had assumed that the "locked: working tree path ..." message came from
+Git. But my assumption was wrong, and this is the `<reason>` in `git
+worktree --reason=<reason> <worktree>`.
 
-    In order to have worktree-specific configuration, you can [...].
+So it makes sense to update here along with the rest of these other
+instances.
 
->  on the `worktreeConfig` extension, e.g.:
+>  /path/to/prunable-worktree            5678abc1 (detached HEAD)
+>  	prunable: gitdir file points to non-existent location
+>  ------------
+>
+>  Note that the annotation is moved to the next line if the additional
+>  information is available, otherwise it stays on the same line as the
+> -working tree itself.
+> +worktree itself.
+>
+>  Porcelain Format
+>  ~~~~~~~~~~~~~~~~
+> @@ -420,7 +420,7 @@ label and value separated by a single space.  Boolean attributes (like `bare`
+>  and `detached`) are listed as a label only, and are present only
+>  if the value is true.  Some attributes (like `locked`) can be listed as a label
+>  only or with a value depending upon whether a reason is available.  The first
+> -attribute of a working tree is always `worktree`, an empty line indicates the
+> +attribute of a worktree is always `worktree`, an empty line indicates the
+>  end of the record.  For example:
 >
 >  ------------
-> @@ -302,16 +302,16 @@ versions will refuse to access repositories with this extension.
->
->  Note that in this file, the exception for `core.bare` and `core.worktree`
->  is gone. If they exist in `$GIT_DIR/config`, you must move
-> -them to the `config.worktree` of the main working tree. You may also
-> -take this opportunity to review and move other configuration that you
-> -do not want to share to all working trees:
-> +them to the `config.worktree` of the main worktree. You may also take this
-> +opportunity to review and move other configuration that you do not want to
-> +share to all worktrees:
->
->   - `core.worktree` should never be shared.
->
->   - `core.bare` should not be shared if the value is `core.bare=true`.
->
-> - - `core.sparseCheckout` is recommended per working tree, unless you
-> -   are sure you always use sparse checkout for all working trees.
-> + - `core.sparseCheckout` is recommended per worktree, unless you are sure
-> +   you always use sparse checkout for all worktrees.
+> @@ -470,9 +470,9 @@ EXAMPLES
+>  You are in the middle of a refactoring session and your boss comes in and
+>  demands that you fix something immediately. You might typically use
+>  linkgit:git-stash[1] to store your changes away temporarily, however, your
+> -working tree is in such a state of disarray (with new, moved, and removed
+> +worktree is in such a state of disarray (with new, moved, and removed
 
-Another minor point, but perhaps the third bullet should share more
-language with the first two. Maybe instead:
+This one should probably remain as "working tree", since the example
+being given here is focused on disarray in the working tree itself, not
+in the worktree's metadata.
 
-    - `core.sparseCheckout` should not be shared, unless you are sure
-      you always use sparse checkout among all worktrees.
+>  files, and other bits and pieces strewn around) that you don't want to risk
+> -disturbing any of it. Instead, you create a temporary linked working tree to
+> +disturbing any of it. Instead, you create a temporary linked worktree to
+>  make the emergency fix, remove it when done, and then resume your earlier
+>  refactoring session.
 
-Feel free (in this instance, and in any others) to ignore these
-suggestions. I wouldn't raise them in an ordinary review, but I figure
-since we are already tweaking the language in this file, it couldn't
-hurt to mention here...
+But this one is in the context of "create a _worktree_", which makes
+sense and should probably be updated as you have done here.
 
 Thanks,
 Taylor
