@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE255C433F5
-	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 06:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E95C5C433EF
+	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 06:55:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235086AbiBTGzS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 01:55:18 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46652 "EHLO
+        id S234476AbiBTGzT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 01:55:19 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234451AbiBTGzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 01:55:09 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7221F35871
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 22:54:48 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id k3-20020a1ca103000000b0037bdea84f9cso9222741wme.1
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 22:54:48 -0800 (PST)
+        with ESMTP id S231336AbiBTGzM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 01:55:12 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C123E3586F
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 22:54:47 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id bg21-20020a05600c3c9500b0035283e7a012so9233365wmb.0
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 22:54:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HIKfAEfv6uK31BWej+f/6Qdjg1333y38a7Gmq7322y8=;
-        b=TgGN+Qv1uB4uRkuaJy7WkKiXhV/jKc1tOCLXsBlQMp1wHD/2iEAZLHEDU0qSh1GKsW
-         eX+4OSpmTBd4naBO6F1Rbked2dH/CQqHXsT72/P75/64otcpsyM42Xw0gkEAEeGBop9z
-         z6NIUXO6gabrkq9orYpYb4fo0fomffbp5x5UMKtnEKFvhgUqawgVuxwY/rJzS5MKCZnN
-         Pz0bqOqDdILtW2+y/mwFcv10qf6l+ZbgmSm5AN2dA8q5bc671G0S/oWgu7nxz21R3h5T
-         fOnRl+AUbgiRIfIPJrJlabgIT7AFRW3TXUGJfEVbXZhe+9JHZgR9ZvoDyJgJZ2izf2UB
-         tvwA==
+        bh=lUeMBI0VGqVpVf36mWn+Z0nc/oxflgv+ptH2bmFaszA=;
+        b=RRLHYxV2Y0Pl8Oqy/iw+dqffT0fXNuUU44KUnuz+kYc0BBYEhiIo8DTho9SFOhs/Fk
+         MbfEO+ar73tfOc+rvrfSc94J2sZCFezPDflgrcPC1pUOduy2MtEQgvZwB3c3jc5yTRdx
+         Y8c4dLQ9wHd/1Ge82OZOS+qL80I2nlOIDrqVWDtY1xotZD1X2KaX8bROcMHiwxtmPnMR
+         ILn7QcM6RR+Wp8UTwvIk6/TZZvruBekefkqwt9HJemNoiKRKcQKUNu/NJtbnmdlGOwA6
+         7pp9DALKj4JrTDtWUL5H+HTo66x4T84Hr6VRAWX4sY4eXagv5ttPjhFfyiUQRUzDrcGr
+         abAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HIKfAEfv6uK31BWej+f/6Qdjg1333y38a7Gmq7322y8=;
-        b=0HXiGv/sCgUpA5PNNvvSiu8LBcjE4ezEMeSpUd9RqNOa8uvAst+yS0uW1MmRtRAx1K
-         9VZ0rrT27vkXOLlsuU2OUFLstamWnqF+PXLOFXg1ZU75KO/XR9e4815W4gM14eO36jgT
-         LW5rJPJvI6XCAXLvn7dwcfxnCNQo6gH8k7k6G5nN/iRLciJ5UAINexHzJV6moXvbbgFT
-         Jt/Pprpx92DV16aM9Gm2jFherR1lkXutsrYDe2cwRLWppU+JqPKQYO0JmMUP613v8aL+
-         l3IVFWiCjbSKz2GLQDWRGlsVJV/NMugvSKCWQMp7HvK4gFs6sPAJhmqJcOoflxewksoX
-         kROQ==
-X-Gm-Message-State: AOAM531JZpWaIYLeCkwi36abHm4mKHH5K6KGzNMEg1PVd9d6gnec+4S4
-        KdUBwLGl9bXuMf4aoJ/BTorFNoKguKI=
-X-Google-Smtp-Source: ABdhPJxlnA34SrvtGfxQbaW9ElbLdWCWl2SRJvcDuJU1JBUZWPjdZNOe6yf40kGtBcz3ldKEAFDSQA==
-X-Received: by 2002:a1c:4c0b:0:b0:37c:505:d460 with SMTP id z11-20020a1c4c0b000000b0037c0505d460mr17288131wmf.101.1645340086789;
-        Sat, 19 Feb 2022 22:54:46 -0800 (PST)
+        bh=lUeMBI0VGqVpVf36mWn+Z0nc/oxflgv+ptH2bmFaszA=;
+        b=rX+y54WABmzrokm2nVnbHPT7icysGOy7cNGF9+Ebmg52vsKK81HRMMaTZjL2DXe9i8
+         CSSmB0ZUYahjvnKzXuH+qlCdKoegxHBis8KNHiNGG37H6WRKJlB4GWp7I+1MpjFd9MkZ
+         w6YfmPL7YrLpjQgRJBLSh+CK7luGkNOOywEKmHC5NxgsoNvFRCzwUD8uj7z+J4cNxWAU
+         Sx/gjTZI/QLrvG0MQaw5ZVXzmEIgX2YGN8w+zA0flJoYEY6wmJdObK0Ia1yteyqw5xRL
+         VdScWOORoJjBY/QCKzAlJ1RSgjVe5an7eJgcmsDkNFDOlWyszcQaGbeYa6rI/t9bacQk
+         NLyw==
+X-Gm-Message-State: AOAM533GS6MDGpdnD4r3FnaHKHmvYDIhJJVbFrP4LdLbBJjsRBbGZPYR
+        cHzjUXA1O2OyzHPCrcxz0FDPi3m49Ys=
+X-Google-Smtp-Source: ABdhPJzZOP7tNxVU5bO/+ukhAm70XVFOWU2tF3KZZrXjHO0nO582QRtlqsLRIrj7qQi34SU4HEk70A==
+X-Received: by 2002:a1c:7216:0:b0:37b:f84d:d56e with SMTP id n22-20020a1c7216000000b0037bf84dd56emr16656709wmc.177.1645340085999;
+        Sat, 19 Feb 2022 22:54:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y16sm9641377wrp.1.2022.02.19.22.54.46
+        by smtp.gmail.com with ESMTPSA id r14sm20377996wrz.84.2022.02.19.22.54.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Feb 2022 22:54:46 -0800 (PST)
-Message-Id: <7994775a9341b256d1ea7dfc417bb577d9a3195f.1645340082.git.gitgitgadget@gmail.com>
+        Sat, 19 Feb 2022 22:54:45 -0800 (PST)
+Message-Id: <60253745f5c59ac4c75d46df1f98ee722523f166.1645340082.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1122.v5.git.1645340082.gitgitgadget@gmail.com>
 References: <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>
         <pull.1122.v5.git.1645340082.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 20 Feb 2022 06:54:34 +0000
-Subject: [PATCH v5 04/12] merge-tree: implement real merges
+Date:   Sun, 20 Feb 2022 06:54:33 +0000
+Subject: [PATCH v5 03/12] merge-tree: add option parsing and initial shell for
+ real merge function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,317 +80,161 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This adds the ability to perform real merges rather than just trivial
-merges (meaning handling three way content merges, recursive ancestor
-consolidation, renames, proper directory/file conflict handling, and so
-forth).  However, unlike `git merge`, the working tree and index are
-left alone and no branch is updated.
+Let merge-tree accept a `--write-tree` parameter for choosing real
+merges instead of trivial merges, and accept an optional
+`--trivial-merge` option to get the traditional behavior.  Note that
+these accept different numbers of arguments, though, so these names
+need not actually be used.
 
-The only output is:
-  - the toplevel resulting tree printed on stdout
-  - exit status of 0 (clean), 1 (conflicts present), anything else
-    (merge could not be performed; unknown if clean or conflicted)
-
-This output is meant to be used by some higher level script, perhaps in
-a sequence of steps like this:
-
-   NEWTREE=$(git merge-tree --write-tree $BRANCH1 $BRANCH2)
-   test $? -eq 0 || die "There were conflicts..."
-   NEWCOMMIT=$(git commit-tree $NEWTREE -p $BRANCH1 -p $BRANCH2)
-   git update-ref $BRANCH1 $NEWCOMMIT
-
-Note that higher level scripts may also want to access the
-conflict/warning messages normally output during a merge, or have quick
-access to a list of files with conflicts.  That is not available in this
-preliminary implementation, but subsequent commits will add that
-ability (meaning that NEWTREE would be a lot more than a tree in the
-case of conflicts).
-
-This also marks the traditional trivial merge of merge-tree as
-deprecated.  The trivial merge not only had limited applicability, the
-output format was also difficult to work with (and its format
-undocumented), and will generally be less performant than real merges.
+Note that real merges differ from trivial merges in that they handle:
+  - three way content merges
+  - recursive ancestor consolidation
+  - renames
+  - proper directory/file conflict handling
+  - etc.
+Basically all the stuff you'd expect from `git merge`, just without
+updating the index and working tree.  The initial shell added here does
+nothing more than die with "real merges are not yet implemented", but
+that will be fixed in subsequent commits.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-merge-tree.txt |  79 +++++++++++++++++++----
- builtin/merge-tree.c             |  44 ++++++++++++-
- t/t4301-merge-tree-write-tree.sh | 106 +++++++++++++++++++++++++++++++
- 3 files changed, 216 insertions(+), 13 deletions(-)
- create mode 100755 t/t4301-merge-tree-write-tree.sh
+ builtin/merge-tree.c | 84 +++++++++++++++++++++++++++++++++++++++-----
+ git.c                |  2 +-
+ 2 files changed, 76 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-index 58731c19422..589a83738ce 100644
---- a/Documentation/git-merge-tree.txt
-+++ b/Documentation/git-merge-tree.txt
-@@ -3,26 +3,81 @@ git-merge-tree(1)
- 
- NAME
- ----
--git-merge-tree - Show three-way merge without touching index
-+git-merge-tree - Perform merge without touching index or working tree
- 
- 
- SYNOPSIS
- --------
- [verse]
--'git merge-tree' <base-tree> <branch1> <branch2>
-+'git merge-tree' [--write-tree] <branch1> <branch2>
-+'git merge-tree' [--trivial-merge] <base-tree> <branch1> <branch2> (deprecated)
- 
- DESCRIPTION
- -----------
--Reads three tree-ish, and output trivial merge results and
--conflicting stages to the standard output.  This is similar to
--what three-way 'git read-tree -m' does, but instead of storing the
--results in the index, the command outputs the entries to the
--standard output.
--
--This is meant to be used by higher level scripts to compute
--merge results outside of the index, and stuff the results back into the
--index.  For this reason, the output from the command omits
--entries that match the <branch1> tree.
-+
-+Performs a merge, but does not make any new commits and does not read
-+from or write to either the working tree or index.
-+
-+The first form will merge the two branches, doing a real merge.  A real
-+merge is distinguished from a trivial merge in that it includes:
-+
-+  * three way content merges of individual files
-+  * rename detection
-+  * proper directory/file conflict handling
-+  * recursive ancestor consolidation (i.e. when there is more than one
-+    merge base, creating a virtual merge base by merging the merge bases)
-+  * etc.
-+
-+After the merge completes, the first form will create a new toplevel
-+tree object.  See `OUTPUT` below for details.
-+
-+The second form is deprecated; it is kept for backward compatibility
-+reasons but may be deleted in the future.  Other than the optional
-+`--trivial-merge`, it accepts no options.  It can only do a trivial
-+merge.  It reads three tree-ish, and outputs trivial merge results and
-+conflicting stages to the standard output in a semi-diff format.
-+Since this was designed for higher level scripts to consume and merge
-+the results back into the index, it omits entries that match
-+<branch1>.  The result of this second form is similar to what
-+three-way 'git read-tree -m' does, but instead of storing the results
-+in the index, the command outputs the entries to the standard output.
-+This form not only has limited applicability, the output format is
-+also difficult to work with, and it will generally be less performant
-+than the first form even on successful merges (especially if working
-+in large repositories).  The remainder of this manual will only
-+discuss the first form.
-+
-+OUTPUT
-+------
-+
-+For either a successful or conflicted merge, the output from
-+git-merge-tree is simply one line:
-+
-+	<OID of toplevel tree>
-+
-+The printed tree object corresponds to what would be checked out in
-+the working tree at the end of `git merge`, and thus may have files
-+with conflict markers in them.
-+
-+EXIT STATUS
-+-----------
-+
-+For a successful, non-conflicted merge, the exit status is 0.  When the
-+merge has conflicts, the exit status is 1.  If the merge is not able to
-+complete (or start) due to some kind of error, the exit status is
-+something other than 0 or 1 (and the output is unspecified).
-+
-+USAGE NOTES
-+-----------
-+
-+git-merge-tree was written to be low-level plumbing, similar to
-+hash-object, mktree, commit-tree, write-tree, update-ref, and mktag.
-+Thus, it could be used as a part of a series of steps such as
-+
-+       NEWTREE=$(git merge-tree --write-tree $BRANCH1 $BRANCH2)
-+       test $? -eq 0 || die "There were conflicts..."
-+       NEWCOMMIT=$(git commit-tree $NEWTREE -p $BRANCH1 -p $BRANCH2)
-+       git update-ref $BRANCH1 $NEWCOMMIT
- 
- GIT
- ---
 diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 0f9d928e862..af445cb1576 100644
+index 914ec960b7e..0f9d928e862 100644
 --- a/builtin/merge-tree.c
 +++ b/builtin/merge-tree.c
-@@ -2,6 +2,9 @@
- #include "builtin.h"
+@@ -3,13 +3,12 @@
  #include "tree-walk.h"
  #include "xdiff-interface.h"
-+#include "help.h"
-+#include "commit-reach.h"
-+#include "merge-ort.h"
  #include "object-store.h"
- #include "parse-options.h"
++#include "parse-options.h"
  #include "repository.h"
-@@ -398,7 +401,46 @@ struct merge_tree_options {
- static int real_merge(struct merge_tree_options *o,
- 		      const char *branch1, const char *branch2)
- {
--	die(_("real merges are not yet implemented"));
-+	struct commit *parent1, *parent2;
-+	struct commit_list *common;
-+	struct commit_list *merge_bases = NULL;
-+	struct commit_list *j;
-+	struct merge_options opt;
-+	struct merge_result result = { 0 };
-+
-+	parent1 = get_merge_parent(branch1);
-+	if (!parent1)
-+		help_unknown_ref(branch1, "merge-tree",
-+				 _("not something we can merge"));
-+
-+	parent2 = get_merge_parent(branch2);
-+	if (!parent2)
-+		help_unknown_ref(branch2, "merge-tree",
-+				 _("not something we can merge"));
-+
-+	init_merge_options(&opt, the_repository);
-+
-+	opt.show_rename_progress = 0;
-+
-+	opt.branch1 = branch1;
-+	opt.branch2 = branch2;
-+
-+	/*
-+	 * Get the merge bases, in reverse order; see comment above
-+	 * merge_incore_recursive in merge-ort.h
-+	 */
-+	common = get_merge_bases(parent1, parent2);
-+	if (!common)
-+		die(_("refusing to merge unrelated histories"));
-+	for (j = common; j; j = j->next)
-+		commit_list_insert(j->item, &merge_bases);
-+
-+	merge_incore_recursive(&opt, merge_bases, parent1, parent2, &result);
-+	if (result.clean < 0)
-+		die(_("failure to merge"));
-+	puts(oid_to_hex(&result.tree->object.oid));
-+	merge_finalize(&opt, &result);
-+	return !result.clean; /* result.clean < 0 handled above */
+ #include "blob.h"
+ #include "exec-cmd.h"
+ #include "merge-blobs.h"
+ 
+-static const char merge_tree_usage[] = "git merge-tree <base-tree> <branch1> <branch2>";
+-
+ struct merge_list {
+ 	struct merge_list *next;
+ 	struct merge_list *link;	/* other stages for this object */
+@@ -366,15 +365,17 @@ static void *get_tree_descriptor(struct repository *r,
+ 	return buf;
  }
  
+-static int trivial_merge(int argc, const char **argv)
++static int trivial_merge(const char *base,
++			 const char *branch1,
++			 const char *branch2)
+ {
+ 	struct repository *r = the_repository;
+ 	struct tree_desc t[3];
+ 	void *buf1, *buf2, *buf3;
+ 
+-	buf1 = get_tree_descriptor(r, t+0, argv[1]);
+-	buf2 = get_tree_descriptor(r, t+1, argv[2]);
+-	buf3 = get_tree_descriptor(r, t+2, argv[3]);
++	buf1 = get_tree_descriptor(r, t+0, base);
++	buf2 = get_tree_descriptor(r, t+1, branch1);
++	buf3 = get_tree_descriptor(r, t+2, branch2);
+ 	trivial_merge_trees(t, "");
+ 	free(buf1);
+ 	free(buf2);
+@@ -384,9 +385,74 @@ static int trivial_merge(int argc, const char **argv)
+ 	return 0;
+ }
+ 
++enum mode {
++	MODE_UNKNOWN,
++	MODE_TRIVIAL,
++	MODE_REAL,
++};
++
++struct merge_tree_options {
++	int mode;
++};
++
++static int real_merge(struct merge_tree_options *o,
++		      const char *branch1, const char *branch2)
++{
++	die(_("real merges are not yet implemented"));
++}
++
  int cmd_merge_tree(int argc, const char **argv, const char *prefix)
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-new file mode 100755
-index 00000000000..6d321652e21
---- /dev/null
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -0,0 +1,106 @@
-+#!/bin/sh
+ {
+-	if (argc != 4)
+-		usage(merge_tree_usage);
+-	return trivial_merge(argc, argv);
++	struct merge_tree_options o = { 0 };
++	int expected_remaining_argc;
 +
-+test_description='git merge-tree --write-tree'
++	const char * const merge_tree_usage[] = {
++		N_("git merge-tree [--write-tree] <branch1> <branch2>"),
++		N_("git merge-tree [--trivial-merge] <base-tree> <branch1> <branch2>"),
++		NULL
++	};
++	struct option mt_options[] = {
++		OPT_CMDMODE(0, "write-tree", &o.mode,
++			    N_("do a real merge instead of a trivial merge"),
++			    MODE_REAL),
++		OPT_CMDMODE(0, "trivial-merge", &o.mode,
++			    N_("do a trivial merge only"), MODE_TRIVIAL),
++		OPT_END()
++	};
 +
-+. ./test-lib.sh
++	/* Parse arguments */
++	argc = parse_options(argc, argv, prefix, mt_options,
++			     merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTION);
++	switch (o.mode) {
++	default:
++		BUG("unexpected command mode %d", o.mode);
++	case MODE_UNKNOWN:
++		switch (argc) {
++		default:
++			usage_with_options(merge_tree_usage, mt_options);
++		case 2:
++			o.mode = MODE_REAL;
++			break;
++		case 3:
++			o.mode = MODE_TRIVIAL;
++			break;
++		}
++		expected_remaining_argc = argc;
++		break;
++	case MODE_REAL:
++		expected_remaining_argc = 2;
++		break;
++	case MODE_TRIVIAL:
++		expected_remaining_argc = 3;
++		break;
++	}
 +
-+# This test is ort-specific
-+if test "$GIT_TEST_MERGE_ALGORITHM" != "ort"
-+then
-+	skip_all="GIT_TEST_MERGE_ALGORITHM != ort"
-+	test_done
-+fi
++	if (argc != expected_remaining_argc)
++		usage_with_options(merge_tree_usage, mt_options);
 +
-+test_expect_success setup '
-+	test_write_lines 1 2 3 4 5 >numbers &&
-+	echo hello >greeting &&
-+	echo foo >whatever &&
-+	git add numbers greeting whatever &&
-+	test_tick &&
-+	git commit -m initial &&
-+
-+	git branch side1 &&
-+	git branch side2 &&
-+	git branch side3 &&
-+
-+	git checkout side1 &&
-+	test_write_lines 1 2 3 4 5 6 >numbers &&
-+	echo hi >greeting &&
-+	echo bar >whatever &&
-+	git add numbers greeting whatever &&
-+	test_tick &&
-+	git commit -m modify-stuff &&
-+
-+	git checkout side2 &&
-+	test_write_lines 0 1 2 3 4 5 >numbers &&
-+	echo yo >greeting &&
-+	git rm whatever &&
-+	mkdir whatever &&
-+	>whatever/empty &&
-+	git add numbers greeting whatever/empty &&
-+	test_tick &&
-+	git commit -m other-modifications &&
-+
-+	git checkout side3 &&
-+	git mv numbers sequence &&
-+	test_tick &&
-+	git commit -m rename-numbers
-+'
-+
-+test_expect_success 'Clean merge' '
-+	TREE_OID=$(git merge-tree --write-tree side1 side3) &&
-+	q_to_tab <<-EOF >expect &&
-+	100644 blob $(git rev-parse side1:greeting)Qgreeting
-+	100644 blob $(git rev-parse side1:numbers)Qsequence
-+	100644 blob $(git rev-parse side1:whatever)Qwhatever
-+	EOF
-+
-+	git ls-tree $TREE_OID >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'Content merge and a few conflicts' '
-+	git checkout side1^0 &&
-+	test_must_fail git merge side2 &&
-+	expected_tree=$(git rev-parse AUTO_MERGE) &&
-+
-+	# We will redo the merge, while we are still in a conflicted state!
-+	test_when_finished "git reset --hard" &&
-+
-+	test_expect_code 1 git merge-tree --write-tree side1 side2 >RESULT &&
-+	actual_tree=$(head -n 1 RESULT) &&
-+
-+	# Due to differences of e.g. "HEAD" vs "side1", the results will not
-+	# exactly match.  Dig into individual files.
-+
-+	# Numbers should have three-way merged cleanly
-+	test_write_lines 0 1 2 3 4 5 6 >expect &&
-+	git show ${actual_tree}:numbers >actual &&
-+	test_cmp expect actual &&
-+
-+	# whatever and whatever~<branch> should have same HASHES
-+	git rev-parse ${expected_tree}:whatever ${expected_tree}:whatever~HEAD >expect &&
-+	git rev-parse ${actual_tree}:whatever ${actual_tree}:whatever~side1 >actual &&
-+	test_cmp expect actual &&
-+
-+	# greeting should have a merge conflict
-+	git show ${expected_tree}:greeting >tmp &&
-+	sed -e s/HEAD/side1/ tmp >expect &&
-+	git show ${actual_tree}:greeting >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'Barf on misspelled option, with exit code other than 0 or 1' '
-+	# Mis-spell with single "s" instead of double "s"
-+	test_expect_code 129 git merge-tree --write-tree --mesages FOOBAR side1 side2 2>expect &&
-+
-+	grep "error: unknown option.*mesages" expect
-+'
-+
-+test_expect_success 'Barf on too many arguments' '
-+	test_expect_code 129 git merge-tree --write-tree side1 side2 invalid 2>expect &&
-+
-+	grep "^usage: git merge-tree" expect
-+'
-+
-+test_done
++	/* Do the relevant type of merge */
++	if (o.mode == MODE_REAL)
++		return real_merge(&o, argv[0], argv[1]);
++	else
++		return trivial_merge(argv[0], argv[1], argv[2]);
+ }
+diff --git a/git.c b/git.c
+index 5ff21be21f3..6090a1289db 100644
+--- a/git.c
++++ b/git.c
+@@ -558,7 +558,7 @@ static struct cmd_struct commands[] = {
+ 	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+-	{ "merge-tree", cmd_merge_tree, RUN_SETUP | NO_PARSEOPT },
++	{ "merge-tree", cmd_merge_tree, RUN_SETUP },
+ 	{ "mktag", cmd_mktag, RUN_SETUP | NO_PARSEOPT },
+ 	{ "mktree", cmd_mktree, RUN_SETUP },
+ 	{ "multi-pack-index", cmd_multi_pack_index, RUN_SETUP },
 -- 
 gitgitgadget
 
