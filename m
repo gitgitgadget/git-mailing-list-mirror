@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70B44C433EF
-	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 06:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3171EC433EF
+	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 06:55:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234501AbiBTGzY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 01:55:24 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46790 "EHLO
+        id S235784AbiBTGzZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 01:55:25 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234465AbiBTGzR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 01:55:17 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6B6935DD5
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 22:54:51 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id h6so21514496wrb.9
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 22:54:51 -0800 (PST)
+        with ESMTP id S234461AbiBTGzM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 01:55:12 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27FAF3587F
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 22:54:50 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id d3so5886475wrf.1
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 22:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qyMp8qLzAwpyXSfXf5fBMSPn1Iu44k0fyZQC+i4XPcM=;
-        b=Ir1fBOqrVwM7ii1h/0XWoViBKY2auZjkdZGn7CLCF9cLjvqt/1XtTxdjCuIWtY33Cm
-         T6znjixsg+2THGtwSlpTYzqNpYP6xDv86Ut555qPOwuuo/rt0qfkBveazq93t6ySwicm
-         QHvcNAPWLpPproXUfRoFQqDjgfGBsrGKOBfITVbUnoO3WrdaYnP6uZYKvZdezVGB7OYe
-         gKh6znWU4rk9PS5DiSG8iBjTGSI3a980B/XjH0TNixcEWKZP+qwlS3mtYi1FP6CJashx
-         lBwmL3Lrx5Y6YVxyKIlROk+MET8tsAq41EcmSth92xpW9JLouMg22P3YjFLy5oeVifZ5
-         8S0g==
+        bh=Hlm+FxseD64b/QTR4+4MuccqKwPuYMbNm71T37iVhh0=;
+        b=WgnQ55xUlbLXnhyCQrlcOoYvAThKkbCw2SXruWlU6C5kzWy8vjbEDCLJzRkjZXVPUt
+         irTXYqyWHuCWJgVf1h34Rw0PrcLic8BVqrN5VZ3gwYG7vmyW019ieUHbbpPpwrsFiRkB
+         cBFV6+GpklB2oPHNoPfGqx8Y7tPq5STkdV4cxwycgHnGAR3o/4XEnsjlY11K0rydbpUI
+         s9VDOMrPWD1uXMAyXd+vV1H+SPYzIL9bYadqHpi8LLrv+GdLV0WtSnmC+QY+bUvrRpCv
+         Tle9ObRwRECBGegr3rQ1NnCR4emPaZ8cftaDd+7Zq3lJwdT5CPE00MEYrwpYAowKGa3v
+         bl2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qyMp8qLzAwpyXSfXf5fBMSPn1Iu44k0fyZQC+i4XPcM=;
-        b=CxWCtZ13Mob+3rUo3vO8UFtfX8kuMECQU6rDOapj4Te/ZXGL8YM3mBEuqQGz0t4Oqa
-         jwTPDlAE6Vx/05ZC//q1HUNIUYCixwFC0FgeyknXuxjFTplXwy/sfAl94ZoDA8oNC7am
-         pAbI1uOynlEqLbQ+gA4iQW+n9lBs7feSBmuDkyzbVO4B7UZ5bC7/OYU3Mh5M+RNTWojy
-         Lc8rlRpWbLdkCrRPrtObmOsACX/ltjGPhxO6CzgR2HoPW15QQGuFAW5LerQUGAy4oBlD
-         adumiVzX0vvGlJ75UMDGYL5pHDxvq2wLtR3nYhCFooKfl0p/cY+NROGgMxuAnYOeFnrI
-         z9XQ==
-X-Gm-Message-State: AOAM5317iiDys/Aml4TCLsoT2d+bcsskWIdpsjPyPWJ3Oj5IaBI1S4Wx
-        j33Yzi3SICDFnrx+fuXssOIu/vzVv7c=
-X-Google-Smtp-Source: ABdhPJztdyYBJGjmXsP6u/ut5K5A7e+NEWNf2dAIRLAbM2DAu/jeGd1aWBwop55TBB18PrIOdvwa0g==
-X-Received: by 2002:a5d:6cd0:0:b0:1e3:11b3:418c with SMTP id c16-20020a5d6cd0000000b001e311b3418cmr11450728wrc.405.1645340090245;
-        Sat, 19 Feb 2022 22:54:50 -0800 (PST)
+        bh=Hlm+FxseD64b/QTR4+4MuccqKwPuYMbNm71T37iVhh0=;
+        b=v6EzodgtlhjqQNUDYmE2o/bts/AjJn1yIGN83NbmmPoVLSgxMVhMK6wHd+iAU6Q+yf
+         As2WbzMyB5yEfNs6+gwKjnfmmMp8FgkYd5hSAmry0Hfecx/UKxTqkcBjo2aUoE6useQm
+         Vlh1aNVcEYvOymNm2sczFomcXFYD/wyCgE0agdllmv2PTBKkg+JSfqHA5J9fpwnVif4M
+         7rFkCq9v87961dVJBbzhqRr8KlRd96LiFohvm1YudCIDU5tGKRY+NWm79jR4DaOV5Alm
+         S/G0UrR3j8fxPwapka+wMpWKOkBT9+8r1NhYJg+XLVUdJqGxBj4/d4BRrxR3Bz1HAMdT
+         PooA==
+X-Gm-Message-State: AOAM533I7Ay9wVDEe2tgti7mrDuVeW708UtzhZFiNv+Pv+iZP8pX5n+p
+        Sxa65XtBZDp76GEVB6ra52VALH30dso=
+X-Google-Smtp-Source: ABdhPJykACNVYINSNUeyliOZLSdIbzRCFaCmjyO1wW1ezQDyDdNdMAILTxEK7M8xeS+eZligZParng==
+X-Received: by 2002:a05:6000:2a2:b0:1e8:6dd5:767b with SMTP id l2-20020a05600002a200b001e86dd5767bmr11118341wry.444.1645340088461;
+        Sat, 19 Feb 2022 22:54:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f6sm27398640wrv.116.2022.02.19.22.54.49
+        by smtp.gmail.com with ESMTPSA id s7sm16707894wro.104.2022.02.19.22.54.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Feb 2022 22:54:49 -0800 (PST)
-Message-Id: <5bb7d3725ad529c36b1bc0367d67dc16a05b14b3.1645340082.git.gitgitgadget@gmail.com>
+        Sat, 19 Feb 2022 22:54:48 -0800 (PST)
+Message-Id: <90c4adecb23770febc204b9061c8da0cd517c8a2.1645340082.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1122.v5.git.1645340082.gitgitgadget@gmail.com>
 References: <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>
         <pull.1122.v5.git.1645340082.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 20 Feb 2022 06:54:38 +0000
-Subject: [PATCH v5 08/12] merge-tree: provide a list of which files have
- conflicts
+Date:   Sun, 20 Feb 2022 06:54:36 +0000
+Subject: [PATCH v5 06/12] merge-tree: support including merge messages in
+ output
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,127 +80,221 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Callers of `git merge-tree --write-tree` will often want to know which
-files had conflicts.  While they could potentially attempt to parse the
-CONFLICT notices printed, those messages are not meant to be machine
-readable.  Provide a simpler mechanism of just printing the files (in
-the same format as `git ls-files` with quoting, but restricted to
-unmerged files) in the output before the free-form messages.
+When running `git merge-tree --write-tree`, we previously would only
+return an exit status reflecting the cleanness of a merge, and print out
+the toplevel tree of the resulting merge.  Merges also have
+informational messages, such as:
+  * "Auto-merging <PATH>"
+  * "CONFLICT (content): ..."
+  * "CONFLICT (file/directory)"
+  * etc.
+In fact, when non-content conflicts occur (such as file/directory,
+modify/delete, add/add with differing modes, rename/rename (1to2),
+etc.), these informational messages may be the only notification the
+user gets since these conflicts are not representable in the contents
+of the file.
+
+Add a --[no-]messages option so that callers can request these messages
+be included at the end of the output.  Include such messages by default
+when there are conflicts, and omit them by default when the merge is
+clean.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-merge-tree.txt |  8 ++++++++
- builtin/merge-tree.c             | 24 ++++++++++++++++++++++--
- t/t4301-merge-tree-write-tree.sh | 11 +++++++++++
- 3 files changed, 41 insertions(+), 2 deletions(-)
+ Documentation/git-merge-tree.txt | 45 +++++++++++++++++++++++++++-----
+ builtin/merge-tree.c             | 21 +++++++++++++--
+ t/t4301-merge-tree-write-tree.sh | 37 ++++++++++++++++++++++++++
+ 3 files changed, 95 insertions(+), 8 deletions(-)
 
 diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-index f415d6de5a3..deaeb49ae05 100644
+index 589a83738ce..f415d6de5a3 100644
 --- a/Documentation/git-merge-tree.txt
 +++ b/Documentation/git-merge-tree.txt
-@@ -67,6 +67,7 @@ simply one line:
- Whereas for a conflicted merge, the output is by default of the form:
+@@ -9,7 +9,7 @@ git-merge-tree - Perform merge without touching index or working tree
+ SYNOPSIS
+ --------
+ [verse]
+-'git merge-tree' [--write-tree] <branch1> <branch2>
++'git merge-tree' [--write-tree] [<options>] <branch1> <branch2>
+ 'git merge-tree' [--trivial-merge] <base-tree> <branch1> <branch2> (deprecated)
+ 
+ DESCRIPTION
+@@ -47,17 +47,47 @@ than the first form even on successful merges (especially if working
+ in large repositories).  The remainder of this manual will only
+ discuss the first form.
+ 
++OPTIONS
++-------
++
++--[no-]messages::
++	Write any informational messages such as "Auto-merging <path>"
++	or CONFLICT notices to the end of stdout.  If unspecified, the
++	default is to include these messages if there are merge
++	conflicts, and to omit them otherwise.
++
+ OUTPUT
+ ------
+ 
+-For either a successful or conflicted merge, the output from
+-git-merge-tree is simply one line:
++By default, for a successful merge, the output from git-merge-tree is
++simply one line:
++
++	<OID of toplevel tree>
++
++Whereas for a conflicted merge, the output is by default of the form:
  
  	<OID of toplevel tree>
-+	<Conflicted file list>
- 	<Informational messages>
++	<Informational messages>
++
++These are discussed individually below.
  
- These are discussed individually below.
-@@ -78,6 +79,13 @@ This is a tree object that represents what would be checked out in the
- working tree at the end of `git merge`.  If there were conflicts, then
- files within this tree may have embedded conflict markers.
- 
-+Conflicted file list
+-The printed tree object corresponds to what would be checked out in
+-the working tree at the end of `git merge`, and thus may have files
+-with conflict markers in them.
++OID of toplevel tree
 +~~~~~~~~~~~~~~~~~~~~
 +
-+This is a sequence of lines containing a filename on each line, quoted
-+as explained for the configuration variable `core.quotePath` (see
-+linkgit:git-config[1]).
++This is a tree object that represents what would be checked out in the
++working tree at the end of `git merge`.  If there were conflicts, then
++files within this tree may have embedded conflict markers.
 +
- Informational messages
- ~~~~~~~~~~~~~~~~~~~~~~
++Informational messages
++~~~~~~~~~~~~~~~~~~~~~~
++
++This always starts with a blank line to separate it from the previous
++section, and then has free-form messages about the merge, such as:
++
++  * "Auto-merging <file>"
++  * "CONFLICT (rename/delete): <oldfile> renamed...but deleted in..."
++  * "Failed to merge submodule <submodule> (<reason>)"
++  * "Warning: cannot merge binary files: <filename>"
  
+ EXIT STATUS
+ -----------
+@@ -79,6 +109,9 @@ Thus, it could be used as a part of a series of steps such as
+        NEWCOMMIT=$(git commit-tree $NEWTREE -p $BRANCH1 -p $BRANCH2)
+        git update-ref $BRANCH1 $NEWCOMMIT
+ 
++Note that when the exit status is non-zero, NEWTREE in this sequence
++will contain a lot more output than just a tree.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
 diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index d44e8d087b1..cb4169d2271 100644
+index af445cb1576..d44e8d087b1 100644
 --- a/builtin/merge-tree.c
 +++ b/builtin/merge-tree.c
-@@ -11,6 +11,9 @@
- #include "blob.h"
- #include "exec-cmd.h"
- #include "merge-blobs.h"
-+#include "quote.h"
-+
-+static int line_termination = '\n';
+@@ -396,6 +396,7 @@ enum mode {
  
- struct merge_list {
- 	struct merge_list *next;
-@@ -400,7 +403,8 @@ struct merge_tree_options {
+ struct merge_tree_options {
+ 	int mode;
++	int show_messages;
  };
  
  static int real_merge(struct merge_tree_options *o,
--		      const char *branch1, const char *branch2)
-+		      const char *branch1, const char *branch2,
-+		      const char *prefix)
- {
- 	struct commit *parent1, *parent2;
- 	struct commit_list *common;
-@@ -444,6 +448,22 @@ static int real_merge(struct merge_tree_options *o,
- 		o->show_messages = !result.clean;
- 
- 	puts(oid_to_hex(&result.tree->object.oid));
-+	if (!result.clean) {
-+		struct string_list conflicted_files = STRING_LIST_INIT_NODUP;
-+		const char *last = NULL;
-+		int i;
+@@ -438,18 +439,27 @@ static int real_merge(struct merge_tree_options *o,
+ 	merge_incore_recursive(&opt, merge_bases, parent1, parent2, &result);
+ 	if (result.clean < 0)
+ 		die(_("failure to merge"));
 +
-+		merge_get_conflicted_files(&result, &conflicted_files);
-+		for (i = 0; i < conflicted_files.nr; i++) {
-+			const char *name = conflicted_files.items[i].string;
-+			if (last && !strcmp(last, name))
-+				continue;
-+			write_name_quoted_relative(
-+				name, prefix, stdout, line_termination);
-+			last = name;
-+		}
-+		string_list_clear(&conflicted_files, 1);
++	if (o->show_messages == -1)
++		o->show_messages = !result.clean;
++
+ 	puts(oid_to_hex(&result.tree->object.oid));
++	if (o->show_messages) {
++		printf("\n");
++		merge_display_update_messages(&opt, &result);
 +	}
- 	if (o->show_messages) {
- 		printf("\n");
- 		merge_display_update_messages(&opt, &result);
-@@ -511,7 +531,7 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 
- 	/* Do the relevant type of merge */
- 	if (o.mode == MODE_REAL)
--		return real_merge(&o, argv[0], argv[1]);
-+		return real_merge(&o, argv[0], argv[1], prefix);
- 	else
- 		return trivial_merge(argv[0], argv[1], argv[2]);
+ 	merge_finalize(&opt, &result);
+ 	return !result.clean; /* result.clean < 0 handled above */
  }
+ 
+ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ {
+-	struct merge_tree_options o = { 0 };
++	struct merge_tree_options o = { .show_messages = -1 };
+ 	int expected_remaining_argc;
++	int original_argc;
+ 
+ 	const char * const merge_tree_usage[] = {
+-		N_("git merge-tree [--write-tree] <branch1> <branch2>"),
++		N_("git merge-tree [--write-tree] [<options>] <branch1> <branch2>"),
+ 		N_("git merge-tree [--trivial-merge] <base-tree> <branch1> <branch2>"),
+ 		NULL
+ 	};
+@@ -459,10 +469,13 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 			    MODE_REAL),
+ 		OPT_CMDMODE(0, "trivial-merge", &o.mode,
+ 			    N_("do a trivial merge only"), MODE_TRIVIAL),
++		OPT_BOOL(0, "messages", &o.show_messages,
++			 N_("also show informational/conflict messages")),
+ 		OPT_END()
+ 	};
+ 
+ 	/* Parse arguments */
++	original_argc = argc - 1; /* ignoring argv[0] */
+ 	argc = parse_options(argc, argv, prefix, mt_options,
+ 			     merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+ 	switch (o.mode) {
+@@ -486,8 +499,12 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 		break;
+ 	case MODE_TRIVIAL:
+ 		expected_remaining_argc = 3;
++		/* Removal of `--trivial-merge` is expected */
++		original_argc--;
+ 		break;
+ 	}
++	if (o.mode == MODE_TRIVIAL && argc < original_argc)
++		die(_("--trivial-merge is incompatible with all other options"));
+ 
+ 	if (argc != expected_remaining_argc)
+ 		usage_with_options(merge_tree_usage, mt_options);
 diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index 719d81e7173..8e6dba44288 100755
+index 6d321652e21..719d81e7173 100755
 --- a/t/t4301-merge-tree-write-tree.sh
 +++ b/t/t4301-merge-tree-write-tree.sh
-@@ -117,6 +117,8 @@ test_expect_success 'test conflict notices and such' '
- 	#   "whatever" has *both* a modify/delete and a file/directory conflict
- 	cat <<-EOF >expect &&
- 	HASH
-+	greeting
-+	whatever~side1
+@@ -103,4 +103,41 @@ test_expect_success 'Barf on too many arguments' '
+ 	grep "^usage: git merge-tree" expect
+ '
  
- 	Auto-merging greeting
- 	CONFLICT (content): Merge conflict in greeting
-@@ -140,4 +142,13 @@ do
- 	'
- done
- 
-+test_expect_success 'Just the conflicted files without the messages' '
-+	test_expect_code 1 git merge-tree --write-tree --no-messages side1 side2 >out &&
++anonymize_hash() {
++	sed -e "s/[0-9a-f]\{40,\}/HASH/g" "$@"
++}
++
++test_expect_success 'test conflict notices and such' '
++	test_expect_code 1 git merge-tree --write-tree side1 side2 >out &&
 +	anonymize_hash out >actual &&
 +
-+	test_write_lines HASH greeting whatever~side1 >expect &&
++	# Expected results:
++	#   "greeting" should merge with conflicts
++	#   "numbers" should merge cleanly
++	#   "whatever" has *both* a modify/delete and a file/directory conflict
++	cat <<-EOF >expect &&
++	HASH
++
++	Auto-merging greeting
++	CONFLICT (content): Merge conflict in greeting
++	Auto-merging numbers
++	CONFLICT (file/directory): directory in the way of whatever from side1; moving it to whatever~side1 instead.
++	CONFLICT (modify/delete): whatever~side1 deleted in side2 and modified in side1.  Version side1 of whatever~side1 left in tree.
++	EOF
 +
 +	test_cmp expect actual
 +'
++
++for opt in $(git merge-tree --git-completion-helper-all)
++do
++	if test $opt = "--trivial-merge" || test $opt = "--write-tree"
++	then
++		continue
++	fi
++
++	test_expect_success "usage: --trivial-merge is incompatible with $opt" '
++		test_expect_code 128 git merge-tree --trivial-merge $opt side1 side2 side3
++	'
++done
 +
  test_done
 -- 
