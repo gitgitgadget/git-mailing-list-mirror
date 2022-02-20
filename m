@@ -2,86 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB3CFC433F5
-	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 20:29:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D31C3C433EF
+	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 20:42:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244830AbiBTUaT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 15:30:19 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43508 "EHLO
+        id S244972AbiBTUmg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 15:42:36 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:40520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233790AbiBTUaR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 15:30:17 -0500
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601CF522D4
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 12:29:56 -0800 (PST)
-Received: by mail-qv1-xf31.google.com with SMTP id a19so26846004qvm.4
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 12:29:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=5ohwA6Jlbi+oAECmvyzVr+WxOAcwJvv473GjWTyxUR4=;
-        b=VvkYqx80iW/mTjXJecIo/FpMcBDgNCmqt7pstKIk9BdgfugT/53VFTuBHOfKvp1V+f
-         RetTaWQcOqSBP6SfvIfwDMhSDKZJ7uII8cwYwG80vIISRDA+XhKr3zxs5dw+EHKUul3d
-         dnXWJCI7e0RCyRchdYAVhCll0OHeVBEvVrMcTfDG0eJCWqCV1pOONU84xgHy4Df+6cAZ
-         LbqrI8h9HPD0wKJbV3fDXNyA3UqHgkF9CS352n9dKENx9TJh6uuqDm96BdT9fDjw88Q3
-         QjT8nH770LyHlWPSPXm4JKqHSpi1dx7lMXcq9eeXPUBIBezC8EeHsCKstfInIlCJo1SN
-         s1mQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=5ohwA6Jlbi+oAECmvyzVr+WxOAcwJvv473GjWTyxUR4=;
-        b=7V5igjMHUbyiHtUMhSTGEsxRr7qkomufE9IOepXLozv8RW+mDmyAn7IEM0z85Bc2Ow
-         czcBtiYTOps3pmM62j7EA16umYzem2MaSMIYcA5K3+KdU3iAK3tyOx5kfDs/cjb2+267
-         3OLx/1FSq+xbD0grZUqSkMEcWMqveTt/vBtRKzRioetqyMDqG/jhSh36ZHPLuPAM9BWR
-         pi9fQU12e2fbOBGcMNw57My7yiwLfZ5lgivK5Y5S8ad6P0zUW1lu6RNxLSNF9SDT+jiB
-         4hbuAtlY5wmPM8jTSdCqUNlB3aIMwbgjOarJ1+hEyPvIpDPW17liEwrQ+wdFr55PMmQq
-         EE9w==
-X-Gm-Message-State: AOAM532EviunLeM8Syk5FEUisHujOKItQxdnnqnZPhX4RrM+S5DVSA01
-        NxqqwhnzB+RYRXjZqCptoHvL
-X-Google-Smtp-Source: ABdhPJzMBcIqEVOPV9pzzog6Svt+1nVvvBFQc21px2XJxb+mq0pmjbyL/7pPUAbd2EqwRwGhccpRaw==
-X-Received: by 2002:ad4:4b63:0:b0:42d:a3cf:1b55 with SMTP id m3-20020ad44b63000000b0042da3cf1b55mr13042807qvx.130.1645388995569;
-        Sun, 20 Feb 2022 12:29:55 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id e12sm3561626qtj.41.2022.02.20.12.29.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Feb 2022 12:29:55 -0800 (PST)
-Message-ID: <0768287f-6dee-2c9a-dd71-8868fa208028@github.com>
-Date:   Sun, 20 Feb 2022 15:29:54 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 01/11] worktree: combine two translatable messages
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+        with ESMTP id S240942AbiBTUme (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 15:42:34 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA1952B197
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 12:42:12 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D7BA103A25;
+        Sun, 20 Feb 2022 15:42:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0azzH7gwcigSGtDvavkHqzKeQzAoe4Eeq1g8+d
+        g/VqY=; b=LDIhcm0aUWPvG7qyR84vMBCHvi/6IgdMqEJUFedosx9iv95dUTxuKr
+        jOJS3M4+6R4iC83lOaPYtFucmkTize54VArlmBYl3q01+iabVOxz7dmbC3YarvQN
+        mh1c8MK4fPfJdddNiBmxOqu2PBdakCwS+5q0nErqFY7EquN93Xx8k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 03D1B103A24;
+        Sun, 20 Feb 2022 15:42:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 63346103A23;
+        Sun, 20 Feb 2022 15:42:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <avila.jn@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= AVILA <avila.jn@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 05/11] worktree: use 'worktree' over 'working tree'
 References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
- <a113ed9a8449b57e2a88a24244f3e45b24a01862.1645379667.git.gitgitgadget@gmail.com>
- <xmqqley5uw40.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqley5uw40.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        <a6a8eb8e7bb4520bfe37d3a79329cce7886af59c.1645379667.git.gitgitgadget@gmail.com>
+Date:   Sun, 20 Feb 2022 12:42:10 -0800
+In-Reply-To: <a6a8eb8e7bb4520bfe37d3a79329cce7886af59c.1645379667.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Sun, 20 Feb 2022
+        17:54:21 +0000")
+Message-ID: <xmqq7d9puv6l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 94178C3C-928D-11EC-93C1-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/20/2022 3:22 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> [jc: bogus CC addressses stripped and retyped; did something change
-> at GGG recently?]
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This is actually my fault. I copy/pasted from the previous PR, but
-that led to markdown-formatted links of some of the email addresses,
-confusing GGG.
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> It is helpful to distinguish between a 'working tree' and a 'worktree'.
+> A worktree contains a working tree plus additional metadata. This
+> metadata includes per-worktree refs and worktree-specific config.
+>
+> This is the first of multiple changes to git-worktree.txt, restricted to
+> the DESCRIPTION section.
 
-I fixed the description so a reroll shouldn't have this problem.
+Looked almost perfect, except for one and a half iffy parts.
 
-Thanks,
--Stolee
+> -If a working tree is deleted without using `git worktree remove`, then
+> ...
+> +If a worktree is deleted without using `git worktree remove`, then
+>  its associated administrative files, which reside in the repository
+>  (see "DETAILS" below), will eventually be removed automatically (see
+
+I think this one should be "working tree".  The administrative files
+are integral part of a worktree, but from the point of view of a
+working tree, it is "associated" with it and not part of it.  If you
+delete without using "git worktree remove", that would be done with
+a command like "rm -f", which removes the working tree but not the
+worktree.
+
+> -If a linked working tree is stored on a portable device or network share
+> -which is not always mounted, you can prevent its administrative files from
+> -being pruned by issuing the `git worktree lock` command, optionally
+> -specifying `--reason` to explain why the working tree is locked.
+> +If a linked worktree is stored on a portable device or network share which
+> +is not always mounted, you can prevent its administrative files from being
+> +pruned by issuing the `git worktree lock` command, optionally specifying
+> +`--reason` to explain why the worktree is locked.
+
+This one, because what is on a removal device is the working tree
+half of a worktree that leaves the "administrative files" half still
+on the mothership when it is removed, I think it is OK to call it a
+working tree, but because we defined "a linked worktree" and removed
+the definition of "a linked working tree" earlier, the original as-is
+won't work well.
+
+"If the working tree portion of a linked worktree is stored on ..."
+may be more correct, but it is a bit mouthful.  I dunno (hence this
+is not even a full "iffy" part, just halfway iffy).
+
+>  add <path> [<commit-ish>]::
+>  
+> -Create `<path>` and checkout `<commit-ish>` into it. The new working directory
+> -is linked to the current repository, sharing everything except working
+> -directory specific files such as `HEAD`, `index`, etc. As a convenience,
+> -`<commit-ish>` may be a bare "`-`", which is synonymous with `@{-1}`.
+> +Create `<path>` and checkout `<commit-ish>` into it. The new worktree
+> +is linked to the current repository, sharing everything except per-worktree
+> +files such as `HEAD`, `index`, etc. As a convenience, `<commit-ish>` may
+> +be a bare "`-`", which is synonymous with `@{-1}`.
+
+The original has the problem, too, but it is unclear what is created
+at <path> by reading only the first sentence, even though the
+mention of "The new worktree" that immediately follows strongly
+hints that we are creating a worktree.
+
+    Create a new worktree at <path> and ...
+
+perhaps?  This clarification is not even part of one and a half ;-)
