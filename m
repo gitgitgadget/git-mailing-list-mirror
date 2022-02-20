@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49AE7C433F5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 608F1C433FE
 	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 17:54:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242127AbiBTRy6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 12:54:58 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35186 "EHLO
+        id S242592AbiBTRy7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 12:54:59 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:35200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231462AbiBTRyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 12:54:53 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99B99527F4
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:54:31 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id d27so23279749wrc.6
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:54:31 -0800 (PST)
+        with ESMTP id S234398AbiBTRyy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 12:54:54 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C370527F2
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:54:33 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id h6so23248890wrb.9
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 09:54:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=8jYl8gjf0naJJiVvZzP4wht3NW0AgZiyMz69tEpui/o=;
-        b=VTGa+RFflIvFU1XkqcBSf9DFyYzlaAUWQ+MfiL8Ns1KbgAmOKznn6NzNf+et7ZJ29+
-         x36h2eYumbhnjB3vMIlpQWW4ksVO0SRUuIPTtHCNcP+Vxo3J0CwWI4DJXANsiOLGYqNf
-         h/V99NS1ATI/AVL4tZxIvDDZSnygsOJb/oY1baImZgwDVleTAspw/EjytXtDc+zmi3Po
-         NSdrEu/ru+JbQ04VOnyarCgCBMid8iaguXskgE8UKjQ6/HCrk0CZGQa5FqWLs2MGHVNH
-         WgGk5l+TKdqMDHNDKbso4MzFbQQwevooSVCuukGd11n7wDygGIkVyV9riuaWsSWmzCVh
-         xWjA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=M3yfAW+FMygRnAbUO3SWrYQH55uT4SNwhA5DqD8nFTc=;
+        b=MLIBCiauXYpI3hQzFqU7lTJcRSsJgdNpuLoraPxvr1OyUpe2ZLIumoIrwC/YRVyP7q
+         yXJ7IQoKK+OakVDTzPHZg32lgmq+4YGJVq7X8vhkIQM/zOnZOobixWFm8ut6mMgNKcsn
+         C07aw/O6VT7aG4+p83SCWf7YuEanhbADghoOTvbHSw9skxm/4GWs2jpbK2tp+5A6vto2
+         nIJwZHSdBL1Z+S7dWK7vRP6QfJPBimrN4fajju5BZYyrc2GxK4dSRE9n3+HCpDXkuIai
+         vLm2u3zu2idAjO/AkCDVLmz3FD4+zSemSkKZ2LFzGcw7NVh6xyTwNSUWZsGVeWRosn4D
+         Zpgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=8jYl8gjf0naJJiVvZzP4wht3NW0AgZiyMz69tEpui/o=;
-        b=D7ykQt1vT7zPbijFwFYegflkwjMwbCZ44dDnJ4klZqcyQjqbDpyxX+zTyl0gKAA/X2
-         +iyKXP0HFFRV4FoaaGsSsYGefqt31hAZDKbei7XeX4maAai7UDHTPDykPb9930Gm0rQl
-         Vbtoh6gj7yD+P+LGLK+rfnvvZEwOkZ/YHN7ymxTwyRYrHir1K5uYrUW0SE4eOQVxvzgL
-         vvNmrPCIhbWN8MZYGfwxpdmC+PQ/XcYXtayjpOW5a/FmxXVhuAob8FY5AovGF78CkEOj
-         ud5B1ZFRpzTP2yYyAge58hdvR3SWLM2PgnsG3Ll0HGszy8Ehj7qWvHM721F3weW8rUs3
-         IrQQ==
-X-Gm-Message-State: AOAM531xpms5hfY59Ql2q/Aru5ZiBlanjbYKRvuCCSxNCUS6IqQNVpLP
-        JwWfUL9B0bxCizcmbwdGrtI6FBmfrfs=
-X-Google-Smtp-Source: ABdhPJzZSZeoPHPEcljPN9033/1Za2yMeMZwR0zIi1I5BqIdZdzuZiT8caypGK5wM5HZmOO65UwlUw==
-X-Received: by 2002:a5d:4536:0:b0:1e5:64fb:a531 with SMTP id j22-20020a5d4536000000b001e564fba531mr12785476wra.264.1645379669879;
-        Sun, 20 Feb 2022 09:54:29 -0800 (PST)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=M3yfAW+FMygRnAbUO3SWrYQH55uT4SNwhA5DqD8nFTc=;
+        b=Crc//RqbL8lhd5koV/ljF5fypw4vfxe+TPNeV0Dn6Y4/MvQiUeaJ2IA5Rsh8TY1fda
+         vY9j+TQR5JjDTA2kHxAxPs98jT4l3r7ji6R7cho7IIXJ6d6R6L39RmqMdZLOYri+af3X
+         3H4SlcL4AtvH8n+yg5C2bAAzv7M/Tq5Kwx1snouRf/Tvqf6H88iMe7xA9G35B0kyWny+
+         QVoRno4lBK5eTYdsBzKcC6wB0HyLkmmT6egcFgP7bG+diRVZBtCVxksAWTBF8YZF+mmv
+         +BcCb3e4CZ5m14Ga6fraA60c7KA12Vjctlq9sDhexbfR+vdZk9njc466Hbad1JgN8nk/
+         wZow==
+X-Gm-Message-State: AOAM533sY1OfH3UykpuNeG2//s8CDrc3LhEysYeINa88ML+EybjBkDg5
+        PiSZtGB6ffdtSMeqDuRMgc6juZFk4qk=
+X-Google-Smtp-Source: ABdhPJzy2T9mG3OOhCnbsWPLv7JbNuFTFha+tOpYBYlaNwnEVUH+ZFhRivhqx/h3QsOOEm2i+qsNlQ==
+X-Received: by 2002:a5d:64e6:0:b0:1e4:a576:5800 with SMTP id g6-20020a5d64e6000000b001e4a5765800mr12732434wri.49.1645379671618;
+        Sun, 20 Feb 2022 09:54:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y10sm5163949wmi.47.2022.02.20.09.54.29
+        by smtp.gmail.com with ESMTPSA id g5sm5204380wmk.38.2022.02.20.09.54.30
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Feb 2022 09:54:29 -0800 (PST)
-Message-Id: <a113ed9a8449b57e2a88a24244f3e45b24a01862.1645379667.git.gitgitgadget@gmail.com>
+        Sun, 20 Feb 2022 09:54:31 -0800 (PST)
+Message-Id: <ccc5b1ef9fb4dbeedfbc1ad8f0da36299bf48b56.1645379667.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
 References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 20 Feb 2022 17:54:17 +0000
-Subject: [PATCH 01/11] worktree: combine two translatable messages
-MIME-Version: 1.0
+Date:   Sun, 20 Feb 2022 17:54:19 +0000
+Subject: [PATCH 03/11] worktree: extract copy_sparse_checkout()
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     "mailto:sunshine@sunshineco.com" 
         <[sunshine@sunshineco.com]@vger.kernel.org>,
@@ -72,36 +72,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-These two messages differ only by the config key name, which should not
-be translated. Extract those keys so the messages can be translated from
-the same string.
+This logic was introduced by 5325591 (worktree: copy sparse-checkout
+patterns and config on add, 2022-02-07), but some feedback came in that
+the add_worktree() method was already too complex. It is better to
+extract this logic into a helper method to reduce this complexity.
 
-Reported-by: Jean-Noël AVILA <jn.avila@free.fr>
+Reported-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/worktree.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ builtin/worktree.c | 33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index c6eb636329a..7c272078dc9 100644
+index 2771a6dc793..c806aa2b261 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -384,11 +384,13 @@ static int add_worktree(const char *path, const char *refname,
- 			    bare &&
- 			    git_config_set_multivar_in_file_gently(
- 					to_file, "core.bare", NULL, "true", 0))
--				error(_("failed to unset 'core.bare' in '%s'"), to_file);
-+				error(_("failed to unset '%s' in '%s'"),
-+				      "core.bare", to_file);
- 			if (!git_configset_get_value(&cs, "core.worktree", &core_worktree) &&
- 			    git_config_set_in_file_gently(to_file,
- 							  "core.worktree", NULL))
--				error(_("failed to unset 'core.worktree' in '%s'"), to_file);
-+				error(_("failed to unset '%s' in '%s'"),
-+				      "core.worktree", to_file);
+@@ -236,6 +236,22 @@ static void check_candidate_path(const char *path,
+ 		die(_("'%s' is a missing but already registered worktree;\nuse '%s -f' to override, or 'prune' or 'remove' to clear"), path, cmd);
+ }
  
- 			git_configset_clear(&cs);
- 		}
++static void copy_sparse_checkout(const char *worktree_git_dir)
++{
++	char *from_file = git_pathdup("info/sparse-checkout");
++	char *to_file = xstrfmt("%s/info/sparse-checkout", worktree_git_dir);
++
++	if (file_exists(from_file)) {
++		if (safe_create_leading_directories(to_file) ||
++			copy_file(to_file, from_file, 0666))
++			error(_("failed to copy '%s' to '%s'; sparse-checkout may not work correctly"),
++				from_file, to_file);
++	}
++
++	free(from_file);
++	free(to_file);
++}
++
+ static void copy_filtered_worktree_config(const char *worktree_git_dir)
+ {
+ 	char *from_file = git_pathdup("config.worktree");
+@@ -379,21 +395,8 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * If the current worktree has sparse-checkout enabled, then copy
+ 	 * the sparse-checkout patterns from the current worktree.
+ 	 */
+-	if (core_apply_sparse_checkout) {
+-		char *from_file = git_pathdup("info/sparse-checkout");
+-		char *to_file = xstrfmt("%s/info/sparse-checkout",
+-					sb_repo.buf);
+-
+-		if (file_exists(from_file)) {
+-			if (safe_create_leading_directories(to_file) ||
+-			    copy_file(to_file, from_file, 0666))
+-				error(_("failed to copy '%s' to '%s'; sparse-checkout may not work correctly"),
+-				      from_file, to_file);
+-		}
+-
+-		free(from_file);
+-		free(to_file);
+-	}
++	if (core_apply_sparse_checkout)
++		copy_sparse_checkout(sb_repo.buf);
+ 
+ 	/*
+ 	 * If we are using worktree config, then copy all current config
 -- 
 gitgitgadget
 
