@@ -2,75 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BBC8C433EF
-	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 02:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 705DAC433EF
+	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 05:10:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233561AbiBTCo0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Feb 2022 21:44:26 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:58694 "EHLO
+        id S229580AbiBTFGK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 00:06:10 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230431AbiBTCoZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Feb 2022 21:44:25 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6B593D4B6
-        for <git@vger.kernel.org>; Sat, 19 Feb 2022 18:44:05 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 242D2172A43;
-        Sat, 19 Feb 2022 21:44:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oLAtprox1Qo0R21vr/fF7gPCEYI+3FaE9V+Yhe
-        2PGhk=; b=cs/bhN1MrFNfdhlAnkZWcDZwi/cSZEdhzh0hF2G1dSqpv3xQ1ow/NO
-        NQkyfXJW06PmwecxSt9LzcmJeNbX2CzqmG5DzqUzC8KsvVuMLeNxzaR3SRC7qK+C
-        pCID8LvZreMHNTmdDhByGT0/liZzCbZ6ejHrHtcfNNND3brlyRu1g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1D28A172A42;
-        Sat, 19 Feb 2022 21:44:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8F0AD172A3F;
-        Sat, 19 Feb 2022 21:44:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/9] ci: make Git's GitHub workflow output much more
- helpful
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet>
-Date:   Sat, 19 Feb 2022 18:44:01 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Sun, 20 Feb 2022 00:46:24 +0100
-        (CET)")
-Message-ID: <xmqqtucuw93i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229491AbiBTFGJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 00:06:09 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F433517DE
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 21:05:45 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id e3so21355319wra.0
+        for <git@vger.kernel.org>; Sat, 19 Feb 2022 21:05:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=b7Dd8nap5pgOWdhuTy9VGMEXPvaxwW6mjyVoeC8FZo4=;
+        b=dXjtBRUEsuWu4Yfzmk15dIJlZ7hJ13uxrwUzAFNIRpPAHGuhduiEeZM5Cj3pus5un2
+         JrC2KpSa0IjUZtkzTgtz9zimfFaZRsAxTwYuEFeb3V6j/GbryhP1SZpwpvhyLRiYJBab
+         qN8OOIAbpIhU2YpTS0k0IQEAfcW2MzcZWTECFueFTQIIvWzEb2Mn6lKjAaBJfbD2zSj6
+         DviReYwRTphl4bdGaPLYmbpSSoJpx7rxHYgkKjZJEFPzUMa9LfM2IhDAijlayzdGMiNR
+         DTNXOZt10eu0bX9fC29JO+t40ID8p9bv9kaLSVyqNOjU7gs5Sral0BAsWH/73VM7ubQ+
+         6hIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=b7Dd8nap5pgOWdhuTy9VGMEXPvaxwW6mjyVoeC8FZo4=;
+        b=GCg7Q+aX0EYVg50jhEjODFd2r7uffwk9kKE55wyoDHIc7tcn8ep2Sh31x9YGolyCP7
+         VHhZhovMDeQE7eFyfpGjT0MsS0WdJCxfbmOMeLb3O/Cn90dNWXnEb8qcIwZMT8GqbzkK
+         5xWbINpxqKe1TL85oJNZa1nuoetbZ52iXOxM1IvHuZlwxlcV5DLRsEiW4qCz3eU/yipu
+         TEgbOQHlcSk6EvsDWpevgC90ovoJZZb5O5Pso8+K0PWQs23woLzivi5AI9I0ebB1YFa0
+         hlTlaTE75+Ta/d9dRUtrbbQRnbjDDJq2b40T0lyg31I5P8kvkbVwvFTSH04c1ATQERxO
+         EtyQ==
+X-Gm-Message-State: AOAM533TmxGXrIb4P/thdOwkG8yXvE0GE+yNq92Lhe85CRQbKX3992ME
+        SsQcJwOrR9qnrmzQxZF9SsdNDYXEhRY=
+X-Google-Smtp-Source: ABdhPJxJBnKCaQyxcN/OXAR9d9DNyjQdmJUjHtycmA/hxifPM4ROlgDZkuVourBM4ZGzGJHJVq3l7Q==
+X-Received: by 2002:a5d:6d4c:0:b0:1e6:335f:6b65 with SMTP id k12-20020a5d6d4c000000b001e6335f6b65mr11828588wri.371.1645333543712;
+        Sat, 19 Feb 2022 21:05:43 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bg23sm4858656wmb.5.2022.02.19.21.05.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 19 Feb 2022 21:05:43 -0800 (PST)
+Message-Id: <pull.1153.git.1645333542011.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 20 Feb 2022 05:05:41 +0000
+Subject: [PATCH] Provide config option to expect files outside sparse patterns
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F68C5F4C-91F6-11EC-9C1F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, jabolopes@google.com,
+        Jeff Hostetler <jeffhostetler@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+From: Elijah Newren <newren@gmail.com>
 
-> I notice that you did not take this into `seen` yet. I find that a little
-> sad because it would potentially have helped others to figure out the
-> failure in the latest `seen`:
-> https://github.com/git/git/runs/5255378056?check_suite_focus=true#step:5:162
->
-> Essentially, a recent patch introduces hard-coded SHA-1 hashes in t3007.3.
+Typically with sparse checkouts, we expect files outside the sparsity
+patterns to be marked as SKIP_WORKTREE and be missing from the working
+tree.  VFS for Git can be used to turn this expectation on its head:
+all files are considered present in the working copy, though they are
+not vivified until first access access.  With VFS for Git, most of the
+files do not match the sparsity patterns at first, and the VFS layer
+automatically updates the sparsity patterns to add more files whenever
+files are written.
 
-I saw the thread, I saw a few patches were commented on, and a few
-were left unanswered, but one was replied by the original submitter
-with a "Good catch!", making me expect the topic to be discussed or
-rerolled to become ready relatively soon.
+With this background, this special usecase does not play well with the
+safety check we added in commit 11d46a399d ("repo_read_index: clear
+SKIP_WORKTREE bit from files present in worktree", 2022-01-06).
+Checking SKIP_WORKTREE files to see if they are present in the working
+tree causes them all to be immediately vivified.  Further, the special
+VFS layer, by virtue of automatically updating the sparsity patterns and
+catching all accesses, isn't in need of that safety check either.
+Provide a configuration option, core.expectFilesOutsideSparsePatterns
+so that those with this special usecase can turn off the safety check.
 
-But nothing happened, so I even forgot to take a look myself by
-picking it up in 'seen'.  It does sound sad that the topic was left
-hanging there for 3 weeks or so in that state without any reroll or
-response.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    Provide config option to expect files outside sparse patterns
+    
+    Builds on en/present-despite-skipped, and addresses issue reported at
+    https://lore.kernel.org/git/YhBCsg2DCEd9FXjE@google.com/
 
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1153%2Fnewren%2Fpresent-despite-skip-worktree-toggle-for-vfs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1153/newren/present-despite-skip-worktree-toggle-for-vfs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1153
+
+ cache.h                          |  1 +
+ config.c                         |  5 +++++
+ environment.c                    |  1 +
+ sparse-index.c                   |  3 ++-
+ t/t1090-sparse-checkout-scope.sh | 19 +++++++++++++++++++
+ 5 files changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/cache.h b/cache.h
+index 281f00ab1b1..1f35d8a59ea 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1003,6 +1003,7 @@ extern const char *core_fsmonitor;
+ 
+ extern int core_apply_sparse_checkout;
+ extern int core_sparse_checkout_cone;
++extern int core_expect_files_outside_sparse_patterns;
+ 
+ /*
+  * Returns the boolean value of $GIT_OPTIONAL_LOCKS (or the default value).
+diff --git a/config.c b/config.c
+index 2bffa8d4a01..68e877a1d80 100644
+--- a/config.c
++++ b/config.c
+@@ -1520,6 +1520,11 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.expectfilesoutsidesparsepatterns")) {
++		core_expect_files_outside_sparse_patterns = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "core.precomposeunicode")) {
+ 		precomposed_unicode = git_config_bool(var, value);
+ 		return 0;
+diff --git a/environment.c b/environment.c
+index fd0501e77a5..c86ebe9ce74 100644
+--- a/environment.c
++++ b/environment.c
+@@ -70,6 +70,7 @@ char *notes_ref_name;
+ int grafts_replace_parents = 1;
+ int core_apply_sparse_checkout;
+ int core_sparse_checkout_cone;
++int core_expect_files_outside_sparse_patterns;
+ int merge_log_config = -1;
+ int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
+ unsigned long pack_size_limit_cfg;
+diff --git a/sparse-index.c b/sparse-index.c
+index eed170cd8f7..8e2a3973856 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -396,7 +396,8 @@ void clear_skip_worktree_from_present_files(struct index_state *istate)
+ 
+ 	int i;
+ 
+-	if (!core_apply_sparse_checkout)
++	if (!core_apply_sparse_checkout ||
++	    core_expect_files_outside_sparse_patterns)
+ 		return;
+ 
+ restart:
+diff --git a/t/t1090-sparse-checkout-scope.sh b/t/t1090-sparse-checkout-scope.sh
+index 3deb4901874..feef883523b 100755
+--- a/t/t1090-sparse-checkout-scope.sh
++++ b/t/t1090-sparse-checkout-scope.sh
+@@ -84,4 +84,23 @@ test_expect_success 'in partial clone, sparse checkout only fetches needed blobs
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'skip-worktree on files outside sparse patterns' '
++	git sparse-checkout disable &&
++	git sparse-checkout set --no-cone "a*" &&
++	git checkout-index --all --ignore-skip-worktree-bits &&
++
++	git ls-files -t >output &&
++	! grep ^S output >actual &&
++	test_must_be_empty actual &&
++
++	test_config core.expectFilesOutsideSparsePatterns true &&
++	cat <<-\EOF >expect &&
++	S b
++	S c
++	EOF
++	git ls-files -t >output &&
++	grep ^S output >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+
+base-commit: d79d29935262f8422a6e620bd33cc2fce28e669d
+-- 
+gitgitgadget
