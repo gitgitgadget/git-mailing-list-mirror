@@ -2,157 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14C2EC433EF
-	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 20:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F141C4332F
+	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 21:23:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234172AbiBTUtA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 15:49:00 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56952 "EHLO
+        id S245141AbiBTVYA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 16:24:00 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiBTUs7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 15:48:59 -0500
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5D98DEA2
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 12:48:37 -0800 (PST)
-Received: by mail-oi1-x236.google.com with SMTP id q5so8922378oij.6
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 12:48:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=e0S0zGow4bvPjnwkHEqHFpyhD4UJ2jl/YEvAV8w04sw=;
-        b=jNujAZRNENXhNPvTBlkfByqzU23gyUWvP5RErCr3b2pCKBOy4cPzchHeU2pYyf0aCZ
-         /4f47L9qtYWZoQFKM3k0mEVOTRfz8wSYT+nMaUQHf15Pxm73A1yH/gsC1+IPnl8bEK5U
-         o53fuRd7FRAHdg2RYOcGRJwckOXjByH0f3cNilkJrY5o/OP/xWFk9FRfPkhH9sDqyPeG
-         GmnVuJO2HnSw5EbO7IBA1zovM6xoPFXh+2sfZdp9vvFIe6kXHHnNl75l/oRrVlDT5rPZ
-         vwt0eAeOTtVcZVqxZoJHHHYI1/CuWS43fHyv99PpTzovNCW180dJKEeCAVnA80Y6jGxm
-         Revg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=e0S0zGow4bvPjnwkHEqHFpyhD4UJ2jl/YEvAV8w04sw=;
-        b=BUh8y8nBEWO3ylj0+B1q4G0FdyYJ8uuVaIe2eTm+ZgsJnuf6m9oZ8vHbjnaCjf+MDq
-         HI8uThKEelVPF6YBaGSnYRl8e60ISLrsHRWEhEhqwbMWR2HcUhOdaBA4XJkvp5Tku4ye
-         QKwQ1gjUhYbKc94HVFqy/9aNtQBT7OS2BosljwZcuqfBVqEBBv+q+YPfCqIOa0G/IEl5
-         hxoOXLaLkmHqs1UlV7UyGnaQxOHbIwoFTBduTFKYzvI4d0Q0PX5mol2LXB7gUxyOnzCc
-         qh+s7Qf9t6Az5SAMTQ/kARCKoxL1zI4wUlqmGKaQodtklSOOuhVaOaStWLm2XPBm5bE9
-         3lqQ==
-X-Gm-Message-State: AOAM5336grl5ksbKCXsjf5R8UJufjUJG4d0HPfDtjKvnBujegEPpqLwv
-        vJPQdCrsf7Wi2coRLMyTW4Js
-X-Google-Smtp-Source: ABdhPJx6/OH+ox3aFEQtXdvwWnVMvuNYfvOOrGRfI0AzwasSGJ9DtofV1aBFIAU1S2ETqH7gkPqYYQ==
-X-Received: by 2002:a05:6808:10cb:b0:2d5:f40:8665 with SMTP id s11-20020a05680810cb00b002d50f408665mr993656ois.140.1645390117184;
-        Sun, 20 Feb 2022 12:48:37 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id l40sm4716710otv.12.2022.02.20.12.48.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Feb 2022 12:48:36 -0800 (PST)
-Message-ID: <fcaac95c-013a-f82b-f359-b9b58dc7d2a9@github.com>
-Date:   Sun, 20 Feb 2022 15:48:36 -0500
+        with ESMTP id S245145AbiBTVX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 16:23:59 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B61137BFB
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 13:23:36 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 82AB35A0A6;
+        Sun, 20 Feb 2022 21:23:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1645392215;
+        bh=++OtTOJEAdGpiVb7UuRoUB8jKqr/f4ymKNIeWMhHWgQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=vzKVPiviSUpCeFlWy/85Xh0XKLqpGsSBoxSddz2ehOTko/PXVPMUO8ieQwldpgW+U
+         mmpjRXCvIMUQRkJXcM3ck99XFkCTkzifXDadmiPamUzNoiWJluK4zJiM5GMwHY6YlM
+         QIUZYfuw+8nUTbR1tmxyvQEdrwTwYgZFIh44oMZtW1ALiaJ7YzDc9uNdBlR3ACrJLv
+         LNaoLRCicQEXi78kw76A7Cx3ls0mtUbLPZ608h1uPmof68rHJdSil/fnV5Z3dUlyfg
+         lU2dZuOBaenQP8xZcbCykaETM0hgbt80RYyegItVuWCL3mlx5G2lozOnK+xT9xDyOF
+         aOs/0ULWOzccijmtD6ON7nTjK8KkGnZBQEB05nSEfGVs/UfteVJPDBVWNKYaF3cwQD
+         M611a+yOzpN/JGJ5hijvGAyfJgZYR3hVrw0u9vCc6aeRxYqJWU9tfcHbK5cebv+XrD
+         3ycbgbiS5WPKQCk/UfUB8LA8ks17tXXX47eA7KZQJWCufS48u2z
+Date:   Sun, 20 Feb 2022 21:23:32 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     "Merlin (they / them) Patterson" <merlinpatt@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Merlin (they/them) via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        "Merlin (they/them)" <merlinpatt+githubgit@gmail.com>
+Subject: Re: [PATCH] docs: update coding guidelines to be more inclusive
+Message-ID: <YhKxVBReUMJUB0tw@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        "Merlin (they / them) Patterson" <merlinpatt@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "Merlin (they/them) via GitGitGadget" <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        "Merlin (they/them)" <merlinpatt+githubgit@gmail.com>
+References: <pull.1070.git.git.1645029267415.gitgitgadget@gmail.com>
+ <xmqq4k4ycvgb.fsf@gitster.g>
+ <220217.86a6epiyii.gmgdl@evledraar.gmail.com>
+ <xmqqfsog512t.fsf@gitster.g>
+ <CAFZ26y3re+fJapXzLOpf73F-ECXhg2sCoBtm_=VUFy5nbN2UVQ@mail.gmail.com>
+ <220219.8635kfhfoy.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 05/11] worktree: use 'worktree' over 'working tree'
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <avila.jn@gmail.com>
-References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
- <a6a8eb8e7bb4520bfe37d3a79329cce7886af59c.1645379667.git.gitgitgadget@gmail.com>
- <xmqq7d9puv6l.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq7d9puv6l.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="cd6RC5wjW+GD4Xmc"
+Content-Disposition: inline
+In-Reply-To: <220219.8635kfhfoy.gmgdl@evledraar.gmail.com>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/20/2022 3:42 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Derrick Stolee <derrickstolee@github.com>
->>
->> It is helpful to distinguish between a 'working tree' and a 'worktree'.
->> A worktree contains a working tree plus additional metadata. This
->> metadata includes per-worktree refs and worktree-specific config.
->>
->> This is the first of multiple changes to git-worktree.txt, restricted to
->> the DESCRIPTION section.
-> 
-> Looked almost perfect, except for one and a half iffy parts.
-> 
->> -If a working tree is deleted without using `git worktree remove`, then
->> ...
->> +If a worktree is deleted without using `git worktree remove`, then
->>  its associated administrative files, which reside in the repository
->>  (see "DETAILS" below), will eventually be removed automatically (see
-> 
-> I think this one should be "working tree".  The administrative files
-> are integral part of a worktree, but from the point of view of a
-> working tree, it is "associated" with it and not part of it.  If you
-> delete without using "git worktree remove", that would be done with
-> a command like "rm -f", which removes the working tree but not the
-> worktree.
 
-Good point. I agree. There is some similar discussion in the COMMANDS
-section around moving/renaming/repairing worktrees, so likely similar
-thoughts apply there, too.
- 
->> -If a linked working tree is stored on a portable device or network share
->> -which is not always mounted, you can prevent its administrative files from
->> -being pruned by issuing the `git worktree lock` command, optionally
->> -specifying `--reason` to explain why the working tree is locked.
->> +If a linked worktree is stored on a portable device or network share which
->> +is not always mounted, you can prevent its administrative files from being
->> +pruned by issuing the `git worktree lock` command, optionally specifying
->> +`--reason` to explain why the worktree is locked.
-> 
-> This one, because what is on a removal device is the working tree
-> half of a worktree that leaves the "administrative files" half still
-> on the mothership when it is removed, I think it is OK to call it a
-> working tree, but because we defined "a linked worktree" and removed
-> the definition of "a linked working tree" earlier, the original as-is
-> won't work well.
-> 
-> "If the working tree portion of a linked worktree is stored on ..."
-> may be more correct, but it is a bit mouthful.  I dunno (hence this
-> is not even a full "iffy" part, just halfway iffy).
+--cd6RC5wjW+GD4Xmc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think the wordy way you say it here is the most correct way.
+On 2022-02-18 at 23:18:35, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> I think this came about because of a previous discussion that you'll
+> find in the list archive where some native speakers were maintaining
+> that "they" in this context was widely accepted usage because it had
+> made it into some style guides single-digit years ago.
 
-Another way to approach this is to start at the definition by saying
-"We will refer to the location of a worktree to be its associated
-working directory, even though its metadata is stored in another
-location."
+Singular they has been in common use for centuries.  It became less
+common for many years because prescriptivists proposed using "he" to
+refer to people of all genders, which was in common use for a long time,
+until it was widely criticized as being sexist (and also, at times,
+sounding bizarre).  "He or she" was then used in formal writing, but
+that was also criticized as not being inclusive as well as being wordy
+and awkward.  During this entire time, singular they has remained in
+common use in speech and informal writing and is widely recognized as
+part of the English language.
 
-That could allow us to use "worktree" even in these cases, but does
-create some overloading of the word.
+It's true that it is only now becoming more acceptable in formal
+writing, but it is well known and commonly used in English as a whole
+and has been for a long time.
 
->>  add <path> [<commit-ish>]::
->>  
->> -Create `<path>` and checkout `<commit-ish>` into it. The new working directory
->> -is linked to the current repository, sharing everything except working
->> -directory specific files such as `HEAD`, `index`, etc. As a convenience,
->> -`<commit-ish>` may be a bare "`-`", which is synonymous with `@{-1}`.
->> +Create `<path>` and checkout `<commit-ish>` into it. The new worktree
->> +is linked to the current repository, sharing everything except per-worktree
->> +files such as `HEAD`, `index`, etc. As a convenience, `<commit-ish>` may
->> +be a bare "`-`", which is synonymous with `@{-1}`.
-> 
-> The original has the problem, too, but it is unclear what is created
-> at <path> by reading only the first sentence, even though the
-> mention of "The new worktree" that immediately follows strongly
-> hints that we are creating a worktree.
-> 
->     Create a new worktree at <path> and ...
-> 
-> perhaps?  This clarification is not even part of one and a half ;-)
+I will also freely admit that for people who have learned English as a
+second language sometime in the past, this would probably not have been
+covered in the textbook.  As I continue to use Spanish, I learn things
+about the language and how it's used today that differ from what I
+learned when I started learning it formally over two decades ago, and
+that's okay. Language evolves and as speakers of a second or third
+language, we'll have to evolve with it.
 
-This is a good change.
+> I.e. this was a perhaps flawed attempt to say something like "this
+> phrasing sounds weird, but it's actually correct".
+>=20
+> As someone who speaks at least 4 languages regularly with levels of
+> proficiency ranging from native to something that sound as though I'm
+> trying to butcher the language, I can assure you that advice like that
+> *is* really useful to a non-native speaker.
 
-Thanks,
--Stolee
+I agree, this context would be helpful.  Maybe, if we retain this, we
+can just explicitly say, "Even though some non-native speakers may find
+the use of singular they unusual, it is in fact common in English and
+preferred in our documentation."
+
+> I.e. whatever you or anyone else thinks about this usage of "they" it
+> *is* relatively obscure usage of English. I'd even bet that for some
+> readers of this document it's the first time they've ever seen it.
+
+It is simply not the case that this is obscure.  As I've said in the
+past, singular they, in the sense of referring to a single person whose
+gender is unknown or irrelevant, has been in use since the 14th century
+and has been used by William Shakespeare, Lord Byron, and Jane Austen.
+It is routinely used for this purpose by fluent non-native speakers as
+well (I have noted colleagues doing this).
+
+I will admit that using they as the pronoun for a person whose gender is
+known and who has explicitly requested the use of this pronoun is much
+more recent, which probably dates to the mid 20th century (albeit at a
+much lower frequency than today), but this is not the context in which
+we are using the pronoun in our documentation.
+
+It may be that for some readers it is the first time they've seen it,
+but it will be far from the last if they continue to read English.
+Understanding the main idea of a technical document in one's specialized
+field (e.g., the Git documentation) is part of the CEFR B2 level, and at
+that point, I'd expect the reader to have read numerous news articles
+and online documents where this usage is common or becoming so.
+
+As to your suggestion to this effect, I should point out that I'm fine
+with removing this text from the documentation, as you suggested,
+provided we can stop having extended debates about it on the list.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--cd6RC5wjW+GD4Xmc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYhKxUwAKCRB8DEliiIei
+gXrYAQDb3RfEsmz9M/Cvzyqy2GJMGB9rFf957BTDI0J0kWh5EQEA8mBWYO2vwRud
+ogTwF7bRngsLtxjAXr/k0RpGmh6Tzw0=
+=Oasg
+-----END PGP SIGNATURE-----
+
+--cd6RC5wjW+GD4Xmc--
