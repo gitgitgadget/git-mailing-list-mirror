@@ -2,111 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FA9CC433EF
-	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 19:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 246D2C433EF
+	for <git@archiver.kernel.org>; Sun, 20 Feb 2022 19:44:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244666AbiBTTmT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 14:42:19 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:55102 "EHLO
+        id S244669AbiBTTo3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 14:44:29 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:34660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232474AbiBTTmS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 14:42:18 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B91FC62
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 11:41:57 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id q4so12540428qki.11
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 11:41:57 -0800 (PST)
+        with ESMTP id S232474AbiBTTo2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 14:44:28 -0500
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 729E530F46
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 11:44:06 -0800 (PST)
+Received: by mail-qk1-x731.google.com with SMTP id q4so12544275qki.11
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 11:44:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=bU1whMsIjbOM2iVeAFgzjqQFjolFx9GTtizkv9MzrgU=;
-        b=d22jZsHG2ls/Qh8ZfeWk3OjLfGsfnXqFzofXcO20FtrqxicO2ECRAQJFd23xGsNK7c
-         6CGkJ/Rittn3eGovhvxrm4RWb0i9IBHk7gnhqzNdQC773bc5j7vozLQUcXvsSpcYYY2k
-         cSt/9mIjmFt8VCHi4+2rECiXVUYMZqGfQ1XzAezPB2X6oDE+T3fXdI0Uo9nj5vBoAaPp
-         oIcDWbf4fNI5VkUtpoDwCRYPjyLWg4uQfJV+09Wtu9QVcVgSEdYw44gXHRC6UFtqiZxF
-         LfPNW4F/sC8un+ETHiCLp9lHAlGHCArYj/RooumIlLlUeuZFFCTzPWsYQkuv5itfYhEM
-         t5OQ==
+        bh=WGEOIX3IJPx6zNcwFWCN+nJnHPEjpvj1pd9xU3CMwo8=;
+        b=DnlFHL74ufmBUBmTlJYmdHT8N3tIMh1XJf14W+qdAw+3yh8oxWiQheEQCQ85VwrB7N
+         dZ6AdHlpoG+NDDEjzk7PTfgSlCw3aICwCWFmXrx88U20BahNBgRNEVNiZFupb0L6P85e
+         wYl+I6iCbA2DRfQJisc9CbvCHwL/rSP9j3Bb9n/4r4IVcrhA95Uw9DXkoXQkEUql2rHN
+         wKpigFspO5ggGO1ORLqEoC2QIi//vYD4jmt1/m0+UHfTcD6ehiyV5YQkYqzpCWSW6hea
+         tCQupAAm/xIj/VJcoU7yq2+Xbfe68/0hYnhOmEY5yhsC3kKBwmjFdK9OR6RQORJTEPgR
+         fhuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=bU1whMsIjbOM2iVeAFgzjqQFjolFx9GTtizkv9MzrgU=;
-        b=uQvrdfKMfaqMj0YSuwG+06tT/PRhC/f0ztoftz5udnSzFgniq99A0jWZW/ib/F7yn1
-         O4bIAMFBXuUIWJGrJSwjz54y2s/8pw7pLe4kd3LrgNG8lKtjVxzFdP7halfGA7yQvwav
-         hAR7zBtjpE/wwWc+EazBOEtXxm0JeCdBiKuzlvUIwCsv3hRyNJrnT7hR+pSJL/+4miWz
-         6i+6aONHUEQS/LU0nAtIghJhUAHxnB8SqA+aN2quC4Ch8slEfbYU6U6RMBDmd9+hVnTq
-         PDaeIds9k8u7/X+/HrE6G5vE7zZFxsyi8YOYTdih8byrG5G1vKHrqvdLz+PwUH9o2VBp
-         XVew==
-X-Gm-Message-State: AOAM530wsc5+QSMHNxm3V4cOUWm77ClbmB8Bh6bWAtY28tIab06mTCck
-        WqGDI06Khe2WF5TgeiSrHTaS
-X-Google-Smtp-Source: ABdhPJzmf7EnDCn08VP1F6LnQwBGirjJewlFeZnEZisydcbmT8+rxYtWdQBb7ztWH93NvesldzzkZQ==
-X-Received: by 2002:a37:5503:0:b0:4e1:2b66:dc53 with SMTP id j3-20020a375503000000b004e12b66dc53mr10201132qkb.706.1645386116373;
-        Sun, 20 Feb 2022 11:41:56 -0800 (PST)
+        bh=WGEOIX3IJPx6zNcwFWCN+nJnHPEjpvj1pd9xU3CMwo8=;
+        b=H4668MpPdKTMC61KQo4upxhNb8hin2Oda91Q+H9w7zrmjz2vOp4dA/p3DbDH4aHVUs
+         LbenWQaC4DXSDQlI/+OTw/1pt4P5sJ6eWel+QrpCkZH54skxYxYrEb8TiE8rksc3n5ku
+         4ST829Jp5a+MApwJba77650wfEbui84SoFGuOFLxIrUkXRNfVNhYe1PGbYm+QJ0x067z
+         /THmADXov+rd8EEcrfgUr9dNBph82iXXfwUqInI74OQADsP8yjA3dV0I6bI2yMjlOunT
+         CHUctvuFSz4WK2fdLsm4a6ZrfF6DTas3Ym2IUeGZXpvGmTFxAIbEwh9qKmM2OX7LMUsC
+         +hEw==
+X-Gm-Message-State: AOAM533onVwPlYX+g45Z5gn8LK6FkAi9FyJ+wAleE1wpL6WQeJmRTlLF
+        vkurWrAaFlJapijAXq1iV96s
+X-Google-Smtp-Source: ABdhPJySBq2oQIG0t7xCH+SZvREkBh2/72Vkviu7011nKCi+Naggk8vCAvlfjsNTJmN5rQbcy+GE9w==
+X-Received: by 2002:a05:620a:799:b0:60d:f1cc:b5cd with SMTP id 25-20020a05620a079900b0060df1ccb5cdmr9090152qka.489.1645386245572;
+        Sun, 20 Feb 2022 11:44:05 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id n16sm3377936qkn.115.2022.02.20.11.41.55
+        by smtp.gmail.com with ESMTPSA id t6sm6172671qtn.59.2022.02.20.11.44.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Feb 2022 11:41:55 -0800 (PST)
-Message-ID: <54a0aa74-57c2-ee65-ae07-cb1b0daf947f@github.com>
-Date:   Sun, 20 Feb 2022 14:41:55 -0500
+        Sun, 20 Feb 2022 11:44:05 -0800 (PST)
+Message-ID: <88f7f183-10a9-1a54-e940-52c31677ac66@github.com>
+Date:   Sun, 20 Feb 2022 14:44:04 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCH] Provide config option to expect files outside sparse
- patterns
+Subject: Re: [PATCH v5 0/5] sparse checkout: fix a few bugs and check argument
+ validity for set/add
 Content-Language: en-US
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, jabolopes@google.com,
-        Jeff Hostetler <jeffhostetler@github.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1153.git.1645333542011.gitgitgadget@gmail.com>
+Cc:     Victoria Dye <vdye@github.com>, Derrick Stolee <stolee@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>
+References: <pull.1118.v4.git.1645080889.gitgitgadget@gmail.com>
+ <pull.1118.v5.git.1645289086.gitgitgadget@gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1153.git.1645333542011.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1118.v5.git.1645289086.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/20/2022 12:05 AM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
+On 2/19/2022 11:44 AM, Elijah Newren via GitGitGadget wrote:
+
+> == Update history ==
 > 
-> Typically with sparse checkouts, we expect files outside the sparsity
-> patterns to be marked as SKIP_WORKTREE and be missing from the working
-> tree.  VFS for Git can be used to turn this expectation on its head:
-> all files are considered present in the working copy, though they are
-> not vivified until first access access.  With VFS for Git, most of the
-> files do not match the sparsity patterns at first, and the VFS layer
-> automatically updates the sparsity patterns to add more files whenever
-> files are written.
+> Changes since v4:
 > 
-> With this background, this special usecase does not play well with the
-> safety check we added in commit 11d46a399d ("repo_read_index: clear
-> SKIP_WORKTREE bit from files present in worktree", 2022-01-06).
-> Checking SKIP_WORKTREE files to see if they are present in the working
-> tree causes them all to be immediately vivified.  Further, the special
-> VFS layer, by virtue of automatically updating the sparsity patterns and
-> catching all accesses, isn't in need of that safety check either.
-> Provide a configuration option, core.expectFilesOutsideSparsePatterns
-> so that those with this special usecase can turn off the safety check.
+>  * have --skip-checks enable running from a subdirectory in non-cone mode
+>  * make sure new die() messages are marked for translation (and using single
+>    quotes instead of double)
+> 
+> Changes since v3:
+> 
+>  * Use strpbrk() instead of multiple strchr(), fix commit message relative
+>    to backslashes.
+> 
+> Changes since v2:
+> 
+>  * Dropped patch 5
+>  * Added Stolee's Reviewed-by
 
-This patch looks like a good solution to the concerns brought up by
-Jonathan N. around vfsd. VFS for Git uses the microsoft/git fork with
-its own custom config to protect things like this. I imagine that we
-will start setting your core_expect_files_outside_sparse_patterns
-variable when reading the virtual filesystem info. We might even modify
-some of our custom checks to use this variable instead. That would make
-them appropriate to send upstream.
-
-Should we update Documentation/config/core.txt describing this config
-key? Or is this intended to be an internal detail only for something
-like vfsd?
-
-The only concern here really is if we want to be picky about the "VFS
-for Git" references instead of "vfsd" references in the commit message.
+I looked at the range-diffs for these iterations and found the changes
+to be acceptable. This version (still) looks good to go.
 
 Thanks,
 -Stolee
