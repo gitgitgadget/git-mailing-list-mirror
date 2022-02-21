@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F7B5C433F5
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 19:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28AFDC433F5
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 19:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233165AbiBUTjp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 14:39:45 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57142 "EHLO
+        id S233094AbiBUTjs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 14:39:48 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233095AbiBUTj2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Feb 2022 14:39:28 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3706322BD2
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:39:00 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id d10so35796420eje.10
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:39:00 -0800 (PST)
+        with ESMTP id S233104AbiBUTja (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 14:39:30 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00339220C0
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:39:01 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id a8so35896818ejc.8
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:39:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5MSZMErovdgwPrkuntoS6Yaji4BIcmuOdMyWxD+uvSM=;
-        b=SLe58eqFVPOwN6GotJbBe8TffsC10TZTjFRtVjGppTIKkBim4yl6nDsNGUS6Y3pV2q
-         VksUp8ShjITCm1V9P8w4LPuUvKmTvPhyr0nDizGgULDjsA/mu8KiQow+WRBs/nPlFglv
-         6KG6/k/UoD0vuyuN9ah6EQ6GvglZ4pULgqQffho0URQ6AgTLeoRVOTr5/oeqpO43iK8j
-         LPWddNb4u1RwoLdVdd/LU1hlAaOx1usn3WWBjYb+fIokqdNknokdSZBWPPOb+ErIONoI
-         cC7oBsEKEJ+s7wbs7y23pHTXKlb+tK+xh3oRSIc4A0LnSgH4v2xX/K3HDIzEJay0Y3rR
-         cXkQ==
+        bh=oAUpehjSe0Pv9RdimtFDeEwfli4XGlL7DRRsUzF5nMk=;
+        b=gmqR2rKL2jAO8j3wXIlyD3WhQlqmKaYSWbGiCSvNtfItVMshZ/HZoknERZx6HFI99H
+         RjBbeUxbOx9uj7uWKaC5jUXLcvX50ACHphEZpnlJFxcshN7VpHCeG0Y1uAD6Lo73WNNC
+         ZbqaX3+MKJmfoVYIh9eBE3c57tyChZQdHxz8klEJ22jXXSjuwIPX6is2PVPjHb/0ntM1
+         CjNatVGwOHVqBgWOH4pK/c0olGJgpY1ivx/VfVKdKlBOzEe2MD13ipfEXDcjDfqAPvGz
+         22e8aa2a1hwPLoFuL5M7pyxyAupSPAIqy9UZi8S2Sj691hjxQJG9dXc4RkHy4gPz+do+
+         Y3Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5MSZMErovdgwPrkuntoS6Yaji4BIcmuOdMyWxD+uvSM=;
-        b=crjj/6SEoK7iEYtVUv10ODlnQNPziR7qAr+RbD58LyUt2yFTgkGJq5h6LTe/MgVSfV
-         KbimB9w20gljfJjSQDzHqfZYcTOwd4XZ2+Msdh258kAQPEyKe90fGOqosdb0BFXVy6Qi
-         dCIlgRKtWcVQ32LM/m6CMGK4T4i8GGkh/vHn7oUkplE5R7BPheAZBNzTWiH9vaGjF2Wl
-         7wG5uwzAVL5L0BfVK5DJflQE3plLGoHs+HYABJKF3bWfIhA88FTzV8BWAly0ORp3tgjo
-         rujn9GABisrW68ZSH25nJ7gxbf67ohcaXMlKBO3xWwx57ZkqzZf7hu2T9A4L8HgyuFqO
-         g7Zw==
-X-Gm-Message-State: AOAM532uK6AYEMV9FveJPVQrFB8M1j5dIuQTfQkwmL4qtb0y6hA4LbQ8
-        IZ9N7Q/TfictTXT9BpA7Qlb6cYgbl3XZ+w==
-X-Google-Smtp-Source: ABdhPJx1AoR6Ba9NKs9qwHpQi6DvKHa4bptGqICWOPCVCwjOpYHmap/zBpksLavRaeiVPtztfqL7YQ==
-X-Received: by 2002:a17:906:b845:b0:6cf:37d1:f246 with SMTP id ga5-20020a170906b84500b006cf37d1f246mr17338771ejb.280.1645472339093;
-        Mon, 21 Feb 2022 11:38:59 -0800 (PST)
+        bh=oAUpehjSe0Pv9RdimtFDeEwfli4XGlL7DRRsUzF5nMk=;
+        b=2RNT4rRRrFGAp4XKVVw7uXDA27GXCBMhSNnqeOx7SrGoyEIwn8Xmiyo4mBy0nnwWRt
+         HQuj/7k0CTZzNIVNbQ2Gx/xx4Cavziq/qLS4f9O5ifHfoQKTNh5TGK/r8lgqcq63j5Ap
+         msnzdeafrhfpRWm6hiWKl7seOv6+Gfe+x53h8BdrhnEZjTkIwQGzWhHN5l2C8ytrz6LH
+         jF1ykHorKjS0L71xm+UrXbSoVABZIlHJzitoOqwfbCCkDDyoYaaR/D81mLTeUGbRKytp
+         xxGt2ee2FJps3AQ8UjycKjJMCIA81rSRdkzw5uXfXCrFeSviVq/+Fydysb76b+UYMCBU
+         S2Rg==
+X-Gm-Message-State: AOAM530FfH7K/AWbzpgTTTULCrQZdBfrEh5oI8GhbLGucUWtzNqYRCzA
+        pnW3TLXfrfFSRa1xOa9dIB+5m9onoc949A==
+X-Google-Smtp-Source: ABdhPJz9+46Xr26hgTS7QR3yqOQgC5SeUWL1Jiod9qdIHRLarmW77oYwI2l+OHi9uUPpvtyVnXUnPw==
+X-Received: by 2002:a17:906:6716:b0:6cc:7d95:90af with SMTP id a22-20020a170906671600b006cc7d9590afmr16718270ejp.442.1645472340000;
+        Mon, 21 Feb 2022 11:39:00 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c25sm8718199edu.103.2022.02.21.11.38.58
+        by smtp.gmail.com with ESMTPSA id c25sm8718199edu.103.2022.02.21.11.38.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 11:38:58 -0800 (PST)
+        Mon, 21 Feb 2022 11:38:59 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Philippe Blain <levraiphilippeblain@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/9] help.c: use puts() instead of printf{,_ln}() for consistency
-Date:   Mon, 21 Feb 2022 20:38:45 +0100
-Message-Id: <patch-v2-2.9-124643c4b35-20220221T193708Z-avarab@gmail.com>
+Subject: [PATCH v2 3/9] help tests: test "git" and "git help [-a|-g] spacing
+Date:   Mon, 21 Feb 2022 20:38:46 +0100
+Message-Id: <patch-v2-3.9-3e39116f197-20220221T193708Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1132.ga1fe46f8690
 In-Reply-To: <cover-v2-0.9-00000000000-20220221T193708Z-avarab@gmail.com>
 References: <cover-0.7-00000000000-20211228T153456Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20220221T193708Z-avarab@gmail.com>
@@ -70,52 +70,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change code in "help.c" that used printf_ln() without format
-specifiers to use puts() instead, as other existing code in the file
-does. Let's also change related code to use puts() instead of the
-equivalent of calling "printf" with a "%s\n" format.
+There's logic in "help.c"'s "print_cmd_by_category()" to emit "help"
+output with particular spacing, which doesn't make much sense when
+emitting only one section with "help -g".
 
-This formatting-only change will make a subsequent functional change
-easier to read, as it'll be changing code that's consistently using
-the same functions to do the same things.
+Let's add tests for the current spacing in preparation for a
+subsequent whitespace formatting fix, and make sure that that fix
+doesn't cause regressions for the "git" and "git help" output.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- help.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ t/t0012-help.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/help.c b/help.c
-index 71444906ddf..77af953826e 100644
---- a/help.c
-+++ b/help.c
-@@ -124,7 +124,8 @@ static void print_cmd_by_category(const struct category_description *catdesc,
- 		uint32_t mask = catdesc[i].category;
- 		const char *desc = catdesc[i].desc;
+diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+index cbd725ccac8..9ac3f5d3c4b 100755
+--- a/t/t0012-help.sh
++++ b/t/t0012-help.sh
+@@ -138,6 +138,51 @@ test_expect_success 'git help --config-sections-for-completion' '
+ 	test_cmp human.munged sections
+ '
  
--		printf("\n%s\n", _(desc));
-+		putchar('\n');
-+		puts(_(desc));
- 		print_command_list(cmds, mask, longest);
- 	}
- 	free(cmds);
-@@ -317,7 +318,7 @@ void list_commands(struct cmdnames *main_cmds, struct cmdnames *other_cmds)
- 	}
- 
- 	if (other_cmds->cnt) {
--		printf_ln(_("git commands available from elsewhere on your $PATH"));
-+		puts(_("git commands available from elsewhere on your $PATH"));
- 		putchar('\n');
- 		pretty_print_cmdnames(other_cmds, colopts);
- 		putchar('\n');
-@@ -439,7 +440,7 @@ void list_all_cmds_help(void)
- 	struct cmdname_help *aliases;
- 	int i, longest;
- 
--	printf_ln(_("See 'git help <command>' to read about a specific subcommand"));
-+	puts(_("See 'git help <command>' to read about a specific subcommand"));
- 	print_cmd_by_category(main_categories, &longest);
- 
- 	list_all_other_cmds(&others);
++test_section_spacing () {
++	cat >expect &&
++	"$@" >out &&
++	grep -E "(^[^ ]|^$)" out >actual
++}
++
++test_section_spacing_trailer () {
++	test_section_spacing "$@" &&
++	test_expect_code 1 git >out &&
++	sed -n '/list available subcommands/,$p' <out >>expect
++}
++
++
++for cmd in git "git help"
++do
++	test_expect_success "'$cmd' section spacing" '
++		test_section_spacing_trailer git help <<-\EOF &&
++		usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]
++
++		These are common Git commands used in various situations:
++
++		start a working area (see also: git help tutorial)
++
++		work on the current change (see also: git help everyday)
++
++		examine the history and state (see also: git help revisions)
++
++		grow, mark and tweak your common history
++
++		collaborate (see also: git help workflows)
++
++		EOF
++		test_cmp expect actual
++	'
++done
++
++test_expect_success "'git help -g' section spacing" '
++	test_section_spacing_trailer git help -g <<-\EOF &&
++
++	The Git concept guides are:
++
++	EOF
++	test_cmp expect actual
++'
++
+ test_expect_success 'generate builtin list' '
+ 	mkdir -p sub &&
+ 	git --list-cmds=builtins >builtins
 -- 
 2.35.1.1132.ga1fe46f8690
 
