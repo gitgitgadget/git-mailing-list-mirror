@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28AFDC433F5
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 19:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2486C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 19:39:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233094AbiBUTjs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 14:39:48 -0500
+        id S233150AbiBUTju (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 14:39:50 -0500
 Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233104AbiBUTja (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Feb 2022 14:39:30 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00339220C0
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:39:01 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id a8so35896818ejc.8
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:39:01 -0800 (PST)
+        with ESMTP id S233120AbiBUTjn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 14:39:43 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6C7723BCB
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:39:04 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id a23so35749941eju.3
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:39:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oAUpehjSe0Pv9RdimtFDeEwfli4XGlL7DRRsUzF5nMk=;
-        b=gmqR2rKL2jAO8j3wXIlyD3WhQlqmKaYSWbGiCSvNtfItVMshZ/HZoknERZx6HFI99H
-         RjBbeUxbOx9uj7uWKaC5jUXLcvX50ACHphEZpnlJFxcshN7VpHCeG0Y1uAD6Lo73WNNC
-         ZbqaX3+MKJmfoVYIh9eBE3c57tyChZQdHxz8klEJ22jXXSjuwIPX6is2PVPjHb/0ntM1
-         CjNatVGwOHVqBgWOH4pK/c0olGJgpY1ivx/VfVKdKlBOzEe2MD13ipfEXDcjDfqAPvGz
-         22e8aa2a1hwPLoFuL5M7pyxyAupSPAIqy9UZi8S2Sj691hjxQJG9dXc4RkHy4gPz+do+
-         Y3Jg==
+        bh=OyKGzFxM2QC5x87vlf/MmlmKiRHJSfuOPozlVExnS2E=;
+        b=lPMzdibTsXvlA6LS6WxhzTOCVcMlC5U5+wqepPtTLZsv9GHECQF/B7lZSNMmgcOv6j
+         2n2u8Dw1Ya6+seMkCLujQwvp0oaEQfpuQW+UKgwi3WGwRjwlAVmTQTH8aNkTARKRsuxK
+         GOLSZl4zsg/8IqXojB6gHmaU0u0zSU1iWECEQBEHF0sW8NjM3MEpIZvDYkBO2uqIbAlY
+         Xp212uRiJ9oZqJSb0t91LQP47i4eVx4XERNZQRFvHW8OZ00inXA9+omylBg/CfsJVF9v
+         Phw0gs5r9oou/Z1gkGZ7UW2QNGODxlkq+piopI9ciBuHWi1+7hAu31TMX9SRCSzWEOfQ
+         9hOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oAUpehjSe0Pv9RdimtFDeEwfli4XGlL7DRRsUzF5nMk=;
-        b=2RNT4rRRrFGAp4XKVVw7uXDA27GXCBMhSNnqeOx7SrGoyEIwn8Xmiyo4mBy0nnwWRt
-         HQuj/7k0CTZzNIVNbQ2Gx/xx4Cavziq/qLS4f9O5ifHfoQKTNh5TGK/r8lgqcq63j5Ap
-         msnzdeafrhfpRWm6hiWKl7seOv6+Gfe+x53h8BdrhnEZjTkIwQGzWhHN5l2C8ytrz6LH
-         jF1ykHorKjS0L71xm+UrXbSoVABZIlHJzitoOqwfbCCkDDyoYaaR/D81mLTeUGbRKytp
-         xxGt2ee2FJps3AQ8UjycKjJMCIA81rSRdkzw5uXfXCrFeSviVq/+Fydysb76b+UYMCBU
-         S2Rg==
-X-Gm-Message-State: AOAM530FfH7K/AWbzpgTTTULCrQZdBfrEh5oI8GhbLGucUWtzNqYRCzA
-        pnW3TLXfrfFSRa1xOa9dIB+5m9onoc949A==
-X-Google-Smtp-Source: ABdhPJz9+46Xr26hgTS7QR3yqOQgC5SeUWL1Jiod9qdIHRLarmW77oYwI2l+OHi9uUPpvtyVnXUnPw==
-X-Received: by 2002:a17:906:6716:b0:6cc:7d95:90af with SMTP id a22-20020a170906671600b006cc7d9590afmr16718270ejp.442.1645472340000;
-        Mon, 21 Feb 2022 11:39:00 -0800 (PST)
+        bh=OyKGzFxM2QC5x87vlf/MmlmKiRHJSfuOPozlVExnS2E=;
+        b=mxxmJwZlwscdl9u/g8RQD4BE22QrkFUugIM+H3lGTAirwiVLv01uS6xNgUzdjVIb4x
+         fbA64zfUHb9rkJ5SZh3xFVjeFBSG7slYBaCUtg58XH2oP9CpJYX7fLs2haoKO7N10Qhr
+         XvsekHoRs2qmb8IfFM1rjN/4W98XwlEFhkkTenHw4eDfzU1MwHHbBTpiYDzg7HCsLI31
+         Zrhp8vmEkcKuNSwRjAhQBAMSj2tXFKXceOb0veBr8FaGhQrpjCpK84QpUKDB9MZaYTEM
+         GH/eR4JtuN9vptpct+ArrCjPb8BkMHhE4xnqprQC8MOG5aUsTo2mBWOMPP9yrNlkcmTo
+         dBhQ==
+X-Gm-Message-State: AOAM530PDj8As9++GRLwMzw3nKRXgUomeOuSn7rd//HWhvqKOcS6fMz6
+        mKMoND8OarAj2vmIUlzUSEWMHoHd177KCg==
+X-Google-Smtp-Source: ABdhPJwJiIIe2vWdgsncdP66S+k1logERqOkFdN+uH6Z1NfpE/NJ1zbJOVdTpOnnKaN8Uv74VxOjbA==
+X-Received: by 2002:a17:907:2bf7:b0:6cf:86bc:4e2e with SMTP id gv55-20020a1709072bf700b006cf86bc4e2emr17301294ejc.200.1645472343123;
+        Mon, 21 Feb 2022 11:39:03 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c25sm8718199edu.103.2022.02.21.11.38.59
+        by smtp.gmail.com with ESMTPSA id c25sm8718199edu.103.2022.02.21.11.39.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 11:38:59 -0800 (PST)
+        Mon, 21 Feb 2022 11:39:02 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Philippe Blain <levraiphilippeblain@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/9] help tests: test "git" and "git help [-a|-g] spacing
-Date:   Mon, 21 Feb 2022 20:38:46 +0100
-Message-Id: <patch-v2-3.9-3e39116f197-20220221T193708Z-avarab@gmail.com>
+Subject: [PATCH v2 6/9] help: correct usage & behavior of "git help --all"
+Date:   Mon, 21 Feb 2022 20:38:49 +0100
+Message-Id: <patch-v2-6.9-868e8a6cf83-20220221T193708Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1132.ga1fe46f8690
 In-Reply-To: <cover-v2-0.9-00000000000-20220221T193708Z-avarab@gmail.com>
 References: <cover-0.7-00000000000-20211228T153456Z-avarab@gmail.com> <cover-v2-0.9-00000000000-20220221T193708Z-avarab@gmail.com>
@@ -70,75 +70,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's logic in "help.c"'s "print_cmd_by_category()" to emit "help"
-output with particular spacing, which doesn't make much sense when
-emitting only one section with "help -g".
+Do the same for the "--all" option that I did for "--guides" in
+9856ea6785c (help: correct usage & behavior of "git help --guides",
+2021-09-22). I.e. we've documented it as ignoring non-option
+arguments, let's have it error out instead.
 
-Let's add tests for the current spacing in preparation for a
-subsequent whitespace formatting fix, and make sure that that fix
-doesn't cause regressions for the "git" and "git help" output.
+As with other changes made in 62f035aee3f (Merge branch
+'ab/help-config-vars', 2021-10-13) this is technically a change in
+behavior, but in practice it's just a bug fix. We were ignoring this
+before, but by erroring we can simplify our documentation and
+synopsis, as well as avoid user confusion as they wonder what the
+difference between e.g. "git help --all" and "git help --all status"
+is (there wasn't any difference).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0012-help.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ Documentation/git-help.txt | 5 ++---
+ builtin/help.c             | 5 +++--
+ t/t0012-help.sh            | 3 +++
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
+diff --git a/Documentation/git-help.txt b/Documentation/git-help.txt
+index cf1d53e9499..d07590c8ff7 100644
+--- a/Documentation/git-help.txt
++++ b/Documentation/git-help.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git help' [-a|--all] [--[no-]verbose]
+-	   [[-i|--info] [-m|--man] [-w|--web]] [<command>|<guide>]
++'git help' [[-i|--info] [-m|--man] [-w|--web]] [<command>|<guide>]
+ 'git help' [-g|--guides]
+ 'git help' [-c|--config]
+ 
+@@ -46,8 +46,7 @@ OPTIONS
+ -------
+ -a::
+ --all::
+-	Prints all the available commands on the standard output. This
+-	option overrides any given command or guide name.
++	Prints all the available commands on the standard output.
+ 
+ --verbose::
+ 	When used with `--all` print description for all recognized
+diff --git a/builtin/help.c b/builtin/help.c
+index 1c1581ef850..b682446bbf5 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -75,8 +75,8 @@ static struct option builtin_help_options[] = {
+ };
+ 
+ static const char * const builtin_help_usage[] = {
+-	N_("git help [-a|--all] [--[no-]verbose]]\n"
+-	   "         [[-i|--info] [-m|--man] [-w|--web]] [<command>]"),
++	N_("git help [-a|--all] [--[no-]verbose]]"),
++	N_("git help [[-i|--info] [-m|--man] [-w|--web]] [<command>]"),
+ 	N_("git help [-g|--guides]"),
+ 	N_("git help [-c|--config]"),
+ 	NULL
+@@ -594,6 +594,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 
+ 	switch (cmd_mode) {
+ 	case HELP_ACTION_ALL:
++		opt_mode_usage(argc, "--all");
+ 		if (verbose) {
+ 			setup_pager();
+ 			list_all_cmds_help();
 diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index cbd725ccac8..9ac3f5d3c4b 100755
+index 9ac3f5d3c4b..c87730aa920 100755
 --- a/t/t0012-help.sh
 +++ b/t/t0012-help.sh
-@@ -138,6 +138,51 @@ test_expect_success 'git help --config-sections-for-completion' '
- 	test_cmp human.munged sections
+@@ -35,6 +35,9 @@ test_expect_success 'basic help commands' '
  '
  
-+test_section_spacing () {
-+	cat >expect &&
-+	"$@" >out &&
-+	grep -E "(^[^ ]|^$)" out >actual
-+}
+ test_expect_success 'invalid usage' '
++	test_expect_code 129 git help -a add &&
++	test_expect_code 129 git help --all add &&
 +
-+test_section_spacing_trailer () {
-+	test_section_spacing "$@" &&
-+	test_expect_code 1 git >out &&
-+	sed -n '/list available subcommands/,$p' <out >>expect
-+}
-+
-+
-+for cmd in git "git help"
-+do
-+	test_expect_success "'$cmd' section spacing" '
-+		test_section_spacing_trailer git help <<-\EOF &&
-+		usage: git [--version] [--help] [-C <path>] [-c <name>=<value>]
-+
-+		These are common Git commands used in various situations:
-+
-+		start a working area (see also: git help tutorial)
-+
-+		work on the current change (see also: git help everyday)
-+
-+		examine the history and state (see also: git help revisions)
-+
-+		grow, mark and tweak your common history
-+
-+		collaborate (see also: git help workflows)
-+
-+		EOF
-+		test_cmp expect actual
-+	'
-+done
-+
-+test_expect_success "'git help -g' section spacing" '
-+	test_section_spacing_trailer git help -g <<-\EOF &&
-+
-+	The Git concept guides are:
-+
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'generate builtin list' '
- 	mkdir -p sub &&
- 	git --list-cmds=builtins >builtins
+ 	test_expect_code 129 git help -g add &&
+ 	test_expect_code 129 git help -a -c &&
+ 
 -- 
 2.35.1.1132.ga1fe46f8690
 
