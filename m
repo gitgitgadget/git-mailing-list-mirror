@@ -2,128 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED690C433F5
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 19:24:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93111C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 19:39:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233016AbiBUTYr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 14:24:47 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:50818 "EHLO
+        id S233082AbiBUTjZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 14:39:25 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:56890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbiBUTYl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Feb 2022 14:24:41 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C737465BA
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:24:17 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id s14so14062295edw.0
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:24:17 -0800 (PST)
+        with ESMTP id S232651AbiBUTjX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 14:39:23 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F06BA22531
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:38:58 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id gb39so35906328ejc.1
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 11:38:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Y66IWN8ghwtlTypfYrLPHesTty7Lk15bybdGUeAKb0A=;
-        b=BhW4lzFWxTkplww6qeMGhvoHf4wv3NBtL2d36Fn///EEaqm7cfWkEkht0yq0hC7C+C
-         UwKedSCMitEURG6HGFGGFL11IKq7YAzXiLtCcgfY1//nd+GKGoTOuOpqQxhHISSx7v4u
-         MR7Yi4eN7R15q+uTBe3p+cpl77RflBkUKqqOREiY3A1mHAhj3dEF/pzj8HOmGkSNIf/P
-         MUxMGLb2v4TOnMBbRxnJXEkwEl+t8JeAV1NTG5agDgcR1IT2hTYZR0CmC+hyYMzibWyQ
-         sE0GsLdECIPyW/w41pJHpVUUgLgKTDS5O+eGPV4AD93ItZZFbIifxSJLF0oXm9eyEpsK
-         Ptsg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=tXGL2Eur04KdsYe1QsFckC0J8ZjJOj8mgtoiKk+PY0s=;
+        b=dPWfmH/QN8btTMfPrhK6EjRNczG87IQHAvWF9KVAjMCx9DT3WamnWRU1eoTh01KLXD
+         0ZMJL2cfuLgTjZ60adf5FAXGJoStY1suk1fgBnARt0hI6BkVoCJF0R7JZj20QJG8WPr6
+         NBjm4sv62PgGkxEdu1V/F96uvOiAzPFzjqPlCIHbNaIZoGQzNAPpDX4gNTF3/EfsMWhr
+         agD72v2Wuy0xrQudpqG3JdBuealsdWSZlotdOKQxy0Hjilr3SDfPf40hkCD58apmCt0h
+         vaeSByJHI25ARxcc6DN2i4qEdWfSF+vsKwSYivubrZ+OcOK+nEkPbnL4Of5PfwajcuBg
+         K8KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=Y66IWN8ghwtlTypfYrLPHesTty7Lk15bybdGUeAKb0A=;
-        b=jY8rqgvQsLMwJhG8t3VLHvLKT5o97nEDZBXpFt9Kd13Vk2vFCFEAQc+yDCfZOtr+i4
-         9pxq1YMOB1cYSdmMB+dPPSDNH5VuAxDiPSwMLrg2iTUGI+gV0jka91KNfLX4F0UJoKVK
-         fpcNIEvBE53Wk6qCDOKhPFTPx6WFsYzqbIcZkhxZ5nD3B/mvN9OaIo1tJn8NAssAQ3OV
-         uWniBMr2AYq9TpkD9KrgtPW1cW0vdTqXZSNEdGmfTH/aKvbOpboYi5+rHWo2WkdbJpqu
-         xt3fP5Mof6tkMBRasgzLMXGYSlArw7jsi+m71B2Xis7x7N6ZWfimDQ5QNWhiyX75oYen
-         USRg==
-X-Gm-Message-State: AOAM531yZf04aw/uBNByJ+RrFzbgn4gHL+ON+9XbfvnZ2/NoGNZV1PwH
-        zMu99IZlVVYSezJ2YZztfcNCXSa8TlAV1Q==
-X-Google-Smtp-Source: ABdhPJyBcyK/Zr6+c+rt+Nf/Fviqgsf6fpXvfqgwoYwR7xbXU9ACnA5kJJFexqycia2YqpjbEEJr1A==
-X-Received: by 2002:a05:6402:42c9:b0:407:f86c:44e7 with SMTP id i9-20020a05640242c900b00407f86c44e7mr23032139edc.230.1645471456290;
-        Mon, 21 Feb 2022 11:24:16 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id z22sm9475607edd.45.2022.02.21.11.24.15
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=tXGL2Eur04KdsYe1QsFckC0J8ZjJOj8mgtoiKk+PY0s=;
+        b=k1D5onN3vzFVJCwKtDyQQZyYItE6VAqf5KwqkgcZnz6O9Xkk/9yh/jtVwVufNa0vG/
+         iwPr/OphYsQgXFrE52CeYIIrde40f0qqnpnQ88JNovBOMVyDMlXOtuZjj0BsVyhUXOkc
+         1S7tMUtd44tyKQDcOdU/i4ferc1aiKSSw2zlsK/zRUkvackAwaZ3xLifzyRvKVZF5dR6
+         crrQecqTjq0JCNs5bw8oL0KD4ip+WsoWbQiUTAmLTfzrmUO/utgHcU25tf//tY7aFbEg
+         9bY20ZzNEbn3ek+HP+cMbp8+yk/uxN9wzjbql7kYX/cOvxkLWPRlI8bLWT0rrRuujZMW
+         /5qQ==
+X-Gm-Message-State: AOAM530XXUc2iQ+Damw7FeklcOSDs0TjKJY/rW9+Xgf8CXOTyu+eTeTx
+        7Aiu/Z0vpDz3V6VPi67vZH8fNqlqDYjYWQ==
+X-Google-Smtp-Source: ABdhPJw75Jp/FMVR/9AD1W+GMFbpGRJ57wGBZ6TfnCCmwwX17cvAvboIU9QD1lKVGSZs+hGPX+BTWg==
+X-Received: by 2002:a17:907:3f25:b0:6b0:5e9a:83 with SMTP id hq37-20020a1709073f2500b006b05e9a0083mr17501339ejc.659.1645472337278;
+        Mon, 21 Feb 2022 11:38:57 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id c25sm8718199edu.103.2022.02.21.11.38.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 11:24:15 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nMEIB-005mAY-7C;
-        Mon, 21 Feb 2022 20:24:15 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Erlend Aasland <Erlend-A@innova.no>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] branch: delete now accepts '-' as branch name
-Date:   Mon, 21 Feb 2022 20:20:22 +0100
-References: <pull.1217.git.git.1645020495014.gitgitgadget@gmail.com>
- <xmqqbkz6vjkj.fsf@gitster.g>
- <00720bfb-c7b7-aaf2-e846-19b08d7b9cf4@sunshineco.com>
- <400A4D37-74EA-4F3B-BA3B-99FFDAE3CB3C@innova.no>
- <CAPig+cR0Ks2bnTRqs3uF4M+3q+n9X6pApBQ9HQTUq=zK5TpuXQ@mail.gmail.com>
- <xmqqiltd9vyg.fsf@gitster.g> <220221.86pmngb22e.gmgdl@evledraar.gmail.com>
- <xmqqwnhota5q.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqwnhota5q.fsf@gitster.g>
-Message-ID: <220221.86zgmk9g68.gmgdl@evledraar.gmail.com>
+        Mon, 21 Feb 2022 11:38:56 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/9] help: tests, parse_options() sanity, fix "help -g" regression
+Date:   Mon, 21 Feb 2022 20:38:43 +0100
+Message-Id: <cover-v2-0.9-00000000000-20220221T193708Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.35.1.1132.ga1fe46f8690
+In-Reply-To: <cover-0.7-00000000000-20211228T153456Z-avarab@gmail.com>
+References: <cover-0.7-00000000000-20211228T153456Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+A late re-roll of [1] which addresses all the comments Eric Sunshine
+raised, thanks for the review, and sorry the v2 took so long!
 
-On Mon, Feb 21 2022, Junio C Hamano wrote:
+As the range-diff shows the main change is a mid-series set of changes
+to sanity check more "git help <opts>" incompaitibilities. The
+SYNOPSIS issues etc. Eric noted have also been fixed.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->>> Continuing the "thinking aloud" a bit, I _think_ this tells us these
->>> things:
->>>
->>>  * @{-1} has way too many letters to type to be liked by users, who
->>>    won't learn or remember what they do not appreciate (and do not
->>>    blame them---it is a bad notation).
->>>
->>>  * @{-<n>} may have been a generalized way that satisfied geeky mind
->>>    while being implemented, but the users only need the "last one"
->>>    and no such generalization.
->>>
->>> If it is too late for a more easy-to-type-and-pleasant-to-eyes
->>> notation, perhaps "@-", that does not have downsides of "-" or
->>> "@{-1}", I have to wonder.
->>
->> I too find the syntax really annoying to type.
->>
->> I wonder if we couldn't say that:
->> ...
->
-> We could, but I do not think I like any of it, except for adding
-> "@-".  We learned that we do not need @{-4} generalization and
-> people only want "the last one" with nothing else.
+1. https://lore.kernel.org/git/cover-0.7-00000000000-20211228T153456Z-avarab@gmail.com/
 
-FWIW I often use @{-2}, @{-3} or equivalent, but never @{-28} or
-whatever.
+Ævar Arnfjörð Bjarmason (9):
+  help doc: add missing "]" to "[-a|--all]"
+  help.c: use puts() instead of printf{,_ln}() for consistency
+  help tests: test "git" and "git help [-a|-g] spacing
+  help.c: split up list_all_cmds_help() function
+  help: note the option name on option incompatibility
+  help: correct usage & behavior of "git help --all"
+  help: error if [-a|-g|-c] and [-i|-m|-w] are combined
+  help: add --no-[external-commands|aliases] for use with --all
+  help: don't print "\n" before single-section output
 
-Not often.
+ Documentation/git-help.txt | 15 ++++--
+ builtin/help.c             | 63 +++++++++++++++++++++----
+ help.c                     | 37 +++++++++++----
+ help.h                     |  2 +-
+ t/t0012-help.sh            | 94 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 187 insertions(+), 24 deletions(-)
 
-But I would very much appreciate @u if it existed. I use @{u} a lot, and
-with the shift-key dancing it's a hassle to typ it.
+Range-diff against v1:
+ 1:  652dae26bf4 =  1:  c4b66c36c17 help doc: add missing "]" to "[-a|--all]"
+ 2:  f84662469a3 =  2:  124643c4b35 help.c: use puts() instead of printf{,_ln}() for consistency
+ 3:  3956937cf3b !  3:  3e39116f197 help tests: test "git" and "git help [-a|-g] spacing
+    @@ t/t0012-help.sh: test_expect_success 'git help --config-sections-for-completion'
+     +'
+     +
+      test_expect_success 'generate builtin list' '
+    + 	mkdir -p sub &&
+      	git --list-cmds=builtins >builtins
+    - '
+ 4:  f040dd549b4 =  4:  f9c4d5e2d28 help.c: split up list_all_cmds_help() function
+ 5:  12ff152bd57 <  -:  ----------- help: error if [-a|-g|-c] and [-i|-m|-w] are combined
+ -:  ----------- >  5:  e5c49089106 help: note the option name on option incompatibility
+ -:  ----------- >  6:  868e8a6cf83 help: correct usage & behavior of "git help --all"
+ -:  ----------- >  7:  992ee6580ac help: error if [-a|-g|-c] and [-i|-m|-w] are combined
+ 6:  a5ef9f69530 !  8:  c81c0cbbcdb help: add --no-[external-commands|aliases] for use with --all
+    @@ Documentation/git-help.txt: git-help - Display help information about Git
+      --------
+      [verse]
+     -'git help' [-a|--all] [--[no-]verbose]
+    -+'git help' [-a|--all] [--[no-]verbose] [--[no-](external-commands|aliases)]
+    ++'git help' [-a|--all] [--[no-]verbose] [--[no-]external-commands] [--[no-]aliases]
+      'git help' [[-i|--info] [-m|--man] [-w|--web]] [<command>|<guide>]
+      'git help' [-g|--guides]
+      'git help' [-c|--config]
+     @@ Documentation/git-help.txt: OPTIONS
+    - 	Prints all the available commands on the standard output. This
+    - 	option overrides any given command or guide name.
+    + --all::
+    + 	Prints all the available commands on the standard output.
+      
+     +--no-external-commands::
+     +	When used with `--all`, exclude the listing of external "git-*"
+    @@ builtin/help.c: static const char *html_path;
+      	OPT_CMDMODE('a', "all", &cmd_mode, N_("print all available commands"),
+      		    HELP_ACTION_ALL),
+     +	OPT_BOOL(0, "external-commands", &show_external_commands,
+    -+		 N_("show external commands in --all?")),
+    -+	OPT_BOOL(0, "aliases", &show_aliases, N_("show aliases in --all?")),
+    ++		 N_("show external commands in --all")),
+    ++	OPT_BOOL(0, "aliases", &show_aliases, N_("show aliases in --all")),
+      	OPT_HIDDEN_BOOL(0, "exclude-guides", &exclude_guides, N_("exclude guides")),
+      	OPT_SET_INT('m', "man", &help_format, N_("show man page"), HELP_FORMAT_MAN),
+      	OPT_SET_INT('w', "web", &help_format, N_("show manual in web browser"),
+    @@ builtin/help.c: static struct option builtin_help_options[] = {
+      
+      static const char * const builtin_help_usage[] = {
+     -	N_("git help [-a|--all] [--[no-]verbose]]"),
+    -+	N_("git help [-a|--all] [--[no-]verbose]] [--[no-](external-commands|aliases)]"),
+    ++	N_("git help [-a|--all] [--[no-]verbose]] [--[no-]external-commands] [--[no-]aliases]"),
+      	N_("git help [[-i|--info] [-m|--man] [-w|--web]] [<command>]"),
+      	N_("git help [-g|--guides]"),
+      	N_("git help [-c|--config]"),
+    @@ builtin/help.c: int cmd_help(int argc, const char **argv, const char *prefix)
+     +
+      	switch (cmd_mode) {
+      	case HELP_ACTION_ALL:
+    - 		no_format();
+    + 		opt_mode_usage(argc, "--all", help_format);
+      		if (verbose) {
+      			setup_pager();
+     -			list_all_cmds_help();
+ 7:  08fd12fe7b4 =  9:  08dc693dc3e help: don't print "\n" before single-section output
+-- 
+2.35.1.1132.ga1fe46f8690
 
-> the same mistake without learning any from the lesson to take any
-> random string that follows @ as if it is inside @{}, I am afraid.
-
-I think we should be careful to squat on namespaces needlessly, but if
-we can't think of a reason for why we wouldn't make typing some of these
-shortcuts easier...
-
-IOW can we think of a reason we'd ever use @1 @-1 or @u for anything
-else? It would be *very* confusing to add a new @{u} that behaved
-differently from @u, whatever such a @u would mean.
-
-> P.S. It seems it is holiday around here and I hear it is at GitHub,
-> too, so I expect the day to be slow and my presence may be sporadic.
-
-*nod*
