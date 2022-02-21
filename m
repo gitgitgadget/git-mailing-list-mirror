@@ -2,86 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65890C433EF
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 01:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EEA9C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 02:11:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245508AbiBUBvJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 20:51:09 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57680 "EHLO
+        id S245726AbiBUCLj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 21:11:39 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:46344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245505AbiBUBvI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 20:51:08 -0500
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47991517D0
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 17:50:46 -0800 (PST)
-Received: by mail-il1-x131.google.com with SMTP id n5so8894360ilk.12
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 17:50:46 -0800 (PST)
+        with ESMTP id S245723AbiBUCLi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 21:11:38 -0500
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC3B641339
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 18:11:12 -0800 (PST)
+Received: by mail-qk1-x72a.google.com with SMTP id b13so5234332qkj.12
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 18:11:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GXSVd4sH0p7mMUnwtX0RxjxJ6CAfa/DZyl5Zh72dGWs=;
-        b=z5K2WcmuQ/Kkmw+AUpjblj0PNVrH0ndPEepsHxoY5Vaz/WqgUgomivReg1PIjmidb2
-         9q8LkNtBTAJREMqJwUdO0tYWFQIx2c70SDKgbX+PQS3H1ncJbz7V1guublFloyNwUCQW
-         bVUlTe8gq70zgQtqX90LOdk0ZoY++9ES8XCr+D6nQaQzUbkv2hzYzLbdroyg+EJdjA4H
-         GoxS92JT/fEU8m1Fk3T/R2klEH2FBB4SjVAFBfztUIzy/3YdRtdhbQGbhu5mmlSwiuia
-         pefAAQXI/uxLcmEIfUHLR26rNHiGSC58tWZ9WGD3k/99XM01FoImnDSB2F1/nadSYyMz
-         806w==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=nz4Pb4s92H0HRFnEiuDwKqss1obmZWZ+J/LWGsxT0S4=;
+        b=fYejoiWugOylrPDvDsBKm9v83ts6LS1qbKUo0pg1OqclEuowtX72UgqA2sFf0u/En6
+         HYg3ojYsyEbk8uNZkpAWtVyzK/9rK8C/+cHGgSr4J/WWdu+pn5+VPFVZunmES028Nvy0
+         B8oMi7PpLTx9ACalsSrhwGCjn27W0FRheWN0AzU8TF7Qwu2+4DIdjOr9vU6huvfTAPuo
+         9KdR1Et/EDI1XfpI0M9H+W1awj+nzgI2q/TX6aYD4vXM3ds9sjbMAckTEHmLGOL3L5e8
+         kxlkQiCXvj38S0HsI8AuXrVRjHnGhmyEuS9OIcIztCaG0WzlkJiVC14Bb0WwZ9xLoHRP
+         hO2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GXSVd4sH0p7mMUnwtX0RxjxJ6CAfa/DZyl5Zh72dGWs=;
-        b=csNfz337H5QmVa23etFENaIs4B7Rotj4WAxkuE+YF84ZTYzc0EiDulJyLNMEAa3VE1
-         /Tj3fSAYuRlBSEf6I1QhFzjyS7wCRg4D9VE3XBFsqAr+3eNn11GSQmxekpZwIh5lxNhc
-         S8EMgq8GsNqtA6I3qhCFS9HgLjuNHR/u2/1J922Uwyn4bvS3431ohHeRMq8bACi6l/jU
-         lmekCoBBNhnIqabpJbx0op5tGcLu5JnIdXSAKk1BzZ8LE8N8Th7CYu2YyIDrXRRY8Z3w
-         hDuz7C0kB9jSe+eLSoq89WSJELnimNIGw3Xvgu3ejWElON+27KkfLR91dINWj53O9LiC
-         vjNQ==
-X-Gm-Message-State: AOAM531O1lovEu9usR19vsED9bdBY4FXzqizuknLzU3ZY70ok2R5I7Mw
-        f79VGf1CFiC80DZ0X3QwNc7KhA==
-X-Google-Smtp-Source: ABdhPJwvopkgSd/IRgBwLF7TJBhKNz5dQDbeeYbgSnVZZTdfjszfBhJwjIU+/KZnzZBA6/1+HVEN9g==
-X-Received: by 2002:a92:ca0f:0:b0:2bf:56d4:3aec with SMTP id j15-20020a92ca0f000000b002bf56d43aecmr14195796ils.220.1645408245678;
-        Sun, 20 Feb 2022 17:50:45 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l8sm4386422ioj.40.2022.02.20.17.50.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Feb 2022 17:50:45 -0800 (PST)
-Date:   Sun, 20 Feb 2022 20:50:44 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     John Cai <johncai86@gmail.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/3] reflog: libify delete reflog function and helpers
-Message-ID: <YhLv9P9VFQ6Iwv41@nand.local>
-References: <pull.1218.git.git.1645209647.gitgitgadget@gmail.com>
- <9e17ece8d8956c7fd41b7be2f5c0475b1f9af6ec.1645209647.git.gitgitgadget@gmail.com>
- <Yg/09XYTruPJQVV/@nand.local>
- <F49696AE-3A00-4870-A355-A9510468F35D@gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=nz4Pb4s92H0HRFnEiuDwKqss1obmZWZ+J/LWGsxT0S4=;
+        b=Q62TWjsl7pDqwcKpT5Q3+CeJmneg1GCrM7Xr4taz3JEWUWv6V+z4iOvkCqtXiopcOy
+         ux3DiFeR5874tPPa7j+kpoHkU0dAVNaW5Bm5Uv0ZSrX6C6+lgzsI/xICUgCk637r1R5T
+         ZOO4F2iAxSX76vZE0wE1Ld+XUn7KtEfCmnnmkDCER/HcZoXvndsdfVlqygPy10HoHJRH
+         qsrdqlOcXTqSdo+/O79YVIJoEiyAuqUqjT9ENUVSkZvmQZLC8yeyE3uxsvisLyv68hk0
+         3KWRYKAz0gydPymapLBjumOo9dYhM0eDrysseZqh5ad44EgvXAIR6JYdyd0P3Fqc39As
+         h+8A==
+X-Gm-Message-State: AOAM532QkS1f7VKz4T6IiDvKdxsQ/D4CKinmlo+Q5UtI8EEPxCVXaV2q
+        wN3KiYnM28HUKSnx6LAWNGQl
+X-Google-Smtp-Source: ABdhPJwy7w8MfWawa2G1ErIa4OaVIDIQURaMfrn/bWWq9VS1XZNCf5xV9X1pYm0RAxM6UtUFdIaEug==
+X-Received: by 2002:a05:620a:1091:b0:648:c4a2:1f19 with SMTP id g17-20020a05620a109100b00648c4a21f19mr3965252qkk.205.1645409472007;
+        Sun, 20 Feb 2022 18:11:12 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id t5sm7244280qkm.59.2022.02.20.18.11.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 20 Feb 2022 18:11:11 -0800 (PST)
+Message-ID: <3aaa0c38-cb14-c50f-92df-e5b4588a4927@github.com>
+Date:   Sun, 20 Feb 2022 21:11:11 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <F49696AE-3A00-4870-A355-A9510468F35D@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH 11/11] worktree: use 'worktree' over 'working tree'
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
+ <91773337675b05b0c0e323211899c64d5b8102e6.1645379667.git.gitgitgadget@gmail.com>
+ <YhLCmWlmf+9MbECN@nand.local>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <YhLCmWlmf+9MbECN@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 20, 2022 at 08:43:14PM -0500, John Cai wrote:
-> > One question that I had which I don't see answered already is what the
-> > plan is for existing reflog-related functions that live in refs.h.
-> > Should or will those functions be moved to the new reflog-specific
-> > header, too?
->
-> Thanks for bringing ths up! Maybe this cleanup can be included in a separate
-> patch series since this one is mainly about getting rid of the shell-out in
-> stash.c. What do you think?
+On 2/20/2022 5:37 PM, Taylor Blau wrote:
+> On Sun, Feb 20, 2022 at 05:54:27PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> @@ -404,14 +404,14 @@ $ git worktree list --verbose
+>>  /path/to/linked-worktree              abcd1234 [master]
+>>  /path/to/locked-worktree-no-reason    abcd5678 (detached HEAD) locked
+>>  /path/to/locked-worktree-with-reason  1234abcd (brancha)
+>> -	locked: working tree path is mounted on a portable device
+>> +	locked: worktree path is mounted on a portable device
+> 
+> I thought this might have been an over-zealous find-and-replace, since I
+> had assumed that the "locked: working tree path ..." message came from
+> Git. But my assumption was wrong, and this is the `<reason>` in `git
+> worktree --reason=<reason> <worktree>`.
+> 
+> So it makes sense to update here along with the rest of these other
+> instances.
 
-Yeah; I think that's fine. We don't need to get all reflog-related
-functions moved into reflog.h in the first series, so I think it's fine
-to move things as you discover them.
+This is a good catch. It could have easily been over-zealous.
 
-I was just wondering whether it was something you planned to do at some
-point (as part of this series, or a future one).
+>>  /path/to/prunable-worktree            5678abc1 (detached HEAD)
+>>  	prunable: gitdir file points to non-existent location
+>>  ------------
+>>
+>>  Note that the annotation is moved to the next line if the additional
+>>  information is available, otherwise it stays on the same line as the
+>> -working tree itself.
+>> +worktree itself.
+>>
+>>  Porcelain Format
+>>  ~~~~~~~~~~~~~~~~
+>> @@ -420,7 +420,7 @@ label and value separated by a single space.  Boolean attributes (like `bare`
+>>  and `detached`) are listed as a label only, and are present only
+>>  if the value is true.  Some attributes (like `locked`) can be listed as a label
+>>  only or with a value depending upon whether a reason is available.  The first
+>> -attribute of a working tree is always `worktree`, an empty line indicates the
+>> +attribute of a worktree is always `worktree`, an empty line indicates the
+>>  end of the record.  For example:
+>>
+>>  ------------
+>> @@ -470,9 +470,9 @@ EXAMPLES
+>>  You are in the middle of a refactoring session and your boss comes in and
+>>  demands that you fix something immediately. You might typically use
+>>  linkgit:git-stash[1] to store your changes away temporarily, however, your
+>> -working tree is in such a state of disarray (with new, moved, and removed
+>> +worktree is in such a state of disarray (with new, moved, and removed
+> 
+> This one should probably remain as "working tree", since the example
+> being given here is focused on disarray in the working tree itself, not
+> in the worktree's metadata.
+
+You're right. Thanks for catching this one.
+
+>>  files, and other bits and pieces strewn around) that you don't want to risk
+>> -disturbing any of it. Instead, you create a temporary linked working tree to
+>> +disturbing any of it. Instead, you create a temporary linked worktree to
+>>  make the emergency fix, remove it when done, and then resume your earlier
+>>  refactoring session.
+> 
+> But this one is in the context of "create a _worktree_", which makes
+> sense and should probably be updated as you have done here.
 
 Thanks,
-Taylor
+-Stolee
