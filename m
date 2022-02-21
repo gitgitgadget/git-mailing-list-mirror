@@ -2,265 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5E7AC433F5
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 21:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D761C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 21:10:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234173AbiBUVDw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 16:03:52 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36530 "EHLO
+        id S234266AbiBUVKz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 16:10:55 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232450AbiBUVDv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Feb 2022 16:03:51 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0E0A23BCD
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 13:03:26 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id s14so14551149edw.0
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 13:03:26 -0800 (PST)
+        with ESMTP id S234244AbiBUVKy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 16:10:54 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0FCF23BE3
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 13:10:29 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id lw4so36348536ejb.12
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 13:10:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=GqI5YVb+bUDafcfGgsU9s4OLJy72YQ0j0PSw4c9ALJo=;
-        b=m9/olB76A3BDPHYCMddy6dghEtTmZjsts/4a1BDNgJ/YU+u5Vpmrxbnv0V6U3HaKBr
-         9YLWJE2f8JB6Az0DgCFXEeG7KQA0aVnLDGu6d3AJMIlEvVT7S1wTi5KmJLlIv/FEAPbd
-         oBFrjRhssNjsikwCAnDXFpu6W1KWzpHQUt6nlERHel0WpBg1XNv5UI4kklkyalPakcCR
-         L9dCG8e1v+jK3LWoZrYr7gk8XqcNbklVRhhsuChPxs0Xs/8Mj+WuRymQdUGTOIAe9ywv
-         MynKh9wqZlfnkGkIvXHn2fW6coRFW4i7/9B2wkMlFA7/IFQZjeYO+FMeXPGg0ILH9jex
-         K5FA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eIjDEoF3ih/anlsGNcrHv0099P1h5luyGdZmo0Cad0c=;
+        b=Dl6VQAt+eJfv3vXO5P++gNHAYX4AH/XRXq5oP302M3gLa3uNoUnjzwEb+YsGZlBsj0
+         3RQCfmXM9LVNI561GGUdUIMQ/JIufUnmQQCyGYjwQNpU60qROnMLxFsWW/haeA9vG9/w
+         /q28WmTgPpLtpGlDc4+2pwohHP6/aWssGm/y/9uXpYorRL9q8OktoURanD9YSo+pjdAo
+         I8V+ThttAGAfiqk6cRvDLUuJlv6pMaSuQVQwlsdJXULzFxdAIF45hdMzqSGG/M6IwknX
+         /wyNnlWp0iLPdIyAmKaOLMrzAMIvoQWnez/wy3edZjz2ltI5G0IjkImzhXbySAA42lLw
+         69lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=GqI5YVb+bUDafcfGgsU9s4OLJy72YQ0j0PSw4c9ALJo=;
-        b=BkIZhISW6gtVmstjJjYoEPEFXiDW5E6NMVeA3zblSGBCPww+oG7/0BKOyqhSKO35NY
-         nUdrVWtdCPdfQ5VspkcfWRxetYzU5zWf2EzFYaIQoj8B0HyhojeP1jbq9Dk73aESRdfx
-         woDJNLmXajfnN8Tm3yRbeUbJDqh8K3Y9r5c1EEq3fbvZe+AN6/8mXHPNJPH+Axe6Kd8B
-         xo8UcCmKFJMJl1u4d939BevoeGshXT/RIGEEGT3hYnYo+wyD/7tjvwxXLM5jsGvUGM90
-         gEKLBotEcrI7HO34vYlQ7kjFLm6wB3f7DkNduuvWzK0oTPg/PDgjowvmujUUlKugyZp0
-         4Zjg==
-X-Gm-Message-State: AOAM530IQ+PnHFNlgxaJQD52EpxS1YVLTAJx+iL+gkyVEYykvdxg4nRs
-        2Gf66haggcjhokIv6dfwF/Dbg1GaUWk=
-X-Google-Smtp-Source: ABdhPJyaD579S7kAeeDE3VwhsBClv2rObNBV1DHBXmvnbS/RNdH+yir0n3ZvyPtkNIaHbt8CuFe3Xw==
-X-Received: by 2002:a05:6402:5ce:b0:412:be81:a9d6 with SMTP id n14-20020a05640205ce00b00412be81a9d6mr19289099edx.272.1645477405168;
-        Mon, 21 Feb 2022 13:03:25 -0800 (PST)
-Received: from szeder.dev (84-236-78-183.pool.digikabel.hu. [84.236.78.183])
-        by smtp.gmail.com with ESMTPSA id m12sm5947247edl.74.2022.02.21.13.03.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 13:03:24 -0800 (PST)
-Date:   Mon, 21 Feb 2022 22:03:19 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v4 0/3] test-lib.sh: have all tests pass under "-x",
- remove BASH_XTRACEFD
-Message-ID: <20220221210319.GA1658@szeder.dev>
-References: <cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com>
- <cover-v4-0.3-00000000000-20211213T013559Z-avarab@gmail.com>
- <20211213054353.GC3400@szeder.dev>
- <220221.86v8x89ebo.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eIjDEoF3ih/anlsGNcrHv0099P1h5luyGdZmo0Cad0c=;
+        b=0tKtE1ISdh694d+jTb9B0F9nLjoz18Cvl3CMqh+AkBb2wxzxYHNAKqus72bI7Gyz9H
+         yaOvCRsOfrpefJCtJ6onEO7NoGf7m0L0YAURbQ0nbhOCZNVJHpBCvjLE0Zjo7VwxKgV0
+         ZSomTGtPY6+siVbiPPgBQWpEmnOwSe0A2lGzLxA6m2nG0+R41viKw7Sb7a5IEfoGG6mH
+         AzNvfzycFS4fvK4769Mn5VGYytObtSxhTupJzV1S6ua9HTJ5YzabUkLyLwMnWPW/CjNS
+         TPszaQZJatOgFq0UyyYRfT5dsGArx/SvC6jFSHAAIX7MLu1uWVO2QNrQS/JfM/hb6uv7
+         5RDA==
+X-Gm-Message-State: AOAM530IgNoW3O4YF08RC8mOk1IN3qk5TV0kn6csLR1NN+Ia4XYMwGee
+        HLHMO0k9OpogXYnZYPopYfrOCb29n/gnNnL6s+6GK2qIBKo=
+X-Google-Smtp-Source: ABdhPJyQjIp6JWRsMqd2RwAlyPlTYr++qMbOV8GsTY+wpSmK8a7Lkrprecl2L01mk6fHZc4LGt0AAUojoN+nzFgtODA=
+X-Received: by 2002:a17:907:29d7:b0:6cd:19bc:2857 with SMTP id
+ ev23-20020a17090729d700b006cd19bc2857mr17391073ejc.159.1645477828042; Mon, 21
+ Feb 2022 13:10:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <220221.86v8x89ebo.gmgdl@evledraar.gmail.com>
+References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
+ <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com> <CAFLLRpJ1aDyLb4qAoQwYDyGdP1_PH8kzLAQCKJpQwiYiapZ5Aw@mail.gmail.com>
+ <CB2ACEF7-76A9-4253-AD43-7BC842F9576D@gmail.com> <YhMC+3FdSEZz22qX@nand.local>
+In-Reply-To: <YhMC+3FdSEZz22qX@nand.local>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 21 Feb 2022 22:10:15 +0100
+Message-ID: <CAP8UFD2dpicW64eqBK47g43xDWA1qv2BMBEOSqj_My5PUs8TSg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] [RFC] repack: add --filter=
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     John Cai <johncai86@gmail.com>,
+        Robert Coup <robert.coup@koordinates.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 21, 2022 at 08:52:18PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> 
-> [Junio: If you'd like to pick up this series it still cleanly applies,
-> and merges cleanly with "seen"]
-> 
-> On Mon, Dec 13 2021, SZEDER Gábor wrote:
-> 
-> Sorry about the late reply, things getting lost around the holidays
-> etc.
-> 
-> > On Mon, Dec 13, 2021 at 02:38:33AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> >> A re-arrangement-only change to v3[1]. The previous 2/2 is now split
-> >> into two commits, as requested by SZEDER[2] in the removal of
-> >> BASH_XTRACEFD is now its own commit & the rationale for doing so is
-> >> outlined in detail.
+On Mon, Feb 21, 2022 at 4:11 AM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> On Wed, Feb 16, 2022 at 04:07:14PM -0500, John Cai wrote:
+> > > I don't know whether that is just around naming (--delete-filter /
+> > > --drop-filter /
+> > > --expire-filter ?), and/or making the documentation very explicit that
+> > > this isn't so
+> > > much "omitting certain objects from a packfile" as irretrievably
+> > > deleting objects.
 > >
-> > I'm afraid I wasn't clear.  What I meant was that if we were to remove
-> > BASH_XTRACEFD, then it should be done its own commit.
-> 
-> Aside from whether you think removing it is a good idea, isn't that what
-> this v4 does?
+> > Yeah, making the name very clear (I kind of like --delete-filter) would certainly help.
 
-Well, yes, but I now realize that I wasn't sufficiently clear the
-second time around, either, and emphasis doesn't travel well over
-email.  What I meant was that: _if_ at all we were to remove it, then
-it should be a separate patch, but since we should most definitely
-keep it, those hunks should be simply dropped.
+I am ok with making the name and doc very clear that it deletes
+objects and they might be lost if they haven't been saved elsewhere
+first.
 
-> In 1/3 I fix -x under non-BASH_XTRACEFD, 2/3 removes test_untraceable,
-> and 3/3 the use of BASH_XTRACEFD.
-> 
-> > But again: BASH_XTRACEFD is the only simple yet reliable and robust
-> > way to get -x trace from our tests, so do not remove it.
-> 
-> Just to tie off this loose end, I re-read the thread ending in [1] (sent
-> after this reply of yours) and I think my [1] addresses this.
+> > Also, to have more protection we can either
+> >
+> > 1. add a config value that needs to be set to true for repack to remove
+> > objects (repack.allowDestroyFilter).
 
-It doesn't at all; "if CI passes without it, then we can remove it" is
-not a convincing argument.
+I don't think it's of much value. We don't have such config values for
+other possibly destructive operations.
 
-> Maybe you still disagree, but I don't see how that squares with
-> "reliable and robust" here.
-> 
-> I.e. unless we're talking about carrying bash-specific code in the test
-> suite we can't make any real use of the feature, as our tests will need
-> to be compatible with other POSIX shells.
-> 
-> I mean, the code changed in 1/3 *was* that bash-specific code, but as
-> that change shows it was rather easily made non-bash-specific. And
-> unless we think we'll add other bash-specific tests (I don't see why,
-> the cross-shell -x support is rather easy to do) ....
-> 
-> 1. https://lore.kernel.org/git/211216.864k78bsjs.gmgdl@evledraar.gmail.com/
-> 
-> >> 1. https://lore.kernel.org/git/cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com/
-> >> 2. https://lore.kernel.org/git/20211212201441.GB3400@szeder.dev/
-> >> 
-> >> Ævar Arnfjörð Bjarmason (3):
-> >>   t1510: remove need for "test_untraceable", retain coverage
-> >>   test-lib.sh: remove the now-unused "test_untraceable" facility
-> >>   test-lib.sh: remove "BASH_XTRACEFD"
-> >> 
-> >>  t/README              |  3 --
-> >>  t/t1510-repo-setup.sh | 85 +++++++++++++++++++++----------------------
-> >>  t/test-lib.sh         | 66 ++++-----------------------------
-> >>  3 files changed, 49 insertions(+), 105 deletions(-)
-> >> 
-> >> Range-diff against v3:
-> >> 1:  7876202c5b0 = 1:  9e7b089dc50 t1510: remove need for "test_untraceable", retain coverage
-> >> -:  ----------- > 2:  60883fd95cb test-lib.sh: remove the now-unused "test_untraceable" facility
-> >> 2:  a7fc794e20d ! 3:  8b5ae33376e test-lib.sh: remove the now-unused "test_untraceable" facility
-> >>     @@ Metadata
-> >>      Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> >>      
-> >>       ## Commit message ##
-> >>     -    test-lib.sh: remove the now-unused "test_untraceable" facility
-> >>     +    test-lib.sh: remove "BASH_XTRACEFD"
-> >>      
-> >>     -    In the preceding commit the use of "test_untraceable=UnfortunatelyYes"
-> >>     -    was removed from "t1510-repo-setup.sh" in favor of more narrow
-> >>     -    redirections of the output of specific commands (and not entire
-> >>     -    sub-shells or functions).
-> >>     +    Stop setting "BASH_XTRACEFD=4" to direct "-x" output to file
-> >>     +    descriptor 4 under bash.
-> >>      
-> >>     -    This is in line with the fixes in the series that introduced the
-> >>     -    "test_untraceable" facility. See 571e472dc43 (Merge branch
-> >>     -    'sg/test-x', 2018-03-14) for the series as a whole, and
-> >>     -    e.g. 91538d0cde9 (t5570-git-daemon: don't check the stderr of a
-> >>     -    subshell, 2018-02-24) for a commit that's in line with the changes in
-> >>     -    the preceding commit.
-> >>     +    When it was added in d88785e424a (test-lib: set BASH_XTRACEFD
-> >>     +    automatically, 2016-05-11) it was needed as a workaround for various
-> >>     +    tests that didn't pass cleanly under "-x".
-> >>      
-> >>     -    We've thus solved the TODO item noted when "test_untraceable" was
-> >>     -    added to "t1510-repo-setup.sh" in 58275069288 (t1510-repo-setup: mark
-> >>     -    as untraceable with '-x', 2018-02-24).
-> >>     +    Most of those were later fixed in 71e472dc43 (Merge branch
-> >>     +    'sg/test-x', 2018-03-14), and in the preceding commits we've fixed the
-> >>     +    final remaining and removed the "test_untraceable" facility.
-> >>      
-> >>     -    So let's remove the feature entirely. Not only is it currently unused,
-> >>     -    but it actively encourages an anti-pattern in our tests. We should be
-> >>     -    testing the output of specific commands, not entire subshells or
-> >>     -    functions.
-> >>     +    The reason we don't need this anymore is becomes clear from reading
-> >>     +    the rationale in d88785e424a and applying those arguments to the
-> >>     +    current state of the codebase. In particular it said (with "this" and
-> >>     +    "it" referring to the problem of tests failing under "-x"):
-> >>      
-> >>     -    That the "-x" output had to be disabled as a result is only one
-> >>     -    symptom, but even under bash those tests will be harder to debug as
-> >>     -    the subsequent check of the redirected file will be far removed from
-> >>     -    the command that emitted the output.
-> >>     +        "there here isn't a portable or scalable solution to this [...] we
-> >>     +        can work around it by pointing the "set -x" output to our
-> >>     +        descriptor 4"
-> >>      
-> >>     -    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> >>     +    And finally that:
-> >>      
-> >>     - ## t/README ##
-> >>     -@@ t/README: appropriately before running "make". Short options can be bundled, i.e.
-> >>     - -x::
-> >>     - 	Turn on shell tracing (i.e., `set -x`) during the tests
-> >>     - 	themselves. Implies `--verbose`.
-> >>     --	Ignored in test scripts that set the variable 'test_untraceable'
-> >>     --	to a non-empty value, unless it's run with a Bash version
-> >>     --	supporting BASH_XTRACEFD, i.e. v4.1 or later.
-> >>     - 
-> >>     - -d::
-> >>     - --debug::
-> >>     +        "Automatic tests for our "-x" option may be a bit too meta"
-> >>     +
-> >>     +    Those tests are exactly what we've had since aedffe95250 (travis-ci:
-> >>     +    run tests with '-x' tracing, 2018-02-24), so punting on fixing issues
-> >>     +    with "-x" by using "BASH_XTRACEFD=4" isn't needed anymore, we're now
-> >>     +    committing to maintaining the test suite in a way that won't break
-> >>     +    under "-x".
-> >>     +
-> >>     +    We could retain "BASH_XTRACEFD=4" anyway, but doing so is bad because:
-> >>     +
-> >>     +     1) Since we're caring about "-x" passing in CI under "dash" on Ubuntu
-> >>     +        using "BASH_XTRACEFD=4" will amount to hiding an error we'll run
-> >>     +        into eventually. Tests will pass locally with "bash", but fail in
-> >>     +        CI with "dash" (or under other non-"bash" shells).
-> >>     +
-> >>     +     2) As the amended code in "test_eval_" shows (an amended revert to
-> >>     +        the pre-image of d88785e424a) it's simpler to not have to take
-> >>     +        this "bash" special-case into account.
-> >>     +
-> >>     +    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> >>      
-> >>       ## t/test-lib.sh ##
-> >>     -@@ t/test-lib.sh: then
-> >>     - 	exit
-> >>     - fi
-> >>     - 
-> >>     --if test -n "$trace" && test -n "$test_untraceable"
-> >>     --then
-> >>     --	# '-x' tracing requested, but this test script can't be reliably
-> >>     --	# traced, unless it is run with a Bash version supporting
-> >>     --	# BASH_XTRACEFD (introduced in Bash v4.1).
-> >>     --	#
-> >>     --	# Perform this version check _after_ the test script was
-> >>     --	# potentially re-executed with $TEST_SHELL_PATH for '--tee' or
-> >>     --	# '--verbose-log', so the right shell is checked and the
-> >>     --	# warning is issued only once.
-> >>     --	if test -n "$BASH_VERSION" && eval '
-> >>     --	     test ${BASH_VERSINFO[0]} -gt 4 || {
-> >>     --	       test ${BASH_VERSINFO[0]} -eq 4 &&
-> >>     --	       test ${BASH_VERSINFO[1]} -ge 1
-> >>     --	     }
-> >>     --	   '
-> >>     --	then
-> >>     --		: Executed by a Bash version supporting BASH_XTRACEFD.  Good.
-> >>     --	else
-> >>     --		echo >&2 "warning: ignoring -x; '$0' is untraceable without BASH_XTRACEFD"
-> >>     --		trace=
-> >>     --	fi
-> >>     --fi
-> >>     - if test -n "$trace" && test -z "$verbose_log"
-> >>     - then
-> >>     - 	verbose=t
-> >>      @@ t/test-lib.sh: else
-> >>       	exec 4>/dev/null 3>/dev/null
-> >>       fi
-> >> -- 
-> >> 2.34.1.1024.g573f2f4b767
-> >> 
-> 
-> o
+> > 2. --filter is dry-run by default and prints out objects that would have been removed,
+> > and it has to be combined with another flag --destroy in order for it to actually remove
+> > objects from the odb.
+
+I am not sure it's of much value either compared to naming it
+--filter-destroy. It's likely to just make things more difficult for
+users to understand.
+
+> I share the same concern as Robert and Stolee do. But I think this issue
+> goes deeper than just naming.
+>
+> Even if we called this `git repack --delete-filter` and only ran it with
+> `--i-know-what-im-doing` flag, we would still be leaving repository
+> corruption on the table, just making it marginally more difficult to
+> achieve.
+
+My opinion on this is that the promisor object mechanism assumes by
+design that some objects are outside a repo, and that this repo
+shouldn't care much about these objects possibly being corrupted.
+
+It's the same for git LFS. As only a pointer file is stored in Git and
+the real file is stored elsewhere, the Git repo doesn't care by design
+about possible corruption of the real file.
+
+I am not against a name and some docs that strongly state that users
+should be very careful when using such a command, but otherwise I
+think such a command is perfectly ok. We have other commands that by
+design could lead to some objects or data being lost.
+
+> I'm not familiar enough with the proposal to comment authoritatively,
+> but it seems like we should be verifying that there is a promisor remote
+> which promises any objects that we are about to filter out of the
+> repository.
+
+I think it could be a follow up mode that could be useful and safe,
+but there should be no requirement for such a mode. In some cases you
+know very much what you want and you don't want checks. For example if
+you have taken proper care to transfer large objects to another
+remote, you might just not need other possibly expansive checks.
+
+[...]
+
+> But as it stands right now, I worry that this feature is too easily
+> misused and could result in unintended repository corruption.
+
+Are you worrying about the UI or about what it does?
+
+I am ok with improving the UI, but I think what it does is reasonable.
+
+> I think verifying that that any objects we're about to delete exist
+> somewhere should make this safer to use, though even then, I think we're
+> still open to a TOCTOU race whereby the promisor has the objects when
+> we're about to delete them (convincing Git that deleting those objects
+> is OK to do) but gets rid of them after objects have been deleted from
+> the local copy (leaving no copies of the object around).
+
+Possible TOCTOU races are a good reason why something with no check is
+perhaps a better goal for now.
