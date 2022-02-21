@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 646B4C433EF
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 14:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CCEFC433FE
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 14:48:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378310AbiBUOsZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 09:48:25 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60450 "EHLO
+        id S1378358AbiBUOs2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 09:48:28 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378314AbiBUOr3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Feb 2022 09:47:29 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5643B6304
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:47:03 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id w13so9187962wmi.2
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:47:03 -0800 (PST)
+        with ESMTP id S1378307AbiBUOrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 09:47:31 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C60138A5
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:47:08 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id d27so27513611wrc.6
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:47:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EKrlFz9E89SyDmXih67+BR+4Z2h2uP3Yp3sCtHeWhvA=;
-        b=XyXWRB/2D4Ygyv8HrLGR/NYyOGfrSHYjWdEfeSHUq2vJkzUUQhhJoTEh221Enzv4ZW
-         zDE8l/P4/Rh2xK0oIuSBIhg5VsYOvQJbbV8j2caZ0m+LsIe0H77nA3/RmQ7GgXfCLkpF
-         GiTTifMbCnrDR0YH24JnkXiPgMbBTYSTLfrEpz9y+0wuB0WMcg3sc8WfbXSjUY9n3dFv
-         sB+VWMQcMhJIkqA0pnu6SXx6r9YpdyOJbjPtXOaPq8RlTovJYEFCr8alGT+tcSu6WLvb
-         bpjDAJmjp5Sy7Ctggs+dRAYkKlTWhO+hwnP22+wzo2LYKxwOwoD3DoJI+wz4k/t9Sicy
-         qztQ==
+        bh=3m1ruZuIYSdJ29PuDQY0iyz4mGK4VGkNcg2pJ9x2hn0=;
+        b=jQVlFQEf4Gvi3FApB/hYlNJzox0vo7yiEVr+OJAdE2jX4PJ3dKfNkntzWyltNBuw6V
+         pw5kj5xpprRjshFy95gSeVo9mWvhmsLSFs1Ch+IAPSyxNdb76HiEQNgARd4zq71dbzIM
+         mixYTLeffC+AnNXqlZmFJFG28EP7dDKgUpviQdy8gBiNoxDJ0tLQK58QNQlTs9+EeM3x
+         K/QYgnn2knlqNte9KeTu4/rA3NK2E7pPMjXdEqwXCjnR/HUfWmiZp9XK8iKc9On91tCk
+         rrorjXGmRo+9VefhXJciwmCJWoM5ZIExNfJXKzIGEE7co/MlJBJGNTeESzVABHSIXTt4
+         pF6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EKrlFz9E89SyDmXih67+BR+4Z2h2uP3Yp3sCtHeWhvA=;
-        b=awugKn2PQ/M4NkCFzOXcU/iYivVw7Jtz+U9OBlTszVvJA6pXGrsYyShakoklkpCinl
-         Nr2OOKdPmme0ZNv/S/FBLf1gcAmZdXP4WadqD8AawVP2VDBeFh00TJkQ1oGN7RN2lUKz
-         L/AguQhP0DhgFLCYPqex//Fdil0xmRM/knqXQnTxKxb4hR8d+48NaP/EAHvGoAPmVWRi
-         8RxD02s05wytWtE7Pzo4fsjOxZqFVJyrLEDvb/uOYu1aDMzdcGvb03oyKqaeQIjxz9yc
-         sjlQOZIwBsMMrJhGkIxKPBr7jgQC9A3XVk/PxpW9Z4YK49p4PGSIkg2/NplFgYuBKkIj
-         9PLg==
-X-Gm-Message-State: AOAM531rcNEFVygaDm6x3c26j49pfpJlbSngUIrX/11aABHEFalMEwMr
-        TMvlAPuV7gC4g99ofdyJfFxvQYdgPg7tqg==
-X-Google-Smtp-Source: ABdhPJzEPCd4n6lhlvywy15TeN1XaH4DrD51G4UAwyCEpjis1qPsE68KBQaQWJcgRJhhyYQ2lJZ5IA==
-X-Received: by 2002:a1c:7216:0:b0:37b:f84d:d56e with SMTP id n22-20020a1c7216000000b0037bf84dd56emr21398999wmc.177.1645454821678;
-        Mon, 21 Feb 2022 06:47:01 -0800 (PST)
+        bh=3m1ruZuIYSdJ29PuDQY0iyz4mGK4VGkNcg2pJ9x2hn0=;
+        b=S5aaetcV00X0qgeB8MtOJ7LPZViv4Y7eX0sTLHrV+NPwA93VwrLwU0GE9zHI57TXUU
+         jShAf/zjUSgkkTsO1yHqYOu1NPz8mi2FYam9AX8wdK/wN38bOpjRvp1mNBwujRJrXbnl
+         ULwRFTZawTU5IUw5TXSmYC1myi7wHNXMmW/ygBcMkv8jc7M2CyTMAGpiWDnHJiJnoIt8
+         EQcexnexyFOi6GbWnkmDXTSog4yi7XTm9wNHXC2YTix2+O5vQ6YcSdwBCbkw9gmktRao
+         S2jJBlO8L5g+fvmIJaRXhKz+/F7fXbqHLVQFw56e3kiYT0Hkd7fOgrVHmITewKjpjKOU
+         CAGA==
+X-Gm-Message-State: AOAM531BGJeDnpaWpj9/ZAjZ6JYRIpbo4m1eIFJBmBNjoSoPIRQQhRJC
+        7RETywsW6ZMT4fO4x2Uj3dBzAK6Qwh1AUQ==
+X-Google-Smtp-Source: ABdhPJxOlO/skdVr4LPTqWT5SrUJqS2rw8joc1O4fuxqWxaLzGcJij7VqLX2G09wS0Tf6sWxT4VgIQ==
+X-Received: by 2002:adf:e5d1:0:b0:1e6:1109:5a11 with SMTP id a17-20020adfe5d1000000b001e611095a11mr16065730wrn.641.1645454826480;
+        Mon, 21 Feb 2022 06:47:06 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r14sm25071094wrz.84.2022.02.21.06.47.00
+        by smtp.gmail.com with ESMTPSA id r14sm25071094wrz.84.2022.02.21.06.47.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 06:47:01 -0800 (PST)
+        Mon, 21 Feb 2022 06:47:05 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 15/25] CI: split up and reduce "ci/test-documentation.sh"
-Date:   Mon, 21 Feb 2022 15:46:27 +0100
-Message-Id: <patch-15.25-4f1564af70f-20220221T143936Z-avarab@gmail.com>
+Subject: [PATCH 20/25] CI: only invoke ci/lib.sh as "steps" in main.yml
+Date:   Mon, 21 Feb 2022 15:46:32 +0100
+Message-Id: <patch-20.25-40d86e8c1dc-20220221T143936Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1132.ga1fe46f8690
 In-Reply-To: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
 References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
@@ -75,152 +75,193 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the "ci/test-documentation.sh" script to run the bash-specific
-parts in as one command in the CI job itself, and to run the two "make
-doc" commands at the top-level.
+Change the scripts in ci/ to stop using ci/lib.sh as a library, now
+that the only thing it did for them was to "set -ex" and possibly set
+TERM=dumb.
 
-It'll now be obvious from the title of the step if if we failed in the
-asciidoc or asciidoctor step.
+Let's create a ci/lib-tput.sh for those that need to use "tput"
+instead, and have these scripts invoke "set -ex" themselves.
 
-Since the "check_unignored_build_artifacts()" function is now only
-used in "ci/check-unignored-build-artifacts.sh" move that function
-there.
+This makes their invocation a lot less verbose, since they'll be
+relying on an earlier step in the CI job to have set the variables in
+$GITHUB_ENV, and won't be spewing their own trace output to set those
+variables again.
 
-The recipe for the job in ".github/workflows/main.yml" is now a bit
-verbose because it's effectively the same job twice, with a "make
-clean" in-between. It would be better for the verbosity to run it via
-a matrix as done in the alternate approach in [1] does, but then we'd
-sacrifice overall CPU time for the brevity. It might still be worth
-doing, but let's go for this simpler approach for now.
+Let's also create a ci/lib-ci-type.sh, and have ci/lib.sh and
+ci/print-test-failures.sh share the logic to discover the CI type. We
+could have set the CI_TYPE in the environment with "setenv", but let's
+avoid that verbosity for this purely internal variable.
 
-1. https://lore.kernel.org/git/patch-v2-6.6-7c423c8283d-20211120T030848Z-avarab@gmail.com/
+The "ci/lib.sh" is now no longer a "Library of functions shared by all
+CI scripts", so let's remove that commentary, and the misleading
+comment about "set -ex" being for "installing dependencies", we're now
+no longer using it in "ci/install-dependencies.sh" (but it does its
+own "set -ex").
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml            | 16 +++++++++++++-
- ci/check-unignored-build-artifacts.sh | 10 +++++++++
- ci/lib.sh                             | 10 ---------
- ci/test-documentation.sh              | 31 +++++++++------------------
- 4 files changed, 35 insertions(+), 32 deletions(-)
+ ci/check-unignored-build-artifacts.sh |  4 +++-
+ ci/install-dependencies.sh            |  2 +-
+ ci/lib-ci-type.sh                     |  8 ++++++++
+ ci/lib-tput.sh                        |  2 ++
+ ci/lib.sh                             | 27 ++++++++++-----------------
+ ci/print-test-failures.sh             |  6 +++---
+ ci/select-test-slice.sh               |  2 +-
+ ci/test-documentation.sh              |  2 +-
+ 8 files changed, 29 insertions(+), 24 deletions(-)
+ create mode 100644 ci/lib-ci-type.sh
+ create mode 100644 ci/lib-tput.sh
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 2c23a19eac2..92b914f16fd 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -365,4 +365,18 @@ jobs:
-     steps:
-     - uses: actions/checkout@v2
-     - run: ci/install-dependencies.sh
--    - run: ci/test-documentation.sh
-+    - run: ci/lib.sh
-+    - run: make check-docs
-+    - run: "make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)"
-+      shell: bash
-+    - run: ci/test-documentation.sh AsciiDoc
-+      if: success()
-+    - run: ci/check-unignored-build-artifacts.sh
-+      if: success()
-+    - run: make clean
-+    - run: "make USE_ASCIIDOCTOR=1 doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)"
-+      shell: bash
-+    - run: ci/test-documentation.sh Asciidoctor
-+      if: success()
-+    - run: ci/check-unignored-build-artifacts.sh
-+      if: success()
 diff --git a/ci/check-unignored-build-artifacts.sh b/ci/check-unignored-build-artifacts.sh
-index 56d04b0db9a..0bc04f32804 100755
+index 0bc04f32804..c27d6a97f45 100755
 --- a/ci/check-unignored-build-artifacts.sh
 +++ b/ci/check-unignored-build-artifacts.sh
-@@ -5,4 +5,14 @@
+@@ -3,7 +3,9 @@
+ # Check whether the build created anything not in our .gitignore
+ #
  
- . ${0%/*}/lib.sh
- 
-+check_unignored_build_artifacts ()
-+{
-+	! git ls-files --other --exclude-standard --error-unmatch \
-+		-- ':/*' 2>/dev/null ||
-+	{
-+		echo "$(tput setaf 1)error: found unignored build artifacts$(tput sgr0)"
-+		false
-+	}
-+}
+-. ${0%/*}/lib.sh
++set -ex
 +
- check_unignored_build_artifacts
++. ${0%/*}/lib-tput.sh
+ 
+ check_unignored_build_artifacts ()
+ {
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 9388289d0ed..ee9af62fc92 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -3,7 +3,7 @@
+ # Install dependencies required to build and test Git on Linux and macOS
+ #
+ 
+-. ${0%/*}/lib.sh
++set -ex
+ 
+ UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl-dev libexpat-dev
+  tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
+diff --git a/ci/lib-ci-type.sh b/ci/lib-ci-type.sh
+new file mode 100644
+index 00000000000..bd6e093c8f4
+--- /dev/null
++++ b/ci/lib-ci-type.sh
+@@ -0,0 +1,8 @@
++if test "$GITHUB_ACTIONS" = "true"
++then
++	CI_TYPE=github-actions
++else
++	echo "Could not identify CI type" >&2
++	env >&2
++	exit 1
++fi
+diff --git a/ci/lib-tput.sh b/ci/lib-tput.sh
+new file mode 100644
+index 00000000000..baed1892f69
+--- /dev/null
++++ b/ci/lib-tput.sh
+@@ -0,0 +1,2 @@
++# GitHub Action doesn't set TERM, which is required by tput
++export TERM=${TERM:-dumb}
 diff --git a/ci/lib.sh b/ci/lib.sh
-index 05f3dd15e27..fc6ce4d3e04 100755
+index b882849ed5d..5eadc96de29 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -39,16 +39,6 @@ setenv () {
+@@ -1,13 +1,9 @@
+ #!/bin/sh
+-
+-# Library of functions shared by all CI scripts
+-
+-# Set 'exit on error' for all CI scripts to let the caller know that
+-# something went wrong.
+-# Set tracing executed commands, primarily setting environment variables
+-# and installing dependencies.
+ set -ex
+ 
++# Helper libraries
++. ${0%/*}/lib-ci-type.sh
++
+ # Starting assertions
+ if test -z "$jobname"
+ then
+@@ -39,15 +35,11 @@ setenv () {
  	fi
  }
  
--check_unignored_build_artifacts ()
--{
--	! git ls-files --other --exclude-standard --error-unmatch \
--		-- ':/*' 2>/dev/null ||
--	{
--		echo "$(tput setaf 1)error: found unignored build artifacts$(tput sgr0)"
--		false
--	}
--}
+-# GitHub Action doesn't set TERM, which is required by tput
+-setenv TERM ${TERM:-dumb}
 -
- # GitHub Action doesn't set TERM, which is required by tput
- setenv TERM ${TERM:-dumb}
+ # Clear MAKEFLAGS that may come from the outside world.
+ MAKEFLAGS=
  
+-if test "$GITHUB_ACTIONS" = "true"
+-then
+-	CI_TYPE=github-actions
++case "$CI_TYPE" in
++github-actions)
+ 	CC="${CC:-gcc}"
+ 
+ 	setenv --test GIT_PROVE_OPTS "--timer --jobs 10"
+@@ -57,11 +49,12 @@ then
+ 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
+ 
+ 	setenv --test GIT_TEST_OPTS "$GIT_TEST_OPTS"
+-else
+-	echo "Could not identify CI type" >&2
+-	env >&2
++	;;
++*)
++	echo "Unhandled CI type: $CI_TYPE" >&2
+ 	exit 1
+-fi
++	;;
++esac
+ 
+ setenv --build DEVELOPER 1
+ setenv --test DEFAULT_TEST_TARGET prove
+diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
+index 0c63b6f7962..452aff35d74 100755
+--- a/ci/print-test-failures.sh
++++ b/ci/print-test-failures.sh
+@@ -3,10 +3,10 @@
+ # Print output of failing tests
+ #
+ 
+-. ${0%/*}/lib.sh
++set -e
+ 
+-# Tracing executed commands would produce too much noise in the loop below.
+-set +x
++. ${0%/*}/lib-ci-type.sh
++. ${0%/*}/lib-tput.sh
+ 
+ cd t/
+ 
+diff --git a/ci/select-test-slice.sh b/ci/select-test-slice.sh
+index ec602f8a053..a0332095bb3 100755
+--- a/ci/select-test-slice.sh
++++ b/ci/select-test-slice.sh
+@@ -3,7 +3,7 @@
+ # Select a portion of the tests for testing Git in parallel
+ #
+ 
+-. ${0%/*}/lib.sh
++set -ex
+ 
+ tests=$(echo $(cd t && ./helper/test-tool path-utils slice-tests "$1" "$2" \
+ 	t[0-9]*.sh))
 diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-index 6b5cce03bd7..b8a6a6f664e 100755
+index b8a6a6f664e..64ff212cdaa 100755
 --- a/ci/test-documentation.sh
 +++ b/ci/test-documentation.sh
-@@ -1,10 +1,12 @@
--#!/usr/bin/env bash
-+#!/bin/sh
- #
--# Perform sanity checks on documentation and build it.
-+# Perform sanity checks on "make doc" output and built documentation
+@@ -3,7 +3,7 @@
+ # Perform sanity checks on "make doc" output and built documentation
  #
  
- . ${0%/*}/lib.sh
+-. ${0%/*}/lib.sh
++set -ex
  
-+generator=$1
-+
- filter_log () {
- 	sed -e '/^GIT_VERSION = /d' \
- 	    -e "/constant Gem::ConfigMap is deprecated/d" \
-@@ -14,28 +16,15 @@ filter_log () {
- 	    "$1"
- }
+ generator=$1
  
--make check-docs
--
--# Build docs with AsciiDoc
--make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)
--cat stderr.raw
--filter_log stderr.raw >stderr.log
--test ! -s stderr.log
--test -s Documentation/git.html
--test -s Documentation/git.xml
--test -s Documentation/git.1
--grep '<meta name="generator" content="AsciiDoc ' Documentation/git.html
--
--rm -f stdout.log stderr.log stderr.raw
--check_unignored_build_artifacts
--
--# Build docs with AsciiDoctor
--make clean
--make USE_ASCIIDOCTOR=1 doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)
- cat stderr.raw
- filter_log stderr.raw >stderr.log
- test ! -s stderr.log
- test -s Documentation/git.html
--grep '<meta name="generator" content="Asciidoctor ' Documentation/git.html
-+if test "$generator" = "Asciidoctor"
-+then
-+	test -s Documentation/git.xml
-+	test -s Documentation/git.1
-+fi
-+grep "<meta name=\"generator\" content=\"$generator " Documentation/git.html
- 
- rm -f stdout.log stderr.log stderr.raw
 -- 
 2.35.1.1132.ga1fe46f8690
 
