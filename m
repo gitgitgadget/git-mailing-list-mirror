@@ -2,113 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D60A5C4332F
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 18:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D608C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 18:46:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231383AbiBUS1q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 13:27:46 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:47034 "EHLO
+        id S232094AbiBUSql (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 13:46:41 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232602AbiBUSYo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Feb 2022 13:24:44 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76E19140EC
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 10:19:29 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C3FFE182774;
-        Mon, 21 Feb 2022 13:19:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=PDU/GkVlbfJC
-        B84GZS5jNTnC1ZSrMd8vzWaMjiCMQTc=; b=nLRhDHTjmzFhtMoGKMrBe51Z5ulp
-        DT4xycqeZ+XOPOx8/8iDrPvtxDmMUdhaVUJyzTVlqBK3aYt4Piuxvy6M7nsd8sy7
-        MVFKPM3TqeOpFByLmkZCVXBs0ugxPvNqQ1GTx0pQ8g8VYieFjQak5fi5vi363bcL
-        PZWJCr57WxP7CRQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A6978182773;
-        Mon, 21 Feb 2022 13:19:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 01136182770;
-        Mon, 21 Feb 2022 13:19:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] ls-files: support --recurse-submodules --stage
-References: <20220218223212.1139366-1-jonathantanmy@google.com>
-        <220219.868ru7fsad.gmgdl@evledraar.gmail.com>
-Date:   Mon, 21 Feb 2022 10:19:24 -0800
-In-Reply-To: <220219.868ru7fsad.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sat, 19 Feb 2022 04:11:30 +0100")
-Message-ID: <xmqqk0dot74j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232031AbiBUSqh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 13:46:37 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1910195
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 10:46:12 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id k127-20020a1ca185000000b0037bc4be8713so3782wme.3
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 10:46:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=t3pu1ljUtOiq0weLRk+F++jc7TEifpPhWv/yQsIL2IA=;
+        b=cWn8wBxRUq6fJ/488C+YkVpQd1z0X8iGWJA7UGuzhTSARDAYYMbtbH4Ok8DxjgQRZX
+         SN4tV3FxYPHTqQMlsnJRBOq2IwE1MSGkhYXYp468BnWzVAu6WyuVLxTOK4X64YxZK/Ki
+         qqh0JliarjGeD63Jk19yLKhwYMVZexsV29Z2j47yTk2ozjDZzfzo7Goxf4JRlbsDvHAm
+         ERzDN7V666DxULiYw949OQDdVifIPuPDB0xzklJcYFG06XTl/Hl8TE25TgIug2lsBI4h
+         CDlIfT98MEt4dj29LHqzCRyKyRlXNQJWqr9pcmLAvs4shYi3laQYhS+a/54GRkxf1RYf
+         yz0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=t3pu1ljUtOiq0weLRk+F++jc7TEifpPhWv/yQsIL2IA=;
+        b=N2ZZmBn6KS2bYcUKrYaCWu3l/Qxv5FmI7Nz5lV6myLUMh4rK52D1iYzQnlu0mc3C2T
+         5rfyRE532UapStj4xQ7G006x//V7rWfyRs7kA/exHru2985CsRo1aJNAzgONUgBF153U
+         +o2JWlyKfO6RE6vOUXQG4CnDrwtng9SyrUN3MHq5P0o2KCQf1RSU3cDhkuDdCzMGLpZT
+         n2qhRt+YyQfgEuEfEv6G8jHq4lCwWxPv7t3m8ta59OQmJ+t7dmwFstOl5drc/Fd/jZ0q
+         DS8N1kptNV+DCP/zJg7lDzJ4lmajvJUaUJG2bjnqpt9wVnJkEqltKVkrzr9pmxwcX5iV
+         OkOQ==
+X-Gm-Message-State: AOAM533JVZ4xRO/eEo5JEY2UliHe0LAeuac8jfzrzVhfu7CbYMdDJBEY
+        iDxw//qAkM7nygUfOB6Id7L2H+eWRbM=
+X-Google-Smtp-Source: ABdhPJyDG6OfrDko9IobitEUeMJR9b2o3FuPzx4wwVuDgbL2dbsehL7cfXd2wRZmAqkT6SoZi61Rdw==
+X-Received: by 2002:a7b:c5d1:0:b0:37f:a8a3:9e17 with SMTP id n17-20020a7bc5d1000000b0037fa8a39e17mr269447wmk.109.1645469171057;
+        Mon, 21 Feb 2022 10:46:11 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l38-20020a05600c1d2600b0037e9090fb1esm174021wms.24.2022.02.21.10.46.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Feb 2022 10:46:10 -0800 (PST)
+Message-Id: <pull.1185.v3.git.git.1645469170.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1185.v2.git.git.1645106124.gitgitgadget@gmail.com>
+References: <pull.1185.v2.git.git.1645106124.gitgitgadget@gmail.com>
+From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 21 Feb 2022 18:46:03 +0000
+Subject: [PATCH v3 0/7] reftable: avoid reading and writing empty keys
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CD1FC19C-9342-11EC-98D1-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+this series makes sure that the object record does not have to consider
+empty keys (and therefore, a NULL memcpy destination)
 
-> This test though will break, as you can see with:
->
->     GIT_TEST_DEFAULT_HASH=3Dsha256 ./t3007-ls-files-recurse-submodules.=
-sh
->
-> So you'll need at least something like:
->
-> diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-=
-recurse-submodules.sh
-> index 3d2da360d17..0fe69da8dcf 100755
-> --- a/t/t3007-ls-files-recurse-submodules.sh
-> +++ b/t/t3007-ls-files-recurse-submodules.sh
-> @@ -42,10 +42,10 @@ test_expect_success '--stage' '
->  	echo brigddsv >submodule/c &&
->  	git -C submodule commit -am "update c again" &&
-> =20
-> -	cat >expect <<-\EOF &&
-> -	100644 6da7 0	.gitmodules
-> -	100644 7898 0	a
-> -	100644 6178 0	b/b
-> +	cat >expect <<-EOF &&
-> +	100644 $(git rev-parse --short=3D4 HEAD:.gitmodules) 0	.gitmodules
-> +	100644 $(git rev-parse --short=3D4 HEAD:a) 0	a
-> +	100644 $(git rev-parse --short=3D4 HEAD:b/b) 0	b/b
->  	100644 dead9 0	submodule/c
->  	EOF
-> =20
-> But then the problem is that one is dead9 and the other dead6, I was
-> just trying to find 4-char prefixes.
->
-> But having indulged in all that, I'm now entirely confused about why an=
-y
-> of this needs to be tested here.
->
-> You're adding --stage, which will give us --stage-y output, and it was
-> previously incompatible with --recurse-submodules. Having the two
-> combine is good!
+while we're at it add some more tests, and fix a naming mistake.
 
-I think what this is trying to make sure is that it (1) enabled the
-combination and (2) uses the object store of the submodule when
-disambiguating names of the objects from the submodule, because the
-author suspects that the reason why these two options were made
-incompatible in the first place was because long time ago there
-wasn't a way to ask "here is an object name---please uniquify in the
-context of _that_ repository".  So it is understandable to prepare
-an object X in a submodule and another object Y in the superproject,
-such that the abbreviated name of X in the context of the submodule
-is different from the abbreviated name of X in the context of the
-superproject (i.e. if X were in the superproject's object store,
-because the object names of X and Y share the prefix, it may require
-longer prefix to disambiguate from Y), and make sure that the uniquify
-is indeed happening in the context of the submodule.
+Han-Wen Nienhuys (7):
+  Documentation: object_id_len goes up to 31
+  reftable: reject 0 object_id_len
+  reftable: add a test that verifies that writing empty keys fails
+  reftable: avoid writing empty keys at the block layer
+  reftable: ensure that obj_id_len is >= 2 on writing
+  reftable: add test for length of disambiguating prefix
+  reftable: rename writer_stats to reftable_writer_stats
 
-So, you are only concentrating on (1) but forgetting why the author
-wants (2).
+ Documentation/technical/reftable.txt |   2 +-
+ reftable/block.c                     |  27 ++++---
+ reftable/block_test.c                |   5 ++
+ reftable/reader.c                    |   5 ++
+ reftable/readwrite_test.c            | 105 ++++++++++++++++++++++++++-
+ reftable/reftable-writer.h           |   2 +-
+ reftable/writer.c                    |   9 ++-
+ 7 files changed, 136 insertions(+), 19 deletions(-)
+
+
+base-commit: 45fe28c951c3e70666ee4ef8379772851a8e4d32
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1185%2Fhanwen%2Fobj-id-len-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1185/hanwen/obj-id-len-v3
+Pull-Request: https://github.com/git/git/pull/1185
+
+Range-diff vs v2:
+
+ 1:  80d29e8f269 = 1:  80d29e8f269 Documentation: object_id_len goes up to 31
+ 2:  4c1a19fc4ae ! 2:  68e7bc32ff8 reftable: reject 0 object_id_len
+     @@ Commit message
+          reftable: reject 0 object_id_len
+      
+          The spec says 2 <= object_id_len <= 31. We are lenient and allow 1,
+     -    but we forbid 0, so we can we can be sure that we never read a
+     -    0-length key.
+     +    but we forbid 0, so we can be sure that we never read a 0-length key.
+      
+          Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+      
+ 3:  600b115f8b1 = 3:  8b5aebdb07a reftable: add a test that verifies that writing empty keys fails
+ 4:  ba036ee8543 ! 4:  a9372cacd1b reftable: avoid writing empty keys at the block layer
+     @@ reftable/block.c: int block_reader_first_key(struct block_reader *br, struct str
+       	if (n < 0)
+       		return n;
+      +	if (!key->len)
+     -+		return -1;
+     ++		return REFTABLE_FORMAT_ERROR;
+       
+       	return 0;
+       }
+ 5:  2bd3d44ba57 = 5:  0b8a42399dd reftable: ensure that obj_id_len is >= 2 on writing
+ 6:  82d36ee0e0d = 6:  bdccd969475 reftable: add test for length of disambiguating prefix
+ 7:  c6ffdb3471c = 7:  72499a14e38 reftable: rename writer_stats to reftable_writer_stats
+
+-- 
+gitgitgadget
