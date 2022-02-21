@@ -2,80 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC1E8C433F5
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 02:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45B75C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 02:35:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343755AbiBUCbV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 21:31:21 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:36944 "EHLO
+        id S1343888AbiBUCgT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 21:36:19 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:48376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343749AbiBUCbU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 21:31:20 -0500
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2EC0443DA
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 18:30:58 -0800 (PST)
-Received: by mail-io1-xd2a.google.com with SMTP id 195so4174828iou.0
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 18:30:58 -0800 (PST)
+        with ESMTP id S236377AbiBUCgT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Feb 2022 21:36:19 -0500
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2062C3CA63
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 18:35:57 -0800 (PST)
+Received: by mail-io1-xd36.google.com with SMTP id d19so3854942ioc.8
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 18:35:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=HWkh4QxHRYBm83oVsBf0ZIsP3nia9mh5h4BysNGPsUE=;
-        b=ONdFv+05AeJDt2TkNVGDx896mVsB4QCqpR4y6nUz6OFM7jx7Ze5VKg8PCNB93EpBlX
-         c9frEci9j8qMqT3EvthYvxg2QNVtH7g9XoujF10bJ39j4jcd+MHlBmDbuU88UaTP8Yok
-         MXDgFY6WK6/AnEnRjOT0Kx+xBRJxFOF+rpIGKjz9LgU/SEEpIh3egs73dI0gpzGF9jVb
-         FEaXueLcts5ibeY/AsncXBcdO0jrPUACKtHJdwxRgItfe4fw2pSPZX3ya1dZGB20V5Rk
-         eI8bn7bb18m2LCtpToWcP3i4eFWxx/rChHNXE7Yjr0tJusIDSr2BHyAMNEMV+GLFPjt0
-         26VQ==
+         :content-disposition:in-reply-to;
+        bh=ZDaTvmppyc2wMBh96XyojGrxQvAKXrDwbW1DGNWWG0k=;
+        b=bJMufWEV0GMxFcxOH75Pl87z9La5U4nPOXKjvAAeJf8mo+9nerSRHkFWHKo2sPbTaV
+         T7xZRUgYpnvFcuNrXOaHj0700grpG+G6zeN7OXyzyIfW6TyKfFsFNbK7lBff+GpRzSxO
+         N2dX2AMdJFYsBJLxnw50U4HRDfE2yhvmKmuFEnXH3gNsuXHbeZDF9fwqYXDwZ8d8ks++
+         Yp/c90pf4WLn6Qlqr/Z+ORDP3FQkuZRKGCXamwBuiBor5fr7/WbbkWrPI5pYCxu92YUE
+         8nuYa+ln5dzSPffo4OM1vSLgX+xTKG4UOO7GdTtAmAGbazfRm8Ko39D6yYLUolM3ppeN
+         aUBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=HWkh4QxHRYBm83oVsBf0ZIsP3nia9mh5h4BysNGPsUE=;
-        b=V9VXAfUb/x2gpXV7PeKxbPusoKORk0R23Chkv1AeJ6OiudZ4ML+lW3X87XhsoGz5pw
-         XVCedca0lYdlxrESGZXvPcpHSeSFZck8SZToabpfZ7qlp2qKIr1HmAkgz9uLYMQroHop
-         4SsFksSVOi/y4lPLqAFmYD4Vr/N1CcTQQD0SkDi5ipBhlYBshWEDkzVfKDTnDO0LF1SO
-         dherCRKNB+pze1wQeLjZtaR/LhLXPlx7710lb4McZ27B4XuMeniEbKyBHWWRCfruywPw
-         FN75Hj/w7kYwG6iodA7dLyj0vCHdAdz2BClm5R0jS7Slv951tNJLPiRSNvy2aOEJCcw4
-         QC8g==
-X-Gm-Message-State: AOAM533c8wkYpg2Dr/602BTEenpYqsXSA8w+gm0bu7tkSkFWoZf2kghx
-        FR/cMWVS2hw0J1jMbkBVBg5GkXtA8cASzKJa
-X-Google-Smtp-Source: ABdhPJx9MEE2BF+TMc1GKMihBkrqk43/bL47GEpf9Y2dK5o7uw0rF0Xaa+hR+2MTvf33uHzukyuBUQ==
-X-Received: by 2002:a02:a80b:0:b0:314:c59d:364d with SMTP id f11-20020a02a80b000000b00314c59d364dmr6435480jaj.77.1645410658129;
-        Sun, 20 Feb 2022 18:30:58 -0800 (PST)
+         :mime-version:content-disposition:in-reply-to;
+        bh=ZDaTvmppyc2wMBh96XyojGrxQvAKXrDwbW1DGNWWG0k=;
+        b=CJLXi0WU8DowebE02BR+slFDhHBeiA7CnGnGYu2QoZm0IKxMYBcx9yHPvY5K4sGwAK
+         59lHA553OGs3LWh4kv4G1qv/AhoKgvvSXyh15HA81CuQsu7c1qRCijuV/EhnENgcEs1s
+         /HINGVPT4a8xzaymguuKpNnChWdRjOKnb9g4kYU/eqtVOrtOep12GAnUT09YozAP9LCT
+         bV341iF9U1mDYF9nDRO/+c6sYDxo6u9DkBfk9tfy5JnFqMT68KmvbnmLtW59XmJgWMUo
+         58yVo0smQM3wj9JNaloPWu4chOcUMDFASfRVWWJPkiCLAIJNoKXGWwCIixa/Ef8aR44x
+         SFGQ==
+X-Gm-Message-State: AOAM531ZAcB9Km1Uw/BvmhTt3L+bA1vkDWmU5Hs1Hgby6QXVgA7XqfdC
+        zNIgFtSa0iZGjUHI7sd3YFcvmhuMSAVPwGz1
+X-Google-Smtp-Source: ABdhPJx9m7vY66/H9oQIEHEpIC/X2JUPvLoUwdVN71bXQxxpY7i9m1WI6Tx0dXhYX24dcEgkzqBx4g==
+X-Received: by 2002:a05:6602:27cc:b0:5f0:876e:126b with SMTP id l12-20020a05660227cc00b005f0876e126bmr14508081ios.129.1645410956526;
+        Sun, 20 Feb 2022 18:35:56 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o22sm8796720iow.37.2022.02.20.18.30.57
+        by smtp.gmail.com with ESMTPSA id d16sm8853632iow.13.2022.02.20.18.35.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Feb 2022 18:30:57 -0800 (PST)
-Date:   Sun, 20 Feb 2022 21:30:57 -0500
+        Sun, 20 Feb 2022 18:35:56 -0800 (PST)
+Date:   Sun, 20 Feb 2022 21:35:55 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/4] test-lib: improve LSAN + ASAN stack traces
-Message-ID: <YhL5YTrbcWXv2PBo@nand.local>
-References: <cover-0.4-00000000000-20220218T205753Z-avarab@gmail.com>
- <cover-v2-0.4-00000000000-20220219T112653Z-avarab@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 1/2] merge-ort: fix small memory leak in
+ detect_and_process_renames()
+Message-ID: <YhL6i3x1l4qwQJg+@nand.local>
+References: <pull.1152.git.1645290601.gitgitgadget@gmail.com>
+ <pull.1152.v2.git.1645320591.gitgitgadget@gmail.com>
+ <f1f7fc97fe2fe5079365bb91c71fb7033378995d.1645320592.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover-v2-0.4-00000000000-20220219T112653Z-avarab@gmail.com>
+In-Reply-To: <f1f7fc97fe2fe5079365bb91c71fb7033378995d.1645320592.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 19, 2022 at 12:29:39PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> I think this v2 should address all the comments on the v1, thanks
-> Taylor & Junio!
+On Sun, Feb 20, 2022 at 01:29:50AM +0000, Elijah Newren via GitGitGadget wrote:
+>  merge-ort.c | 15 +++++----------
+>  1 file changed, 5 insertions(+), 10 deletions(-)
 
-Thanks; this version looks good to me, though I agree with Junio's
-feedback on the first patch. TBH, I do not feel strongly at all about
-"GIT_XSAN_OPTIONS" versus "GIT_SAN_OPTIONS", either seems fine to (with
-a slight bias towards the first, since it makes it clear that it targets
-both ASan and LSan).
+Both versions of this patch look good to me (in fact, I appreciated
+seeing both v1 and v2, since v1 makes it more obvious what is changing,
+but v2 does the whole thing in a little bit of a cleaner way).
 
-But either way, this looks like it's almost there.
+> diff --git a/merge-ort.c b/merge-ort.c
+> index d85b1cd99e9..3d7f9feb6f7 100644
+> --- a/merge-ort.c
+> +++ b/merge-ort.c
+> @@ -3086,12 +3086,11 @@ static int detect_and_process_renames(struct merge_options *opt,
+>  				      struct tree *side1,
+>  				      struct tree *side2)
+>  {
+> -	struct diff_queue_struct combined;
+> +	struct diff_queue_struct combined = { 0 };
+>  	struct rename_info *renames = &opt->priv->renames;
+> -	int need_dir_renames, s, clean = 1;
+> +	int need_dir_renames, s, i, clean = 1;
+
+And this entire patch looks good to me, but I did wonder about why "i"
+is an int here. Shouldn't it be a size_t instead? Looking at
+diff_queue_struct's definition, both "alloc" and "nr" are signed ints,
+when they should almost certainly be unsigned to avoid overflow.
 
 Thanks,
 Taylor
