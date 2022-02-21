@@ -2,132 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B25ABC433F5
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 03:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7490AC433F5
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 07:57:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343746AbiBUDMT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 22:12:19 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57236 "EHLO
+        id S1346645AbiBUH5q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 02:57:46 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:43680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236396AbiBUDMS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Feb 2022 22:12:18 -0500
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF9AB205F8
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 19:11:56 -0800 (PST)
-Received: by mail-io1-xd31.google.com with SMTP id e79so14432417iof.13
-        for <git@vger.kernel.org>; Sun, 20 Feb 2022 19:11:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=KPyiYxCegHZF4jLY1JDEu80glJkeiYNm//vrxnTqpwE=;
-        b=fyObtL34+3TrOenulth7TKBvdwvAoYMxAvmYrpS1VvKCzREezdMPSF+X9IbFdmOo9p
-         veMh9JL49EexbuH7Vu9cHilEKlRMe7/qa2DDc0jxyzYuZgCQgr63VIQ64AvwfKvxOCOw
-         hg+g1Xix02Hq4PExLxjAD4oZgaNvF0A4KDkrioqka4NTQTcyC5rZB/0McqOq1oKHW2AJ
-         NXcwnnwdwUzFAlIqcwCrilCKnu8QnLa1scXuujQic3AuameIhZ/b6SXWD82wvDpSu52s
-         hCs0A9+R80TQqLIunux26T88wgYzAgxBPLMSEJJzILeVaddlOcmXiGV0WsT4/8RQP3Mt
-         550w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=KPyiYxCegHZF4jLY1JDEu80glJkeiYNm//vrxnTqpwE=;
-        b=sQ7aAQoi2L7Rzzfy7XqKKyv/cH66BAyXIo461ALLOKRZG22vXXoS7I5hV+0fFQ/UDG
-         1HG9tMJFh+zYT59ZY33RxbKffHEauCTfdGn28kKOY/iXrdsuOZjFQt1FMM69Xr6U/ab2
-         7eQl+2fffFJqS0+5QW/Vzj3AZe1CdR6DtOC65Lr4z1yUZsV/SUNw2iwZoAayxnrnN5f7
-         2/RfIeUjwYbgHJZCRdt6BZcBJmaW2oSXmJxr/tQvxIOs4nri1imVpoyB1peVDJbchVjp
-         gL2aYucECzLWpdKxUx2VnGSYgfcn+t/wzL1DHeGVCZa/cvE8hEhtZqG5SHRu8PqRulpk
-         MuKg==
-X-Gm-Message-State: AOAM530QANQVWZFbN0eqP22iFpdkyXTx1gKomA8h3N+3KUj6R1WNp8+t
-        L02/s8gYyR28xRfll9smDHKN0DpayCt2a2oa
-X-Google-Smtp-Source: ABdhPJzQoRe2GOXy20mvhC1y+lT95ER187SQrq8kVMakhSJ+sOzs/NbyztnvRsWlw9evEF5EDNkxTw==
-X-Received: by 2002:a5d:84c5:0:b0:60b:bd34:bb6f with SMTP id z5-20020a5d84c5000000b0060bbd34bb6fmr14289332ior.32.1645413116229;
-        Sun, 20 Feb 2022 19:11:56 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c13sm95874ilm.2.2022.02.20.19.11.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Feb 2022 19:11:55 -0800 (PST)
-Date:   Sun, 20 Feb 2022 22:11:55 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     John Cai <johncai86@gmail.com>
-Cc:     Robert Coup <robert.coup@koordinates.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v2 0/4] [RFC] repack: add --filter=
-Message-ID: <YhMC+3FdSEZz22qX@nand.local>
-References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
- <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
- <CAFLLRpJ1aDyLb4qAoQwYDyGdP1_PH8kzLAQCKJpQwiYiapZ5Aw@mail.gmail.com>
- <CB2ACEF7-76A9-4253-AD43-7BC842F9576D@gmail.com>
+        with ESMTP id S1346619AbiBUH5l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 02:57:41 -0500
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3448A2181F
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 23:57:17 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 5E4875C01D1;
+        Mon, 21 Feb 2022 02:57:15 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Mon, 21 Feb 2022 02:57:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; bh=5A2CFYv8jgjasEDbgDR6DUZ44c3vF4H1J24TQ2
+        CCjTc=; b=fyAjovAa0ExXm5GMExxmpvxDfebOgxAs9JDTFqdHhNt651FLBoWEBJ
+        y4yqHuLKkAP89GmjUmdLEDoElJziE92sG1M/I0uvAvO2JbaFbe37Niob3sKO/wXM
+        fBYFX2sgx/dxZsFs1QXqjXy2KGK1hqNPT7RpJa8D+fvVVOVeUj+ADxFi/lp73ykZ
+        L0rj4cQxQUETXreQg47ptClJyXNX6GlLJyreuhKKnYwfR+bYrtyCCJZ8vgtfzS4q
+        wuU31K1s7FqfsU2R3iLDeMN6iGDAiZDixCCZhPNeCFwhlIwZ98RrtQ8XIfsP3Jdq
+        +kdJu65r0tq7TSkVmua5XSyBrZibQzwg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=5A2CFYv8jgjasEDbg
+        DR6DUZ44c3vF4H1J24TQ2CCjTc=; b=NK0ionusH7dBWl6LO9KDEEyc/I4zIYLTd
+        11pxFQQ2zFRRcI4yidfXirSLy7c34ygS6+qCAeea1C3X/pFKrCg0rpDbzBZG+SH5
+        xCIokvmrR5y1umVPiKlwC9ozGUL+tzIbNKlePYdRc7+eN2LoksMVmwo8aZgfeYfD
+        RFCGRtElh0+ylihP+gqasCh12tX/c0we1lENH+kKEcMyaNS0/FdFjv68tvJ6UDKk
+        boc3mkHgXeeWUQUzwNDoKPBE/fKyDuoSYoI4zeXK7qOgvyiqaeq0HsOlkp0sxQwN
+        JyQ0TVMtmy7H8zIubgVgd3pFfxMv0jcLxrSN3wlm85RRWOwMhGfZg==
+X-ME-Sender: <xms:20UTYn2F5gYjit5Jz4rwOcwA_US4YKO3xQpCjzJZSi0388OdPfJ_yg>
+    <xme:20UTYmFAR8mBv5SUvyh_RYYqLfFDAgoy3pvYWH-r8QGyb-PmKzgUPKDyXbCEb5BeZ
+    _KuDe1jVxZ3SHgzgA>
+X-ME-Received: <xmr:20UTYn7n-SUvzT3XTP-SSbDzUJ7qrXd5QA3TEhfyX0AkHBAT99Q7rgmhQ4WhXl4DbUJli-U8LM565wlsjR953o8k95bpTECsBSfDxwmcpZjh3HwwapgKzQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrkeehgdduudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:20UTYs0wbqLiG_1bd_6zG_MPSZtvTIWV8JUpxOVl4M_Ft1TC_UpOyQ>
+    <xmx:20UTYqG5AijwZ585M5DQgB_EauYPImMjfQ5k8Wxb-jtdRg2Ec93dpg>
+    <xmx:20UTYt9LQrs6E4yiy21Js_RdjorxSBLM7lAHZaEIln-Jvkmo4TaFuw>
+    <xmx:20UTYvT5tGmzVHVmW76tMao-35Z4WA1KagQOilAyH0_aHI3UhfkSZA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 21 Feb 2022 02:57:14 -0500 (EST)
+Received: from localhost (ncase [10.192.0.11])
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id da7533c7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 21 Feb 2022 07:57:11 +0000 (UTC)
+Date:   Mon, 21 Feb 2022 08:57:09 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 1/7] fetch: increase test coverage of fetches
+Message-ID: <YhNF1Xc9GwGNXzhC@ncase>
+References: <cover.1645102965.git.ps@pks.im>
+ <b4ca3f1f3baacde2aea7bae4f583f68c211a557a.1645102965.git.ps@pks.im>
+ <CAP8UFD2kr6WJvv7eoDvytx5Q982XBXTpSTUQw5hXmRrDm-UuBw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="+zNCa98l1PYs8lA5"
 Content-Disposition: inline
-In-Reply-To: <CB2ACEF7-76A9-4253-AD43-7BC842F9576D@gmail.com>
+In-Reply-To: <CAP8UFD2kr6WJvv7eoDvytx5Q982XBXTpSTUQw5hXmRrDm-UuBw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 16, 2022 at 04:07:14PM -0500, John Cai wrote:
-> > I don't know whether that is just around naming (--delete-filter /
-> > --drop-filter /
-> > --expire-filter ?), and/or making the documentation very explicit that
-> > this isn't so
-> > much "omitting certain objects from a packfile" as irretrievably
-> > deleting objects.
->
-> Yeah, making the name very clear (I kind of like --delete-filter) would certainly help.
-> Also, to have more protection we can either
->
-> 1. add a config value that needs to be set to true for repack to remove
-> objects (repack.allowDestroyFilter).
->
-> 2. --filter is dry-run by default and prints out objects that would have been removed,
-> and it has to be combined with another flag --destroy in order for it to actually remove
-> objects from the odb.
 
-I share the same concern as Robert and Stolee do. But I think this issue
-goes deeper than just naming.
+--+zNCa98l1PYs8lA5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Even if we called this `git repack --delete-filter` and only ran it with
-`--i-know-what-im-doing` flag, we would still be leaving repository
-corruption on the table, just making it marginally more difficult to
-achieve.
+On Thu, Feb 17, 2022 at 04:18:07PM +0100, Christian Couder wrote:
+> On Thu, Feb 17, 2022 at 2:04 PM Patrick Steinhardt <ps@pks.im> wrote:
+>=20
+> > +test_expect_success 'atomic fetch with failing backfill' '
+> > +       git init clone3 &&
+> > +
+> > +       # We want to test whether a failure when backfilling tags corre=
+ctly
+> > +       # aborts the complete transaction when `--atomic` is passed: we=
+ should
+> > +       # neither create the branch nor should we create the tag when e=
+ither
+> > +       # one of both fails to update correctly.
+> > +       #
+> > +       # To trigger failure we simply abort when backfilling a tag.
+> > +       write_script clone3/.git/hooks/reference-transaction <<-\EOF &&
+> > +               while read oldrev newrev reference
+> > +               do
+> > +                       if test "$reference" =3D refs/tags/tag1
+> > +                       then
+> > +                               exit 1
+> > +                       fi
+>=20
+> Maybe the following could save a few lines:
+>=20
+>                        test "$reference" =3D refs/tags/tag1 && exit 1
+>=20
+> It would make the code look a bit different than in another hook
+> script written below though, so not a big deal.
 
-I'm not familiar enough with the proposal to comment authoritatively,
-but it seems like we should be verifying that there is a promisor remote
-which promises any objects that we are about to filter out of the
-repository.
+If `$reference` does not match the tag we want to continue and
+eventually return successfully from this hook. But:
 
-I think that this is basically what `pack-objects`'s
-`--missing=allow-promisor` does, though I don't think that's the right
-tool for this job, either. Because we pack-objects also knows the object
-filter, by the time we are ready to construct a pack, we're traversing
-the filtered list of objects.
+    $ while read foo; do test "$foo" =3D bar && echo match; done < <(echo b=
+ar)
+    match
+    $ while read foo; do test "$foo" =3D bar && echo match; done < <(echo f=
+oo)
+    $ echo $?
+    1
 
-So we don't even bother to call show_object (or, in this case,
-builtin/pack-objects.c::show_objecT__ma_allow_promisor) on them.
+So with the proposed change we'd now exit the hook with an error code
+instead of returning successfully.
 
-So I wonder what your thoughts are on having pack-objects only allow an
-object to get "filtered out" if a copy of it is promised by some
-promisor remote. Alternatively, and perhaps a more straight-forward
-option might be to have `git repack` look at any objects that exist in a
-pack we're about to delete, but don't exist in any of the packs we are
-going to leave around, and make sure that any of those objects are
-either unreachable or exist on a promisor remote.
+Patrick
 
-But as it stands right now, I worry that this feature is too easily
-misused and could result in unintended repository corruption.
+--+zNCa98l1PYs8lA5
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I think verifying that that any objects we're about to delete exist
-somewhere should make this safer to use, though even then, I think we're
-still open to a TOCTOU race whereby the promisor has the objects when
-we're about to delete them (convincing Git that deleting those objects
-is OK to do) but gets rid of them after objects have been deleted from
-the local copy (leaving no copies of the object around).
+-----BEGIN PGP SIGNATURE-----
 
-So, I don't know exactly what the right path forward is. But I'm curious
-to get your thoughts on the above.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmITRdUACgkQVbJhu7ck
+PpT+eQ/+MRRnVTjmNiuJyMfwpEzWqtngipO26/cOC6ggFr6+LYYIcip0FzS0YXSC
+1UAgM+oWCFzjSS/BjZdx/6GRmipQW+rUQ/GeKwEx2sEPhjg8HmWcnAtlCQ94g5e+
+g5jEVahrUjL38arO37NNAPKiuLLR5iVHlit8NdopwfhecpyqVadUdnMkOxyZaeo1
+AhCeZ07n2gfD8KKJNXC2SbygToMPZ7m/otFDhHx1fN3TXRWGeOixiNK/mei9rqf+
+LEW88e5GCbgDMGsjV1OkF28uBM9tza8NRRap7A+yKBN/l0H35lDn+PYbb8Mprb8v
+eWDjYYdtj1mua34vkDlrgahfgYF+0DBeNoFhYM6gPvVEUkmXz6C7NXoMuiqj1jiM
+SDhMDdTLt0s+M89rRpC7JaDpTX32CZqmFgZm3XyknZCpvHpZ/QVNSwjWN1kEBjBq
+XIu/e6gaHYwYqwvmI5U/ELrsiGLOXtZuni8wLLBIud/KPQmLVipuY/BLPuHv18Sy
+nadcCHJlo+JgDCxoNL62lIFbJWmcKSnaKCOR/eCODdvMrYyFTa37hCABPa//aXtW
+C0KoM7iqQmsnWqqtjKanLz5Rsg7ToVILlD0W3V/tG8YHyD+ckUXIjg8jh1SYVjYz
+YYVVZI0X4ZV59P3i3LqaUZeBTfm921JgBhjU/v/pMgFryXCMJXc=
+=STLc
+-----END PGP SIGNATURE-----
 
-Thanks,
-Taylor
+--+zNCa98l1PYs8lA5--
