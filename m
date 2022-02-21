@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CCEFC433FE
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 14:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB0E3C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 14:48:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378358AbiBUOs2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 09:48:28 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60610 "EHLO
+        id S1378359AbiBUOsb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 09:48:31 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378307AbiBUOrb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Feb 2022 09:47:31 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C60138A5
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:47:08 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id d27so27513611wrc.6
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:47:08 -0800 (PST)
+        with ESMTP id S1378308AbiBUOrc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 09:47:32 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 162665FA8
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:47:09 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id v12so27530552wrv.2
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:47:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3m1ruZuIYSdJ29PuDQY0iyz4mGK4VGkNcg2pJ9x2hn0=;
-        b=jQVlFQEf4Gvi3FApB/hYlNJzox0vo7yiEVr+OJAdE2jX4PJ3dKfNkntzWyltNBuw6V
-         pw5kj5xpprRjshFy95gSeVo9mWvhmsLSFs1Ch+IAPSyxNdb76HiEQNgARd4zq71dbzIM
-         mixYTLeffC+AnNXqlZmFJFG28EP7dDKgUpviQdy8gBiNoxDJ0tLQK58QNQlTs9+EeM3x
-         K/QYgnn2knlqNte9KeTu4/rA3NK2E7pPMjXdEqwXCjnR/HUfWmiZp9XK8iKc9On91tCk
-         rrorjXGmRo+9VefhXJciwmCJWoM5ZIExNfJXKzIGEE7co/MlJBJGNTeESzVABHSIXTt4
-         pF6g==
+        bh=9t4ZR/XM6WuDOTGpvUba9iAvgSF5eJXl8U9AFZQJ59w=;
+        b=YNb+SC86CrvxOhw08ZNBloJ9pOUEblIVphJnUIvCN3QTXJYAtplkNq+GAdD4/61THO
+         nhvafzuIEgDGizHZt/QGFFhAGtgi2llztAXgJ7WTgF8CUfSEAHl2A7kjOV7R0UT36UAb
+         1JbMiTcGQxOFt0NmkRJ73g04biXCMEHrSIM+FDOw5MxnpU3HmUFm4Nclnnt8CAobAmcN
+         qyc00Xq4opR60VbnfYU2RNyqlSH+IwJU4xy/rE4K1pVXFTqt29K4j5DI9R4IimplHSlY
+         F6mF0j7fPzAXIqhCHt9Rel4VVQWAsUv7gE2VrbhlAMliuHoWeokuMvOQr2rIBBdpCPKI
+         FDdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3m1ruZuIYSdJ29PuDQY0iyz4mGK4VGkNcg2pJ9x2hn0=;
-        b=S5aaetcV00X0qgeB8MtOJ7LPZViv4Y7eX0sTLHrV+NPwA93VwrLwU0GE9zHI57TXUU
-         jShAf/zjUSgkkTsO1yHqYOu1NPz8mi2FYam9AX8wdK/wN38bOpjRvp1mNBwujRJrXbnl
-         ULwRFTZawTU5IUw5TXSmYC1myi7wHNXMmW/ygBcMkv8jc7M2CyTMAGpiWDnHJiJnoIt8
-         EQcexnexyFOi6GbWnkmDXTSog4yi7XTm9wNHXC2YTix2+O5vQ6YcSdwBCbkw9gmktRao
-         S2jJBlO8L5g+fvmIJaRXhKz+/F7fXbqHLVQFw56e3kiYT0Hkd7fOgrVHmITewKjpjKOU
-         CAGA==
-X-Gm-Message-State: AOAM531BGJeDnpaWpj9/ZAjZ6JYRIpbo4m1eIFJBmBNjoSoPIRQQhRJC
-        7RETywsW6ZMT4fO4x2Uj3dBzAK6Qwh1AUQ==
-X-Google-Smtp-Source: ABdhPJxOlO/skdVr4LPTqWT5SrUJqS2rw8joc1O4fuxqWxaLzGcJij7VqLX2G09wS0Tf6sWxT4VgIQ==
-X-Received: by 2002:adf:e5d1:0:b0:1e6:1109:5a11 with SMTP id a17-20020adfe5d1000000b001e611095a11mr16065730wrn.641.1645454826480;
-        Mon, 21 Feb 2022 06:47:06 -0800 (PST)
+        bh=9t4ZR/XM6WuDOTGpvUba9iAvgSF5eJXl8U9AFZQJ59w=;
+        b=Anag4ArM+wIn067wSn3qb6QEaNXlg4y2YqBqiRk0VsWwOFbcVBgnliisgw1EVt4Ftd
+         nhQnp9KaaVkSCaXAGOnYr8A8svtrc/kU4PKqDo5owGL3iqVg4NioMkjiQBTSK1k/9okH
+         D5BzISYZy9+12DvYJcCbTpDzpXdsWP94cGOxzxoWMp133GeYUqvabmfsHYwEu3E3yVgD
+         4OJMVacTsxZGMlPNMayQ+pQtDnk/vWffc/l64dUHbd1AzNNl+vyNTj2P/PL9/5/3e/p8
+         dlJfbsa9J00ZMMVlurq7ml1J6GAxzxUByMfm3vquKLp99HjYOh89qLQwaZQt3Rev/tG/
+         3n/A==
+X-Gm-Message-State: AOAM532LsBGmQkk5DjyqTZ8Yo2oWllQdiKGQETC5/5bxnb+GjW/nQ8h/
+        IabxwaSvtA32HZPBJiqVRRRumQMX2z0apQ==
+X-Google-Smtp-Source: ABdhPJyigpZio2J5IReMh5R8iGVxfSR/SlQ4ypg5omUSIr0Suzey9dD1Y4caqRLt/u+0+aCZDftPaw==
+X-Received: by 2002:adf:9141:0:b0:1e3:1379:4cc6 with SMTP id j59-20020adf9141000000b001e313794cc6mr16210512wrj.249.1645454827410;
+        Mon, 21 Feb 2022 06:47:07 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r14sm25071094wrz.84.2022.02.21.06.47.05
+        by smtp.gmail.com with ESMTPSA id r14sm25071094wrz.84.2022.02.21.06.47.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 06:47:05 -0800 (PST)
+        Mon, 21 Feb 2022 06:47:06 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 20/25] CI: only invoke ci/lib.sh as "steps" in main.yml
-Date:   Mon, 21 Feb 2022 15:46:32 +0100
-Message-Id: <patch-20.25-40d86e8c1dc-20220221T143936Z-avarab@gmail.com>
+Subject: [PATCH 21/25] CI: narrow down variable definitions in --build and --test
+Date:   Mon, 21 Feb 2022 15:46:33 +0100
+Message-Id: <patch-21.25-abf9c504740-20220221T143936Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1132.ga1fe46f8690
 In-Reply-To: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
 References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
@@ -75,193 +75,157 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the scripts in ci/ to stop using ci/lib.sh as a library, now
-that the only thing it did for them was to "set -ex" and possibly set
-TERM=dumb.
+In a preceding step the "setvar" function was made to take a
+"--build", "--test" or "--all" argument to indicate where the
+variables it sets were used.
 
-Let's create a ci/lib-tput.sh for those that need to use "tput"
-instead, and have these scripts invoke "set -ex" themselves.
+Let's make use of that by having the relevant parts of
+".github/workflows/main.yml" invoke "ci/lib.sh" with those options.
 
-This makes their invocation a lot less verbose, since they'll be
-relying on an earlier step in the CI job to have set the variables in
-$GITHUB_ENV, and won't be spewing their own trace output to set those
-variables again.
-
-Let's also create a ci/lib-ci-type.sh, and have ci/lib.sh and
-ci/print-test-failures.sh share the logic to discover the CI type. We
-could have set the CI_TYPE in the environment with "setenv", but let's
-avoid that verbosity for this purely internal variable.
-
-The "ci/lib.sh" is now no longer a "Library of functions shared by all
-CI scripts", so let's remove that commentary, and the misleading
-comment about "set -ex" being for "installing dependencies", we're now
-no longer using it in "ci/install-dependencies.sh" (but it does its
-own "set -ex").
+By doing this the set of variables shown in build-only steps will be
+fewer, which makes diagnosing anything going on there easier, as we
+won't have to look at a deluge of e.g. GIT_TEST_* variables.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/check-unignored-build-artifacts.sh |  4 +++-
- ci/install-dependencies.sh            |  2 +-
- ci/lib-ci-type.sh                     |  8 ++++++++
- ci/lib-tput.sh                        |  2 ++
- ci/lib.sh                             | 27 ++++++++++-----------------
- ci/print-test-failures.sh             |  6 +++---
- ci/select-test-slice.sh               |  2 +-
- ci/test-documentation.sh              |  2 +-
- 8 files changed, 29 insertions(+), 24 deletions(-)
- create mode 100644 ci/lib-ci-type.sh
- create mode 100644 ci/lib-tput.sh
+ .github/workflows/main.yml | 20 +++++++++++---------
+ ci/lib.sh                  | 17 +++++++++++++++++
+ 2 files changed, 28 insertions(+), 9 deletions(-)
 
-diff --git a/ci/check-unignored-build-artifacts.sh b/ci/check-unignored-build-artifacts.sh
-index 0bc04f32804..c27d6a97f45 100755
---- a/ci/check-unignored-build-artifacts.sh
-+++ b/ci/check-unignored-build-artifacts.sh
-@@ -3,7 +3,9 @@
- # Check whether the build created anything not in our .gitignore
- #
- 
--. ${0%/*}/lib.sh
-+set -ex
-+
-+. ${0%/*}/lib-tput.sh
- 
- check_unignored_build_artifacts ()
- {
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 9388289d0ed..ee9af62fc92 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -3,7 +3,7 @@
- # Install dependencies required to build and test Git on Linux and macOS
- #
- 
--. ${0%/*}/lib.sh
-+set -ex
- 
- UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl-dev libexpat-dev
-  tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
-diff --git a/ci/lib-ci-type.sh b/ci/lib-ci-type.sh
-new file mode 100644
-index 00000000000..bd6e093c8f4
---- /dev/null
-+++ b/ci/lib-ci-type.sh
-@@ -0,0 +1,8 @@
-+if test "$GITHUB_ACTIONS" = "true"
-+then
-+	CI_TYPE=github-actions
-+else
-+	echo "Could not identify CI type" >&2
-+	env >&2
-+	exit 1
-+fi
-diff --git a/ci/lib-tput.sh b/ci/lib-tput.sh
-new file mode 100644
-index 00000000000..baed1892f69
---- /dev/null
-+++ b/ci/lib-tput.sh
-@@ -0,0 +1,2 @@
-+# GitHub Action doesn't set TERM, which is required by tput
-+export TERM=${TERM:-dumb}
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 1e13718b989..0787cadc76b 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -84,7 +84,7 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+       shell: bash
+     - name: build
+       shell: bash
+@@ -122,7 +122,7 @@ jobs:
+       shell: bash
+       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --test
+       shell: bash
+     - name: select tests
+       run: . /etc/profile && ci/select-test-slice.sh ${{matrix.nr}} 10
+@@ -169,7 +169,7 @@ jobs:
+     - name: copy dlls to root
+       shell: cmd
+       run: compat\vcbuild\vcpkg_copy_dlls.bat release
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+       shell: bash
+     - name: generate Visual Studio solution
+       shell: bash
+@@ -211,7 +211,7 @@ jobs:
+     - name: extract tracked files and build artifacts
+       shell: bash
+       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --test
+       shell: bash
+     - name: select tests
+       run: . /etc/profile && ci/select-test-slice.sh ${{matrix.nr}} 10
+@@ -275,8 +275,9 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - run: ci/install-dependencies.sh
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+     - run: make
++    - run: ci/lib.sh --test
+     - run: make test
+       if: success()
+     - run: ci/print-test-failures.sh
+@@ -310,8 +311,9 @@ jobs:
+     steps:
+     - uses: actions/checkout@v1
+     - run: ci/install-dependencies.sh
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+     - run: make
++    - run: ci/lib.sh --test
+     - run: make test
+       if: success() && matrix.vector.skip-tests != 'no'
+     - run: ci/print-test-failures.sh
+@@ -331,7 +333,7 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - run: ci/install-dependencies.sh
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+     - run: make ci-static-analysis
+   sparse:
+     needs: ci-config
+@@ -352,7 +354,7 @@ jobs:
+     - uses: actions/checkout@v2
+     - name: Install other dependencies
+       run: ci/install-dependencies.sh
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+     - run: make sparse
+   documentation:
+     name: documentation
+@@ -364,7 +366,7 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - run: ci/install-dependencies.sh
+-    - run: ci/lib.sh
++    - run: ci/lib.sh --build
+     - run: make check-docs
+     - run: "make doc > >(tee stdout.log) 2> >(tee stderr.raw >&2)"
+       shell: bash
 diff --git a/ci/lib.sh b/ci/lib.sh
-index b882849ed5d..5eadc96de29 100755
+index 5eadc96de29..367d1ee05d5 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -1,13 +1,9 @@
- #!/bin/sh
--
--# Library of functions shared by all CI scripts
--
--# Set 'exit on error' for all CI scripts to let the caller know that
--# something went wrong.
--# Set tracing executed commands, primarily setting environment variables
--# and installing dependencies.
- set -ex
+@@ -5,6 +5,13 @@ set -ex
+ . ${0%/*}/lib-ci-type.sh
  
-+# Helper libraries
-+. ${0%/*}/lib-ci-type.sh
-+
  # Starting assertions
++mode=$1
++if test -z "$mode"
++then
++	echo "need a $0 mode, e.g. --build or --test"
++	exit 1
++fi
++
  if test -z "$jobname"
  then
-@@ -39,15 +35,11 @@ setenv () {
- 	fi
- }
+ 	echo "must set a CI jobname" >&2
+@@ -13,9 +20,14 @@ fi
  
--# GitHub Action doesn't set TERM, which is required by tput
--setenv TERM ${TERM:-dumb}
--
- # Clear MAKEFLAGS that may come from the outside world.
- MAKEFLAGS=
+ # Helper functions
+ setenv () {
++	skip=
+ 	varmode=
+ 	case "$1" in
+ 	--*)
++		if test "$1" != "$mode" && test "$1" != "--all"
++		then
++			skip=t
++		fi
+ 		varmode=$1
+ 		shift
+ 		;;
+@@ -25,6 +37,11 @@ setenv () {
+ 	val=$2
+ 	shift 2
  
--if test "$GITHUB_ACTIONS" = "true"
--then
--	CI_TYPE=github-actions
-+case "$CI_TYPE" in
-+github-actions)
- 	CC="${CC:-gcc}"
- 
- 	setenv --test GIT_PROVE_OPTS "--timer --jobs 10"
-@@ -57,11 +49,12 @@ then
- 	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- 
- 	setenv --test GIT_TEST_OPTS "$GIT_TEST_OPTS"
--else
--	echo "Could not identify CI type" >&2
--	env >&2
-+	;;
-+*)
-+	echo "Unhandled CI type: $CI_TYPE" >&2
- 	exit 1
--fi
-+	;;
-+esac
- 
- setenv --build DEVELOPER 1
- setenv --test DEFAULT_TEST_TARGET prove
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 0c63b6f7962..452aff35d74 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -3,10 +3,10 @@
- # Print output of failing tests
- #
- 
--. ${0%/*}/lib.sh
-+set -e
- 
--# Tracing executed commands would produce too much noise in the loop below.
--set +x
-+. ${0%/*}/lib-ci-type.sh
-+. ${0%/*}/lib-tput.sh
- 
- cd t/
- 
-diff --git a/ci/select-test-slice.sh b/ci/select-test-slice.sh
-index ec602f8a053..a0332095bb3 100755
---- a/ci/select-test-slice.sh
-+++ b/ci/select-test-slice.sh
-@@ -3,7 +3,7 @@
- # Select a portion of the tests for testing Git in parallel
- #
- 
--. ${0%/*}/lib.sh
-+set -ex
- 
- tests=$(echo $(cd t && ./helper/test-tool path-utils slice-tests "$1" "$2" \
- 	t[0-9]*.sh))
-diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-index b8a6a6f664e..64ff212cdaa 100755
---- a/ci/test-documentation.sh
-+++ b/ci/test-documentation.sh
-@@ -3,7 +3,7 @@
- # Perform sanity checks on "make doc" output and built documentation
- #
- 
--. ${0%/*}/lib.sh
-+set -ex
- 
- generator=$1
- 
++	if test -n "$skip"
++	then
++		return 0
++	fi
++
+ 	if test -n "$GITHUB_ENV"
+ 	then
+ 		echo "$key=$val" >>"$GITHUB_ENV"
 -- 
 2.35.1.1132.ga1fe46f8690
 
