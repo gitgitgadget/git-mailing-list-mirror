@@ -2,87 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9059FC433F5
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 01:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A94EC433FE
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 01:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245492AbiBUBtG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Feb 2022 20:49:06 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57048 "EHLO
+        id S245494AbiBUBtH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Feb 2022 20:49:07 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:57050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245458AbiBUBtC (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S245488AbiBUBtC (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 20 Feb 2022 20:49:02 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EDEE517D2
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DEB5517D0
         for <git@vger.kernel.org>; Sun, 20 Feb 2022 17:48:40 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C02BA105F99;
-        Sun, 20 Feb 2022 20:48:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Se9udwFhR2vNE2giAwVeZ51MakFmxEpWkQVGQ8
-        nWBv8=; b=Ah1ygfbCnGGCb95PCZIQ3hI19X3FHvYjbGno/NL5L+r2dcpQRxVoBY
-        38HKV51sf2jJ/7qV7mvc4PBblYbsWvviRkRtF+B5d0S+czmtSnBHXPfKwErD349h
-        p6goz77lKrc/CSxnplIRow1kaYnPwF+I9KuSnOOy44BlglafjPfdo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B8950105F98;
-        Sun, 20 Feb 2022 20:48:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 313BD105F96;
-        Sun, 20 Feb 2022 20:48:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com
-Subject: Re: [PATCH] ls-files: support --recurse-submodules --stage
-References: <20220218223212.1139366-1-jonathantanmy@google.com>
-Date:   Sun, 20 Feb 2022 17:48:38 -0800
-In-Reply-To: <20220218223212.1139366-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Fri, 18 Feb 2022 14:32:11 -0800")
-Message-ID: <xmqq35kdugzt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Received: by mail-io1-xd31.google.com with SMTP id 195so4097337iou.0
+        for <git@vger.kernel.org>; Sun, 20 Feb 2022 17:48:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8tFUzsk8mmPNKNubl9j8beFhsQGNtrHpOHhOwthNdpY=;
+        b=YHESTKcIzNqVJrjiTS+9GIQ4936lGZCA9SAOjqbW6W0mLLaTvrJHcfuwOSLjO1q3TQ
+         45PrDb9XECHzpOX+XlTrY5OBx3geFkeDRc/EATnqlpemEJurKRCAGwquJNIexcN7QPDv
+         MPAuebME7xyYZbE1odIeDIA0bysBF/S7PaDIz6Dy2yzewMYwRrvSD3dXtBEUFDB1G7zp
+         qUseee+u5JuaK4FEC/wMRpkhIimDc6IZG3fp2dnbGcj5W7XRO/aOdbMlfT58hNTiHUd+
+         s2+CjblN5MAAN6qCH8lay9NnYXpbFcDXWbKs24K3IWeuUkvwZXx1hE/lePMHY4B4ZPa+
+         3+Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8tFUzsk8mmPNKNubl9j8beFhsQGNtrHpOHhOwthNdpY=;
+        b=i3kJhE6nR7M8VuaXrsxV+ap5fQBLVEnegcMefj7SRwMRjzaZ8AnkRtFoLP7gRwYTIk
+         or6elE3lkH5QrkSRWTi46Fj4aepMMy75d305PB/rJnWX6JBFVXGLMlozZ2L03g8dUfLw
+         z11f5pMxpTjwvJqNfJaKU+MEM0KEusHlS2nQ73zxyKc+AZI2uFh65fhlfDgRfjuu0tA5
+         8bFnNO2zVq5oT0KZGKcXci2AZfZbC1RU9/q+1svHfEQsjlOt8e6mJFnA6Fu4dErjUg9B
+         L1Pw3PZVIM6pd61m8JeXaYr/TIStUQO/ygod8DEW220+f89eP8KntQ3uqTMgUoxwqE9V
+         cZ+Q==
+X-Gm-Message-State: AOAM532DIJbX7426HFNK3JziNTHvVx00sU72n0ePHmnvjhoDLvoaKU0o
+        KLsUDCxGC0BKh734sVBS+Uyre3rw8dk4//si
+X-Google-Smtp-Source: ABdhPJyQMpAxq/kpt9P6PeZWurx3Sd3kVbRKqK5C2IVeTgsgGhxw3XUWQksC8oL+OKpDBJ8k9p88Sw==
+X-Received: by 2002:a02:83cb:0:b0:30e:e389:a146 with SMTP id j11-20020a0283cb000000b0030ee389a146mr12902176jah.201.1645408119426;
+        Sun, 20 Feb 2022 17:48:39 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id x19sm8949888iov.33.2022.02.20.17.48.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 20 Feb 2022 17:48:39 -0800 (PST)
+Date:   Sun, 20 Feb 2022 20:48:38 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Shubham Mishra <shivam828787@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSOC] Student Introduction - Reachability bitmap Improvements
+Message-ID: <YhLvdjghyC+WQI6e@nand.local>
+References: <CAC316V7M8bziK207tuFbctAqDdz+GC8OGaxM+B0earJtqDvBSg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 641277EC-92B8-11EC-A9A2-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAC316V7M8bziK207tuFbctAqDdz+GC8OGaxM+B0earJtqDvBSg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Hi Shubham,
 
-> +test_expect_success '--stage' '
-> +	# In order to test hash abbreviation, write two objects that have the
-> +	# same first 4 hexadecimal characters in their (SHA-1) hashes.
+On Sun, Feb 20, 2022 at 10:39:13PM +0530, Shubham Mishra wrote:
+> Hi,
+> I am Interested in Project - "Reachability bitmap Improvements".
 
-What about linux-sha256 jobs?
-e.g. https://github.com/git/git/runs/5267681569?check_suite_focus=true
+Great! I am excited that you are interested.
 
-> +	echo brocdnra >submodule/c &&
-> +	git -C submodule commit -am "update c" &&
-> +	echo brigddsv >submodule/c &&
-> +	git -C submodule commit -am "update c again" &&
-> +
-> +	cat >expect <<-\EOF &&
-> +	100644 6da7 0	.gitmodules
-> +	100644 7898 0	a
-> +	100644 6178 0	b/b
-> +	100644 dead9 0	submodule/c
-> +	EOF
-> +
-> +	git ls-files --stage --recurse-submodules --abbrev=4 >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'ls-files correctly outputs files in submodule with -z' '
->  	lf_to_nul >expect <<-\EOF &&
->  	.gitmodules
-> @@ -292,7 +311,6 @@ test_incompatible_with_recurse_submodules () {
->  test_incompatible_with_recurse_submodules --deleted
->  test_incompatible_with_recurse_submodules --modified
->  test_incompatible_with_recurse_submodules --others
-> -test_incompatible_with_recurse_submodules --stage
->  test_incompatible_with_recurse_submodules --killed
->  test_incompatible_with_recurse_submodules --unmerged
+> I am going through the blog [1] and I love the technique we are using
+> to fasten the queries. I have still not decided which one idea to pick
+> out of many mentioned under "Reachability bitmap Improvements" but I
+> think I will figure that out soon.
+
+Let me know if you have any questions about the projects listed there,
+and I'd be happy to add some more details. Alternatively, if none of
+them pique your interest, that is OK, too, and we can brainstorm other
+potential projects.
+
+> Can someone please tell me if a micro-project - "avoid pipes in git
+> related commands in test scripts" mentioned [2] is still available to
+> take?
+
+Oh, yes. Here is a command you can run to find some of them:
+
+    $ git grep "git[^|]*|\($\|[^|]\)" -- t
+
+There are some false-positives, but that should give you a good starting
+point to look for potential spots to touch up.
+
+BTW, re-reading [2], I wanted to clarify that "The git command should be
+on the left side of a pipe" is describing what we should remove, not
+add.
+
+I'm looking forward to your patches!
+
+> [1] https://github.blog/2015-09-22-counting-objects
+> [2] https://git.github.io/SoC-2022-Microprojects/
+
+Thanks,
+Taylor
