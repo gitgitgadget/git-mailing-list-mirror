@@ -2,70 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C11C433F5
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 20:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57749C433F5
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 20:15:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233373AbiBUUEl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 15:04:41 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:39936 "EHLO
+        id S233527AbiBUUQD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 15:16:03 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:37386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233367AbiBUUEk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Feb 2022 15:04:40 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A301237CD
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 12:04:15 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id r13so12944394ejd.5
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 12:04:15 -0800 (PST)
+        with ESMTP id S229893AbiBUUQA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 15:16:00 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B0F912ABE
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 12:15:36 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id p14so35950791ejf.11
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 12:15:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=RS7EQqvpsQEoXk+CUHdQkT6U8HTT+O+YZ+zksb9I14E=;
-        b=ZW7Ms8NVAH9aGJ9dfH4eDG1nXJHyWbnzthPh80IVuYxsdlBBbFyxw09ClbH2JT9rOx
-         UEbfy3hA4lwKNzko+B0G3+Z16G37yz3D4QD0rye5mstLwnh47jjeDTv/BuhSGKwvbPZZ
-         iVUGAm8ANhc64oCFYJE+JOqoE/rpq9F7cXaKQ7IeeGFudiEm+Y0NVmXWjw/qH8MUgCHH
-         hQHewOaa27iZ5hrhoHM6bWywMyPcT5lxaZf41KTI7/5pSQBz/jnDOcGdy1GY+eDlsWy5
-         pcgaQaowC84edg6hXhX4ycB0ww5UbMWuXrdie2mrx9t/g7ufv/IHpxSaKwEhf+Ras89y
-         JBtQ==
+        bh=5uFkEKkXQdw0j2iQ9o1+PXcRIvPkOTb1CwnnAWE8b6w=;
+        b=C+BbCddmh48CXLAbrqoNYepWKLaxCsJ3ts3qGaRfMTcxhzv4jWIMYN9N65+z/D1uWm
+         HyGTxS6QbMTHLImGD0HXP2b3p1i0jYI40gHzoB2k7u5qHvtcynhXNo/ZFOdy18cFEfJk
+         krJwXfyssxukrEc4pC4uFlH3Szp8RVCKxfq5GGyJ4UaJzMGVNnYiSS7M13B8plez5/re
+         MxrMrwXtY9H6QsNHs/xFhkQvSyo6DLvLVRfmbab24FBHQ46fEvHvAMv+W/+/KuqJkMFo
+         xIF1uACAK/rzYhK2dwJnH8QjDyErAxY8O0pPy5nSkvrAUOK1RT+xA45N9x2ZWMWcehA6
+         tvMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=RS7EQqvpsQEoXk+CUHdQkT6U8HTT+O+YZ+zksb9I14E=;
-        b=IyrqG7T2iyLEnet4DQkUTE65WLsqeBH1ngRaaRgJB2dwuwkojb277KjVjqSigf+bty
-         ykiWvb2Kz6YZto0S9T3q6yW+wDJJTCPySDN+trkDv/Z958foLfuJvUvN2oi9TLVq+cMv
-         P3m86jNXGgypuftQVT9UIJP+7MqHyv/O4ht99+AuIsc0SR5Rq+OtkFPOWjcHjTzsAq4o
-         dgw6RvJWurC5obh7/VO+kQHqKVvf7QrkrILe5k/MLlWkdpvBw193h3QaC+vhtPbUHTuG
-         yeApvQKNlf4ybv1LcD3agsWGLvbe+7vjCff5PNmrssF9yyKM8d8LXE5MJYHbfbQoB64x
-         JhYQ==
-X-Gm-Message-State: AOAM531y9RJ6myXzs/kzp1KhIRTiK6aLj/y2aXOVaZnUuHGWd0Bv3kif
-        EVAvdjq+NkmAjO8N9dOaRek=
-X-Google-Smtp-Source: ABdhPJyEMpsfth1wmFmMFatNnpkERIX0yhNCAQooy2/mhrbAZv4SXU2mQ4ELjeZNEaVcBzq29T6fCA==
-X-Received: by 2002:a17:906:2f94:b0:6cf:e4f7:13a with SMTP id w20-20020a1709062f9400b006cfe4f7013amr16457764eji.269.1645473853442;
-        Mon, 21 Feb 2022 12:04:13 -0800 (PST)
+        bh=5uFkEKkXQdw0j2iQ9o1+PXcRIvPkOTb1CwnnAWE8b6w=;
+        b=bF+1y2mwPGWbNUzQjShwnPmCaH5vCwEv75Re5APi+M4bHBgYUijOGK6SMl5f4/CpnS
+         zFSGneKiFggBwLR9tz07aNbjtIa0FezBOcBZVn2Ashl21uQoMclCOohXiO/uAm/Qjvf7
+         4V0bjhLFDR3DXNQV2JK0O5xHXRW5Zogx+EXrW+DBwQkpl/fqoNb+SECpsotNCbthrwoy
+         UqsMXSfzyb0a/Tu2K96jat0NV9sKBwsW+B6KnBNwoWVOIAna2OpkzNOkvupwFcXRfVOt
+         qXuRBhX44JvFN2BVJH6pARamfYhr1P8Y66RlLqE/rt956kfCiJaRwojMU4aU0ArTRQKd
+         SZaA==
+X-Gm-Message-State: AOAM532SVoRnA6v0Ytw03dJQm3w9lAHvGWDdsTIV2spg/gk6vY6CecBA
+        W8RX3SP6s/efCcuxkghQS/uFYGSEPP921Q==
+X-Google-Smtp-Source: ABdhPJyQ+jc1i0xHyqvs2+uR5Rk7dRI8+wzDJ7HFqxBOySDjKIghUes6qjEyVNxpKTqBe4NC1iW1BA==
+X-Received: by 2002:a17:906:7197:b0:6cd:ef8f:ecbf with SMTP id h23-20020a170906719700b006cdef8fecbfmr16858596ejk.18.1645474534855;
+        Mon, 21 Feb 2022 12:15:34 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id n25sm8999040eds.89.2022.02.21.12.04.11
+        by smtp.gmail.com with ESMTPSA id 29sm5616791ejk.147.2022.02.21.12.15.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 12:04:12 -0800 (PST)
+        Mon, 21 Feb 2022 12:15:33 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nMEup-005nzk-Ci;
-        Mon, 21 Feb 2022 21:04:11 +0100
+        id 1nMF5p-005oWm-78;
+        Mon, 21 Feb 2022 21:15:33 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v4 0/3] test-lib.sh: have all tests pass under "-x",
- remove BASH_XTRACEFD
-Date:   Mon, 21 Feb 2022 20:52:18 +0100
-References: <cover-v3-0.2-00000000000-20211210T100512Z-avarab@gmail.com>
- <cover-v4-0.3-00000000000-20211213T013559Z-avarab@gmail.com>
- <20211213054353.GC3400@szeder.dev>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 00/11] Makefile: fix "Perl" and "Python" rules, speed up
+ re-builds
+Date:   Mon, 21 Feb 2022 21:14:00 +0100
+References: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20211213054353.GC3400@szeder.dev>
-Message-ID: <220221.86v8x89ebo.gmgdl@evledraar.gmail.com>
+In-reply-to: <cover-00.11-00000000000-20211217T002023Z-avarab@gmail.com>
+Message-ID: <220221.86r17w9dsq.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -74,217 +76,101 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-[Junio: If you'd like to pick up this series it still cleanly applies,
-and merges cleanly with "seen"]
+On Fri, Dec 17 2021, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-On Mon, Dec 13 2021, SZEDER G=C3=A1bor wrote:
+A gentle reminder about considering picking up this topic that got lost
+around the holidays.
 
-Sorry about the late reply, things getting lost around the holidays
-etc.
+This thread doesn't have any reviews, but as the linked-to range-diff
+shows it's all had reviews already as part of the larger topic I split
+it up from (except for the trivial addition noted below).
 
-> On Mon, Dec 13, 2021 at 02:38:33AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> A re-arrangement-only change to v3[1]. The previous 2/2 is now split
->> into two commits, as requested by SZEDER[2] in the removal of
->> BASH_XTRACEFD is now its own commit & the rationale for doing so is
->> outlined in detail.
+> This topic is split-up from v4 of ab/make-dependency[1]. Range-diff to
+> it below. As noted in [2] I opted to split up that series rather than
+> having it grow too large.
 >
-> I'm afraid I wasn't clear.  What I meant was that if we were to remove
-> BASH_XTRACEFD, then it should be done its own commit.
+> This is miscellanious cleanups related to the "Perl" rules, and some
+> fixes for bad dependency rules in 08/11. Then in 10/11 we make the
+> "Python" rules use the new template we created for "Perl",
+>
+> We are then able to speed up "make" re-builds a bit in 11/11, as we
+> don't need to inject @@GIT_VERSION@@ into the Perl scripts anymore.
+>
+> The 09/11 is new. It's a trivial sorting of the PERL_DEFINES list,
+> which'll help to maintain it in the future.
+>
+> 1. https://lore.kernel.org/git/cover-v4-00.23-00000000000-20211117T101807=
+Z-avarab@gmail.com/
+> 2. https://lore.kernel.org/git/211217.86a6h09km9.gmgdl@evledraar.gmail.co=
+m/
+>
+>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (11):
+>   Makefile: clean perl/build/ even with NO_PERL=3DY
+>   Makefile: don't set up "perl/build" rules under NO_PERL=3DY
+>   Makefile: use "=3D" not ":=3D" for po/* and perl/*
+>   Makefile: remove "mv $@ $@+" dance redundant to .DELETE_ON_ERROR
+>   Makefile: guard Perl-only variable assignments
+>   Makefile: change "ifndef NO_PERL" to "ifdef NO_PERL"
+>   Makefile: adjust Perl-related comments & whitespace
+>   Makefile: correct "GIT-PERL-{DEFINES,HEADER}" dependency graph
+>   Makefile: sort PERL_DEFINES list
+>   Makefile: create a GIT-PYTHON-DEFINES, like "PERL"
+>   Makefile: stop needing @@GIT_VERSION@@ in *.perl scripts
+>
+>  .gitignore          |   2 +-
+>  Makefile            | 160 +++++++++++++++++++++++---------------------
+>  git-cvsserver.perl  |   6 +-
+>  git-send-email.perl |   7 +-
+>  git-svn.perl        |   2 +-
+>  5 files changed, 90 insertions(+), 87 deletions(-)
+>
+> Range-diff:
+>  1:  1621ca72c1d <  -:  ----------- Makefile: don't invoke msgfmt with --=
+statistics
+>  4:  daead5ec293 =3D  1:  185f5a9a9cf Makefile: clean perl/build/ even wi=
+th NO_PERL=3DY
+>  2:  b7c36c9fea0 =3D  2:  37eeccc5646 Makefile: don't set up "perl/build"=
+ rules under NO_PERL=3DY
+>  3:  29b000eb0f1 =3D  3:  572a82c71a1 Makefile: use "=3D" not ":=3D" for =
+po/* and perl/*
+>  5:  3c987590740 =3D  4:  5baff22f5af Makefile: remove "mv $@ $@+" dance =
+redundant to .DELETE_ON_ERROR
+>  6:  b57f582ccd3 =3D  5:  992e325491d Makefile: guard Perl-only variable =
+assignments
+>  7:  fcdee92f64c =3D  6:  5e94ef729fe Makefile: change "ifndef NO_PERL" t=
+o "ifdef NO_PERL"
+>  8:  1e25b532ca2 =3D  7:  4eeef8571aa Makefile: adjust Perl-related comme=
+nts & whitespace
+>  9:  77d9855bfcf =3D  8:  8aa35537b08 Makefile: correct "GIT-PERL-{DEFINE=
+S,HEADER}" dependency graph
+>  -:  ----------- >  9:  5ff768a5cec Makefile: sort PERL_DEFINES list
+> 10:  6004cdcd8d9 =3D 10:  fe79797f45e Makefile: create a GIT-PYTHON-DEFIN=
+ES, like "PERL"
+> 11:  17b30e96057 =3D 11:  defbd9b6db2 Makefile: stop needing @@GIT_VERSIO=
+N@@ in *.perl scripts
+> 12:  30ddf7da2c8 <  -:  ----------- Makefiles: add "shared.mak", move ".D=
+ELETE_ON_ERROR" to it
+> 13:  f378a7dc35e <  -:  ----------- Makefile: move $(comma), $(empty) and=
+ $(space) to shared.mak
+> 14:  13cbb851d32 <  -:  ----------- Makefile: re-add and use the "shellqu=
+ote" macros
+> 15:  337953e4994 <  -:  ----------- Makefile: add a "TRACK_template" for =
+GIT-*{FLAGS,DEFINES,...}
+> 16:  5bb597c1993 <  -:  ----------- Makefile: add "$(QUIET)" boilerplate =
+to shared.mak
+> 17:  3c4d0589667 <  -:  ----------- Makefile: use $(wspfx) for $(QUIET...=
+) in shared.mak
+> 18:  be5882b2c99 <  -:  ----------- Makefiles: add and use wildcard "mkdi=
+r -p" template
+> 19:  2710f8af6cd <  -:  ----------- Makefile: correct the dependency grap=
+h of hook-list.h
+> 20:  59f22a0269a <  -:  ----------- Makefile: use $(file) I/O instead of =
+"FORCE" when possible
+> 21:  dd569a59c74 <  -:  ----------- Makefile: disable GNU make built-in w=
+ildcard rules
+> 22:  4168a7e3b30 <  -:  ----------- Makefile: define $(LIB_H) in terms of=
+ $(FIND_SOURCE_FILES)
+> 23:  48a3927d972 <  -:  ----------- Makefile: move ".SUFFIXES" rule to sh=
+ared.mak
 
-Aside from whether you think removing it is a good idea, isn't that what
-this v4 does?
-
-In 1/3 I fix -x under non-BASH_XTRACEFD, 2/3 removes test_untraceable,
-and 3/3 the use of BASH_XTRACEFD.
-
-> But again: BASH_XTRACEFD is the only simple yet reliable and robust
-> way to get -x trace from our tests, so do not remove it.
-
-Just to tie off this loose end, I re-read the thread ending in [1] (sent
-after this reply of yours) and I think my [1] addresses this.
-
-Maybe you still disagree, but I don't see how that squares with
-"reliable and robust" here.
-
-I.e. unless we're talking about carrying bash-specific code in the test
-suite we can't make any real use of the feature, as our tests will need
-to be compatible with other POSIX shells.
-
-I mean, the code changed in 1/3 *was* that bash-specific code, but as
-that change shows it was rather easily made non-bash-specific. And
-unless we think we'll add other bash-specific tests (I don't see why,
-the cross-shell -x support is rather easy to do) ....
-
-1. https://lore.kernel.org/git/211216.864k78bsjs.gmgdl@evledraar.gmail.com/
-
->> 1. https://lore.kernel.org/git/cover-v3-0.2-00000000000-20211210T100512Z=
--avarab@gmail.com/
->> 2. https://lore.kernel.org/git/20211212201441.GB3400@szeder.dev/
->>=20
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (3):
->>   t1510: remove need for "test_untraceable", retain coverage
->>   test-lib.sh: remove the now-unused "test_untraceable" facility
->>   test-lib.sh: remove "BASH_XTRACEFD"
->>=20
->>  t/README              |  3 --
->>  t/t1510-repo-setup.sh | 85 +++++++++++++++++++++----------------------
->>  t/test-lib.sh         | 66 ++++-----------------------------
->>  3 files changed, 49 insertions(+), 105 deletions(-)
->>=20
->> Range-diff against v3:
->> 1:  7876202c5b0 =3D 1:  9e7b089dc50 t1510: remove need for "test_untrace=
-able", retain coverage
->> -:  ----------- > 2:  60883fd95cb test-lib.sh: remove the now-unused "te=
-st_untraceable" facility
->> 2:  a7fc794e20d ! 3:  8b5ae33376e test-lib.sh: remove the now-unused "te=
-st_untraceable" facility
->>     @@ Metadata
->>      Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->>=20=20=20=20=20=20
->>       ## Commit message ##
->>     -    test-lib.sh: remove the now-unused "test_untraceable" facility
->>     +    test-lib.sh: remove "BASH_XTRACEFD"
->>=20=20=20=20=20=20
->>     -    In the preceding commit the use of "test_untraceable=3DUnfortun=
-atelyYes"
->>     -    was removed from "t1510-repo-setup.sh" in favor of more narrow
->>     -    redirections of the output of specific commands (and not entire
->>     -    sub-shells or functions).
->>     +    Stop setting "BASH_XTRACEFD=3D4" to direct "-x" output to file
->>     +    descriptor 4 under bash.
->>=20=20=20=20=20=20
->>     -    This is in line with the fixes in the series that introduced the
->>     -    "test_untraceable" facility. See 571e472dc43 (Merge branch
->>     -    'sg/test-x', 2018-03-14) for the series as a whole, and
->>     -    e.g. 91538d0cde9 (t5570-git-daemon: don't check the stderr of a
->>     -    subshell, 2018-02-24) for a commit that's in line with the chan=
-ges in
->>     -    the preceding commit.
->>     +    When it was added in d88785e424a (test-lib: set BASH_XTRACEFD
->>     +    automatically, 2016-05-11) it was needed as a workaround for va=
-rious
->>     +    tests that didn't pass cleanly under "-x".
->>=20=20=20=20=20=20
->>     -    We've thus solved the TODO item noted when "test_untraceable" w=
-as
->>     -    added to "t1510-repo-setup.sh" in 58275069288 (t1510-repo-setup=
-: mark
->>     -    as untraceable with '-x', 2018-02-24).
->>     +    Most of those were later fixed in 71e472dc43 (Merge branch
->>     +    'sg/test-x', 2018-03-14), and in the preceding commits we've fi=
-xed the
->>     +    final remaining and removed the "test_untraceable" facility.
->>=20=20=20=20=20=20
->>     -    So let's remove the feature entirely. Not only is it currently =
-unused,
->>     -    but it actively encourages an anti-pattern in our tests. We sho=
-uld be
->>     -    testing the output of specific commands, not entire subshells or
->>     -    functions.
->>     +    The reason we don't need this anymore is becomes clear from rea=
-ding
->>     +    the rationale in d88785e424a and applying those arguments to the
->>     +    current state of the codebase. In particular it said (with "thi=
-s" and
->>     +    "it" referring to the problem of tests failing under "-x"):
->>=20=20=20=20=20=20
->>     -    That the "-x" output had to be disabled as a result is only one
->>     -    symptom, but even under bash those tests will be harder to debu=
-g as
->>     -    the subsequent check of the redirected file will be far removed=
- from
->>     -    the command that emitted the output.
->>     +        "there here isn't a portable or scalable solution to this [=
-...] we
->>     +        can work around it by pointing the "set -x" output to our
->>     +        descriptor 4"
->>=20=20=20=20=20=20
->>     -    Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
-mail.com>
->>     +    And finally that:
->>=20=20=20=20=20=20
->>     - ## t/README ##
->>     -@@ t/README: appropriately before running "make". Short options can=
- be bundled, i.e.
->>     - -x::
->>     - 	Turn on shell tracing (i.e., `set -x`) during the tests
->>     - 	themselves. Implies `--verbose`.
->>     --	Ignored in test scripts that set the variable 'test_untraceable'
->>     --	to a non-empty value, unless it's run with a Bash version
->>     --	supporting BASH_XTRACEFD, i.e. v4.1 or later.
->>     -=20
->>     - -d::
->>     - --debug::
->>     +        "Automatic tests for our "-x" option may be a bit too meta"
->>     +
->>     +    Those tests are exactly what we've had since aedffe95250 (travi=
-s-ci:
->>     +    run tests with '-x' tracing, 2018-02-24), so punting on fixing =
-issues
->>     +    with "-x" by using "BASH_XTRACEFD=3D4" isn't needed anymore, we=
-'re now
->>     +    committing to maintaining the test suite in a way that won't br=
-eak
->>     +    under "-x".
->>     +
->>     +    We could retain "BASH_XTRACEFD=3D4" anyway, but doing so is bad=
- because:
->>     +
->>     +     1) Since we're caring about "-x" passing in CI under "dash" on=
- Ubuntu
->>     +        using "BASH_XTRACEFD=3D4" will amount to hiding an error we=
-'ll run
->>     +        into eventually. Tests will pass locally with "bash", but f=
-ail in
->>     +        CI with "dash" (or under other non-"bash" shells).
->>     +
->>     +     2) As the amended code in "test_eval_" shows (an amended rever=
-t to
->>     +        the pre-image of d88785e424a) it's simpler to not have to t=
-ake
->>     +        this "bash" special-case into account.
->>     +
->>     +    Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
-mail.com>
->>=20=20=20=20=20=20
->>       ## t/test-lib.sh ##
->>     -@@ t/test-lib.sh: then
->>     - 	exit
->>     - fi
->>     -=20
->>     --if test -n "$trace" && test -n "$test_untraceable"
->>     --then
->>     --	# '-x' tracing requested, but this test script can't be reliably
->>     --	# traced, unless it is run with a Bash version supporting
->>     --	# BASH_XTRACEFD (introduced in Bash v4.1).
->>     --	#
->>     --	# Perform this version check _after_ the test script was
->>     --	# potentially re-executed with $TEST_SHELL_PATH for '--tee' or
->>     --	# '--verbose-log', so the right shell is checked and the
->>     --	# warning is issued only once.
->>     --	if test -n "$BASH_VERSION" && eval '
->>     --	     test ${BASH_VERSINFO[0]} -gt 4 || {
->>     --	       test ${BASH_VERSINFO[0]} -eq 4 &&
->>     --	       test ${BASH_VERSINFO[1]} -ge 1
->>     --	     }
->>     --	   '
->>     --	then
->>     --		: Executed by a Bash version supporting BASH_XTRACEFD.  Good.
->>     --	else
->>     --		echo >&2 "warning: ignoring -x; '$0' is untraceable without BASH=
-_XTRACEFD"
->>     --		trace=3D
->>     --	fi
->>     --fi
->>     - if test -n "$trace" && test -z "$verbose_log"
->>     - then
->>     - 	verbose=3Dt
->>      @@ t/test-lib.sh: else
->>       	exec 4>/dev/null 3>/dev/null
->>       fi
->> --=20
->> 2.34.1.1024.g573f2f4b767
->>=20
-
-o
