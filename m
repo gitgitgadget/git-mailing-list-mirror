@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC9B6C433F5
-	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 14:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86EF1C433EF
+	for <git@archiver.kernel.org>; Mon, 21 Feb 2022 14:47:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1378327AbiBUOrk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 09:47:40 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:59550 "EHLO
+        id S1378329AbiBUOro (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 09:47:44 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:60418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1378300AbiBUOrR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Feb 2022 09:47:17 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A692F5596
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:46:54 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id d3so11853219wrf.1
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:46:54 -0800 (PST)
+        with ESMTP id S242285AbiBUOr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 09:47:29 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7795FA8
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:46:55 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id j17so818240wrc.0
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 06:46:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=74RcGAtf/M5wljt+DWF/2V0kyvyrPbZpV5I45HW//EQ=;
-        b=nKlVhZvYpZczDpyefRrWy10r0gzJ4GPwu8fEv1dtyav58Vie3gyr9KATb+/YPEgnDg
-         JG7slw7zBzlGu75dkRJNA7aV+6akhyZEp0Yuupwnu+1OS5FmaY5zav7WJubwdzx0zjcR
-         +b6CFk2eKYiYUiIHy9aSkEqd1RhgOru53X7zxkR6ITvfRALQACycU91U4zOf42ZhlzlG
-         peIaZ13sIMj5Nd7aO1ot33XBp0IfFsc2RtC897RaYIRwBMP5zsbmfxYJhPfpHa/z3T67
-         Ryfg36ir+XdDfZ/tnam2D5jlZm4I3nde5+xWXqb7wvKTrAIPWKVdVmHXLcC2cDf3GC/I
-         2mug==
+        bh=lqYChkBLuiLY4LNO1CIj1mE6XKgBlp82KYad2s48vsg=;
+        b=plMYYHeuuv6BhqR9uvTcig1mFMQP9WfhJOpDxXGOwTc+keVd/kaX05639ZEanJt/OB
+         yIePGr6qMZR+0BAaCb3pNu/7yiRNO34q63p0i2LRGJi2HIcDz4/VtyzaQyJrJ2yLU3T7
+         ffzOHIlXLTXNR7N5m0BE1Ij1i985qykOV+jjtb4n5WIra+ORt+vMnCvKBL4XyR8gNW84
+         9dgUTcVpspWl8ILtcsEpPuSpTsEP4+iQijxExRR0wA7v07QPqcCiqFZ970288/49CERP
+         OxcgYYITBwbgtecO/TzaQJx1yZCW/8ZVaJyxAlIrbbG98v8Im0jrgD8TVYed58DlkEKH
+         TGyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=74RcGAtf/M5wljt+DWF/2V0kyvyrPbZpV5I45HW//EQ=;
-        b=aRRGiEp101e551PkcP2pCJUlM8B7xxbqUjxRvz44u5iiJAoE1E5vTY6hWVAQ+JQKQG
-         uAbsMQTBScBvEHTAIv94TXTaMooBEnTC73f/fDDU1ICVDWiTe1aX+r+BpPyVR5Yv74Ui
-         D76saEJn5BG9PMws7pnK/P7HFFv2ASUrX/2iXbrXv1AvgmnJdm+PQz4DRN8vg+n8kPjJ
-         mFYh9IE3XzxHqgZLU9vFJSj78c0nC8yqNOYKeEVjMfKK5XamEtIsrTdS1L8UH00Dbbn0
-         +KRyqo/umyx2xd2gdkTUq7bOd7LI3SF38Sn7f7aTyUdD//h3lVZHmNfpVQvBbJMEJNe7
-         REKw==
-X-Gm-Message-State: AOAM5337jNs8hfGKytZo2tJZBvToEoYdeXtb5ZCPFxcrHLX+2869owxL
-        hCW63CuiWBNtAxcQcV0TDioFO7rEQrMLQg==
-X-Google-Smtp-Source: ABdhPJxZL0uiHEwrH2fu93Do+D1Zpw4o0hHA8UvkriFT1cz1BkeuC4L2KLAsHsQlrOzVsHwpvpJ8iw==
-X-Received: by 2002:adf:fa0d:0:b0:1e3:f7b0:1037 with SMTP id m13-20020adffa0d000000b001e3f7b01037mr16323813wrr.188.1645454812990;
-        Mon, 21 Feb 2022 06:46:52 -0800 (PST)
+        bh=lqYChkBLuiLY4LNO1CIj1mE6XKgBlp82KYad2s48vsg=;
+        b=xvtyu7vuivhd9F0oRVMyd+5mPuLrvjDxjKNzrmXGQkkUJcFAnCqf9JO0f9+EaQU+Hb
+         7zVZKRjixB48/GP0bOvDG282NTMq8NBfIyEPEDtBrbBxe7eGxlUyAwd/xmFzqJ3tSXJV
+         NqHWpBiYijUd81Qn0njXpwYcw+gaQddtLEoq3g6LSFO5xUaayCe+Brz2S8+a3BXXIxWU
+         RyNxCG7veNSPBmGMV79EQVVRz0iZ3kPRs3E9dDpoxIbg7wunFnmv/du+pyKGj1v2dOni
+         wVEB26bvoXxSvU3mgi7lLOqMn2pf4py5HdLcs3MUHEMavrvaMqStzkRY2LZHV3V8FahZ
+         huUQ==
+X-Gm-Message-State: AOAM531bXInKnSU0VeCyB+6bbSIOdO9dcVNdBgLkbi3u2nZY7mcuwyNV
+        KJ2DDb9uaEUvKUdZhgVTb0vFo+Vi2o3HgQ==
+X-Google-Smtp-Source: ABdhPJxRPvRL07JcqICqMCcAHoNx8o6MtR99wtNgb1s4ugsF1ZtIjXEbBKd6vxFZ+ut+i2Z94gTXgA==
+X-Received: by 2002:adf:dc90:0:b0:1e4:a5fe:9b42 with SMTP id r16-20020adfdc90000000b001e4a5fe9b42mr15977352wrj.98.1645454813885;
+        Mon, 21 Feb 2022 06:46:53 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r14sm25071094wrz.84.2022.02.21.06.46.52
+        by smtp.gmail.com with ESMTPSA id r14sm25071094wrz.84.2022.02.21.06.46.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 06:46:52 -0800 (PST)
+        Mon, 21 Feb 2022 06:46:53 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 06/25] CI: don't have "git grep" invoke a pager in tree content check
-Date:   Mon, 21 Feb 2022 15:46:18 +0100
-Message-Id: <patch-06.25-59e4f41e86c-20220221T143936Z-avarab@gmail.com>
+Subject: [PATCH 07/25] CI: have "static-analysis" run a "make ci-static-analysis" target
+Date:   Mon, 21 Feb 2022 15:46:19 +0100
+Message-Id: <patch-07.25-836ef20fdcc-20220221T143936Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1132.ga1fe46f8690
 In-Reply-To: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
 References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
@@ -75,31 +75,140 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix the omission of not adding "-P" (a.k.a. "--no-pager") to the "git"
-invocation that spaws "git grep", added in 0e7696c64db (ci: disallow
-directional formatting, 2021-11-04).
+Make it easier to run the CI logic locally by creating
+"ci-static-analysis" target.
 
-This didn't matter for the GitHub CI, but does when running the check
-locally. A subsequent commit will start invoking it via a new check
-from the top-level Makefile, and without this we'd visibly spawn a
-pager when doing so.
+Now the "check-coccicheck" logic added in 0860a7641ba (travis-ci: fail
+if Coccinelle static analysis found something to transform,
+2018-07-23) can be easily tested outside of CI, and likewise the
+sanity check added in 0e7696c64db (ci: disallow directional
+formatting, 2021-11-04).
+
+These targets could be improved, the "hdr-check" target will re-do all
+of its work every time it's run, and could with a change similar to my
+c234e8a0ecf (Makefile: make the "sparse" target non-.PHONY,
+2021-09-23). The same goes for the new
+"ci-check-directional-formatting" target.
+
+But without those improvements being able to easily run a 1=1
+equivalent of the checks we do in CI during a local build is already
+an improvement. Subsequent commits will expand on this ability.
+
+This change will also make the CI check faster, since we can take
+advantage of parallelism. The "make coccicheck" takes a very long
+time, and at the tail end we might only have one job pegging 100% of
+one CPU core for a long time. Now any extra cores will be free to run
+the rest of the targets under "ci-static-analysis".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ci/check-directional-formatting.bash | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .github/workflows/main.yml |  3 +--
+ Makefile                   | 29 +++++++++++++++++++++++++++++
+ ci/run-static-analysis.sh  | 30 ------------------------------
+ 3 files changed, 30 insertions(+), 32 deletions(-)
+ delete mode 100755 ci/run-static-analysis.sh
 
-diff --git a/ci/check-directional-formatting.bash b/ci/check-directional-formatting.bash
-index e6211b141aa..de8e6e486f0 100755
---- a/ci/check-directional-formatting.bash
-+++ b/ci/check-directional-formatting.bash
-@@ -23,5 +23,5 @@
- # U+2066..U+2069: LRI, RLI, FSI and PDI
- regex='(\u202a|\u202b|\u202c|\u202d|\u202e|\u2066|\u2067|\u2068|\u2069)'
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 309b9141249..ad752010102 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -317,8 +317,7 @@ jobs:
+     steps:
+     - uses: actions/checkout@v2
+     - run: ci/install-dependencies.sh
+-    - run: ci/run-static-analysis.sh
+-    - run: ci/check-directional-formatting.bash
++    - run: make ci-static-analysis
+   sparse:
+     needs: ci-config
+     if: needs.ci-config.outputs.enabled == 'yes'
+diff --git a/Makefile b/Makefile
+index 6f0b4b775fe..02cd563e216 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2005,6 +2005,7 @@ ifndef V
+ 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
+ 	QUIET_RC       = @echo '   ' RC $@;
+ 	QUIET_SPATCH   = @echo '   ' SPATCH $<;
++	QUIET_CHECK    = @echo '   ' CHECK $@;
+ 	QUIET_SUBDIR0  = +@subdir=
+ 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+ 			 $(MAKE) $(PRINT_DIR) -C $$subdir
+@@ -3052,6 +3053,20 @@ coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/c
+ # See contrib/coccinelle/README
+ coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
  
--! LC_CTYPE=C git grep -El "$(LC_CTYPE=C.UTF-8 printf "$regex")" \
-+! LC_CTYPE=C git -P grep -El "$(LC_CTYPE=C.UTF-8 printf "$regex")" \
- 	-- ':(exclude,attr:binary)' ':(exclude)*.po'
++.PHONY: check-coccicheck
++check-coccicheck: coccicheck
++	$(QUIET_CHECK)for cocci_patch in contrib/coccinelle/*.patch; do \
++		if test -s "$$cocci_patch"; then \
++			echo "Coccinelle suggests the following changes in '$$cocci_patch':"; \
++			cat "$$cocci_patch"; \
++			fail=UnfortunatelyYes; \
++		fi \
++	done; \
++	if test -n "$$fail"; then \
++		echo "error: Coccinelle suggested some changes"; \
++		exit 1; \
++	fi
++
+ .PHONY: coccicheck coccicheck-pending
+ 
+ ### Installation rules
+@@ -3487,3 +3502,17 @@ $(FUZZ_PROGRAMS): all
+ 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
+ 
+ fuzz-all: $(FUZZ_PROGRAMS)
++
++### CI "check" targets
++#
++# These targets are run from the CI, see .github/workflows/main.yml,
++# but can also be run manually to run the same assertions locally.
++
++.PHONY: ci-check-directional-formatting
++ci-check-directional-formatting:
++	$(QUIET_CHECK)ci/check-directional-formatting.bash
++
++.PHONY: ci-static-analysis
++ci-static-analysis: ci-check-directional-formatting
++ci-static-analysis: check-coccicheck
++ci-static-analysis: hdr-check
+diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
+deleted file mode 100755
+index 5a87b1cac96..00000000000
+--- a/ci/run-static-analysis.sh
++++ /dev/null
+@@ -1,30 +0,0 @@
+-#!/bin/sh
+-#
+-# Perform various static code analysis checks
+-#
+-
+-. ${0%/*}/lib.sh
+-
+-make coccicheck
+-
+-set +x
+-
+-fail=
+-for cocci_patch in contrib/coccinelle/*.patch
+-do
+-	if test -s "$cocci_patch"
+-	then
+-		echo "$(tput setaf 1)Coccinelle suggests the following changes in '$cocci_patch':$(tput sgr0)"
+-		cat "$cocci_patch"
+-		fail=UnfortunatelyYes
+-	fi
+-done
+-
+-if test -n "$fail"
+-then
+-	echo "$(tput setaf 1)error: Coccinelle suggested some changes$(tput sgr0)"
+-	exit 1
+-fi
+-
+-make hdr-check ||
+-exit 1
 -- 
 2.35.1.1132.ga1fe46f8690
 
