@@ -2,172 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BFD3C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 13:20:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 094E7C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 13:29:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232187AbiBVNVK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 08:21:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54996 "EHLO
+        id S232461AbiBVN3i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 08:29:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231628AbiBVNVJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 08:21:09 -0500
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 341AEC334E
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:20:43 -0800 (PST)
-Received: by mail-qv1-xf33.google.com with SMTP id p7so41618811qvk.11
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:20:43 -0800 (PST)
+        with ESMTP id S232419AbiBVN3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 08:29:35 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70C8A99697
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:29:09 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id qx21so42837777ejb.13
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:29:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=SXyGVH32OCeQgP1R2nttgjOJxSiOV6SZF15UpXVUCtY=;
-        b=q7Wbn8L/l4Z7s6B7iWGyz432mwA84ll2Z7OkFo5Tv8pHnvrHtq7ryU6FNmb744ePZU
-         2QW4QYTcAOEz6KfWkdx0HwUYLtxW7ES56rt4EDsPB1qVF0KbJyXiRzdAXL31V4x3Xn5N
-         8PJWu2rGQ5lT9I8Sou8dqrjWCVD/R3KjVovBnsQR4LB8yhFj36BA6U8/TG4+oRZV5wX/
-         6tMcDN5gYsYD7/44j7jh7efAZyQ/uG7y/MtZaeipu9+iCqqdeA6TIDF2txA0KiCAmHGT
-         LU5CgTYR5Fo/VwK9f2VbtH4K/2v1ZUSNT1susA3uy+SlzxdAExA8DUnaW8BULmal8aml
-         wa4w==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=jPkzrfpPBp/GCktwxNq4hqinwKSyC7cEUygPdFGHLXU=;
+        b=Uvvt7ws1YkZsQPycHEFgGqcAuAp/0BuemMpENamoYZk7CGvajPE083pmrlVM5TVWob
+         sR3KkU/EXdHtKNXJERJv7ajHgxkj/TFlKQ/w6H41UOLICkjJRAD4oGgNYlgInmfqH73d
+         sPOw3a4NFHnxlLijfPeySMtsio6oSaDUglRnJ8zXEojNdwzM8pGY3azJCM9E4sGjRD3m
+         tFSntZG3OvBX4onFJSurxPvTBd05HBSMI0DmWGnR5nKAXpTBMnlktOYmSt3wsj8f8DzO
+         b7PCTA1w/m17gEOmmCbBaNEaQOwBI5zZvVgSPK5yreXCxXbypb92MyZWG/WfXFuVwTHE
+         NHXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=SXyGVH32OCeQgP1R2nttgjOJxSiOV6SZF15UpXVUCtY=;
-        b=fTf9W1Zl0wl6Eo01S+Fwks0qwxaoy+FhVh+4YmgEg9pz7ruBJVjm7Y99QUQ8w7wLWx
-         2o///lXVQARsnISYdBJ4g5FxR9uKf5Zq+ifiJ+qDjF4Qmrp/L1ASg/xSH6nY1QKpSkLX
-         ve7nGS2+sfnUSNvSFb0nOqT5jOuVXt5OpB2a7/PuPGL28SwBn5uskmXeq2pNOY+JP6HE
-         kGl/w+ajWgFmR4w1zDHm5GpstMgBfacq8NMfqTIuLgaq/AyIpndgulzs2j3Qv0r3h33H
-         TR8NQtV53f5sR8NTkYyTgdzN59kqCWI+iG63DIGfNe4bvKkQU6ixQZ89BOYM7Gfg+7iZ
-         JXIw==
-X-Gm-Message-State: AOAM530LYQabXDyDUQ7pKVi395vk5HYqXBHms8dnCmmADREf2YRp0ONr
-        o0Z7OjJIXKDU/K0RQinWQhO3tyDvKec=
-X-Google-Smtp-Source: ABdhPJwQ2/7d9Z/+UTS1JOjmVbQj/TWD0vuUTk1j7CKBIxx4cheS+bA4h7iTilbUE9+3ChqB+kp3zQ==
-X-Received: by 2002:ac8:7d90:0:b0:2dc:8dd3:276f with SMTP id c16-20020ac87d90000000b002dc8dd3276fmr21767924qtd.508.1645536041724;
-        Tue, 22 Feb 2022 05:20:41 -0800 (PST)
-Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id k10sm1015333qkj.45.2022.02.22.05.20.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Feb 2022 05:20:40 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, phillip.wood123@gmail.com,
-        e@80x24.org, bagasdotme@gmail.com, gitster@pobox.com,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v10 3/4] cat-file: add remove_timestamp helper
-Date:   Mon, 21 Feb 2022 22:31:14 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <7905D997-249D-4DDF-A97D-0667499AE786@gmail.com>
-In-Reply-To: <220219.86a6ene548.gmgdl@evledraar.gmail.com>
-References: <pull.1212.v9.git.git.1645045157.gitgitgadget@gmail.com>
- <pull.1212.v10.git.git.1645208594.gitgitgadget@gmail.com>
- <bf74b6cd75bd886c1b5954693beeaccdfd2e51ec.1645208594.git.gitgitgadget@gmail.com>
- <220219.86a6ene548.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=jPkzrfpPBp/GCktwxNq4hqinwKSyC7cEUygPdFGHLXU=;
+        b=kPNtfZ2TWpVi2URW9VsCrXAufQs/PD2x6byaQvVM+gYtbvOg+3aG5BMeVGGmZDtEPP
+         1SzOfT2U6dWu2GbZrctt/ycfJCoSf16qf3IoP71u8fDAMU2WlyME+sqA2NqPLRFC8Q+7
+         W7BzrEJ2gHn5i6yB5K81icMtxQnyB5sSE0rHFvx1meyEya/WEJSCDb2IcDqyQkXa8gFZ
+         D8BNBxt/YhoGUfMWMvywIzupUOZSJBrWsfGxSC+aWzCGjCLhOS8jQvmdWsix76fUtWkh
+         TehiG22MZk710Z0376zZZDaUBHRc8A0Sk+H1iJK2uTelyz+1uQLPVuDWyYj9LBSUO+BO
+         hdxQ==
+X-Gm-Message-State: AOAM532k1EFLHhW4UyaCYCcVNvdTaj7C+2fDZBiMUNQcYcH0XqeJ0XTY
+        sebh3gsBfGkujJl80Xxg74orl1tb0/GQtO4w
+X-Google-Smtp-Source: ABdhPJyXA+VY1+Ox+8UlucxnaRkVvP1Ty6Sq4ED3G0Zf0IPBW+WBCCkagaPPEycGi8qlRSXYNRY1aA==
+X-Received: by 2002:a17:906:84b:b0:6ce:6f82:9af6 with SMTP id f11-20020a170906084b00b006ce6f829af6mr19586330ejd.489.1645536547573;
+        Tue, 22 Feb 2022 05:29:07 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id 5sm6304434eji.192.2022.02.22.05.29.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Feb 2022 05:29:07 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nMVE2-00653X-DD;
+        Tue, 22 Feb 2022 14:29:06 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH 05/25] CI: remove unused Azure ci/* code
+Date:   Tue, 22 Feb 2022 14:05:08 +0100
+References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
+        <patch-05.25-4738a22a36d-20220221T143936Z-avarab@gmail.com>
+        <nycvar.QRO.7.76.6.2202221115590.4418@tvgsbejvaqbjf.bet>
+        <220222.86k0dn89bm.gmgdl@evledraar.gmail.com>
+        <nycvar.QRO.7.76.6.2202221306190.11118@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <nycvar.QRO.7.76.6.2202221306190.11118@tvgsbejvaqbjf.bet>
+Message-ID: <220222.86y2236ndp.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi =C3=86var,
 
-On 19 Feb 2022, at 1:33, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On Tue, Feb 22 2022, Johannes Schindelin wrote:
 
-> On Fri, Feb 18 2022, John Cai via GitGitGadget wrote:
+> Hi =C3=86var,
 >
->> From: John Cai <johncai86@gmail.com>
->>
->> maybe_remove_timestamp() takes arguments, but it would be useful to ha=
-ve
->> a function that reads from stdin and strips the timestamp. This would
->> allow tests to pipe data into a function to remove timestamps, and
->> wouldn't have to always assign a variable. This is especially helpful
->> when the data is multiple lines.
->>
->> Keep maybe_remove_timestamp() the same, but add a remove_timestamp
->> helper that reads from stdin.
->>
->> The tests in the next patch will make use of this.
->>
->> Signed-off-by: John Cai <johncai86@gmail.com>
->> ---
->>  t/t1006-cat-file.sh | 15 ++++++++++-----
->>  1 file changed, 10 insertions(+), 5 deletions(-)
->>
->> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
->> index 145eee11df9..2d52851dadc 100755
->> --- a/t/t1006-cat-file.sh
->> +++ b/t/t1006-cat-file.sh
->> @@ -105,13 +105,18 @@ strlen () {
->>  }
->>
->>  maybe_remove_timestamp () {
->> -    if test -z "$2"; then
->> -        echo_without_newline "$1"
->> -    else
->> -	echo_without_newline "$(printf '%s\n' "$1" | sed -e 's/ [0-9][0-9]* =
-[-+][0-9][0-9][0-9][0-9]$//')"
->> -    fi
->> +	if test -z "$2"; then
->> +		echo_without_newline "$1"
->> +	else
->> +		echo_without_newline "$(printf '%s\n' "$1" | remove_timestamp)"
->> +	fi
->>  }
->>
->> +remove_timestamp () {
->> +	sed -e 's/ [0-9][0-9]* [-+][0-9][0-9][0-9][0-9]$//'
->> +}
->> +
->> +
->>  run_tests () {
->>      type=3D$1
->>      sha1=3D$2
+> On Tue, 22 Feb 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
-> I may have missed some previous discussions, but is there a reason this=
+>> It's still unclear to me how Azure CI is being used as a "fall-back",
+>> can you explain that?
+>
+> By reinstating the `azure-pipelines.yml` file from the last known-good
+> version.
 
-> echo_without_newline dance is needed? At this point this on top passes
-> all tests for me on both dash and bash:
->
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index 2d52851dadc..8266a939f99 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -104,18 +104,19 @@ strlen () {
->      echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
->  }
->
-> -maybe_remove_timestamp () {
-> -	if test -z "$2"; then
-> -		echo_without_newline "$1"
-> -	else
-> -		echo_without_newline "$(printf '%s\n' "$1" | remove_timestamp)"
-> -	fi
-> -}
-> -
->  remove_timestamp () {
->  	sed -e 's/ [0-9][0-9]* [-+][0-9][0-9][0-9][0-9]$//'
->  }
->
-> +maybe_remove_timestamp () {
-> +	if test -n "$2"
-> +	then
-> +		echo "$1" | remove_timestamp
-> +		return 0
-> +	fi
-> +
-> +	echo "$1"
-> +}
->
->  run_tests () {
->      type=3D$1
->
-> The move is another comment, if we're adding a remove_timestamp() let's=
+Okey, despite what you might thing I'm not on the war path to remove all
+of this at all costs.
 
-> define it before maybe_remove_timestamp() which uses it, even though in=
+In particular I don't mind much keeping the 05/25 parts around, but the
+04/25 would be a hassle, depending on how you reply to the below.
 
-> this case we can get away with it...
+So what do you expect me or someone who overtly touches code related to
+this & the similar (and related) in-tree JUnit support to do? Presumably
+one of:
 
-Thanks for these suggestions! I'll adjust 3/4 to include these changes.
+ 1. Don't work on any such code at all, in case you'd one day like to
+    resurrect Azure support.
+
+ 2. Test my patches locally by reverting azure-pipelines.yml and make
+    sure any overt changes to Azure-related code still work with that
+    reverted commit.
+
+ 3. Just "YOLO hack it" but leave it in place-as is. E.g. for 04/25 and
+    05/25 in combination with 11/25 (the later s/export/setenv/g change)
+    leave a known-bad-but-looking-like-it-was-before Azure branch in-place.
+
+ 4. A variant of #2 where I attempt to patch the Azure code branches, but
+    the "testing" is just eyeballing that they look reasonable, but I haven=
+'t
+    *really* tested them even once (and I'd note as much in a commit messag=
+e).
+
+I'm not willing to go for #1 and #2. I could do #3 or #4 if Junio/others
+chime and agree with you, but I really don't think those are worth it
+either.
+
+I could understand your view in your reply back in December when I sent
+the stand-alone Azure removal patch[1]. Even though I noted that it was
+needed for subsequent changes it was a stand-alone patch, so it wasn't
+easy to evaluate the trade-off of whether removing it was worth it.
+
+I think here it is quite easy. The end-state of this series
+significantly improves the UX for the CI we actually use, and I think
+actually makes it easier to get Azure support back up & running should
+you ever want that, since the whole structure of it is making CI less
+complex and less of a special-case.
+
+It's been almost 2 years (just around 2 months short of it..) since
+azure-pipelines.yml was removed from "master". It would really be quite
+easy to get it or any other new CI target off the ground, particularly
+after this series.
+
+Insisting that any effort to fix actual CI issues in the actual CI we do
+use needs to be hamstrung by any change in the area needing to carefully
+eyeball:
+
+    git show 6081d3898fe^:azure-pipelines.yml
+
+And for each change carefully consider them *if* we still ran that just
+seems unreasonably obstructionist.
+
+Sure, Azure CI had some neat features, so did Travis CI. If we ever want
+to run either of them again let's just consider that if and when that
+happens.
+
+Maybe you have relevant feedback queued up, but so far you haven't had
+any meaningful comments on the goals end end-state of this series as
+compared to yours[2] (to the extent that their approaches differ).
+
+Can we try to focus on that instead? I.e. the actual visible CI changes
+that'll either make the CI workflow we actually use better or worse?
+
+1. https://lore.kernel.org/git/patch-1.1-eec0a8c3164-20211217T000418Z-avara=
+b@gmail.com/
+2. https://lore.kernel.org/git/pull.1117.git.1643050574.gitgitgadget@gmail.=
+com/
