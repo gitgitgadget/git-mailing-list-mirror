@@ -2,95 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38784C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 16:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 168D7C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 17:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234388AbiBVQyz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 11:54:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35960 "EHLO
+        id S234498AbiBVRLw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 12:11:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233968AbiBVQyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 11:54:53 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31BFF11942A
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 08:54:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645548859;
-        bh=YPJvpNkAAX3YMO+A9pecIoAna+VC+7kz4VzA6EhysMw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RCY4ohm35FlH1wSP9+7tdUeDBzJQXPVaKb7TK2B+D4QGN0+3nvMbS4cFnlm014/5X
-         ewrmQoQjS0exGLKBnMxUOPYq9DpJvTVQKT5XUOTBmcr/EnXc1IvoFkuRf/JttVNNl1
-         OvWiYTs1UdM/DniOYxVlzi7egUQ0zeEsiZir5AWY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N1OXZ-1oOsNc2Qpv-012syS; Tue, 22
- Feb 2022 17:54:19 +0100
-Date:   Tue, 22 Feb 2022 17:54:18 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Johannes Sixt <j6t@kdbg.org>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH 08/12] merge-ort: provide a merge_get_conflicted_files()
- helper function
-In-Reply-To: <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.2202221751550.11118@tvgsbejvaqbjf.bet>
-References: <pull.1122.git.1642888562.gitgitgadget@gmail.com> <35e0ed9271a0229fe2acd2385a7e4171d4dfe077.1642888562.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2201281744280.347@tvgsbejvaqbjf.bet> <CABPp-BG2rMEYBLuBW=0wtpJe4aUFGCFa8D0NTSKz9Sm+CkXPxw@mail.gmail.com>
- <0d7ba76c-9824-9953-b8ce-6abe810e2778@kdbg.org> <CABPp-BERtRDeyF3MhOQhAFwjoykOKwXoz6635NK7j2SEKp1b3A@mail.gmail.com> <nycvar.QRO.7.76.6.2202050009220.347@tvgsbejvaqbjf.bet> <CABPp-BGCL0onSmpgKuO1k2spYCkx=v27ed9TSSxFib=OdDcLbw@mail.gmail.com>
- <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S231278AbiBVRLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 12:11:51 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52277D1095
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 09:11:25 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id p14so44857972ejf.11
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 09:11:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LBMaU/ae+uOL9zhP0DVQIXJH3tSsXio47Th7rh+sKH4=;
+        b=W2GfPdYl0jUBcmBiY8/bMar1bn7FFgowJ3nuystLBnCqxxIt5cwfx6Wv5ZxoG/eC21
+         mwAY4Dn7xCjlRjZp1j3vcniT9xjWk1gn+eMrlvZSlD3zwU2rDtBOthUtSajbAZClSDyp
+         AI9HvcuN4Xf2lIDpMuX0ZmQdSlT+oJRSXvsxP+dvr22hOkHPpOoxoMeSOdDdbAe8viLm
+         ohUNdujwMI2iuVdV5qN7pEI+xHaea+u8+x1rqZJXu9cRVqqn2rOkGkdrhFRb7pPJnVe7
+         DcpF+LVpHD3cwFVt294RXxtQTj49WIV3scRPLvVPuwKVnRe3Hf8l9EtopL2qUKakI4vl
+         bu9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LBMaU/ae+uOL9zhP0DVQIXJH3tSsXio47Th7rh+sKH4=;
+        b=pfN2ifRoIYOT6euf9Nyp2QKcdvjs3JYK3BFZPaC9Ege7QMGUli/Qih0HKkpBqsunXv
+         wXPxDwJ3L9m4yOaIB3VGybul+NyMpgohZbff7c+q8E2iQ5wtYMQC2hG4Ra5OQ7AtCPVt
+         vlK1AGAT2qtyjjIEArzUuxnXXHlEL36gQMCiFf6Nc9/dMgkdoYbUzPf6rySUCsYDIgKX
+         luSSlnFKwC7k78aZUpeGFv5wlLg/RtYz4yg5kiVmh/1P5/mJZ4QH4bulAz0pQ4So9bNl
+         xkfaeKmwOAVCXhG8AvvyFLH9hWiVkktjwKJlfizjBjQ3de1mGUImgrza6J5sQnrHHNha
+         z4OA==
+X-Gm-Message-State: AOAM5312GDs+WK5ebi+OE1H5l15iN8oY/l5lUUHsw0F17Fc227bWiPCe
+        2MD2GwO9sSpKniQTz3fDr4o5ql/QND46DCq2eYpSKhlHSx8=
+X-Google-Smtp-Source: ABdhPJyPapjCms9c4NOv4oyplp5LREDHV5s2vwny6Dbs9htdoYPKecbME7v9xxaGRqpTYD8EyXgB97OoPhY/sZvi+fc=
+X-Received: by 2002:a17:906:5c4:b0:6cd:8d9c:3c7d with SMTP id
+ t4-20020a17090605c400b006cd8d9c3c7dmr21241895ejt.554.1645549883609; Tue, 22
+ Feb 2022 09:11:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RLugEiViD9C9aXIVLEFOsiprRH/ZKZZiu1rJk7VJTAHOtqsD2dS
- 1mYKpq0WDDXSC9L3/fH2COWMhhES9+WVN+68a39ezuw+bkfCexJc5j9m6lN/ZO3a2clkFnF
- roF/zZXv+8c5lftRw76g5kDu7noJy2rWE3gfrfVTFlCM9bxBwxPG4as0ZgQr5Kf+8xb4qj2
- ziiXTtm7RWIkhf7MM6u8w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RCobeN/qCJs=:LarF9d9UvpVPi3ZPDaTzZT
- FCTp7eTFSgYBHDXT1kBRsEgoNVKKKOdLomkdl6RoczDc45YYEosVuTESptH3HmbHbyn9pKTGO
- QyEfIvtR9b7aOpi5D5KgPBGXT5vNmDexdmKjPp89oeX0NuBEgcP8B/ubGw/NQowY6BT1OfpHF
- l9enAhakJB2zfcUlKr5VCfMJghiC8WX7FLl65Zi+5ShC3eRJfpJKWZ1xxlERlmTqt86KMcqNt
- 9BG1vYUVzLrJ/m03eRdhPBEKqWITLB70CndNGCOzGXuarCczXBA7MHv5tjdO7saAwPJCaurP8
- WYHTSykmOsfQ95gkg47ifnDNmlkoudN+G68l4Xte5//TfMcERAzbLojs/aYepajQzHn/nLcmd
- V/++9ECZzdjDaYh4M4MvQfJqdmI0kF33CSrsP8zNu77RoXxRIeuRjqxDqwHrjCo/4hnkzTagH
- eHJZdfggOtcuZZcRsvFY0hTA1GxZLdF2TRH2BUMiHdSN3FCJpXqM84llx7pXrlWRnkss5me1w
- bVClqKxt3cKQKmgjGDuAI3jMtK5io9CghKZSqwrGD2Hk4zgiwbltDYYERF3GgSo4ZpSFYg7Jc
- u1urUeWiulFIMrNTBfEgPl8v7f5T6hba6ScHeDMz9EHNkFvWPb2QdC7zGmU14akT4pEuzmPA3
- ZBiNQqoRHmOsY/25uWrh5CkxqgQ89FHIaGENqMaPzu66YTbgMG2RYoV7qmUGKFpXN+xM47pD5
- tKvGzqzTXrvzJe8P06Kt+Mif9OP92Bg9EHgLYNHyvVvH9JZYt0KJjtEDHIeDNvuN2btayh/6F
- RkAFU25dFFxFyWZ+Io556zOJiEN9j/EeFH5CjXoTW3hgRgJvQ8UKF9lRSodEH6DrweD+OXmel
- sxRZVXoTNKl8St7NkUfXjNXt90eV4Lcv+dxDCZQrDUBZjcAgeoFh5WU+ENwVGJdbRgKReWQyM
- I/bAyiFE38M+UD/PTB3dsD3onCHnCvdCd/T1FOf7QPvQxUHMZNaXoSCRWZvIMQjBJtGfhdBsv
- pilxQym+cSx+6YRdUnXpWNbv8iyFZAFh2bdBidZItwODMypvh20I/WLxIcc7pfRmKML3N3zaS
- Mvg2a607s89VKQ=
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
+ <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com> <CAFLLRpJ1aDyLb4qAoQwYDyGdP1_PH8kzLAQCKJpQwiYiapZ5Aw@mail.gmail.com>
+ <CB2ACEF7-76A9-4253-AD43-7BC842F9576D@gmail.com> <YhMC+3FdSEZz22qX@nand.local>
+ <CAP8UFD2dpicW64eqBK47g43xDWA1qv2BMBEOSqj_My5PUs8TSg@mail.gmail.com> <YhQHYQ9b9bYYv10r@nand.local>
+In-Reply-To: <YhQHYQ9b9bYYv10r@nand.local>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 22 Feb 2022 18:11:11 +0100
+Message-ID: <CAP8UFD3U4t-inWC5mZYhybWpjVwkqA7v4hYZ5voBOEJ=+_Y1kQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] [RFC] repack: add --filter=
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     John Cai <johncai86@gmail.com>,
+        Robert Coup <robert.coup@koordinates.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
-
-On Mon, 21 Feb 2022, Johannes Schindelin wrote:
-
-> [...] since `merge-tree` is a low-level tool meant to be called by
-> programs rather than humans, we need to make sure that those messages
-> remain machine-parseable, even if they contain file names.
+On Mon, Feb 21, 2022 at 10:42 PM Taylor Blau <me@ttaylorr.com> wrote:
 >
-> [...]
+> On Mon, Feb 21, 2022 at 10:10:15PM +0100, Christian Couder wrote:
+> > > > Also, to have more protection we can either
+> > > >
+> > > > 1. add a config value that needs to be set to true for repack to remove
+> > > > objects (repack.allowDestroyFilter).
+> >
+> > I don't think it's of much value. We don't have such config values for
+> > other possibly destructive operations.
+> >
+> > > > 2. --filter is dry-run by default and prints out objects that would have been removed,
+> > > > and it has to be combined with another flag --destroy in order for it to actually remove
+> > > > objects from the odb.
+> >
+> > I am not sure it's of much value either compared to naming it
+> > --filter-destroy. It's likely to just make things more difficult for
+> > users to understand.
 >
-> Do you think we can switch to `sq_quote_buf_pretty()` for these messages=
-?
+> On this and the above, I agree with Christian.
+>
+> > > I share the same concern as Robert and Stolee do. But I think this issue
+> > > goes deeper than just naming.
+> > >
+> > > Even if we called this `git repack --delete-filter` and only ran it with
+> > > `--i-know-what-im-doing` flag, we would still be leaving repository
+> > > corruption on the table, just making it marginally more difficult to
+> > > achieve.
+> >
+> > My opinion on this is that the promisor object mechanism assumes by
+> > design that some objects are outside a repo, and that this repo
+> > shouldn't care much about these objects possibly being corrupted.
+>
+> For what it's worth, I am fine having a mode of repack which allows us
+> to remove objects that we know are stored by a promisor remote. But this
+> series doesn't do that, so users could easily run `git repack -d
+> --filter=...` and find that they have irrecoverably corrupted their
+> repository.
 
-Or maybe much better: use NUL to separate those messages if `-z` is passed
-to `merge-tree`? That would address the issue in one elegant diff.
+In some cases we just know the objects we are removing are stored by a
+promisor remote or are replicated on different physical machines or
+both, so you should be fine with this.
 
-What do you think?
+If you are not fine with this because sometimes a user might use it
+without knowing, then why are you ok with commands deleting refs not
+checking that there isn't a regular repack removing dangling objects?
 
-Ciao,
-Dscho
+Also note that people who want to remove objects using a filter can
+already do it by cloning with a filter and then replacing the original
+packs with the packs from the clone. So refusing this new feature is
+just making things more cumbersome.
+
+> I think that there are some other reasonable directions, though. One
+> which Robert and I discussed was making it possible to split a
+> repository into two packs, one which holds objects that match some
+> `--filter` criteria, and one which holds the objects that don't match
+> that filter.
+
+I am ok with someone implementing this feature, but if an option that
+actually deletes the filtered objects is rejected then such a feature
+will be used with some people just deleting one of the resulting packs
+(and they might get it wrong), so I don't think any real safety will
+be gained.
+
+> Another option would be to prune the repository according to objects
+> that are already made available by a promisor remote.
+
+If the objects have just been properly transferred to the promisor
+remote, the check will just waste resources.
+
+> An appealing quality about the above two directions is that the first
+> doesn't actually remove any objects, just makes it easier to push a
+> whole pack of unwanted objects off to a promsior remote. The second
+> prunes the repository according to objects that are already made
+> available by the promisor remote. (Yes, there is a TOCTOU race there,
+> too, but it's the same prune-while-pushing race that Git already has
+> today).
+>
+> > I am not against a name and some docs that strongly state that users
+> > should be very careful when using such a command, but otherwise I
+> > think such a command is perfectly ok. We have other commands that by
+> > design could lead to some objects or data being lost.
+>
+> I can think of a handful of ways to remove objects which are unreachable
+> from a repository, but I am not sure we have any ways to remove objects
+> which are reachable.
+
+Cloning with a filter already does that. It's by design in the
+promisor object and partial clone mechanisms that reachable objects
+are removed. Having more than one promisor remote, which is an
+existing mechanism, means that it's just wasteful to require all the
+remotes to have all the reachable objects, so how could people easily
+set up such remotes? Why make it unnecessarily hard and forbid a
+straightforward way?
