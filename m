@@ -2,161 +2,192 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FC4DC433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 16:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B55C8C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 16:27:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233487AbiBVQ1N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 11:27:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51892 "EHLO
+        id S233009AbiBVQ11 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 11:27:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231831AbiBVQ1M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 11:27:12 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B4BF63B1
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 08:26:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645547191;
-        bh=yVULErIXx8p3ykGsUORQLlLTVxbdiOnyvqdmk+wku7Q=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=GvLlkQic3bDsjoG8F2L4crOa5IDIrPdiURrmCZAhYyHEkm/iXnCvZ//kzNt2z1mV7
-         TzSFmYyZWnFNX4pVIvKSozSt30pYKOSLkmCrc0OQzV/F2j6poUD1G78A8aw568XxbJ
-         qXy6JItx0SGGChy6YcFQfLMmaJ/h8UkBFBT3oCuU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mlf0K-1o5GOj1MUE-00ijpi; Tue, 22
- Feb 2022 17:26:31 +0100
-Date:   Tue, 22 Feb 2022 17:26:29 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        with ESMTP id S233885AbiBVQ1X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 11:27:23 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71FD06C947
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 08:26:55 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id lw4so44576486ejb.12
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 08:26:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GV9VteCvrmUTyIdd7aEjASp5yyEUKOtzJVCJldQ73T0=;
+        b=FikUWf5qqYEkhtR6zEbF7EzhVKqCXWYy10dioeqfTjGfAKC1SZrxCD7E0fvTfdRrRz
+         tBPDZhpNBUPPeEzhJXddZNxivfln8ldCsORr7sJ+m8x/tftSzJ8pZQOLUbq6s/mq3hHR
+         3o/AqP5UniVsYE7oqiqSAJQGUQZSMImN1kwCDmlx7i5/cInWaevjiygnMguG856gam84
+         0sEPjNHjuGLLuxhVsPHORI2wbejZso/dJ1NEdUdh5HvbcNlMoOsBH/9Za9lmKj+Oex0X
+         WCBhmcLAZJvsHreLC/94/IqQPVtBQypDNErnC6DlW/6TyPBKoVNR6Fmji9jUaI4HmYsb
+         WqlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GV9VteCvrmUTyIdd7aEjASp5yyEUKOtzJVCJldQ73T0=;
+        b=zPq5v1/AzpKNeNQF1c35JMVs8b8qONMafv6+fTUTyfiR1tKVk8aigwbBev8NYFp5OV
+         7GDrSwaVu/HIWqOSU2hl4oxUPsPEtEMZ32dXCYHRo/N6UI4UTr6Uj7suFgJDqcCHAE5e
+         57sPmwvMOELROxRowA2iRJ/E7nc8vDU71y+fRYH8CnKW0bml3qdoE94/W8WCbZ8C8yJV
+         09uylB5LCp1bkpo4d5BYQaKDBB0BmJsoipwwpMvgJyYlmkm8TqmxPptkiBGqc6GOs+UQ
+         53K2/5+F6plz510BRsACokHIzxLoWpSEjavedV8zLb7+noeDEPe/KxWVm23/KW2uG1tn
+         Ktxw==
+X-Gm-Message-State: AOAM530KVR3X8/MaJc80BKN8uL2I1rlCJ8z9rWz7rF9pKMF//LViPxqf
+        VKSczisZFbQQ3JN4MEFpUaCBCEK7Y1enxRHITUM=
+X-Google-Smtp-Source: ABdhPJwysRSjP5KX3PSo7+1JzzyeyYtbhtptoqddWFgwgnS8UDPOTk9ARnaDiHdn9EwpMudmPiVUyitAox9GfRJ4xjw=
+X-Received: by 2002:a17:906:3a18:b0:6cd:ba45:995f with SMTP id
+ z24-20020a1709063a1800b006cdba45995fmr20590361eje.328.1645547213559; Tue, 22
+ Feb 2022 08:26:53 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
+ <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com> <02c29f920d0d5fde6d85f7b86a69be92e3f0f34d.1643787281.git.gitgitgadget@gmail.com>
+ <xmqqy22tx8t1.fsf@gitster.g> <CABPp-BGpD6g5QH3=4X_dCuSX0Bs0utHn5hyuU4_UiwNhU0h8sg@mail.gmail.com>
+ <xmqqh79hvsgn.fsf@gitster.g> <CABPp-BEaemkGGm0cSofP0gau7YN-y6HFoi0yJbHA8+iGjxsYSA@mail.gmail.com>
+ <xmqqee3wt5g3.fsf@gitster.g>
+In-Reply-To: <xmqqee3wt5g3.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 22 Feb 2022 08:26:41 -0800
+Message-ID: <CABPp-BE+DaBkis0r7pqs-kaChCvFhCEsyDg=gs3=QjWOPERaXQ@mail.gmail.com>
+Subject: Re: [PATCH v3 04/15] merge-tree: implement real merges
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
         Taylor Blau <me@ttaylorr.com>,
         Johannes Altmanninger <aclopte@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Christian Couder <christian.couder@gmail.com>,
         =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Josh Steadmon <steadmon@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v5 12/12] git-merge-tree.txt: add a section on potentional
- usage mistakes
-In-Reply-To: <7abf633b6382118a63e983b80186e91dc38eef5f.1645340082.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202221725430.11118@tvgsbejvaqbjf.bet>
-References: <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>        <pull.1122.v5.git.1645340082.gitgitgadget@gmail.com> <7abf633b6382118a63e983b80186e91dc38eef5f.1645340082.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:M90TqmC0TFiIxwKpZfSpWzEvmHaejCITG98TJ6JFEqcolN+F3Sj
- n3Ol6sHCOX0NrpXx8OeT37i6GaK9BUbRgVOzoX3KYa2GCw3YyZlpU923FfpaOGofuGEWTwc
- T2sUw1G/WA1SnqXfRFMqAZ4Lym1mHfmpjTutZB2BhDul2/9KC9wqST+jADZG+lDGO/TVhxA
- SWTOZG/YcB1E0fTCsE59A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:/Wxb8+Vj0Y8=:UKDY460Suz07BTpNc2VsAq
- 9yjZXc3zqkC5j6iz44V84MlFgmCELmoM+NUcoQI//Y9leKiqkKFhcT6fzHyzNzZT1ZnHF6kJ2
- TY0rLSDlMQPoaidXau1GLU9s6IniEi5+lSX3Oz7BsNqAsncR3smnHGtqQq+v42VhHjuvlt66V
- pAAJHTRd5uzZSaKjUy0tkGJ4Ap0P0IG/t5JjXC0yUWOcXk8utn6/3Zmn59JG+DSEaTBGM+fA4
- 0BJ+SiMicrum3bj/DYRuMPQmoI3leGxYfpi4BWgZ26zgbhJwoBO9o4j8jXKgRHIoSWl/SW/13
- 6dKhvof+IAceud538vuheVUyHZ+PdyzrIvBWUreOomwkuzRM0Fes8bYwRmUasrxfzelG1eLl4
- nj8ZO4EMZ2eaqF7xQkuYuk+J+6PN0+v6/3ebDFmPdimfjM5s1itUs0hgNo6jkGm+Qcj4N1T0R
- w5Yoc0hImvMF4F3AN5GqkxzxD6Ko7D27CT6khw/Jceg4sbPC/lodeoqRR9XdDUp60t9Cc2JKN
- zOGETEBG8tmpZivu0a/19xDHALukoNimGCZs2rpQ5HezKeeb0AqQ1G3dTIGHWDsdV8qA6PbG/
- 2Dacc1ud4CDQR/zNVxd1ovBc/O+TqrPbYWtKUtZPaekWc43dsiD7G14S7C1o7nWiZD0KQq0Jo
- SNlif6xM1/HVbEe1NeDXI0psoRvs2kBa8RhmS+CeoiEGZEeFfFakBnU3eJ7duB8D5tFAiu5ZX
- 6SY/xAqIfsnORsavYxXwyGO43AmTtIkZf9gAPI6B0DHT0tIhsTmO9K5TtEXA0bMqlQWlufpBI
- oenfxY5mLaML7S7iRw6AZpk0EFYYowqOozUKPGtW44/lmt5aY1675KmGZA7elXYBKw3+OU0pX
- jlCN6biK1J0nyy1hg97gyKM3jQbejRPUQwkrP4G3eEOTVL4efXSmdHixjlg+86Fc4a/TFXntj
- rbDjYfp9NY0gQKNOyMdoiSxrtkBF7O/FwKfzMPX7Yg5/2ilwQwv1M+71ruQPwUUdx6r7Nqaxm
- JyERB7uY99ZVnmcPuta/mjxMPbOMCe5Z3wGBYxU+tfiMpN5AIHWRkHX3ngv+rsa1gtz06edLq
- uzjWiR8WfpjazE=
-Content-Transfer-Encoding: quoted-printable
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
-
-On Sun, 20 Feb 2022, Elijah Newren via GitGitGadget wrote:
-
-> From: Elijah Newren <newren@gmail.com>
+On Mon, Feb 21, 2022 at 10:55 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  Documentation/git-merge-tree.txt | 46 ++++++++++++++++++++++++++++++++
->  1 file changed, 46 insertions(+)
-
-Thank you for this. It addresses the concern I had about printing out the
-tree object ID in the conflicted case.
-
-Thanks,
-Dscho
-
+> Elijah Newren <newren@gmail.com> writes:
 >
-> diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-=
-tree.txt
-> index d2ff2fa3035..306149fa0e2 100644
-> --- a/Documentation/git-merge-tree.txt
-> +++ b/Documentation/git-merge-tree.txt
-> @@ -158,6 +158,52 @@ that they'd have access to if using `git merge`:
->    * any messages that would have been printed to stdout (the <Informati=
-onal
->      messages>)
+> > Adding such an ability to merge-tree would be trivial -- it basically
+> > involves just two things: (1) accepting one extra argument, and (2)
+> > calling merge_incore_nonrecursive() instead of
+> > merge_incore_recursive().
+> >
+> > However, I think forking a subprocess for every merge of a series of
+> > commits is a completely unreasonable overhead, so even if we provide
+> > such an option to merge-tree, I still want a separate plumbing-ish
+> > tool that does non-worktree/non-index replaying of commits which is
+> > not written as a driver of merge-tree.  That other tool should just
+> > call merge_incore_nonrecursive() directly.  And such a tool, since it
+> > should handle an arbitrary number of commits, should certainly be able
+> > to handle just one commit.  From that angle, it feels like adding
+> > another mode to merge-tree would just be a partial duplication of the
+> > other tool.
 >
-> +MISTAKES TO AVOID
-> +-----------------
-> +
-> +Do NOT look through the resulting toplevel tree to try to find which
-> +files conflict; parse the <Conflicted file info> section instead.  Not
-> +only would parsing an entire tree be horrendously slow in large
-> +repositories, there are numerous types of conflicts not representable b=
-y
-> +conflict markers (modify/delete, mode conflict, binary file changed on
-> +both sides, file/directory conflicts, various rename conflict
-> +permutations, etc.)
-> +
-> +Do NOT interpret an empty <Conflicted file info> list as a clean merge;
-> +check the exit status.  A merge can have conflicts without having
-> +individual files conflict (there are a few types of directory rename
-> +conflicts that fall into this category, and others might also be added
-> +in the future).
-> +
-> +Do NOT attempt to guess or make the user guess the conflict types from
-> +the <Conflicted file info> list.  The information there is insufficient
-> +to do so.  For example: Rename/rename(1to2) conflicts (both sides
-> +renamed the same file differently) will result in three different file
-> +having higher order stages (but each only has one higher order stage),
-> +with no way (short of the <Informational messages> section) to determin=
-e
-> +which three files are related.  File/directory conflicts also result in
-> +a file with exactly one higher order stage.
-> +Possibly-involved-in-directory-rename conflicts (when
-> +"merge.directoryRenames" is unset or set to "conflicts") also result in
-> +a file with exactly one higher order stage.  In all cases, the
-> +<Informational messages> section has the necessary info, though it is
-> +not designed to be machine parseable.
-> +
-> +Do NOT assume all filenames listed in the <Informational messages>
-> +section had conflicts.  Messages can be included for files that have no
-> +conflicts, such as "Auto-merging <file>".
-> +
-> +AVOID taking the OIDS from the <Conflicted file info> and re-merging
-> +them to present the conflicts to the user.  This will lose information.
-> +Instead, look up the version of the file found within the <OID of
-> +toplevel tree> and show that instead.  In particular, the latter will
-> +have conflict markers annotated with the original branch/commit being
-> +merged and, if renames were involved, the original filename.  While you
-> +could include the original branch/commit in the conflict marker
-> +annotations when re-merging, the original filename is not available fro=
-m
-> +the <Conflicted file info> and thus you would be losing information tha=
-t
-> +might help the user resolve the conflict.
-> +
->  GIT
->  ---
->  Part of the linkgit:git[1] suite
-> --
-> gitgitgadget
+> The above does not make much sense to me.
 >
+> I am hearing that "multi-step cherry-picks and reverts need to be
+> fast and we need something like sequencer that is all written in C,
+
+Yes, I agree with that part so far.  jj is kicking our butt on rebase
+speed; I'm not sure if we can catch it, but it'd be nice to see us not
+be more than a hundred times slower.
+
+> and single-step cherry-pick is merely a special case that does not
+> deserve a plumbing".
+
+Well, apparently I failed at communication if that's what you heard.
+Perhaps I can step back and provide my high-level goals, and then
+mention how this series fits in.  My high-level goals:
+
+  * new sequencer-like replay tool, including multiple abilities
+today's rebase/cherry-pick tools don't have
+  * enable folks to use merging machinery for server side operations
+(merge, rebase, cherry-pick, revert)
+  * do not repeat or encourage the rebase-as-shell-script mistakes of yesteryear
+  * somehow split this up into reviewable chunks
+
+Now, in particular, the "merge divergent branches" piece seemed like a
+really simple portion of the problem space for which I could get some
+early feedback without having to address the whole problem space all
+at once, and which doesn't seem to have any downside risk.
+
+And even with my attempt to narrow it in scope, and even despite lots
+of early feedback from the Git Virtual Contributor Summit six months
+ago, it's been nearly two months of active discussions including all
+kinds of intrinsic and tangential points about the UI and design.  Why
+try to prematurely widen the scope?  Can we just focus on merging
+divergent branches for now, and cover the rest later?
+
+> But that argument leads to "and the same something-like-sequencer
+> that is all written in C would need '--rebase-merges' that can pick
+> multi-step merge sequences, and single-step merge does not deserve a
+> plumbing", which is an argument against this topic that is utterly
+> absurd.
+>
+> So why isn't your objection not equally absurd against having a
+> single step cherry-pick or revert primitive as a plumbing?
+
+The objection you are arguing against is not my position.  In fact,
+I'm not even objecting to having a single-step cherry-pick, I'm
+objecting to providing it _now_, which I thought would have been clear
+from the portion of my email you snipped ("...I'm happy to add [a
+single step cherry-pick primitive] along with the tool I submit
+later...").  Since that wasn't clear, and since that wasn't my only
+communication failure here, let me attempt to be clearer about my
+objection(s):
+
+1. I'm really trying to pick off a small piece of the problem space
+and get feedback on it without unnecessarily complicating things with
+unrelated issues.  Thus, this series is _only_ about merging branches
+that have diverged, and leaves commit replaying for later.
+
+2. Two folks have chimed in about the single step cherry-pick, and the
+ONLY reason given for wanting such a thing was to create a
+rebasing/cherry-picking script which was driven by repeatedly invoking
+this low-level primitive command.  That's also the only usecase I can
+currently think of for such a primitive.  To me, that means providing
+such a low-level command now would be likely to result in the
+rebase-as-a-script mistake of yesteryear.  I think we can avoid that
+pitfall by first providing a tool that avoids the
+repeatedly-fork-git-subprocesses model.  (Also, providing a low-level
+single-step cherry-pick command also has the added negative of further
+distracting from the focus on merging divergent branches.)
+
+3. The merge primitive in this series is useful completely independent
+of any rebasing script (it would not be used solely for rebasing
+merges, if it's used for that purpose at all, as evidenced by the fact
+that dscho is already trying to use it for doing new real merges).
+
+4. Once we have a git-replay tool that can replay a sequence of
+commits, there _might_ not be a need for a single commit replaying
+primitive.  If we provided one as you and Johannes Altimanninger were
+asking for, and it turned out to be deemed useless because the later
+tool I provide can do everything it can and more, haven't we just
+wasted time in providing it?  And perhaps also wasted future time as
+we then have work to do to deprecate and remove the new command or
+mode? (NOTE: I did *not* say there was "no need" for a single-commit
+replaying primitive -- I said there "might not" be a need.)
+
+Also, since you bring up --rebase-merges, there's an additional point
+about it that might be relevant:
+
+5. While you could implement a naive --rebase-merges in terms of a
+primitive for merging divergent branches (or vice-versa, i.e.
+implement merging divergent branches from a naive --rebase-merges
+implementation), I think replaying merges more intelligently[*] is
+actually a distinct operation from doing a new merge of divergent
+branches and that you probably can't implement one in terms of the
+other.  (I'm not certain on this, and definitely don't want to argue
+the finer points on it while my implementation is still half-baked,
+but I really do think they are different things right now.)
+
+[*] https://lore.kernel.org/git/CABPp-BHp+d62dCyAaJfh1cZ8xVpGyb97mZryd02aCOX=Qn=Ltw@mail.gmail.com/
