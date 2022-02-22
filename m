@@ -2,121 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E6FBC433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 13:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB4B4C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 13:43:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232511AbiBVNnt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 08:43:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44366 "EHLO
+        id S232477AbiBVNoH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 08:44:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbiBVNnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 08:43:46 -0500
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1C7410EC5D
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:43:21 -0800 (PST)
-Received: by mail-qv1-xf2b.google.com with SMTP id d3so42032967qvb.5
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:43:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=1wlaSsSJuGkD7aDe56JpTBcoTwgXnhthWsdYjp1fPCw=;
-        b=RPFjQ54Iwot5UVyIXQoUszkEJYzVsc0L2dwOoA2Yrk6RzLmnW5SFDVVYZfa5VQccsy
-         6ltGdKspuHGXhMaAqNLEzeBsgplp67IaSDoGxLUvW8xmN67jwDwj9BuCqlc16Mw3zLgf
-         vwzkShtA+NRU3Ws9QECXgWicP2vAREfiEtMxAMVtsSF0SnVxWv6uoN/HP7GChyNS/8lU
-         GxgJi09+w56VI8EbYiXFgs0rkH5/shsq6YeJGc+4/1218etLypQgDfBH1OSF8mCTmuQm
-         9oWXDedQBjcr0lRaxjw+ARQhDkkQINZWZ8Oday7dbJQ47KN/c16MQvnrSEBRG/RwNSjZ
-         t96Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=1wlaSsSJuGkD7aDe56JpTBcoTwgXnhthWsdYjp1fPCw=;
-        b=jj9WagCUQm+TsHw1xGkXtIA9mdFEOH9VCBAzWUdMHHSVRE0rcmMrN3LW0nqXSXg2dM
-         cV0eg5TfiRxK+xjOEK8yDdNfhbT5U1lDeHHb5UxHc4BoLAD1R228GM/AqgddZ5eh9RBl
-         Xh2iXe7pXBYr8wLzq4EbmjT0U263CGphOrhuO2RWomG7D2Cvxht+NUMZfu88Py65M7cm
-         +CUqo4pejwvrDZon8sfXiJ2wAgUNJaVxfpsTchXNNqx0OA4YrzmVKXGgq57jQ96BHXlA
-         395ESZTFGzU5hv2Q+ESyGlDlZdi8IlzFcao+GeCJ8gjD7EA7fgtMF4f7ubF8N2XLvLtm
-         D4uA==
-X-Gm-Message-State: AOAM531CBZmK1pNDaDQ7JKiaRze8CATJeLekF9sLbCOhjuDQw1jox/0o
-        r/hUKvv6TQo2T+Le9qF9LRLL
-X-Google-Smtp-Source: ABdhPJxunNQ1Ymy6YOFOJWU3Gu+GhXHYBQnLKY5NID1r5MSLuvDKgg7ALReYfMIb3yS8oH7BNbobfA==
-X-Received: by 2002:a05:622a:1654:b0:2d1:83d6:ea64 with SMTP id y20-20020a05622a165400b002d183d6ea64mr22026065qtj.599.1645537400814;
-        Tue, 22 Feb 2022 05:43:20 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id bk23sm28222992qkb.3.2022.02.22.05.43.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Feb 2022 05:43:20 -0800 (PST)
-Message-ID: <f65462bf-eed7-f8b9-6255-249e5128172f@github.com>
-Date:   Tue, 22 Feb 2022 08:43:19 -0500
+        with ESMTP id S232323AbiBVNoH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 08:44:07 -0500
+X-Greylist: delayed 65 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 22 Feb 2022 05:43:41 PST
+Received: from mail3-relais-sop.national.inria.fr (mail3-relais-sop.national.inria.fr [192.134.164.104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33C7C11E3ED
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:43:41 -0800 (PST)
+X-IronPort-AV: E=Sophos;i="5.88,387,1635199200"; 
+   d="scan'208";a="6659582"
+Received: from dt-lawall.paris.inria.fr ([128.93.67.65])
+  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2022 14:42:34 +0100
+Date:   Tue, 22 Feb 2022 14:42:33 +0100 (CET)
+From:   Julia Lawall <julia.lawall@inria.fr>
+X-X-Sender: julia@hadrien
+To:     =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        git <git@vger.kernel.org>, cocci@inria.fr
+Subject: Re: [cocci] [PATCH] add usage-strings ci check and amend remaining
+ usage strings
+In-Reply-To: <220222.867d9n83ir.gmgdl@evledraar.gmail.com>
+Message-ID: <alpine.DEB.2.22.394.2202221436320.2556@hadrien>
+References: <220221.86tucsb4oy.gmgdl@evledraar.gmail.com> <20220221173357.8622-1-chakrabortyabhradeep79@gmail.com> <nycvar.QRO.7.76.6.2202221152230.11118@tvgsbejvaqbjf.bet> <220222.867d9n83ir.gmgdl@evledraar.gmail.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH] Provide config option to expect files outside sparse
- patterns
-Content-Language: en-US
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jose Lopes <jabolopes@google.com>,
-        Jeff Hostetler <jeffhostetler@github.com>
-References: <pull.1153.git.1645333542011.gitgitgadget@gmail.com>
- <54a0aa74-57c2-ee65-ae07-cb1b0daf947f@github.com>
- <CABPp-BGz0Y+Gk0uLy7K-pqBY955=rN-E2SJFofDaje60b-XZuw@mail.gmail.com>
- <nycvar.QRO.7.76.6.2202221313400.11118@tvgsbejvaqbjf.bet>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <nycvar.QRO.7.76.6.2202221313400.11118@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="8323329-930122316-1645537354=:2556"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/22/2022 7:28 AM, Johannes Schindelin wrote:
-> Hi Elijah,
-> 
-> On Mon, 21 Feb 2022, Elijah Newren wrote:
-> 
->> On Sun, Feb 20, 2022 at 11:41 AM Derrick Stolee
->> <derrickstolee@github.com> wrote:
->>
->>> The only concern here really is if we want to be picky about the "VFS
->>> for Git" references instead of "vfsd" references in the commit
->>> message.
->>
->> I'm not sure I'm understanding the distinction.  Was "VFS for Git"
->> renamed to "vfsd"?  Is "vfsd" Google's modified version?  Something
->> else?
-> 
-> VFS for Git is the existing project at
-> https://github.com/microsoft/VFSforGit which is pretty much in maintenance
-> mode.
-> 
-> vfsd was mentioned by Jonathan Tan in
-> https://lore.kernel.org/git/20220207190320.2960362-1-jonathantanmy@google.com/.
-> From what I gather, it is a completely separate implementation of the same
-> ideas of VFS for Git, but from what I see it does not share any code with
-> it (and it is unclear how much vfsd tries/tried to learn from VFS for Git,
-> it looks like it's being done from scratch but that impression could be
-> incorrect).
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Elijah is correct that "vfsd" is not publicly visible outside of this
-message, so that makes it difficult for us to verify that these patches
-being made for it actually work as we intend.
+--8323329-930122316-1645537354=:2556
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-> 	Side note: VFS for Git itself requires the Microsoft fork of Git
-> 	to work, therefore this patch would only be needed in that fork,
-> 	as far as VFS for Git is concerned.
 
-I would drop this side note, since a big reason for the microsoft/git
-fork is so we can create custom patches that handle these issues. We
-would probably have created a similar patch during release integration,
-but we are grateful to use this patch as a base for making these
-integrations simpler in the future.
 
-Thanks,
--Stolee
+On Tue, 22 Feb 2022, Ævar Arnfjörð Bjarmason wrote:
+
+>
+> On Tue, Feb 22 2022, Johannes Schindelin wrote:
+>
+> > Hi Julia,
+> >
+> > I would like to loop you in here because you have helped us with
+> > Coccinelle questions in the past.
+>
+> Thanks. Probably better to CC the relevant ML, adding it.
+>
+> > On Mon, 21 Feb 2022, Abhradeep Chakraborty wrote:
+> >
+> >> Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> >>
+> >> > That should be fairly easy to do though, and if not we could always
+> >> > just dump these to stderr or something if a
+> >> > git_env_bool("GIT_TEST_PARSE_OPTIONS_DUMP_FIELD_HELP", 0) was true,
+> >> > and do the testing itself in t0012-help.sh.
+> >>
+> >> Okay but if the logic can't be implented in the `parse-options.c` file
+> >> (most probably I will be able to implement the logic), would you allow
+> >> me to try the `coccinelle script` method you mentioned?
+> >
+> > The task at hand is to identify calls to the macro `OPT_CMDMODE()` (and
+> > other, similar macros) that get a fourth argument of the form
+> >
+> > 	N_("<some string>")
+> >
+> > The problem is to identify `<some string>` that ends in a `.` (which we
+> > want to avoid) or that starts with some prefix and a colon but follows
+> > with an upper-case character.
+> >
+> > In other words, we want to suggest replacing
+> >
+> > 	N_("log: Use something")
+> >
+> > or
+> >
+> > 	N_("log: use something.")
+> >
+> > by
+> >
+> > 	N_("log: use something")
+> >
+> > Ævar suggested that Coccinelle can do that. Could you give us a hand how
+> > this would be possible using `spatch`?
+
+Hello,
+
+I'm not sure to follow all of the following.
+
+Of there are some cases that are useful to do statically, with only local
+information, then using Coccinelle could be useful to get the problem out
+of the way once and for all.  Coccinelle doesn't support much processing
+of strings directly, but you can always write some python code to test the
+contents of a string and to create a new one.
+
+Let me know if you want to try this.  You can also check, eg the demo
+demos/pythontococci.cocci to see how to create code in a python script and
+then use it in a normal SmPL rule.
+
+If some context has to be taken into account and the context in the same
+function, then that can also be done with Coccinelle, eg
+
+A
+...
+B
+
+matches the case where after an A there is a B on all execution paths
+(except perhaps those that end in an error exit) and
+
+A
+... when exists
+B
+
+matches the case where there is a B sometime after executing A, even if
+that does not always occur.
+
+If the context that you are interested in is in a called function or is in
+the calling context, then Coccinelle might not be the ideal choice.
+Coccinelle works on one function at a time, so to do anything
+interprocedural, you have to do some hacks.
+
+julia
+>
+> I probably shouldn't have mentioned that at all, and I think this is
+> academic in this context, because as noted we can just add this to
+> parse_options_check() (linking it here again for off-git-ml context):
+>
+>     https://lore.kernel.org/git/220221.86tucsb4oy.gmgdl@evledraar.gmail.com/
+>
+> We now pay that trivial runtime overhead every time, we could run it
+> only during the tests if we ever got worried about it.
+>
+> And it's a lot less fragile and easy to understand than running
+> coccicheck, i.e. as nice as it is it's still takes a while to run, is
+> its own mini-language, needs to be kept in sync with code changes etc.
+>
+> So by doing it at runtime we can adjust messages, code & tests in an
+> atomic patch more easily (i.e. not assume that you ran some cocci target
+> to validate it).
+>
+> It also makes it really easy to do things that are really hard (or
+> impossible?) with coccinelle. I.e. some of these checks are run as a
+> function of what flag gets passed into some function later on, which in
+> the general case would require coccinelle to have some runtime emulator
+> for C code just to see *what* checks it wants to run.
+>
+> That being said (and with the caveat that I've only looked at this code,
+> not done this myself) if you clone linux.git and browse through:
+>
+>     git grep -C100 -F coccilib.report '*.cocci'
+>
+> You can see a lot of examples of using cocci for these sorts of checks.
+>
+> And the same goes if you clone coccinelle.git and do:
+>
+>     git grep -C100 @script: -- tests
+>
+> For linux.git it's documented here:
+> https://github.com/torvalds/linux/blob/master/Documentation/dev-tools/coccinelle.rst
+>
+> I.e. it's basically writing the sort of cocci rules we have in-tree with
+> a callback script that complaints about the required change.
+>
+> For our use it would probably better (in lieu of parse_options_check(),
+> which is the right thing here) to just have a normal *.cocci file and
+> complain if it applies changes. We already error in the CI if those need
+> to apply any changes.
+>
+> But I don't off-hand know how to do that. E.g. I was trying the other
+> day to come up with some coccinelle rule that converted:
+>
+>     die("BUG: blah blah");
+>
+> To:
+>
+>     BUG("blah blah");
+>
+> And while I'm sure there's some way to do this, couldn't find a way to
+> write a rule to "reach in" to a constant string, apply some check or
+> search/replacement on it, and to do a subsequent transformation on it.
+>
+> In this case the OPT_BLAH(1, 2, 3, "string here") has OPT_BLAH() as a
+> macro. I can't remember if there's extra caveats around using coccinelle
+> for macros v.s. symbols.
+>
+> Disclaimer: By "couldn't" I mean I grepped the above examples for all of
+> a few minutes quickly skimmed the coccinelle docs, didn't find a
+> template I could copy, then ended up writing some nasty grep/xargs/perl
+> for-loop instead :)
+>
+--8323329-930122316-1645537354=:2556--
