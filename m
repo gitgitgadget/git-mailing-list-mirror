@@ -2,142 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44414C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 10:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90108C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 10:26:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230495AbiBVKWm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 05:22:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48330 "EHLO
+        id S230191AbiBVK0m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 05:26:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbiBVKWi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 05:22:38 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225B27F6C4
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:22:10 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id i11so34016974eda.9
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:22:10 -0800 (PST)
+        with ESMTP id S229613AbiBVK0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 05:26:41 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 949F21598CB
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:26:16 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id ci24-20020a17090afc9800b001bc3071f921so1949446pjb.5
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:26:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=SSGO8LodzMyckp9vxgELSiLDvPrOKP7OamO6MjyhdR0=;
-        b=C1QVNABctHo68nbeb/Tvm3fGPpvhebzrFsUTNu/F94aU81cDhD87gM8k3fz7wXz7g7
-         pUGcxLCi3Rud8nzbrotReDbv7M0a0zG5SaT4jfI9gAHsO60PkchpVAHOUEWk7ge17Dmp
-         j8JqfP9TgTg1h5eauBNG65hBHK4leGceN5lcdqG20/iPd5RRs+OSz+2Q63ls1VB7Mq6T
-         2T4mt7H4Y8696lo6f5f+xuCGckAwXZC9/dN5Yn1joJknfNIiHKUD+B5qTmZswbF5+J+o
-         LXmpm5Tw9WdBqMzU7MOpOFWpoqDfQmjKtEFvUyvDNOjaH5GQD4pHgCMTL3V4FcpB/tkN
-         Nr5w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DPGk7336xM8LsamJElYtRbQn4+rGbedVvX/oQYGiAQc=;
+        b=RNKurib6UvaLdxHOC/kNxors8N8m6c0Lep2hOnA5qFUUzjOnD8eJ8xG8OQqg37ZnMF
+         xygvV8sI5LJgirJK5K0YU2IJXOALJDMlFjHCeKnkJx2EAGFwWJoSJ8JFVsD1JgCBUUX4
+         87niFptIbacKP+3vqs2ddYp2iHgfw+7Wrx23RES1RQyGuHK5elQmnOF1r9HZO07txaFZ
+         ZaOAvOze5ggzY8ptXR9IezH9+d0diIVmh6P78ytFxmfJbjAmpYUI2kW7nKyjQaQQDuNy
+         DuVKrTJSSzRv4socsGQ+hjdMRepY5vt/OADU9aGC9zr0T8a3PGq/tWcc7mDmNvZskzn7
+         00ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=SSGO8LodzMyckp9vxgELSiLDvPrOKP7OamO6MjyhdR0=;
-        b=sM1TFoYGk2T/aZ/KrEcQHrVIS83oISntBsimAFbmQt0+leMHTk1OR9hpFZOF0VOxDF
-         qT4IO74vHwAQJyZf/faVeCiCQmxwEUztnwBnqBGwfbRBWmIJtiOFKZi52pH+Xwj8cY/g
-         2OwPkNX+S44NTW3t2pJRqGwJizGAqmuCoaQQwi6c0cTJwbCijNCCjRlhPB4K2G7u251M
-         W+9ANKwB2GSGug0V8GAdT6O8DBC6ZLWaKW05er32OaD5aWyUxMxYHUEyNbAb+RNzdaj/
-         h8TnWCp1a6br4Q/RGY/1lnDm65toRj2wfAsGURA+FJtyv84sIh2v154j2aO7qJz9vF8G
-         Nikg==
-X-Gm-Message-State: AOAM531CtJYFD/rOJ0ImMz6eN/7Fm6A4SVsmYv43gskpnwCxUpQtjP5B
-        50bn0I0QrdbwUUEXqn9i+Cq2HuqivyXgmiJY
-X-Google-Smtp-Source: ABdhPJyw1PoRTqE0HpJDbxylVY9cDnOXS6C7+cX2QV/cF9bZWLClipkvd4h5gz2VAW/ZRNw14A5ujg==
-X-Received: by 2002:a05:6402:1cae:b0:410:d3ae:3c8a with SMTP id cz14-20020a0564021cae00b00410d3ae3c8amr25077428edb.215.1645525328533;
-        Tue, 22 Feb 2022 02:22:08 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id i24sm6076603ejg.40.2022.02.22.02.22.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 02:22:07 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nMSJ5-005wnr-9L;
-        Tue, 22 Feb 2022 11:22:07 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 3/4] test-lib: make $GIT_BUILD_DIR an absolute path
-Date:   Tue, 22 Feb 2022 11:14:17 +0100
-References: <cover-v2-0.4-00000000000-20220219T112653Z-avarab@gmail.com>
- <cover-v3-0.4-00000000000-20220221T155656Z-avarab@gmail.com>
- <patch-v3-3.4-b03ae29fc92-20220221T155656Z-avarab@gmail.com>
- <YhPL+wSxtI0KIz07@nand.local>
- <220221.868ru4avw6.gmgdl@evledraar.gmail.com> <xmqqee3vwepd.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqee3vwepd.fsf@gitster.g>
-Message-ID: <220222.86o82z8als.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DPGk7336xM8LsamJElYtRbQn4+rGbedVvX/oQYGiAQc=;
+        b=358X3bdLynq/yJuORaUGQLWOTNjwr/EYfHu9rPOtiU3wmqXM7ZSZx6t6BMaPsHO3+t
+         fsXNTg16n5A849buwCPMn23YZYayT0V9fN2Cnus3jw6vKoP8K19ZJ4BNFnM/BP1qOzVv
+         UJCOFBCoS4ntsOzs0j04i6lFVLsR3gOKMZD0CSK4LyGyvL/V6gUt7SEw0LawZvb2k+do
+         1z8YQ3ODzlH7MdZ7ai3blxms1J1NHu5sLgWQK1Vx0hQNNQAbSyaQoZWhA7YDw872XUpu
+         2nLPtZuyuLT1HrT1ffPyDQ+WW1LD0s0KNWSBgvkMF03UkEX7tm5+gqT75rdtK0P1O2wl
+         BVVQ==
+X-Gm-Message-State: AOAM531EVDogalonwaAwnTGg6ETmykr7uN5j3puNUShXoU8H5+Yey9U6
+        M09+uh8XY4ycqQMuY53ieCJb5H/opylkqQ==
+X-Google-Smtp-Source: ABdhPJwNFGJ3tgixsmvxFUEmHG3lI/J2oFt4Sg4Nk17T4Cbg2GTyO+EGNAaxFCkQ8XnHy1OUl825nw==
+X-Received: by 2002:a17:90a:581:b0:1b9:b85e:94df with SMTP id i1-20020a17090a058100b001b9b85e94dfmr3410437pji.195.1645525575985;
+        Tue, 22 Feb 2022 02:26:15 -0800 (PST)
+Received: from localhost.localdomain ([202.142.96.56])
+        by smtp.gmail.com with ESMTPSA id t3sm17159489pfg.28.2022.02.22.02.26.13
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 22 Feb 2022 02:26:15 -0800 (PST)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH] add usage-strings ci check and amend remaining usage strings
+Date:   Tue, 22 Feb 2022 15:55:36 +0530
+Message-Id: <20220222102536.83705-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <220221.86tucsb4oy.gmgdl@evledraar.gmail.com>
+References: <220221.86tucsb4oy.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
 
-On Mon, Feb 21 2022, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> But in this case there's really a much easier way to do this, to just
+> extend something like this:
+> ...
+> See b6c2a0d45d4 (parse-options: make sure argh string does not have SP
+> or _, 2014-03-23) for the existing code shown in the context where we
+> already check "argh" like that, i.e. we're just missing a test for
+> "help".
 >
->>> Sorry to notice this so late, but this hunk caught my eye. What happens
->>> if `TEST_DIRECTORY` is provided by the user (and doesn't end in "/t")?
->>
->> I think that the preceding 2/4 should cover your concern here, i.e. I
->> think that's not possible.
->>
->>> Before this change, we would have set GIT_BUILD_DIR to the parent of
->>> whatever TEST_DIRECTORY is, whether or not it ended in "/t". We'll still
->>> do the same thing with this patch if TEST_DIRECTORY ends in "/t". But if
->>> it doesn't, then we'll set GIT_BUILD_DIR to be the same as
->>> TEST_DIRECTORY, which is a behavior change.
->>
->> Indeed, but I believe (again see 2/4) that can't happen.
->
-> It is not like "can't happen", but "whoever wrote the TEST_DIRECTORY
-> override logic did not mean to support such a use case".
+> Obviously such a function would need to hardcode some of the logic you
+> added in your shellscript. E.g. this fires on a string ending in "...",
+> but yours doesn't.
 
-To clarify with "can't happen" I mean (and should have said) that "can't
-work", i.e. it would error out anyway.
+Hello Ævar, I have some query related to this method. I have implemented
+the logic locally and tests are also passing. However, I think the test
+you mentioned is only running against the builtin files and files that
+are used in builtin commands (e.g. `diff.c`, `builtin/add.c` etc.). But
+some files from `t/helper` (e.g. t/helper/test-run-command.c) also uses
+parse option API and it seems that there are no test files (pardon me if I
+am wrong) for checking `parse option usage strings check` for `t/helper`
+test-tool commands.
 
-E.g. try in a git.git checkout:
-=20=20=20=20
-    (
-        mv t t2 &&
-        cd t &&
-        ./t0001-init.sh
-    )
+E.g. `grep -r --include="*.c" 'struct option .*\[] = {$' .` command gives
+the following output - 
 
-It will die with:
-=20=20=20=20
-    You need to build test-tool:
-    Run "make t/helper/test-tool" in the source (toplevel) directory
-    FATAL: Unexpected exit with code 1
+./helper/test-parse-options.c:  struct option options[] = {
+./helper/test-lazy-init-name-hash.c:    struct option options[] = {
+./helper/test-serve-v2.c:       struct option options[] = {
+./helper/test-simple-ipc.c:     struct option options[] = {
+./helper/test-parse-pathspec-file.c:    struct option options[] = {
+./helper/test-getcwd.c: struct option options[] = {
+./helper/test-run-command.c:    struct option options[] = {
+./helper/test-run-command.c:    struct option options[] = {
+./helper/test-proc-receive.c:   struct option options[] = {
+./helper/test-progress.c:       struct option options[] = {
+./helper/test-tool.c:   struct option options[] = {
 
-And if you were to manually patch test-lib.sh to get past that error it
-would start erroring on e.g.:
+So, these files are using parse-options and there is a chance that in
+future, usage strings from these files may violate the style guide. In
+this case, all tests will be passing even if there are some style
+violations. What do you think?
 
-    sed: couldn't open file /home/avar/g/git/t2/../t/chainlint.sed: No such=
- file or directory
-
-And if you "fix" that it'll error out on something else.
-
-I.e. we'll have discovered that $(pwd)/.. must be our build directory,
-and we then construct paths by adding the string "/t/[...]" to that.
-
-> I am perfectly fine if we declared that we do not to support the use
-> of that override mechanism by anybody but the "subtest" thing we do
-> ourselves.  If we can catch a workflow that misuses the mechansim
-> cheaply enough (e.g. perhaps erroring out if TEST_DIRECTORY is set
-> and it does not end in "/t"), we should do so, I would think, instead
-> of doing the "go up and do pwd", which will make things worse.
-
-What I was going for in 2/4 in
-http://lore.kernel.org/git/patch-v3-2.4-33a628e9c3a-20220221T155656Z-avarab=
-@gmail.com
-is that we've already declared that. I.e. test-lib.sh has various
-assumptions about appending "/t/..." to the build directory being a
-valid way to get paths to various test-lib.sh-adjacent code.
-
-So trimming off "/t" here with a string operation v.s. $(cd .. && pwd)
-is being consistent with that code.
-
-It would be odd to make the bit at the top very generic, only to have
-the reader keep reading and wonder how that generic mechanism and the
-subsequent hardcoding of "/t/[...]" are supposed to work together.
+Thanks :)
