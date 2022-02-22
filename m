@@ -2,67 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C05A6C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 15:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02755C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 15:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233113AbiBVPfY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 10:35:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43368 "EHLO
+        id S232573AbiBVPlr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 10:41:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229913AbiBVPfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 10:35:21 -0500
+        with ESMTP id S232535AbiBVPlq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 10:41:46 -0500
 Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4894E160FE8
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 07:34:56 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id c6so34975968edk.12
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 07:34:56 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC062163055
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 07:41:20 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id s14so20523379edw.0
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 07:41:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=dOzPGcZgqWfeSGw1JKkDGsvDQEArg8zHaqqswDjd9Ck=;
-        b=SLBbIIl8gXofREVWZuZKM0kNA86x9wWVozUm6kac6bEmDLyuCf0n406Kpsz9qn4t0v
-         L2svv4HuprmVE0ULSxdAAL38f1UT7Gz3iRDMlifl9su1g8n7b1PNHKOjTVzof9b1Vsbf
-         YaDNpaqO8Tg4UBGInPlbRcE9Pt/5lyN8Vr7ckJRXGFe70IuuQ1b0TmCwHmJDRpxp1Bd3
-         K7f0amklo9NDUiKGB3iHtx9kl+IUnructlEIKv3qSK6dDpYb6P7avbpvsxaZmUU7YoaJ
-         kYT2IfPDORMafroBAWFyKAQib3dW3JIz7jCfvL1JBy6xLOyRdi7e3rS3XA5Kv7G9m9M+
-         vu4w==
+        bh=KTdD4i4fMsW17UGGijKNj3P9orBFCT7ErBZSp9p+slw=;
+        b=aJXmoumlg6Nu4x4d6/ShvDrrg9xWcr3hEFoONwKJhwDMc4LjNdUsbMHTuJpNUsREca
+         ekswHYARp/5rgCmZtwVynB4VWUDXWxApwzevKBKYodeLrcDNByBMqF9it8Ookq2PqXUm
+         M7G+ScKNscnjwf3LuJG1oCyWtS6WdRxTGkZmH9/WRPnibBwtOZOHOpMk1AAr0kMoxqQ6
+         2oL4Eo7nZVpgni+oZMVoFyTeGPFwYdTzWwzttqSMPlPendwkMZ6vgAx+6UCxk5ckU+/B
+         VkGrvHExIT1CM4nKdWct1fpSl4xPyrFPN8RyObnt0QZH1VzQKzI7AkRdi00Zq02srLp2
+         KRSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=dOzPGcZgqWfeSGw1JKkDGsvDQEArg8zHaqqswDjd9Ck=;
-        b=kVMWoRLdHHCc+Lk4cHjRs0bYkWCAus/lRJBJB9PglLan5No8eBrClKhv+goszDPZfG
-         n8VdE8VfRILmJrkres+NnFvGGWbnff9fOj9XjWLtWqIBR82+tDRFPJipfXoAlb9g5jyq
-         KtKI+D4Pffqmr53+ZUpAk6u6BBI7QHd9gnzpl44WNJI3+vlhTXZCFoUVupsuZ7P3w7R8
-         UXceuU8nXtcP01JmK1PG62ZNHuoNwQ5+bTLG1xVoqab8FRbZa0apKWfjhWFjRUe8MqGS
-         7tZ13TMlRiATpPBxJelHchJ6XA6hW9fu5UPotrY0aRBCoMUojKVWWibfDnELw6gRgpAm
-         qr4Q==
-X-Gm-Message-State: AOAM531xObdybx8ana2j3wAOx7eFS4VSgMYlP/k1cAZ9c0lDY5DIAR93
-        fC44kga/W5dpCG3tsqWMMOc=
-X-Google-Smtp-Source: ABdhPJzsb0BeNtZwIq6C4Mc255BCncqSvEiE8bFp9EbABwqwlS77kSmd/xXJZ6bV2jLGdKQksXRx9w==
-X-Received: by 2002:aa7:dbd6:0:b0:408:4a31:97a5 with SMTP id v22-20020aa7dbd6000000b004084a3197a5mr27370354edt.186.1645544094638;
-        Tue, 22 Feb 2022 07:34:54 -0800 (PST)
+        bh=KTdD4i4fMsW17UGGijKNj3P9orBFCT7ErBZSp9p+slw=;
+        b=Ej5rxm24hVFs9lXfB77cCuZaXU+DqRVFSOKJjY3mYO0SVPDnofP4j/DpkmEtWSyjUL
+         2iLWZn1/xO8+o3OQ3Z/2GnZhZ2L2Hcj0SPCUwR71qhr4I0DCABPBQhSVItUjz+ypESIU
+         QPz+PqOuAGaCbOVcn6+YHOK0d1YBw5l04fgDJ7vH5+Jn+dxz1aXj2x7K2RmB3CLD0wdN
+         HIju6F2nDnRNiJ8bI7nylFisHDKQPw1BrBqMAABDXFDYWar9tTTo8JEyYB15BoLAZbHy
+         p3EO6zffzq4IomvYNEGt18IScnayjBvmic3DFIjGrHaomFgMos6Tw6q+3BOBc4wG5Giv
+         QyMQ==
+X-Gm-Message-State: AOAM531sirgnQwDMwdhpoUJUkA7MrYfzrXjlMd7BX1s8jrTHdVPvWdbU
+        KtxsevJehuwXvWKSwMZWb8Y=
+X-Google-Smtp-Source: ABdhPJxWJXePoPvnr/b0kInj6v8IxuFl++mQ+MsxxVdoYWqjX2KjwpfCgyflgBiyxJIsI/7qiDnEHg==
+X-Received: by 2002:aa7:c0d0:0:b0:410:d576:8808 with SMTP id j16-20020aa7c0d0000000b00410d5768808mr27258710edp.340.1645544479201;
+        Tue, 22 Feb 2022 07:41:19 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g8sm6507348ejt.26.2022.02.22.07.34.54
+        by smtp.gmail.com with ESMTPSA id m11sm10540395edc.110.2022.02.22.07.41.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 07:34:54 -0800 (PST)
+        Tue, 22 Feb 2022 07:41:18 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nMXBl-006B73-J6;
-        Tue, 22 Feb 2022 16:34:53 +0100
+        id 1nMXHy-006BPg-5u;
+        Tue, 22 Feb 2022 16:41:18 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH 1/2] rebase: help user when dying with preserve-merges`
-Date:   Tue, 22 Feb 2022 16:32:59 +0100
+Subject: Re: [PATCH 2/2] rebase: `preserve` is also a pull option, tell
+ dying users
+Date:   Tue, 22 Feb 2022 16:34:56 +0100
 References: <pull.1155.git.1645526016.gitgitgadget@gmail.com>
- <cd06aa68c2fc65551cd810a1c2c0941c51433163.1645526016.git.gitgitgadget@gmail.com>
+ <eb5871db95b12500cc0a6b8b0e3a82ed9e8fcfbd.1645526016.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <cd06aa68c2fc65551cd810a1c2c0941c51433163.1645526016.git.gitgitgadget@gmail.com>
-Message-ID: <220222.86czje7w4i.gmgdl@evledraar.gmail.com>
+In-reply-to: <eb5871db95b12500cc0a6b8b0e3a82ed9e8fcfbd.1645526016.git.gitgitgadget@gmail.com>
+Message-ID: <220222.868ru27vtt.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,43 +75,49 @@ On Tue, Feb 22 2022, Philip Oakley via GitGitGadget wrote:
 
 > From: Philip Oakley <philipoakley@iee.email>
 >
-> Git will die if a "rebase --preserve-merges" is in progress.
-> Users cannot --quit, --abort or --continue the rebase.
+> The `--preserve-merges` option was removed by v2.35.0. However
+> users may not be aware that it is also a Pull option, and it is
+> still offered by major IDE vendors such as Visual Studio.
 >
-> This sceario can occur if the user updates their Git, or switches
-> to another newer version, after starting a preserve-merges rebase,
-> commonly via the pull setting.
+> Extend the `--preserve-merges` die message to direct users to
+> this option and it's locations.
 >
-> One trigger is an unexpectedly difficult to resolve conflict, as
-> reported on the `git-users` group.
-> (https://groups.google.com/g/git-for-windows/c/3jMWbBlXXHM)
+> Signed-off-by: Philip Oakley <philipoakley@iee.email>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/rebase.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
-> Tell the user the cause, i.e. the existence of the directory.
-> The problem must be resolved manually, `git rebase --<option>`
-> commands will die, or the user must downgrade. Also, note that
-> the deleted options are no longer shown in the documentation.
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 07221d0ae41..97f704bb297 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1205,7 +1205,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  			     builtin_rebase_usage, 0);
+>  
+>  	if (preserve_merges_selected)
+> -		die(_("--preserve-merges was replaced by --rebase-merges"));
+> +		die(_("--preserve-merges was replaced by --rebase-merges\n"
+> +			"Also, check your `pull` configuration settings\n"
+> +			"`git config --show-scope --show-origin --get-regexp 'pull.*'`\n"
+> +			"which may also invoke this option."));
 
-I can go and read the linked thread for the answer, but:
+I may be missing some subtlety, but how is the user ever going to need
+to check their config?
 
->  		if (is_directory(buf.buf)) {
-> -			die("`rebase -p` is no longer supported");
-> +			die("`rebase --preserve-merges` (-p) is no longer supported.\n"
-> +			"You still have a `.git/rebase-merge/rewritten` directory, \n"
-> +			"indicating a `rebase preserve-merge` is still in progress.\n");
->  		} else {
->  			strbuf_reset(&buf);
->  			strbuf_addf(&buf, "%s/interactive", merge_dir());
+After 52f1e82178e (pull: remove support for `--rebase=preserve`,
+2021-09-07) we:
 
-As much of an improvement this is, I'd be no closer to knowing what I
-should do at this point.
+    $ git -c pull.rebase=preserve pull
+    error: rebase.c:29: preserve: 'preserve' superseded by 'merges'
+    fatal: builtin/pull.c:45: Invalid value for pull.rebase: preserve
 
-Should I "rm -rf" that directory, downgrade my version of git if I'd
-like to recover my work (as the message alludes to).
+I.e. we'd error before this, and the "preserve_merges_selected" variable
+being checked here is not affected by config, i.e. we only ever got to
+this "via config" route if "pull" et al was invoking us.
 
-In either case I'd think that this is getting a bit past the length
-where we'd have just a die() v.s. splitting it into a die()/advise()
-pair. I.e. to have the advise() carry some bullet-point list about X/Y/Z
-solutions, with the die() being a brief ~"we did because xyz dir is
-still here".
+But now that command dies.
 
-
+If there is still a codepath where we call "rebase --preserve-merges" on
+the basis of config that I've missed, shouldn't this die() be happening
+there?
