@@ -2,126 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C0CFC433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 06:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEEE5C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 07:19:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230238AbiBVGUx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 01:20:53 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:35324 "EHLO
+        id S230443AbiBVHUN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 02:20:13 -0500
+Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:40798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230204AbiBVGUr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 01:20:47 -0500
-X-Greylist: delayed 518 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 21 Feb 2022 22:20:22 PST
-Received: from pv50p00im-ztdg10011301.me.com (pv50p00im-ztdg10011301.me.com [17.58.6.40])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8263FD64D0
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 22:20:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1645510303;
-        bh=Mzekzhh7svNZhCGHypCGVQ+3t3H6IXhGQLgITA0n+cE=;
-        h=Content-Type:From:Mime-Version:Subject:Message-Id:Date:To;
-        b=coFDGDvbhFBJ+a2Y0/X5JUt2ug8q+WbWlNL4wBpsfZLppxol5TkklfhksIJoznBqe
-         dLlCbIozbocrBCRzWv0718HcFRgaziXnXUx4oUY1m4H9zd3hSngezfc0eYPD/naocW
-         AE4CgL4xAdYwIj9NrHkTjRG2Bc9E4Z1PmJEM6NacdI6Sr6EF2UHAr7TH96ty+XW4Qo
-         +1cSRy+pWwmwWsuNdqofhHLQItgjap4wTn0xTHh5waH63SV7zwmfJhQKjWMmdrOvxs
-         qLCAB5Q39fqT7oSl5ky7kIhe6xrx7m0T/eCpr9m8B4m6KhHSaKFhD5StGyh741EKZ8
-         dg2TQqjh58evg==
-Received: from smtpclient.apple (ip-149-172-096-004.um42.pools.vodafone-ip.de [149.172.96.4])
-        by pv50p00im-ztdg10011301.me.com (Postfix) with ESMTPS id D977A180174
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 06:11:42 +0000 (UTC)
+        with ESMTP id S230434AbiBVHUM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 02:20:12 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26CE4CA716
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 23:19:48 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7FE4417BC6B;
+        Tue, 22 Feb 2022 02:19:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=Hp5lC+85oB0jqLZtz+1mYhCAC
+        LP6zJPwC5lLv5FXIAw=; b=hxHDcfkPdvTfPpDYvZd0t0s2d1vETrQzc08iS2M7n
+        zmGpI5FNBTwfmKiGMp8z7igLW5UEGFONuhJ1KGWTdtgsCS9hS5z7ge9i9FSXETuh
+        yR0wobxaMVG2GHi0vE8ZirnR97fAfk0GvNQlzV3mzmLhvjoKdtVbXblNKNz9O3Wg
+        B0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6ABD617BC69;
+        Tue, 22 Feb 2022 02:19:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A4F4917BC68;
+        Tue, 22 Feb 2022 02:19:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 3/4] test-lib: make $GIT_BUILD_DIR an absolute path
+References: <cover-v2-0.4-00000000000-20220219T112653Z-avarab@gmail.com>
+        <cover-v3-0.4-00000000000-20220221T155656Z-avarab@gmail.com>
+        <patch-v3-3.4-b03ae29fc92-20220221T155656Z-avarab@gmail.com>
+        <YhPL+wSxtI0KIz07@nand.local>
+        <220221.868ru4avw6.gmgdl@evledraar.gmail.com>
+Date:   Mon, 21 Feb 2022 23:19:42 -0800
+Message-ID: <xmqqee3vwepd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: CEA201D4-93AF-11EC-9625-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-From:   Maximilian Reichel <reichemn@icloud.com>
-Mime-Version: 1.0 (1.0)
-Subject: pull fails after commit dry-run
-Message-Id: <B0458F2D-C6B9-41AE-8F2F-39C1D2AEE6BD@icloud.com>
-Date:   Tue, 22 Feb 2022 07:11:40 +0100
-To:     git@vger.kernel.org
-X-Mailer: iPhone Mail (19D50)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.425,18.0.816
- definitions=2022-02-22_02:2022-02-21,2022-02-22 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-2009150000 definitions=main-2202220036
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=EF=BB=BFThank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Running the following two scripts.
+>> Sorry to notice this so late, but this hunk caught my eye. What happen=
+s
+>> if `TEST_DIRECTORY` is provided by the user (and doesn't end in "/t")?
+>
+> I think that the preceding 2/4 should cover your concern here, i.e. I
+> think that's not possible.
+>
+>> Before this change, we would have set GIT_BUILD_DIR to the parent of
+>> whatever TEST_DIRECTORY is, whether or not it ended in "/t". We'll sti=
+ll
+>> do the same thing with this patch if TEST_DIRECTORY ends in "/t". But =
+if
+>> it doesn't, then we'll set GIT_BUILD_DIR to be the same as
+>> TEST_DIRECTORY, which is a behavior change.
+>
+> Indeed, but I believe (again see 2/4) that can't happen.
 
+It is not like "can't happen", but "whoever wrote the TEST_DIRECTORY
+override logic did not mean to support such a use case".
 
-Script one:
-'#!/bin/bash
+I am perfectly fine if we declared that we do not to support the use
+of that override mechanism by anybody but the "subtest" thing we do
+ourselves.  If we can catch a workflow that misuses the mechansim
+cheaply enough (e.g. perhaps erroring out if TEST_DIRECTORY is set
+and it does not end in "/t"), we should do so, I would think, instead
+of doing the "go up and do pwd", which will make things worse.
 
-mkdir parent
-git -C parent init
-git -C parent -c user.name=3D"P" -c user.email=3D"m@example.com" commit -m o=
-ne --allow-empty=20
-
-mkdir cloneDir
-cd cloneDir
-git init
-
-git pull -v --rebase "../parent"
-echo git pull exit code: $?'
-
-
-
-
-script two:
-'#!/bin/bash
-
-mkdir parent
-git -C parent init
-git -C parent -c user.name=3D"P" -c user.email=3D"m@example.com" commit -m o=
-ne --allow-empty=20
-
-mkdir cloneDir
-cd cloneDir
-git init
-git commit -m "foo" --dry-run
-git pull -v --rebase "../parent"
-echo git pull exit code: $?'
-
-
-
-What did you expect to happen? (Expected behavior)
-Since they only differ in the 'git commit -m "foo" --dry-run' invocation, I w=
-ould expect the same outcome for both scripts.
-Expected output of the last two lines:
-'=46rom ../parent
-* branch            HEAD       -> FETCH_HEAD
-git pull exit code: 0'
-
-What happened instead? (Actual behavior)
-The second script is not able to pull from ../parent.
-Output of the last lines of the second script:
-'fatal: Updating an unborn branch with changes added to the index.
-git pull exit code: 128=E2=80=99
-
-
-Anything else you want to add:
-I tested this on git 2.35.1, 2.34.1 and 2.21.0 and they are all affected.=20=
-
-
-
-[System Info]
-git version:
-git version 2.35.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.10.25-linuxkit #1 SMP Tue Mar 23 09:27:39 UTC 2021 x86_64
-compiler info: gnuc: 10.2
-libc info: glibc: 2.31
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+Thanks.
