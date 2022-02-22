@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FF8FC433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 00:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03F52C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 00:18:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237670AbiBVASh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 19:18:37 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33068 "EHLO
+        id S237677AbiBVASj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 19:18:39 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:33066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237617AbiBVASc (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S237619AbiBVASc (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 21 Feb 2022 19:18:32 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8578725594
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 16:18:07 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id s1so3338133wrg.10
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 16:18:07 -0800 (PST)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12F8A2558A
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 16:18:06 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id d3so14115703wrf.1
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 16:18:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=G3FbLFEqO3aEUBUJI2bH5XLPGjurAqgIMRRvIVHdmIk=;
-        b=Lz5kR4SuBhHxas1zlU88iY3gnQHGn2dZMTGY40ikvKVuP1RY2qBtrDWJJZ2RXYKef8
-         8FCIO6xhhIUto0N4NNczFlofWvVKfTzbfoHicI3sBXHnEyi8zy7JYLu+HduP2F/k+4y3
-         G8rmXsV2DqlvvoyvSHzp9votbyVUhdJNMZx1RhTudxSq8nBTzragPBt6c67aZZx9LLFQ
-         hK/p1Sb/efRF6E18L1UrGtUT4jbao2UYcllyBW5Xw4MMQ3B/xhmz2kHmCpS09H5n/nj2
-         kx7nFQp7ihfCC/efBKDn/nZL1LY6+8lgmLdOkS+D1WeSiLM5jmOnVrfz8dybA2ETiANE
-         ZVkA==
+        bh=M3yfAW+FMygRnAbUO3SWrYQH55uT4SNwhA5DqD8nFTc=;
+        b=n4YOTMiULxqGKriUJ57mKToZ+T2MHBPAAEZDNjcFosD8shmqn/QwEZ75SMtckHfXZ/
+         915PuyzaS3tNmDH4zd+BJWljcpDI/jP9m/Gi6SjnKTkovJyWsEMElhh9178N7sVIMRrV
+         tpxaMBy/yaKypIQ/7IsD/X3G/jdu/VQBbXpS5mNk+VglD8lLwYUoZUUlcnU4QAp4Hr2w
+         iaf0i1mB43CRSctLoy4Uk2UE+x8RFsdjIgyO8zhOfZMSaFejd+RILcekaYQORodRgviP
+         IUhliCCbbxgrDsMel6JenI1zm5DGYL+g4oVBGViR+0vde1hiuKNlo2q3gdCH7BYoh0LH
+         Ij7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=G3FbLFEqO3aEUBUJI2bH5XLPGjurAqgIMRRvIVHdmIk=;
-        b=oait2+pijO/aPCEFH1K5/E1KAzO0LuxXqfqkRaJXZIP9DIYiyIXbe6zTRz/uYnkw6H
-         BC+aJg8unildtkmhSDmTMpBRk9d8fGo63CHgER573qqucZUajg8loaF4AHOOrydWLCk6
-         yUymPUhuPocuztblaY9uC2NDDGxesn5zfWySfL2QmQ5uaGvBIMWFYsP2no3HASUc5zHE
-         saeoGIo4xohWEvOKftGrHBeWz8Zf7ROmNYTWRRS2wY4awlsSWuSKBnah7WsnHbppQmEv
-         s7qSdGaEvFnpzWuohSLVpsaxkzrUkGT7yAI4GWAA0BfabIglDyUW2nQnSSaiSmKVMcIu
-         UkDg==
-X-Gm-Message-State: AOAM532+FJY9uc1OJ0YySuQWKoviYWinSqU7KNfjPUqX43+KfhzJx+sR
-        n1SwOWZOiCoDmqjqNRAg2+9gLCZp/U8=
-X-Google-Smtp-Source: ABdhPJx6VpdKVrxI+odSk9ykcXmazZ7DtEQjlOWGKJPVqRA7ij/xOOFMt4iFKdZPtdgtT8YUfYfC+w==
-X-Received: by 2002:adf:f0c6:0:b0:1e7:13f7:74b9 with SMTP id x6-20020adff0c6000000b001e713f774b9mr17269610wro.361.1645489085929;
-        Mon, 21 Feb 2022 16:18:05 -0800 (PST)
+        bh=M3yfAW+FMygRnAbUO3SWrYQH55uT4SNwhA5DqD8nFTc=;
+        b=K79h8IX2AXHD8XfryPtgA1N6jHg++9TrCIuM7nsiGnA3PTQVA/yEEWQdYqG+yass0a
+         ikZRa+EkW1Y7lOkwalmkqgd8VcYi3giF2zx9CaZFhllN1wr92S64EnrJE1yvcGGncHWr
+         ZaoKvJGFTV8NghpcMTVgjuceIp+uPLuMtc7nPbyZ9tqOjSITD4VH/lz72JDddwoO5x9I
+         DErKj/aB+aU+eAOtsVJk7oXfRcA4uwaAv4P3+AMM6yXyfHLKYAleFUDGHEPD37Ir05gd
+         XyaIH2nqlhq42VVHQsh+TipQ7ZWR5ZU3CvVdUngejq2yS5/HORBW54nvbudoosRj+lzM
+         odFQ==
+X-Gm-Message-State: AOAM530xc8wFzImW3Vmks5MC4z/IXDCVP4n9jc2inW1Gg3JJphYQoqR3
+        yz6sEevNRrxwmk3A8Sa4k13/ahh1jTQ=
+X-Google-Smtp-Source: ABdhPJzMM1ZvEqXuyMnV6CH9hvqb75x0qL1zbjofv937EYnIBfcmKfQEmCj3AfFsh1uJhtSFPOFXRw==
+X-Received: by 2002:a5d:4c41:0:b0:1e5:1a70:fb86 with SMTP id n1-20020a5d4c41000000b001e51a70fb86mr17187564wrt.452.1645489084522;
+        Mon, 21 Feb 2022 16:18:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h7sm32996565wru.41.2022.02.21.16.18.05
+        by smtp.gmail.com with ESMTPSA id z5-20020a05600c0a0500b0037bb8df81a2sm915684wmp.13.2022.02.21.16.18.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Feb 2022 16:18:05 -0800 (PST)
-Message-Id: <2801ae232ae5cd0aa431e90eb37bbaf765d64fa5.1645489080.git.gitgitgadget@gmail.com>
+        Mon, 21 Feb 2022 16:18:04 -0800 (PST)
+Message-Id: <ccc5b1ef9fb4dbeedfbc1ad8f0da36299bf48b56.1645489080.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
 References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
         <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Feb 2022 00:17:54 +0000
-Subject: [PATCH v2 05/11] worktree: use 'worktree' over 'working tree'
+Date:   Tue, 22 Feb 2022 00:17:52 +0000
+Subject: [PATCH v2 03/11] worktree: extract copy_sparse_checkout()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,96 +69,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-It is helpful to distinguish between a 'working tree' and a 'worktree'.
-A worktree contains a working tree plus additional metadata. This
-metadata includes per-worktree refs and worktree-specific config.
+This logic was introduced by 5325591 (worktree: copy sparse-checkout
+patterns and config on add, 2022-02-07), but some feedback came in that
+the add_worktree() method was already too complex. It is better to
+extract this logic into a helper method to reduce this complexity.
 
-This is the first of multiple changes to git-worktree.txt, restricted to
-the DESCRIPTION section.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
+Reported-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-worktree.txt | 50 ++++++++++++++++++----------------
- 1 file changed, 27 insertions(+), 23 deletions(-)
+ builtin/worktree.c | 33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index b8d53c48303..27437615436 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -25,45 +25,49 @@ Manage multiple working trees attached to the same repository.
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 2771a6dc793..c806aa2b261 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -236,6 +236,22 @@ static void check_candidate_path(const char *path,
+ 		die(_("'%s' is a missing but already registered worktree;\nuse '%s -f' to override, or 'prune' or 'remove' to clear"), path, cmd);
+ }
  
- A git repository can support multiple working trees, allowing you to check
- out more than one branch at a time.  With `git worktree add` a new working
--tree is associated with the repository.  This new working tree is called a
--"linked working tree" as opposed to the "main working tree" prepared by
--linkgit:git-init[1] or linkgit:git-clone[1].
--A repository has one main working tree (if it's not a
--bare repository) and zero or more linked working trees. When you are done
--with a linked working tree, remove it with `git worktree remove`.
-+tree is associated with the repository, along with additional metadata
-+that differentiates that working tree from others in the same repository.
-+The working tree, along with this metada, is called a "worktree".
++static void copy_sparse_checkout(const char *worktree_git_dir)
++{
++	char *from_file = git_pathdup("info/sparse-checkout");
++	char *to_file = xstrfmt("%s/info/sparse-checkout", worktree_git_dir);
 +
-+This new worktree is called a "linked worktree" as opposed to the "main
-+worktree" prepared by linkgit:git-init[1] or linkgit:git-clone[1].
-+A repository has one main worktree (if it's not a bare repository) and
-+zero or more linked worktrees. When you are done with a linked worktree,
-+remove it with `git worktree remove`.
++	if (file_exists(from_file)) {
++		if (safe_create_leading_directories(to_file) ||
++			copy_file(to_file, from_file, 0666))
++			error(_("failed to copy '%s' to '%s'; sparse-checkout may not work correctly"),
++				from_file, to_file);
++	}
++
++	free(from_file);
++	free(to_file);
++}
++
+ static void copy_filtered_worktree_config(const char *worktree_git_dir)
+ {
+ 	char *from_file = git_pathdup("config.worktree");
+@@ -379,21 +395,8 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * If the current worktree has sparse-checkout enabled, then copy
+ 	 * the sparse-checkout patterns from the current worktree.
+ 	 */
+-	if (core_apply_sparse_checkout) {
+-		char *from_file = git_pathdup("info/sparse-checkout");
+-		char *to_file = xstrfmt("%s/info/sparse-checkout",
+-					sb_repo.buf);
+-
+-		if (file_exists(from_file)) {
+-			if (safe_create_leading_directories(to_file) ||
+-			    copy_file(to_file, from_file, 0666))
+-				error(_("failed to copy '%s' to '%s'; sparse-checkout may not work correctly"),
+-				      from_file, to_file);
+-		}
+-
+-		free(from_file);
+-		free(to_file);
+-	}
++	if (core_apply_sparse_checkout)
++		copy_sparse_checkout(sb_repo.buf);
  
- In its simplest form, `git worktree add <path>` automatically creates a
- new branch whose name is the final component of `<path>`, which is
- convenient if you plan to work on a new topic. For instance, `git
- worktree add ../hotfix` creates new branch `hotfix` and checks it out at
--path `../hotfix`. To instead work on an existing branch in a new working
--tree, use `git worktree add <path> <branch>`. On the other hand, if you
--just plan to make some experimental changes or do testing without
--disturbing existing development, it is often convenient to create a
--'throwaway' working tree not associated with any branch. For instance,
--`git worktree add -d <path>` creates a new working tree with a detached
--`HEAD` at the same commit as the current branch.
-+path `../hotfix`. To instead work on an existing branch in a new worktree,
-+use `git worktree add <path> <branch>`. On the other hand, if you just
-+plan to make some experimental changes or do testing without disturbing
-+existing development, it is often convenient to create a 'throwaway'
-+worktree not associated with any branch. For instance,
-+`git worktree add -d <path>` creates a new worktree with a detached `HEAD`
-+at the same commit as the current branch.
- 
- If a working tree is deleted without using `git worktree remove`, then
- its associated administrative files, which reside in the repository
- (see "DETAILS" below), will eventually be removed automatically (see
- `gc.worktreePruneExpire` in linkgit:git-config[1]), or you can run
--`git worktree prune` in the main or any linked working tree to
--clean up any stale administrative files.
-+`git worktree prune` in the main or any linked worktree to clean up any
-+stale administrative files.
- 
--If a linked working tree is stored on a portable device or network share
--which is not always mounted, you can prevent its administrative files from
--being pruned by issuing the `git worktree lock` command, optionally
--specifying `--reason` to explain why the working tree is locked.
-+If the working tree for a a linked worktree is stored on a portable device
-+or network share which is not always mounted, you can prevent its
-+administrative files from being pruned by issuing the `git worktree lock`
-+command, optionally specifying `--reason` to explain why the worktree is
-+locked.
- 
- COMMANDS
- --------
- add <path> [<commit-ish>]::
- 
--Create `<path>` and checkout `<commit-ish>` into it. The new working directory
--is linked to the current repository, sharing everything except working
--directory specific files such as `HEAD`, `index`, etc. As a convenience,
--`<commit-ish>` may be a bare "`-`", which is synonymous with `@{-1}`.
-+Create a worktree at `<path>` and checkout `<commit-ish>` into it. The new worktree
-+is linked to the current repository, sharing everything except per-worktree
-+files such as `HEAD`, `index`, etc. As a convenience, `<commit-ish>` may
-+be a bare "`-`", which is synonymous with `@{-1}`.
- +
- If `<commit-ish>` is a branch name (call it `<branch>`) and is not found,
- and neither `-b` nor `-B` nor `--detach` are used, but there does
+ 	/*
+ 	 * If we are using worktree config, then copy all current config
 -- 
 gitgitgadget
 
