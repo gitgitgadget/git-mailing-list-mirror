@@ -2,124 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1DA1C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 10:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44414C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 10:22:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbiBVKWg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 05:22:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48294 "EHLO
+        id S230495AbiBVKWm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 05:22:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbiBVKWf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 05:22:35 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225557EB36
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:22:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645525319;
-        bh=R/IcGrkeHLDxsWAArYAG/pemXRpB6HQhqU5V6rpOI4A=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cHaSzjV2B0EXvglVL89HaGXonpF6NoWR4WUNM0dkrtqqbcgoMZDTQsP8N+SLK14ON
-         VzK5jxYjemOE2R1kvh2h4EVb3ykBpQQD0Gx0sLqZj+8nu2A/4icGUr1md55zXv64vw
-         YGfinKJ2dz29n8uEMp6xwVqawv4MVRgub0MriKdA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M59GG-1nLMNH2b24-0017M9; Tue, 22
- Feb 2022 11:21:59 +0100
-Date:   Tue, 22 Feb 2022 11:21:57 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?=C4=90o=C3=A0n_Tr=E1=BA=A7n_C=C3=B4ng_Danh?= 
-        <congdanhqx@gmail.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH 05/25] CI: remove unused Azure ci/* code
-In-Reply-To: <patch-05.25-4738a22a36d-20220221T143936Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202221115590.4418@tvgsbejvaqbjf.bet>
-References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com> <patch-05.25-4738a22a36d-20220221T143936Z-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S229599AbiBVKWi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 05:22:38 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225B27F6C4
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:22:10 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id i11so34016974eda.9
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:22:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=SSGO8LodzMyckp9vxgELSiLDvPrOKP7OamO6MjyhdR0=;
+        b=C1QVNABctHo68nbeb/Tvm3fGPpvhebzrFsUTNu/F94aU81cDhD87gM8k3fz7wXz7g7
+         pUGcxLCi3Rud8nzbrotReDbv7M0a0zG5SaT4jfI9gAHsO60PkchpVAHOUEWk7ge17Dmp
+         j8JqfP9TgTg1h5eauBNG65hBHK4leGceN5lcdqG20/iPd5RRs+OSz+2Q63ls1VB7Mq6T
+         2T4mt7H4Y8696lo6f5f+xuCGckAwXZC9/dN5Yn1joJknfNIiHKUD+B5qTmZswbF5+J+o
+         LXmpm5Tw9WdBqMzU7MOpOFWpoqDfQmjKtEFvUyvDNOjaH5GQD4pHgCMTL3V4FcpB/tkN
+         Nr5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=SSGO8LodzMyckp9vxgELSiLDvPrOKP7OamO6MjyhdR0=;
+        b=sM1TFoYGk2T/aZ/KrEcQHrVIS83oISntBsimAFbmQt0+leMHTk1OR9hpFZOF0VOxDF
+         qT4IO74vHwAQJyZf/faVeCiCQmxwEUztnwBnqBGwfbRBWmIJtiOFKZi52pH+Xwj8cY/g
+         2OwPkNX+S44NTW3t2pJRqGwJizGAqmuCoaQQwi6c0cTJwbCijNCCjRlhPB4K2G7u251M
+         W+9ANKwB2GSGug0V8GAdT6O8DBC6ZLWaKW05er32OaD5aWyUxMxYHUEyNbAb+RNzdaj/
+         h8TnWCp1a6br4Q/RGY/1lnDm65toRj2wfAsGURA+FJtyv84sIh2v154j2aO7qJz9vF8G
+         Nikg==
+X-Gm-Message-State: AOAM531CtJYFD/rOJ0ImMz6eN/7Fm6A4SVsmYv43gskpnwCxUpQtjP5B
+        50bn0I0QrdbwUUEXqn9i+Cq2HuqivyXgmiJY
+X-Google-Smtp-Source: ABdhPJyw1PoRTqE0HpJDbxylVY9cDnOXS6C7+cX2QV/cF9bZWLClipkvd4h5gz2VAW/ZRNw14A5ujg==
+X-Received: by 2002:a05:6402:1cae:b0:410:d3ae:3c8a with SMTP id cz14-20020a0564021cae00b00410d3ae3c8amr25077428edb.215.1645525328533;
+        Tue, 22 Feb 2022 02:22:08 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id i24sm6076603ejg.40.2022.02.22.02.22.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Feb 2022 02:22:07 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nMSJ5-005wnr-9L;
+        Tue, 22 Feb 2022 11:22:07 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 3/4] test-lib: make $GIT_BUILD_DIR an absolute path
+Date:   Tue, 22 Feb 2022 11:14:17 +0100
+References: <cover-v2-0.4-00000000000-20220219T112653Z-avarab@gmail.com>
+ <cover-v3-0.4-00000000000-20220221T155656Z-avarab@gmail.com>
+ <patch-v3-3.4-b03ae29fc92-20220221T155656Z-avarab@gmail.com>
+ <YhPL+wSxtI0KIz07@nand.local>
+ <220221.868ru4avw6.gmgdl@evledraar.gmail.com> <xmqqee3vwepd.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqqee3vwepd.fsf@gitster.g>
+Message-ID: <220222.86o82z8als.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-1863663076-1645525290=:4418"
-Content-ID: <nycvar.QRO.7.76.6.2202221121490.4418@tvgsbejvaqbjf.bet>
-X-Provags-ID: V03:K1:/FjynvSw4Ua4ckLQWX0NvvScH4xjK5pzOA6tsPR4j1OLobr+BNC
- GkHcT4OgnfdI4gvl7rms6BUMCkk/UiDiteOch62yD7s5YeHeq9W5N/jBHEdon52D6evWmcQ
- zPwBYvzRZ3YrsywFY3kyFEGII2EgJor1gCuPBWjnzT6qMHU0ybUmwGp/9L3lMS0xCW5Nnc1
- tM59ZaL2mrkdJ2K/5REQQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pWpKJpXG4a8=:uM1MbJ3g+P8RSL6fQ4xLaa
- L30lIT9/3dwlDknAjZx5DU4c21i4ES6iH257coudAeZZef8wvUYLXueK4X/865pizKlK67hfP
- QgECp+iaONDnd4jvTM1dHfjJP7WQNzNtSHT2n6tm+w0F3aKlUcbLctICsA8Gp0FEJ2Qp/ldyY
- giX48ekdrnP6whaRQlM815Z/NriHM5eDZ0/8nQshbSbpXFu9Hk/+EhZcAvuhjugeoKprP1m9k
- UusklbxVt4Z2MrPTopR+4q6w9RH6RtwISlcvXrU2k4IXQ3e0NEvdJzReyW7fTNaZUrZCyP+nh
- vGLi9OcaaPukiJ937fGsDkV1pwa2VAlvcsACw2ZLYOGqErP8BqxdTTB36azLegVMzvrCOb1Je
- 4FH6QtI6R6k4/AmrDQtBSEEHDStaoMYu9SskAbiYgbqD8n4gGSuHvszQXMflLoTkuaexEMSlk
- +tt4WBybNR7WkTsUZbrMpBGPVic03snNs36M+VMHNTN3xj2zSq9XWR/SNy91SvQCjS5vXYJxK
- +Ap9vNTewM0wZxofsKWdfzSguxdk6Gz8wthf4S/WA6EB2qHAfzcOMGfVvoZLO1rphwCX0zXrM
- e/Hmee9Yn3YOu02/GUlB8+Nq5rvD//tY4Cfp6uLA92yS8tBR+j3C9MSlk2l+H6mr0pKpwaygs
- d4GkXncWTcygYRuIKaIW5LLER3s0WVqMT2uY0hRoNLUVduj0RPRjRvtX4HR4w6r7Z10L5WXfb
- JgBAbrcoCqe1ddkLkOrxi5zVvBgVSUr31bHa+f4OKayBjkBixOBauJeYYcqkBQkL0aJRc+arA
- jrBzUgVAII/EiYdmDhKnGzohtDWpUCRs7J5CBO5F0+1mqULq0NDH08zClPZc2ZVTfY3K0HrAL
- GKc3w89DXCn34LgtuZZtfVJ7lzsXbao12mkmRvQ3Q3DT685Mq+poGuOZVb7797Kcrqh/Z/e/j
- wfq7dpmFsAikSnMd0eA+Ze7ww3VTukOWURgHxA4CYL9+/ewFs528Hxm8VD1B9zhDNX3dJY1nb
- 4KlKogSDE1qtTmxWBInrPQPMXYSF/ijllL/Wa3FU9pSAVzcNJc1Tu6ZkdqfKfwvhVVPWWwVQl
- HoLmpS1vumOfH0=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1863663076-1645525290=:4418
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-ID: <nycvar.QRO.7.76.6.2202221121491.4418@tvgsbejvaqbjf.bet>
+On Mon, Feb 21 2022, Junio C Hamano wrote:
 
-Hi,
-
-
-On Mon, 21 Feb 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
-> Remove Azure-specific code that's been unused since 6081d3898fe (ci:
-> retire the Azure Pipelines definition, 2020-04-11). As noted in a
-> larger removal of all of the Azure-supporting code in [1] (although
-> that missed some of this) there is more of it in-tree, but let's focus
-> on only the ci/* code for now.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> This is needed because in subsequent commits this unused code would
-> either need to be changed to accommodate changes in ci/*, or be
-> removed.
+>>> Sorry to notice this so late, but this hunk caught my eye. What happens
+>>> if `TEST_DIRECTORY` is provided by the user (and doesn't end in "/t")?
+>>
+>> I think that the preceding 2/4 should cover your concern here, i.e. I
+>> think that's not possible.
+>>
+>>> Before this change, we would have set GIT_BUILD_DIR to the parent of
+>>> whatever TEST_DIRECTORY is, whether or not it ended in "/t". We'll still
+>>> do the same thing with this patch if TEST_DIRECTORY ends in "/t". But if
+>>> it doesn't, then we'll set GIT_BUILD_DIR to be the same as
+>>> TEST_DIRECTORY, which is a behavior change.
+>>
+>> Indeed, but I believe (again see 2/4) that can't happen.
 >
-> As we'll see in those subsequent commits the end-state we're heading
-> towards will actually make it easier to add new CI types in the
-> future, even though the only one we're left with now is the GitHub
-> CI. I.e. the "ci/*" framework will be made to do less, not more. We'll
-> be offloading more of what it does to our generic build and test
-> system.
->
-> While I'm at it (since the line needs to be touched anyway) change an
-> odd 'if test true =3D=3D "$GITHUB_ACTIONS"' to the more usual style used
-> in other places of 'if test "$GITHUB_ACTIONS" =3D "true"'.
->
-> 1. https://lore.kernel.org/git/patch-1.1-eec0a8c3164-20211217T000418Z-av=
-arab@gmail.com/
+> It is not like "can't happen", but "whoever wrote the TEST_DIRECTORY
+> override logic did not mean to support such a use case".
 
-This has been discussed before, and I already gave my NAK.
+To clarify with "can't happen" I mean (and should have said) that "can't
+work", i.e. it would error out anyway.
 
-It is sad that I have to repeat myself: it is a good thing to have the
-Azure Pipelines definition as a fall-back. In the past, this has served us
-very well especially when we had to run a barrage of security fixes, for a
-slew of backports to previous release trains.
+E.g. try in a git.git checkout:
+=20=20=20=20
+    (
+        mv t t2 &&
+        cd t &&
+        ./t0001-init.sh
+    )
 
-You seem to have fun to just remove this code, under some assumption that
-it is not needed, despite me pointing out that it is needed.
+It will die with:
+=20=20=20=20
+    You need to build test-tool:
+    Run "make t/helper/test-tool" in the source (toplevel) directory
+    FATAL: Unexpected exit with code 1
 
-Ciao,
-Johannes
+And if you were to manually patch test-lib.sh to get past that error it
+would start erroring on e.g.:
 
---8323328-1863663076-1645525290=:4418--
+    sed: couldn't open file /home/avar/g/git/t2/../t/chainlint.sed: No such=
+ file or directory
+
+And if you "fix" that it'll error out on something else.
+
+I.e. we'll have discovered that $(pwd)/.. must be our build directory,
+and we then construct paths by adding the string "/t/[...]" to that.
+
+> I am perfectly fine if we declared that we do not to support the use
+> of that override mechanism by anybody but the "subtest" thing we do
+> ourselves.  If we can catch a workflow that misuses the mechansim
+> cheaply enough (e.g. perhaps erroring out if TEST_DIRECTORY is set
+> and it does not end in "/t"), we should do so, I would think, instead
+> of doing the "go up and do pwd", which will make things worse.
+
+What I was going for in 2/4 in
+http://lore.kernel.org/git/patch-v3-2.4-33a628e9c3a-20220221T155656Z-avarab=
+@gmail.com
+is that we've already declared that. I.e. test-lib.sh has various
+assumptions about appending "/t/..." to the build directory being a
+valid way to get paths to various test-lib.sh-adjacent code.
+
+So trimming off "/t" here with a string operation v.s. $(cd .. && pwd)
+is being consistent with that code.
+
+It would be odd to make the bit at the top very generic, only to have
+the reader keep reading and wonder how that generic mechanism and the
+subsequent hardcoding of "/t/[...]" are supposed to work together.
