@@ -2,108 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82344C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 20:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BC46C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 20:32:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234572AbiBVUZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 15:25:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55542 "EHLO
+        id S234506AbiBVUdL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 15:33:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231694AbiBVUZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 15:25:28 -0500
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C2E119423
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 12:25:00 -0800 (PST)
-Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1nMbiU-0006mH-9t;
-        Tue, 22 Feb 2022 20:24:58 +0000
-Message-ID: <df47bb75-9684-6896-1e5b-21406c4a549a@iee.email>
-Date:   Tue, 22 Feb 2022 20:24:58 +0000
+        with ESMTP id S231694AbiBVUdK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 15:33:10 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F2B966F8C
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 12:32:44 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id u18so39813895edt.6
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 12:32:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=05zFEqLYWMXb2qLoTHl89zVwEyGI7Dxy6DkM8N36hGM=;
+        b=YUjbYVRLuZn8+VNske7Kw9AYU+6+wJ224Fs9bG2gpMTAF1N2PfN7i5JWdED69yCjcf
+         hBtzMdnB0mwdBszFGM4STL5SsLlYaPensJk3W5zSCjnSYHD3Qng3mIGixqj0ulyArxjV
+         jPxpYh9QuED8woV79fY4RkJACT2XT9IPVIih+/sxqij7l5/i7D/dL5yd00MAFZ+4Wox7
+         l49MH1vGM5dolRZRL7mWJ8rKOurpzycpYfYVr0CW4GvM25c65OepoBFpvYcIQfMxWUaj
+         OHKw7qD7RXO650Y9iQjs3+qHKtzM970f0uM5VTN0FdlTghfZ4lEkAuojZjeWqzc8pGe0
+         UTDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=05zFEqLYWMXb2qLoTHl89zVwEyGI7Dxy6DkM8N36hGM=;
+        b=zYWz472zCDBt1Kf3KbJj/IQgzfu2zZjnIK5kv/JDicYv/PgSmrh6aTkotGzhMLpHm2
+         HK1m2IMl3lJNfN3SRizZYBbInSB8/VFcoHyer58sBV//VlYyU4MdoMwMPkhsTsW98IQx
+         rDDcQTpuc7K5pWpxLQGwt9PG1mKeo9E84RgXhfO2imWpHkDIs+sSnrO15UgZuzKHuzN1
+         MhDkq8mfdM0+bQmhcYItXzXeBQbO38cG5RGcJ0Ko3cHVnbttXXCu+J3F/gzyM7EK8QUF
+         IOPCMHjb2oF2G1OK3n80GujqnTpuklm46qlLEFip/smNUeeK2qDCKzKTajj5YFT+I0T9
+         Gwwg==
+X-Gm-Message-State: AOAM5315OiXct6paMVnZK3WdC2C5it5jP+ZRo8hK+n2Et+BZq02hvfwP
+        N333k4ZSotv9FIeO/C9BQKmaDn+WEoLpAQOe1W4=
+X-Google-Smtp-Source: ABdhPJyX2lus2jOTVl3LQ97Yn/23pMhNXiYbjFzTvEI6e0s8jq/j+t8qYhsT901uCxGdbMtkIbFbdP5ef1QWGjyAx7k=
+X-Received: by 2002:a05:6402:cac:b0:410:a920:4e90 with SMTP id
+ cn12-20020a0564020cac00b00410a9204e90mr27719751edb.60.1645561962565; Tue, 22
+ Feb 2022 12:32:42 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 0/2] Update the die() preserve-merges messages to help
- some users
-Content-Language: en-GB
-To:     phillip.wood@dunelm.org.uk,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1155.git.1645526016.gitgitgadget@gmail.com>
- <8b95ac6e-5e9d-38e4-4729-dbbe4b671ea8@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <8b95ac6e-5e9d-38e4-4729-dbbe4b671ea8@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20220222114313.14921-1-shivam828787@gmail.com> <20220222114313.14921-2-shivam828787@gmail.com>
+In-Reply-To: <20220222114313.14921-2-shivam828787@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 22 Feb 2022 21:32:30 +0100
+Message-ID: <CAP8UFD1FVuoe7V3JU+hExsbjWTkNZFCZFV4qc65YLd4ow-Da5w@mail.gmail.com>
+Subject: Re: [PATCH 1/2] t0001: remove pipes
+To:     Shubham Mishra <shivam828787@gmail.com>
+Cc:     git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-On 22/02/2022 18:55, Phillip Wood wrote:
-> Hi Philip
+On Tue, Feb 22, 2022 at 3:08 PM Shubham Mishra <shivam828787@gmail.com> wrote:
 >
-> On 22/02/2022 10:33, Johannes Schindelin via GitGitGadget wrote:
->> This small update to the die() preserve-merges messages is a response
->> to the
->> reported edge case in the Git-for-Windows googlegroups thread
->> [https://groups.google.com/g/git-for-windows/c/3jMWbBlXXHM] where
->> even git
->> rebase --continue would die.
->>
->> It is most relevant for Windows because Visual Studio still offers the
->> option to run git pull --preserve, therefore Git for Windows already
->> applied
->> these patches. The improvements are not specific to Windows, though, and
->> should therefore also get into core Git, albeit at a more leisurely
->> pace.
+> pipes doesn't care about error codes and ignore them thus we should not use them in tests.
+
+Only the exit code of the command before the pipe is ignored.
+
+Also it's ok to use pipes if the command before the pipe is not `git`.
+We trust regular commands to just work and we test only `git`.
+
+> As an easy alternative, I am using a tmp file to write from git command so we can test the exit code.
+
+In general, when improving the code in a way that has already been
+used by others, it's a good idea to take a look at previous commits
+doing the same thing. See for example 66c0c44df6 (t0000: avoid masking
+git exit value through pipes, 2021-09-16). I am not saying that you
+should copy paste the commit message though.
+
+> Signed-off-by: Shubham Mishra <shivam828787@gmail.com>
+> ---
+>  t/t0001-init.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> I think the new messages are an improvement, I was wondering how
-> difficult it would be to allow the user to run rebase --abort so they
-> can at least easily start again with --rebase-merges.
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index 3235ab4d53..9a8f209648 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -489,11 +489,11 @@ test_expect_success 're-init from a linked worktree' '
+>                 git worktree add ../linked-worktree &&
+>                 mv .git/info/exclude expected-exclude &&
+>                 cp .git/config expected-config &&
+> -               find .git/worktrees -print | sort >expected &&
+> +               find .git/worktrees -print >tmp && sort tmp >expected &&
 
-In this case, the user (another Phillip), couldn't run `rebase
---continue` without getting a `fatal:` report. A code inspection showed
-that was one of the first tests so I don't believe they could run
-`--quit` or `abort` either!
+Please put the `find` and `sort` commands on 2 different lines when
+they are separated with &&.
 
-We eventually nailed it down to being an update of Git, after getting
-into a bad conflict resolution, so the update refused to do any rebase
-commands! Later they tried downgrading and finishing the rebase that way
-in the usual 'hack & hope' way. Luckily they had a backup from the time
-of the update, which was able to confirm the presence of the indicative
-directory (which is an implementation detail).
+>                 git -C ../linked-worktree init &&
+>                 test_cmp expected-exclude .git/info/exclude &&
+>                 test_cmp expected-config .git/config &&
+> -               find .git/worktrees -print | sort >actual &&
+> +               find .git/worktrees -print >tmp && sort tmp >actual &&
 
-If the `rebase abort` was moved earlier in the code, then it might work,
-but we'd still need to keep the clean-up code for a non-existent option,
-which is less than ideal .
+Idem.
 
-Philip
-
+>                 test_cmp expected actual
+>         )
+>  '
+> --
+> 2.25.1
 >
-> Best Wishes
->
-> Phillip
->
->> This is a companion patch series to
->> https://github.com/git-for-windows/git/pull/3708
->>
->> Philip Oakley (2):
->>    rebase: help user when dying with preserve-merges`
->>    rebase: `preserve` is also a pull option, tell dying users
->>
->>   builtin/rebase.c | 9 +++++++--
->>   1 file changed, 7 insertions(+), 2 deletions(-)
->>
->>
->> base-commit: e6ebfd0e8cbbd10878070c8a356b5ad1b3ca464e
->> Published-As:
->> https://github.com/gitgitgadget/git/releases/tag/pr-1155%2Fdscho%2Fdie_preserve-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
->> pr-1155/dscho/die_preserve-v1
->> Pull-Request: https://github.com/gitgitgadget/git/pull/1155
->
-
