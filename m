@@ -2,68 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3BD4C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 13:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8125FC433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 13:08:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231996AbiBVNGH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 08:06:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57388 "EHLO
+        id S232002AbiBVNIh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 08:08:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232148AbiBVNGC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 08:06:02 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F22139CDC
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:05:36 -0800 (PST)
+        with ESMTP id S230181AbiBVNIg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 08:08:36 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50DFB151D01
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:08:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645535133;
-        bh=AL5QWyiFUdi+tDDBT7TwjTNesqpKYSgRzHI55urCIeU=;
+        s=badeba3b8450; t=1645535285;
+        bh=GtDKdxOgQO/4HPTJ5e1xe8r+wk/lDRkpfpZLRF1DJx8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=WjU8HJ4zta9ivmHYod1qAvc6uB5ZlREG15/a0wVA4OS55UnH2nOs2IGqrvjsYB0eu
-         78QnFreNumfSaDRlW+NoVeAPzeemVvStInUp9UP8s/FmWPCUHFyko3U/q3624GtEW/
-         b2SDssPXYcD8ftLzRn+BgOEjVt7vOEpws8B1Qxmw=
+        b=TRzevMRNvO87Wsht+26X1xOMzsuaYADs9hlYDXZkdCdarQ2Nocp0nOL0qyLycRslZ
+         wIpk9kS+vS1A8v5x+RI7waYotkJdZx05Ah7bze367lEsP7m4jxfl30kUoKLrZFtGUG
+         7Hf/d8rBHWnxZDhRgil40uQHrhzuW47CKRa66ak0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ma20q-1nhL8D0T8G-00Vzjj; Tue, 22
- Feb 2022 14:05:33 +0100
-Date:   Tue, 22 Feb 2022 14:05:31 +0100 (CET)
+Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3DJv-1nNt0a0ug1-003awz; Tue, 22
+ Feb 2022 14:08:05 +0100
+Date:   Tue, 22 Feb 2022 14:08:03 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Elijah Newren <newren@gmail.com>
-cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+cc:     Christian Couder <christian.couder@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>
-Subject: Re: [PATCH v2 8/8] merge-tree: provide an easy way to access which
- files have conflicts
-In-Reply-To: <CABPp-BFCvOkC1KSVm3qKUcaBFV0pUg4MJf5h+shj=TFZzWscUA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202221403590.11118@tvgsbejvaqbjf.bet>
-References: <pull.1114.git.git.1640927044.gitgitgadget@gmail.com> <pull.1114.v2.git.git.1641403655.gitgitgadget@gmail.com> <01364bb020ee2836016ec0e8eafa2261fb7800ab.1641403655.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2201071908580.339@tvgsbejvaqbjf.bet>
- <CABPp-BFCvOkC1KSVm3qKUcaBFV0pUg4MJf5h+shj=TFZzWscUA@mail.gmail.com>
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [RFC PATCH 0/2] Introduce new merge-tree-ort command
+In-Reply-To: <CABPp-BEQ5BBEgB21hUNBuioOfMry_x2nKOLgY8=v2w8eGXrsyw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202221407150.11118@tvgsbejvaqbjf.bet>
+References: <20220105163324.73369-1-chriscool@tuxfamily.org> <CABPp-BFh7UnQtPM=tO8rfp5bPK4-7esouv5KCx1sUSESwEA=Rw@mail.gmail.com> <CAP8UFD0wKnAg5oyMWchXysPTg3K9Vb4M1tRcPzPE81QM903pYg@mail.gmail.com> <CABPp-BHpuLjCYycBwweMW_NdQrS_r3ECmvLb8XjNW-_Rau5NTw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2201101427440.339@tvgsbejvaqbjf.bet> <CABPp-BHJvFx0fxobYZ2vauK=KfCLF_7So8xABLjqr9rx4SVy-w@mail.gmail.com> <CABPp-BEQ5BBEgB21hUNBuioOfMry_x2nKOLgY8=v2w8eGXrsyw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:78IxmRyQnN7MdrWyQhAE8roObR/v1yycdEAgZdY5QmmKd6mkUyu
- oSpVcCZQF2owOSCwtjIXf3Tlwo90VIggeitOHFZI+eCX6GmGzRBXeXeYImetDzWUFp6sKKq
- 76eP/2H72Uol1+AOxsGZIaim6afY2+yvfXndfgQ8vV6cfCqwCGsY315mSw7lH9EdzuLGgUy
- JMIswlCBSUlQyX5TqSJiA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eCKt/yJ77rs=:7qS2vug6iFDyHhocF/LWMz
- LvQBJuKrJEmVs9UKp7aJsHWy26P4LYTgEpto4oiQxcAi5tjFc7n9eJbrE9psiWuFXdvkvqXzz
- iRwBkvNtSqwcb87w7i/3TObiQHJ+ZsVdbF0CDunAJcQN6yoww9luRYlPWslZHrE9uU2jCap0u
- T//BGZdWusnqhpacqLdULWkNEZ8/yozC2FcOmS2hZktwI+hrVTkzstxUwDpdlJyHpGDlOrOss
- s1LYopRJ+l1RGONT1SvIzS9NHUpgoVC+gzQnrarM/wAVtAcZS9wQ+URIwJ6rbm67u0erJLriI
- DdVtKhEIWo0u4RGbcTEcSj1xHgadpLszdfGctPgrWlEDWKfETLoO4nqMyqHdTB/XGEjrkc5jK
- nGUVeQSJWK5U38j+oEhm3QMiNCyMOkvAFIJbqLaRnRkIPltENYxqTPJkXXcJQ1YQYVAL0Zyzg
- NQa7fzcIipDYoAoR7e21+C+59SVzVPi4Vmr8B9xu8RqTgNTaxq1KnksdJZXRcqnDym30N8/UK
- jE7gz/yDU4JSMGLNUUpwLcKnT/L9hMWPPlFSUyU+yy1zuT9/n4aJCZ2dbWU78pp1XY0F9M96e
- Z95klb7phZmD62r2uvDehFFeWtNlKUMLGawiLZioZbB0S3wswiafRcetObsF7nQU7QSCYmqE7
- 7SNHAJE5zd7vg4T6Thf8ntbuNDDVIFfGAykZ6wph89Yc0jea1F7BRtfTNTaa2II9oYByiaeIQ
- UUY19wdUQsb/7Dxk/7aaSMGh8A4ib09Kz8BGmOgFUpOfcJuhBIqQ/umJJ/+NuLwlnNX7c+Tiz
- BkJvnKEzPrqUhZC4EqTr+NUtA7rBAQp7+gUKGx/5AUkdvj1lOCP82l4FBhgSJjUIyVAppC0sS
- 5/R0oscO8BXTwDP0lLx9/rPQ465czfMo1wvIegFv5lgahh4HvHDz5v0DLLjpW4c2DPwDBmxuW
- ram8RPTKP72PaoHBMOvqDJ8FoWIQdOLuE03+E+fWnfnrDy1dyN0vz5XQgOKXPW528UXyCYyTE
- 4yZ7BekF+cb/o2QfXr/8T9cyygr/XrGr8odwvTpZ/0U/AMbBExe120czdB+wrPsMaIvnMjzJI
- bzKFSonZB3A0bs=
+X-Provags-ID: V03:K1:HGW9k46/OTGMPTl3rGMnV9Mk+z+4e/uuuLxcXxhPcxX1hUbiJ7J
+ FvcAFke08mYGBoRRvgSgrrjDFJ0SbsCfoH7HC9VmUhqpgb3+XSBWozaUQoZ6r7MlEJOTJqI
+ Mzrvdo+LvgACyGdjq119KPqd0yU2Yb2S0bHyQNuaDtjmC5sUVCoSMFH1Mf1lJwV8SDbTbry
+ b+tJx9WyFBGnJMmoFrmbg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:HORwhv1huIw=:FWOg0oQNkbayHQmmcUSs4F
+ ThAVJSmLgodKa2ZciRg9FWXDFG928+xB7vkOlV+5UjneOSLkrUcIbtgttpCey9l/eam3dBxLI
+ DRZoSMhPtB7a18hsfvxP5x5X/LBdnqtbsCWW9oL+bWZGnb+sz+2tnrgxI9ujatTw9mkKLTff6
+ tUH6Pp21+olPWEVmH5vgLaD02Z2U3+tqFpuEW32F1W/n3HmLJv2pPoGKlihsICwBvm7e7AWsv
+ VF3gvVe29Ya7T3PFV86XyoGkaIVfs7X4Dtv0XQDQZoLV3qrFGxHLat3DOFZgi5Su9sBh7J1W9
+ B9A9Gb8523KVto6mXeO6MGeieuWzZl/H/cx0rBllRLhLmcP/UIPAHHtq2PNaBHE7Zvw3clniX
+ 7//WCxTL3ImZ1Ev1yqr9gb7dnMAvhqW0AK/wtcKkzAowtrsIgct/C/EVIXt6K1IeNBpngGNg1
+ bdwaTq5hhWQvZgYYbcaUwUtOx5hM45jUMUKpzx1oTmDHZhdFpLm6UzTslD9Xd+ZjvRtE9YxOn
+ zlNR4M+iTaWyrxuQLsk2CxaJ/tKP38Bjw9GhFuONq4+07DYIqWytPfzOrpbRzOiy3QA/O6uVp
+ ArKysm+y9IMD5eMYuif614cwj86NCgL8Me4+uRFf6zFt6xMw6xY460w3SEgJvnWu2+rroXWcp
+ wwKm90bVYhEHwbL1UkphMSuSWDoXj81363eAmAs81gO5YmtIjIEOLteVbj+4qvfi2zTSZU+Ad
+ 7f9wohpVLxw2YPEwG3mEdXR0rNLkiIKMpkIu8ect3GGyzhL3JQ4tqcyLC7i0175itACZrh+B5
+ 13j4GpNfYLYJ7agp1pCCoOes2nDUzu2NBEJpqugCpqbcJN2P6fqRp5mFeolDrOzbe6GZqC0ST
+ V5w7g4vR0qf7q19vVLUdY55V7pKgsnr4PABVv/JsEk/Pe0DLqRiJGiWHgeSWMeR1JtoEN8TTK
+ +i5I+I3vc3koZ8SJeXGpmyONStlFcaeDxTkHEBL/e4epOUVcE6jg0AFIg7kkPIS5KoxJgUKYd
+ XmQFqnATEDWtwdJ8H3UZth2MPu4yjgbkPMOLcKLwd8L3ROYMeNv3inRTcruduD0MbI/EEXWM6
+ ennYLKnSd+vetk=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -71,43 +71,67 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Elijah,
 
-On Fri, 7 Jan 2022, Elijah Newren wrote:
+On Tue, 11 Jan 2022, Elijah Newren wrote:
 
-> On Fri, Jan 7, 2022 at 11:36 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+> On Mon, Jan 10, 2022 at 9:59 AM Elijah Newren <newren@gmail.com> wrote:
 > >
+> > On Mon, Jan 10, 2022 at 5:49 AM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
 > ...
-> > Mind you, I did not even get to the point of analyzing things even mor=
+> > >, therefore it expects the resolved conflicts to
+> > > be in _files_. I don't think that there is a way to reasonably handl=
 e
-> > deeply. My partner in crime and I only got to comparing the `merge-ort=
-`
-> > way to the libgit2-based way, trying to get them to compare as much
-> > apples-to-apples as possible [*1*], and we found that even the time to
-> > spawn the Git process (~1-3ms, with all overhead counted in) is _quite=
-_
-> > noticeable, at server-side scale.
+> > > symlink target conflicts or directory/file/symlink conflicts, but th=
+ere
+> > > might be.
 > >
-> > Of course, the `merge-ort` performance was _really_ nice when doing
-> > anything remotely complex, then `merge-ort` really blew the libgit2-ba=
-sed
-> > merge out of the water. But that's not the common case. The common cas=
-e
-> > are merges that involve very few modified files, a single merge base, =
-and
-> > they don't conflict. And those can be processed by the libgit2-based
-> > method within a fraction of the time it takes to even only so much as
-> > spawn `git` (libgit2-based merges can complete in less than a fifth
-> > millisecond, that's at most a fifth of the time it takes to merely run
-> > `git merge-tree`).
+> > You really need (mode,oid) pairs to be provided by the user.  That
+> > fixes the executable issue I mentioned above, and makes it clear how
+> > to handle symlinks and file/symlink conflicts.
+> >
+> > directory/file are still handled by providing individual files, but
+> > ordering traversal becomes really tricky.  The directory/file case
+> > might even require the pre_resolved_conflicts to be pulled out of that
+> > loop somehow.  It'd take some investigative work, or some deep
+> > thought, or both.
 >
-> Out of curiosity, are you only doing merges, or are you also
-> attempting server-side rebases in some fashion?
+> I think I came up with a solution to this during my run yesterday,
+> though I haven't tried or tested it.  Instead of modifying the loop
+> over plist.items, you instead add a preliminary loop over
+> pre_resolved_conflicts that modifies opt->priv->paths (and add this
+> preliminary loop just before the items from opt->priv->paths are added
+> to plist.items).  In that preliminary loop, you need to make sure that
+> (a) any files in pre_resolved_conflicts corresponding to existing
+> _files_ in opt->priv->path result in updating that item's clean &
+> is_null & mode & oid state, (b) any files in pre_resolved_conflicts
+> that correspond to existing _directories_ in opt->priv->path need the
+> value to be expanded to be a conflict_info instead of just a
+> merged_info, you need to set the df_conflict bit, and don't update the
+> merge_info fields but do update the extended conflict_info ones, (c)
+> any new files in pre_resolved_conflicts result in new entries
+> opt->priv->paths, (d) any leading directories of new files in
+> pre_resolved_conflicts are appropriately handled, meaning: (d1) new
+> opt->priv->paths are created if the directory path wasn't in
+> opt->priv->paths before, (d2) a tweak to df_conflict for the directory
+> item if it previously existed in opt->priv->paths but only as a file
+> (possibly also necessitating expanding from a merged_info to a
+> conflict_info), (d3) no-op if the directory already existed in
+> opt->priv->paths and was just a directory (and in this case, you can
+> stop walking the parent directories to the toplevel).
+>
+> Then, after this preliminary loop that modifies opt->priv->paths, the
+> rest can just proceed as-is.
+>
+> That should handle new files, new directories, and all directory/file
+> conflicts.  Yeah, it's a bunch to look at, but directory/file
+> conflicts are always a bear.
 
-One step after another. For now, I am focusing on merges.
+Indeed.
 
-But yes, rebases are on my radar, too, and I am very grateful for the
-head-start you provided in `t/helper/test-fast-rebase.c` (and for the pun
-therein).
+What's even worse is the question how to represent that in a web UI, and I
+think I'll wait for that to happen (if ever) to give that part of the
+design more thought.
 
 Ciao,
 Dscho
