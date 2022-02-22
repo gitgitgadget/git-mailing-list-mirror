@@ -2,106 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BEBEC433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 18:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6ED5C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 18:55:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235110AbiBVSyW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 13:54:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56604 "EHLO
+        id S234659AbiBVSzs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 13:55:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235107AbiBVSyS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 13:54:18 -0500
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A540C114FE6
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 10:53:51 -0800 (PST)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id CA1BF3F4859;
-        Tue, 22 Feb 2022 13:53:50 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 823993F4854;
-        Tue, 22 Feb 2022 13:53:50 -0500 (EST)
-Subject: Re: [PATCH v5 00/30] Builtin FSMonitor Part 2
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
- <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2202171655390.348@tvgsbejvaqbjf.bet>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <37f54cd9-3e53-7d38-2c23-2fc245dc1132@jeffhostetler.com>
-Date:   Tue, 22 Feb 2022 13:53:49 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S235145AbiBVSzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 13:55:44 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28CB2151354
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 10:55:17 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id o24so35247108wro.3
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 10:55:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=W5QvcAeVK5WcEZUZq+2Ri9EuJDi9vGK9fcartWZTBBM=;
+        b=cVi++9XDWcnGbNhScH4tc9tlzv09lDs8V5llHk1y4l9QcbOoFApAQiHVTfSV9/tC5z
+         jD0r4/dPICgQmlHJQVekAUBfaMh2OezcAUW3l8JlcgnxnwjKfoeiFh63J5MLinSiGv0s
+         7DmoeFV8s0RyrBUN0M+mfMIuZvzvNxEyM+Ox7a0nET5uw115Bu/+C0sbgMBNOfdMTid9
+         5IMeIhlIMzgmoqyDWDDIcseEFO75RBfNuaf6vTzcBipqhovZFPSqtaaqe7bzdAGj9Rt9
+         AqFQA2m9vnH2sKJx92g9ymoWuZV0YZCxJCccU++9AXIwgBEeYBZLcYJuHAzDdVx/w+2W
+         kQJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=W5QvcAeVK5WcEZUZq+2Ri9EuJDi9vGK9fcartWZTBBM=;
+        b=Wb0snritVbJ7VwGcEPqCEkKfyy7JYbv+X/S6LcGHFyshpZOVJRJMhNZzRRwjbJDpfy
+         hLqmvFQR6UeaZTEjnPMp++jiO7aqC9pl6R0OTnx1xHTtT/NI6jdZ3dDBkCNoTWK61Ng4
+         oX48SAlmzeoXDPae7WRMGX7T60xZUfCHw583sRXGU8Nh9Qt3wPqlbU31grHeiwDZbXAv
+         Zq58U6YDaaIHuY/43zTDs94KKVskyiGkhoyeNgGVjRusM2rEz5hXlmv0Y3EXT3d5wEmu
+         WGZVMOxdr44oiKsNPUuXtzLbUizOdG/0OmaiaudDAqUC2f7y5ec5YEfADoZDz4A74F+J
+         vWBQ==
+X-Gm-Message-State: AOAM53066s/MKvFwEg98POjGdFDx1JtMWswPA7bqIQq6rVIjMBpkbB5K
+        9KbhK4j15b4ma0jv1r+8jTM=
+X-Google-Smtp-Source: ABdhPJzCl+sDk3xWEq5PEvnciKQYl+xmHglzO1IkLrQQvZrq17GhMWs4mZO2qcdc6eubWBeccw/5MA==
+X-Received: by 2002:a5d:59af:0:b0:1e4:a027:ce3b with SMTP id p15-20020a5d59af000000b001e4a027ce3bmr19810304wrr.318.1645556115622;
+        Tue, 22 Feb 2022 10:55:15 -0800 (PST)
+Received: from [192.168.1.201] ([31.185.185.186])
+        by smtp.googlemail.com with ESMTPSA id p11sm29042572wrr.16.2022.02.22.10.55.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Feb 2022 10:55:15 -0800 (PST)
+Message-ID: <8b95ac6e-5e9d-38e4-4729-dbbe4b671ea8@gmail.com>
+Date:   Tue, 22 Feb 2022 18:55:14 +0000
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2202171655390.348@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/2] Update the die() preserve-merges messages to help
+ some users
 Content-Language: en-US
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1155.git.1645526016.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.1155.git.1645526016.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Philip
 
+On 22/02/2022 10:33, Johannes Schindelin via GitGitGadget wrote:
+> This small update to the die() preserve-merges messages is a response to the
+> reported edge case in the Git-for-Windows googlegroups thread
+> [https://groups.google.com/g/git-for-windows/c/3jMWbBlXXHM] where even git
+> rebase --continue would die.
+> 
+> It is most relevant for Windows because Visual Studio still offers the
+> option to run git pull --preserve, therefore Git for Windows already applied
+> these patches. The improvements are not specific to Windows, though, and
+> should therefore also get into core Git, albeit at a more leisurely pace.
 
-On 2/17/22 11:06 AM, Johannes Schindelin wrote:
-> Hi Jeff,
-> 
-> On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
-> 
->> Here is V5 of Part 2 of my Builtin FSMonitor series. I apologize for the
->> delay since V4 that I submitted back in October. (Insert the usual $DayJob
->> excuse...)
->>
->> I have rebased this branch onto the current "master" branch.
-> 
-> Thank you for your tireless work on this. I do see that it requires a ton
-> of effort on your part and just wanted to let you know that I appreciate
-> it very much!
-> 
->> In this version I removed the core.useBuiltinFSMonitor config setting and
->> instead extended the existing core.fsmonitor.
-> 
-> I am somewhat surprised that a reviewer suggested this, as it breaks the
-> common paradigm we use to allow using several Git versions on the same
-> worktree.
-> 
-> Imagine, for example, that you run a Git version that understands
-> `core.fsmonitor=true` to imply the built-in FSMonitor, while you _also_
-> use an IDE that bundles a slightly older Git version that mistakes the
-> `true` for meaning the executable `true` (which is not a FSMonitor at all,
-> but its exit code suggests that everything's fine and dandy). The result
-> would be that the IDE does not see _any_ updates anymore, but nothing
-> would suggest that anything is wrong.
-> 
-> We can probably warn users about this, and we can also work around the
-> fact that Git for Windows already uses `core.useBuiltinFSMonitor`, but it
-> makes me somewhat uneasy nevertheless.
-> 
-> Thank you,
-> Dscho
-> 
+I think the new messages are an improvement, I was wondering how 
+difficult it would be to allow the user to run rebase --abort so they 
+can at least easily start again with --rebase-merges.
 
-This is a valid concern and I should have thought to mention it when
-the suggestion came up on the list.  Yes, extending `core.fsmonitor` to
-take a boolean or a path could confuse older clients (like ones bundled
-with an IDE, like VS).
+Best Wishes
 
-My assumption was that since we shipped `core.useBuiltinFSMonitor`
-in GFW with an experimental label, that normal users would not be
-using it at all and especially not from their IDEs, so it wouldn't
-matter.  And experimental features are just that -- experimental
-and subject to change.
+Phillip
 
-But your point is valid -- if someone does have the odd hook called
-"true" or "1", they'll get an unexpected result.
-
-Jeff
-
-
+> This is a companion patch series to
+> https://github.com/git-for-windows/git/pull/3708
+> 
+> Philip Oakley (2):
+>    rebase: help user when dying with preserve-merges`
+>    rebase: `preserve` is also a pull option, tell dying users
+> 
+>   builtin/rebase.c | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> 
+> base-commit: e6ebfd0e8cbbd10878070c8a356b5ad1b3ca464e
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1155%2Fdscho%2Fdie_preserve-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1155/dscho/die_preserve-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1155
 
