@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09365C433EF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A5F1C4332F
 	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 16:30:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234023AbiBVQa4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 11:30:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34294 "EHLO
+        id S234026AbiBVQa5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 11:30:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234005AbiBVQax (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 11:30:53 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 314C6166E26
+        with ESMTP id S233871AbiBVQay (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 11:30:54 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6940166E27
         for <git@vger.kernel.org>; Tue, 22 Feb 2022 08:30:28 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id f17so9557495wrh.7
+Received: by mail-wm1-x32c.google.com with SMTP id az13-20020a05600c600d00b003808a3380faso2358839wmb.1
         for <git@vger.kernel.org>; Tue, 22 Feb 2022 08:30:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=E38wZpp4FkHoZgeWxHWlwwjW9ujaAyYMiL9nw2foArY=;
-        b=m+O/QmbYzibJtWkfZXI0WmqfePnSMaRahcRGg6EZBLt6V9V0xvctdl4RlTU1vBUwHj
-         HFsxJ4jjIrbdqLOQZoz6hPkopz57Qfome0xibyntsqipWdvRFkvBoCylADv0UQhoGcks
-         FhDbfOpVhex8ycq19RPe5AMHjWyf3gGE6ehgXdSYwMwuXrr9pF6DJEQrsYCE7s7iuHxj
-         A/niIomIW4t5LPUJWHO511CeWNqcYgKSEc3c0XHsW9SolfzxyNr3LYFjHA+dmh3Jb3lp
-         J+9x/1IiNALLLCTJ+GjbDIece+Xbs0AwT9tBf2h/QQ0L1gbpDfCId95t/JhaMoCSNS23
-         NEdw==
+        bh=7429hhfNkiW/qxWbha+VARTUnOlAfrXqdV83gmgZ41o=;
+        b=KoS9NN/SFrlD4P1cKAAt42YV5XlzqCiJlXqaLsu6hbvN1jRbjElE01Dgkl++I/hcej
+         /1Fu/HnPlIgXTT+MoKtXvz/SWyu4/Go9nGX336OY6SVQovOa88OY68g29+MDXp90rXzL
+         wjPhAwrH6vPZ37l6i04tIWQkvaNPUUFg7ETUwFGxY9R2oDZbYieif0bvH0S4eOVNdgMk
+         WLEGVQCrN7JSAoSw+iNdL0rONBDgVhC/3y/SQIMhaK51VcLwpKsX3kxO1HrpZTaqWcCf
+         gqg20sIZlSUJ2gJsh6qMRmLzw2DHSKXOTm+5Cnen7kp8fCe6WxuURZ4TSiwF8nRyGRCU
+         CIVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=E38wZpp4FkHoZgeWxHWlwwjW9ujaAyYMiL9nw2foArY=;
-        b=yByMMjnU5wlfvUGsr55SR9BCjRiBPvXziu2twbBaoX6Oj+UJw24o75Gls2R8YJmIFU
-         rQ+WoWHjZlcE1UDF3aReQHcPIap1Em6RUdhNxoS82gf71cBkTqXJ8fqjIbTGIzBwg9zX
-         xS++ZqRHOylxd9HqsdClHfBaEPson2QH9HemZw/kk8HLPMRLdq81wGjRx3g9zvOLLnok
-         JlYVW37nMq2LkuT7H8B0DGV/ZnAN6edPqWXmnQikbqf//5WRnwoYwM5jQr37ugtmmmlb
-         /d56KdMPzUNmGaIR7BGCHdbMPnaW7F+3ZyNG+N1nH6/Q/swHrU0xf5qdQuvBFGmox65q
-         IFWw==
-X-Gm-Message-State: AOAM533cdk2SMXc55T7ZrJYygbNoP/373zJbBF7JQwfY9b+eh1v3XzDG
-        K2gXd1clToqq538hha8vMl9zUiWaas4=
-X-Google-Smtp-Source: ABdhPJzmq3f1/rpxoPZnoR+N7BURymTfwFRwDKbj8z3QTBSv/APpkPs2umttOmnHwF12Qg2LvQ/nEQ==
-X-Received: by 2002:adf:f312:0:b0:1e8:f4bb:5a5c with SMTP id i18-20020adff312000000b001e8f4bb5a5cmr19472630wro.668.1645547426669;
-        Tue, 22 Feb 2022 08:30:26 -0800 (PST)
+        bh=7429hhfNkiW/qxWbha+VARTUnOlAfrXqdV83gmgZ41o=;
+        b=Tim27fhHqI0ZVazuSpPwXQtZVZ8p8XXGDa2ypHRCIIrGCoMEIdmvD3H+asaVduplky
+         ui2O0cdf1dIltbh/ESfKddf7X9XLx4HJEgPL7hQ8UVLorOJS6ar+NQew0Fu536w4WHht
+         b8mOqMJmWBu5cJoBmEG54oEn+hcwYwDw0wj060nfiQAZ1uWzC27ZHFZ60zG7Wc08vaeq
+         qkDn5TaRkHHaQaRxzZEGPdFkMJp39H88wYzsiRe788clMYTztfICDdf/j/G+RcnjBnzf
+         VJQiksGSagtenlBeD8UbKt5quHL2XosGm/vcSGrnBOv01ggcZ4XemlAGOQWmSD/KdRtW
+         hlYg==
+X-Gm-Message-State: AOAM530E9l1U7u3mjGSBeNnVNFNzDAecwVvzKD6khw5q3aBar5on2gu5
+        CoI0HBHnUzyGAHHF8n+MzTW9vjzDpxM=
+X-Google-Smtp-Source: ABdhPJyFIrrexcsDBFa5qhrx/i/NBXqTtIxElYJpwrK/FluoukKWRDSjbJpzV6gxTIfbhnp7hhKUCA==
+X-Received: by 2002:a05:600c:1d28:b0:37c:a9d:d39f with SMTP id l40-20020a05600c1d2800b0037c0a9dd39fmr4037829wms.172.1645547427338;
+        Tue, 22 Feb 2022 08:30:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r14sm28749169wrz.84.2022.02.22.08.30.26
+        by smtp.gmail.com with ESMTPSA id z14sm2408410wrm.100.2022.02.22.08.30.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 08:30:26 -0800 (PST)
-Message-Id: <4320101f2e01709ae33f7d81c9e4caa486fd9ad8.1645547423.git.gitgitgadget@gmail.com>
+        Tue, 22 Feb 2022 08:30:27 -0800 (PST)
+Message-Id: <88d7173c86bbec7416cb43c408339c24ed015dce.1645547423.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com>
 References: <pull.1132.git.1643328752.gitgitgadget@gmail.com>
         <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Feb 2022 16:30:11 +0000
-Subject: [PATCH v2 02/14] bisect: avoid double-quoting when printing the
- failed command
+Date:   Tue, 22 Feb 2022 16:30:12 +0000
+Subject: [PATCH v2 03/14] bisect--helper: retire the --no-log option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,29 +72,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We already quote the command via `sq_quote_argv()`, no need to enclose
-the result in an extraneous pair of single-quotes.
-
-Pointed out by Elijah Newren.
+Turns out we actually never used it, anyway...
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/bisect--helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/bisect--helper.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 4208206af07..ba6d90635a5 100644
+index ba6d90635a5..71a6f8f5192 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -1115,7 +1115,7 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
- 
- 		if (res < 0 || 128 <= res) {
- 			error(_("bisect run failed: exit code %d from"
--				" '%s' is < 0 or >= 128"), res, command.buf);
-+				" %s is < 0 or >= 128"), res, command.buf);
- 			strbuf_release(&command);
- 			return res;
- 		}
+@@ -1182,7 +1182,7 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		BISECT_VISUALIZE,
+ 		BISECT_RUN,
+ 	} cmdmode = 0;
+-	int res = 0, nolog = 0;
++	int res = 0;
+ 	struct option options[] = {
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+ 			 N_("reset the bisection state"), BISECT_RESET),
+@@ -1206,8 +1206,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("visualize the bisection"), BISECT_VISUALIZE),
+ 		OPT_CMDMODE(0, "bisect-run", &cmdmode,
+ 			 N_("use <cmd>... to automatically bisect."), BISECT_RUN),
+-		OPT_BOOL(0, "no-log", &nolog,
+-			 N_("no log for BISECT_WRITE")),
+ 		OPT_END()
+ 	};
+ 	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
 -- 
 gitgitgadget
 
