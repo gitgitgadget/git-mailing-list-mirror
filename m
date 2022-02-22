@@ -2,107 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7A46C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 10:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3C22C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 10:34:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231166AbiBVKa7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 05:30:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57196 "EHLO
+        id S231136AbiBVKe0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 05:34:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230096AbiBVKa6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 05:30:58 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38DCB15AF16
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:30:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645525827;
-        bh=kzAUA81UfacFAxI8076nKvVCe2QJEOEKFr4oe670Fi8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=VGmLK2BVvXD4fvKmvkow7r3e+YTCsSjepCBXjLAQ80vS3UPx3FRH64ukI737M15Db
-         g02TtKABkR2ZSgQ5a4kVeeh/RVW9uLU/7p2vwYPVNNCUxGajDYmgyJGA83hTS/Hdyq
-         VT+hBTrxAazUx+SfgQprTWjPwpPVx2SEAv715ftI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4Qwg-1oLP3l2Txu-011VjY; Tue, 22
- Feb 2022 11:30:27 +0100
-Date:   Tue, 22 Feb 2022 11:30:25 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/9] ci: make Git's GitHub workflow output much more
- helpful
-In-Reply-To: <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet>
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet> <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S231348AbiBVKeP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 05:34:15 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B624C15B3E9
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:33:39 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id p9so32191319wra.12
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:33:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=6Lwd9TmQkHgtuyVj0Z7okVM0xaLeMfR8AFo2dR4I7f4=;
+        b=ZvGB3WmIX7jesLgqBUUXVCtoldn1M4Tbs5Ry5cMPJk1bJVI3WcTBlSM28ShdgPtju8
+         rkuCOWoxGRZZ34gtwtson58Hu2MVo3wXsHmw3Vxoc214NQnqLQmjkSNY79/SU9ugxSSm
+         tv69YMAJ4YLmKQMYtKKOHw6pPJGnof+fzv+fE6FFUeeikQumHWnVGyt1e/UF/gX0nbBa
+         uhsfW0lFtAlxy6H9GZLrig3T6osLDVis+xIQdQDgn4LWxU5rGNLNNoA/LJ/bl52ldREl
+         ZP7EW1dhdsRsShsvbdxGLDpeNEtOx7NZZUKwhYuqAUHKp1JpBhtfu81EGu3cruies5Yq
+         4Twg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=6Lwd9TmQkHgtuyVj0Z7okVM0xaLeMfR8AFo2dR4I7f4=;
+        b=H8aQJ++uAq4RPNtvr53p1DEupERnVZ/gFHTsWoJt6s2d0UCA75xQDLb4GIVsOJO38s
+         7xGkcq9nNE/j8vOOo3IhsR7gFSwiIHar7JESlrabumY40fz/Sy9M/6So0u/I+k4thDwj
+         FYLTlFwRwe3wpW+WaxOCAzIzG+7hW5rAfQD7h4uCVvEYtwGe2sfr5l8uwusjJf5uCxqI
+         CQaktSGWfMMEiyaPo3m4EP1c/ZHVvl+IGM/IqF0jkUB76fa8mdzYLv0i6INjvGSRmTvz
+         /ySN/CxRQ1gMi7gpyj//SFd4SL8zM+tgd65JTFZHIRTC+pGL/uf+ZLONoMZgsVtAkSQz
+         T1FA==
+X-Gm-Message-State: AOAM532ROC/XcCnYu5LiV1MNgZU5T28T//1qv6oi1vWiGaWQpiWbgbtu
+        ZgV6F82SCZmf7xBGHE55LAnjwXzFoS8=
+X-Google-Smtp-Source: ABdhPJwO0xemklJRLlk6uhN/QxuozlD1V3IWxM1gRiJ5Z41TNt3EtZG7G9CfNOmd00/MWvHTHjVmwA==
+X-Received: by 2002:adf:cd0c:0:b0:1e3:3910:ac1e with SMTP id w12-20020adfcd0c000000b001e33910ac1emr18671908wrm.436.1645526018045;
+        Tue, 22 Feb 2022 02:33:38 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 8-20020a05600c26c800b0037bec3c03c9sm3746815wmv.2.2022.02.22.02.33.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Feb 2022 02:33:37 -0800 (PST)
+Message-Id: <pull.1155.git.1645526016.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 22 Feb 2022 10:33:34 +0000
+Subject: [PATCH 0/2] Update the die() preserve-merges messages to help some users
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2147411772-1645525827=:4418"
-X-Provags-ID: V03:K1:0CcmjTErBhYY8JlcSHRxvu5bRYwP0vKAoKbCa2+xgq4KzDxUSNB
- Fi5mGA+vNaENQjP7IuZ70Z4Czo4RQ2nZc4bzl8DQOjUcaPBkb1B+pbJSk644/kbE9bqya2J
- r5DycX9MCn7+29McsBRnbervGx4QOqRQP0Aq4zXO88rk67zQOUrW8Bie7faJRgWIFbyI2RM
- VdpOGCJvsRiRSNhSXkbSg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:o2WfBhnYeMk=:5p9z1kLvoRkiT85j6E/TMq
- qbDVHbMly72GovzHEhWpvSvls1k+sh3PVM/RMstcQXuUMgK6Mlld40abJ57Eu7VRgXoBzIT+A
- AtZmn2wTfqZW50yIxA3SPx5PgV4CTgahUX6FekzwLPvjUMbLgtlDERfJv3R7XXlRtntYRffdC
- XE5Dw6wCgVMNsJHhSSzvGE/T+Yaa8haPvTqpD7yDpOO4izNhx+O3oraUQQZaN7Sl2uUsswU0O
- T+Ky5sCryWDe3lLYkVJrTP7d1J0Ld32YEs4j/C6NNRwZQmZJArzzbFEbVFqOKsf/4U1y/H5of
- 2kih2oi30qVprwz8GMxhSUTcWgZG6+ZS6hwtiooEvh2gSoKjzcfmRPkMLkQe4BeDR7j6UeIM/
- ywWPKCtI86sK3ZjbGxkr7pLKJDsX2H2re8zKqMFv10VNfV9svYZbMlBh1Z3A0KRxfYJlNM4Fk
- GnfKp/FagQiL/TT/CXd1XgjKYCvJVBIWxgt87lgAShEPvfqVDOhYeXfp2LdJ+V2fAFBV4sZch
- 0tItGl3jIuIWSR/M6vAUPPDrhUBBn015GMr0d8t/FQsJGdMEBT8kEXd80e7sHoC5MPVHPFdwJ
- XI3ZjlOtsVRBL6g3cve+XogtGjH9Qa+SW3ckf9TukxDwb34hUgvqonVz/SGOYYpQxqZ1rKtL5
- xR+wWIUL206Kg9ARhuRF0dGP2qwAq7euOHPS4pCWIpAyEfdWtVt+x8A/+PG8AoscJ5C1tOhQW
- 2rcSkJlt093IjWoFCHEX58VWCWlhB08lYNUBM2fZ2uhjsh3zZleDZemS9YuXn3KtXPTUlrreg
- CvSKZkcLzAEa+TprHK/fL9D/T4NonMAFX4oTrSapMflbqyuBZi9T6EtWMqymOSnkUXG63tjI3
- KiasY2vsXWAE0d3XuwH9eyYhJalsu6gjasuZVA0+GQhXAJmW5gjC61G7Gowt5Jd84dHVXgCH6
- kMGVzF/lq1jT9sL5yD5cif1THEraSWXyIeV9UlW56mRoppHcqcSWPONiv4GWC95bYDajSxvsX
- gx7CVT64d1Lf+H3ChOLD4ZQXfhWbtjiTC3pnJOK7AlcHa+LVaxHg4PSTwVIZlA9COJdm8W6st
- 4bu8hR/8RgPhYg=
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This small update to the die() preserve-merges messages is a response to the
+reported edge case in the Git-for-Windows googlegroups thread
+[https://groups.google.com/g/git-for-windows/c/3jMWbBlXXHM] where even git
+rebase --continue would die.
 
---8323328-2147411772-1645525827=:4418
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+It is most relevant for Windows because Visual Studio still offers the
+option to run git pull --preserve, therefore Git for Windows already applied
+these patches. The improvements are not specific to Windows, though, and
+should therefore also get into core Git, albeit at a more leisurely pace.
 
-Hi =C3=86var,
+This is a companion patch series to
+https://github.com/git-for-windows/git/pull/3708
 
-On Sun, 20 Feb 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Philip Oakley (2):
+  rebase: help user when dying with preserve-merges`
+  rebase: `preserve` is also a pull option, tell dying users
 
-> On Sun, Feb 20 2022, Johannes Schindelin wrote:
->
-> > I notice that you did not take this into `seen` yet. I find that a lit=
-tle
-> > sad because it would potentially have helped others to figure out the
-> > failure in the latest `seen`:
-> > https://github.com/git/git/runs/5255378056?check_suite_focus=3Dtrue#st=
-ep:5:162
-> >
-> > Essentially, a recent patch introduces hard-coded SHA-1 hashes in t300=
-7.3.
->
-> I left some feedback on your submission ~3 weeks ago that you haven't
-> responded to:
-> https://lore.kernel.org/git/220127.86ilu5cdnf.gmgdl@evledraar.gmail.com/
+ builtin/rebase.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-You answered my goal of making it easier to figure out regressions by
-doubling down on hiding the logs even better. That's not feedback, that's
-just ignoring the goal.
 
-You answered my refactor of the Azure Pipelines support with the question
-"why?" that I had answered already a long time ago. That's not feedback,
-that's ignoring the answers I already provided.
-
-I don't know how to respond to that, therefore I didn't.
-
-Ciao,
-Johannes
-
---8323328-2147411772-1645525827=:4418--
+base-commit: e6ebfd0e8cbbd10878070c8a356b5ad1b3ca464e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1155%2Fdscho%2Fdie_preserve-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1155/dscho/die_preserve-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1155
+-- 
+gitgitgadget
