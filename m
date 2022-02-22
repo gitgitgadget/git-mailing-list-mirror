@@ -2,112 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 839C1C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 07:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBE1BC433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 08:47:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbiBVHsF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 02:48:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57048 "EHLO
+        id S229713AbiBVIr4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 03:47:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229543AbiBVHrv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 02:47:51 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7272668
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 23:47:24 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id q17so34969620edd.4
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 23:47:24 -0800 (PST)
+        with ESMTP id S229446AbiBVIrw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 03:47:52 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C40396825
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 00:47:26 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id v12so31677304wrv.2
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 00:47:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=r4Z9Ge95V+LtLeaEMVfOjApYXYzV0+Kx8X7ihcqLzt4=;
-        b=WQQZIE5/VkpPjShmFbbaI+9w3jhekq/teVaDE0vGTkiIUl8r1fW6Yl4JipBEazK62l
-         dfnZNzBJHUgZZ+xhiZpw8f7/0/zWRr4djBhPmGDyN7hBu0/4XEOPF0v9pOOVCx+zWNx9
-         Bna9Xmb0xbLsBJ1UmrBGAPGz66+sP82sOhj5HlklqQd6OKL6msijijYTI2cnJF0cE0V6
-         xvSJZhGHEEMzv4DJea72LLIO5NCa8aUs/4ZlcE69a6uMPN0M1CjncfrwB9cfV0XchF7/
-         +A5LUDTXl0J7Y+JXcAACq3jDUGUP44QluxSa4eBkSHy8HV2tnFwiy0D7EampDYKRHVyK
-         mS5Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ioNY8222E/XTPcQqZg7n1UdXxL0yVndmku8l0Oudyv8=;
+        b=XwSmjE1eflBGpHy2ZQL02xmC91nDRu4by8lhz5i7pc5CLsGT7lwWj6A3E93V6ZKXzc
+         sY+mZcyMHvbtVhoZ6BXBK4mjf1irvL7yNNYKxUsPpt2HBh88np1iw9iU0RH0jZLJjI6b
+         rF9J63clxu/7LGGyqGBJGM1uKwwpmN3NIicWbtbBC3/SmUBcPPv2QkVMtVVJwtKeLZyF
+         RiLTQmw5RUrAlrXfK+kmWL689MfhzxE3HGXJSmOso5O/94KsV6nwmwH1jjmyf3ZAKSoK
+         1ato90KaUFwGilc2yLlVrTWpG3xyY13g+Ksd2SMC2UX9242EDL/SsDxNR92sJS5Y33kj
+         8Kgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=r4Z9Ge95V+LtLeaEMVfOjApYXYzV0+Kx8X7ihcqLzt4=;
-        b=XyvkFN6u2dgHVOhoF3y5Pd6PnYh96qR7Cm/G6m6eJhpdNoLKW9jb7Qlz0kT3pfwJ/M
-         D+0kw6pZHboyAVy+D5lyu91CB4ro7/bXsarGTd90fULPdTLPVLvv6yTbDs3hq/U92VtG
-         FKzRPutYkDNikVnnm9Lvkn3xcQn4XAh2bUeUknJMq7wOJ9WT+9GCPXzHEuc8OIv9ZC/G
-         7lZ37NCWsgSqs1tHZG2AMmAptbhrqCHQhVmnMCWM/+GFqOos+aHjyktIbbJttSze6DNG
-         vQPPHVz65UR4+nPG5Xqw74n+S74wQhV9V8QosyDDqXhoVIHVCn5OPezEQAylHEdSuP7f
-         6l1A==
-X-Gm-Message-State: AOAM530DTbdGWdFXNtmGZIloRnLm+mpbEPk/dLaKKvnaoyuLAsHyhmAl
-        lrkoTcto/Df+ITg8LIoFQUmicaB+hJy6jvNwm+PlQeRoa0M=
-X-Google-Smtp-Source: ABdhPJxsO4jfdrRd2/snY/MrRKzwOL49rRnJsVEIvV6GHRwD+Vs1pl8nYNLlMDj79cr8vf419ZIYuiL63KKXko8ySNM=
-X-Received: by 2002:aa7:c7c4:0:b0:407:52cc:3b32 with SMTP id
- o4-20020aa7c7c4000000b0040752cc3b32mr25020939eds.397.1645516043259; Mon, 21
- Feb 2022 23:47:23 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ioNY8222E/XTPcQqZg7n1UdXxL0yVndmku8l0Oudyv8=;
+        b=MQI8pJP2yOH7lLHTB+661GIKS0W34WiQIxhCm102XBbomC8Cd48zobTqYTLU3CYeWb
+         7LWvYFgAjDA8h921wAOD4NCpBFYCKFIgtQe0GQSg+s3WAFaPNLmKPG5DXuMiQfYyCXpP
+         IrfsgxpLDx4SC4kRndb7E9MLkT1l42bwxbfqn7MLq/s6Xm4KtRc+tx5d/pPzV1BaGt2R
+         ifJv/OnyFWgFYE8K/PYeyk2ArmKv8rHzELxIiAzR04a2nJD+XgUkV+2nk6CwhP5UnqJi
+         kzOBDcKHQyRx5+vBr8WpYMHrxgrWvrZdjYgngLrtUqRTeg7QbGf8KUWlp5JrcVa8h4oP
+         /lzA==
+X-Gm-Message-State: AOAM5329nLq3tTbnKMzXst2snqkpfTQceM59yp42siADuXxxgnEVTOqa
+        31ld9Z5SAWD9K1HD1AjBbZYKVFQDOkw=
+X-Google-Smtp-Source: ABdhPJyLpFLXq9Qfqi0WHh2j3AY9aYlzd0+c0GlnQEAl37uDa15Uomr6hFhBDda6xrWpEmqmpKXaYQ==
+X-Received: by 2002:a5d:6d4e:0:b0:1e3:3636:b104 with SMTP id k14-20020a5d6d4e000000b001e33636b104mr19347491wri.605.1645519644120;
+        Tue, 22 Feb 2022 00:47:24 -0800 (PST)
+Received: from fedora35.example.com ([151.24.56.251])
+        by smtp.gmail.com with ESMTPSA id f18sm2010636wmg.21.2022.02.22.00.47.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Feb 2022 00:47:23 -0800 (PST)
+From:   Elia Pinto <gitter.spiros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] t6423-merge-rename-directories.sh: use the $(...) construct for command substitution
+Date:   Tue, 22 Feb 2022 08:46:46 +0000
+Message-Id: <20220222084646.115147-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-References: <CAC316V7M8bziK207tuFbctAqDdz+GC8OGaxM+B0earJtqDvBSg@mail.gmail.com>
- <YhLvdjghyC+WQI6e@nand.local>
-In-Reply-To: <YhLvdjghyC+WQI6e@nand.local>
-From:   Shubham Mishra <shivam828787@gmail.com>
-Date:   Tue, 22 Feb 2022 13:17:11 +0530
-Message-ID: <CAC316V6Y6zCT1MACHnaXbh+EEmQPz4_fLRFdK90tBsdkX2h41g@mail.gmail.com>
-Subject: Re: [GSOC] Student Introduction - Reachability bitmap Improvements
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+    The Git CodingGuidelines prefer the $(...) construct for command
+    substitution instead of using the backquotes `...`.
 
-Thanks, I have started working on it. I have a little doubt, I can see
-we are using pipe with other commands too (not just git).
-I wanted to ask why we are only caring about error codes of  "git"
-commands which get suppressed due to pipe. Not for other commands?
+    The backquoted form is the traditional method for command
+    substitution, and is supported by POSIX.  However, all but the
+    simplest uses become complicated quickly.  In particular, embedded
+    command substitutions and/or the use of double quotes require
+    careful escaping with the backslash character.
 
-Thanks,
-Shuabham
+    The patch was generated by:
 
-On Mon, Feb 21, 2022 at 7:18 AM Taylor Blau <me@ttaylorr.com> wrote:
->
-> Hi Shubham,
->
-> On Sun, Feb 20, 2022 at 10:39:13PM +0530, Shubham Mishra wrote:
-> > Hi,
-> > I am Interested in Project - "Reachability bitmap Improvements".
->
-> Great! I am excited that you are interested.
->
-> > I am going through the blog [1] and I love the technique we are using
-> > to fasten the queries. I have still not decided which one idea to pick
-> > out of many mentioned under "Reachability bitmap Improvements" but I
-> > think I will figure that out soon.
->
-> Let me know if you have any questions about the projects listed there,
-> and I'd be happy to add some more details. Alternatively, if none of
-> them pique your interest, that is OK, too, and we can brainstorm other
-> potential projects.
->
-> > Can someone please tell me if a micro-project - "avoid pipes in git
-> > related commands in test scripts" mentioned [2] is still available to
-> > take?
->
-> Oh, yes. Here is a command you can run to find some of them:
->
->     $ git grep "git[^|]*|\($\|[^|]\)" -- t
->
-> There are some false-positives, but that should give you a good starting
-> point to look for potential spots to touch up.
->
-> BTW, re-reading [2], I wanted to clarify that "The git command should be
-> on the left side of a pipe" is describing what we should remove, not
-> add.
->
-> I'm looking forward to your patches!
->
-> > [1] https://github.blog/2015-09-22-counting-objects
-> > [2] https://git.github.io/SoC-2022-Microprojects/
->
-> Thanks,
-> Taylor
+        for _f in $(find . -name "*.sh")
+        do
+           shellcheck -i SC2006 -f diff ${_f} | ifne git apply -p2
+        done
+
+    and then carefully proof-read.
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/t6423-merge-rename-directories.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
+index 5b81a130e9..479db32cd6 100755
+--- a/t/t6423-merge-rename-directories.sh
++++ b/t/t6423-merge-rename-directories.sh
+@@ -4421,14 +4421,14 @@ test_setup_12c1 () {
+ 
+ 		git checkout A &&
+ 		git mv node2/ node1/ &&
+-		for i in `git ls-files`; do echo side A >>$i; done &&
++		for i in $(git ls-files); do echo side A >>$i; done &&
+ 		git add -u &&
+ 		test_tick &&
+ 		git commit -m "A" &&
+ 
+ 		git checkout B &&
+ 		git mv node1/ node2/ &&
+-		for i in `git ls-files`; do echo side B >>$i; done &&
++		for i in $(git ls-files); do echo side B >>$i; done &&
+ 		git add -u &&
+ 		test_tick &&
+ 		git commit -m "B"
+@@ -4511,7 +4511,7 @@ test_setup_12c2 () {
+ 
+ 		git checkout A &&
+ 		git mv node2/ node1/ &&
+-		for i in `git ls-files`; do echo side A >>$i; done &&
++		for i in $(git ls-files); do echo side A >>$i; done &&
+ 		git add -u &&
+ 		echo leaf5 >node1/leaf5 &&
+ 		git add node1/leaf5 &&
+@@ -4520,7 +4520,7 @@ test_setup_12c2 () {
+ 
+ 		git checkout B &&
+ 		git mv node1/ node2/ &&
+-		for i in `git ls-files`; do echo side B >>$i; done &&
++		for i in $(git ls-files); do echo side B >>$i; done &&
+ 		git add -u &&
+ 		echo leaf6 >node2/leaf6 &&
+ 		git add node2/leaf6 &&
+@@ -4759,7 +4759,7 @@ test_setup_12f () {
+ 		echo g >dir/subdir/tweaked/g &&
+ 		echo h >dir/subdir/tweaked/h &&
+ 		test_seq 20 30 >dir/subdir/tweaked/Makefile &&
+-		for i in `test_seq 1 88`; do
++		for i in $(test_seq 1 88); do
+ 			echo content $i >dir/unchanged/file_$i
+ 		done &&
+ 		git add . &&
+-- 
+2.32.0
+
