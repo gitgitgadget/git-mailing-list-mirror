@@ -2,192 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B55C8C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 16:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03969C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 16:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233009AbiBVQ11 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 11:27:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52738 "EHLO
+        id S234010AbiBVQax (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 11:30:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233885AbiBVQ1X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 11:27:23 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71FD06C947
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 08:26:55 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id lw4so44576486ejb.12
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 08:26:55 -0800 (PST)
+        with ESMTP id S231695AbiBVQax (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 11:30:53 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 614A2166E1F
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 08:30:27 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id h6so34382101wrb.9
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 08:30:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GV9VteCvrmUTyIdd7aEjASp5yyEUKOtzJVCJldQ73T0=;
-        b=FikUWf5qqYEkhtR6zEbF7EzhVKqCXWYy10dioeqfTjGfAKC1SZrxCD7E0fvTfdRrRz
-         tBPDZhpNBUPPeEzhJXddZNxivfln8ldCsORr7sJ+m8x/tftSzJ8pZQOLUbq6s/mq3hHR
-         3o/AqP5UniVsYE7oqiqSAJQGUQZSMImN1kwCDmlx7i5/cInWaevjiygnMguG856gam84
-         0sEPjNHjuGLLuxhVsPHORI2wbejZso/dJ1NEdUdh5HvbcNlMoOsBH/9Za9lmKj+Oex0X
-         WCBhmcLAZJvsHreLC/94/IqQPVtBQypDNErnC6DlW/6TyPBKoVNR6Fmji9jUaI4HmYsb
-         WqlQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=+m/aieNUxti1udp6/tuXx1EdP5Pxoaz8caGLgixBNK0=;
+        b=OELDgwph2ZrhcjWXCeXCVynGDrNvb9CbG6t8VlFbzbyPpQ1uUonHa2+QNLlw+xGz0X
+         qZ1LSAK/uMGj9B7sThH9XsRU4rEcKNBELoUnO3wuCtqMDASeann51hSq5DNPDCPr5TIg
+         3uERsJ3WQprX8E4syAe5H3p/vIDkTnItwYfdC55a/SUo64qXjtaKzoCT+W3L1apbDazY
+         8FUz/+vzdWZfAtaCs30YQ0wpg0KtpnaeFv4mVGZuxHF3N79VAxxRngmwt9bwkIOMY8ja
+         pPqeY1yp9vXZRePetMNXogv8ozFGAHubkVay0zHWJ7ag5Bks9isPDekGAa2pBftV/u74
+         eHqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GV9VteCvrmUTyIdd7aEjASp5yyEUKOtzJVCJldQ73T0=;
-        b=zPq5v1/AzpKNeNQF1c35JMVs8b8qONMafv6+fTUTyfiR1tKVk8aigwbBev8NYFp5OV
-         7GDrSwaVu/HIWqOSU2hl4oxUPsPEtEMZ32dXCYHRo/N6UI4UTr6Uj7suFgJDqcCHAE5e
-         57sPmwvMOELROxRowA2iRJ/E7nc8vDU71y+fRYH8CnKW0bml3qdoE94/W8WCbZ8C8yJV
-         09uylB5LCp1bkpo4d5BYQaKDBB0BmJsoipwwpMvgJyYlmkm8TqmxPptkiBGqc6GOs+UQ
-         53K2/5+F6plz510BRsACokHIzxLoWpSEjavedV8zLb7+noeDEPe/KxWVm23/KW2uG1tn
-         Ktxw==
-X-Gm-Message-State: AOAM530KVR3X8/MaJc80BKN8uL2I1rlCJ8z9rWz7rF9pKMF//LViPxqf
-        VKSczisZFbQQ3JN4MEFpUaCBCEK7Y1enxRHITUM=
-X-Google-Smtp-Source: ABdhPJwysRSjP5KX3PSo7+1JzzyeyYtbhtptoqddWFgwgnS8UDPOTk9ARnaDiHdn9EwpMudmPiVUyitAox9GfRJ4xjw=
-X-Received: by 2002:a17:906:3a18:b0:6cd:ba45:995f with SMTP id
- z24-20020a1709063a1800b006cdba45995fmr20590361eje.328.1645547213559; Tue, 22
- Feb 2022 08:26:53 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=+m/aieNUxti1udp6/tuXx1EdP5Pxoaz8caGLgixBNK0=;
+        b=slgXx3tfVW6u4mFd8tQQbp87U7qgAk6OURhXp0uUUpUDI84iiedZkoHVluZsjRGN5n
+         U33WKLfipD/dyD0J0hilGvGZu/lGu58G8a8kGHjiEc4zRO9K9a0Judnr4RvHc425suRm
+         1/g6eMYbLxC18LIQbL81wNy4v03FIC39Pk0iSNm6Dg6em6LW6USt1+NTsxidTBhMZFig
+         9XhuVE307YsKRu+QtfErCkFV777jEfqjd7oefQyvXSTfYMhyGiZT7IS0ZYhuOIBcemDe
+         kEmMU7bMQVLEmJuvC0IfamOh1rUYrCs6HGSWcp+bsy5mxyFCyKayJthKoSB0ECWulIfT
+         O19g==
+X-Gm-Message-State: AOAM530ELwoxmkT0nPD3TMKXeOvEU/bIiegJtu7L0xfnubzGkAgIUPcp
+        4T/CukQlCCmkciYvvct9dU9NBhAkXRw=
+X-Google-Smtp-Source: ABdhPJxpINWLHQ2RiHntkwFRzUiZYqQthIFG9qr2cG2xYVXVv6wq7/tOM27r4khC/VpDSPkRvMC5CA==
+X-Received: by 2002:a5d:530c:0:b0:1e4:aabf:ad5f with SMTP id e12-20020a5d530c000000b001e4aabfad5fmr20185110wrv.28.1645547425806;
+        Tue, 22 Feb 2022 08:30:25 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v20-20020a7bcb54000000b0037fa63db8aasm2838044wmj.5.2022.02.22.08.30.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Feb 2022 08:30:24 -0800 (PST)
+Message-Id: <81ca0d68cde6c1cfcf439b8b43016fd2b8e64d10.1645547423.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com>
+References: <pull.1132.git.1643328752.gitgitgadget@gmail.com>
+        <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 22 Feb 2022 16:30:10 +0000
+Subject: [PATCH v2 01/14] bisect run: fix the error message
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
- <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com> <02c29f920d0d5fde6d85f7b86a69be92e3f0f34d.1643787281.git.gitgitgadget@gmail.com>
- <xmqqy22tx8t1.fsf@gitster.g> <CABPp-BGpD6g5QH3=4X_dCuSX0Bs0utHn5hyuU4_UiwNhU0h8sg@mail.gmail.com>
- <xmqqh79hvsgn.fsf@gitster.g> <CABPp-BEaemkGGm0cSofP0gau7YN-y6HFoi0yJbHA8+iGjxsYSA@mail.gmail.com>
- <xmqqee3wt5g3.fsf@gitster.g>
-In-Reply-To: <xmqqee3wt5g3.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 22 Feb 2022 08:26:41 -0800
-Message-ID: <CABPp-BE+DaBkis0r7pqs-kaChCvFhCEsyDg=gs3=QjWOPERaXQ@mail.gmail.com>
-Subject: Re: [PATCH v3 04/15] merge-tree: implement real merges
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Altmanninger <aclopte@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 21, 2022 at 10:55 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > Adding such an ability to merge-tree would be trivial -- it basically
-> > involves just two things: (1) accepting one extra argument, and (2)
-> > calling merge_incore_nonrecursive() instead of
-> > merge_incore_recursive().
-> >
-> > However, I think forking a subprocess for every merge of a series of
-> > commits is a completely unreasonable overhead, so even if we provide
-> > such an option to merge-tree, I still want a separate plumbing-ish
-> > tool that does non-worktree/non-index replaying of commits which is
-> > not written as a driver of merge-tree.  That other tool should just
-> > call merge_incore_nonrecursive() directly.  And such a tool, since it
-> > should handle an arbitrary number of commits, should certainly be able
-> > to handle just one commit.  From that angle, it feels like adding
-> > another mode to merge-tree would just be a partial duplication of the
-> > other tool.
->
-> The above does not make much sense to me.
->
-> I am hearing that "multi-step cherry-picks and reverts need to be
-> fast and we need something like sequencer that is all written in C,
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Yes, I agree with that part so far.  jj is kicking our butt on rebase
-speed; I'm not sure if we can catch it, but it'd be nice to see us not
-be more than a hundred times slower.
+In d1bbbe45df8 (bisect--helper: reimplement `bisect_run` shell function
+in C, 2021-09-13), we ported the `bisect run` subcommand to C, including
+the part that prints out an error message when the implicit `git bisect
+bad` or `git bisect good` failed.
 
-> and single-step cherry-pick is merely a special case that does not
-> deserve a plumbing".
+However, the error message was supposed to print out whether the state
+was "good" or "bad", but used a bogus (because non-populated) `args`
+variable for it.
 
-Well, apparently I failed at communication if that's what you heard.
-Perhaps I can step back and provide my high-level goals, and then
-mention how this series fits in.  My high-level goals:
+Helped-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/bisect--helper.c    |  8 ++------
+ t/t6030-bisect-porcelain.sh | 10 ++++++++++
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
-  * new sequencer-like replay tool, including multiple abilities
-today's rebase/cherry-pick tools don't have
-  * enable folks to use merging machinery for server side operations
-(merge, rebase, cherry-pick, revert)
-  * do not repeat or encourage the rebase-as-shell-script mistakes of yesteryear
-  * somehow split this up into reviewable chunks
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 28a2e6a5750..4208206af07 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -1093,7 +1093,6 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
+ {
+ 	int res = BISECT_OK;
+ 	struct strbuf command = STRBUF_INIT;
+-	struct strvec args = STRVEC_INIT;
+ 	struct strvec run_args = STRVEC_INIT;
+ 	const char *new_state;
+ 	int temporary_stdout_fd, saved_stdout;
+@@ -1111,8 +1110,6 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
+ 	strvec_push(&run_args, command.buf);
+ 
+ 	while (1) {
+-		strvec_clear(&args);
+-
+ 		printf(_("running %s\n"), command.buf);
+ 		res = run_command_v_opt(run_args.v, RUN_USING_SHELL);
+ 
+@@ -1157,14 +1154,13 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
+ 			printf(_("bisect found first bad commit"));
+ 			res = BISECT_OK;
+ 		} else if (res) {
+-			error(_("bisect run failed: 'git bisect--helper --bisect-state"
+-			" %s' exited with error code %d"), args.v[0], res);
++			error(_("bisect run failed: 'git bisect"
++			" %s' exited with error code %d"), new_state, res);
+ 		} else {
+ 			continue;
+ 		}
+ 
+ 		strbuf_release(&command);
+-		strvec_clear(&args);
+ 		strvec_clear(&run_args);
+ 		return res;
+ 	}
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 1be85d064e7..720442de2eb 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -980,4 +980,14 @@ test_expect_success 'bisect visualize with a filename with dash and space' '
+ 	git bisect visualize -p -- "-hello 2"
+ '
+ 
++test_expect_success 'testing' '
++	git bisect reset &&
++	git bisect start $HASH4 $HASH1 &&
++	write_script test_script.sh <<-\EOF &&
++	rm .git/BISECT*
++	EOF
++	test_must_fail git bisect run ./test_script.sh 2>error &&
++	grep "git bisect good.*exited with error code" error
++'
++
+ test_done
+-- 
+gitgitgadget
 
-Now, in particular, the "merge divergent branches" piece seemed like a
-really simple portion of the problem space for which I could get some
-early feedback without having to address the whole problem space all
-at once, and which doesn't seem to have any downside risk.
-
-And even with my attempt to narrow it in scope, and even despite lots
-of early feedback from the Git Virtual Contributor Summit six months
-ago, it's been nearly two months of active discussions including all
-kinds of intrinsic and tangential points about the UI and design.  Why
-try to prematurely widen the scope?  Can we just focus on merging
-divergent branches for now, and cover the rest later?
-
-> But that argument leads to "and the same something-like-sequencer
-> that is all written in C would need '--rebase-merges' that can pick
-> multi-step merge sequences, and single-step merge does not deserve a
-> plumbing", which is an argument against this topic that is utterly
-> absurd.
->
-> So why isn't your objection not equally absurd against having a
-> single step cherry-pick or revert primitive as a plumbing?
-
-The objection you are arguing against is not my position.  In fact,
-I'm not even objecting to having a single-step cherry-pick, I'm
-objecting to providing it _now_, which I thought would have been clear
-from the portion of my email you snipped ("...I'm happy to add [a
-single step cherry-pick primitive] along with the tool I submit
-later...").  Since that wasn't clear, and since that wasn't my only
-communication failure here, let me attempt to be clearer about my
-objection(s):
-
-1. I'm really trying to pick off a small piece of the problem space
-and get feedback on it without unnecessarily complicating things with
-unrelated issues.  Thus, this series is _only_ about merging branches
-that have diverged, and leaves commit replaying for later.
-
-2. Two folks have chimed in about the single step cherry-pick, and the
-ONLY reason given for wanting such a thing was to create a
-rebasing/cherry-picking script which was driven by repeatedly invoking
-this low-level primitive command.  That's also the only usecase I can
-currently think of for such a primitive.  To me, that means providing
-such a low-level command now would be likely to result in the
-rebase-as-a-script mistake of yesteryear.  I think we can avoid that
-pitfall by first providing a tool that avoids the
-repeatedly-fork-git-subprocesses model.  (Also, providing a low-level
-single-step cherry-pick command also has the added negative of further
-distracting from the focus on merging divergent branches.)
-
-3. The merge primitive in this series is useful completely independent
-of any rebasing script (it would not be used solely for rebasing
-merges, if it's used for that purpose at all, as evidenced by the fact
-that dscho is already trying to use it for doing new real merges).
-
-4. Once we have a git-replay tool that can replay a sequence of
-commits, there _might_ not be a need for a single commit replaying
-primitive.  If we provided one as you and Johannes Altimanninger were
-asking for, and it turned out to be deemed useless because the later
-tool I provide can do everything it can and more, haven't we just
-wasted time in providing it?  And perhaps also wasted future time as
-we then have work to do to deprecate and remove the new command or
-mode? (NOTE: I did *not* say there was "no need" for a single-commit
-replaying primitive -- I said there "might not" be a need.)
-
-Also, since you bring up --rebase-merges, there's an additional point
-about it that might be relevant:
-
-5. While you could implement a naive --rebase-merges in terms of a
-primitive for merging divergent branches (or vice-versa, i.e.
-implement merging divergent branches from a naive --rebase-merges
-implementation), I think replaying merges more intelligently[*] is
-actually a distinct operation from doing a new merge of divergent
-branches and that you probably can't implement one in terms of the
-other.  (I'm not certain on this, and definitely don't want to argue
-the finer points on it while my implementation is still half-baked,
-but I really do think they are different things right now.)
-
-[*] https://lore.kernel.org/git/CABPp-BHp+d62dCyAaJfh1cZ8xVpGyb97mZryd02aCOX=Qn=Ltw@mail.gmail.com/
