@@ -2,124 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7403DC433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 19:39:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95AE6C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 19:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232879AbiBVTju (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 14:39:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42360 "EHLO
+        id S234764AbiBVTuL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 14:50:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbiBVTjt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 14:39:49 -0500
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09C5862CE
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 11:39:23 -0800 (PST)
-Received: by mail-il1-x130.google.com with SMTP id j5so10780786ila.2
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 11:39:23 -0800 (PST)
+        with ESMTP id S233668AbiBVTuL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 14:50:11 -0500
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59460B6D09
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 11:49:45 -0800 (PST)
+Received: by mail-io1-xd36.google.com with SMTP id m185so21636128iof.10
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 11:49:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=2+QTrdP2KadlOQNlhJ9AZZbK7Z0f1OaX2oAHMGdPnqk=;
-        b=EcGP/g/7CneTx08AN+99HO0f4wOGFygM6/9zmPYziU+Dps8p2UBfTkj8eTOFhjDatB
-         98tOV1LfFXQsqndcLxQg/BSMO5Fj3x2RE1GrBYI9L0jEsQI3XKWyzeUVgH8BjQBhmlqx
-         YF+hVRL8D/1W9wR6MbLB40k0IxesF8DSnOhmWTFacmMPScGe8QMSM1eYLVz3vfEgzRd2
-         L5EpypewgG9CUp2ESTBJfUTugPjSrw2bE9xk3IHrqiGmOAtjojnNFRh59ZQV4XpReJEW
-         f1B/poNc62wjCpj6b7IP7Rywg3BvaPx6GwRIufAJhRhkLpxGt/jie+W3y+igPxBY8vUV
-         WOXA==
+         :content-disposition:in-reply-to;
+        bh=IA77Jw9LfDj8eI3+Ev5imfNrNAkzTdq/bQHm2s01umo=;
+        b=3F8QqGpvd8TRdgXzZWu7CJuN8Oxmqq1/pHutrGV+6d9v2l5D+QANIpwGMU1FRN6Ho0
+         lwV+1xKPzDciyxC278PHT5WDaUAMbFKii0kL0phC+JIDJzj89NudjG9J6Bfoj+ueloqv
+         Arg2UgNfnmgelouOy4vFB2Lx1eimYufNIlLyeuGk7qTP1MDYU2JaN/PiZwoM5XJApmsJ
+         cu5xrdfBbdoWZIMzNQLcWLKjEMrNSHSa0+IMbH+NjJ3o0lZX08FOy0gBdajzE5/0sEgn
+         Ft4SxcUmDkVY5LraOTXtMtEKkTkkYAvznBYLpzFZbPh0HlZNyAbq04A2FWpNXx6GrgQF
+         5HqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=2+QTrdP2KadlOQNlhJ9AZZbK7Z0f1OaX2oAHMGdPnqk=;
-        b=eOTp3NVDbGePzmuuZ5lDdTVx1rArQQfts7S+R//zHAZfPjUxtWd4kPzvz200DbCbe/
-         UcYFhSWz0OYTx30JmfJiv/YpKxXVygNdtOxnEz+qvubUDSDGVUeuWuILcqzgeIXkNefv
-         pVas0o/hjqjQBabZSS9qS/7bVKbiZ6+mc/y1wnsWJEECArr2b9rgE9nPSCWhxx6Kpjbj
-         TsSNSF0CLIseietD3GeFWcOawxQAh4xXL8Eo63w9g1iZJtmrqJjW8DllOvhbUNGJ0tno
-         Lt98+WAJRE4KcsrQZmBmQ82lo0sxES4/R1Jqr86zGozS3vl7Akms4iuBjk0veOOGnlQY
-         XVaw==
-X-Gm-Message-State: AOAM530ifVkFQhGvbg+YUXyWPD1bvq1Ion0PHeGJK2w+jq3OEbmoLpCB
-        3RSMKDLZGFsD0puyT4Ilc0viNw==
-X-Google-Smtp-Source: ABdhPJzjoJxiwxzabb3PljodI/DIylGNPjc4RC2bjukEA08hc4cRtMOHvC83FpXzkPklRTzmR6qfUg==
-X-Received: by 2002:a92:ca06:0:b0:2be:85f:7d04 with SMTP id j6-20020a92ca06000000b002be085f7d04mr22396766ils.216.1645558762399;
-        Tue, 22 Feb 2022 11:39:22 -0800 (PST)
+         :mime-version:content-disposition:in-reply-to;
+        bh=IA77Jw9LfDj8eI3+Ev5imfNrNAkzTdq/bQHm2s01umo=;
+        b=kG9nR+LBj3BaMa7mBJG2g8JlSqN1rZr3KvUkNfuQyzX6syOTC9GWjncxrXim3LqcDF
+         e6KzZwzqoqANF+HkXw19o+JyDdcCcoiWfMi9+hzwv/ZC8mui9tndLyyS8lBoHa3DgvpL
+         /aR09T2g4SmJvGifPkVxWG7SX896y7HL1Qdgxk0568XUIfi5Q7tKpl5B7sUWJhiccpYd
+         rFjxdanmsc95/HmN9tB7aAt0cfmZzFlSMmhszuhK7FdiFM84e/6hLiXol4JgcLZrkZO3
+         LxMR1k0Qkap/sojdN4Q5nOy+upJJ5JbdS7Fdca2YKHNscE+i8hEFm/KEm0qm7BGltSwl
+         5rkQ==
+X-Gm-Message-State: AOAM531nTKAc53MB9m7Md1auShYMek93BcaQ/muuqGTo5KKyqtLYR3Pl
+        fN3SUJ7pMuw9ZkAvOR4oPE4mcA==
+X-Google-Smtp-Source: ABdhPJw7IYaHmcUrybrFygjmJICktan3+VSngiihZBNopyCqfBekZc7xzFWZk3alLwRIcM0CvKuyNA==
+X-Received: by 2002:a5d:87c5:0:b0:610:1e57:152a with SMTP id q5-20020a5d87c5000000b006101e57152amr20823664ios.43.1645559384734;
+        Tue, 22 Feb 2022 11:49:44 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id p8sm253732iln.0.2022.02.22.11.39.22
+        by smtp.gmail.com with ESMTPSA id x11sm360199ilg.22.2022.02.22.11.49.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 11:39:22 -0800 (PST)
-Date:   Tue, 22 Feb 2022 14:39:21 -0500
+        Tue, 22 Feb 2022 11:49:44 -0800 (PST)
+Date:   Tue, 22 Feb 2022 14:49:43 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Shubham Mishra <shivam828787@gmail.com>, git@vger.kernel.org,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/2] microproject: avoid using pipes in test
-Message-ID: <YhU76TpyP6p56/oV@nand.local>
-References: <20220222114313.14921-1-shivam828787@gmail.com>
- <220222.86pmnf6ket.gmgdl@evledraar.gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com,
+        newren@gmail.com, jn.avila@free.fr, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 08/11] worktree: use 'worktree' over 'working tree'
+Message-ID: <YhU+V+k/tp5B+NEP@nand.local>
+References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
+ <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
+ <65a0cd527118578c98a6862460caa86ecb49735a.1645489080.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <220222.86pmnf6ket.gmgdl@evledraar.gmail.com>
+In-Reply-To: <65a0cd527118578c98a6862460caa86ecb49735a.1645489080.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 22, 2022 at 03:24:31PM +0100, Ævar Arnfjörð Bjarmason wrote:
->
-> On Tue, Feb 22 2022, Shubham Mishra wrote:
->
-> > pipes doesn't care about error codes and ignore them thus we should not use them in tests.
->
-> Aside from what Derrick Stolee mentioned in his feedback, all of which I
-> agree with.
->
-> I think these changes are good, but it's not the case that we try to
-> avoid using pipes at all in our tests.
->
-> It's often a hassle, and just not worth it, e.g.:
->
->     oid=$(echo foo | git hash-object --stdin -w) &&
->
-> Sure, we can make that:
->
->     echo foo >in &&
->     oid=$(git hash-object --stdin -w <in) &&
->
-> But in the general case it's not worth worrying about.
+On Tue, Feb 22, 2022 at 12:17:57AM +0000, Derrick Stolee via GitGitGadget wrote:
+> Helped-by: Taylor Blau <m3@ttaylorr.com>
 
-Agreed, and I would add that we don't necessarily need to worry about
-non-Git commands on the left-hand side of a pipe. So something like:
-
-    find ... | sort >actual
-
-isn't a problem for us, because our test suite assumes that something
-like find will not fail. So leaving instances of those alone is OK,
-but...
-
-> What we *do* try to avoid, and what's actually important is to never
-> invoke "git" or other programs we invoke on the LHS of a pipe, or to
-> otherwise do so in a way that hides potential errors.
->
-> That's not isolated to just pipes, but e.g. calling it within helper
-> functions that don't &&-chain, but pipes are probably the most common
-> offender.
->
-> The reason we do that is because in hacking git we may make it error,
-> segfault etc. If it's on the LHS of a pipe that failure becomes
-> indistinguishable from success.
->
-> And if the test is really checking e.g. "when I run git like this, it
-> produces no output" printing nothing with an exit of 0 will become the
-> same as a segafault for the purposes of test.
-
-...yes, we do care about Git failures. So something like:
-
-    git ls-files | grep "want"
-
-would be no-good, since any failures running 'git ls-files' would be
-quashed by the pipe.
+One more small fixup, this should be: s/m3/me.
 
 Thanks,
 Taylor
