@@ -2,124 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1770FC433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 02:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D95FC433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 02:28:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231847AbiBVC02 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Feb 2022 21:26:28 -0500
-Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:51612 "EHLO
+        id S232012AbiBVC3H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Feb 2022 21:29:07 -0500
+Received: from mxb-00190b01.gslb.pphosted.com ([23.128.96.19]:52850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbiBVC01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Feb 2022 21:26:27 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CF6A25C5E
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 18:26:03 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id bq11so11987302edb.2
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 18:26:02 -0800 (PST)
+        with ESMTP id S231964AbiBVC3F (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Feb 2022 21:29:05 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CD1725C5C
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 18:28:40 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id d10so38111987eje.10
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 18:28:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=TrDD4N7586W/bnkfJLjfH7HDIbiJpGFInRq3ZYZayfg=;
-        b=fmcKgX1+1rRMmGPME0YRQgAleWsm+maAmeCj4PrbF1hP6cRg9/waC/udzMxzy8L+aM
-         CEPC1C5ElLk1tDXJCbr3Jb09NYMYZLDC/tXhXwLl3pZLE815jG02xx4tZThNTyN/pux3
-         laHx2SXK6vCFoeR84sNwjR7A2HAx5h9ScvtJepM0+cBhAYINZFiDo4JelCTH4cAadpXy
-         VhxiGoobmUSYfjy6ad6LXlmioXDFaz4+nEWKipmslC3smaOs6S7Cm47Jx0u2choefnw3
-         b2Umu1eU+bAuEoA/Mj7v7zNIT4hwmPCLgqbZkAaTyKCxjJjPqAWxX4mshboy1R7F1pf0
-         GRPw==
+        bh=Nr8uQm2Kv9XMbX5qaWayQzDj/NCsMVD2hYuL9E1ufdk=;
+        b=X4BlQJJtXHU+SOhQliMc1mLmnnVRn7U2STNOpjt90BiSNC0wsCxNSEs6oOdrfWxROY
+         t7mwIuDnKw/nD0ThIIVW6zSSTDzKN3eYcGSwFdjx8ZuZ/0B3VTuBuGUA2hGUjvq838Nf
+         tdzk+/xf3tYrIW+LEC71M+B6BBQ7AX+Lan10fYCxBgQoAq0wi7RxgaYT2Kqem7vHnAWq
+         ND8klWD5dJ3KcNiqRT3v3zHtqxeMvwlKn9H16wz1EMj4H42XbM3Ej3uX9Jf7c585N8Nc
+         ttE9LjtMywoNYm3jYPS3OfQ5E0E3Q/qu6gxm/7v+ju/pd86GV+GFxz8Y7d0imQ8ZgmYm
+         k60Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TrDD4N7586W/bnkfJLjfH7HDIbiJpGFInRq3ZYZayfg=;
-        b=D3Rp9kSJenuURvPY5jdtR7B6mRR50it4f650qx1k75MagLUvm2dXc295CnybKla9Eb
-         f+1cLzpxNQHV250mYy4n2wMmv9RYqUGqsrDpZnHyhGKM1KyfDHGIftNXfSUkOl43Eueo
-         tl8hDUIty8ZuF9rVotIsjRtViXHUJJOQryIQj12k/rfoo57rp6rRGk5AaNil2YMib457
-         mmqqMsSGC1NNCFzATzLuph7ZZL/bvrZdYT32jBpaX6/j4ppW4+DyzYOZsb/1yKoDTLwf
-         irNapc+Ro5SXVFYiITyx9vTGxag5AiUhzauuPRjPYmYwYSoru6MxIYzs//jmp1kBl4nN
-         pR4g==
-X-Gm-Message-State: AOAM533M6m316kIt6YdXXoLtHSadTwAAZF/SkKFL7pbEOZikysYjn8N7
-        h9ORrZ9qnINzkqaIeN8DR5t53EoWKI/FNc5LUfE=
-X-Google-Smtp-Source: ABdhPJy8VDgLMOM0JZp82AZAzt5FSjp7nGcN3V2cT4KsSfbnoW6mDoWNTmxO7LPJ9xMkws/xmpTDqd5QBt0mprQz3Io=
-X-Received: by 2002:a50:9ea2:0:b0:409:5438:debf with SMTP id
- a31-20020a509ea2000000b004095438debfmr24275271edf.126.1645496761627; Mon, 21
- Feb 2022 18:26:01 -0800 (PST)
+        bh=Nr8uQm2Kv9XMbX5qaWayQzDj/NCsMVD2hYuL9E1ufdk=;
+        b=yIMJfcECGC+q5QBsDqtM3ah2EsoAaxTTw6OT+jwhCeKBemqnHEUWh8erJ/K6NPyFvP
+         qWnFFnhLnAZ3lUs82J5x1FgPq4nRIFOG9R8HtMe8E2nsAKzPrrR0e0AsD0gJWn9cUXYy
+         Lxaot8OR35SQuylXmtXBQVB9xulvirbkAk9ngFijnUT/ofkHyrfT1FbAY4KxO0WMTQgR
+         +oO+quNZX6aQCZDuz+t7DpcDOic4Tf9tLrZDkYDh/XQJmDazyWNKXJGTQdokSQSywjwn
+         m8p0K8083kyPujkSJG+yjWLWpYCEAPEvnXlP57svpWMLbr5m4J7tRca4HVa+g9FiCcqi
+         GkvQ==
+X-Gm-Message-State: AOAM533WusMfztyCl9neHByraO9Z5lIb1pegx0Y9OIXf1Rn3VW4DOniK
+        ANyWzKSKsfnEgFLBrrlaJZihbrh85iEmo9m5fSc=
+X-Google-Smtp-Source: ABdhPJxSWqlXr4h53NpJMCjoQqHkwmmjzbPC+f04CifLAyodtwS9VnXb/xVjXPxnCDGDJM1GhL1W+0KbojqmrDKYoO4=
+X-Received: by 2002:a17:906:a855:b0:6cd:ba20:39c5 with SMTP id
+ dx21-20020a170906a85500b006cdba2039c5mr17306921ejb.100.1645496919098; Mon, 21
+ Feb 2022 18:28:39 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1153.git.1645333542011.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2202212100080.4418@tvgsbejvaqbjf.bet> <220221.86a6ejakun.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220221.86a6ejakun.gmgdl@evledraar.gmail.com>
+References: <pull.1122.v4.git.1644698093.gitgitgadget@gmail.com>
+ <pull.1122.v5.git.1645340082.gitgitgadget@gmail.com> <7994775a9341b256d1ea7dfc417bb577d9a3195f.1645340082.git.gitgitgadget@gmail.com>
+ <9b65e743-729f-6449-b7ef-c8c9fb130221@web.de>
+In-Reply-To: <9b65e743-729f-6449-b7ef-c8c9fb130221@web.de>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 21 Feb 2022 18:25:50 -0800
-Message-ID: <CABPp-BHmU8-a+McANE2bdAndGEtVudr74FHEEj6K6NwYECEZ6Q@mail.gmail.com>
-Subject: Re: [PATCH] Provide config option to expect files outside sparse patterns
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+Date:   Mon, 21 Feb 2022 18:28:27 -0800
+Message-ID: <CABPp-BESAh6wLComJoYsf7Q7NF2EMPptKRhfAoy=1-ZRZovnaQ@mail.gmail.com>
+Subject: Re: [PATCH v5 04/12] merge-tree: implement real merges
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jose Lopes <jabolopes@google.com>,
-        Jeff Hostetler <jeffhostetler@github.com>
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Josh Steadmon <steadmon@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 21, 2022 at 2:57 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+On Sun, Feb 20, 2022 at 1:03 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
 >
-> On Mon, Feb 21 2022, Johannes Schindelin wrote:
+> Am 20.02.22 um 07:54 schrieb Elijah Newren via GitGitGadget:
+[...]
+> > +     /*
+> > +      * Get the merge bases, in reverse order; see comment above
+> > +      * merge_incore_recursive in merge-ort.h
+> > +      */
+> > +     common =3D get_merge_bases(parent1, parent2);
+> > +     if (!common)
+> > +             die(_("refusing to merge unrelated histories"));
+> > +     for (j =3D common; j; j =3D j->next)
+> > +             commit_list_insert(j->item, &merge_bases);
 >
-> > Hi Elijah,
-> >
-> > In addition to Stolee's feedback...
-> >
-> > On Sun, 20 Feb 2022, Elijah Newren via GitGitGadget wrote:
-> >
-> >> diff --git a/config.c b/config.c
-> >> index 2bffa8d4a01..68e877a1d80 100644
-> >> --- a/config.c
-> >> +++ b/config.c
-> >> @@ -1520,6 +1520,11 @@ static int git_default_core_config(const char *=
-var, const char *value, void *cb)
-> >>              return 0;
-> >>      }
-> >>
-> >> +    if (!strcmp(var, "core.expectfilesoutsidesparsepatterns")) {
-> >> +            core_expect_files_outside_sparse_patterns =3D git_config_=
-bool(var, value);
-> >> +            return 0;
-> >> +    }
-> >
-> > The `core` section is already quite crowded (for which I am partially
-> > responsible, of course).
-> >
-> > Maybe it would be a good idea to introduce the `sparse` section, using
-> > `sparse.allowFilesMatchingPatterns` or `sparse.applyPatternsToWorktree =
-=3D
-> > false`?
->
-> There's a large list of exceptions to this, but generally we have core.*
-> for cross-command configuration, and <cmd>.* for command-specific
-> configuration.
->
-> Excetions include http.*, mailmap.*, pack.* (arguably), trace2.*.
->
-> In this case though we have 2x /^core\.sparse[A-Z].*/ variables in
-> git-config(1) already.
+> This loop creates a reversed copy of "common".  You could use
+> reverse_commit_list() instead to do it in-place and avoid the
+> allocations.  Only the copy, "merge_bases", is used below.
 
-Those wouldn't be an exception as worded.  They are very much
-cross-command configuration variables, affecting basically every
-command that touches the working tree.
+Oh, good catch.  I probably should have been aware of this since
+someone requested I move the reverse_commit_list() function from
+merge-recursive.c to commit.c as part of my merge-ort work, but looks
+like I forgot about it and copied this command snippet from
+builtin/merge.c instead.  I have no excuse.
 
-> So perhaps we could name it like that, then at least you'd find all of
-> these in the same place when looking through that documentation,
-> although a name starting with "core.sparse" might not be otherwise
-> ideal.
->
-> There's also no law that says we can't have a three-level variable as
-> core.sparse.*, perhaps that would be the start of a good trend, and it
-> would sort adjacent to core.sparse[A-Z].* ...
-
-Interesting thought.  I'm curious what others think of this.
+However, I wonder if that means we could also apply this
+simplification to the code snippets in builtin/merge.c and sequencer.c
+that you can find with
+    git grep commit_list_insert.*reversed
+?  Maybe #leftoverbits for that part?
