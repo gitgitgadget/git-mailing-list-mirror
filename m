@@ -2,92 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48F15C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 14:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F41DC4332F
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 14:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232591AbiBVOFD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 09:05:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59888 "EHLO
+        id S232521AbiBVOHO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 09:07:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231978AbiBVOFC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 09:05:02 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06698127D5A
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 06:04:37 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id l8so15693115pls.7
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 06:04:37 -0800 (PST)
+        with ESMTP id S232421AbiBVOHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 09:07:13 -0500
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF3FDF7
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 06:06:34 -0800 (PST)
+Received: by mail-qk1-x735.google.com with SMTP id t21so15676811qkg.6
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 06:06:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=YBlm+2HPXOnC7mLH5l+Qfon6M146F/VKrcUEPT90Zz0=;
-        b=h+/YhPpyGaDmfSRfxud9HRLIo6aMOF29YNnMIvkUssenYhJkQoPswDFhtsqckSZYSk
-         +FabzEMuAa717XnckvRqQkOnuq8EazXOMLoAlNh6mbJ53HLRqPk6YGcXzMMnvLMlF+TI
-         RhK4hin0mcDFt6HddOyimuDDgqWjeN0uUYjqRZ0kHMyujiy44PhgAFOtbAmx16m9FjZT
-         TX9gwKC2mXtAMek64b3kc6eJl4cQJ90NJaLlHCw7TX4tNzmmRz13ndfSYtjU1NJzken+
-         1wd+RwgyT9ugGz0c9yVblrfzE58VCmhjOQB9nydWiC1ALrNTqUhF+vNOY/Po8McsFho8
-         BgKQ==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=ndaG9E8c5iUlwzPTyCjVUaBSL6/9Phl5ya1e0Sp5ITU=;
+        b=M7ikTlh6fgSh0MtzgWD/HHF9sGVBtlecb3xtNTF0PX7Ly16D21/1ZYvMnSRE389sms
+         6ja0RQ7b/OWDO8AobmpG1sQ1lbx/qrD866lZ52IrouMk2/ln4wwD1p6rkacMe17Bf4mp
+         WPY1nHuor0HwmZLDaYmPoci5PiUhvi145+aPFW+k9DflPjz8rIcaZsq4PUlblxFDhLXC
+         KUn+Ev80SZhIvC8NWHC6+hct8Bu05gxV7EORQAGQfMmyXpdBm29XmeK1sXhOJirHtH48
+         ZmNSwH9Il5hSmbjA/dCDktDLeuMTxnatJ5jU/pQ0zpMfPe4JsTIi9D+kYVS91heIdEvB
+         SHOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=YBlm+2HPXOnC7mLH5l+Qfon6M146F/VKrcUEPT90Zz0=;
-        b=zwg8TXfKpMYp0mOx+538X3/nhpogt/SmBeMKtygHJFuHxmFUftA68EmD4gqel0JT4U
-         lWoz+F8Vb0uQBeT+AsfQT6kdg1aBns4NIVxaSrTgGTOeaOSyUSOZWDhgFRowyj3SwqWy
-         cK5fF13+u5E7QXl6vEFvnhDY+4NANs4KnDFY4oCon4UJUOkymC/kMrJIocK9cFNaddyJ
-         52E9qeHQaBBO26UuClhJOMZAIHVoCmznM0RYFgcxqQKmm5RQlrByjoiIE4HD07tN6HBL
-         0OUmong6YX/gGVKSAHjxnPRCNz4GmzJzix7aTT49ZhcJOo4wDanN7SqCUUBPjycofXoP
-         fGPA==
-X-Gm-Message-State: AOAM533FZdkLShZw2XN4EJ8NqPmM4Y5ZenoXoEbKRFqOV+/nok7jhurc
-        mH3+tgD1H4sXvEWKlDCE9vs=
-X-Google-Smtp-Source: ABdhPJxG+3dCuMJo4z4e0wPJMNv4raBrwNp0IiZ6m639F0KmwbL2ZfmokgQr2SCTfyl8siwzh61O4w==
-X-Received: by 2002:a17:902:ea81:b0:14f:a4ce:ef79 with SMTP id x1-20020a170902ea8100b0014fa4ceef79mr12219777plb.136.1645538676310;
-        Tue, 22 Feb 2022 06:04:36 -0800 (PST)
-Received: from localhost.localdomain ([202.142.96.56])
-        by smtp.gmail.com with ESMTPSA id s11sm18087116pfk.8.2022.02.22.06.04.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 22 Feb 2022 06:04:35 -0800 (PST)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Julia Lawall <julia.lawall@inria.fr>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH] add usage-strings ci check and amend remaining usage strings
-Date:   Tue, 22 Feb 2022 19:33:47 +0530
-Message-Id: <20220222140347.85321-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <alpine.DEB.2.22.394.2202221436320.2556@hadrien>
-References: <alpine.DEB.2.22.394.2202221436320.2556@hadrien>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=ndaG9E8c5iUlwzPTyCjVUaBSL6/9Phl5ya1e0Sp5ITU=;
+        b=IvGl2c85FI4f55UdI3ZPzDa4R7i4JYiGPOBI8kyBa/AVXPcIiVVMKFrtBE5RtO9axC
+         D5095yHuPdckgzs4odVtq9BsNcN41l6fkAGQv1FqJvcJYpV9d5cGnbAepBNYG/EpBPXS
+         OrmFe/sDTxLuaSvCARG05sfIig0R5rwRfGVV0dmT+cjhOdiIhjhc6qf8jzWhlj3e1UuK
+         bZ2BqlRoDJocrzLHO9dNKDy3Ql2vyBvdkIc5MQaDaakn9UZXKyvlNQ9PykRBoWYLQ7Sf
+         AsWRB5Q6eEJUTryM8v5lZ8euu+X97dpOlCFkY/PBtldVwEnJaRa63RSokM5jSs4MzeCS
+         Xj1g==
+X-Gm-Message-State: AOAM5338CedrlQhDOPNnaOJZGfA1t3onNZHiuNnARNii3QOSuIJ9xLb9
+        oXFVLBFx9+nVYRE4K7rI1P1ItlMrFenh
+X-Google-Smtp-Source: ABdhPJyACOSpLlitWf3+86pNPtt8Ss7h6LPKaO7F86xShw9mTbox7GdCCvbSr9nrMjd5J2xLqVJ/Fg==
+X-Received: by 2002:a05:620a:111b:b0:648:fd03:c029 with SMTP id o27-20020a05620a111b00b00648fd03c029mr4212727qkk.314.1645538764351;
+        Tue, 22 Feb 2022 06:06:04 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id p14sm10093915qtn.93.2022.02.22.06.06.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Feb 2022 06:06:04 -0800 (PST)
+Message-ID: <d9634657-1cd1-7daa-0b95-85b540f0dc75@github.com>
+Date:   Tue, 22 Feb 2022 09:06:03 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH] t6423-merge-rename-directories.sh: use the $(...)
+ construct for command substitution
+Content-Language: en-US
+To:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+References: <20220222084646.115147-1-gitter.spiros@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20220222084646.115147-1-gitter.spiros@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Julia Lawall wrote:
+On 2/22/2022 3:46 AM, Elia Pinto wrote:
+>     The Git CodingGuidelines prefer the $(...) construct for command
+>     substitution instead of using the backquotes `...`.
+> 
+>     The backquoted form is the traditional method for command
+>     substitution, and is supported by POSIX.  However, all but the
+>     simplest uses become complicated quickly.  In particular, embedded
+>     command substitutions and/or the use of double quotes require
+>     careful escaping with the backslash character.
 
-> Of there are some cases that are useful to do statically, with only local
-> information, then using Coccinelle could be useful to get the problem out
-> of the way once and for all.  Coccinelle doesn't support much processing
-> of strings directly, but you can always write some python code to test the
-> contents of a string and to create a new one.
->
-> Let me know if you want to try this.  You can also check, eg the demo
-> demos/pythontococci.cocci to see how to create code in a python script and
-> then use it in a normal SmPL rule.
-> ...
-> If the context that you are interested in is in a called function or is in
-> the calling context, then Coccinelle might not be the ideal choice.
-> Coccinelle works on one function at a time, so to do anything
-> interprocedural, you have to do some hacks.
+This message has some strange left-padding. Could you reduce that
+whitespace for the majority of your message? 
 
-Thank you Julia for this helpful info. Looking at your description, I think
-the `add check to parse-options.c` (that Ævar suggested as the most ideal
-method for it) method is more simpler than this. Moreover,as this is only
-about checking usage-strings, so adding complexity to it will not be a
-good idea.
+>     The patch was generated by:
+> 
+>         for _f in $(find . -name "*.sh")
+>         do
+>            shellcheck -i SC2006 -f diff ${_f} | ifne git apply -p2
+>         done
 
-Thanks :)
+Having some left-padding makes sense for this example.
+
+Also, thanks for sharing this automation!
+ 
+>     and then carefully proof-read.
+> -		for i in `git ls-files`; do echo side A >>$i; done &&
+> +		for i in $(git ls-files); do echo side A >>$i; done &&
+
+> -		for i in `git ls-files`; do echo side B >>$i; done &&
+> +		for i in $(git ls-files); do echo side B >>$i; done &&
+
+> -		for i in `git ls-files`; do echo side A >>$i; done &&
+> +		for i in $(git ls-files); do echo side A >>$i; done &&
+
+> -		for i in `git ls-files`; do echo side B >>$i; done &&
+> +		for i in $(git ls-files); do echo side B >>$i; done &&
+
+> -		for i in `test_seq 1 88`; do
+> +		for i in $(test_seq 1 88); do
+
+These changes make sense. Thanks!
+-Stolee
