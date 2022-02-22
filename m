@@ -2,34 +2,36 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95205C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 12:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7467C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 12:13:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231138AbiBVMMA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 07:12:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35898 "EHLO
+        id S231368AbiBVMNi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 07:13:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229691AbiBVML7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 07:11:59 -0500
+        with ESMTP id S229691AbiBVMNg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 07:13:36 -0500
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14151DF20
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 04:11:32 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6429331348
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 04:13:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645531889;
-        bh=g9sTG4rIUye9w+0Bb7LRK7DChi8f0NkA7Yjjq1yIkkI=;
+        s=badeba3b8450; t=1645531988;
+        bh=Bh5rll44DCTLK1/5n1461pQRkLYaGspaB1n27vy8Keg=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cXqT33vR5bRuKFSmVPoa3x/6XLNVje3Zi41C4W1nVasdPAUc2jSEmgZEqH4kPB9eL
-         7dQalIrOT9VegUq69Bmjr8uOMSg104t3vGh3gFQULX5RXwRoIHSxSQDWrQlCEeCoLE
-         CHB1HtzwNJoT+f0npXfninjigCjclyvQXM4RC2G8=
+        b=CGa2N36kS2gmg/JeBGM9+BW1uYDbQCj6kwsTwolccop9ZcPikoUj/YOcLl3XbKvSm
+         iUhEFjtuVMswtaT2ckK6aOHGohK3dX90FxDE3UN/5iEo2YKVk9hy7XCn17BzxUg9Eg
+         JRwc4lF0SmK79Kw8Jr7lIAZFMuffZ7hF2nv9PLJ0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MjS5A-1o78IN1Il8-00kzW7; Tue, 22
- Feb 2022 13:11:29 +0100
-Date:   Tue, 22 Feb 2022 13:11:27 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTAFh-1nomXT02Yh-00UYaS; Tue, 22
+ Feb 2022 13:13:08 +0100
+Date:   Tue, 22 Feb 2022 13:13:06 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Elijah Newren <newren@gmail.com>
-cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
@@ -37,99 +39,65 @@ cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Jeff Hostetler <jeffhostetler@github.com>
 Subject: Re: [PATCH] Provide config option to expect files outside sparse
  patterns
-In-Reply-To: <CABPp-BH_fJYWSySh_-Pk5w2j7U2q4CAXi_mEextmmd4YBXOiGg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202221309220.11118@tvgsbejvaqbjf.bet>
-References: <pull.1153.git.1645333542011.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2202212100080.4418@tvgsbejvaqbjf.bet> <CABPp-BH_fJYWSySh_-Pk5w2j7U2q4CAXi_mEextmmd4YBXOiGg@mail.gmail.com>
+In-Reply-To: <CABPp-BHmU8-a+McANE2bdAndGEtVudr74FHEEj6K6NwYECEZ6Q@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202221311480.11118@tvgsbejvaqbjf.bet>
+References: <pull.1153.git.1645333542011.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2202212100080.4418@tvgsbejvaqbjf.bet> <220221.86a6ejakun.gmgdl@evledraar.gmail.com> <CABPp-BHmU8-a+McANE2bdAndGEtVudr74FHEEj6K6NwYECEZ6Q@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:YS3NioYWImJitzg5l5GjV5MgCRli+olw0fvTbta0apOd/YTphJH
- kHTSX6B7kIfr7YSHgkmUFScqckHxLKs30vmvdrU2Au0J9OAg9vcJZA24i8r9T+bdNA3zVr2
- I25yS86iwl6lvl+fcf9j6Hw1Z6Md2itkL4SaPogOLtU76dfKnPJOuCLTmo5zfpeMhOPHYpv
- a/JF6dKDnXQtk+Ur9KceA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:erIoGk1MVy0=:4yWSmyvZQIUA5u3+sbcVSK
- mpO1tewVOPVuJW5HLVDjsDmQFv0Fn1XpNHOx9AHXc/dqmxZ6XKwP4AzerkIftGRKt5n5d4O7t
- 2uCuw21N9NzAF5OMLYFaJ7Cvr0SdpPJwhwijntdQ0FmNnIBNzWHgQilp8rUFbVpxBt/PvEuwb
- fAzWHHq3S/m6p0aC1HpBJcOdYNTkEXrkaFvGceZ/07fPYR9g8FI+ytNhue0hXbrfwbM54kcbo
- Ow+2AG5HazpGXr1cb18WWftZekiIAMztHQqHC0zS605LOj42/X6/mL6ptTL2nGcVYI6adGRG1
- kO5YUvLiRjECXxWVpkrZnzvE2zxumzk34UhSO7JmbgjeqyzqCxFMvesIwF5wlkcbDQbLyWBTm
- zLhPPIX+xVbZY8i2O889iTKEQE4UGZ9snQbzrOZJltKnF86GmWdCjNRmCe2QRfo3Qfnsh7mOZ
- CZtDE8QOCAXyn91M+We9sUQEHecz75p+1tr0MpolnPMaHl/kM1fEoNpHHMxbF3dAZMHP+P3Ta
- /kQfWWqTDHcTp6ozGESrWB+ZimodKjPPQY7x/vjIBjLxh5lTzt+jGEPlyRMgkcTjvszPWHZAO
- IiK5P0GyAul2WFVTYZLwnkP5MzSfsVTnqLXV5bBGhZLl1pivD9TYs+NnmPUzhiHDHsEDH9bKF
- CNPlrS0MS4ZTQCZssup/lPCaOxYTzr5Z4u/UdgR7MAZhI/Rm1im9U8Lxg9nFuZ5v0D+N8TupG
- WV1RpqNhAgmauww70f4EwB+98+P7jQafGxI04j3jQnvV8SV0+lhFZR+WdnplEINaZblo5E7lv
- FC1aidTBNTIWSEv45D8b8tRkPXxP0NIt5g+V9coCvQvohyqIAUlNv77qDRsYjVjhyVe247sAK
- Sx/heq73KPAhhcTZG1lRjEWnMAgRGd8+RS8dlyPYwKTGuiU2EhkrsR5Q1Scivr1V7JCW4NnZJ
- otXCYPPNUbB3uM5uUeoHNC1y7OIpWHijZCnBjAUQ4YmFGZIMTuPajjgrBU8sRLZtjB49XO3PG
- JjsZQXs4ZbiMo5Qr3Xzi3+PJzzDyXt4h7Sejc7FNRZDtaJoc3awRBfy5LKOTOgMBhyYkQb1zi
- u3QGM2ILbT2fwY=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-432541242-1645531988=:11118"
+X-Provags-ID: V03:K1:v9MDPvzUMiXg4V88jU8W3xIsGhZnoL7mdFG7rFI/Ro6+gwHwXgH
+ 3l0SzmcU9n+gtBwYzMQVs2TUz3+DCHibQyHEZXLB3a3fDSxPux402yUeohQUxHKvWnA19kv
+ QbE35xnLAy+1Sb6Bx9HOsf4EnclgsKjgcShLQfTTWQp4GBBtODvHd5EPMe/jfxfNawXOXva
+ V9QRAdhXEGGJwLkbbfTbg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OMslHKqELuE=:21B34OGmlO6ZTJjZsC1YXm
+ vdDz3fUiQy0/Cqj2waogIvMsVgdx7Wpfav/xstuJqaAXoAuZQ8hsv/wXqYHnAD5QNwcJSmJ7B
+ 1+bhm7kB77EP9hY5vErIMNcBhy4LAANJRE+76fPnJ3nGDxVQ8N79Di1iabt7ta7VsnnUcITtV
+ xwQ+R11ipBOmCswGWRfG4HRk2c3caSIFElxrKalL1/9AfAkQE2ToaFKPPOuMEVmmawMqdLgv4
+ ttRlfYzzuyEhy7CV+DxE1g+or4rA+3pYp9p7ETCvDlqNxnoQbp/+S9WqkIZLT+YMQF6VRmelL
+ RK5CwrBvtjI+KfEmT2JmWRi5O33Uut27UABiaEGTko2MasGAGIO5k7sS00wlD3HPo3l2isPPI
+ XljePHkDB7gr+OGBLp6NAQdTJRlhHvZXAwzt+4J/Wq8SBii7grPTp1WCnWypvUGTTcOn0NGXf
+ CmF7Uj/XPdGx0d5FuhWET8oz5TK4px1szLDSyHuokJo5rdLxxwEIFLTEj6BY41dwihVALjcPr
+ HGyy2MxVeMrfapRQXaQM2QWnRR7GlNO0hyR342uBFSVpwemQlMS7H/EM9DTjTpXFIje5lAoDU
+ ghxFd2HQe2cUljMo+FJHxJQc7gbo/ZKv+ofTKYbAfKd7nAZDrCziEOVf8OdCbUW7aUop/ffr9
+ IMjB7Hy8sS1semaCk5pQZtxlDdM+xClhecBeDA4bhvVXPKpgHTkoQ45Lrree7pxr7l1hKIPp+
+ coSrIJ8jC1iW+0cllcBIwUKJqlPWfwwG3GMXnH/q3HAHyLtKDf22v5u8UF/UpJLh80aSO4qRt
+ llJRcGR3UD27L76PWGuDF3gC8fxMabaKLU5kAffuTKAwBr71pLAfYAJyjVAXuq80K9saqGYd8
+ iau4AxCvO7eRv3HTk3GKNG47g+u1LTX10Bz+D07ydd7m5F7BhdAtn/isAXC2dzZC0Q2F3+OUA
+ ZIoURmYJskL64QPjK9EI2Uzy4ySKi7nMyMpJA4COizDFyySiHWftv9n4RW+EjqeW9guCTJwip
+ TqAZt9mIpU6MhTJ1/sLyLEU7JaJjGc74CscPnb/DR9ipBZmfOXmF4/RHIeohDj0MhXmUEo5Wn
+ bTkxl/E6xfJwXU=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-432541242-1645531988=:11118
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
 Hi Elijah,
 
 On Mon, 21 Feb 2022, Elijah Newren wrote:
 
-> On Mon, Feb 21, 2022 at 12:34 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > In addition to Stolee's feedback...
-> >
-> > On Sun, 20 Feb 2022, Elijah Newren via GitGitGadget wrote:
-> >
-> > > diff --git a/config.c b/config.c
-> > > index 2bffa8d4a01..68e877a1d80 100644
-> > > --- a/config.c
-> > > +++ b/config.c
-> > > @@ -1520,6 +1520,11 @@ static int git_default_core_config(const char=
- *var, const char *value, void *cb)
-> > >               return 0;
-> > >       }
-> > >
-> > > +     if (!strcmp(var, "core.expectfilesoutsidesparsepatterns")) {
-> > > +             core_expect_files_outside_sparse_patterns =3D git_conf=
-ig_bool(var, value);
-> > > +             return 0;
-> > > +     }
-> >
-> > The `core` section is already quite crowded (for which I am partially
-> > responsible, of course).
-> >
-> > Maybe it would be a good idea to introduce the `sparse` section, using
-> > `sparse.allowFilesMatchingPatterns` or `sparse.applyPatternsToWorktree=
- =3D
-> > false`?
+> On Mon, Feb 21, 2022 at 2:57 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
 >
-> That's a fair point.  At one point Stolee wanted to change from
-> core.sparse* to sparse.* -- but by that point we already had users and
-> would have had to deal with a bit of a migration story (and wondering
-> what to do if people had both old and new config variables set
-> inconsistently).
+> > There's also no law that says we can't have a three-level variable as
+> > core.sparse.*, perhaps that would be the start of a good trend, and it
+> > would sort adjacent to core.sparse[A-Z].* ...
+>
+> Interesting thought.  I'm curious what others think of this.
 
-Right, migration is always hard.
+What would make it `core`?
 
-And it's outside of the scope of this here patch series, of course.
+In other words, while it is valuable to consider this option, I don't
+think that it solves anything, for the price of additional complexity.
 
-> I'm not sure if it's optimal to try to keep the sparse settings
-> together (thus put new ones under core), or try to avoid filling core.
-> I guess if we moved towards sparse.* now, it might be an easier
-> migration story if we only have two options to move.  And besides,
-> we're already split between multiple sections with
-> extensions.worktreeConfig, core.sparseCheckout{,Cone}, and
-> index.sparse already...so maybe adding one more section would be par
-> for the course.  ;-)
-
-FWIW as a potential #leftoverbits, we could migrate those to `sparse.*`
-where `sparse.*` would take precendence over `core.sparse*` and the usual
-deprecation notice would be shown via the `advice` mechanism.
-
-> So, I'm leaning towards sparse.expectFilesOutsideOfPatterns, but I'd
-> like to hear Stolee's thoughts too.
-
-Indeed, his opinion weighs more than mine on this matter.
+Let's not go there.
 
 Ciao,
 Dscho
+
+--8323328-432541242-1645531988=:11118--
