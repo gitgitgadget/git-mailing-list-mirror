@@ -2,122 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02755C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 15:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F253CC433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 15:49:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232573AbiBVPlr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 10:41:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34178 "EHLO
+        id S232159AbiBVPtu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 10:49:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232535AbiBVPlq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 10:41:46 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC062163055
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 07:41:20 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id s14so20523379edw.0
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 07:41:20 -0800 (PST)
+        with ESMTP id S233710AbiBVPrz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 10:47:55 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 668C245040
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 07:47:29 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id g1so12451765pfv.1
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 07:47:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=KTdD4i4fMsW17UGGijKNj3P9orBFCT7ErBZSp9p+slw=;
-        b=aJXmoumlg6Nu4x4d6/ShvDrrg9xWcr3hEFoONwKJhwDMc4LjNdUsbMHTuJpNUsREca
-         ekswHYARp/5rgCmZtwVynB4VWUDXWxApwzevKBKYodeLrcDNByBMqF9it8Ookq2PqXUm
-         M7G+ScKNscnjwf3LuJG1oCyWtS6WdRxTGkZmH9/WRPnibBwtOZOHOpMk1AAr0kMoxqQ6
-         2oL4Eo7nZVpgni+oZMVoFyTeGPFwYdTzWwzttqSMPlPendwkMZ6vgAx+6UCxk5ckU+/B
-         VkGrvHExIT1CM4nKdWct1fpSl4xPyrFPN8RyObnt0QZH1VzQKzI7AkRdi00Zq02srLp2
-         KRSA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=A0j9BQaQCfCrPquhl+ggWosPOYpVn7RK9cQOrRe5QIQ=;
+        b=Ayx5fJ3Wt7nQZ/U/atv66gSxh+9xpRbpvsskMDz+g6NFn3ox4ueKd6R6vAghBDWnI8
+         bDyfAnwsTUhw/vwKgGYAmdvqBZUkHvPuBRFJtkyy1z1Nuk6yWGIURk9rojurdbtIo1Ns
+         PwV9AwtrkmS9CUjwQLxjIcSrHxqUK4txViqc1+UCMNZ3ehCUUHkv8rh+XKRhKty5w/LK
+         Pxwyok5OmMVzeePQ+Qs5Kj4yua/OnPVNpRp4FCYdGV+cXkHMNWWE0eMDQMNxZAoXisZf
+         FnvWgRd+e0p1u10pfFbK5u3v6FPLnKEu7jUlPN1nkyT4vWMJ2K1SqPPTtP3BNfee6Oa4
+         11tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=KTdD4i4fMsW17UGGijKNj3P9orBFCT7ErBZSp9p+slw=;
-        b=Ej5rxm24hVFs9lXfB77cCuZaXU+DqRVFSOKJjY3mYO0SVPDnofP4j/DpkmEtWSyjUL
-         2iLWZn1/xO8+o3OQ3Z/2GnZhZ2L2Hcj0SPCUwR71qhr4I0DCABPBQhSVItUjz+ypESIU
-         QPz+PqOuAGaCbOVcn6+YHOK0d1YBw5l04fgDJ7vH5+Jn+dxz1aXj2x7K2RmB3CLD0wdN
-         HIju6F2nDnRNiJ8bI7nylFisHDKQPw1BrBqMAABDXFDYWar9tTTo8JEyYB15BoLAZbHy
-         p3EO6zffzq4IomvYNEGt18IScnayjBvmic3DFIjGrHaomFgMos6Tw6q+3BOBc4wG5Giv
-         QyMQ==
-X-Gm-Message-State: AOAM531sirgnQwDMwdhpoUJUkA7MrYfzrXjlMd7BX1s8jrTHdVPvWdbU
-        KtxsevJehuwXvWKSwMZWb8Y=
-X-Google-Smtp-Source: ABdhPJxWJXePoPvnr/b0kInj6v8IxuFl++mQ+MsxxVdoYWqjX2KjwpfCgyflgBiyxJIsI/7qiDnEHg==
-X-Received: by 2002:aa7:c0d0:0:b0:410:d576:8808 with SMTP id j16-20020aa7c0d0000000b00410d5768808mr27258710edp.340.1645544479201;
-        Tue, 22 Feb 2022 07:41:19 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id m11sm10540395edc.110.2022.02.22.07.41.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 07:41:18 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nMXHy-006BPg-5u;
-        Tue, 22 Feb 2022 16:41:18 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Philip Oakley <philipoakley@iee.email>
-Subject: Re: [PATCH 2/2] rebase: `preserve` is also a pull option, tell
- dying users
-Date:   Tue, 22 Feb 2022 16:34:56 +0100
-References: <pull.1155.git.1645526016.gitgitgadget@gmail.com>
- <eb5871db95b12500cc0a6b8b0e3a82ed9e8fcfbd.1645526016.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <eb5871db95b12500cc0a6b8b0e3a82ed9e8fcfbd.1645526016.git.gitgitgadget@gmail.com>
-Message-ID: <220222.868ru27vtt.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=A0j9BQaQCfCrPquhl+ggWosPOYpVn7RK9cQOrRe5QIQ=;
+        b=fWozGOPbO+r1ztxtftdGzbRf59eImbCZsOhKKNdnQRe9gkO5ucISa5qBKOx27fIkMF
+         KCUe+QJ+eTFTQFHTdwHmUB8Gwz/l+6md7IM09IWEFT2cd6KXZ5CW479FuOB1UV0IvBZz
+         8es3TRp+J6DgfSLnrukGfba+SJYyP1EhkaR3F6ARpwaAtOFsQPHVq7RSOQlcdkpfQOSN
+         VygYFy0Pm5nkssAih9WdxS34TdcakGLa3fT60rFC/Vp18xTVy9+rRNaK5G2XhXRZ6NGw
+         2gniQUxbIlMxiMZoTtTrMFVluFXar9Z5l/wggVQ6kVbx9KtMs8k13Xr4tAniHj7dqmwk
+         678Q==
+X-Gm-Message-State: AOAM53137ZvNwffpEUdtStjyujlM+QmDrF3p/Ea2kthSgogepUn3bELO
+        +axcDe8y1KJ72M0K4UAYVjk=
+X-Google-Smtp-Source: ABdhPJxtjSysIJpN2/m05wikJ73KuWc02GhqAYrewTRrO+KGw/VIM4v1/8wJ/W5BuvfBPIHqVGGPnQ==
+X-Received: by 2002:a63:9d85:0:b0:374:916e:4b19 with SMTP id i127-20020a639d85000000b00374916e4b19mr1379347pgd.128.1645544848770;
+        Tue, 22 Feb 2022 07:47:28 -0800 (PST)
+Received: from localhost.localdomain ([202.142.96.56])
+        by smtp.gmail.com with ESMTPSA id y23sm17357697pfa.67.2022.02.22.07.47.25
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 22 Feb 2022 07:47:28 -0800 (PST)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Julia Lawall <julia.lawall@inria.fr>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH] add usage-strings ci check and amend remaining usage strings
+Date:   Tue, 22 Feb 2022 21:17:00 +0530
+Message-Id: <20220222154700.33928-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <alpine.DEB.2.22.394.2202221436320.2556@hadrien>
+References: <alpine.DEB.2.22.394.2202221436320.2556@hadrien>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Julia Lawall wrote:
 
-On Tue, Feb 22 2022, Philip Oakley via GitGitGadget wrote:
-
-> From: Philip Oakley <philipoakley@iee.email>
+> Of there are some cases that are useful to do statically, with only local
+> information, then using Coccinelle could be useful to get the problem out
+> of the way once and for all.  Coccinelle doesn't support much processing
+> of strings directly, but you can always write some python code to test the
+> contents of a string and to create a new one.
 >
-> The `--preserve-merges` option was removed by v2.35.0. However
-> users may not be aware that it is also a Pull option, and it is
-> still offered by major IDE vendors such as Visual Studio.
->
-> Extend the `--preserve-merges` die message to direct users to
-> this option and it's locations.
->
-> Signed-off-by: Philip Oakley <philipoakley@iee.email>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/rebase.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 07221d0ae41..97f704bb297 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1205,7 +1205,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  			     builtin_rebase_usage, 0);
->  
->  	if (preserve_merges_selected)
-> -		die(_("--preserve-merges was replaced by --rebase-merges"));
-> +		die(_("--preserve-merges was replaced by --rebase-merges\n"
-> +			"Also, check your `pull` configuration settings\n"
-> +			"`git config --show-scope --show-origin --get-regexp 'pull.*'`\n"
-> +			"which may also invoke this option."));
+> Let me know if you want to try this.  You can also check, eg the demo
+> demos/pythontococci.cocci to see how to create code in a python script and
+> then use it in a normal SmPL rule.
+> ...
+> If the context that you are interested in is in a called function or is in
+> the calling context, then Coccinelle might not be the ideal choice.
+> Coccinelle works on one function at a time, so to do anything
+> interprocedural, you have to do some hacks.
 
-I may be missing some subtlety, but how is the user ever going to need
-to check their config?
+Though in this case, `parse-options.c check` method is better, but in other
+cases, this might be a good fit. In those cases, I would also like to help
+you (i.e. you, Johannes, Ævar and other devs) to fix those cases.
 
-After 52f1e82178e (pull: remove support for `--rebase=preserve`,
-2021-09-07) we:
-
-    $ git -c pull.rebase=preserve pull
-    error: rebase.c:29: preserve: 'preserve' superseded by 'merges'
-    fatal: builtin/pull.c:45: Invalid value for pull.rebase: preserve
-
-I.e. we'd error before this, and the "preserve_merges_selected" variable
-being checked here is not affected by config, i.e. we only ever got to
-this "via config" route if "pull" et al was invoking us.
-
-But now that command dies.
-
-If there is still a codepath where we call "rebase --preserve-merges" on
-the basis of config that I've missed, shouldn't this die() be happening
-there?
+Thanks :)
