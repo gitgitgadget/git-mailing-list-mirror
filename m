@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9329CC433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 18:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2610FC433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 18:53:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229747AbiBVSyM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 13:54:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55522 "EHLO
+        id S235105AbiBVSyN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 13:54:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233999AbiBVSyF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 13:54:05 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27D3611475E
+        with ESMTP id S235100AbiBVSyH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 13:54:07 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF5F611477A
         for <git@vger.kernel.org>; Tue, 22 Feb 2022 10:53:40 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id x3-20020a05600c21c300b0037c01ad715bso2567253wmj.2
+Received: by mail-wr1-x42b.google.com with SMTP id d17so345957wrc.9
         for <git@vger.kernel.org>; Tue, 22 Feb 2022 10:53:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RWt+ewUhKb4KlpjppHFVMNRVqK33c9kyxe9170BIAvI=;
-        b=exNVIkL99Ee1DCK8v8GQ4V6GufBQsFG4xwcW3sdiV1huLe3IXRPe1NwBA0kfe2p5Lx
-         uay9PD32LbUXPlhfGBRtCTICKZg5QFZ+iut82Bza1PBgMQqg+p62wat8h5tYW1A3jmK2
-         II1l9BQADTDWdjLbK13PgrigmxFXTkDQ/M9Rd/2oGR1vMUx8ZDkOcZV9R9zsqFPNyyGt
-         KFBcVkv5b/9bgEjzpbaSIrBpRwLa2LgIuTG5xU9izym2YSdZXVgRWsFa5wcC31KM/b9c
-         BHVxRhPvgnpnJz43L7wuaUHIhRkVn0U6iHMCyZasVbxAG05QjnXhoLlI2pT+oaVhpdT6
-         62wA==
+        bh=WixbW0OSoA7IdMQhhP0xT088HPSMGgfKzB5SsBiwsjs=;
+        b=hk2Px5HhkjKnsP4pyoTbIMCzx4A8UPHWrfaepZKxo1eaBLE54DaueWLKVAZs+rMiBb
+         5Sn4MBNOLp5FjuWVkVkY5xgG0VVN2sPx7Rz+MezfayP5kUEB7s/O1sYdVctMVHn44EVX
+         S5m09c1pSNlNp9WmFQUALRJCdzZiQGSqE2XWw9Zc5rnc5mSyKpuae5Zjp4Mx114oZc/c
+         +zzu0qEgf5as6Z8+HI7FljQy4PNVyiGv7se23+jAuZ2IIJe5hYMu8DpNUVbhQnok4Nn9
+         V3P5i3MLlqr2PDmZftnhfCcLYJ6f1QXpdwbEWcXMrE4SRRKn4CPu+UXv1nnBJz5iWidx
+         jLjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RWt+ewUhKb4KlpjppHFVMNRVqK33c9kyxe9170BIAvI=;
-        b=0tp+rZt3N1SXEfWcN85rFEK9LA3SuLPzJc1wVtJRjjgFxb1+Z0U28n6LBYfJhqdHL3
-         o1Wgj1zWXq0S3aBL7z6j/YrURjDZ2kEOjVTuD04SxGrCJCeON1eF+JRteTInRnUfX7D4
-         PaM4xLi+kdJqKFbyafIolHfhgikPmfgPlV1B6BdhSQ32gynSgNimgvp2wgu5QOPrTA4I
-         CPc5y0tsXs6Y9VH1+6xr4QHVLupJ4g5YByAulb0vn6W+S/pzEaIxaN6zCD3NCm0rz83z
-         9XpkJrT4SxnJ8cHg0zvh322il5aKBN5Nx7EiVvKE+wucFE54GtkBUH5mAkeVpyn5kldF
-         eVMg==
-X-Gm-Message-State: AOAM533nV833cv99TS8AmFRpQeccrTq8lTe3PtOiYa2V9YWBTB60Mc2l
-        qGjh/mrU+yfe+Hdh2yOephg7nJ1vKcg=
-X-Google-Smtp-Source: ABdhPJwcFvv4X+CmRjMTn3RIf0nJnoZdhNnTIBw67A9FDBIcjJTc4XHbybWVqDsArvznbpxqml4Y6A==
-X-Received: by 2002:a7b:c5d0:0:b0:355:482a:6f44 with SMTP id n16-20020a7bc5d0000000b00355482a6f44mr4380198wmk.58.1645556018632;
-        Tue, 22 Feb 2022 10:53:38 -0800 (PST)
+        bh=WixbW0OSoA7IdMQhhP0xT088HPSMGgfKzB5SsBiwsjs=;
+        b=5R9VASS0UYAYv4Z3yybLHfB5u9ZjeR3isLKRtOzJSfa95jDpKcKi0NJBWEAQve5tp0
+         4ugTmZ11VtU7DLmXx7U+PuWq5//+YIqMrFBOoBbnYdhPVRQq++GzvXkCe78nkDrZxBUP
+         lclSd/BSwZ0UWSDMbfTfjU4QSJzFzHMptDAiqa/q60XiGzJBPv0IkLImI2YPfADfZyfT
+         BnpMonw+54cmQ5OK+9ZnP2oK4wTicAw7AqxvGQAZR6hgM5c/2oQ18yqV2zHHIXR5kKhw
+         gGIcqs9zNGZJc5m9XOtkAMSRca4tyX0tvHZVv7B0QcWMBCH531ZYsTROWl0ZnRr/YhQ9
+         FSsg==
+X-Gm-Message-State: AOAM532FBh7yMTxTJ0ZHoKooS1mIg/ZL5oc2HfgoE1WV13zuYwGoZOmz
+        koASMT95XIGTtLINHgzr1tW2FyCJ228=
+X-Google-Smtp-Source: ABdhPJxcjHtZ2P2hZYbePFzBuIUJ22gObW/aYi42/Yv7CXsGNg9Q6DcXgfvbieNgBaJJxozVdX/eOQ==
+X-Received: by 2002:adf:ef44:0:b0:1e4:99e8:a65e with SMTP id c4-20020adfef44000000b001e499e8a65emr21519819wrp.365.1645556019398;
+        Tue, 22 Feb 2022 10:53:39 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ba14sm32110268wrb.56.2022.02.22.10.53.38
+        by smtp.gmail.com with ESMTPSA id d12sm45306173wrx.47.2022.02.22.10.53.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 22 Feb 2022 10:53:38 -0800 (PST)
-Message-Id: <7ae9b2365542b68d7d75f39b126d2acec3e223ff.1645556015.git.gitgitgadget@gmail.com>
+Message-Id: <39b061a471bb6e5306f94b3a6d7e19be6ed6a92f.1645556015.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1146.v2.git.1645556015.gitgitgadget@gmail.com>
 References: <pull.1146.git.1645008873.gitgitgadget@gmail.com>
         <pull.1146.v2.git.1645556015.gitgitgadget@gmail.com>
 From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Feb 2022 18:53:34 +0000
-Subject: [PATCH v2 3/4] terminal: set VMIN and VTIME in non-canonical mode
+Date:   Tue, 22 Feb 2022 18:53:35 +0000
+Subject: [PATCH v2 4/4] add -p: disable stdin buffering when
+ interactive.singlekey is set
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,45 +70,36 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-If VMIN and VTIME are both set to zero then the terminal performs
-non-blocking reads which means that read_key_without_echo() returns
-EOF if there is no key press pending. This results in the user being
-unable to select anything when running "git add -p".  Fix this by
-explicitly setting VMIN and VTIME when enabling non-canonical mode.
+The builtin "add -p" reads the key "F2" as three separate keys "^[",
+"O" and "Q". The "Q" causes it to quit which is probably not what the
+user was expecting. This is because it uses poll() to check for
+pending input when reading escape sequences but reads the input with
+getchar() which is buffered by default and so hoovers up all the
+pending input leading poll() think there isn't anything pending. Fix
+this by calling setbuf() to disable input buffering if
+interactive.singlekey is set.
+
+Looking at the comment above mingw_getchar() in terminal.c I wonder if
+that function is papering over this bug and could be removed.
+Unfortunately I don't have access to windows to test that.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- compat/terminal.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ add-interactive.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/compat/terminal.c b/compat/terminal.c
-index 11288cfe5c9..3620184e790 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -57,6 +57,10 @@ static int disable_bits(tcflag_t bits)
- 	t = old_term;
+diff --git a/add-interactive.c b/add-interactive.c
+index 6498ae196f1..ad78774ca26 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -70,6 +70,8 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 			      &s->interactive_diff_algorithm);
  
- 	t.c_lflag &= ~bits;
-+	if (bits & ICANON) {
-+		t.c_cc[VMIN] = 1;
-+		t.c_cc[VTIME] = 0;
-+	}
- 	if (!tcsetattr(term_fd, TCSAFLUSH, &t))
- 		return 0;
+ 	git_config_get_bool("interactive.singlekey", &s->use_single_key);
++	if (s->use_single_key)
++		setbuf(stdin, NULL);
+ }
  
-@@ -159,7 +163,11 @@ static int disable_bits(DWORD bits)
- 
- 		if (bits & ENABLE_LINE_INPUT) {
- 			string_list_append(&stty_restore, "icanon");
--			strvec_push(&cp.args, "-icanon");
-+			/*
-+			 * POSIX allows VMIN and VTIME to overlap with VEOF and
-+			 * VEOL - let's hope that is not the case on windows.
-+			 */
-+			strvec_pushl(&cp.args, "-icanon", "min", "1", "time", "0", NULL);
- 		}
- 
- 		if (bits & ENABLE_ECHO_INPUT) {
+ void clear_add_i_state(struct add_i_state *s)
 -- 
 gitgitgadget
-
