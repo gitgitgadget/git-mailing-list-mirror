@@ -2,64 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F4209C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 13:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2263C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 13:54:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232563AbiBVNuz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 08:50:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49796 "EHLO
+        id S232575AbiBVNzS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 08:55:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232561AbiBVNux (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 08:50:53 -0500
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE9710BBCF
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:50:28 -0800 (PST)
-Received: by mail-qv1-xf2c.google.com with SMTP id ba20so11065441qvb.1
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:50:28 -0800 (PST)
+        with ESMTP id S232359AbiBVNzP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 08:55:15 -0500
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47577119411
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:54:50 -0800 (PST)
+Received: by mail-qv1-xf2e.google.com with SMTP id d3so42142238qvb.5
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 05:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=1dv1whm3Biw0ceixoUPWJ6+Bpjzt6C4EkkaVEDjMzW8=;
-        b=B0qc6OwBJDiuHq9Hn+GlCOd1/EcNA4lt4cPJLg8EUm+tAnoV82NGoJO6788fT4PDhS
-         3dIpjf40NYRhKAzVJldJac6FN296FprUs58daZJRmFkaYJOzg2XI0HOgkniWsG5oiLdT
-         jRtq1MXTTZ6J0Xmkslo5nDDkTRVVEMq/Tt/I2qy443z0IIvsEusLZflgH1pOIhKZwmFd
-         Ivq/ixwqFX/9offvyieN43mfGnuBrCuu+mlLY/h6ylA1Im1ASQyXi0NztLYz5XmBlXGF
-         zFMRttHkBxrC0u3+KVTL+7A+kA97XOvLcsjULrIrFtUekfcGpeRbXL1fID5ye0HV8jKI
-         9T0Q==
+        bh=uwTsx90EHW/ayNF8rTstYcaCHfJBtBL9T+P/kiRaKdA=;
+        b=e/tCQKeF2L8OPdQ/lERZ6HC5aUqMxRSd/Pbjz0IE4Da8AVutfp66k6VPNfK2nvY26i
+         RxmoqrtJpYgJxwLvE+L0E94/Xxl5Mw1aq2E5jZyIgJsP5h9ZGfqXCFFSnhFKooxh0dzq
+         ScHsd6XK40EWhN9AZk4WbKHnBR3x9rntxMijBYDBX6OFuyts/uRwGyoCYNp+3z7AUXdu
+         DvaV3mqI78SbIdwPkdxXThAVfp1CUM76gyK4VJg8hJK3kKLx5iDI0WNxtisv/p4p+9MG
+         X7fF9xkUMrjd812VLAOMYseNIgisFDNCBdD3SWxyIJ5xGFIeB90kyj9+Ty7Vlkd/ESum
+         9fUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=1dv1whm3Biw0ceixoUPWJ6+Bpjzt6C4EkkaVEDjMzW8=;
-        b=IKbSYHbMEQmpP+PcCRamJ8Yn7h871bPycoE9XrYTNdAwdOTEu7ft/CSGhyG6sNj97C
-         jMAu+dOKXrdmTUnZc+SxTHHmIntRAscwe3PwsXvSL3BdKljJRpioVmpDuXC1etFPa7E+
-         vaXrPYMArBMCWgmWvTC2AeRUBhx7aPurNO1ZCS/dLNTNvErKJvgn1opcdUnrYR/Tf201
-         Fl8BcHzWp42NUS9oNMe4JQasN+GxVKJij981Q0V9m5VtyhPs/I8y3MUewxFVlmzdJOVN
-         XbIKXpFB0BW7B69C+GuKuhApsvGzLqAsGzXob512mtL/6pvgDXZyb1BnFIk/i9XZkDik
-         asFw==
-X-Gm-Message-State: AOAM531gyz6rsEe37FZre7vf43QhtRruIlVRqxTQAdyttfws5MLt4ex6
-        DH1tzKa98FYKKuHADghFAfZ36sfSJNFY
-X-Google-Smtp-Source: ABdhPJxnosKs3a/mIUrClDYsI8zh4FFQNyv5qzipMcN3m8hL5zXR04TrudbHjun2k2T6lmcuiaSfFw==
-X-Received: by 2002:ad4:5ba4:0:b0:42d:fa10:6447 with SMTP id 4-20020ad45ba4000000b0042dfa106447mr18513819qvq.37.1645537827756;
-        Tue, 22 Feb 2022 05:50:27 -0800 (PST)
+        bh=uwTsx90EHW/ayNF8rTstYcaCHfJBtBL9T+P/kiRaKdA=;
+        b=XmiXRbASXeYT5tK/R3OKuu7y7mzrYshbUsvCbr5dgwebWhZloY8SvVCaCS9T1Fq2tq
+         YJWvnJfkMNypT7dwd/O10oujGmqJlsav5WzOORuadsSl5G2pVSKm0yscmwElkk9LWEa/
+         QlOuvcSx3R22KlFsqmFzbMHOY33XEnYm3loIiLoi6tFSUwTpRmkVnODqJSoTuPvQkqY1
+         32mahjZ/mH7NVD2LxgdDMKRa8cFYlX4ohWWgvSikmRySbqpXhBYH4ivuAVQ37aE9/c/A
+         EVoei9osPc1TdJqok5Ck/R5Qs8ILaDG3a8p0E/tPcx/3inyyO551jo2T/3MvL3a+mLfP
+         Ozjg==
+X-Gm-Message-State: AOAM533Y2MKLaL9vuNabncpocfq2LEZlOkRiArPoJhMl8fG+SvmiJgzF
+        kDPZZuHcm9SYGOAek5EA1+3v
+X-Google-Smtp-Source: ABdhPJwP0cCTYDyKbWpNtVP2p1fRbChQsAxdLG4TJqpjpkpYwt0HRu7yYpYqQMkMjUAec9iFxzTZ/Q==
+X-Received: by 2002:a05:622a:170f:b0:2de:1b24:dc1f with SMTP id h15-20020a05622a170f00b002de1b24dc1fmr9044213qtk.299.1645538089341;
+        Tue, 22 Feb 2022 05:54:49 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id x4sm10748631qkh.42.2022.02.22.05.50.27
+        by smtp.gmail.com with ESMTPSA id d8sm871178qko.85.2022.02.22.05.54.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Feb 2022 05:50:27 -0800 (PST)
-Message-ID: <2e40461e-0b36-af67-33d5-a5d37f335025@github.com>
-Date:   Tue, 22 Feb 2022 08:50:26 -0500
+        Tue, 22 Feb 2022 05:54:49 -0800 (PST)
+Message-ID: <9d08d2a6-82ed-7d6c-6a82-0e89c55bd94a@github.com>
+Date:   Tue, 22 Feb 2022 08:54:48 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCH 0/2] microproject: avoid using pipes in test
+Subject: Re: [PATCH 1/2] t0001: remove pipes
 Content-Language: en-US
 To:     Shubham Mishra <shivam828787@gmail.com>, git@vger.kernel.org
 Cc:     me@ttaylorr.com
 References: <20220222114313.14921-1-shivam828787@gmail.com>
+ <20220222114313.14921-2-shivam828787@gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20220222114313.14921-1-shivam828787@gmail.com>
+In-Reply-To: <20220222114313.14921-2-shivam828787@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -67,23 +68,52 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 2/22/2022 6:43 AM, Shubham Mishra wrote:
-
-Welcome, Subham!
-
 > pipes doesn't care about error codes and ignore them thus we should not use them in tests.
 > As an easy alternative, I am using a tmp file to write from git command so we can test the exit code.
 
-This is the correct way to convert the pipes into something that
-properly notices Git failures. The only issue I have with your
-patches is that you should insert a newline after your &&.
+Please be careful about the length of your lines in your
+commit message. vim should auto-wrap as you write.
 
-(I'll include an example on patch 1.)
- 
-> This is my first contribution that's why I am keeping diff short with an intention to understand the process instead of making impactful change in first attempt. Later, I will send more patches to fix the issue for other files.
+There are also some grammar issues, so here is an update
+to what you wrote:
 
-I think this is a great start! After fixing the formatting that
-I saw, you should be good to start making more changes in a
-single series. These patches are a good size.
+  Pipes ignore error codes and thus we should not use them
+  in tests. As an alternative, use a 'tmp' file to write the
+  Git output so we can test the exit code.
+
+(My wrapping is probably too short here.)
+
+> Signed-off-by: Shubham Mishra <shivam828787@gmail.com>
+> ---
+>  t/t0001-init.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index 3235ab4d53..9a8f209648 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -489,11 +489,11 @@ test_expect_success 're-init from a linked worktree' '
+>  		git worktree add ../linked-worktree &&
+>  		mv .git/info/exclude expected-exclude &&
+>  		cp .git/config expected-config &&
+> -		find .git/worktrees -print | sort >expected &&
+> +		find .git/worktrees -print >tmp && sort tmp >expected &&
+
+Split each part of the &&-chain across lines, like this:
+
++		find .git/worktrees -print >tmp &&
++		sort tmp >expected &&
+
+>  		git -C ../linked-worktree init &&
+>  		test_cmp expected-exclude .git/info/exclude &&
+>  		test_cmp expected-config .git/config &&
+> -		find .git/worktrees -print | sort >actual &&
+> +		find .git/worktrees -print >tmp && sort tmp >actual &&
+
+Here, too.
+
+I could make the same comments on patch 2, but I think you
+have enough info to go on.
 
 Thanks,
 -Stolee
