@@ -2,86 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEB2CC433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 07:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 839C1C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 07:47:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230514AbiBVHXT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 02:23:19 -0500
-Received: from gmail-smtp-in.l.google.com ([23.128.96.19]:51924 "EHLO
+        id S229544AbiBVHsF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 02:48:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57048 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230520AbiBVHXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 02:23:13 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 004F37C144
-        for <git@vger.kernel.org>; Mon, 21 Feb 2022 23:22:47 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AF9B617BC88;
-        Tue, 22 Feb 2022 02:22:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type;
-         s=sasl; bh=Uli8EMBGQZLM8IbECIzQt3xaa2z2HyvssRMb8miqemc=; b=dQ7Q
-        +I3l2USHbJDwbVtKtJYyzeqS3GQFc3dGUScy9k3WO+s5tYoL31HyYAgcE6StnGRS
-        trcznSD/ZJf2AwwajNVWG8xPN9w4e3zhc/ZYLlmBUzLxI1MHOi8pA10CRzN+KqRQ
-        GvRgR83OUi8twHojyW02TTO45Dv+vgt/2Fl6JQk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A7D8617BC87;
-        Tue, 22 Feb 2022 02:22:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1D78317BC86;
-        Tue, 22 Feb 2022 02:22:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com, newren@gmail.com,
-        jn.avila@free.fr, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 06/11] worktree: use 'worktree' over 'working tree'
-References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
-        <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
-        <a375e4b6ff0e5f77fcfaac44945e5722b0f9ab9c.1645489080.git.gitgitgadget@gmail.com>
-Date:   Mon, 21 Feb 2022 23:22:44 -0800
-Message-ID: <xmqq35kbwekb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229543AbiBVHrv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 02:47:51 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7272668
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 23:47:24 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id q17so34969620edd.4
+        for <git@vger.kernel.org>; Mon, 21 Feb 2022 23:47:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=r4Z9Ge95V+LtLeaEMVfOjApYXYzV0+Kx8X7ihcqLzt4=;
+        b=WQQZIE5/VkpPjShmFbbaI+9w3jhekq/teVaDE0vGTkiIUl8r1fW6Yl4JipBEazK62l
+         dfnZNzBJHUgZZ+xhiZpw8f7/0/zWRr4djBhPmGDyN7hBu0/4XEOPF0v9pOOVCx+zWNx9
+         Bna9Xmb0xbLsBJ1UmrBGAPGz66+sP82sOhj5HlklqQd6OKL6msijijYTI2cnJF0cE0V6
+         xvSJZhGHEEMzv4DJea72LLIO5NCa8aUs/4ZlcE69a6uMPN0M1CjncfrwB9cfV0XchF7/
+         +A5LUDTXl0J7Y+JXcAACq3jDUGUP44QluxSa4eBkSHy8HV2tnFwiy0D7EampDYKRHVyK
+         mS5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=r4Z9Ge95V+LtLeaEMVfOjApYXYzV0+Kx8X7ihcqLzt4=;
+        b=XyvkFN6u2dgHVOhoF3y5Pd6PnYh96qR7Cm/G6m6eJhpdNoLKW9jb7Qlz0kT3pfwJ/M
+         D+0kw6pZHboyAVy+D5lyu91CB4ro7/bXsarGTd90fULPdTLPVLvv6yTbDs3hq/U92VtG
+         FKzRPutYkDNikVnnm9Lvkn3xcQn4XAh2bUeUknJMq7wOJ9WT+9GCPXzHEuc8OIv9ZC/G
+         7lZ37NCWsgSqs1tHZG2AMmAptbhrqCHQhVmnMCWM/+GFqOos+aHjyktIbbJttSze6DNG
+         vQPPHVz65UR4+nPG5Xqw74n+S74wQhV9V8QosyDDqXhoVIHVCn5OPezEQAylHEdSuP7f
+         6l1A==
+X-Gm-Message-State: AOAM530DTbdGWdFXNtmGZIloRnLm+mpbEPk/dLaKKvnaoyuLAsHyhmAl
+        lrkoTcto/Df+ITg8LIoFQUmicaB+hJy6jvNwm+PlQeRoa0M=
+X-Google-Smtp-Source: ABdhPJxsO4jfdrRd2/snY/MrRKzwOL49rRnJsVEIvV6GHRwD+Vs1pl8nYNLlMDj79cr8vf419ZIYuiL63KKXko8ySNM=
+X-Received: by 2002:aa7:c7c4:0:b0:407:52cc:3b32 with SMTP id
+ o4-20020aa7c7c4000000b0040752cc3b32mr25020939eds.397.1645516043259; Mon, 21
+ Feb 2022 23:47:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3AC842CE-93B0-11EC-95D1-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+References: <CAC316V7M8bziK207tuFbctAqDdz+GC8OGaxM+B0earJtqDvBSg@mail.gmail.com>
+ <YhLvdjghyC+WQI6e@nand.local>
+In-Reply-To: <YhLvdjghyC+WQI6e@nand.local>
+From:   Shubham Mishra <shivam828787@gmail.com>
+Date:   Tue, 22 Feb 2022 13:17:11 +0530
+Message-ID: <CAC316V6Y6zCT1MACHnaXbh+EEmQPz4_fLRFdK90tBsdkX2h41g@mail.gmail.com>
+Subject: Re: [GSOC] Student Introduction - Reachability bitmap Improvements
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi,
 
-> +Similarly, if the working directory for a linked worktree is moved without
+Thanks, I have started working on it. I have a little doubt, I can see
+we are using pipe with other commands too (not just git).
+I wanted to ask why we are only caring about error codes of  "git"
+commands which get suppressed due to pipe. Not for other commands?
 
-"the working tree for a linked worktree" is the phrase used in
-05/11, which this part should also adopt, I think.
+Thanks,
+Shuabham
 
-From 8da2786fa1ff0d094a5c8e7151bfadbd9ca3dd4e Mon Sep 17 00:00:00 2001
-From: Junio C Hamano <gitster@pobox.com>
-Date: Mon, 21 Feb 2022 23:18:45 -0800
-Subject: [PATCH] fixup! worktree: use 'worktree' over 'working tree'
-
----
- Documentation/git-worktree.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 46afc7224f..2447cd8034 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -139,7 +139,7 @@ worktrees will be unable to locate it. Running `repair` in the main
- worktree will reestablish the connection from linked worktrees back to the
- main worktree.
- +
--Similarly, if the working directory for a linked worktree is moved without
-+Similarly, if the working tree for a linked worktree is moved without
- using `git worktree move`, the main worktree (or bare repository) will be
- unable to locate it. Running `repair` within the recently-moved worktree
- will reestablish the connection. If multiple linked worktrees are moved,
--- 
-2.35.1-273-ge6ebfd0e8c
-
+On Mon, Feb 21, 2022 at 7:18 AM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> Hi Shubham,
+>
+> On Sun, Feb 20, 2022 at 10:39:13PM +0530, Shubham Mishra wrote:
+> > Hi,
+> > I am Interested in Project - "Reachability bitmap Improvements".
+>
+> Great! I am excited that you are interested.
+>
+> > I am going through the blog [1] and I love the technique we are using
+> > to fasten the queries. I have still not decided which one idea to pick
+> > out of many mentioned under "Reachability bitmap Improvements" but I
+> > think I will figure that out soon.
+>
+> Let me know if you have any questions about the projects listed there,
+> and I'd be happy to add some more details. Alternatively, if none of
+> them pique your interest, that is OK, too, and we can brainstorm other
+> potential projects.
+>
+> > Can someone please tell me if a micro-project - "avoid pipes in git
+> > related commands in test scripts" mentioned [2] is still available to
+> > take?
+>
+> Oh, yes. Here is a command you can run to find some of them:
+>
+>     $ git grep "git[^|]*|\($\|[^|]\)" -- t
+>
+> There are some false-positives, but that should give you a good starting
+> point to look for potential spots to touch up.
+>
+> BTW, re-reading [2], I wanted to clarify that "The git command should be
+> on the left side of a pipe" is describing what we should remove, not
+> add.
+>
+> I'm looking forward to your patches!
+>
+> > [1] https://github.blog/2015-09-22-counting-objects
+> > [2] https://git.github.io/SoC-2022-Microprojects/
+>
+> Thanks,
+> Taylor
