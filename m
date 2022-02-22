@@ -2,82 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91726C433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 19:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82344C433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 20:25:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235286AbiBVTu7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 14:50:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51182 "EHLO
+        id S234572AbiBVUZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 15:25:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233668AbiBVTu7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 14:50:59 -0500
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B62DCBA759
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 11:50:33 -0800 (PST)
-Received: by mail-io1-xd31.google.com with SMTP id r7so16257219iot.3
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 11:50:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=6YsRLbNs23Cv6ByKYYgVeFprO9VvfGzdDgs/zUmaSVY=;
-        b=sM97bjsqJLbQZztusfn/VrorlK/ppzLWqCvT6VLCOw7pgctwb9YbaLZeNIR8RlU9t8
-         5nLQt5SwLiWQtD63K8wEOwMpFY2KuZAB4AEWQWBAJuOHq/T+GmOesxpwpkxCMI9o1bQf
-         ArLPzRT5dio3aYMDZz+SJNuJWcqAqPF5n8ce1qsKlXYYt+dImgWV75qyPGlDkQDOZ5MQ
-         v5/68VbmXeKjfuHa2NtOm83S+aftxZTNRBmQDry+RUYAiCmYRuPBjbRt71a2XRVoxD9f
-         pNrXe4tFtJZOlki21ttBdPVJKGxUKKnCG6YkHGgNnQsyWXh7zrqmw1+1uLQokRejS0DJ
-         rucw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6YsRLbNs23Cv6ByKYYgVeFprO9VvfGzdDgs/zUmaSVY=;
-        b=1pLuEqIHAuGFvDYbjgmuqXjPDSuKmCiJ0HadBRmIafc2UwsUxvhDPL/AaBYfcXQjS/
-         1G/+nSxZgrCvU89kx7jW8fm0lI/9Ec0kqwjZiNzXVhUq5DNbo0ui6bhaZLGcQq5k2ZnK
-         dcjc9jDjKwXImTIzNLwnwZ26aJfSV4Cuscd9Jr8sRASdZ7aqi7TFaZ6tFXCq2HT3fLk+
-         pbMBbDGxpUvAL2dMx+P/NDAvaIQdMJ1dpoBWbqqk61RLlsNlefPwUHvH3SvdZf4QiEPu
-         p2HzNNGJFMNInrmEZpqwkWMwMdMdObM+mOQnnD4wSzfcYd8IeQdyOpdnDYfVSYT7Ux4K
-         kFcg==
-X-Gm-Message-State: AOAM530LaouyKDL5clC/V6zXQNj4lAajGEUnah7Ubl4BI9mIbh/QsYrL
-        CjyhfnhXxCnqbCyGWRDwpxBRrA==
-X-Google-Smtp-Source: ABdhPJz5hg45FgqTZD0Imw+azK1bEXyjNn1TNhsWABH8kWEcx/aaJKmPm4Hy5MNFJuMpYzdVX/mQxA==
-X-Received: by 2002:a6b:ec15:0:b0:640:def4:c0bd with SMTP id c21-20020a6bec15000000b00640def4c0bdmr10025695ioh.134.1645559433196;
-        Tue, 22 Feb 2022 11:50:33 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id n23sm12126743ioo.55.2022.02.22.11.50.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 11:50:32 -0800 (PST)
-Date:   Tue, 22 Feb 2022 14:50:32 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com,
-        newren@gmail.com, jn.avila@free.fr, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 00/11] Updates to worktree code and docs
-Message-ID: <YhU+iI3RmwauYnsI@nand.local>
-References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
- <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
+        with ESMTP id S231694AbiBVUZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 15:25:28 -0500
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C2E119423
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 12:25:00 -0800 (PST)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nMbiU-0006mH-9t;
+        Tue, 22 Feb 2022 20:24:58 +0000
+Message-ID: <df47bb75-9684-6896-1e5b-21406c4a549a@iee.email>
+Date:   Tue, 22 Feb 2022 20:24:58 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH 0/2] Update the die() preserve-merges messages to help
+ some users
+Content-Language: en-GB
+To:     phillip.wood@dunelm.org.uk,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1155.git.1645526016.gitgitgadget@gmail.com>
+ <8b95ac6e-5e9d-38e4-4729-dbbe4b671ea8@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <8b95ac6e-5e9d-38e4-4729-dbbe4b671ea8@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 22, 2022 at 12:17:49AM +0000, Derrick Stolee via GitGitGadget wrote:
-> Updates in v2
-> =============
->
-> Based on Junio and Taylor's review, I updated some language in the docs:
->
->  * Some uses of "worktree" should have stayed as "working tree"
->  * Some adjacent wording was improved.
+Hi Phillip,
 
-Thanks; these updates (in addition to the handful of fixups that Junio
-provided on top) look good to me. I'll leave it to the two of you to
-figure out if you want to send another reroll, or if Junio already
-caught the minor changes when applying.
+On 22/02/2022 18:55, Phillip Wood wrote:
+> Hi Philip
+>
+> On 22/02/2022 10:33, Johannes Schindelin via GitGitGadget wrote:
+>> This small update to the die() preserve-merges messages is a response
+>> to the
+>> reported edge case in the Git-for-Windows googlegroups thread
+>> [https://groups.google.com/g/git-for-windows/c/3jMWbBlXXHM] where
+>> even git
+>> rebase --continue would die.
+>>
+>> It is most relevant for Windows because Visual Studio still offers the
+>> option to run git pull --preserve, therefore Git for Windows already
+>> applied
+>> these patches. The improvements are not specific to Windows, though, and
+>> should therefore also get into core Git, albeit at a more leisurely
+>> pace.
+>
+> I think the new messages are an improvement, I was wondering how
+> difficult it would be to allow the user to run rebase --abort so they
+> can at least easily start again with --rebase-merges.
 
-Thanks,
-Taylor
+In this case, the user (another Phillip), couldn't run `rebase
+--continue` without getting a `fatal:` report. A code inspection showed
+that was one of the first tests so I don't believe they could run
+`--quit` or `abort` either!
+
+We eventually nailed it down to being an update of Git, after getting
+into a bad conflict resolution, so the update refused to do any rebase
+commands! Later they tried downgrading and finishing the rebase that way
+in the usual 'hack & hope' way. Luckily they had a backup from the time
+of the update, which was able to confirm the presence of the indicative
+directory (which is an implementation detail).
+
+If the `rebase abort` was moved earlier in the code, then it might work,
+but we'd still need to keep the clean-up code for a non-existent option,
+which is less than ideal .
+
+Philip
+
+>
+> Best Wishes
+>
+> Phillip
+>
+>> This is a companion patch series to
+>> https://github.com/git-for-windows/git/pull/3708
+>>
+>> Philip Oakley (2):
+>>    rebase: help user when dying with preserve-merges`
+>>    rebase: `preserve` is also a pull option, tell dying users
+>>
+>>   builtin/rebase.c | 9 +++++++--
+>>   1 file changed, 7 insertions(+), 2 deletions(-)
+>>
+>>
+>> base-commit: e6ebfd0e8cbbd10878070c8a356b5ad1b3ca464e
+>> Published-As:
+>> https://github.com/gitgitgadget/git/releases/tag/pr-1155%2Fdscho%2Fdie_preserve-v1
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
+>> pr-1155/dscho/die_preserve-v1
+>> Pull-Request: https://github.com/gitgitgadget/git/pull/1155
+>
+
