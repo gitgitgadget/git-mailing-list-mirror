@@ -2,122 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9EBCC433F5
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 19:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC486C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 19:35:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233174AbiBVTMo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 14:12:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54462 "EHLO
+        id S234555AbiBVTgB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 14:36:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230249AbiBVTMn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 14:12:43 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37B9B329A0
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 11:12:16 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id s1so6197149edd.13
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 11:12:16 -0800 (PST)
+        with ESMTP id S230486AbiBVTgB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 14:36:01 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09687B4A
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 11:35:35 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id r7so16202550iot.3
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 11:35:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=C29LHm5+FpRgjXiiXAR9TGgl068Tx66u0utZ5TXEkWM=;
-        b=hS+lqRLmv/CDIEP0CCHKzOaim38Bo2cmVpuXi4KcbgIPk3yCa/7Ql4CNwPJzj8Fn2N
-         9WciDHUWp3+iINkOfq7Z9QqQyFLtlH6FLTgCUrcFwTJHfAoomZ5EbszVnLWReqHzJ9HE
-         D6ZoZ8aIqKpifnBnGc6krTC3vZNcEkiWVAM9Ru8sELGnn9DQVQt0rVkXVyakuXqoLsXb
-         B9tV41fPN0GoGBmLa1kqqly8Ip6eWkZk76gh+9IAtVKd/t9gLcaps8DRNk2FswKsA3hB
-         I3i1ftdzpq5whI1xkN6EH0C55LUNrnhfVGo0yMvNCEkXWKbnuIL3iw9RjEsHnf7Atcf/
-         IVzg==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=7mrRW89h3xwE3VOC5kSzYp8pGGmPV1YcIdjOHz3y9Zs=;
+        b=iwviH7ilNsR9pTOoSATQddRzs5zxaFDZiq+tcuijNS2pI9d/pdLhKNGGw18e4SsOaL
+         wfNKoal9Vg94cl4hYqxU0u1X4pyQxuv9CPnD8mZinYB5uPiDUuz88gShuLG0lQFdXFaL
+         +UWdGRvDjRpjBOWNJp7Yn9Yf7EmuyB9MzPb4jCS0xefunTyCfWmwMI6Kjh1RaJZptRA+
+         P43m0ZvgGOdtPxRhdEzKkBeJKYJfTu87JynlAxdUXkqMo9Zzc0XcrCBgPdAzYVK99sXm
+         XW2AtzjzzYpRKIJ+fi61DN4oZZvqcYnyOhaFb5nLGqsYymsvVgyunRxmGozBjVsTRWBe
+         m7Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=C29LHm5+FpRgjXiiXAR9TGgl068Tx66u0utZ5TXEkWM=;
-        b=a4YVJbygIZ3xxHhyTgtXGQW6F3KgQ8UZEbMzwpE/+rRIIQWDaeGYxhB7+p77zsVZMu
-         o+dS6o0DY4Yanf+8Szm2+mcQ7e5iFg/k7yiGgFRmOU4yy1nRql+oNX8Hrkq5PvTg7iSr
-         y2r0ic9PuWo9sxe0YQJVCdwoKugDPPiJdaxrTmX0te2tdMt5TGQXRMRTZCcTItp9MUpW
-         Nx7cgpJCICnjUgr5fF/SOMfwAWrutK3hOAo9m1goxo9uV1Zvy2S8X97fCu+tDMYRW+j7
-         Mxu99aM04PxmRG+NSFRwtST4NU1Yn9oWGX5wRC7Te0W4WC7J7bsvw+7PdtN3xg00daeQ
-         jpFA==
-X-Gm-Message-State: AOAM533m4l/iHfdw4s2cez7ImFq+1k4gph8eBrsiT4LJ9duUpFqxzOSX
-        HL4XU2bCyIVJ7U/I4RqQLXNjNIZExeGlxLAo0m+DmuvfG9RAJpXO
-X-Google-Smtp-Source: ABdhPJwYoEl6huDhuTCDpYh35nEA1u1nqoMTI3HG/L1rS1JGmOznOc7TWLAX0qsfBD5Mj+2O7iLGZ8ZUOhUa2JOEfp8=
-X-Received: by 2002:a05:6402:2750:b0:412:f7a6:6d52 with SMTP id
- z16-20020a056402275000b00412f7a66d52mr13059417edd.187.1645557134641; Tue, 22
- Feb 2022 11:12:14 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=7mrRW89h3xwE3VOC5kSzYp8pGGmPV1YcIdjOHz3y9Zs=;
+        b=X78Iq6ekZU5h1m/1ONCrwaUeq5sDPz1emRrVK/THCuyqsOmVZwF/BYV6MWDb7T9Ph9
+         ArR787iNMldFq9LscM9LPykNd4DPc/IYtPCgZRcMGkx2DLIRsq+U/svUYrVEEvL8CQ6p
+         BKH/ybzxArK9cJEm2tmeJ4yXNgaS1Z7duaUV8xLl8LDdGU0HId5LVuR766uvDfN4lwrK
+         7zZqJ4WTm67RI7xQ6zGaglh3dcx+nGirYJ2IS3C1eiiDf+TdOaleLQzS/jgyMiGZkCDc
+         jlYgFdneuV0SA0Eiu0vRVx/crNBo7HdvFSN8lHLnw23FSAZ5CFDFuf68gmsN5ENZ/csV
+         d2lQ==
+X-Gm-Message-State: AOAM530sAHRysp80FSZVZcIwtA/TtdR0kb+AdSfzPxtlJqJmNLsM8eGI
+        jMcKnrUMDmaHadQAW4Fpv+REPQ==
+X-Google-Smtp-Source: ABdhPJzwJ0CA/jAegiIlecOiqWTrBHlDS34LLrZvYALt553zOpyuNXn1gdU/6TX7LfLgjQhOm+b63A==
+X-Received: by 2002:a02:cf26:0:b0:314:c65d:22ab with SMTP id s6-20020a02cf26000000b00314c65d22abmr12842697jar.183.1645558534161;
+        Tue, 22 Feb 2022 11:35:34 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id m11sm5567059ilg.53.2022.02.22.11.35.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Feb 2022 11:35:33 -0800 (PST)
+Date:   Tue, 22 Feb 2022 14:35:32 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     John Cai <johncai86@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Robert Coup <robert.coup@koordinates.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 0/4] [RFC] repack: add --filter=
+Message-ID: <YhU7BK5uOS5OK/ZB@nand.local>
+References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
+ <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
+ <CAFLLRpJ1aDyLb4qAoQwYDyGdP1_PH8kzLAQCKJpQwiYiapZ5Aw@mail.gmail.com>
+ <CB2ACEF7-76A9-4253-AD43-7BC842F9576D@gmail.com>
+ <YhMC+3FdSEZz22qX@nand.local>
+ <CAP8UFD2dpicW64eqBK47g43xDWA1qv2BMBEOSqj_My5PUs8TSg@mail.gmail.com>
+ <YhQHYQ9b9bYYv10r@nand.local>
+ <CFECF0B1-A94F-4372-AFC9-C0469A17E9A5@gmail.com>
 MIME-Version: 1.0
-References: <20220222114313.14921-1-shivam828787@gmail.com> <220222.86pmnf6ket.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220222.86pmnf6ket.gmgdl@evledraar.gmail.com>
-From:   Shubham Mishra <shivam828787@gmail.com>
-Date:   Wed, 23 Feb 2022 00:42:01 +0530
-Message-ID: <CAC316V4ptAWJDgkcDrN8Gt7fSm4MtJFB7xqC4JTcEX0OW8a6rg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] microproject: avoid using pipes in test
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CFECF0B1-A94F-4372-AFC9-C0469A17E9A5@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I think these changes are good, but it's not the case that we try to
-> avoid using pipes at all in our tests.
+On Tue, Feb 22, 2022 at 01:52:09PM -0500, John Cai wrote:
+> > Another option would be to prune the repository according to objects
+> > that are already made available by a promisor remote.
 >
-> It's often a hassle, and just not worth it, e.g.:
->
->     oid=$(echo foo | git hash-object --stdin -w) &&
->
-> Sure, we can make that:
->
->     echo foo >in &&
->     oid=$(git hash-object --stdin -w <in) &&
->
-> But in the general case it's not worth worrying about.
->
-> What we *do* try to avoid, and what's actually important is to never
-> invoke "git" or other programs we invoke on the LHS of a pipe, or to
-> otherwise do so in a way that hides potential errors.
+> Thanks for the discussion around the two packfile idea. Definitely
+> interesting.  However, I'm leaning towards the second option here
+> where we ensure that objects that are about to be deleted can be
+> retrieved via a promisor remote. That way we have an easy path to
+> recovery.
 
-Sorry, I have not mentioned it properly in the message but my
-intention is not to remove all pipes but to remove only those, which
-have "git" command in LHS.
+Yeah, I think this may have all come from a potential misunderstanding I
+had with the original proposal. More of the details there can be found
+in [1].
 
-> That's not isolated to just pipes, but e.g. calling it within helper
-> functions that don't &&-chain, but pipes are probably the most common
-> offender.
->
-> The reason we do that is because in hacking git we may make it error,
-> segfault etc. If it's on the LHS of a pipe that failure becomes
-> indistinguishable from success.
->
-> And if the test is really checking e.g. "when I run git like this, it
-> produces no output" printing nothing with an exit of 0 will become the
-> same as a segafault for the purposes of test.
->
-> And that's bad.
->
-> But just invoking things on the LHS of a pipe? Sometimes it's a good
-> thing not do do that, because we'll be able to see a failure more
-> incrementally, and with intermediate files.
->
-> But it's generally not a problem, our test suite assumes that the OS is
-> basically sane. We're not going to call every invocation of "sed",
-> "grep" etc. with a wrapper like "test_must_fail grep" instead of "!
-> grep".
->
-> The same goes for our own helper utility functions such as "q_to_nul"
-> etc, as long as (and this is critical) that they're implemented by
-> shelling out to "sed", "grep", "perl" or whatever, and not to "git" or
-> "test-tool" etc. Then we need to start being as paranoid about them as
-> "git" on the LHS of pipes.
+But assuming that this proposal isn't about first offloading some
+objects to an auxiliary (non-Git) server, then I think refiltering into
+a single pack makes sense, because we trust the remote to still have
+any objects we deleted.
 
-Thanks here for providing me with a broader context of the problem.
-What I understand,
-It's not just about "git" on LHS of pipes but more broader to anything
-custom where
-We can miss exit codes but I think as a low hanging fruit I can start
-with "git" on LHS of pipe
-and as I will understand the codebase more I can work on other custom
-helpers too.
+(The snag I hit was that it seemed like your+Christian's proposal hinged
+on using _two_ filters, one to produce the set of objects you wanted to
+get rid of, and another to produce the set of objects you wanted to
+keep. The lack of cohesion between the two is what gave me pause, but it
+may not have been what either of you were thinking in the first place).
+
+Anyway, I'm not sure "spitting" a repository along a `--filter` into two
+packs is all that interesting of an idea, but it is something we could
+do if it became useful to you without writing too much new code (and
+instead leveraging `git pack-objects --stdin-packs`).
 
 Thanks,
-Shubham
+Taylor
+
+[1]: https://lore.kernel.org/git/YhUeUCIetu%2FaOu6k@nand.local/
