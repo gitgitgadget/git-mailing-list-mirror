@@ -2,123 +2,204 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E466C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 14:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D22DC433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 14:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232818AbiBVOdn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 09:33:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36108 "EHLO
+        id S232889AbiBVOjJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 09:39:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231975AbiBVOdm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 09:33:42 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5685332047
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 06:33:17 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id s14so20022484edw.0
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 06:33:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=mbWlxQPQwpmHLEewDFVvNjaeAGnskLc5v+iWFylLOjI=;
-        b=cZLd8xiBgjswJInONWfVDEnvWChrU+Q2A8ueSovcKNdETeUyQPBp/m8ibkRvqbYy/8
-         09UB9X+Y3P7OKjMlsGa+Nb9GDPgq40+Ao51L4/WwRKBiQ5tgkyR3H9e3mMuzADVl3Zw1
-         B+RObPL2QlN3Aif0PRXYU7pnuGCp3yL/+/AyA+tXV9jLPCIeZSNVyO5LjZfWnkpFAD3F
-         OMrd3sOHBWgBDehRn92U4qKrDSqydJItPdXUipJVbE+DsFQsL/qmf5nd75AW1gfoudxe
-         YOBhfLaLazTVjwijX4AbXLYLhh2nhJompUW1zTB2gPEi/g52ciEVeqB4G0Wgk74UVRsZ
-         i5dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=mbWlxQPQwpmHLEewDFVvNjaeAGnskLc5v+iWFylLOjI=;
-        b=b4BRjO0tXNEh341bZmJHSzfnz9Msj6E7Guq6NCQ3PjJhm8c1eFgEtLX3kbeQFUtHUr
-         RkLWFZ3xONuYb/Cd2mbCut9siVgSAW6iwzWyDQ+AgLM8CD7yDY/Hl0dOmGTIH0dUuEFZ
-         mMZqSZ4z6xBNaFYggJaxFxQkrCZFOrkdM7JYTezYQDI3iV3slsco/klKM0ZR34wgM+00
-         PHLhWiYwQf9U23QAvGtJ1m94GMvDlCnzEX2RITRmUAMudaEGeQSz3yyc4DapA1GzD/eR
-         ze5VqvGlMqxoCRdkpII79SO+s1rxw30xsxlWRxzHTHqF17+XzW0WppInsVLnPsDH7K09
-         O62w==
-X-Gm-Message-State: AOAM532EIFfRvkiR/e5J/dZO7SGEmCRR4x0HzTVwEbT6PdaKXtSn8jv6
-        8bFeIHCgIvrJeMLM8P+dVncrYWM2o4/YmDhX
-X-Google-Smtp-Source: ABdhPJzqUHNvwo4k77yuZ0QHaW/Hjc/0+g/YzQvNVMmguqPsC4pZdW2OGkys39pF+n3AFjcZhQ+SZA==
-X-Received: by 2002:a05:6402:27c7:b0:412:80f9:18af with SMTP id c7-20020a05640227c700b0041280f918afmr26650429ede.127.1645540395636;
-        Tue, 22 Feb 2022 06:33:15 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id d25sm6379866ejz.4.2022.02.22.06.33.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 06:33:14 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nMWE6-0068HH-CL;
-        Tue, 22 Feb 2022 15:33:14 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Shubham Mishra <shivam828787@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/2] microproject: avoid using pipes in test
-Date:   Tue, 22 Feb 2022 15:24:31 +0100
-References: <20220222114313.14921-1-shivam828787@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20220222114313.14921-1-shivam828787@gmail.com>
-Message-ID: <220222.86pmnf6ket.gmgdl@evledraar.gmail.com>
+        with ESMTP id S232887AbiBVOjH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 09:39:07 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 631F14ECC7
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 06:38:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1645540718;
+        bh=DIrT10e0kw31gSXKrMPXaVK4JkUkh+iNiPwoQdz1fMo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=LIdLML7IHx2Gm371hY7tcUcwNBvTI2Ep3Pq3c9n0OCq21qx8r8K4Caw9NJ8mENaAR
+         BIlDCOklUlm2LkF164tuQoQzRzba0p+w9cJdIq8QE4otmS8/sFbaNY+gT4LjRSwas7
+         3+UsPnV0M+KT8YS+QGJRM82j3zPYbz7Rc6sWPE+E=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUosT-1nn5ZP1qZV-00QnPt; Tue, 22
+ Feb 2022 15:38:38 +0100
+Date:   Tue, 22 Feb 2022 15:38:36 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Miriam Rubio <mirucam@gmail.com>
+Subject: Re: [PATCH 01/11] bisect run: fix the error message
+In-Reply-To: <CABPp-BGk7-yRZddOWBq6FpZDr=nOKSbL7eyMJQnOycP9CFtRng@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202221537520.11118@tvgsbejvaqbjf.bet>
+References: <pull.1132.git.1643328752.gitgitgadget@gmail.com> <93d19d85ee38f50019d5f05605ce7b5eca76cbd6.1643328752.git.gitgitgadget@gmail.com> <CABPp-BGk7-yRZddOWBq6FpZDr=nOKSbL7eyMJQnOycP9CFtRng@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:w6EiSffrYTP6QXxQHuix2RadVd5D6Fdn9ckqxhLtXzZElaehSiN
+ c/Aeo4wj1nC7+kCaYPsMeQypsiq5MGgBAlNFMG18g/tcVFCvEHG5aY47xalBFKlTzmnHRs6
+ +85a9wNNh85ayG9wJ6uA1PiYeHkRYgYZHNdZpjfaziveNFdxqdj+2RG3UWI8hjd+lcwsI/H
+ a3g69uP+ps15CQFn2jn1w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tPvsQxXY6ZM=:ex15jrLOFZEs0WfpRa/3sc
+ X7djdhQjQpE94gPP6peaLtFa3gz99X9Jw0UYjDkWCKXWgBVIX5N49HaSvFmZR6BzWS11B5Udu
+ e9Nb3HNYru5GP7pJgTuPPhPgJ4y2vvh8xgi6rMxmpQ0pdCabX9uNftTyUr7h1VfzWDCoKB6pJ
+ pMVu6Lx7ePdIqDPwsZMgxhKShNMmcKff9hL+1ZyHgDvQHe3wAlBWijtj2a4qJF3bdBH0UC6aw
+ 8BDvGSlvreawE8KJCOkmdyitVZ4kx6zAy5sKiv9vmcrR5eoOv9m2HonSFVNa8kO50AfQLwYnw
+ yP5S+qZdmArFNw7ioJKqI/MvSPnmxhFll0HKSvs1VlY8wPBvBSda9KcDCAgpohCqw3ndc0ouF
+ Im+GKVKC/gJ+AZKj//wOpkwvmUEkX/dbb6CMbPoedxOn+kjuY+Qa+ybeeP4k3CjIYozb4ij6B
+ R9q/Ugb4ceFr7HndDD3qXfAtPqu36exeHytU+5Plavjvjf77X78cPTAD40CV0d9eNuQSMcrwF
+ QpJT3M6U6yUykw4UHADpote4FXJ5KdOIW9KsiLGa6HnWIjAmcFUsmHz7WLrerQumICBf70Rby
+ urQPITGErnzHUfqR5TcOZ9HIbn/sm4EmtHPbmn+LWcskNnvfAJ5LZy2CuY2YiuIa9sFKh7dHM
+ IxodxF3C/s3P4Rl+hXcqVgHE9sRNObPJSz9quggiGLZTHH3isA10OvKzodsZ7WmPR7STHAg4q
+ zJ6SnoRwabcvbpxWBGC88evA0z8UlxcQxW8plDfXPUn/zu6z9cIawdHBas9rAdy3dwezTRRW8
+ nS1ZXtbYyVOM3ZVkc0KuKQeDj/+HaxPZP5Sqzf7HzwDmd/wR89dz/6E5M61lZTzssSwS5gq9d
+ B3dtoKo+4Qr7z4ZiPBuVS+G9bV72lKWj5qCms/YtoPN1byMcGlRMc0LGRHSAQBMIWHmxB52ZZ
+ VrNTdZXGlPoYGUaZzi2mmUoD/uFTgHsgXczva3ZUyXbyKKGqRloMYn2vK1JqyYnHVc37U8Okv
+ ELcWwwARsBA++SiR9HKozW44wI5mOsH6Xp1AcYTlvCr89iaes8SpE0gHx6gh16vnaHmz5nD3x
+ tThYNYB3PiO+2U=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Elijah,
 
-On Tue, Feb 22 2022, Shubham Mishra wrote:
+On Tue, 8 Feb 2022, Elijah Newren wrote:
 
-> pipes doesn't care about error codes and ignore them thus we should not use them in tests.
+> On Fri, Jan 28, 2022 at 3:27 PM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > In d1bbbe45df8 (bisect--helper: reimplement `bisect_run` shell functio=
+n
+> > in C, 2021-09-13), we ported the `bisect run` subcommand to C, includi=
+ng
+> > the part that prints out an error message when the implicit `git bisec=
+t
+> > bad` or `git bisect good` failed.
+> >
+> > However, the error message was supposed to print out whether the state
+> > was "good" or "bad", but used a bogus (because non-populated) `args`
+> > variable for it.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin/bisect--helper.c | 8 ++------
+> >  1 file changed, 2 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> > index 28a2e6a5750..4208206af07 100644
+> > --- a/builtin/bisect--helper.c
+> > +++ b/builtin/bisect--helper.c
+> > @@ -1093,7 +1093,6 @@ static int bisect_run(struct bisect_terms *terms=
+, const char **argv, int argc)
+> >  {
+> >         int res =3D BISECT_OK;
+> >         struct strbuf command =3D STRBUF_INIT;
+> > -       struct strvec args =3D STRVEC_INIT;
+> >         struct strvec run_args =3D STRVEC_INIT;
+> >         const char *new_state;
+> >         int temporary_stdout_fd, saved_stdout;
+> > @@ -1111,8 +1110,6 @@ static int bisect_run(struct bisect_terms *terms=
+, const char **argv, int argc)
+> >         strvec_push(&run_args, command.buf);
+> >
+> >         while (1) {
+> > -               strvec_clear(&args);
+> > -
+> >                 printf(_("running %s\n"), command.buf);
+> >                 res =3D run_command_v_opt(run_args.v, RUN_USING_SHELL)=
+;
+> >
+> > @@ -1157,14 +1154,13 @@ static int bisect_run(struct bisect_terms *ter=
+ms, const char **argv, int argc)
+> >                         printf(_("bisect found first bad commit"));
+> >                         res =3D BISECT_OK;
+> >                 } else if (res) {
+> > -                       error(_("bisect run failed: 'git bisect--helpe=
+r --bisect-state"
+> > -                       " %s' exited with error code %d"), args.v[0], =
+res);
+> > +                       error(_("bisect run failed: 'git bisect"
+> > +                       " %s' exited with error code %d"), new_state, =
+res);
+> >                 } else {
+> >                         continue;
+> >                 }
+> >
+> >                 strbuf_release(&command);
+> > -               strvec_clear(&args);
+> >                 strvec_clear(&run_args);
+> >                 return res;
+> >         }
+> > --
+> > gitgitgadget
+>
+> Good catch.  Looks like this printed "(null)" on glibc, and probably
+> crashed elsewhere.  Perhaps it'd help to add a test that would have
+> caught this with something like (I'm hoping gmail doesn't corrupt
+> this):
+>
+> diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+> index 1be85d064e..28b54ba41b 100755
+> --- a/t/t6030-bisect-porcelain.sh
+> +++ b/t/t6030-bisect-porcelain.sh
+> @@ -980,4 +980,15 @@ test_expect_success 'bisect visualize with a
+> filename with dash and space' '
+>         git bisect visualize -p -- "-hello 2"
+>  '
+>
+> +test_expect_success 'testing' '
+> +       git bisect reset &&
+> +       git bisect start $HASH4 $HASH1 &&
+> +       write_script test_script.sh <<-\EOF &&
+> +       rm .git/BISECT*
+> +       EOF
+> +       test_must_fail git bisect run ./test_script.sh 2>error &&
+> +       cat error &&
+> +       grep git.bisect.good..exited.with.error.code error
+> +'
+> +
+>  test_done
 
-Aside from what Derrick Stolee mentioned in his feedback, all of which I
-agree with.
+Excellent, thank you!
 
-I think these changes are good, but it's not the case that we try to
-avoid using pipes at all in our tests.
+> Also, as a side note, it appears that another error message in this
+> same function has a suboptimal error message, which could be fixed
+> with
+>
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 28a2e6a575..6187d9fbcb 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -1118,7 +1118,7 @@ static int bisect_run(struct bisect_terms
+> *terms, const char **argv, int argc)
+>
+>                 if (res < 0 || 128 <=3D res) {
+>                         error(_("bisect run failed: exit code %d from"
+> -                               " '%s' is < 0 or >=3D 128"), res, comman=
+d.buf);
+> +                               " %s is < 0 or >=3D 128"), res, command.=
+buf);
+>                         strbuf_release(&command);
+>                         return res;
+>                 }
+>
+> In particular, the line of code just above here:
+>       sq_quote_argv(&command, argv);
+> means that we get double single quotes without this fix, which looks
+> ugly.  Of course, this doesn't need to be included in your series, but
+> since you're cleaning up other error messages anyway, I thought I'd at
+> least mention it.
 
-It's often a hassle, and just not worth it, e.g.:
+Sure, and I think it is not _too_ much out of scope to fix it in the same
+patch series, too.
 
-    oid=$(echo foo | git hash-object --stdin -w) &&
-
-Sure, we can make that:
-
-    echo foo >in &&
-    oid=$(git hash-object --stdin -w <in) &&
-
-But in the general case it's not worth worrying about.
-
-What we *do* try to avoid, and what's actually important is to never
-invoke "git" or other programs we invoke on the LHS of a pipe, or to
-otherwise do so in a way that hides potential errors.
-
-That's not isolated to just pipes, but e.g. calling it within helper
-functions that don't &&-chain, but pipes are probably the most common
-offender.
-
-The reason we do that is because in hacking git we may make it error,
-segfault etc. If it's on the LHS of a pipe that failure becomes
-indistinguishable from success.
-
-And if the test is really checking e.g. "when I run git like this, it
-produces no output" printing nothing with an exit of 0 will become the
-same as a segafault for the purposes of test.
-
-And that's bad.
-
-But just invoking things on the LHS of a pipe? Sometimes it's a good
-thing not do do that, because we'll be able to see a failure more
-incrementally, and with intermediate files.
-
-But it's generally not a problem, our test suite assumes that the OS is
-basically sane. We're not going to call every invocation of "sed",
-"grep" etc. with a wrapper like "test_must_fail grep" instead of "!
-grep".
-
-The same goes for our own helper utility functions such as "q_to_nul"
-etc, as long as (and this is critical) that they're implemented by
-shelling out to "sed", "grep", "perl" or whatever, and not to "git" or
-"test-tool" etc. Then we need to start being as paranoid about them as
-"git" on the LHS of pipes.
-
+Thank you!
+Dscho
