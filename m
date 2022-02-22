@@ -2,99 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E752DC433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 23:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E507BC433F5
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 23:52:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235888AbiBVXRc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 18:17:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41666 "EHLO
+        id S233008AbiBVXwm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 18:52:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235010AbiBVXRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 18:17:30 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34AB290CC0
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 15:17:04 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id u16so13598304pfg.12
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 15:17:04 -0800 (PST)
+        with ESMTP id S230304AbiBVXwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 18:52:41 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ADE330F5A
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 15:52:14 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id j10-20020a17090a94ca00b001bc2a9596f6so1086858pjw.5
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 15:52:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=08xkDPBJ7WvpC9hqlzNrXmnE91wAP+aX5OqbjiHskbk=;
-        b=ert7OjsM5PCtzj0IBPSY/eoWzsaxxjCb98kXUht32A6fs2bBFZ3NXA8oGcX+Xrwnl0
-         LFlwqStXcvic1BJMoiEH4eHrJpRNeiKuy/jjqYJnMLdGbKuJPwb3yx2LG2to0TAehxTx
-         WnDBDNZABX9KAW1KghYXuBDWG+psaWNzInFoNjBOLFjcE9fEia+eT5nhp8UPZgWfrTrT
-         XcmUIMCRhe/tRQIuI4w/6m1pW+ZRFfp1+rWpStVSb9RQrgOr8eZk8fSsrDAkDBlgkZFG
-         vAbxxRLOb0kZDyza7xm2SpL73UdS440vJYTsiRT7uLJ5QFz3ULk2HTmOP9SRXcReEOV8
-         +COA==
+        bh=tyBqE7H4RLCVrgECQ9YEbcWR65adTTUHAb82dSA4vR0=;
+        b=PnvVIXEegCiIKE8FuX4Gzi2Hf69+xu1j/AoWULtiJy61PetdvYfOpbckfOIHID+RI4
+         gab5+lYMPdAEKwfCDHsMhH630VQPApTzM4uDagZLeePHZNeOHh0RAPi8EBy2iAiQfp4u
+         ZMvJ2+s69ZHbhCwDuzH1BDrvZpx1g3RwiuP1kFtJ/CH+kZeA/jS5kq70AtkLadXSRKwk
+         zklhi2O2TiMVgJXsXj0WnWYS4tcoZhy5rWTfEkeGzk3A9pGwD1doJj+m53oe0lMfmvDL
+         Lil3CTdxYBDoXvabkVl0Ml1OR0ZPBV7P1PUosod4ZbOh7Z332R0+N9Ih0CdxcLbTY1VK
+         E2+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=08xkDPBJ7WvpC9hqlzNrXmnE91wAP+aX5OqbjiHskbk=;
-        b=Jw0tZEM7TrueEsoqpUJRpmV6g2YXuSQzqXMkmXwdvO7aZKHTuhR90dbrrzn5VHbJ/d
-         8bw7aAJ6R3jb5INxJSJBuYdLDuOH524la2DHHxPtAKjxEZHX5CuMEj5eC+HeNkuJMs/K
-         Oe+Jio1Xuw8OIrejmH9GTUhxwrCzaDlxG7bJi78RouhJZ+MlyyQc5oMtFWvI79ZRXPLt
-         R/DdzejKkqKowqavAYLzvUKK4ncywDkju/kLDYCkVOYb+ILIXfyYHxBIQ5U2U+b3BTnj
-         qPshVwN9Z2YAiY/lMJjPPecMg6QejgCQuHEFRebUrXhPXrfa/h6x9aEYskLlLbIRT/Ic
-         +3bQ==
-X-Gm-Message-State: AOAM532mnOzsaS0FY4Na1J3LB5BhIrOmcjgapniN50Pb5yfhI8SpJxLi
-        VJ0y6O7uzo++P7VsZURZOj8=
-X-Google-Smtp-Source: ABdhPJyn5/ag3ugS2ffnyGv09qPdyFJZWQzJaK6yueeejK0N285qrTh0hmsHWzK25VLpNZtzox1SYw==
-X-Received: by 2002:a05:6a00:22c8:b0:4e1:cb76:2e58 with SMTP id f8-20020a056a0022c800b004e1cb762e58mr25770351pfj.47.1645571823587;
-        Tue, 22 Feb 2022 15:17:03 -0800 (PST)
+        bh=tyBqE7H4RLCVrgECQ9YEbcWR65adTTUHAb82dSA4vR0=;
+        b=MnQLXS7wqAAXpTv6aFvAc34AR7MYe+xTlBEz6VguUE9PPv9uwiY1sNzoIucLiayQQZ
+         XooyIpREdxW4tMoBAa8uiKyxGRS5ek45MHYQbmccpmd6qeuql5r3LXQdoryYIKEhAv7k
+         OyK1o8VPe7texLJHYqU/T4tC9lYUWR0QVVnQYltemHNd/U7RwTgLptteypNDWNTyJshp
+         01j3KaJKnx3mecI6oj+1zmY4GXlUodXGTQWBk87+Ja5WUT4kQglmixRcDbPR8AaYOD4r
+         reP1gGEvRFjBZW7Qpo7nmZlrmIrG4pQGjpqT+28Ujc8y6Oi4UxzPu6XNTlUa7qXwQVzK
+         l1oQ==
+X-Gm-Message-State: AOAM532b+tyj4cunSs56o+nt8CV8Vpno6gVKgLCcayFB/7ktoV3RQInB
+        F3YDauiIjZqlJV0twijpm0gRkIzUmgc=
+X-Google-Smtp-Source: ABdhPJy3wpciSVfFF47WXFaF4sc/L91HLDNGUdWE1JObRwTZpIVp3zcLldnNAlkSWMa0J4C4lu4Kjg==
+X-Received: by 2002:a17:902:6b81:b0:14f:37e1:3940 with SMTP id p1-20020a1709026b8100b0014f37e13940mr24879419plk.115.1645573933602;
+        Tue, 22 Feb 2022 15:52:13 -0800 (PST)
 Received: from google.com ([2620:15c:2ce:200:2ada:62da:c2a8:ce2c])
-        by smtp.gmail.com with ESMTPSA id x126sm17039420pfb.117.2022.02.22.15.17.02
+        by smtp.gmail.com with ESMTPSA id y191sm19126270pfb.78.2022.02.22.15.52.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 15:17:03 -0800 (PST)
-Date:   Tue, 22 Feb 2022 15:17:00 -0800
+        Tue, 22 Feb 2022 15:52:12 -0800 (PST)
+Date:   Tue, 22 Feb 2022 15:52:10 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, jabolopes@google.com,
-        Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH v2 3/5] repo_read_index: clear SKIP_WORKTREE bit from
- files present in worktree
-Message-ID: <YhVu7GH/tcVmao66@google.com>
-References: <pull.1114.git.1642092230.gitgitgadget@gmail.com>
- <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
- <11d46a399d26c913787b704d2b7169cafc28d639.1642175983.git.gitgitgadget@gmail.com>
- <YhBCsg2DCEd9FXjE@google.com>
- <0979ce9b-d7be-9f84-0942-201626b488a4@github.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: en/present-despite-skipped (Re: What's cooking in git.git (Feb
+ 2022, #05; Thu, 17))
+Message-ID: <YhV3KruSTFYEDBAO@google.com>
+References: <xmqqley93rkw.fsf@gitster.g>
+ <YhBNgUFnujFGVcRo@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0979ce9b-d7be-9f84-0942-201626b488a4@github.com>
+In-Reply-To: <YhBNgUFnujFGVcRo@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jonathan Nieder wrote:
+> Junio C Hamano wrote:
 
-Derrick Stolee wrote:
-
-> Just chiming in here to say that we've dealt with these issues in
-> microsoft/git by special-casing them behind our core_virtualfilesystem
-> global. A recent example is the changes to 'git add' to prevent
-> adding a file that is marked as sparse (unless --sparse is specified).
-> We always allow this when in the virtualized scenario [1].
+>> * en/present-despite-skipped (2022-01-14) 6 commits
+>>   (merged to 'next' on 2022-02-15 at 960873fdad)
+>>  + Accelerate clear_skip_worktree_from_present_files() by caching
+>>  + Update documentation related to sparsity and the skip-worktree bit
+>>  + repo_read_index: clear SKIP_WORKTREE bit from files present in worktree
+>>  + unpack-trees: fix accidental loss of user changes
+>>  + t1011: add testcase demonstrating accidental loss of user modifications
+>>  + Merge branch 'vd/sparse-clean-etc' into en/present-despite-skipped
+>>
+>>  In sparse-checkouts, files mis-marked as missing from the working tree
+>>  could lead to later problems.  Such files were hard to discover, and
+>>  harder to correct.  Automatically detecting and correcting the marking
+>>  of such files has been added to avoid these problems.
+>>
+>>  Will merge to 'master'.
+>>  cf. <20220204081336.3194538-1-newren@gmail.com>
+>>  source: <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
 >
-> [1] https://github.com/microsoft/git/blob/2f6531aced2e77a6c1000a923967ae0105383930/builtin/add.c#L50-L54
+> I'd recommend holding off on merging to 'master' for now, until we
+> figure out what to do about
+> https://lore.kernel.org/git/YhBCsg2DCEd9FXjE@google.com/. Hopefully that
+> won't take long.
 
-Oh!  Thanks for that pointer --- it's very helpful.  I hadn't realized
-that VFS for Git still requires a patched Git.
+Since as discussed there this isn't a regression for existing users of
+git 'master', I see no reason to hold off on merging to 'master'.
+Thanks for your patient help.
 
-> This seems like something that should be on vfsd to handle, and should
-> not prevent upstream Git from making changes that benefit its users.
-
-Separate from the "should" questions (in general I'm in favor of
-unpatched Git being able to serve as a solid platform for both Scalar
-and this kind of VFS use case), this context tells me that this is not
-in fact a regression for VFS for Git users, so it's much appreciated.
-
-Thanks,
+Sincerely,
 Jonathan
