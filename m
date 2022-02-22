@@ -2,263 +2,215 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6EB4C433FE
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 11:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25CC9C433EF
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 11:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231139AbiBVLOc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 06:14:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41130 "EHLO
+        id S231272AbiBVLhK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 06:37:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229491AbiBVLOb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 06:14:31 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F341B45A0
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 03:14:05 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id u1so32438217wrg.11
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 03:14:05 -0800 (PST)
+        with ESMTP id S230138AbiBVLhI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 06:37:08 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2D28986D4
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 03:36:42 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id cm8so26576271edb.3
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 03:36:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=bKIogpHs3E5vOpWuzAK/3JCW0eJBzJG0yWPEmOj0gDg=;
-        b=e1cJK7+yeWENycoDep3k20e7A2hch33ocZjyynXlJcjFgtSo/kEUezZ36X3SDRhr1B
-         xa2bKD5jNvv+rNWTOPYZzqv/vFJYrRAF/WlmarMbKh0R2THRnmT1IPKA2NtARaKRYhhy
-         sWb/UPA+8tFOXOUHPuByNqTDZrtTlml0ZCsCNTPISAV97CyDSFky5QKxQrPo72ZNQ4Tl
-         FwTrULnmoHhiFw8MRPGTMJySAGtEaLBCvBm7so7+pX/grM3/B77ftlpEAuSo/MSLeYUv
-         dCotCydA5qHD3NlqmYPdGorOLj0g4dspV/taeCaBCrRhs0i0PHxpaZ3IvG/BLBUoZyPA
-         vtCg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ZruvFEdHXus31KGiqvc7Rv+WfhVT43rXxF+jn2Ac4Ws=;
+        b=oE1cC9SL91k05jt7PY0XRl3Dkta+9E6iH9fNw2rQ2d0de3QjZAQXZrXNjUZRPvA19v
+         agXZ6SalILPiMKgLQQzr+4QHvPd8X65GHb5wBGI+ltzIFxhd9DXY0RPT3iRaio5Q9mdK
+         kHDwCKF0lp+FEcinLst+N7QN7Ta7EN22ujoG2Jlk11gGRcxi93ldKScA7hNd4tMUwjXW
+         xP9qtbktV1M41ojNnMCs9F3Qg7WscxRevD9BCN1homTqHqp2Mb+nJM5aL/lXd68Tikhe
+         X+UdHN1NAHix1b6tL4U2gGisU8kpPyCLKVzpe0nEKHGx7uAYPbbSXoOVoWH2zsVR+L45
+         WFaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=bKIogpHs3E5vOpWuzAK/3JCW0eJBzJG0yWPEmOj0gDg=;
-        b=TjfihgKz777R9mcLq2X9vzA2gxTAibb8BeMNlz6A/xKknhmXZj5XWZGdXeKxLFw+sK
-         ziq36jF3DyBwAUWxkySKV05CgA4bFJOrMUF1n3z/R1n0X/MHAaZbwrIkY1cBZ4fAYhEX
-         dztM0a0WzJL8e/qJuDaV1Mh3rCD272hod7dcw11Z3JvdEuGZHZAdgdLzxRhU6I+6PbGW
-         KdET/COH6gWDX/Y938gGFr40GY8roW471/YaJMRLXFwfu3gQ6fIeTP6gqpWsoS4PTlax
-         aNKsiTp1jkq+T7/zrMVccJQzcg9zwHKq9Zto6f5ESlIh+h17rArJhbe5uev/8bVm26ko
-         V8mg==
-X-Gm-Message-State: AOAM530CMOJBMT6Qixrt3t7oC6yhERpExLqcMLxFasEXlIGH0uDCu0bW
-        7/MxjDemIY1eJMV/N4g5hFn4ZeAfKnM=
-X-Google-Smtp-Source: ABdhPJzwBpI83T4rhcvdCt1WRquz8YrtXgRtv+8dAagSkJqa2xDalvoBkeQD44q5oRXqg+GBbnVSMg==
-X-Received: by 2002:a05:6000:178c:b0:1ea:7c28:d45d with SMTP id e12-20020a056000178c00b001ea7c28d45dmr3978116wrg.604.1645528444050;
-        Tue, 22 Feb 2022 03:14:04 -0800 (PST)
-Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id d14sm46158430wri.93.2022.02.22.03.14.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Feb 2022 03:14:03 -0800 (PST)
-Message-ID: <e73c6746-9f8d-7e23-3764-18d01307278b@gmail.com>
-Date:   Tue, 22 Feb 2022 11:14:01 +0000
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=ZruvFEdHXus31KGiqvc7Rv+WfhVT43rXxF+jn2Ac4Ws=;
+        b=B2DK4CUoPLeN0OlCZjRUg3zQ46RBgHZGbzIV8C7kpLehMmxFZH+rmQtFPZp9AmzneE
+         mKlgrOMeWDb380yqvN15twqAJ6q5nKGSUxHKssiZ6b7Xx1fdVldJybAWu4E4XCpW75Nm
+         gDGtBKN7cxcMXODavvR0EHe7H7UUMybwR3Q0A4vVjs78Z+HBDhKQX5jr3vzewns+BMhH
+         4I2DWy3dtAqdBqcnnBfozZEUxZlNBL2+1atw2wZZYmrAKaUTW6XlPedXZxNSxe41zpgT
+         iFroV9Rcb/A4g5Cwm5Zk41x922P295x0r6uoF9JoJkymLVbJWvVT4XRstWgGKtHiBEMG
+         5MnQ==
+X-Gm-Message-State: AOAM530KiSqe8OUIXE0aSFeIUC10Lu8cqDIXW0FFPL0clZwwhUjuakia
+        4EaEK5slXNXeugw+Or0FPu0=
+X-Google-Smtp-Source: ABdhPJysTFA6XoZkMGyQ1IrkuknvbqYSwNq84DB2WTws117xKrzDhcNq+Ira+MlEBc84sHmj8GkGfg==
+X-Received: by 2002:a05:6402:51ca:b0:412:d1b2:496d with SMTP id r10-20020a05640251ca00b00412d1b2496dmr18689064edd.18.1645529801258;
+        Tue, 22 Feb 2022 03:36:41 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id l8sm6097259ejp.198.2022.02.22.03.36.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Feb 2022 03:36:40 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nMTTD-00604d-KA;
+        Tue, 22 Feb 2022 12:36:39 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        =?utf-8?B?xJBvw6Bu?= =?utf-8?B?IFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 4/8] Makefile: move ".SUFFIXES" rule to shared.mak
+Date:   Tue, 22 Feb 2022 12:14:57 +0100
+References: <cover-v2-0.8-00000000000-20211224T173558Z-avarab@gmail.com>
+ <patch-v2-4.8-4c6d8089fff-20211224T173558Z-avarab@gmail.com>
+ <YhQs3VfjacB+Ryvh@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <YhQs3VfjacB+Ryvh@nand.local>
+Message-ID: <220222.86bkyz875k.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/1] xdiff: provide indirection to git functions
-Content-Language: en-US
-To:     Edward Thomson <ethomson@edwardthomson.com>, git@vger.kernel.org
-Cc:     johannes.schindelin@gmx.de,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-References: <20220217225218.GA7@edef91d97c94>
- <20220217225408.GB7@edef91d97c94>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20220217225408.GB7@edef91d97c94>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17/02/2022 22:54, Edward Thomson wrote:
-> Provide an indirection layer into the git-specific functionality and
-> utilities in `git-xdiff.h`, prefixing those types and functions with
-> `xdl_` (and `XDL_` for macros).  This allows other projects that use
-> git's xdiff implementation to keep up-to-date; they can now take all the
-> files _except_ `git-xdiff.h`, which they have customized for their own
-> environment.
 
-The changes since V1 look good,
+On Mon, Feb 21 2022, Taylor Blau wrote:
 
-Best Wishes
+> On Fri, Dec 24, 2021 at 06:37:43PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>     $ git -c hyperfine.hook.setup=3D hyperfine -L rev HEAD~1,HEAD~0 -s '=
+make -C Documentation man' 'make -C Documentation -j1 man'
+>>     Benchmark 1: make -C Documentation -j1 man' in 'HEAD~1
+>>       Time (mean =C2=B1 =CF=83):     121.7 ms =C2=B1   8.8 ms    [User: =
+105.8 ms, System: 18.6 ms]
+>>       Range (min =E2=80=A6 max):   112.8 ms =E2=80=A6 148.4 ms    26 runs
+>>
+>>     Benchmark 2: make -C Documentation -j1 man' in 'HEAD~0
+>>       Time (mean =C2=B1 =CF=83):      97.5 ms =C2=B1   8.0 ms    [User: =
+80.1 ms, System: 20.1 ms]
+>>       Range (min =E2=80=A6 max):    89.8 ms =E2=80=A6 111.8 ms    32 runs
+>>
+>>     Summary
+>>       'make -C Documentation -j1 man' in 'HEAD~0' ran
+>>         1.25 =C2=B1 0.14 times faster than 'make -C Documentation -j1 ma=
+n' in 'HEAD~1'
+>
+> Nice speed-up. Though I am not sure I totally understand where it comes
+> from ;). Reading 30248886ce8 and the documentation on .SUFFIXES from
+> [1], I am still unclear. I guess removing the obsolete built-in suffix
+> rules gives make less work to do in general?
 
-Phillip
+I'll update the commit message, but basically the same applies as for
+2/8 here (<patch-v2-2.8-b0c9be581a6-20211224T173558Z-avarab@gmail.com>),
+or if you run "make" with "--debug=3Da". I.e. if before/after this change y=
+ou do:
 
-> Signed-off-by: Edward Thomson <ethomson@edwardthomson.com>
-> ---
->   xdiff/git-xdiff.h | 16 ++++++++++++++++
->   xdiff/xdiff.h     |  8 +++-----
->   xdiff/xdiffi.c    | 20 ++++++++++----------
->   xdiff/xinclude.h  |  2 +-
->   xdiff/xmerge.c    |  4 ++--
->   5 files changed, 32 insertions(+), 18 deletions(-)
->   create mode 100644 xdiff/git-xdiff.h
-> 
-> diff --git a/xdiff/git-xdiff.h b/xdiff/git-xdiff.h
-> new file mode 100644
-> index 0000000000..664a7c1351
-> --- /dev/null
-> +++ b/xdiff/git-xdiff.h
-> @@ -0,0 +1,16 @@
-> +#ifndef GIT_XDIFF_H
-> +#define GIT_XDIFF_H
-> +
-> +#include "git-compat-util.h"
-> +
-> +#define xdl_malloc(x) xmalloc(x)
-> +#define xdl_free(ptr) free(ptr)
-> +#define xdl_realloc(ptr,x) xrealloc(ptr,x)
-> +
-> +#define xdl_regex_t regex_t
-> +#define xdl_regmatch_t regmatch_t
-> +#define xdl_regexec_buf(p, b, s, n, m, f) regexec_buf(p, b, s, n, m, f)
-> +
-> +#define XDL_BUG(msg) BUG(msg)
-> +
-> +#endif
-> diff --git a/xdiff/xdiff.h b/xdiff/xdiff.h
-> index 72e25a9ffa..fb47f63fbf 100644
-> --- a/xdiff/xdiff.h
-> +++ b/xdiff/xdiff.h
-> @@ -27,6 +27,8 @@
->   extern "C" {
->   #endif /* #ifdef __cplusplus */
-> 
-> +#include "git-xdiff.h"
-> +
->   /* xpparm_t.flags */
->   #define XDF_NEED_MINIMAL (1 << 0)
-> 
-> @@ -82,7 +84,7 @@ typedef struct s_xpparam {
->   	unsigned long flags;
-> 
->   	/* -I<regex> */
-> -	regex_t **ignore_regex;
-> +	xdl_regex_t **ignore_regex;
->   	size_t ignore_regex_nr;
-> 
->   	/* See Documentation/diff-options.txt. */
-> @@ -119,10 +121,6 @@ typedef struct s_bdiffparam {
->   } bdiffparam_t;
-> 
-> 
-> -#define xdl_malloc(x) xmalloc(x)
-> -#define xdl_free(ptr) free(ptr)
-> -#define xdl_realloc(ptr,x) xrealloc(ptr,x)
-> -
->   void *xdl_mmfile_first(mmfile_t *mmf, long *size);
->   long xdl_mmfile_size(mmfile_t *mmf);
-> 
-> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-> index 69689fab24..af31b7f4b3 100644
-> --- a/xdiff/xdiffi.c
-> +++ b/xdiff/xdiffi.c
-> @@ -832,7 +832,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->   			/* Shift the group backward as much as possible: */
->   			while (!group_slide_up(xdf, &g))
->   				if (group_previous(xdfo, &go))
-> -					BUG("group sync broken sliding up");
-> +					XDL_BUG("group sync broken sliding up");
-> 
->   			/*
->   			 * This is this highest that this group can be shifted.
-> @@ -848,7 +848,7 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->   				if (group_slide_down(xdf, &g))
->   					break;
->   				if (group_next(xdfo, &go))
-> -					BUG("group sync broken sliding down");
-> +					XDL_BUG("group sync broken sliding down");
-> 
->   				if (go.end > go.start)
->   					end_matching_other = g.end;
-> @@ -873,9 +873,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->   			 */
->   			while (go.end == go.start) {
->   				if (group_slide_up(xdf, &g))
-> -					BUG("match disappeared");
-> +					XDL_BUG("match disappeared");
->   				if (group_previous(xdfo, &go))
-> -					BUG("group sync broken sliding to match");
-> +					XDL_BUG("group sync broken sliding to match");
->   			}
->   		} else if (flags & XDF_INDENT_HEURISTIC) {
->   			/*
-> @@ -916,9 +916,9 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
-> 
->   			while (g.end > best_shift) {
->   				if (group_slide_up(xdf, &g))
-> -					BUG("best shift unreached");
-> +					XDL_BUG("best shift unreached");
->   				if (group_previous(xdfo, &go))
-> -					BUG("group sync broken sliding to blank line");
-> +					XDL_BUG("group sync broken sliding to blank line");
->   			}
->   		}
-> 
-> @@ -927,11 +927,11 @@ int xdl_change_compact(xdfile_t *xdf, xdfile_t *xdfo, long flags) {
->   		if (group_next(xdf, &g))
->   			break;
->   		if (group_next(xdfo, &go))
-> -			BUG("group sync broken moving to next group");
-> +			XDL_BUG("group sync broken moving to next group");
->   	}
-> 
->   	if (!group_next(xdfo, &go))
-> -		BUG("group sync broken at end of file");
-> +		XDL_BUG("group sync broken at end of file");
-> 
->   	return 0;
->   }
-> @@ -1011,11 +1011,11 @@ static void xdl_mark_ignorable_lines(xdchange_t *xscr, xdfenv_t *xe, long flags)
->   }
-> 
->   static int record_matches_regex(xrecord_t *rec, xpparam_t const *xpp) {
-> -	regmatch_t regmatch;
-> +	xdl_regmatch_t regmatch;
->   	int i;
-> 
->   	for (i = 0; i < xpp->ignore_regex_nr; i++)
-> -		if (!regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
-> +		if (!xdl_regexec_buf(xpp->ignore_regex[i], rec->ptr, rec->size, 1,
->   				 &regmatch, 0))
->   			return 1;
-> 
-> diff --git a/xdiff/xinclude.h b/xdiff/xinclude.h
-> index a4285ac0eb..75db1d8f35 100644
-> --- a/xdiff/xinclude.h
-> +++ b/xdiff/xinclude.h
-> @@ -23,7 +23,7 @@
->   #if !defined(XINCLUDE_H)
->   #define XINCLUDE_H
-> 
-> -#include "git-compat-util.h"
-> +#include "git-xdiff.h"
->   #include "xmacros.h"
->   #include "xdiff.h"
->   #include "xtypes.h"
-> diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-> index fff0b594f9..433e2d7415 100644
-> --- a/xdiff/xmerge.c
-> +++ b/xdiff/xmerge.c
-> @@ -88,7 +88,7 @@ static int xdl_cleanup_merge(xdmerge_t *c)
->   		if (c->mode == 0)
->   			count++;
->   		next_c = c->next;
-> -		free(c);
-> +		xdl_free(c);
->   	}
->   	return count;
->   }
-> @@ -456,7 +456,7 @@ static void xdl_merge_two_conflicts(xdmerge_t *m)
->   	m->chg1 = next_m->i1 + next_m->chg1 - m->i1;
->   	m->chg2 = next_m->i2 + next_m->chg2 - m->i2;
->   	m->next = next_m->next;
-> -	free(next_m);
-> +	xdl_free(next_m);
->   }
-> 
->   /*
-> --
-> 2.35.1
+    git clean -dxf; make -C Documentation/ --debug=3Da git-status.1 >/tmp/b=
+ 2>&1
+    git clean -dxf; make -C Documentation/ --debug=3Da git-status.1 >/tmp/a=
+ 2>&1
 
+You'll get:
+=20=20=20=20
+    $ wc -l /tmp/[ba]
+       6515 /tmp/a
+     144051 /tmp/b
+     150566 total
+
+Which e.g. for "git-status.txt" starts with (I cut a lot out, there's
+way more than this just for that file):
+=20=20=20=20
+          Considering target file 'git-status.txt'.
+           Looking for an implicit rule for 'git-status.txt'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.o'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.c'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.cc'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.C'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.cpp'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.p'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.f'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.F'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.m'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.r'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.s'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.S'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.mod'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.sh'.
+    -      Trying pattern rule with stem 'git-status.txt'.
+    -      Trying implicit prerequisite 'git-status.txt.o'.
+    [...]
+
+I.e. given a foo.txt "make" by default will exhaustively consider foo
+foo.txt.c, foo.txt.cpp etc. etc.
+
+This is all ultimately a part of make's implicit rule
+mechanism. I.e. even if you have no Makefile at all you can run "make
+main" if you have a main.c in your directory, and it'll discover it and
+compile it with implicit rules, unless you explicitl disable them,
+e.g. with "-r":
+=20=20=20=20
+    $ rm Makefile hello; make hello
+    rm: cannot remove 'Makefile': No such file or directory
+    rm: cannot remove 'hello': No such file or directory
+    cc   hello.o   -o hello
+    $ rm Makefile hello; make -r hello
+    rm: cannot remove 'Makefile': No such file or directory
+    make: *** No rule to make target 'hello'.  Stop.
+
+> So long as we're not depending on any of these, this seems like a nice
+> little boost to me.
+
+Yes, definitely!
+
+>> diff --git a/shared.mak b/shared.mak
+>> index 29f0e69ecb9..155ac84f867 100644
+>> --- a/shared.mak
+>> +++ b/shared.mak
+>> @@ -9,6 +9,11 @@
+>>  %:: s.%
+>>  %:: SCCS/s.%
+>>
+>> +## Likewise delete default $(SUFFIXES). See:
+>> +##
+>> +##     info make --index-search=3D.DELETE_ON_ERROR
+>> +.SUFFIXES:
+>
+> Hmm. s/DELETE_ON_ERROR/SUFFIXES? Or perhaps I'm holding this whole thing
+> incorrectly:
+>
+>     ~/s/git [nand] (ab/make-noop) $ info make --index-search=3D.DELETE_ON=
+_ERROR
+>     no index entries found for '.DELETE_ON_ERROR'
+>     ~/s/git [nand] (ab/make-noop) $ info make --index-search=3D.SUFFIXES
+>     no index entries found for '.SUFFIXES'
+
+Yes that's a copy/paste error, it should be .SUFFIXES.
+
+But both commands should work, or emit an error like:
+
+    $ info doesnotexist --index-search=3D.DELETE_ON_ERROR
+    info: No menu item 'doesnotexist' in node '(dir)Top'
+
+A broken OS package? Self-built "make"?
+
+In any case I could also link to
+https://www.gnu.org/software/make/manual/html_node/Suffix-Rules.html;
+which is the same information online (but may not match your local
+"make" version)>
