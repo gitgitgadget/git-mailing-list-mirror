@@ -2,99 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5846C433EF
-	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 10:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84AF0C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Feb 2022 10:49:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231260AbiBVKe3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 05:34:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59846 "EHLO
+        id S231526AbiBVKuW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 05:50:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231269AbiBVKeQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 05:34:16 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 588F215B996
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:33:42 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id h6so32193528wrb.9
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:33:42 -0800 (PST)
+        with ESMTP id S231521AbiBVKuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 05:50:19 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05EC215C669
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:49:52 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id hw13so41381185ejc.9
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 02:49:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=D6VYAnT0XkwVz5TLj2sX77R0z6b5cAQMShUfZW427wg=;
-        b=A3WkudGjONOfaQJLZifjWs7C3jEjGIehvyGNruT3xV4A9jiMM3sPkputMZ8D0HFw6a
-         Vw2FOGFycj/NjC0N9KpJrz434w6sW4yBjfz3oPeIEHYc0KBYkzrO7RgFScIJD0veanBH
-         bgW/WCX3Gpz6nzKymxjC8XTxEVnbNrXZXd2grRpqr8hYMzRjTI0rRLEOso81K3R2IcdZ
-         HbRwxQIXMj5kAPAi08lOZJvUkirh6Qd/qdfWp67H1z8HQ5Kn5RkmEaTj0nBopQQsaXlx
-         T9Zg9hUVMBmWfT/ZysmOxvHDz7ickhv6bXUTvCHKT3Mo22W4lr57B7VhYJs5iYf5mer8
-         NRxg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=3/HVSZ1gQyVZQyhE64UcZrjNfzZ/D74XzsADht3jeUA=;
+        b=c1MWX/WDK/3sxj/MvopGFrXk5JpW+PLV2Xb1DvlCkYX2laADWFaC9UbjPz8j58IWh0
+         Ow0C6ZXY5RJOWiseqxJrwOZD/xMl7gKfzaMlVYag3l5+N8GuHWrUMGpbDVGz+JrlNkTI
+         8F2moe4x/Eaa8mgZRfllH/56C6N5zcPO8gByweco4+uPXBcnzR7eUcP9zrrwz4EiRz5g
+         17DcVs/CSwrugdC+pCvSxVC5SxDHXMqK2QDqcyRxPTLb/rA6Sed5SovDSEjLelfJhn/I
+         1N6a85jbfNZR0AtT4NeEC3Mvf91xKs6WPkqyCyFbSDmNoFddqOTv1+49q11Y0a8r8t6M
+         XmKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=D6VYAnT0XkwVz5TLj2sX77R0z6b5cAQMShUfZW427wg=;
-        b=Fq5mkPOl23+zXrmJmGqbx7n8mYmtNvaOvH9EkU7jcOwiyRlXzcuenzUg8zGg28jkNA
-         J8EfCqRVZMlPjhkhe1Godubh6NSGVuFOsZ7ySUQw/DEgk2QcI7wLVJ+IyBjoV0AK/VhI
-         LcuYxGqCAnV5ezXQshQaLhym31FiMlWwiRQjX/CZRhMVXkl2KsndghDqRbP9FSyNKi/B
-         0Sh8v1Kwo4qWTwTQZgSHI2so2mlQvGa3QFkGswFmFnSbRc+DMyigxn+BZt8Qa7uRDOjy
-         HqReLRd1tO8CRZpUdqxLMtg6HkUuNmo7Egb7MB7smzITDJ2bIQsygMCBvYGAP14z7yu2
-         5Eyg==
-X-Gm-Message-State: AOAM530fM5sc/RaWBZOFd3LZ54FvNQ0vjsZzcu6UtZsmDQ0/7ICXMaK+
-        Xdyesgxb7Fa6UYqDQCAyYFuuLkKjtBw=
-X-Google-Smtp-Source: ABdhPJynuZhBVAdN/DB2Y5aUKgZGsTnonaoJQIcjyXE5PEltvF/Cl+S5chUirndJ/XfQxVMruyZt/A==
-X-Received: by 2002:a5d:62c9:0:b0:1ea:940f:d929 with SMTP id o9-20020a5d62c9000000b001ea940fd929mr1569332wrv.164.1645526020844;
-        Tue, 22 Feb 2022 02:33:40 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j12sm3450739wrs.1.2022.02.22.02.33.39
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=3/HVSZ1gQyVZQyhE64UcZrjNfzZ/D74XzsADht3jeUA=;
+        b=mqgaquLJYEpV8p/zfYj8jrvqFAJTQ2VFmdT5XXaLRv5gMZS7VuGXrAhCXXDuBrf+Ju
+         m7ptlr8880R4MlMo1gKAicfQxD1LmhqHU14wpptCZOiAqO2Fz4VvQC/QSZBGLy3RmMYD
+         3QmLYSyX/QrwCQ9CHir6rQ1pDoX2p/lyW02eUlBb8PDRSw3GpnNGU2jPp7W6m57MAmLw
+         cGPkTuLY0VKQ/h2CihvntlulAS3R3jwqqptZi8oytmgTOVRnjTquDHKofJN/5PWWKm+I
+         pb3wyXHAL54zUO7HhK+dssVggxwcCdEQmwymU1AyJgMMPVSWJn62o8ifWbbt4pGKEZlY
+         0TPg==
+X-Gm-Message-State: AOAM531WQKZaGE4jWblkl27PrEZkpRD+tJA3PYeaGq4p148J/p/seVmI
+        QMr3XtRnWzf5iuk6xccMEZsvTNy7T47Z/3mn
+X-Google-Smtp-Source: ABdhPJwWHztVVzBpBRxd0vBS7uyOeuyOaF86iH4g/v34Ecd3IBbYf3Sbfc0qfZTMcjHGBj+i0XWqfw==
+X-Received: by 2002:a17:906:af57:b0:6cf:7f1d:ddd7 with SMTP id ly23-20020a170906af5700b006cf7f1dddd7mr18677545ejb.453.1645526990427;
+        Tue, 22 Feb 2022 02:49:50 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id k7sm6043027ejp.182.2022.02.22.02.49.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 02:33:39 -0800 (PST)
-Message-Id: <eb5871db95b12500cc0a6b8b0e3a82ed9e8fcfbd.1645526016.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1155.git.1645526016.gitgitgadget@gmail.com>
-References: <pull.1155.git.1645526016.gitgitgadget@gmail.com>
-From:   "Philip Oakley via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 22 Feb 2022 10:33:36 +0000
-Subject: [PATCH 2/2] rebase: `preserve` is also a pull option, tell dying
- users
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 22 Feb 2022 02:49:49 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nMSjt-005y28-9O;
+        Tue, 22 Feb 2022 11:49:49 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Victoria Dye <vdye@github.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH 05/25] CI: remove unused Azure ci/* code
+Date:   Tue, 22 Feb 2022 11:27:38 +0100
+References: <cover-00.25-00000000000-20220221T143936Z-avarab@gmail.com>
+ <patch-05.25-4738a22a36d-20220221T143936Z-avarab@gmail.com>
+ <nycvar.QRO.7.76.6.2202221115590.4418@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <nycvar.QRO.7.76.6.2202221115590.4418@tvgsbejvaqbjf.bet>
+Message-ID: <220222.86k0dn89bm.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Philip Oakley <philipoakley@iee.email>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philip Oakley <philipoakley@iee.email>
 
-The `--preserve-merges` option was removed by v2.35.0. However
-users may not be aware that it is also a Pull option, and it is
-still offered by major IDE vendors such as Visual Studio.
+On Tue, Feb 22 2022, Johannes Schindelin wrote:
 
-Extend the `--preserve-merges` die message to direct users to
-this option and it's locations.
+> Hi,
+>
+>
+> On Mon, 21 Feb 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> Remove Azure-specific code that's been unused since 6081d3898fe (ci:
+>> retire the Azure Pipelines definition, 2020-04-11). As noted in a
+>> larger removal of all of the Azure-supporting code in [1] (although
+>> that missed some of this) there is more of it in-tree, but let's focus
+>> on only the ci/* code for now.
+>>
+>> This is needed because in subsequent commits this unused code would
+>> either need to be changed to accommodate changes in ci/*, or be
+>> removed.
+>>
+>> As we'll see in those subsequent commits the end-state we're heading
+>> towards will actually make it easier to add new CI types in the
+>> future, even though the only one we're left with now is the GitHub
+>> CI. I.e. the "ci/*" framework will be made to do less, not more. We'll
+>> be offloading more of what it does to our generic build and test
+>> system.
+>>
+>> While I'm at it (since the line needs to be touched anyway) change an
+>> odd 'if test true =3D=3D "$GITHUB_ACTIONS"' to the more usual style used
+>> in other places of 'if test "$GITHUB_ACTIONS" =3D "true"'.
+>>
+>> 1. https://lore.kernel.org/git/patch-1.1-eec0a8c3164-20211217T000418Z-av=
+arab@gmail.com/
+>
+> This has been discussed before, and I already gave my NAK.
+>
+> It is sad that I have to repeat myself: it is a good thing to have the
+> Azure Pipelines definition as a fall-back. In the past, this has served us
+> very well especially when we had to run a barrage of security fixes, for a
+> slew of backports to previous release trains.
+>
+> You seem to have fun to just remove this code, under some assumption that
+> it is not needed, despite me pointing out that it is needed.
 
-Signed-off-by: Philip Oakley <philipoakley@iee.email>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/rebase.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+I previously submitted a stand-alone patch to remove it[1] after the
+removal of (most of) the Travis CI was merged in f9b889dd67b (Merge
+branch 'ab/ci-updates', 2021-12-15).
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 07221d0ae41..97f704bb297 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1205,7 +1205,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			     builtin_rebase_usage, 0);
- 
- 	if (preserve_merges_selected)
--		die(_("--preserve-merges was replaced by --rebase-merges"));
-+		die(_("--preserve-merges was replaced by --rebase-merges\n"
-+			"Also, check your `pull` configuration settings\n"
-+			"`git config --show-scope --show-origin --get-regexp 'pull.*'`\n"
-+			"which may also invoke this option."));
- 
- 	if (action != ACTION_NONE && total_argc != 2) {
- 		usage_with_options(builtin_rebase_usage,
--- 
-gitgitgadget
+I submitted that not for "fun", but because I had other CI/test-lib.sh
+changes depending on that.
+
+I.e. I needed to either patch code unused in-tree I couldn't test
+without reverting your 6081d3898fe (ci: retire the Azure Pipelines
+definition, 2020-04-11) (and presumably set up some Azure CI account
+etc.), or remove it.
+
+It's still unclear to me how Azure CI is being used as a "fall-back",
+can you explain that? I.e. we don't have the azure-pipelines.yml anymore
+(and neither does git-for-windows/git). Is this in-tree code being used
+by some out-of-tree fork of git.git, or do you mean you'd like to keep
+it in case we find a reason to revert your 6081d3898fe?
+
+In this case (and as I think this series makes clear), we can't easily
+keep certain Travis + Azure assumptions around *and* simplify how
+ci/lib.sh works in the same way. At the tip of this series it's turned
+into a very dumb variable setting helper with the CI recipe itself
+driving the test.
+
+Whereas Travis and Azure were using a feature where a "job" once running
+would attempt to skip the rest of the CI run.
+
+And in your [1] you mentioned the reasons for keeping it around being:
+=20=20=20=20
+    The reason is that there are still some things that Azure Pipelines can=
+ do
+    that GitHub workflows cannot, for example:
+=20=20=20=20
+    - present the logs of failed tests in an intuitive manner,
+=20=20=20=20
+    - re-run _only_ failed jobs.
+
+It seems to me that in your parallel series you're working on 1/2 of
+those, and with/without those changes we could otherwise improve the
+presentation of the failed test runs enough with the "grouping"
+etc. feature.
+
+And as for 2/2 that any such support would be mostly orthogonal to
+keeping Azure code that's currently unused around. I.e. a goal of this
+series is also to make the CI less of a special snowflake, because I'm
+not only interested in running the CI code on GitHub CI, but also
+locally.
+
+Which means that for any future port to Azure, GitLab CI etc. we'd
+presumably just have a thin recipe that ran "make" followed by "make
+test", and for a re-run of only that job it would just use the CI itself
+to do that, without us needing to carry any special-cases in ci/*.
+
+I'm not at all opposed to keeping Azure support in-tree. I specifically
+have a problem with unused code holding other improvements
+hostage.
+
+I.e. neither I nor anyone else can easily change anything surrounding it
+while being assured that we haven't broken that unused code. As noted in
+04/25 I think you've also had that issue, i.e. your recent 0e7696c64db
+(it seems to me) introduced what would have been a bug if it were
+combined with the azure-pipelines.yml code removed in your 6081d3898fe.
+
+1. https://lore.kernel.org/git/nycvar.QRO.7.76.6.2112201834050.347@tvgsbejv=
+aqbjf.bet/
