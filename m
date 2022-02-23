@@ -2,143 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98A18C4332F
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B48EC433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 15:04:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241603AbiBWOaS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 09:30:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47350 "EHLO
+        id S241895AbiBWPEg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 10:04:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241598AbiBWOaK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 09:30:10 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0F27B2D48
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:32 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id i19so13850187wmq.5
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:32 -0800 (PST)
+        with ESMTP id S241883AbiBWPEf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 10:04:35 -0500
+Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 748B6AC900
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:04:07 -0800 (PST)
+Received: by mail-vs1-xe2e.google.com with SMTP id t22so3480732vsa.4
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:04:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=tO7h+DeaJ3/BEvEuC8xoY3AML7GXYy7kJ7VgjcRzbPU=;
-        b=b/j21jORB+CrTFZ91EUbuzpLkcgCnsOi1dGMhh5lw3k2b4tvfB8J5ceOFMhWyuwZ3f
-         KllVfszSgcVWD/P/11QkmE8E9J4PrgHFo3OOG4uz9Se0T6U4GJEGjGZvU6isorH1bZiE
-         e242VJ3rYOeaglWkri2XTDPlLOCpqVPPqVT0KWY4pIhVOY59D60OIt7W0TZWhdJmeC3r
-         49enlhm6V8EjEW/rUqJZsCUCi4pYd1vXM5m1Hyxc2TH1mUqeBC/2W0ubrObAj8TSbi0g
-         XsC2C+mzZlkdPHbb1cgZhSN6gH1JdfezVj80eujA8Dmrq78wyjqH8HNVv/fsZrMVhbX6
-         bCPg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=u4z+g5RSEanj7BQvkvG+gV+G+QBIK3Exa8sFAQMjCHM=;
+        b=EIz3pWROAIppQLTztnoj8/mbFnwJHcoAGAaUGLxy60rPIEJuSIESJNgdzN/I2eNgge
+         KB3m0U8b8sUdgPe9wt5MWD/XCTcA54WjKjFU7UNj+NhZ6trErsvXmLTh4YN9/quOkB9U
+         1xTOKe43QSA6DHTCX/n9gVwhJavAo37YV8nqscqzEqDmLLJ5ff+6r/MdOz4OziztnHbK
+         RnphBy0GXV+2recEgJ9I7HFOBr4BRP8GhfAJtMYkPRanOSusX1RWfGmp5nVqiaYracS1
+         brxlRNHRmSphgLXry/aqq1QjCcILYl3+FfqHzpo07qB3Q/GntWjJDuO2TIcA9Y6ekmCS
+         v6Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tO7h+DeaJ3/BEvEuC8xoY3AML7GXYy7kJ7VgjcRzbPU=;
-        b=kMC0ZSJN82Xmos2Qp4DguU0dfQNG1/lFjBb3fxS2JSr//inVQESsuKH9NvjOhPZgJ8
-         KrDVyDal7TNq1FStWsbIpCoyhW3zdAdsR4w/X2YPFFsHxrnN56Ba4ySy1BXApOihhRN9
-         EQ7pNz57OrOABZYdqapHJ6UWtfwUbfG3URyyonkth5E5eGqYTyUlyH7xtW4vfqdAjn70
-         qsCiHNSoQO+yqE1/FWwXxwv10KTMK07m9g1kqHOtE2deEty9Kq9xp8V1vWkqrEebL+83
-         67UvaoZFgOCeKQgxYCs0eclVm5/4I06SZZAR0PXPxDB+YyXr7GXCnFUvaJOHWVvr3iNG
-         kQNQ==
-X-Gm-Message-State: AOAM531x1cfoDUpjBmYF9oTCNAaeppjzkgXmWe2MrU66UTBIySBX1lzu
-        IuRxgvlNDuWrpEuzaTsNsKyMMsv1bd0=
-X-Google-Smtp-Source: ABdhPJzweMsO5s2CDmrD5rS8pKxp04mlmpSUfSIGlv5WqW/pPj3kgLTqGD5fMLRu7qgkEj3Abqw1EQ==
-X-Received: by 2002:a1c:f413:0:b0:37b:d1de:5762 with SMTP id z19-20020a1cf413000000b0037bd1de5762mr29572wma.108.1645626571073;
-        Wed, 23 Feb 2022 06:29:31 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 8-20020a05600c26c800b0037bec3c03c9sm8686393wmv.2.2022.02.23.06.29.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 06:29:30 -0800 (PST)
-Message-Id: <11ee7e107b44d3fb8b59927746aaa30c880f8563.1645626559.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
-References: <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
-        <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 14:29:19 +0000
-Subject: [PATCH v3 11/11] worktree: use 'worktree' over 'working tree'
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=u4z+g5RSEanj7BQvkvG+gV+G+QBIK3Exa8sFAQMjCHM=;
+        b=nEqcJHR7tydfEfIRjVxRVjFi7X7TJplGAeaQfKnePljlAZgujBdWOaDMXCIFsJo0DR
+         8i3AZN/0QMBGv4ewVXwnJzoYOY6IX+QON9AEd8Na9TXn0WEdEKnCa6d6qOoD6Zao3gdY
+         YsABPtvue5HU2X6POjUpIooq2cH1yKVLRNyvXpDJ23EAFK6urkNu/n7IHna5dpoYcE86
+         v0LXGF71U6vnxbUDNOpYrZ66jBc0Dcdz5l36XU0qgm+buirxTOT/L5xp8cMYaDUXhWeX
+         uVI66IveY0xSRYhM15bRFEwl/D2aKMkiZqjz38iTJ+o25omQAlOgoGY0U5Zmfmmv5cL9
+         q+Yg==
+X-Gm-Message-State: AOAM532oMiDeKTl0hIgBMxkFHWNFagceuSoCfLCHTCjcH8/LMt2SlSwI
+        dbTF0sMLwwWgmLdF8feEomPbgFUrrkMt2BOWcPQ=
+X-Google-Smtp-Source: ABdhPJyhC32A4Fw4QilRCQ/X4ajndsUPGnTK+trqjjdiupMIoCMnD2WnfrxwvFP1HwiE4+f5nNqf6ca277OfY2BGg3s=
+X-Received: by 2002:a67:ac09:0:b0:304:f097:e6fb with SMTP id
+ v9-20020a67ac09000000b00304f097e6fbmr12710788vse.85.1645628646565; Wed, 23
+ Feb 2022 07:04:06 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     sunshine@sunshineco.com, gitster@pobox.com, newren@gmail.com,
-        jn.avila@free.fr, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+References: <20211125125720.231039-1-ms@kilabit.info>
+In-Reply-To: <20211125125720.231039-1-ms@kilabit.info>
+From:   Halil SEN <halilsen@gmail.com>
+Date:   Wed, 23 Feb 2022 16:03:55 +0100
+Message-ID: <CAOeUTuuyftWB=PaA9HPDnyxsb40R3Z6GD65TB92jEW+38goqRg@mail.gmail.com>
+Subject: Re: [PATCH] gitk: fix error when resizing gitk
+To:     Shulhan <ms@kilabit.info>
+Cc:     git@vger.kernel.org, paulus@ozlabs.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+Hello Shulhan,
 
-It is helpful to distinguish between a 'working tree' and a 'worktree'.
-A worktree contains a working tree plus additional metadata. This
-metadata includes per-worktree refs and worktree-specific config.
+I just stumbled upon your patch while looking for the patch
+that I sent at the beginning of this week for the exact same
+issue.  It turns out you sent your patch two months ago.  I
+should have checked before debugging :face_palm:
 
-This is the last of multiple changes to git-worktree.txt, starting at
-the LIST OUTPUT FORMAT section.
+If you would like to check it out, here is my patch in [1].
 
-The EXAMPLES section has an instance of "working tree" that must stay as
-it is, because it is not talking about a worktree, but an example of why
-a user might want to create a worktree.
+I see that you have fixed resizeclistpanes but exact same issue
+is present on resizecdetpanes as well.
 
-Helped-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- Documentation/git-worktree.txt | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+I am not sure if the conditional logic is necessary because we
+are sure that `sash#` includes x, y positions in ttk mode but it
+includes only the x position if not ttk. Also setting the y coord
+to 0 might have unintended consequences.
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 1b4d1d69a16..453e1550226 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -383,11 +383,11 @@ $ git worktree list
- /path/to/other-linked-worktree  1234abc  (detached HEAD)
- ------------
- 
--The command also shows annotations for each working tree, according to its state.
-+The command also shows annotations for each worktree, according to its state.
- These annotations are:
- 
-- * `locked`, if the working tree is locked.
-- * `prunable`, if the working tree can be pruned via `git worktree prune`.
-+ * `locked`, if the worktree is locked.
-+ * `prunable`, if the worktree can be pruned via `git worktree prune`.
- 
- ------------
- $ git worktree list
-@@ -405,14 +405,14 @@ $ git worktree list --verbose
- /path/to/linked-worktree              abcd1234 [master]
- /path/to/locked-worktree-no-reason    abcd5678 (detached HEAD) locked
- /path/to/locked-worktree-with-reason  1234abcd (brancha)
--	locked: working tree path is mounted on a portable device
-+	locked: worktree path is mounted on a portable device
- /path/to/prunable-worktree            5678abc1 (detached HEAD)
- 	prunable: gitdir file points to non-existent location
- ------------
- 
- Note that the annotation is moved to the next line if the additional
- information is available, otherwise it stays on the same line as the
--working tree itself.
-+worktree itself.
- 
- Porcelain Format
- ~~~~~~~~~~~~~~~~
-@@ -421,7 +421,7 @@ label and value separated by a single space.  Boolean attributes (like `bare`
- and `detached`) are listed as a label only, and are present only
- if the value is true.  Some attributes (like `locked`) can be listed as a label
- only or with a value depending upon whether a reason is available.  The first
--attribute of a working tree is always `worktree`, an empty line indicates the
-+attribute of a worktree is always `worktree`, an empty line indicates the
- end of the record.  For example:
- 
- ------------
-@@ -473,7 +473,7 @@ demands that you fix something immediately. You might typically use
- linkgit:git-stash[1] to store your changes away temporarily, however, your
- working tree is in such a state of disarray (with new, moved, and removed
- files, and other bits and pieces strewn around) that you don't want to risk
--disturbing any of it. Instead, you create a temporary linked working tree to
-+disturbing any of it. Instead, you create a temporary linked worktree to
- make the emergency fix, remove it when done, and then resume your earlier
- refactoring session.
- 
--- 
-gitgitgadget
+
+[1] https://lore.kernel.org/git/0b5b8fb591e434a2a24b1f58d1ce3fc7da48a28e.1645386457.git.gitgitgadget@gmail.com/
+
+Signed-off-by: Halil Sen <halil.sen@gmail.com>
