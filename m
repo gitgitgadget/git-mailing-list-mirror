@@ -2,128 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8695BC433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC2F5C433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:29:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241567AbiBWO2M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 09:28:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46050 "EHLO
+        id S241566AbiBWO3v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 09:29:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241559AbiBWO2H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 09:28:07 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8833F4B425
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:27:39 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id v21so4661936wrv.5
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:27:39 -0800 (PST)
+        with ESMTP id S241345AbiBWO3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 09:29:50 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D448B250B
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:22 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id s13so11410353wrb.6
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=0+N5xsfqc55jf6KHiNqi60QCC/m3RfVQDLsjUaMjvhs=;
-        b=ExZDB/5ZhkLmA8OGU8aantl4Y9i3ts40ADOIkBCB8ZwW9U2DI7f6+glofv+Y/VIGm9
-         /rMd6zDDbbXkDu/0XVUs2PCu9II+pPEDdBPlbu5LorJ7aboy4aRlx6Of1D54PSrOHide
-         9nwCQKyhIPK9HLRtzyr633y1xPzadVfFlgNUl99XMukWg6OKQlGUB4CrsmaDoKHKUqVv
-         ShdICkp9Ng0dv6XRWWWL7tUzChB9QmljoWbAm9EXDvM5LGSPgE0pFgbaFW/4bsDmaeZx
-         FElV+fdUPqUno4GAMwZt7siMRp6aMMX022TUdct22xg63TfoBIbE3vBgElnjQpZGCPll
-         Hb9Q==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=43WFuOwFMqkv5O3nGQXs+Cupeolbpy6yS/2ALPMecks=;
+        b=CShlSm/BqNIvLEPhA2w4yT8vBpUqEO9Lj7FpMNek2UFGqywqMNlyAQtNWAhFLF/GoP
+         qCkvB75XmxXTK4Q4LVDd9g1/iBFu2J/OaU2nKdUosSJRdHUsB+0COo7IpAcUANDbk/QY
+         ZUAkHw5AmgKZv84EsBo5ocvX4+39oqkGT2g3nPL54AVw2XGMrFAVuVXnuN0PkaQzpOwg
+         Dlf4E7ezpFwzDjjxqIoiSvZsUIUKwCWDN0KKs5jEVW3ql7BzLnraOM4GjxPvpPLsVtLn
+         H8ELISY9tG2HyAU8VXmvouIjFjVWHSGgMi6krobf23JuF/8Nh/lpSxLgpWnzlOlEsTjs
+         bDKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0+N5xsfqc55jf6KHiNqi60QCC/m3RfVQDLsjUaMjvhs=;
-        b=k+a6FgnvskujsKXmGI8tP9LKuY5BAcwHDDy+hXrD9vqlx/j2LcvbTYM/24mlzXhXZE
-         nfT62MZqnqRCJNDFFhcqxTtm10fXGfivMyXFhfXv8BRzixcixBkeJknP50LAbNBJ7QQO
-         k7MWtMHlT4HKSWUgl1GeCD00+V4NHYS7flr64No93OUO1HMvq9iRyw8Ux12supnPLFFn
-         acUvXuGOX11MsA5q8mLKbdKUYlE4vMTq24RZ1dttiooIcqZjcIOBYPvR6yzwgHYgLwrk
-         xzGLdEk7RmMDTXSHGKhtWN9GO8OwoFcPXbGIxXioJ5D2maTVsSgrZkO3+Z8vDZ7lkk/h
-         FRLw==
-X-Gm-Message-State: AOAM533sJ/vadZQ0/ADqYD9TQNFAjqbSiMC+pf+4AZiTndEDSJlOSKZk
-        qF764FWcxeCWr1ZXkwPCuZ4jDiBlhow=
-X-Google-Smtp-Source: ABdhPJw9rq3PIY7WDowO2QTPb7UnMOesaiCBYVnn6lrUTYQ5VaMoEqDUEOLyjlR1QhK9cDpUKlTldw==
-X-Received: by 2002:a5d:6da3:0:b0:1e3:2f74:f025 with SMTP id u3-20020a5d6da3000000b001e32f74f025mr23896971wrs.59.1645626457938;
-        Wed, 23 Feb 2022 06:27:37 -0800 (PST)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=43WFuOwFMqkv5O3nGQXs+Cupeolbpy6yS/2ALPMecks=;
+        b=T7BG418z4GR2xw8F/v99dHkZJ4EmBVbMFSiOl3bUYop7DahQfejy5h3dbEAmHKmqVO
+         CR2cjeSwHws2/oTtIydAfG10AYagUsO52XArZwKuftUyPIFzL9Qm1frxi5KL5KKC9L4m
+         C1GwD+92cHtprRi52/KHSUJ2sSp3RY3w+mLkMTWAjpq/B1InKEyamKhyw4SHHPtJB+t4
+         /uXa/5EShw1CQ/NEawqU8MY4OrD0GqHAw3hrHuiHcY9TSY2PlD+cVcrccsK+eZrBZcmZ
+         TsNSdSu+669qOhl85QrYXUQR067u/1pEQvD6Mb5HQPj/kvgAe0haMheKVZjdQPBlEMqe
+         XmMA==
+X-Gm-Message-State: AOAM533Ho4W9NL7bTG1Xv/cG257viFBkJ5XzEJ0OfopCrS7B9JkYH9gg
+        zlcGH8aFSk5lrhemg8171UKmfGX17zg=
+X-Google-Smtp-Source: ABdhPJz98UVnxwUQ9f01GDU16Ol9YmmHwkNznKpwuFlGT9QUx6FMjUNPOcojVlQQ6W3F6p+DDC12qg==
+X-Received: by 2002:a5d:5988:0:b0:1e8:b518:ad7f with SMTP id n8-20020a5d5988000000b001e8b518ad7fmr22940781wri.193.1645626560689;
+        Wed, 23 Feb 2022 06:29:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j5-20020a05600c410500b0037bc3e4b526sm5501911wmi.7.2022.02.23.06.27.37
+        by smtp.gmail.com with ESMTPSA id e20sm1552437wre.90.2022.02.23.06.29.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 06:27:37 -0800 (PST)
-Message-Id: <9d42bdbff6ccaaf34952de9e6cc4ff2e7eef714d.1645626455.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1147.v3.git.1645626455.gitgitgadget@gmail.com>
-References: <pull.1147.v2.git.1645545507689.gitgitgadget@gmail.com>
-        <pull.1147.v3.git.1645626455.gitgitgadget@gmail.com>
-From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 14:27:35 +0000
-Subject: [PATCH v3 2/2] parse-options.c: add style checks for usage-strings
-Fcc:    Sent
+        Wed, 23 Feb 2022 06:29:20 -0800 (PST)
+Message-Id: <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
+References: <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 23 Feb 2022 14:29:08 +0000
+Subject: [PATCH v3 00/11] Updates to worktree code and docs
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Julia Lawall <julia.lawall@inria.fr>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Cc:     sunshine@sunshineco.com, gitster@pobox.com, newren@gmail.com,
+        jn.avila@free.fr, Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+This is built on top of ds/sparse-checkout-requires-per-worktree-config and
+includes some forward fixes for comments from that series.
 
-`parse-options.c` doesn't check if the usage strings for option flags
-are following the style guide or not. Style convention says, usage
-strings should not start with capital letter (unless needed) and
-it should not end with `.`.
+ * Patch 1 combines two translatable messages into one. (Thanks, Jean-Noël)
+ * Patches 2-4 extract methods from the already-busy add_worktree() method.
+   (Thanks, Eric)
+ * Patches 5-11 update git-worktree.txt to use 'worktree' over 'working
+   tree'. This involves some rewrapping of the paragraphs, so the diffs are
+   not obviously just a find and replace. I split the changes mostly by
+   section of the file to keep the diffs from being too large.
 
-Add checks to the `parse_options_check()` function to check usage
-strings against the style convention.
 
-Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
----
- parse-options.c               | 6 ++++++
- t/t1502-rev-parse-parseopt.sh | 4 ++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+Updates in v3
+=============
 
-diff --git a/parse-options.c b/parse-options.c
-index 2437ad3bcdd..eb92290a63a 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -492,6 +492,12 @@ static void parse_options_check(const struct option *opts)
- 		default:
- 			; /* ok. (usually accepts an argument) */
- 		}
-+		if (opts->type != OPTION_GROUP && opts->help &&
-+			opts->help[0] && isupper(opts->help[0]) &&
-+			!(opts->help[1] && isupper(opts->help[1])))
-+			err |= optbug(opts, xstrfmt("help should not start with capital letter unless needed: %s", opts->help));
-+		if (opts->help && !ends_with(opts->help, "...") && ends_with(opts->help, "."))
-+			err |= optbug(opts, xstrfmt("help should not end with a dot: %s", opts->help));
- 		if (opts->argh &&
- 		    strcspn(opts->argh, " _") != strlen(opts->argh))
- 			err |= optbug(opts, "multi-word argh should use dash to separate words");
-diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
-index 284fe18e726..2a07e130b96 100755
---- a/t/t1502-rev-parse-parseopt.sh
-+++ b/t/t1502-rev-parse-parseopt.sh
-@@ -53,7 +53,7 @@ test_expect_success 'setup optionspec-only-hidden-switches' '
- |
- |some-command does foo and bar!
- |--
--|hidden1* A hidden switch
-+|hidden1* a hidden switch
- EOF
- '
- 
-@@ -131,7 +131,7 @@ test_expect_success 'test --parseopt help-all output hidden switches' '
- |
- |    some-command does foo and bar!
- |
--|    --hidden1             A hidden switch
-+|    --hidden1             a hidden switch
- |
- |EOF
- END_EXPECT
+Several typos were fixed:
+
+ * Patch 5: fixed "metata" and "a a" typos.
+ * Patch 6: fixed "working directory" typo.
+ * Patch 8: fixed typo in Taylor's email.
+
+
+Updates in v2
+=============
+
+Based on Junio and Taylor's review, I updated some language in the docs:
+
+ * Some uses of "worktree" should have stayed as "working tree"
+ * Some adjacent wording was improved.
+
+Thanks, -Stolee
+
+Derrick Stolee (11):
+  worktree: combine two translatable messages
+  worktree: extract copy_filtered_worktree_config()
+  worktree: extract copy_sparse_checkout()
+  worktree: extract checkout_worktree()
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+  worktree: use 'worktree' over 'working tree'
+
+ Documentation/git-worktree.txt | 268 ++++++++++++++++-----------------
+ builtin/worktree.c             | 138 +++++++++--------
+ 2 files changed, 209 insertions(+), 197 deletions(-)
+
+
+base-commit: 3ce113827287079dced9aaf9c5d1e1734ecaa265
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1154%2Fderrickstolee%2Fworktree-forward-fixes-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1154/derrickstolee/worktree-forward-fixes-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1154
+
+Range-diff vs v2:
+
+  1:  a113ed9a844 =  1:  a113ed9a844 worktree: combine two translatable messages
+  2:  f8aa87112a8 =  2:  f8aa87112a8 worktree: extract copy_filtered_worktree_config()
+  3:  ccc5b1ef9fb =  3:  ccc5b1ef9fb worktree: extract copy_sparse_checkout()
+  4:  1e62e4e4fa1 =  4:  1e62e4e4fa1 worktree: extract checkout_worktree()
+  5:  2801ae232ae !  5:  4e66cf33648 worktree: use 'worktree' over 'working tree'
+     @@ Documentation/git-worktree.txt: Manage multiple working trees attached to the sa
+      -with a linked working tree, remove it with `git worktree remove`.
+      +tree is associated with the repository, along with additional metadata
+      +that differentiates that working tree from others in the same repository.
+     -+The working tree, along with this metada, is called a "worktree".
+     ++The working tree, along with this metadata, is called a "worktree".
+      +
+      +This new worktree is called a "linked worktree" as opposed to the "main
+      +worktree" prepared by linkgit:git-init[1] or linkgit:git-clone[1].
+     @@ Documentation/git-worktree.txt: Manage multiple working trees attached to the sa
+      -which is not always mounted, you can prevent its administrative files from
+      -being pruned by issuing the `git worktree lock` command, optionally
+      -specifying `--reason` to explain why the working tree is locked.
+     -+If the working tree for a a linked worktree is stored on a portable device
+     ++If the working tree for a linked worktree is stored on a portable device
+      +or network share which is not always mounted, you can prevent its
+      +administrative files from being pruned by issuing the `git worktree lock`
+      +command, optionally specifying `--reason` to explain why the worktree is
+  6:  a375e4b6ff0 !  6:  704cce17815 worktree: use 'worktree' over 'working tree'
+     @@ Documentation/git-worktree.txt: branches from there if `<branch>` is ambiguous b
+      -reestablish the connection. If multiple linked working trees are moved,
+      -running `repair` from any working tree with each tree's new `<path>` as
+      -an argument, will reestablish the connection to all the specified paths.
+     -+Similarly, if the working directory for a linked worktree is moved without
+     ++Similarly, if the working tree for a linked worktree is moved without
+      +using `git worktree move`, the main worktree (or bare repository) will be
+      +unable to locate it. Running `repair` within the recently-moved worktree
+      +will reestablish the connection. If multiple linked worktrees are moved,
+  7:  d1c4b687cbc =  7:  bee53e679ff worktree: use 'worktree' over 'working tree'
+  8:  65a0cd52711 !  8:  0eb374620a7 worktree: use 'worktree' over 'working tree'
+     @@ Commit message
+          The first paragraph of this section was also a bit confusing, so it is
+          cleaned up to make it easier to understand.
+      
+     -    Helped-by: Taylor Blau <m3@ttaylorr.com>
+     +    Helped-by: Taylor Blau <me@ttaylorr.com>
+          Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+      
+       ## Documentation/git-worktree.txt ##
+  9:  e8890134fb4 =  9:  c9afb58d967 worktree: use 'worktree' over 'working tree'
+ 10:  75f0e4ff5c2 = 10:  1e235677ef0 worktree: use 'worktree' over 'working tree'
+ 11:  1e07383552a = 11:  11ee7e107b4 worktree: use 'worktree' over 'working tree'
+
 -- 
 gitgitgadget
