@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63BE0C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 07:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC8ABC433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 07:47:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238826AbiBWHsE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 02:48:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44056 "EHLO
+        id S238758AbiBWHsH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 02:48:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238771AbiBWHre (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 02:47:34 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3DA955765
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 23:47:06 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id y5so2756268wmi.0
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 23:47:06 -0800 (PST)
+        with ESMTP id S238762AbiBWHrc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 02:47:32 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21C0D6AA5B
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 23:47:05 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id c192so13215962wma.4
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 23:47:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=mmXje3uuaK8BuJfg02GOpB/9+6GTpkr32zp2fn50u18=;
-        b=T2Z0Zhj61a1Z1nIaheAvue07k2hrl4p3MelcVhhaPwMLtexGCeIFT/LBt3/T7AbwGI
-         UyEk6DuOKLEeGWxF2ZVGncm40tEo3pvxSI4F5u6P8u7AueFxhaqgQeTDW7m1z7FqKWcT
-         FBKOYJgN+83MM5pYsDCN0kzzo6Ye1sToZ1SxznDWy6qvigcanNuXd6uVEOdR7fVn2U4Q
-         4MLpH+NA0W+yPHTCEbJRkTmD8IKMcksjuZ77lUOaHfLaZKNo0PVlTfuCJwtet3mZSyOA
-         62pRTJoEoytvrPYq+lcnXiPTVwMRx/lf5hOCSq9VKCW1N0RZkEHs1Q5iDwsHeHZWwEmW
-         oYCQ==
+        bh=7SOR/FBx/PG5GwcYfRl7WIzTn+A4mPROJf87y4NZU28=;
+        b=hO3D4fk+VXBYtPmCCg4f3HtJ9Twz03AbSfaLqRBONTCwwMHTrQNiW9OxOJhZNjo1FG
+         326PR6geA2c3Kd73PwDNJ2l0+YPWwcZF/JcGv4772WSjmUiXD/nd2ST/ut3mRkM/ORqZ
+         8HMFbVPjRrrbof9I0P4ODz8of70Tnb9Tn0m+NbAR3VSSTB7HyMcpn/wnYVfpWU7Sfp3p
+         ANvnHfHdkfXlBQgQbJfq7NqlSFS5LXa19S/K7aJbg8Qpo+fnqJsb7N3CHBcftvxbFvfN
+         da5PY93ywkjutSs3pK2jjo5VlrkSA6boTJmqOfRmD8s32WbuGMB1vKeuz6g6PKfkMi/J
+         PutQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=mmXje3uuaK8BuJfg02GOpB/9+6GTpkr32zp2fn50u18=;
-        b=Wmm1vnn6KKKPj+UpABScGKvIwVVxi5/I6XMcTzo3xcl5ExAJTTqiCkKUDHBKE11MVI
-         r55WyN9dwOXyjLJYqIrEU/ZDwJyDBumrdE6odXvWBnqDtLaiA0ff9MNCPJdljFmSwnZw
-         CgJsuAxJPfJV9OYJ4wewocavJbHMCLW+mDQfcF2N6eAmtHVFC6x/p0Tn4MuM9Qn7vS/S
-         rxIt8gQiMIy4voa2L4iqUhMohKp/ZdWxUhwU90lBBoIJ1D1ZR6iAYhmg/HPjT0I6lphC
-         euISxwCwgujCZkXBqcI9oEUf4RpAeD0eCCzlZblnoXx+2NYkEsnKnsKImBX9arIqA0ke
-         2t0g==
-X-Gm-Message-State: AOAM531ey0JeTQPP3mT8pGROqsV7wtn0AzS0xvOmOGe3vrMUzBpcgLkP
-        NdHLbHsUlJzZlWGmjVOSLFS66iJkUJ8=
-X-Google-Smtp-Source: ABdhPJxzgn7Cw/ELETK+uKiklgejSJmp2ZphzZ5x2yDJdBv2wropRsReOR1J4spHbGZXZclCtFZDDw==
-X-Received: by 2002:a05:600c:1547:b0:37b:c6c4:1000 with SMTP id f7-20020a05600c154700b0037bc6c41000mr6462226wmg.111.1645602425187;
-        Tue, 22 Feb 2022 23:47:05 -0800 (PST)
+        bh=7SOR/FBx/PG5GwcYfRl7WIzTn+A4mPROJf87y4NZU28=;
+        b=rg3dbJP2lBLbBSeJmQeBeDfSgFhDQ0/xoQaiJqjSmxre0vAHEeHj+MCta3AsgXHLlt
+         0Y7Yed+RlgsLoUeo7bs6BYS5g1KdEtbZWw9HNv893CNfNMJNjMJEadxIBrKZwL6qhq+p
+         1oElUk+7yhm7CKwK1Ghm/cGt0pyAqivuxgOQhEIVP5elkiXLG8ZtgLUbE6Lm8LZ1v9cr
+         AHS4/Y1/hjcQF2XGL3n9jZdAg5jPWNHNRpbJTNuDWBPd6z43K9hZ1j3i1xz1Wbn+jEFh
+         7+TWW0Gw3DDvU3tum7dPXEovkcDKS9xQGELIKs6iaMuOyXL5A1XE4hIzDI3hXsc3nkqn
+         g4WA==
+X-Gm-Message-State: AOAM531WDvJpF5dlJYmqRXMDOJ+7STzJUoKn7BpJ4vwecaqRJ6NdWrS0
+        +LNiL1oVEtHMCkJ9mD9han4m9Kgh5wQ=
+X-Google-Smtp-Source: ABdhPJwODaiL1+INbPzvYTIDovPYKlxnsjYoLIHt8KAIzNWioU13Hy1tyXU7QDODSY0AIozNLw5KYg==
+X-Received: by 2002:a1c:e915:0:b0:37b:d847:e127 with SMTP id q21-20020a1ce915000000b0037bd847e127mr6345562wmc.180.1645602423284;
+        Tue, 22 Feb 2022 23:47:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n9-20020a05600c294900b00380f8be8ceesm632638wmd.20.2022.02.22.23.47.04
+        by smtp.gmail.com with ESMTPSA id g16-20020a7bc4d0000000b0037bbe255339sm4662299wmk.15.2022.02.22.23.47.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 23:47:04 -0800 (PST)
-Message-Id: <db73c6dd82346b55c46334111e89aefd3d9039a2.1645602413.git.gitgitgadget@gmail.com>
+        Tue, 22 Feb 2022 23:47:02 -0800 (PST)
+Message-Id: <f1231a8fbc8cfd901ebf9f7e3d86b6d5655778d5.1645602413.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1122.v6.git.1645602413.gitgitgadget@gmail.com>
 References: <pull.1122.v5.git.1645340082.gitgitgadget@gmail.com>
         <pull.1122.v6.git.1645602413.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 07:46:52 +0000
-Subject: [PATCH v6 11/12] merge-tree: add a --allow-unrelated-histories flag
+Date:   Wed, 23 Feb 2022 07:46:50 +0000
+Subject: [PATCH v6 09/12] merge-tree: provide easy access to `ls-files -u`
+ style info
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,101 +80,182 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Folks may want to merge histories that have no common ancestry; provide
-a flag with the same name as used by `git merge` to allow this.
+Much like `git merge` updates the index with information of the form
+    (mode, oid, stage, name)
+provide this output for conflicted files for merge-tree as well.
+Provide a --name-only option for users to exclude the mode, oid, and
+stage and only get the list of conflicted filenames.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-merge-tree.txt |  5 +++++
- builtin/merge-tree.c             |  7 ++++++-
- t/t4301-merge-tree-write-tree.sh | 24 +++++++++++++++++++++++-
- 3 files changed, 34 insertions(+), 2 deletions(-)
+ Documentation/git-merge-tree.txt | 34 ++++++++++++++++++++++++++------
+ builtin/merge-tree.c             | 11 ++++++++++-
+ t/t4301-merge-tree-write-tree.sh | 26 ++++++++++++++++++++++--
+ 3 files changed, 62 insertions(+), 9 deletions(-)
 
 diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-index 75b57f8abab..628324646d3 100644
+index 68a51c82618..b89aabdb98e 100644
 --- a/Documentation/git-merge-tree.txt
 +++ b/Documentation/git-merge-tree.txt
-@@ -59,6 +59,11 @@ OPTIONS
- 	default is to include these messages if there are merge
- 	conflicts, and to omit them otherwise.
+@@ -40,6 +40,13 @@ After the merge completes, a new toplevel tree object is created.  See
+ OPTIONS
+ -------
  
-+--allow-unrelated-histories::
-+	merge-tree will by default error out if the two branches specified
-+	share no common history.  This flag can be given to override that
-+	check and make the merge proceed anyway.
++--name-only::
++	In the Conflicted file info section, instead of writing a list
++	of (mode, oid, stage, path) tuples to output for conflicted
++	files, just provide a list of filenames with conflicts (and
++	do not list filenames multiple times if they have multiple
++	conflicting stages).
 +
- [[OUTPUT]]
- OUTPUT
- ------
+ --[no-]messages::
+ 	Write any informational messages such as "Auto-merging <path>"
+ 	or CONFLICT notices to the end of stdout.  If unspecified, the
+@@ -58,7 +65,7 @@ line:
+ Whereas for a conflicted merge, the output is by default of the form:
+ 
+ 	<OID of toplevel tree>
+-	<Conflicted file list>
++	<Conflicted file info>
+ 	<Informational messages>
+ 
+ These are discussed individually below.
+@@ -72,19 +79,24 @@ working tree at the end of `git merge`.  If there were conflicts, then
+ files within this tree may have embedded conflict markers.
+ 
+ [[CFI]]
+-Conflicted file list
++Conflicted file info
+ ~~~~~~~~~~~~~~~~~~~~
+ 
+-This is a sequence of lines containing a filename on each line, quoted
+-as explained for the configuration variable `core.quotePath` (see
+-linkgit:git-config[1]).
++This is a sequence of lines with the format
++
++	<mode> <object> <stage> <filename>
++
++The filename will be quoted as explained for the configuration
++variable `core.quotePath` (see linkgit:git-config[1]).  However, if
++the `--name-only` option is passed, the mode, object, and stage will
++be omitted.
+ 
+ [[IM]]
+ Informational messages
+ ~~~~~~~~~~~~~~~~~~~~~~
+ 
+ This always starts with a blank line to separate it from the previous
+-section, and then has free-form messages about the merge, such as:
++sections, and then has free-form messages about the merge, such as:
+ 
+   * "Auto-merging <file>"
+   * "CONFLICT (rename/delete): <oldfile> renamed...but deleted in..."
+@@ -116,6 +128,16 @@ used as a part of a series of steps such as:
+ Note that when the exit status is non-zero, `NEWTREE` in this sequence
+ will contain a lot more output than just a tree.
+ 
++For conflicts, the output includes the same information that you'd get
++with linkgit:git-merge[1]:
++
++  * what would be written to the working tree (the
++    <<OIDTLT,OID of toplevel tree>>)
++  * the higher order stages that would be written to the index (the
++    <<CFI,Conflicted file info>>)
++  * any messages that would have been printed to stdout (the
++    <<IM,Informational messages>>)
++
+ [[DEPMERGE]]
+ DEPRECATED DESCRIPTION
+ ----------------------
 diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 767892006e3..b4f5c7e0aab 100644
+index 3653526cc0a..4a79caf081a 100644
 --- a/builtin/merge-tree.c
 +++ b/builtin/merge-tree.c
-@@ -399,6 +399,7 @@ enum mode {
- 
+@@ -400,6 +400,7 @@ enum mode {
  struct merge_tree_options {
  	int mode;
-+	int allow_unrelated_histories;
  	int show_messages;
- 	int name_only;
++	int name_only;
  };
-@@ -434,7 +435,7 @@ static int real_merge(struct merge_tree_options *o,
- 	 * merge_incore_recursive in merge-ort.h
- 	 */
- 	merge_bases = get_merge_bases(parent1, parent2);
--	if (!merge_bases)
-+	if (!merge_bases && !o->allow_unrelated_histories)
- 		die(_("refusing to merge unrelated histories"));
- 	merge_bases = reverse_commit_list(merge_bases);
  
-@@ -499,6 +500,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
- 			   &o.name_only,
- 			   N_("list filenames without modes/oids/stages"),
- 			   PARSE_OPT_NONEG),
-+		OPT_BOOL_F(0, "allow-unrelated-histories",
-+			   &o.allow_unrelated_histories,
-+			   N_("allow merging unrelated histories"),
+ static int real_merge(struct merge_tree_options *o,
+@@ -453,7 +454,11 @@ static int real_merge(struct merge_tree_options *o,
+ 		merge_get_conflicted_files(&result, &conflicted_files);
+ 		for (i = 0; i < conflicted_files.nr; i++) {
+ 			const char *name = conflicted_files.items[i].string;
+-			if (last && !strcmp(last, name))
++			struct stage_info *c = conflicted_files.items[i].util;
++			if (!o->name_only)
++				printf("%06o %s %d\t",
++				       c->mode, oid_to_hex(&c->oid), c->stage);
++			else if (last && !strcmp(last, name))
+ 				continue;
+ 			write_name_quoted_relative(
+ 				name, prefix, stdout, line_termination);
+@@ -488,6 +493,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 			    N_("do a trivial merge only"), MODE_TRIVIAL),
+ 		OPT_BOOL(0, "messages", &o.show_messages,
+ 			 N_("also show informational/conflict messages")),
++		OPT_BOOL_F(0, "name-only",
++			   &o.name_only,
++			   N_("list filenames without modes/oids/stages"),
 +			   PARSE_OPT_NONEG),
  		OPT_END()
  	};
  
 diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index 22e03f0939c..bd1769c624b 100755
+index 8e6dba44288..0ec5f0d3f7e 100755
 --- a/t/t4301-merge-tree-write-tree.sh
 +++ b/t/t4301-merge-tree-write-tree.sh
-@@ -44,7 +44,13 @@ test_expect_success setup '
- 	git checkout side3 &&
- 	git mv numbers sequence &&
- 	test_tick &&
--	git commit -m rename-numbers
-+	git commit -m rename-numbers &&
-+
-+	git switch --orphan unrelated &&
-+	>something-else &&
-+	git add something-else &&
-+	test_tick &&
-+	git commit -m first-commit
- '
+@@ -65,6 +65,7 @@ test_expect_success 'Content merge and a few conflicts' '
+ 	expected_tree=$(git rev-parse AUTO_MERGE) &&
  
- test_expect_success 'Clean merge' '
-@@ -213,4 +219,20 @@ test_expect_success 'NUL terminated conflicted file "lines"' '
+ 	# We will redo the merge, while we are still in a conflicted state!
++	git ls-files -u >conflicted-file-info &&
+ 	test_when_finished "git reset --hard" &&
+ 
+ 	test_expect_code 1 git merge-tree --write-tree side1 side2 >RESULT &&
+@@ -108,7 +109,7 @@ anonymize_hash() {
+ }
+ 
+ test_expect_success 'test conflict notices and such' '
+-	test_expect_code 1 git merge-tree --write-tree side1 side2 >out &&
++	test_expect_code 1 git merge-tree --write-tree --name-only side1 side2 >out &&
+ 	anonymize_hash out >actual &&
+ 
+ 	# Expected results:
+@@ -143,7 +144,7 @@ do
+ done
+ 
+ test_expect_success 'Just the conflicted files without the messages' '
+-	test_expect_code 1 git merge-tree --write-tree --no-messages side1 side2 >out &&
++	test_expect_code 1 git merge-tree --write-tree --no-messages --name-only side1 side2 >out &&
+ 	anonymize_hash out >actual &&
+ 
+ 	test_write_lines HASH greeting whatever~side1 >expect &&
+@@ -151,4 +152,25 @@ test_expect_success 'Just the conflicted files without the messages' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'error out by default for unrelated histories' '
-+	test_expect_code 128 git merge-tree --write-tree side1 unrelated 2>error &&
++test_expect_success 'Check conflicted oids and modes without messages' '
++	test_expect_code 1 git merge-tree --write-tree --no-messages side1 side2 >out &&
++	anonymize_hash out >actual &&
 +
-+	grep "refusing to merge unrelated histories" error
-+'
++	# Compare the basic output format
++	q_to_tab >expect <<-\EOF &&
++	HASH
++	100644 HASH 1Qgreeting
++	100644 HASH 2Qgreeting
++	100644 HASH 3Qgreeting
++	100644 HASH 1Qwhatever~side1
++	100644 HASH 2Qwhatever~side1
++	EOF
 +
-+test_expect_success 'can override merge of unrelated histories' '
-+	git merge-tree --write-tree --allow-unrelated-histories side1 unrelated >tree &&
-+	TREE=$(cat tree) &&
++	test_cmp expect actual &&
 +
-+	git rev-parse side1:numbers side1:greeting side1:whatever unrelated:something-else >expect &&
-+	git rev-parse $TREE:numbers $TREE:greeting $TREE:whatever $TREE:something-else >actual &&
-+
-+	test_cmp expect actual
++	# Check the actual hashes against the `ls-files -u` output too
++	tail -n +2 out | sed -e s/side1/HEAD/ >actual &&
++	test_cmp conflicted-file-info actual
 +'
 +
  test_done
