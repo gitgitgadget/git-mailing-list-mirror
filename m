@@ -2,38 +2,38 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C449BC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 22:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF554C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 22:04:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243082AbiBWWEB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 17:04:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41468 "EHLO
+        id S243088AbiBWWFF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 17:05:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234750AbiBWWEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 17:04:01 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 015C54B1DF
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 14:03:32 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 988BE18B83C;
-        Wed, 23 Feb 2022 17:03:32 -0500 (EST)
+        with ESMTP id S234750AbiBWWFE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 17:05:04 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68C164D9F9
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 14:04:36 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9C59A11F904;
+        Wed, 23 Feb 2022 17:04:35 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Xe/XX3M9kyk4
-        EFHdogETayhD1oqT71QSg/zmrPtiNPo=; b=OkMefS0YmH9j32drHQgG+O+KSKHF
-        DggR6+aG9yTEyYx/TxDa793lp7w18UduOzeWRVl4a17nBLPwlrT/B+6dVj4sDezU
-        Uy2/EwJZsllfqatv+0O9CMJ/gtGMnHi68iT8bDIeFadjKDya+qh/ckHYsn5t1YyV
-        SHwnwHnUehktVOY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7DDDD18B83A;
-        Wed, 23 Feb 2022 17:03:32 -0500 (EST)
+        :content-type:content-transfer-encoding; s=sasl; bh=VUs5deiQy6rY
+        nrCT2C+nAHWgXRstnQN68aCfiiKEWIU=; b=bYeIXAgKt4Qd5honXuizLdZYL0Jc
+        MPeYwYyaRm02yK9+LG3/CSQYKbM3/cPryWtogZggWr0WeiADNstwXDwLgtesCoI9
+        8dyTga4TYQuHhcvCeYo6ulx+DrQCTQQeYsmdaXquTzUBdLML8i0K1mPUlYNmcZNI
+        PhllfxNrz6tYwaY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9400511F903;
+        Wed, 23 Feb 2022 17:04:35 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D253D18B839;
-        Wed, 23 Feb 2022 17:03:29 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0381311F902;
+        Wed, 23 Feb 2022 17:04:34 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
@@ -42,20 +42,21 @@ Cc:     git@vger.kernel.org,
         Eric Sunshine <sunshine@sunshineco.com>,
         SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
         Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v2 4/9] help.c: split up list_all_cmds_help() function
+Subject: Re: [PATCH v2 5/9] help: note the option name on option
+ incompatibility
 References: <cover-0.7-00000000000-20211228T153456Z-avarab@gmail.com>
         <cover-v2-0.9-00000000000-20220221T193708Z-avarab@gmail.com>
-        <patch-v2-4.9-f9c4d5e2d28-20220221T193708Z-avarab@gmail.com>
-Date:   Wed, 23 Feb 2022 14:03:28 -0800
-In-Reply-To: <patch-v2-4.9-f9c4d5e2d28-20220221T193708Z-avarab@gmail.com>
+        <patch-v2-5.9-e5c49089106-20220221T193708Z-avarab@gmail.com>
+Date:   Wed, 23 Feb 2022 14:04:33 -0800
+In-Reply-To: <patch-v2-5.9-e5c49089106-20220221T193708Z-avarab@gmail.com>
         (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 21 Feb
- 2022 20:38:47
+ 2022 20:38:48
         +0100")
-Message-ID: <xmqqbkyxs0jz.fsf@gitster.g>
+Message-ID: <xmqq7d9ls0i6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6F1D7810-94F4-11EC-BA5E-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 95F384DE-94F4-11EC-96BA-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,57 +64,75 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> -void list_all_cmds_help(void)
-> +static void list_all_cmds_help_external_commands(void)
->  {
->  	struct string_list others =3D STRING_LIST_INIT_DUP;
-> -	struct string_list alias_list =3D STRING_LIST_INIT_DUP;
-> -	struct cmdname_help *aliases;
-> -	int i, longest;
-> -
-> -	puts(_("See 'git help <command>' to read about a specific subcommand"=
-));
-> -	print_cmd_by_category(main_categories, &longest);
-> +	int i;
-> =20
->  	list_all_other_cmds(&others);
->  	if (others.nr)
+> Change the errors added in d35d03cf93e (help: simplify by moving to
+> OPT_CMDMODE(), 2021-09-22) to quote the offending option at the user
+> when invoked as e.g.:
+>
+>     git help --guides garbage
+>
+> Now instead of:
+>
+>     fatal: this option doesn't take any other arguments
+>
+> We'll emit:
+>
+>     fatal: the '--guides' option doesn't take any non-option arguments
 
-Let's note that in the body of this new helper function, we still
-use the printf("\n%s\n", _("group header")) pattern, not putchar('\n')
-followed by puts().
+Very good.
 
-> @@ -449,6 +444,13 @@ void list_all_cmds_help(void)
->  	for (i =3D 0; i < others.nr; i++)
->  		printf("   %s\n", others.items[i].string);
->  	string_list_clear(&others, 0);
-> +}
-> +
-> +static void list_all_cmds_help_aliases(int longest)
-> +{
-> +	struct string_list alias_list =3D STRING_LIST_INIT_DUP;
-> +	struct cmdname_help *aliases;
-> +	int i;
-> =20
->  	git_config(get_alias, &alias_list);
->  	string_list_sort(&alias_list);
-
-And this helper, too.
-
-> @@ -474,6 +476,17 @@ void list_all_cmds_help(void)
->  	string_list_clear(&alias_list, 1);
+> Let's also rename the function, as it will be extended to do other
+> checks that aren't "no extra argc" in a subsequent commit.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  builtin/help.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
+>
+> diff --git a/builtin/help.c b/builtin/help.c
+> index d387131dd83..1c1581ef850 100644
+> --- a/builtin/help.c
+> +++ b/builtin/help.c
+> @@ -574,11 +574,12 @@ static const char *check_git_cmd(const char* cmd)
+>  	return cmd;
 >  }
 > =20
-> +void list_all_cmds_help(void)
-> +{
-> +	int longest;
-> +
-> +	puts(_("See 'git help <command>' to read about a specific subcommand"=
-));
-> +	print_cmd_by_category(main_categories, &longest);
-> +
-> +	list_all_cmds_help_external_commands();
-> +	list_all_cmds_help_aliases(longest);
-> +}
-
-This does make sense ;-)
+> -static void no_extra_argc(int argc)
+> +static void opt_mode_usage(int argc, const char *opt_mode)
+>  {
+>  	if (argc)
+> -		usage_msg_opt(_("this option doesn't take any other arguments"),
+> -			      builtin_help_usage, builtin_help_options);
+> +		usage_msg_optf(_("the '%s' option doesn't take any non-option argume=
+nts"),
+> +			       builtin_help_usage, builtin_help_options,
+> +			       opt_mode);
+>  }
+> =20
+>  int cmd_help(int argc, const char **argv, const char *prefix)
+> @@ -604,20 +605,20 @@ int cmd_help(int argc, const char **argv, const c=
+har *prefix)
+>  		printf("%s\n", _(git_more_info_string));
+>  		break;
+>  	case HELP_ACTION_GUIDES:
+> -		no_extra_argc(argc);
+> +		opt_mode_usage(argc, "--guides");
+>  		list_guides_help();
+>  		printf("%s\n", _(git_more_info_string));
+>  		return 0;
+>  	case HELP_ACTION_CONFIG_FOR_COMPLETION:
+> -		no_extra_argc(argc);
+> +		opt_mode_usage(argc, "--config-for-completion");
+>  		list_config_help(SHOW_CONFIG_VARS);
+>  		return 0;
+>  	case HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION:
+> -		no_extra_argc(argc);
+> +		opt_mode_usage(argc, "--config-sections-for-completion");
+>  		list_config_help(SHOW_CONFIG_SECTIONS);
+>  		return 0;
+>  	case HELP_ACTION_CONFIG:
+> -		no_extra_argc(argc);
+> +		opt_mode_usage(argc, "--config");
+>  		setup_pager();
+>  		list_config_help(SHOW_CONFIG_HUMAN);
+>  		printf("\n%s\n", _("'git help config' for more information"));
