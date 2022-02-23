@@ -2,152 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB569C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:31:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E25F8C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:31:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243951AbiBWScU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 13:32:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37488 "EHLO
+        id S242043AbiBWScV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 13:32:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243908AbiBWScK (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S243907AbiBWScK (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Feb 2022 13:32:10 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77FB34B86D
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:25 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id w13so13813147wmi.2
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:25 -0800 (PST)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38BD04B863
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:24 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id n25-20020a05600c3b9900b00380f41e51e6so1925507wms.2
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=x8+sZRlT+5AjxhkuyEq88suJEF1Kw89D8eIrUkKrH5U=;
-        b=WkKQjfmKYp66FUkrRCSUwahp80R1IjxJwHxBCLyXM+gQqPh3Q2WLXVC9sDHby7Fq+l
-         ZvckKtcOvT85AilyULd6+x5Y0g6k7tDwMTs6tE9T4fDU6YGyGesqxBNsbfqD2/hrNWpy
-         NS/jK9/lFJmefc2obfK1qTHmop8q6OD/upCe71PurR2/HWAA1Q31vIQBJM6bBMCyBS9b
-         aXFfbvyxnXviPa0fEERDt3L60atip7trvABw6ixJiZTAgk+osl9F2y2kl/DZgIFOi5bh
-         adSlBlRgmSmqa2bvhP9v25+RYSBFAbRnjX6zc/viRCPBHX19J9gQPIxGkMsM4zUfxxrq
-         abVg==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=v9RFMQ7zWfgEqIwSaWdpAS9Bc5xyQgRqjjpEu14/g1s=;
+        b=KtGT6wbKSWJal+gXD3/9SB7ZKOMMU6ZzPlNi2JzCGa+RC2K2RVwVq+AC84Tw08oE2w
+         p2TQ/4DKC3KzmanN8jKFInHENTz61FRwxiA7VnaR62UIN2n7eavIHhfxFNdNKKa3LRsx
+         HKZ/poXPKP8FGypkRFMQbw3qVDExyNEneZCX45q1lan61N1ph6Vyd1vLFaPke+I0ob9L
+         HrJqWqjbdJaDU2lNx7aG8jimNZ0v7TSFcLy+VL4u4xySG5G/y68TSKzQEFu3DONnvsVW
+         Jp21KpNBQ+SxSv4aqjd9MI2Em7p/r6KB8VHib1i/ophbuDj1g+1IQcjDzLoEMyfKT5NH
+         ynKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=x8+sZRlT+5AjxhkuyEq88suJEF1Kw89D8eIrUkKrH5U=;
-        b=YRJbt9RGjKQEYPsyNnXp3YjiBLHZreEHZWd62XtTdiCMUU80wWarQ0tU0fI3GkQI9B
-         8+npU803Ai4PgumZFIdRzHbYExHoo0FO0g5Vrm32o8YIfYhJq8Y6xdCVUEgLRYPmTjGJ
-         Fd+4EoUKk2BlRKvCSbu0IwXoWk0Lt9VY3GugKIbYYg533NvGLzf09+Z4WiTakuUc75l0
-         itlCVbcAP30EAHJLnRPB8LiUdL0KpN7bopnQZHZSGjHQoPHQjww9dhJi88DdcHVhe50C
-         gbvgu3y2vTJoPuwQpOzXTILN5252FuvWTYIy+r+2nm9CPq9/YqNxXmLhQP+mXw1Iwy8v
-         QdgQ==
-X-Gm-Message-State: AOAM530VLxDnN8S9mhJm1n24LMJdW6yWBI5gHJke6gw6QnJBYs+2Hufp
-        pQIEjUgpSb0lPzCV/lLmdrkNgFIzBoc=
-X-Google-Smtp-Source: ABdhPJxds8X5tPkA0A4tvVaayPdxzOECqGYr3LTrsb8dwyCmVWYdSfoygFbdiXKOPd2iy/0Kr4rJyQ==
-X-Received: by 2002:a05:600c:215:b0:37c:729:f84d with SMTP id 21-20020a05600c021500b0037c0729f84dmr8626045wmi.131.1645641083834;
-        Wed, 23 Feb 2022 10:31:23 -0800 (PST)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=v9RFMQ7zWfgEqIwSaWdpAS9Bc5xyQgRqjjpEu14/g1s=;
+        b=VoxpXwVGPZLGxyhN/F3xEOqdv1chM68wdrSuhUrFjwhAkFn5vbs8CPuY4/r00sktsn
+         sHkRXRsWB6h4EAdapeDypAkklIwtlFaQlP8xucjD6gTgRhjefaoS2XNo40OkPlEw00Zb
+         s0l/dlO7Ejryiuqqf7Bak84SS4359kjFe68Bu0d1ZP+Hc4fmPPIQbNcs1czAiWG9WWU9
+         kPat6WmlJNMeypc+ImjNrVgwjAj7WajZ/a9TZ6a1PaHwPGfZTQ9BKiUdBQKoj10J7soI
+         2slC9LsULUdypPq8cMmogLtPhtJY3XLc6+I0ovHiWmNPmejG2oyrQly1qii5eIAbGO1h
+         SS1A==
+X-Gm-Message-State: AOAM532jlQ7/5VxJZGKmM34tvQAxlyEn3T3TSrIZ0YfGVSK+8mL2a/Rj
+        fhY+biDprWSH5q0KWygGDy7MtIOLKBU=
+X-Google-Smtp-Source: ABdhPJwIfOyMEBJY0ztz7OeUsbit2UvqR/Nt7vpkyz5WTpNiLM+vXn5v83QFw+Wdd/cQ90opm9DiBQ==
+X-Received: by 2002:a1c:f413:0:b0:37b:d1de:5762 with SMTP id z19-20020a1cf413000000b0037bd1de5762mr804040wma.108.1645641082663;
+        Wed, 23 Feb 2022 10:31:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u15sm457012wrs.18.2022.02.23.10.31.23
+        by smtp.gmail.com with ESMTPSA id w4sm272974wre.102.2022.02.23.10.31.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 10:31:23 -0800 (PST)
-Message-Id: <cf184fd1d34b5613fd1e28fd5da75a475c25884f.1645641063.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 10:31:22 -0800 (PST)
+Message-Id: <42d351f4aae9532d2787e72ae4be2e08fe614f44.1645641063.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
 References: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 18:30:56 +0000
-Subject: [PATCH 18/25] connect.c: refactor sending of agent & object-format
-MIME-Version: 1.0
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 23 Feb 2022 18:30:55 +0000
+Subject: [PATCH 17/25] fetch: fetch bundles before fetching original data
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, aevar@gmail.com,
         newren@gmail.com, Derrick Stolee <derrickstolee@github.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
- <avarab@gmail.com>
+From: Derrick Stolee <derrickstolee@github.com>
 
-Refactor the sending of the "agent" and "object-format" capabilities
-into a function.
+If a user cloned using a bundle URI, then they might want to re-use it
+to download new bundles during 'git fetch' before fetching the remaining
+objects from the origin server. Use the 'fetch.bundleURI' config as the
+indicator for whether this extra step should happen.
 
-This was added in its current form in ab67235bc4 (connect: parse v2
-refs with correct hash algorithm, 2020-05-25). When we connect to a v2
-server we need to know about its object-format, and it needs to know
-about ours. Since most things in connect.c and transport.c piggy-back
-on the eager getting of remote refs via the handshake() those commands
-can make use of the just-sent-over object-format by ls-refs.
+Do not fetch bundles if --dry-run is specified.
 
-But I'm about to add a command that may come after ls-refs, and may
-not, but we need the server to know about our user-agent and
-object-format. So let's split this into a function.
+RFC-TODO: add tests.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+RFC-TODO: update Documentation/git-fetch.txt
+
+RFC-TODO: update Documentation/config/
+
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- connect.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ builtin/fetch.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/connect.c b/connect.c
-index eaf7d6d2618..9d78d681e95 100644
---- a/connect.c
-+++ b/connect.c
-@@ -473,6 +473,24 @@ void check_stateless_delimiter(int stateless_rpc,
- 		die("%s", error);
- }
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 6f5e1578639..c0fece55632 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -29,6 +29,7 @@
+ #include "commit-graph.h"
+ #include "shallow.h"
+ #include "worktree.h"
++#include "bundle.h"
  
-+static void send_capabilities(int fd_out, struct packet_reader *reader)
-+{
-+	const char *hash_name;
+ #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+ 
+@@ -2081,6 +2082,22 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	/* FETCH_HEAD never gets updated in --dry-run mode */
+ 	if (dry_run)
+ 		write_fetch_head = 0;
++	else {
++		/*
++		 * --dry-run mode skips bundle downloads, which might
++		 * update some refs.
++		 */
++		char *bundle_uri = NULL;
++		git_config_get_string("fetch.bundleuri", &bundle_uri);
 +
-+	if (server_supports_v2("agent", 0))
-+		packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
-+
-+	if (server_feature_v2("object-format", &hash_name)) {
-+		int hash_algo = hash_algo_by_name(hash_name);
-+		if (hash_algo == GIT_HASH_UNKNOWN)
-+			die(_("unknown object format '%s' specified by server"), hash_name);
-+		reader->hash_algo = &hash_algos[hash_algo];
-+		packet_write_fmt(fd_out, "object-format=%s", reader->hash_algo->name);
-+	} else {
-+		reader->hash_algo = &hash_algos[GIT_HASH_SHA1];
++		if (bundle_uri) {
++			char *filter = NULL;
++			git_config_get_string("fetch.bundlefilter", &filter);
++			fetch_bundle_uri(bundle_uri, filter);
++			free(bundle_uri);
++			free(filter);
++		}
 +	}
-+}
-+
- struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 			     struct ref **list, int for_push,
- 			     struct transport_ls_refs_options *transport_options,
-@@ -480,7 +498,6 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 			     int stateless_rpc)
- {
- 	int i;
--	const char *hash_name;
- 	struct strvec *ref_prefixes = transport_options ?
- 		&transport_options->ref_prefixes : NULL;
- 	char **unborn_head_target = transport_options ?
-@@ -490,18 +507,8 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	if (server_supports_v2("ls-refs", 1))
- 		packet_write_fmt(fd_out, "command=ls-refs\n");
  
--	if (server_supports_v2("agent", 0))
--		packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
--
--	if (server_feature_v2("object-format", &hash_name)) {
--		int hash_algo = hash_algo_by_name(hash_name);
--		if (hash_algo == GIT_HASH_UNKNOWN)
--			die(_("unknown object format '%s' specified by server"), hash_name);
--		reader->hash_algo = &hash_algos[hash_algo];
--		packet_write_fmt(fd_out, "object-format=%s", reader->hash_algo->name);
--	} else {
--		reader->hash_algo = &hash_algos[GIT_HASH_SHA1];
--	}
-+	/* Send capabilities */
-+	send_capabilities(fd_out, reader);
- 
- 	if (server_options && server_options->nr &&
- 	    server_supports_v2("server-option", 1))
+ 	if (all) {
+ 		if (argc == 1)
 -- 
 gitgitgadget
 
