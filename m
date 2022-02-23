@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3EDBC433FE
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 17:55:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33D3EC43217
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 17:55:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243587AbiBWRzw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 12:55:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49116 "EHLO
+        id S243597AbiBWRzx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 12:55:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235401AbiBWRzt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S243584AbiBWRzt (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Feb 2022 12:55:49 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE96365EC
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:18 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id c18-20020a7bc852000000b003806ce86c6dso2044578wml.5
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:18 -0800 (PST)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CED47676
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:20 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id y5so3789706wmi.0
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=q8+BEG3NwnoERyq+lPMXDfKtOelfHmetpKek56q/MYw=;
-        b=gMri/RKKRgjqJBzDyo5vIsK0gxxPmBZUaWLiXJl1gawiCPbysh7aqmnerc1idrdzmZ
-         EYVKwGeWz+pguvicrbh6o9QCo3/Dso/DS0ALIlE//SA1/jQHhSeWMVybUjMV5Tz1+Gtl
-         As8cyRv1kElZvJJ+sEaV4VqD44agMv5YD0BHSmrngP0bbYlBBUvFho/972TnwZUaemcX
-         k6Qyp81EKQ22RmdvJLCWM90L9ynqmI0yME8hvrefLB4mysxEOLEUGtIJ4grdQ9JYJBDh
-         UE+gPk9r2adjVZGh1tb+SBii0ghKpENi/GdfkKZPEKwstT0rPpuvNu5vVYV/l5d+FiNd
-         ucIw==
+        bh=nGmhClemBjCXUaD+XiZ/cSIN9riLpu6JFE1FglUlAQg=;
+        b=lkWujp2eUs+W/Vcv0miS8EuhaA2E3QFHVj7q6RWALJ+Jl18z7UQ3P2iogMA1PojnF7
+         xDpI5t6hioZSsLyOmZRxYamM4TzPA+d1BPvagbgEWIv0mNjm24W51RW+S/i5tcMDgpJ2
+         VO7wMB95feuzw0rmNGcCmRX4Pj2dJ+a4nfpDu7hDjf6/i/C6DLCNgLhtpE2MOw6F3vNe
+         lo/iFOTrNfVyJuCY216sMDkuScnc6Rj8DDV0sOnPE21LvbFD1kk0hHvDzPgo4bKnHLp8
+         +AKCzaPBV/JzZc5uNbkWktdiignEM1yZ5/3t/vYoj/xP+AVSRHzL+PKhRu8V7oG7Hrwx
+         XbHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=q8+BEG3NwnoERyq+lPMXDfKtOelfHmetpKek56q/MYw=;
-        b=T915l5dAfwjUfGYja6Djg1c37LRg8wKIeytXeYoIWubp+iTExm5IOL01He/8B+Hzrn
-         gh41+ioynqdBpYsPjAb7wDzVm5ygrfP1INqKDzCofdBN8QX7CXmAcJH+nVE/iM1maIYy
-         rZJgSyklGGT/dpMpk3bQPehnKn/YwnWdpGtxDUvZFJYU28uX7rbdURS7AkiH/Q0A14JB
-         rkpK+TACV0kb3+/5+FuT7AandCvs9Am+Zf/yLPaSTE8I9ZOBQYmKVZNZDT2JMfkoqny1
-         BlRFwJbC87G7Mc6+O+bp9mcGBqZsExxRllW5Hpldura8Y9G2WM+sIGLcB1ckpTyzVhxP
-         H4KA==
-X-Gm-Message-State: AOAM531IVaDlEjQJJIQ7+1xlPeCYmcL9QmM3vT+okqFxdK1NXKyGk2Hx
-        ig2klNG3BpBaeXG4YiMcRHRYpbjW12I=
-X-Google-Smtp-Source: ABdhPJy1p44IByKm2u+whb+yBtxCn8vec+Ko2jGmy7Ph75upDOXg1ld8qrJ+tmnEDR8L2fUku2ADOw==
-X-Received: by 2002:a05:600c:4b92:b0:380:e46c:c35 with SMTP id e18-20020a05600c4b9200b00380e46c0c35mr662536wmp.15.1645638917150;
-        Wed, 23 Feb 2022 09:55:17 -0800 (PST)
+        bh=nGmhClemBjCXUaD+XiZ/cSIN9riLpu6JFE1FglUlAQg=;
+        b=ApHso5fEZ2gys0ckydnVBGsG6/bnakkcFlNHZ7DouON1j1HknVsjAutGlfEmJIzX34
+         R8k8NNvpokVxg8sln08R1xetrBb+TcdtwFl8fcJXtyCNbBbzBvKmkJanj5INVkedreGB
+         s72BiTAMYmGTA2O5CKAoKoRt2Lu+IbArZGIpEtyj13NCgMCfZMCMpGIVhQQiPJmQZTGu
+         mo/JL9qzfAnq54YSgyxfLBu1hLGtqGWCoHqJce/A1/iuGTz3Mqz1Otbfu2A3YBnqY4e0
+         UHGYobgrm9TqoXdDyrH/2GO7+7E7MOZ+FS0rSsPL3iVETpcD/ssJHAQqHn3e8MyEKVNr
+         HRMQ==
+X-Gm-Message-State: AOAM532Xgm1jJVbxSrW7Mmahp7TLCAdVZhWmlbe+38q6VBTcFx84dd07
+        P032MS+ucUm+c9MypTGmmpRJtV05CIA=
+X-Google-Smtp-Source: ABdhPJz4irxormOzt/w5Ogf0skQPjPPXy26QOGcFQnir3oiP4qPVjJW1URQ+M8GFl63nlPhTWy0a0A==
+X-Received: by 2002:a05:600c:2319:b0:380:e369:83ea with SMTP id 25-20020a05600c231900b00380e36983eamr652403wmo.45.1645638918744;
+        Wed, 23 Feb 2022 09:55:18 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l38-20020a05600c1d2600b0037e9090fb1esm422040wms.24.2022.02.23.09.55.16
+        by smtp.gmail.com with ESMTPSA id g6sm194451wrq.97.2022.02.23.09.55.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 09:55:16 -0800 (PST)
-Message-Id: <888774f6f28b291c928041a32c3df360cee13d10.1645638911.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 09:55:18 -0800 (PST)
+Message-Id: <355c503157ad02e6106179c2dc7228bdf63a6228.1645638911.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
 References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 17:55:04 +0000
-Subject: [PATCH 04/11] pack-bitmap: drop filter in prepare_bitmap_walk()
+Date:   Wed, 23 Feb 2022 17:55:06 +0000
+Subject: [PATCH 06/11] MyFirstObjectWalk: update recommended usage
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,171 +68,113 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Now that all consumers of prepare_bitmap_walk() have populated the
-'filter' member of 'struct rev_info', we can drop that extra parameter
-from the method and access it directly from the 'struct rev_info'.
+The previous change consolidated traverse_commit_list() and
+traverse_commit_list_filtered(). This allows us to simplify the
+recommended usage in MyFirstObjectWalk.txt to use this new set of
+values.
+
+While here, add some clarification on the difference between the two
+methods.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/pack-objects.c |  2 +-
- builtin/rev-list.c     |  8 +++-----
- pack-bitmap.c          | 20 +++++++++-----------
- pack-bitmap.h          |  2 --
- reachable.c            |  2 +-
- 5 files changed, 14 insertions(+), 20 deletions(-)
+ Documentation/MyFirstObjectWalk.txt | 44 +++++++++++------------------
+ 1 file changed, 16 insertions(+), 28 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 256d9b1798f..57f2cf49696 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3651,7 +3651,7 @@ static int pack_options_allow_reuse(void)
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index ca267941f3e..8ec83185b8a 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -522,24 +522,25 @@ function shows that the all-object walk is being performed by
+ `traverse_commit_list()` or `traverse_commit_list_filtered()`. Those two
+ functions reside in `list-objects.c`; examining the source shows that, despite
+ the name, these functions traverse all kinds of objects. Let's have a look at
+-the arguments to `traverse_commit_list_filtered()`, which are a superset of the
+-arguments to the unfiltered version.
++the arguments to `traverse_commit_list()`.
  
- static int get_object_list_from_bitmap(struct rev_info *revs)
- {
--	if (!(bitmap_git = prepare_bitmap_walk(revs, revs->filter, 0)))
-+	if (!(bitmap_git = prepare_bitmap_walk(revs, 0)))
- 		return -1;
+-- `struct list_objects_filter_options *filter_options`: This is a struct which
+-  stores a filter-spec as outlined in `Documentation/rev-list-options.txt`.
+-- `struct rev_info *revs`: This is the `rev_info` used for the walk.
++- `struct rev_info *revs`: This is the `rev_info` used for the walk. It
++  includes a `filter` member which contains information for how to filter
++  the object list.
+ - `show_commit_fn show_commit`: A callback which will be used to handle each
+   individual commit object.
+ - `show_object_fn show_object`: A callback which will be used to handle each
+   non-commit object (so each blob, tree, or tag).
+ - `void *show_data`: A context buffer which is passed in turn to `show_commit`
+   and `show_object`.
++
++In addition, `traverse_commit_list_filtered()` has an additional paramter:
++
+ - `struct oidset *omitted`: A linked-list of object IDs which the provided
+   filter caused to be omitted.
  
- 	if (pack_options_allow_reuse() &&
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 6f2b91d304e..556e78aebb9 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -434,8 +434,7 @@ static int try_bitmap_count(struct rev_info *revs,
- 	 */
- 	max_count = revs->max_count;
+-It looks like this `traverse_commit_list_filtered()` uses callbacks we provide
+-instead of needing us to call it repeatedly ourselves. Cool! Let's add the
+-callbacks first.
++It looks like these methods use callbacks we provide instead of needing us
++to call it repeatedly ourselves. Cool! Let's add the callbacks first.
  
--	bitmap_git = prepare_bitmap_walk(revs, revs->filter,
--					 filter_provided_objects);
-+	bitmap_git = prepare_bitmap_walk(revs, filter_provided_objects);
- 	if (!bitmap_git)
- 		return -1;
+ For the sake of this tutorial, we'll simply keep track of how many of each kind
+ of object we find. At file scope in `builtin/walken.c` add the following
+@@ -712,20 +713,9 @@ help understand. In our case, that means we omit trees and blobs not directly
+ referenced by `HEAD` or `HEAD`'s history, because we begin the walk with only
+ `HEAD` in the `pending` list.)
  
-@@ -463,8 +462,7 @@ static int try_bitmap_traversal(struct rev_info *revs,
- 	if (revs->max_count >= 0)
- 		return -1;
+-First, we'll need to `#include "list-objects-filter-options.h"` and set up the
+-`struct list_objects_filter_options` at the top of the function.
+-
+-----
+-static void walken_object_walk(struct rev_info *rev)
+-{
+-	struct list_objects_filter_options filter_options = { 0 };
+-
+-	...
+-----
+-
+ For now, we are not going to track the omitted objects, so we'll replace those
+ parameters with `NULL`. For the sake of simplicity, we'll add a simple
+-build-time branch to use our filter or not. Replace the line calling
++build-time branch to use our filter or not. Preface the line calling
+ `traverse_commit_list()` with the following, which will remind us which kind of
+ walk we've just performed:
  
--	bitmap_git = prepare_bitmap_walk(revs, revs->filter,
--					 filter_provided_objects);
-+	bitmap_git = prepare_bitmap_walk(revs, filter_provided_objects);
- 	if (!bitmap_git)
- 		return -1;
- 
-@@ -481,7 +479,7 @@ static int try_bitmap_disk_usage(struct rev_info *revs,
- 	if (!show_disk_usage)
- 		return -1;
- 
--	bitmap_git = prepare_bitmap_walk(revs, revs->filter, filter_provided_objects);
-+	bitmap_git = prepare_bitmap_walk(revs, filter_provided_objects);
- 	if (!bitmap_git)
- 		return -1;
- 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 9c666cdb8bd..613f2797cdf 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -739,8 +739,7 @@ static int add_commit_to_bitmap(struct bitmap_index *bitmap_git,
- static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
- 				   struct rev_info *revs,
- 				   struct object_list *roots,
--				   struct bitmap *seen,
--				   struct list_objects_filter_options *filter)
-+				   struct bitmap *seen)
- {
- 	struct bitmap *base = NULL;
- 	int needs_walk = 0;
-@@ -823,7 +822,7 @@ static struct bitmap *find_objects(struct bitmap_index *bitmap_git,
- 		show_data.bitmap_git = bitmap_git;
- 		show_data.base = base;
- 
--		traverse_commit_list_filtered(filter, revs,
-+		traverse_commit_list_filtered(revs->filter, revs,
- 					      show_commit, show_object,
- 					      &show_data, NULL);
- 
-@@ -1219,7 +1218,6 @@ static int can_filter_bitmap(struct list_objects_filter_options *filter)
- }
- 
- struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
--					 struct list_objects_filter_options *filter,
- 					 int filter_provided_objects)
- {
- 	unsigned int i;
-@@ -1240,7 +1238,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 	if (revs->prune)
- 		return NULL;
- 
--	if (!can_filter_bitmap(filter))
-+	if (!can_filter_bitmap(revs->filter))
- 		return NULL;
- 
- 	/* try to open a bitmapped pack, but don't parse it yet
-@@ -1297,8 +1295,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 
- 	if (haves) {
- 		revs->ignore_missing_links = 1;
--		haves_bitmap = find_objects(bitmap_git, revs, haves, NULL,
--					    filter);
-+		haves_bitmap = find_objects(bitmap_git, revs, haves, NULL);
- 		reset_revision_walk();
- 		revs->ignore_missing_links = 0;
- 
-@@ -1306,8 +1303,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 			BUG("failed to perform bitmap walk");
+@@ -733,19 +723,17 @@ walk we've just performed:
+ 	if (0) {
+ 		/* Unfiltered: */
+ 		trace_printf(_("Unfiltered object walk.\n"));
+-		traverse_commit_list(rev, walken_show_commit,
+-				walken_show_object, NULL);
+ 	} else {
+ 		trace_printf(
+ 			_("Filtered object walk with filterspec 'tree:1'.\n"));
+-		parse_list_objects_filter(&filter_options, "tree:1");
+-
+-		traverse_commit_list_filtered(&filter_options, rev,
+-			walken_show_commit, walken_show_object, NULL, NULL);
++		CALLOC_ARRAY(rev->filter, 1);
++		parse_list_objects_filter(rev->filter, "tree:1");
  	}
++	traverse_commit_list(rev, walken_show_commit,
++			     walken_show_object, NULL);
+ ----
  
--	wants_bitmap = find_objects(bitmap_git, revs, wants, haves_bitmap,
--				    filter);
-+	wants_bitmap = find_objects(bitmap_git, revs, wants, haves_bitmap);
+-`struct list_objects_filter_options` is usually built directly from a command
++The `rev->filter` member is usually built directly from a command
+ line argument, so the module provides an easy way to build one from a string.
+ Even though we aren't taking user input right now, we can still build one with
+ a hardcoded string using `parse_list_objects_filter()`.
+@@ -784,7 +772,7 @@ object:
+ ----
+ 	...
  
- 	if (!wants_bitmap)
- 		BUG("failed to perform bitmap walk");
-@@ -1315,8 +1311,10 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 	if (haves_bitmap)
- 		bitmap_and_not(wants_bitmap, haves_bitmap);
+-		traverse_commit_list_filtered(&filter_options, rev,
++		traverse_commit_list_filtered(rev,
+ 			walken_show_commit, walken_show_object, NULL, &omitted);
  
--	filter_bitmap(bitmap_git, (filter && filter_provided_objects) ? NULL : wants,
--		      wants_bitmap, filter);
-+	filter_bitmap(bitmap_git,
-+		      (revs->filter && filter_provided_objects) ? NULL : wants,
-+		      wants_bitmap,
-+		      revs->filter);
- 
- 	bitmap_git->result = wants_bitmap;
- 	bitmap_git->haves = haves_bitmap;
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 19a63fa1abc..3d3ddd77345 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -10,7 +10,6 @@
- struct commit;
- struct repository;
- struct rev_info;
--struct list_objects_filter_options;
- 
- static const char BITMAP_IDX_SIGNATURE[] = {'B', 'I', 'T', 'M'};
- 
-@@ -54,7 +53,6 @@ void test_bitmap_walk(struct rev_info *revs);
- int test_bitmap_commits(struct repository *r);
- int test_bitmap_hashes(struct repository *r);
- struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
--					 struct list_objects_filter_options *filter,
- 					 int filter_provided_objects);
- uint32_t midx_preferred_pack(struct bitmap_index *bitmap_git);
- int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
-diff --git a/reachable.c b/reachable.c
-index 84e3d0d75ed..b9f4ad886ef 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -205,7 +205,7 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
- 	cp.progress = progress;
- 	cp.count = 0;
- 
--	bitmap_git = prepare_bitmap_walk(revs, NULL, 0);
-+	bitmap_git = prepare_bitmap_walk(revs, 0);
- 	if (bitmap_git) {
- 		traverse_bitmap_commit_list(bitmap_git, revs, mark_object_seen);
- 		free_bitmap_index(bitmap_git);
+ 	...
 -- 
 gitgitgadget
 
