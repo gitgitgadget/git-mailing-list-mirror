@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 555FEC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22A4EC433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:31:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243941AbiBWScO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 13:32:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37488 "EHLO
+        id S243943AbiBWScQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 13:32:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243892AbiBWSbs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 13:31:48 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6F244B435
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:19 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id m13-20020a7bca4d000000b00380e379bae2so2132854wml.3
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:19 -0800 (PST)
+        with ESMTP id S243585AbiBWScJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 13:32:09 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AF6F4B843
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:21 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id i19so14277943wmq.5
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=l2bOQQhpVQaDo7qkyj8KpnTRnvE1PVFH7xRfiYKu/jw=;
-        b=Gitky/1GmIcKsDHzhIV2ugfJyvU7ByhlgRM1puNmE40i00miLiLzAZWic0ckeIuZNC
-         cKIit31MSpZYM8snURHdpknVuXjxKpBULBLTBDS0x503K8qsIXdMfFSUldYV/zu09+q3
-         Xs100Bh4j54LAOQzpb2DsXrVAC5ikF/gO0gDYv1Vd64ocjgyXKXkvNKE+IwdJz1hG1gy
-         ULYsGRXXoKPczELgOACOGUea9Jk3JBzdMlZoalrYlvWSWqz5qndDZYj9gsc/wtMtDKBt
-         ut494rSEnmjmxziglN9C8S5XoBFbGkr+ngpMk5+vM03gNdTQOczZENuZ0DDIywpJcU+n
-         1KUw==
+        bh=BE8pRQBi1xdCF9mnbjjcuFKiO+AGnnrTf1akRhh1Gvo=;
+        b=bSXDAjWuyEujZNJ6elVW6ekW9pvViRm/bQL8nlb7eEFRhGIQ3PsDbF/LTrdVQh9LER
+         0MGH7CftG2N2AtSAYMw32tNGuy+FsVH1Nc0wyN0rqCLTHv7Kjhn2jdbXOGVFp22L+OkS
+         ODb/jp/RXgf05GtfJpwFFslVRTVa9fSsUbZTfTQQlpiMq3OK4b0M/qxgax/OTTxMAMeV
+         Ziw1Fo6zeay2QVMN7275LG58MXoxeBlCLKtEP9yzegKxP22hAsIKGry3OwN4CJhrveHx
+         koT+smUYB1gLH0KLeMFuYAPrf26WLzmk6wB8P+csOs5lFKIMLHlAUPsSlEnsOekDqyLp
+         AlAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=l2bOQQhpVQaDo7qkyj8KpnTRnvE1PVFH7xRfiYKu/jw=;
-        b=chpmqh4RcYhxlmdRWZcM7WZLjoNBK6Oerz1yQcWKMOjLYyk11Iwf/KS9aFglts35mu
-         dbcgY4c4CV0K3AzkN4Yo6ccOUCM39P0JqJejdZZ/yTT2SN0BwM5wshyqEnaihz4bXcza
-         vLynn8jC8CfzMZwXBtPWSln+tHD9ZCiTxXe76/7JoyXAo7H5iQQ88e5GTksNlxa/J8dU
-         r3iWmJy2Kk+GjxnmhCxYngS1b7I9vnOHgRplI1jeJgicg1lf+mSto7jEI7eWcK2el9lB
-         BtMt3Rug5WJPE8Sv5IxjQcWU8HpD//3V3XeKyvpuD3w9Z0RAcVEsk1Uj7x+gQxSoco8I
-         DlZA==
-X-Gm-Message-State: AOAM53318FZy3/ifJA3YazbEyAO2CaPNXG+ajiiUPUGcgOaza5ofRmS5
-        b27r5AI2+xffUD9PimO0mdDiNCaYtjE=
-X-Google-Smtp-Source: ABdhPJwUyGeX9pZhWHBmP57IfAkt+wQ+QbhPJbulNWO2Cle+sMrP92iw/6tHxR/VaakGzbCBi+CSYQ==
-X-Received: by 2002:a05:600c:1c25:b0:380:d306:1058 with SMTP id j37-20020a05600c1c2500b00380d3061058mr786664wms.150.1645641078180;
-        Wed, 23 Feb 2022 10:31:18 -0800 (PST)
+        bh=BE8pRQBi1xdCF9mnbjjcuFKiO+AGnnrTf1akRhh1Gvo=;
+        b=n4yozIeU0hMz9VMSl30iwixsmP81nH7l2BJ3P+05AYGXdU8GPmDpDSkcLPw6V95nxn
+         ZX0QHAtVD4lFHArtDOTgblUuMjbb10/tOlRufMJRsxt/6gTFQJnbZZsRqaPuk7EORA4z
+         eAA1bvsjTvXrV+qbbuQBntfiwIo/7vcpxAop8UVcPLDDDcrIyUAdG/3FG/HOi2GfdoZn
+         QS/BTNP6R+OjJnH5b5meRWf5v0eB4nX9vUd0o5O3TditcQX2tqPpI8s6O/8UISXHSt0R
+         I/ZrvXMnF7f4Uplnzmg5piLBYMxw9lGRLNN4nX+e9LlBZWQy3YitdSjiXn0bzPPm2Zdm
+         tPLA==
+X-Gm-Message-State: AOAM531XZuIGdbpHX4zEHi7c3okttB+zT+1KRr+1P+LJrUYeJkwyjTbm
+        8pg/2WXWB4p4MF+UU/yl+NtS9UjNl28=
+X-Google-Smtp-Source: ABdhPJxfntQh18FX1xsW4mIIiMNJ/VMHV+dJrpjnIvPrX7mRtzQVT+pehm+505LKqrLYMStLpLq5Tg==
+X-Received: by 2002:a05:600c:21ce:b0:37c:526:4793 with SMTP id x14-20020a05600c21ce00b0037c05264793mr8655759wmj.120.1645641079440;
+        Wed, 23 Feb 2022 10:31:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a2sm252367wmq.38.2022.02.23.10.31.17
+        by smtp.gmail.com with ESMTPSA id s7sm257603wro.104.2022.02.23.10.31.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 10:31:17 -0800 (PST)
-Message-Id: <050725d90ef019ca2684ec0afbfd701efea7f88a.1645641063.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 10:31:19 -0800 (PST)
+Message-Id: <cdc81b2160ee4f5b98bc4eb24b0a933426eed494.1645641063.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
 References: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 18:30:51 +0000
-Subject: [PATCH 13/25] clone: add --bundle-uri option
+Date:   Wed, 23 Feb 2022 18:30:52 +0000
+Subject: [PATCH 14/25] clone: --bundle-uri cannot be combined with --depth
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,108 +67,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Cloning a remote repository is one of the most expensive operations in
-Git. The server can spend a lot of CPU time generating a pack-file for
-the client's request. The amount of data can clog the network for a long
-time, and the Git protocol is not resumable. For users with poor network
-connections or are located far away from the origin server, this can be
-especially painful.
+The previous change added the '--bundle-uri' option, but did not check
+if the --depth parameter was included. Since bundles are not compatible
+with shallow clones, provide an error message to the user who is
+attempting this combination.
 
-The 'git bundle fetch' command allows users to bootstrap a repository
-using a set of bundles. However, this would require them to use 'git
-init' first, followed by the 'git bundle fetch', and finally add a
-remote, fetch, and checkout the branch they want.
+I am leaving this as its own change, separate from the one that
+implements '--bundle-uri', because this is more of an advisory for the
+user. There is nothing wrong with bootstrapping with bundles and then
+fetching a shallow clone. However, that is likely going to involve too
+much work for the client _and_ the server. The client will download all
+of this bundle information containing the full history of the
+repository only to ignore most of it. The server will get a shallow
+fetch request, but with a list of haves that might cause a more painful
+computation of that shallow pack-file.
 
-Instead, integrate this workflow directly into 'git clone' with the
---bundle-uri' option. If the user is aware of a bundle server, then they
-can tell Git to bootstrap the new repository with these bundles before
-fetching the remaining objects from the origin server.
-
-RFC-TODO: Document this option in git-clone.txt.
-
-RFC-TODO: I added a comment about the location of this code being
-necessary for the later step of auto-discovering the bundle URI from the
-origin server. This is probably not actually a requirement, but rather a
-pain point around how I implemented the feature. If a --bundle-uri
-option is specified, but SSH is used for the clone, then the SSH
-connection is left open while Git downloads bundles from another server.
-This is sub-optimal and should be reconsidered when fully reviewed.
-
-RFC-TODO: create tests for this option with a variety of URI types.
-
-RFC-TODO: a simple end-to-end test is available at the end of the
-series.
+RFC-TODO: add a test case for this error message.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/clone.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ builtin/clone.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 9c29093b352..6df3d513dc4 100644
+index 6df3d513dc4..cfe3d96047a 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -33,6 +33,7 @@
- #include "packfile.h"
- #include "list-objects-filter-options.h"
- #include "hook.h"
-+#include "bundle.h"
+@@ -912,6 +912,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		option_no_checkout = 1;
+ 	}
  
- /*
-  * Overall FIXMEs:
-@@ -74,6 +75,7 @@ static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
- static struct list_objects_filter_options filter_options;
- static struct string_list server_options = STRING_LIST_INIT_NODUP;
- static int option_remote_submodules;
-+static const char *bundle_uri;
- 
- static int recurse_submodules_cb(const struct option *opt,
- 				 const char *arg, int unset)
-@@ -155,6 +157,8 @@ static struct option builtin_clone_options[] = {
- 		    N_("any cloned submodules will use their remote-tracking branch")),
- 	OPT_BOOL(0, "sparse", &option_sparse_checkout,
- 		    N_("initialize sparse-checkout file to include only files at root")),
-+	OPT_STRING(0, "bundle-uri", &bundle_uri,
-+		   N_("uri"), N_("A URI for downloading bundles before fetching from origin remote")),
- 	OPT_END()
- };
- 
-@@ -1185,6 +1189,35 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 	refs = transport_get_remote_refs(transport, &transport_ls_refs_options);
- 
-+	/*
-+	 * NOTE: The bundle URI download takes place after transport_get_remote_refs()
-+	 * because a later change will introduce a check for recommended features,
-+	 * which might include a recommended bundle URI.
-+	 */
-+
-+	/*
-+	 * Before fetching from the remote, download and install bundle
-+	 * data from the --bundle-uri option.
-+	 */
 +	if (bundle_uri) {
-+		const char *filter = NULL;
-+
-+		if (filter_options.filter_spec.nr)
-+			filter = expand_list_objects_filter_spec(&filter_options);
-+		/*
-+		 * Set the config for fetching from this bundle URI in the
-+		 * future, but do it before fetch_bundle_uri() which might
-+		 * un-set it (for instance, if there is no table of contents).
-+		 */
-+		git_config_set("fetch.bundleuri", bundle_uri);
-+		if (filter)
-+			git_config_set("fetch.bundlefilter", filter);
-+
-+		if (!fetch_bundle_uri(bundle_uri, filter))
-+			warning(_("failed to fetch objects from bundle URI '%s'"),
-+				bundle_uri);
++		if (deepen)
++			die(_("--bundle-uri is incompatible with --depth, --shallow-since, and --shallow-exclude"));
 +	}
 +
- 	if (refs)
- 		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
+ 	repo_name = argv[0];
  
+ 	path = get_repo_path(repo_name, &is_bundle);
 -- 
 gitgitgadget
 
