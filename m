@@ -2,97 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BA52C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 07:58:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F31BC433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 09:00:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233144AbiBWH62 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 02:58:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34462 "EHLO
+        id S239131AbiBWJBE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 04:01:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231245AbiBWH61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 02:58:27 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A33C77AB8
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 23:58:00 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id p15so50473954ejc.7
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 23:58:00 -0800 (PST)
+        with ESMTP id S232588AbiBWJBD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 04:01:03 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C0D7CDF5
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 01:00:35 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id g20so1187822edw.6
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 01:00:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=S/1fO6MoCRsWqQGsZqKUrlM0wxp9sDdBrME2p1A8jlk=;
-        b=HkFJDxIrVB9zdTsRgPK9r4Es12KrsHGjQInDgfrzJgaQT23wUXEtzKwlcYgHlXBKqe
-         2oL/rDhLeqYFTjBjY5NA2NRdcTmKpiREclJsU6zbD0xzB9dsgaoz+3BxfKgYK0slbsk4
-         gkmIkI0eJ+DkvX+L04EbAqyYwWAVGjxaDmX7PwtOCYuGnOiw0IhtUu5hi0tRHFlkt0vZ
-         5vc0NXotJde3iym76nx6nQdTmCCNpox2qU2gE5+1Z8NAcLHWj9QV5RyVjpg3QPaZBNZy
-         s+H2Q2Xg+ed+cp87YhCSFCZ7HVtjTinO+WNS9UBBkcUmI6PYe5spIT4Apics/ABOqN/j
-         j8Jg==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=5Z2WohTsl44jkEatVB58rkSZTLM2XcL1Vh0RC537ekY=;
+        b=T2rdRxTfPWjligAYC7k++vl9MlkoWqKii4tnL67c3/2bUstvFUJa3hykc7s5f8IhtM
+         CsyJpTOdgDDF6bkHHMTuzkeMW2uyboTS6/CFf1/gvE5EX6acSRcmsxHkeHhUpFO8Wnhl
+         sTEnorxTJQjRpfsQIYX7ptwkIXcWAof0Uwg2n+nOyX+iILUi1apCIlwlXKqkuxd9H8o2
+         nwJ2+jIE6krYCnoRcEAxIlUjSGv4nOQvL34V5cNLaI22MS8jA8DUXbEH5TFhyUgeLb0z
+         lGTgGwVTQxB6sFOpFeqctamIRnP3Dzr5dnbWYzufUAOBHKenVXK2a0rYhfD53rXVaxWx
+         euIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=S/1fO6MoCRsWqQGsZqKUrlM0wxp9sDdBrME2p1A8jlk=;
-        b=2BFRazNqUTvsr4jb/28m5YX6KB/m0H8OUqbgy1nic95vhkCFiP7NTIrAgdcX/Upy8v
-         ZjOGPCTTGZ99M7iiX63FkITd383Re9J6eM+iGjRxsRxulH7RxlB2b6yzFc2JlD/Fv6Mz
-         Sgu4GsaMWfT2mbDrr5OQKDbD9pQ2NOYQ6Z7p6vBctgh6htLAQtBe7oZuCwlNT+nToROn
-         UEQipAa++aZ/Eu1ub9K5bPv49NJ1Co8cluCvfQE3sOXXIrGaQIGcWI3YF+AFxF3TRH/9
-         juRFM3hgoSuSz17FZRzTerZFH6zmkMO67W7BaH/2UqiquyU5ikcHWkmQuujEILFT1iJ2
-         5Pww==
-X-Gm-Message-State: AOAM531YipZqW9OQtRb0J9cLqKV4vPEzLe3gE8+RZvaJxVF2SzURYr/b
-        vvARRzQNiyHcLLf4Bobje1AWTQ6Pb5/rkkgM9ACgnSXo/L0=
-X-Google-Smtp-Source: ABdhPJw19ek/7tG7mSpkqqRgOILMQVCgjmt+BzGfIcZmVC69ZFyh0VKeEBlSGGFHbuFUanEPGHnEBYe01iVujzQKesw=
-X-Received: by 2002:a17:906:64e:b0:6ce:36ae:7ab5 with SMTP id
- t14-20020a170906064e00b006ce36ae7ab5mr22146697ejb.192.1645603078611; Tue, 22
- Feb 2022 23:57:58 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=5Z2WohTsl44jkEatVB58rkSZTLM2XcL1Vh0RC537ekY=;
+        b=DD0aFZZlkjpeIPBKOgs6z2gmCUeIevisLgacI6K/D5O19h55+2aa6k7KsmS2rM8RSL
+         OTnZmUZ2yOugUle1iw2IA/BO5kAfUx84c6IfS5rWjuD1UOtx1wgDJ/nJgg88u2Frrfog
+         Jl1vCK6ESIaqfobwoYAXqfwKGo8iLovZcd6IANvgwO0yOTgFjQBYJTwgR6XDJyvfoTLP
+         PSqDtil6cTdiLVcICpvRA5wiGKeYDIla7Br9YujsJHq4IALiOlogGMyoGHSz3A+AoUhF
+         +svXCY7hZp+WeUY2Mej1STne4PKq7ISkGd9ILngr89vhjtj2NAeotjn/9B2qqNZXLJGM
+         6jXA==
+X-Gm-Message-State: AOAM532MIGER46XETvjv6rSds5oGUSvrPl5XfOaN3FkvznQ++kY5G40E
+        /7HzGf9nEHq3Wlt4VFL+b+QB+JDMSV0=
+X-Google-Smtp-Source: ABdhPJyc7kvvFnu3HcfWkw1UtRSHLUZs3WCxRUqUXcR2xU5XVIAjou21unoXtRK+sAfBpr+e4j7DdQ==
+X-Received: by 2002:a05:6402:170e:b0:40b:657:ac3f with SMTP id y14-20020a056402170e00b0040b0657ac3fmr29985462edu.354.1645606833590;
+        Wed, 23 Feb 2022 01:00:33 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id g7sm7942141edt.69.2022.02.23.01.00.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Feb 2022 01:00:32 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nMnVg-006D1W-F8;
+        Wed, 23 Feb 2022 10:00:32 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 1/3] stash: add test to ensure reflog --rewrite
+ --updatref behavior
+Date:   Wed, 23 Feb 2022 09:54:47 +0100
+References: <pull.1218.git.git.1645209647.gitgitgadget@gmail.com>
+ <pull.1218.v2.git.git.1645554651.gitgitgadget@gmail.com>
+ <6e136b62ca4588cc58f2cb59b635eeaf14e6e20d.1645554652.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <6e136b62ca4588cc58f2cb59b635eeaf14e6e20d.1645554652.git.gitgitgadget@gmail.com>
+Message-ID: <220223.864k4q6jpr.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1152.git.1645290601.gitgitgadget@gmail.com>
- <pull.1152.v2.git.1645320591.gitgitgadget@gmail.com> <f1f7fc97fe2fe5079365bb91c71fb7033378995d.1645320592.git.gitgitgadget@gmail.com>
- <YhL6i3x1l4qwQJg+@nand.local>
-In-Reply-To: <YhL6i3x1l4qwQJg+@nand.local>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 22 Feb 2022 23:57:47 -0800
-Message-ID: <CABPp-BFO0dz6t2ouC0+40Z6oDnGc32GKDHUpeFfh7C_Vpccerg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] merge-ort: fix small memory leak in detect_and_process_renames()
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 20, 2022 at 6:35 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> On Sun, Feb 20, 2022 at 01:29:50AM +0000, Elijah Newren via GitGitGadget wrote:
-> >  merge-ort.c | 15 +++++----------
-> >  1 file changed, 5 insertions(+), 10 deletions(-)
->
-> Both versions of this patch look good to me (in fact, I appreciated
-> seeing both v1 and v2, since v1 makes it more obvious what is changing,
-> but v2 does the whole thing in a little bit of a cleaner way).
 
-Thanks for taking a look!
+On Tue, Feb 22 2022, John Cai via GitGitGadget wrote:
 
-> > diff --git a/merge-ort.c b/merge-ort.c
-> > index d85b1cd99e9..3d7f9feb6f7 100644
-> > --- a/merge-ort.c
-> > +++ b/merge-ort.c
-> > @@ -3086,12 +3086,11 @@ static int detect_and_process_renames(struct merge_options *opt,
-> >                                     struct tree *side1,
-> >                                     struct tree *side2)
-> >  {
-> > -     struct diff_queue_struct combined;
-> > +     struct diff_queue_struct combined = { 0 };
-> >       struct rename_info *renames = &opt->priv->renames;
-> > -     int need_dir_renames, s, clean = 1;
-> > +     int need_dir_renames, s, i, clean = 1;
+> From: John Cai <johncai86@gmail.com>
 >
-> And this entire patch looks good to me, but I did wonder about why "i"
-> is an int here. Shouldn't it be a size_t instead? Looking at
-> diff_queue_struct's definition, both "alloc" and "nr" are signed ints,
-> when they should almost certainly be unsigned to avoid overflow.
+> There is missing test coverage to ensure that the resulting reflogs
+> after a git stash drop has had its old oid rewritten if applicable, and
+> if the refs/stash has been updated if applicable.
 
-You may be right, but I'm not sure we're too worried right now about
-folks having billions of paths involved in renames; such a repo would
-make even the Microsoft monorepos look miniscule.  ;-)
+This test looks good, and if 3/3 is applied and either of the flags
+you're passing is omitted they'll fail, so we know we have the missing
+coverage here.
+
+> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>  t/t3903-stash.sh | 25 ++++++++++++++++++++++++-
+>  1 file changed, 24 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index b149e2af441..ec9cc5646d6 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -185,10 +185,33 @@ test_expect_success 'drop middle stash by index' '
+>  	test 1 =3D $(git show HEAD:file)
+>  '
+>=20=20
+> +test_expect_success 'drop stash reflog updates refs/stash' '
+> +	git reset --hard &&
+> +	git rev-parse refs/stash >expect &&
+> +	echo 9 >file &&
+> +	git stash &&
+> +	git stash drop stash@{0} &&
+> +	git rev-parse refs/stash >actual &&
+> +	test_cmp expect actual
+> +'
+
+This one will be portable to the reftable backend.
+
+> +test_expect_success 'drop stash reflog updates refs/stash with rewrite' '
+
+But as I noted in <220222.86fsob88h7.gmgdl@evledraar.gmail.com> (but it
+was easy to miss) this test will need to depend on REFFILES. So just
+changing this line to:
+
+    test_expect_success REFFILES 'drop stash[...]'
+
+> +	git reset --hard &&
+> +	echo 9 >file &&
+> +	git stash &&
+> +	oid=3D"$(git rev-parse stash@{0})" &&
+> +	git stash drop stash@{1} &&
+> +	cut -d" " -f1-2 .git/logs/refs/stash >actual &&
+> +	cat >expect <<-EOF &&
+> +	$(test_oid zero) $oid
+> +	EOF
+> +	test_cmp expect actual
+> +'
+
+Then:
+
+>  test_expect_success 'stash pop' '
+>  	git reset --hard &&
+>  	git stash pop &&
+> -	test 3 =3D $(cat file) &&
+> +	test 9 =3D $(cat file) &&
+>  	test 1 =3D $(git show :file) &&
+>  	test 1 =3D $(git show HEAD:file) &&
+>  	test 0 =3D $(git stash list | wc -l)
+
+This test was already a bit broken in needing the preceding tests, but
+it will break now if REFFILES isn't true, which you can reproduce
+e.g. with:
+
+    ./t3903-stash.sh --run=3D1-16,18-50 -vixd
+
+Perhaps the least sucky solution to that is:
+
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index ec9cc5646d6..1d11c9bda20 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -205,13 +205,19 @@ test_expect_success 'drop stash reflog updates refs/s=
+tash with rewrite' '
+ 	cat >expect <<-EOF &&
+ 	$(test_oid zero) $oid
+ 	EOF
+-	test_cmp expect actual
++	test_cmp expect actual &&
++	>dropped-stash
+ '
+=20
+ test_expect_success 'stash pop' '
+ 	git reset --hard &&
+ 	git stash pop &&
+-	test 9 =3D $(cat file) &&
++	if test -e dropped-stash
++	then
++		test 9 =3D $(cat file)
++	else
++		test 3 =3D $(cat file)
++	fi &&
+ 	test 1 =3D $(git show :file) &&
+ 	test 1 =3D $(git show HEAD:file) &&
+ 	test 0 =3D $(git stash list | wc -l)
