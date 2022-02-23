@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FD5FC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 765B6C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241588AbiBWOaA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 09:30:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46842 "EHLO
+        id S241590AbiBWOaD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 09:30:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241559AbiBWO3x (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 09:29:53 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 763E9B251B
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:25 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id u1so39913886wrg.11
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:25 -0800 (PST)
+        with ESMTP id S241579AbiBWO34 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 09:29:56 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B548B2535
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:28 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id x15so5550203wrg.8
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=M3yfAW+FMygRnAbUO3SWrYQH55uT4SNwhA5DqD8nFTc=;
-        b=T10qMne4e0hMrBwV4S9IsSLHcqiOXdzkVeD3tO+Ww3XHoDbbGD8t1dPO9+a8h9GPHN
-         jWKDLpL/rxwOcZXYZMa5y6hh6HX7DYDPlG6zIxHYjW0NtgCWmy2awwEG6jCYpsxcw492
-         P86Yttla4jLV/+njIwhKKxhgRRmpZEI7DQtD1h6R7WPjFMUi/u1ZgXFf9lflFM+rQSIO
-         sUGMmMW0neIBBYcroP7Ov5EA8JTBFZR29c61kgLq26LV/ntO27G9Ng8tDyo0xgk8GgMY
-         5T8Z5jwktsRx6A7VdKtS1XhLRc5ePGx5PRSQjv2mtlAzkmhoHkAp0C9F/FqCM3PEBK7h
-         d2Uw==
+        bh=BGCI4x5Zk/ciGPd5nFuBtrTQZXLO9AYHaRZJH4Gsd48=;
+        b=kQGpfjkvZscWL+iwu+XpnpMoRaFj07WAfL1to74H784m7Ssc2Kp7PtM6SuR+ai6p68
+         sZ6bdA4YwzKaW3trvcMTcf+hv2E4VVu+X10qPjfWFeHcCmX0CctmJgUBuy9GMNnSxK7c
+         0iHN2WjfBtDawsyx9ukKO4JOvatrN81NZD0fO00LRbOsdP12kyzxNyT3QL3A2UV/oE8G
+         htwGTWM422Q0atHFu+gRKOxNih1FmCgoB2zxoYt66wWYJyYWf/uCyoS/cPERPaE37GTN
+         +GufkVyyEp7ZglrgVNRBJUKjSGu328ZUfG/o2jny+RQcq+LXaAir+0TzbvNCkSIZDLw4
+         3n5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=M3yfAW+FMygRnAbUO3SWrYQH55uT4SNwhA5DqD8nFTc=;
-        b=U+Fr97ZSSfDTY3bLBcN//+eo0PRshpNIsL6/pQLjPNNayup06gi44fe/ocybJptq8D
-         qBeOzpcceMYwVQbgJW/NgFkaHiQV4aRFdWfDV32N/OX6UjQGmrmqjCHuuOIITYtJp60R
-         coajoX/Gb3RMEMIDVKzuLm6j5H04/1eOrIDYwQm2tjlEVQbJy7lH3542qtxdg3qAS/FD
-         1QOlG5KKA6nlXXtK0hGDjiQOn7r1lgTNNmzv0vjO+0x934DlvQy+hnP0QkVtYPH5Gt7Q
-         K9GePN/zHD9ck4FVnKCt5xq13dHdA6IKbETqY9F6E7tHXe63eH6MhwkDx3LPj2WwNCd5
-         ZLNQ==
-X-Gm-Message-State: AOAM530t2EN0SvAUjydtpPApJryoLxHtXNYJWKtjjc9uGYlCIm6E7ATP
-        kkLuwLH756zycgd0OsEyBEUGJZcjnCk=
-X-Google-Smtp-Source: ABdhPJz2Q1kunxHvmfBeL9q34/YbFRY0V5fQcDO2B1GR3QzfV3h5e6PEh7zK4qBHFRcsgREJwitdrA==
-X-Received: by 2002:a5d:6106:0:b0:1ed:b56f:73f7 with SMTP id v6-20020a5d6106000000b001edb56f73f7mr2429084wrt.601.1645626563775;
-        Wed, 23 Feb 2022 06:29:23 -0800 (PST)
+        bh=BGCI4x5Zk/ciGPd5nFuBtrTQZXLO9AYHaRZJH4Gsd48=;
+        b=KWAz4I4w/BH10maYZspdSy+/heIBYfpyzTCMuJ1QJowcBWrK+wtJlmBZNSmrRmo6Bg
+         9zQHSBXRF5nBU7YCesgri+bXQ8KVohPoZK9UJeite3mqDo7LjvovbuwbXyUX1MJCHs8W
+         do8dg93EkyFqlDZSBEBOUrDOoSnQIakc+wnf6qN+kMXqbWiwIj/R7m1mKPh+Dg21sttD
+         2JPsksMfQ9AbHb+JehrpaUyNOcCft2uoes2mjKlsCvDzRsmuR9dTkQFUJOdnarvPvTej
+         hj+dBh621n71WIx4qveqr+KMUuGoiXUeUM/uA0T+y4AchS2OzE/dC4/OsZOjKDui+u2x
+         gT7A==
+X-Gm-Message-State: AOAM53197f9wXTp7hsMjdeiHRNUUNQ4IMQmGzPITwPhcTElkIaViuVmT
+        xZ4ftTTQ38/BRnyUwe/J4h8Nw40EA+s=
+X-Google-Smtp-Source: ABdhPJyoM9JmhRUmRnAIyfWhdNag+rgb+0zwHV+FtJXRv8nYDYRCIdR8tlRfIWnuE7krzwvvf4vdUg==
+X-Received: by 2002:a5d:440b:0:b0:1e3:f66:bf59 with SMTP id z11-20020a5d440b000000b001e30f66bf59mr23239543wrq.250.1645626566614;
+        Wed, 23 Feb 2022 06:29:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 2sm34404139wry.4.2022.02.23.06.29.23
+        by smtp.gmail.com with ESMTPSA id 2sm34404287wry.4.2022.02.23.06.29.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 06:29:23 -0800 (PST)
-Message-Id: <ccc5b1ef9fb4dbeedfbc1ad8f0da36299bf48b56.1645626559.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 06:29:25 -0800 (PST)
+Message-Id: <704cce17815b17ec0d07c64c7818c0a2d2fd3105.1645626559.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
 References: <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
         <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 14:29:11 +0000
-Subject: [PATCH v3 03/11] worktree: extract copy_sparse_checkout()
+Date:   Wed, 23 Feb 2022 14:29:14 +0000
+Subject: [PATCH v3 06/11] worktree: use 'worktree' over 'working tree'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,68 +69,144 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-This logic was introduced by 5325591 (worktree: copy sparse-checkout
-patterns and config on add, 2022-02-07), but some feedback came in that
-the add_worktree() method was already too complex. It is better to
-extract this logic into a helper method to reduce this complexity.
+It is helpful to distinguish between a 'working tree' and a 'worktree'.
+A worktree contains a working tree plus additional metadata. This
+metadata includes per-worktree refs and worktree-specific config.
 
-Reported-by: Eric Sunshine <sunshine@sunshineco.com>
+This is the second of multiple changes to git-worktree.txt, restricted
+to the COMMANDS section.
+
+There is some language around the movement of "the working tree of a
+linked worktree" which is used once, but the remaining uses are left as
+just moving "a linked worktree" for brevity.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/worktree.c | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ Documentation/git-worktree.txt | 85 ++++++++++++++++------------------
+ 1 file changed, 41 insertions(+), 44 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 2771a6dc793..c806aa2b261 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -236,6 +236,22 @@ static void check_candidate_path(const char *path,
- 		die(_("'%s' is a missing but already registered worktree;\nuse '%s -f' to override, or 'prune' or 'remove' to clear"), path, cmd);
- }
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 956c17c4306..234882be45a 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -88,75 +88,72 @@ branches from there if `<branch>` is ambiguous but exists on the
+ linkgit:git-config[1].
+ +
+ If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `--detach` used,
+-then, as a convenience, the new working tree is associated with a branch
+-(call it `<branch>`) named after `$(basename <path>)`.  If `<branch>`
+-doesn't exist, a new branch based on `HEAD` is automatically created as
+-if `-b <branch>` was given.  If `<branch>` does exist, it will be
+-checked out in the new working tree, if it's not checked out anywhere
+-else, otherwise the command will refuse to create the working tree (unless
+-`--force` is used).
++then, as a convenience, the new worktree is associated with a branch (call
++it `<branch>`) named after `$(basename <path>)`.  If `<branch>` doesn't
++exist, a new branch based on `HEAD` is automatically created as if
++`-b <branch>` was given.  If `<branch>` does exist, it will be checked out
++in the new worktree, if it's not checked out anywhere else, otherwise the
++command will refuse to create the worktree (unless `--force` is used).
  
-+static void copy_sparse_checkout(const char *worktree_git_dir)
-+{
-+	char *from_file = git_pathdup("info/sparse-checkout");
-+	char *to_file = xstrfmt("%s/info/sparse-checkout", worktree_git_dir);
-+
-+	if (file_exists(from_file)) {
-+		if (safe_create_leading_directories(to_file) ||
-+			copy_file(to_file, from_file, 0666))
-+			error(_("failed to copy '%s' to '%s'; sparse-checkout may not work correctly"),
-+				from_file, to_file);
-+	}
-+
-+	free(from_file);
-+	free(to_file);
-+}
-+
- static void copy_filtered_worktree_config(const char *worktree_git_dir)
- {
- 	char *from_file = git_pathdup("config.worktree");
-@@ -379,21 +395,8 @@ static int add_worktree(const char *path, const char *refname,
- 	 * If the current worktree has sparse-checkout enabled, then copy
- 	 * the sparse-checkout patterns from the current worktree.
- 	 */
--	if (core_apply_sparse_checkout) {
--		char *from_file = git_pathdup("info/sparse-checkout");
--		char *to_file = xstrfmt("%s/info/sparse-checkout",
--					sb_repo.buf);
--
--		if (file_exists(from_file)) {
--			if (safe_create_leading_directories(to_file) ||
--			    copy_file(to_file, from_file, 0666))
--				error(_("failed to copy '%s' to '%s'; sparse-checkout may not work correctly"),
--				      from_file, to_file);
--		}
--
--		free(from_file);
--		free(to_file);
--	}
-+	if (core_apply_sparse_checkout)
-+		copy_sparse_checkout(sb_repo.buf);
+ list::
  
- 	/*
- 	 * If we are using worktree config, then copy all current config
+-List details of each working tree.  The main working tree is listed first,
+-followed by each of the linked working trees.  The output details include
+-whether the working tree is bare, the revision currently checked out, the
++List details of each worktree.  The main worktree is listed first,
++followed by each of the linked worktrees.  The output details include
++whether the worktree is bare, the revision currently checked out, the
+ branch currently checked out (or "detached HEAD" if none), "locked" if
+-the worktree is locked, "prunable" if the worktree can be pruned by `prune`
+-command.
++the worktree is locked, "prunable" if the worktree can be pruned by the
++`prune` command.
+ 
+ lock::
+ 
+-If a working tree is on a portable device or network share which
+-is not always mounted, lock it to prevent its administrative
+-files from being pruned automatically. This also prevents it from
+-being moved or deleted. Optionally, specify a reason for the lock
+-with `--reason`.
++If a worktree is on a portable device or network share which is not always
++mounted, lock it to prevent its administrative files from being pruned
++automatically. This also prevents it from being moved or deleted.
++Optionally, specify a reason for the lock with `--reason`.
+ 
+ move::
+ 
+-Move a working tree to a new location. Note that the main working tree
+-or linked working trees containing submodules cannot be moved with this
+-command. (The `git worktree repair` command, however, can reestablish
+-the connection with linked working trees if you move the main working
+-tree manually.)
++Move a worktree to a new location. Note that the main worktree or linked
++worktrees containing submodules cannot be moved with this command. (The
++`git worktree repair` command, however, can reestablish the connection
++with linked worktrees if you move the main worktree manually.)
+ 
+ prune::
+ 
+-Prune working tree information in `$GIT_DIR/worktrees`.
++Prune worktree information in `$GIT_DIR/worktrees`.
+ 
+ remove::
+ 
+-Remove a working tree. Only clean working trees (no untracked files
+-and no modification in tracked files) can be removed. Unclean working
+-trees or ones with submodules can be removed with `--force`. The main
+-working tree cannot be removed.
++Remove a worktree. Only clean worktrees (no untracked files and no
++modification in tracked files) can be removed. Unclean worktrees or ones
++with submodules can be removed with `--force`. The main worktree cannot be
++removed.
+ 
+ repair [<path>...]::
+ 
+-Repair working tree administrative files, if possible, if they have
+-become corrupted or outdated due to external factors.
++Repair worktree administrative files, if possible, if they have become
++corrupted or outdated due to external factors.
+ +
+-For instance, if the main working tree (or bare repository) is moved,
+-linked working trees will be unable to locate it. Running `repair` in
+-the main working tree will reestablish the connection from linked
+-working trees back to the main working tree.
++For instance, if the main worktree (or bare repository) is moved, linked
++worktrees will be unable to locate it. Running `repair` in the main
++worktree will reestablish the connection from linked worktrees back to the
++main worktree.
+ +
+-Similarly, if a linked working tree is moved without using `git worktree
+-move`, the main working tree (or bare repository) will be unable to
+-locate it. Running `repair` within the recently-moved working tree will
+-reestablish the connection. If multiple linked working trees are moved,
+-running `repair` from any working tree with each tree's new `<path>` as
+-an argument, will reestablish the connection to all the specified paths.
++Similarly, if the working tree for a linked worktree is moved without
++using `git worktree move`, the main worktree (or bare repository) will be
++unable to locate it. Running `repair` within the recently-moved worktree
++will reestablish the connection. If multiple linked worktrees are moved,
++running `repair` from any worktree with each tree's new `<path>` as an
++argument, will reestablish the connection to all the specified paths.
+ +
+-If both the main working tree and linked working trees have been moved
+-manually, then running `repair` in the main working tree and specifying the
+-new `<path>` of each linked working tree will reestablish all connections
+-in both directions.
++If both the main worktree and linked worktrees have been moved manually,
++then running `repair` in the main worktree and specifying the new `<path>`
++of each linked worktree will reestablish all connections in both
++directions.
+ 
+ unlock::
+ 
+-Unlock a working tree, allowing it to be pruned, moved or deleted.
++Unlock a worktree, allowing it to be pruned, moved or deleted.
+ 
+ OPTIONS
+ -------
 -- 
 gitgitgadget
 
