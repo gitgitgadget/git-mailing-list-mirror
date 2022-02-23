@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAF37C433FE
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4096DC433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:31:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243883AbiBWSbq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 13:31:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37334 "EHLO
+        id S243893AbiBWSbs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 13:31:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243868AbiBWSbh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 13:31:37 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80A644B414
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:09 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id d17so6223522wrc.9
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:09 -0800 (PST)
+        with ESMTP id S243869AbiBWSbj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 13:31:39 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCF764B416
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:10 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id i19so14277714wmq.5
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=1jvZERtSPiben/T2+8gaCUWFMGf3l9m8EC+gogi8QVY=;
-        b=eq2XT1Oyl8P6ixtt93znC1LP7RuodgsmRWsU9avMQMtLbwUdMiCDbLxAqrC9Qz4i1a
-         zU3A2v2MzTq6mVvk5X4mpvHCw9poQDLsjAl40uUfb1e/jnRfXaDSBI64nj96zqtPjHRl
-         ky0v5h06wZp1Io3QXMfFLDL03cw+b/Ua7J1yO3Q6X0iTf1YGb7Xrj4btAFBaq3btyxmQ
-         i54WPb8V1HXkviyD92tcMZO4bzlPekkfGyqSLzY9zKAmWc4A3DvfHvEEhIlyIRo5tqNS
-         wJfuGyO2MVEhyz6qqpczcnjdwHeH74z2ZDPSNjDkYP3eEOck2PYPwf/YdMM+2M/6QetU
-         C6ig==
+        bh=nqJ7gYx5eQohJ5KAa6XRx1AGCVw3/JtF38IijvN1zdw=;
+        b=mpmAc6b4SXQBLVhG8zIEYEQo2dAoK/5+HkWN9BveSryoh/sPNmqQyQaBaA1fKXG94c
+         9azW1KjUHwNZUMWZdTuOVXOlLY4QGyVOBNWgrDkg6LnanQZNsCC8Fmq88jHWvEF5BvKW
+         CYk9HIlxNGE5mbHYfUFhC+u21svndSM5kK5NoQu5jSaOebrcio8uLSkpdnKk7qByBbd3
+         1Ns4mcRW7TFBdyLYZL0vOKvs1EpxXBit3fzUmfUSKI/XsjEqIlYOk6Rq0Je+lkE8Q0p0
+         rlgtS2deOTW4mHPxKF+Ph0P6e6u4xmqeTOsnXNpQ3YH7wIUlPzQw4Umb7sMXIaf1NvNH
+         yH1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1jvZERtSPiben/T2+8gaCUWFMGf3l9m8EC+gogi8QVY=;
-        b=cTHMnn7ZK0etv3nyhZInoT7Boy36IZt3fUgGRi0lbAXoEEF+9trU9ZlsuQaptIqeIf
-         /WPn3QrCAAsPuZPracJPjacYH1Nknmjho1XnwWyz0h4vVuemlgOwofHIuoNSE/jOdann
-         r+BNbh2JQ1k+IhOsWq3gXyaWZZ9Fwao+TdEu9a6NrAEoWDaqNC85iMbFpfcwH0yu68v/
-         0SWF+IfZd+skiWmFx3XBWDq3y1mrch7uS9UlBN+Dh9DeclhsBsoYRWGITZjgeJ7+F8Z8
-         oxrRYA6GKsDnard9eHuWXR/+6OrncPQXa7zxWUJkABOF7EpBw1ayyDbd8SlhuLapv5v+
-         eskA==
-X-Gm-Message-State: AOAM5305TOty6vYKCTNlAcjhAQ0zOapVc4DgeD0dHjrUb/nAbSNURkVO
-        dP5IrKzNt5PwFh3iKbGzeC2c3Mvrv0k=
-X-Google-Smtp-Source: ABdhPJwiwfaXX1AJ6EnrD7LzJvmx8ls2ufGxghdkkQ5tYAmcn0xjLdfMkKNy8Cj6QGULnOFMFyoxkQ==
-X-Received: by 2002:adf:bc14:0:b0:1e2:b035:9c46 with SMTP id s20-20020adfbc14000000b001e2b0359c46mr674191wrg.386.1645641067835;
-        Wed, 23 Feb 2022 10:31:07 -0800 (PST)
+        bh=nqJ7gYx5eQohJ5KAa6XRx1AGCVw3/JtF38IijvN1zdw=;
+        b=f568jzE55MMxZ/uaOQeExq1x+iNgBTyhZgLgaFrIGa0GH5DTUI1cdBbgFfqznznUvz
+         mgNXe8kq1Y8FbqaWSAeTJvRuYzs1LanCwiXEaUbFrIoqNRPoCGBAbRQag3+2F7T6Lmuy
+         oNYcO5EvcG6B0W64yB9PKT8x2eZEd6/gSQWWtdjom5nwC8NTpQjU3wu0NdU66+ppQxv/
+         Zh8NKchFCNdAVRZIk/dGkcw+XpfI0N2rJJJyDzA/rWaCVnVeR0Hy1A7iOhJR77ojkJ5W
+         zc5s4XI2rfiToHuYBtLt9KcBxzWIC7QDsPF1AJYEnqNtoVCLLAii+HVZHXsj5JucrDhf
+         ay3w==
+X-Gm-Message-State: AOAM533R/xJwB6Fro3Hy7RKHgduYJJo/oxI9XypaFj/tK9Bl9bnddYTU
+        Wr/+yeeFxkA6XUoCYbMBpJsojEkVNJU=
+X-Google-Smtp-Source: ABdhPJz6yCUlaNFHRJ1xbC/5E2CJb+DmcVHzChn+Puuxpqtf9k2dG4Hnem2xh4YR7b+csyt+X+QXUQ==
+X-Received: by 2002:a05:600c:284a:b0:37e:9244:abea with SMTP id r10-20020a05600c284a00b0037e9244abeamr796400wmb.2.1645641069160;
+        Wed, 23 Feb 2022 10:31:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s7sm322644wri.5.2022.02.23.10.31.07
+        by smtp.gmail.com with ESMTPSA id y12sm322133wrt.72.2022.02.23.10.31.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 10:31:07 -0800 (PST)
-Message-Id: <fcd51a650217c4344e2ac79b53f06bc3eca3adb3.1645641063.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 10:31:08 -0800 (PST)
+Message-Id: <d36012fa27ab1d56d6711a9c920bd69b4f5c1b47.1645641063.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
 References: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 18:30:41 +0000
-Subject: [PATCH 03/25] dir: extract starts_with_dot[_dot]_slash()
+Date:   Wed, 23 Feb 2022 18:30:42 +0000
+Subject: [PATCH 04/25] remote: move relative_url()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,103 +67,302 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-We will want to use this logic to assist checking if paths are absolute
-or relative, so extract it into a helpful place. This creates a
-collision with similar methods in builtin/fsck.c, but those methods have
-important differences. Prepend "fsck_" to those methods to emphasize
-that they are custom to the fsck builtin.
+This method was initially written in 63e95beb0 (submodule: port
+resolve_relative_url from shell to C, 2016-05-15). As we will need
+similar functionality in the bundle URI feature, extract this to be
+available in remote.h.
+
+The code is exactly the same. The prototype is different only in
+whitespace. The documentation comment only adds explicit instructions on
+what happens when supplying two absolute URLs.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/submodule--helper.c | 10 ----------
- dir.h                       | 11 +++++++++++
- fsck.c                      | 14 +++++++-------
- 3 files changed, 18 insertions(+), 17 deletions(-)
+ builtin/submodule--helper.c | 119 ------------------------------------
+ remote.c                    |  96 +++++++++++++++++++++++++++++
+ remote.h                    |  30 +++++++++
+ 3 files changed, 126 insertions(+), 119 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c5d3fc3817f..c17dde4170f 100644
+index c17dde4170f..506ebd8e6bc 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -70,16 +70,6 @@ static int print_default_remote(int argc, const char **argv, const char *prefix)
+@@ -70,125 +70,6 @@ static int print_default_remote(int argc, const char **argv, const char *prefix)
  	return 0;
  }
  
--static int starts_with_dot_slash(const char *str)
+-/*
+- * Returns 1 if it was the last chop before ':'.
+- */
+-static int chop_last_dir(char **remoteurl, int is_relative)
 -{
--	return str[0] == '.' && is_dir_sep(str[1]);
+-	char *rfind = find_last_dir_sep(*remoteurl);
+-	if (rfind) {
+-		*rfind = '\0';
+-		return 0;
+-	}
+-
+-	rfind = strrchr(*remoteurl, ':');
+-	if (rfind) {
+-		*rfind = '\0';
+-		return 1;
+-	}
+-
+-	if (is_relative || !strcmp(".", *remoteurl))
+-		die(_("cannot strip one component off url '%s'"),
+-			*remoteurl);
+-
+-	free(*remoteurl);
+-	*remoteurl = xstrdup(".");
+-	return 0;
 -}
 -
--static int starts_with_dot_dot_slash(const char *str)
+-/*
+- * The `url` argument is the URL that navigates to the submodule origin
+- * repo. When relative, this URL is relative to the superproject origin
+- * URL repo. The `up_path` argument, if specified, is the relative
+- * path that navigates from the submodule working tree to the superproject
+- * working tree. Returns the origin URL of the submodule.
+- *
+- * Return either an absolute URL or filesystem path (if the superproject
+- * origin URL is an absolute URL or filesystem path, respectively) or a
+- * relative file system path (if the superproject origin URL is a relative
+- * file system path).
+- *
+- * When the output is a relative file system path, the path is either
+- * relative to the submodule working tree, if up_path is specified, or to
+- * the superproject working tree otherwise.
+- *
+- * NEEDSWORK: This works incorrectly on the domain and protocol part.
+- * remote_url      url              outcome          expectation
+- * http://a.com/b  ../c             http://a.com/c   as is
+- * http://a.com/b/ ../c             http://a.com/c   same as previous line, but
+- *                                                   ignore trailing slash in url
+- * http://a.com/b  ../../c          http://c         error out
+- * http://a.com/b  ../../../c       http:/c          error out
+- * http://a.com/b  ../../../../c    http:c           error out
+- * http://a.com/b  ../../../../../c    .:c           error out
+- * NEEDSWORK: Given how chop_last_dir() works, this function is broken
+- * when a local part has a colon in its path component, too.
+- */
+-static char *relative_url(const char *remote_url,
+-				const char *url,
+-				const char *up_path)
 -{
--	return str[0] == '.' && str[1] == '.' && is_dir_sep(str[2]);
+-	int is_relative = 0;
+-	int colonsep = 0;
+-	char *out;
+-	char *remoteurl = xstrdup(remote_url);
+-	struct strbuf sb = STRBUF_INIT;
+-	size_t len = strlen(remoteurl);
+-
+-	if (is_dir_sep(remoteurl[len-1]))
+-		remoteurl[len-1] = '\0';
+-
+-	if (!url_is_local_not_ssh(remoteurl) || is_absolute_path(remoteurl))
+-		is_relative = 0;
+-	else {
+-		is_relative = 1;
+-		/*
+-		 * Prepend a './' to ensure all relative
+-		 * remoteurls start with './' or '../'
+-		 */
+-		if (!starts_with_dot_slash(remoteurl) &&
+-		    !starts_with_dot_dot_slash(remoteurl)) {
+-			strbuf_reset(&sb);
+-			strbuf_addf(&sb, "./%s", remoteurl);
+-			free(remoteurl);
+-			remoteurl = strbuf_detach(&sb, NULL);
+-		}
+-	}
+-	/*
+-	 * When the url starts with '../', remove that and the
+-	 * last directory in remoteurl.
+-	 */
+-	while (url) {
+-		if (starts_with_dot_dot_slash(url)) {
+-			url += 3;
+-			colonsep |= chop_last_dir(&remoteurl, is_relative);
+-		} else if (starts_with_dot_slash(url))
+-			url += 2;
+-		else
+-			break;
+-	}
+-	strbuf_reset(&sb);
+-	strbuf_addf(&sb, "%s%s%s", remoteurl, colonsep ? ":" : "/", url);
+-	if (ends_with(url, "/"))
+-		strbuf_setlen(&sb, sb.len - 1);
+-	free(remoteurl);
+-
+-	if (starts_with_dot_slash(sb.buf))
+-		out = xstrdup(sb.buf + 2);
+-	else
+-		out = xstrdup(sb.buf);
+-
+-	if (!up_path || !is_relative) {
+-		strbuf_release(&sb);
+-		return out;
+-	}
+-
+-	strbuf_reset(&sb);
+-	strbuf_addf(&sb, "%s%s", up_path, out);
+-	free(out);
+-	return strbuf_detach(&sb, NULL);
 -}
 -
- /*
-  * Returns 1 if it was the last chop before ':'.
-  */
-diff --git a/dir.h b/dir.h
-index 8e02dfb505d..5e38d1ba536 100644
---- a/dir.h
-+++ b/dir.h
-@@ -578,4 +578,15 @@ void connect_work_tree_and_git_dir(const char *work_tree,
- void relocate_gitdir(const char *path,
- 		     const char *old_git_dir,
- 		     const char *new_git_dir);
+ static char *resolve_relative_url(const char *rel_url, const char *up_path, int quiet)
+ {
+ 	char *remoteurl, *resolved_url;
+diff --git a/remote.c b/remote.c
+index c97c626eaa8..c4a56749e85 100644
+--- a/remote.c
++++ b/remote.c
+@@ -14,6 +14,7 @@
+ #include "strvec.h"
+ #include "commit-reach.h"
+ #include "advice.h"
++#include "connect.h"
+ 
+ enum map_direction { FROM_SRC, FROM_DST };
+ 
+@@ -2727,3 +2728,98 @@ void remote_state_clear(struct remote_state *remote_state)
+ 	hashmap_clear_and_free(&remote_state->remotes_hash, struct remote, ent);
+ 	hashmap_clear_and_free(&remote_state->branches_hash, struct remote, ent);
+ }
 +
-+static inline int starts_with_dot_slash(const char *str)
++/*
++ * Returns 1 if it was the last chop before ':'.
++ */
++static int chop_last_dir(char **remoteurl, int is_relative)
 +{
-+	return str[0] == '.' && is_dir_sep(str[1]);
++	char *rfind = find_last_dir_sep(*remoteurl);
++	if (rfind) {
++		*rfind = '\0';
++		return 0;
++	}
++
++	rfind = strrchr(*remoteurl, ':');
++	if (rfind) {
++		*rfind = '\0';
++		return 1;
++	}
++
++	if (is_relative || !strcmp(".", *remoteurl))
++		die(_("cannot strip one component off url '%s'"),
++			*remoteurl);
++
++	free(*remoteurl);
++	*remoteurl = xstrdup(".");
++	return 0;
 +}
 +
-+static inline int starts_with_dot_dot_slash(const char *str)
++/*
++ * NEEDSWORK: Given how chop_last_dir() works, this function is broken
++ * when a local part has a colon in its path component, too.
++ */
++char *relative_url(const char *remote_url,
++		   const char *url,
++		   const char *up_path)
 +{
-+	return str[0] == '.' && str[1] == '.' && is_dir_sep(str[2]);
++	int is_relative = 0;
++	int colonsep = 0;
++	char *out;
++	char *remoteurl = xstrdup(remote_url);
++	struct strbuf sb = STRBUF_INIT;
++	size_t len = strlen(remoteurl);
++
++	if (is_dir_sep(remoteurl[len-1]))
++		remoteurl[len-1] = '\0';
++
++	if (!url_is_local_not_ssh(remoteurl) || is_absolute_path(remoteurl))
++		is_relative = 0;
++	else {
++		is_relative = 1;
++		/*
++		 * Prepend a './' to ensure all relative
++		 * remoteurls start with './' or '../'
++		 */
++		if (!starts_with_dot_slash(remoteurl) &&
++		    !starts_with_dot_dot_slash(remoteurl)) {
++			strbuf_reset(&sb);
++			strbuf_addf(&sb, "./%s", remoteurl);
++			free(remoteurl);
++			remoteurl = strbuf_detach(&sb, NULL);
++		}
++	}
++	/*
++	 * When the url starts with '../', remove that and the
++	 * last directory in remoteurl.
++	 */
++	while (url) {
++		if (starts_with_dot_dot_slash(url)) {
++			url += 3;
++			colonsep |= chop_last_dir(&remoteurl, is_relative);
++		} else if (starts_with_dot_slash(url))
++			url += 2;
++		else
++			break;
++	}
++	strbuf_reset(&sb);
++	strbuf_addf(&sb, "%s%s%s", remoteurl, colonsep ? ":" : "/", url);
++	if (ends_with(url, "/"))
++		strbuf_setlen(&sb, sb.len - 1);
++	free(remoteurl);
++
++	if (starts_with_dot_slash(sb.buf))
++		out = xstrdup(sb.buf + 2);
++	else
++		out = xstrdup(sb.buf);
++
++	if (!up_path || !is_relative) {
++		strbuf_release(&sb);
++		return out;
++	}
++
++	strbuf_reset(&sb);
++	strbuf_addf(&sb, "%s%s", up_path, out);
++	free(out);
++	return strbuf_detach(&sb, NULL);
 +}
+diff --git a/remote.h b/remote.h
+index 4a1209ae2c8..91c7f187863 100644
+--- a/remote.h
++++ b/remote.h
+@@ -409,4 +409,34 @@ int parseopt_push_cas_option(const struct option *, const char *arg, int unset);
+ int is_empty_cas(const struct push_cas_option *);
+ void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
+ 
++/*
++ * The `url` argument is the URL that navigates to the submodule origin
++ * repo. When relative, this URL is relative to the superproject origin
++ * URL repo. The `up_path` argument, if specified, is the relative
++ * path that navigates from the submodule working tree to the superproject
++ * working tree. Returns the origin URL of the submodule.
++ *
++ * Return either an absolute URL or filesystem path (if the superproject
++ * origin URL is an absolute URL or filesystem path, respectively) or a
++ * relative file system path (if the superproject origin URL is a relative
++ * file system path).
++ *
++ * When the output is a relative file system path, the path is either
++ * relative to the submodule working tree, if up_path is specified, or to
++ * the superproject working tree otherwise.
++ *
++ * NEEDSWORK: This works incorrectly on the domain and protocol part.
++ * remote_url      url              outcome          expectation
++ * http://a.com/b  ../c             http://a.com/c   as is
++ * http://a.com/b/ ../c             http://a.com/c   same as previous line, but
++ *                                                   ignore trailing slash in url
++ * http://a.com/b  ../../c          http://c         error out
++ * http://a.com/b  ../../../c       http:/c          error out
++ * http://a.com/b  ../../../../c    http:c           error out
++ * http://a.com/b  ../../../../../c    .:c           error out
++ */
++char *relative_url(const char *remote_url,
++		   const char *url,
++		   const char *up_path);
 +
  #endif
-diff --git a/fsck.c b/fsck.c
-index 3ec500d707a..32cd3bc081f 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -976,31 +976,31 @@ done:
- }
- 
- /*
-- * Like builtin/submodule--helper.c's starts_with_dot_slash, but without
-+ * Like dir.h's starts_with_dot_slash, but without
-  * relying on the platform-dependent is_dir_sep helper.
-  *
-  * This is for use in checking whether a submodule URL is interpreted as
-  * relative to the current directory on any platform, since \ is a
-  * directory separator on Windows but not on other platforms.
-  */
--static int starts_with_dot_slash(const char *str)
-+static int fsck_starts_with_dot_slash(const char *str)
- {
- 	return str[0] == '.' && (str[1] == '/' || str[1] == '\\');
- }
- 
- /*
-- * Like starts_with_dot_slash, this is a variant of submodule--helper's
-- * helper of the same name with the twist that it accepts backslash as a
-+ * Like fsck_starts_with_dot_slash, this is a variant of dir.h's
-+ * helper with the twist that it accepts backslash as a
-  * directory separator even on non-Windows platforms.
-  */
--static int starts_with_dot_dot_slash(const char *str)
-+static int fsck_starts_with_dot_dot_slash(const char *str)
- {
--	return str[0] == '.' && starts_with_dot_slash(str + 1);
-+	return str[0] == '.' && fsck_starts_with_dot_slash(str + 1);
- }
- 
- static int submodule_url_is_relative(const char *url)
- {
--	return starts_with_dot_slash(url) || starts_with_dot_dot_slash(url);
-+	return fsck_starts_with_dot_slash(url) || fsck_starts_with_dot_dot_slash(url);
- }
- 
- /*
 -- 
 gitgitgadget
 
