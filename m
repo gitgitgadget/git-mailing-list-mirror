@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 144B1C433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 17:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACC44C433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 17:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243609AbiBWR4E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 12:56:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49208 "EHLO
+        id S243610AbiBWR4M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 12:56:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243593AbiBWRzw (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S243594AbiBWRzw (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Feb 2022 12:55:52 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F86E2736
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD9DB65EE
         for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:24 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id j22so14838840wrb.13
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:23 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id o4so4155450wrf.3
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5mG5vvumPmhw2DkdF6cHCjGmFvwG0XBh/NgIZByVDf4=;
-        b=YgQNa1lAUn6PFhNHjMjhqdID/xq2607oxQwEV/8GduSjrt7t8GLnp3ymYWf92JzBqZ
-         LdD6Ps0tB3Z2Jm6xQhsHZ4Dkuacy0ilosnkDnvYUDQFbIQx4w+wWEq/HV04I5c1aFiK2
-         kucpKQou8cWmbjJo+wK4FlSwFx7B8J2hht2q1P97yXOmuIk6MeAYegB6z7qzoM64bLCW
-         XTltV8GHSM7K0/hgLCi/zNZGKGkSCleXmSLWZD8XFlQEdTMb5Ubh/+Mpy3IiFK5ueARs
-         hh27LFxQLo5G8YHc0Ci5I1Tm2xkT9obg9rVaqO1A+pxbirP61tD/NhmV6nFqz1W24yhn
-         LGWQ==
+        bh=E/dL4dbXmnevF9IPOBnoODuzwSNqZWPE+6v50BBklS0=;
+        b=K8NOgDuc2ZvOFoTU2vAhyG3KgOjPewKePXKmLNjzMDiPaS4V44U5HgrMkb3OkhIjZW
+         7PWPEp1LcbI11cnAVCNJ7JHU9pxEawS3g8FAPQR3c/FaXA7Js7vpIDv1HB4MFupQLono
+         CWys2yKvU1mOUK3cv5JERIN73DQqJ8jN2K5/7rZlIweb2oVp/Isbkkb+K2NkANPkArNy
+         yQc8t4v0ioyCO9oUURaCqWiZCyzvxoKZi8LQJ3U/Q03lW3Zas+R1/xm8Ya+MyIk6dKGi
+         drAOljU+FGnfgAPMc4mAcIE6SeKWzyzFPU3Ss0T2uRJVFMUlIUBl0Pe1Sgte/CWEqOXu
+         knpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5mG5vvumPmhw2DkdF6cHCjGmFvwG0XBh/NgIZByVDf4=;
-        b=UEvrH+4uw+Yw4EUxVR5a6SLMvWkmVigDMQRnzSbrKYZLWythkQdGLi0U0Qru/cgx5U
-         EQDP2dbpXU4YMaerOioqXzjBuI719aVi0J3bAvC9sGbe4NloVKEd1Ued27vHR0s5D6id
-         nCwOr3sa/ERKCTymV52cDUOTzovr3voPSOYo1jPsuCL48yUY/keZepsIO7MK7sC5J6m8
-         a7L1/ui4mE6aWOWt+Oxaf3/ARZkjq9kW6k+8EAJiE1OqG88JXwzc9WciZdplctLPgOEP
-         RulsMq887B5FyuZ5N6J/L6n9Z9jrsajRkOGuAPQogqtscl0NNXxLFeNzlJF4qcLIDiX3
-         GfSw==
-X-Gm-Message-State: AOAM532XTz4h5HXK6ErpW5drjdyaELpratn00PqUBvKDcOMA4AZ6l3QA
-        BgtE7CEZVweppyUpJfnMVGSSCeEilcE=
-X-Google-Smtp-Source: ABdhPJz9I+IdvaR1fVWxULjZqTH+roo2tEmX//sv5Y7QmUSUqAnbUVjRd0qDnJfEX/AuEYg8pUJz4A==
-X-Received: by 2002:a5d:550d:0:b0:1ed:c155:6c2a with SMTP id b13-20020a5d550d000000b001edc1556c2amr581475wrv.470.1645638922473;
-        Wed, 23 Feb 2022 09:55:22 -0800 (PST)
+        bh=E/dL4dbXmnevF9IPOBnoODuzwSNqZWPE+6v50BBklS0=;
+        b=CE3a9yrydNTUm6S5KaYdDR2vVMTOTfnYocdNKAceD2BcQLNsmCpBx0/1RbV+zx2ivv
+         0m9LP8zGLbN+HCjpiqW2oxJJETXYnEW+jYLx9MHjGHthdysP1Ay0hJQGeU4wBMMzOrQf
+         oZOrtTwAynNo3XgbVs5QePsnXpMXMGrVP2InNwPMXTGL8s0B8sO5vuIVsJifg1ZaJtk9
+         XQZHM3uJ9UTkC4t85BwLnz3DRXmlUgR5Np4nxfmCZuqEL3FQEieutY72GeWCP1IMBVHL
+         hTV07+LLReG4F2YGCP0uh15RIDag3gIg7DEhtCdjhwMEEF6urf6Hj/Lf395B8r09S4dw
+         txpw==
+X-Gm-Message-State: AOAM531Oo7vN01v/uRbthUkPr66LRxNg1QPns0JHMqWZek13dlVSJSHU
+        E0CAf1yLf3kKecqQNAJIozAJMi+OOEU=
+X-Google-Smtp-Source: ABdhPJwoFqO9zERov9rXVZQQFjmJbRmtWB+XZVtPRjdirMmaVl1+IXGIbYum46yQQC97tfyFDgQgUw==
+X-Received: by 2002:adf:f303:0:b0:1e7:aeab:ac6a with SMTP id i3-20020adff303000000b001e7aeabac6amr604105wro.40.1645638923262;
+        Wed, 23 Feb 2022 09:55:23 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u15sm223825wrn.48.2022.02.23.09.55.21
+        by smtp.gmail.com with ESMTPSA id e20sm246424wre.90.2022.02.23.09.55.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 09:55:21 -0800 (PST)
-Message-Id: <5393e74708dfd38e5596d9e877a491e6ed8dda24.1645638911.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 09:55:22 -0800 (PST)
+Message-Id: <ec51d0a50e6e64ae37795d77f7d33204b9b71ecd.1645638911.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
 References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 17:55:10 +0000
-Subject: [PATCH 10/11] bundle: create filtered bundles
+Date:   Wed, 23 Feb 2022 17:55:11 +0000
+Subject: [PATCH 11/11] bundle: unbundle promisor packs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,158 +68,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-A previous change allowed Git to parse bundles with the 'filter'
-capability. Now, teach Git to create bundles with this option.
+In order to have a valid pack-file after unbundling a bundle that has
+the 'filter' capability, we need to generate a .promisor file. The
+bundle does not promise _where_ the objects can be found, but we can
+expect that these bundles will be unbundled in repositories with
+appropriate promisor remotes that can find those missing objects.
 
-Some rearranging of code is required to get the option parsing in the
-correct spot. There are now two reasons why we might need capabilities
-(a new hash algorithm or an object filter) so that is pulled out into a
-place where we can check both at the same time.
-
-The --filter option is parsed as part of setup_revisions(), but it
-expected the --objects flag, too. That flag is somewhat implied by 'git
-bundle' because it creates a pack-file walking objects, but there is
-also a walk that walks the revision range expecting only commits. Make
-this parsing work by setting 'revs.tree_objects' and 'revs.blob_objects'
-before the call to setup_revisions().
+Use the 'git index-pack --promisor=<message>' option to create this
+.promisor file. Add "from-bundle" as the message to help anyone diagnose
+issues with these promisor packs.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle.c               | 56 +++++++++++++++++++++++++++++++++---------
- t/t6020-bundle-misc.sh | 30 ++++++++++++++++++++++
- 2 files changed, 75 insertions(+), 11 deletions(-)
+ bundle.c               | 4 ++++
+ t/t6020-bundle-misc.sh | 8 +++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/bundle.c b/bundle.c
-index 2afced4d991..e284ef63062 100644
+index e284ef63062..3d97de40ef0 100644
 --- a/bundle.c
 +++ b/bundle.c
-@@ -334,6 +334,9 @@ static int write_pack_data(int bundle_fd, struct rev_info *revs, struct strvec *
- 		     "--stdout", "--thin", "--delta-base-offset",
- 		     NULL);
- 	strvec_pushv(&pack_objects.args, pack_options->v);
-+	if (revs->filter)
-+		strvec_pushf(&pack_objects.args, "--filter=%s",
-+			     list_objects_filter_spec(revs->filter));
- 	pack_objects.in = -1;
- 	pack_objects.out = bundle_fd;
- 	pack_objects.git_cmd = 1;
-@@ -507,10 +510,38 @@ int create_bundle(struct repository *r, const char *path,
- 	int bundle_to_stdout;
- 	int ref_count = 0;
- 	struct rev_info revs, revs_copy;
--	int min_version = the_hash_algo == &hash_algos[GIT_HASH_SHA1] ? 2 : 3;
-+	int min_version = 2;
- 	struct bundle_prerequisites_info bpi;
- 	int i;
+@@ -631,6 +631,10 @@ int unbundle(struct repository *r, struct bundle_header *header,
+ 	struct child_process ip = CHILD_PROCESS_INIT;
+ 	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
  
-+	/* init revs to list objects for pack-objects later */
-+	save_commit_buffer = 0;
-+	repo_init_revisions(r, &revs, NULL);
++	/* If there is a filter, then we need to create the promisor pack. */
++	if (header->filter)
++		strvec_push(&ip.args, "--promisor=from-bundle");
 +
-+	/*
-+	 * Pre-initialize the '--objects' flag so we can parse a
-+	 * --filter option successfully.
-+	 */
-+	revs.tree_objects = revs.blob_objects = 1;
-+
-+	argc = setup_revisions(argc, argv, &revs, NULL);
-+
-+	/*
-+	 * Reasons to require version 3:
-+	 *
-+	 * 1. @object-format is required because our hash algorithm is not
-+	 *    SHA1.
-+	 * 2. @filter is required because we parsed an object filter.
-+	 */
-+	if (the_hash_algo != &hash_algos[GIT_HASH_SHA1] ||
-+	    revs.filter)
-+		min_version = 3;
-+
-+	if (argc > 1) {
-+		error(_("unrecognized argument: %s"), argv[1]);
-+		goto err;
-+	}
-+
- 	bundle_to_stdout = !strcmp(path, "-");
- 	if (bundle_to_stdout)
- 		bundle_fd = 1;
-@@ -533,17 +564,14 @@ int create_bundle(struct repository *r, const char *path,
- 		write_or_die(bundle_fd, capability, strlen(capability));
- 		write_or_die(bundle_fd, the_hash_algo->name, strlen(the_hash_algo->name));
- 		write_or_die(bundle_fd, "\n", 1);
--	}
--
--	/* init revs to list objects for pack-objects later */
--	save_commit_buffer = 0;
--	repo_init_revisions(r, &revs, NULL);
- 
--	argc = setup_revisions(argc, argv, &revs, NULL);
--
--	if (argc > 1) {
--		error(_("unrecognized argument: %s"), argv[1]);
--		goto err;
-+		if (revs.filter) {
-+			const char *value = expand_list_objects_filter_spec(revs.filter);
-+			capability = "@filter=";
-+			write_or_die(bundle_fd, capability, strlen(capability));
-+			write_or_die(bundle_fd, value, strlen(value));
-+			write_or_die(bundle_fd, "\n", 1);
-+		}
- 	}
- 
- 	/* save revs.pending in revs_copy for later use */
-@@ -566,6 +594,12 @@ int create_bundle(struct repository *r, const char *path,
- 	bpi.fd = bundle_fd;
- 	bpi.pending = &revs_copy.pending;
- 
-+	/*
-+	 * Nullify the filter here, and any object walking. We only care
-+	 * about commits and tags here. The revs_copy has the right
-+	 * instances of these values.
-+	 */
-+	revs.filter = NULL;
- 	revs.blob_objects = revs.tree_objects = 0;
- 	traverse_commit_list(&revs, write_bundle_prerequisites, ignore_object, &bpi);
- 	object_array_remove_duplicates(&revs_copy.pending);
+ 	if (extra_index_pack_args) {
+ 		strvec_pushv(&ip.args, extra_index_pack_args->v);
+ 		strvec_clear(extra_index_pack_args);
 diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index 6522401617d..39cfefafb65 100755
+index 39cfefafb65..344af34db1e 100755
 --- a/t/t6020-bundle-misc.sh
 +++ b/t/t6020-bundle-misc.sh
-@@ -487,4 +487,34 @@ test_expect_success 'unfiltered bundle with --objects' '
- 	test_cmp expect actual
- '
+@@ -513,7 +513,13 @@ do
+ 		The bundle uses this filter: $filter
+ 		The bundle records a complete history.
+ 		EOF
+-		test_cmp expect actual
++		test_cmp expect actual &&
++
++		# This creates the first pack-file in the
++		# .git/objects/pack directory. Look for a .promisor.
++		git bundle unbundle partial.bdl &&
++		ls .git/objects/pack/pack-*.promisor >promisor &&
++		test_line_count = 1 promisor
+ 	'
+ done
  
-+for filter in "blob:none" "tree:0" "tree:1" "blob:limit=100"
-+do
-+	test_expect_success 'filtered bundle: $filter' '
-+		test_when_finished rm -rf .git/objects/pack &&
-+		git bundle create partial.bdl \
-+			--all \
-+			--filter=$filter &&
-+
-+		git bundle verify partial.bdl >unfiltered &&
-+		make_user_friendly_and_stable_output <unfiltered >actual &&
-+
-+		cat >expect <<-EOF &&
-+		The bundle contains these 10 refs:
-+		<COMMIT-P> refs/heads/main
-+		<COMMIT-N> refs/heads/release
-+		<COMMIT-D> refs/heads/topic/1
-+		<COMMIT-H> refs/heads/topic/2
-+		<COMMIT-D> refs/pull/1/head
-+		<COMMIT-G> refs/pull/2/head
-+		<TAG-1> refs/tags/v1
-+		<TAG-2> refs/tags/v2
-+		<TAG-3> refs/tags/v3
-+		<COMMIT-P> HEAD
-+		The bundle uses this filter: $filter
-+		The bundle records a complete history.
-+		EOF
-+		test_cmp expect actual
-+	'
-+done
-+
- test_done
 -- 
 gitgitgadget
-
