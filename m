@@ -2,121 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACC44C433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 17:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7686C433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243610AbiBWR4M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 12:56:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49212 "EHLO
+        id S231459AbiBWSCC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 13:02:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243594AbiBWRzw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 12:55:52 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD9DB65EE
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:24 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id o4so4155450wrf.3
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:24 -0800 (PST)
+        with ESMTP id S243748AbiBWSBz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 13:01:55 -0500
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20204427E8
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:01:12 -0800 (PST)
+Received: by mail-io1-xd2f.google.com with SMTP id w7so25464563ioj.5
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:01:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=E/dL4dbXmnevF9IPOBnoODuzwSNqZWPE+6v50BBklS0=;
-        b=K8NOgDuc2ZvOFoTU2vAhyG3KgOjPewKePXKmLNjzMDiPaS4V44U5HgrMkb3OkhIjZW
-         7PWPEp1LcbI11cnAVCNJ7JHU9pxEawS3g8FAPQR3c/FaXA7Js7vpIDv1HB4MFupQLono
-         CWys2yKvU1mOUK3cv5JERIN73DQqJ8jN2K5/7rZlIweb2oVp/Isbkkb+K2NkANPkArNy
-         yQc8t4v0ioyCO9oUURaCqWiZCyzvxoKZi8LQJ3U/Q03lW3Zas+R1/xm8Ya+MyIk6dKGi
-         drAOljU+FGnfgAPMc4mAcIE6SeKWzyzFPU3Ss0T2uRJVFMUlIUBl0Pe1Sgte/CWEqOXu
-         knpg==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=55eVss2FjjbR/BptcFBTfJ9F/BEx55IGL6Be5+kQlNQ=;
+        b=EAufCO22Sw5RBAdsDlEnKbiMZaPOrroMRcIUYIYs1/ozijQVNF7kEhnypB31qL70yA
+         5k9juTbPZtSRo/6VV6YNi2uHeA+5d88tAXpwReNe4VEVz9fLgkIsN37Jo74IUxLcvUPw
+         Z9Yr/jJY+hH8j40zcOBC/W/nerivz9smOO87VfwL3XYymahH0ElbYBb1U0fIUJrsQX1N
+         uOF/gyxo+kIxJrWaz/WIQ/Q5wAM6a0jTxRZXdXZeiQtNaQ7YkvFctrw91H0ue/HY1ee1
+         FwrcSRrzixekzuBRi048zsUGONp1e8mvSgG0VBOQlH756qBhzS6/Q90J285HWJKnlQ5S
+         ACjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=E/dL4dbXmnevF9IPOBnoODuzwSNqZWPE+6v50BBklS0=;
-        b=CE3a9yrydNTUm6S5KaYdDR2vVMTOTfnYocdNKAceD2BcQLNsmCpBx0/1RbV+zx2ivv
-         0m9LP8zGLbN+HCjpiqW2oxJJETXYnEW+jYLx9MHjGHthdysP1Ay0hJQGeU4wBMMzOrQf
-         oZOrtTwAynNo3XgbVs5QePsnXpMXMGrVP2InNwPMXTGL8s0B8sO5vuIVsJifg1ZaJtk9
-         XQZHM3uJ9UTkC4t85BwLnz3DRXmlUgR5Np4nxfmCZuqEL3FQEieutY72GeWCP1IMBVHL
-         hTV07+LLReG4F2YGCP0uh15RIDag3gIg7DEhtCdjhwMEEF6urf6Hj/Lf395B8r09S4dw
-         txpw==
-X-Gm-Message-State: AOAM531Oo7vN01v/uRbthUkPr66LRxNg1QPns0JHMqWZek13dlVSJSHU
-        E0CAf1yLf3kKecqQNAJIozAJMi+OOEU=
-X-Google-Smtp-Source: ABdhPJwoFqO9zERov9rXVZQQFjmJbRmtWB+XZVtPRjdirMmaVl1+IXGIbYum46yQQC97tfyFDgQgUw==
-X-Received: by 2002:adf:f303:0:b0:1e7:aeab:ac6a with SMTP id i3-20020adff303000000b001e7aeabac6amr604105wro.40.1645638923262;
-        Wed, 23 Feb 2022 09:55:23 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e20sm246424wre.90.2022.02.23.09.55.22
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=55eVss2FjjbR/BptcFBTfJ9F/BEx55IGL6Be5+kQlNQ=;
+        b=5T8cbf9uO2+QYbP61a2nUXab3YWQwMSUevJxl9c2TsntCbw0BIcEqpwB5Nvrd4E8Ki
+         ev0up31M7QvF0xxq7A754W8EaQH6mshdYVIT14GGsWwDnaiCesZLiZ4G08fiI0Ky5JbZ
+         pAP/kW2lTNol1Ftw5iVlF8qPlAad3Rjpot7Mr1s8U9G/a3w5fdqqi3ZHu6DxgRJe00Ru
+         FwROjKCAe/EAZRcIVHlUYt/7CrmWnEPMx+faAUAqKwhBSE8fgCltxqYh+N+91IU/ctMG
+         A7py6aHKTfYhJLChYxYdWFKCObUDEyRkM2OMzwxIDzBEsruGE5sGXNNEcS6eZHYFpA1L
+         4DlQ==
+X-Gm-Message-State: AOAM532nz863YeYg70fZvixtoGmotrVWd5yS7Y9S6+6CvcarqNDTv/QL
+        ShjW59WH2iSkkY0dA3y9Fhlkf/eQaEQuzz2x
+X-Google-Smtp-Source: ABdhPJxgqbL2AYkAOwbFrBHU2Ub/vzi417wqlJYZGIF/WFwXiaGXahtvu1burXlaBAYFmHPdRicGCw==
+X-Received: by 2002:a02:ce36:0:b0:313:efab:aef3 with SMTP id v22-20020a02ce36000000b00313efabaef3mr701329jar.240.1645639271444;
+        Wed, 23 Feb 2022 10:01:11 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a6sm201861ilj.1.2022.02.23.10.01.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 09:55:22 -0800 (PST)
-Message-Id: <ec51d0a50e6e64ae37795d77f7d33204b9b71ecd.1645638911.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
-References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 17:55:11 +0000
-Subject: [PATCH 11/11] bundle: unbundle promisor packs
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 23 Feb 2022 10:01:10 -0800 (PST)
+Date:   Wed, 23 Feb 2022 13:01:10 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+Cc:     Shubham Mishra <shivam828787@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] avoid pipes with Git on LHS
+Message-ID: <YhZ2Zpl3XGkTKxuI@nand.local>
+References: <20220222114313.14921-1-shivam828787@gmail.com>
+ <20220223115347.3083-1-shivam828787@gmail.com>
+ <CAC316V57tHux-+MWMJuP5wNtwYrc2AinZj+ffnoyy-aWQWDukg@mail.gmail.com>
+ <CAJyCBOTiWxAgkZPB6M5jPw=t=32zrnNH5tfnOc9Kdj9mKayrSA@mail.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     stolee@gmail.com, avarab@gmail.com, gitster@pobox.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJyCBOTiWxAgkZPB6M5jPw=t=32zrnNH5tfnOc9Kdj9mKayrSA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+On Wed, Feb 23, 2022 at 09:19:23PM +0800, Shaoxuan Yuan wrote:
+> On Wed, Feb 23, 2022 at 8:42 PM Shubham Mishra <shivam828787@gmail.com> wrote:
+> >
+> > Hi,
+>
+> Hi,
+>
+> > I am using mails for code review for the first time, I have some
+> > doubts, Can someone please clarify them? -
+> > 1. It looks like the cover letter (Including "Range-diff" section) is
+> > only for context sharing with reviewers, nothing from it gets merged
+> > to the "seek" or any other branch.
+>
+> The cover letter stands for an introduction/summary to your patches.
+> You can also put helpful context in it for better understanding. According
+> to my knowledge, it will not be in the commit messages.
 
-In order to have a valid pack-file after unbundling a bundle that has
-the 'filter' capability, we need to generate a .promisor file. The
-bundle does not promise _where_ the objects can be found, but we can
-expect that these bundles will be unbundled in repositories with
-appropriate promisor remotes that can find those missing objects.
+Right; the cover letter (along with any notes below the '---' in your
+patches do not make it into the commit history).
 
-Use the 'git index-pack --promisor=<message>' option to create this
-.promisor file. Add "from-bundle" as the message to help anyone diagnose
-issues with these promisor packs.
+The range-diff you posted is empty and doesn't look quite right to me...
+when I applied both versions of your patches locally and generated a
+range-diff myself, I got the expected (non-empty) results.
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- bundle.c               | 4 ++++
- t/t6020-bundle-misc.sh | 8 +++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+I'm not sure exactly how you're generating the range-diff locally, but
+you may want to make sure that you're picking the previous version
+correctly (and not doing something like `git range-diff master HEAD
+HEAD`, which is what I suspect may have happened).
 
-diff --git a/bundle.c b/bundle.c
-index e284ef63062..3d97de40ef0 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -631,6 +631,10 @@ int unbundle(struct repository *r, struct bundle_header *header,
- 	struct child_process ip = CHILD_PROCESS_INIT;
- 	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
- 
-+	/* If there is a filter, then we need to create the promisor pack. */
-+	if (header->filter)
-+		strvec_push(&ip.args, "--promisor=from-bundle");
-+
- 	if (extra_index_pack_args) {
- 		strvec_pushv(&ip.args, extra_index_pack_args->v);
- 		strvec_clear(extra_index_pack_args);
-diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index 39cfefafb65..344af34db1e 100755
---- a/t/t6020-bundle-misc.sh
-+++ b/t/t6020-bundle-misc.sh
-@@ -513,7 +513,13 @@ do
- 		The bundle uses this filter: $filter
- 		The bundle records a complete history.
- 		EOF
--		test_cmp expect actual
-+		test_cmp expect actual &&
-+
-+		# This creates the first pack-file in the
-+		# .git/objects/pack directory. Look for a .promisor.
-+		git bundle unbundle partial.bdl &&
-+		ls .git/objects/pack/pack-*.promisor >promisor &&
-+		test_line_count = 1 promisor
- 	'
- done
- 
--- 
-gitgitgadget
+> > 2. I wanted to know how the merging process takes place. Once the
+> > patch is accepted, do we merge all previous versions of it one after
+> > another or every patch is independent so we have to just merge the
+> > last accepted patch?
+>
+> Not so sure about this question. My two cents: generally the most agreed-upon
+> patch will be merged, but the exact merging process could vary based
+> on the circumstances. Probably Junio can have a better answer to this.
+
+Emily Shaffer did some great work a couple of years ago on a "My First
+Contribution" tutorial, which you can find in
+Documentation/MyFirstContribution.txt.
+
+The section "My Patch Got Emailed - Now What?" provides a good overview
+of the review and queuing process.
+
+Thanks,
+Taylor
