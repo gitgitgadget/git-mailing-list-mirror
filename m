@@ -2,483 +2,243 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A362C433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 01:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16573C433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 02:15:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236608AbiBWBmW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Feb 2022 20:42:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36924 "EHLO
+        id S236750AbiBWCP4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Feb 2022 21:15:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232087AbiBWBmW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Feb 2022 20:42:22 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 047E9506D8
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 17:41:55 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id bq11so20025504edb.2
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 17:41:54 -0800 (PST)
+        with ESMTP id S236748AbiBWCPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Feb 2022 21:15:55 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E77193B57A
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 18:15:28 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id bq11so20166031edb.2
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 18:15:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=hI1Q/BMoaFVAnFuchtlqMF7N8nR/9nzPuGMRytWUIyY=;
-        b=WoQbNvpurpz54ULWpg76+S5PXEvn+R2CUdwcS8YgUQ9ACvJi9rga7Nkcj0qnY9eZxM
-         zj+KQA+icKeEhRM6G1DQoqCRe68JulCGF9usvdDVwpuDXafzDvsWECgVLDiuBFlpl+wO
-         XIVBKUYfY4abS9VaQreNFLQmw/wCosNy4Lj98GOKWSuBYVy6TWeYGw/vk3Y5krBIYgcp
-         RM0RdikHYlHJ90d2nt0Vf9dd6owry4LJ4H2HfFUFxx3yQdwY4o2NoxMuV8YFbCO8eX75
-         rcGpDjiNc7Ccf5QkjPwgRGlq9oDoJEqIC0J2aRXeWGcRNEto3+pH36AOZvgXiSp3JCAE
-         xuSA==
+        bh=jpU9ATNsb0z1CTDO7tBqGQew1IFt0D6itoAZ5vxyr6A=;
+        b=Tpk1IKKAJrKivBCrTWGTb2YH+JobskysWW/OlxhltKywcUmh3e7XBjMIuUj6xMLgVC
+         I6T1H6Cvg/u70qhuNhHs+toZ+DPjpZRLf+YGw/dIINFyS78wkxzDIZ7m9FJyVYik9Tn4
+         dcW9WgO/7f298CPkCzWtZRU0RWElV5UN5dxeh8N2/R6+YqiOiH5N7ze4uV0MJXURVwuX
+         2d2enagPFVxVwrb/a+aNQhv/dW7wos2zCtbrqX6xvnWakQDa58KEnHEEPdEDTmOL/8t7
+         xTX+dWrr9/M5lKhk+xwJ/Y2YV8SpfEOQldnmopQbJsYGBhhA6jU9rHU7ax1q2h7m9Y/4
+         RphQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=hI1Q/BMoaFVAnFuchtlqMF7N8nR/9nzPuGMRytWUIyY=;
-        b=QLj+2esw5FQ43v0ghFCWuGLivNqLF7jolXy9Q9PCbxddcYhdXlTqOsoj7jHOZXatyL
-         3V2oRmALVKN/3t/PDsacoKQdS27xT7joP9sbjcYa2EfihYfC52P+iXJlNgrSP640yp8v
-         rMzgFP97ljybbHgrJzsb0ziQhQjkAr3kapWG3Vj/OcV2iTUIjYEnMnK/EQL84Iyp7HBE
-         isF9CnmLyq/ZecRuAkxVlCWbpCaOSHq83FVaiiCVLpTX6wtQTaZ84M8dhS5wzLNFGi8e
-         EUOu1OvjTaKV3Mjwx3vaaSIIiac1c16Vo57NNf6IMsPKGRJ/nQ/aXAjQW2LpvDUg/4D3
-         e3qg==
-X-Gm-Message-State: AOAM532Kg7BIp5ouy9MWL5G0Vf1QJreYIeOkrJhygifyRsZJRyLrXbY/
-        GOX3Kxuz3ERwxv+Ez7WYhS8agu2m+WHVE1GdnOs=
-X-Google-Smtp-Source: ABdhPJwYR0BrVVAe95DvOjWBskd2/emc2PvGjWgRIDeCNb2BGszcqMETQMmM+Sk4HtdELGLuKm1Iuj0HCsye3LAaGtQ=
-X-Received: by 2002:a05:6402:11cd:b0:410:d432:2e30 with SMTP id
- j13-20020a05640211cd00b00410d4322e30mr29107418edw.119.1645580513216; Tue, 22
- Feb 2022 17:41:53 -0800 (PST)
+        bh=jpU9ATNsb0z1CTDO7tBqGQew1IFt0D6itoAZ5vxyr6A=;
+        b=w2ZE1zqU737X9brtDWE5UCUojx2ZnYrwqwQbuEWZQLHZ7qd5AK4TX09hqHaxZPrxWw
+         weFQjBwJ5bd1mKBMHHGsREzhAjNzhLP4vlwNgcfHeDY7/owO6ZmxOQMTOd3DkFhxWtxm
+         OmX/GsQ/0cGQTkeT4X14/uPAj4HOibGYK18er9SVJwm2jZyZjsNKAQVp+arv6cYtGDHk
+         FfYd0TENbyugJhgZJQHVCam2rmYDFz6Dj+6aI+N/ZPeOZHbdRFwgCQ6qOXrRe+TAQM//
+         ZtSxQSB5Fu978+qlloVob0EVABSSMR0MQbh4GDGb46oyRyyrkGO99IHdzdQ+ts+VP16f
+         n0WQ==
+X-Gm-Message-State: AOAM533ccZPl68k3yFo6sW4iSbOVn0mzar0CqBJ5Cy/g7hOgiD7JI9qp
+        bP3Qr0wUL4NGa+nHCVEJqWZdd1IhOI7YewLzpgg=
+X-Google-Smtp-Source: ABdhPJw/SHh4du/I1u4Lf1bMqve/AKEHVmuVadPkXZx+zVa/pab6hsjEtXgJsuibgtqLbJXm07YIRbxGV8Yzxa5t9ew=
+X-Received: by 2002:aa7:c04e:0:b0:400:4daf:bab1 with SMTP id
+ k14-20020aa7c04e000000b004004dafbab1mr29204165edo.101.1645582527251; Tue, 22
+ Feb 2022 18:15:27 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1132.git.1643328752.gitgitgadget@gmail.com> <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com>
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
+ <35e0ed9271a0229fe2acd2385a7e4171d4dfe077.1642888562.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2201281744280.347@tvgsbejvaqbjf.bet> <CABPp-BG2rMEYBLuBW=0wtpJe4aUFGCFa8D0NTSKz9Sm+CkXPxw@mail.gmail.com>
+ <0d7ba76c-9824-9953-b8ce-6abe810e2778@kdbg.org> <CABPp-BERtRDeyF3MhOQhAFwjoykOKwXoz6635NK7j2SEKp1b3A@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202050009220.347@tvgsbejvaqbjf.bet> <CABPp-BGCL0onSmpgKuO1k2spYCkx=v27ed9TSSxFib=OdDcLbw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 22 Feb 2022 17:41:41 -0800
-Message-ID: <CABPp-BEOX+zxR9-yyx-EaiOV-Z9yD0YP_Kwvu4iGB8enz40XXQ@mail.gmail.com>
-Subject: Re: [PATCH v2 00/14] Finish converting git bisect into a built-in
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Tue, 22 Feb 2022 18:15:15 -0800
+Message-ID: <CABPp-BFG_05RyVVyiHzOkuoT8=9NftJGp_W+DXd7ktqC5UfvwQ@mail.gmail.com>
+Subject: Re: [PATCH 08/12] merge-ort: provide a merge_get_conflicted_files()
+ helper function
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 22, 2022 at 8:30 AM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Mon, Feb 21, 2022 at 2:46 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> After three GSoC/Outreachy students spent an incredible effort on this, it
-> is finally time to put a neat little bow on it.
+> Hi Elijah,
 >
-> Changes since v1:
+> On Fri, 4 Feb 2022, Elijah Newren wrote:
 >
->  * Added a regression test to "bisect run: fix the error message".
->  * Added a patch to address an error message that double-single-quoted the
->    command.
->  * Reworked the logic in "bisect--helper: make --bisect-state optional" to
->    delay showing the usage upon an unknown command, which should make the
->    code a lot less confusing.
->  * Split out the change that moved the BISECT_STATE case to the end of the
->    switch block.
->  * Added a patch that replaces the return error() calls in
->    cmd_bisect_helper() with die() calls, to avoid returning -1 as an exit
->    code.
->  * Dropped the use of parse_options() for the single purpose of handling -h;
->    This is now done explicitly.
->  * Simplified the diff of "bisect: move even the option parsing to
->    bisect--helper" by modifying argc and argv instead of modifying all the
->    function calls using those variables.
->  * In the "Turn git bisect into a full built-in" patch, changed the name of
->    the variable holding the usage to use the builtin_ prefix used in other
->    built-ins, too.
->  * Removed the trailing dot from the commit message of "Turn git bisect into
->    a full built-in".
+> > On Fri, Feb 4, 2022 at 3:10 PM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > On Sat, 29 Jan 2022, Elijah Newren wrote:
+[...]
+> > I've thought about this problem long and hard before (in part because
+> > of some conversations I had with Edward Thompson about libgit2 and
 >
-> Johannes Schindelin (14):
->   bisect run: fix the error message
->   bisect: avoid double-quoting when printing the failed command
->   bisect--helper: retire the --no-log option
->   bisect--helper: really retire --bisect-next-check
->   bisect--helper: really retire `--bisect-autostart`
->   bisect--helper: using `--bisect-state` without an argument is a bug
->   bisect--helper: align the sub-command order with git-bisect.sh
->   bisect--helper: make `--bisect-state` optional
->   bisect--helper: move the `BISECT_STATE` case to the end
->   bisect--helper: return only correct exit codes in `cmd_*()`
->   bisect: move even the option parsing to `bisect--helper`
->   Turn `git bisect` into a full built-in
->   bisect: remove Cogito-related code
->   bisect: no longer try to clean up left-over `.git/head-name` files
->
->  Makefile                               |   3 +-
->  bisect.c                               |   3 -
->  builtin.h                              |   2 +-
->  builtin/{bisect--helper.c => bisect.c} | 189 ++++++++++---------------
->  git-bisect.sh                          |  84 -----------
->  git.c                                  |   2 +-
->  t/t6030-bisect-porcelain.sh            |  11 +-
->  7 files changed, 88 insertions(+), 206 deletions(-)
->  rename builtin/{bisect--helper.c => bisect.c} (88%)
->  delete mode 100755 git-bisect.sh
->
->
-> base-commit: 89bece5c8c96f0b962cfc89e63f82d603fd60bed
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1132%2Fdscho%2Fbisect-in-c-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1132/dscho/bisect-in-c-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1132
->
-> Range-diff vs v1:
->
->   1:  93d19d85ee3 !  1:  81ca0d68cde bisect run: fix the error message
->      @@ Commit message
->           was "good" or "bad", but used a bogus (because non-populated) `args`
->           variable for it.
->
->      +    Helped-by: Elijah Newren <newren@gmail.com>
->           Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
->        ## builtin/bisect--helper.c ##
->      @@ builtin/bisect--helper.c: static int bisect_run(struct bisect_terms *terms, cons
->                 strvec_clear(&run_args);
->                 return res;
->         }
->      +
->      + ## t/t6030-bisect-porcelain.sh ##
->      +@@ t/t6030-bisect-porcelain.sh: test_expect_success 'bisect visualize with a filename with dash and space' '
->      +  git bisect visualize -p -- "-hello 2"
->      + '
->      +
->      ++test_expect_success 'testing' '
->      ++ git bisect reset &&
->      ++ git bisect start $HASH4 $HASH1 &&
->      ++ write_script test_script.sh <<-\EOF &&
->      ++ rm .git/BISECT*
->      ++ EOF
->      ++ test_must_fail git bisect run ./test_script.sh 2>error &&
->      ++ grep "git bisect good.*exited with error code" error
->      ++'
->      ++
->      + test_done
->   -:  ----------- >  2:  4320101f2e0 bisect: avoid double-quoting when printing the failed command
->   2:  8e0e5559980 =  3:  88d7173c86b bisect--helper: retire the --no-log option
->   3:  996a7099bf8 =  4:  b914fe64dda bisect--helper: really retire --bisect-next-check
->   4:  3de4c48b66d =  5:  0d3db63bda6 bisect--helper: really retire `--bisect-autostart`
->   8:  1b14ed3d797 =  6:  a345cf3e0e4 bisect--helper: using `--bisect-state` without an argument is a bug
->   5:  6afc6e0eece =  7:  0487701220b bisect--helper: align the sub-command order with git-bisect.sh
->   6:  eddbdde222a !  8:  d8b2767c148 bisect--helper: make `--bisect-state` optional
->      @@ Commit message
->           `git bisect--helper bad`, i.e. do not require the `--bisect-state`
->           option to be passed explicitly.
->
->      -    To prepare for converting `bisect--helper` to a full built-in
->      -    implementation of `git bisect` (which must not require the
->      -    `--bisect-state` option to be specified at all), let's move the handling
->      -    toward the end of the `switch (cmdmode)` block.
->      -
->           Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
->        ## builtin/bisect--helper.c ##
->      @@ builtin/bisect--helper.c: int cmd_bisect__helper(int argc, const char **argv, co
->                              git_bisect_helper_usage,
->                              PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_UNKNOWN);
->
->      -+ if (!cmdmode && argc > 0) {
->      -+         set_terms(&terms, "bad", "good");
->      -+         get_terms(&terms);
->      -+         if (!check_and_set_terms(&terms, argv[0]))
->      -+                 cmdmode = BISECT_STATE;
->      -+ }
->      -+
->      -  if (!cmdmode)
->      -          usage_with_options(git_bisect_helper_usage, options);
->      -
->      -@@ builtin/bisect--helper.c: int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->      +- if (!cmdmode)
->      +-         usage_with_options(git_bisect_helper_usage, options);
->      +-
->      +- switch (cmdmode) {
->      ++ switch (cmdmode ? cmdmode : BISECT_STATE) {
->      +  case BISECT_START:
->                 set_terms(&terms, "bad", "good");
->                 res = bisect_start(&terms, argv, argc);
->      -          break;
->      -- case BISECT_STATE:
->      --         set_terms(&terms, "bad", "good");
->      --         get_terms(&terms);
->      --         res = bisect_state(&terms, argv, argc);
->      --         break;
->      -  case BISECT_TERMS:
->      -          if (argc > 1)
->      -                  return error(_("--bisect-terms requires 0 or 1 argument"));
->       @@ builtin/bisect--helper.c: int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->      +  case BISECT_STATE:
->      +          set_terms(&terms, "bad", "good");
->                 get_terms(&terms);
->      -          res = bisect_run(&terms, argv, argc);
->      -          break;
->      -+ case BISECT_STATE:
->      -+         if (!terms.term_good) {
->      -+                 set_terms(&terms, "bad", "good");
->      -+                 get_terms(&terms);
->      ++         if (!cmdmode &&
->      ++             (!argc || check_and_set_terms(&terms, argv[0]))) {
->      ++                 char *msg = xstrfmt(_("unknown command: '%s'"), argv[0]);
->      ++                 usage_msg_opt(msg, git_bisect_helper_usage, options);
->       +         }
->      -+         res = bisect_state(&terms, argv, argc);
->      -+         break;
->      -  default:
->      -          BUG("unknown subcommand %d", cmdmode);
->      -  }
->      +          res = bisect_state(&terms, argv, argc);
->      +          break;
->      +  case BISECT_TERMS:
->      +
->      + ## git-bisect.sh ##
->      +@@ git-bisect.sh: case "$#" in
->      +  start)
->      +          git bisect--helper --bisect-start "$@" ;;
->      +  bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
->      +-         git bisect--helper --bisect-state "$cmd" "$@" ;;
->      ++         git bisect--helper "$cmd" "$@" ;;
->      +  skip)
->      +          git bisect--helper --bisect-skip "$@" || exit;;
->      +  next)
->   -:  ----------- >  9:  e8904db81c5 bisect--helper: move the `BISECT_STATE` case to the end
->   -:  ----------- > 10:  208f8fa4851 bisect--helper: return only correct exit codes in `cmd_*()`
->   7:  515e86e2075 ! 11:  dc04b06206b bisect: move even the option parsing to `bisect--helper`
->      @@ Commit message
->           together. So it would appear as if a lot of work would have to be done
->           just to be able to use `parse_options()` just to parse the sub-command,
->           instead of a simple `if...else if` chain, the latter being a
->      -    dramatically simpler implementation. Therefore, we now keep the
->      -    `parse_options()` call primarily to support `-h` and little else.
->      +    dramatically simpler implementation.
->
->           Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
->      @@ builtin/bisect--helper.c: static int bisect_run(struct bisect_terms *terms, cons
->       - argc = parse_options(argc, argv, prefix, options,
->       -                      git_bisect_helper_usage,
->       -                      PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_UNKNOWN);
->      -+ /* Handle -h and invalid options */
->      -+ parse_options(argc - 1, argv + 1, prefix, options,
->      -+               git_bisect_usage,
->      -+               PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_UNKNOWN |
->      -+               PARSE_OPT_ONE_SHOT | PARSE_OPT_STOP_AT_NON_OPTION);
->      -
->      -- if (!cmdmode && argc > 0) {
->      -+ if (!strcmp("help", command))
->      ++ if (!strcmp("-h", command) || !strcmp("help", command))
->       +         usage_with_options(git_bisect_usage, options);
->      -+ else if (!strcmp("start", command)) {
->      -          set_terms(&terms, "bad", "good");
->      --         get_terms(&terms);
->      --         if (!check_and_set_terms(&terms, argv[0]))
->      --                 cmdmode = BISECT_STATE;
->      -- }
->      --
->      -- if (!cmdmode)
->      --         usage_with_options(git_bisect_helper_usage, options);
->      --
->      -- switch (cmdmode) {
->      +
->      +- switch (cmdmode ? cmdmode : BISECT_STATE) {
->       - case BISECT_START:
->      --         set_terms(&terms, "bad", "good");
->      --         res = bisect_start(&terms, argv, argc);
->      ++ argc -= 2;
->      ++ argv += 2;
->      ++
->      ++ if (!strcmp("start", command)) {
->      +          set_terms(&terms, "bad", "good");
->      +          res = bisect_start(&terms, argv, argc);
->       -         break;
->       - case BISECT_TERMS:
->      --         if (argc > 1)
->      --                 return error(_("--bisect-terms requires 0 or 1 argument"));
->      --         res = bisect_terms(&terms, argc == 1 ? argv[0] : NULL);
->      ++ } else if (!strcmp("terms", command)) {
->      +          if (argc > 1)
->      +-                 die(_("--bisect-terms requires 0 or 1 argument"));
->      ++                 die(_("'terms' requires 0 or 1 argument"));
->      +          res = bisect_terms(&terms, argc == 1 ? argv[0] : NULL);
->       -         break;
->       - case BISECT_SKIP:
->      -+         res = bisect_start(&terms, argv + 2, argc - 2);
->      -+ } else if (!strcmp("terms", command)) {
->      -+         if (argc > 3)
->      -+                 return error(_("'terms' requires 0 or 1 argument"));
->      -+         res = bisect_terms(&terms, argc == 3 ? argv[2] : NULL);
->       + } else if (!strcmp("skip", command)) {
->                 set_terms(&terms, "bad", "good");
->                 get_terms(&terms);
->      --         res = bisect_skip(&terms, argv, argc);
->      +          res = bisect_skip(&terms, argv, argc);
->       -         break;
->       - case BISECT_NEXT:
->      --         if (argc)
->      --                 return error(_("--bisect-next requires 0 arguments"));
->      -+         res = bisect_skip(&terms, argv + 2, argc - 2);
->       + } else if (!strcmp("next", command)) {
->      -+         if (argc != 2)
->      -+                 return error(_("'next' requires 0 arguments"));
->      +          if (argc)
->      +-                 die(_("--bisect-next requires 0 arguments"));
->      ++                 die(_("'next' requires 0 arguments"));
->                 get_terms(&terms);
->                 res = bisect_next(&terms, prefix);
->       -         break;
->       - case BISECT_RESET:
->      --         if (argc > 1)
->      --                 return error(_("--bisect-reset requires either no argument or a commit"));
->      --         res = bisect_reset(argc ? argv[0] : NULL);
->      ++ } else if (!strcmp("reset", command)) {
->      +          if (argc > 1)
->      +-                 die(_("--bisect-reset requires either no argument or a commit"));
->      ++                 die(_("'reset' requires either no argument or a commit"));
->      +          res = bisect_reset(argc ? argv[0] : NULL);
->       -         break;
->       - case BISECT_VISUALIZE:
->      -+ } else if (!strcmp("reset", command)) {
->      -+         if (argc > 3)
->      -+                 return error(_("'reset' requires either no argument or a commit"));
->      -+         res = bisect_reset(argc > 2 ? argv[2] : NULL);
->       + } else if (one_of(command, "visualize", "view", NULL)) {
->                 get_terms(&terms);
->      --         res = bisect_visualize(&terms, argv, argc);
->      +          res = bisect_visualize(&terms, argv, argc);
->       -         break;
->       - case BISECT_REPLAY:
->      --         if (argc != 1)
->      -+         res = bisect_visualize(&terms, argv + 2, argc - 2);
->       + } else if (!strcmp("replay", command)) {
->      -+         if (argc != 3)
->      -                  return error(_("no logfile given"));
->      +          if (argc != 1)
->      +                  die(_("no logfile given"));
->                 set_terms(&terms, "bad", "good");
->      --         res = bisect_replay(&terms, argv[0]);
->      +          res = bisect_replay(&terms, argv[0]);
->       -         break;
->       - case BISECT_LOG:
->      --         if (argc)
->      --                 return error(_("--bisect-log requires 0 arguments"));
->      -+         res = bisect_replay(&terms, argv[2]);
->       + } else if (!strcmp("log", command)) {
->      -+         if (argc > 2)
->      -+                 return error(_("'log' requires 0 arguments"));
->      +          if (argc)
->      +-                 die(_("--bisect-log requires 0 arguments"));
->      ++                 die(_("'log' requires 0 arguments"));
->                 res = bisect_log();
->       -         break;
->       - case BISECT_RUN:
->      --         if (!argc)
->       + } else if (!strcmp("run", command)) {
->      -+         if (argc < 3)
->      -                  return error(_("bisect run failed: no command provided."));
->      +          if (!argc)
->      +                  die(_("bisect run failed: no command provided."));
->                 get_terms(&terms);
->      --         res = bisect_run(&terms, argv, argc);
->      +          res = bisect_run(&terms, argv, argc);
->       -         break;
->       - case BISECT_STATE:
->      --         if (!terms.term_good) {
->      --                 set_terms(&terms, "bad", "good");
->      --                 get_terms(&terms);
->      -+         res = bisect_run(&terms, argv + 2, argc - 2);
->       + } else {
->      -+         set_terms(&terms, "bad", "good");
->      -+         get_terms(&terms);
->      -+         if (!check_and_set_terms(&terms, command))
->      -+                 res = bisect_state(&terms, argv + 1, argc - 1);
->      -+         else {
->      +          set_terms(&terms, "bad", "good");
->      +          get_terms(&terms);
->      +-         if (!cmdmode &&
->      +-             (!argc || check_and_set_terms(&terms, argv[0]))) {
->      +-                 char *msg = xstrfmt(_("unknown command: '%s'"), argv[0]);
->      +-                 usage_msg_opt(msg, git_bisect_helper_usage, options);
->      ++         if (check_and_set_terms(&terms, command)) {
->       +                 char *msg = xstrfmt(_("unknown command: '%s'"), command);
->       +                 usage_msg_opt(msg, git_bisect_usage, options);
->                 }
->      --         res = bisect_state(&terms, argv, argc);
->      ++         /* shift the `command` back in */
->      ++         argc++;
->      ++         argv--;
->      +          res = bisect_state(&terms, argv, argc);
->       -         break;
->       - default:
->       -         BUG("unknown subcommand %d", cmdmode);
->      @@ git-bisect.sh: Please use "git help bisect" to get the full man page.'
->       - start)
->       -         git bisect--helper --bisect-start "$@" ;;
->       - bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
->      --         git bisect--helper --bisect-state "$cmd" "$@" ;;
->      +-         git bisect--helper "$cmd" "$@" ;;
->       - skip)
->       -         git bisect--helper --bisect-skip "$@" || exit;;
->       - next)
->   9:  1c0bd8a326f ! 12:  7db4b03b668 Turn `git bisect` into a full built-in.
->      @@ Metadata
->       Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
->        ## Commit message ##
->      -    Turn `git bisect` into a full built-in.
->      +    Turn `git bisect` into a full built-in
->
->           Now that the shell script hands off to the `bisect--helper` to do
->           _anything_ (except to show the help), it is but a tiny step to let the
->      @@ builtin.h: int cmd_am(int argc, const char **argv, const char *prefix);
->        int cmd_bugreport(int argc, const char **argv, const char *prefix);
->
->        ## builtin/bisect--helper.c => builtin/bisect.c ##
->      +@@ builtin/bisect.c: static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
->      + static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
->      + static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
->      +
->      +-static const char * const git_bisect_usage[] = {
->      ++static const char * const builtin_bisect_usage[] = {
->      +  N_("git bisect help\n"
->      +     "\tprint this long help message."),
->      +  N_("git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]\n"
->       @@ builtin/bisect.c: static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
->         }
->        }
->      @@ builtin/bisect.c: static int bisect_run(struct bisect_terms *terms, const char *
->        {
->         int res = 0;
->         struct option options[] = {
->      +@@ builtin/bisect.c: int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->      +  const char *command = argc > 1 ? argv[1] : "help";
->      +
->      +  if (!strcmp("-h", command) || !strcmp("help", command))
->      +-         usage_with_options(git_bisect_usage, options);
->      ++         usage_with_options(builtin_bisect_usage, options);
->      +
->      +  argc -= 2;
->      +  argv += 2;
->      +@@ builtin/bisect.c: int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->      +          get_terms(&terms);
->      +          if (check_and_set_terms(&terms, command)) {
->      +                  char *msg = xstrfmt(_("unknown command: '%s'"), command);
->      +-                 usage_msg_opt(msg, git_bisect_usage, options);
->      ++                 usage_msg_opt(msg, builtin_bisect_usage, options);
->      +          }
->      +          /* shift the `command` back in */
->      +          argc++;
->
->        ## git-bisect.sh (deleted) ##
->       @@
->  10:  cce533486db = 13:  0611d16f772 bisect: remove Cogito-related code
->  11:  dc77297c676 = 14:  e2fa11a819e bisect: no longer try to clean up left-over `.git/head-name` files
->
-> --
-> gitgitgadget
+> Not a big deal for _me_, but I seem to remember that Ed cared a lot about
+> having no p in their surname ;-)
 
-You've addressed all my feedback from v1, and I've looked over the
-changes and they look good to me:
+Eek!  My apologies to Ed; I'll try to remember and do better.
 
-Reviewed-by: Elijah Newren <newren@gmail.com>
+> > merging at Git Merge 2020).  It wasn't at all clear to me that libgit2
+> > had considered anything beyond simple rename cases.  The only rules I
+> > ever figured out that made sense to me was "group the stages by target
+> > filename rather than by logical conflict" (so we get `ls -files -u`
+> > populated) and print a meant-for-human message for each logical
+> > conflict (found in the <Informational Messages> section for
+> > merge-tree), and make NO attempt to connect stages by conflict type.
+> >
+> > I'm sure that's not what you wanted to hear, and maybe doesn't even
+> > play nicely with your design.  But short of ignoring the edge and
+> > corner cases, I don't see how to solve that problem.  If you do just
+> > want to ignore edge and corner cases, then just ignore the
+> > rename/rename case you brought up in the first place and just use
+> > `ls-files -u`-type output as-is within your design.  If you don't want
+> > to ignore edge cases and want something that works with a specific
+> > design that somehow groups conflicted file stages by conflict type,
+> > then we're going to have to dig into all these questions above and do
+> > some big replumbing within merge-ort.
+>
+> There is sometimes a big difference between what I want to hear and what I
+> need to hear. Thank you for providing so many details that I needed to
+> hear.
+>
+> So let's take a step back and look at my goal here, as in: the
+> over-arching goal: to use merge-ort on the server side.
+>
+> From what you said above, it becomes very clear to me that there is very
+> little chance to resolve such conflicts on the server side.
+
+No, it's still resolvable on the server side.  It's just that attempts
+to break up the information into individual logical conflicts is
+problematic; if you provide _all_ the informational conflict messages
+to the user, and iterate through the paths with conflicts, then things
+are fine.  It's only when you attempt to find "the relevant subset"
+that things become hard.  Of course, providing it all at once might be
+a UI that you hate (perhaps because it's too much like how the command
+line behaves...)
+
+> For example, if a topic branch renames a file differently than the main
+> branch, there is a really good chance that the user tasked with merging
+> the topic branch will have to do a whole lot more than just click a few
+> buttons to perform that task. There might very well be the need to edit
+> files that do not contain merge conflict markers (I like to call those
+> cases "non-semantic merge conflicts"), and almost certainly local testing
+> will be necessary.
+
+Sidenote: Do you lump in binary merge conflicts with "non-semantic
+merge conflicts"?  You would by your definition, but I'm not sure it
+matches.
+
+I tend to call things either content-based conflicts or path-based
+conflicts, where content-based usually means textual-based but also
+includes merges of binaries.
+
+> So I guess the best we can do in those complicated cases is to give a
+> comprehensive overview of the problems in the web UI, with the note that
+> this merge conflict has to be resolved on the local side.
+>
+> Which brings me to the next concern: since `merge-tree` is a low-level
+> tool meant to be called by programs rather than humans, we need to make
+> sure that those messages remain machine-parseable, even if they contain
+> file names.
+>
+> Concretely: while I am not currently aware of any web UI that allows to
+> resolve simple rename/rename conflicts, it is easily conceivable how to
+> implement such a thing. When that happens, we will need to be able to
+> teach the server-side code to discern between the cases that can be
+> handled in the web UI (trivial merge conflicts, trivial rename/rename
+> conflicts) as compared to scenarios where the conflicts are just too
+> complex.
+
+Um, I'm really worried about attempting to make the conflict notices
+machine parseable.  I don't like that idea at all, and I even tried to
+rule that out already with my wording:
+"""
+In all cases, the
+<Informational messages> section has the necessary info, though it is
+not designed to be machine parseable.
+"""
+though maybe I should have been even more explicit.  The restrictions
+that those messages be stable is too rigid, I think.  I also think
+they're a poor way to communicate information to a higher level tool.
+I would much rather us add some kind of additional return data
+structures from merge ort and use them if we want extra info.
+
+> Here's an excerpt from t4301:
+>
+> -- snip --
+> Auto-merging greeting
+> CONFLICT (content): Merge conflict in greeting
+> Auto-merging numbers
+> CONFLICT (file/directory): directory in the way of whatever from side1; moving it to whatever~side1 instead.
+> CONFLICT (modify/delete): whatever~side1 deleted in side2 and modified in side1.  Version side1 of whatever~side1 left in tree.
+> -- snap --
+>
+> This is the complete set of messages provided in the `test conflict
+> notices and such` test case.
+>
+> I immediately notice that every line contains at least one file name.
+> Looking at https://github.com/git/git/blob/v2.35.1/merge-ort.c#L1899, it
+> does not seem as if the file names are quoted:
+>
+>                 path_msg(opt, path, 1, _("Auto-merging %s"), path);
+>
+> (where `path` is used verbatim in a call to `merge_3way()` before that,
+> i.e. it must not have been quoted)
+>
+> I would like to register a wish to ensure that file names with special
+> characters (such as most notably line-feed characters) are quoted in these
+> messages, so that a simple server-side parser can handle messages starting
+> with `Auto-merging` and with `CONFLICT (content): Merge conflict in `, and
+> "throw the hands up in the air" if any other message prefix is seen.
+>
+> Do you think we can switch to `sq_quote_buf_pretty()` for these messages?
+> For the `Auto-merging` one, it would be trivial, but I fear that we will
+> have to work a bit on the `path_msg()` function
+> (https://github.com/git/git/blob/v2.35.1/merge-ort.c#L630-L649) because it
+> accepts a variable list of arguments without any clue whether the
+> arguments refer to paths or not. (And I would be loathe to switch _all_
+> callers to do the quoting themselves.)
+>
+> I see 28 calls to that function, and at least a couple that pass not only
+> a path but also an OID (e.g.
+> https://github.com/git/git/blob/v2.35.1/merge-ort.c#L1611-L1613).
+>
+> We could of course be sloppy and pass even OIDs through
+> `sq_quote_buf_pretty()` in `path_msg()`, knowing that there won't be any
+> special characters in them, but it gets more complicated e.g. in
+> https://github.com/git/git/blob/v2.35.1/merge-ort.c#L1648-L1651, where we
+> pass an `strbuf` that contains a somewhat free-form commit message.
+>
+> I guess we could still pass those through `sq_quote_buf_pretty()`, even if
+> they are not paths, to ensure that there are no special characters in the
+> machine-parseable lines.
+>
+> What do you think?
+
+Switching to single quoting paths as a matter of style might make
+sense, but only if we go through and change every caller to do so so
+that we can make sure it applies to all paths.  And only paths and not
+OIDs.
+
+But I'm going to reserve the right in merge-ort to modify, add, or
+delete any of those messages passed to path_msg(), which might wreak
+havoc on your attempts to parse those strings.  I think they're a bad
+form for communicating information to a script or program, and trying
+to transform them into such risks making them suboptimal at
+communicating info to humans.  These messages should optimize the
+latter, and if we want something for the former, it should probably be
+a new independent bit of info.
