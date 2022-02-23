@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5380AC4332F
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 07:47:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 398B0C433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 07:47:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238783AbiBWHrh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 02:47:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43432 "EHLO
+        id S238785AbiBWHrk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 02:47:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234726AbiBWHr2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 02:47:28 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A46060CDD
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 23:47:01 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id q23so3407292wra.2
-        for <git@vger.kernel.org>; Tue, 22 Feb 2022 23:47:01 -0800 (PST)
+        with ESMTP id S238754AbiBWHrc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 02:47:32 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DA956A01B
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 23:47:03 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id y6-20020a7bc186000000b0037bdc5a531eso2099555wmi.0
+        for <git@vger.kernel.org>; Tue, 22 Feb 2022 23:47:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=hBf1L3DAgwM6lVnjfgVq6LC6AtXTGHUlM38V8n4wdp8=;
-        b=eeq/Xsne6vv3a4csdBMEWBY+SR9An3H7PeoBcegztBoW+FotPanx9TewqZmNo238Wk
-         RfaJnLlCJSxmJLZK5aqIqqU2RFJCSwKPpYqTfnarNi9fLXmpEbzWMD6Vfp1JQAXkyqAW
-         VfddOFqUxXxon+7dH3UeUqZxcmfHZlOZVWsbjAqpsmQbooUud++OgRbjxU2yvpBp0Rbb
-         JSJdM5lmOd6Nu6Wn1cxKxwxrJK3UQV9cU0sGay3XerHeHo6jNmiPs9FqFy9el04ubsVU
-         4TmYcSD0Wg8SCzEQSDn7EKvJshl/+i5lQ92Usb6f0a8fAKML4JIoiqoD6rkxOGNl89Cs
-         nQMA==
+        bh=Ap4ZqYlnkgb+ZsEVT3Um4/EicxMnYbd2hGinYTe7EAw=;
+        b=dbHB8geF2tk0PvN/9CzbDsJ6qNFUJlyFIkUiSTJNQyPrpDSUOGSmACuXZ/CTY6GA6D
+         oV8nCk2xWxs8KMxbFRazQPMg/xxQoFc5aagQHci+01ODa+RUgg4hbTShq/bzSckdAkmd
+         2P7VsRMf0Tjtj4/vgM8/TIiiV8IAJOtYmh2wI3MMFwi7TQhEPHf803T8v8V7URQYWY6O
+         FP0da1UtheWjuVFXCuo4bE5UzmgGOvHyu2Sa188vth/B8AwY54knGnYEJdMHBetB0m58
+         sgiv0x3LbOxSOBfCSVp8yeMAsyKnnkwkMQc5KGkTsjSD0H5lh5YlvME7D7EMxhU8jiry
+         y4QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hBf1L3DAgwM6lVnjfgVq6LC6AtXTGHUlM38V8n4wdp8=;
-        b=DgNwDtFyqatghvH+XeVg1jYbpvMH7B6aDdTs6FWeYea1osPm3Rv6n59h8Z9+ONLlqF
-         BPTR5NpU0fvPaIMmS4krDGEGg4e8t006m+r/k278DWHDMBH/zS632N1VklsSYzQXUlNC
-         yYeKxfHT10XiKkjEDWFa7XfRLKnEeYUud9VWlXk+ke4iM8cVkSdfbJo7zGtV88HWwRKm
-         Ff/i1H7zZdOhFjBNE3ijZCbfskNKnWBxu5CHbEPt+nhT4LJThA5TqdGMOv7wmJm0jB5y
-         YdR8V701fZVBHU5NlGLji8DfIZ85dFRiH0EKa14l1bhEXbhA23qxN9N77h7bbK0AQrxO
-         sJHw==
-X-Gm-Message-State: AOAM533tfsamDohpUeIHN8lh7Ik3+vB5GkPUIJsjn9awtKdI/tpwNA1B
-        InMnhXjBtkmAUC5v9Tx3De09QS+CGgg=
-X-Google-Smtp-Source: ABdhPJyvd8ZUJPsS9zwd5/ukKOCuSk/P7vXxTWB6Ec42SclTas3AkNhWgebu+QI7Pv4LLH7goR1ogg==
-X-Received: by 2002:a5d:53cb:0:b0:1e7:5e87:9c6c with SMTP id a11-20020a5d53cb000000b001e75e879c6cmr22982233wrw.696.1645602419647;
-        Tue, 22 Feb 2022 23:46:59 -0800 (PST)
+        bh=Ap4ZqYlnkgb+ZsEVT3Um4/EicxMnYbd2hGinYTe7EAw=;
+        b=wHHFagFS0IJaiQ1R3HTzgczWlU5YpS4Aq9MYB8f7e9ksI5LcnVDrxbBPjbGcW3Cq6G
+         3ipRxxYIuUdngKjlxGlOr2A17qv3dxyD/BQz31rm2+FnHbCb1yTIX3/n4vnEh8XLq8/N
+         hO0K4HChAfhVx5zxrWq862UbP1B+bB2WH7q/20pZoUimCD7CbC51SMZotr31ehImJNIT
+         6/ezAsnPqunUW7lTAnH7hieTqj6zUayNK59fl9Jed2eW5AWwOyLuK/PuIDD+WhGa/Qux
+         UzQ61LkIMv2Cf4J5eDIJinqERMS/V0wtDrHAg7R9eUKsauO0GK5pI4CpRCitYlShMDa0
+         pycA==
+X-Gm-Message-State: AOAM5311Q90X2S21EMnND1R7NlosN6hfOU1BWRuknwYiI+5kA8bhX4UK
+        QyJfJUFvPda/H9MssYuflTxMwhsFOEw=
+X-Google-Smtp-Source: ABdhPJyQbYkKq066U2w3y4wY7bBsbLrpzqTH/bLhLsFnM8UoBETszfSKUVrjInxY2llnb6sdgsKUPg==
+X-Received: by 2002:a05:600c:3d88:b0:380:f6d9:9461 with SMTP id bi8-20020a05600c3d8800b00380f6d99461mr1010662wmb.137.1645602421617;
+        Tue, 22 Feb 2022 23:47:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p8sm49073967wro.106.2022.02.22.23.46.58
+        by smtp.gmail.com with ESMTPSA id c9sm35280326wrn.51.2022.02.22.23.47.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Feb 2022 23:46:59 -0800 (PST)
-Message-Id: <6629af14919a5133c656a0592a18e2adb8925dc4.1645602413.git.gitgitgadget@gmail.com>
+        Tue, 22 Feb 2022 23:47:01 -0800 (PST)
+Message-Id: <4c8f42372dda68230563d5f4d12c3bb2878ae979.1645602413.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1122.v6.git.1645602413.gitgitgadget@gmail.com>
 References: <pull.1122.v5.git.1645340082.gitgitgadget@gmail.com>
         <pull.1122.v6.git.1645602413.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 07:46:46 +0000
-Subject: [PATCH v6 05/12] merge-ort: split out a separate
- display_update_messages() function
+Date:   Wed, 23 Feb 2022 07:46:48 +0000
+Subject: [PATCH v6 07/12] merge-ort: provide a merge_get_conflicted_files()
+ helper function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,132 +80,93 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This patch includes no new code; it simply moves a bunch of lines into a
-new function.  As such, there are no functional changes.  This is just a
-preparatory step to allow the printed messages to be handled differently
-by other callers, such as in `git merge-tree --write-tree`.
-
-(Patch best viewed with
-     --color-moved --color-moved-ws=allow-indentation-change
- to see that it is a simple code movement.)
+After a merge, this function allows the user to extract the same
+information that would be printed by `ls-files -u`, which means
+files with their mode, oid, and stage.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-ort.c | 78 ++++++++++++++++++++++++++++-------------------------
- merge-ort.h |  8 ++++++
- 2 files changed, 49 insertions(+), 37 deletions(-)
+ merge-ort.c | 31 +++++++++++++++++++++++++++++++
+ merge-ort.h | 21 +++++++++++++++++++++
+ 2 files changed, 52 insertions(+)
 
 diff --git a/merge-ort.c b/merge-ort.c
-index 9bf15a01db8..ebaed98d53a 100644
+index ebaed98d53a..e1b647b0a40 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -4235,6 +4235,45 @@ static int record_conflicted_index_entries(struct merge_options *opt)
- 	return errs;
+@@ -4274,6 +4274,37 @@ void merge_display_update_messages(struct merge_options *opt,
+ 	trace2_region_leave("merge", "display messages", opt->repo);
  }
  
-+void merge_display_update_messages(struct merge_options *opt,
-+				   struct merge_result *result)
++void merge_get_conflicted_files(struct merge_result *result,
++				struct string_list *conflicted_files)
 +{
-+	struct merge_options_internal *opti = result->priv;
 +	struct hashmap_iter iter;
 +	struct strmap_entry *e;
-+	struct string_list olist = STRING_LIST_INIT_NODUP;
-+	int i;
++	struct merge_options_internal *opti = result->priv;
 +
-+	if (opt->record_conflict_msgs_as_headers)
-+		BUG("Either display conflict messages or record them as headers, not both");
++	strmap_for_each_entry(&opti->conflicted, &iter, e) {
++		const char *path = e->key;
++		struct conflict_info *ci = e->value;
++		int i;
 +
-+	trace2_region_enter("merge", "display messages", opt->repo);
++		VERIFY_CI(ci);
 +
-+	/* Hack to pre-allocate olist to the desired size */
-+	ALLOC_GROW(olist.items, strmap_get_size(&opti->output),
-+		   olist.alloc);
++		for (i = MERGE_BASE; i <= MERGE_SIDE2; i++) {
++			struct stage_info *si;
 +
-+	/* Put every entry from output into olist, then sort */
-+	strmap_for_each_entry(&opti->output, &iter, e) {
-+		string_list_append(&olist, e->key)->util = e->value;
++			if (!(ci->filemask & (1ul << i)))
++				continue;
++
++			si = xmalloc(sizeof(*si));
++			si->stage = i+1;
++			si->mode = ci->stages[i].mode;
++			oidcpy(&si->oid, &ci->stages[i].oid);
++			string_list_append(conflicted_files, path)->util = si;
++		}
 +	}
-+	string_list_sort(&olist);
-+
-+	/* Iterate over the items, printing them */
-+	for (i = 0; i < olist.nr; ++i) {
-+		struct strbuf *sb = olist.items[i].util;
-+
-+		printf("%s", sb->buf);
-+	}
-+	string_list_clear(&olist, 0);
-+
-+	/* Also include needed rename limit adjustment now */
-+	diff_warn_rename_limit("merge.renamelimit",
-+			       opti->renames.needed_limit, 0);
-+
-+	trace2_region_leave("merge", "display messages", opt->repo);
++	/* string_list_sort() uses a stable sort, so we're good */
++	string_list_sort(conflicted_files);
 +}
 +
  void merge_switch_to_result(struct merge_options *opt,
  			    struct tree *head,
  			    struct merge_result *result,
-@@ -4272,43 +4311,8 @@ void merge_switch_to_result(struct merge_options *opt,
- 		fclose(fp);
- 		trace2_region_leave("merge", "write_auto_merge", opt->repo);
- 	}
--
--	if (display_update_msgs) {
--		struct merge_options_internal *opti = result->priv;
--		struct hashmap_iter iter;
--		struct strmap_entry *e;
--		struct string_list olist = STRING_LIST_INIT_NODUP;
--		int i;
--
--		if (opt->record_conflict_msgs_as_headers)
--			BUG("Either display conflict messages or record them as headers, not both");
--
--		trace2_region_enter("merge", "display messages", opt->repo);
--
--		/* Hack to pre-allocate olist to the desired size */
--		ALLOC_GROW(olist.items, strmap_get_size(&opti->output),
--			   olist.alloc);
--
--		/* Put every entry from output into olist, then sort */
--		strmap_for_each_entry(&opti->output, &iter, e) {
--			string_list_append(&olist, e->key)->util = e->value;
--		}
--		string_list_sort(&olist);
--
--		/* Iterate over the items, printing them */
--		for (i = 0; i < olist.nr; ++i) {
--			struct strbuf *sb = olist.items[i].util;
--
--			printf("%s", sb->buf);
--		}
--		string_list_clear(&olist, 0);
--
--		/* Also include needed rename limit adjustment now */
--		diff_warn_rename_limit("merge.renamelimit",
--				       opti->renames.needed_limit, 0);
--
--		trace2_region_leave("merge", "display messages", opt->repo);
--	}
-+	if (display_update_msgs)
-+		merge_display_update_messages(opt, result);
- 
- 	merge_finalize(opt, result);
- }
 diff --git a/merge-ort.h b/merge-ort.h
-index fe599b87868..e5aec45b18f 100644
+index e5aec45b18f..ddcc39d7270 100644
 --- a/merge-ort.h
 +++ b/merge-ort.h
-@@ -80,6 +80,14 @@ void merge_switch_to_result(struct merge_options *opt,
- 			    int update_worktree_and_index,
- 			    int display_update_msgs);
+@@ -2,6 +2,7 @@
+ #define MERGE_ORT_H
  
+ #include "merge-recursive.h"
++#include "hash.h"
+ 
+ struct commit;
+ struct tree;
+@@ -88,6 +89,26 @@ void merge_switch_to_result(struct merge_options *opt,
+ void merge_display_update_messages(struct merge_options *opt,
+ 				   struct merge_result *result);
+ 
++struct stage_info {
++	struct object_id oid;
++	int mode;
++	int stage;
++};
++
 +/*
-+ * Display messages about conflicts and which files were 3-way merged.
-+ * Automatically called by merge_switch_to_result() with stream == stdout,
-+ * so only call this when bypassing merge_switch_to_result().
++ * Provide a list of path -> {struct stage_info*} mappings for
++ * all conflicted files.  Note that each path could appear up to three
++ * times in the list, corresponding to 3 different stage entries.  In short,
++ * this basically provides the info that would be printed by `ls-files -u`.
++ *
++ * result should have been populated by a call to
++ * one of the merge_incore_[non]recursive() functions.
++ *
++ * conflicted_files should be empty before calling this function.
 + */
-+void merge_display_update_messages(struct merge_options *opt,
-+				   struct merge_result *result);
++void merge_get_conflicted_files(struct merge_result *result,
++				struct string_list *conflicted_files);
 +
  /* Do needed cleanup when not calling merge_switch_to_result() */
  void merge_finalize(struct merge_options *opt,
