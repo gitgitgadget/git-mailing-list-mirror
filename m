@@ -2,83 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E52D3C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 21:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 828B4C433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 21:27:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241426AbiBWVYB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 16:24:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54718 "EHLO
+        id S242218AbiBWV1p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 16:27:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236969AbiBWVX5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 16:23:57 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECEEA4ECF5
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 13:23:28 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 30FB211F49F;
-        Wed, 23 Feb 2022 16:23:28 -0500 (EST)
+        with ESMTP id S242109AbiBWV1o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 16:27:44 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F06936695
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 13:27:16 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1182F178F4B;
+        Wed, 23 Feb 2022 16:27:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZyfssYE7ee0/
-        nBC6LotXMIDrqUJMZaqNjQuNgvSgJig=; b=u1VAxxjEy1r7Hf6Qp040ELMLDfu3
-        jd8/fX9oA7+swvO2JjC/YyNsDoOB9epZO/dJUJqT15JYjr6LkKJW7mD3UQd/2AVF
-        lLkOXpuG/wexemw7DaaN6gW9gCQ3hMuxu79LfsXT+S/hdmy+Nr6sVnf9DDRtaV1w
-        1obnfRKD5XtR2FQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 291DC11F49E;
-        Wed, 23 Feb 2022 16:23:28 -0500 (EST)
+        :content-type:content-transfer-encoding; s=sasl; bh=oYpzSbYk14DV
+        KSYqM0xFaZ1q8ZE7Q9mV7+u8omZHLig=; b=Vo5IcOnl99rcLjiXN5W3EKSVKUFM
+        O8HE0zvhsx5rC+5Kb+67nnjXcnpwvyokjjQFPVub0Dq1hIrjKpBfPWL9kqVhkdss
+        5wgM4xzmrtwR4loMsuropKegFyBb/JjhqoJCd6McUV/lQHmXXii48/YuIDllpAap
+        t0iYnnwAO/l8hmk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0AF9B178F49;
+        Wed, 23 Feb 2022 16:27:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8478E11F49D;
-        Wed, 23 Feb 2022 16:23:27 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 754C2178F48;
+        Wed, 23 Feb 2022 16:27:13 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Yuri <yuri@tsoft.com>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: When rebase.autoStash=true is used, 'git pull' merge process
- still complains when incoming changes are in a different place of the file
- than local changes
-References: <efdd752b-5cff-c483-80eb-654b53fdde7c@tsoft.com>
-        <3101d7c2-c78c-1f96-a7c6-08979d8f246b@gmail.com>
-Date:   Wed, 23 Feb 2022 13:23:26 -0800
-In-Reply-To: <3101d7c2-c78c-1f96-a7c6-08979d8f246b@gmail.com> (Phillip Wood's
-        message of "Tue, 22 Feb 2022 16:37:44 +0000")
-Message-ID: <xmqqa6ehtgz5.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 1/3] stash: add test to ensure reflog --rewrite
+ --updatref behavior
+References: <pull.1218.git.git.1645209647.gitgitgadget@gmail.com>
+        <pull.1218.v2.git.git.1645554651.gitgitgadget@gmail.com>
+        <6e136b62ca4588cc58f2cb59b635eeaf14e6e20d.1645554652.git.gitgitgadget@gmail.com>
+        <220223.864k4q6jpr.gmgdl@evledraar.gmail.com>
+Date:   Wed, 23 Feb 2022 13:27:12 -0800
+In-Reply-To: <220223.864k4q6jpr.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 23 Feb 2022 09:54:47 +0100")
+Message-ID: <xmqq4k4ptgsv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D738ACEA-94EE-11EC-A05C-CB998F0A682E-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 5DE3A452-94EF-11EC-B97C-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On 17/02/2022 20:50, Yuri wrote:
->> I have a file "x" that has one local change and some incoming pulled
->> changes.
->> Pulled changes are contextually very far away, so it should be
->> possible to merge them without user interaction.
->> But git still complains:
->> $ git pull
->> Updating 91bfe02..522ccf2
->> error: Your local changes to the following files would be
->> overwritten by merge:
->>  =C2=A0=C2=A0=C2=A0 x
+> This test was already a bit broken in needing the preceding tests, but
+> it will break now if REFFILES isn't true, which you can reproduce
+> e.g. with:
 >
-> pull only uses rebase.autoStash if you ask it to rebase, if it is
-> trying to merge then you need to pass --autostash on the command line
-> or set merge.autoStash (assuming you want merge to always use
-> --autostash).
+>     ./t3903-stash.sh --run=3D1-16,18-50 -vixd
+>
+> Perhaps the least sucky solution to that is:
+>
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index ec9cc5646d6..1d11c9bda20 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -205,13 +205,19 @@ test_expect_success 'drop stash reflog updates re=
+fs/stash with rewrite' '
+>  	cat >expect <<-EOF &&
+>  	$(test_oid zero) $oid
+>  	EOF
+> -	test_cmp expect actual
+> +	test_cmp expect actual &&
+> +	>dropped-stash
+>  '
 
-I wonder if it would make a good #leftoverbit starter project to
-introduce pull.autoStash so that those who want autostash only when
-running "git pull" (but not "git merge" or "git rebase") can set it,
-ignoring the settings of merge/rebase.autoStash variables.
+If "git stash drop", invoked in earlier part of this test before the
+precontext, fails, then test_cmp would fail and we leave
+dropped-stash untouched, even though we did run "git stash drop"
+already.
 
-Thanks.
+Why does the next test need to depend on what has happened earlier?
 
+>  test_expect_success 'stash pop' '
+>  	git reset --hard &&
+>  	git stash pop &&
+> -	test 9 =3D $(cat file) &&
+> +	if test -e dropped-stash
+> +	then
+> +		test 9 =3D $(cat file)
+> +	else
+> +		test 3 =3D $(cat file)
+> +	fi &&
+>  	test 1 =3D $(git show :file) &&
+>  	test 1 =3D $(git show HEAD:file) &&
+>  	test 0 =3D $(git stash list | wc -l)
