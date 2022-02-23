@@ -2,100 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17B6CC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 23:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42C03C433FE
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 23:30:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244796AbiBWX13 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 18:27:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49936 "EHLO
+        id S244771AbiBWXan (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 18:30:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235909AbiBWX12 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 18:27:28 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2BA665F5
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 15:26:58 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BAD8B18C020;
-        Wed, 23 Feb 2022 18:26:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ICVkDrlbdILW5fI2QPPPtbnSe75TgrOTpFGhwu
-        aIT9A=; b=CWlzS3ZyG7gwJUgAPBsWSG/npzsmDB43kV5DntL0ur789B43NyRDtz
-        kLGd9pVkuCdhDQn+nilkJGKWKA2t6iOYho3hCFBBy2HVhcmOYEYTrNRS6PGW8dLV
-        RBUpONJSsUAICeZr2EWUP+99xLMGLOCLTYUOOqx+nXoCq2Zl7c5zk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B3D9218C01F;
-        Wed, 23 Feb 2022 18:26:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2740718C01E;
-        Wed, 23 Feb 2022 18:26:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Matt Cooper via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, derrickstolee@github.com,
-        Matt Cooper <vtbassmatt@gmail.com>
-Subject: Re: [PATCH 2/2] t5302: confirm that large packs mention limit
-References: <pull.1158.git.1645632193.gitgitgadget@gmail.com>
-        <43990408a10d65058d872f13ea9619e85de7081d.1645632193.git.gitgitgadget@gmail.com>
-        <YhZtcEqczAFES+hQ@nand.local>
-Date:   Wed, 23 Feb 2022 15:26:54 -0800
-In-Reply-To: <YhZtcEqczAFES+hQ@nand.local> (Taylor Blau's message of "Wed, 23
-        Feb 2022 12:22:56 -0500")
-Message-ID: <xmqqh78pp3k1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S244732AbiBWXam (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 18:30:42 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7303A31201
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 15:30:13 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id m14so965549lfu.4
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 15:30:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rYYRPhnH8CS2uVIi+FxLk/ojKnWd2zkFQzZiD13ZcFU=;
+        b=Wbo1qIScbhQFC5F+1VNqW+DGebqZetzXJY9Jp9SDFIFUMa+7SRC/xedO0h0Y/rFTRv
+         AOwAYIcyUs1SeuP4KySQfdDogRTsz6/6pMp7XJ6u1JBXco6A3yPDwpswE99uxavo2UOP
+         4plSsa5WMULvo00r8hQPooIRQM7cImsB9wXwYSzrT5V5Vngr4k+rZsExaO62jH2+1e15
+         lu2tOx/Aj3SQ5vDSPtnfSeObRyx9FKHnypSyX0q1hpTrvU6BQlaN27p3b2EayRl+jdD3
+         ZgxHOSpKtsZWOyXfzMG5bDrivX6JsRevj6lRFnGmghy2cirLdgpzLx3BXv0eT3Ez/Yjj
+         N6Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rYYRPhnH8CS2uVIi+FxLk/ojKnWd2zkFQzZiD13ZcFU=;
+        b=yMm4xU3hcR5ovl/xv3vSaEPZWIZ48i9Yjwq/g1V+is7saPEsUzvPIF00RcTXcUZCO1
+         oZAG/E8Y+UkqXri+LDr5VFygMzKVQWcMcUqSrezZb2WA3DE44+5Iucv6atTMsGyu2xen
+         gxvbuiNFz5d9XV8Bqq0PRX0WuuZD9l1+v6HWcRlS+MyXUzWjF8m/UPKwps8fp0zzK1oQ
+         OqRRTKZE8wauY31+uv4speLQ2JkhkaaESOXwhG+3kOD6wMev+Q+nBEVhgpuqW1AUq3RX
+         BknmQUEk9Hm15eTAhfyY3ZShx+2JlnORcS75/bECWXHxXuoaICKd7cAtFicDPdPoACdd
+         whpg==
+X-Gm-Message-State: AOAM531hgm7hurCXI82HrMEvT+Dp7OKVgdF0mlqRhL2qEVBtTRBSi+/K
+        ahYjDm/ptWyNHTYWVrkyP20/VsloQzYTSVUunRo=
+X-Google-Smtp-Source: ABdhPJxoII3GqGdx0VGJrJwEoYOKZyYeHXz64RPG5sop1PSnSULCf9BC4P1mqZ5TfUWol7xHqnNi36woLZq5JYnSItY=
+X-Received: by 2002:a05:6512:3f94:b0:443:5d1d:55a2 with SMTP id
+ x20-20020a0565123f9400b004435d1d55a2mr63994lfa.213.1645659011625; Wed, 23 Feb
+ 2022 15:30:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 168152E2-9500-11EC-B5C1-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+References: <20220223073125.640133-1-alexhenrie24@gmail.com> <xmqqwnhlp4h1.fsf@gitster.g>
+In-Reply-To: <xmqqwnhlp4h1.fsf@gitster.g>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Wed, 23 Feb 2022 16:30:00 -0700
+Message-ID: <CAMMLpeQWjs0C4VwfpzOhZvY0Tm2YTnC74tyUeBG9bBzsNA42_w@mail.gmail.com>
+Subject: Re: [PATCH] switch: mention the --detach option when dying due to
+ lack of a branch
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-
-> On Wed, Feb 23, 2022 at 04:03:13PM +0000, Matt Cooper via GitGitGadget wrote:
->> From: Matt Cooper <vtbassmatt@gmail.com>
->>
->> When a pack can't be processed because it's too large, we report the
->> exact nature of the breach. This test ensures that the error message has
->> a human-readable size included.
->>
->> Signed-off-by: Matt Cooper <vtbassmatt@gmail.com>
->> Helped-by: Taylor Blau <me@ttaylorr.com>
->> Helped-by: Derrick Stolee <derrickstolee@github.com>
+On Wed, Feb 23, 2022 at 4:07 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Ah, one small note here: typically we try to keep commit trailers in
-> reverse-chronological order, with the most recent thing at the bottom.
-> That doesn't really matter for the Helped-by's, but keeping your s-o-b
-> at the bottom indicates that you signed off on the result of your patch
-> after Stolee and I gave some suggestions.
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+> > Users who are accustomed to doing `git checkout <tag>` assume that
+> > `git switch <tag>` will do the same thing. Inform them of the --detach
+> > option so they aren't left wondering why `git switch` doesn't work but
+> > `git checkout` does.
+>
+> An error message certainly would help over showing
+>
+>         fatal: a branch is expected, got tag 'abc'
+>
+> but I have to wonder why we shouldn't DWIM and detach the HEAD at
+> the commit the user wanted to.  That would also solve the issue of
+> leaving them wondering why switch is broken and checkout is not, no?
+>
+> If the advice for detached HEAD state is enabled, then the user will
+> be reminded that they are not on any branch the usual way when the
+> HEAD is detached at the named commit.  And if the advice is not
+> enabled, then they will not be helped by this new advise() message
+> we add here.
 
-It is very much appreciated to point these things out.
+Before commit 7968bef06b "switch: only allow explicit detached HEAD",
+`git switch` did not require --detach to enter a detached HEAD state.
+The justification in the commit message is worth reading, but I don't
+have an opinion on whether or not it was a change for the better.
 
-> It's not a huge deal, and I'm sure we have plenty of examples of
-> slightly out-of-order commit trailers throughout our history. Personally
-> I don't consider it worth rerolling, but perhaps something to keep in
-> mind for future contributions :-).
+> > +     if (advice_enabled(ADVICE_DETACHED_HEAD))
+> > +             advise(_("The specified commit is not a local branch.\n"
+> > +                      "If you want to enter detached head mode, try again with the --detach option."));
+> > +
+>
+> "detached HEAD" is a state, and not a mode.
+>
+> s/enter detached head mode/detach HEAD at the commit/ perhaps.
 
-People need to understand that each such contributor robs maintainer
-bandwidth by not rerolling.
+Sure. I'll send a v2 tonight.
 
->> +test_expect_success 'too-large packs report the breach' '
->> +	pack=$(git pack-objects --all pack </dev/null) &&
->> +	sz="$(test_file_size pack-$pack.pack)" &&
->> +	test "$sz" -gt 20 &&
->> +	test_must_fail git index-pack --max-input-size=20 pack-$pack.pack 2>err &&
->> +	grep "maximum allowed size (20 bytes)" err
->> +'
-
-This test looks OK to me.
-
-Shouldn't it be squashed into the previous patch?  After all, it is
-a test for the new behaviour introduced by the previous step, right?
-
-Thanks.
-
+-Alex
