@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37220C433FE
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:29:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C65DEC433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:29:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241571AbiBWO35 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 09:29:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46888 "EHLO
+        id S241586AbiBWO37 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 09:29:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241574AbiBWO3z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 09:29:55 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44505B252C
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:27 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id o62-20020a1ca541000000b00380e3cc26b7so3070212wme.0
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:27 -0800 (PST)
+        with ESMTP id S241572AbiBWO3y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 09:29:54 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ABBBB2525
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:26 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id i20so3481044wmc.3
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HnR3MbIKrJIoZ3DYzMGEr8XFfhJHemw/xfKFj5WjkYQ=;
-        b=jkHchba8cujPTa2PcFfIo/ffYr6d9Jhjyvq/Hpg8n1VDlTwVhPto1SVDpjnBBO8/v4
-         3RZD+VwmuExkN0Ib9n22KZIGntI+CeLewFiL5HmwPe2LrNmddtr0EW2nCXpGyjeLcW36
-         Htnjc6x1f8gUjiiStBaVNxn7jp6ccmvZHreYZhYkRKTq16cFH+TLGJPIjn60Ck9dMQ51
-         KK2OiKDS4gB9pgllUfMFvWF3RHV1VDxSI76UawpvJ4G+Ld4JAkelCvPey/U3PfwI0V4c
-         qmGed1ANkcr3DFwi7Le1iRo3kAkg0myRQ8GNQePAnUBjoc5TiO9AaX/Gs3bFkVSQizHA
-         AJFA==
+        bh=IEwQOKVfS1z3z4RURBKjrMl0ojCq6mcDnKEPehPFfRg=;
+        b=gUDuJGmrfck7GFPA8FRzn+LJDJMBb79a96k2B8bQz0Z3dCTi0gZPpahjltD4Ky39tj
+         cCMc/2JMc33fRPy5FSMSxJUAhw6K+iOaccDByEH6ZYiqPS4+DY9KOVKxouvzs7IjQsOT
+         HIeXNJWfs5Bkf2EhYmpKtb+wN/UIg2LPV48V+Taf6UOeUc6sKiPV8CAohlysknGSZlnG
+         Y+Mh95juTBNA4FnpDgBRPQyDDNSvWz8OHtkZlfff3mAdGILKieNgX+z7ayjCttOY5Nuf
+         A0kI+3FM2xeErytX/aO4NJZe5TruziAsovREc3s0zcfMt0jpCpGQJHpTbKx0RRu3piNZ
+         Do5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HnR3MbIKrJIoZ3DYzMGEr8XFfhJHemw/xfKFj5WjkYQ=;
-        b=HjEtjCxH+36yJ/zEFtrNhTfG8jw+0dtfPPnFiFjvABEZUbam8IiGI83ICqsQJsWtBg
-         4O2vOBKnJm7bQ0d3kVkfKk4cb56a7Cuc9aFC4tM5Q8WMcpH602itf+THvZ+QLRwVGpo+
-         krngGt2iOhNb8M1CpuJ7WtRFKsUCiW4eL2laBGWgGKz7hYo7tv5UUvuCfXZikJV/BoA0
-         4+W6rN82k26JJXQr9Htx42fIX1oI5wLoqKF22WhsHsfPPSfXX8QJNe6n+/8NPI3sNwIy
-         hOXFadc+LdhAnHH5JEJL9o6MEQ84onMm7SZJxfBla1buKdQAXrb8IhrpddRhdLeejdWh
-         ci0Q==
-X-Gm-Message-State: AOAM532H/b0BGZ05ZfjIoSepn1PZr5ejo9NHbbC6yqGhiRIavXDtQzbT
-        GGeOVTElFW78pT2BJoy7MibrnDUOrWI=
-X-Google-Smtp-Source: ABdhPJw0EaZ+d3zEI6/f7Y4TSqceFiVjYs34/ilQ8N3DguKyYj2FgfgmiuHHe8u6VqAjz0hvAcbU8w==
-X-Received: by 2002:a05:600c:1d28:b0:37c:a9d:d39f with SMTP id l40-20020a05600c1d2800b0037c0a9dd39fmr16594wms.172.1645626565552;
-        Wed, 23 Feb 2022 06:29:25 -0800 (PST)
+        bh=IEwQOKVfS1z3z4RURBKjrMl0ojCq6mcDnKEPehPFfRg=;
+        b=FDe+f3p/EC9cgEMGy+WP1qebeslMoaXQsq/RqRFhMayQWhf+tjSU1PSHS7PxIBnlxP
+         mLRFoYRSfKd5rSocAjj+4PLVG2+ar0t/cWrxbukOKaOgLkpTGtkwa+zI6SwT6WKGDnil
+         CkK1lVsAAmtq5zJ85akrkVruRy6D4uLgsWa9iD0yMs/aMbBRDDWzJX8srlhsUEDYQgyp
+         ZAjmZuXykxRAjH+I4xP8eBCQSwhQutfcegSFBoQ8qI0XjILZ7bmkz1H42TWbgavtjMnj
+         TkI9bxSo2Cv8kUlLtGA+UWcrvzsb/dsMHxLCPHzL0RW8WTAMsiSoHpffzxJO7P2b2jnO
+         8oCQ==
+X-Gm-Message-State: AOAM531Ve2xocWWSTTmpf1n/K1IdUZ/LAe50VfojdCTXKORUYY4TNIhN
+        p64uGziR5DtpCeN/dVNYS19cVfThihE=
+X-Google-Smtp-Source: ABdhPJxXHeZyXruRBFjRCa/3CDawqoz0chV615wooQkDJXHP1fzMu6y536jLmV4CUrwGq9iLU90zRw==
+X-Received: by 2002:a05:600c:2e54:b0:380:d3c8:ef33 with SMTP id q20-20020a05600c2e5400b00380d3c8ef33mr4446wmf.69.1645626564770;
+        Wed, 23 Feb 2022 06:29:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f7sm49826430wrz.40.2022.02.23.06.29.25
+        by smtp.gmail.com with ESMTPSA id f18sm19971540wre.66.2022.02.23.06.29.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 06:29:25 -0800 (PST)
-Message-Id: <4e66cf33648a965489508c4192a8f0a7f846266e.1645626559.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 06:29:24 -0800 (PST)
+Message-Id: <1e62e4e4fa1a543ad134d70d97740cac5826e587.1645626559.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
 References: <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
         <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 14:29:13 +0000
-Subject: [PATCH v3 05/11] worktree: use 'worktree' over 'working tree'
+Date:   Wed, 23 Feb 2022 14:29:12 +0000
+Subject: [PATCH v3 04/11] worktree: extract checkout_worktree()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,96 +69,60 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-It is helpful to distinguish between a 'working tree' and a 'worktree'.
-A worktree contains a working tree plus additional metadata. This
-metadata includes per-worktree refs and worktree-specific config.
+The ability to add the --no-checkout flag to 'git worktree' was added in
+ef2a0ac9a0 (worktree: add: introduce --checkout option, 2016-03-29).
+Recently, we noticed that add_worktree() is rather complicated, so
+extract the logic for this checkout process to simplify the method.
 
-This is the first of multiple changes to git-worktree.txt, restricted to
-the DESCRIPTION section.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-worktree.txt | 50 ++++++++++++++++++----------------
- 1 file changed, 27 insertions(+), 23 deletions(-)
+ builtin/worktree.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index b8d53c48303..956c17c4306 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -25,45 +25,49 @@ Manage multiple working trees attached to the same repository.
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index c806aa2b261..25807e63a25 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -292,6 +292,18 @@ worktree_copy_cleanup:
+ 	free(to_file);
+ }
  
- A git repository can support multiple working trees, allowing you to check
- out more than one branch at a time.  With `git worktree add` a new working
--tree is associated with the repository.  This new working tree is called a
--"linked working tree" as opposed to the "main working tree" prepared by
--linkgit:git-init[1] or linkgit:git-clone[1].
--A repository has one main working tree (if it's not a
--bare repository) and zero or more linked working trees. When you are done
--with a linked working tree, remove it with `git worktree remove`.
-+tree is associated with the repository, along with additional metadata
-+that differentiates that working tree from others in the same repository.
-+The working tree, along with this metadata, is called a "worktree".
++static int checkout_worktree(const struct add_opts *opts,
++			     struct strvec *child_env)
++{
++	struct child_process cp = CHILD_PROCESS_INIT;
++	cp.git_cmd = 1;
++	strvec_pushl(&cp.args, "reset", "--hard", "--no-recurse-submodules", NULL);
++	if (opts->quiet)
++		strvec_push(&cp.args, "--quiet");
++	strvec_pushv(&cp.env_array, child_env->v);
++	return run_command(&cp);
++}
 +
-+This new worktree is called a "linked worktree" as opposed to the "main
-+worktree" prepared by linkgit:git-init[1] or linkgit:git-clone[1].
-+A repository has one main worktree (if it's not a bare repository) and
-+zero or more linked worktrees. When you are done with a linked worktree,
-+remove it with `git worktree remove`.
+ static int add_worktree(const char *path, const char *refname,
+ 			const struct add_opts *opts)
+ {
+@@ -425,17 +437,9 @@ static int add_worktree(const char *path, const char *refname,
+ 	if (ret)
+ 		goto done;
  
- In its simplest form, `git worktree add <path>` automatically creates a
- new branch whose name is the final component of `<path>`, which is
- convenient if you plan to work on a new topic. For instance, `git
- worktree add ../hotfix` creates new branch `hotfix` and checks it out at
--path `../hotfix`. To instead work on an existing branch in a new working
--tree, use `git worktree add <path> <branch>`. On the other hand, if you
--just plan to make some experimental changes or do testing without
--disturbing existing development, it is often convenient to create a
--'throwaway' working tree not associated with any branch. For instance,
--`git worktree add -d <path>` creates a new working tree with a detached
--`HEAD` at the same commit as the current branch.
-+path `../hotfix`. To instead work on an existing branch in a new worktree,
-+use `git worktree add <path> <branch>`. On the other hand, if you just
-+plan to make some experimental changes or do testing without disturbing
-+existing development, it is often convenient to create a 'throwaway'
-+worktree not associated with any branch. For instance,
-+`git worktree add -d <path>` creates a new worktree with a detached `HEAD`
-+at the same commit as the current branch.
+-	if (opts->checkout) {
+-		struct child_process cp = CHILD_PROCESS_INIT;
+-		cp.git_cmd = 1;
+-		strvec_pushl(&cp.args, "reset", "--hard", "--no-recurse-submodules", NULL);
+-		if (opts->quiet)
+-			strvec_push(&cp.args, "--quiet");
+-		strvec_pushv(&cp.env_array, child_env.v);
+-		ret = run_command(&cp);
+-		if (ret)
+-			goto done;
+-	}
++	if (opts->checkout &&
++	    (ret = checkout_worktree(opts, &child_env)))
++		goto done;
  
- If a working tree is deleted without using `git worktree remove`, then
- its associated administrative files, which reside in the repository
- (see "DETAILS" below), will eventually be removed automatically (see
- `gc.worktreePruneExpire` in linkgit:git-config[1]), or you can run
--`git worktree prune` in the main or any linked working tree to
--clean up any stale administrative files.
-+`git worktree prune` in the main or any linked worktree to clean up any
-+stale administrative files.
- 
--If a linked working tree is stored on a portable device or network share
--which is not always mounted, you can prevent its administrative files from
--being pruned by issuing the `git worktree lock` command, optionally
--specifying `--reason` to explain why the working tree is locked.
-+If the working tree for a linked worktree is stored on a portable device
-+or network share which is not always mounted, you can prevent its
-+administrative files from being pruned by issuing the `git worktree lock`
-+command, optionally specifying `--reason` to explain why the worktree is
-+locked.
- 
- COMMANDS
- --------
- add <path> [<commit-ish>]::
- 
--Create `<path>` and checkout `<commit-ish>` into it. The new working directory
--is linked to the current repository, sharing everything except working
--directory specific files such as `HEAD`, `index`, etc. As a convenience,
--`<commit-ish>` may be a bare "`-`", which is synonymous with `@{-1}`.
-+Create a worktree at `<path>` and checkout `<commit-ish>` into it. The new worktree
-+is linked to the current repository, sharing everything except per-worktree
-+files such as `HEAD`, `index`, etc. As a convenience, `<commit-ish>` may
-+be a bare "`-`", which is synonymous with `@{-1}`.
- +
- If `<commit-ish>` is a branch name (call it `<branch>`) and is not found,
- and neither `-b` nor `-B` nor `--detach` are used, but there does
+ 	is_junk = 0;
+ 	FREE_AND_NULL(junk_work_tree);
 -- 
 gitgitgadget
 
