@@ -2,108 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EC48C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB9FBC433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:27:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241552AbiBWO0j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 09:26:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43126 "EHLO
+        id S241560AbiBWO2H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 09:28:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234188AbiBWO0i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 09:26:38 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1309B238D
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:26:10 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id y7so18441484oih.5
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:26:10 -0800 (PST)
+        with ESMTP id S241556AbiBWO2G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 09:28:06 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA5BAAC07A
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:27:37 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id x15so5541254wrg.8
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:27:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=WqbKQ7Bv8wQP84iKzOQH9fIUxd6lTQwjVzCObkczIaM=;
-        b=B66y6A6d1OlyU2N11A65kI8ZgJywlcV6dJqakhKJ/iGMDY/JA3D/vnWR/2S5+EPT3a
-         kZ6plB1A/Tnv2R8nRSUzDKwEU/sjemwZhd/q2IfLC/g2Q2gptq7iluteRebKP4kW0W7y
-         6kyCqh5QelS6XVpBcKgTBF/Id+aUV++HDReyWg1pFrtV7qFu9KmvTYQh42zK59AqU4WC
-         L5VXTkmTDNl3fpy48KeoSKQ4ms0/mq56G3YEaI6/lVHKWSwt4LeFcYTeeu2L81cNVxWw
-         b9annUX9/9S8Jy07F6GussMMinHxCYINvnTccx5waC9yE+0hX4NF+9Fz89c9wof3nRpQ
-         pQ+g==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=42x7JBXT0wOUXNQM6ZqV/sqN+Y18Awz/hHV6lJS5qEQ=;
+        b=ngDTrJcuc2XdAVhhWJ6xlUfKPvUuCmIsmh73vORS4kXSaoLHaa9JDwwm7mlvMkusNC
+         kou/2mYEEId8osdar0/zofnPy1y5ZBGvomAYnRorbBHtswlkRw6ji9l/q9BcuIgIHtY9
+         +JlDDeb/8J//BjxGo2ORyOL/O5ivT2jwF9DyHl94vGiD8OHb+JGTv8CzBDSMaN8BbI03
+         ybyg4bnOz5ECqe0X8mMQ+TIaKj037k4YbDQQldFqe7LaCFonY2CXkfeHn0in/z4KME63
+         /GRXDxDXFvhH1jLgnBkJGOEnAOtSal93IPRy/Ra9+6m9emXhrq6r8iM+pPU6dSklrjSA
+         52xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=WqbKQ7Bv8wQP84iKzOQH9fIUxd6lTQwjVzCObkczIaM=;
-        b=fiIc0ysaadf1mKTqMd6WmUjbFNQ+1FeBQW0EYNJlO552dVLabl6rUz4sBIPKwKBZV8
-         6bKcDX3iaffUzYtcuO8HqvnxjDmkuOWicd8GtOTVcTZZRjAD7lIfskvbTPnEGk3H4zR3
-         Zl5OE4lzIYO8Ypq/wEoL/ajWGpn1yjLhKIs78RJAhmp/mJFxM9RzYTvUfzeL16nev05T
-         5Gjs1AxvbrvuDemzK9gw+lwzzP7VfCEZmPKRHAzh0P3pSiSgly/gmlfM70FqNsK9GjsY
-         cBskFeo/SNjODcpb6anBeE9eZ3UIdn1oVgfnL/RiR0rWzBw3CwQXYMNGEyH+QR1hoINC
-         MGVQ==
-X-Gm-Message-State: AOAM5321em9MuheVWQzQ5IQkpYHdtm5tq6drhx+kR4juDR4xF8UoCFiv
-        GyR/LE+GVCJWMcZGkXl+aQSL
-X-Google-Smtp-Source: ABdhPJzY/4jIRwjEkNjA9aIlH/BGkS5dOTgoGfjj/zTTOX83GMNbK2fanEE5Gl8LkyXQT4u8EBvtOg==
-X-Received: by 2002:a05:6808:3084:b0:2d4:c36a:4d27 with SMTP id bl4-20020a056808308400b002d4c36a4d27mr4698335oib.66.1645626370158;
-        Wed, 23 Feb 2022 06:26:10 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id fq40sm4207221oab.5.2022.02.23.06.26.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Feb 2022 06:26:09 -0800 (PST)
-Message-ID: <c37318bd-2b11-4054-9754-70c33f4d2d7e@github.com>
-Date:   Wed, 23 Feb 2022 09:26:08 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v2 00/11] Updates to worktree code and docs
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Jean-No=c3=abl_AVILA?= <jn.avila@free.fr>,
-        Taylor Blau <me@ttaylorr.com>
-References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
- <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
- <CABPp-BFPND3kCkHGxztpXRJRLeu=BJPFm7tbCrr0rVp4M0rHeg@mail.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CABPp-BFPND3kCkHGxztpXRJRLeu=BJPFm7tbCrr0rVp4M0rHeg@mail.gmail.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=42x7JBXT0wOUXNQM6ZqV/sqN+Y18Awz/hHV6lJS5qEQ=;
+        b=HQ01IDHclC9kKE3X9TYL7rKSL3k5B2VFdm7958rBABh+eIZUIcya0mYUeIp2N1pKd3
+         K5AUKkG/iVEBtxDXn2orckjoOeSQ6QCYHElSpR0RxUz8QIMxcS0kD84TijHMNhZTaBPO
+         n3I3MML/BpgmVbHfBzpTCEf691MZQ3pK6v3i5hDdhzqc2B6ZlyaLyzNgrP2L6Qd+Y5mc
+         FsBM6ailLcpraHCX74glOGHVN1V8L5kzVLfFYz2HBQCEy4weP6DH52dTWBzxNmfagx8V
+         wYr7uG/43kFUqvPGCg8seaH4FSep5g8szYFl/yFT+AVYeFjZnNwgKFahIMHFJkpTF/j1
+         vDtQ==
+X-Gm-Message-State: AOAM533gw2+OfpERRL7xbra2pttZLOCMDXaTGmaSYNQw+4BR6IyKTpdg
+        GDqqVULsR7R+3BLsfyT1qdEnZHMJtvY=
+X-Google-Smtp-Source: ABdhPJy+c1u8bnnIRcoFeLncghOswwAUsJvE+wi49DfSmAC2kpKovvc7W/lqtyDoJwnBeA34gBsMoA==
+X-Received: by 2002:a05:6000:18c3:b0:1e5:82d3:e4e2 with SMTP id w3-20020a05600018c300b001e582d3e4e2mr23781199wrq.575.1645626456219;
+        Wed, 23 Feb 2022 06:27:36 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o3-20020a05600c4fc300b0037bea2f9775sm5888028wmq.25.2022.02.23.06.27.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Feb 2022 06:27:35 -0800 (PST)
+Message-Id: <pull.1147.v3.git.1645626455.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1147.v2.git.1645545507689.gitgitgadget@gmail.com>
+References: <pull.1147.v2.git.1645545507689.gitgitgadget@gmail.com>
+From:   "Abhradeep Chakraborty via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 23 Feb 2022 14:27:33 +0000
+Subject: [PATCH v3 0/2] add usage-strings ci check and amend remaining usage strings
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Julia Lawall <julia.lawall@inria.fr>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/23/2022 1:51 AM, Elijah Newren wrote:
-> On Mon, Feb 21, 2022 at 4:18 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> This is built on top of ds/sparse-checkout-requires-per-worktree-config and
->> includes some forward fixes for comments from that series.
->>
->>  * Patch 1 combines two translatable messages into one. (Thanks, Jean-Noël)
->>  * Patches 2-4 extract methods from the already-busy add_worktree() method.
->>    (Thanks, Eric)
->>  * Patches 5-11 update git-worktree.txt to use 'worktree' over 'working
->>    tree'. This involves some rewrapping of the paragraphs, so the diffs are
->>    not obviously just a find and replace. I split the changes mostly by
->>    section of the file to keep the diffs from being too large.
->>
->>
->> Updates in v2
->> =============
->>
->> Based on Junio and Taylor's review, I updated some language in the docs:
->>
->>  * Some uses of "worktree" should have stayed as "working tree"
->>  * Some adjacent wording was improved.
-> 
-> I read through the series.  Looks like the only thing I caught was
-> typos that others caught -- though one of them was a typo flagged by
-> Taylor in v1 that went uncorrected in v2 ("metada").  Otherwise, looks
-> good; thanks for fixing this all up.
+This patch series completely fixes #636.
 
-Thanks, all. There were enough typos in this version that I'll send
-a v3 that fixes them all.
+The issue is about amending the usage-strings (for command flags such as -h,
+-v etc.) which do not follow the style convention/guide. There was a PR
+[https://github.com/gitgitgadget/git/pull/920] addressing this issue but as
+Johannes [https://github.com/dscho] said in his comment
+[https://github.com/gitgitgadget/git/issues/636#issuecomment-1018660439],
+there are some files that still have those kind of usage strings. Johannes
+also suggested to add a CI check under ci/test-documentation.sh to check the
+usage strings.
 
-Thanks,
--Stolee
+In this version, the previously single commit is split into two commits (
+one addressing amending of usage strings and another is for adding the style
+checks to parse_options_check()) and the checks are simplified.
+
+Changes since v1:
+
+ 1. remove check-usage-strings.sh
+ 2. remove CI check
+ 3. add checks to parse-options.c
+ 4. modify t/t1502-rev-parse-parseopt.sh to pass the test
+
+Until v1:
+
+A shell script check-usage-strings.sh was introduced to check the
+usage-strings. CI check for the same was also introduced.
+
+Abhra303 (1):
+  amend remaining usage strings according to style guide
+
+Abhradeep Chakraborty (1):
+  parse-options.c: add style checks for usage-strings
+
+ builtin/bisect--helper.c      | 2 +-
+ builtin/reflog.c              | 6 +++---
+ builtin/submodule--helper.c   | 2 +-
+ diff.c                        | 2 +-
+ parse-options.c               | 6 ++++++
+ t/helper/test-run-command.c   | 6 +++---
+ t/t1502-rev-parse-parseopt.sh | 4 ++--
+ 7 files changed, 17 insertions(+), 11 deletions(-)
+
+
+base-commit: e6ebfd0e8cbbd10878070c8a356b5ad1b3ca464e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1147%2FAbhra303%2Fusage_command_amend-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1147/Abhra303/usage_command_amend-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1147
+
+Range-diff vs v2:
+
+ 1:  902937e768d ! 1:  f425e36b7ea add usage-strings check  and amend remaining usage strings
+     @@ Metadata
+      Author: Abhra303 <chakrabortyabhradeep79@gmail.com>
+      
+       ## Commit message ##
+     -    add usage-strings check  and amend remaining usage strings
+     +    amend remaining usage strings according to style guide
+      
+          Usage strings for git (sub)command flags has a style guide that
+     -    suggests - first letter should not capitalized (unless requied)
+     +    suggests - first letter should not capitalized (unless required)
+          and it should skip full-stop at the end of line. But there are
+          some files where usage-strings do not follow the above mentioned
+     -    guide. Moreover, there are no checks to verify if all usage strings
+     -    are following the guide/convention or not.
+     +    guide.
+      
+     -    Amend the usage strings that don't follow the convention/guide and
+     -    add a check in the `parse_options_check()` function in `parse-options.c`
+     -    to check the usage strings against the style guide.
+     +    Amend the usage strings that don't follow the style convention/guide.
+      
+          Signed-off-by: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+      
+     @@ diff.c: static void prep_parse_options(struct diff_options *options)
+       
+       		OPT_END()
+      
+     - ## parse-options.c ##
+     -@@ parse-options.c: static void parse_options_check(const struct option *opts)
+     - 		default:
+     - 			; /* ok. (usually accepts an argument) */
+     - 		}
+     -+		if (opts->type != OPTION_GROUP && opts->help &&
+     -+			!(starts_with(opts->help, "HEAD") ||
+     -+			  starts_with(opts->help, "GPG") ||
+     -+			  starts_with(opts->help, "DEPRECATED") ||
+     -+			  starts_with(opts->help, "SHA1")) &&
+     -+			  (opts->help[0] >= 65 && opts->help[0] <= 90))
+     -+			err |= optbug(opts, xstrfmt("help should not start with capital letter unless needed: %s", opts->help));
+     -+		if (opts->help && !ends_with(opts->help, "...") && ends_with(opts->help, "."))
+     -+			err |= optbug(opts, xstrfmt("help should not end with a dot: %s", opts->help));
+     - 		if (opts->argh &&
+     - 		    strcspn(opts->argh, " _") != strlen(opts->argh))
+     - 			err |= optbug(opts, "multi-word argh should use dash to separate words");
+     -
+       ## t/helper/test-run-command.c ##
+      @@ t/helper/test-run-command.c: static int quote_stress_test(int argc, const char **argv)
+       	struct strbuf out = STRBUF_INIT;
+     @@ t/helper/test-run-command.c: static int quote_stress_test(int argc, const char *
+       		OPT_END()
+       	};
+       	const char * const usage[] = {
+     -
+     - ## t/t1502-rev-parse-parseopt.sh ##
+     -@@ t/t1502-rev-parse-parseopt.sh: test_expect_success 'setup optionspec-only-hidden-switches' '
+     - |
+     - |some-command does foo and bar!
+     - |--
+     --|hidden1* A hidden switch
+     -+|hidden1* a hidden switch
+     - EOF
+     - '
+     - 
+     -@@ t/t1502-rev-parse-parseopt.sh: test_expect_success 'test --parseopt help-all output hidden switches' '
+     - |
+     - |    some-command does foo and bar!
+     - |
+     --|    --hidden1             A hidden switch
+     -+|    --hidden1             a hidden switch
+     - |
+     - |EOF
+     - END_EXPECT
+ -:  ----------- > 2:  9d42bdbff6c parse-options.c: add style checks for usage-strings
+
+-- 
+gitgitgadget
