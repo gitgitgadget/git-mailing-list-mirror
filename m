@@ -2,100 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79683C433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 19:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2F10C433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 19:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244475AbiBWTkN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 14:40:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34768 "EHLO
+        id S244520AbiBWTum (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 14:50:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241631AbiBWTkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 14:40:12 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C91D848E6A
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 11:39:44 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6C494102357;
-        Wed, 23 Feb 2022 14:39:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mnsCv7nIaSCMDD4/wcGrlqLbUgBJgIkJg43qp4
-        URRaU=; b=BOgFW5F6SAE7PqNw7U1v1iD81PUIYiBFwHmhs2TOvAoqj+ivpxx6vY
-        Lo9EqpjGm7IrW24RhkmfmbAK0Lq+Kz92PhYWSZzBGP9vIftZJM0lrh/wpfe8kHXX
-        UgmFR7pIqzqKUG59mgJGh4rTnC3E+91pKSG/VQgKa9IT6h64LsTvE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 60F73102356;
-        Wed, 23 Feb 2022 14:39:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C4C7C102355;
-        Wed, 23 Feb 2022 14:39:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: en/present-despite-skipped (Re: What's cooking in git.git (Feb
- 2022, #05; Thu, 17))
-References: <xmqqley93rkw.fsf@gitster.g> <YhBNgUFnujFGVcRo@google.com>
-        <YhV3KruSTFYEDBAO@google.com>
-Date:   Wed, 23 Feb 2022 11:39:40 -0800
-In-Reply-To: <YhV3KruSTFYEDBAO@google.com> (Jonathan Nieder's message of "Tue,
-        22 Feb 2022 15:52:10 -0800")
-Message-ID: <xmqqo82xv0cj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S238759AbiBWTul (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 14:50:41 -0500
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 824E04B87A
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 11:50:13 -0800 (PST)
+Received: by mail-qv1-xf36.google.com with SMTP id e22so10269164qvf.9
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 11:50:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version;
+        bh=7hYaHNbo52ZMPGs1X3P4qCvukE3JJaq8VhT0mWwW/U4=;
+        b=bE5fRtWKk8/+VAZFhoeZ3dI6fWrH6fInsfYKaJyZT74XM8XkNbF1qVkqG9xlcKyuyX
+         1CsWZ7Q411d8W4Lvh/erMmUFc9mvWi0mAZe9sfvCjyNWWs6v1mbe7sxZ32kV+xwfTl3h
+         fj47H8cNi8i7FT8ZGrno6OYyoZdTZY1y8ixdwcvWJ5MiZ/MOBADRQVn2r+S39I5MrKWP
+         Dqb9vEMO4nid8V+LsiWsuBkH0AIUC98hpT6guvDYoWIpUeXAT3sJN1s3irltSnysxsHo
+         dKUMbkm9Xju0v828nTVzL+nwM4FploJC4L9m67agWUmzPqE6XuAPSuzX3HWzHdrxaHOq
+         nK6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version;
+        bh=7hYaHNbo52ZMPGs1X3P4qCvukE3JJaq8VhT0mWwW/U4=;
+        b=W+TXUWg695eHsRz6kOaxrpy5J5zQlgO9cUcXwcAkXIFc2ttw9d11MQgEnjWZk9m57D
+         tYN6nKDN3a0OmCn8GWb7H3iw/EceqEZ0VJ8wdZqNEH5l5cPsZv1rslSggW8Qxz4TrqKu
+         8DxKaUE5JnNlh9eXjhdT7MwkJYy5K1fal42XN1q5ZrZhfqaMT4ugsldbYWlKEkk8zlFv
+         IjULVM7hYcz7BOyyJ8KgGtJND796p9kK8LoZXQd0KaE5E/iBwtvDPG3eCbBiR43hyIST
+         w3YWej9qgptyJ547jHxAbSBEZd7LgTj+lmWgq78s2G2TRmKfSxkLxufFpDA3YP+BN8I7
+         lDbw==
+X-Gm-Message-State: AOAM530SN2B/qsumHyj0HWT4Y5tye/dsn9WRKzZC9cblt9UJVhqwZ1JU
+        NSTRNcM79LiVUofOpzKnYU8Rw09JMto=
+X-Google-Smtp-Source: ABdhPJzT6YIAg//U5euki5xmxwRji9MHNzE8+uJoi9LoAzQ+lSVldOuUkKIgjBjAOa6fPAQ33KjwBA==
+X-Received: by 2002:ac8:5c05:0:b0:2de:70c9:f9e6 with SMTP id i5-20020ac85c05000000b002de70c9f9e6mr1330339qti.568.1645645812628;
+        Wed, 23 Feb 2022 11:50:12 -0800 (PST)
+Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
+        by smtp.gmail.com with ESMTPSA id e64sm235091qkd.122.2022.02.23.11.50.12
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Feb 2022 11:50:12 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/3] reflog: libify delete reflog function and helpers
+Date:   Wed, 23 Feb 2022 14:50:11 -0500
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <F889CE8D-BFFD-4E3D-8CD1-0F2A1948805F@gmail.com>
+In-Reply-To: <YhLv9P9VFQ6Iwv41@nand.local>
+References: <pull.1218.git.git.1645209647.gitgitgadget@gmail.com>
+ <9e17ece8d8956c7fd41b7be2f5c0475b1f9af6ec.1645209647.git.gitgitgadget@gmail.com>
+ <Yg/09XYTruPJQVV/@nand.local>
+ <F49696AE-3A00-4870-A355-A9510468F35D@gmail.com>
+ <YhLv9P9VFQ6Iwv41@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5864B9D0-94E0-11EC-92E9-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi Taylor,
 
->>>  Will merge to 'master'.
->>>  cf. <20220204081336.3194538-1-newren@gmail.com>
->>>  source: <pull.1114.v2.git.1642175983.gitgitgadget@gmail.com>
+On 20 Feb 2022, at 20:50, Taylor Blau wrote:
+
+> On Sun, Feb 20, 2022 at 08:43:14PM -0500, John Cai wrote:
+>>> One question that I had which I don't see answered already is what the
+>>> plan is for existing reflog-related functions that live in refs.h.
+>>> Should or will those functions be moved to the new reflog-specific
+>>> header, too?
 >>
->> I'd recommend holding off on merging to 'master' for now, until we
->> figure out what to do about
->> https://lore.kernel.org/git/YhBCsg2DCEd9FXjE@google.com/. Hopefully that
->> won't take long.
+>> Thanks for bringing ths up! Maybe this cleanup can be included in a separate
+>> patch series since this one is mainly about getting rid of the shell-out in
+>> stash.c. What do you think?
 >
-> Since as discussed there this isn't a regression for existing users of
-> git 'master', I see no reason to hold off on merging to 'master'.
+> Yeah; I think that's fine. We don't need to get all reflog-related
+> functions moved into reflog.h in the first series, so I think it's fine
+> to move things as you discover them.
+>
+> I was just wondering whether it was something you planned to do at some
+> point (as part of this series, or a future one).
 
-I think I've read on what people said on this topic for the past few
-days while I was away.
+Yes I will open a new series for this. I've been looking through refs.h, and as you
+alluded to there are a number of reflog related functions. But, they also relate to refs.
+I'm not sure which ones should go into reflog.h versus staying in refs.h. What are your
+thoughts?
 
-I do not quite follow the above, though.
+>
+> Thanks,
+> Taylor
 
-Does the logic go like this?
-
- - Earlier you worried that VFS for Git and similar that have been
-   working happily with vanilla Git would break with this series;
-
- - It turns out that VFS for Git comes with its own version of Git
-   that does not have this series;
-
- - Hence we can do whatever we like to vanilla Git, and it won't
-   immediately hurt.
-
-The config knob to tell the sparse logic that it is OK if lstat()
-tells us that there appears files that ought to be missing from the
-filesystem due to sparse settings would be needed and that is why
-you sent an updated proposal patch in separate thread, right?
-
-Shouldn't we iron out the details of that knob and release the topic
-with that knob at the same time?  If Microsoft folks already have an
-existing knob to tweak the behaviour of sparse checkout to work better
-in vfs environment where lstat() lies, and if the necessary adjustment
-is wider than just the issue the sparse.expectFilesOutsideOfPatterns
-solves, I wonder if we should take the approach to align with their
-forked version of Git by matching the name and the behaviour of the
-knob somehow.
-
-Thanks.
-
+Thanks!
+John
