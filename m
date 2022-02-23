@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C65DEC433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:29:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FD5FC433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241586AbiBWO37 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 09:29:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46864 "EHLO
+        id S241588AbiBWOaA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 09:30:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241572AbiBWO3y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 09:29:54 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ABBBB2525
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:26 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id i20so3481044wmc.3
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:26 -0800 (PST)
+        with ESMTP id S241559AbiBWO3x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 09:29:53 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 763E9B251B
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:25 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id u1so39913886wrg.11
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=IEwQOKVfS1z3z4RURBKjrMl0ojCq6mcDnKEPehPFfRg=;
-        b=gUDuJGmrfck7GFPA8FRzn+LJDJMBb79a96k2B8bQz0Z3dCTi0gZPpahjltD4Ky39tj
-         cCMc/2JMc33fRPy5FSMSxJUAhw6K+iOaccDByEH6ZYiqPS4+DY9KOVKxouvzs7IjQsOT
-         HIeXNJWfs5Bkf2EhYmpKtb+wN/UIg2LPV48V+Taf6UOeUc6sKiPV8CAohlysknGSZlnG
-         Y+Mh95juTBNA4FnpDgBRPQyDDNSvWz8OHtkZlfff3mAdGILKieNgX+z7ayjCttOY5Nuf
-         A0kI+3FM2xeErytX/aO4NJZe5TruziAsovREc3s0zcfMt0jpCpGQJHpTbKx0RRu3piNZ
-         Do5Q==
+        bh=M3yfAW+FMygRnAbUO3SWrYQH55uT4SNwhA5DqD8nFTc=;
+        b=T10qMne4e0hMrBwV4S9IsSLHcqiOXdzkVeD3tO+Ww3XHoDbbGD8t1dPO9+a8h9GPHN
+         jWKDLpL/rxwOcZXYZMa5y6hh6HX7DYDPlG6zIxHYjW0NtgCWmy2awwEG6jCYpsxcw492
+         P86Yttla4jLV/+njIwhKKxhgRRmpZEI7DQtD1h6R7WPjFMUi/u1ZgXFf9lflFM+rQSIO
+         sUGMmMW0neIBBYcroP7Ov5EA8JTBFZR29c61kgLq26LV/ntO27G9Ng8tDyo0xgk8GgMY
+         5T8Z5jwktsRx6A7VdKtS1XhLRc5ePGx5PRSQjv2mtlAzkmhoHkAp0C9F/FqCM3PEBK7h
+         d2Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IEwQOKVfS1z3z4RURBKjrMl0ojCq6mcDnKEPehPFfRg=;
-        b=FDe+f3p/EC9cgEMGy+WP1qebeslMoaXQsq/RqRFhMayQWhf+tjSU1PSHS7PxIBnlxP
-         mLRFoYRSfKd5rSocAjj+4PLVG2+ar0t/cWrxbukOKaOgLkpTGtkwa+zI6SwT6WKGDnil
-         CkK1lVsAAmtq5zJ85akrkVruRy6D4uLgsWa9iD0yMs/aMbBRDDWzJX8srlhsUEDYQgyp
-         ZAjmZuXykxRAjH+I4xP8eBCQSwhQutfcegSFBoQ8qI0XjILZ7bmkz1H42TWbgavtjMnj
-         TkI9bxSo2Cv8kUlLtGA+UWcrvzsb/dsMHxLCPHzL0RW8WTAMsiSoHpffzxJO7P2b2jnO
-         8oCQ==
-X-Gm-Message-State: AOAM531Ve2xocWWSTTmpf1n/K1IdUZ/LAe50VfojdCTXKORUYY4TNIhN
-        p64uGziR5DtpCeN/dVNYS19cVfThihE=
-X-Google-Smtp-Source: ABdhPJxXHeZyXruRBFjRCa/3CDawqoz0chV615wooQkDJXHP1fzMu6y536jLmV4CUrwGq9iLU90zRw==
-X-Received: by 2002:a05:600c:2e54:b0:380:d3c8:ef33 with SMTP id q20-20020a05600c2e5400b00380d3c8ef33mr4446wmf.69.1645626564770;
-        Wed, 23 Feb 2022 06:29:24 -0800 (PST)
+        bh=M3yfAW+FMygRnAbUO3SWrYQH55uT4SNwhA5DqD8nFTc=;
+        b=U+Fr97ZSSfDTY3bLBcN//+eo0PRshpNIsL6/pQLjPNNayup06gi44fe/ocybJptq8D
+         qBeOzpcceMYwVQbgJW/NgFkaHiQV4aRFdWfDV32N/OX6UjQGmrmqjCHuuOIITYtJp60R
+         coajoX/Gb3RMEMIDVKzuLm6j5H04/1eOrIDYwQm2tjlEVQbJy7lH3542qtxdg3qAS/FD
+         1QOlG5KKA6nlXXtK0hGDjiQOn7r1lgTNNmzv0vjO+0x934DlvQy+hnP0QkVtYPH5Gt7Q
+         K9GePN/zHD9ck4FVnKCt5xq13dHdA6IKbETqY9F6E7tHXe63eH6MhwkDx3LPj2WwNCd5
+         ZLNQ==
+X-Gm-Message-State: AOAM530t2EN0SvAUjydtpPApJryoLxHtXNYJWKtjjc9uGYlCIm6E7ATP
+        kkLuwLH756zycgd0OsEyBEUGJZcjnCk=
+X-Google-Smtp-Source: ABdhPJz2Q1kunxHvmfBeL9q34/YbFRY0V5fQcDO2B1GR3QzfV3h5e6PEh7zK4qBHFRcsgREJwitdrA==
+X-Received: by 2002:a5d:6106:0:b0:1ed:b56f:73f7 with SMTP id v6-20020a5d6106000000b001edb56f73f7mr2429084wrt.601.1645626563775;
+        Wed, 23 Feb 2022 06:29:23 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f18sm19971540wre.66.2022.02.23.06.29.24
+        by smtp.gmail.com with ESMTPSA id 2sm34404139wry.4.2022.02.23.06.29.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 06:29:24 -0800 (PST)
-Message-Id: <1e62e4e4fa1a543ad134d70d97740cac5826e587.1645626559.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 06:29:23 -0800 (PST)
+Message-Id: <ccc5b1ef9fb4dbeedfbc1ad8f0da36299bf48b56.1645626559.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
 References: <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
         <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 14:29:12 +0000
-Subject: [PATCH v3 04/11] worktree: extract checkout_worktree()
+Date:   Wed, 23 Feb 2022 14:29:11 +0000
+Subject: [PATCH v3 03/11] worktree: extract copy_sparse_checkout()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,60 +69,68 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The ability to add the --no-checkout flag to 'git worktree' was added in
-ef2a0ac9a0 (worktree: add: introduce --checkout option, 2016-03-29).
-Recently, we noticed that add_worktree() is rather complicated, so
-extract the logic for this checkout process to simplify the method.
+This logic was introduced by 5325591 (worktree: copy sparse-checkout
+patterns and config on add, 2022-02-07), but some feedback came in that
+the add_worktree() method was already too complex. It is better to
+extract this logic into a helper method to reduce this complexity.
 
+Reported-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/worktree.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ builtin/worktree.c | 33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index c806aa2b261..25807e63a25 100644
+index 2771a6dc793..c806aa2b261 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -292,6 +292,18 @@ worktree_copy_cleanup:
- 	free(to_file);
+@@ -236,6 +236,22 @@ static void check_candidate_path(const char *path,
+ 		die(_("'%s' is a missing but already registered worktree;\nuse '%s -f' to override, or 'prune' or 'remove' to clear"), path, cmd);
  }
  
-+static int checkout_worktree(const struct add_opts *opts,
-+			     struct strvec *child_env)
++static void copy_sparse_checkout(const char *worktree_git_dir)
 +{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	cp.git_cmd = 1;
-+	strvec_pushl(&cp.args, "reset", "--hard", "--no-recurse-submodules", NULL);
-+	if (opts->quiet)
-+		strvec_push(&cp.args, "--quiet");
-+	strvec_pushv(&cp.env_array, child_env->v);
-+	return run_command(&cp);
++	char *from_file = git_pathdup("info/sparse-checkout");
++	char *to_file = xstrfmt("%s/info/sparse-checkout", worktree_git_dir);
++
++	if (file_exists(from_file)) {
++		if (safe_create_leading_directories(to_file) ||
++			copy_file(to_file, from_file, 0666))
++			error(_("failed to copy '%s' to '%s'; sparse-checkout may not work correctly"),
++				from_file, to_file);
++	}
++
++	free(from_file);
++	free(to_file);
 +}
 +
- static int add_worktree(const char *path, const char *refname,
- 			const struct add_opts *opts)
+ static void copy_filtered_worktree_config(const char *worktree_git_dir)
  {
-@@ -425,17 +437,9 @@ static int add_worktree(const char *path, const char *refname,
- 	if (ret)
- 		goto done;
- 
--	if (opts->checkout) {
--		struct child_process cp = CHILD_PROCESS_INIT;
--		cp.git_cmd = 1;
--		strvec_pushl(&cp.args, "reset", "--hard", "--no-recurse-submodules", NULL);
--		if (opts->quiet)
--			strvec_push(&cp.args, "--quiet");
--		strvec_pushv(&cp.env_array, child_env.v);
--		ret = run_command(&cp);
--		if (ret)
--			goto done;
+ 	char *from_file = git_pathdup("config.worktree");
+@@ -379,21 +395,8 @@ static int add_worktree(const char *path, const char *refname,
+ 	 * If the current worktree has sparse-checkout enabled, then copy
+ 	 * the sparse-checkout patterns from the current worktree.
+ 	 */
+-	if (core_apply_sparse_checkout) {
+-		char *from_file = git_pathdup("info/sparse-checkout");
+-		char *to_file = xstrfmt("%s/info/sparse-checkout",
+-					sb_repo.buf);
+-
+-		if (file_exists(from_file)) {
+-			if (safe_create_leading_directories(to_file) ||
+-			    copy_file(to_file, from_file, 0666))
+-				error(_("failed to copy '%s' to '%s'; sparse-checkout may not work correctly"),
+-				      from_file, to_file);
+-		}
+-
+-		free(from_file);
+-		free(to_file);
 -	}
-+	if (opts->checkout &&
-+	    (ret = checkout_worktree(opts, &child_env)))
-+		goto done;
++	if (core_apply_sparse_checkout)
++		copy_sparse_checkout(sb_repo.buf);
  
- 	is_junk = 0;
- 	FREE_AND_NULL(junk_work_tree);
+ 	/*
+ 	 * If we are using worktree config, then copy all current config
 -- 
 gitgitgadget
 
