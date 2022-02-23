@@ -2,80 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B48EC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 15:04:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E694C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 15:33:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241895AbiBWPEg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 10:04:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36104 "EHLO
+        id S242091AbiBWPeK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 10:34:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241883AbiBWPEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 10:04:35 -0500
-Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 748B6AC900
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:04:07 -0800 (PST)
-Received: by mail-vs1-xe2e.google.com with SMTP id t22so3480732vsa.4
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:04:07 -0800 (PST)
+        with ESMTP id S233112AbiBWPeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 10:34:09 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1615B151A
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:33:41 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id h15so27786564edv.7
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:33:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=u4z+g5RSEanj7BQvkvG+gV+G+QBIK3Exa8sFAQMjCHM=;
-        b=EIz3pWROAIppQLTztnoj8/mbFnwJHcoAGAaUGLxy60rPIEJuSIESJNgdzN/I2eNgge
-         KB3m0U8b8sUdgPe9wt5MWD/XCTcA54WjKjFU7UNj+NhZ6trErsvXmLTh4YN9/quOkB9U
-         1xTOKe43QSA6DHTCX/n9gVwhJavAo37YV8nqscqzEqDmLLJ5ff+6r/MdOz4OziztnHbK
-         RnphBy0GXV+2recEgJ9I7HFOBr4BRP8GhfAJtMYkPRanOSusX1RWfGmp5nVqiaYracS1
-         brxlRNHRmSphgLXry/aqq1QjCcILYl3+FfqHzpo07qB3Q/GntWjJDuO2TIcA9Y6ekmCS
-         v6Dw==
+        bh=pvH54qV6UBJof1si+Hhq6cdvrx/iXWGdn3psQyGAVSE=;
+        b=o+Q5+v6GzG57Owwqv0mCxezMJdpuYJhvhhspOw9R63rHli79McPG5nplhXGvVUDq6b
+         k+3v4ycZAfNH6g8YSK2yxjAT4Q8TcmA490BvUgJfpKxvIcRDDBuwnmn0RN6O1QOPloK8
+         vm8jE97grxv4cVyTri2zJY2IcYC1bnv1d9X+Lofs25GDYHz9omE4ldBGZRzfOFsF5Er9
+         LkN4/Arr2qEtClBfVO8JTLbYXOpOngx4yCmntGveMPolLysjGvTJeqaeXpaVQE7DSutp
+         ByAZ8qUCHFP5dwn6v53iPtmlzS4E5zSQrbAPw0WCNTEAFlfJrOBBpxavI10RdrZn4wlW
+         vk9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=u4z+g5RSEanj7BQvkvG+gV+G+QBIK3Exa8sFAQMjCHM=;
-        b=nEqcJHR7tydfEfIRjVxRVjFi7X7TJplGAeaQfKnePljlAZgujBdWOaDMXCIFsJo0DR
-         8i3AZN/0QMBGv4ewVXwnJzoYOY6IX+QON9AEd8Na9TXn0WEdEKnCa6d6qOoD6Zao3gdY
-         YsABPtvue5HU2X6POjUpIooq2cH1yKVLRNyvXpDJ23EAFK6urkNu/n7IHna5dpoYcE86
-         v0LXGF71U6vnxbUDNOpYrZ66jBc0Dcdz5l36XU0qgm+buirxTOT/L5xp8cMYaDUXhWeX
-         uVI66IveY0xSRYhM15bRFEwl/D2aKMkiZqjz38iTJ+o25omQAlOgoGY0U5Zmfmmv5cL9
-         q+Yg==
-X-Gm-Message-State: AOAM532oMiDeKTl0hIgBMxkFHWNFagceuSoCfLCHTCjcH8/LMt2SlSwI
-        dbTF0sMLwwWgmLdF8feEomPbgFUrrkMt2BOWcPQ=
-X-Google-Smtp-Source: ABdhPJyhC32A4Fw4QilRCQ/X4ajndsUPGnTK+trqjjdiupMIoCMnD2WnfrxwvFP1HwiE4+f5nNqf6ca277OfY2BGg3s=
-X-Received: by 2002:a67:ac09:0:b0:304:f097:e6fb with SMTP id
- v9-20020a67ac09000000b00304f097e6fbmr12710788vse.85.1645628646565; Wed, 23
- Feb 2022 07:04:06 -0800 (PST)
+        bh=pvH54qV6UBJof1si+Hhq6cdvrx/iXWGdn3psQyGAVSE=;
+        b=vSU3mcbnDe9i86vEsUPhqwi+1KaSkqgnbLAXjMx1PDIGP50ETKeXcrN24j/qUChiI7
+         ORQn5IxVHWkSuDPxDK96bojQg8LU/WAWjo5zOua4xv6f/J40sD4XhFlZlVtYnHk66ari
+         q5K/JlLqPb60AMJo/6rYgznrj6FJymSWfrdWlMsrEl7gzY9y2z7wXPhj9weq1oB4z6I6
+         sEMl5nABQSeFrF0xvqZ0GmOcETIzb4bgkViHIikCinxfZ8ETISxQSJdNeEYCD0ukZwo7
+         d9tw5IECFwrqjSd4T7VMWqbN0TosbVVVbNRGCDeL4ZEu4kknyFQ20dVDPPmCvYeMVfVe
+         YNJw==
+X-Gm-Message-State: AOAM533zsvOnGQw/NNRo5sAltItQT7Xbk5pUe/n8IGQnVOqS/QefsEsc
+        14zi+Tfvm/2eWklEVc6F0BUNVH7F8jmrKCBRAUAbX5MpSKk=
+X-Google-Smtp-Source: ABdhPJxQQcOU3C+iBjSwTZNJykzDnb711jgnYzI42Ey9KrjtNV28N3jzR8B+Spxenmp1ckU+E+hcQvEXef0jRGq8aCw=
+X-Received: by 2002:a05:6402:369c:b0:413:2bc0:3f00 with SMTP id
+ ej28-20020a056402369c00b004132bc03f00mr6745014edb.126.1645630420289; Wed, 23
+ Feb 2022 07:33:40 -0800 (PST)
 MIME-Version: 1.0
-References: <20211125125720.231039-1-ms@kilabit.info>
-In-Reply-To: <20211125125720.231039-1-ms@kilabit.info>
-From:   Halil SEN <halilsen@gmail.com>
-Date:   Wed, 23 Feb 2022 16:03:55 +0100
-Message-ID: <CAOeUTuuyftWB=PaA9HPDnyxsb40R3Z6GD65TB92jEW+38goqRg@mail.gmail.com>
-Subject: Re: [PATCH] gitk: fix error when resizing gitk
-To:     Shulhan <ms@kilabit.info>
-Cc:     git@vger.kernel.org, paulus@ozlabs.org
+References: <CABPp-BERVCynOVvBq0QL49Ah+gy3W2snUVWBHfzXaVpXX3Dpyg@mail.gmail.com>
+ <3bdff4ba-fb5f-e369-306d-5510ab20893a@gmail.com>
+In-Reply-To: <3bdff4ba-fb5f-e369-306d-5510ab20893a@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 23 Feb 2022 07:33:29 -0800
+Message-ID: <CABPp-BF_ygATPVGfSR24URm5ZTHBJwJd0miMtgMgNWfw_o33Nw@mail.gmail.com>
+Subject: Re: BUG: fast-import, ftruncate, and file mode
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Shulhan,
+On Wed, Feb 23, 2022 at 5:59 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>
+> On 23/02/2022 07:47, Elijah Newren wrote:
+> > Hi,
+> >
+> > fast-import makes use of odb_mkstemp(), which creates a secure
+> > temporary file and opens it with mode 0444, and then uses it for its
+> > packfile writing.  Sometimes, fast-import will call its
+> > truncate_pack() function, which makes use of ftruncate().
+> >
+> > According to my local manpage, "With ftruncate(), the file must be
+> > open for writing; with truncate(), the file must be writable."
+> >
+> > The writable requirement does not appear to be enforced by the kernel
+> > on common filesystems like ext4 or zfs, but this is enforced on some
+> > filesystems.  Apparently a "VxFS Veritas filesystem" got triggered by
+> > this...and some helpful bug reporters tracked this problem down and
+> > found a workaround (for the filter-repo usecase, they recompiled a
+> > special copy of git using mode 0644 for odb_mkstemp, since it was just
+> > an intermediate step anyway and won't be used elsewhere).
+>
+> Am I missing something or is this really a file system bug? Surely if we
+> have opened a file for writing the file permissions when we call
+> ftruncate() should be irrelevant?
+>
+> Best Wishes
+>
+> Phillip
 
-I just stumbled upon your patch while looking for the patch
-that I sent at the beginning of this week for the exact same
-issue.  It turns out you sent your patch two months ago.  I
-should have checked before debugging :face_palm:
-
-If you would like to check it out, here is my patch in [1].
-
-I see that you have fixed resizeclistpanes but exact same issue
-is present on resizecdetpanes as well.
-
-I am not sure if the conditional logic is necessary because we
-are sure that `sash#` includes x, y positions in ttk mode but it
-includes only the x position if not ttk. Also setting the y coord
-to 0 might have unintended consequences.
-
-
-[1] https://lore.kernel.org/git/0b5b8fb591e434a2a24b1f58d1ce3fc7da48a28e.1645386457.git.gitgitgadget@gmail.com/
-
-Signed-off-by: Halil Sen <halil.sen@gmail.com>
+Oh, indeed, looks like I can't read late at night.  Sorry for the noise.
