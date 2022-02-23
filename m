@@ -2,48 +2,48 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D792BC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 12:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02193C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 12:35:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240363AbiBWMgG (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S240450AbiBWMgG (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 23 Feb 2022 07:36:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42340 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240047AbiBWMgE (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239950AbiBWMgE (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Feb 2022 07:36:04 -0500
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEC779E9C0
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 04:35:34 -0800 (PST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id 3402B3201464
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:35:34 -0500 (EST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F2E08AE46
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 04:35:33 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 9CC5E3201D6A
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:35:30 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 23 Feb 2022 07:35:34 -0500
+  by compute2.internal (MEProxy); Wed, 23 Feb 2022 07:35:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=WNrVd9TZw72dp++gIuub95XhC9T4rkzfYLy0z/
-        VuXjk=; b=CXj2cSbzj36fMGua5pyNbBQb6t6zfuENxnlDGzH0VYVxKpc2mCthj+
-        0tOY/aqmAus8LRCYcBWhWwM4WCBKqFNVtmBYpizjBd9+HKqPNuef8b8/BPs4Dd0X
-        mlLQuuuSM5g5vebpBWY1/XN1CWjAwfYfZynTe+942oHlWXvAeTxO2obl4mhTzfpB
-        +C4SbZ0Sin8PS52M0On0UdR4xkt6m7WwyXizgR0uLmkzGjipG2eQYE4KOPX8vS24
-        g/pOD1ObRu5A0Sq6oD3NYNjfAbWF47rhAcrR8Wq1oEmW13LkekKNPXn6pWnrA1Vy
-        AWTr5LZNXBsEEZFxQ4eCOEtdAMCPqggw==
+        :subject:to:to; s=fm3; bh=5UB2CChNp/T2WLHWQQhQiMy1WWeNyh4EH/YSJ9
+        GAmDA=; b=FNPjHVCIa5Ufw0PW3ZoM16EIDfrcenJyOPP/yGURDoLAZO8Wjy7glp
+        +CzfakPaL7IagQXUg3X8l84vV1f6PLqJgpgS4V185oYHdsGTbwxmOSA9ilojcxEm
+        6l9F8KhVNY2+r+zYaA9CoPji/NlyumCN3HkRtWuaOBRmthWVaZNyDmK1nCbjDAoi
+        56YV+uodixqVKppN5/dzy7EwpfJDhzaQ0GAPAwhbmox/BhwGA4t4iE46eInWJ8Pa
+        xKv7JmGZKGOtLhJ7h2CeiiqfDW6BylsfG/Dy23pgEL9XkcqY7a3TsYLs5VpTs1uh
+        1SFXrExnyKU+4XdjJW+UhO1TmR+AwAlQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=WNrVd9TZw72dp++gI
-        uub95XhC9T4rkzfYLy0z/VuXjk=; b=dQgdHMoCHkR7iNLnxAanX/IdaBCcGn4a2
-        EF3f2wtJWfA001W1QbIIv8VE1ttFAc+6hua9E84h6BRBBWaeLgjC3Ral3Ito4wUQ
-        u8wrAmNdO/2S6CxxrPdkG106JTNpfRVkE3Wtw/41o/DwCp44qEZKpwCqjsnqluYr
-        3WAFOGFpEzeAoFVrnT4PRriBkJ0ehbvDsFkH4gda2U+53H+DsIblJKP02JW/QXto
-        8ubtqZEwyh5kFle6BXqIVU3m8OobT77mARc53Za91BdOZau0FqD1TgrOZ//Q4eEN
-        AwQBiPGQ4jGR+0MSlE5bOydXRpI15RIAUEObKq+lG0dfxwj8q86Rg==
-X-ME-Sender: <xms:FSoWYgjyZBMh8ga1GHOcUhHlDERaEWmXXqRBangq_oNry7_ZraBIQA>
-    <xme:FSoWYpBZxEpnj4KIomWgrRmKekrKEDStmWQfcuvqSl8H9kXwkWIae8ic6p6r9rjL0
-    jOpmRNV2c7oEGd0Ig>
-X-ME-Received: <xmr:FSoWYoHaMaajGH3SWM012q4bT4U5FTZGlxHWyLsf8mDkNDfk8Bkpt6v8i7GA2kzY4wVx1Jits8pE48R5Rmv4kxWPFk9DpHIhpzGD3DiL3T2bUV0OBdkpKmg>
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=5UB2CChNp/T2WLHWQ
+        QhQiMy1WWeNyh4EH/YSJ9GAmDA=; b=HVy7UVVtkI9Yy0dZHk8xuA5NLmoLixcvJ
+        NwC3kN4Cvlgp4Ddv6vO0b++W1HzKHBNsSY37xgbw+s5OtFhqe7UDfZgbbR8bSLpq
+        1vV4a/C9GpxMBVnbGiNCPF5KCdKt39CLpxJtm2VxHKgipemfaStEarQKYLlwfLJv
+        F2oTnkWAlbo12tV2kMQjLOI11NEEXzj4lOIMXOzCVYheWkEd1rEXkOqI70ae3GNV
+        rH6cYkQI4MJz8kUdPUNvDiAm0FVzeyCqu5+gF1n+KG9JsYROYdmGYGGgHO+jMZOw
+        KiDQcUVwAPwYSwxQjkZb8eNtVYY+X2uZsCjiP4CBhmMwWcOgLjt0g==
+X-ME-Sender: <xms:ESoWYiH8vLc-S2gs1jOqRDSZUEczPrZY1qdz-bYMSTy0uafKghcVGA>
+    <xme:ESoWYjUcX1or4wo28UlS7l1Ou6z0MmqFvASzIRnhhUKezsztYC-8NAF_ZMFfnSChX
+    m5_mUnobXJXXb8v7g>
+X-ME-Received: <xmr:ESoWYsL4EtxEo7toluN8EHvzn53Imi03W3eikDWef5m3cUc5zGm_8pINQKRzuxmhGORkOPLxFZ2cyQVbyA58RgtvO-GSyJWGsv60CZkOsDGfLXmgP0miwZc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrledtgdegtdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
@@ -51,26 +51,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrledtgdegtdcutefuodetggdote
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgfejueevjeetudehgffffeffvdejfeejie
     dvkeffgfekuefgheevteeufeelkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:FSoWYhRbWR8d7uI7BsIrflkkZ34oUv9kJd02743LJIz7RMFz8THQLw>
-    <xmx:FSoWYtyDkyv1ncuNOpbGdX_Kg3PjyyJoTh2dZcOiNmW3JzYbUO_gZA>
-    <xmx:FSoWYv5o_e1EX2s3s1MRE05r-UKnbWYWuI-PnSPfymIl1hF2bz1CkA>
-    <xmx:FSoWYmsuhGgPFZSQzB_eqte85LnqV6OXVLlEuoYrJ2nCGfeX8y6F1g>
+X-ME-Proxy: <xmx:ESoWYsGiTZOrqDEXtgJ2YRpc36A3xFD1LOpzNRGWzux7QHd66XAEsQ>
+    <xmx:ESoWYoV2dxxrs68JNd0tEhkQU4DD2ermH1c7RbLRvk-HBhK0uPFH6A>
+    <xmx:ESoWYvOQ24z9GjxfUXiKShJJhLYDU7Lv7eLN1NRMjLWKfUxX_AY7XQ>
+    <xmx:EioWYrDANCdhnOcS2qmRS9VdXZr9dee5o5Smv5rPq9AsQpJGqbefSw>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 23 Feb 2022 07:35:33 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 23 Feb 2022 07:35:29 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 7b2604ad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 4d3e29f8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
         for <git@vger.kernel.org>;
-        Wed, 23 Feb 2022 12:35:32 +0000 (UTC)
-Date:   Wed, 23 Feb 2022 13:35:31 +0100
+        Wed, 23 Feb 2022 12:35:28 +0000 (UTC)
+Date:   Wed, 23 Feb 2022 13:35:27 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Subject: [PATCH 2/5] fetch: avoid lookup of commits when not appending to
- FETCH_HEAD
-Message-ID: <80f993dddd521133154a751aeaab86adee409eea.1645619224.git.ps@pks.im>
+Subject: [PATCH 1/5] upload-pack: look up "want" lines via commit-graph
+Message-ID: <ca5e136cca495c7d927e99f5ae8a672d93823eea.1645619224.git.ps@pks.im>
 References: <cover.1645619224.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wMczwc6dhM75p+2T"
+        protocol="application/pgp-signature"; boundary="AaGX7+af4SEkVC4o"
 Content-Disposition: inline
 In-Reply-To: <cover.1645619224.git.ps@pks.im>
 Precedence: bulk
@@ -78,142 +77,122 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---wMczwc6dhM75p+2T
+--AaGX7+af4SEkVC4o
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When fetching from a remote repository we will by default write what has
-been fetched into the special FETCH_HEAD reference. The order in which
-references are written depends on whether the reference is for merge or
-not, which, despite some other conditions, is also determined based on
-whether the old object ID the reference is being updated from actually
-exists in the repository.
+During packfile negotiation the client will send "want" and "want-ref"
+lines to the server to tell it which objects it is interested in. The
+server-side parses each of those and looks them up to see whether it
+actually has requested objects. This lookup is performed by calling
+`parse_object()` directly, which thus hits the object database. In the
+general case though most of the objects the client requests will be
+commits. We can thus try to look up the object via the commit-graph
+opportunistically, which is much faster than doing the same via the
+object database.
 
-To write FETCH_HEAD we thus loop through all references thrice: once for
-the references that are about to be merged, once for the references that
-are not for merge, and finally for all references that are ignored. For
-every iteration, we then look up the old object ID to determine whether
-the referenced object exists so that we can label it as "not-for-merge"
-if it doesn't exist. It goes without saying that this can be expensive
-in case where we are fetching a lot of references.
+Refactor parsing of both "want" and "want-ref" lines to do so.
 
-While this is hard to avoid in the case where we're writing FETCH_HEAD,
-users can in fact ask us to skip this work via `--no-write-fetch-head`.
-In that case, we do not care for the result of those lookups at all
-because we don't have to order writes to FETCH_HEAD in the first place.
+The following benchmark is executed in a repository with a huge number
+of references. It uses cached request from git-fetch(1) as input and
+contains about 876,000 "want" lines:
 
-Skip this busywork in case we're not writing to FETCH_HEAD. The
-following benchmark performs a mirror-fetch in a repository with about
-two million references:
+    Benchmark 1: git-upload-pack (HEAD~)
+      Time (mean =C2=B1 =CF=83):      7.113 s =C2=B1  0.028 s    [User: 6.9=
+00 s, System: 0.662 s]
+      Range (min =E2=80=A6 max):    7.072 s =E2=80=A6  7.168 s    10 runs
 
-    Benchmark 1: git fetch --prune --no-write-fetch-head +refs/*:refs/* (HE=
-AD~)
-      Time (mean =C2=B1 =CF=83):     75.388 s =C2=B1  1.942 s    [User: 71.=
-103 s, System: 8.953 s]
-      Range (min =E2=80=A6 max):   73.184 s =E2=80=A6 76.845 s    3 runs
-
-    Benchmark 2: git fetch --prune --no-write-fetch-head +refs/*:refs/* (HE=
-AD)
-      Time (mean =C2=B1 =CF=83):     69.486 s =C2=B1  1.016 s    [User: 65.=
-941 s, System: 8.806 s]
-      Range (min =E2=80=A6 max):   68.864 s =E2=80=A6 70.659 s    3 runs
+    Benchmark 2: git-upload-pack (HEAD)
+      Time (mean =C2=B1 =CF=83):      6.622 s =C2=B1  0.061 s    [User: 6.4=
+52 s, System: 0.650 s]
+      Range (min =E2=80=A6 max):    6.535 s =E2=80=A6  6.727 s    10 runs
 
     Summary
-      'git fetch --prune --no-write-fetch-head +refs/*:refs/* (HEAD)' ran
-        1.08 =C2=B1 0.03 times faster than 'git fetch --prune --no-write-fe=
-tch-head +refs/*:refs/* (HEAD~)'
+      'git-upload-pack (HEAD)' ran
+        1.07 =C2=B1 0.01 times faster than 'git-upload-pack (HEAD~)'
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fetch.c | 42 +++++++++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 15 deletions(-)
+ upload-pack.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e8305b6662..4d12c2fd4d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1146,7 +1146,6 @@ static int store_updated_refs(const char *raw_url, co=
-nst char *remote_name,
- 	     want_status <=3D FETCH_HEAD_IGNORE;
- 	     want_status++) {
- 		for (rm =3D ref_map; rm; rm =3D rm->next) {
--			struct commit *commit =3D NULL;
- 			struct ref *ref =3D NULL;
+diff --git a/upload-pack.c b/upload-pack.c
+index 8acc98741b..3a851b3606 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1400,13 +1400,19 @@ static int parse_want(struct packet_writer *writer,=
+ const char *line,
+ 	const char *arg;
+ 	if (skip_prefix(line, "want ", &arg)) {
+ 		struct object_id oid;
++		struct commit *commit;
+ 		struct object *o;
 =20
- 			if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW) {
-@@ -1157,21 +1156,34 @@ static int store_updated_refs(const char *raw_url, =
-const char *remote_name,
- 			}
+ 		if (get_oid_hex(arg, &oid))
+ 			die("git upload-pack: protocol error, "
+ 			    "expected to get oid, not '%s'", line);
 =20
- 			/*
--			 * References in "refs/tags/" are often going to point
--			 * to annotated tags, which are not part of the
--			 * commit-graph. We thus only try to look up refs in
--			 * the graph which are not in that namespace to not
--			 * regress performance in repositories with many
--			 * annotated tags.
-+			 * When writing FETCH_HEAD we need to determine whether
-+			 * we already have the commit or not. If not, then the
-+			 * reference is not for merge and needs to be written
-+			 * to the reflog after other commits which we already
-+			 * have. We're not interested in this property though
-+			 * in case FETCH_HEAD is not to be updated, so we can
-+			 * skip the classification in that case.
- 			 */
--			if (!starts_with(rm->name, "refs/tags/"))
--				commit =3D lookup_commit_in_graph(the_repository, &rm->old_oid);
--			if (!commit) {
--				commit =3D lookup_commit_reference_gently(the_repository,
--									&rm->old_oid,
--									1);
--				if (!commit)
--					rm->fetch_head_status =3D FETCH_HEAD_NOT_FOR_MERGE;
-+			if (fetch_head->fp) {
-+				struct commit *commit =3D NULL;
+-		o =3D parse_object(the_repository, &oid);
++		commit =3D lookup_commit_in_graph(the_repository, &oid);
++		if (commit)
++			o =3D &commit->object;
++		else
++			o =3D parse_object(the_repository, &oid);
 +
-+				/*
-+				 * References in "refs/tags/" are often going to point
-+				 * to annotated tags, which are not part of the
-+				 * commit-graph. We thus only try to look up refs in
-+				 * the graph which are not in that namespace to not
-+				 * regress performance in repositories with many
-+				 * annotated tags.
-+				 */
-+				if (!starts_with(rm->name, "refs/tags/"))
-+					commit =3D lookup_commit_in_graph(the_repository, &rm->old_oid);
-+				if (!commit) {
-+					commit =3D lookup_commit_reference_gently(the_repository,
-+										&rm->old_oid,
-+										1);
-+					if (!commit)
-+						rm->fetch_head_status =3D FETCH_HEAD_NOT_FOR_MERGE;
-+				}
- 			}
+ 		if (!o) {
+ 			packet_writer_error(writer,
+ 					    "upload-pack: not our ref %s",
+@@ -1434,7 +1440,7 @@ static int parse_want_ref(struct packet_writer *write=
+r, const char *line,
+ 	if (skip_prefix(line, "want-ref ", &refname_nons)) {
+ 		struct object_id oid;
+ 		struct string_list_item *item;
+-		struct object *o;
++		struct object *o =3D NULL;
+ 		struct strbuf refname =3D STRBUF_INIT;
 =20
- 			if (rm->fetch_head_status !=3D want_status)
+ 		strbuf_addf(&refname, "%s%s", get_git_namespace(), refname_nons);
+@@ -1448,7 +1454,15 @@ static int parse_want_ref(struct packet_writer *writ=
+er, const char *line,
+ 		item =3D string_list_append(wanted_refs, refname_nons);
+ 		item->util =3D oiddup(&oid);
+=20
+-		o =3D parse_object_or_die(&oid, refname_nons);
++		if (!starts_with(refname_nons, "refs/tags/")) {
++			struct commit *commit =3D lookup_commit_in_graph(the_repository, &oid);
++			if (commit)
++				o =3D &commit->object;
++		}
++
++		if (!o)
++			o =3D parse_object_or_die(&oid, refname_nons);
++
+ 		if (!(o->flags & WANTED)) {
+ 			o->flags |=3D WANTED;
+ 			add_object_array(o, NULL, want_obj);
 --=20
 2.35.1
 
 
---wMczwc6dhM75p+2T
+--AaGX7+af4SEkVC4o
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIWKhIACgkQVbJhu7ck
-PpTL8BAArCltknS4GW40YRolowxQzF7wo2RGPFleepDOK5SaeYJg2nrbrJpILGkJ
-DnFbHbft7250Tj/gqaqQiWmzAjkqc4OJ6L6Do2Pos2c4mQkzGwONeEm0+7JwaA31
-zxwISXMtjX1gWBsrDHQ4MVy5o2xXR0p7MdGmTFDkNGUNLX2Ho17cVYU7TamswB5/
-MzBfxXft3+U4rcZ9P7dPXehtFF2yqo4ka+et5DBRS/TkulvoxidI2uwQ4w6ZZ3xF
-Is+A3e0Y4xP08l4tmYgD0oePImJu1vuc32vKd6ZLVrOOJFZE7A56j5JbmXqvtt8m
-xvQSuE/UlMTKdE0wIVM+QfGLrrWOatQgoFDVvVoaE2d+t9sl0ThnFzAf/2dKP1bj
-ZP87NQaor+3yOuQb5K46qp6AJNZPTjpwLjWbJYqPBionwiPLUAFcK63+7o6XXb5l
-8XuE/hagd1z9k3lGDAWiZe99Ad0jcmk1ZMNKXVMg8oEmA5p6Hwwq4z8t4u9iErnA
-3Q4eMAu7oAz5vxwedF8l6C82COInVZwqD2r5hyhpwCAbRFp4z0DPW+E1L0toRzPI
-xCo7eWa1TpTE1kJw33M2xx4Pu3B0A9hVCTZwFSmlmICktdPOcZoYTueEvK4Ulo3f
-C0f/aZS8uNAJH0XDkDJlbo7a8iTNTM8vt8aC6dE1fKuHA0SqTKY=
-=HOAG
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIWKg4ACgkQVbJhu7ck
+PpTlhhAAl+c5LNHMm20tER1bpqR4udjywHsJD5lxzs8JGH0hkDECmLm+a2kjTiw5
+9+tfG+r9Rnpc/7Ev/MuFRfhFcboV6GpT9hPHfMbh3HZ3kGJuTKChr2ix8oxiQ7aY
+qqhkEplhF23gz/fwdmxbaS2xu5hU9TFQOZSTDWY0ElnAT8J0wFRd/DepzWvi15QP
+oCFwRueLyBaU4SvLnlXGPKdbBGal1fzqOSVF8Ko+AmdjcYoctuxIeW1iMDx6SSS6
+H0pBeQA1NwwuDoDXHEmdzcKhmPuIHmVUJ34PBqQRJ7j672vJlFY1egS/NBCdGHVl
+ScU/AwlsV2/6FdvVQzozyGkLbYo3rbXST9b80H+hOmjxZh/tHVk4wwtubwBWQelx
+Q8XUzXhBQhoCYy8wlZtpLOuiFrVhWRYBAOB9++AuAo+KfRqmyo+el5OXqDWws+EO
+xLjWFoQMc11OihPcSGYqvbvkgdM1QNSRPE0thV9CtydMP/zQEQ+lktFwYe5mHkKj
+Di3gs0JUDOiXZjpl842WhWlfKhI0xlWs75+r+JfB2kMkeGtANSAfz2+5dMVRFFu/
+M9nRuKB1bUiJGhO06CNpgR9um8Mu5C5XzzS2DDwQ6clZ3/fZfIW28zNmHqDtwrEy
+cf/7cUyBk5k96uX3/MpxdN/w8azDcwHok7NZCsasMAnTKU9Gn94=
+=AICv
 -----END PGP SIGNATURE-----
 
---wMczwc6dhM75p+2T--
+--AaGX7+af4SEkVC4o--
