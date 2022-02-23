@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1A23C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98A18C4332F
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:29:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241585AbiBWOaQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 09:30:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47342 "EHLO
+        id S241603AbiBWOaS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 09:30:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241592AbiBWOaK (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241598AbiBWOaK (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Feb 2022 09:30:10 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAFB3B2D43
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:31 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id s1so13525921wrg.10
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:31 -0800 (PST)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0F27B2D48
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:32 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id i19so13850187wmq.5
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:29:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3mzYoBMb/LqABNWhOwFeFBJRtjvu3vUV5yKXSuTkHtg=;
-        b=lfSsNhM3l2ewttQtOcptVGRW3v2JvEW26YvOb+TOUXu2PkNaSnEcF3j2WtBBm1MSoA
-         +NoLsMmWyPNp01muT6dQ2nS5637eg3VeF43DJ8ZlKSiwGV/inFCk0agNF/uEjYydJH2t
-         FDlUQBP2bUiIZc9OaLyVwjT65tyxAqJS4D5qtRMstS0C6A7hRTCU4dtZ5mTjpqEck+2e
-         3HqNDbXVZYoWF2Zw10x3K1W/GGwG1QfYqojckthMcSGoQEl/tKD+Nrwl/V6LW+r0/EyL
-         u/sIRdAydtehUM/RL4sWHgURGRBVULc3JDiItQUPs5lmzGL2FlBhenpegUcmMprS3Iyk
-         e8Ow==
+        bh=tO7h+DeaJ3/BEvEuC8xoY3AML7GXYy7kJ7VgjcRzbPU=;
+        b=b/j21jORB+CrTFZ91EUbuzpLkcgCnsOi1dGMhh5lw3k2b4tvfB8J5ceOFMhWyuwZ3f
+         KllVfszSgcVWD/P/11QkmE8E9J4PrgHFo3OOG4uz9Se0T6U4GJEGjGZvU6isorH1bZiE
+         e242VJ3rYOeaglWkri2XTDPlLOCpqVPPqVT0KWY4pIhVOY59D60OIt7W0TZWhdJmeC3r
+         49enlhm6V8EjEW/rUqJZsCUCi4pYd1vXM5m1Hyxc2TH1mUqeBC/2W0ubrObAj8TSbi0g
+         XsC2C+mzZlkdPHbb1cgZhSN6gH1JdfezVj80eujA8Dmrq78wyjqH8HNVv/fsZrMVhbX6
+         bCPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3mzYoBMb/LqABNWhOwFeFBJRtjvu3vUV5yKXSuTkHtg=;
-        b=MAhKJi/ytXh9duCuQPltJ/cCjDtz8Z2E/iMcWsTvEhT6xGi7FJ9X3u06ox6TQjA3+F
-         EsKChZAYkIcZYQ9Uxo8nmqTqOIR/fapW8mZm7Lh2GX1o9HNh1HfM0w4gsx09Dmhi6Sal
-         d6KALKiAe+BY40k+g3MuYs8de/gvhupg6/9zUljl1t8/arXoI/044aegDHKEKlCx+FLR
-         k2DQl+BqJjaBcZ6hLGxDhd4OBGVTV4SLSKvgquczdypRAWJ0qx5IWkTX5DboKWxluUSK
-         Msdr96MB6fg9xF+4DbJ45eXh9JReKzwQSaDNE19zWr48LSPM+JycCDhwNZpWvI4Rz02P
-         uyqg==
-X-Gm-Message-State: AOAM530wQqkXRfRo+Cd1CTKL4f4e/LTP11VMcGw1qcETUGiyyo4E9QJZ
-        yqvoYnhVXRmp1erWnM/yiRA9eafQCSg=
-X-Google-Smtp-Source: ABdhPJxcViOLBcBl3zdUGJi3MvlJW2pC9RH9yCw0dDZgVd0BmxXiS2UAG6GgSxLuk1iBwspUcRmh4A==
-X-Received: by 2002:adf:fe4a:0:b0:1e3:31af:6f02 with SMTP id m10-20020adffe4a000000b001e331af6f02mr24036974wrs.10.1645626570200;
-        Wed, 23 Feb 2022 06:29:30 -0800 (PST)
+        bh=tO7h+DeaJ3/BEvEuC8xoY3AML7GXYy7kJ7VgjcRzbPU=;
+        b=kMC0ZSJN82Xmos2Qp4DguU0dfQNG1/lFjBb3fxS2JSr//inVQESsuKH9NvjOhPZgJ8
+         KrDVyDal7TNq1FStWsbIpCoyhW3zdAdsR4w/X2YPFFsHxrnN56Ba4ySy1BXApOihhRN9
+         EQ7pNz57OrOABZYdqapHJ6UWtfwUbfG3URyyonkth5E5eGqYTyUlyH7xtW4vfqdAjn70
+         qsCiHNSoQO+yqE1/FWwXxwv10KTMK07m9g1kqHOtE2deEty9Kq9xp8V1vWkqrEebL+83
+         67UvaoZFgOCeKQgxYCs0eclVm5/4I06SZZAR0PXPxDB+YyXr7GXCnFUvaJOHWVvr3iNG
+         kQNQ==
+X-Gm-Message-State: AOAM531x1cfoDUpjBmYF9oTCNAaeppjzkgXmWe2MrU66UTBIySBX1lzu
+        IuRxgvlNDuWrpEuzaTsNsKyMMsv1bd0=
+X-Google-Smtp-Source: ABdhPJzweMsO5s2CDmrD5rS8pKxp04mlmpSUfSIGlv5WqW/pPj3kgLTqGD5fMLRu7qgkEj3Abqw1EQ==
+X-Received: by 2002:a1c:f413:0:b0:37b:d1de:5762 with SMTP id z19-20020a1cf413000000b0037bd1de5762mr29572wma.108.1645626571073;
+        Wed, 23 Feb 2022 06:29:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h15sm2759484wmq.29.2022.02.23.06.29.29
+        by smtp.gmail.com with ESMTPSA id 8-20020a05600c26c800b0037bec3c03c9sm8686393wmv.2.2022.02.23.06.29.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 06:29:29 -0800 (PST)
-Message-Id: <1e235677ef0032753c8bde0bb9f31ef7dc398e81.1645626559.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 06:29:30 -0800 (PST)
+Message-Id: <11ee7e107b44d3fb8b59927746aaa30c880f8563.1645626559.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
 References: <pull.1154.v2.git.1645489080.gitgitgadget@gmail.com>
         <pull.1154.v3.git.1645626559.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 14:29:18 +0000
-Subject: [PATCH v3 10/11] worktree: use 'worktree' over 'working tree'
+Date:   Wed, 23 Feb 2022 14:29:19 +0000
+Subject: [PATCH v3 11/11] worktree: use 'worktree' over 'working tree'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,80 +73,72 @@ It is helpful to distinguish between a 'working tree' and a 'worktree'.
 A worktree contains a working tree plus additional metadata. This
 metadata includes per-worktree refs and worktree-specific config.
 
-This is the sixth of multiple changes to git-worktree.txt, restricted to
-the DETAILS section.
+This is the last of multiple changes to git-worktree.txt, starting at
+the LIST OUTPUT FORMAT section.
 
+The EXAMPLES section has an instance of "working tree" that must stay as
+it is, because it is not talking about a worktree, but an example of why
+a user might want to create a worktree.
+
+Helped-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-worktree.txt | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ Documentation/git-worktree.txt | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index a1ee5c43f1d..1b4d1d69a16 100644
+index 1b4d1d69a16..453e1550226 100644
 --- a/Documentation/git-worktree.txt
 +++ b/Documentation/git-worktree.txt
-@@ -319,29 +319,29 @@ linkgit:git-config[1] for more details.
+@@ -383,11 +383,11 @@ $ git worktree list
+ /path/to/other-linked-worktree  1234abc  (detached HEAD)
+ ------------
  
- DETAILS
- -------
--Each linked working tree has a private sub-directory in the repository's
-+Each linked worktree has a private sub-directory in the repository's
- `$GIT_DIR/worktrees` directory.  The private sub-directory's name is usually
--the base name of the linked working tree's path, possibly appended with a
-+the base name of the linked worktree's path, possibly appended with a
- number to make it unique.  For example, when `$GIT_DIR=/path/main/.git` the
- command `git worktree add /path/other/test-next next` creates the linked
--working tree in `/path/other/test-next` and also creates a
-+worktree in `/path/other/test-next` and also creates a
- `$GIT_DIR/worktrees/test-next` directory (or `$GIT_DIR/worktrees/test-next1`
- if `test-next` is already taken).
+-The command also shows annotations for each working tree, according to its state.
++The command also shows annotations for each worktree, according to its state.
+ These annotations are:
  
--Within a linked working tree, `$GIT_DIR` is set to point to this private
-+Within a linked worktree, `$GIT_DIR` is set to point to this private
- directory (e.g. `/path/main/.git/worktrees/test-next` in the example) and
--`$GIT_COMMON_DIR` is set to point back to the main working tree's `$GIT_DIR`
-+`$GIT_COMMON_DIR` is set to point back to the main worktree's `$GIT_DIR`
- (e.g. `/path/main/.git`). These settings are made in a `.git` file located at
--the top directory of the linked working tree.
-+the top directory of the linked worktree.
+- * `locked`, if the working tree is locked.
+- * `prunable`, if the working tree can be pruned via `git worktree prune`.
++ * `locked`, if the worktree is locked.
++ * `prunable`, if the worktree can be pruned via `git worktree prune`.
  
- Path resolution via `git rev-parse --git-path` uses either
- `$GIT_DIR` or `$GIT_COMMON_DIR` depending on the path. For example, in the
--linked working tree `git rev-parse --git-path HEAD` returns
-+linked worktree `git rev-parse --git-path HEAD` returns
- `/path/main/.git/worktrees/test-next/HEAD` (not
- `/path/other/test-next/.git/HEAD` or `/path/main/.git/HEAD`) while `git
- rev-parse --git-path refs/heads/master` uses
- `$GIT_COMMON_DIR` and returns `/path/main/.git/refs/heads/master`,
--since refs are shared across all working trees, except `refs/bisect` and
-+since refs are shared across all worktrees, except `refs/bisect` and
- `refs/worktree`.
+ ------------
+ $ git worktree list
+@@ -405,14 +405,14 @@ $ git worktree list --verbose
+ /path/to/linked-worktree              abcd1234 [master]
+ /path/to/locked-worktree-no-reason    abcd5678 (detached HEAD) locked
+ /path/to/locked-worktree-with-reason  1234abcd (brancha)
+-	locked: working tree path is mounted on a portable device
++	locked: worktree path is mounted on a portable device
+ /path/to/prunable-worktree            5678abc1 (detached HEAD)
+ 	prunable: gitdir file points to non-existent location
+ ------------
  
- See linkgit:gitrepository-layout[5] for more information. The rule of
-@@ -349,8 +349,8 @@ thumb is do not make any assumption about whether a path belongs to
- `$GIT_DIR` or `$GIT_COMMON_DIR` when you need to directly access something
- inside `$GIT_DIR`. Use `git rev-parse --git-path` to get the final path.
+ Note that the annotation is moved to the next line if the additional
+ information is available, otherwise it stays on the same line as the
+-working tree itself.
++worktree itself.
  
--If you manually move a linked working tree, you need to update the `gitdir` file
--in the entry's directory. For example, if a linked working tree is moved
-+If you manually move a linked worktree, you need to update the `gitdir` file
-+in the entry's directory. For example, if a linked worktree is moved
- to `/newpath/test-next` and its `.git` file points to
- `/path/main/.git/worktrees/test-next`, then update
- `/path/main/.git/worktrees/test-next/gitdir` to reference `/newpath/test-next`
-@@ -359,10 +359,10 @@ automatically.
+ Porcelain Format
+ ~~~~~~~~~~~~~~~~
+@@ -421,7 +421,7 @@ label and value separated by a single space.  Boolean attributes (like `bare`
+ and `detached`) are listed as a label only, and are present only
+ if the value is true.  Some attributes (like `locked`) can be listed as a label
+ only or with a value depending upon whether a reason is available.  The first
+-attribute of a working tree is always `worktree`, an empty line indicates the
++attribute of a worktree is always `worktree`, an empty line indicates the
+ end of the record.  For example:
  
- To prevent a `$GIT_DIR/worktrees` entry from being pruned (which
- can be useful in some situations, such as when the
--entry's working tree is stored on a portable device), use the
-+entry's worktree is stored on a portable device), use the
- `git worktree lock` command, which adds a file named
- `locked` to the entry's directory. The file contains the reason in
--plain text. For example, if a linked working tree's `.git` file points
-+plain text. For example, if a linked worktree's `.git` file points
- to `/path/main/.git/worktrees/test-next` then a file named
- `/path/main/.git/worktrees/test-next/locked` will prevent the
- `test-next` entry from being pruned.  See
+ ------------
+@@ -473,7 +473,7 @@ demands that you fix something immediately. You might typically use
+ linkgit:git-stash[1] to store your changes away temporarily, however, your
+ working tree is in such a state of disarray (with new, moved, and removed
+ files, and other bits and pieces strewn around) that you don't want to risk
+-disturbing any of it. Instead, you create a temporary linked working tree to
++disturbing any of it. Instead, you create a temporary linked worktree to
+ make the emergency fix, remove it when done, and then resume your earlier
+ refactoring session.
+ 
 -- 
 gitgitgadget
-
