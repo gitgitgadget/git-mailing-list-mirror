@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F406C433FE
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:31:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A2D5C433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243935AbiBWScM (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S243917AbiBWScM (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 23 Feb 2022 13:32:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37444 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243886AbiBWSbq (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S243888AbiBWSbq (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Feb 2022 13:31:46 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 487714B416
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:17 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id c18-20020a7bc852000000b003806ce86c6dso2103982wml.5
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:17 -0800 (PST)
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDF4B4B430
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:18 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id v2-20020a7bcb42000000b0037b9d960079so2158350wmj.0
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Gk7hwcevbSQEOI3ogjwQ6/G/ReEKIjYaCr5lOLD/awU=;
-        b=dwFKRG9FYKQWdJ5NSphVxPfeWyOirI2jfTjvERZJCesgx1QAzEm9fVR1czBqC7zvqk
-         zJlfseaFrfHufTVLublsDOCet68Kl91ZfmaTl4kJTLnb9SxDdLNMTDSOvos5NkwOCtXq
-         wmWL96QCBlgAzHXDGlCtJmDr9Qtu6ZTa39MoI9GX5n/eTA7lgMNrCaW4uAHjj5Qux6bd
-         bpIfF1nhczIf/q3eiBAOuSPjlfl+98/vlwJ/JN5Cp979c8AuPzmNJcuSAtvexFyiF97W
-         n7NDN6ljXVWQiDwE2cYcIktpoUzNiUBrp76wlNaWpFfncALevNVGsti49Lxv9SOEyzho
-         AHsg==
+        bh=BXrzedZOQdaUzkt+06k4i4zy10kAbzieYhw98+se9QY=;
+        b=eEZDo6vEabEsKPHUlw7qiQQPsPRUFtSiUSJYRntbnGbpiFSjMC0bakh8GWwyEZCZVM
+         zp6GyvYNT8ec6AtA5O4LDnXISefBPasPAGfHCUaMCfhd0WQ7ljT0F1NtzsDnZKC2bXsf
+         x20zYWUUAKQKldkZoPSAXujvCMwVZlA39DoKtvB4WZfUGvefbWndzf3trHTTo8OlUgCb
+         fftQ+Iq6BQsslOlO/KPZnpv8wWiSx8F9LsX4wAXUaID9GYRio9KY0U3ZWOGo6D5HZmoG
+         RmPK2Lq9/U68k0msyNYqcEZ96e753yX7qjngtTHr3ql16emASRwwwh4ETfdQIg40u44U
+         pBrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Gk7hwcevbSQEOI3ogjwQ6/G/ReEKIjYaCr5lOLD/awU=;
-        b=Os8GTahfVQA078siivyvsgwqId7iF6jZvmNpkp3X3QUQ/LnSF6IiuMFcIG98OxM86Y
-         YC43EdtUGPO7irLLRYrwmUkIwYHlZrl9Gu3lLw8LXKbhaQ6DPPuHjuR09mkSYcPfuM2Y
-         sMbBCDNv3BzI8biTzU0aQ4JS7tdO4VakQ9HT08o6hrhTdnYavNqdq8iRyrBzjtX9U5g5
-         LDYivE1HhTJsLlPaPmT0Yrn3rio3hS8QzPQJsOGvRURLDtgHl1kZiHo/sc32xTc5eq/g
-         I2Nfo/YmU6Jjw5lfvXOUjZm60XMbKtka+PaTcy6QVzzSi/l1w+doWpxfr9361/myOodX
-         1QyA==
-X-Gm-Message-State: AOAM530kM9e/FK12Y1U1odG0l9fk3aIZISQFGqmx9Zx6GU1CBtEmoJqJ
-        C0Hie6NNQqNQ2WhYbghXqqPV70iBfjQ=
-X-Google-Smtp-Source: ABdhPJwcqZ2FYfcvZ+h0Nb91OF2MTityydREWKs6WquZDCxD1E5Hg3AyLKfW71FDYtaVLR+9CJppag==
-X-Received: by 2002:a1c:a915:0:b0:380:e3de:b78f with SMTP id s21-20020a1ca915000000b00380e3deb78fmr6134867wme.19.1645641075644;
-        Wed, 23 Feb 2022 10:31:15 -0800 (PST)
+        bh=BXrzedZOQdaUzkt+06k4i4zy10kAbzieYhw98+se9QY=;
+        b=kcoz1lKKjLfxOPHUC3D6GZWBkAFtPGEV/46VATyRpnBv0eCLB01sRHc4CJGf2ITDAS
+         QNpMoYl5+aL5EwEJv4tuPbifgizj5VKDsQP887d6m0Qr6EiJE7V2WDv2ptODcBuj73qG
+         rj4IMtf9/5f7+aPLqO30nzteb4buO1JZtCh20MZOpg45Rg/SUJDkBfh1+1yTUN2xz7Rg
+         mJ67YqnET3fGoVafkRGGOTgE0o+TNpS3CiHjhvkxOTm6GmQZMBzUddZybmkcihYT3hh5
+         JHA8QpFKBcfQFLGkMaraASD6hpTVS9kNcqecrZMsfNhbW+KEdjwXwpgU5kBXhkkcE6N2
+         tH/Q==
+X-Gm-Message-State: AOAM531NmyKy7+EWqGJYl4muaCf/eZiCzUdvt2l/i7ftJnBWpiVcjWav
+        y7Dfv29FOsMLMGyXhZF5d0qtoEpr9O0=
+X-Google-Smtp-Source: ABdhPJyYZHsm/xekYdjqHGU3yk1HXJSeK9+JqiX7r+LKuWpB6mC7Kf0FGMb47XIdRFkk7wyke7IRyA==
+X-Received: by 2002:a05:600c:1c0d:b0:37c:3016:1601 with SMTP id j13-20020a05600c1c0d00b0037c30161601mr811436wms.84.1645641077421;
+        Wed, 23 Feb 2022 10:31:17 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m31sm282236wms.4.2022.02.23.10.31.14
+        by smtp.gmail.com with ESMTPSA id a16sm290626wrt.37.2022.02.23.10.31.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 10:31:15 -0800 (PST)
-Message-Id: <fa0e83b39dd3c3bb16e932c39aff080a1fdf8fe4.1645641063.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 10:31:17 -0800 (PST)
+Message-Id: <f170cb27ce70d142aef3884a8866b87d4822be5f.1645641063.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
 References: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 18:30:48 +0000
-Subject: [PATCH 10/25] bundle: add --filter option to 'fetch'
+Date:   Wed, 23 Feb 2022 18:30:50 +0000
+Subject: [PATCH 12/25] bundle: make it easy to call 'git bundle fetch'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,97 +67,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-When a repository uses an object filter for partial clone, the 'git
-bundle fetch' command should try to download bundles that match that
-filter.
-
-Teach 'git bundle fetch' to take a '--filter' option and then only
-consider bundles that match that filter (or lack thereof). This allows
-the bundle server to advertise different sets of bundles for different
-filters.
-
-Add some verification to be sure that the bundle we downloaded actually
-uses that filter. This is especially important when no filter is
-requested but the downloaded bundle _does_ have a filter.
-
-RFC-TODO: add tests for the happy path.
-
-RFC-TODO: add tests for these validations.
+Future changes will integrate 'git bundle fetch' into the 'git clone'
+and 'git fetch' operations. Make it easy to fetch bundles via a helper
+method.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- builtin/bundle.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ bundle.c | 21 +++++++++++++++++++++
+ bundle.h |  9 +++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 66f3b3c9376..27da5e3737f 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -9,6 +9,7 @@
- #include "refs.h"
- #include "config.h"
- #include "packfile.h"
-+#include "list-objects-filter-options.h"
- 
- /*
-  * Basic handler for bundle files to connect repositories via sneakernet.
-@@ -406,10 +407,13 @@ static int cmd_bundle_fetch(int argc, const char **argv, const char *prefix)
- 	};
- 	struct remote_bundle_info *stack = NULL;
- 	struct hashmap toc = { 0 };
-+	const char *filter = NULL;
- 
- 	struct option options[] = {
- 		OPT_BOOL(0, "progress", &progress,
- 			 N_("show progress meter")),
-+		OPT_STRING(0, "filter", &filter,
-+			   N_("filter-spec"), N_("only install bundles matching this filter")),
- 		OPT_END()
- 	};
- 
-@@ -449,6 +453,17 @@ static int cmd_bundle_fetch(int argc, const char **argv, const char *prefix)
- 
- 		/* initialize stack using timestamp heuristic. */
- 		hashmap_for_each_entry(&toc, &iter, info, ent) {
-+			/* Skip if filter does not match. */
-+			if (!filter && info->filter_str)
-+				continue;
-+			if (filter &&
-+			    (!info->filter_str || strcasecmp(filter, info->filter_str)))
-+				continue;
+diff --git a/bundle.c b/bundle.c
+index 3d97de40ef0..9e1b5300366 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -649,3 +649,24 @@ int unbundle(struct repository *r, struct bundle_header *header,
+ 		return error(_("index-pack died"));
+ 	return 0;
+ }
 +
-+			/*
-+			 * Now that the filter matches, start with the
-+			 * bundle with largest timestamp.
-+			 */
- 			if (info->timestamp > max_time || !stack) {
- 				stack = info;
- 				max_time = info->timestamp;
-@@ -468,6 +483,7 @@ static int cmd_bundle_fetch(int argc, const char **argv, const char *prefix)
- 	while (stack) {
- 		int valid = 1;
- 		int bundle_fd;
-+		const char *filter_str = NULL;
- 		struct string_list_item *prereq;
- 		struct bundle_header header = BUNDLE_HEADER_INIT;
- 
-@@ -483,6 +499,16 @@ static int cmd_bundle_fetch(int argc, const char **argv, const char *prefix)
- 		if (bundle_fd < 0)
- 			die(_("failed to read bundle from '%s'"), stack->uri);
- 
-+		if (header.filter)
-+			filter_str = list_objects_filter_spec(header.filter);
++int fetch_bundle_uri(const char *bundle_uri,
++		     const char *filter)
++{
++	int res = 0;
++	struct strvec args = STRVEC_INIT;
 +
-+		if (filter && (!filter_str || strcasecmp(filter, filter_str)))
-+			die(_("bundle from '%s' does not match expected filter"),
-+			    stack->uri);
-+		if (!filter && filter_str)
-+			die(_("bundle from '%s' has an unexpected filter"),
-+			    stack->uri);
++	strvec_pushl(&args, "bundle", "fetch", NULL);
 +
- 		reprepare_packed_git(the_repository);
- 		for_each_string_list_item(prereq, &header.prerequisites) {
- 			struct object_info info = OBJECT_INFO_INIT;
++	if (filter)
++		strvec_pushf(&args, "--filter=%s", filter);
++	strvec_push(&args, bundle_uri);
++
++	if (run_command_v_opt(args.v, RUN_GIT_CMD)) {
++		warning(_("failed to download bundle from uri '%s'"), bundle_uri);
++		res = 1;
++	}
++
++	strvec_clear(&args);
++	return res;
++}
+diff --git a/bundle.h b/bundle.h
+index eb026153d56..bf865b19687 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -45,4 +45,13 @@ int unbundle(struct repository *r, struct bundle_header *header,
+ int list_bundle_refs(struct bundle_header *header,
+ 		int argc, const char **argv);
+ 
++struct list_objects_filter_options;
++/**
++ * Fetch bundles from the given URI with the given filter.
++ *
++ * Uses 'git bundle fetch' as a subprocess.
++ */
++int fetch_bundle_uri(const char *bundle_uri,
++		     const char *filter);
++
+ #endif
 -- 
 gitgitgadget
 
