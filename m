@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B0E3C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:31:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAF37C433FE
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 18:31:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243878AbiBWSbn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 13:31:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37364 "EHLO
+        id S243883AbiBWSbq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 13:31:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243871AbiBWSbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 13:31:40 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0619E4B421
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:12 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id d3so25437109wrf.1
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:11 -0800 (PST)
+        with ESMTP id S243868AbiBWSbh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 13:31:37 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80A644B414
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:09 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id d17so6223522wrc.9
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 10:31:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2WQN9xs7IjLHHOx2h4dk6qc3hKyFx/uqIjlbjTom1KA=;
-        b=guFhpzwJLQT4GF9jsuVmH7YcbJNxW1UcSztfUCsXdHVlUHO8HIxWe8Owq1tnXZW5o2
-         s0mWRdIbRyYIE7ZtOQ1p9TdJ63/b9/sgzcYJyi9/6slXbiJuVlGVif5rjU58fTIwok6f
-         RsCrmxqVhknComgOmSK3TCYl2n3WErYtO36xP/ddDg0az1JPHyKgXDHntiBv9L9rTU4K
-         kJnqTTvkpOF+m6v0IlXhtVT5gnieb6WvjC8Ntkuyy2p3BF848fnN0i9Ei4irNpZhPY7o
-         cAKyndJJgLtwQ4QtO3KT5H4Rxp0mjFHF8r288Gn+864bk/foxLJV3WoIOWp/5shmR3lR
-         LFig==
+        bh=1jvZERtSPiben/T2+8gaCUWFMGf3l9m8EC+gogi8QVY=;
+        b=eq2XT1Oyl8P6ixtt93znC1LP7RuodgsmRWsU9avMQMtLbwUdMiCDbLxAqrC9Qz4i1a
+         zU3A2v2MzTq6mVvk5X4mpvHCw9poQDLsjAl40uUfb1e/jnRfXaDSBI64nj96zqtPjHRl
+         ky0v5h06wZp1Io3QXMfFLDL03cw+b/Ua7J1yO3Q6X0iTf1YGb7Xrj4btAFBaq3btyxmQ
+         i54WPb8V1HXkviyD92tcMZO4bzlPekkfGyqSLzY9zKAmWc4A3DvfHvEEhIlyIRo5tqNS
+         wJfuGyO2MVEhyz6qqpczcnjdwHeH74z2ZDPSNjDkYP3eEOck2PYPwf/YdMM+2M/6QetU
+         C6ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2WQN9xs7IjLHHOx2h4dk6qc3hKyFx/uqIjlbjTom1KA=;
-        b=Esa+tO7QN3bRDujYDuuCAIddFokcFVWM4ctq1pX8eMXQee1HHE9vZLVfrRZImMK1oo
-         72FItazYi2xszh1OpDXLCOVhqIjsXWBSvQIBOtG8hyt9abhZ+o6lYjOguNCpDwxV58HD
-         IFc5p0z/JWwHcNuObcLCNZq1VEu5W0br4PIDydVA8CFcpi/KGCOvmskcpuuAR++x3HJh
-         KkIEebL+WOPxFDG7z7eifttVnVmOd4tx4I/c7fCZbMQ7VGJBxXgyzG5Ahuh4fcMlHK16
-         pWREuGNFgrx1IHVk9kRBuG6g5k2cainRDn66xj9KIh3mjKzJ2QQesHUZYzkzk2ICK0uV
-         Yw1g==
-X-Gm-Message-State: AOAM533lSmU9CKwYR8y2ip2u7y87ml8h0d4OcmvhTc3rGkKBA8ByECE5
-        0/kcNx50NhMxgSWBmNxKi7GnIuAz+Og=
-X-Google-Smtp-Source: ABdhPJyCtVcHfVes8oel0GkEOP6FZQsCXfbMAASCwomIK/IKWTTsWlXTToQcgjQHa9Pdd+cXfgS4TA==
-X-Received: by 2002:a05:6000:1364:b0:1ed:b65a:da45 with SMTP id q4-20020a056000136400b001edb65ada45mr681996wrz.680.1645641070403;
-        Wed, 23 Feb 2022 10:31:10 -0800 (PST)
+        bh=1jvZERtSPiben/T2+8gaCUWFMGf3l9m8EC+gogi8QVY=;
+        b=cTHMnn7ZK0etv3nyhZInoT7Boy36IZt3fUgGRi0lbAXoEEF+9trU9ZlsuQaptIqeIf
+         /WPn3QrCAAsPuZPracJPjacYH1Nknmjho1XnwWyz0h4vVuemlgOwofHIuoNSE/jOdann
+         r+BNbh2JQ1k+IhOsWq3gXyaWZZ9Fwao+TdEu9a6NrAEoWDaqNC85iMbFpfcwH0yu68v/
+         0SWF+IfZd+skiWmFx3XBWDq3y1mrch7uS9UlBN+Dh9DeclhsBsoYRWGITZjgeJ7+F8Z8
+         oxrRYA6GKsDnard9eHuWXR/+6OrncPQXa7zxWUJkABOF7EpBw1ayyDbd8SlhuLapv5v+
+         eskA==
+X-Gm-Message-State: AOAM5305TOty6vYKCTNlAcjhAQ0zOapVc4DgeD0dHjrUb/nAbSNURkVO
+        dP5IrKzNt5PwFh3iKbGzeC2c3Mvrv0k=
+X-Google-Smtp-Source: ABdhPJwiwfaXX1AJ6EnrD7LzJvmx8ls2ufGxghdkkQ5tYAmcn0xjLdfMkKNy8Cj6QGULnOFMFyoxkQ==
+X-Received: by 2002:adf:bc14:0:b0:1e2:b035:9c46 with SMTP id s20-20020adfbc14000000b001e2b0359c46mr674191wrg.386.1645641067835;
+        Wed, 23 Feb 2022 10:31:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r12sm339156wrz.50.2022.02.23.10.31.09
+        by smtp.gmail.com with ESMTPSA id s7sm322644wri.5.2022.02.23.10.31.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 10:31:10 -0800 (PST)
-Message-Id: <60a8d52af64cdc3ca8b374c714cd3af1fc74f5ec.1645641063.git.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 10:31:07 -0800 (PST)
+Message-Id: <fcd51a650217c4344e2ac79b53f06bc3eca3adb3.1645641063.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
 References: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 18:30:43 +0000
-Subject: [PATCH 05/25] remote: allow relative_url() to return an absolute url
+Date:   Wed, 23 Feb 2022 18:30:41 +0000
+Subject: [PATCH 03/25] dir: extract starts_with_dot[_dot]_slash()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,53 +67,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-When the 'url' parameter was absolute, the previous implementation would
-concatenate 'remote_url' with 'url'. Instead, we want to return 'url' in
-this case.
+We will want to use this logic to assist checking if paths are absolute
+or relative, so extract it into a helpful place. This creates a
+collision with similar methods in builtin/fsck.c, but those methods have
+important differences. Prepend "fsck_" to those methods to emphasize
+that they are custom to the fsck builtin.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- remote.c | 12 ++++++++++--
- remote.h |  1 +
- 2 files changed, 11 insertions(+), 2 deletions(-)
+ builtin/submodule--helper.c | 10 ----------
+ dir.h                       | 11 +++++++++++
+ fsck.c                      | 14 +++++++-------
+ 3 files changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index c4a56749e85..ac1d98ae922 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2766,10 +2766,18 @@ char *relative_url(const char *remote_url,
- 	int is_relative = 0;
- 	int colonsep = 0;
- 	char *out;
--	char *remoteurl = xstrdup(remote_url);
-+	char *remoteurl;
- 	struct strbuf sb = STRBUF_INIT;
--	size_t len = strlen(remoteurl);
-+	size_t len;
-+
-+	if (!url_is_local_not_ssh(url) || is_absolute_path(url))
-+		return xstrdup(url);
-+
-+	len = strlen(remote_url);
-+	if (!len)
-+		BUG("invalid empty remote_url");
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index c5d3fc3817f..c17dde4170f 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -70,16 +70,6 @@ static int print_default_remote(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
  
-+	remoteurl = xstrdup(remote_url);
- 	if (is_dir_sep(remoteurl[len-1]))
- 		remoteurl[len-1] = '\0';
- 
-diff --git a/remote.h b/remote.h
-index 91c7f187863..438152ef562 100644
---- a/remote.h
-+++ b/remote.h
-@@ -434,6 +434,7 @@ void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
-  * http://a.com/b  ../../../c       http:/c          error out
-  * http://a.com/b  ../../../../c    http:c           error out
-  * http://a.com/b  ../../../../../c    .:c           error out
-+ * http://a.com/b  http://d.org/e   http://d.org/e   as is
+-static int starts_with_dot_slash(const char *str)
+-{
+-	return str[0] == '.' && is_dir_sep(str[1]);
+-}
+-
+-static int starts_with_dot_dot_slash(const char *str)
+-{
+-	return str[0] == '.' && str[1] == '.' && is_dir_sep(str[2]);
+-}
+-
+ /*
+  * Returns 1 if it was the last chop before ':'.
   */
- char *relative_url(const char *remote_url,
- 		   const char *url,
+diff --git a/dir.h b/dir.h
+index 8e02dfb505d..5e38d1ba536 100644
+--- a/dir.h
++++ b/dir.h
+@@ -578,4 +578,15 @@ void connect_work_tree_and_git_dir(const char *work_tree,
+ void relocate_gitdir(const char *path,
+ 		     const char *old_git_dir,
+ 		     const char *new_git_dir);
++
++static inline int starts_with_dot_slash(const char *str)
++{
++	return str[0] == '.' && is_dir_sep(str[1]);
++}
++
++static inline int starts_with_dot_dot_slash(const char *str)
++{
++	return str[0] == '.' && str[1] == '.' && is_dir_sep(str[2]);
++}
++
+ #endif
+diff --git a/fsck.c b/fsck.c
+index 3ec500d707a..32cd3bc081f 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -976,31 +976,31 @@ done:
+ }
+ 
+ /*
+- * Like builtin/submodule--helper.c's starts_with_dot_slash, but without
++ * Like dir.h's starts_with_dot_slash, but without
+  * relying on the platform-dependent is_dir_sep helper.
+  *
+  * This is for use in checking whether a submodule URL is interpreted as
+  * relative to the current directory on any platform, since \ is a
+  * directory separator on Windows but not on other platforms.
+  */
+-static int starts_with_dot_slash(const char *str)
++static int fsck_starts_with_dot_slash(const char *str)
+ {
+ 	return str[0] == '.' && (str[1] == '/' || str[1] == '\\');
+ }
+ 
+ /*
+- * Like starts_with_dot_slash, this is a variant of submodule--helper's
+- * helper of the same name with the twist that it accepts backslash as a
++ * Like fsck_starts_with_dot_slash, this is a variant of dir.h's
++ * helper with the twist that it accepts backslash as a
+  * directory separator even on non-Windows platforms.
+  */
+-static int starts_with_dot_dot_slash(const char *str)
++static int fsck_starts_with_dot_dot_slash(const char *str)
+ {
+-	return str[0] == '.' && starts_with_dot_slash(str + 1);
++	return str[0] == '.' && fsck_starts_with_dot_slash(str + 1);
+ }
+ 
+ static int submodule_url_is_relative(const char *url)
+ {
+-	return starts_with_dot_slash(url) || starts_with_dot_dot_slash(url);
++	return fsck_starts_with_dot_slash(url) || fsck_starts_with_dot_dot_slash(url);
+ }
+ 
+ /*
 -- 
 gitgitgadget
 
