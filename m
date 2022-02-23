@@ -2,55 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AFA7C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 17:55:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E4FBC433FE
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 17:55:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243576AbiBWRzo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 12:55:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48958 "EHLO
+        id S243578AbiBWRzp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 12:55:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243573AbiBWRzn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 12:55:43 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B7464F6
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:14 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id j22so14838140wrb.13
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:14 -0800 (PST)
+        with ESMTP id S234110AbiBWRzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 12:55:44 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7FE265BC
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:15 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id d17so6076262wrc.9
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 09:55:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=D3qwZC/Mpfs6m3rbEr+0KW4r8PevEp+qRCR8Bm/+bSU=;
-        b=nTjcDv0pgiAgxbGDN/7xtST6DQUHWt9ZdSAij3JcLsUTwOEandam3GoSoB+ksgR+Bl
-         Tz0k91lr9SfbxEgtfErpr8N8qG/k0LwSWQ5VhFuSbogjBx0KuvxV5v6OiS8bzAj0jt6F
-         /HLowGlYJUMHFMEI1SwDn22rW55E9IGuOanwwULskWN54y4m3Mznw9QVZpQ+X1n4zVCg
-         5T23t1fpQZswK9n6Erd3/lt16UtWmR7vZth/rpxnnj5zqXjH9+D5qaywOMsniLzNLzQi
-         YDWOFszPxfGLyylw2Wk+zPFaUG8sc15ad3ZPe8C20+WB5p4M/+8ZHcoRtP7UjXVRoxKo
-         TxYA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7/Vet349YwWXOD88+eWNxKjf9Jhn0cuBQkzK8diKGoU=;
+        b=P29g+cBobG2E39g70chUs6flKta/3ZKJE0FVm2WkWIAyUZWjTuccGtivSWIhk4ZIze
+         1aeaRuGvizN/+9uRAwXDXNbcqWTc0jGy/qVvMkLKe53NGPG5NfFYA1mI4VVoA4DCBZid
+         jBX7p48mHd3PxFJWzliKm/sL64im1jPZIG8oOJohASqstSQX3LQ20b2YehHtD9+uK4kq
+         8NyCbLtBVdW1oZN4JL5UNHHP13hR6d6XBg7zg+gVwWMn01pmd/l5UXlQP3bPVSHlUAY0
+         +9dj+ODmu4KuvVtNTD3685HcOI5Rv7cpjRl3yiDM48dqrOjAGHJf5AdjYWORsl4iJ6J0
+         fQ/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=D3qwZC/Mpfs6m3rbEr+0KW4r8PevEp+qRCR8Bm/+bSU=;
-        b=wkFYwgSB6HPyYbHzJeTp5mfszBJWWyChymIuJQeLnYZ9ZmkgMjuSaibOGRD2Drcsqn
-         BFeDM0dKG+unhWbdP0cDLwQhhbdfePqcabPdCgaqRiom22Ly6G9AaG2DJE6hJW796MZT
-         EfEOxtS9dhZemrr2VINcddqq1r+5jWV1c03iC/BkcmONS/VnP3PwQBcA5exvOCMT2uay
-         1IYOFw09/9OlO/ckAhKKmbEzp0mpoCPAW5wzfUpOMnTrNFEQTRF3v4RFPu29GWvT8wzr
-         xxsrDFFMO86AdM4VtA8en4z6YpA4uCW7nbQn/rUTaYnGEVtoKmFiPzOU+QazyYJnRhUG
-         2LVw==
-X-Gm-Message-State: AOAM533cpKN+9n+o9mDaNShauF1GQEEz/BYmv9N4mKytJHXvzHoPxrhC
-        n0DLFezrmpPbLNu+86uyzFgil69s9I4=
-X-Google-Smtp-Source: ABdhPJyfM7RdaAhznlLBh61+2NZElC8Z0aa9kCmDOQSK+tPAmIPFppGDdoFuisdNw5ywKmQtLClF5Q==
-X-Received: by 2002:adf:f007:0:b0:1ed:becf:c59d with SMTP id j7-20020adff007000000b001edbecfc59dmr548737wro.203.1645638912889;
-        Wed, 23 Feb 2022 09:55:12 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=7/Vet349YwWXOD88+eWNxKjf9Jhn0cuBQkzK8diKGoU=;
+        b=KFeoxWKRvxcxdLKHgSy4KWdcx+933zpgUWCg+ULD2dXH3tYI7QW/2KJ0vEiyWHzrMP
+         AB2lCVIxCSFTabAp0yySRt1nHqLWuW/5DTxPAy+5rUB1poW61Hdtp/7TuPyposbSXW3t
+         UlLMzr3UdcE2iWlLYX6qZsFShpqJYpAGuyfsPBvH5Dsv0FIJCTod0o+BS4EWeJgf5zWN
+         STCyCo+VnalHSmcMoboU7PyF3ckScznj/njexgfuIjKzc+JS8PSdmeIcZqgGHa+ikGVx
+         R5SGI1x8+aHmDjibYGqDoztvX6b2iOhjIvm0G0lAyVjRRtK2S0EhIclDdPfmkPkdlvWT
+         XpRw==
+X-Gm-Message-State: AOAM533b3AYGs4TZvq7UOqaMtKOFIb1iF/DVufDoHY04HAr/yc26iYUe
+        VAgE0rbKe5l03wp+Bsiu9Yr/X4H8yGk=
+X-Google-Smtp-Source: ABdhPJyzEb7AOb1Xq6Iibpiwml7lsMVjk8g9/NxrxXiklUYkzeH9V7jyVwbX4SiiskbSuuXONLbvvg==
+X-Received: by 2002:a5d:47ae:0:b0:1e8:e479:fa8e with SMTP id 14-20020a5d47ae000000b001e8e479fa8emr557719wrb.169.1645638914005;
+        Wed, 23 Feb 2022 09:55:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z4sm184955wrr.82.2022.02.23.09.55.11
+        by smtp.gmail.com with ESMTPSA id j9sm276747wmc.5.2022.02.23.09.55.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 09:55:12 -0800 (PST)
-Message-Id: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
+        Wed, 23 Feb 2022 09:55:13 -0800 (PST)
+Message-Id: <a1eb4dceb0b1444427c0358948c57bafc513918f.1645638911.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
+References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Feb 2022 17:55:00 +0000
-Subject: [PATCH 00/11] Partial bundles
+Date:   Wed, 23 Feb 2022 17:55:01 +0000
+Subject: [PATCH 01/11] index-pack: document and test the --promisor option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -58,84 +60,64 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     stolee@gmail.com, avarab@gmail.com, gitster@pobox.com,
         zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>,
         Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While discussing bundle-URIs [1], it came to my attention that bundles have
-no way to specify an object filter, so bundles cannot be used with partial
-clones.
+From: Derrick Stolee <derrickstolee@github.com>
 
-[1]
-https://lore.kernel.org/git/7fab28bf-54e7-d0e9-110a-53fad6244cc9@gmail.com/
+The --promisor option of 'git index-pack' was created in 88e2f9e
+(introduce fetch-object: fetch one promisor object, 2017-12-05) but was
+untested. It is currently unused within the Git codebase, but that will
+change in an upcoming change to 'git bundle unbundle' when there is a
+filter capability.
 
-This series provides a way to fix that by adding a 'filter' capability to
-the bundle file format and allowing one to create a partial bundle with 'git
-bundle create --filter=blob:none '.
+For now, add documentation about the option and add a test to ensure it
+is working as expected.
 
-There are a couple things that I want to point out about this implementation
-that could use some high-level feedback:
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ Documentation/git-index-pack.txt | 8 ++++++++
+ t/t5300-pack-object.sh           | 4 +++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
- 1. I moved the '--filter' parsing into setup_revisions() instead of adding
-    another place to parse it. This works for 'git bundle' but it also
-    allows it to be parsed successfully in commands such as 'git diff' which
-    doesn't make sense. Options such as '--objects' are already being parsed
-    there, and they don't make sense either, so I want some thoughts on
-    this.
-
- 2. If someone uses 'git clone partial.bdl partial' where 'partial.bdl' is a
-    filtered bundle, then the clone will fail with a message such as
-
-fatal: missing blob object '9444604d515c0b162e37e59accd54a0bac50ed2e' fatal:
-remote did not send all necessary objects
-
-This might be fine. We don't expect users to clone partial bundles or fetch
-partial bundles into an unfiltered repo and these failures are expected. It
-is possible that we could put in custom logic to fail faster by reading the
-bundle header for a filter.
-
-Generally, the idea is to open this up as a potential way to bootstrap a
-clone of a partial clone using a set of precomputed partial bundles.
-
-Thanks, -Stolee
-
-Derrick Stolee (11):
-  index-pack: document and test the --promisor option
-  revision: put object filter into struct rev_info
-  pack-objects: use rev.filter when possible
-  pack-bitmap: drop filter in prepare_bitmap_walk()
-  list-objects: consolidate traverse_commit_list[_filtered]
-  MyFirstObjectWalk: update recommended usage
-  bundle: safely handle --objects option
-  bundle: parse filter capability
-  rev-list: move --filter parsing into revision.c
-  bundle: create filtered bundles
-  bundle: unbundle promisor packs
-
- Documentation/MyFirstObjectWalk.txt | 44 ++++++---------
- Documentation/git-index-pack.txt    |  8 +++
- builtin/pack-objects.c              |  9 +--
- builtin/rev-list.c                  | 29 +++-------
- bundle.c                            | 87 ++++++++++++++++++++++++-----
- bundle.h                            |  3 +
- list-objects-filter-options.c       |  2 +-
- list-objects-filter-options.h       |  5 ++
- list-objects.c                      | 25 +++------
- list-objects.h                      | 12 +++-
- pack-bitmap.c                       | 24 ++++----
- pack-bitmap.h                       |  2 -
- reachable.c                         |  2 +-
- revision.c                          | 11 ++++
- revision.h                          |  4 ++
- t/t5300-pack-object.sh              |  4 +-
- t/t6020-bundle-misc.sh              | 48 ++++++++++++++++
- 17 files changed, 215 insertions(+), 104 deletions(-)
-
-
-base-commit: 45fe28c951c3e70666ee4ef8379772851a8e4d32
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1159%2Fderrickstolee%2Fbundle%2Fpartial-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1159/derrickstolee/bundle/partial-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1159
+diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
+index 1f1e3592251..4e71c256ecb 100644
+--- a/Documentation/git-index-pack.txt
++++ b/Documentation/git-index-pack.txt
+@@ -122,6 +122,14 @@ This option cannot be used with --stdin.
+ +
+ include::object-format-disclaimer.txt[]
+ 
++--promisor[=<message>]::
++	Before committing the pack-index, create a .promisor file for this
++	pack. Particularly helpful when writing a promisor pack with --fix-thin
++	since the name of the pack is not final until the pack has been fully
++	written. If a `<message>` is provided, then that content will be
++	written to the .promisor file for future reference. See
++	link:technical/partial-clone.html[partial clone] for more information.
++
+ NOTES
+ -----
+ 
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 2fd845187e7..a11d61206ad 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -315,8 +315,10 @@ test_expect_success \
+      git index-pack -o tmp.idx test-3.pack &&
+      cmp tmp.idx test-1-${packname_1}.idx &&
+ 
+-     git index-pack test-3.pack &&
++     git index-pack --promisor=message test-3.pack &&
+      cmp test-3.idx test-1-${packname_1}.idx &&
++     echo message >expect &&
++     test_cmp expect test-3.promisor &&
+ 
+      cat test-2-${packname_2}.pack >test-3.pack &&
+      git index-pack -o tmp.idx test-2-${packname_2}.pack &&
 -- 
 gitgitgadget
+
