@@ -2,431 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4EF2C433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 10:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5962EC433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 10:23:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239519AbiBWKQz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 05:16:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42064 "EHLO
+        id S237018AbiBWKYI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 05:24:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239532AbiBWKQv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 05:16:51 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB3228B6F9
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 02:16:22 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id p14so51192963ejf.11
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 02:16:22 -0800 (PST)
+        with ESMTP id S230447AbiBWKYH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 05:24:07 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41FAF8BF57
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 02:23:35 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id z22so43335610edd.1
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 02:23:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=LOT/YKcKMmoPSarfJVkPkLWik6vrXi9tEM36Jh+Vd4w=;
-        b=cX0NZsno44XzoErHROGbdK9nINnoR9iJJoA6bMRvTTJdp10gZNevDMhB8rP1oiDbyD
-         AweLtv6nqZO+xkVKetKkH+uBkWXlLyUJ8zy8m98LVf5cBIGVizfy8pV3hLYIpk8kh6sW
-         WUQkAcDLcNfW7QYLDFOAdHdir7e3fMejxJynPQtCC8TVmLp3NJPyfa/fwN/HY98pvp4F
-         5nt0dFX0vMai3Sjm+JioDq3nJLlydyZUI+YaWxdeZFD0z4qv7hmqsrEZzXTICnu26Wzk
-         OTGOdF2wRMmOrHAStnTTwAIkDQw5b+D8x5r5I0OHzsPUniCAe+cuWrS4ArlwD7sUF+4w
-         pJYA==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=LI6HXV8lfA/wr5iq+4qEWz4m8kDn81wVDySXXsKR6s4=;
+        b=coW0LPOCl3t4w0/DAZH+qhkc4/WQcN/jPkv0qxQULQVJBrBOM9ODCIMDw4+mJ/FlT7
+         B0//gAZu7oe9/zfiZGlE7C5quSh/LI2kLeQ7rlu1q0COlUyNsdd0WsjvDVBmpBlAWlnF
+         PlvtkQxOIxfMWXMe3z5cA+lCwEqrEG+qJL0V/2yJR5Lmxb7s7hOw/OuytaG5CYj3v5ur
+         YftRojHlHqSPTk163HRUHYwN6onxGNCXuRsn6XiOZMNSzw0YMeRGksimwryKb5evZ812
+         goYEc50TW+HpaZtgKpjr6eYusoax8tcafq49153OLamtY9aAyEg3kfQ9yg5VqHJK5gbg
+         Pjpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=LOT/YKcKMmoPSarfJVkPkLWik6vrXi9tEM36Jh+Vd4w=;
-        b=xZxEAZTi9TQz8ZN9KfYJwDSBCV48+FUqrZW2uSw9NHbqDKeNWk28ku6ELGdLuc1Iy0
-         jbFwKfMksGPdMxNq/97KTkPL9/+MnaPZiTB9KK8MzYJehC5YbuLHSgCkIopoxo5CXIDY
-         q4g/ky2+kjZte0cp9OMCeVvztFP5qD5ItkBmACUUYXn7zFv2nurCzNGPeA6g/yBJsuF8
-         +77mMj3EkTkB76OY18QJmPr4tT8tu2eBdCZ9b2LKDOeKgGvO71cJTWJ0ZXL4/EBG4Ub+
-         j8ElYIdi9L1ieBOOvUdlZ+odsSsPxEY41YNL/HTtkQcgUsEgu+p/T/hbUXNmBEW84Y+K
-         C0Wg==
-X-Gm-Message-State: AOAM530DrPS/MByERE9+2QCMfbVkD5T/xEtiwMLKVSO8gvQDGUxezGOw
-        YnhL/e/bzPW8K/JzHJEZd2Q+pRBoB+M=
-X-Google-Smtp-Source: ABdhPJxwnkqri+e5j2v8DnIWRqd3IjHihaN3Xo+6JNjfYT+iRImuA9q8IBYMLrFvLeuRPQGDh9h08g==
-X-Received: by 2002:a17:906:1188:b0:6ce:f315:21df with SMTP id n8-20020a170906118800b006cef31521dfmr22697384eja.591.1645611380863;
-        Wed, 23 Feb 2022 02:16:20 -0800 (PST)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=LI6HXV8lfA/wr5iq+4qEWz4m8kDn81wVDySXXsKR6s4=;
+        b=Y3tF0PViK2u2LotwJpVx76POMdJ/QkndxfHiithP5Fud6BTrqpWNu7PcEBAzMvx3uB
+         0xu58/kLW8pA5i5a8e6bm4STyZeBDtMioGDdlF52s/2iZ27H/ibo9XGfptU3O4da/aK8
+         tQzV6s003P1bdHT3W+eIKJRaqOfTr1JVQnXa0pxNSL/G18ky+1KyAYa5RGEO9bj5G8Jk
+         9qNazFkMiXd/7JryGlNyGB+Kpb8wRRZkqsxppnq8Za9atBU/YDKYE9KL9F2KpcwAsN21
+         GRIDoV0SsjzWXv6F1TVXDi5HylZJsUAwVl0iN9PGA2evnXwYMwL6pPmq9Iom27FZwwoO
+         rROQ==
+X-Gm-Message-State: AOAM532DmMDGGjeQCZ1mPUJ6cLOU5No7qsQZkBCQqeWKxM1J8RzcSevM
+        HA89+XgwbvnKDRv9epgEWySyKL2AfxU=
+X-Google-Smtp-Source: ABdhPJwr7+yxIywrAJiUZgP3mipWzIV5YbAVFa1xM3kMzbAQIVfkqAhnsgaB4WFpnllMrccaEhJy/w==
+X-Received: by 2002:a50:fb19:0:b0:404:eb52:62cb with SMTP id d25-20020a50fb19000000b00404eb5262cbmr30215773edq.363.1645611814128;
+        Wed, 23 Feb 2022 02:23:34 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ka26sm2771153ejc.170.2022.02.23.02.16.19
+        by smtp.gmail.com with ESMTPSA id v8sm6386614edc.0.2022.02.23.02.23.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 02:16:20 -0800 (PST)
+        Wed, 23 Feb 2022 02:23:33 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nMoh1-006FfR-Aj;
-        Wed, 23 Feb 2022 11:16:19 +0100
+        id 1nMoo0-006Fwm-4p;
+        Wed, 23 Feb 2022 11:23:32 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     Philip Oakley via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 11/14] bisect: move even the option parsing to
- `bisect--helper`
-Date:   Wed, 23 Feb 2022 10:47:36 +0100
-References: <pull.1132.git.1643328752.gitgitgadget@gmail.com>
- <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com>
- <dc04b06206bbb833ce3a7fa893d724d00fe58a74.1645547423.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 1/2] rebase: help user when dying with preserve-merges`
+Date:   Wed, 23 Feb 2022 11:20:28 +0100
+References: <pull.1155.git.1645526016.gitgitgadget@gmail.com>
+ <cd06aa68c2fc65551cd810a1c2c0941c51433163.1645526016.git.gitgitgadget@gmail.com>
+ <220222.86czje7w4i.gmgdl@evledraar.gmail.com>
+ <c04eba64-0357-cfdd-2ffe-3905ce4f4cb9@iee.email>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <dc04b06206bbb833ce3a7fa893d724d00fe58a74.1645547423.git.gitgitgadget@gmail.com>
-Message-ID: <220223.86v8x56g7g.gmgdl@evledraar.gmail.com>
+In-reply-to: <c04eba64-0357-cfdd-2ffe-3905ce4f4cb9@iee.email>
+Message-ID: <220223.86r17t6fvf.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Feb 22 2022, Johannes Schindelin via GitGitGadget wrote:
+On Tue, Feb 22 2022, Philip Oakley wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> On 22/02/2022 15:32, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Tue, Feb 22 2022, Philip Oakley via GitGitGadget wrote:
+>>
+>>> From: Philip Oakley <philipoakley@iee.email>
+>>>
+>>> Git will die if a "rebase --preserve-merges" is in progress.
+>>> Users cannot --quit, --abort or --continue the rebase.
+>>>
+>>> This sceario can occur if the user updates their Git, or switches
+>>> to another newer version, after starting a preserve-merges rebase,
+>>> commonly via the pull setting.
+>>>
+>>> One trigger is an unexpectedly difficult to resolve conflict, as
+>>> reported on the `git-users` group.
+>>> (https://groups.google.com/g/git-for-windows/c/3jMWbBlXXHM)
+>>>
+>>> Tell the user the cause, i.e. the existence of the directory.
+>>> The problem must be resolved manually, `git rebase --<option>`
+>>> commands will die, or the user must downgrade. Also, note that
+>>> the deleted options are no longer shown in the documentation.
+>> I can go and read the linked thread for the answer, but:
+>>
+>>>  		if (is_directory(buf.buf)) {
+>>> -			die("`rebase -p` is no longer supported");
+>>> +			die("`rebase --preserve-merges` (-p) is no longer supported.\n"
+>>> +			"You still have a `.git/rebase-merge/rewritten` directory, \n"
+>>> +			"indicating a `rebase preserve-merge` is still in progress.\n");
+>>>  		} else {
+>>>  			strbuf_reset(&buf);
+>>>  			strbuf_addf(&buf, "%s/interactive", merge_dir());
+>> As much of an improvement this is, I'd be no closer to knowing what I
+>> should do at this point.
+>>
+>> Should I "rm -rf" that directory, downgrade my version of git if I'd
+>> like to recover my work (as the message alludes to).
+>>
+>> In either case I'd think that this is getting a bit past the length
+>> where we'd have just a die() v.s. splitting it into a die()/advise()
+>> pair. I.e. to have the advise() carry some bullet-point list about X/Y/Z
+>> solutions, with the die() being a brief ~"we did because xyz dir is
+>> still here".
+>>
+>>
+> Hi =C3=86var,
 >
-> On our journey to a fully built-in `git bisect`, this is the
-> second-to-last step.
+> Exactly. This is a slightly special, but real, case. The previous
+> message was essentially totally opaque to users. An "If I were you I
+> wouldn't start from here" response is somewhat true, so we simply tell
+> the user how they got to receive the fatal message. They can then take
+> any of the options they choose.
 >
-> Side note: The `if (!strcmp(...)) ... else if (!strcmp(...)) ... else if
-> (!strcmp(...)) ...` chain seen in this patch was not actually the first
-> idea how to convert the command modes to sub-commands. Since the
-> `bisect--helper` command already used the `parse-opions` API with neatly
-> set-up command modes, naturally the idea was to use `PARSE_OPT_NODASH`
-> to support proper sub-commands instead. However, the `parse-options` API
-> is not set up for that, and even after making that option work with long
-> options, it turned out that `STOP_AT_NON_OPTION` and `KEEP_UNKNOWN`
-> would have to be used but these options were not designed to work
-> together. So it would appear as if a lot of work would have to be done
-> just to be able to use `parse_options()` just to parse the sub-command,
-> instead of a simple `if...else if` chain, the latter being a
-> dramatically simpler implementation.
+> Ultimately the user downgraded and managed to use "rebase --continue",
+> as advised by Git, without the response "fatal:" to complete their old
+> preserve-merges rebase.
 
-As I noted in
-https://lore.kernel.org/git/220129.86pmobauyt.gmgdl@evledraar.gmail.com/:
+Right. I'm pointing out that in this proposed version of the die()
+message we stop just short of actually telling the user how to proceed.
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/bisect--helper.c | 133 ++++++++++++++++-----------------------
->  git-bisect.sh            |  49 +--------------
->  2 files changed, 56 insertions(+), 126 deletions(-)
->
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 5228964937d..ef0b06d594b 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -20,18 +20,34 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
->  static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
->  static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
->  
-> -static const char * const git_bisect_helper_usage[] = {
-> -	N_("git bisect--helper --bisect-reset [<commit>]"),
-> -	N_("git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]"),
-> -	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
-> -					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
-> -	N_("git bisect--helper --bisect-next"),
-> -	N_("git bisect--helper [--bisect-state] (bad|new) [<rev>]"),
-> -	N_("git bisect--helper [--bisect-state] (good|old) [<rev>...]"),
-> -	N_("git bisect--helper --bisect-replay <filename>"),
-> -	N_("git bisect--helper --bisect-skip [(<rev>|<range>)...]"),
-> -	N_("git bisect--helper --bisect-visualize"),
-> -	N_("git bisect--helper --bisect-run <cmd>..."),
-> +static const char * const git_bisect_usage[] = {
-> +	N_("git bisect help\n"
-> +	   "\tprint this long help message."),
-> +	N_("git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]\n"
-> +	   "\t\t [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]\n"
-> +	   "\treset bisect state and start bisection."),
-> +	N_("git bisect (bad|new) [<rev>]\n"
-> +	   "\tmark <rev> a known-bad revision/\n"
-> +	   "\t\ta revision after change in a given property."),
-> +	N_("git bisect (good|old) [<rev>...]\n"
-> +	   "\tmark <rev>... known-good revisions/\n"
-> +	   "\t\trevisions before change in a given property."),
-> +	N_("git bisect terms [--term-good | --term-bad]\n"
-> +	   "\tshow the terms used for old and new commits (default: bad, good)"),
-> +	N_("git bisect skip [(<rev>|<range>)...]\n"
-> +	   "\tmark <rev>... untestable revisions."),
-> +	N_("git bisect next\n"
-> +	   "\tfind next bisection to test and check it out."),
-> +	N_("git bisect reset [<commit>]\n"
-> +	   "\tfinish bisection search and go back to commit."),
-> +	N_("git bisect (visualize|view)\n"
-> +	   "\tshow bisect status in gitk."),
-> +	N_("git bisect replay <logfile>\n"
-> +	   "\treplay bisection log."),
-> +	N_("git bisect log\n"
-> +	   "\tshow bisect log."),
-> +	N_("git bisect run <cmd>...\n"
-> +	   "\tuse <cmd>... to automatically bisect."),
->  	NULL
->  };
+I.e. just that they have a X directory, not that they should either
+remove X and lose their work, or downgrade git, proceed, and then
+upgrade git.
 
-Even that doesn't explain why this needs to be changed as
-well. I.e. this could just be:
-	
-	diff --git a/builtin/bisect.c b/builtin/bisect.c
-	index e8a346fa516..d27b80ddaf3 100644
-	--- a/builtin/bisect.c
-	+++ b/builtin/bisect.c
-	@@ -20,33 +20,18 @@ static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
-	 static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
-	 
-	 static const char * const builtin_bisect_usage[] = {
-	-	N_("git bisect help\n"
-	-	   "\tprint this long help message."),
-	+	N_("git bisect reset [<commit>]"),
-	+	N_("git bisect terms [--term-good | --term-old | --term-bad | --term-new]"),
-	 	N_("git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]\n"
-	-	   "\t\t [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]\n"
-	-	   "\treset bisect state and start bisection."),
-	-	N_("git bisect (bad|new) [<rev>]\n"
-	-	   "\tmark <rev> a known-bad revision/\n"
-	-	   "\t\ta revision after change in a given property."),
-	-	N_("git bisect (good|old) [<rev>...]\n"
-	-	   "\tmark <rev>... known-good revisions/\n"
-	-	   "\t\trevisions before change in a given property."),
-	-	N_("git bisect terms [--term-good | --term-bad]\n"
-	-	   "\tshow the terms used for old and new commits (default: bad, good)"),
-	-	N_("git bisect skip [(<rev>|<range>)...]\n"
-	-	   "\tmark <rev>... untestable revisions."),
-	-	N_("git bisect next\n"
-	-	   "\tfind next bisection to test and check it out."),
-	-	N_("git bisect reset [<commit>]\n"
-	-	   "\tfinish bisection search and go back to commit."),
-	-	N_("git bisect (visualize|view)\n"
-	-	   "\tshow bisect status in gitk."),
-	-	N_("git bisect replay <logfile>\n"
-	-	   "\treplay bisection log."),
-	-	N_("git bisect log\n"
-	-	   "\tshow bisect log."),
-	-	N_("git bisect run <cmd>...\n"
-	-	   "\tuse <cmd>... to automatically bisect."),
-	+	   "                 [--no-checkout] [--first-parent] [<bad> [<good>...]]\n"
-	+	   "                 [--] [<paths>...]"),
-	+	N_("git bisect next"),
-	+	N_("git bisect state (bad|new) [<rev>]"),
-	+	N_("git bisect state (good|old) [<rev>...]"),
-	+	N_("git bisect replay <filename>"),
-	+	N_("git bisect skip [(<rev>|<range>)...]"),
-	+	N_("git bisect visualize"),
-	+	N_("git bisect run <cmd>..."),
-	 	NULL
-	 };
+> They'll hit a similar fault in short order because when they next `pull`
+> they'll be slipped into trying the preserve-merge rebase again - that's
+> the 2/2 patch, making sure they know why.
 
-Which turns the help output into:
-    
-    $ ./git bisect -h
-    usage: git bisect reset [<commit>]
-       or: git bisect terms [--term-good | --term-old | --term-bad | --term-new]
-       or: git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]
-                            [--no-checkout] [--first-parent] [<bad> [<good>...]]
-                            [--] [<paths>...]
-       or: git bisect next
-       or: git bisect state (bad|new) [<rev>]
-       or: git bisect state (good|old) [<rev>...]
-       or: git bisect replay <filename>
-       or: git bisect skip [(<rev>|<range>)...]
-       or: git bisect visualize
-       or: git bisect run <cmd>...
+Well, this is "rebase". You can have been running rebases in a
+repository without ever having any interactions with remotes.
 
-Instead of:
-    
-    $ ./git bisect -h
-    usage: git bisect help
-            print this long help message.
-       or: git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]
-                     [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]
-            reset bisect state and start bisection.
-       or: git bisect (bad|new) [<rev>]
-            mark <rev> a known-bad revision/
-                    a revision after change in a given property.
-       or: git bisect (good|old) [<rev>...]
-            mark <rev>... known-good revisions/
-                    revisions before change in a given property.
-       or: git bisect terms [--term-good | --term-bad]
-            show the terms used for old and new commits (default: bad, good)
-       or: git bisect skip [(<rev>|<range>)...]
-            mark <rev>... untestable revisions.
-       or: git bisect next
-            find next bisection to test and check it out.
-       or: git bisect reset [<commit>]
-            finish bisection search and go back to commit.
-       or: git bisect (visualize|view)
-            show bisect status in gitk.
-       or: git bisect replay <logfile>
-            replay bisection log.
-       or: git bisect log
-            show bisect log.
-       or: git bisect run <cmd>...
-            use <cmd>... to automatically bisect.
+And even if you had interactions with remotes you might be doing so via
+"git fetch" followed by "git rebase", and might not ever invoke "git
+pull".
 
-I.e. parse_options() != the usage_with_options() formatting function in
-parse-options.c. You can use one without using the other. The commit
-message only claims (wrongly I think, but let's leave that aside for the
-moment) that we can't use parse_options(), but doesn't say why we *also*
-need to move to doing our own formatting of the usage output, those are
-two different things.
-
-As I noted in the previous round I think you were trying to retain the
-OPT_CMDMODE help messages. We could use the "" parse_options() usage
-feature to emit output similar to "git bisect--helper -h", but I think
-just having it by the same as current built-ins is fine.
-
-I.e. for "stash" etc. we're not emitting human readable help
-explanations along with every subcommand, and could just do the same for
-"git bisect".
-
-But on to parse_options() usage:
-
-> @@ -1168,108 +1184,69 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
->  
->  int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
->  {
-> -	enum {
-> -		BISECT_START = 1,
-> -		BISECT_STATE,
-> -		BISECT_TERMS,
-> -		BISECT_SKIP,
-> -		BISECT_NEXT,
-> -		BISECT_RESET,
-> -		BISECT_VISUALIZE,
-> -		BISECT_REPLAY,
-> -		BISECT_LOG,
-> -		BISECT_RUN,
-> -	} cmdmode = 0;
->  	int res = 0;
->  	struct option options[] = {
-> -		OPT_CMDMODE(0, "bisect-start", &cmdmode,
-> -			 N_("start the bisect session"), BISECT_START),
-> -		OPT_CMDMODE(0, "bisect-state", &cmdmode,
-> -			 N_("mark the state of ref (or refs)"), BISECT_STATE),
-> -		OPT_CMDMODE(0, "bisect-terms", &cmdmode,
-> -			 N_("print out the bisect terms"), BISECT_TERMS),
-> -		OPT_CMDMODE(0, "bisect-skip", &cmdmode,
-> -			 N_("skip some commits for checkout"), BISECT_SKIP),
-> -		OPT_CMDMODE(0, "bisect-next", &cmdmode,
-> -			 N_("find the next bisection commit"), BISECT_NEXT),
-> -		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
-> -			 N_("reset the bisection state"), BISECT_RESET),
-> -		OPT_CMDMODE(0, "bisect-visualize", &cmdmode,
-> -			 N_("visualize the bisection"), BISECT_VISUALIZE),
-> -		OPT_CMDMODE(0, "bisect-replay", &cmdmode,
-> -			 N_("replay the bisection process from the given file"), BISECT_REPLAY),
-> -		OPT_CMDMODE(0, "bisect-log", &cmdmode,
-> -			 N_("list the bisection steps so far"), BISECT_LOG),
-> -		OPT_CMDMODE(0, "bisect-run", &cmdmode,
-> -			 N_("use <cmd>... to automatically bisect."), BISECT_RUN),
->  		OPT_END()
->  	};
->  	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
-> +	const char *command = argc > 1 ? argv[1] : "help";
->  
-> -	argc = parse_options(argc, argv, prefix, options,
-> -			     git_bisect_helper_usage,
-> -			     PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_UNKNOWN);
-
-Because of thinking that we need to get rid of parse_options() here
-we...
-
-> +	if (!strcmp("-h", command) || !strcmp("help", command))
-> +		usage_with_options(git_bisect_usage, options);
-
-...end up duplicating some of its behavior here...
-
->  
-> -	switch (cmdmode ? cmdmode : BISECT_STATE) {
-> -	case BISECT_START:
-> +	argc -= 2;
-> +	argv += 2;
-> +
-> +	if (!strcmp("start", command)) {
->  		set_terms(&terms, "bad", "good");
->  		res = bisect_start(&terms, argv, argc);
-> -		break;
-> -	case BISECT_TERMS:
-> +	} else if (!strcmp("terms", command)) {
->  		if (argc > 1)
-> -			die(_("--bisect-terms requires 0 or 1 argument"));
-> +			die(_("'terms' requires 0 or 1 argument"));
->  		res = bisect_terms(&terms, argc == 1 ? argv[0] : NULL);
-> -		break;
-> -	case BISECT_SKIP:
-> +	} else if (!strcmp("skip", command)) {
->  		set_terms(&terms, "bad", "good");
->  		get_terms(&terms);
->  		res = bisect_skip(&terms, argv, argc);
-> -		break;
-> -	case BISECT_NEXT:
-> +	} else if (!strcmp("next", command)) {
->  		if (argc)
-> -			die(_("--bisect-next requires 0 arguments"));
-> +			die(_("'next' requires 0 arguments"));
->  		get_terms(&terms);
->  		res = bisect_next(&terms, prefix);
-> -		break;
-> -	case BISECT_RESET:
-> +	} else if (!strcmp("reset", command)) {
->  		if (argc > 1)
-> -			die(_("--bisect-reset requires either no argument or a commit"));
-> +			die(_("'reset' requires either no argument or a commit"));
->  		res = bisect_reset(argc ? argv[0] : NULL);
-> -		break;
-> -	case BISECT_VISUALIZE:
-> +	} else if (one_of(command, "visualize", "view", NULL)) {
->  		get_terms(&terms);
->  		res = bisect_visualize(&terms, argv, argc);
-> -		break;
-> -	case BISECT_REPLAY:
-> +	} else if (!strcmp("replay", command)) {
->  		if (argc != 1)
->  			die(_("no logfile given"));
->  		set_terms(&terms, "bad", "good");
->  		res = bisect_replay(&terms, argv[0]);
-> -		break;
-> -	case BISECT_LOG:
-> +	} else if (!strcmp("log", command)) {
->  		if (argc)
-> -			die(_("--bisect-log requires 0 arguments"));
-> +			die(_("'log' requires 0 arguments"));
->  		res = bisect_log();
-> -		break;
-> -	case BISECT_RUN:
-> +	} else if (!strcmp("run", command)) {
->  		if (!argc)
->  			die(_("bisect run failed: no command provided."));
->  		get_terms(&terms);
->  		res = bisect_run(&terms, argv, argc);
-> -		break;
-> -	case BISECT_STATE:
-> +	} else {
->  		set_terms(&terms, "bad", "good");
->  		get_terms(&terms);
-> -		if (!cmdmode &&
-> -		    (!argc || check_and_set_terms(&terms, argv[0]))) {
-> -			char *msg = xstrfmt(_("unknown command: '%s'"), argv[0]);
-> -			usage_msg_opt(msg, git_bisect_helper_usage, options);
-> +		if (check_and_set_terms(&terms, command)) {
-> +			char *msg = xstrfmt(_("unknown command: '%s'"), command);
-> +			usage_msg_opt(msg, git_bisect_usage, options);
-
-[Change this usage_msg_opt() to a usage_msg_optf() and drop the
-xstrfmt()]
-
->  		}
-> +		/* shift the `command` back in */
-> +		argc++;
-> +		argv--;
->  		res = bisect_state(&terms, argv, argc);
-> -		break;
-> -	default:
-> -		BUG("unknown subcommand %d", cmdmode);
->  	}
-
-..and introducing bugs here, e.g. "git bisect --blah" is now a valid way
-to start a bisect", we no longer understand "git bisect <subcommand>
--h", but did before etc.
-
-Is the reason for further extending the custom command parser here
-because of e.g. the "die(..requires N arguments"? For all of those this
-could follow the pattern that builtin/commit-graph.c etc. use.
-
-I.e. just define a usage for say "log", and empty options, then pass
-argc/argv to that subcommand, and have it call parse_options().
-
-Then not only will the user get an error, they'll get the subset of "git
-bisect -h" output appropriate for whatever "git bisect subcommand <bad
-usage>" they invoked.
+And even if you did a "git pull" later shouldn't the error you got here
+be sufficiently stand-alone as to tell you what to do, without needing a
+later "pull"?
