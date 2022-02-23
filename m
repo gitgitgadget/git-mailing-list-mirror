@@ -2,90 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E694C433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 15:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 646CCC433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 15:41:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242091AbiBWPeK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 10:34:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42908 "EHLO
+        id S240884AbiBWPlo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 10:41:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233112AbiBWPeJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 10:34:09 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1615B151A
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:33:41 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id h15so27786564edv.7
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:33:41 -0800 (PST)
+        with ESMTP id S242296AbiBWPlk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 10:41:40 -0500
+Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC76CC0862
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:41:07 -0800 (PST)
+Received: by mail-vs1-xe29.google.com with SMTP id q9so3627745vsg.2
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 07:41:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=koordinates.com; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=pvH54qV6UBJof1si+Hhq6cdvrx/iXWGdn3psQyGAVSE=;
-        b=o+Q5+v6GzG57Owwqv0mCxezMJdpuYJhvhhspOw9R63rHli79McPG5nplhXGvVUDq6b
-         k+3v4ycZAfNH6g8YSK2yxjAT4Q8TcmA490BvUgJfpKxvIcRDDBuwnmn0RN6O1QOPloK8
-         vm8jE97grxv4cVyTri2zJY2IcYC1bnv1d9X+Lofs25GDYHz9omE4ldBGZRzfOFsF5Er9
-         LkN4/Arr2qEtClBfVO8JTLbYXOpOngx4yCmntGveMPolLysjGvTJeqaeXpaVQE7DSutp
-         ByAZ8qUCHFP5dwn6v53iPtmlzS4E5zSQrbAPw0WCNTEAFlfJrOBBpxavI10RdrZn4wlW
-         vk9A==
+        bh=BIZW5w/Ggqa6XUU95RGlhjfKKidw7VS6bP2bDXUMgFU=;
+        b=3E5vEvnkViG6c1qmsI6CDuPoG39TauQcL+M/SSwmuoq5G5cH8QbrMYpg8JQWJ20x8I
+         HlzvPG6X+2EMeIqNZ994caK0DTd28NwL8D/Sv1Z2JIZXE2NYwcUJJGSbQM2tPnMpwi35
+         acxMu0s3p0WwtPbUm7Q2XZ4FGFF5dMCg4BsgjdXCTHJqzp3A76ZdeaYcr95+tgOtiT2S
+         ovRdTk+8lOmDvsQs6sI7UcPymRb4+Qmihx7+139HvmbX5f7/oblSiydfaKhVxBXbfs7m
+         Ha9lyqpV4sZR4gUCkWCP0T5yQSWHi0tr9b8AuJSstfMciOi9HI8E8MauTMc6AwgCgXgT
+         DCVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=pvH54qV6UBJof1si+Hhq6cdvrx/iXWGdn3psQyGAVSE=;
-        b=vSU3mcbnDe9i86vEsUPhqwi+1KaSkqgnbLAXjMx1PDIGP50ETKeXcrN24j/qUChiI7
-         ORQn5IxVHWkSuDPxDK96bojQg8LU/WAWjo5zOua4xv6f/J40sD4XhFlZlVtYnHk66ari
-         q5K/JlLqPb60AMJo/6rYgznrj6FJymSWfrdWlMsrEl7gzY9y2z7wXPhj9weq1oB4z6I6
-         sEMl5nABQSeFrF0xvqZ0GmOcETIzb4bgkViHIikCinxfZ8ETISxQSJdNeEYCD0ukZwo7
-         d9tw5IECFwrqjSd4T7VMWqbN0TosbVVVbNRGCDeL4ZEu4kknyFQ20dVDPPmCvYeMVfVe
-         YNJw==
-X-Gm-Message-State: AOAM533zsvOnGQw/NNRo5sAltItQT7Xbk5pUe/n8IGQnVOqS/QefsEsc
-        14zi+Tfvm/2eWklEVc6F0BUNVH7F8jmrKCBRAUAbX5MpSKk=
-X-Google-Smtp-Source: ABdhPJxQQcOU3C+iBjSwTZNJykzDnb711jgnYzI42Ey9KrjtNV28N3jzR8B+Spxenmp1ckU+E+hcQvEXef0jRGq8aCw=
-X-Received: by 2002:a05:6402:369c:b0:413:2bc0:3f00 with SMTP id
- ej28-20020a056402369c00b004132bc03f00mr6745014edb.126.1645630420289; Wed, 23
- Feb 2022 07:33:40 -0800 (PST)
+        bh=BIZW5w/Ggqa6XUU95RGlhjfKKidw7VS6bP2bDXUMgFU=;
+        b=uFLUeH81oSbo7bIXAHec6zAbQA+nKBQNgkkIlOUqb07p2XFkznhhB2VcAYKRPanleF
+         HjnaXtiY5kZ5cQd7g4Lbr63AlnMWkb6W9jKxPO/93Pns6d6Vh4L4lGTJVwR+Df8Kw2At
+         jAIDJrStYXDfP0yt4w6OF9zcONKBAT+N4QKkamTm8k10idV/fQJRrxrqDlIqM1xNEq9z
+         yfYH0C1G/TW3FKx7R5IcK02URvimC8Gv/Emz5Xv+FiAaiHGlT/oHSCO7OHXr/R4AGBSC
+         z+uw3RpgAtBsfPRsy0uNHNeSACLW8bOld+1guRkD4tBxAF2YfOpkxpN+OV1/Dy/d+SJi
+         dvpQ==
+X-Gm-Message-State: AOAM530KMrXvNjJpEJJWt2IhA4ZiC5AhKdXFoSi1/wS+OBimA/lrtjI1
+        lrv1gN5A011B7EEcOhr6CzBo20vFicRIo+0eXgDSBA==
+X-Google-Smtp-Source: ABdhPJwpN9ZrvtxY5KYgvj2FDtTlTOE5WvhLmo1fqyC/gp6mmOxFB3xFIygD/2nio0iJZkbm/8mwo34xuK7VSqq1e8o=
+X-Received: by 2002:a05:6102:48e:b0:31c:2105:21e9 with SMTP id
+ n14-20020a056102048e00b0031c210521e9mr143838vsa.32.1645630866958; Wed, 23 Feb
+ 2022 07:41:06 -0800 (PST)
 MIME-Version: 1.0
-References: <CABPp-BERVCynOVvBq0QL49Ah+gy3W2snUVWBHfzXaVpXX3Dpyg@mail.gmail.com>
- <3bdff4ba-fb5f-e369-306d-5510ab20893a@gmail.com>
-In-Reply-To: <3bdff4ba-fb5f-e369-306d-5510ab20893a@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 23 Feb 2022 07:33:29 -0800
-Message-ID: <CABPp-BF_ygATPVGfSR24URm5ZTHBJwJd0miMtgMgNWfw_o33Nw@mail.gmail.com>
-Subject: Re: BUG: fast-import, ftruncate, and file mode
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
+ <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com> <CAFLLRpJ1aDyLb4qAoQwYDyGdP1_PH8kzLAQCKJpQwiYiapZ5Aw@mail.gmail.com>
+ <CB2ACEF7-76A9-4253-AD43-7BC842F9576D@gmail.com> <YhMC+3FdSEZz22qX@nand.local>
+ <CAP8UFD2dpicW64eqBK47g43xDWA1qv2BMBEOSqj_My5PUs8TSg@mail.gmail.com>
+ <YhQHYQ9b9bYYv10r@nand.local> <CAP8UFD3U4t-inWC5mZYhybWpjVwkqA7v4hYZ5voBOEJ=+_Y1kQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD3U4t-inWC5mZYhybWpjVwkqA7v4hYZ5voBOEJ=+_Y1kQ@mail.gmail.com>
+From:   Robert Coup <robert.coup@koordinates.com>
+Date:   Wed, 23 Feb 2022 15:40:50 +0000
+Message-ID: <CAFLLRpKLSxLV82SCr8x=BBRBybxj1XOxb=Srs5_X2idvvb1YEg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] [RFC] repack: add --filter=
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, John Cai <johncai86@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 23, 2022 at 5:59 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->
-> On 23/02/2022 07:47, Elijah Newren wrote:
-> > Hi,
-> >
-> > fast-import makes use of odb_mkstemp(), which creates a secure
-> > temporary file and opens it with mode 0444, and then uses it for its
-> > packfile writing.  Sometimes, fast-import will call its
-> > truncate_pack() function, which makes use of ftruncate().
-> >
-> > According to my local manpage, "With ftruncate(), the file must be
-> > open for writing; with truncate(), the file must be writable."
-> >
-> > The writable requirement does not appear to be enforced by the kernel
-> > on common filesystems like ext4 or zfs, but this is enforced on some
-> > filesystems.  Apparently a "VxFS Veritas filesystem" got triggered by
-> > this...and some helpful bug reporters tracked this problem down and
-> > found a workaround (for the filter-repo usecase, they recompiled a
-> > special copy of git using mode 0644 for odb_mkstemp, since it was just
-> > an intermediate step anyway and won't be used elsewhere).
->
-> Am I missing something or is this really a file system bug? Surely if we
-> have opened a file for writing the file permissions when we call
-> ftruncate() should be irrelevant?
->
-> Best Wishes
->
-> Phillip
+Hi Christian,
 
-Oh, indeed, looks like I can't read late at night.  Sorry for the noise.
+On Tue, 22 Feb 2022 at 17:11, Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> In some cases we just know the objects we are removing are stored by a
+> promisor remote or are replicated on different physical machines or
+> both, so you should be fine with this.
+
+From my point of view I think the goal here is great.
+
+> > Another option would be to prune the repository according to objects
+> > that are already made available by a promisor remote.
+>
+> If the objects have just been properly transferred to the promisor
+> remote, the check will just waste resources.
+
+As far as I can see this patch doesn't know or check that any of the
+filtered-out objects are held anywhere else... it simply applies a
+filter during repacking and the excluded objects are dropped. That's
+the aspect I have concerns about.
+
+Maybe an approach where you build/get/maintain a list of
+objects-I-definitely-have-elsewhere and pass it as an exclude list to
+repack would be a cleaner/safer/easier solution? If you're confident
+enough you don't need to check with the promisor remote then you can
+use a local list, or even something generated with `rev-list
+--filter=`.
+
+Thanks,
+
+Rob :)
