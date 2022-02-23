@@ -2,64 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2223AC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 409D4C433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 14:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241450AbiBWOOY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 09:14:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34828 "EHLO
+        id S241484AbiBWOSh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 09:18:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241433AbiBWOOX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 09:14:23 -0500
-Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74FCAB12F1
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:13:55 -0800 (PST)
-Received: by mail-oo1-xc30.google.com with SMTP id k13-20020a4a948d000000b003172f2f6bdfso22428685ooi.1
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:13:55 -0800 (PST)
+        with ESMTP id S234631AbiBWOSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 09:18:36 -0500
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAFF8B0D0D
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:18:08 -0800 (PST)
+Received: by mail-oo1-xc32.google.com with SMTP id j7-20020a4ad6c7000000b0031c690e4123so13344707oot.11
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 06:18:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :references:from:in-reply-to:content-transfer-encoding;
-        bh=vXSFOvzYwc2lEW5g/01HhCAlzU9IYB7YVIgbjPDEkuA=;
-        b=VW3JGph4ZseKO10OqiCVKBdpGtSSEgX+BAEbkRl3vxXmFe04FtQX9uh755TYIGQ4cI
-         OS1FUYrvYhn6GqyrpmB5ACvx73UDU+FX1eXvh2YE5FXTpPPD+W1fMXd8ywfzQOwHt9n9
-         v5MGq/bh7a0MbS6bjXBtNpZk3s6gUwLSgYDeqeemxqPZn7IifEMaK2LtMokbADARyp03
-         FPGifYOYQEgk7+LpKGW2ciIhV4HxaT0L9T79HXV72tyulJMkhfb1mdpx39l0TIKLdYGd
-         aYO/SIr6ky6FgxIFly+nvznpdN8J092rq07o7XZv7tMY0amrHmFtmMxf9WzPyKwhtdeo
-         fNPg==
+        bh=TpaLrSdblp80m6ZBzqFJ3n+cvsszq+9mAGRYOVV5g9M=;
+        b=Fwg305W21ysX43dkWxzYNU8KhBfp7evPOe2jx9I6+pYiuSEUpfWe20JUoj1JdEZEwn
+         vpDV7d9CVyamvznV/HuKF7QesmM9X7Aa3c9HQWS92FLpZLDg8JjVHQlOefqgesu+mxYx
+         cWeLQwQdCgQoXCO9oGoOKra1hUm2pVFbU5bnRcHnnp8zoNZNYuYxR2xquP38gugKaAAv
+         mpkL3HnYDR93jT1maR/1Vv/qz1gCoyRE7eH0gT2tJBklYTgCAeBxmInJG2RduwMzTSw+
+         +MmSCVBNmnglhU19/5fDkwx4xDKvaLuNOhy8ePwnT+hQzzYLiVAgq8kKHznPZellp94i
+         TpoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=vXSFOvzYwc2lEW5g/01HhCAlzU9IYB7YVIgbjPDEkuA=;
-        b=YhQ+e9de53AweySb0jEc87kHncvqKgj+5T9zsy36ptTYq70RkwMnyPy4Ifzwuy7weh
-         UEVOr2Aq1RL5elk+UwIzVkKTN7cNdSWNHSiUHx8IL7sOWd2jvn0S7VFrAni7uRPlQI5z
-         9Lf4mixbyRBbZiu8pGm9DKWIKp/Sluy0fKysz7YhzIESoL3XirYfWC0mf0U/w2tFnbNW
-         Je4hkZhb9QNktOrcReZXaCExIDAAm7a5olHnNrK0gqzTPjkroeF5nkx6LKH5xUWxouei
-         F9b0g3QXEM0sO5fOjMpbfdTtc3ABNtFZn2Sv70faURQ/UATiesF6rJS+/ZLare0UZEer
-         wL4Q==
-X-Gm-Message-State: AOAM532b6tGjiWHLSeZZqfshwNsMdlYIYV8pZkKpc+qMQXFn6p5Yz45T
-        vIOkkSo2rgyO3PhtGWbikPOGA2+d6kEU
-X-Google-Smtp-Source: ABdhPJx+RLPW0S6Ulx/3aqJqiu0vBKUo17lWHu4Z+wvk0n0tloB+LHMCpoY1yPxAPDsSCxeKt1tRLg==
-X-Received: by 2002:a05:6870:2a41:b0:d3:473b:3e96 with SMTP id jd1-20020a0568702a4100b000d3473b3e96mr3858784oab.38.1645625634690;
-        Wed, 23 Feb 2022 06:13:54 -0800 (PST)
+        bh=TpaLrSdblp80m6ZBzqFJ3n+cvsszq+9mAGRYOVV5g9M=;
+        b=jEA2GHYMucOv3TPGcENHs9QhKC6nGp3sT+kLSzuU5yap8iVuxQyFihQgumZwyTrKN/
+         jokdfUaTV576CCPP/W9qSqDIa5Dp21eMRqc3PRzg0G0stg1TdQHSa4YKJD7B/8h+1CIM
+         XIE4xUY3PpPFTiyp6E+Ovz0bUTP9JIJAcdgwVQQRLr9DKyUx8QqyZ7zkJsscZxPOtxMR
+         KiQzg8fAsRdA2/uUYqWC8uP26h34YrLlGkGf5JmgJRWNnXoAdA4bwZE4q2nfwdD+KxHf
+         o08WWiYyxkd+15fzRYQMVOi6aGkBEjJ4HaxYF6kHQt/gR4ZWt69uQ5iWOdG+qS0rLahk
+         LteQ==
+X-Gm-Message-State: AOAM533Kavjk3UEY54jPtu29bBJRor2P2iYw83cNeccSKmFl9NyImh88
+        q1GFVzbAuJJRmCb4PdNTbsvR
+X-Google-Smtp-Source: ABdhPJzlYtZ8L8RWR0cjq3Hjl+LcJj17avNLtjoby0VQPTeomdmEa4WCcknbFF/a5tGDFBW3QBJokg==
+X-Received: by 2002:a05:6870:6249:b0:c4:7dc0:d71e with SMTP id r9-20020a056870624900b000c47dc0d71emr3783425oak.241.1645625887940;
+        Wed, 23 Feb 2022 06:18:07 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id x17sm7547554oop.1.2022.02.23.06.13.54
+        by smtp.gmail.com with ESMTPSA id u2sm6240581ots.15.2022.02.23.06.18.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Feb 2022 06:13:54 -0800 (PST)
-Message-ID: <ddb91a1d-6ddf-ba25-f1af-ba3f4c18726e@github.com>
-Date:   Wed, 23 Feb 2022 09:13:53 -0500
+        Wed, 23 Feb 2022 06:18:07 -0800 (PST)
+Message-ID: <33154b3c-1316-aab3-46a1-a0fbd87293de@github.com>
+Date:   Wed, 23 Feb 2022 09:18:05 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCH 1/5] upload-pack: look up "want" lines via commit-graph
+Subject: Re: [PATCH 2/5] fetch: avoid lookup of commits when not appending to
+ FETCH_HEAD
 Content-Language: en-US
 To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 References: <cover.1645619224.git.ps@pks.im>
- <ca5e136cca495c7d927e99f5ae8a672d93823eea.1645619224.git.ps@pks.im>
+ <80f993dddd521133154a751aeaab86adee409eea.1645619224.git.ps@pks.im>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ca5e136cca495c7d927e99f5ae8a672d93823eea.1645619224.git.ps@pks.im>
+In-Reply-To: <80f993dddd521133154a751aeaab86adee409eea.1645619224.git.ps@pks.im>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -67,67 +68,95 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 2/23/2022 7:35 AM, Patrick Steinhardt wrote:
-
-> The following benchmark is executed in a repository with a huge number
-> of references. It uses cached request from git-fetch(1) as input and
-> contains about 876,000 "want" lines:
+> When fetching from a remote repository we will by default write what has
+> been fetched into the special FETCH_HEAD reference. The order in which
+> references are written depends on whether the reference is for merge or
+> not, which, despite some other conditions, is also determined based on
+> whether the old object ID the reference is being updated from actually
+> exists in the repository.
 > 
->     Benchmark 1: git-upload-pack (HEAD~)
->       Time (mean ± σ):      7.113 s ±  0.028 s    [User: 6.900 s, System: 0.662 s]
->       Range (min … max):    7.072 s …  7.168 s    10 runs
+> To write FETCH_HEAD we thus loop through all references thrice: once for
+> the references that are about to be merged, once for the references that
+> are not for merge, and finally for all references that are ignored. For
+> every iteration, we then look up the old object ID to determine whether
+> the referenced object exists so that we can label it as "not-for-merge"
+> if it doesn't exist. It goes without saying that this can be expensive
+> in case where we are fetching a lot of references.
 > 
->     Benchmark 2: git-upload-pack (HEAD)
->       Time (mean ± σ):      6.622 s ±  0.061 s    [User: 6.452 s, System: 0.650 s]
->       Range (min … max):    6.535 s …  6.727 s    10 runs
+> While this is hard to avoid in the case where we're writing FETCH_HEAD,
+> users can in fact ask us to skip this work via `--no-write-fetch-head`.
+> In that case, we do not care for the result of those lookups at all
+> because we don't have to order writes to FETCH_HEAD in the first place.
+> 
+> Skip this busywork in case we're not writing to FETCH_HEAD. The
+> following benchmark performs a mirror-fetch in a repository with about
+> two million references:
+> 
+>     Benchmark 1: git fetch --prune --no-write-fetch-head +refs/*:refs/* (HEAD~)
+>       Time (mean ± σ):     75.388 s ±  1.942 s    [User: 71.103 s, System: 8.953 s]
+>       Range (min … max):   73.184 s … 76.845 s    3 runs
+> 
+>     Benchmark 2: git fetch --prune --no-write-fetch-head +refs/*:refs/* (HEAD)
+>       Time (mean ± σ):     69.486 s ±  1.016 s    [User: 65.941 s, System: 8.806 s]
+>       Range (min … max):   68.864 s … 70.659 s    3 runs
 > 
 >     Summary
->       'git-upload-pack (HEAD)' ran
->         1.07 ± 0.01 times faster than 'git-upload-pack (HEAD~)'
+>       'git fetch --prune --no-write-fetch-head +refs/*:refs/* (HEAD)' ran
+>         1.08 ± 0.03 times faster than 'git fetch --prune --no-write-fetch-head +refs/*:refs/* (HEAD~)'
 
-Nice!
+I have a super-small nitpick here.
 
-> -		o = parse_object(the_repository, &oid);
-> +		commit = lookup_commit_in_graph(the_repository, &oid);
-> +		if (commit)
-> +			o = &commit->object;
-> +		else
-> +			o = parse_object(the_repository, &oid);
+I see that you are using '-n' to name your experiments. These names
+are a bit long, especially since they are the same Git command but
+built at different commits. It would be enough to say the command
+you are testing before the stats and leave the names as "HEAD" and
+"HEAD~" (or, I typically use "new" and "old", respectively).
+
+>  			/*
+> -			 * References in "refs/tags/" are often going to point
+> -			 * to annotated tags, which are not part of the
+> -			 * commit-graph. We thus only try to look up refs in
+> -			 * the graph which are not in that namespace to not
+> -			 * regress performance in repositories with many
+> -			 * annotated tags.
+> +			 * When writing FETCH_HEAD we need to determine whether
+> +			 * we already have the commit or not. If not, then the
+> +			 * reference is not for merge and needs to be written
+> +			 * to the reflog after other commits which we already
+> +			 * have. We're not interested in this property though
+> +			 * in case FETCH_HEAD is not to be updated, so we can
+> +			 * skip the classification in that case.
+>  			 */
+> -			if (!starts_with(rm->name, "refs/tags/"))
+> -				commit = lookup_commit_in_graph(the_repository, &rm->old_oid);
+> -			if (!commit) {
+> -				commit = lookup_commit_reference_gently(the_repository,
+> -									&rm->old_oid,
+> -									1);
+> -				if (!commit)
+> -					rm->fetch_head_status = FETCH_HEAD_NOT_FOR_MERGE;
+> +			if (fetch_head->fp) {
+> +				struct commit *commit = NULL;
 > +
-
-This is a neat trick. I see that we've also done this trick in
-revision.c:get_reference(). Perhaps it is worth creating a helper,
-maybe named parse_probably_commit()?
-
->  		if (!o) {
->  			packet_writer_error(writer,
->  					    "upload-pack: not our ref %s",
-> @@ -1434,7 +1440,7 @@ static int parse_want_ref(struct packet_writer *writer, const char *line,
->  	if (skip_prefix(line, "want-ref ", &refname_nons)) {
->  		struct object_id oid;
->  		struct string_list_item *item;
-> -		struct object *o;
-> +		struct object *o = NULL;
->  		struct strbuf refname = STRBUF_INIT;
->  
->  		strbuf_addf(&refname, "%s%s", get_git_namespace(), refname_nons);
-> @@ -1448,7 +1454,15 @@ static int parse_want_ref(struct packet_writer *writer, const char *line,
->  		item = string_list_append(wanted_refs, refname_nons);
->  		item->util = oiddup(&oid);
->  
-> -		o = parse_object_or_die(&oid, refname_nons);
-> +		if (!starts_with(refname_nons, "refs/tags/")) {
-> +			struct commit *commit = lookup_commit_in_graph(the_repository, &oid);
-> +			if (commit)
-> +				o = &commit->object;
-> +		}
-> +
-> +		if (!o)
-> +			o = parse_object_or_die(&oid, refname_nons);
-> +
-
-Even here, we _could_ use a parse_probably_commit() helper
-inside the if (!starts_with(...)) block, even though we would
-still need the if (!o) check later.
+> +				/*
+> +				 * References in "refs/tags/" are often going to point
+> +				 * to annotated tags, which are not part of the
+> +				 * commit-graph. We thus only try to look up refs in
+> +				 * the graph which are not in that namespace to not
+> +				 * regress performance in repositories with many
+> +				 * annotated tags.
+> +				 */
+> +				if (!starts_with(rm->name, "refs/tags/"))
+> +					commit = lookup_commit_in_graph(the_repository, &rm->old_oid);
+> +				if (!commit) {
+> +					commit = lookup_commit_reference_gently(the_repository,
+> +										&rm->old_oid,
+> +										1);
+> +					if (!commit)
+> +						rm->fetch_head_status = FETCH_HEAD_NOT_FOR_MERGE;
+> +				}
+>  			}
+Looks good. Most of the diff is whitespace.
 
 Thanks,
 -Stolee
