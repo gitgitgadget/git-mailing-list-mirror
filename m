@@ -2,68 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F31BC433F5
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 09:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5119FC433EF
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 09:09:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239131AbiBWJBE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 04:01:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41842 "EHLO
+        id S237815AbiBWJKK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 04:10:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232588AbiBWJBD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 04:01:03 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C0D7CDF5
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 01:00:35 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id g20so1187822edw.6
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 01:00:35 -0800 (PST)
+        with ESMTP id S234770AbiBWJKJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 04:10:09 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B50B08021F
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 01:09:40 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id lw4so50978977ejb.12
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 01:09:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version:content-transfer-encoding;
-        bh=5Z2WohTsl44jkEatVB58rkSZTLM2XcL1Vh0RC537ekY=;
-        b=T2rdRxTfPWjligAYC7k++vl9MlkoWqKii4tnL67c3/2bUstvFUJa3hykc7s5f8IhtM
-         CsyJpTOdgDDF6bkHHMTuzkeMW2uyboTS6/CFf1/gvE5EX6acSRcmsxHkeHhUpFO8Wnhl
-         sTEnorxTJQjRpfsQIYX7ptwkIXcWAof0Uwg2n+nOyX+iILUi1apCIlwlXKqkuxd9H8o2
-         nwJ2+jIE6krYCnoRcEAxIlUjSGv4nOQvL34V5cNLaI22MS8jA8DUXbEH5TFhyUgeLb0z
-         lGTgGwVTQxB6sFOpFeqctamIRnP3Dzr5dnbWYzufUAOBHKenVXK2a0rYhfD53rXVaxWx
-         euIg==
+        bh=31pBm1oA8s3SJfUY/rJOyeO53GkjvWh2hkqn5NsOA4M=;
+        b=RS9XlZUKSW0AAWEMu2ATP27EITJ9om6iOXTpqBXBR7LGs31TqECdKgZ8dDkofo4pSO
+         76HEgHh4MZGY1DSbCwzQNnLbBMOUzim+pbQjBvIMLW2+OAzAXJJrt7X9RPi0Y+DM+PP2
+         84iGr20Zk4Ip1jSjTlNJQYjpOLs9iPd4G87tZiKKWK/7+/g/9WGN0+AbMpHHp78jMXQY
+         FTMO0DReVlC3UysJOcCoqShTrNd2vyP5uPwMhNKmTRbJu97Jt1DyOhNFcxEIG6eHrlIc
+         UkGf6FGIDwXTae4CWzVY4F446gbCV/8dRNdZVtryV/JRLzn5m21DL666hd3yskaRQcpL
+         awew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=5Z2WohTsl44jkEatVB58rkSZTLM2XcL1Vh0RC537ekY=;
-        b=DD0aFZZlkjpeIPBKOgs6z2gmCUeIevisLgacI6K/D5O19h55+2aa6k7KsmS2rM8RSL
-         OTnZmUZ2yOugUle1iw2IA/BO5kAfUx84c6IfS5rWjuD1UOtx1wgDJ/nJgg88u2Frrfog
-         Jl1vCK6ESIaqfobwoYAXqfwKGo8iLovZcd6IANvgwO0yOTgFjQBYJTwgR6XDJyvfoTLP
-         PSqDtil6cTdiLVcICpvRA5wiGKeYDIla7Br9YujsJHq4IALiOlogGMyoGHSz3A+AoUhF
-         +svXCY7hZp+WeUY2Mej1STne4PKq7ISkGd9ILngr89vhjtj2NAeotjn/9B2qqNZXLJGM
-         6jXA==
-X-Gm-Message-State: AOAM532MIGER46XETvjv6rSds5oGUSvrPl5XfOaN3FkvznQ++kY5G40E
-        /7HzGf9nEHq3Wlt4VFL+b+QB+JDMSV0=
-X-Google-Smtp-Source: ABdhPJyc7kvvFnu3HcfWkw1UtRSHLUZs3WCxRUqUXcR2xU5XVIAjou21unoXtRK+sAfBpr+e4j7DdQ==
-X-Received: by 2002:a05:6402:170e:b0:40b:657:ac3f with SMTP id y14-20020a056402170e00b0040b0657ac3fmr29985462edu.354.1645606833590;
-        Wed, 23 Feb 2022 01:00:33 -0800 (PST)
+        bh=31pBm1oA8s3SJfUY/rJOyeO53GkjvWh2hkqn5NsOA4M=;
+        b=JuCWvqgdBGrwdrafYl+GCgTljVlkNvkGfLgkDLdhPDvd+uvezYRIWpq9PKPgflmYvm
+         Xhz5B1jHSpCrqktwZOeNhpUOuN1kz17XvK+VgQjvkEGhqnHqaLBRXZcsK6cf6JXn+02w
+         O+v9vSj05fmMx/cuVhH0Z0Hy1qx/xFK+72Ow4+3saLcrpdlbs5R4B47wd5b66QGX/163
+         OV4pNxjcZ2ssbSv/IuOiTm3CY932vH8co+YGMwAXJtkxAGcSNGLOpoX1yAgtwUMBV3nh
+         ZOoX8bu09K8lkfCouSKXM5WmKWBe5rSwSg0GTIKr8vM+FgoZI+/jseJ2SFzgmpFCYhdl
+         /cIQ==
+X-Gm-Message-State: AOAM530C4yJ6mVo3I/3hsCWSQ2DpDgbr31Q2MEMJNlIJOMdwBVJxEykO
+        qQNWNle/Crqrtp9HGT9XUv7Myya4HEg=
+X-Google-Smtp-Source: ABdhPJzAaukHBAILd5ZDrMlB6QANOKlQWr1mL1qZ0zJmzvtA5ytRnBDj1fOYGy6bvBzdgj+pZtHzCw==
+X-Received: by 2002:a17:906:c59:b0:6b9:59d8:263e with SMTP id t25-20020a1709060c5900b006b959d8263emr23028652ejf.770.1645607378757;
+        Wed, 23 Feb 2022 01:09:38 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id g7sm7942141edt.69.2022.02.23.01.00.32
+        by smtp.gmail.com with ESMTPSA id t12sm7061166ejd.27.2022.02.23.01.09.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 01:00:32 -0800 (PST)
+        Wed, 23 Feb 2022 01:09:38 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nMnVg-006D1W-F8;
-        Wed, 23 Feb 2022 10:00:32 +0100
+        id 1nMneT-006DNi-VT;
+        Wed, 23 Feb 2022 10:09:37 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
         John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 1/3] stash: add test to ensure reflog --rewrite
- --updatref behavior
-Date:   Wed, 23 Feb 2022 09:54:47 +0100
+Subject: Re: [PATCH v2 2/3] reflog: libify delete reflog function and helpers
+Date:   Wed, 23 Feb 2022 10:02:54 +0100
 References: <pull.1218.git.git.1645209647.gitgitgadget@gmail.com>
  <pull.1218.v2.git.git.1645554651.gitgitgadget@gmail.com>
- <6e136b62ca4588cc58f2cb59b635eeaf14e6e20d.1645554652.git.gitgitgadget@gmail.com>
+ <e7c950218b1b6b91a3cecedf3d2339230522e2e0.1645554652.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <6e136b62ca4588cc58f2cb59b635eeaf14e6e20d.1645554652.git.gitgitgadget@gmail.com>
-Message-ID: <220223.864k4q6jpr.gmgdl@evledraar.gmail.com>
+In-reply-to: <e7c950218b1b6b91a3cecedf3d2339230522e2e0.1645554652.git.gitgitgadget@gmail.com>
+Message-ID: <220223.86zgmi54q6.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,103 +75,170 @@ On Tue, Feb 22 2022, John Cai via GitGitGadget wrote:
 
 > From: John Cai <johncai86@gmail.com>
 >
-> There is missing test coverage to ensure that the resulting reflogs
-> after a git stash drop has had its old oid rewritten if applicable, and
-> if the refs/stash has been updated if applicable.
-
-This test looks good, and if 3/3 is applied and either of the flags
-you're passing is omitted they'll fail, so we know we have the missing
-coverage here.
-
+> Currently stash shells out to reflog in order to delete refs. In an
+> effort to reduce how much we shell out to a subprocess, libify the
+> functionality that stash needs into reflog.c.
+>
+> Add a reflog_delete function that is pretty much the logic in the while
+> loop in builtin/reflog.c cmd_reflog_delete(). This is a function that
+> builtin/reflog.c and builtin/stash.c can both call.
+>
+> Also move functions needed by reflog_delete and export them.
+>
 > Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > Signed-off-by: John Cai <johncai86@gmail.com>
 > ---
->  t/t3903-stash.sh | 25 ++++++++++++++++++++++++-
->  1 file changed, 24 insertions(+), 1 deletion(-)
+>  Makefile         |   1 +
+>  builtin/reflog.c | 451 +----------------------------------------------
+>  object.h         |   2 +-
+>  reflog.c         | 435 +++++++++++++++++++++++++++++++++++++++++++++
+>  reflog.h         |  49 +++++
+>  5 files changed, 490 insertions(+), 448 deletions(-)
+>  create mode 100644 reflog.c
+>  create mode 100644 reflog.h
 >
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index b149e2af441..ec9cc5646d6 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -185,10 +185,33 @@ test_expect_success 'drop middle stash by index' '
->  	test 1 =3D $(git show HEAD:file)
->  '
->=20=20
-> +test_expect_success 'drop stash reflog updates refs/stash' '
-> +	git reset --hard &&
-> +	git rev-parse refs/stash >expect &&
-> +	echo 9 >file &&
-> +	git stash &&
-> +	git stash drop stash@{0} &&
-> +	git rev-parse refs/stash >actual &&
-> +	test_cmp expect actual
-> +'
+> diff --git a/Makefile b/Makefile
+> index 6f0b4b775fe..876d4dfd6cb 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -989,6 +989,7 @@ LIB_OBJS +=3D rebase-interactive.o
+>  LIB_OBJS +=3D rebase.o
+>  LIB_OBJS +=3D ref-filter.o
+>  LIB_OBJS +=3D reflog-walk.o
+> +LIB_OBJS +=3D reflog.o
+>  LIB_OBJS +=3D refs.o
+>  LIB_OBJS +=3D refs/debug.o
+>  LIB_OBJS +=3D refs/files-backend.o
+> diff --git a/builtin/reflog.c b/builtin/reflog.c
+> index 85b838720c3..03d347e5832 100644
+> --- a/builtin/reflog.c
+> +++ b/builtin/reflog.c
+> @@ -1,16 +1,13 @@
+>  #include "builtin.h"
+>  #include "config.h"
+>  #include "lockfile.h"
+> -#include "object-store.h"
+>  #include "repository.h"
+> -#include "commit.h"
+> -#include "refs.h"
+>  #include "dir.h"
+> -#include "tree-walk.h"
+>  #include "diff.h"
+>  #include "revision.h"
+>  #include "reachable.h"
+>  #include "worktree.h"
+> +#include "reflog.h"
+> [...]
+> diff --git a/reflog.c b/reflog.c
+> new file mode 100644
+> index 00000000000..8d57dc43503
+> --- /dev/null
+> +++ b/reflog.c
+> @@ -0,0 +1,435 @@
+> +#include "cache.h"
+> +#include "commit.h"
+> +#include "object-store.h"
+> +#include "reachable.h"
+> +#include "reflog.h"
+> +#include "refs.h"
+> +#include "revision.h"
+> +#include "tree-walk.h"
+> +#include "worktree.h"
 
-This one will be portable to the reftable backend.
+I think you missed some now-redundant headers, and copied over others we
+didn't need. This compiles for me with this on top:
 
-> +test_expect_success 'drop stash reflog updates refs/stash with rewrite' '
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 03d347e5832..940db196f62 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -1,9 +1,5 @@
+ #include "builtin.h"
+ #include "config.h"
+-#include "lockfile.h"
+-#include "repository.h"
+-#include "dir.h"
+-#include "diff.h"
+ #include "revision.h"
+ #include "reachable.h"
+ #include "worktree.h"
+diff --git a/reflog.c b/reflog.c
+index 8d57dc43503..333fd8708fe 100644
+--- a/reflog.c
++++ b/reflog.c
+@@ -1,11 +1,8 @@
+ #include "cache.h"
+-#include "commit.h"
+ #include "object-store.h"
+-#include "reachable.h"
+ #include "reflog.h"
+ #include "refs.h"
+ #include "revision.h"
+-#include "tree-walk.h"
+ #include "worktree.h"
 
-But as I noted in <220222.86fsob88h7.gmgdl@evledraar.gmail.com> (but it
-was easy to miss) this test will need to depend on REFFILES. So just
-changing this line to:
+But perhaps some of those are really "needed" but brought in implicitly?
 
-    test_expect_success REFFILES 'drop stash[...]'
+> [...]
+> diff --git a/reflog.h b/reflog.h
+> new file mode 100644
+> index 00000000000..3427021cdc2
+> --- /dev/null
+> +++ b/reflog.h
+> @@ -0,0 +1,49 @@
+> +#ifndef REFLOG_H
+> +#define REFLOG_H
+> +
+> +#include "refs.h"
 
-> +	git reset --hard &&
-> +	echo 9 >file &&
-> +	git stash &&
-> +	oid=3D"$(git rev-parse stash@{0})" &&
-> +	git stash drop stash@{1} &&
-> +	cut -d" " -f1-2 .git/logs/refs/stash >actual &&
-> +	cat >expect <<-EOF &&
-> +	$(test_oid zero) $oid
-> +	EOF
-> +	test_cmp expect actual
-> +'
+Just a nit but I think the reflog_delete() should be wrapped (ends up at
+80 cols), and the usual style in this project is to not whitespace-pad
+so much, i.e. this on top:
 
-Then:
-
->  test_expect_success 'stash pop' '
->  	git reset --hard &&
->  	git stash pop &&
-> -	test 3 =3D $(cat file) &&
-> +	test 9 =3D $(cat file) &&
->  	test 1 =3D $(git show :file) &&
->  	test 1 =3D $(git show HEAD:file) &&
->  	test 0 =3D $(git stash list | wc -l)
-
-This test was already a bit broken in needing the preceding tests, but
-it will break now if REFFILES isn't true, which you can reproduce
-e.g. with:
-
-    ./t3903-stash.sh --run=3D1-16,18-50 -vixd
-
-Perhaps the least sucky solution to that is:
-
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index ec9cc5646d6..1d11c9bda20 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -205,13 +205,19 @@ test_expect_success 'drop stash reflog updates refs/s=
-tash with rewrite' '
- 	cat >expect <<-EOF &&
- 	$(test_oid zero) $oid
- 	EOF
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	>dropped-stash
- '
+diff --git a/reflog.h b/reflog.h
+index 3427021cdc2..d2906fb9f8d 100644
+--- a/reflog.h
++++ b/reflog.h
+@@ -1,6 +1,5 @@
+ #ifndef REFLOG_H
+ #define REFLOG_H
+-
+ #include "refs.h"
 =20
- test_expect_success 'stash pop' '
- 	git reset --hard &&
- 	git stash pop &&
--	test 9 =3D $(cat file) &&
-+	if test -e dropped-stash
-+	then
-+		test 9 =3D $(cat file)
-+	else
-+		test 3 =3D $(cat file)
-+	fi &&
- 	test 1 =3D $(git show :file) &&
- 	test 1 =3D $(git show HEAD:file) &&
- 	test 0 =3D $(git stash list | wc -l)
+ struct cmd_reflog_expire_cb {
+@@ -25,25 +24,20 @@ struct expire_reflog_policy_cb {
+ 	unsigned int dry_run:1;
+ };
+=20
+-int reflog_delete(const char *rev, enum expire_reflog_flags flags, int ver=
+bose);
+-
++int reflog_delete(const char *rev, enum expire_reflog_flags flags,
++		  int verbose);
+ void reflog_expiry_cleanup(void *cb_data);
+-
+ void reflog_expiry_prepare(const char *refname, const struct object_id *oi=
+d,
+ 			   void *cb_data);
+-
+ int should_expire_reflog_ent(struct object_id *ooid, struct object_id *noi=
+d,
+ 			     const char *email, timestamp_t timestamp, int tz,
+ 			     const char *message, void *cb_data);
+-
+ int count_reflog_ent(struct object_id *ooid, struct object_id *noid,
+ 		     const char *email, timestamp_t timestamp, int tz,
+ 		     const char *message, void *cb_data);
+-
+ int should_expire_reflog_ent_verbose(struct object_id *ooid,
+ 				     struct object_id *noid,
+ 				     const char *email,
+ 				     timestamp_t timestamp, int tz,
+ 				     const char *message, void *cb_data);
+-
+ #endif /* REFLOG_H */
+
+
+Other than all that I really can't find anything at all to comment on,
+and I see that all the points raised in previous rounds by others were
+addressed.
