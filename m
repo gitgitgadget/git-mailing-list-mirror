@@ -2,135 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2214EC433EF
-	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 21:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 304BAC433F5
+	for <git@archiver.kernel.org>; Wed, 23 Feb 2022 21:51:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241393AbiBWVud (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Feb 2022 16:50:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49436 "EHLO
+        id S241300AbiBWVvk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Feb 2022 16:51:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241027AbiBWVuc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Feb 2022 16:50:32 -0500
-Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E246A50067
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 13:50:03 -0800 (PST)
-Received: by mail-qv1-xf30.google.com with SMTP id e22so480311qvf.9
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 13:50:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=VzMptS0GIeo3jWTbEp9zw5v5UA+p44oHQM4im6rxfVY=;
-        b=jeJFqZJuqZgJAgcWD2pF7kG17YhrJzcThRMD1WFIpXbylUzG51G8wBuTLdV/i6HRkD
-         DMVjX3vEeNpAd3X46e52r6iPPyF1fOcLouVaLxM4I49JLyWPc149Omik9Gc9V100E/VC
-         mt0VrDu5f64fik7fniE/5Y6R6/kvNW0ZKK3O3500OUtGYdcx0AvvGD1yiDgjrsj1M6Br
-         7oINnuE8YzDmZOYZID8SbTGSb+CXK2fIsp1kZXXcyr2rqfVuxsHuheRdbIIm5p9T/bgv
-         0wcd/g1K0QH6ZptRUDOXyMYjvyTHXVOBUMYIA0X5fSU/0787k73IJlW9K0d/W4gVowLr
-         +reA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=VzMptS0GIeo3jWTbEp9zw5v5UA+p44oHQM4im6rxfVY=;
-        b=FAhcmGyjFgWo11rfyN4MRoPa0iJImi0I6dzO5MMqIPI3kxcdEbBGU1WjmmWBehlVJ4
-         iWCzI22k3tLoUnXxzfri1nn/GGcwc2oD3SX3OiXlOjTHzouxD3BA7upFJMmwDUkz/vi9
-         96MGnFgsTvX8ufjFuuzjpgjOTSpRtEwe13OlvHz9bIAxrCASkqkieuWxQyi2SWnn5xC0
-         40ttvWHmN1oS00SQspkfY+ai/xUGa7mL+hdIZduCm9G71TsxQ4JUzaMl89mmj0HdcxiB
-         YNS/+GHMBUPlPMwRPfpKg9Y0PK85om1IcjxJY3wLem+OFcwfkB6+1Z/PXdQ75ZSRHT7t
-         kdJg==
-X-Gm-Message-State: AOAM530+CpMteAn2g94b72TpM5LwCVTFN2c8LMLqjGjK7P4S5+np4rLX
-        r7dTU92hafF14ecrmN5xG9Q=
-X-Google-Smtp-Source: ABdhPJyFCXfflCaJJZ50JHXrTmZwSJlFodz7YQ2xhYoNPy0dlFwPp/OVBfgJIJmI9tPI8inYTW4zNg==
-X-Received: by 2002:a05:622a:547:b0:2dc:edb1:6c28 with SMTP id m7-20020a05622a054700b002dcedb16c28mr1788572qtx.398.1645653002921;
-        Wed, 23 Feb 2022 13:50:02 -0800 (PST)
-Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
-        by smtp.gmail.com with ESMTPSA id q8sm424088qkl.65.2022.02.23.13.50.02
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Feb 2022 13:50:02 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 1/3] stash: add test to ensure reflog --rewrite --updatref behavior
-Date:   Wed, 23 Feb 2022 16:50:02 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <8A0E2968-8324-4A73-B857-F5D8E5C5EACD@gmail.com>
-In-Reply-To: <xmqq4k4ptgsv.fsf@gitster.g>
-References: <pull.1218.git.git.1645209647.gitgitgadget@gmail.com>
- <pull.1218.v2.git.git.1645554651.gitgitgadget@gmail.com>
- <6e136b62ca4588cc58f2cb59b635eeaf14e6e20d.1645554652.git.gitgitgadget@gmail.com>
- <220223.864k4q6jpr.gmgdl@evledraar.gmail.com> <xmqq4k4ptgsv.fsf@gitster.g>
+        with ESMTP id S235875AbiBWVvk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Feb 2022 16:51:40 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C369347069
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 13:51:11 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 120DF11F80F;
+        Wed, 23 Feb 2022 16:51:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=9NlcLFIa0FlL
+        l/XgeBMnvMgjoq3kESC0aGmHlpzrMHs=; b=kS/vogQrzDXNuD8Vcnxe+bbc+1tm
+        mBfgBrUwwlblTnpMciCVjUi3m7f/Wf0LJ6Dl3Uy1uNLNzh23kjG5q3drJeGS5NmT
+        CunFD5TyraI3l2Zen/bY22ORL3LDRrIY3xelpHEE0yZRbEByyVzFe5yej4hZnaCf
+        8OjPytN6gGGe08g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0A0BE11F80E;
+        Wed, 23 Feb 2022 16:51:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6FCE011F80D;
+        Wed, 23 Feb 2022 16:51:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v2 2/9] help.c: use puts() instead of printf{,_ln}() for
+ consistency
+References: <cover-0.7-00000000000-20211228T153456Z-avarab@gmail.com>
+        <cover-v2-0.9-00000000000-20220221T193708Z-avarab@gmail.com>
+        <patch-v2-2.9-124643c4b35-20220221T193708Z-avarab@gmail.com>
+Date:   Wed, 23 Feb 2022 13:51:08 -0800
+In-Reply-To: <patch-v2-2.9-124643c4b35-20220221T193708Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 21 Feb
+ 2022 20:38:45
+        +0100")
+Message-ID: <xmqqfso9s14j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: B6660194-94F2-11EC-81B5-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-On 23 Feb 2022, at 16:27, Junio C Hamano wrote:
+> -		printf("\n%s\n", _(desc));
+> +		putchar('\n');
+> +		puts(_(desc));
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> This test was already a bit broken in needing the preceding tests, but=
+This is sort of "Meh".  Even the justification that says "we'll do
+the same thing in future patches" is not really a justification, as
+it is entirely fine to add more of the "line-break plus %\n" printf()
+in the later steps in the same series.
 
->> it will break now if REFFILES isn't true, which you can reproduce
->> e.g. with:
->>
->>     ./t3903-stash.sh --run=3D1-16,18-50 -vixd
->>
->> Perhaps the least sucky solution to that is:
->>
->> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
->> index ec9cc5646d6..1d11c9bda20 100755
->> --- a/t/t3903-stash.sh
->> +++ b/t/t3903-stash.sh
->> @@ -205,13 +205,19 @@ test_expect_success 'drop stash reflog updates r=
-efs/stash with rewrite' '
->>  	cat >expect <<-EOF &&
->>  	$(test_oid zero) $oid
->>  	EOF
->> -	test_cmp expect actual
->> +	test_cmp expect actual &&
->> +	>dropped-stash
->>  '
->
-> If "git stash drop", invoked in earlier part of this test before the
-> precontext, fails, then test_cmp would fail and we leave
-> dropped-stash untouched, even though we did run "git stash drop"
-> already.
->
-> Why does the next test need to depend on what has happened earlier?
+>  		print_command_list(cmds, mask, longest);
+>  	}
+>  	free(cmds);
+> @@ -317,7 +318,7 @@ void list_commands(struct cmdnames *main_cmds, stru=
+ct cmdnames *other_cmds)
+>  	}
+> =20
+>  	if (other_cmds->cnt) {
+> -		printf_ln(_("git commands available from elsewhere on your $PATH"));
+> +		puts(_("git commands available from elsewhere on your $PATH"));
 
-Ideally it shouldn't, but it seems like the way these test have been writ=
-ten
-makes subsequent tests depend on what previous tests have stashed.
+This *IS* an improvement, as the first parameter to printf_ln() is
+supposed to be a format string, and should have been
 
-I'm wondering now that while we're at it, if we should just clean up thes=
-e tests
-so there are no dependencies between the tests. Otherwise it's quite pain=
-ful the
-next time someone needs to add a test here.
+	printf_ln("%s", _("git commands ..."));
 
-We could follow the pattern in 5ac15ad2509 (reflog tests: add --updateref=
- tests,
-2021-10-16), where =C3=86var set up the tests and copied over the repo so=
- each test
-is isolated from each other.
+> -	printf_ln(_("See 'git help <command>' to read about a specific subcom=
+mand"));
+> +	puts(_("See 'git help <command>' to read about a specific subcommand"=
+));
 
->
->>  test_expect_success 'stash pop' '
->>  	git reset --hard &&
->>  	git stash pop &&
->> -	test 9 =3D $(cat file) &&
->> +	if test -e dropped-stash
->> +	then
->> +		test 9 =3D $(cat file)
->> +	else
->> +		test 3 =3D $(cat file)
->> +	fi &&
->>  	test 1 =3D $(git show :file) &&
->>  	test 1 =3D $(git show HEAD:file) &&
->>  	test 0 =3D $(git stash list | wc -l)
+Ditto.
