@@ -2,135 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BB23C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 14:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4BD2C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 14:53:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235650AbiBXOxG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 09:53:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50540 "EHLO
+        id S235628AbiBXOxq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 09:53:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235669AbiBXOxB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 09:53:01 -0500
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BA4213CEF5
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 06:52:31 -0800 (PST)
-Received: by mail-qv1-xf2b.google.com with SMTP id fc19so3909922qvb.7
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 06:52:31 -0800 (PST)
+        with ESMTP id S235626AbiBXOxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 09:53:45 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57CEF17DBAC
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 06:53:15 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id a1so3932507qvl.6
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 06:53:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=2JEoP38FoZVyh5Pba2BAMhUK4/lz/oHGiXvSlOedc98=;
-        b=FO3tjr4bYrT8X/KSRhRfeLanhq+qEgYKumuXGcBUwP6HRRwpX5AyLbUHdlxXVjLokl
-         hghXsoyEDOcB4coIuiuQOfxuvl6Ky3BewrOwnxb3hdaHo+2v51rBVxzQ4X7JYvEnkGwl
-         HDVLjoqLkVnR5nZ4FI123ByR24uUdgtKOFtAQ9nTo6fdxfoTIMSGPzLwbbFporBcM9mx
-         xet951yRRKs/qJtdlpq4wG4Z3B8/VWq5hIpo6lqFVC5wB1Y+c8NYrfhV18YOCcnyz9Ov
-         kyeL8g/OityzJYQEJLTzsiQ87hCtMZXL4JEe+Vi0V8dpNPX9SkPwlGLiEgwbRvZf21qj
-         CutQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version;
+        bh=0tctd2xeR3EBx/7aYDzM42fSdY/TMq2DM1Wk5k5vK/E=;
+        b=JS3DteUqTYsrx6dTHgyz1q1zzTeg0R45zER+CtQBbd31105ZF3NWiABgYfFy9oj078
+         cB9di8Jv6/DZq6AAyzHN1DhEUn0BrAUiYT+wbeByXc+NH5d3ntpyMTfQwpLQKNZF7uSn
+         ylGxWvEboW8vIYijviEOzy7SAh/Nd/ANK6HY4Rgaf5FZHy5MF6gLMK3tM6z22T46/uc/
+         qPZCC4icDr809+Y2xqKKBGI+CyAogaX+eYCKxN3Xld4Gn7blpzl5r0BQkKAURn4shKJh
+         mKKDEbmC6+3xZkibtY3xwwp6qnCBEfJdH9b9HPztwcgu9RHOI+1g9k/fJwra8Ut2q8vQ
+         Qu8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=2JEoP38FoZVyh5Pba2BAMhUK4/lz/oHGiXvSlOedc98=;
-        b=uAQiTtv4JoTGZQr2h3yrJbKorIyzhjeGAinSa+qplzm/+6YOkXvdBMcdC4ZlM3evzP
-         fSzHL7aLLpp2XthIMU1cr4/kFx78b580TMUQj9mYd1sgQvFRo9YK/7MDcKIH62stNvU8
-         sAPM3zc29p4Td1XCxA/uDFctsAmjTp0LOGEyXTTdb4zlJIlPAbKD28KfgDRTOe4SSr+L
-         eR2apdHSsn1GVexu9MjqNVf+dZ4rMGYjwhGFT6ZQF55KeOAVQ6SnWXmPHT6AzoGYePOC
-         adakoFnFiO7+ZD491gPo30fHpe7z67WUSHelbM7ZUnRCv5QgFXs/+lH01UakVcfVXYTH
-         1niA==
-X-Gm-Message-State: AOAM533fekeNJKsZNjXOyZROB5zV1ddRzKvik4hH4VDCCEf2vT0474KZ
-        EDNQsdqkLOPTHi+OPBsdsOq7
-X-Google-Smtp-Source: ABdhPJyeLFqvU5uVeJ81KOBmrql0ur5V7eOHgm0EzOLl/S/5UzPFZ/tDeJiZ3kussUqiTQ3x+jxFNg==
-X-Received: by 2002:ad4:4f47:0:b0:432:bb7c:32c3 with SMTP id eu7-20020ad44f47000000b00432bb7c32c3mr123150qvb.15.1645714350678;
-        Thu, 24 Feb 2022 06:52:30 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id z3sm1316006qkl.13.2022.02.24.06.52.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Feb 2022 06:52:30 -0800 (PST)
-Message-ID: <c7ee2394-cda0-a997-3b9d-fb8c3d65b312@github.com>
-Date:   Thu, 24 Feb 2022 09:52:28 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version;
+        bh=0tctd2xeR3EBx/7aYDzM42fSdY/TMq2DM1Wk5k5vK/E=;
+        b=gD1nif2W+tIBw3iAtrfORu4gYHsJjOSnvU3vYekg4EuGD023eDT0dPKFxzRloWAgxx
+         FccSRAXiiGTNl5aEQOeCpfAh08ehatu982ZQY7zZYZqdzsDQXGvYaA1+ULYwfPuFtmQ1
+         I4vhQF92STa2yXo23haUEBXJSTiFPJMyGkB75huYsFUoxhTfz/4vhzMf5ip6mULe1AnP
+         ZLnZJe4JxjAO9hpwtNipl7B/s1qgsMWK9Qf9L8Y6mzxd3DKqjsbdZzIMFb302Q45b8Y4
+         SD4RbLjUZn7hpr/zYdpX0Ll1dkngp9qwQDsl6rtJfEog0Oq2Mi8wbmsz60NegF4OiZPw
+         VUIA==
+X-Gm-Message-State: AOAM5310inHILQdZEiUnmpMNzFP62tubjfJybhfXhmKC95ycfce/GAdS
+        T5SJX4AqcHoemY3RtaZfXsQ=
+X-Google-Smtp-Source: ABdhPJx6ZUd5jZoWLGWq36QV8gXpEqOiiEePt/y6+EvJol+vvNv+9q6YaiOI38XGBL5x9a8//qQ62Q==
+X-Received: by 2002:a05:622a:d1:b0:2d2:dc49:842 with SMTP id p17-20020a05622a00d100b002d2dc490842mr2664303qtw.89.1645714394325;
+        Thu, 24 Feb 2022 06:53:14 -0800 (PST)
+Received: from [10.37.129.2] (pool-108-35-55-112.nwrknj.fios.verizon.net. [108.35.55.112])
+        by smtp.gmail.com with ESMTPSA id a6sm1757162qta.91.2022.02.24.06.53.13
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Feb 2022 06:53:13 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 1/3] stash: add test to ensure reflog --rewrite --updatref behavior
+Date:   Thu, 24 Feb 2022 09:53:13 -0500
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <9AC71167-BED8-4003-A5B2-072B7913FA62@gmail.com>
+In-Reply-To: <xmqqczjdp2g8.fsf@gitster.g>
+References: <pull.1218.git.git.1645209647.gitgitgadget@gmail.com>
+ <pull.1218.v2.git.git.1645554651.gitgitgadget@gmail.com>
+ <6e136b62ca4588cc58f2cb59b635eeaf14e6e20d.1645554652.git.gitgitgadget@gmail.com>
+ <220223.864k4q6jpr.gmgdl@evledraar.gmail.com> <xmqqbkyxqjrq.fsf@gitster.g>
+ <272D2409-1CAE-4203-96F7-9B104F7E5D4D@gmail.com> <xmqqczjdp2g8.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 02/23] t7527: test FS event reporing on macOS WRT case and
- Unicode
-Content-Language: en-US
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
- <ad8cf6d9a47b61d9fe41a961466122be16e4f041.1644940773.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ad8cf6d9a47b61d9fe41a961466122be16e4f041.1644940773.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/15/2022 10:59 AM, Jeff Hostetler via GitGitGadget wrote:
-> From: Jeff Hostetler <jeffhost@microsoft.com>
-> 
-> Confirm that macOS FS events are reported with a normalized spelling.
-> 
-> APFS (and/or HFS+) is case-insensitive.  This means that case-independent
-> lookups ( [ -d .git ] and [ -d .GIT ] ) should both succeed.  But that
-> doesn't tell us how FS events are reported if we try "rm -rf .git" versus
-> "rm -rf .GIT".  Are the events reported using the on-disk spelling of the
-> pathname or in the spelling used by the command.
+Hi Junio,
 
-Was this last sentence supposed to be a question?
- 
-> NEEDSWORK: I was only able to test case.  It would be nice to add tests
+On 23 Feb 2022, at 18:50, Junio C Hamano wrote:
 
-"I was only able test the APFS case."?
+> John Cai <johncai86@gmail.com> writes:
+>
+>> Yes, this is true but that doesn't seem to test the --rewrite functionality.
+>> I could be missing something, but it seems that the reflog --rewrite option
+>> will write the LHS old oid value in the .git/logs/refs/stash file. When
+>> --rewrite isn't used, the reflog delete still does the right thing to the
+>> RHS entry.
+>>
+>> I couldn't find any way to check this LFS value other than reaching into the
+>> actual file. If there is a way that would be preferable.
+>
+> Ah, that one.
+>
+> As 2b81fab2 (git-reflog: add option --rewrite to update reflog
+> entries while expiring, 2008-02-22) says, the redundant half of the
+> reflog entry only matters to "certain sanity checks" and would not
+> be even visible to normal ref API users.  I wonder why we need to
+> even say "--rewrite" in the first place.  Perhaps we should
+> implicitly set it always and eventually deprecate that option.
 
-> that use different Unicode spellings/normalizations and understand the
-> differences between APFS and HFS+ in this area.  We should confirm that
-> the spelling of the workdir paths that the daemon sends to clients are
-> always properly normalized.
-
-Are there any macOS experts out there who can help us find the answers
-to these questions?
-
-> +# Confirm that MacOS hides all of the Unicode normalization and/or
-> +# case folding from the FS events.  That is, are the pathnames in the
-> +# FS events reported using the spelling on the disk or in the spelling
-> +# used by the other process.
-> +#
-> +# Note that we assume that the filesystem is set to case insensitive.
-> +#
-> +# NEEDSWORK: APFS handles Unicode and Unicode normalization
-> +# differently than HFS+.  I only have an APFS partition, so
-> +# more testing here would be helpful.
-> +#
-> +
-> +# Rename .git using alternate spelling and confirm that the daemon
-> +# sees the event using the correct spelling and shutdown.
-> +test_expect_success UTF8_NFD_TO_NFC 'MacOS event spelling (rename .GIT)' '
-> +	test_when_finished "stop_daemon_delete_repo test_apfs" &&
-> +
-> +	git init test_apfs &&
-> +	start_daemon test_apfs &&
-> +
-> +	test_path_is_dir test_apfs/.git &&
-> +	test_path_is_dir test_apfs/.GIT &&
-> +
-> +	mv test_apfs/.GIT test_apfs/.FOO &&
-> +	sleep 1 &&
-
-This sleep is unfortunate. Do we really need it? Or does this test
-become flaky without it?
-
-> +	mv test_apfs/.FOO test_apfs/.git &&
-> +
-> +	test_must_fail git -C test_apfs fsmonitor--daemon status
-> +'
-> +
-
-This test is helpful in that it will help us discover if HFS+ or
-any future filesystem would break these assumptions.
-
-Thanks,
--Stolee
+Yeah, that makes sense. I had this thought as I was figuring out
+how to test this. I can take care of this in a separate patch series
