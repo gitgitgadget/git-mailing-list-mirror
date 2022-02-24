@@ -2,170 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC8B3C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 16:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5A99C4332F
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 16:48:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230237AbiBXQs3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 11:48:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35526 "EHLO
+        id S230211AbiBXQtQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 11:49:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbiBXQs3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 11:48:29 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D12013858D
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:47:58 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id r13so5659394ejd.5
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:47:58 -0800 (PST)
+        with ESMTP id S230313AbiBXQtL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 11:49:11 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7699F1A94BE
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:48:40 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id p184-20020a1c29c1000000b0037f76d8b484so146639wmp.5
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:48:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=g2djkzUfc/RoUalYym2mSfkplfMVJQ205E8i1cYDE4g=;
-        b=gefsP2KqSzM1HcxvsnGgC8D3mUKWJt3ySf5+PYzFOA6dW46ECAEIbqTo4DygNzaNxW
-         1f9hTM580VGBYgaIqpruWZdwIDlOy7kHbq8tMXab0P2nAi/c4hOYD1gLds8Ftm7UXjzO
-         t4Rb6/hZ4YmmZIzu2TFYCFykmMoFx8fNWDAYh5P5fdP+bD6rE8A+Tcw9Zs3ihAwPsrhX
-         o3p/3UlWbtXW6PgLRAdLG5yc5UlpxQXfvmeWrJS6RwPLL0tJTito12I8kq2sipt1uz4u
-         Ghk93XLF0sSOJFKHPv2iyqjw4o8k+K0ZEySRcQZil3ztM+KzaET+jq61Z309l/o0WVm3
-         T7sQ==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=lg9DwJID4DjPDFlYsI8DFYnbZhMDDJ3IHcq0B/LcPKM=;
+        b=SJhL7KEDMahRoX907+qdHT+72TLX8QDQeZXC7+b0A90/94DvmSc/WJuPQgiOUxB2k2
+         H0psCkaQ7IPgjmKFMl/wnHreXq2w/z2tIO59gPwb9fm3DpOh10rHZQmjgxuY7NIfZH7B
+         VStKHi2K1XKK0z/T9OP5GXmWo7XJBnuds2dR4lgbRuiJDgB2Atj4LwC6eeGWPzsjkCGx
+         dZJSUyCiNCgHfiCmrIujNBD9SYP7nhCzxdzbIDPmcwYy5gnXcRpV+dCH+PSwCqhRJB9/
+         TLlpx3LXqUFA2vaC3SyI+h+xLZ08kU0jXamGjWAYEwiH7OfqV4dOqjoHfsouyhVPsHcS
+         oEZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=g2djkzUfc/RoUalYym2mSfkplfMVJQ205E8i1cYDE4g=;
-        b=iouOHJgvdlMBp2zdLOKaHNCOKulj99KJE3WRkwlxtyNJOhH8zZmLMTsd0sFrcxya/G
-         /2O5jf+3bG58IoOyhcykCCCgsmVVrfMa4i/k8kTRQFC6ZNTM7c6Twsac/loTKUH+YZlJ
-         DUB2yaAt6CSevgdW3RWG1RblGT9fk3jX2PEvV8jMkjOgywYSy1kcyGOdjZLU0DALsJwR
-         bC2ZPkHGvSPCK5MsfcnbPkQf78zdUNDZuqCaONAOAF2OdFEBmOJ4ZSkVth2xzfBGOsNr
-         PKBRQI08twUpd8acgnVpxOEcfuZpFPvyG8S+TgRIkBqpkHDPx4VFb3LhonNBPlkDlPdV
-         0uAQ==
-X-Gm-Message-State: AOAM533JWRQvlph2v3/mVIIZVRO68/3wlvqmhcE3lDG1XBWn7uJLFP1D
-        JKmnnG/C02s0hUDaeeSjuOGkVVa6vgiPr4Za+3yNszdjk7A27Q==
-X-Google-Smtp-Source: ABdhPJxW0GHKaEMk9igso376LbG3I56K+Nzy2o6B+PvHuiqBvtk5M1QbRejJWADVe7qexYcxDD5NALQCK446eenopuA=
-X-Received: by 2002:a17:907:7613:b0:6d0:ee20:8a37 with SMTP id
- jx19-20020a170907761300b006d0ee208a37mr2935541ejc.316.1645721277071; Thu, 24
- Feb 2022 08:47:57 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=lg9DwJID4DjPDFlYsI8DFYnbZhMDDJ3IHcq0B/LcPKM=;
+        b=7LwC3dec50t4QOUYeBRcev5pwn1LT5yh++312k1OYrzKkveuN3+ktM2LgUOW3ioXIN
+         YbPAErYpu+UrNOYemZ4jqxHUsY3UqWG6IaXQdbNpUTSlNC/D11zgTh2RxECC2Ca4Rxuh
+         ShkoUq7eCV877kyTBsUFZ4VWLgR+HIO+KpuE60mCTFUzRizdFvdqI/sif/hKxss6Cfft
+         YlXOV6PNPgKKs7eKShJXfllBICSRmmuZZ92jjiCIariNBQ7HpITKHjhpzW0V9PE/Y5iD
+         N5aH94ZdussGyV3+VrP6mJTbCVQWbOGLs/SJByuC9OjEmYkwJtM6Q9W83i8kh0LqGO+h
+         4SVw==
+X-Gm-Message-State: AOAM530i5ze2+rqszJNj1t210+h4e58Q77ww7pm7EDqLIV6nG6QMLK/y
+        04E8/LfT2aRCuM9DwOXPu0WJdIZWjKg=
+X-Google-Smtp-Source: ABdhPJy+eyGxOkDxo8kkszGMmt1jrnkrETMD3g3++n77hg01+OFrR2AlHFM8V2Ycxpy3hyjpSCp4ow==
+X-Received: by 2002:a1c:2742:0:b0:37b:b481:321f with SMTP id n63-20020a1c2742000000b0037bb481321fmr2967638wmn.56.1645719226318;
+        Thu, 24 Feb 2022 08:13:46 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x2-20020a7bc762000000b00380fd1ba4ebsm4484118wmk.9.2022.02.24.08.13.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Feb 2022 08:13:45 -0800 (PST)
+Message-Id: <2338c15249a3a58032bc1f8b0cd029f3897b4e88.1645719219.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1138.v2.git.1645719218.gitgitgadget@gmail.com>
+References: <pull.1138.git.1643730593.gitgitgadget@gmail.com>
+        <pull.1138.v2.git.1645719218.gitgitgadget@gmail.com>
+From:   "Robert Coup via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 24 Feb 2022 16:13:37 +0000
+Subject: [PATCH v2 7/8] fetch: after repair, encourage auto gc repacking
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAPMMpog6vKBfYEWqKDgK7YQQ96pPVMH7hYPXUHMnJsgLNgYMXA@mail.gmail.com>
- <b54a6cde-5065-632b-012c-0d6f777249ef@odoo.com>
-In-Reply-To: <b54a6cde-5065-632b-012c-0d6f777249ef@odoo.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 24 Feb 2022 17:47:46 +0100
-Message-ID: <CAPMMpojn9uYEuG07ky6Jz-F4PAGRjY8Y_az2EbM1cvq98QBnwQ@mail.gmail.com>
-Subject: Re: branch.autoSetupMerge option for "if name matches only"?
-To:     Xavier Morel <xmo@odoo.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        John Cai <johncai86@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Robert Coup <robert@coup.net.nz>,
+        Robert Coup <robert@coup.net.nz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Xavier,
+From: Robert Coup <robert@coup.net.nz>
 
-Thanks for the follow-up.
+After invoking `fetch --repair`, the object db will likely contain many
+duplicate objects. If auto-maintenance is enabled, invoke it with
+appropriate settings to encourage repacking/consolidation.
 
->I found this message when trying to see if someone had already suggested
-> something along those lines.
+* gc.autoPackLimit: unless this is set to 0 (disabled), override the
+  value to 1 to force pack consolidation.
+* maintenance.incremental-repack.auto: unless this is set to 0, override
+  the value to -1 to force incremental repacking.
 
-Did you find any other related threads that could add context? I did
-not find anything when I looked.
+Signed-off-by: Robert Coup <robert@coup.net.nz>
+---
+ Documentation/fetch-options.txt |  3 ++-
+ builtin/fetch.c                 | 23 +++++++++++++++++++++--
+ t/t5616-partial-clone.sh        |  6 ++++--
+ 3 files changed, 27 insertions(+), 5 deletions(-)
 
-> what I wanted to propose was to only automatically setup the merge on
-> implicit remote tracking branches
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 1131aaad252..73abafdfc41 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -169,7 +169,8 @@ ifndef::git-pull[]
+ 	associated objects that are already present locally, this option fetches
+ 	all objects as a fresh clone would. Use this to reapply a partial clone
+ 	filter from configuration or using `--filter=` when the filter
+-	definition has changed.
++	definition has changed. Automatic post-fetch maintenance will perform
++	object database pack consolidation to remove any duplicate objects.
+ endif::git-pull[]
+ 
+ --refmap=<refspec>::
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f32b24d182b..7d023341ac0 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2020,6 +2020,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	struct remote *remote = NULL;
+ 	int result = 0;
+ 	int prune_tags_ok = 1;
++	struct strvec auto_maint_opts = STRVEC_INIT;
++	int opt_val;
+ 
+ 	packet_trace_identity("fetch");
+ 
+@@ -2226,10 +2228,27 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 					     NULL);
+ 	}
+ 
+-	if (enable_auto_gc)
+-		run_auto_maintenance(verbosity < 0, NULL);
++	if (enable_auto_gc) {
++		if (repair) {
++			/*
++			 * Hint auto-maintenance strongly to encourage repacking,
++			 * but respect config settings disabling it.
++			 */
++			if (git_config_get_int("gc.autopacklimit", &opt_val))
++				opt_val = -1;
++			if (opt_val != 0)
++				strvec_push(&auto_maint_opts, "gc.autoPackLimit=1");
++
++			if (git_config_get_int("maintenance.incremental-repack.auto", &opt_val))
++				opt_val = -1;
++			if (opt_val != 0)
++				strvec_push(&auto_maint_opts, "maintenance.incremental-repack.auto=-1");
++		}
++		run_auto_maintenance(verbosity < 0, &auto_maint_opts);
++	}
+ 
+  cleanup:
+ 	string_list_clear(&list, 0);
++	strvec_clear(&auto_maint_opts);
+ 	return result;
+ }
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 230b2dcbc94..60f1817cda6 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -187,7 +187,7 @@ test_expect_success 'push new commits to server for file.4.txt' '
+ # Do partial fetch to fetch smaller files; then verify that without --repair
+ # applying a new filter does not refetch missing large objects. Then use
+ # --repair to apply the new filter on existing commits. Test it under both
+-# protocol v2 & v0.
++# protocol v2 & v0. Check repacking auto-maintenance is kicked off.
+ test_expect_success 'apply a different filter using --repair' '
+ 	git -C pc1 fetch --filter=blob:limit=999 origin &&
+ 	git -C pc1 rev-list --quiet --objects --missing=print \
+@@ -199,11 +199,13 @@ test_expect_success 'apply a different filter using --repair' '
+ 		main..origin/main >observed &&
+ 	test_line_count = 2 observed &&
+ 
++	GIT_TRACE2_EVENT="$(pwd)/trace.log" \
+ 	git -c protocol.version=0 -C pc1 fetch --filter=blob:limit=29999 \
+ 		--repair origin &&
+ 	git -C pc1 rev-list --quiet --objects --missing=print \
+ 		main..origin/main >observed &&
+-	test_line_count = 0 observed
++	test_line_count = 0 observed &&
++	test_subcommand git -c gc.autoPackLimit=1 -c maintenance.incremental-repack.auto=-1 maintenance run --auto --no-quiet <trace.log
+ '
+ 
+ test_expect_success 'fetch --repair works with a shallow clone' '
+-- 
+gitgitgadget
 
-While I understand this as a personal expectation/preference, that
-doesn't seem to align with the expectations of the "beginner users"
-that I interact with;
-
-generally, they expect a branch that is "the local version of a remote
-branch" to behave one way, and a branch that "was 'branched' from the
-then-HEAD of a remote branch" to behave another way - regardless of
-whether a given user knows the "pretend I already have the branch
-locally / create it on-the-fly" syntax, or is explicit about saying "I
-want to work on (for example) master which I know is origin/master on
-the remote".
-
-> As far as I'm concerned, `git switch` actually behaving as documented
-> would resolve the entire issue
-
-I'm not sure I understand this. I just tested and got exactly what I
-expected from the doc:
-
-$ git -c merge.autosetupmerge=false switch -t origin/mybranch
-Branch 'mybranch' set up to track remote branch 'mybranch' from 'origin'.
-Switched to a new branch 'mybranch'
-
-I agree being able to say "git switch mybranch", without the other
-side effects of merge.autosetupmerge=true, would be convenient... but
-then I'm arguing for a broader change and (in my opinion) better value
-of "merge.autosetupmerge" altogether :)
-
-Fwiw, I submitted a patch introducing this
-"merge.autosetupmerge=simple" option earlier today, but no reactions
-yet. I don't know whether that's because project members disagree that
-there is inherent unnecessary complexity facing "beginners" in the
-current behavior, or disagree that this is a reasonable direction to
-reduce that complexity, or are frustrated with my spotty participation
-record in this mailing list, or the terrible quality of my C- and
-project-novice code, or simply haven't looked at this topic yet!
-
-The patch series is titled "adding new branch.autosetupmerge option "simple"".
-
-Thanks again,
-Tao
-
-
-On Wed, Feb 9, 2022 at 2:46 PM Xavier Morel <xmo@odoo.com> wrote:
->
-> I found this message when trying to see if someone had already suggested
-> something along those lines.
->
-> In fact I would be even more restrictive: what I wanted to propose was
-> to only automatically setup the merge on implicit remote tracking
-> branches, that is:
->
->      git switch foo
->
-> if there is no such branch locally will look for the corresponding
-> branch in the remotes, and will create a matching local one. In that
-> case it makes a lot of sense to create a remote-tracking branch: when
-> implicitly checking out a remote branch, it's likely the goal is to
-> track it.
->
-> The issue is that
->
->      git switch -c bar foo
->
-> will do the same, despite explicitely creating a differently named
-> branch, which is probably some sort of feature which needs to be
-> remote-ed somewhere else. If this issue is not caught immediately it is
-> possible to push directly upstream by mistake.
->
-> Upon reading the documentation of `git switch` I actually believed this
-> would behave correctly given `autoSetupMerge=false`:
->
->      --guess, --no-guess
->          If <branch> is not found but there does exist a tracking branch
-> in exactly one remote (call it <remote>) with
->          a matching name, treat as equivalent to
->
->              $ git switch -c <branch> --track <remote>/<branch>
->
-> Because `--guess` is the default for the `git switch <name>` form, this
-> description made me believe the tracking would be forced.
->
-> Sadly it is not so, setting `autoSetupMerge=false` will also disable
-> automatic remote-tracking on guessed branch.
->
-> As far as I'm concerned, `git switch` actually behaving as documented
-> would resolve the entire issue (especially if it were possible to
-> disable `git checkout` somehow, such that I would have to force muscle
-> memory).
->
-> This is made more annoying because
->
->      git switch -t foo
->
-> *does not work*, frustratingly (if as documented, this time) `-t`
-> implies `-c`. So it's not even possible to remember to type `git switch
-> -t remotebranch` and then live happily with `autoSetupMerge=false`. This
-> makes `autoSetupMerge=false` a lot more frustrating that necessary.
