@@ -2,200 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6059CC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 16:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F7E1C433FE
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 16:46:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229854AbiBXQoY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 11:44:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49928 "EHLO
+        id S230131AbiBXQqe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 11:46:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbiBXQoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 11:44:23 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0370F141FD9
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:43:53 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id g20so3685360edw.6
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:43:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=AuMM1r/4Ib1W/wFtepaXYNrwWV86bDZdy7Jlz5E6r4U=;
-        b=A0s76mO0VGu2raG0wm9Yon7Gv6pXV9v5/gXQIMnmQJOa2nA1U82RhpuC126roD0dpc
-         wO9s4XCISNsZnL4xqi6UPhjPCRWuElRMGrSembGftGec+8jyk460wMg1Du/T/Pf/dkO5
-         t0ICW7lcQxA3IU+wpBGOaYGVMZT3aM62Qfv3sTZGu/vZ2rm7I00wAcS5vF4faSIih/ep
-         QaELAan8wJOAWifjTDv/smqlUnsA8pACBfAVTeIi1alS3jiTdUOzILfftsTvIwmngakJ
-         MQWgrpCBx6jfnmrb76l4I6O+LrawHDnq5LqEU0l6QX2UwyItgDWO7z2P5UQRnO0NIWGy
-         IkcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AuMM1r/4Ib1W/wFtepaXYNrwWV86bDZdy7Jlz5E6r4U=;
-        b=pLHXpm4HOx8/rl2Rlb/G4z3Ej1JkpRW/l+9PYE/cq+Kp3IhYxB5kO0Rhal8jddYNh/
-         C0OkDCjasWrfmp/HnkdOZrxsvZ2DIuR5yvkMLGXD1qrNQR9TuWuIuf0t4sejseClL8hG
-         O/LF+vz4VXPtB3XTLBAYGGsbyaRaOSfX1gXXeBf5WYvHEnvD08s4X7tde/9NdxeIouFD
-         PvCARQwqAPKOIvcrpbveE9Y5UcTnAhwxy6iDZ0Q6+MU5XRepHmKUkOVf8/VrwSy/Ml4p
-         4kVOiJbHuHWr+D2a3jMAdYIaOe5J03phKXTDm6Lp8J0LJrpUvgSeacmnfj7AyYqZvdMI
-         y3tw==
-X-Gm-Message-State: AOAM532xmEKj18j5OI7pjEZqxLonW6ZTJNUVN9qndY/nvU+rigNBt63V
-        0mWK32589E0LuVxCsE5X+TlJWxiEYU8=
-X-Google-Smtp-Source: ABdhPJxyt0pmFHpJja2G3TYxQc9/vb0A/x6nes4CPkEMMNPIwVuhMVB6snW+YroRhaErx7FQF36K0g==
-X-Received: by 2002:a5d:6f0f:0:b0:1e5:78e4:3a7a with SMTP id ay15-20020a5d6f0f000000b001e578e43a7amr2828766wrb.446.1645719225362;
-        Thu, 24 Feb 2022 08:13:45 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 14sm3989716wrb.34.2022.02.24.08.13.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Feb 2022 08:13:44 -0800 (PST)
-Message-Id: <cfa6dca8ef4a64b6233e3b7b6021571447fc5ba9.1645719218.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1138.v2.git.1645719218.gitgitgadget@gmail.com>
-References: <pull.1138.git.1643730593.gitgitgadget@gmail.com>
-        <pull.1138.v2.git.1645719218.gitgitgadget@gmail.com>
-From:   "Robert Coup via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Feb 2022 16:13:36 +0000
-Subject: [PATCH v2 6/8] maintenance: add ability to pass config options
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229807AbiBXQqe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 11:46:34 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CADAE1637E0
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:46:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1645721157;
+        bh=fNtSRs3EBTzgbOFsvBbC0I0m7yrvNcPAB3YE4bmb1eY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=KLClmj4uzzOUO53hzJYVM0qrxau7YKYQpWZMgdheUMErux4bP+I42MNZa6xtg2MK5
+         iBoFTFr3M7Ef7PaBRlKVtQFe7HMJ4fz9JBGUcIKUQlbRNuk8WKMFqCwl+qJkjz495b
+         QAj/MfJV2i52B5XL+fYdGAr6Lcepylj8UCMtwfrw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZTqg-1nhdX10AUA-00WZs0; Thu, 24
+ Feb 2022 17:45:57 +0100
+Date:   Thu, 24 Feb 2022 17:45:55 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v5 27/30] fsmonitor--daemon: use a cookie file to sync
+ with file system
+In-Reply-To: <f47a763dc260c57c6f411cde7b4b8826732a8c7a.1644612979.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202241742500.11118@tvgsbejvaqbjf.bet>
+References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <f47a763dc260c57c6f411cde7b4b8826732a8c7a.1644612979.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        John Cai <johncai86@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Robert Coup <robert@coup.net.nz>,
-        Robert Coup <robert@coup.net.nz>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ozms37UOfs0wno2iF54cUWqzar1DDR17+YbYX0hI2IjiOHVP8Wc
+ ISDJpi2JXsrQnZ2lWMRJe52U+bSj5D6MwxAfkHiHvKdLcIoZinupxuX69oc7JRIV6vXvFZ3
+ TRkS/X2y09gge0r0rl7ydZ3Qew1NKRhF58ucY1D4ljNnnPnAdYaRbXRQ7Z/hH5aaFIycH2B
+ TDs7/oT6zKZvl9pss/VWw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bncNJwAssWk=:Yrc489FfHbucW910wYc03U
+ e1q3wcEv8+KiHionPWEk0eb7VrPA0JHsQHIrVgGfzHD9snqcAxl5zJfnPSdhmotvIswh83BpL
+ xXu2xQGrhZ0PADhq0jBq88n3sqOZP3UKPVMo+gbrY6cUJCnZKSns6wEwm5QfhKouzXP3m14rv
+ V3FV1FU94NPf6u8U9t1ITpWsmJw5RyxuBvuS6/2bDSf4L93rDiav1Wm/ZcQPbq75181SVo/Y2
+ droo29QxE3uxc5gghWCN4ghEzpPbt3Su4dHUV+/8H8sGBT90ipYwOxHqEgQ1F7jAYrTkK7VcA
+ fUZMTAvJApzu4XkV7FdaO7+9p073fXmfiPO+CNbNYcwb9zwIzuPFmANrCauxM6nAarcCAjn2J
+ 5GxipNUDPtLJKsE0Ca3/pDdnA+Eavt4wCS7/GS+ww9gAVh5u79GQa95sgHNHxzcDfyrGaFgGj
+ KxAx1L8lM7I4D6CGzdPfrkaGekHCwqCOuJgWm6q4ac92xcQJuJa7NFh5t7St1w/RNKsRx5tls
+ XCNIPaQNvHUSBLaMWU1vgqRKGtNhUdmhr1vEDAQgq/VDVnLdf7dUbz7fnl+JiZIHZdeiMmqF8
+ +YBzt6Xr1fQvteEVkNXod/snoD5kER84wYitXsq1gy6vZ0Xc0N3peJn15/H/Hd4WRmjIZrY/Z
+ c1hE30Qt7APDxlZ34QkQFR5+n++/2zMJAnvDscv9ebKF9/jUu5xKuFmagJuV48G3oJsLMcxjl
+ 9fldFy/dKcmGUOGRd4wSOnbfmFmniQt4MUrFSV29ANKBZiiVZCYvfDbHnb/09HYO0TMQyxB/x
+ eKz1Pl9uaJGsamy7RfuVE+UaNw84Etk6svhxofpWnidrCl0YAkp3eKwedCb0rImlOHCuPFJsS
+ Pv9U8FvyixvUXlLiRaj4Gfaa2F5End833OWRzmakoaYzCen0zVnOaC/un4FYSybpxwsUoZ/RF
+ ByhMRQeAbVWxHPRGQLRU14O0Yg3qXjTFpSY0H8tKEaA1UfH/PaFacyNHbYq/H7yqI+8kxwrFl
+ Hz7MvSEAoBq3GV6jTjVv/FE82TYcMmFtZVqeBi6ETxGnUPUspRDW+FgJmlu+WRbWV2GfRoK0M
+ kd4fym18BHHEug=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Robert Coup <robert@coup.net.nz>
+Hi Jeff,
 
-Make run_auto_maintenance() accept optional config options for a
-specific invocation of the auto-maintenance process.
+On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
 
-Signed-off-by: Robert Coup <robert@coup.net.nz>
----
- builtin/am.c     | 2 +-
- builtin/commit.c | 2 +-
- builtin/fetch.c  | 2 +-
- builtin/merge.c  | 2 +-
- builtin/rebase.c | 2 +-
- run-command.c    | 8 +++++++-
- run-command.h    | 5 ++++-
- 7 files changed, 16 insertions(+), 7 deletions(-)
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> Teach fsmonitor--daemon client threads to create a cookie file
+> inside the .git directory and then wait until FS events for the
+> cookie are observed by the FS listener thread.
+>
+> This helps address the racy nature of file system events by
+> blocking the client response until the kernel has drained any
+> event backlog.
+>
+> This is especially important on MacOS where kernel events are
+> only issued with a limited frequency.  See the `latency` argument
+> of `FSeventStreamCreate()`.  The kernel only signals every `latency`
+> seconds, but does not guarantee that the kernel queue is completely
+> drained, so we may have to wait more than one interval.  If we
+> increase the frequency, the system is more likely to drop events.
+> We avoid these issues by having each client thread create a unique
+> cookie file and then wait until it is seen in the event stream.
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 7de2c89ef22..298c6093bff 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1899,7 +1899,7 @@ next:
- 	 */
- 	if (!state->rebasing) {
- 		am_destroy(state);
--		run_auto_maintenance(state->quiet);
-+		run_auto_maintenance(state->quiet, NULL);
- 	}
- }
- 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index b9ed0374e30..84e7ab0a4cc 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1844,7 +1844,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	git_test_write_commit_graph_or_die();
- 
- 	repo_rerere(the_repository, 0);
--	run_auto_maintenance(quiet);
-+	run_auto_maintenance(quiet, NULL);
- 	run_commit_hook(use_editor, get_index_file(), "post-commit", NULL);
- 	if (amend && !no_post_rewrite) {
- 		commit_post_rewrite(the_repository, current_head, &oid);
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 8e5e590dd6e..f32b24d182b 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -2227,7 +2227,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (enable_auto_gc)
--		run_auto_maintenance(verbosity < 0);
-+		run_auto_maintenance(verbosity < 0, NULL);
- 
-  cleanup:
- 	string_list_clear(&list, 0);
-diff --git a/builtin/merge.c b/builtin/merge.c
-index a94a03384ae..8d3e6d0de03 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -472,7 +472,7 @@ static void finish(struct commit *head_commit,
- 			 * We ignore errors in 'gc --auto', since the
- 			 * user should see them.
- 			 */
--			run_auto_maintenance(verbosity < 0);
-+			run_auto_maintenance(verbosity < 0, NULL);
- 		}
- 	}
- 	if (new_head && show_diffstat) {
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index d858add3fe8..cbab6c05373 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -552,7 +552,7 @@ static int finish_rebase(struct rebase_options *opts)
- 	 * We ignore errors in 'git maintenance run --auto', since the
- 	 * user should see them.
- 	 */
--	run_auto_maintenance(!(opts->flags & (REBASE_NO_QUIET|REBASE_VERBOSE)));
-+	run_auto_maintenance(!(opts->flags & (REBASE_NO_QUIET|REBASE_VERBOSE)), NULL);
- 	if (opts->type == REBASE_MERGE) {
- 		struct replay_opts replay = REPLAY_OPTS_INIT;
- 
-diff --git a/run-command.c b/run-command.c
-index a8501e38ceb..720fd7820c8 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1798,9 +1798,10 @@ int run_processes_parallel_tr2(int n, get_next_task_fn get_next_task,
- 	return result;
- }
- 
--int run_auto_maintenance(int quiet)
-+int run_auto_maintenance(int quiet, const struct strvec *config_opts)
- {
- 	int enabled;
-+	int i;
- 	struct child_process maint = CHILD_PROCESS_INIT;
- 
- 	if (!git_config_get_bool("maintenance.auto", &enabled) &&
-@@ -1809,6 +1810,11 @@ int run_auto_maintenance(int quiet)
- 
- 	maint.git_cmd = 1;
- 	maint.close_object_store = 1;
-+
-+	if (config_opts)
-+		for (i = 0; i<config_opts->nr; i++)
-+			strvec_pushl(&maint.args, "-c", config_opts->v[i], NULL);
-+
- 	strvec_pushl(&maint.args, "maintenance", "run", "--auto", NULL);
- 	strvec_push(&maint.args, quiet ? "--quiet" : "--no-quiet");
- 
-diff --git a/run-command.h b/run-command.h
-index 07bed6c31b4..24021abd41f 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -222,8 +222,11 @@ int run_command(struct child_process *);
- 
- /*
-  * Trigger an auto-gc
-+ *
-+ * config_opts is an optional list of additional config options to
-+ * pass to the maintenance process in the form "some.option=value".
-  */
--int run_auto_maintenance(int quiet);
-+int run_auto_maintenance(int quiet, const struct strvec *config_opts);
- 
- #define RUN_COMMAND_NO_STDIN		(1<<0)
- #define RUN_GIT_CMD			(1<<1)
--- 
-gitgitgadget
+It took a couple iterations of this cookie file business to become
+robust... ;-)
 
+About these NEEDSWORKs:
+
+> +	/*
+> +	 * Create the cookie file on disk and then wait for a notification
+> +	 * that the listener thread has seen it.
+> +	 */
+> +	fd =3D open(cookie_pathname.buf, O_WRONLY | O_CREAT | O_EXCL, 0600);
+> +	if (fd >=3D 0) {
+> +		close(fd);
+> +		unlink(cookie_pathname.buf);
+> +
+> +		/*
+> +		 * NEEDSWORK: This is an infinite wait (well, unless another
+> +		 * thread sends us an abort).  I'd like to change this to
+> +		 * use `pthread_cond_timedwait()` and return an error/timeout
+> +		 * and let the caller do the trivial response thing.
+> +		 */
+> +		while (cookie->result =3D=3D FCIR_INIT)
+> +			pthread_cond_wait(&state->cookies_cond,
+> +					  &state->main_lock);
+
+It would probably make sense to do this at some stage, but since we have
+code that has seen quite a bit of real-world testing, I am in favor of
+postponing this change to a later date.
+
+> @@ -1063,6 +1284,11 @@ done:
+>
+>  	strbuf_release(&state.path_worktree_watch);
+>  	strbuf_release(&state.path_gitdir_watch);
+> +	strbuf_release(&state.path_cookie_prefix);
+> +
+> +	/*
+> +	 * NEEDSWORK: Consider "rm -rf <gitdir>/<fsmonitor-dir>"
+> +	 */
+>
+>  	return err;
+>  }
+
+In this instance, I think we can just drop the `NEEDSWORK`: it makes sense
+to keep around these directories rather than destroying and re-creating
+them over and over again.
+
+Ciao,
+Dscho
