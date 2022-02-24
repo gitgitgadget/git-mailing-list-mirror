@@ -2,174 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85179C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 19:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EF49C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 19:20:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233500AbiBXTRj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 14:17:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38640 "EHLO
+        id S233675AbiBXTUo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 14:20:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233497AbiBXTRf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 14:17:35 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F8E0DC1
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 11:17:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645730217;
-        bh=FNxQUA2Gq4n0v18oaRrcgiLCI/TWcLYm71Y5pTmVUtM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=j90AZ/T/6L7t52xpc251tnd7MqYfX7kZVcKla7NzTPsUdq61rOcbKITV4hMvVQ2qV
-         Vuzbp+sahsrlR+ATc02FMdd/5EMA9OLnoNinEjYvz4+3AUhA5Zn1cyaM56ONr3Gr5s
-         +yGzL3cIMi8LqeFHvjM+hLgJbyPzUXQo1iDDW+HI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmULr-1o4vsn3MUT-00iUn7; Thu, 24
- Feb 2022 20:16:56 +0100
-Date:   Thu, 24 Feb 2022 20:16:54 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler <git@jeffhostetler.com>
-cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v5 00/30] Builtin FSMonitor Part 2
-In-Reply-To: <4aa1293e-00b6-b9ef-efd4-cdf605db37a1@jeffhostetler.com>
-Message-ID: <nycvar.QRO.7.76.6.2202242006020.11118@tvgsbejvaqbjf.bet>
-References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com> <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2202171655390.348@tvgsbejvaqbjf.bet> <37f54cd9-3e53-7d38-2c23-2fc245dc1132@jeffhostetler.com>
- <nycvar.QRO.7.76.6.2202241650200.11118@tvgsbejvaqbjf.bet> <4aa1293e-00b6-b9ef-efd4-cdf605db37a1@jeffhostetler.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S230375AbiBXTUn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 14:20:43 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 684571B84C9
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 11:20:13 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 357AA10CE27;
+        Thu, 24 Feb 2022 14:20:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8c58QZOZNoqb2D51auPbBQsO+gP7Ot1TiAgEpg
+        kUUp4=; b=LplHoS2ZeWuLcsEMgRTbDpRJxlFFeD2Xt88cObIkpYIXHpuQfuDppC
+        8Gu8hEhqjktYEIk0AQmd6TIzNmZ+h5ht6yz78cCe91WVPqxiEJawStgI5YsLg7Uh
+        vVoLZa+ZPDvkoGKnBQU84fQ/13hiwjPpU475NbExqsFrf+mg0z+ks=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AD5610CE25;
+        Thu, 24 Feb 2022 14:20:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3FDFF10CE23;
+        Thu, 24 Feb 2022 14:20:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Tao Klerks <tao@klerks.biz>
+Subject: Re: [PATCH 1/3] merge: new autosetupmerge option 'simple' for
+ matching branches
+References: <pull.1161.git.1645695940.gitgitgadget@gmail.com>
+        <89efc1e15646599753baeab38ba2399dcbe868f1.1645695940.git.gitgitgadget@gmail.com>
+Date:   Thu, 24 Feb 2022 11:20:10 -0800
+In-Reply-To: <89efc1e15646599753baeab38ba2399dcbe868f1.1645695940.git.gitgitgadget@gmail.com>
+        (Tao Klerks via GitGitGadget's message of "Thu, 24 Feb 2022 09:45:38
+        +0000")
+Message-ID: <xmqqbkywm5qt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:UbBbFEmAsjBw5H05mtja/fjXA1IYO6us7gA4rA35mHocBdr8GdH
- NIsE82su/AzmJc2HuqklV0qriAWeMYiR5yLqz86GVzXFwGRML03qDY+Vi2e2z+r/Tdm6kLV
- mJNGjpWYXGQiiifBFXLHCNu3mMucoJ1JbmIqjUTVJFQr8rXYfskbwgQhASEvFIhVZOFpkYe
- deywwaSSeROyPqE4ZNiNg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ErNmgbmApAY=:t2CTHh9MbCZ+m6YKIqv3Bc
- uvXJ/qo6NDyKAk2sdqYQIYD4m2N3qj5O3oQX+as3s2WM2+lh8cn6wRKM3evXH9voc/E1mq0Zc
- RSOzoM9ERrCfieGPOa+ZqlqSmHgNK412tFwiPGyQGEZvE8/C/p4kIfF/Czw8boKqGPxRm8TwJ
- aAAD8v7/JfRWDbwhu8903IgASyt09DhGgDKnaLRnU2ftuV5lptaR2eVSDC4rqJPhMdwVDE7xZ
- q+DNZmd5VKABzK6UnY3MKi40NzoQ2uYE3gxMiUAyA8tYdo7hO50F6He3V2+fecswVOYWFLunK
- w8aiQdAgk0uUQCynceoO1efGB1OALVCyYhTKlAAbeCjdFUgohC+m5WlPJVv5k5eP9vNxiOSui
- /q3Gc+GoFwCHsp5SAAqHXqIXtE2rxntYPp8vKy2nsVlLyeWNoHSoRnKWBo9hmfFKhfpRNNhSU
- oErVnha+/jCtj+6AVZa2QqBCnu5rTiqkScw5EjM4K/b+Zyg6s4H1R+5GgplCqswptqzI6wkaP
- 5Zmp7cAAHFbsdHUb4k7jutGsv2N/cIFhHoeCa+cvsmN1dgUvxNnE/MX6Gfmfr0geEsixtWvJX
- eMF+OwynY6wNRb0F79dDXeF7xroA3nerFZWKi6Yd4RMFjyeDCE0BCRCTf8j5e+91sMNiOtX1d
- vWyRcj9etU3eKEkt+fXCynGvgZGI9RGfwpuqkriyt9M/iyraxYQlPsj3TVPA3FVdfTKXG8Jvq
- pjUcU2/jPvSbWpk3U9qDRZzAew/nEiIKxLhiB7R98i+D8yBbnE6mqhQotcqrVTbD5J2PUgNB3
- PVI8FaT3nXkpzszMNaIVM2ZfZ4k5GMP+kU9bzSBk/WDfcxeez2VM3lbpK2PqJFbfHhxJpeNSu
- Vx9NVlJbG9Nh1qBJItawf38sFUkxvdfMXRTS6Prn5Eq/ULzrRbBqBXc+sYSY6N52eG2oGjQAf
- hn8TPKEUDNYibIzdP7aMh7HS4opqYRmHaPBaNQss7BDsclye9encNzDmtJf9sulrNTQzq83W/
- VbXbEbI834Fy+MygWrxplCxZ34hVWRWCMq6nLn2DRQkmz0dZyVPbjI5xmMd8QeaIJWUBnLOPC
- w0tF/78QK8ORQY=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C91CEA32-95A6-11EC-AE2F-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+"Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Thu, 24 Feb 2022, Jeff Hostetler wrote:
-
-> On 2/24/22 11:22 AM, Johannes Schindelin wrote:
+> From: Tao Klerks <tao@klerks.biz>
 >
-> > On Tue, 22 Feb 2022, Jeff Hostetler wrote:
-> >
-> > > On 2/17/22 11:06 AM, Johannes Schindelin wrote:
-> > >
-> > > > On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
-> > > >
-> > > > > In this version I removed the core.useBuiltinFSMonitor config
-> > > > > setting and instead extended the existing core.fsmonitor.
-> > > >
-> > > > I am somewhat surprised that a reviewer suggested this, as it
-> > > > breaks the common paradigm we use to allow using several Git
-> > > > versions on the same worktree.
-> > [...]
-> >
-> > I wondered about that for a while, and put that to a test last night.
-> > I set `core.fsmonitor =3D true` and then modified a file and ran `git
-> > status`. Something I did not expect happened: it picked up on the
-> > modified file!
-> >
-> > [... describing how FSMonitor protocol v1 is affected...]
-> >
-> > However, after seeing how nicely your latest iteration cleans up the
-> > code by simply interpreting a Boolean value to refer to the built-in
-> > FSMonitor, I _really_ would like to make it work.
-> >
-> > Maybe we can declare that it is "safe enough" to rely on new enough
-> > Git versions to be used by users who use multiple Git versions on the
-> > same worktree? They should use _at least_ v2.26.1 anyway, because that
-> > one fixed a rather important vulnerability (CVE-2020-5260)? At least
-> > for Visual Studio, this is true: it ships with Git version
-> > 2.33.0.windows.2.
-> >
-> > What do you think? Can we somehow make `core.fsmonitor =3D true` work?
+> The push.defaut option "simple" helps produce
+
+The cover letter wrappeed around 70 columns, which was much easier
+to read.
+
+Please re-read Documentation/SubmittingPatches[[describe-changes]]
+section before going forward.
+
+> predictable/understandable behavior for beginners,
+> where they don't accidentally push to the
+> "wrong" branch in centralized workflows. If they
+> create a local branch with a different name
+> and then try to do a plain push, it will
+> helpfully fail and explain why.
 >
-> [...]
+> However, such users can often find themselves
+> confused by the behavior of git after they first
+> branch, and before they push. At that stage,
+> their upstream tracking branch is the original
+> remote branch, and pull (for example) behaves
+> very differently to how it later does when they
+> create their own same-name remote branch.
+
+Instead of saying "very differently", explain what happens before
+and after the behaviour-change-triggering-event.
+
+> This commit introduces a new option to the
+> branch.autosetupmerge setting, "simple",
+> which is intended to be consistent with and
+> complementary to the push.default "simple"
+> option.
 >
-> I agree.  I would like to keep the current
+> It will set up automatic tracking for a new
+> branch only if the remote ref is a branch and
+> that remote branch name matches the new local
+> branch name. It is a reduction in scope of
+> the existing default option, "true".
 >
->     "core.fsmonitor =3D <bool> | <path>"
+> Signed-off-by: Tao Klerks <tao@klerks.biz>
+> ---
+>  branch.c | 9 +++++++++
+>  branch.h | 1 +
+>  config.c | 3 +++
+>  3 files changed, 13 insertions(+)
 >
-> usage that I have in V5.
->
-> It cleaned up things very nicely and it got rid of the somewhat awkward
-> usage of having "core.useBuiltinFSMonitor" override the existing
-> "core.fsmonitor" setting.
+> diff --git a/branch.c b/branch.c
+> index 6b31df539a5..246bc82ce3c 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -256,6 +256,15 @@ static void setup_tracking(const char *new_ref, const char *orig_ref,
+>  		die(_("not tracking: ambiguous information for ref %s"),
+>  		    orig_ref);
+>  
+> +	if (track == BRANCH_TRACK_SIMPLE) {
+> +		// only track if remote branch name matches
+> +		// (tracking.srcs must contain only one entry from find_tracked_branch with this config)
 
-Yes!
+	/*
+	 * Our multi-line comments look exactly
+	 * like this.  They are not overly long,
+	 * have their opening and closing slash-aster
+	 * and aster-slash on their own line.
+	 */
 
-> It is unfortunate that it might cause a breakage for users who are
-> *also* running a Git version between 2.16 ... 2.26.  I have to wonder
-> if it wouldn't be better to spend our energy documenting that users
-> should upgrade, rather than trying to support interop with them.
+> +		if (strncmp(tracking.srcs->items[0].string, "refs/heads/", 11))
+> +			return;
+> +		if (strcmp(tracking.srcs->items[0].string + 11, new_ref))
+> +			return;
 
-That's a good point: I guess if you added a comment to the documentation
-of `core.fsmonitor =3D true`, that should be good enough.
 
-> [...]
->
-> So anything still using the V1 FSMonitor protocol is going to unreliable
-> and racy and users should not use it, so I don't think it is worth the e=
-ffort
-> to complicate our current solution to maintain compatibility.
-> (I hate to say that, but they just shouldn't be using V1 any more.)
+Don't count hardcoded string length.  
 
-That's a really good point.
+		char *tracked_branch;
+		if (!skip_prefix(tracking.srcs->items[0].string,
+				 "refs/heads/", &tracked_branch) ||
+		    strcmp(tracked_branch, new_ref))
+			return;
 
-> On a slight tangent, the current code (before my patch series) does
-> support a "core.fsmonitorhookversion" to allow the client to talk to
-> a V1 or V2 provider explicitly (vs the default of trying V2 and then
-> trying V1).  The IPC implementation does not use this config setting,
-> but I could see adding something to emit a warning if it was set to
-> 1 when using the builtin FSMonitor.  This might help users who are
-> *also* running a Git version between 2.26 and 2.35 to understand the
-> fallback after the true.exe warning that Johannes described.
+or something along the line, perhaps?
 
-How about making it an error instead? That should really be helpful: if
-`core.fsmonitor =3D true` and `core.fsmonitorHookVersion =3D 1`, just erro=
-r
-out. That way, users will more likely fall into the pit of success.
+But the post-context in this hunk makes the refernece to items[0] in
+the above look very wrong.  It says tracking.srcs may not have even
+a single item at this point in the original code flow.  If that is
+true, the above reference to ->items[0] may not be safely done at
+all.
 
-> On another slight tangent, I'm wondering if we want to officially
-> deprecate the V1 hook code and/or remove support for it from the code.
+Also, what happens when there are more than one in the items[]
+array?  What makes it sensible to use the first one, ignoring the
+others?
 
-Oooh! That's _also_ a good point.
+> +	}
+> +
+>  	if (tracking.srcs->nr < 1)
+>  		string_list_append(tracking.srcs, orig_ref);
+>  	if (install_branch_config_multiple_remotes(config_flags, new_ref,
+> diff --git a/branch.h b/branch.h
+> index 04df2aa5b51..560b6b96a8f 100644
+> --- a/branch.h
+> +++ b/branch.h
+> @@ -12,6 +12,7 @@ enum branch_track {
+>  	BRANCH_TRACK_EXPLICIT,
+>  	BRANCH_TRACK_OVERRIDE,
+>  	BRANCH_TRACK_INHERIT,
+> +	BRANCH_TRACK_SIMPLE,
+>  };
+>  
+>  extern enum branch_track git_branch_track;
+> diff --git a/config.c b/config.c
+> index e0c03d154c9..cc586ac816c 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1673,6 +1673,9 @@ static int git_default_branch_config(const char *var, const char *value)
+>  		} else if (value && !strcmp(value, "inherit")) {
+>  			git_branch_track = BRANCH_TRACK_INHERIT;
+>  			return 0;
+> +		} else if (value && !strcmp(value, "simple")) {
+> +			git_branch_track = BRANCH_TRACK_SIMPLE;
+> +			return 0;
+>  		}
+>  		git_branch_track = git_config_bool(var, value);
+>  		return 0;
 
-Maybe we can keep this deprecation out of this here patch series, though.
-It would be good to get this finished and into `next`, I think.
+These two hunks look perfect.
 
-I spent some time (in two separate thrusts) to review the entire patch
-series, and hope that my feedback was useful to you.
-
-In particular with your idea to document the incompatibilities of
-`core.fsmonitor =3D true` with Git v2.16.0..v2.26.0, I am really eager to
-see (the next iteration of) this patch series advance to the `next`
-branch, and then into an official Git version so that more users can
-benefit from it.
-
-Thank you for all your work on this,
-Dscho
