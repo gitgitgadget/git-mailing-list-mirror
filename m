@@ -2,44 +2,44 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AF58C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 10:06:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D80E9C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 10:06:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233094AbiBXKHJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 05:07:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37744 "EHLO
+        id S233152AbiBXKHL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 05:07:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230228AbiBXKHH (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232187AbiBXKHH (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 24 Feb 2022 05:07:07 -0500
-Received: from EUR01-DB5-obe.outbound.protection.outlook.com (mail-eopbgr150048.outbound.protection.outlook.com [40.107.15.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9006B64C0
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 02:06:35 -0800 (PST)
+Received: from EUR02-AM5-obe.outbound.protection.outlook.com (mail-eopbgr00064.outbound.protection.outlook.com [40.107.0.64])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31B99FD4
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 02:06:36 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bIIQoVeZ4sZSWQ4BDfH0qM3TGrfLdthIY4dvTa7nKlhQRlwfKfCKRmTLPWlbiqxccgbokUcveAJGaWjZmPXkqkKXRIexy0WPuvyAeYx2fQMasVOhaJf/lxJpszimTb9orOho16mDeahNZiF/ZSWz77WFY/nb40xkj0mvE3i4x27zfRpBxEU05OiW6GdGqRMnK7jZCGrQrtYnIrahGIT/Mbr9ldE/j+7FLJ+b3mgczyJdaqx01EnoDF9fmclPjQABFyn/Ow89AjN6fPXw9ubxCVSUoyc68Wf3SL/K2FR3JDqW7nIvggFqS8/p7lSJwQRlmxZJIs5CtFmlxTkKSI4iZw==
+ b=jWOcBBOhOjloUhazrkKbT2QcnqyHuQyUQpHWG8W20R8GBMyQ3x+K1tEaeH8JuNTy9TIKuJfVwsnpIR0kaN6sh+24cJOms5sYsITdSlw8lHjbSiYSO14euk+jKQ12aIk8+9589jKBGxyEjge9L/ic3x/YYR86LBo5xoDwvW1E9/0rsjkrvrlPPJetBm2Lu6VelXpVrMg7LByqCfwNZ/22Amf41ykX9fD41t+0XqKhnVJmH7gYktEneTcp4NYjKgpiFGa/byj9VwDShHvZyc+ma2oAhHp+II4nZzGlgV4jHGBvfTFcqwsHamyZQ7LQvJD45mlSGos4weSOo8qV1VF3UQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9mp3CMNMTbgO/xPeP+EKXAIAuT1Fom572fodin7/55c=;
- b=MD1IZFiCIwlZdd2TlZwNZUm9xyjKAKCkj25tPwc1/hgFEMZCM+m15cmp8wRT4te257HCcI8Jekxlg91N99z5Kx5clSrIqjClqqGViNdDTGxvzKmX5pyTt/K8+iUBKq+4Mcz3f6SDf27yTz7JZ5i6YvbFHHFNmQDrQTN46aKJVutAD96dMZ6XszXNoNLensI+v5JTGizWnXIeiKcQenmdbQYmySRmVxnJQLlPZVwRvvAl0cATm3kSxWdWKppoN60jS9dmAr/Mz7aNrjnp/eokrnrAIugZZ+xZmvdqL67+bR1hlNnUGFu2MHI+m6YPrcZyCPkXeE/26K5DdrI0LhnyWA==
+ bh=2dbjYIUSUiqVyL3Lcz9VDfZyMKEuUxGhxOkyXLF6cmw=;
+ b=OVwEDQOAEM4mByGKotOl2mI9ms2wZIF11pcK2K6ZFUrkDSD4yV8i6F7qgMr7wubg/bbPVp1ooslIb4AUoh1i9Sk/unGaV9WGL/qhL/UoivlQyueD0lEliAD4dtjrd6FnkiPd1Ju/1WAkdMhR06s3QsHnTajKcb5Mb0u/yT99SU8zgaFDdttQb1/HYY0/Y6o8+BhkZ92xvm22OqbEZv8Fmv3I6QQZxxsjWdwPKdHU8Qzs94G0jHao6PtpXbQsxiwGsI5ww7lj9T7rwlDnVBBuZ7W3+nqww/UvUSwBRPcyPWXNnzlFoCQ4hhegTvmdzk6DaISV+JUL0DOtPu/HBlvZNA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
  dkim=pass header.d=gigacodes.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9mp3CMNMTbgO/xPeP+EKXAIAuT1Fom572fodin7/55c=;
- b=u9r2qspt02MPIZ+lXRPcM5knyh5WUrYKJXRemm1jHz59oznGZ39pLf1iApNYH82snYsWXzfX+X6xOOv+XZaTTiYKqrIZVPdwVRh5X+eJY0Jq+gU8e1BwqlcVxTieWyEyldOi8wDWqmQyZTfaWXYpv+zC7VhMgm8UhxGb0ErWwqE=
+ bh=2dbjYIUSUiqVyL3Lcz9VDfZyMKEuUxGhxOkyXLF6cmw=;
+ b=RMsnN50HjeBYQt38mGBS9+wEnmTs36AEg2wXo9ixWgJBPI456DfOlTkJH9tI0CIk5aoNQ6WTbBVEWTdFIdtsjklm3IeLZt3VVdW7wpE3V9oaVhWFA0UfakisiR1tqETs3W4PDUWawh3dH5qhjWOK83wS+IAQJHKAR33djJ9+AlM=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=gigacodes.de;
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by VE1PR10MB2941.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:803:106::17) with
+ by PR3PR10MB3898.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:42::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5017.24; Thu, 24 Feb
- 2022 10:06:33 +0000
+ 2022 10:06:34 +0000
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::116e:6242:98da:22ba]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::116e:6242:98da:22ba%7]) with mapi id 15.20.5017.024; Thu, 24 Feb 2022
- 10:06:33 +0000
+ 10:06:34 +0000
 From:   Fabian Stelzer <fs@gigacodes.de>
 To:     git@vger.kernel.org
 Cc:     Todd Zullinger <tmz@pobox.com>,
@@ -47,100 +47,109 @@ Cc:     Todd Zullinger <tmz@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Hans Jerry Illikainen <hji@dyntopia.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] t/lib-gpg: reload gpg components after updating trustlist
-Date:   Thu, 24 Feb 2022 11:06:27 +0100
-Message-Id: <20220224100628.612789-2-fs@gigacodes.de>
+Subject: [PATCH 3/3] t/lib-gpg: kill all gpg components, not just gpg-agent
+Date:   Thu, 24 Feb 2022 11:06:28 +0100
+Message-Id: <20220224100628.612789-3-fs@gigacodes.de>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220203123724.47529-1-fs@gigacodes.de>
 References: <20220203123724.47529-1-fs@gigacodes.de>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: AM6P193CA0100.EURP193.PROD.OUTLOOK.COM
- (2603:10a6:209:88::41) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-ClientProxiedBy: AM6P192CA0060.EURP192.PROD.OUTLOOK.COM
+ (2603:10a6:209:82::37) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  (2603:10a6:102:12e::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 449f8982-672d-4f49-b20c-08d9f77d5599
-X-MS-TrafficTypeDiagnostic: VE1PR10MB2941:EE_
-X-Microsoft-Antispam-PRVS: <VE1PR10MB2941BAB6DB24FD4CD48D30DEB63D9@VE1PR10MB2941.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Office365-Filtering-Correlation-Id: 33deb776-8103-4dcf-f88e-08d9f77d5666
+X-MS-TrafficTypeDiagnostic: PR3PR10MB3898:EE_
+X-Microsoft-Antispam-PRVS: <PR3PR10MB389860E1C63BB4F2EBE0D004B63D9@PR3PR10MB3898.EURPRD10.PROD.OUTLOOK.COM>
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: EsgvaGXciNv8KTX3//VWEUWlQLHluJzvv2Ig6TS2RN1MqXqediuIVxAAgmBoujv7A5hrySxfbRw9UOJqkWP6O3faQX1GxcI0zcnnyXp0inuUwMHlWLCtcBDxOLa1KCvYoEXj8vNer6OmWwiReDtTocecGTHHcrlDaYDpC0R+HCL5d8cOLq3wZ3AWPW56jZawQrj7tgYx2l4IbZ2Ukeor1CD1aSGhLbF82lJ58eZiPUDLpOfoag4sC8LGgxPb64v4IcdpB/aq/crIiV1A/bnu9oiYZVHramUrVhPs/4RF3WcPlW361tbRxJbSzhh0+dgCVIbuYJowEPzvaej+1uTer0SrFn774R8nqLZS9A6T9GWrL48tWUYpyVbuyRo5J05oSX/1mBoQy3BjC8Wql50H6KUDRirXhP4QUShI+kXRYv5cv3Nd1OXkEFS76JTCvCg9Sa/h9WoezMIXPneFQA8j52F8nJ4RBrG8TVoEBOV3c7Y9MoOsOa9Yy+aAUSy103ntiQPYYPS26JDROfc4gm6ZlUYuAdM0C1H916osG9QVJj7bF6u1jx5q18advLiFwVhxbaHumg9P44e5BdhAsR+9pPguaGvxVkgZb1xfbrKBBk0kBOjYkWqvATyiQf+0VjGZWCMWz8puDir12mufVR4KUQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(4636009)(39840400004)(396003)(136003)(366004)(376002)(346002)(26005)(86362001)(2906002)(1076003)(66946007)(66556008)(186003)(8676002)(8936002)(66476007)(4326008)(6506007)(6666004)(5660300002)(2616005)(6486002)(38100700002)(54906003)(36756003)(316002)(6916009)(508600001)(6512007);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: HQYwNBG9MJCiJ6c40qE8aoWakdh0NgvlvJG25QwOl6N2oxVwHA7sMAD+yBGRasqN8vtB3aWkJnxO2xGqzv+9aFGmaRWv58cdcsL74VAAh9c1QBFtThOH+9l+6Wz3FOntAabASGSKgXgwnsLD4iK0q642Wz5Na+mdnQxGvzNES3geNTuHyOkV0r/uS/vtElVarcNO0rphBWz+6GfH3MO+Wfyha6sCsBiwDewxWn/hIx1/oFEdYACEheIcFkpBv4NdqE+VQ/N+jqd3pCIydz2woAISymHJGkglsZanxLtUl5lE9ZhsuXIqn+/Tq1/GStu6z48H+XJlW2dfVpFPa8K3oHGbn0F5ANVOkg++NdAG6IpDLMHoRpKOtzAmiqHTxh99b0Scm1Q3+zmQ3SWakeJtyfY/kyutK3w8mUPLUFmlhTk/SQee51xU060azM1M/i6y47FWhHaqcZAFkBLX8ZGpuRnLdKtqK0EnObLM+EvZ1EBdJtADuRkDgtOmGAKGRnVWWVJjlXnAB4pN0RxxIn6XyBmsD25vARzQhRas9ndDA/GXAFJA7qgQeeAoL/v1R+Dy5XCDSJ1U7jX6/MXb2nM8DVcVO0g9OMXrel0R2wr3IzRqS1tOXio/UMXA88kX0c0h1Jdsvu7SFDyElXKPP+MDuA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(346002)(396003)(39840400004)(376002)(136003)(6506007)(6512007)(6666004)(86362001)(83380400001)(6486002)(1076003)(508600001)(2616005)(186003)(26005)(8676002)(6916009)(316002)(36756003)(38100700002)(54906003)(5660300002)(2906002)(8936002)(66556008)(66946007)(4326008)(66476007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?NUySGDzlF71955oGTB5JfpOxS3N0QhKGvRGqgJPdhXgN53b7ye0JwvFmuRMB?=
- =?us-ascii?Q?T+iWLoC/wbRMKCb6292hnVIEZzwV6nbsbcxRYuOGq9ohdWek2QFnaZ52uU33?=
- =?us-ascii?Q?Nk0qvmfK9aJgxWSBJdw9t138KaOscVfuyUfWRgu7F0xe15uXEPpwT3PHHxnn?=
- =?us-ascii?Q?3o72JJJoADvREUCBtysRBdYj322cWT/+OnKZJ9eW2X7NoeHnUq80SVk+LltC?=
- =?us-ascii?Q?p5JQAMbuso4kMPRsdQJ4UgvFWsEkoi/hDJWDedtUjRQ0GYaAT3SioRqgwGkK?=
- =?us-ascii?Q?rpuFW6FygXqwrwTLf1BJPrD0LCuVvVOI7IGZxDR5okrHFw1M/OIQSB+K49B8?=
- =?us-ascii?Q?xoAzIakaynTSs91i03WyB1Yi0DbAHUiwXzrtrc44l0V/GngvH/4LruAW/W/x?=
- =?us-ascii?Q?V8vM43S1mSiTxrlZ5xX8noQdhCPGv7Rj4jQAJKZwnHft1xEJjGr7efSeETBI?=
- =?us-ascii?Q?7UNy5SdW3gBFaLJkvkTt4WqoEDFAXfMZGam7b1FymjtSKo8SdfvKOxfXxbKg?=
- =?us-ascii?Q?JOJzQjv2Dy87kVYNDe0DHcCsVhDoU0uxIZc8KNFrwqDrD302YhRd4YGTzjy7?=
- =?us-ascii?Q?xdYiYX3JQI5DcyWnhWmx3bwZD5CYMP+ha658QVN52ssk9WKOJNu6a8XyRjsW?=
- =?us-ascii?Q?qyyRKei33opicrBPfVaeOMyAj8deav+RO2dQW/e2rCPUSgt+iz7T0f+uw+qO?=
- =?us-ascii?Q?8QWr+4INXl0UlOYkNrDIDeJw6CfhBw3dhSuw91eOOPG3MQszl43C9cq3GgMd?=
- =?us-ascii?Q?N1UkbC8C0YyqDv7Xf94O3QiJvUwnFvNwfn/qs7G5Gn0JKVUTWNPRicgqp7MN?=
- =?us-ascii?Q?FzhMHYQb7IHFk9sbvq1YBt9bO854nIm/O5dhifSjeTvbzggV0TmpJuDYS+vP?=
- =?us-ascii?Q?3oxBkpTHd6m6KAjB86LQY/Io3Oooji0QkzHsdYmS2kNhwTdsWvr43Q6p5Fco?=
- =?us-ascii?Q?hFVXx9Th3W8koGsD9zCECh3PVfxfDFhtjsWoikonN/Azp9xDDpxfY72PPtPS?=
- =?us-ascii?Q?YAmdUvILhT3SZcrdWkrXPD3tbvUqKmhMOErjUvmEfLgL68QidjS62fRN2tdj?=
- =?us-ascii?Q?wV+GOcQi2XTvSz0jVL9pPlecSOoYhBsKXroCk966YIPKYr4jG8CiNjeMh0ji?=
- =?us-ascii?Q?v3LpCKm9M3gcytLFo3nAnTh8Q7hcQ1vPpzKZyh9W4iAXGJ2+3EU9fTm9E2kL?=
- =?us-ascii?Q?gbXg1z12MSuVbhX7TKnl8AFgjoygHEuZjBXJD53z4tYJoZRYoA/+l/Q8cgX2?=
- =?us-ascii?Q?IdP85qOkPGKJFvDBIySLbmzqo1q1ivwKt6ZqfvegQuBx12R+buPNobKKsHRI?=
- =?us-ascii?Q?DJd2gKpjS5icyP6SmHcyQ79Wdkcnklw1Mhdbso21RwB8uxq/oARsN3w4MRk1?=
- =?us-ascii?Q?8NY3oQx5gvKrvmCqBxI3GgUmDpfYB+HEgTDCG78b/qmcdnkvN4KP09U59uRQ?=
- =?us-ascii?Q?TdlG4MzVWg4d6Rxn4Wg6YA/IHv2Txeh3h4TR1rlGyymFiP5yL74Vvb7Vfw6/?=
- =?us-ascii?Q?RHM5aTCoe72bqkCBQZ0wH1GCg9T6AZ++8mhfWiyfTMXabIpig8y7x52JrTKO?=
- =?us-ascii?Q?eX36ZYMXC9l15EsqwQDX+8PNkI4vo1XW2Ds8UHz8EAv6CWBj4NGTrpL3ypBT?=
- =?us-ascii?Q?YBjCTozAZ+qgc0OxcGjR5p9OM3myGu912CSTn9cjeFoesXqIVlZTSHgbbu1z?=
- =?us-ascii?Q?nSaa0OJCNSsG1WeOOV8/lguXvqU=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ac181Wk4OAl1gTiCsCYqsA/eTWaAYRQbdbPmw1hTiMRxyWUhTHMm2A/4Wcp2?=
+ =?us-ascii?Q?KkT0AIHz8Zs5mzmC1+dNMfl1jRk3izR3u9DXfmmsZRzNK4yF+p7tRSrLf6He?=
+ =?us-ascii?Q?+LWdtTcybqgxrwfoA+IGOIW7RjMXrEdtgjY2rXHpPVDU7byIsGyiEbRfGbAL?=
+ =?us-ascii?Q?SamtcFSb9EEPQdHXgB6DvRPMddZkaiocSAZ2NUSy1ahKUOWjWmK9+Y2YZedG?=
+ =?us-ascii?Q?K+M8fJWpkYprJAvkGtN8n0XDFSex3CZe9i0yaQWeI8rgzp+KT0f8VknFEVB7?=
+ =?us-ascii?Q?BdcxTy/LpIx1JF2PPzgkjRSDZ/MPDOpeDLNIUs2EeESqUSN/m7/GBtApsryt?=
+ =?us-ascii?Q?K68KHdQo9dEw7u8m+Mh9oF81bnJjxVOiKvw0vZBKnO+JR4uFEuID6ySHWGrX?=
+ =?us-ascii?Q?t2RrOuZ/w+a7F+CKHWkCqq0VdA7cTvOBway1I5+q95Cp7+rPBLs+4dqGiNFM?=
+ =?us-ascii?Q?MrEZauD0igVYGqURu4CCZGYwTJdO0bX+i5E5ILxVKzae3m8m2p7svXcRGVf8?=
+ =?us-ascii?Q?b3YysUl1Ajqzfjb45EBW9NIxeplR3L/yc39toR/8ZXXph8VdvzossM8/XspW?=
+ =?us-ascii?Q?RhFTdpaGkQsMZWHIjTQW+gDRFSPtmyzaBmc1JsDxIiPxCw3lkM2mK3l3Gh7z?=
+ =?us-ascii?Q?H8U745gLbBTftCEw1kQj/VnGjYMF9w5Q/ycoxRMsqats3Bvir9s5t8EYwOq1?=
+ =?us-ascii?Q?fqePKbJMplVIOfNSIrjd7bHrS+ufzmFXTjBUwXcj6jdbP8ZvU1UhoK2vuk4Y?=
+ =?us-ascii?Q?NLTCU2T+O1oyQdcBJ1F5MP+AETk5Yh8guXEv5ot3hDzSpTbkX1hJ4Zv4zupm?=
+ =?us-ascii?Q?GwOaxye/OXkmnCj0V+zGWJl/0QTHFYPwqScF23QCNuvASgEB5Eglc0jaQG5i?=
+ =?us-ascii?Q?45D9r8B+UexDTqLcK/3nDWth+Y0Cxd2yU+nBd6LEVzo0m5F2PuOw0IQGiHQb?=
+ =?us-ascii?Q?Sq+SgGwieGvJ0fVhKRervVXnkHTfkuhcy/vtBL0sfc9JSsb3liB/JHwsCOQ/?=
+ =?us-ascii?Q?UE1nWHwVALbxMTcCvbSLb9ErxUaXKjvMnHNqUCnJdweR1pPCMHfCt+3Qj+JM?=
+ =?us-ascii?Q?ZmBVBB/tOEdsSuOSvsdNwhRQZBejwmWI81eTxLzLubPUhxIGHpQrvaDsyg7c?=
+ =?us-ascii?Q?8tCf+jNhdRvaVnRIQ5IQX9hUUN2nwgv5O7D4ht7MQXWGIevNtmFPYgljOu3O?=
+ =?us-ascii?Q?vLJmjgD0LvvzvPRP7atijLHYOINnD/PIXtSFzKig0Q0wseNA7lKrH9SbqytZ?=
+ =?us-ascii?Q?RkkRhdynnQMMfGXT98bWCeW1x5cvrDVZPL3vrC6tivXcbZ4HDZDY4xl+UPsp?=
+ =?us-ascii?Q?bVIWbbspWf0WOCEzp/EYRAJjoitkX83P9Wdbk+VmI3+nOv7tx1x/nmpbgfUA?=
+ =?us-ascii?Q?Rpv9lwvhc6EF0ntjQbCTEgTfmnJ28ArOzLfeiJwYUo9amzQdbNZvOVfz4gkw?=
+ =?us-ascii?Q?33bk87RdBHWOH1OgkKwe+w3i50zyvy8PgqqWchC3onsbgmUfynXdvYGvjw23?=
+ =?us-ascii?Q?brMknUzzQgDuqheJWrUJRO5QE/M6dL2HKv+2eSCF2sihINp6nNn6VaQZIdWO?=
+ =?us-ascii?Q?n1uQq9hn/U1VWDAm1xNxN1ZWS4rbj+ozei1rs2cbZiHzipdzlQDJ3aeV4Rnh?=
+ =?us-ascii?Q?mJUuct7UMgjd4HLSOF+S3Z9qJVGVU35ikrCHv/K+JpJA2DmghQYFCKn+4u8V?=
+ =?us-ascii?Q?u7AOM0DdIVgM0GtKrJEHT1iu+rM=3D?=
 X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 449f8982-672d-4f49-b20c-08d9f77d5599
+X-MS-Exchange-CrossTenant-Network-Message-Id: 33deb776-8103-4dcf-f88e-08d9f77d5666
 X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Feb 2022 10:06:32.9838
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Feb 2022 10:06:34.3447
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +CauERL9IohKl1D+WWGpPhRKUDiz0G9HzHIpK1N2hHBTIwASoqMDJVSvtklADOt+v7xaq26FdTf/ia7o9dNAfJmLZLpKYVNyRiqDvcGQ+wM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VE1PR10MB2941
+X-MS-Exchange-CrossTenant-UserPrincipalName: iMQoathAdjiq4n2jrYEWyZQLZyYbpjY89T+n8Rg9E7zq9c4fPY75T7YQ0o7US3jtM6eEBOfB6Zt7QTeBWnzAbTKsrrcqgJUE3KfTyCaw0Co=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR10MB3898
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 From: Todd Zullinger <tmz@pobox.com>
 
-With gpgsm from gnupg-2.3, the changes to the trustlist.txt do not
-appear to be picked up without refreshing the gpg-agent.  Use the 'all'
-keyword to reload all of the gpg components.  The scdaemon is started as
-a child of gpg-agent, for example.
+The gpg-agent is one of several processes that newer releases of GnuPG
+start automatically.  Issue a kill to each of them to ensure they do not
+affect separate tests.  (Yes, the separate GNUPGHOME should do that
+already. If we find that is case, we could drop the --kill entirely.)
 
-We used to have a --kill at this spot, but I removed it in 2e285e7803
-(t/lib-gpg: drop redundant killing of gpg-agent, 2019-02-07).  It seems
-like it might be necessary (again) for 2.3.
+In terms of compatibility, the 'all' keyword was added to the --kill &
+--reload options in GnuPG 2.1.18.  Debian and RHEL are often used as
+indicators of how a change might affect older systems we often try to
+support.
+
+    - Debian Strech (old old stable), which has limited security support
+      until June 2022, has GnuPG 2.1.18 (or 2.2.x in backports).
+
+    - CentOS/RHEL 7, which is supported until June 2024, has GnuPG
+      2.0.22, which lacks the --kill option, so the change won't have
+      any impact.
 
 Signed-off-by: Todd Zullinger <tmz@pobox.com>
 ---
- t/lib-gpg.sh | 1 +
- 1 file changed, 1 insertion(+)
+ t/lib-gpg.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index e997ce10ea..2bad35e61a 100644
+index 2bad35e61a..8b9fb6e932 100644
 --- a/t/lib-gpg.sh
 +++ b/t/lib-gpg.sh
-@@ -75,6 +75,7 @@ test_lazy_prereq GPGSM '
- 	gpgsm --homedir "${GNUPGHOME}" -K --with-colons |
- 	awk -F ":" "/^(fpr|fingerprint):/ {printf \"%s S relax\\n\", \$10}" \
- 		>"${GNUPGHOME}/trustlist.txt" &&
-+	(gpgconf --reload all || : ) &&
- 
- 	echo hello | gpgsm --homedir "${GNUPGHOME}" >/dev/null \
- 	       -u committer@example.com -o /dev/null --sign -
+@@ -40,7 +40,7 @@ test_lazy_prereq GPG '
+ 		#		> lib-gpg/ownertrust
+ 		mkdir "$GNUPGHOME" &&
+ 		chmod 0700 "$GNUPGHOME" &&
+-		(gpgconf --kill gpg-agent || : ) &&
++		(gpgconf --kill all || : ) &&
+ 		gpg --homedir "${GNUPGHOME}" --import \
+ 			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+ 		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
 -- 
 2.35.1
 
