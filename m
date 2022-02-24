@@ -2,96 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C673C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 16:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F6B6C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 16:25:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbiBXQZo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 11:25:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50566 "EHLO
+        id S229566AbiBXQ0F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 11:26:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbiBXQZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 11:25:43 -0500
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C15EE270273
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:25:03 -0800 (PST)
-Received: by mail-wm1-f41.google.com with SMTP id m13-20020a7bca4d000000b00380e379bae2so111343wml.3
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:25:03 -0800 (PST)
+        with ESMTP id S229513AbiBXQ0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 11:26:01 -0500
+Received: from mail-qk1-f201.google.com (mail-qk1-f201.google.com [209.85.222.201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BE181D6386
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:25:19 -0800 (PST)
+Received: by mail-qk1-f201.google.com with SMTP id l82-20020a37a255000000b0060dd39f5d87so3258428qke.4
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:25:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=qyckDC2D1Ts3yDr7xc7EKizmpKG9HeGjHuIw+CykXEM=;
-        b=SdpiMZJnTUkdMUsFOjINSex2bCSPZ9PtCN+Npqz7saihxbkUQt2uuPDzmsitK4zBNO
-         jwdjrI2/wsJRDIOaRg0UYtwjsws1GU2oJwYwVj1qM7iTnwEqFdxJZ0wwWg4FfhSyjq20
-         /UipAueo01kAXApfgvxtADAnSa+jrvPUTDQVpfPvV4BozmBrZ/8Hh+hVm6LFKuu0HmmK
-         B8uXDMlPBDy90aalVVSORD1JYt0QAU5XUHqbw0Jk6NjQ+wpfeMf7T9HN2OLoiviK9soL
-         3msyF4DODTAUOWsTsXDLy6ZCpiRnCdXKQRddKNIse9nVH3TZGUvge1b4XCYmokK6Y5pj
-         412A==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=k/N8+CYCTYfxxdyEH/FwlBaMSlkSBPvsAaJ0CyTWb4M=;
+        b=OiZGCnaLye+WXgB/yEZB0I/0M31lOtoqvAbcT+RvcWeIFwItvz7w7RMGRb7P3E1ZTv
+         G+xJrXjRne5z8jK+D8dZ3MuzfN3nJTeAgPaHeQz7x2D5E8sf7Nhj2GJybYliEq1obKVJ
+         /zVc12Kb8EzgQWcDS1soOtLRac09hvVXFCB3/N77RuNKXqDMY2eb7DsuIsOwN1nC+YEK
+         bgOiBkm7eFP+Q6ZcZVhS7BXvTtYgEWwA51WQtwM3/htxPMsfDu3uA2L/Gpc5ikEzqYdi
+         oGKfZOs6fMcTi7/wQEFJCAVOwlEWHYwhzpR9Mu4z70iv1CV9FLse3s0F6w5LRbIJZkJW
+         Fy5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qyckDC2D1Ts3yDr7xc7EKizmpKG9HeGjHuIw+CykXEM=;
-        b=QY5VfeHnd+X7iVNVFpqZJvIrLUHMNw7ZNSvgILjyWhUj08KFYPYSxUIB1wW/jKIzoK
-         1yTjriveCBGxILeruXVfMXkN7E2MbC4FbDFSdGi/P1DRpqi9PNuJQ4LqgocIJRLmgHIM
-         DVHnucLZzKy+ssiPfzW3ILtHB/CrWeUJUVRDKCyGYm5mNyZfKajJJYI8/Fsgkd9QV3tw
-         KBjdSU9J5MMzRYOJPhxR9oLl096OtShBGOmyUv6ArhPY0lFlt1c+qLhp80niSc0t0z3q
-         Xu1xhVf8NTUSnAEoNO6Ht1l08e1ksKYZ3L5Wy3qfqfTJLY3H8lBppjLWQqafMiAB5ixG
-         QoPg==
-X-Gm-Message-State: AOAM5314FFHp1VOD4ZPKlOcO5w0O20WVwzge0zjpgwSaWfKDSiJo6ERV
-        ZkB4SZ3ppDHsB2FZPHqsO9bfwPvGORI=
-X-Google-Smtp-Source: ABdhPJzVsaeksPXT48tzaK6lAKQG6+NkKDjwLrCZZqvUMUA7YI+RyPdTY2UCt2MnZHpZ+M1r3MjtDA==
-X-Received: by 2002:a05:600c:3d88:b0:380:f6d9:9461 with SMTP id bi8-20020a05600c3d8800b00380f6d99461mr6819068wmb.137.1645719227333;
-        Thu, 24 Feb 2022 08:13:47 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z3sm3787758wmp.42.2022.02.24.08.13.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Feb 2022 08:13:46 -0800 (PST)
-Message-Id: <20942562a66bd1dcc6966a1d9150cff9a9ad11e3.1645719219.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1138.v2.git.1645719218.gitgitgadget@gmail.com>
-References: <pull.1138.git.1643730593.gitgitgadget@gmail.com>
-        <pull.1138.v2.git.1645719218.gitgitgadget@gmail.com>
-From:   "Robert Coup via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Feb 2022 16:13:38 +0000
-Subject: [PATCH v2 8/8] doc/partial-clone: mention --repair fetch option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        John Cai <johncai86@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Robert Coup <robert@coup.net.nz>,
-        Robert Coup <robert@coup.net.nz>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=k/N8+CYCTYfxxdyEH/FwlBaMSlkSBPvsAaJ0CyTWb4M=;
+        b=3e9D1j0lwDOOubw4nh1J8dkIyThFPDs77eKqcBRCyApHoTIRGdBapDFhihP8dZ9qAA
+         K5XUxNhBd+KPA9lTWH8zDmuq5j4VoDp7jIUBEvvGyCDqfSlRoUkPLMcgJWWI+kGwhtmf
+         XvLHambDKgCmF0EKhoOE8elGY1fLP7BSggNQJG+jqDc5jpYnpJlfVK37Ysnc30MnuJ4U
+         /17hdWbaZypbzz658//CpSTjv9S1a8dEk6UD5QQ4QpUGN76rEOxln7L9NnXlvYue1O9y
+         vox2uzpjkQCx93SKl7CAzz06me1pVHtBXenGM6V6F0QyNCYEqL17T1nTjjz7V/0inffx
+         4oQA==
+X-Gm-Message-State: AOAM5324R4uT10zxfgrtUQmL1hfj/c+BeYybTUEd+Bi1SXlOE5pX7Snb
+        kLEg+TkSOkvawYMHtZaDhUkV5pH88tBYDg==
+X-Google-Smtp-Source: ABdhPJzXKMW8JNYVyGJkxWY5XXsZRiZLf5uP9kEejineq5cOizhyfqS1094+p3ZY/nhMUJpC2YuuQW6Ml6qpFg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:aa7:8f33:0:b0:4cb:95a7:928c with SMTP id
+ y19-20020aa78f33000000b004cb95a7928cmr3665535pfr.42.1645719331538; Thu, 24
+ Feb 2022 08:15:31 -0800 (PST)
+Date:   Fri, 25 Feb 2022 00:15:29 +0800
+In-Reply-To: <220224.8635k8a36n.gmgdl@evledraar.gmail.com>
+Message-Id: <kl6lpmnc44wu.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20220215172318.73533-1-chooglen@google.com> <20220224100842.95827-1-chooglen@google.com>
+ <20220224100842.95827-3-chooglen@google.com> <220224.8635k8a36n.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH v3 02/10] t5526: stop asserting on stderr literally
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Robert Coup <robert@coup.net.nz>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Document it for partial clones as a means to refetch with a new filter.
+> On Thu, Feb 24 2022, Glen Choo wrote:
+>
+>> +check_sub() {
+>> +	NEW_HEAD=3D$1 &&
+>> +	cat <<-EOF >$pwd/expect.err.sub
+>
+> Hrm, I didn't know that would work, the usual style is:
+>
+>     cat >file <<...
+>
+> Instead of:
+>
+>     cat <<.. >file
+>
+> Maybe better to use that?
 
-Signed-off-by: Robert Coup <robert@coup.net.nz>
----
- Documentation/technical/partial-clone.txt | 3 +++
- 1 file changed, 3 insertions(+)
+Thanks, I somehow mixed things up when I wrote that.
 
-diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
-index a0dd7c66f24..268939f781d 100644
---- a/Documentation/technical/partial-clone.txt
-+++ b/Documentation/technical/partial-clone.txt
-@@ -181,6 +181,9 @@ Fetching Missing Objects
-   currently fetches all objects referred to by the requested objects, even
-   though they are not necessary.
- 
-+- Fetching with `--repair` will request a complete new filtered packfile from
-+  the remote, which can be used to change a filter without needing to
-+  dynamically fetch missing objects.
- 
- Using many promisor remotes
- ---------------------------
--- 
-gitgitgadget
+>> +	Fetching submodule submodule
+>> +	From $pwd/submodule
+>> +	   OLD_HEAD..$NEW_HEAD  sub        -> origin/sub
+>> +	EOF
+>> +}
+>> +
+>> +check_deep() {
+>> +	NEW_HEAD=3D$1 &&
+>> +	cat <<-EOF >$pwd/expect.err.deep
+>> +	Fetching submodule submodule/subdir/deepsubmodule
+>> +	From $pwd/deepsubmodule
+>> +	   OLD_HEAD..$NEW_HEAD  deep       -> origin/deep
+>> +	EOF
+>> +}
+>> +
+>> +check_super() {
+>> +	NEW_HEAD=3D$1 &&
+>> +	cat <<-EOF >$pwd/expect.err.super
+>> +	From $pwd/.
+>> +	   OLD_HEAD..$NEW_HEAD  super      -> origin/super
+>> +	EOF
+>> +}
+>
+> These look a lot better, but instead of always passing the result of
+> "git rev-parse --short HEAD" can't we just always invoke that in these
+> helpers?
+>
+> Maybe there are cases where $NEW_HEAD is different, I've just skimmed
+> this series.
+
+I haven't found any other instances where $NEW_HEAD is different, so I
+suppose we could move it into the helpers. I don't think it benefits
+readability that much to do so, but if you think it's much better, I'll
+incorporate it when I reroll this.
+
+>> @@ -62,7 +82,8 @@ verify_fetch_result() {
+>>  	if [ -f expect.err.deep ]; then
+>>  		cat expect.err.deep >>expect.err.combined
+>>  	fi &&
+>> -	test_cmp expect.err.combined $ACTUAL_ERR
+>> +	sed -E 's/[0-9a-f]+\.\./OLD_HEAD\.\./' $ACTUAL_ERR >actual.err.cmp &&
+>> +	test_cmp expect.err.combined actual.err.cmp
+>>  }
+>
+> I think this is unportable per check-non-portable-shell.pl:
+>
+>         /\bsed\s+-[^efn]\s+/ and err 'sed option not portable (use only -=
+n, -e, -f)';
+
+Ah thanks, my sed-fu is pretty poor, so I appreciate the tip :)
+
+I used that because I wanted +, but I found what I needed from the sed
+manpage i.e. that + is equivalent to \{1,\}).
