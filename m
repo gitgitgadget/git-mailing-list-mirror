@@ -2,114 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA5A0C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 17:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6719C433FE
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 17:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231855AbiBXREQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 12:04:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50660 "EHLO
+        id S230330AbiBXRRT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 12:17:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232144AbiBXRCq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 12:02:46 -0500
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373671A6F8B
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:59:52 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id g24so2345588qkl.3
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:59:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=yVnr1PMAeukIxxyqfgzyNC8M7X12EwILnggqeo8sasY=;
-        b=acIUiT8VK3ZpZGlX9M2nDxE3AUo3edgHnWecyu8mPgIppn7CQ2kLp3yExr+swsahUF
-         cTugiqMOLMHiqJmn5aMT7IWhuzoJHFeMmQc2/XGlGRyg3cVOphdZd7yaAApluYFIQtft
-         /6vOPQvD9LEUik+Al4juiBpZjZ+1w+ZTG5y+9OlJbAgdy2fg55C9NV7lg42rLlVopVJI
-         uHgC0jxRr/qp58jumGirRkZI3h7BcDOSKJ9KsxVg7psgpWjvrIN+GhX/v0CwA3IC1Sew
-         tU6/iNNi6ftkhPvgQB+iDQ3FqcDlvoVfzwvduvdj/XoRNa0IB0OJLueJIGyp3nlELkd3
-         R3uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=yVnr1PMAeukIxxyqfgzyNC8M7X12EwILnggqeo8sasY=;
-        b=A0+QrHbZ/TclH1/YmuP5707Lib1ES8bcAu1alYvAu10hl5OWqK2k2+0QtQWRE0Rl6f
-         S+N1szBil61mMLIKqn36586wI6Ldm95XAUKPVsxHnR1WoWSHqzCbdfjsf4rJ88AHQ++N
-         nCJNpODmsvl9RY4/CxXIbv2BmBG5utHleGgKGfwTwr4k3vwu/qAi+0fLDufXm7Q5Zw0n
-         RoZCHcd4xItrsBEq0TZLHCnoHQoPd2LaFaAq3xqda7kgy5XG9VmnUu3PZY2RgCjw7qjL
-         wSF+OyPLLw58z4nK+sg+TZjF4bpKvcUS9l3nOAbMOmuaaTpO7XozfKNarRsB0KHAauSr
-         zmuw==
-X-Gm-Message-State: AOAM531z3iP0b52y0YAh8feGKHKeUZN2ipbZk0BD3RzL+Sj0rIErObRi
-        jYRGfwbCZkrm8BHzerf18wE9syNSyomb
-X-Google-Smtp-Source: ABdhPJzvwnsHh4E450/IDpYPM8aQ43Xwk6AilAyETbJAL86YznOhYqp8OsZbbN9AxYcugLcg/bVV0Q==
-X-Received: by 2002:a37:b542:0:b0:506:efb6:9955 with SMTP id e63-20020a37b542000000b00506efb69955mr2278451qkf.594.1645721978768;
-        Thu, 24 Feb 2022 08:59:38 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id bq42-20020a05620a46aa00b006494fb49246sm57260qkb.86.2022.02.24.08.59.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Feb 2022 08:59:38 -0800 (PST)
-Message-ID: <2bc6fcb6-2d95-c962-3098-ca4e4e0afa00@github.com>
-Date:   Thu, 24 Feb 2022 11:59:37 -0500
+        with ESMTP id S229836AbiBXRRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 12:17:18 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A2DE396B1
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 09:16:43 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B548F126655;
+        Thu, 24 Feb 2022 12:16:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=OBRbAX0uQkbW4dCvjsRE7ufy6Jri9sLlaEd1Wa
+        Hj5Ok=; b=ILTCCWR+fq7PPyQTEcUzq74dc8sSUaUE/7j42ppNKh1bxkFkShkG8E
+        BHpLdki7kt6eAQjhnux2sLRBM+rLhbRAsY9uz3jgu+7MSzxKdi/DS6ZvBF4lC1sn
+        H5mlkeJNJLqbPXuHbDAH+mP/Twf6s6eSU/tpRrr2OyUrQ23Gy5mqU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD75C126654;
+        Thu, 24 Feb 2022 12:16:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 25D8A126653;
+        Thu, 24 Feb 2022 12:16:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v5 00/30] Builtin FSMonitor Part 2
+References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
+        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.2202171655390.348@tvgsbejvaqbjf.bet>
+        <xmqqpmnl8evc.fsf@gitster.g>
+        <nycvar.QRO.7.76.6.2202241646430.11118@tvgsbejvaqbjf.bet>
+Date:   Thu, 24 Feb 2022 09:16:39 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2202241646430.11118@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Thu, 24 Feb 2022 16:47:17 +0100
+        (CET)")
+Message-ID: <xmqqo82wnq14.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 0/7] Sparse index: integrate with 'read-tree'
-Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Victoria Dye <vdye@github.com>, Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 87BECCA6-9595-11EC-A7D6-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/23/2022 1:25 PM, Victoria Dye via GitGitGadget wrote:
-> Like previous integrations [1] [2], this series allows 'git read-tree' to
-> operate using a sparse index.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-(Fixed the CCs on this reply, too.)
- 
-> The first two patches are bugfixes for issues found while implementing the
-> 'read-tree' integration:
-> 
->  * The first (patch 1/7) fixes an edge case in which a repo with no in-cone
->    files or directories would have its root collapsed into a sparse
->    directory; the fix ensures the root directory is never collapsed into a
->    sparse directory.
->  * The second (patch 2/7) corrects the 'git status' reporting of changes
->    nested inside the subdirectory of a sparse directory, ensuring that the
->    modified file (not the subdirectory) is correctly reported as having
->    changes.
+> Just to make sure: I did not intend to insult anyone (and in hindsight I
+> wish that I had made that clearer).
 
-Thanks for these! I just found one tiny optimization in the first patch.
+It is OK that you are wiser in hindsight.  We all are, and we try to
+do better the next time ;-)
 
-> The remainder of the series focuses on utilizing the sparse index in 'git
-> read-tree'. After some baseline behavior-establishing tests (patch 3/7),
-> sparse index usage is trivially enabled (patch 4/7) for 'read-tree' except:
-> 
->  * usage with '--prefix'
->  * two- and three-way merge
-> 
-> These cases require additional changes in order to work as expected (i.e.,
-> outwardly matching non-sparse index sparse-checkout). For the former, the
-> sparse index can be enabled as long as the index is expanded when the prefix
-> is a directory outside the sparse cone (patch 5/7). For the latter, sparse
-> directories that cannot be trivially merged must have their contents merged
-> file-by-file, done by recursively traversing the trees represented by the
-> sparse directories (patches 6/7 & 7/7).
+Thanks for reminding of the topic.
 
-I enjoyed reading these remaining patches. I'm impressed with how you
-constructed these tests and patches to do the smallest amount of change
-per patch.
+As a general principle, when introducing a new feature that achieves
+the same goal in a new and improved way, it is safer to introduce it
+in such a way that users of older implementations that lack the
+feature cannot choose it by mistake.
 
-I couldn't find any fault in these patches, but perhaps Elijah's deep
-experience with merge machinery could help add confidence, especially
-for patches 6 & 7.
+One way to do so is to we reuse the same configuration knob by
+adding a new settings value that older implementations would choke
+on, the users will be forced to ensure that the older and proven way
+is used consistently everywhere, until every tool the user uses are
+ready.
 
-Thanks,
--Stolee
+For this instance, I think it is OK to split and allow two to
+operate on the same data at the same time, because I believe that
+both old and new implementation will leave a permanent difference to
+the on-disk data that cannot later be reused by the other [*].
+
+But it is an exception than a norm when adding a new thing that
+extends an existing feature (as opposed to inventing totally a new
+thing that won't overlap with any existing one).  As a general
+principle, it is much safer to make sure it breaks (and have users
+hold off) when the new setting is given to an old implementation.
+
+    * Side note.  For example, if we introduce the index-v5 feature
+    by not reusing the index.version but with index.usev5 variable,
+    new implementations that know about the knob would write out v5
+    data that existing implementations will not work with.
+
+Also, from the point of view of the longer-term maintenance, of
+course not having to deal with orthogonal looking different
+configuration variables where newer ones override the older ones
+will induce more pain over time.
