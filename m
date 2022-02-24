@@ -2,117 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4727C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 15:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6182C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 15:11:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235714AbiBXPGN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 10:06:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33254 "EHLO
+        id S235705AbiBXPLi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 10:11:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235705AbiBXPGM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 10:06:12 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B77AE18DA97
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 07:05:42 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id z7so2810017oid.4
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 07:05:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=5CNkRAg9DJw84c7bLPNA3hWxAkbrXH0WE0Erk5tY8EU=;
-        b=Rh4niomY+8SA+Bg39Cshj3IEYYtFl0ncyreqEliGd40L7xRyDVjKId3lTP87dwx604
-         TFk6ozTv8VuJpJV0upwpp/RhaZ3uKDl/trK4MP/lgpIUsPvdD24wIRk3u/OvYodfWVS1
-         vw2RdKwu7RlgT8wJ3VuUFCG9OAEdL2kDy6tpxtTd4CEieujDP2ldO6ku85mGi9gVFSAQ
-         cvfAPuF+1cpzuc8PVMsfGBgjxLDDjp90M+Kp6Jkaqy+/uQ9cQZaVfvJts/s9mIFxoMRg
-         eNk6dgtRDj32T6vuHiszCliPp+zNXxI9QtQYyWa8sCWOoS7LXPVc2nbaXVN45Ql+elwN
-         gouQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=5CNkRAg9DJw84c7bLPNA3hWxAkbrXH0WE0Erk5tY8EU=;
-        b=owTR/Umshj/8vLocAgN9ephGp4HxxRL6qD/ESh07UCJR1EwbKscyb91LrwDcbJbpj0
-         1ic6ceinW0O0GpsFVvuczG0/idQmrMO9uPWiIK9td7ed/rJV0VgUJ84AF2IxsDt2rMbY
-         XXbc/jBBPX6DVn24hBdZYBGz4OTv8bSdFeUmNEiAy/2nGz+UQ/CquaCrk25FhjfsqHrM
-         zj9dm5cJq6NS3mRwFD4Uw9PR4dB4ke4nkJrenhOv1CN9JKgawiDkkebkTmqgU6pvMZgY
-         pbx/EIz9xrH5Jd8KoHlvydjpWSaylQPj++b9/D61zR73JHmNev81H2692d81NZDT9Bma
-         MzjQ==
-X-Gm-Message-State: AOAM532w/gU4hPQs6DtwxTTif7S074vJlbLTyUxr8Ia1RUbt1bEdpeFs
-        LnW5rE590O6ByrvO2HQitp28
-X-Google-Smtp-Source: ABdhPJxERA7D8hNeteZwty79rrpc7qQWDMucGRK0c4NTi4q1uCZ/AADREIy0vPD8WhkkJzRc6wZjWg==
-X-Received: by 2002:a05:6808:1904:b0:2d5:80d:b7eb with SMTP id bf4-20020a056808190400b002d5080db7ebmr7584711oib.321.1645715141735;
-        Thu, 24 Feb 2022 07:05:41 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id m11sm1633769oiw.3.2022.02.24.07.05.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Feb 2022 07:05:41 -0800 (PST)
-Message-ID: <b459111d-a536-b4d7-44d5-7f5aeb9ffb08@github.com>
-Date:   Thu, 24 Feb 2022 10:05:39 -0500
+        with ESMTP id S232344AbiBXPLh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 10:11:37 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E51AC19F440
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 07:11:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1645715456;
+        bh=QRMrBEAVZv1gIYu4d6LYNBlO8Zn9TFpjFu9MVHxgG+U=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=dULKZBN/jW9UfZTEtzawmct/7U+GuTVUfeU8LWQNnD/fhJVYDzSQu9FSXacF0ZQTS
+         +mj8OvZqWWXZJYRBuQjSRKdIMcrue9mILnQOhsALy2GjEkxaFPWFmblCnonpb1imyk
+         QmVWIvOu/MaIyr9n9FL4cD+3au9tJfE95FbSoa9Y=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mel3n-1nuwcv20yD-00ajsx; Thu, 24
+ Feb 2022 16:10:56 +0100
+Date:   Thu, 24 Feb 2022 16:10:54 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v5 15/30] compat/fsmonitor/fsm-listen-win32: implement
+ FSMonitor backend on Windows
+In-Reply-To: <98c5adf8ca0112ebf729970a0f15302d55806bd2.1644612979.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202241605140.11118@tvgsbejvaqbjf.bet>
+References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <98c5adf8ca0112ebf729970a0f15302d55806bd2.1644612979.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 06/23] fsmonitor-settings: stub in platform-specific
- incompatibility checking
-Content-Language: en-US
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
- <4715677f85ff3f47b437f82e2b82a8b5dd371c99.1644940773.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <4715677f85ff3f47b437f82e2b82a8b5dd371c99.1644940773.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:q1tzeVkAXMJEnXiQJJgJy+fUzVm2eejn/X64Tqk48IjOr4gcl0b
+ +yMJQUdTScDaM47FvEgrDZQcabvQ5fpYQIy8GvjKMfT4xoPTijc5YXMqKU6FVxR8GGh0/+0
+ tCiOzpIbefvvoIcHqX7nD+fep5DGgDlUqPojhStq8hz4ynEZeUbMajpwrP6ANwB+am2BInm
+ RdBQ8/dnWxaqre79xntYw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lM76atgqjB4=:qmRMq+ofAMIDC0NDQd1rSZ
+ H3w7PDaUtWa5d/6/QdRM/3UyzkdqUMXqY+Fg9aMiUnOLAicDmPMBEsEEh6nsK4xzixXKfGtYu
+ 7PC0Ch1frwjs+9aS4HX1foushSKAY0U89s9RLveY3q57m4vMPdJB+EEDhnnay8HG6ZdwVKT/s
+ qAmSiV0lGsQut43mR+Yjr1VLPiwxr8RaHyhSh+OuxMauIrUzTypmj6IRxdwy9mu93JE5w6fkC
+ PMh38rB9+dtn0l5aPM828YYqKD8b0rKt0pI812OZTS0qdWs/kw8nAMIQypZY9PdxuJ3Ac2ZHY
+ DuEphyeT4v/iYQIMCuiPc9OhgiRMywc0wNII2aQ6QyJZkYcPe6spAQQ+Ae3AS5yZwG5TdmLkQ
+ aLt5GYtbsu5ADVkNgFmwhIDuJ/5Dmdf6WaIUPLVyh2GOSJWLRIzG9p9c2WZ0dB1JCTJwDSyvY
+ 9IBlZyfzKJwmYeCc6u8UejDflzhPuc01rkAHRCfwrIhi9homNTAr6zMPvcz2AWK2JIsR8gUzp
+ VhLFOBsQDljwRRLHPX+cMtwNaT4ak2uAtNzZkBT3emp1C8njdn3GmnaUH4eMvZLbZLQ2vPHq7
+ lQGuE48N+Uspgxy3Wqg+Rf4hGEuEtQqF8X9jz3c3TA/NLrj+mAURE+vlZm7UIgOwcsdKgk2gM
+ 8O8OLj5gMhmvWLVbZ6S8KR5OIBjt4V2MRN4WiNnuEqPV2XTZ8Cna79VJ9+Uj2jHWFAqsmIPHI
+ uXhgOMlzPwfWMTRVXL2C7kjSsZxHz1ZmW6rvs6NyXqtiZbAn4eB1f1v2Qq9dWcs1XLfiBUuVk
+ R3r8GCVJlDDPDQAyL/K6StQ8hlHycRtFu3KwaYA9Tw2V+UASANu8OHPGOfRkQkmG/igto83Vk
+ E6b2ikIRqsFDHQA6/WObXKcTNxfCfktXfEYBaQ4NWsyR3zWmR6GGmpwlqa9jlBVEBqe7n+cKS
+ E/lWZc/xAlBgC3LVBwLQi7DTMGX42U3Rw6+S33FY0+myu2TO7ZCGXVAH1dQxaAxEWWlnUj+xn
+ /evIzZONd/AyS1kLkn75qiIJ1IILCHW5Hy05O63aztLt1c6vAigUDu2Me0107ShSR0YyiUFQB
+ U7Q07/RQ3JpwD8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/15/2022 10:59 AM, Jeff Hostetler via GitGitGadget wrote:
-> From: Jeff Hostetler <jeffhost@microsoft.com>
-> 
-> Extend generic incompatibility checkout with platform-specific
-> mechanism.  Stub in Win32 version.
-> 
-> In the existing fsmonitor-settings code we have a way to mark
-> types of repos as incompatible with fsmonitor (whether via the
-> hook and ipc APIs).  For example, we do this for bare repos,
-> since there are no files to watch.
-> 
-> Extend this exclusion mechanism for platfor-specific reasons.
+Hi Jeff,
 
-s/platfor-specific/platform-specific/
+merely a comment:
 
-> +# If your platform has os-specific ways to tell if a repo is incompatible with
-> +# fsmonitor (whether the hook or ipc daemon version), set FSMONITOR_OS_SETTINGS
-> +# to the "<name>" of the corresponding `compat/fsmonitor/fsm-settings-<name>.c`
-> +# that implements the `fsm_os_settings__*()` routines.
+On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
 
-nit: It's just a comment, but I think "OS" and "IPC" should probably
-be capitalized.
-
-> +#ifdef HAVE_FSMONITOR_OS_SETTINGS
-> +	{
-> +		enum fsmonitor_reason reason;
+> +/*
+> + * Convert the WCHAR path from the notification into UTF8 and
+> + * then normalize it.
+> + */
+> +static int normalize_path_in_utf8(FILE_NOTIFY_INFORMATION *info,
+> +				  struct strbuf *normalized_path)
+> +{
+> +	int reserve;
+> +	int len = 0;
 > +
-> +		reason = fsm_os__incompatible(r);
-> +		if (reason != FSMONITOR_REASON_ZERO) {
-
-A naming nit about FSMONITOR_REASON_ZERO. It seems named ZERO
-on purpose so a non-zero reason signals incompatibility. That
-would mean you could use
-
-		if (reason)
-
-here. Alternatively, FSMONITOR_REASON_COMPATIBLE would signal
-the meaning better here:
-
-		if (reason != FSMONITOR_REASON_COMPATIBLE)
-
-> +			set_incompatible(r, reason);
-> +			return 1;
+> +	strbuf_reset(normalized_path);
+> +	if (!info->FileNameLength)
+> +		goto normalize;
+> +
+> +	/*
+> +	 * Pre-reserve enough space in the UTF8 buffer for
+> +	 * each Unicode WCHAR character to be mapped into a
+> +	 * sequence of 2 UTF8 characters.  That should let us
+> +	 * avoid ERROR_INSUFFICIENT_BUFFER 99.9+% of the time.
+> +	 */
+> +	reserve = info->FileNameLength + 1;
+> +	strbuf_grow(normalized_path, reserve);
+> +
+> +	for (;;) {
+> +		len = WideCharToMultiByte(CP_UTF8, 0, info->FileName,
+> +					  info->FileNameLength / sizeof(WCHAR),
+> +					  normalized_path->buf,
+> +					  strbuf_avail(normalized_path) - 1,
+> +					  NULL, NULL);
+> +		if (len > 0)
+> +			goto normalize;
+> +		if (GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
+> +			error("[GLE %ld] could not convert path to UTF-8: '%.*ls'",
+> +			      GetLastError(),
+> +			      (int)(info->FileNameLength / sizeof(WCHAR)),
+> +			      info->FileName);
+> +			return -1;
 > +		}
+> +
+> +		strbuf_grow(normalized_path,
+> +			    strbuf_avail(normalized_path) + reserve);
+> +	}
+> +
+> +normalize:
+> +	strbuf_setlen(normalized_path, len);
+> +	return strbuf_normalize_path(normalized_path);
+> +}
 
-Thanks,
--Stolee
+There are Unicode pages that require quite a few more bytes per wide
+character (IIRC it can blow up to six bytes), but it should be good enough
+for now, and we can always revisit this easily enough at a later stage.
+
+I really like this patch, as it makes the complexities of handling two
+watches and the complexities of handling overlapped (and asynchronous)
+results look easy.
+
+Thank you!
+Dscho
