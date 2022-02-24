@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B80D1C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 20:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D778EC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 20:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234366AbiBXUjZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 15:39:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51408 "EHLO
+        id S232307AbiBXUj1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 15:39:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234354AbiBXUjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 15:39:14 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D307B179A29
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 12:38:43 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id j22so1398101wrb.13
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 12:38:43 -0800 (PST)
+        with ESMTP id S234360AbiBXUjT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 15:39:19 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E60C179A2E
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 12:38:44 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id s13so1446635wrb.6
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 12:38:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=oPNuFQbuxhEXkfATdZeV447TAqaaEdYD+9qvHIVYfg0=;
-        b=BxIqgiMxcHrbM0K9vJQfmFGG2xqAAPc5i0ekfMe7UmvShldycvzCBAe4l+gCf279yE
-         K+ZRj0xnLYQgUfG3Rj1pYamVGjpfOpOBnbXhsvSoyG9U99zSa8ikcC2IngD0JQgHc9JZ
-         rsGSexql0URBMGxK5Y+u/xKcMSrxu6Mj1glUQfhQGMtKGhWHgc3uT59hBiu3GTOc/Dg2
-         jzlANaO8UM8K5ntmkhfnhx1iGaaWF8rIyCZAUUKX5hR1AH+UItN4g3lIfgndXpMlOmML
-         dAol8oAxcxEm2gdhKtjEU0Y9txKew+NRIh2a2DzkdThtQ6dIk+hBLY+rDM9lAZK8B5dO
-         WhuA==
+        bh=2lfdbTb1AAzLaTbrjMtrUcUXS6b8cJjnDeEf/T3l0rk=;
+        b=hWYjZ0dpe3yfKoiAfHyU2w22URYcFvHmorxJ6s8wJpmT1B3xKhq1ixAqJYWEUDwyje
+         oiKWXdqWVdztLpz4pUbPz1SCrNYF6J5K2DJXi066D02Gl4C2BPguGGYIs5SAvYtVlZ66
+         STfnsDHwJd/kiZILFnKZUwgrnN4VJ0BNUlnjjLKilmalBO1CHmxjqrbkJb/py8IfovuJ
+         1c7jwSRsFK96ko6T7C85T1otyBqvBdwfLaXaAv4Bi6WiKbbvu4xmIGAcMlFQBVLleyIG
+         Q4uTOB5EyW8Hb8X+3u0om4mRLEgxtfdSOWGP26/5cFjxmaGHzpVyxpCd96AzCaBWOVTk
+         FBRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oPNuFQbuxhEXkfATdZeV447TAqaaEdYD+9qvHIVYfg0=;
-        b=DL6WS2ezsD4v83xMBA9z9+I9LruVSh6xMFVp08VI7lkjS2VFhSaFDbhnkDAsI20wqq
-         Xi2vbssiMBEMHyRwEchJGg6GKGSqrCqL/sWSM2qZsAdWH5r0GGxVvwAvqrK2em2lkDgF
-         GUcNobPWNbyUu5lIcIRFX8jZBCnzHT4yUR2X640jPfXF+fRzzVfrA7puYOludQWtK+xw
-         Hz/WxyztjrpTsDhDb35wCuVKynwa+hs84eWs2/BpWuQ97hp0HvmMufK1RtWDKXtTL6fx
-         xmZNYgae1zsO6UNBKAOYvl/RA55O89T3Eljd/lEY11wG733TPQ3KOrqBaZtyS5QYZaY5
-         bpHg==
-X-Gm-Message-State: AOAM5333gyoZNrUsPYBk/pIqKe2++b4J8tlzftVSzn6H3NDwq52CeVsD
-        JNGuHCG1FQiFvtSh4dO0E7tc687BmSg=
-X-Google-Smtp-Source: ABdhPJx4a1vPH2nI4iJ060+NetX+V+dyMtJA7UefSpqJsWqHO9bKMPI1hSoIwu/WWR0MvKWaYnvYnA==
-X-Received: by 2002:adf:f2c9:0:b0:1e3:1cfa:551a with SMTP id d9-20020adff2c9000000b001e31cfa551amr3707291wrp.603.1645735122229;
+        bh=2lfdbTb1AAzLaTbrjMtrUcUXS6b8cJjnDeEf/T3l0rk=;
+        b=DDO4kUN8Io+pz75NOVc3CqqFtCzfaZRBI8oDXFnNXpERsMCdWNXnEHh8nKvDgTWJT2
+         Q7kKKrvOB4Xi4nIGtluKw50iWte7dBDuxW5qqvS9nDqAOc3/k4FJzbbi3c/JQVVU5yxy
+         v1OwUwAshvB4rxtmHRjfGCQtFNM6Zkmiof8rxbl/faJlqm5cuqk3G+evVsU0wv7IlD0/
+         rE1P/ypHbfyO/zZYlujtMjzP4QP4pHd7Xw6z4yjF7VxQ/fOWYBO3VdsN/5CZpbdvyqOv
+         UNX6WUgWUs2VjkHHkRW/VSsnam94Gwtha+KWV1MGGWiRKZbGa1ddHOtCETwJNQTA9RVM
+         EncA==
+X-Gm-Message-State: AOAM532mUdAI4+Quv4D5pciahZm+L2iL0c6pABrjoGZfttq8d3Fm2rRr
+        pcn3lz9FF/LmUsmkxGs3MEhUFDlWvtY=
+X-Google-Smtp-Source: ABdhPJwcU6P7JAlKQq0sr6T1menP9OkV+8g3UA8s76sDECJ1qlbRdUkG+UMJQDpaHiqYXD9b2LMx7g==
+X-Received: by 2002:adf:f988:0:b0:1ee:c6e9:1fb2 with SMTP id f8-20020adff988000000b001eec6e91fb2mr2218703wrr.696.1645735122976;
         Thu, 24 Feb 2022 12:38:42 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m18-20020a5d56d2000000b001edc00dbeeasm334871wrw.69.2022.02.24.12.38.41
+        by smtp.gmail.com with ESMTPSA id f21-20020a5d58f5000000b001ea99c3397dsm390582wrd.21.2022.02.24.12.38.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Feb 2022 12:38:41 -0800 (PST)
-Message-Id: <7f9b65bd22551fd7fd5d2f0bf18aee8c25f1db99.1645735117.git.gitgitgadget@gmail.com>
+        Thu, 24 Feb 2022 12:38:42 -0800 (PST)
+Message-Id: <28fe8824ba71ff9cda5ec5c034b6a6fb3c857654.1645735117.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1163.git.1645735117.gitgitgadget@gmail.com>
 References: <pull.1163.git.1645735117.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Feb 2022 20:38:34 +0000
-Subject: [PATCH 5/7] commit-graph: document file format v2
+Date:   Thu, 24 Feb 2022 20:38:35 +0000
+Subject: [PATCH 6/7] commit-graph: parse file format v2
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,81 +67,180 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The corrected commit date was first documented in 5a3b130ca (doc: add
-corrected commit date info, 2021-01-16) and it used an optional chunk to
-augment the commit-graph format without modifying the file format
-version.
+The commit-graph file format v2 alters how it stores the corrected
+commit date offsets within the Commit Data chunk instead of a separate
+chunk. The idea is to significantly reduce the amount of data loaded
+from disk while parsing the commit-graph.
 
-One major benefit to this approach is that corrected commit dates could
-be written without causing a backwards compatibility issue with Git
-versions that do not understand them. The topological level was still
-available in the CDAT chunk as it was before.
+We need to alter the error message when we see a file format version
+outside of our range now that multiple are possible. This has a
+non-functional side-effect of altering a use of GRAPH_VERSION within
+write_commit_graph().
 
-However, this causes a different issue: more data needs to be loaded
-from disk when parsing commits from the commit-graph. In cases where
-there is no significant algorithmic gain from using corrected commit
-dates, commit walks take up to 20% longer because of this extra data.
+By storing the file format version in 'struct commit_graph', we can
+alter the parsing code to depend on that version value. This involves
+changing where we look for the corrected commit date offset, but also
+which constants we use for jumping into the Generation Data Overflow
+chunk. The Commit Data chunk only has 30 bits available for the offset
+while the Generation Data chunk has 32 bits. This only makes a
+meaningful difference in very malformed repositories.
 
-Create a new file format version for the commit-graph format that
-differs only in the CDAT chunk: it now stores corrected commit date
-offsets. This brings our data back to normal and will demonstrate
-performance gains in almost all cases.
+Also, we need to be careful about how we enable using corrected commit
+dates and generation numbers to rely upon the read_generation_data value
+instead of a non-zero value in the Commit Date chunk. In
+generation_numbers_enabled(), the first_generation variable is
+attemptint to look for the first topological level stored to see that it
+is nonzero. However, for a v2 commit-graph, this value is actually
+likely to be zero because the corrected commit date offset is probably
+zero.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- .../technical/commit-graph-format.txt         | 22 ++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ commit-graph.c          | 43 +++++++++++++++++++++++++++++------------
+ commit-graph.h          |  6 ++++++
+ t/t5318-commit-graph.sh |  2 +-
+ 3 files changed, 38 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
-index 87971c27dd7..2cb48993314 100644
---- a/Documentation/technical/commit-graph-format.txt
-+++ b/Documentation/technical/commit-graph-format.txt
-@@ -36,7 +36,7 @@ HEADER:
-       The signature is: {'C', 'G', 'P', 'H'}
+diff --git a/commit-graph.c b/commit-graph.c
+index b86a6a634fe..366fc4d6e41 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -49,7 +49,9 @@ void git_test_write_commit_graph_or_die(void)
+ #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
  
-   1-byte version number:
--      Currently, the only valid version is 1.
-+      This version number can be 1 or 2.
+ #define GRAPH_VERSION_1 0x1
+-#define GRAPH_VERSION GRAPH_VERSION_1
++#define GRAPH_VERSION_2 0x2
++#define GRAPH_VERSION_MIN GRAPH_VERSION_1
++#define GRAPH_VERSION_MAX GRAPH_VERSION_2
  
-   1-byte Hash Version
-       We infer the hash length (H) from this value:
-@@ -85,13 +85,22 @@ CHUNK DATA:
-       position. If there are more than two parents, the second value
-       has its most-significant bit on and the other bits store an array
-       position into the Extra Edge List chunk.
--    * The next 8 bytes store the topological level (generation number v1)
--      of the commit and
--      the commit time in seconds since EPOCH. The generation number
--      uses the higher 30 bits of the first 4 bytes, while the commit
-+    * The next 8 bytes store the generation number information of the
-+      commit and the commit time in seconds since EPOCH. The generation
-+      number uses the higher 30 bits of the first 4 bytes, while the commit
-       time uses the 32 bits of the second 4 bytes, along with the lowest
-       2 bits of the lowest byte, storing the 33rd and 34th bit of the
-       commit time.
-+      - If the commit-graph file format is version 1, then the higher 30
-+	bits contain the topological level (generation number v1) for the
-+	commit.
-+      - If the commit-graph file format is version 2, then the higher 30
-+	bits contain the corrected commit date offset (generation number
-+	v2) for the commit, except if the offset cannot be stored within
-+	29 bits. If the offset is too large for 29 bits, then the value
-+	stored here has its most-significant bit on and the other bits
-+	store the position of the corrected commit date in the Generation
-+	Date Overflow chunk.
+ #define GRAPH_EXTRA_EDGES_NEEDED 0x80000000
+ #define GRAPH_EDGE_LAST_MASK 0x7fffffff
+@@ -63,6 +65,7 @@ void git_test_write_commit_graph_or_die(void)
+ 			+ GRAPH_FANOUT_SIZE + the_hash_algo->rawsz)
  
-   Generation Data (ID: {'G', 'D', 'A', 'T' }) (N * 4 bytes) [Optional]
-     * This list of 4-byte values store corrected commit date offsets for the
-@@ -103,6 +112,9 @@ CHUNK DATA:
-     * Generation Data chunk is present only when commit-graph file is written
-       by compatible versions of Git and in case of split commit-graph chains,
-       the topmost layer also has Generation Data chunk.
-+    * This chunk does not exist if the commit-graph file format version is 2,
-+      because the corrected commit date offset data is stored in the Commit
-+      Data chunk.
+ #define CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW (1ULL << 31)
++#define CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW_V3 (1ULL << 29)
  
-   Generation Data Overflow (ID: {'G', 'D', 'O', 'V' }) [Optional]
-     * This list of 8-byte values stores the corrected commit date offsets
+ /* Remember to update object flag allocation in object.h */
+ #define REACHABLE       (1u<<15)
+@@ -358,9 +361,10 @@ struct commit_graph *parse_commit_graph(struct repository *r,
+ 	}
+ 
+ 	graph_version = *(unsigned char*)(data + 4);
+-	if (graph_version != GRAPH_VERSION) {
+-		error(_("commit-graph version %X does not match version %X"),
+-		      graph_version, GRAPH_VERSION);
++	if (graph_version < GRAPH_VERSION_MIN ||
++	    graph_version > GRAPH_VERSION_MAX) {
++		error(_("commit-graph version %X is not understood"),
++		      graph_version);
+ 		return NULL;
+ 	}
+ 
+@@ -375,6 +379,7 @@ struct commit_graph *parse_commit_graph(struct repository *r,
+ 
+ 	graph = alloc_commit_graph();
+ 
++	graph->version = graph_version;
+ 	graph->hash_len = the_hash_algo->rawsz;
+ 	graph->num_chunks = *(unsigned char*)(data + 6);
+ 	graph->data = graph_map;
+@@ -402,13 +407,17 @@ struct commit_graph *parse_commit_graph(struct repository *r,
+ 	pair_chunk(cf, GRAPH_CHUNKID_EXTRAEDGES, &graph->chunk_extra_edges);
+ 	pair_chunk(cf, GRAPH_CHUNKID_BASE, &graph->chunk_base_graphs);
+ 
+-	if (get_configured_generation_version(r) >= 2) {
+-		pair_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA,
+-			&graph->chunk_generation_data);
++	if (graph_version >= GRAPH_VERSION_2 ||
++	    get_configured_generation_version(r) >= 2) {
++		/* Skip this chunk if GRAPH_VERSION_2 or higher. */
++		if (graph_version == GRAPH_VERSION_1)
++			pair_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA,
++				   &graph->chunk_generation_data);
+ 		pair_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW,
+ 			&graph->chunk_generation_data_overflow);
+ 
+-		if (graph->chunk_generation_data)
++		if (graph_version >= GRAPH_VERSION_2 ||
++		    graph->chunk_generation_data)
+ 			graph->read_generation_data = 1;
+ 	}
+ 
+@@ -683,6 +692,9 @@ int generation_numbers_enabled(struct repository *r)
+ 	if (!g->num_commits)
+ 		return 0;
+ 
++	if (g->version >= GRAPH_VERSION_2)
++		return g->read_generation_data;
++
+ 	first_generation = get_be32(g->chunk_commit_data +
+ 				    g->hash_len + 8) >> 2;
+ 
+@@ -799,13 +811,20 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
+ 	item->date = (timestamp_t)((date_high << 32) | date_low);
+ 
+ 	if (g->read_generation_data) {
+-		offset = (timestamp_t)get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
++		timestamp_t overflow_bit;
++		if (g->version == GRAPH_VERSION_2) {
++			offset = (timestamp_t)(get_be32(commit_data + g->hash_len + 8) >> 2);
++			overflow_bit = CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW_V3;
++		} else {
++			offset = (timestamp_t)get_be32(g->chunk_generation_data + sizeof(uint32_t) * lex_index);
++			overflow_bit = CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW;
++		}
+ 
+-		if (offset & CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW) {
++		if (offset & overflow_bit) {
+ 			if (!g->chunk_generation_data_overflow)
+ 				die(_("commit-graph requires overflow generation data but has none"));
+ 
+-			offset_pos = offset ^ CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW;
++			offset_pos = offset ^ overflow_bit;
+ 			graph_data->generation = item->date + get_be64(g->chunk_generation_data_overflow + 8 * offset_pos);
+ 		} else
+ 			graph_data->generation = item->date + offset;
+@@ -1917,7 +1936,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 
+ 	hashwrite_be32(f, GRAPH_SIGNATURE);
+ 
+-	hashwrite_u8(f, GRAPH_VERSION);
++	hashwrite_u8(f, GRAPH_VERSION_1);
+ 	hashwrite_u8(f, oid_version());
+ 	hashwrite_u8(f, get_num_chunks(cf));
+ 	hashwrite_u8(f, ctx->num_commit_graphs_after - 1);
+diff --git a/commit-graph.h b/commit-graph.h
+index 04a94e18302..b379b8eae25 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -63,6 +63,12 @@ struct commit_graph {
+ 	const unsigned char *data;
+ 	size_t data_len;
+ 
++	/**
++	 * The 'version' byte mirrors the file format version. This is
++	 * necessary to consider when parsing commits.
++	 */
++	unsigned version;
++
+ 	unsigned char hash_len;
+ 	unsigned char num_chunks;
+ 	uint32_t num_commits;
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 5e4b0216fa6..a14a13e5f7b 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -605,7 +605,7 @@ test_expect_success 'detect bad signature' '
+ '
+ 
+ test_expect_success 'detect bad version' '
+-	corrupt_graph_and_verify $GRAPH_BYTE_VERSION "\02" \
++	corrupt_graph_and_verify $GRAPH_BYTE_VERSION "\03" \
+ 		"graph version"
+ '
+ 
 -- 
 gitgitgadget
 
