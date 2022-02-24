@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E60DFC433EF
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 22:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA0DFC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 22:34:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235545AbiBXWfQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 17:35:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49594 "EHLO
+        id S235548AbiBXWfT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 17:35:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235528AbiBXWfL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 17:35:11 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA491E0170
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 14:34:38 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id d17so1781255wrc.9
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 14:34:38 -0800 (PST)
+        with ESMTP id S235529AbiBXWfM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 17:35:12 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 846761ED4D7
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 14:34:40 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id b5so1830622wrr.2
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 14:34:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=mKHL2nL51eB+mDp6PJ2T49JTazVcHNXbFerl3otKkM4=;
-        b=XlYZzCdLQvLIxS4h1c9LsZDGu2yHgN2+C5Dq3KLIZlJfFePKTyJw9OWWMW0G+nJ4S2
-         J+sMIksTNk4QRxIoyg8UIWJCBjCRgJ0sWRgqYjLXjvvyiEQd6LlYyuY45ORlloBrMr7z
-         K6/Bo1IaOTt8ujfVs+qD0+gNAWf53UIvCcPbh+V9ptUpr2XVCJEQd+/3nejnl1D6RcU7
-         BvLo0O6TdYA2DM0okr9bvcxaAGtR2ET+yGjscdMSev0nV8iUntshd89ZBL2yMkAI3eZv
-         jxWkIrRypDpIomhtiOhslo7ViH4OIVGfPH8EaXpeNYgACvi8w6Y3Xep/JGwMlpXKI1Pu
-         cw1A==
+        bh=fqoCza8Vg8xn4hC9kZQfbeXf7/jb1S/78yAQODWVUcE=;
+        b=HkIShwSy4FAXA03ZT8nxgHsYYSi0XePdBllySv5r9n9ZxqkqYw6dP0VUTO/Lel5ufs
+         xArEulLXR4nZjvoFFFJxRZYbf6MbyhkRaG8rfl8ERanxgGemLfz4iDLAUYWMJmX278pG
+         1GGnX3t8bsXcOSXtrTpzXidwxMnWIW/db3tqqRNTFu6kzk5e8qjb2vzqtnFCLgbZb4QF
+         xiSTE3qqYQFRupT0Iu8jKFpAuZqa2cWV0xNtPvVJoPKjLByZVuSFIvj8ghJysbZzyar8
+         YTxyRorKProvHIzj29y9twYAtUtFjGeJQeWrIjRxkgZvs3/ICNxow20LTO3nLjWgf/C2
+         WfjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=mKHL2nL51eB+mDp6PJ2T49JTazVcHNXbFerl3otKkM4=;
-        b=vkKHiZ7wuaYhxQWbGKfL05tpSbpm8sO6dbRkzTUxyEnHGlFimzu7ZfFjvjPe1hHvQP
-         y/+Wdhig2G2XHL3UH/MLrs38e1H0UD/DJCtlHRPH6MFtqZjnCIo5/SpcKrFiTWopKDXX
-         0TRwyKJ/6MwXVriwrTvgze83uwoI/eNR8tAfwxSoXNqnNyUnHeZ34GWFaqBdbuyKAWZF
-         ZGim6SvcL3cqzU+G2bTKA8M4OqFYB+LU60KMkd82jmziSQoxIqFY6WHld5ogi01A3Uub
-         sWUlRsR3oWJ0C5EWNiZ2dyjjcz0YB8d4iQ3+xKVETGXdsh5o/wMWZuJZOLJFSIsHaQIm
-         I3nQ==
-X-Gm-Message-State: AOAM5305IcPmuc40Yks8/PIYJThkk4yr+olENc+Q030x29cvFGsQRYUW
-        HcYsywhmABDlvjGipqR56TFdq2QCrss=
-X-Google-Smtp-Source: ABdhPJw6kaNDhFSS7iXga+SPxQTT7zIWuc+RxLU4qDEFGaWUhzcu2rvi3ybp8KqJs6d0imryO5Otwg==
-X-Received: by 2002:a05:6000:1541:b0:1e8:30f7:b3f0 with SMTP id 1-20020a056000154100b001e830f7b3f0mr3743204wry.578.1645742076553;
-        Thu, 24 Feb 2022 14:34:36 -0800 (PST)
+        bh=fqoCza8Vg8xn4hC9kZQfbeXf7/jb1S/78yAQODWVUcE=;
+        b=p9vQEH6mHUDH8QRtKBz8hAszYB4J/IptQnd/H0tKqKrH3T0GyEYSgmGV8pd+vP/5JB
+         3PMHasK3x7QBuzvm51RPBMeoxoyoduhTYKwRSgEsFvlPFgdjX0fnqdl9L2y2MJ+3d9ti
+         kGP00VgtC3HZUnUR39r8irNaZvJoNY3FNp8t1G1RVjQPjEgvekDrJJjJQrTYwKXQOI1z
+         90tC9XlcZSwMGM827Wz0llrehqE5zNAeSCR//kc3mf3rw5Q/q7VdiULcfFN8AfH2XEHa
+         aC3+qdNU1q5oFBxkm43Ga2X/B7Yh9feZhOlRPV9jmYO39OugHD+DP0juFYwTPwG40oFP
+         ZOqg==
+X-Gm-Message-State: AOAM533HgE8RJVAsFmOydrypu7Ng6I00p6I4bdKZFFQ8+SHkSf3sRz6d
+        7iRpXA7KB31hK8uuHO3oID9Aqc0GTiE=
+X-Google-Smtp-Source: ABdhPJwl0699XcHcpGQyYfypld66O+dyECrQ0Val0Z7IJTn37QUTz1OQc027kW09PkTi0uACcAsvMw==
+X-Received: by 2002:adf:e6c7:0:b0:1ed:9f7c:c99e with SMTP id y7-20020adfe6c7000000b001ed9f7cc99emr3803525wrm.0.1645742078883;
+        Thu, 24 Feb 2022 14:34:38 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z5-20020adfdf85000000b001e713f774d3sm555634wrl.61.2022.02.24.14.34.35
+        by smtp.gmail.com with ESMTPSA id x11-20020adfdccb000000b001e57922b8b6sm561880wrm.43.2022.02.24.14.34.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Feb 2022 14:34:36 -0800 (PST)
-Message-Id: <f0cff03b95d574dff414a63325a0f1c6d2d1ff96.1645742073.git.gitgitgadget@gmail.com>
+        Thu, 24 Feb 2022 14:34:38 -0800 (PST)
+Message-Id: <4f05fa70209768fb20284bd4018a1364567cad5a.1645742073.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
 References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
         <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Feb 2022 22:34:28 +0000
-Subject: [PATCH v2 2/7] status: fix nested sparse directory diff in sparse
- index
+Date:   Thu, 24 Feb 2022 22:34:31 +0000
+Subject: [PATCH v2 5/7] read-tree: narrow scope of index expansion for
+ '--prefix'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,97 +69,96 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Add the 'recursive' flag to 'wt_status_collect_changes_index(...)'. Without
-the 'recursive' flag, 'git status' could report index changes incorrectly
-when the following conditions were met:
+When 'git read-tree' is provided with a prefix, expand the index only if the
+prefix is equivalent to a sparse directory or contained within one. If the
+index is not expanded in these cases, 'ce_in_traverse_path' will indicate
+that the relevant sparse directory is not in the prefix/traverse path,
+skipping past it and not unpacking the appropriate tree(s).
 
-* sparse index is enabled
-* there is a difference between the index and HEAD in a file inside a
-  *subdirectory* of a sparse directory
-* the sparse directory index entry is *not* expanded in-core
-
-In this scenario, 'git status' would not recurse into the sparse directory's
-subdirectories to identify which file contained the difference between the
-index and HEAD. Instead, it would report the immediate subdirectory itself
-as "modified".
-
-Example:
-
-$ git init
-$ mkdir -p sparse/sub
-$ echo test >sparse/sub/foo
-$ git add .
-$ git commit -m "commit 1"
-$ echo somethingelse >sparse/sub/foo
-$ git add .
-$ git commit -a -m "commit 2"
-$ git sparse-checkout set --cone --sparse-index 'sparse'
-$ git reset --soft HEAD~1
-$ git status
-On branch master
-You are in a sparse checkout.
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        modified:   sparse/sub
-
-The 'recursive' diff option in 'wt_status_collect_changes_index' corrects
-this by indicating that 'git status' should recurse into sparse directories
-to find modified files. Given the same repository setup as the example
-above, the corrected result of `git status` is:
-
-$ git status
-On branch master
-You are in a sparse checkout.
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        modified:   sparse/sub/foo
+If the prefix is in-cone, its sparse subdirectories (if any) will be
+traversed correctly without index expansion.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 7 +++++++
- wt-status.c                              | 9 +++++++++
- 2 files changed, 16 insertions(+)
+ builtin/read-tree.c                      |  3 +--
+ t/t1092-sparse-checkout-compatibility.sh |  8 ++++++-
+ unpack-trees.c                           | 30 ++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+), 3 deletions(-)
 
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index c2fdbc2657f..a7b7f822281 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -213,8 +213,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+ 	if (opts.merge && !opts.index_only)
+ 		setup_work_tree();
+ 
+-	/* TODO: audit sparse index behavior in unpack_trees */
+-	if (opts.skip_sparse_checkout || opts.prefix)
++	if (opts.skip_sparse_checkout)
+ 		ensure_full_index(&the_index);
+ 
+ 	if (opts.merge) {
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 9ef7cd80885..b1dcaa0e642 100755
+index ae44451a0a9..a404be0a10f 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -278,6 +278,13 @@ test_expect_success 'status with options' '
- 	test_all_match git status --porcelain=v2 -uno
+@@ -1415,7 +1415,13 @@ test_expect_success 'sparse index is not expanded: read-tree' '
+ 	do
+ 		ensure_not_expanded read-tree -mu $MERGE_TREES &&
+ 		ensure_not_expanded reset --hard HEAD || return 1
+-	done
++	done &&
++
++	rm -rf sparse-index/deep/deeper2 &&
++	ensure_not_expanded add . &&
++	ensure_not_expanded commit -m "test" &&
++
++	ensure_not_expanded read-tree --prefix=deep/deeper2 -u deepest
  '
  
-+test_expect_success 'status with diff in unexpanded sparse directory' '
-+	init_repos &&
-+	test_all_match git checkout rename-base &&
-+	test_all_match git reset --soft rename-out-to-out &&
-+	test_all_match git status --porcelain=v2
-+'
-+
- test_expect_success 'status reports sparse-checkout' '
- 	init_repos &&
- 	git -C sparse-checkout status >full &&
-diff --git a/wt-status.c b/wt-status.c
-index 335e723a71e..4a5b9beeca1 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -651,6 +651,15 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- 	rev.diffopt.detect_rename = s->detect_rename >= 0 ? s->detect_rename : rev.diffopt.detect_rename;
- 	rev.diffopt.rename_limit = s->rename_limit >= 0 ? s->rename_limit : rev.diffopt.rename_limit;
- 	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
-+
+ test_expect_success 'ls-files' '
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 360844bda3a..dba122a02bb 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1739,6 +1739,36 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		setup_standard_excludes(o->dir);
+ 	}
+ 
 +	/*
-+	 * The `recursive` option must be enabled to show differences in files
-+	 * *more than* one level deep in a sparse directory index entry (e.g., given
-+	 * sparse directory 'sparse-dir/', reporting a difference in the file
-+	 * 'sparse-dir/another-dir/my-file').
++	 * If the prefix is equal to or contained within a sparse directory, the
++	 * index needs to be expanded to traverse with the specified prefix.
 +	 */
-+	rev.diffopt.flags.recursive = 1;
++	if (o->prefix && o->src_index->sparse_index) {
++		int prefix_len = strlen(o->prefix);
 +
- 	copy_pathspec(&rev.prune_data, &s->pathspec);
- 	run_diff_index(&rev, 1);
- 	object_array_clear(&rev.pending);
++		while (prefix_len > 0 && o->prefix[prefix_len - 1] == '/')
++			prefix_len--;
++
++		if (prefix_len > 0) {
++			struct strbuf ce_prefix = STRBUF_INIT;
++			strbuf_grow(&ce_prefix, prefix_len + 1);
++			strbuf_add(&ce_prefix, o->prefix, prefix_len);
++			strbuf_addch(&ce_prefix, '/');
++
++			/*
++			 * If the prefix is not inside the sparse cone, then the
++			 * index is explicitly expanded if it is found as a sparse
++			 * directory, or implicitly expanded (by 'index_name_pos')
++			 * if the path is inside a sparse directory.
++			 */
++			if (!path_in_cone_mode_sparse_checkout(ce_prefix.buf, o->src_index) &&
++			    index_name_pos(o->src_index, ce_prefix.buf, ce_prefix.len) >= 0)
++				ensure_full_index(o->src_index);
++
++			strbuf_release(&ce_prefix);
++		}
++	}
++
+ 	if (!core_apply_sparse_checkout || !o->update)
+ 		o->skip_sparse_checkout = 1;
+ 	if (!o->skip_sparse_checkout && !o->pl) {
 -- 
 gitgitgadget
 
