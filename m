@@ -2,97 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8DB3C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 19:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D783C4332F
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 19:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233837AbiBXTXE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 14:23:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56812 "EHLO
+        id S233961AbiBXTjL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 14:39:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233784AbiBXTWz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 14:22:55 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E259FEFFB5
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 11:22:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645730535;
-        bh=ddlnIZosXDPxq9tY1mN6hMQztahOvtD1sxpBeHqOucI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=fqbVPKLz8U0pd/0D48FXBIWCEowuw3JKRp2AV2FpMVOPPpnscjuQ+H/vInw1HQF0I
-         fTcAqnLiuv5ka1Swtup/P9afNatm0BFDR9Wo60JQwG017Iki2M8X9WMpZkouj3bvGt
-         oA54tE6tkGsZ6qTEQ0G2s9grahPevPBvfA7WzNC8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8GQy-1oIK5X0XxY-014Eyf; Thu, 24
- Feb 2022 20:22:15 +0100
-Date:   Thu, 24 Feb 2022 20:22:13 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH 00/12] c99: use more designated initializers
-In-Reply-To: <cover-00.12-00000000000-20220224T092805Z-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202242017590.11118@tvgsbejvaqbjf.bet>
-References: <cover-00.12-00000000000-20220224T092805Z-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S231497AbiBXTjK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 14:39:10 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DFD51E1486
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 11:38:40 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F33D21748F9;
+        Thu, 24 Feb 2022 14:38:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Y+DnMGAKT2y33LD2Rl4loMd7QepUJwy9tMNYkw
+        88sjg=; b=KjnsObAuM+jI7xQIAv6OdLlo5Mb5AtvnNcYD7El2IzwU1TZWKLX6gY
+        fwvkxR5REzvHmhK4Fbr43QnqVN8/Emd4/EUkKAy2cFLUWD6i8MQZWf8E3IKaXUVd
+        zBPQm0YqTosJldua6mOfKU42ucVBjdw07jSiE83l1yqMgmK4ln1aQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EBE201748F6;
+        Thu, 24 Feb 2022 14:38:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5FBA51748F4;
+        Thu, 24 Feb 2022 14:38:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Tao Klerks <tao@klerks.biz>
+Subject: Re: [PATCH 3/3] branch documentation: new autosetupmerge option
+ "simple"
+References: <pull.1161.git.1645695940.gitgitgadget@gmail.com>
+        <39c14906e7b65843c2543682bb577c6a2253240a.1645695940.git.gitgitgadget@gmail.com>
+Date:   Thu, 24 Feb 2022 11:38:36 -0800
+In-Reply-To: <39c14906e7b65843c2543682bb577c6a2253240a.1645695940.git.gitgitgadget@gmail.com>
+        (Tao Klerks via GitGitGadget's message of "Thu, 24 Feb 2022 09:45:40
+        +0000")
+Message-ID: <xmqq1qzsm4w3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-731122540-1645730535=:11118"
-X-Provags-ID: V03:K1:d/D3jIoE208gmmiqpZkkxbEXtBY/hwVxF6BDB9A36dCrQxpmaVL
- SDUX+QA5rGAGwx/OMYzrhY79IIV/N7dZRnrY2IJUKY0KxBaNWaKSnGKxLbiz41Urhgz0pGy
- llSVqHcEdCtUMDAJJxo58wLh0LXJtRHzkae+WuS6NBDgeTjJ7HtVDNXOaSr2DgiNbfU9pkz
- xfQwWSQ2k5DBwI3lxJqKQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ssDQVkyd3bc=:zaxeNmVxl9ccSpZiwrecyg
- 7EOv+v/Jl3OpnKspZ19KzmTQ4EaMjGlY+fvR8m48Sovcmwo2lbRa/Prhbn4FmwSgrZOUmhkTe
- hje1RrE2sBNh1ao+4rdqFo6FykRPUToUu74TV5btS5EwrSbEHB49IF0fTKoeisA2HIkItU2dy
- mBz1MAB/4VXS2zQhUH3n0G2KKcegBGjMdk7N/lCS6gPyYMdXoWl8gCOlsyb6yKATF6qJ0ykVT
- fgH5bbC2IhVaf1EDUKUtkbipfBq7igydbMhjxaKzfNmADz15mXW6XOZ565vtyZK+C3mepIftn
- h7CGj3ADf4qcGEoUQgQoA+yotVYfWs+XZAqOnZcx+YZYu44mVL9JQf1DUupOR6wfL8tHV0TqW
- WaHJEJeuTZYigLlA1+qLYgd9RNRqxu7EcCcc/bnwi7KfroLCOWhcJu7XgIgewahKLo496f/rK
- lHw/uk09AQ8RzwkFtql70os7eX8LY7MJ+kBV2cBpW9z3gZm4JgjFDqtQNCjuGQlBI7PqlTRff
- 1ogMT3uL5Cd8lefslipKbE9uY5Tpa1zj2jLhHDtLWCN2N4ZDbcxQlIoy44bvTEX0yCYbTJDHs
- 3x3ATC6Cyr6zU1zT9Ha8RbgHVtvVAHxjCLkodL6cSzdAVM5kCL4ifMTrPTNa3QFYPkbZnkZcG
- utFeeMuAgyqA8u0FflGuONjQdytIR6sRZ5MYSUEAveyCj9sOXcrLrEAeoLdk3gBBjaRt8A8fM
- ykz7zZjmjCunqLlUWOg5C64pnWBCyte0ZaKns66D7WWp0kczAH1YZ8UeJ7qhOGmvZGb6ht9ba
- U+fAU7/jvtXVOnZ0M8sNJyr/P9CCjjr2puYQYr+svbwfDAQlQ+SYiHY/HJFF9WsujXAum8qQa
- 56ITmCrewnZO8wplk0Z+PErfaYWvG2ifjHq6AvSCTL/Eo86W/8BUpajtEEK0iRkwo6vT2TiPS
- mSDmpKoJXSZ9fuzC5UhFqN+ZAXPdNGcnocepaQk6Cr9hBO+/Fm42IU6N0MkAmXs6ZJUAPgi/z
- r9qTLpkLVq7epSJ3ei24iF43m4/xceXpwO279s68RDF0bl+stiGCpHu15Bk9o2exf438Znvvd
- ukxoQcITctav/4=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5C69B624-95A9-11EC-AC88-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+"Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---8323328-731122540-1645730535=:11118
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> From: Tao Klerks <tao@klerks.biz>
+>
+> Updating the branch and config documentation to reflect
+> the new "simple" option to branch.autosetupmerge.
 
-Hi =C3=86var,
+Documentation/Submittingpatches[[describe-changes]].
 
-On Thu, 24 Feb 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+But it would be moot; these changes are better done as part of [1/3]
+and in that case, updating the documentation (or testing the desired
+behaviour, for that matter) is not something we need to justify
+separately.  It is something we must done as part of the change.
 
-> A follow-up to 404c4a54624 (Merge branch 'ab/designated-initializers',
-> 2021-10-11) and a4b9fb6a5cf (Merge branch
-> 'ab/designated-initializers-more', 2021-10-18). These code readability
-> improvements are something we can allow ourselves now that we have a
-> hard dependency on C99.
+> diff --git a/Documentation/config/branch.txt b/Documentation/config/branch.txt
+> index 1e0c7af014b..7b4e5ca5b74 100644
+> --- a/Documentation/config/branch.txt
+> +++ b/Documentation/config/branch.txt
+> @@ -9,7 +9,9 @@ branch.autoSetupMerge::
+>  	automatic setup is done when the starting point is either a
+>  	local branch or remote-tracking branch; `inherit` -- if the starting point
+>  	has a tracking configuration, it is copied to the new
+> -	branch. This option defaults to true.
+> +	branch; `simple` -- automatic setup is done when the starting point is
 
-This is probably a bit premature given that we still are treating the
-C99-isms as weather balloons. The idea was to keep things in an
-easily-revertable state for at least a couple of major versions.
+It may be clearer to say "done only when".  I dunno.
 
-The referenced changes are only in core Git as of v2.34.0, and we are not
-even half-way through the v2.36.0 cycle.
+> +	a remote-tracking branch and the new branch has the same name as the
+> +	remote branch. This option defaults to true.
 
-Do not get me wrong, I have nothing against this living in `seen` for now,
-but it should wait before it advances, probably at least until v2.36.0 if
-not v2.37.0.
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> index c8b4f9ce3c7..f99d6a6b008 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> @@ -227,7 +227,9 @@ want `git switch`, `git checkout` and `git branch` to always behave as if `--no-
+>  were given. Set it to `always` if you want this behavior when the
+>  start-point is either a local or remote-tracking branch. Set it to
+>  `inherit` if you want to copy the tracking configuration from the
+> -branch point.
+> +branch point. Set it to `simple` if you want this behavior only when
+> +the start-point is a remote branch and the new branch has the same name
+> +as the remote branch.
 
-Ciao,
-Johannes
+The existing "if you want this behaviour when" is already awkward.
+What it means is that only those who want to use the "start-point"
+itself as the upstream whether the start-point is local or
+remote-tracking,can use "always" and does not get hurt.
 
---8323328-731122540-1645730535=:11118--
+But using the phrase for "simple" makes it even worse, as the
+condition that the tracking behaviour kicks in is even narrower.  If
+you know that start-point is not a remote-tracking branch (by the
+way, do not say "remote branch" when you mean "remote-tracking
+brnach"), or its name is not the same as the local branch, you just
+do not pass --track=simple from the command line.  Strike everything
+after "Set it to `simple`" and replace with something like
+
+    `--track=simple` sets up the upstream information only when the
+    start-point is a remote-tracking branch and ...
+
+perhaps?
+
+Thanks.
