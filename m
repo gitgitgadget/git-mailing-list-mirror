@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58FC8C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 05:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33B8BC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 05:47:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230372AbiBXFsF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 00:48:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58204 "EHLO
+        id S230378AbiBXFsL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 00:48:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229786AbiBXFsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 00:48:04 -0500
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A50816BCE4
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 21:47:35 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id c9so833521pll.0
-        for <git@vger.kernel.org>; Wed, 23 Feb 2022 21:47:35 -0800 (PST)
+        with ESMTP id S230375AbiBXFsJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 00:48:09 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C9C71C887E
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 21:47:38 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id e13so804063plh.3
+        for <git@vger.kernel.org>; Wed, 23 Feb 2022 21:47:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LaghvTKVuxaxh8MsTeOjjXrZgUTP2ThDdUBjs8+u1Ys=;
-        b=hjyQkb+ZS0tEsvn275vLIHYiBI0H0EGTKM1fJAg4fQxCaktuljDW5nDV1vSx8OEBDv
-         hT4+h/WOyxgOChruC8SpSkbjTax1u0hanKh+HyWUDtLfmh1e3lcDQu+9HVqGuhZ2p/S3
-         3Ng43bcav5mvCuF1VJwC0GaWFI9u520iY9hcVLkEcAk9QZK9gWOaEL/OkZl1T517MjBa
-         0ncP3y++CtHH07D0r59AcQ12s9UrpV7VVGPnqWdDFBH0gVsFG1A8H1poS8CdVEONg5ad
-         Andd6+AY4dxKL9p6n6b+ZYnBpGljTViCWbts2dLXpwykeBJ/zgsD1cTYAKlLOKBEwUT1
-         wnow==
+        bh=NLg00uUzPPA27CeESJ9fFzVnompV9hZH8ZL3j/6cjCo=;
+        b=FwwkNicqQ5YV0puRNfb0c3bwfraxc+vrKlNyk6Oc2tMoZKSwc4RnWCKXtAUUplHvIL
+         SJ5nfIC7fnKoLl5TZg+HR8CHSY62X/DxCeY3QS4JajrO3J5et1pNHvAOEae7G6n403Ac
+         8HPHF5XbhS/oM0gLJce/pyjEOcCoFjjkyXmHDa7hCwBnJJvHTFwRleDAZMCBWT84p2qA
+         bABIOkUL6fU0Xq/xKKb8t3PDgHby2bY7KAWcge1eDxdJCa04dbepWhOvKudb00fu4nZK
+         41TBYMXff7T6xjmM2Iwrxf9DE37i79mrYNa+EZIOVAKXGYwoxgt9sFHgeWrvdXmTgBVx
+         KLrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LaghvTKVuxaxh8MsTeOjjXrZgUTP2ThDdUBjs8+u1Ys=;
-        b=OKCUMJcfarUKaPN/cB5BDQrVQylRt/ZlPBwimNwEpK4waOMPvFtEQlIuRr6nIvKhyE
-         c7FUfhQtGK5iAAP6No0mX71mmN74Rzh8DDdnq15F7WZK8ovhLLQTdGxCX4zuJ31tDyil
-         r7k9uVgm3s5EfT+znZO+5cA9tJ8Fc9e5PxjjjisiShkd8Jp2G4cz54pYOqZGz2yzSMf9
-         /8nf2WjhKh9Mgd/6B2k5U7vHBbmrzjzr0DDtpi74ekJPANDZqcdX3p6BvE9I7KbFO1Vw
-         fJsSn9F5gm2IXYA0VwgxYBcHpjipIiej4FRIYdBM5Yrxjv3EBbMiSN1VsyMRBabc2x6w
-         9Jyw==
-X-Gm-Message-State: AOAM533uMy0PuAsa22ptEeRmz14R+NK5icDVZW1V3Wt7lXCtm8u5vT6y
-        tx/8OxfeGdrWYkpMnZhUJxb7ZDC16ADaboXMUJ0=
-X-Google-Smtp-Source: ABdhPJxAqMMMc0vI9aEW5TAR7Z2gfRXYeF1Qouhpd9wmbbZJPxAHs/eCf1qAxL44AxceDM2gadqIIA==
-X-Received: by 2002:a17:902:ab92:b0:14d:8c80:dbff with SMTP id f18-20020a170902ab9200b0014d8c80dbffmr1007306plr.89.1645681654742;
-        Wed, 23 Feb 2022 21:47:34 -0800 (PST)
+        bh=NLg00uUzPPA27CeESJ9fFzVnompV9hZH8ZL3j/6cjCo=;
+        b=r6FZeNp/LCtlo/P3Jsk2v33Nef1ZM/bOYErv1L4HakNCWaPQQCPyZHznT8URU9HwGv
+         YKoaFhdZc7lmhwGzaWUKjF9Hp7UeXych1XwhAZKKSWfAyidjRZRPpO/0P1BwjGYWrnFf
+         H7GAViYOfaAXsKM/IaXab38jMVKWRYEVOibyOZ1egC1JVeSonX7G/T1ey2oXYb6f23y7
+         ZhOwOyFX3ZZ2JdSOKHkIUyNsNEBcwZzBuisu0akjC0iTDzdZ6CsLQIeyhf1pN889gmzo
+         RDnfwLtp8oXVr8kqFGIaVGa+mXY0R9Isuy6rqaGFBehGqH8DexC5VTnXTUMA8kbdjsWP
+         8KwQ==
+X-Gm-Message-State: AOAM532hDN51synMt/Xk2x+9UT4+L5qwu+9QF/83DVYyOtZtIecszsX5
+        FiEjjqPubGWjyAJeocB7wX8epascjDP2ANq4g3g=
+X-Google-Smtp-Source: ABdhPJx6TT+CCHkAtby6rh/P//wdDXkkQJI+8R02eTBeOkmMCA30tSrkuP9PP2npCP/KKVey9WhNug==
+X-Received: by 2002:a17:902:f785:b0:14d:d2b6:b7c with SMTP id q5-20020a170902f78500b0014dd2b60b7cmr1034092pln.68.1645681657261;
+        Wed, 23 Feb 2022 21:47:37 -0800 (PST)
 Received: from DESKTOP-MEF584H.localdomain ([103.108.4.99])
-        by smtp.gmail.com with ESMTPSA id f12sm1497817pfv.106.2022.02.23.21.47.32
+        by smtp.gmail.com with ESMTPSA id f12sm1497817pfv.106.2022.02.23.21.47.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Feb 2022 21:47:34 -0800 (PST)
+        Wed, 23 Feb 2022 21:47:36 -0800 (PST)
 From:   Shubham Mishra <shivam828787@gmail.com>
 To:     git@vger.kernel.org
 Cc:     me@ttaylorr.com, Shubham Mishra <shivam828787@gmail.com>
-Subject: [PATCH 1/2] t0001-t0028: avoid pipes with Git on LHS
-Date:   Thu, 24 Feb 2022 11:17:19 +0530
-Message-Id: <20220224054720.23996-2-shivam828787@gmail.com>
+Subject: [PATCH 2/2] t0030-t0050: avoid pipes with Git on LHS
+Date:   Thu, 24 Feb 2022 11:17:20 +0530
+Message-Id: <20220224054720.23996-3-shivam828787@gmail.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20220224054720.23996-1-shivam828787@gmail.com>
 References: <20220224054720.23996-1-shivam828787@gmail.com>
@@ -68,113 +68,139 @@ the Git output so we can test the exit code.
 
 Signed-off-by: Shubham Mishra <shivam828787@gmail.com>
 ---
- t/t0000-basic.sh            | 10 ++++++----
- t/t0022-crlf-rename.sh      |  4 ++--
- t/t0025-crlf-renormalize.sh |  4 ++--
- t/t0027-auto-crlf.sh        | 12 ++++++------
- 4 files changed, 16 insertions(+), 14 deletions(-)
+ t/t0030-stripspace.sh | 81 ++++++++++++++++++++++++++++---------------
+ t/t0050-filesystem.sh |  3 +-
+ 2 files changed, 56 insertions(+), 28 deletions(-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index b007f0efef..b5fa76059b 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -1089,7 +1089,8 @@ test_expect_success 'update-index D/F conflict' '
- 	mv path2 path0 &&
- 	mv tmp path2 &&
- 	git update-index --add --replace path2 path0/file2 &&
--	numpath0=$(git ls-files path0 | wc -l) &&
-+	git ls-files path0 >tmp &&
-+	numpath0=$(wc -l <tmp) &&
- 	test $numpath0 = 1
+diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
+index ae1ca380c1..4d0af9bf98 100755
+--- a/t/t0030-stripspace.sh
++++ b/t/t0030-stripspace.sh
+@@ -225,32 +225,48 @@ test_expect_success \
+ 
+ test_expect_success \
+     'text without newline at end should end with newline' '
+-    test $(printf "$ttt" | git stripspace | wc -l) -gt 0 &&
+-    test $(printf "$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
+-    test $(printf "$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
+-    test $(printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0
++    printf "$ttt" | git stripspace >tmp &&
++    test $(wc -l <tmp) -gt 0 &&
++    printf "$ttt$ttt" | git stripspace >tmp &&
++    test $(wc -l <tmp) -gt 0 &&
++    printf "$ttt$ttt$ttt" | git stripspace >tmp &&
++    test $(wc -l <tmp) -gt 0 &&
++    printf "$ttt$ttt$ttt$ttt" | git stripspace >tmp &&
++    test $(wc -l <tmp) -gt 0
  '
  
-@@ -1104,12 +1105,13 @@ test_expect_success 'very long name in the index handled sanely' '
- 	>path4 &&
- 	git update-index --add path4 &&
- 	(
--		git ls-files -s path4 |
--		sed -e "s/	.*/	/" |
-+		git ls-files -s path4 >tmp &&
-+		sed -e "s/	.*/	/" tmp |
- 		tr -d "\012" &&
- 		echo "$a"
- 	) | git update-index --index-info &&
--	len=$(git ls-files "a*" | wc -c) &&
-+	git ls-files "a*" >tmp &&
-+	len=$(wc -c <tmp) &&
- 	test $len = 4098
+ # text plus spaces at the end:
+ 
+ test_expect_success \
+     'text plus spaces without newline at end should end with newline' '
+-    test $(printf "$ttt$sss" | git stripspace | wc -l) -gt 0 &&
+-    test $(printf "$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
+-    test $(printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
+-    test $(printf "$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
+-    test $(printf "$ttt$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
+-    test $(printf "$ttt$sss$sss$sss" | git stripspace | wc -l) -gt 0
++    printf "$ttt$sss" | git stripspace >tmp &&
++    test $(wc -l <tmp) -gt 0 &&
++    printf "$ttt$ttt$sss" | git stripspace >tmp &&
++    test $(wc -l <tmp) -gt 0 &&
++    printf "$ttt$ttt$ttt$sss" | git stripspace >tmp &&
++    test $(wc -l <tmp) -gt 0 &&
++    printf "$ttt$sss$sss" | git stripspace >tmp &&
++    test $(wc -l <tmp) -gt 0 &&
++    printf "$ttt$ttt$sss$sss" | git stripspace >tmp &&
++    test $(wc -l <tmp) -gt 0 &&
++    printf "$ttt$sss$sss$sss" | git stripspace >tmp &&
++    test $(wc -l <tmp) -gt 0
  '
  
-diff --git a/t/t0022-crlf-rename.sh b/t/t0022-crlf-rename.sh
-index c1a331e9e9..9fe9891251 100755
---- a/t/t0022-crlf-rename.sh
-+++ b/t/t0022-crlf-rename.sh
-@@ -24,8 +24,8 @@ test_expect_success setup '
- 
- test_expect_success 'diff -M' '
- 
--	git diff-tree -M -r --name-status HEAD^ HEAD |
--	sed -e "s/R[0-9]*/RNUM/" >actual &&
-+	git diff-tree -M -r --name-status HEAD^ HEAD >tmp &&
-+	sed -e "s/R[0-9]*/RNUM/" tmp >actual &&
- 	echo "RNUM	sample	elpmas" >expect &&
- 	test_cmp expect actual
- 
-diff --git a/t/t0025-crlf-renormalize.sh b/t/t0025-crlf-renormalize.sh
-index 81447978b7..f7202c192e 100755
---- a/t/t0025-crlf-renormalize.sh
-+++ b/t/t0025-crlf-renormalize.sh
-@@ -22,8 +22,8 @@ test_expect_success 'renormalize CRLF in repo' '
- 	i/lf w/lf attr/text=auto LF.txt
- 	i/lf w/mixed attr/text=auto CRLF_mix_LF.txt
- 	EOF
--	git ls-files --eol |
--	sed -e "s/	/ /g" -e "s/  */ /g" |
-+	git ls-files --eol >tmp &&
-+	sed -e "s/	/ /g" -e "s/  */ /g" tmp |
- 	sort >actual &&
- 	test_cmp expect actual
- '
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-index c5f7ac63b0..0feb41a23f 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -311,8 +311,8 @@ checkout_files () {
- 		i/-text w/$(stats_ascii $crlfnul) attr/$(attr_ascii $attr $aeol) crlf_false_attr__CRLF_nul.txt
- 		i/-text w/$(stats_ascii $crlfnul) attr/$(attr_ascii $attr $aeol) crlf_false_attr__LF_nul.txt
- 		EOF
--		git ls-files --eol crlf_false_attr__* |
--		sed -e "s/	/ /g" -e "s/  */ /g" |
-+		git ls-files --eol crlf_false_attr__* >tmp &&
-+		sed -e "s/	/ /g" -e "s/  */ /g" tmp |
- 		sort >actual &&
- 		test_cmp expect actual
- 	'
-@@ -359,12 +359,12 @@ test_expect_success 'ls-files --eol -o Text/Binary' '
- 	i/ w/crlf TeBi_126_CL
- 	i/ w/-text TeBi_126_CLC
- 	EOF
--	git ls-files --eol -o |
-+	git ls-files --eol -o >tmp &&
- 	sed -n -e "/TeBi_/{s!attr/[	]*!!g
- 	s!	! !g
- 	s!  *! !g
- 	p
--	}" | sort >actual &&
-+	}" tmp | sort >actual &&
- 	test_cmp expect actual
+ test_expect_success \
+     'text plus spaces without newline at end should not show spaces' '
+-    ! (printf "$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
+-    ! (printf "$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
+-    ! (printf "$ttt$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
+-    ! (printf "$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
+-    ! (printf "$ttt$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
+-    ! (printf "$ttt$sss$sss$sss" | git stripspace | grep "  " >/dev/null)
++    printf "$ttt$sss" | git stripspace >tmp &&
++    ! (grep "  " tmp >/dev/null) &&
++    printf "$ttt$ttt$sss" | git stripspace &&
++    ! (grep "  " tmp >/dev/null) &&
++    printf "$ttt$ttt$ttt$sss" | git stripspace &&
++    ! (grep "  " tmp >/dev/nul) &&
++    printf "$ttt$sss$sss" | git stripspace &&
++    ! (grep "  " tmp >/dev/null) &&
++    printf "$ttt$ttt$sss$sss" | git stripspace &&
++    ! (grep "  " tmp >/dev/null) &&
++    printf "$ttt$sss$sss$sss" | git stripspace &&
++    ! (grep "  " tmp >/dev/null)
  '
  
-@@ -617,8 +617,8 @@ test_expect_success 'ls-files --eol -d -z' '
- 	i/lf w/ crlf_false_attr__LF.txt
- 	i/mixed w/ crlf_false_attr__CRLF_mix_LF.txt
- 	EOF
--	git ls-files --eol -d |
--	sed -e "s!attr/[^	]*!!g" -e "s/	/ /g" -e "s/  */ /g" |
-+	git ls-files --eol -d >tmp &&
-+	sed -e "s!attr/[^	]*!!g" -e "s/	/ /g" -e "s/  */ /g" tmp |
- 	sort >actual &&
- 	test_cmp expect actual
+ test_expect_success \
+@@ -282,12 +298,18 @@ test_expect_success \
+ 
+ test_expect_success \
+     'text plus spaces at end should not show spaces' '
+-    ! (echo "$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
+-    ! (echo "$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
+-    ! (echo "$ttt$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
+-    ! (echo "$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
+-    ! (echo "$ttt$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
+-    ! (echo "$ttt$sss$sss$sss" | git stripspace | grep "  " >/dev/null)
++    echo "$ttt$sss" | git stripspace >tmp &&
++    ! (grep "  " tmp >/dev/null) &&
++    echo "$ttt$ttt$sss" | git stripspace >tmp &&
++    ! (grep "  " tmp>/dev/null) &&
++    echo "$ttt$ttt$ttt$sss" &&
++    ! (grep "  " tmp >/dev/null) &&
++    echo "$ttt$sss$sss" | git stripspace >tmp &&
++    ! (grep "  " tmp >/dev/null) &&
++    echo "$ttt$ttt$sss$sss" | git stripspace >tmp &&
++    ! (grep "  " tmp >/dev/null) &&
++    echo "$ttt$sss$sss$sss" | git stripspace >tmp &&
++    ! (grep "  " tmp >/dev/null)
+ '
+ 
+ test_expect_success \
+@@ -339,11 +361,16 @@ test_expect_success \
+ 
+ test_expect_success \
+     'spaces without newline at end should not show spaces' '
+-    ! (printf "" | git stripspace | grep " " >/dev/null) &&
+-    ! (printf "$sss" | git stripspace | grep " " >/dev/null) &&
+-    ! (printf "$sss$sss" | git stripspace | grep " " >/dev/null) &&
+-    ! (printf "$sss$sss$sss" | git stripspace | grep " " >/dev/null) &&
+-    ! (printf "$sss$sss$sss$sss" | git stripspace | grep " " >/dev/null)
++    printf "" | git stripspace >tmp &&
++    ! ( grep " " tmp >/dev/null) &&
++    printf "$sss" | git stripspace >tmp &&
++    ! ( grep " " tmp >/dev/null) &&
++    printf "$sss$sss" | git stripspace >tmp &&
++    ! (grep " " tmp >/dev/null) &&
++    printf "$sss$sss$sss" | git stripspace >tmp &&
++    ! (grep " " tmp >/dev/null) &&
++    printf "$sss$sss$sss$sss" | git stripspace >tmp &&
++    ! (grep " " tmp >/dev/null)
+ '
+ 
+ test_expect_success \
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index afc343cf9b..5c9dc90d0b 100755
+--- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -104,7 +104,8 @@ test_expect_failure CASE_INSENSITIVE_FS 'add (with different case)' '
+ 	rm camelcase &&
+ 	echo 1 >CamelCase &&
+ 	git add CamelCase &&
+-	camel=$(git ls-files | grep -i camelcase) &&
++	git ls-files >tmp &&
++	camel=$(grep -i camelcase tmp) &&
+ 	test $(echo "$camel" | wc -l) = 1 &&
+ 	test "z$(git cat-file blob :$camel)" = z1
  '
 -- 
 2.25.1
