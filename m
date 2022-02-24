@@ -2,87 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6383FC433F5
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 21:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CB1CC433EF
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 21:42:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233266AbiBXVnO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 16:43:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38240 "EHLO
+        id S233330AbiBXVnY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 16:43:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230375AbiBXVnN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 16:43:13 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CB9A1B45C3
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 13:42:43 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2D6B11837DD;
-        Thu, 24 Feb 2022 16:42:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fMcLZHGQyLi5HAndn9judg/nRuE9VQO88BpZLn
-        9FyPM=; b=aK+S2DfaSRupAtyY6yWySKk8+aRLJJnHS6BOo6rpe/h+qIKyhRs3Lg
-        b8sUmQZVlGOSmcCnUupSzqTPwy70cYU5uNTSR3g4FmzjO2rC/ZqFr5P5QsqhVuGG
-        p75Frc/8R1uF9JUxR0HbybSnCvk19KTOxX5ePtl5aOmcMB3xR4rdk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 25A861837DC;
-        Thu, 24 Feb 2022 16:42:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 977D11837DA;
-        Thu, 24 Feb 2022 16:42:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, abhishekkumar8222@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 0/7] Commit-graph: Generation Number v2 Fixes, v3
- implementation
-References: <pull.1163.git.1645735117.gitgitgadget@gmail.com>
-Date:   Thu, 24 Feb 2022 13:42:39 -0800
-In-Reply-To: <pull.1163.git.1645735117.gitgitgadget@gmail.com> (Derrick Stolee
-        via GitGitGadget's message of "Thu, 24 Feb 2022 20:38:29 +0000")
-Message-ID: <xmqqsfs8j60g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S230375AbiBXVnX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 16:43:23 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE8B1E5001
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 13:42:53 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id iq13-20020a17090afb4d00b001bc4437df2cso3116631pjb.2
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 13:42:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=EJtmS5Q0sLZlScD2acDOkR2Tr9QldHgpNVfJ46Qxl6U=;
+        b=e3iI54D8nqd6MMF7OVQ0TvcxkQOFwmcRhNU2JdC590E514F6SA1WwwVNkfltfTtEBS
+         G+3jWzXvKAmy1RfXvbd8Yo6hfyHiv9poePYVGzmz3YglrFSFasyqtSE+pO3To/ubVmzl
+         uRCusladqIRkW4odfsKoaNXBzHGYOp20QNRfcZGtP8WR1q3Vh4oQZOm2/vimE0Gzm4v2
+         VApXoHSSCJawLn4BLRRwS1ixldDjTjgN0hQhYm61fflf43MXvRxso3g6ejcdagy5hlaR
+         yFTv9Dy5uQk8RfjbYhborVQlGJpvIMI2SltbEMOtZrTx5zVZlXFyfjIKIHDoUdATcdKa
+         sQOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=EJtmS5Q0sLZlScD2acDOkR2Tr9QldHgpNVfJ46Qxl6U=;
+        b=JMG6OF7M14ZfAaOhxN7fcfJf97h4XCUsiItWRt6tqCILTTkOdh6RfrxsM/VLSIDAU3
+         otJaTW9hhWTNCzuJMuw5S8CSqT00L9UMW1PPGT7fn6LXwgoIBaDfrVHZF7jtOzRpHmfc
+         Q3iudYsSLmXk3TmQ4fnCO9EsRzLNmlUNpDm8NNcVmtMFT6HEvMvkFqWL81WCyj+IrlqT
+         1ZpqtnCNAeldijP6BIGkt1f7kAODe78fhRJ/6D3MGC9MS/dCUa3H1CrWhk8ezBMBzPaI
+         AiO5CMJ+UgIzGs8xZxGkloIPtr9mxOtuiai+4JZwrwRe4oDf4vAqWYPCLQRv/MsV2fc8
+         gFnA==
+X-Gm-Message-State: AOAM530B9l/6EYj/Mz+beZi9vP/ZW9tzPzpT94p3KAxwl0sDAR4gEBZc
+        vNDDuZtJvjB118xbwkO0r7YK0cE44JvY
+X-Google-Smtp-Source: ABdhPJwqoJiKk0up7tFkf1CDo9PLUA2Szx3qNaHRII03tkgq6Xq0PAOklKEKV6c0enqsq55UxOP8qQ==
+X-Received: by 2002:a17:90b:2243:b0:1b9:e528:5496 with SMTP id hk3-20020a17090b224300b001b9e5285496mr93283pjb.240.1645738973024;
+        Thu, 24 Feb 2022 13:42:53 -0800 (PST)
+Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id q22-20020a17090a2e1600b001b9c387d0f5sm7202695pjd.28.2022.02.24.13.42.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Feb 2022 13:42:52 -0800 (PST)
+Message-ID: <46428e01-ee6e-36c8-8bbd-1119d9ee2975@github.com>
+Date:   Thu, 24 Feb 2022 13:42:50 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B0EC2496-95BA-11EC-A8EC-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.6.1
+Subject: Re: [PATCH 1/7] sparse-index: prevent repo root from becoming sparse
+Content-Language: en-US
+To:     Derrick Stolee <derrickstolee@github.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
+ <90da1f9f33a1383ba199f9b11e9890bc67e56edf.1645640717.git.gitgitgadget@gmail.com>
+ <ee861471-d870-f2e4-4f3b-3aea467d8415@github.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <ee861471-d870-f2e4-4f3b-3aea467d8415@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Derrick Stolee wrote:
+> On 2/23/2022 1:25 PM, Victoria Dye via GitGitGadget wrote:
+>> From: Victoria Dye <vdye@github.com>
+> 
+> Aside: It looks like you have the same "mailto:" email addresses in the
+> CC similar to a mistake I made. The root cause of my issue was that I
+> copy-pasted from the rendered description of another PR instead of
+> copying the plaintext available by clicking the "Edit" button. Perhaps
+> this is worth extending GGG to prevent this issue in the future.
+> 
+>> Prevent the repository root from being collapsed into a sparse directory by
+>> treating an empty path as "inside the sparse-checkout". When collapsing a
+>> sparse index (e.g. in 'git sparse-checkout reapply'), the root directory
+>> typically could not become a sparse directory due to the presence of in-cone
+>> root-level files and directories. However, if no such in-cone files or
+>> directories were present, there was no explicit check signaling that the
+>> "repository root path" (an empty string, in the case of
+>> 'convert_to_sparse(...)') was in-cone, and a sparse directory index entry
+>> would be created from the repository root directory.
+>>
+>> The documentation in Documentation/git-sparse-checkout.txt explicitly states
+>> that the files in the root directory are expected to be in-cone for a
+>> cone-mode sparse-checkout. Collapsing the root into a sparse directory entry
+>> violates that assumption, as sparse directory entries are expected to be
+>> outside the sparse cone and have SKIP_WORKTREE enabled. This invalid state
+>> in turn causes issues with commands that interact with the index, e.g.
+>> 'git status'.
+>>
+>> Treating an empty (root) path as in-cone prevents the creation of a root
+>> sparse directory in 'convert_to_sparse(...)'. Because the repository root is
+>> otherwise never compared with sparse patterns (in both cone-mode and
+>> non-cone sparse-checkouts), the new check does not cause additional changes
+>> to how sparse patterns are applied.
+> 
+> Good catch! I agree with everything said here.
+> 
+>> +	if (!strlen(path) ||
+> 
+> Instead of a full strlen(), could we just check "if (!*path ||" to
+> look for the nul byte?
+> 
+> Thanks,
+> -Stolee
 
-> This patch series includes two distinct, but similarly-motivated parts:
->
->  * Patches 1-4 fix some bugs in the commit-graph generation number v2.
->  * Patches 5-7 add a new generation number v3 by incrementing the
->    commit-graph file format.
->
-> I had been thinking about generation number v3, which is the same corrected
-> commit date as generation number v2, but it is stored in the Commit Data
-> chunk, requiring a new commit-graph file format version. This breaks
-> compatibility with older versions of Git, so it requires opt-in via the
-> commitGraph.generationVersion config value. The only improvement over
-> version 2 is that the commit-graph file is smaller, so I/O time is reduced.
-
-Sounds exciting.  Locality of on-disk data does matter.
-
-> However, while exploring this idea I found bugs in generation number v2. In
-> particular, Git has been ignoring them since shortly after they were
-> introduced. This is due to a bug I introduced when trying to make split
-> commit-graphs safer with mixed generation number versions. I also noticed an
-> issue with the offset overflows that I only noticed after writing generation
-> number v3 using a smaller offset size, actually triggering the bug in the
-> test suite.
->
-> I'm submitting these two things together so we can see them all at once, but
-> I'd be happy to split this into two series. The first four patches are
-> important bug fixes, so we can consider them as higher-priority.
->
-> Thanks, -Stolee
-
-Thanks, will take a look.
-
+I'll reroll with corrected CC's & make the `strlen` -> `*path` change.
+Thanks!
