@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CF09C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 15:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFFE4C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 15:31:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236134AbiBXPav (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 10:30:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55640 "EHLO
+        id S236323AbiBXPbo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 10:31:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232698AbiBXPav (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 10:30:51 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 234891BA16A
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 07:30:20 -0800 (PST)
+        with ESMTP id S236321AbiBXPbm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 10:31:42 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 978491BE4DB
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 07:31:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645716614;
-        bh=AdJOH8Zs9jWiHSA/wzf0NpFgpe8PHv0c+3NPZVPW0Lc=;
+        s=badeba3b8450; t=1645716666;
+        bh=NKTDE5eBcO47O3x5i25++NvnaPUO54c/tq7a5ZFEB7g=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NsO7qaYgIhj2+4gWDHwvXzduyxKA3aYZdgcQGCW4sOZb6iZ7zNULDxAYmcrOz3EOH
-         TkvCBp+NXkz3SWZxIzK4I7Lqslw6GSdS3bKi9bl0oYz5D6U2CowFVD0JHUGnIYO/Uh
-         nff4VBP+ZszyqqJTLrOLHWtkAKiIfNcccrA0xuBw=
+        b=b58PgazVI8uLhQV3j/S0r/mPV3AMMldmYNBRlMw+d8Ovkv6T+fO9VgtBPab6e2fQx
+         2FKuBGTMwb7TwpXKl4MC+SFnCeD9BkAONo3zj9eXQDVc93hahnT9eUcCKMo49sUGE3
+         gjsRfLyfH1mRmNXm/MRvkylGcx+yLApIfflXZ6Kg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MA7GS-1nXgTP3xQA-00Be0k; Thu, 24
- Feb 2022 16:30:14 +0100
-Date:   Thu, 24 Feb 2022 16:30:12 +0100 (CET)
+Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M6lpM-1nJQrH48XW-008Jgj; Thu, 24
+ Feb 2022 16:31:06 +0100
+Date:   Thu, 24 Feb 2022 16:31:04 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+To:     Jeff Hostetler <git@jeffhostetler.com>
+cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v5 11/30] fsmonitor--daemon: implement 'start' command
-In-Reply-To: <69fc0998286cbc791f199710a68a2028080e1632.1644612979.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202241627150.11118@tvgsbejvaqbjf.bet>
-References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <69fc0998286cbc791f199710a68a2028080e1632.1644612979.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v5 10/30] fsmonitor--daemon: implement 'run' command
+In-Reply-To: <6e03d1e0-8765-a474-f69f-b1ce63146b6a@jeffhostetler.com>
+Message-ID: <nycvar.QRO.7.76.6.2202241630450.11118@tvgsbejvaqbjf.bet>
+References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com> <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <6fe5a2bc79eec132b6455d53196906036d0f4a80.1644612979.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2202171744410.348@tvgsbejvaqbjf.bet>
+ <6e03d1e0-8765-a474-f69f-b1ce63146b6a@jeffhostetler.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:137UbzROoF4W9JK8cX0KyxNwP0YL/yix59vJkK630RkqA3aQoFd
- JMWGf2PyDiCI0s32EBVWdPkFQP1WLQZ/xwNUoJ7bZAp38DrEBqYF/niQ+eHvORfGu6bjM9R
- H6iO82wpER3qYo4X4WEqrBh14BEz6vcNmMP78JY2OfSK84hEbttzBYYHa5QGEcXWHetiA2j
- 2SFp4xU/fAMcvj6O6BIOw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BnwmmBAv9gI=:LQuKe0nZh9E0JOAidVxA0t
- W7h4Qdbx6UoQqGHyp6fAwASEvwlpYYujbCGJjylNfPB6qETdFmTD2fDQxYlKHGnNe7SpdIwRN
- cD+rUg6Gj3PGFevM/nKI2OUhIrJTe9Q1OrGmLDsnSlGEeTo/XiN0jy7LTTatd436gcZ3Ga/fw
- bxA23PFyWLb17urAyzi24xBp94RX+nijXRjaE42bzWgMVJLPmCNShg3GHsGdJ4ab0kffuoKhi
- 4mk2BP8yUCghogi1EeDOjUdyJHdQh78RiCOSmHD0Xd0gUs2PtLsaIJPxFpXrkZD5F6yg2Iurw
- xiotIa3EKt0SxFPj7oribjaGBJbMiBJc/1m/VypNTkzwysk2CR4pNBBzHpJBLtGRhsZemZgwQ
- OosSGwo7KSqDwoQhZJhPKdVNVk2JERuHO0Oz+0VkO9TNb/K29IClvoIaH3huMjTOTNw5CIqit
- Gf8saPjnQRnSSwV02+CG3NGi1K3gwh4/vpL3j2QJ0aqxlLG5kSqOxvYcDDOqhAS8Pmk7MDmjk
- sPB5MS5uH+yNr0oAIH2lpf7ID33S7Dp9jgaiypv15BDpCxjptDKpFTaj88E38OqouucTVnKeX
- 84TWvSNbG1LoBKByRlsxN9qb3Z9LUhWzsdDf4r0xSXpqPq4z+FclkpShzfhNbxTYiNUiU6R8u
- YlacjRRvUN/SkGu4Jj+NdAnK9uo9/HHMctKTVVkUy0AbKCRPatX5k+vuJs4qtD67BH8FXIbhp
- O7ZDijz0cpDmiDneWt/pD5XNUU32PdezIACRnNhNrbKwZvc6hijElHruNtfU3+ZlYrLzQvLjc
- Rus9H4aj4Y1/WB7/d9zdtq+9jppj11wSKpb1opSswUue6IP7UsRS8BS+s4ZZTR7p1HtJOlINV
- W9yFw/uydJZbAzODUTn8jmqISFsJLD1vlcNUZ1jZx6gZNAmqhnrsTpEo9W8/ZvaClIel0MBVo
- F67tXdKftOZltpiQXKpme/LtRHPwi3fTZz3eyldKhqNKkl9GsHvY9FODU/uTZh0tLVjnQlr20
- qvOkVYhBhbZKq2+rreEoPhf1SRvG5OtkgHNuSrjK/dCKPdzWSTtxBKbANi/B2D8P/eaN7CQCY
- 8Xug0V9yiTXuyY=
+X-Provags-ID: V03:K1:EMSaWJxNrex19GntnbWAqHkuG2AR91lJ1JNP9H+HTlYIM+sdplE
+ xWrP14UYi1PrLkJz4sKNdC8XBfAQant4qp7ZvI8HcY6vJksWFq3D7+MovCVuv8/WBm7+CWH
+ LVCaEdoeYis4ZQDFNf3KCQmlBVh5zYgufoUYaywLgTN/uwYbThgOCEAqsg5ssgV4FwMDKkX
+ LinCZwlbFdkotauWDDtpA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lhx2V9vOjq4=:Y6ksdsIYkeW2fNAPgUhIus
+ gzvcAubLGPDNavorZYO2BqLWNjJuDu5EPfWMLQWKrQODOuM+E7Kbd/gI0M5Btbt5RnZjJONOb
+ qH1sbvtaE+E/31dwVl+H1mGMVLe4XxSLs3f//JTpYxjUGLNZ1RS/KfAVoI7efo7YA1GmDEsLo
+ Oi0wIL141kAt4k/zfFClrjfuOTzd4m3krZVjO7ySEmteOgdu2Fv4WS9WwH3cqx6lVtsTqtERT
+ 94lPCNSbasy31umy9YiwUFa1kOtJurdqXRHCGv9xkJjvOlQcLQNw+tjzCc30a35JVZpArCDHR
+ V/O9gMWaLb3Z0J33WkiEww6KlEX/Fcnw1+z94G0Jg+YrmeuqOdLcerRyZd5XPVsvmgW092EKH
+ eVs8PblombfHd06q41AOtm+A9uGnVbiZMvJwhladg0hCNHKxCDUgHuaj4cUQB8Tht3a0rSub2
+ wCgJ83/sSyQF96pRbP2cXARZCZaExE+gWHTu7pcBxfoZsLdHvcwJCkW40IrYDKhvFWEEeAHGA
+ ISLOA+5iwp9YTBlU9bgEFVgoRDVXWcfMjOFqZ3FvKC/C5D7BmygPTUs8FPKsPIhi1aV6USh1X
+ VqcqcaPXBwWx+HmBxoKq5YsofSfjb8SMVM0BxwjkiY1AFIr1O3sVEzGnOGoD7LsVDupT/kYzE
+ 6FKt60ywtyS8uOMvS4iTWeqVgRjDnv6bQSCkorLtwGscAIuNGOpHHIXi1qz+SNWamu51NsLs8
+ ijPZNmQ6JAYbKpY0FFRjxf7GnQ36kjcuQ8ZQAl1apWG+boOjnxCFFRfNGwwx9idmicM+feICM
+ CgEfS/fb/4Z+GXrsCkK3ysOdfH2M/awlcoh2u9wBfE8oozQkB65RUgDVFaawpHQ6vw/mu9naQ
+ wusWz9YfmU3odYnM0PA7PXrq2760f6hHwLAwh1AavOan0GIPWsKG1K2mqLXWJPI/kn0cwyKXZ
+ F51urX5+mfaJVEvYb8ES8XtcQfQwD5Nkba4yx/6xIBDakNbo6aT858r8POfluxGcY6DPpg9/y
+ 6chVnWR27e2axPmt3ThV22aZdwLUVH39Uzmor1f12VMwYMoTvqd/glVbp0TDgHIDdkRgISGQT
+ s8LHcL+mHbWjnA=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -70,68 +70,40 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Jeff,
 
-something I missed in my review, but which causes failures in `seen`
-because of the interplay with `ac/usage-string-fixups`:
+On Thu, 17 Feb 2022, Jeff Hostetler wrote:
 
-On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
-
->  int cmd_fsmonitor__daemon(int argc, const char **argv, const char *pref=
-ix)
->  {
->  	const char *subcmd;
-> +	int free_console =3D 0;
+> On 2/17/22 11:46 AM, Johannes Schindelin wrote:
 >
->  	struct option options[] =3D {
-> +		OPT_BOOL(0, "free-console", &free_console, N_("free console")),
->  		OPT_INTEGER(0, "ipc-threads",
->  			    &fsmonitor__ipc_threads,
->  			    N_("use <n> ipc worker threads")),
-> +		OPT_INTEGER(0, "start-timeout",
-> +			    &fsmonitor__start_timeout_sec,
-> +			    N_("Max seconds to wait for background daemon startup")),
+> > On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
+> >
+> > > +static int try_to_run_foreground_daemon(void)
+> > > +{
+> > > +	/*
+> > > +	 * Technically, we don't need to probe for an existing daemon
+> > > +	 * process, since we could just call `fsmonitor_run_daemon()`
+> > > +	 * and let it fail if the pipe/socket is busy.
+> > > +	 *
+> > > +	 * However, this method gives us a nicer error message for a
+> > > +	 * common error case.
+> > > +	 */
+> > > +	if (fsmonitor_ipc__get_state() =3D=3D IPC_STATE__LISTENING)
+> > > +		die("fsmonitor--daemon is already running '%s'",
+> > > +		    the_repository->worktree);
+> > > +
+> > > +	printf(_("running fsmonitor-daemon in '%s'\n"),
+> > > +	       the_repository->worktree);
+> > > +	fflush(stdout);
+> >
+> > Do we want to print this to `stderr` instead?
+>
+> Yes.  I have a patch in part 3 that moves it to stderr
+> and only emits it if a config setting is present.
+>
+> fsmonitor--daemon: print start message only if fsmonitor.announceStartup
+>
+> Wondering if I should squash that in here instead.
 
-Git is about to be stricter about these option usage strings: they are no
-longer allowed to start with an upper-case letter. This diff fixes it for =
-me:
+I would like that.
 
-=2D- snip --
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Thu, 24 Feb 2022 15:48:01 +0100
-Subject: [PATCH] fixup??? fsmonitor--daemon: implement 'start' command
-
-There is a patch series in `seen` that errors out on option usage
-strings starting with a capital letter. Let's avoid that preemptively.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- builtin/fsmonitor--daemon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 591433e897df..775e4de5584d 100644
-=2D-- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -1504,7 +1504,7 @@ int cmd_fsmonitor__daemon(int argc, const char **arg=
-v, const char *prefix)
- 			    N_("use <n> ipc worker threads")),
- 		OPT_INTEGER(0, "start-timeout",
- 			    &fsmonitor__start_timeout_sec,
--			    N_("Max seconds to wait for background daemon startup")),
-+			    N_("max seconds to wait for background daemon startup")),
-
- 		OPT_END()
- 	};
-=2D-
-2.35.1.windows.2
-=2D- snap --
-
-Could I ask you to squash this in before you send a new iteration?
-
-Thank you,
+Thanks,
 Dscho
-
-
-> +
->  		OPT_END()
->  	};
->
