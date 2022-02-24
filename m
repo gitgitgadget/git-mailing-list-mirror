@@ -2,90 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48D51C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 16:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA5A0C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 17:03:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231216AbiBXQv4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 11:51:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52580 "EHLO
+        id S231855AbiBXREQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 12:04:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231149AbiBXQvy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 11:51:54 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 022301986F8
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:51:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645721471;
-        bh=KX2WN9d4FjnXltzCUoqLmO4spHlOawicpkz3ngcQUdo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=UJN3X1DKeOnWKZCxez4NEMW/0EcCOcpvC+izsovKIQdhxqTsVXRDXKQfAhm/M7eKI
-         OK13RAI+uxGV1Jc2hpilo0Mn/BdZ7M+eiM0eiVY4+zGIvWN6GlPhG0brB0gk5Zrs77
-         xrE2JY7VdCI/Xb+XHJGxaVZiKlQZaXle3V1pzkI0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVeMA-1nmbfe3b7s-00RZUK; Thu, 24
- Feb 2022 17:51:11 +0100
-Date:   Thu, 24 Feb 2022 17:51:08 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v5 28/30] fsmonitor: force update index after large
- responses
-In-Reply-To: <aec44a21afda7f058aca274dcb93c1eec442784a.1644612979.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202241749340.11118@tvgsbejvaqbjf.bet>
-References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <aec44a21afda7f058aca274dcb93c1eec442784a.1644612979.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S232144AbiBXRCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 12:02:46 -0500
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373671A6F8B
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:59:52 -0800 (PST)
+Received: by mail-qk1-x72e.google.com with SMTP id g24so2345588qkl.3
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:59:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=yVnr1PMAeukIxxyqfgzyNC8M7X12EwILnggqeo8sasY=;
+        b=acIUiT8VK3ZpZGlX9M2nDxE3AUo3edgHnWecyu8mPgIppn7CQ2kLp3yExr+swsahUF
+         cTugiqMOLMHiqJmn5aMT7IWhuzoJHFeMmQc2/XGlGRyg3cVOphdZd7yaAApluYFIQtft
+         /6vOPQvD9LEUik+Al4juiBpZjZ+1w+ZTG5y+9OlJbAgdy2fg55C9NV7lg42rLlVopVJI
+         uHgC0jxRr/qp58jumGirRkZI3h7BcDOSKJ9KsxVg7psgpWjvrIN+GhX/v0CwA3IC1Sew
+         tU6/iNNi6ftkhPvgQB+iDQ3FqcDlvoVfzwvduvdj/XoRNa0IB0OJLueJIGyp3nlELkd3
+         R3uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=yVnr1PMAeukIxxyqfgzyNC8M7X12EwILnggqeo8sasY=;
+        b=A0+QrHbZ/TclH1/YmuP5707Lib1ES8bcAu1alYvAu10hl5OWqK2k2+0QtQWRE0Rl6f
+         S+N1szBil61mMLIKqn36586wI6Ldm95XAUKPVsxHnR1WoWSHqzCbdfjsf4rJ88AHQ++N
+         nCJNpODmsvl9RY4/CxXIbv2BmBG5utHleGgKGfwTwr4k3vwu/qAi+0fLDufXm7Q5Zw0n
+         RoZCHcd4xItrsBEq0TZLHCnoHQoPd2LaFaAq3xqda7kgy5XG9VmnUu3PZY2RgCjw7qjL
+         wSF+OyPLLw58z4nK+sg+TZjF4bpKvcUS9l3nOAbMOmuaaTpO7XozfKNarRsB0KHAauSr
+         zmuw==
+X-Gm-Message-State: AOAM531z3iP0b52y0YAh8feGKHKeUZN2ipbZk0BD3RzL+Sj0rIErObRi
+        jYRGfwbCZkrm8BHzerf18wE9syNSyomb
+X-Google-Smtp-Source: ABdhPJzvwnsHh4E450/IDpYPM8aQ43Xwk6AilAyETbJAL86YznOhYqp8OsZbbN9AxYcugLcg/bVV0Q==
+X-Received: by 2002:a37:b542:0:b0:506:efb6:9955 with SMTP id e63-20020a37b542000000b00506efb69955mr2278451qkf.594.1645721978768;
+        Thu, 24 Feb 2022 08:59:38 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id bq42-20020a05620a46aa00b006494fb49246sm57260qkb.86.2022.02.24.08.59.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Feb 2022 08:59:38 -0800 (PST)
+Message-ID: <2bc6fcb6-2d95-c962-3098-ca4e4e0afa00@github.com>
+Date:   Thu, 24 Feb 2022 11:59:37 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:XVF/3lQhex9JLKWRf+A89nRylTAIGv09nSsyKV4pzIRPCTFEzgw
- oomqgbjJoKkPpjCkFzn5DcRDcY9kWNHfY7Vo7FA1JMDfJmeOMGvLAxMTZcUGWeSPgjS0xsL
- S6H6eIzboRYHkiZLWt/FMP+5k3VALRvdNZ8Fd+g95Ri08JJZwEwX0WOIV7KXwmXvnFuWDpf
- kISUQWGh0UW2BteFFd+IQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FlT/JKHwIaw=:P8+4K7ALHVXBeXVgZFmp0B
- CpC75AnifjMCsIRy6NNq1qhTpeB5K4bCnPuUkF9lKgxMy9sBODsyIgCtIqd6Tc+lkonFvnmdU
- NMoSBW4JaajtRbgwzIWkTZFEQVktmeTJoD/TFOu2H8LFyJ3Co74tP8RxwRFkmc6zrRHYS109P
- WqZ8VEm0/8LgeQAquU9Dg7uTyc9b/rJ0BVPYAVdz6TyjA/2d3165XMP8CAOqWdYZSIMw9uExc
- LvP+to/xaXoKJBRkTHzteVrnHYsrGfLrCVP72bulbzxJyaxUexfeVQsxKBQmKINoBXUiIS29W
- RiDeD6Ax99Wx+VB9Z1sge0pZV8cCm67T+EX3Ozn6ydVajVSryud2BBF6B8OMlx6uSZBm0WMJ6
- 7af7AAGv2ri+MdnjXAyYcQtYvFXrv4J2Hfgb5AIjfV5ncENTaXNAFBbspFVMH9rAL3wqChGHd
- MkpxYBraIl22vl7sK860wHwiNIzAKDAciSSPbHC+kCjsc+WlvkeHoqQJpz/QHt+Bay0D9Meof
- x+7qSDGsHxiTcnvjN1k7v9NBcjggfGi6de9hjvIs5VZOQebBcIAGrVX7VncjR0stkksP7ZQZk
- doNdXz1+AyvR4JAeJYZLaswVfJS9BZ9jRiGa9FYdsXguWTT2LT04eey/AQkiM13dJHc/X7HGl
- nSuV75/Zdi7ZJFquOMaM/qiviGdpQVCSFBu4WHwO1/XMJfhlRTOlafNI6sPsBMyJbyr8/lzZB
- JFv1r3OgvSY1uyfk2MhMiwqHrWhsIBGhYFTEkd6xlPI8i/+LfcztCNOTSOq4roIICylk2i4Gb
- K+0wkSiD7r755nSTja31HvkzKSGLP9fLHS4rBN0LjP4RDvsANbAX0vUGf9r5fEaaz58XvSHer
- 7ojeBnz5v9+SrZVl0SjAcAkJ86y9fKNr0keWsKXutCCjkKYtVj/hQgckPR+RBrdQp63HDYVzA
- AxSlspWpyxjOvJ2nlo64rM/RYTsnD6+nkQKACZAy4IwZZgYWQ+SX8U/8L6KgECsaId7Axi6FI
- KwuWCdnLpTNqn/rJAyZRsl7CYt5i/JHDe8LuzMhRV9jBPtydGd2n8Xi49GRPWu9XetrtrvGNm
- 9Euvdv+5uQxqH8=
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH 0/7] Sparse index: integrate with 'read-tree'
+Content-Language: en-US
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Victoria Dye <vdye@github.com>, Elijah Newren <newren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+On 2/23/2022 1:25 PM, Victoria Dye via GitGitGadget wrote:
+> Like previous integrations [1] [2], this series allows 'git read-tree' to
+> operate using a sparse index.
 
-On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
+(Fixed the CCs on this reply, too.)
+ 
+> The first two patches are bugfixes for issues found while implementing the
+> 'read-tree' integration:
+> 
+>  * The first (patch 1/7) fixes an edge case in which a repo with no in-cone
+>    files or directories would have its root collapsed into a sparse
+>    directory; the fix ensures the root directory is never collapsed into a
+>    sparse directory.
+>  * The second (patch 2/7) corrects the 'git status' reporting of changes
+>    nested inside the subdirectory of a sparse directory, ensuring that the
+>    modified file (not the subdirectory) is correctly reported as having
+>    changes.
 
-> [...]
-> + *
-> + * NEEDSWORK: Does this need to be a config value?
-> + */
-> +static int fsmonitor_force_update_threshold = 100;
-> +
->  void refresh_fsmonitor(struct index_state *istate)
->  {
->  	struct strbuf query_result = STRBUF_INIT;
+Thanks for these! I just found one tiny optimization in the first patch.
 
-We gave this ample opportunity to rise to a need, and no need arose, to
-introduce a config option.
+> The remainder of the series focuses on utilizing the sparse index in 'git
+> read-tree'. After some baseline behavior-establishing tests (patch 3/7),
+> sparse index usage is trivially enabled (patch 4/7) for 'read-tree' except:
+> 
+>  * usage with '--prefix'
+>  * two- and three-way merge
+> 
+> These cases require additional changes in order to work as expected (i.e.,
+> outwardly matching non-sparse index sparse-checkout). For the former, the
+> sparse index can be enabled as long as the index is expanded when the prefix
+> is a directory outside the sparse cone (patch 5/7). For the latter, sparse
+> directories that cannot be trivially merged must have their contents merged
+> file-by-file, done by recursively traversing the trees represented by the
+> sparse directories (patches 6/7 & 7/7).
 
-Therefore I am in favor of simply dropping the comment.
+I enjoyed reading these remaining patches. I'm impressed with how you
+constructed these tests and patches to do the smallest amount of change
+per patch.
 
-Ciao,
-Dscho
+I couldn't find any fault in these patches, but perhaps Elijah's deep
+experience with merge machinery could help add confidence, especially
+for patches 6 & 7.
+
+Thanks,
+-Stolee
