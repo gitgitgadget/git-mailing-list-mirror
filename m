@@ -2,216 +2,227 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E860C433F5
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 17:52:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F5E0C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 18:13:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232437AbiBXRxK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 12:53:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43754 "EHLO
+        id S231722AbiBXSNn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 13:13:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232433AbiBXRxJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 12:53:09 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 905E51179A2
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 09:52:39 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id cm8so3979192edb.3
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 09:52:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kmlMGaYDK3okHHyck2tFDjOlf97wOnOGJBtx6RYueV8=;
-        b=11ik8ay5g0rN3ZoE0gktE0p554jSWmy4538BmRFdIVSRpQ1N+Z+zwwr5R5fI1SS6/A
-         zm1xk2BGbrF9wIsa8J4lKdDS1JxhJqXPmlBeY/GRL1C13L7eci88zeYkpQjM5KSguLTP
-         reNJz1ThSCgshdsrFP/b9573BdN4SPevTxg42gC/nZ20JslNoxDRdJ5EWtKvWIfiazFZ
-         yCjshfBjNfSUrRtTIlmcGDhZl8hIDyD81oGkmXtJK884P3j39RfYU7njmVsRdk+Ez7R1
-         xSKNPFD1xZhJ6mKyWKKNnSEEPLeD+HjxChrsqafBfYvrh9Vt5R9SZ/dCgwDHX4n8Rx4J
-         lUNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kmlMGaYDK3okHHyck2tFDjOlf97wOnOGJBtx6RYueV8=;
-        b=zmd+yadMWEhCvPEnOu77pJjIciMIdtc47dRBm5uFMeWe1PZ7Ko8/cV0dj+k9XoYTlO
-         lhLszyg+GrqT8FU7cMXZWmZ5lCcMxgkiLgHZ8WIQZm5e1AXttc4gfI0VQDEvoeuHxddy
-         NXRLDIJLBrUuACw6riLtcsBf61LFlXR65yjSEtOdFfDlJkLhF0WBtO3SLmKDoR8S3idL
-         PIkmCWXgHvH9pVP3+Ris6zl0Kjqm9/mXRpRhLFP38WcRbobU2ZRbb3MNRK4GacaGrcOq
-         uXmLB0pw9ioaiZidQpTBWn1BwbVMl5MxXXrRk7+Cs110zcf2dcROhM6YrKvGVi5WGFmR
-         Yfpw==
-X-Gm-Message-State: AOAM531xlb7jQocvPTyfHGEsWNqj4HAE60khWgbERJdv8o5SkPTXKRci
-        TXoMX0J2YZ6NRK0osRiFaQcbjvyIAaUx56u7cWOaog==
-X-Google-Smtp-Source: ABdhPJzXKsRsyvLdZtnajU3RXFPtcwkXAtw2T47Mx9piQwH6B/re0YzXppnZN6VNGH0esbyLND1PEtS7m7zXnaQtO0c=
-X-Received: by 2002:a05:6402:908:b0:410:ef84:f6f1 with SMTP id
- g8-20020a056402090800b00410ef84f6f1mr3391641edz.34.1645725157987; Thu, 24 Feb
- 2022 09:52:37 -0800 (PST)
+        with ESMTP id S229662AbiBXSNm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 13:13:42 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 659F8214F90
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 10:13:11 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 8BB013F4860;
+        Thu, 24 Feb 2022 13:13:10 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 1E2CE3F483E;
+        Thu, 24 Feb 2022 13:13:10 -0500 (EST)
+Subject: Re: [PATCH v5 00/30] Builtin FSMonitor Part 2
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>
+ <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2202171655390.348@tvgsbejvaqbjf.bet>
+ <37f54cd9-3e53-7d38-2c23-2fc245dc1132@jeffhostetler.com>
+ <nycvar.QRO.7.76.6.2202241650200.11118@tvgsbejvaqbjf.bet>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <4aa1293e-00b6-b9ef-efd4-cdf605db37a1@jeffhostetler.com>
+Date:   Thu, 24 Feb 2022 13:13:09 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <pull.986.git.1624559401.gitgitgadget@gmail.com>
- <627f1952fd8d4864b6b87f5539a9d9b802c5796b.1624559402.git.gitgitgadget@gmail.com>
- <xmqq35t11dtu.fsf@gitster.g>
-In-Reply-To: <xmqq35t11dtu.fsf@gitster.g>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 24 Feb 2022 18:52:27 +0100
-Message-ID: <CAPMMpogerttWdjGBNxJaqHT4bd3_igDx4_Fxev2eNHqexZ=aLQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] Write index when populating empty untracked cache
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <nycvar.QRO.7.76.6.2202241650200.11118@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-Thanks so much for reviewing this, and my apologies for not reacting
-earlier, after you took the time.
 
-> our commit title are <area> prefix, a colon and then a
-> summary.  Try to make your commits blend in.
+On 2/24/22 11:22 AM, Johannes Schindelin wrote:
+> Hi Jeff,
+> 
+> On Tue, 22 Feb 2022, Jeff Hostetler wrote:
+> 
+>> On 2/17/22 11:06 AM, Johannes Schindelin wrote:
+>>
+>>> On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
+>>>
+>>>> In this version I removed the core.useBuiltinFSMonitor config
+>>>> setting and instead extended the existing core.fsmonitor.
+>>>
+>>> I am somewhat surprised that a reviewer suggested this, as it breaks
+>>> the common paradigm we use to allow using several Git versions on the
+>>> same worktree.
+>>>
+>>> Imagine, for example, that you run a Git version that understands
+>>> `core.fsmonitor=true` to imply the built-in FSMonitor, while you
+>>> _also_ use an IDE that bundles a slightly older Git version that
+>>> mistakes the `true` for meaning the executable `true` (which is not a
+>>> FSMonitor at all, but its exit code suggests that everything's fine
+>>> and dandy). The result would be that the IDE does not see _any_
+>>> updates anymore, but nothing would suggest that anything is wrong.
+>>>
+>>> We can probably warn users about this, and we can also work around the
+>>> fact that Git for Windows already uses `core.useBuiltinFSMonitor`, but
+>>> it makes me somewhat uneasy nevertheless.
+>>
+>> This is a valid concern and I should have thought to mention it when
+>> the suggestion came up on the list.  Yes, extending `core.fsmonitor` to
+>> take a boolean or a path could confuse older clients (like ones bundled
+>> with an IDE, like VS).
+>>
+>> My assumption was that since we shipped `core.useBuiltinFSMonitor`
+>> in GFW with an experimental label, that normal users would not be
+>> using it at all and especially not from their IDEs, so it wouldn't
+>> matter.  And experimental features are just that -- experimental
+>> and subject to change.
+>>
+>> But your point is valid -- if someone does have the odd hook called
+>> "true" or "1", they'll get an unexpected result.
+> 
+> I wondered about that for a while, and put that to a test last night. I
+> set `core.fsmonitor = true` and then modified a file and ran `git status`.
+> Something I did not expect happened: it picked up on the modified file!
+> 
+> It also printed out a warning:
+> 
+> 	warning: Empty last update token.
+> 
+> This is the reason why it works: by default, current Git versions assume
+> that the FSMonitor hook understands the FSMonitor protocol v2, which
+> starts by the client sending out a token, receiving a new token and then
+> the paths of the files/directories/symlinks to inspect. Since the program
+> `true` does _not_ write that token, Git warns that it did not receive a
+> token and continues as if no FSMonitor had been configured.
+> 
+> So that's good news!
+> 
+> The less good news is that prior to v2.26.0, Git did not support v2 of the
+> FSMonitor protocol, but only v1. And v1 does not expect such a token. Git
+> versions between v2.16.0 and v2.26.0 will interpret a successful run of
+> the `true` executable with an empty output to mean that no files have been
+> modified.
+> 
+> And indeed, in my tests, after making sure that the Git index had been
+> refreshed explicitly and then modifying a file and then running `git
+> status` with v2.16.0, Git did not pick up on the modification.
+> 
+> That's the less good news.
+> 
+> At first I thought that we're pretty safe because nobody should use older
+> Git versions and enable FSMonitor because FSMonitor protocol v1 is known
+> to be subject to racy behavior. But then, Git users sometimes do not
+> completely control which Git versions they use. Take for example Visual
+> Studio users who also use the Git Bash to work on their worktree. While
+> their Git Bash might be reasonably recent, Visual Studio comes with its
+> own embedded Git version. Therefore, a user might want to play with the
+> built-in FSMonitor in Git Bash, find that it dramatically speeds up
+> everything (as it does for me, thank you so much!), and not realize that
+> the Git executable used by Visual Studio totally misinterprets
+> `core.fsmonitor` to refer to `/usr/bin/true.exe` and then miss any
+> modifications.
+> 
+> As long as the embedded Git version is at least v2.26.0, Visual Studio
+> will at least work correctly (because it ignores `true.exe`'s output and
+> continue as if no FSMonitor had been configured). But as soon as an older
+> version is used, Git would work incorrectly, without any indication what
+> is going wrong.
+> 
+> I tried to come up with alternatives (because I _really_ dislike being a
+> reviewer who only points out what's wrong without any constructive
+> suggestion how to do it better), and the best alternatives I came up were:
+> 
+> - stick with `core.useBuiltinFSMonitor` as before, or
+> 
+> - use a special value of `core.fsmonitor` that simply is not a valid
+>    executable name. In 2019, when I worked on the original precursor of the
+>    built-in FSMonitor (before I had to drop working on FSMonitor
+>    because of all the security work that went into v2.24.1), I had picked
+>    `:builtin:` because colons are illegal on Windows, but of _course_ they
+>    are legal everywhere else. But one thing is not possible, even on Linux:
+>    to have a trailing slash in an executable name. So something like
+>    `/builtin-fsmonitor/` would work.
+> 
+> However, after seeing how nicely your latest iteration cleans up the code
+> by simply interpreting a Boolean value to refer to the built-in FSMonitor,
+> I _really_ would like to make it work.
+> 
+> Maybe we can declare that it is "safe enough" to rely on new enough Git
+> versions to be used by users who use multiple Git versions on the same
+> worktree? They should use _at least_ v2.26.1 anyway, because that one
+> fixed a rather important vulnerability (CVE-2020-5260)? At least for
+> Visual Studio, this is true: it ships with Git version 2.33.0.windows.2.
+> 
+> What do you think? Can we somehow make `core.fsmonitor = true` work?
+> 
+> Ciao,
+> Dscho
+> 
 
-Noted, will fix, thx. I believe I did this better in an unrelated
-patch series today, but I guess I will see what people say :)
+Thanks for the testing and background information here!
 
-> What requests the untracked cache to
-> be created, and what options (or perhaps the lack of what options)
-> prevent the untracked cache to be "non-applicable"?
+I agree.  I would like to keep the current
 
-Will try to clarify / be more specific.
+     "core.fsmonitor = <bool> | <path>"
 
-> I suspect that "the cache" here is the same "untracked
-> cache"
+usage that I have in V5.
 
-Will fix.
+It cleaned up things very nicely and it got rid of the somewhat awkward
+usage of having "core.useBuiltinFSMonitor" override the existing
+"core.fsmonitor" setting.
 
-> "we detect ... and queues" sounds like a grammo.
+It is unfortunate that it might cause a breakage for users who are
+*also* running a Git version between 2.16 ... 2.26.  I have to wonder
+if it wouldn't be better to spend our energy documenting that users
+should upgrade, rather than trying to support interop with them.
 
-Yep, dreaded perspective shift, will fix.
+The 2.16 ... 2.26 versions don't have the security fix referenced
+above.
 
-> perhaps [proposed text] or something along the line.
+The 2.16 ... 2.26 versions are based upon the V1 FSMonitor protocol
+and don't have fixes for several serious bugs or races in the original
+implementation:
 
-Will incorporate, thx.
+* 398a3b0899 (fsmonitor: force a refresh after the index was discarded, 
+2019-05-07)
+* 679f2f9fdd (unpack-trees: skip stat on fsmonitor-valid files, 2019-11-20)
+* dfaed02862 (fsmonitor: update documentation for hook version and 
+watchman hooks, 2020-01-23)
 
-> The logic sounds fairly straight-forward.
+That last fix added the V2 FSMonitor protocol.  This is used by both
+the hook- and the IPC-based providers.
 
-I didn't understand here whether you were confirming that the change
-seems to make sense (yay!), or commenting that the extra comment block
-is redundant, stating something obvious, and should better be removed.
-Could you confirm please?
+So anything still using the V1 FSMonitor protocol is going to unreliable
+and racy and users should not use it, so I don't think it is worth the 
+effort to complicate our current solution to maintain compatibility.
+(I hate to say that, but they just shouldn't be using V1 any more.)
 
-In the meantime, I'll "re-roll" (?) with the proposed changes.
 
-Thanks again,
-Tao
+On a slight tangent, the current code (before my patch series) does
+support a "core.fsmonitorhookversion" to allow the client to talk to
+a V1 or V2 provider explicitly (vs the default of trying V2 and then
+trying V1).  The IPC implementation does not use this config setting,
+but I could see adding something to emit a warning if it was set to
+1 when using the builtin FSMonitor.  This might help users who are
+*also* running a Git version between 2.26 and 2.35 to understand the
+fallback after the true.exe warning that Johannes described.
 
-On Tue, Jun 29, 2021 at 6:42 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > Subject: Re: [PATCH 3/3] Write index when populating empty untracked cache
->
-> Common to all three patches.
->
-> Look at "git shortlog --no-merges -200 master" and observe the
-> pattern, i.e. our commit title are <area> prefix, a colon and then a
-> summary.  Try to make your commits blend in.
->
-> > From: Tao Klerks <tao@klerks.biz>
-> >
-> > It is expected that an empty/unpopulated untracked
-> > cache structure can be written to the index - by update-
-> > index, or by a "git status" call that sees the untracked cache
-> > should be enabled, but is running with options that make
-> > it non-applicable in that run.
->
-> Would an example be helpful?  What requests the untracked cache to
-> be created, and what options (or perhaps the lack of what options)
-> prevent the untracked cache to be "non-applicable"?
->
-> > Currently, if that happens, then subsequent "git status"
-> > calls end up populating the untracked cache, but not
-> > writing the index (not saving their work) - so the
-> > performance outcome is almost identical to the cache
-> > being altogether disabled.
-> >
-> > This continues until the index gets written with the cache
-> > populated, for some *other* reason.
->
-> Here (and only here), the word "cache" is used instead of "untracked
-> cache"---but I suspect that "the cache" here is the same "untracked
-> cache".  If that is the case, being consistent and spelling it out
-> would reduce the risk of confusing readers.
->
-> > In this change, we detect the "existing cache is empty
-> > and it looks like we are using it" condition, and queues
-> > an index write when this happens.
->
-> "we detect ... and queues" sounds like a grammo.
->
-> In this project, we describe the change being proposed as if we are
-> giving an order to the codebase to "become like so".  So, perhaps
->
->     Detect the condition where an empty untracked cache exists in
->     the index and we collect the list of untracked paths, and queue
->     an index write under that condition, so that the collected
->     untracked paths can be written out to the untracked cache
->     extension in the index.
->
-> or something along the line.
->
-> > This change depends on previous fixes to t7519 for the
-> > "ignore .git changes when invalidating UNTR" test case to
-> > pass - before this fix, the test never actually did anything
-> > as it was not set up correctly.
-> >
-> > Signed-off-by: Tao Klerks <tao@klerks.biz>
-> > ---
-> >  dir.c | 14 +++++++++++---
-> >  1 file changed, 11 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/dir.c b/dir.c
-> > index ebe5ec046e0..a326e40e1c1 100644
-> > --- a/dir.c
-> > +++ b/dir.c
-> > @@ -2703,7 +2703,8 @@ void remove_untracked_cache(struct index_state *istate)
-> >
-> >  static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
-> >                                                     int base_len,
-> > -                                                   const struct pathspec *pathspec)
-> > +                                                   const struct pathspec *pathspec,
-> > +                                                   struct index_state *istate)
-> >  {
-> >       struct untracked_cache_dir *root;
-> >       static int untracked_cache_disabled = -1;
-> > @@ -2767,8 +2768,15 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
-> >               return NULL;
-> >       }
-> >
-> > -     if (!dir->untracked->root)
-> > +     if (!dir->untracked->root) {
-> >               FLEX_ALLOC_STR(dir->untracked->root, name, "");
-> > +             /*
-> > +              * If we've had to initialize the root, then what we had was an
-> > +              * empty uninitialized untracked cache structure. We will be
-> > +              * populating it now, so we should trigger an index write.
-> > +              */
-> > +             istate->cache_changed |= UNTRACKED_CHANGED;
-> > +     }
->
-> The logic sounds fairly straight-forward.  The fact that we came
-> this far in the helper function means that we know we want to use
-> (i.e. untracked cache is not disabled, and various other "we
-> shouldn't be contaminating the cache with the one-shot information"
-> cases did not return from the helper) untracked cache, and root
-> being NULL originally means the untracked cache wasn't populated.
->
-> >       /* Validate $GIT_DIR/info/exclude and core.excludesfile */
-> >       root = dir->untracked->root;
-> > @@ -2838,7 +2846,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
-> >               return dir->nr;
-> >       }
-> >
-> > -     untracked = validate_untracked_cache(dir, len, pathspec);
-> > +     untracked = validate_untracked_cache(dir, len, pathspec, istate);
-> >       if (!untracked)
-> >               /*
-> >                * make sure untracked cache code path is disabled,
+
+On another slight tangent, I'm wondering if we want to officially
+deprecate the V1 hook code and/or remove support for it from the code.
+
+
+Jeff
