@@ -2,112 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50921C4332F
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 16:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48D51C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 16:51:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230346AbiBXQtX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 11:49:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39222 "EHLO
+        id S231216AbiBXQv4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 11:51:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52580 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230282AbiBXQtP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 11:49:15 -0500
-Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE6041AF8E0
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:48:43 -0800 (PST)
-Received: by mail-qv1-xf36.google.com with SMTP id ba20so4665884qvb.1
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:48:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=bLZRCRDgJTW6QX3ddwzJahDB7tQihr52Ug1p/WJeBec=;
-        b=MLfeYRu+QS7d2EzU4274PYHbVPIQUdjKVJ9k0XWt/CjaIg8tup7uN8udA4yS5JYr3D
-         2MEtzQZi4yyAqhVtCSyTcP7kNt4SKFnB9IQI0Ol0+apdOJPxH5VaDa4CuydQT9FSGtsR
-         SZiF3OlTCoCKqNnzaiBG5q9VH1KCEcuCeZ1PVEeQf+bbtfJw5ZeGtpzvq7elI/OJfucK
-         11OPM2d9WY+MMIa1mF3gzDJsZ2Vvy/0n0z9HWtHTMIsNaWiClIv2UHT+CENNleJpnw7W
-         Gk+JwCRFX3w0yxsh32EXHfES++fHvAh3XUmbQF/MYztjzJ2orztqjxSnqfmgln8xmuvT
-         54Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=bLZRCRDgJTW6QX3ddwzJahDB7tQihr52Ug1p/WJeBec=;
-        b=dX2zAWsdjtl/zwuN0Wfz0tylEuu9k5Sc86DHAoj5+TDsndVEhT0UPVHC6KIJVwxXYQ
-         AABPacQrenk2Qi3HDzvmcY9cdOxgF0AphzrpiMEd7pZmSGil3iRND/HfjQMfZfRS3U0+
-         nnKXxHpdNkZE9TngOFszoUW5rbeLbowS8Sw2WDF19YrtUvMQrOeGNf4Z42uWjwmzl0GI
-         7cEmvrhnxYSQ+wH5UJf0nwZjsNHCuHagKOOWu+ZjfgykAnxaFSFs3rxeWMWAMDwLxk6Y
-         rx+HOxkNiPCeFVsa7VAJqiUOlWnKc6oMKTFGXArL46r9DSW774lpjhI/t9O0jINYtWER
-         OA1g==
-X-Gm-Message-State: AOAM5333q3/SxzH0YYIf5sBtqNXzQoV+HN5YVuVU4If0TTJaPjMhZp1+
-        q5+70U8LGTFE5pjaYtkCBV1EXDBCYUUj
-X-Google-Smtp-Source: ABdhPJw+4BhUQ8FEfMXo0dfeH95eFqpB3Nc2rwSsP8JXvzdwi7Ht4zbDZMdQRr5OMEhGYYAdInGGkg==
-X-Received: by 2002:a05:622a:94:b0:2de:88ff:438a with SMTP id o20-20020a05622a009400b002de88ff438amr3181309qtw.60.1645721322304;
-        Thu, 24 Feb 2022 08:48:42 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id s11sm1925472qta.74.2022.02.24.08.48.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Feb 2022 08:48:42 -0800 (PST)
-Message-ID: <ee861471-d870-f2e4-4f3b-3aea467d8415@github.com>
-Date:   Thu, 24 Feb 2022 11:48:40 -0500
+        with ESMTP id S231149AbiBXQvy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 11:51:54 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 022301986F8
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 08:51:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1645721471;
+        bh=KX2WN9d4FjnXltzCUoqLmO4spHlOawicpkz3ngcQUdo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=UJN3X1DKeOnWKZCxez4NEMW/0EcCOcpvC+izsovKIQdhxqTsVXRDXKQfAhm/M7eKI
+         OK13RAI+uxGV1Jc2hpilo0Mn/BdZ7M+eiM0eiVY4+zGIvWN6GlPhG0brB0gk5Zrs77
+         xrE2JY7VdCI/Xb+XHJGxaVZiKlQZaXle3V1pzkI0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVeMA-1nmbfe3b7s-00RZUK; Thu, 24
+ Feb 2022 17:51:11 +0100
+Date:   Thu, 24 Feb 2022 17:51:08 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v5 28/30] fsmonitor: force update index after large
+ responses
+In-Reply-To: <aec44a21afda7f058aca274dcb93c1eec442784a.1644612979.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202241749340.11118@tvgsbejvaqbjf.bet>
+References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <aec44a21afda7f058aca274dcb93c1eec442784a.1644612979.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 1/7] sparse-index: prevent repo root from becoming sparse
-Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Victoria Dye <vdye@github.com>, Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
- <90da1f9f33a1383ba199f9b11e9890bc67e56edf.1645640717.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <90da1f9f33a1383ba199f9b11e9890bc67e56edf.1645640717.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:XVF/3lQhex9JLKWRf+A89nRylTAIGv09nSsyKV4pzIRPCTFEzgw
+ oomqgbjJoKkPpjCkFzn5DcRDcY9kWNHfY7Vo7FA1JMDfJmeOMGvLAxMTZcUGWeSPgjS0xsL
+ S6H6eIzboRYHkiZLWt/FMP+5k3VALRvdNZ8Fd+g95Ri08JJZwEwX0WOIV7KXwmXvnFuWDpf
+ kISUQWGh0UW2BteFFd+IQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FlT/JKHwIaw=:P8+4K7ALHVXBeXVgZFmp0B
+ CpC75AnifjMCsIRy6NNq1qhTpeB5K4bCnPuUkF9lKgxMy9sBODsyIgCtIqd6Tc+lkonFvnmdU
+ NMoSBW4JaajtRbgwzIWkTZFEQVktmeTJoD/TFOu2H8LFyJ3Co74tP8RxwRFkmc6zrRHYS109P
+ WqZ8VEm0/8LgeQAquU9Dg7uTyc9b/rJ0BVPYAVdz6TyjA/2d3165XMP8CAOqWdYZSIMw9uExc
+ LvP+to/xaXoKJBRkTHzteVrnHYsrGfLrCVP72bulbzxJyaxUexfeVQsxKBQmKINoBXUiIS29W
+ RiDeD6Ax99Wx+VB9Z1sge0pZV8cCm67T+EX3Ozn6ydVajVSryud2BBF6B8OMlx6uSZBm0WMJ6
+ 7af7AAGv2ri+MdnjXAyYcQtYvFXrv4J2Hfgb5AIjfV5ncENTaXNAFBbspFVMH9rAL3wqChGHd
+ MkpxYBraIl22vl7sK860wHwiNIzAKDAciSSPbHC+kCjsc+WlvkeHoqQJpz/QHt+Bay0D9Meof
+ x+7qSDGsHxiTcnvjN1k7v9NBcjggfGi6de9hjvIs5VZOQebBcIAGrVX7VncjR0stkksP7ZQZk
+ doNdXz1+AyvR4JAeJYZLaswVfJS9BZ9jRiGa9FYdsXguWTT2LT04eey/AQkiM13dJHc/X7HGl
+ nSuV75/Zdi7ZJFquOMaM/qiviGdpQVCSFBu4WHwO1/XMJfhlRTOlafNI6sPsBMyJbyr8/lzZB
+ JFv1r3OgvSY1uyfk2MhMiwqHrWhsIBGhYFTEkd6xlPI8i/+LfcztCNOTSOq4roIICylk2i4Gb
+ K+0wkSiD7r755nSTja31HvkzKSGLP9fLHS4rBN0LjP4RDvsANbAX0vUGf9r5fEaaz58XvSHer
+ 7ojeBnz5v9+SrZVl0SjAcAkJ86y9fKNr0keWsKXutCCjkKYtVj/hQgckPR+RBrdQp63HDYVzA
+ AxSlspWpyxjOvJ2nlo64rM/RYTsnD6+nkQKACZAy4IwZZgYWQ+SX8U/8L6KgECsaId7Axi6FI
+ KwuWCdnLpTNqn/rJAyZRsl7CYt5i/JHDe8LuzMhRV9jBPtydGd2n8Xi49GRPWu9XetrtrvGNm
+ 9Euvdv+5uQxqH8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/23/2022 1:25 PM, Victoria Dye via GitGitGadget wrote:
-> From: Victoria Dye <vdye@github.com>
+Hi Jeff,
 
-Aside: It looks like you have the same "mailto:" email addresses in the
-CC similar to a mistake I made. The root cause of my issue was that I
-copy-pasted from the rendered description of another PR instead of
-copying the plaintext available by clicking the "Edit" button. Perhaps
-this is worth extending GGG to prevent this issue in the future.
+On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
 
-> Prevent the repository root from being collapsed into a sparse directory by
-> treating an empty path as "inside the sparse-checkout". When collapsing a
-> sparse index (e.g. in 'git sparse-checkout reapply'), the root directory
-> typically could not become a sparse directory due to the presence of in-cone
-> root-level files and directories. However, if no such in-cone files or
-> directories were present, there was no explicit check signaling that the
-> "repository root path" (an empty string, in the case of
-> 'convert_to_sparse(...)') was in-cone, and a sparse directory index entry
-> would be created from the repository root directory.
-> 
-> The documentation in Documentation/git-sparse-checkout.txt explicitly states
-> that the files in the root directory are expected to be in-cone for a
-> cone-mode sparse-checkout. Collapsing the root into a sparse directory entry
-> violates that assumption, as sparse directory entries are expected to be
-> outside the sparse cone and have SKIP_WORKTREE enabled. This invalid state
-> in turn causes issues with commands that interact with the index, e.g.
-> 'git status'.
-> 
-> Treating an empty (root) path as in-cone prevents the creation of a root
-> sparse directory in 'convert_to_sparse(...)'. Because the repository root is
-> otherwise never compared with sparse patterns (in both cone-mode and
-> non-cone sparse-checkouts), the new check does not cause additional changes
-> to how sparse patterns are applied.
+> [...]
+> + *
+> + * NEEDSWORK: Does this need to be a config value?
+> + */
+> +static int fsmonitor_force_update_threshold = 100;
+> +
+>  void refresh_fsmonitor(struct index_state *istate)
+>  {
+>  	struct strbuf query_result = STRBUF_INIT;
 
-Good catch! I agree with everything said here.
+We gave this ample opportunity to rise to a need, and no need arose, to
+introduce a config option.
 
-> +	if (!strlen(path) ||
+Therefore I am in favor of simply dropping the comment.
 
-Instead of a full strlen(), could we just check "if (!*path ||" to
-look for the nul byte?
-
-Thanks,
--Stolee
+Ciao,
+Dscho
