@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52840C433FE
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 20:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B80D1C433EF
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 20:38:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234377AbiBXUjW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 15:39:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51298 "EHLO
+        id S234366AbiBXUjZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 15:39:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234166AbiBXUjN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 15:39:13 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B61E179A14
+        with ESMTP id S234354AbiBXUjO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 15:39:14 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D307B179A29
         for <git@vger.kernel.org>; Thu, 24 Feb 2022 12:38:43 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id p9so1405793wra.12
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 12:38:42 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id j22so1398101wrb.13
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 12:38:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=oncpURorPax8mzkt34OazX8EncUMvSMsGuwytMmjXG8=;
-        b=WWKxWwGjYLgCDgHtB6AzY2MDL0Ct6PngnrrnHys3TuX0Z0neISYDb2Nv+Yep007IAv
-         NTqxffIm7932BpzdL4u93wOmuXtAawRRp7vt9DiKRE2R5wbMy0dicY/yvppIXoCNbpgr
-         kliN4JL4ZGMpkIc/WxGcmJS2AccYFhhl901IlQuygm/4KBe4tBOrFOTHe7iRa+mK40kt
-         sQ4bmDS77UnWreDszcc+uqYwmp9Y4wG9tYMgryYAuBJaozbPhB9bIXEF9u2+EcjNsDD8
-         E/MFBm+yb0ZfZw2GLVgZg0ebO4eqz346dWOvATAj5plwHGlkHSwcYpXXamN42DnyDP90
-         avZQ==
+        bh=oPNuFQbuxhEXkfATdZeV447TAqaaEdYD+9qvHIVYfg0=;
+        b=BxIqgiMxcHrbM0K9vJQfmFGG2xqAAPc5i0ekfMe7UmvShldycvzCBAe4l+gCf279yE
+         K+ZRj0xnLYQgUfG3Rj1pYamVGjpfOpOBnbXhsvSoyG9U99zSa8ikcC2IngD0JQgHc9JZ
+         rsGSexql0URBMGxK5Y+u/xKcMSrxu6Mj1glUQfhQGMtKGhWHgc3uT59hBiu3GTOc/Dg2
+         jzlANaO8UM8K5ntmkhfnhx1iGaaWF8rIyCZAUUKX5hR1AH+UItN4g3lIfgndXpMlOmML
+         dAol8oAxcxEm2gdhKtjEU0Y9txKew+NRIh2a2DzkdThtQ6dIk+hBLY+rDM9lAZK8B5dO
+         WhuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oncpURorPax8mzkt34OazX8EncUMvSMsGuwytMmjXG8=;
-        b=i7kKUk5sPNNz9roz7gOXsJo9YCwTEK7ci31Ix9sCHe8kTn39Xb3IDiAvn69vG5qFHd
-         ZafANSv/faQoR5wY2csen0ySWD9SNG/pqqL99rRa8kxf++nSxUyNJhW5lfBXUr25riO9
-         oc2o1M91fD/XrcP63NqZcLOyv6+Rs4fMmZuV2bATkmHqJb3AQqi3qb3EKqQPaP+Q+Gli
-         OmyhxYdG6a9fQi/CFWLHDDh28oU6soZIDrj1a94Ck4TxOEjLiWT7r5578ocrS49SoEGl
-         TwAAyLTAEWhYDYTSbumcFSueFiFncKoMilYBKq1kkZ8ZqtebY2K68Dh56PY3rD00XiO3
-         /rbA==
-X-Gm-Message-State: AOAM530+cxwW0gpYXQfojl040zii/QJwu770i3Ty1tug8CnLPS0ixoC9
-        9cyVvKWdVLl8+CJ02L1bUXiGCzc596g=
-X-Google-Smtp-Source: ABdhPJw/aplz7STll390pWz6OKVnbZvyGC+GufTveOSzq1eErE4ZEA3tGS9NlLIjbBMqaSkNVeHNDg==
-X-Received: by 2002:a5d:6205:0:b0:1e4:b3fd:9ba8 with SMTP id y5-20020a5d6205000000b001e4b3fd9ba8mr3514219wru.426.1645735121413;
-        Thu, 24 Feb 2022 12:38:41 -0800 (PST)
+        bh=oPNuFQbuxhEXkfATdZeV447TAqaaEdYD+9qvHIVYfg0=;
+        b=DL6WS2ezsD4v83xMBA9z9+I9LruVSh6xMFVp08VI7lkjS2VFhSaFDbhnkDAsI20wqq
+         Xi2vbssiMBEMHyRwEchJGg6GKGSqrCqL/sWSM2qZsAdWH5r0GGxVvwAvqrK2em2lkDgF
+         GUcNobPWNbyUu5lIcIRFX8jZBCnzHT4yUR2X640jPfXF+fRzzVfrA7puYOludQWtK+xw
+         Hz/WxyztjrpTsDhDb35wCuVKynwa+hs84eWs2/BpWuQ97hp0HvmMufK1RtWDKXtTL6fx
+         xmZNYgae1zsO6UNBKAOYvl/RA55O89T3Eljd/lEY11wG733TPQ3KOrqBaZtyS5QYZaY5
+         bpHg==
+X-Gm-Message-State: AOAM5333gyoZNrUsPYBk/pIqKe2++b4J8tlzftVSzn6H3NDwq52CeVsD
+        JNGuHCG1FQiFvtSh4dO0E7tc687BmSg=
+X-Google-Smtp-Source: ABdhPJx4a1vPH2nI4iJ060+NetX+V+dyMtJA7UefSpqJsWqHO9bKMPI1hSoIwu/WWR0MvKWaYnvYnA==
+X-Received: by 2002:adf:f2c9:0:b0:1e3:1cfa:551a with SMTP id d9-20020adff2c9000000b001e31cfa551amr3707291wrp.603.1645735122229;
+        Thu, 24 Feb 2022 12:38:42 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q11-20020adfcd8b000000b001e320028660sm285328wrj.92.2022.02.24.12.38.40
+        by smtp.gmail.com with ESMTPSA id m18-20020a5d56d2000000b001edc00dbeeasm334871wrw.69.2022.02.24.12.38.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Feb 2022 12:38:40 -0800 (PST)
-Message-Id: <de7ab2f39d90c6b33b21a5adf126ec2ef5ce27e6.1645735117.git.gitgitgadget@gmail.com>
+        Thu, 24 Feb 2022 12:38:41 -0800 (PST)
+Message-Id: <7f9b65bd22551fd7fd5d2f0bf18aee8c25f1db99.1645735117.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1163.git.1645735117.gitgitgadget@gmail.com>
 References: <pull.1163.git.1645735117.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 24 Feb 2022 20:38:33 +0000
-Subject: [PATCH 4/7] commit-graph: fix generation number v2 overflow values
+Date:   Thu, 24 Feb 2022 20:38:34 +0000
+Subject: [PATCH 5/7] commit-graph: document file format v2
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,89 +67,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The Generation Data Chunk was implemented and tested in e8b63005c
-(commit-graph: implement generation data chunk, 2021-01-16), but the
-test was carefully constructed to work on systems with 32-bit dates.
-Since the corrected commit date offsets still required more than 31
-bits, this triggered writing the generation_data_overflow chunk.
+The corrected commit date was first documented in 5a3b130ca (doc: add
+corrected commit date info, 2021-01-16) and it used an optional chunk to
+augment the commit-graph format without modifying the file format
+version.
 
-However, upon closer look, the
-write_graph_chunk_generation_data_overflow() method writes the offsets
-to the chunk (as dictated by the format) but fill_commit_graph_info()
-treats the value in the chunk as if it is the full corrected commit date
-(not an offset). For some reason, this does not cause an issue when
-using the FUTURE_DATE specified in t5318-commit-graph.sh, but it does
-show up as a failure in 'git commit-graph verify' if we increase that
-FUTURE_DATE to be above four billion.
+One major benefit to this approach is that corrected commit dates could
+be written without causing a backwards compatibility issue with Git
+versions that do not understand them. The topological level was still
+available in the CDAT chunk as it was before.
 
-Fix this error and update the test to require 64-bit dates so we can
-safely use this large value in our test.
+However, this causes a different issue: more data needs to be loaded
+from disk when parsing commits from the commit-graph. In cases where
+there is no significant algorithmic gain from using corrected commit
+dates, commit walks take up to 20% longer because of this extra data.
+
+Create a new file format version for the commit-graph format that
+differs only in the CDAT chunk: it now stores corrected commit date
+offsets. This brings our data back to normal and will demonstrate
+performance gains in almost all cases.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- commit-graph.c          |  2 +-
- t/t5318-commit-graph.sh | 21 +++++++++++++++++++--
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ .../technical/commit-graph-format.txt         | 22 ++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 8e52bb09552..b86a6a634fe 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -806,7 +806,7 @@ static void fill_commit_graph_info(struct commit *item, struct commit_graph *g,
- 				die(_("commit-graph requires overflow generation data but has none"));
+diff --git a/Documentation/technical/commit-graph-format.txt b/Documentation/technical/commit-graph-format.txt
+index 87971c27dd7..2cb48993314 100644
+--- a/Documentation/technical/commit-graph-format.txt
++++ b/Documentation/technical/commit-graph-format.txt
+@@ -36,7 +36,7 @@ HEADER:
+       The signature is: {'C', 'G', 'P', 'H'}
  
- 			offset_pos = offset ^ CORRECTED_COMMIT_DATE_OFFSET_OVERFLOW;
--			graph_data->generation = get_be64(g->chunk_generation_data_overflow + 8 * offset_pos);
-+			graph_data->generation = item->date + get_be64(g->chunk_generation_data_overflow + 8 * offset_pos);
- 		} else
- 			graph_data->generation = item->date + offset;
- 	} else
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 1afee1c2705..5e4b0216fa6 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -815,6 +815,19 @@ test_expect_success 'corrupt commit-graph write (missing tree)' '
- 	)
- '
+   1-byte version number:
+-      Currently, the only valid version is 1.
++      This version number can be 1 or 2.
  
-+# The remaining tests check timestamps that flow over
-+# 32-bits. The graph_git_behavior checks can't take a
-+# prereq, so just stop here if we are on a 32-bit machine.
-+
-+if ! test_have_prereq TIME_IS_64BIT
-+then
-+	test_done
-+fi
-+if ! test_have_prereq TIME_T_IS_64BIT
-+then
-+	test_done
-+fi
-+
- # We test the overflow-related code with the following repo history:
- #
- #               4:F - 5:N - 6:U
-@@ -832,10 +845,10 @@ test_expect_success 'corrupt commit-graph write (missing tree)' '
- # The largest offset observed is 2 ^ 31, just large enough to overflow.
- #
+   1-byte Hash Version
+       We infer the hash length (H) from this value:
+@@ -85,13 +85,22 @@ CHUNK DATA:
+       position. If there are more than two parents, the second value
+       has its most-significant bit on and the other bits store an array
+       position into the Extra Edge List chunk.
+-    * The next 8 bytes store the topological level (generation number v1)
+-      of the commit and
+-      the commit time in seconds since EPOCH. The generation number
+-      uses the higher 30 bits of the first 4 bytes, while the commit
++    * The next 8 bytes store the generation number information of the
++      commit and the commit time in seconds since EPOCH. The generation
++      number uses the higher 30 bits of the first 4 bytes, while the commit
+       time uses the 32 bits of the second 4 bytes, along with the lowest
+       2 bits of the lowest byte, storing the 33rd and 34th bit of the
+       commit time.
++      - If the commit-graph file format is version 1, then the higher 30
++	bits contain the topological level (generation number v1) for the
++	commit.
++      - If the commit-graph file format is version 2, then the higher 30
++	bits contain the corrected commit date offset (generation number
++	v2) for the commit, except if the offset cannot be stored within
++	29 bits. If the offset is too large for 29 bits, then the value
++	stored here has its most-significant bit on and the other bits
++	store the position of the corrected commit date in the Generation
++	Date Overflow chunk.
  
--test_expect_success 'set up and verify repo with generation data overflow chunk' '
-+test_expect_success TIME_IS_64BIT,TIME_T_IS_64BIT 'set up and verify repo with generation data overflow chunk' '
- 	objdir=".git/objects" &&
- 	UNIX_EPOCH_ZERO="@0 +0000" &&
--	FUTURE_DATE="@2147483646 +0000" &&
-+	FUTURE_DATE="@4000000000 +0000" &&
- 	test_oid_cache <<-EOF &&
- 	oid_version sha1:1
- 	oid_version sha256:2
-@@ -867,4 +880,8 @@ test_expect_success 'set up and verify repo with generation data overflow chunk'
+   Generation Data (ID: {'G', 'D', 'A', 'T' }) (N * 4 bytes) [Optional]
+     * This list of 4-byte values store corrected commit date offsets for the
+@@ -103,6 +112,9 @@ CHUNK DATA:
+     * Generation Data chunk is present only when commit-graph file is written
+       by compatible versions of Git and in case of split commit-graph chains,
+       the topmost layer also has Generation Data chunk.
++    * This chunk does not exist if the commit-graph file format version is 2,
++      because the corrected commit date offset data is stored in the Commit
++      Data chunk.
  
- graph_git_behavior 'generation data overflow chunk repo' repo left right
- 
-+# Do not add tests at the end of this file, unless they require 64-bit
-+# timestamps, since this portion of the script is only executed when
-+# time data types have 64 bits.
-+
- test_done
+   Generation Data Overflow (ID: {'G', 'D', 'O', 'V' }) [Optional]
+     * This list of 8-byte values stores the corrected commit date offsets
 -- 
 gitgitgadget
 
