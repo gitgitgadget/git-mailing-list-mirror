@@ -2,133 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6182C433EF
-	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 15:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E840C433F5
+	for <git@archiver.kernel.org>; Thu, 24 Feb 2022 15:11:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235705AbiBXPLi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Feb 2022 10:11:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48502 "EHLO
+        id S235711AbiBXPLk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Feb 2022 10:11:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232344AbiBXPLh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Feb 2022 10:11:37 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E51AC19F440
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 07:11:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645715456;
-        bh=QRMrBEAVZv1gIYu4d6LYNBlO8Zn9TFpjFu9MVHxgG+U=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=dULKZBN/jW9UfZTEtzawmct/7U+GuTVUfeU8LWQNnD/fhJVYDzSQu9FSXacF0ZQTS
-         +mj8OvZqWWXZJYRBuQjSRKdIMcrue9mILnQOhsALy2GjEkxaFPWFmblCnonpb1imyk
-         QmVWIvOu/MaIyr9n9FL4cD+3au9tJfE95FbSoa9Y=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mel3n-1nuwcv20yD-00ajsx; Thu, 24
- Feb 2022 16:10:56 +0100
-Date:   Thu, 24 Feb 2022 16:10:54 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v5 15/30] compat/fsmonitor/fsm-listen-win32: implement
- FSMonitor backend on Windows
-In-Reply-To: <98c5adf8ca0112ebf729970a0f15302d55806bd2.1644612979.git.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202241605140.11118@tvgsbejvaqbjf.bet>
-References: <pull.1041.v4.git.1634826309.gitgitgadget@gmail.com>        <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com> <98c5adf8ca0112ebf729970a0f15302d55806bd2.1644612979.git.gitgitgadget@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S232344AbiBXPLk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Feb 2022 10:11:40 -0500
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFC475D5C2
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 07:11:09 -0800 (PST)
+Received: by mail-oo1-xc34.google.com with SMTP id x6-20020a4a4106000000b003193022319cso3854856ooa.4
+        for <git@vger.kernel.org>; Thu, 24 Feb 2022 07:11:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=1qn4X58QHsPXhrpaBwmPJQxuGoxu7R4k426eDNpgwYI=;
+        b=GFxJmVDn/XScBnbmhmAwKhVgYwN+u7sjz11cE7pxEblVMyyRd019MGX/4KWx+KWezk
+         ylTemMPXgJLno8cy3xWRFamNANAEwaeukFfefucuoUARi6kK68daEwL9DUQSpADWGKMr
+         kn6/SIJi5igoESuMTpQGkahvcYnecF9e4YMYu2aV1s72gC5Avwczi9ZiyIgG4s+Fi59G
+         YXHA6SGPbhclSmfvmxnsV2U/scjiA9HcPnW7HLFgryZwcCfFnZRKmkSXj91gewMf1zvX
+         2pgpEc/kBPLcirl4bEpqA+9tymC4u0O/q4kzY0iL5DdvQeFXo9GCmcpu4Nje/QRYStoD
+         dwwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=1qn4X58QHsPXhrpaBwmPJQxuGoxu7R4k426eDNpgwYI=;
+        b=7bjPZ2+xfM7aO8hS42hx3pMQsnVLuaNebTCxFYNB77Ha4Y3zjPho2IQXeqpS6/kf0u
+         mNkDSy2xennkNuMgew0UbnymvgpOkq4Aqoe5VNf4Q26m66qBhpsIItOqojYxD5V2nMnf
+         DegZyLtBETWZeTuPmliTc57xo4MbBpBEHfOkfK4W98UgDz5Avxilhz7SRruyZC1pDfVL
+         1vmpTOIzX4RC/eh2an2/bpzAjCsMkEULamqchIuxutb14ssPyKeuYYkqfeBOGsnUudCl
+         5qz3nmuISrbwBELwJmHrlvGx0scQmsls2AEbW2WouRkj0dVAMWBHntE+ytgNgy6Wh1zj
+         Xtyw==
+X-Gm-Message-State: AOAM532IKg6zD2So4TTgPBMAb7Nwn3sqASaiAKz+gn89L4RUWUVsew24
+        Oi8WZurZju7jEMlz8ZX4b57MFfgmkbDV
+X-Google-Smtp-Source: ABdhPJyurS0NPY6T6j7h//tWeenY2sFWhnb6hl1wkSkonptmovis/ZcHdZ3PfqSv7ElK0+BB4geUVA==
+X-Received: by 2002:a05:6870:ea02:b0:d3:5691:f0ea with SMTP id g2-20020a056870ea0200b000d35691f0eamr1356523oap.22.1645715469235;
+        Thu, 24 Feb 2022 07:11:09 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id h16sm1257536otg.35.2022.02.24.07.11.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 24 Feb 2022 07:11:08 -0800 (PST)
+Message-ID: <05747ff2-f839-5408-e25b-698b147ef158@github.com>
+Date:   Thu, 24 Feb 2022 10:11:07 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:q1tzeVkAXMJEnXiQJJgJy+fUzVm2eejn/X64Tqk48IjOr4gcl0b
- +yMJQUdTScDaM47FvEgrDZQcabvQ5fpYQIy8GvjKMfT4xoPTijc5YXMqKU6FVxR8GGh0/+0
- tCiOzpIbefvvoIcHqX7nD+fep5DGgDlUqPojhStq8hz4ynEZeUbMajpwrP6ANwB+am2BInm
- RdBQ8/dnWxaqre79xntYw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:lM76atgqjB4=:qmRMq+ofAMIDC0NDQd1rSZ
- H3w7PDaUtWa5d/6/QdRM/3UyzkdqUMXqY+Fg9aMiUnOLAicDmPMBEsEEh6nsK4xzixXKfGtYu
- 7PC0Ch1frwjs+9aS4HX1foushSKAY0U89s9RLveY3q57m4vMPdJB+EEDhnnay8HG6ZdwVKT/s
- qAmSiV0lGsQut43mR+Yjr1VLPiwxr8RaHyhSh+OuxMauIrUzTypmj6IRxdwy9mu93JE5w6fkC
- PMh38rB9+dtn0l5aPM828YYqKD8b0rKt0pI812OZTS0qdWs/kw8nAMIQypZY9PdxuJ3Ac2ZHY
- DuEphyeT4v/iYQIMCuiPc9OhgiRMywc0wNII2aQ6QyJZkYcPe6spAQQ+Ae3AS5yZwG5TdmLkQ
- aLt5GYtbsu5ADVkNgFmwhIDuJ/5Dmdf6WaIUPLVyh2GOSJWLRIzG9p9c2WZ0dB1JCTJwDSyvY
- 9IBlZyfzKJwmYeCc6u8UejDflzhPuc01rkAHRCfwrIhi9homNTAr6zMPvcz2AWK2JIsR8gUzp
- VhLFOBsQDljwRRLHPX+cMtwNaT4ak2uAtNzZkBT3emp1C8njdn3GmnaUH4eMvZLbZLQ2vPHq7
- lQGuE48N+Uspgxy3Wqg+Rf4hGEuEtQqF8X9jz3c3TA/NLrj+mAURE+vlZm7UIgOwcsdKgk2gM
- 8O8OLj5gMhmvWLVbZ6S8KR5OIBjt4V2MRN4WiNnuEqPV2XTZ8Cna79VJ9+Uj2jHWFAqsmIPHI
- uXhgOMlzPwfWMTRVXL2C7kjSsZxHz1ZmW6rvs6NyXqtiZbAn4eB1f1v2Qq9dWcs1XLfiBUuVk
- R3r8GCVJlDDPDQAyL/K6StQ8hlHycRtFu3KwaYA9Tw2V+UASANu8OHPGOfRkQkmG/igto83Vk
- E6b2ikIRqsFDHQA6/WObXKcTNxfCfktXfEYBaQ4NWsyR3zWmR6GGmpwlqa9jlBVEBqe7n+cKS
- E/lWZc/xAlBgC3LVBwLQi7DTMGX42U3Rw6+S33FY0+myu2TO7ZCGXVAH1dQxaAxEWWlnUj+xn
- /evIzZONd/AyS1kLkn75qiIJ1IILCHW5Hy05O63aztLt1c6vAigUDu2Me0107ShSR0YyiUFQB
- U7Q07/RQ3JpwD8=
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH 07/23] fsmonitor-settings: virtual repos are incompatible
+ with FSMonitor
+Content-Language: en-US
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
+ <4e856d60e385d64158f17ec1226f97eb323bc55e.1644940774.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <4e856d60e385d64158f17ec1226f97eb323bc55e.1644940774.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+On 2/15/2022 10:59 AM, Jeff Hostetler via GitGitGadget wrote:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+> 
+> Virtual repos, such as GVFS (aka VFS for Git), are incompatible
+> with FSMonitor.
 
-merely a comment:
-
-On Fri, 11 Feb 2022, Jeff Hostetler via GitGitGadget wrote:
+I would swap all of your "GVFS (aka VFS for Git)" for just
+"VFS for Git".
 
 > +/*
-> + * Convert the WCHAR path from the notification into UTF8 and
-> + * then normalize it.
+> + * GVFS (aka VFS for Git) is incompatible with FSMonitor.
+> + *
+> + * Granted, core Git does not know anything about GVFS and we
+> + * shouldn't make assumptions about a downstream feature, but users
+> + * can install both versions.  And this can lead to incorrect results
+> + * from core Git commands.  So, without bringing in any of the GVFS
+> + * code, do a simple config test for a published config setting.  (We
+> + * do not look at the various *_TEST_* environment variables.)
 > + */
-> +static int normalize_path_in_utf8(FILE_NOTIFY_INFORMATION *info,
-> +				  struct strbuf *normalized_path)
+> +static enum fsmonitor_reason is_virtual(struct repository *r)
 > +{
-> +	int reserve;
-> +	int len = 0;
+> +	const char *const_str;
 > +
-> +	strbuf_reset(normalized_path);
-> +	if (!info->FileNameLength)
-> +		goto normalize;
+> +	if (!repo_config_get_value(r, "core.virtualfilesystem", &const_str))
+> +		return FSMONITOR_REASON_VIRTUAL;
 > +
-> +	/*
-> +	 * Pre-reserve enough space in the UTF8 buffer for
-> +	 * each Unicode WCHAR character to be mapped into a
-> +	 * sequence of 2 UTF8 characters.  That should let us
-> +	 * avoid ERROR_INSUFFICIENT_BUFFER 99.9+% of the time.
-> +	 */
-> +	reserve = info->FileNameLength + 1;
-> +	strbuf_grow(normalized_path, reserve);
-> +
-> +	for (;;) {
-> +		len = WideCharToMultiByte(CP_UTF8, 0, info->FileName,
-> +					  info->FileNameLength / sizeof(WCHAR),
-> +					  normalized_path->buf,
-> +					  strbuf_avail(normalized_path) - 1,
-> +					  NULL, NULL);
-> +		if (len > 0)
-> +			goto normalize;
-> +		if (GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
-> +			error("[GLE %ld] could not convert path to UTF-8: '%.*ls'",
-> +			      GetLastError(),
-> +			      (int)(info->FileNameLength / sizeof(WCHAR)),
-> +			      info->FileName);
-> +			return -1;
-> +		}
-> +
-> +		strbuf_grow(normalized_path,
-> +			    strbuf_avail(normalized_path) + reserve);
-> +	}
-> +
-> +normalize:
-> +	strbuf_setlen(normalized_path, len);
-> +	return strbuf_normalize_path(normalized_path);
+> +	return FSMONITOR_REASON_ZERO;
 > +}
 
-There are Unicode pages that require quite a few more bytes per wide
-character (IIRC it can blow up to six bytes), but it should be good enough
-for now, and we can always revisit this easily enough at a later stage.
+This reason seems to be specific to a config setting that only
+exists in the microsoft/git fork. Perhaps this patch should remain
+there.
 
-I really like this patch, as it makes the complexities of handling two
-watches and the complexities of handling overlapped (and asynchronous)
-results look easy.
+However, there is also the discussion of vfsd going on, so something
+similar might be necessary for that system. Junio also mentioned
+wanting to collaborate on a common indicator that virtualization was
+being used, so maybe we _should_ make core.virtualFilesystem a config
+setting in the core Git project.
 
-Thank you!
-Dscho
+The reason for the incompatibility here is that VFS for Git has its
+own filesystem watcher and Git gets updates from it via custom code
+that is a precursor to this FS Monitor feature. I don't know if vfsd
+has plans for a similar setup. (It would probably be best to fit
+into the FS Monitor client/server model and use a different daemon
+for those virtualized repos, but I don't know enough details to be
+sure.)
+
+CC'ing Jonathan Nieder for thoughts on this.
+
+Thanks,
+-Stolee
