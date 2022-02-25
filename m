@@ -2,126 +2,263 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2E8AC433EF
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 15:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B723CC433EF
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 15:08:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236319AbiBYPEg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 10:04:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40292 "EHLO
+        id S240669AbiBYPJZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 10:09:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235162AbiBYPEe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 10:04:34 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8D3E18462A
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 07:04:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645801437;
-        bh=NeE9FyxvssWJUy5bMvKsfR7FglpJ5n2/hZqSFxnSCg0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=NWuq5U2+zAqWPW1L0M+T4DFkcBMwP9BzAqlGTB39nTMg4/6hmpZoyjkUeMPNKBXPf
-         xfH3loD9iX/fHZXLkIvW6/SAIufrENnZDiM0MVO45Ecd5PkWnuWyEr7+/NkO9KSou8
-         qjgXtg/4Y2lybhjhxPeoRo0Bht4bIpUvgD5Lw9Ok=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MHXBp-1nSGq42JCD-00DVXH; Fri, 25
- Feb 2022 16:03:57 +0100
-Date:   Fri, 25 Feb 2022 16:03:55 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Julia Lawall <julia.lawall@inria.fr>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        git <git@vger.kernel.org>, cocci@inria.fr
-Subject: Re: [cocci] [PATCH] add usage-strings ci check and amend remaining
- usage strings
-In-Reply-To: <alpine.DEB.2.22.394.2202221436320.2556@hadrien>
-Message-ID: <nycvar.QRO.7.76.6.2202251601040.11118@tvgsbejvaqbjf.bet>
-References: <220221.86tucsb4oy.gmgdl@evledraar.gmail.com> <20220221173357.8622-1-chakrabortyabhradeep79@gmail.com> <nycvar.QRO.7.76.6.2202221152230.11118@tvgsbejvaqbjf.bet> <220222.867d9n83ir.gmgdl@evledraar.gmail.com>
- <alpine.DEB.2.22.394.2202221436320.2556@hadrien>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S240345AbiBYPJX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 10:09:23 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B6C57EA25
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 07:08:50 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id u1so4947435wrg.11
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 07:08:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=ezEmxTVZNu2aIIx7bPf7QJuz+rcA0Vealqv5nlKhkXo=;
+        b=O5BUpwF8H0RU91RAGfk0Cf5+yLyHILpMonASW+q6TNw6x5vA3JpsOSJHjH50YD5Zx0
+         eKmIMdXBypBTlno8IS0i2aoYFuEHkaGbaMGD0JKhmkem+w60FaKfHQJZ4DK/2WLUEB8v
+         PGdSTN9I4i/CX0W+PoPdaanSNDSJntxH1W1fnPqZEP3M3xMeqZX9F6Gja2BLqqzKfyvz
+         2LgNagpsBmXGxJkF0YfdSgdH7brBZSjnfI9/Vl8l3fkCm8Zh5ZPnsYx+CNN+MNvO2PJH
+         e9017krleKawtksLO6JDJR4a65ityZHJpE4ccUnm7H7MhQSURZDuBxqqbxVs9CJae2eR
+         hCfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=ezEmxTVZNu2aIIx7bPf7QJuz+rcA0Vealqv5nlKhkXo=;
+        b=N084aUwPOEHJW+VAVxB7WX4p/usj6AanJT44NMVEnXKSP+uO74GRGXeV69mSqiOXx+
+         tbiWWFSSvuhQaFTlZlXgraMZTHjh5pZCRS83ueWpVtHGNGHbguVP7L+sF7EQvyOoUcrA
+         KhzOIGI9AOlusWubMQDbrLRdfVqIlHAV0OeidbegMt8PqnLTMJvGWTzv3JcTuYXy17Wy
+         Gz+62flwXZI+4WBsHRcKH2noXv3GQqxE8u3G+AsAtZDbS4YWzfoxbW4M6jT0BpmArPH0
+         DRIKHf8WImpvkU/GAAM4urPRZ/bPj5czMhp5/PNUfvCEpDysKFiBOGuez+UEL4iFKq3U
+         U6hQ==
+X-Gm-Message-State: AOAM533xuf+12eBpqUDEhqCflhfwR5L721gFsBwxKhlYMN4/0VmfpbtR
+        41ohH5oY7ahcxlR1zJhEOSfvcfQzrxs=
+X-Google-Smtp-Source: ABdhPJzZcP5M01MUOnCcqSLp2knnre6b9yIyCCfP0TXzeKo0zL4sRvDIsWn7UibgiXUKWSkzrk73pg==
+X-Received: by 2002:a05:6000:8d:b0:1ed:9ed7:c915 with SMTP id m13-20020a056000008d00b001ed9ed7c915mr6458469wrx.543.1645801728756;
+        Fri, 25 Feb 2022 07:08:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v5-20020a05600c15c500b003810188b6basm5684206wmf.28.2022.02.25.07.08.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Feb 2022 07:08:48 -0800 (PST)
+Message-Id: <pull.1164.git.1645801727732.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 25 Feb 2022 15:08:47 +0000
+Subject: [PATCH] worktree: add -z option for list subcommand
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1687200457-1645801437=:11118"
-X-Provags-ID: V03:K1:s5ntb5VsLNKSNojXg+N/+x2yMHxWS8FysZL6UoDT+S1QjOoFDNM
- ImrHj/jN50UKGPFp9ngr/xAB0q70GYVBou9QUKd0KpF+pwJtHiXreyDNQcEXstgIc54UEEm
- bXalHW4MBvuUMispSi32vsDSsChY73BZigQlbiBEFANlIguT2HzBScuGD5wZQ3l7ZAZDVvR
- DkplhiEkOdnT+CLpSuiRg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Q5Ik57tstAs=:40eb6fueA/mjwERCyqL2PF
- vaTXJzM+h/wHdfon7iSeb5w6fRGeoTB2fyyc2gUY2yRRnXX1j48GP3qBmZlm59aPTY53sdbKl
- eHjuoAh3Z5XTc8R79uOJ02psmqn1ic2Ol9jY48jt7Y9va85kA6VeGcHSee3gLTZI5QM4XPVC4
- /uvuqcOcsJjx5n7MulN8rKVwIzc7bdNRjWG4OMZaFpyj1Ayi3bR5ad97BF/bVaCFv7SE7r//k
- LXcP0+TuaEhob0KmSsezlIseKU0Im3MmE3/X7LTOlFpE9JRJXcEiaHeqadQ2ZKiLGCD/18F4m
- ATm90sArArG4PRDKYJhME4jHgKtAtX2DBREBk/Aa9qeHnZtT/otinJT+91Ckrj6u7yiK2PYnv
- kWcV/XiU7l0gBXA+5pB+trpwK9YkhZ69DDEkklYYzTGGBhx9nKfAzvUNeHKrOZ3qDT5MHZgBl
- N0Oz3Qr1olipJF/m80gwLrVg1IkthJEHHQ32PRHrUbscJIX4Q2DjiME8hT0M98bwWJ1CbgpG8
- bfhNgkMJ9FYgwbnEncQH0Oso/AlADkR9WKcE2T5nSaW5sIF5RHOQRImb/5s2p+im1qn2M4I4U
- 0hWVuQfXBH3XFBPVtfNu8E42pPqEFGulI/Sa1ZGwFyxmtW970GqAOGGbuS0YlidPAD4GlC9L3
- QVEdvS3cldQWNiVbTeSYBrVxHA2zkErXk2VI0v8ipPBiJbSeFvhb45apYlYoERzQjcjOmx0uN
- F7eu6+vvjhqjUbD7yRCqBhnEviddK5hRPby4Lsu6eOcuB3lpLP/pJHmEFtjYYwZJj9iJ4VfSu
- HWMIiQwWVagBFr8Rl8iIM4h2PoGF4ilYHk7p4Cy/VVOef7ICm4HUagPQ/+Upt2Y5XU6IAR7rg
- 7ZN+fsh6kcoLrr6FtNTkJj5nbHm/e0v9XxeqnUjdgryhgAHXF7XyM8ezCTVOOZmqouv/+VIsQ
- E5WN2vzhydx7FxRSR6UGYQkhZA2U99rRiIp4rXzURG0VpWNtrynz/7bjRn5zh45XC6oRQtMo4
- LVOYG7insxzwJzgXEym08tuqlf29+d1dZSY381hOYJjh+foHR5OO/o6ONWOHLZheAyhXI4oGj
- BbbvNmsjzDdGE0=
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
---8323328-1687200457-1645801437=:11118
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Add a -z option to be used in conjunction with --porcelain that gives
+NUL-terminated output. This enables 'worktree list --porcelain' to
+handle worktree paths that contain newlines.
 
-Hi Julia,
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+    worktree: add -z option for list subcommand
+    
+    Add a -z option to be used in conjunction with --porcelain that gives
+    NUL-terminated output. This enables 'worktree list --porcelain' to
+    handle worktree paths that contain newlines.
+    
+    For a previous discussion of the merits of adding a -z option vs quoting
+    the worktree path see
+    https://lore.kernel.org/git/CAPig+cT-9sjmkdWFEcFS=rg9ziV9b6uWNMpQ8BTYP-a258La6Q@mail.gmail.com/
 
-On Tue, 22 Feb 2022, Julia Lawall wrote:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1164%2Fphillipwood%2Fwip%2Fworktree-list-nul-termination-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1164/phillipwood/wip/worktree-list-nul-termination-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1164
 
-> [I]f there are some cases that are useful to do statically, with only
-> local information, then using Coccinelle could be useful to get the
-> problem out of the way once and for all.  Coccinelle doesn't support
-> much processing of strings directly, but you can always write some
-> python code to test the contents of a string and to create a new one.
->
-> Let me know if you want to try this.  You can also check, eg the demo
-> demos/pythontococci.cocci to see how to create code in a python script a=
-nd
-> then use it in a normal SmPL rule.
->
-> If some context has to be taken into account and the context in the same
-> function, then that can also be done with Coccinelle, eg
->
-> A
-> ...
-> B
->
-> matches the case where after an A there is a B on all execution paths
-> (except perhaps those that end in an error exit) and
->
-> A
-> ... when exists
-> B
->
-> matches the case where there is a B sometime after executing A, even if
-> that does not always occur.
->
-> If the context that you are interested in is in a called function or is =
-in
-> the calling context, then Coccinelle might not be the ideal choice.
-> Coccinelle works on one function at a time, so to do anything
-> interprocedural, you have to do some hacks.
+ Documentation/git-worktree.txt | 15 +++++++++++----
+ builtin/worktree.c             | 33 +++++++++++++++++++++------------
+ t/t2402-worktree-list.sh       | 21 +++++++++++++++++++++
+ 3 files changed, 53 insertions(+), 16 deletions(-)
 
-Right. The code in question is not actually calling a function, but a
-macro, and passes a literal string to the macro that we would want to
-check statically.
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index 9e862fbcf79..a3fcd498df7 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git worktree add' [-f] [--detach] [--checkout] [--lock [--reason <string>]] [-b <new-branch>] <path> [<commit-ish>]
+-'git worktree list' [-v | --porcelain]
++'git worktree list' [-v | --porcelain [-z]]
+ 'git worktree lock' [--reason <string>] <worktree>
+ 'git worktree move' <worktree> <new-path>
+ 'git worktree prune' [-n] [-v] [--expire <expire>]
+@@ -223,7 +223,13 @@ This can also be set up as the default behaviour by using the
+ --porcelain::
+ 	With `list`, output in an easy-to-parse format for scripts.
+ 	This format will remain stable across Git versions and regardless of user
+-	configuration.  See below for details.
++	configuration.  It is recommended to combine this with `-z`.
++	See below for details.
++
++-z::
++	When `--porcelain` is specified with `list` terminate each line with a
++	NUL rather than a newline. This makes it possible to parse the output
++	when a worktree path contains a newline character.
+ 
+ -q::
+ --quiet::
+@@ -411,7 +417,8 @@ working tree itself.
+ 
+ Porcelain Format
+ ~~~~~~~~~~~~~~~~
+-The porcelain format has a line per attribute.  Attributes are listed with a
++The porcelain format has a line per attribute.  If `-z` is given then the lines
++are terminated with NUL rather than a newline.  Attributes are listed with a
+ label and value separated by a single space.  Boolean attributes (like `bare`
+ and `detached`) are listed as a label only, and are present only
+ if the value is true.  Some attributes (like `locked`) can be listed as a label
+@@ -449,7 +456,7 @@ prunable gitdir file points to non-existent location
+ 
+ ------------
+ 
+-If the lock reason contains "unusual" characters such as newline, they
++Unless `-z` is used any "unusual" characters in the lock reason such as newlines
+ are escaped and the entire reason is quoted as explained for the
+ configuration variable `core.quotePath` (see linkgit:git-config[1]).
+ For Example:
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 0d0809276fe..b4cc586f5c5 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -575,35 +575,38 @@ static int add(int ac, const char **av, const char *prefix)
+ 	return add_worktree(path, branch, &opts);
+ }
+ 
+-static void show_worktree_porcelain(struct worktree *wt)
++static void show_worktree_porcelain(struct worktree *wt, int line_terminator)
+ {
+ 	const char *reason;
+ 
+-	printf("worktree %s\n", wt->path);
++	printf("worktree %s%c", wt->path, line_terminator);
+ 	if (wt->is_bare)
+-		printf("bare\n");
++		printf("bare%c", line_terminator);
+ 	else {
+-		printf("HEAD %s\n", oid_to_hex(&wt->head_oid));
++		printf("HEAD %s%c", oid_to_hex(&wt->head_oid), line_terminator);
+ 		if (wt->is_detached)
+-			printf("detached\n");
++			printf("detached%c", line_terminator);
+ 		else if (wt->head_ref)
+-			printf("branch %s\n", wt->head_ref);
++			printf("branch %s%c", wt->head_ref, line_terminator);
+ 	}
+ 
+ 	reason = worktree_lock_reason(wt);
+ 	if (reason && *reason) {
+ 		struct strbuf sb = STRBUF_INIT;
+-		quote_c_style(reason, &sb, NULL, 0);
+-		printf("locked %s\n", sb.buf);
++		if (line_terminator) {
++			quote_c_style(reason, &sb, NULL, 0);
++			reason = sb.buf;
++		}
++		printf("locked %s%c", reason, line_terminator);
+ 		strbuf_release(&sb);
+ 	} else if (reason)
+-		printf("locked\n");
++		printf("locked%c", line_terminator);
+ 
+ 	reason = worktree_prune_reason(wt, expire);
+ 	if (reason)
+-		printf("prunable %s\n", reason);
++		printf("prunable %s%c", reason, line_terminator);
+ 
+-	printf("\n");
++	fputc(line_terminator, stdout);
+ }
+ 
+ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
+@@ -681,12 +684,15 @@ static void pathsort(struct worktree **wt)
+ static int list(int ac, const char **av, const char *prefix)
+ {
+ 	int porcelain = 0;
++	int line_terminator = '\n';
+ 
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "porcelain", &porcelain, N_("machine-readable output")),
+ 		OPT__VERBOSE(&verbose, N_("show extended annotations and reasons, if available")),
+ 		OPT_EXPIRY_DATE(0, "expire", &expire,
+ 				N_("add 'prunable' annotation to worktrees older than <time>")),
++		OPT_SET_INT('z', NULL, &line_terminator,
++			    N_("fields are separated with NUL character"), '\0'),
+ 		OPT_END()
+ 	};
+ 
+@@ -696,6 +702,8 @@ static int list(int ac, const char **av, const char *prefix)
+ 		usage_with_options(worktree_usage, options);
+ 	else if (verbose && porcelain)
+ 		die(_("options '%s' and '%s' cannot be used together"), "--verbose", "--porcelain");
++	else if (!line_terminator && !porcelain)
++		die(_("'-z' requires '--porcelain'"));
+ 	else {
+ 		struct worktree **worktrees = get_worktrees();
+ 		int path_maxlen = 0, abbrev = DEFAULT_ABBREV, i;
+@@ -708,7 +716,8 @@ static int list(int ac, const char **av, const char *prefix)
+ 
+ 		for (i = 0; worktrees[i]; i++) {
+ 			if (porcelain)
+-				show_worktree_porcelain(worktrees[i]);
++				show_worktree_porcelain(worktrees[i],
++							line_terminator);
+ 			else
+ 				show_worktree(worktrees[i], path_maxlen, abbrev);
+ 		}
+diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
+index c8a5a0aac6d..48d5d30d709 100755
+--- a/t/t2402-worktree-list.sh
++++ b/t/t2402-worktree-list.sh
+@@ -64,6 +64,27 @@ test_expect_success '"list" all worktrees --porcelain' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '"list" all worktrees --porcelain -z' '
++	test_when_finished "rm -rf here _actual actual expect &&
++				git worktree prune" &&
++	printf "worktree %sQHEAD %sQbranch %sQQ" \
++		"$(git rev-parse --show-toplevel)" \
++		$(git rev-parse HEAD --symbolic-full-name HEAD) >expect &&
++	git worktree add --detach here main &&
++	printf "worktree %sQHEAD %sQdetachedQQ" \
++		"$(git -C here rev-parse --show-toplevel)" \
++		"$(git rev-parse HEAD)" >>expect &&
++	git worktree list --porcelain -z >_actual &&
++	cat _actual | tr "\0" Q >actual	&&
++	test_cmp expect actual
++'
++
++test_expect_success '"list" -z fails without --porcelain' '
++	test_when_finished "rm -rf here && git worktree prune" &&
++	git worktree add --detach here main &&
++	test_must_fail git worktree list -z
++'
++
+ test_expect_success '"list" all worktrees with locked annotation' '
+ 	test_when_finished "rm -rf locked unlocked out && git worktree prune" &&
+ 	git worktree add --detach locked main &&
 
-I did have my doubts that it would be easy with Coccinelle, but since =C3=
-=86var
-seemed so confident, I tried it, struggled, and decided to follow up with
-you.
-
-Thank you for confirming my suspicion!
-Johannes
-
---8323328-1687200457-1645801437=:11118--
+base-commit: dab1b7905d0b295f1acef9785bb2b9cbb0fdec84
+-- 
+gitgitgadget
