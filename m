@@ -2,232 +2,258 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C8C5C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 20:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD5A2C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 20:44:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236349AbiBYUZk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 15:25:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48324 "EHLO
+        id S236862AbiBYUos (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 15:44:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235062AbiBYUZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 15:25:38 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CD3B214F99
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 12:25:06 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id h17so162775plc.5
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 12:25:06 -0800 (PST)
+        with ESMTP id S229774AbiBYUor (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 15:44:47 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2B741AE65C
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 12:44:14 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id s24so9023745edr.5
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 12:44:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=9BmahDNH3REI5WFHAhNr/9R5HIbtrovWr11v1KpKMAE=;
-        b=RGHi+5mqEQb+jRlNsOPdK61ZTPXpCjkAwikou+WgSHN/ez9n43LMSL2WBFk+wo2s+m
-         991jhY+1edO7w4MU/u0TAmpQaBMXklfA5y2GD6AAumnCshnb5xN3JSGP/i/uN45q/kL8
-         Glg93rJ4AEk55y4sKTvEGbMWQCGHRFE2biEywbdK1/Lj48nfqb5JIBqM37RY4lJn8/7S
-         dL639Y7ZzldfQeLGEhj2iD94zc7VmS++xM10hq19QKEcbUCyn25dSIsj/EHSFV3cq2AI
-         XRZxxzXtAt5na36X7G9CtCZwvwKL1DFEHEw+1ZSTlA0qBcfTbzJlkndGFWjlz+PPUFdR
-         QfVw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=K0l1Bkkuxz3jGu8w2r3XvRqq+NjRiZm0tP9alprILFk=;
+        b=GD0pyBK+dh/C5vwq7K6H7Bk5Y3A3+50+MdUxrwUFXOeJIzllwkvvOu1oReDaDsby9C
+         KXDs5bT5yaIdWxyrtS1iY46ML2JcQ4FqYwg6CW6Sk6wN4E3GrSLb1YECJUaAEJpBwYIi
+         LBNhlFp5IbPWPwEz6w4Nu3Botbw3ltnSf9qPtX5Da4tx8ReLySN/6X5okqvSGICrrMkE
+         uYmy1DGzv9SmyK16l5cGCL98u5qXUqcs5AkTtGGgwpFgz6C2PDZkJ3JKwaFINbiUUDtz
+         drMfJbV5OHwipjNftWyNktRL1V7kQ+c+imoHFsMh5xgxi0sTv3dQy0GWYGu8roU/JItK
+         6UMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=9BmahDNH3REI5WFHAhNr/9R5HIbtrovWr11v1KpKMAE=;
-        b=wH4cXNsEbrxFnHBIWU0gD+7c20bYOUQMzerkC6eKLNkZjRNpCtq9ctK+WczZOvsbUx
-         qcS+ku5stpymzf1B5znNg3OOO7deBRTyV7Wf7rJQjBSHurB6M9taOkqrdNNKElheMcEr
-         /bmfC0LfOVpCBbotH08zzsUN0TTdr9lzbZqC1gDzLLSGbLzulXkcktRELVxmxo5subj5
-         AToFa++buZEqhcFqh4P/4wuWBwtWpbhuEW1LMHuPGe8kj5KvaHdH0r10dBQD7/df7Gn8
-         MEQiyAzbRxoFs6moKe/DtcfxGT2b0QQ0sSuRSFpLkcAdFFj2GuPsRfETwlAvS3oVYmQf
-         ULsw==
-X-Gm-Message-State: AOAM531mb2IIOG+HGjIr0pHJX5vHZe0GHJFW2GHbnz1Oj9rhu616xI0b
-        rN9P9bmGN2AYvxzQpWdtVrM/
-X-Google-Smtp-Source: ABdhPJxnq2Zvpcho08WNWFBo+YO5YAPAXkcXWwaj40CgKTNgF/4klAEHhAUsAJvqxwThNJdgeWvvEw==
-X-Received: by 2002:a17:902:82c5:b0:151:476b:c581 with SMTP id u5-20020a17090282c500b00151476bc581mr291190plz.158.1645820705806;
-        Fri, 25 Feb 2022 12:25:05 -0800 (PST)
-Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id e7-20020aa78c47000000b004de8f900716sm3925638pfd.127.2022.02.25.12.25.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Feb 2022 12:25:05 -0800 (PST)
-Message-ID: <686e9c8e-7c5b-7cbc-4772-92b9754caa07@github.com>
-Date:   Fri, 25 Feb 2022 12:25:04 -0800
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=K0l1Bkkuxz3jGu8w2r3XvRqq+NjRiZm0tP9alprILFk=;
+        b=UMt4htWm9nv5RFmYRG1hulsUeZ7kGQto3/yMsynvPc9hJqsDiWmKz+MHhki9A+H9sG
+         HwZoxWG8itHg5VUqhW6JAcPdHZZ2+2f7DRonmxAWX5eLq8tDUAfuJatrnLiiqgG1/Etb
+         6TUG/T3lp3b/VnocTYQoWzG+IFe13mEMyRgk3THY/1f/5Fj5QxXzzJkORMjVHqsNi/c5
+         Y5WeSl3tmzMSRqe6mHml6zOHP6ZgnGx8RSimg9nEaYSnRZ6T5QIgwqSyzzn/GtWqJG8C
+         T7Nb7MLjNSUv6ZN4waTcmHryFJFAmq2s2u7uQzpRT/1doGYf8Veosh31uqdegcjHlfvv
+         EUuA==
+X-Gm-Message-State: AOAM531QLkOfPMNjr1ufl/5LWeNYCPQw3NO5eAtr8pbQGBbY0OrVHAJq
+        LVgvgcCOHCpNlqKth2QFE/FjnSjVgK9/gQ==
+X-Google-Smtp-Source: ABdhPJwgNSiIQEbxgFSRbigpxrJFXAb56w5AzGGQptvNJ78L1xc7wvuY9Ko/ZpJ3HT2aTLXoXK141w==
+X-Received: by 2002:aa7:d2d5:0:b0:410:8765:d2de with SMTP id k21-20020aa7d2d5000000b004108765d2demr8823310edr.148.1645821853163;
+        Fri, 25 Feb 2022 12:44:13 -0800 (PST)
+Received: from gmgdl ([109.36.128.147])
+        by smtp.gmail.com with ESMTPSA id b15-20020a50cccf000000b0040f74c6abedsm1886246edj.77.2022.02.25.12.44.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Feb 2022 12:44:12 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nNhRj-000gh7-WC;
+        Fri, 25 Feb 2022 21:44:12 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 05/23] fsmonitor-settings: bare repos are incompatible
+ with FSMonitor
+Date:   Fri, 25 Feb 2022 21:42:09 +0100
+References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
+ <44cc61e186cb65fa6b2c1d5a0f080fc0b2265e57.1644940773.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <44cc61e186cb65fa6b2c1d5a0f080fc0b2265e57.1644940773.git.gitgitgadget@gmail.com>
+Message-ID: <220225.86ee3q7k2s.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.1
-Subject: Re: [PATCH v2 5/7] read-tree: narrow scope of index expansion for
- '--prefix'
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
- <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
- <4f05fa70209768fb20284bd4018a1364567cad5a.1645742073.git.gitgitgadget@gmail.com>
- <CABPp-BHx8gFh717bovO6wCo0RA058=YjNtHhRme+Rxh8GOnxbQ@mail.gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <CABPp-BHx8gFh717bovO6wCo0RA058=YjNtHhRme+Rxh8GOnxbQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
-> On Thu, Feb 24, 2022 at 2:34 PM Victoria Dye via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Victoria Dye <vdye@github.com>
->>
->> When 'git read-tree' is provided with a prefix, expand the index only if the
->> prefix is equivalent to a sparse directory or contained within one. If the
->> index is not expanded in these cases, 'ce_in_traverse_path' will indicate
->> that the relevant sparse directory is not in the prefix/traverse path,
->> skipping past it and not unpacking the appropriate tree(s).
->>
->> If the prefix is in-cone, its sparse subdirectories (if any) will be
->> traversed correctly without index expansion.
->>
->> Signed-off-by: Victoria Dye <vdye@github.com>
->> ---
->>  builtin/read-tree.c                      |  3 +--
->>  t/t1092-sparse-checkout-compatibility.sh |  8 ++++++-
->>  unpack-trees.c                           | 30 ++++++++++++++++++++++++
->>  3 files changed, 38 insertions(+), 3 deletions(-)
->>
->> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
->> index c2fdbc2657f..a7b7f822281 100644
->> --- a/builtin/read-tree.c
->> +++ b/builtin/read-tree.c
->> @@ -213,8 +213,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
->>         if (opts.merge && !opts.index_only)
->>                 setup_work_tree();
->>
->> -       /* TODO: audit sparse index behavior in unpack_trees */
->> -       if (opts.skip_sparse_checkout || opts.prefix)
->> +       if (opts.skip_sparse_checkout)
->>                 ensure_full_index(&the_index);
->>
->>         if (opts.merge) {
->> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
->> index ae44451a0a9..a404be0a10f 100755
->> --- a/t/t1092-sparse-checkout-compatibility.sh
->> +++ b/t/t1092-sparse-checkout-compatibility.sh
->> @@ -1415,7 +1415,13 @@ test_expect_success 'sparse index is not expanded: read-tree' '
->>         do
->>                 ensure_not_expanded read-tree -mu $MERGE_TREES &&
->>                 ensure_not_expanded reset --hard HEAD || return 1
->> -       done
->> +       done &&
->> +
->> +       rm -rf sparse-index/deep/deeper2 &&
->> +       ensure_not_expanded add . &&
->> +       ensure_not_expanded commit -m "test" &&
->> +
->> +       ensure_not_expanded read-tree --prefix=deep/deeper2 -u deepest
->>  '
->>
->>  test_expect_success 'ls-files' '
->> diff --git a/unpack-trees.c b/unpack-trees.c
->> index 360844bda3a..dba122a02bb 100644
->> --- a/unpack-trees.c
->> +++ b/unpack-trees.c
->> @@ -1739,6 +1739,36 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
->>                 setup_standard_excludes(o->dir);
->>         }
->>
->> +       /*
->> +        * If the prefix is equal to or contained within a sparse directory, the
->> +        * index needs to be expanded to traverse with the specified prefix.
->> +        */
->> +       if (o->prefix && o->src_index->sparse_index) {
->> +               int prefix_len = strlen(o->prefix);
->> +
->> +               while (prefix_len > 0 && o->prefix[prefix_len - 1] == '/')
->> +                       prefix_len--;
->> +
->> +               if (prefix_len > 0) {
-> 
-> Is this condition check necessary?  If we want some safety check here,
-> could it instead be something like
-> 
->    if (prefix_len <= 0)
->        BUG("Broken prefix passed to unpack_trees");
-> 
 
-This condition was intended to skip unnecessary computation for the
-(probably unlikely, but still technically valid) case where the prefix is
-the repo root (e.g., '--prefix=/') - because the repo root is represented
-with only directory separator(s), `prefix_len` would be 0 after removing
-trailing '/'. In that scenario, the index won't need to be expanded, so we
-don't need to go looking in the index for that path. 
+On Tue, Feb 15 2022, Jeff Hostetler via GitGitGadget wrote:
 
-None of that is particularly clear from reading the patch, though, so I'll
-add a comment & test covering it explicitly.
+> +static void create_reason_message(struct repository *r,
+> +				  struct strbuf *buf_reason)
+> +{
+> +	struct fsmonitor_settings *s = r->settings.fsmonitor;
+> +
+> +	switch (s->reason) {
+> +	case FSMONITOR_REASON_ZERO:
+> +		return;
+> +
+> +	case FSMONITOR_REASON_BARE:
+> +		strbuf_addstr(buf_reason,
+> +			      _("bare repos are incompatible with fsmonitor"));
+> +		return;
+> +
+> +	default:
+> +		BUG("Unhandled case in create_reason_message '%d'", s->reason);
+> +	}
+> +}
+> +
+> +enum fsmonitor_reason fsm_settings__get_reason(struct repository *r,
+> +					       struct strbuf *buf_reason)
+> +{
+> +	lookup_fsmonitor_settings(r);
+> +
+> +	strbuf_reset(buf_reason);
+> +	if (r->settings.fsmonitor->mode == FSMONITOR_MODE_INCOMPATIBLE)
+> +		create_reason_message(r, buf_reason);
+> +
+> +	return r->settings.fsmonitor->reason;
+> +}
 
-> and then dedent the following code?  (Or are callers allowed to not
-> sanitize their input before passing to unpack_trees(), meaning that we
-> should use a die() rather than a BUG()?)
-> 
-> To test this idea, near the top of unpack_trees(), I added:
->     if (o->prefix)
->         assert(*o->prefix && *o->prefix != '/');
-> and reran all tests.  They all ran without hitting that assertion.  FWIW.
-> 
->> +                       struct strbuf ce_prefix = STRBUF_INIT;
->> +                       strbuf_grow(&ce_prefix, prefix_len + 1);
->> +                       strbuf_add(&ce_prefix, o->prefix, prefix_len);
->> +                       strbuf_addch(&ce_prefix, '/');
->> +
->> +                       /*
->> +                        * If the prefix is not inside the sparse cone, then the
->> +                        * index is explicitly expanded if it is found as a sparse
->> +                        * directory, or implicitly expanded (by 'index_name_pos')
->> +                        * if the path is inside a sparse directory.
->> +                        */
->> +                       if (!path_in_cone_mode_sparse_checkout(ce_prefix.buf, o->src_index) &&
->> +                           index_name_pos(o->src_index, ce_prefix.buf, ce_prefix.len) >= 0)
-> 
-> style nit: Can you rewrap both the comments and the code at 80 characters?
-> 
+This API (just looking at one small bit discussed because related bits
+conflict with another series) seems to require a lot of ceremony just to
+get a const char * error.
 
-I couldn't think of a way to wrap the condition that wouldn't make it more
-difficult to read. The best I could come up with was:
+I tried this on top of "seen", and the parts I compile on Linux (so not
+the fsmonitor--daemon.c) were happy with it.
 
-			if (!path_in_cone_mode_sparse_checkout(ce_prefix.buf, 
-							       o->src_index) &&
-			    index_name_pos(o->src_index, 
-					   ce_prefix.buf, 
-					   ce_prefix.len) >= 0)
-				ensure_full_index(o->src_index);
+ builtin/fsmonitor--daemon.c | 14 +++++++-------
+ builtin/update-index.c      |  9 ++++-----
+ fsmonitor-settings.c        | 47 +++++++++++++++------------------------------
+ fsmonitor-settings.h        |  5 +++--
+ 4 files changed, 29 insertions(+), 46 deletions(-)
 
-
-which, to me, is a bit hard to parse. Alternatively, though, I can move the
-prefix-checking logic into its own function (kind of like
-'pathspec_needs_expanded_index(...)' in [1]), in which case I won't need to
-change the current wrapping to keep it under 80 characters.
-
-[1] https://lore.kernel.org/git/822d7344587f698e73abba1ca726c3a905f7b403.1638201164.git.gitgitgadget@gmail.com/
-
-> It took me a bit of playing and testing to understand these two lines.
-> The comment helps, but it's still a bit dense to unpack; somehow I
-> didn't understand that the comment was referring to index_name_pos()'s
-> call to ensure_full_index().  Once I understood that, it all looks
-> good.
-> 
-
-Sorry about that, I'll revise to make that clearer.
-
-> 
->> +                               ensure_full_index(o->src_index);
->> +
->> +                       strbuf_release(&ce_prefix);
->> +               }
->> +       }
->> +
->>         if (!core_apply_sparse_checkout || !o->update)
->>                 o->skip_sparse_checkout = 1;
->>         if (!o->skip_sparse_checkout && !o->pl) {
->> --
->> gitgitgadget
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 591433e897d..7ad7bc718b3 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -1496,7 +1496,7 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *subcmd;
+ 	int free_console = 0;
+-
++	enum fsmonitor_mode fsm_mode;
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "free-console", &free_console, N_("free console")),
+ 		OPT_INTEGER(0, "ipc-threads",
+@@ -1524,12 +1524,12 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
+ 	prepare_repo_settings(the_repository);
+ 	fsm_settings__set_ipc(the_repository);
+ 
+-	if (fsm_settings__get_mode(the_repository) == FSMONITOR_MODE_INCOMPATIBLE) {
+-		struct strbuf buf_reason = STRBUF_INIT;
+-		fsm_settings__get_reason(the_repository, &buf_reason);
+-		error("%s '%s'", buf_reason.buf, xgetcwd());
+-		strbuf_release(&buf_reason);
+-		return -1;
++	fsm_mode = fsm_settings__get_mode(the_repository);
++	if (fsm_mode == FSMONITOR_MODE_INCOMPATIBLE) {
++		enum fsmonitor_reason fsm_reason = fsm_settings__get_reason(the_repository);
++		const char *reason = fsm_settings_incompatible_reason_msg(fsm_mode, fsm_reason);
++
++		return error("%s", reason ? reason : "???");
+ 	}
+ 
+ 	if (!strcmp(subcmd, "start"))
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 61b0b98ccaf..f8f638d33d9 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1237,13 +1237,12 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 
+ 	if (fsmonitor > 0) {
+ 		enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(r);
++		enum fsmonitor_reason fsm_reason = fsm_settings__get_reason(r);
+ 
+ 		if (fsm_mode == FSMONITOR_MODE_INCOMPATIBLE) {
+-			struct strbuf buf_reason = STRBUF_INIT;
+-			fsm_settings__get_reason(r, &buf_reason);
+-			error("%s", buf_reason.buf);
+-			strbuf_release(&buf_reason);
+-			return -1;
++			const char *reason = fsm_settings_incompatible_reason_msg(fsm_mode, fsm_reason);
++
++			return error("%s", reason ? reason : "???");
+ 		}
+ 
+ 		if (fsm_mode == FSMONITOR_MODE_DISABLED) {
+diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
+index de69ace246a..e37b342aa2b 100644
+--- a/fsmonitor-settings.c
++++ b/fsmonitor-settings.c
+@@ -103,6 +103,13 @@ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r)
+ 	return r->settings.fsmonitor->mode;
+ }
+ 
++enum fsmonitor_reason fsm_settings__get_reason(struct repository *r)
++{
++	lookup_fsmonitor_settings(r);
++
++	return r->settings.fsmonitor->reason;
++}
++
+ const char *fsm_settings__get_hook_path(struct repository *r)
+ {
+ 	lookup_fsmonitor_settings(r);
+@@ -142,43 +149,19 @@ void fsm_settings__set_disabled(struct repository *r)
+ 	FREE_AND_NULL(r->settings.fsmonitor->hook_path);
+ }
+ 
+-static void create_reason_message(struct repository *r,
+-				  struct strbuf *buf_reason)
++const char *fsm_settings_incompatible_reason_msg(enum fsmonitor_mode mode,
++						 enum fsmonitor_reason reason)
+ {
+-	struct fsmonitor_settings *s = r->settings.fsmonitor;
++	assert(mode == FSMONITOR_MODE_INCOMPATIBLE);
+ 
+-	switch (s->reason) {
++	switch (reason) {
+ 	case FSMONITOR_REASON_ZERO:
+-		return;
+-
++		return NULL;
+ 	case FSMONITOR_REASON_BARE:
+-		strbuf_addstr(buf_reason,
+-			      _("bare repos are incompatible with fsmonitor"));
+-		return;
+-
++		return _("bare repos are incompatible with fsmonitor");
+ 	case FSMONITOR_REASON_VIRTUAL:
+-		strbuf_addstr(buf_reason,
+-			      _("virtual repos are incompatible with fsmonitor"));
+-		return;
+-
++		return _("virtual repos are incompatible with fsmonitor");
+ 	case FSMONITOR_REASON_REMOTE:
+-		strbuf_addstr(buf_reason,
+-			      _("remote repos are incompatible with fsmonitor"));
+-		return;
+-
+-	default:
+-		BUG("Unhandled case in create_reason_message '%d'", s->reason);
++		return _("remote repos are incompatible with fsmonitor");
+ 	}
+ }
+-
+-enum fsmonitor_reason fsm_settings__get_reason(struct repository *r,
+-					       struct strbuf *buf_reason)
+-{
+-	lookup_fsmonitor_settings(r);
+-
+-	strbuf_reset(buf_reason);
+-	if (r->settings.fsmonitor->mode == FSMONITOR_MODE_INCOMPATIBLE)
+-		create_reason_message(r, buf_reason);
+-
+-	return r->settings.fsmonitor->reason;
+-}
+diff --git a/fsmonitor-settings.h b/fsmonitor-settings.h
+index fca25887c0f..81be1ef1801 100644
+--- a/fsmonitor-settings.h
++++ b/fsmonitor-settings.h
+@@ -25,9 +25,10 @@ void fsm_settings__set_hook(struct repository *r, const char *path);
+ void fsm_settings__set_disabled(struct repository *r);
+ 
+ enum fsmonitor_mode fsm_settings__get_mode(struct repository *r);
++enum fsmonitor_reason fsm_settings__get_reason(struct repository *r);
+ const char *fsm_settings__get_hook_path(struct repository *r);
+-enum fsmonitor_reason fsm_settings__get_reason(struct repository *r,
+-					       struct strbuf *buf_reason);
++const char *fsm_settings_incompatible_reason_msg(enum fsmonitor_mode mode,
++						 enum fsmonitor_reason reason);
+ 
+ struct fsmonitor_settings;
+ 
 
