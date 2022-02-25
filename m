@@ -2,103 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB08DC433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 17:20:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D349C433EF
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 17:23:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243592AbiBYRUy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 12:20:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47670 "EHLO
+        id S239341AbiBYRYP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 12:24:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230497AbiBYRUx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 12:20:53 -0500
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D77221133D
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 09:20:21 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id bu29so10680499lfb.0
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 09:20:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=BI0yFFp9ixy7eEpf5eN2ZEnWsTly4Bv8TGP1wOdJqdo=;
-        b=BwkafG/PImo7SoHq9Du/gv2OrwKpk9ZHMeKuGM7+vWQtGSrTsIryo84Q0o3xycD+ir
-         h2wTIV7tHtZUymnifH1oNLzx6CaOOlWXh2xLJlh1Tn8uo6+MG0+mUs0yXIitPzHG8alq
-         F329JgE+6M/ddrzCzIwCLutAptVmtZEUXsSZZvo/JwZoKtOy8qneFQlf6mo0nEfNBt7F
-         OhREzmkUhtmZ5ItjpAG/d+DHRQI7BY0SAFizXZ2vS9ZRm/JhdhP/x3cihIRbTnjJD1cf
-         J3seHvn8i6q1h4YsTssf6itYEe/fPAVP/zlNK/Xa7vWOiyBi5uVWzoTgbaS/76geaGS2
-         BEwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BI0yFFp9ixy7eEpf5eN2ZEnWsTly4Bv8TGP1wOdJqdo=;
-        b=gKSUYN9z8/EpioAe+zJ30qM97S+pHrsHHuIhEy2UlEd5RV3BvvCsEGglrT5fccM5SA
-         53N3uM+pHMJ6XeyIlhg37gm+NvPxCxzAb2avm5QE/y0LW27v13P4eXAO3pEZD1gIDjNd
-         SMP24EBlqZvuGY4uuT9Ey3kasolNzUaggB+S0y1iXfVnsxCStjZVfR6k0V471pDHekgK
-         79rSSIGYszHCv7Az4UvnXRfJtrHrqpZecuHJATtoEruud510woV6jgNKbTPv383gnR3s
-         Pei+HR44T1NVZYmcrfmoXImjGhboPXUGbIdSyEMs9cB82PplJk1ipxUDRBLfdqVomDwk
-         095w==
-X-Gm-Message-State: AOAM532BtkyIQgjJ8ElUGQNIa/OCjGQeNxTYEAq92VnnrRIKed0/89fn
-        9DuWSf871qaWrDZvTg4o7gk4QJNSfgyGTx/MF+Tw0yeV
-X-Google-Smtp-Source: ABdhPJz6SqKbnOcyMk1G0+/Dm0ySexbqJhe0tL/aGp3DWh7pYax5w1A+JBynb50HFb2zE8JKrd5BuyRV73duWvwsdhE=
-X-Received: by 2002:ac2:4143:0:b0:443:ee24:b490 with SMTP id
- c3-20020ac24143000000b00443ee24b490mr5491745lfi.205.1645809619305; Fri, 25
- Feb 2022 09:20:19 -0800 (PST)
+        with ESMTP id S237449AbiBYRYP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 12:24:15 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8881637C0
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 09:23:40 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6FC1C17DE66;
+        Fri, 25 Feb 2022 12:23:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=lz2hjfzfSGgn
+        IcRWI1Vhp8iCKnuSqOVkCtekKb6YuQo=; b=Lsu5xcNb/x7i0dr60U2XCgd1AP1K
+        uC8SED5yKZbiXU3NVHWf+2QT3hHfQaD5yGX2qEJRKgLEPi+1XrGpoKsXYyuxHZGS
+        yJrQ2OKPWnl4mTqt1W4c0G2NPd3N0rI0GzeLT1PwDRpoSDQRXmJbHFtzU4WrR1Mw
+        ZR5HXxd06RKagGw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 678D917DE65;
+        Fri, 25 Feb 2022 12:23:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A611B17DE64;
+        Fri, 25 Feb 2022 12:23:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     John Cai <johncai86@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v2 1/3] stash: add test to ensure reflog --rewrite
+ --updatref behavior
+References: <pull.1218.git.git.1645209647.gitgitgadget@gmail.com>
+        <pull.1218.v2.git.git.1645554651.gitgitgadget@gmail.com>
+        <6e136b62ca4588cc58f2cb59b635eeaf14e6e20d.1645554652.git.gitgitgadget@gmail.com>
+        <220223.864k4q6jpr.gmgdl@evledraar.gmail.com>
+        <xmqq4k4ptgsv.fsf@gitster.g>
+        <220223.86ley1b653.gmgdl@evledraar.gmail.com>
+        <865928A5-3F54-4B51-B502-07E24D98CEDB@gmail.com>
+        <220225.86lexz88sp.gmgdl@evledraar.gmail.com>
+Date:   Fri, 25 Feb 2022 09:23:36 -0800
+In-Reply-To: <220225.86lexz88sp.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 25 Feb 2022 12:45:19 +0100")
+Message-ID: <xmqq5yp2g8rr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20220224064710.2252637-1-alexhenrie24@gmail.com>
- <xmqqv8x4m6jn.fsf@gitster.g> <220225.86h78n88gb.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220225.86h78n88gb.gmgdl@evledraar.gmail.com>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Fri, 25 Feb 2022 10:20:08 -0700
-Message-ID: <CAMMLpeTSMzx4mFjV-fQtbqo1cPfME_ekRO5Xt5TQaKGj0fmNxQ@mail.gmail.com>
-Subject: Re: [PATCH v2] switch: mention the --detach option when dying due to
- lack of a branch
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: AB05A50C-965F-11EC-967C-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 25, 2022 at 4:57 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Thu, Feb 24 2022, Junio C Hamano wrote:
->
-> > Alex Henrie <alexhenrie24@gmail.com> writes:
-> >> diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
-> >> index ebb961be29..f54691bac9 100755
-> >> --- a/t/t2060-switch.sh
-> >> +++ b/t/t2060-switch.sh
-> >> @@ -32,6 +32,17 @@ test_expect_success 'switch and detach' '
-> >>      test_must_fail git symbolic-ref HEAD
-> >>  '
-> >>
-> >> +test_expect_success 'suggestion to detach' '
-> >> +    test_must_fail git switch main^{commit} 2>stderr &&
-> >> +    test_i18ngrep "try again with the --detach option" stderr
-> >> +'
-> >> +
-> >> +test_expect_success 'suggestion to detach is suppressed with advice.s=
-uggestDetachingHead=3Dfalse' '
-> >> +    test_config advice.suggestDetachingHead false &&
-> >> +    test_must_fail git switch main^{commit} 2>stderr &&
-> >> +    test_i18ngrep ! "try again with the --detach option" stderr
-> >> +'
-> >
-> > OK, we try to be consistent with other tests in the file, and leave
-> > s/test_i18n// to a file-wide clean-up outside the topic.
->
-> FWIW that's not the case here. This is the first use of test_i18ngrep in
-> this file.
->
-> But better to use test_cmp as noted in
-> <220224.86sfs8abj6.gmgdl@evledraar.gmail.com> in the sid-thread.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Why is test_cmp preferable to grep in tests like this?
+>> Curious what your thoughts are on an effort to isolate these tests fro=
+m each other.
+>> I like your approach in t/t1417 in creating a test repo and copying it=
+ over each time.
+>> Something like this?
+>
+> That looks good to me if you're willing to do that legwork, probably
+> better in a preceding cleanup commit.
 
--Alex
+Yup.  Thanks for helping other contributors.  I agree with many
+things you said in your review.
+
+>> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+>> index ac345eced8cb..40254f8dc99c 100755
+>> --- a/t/t3903-stash.sh
+>> +++ b/t/t3903-stash.sh
+>> @@ -41,7 +41,9 @@ diff_cmp () {
+>>         rm -f "$1.compare" "$2.compare"
+>>  }
+>>
+>> -test_expect_success 'stash some dirty working directory' '
+>> +test_expect_success 'setup' '
+>> +       git init repo &&
+>> +       cd repo &&
+
+We do not want to "chdir" around without isolating it in a
+subprocess.  If this test fails after it goes to "repo" but before it
+does "cd ..", the next test begins in the "repo" directory, but it
+is most likely not expecting that.
+
+>> -cat >expect <<EOF
+>> -diff --git a/file b/file
+>> -index 0cfbf08..00750ed 100644
+>> ---- a/file
+>> -+++ b/file
+>> -@@ -1 +1 @@
+>> --2
+>> -+3
+>> -EOF
+>> +test_stash () {
+>> +       cp -R repo copy &&
+>> +       cd copy &&
+>> +       test_expect_success "$@" &&
+>> +       cd ../ &&
+>> +       rm -rf copy
+>> +}
+
+This will create an anti-pattern, because you would want to have the
+part between "cd copy" and "cd .." in a subshell, but you do not
+want to do test_expect_success inside a subshell.  Hence, this is a
+bad helper that does not help and should not be used, I would think.
+
+>> -test_expect_success 'parents of stash' '
+>> +test_stash 'parents of stash' '
+>>         test $(git rev-parse stash^) =3D $(git rev-parse HEAD) &&
+>>         git diff stash^2..stash >output &&
+>>         diff_cmp expect output
+>>  '
+>
+> For this sort of thing I think it's usually better to override
+> "test_expect_success" as a last resort, i.e. to have that
+> "test_setup_stash_copy" just be a "setup_stash" or whatever function
+> called from within your test_expect_success.
+>
+> And instead of the "rm -rf" later, just do:
+>
+>     test_when_finished "rm -rf copy" &&
+>     cp -R repo copy &&
+>     [...]
+
+Yup.  I think this is how we would write it:
+
+	test_expect_success 'parents of stash' '
+		test_when_finished "rm -fr copy" &&
+		cp -R repo copy &&
+		(
+			cd copy &&
+			... the real body of the test here, like ...
+			test $(git rev-parse stash^) =3D $(git rev-parse HEAD) &&
+		)
+	'
+
+> The test still needs to deal with the sub-repo, but it could cd or use
+> "-C".
+
+I am not sure about this.  test_expect_success does not take "-C".
