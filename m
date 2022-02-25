@@ -2,116 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1977FC433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 08:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E490FC433F5
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 08:32:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238346AbiBYIIz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 03:08:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49714 "EHLO
+        id S238514AbiBYIdW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 03:33:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229905AbiBYIIy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 03:08:54 -0500
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 303EF6F4A6
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 00:08:22 -0800 (PST)
-Received: by mail-pg1-x533.google.com with SMTP id 132so3980820pga.5
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 00:08:22 -0800 (PST)
+        with ESMTP id S236278AbiBYIdV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 03:33:21 -0500
+Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95438187BA7
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 00:32:49 -0800 (PST)
+Received: by mail-ua1-x931.google.com with SMTP id t25so2113215uaa.3
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 00:32:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=b4iHYkC7Fo5GaH1f30T+jFie/cyJHy8YLLSav0/YV94=;
-        b=LJ17qRApcks5a4m1PxAwPZUJ17fts+rI4yZ4mt+1xAa6dAVnfPJT1bBac1WrPHA53K
-         x8mAsmpG7ahPg9iIvkw8EhJEMYbN2XostqkFn5CfWX9j8t3lKutpik6/Y4/6lLCAZvlZ
-         upz3LPplSzjiLbZJIeRMFibcBwm+aGGwRPW/5WUafRZpZ7sOq2SpCZEGq4N9FP5LCmPC
-         zNxtfJoSMycGI57iNm4Ta4a02DixY9ev18w1UTv9/I3Kr3H1jq62nnoBdQUee/ZC4ZpM
-         zyXHXqjwp5kWIQuafWHlMHn+NKXj5u+OGpRzmKtKnTIPP8IFWJeDzqNxj6BTv0GjQ91A
-         PEXA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=fMtvewpPfvhbXY4GgjIkGtnii/AgJ8TRI0WsbwhM7Jo=;
+        b=NxElw+gmjTfm8MLh6rhm/swgKpap1puNaDA4ZD/1Llrov2bvmvjOU7Iz2AMsSXrVIR
+         /zez62bPzCE+9LEpy79B02xST4wPWtJ0v2EolRGyp/CfDFHXynL5yGb0dqrLFhhGBRj8
+         zqED4R3A1oD4Dxzon8kA+PQWXamyQTpbVTwvzQhsgzjhXJIunjD6CHs7Uyqen05dsIxY
+         3LPEfbxKCZesMG6gi9aGCSwkjBgoMMRFNF753jPzfB86LIadamIFktuWcZnuQGNr95iB
+         cO/rBVv94j6wrX73DjJ8Obvtv69zdndOi0Zzf3xUJGJbEyxmSYbjAd2NjpZpWe3LuLQt
+         Yx+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=b4iHYkC7Fo5GaH1f30T+jFie/cyJHy8YLLSav0/YV94=;
-        b=HL+JQCxFzSNKDzzceuDKrJYaxhw2LUTIiDF1yOT9S59lFUUFKmh1QXYM8eTkMdlrCL
-         ZniljkPRvCeiIS1W0K+gqWM9ZAKtoNbMuQseSlT/hctHM4neGyRgreEgKyVYYkriqRiy
-         wdgYQN/M/6UN1rL7c64vOaUOo4GHEkYOReRa3CfmJz8QEzEpYi2hMAnq0eE9GKawQs4o
-         EKixm+6IRbQOOex4hU3WwEVRnrdoVsvggUncUVrX3KuyYCbEYrMuMXVunL2Awe+9WZd+
-         XFsSxGTVz2rpY+I7Q50qFD37s5MNKNCAQlr9DUQgo+j4vpyS1FvUkI8y7UsOkLY/gsWe
-         0CvQ==
-X-Gm-Message-State: AOAM5335N3zq6ShKTtWD/c9pkE2WE1+VN9XSn2TzF4rhbC9Zs1lyB+rL
-        SyzT5eM6onjN2/otZ9maIjY=
-X-Google-Smtp-Source: ABdhPJzzRM9TtusBuQJhMpL87zzysC6QSYQo8WtEQuOTa2smveIG1vvQLgaxhIAlhFs6wTYByQVkEw==
-X-Received: by 2002:a62:ee12:0:b0:4e1:2ec1:cba2 with SMTP id e18-20020a62ee12000000b004e12ec1cba2mr6557583pfi.71.1645776501518;
-        Fri, 25 Feb 2022 00:08:21 -0800 (PST)
-Received: from localhost.localdomain ([202.142.80.210])
-        by smtp.gmail.com with ESMTPSA id z35-20020a631923000000b00373520fddd5sm1649877pgl.83.2022.02.25.00.08.18
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 25 Feb 2022 00:08:20 -0800 (PST)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH v4 2/2] parse-options.c: add style checks for usage-strings
-Date:   Fri, 25 Feb 2022 13:38:11 +0530
-Message-Id: <20220225080811.8097-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <xmqqh78nh3sf.fsf@gitster.g>
-References: <xmqqh78nh3sf.fsf@gitster.g>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=fMtvewpPfvhbXY4GgjIkGtnii/AgJ8TRI0WsbwhM7Jo=;
+        b=tdtCdsUchi+tgnMWJzQcVQwoNVsWtWYCvOJavvND59IpGV9F0prc66q9e5HIF7KMEI
+         /OCHHYwo0UTROYZ3NiVW11WQuKVRnOUwqRfaWT+wP4ucp0FWcaz1AifdTXamkHbiJhaJ
+         Urtu1YoauJHiH7TyWO1gWC5pxe+sD6qa8ZKTJi7a0WkzAvds11h4rEDs/IQMA1Zxt3rG
+         bQf812cdkHwaoMhNxMJjSQmIH0vPE+nauATXcEhyCVhmS0h5jp4dwU0EQjX5dt5nirar
+         CJWevej8qvQDVaOMGUPf41TfLrePLu2s4EJSfi8DL25Tllzl38m2HOUpJux/WlxHC2CX
+         9W/w==
+X-Gm-Message-State: AOAM530YKYxtkiLuOKO2WqAon6oxKBggFtH0pem5kIwAh5yfPBz/gSv4
+        56TbR8S8hVFnPNSfD24U/aGPKcc42G4JQkuhUjLQV+62TTI=
+X-Google-Smtp-Source: ABdhPJxvmcTOU4bbu3/g1uSpIHijwn4iDiCR0yd+4pnYjIeIDB0paxzS2cq8dQTtFa8pgSB+f2cSREvYjarRTDqm8Hg=
+X-Received: by 2002:ab0:6346:0:b0:342:458a:eff9 with SMTP id
+ f6-20020ab06346000000b00342458aeff9mr2904903uap.50.1645777968446; Fri, 25 Feb
+ 2022 00:32:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From:   Kang-Che Sung <explorer09@gmail.com>
+Date:   Fri, 25 Feb 2022 16:32:37 +0800
+Message-ID: <CADDzAfNTuuAWn1ynswTayRqgNNcPn3ou=v6c+z_tRsu5uoqJZA@mail.gmail.com>
+Subject: "Git worktree list" on paths with newlines
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
+Dear Git developers,
 
-> Style.
->
->	/*
->        * This is how our multi-line comments
->        * look like; with slash-asterisk that opens
->        * and asterisk-slash that closes one on their
->        * own lines.
->	 */
->
-> Also avoid overly long lines.
+I'm not sure if this is a good place to ask a question about the Git worktree
+feature.
 
-Oh, sorry for that. I was in kind of a hurry ( today was
-my semester exam), so I didn't look at the style guide.
-Will fix it.
+I'm writing a shell script that parses the "git worktree list --porcelain"
+format, and I've run into trouble on determining the end of the worktree path.
 
-> These two calls to optbug() use xstrfmt() to grab allocated pieces
-> of memory and pass it as a parameter to the function, which means
-> the string is leaked without any chance to be freed.
->
-> Do we care?
->
-> >  		if (opts->argh &&
-> >  		    strcspn(opts->argh, " _") != strlen(opts->argh))
-> >  			err |= optbug(opts, "multi-word argh should use dash to separate words");
->
-> The existing use of optbug() we see here does not share such a
-> problem.
+Consider a repository with a "test1" branch, and I create a worktree through a
+command like this:
 
-hmm, I wanted a formatting function to format (i.e. pass the
-`opt->help` dynamically) the output string. The existing use of
-`optbug()` that you specified has no `%s` formatter; it is a plain
-string. That's why I used `xstrfmt()`. Moreover, it was in Ævar's
-suggestion[1] -
+$ git worktree add "$(printf 'directory\nHEAD\nbranch\n\nxyz')" test1
 
-> +		if (opts->help && ends_with(opts->help, "."))
-> +			err |= optbug(opts, xstrfmt("argh should not end with a dot: %s", opts->help));
+Git does allow me to create a worktree with newlines in its name (in a Unix
+file system, of course). After that, "git worktree list --porcelain" would show
+a somewhat tricked output, and it would break my parsing script.
 
-But I think, you're right. There is some memory leakage here.
-Should I go with plain strings then? (i.e. "help should not end
-with a dot" instead of `xstrfmt("help should not end with a dot:
-%s", opts->help)`)
+(What my script does is find out what worktrees check out branches of a
+specific pattern, and remove the worktrees found )
 
-Thanks :)
+I wish "git worktree list --porcelain" would show directory names with some
+quoting or escaping so that tricky names can be handled easily for any program
+that reads the porcelain output. But I didn't see any command line option that
+enables quoting or escaping of file names.
 
-[1] https://lore.kernel.org/git/220221.86tucsb4oy.gmgdl@evledraar.gmail.com/
+Does anyone have an idea on what I could do?
