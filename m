@@ -2,192 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FE88C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 07:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1977FC433F5
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 08:08:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238207AbiBYHqZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 02:46:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48234 "EHLO
+        id S238346AbiBYIIz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 03:08:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234309AbiBYHqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 02:46:24 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE0F2272F4
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 23:45:53 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id p15so9153215ejc.7
-        for <git@vger.kernel.org>; Thu, 24 Feb 2022 23:45:53 -0800 (PST)
+        with ESMTP id S229905AbiBYIIy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 03:08:54 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 303EF6F4A6
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 00:08:22 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id 132so3980820pga.5
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 00:08:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7+ioN8UNMxmcSUkAe55HYTYhbZBEEhryrqWe9g7HA3k=;
-        b=iIfnwbkZIhgCgvkvW8acnCzw6h12h0lntZjr6ZpuoBkdWyCB0WnPKnj3HKezl7SSFW
-         Hwnlvan95z8TBEPNFdccF6lDyNrDkUZ9WsQBXgOONVMRzSyj9X9Mz3vIuObPXk19Gl2+
-         /NMIDkqLPjmsGqH8W2QqLRqo26aJgMfWMbZlKqVlh78x4G1E3Yk0wOCU06A6UCek4aiD
-         pUEt5i+p3+i+gEJqasrltK1mbfMP0tpUmjJHNGV8b6SKhcIKi6ciXwxcI16eOrRNLSXS
-         r1fRuNPus32dW/L59WHCrxbFPLLxQZUphP0X7AMbbJ3K/7qnP0IpN9Tn56BJkBo2qVkj
-         l+cg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=b4iHYkC7Fo5GaH1f30T+jFie/cyJHy8YLLSav0/YV94=;
+        b=LJ17qRApcks5a4m1PxAwPZUJ17fts+rI4yZ4mt+1xAa6dAVnfPJT1bBac1WrPHA53K
+         x8mAsmpG7ahPg9iIvkw8EhJEMYbN2XostqkFn5CfWX9j8t3lKutpik6/Y4/6lLCAZvlZ
+         upz3LPplSzjiLbZJIeRMFibcBwm+aGGwRPW/5WUafRZpZ7sOq2SpCZEGq4N9FP5LCmPC
+         zNxtfJoSMycGI57iNm4Ta4a02DixY9ev18w1UTv9/I3Kr3H1jq62nnoBdQUee/ZC4ZpM
+         zyXHXqjwp5kWIQuafWHlMHn+NKXj5u+OGpRzmKtKnTIPP8IFWJeDzqNxj6BTv0GjQ91A
+         PEXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7+ioN8UNMxmcSUkAe55HYTYhbZBEEhryrqWe9g7HA3k=;
-        b=Gp5WJhq6UJjb2IMkalwet7B4/FXkwA6h8g8Q6ZKLfdvjeq4a0oVXg0jodlYRw3xcbr
-         IiFJ0DWK8BOHsG8AscSBYPIDqQz7PSyqHtcHGjLrianGOBtWfM5seGlz9oddtexLNzij
-         yAAiQnvMtd35hgnhWBYicZZQcOd+nwrWQ4YJuKbvYdIHFI7NSdI4PcZLjp0rMbsjcFTQ
-         kaBwIkti2p5B7qte02YADzPfyS1eOhZ++NkaN7lhH3SuJK3TsabBwzcFnXvyp4QpLB4e
-         1t8WBc0hWb4QFNDpkT5cbRp6YPqt/t9HgDyvPsmtEk5lzi+FA/evLe5p0P9+cJrn8idk
-         qWBw==
-X-Gm-Message-State: AOAM533ZKlNXRVvtujj4E87tDQWm+D8uMmRkA2aeh9jUIkaEl1evUtGd
-        kWlqufsTKgzupb3OXWY7ZRUPZstSlXxTrL3KXFw=
-X-Google-Smtp-Source: ABdhPJw67FibJgEitf+z0/v9UsjAypoKV3y/bNWFmF4i5/dd2jQR1S+YVdYUQS4z9tFn73uH5WpT4r4gyvlOdKDQYX0=
-X-Received: by 2002:a17:906:a855:b0:6cd:ba20:39c5 with SMTP id
- dx21-20020a170906a85500b006cdba2039c5mr5011218ejb.100.1645775151633; Thu, 24
- Feb 2022 23:45:51 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=b4iHYkC7Fo5GaH1f30T+jFie/cyJHy8YLLSav0/YV94=;
+        b=HL+JQCxFzSNKDzzceuDKrJYaxhw2LUTIiDF1yOT9S59lFUUFKmh1QXYM8eTkMdlrCL
+         ZniljkPRvCeiIS1W0K+gqWM9ZAKtoNbMuQseSlT/hctHM4neGyRgreEgKyVYYkriqRiy
+         wdgYQN/M/6UN1rL7c64vOaUOo4GHEkYOReRa3CfmJz8QEzEpYi2hMAnq0eE9GKawQs4o
+         EKixm+6IRbQOOex4hU3WwEVRnrdoVsvggUncUVrX3KuyYCbEYrMuMXVunL2Awe+9WZd+
+         XFsSxGTVz2rpY+I7Q50qFD37s5MNKNCAQlr9DUQgo+j4vpyS1FvUkI8y7UsOkLY/gsWe
+         0CvQ==
+X-Gm-Message-State: AOAM5335N3zq6ShKTtWD/c9pkE2WE1+VN9XSn2TzF4rhbC9Zs1lyB+rL
+        SyzT5eM6onjN2/otZ9maIjY=
+X-Google-Smtp-Source: ABdhPJzzRM9TtusBuQJhMpL87zzysC6QSYQo8WtEQuOTa2smveIG1vvQLgaxhIAlhFs6wTYByQVkEw==
+X-Received: by 2002:a62:ee12:0:b0:4e1:2ec1:cba2 with SMTP id e18-20020a62ee12000000b004e12ec1cba2mr6557583pfi.71.1645776501518;
+        Fri, 25 Feb 2022 00:08:21 -0800 (PST)
+Received: from localhost.localdomain ([202.142.80.210])
+        by smtp.gmail.com with ESMTPSA id z35-20020a631923000000b00373520fddd5sm1649877pgl.83.2022.02.25.00.08.18
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 25 Feb 2022 00:08:20 -0800 (PST)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH v4 2/2] parse-options.c: add style checks for usage-strings
+Date:   Fri, 25 Feb 2022 13:38:11 +0530
+Message-Id: <20220225080811.8097-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <xmqqh78nh3sf.fsf@gitster.g>
+References: <xmqqh78nh3sf.fsf@gitster.g>
 MIME-Version: 1.0
-References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
- <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com> <f0cff03b95d574dff414a63325a0f1c6d2d1ff96.1645742073.git.gitgitgadget@gmail.com>
-In-Reply-To: <f0cff03b95d574dff414a63325a0f1c6d2d1ff96.1645742073.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 24 Feb 2022 23:45:40 -0800
-Message-ID: <CABPp-BGLG15g1UYanaNy=zM320DEYWW52xKNRDA_87mcVXWhYQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] status: fix nested sparse directory diff in sparse index
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 24, 2022 at 2:34 PM Victoria Dye via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Victoria Dye <vdye@github.com>
->
-> Add the 'recursive' flag to 'wt_status_collect_changes_index(...)'. Without
+Junio C Hamano wrote:
 
-Perhaps "Set the 'recursive' diff option flag in
-'wt_status_collect_changes_index(...)'" ?  There's no function
-argument named 'recursive' in wt_status_collect_changes_index() before
-or after your changes, which is what the wording led me to think of.
+> Style.
+>
+>	/*
+>        * This is how our multi-line comments
+>        * look like; with slash-asterisk that opens
+>        * and asterisk-slash that closes one on their
+>        * own lines.
+>	 */
+>
+> Also avoid overly long lines.
 
-> the 'recursive' flag, 'git status' could report index changes incorrectly
-> when the following conditions were met:
->
-> * sparse index is enabled
-> * there is a difference between the index and HEAD in a file inside a
->   *subdirectory* of a sparse directory
-> * the sparse directory index entry is *not* expanded in-core
->
-> In this scenario, 'git status' would not recurse into the sparse directory's
-> subdirectories to identify which file contained the difference between the
-> index and HEAD. Instead, it would report the immediate subdirectory itself
-> as "modified".
->
-> Example:
->
-> $ git init
-> $ mkdir -p sparse/sub
-> $ echo test >sparse/sub/foo
-> $ git add .
-> $ git commit -m "commit 1"
-> $ echo somethingelse >sparse/sub/foo
-> $ git add .
-> $ git commit -a -m "commit 2"
-> $ git sparse-checkout set --cone --sparse-index 'sparse'
-> $ git reset --soft HEAD~1
-> $ git status
-> On branch master
-> You are in a sparse checkout.
->
-> Changes to be committed:
->   (use "git restore --staged <file>..." to unstage)
->         modified:   sparse/sub
->
-> The 'recursive' diff option in 'wt_status_collect_changes_index' corrects
-> this by indicating that 'git status' should recurse into sparse directories
-> to find modified files. Given the same repository setup as the example
-> above, the corrected result of `git status` is:
->
-> $ git status
-> On branch master
-> You are in a sparse checkout.
->
-> Changes to be committed:
->   (use "git restore --staged <file>..." to unstage)
->         modified:   sparse/sub/foo
->
-> Signed-off-by: Victoria Dye <vdye@github.com>
-> ---
->  t/t1092-sparse-checkout-compatibility.sh | 7 +++++++
->  wt-status.c                              | 9 +++++++++
->  2 files changed, 16 insertions(+)
->
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 9ef7cd80885..b1dcaa0e642 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -278,6 +278,13 @@ test_expect_success 'status with options' '
->         test_all_match git status --porcelain=v2 -uno
->  '
->
-> +test_expect_success 'status with diff in unexpanded sparse directory' '
-> +       init_repos &&
-> +       test_all_match git checkout rename-base &&
-> +       test_all_match git reset --soft rename-out-to-out &&
-> +       test_all_match git status --porcelain=v2
-> +'
-> +
->  test_expect_success 'status reports sparse-checkout' '
->         init_repos &&
->         git -C sparse-checkout status >full &&
-> diff --git a/wt-status.c b/wt-status.c
-> index 335e723a71e..4a5b9beeca1 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -651,6 +651,15 @@ static void wt_status_collect_changes_index(struct wt_status *s)
->         rev.diffopt.detect_rename = s->detect_rename >= 0 ? s->detect_rename : rev.diffopt.detect_rename;
->         rev.diffopt.rename_limit = s->rename_limit >= 0 ? s->rename_limit : rev.diffopt.rename_limit;
->         rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
-> +
-> +       /*
-> +        * The `recursive` option must be enabled to show differences in files
-> +        * *more than* one level deep in a sparse directory index entry (e.g., given
-> +        * sparse directory 'sparse-dir/', reporting a difference in the file
-> +        * 'sparse-dir/another-dir/my-file').
-> +        */
-> +       rev.diffopt.flags.recursive = 1;
+Oh, sorry for that. I was in kind of a hurry ( today was
+my semester exam), so I didn't look at the style guide.
+Will fix it.
 
-Kind of clever, and makes sense.
+> These two calls to optbug() use xstrfmt() to grab allocated pieces
+> of memory and pass it as a parameter to the function, which means
+> the string is leaked without any chance to be freed.
+>
+> Do we care?
+>
+> >  		if (opts->argh &&
+> >  		    strcspn(opts->argh, " _") != strlen(opts->argh))
+> >  			err |= optbug(opts, "multi-word argh should use dash to separate words");
+>
+> The existing use of optbug() we see here does not share such a
+> problem.
 
-I'm wondering if there's an alternate wording that might be helpful
-here or in the commit message, that instead of just saying the
-'recursive' option is necessary, perhaps says a little bit about why
-it helps.  In particular, the diff machinery, by default, is not
-recursive and stops at comparing the first level of trees.  (See e.g.
-the -r option in diff-tree, it's just that it's turned on by default
-in 'git diff' and by the -p option in 'git log'.)  I'm guessing the
-recursive option never needed to be turned on previously within
-wt-status, due to something about the nature of the index only holding
-files previously.  Now, however, the sparse index changes that.  (And
-it also suggests that perhaps we should look to see if other commands
-run the diff machinery without the recursive flag, and see if they
-need it now due to sparse indices.)
+hmm, I wanted a formatting function to format (i.e. pass the
+`opt->help` dynamically) the output string. The existing use of
+`optbug()` that you specified has no `%s` formatter; it is a plain
+string. That's why I used `xstrfmt()`. Moreover, it was in Ævar's
+suggestion[1] -
 
-Granted, I'm not totally sure how to work these facts in (in part
-because I don't know how comparison to the index normally avoids the
-need for the recursive flag), and maybe what you have is fine.  Just
-thought I'd point it out since I wasn't aware of the non-recursive
-nature of the diff machinery until I started doing things with
-diff-tree.
+> +		if (opts->help && ends_with(opts->help, "."))
+> +			err |= optbug(opts, xstrfmt("argh should not end with a dot: %s", opts->help));
 
+But I think, you're right. There is some memory leakage here.
+Should I go with plain strings then? (i.e. "help should not end
+with a dot" instead of `xstrfmt("help should not end with a dot:
+%s", opts->help)`)
 
-> +
->         copy_pathspec(&rev.prune_data, &s->pathspec);
->         run_diff_index(&rev, 1);
->         object_array_clear(&rev.pending);
-> --
-> gitgitgadget
+Thanks :)
+
+[1] https://lore.kernel.org/git/220221.86tucsb4oy.gmgdl@evledraar.gmail.com/
