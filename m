@@ -2,168 +2,232 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B63C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 20:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C8C5C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 20:25:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236079AbiBYUQe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 15:16:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56942 "EHLO
+        id S236349AbiBYUZk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 15:25:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231247AbiBYUQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 15:16:29 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01F0E20239D
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 12:15:56 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3573A117527;
-        Fri, 25 Feb 2022 15:15:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iUo1OtlAx2Si4H6Mjh5POeWaJ1FufixIBlvAIS
-        pqbew=; b=hXi8fVIpeR3CvxH4a2XfxUKypQwrQFajBWleVsgqGTDIcdcVo9Y+87
-        lvl54OnXIXX9P/apq7O+kB0GRuLciLXmD4yjOaXRYfMLzCmpaB6N4xJaTNBR5LL1
-        PT7grj7G/2DhIJO95jYtA5neFLrqa6BR+vaJ+JniUxUZ1NPuPnR3U=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 269A7117526;
-        Fri, 25 Feb 2022 15:15:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 697D6117525;
-        Fri, 25 Feb 2022 15:15:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Tao Klerks <tao@klerks.biz>
-Subject: Re: [PATCH v2 1/2] merge: new autosetupmerge option 'simple' for
- matching branches
-References: <pull.1161.git.1645695940.gitgitgadget@gmail.com>
-        <pull.1161.v2.git.1645815142.gitgitgadget@gmail.com>
-        <890e016bfc0809d25a4ae8ae924b23895f520810.1645815142.git.gitgitgadget@gmail.com>
-Date:   Fri, 25 Feb 2022 12:15:52 -0800
-In-Reply-To: <890e016bfc0809d25a4ae8ae924b23895f520810.1645815142.git.gitgitgadget@gmail.com>
-        (Tao Klerks via GitGitGadget's message of "Fri, 25 Feb 2022 18:52:21
-        +0000")
-Message-ID: <xmqqczjaaeiv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S235062AbiBYUZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 15:25:38 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CD3B214F99
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 12:25:06 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id h17so162775plc.5
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 12:25:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=9BmahDNH3REI5WFHAhNr/9R5HIbtrovWr11v1KpKMAE=;
+        b=RGHi+5mqEQb+jRlNsOPdK61ZTPXpCjkAwikou+WgSHN/ez9n43LMSL2WBFk+wo2s+m
+         991jhY+1edO7w4MU/u0TAmpQaBMXklfA5y2GD6AAumnCshnb5xN3JSGP/i/uN45q/kL8
+         Glg93rJ4AEk55y4sKTvEGbMWQCGHRFE2biEywbdK1/Lj48nfqb5JIBqM37RY4lJn8/7S
+         dL639Y7ZzldfQeLGEhj2iD94zc7VmS++xM10hq19QKEcbUCyn25dSIsj/EHSFV3cq2AI
+         XRZxxzXtAt5na36X7G9CtCZwvwKL1DFEHEw+1ZSTlA0qBcfTbzJlkndGFWjlz+PPUFdR
+         QfVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=9BmahDNH3REI5WFHAhNr/9R5HIbtrovWr11v1KpKMAE=;
+        b=wH4cXNsEbrxFnHBIWU0gD+7c20bYOUQMzerkC6eKLNkZjRNpCtq9ctK+WczZOvsbUx
+         qcS+ku5stpymzf1B5znNg3OOO7deBRTyV7Wf7rJQjBSHurB6M9taOkqrdNNKElheMcEr
+         /bmfC0LfOVpCBbotH08zzsUN0TTdr9lzbZqC1gDzLLSGbLzulXkcktRELVxmxo5subj5
+         AToFa++buZEqhcFqh4P/4wuWBwtWpbhuEW1LMHuPGe8kj5KvaHdH0r10dBQD7/df7Gn8
+         MEQiyAzbRxoFs6moKe/DtcfxGT2b0QQ0sSuRSFpLkcAdFFj2GuPsRfETwlAvS3oVYmQf
+         ULsw==
+X-Gm-Message-State: AOAM531mb2IIOG+HGjIr0pHJX5vHZe0GHJFW2GHbnz1Oj9rhu616xI0b
+        rN9P9bmGN2AYvxzQpWdtVrM/
+X-Google-Smtp-Source: ABdhPJxnq2Zvpcho08WNWFBo+YO5YAPAXkcXWwaj40CgKTNgF/4klAEHhAUsAJvqxwThNJdgeWvvEw==
+X-Received: by 2002:a17:902:82c5:b0:151:476b:c581 with SMTP id u5-20020a17090282c500b00151476bc581mr291190plz.158.1645820705806;
+        Fri, 25 Feb 2022 12:25:05 -0800 (PST)
+Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id e7-20020aa78c47000000b004de8f900716sm3925638pfd.127.2022.02.25.12.25.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Feb 2022 12:25:05 -0800 (PST)
+Message-ID: <686e9c8e-7c5b-7cbc-4772-92b9754caa07@github.com>
+Date:   Fri, 25 Feb 2022 12:25:04 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BB9C83F0-9677-11EC-A139-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.6.1
+Subject: Re: [PATCH v2 5/7] read-tree: narrow scope of index expansion for
+ '--prefix'
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
+ <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
+ <4f05fa70209768fb20284bd4018a1364567cad5a.1645742073.git.gitgitgadget@gmail.com>
+ <CABPp-BHx8gFh717bovO6wCo0RA058=YjNtHhRme+Rxh8GOnxbQ@mail.gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <CABPp-BHx8gFh717bovO6wCo0RA058=YjNtHhRme+Rxh8GOnxbQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Elijah Newren wrote:
+> On Thu, Feb 24, 2022 at 2:34 PM Victoria Dye via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Victoria Dye <vdye@github.com>
+>>
+>> When 'git read-tree' is provided with a prefix, expand the index only if the
+>> prefix is equivalent to a sparse directory or contained within one. If the
+>> index is not expanded in these cases, 'ce_in_traverse_path' will indicate
+>> that the relevant sparse directory is not in the prefix/traverse path,
+>> skipping past it and not unpacking the appropriate tree(s).
+>>
+>> If the prefix is in-cone, its sparse subdirectories (if any) will be
+>> traversed correctly without index expansion.
+>>
+>> Signed-off-by: Victoria Dye <vdye@github.com>
+>> ---
+>>  builtin/read-tree.c                      |  3 +--
+>>  t/t1092-sparse-checkout-compatibility.sh |  8 ++++++-
+>>  unpack-trees.c                           | 30 ++++++++++++++++++++++++
+>>  3 files changed, 38 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+>> index c2fdbc2657f..a7b7f822281 100644
+>> --- a/builtin/read-tree.c
+>> +++ b/builtin/read-tree.c
+>> @@ -213,8 +213,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+>>         if (opts.merge && !opts.index_only)
+>>                 setup_work_tree();
+>>
+>> -       /* TODO: audit sparse index behavior in unpack_trees */
+>> -       if (opts.skip_sparse_checkout || opts.prefix)
+>> +       if (opts.skip_sparse_checkout)
+>>                 ensure_full_index(&the_index);
+>>
+>>         if (opts.merge) {
+>> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+>> index ae44451a0a9..a404be0a10f 100755
+>> --- a/t/t1092-sparse-checkout-compatibility.sh
+>> +++ b/t/t1092-sparse-checkout-compatibility.sh
+>> @@ -1415,7 +1415,13 @@ test_expect_success 'sparse index is not expanded: read-tree' '
+>>         do
+>>                 ensure_not_expanded read-tree -mu $MERGE_TREES &&
+>>                 ensure_not_expanded reset --hard HEAD || return 1
+>> -       done
+>> +       done &&
+>> +
+>> +       rm -rf sparse-index/deep/deeper2 &&
+>> +       ensure_not_expanded add . &&
+>> +       ensure_not_expanded commit -m "test" &&
+>> +
+>> +       ensure_not_expanded read-tree --prefix=deep/deeper2 -u deepest
+>>  '
+>>
+>>  test_expect_success 'ls-files' '
+>> diff --git a/unpack-trees.c b/unpack-trees.c
+>> index 360844bda3a..dba122a02bb 100644
+>> --- a/unpack-trees.c
+>> +++ b/unpack-trees.c
+>> @@ -1739,6 +1739,36 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+>>                 setup_standard_excludes(o->dir);
+>>         }
+>>
+>> +       /*
+>> +        * If the prefix is equal to or contained within a sparse directory, the
+>> +        * index needs to be expanded to traverse with the specified prefix.
+>> +        */
+>> +       if (o->prefix && o->src_index->sparse_index) {
+>> +               int prefix_len = strlen(o->prefix);
+>> +
+>> +               while (prefix_len > 0 && o->prefix[prefix_len - 1] == '/')
+>> +                       prefix_len--;
+>> +
+>> +               if (prefix_len > 0) {
+> 
+> Is this condition check necessary?  If we want some safety check here,
+> could it instead be something like
+> 
+>    if (prefix_len <= 0)
+>        BUG("Broken prefix passed to unpack_trees");
+> 
 
-> From: Tao Klerks <tao@klerks.biz>
->
-> This commit introduces a new option to the branch.autosetupmerge
-> setting, "simple", which is intended to be consistent with and
-> complementary to the push.default "simple" option.
+This condition was intended to skip unnecessary computation for the
+(probably unlikely, but still technically valid) case where the prefix is
+the repo root (e.g., '--prefix=/') - because the repo root is represented
+with only directory separator(s), `prefix_len` would be 0 after removing
+trailing '/'. In that scenario, the index won't need to be expanded, so we
+don't need to go looking in the index for that path. 
 
-Documentation/SubmittingPatches.
+None of that is particularly clear from reading the patch, though, so I'll
+add a comment & test covering it explicitly.
 
-We do not say "This commit does this".  Instead, we say "Add a new
-option that does X".  Usually that is done after the explanation of
-the status quo is finished to make readers understand what the
-problem the change is trying to solve is.  So...
+> and then dedent the following code?  (Or are callers allowed to not
+> sanitize their input before passing to unpack_trees(), meaning that we
+> should use a die() rather than a BUG()?)
+> 
+> To test this idea, near the top of unpack_trees(), I added:
+>     if (o->prefix)
+>         assert(*o->prefix && *o->prefix != '/');
+> and reran all tests.  They all ran without hitting that assertion.  FWIW.
+> 
+>> +                       struct strbuf ce_prefix = STRBUF_INIT;
+>> +                       strbuf_grow(&ce_prefix, prefix_len + 1);
+>> +                       strbuf_add(&ce_prefix, o->prefix, prefix_len);
+>> +                       strbuf_addch(&ce_prefix, '/');
+>> +
+>> +                       /*
+>> +                        * If the prefix is not inside the sparse cone, then the
+>> +                        * index is explicitly expanded if it is found as a sparse
+>> +                        * directory, or implicitly expanded (by 'index_name_pos')
+>> +                        * if the path is inside a sparse directory.
+>> +                        */
+>> +                       if (!path_in_cone_mode_sparse_checkout(ce_prefix.buf, o->src_index) &&
+>> +                           index_name_pos(o->src_index, ce_prefix.buf, ce_prefix.len) >= 0)
+> 
+> style nit: Can you rewrap both the comments and the code at 80 characters?
+> 
 
-> The push.defaut option "simple" helps produce
-> predictable/understandable behavior for beginners, where they don't
-> accidentally push to the "wrong" branch in centralized workflows. If
-> they create a local branch with a different name and then try to do a
-> plain push, it will helpfully fail and explain why.
+I couldn't think of a way to wrap the condition that wouldn't make it more
+difficult to read. The best I could come up with was:
 
-... this would be a better first paragraph to start the proposed log
-message with.
+			if (!path_in_cone_mode_sparse_checkout(ce_prefix.buf, 
+							       o->src_index) &&
+			    index_name_pos(o->src_index, 
+					   ce_prefix.buf, 
+					   ce_prefix.len) >= 0)
+				ensure_full_index(o->src_index);
 
-	With push.default set to "simple", the users fork from a
-	local branch from a remote-tracking branch of the same name,
-	and are protected from a mistake to push to a wrong branch.
-	If they create a ... and explain why.
 
-> However, such users can often find themselves confused by the behavior
-> of git after they first branch, and before they push. At that stage,
+which, to me, is a bit hard to parse. Alternatively, though, I can move the
+prefix-checking logic into its own function (kind of like
+'pathspec_needs_expanded_index(...)' in [1]), in which case I won't need to
+change the current wrapping to keep it under 80 characters.
 
-Depending on how they "branch", they may or may not be confused.  Be
-more specific to illustrate what problem you are solving, e.g.
+[1] https://lore.kernel.org/git/822d7344587f698e73abba1ca726c3a905f7b403.1638201164.git.gitgitgadget@gmail.com/
 
-	... after they create a new local branch from a
-	remote-tracking branch with a different name.
+> It took me a bit of playing and testing to understand these two lines.
+> The comment helps, but it's still a bit dense to unpack; somehow I
+> didn't understand that the comment was referring to index_name_pos()'s
+> call to ensure_full_index().  Once I understood that, it all looks
+> good.
+> 
 
-> their upstream tracking branch is the original remote branch, and pull
-> will be bringing in "upstream changes" - eg all changes to "main", in
-> a typical project where that's where they branched from.
+Sorry about that, I'll revise to make that clearer.
 
-OK.  So "pull" tries to grab from the upstream (which is most likely
-an integration branch with bland name like 'master', 'main' or
-'trunk'), while "push" does not allow the work on a branch (which is
-named after the theme of the work and not a bland name suitable for
-integration branches) to be pushed to the upstream.
+> 
+>> +                               ensure_full_index(o->src_index);
+>> +
+>> +                       strbuf_release(&ce_prefix);
+>> +               }
+>> +       }
+>> +
+>>         if (!core_apply_sparse_checkout || !o->update)
+>>                 o->skip_sparse_checkout = 1;
+>>         if (!o->skip_sparse_checkout && !o->pl) {
+>> --
+>> gitgitgadget
 
-It may probably not be so clear why it is a problem to many readers,
-I suspect.  Isn't that what happens in a typical triangular workflow
-to work with a project with a centralized repository?  You fork from
-the integration branch shared among project participants, you work on
-your own branch, occasionally rebasing on top of the updated upstream,
-and when you are done, try to push it out to the integration branch,
-and that final leg needs to be explicit to make sure you won't push
-out to a wrong branch (in this case, a new branch at the remote with
-the same name as your local topic branch) by mistake?
-
-> On the other hand, once they push their new branch (dealing with the
-> initial error, following instructions to push to the right name),
-> subsequent "pull" calls will behave as expected, only bring in any
-> changes to that new branch they pushed.
-
-Is that because the upstream for this local branch is updated?
-The "following instructions..." part may want to clarify.
-
-It somehow feels that a better solution might be to suggest
-updating the push.default to 'upstream' when it happens?  I dunno.
-
-In any case, now we have explained what happens with today's code,
-here is a good place to propose a solution.  Do so in imperative,
-e.g.
-
-    Allow branch.autosetupmerge to take a new value, 'simple', which 
-    sets the upstream of the new branch only when the local branch
-    being created has the same name as the remote-tracking branch it
-    was created out of.  Otherwise the new local branch will not get
-    any tracking information and 
-
-or something, perhaps?
-
-> +	/*
-> +	 * This check does not apply to the BRANCH_TRACK_INHERIT
-> +	 * option; you can inherit one or more tracking entries
-> +	 * and the tracking.matches counter is not incremented.
-> +	 */
->  	if (tracking.matches > 1)
->  		die(_("not tracking: ambiguous information for ref %s"),
->  		    orig_ref);
-
-> +	if (track == BRANCH_TRACK_SIMPLE) {
-> +		/*
-> +		 * Only track if remote branch name matches.
-> +		 * Reaching into items[0].string is safe because
-> +		 * we know there is at least one and not more than
-> +		 * one entry (because not BRANCH_TRACK_INHERIT).
-> +		 */
-
-OK, because in the pre-context of this hunk, we would have jumped to
-cleanup: if there were no .matches; so we know there should at least
-be one, and we rejected ambiguous matches already, so we know there
-is only one.
-
-> +		const char *tracked_branch;
-> +		if (!skip_prefix(tracking.srcs->items[0].string,
-> +				 "refs/heads/", &tracked_branch) ||
-> +		    strcmp(tracked_branch, new_ref))
-> +			return;
-> +	}
-
-That looks sensible.  Sometimes we do not set tracking information
-and just return.
