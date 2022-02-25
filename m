@@ -2,125 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD241C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 12:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 107A2C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 12:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240642AbiBYM07 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 07:26:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39270 "EHLO
+        id S240846AbiBYM7q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 07:59:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232744AbiBYM07 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 07:26:59 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DB5A214FBA
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 04:26:27 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id q17so7196333edd.4
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 04:26:27 -0800 (PST)
+        with ESMTP id S240839AbiBYM7o (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 07:59:44 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12C621EBAB9
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 04:59:12 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id h15so7296712edv.7
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 04:59:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Ur6/MrKg5uJBgwjDCpRrPMVnCKs3CccQrqP9pNXaf0w=;
-        b=PEV0l7yiXlZP3bve8ixSzYUwQv9pc/88Q4z3U6Y9GhJzTP85Z2RRV9sn6nHHo/SZ2N
-         wNz/pxM4UVQqS9v88RRKLepQbRWE7f5U0rxvy7lS07gw3gz6XyEATbFLQPPBpHbAtN8a
-         Pdr+eeq+gD7FRNCQT855yn5WpstNqOkAT/WM5KOnFBmeKFYNRcIaoGhIcfizbmIP/FYD
-         1QopWddyS0pSIl7HjeJ3Er7hRVWqXE5fWt6qce77FuQ8uDzzoWDX53Tw0u7bxJ06rCHB
-         Oc42bHzB2xtf8Uhd+Tf/rUjqVj/6VjlPU+WPcqbIkK/Y6Y9tfHfXH6rHwM6n+MlthNMN
-         rPfQ==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=UyxeaOCgrrwOOcieiRsnHtUFmmI4/fvUbOdZpeoq1tM=;
+        b=Dt09HCz8cKHGDSz47R0k/34aKJRj0WbHoFhOzGALYu72vSIEWDU7Ufjmeez45jXObN
+         wbJMyaIL3uAos363DgAtad61Vapqrpm7oMo37xUBZXree0/Va47Ls41+3O0Dx2jp3+YD
+         raAyv2A2S951KLCSa/2QAhV7dIoVBmPD7m8ZFDV9zydY6WlO7tHf5U0d4aL9BGbRAElY
+         px+2LuHq/IX+O/X2smW9olB9V5043dM7bNmGvxz9WDR+8aq1tsgTrDLzw8cNq8+dc3Z7
+         6grMyQtDgGxrUCzkitzvRzsv6wWGS1uu5hpcKURDV8c6uESGxW6yFHpjcoVN7qokRubl
+         6KPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Ur6/MrKg5uJBgwjDCpRrPMVnCKs3CccQrqP9pNXaf0w=;
-        b=RuR/WWB7gBBOeceoOtXDXnrlKeLdi+6qgpGO39l9kDm5ujWUiOA4WAeUWdn2rXnFtu
-         swuCsIuyxZWl31rBaM9/4VTxnKZeVX1xTod3w00tIM0WmnFi9Tk2fnYQPi0erf87fR6s
-         2InkcCA0eSYlfiK2EjqZUg5Gd2hEo37d+CFtSwF1XPHUtzl5715doX5gcS+3KEdWs5e4
-         1bnNSu/dK9AZq913Kw08zmq31XvZt1BG2Cvy3wG0DK4d4SFKe4LFUMFp04p4mV6EK41k
-         KoB3787H5wulxvHetchMMe+2iflD8Q2mTCN39ga6TiK54jcQKv6eVyfJmE+XxBs41VRQ
-         uV5g==
-X-Gm-Message-State: AOAM531xLTWIiF/K5MQyDjFVGi+Cjm62k6LsezXOgBReiF/X7pDTA3mT
-        X1xWJTc3PgtBxT8q0hqPKl2So1+DBUXPvA==
-X-Google-Smtp-Source: ABdhPJyqDDSaLrui0GM2VAd6nQmY17x61iTxJXkzCkn+kCbtmLts4be/jPP7F79Tn53AbO5CeaAi2Q==
-X-Received: by 2002:a05:6402:5107:b0:412:8530:3ba9 with SMTP id m7-20020a056402510700b0041285303ba9mr6964092edd.264.1645791985160;
-        Fri, 25 Feb 2022 04:26:25 -0800 (PST)
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=UyxeaOCgrrwOOcieiRsnHtUFmmI4/fvUbOdZpeoq1tM=;
+        b=oJAyfj9z1jmCYp7pmxNFiX6mKixDz2skmp2Cy1m0e01EA5U0S3/MBsoqMYVXWFbvVV
+         M96h1w99F5OVpZT7TKJkEsKxUQmOh/knYQS5rA+dPC5OnSerz6tPQmFlzCJ0nSrM8FtN
+         O9DYlSKiNcvYn0HH4Qsxey9B/WZ+W4yQPM0bTju8mZQTg8vtQ0gX8Grgk25JUdhswDDg
+         wuOjR22+CzW9luvRiero1OIqC52ZyDxnqzeJ+wB855wHgfEArCmn8ku5dHuErcjKq8dn
+         zjMWrXzTe/jj9S8cU7if7pnQBIF0jFfDfgla/6d58gNLhrKGMromThJ8ce3jqb/8d0bS
+         a9Ng==
+X-Gm-Message-State: AOAM531YpFdJusqBJ+UNp3Nok1NUlXEMRft4+adtTb64nu0brYxf8Jmr
+        /TnjmgP/t85jWYtRLaafiiQ=
+X-Google-Smtp-Source: ABdhPJzEkgSlXXeYYFD5pxoU4WXu8TeWvsT8K329B07E6QD8raPdM84FNFSZAkcRG17YHhsUJO4CBg==
+X-Received: by 2002:a05:6402:254b:b0:412:d172:2607 with SMTP id l11-20020a056402254b00b00412d1722607mr7068319edb.80.1645793950478;
+        Fri, 25 Feb 2022 04:59:10 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id v2-20020a17090606c200b006a728f4a9bcsm957873ejb.148.2022.02.25.04.26.24
+        by smtp.gmail.com with ESMTPSA id ie19-20020a170906df1300b006bc52a7e928sm956828ejc.111.2022.02.25.04.59.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Feb 2022 04:26:24 -0800 (PST)
+        Fri, 25 Feb 2022 04:59:09 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nNZg0-000VlP-7p;
-        Fri, 25 Feb 2022 13:26:24 +0100
+        id 1nNaBh-000WuT-5C;
+        Fri, 25 Feb 2022 13:59:09 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Justin Donnelly via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Justin Donnelly <justinrdonnelly@gmail.com>
-Subject: Re: [PATCH 0/4] In PS1 prompt, make upstream state indicators
- consistent with other state indicators
-Date:   Fri, 25 Feb 2022 13:22:59 +0100
-References: <pull.1162.git.1645789446.gitgitgadget@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+Date:   Fri, 25 Feb 2022 13:39:54 +0100
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet>
+ <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com>
+ <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet>
+ <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
+ <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <pull.1162.git.1645789446.gitgitgadget@gmail.com>
-Message-ID: <220225.86czjb874f.gmgdl@evledraar.gmail.com>
+In-reply-to: <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com>
+Message-ID: <220225.868rtz85lu.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Feb 25 2022, Justin Donnelly via GitGitGadget wrote:
+On Wed, Feb 23 2022, Phillip Wood wrote:
 
-I couldn't find any glaring issues here on a quick review, just a note.
-
-> These patches are about the characters and words that can be configured to
-> display in the PS1 prompt after the branch name. I've been unable to find a
-> consistent terminology. I refer to them as follows: [short | long] [type]
-> state indicator where short is for characters (e.g. ?), long is for words
-> (e.g. |SPARSE), and type is the type of indicator (e.g. sparse or upstream).
-> I'd be happy to change the commit messages to a different terminology if
-> that's preferred.
-
-I think that terminology is correct, in case you haven't seen it
-git-for-each-ref(1) talks about the "short" here as "short",
-"trackshort" etc.
-
-> There are a few inconsistencies with the PS1 prompt upstream state indicator
-> (GIT_PS1_SHOWUPSTREAM).
+> On 22/02/2022 13:31, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> [...]
+>> So just to make the point about one of those mentioned in my [1] with
+>> some further details (I won't go into the whole thing to avoid repeating
+>> myself):
+>> I opened both of:
+>>      https://github.com/git-for-windows/git/runs/4822802185?check_suite_=
+focus=3Dtrue
+>>      https://github.com/dscho/git/runs/4840190622?check_suite_focus=3Dtr=
+ue
+>> Just now in Firefox 91.5.0esr-1. Both having been opened before, so
+>> they're in cache, and I've got a current 40MB/s real downlink speed etc.
+>> The former fully loads in around 5100ms, with your series here
+>> that's
+>> just short of 18000ms.
+>> So your CI changes are making the common case of just looking at a
+>> CI
+>> failure more than **3x as slow as before**.
 >
->  * With GIT_PS1_SHOWUPSTREAM="auto", if there are no other short state
->    indicators (e.g. + for staged changes, $ for stashed changes, etc.), the
->    upstream state indicator appears adjacent to the branch name (e.g.
->    (main=)) instead of being separated by SP or GIT_PS1_STATESEPARATOR (e.g.
->    (main =)).
->  * If there are long state indicators (e.g. |SPARSE), a short upstream state
->    indicator (i.e. GIT_PS1_SHOWUPSTREAM="auto") is to the right of the long
->    state indicator (e.g. (main +|SPARSE=)) instead of with the other short
->    state indicators (e.g. (main +=|SPARSE)).
+> I don't think that is the most useful comparison between the two.[...]
 
-I think it would really help to in each commit message have a
-before/after comparison of the relevant PS1 output that's being changed.
+I'm not saying that it's the most useful comparison between the two, but
+that there's a major performance regression introduced in this series
+that so far isn't addressed or noted.
 
-I'm not sure how to readthis example. So before we said "main +=|SPARSE"
-but now we'll say "main +|SPARSE=", but without sparse we'll say
-"main="?
+> [...]When
+> I am investigating a test failure the time that matters to me is the
+> time it takes to display the output of the failing test case. With the
+> first link above the initial page load is faster but to get to the
+> output of the failing test case I have click on "Run
+> ci/print_test_failures.sh" then wait for that to load and then search
+> for "not ok" to actually get to the information I'm after. With the
+> second link the initial page load does feel slower but then I'm
+> presented  with the test failures nicely highlighted in red, all I
+> have to do is click on one and I've got the information I'm
+> after. Overall that is much faster and easier to use.
 
-Aren't both of those harder to read than they need to be, shouldn't it
-be closer to:
+Whether you think the regression is worth the end result is a subjective
+judgement. I don't think it is, but I don't think you or anyone else is
+wrong if they don't agree.
 
-    main= |SPARSE
+If you think it's OK to spend ~20s instead of ~5s on rendering the new
+output that's something that clearly depends on how much you value the
+new output, and much much you're willing to wait.
 
-Or:
+What I am saying, and what I hope you'll agree with, is that it's
+something that should be addressed in some way by this series.
 
-    main= |+SPARSE
-
-Or:
-
-    main= +|SPARSE
-
-I can't recall what the "+" there is (if any).
-
-I.e. the "=" refers to the ahead/behind state of "main, it seems odd in
-both versions of your example that we're splitting it off from "main"
-because we have "SPARSE" too.
-
-But maybe I'm missing something...
+One way to do that would be to note the performence regression in a
+commit message, and argue that despite the slowdown it's worth it.
