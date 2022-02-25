@@ -2,78 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F32A4C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 17:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A82A9C4332F
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 17:35:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236298AbiBYR1L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 12:27:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36852 "EHLO
+        id S243774AbiBYRft (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 12:35:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234603AbiBYR1I (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 12:27:08 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1CF522BD47
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 09:26:35 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 98D7818B566;
-        Fri, 25 Feb 2022 12:26:35 -0500 (EST)
+        with ESMTP id S242721AbiBYRft (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 12:35:49 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B73651B1DC1
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 09:35:16 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4EB0517DFA0;
+        Fri, 25 Feb 2022 12:35:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=8MwIz3URkaxu
-        aUGc4avS6900yP6XSZq/R8k36HOpXy4=; b=cvUT+kFPjI6LygbjVXPdzQIN7oRZ
-        haiIQ9Tq2kUAqxgP4J2OT7Hmi5m4f0eBRKhowF0scUCjvXiv36gRAKiCs55pB25K
-        JHBb2CuRQ0+7SDZ9a8gvcoVtbdQgrXm+PlhdfXrSdq7Mmiq2lEhM09lHxaIqA9DR
-        EBd4VLHWHtUjmUg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91E6D18B565;
-        Fri, 25 Feb 2022 12:26:35 -0500 (EST)
+        :content-type; s=sasl; bh=ZWm60wCvy/8BMWzhkp0bt/qo7Eea8aM6W4C7zg
+        vC/fI=; b=JYlUWbNgWSlblq/l3H1KTijNapeWhvK6Jcgzrjev0MrkVzMURfGmW7
+        wVYqIO/x3i4WnE0Dv/SziNnac8njOUV4METw6k9F6d4JfW+Mtq9kF7U75LA4WE16
+        LMDtq4jLnCftLOqPfbjrNgxAk7wiaVaogNofGCIy8tqaBqHNG0JWc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 46A7317DF9F;
+        Fri, 25 Feb 2022 12:35:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.82.80.254])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 09EDF18B563;
-        Fri, 25 Feb 2022 12:26:33 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B26B317DF9D;
+        Fri, 25 Feb 2022 12:35:13 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        pclouds@gmail.com
-Subject: Re: [PATCH v2] switch: mention the --detach option when dying due
- to lack of a branch
-References: <20220224064710.2252637-1-alexhenrie24@gmail.com>
-        <xmqqv8x4m6jn.fsf@gitster.g>
-        <220225.86h78n88gb.gmgdl@evledraar.gmail.com>
-Date:   Fri, 25 Feb 2022 09:26:32 -0800
-In-Reply-To: <220225.86h78n88gb.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 25 Feb 2022 12:57:01 +0100")
-Message-ID: <xmqq1qzqg8mv.fsf@gitster.g>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, abhishekkumar8222@gmail.com
+Subject: Re: [PATCH 2/7] commit-graph: fix ordering bug in generation numbers
+References: <pull.1163.git.1645735117.gitgitgadget@gmail.com>
+        <6e47ffed25795260c2b8614d4589fb58d892c8df.1645735117.git.gitgitgadget@gmail.com>
+        <xmqqh78nkj2x.fsf@gitster.g>
+        <756fd005-637d-a067-9949-e87fc15b3bf6@github.com>
+Date:   Fri, 25 Feb 2022 09:35:12 -0800
+In-Reply-To: <756fd005-637d-a067-9949-e87fc15b3bf6@github.com> (Derrick
+        Stolee's message of "Fri, 25 Feb 2022 08:51:11 -0500")
+Message-ID: <xmqqwnhietnz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 138AFED8-9660-11EC-87DE-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 49E62772-9661-11EC-94C3-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Derrick Stolee <derrickstolee@github.com> writes:
 
->>> +	test_i18ngrep ! "try again with the --detach option" stderr
->>> +'
->>
->> OK, we try to be consistent with other tests in the file, and leave
->> s/test_i18n// to a file-wide clean-up outside the topic.
+> It is very subtle, which is why it took me a while to debug this
+> issue once I managed to trigger it.
 >
-> FWIW that's not the case here. This is the first use of test_i18ngrep i=
-n
-> this file.
+>>     for each commit ctx->commits.list[i]:
+>>         continue if generation number has been computed for it already
+>
+> This is the critical line in the current version. This includes
+> "continue if the generation number was loaded from the previous
+> commit-graph file." This means we under-count when building from
+> an existing commit-graph with overflows.
+>
+> If we insert an increment here, then we risk double-counting. I
+> should have described this better.
 
-Oh, thanks for pointing it out---I remembered that somebody gave a
-similar suggestion and blindly assumed that there are other
-instances already.  If so, picking, between grep and test_cmp,
-whichever requires the least amount of boilerplate code is fine by
-me.
+Ah, that obviously I missed.  Thanks.
 
-Thanks.
