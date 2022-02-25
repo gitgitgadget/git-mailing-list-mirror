@@ -2,131 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31AF2C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 15:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 128FBC433F5
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 15:36:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238920AbiBYPgl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 10:36:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52074 "EHLO
+        id S242169AbiBYPhN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 10:37:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237330AbiBYPgk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 10:36:40 -0500
-Received: from mail2-relais-roc.national.inria.fr (mail2-relais-roc.national.inria.fr [192.134.164.83])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FAE921D088
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 07:36:07 -0800 (PST)
-X-IronPort-AV: E=Sophos;i="5.90,136,1643670000"; 
-   d="scan'208";a="23256780"
-Received: from dt-lawall.paris.inria.fr ([128.93.67.65])
-  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Feb 2022 16:36:05 +0100
-Date:   Fri, 25 Feb 2022 16:36:04 +0100 (CET)
-From:   Julia Lawall <julia.lawall@inria.fr>
-X-X-Sender: julia@hadrien
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-cc:     =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+        with ESMTP id S242167AbiBYPhM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 10:37:12 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E0CC21DF2E
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 07:36:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1645803392;
+        bh=p8Zyok1Yrp3E0HupnifeLQPhoFhktGR3BmNe9zwg44U=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=efP1x2wbubp9H7I9wncw2X0D2EnctZJTf+LmrEzmmSnwYGEy//bivtwm3nqLvuDtA
+         nYIrtAs6pWxQOD+7iZXndffjQKLksR7KAO5NsdVJ+P6G1MpRXRKMqOH2uf9OsVRukK
+         uNi12RxtQe4Y+ZOBD33cDPqrt+CCGim3ocsS1lEs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MdNY2-1nwgPf4AMa-00ZSSQ; Fri, 25
+ Feb 2022 16:36:32 +0100
+Date:   Fri, 25 Feb 2022 16:36:30 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Julia Lawall <julia.lawall@inria.fr>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        git <git@vger.kernel.org>, cocci@inria.fr
-Subject: Re: [cocci] [PATCH] add usage-strings ci check and amend remaining
- usage strings
-In-Reply-To: <nycvar.QRO.7.76.6.2202251601040.11118@tvgsbejvaqbjf.bet>
-Message-ID: <alpine.DEB.2.22.394.2202251630510.2577@hadrien>
-References: <220221.86tucsb4oy.gmgdl@evledraar.gmail.com> <20220221173357.8622-1-chakrabortyabhradeep79@gmail.com> <nycvar.QRO.7.76.6.2202221152230.11118@tvgsbejvaqbjf.bet> <220222.867d9n83ir.gmgdl@evledraar.gmail.com> <alpine.DEB.2.22.394.2202221436320.2556@hadrien>
- <nycvar.QRO.7.76.6.2202251601040.11118@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH v4 2/2] parse-options.c: add style checks for
+ usage-strings
+In-Reply-To: <e1c5a3258263d05530f236c247603c2f342dac85.1645766599.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202251632320.11118@tvgsbejvaqbjf.bet>
+References: <pull.1147.v3.git.1645626455.gitgitgadget@gmail.com> <pull.1147.v4.git.1645766599.gitgitgadget@gmail.com> <e1c5a3258263d05530f236c247603c2f342dac85.1645766599.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-858204238-1645803364=:2577"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:nHWiNUVmnRQCiOYGa+SWYFRbkfzO7frykwPyRrp7vD6HmYB2idF
+ f6beJ8FGZo12B38X1DRbXg81dyf5TVZdYUm6gv1CXtCmmqLKgc+yEm5dnBoA9GEW4Bo4i1y
+ HxrK0CDmHTWjIi95wvW54SG8U/f+NkhubKPV4r9xDPRuatqoAkZuk8U9dcSLMMJDFmrmsFs
+ ww4R0azs4FArjdDaGMyEw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:gIm/+9Qpr2w=:Sir6uVw8El7olKjg73O6fX
+ ZaRHhhoWxAsMmnQLb2LkAL57U8bCGH2tLv5x2e62szP/NlvO9JEax4A9cQD4QXHimUgcUfY7y
+ NELQ4zm8zZtvxLUq91a+sqGuEdgwpe4iQDBwnipDUVW4pB1mw3MMrGuHY2ENWSOjdyvGjTyml
+ /luc9opto39MyosX11cqJeVoor1uAyAzk6j4hhPAfjOLeu0QkGC/64KEWkFNZmT0dphA2R6s2
+ sgr3Xw8ONv9kRehfq4MXHt3ecWJL0TynJcc8UWeLp9vDV5YNDRXQyK6biFMcHG9+Bj6xOKDyi
+ 3qGzRCrN6jiry86qdnv98Mj/c81pocKcqRoChPxjWQGhzbemQIgGiARDt1KqD+toQ9GW9UbdA
+ iBDgZKHVy5MzO4DivpUkhVPI293jYg/vbMuCtEEakpjzSNMSnbOfbbDx+NTZQY0uyfL7ClGbP
+ YpAKuv/Gi/fQuNx4VabhC0WNtFaAbp5IK7pkhk0Iel8iQ700S0sCwzaURi2KeSx3TGMKVEQom
+ Zy9vMd/O3jwP7Nq7KZ4xC7cnivenJoOP8+mnLF6sYI5XhfQvGJe0Nt6VsA/sZaF7OgDJ8F65D
+ OOYNK9IgXcTHNpkZQStNBrtXum/lHt5QFzcyxGxioiAnUjp+NQLy3pySRvzbZx/xA93z7I9aM
+ PWe1144Tm97v4tOaGBcn73aMYH2WhZ3MVKQqfxkDLfLqDv0NOPs8JOd3rm5blJrSq0PW35VsR
+ PpHCWWt4vpbA5h0HgUXzu9dVi9pg1ZkXfw6dSKMii8ncWqAlA2KDwZjtS9BnobF6McLvgAEEt
+ dPIs8K7dBL1gaCZWFQKYSpG4/1VapBnG81hXxIPGwN6bXmiHNd6Prx+mBHgxsUqX3/esDRMfB
+ EgXA4ggSlTcRGaW7iLavMADbCZdJv7hXBGapBC2Fj3FS11NxpohMtX4eeaoO9Ge3pUm5Felon
+ 5kE2GzfTEZ4a4PsOPtcAmpKBQc5CtpZi/etnwdO2EQXjBb8b/eCOycQBU9D+0t9OFzBZK2dv+
+ 7Aw9TYMvo0soWy2Jduc5aykPqdnRDzh77HfhYnJG2OQjz7Kaw+O40xyVNHUAhhoUkmUZhj2/g
+ znxqcDmZQgb6CU=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Abhradeep,
 
---8323329-858204238-1645803364=:2577
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Fri, 25 Feb 2022, Abhradeep Chakraborty via GitGitGadget wrote:
 
-
-
-On Fri, 25 Feb 2022, Johannes Schindelin wrote:
-
-> Hi Julia,
+> From: Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 >
-> On Tue, 22 Feb 2022, Julia Lawall wrote:
+> `parse-options.c` doesn't check if the usage strings for option flags
+> are following the style guide or not. Style convention says, usage
+> strings should not start with capital letter (unless needed) and
+> it should not end with `.`.
 >
-> > [I]f there are some cases that are useful to do statically, with only
-> > local information, then using Coccinelle could be useful to get the
-> > problem out of the way once and for all.  Coccinelle doesn't support
-> > much processing of strings directly, but you can always write some
-> > python code to test the contents of a string and to create a new one.
-> >
-> > Let me know if you want to try this.  You can also check, eg the demo
-> > demos/pythontococci.cocci to see how to create code in a python script and
-> > then use it in a normal SmPL rule.
-> >
-> > If some context has to be taken into account and the context in the same
-> > function, then that can also be done with Coccinelle, eg
-> >
-> > A
-> > ...
-> > B
-> >
-> > matches the case where after an A there is a B on all execution paths
-> > (except perhaps those that end in an error exit) and
-> >
-> > A
-> > ... when exists
-> > B
-> >
-> > matches the case where there is a B sometime after executing A, even if
-> > that does not always occur.
-> >
-> > If the context that you are interested in is in a called function or is in
-> > the calling context, then Coccinelle might not be the ideal choice.
-> > Coccinelle works on one function at a time, so to do anything
-> > interprocedural, you have to do some hacks.
->
-> Right. The code in question is not actually calling a function, but a
-> macro, and passes a literal string to the macro that we would want to
-> check statically.
+> Add checks to the `parse_options_check()` function to check usage
+> strings against the style convention.
 
-Coccinelle doesn't care about whether a function is called or whether a
-macro is called.  It considers everything to be a function.
+As I just pointed out in
+https://lore.kernel.org/git/nycvar.QRO.7.76.6.2202251600210.11118@tvgsbejv=
+aqbjf.bet/,
+it seems that replacing the static check presented in v1 by a runtime
+check needs to be reverted.
 
->
-> I did have my doubts that it would be easy with Coccinelle, but since Ævar
-> seemed so confident, I tried it, struggled, and decided to follow up with
-> you.
+In addition to the example I presented, there is another compelling reason
+to do so: with the static check, we can detect incorrect usage strings in
+all code, even in code that is platform-dependent (such as in
+`fsmonitor--daemon`).
 
-Something like this:
-
-@r1@
-expression e;
-@@
-
-N(e)
-
-@script:python s@
-e << r1.e;
-replacement;
-@@
-
-if string_ok e
-then cocci.include_match(False)
-else coccinelle.replacement = "\"better string\""
-
-@@
-expression r1.e;
-expression s.replacement;
-@@
-- N(e)
-+ N(replacement)
-
-------------------
-
-You can fill in the definition of string_ok and better string.  I think
-the \" will be necessary, because the value of an expression metavariable
-at the python level is a string, so there should be a string inside of it
-to make it a string expression.
-
-julia
---8323329-858204238-1645803364=:2577--
+Ciao,
+Dscho
