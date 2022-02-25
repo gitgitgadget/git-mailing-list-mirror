@@ -2,81 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DA26C433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 16:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5C6EC433EF
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 16:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242415AbiBYQAb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 11:00:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51810 "EHLO
+        id S236648AbiBYQC6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 11:02:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237541AbiBYQAa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 11:00:30 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA7EF1E64E1
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 07:59:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645804795;
-        bh=055PTez9+a3XR39oR3sllw73m86OzmqGxIq/Ql5CoIQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ok6+m8UdlPMJhZHv69giazDYyT8iJoBvdih2lWZkS3Mh83NydAlNfAW2LyKcFq0rU
-         I3GsfzeBP6LuI/y58V2rE0JRyDo/n2BlG0e/742jwUJvvRMC5E4OXipnZTeE76euMy
-         5hP1bOF3hNlfsP0y7G76eeE1lW41GAUE2axjnicc=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQe5k-1ncOAX2sAY-00NgqB; Fri, 25
- Feb 2022 16:59:55 +0100
-Date:   Fri, 25 Feb 2022 16:59:54 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v2 00/14] Finish converting git bisect into a built-in
-In-Reply-To: <CABPp-BEOX+zxR9-yyx-EaiOV-Z9yD0YP_Kwvu4iGB8enz40XXQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2202251659300.11118@tvgsbejvaqbjf.bet>
-References: <pull.1132.git.1643328752.gitgitgadget@gmail.com> <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com> <CABPp-BEOX+zxR9-yyx-EaiOV-Z9yD0YP_Kwvu4iGB8enz40XXQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        with ESMTP id S242572AbiBYQCw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 11:02:52 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87411200
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 08:02:20 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id z15so5046561pfe.7
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 08:02:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=EJAA2UhGOFQ7t1TTpFxSt6XnBMimvPvLRhecExrXDz0=;
+        b=nwCjlds5u6pB4z4EpoySCaO6btA/PHaMbBxlegtAn1zXswBEiKAfHLmWeUuRhg6VtW
+         TydCZi/4KnvAF/nfzpHpNb/lnhJokWH3kYoK9VbQ04N6v0YQGzXA29AN+DgRj8mzD0gN
+         KycNKv5B4+sAdy/ErSGhl9recF7jPIJkFAtUQdoaRhEL6Q8D+f/VSymD4/ujJt3tPfxt
+         3D7EmHGw1JKUxuF4YZnGKDwjVr8lr8+Wgb+g5vKj409zYoLQX9rewHZEztmMCj0iEt8B
+         hRVm7gEWIAuo5+AjyED+arcFn8Nq6y0YmD8+6ZXEUvtiBjB6JwkbfqezoL9AhSrJzckc
+         OAZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=EJAA2UhGOFQ7t1TTpFxSt6XnBMimvPvLRhecExrXDz0=;
+        b=3PL6qyrX9kWAMyBwWPPgBXkO27nF+z3EKT2mv/cE14DkmL9i4Fek6o3rS4ao+3ct7G
+         3xbXnwT7XPN4L/0AIfsMwOl3zTwx9pka+sZlPUzcw2aYsyW9nMMbHu+sZJTyxZwCY1TA
+         0dOA437vS/YTBsGKwR33p5na7Q9/BQC42+UhQDGh0o+uE3in1Z1p8qBvQO4hl1kLVIfC
+         L4iMaatZo6+02Q/FvUem9nS1QovjgzRigsESLKwARyjJ3B8d1dXx8fOMFilVRpcMKtJl
+         wtY91Jgl0k3Yk8ezl0fEld1G6QTnaiaA/h2kjOx7DVDpzv3KT7tG41fb6X4jSNDyQP/T
+         cOtA==
+X-Gm-Message-State: AOAM530nUMNOnBB/2mczFKBkQgLWqdh2wmo2aURHv+Ns7xBbwk4tzYRJ
+        I1Sde7cUPN25mi39OX7B0v8=
+X-Google-Smtp-Source: ABdhPJwlBWM4PGXE2U3c9ShPOOCskZMUSuAFFG1dVDqM9R5scDehJ7E6MT2e0nwKq43j0GK/oLTd+w==
+X-Received: by 2002:a63:da14:0:b0:374:844c:777b with SMTP id c20-20020a63da14000000b00374844c777bmr6611872pgh.99.1645804939916;
+        Fri, 25 Feb 2022 08:02:19 -0800 (PST)
+Received: from localhost.localdomain ([202.142.80.210])
+        by smtp.gmail.com with ESMTPSA id d7-20020a056a00244700b004e1300a2f7csm3608681pfj.212.2022.02.25.08.02.16
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 25 Feb 2022 08:02:19 -0800 (PST)
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Julia Lawall <julia.lawall@inria.fr>, git <git@vger.kernel.org>
+Subject: Re: [PATCH v4 2/2] parse-options.c: add style checks for usage-strings
+Date:   Fri, 25 Feb 2022 21:31:47 +0530
+Message-Id: <20220225160147.14824-1-chakrabortyabhradeep79@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <nycvar.QRO.7.76.6.2202251632320.11118@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.2202251632320.11118@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:BAPde2oGO5qAraqWLH3ouUWRQ6YdhYa0WRI4VILULpUWUjq+AZ5
- 0PHjSoYQLW+0P1M3jCpo5fuOeuh/N8OMhxIt2oM+uj2oy/PJjhbW05CpQtq2lKcmlHt0e03
- UTPpWwWzTQv4/wugaNXi9jnoykePVzG826VZgrgtfEyxGA3v6mMC1ItfoBBO/nDA1vVetJk
- vc8mLIJYrh/QRoHganqig==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:KANceJAidio=:fFtMps9k4yk3RwSdgp7jq6
- xz/Jj6lh80BviBWtBi81X/2UVYq+cSiFABeWu3NkSxUy1hpC/CDEb4mXqG+ZyJZWVLGlAlisn
- KXka1tNTjL7dhT18KGI50yoYC6pcoAMRz0oQXglgoIKlsFsuZLSwNQvB+h9r72Qk7ghYDK7KX
- fj1P4JWCVh8jEiWIU0G5pEwjHJM2+B2Mgv5sufXdsHUcQ7OavxiLUnGTirnd+QHeBtL0Nf0Cz
- PlUgqE/c7hD5v6/lvcJmBcd7nXCPv83QSzqjf7aP/E4PopCH+qhz11ZWdZkm0VaaKGccmpTKz
- w0QSLUi28XbXOCJyVOvO/OMexF/4TGJZ7+A5YIcFDuMACGmpy8rSSXa8Q3YUZYAz9kr6r/Mku
- rl8Z2Ws3VMssCA0Hsp89f3g4kIS37PqqVmLSWsOTGGnEABfFtYx7levPmssXXDquSt8c4/Rqj
- GV5WstYXaDGKx2k1Fn+QFDsNHNecCgjBNQA3N+gpYFu0E1KWxAXtGb0CEiFqylsqMJXQrybha
- 0uwLFvdTJiBvcgvMahjh7/icEJ3E5CmNwBEm6ewB+QYVHrOfDcoRWsylIJpjjA6N8+kh+4/E4
- 0WDnkFJDicccoeDxfWJkIw1tB4LgAQg7rIAUJIKvfV6VOq4JD+XZyjqYz24o4kF3Q9EKEwj0D
- i4s1YcDHNUU0NSARvAihqmjfw7jH58gC6KKc7R8z5PT57MQQCt6kmUQ1IVzVKaRVsOS/9o1Qt
- mXP3gwW99x+9ULa/cCda88b18WC1+K/cKKkMZYBTQv5RowWlsf5n67DA5o59IzKenmsGp7DcG
- UJfi07gFf7iYiuyLWJ5TxuJoRQ1eM+JvpCyyh/oCINloODS/vF1X78l7qvS/DcKSlVv/L76Q0
- ZRB3F6Ii9VyBTVljRwey/IUfDzE2sN0oIw4k51kscfJxUzjp42SHn+wk0WW2fqg/cZm11To5g
- HYbzqDMsANFAF93zqR3m8hxqHHUyl6wDmoIZFdgS/gcUYiRXw3SZt3WsI8WIy3eV6r/PPQI6A
- eRrznRX5ODCaCiZUrtAwfkRGt8h6i2m15yV/ZfADVYnLqBNmarV+N1XrjtYakkgXu1nGPnQVg
- 7PFJwf9mvPpZjA=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-On Tue, 22 Feb 2022, Elijah Newren wrote:
-
-> You've addressed all my feedback from v1, and I've looked over the
-> changes and they look good to me:
+> As I just pointed out in
+> https://lore.kernel.org/git/nycvar.QRO.7.76.6.2202251600210.11118@tvgsbejv=
+> aqbjf.bet/,
+> it seems that replacing the static check presented in v1 by a runtime
+> check needs to be reverted.
 >
-> Reviewed-by: Elijah Newren <newren@gmail.com>
+> In addition to the example I presented, there is another compelling reason
+> to do so: with the static check, we can detect incorrect usage strings in
+> all code, even in code that is platform-dependent (such as in
+> `fsmonitor--daemon`).
 
-Thank you for helping me improve the patch series!
-Dscho
+First of all, thank you so much for putting so much time to look into
+my PR. I appriciate your research about various possible outcomes of this
+Patch request.
+
+I saw your mail where you listed some of the disadvantages of the current
+version. I also agree with the arguments you provided and it is also true
+that one wouldn't find any clue by seeing the output of the `CI` link
+you mentioned (i.e. https://github.com/git/git/runs/5312914410?check_suite_focus=true).
+
+Let's see what Junio, Ævar and others say about this.
+
+Thanks :)
