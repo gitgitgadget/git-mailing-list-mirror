@@ -2,90 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B04DC433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 16:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 642EAC433F5
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 16:26:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241724AbiBYQDv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 11:03:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57210 "EHLO
+        id S242344AbiBYQ0v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 11:26:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242436AbiBYQDu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 11:03:50 -0500
+        with ESMTP id S231629AbiBYQ0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 11:26:51 -0500
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7E511A3604
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 08:03:15 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 251821CDDE4
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 08:26:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1645804990;
-        bh=q5Q02FVqT1yjbN2Zlt/os82l8LsjdyPRnBljCTrNxBw=;
+        s=badeba3b8450; t=1645806371;
+        bh=IvxSSCc63s2t3YA9Zy4JXbpxM8O0i1uSA38T45SL+XQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=PRDo2TuCohnnDrRHbs47JnZ7C+S+aOi10frYhRikkVn7WI/ETT0am+dwuyxmnIkRX
-         No+MykbfZ2Jcy2aHDQ6rn5/6ylp+ZrEmUM5yKtjyiQnILQ0E9DVxw/MlHUmbLfaiqR
-         8oV+AuQkJfDNO0ZT/GoMWGWLQcYwjfO93uLSVcZE=
+        b=aNXzcYI/YaY7/3cwT6OntWoGoMwtbUAwzXLaQDrImSr3QtImc0G9pNrUApIcIk2oG
+         T694efoUuvOUjA9vQZbm/G6hWTqdvI7hcMivkzTFQhn9glhWae1sCYDC16Uu3xLLwA
+         C8Ygb4DtGzX73kGlASjS1RgHZcFz8LRMl1+6sRdo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCbEf-1nXDhN1i1z-009ckq; Fri, 25
- Feb 2022 17:03:10 +0100
-Date:   Fri, 25 Feb 2022 17:03:08 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MA7Ka-1nUpDN1wHi-00Bbhe; Fri, 25
+ Feb 2022 17:26:11 +0100
+Date:   Fri, 25 Feb 2022 17:26:09 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Miriam Rubio <mirucam@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 00/14] Finish converting git bisect into a built-in
-In-Reply-To: <xmqqo82xs1ue.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2202251700110.11118@tvgsbejvaqbjf.bet>
-References: <pull.1132.git.1643328752.gitgitgadget@gmail.com> <pull.1132.v2.git.1645547423.gitgitgadget@gmail.com> <xmqqo82xs1ue.fsf@gitster.g>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Johannes Sixt <j6t@kdbg.org>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH 08/12] merge-ort: provide a merge_get_conflicted_files()
+ helper function
+In-Reply-To: <CABPp-BG7id0GfpDee_7ETZ_94BC_i-e_=-u=PrYJeD7d4sVbiw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202251706150.11118@tvgsbejvaqbjf.bet>
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com> <35e0ed9271a0229fe2acd2385a7e4171d4dfe077.1642888562.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2201281744280.347@tvgsbejvaqbjf.bet> <CABPp-BG2rMEYBLuBW=0wtpJe4aUFGCFa8D0NTSKz9Sm+CkXPxw@mail.gmail.com>
+ <0d7ba76c-9824-9953-b8ce-6abe810e2778@kdbg.org> <CABPp-BERtRDeyF3MhOQhAFwjoykOKwXoz6635NK7j2SEKp1b3A@mail.gmail.com> <nycvar.QRO.7.76.6.2202050009220.347@tvgsbejvaqbjf.bet> <CABPp-BGCL0onSmpgKuO1k2spYCkx=v27ed9TSSxFib=OdDcLbw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.2202221751550.11118@tvgsbejvaqbjf.bet> <CABPp-BG7id0GfpDee_7ETZ_94BC_i-e_=-u=PrYJeD7d4sVbiw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:amaBdH1l4/jk5e352ydgLH+7vtmAv/LVDvRG5oJGyjClETAlRnB
- nYjhahQ1E5DVtickdNbHPHdWDgxw7zvIk9YDNmXZ5c8ypmyWYxQH5Bgxh7tLZjc6tyWquiI
- 7XhtKaP1Th6RkaYQa7iiAP66i9DGkoMbu8HemMyh55Q+JJ3EPMHf7AKHRo/1ZC5LIaukelL
- 021kxvwWvBfshGRWZpvRw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:21yd/HRgR54=:+H8LX7ieruU4XztFaYDqJA
- TCTibvc1tXHELNYElMIn6bQQ8hGBTg9v65CSHE9gPLsjsTTz3bIzL6uXPhggmcytrZZuLRPaR
- tTokk8/sFMJe0kOFWrPUro07bJXJRRPWjemsHBOx+KSvPWTXC0ryAn38X3Ie+e4UDJ1uWLIiT
- J2IyZQdSI3ExMfQymR0xJP9D+pbt9WeUd9ftzGoIks6qSA8/XvYK3H7FbjSGWxOZRzkvsOjeW
- C2P9H+PFo0PRDn6I7Yq3wIpwt9RVFuyS1+WYgc/yY9abaz7d7kBrxs1l03nbk+Y9/JFm537QZ
- LpaAZtCB/296HwgSYbCQGOMSXtj9lzsXb4CaTdAm6+ojzCyk2Cw9MlDevjD4USMRk8VncFzDt
- bnPBwER5SGMWw3GfUYmw2y7Nr35gcnAJhmcv1n7nCkAj00HNL1hs7MFQbmME5FxreJCg51iv3
- S8657BnxdmHjYg6fv4C2DjlemGs9tOA1bMHclYpBymD5H/H0eHjNuh3bOaETaJ253GuGD+6z8
- aOLkWTQL61tt3s32eZ7uQQEsT9Py9bLdqTIuGh60DgcwSlkyNhU6o4HjC9JrbmsZ9YVnS6fCL
- aVJyTCh0lFaUtFsmnutgTpFNAPybBJvoqPIOksyqcYi6bLpHV89JPg+/LToLRfokf5UnqrpWW
- ldbdu/GSBk/5UhpbNd/Bnnvb4dW3mQILfHVeYlKXBBj6eayN69OASqSNsJP68BshwqvE5x0fH
- T8Qc6q4H1VfQutgcHP4/qqQUeNiOCvOykDTXrVfOLXPqexw04305al8hhqVMMWWekNzh5kYyB
- zxewY2qxpC66ycGZOLcXXgk2CWq0PCUOCmP2AfHo4QRjM1+HtImCLugL6bVzye0IGEWUAOgIm
- oBgXajzCCpB/A8sGF5jCy8HkX6SREx/vUPTecYGeasDVFRK4o0zG2tJyoXvR6weU9jbIVdzfI
- czpkpwzfM0vhKbTk9pQ/pHU6f0jXvax4xhMe7GcVGyiDyJb0ZK0UheOILaMTXJIqxprstoy05
- HNpfROdIE7UGUOCMWfvTBpyVX+ufWAncZabN2z4Ej5ppN73iB4K2VOl5Ki71VF6JmfwBBUvt9
- N5zW6CmQdb0xsk=
+X-Provags-ID: V03:K1:oJy37fB5tvqxNx0U/blN+RSe3UsVHO9FbmPXW/UZS9Hlz2gHO59
+ kEuA87ovdfxX/LmH/kVM5vr/Ftf0OOqTtWmgiUIxiEV/ve+FBaRDIfC5BU36VaqSu9z6ScD
+ tLHegKtXMG5Kedij8NCnyImiqDECGbbZHQO9g+j2SlvEW/TxoAQ65hQCThOwQaN7+pTdnvF
+ Ng8LyuJOdpXGI1gOuK5ew==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:03+WX5OST9o=:a9tLU56GTHXH1hKRn015m0
+ kddLLi61XhHN763JUYyTnpqIXkW6ziFb6DS2OmLJkDaaA9MEtLzwe+gSjl/rj8BK2TK7NqlEV
+ NA/btDQJ6I2hirV/NwinzoLy7DaMKas35CvWwkwPeuSbvB3cCTOKXrkz2gzPJGz3HrajswQkm
+ lgEYQbunV02+KGhgYzqLLZ7WVMAeAe2BAVYI0Pzryhu0BCW7RTTx2QSV3wVpE58p0neDehUGq
+ mD1cK49sEp2x6aC2pBV7K+jkvFDFOGOZBfBBeoeot9/vPFrl/mFqVB6/6wzAXIvMRWiGOWGPV
+ TJbbxkyQyHFmPGNm1S1eMBTQVgYYtlAWv4Hb0Cf55G5zVc0HkGg9mbl8HBBS0JDFpA5UlFHOX
+ 212uqt8aSxk1PRAdld8gV51ZZeiiBECKjd4hWotlbJo0443J7nczt+OBY4/R+lwRKtP3g6xn0
+ 4STI/bNTLzKBm+MfbkS7+mB+5YGUDrIVpM21FIUchRA5/cCmFnJRmiAUCHwPy+XKXLZ+XTA+f
+ dBluvjt+d3Jq1OFpskuL7+eVb065KU+AF4h8EF8NJ3eKPPk0gsER4EHUvgBA78BScHVKHCAmG
+ R5tPnNeR9agmEZP1TCJGzvH2cs/sF3ViToiOE8ZDPnb4L6uYk+4iiGXhwJGAEGldQdphRXT3N
+ UnDF8wJ85GoXfwaHgbyl94HacKGukxX3M5BfILgTmxTNUP8W1g/ch/a5y1dx+0sp4qXzecl4/
+ za1b6oinb7jcFVob4uV5Rn4stbXNyX8RwZ4An8OCC4WrsIuToDjU0goaWARzn9Dm2ueV0pIsp
+ xq3DTlKn2+essag8jRK2lYyKWh+CvBHCLXlFFHahsvSDaGP7if3a9VbXqbtSHK48v8TYv+NP9
+ DWBFvQAKeZou0asZd2m7H9zKPNMC4NYrZV0m2dGM9JV0nsce2KtBv7WHJ123lxt3SHKzjqDhN
+ vi5Rw8lxf/km0qdPikhXNZOQmPDnYUJIcombfKAKOKt1hLyO7HkdlvLzhLKor2ZDi3XHVibIN
+ RweS/nLm0Spvr697Eg9751BS4DCdxzE/9GfiYXR7Ph9y+U8w00jvd5ug5vkTiDvp7Ecarc1bh
+ 5mRtQdRWU3uuPE=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Elijah,
 
-On Wed, 23 Feb 2022, Junio C Hamano wrote:
+On Tue, 22 Feb 2022, Elijah Newren wrote:
 
-> [...] the parse-options bit I am not sure about (read: I do not have a
-> strong objection, but I do have to wonder if there is a better way to
-> achieve the goal) [...]
+> On Tue, Feb 22, 2022 at 8:54 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Mon, 21 Feb 2022, Johannes Schindelin wrote:
+> >
+> > > [...] since `merge-tree` is a low-level tool meant to be called by
+> > > programs rather than humans, we need to make sure that those message=
+s
+> > > remain machine-parseable, even if they contain file names.
+> > >
+> > > [...]
+> > >
+> > > Do you think we can switch to `sq_quote_buf_pretty()` for these mess=
+ages?
+> >
+> > Or maybe much better: use NUL to separate those messages if `-z` is pa=
+ssed
+> > to `merge-tree`? That would address the issue in one elegant diff.
+> >
+> > What do you think?
+>
+> Separating the combination of messages for a single target path from
+> the combination of messages for a different target path by a NUL
+> character may make sense.  Would we also want the messages for a path
+> to be prepended by the pathname and a NUL character, in this case, to
+> make it easier to determine which path the group of messages are for?
+>
+> I'm not sure if that does exactly what you are asking, though.
 
-After spending a lot of time to try to make it work, I realized that it's
-in the name of `parse_options()` that it's not a `handle_subcommand()`
-API.
+The most important thing I am asking for is a way for a program calling
+`merge-tree` to figure out whether it knows how to handle all the types of
+conflicts encountered in this merge.
 
-So yes, I agree there is probably a better way (and e.g. `git bundle`
-and `scalar` would benefit from it, too): designing a proper API for
-handling subcommands.
+So that a web UI could present e.g. simple content conflicts, and even
+rename/rename conflicts, but would know that it cannot resolve the
+conflicts e.g. when a submodule is affected.
 
-That's safely outside the scope of the patch series, of course.
+So... I am fairly certain that we're not as close to addressing this as I
+had hoped for.
 
-> Will queue.
+> The thing that is stored (in opt->priv->output) is a strbuf per path,
+> not an array of strbufs per path.  So, if we have a rename/delete and
+> a rename/add and a mode conflict for the same "path" (A->B on one
+> side, other side deletes A and adds a symlink B, resulting in three
+> messages for path "B" that are all appended into a single strbuf),
+> then we'll have a single "message" which has three newlines.  We can
+> add a NUL character at the end of that, but not between the messages
+> without restructuring things a bit.
+>
+> There's also at least one example, with submodules, where there are
+> two path_msg() calls for the same individual conflict in order to
+> split conflict info from resolution advice, and those really shouldn't
+> be thought of as messages for different conflicts.  (I'm starting to
+> wonder if the resolution advice should just be tossed; I kept it
+> because merge-recursive had it, but it might not make sense with
+> merge-ort being used by server side merges.  But even if we toss that
+> one, I'm not sure I want to commit to one path_msg() call per "logical
+> conflict".)
+>
+> But...maybe this would be good enough for some kind of use you have?
+> Because if you only want to care about "simple" cases, you could
+> potentially define those as ones with only one newline  in them.
 
-Thanks,
+We cannot rely on newline character parsing because that is a valid
+filename character on Unix:
+
+	$ echo a >'with
+	> a newline'
+
+	$ ls -la with*
+	-rw-r--r-- 1 me me 2 Feb 25 17:10 'with'$'\n''a newline'
+
+I guess we have to work harder on this and add more than just an `strbuf`
+so that we can output `<path>NUL<conflict-type>NUL` pairs (where we
+promise to keep the `<conflict-type>` strings constant) or something
+similar.
+
+Ciao,
 Dscho
