@@ -2,251 +2,212 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C2BFC433F5
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 16:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F03EC433EF
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 16:31:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242936AbiBYQ2k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 11:28:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48466 "EHLO
+        id S243011AbiBYQcD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 11:32:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235397AbiBYQ2j (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 11:28:39 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49D1F793AF
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 08:28:06 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id hw13so11858265ejc.9
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 08:28:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=aR+oY/pRUMYQ2rrTSj0wxGwmHASatLXm5YvaK8HdYBs=;
-        b=p+IPzwj0w+S6C8I/1mIrfmxQ0H6UO5oDUcoR/7dBLBpjqIaFZewFnXrhi9Fu7GaARe
-         kFEzSC+z7ztbPRs8B8rdQaYf8lPod4E58JTt63tAPH4endA7LDlVsqX/iBfcI4C7lZVL
-         XBuqtAcMmmHZwD8LXCY5zAC+BZr9qtSrk3XPuoeoBSkSfuMIYmROal76gYDuMKeQxlUG
-         b1vAcQUUAT3xG7NU71iuItAIbvh647aXOzaCdVE1r7xijAEOPSNLTumI6mKaj7soz8NH
-         B9T27Yqhb+oDQdFu6/Ptg8lkicyYMDYmYNkbMqWbUhtj+yPu5GK8Vp6iqG9izUZCpyj6
-         zwxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=aR+oY/pRUMYQ2rrTSj0wxGwmHASatLXm5YvaK8HdYBs=;
-        b=wvn45Pt2OXZefBmLNYiF4ZrQ07ietMFVoz+WcxKENNj4tS0t2PFS+QXwcEknGj62WZ
-         h1Rz3/yAqLgwPqBj1viGKdTW5W4pX0gH1RgwFqkgncBvnJ/ikp/F4VHqe1UcGuCOXIUn
-         RTp3wBs+5hAX9tcq9ZHhIVf2OFQQNCLufjR6SqV8ctmSDIr0fTrshm8bxXzsO/pwLGOx
-         qa3R2hBKkgcEGs8Zzjlu8R4aaLYeam8tNJnAeYmDloUdTHT1y/IQX9UMWkuOVnTcmkfS
-         Ni0kwGZ5Zxysq9mZfAaI0RuLfIbL6SxGZ/5+5KAAKleG0+a9ByGG//RakxHYm8LLMKP6
-         bWWA==
-X-Gm-Message-State: AOAM533yTyNITKaa/E8UZ7N7jf0+j/7QZOO28lgPHHV9K55hHCbMqkNJ
-        uNmn8NDXq6kNjGAYbd+1Jrg=
-X-Google-Smtp-Source: ABdhPJwbyNkg2c+VPJXKCtURsBnwrHglILUC8FGyNhqpZyupYRk5pvZkPqMgVG5tFs2ckig7KF0CRA==
-X-Received: by 2002:a17:906:1995:b0:6ce:6b78:f9ec with SMTP id g21-20020a170906199500b006ce6b78f9ecmr6729189ejd.459.1645806484472;
-        Fri, 25 Feb 2022 08:28:04 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id p3-20020a1709060e8300b006d0e8ada804sm1169743ejf.127.2022.02.25.08.28.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Feb 2022 08:28:03 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nNdRr-000e2F-BX;
-        Fri, 25 Feb 2022 17:28:03 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Julia Lawall <julia.lawall@inria.fr>, git <git@vger.kernel.org>
-Subject: Re: [PATCH] add usage-strings ci check and amend remaining usage
- strings
-Date:   Fri, 25 Feb 2022 17:16:53 +0100
-References: <alpine.DEB.2.22.394.2202221436320.2556@hadrien>
- <20220222154700.33928-1-chakrabortyabhradeep79@gmail.com>
- <nycvar.QRO.7.76.6.2202251600210.11118@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <nycvar.QRO.7.76.6.2202251600210.11118@tvgsbejvaqbjf.bet>
-Message-ID: <220225.86zgme7vxo.gmgdl@evledraar.gmail.com>
+        with ESMTP id S243015AbiBYQcA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 11:32:00 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F673211880
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 08:31:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1645806681;
+        bh=f9EMQ5l8mf41ZsbtO4MhVYF9qAcsBPv6ZXOKUl0WaZo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=T+ntnsnvH5dr/nJOR6vA+cHpOFJZmfVqIKiSGeK7jLN2RPqunBjEz8BbMYG6WC/1p
+         +jeSNihs90ysXHkzAhgS/8ngdyVm5+uKGoLF7GmS0djjIW4F+JW5Q33Qn6v8A6HCuY
+         iDtiaaqnQtS1+fnjPAaKjIAYyPL/pZDJUV+df3WE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [172.28.129.168] ([89.1.212.236]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MJmGZ-1ncq240ci9-00KBXo; Fri, 25
+ Feb 2022 17:31:21 +0100
+Date:   Fri, 25 Feb 2022 17:31:19 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Johannes Sixt <j6t@kdbg.org>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: Re: [PATCH 08/12] merge-ort: provide a merge_get_conflicted_files()
+ helper function
+In-Reply-To: <CABPp-BFG_05RyVVyiHzOkuoT8=9NftJGp_W+DXd7ktqC5UfvwQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2202251726500.11118@tvgsbejvaqbjf.bet>
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com> <35e0ed9271a0229fe2acd2385a7e4171d4dfe077.1642888562.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2201281744280.347@tvgsbejvaqbjf.bet> <CABPp-BG2rMEYBLuBW=0wtpJe4aUFGCFa8D0NTSKz9Sm+CkXPxw@mail.gmail.com>
+ <0d7ba76c-9824-9953-b8ce-6abe810e2778@kdbg.org> <CABPp-BERtRDeyF3MhOQhAFwjoykOKwXoz6635NK7j2SEKp1b3A@mail.gmail.com> <nycvar.QRO.7.76.6.2202050009220.347@tvgsbejvaqbjf.bet> <CABPp-BGCL0onSmpgKuO1k2spYCkx=v27ed9TSSxFib=OdDcLbw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet> <CABPp-BFG_05RyVVyiHzOkuoT8=9NftJGp_W+DXd7ktqC5UfvwQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:R9ZC6yJ2LpwBngI0x3EM3EtbVk1noHixnp3Nwq/22/kDTOn+lvj
+ 4EUxOJhsMnJKHJEBVy1F6qcn2d21yWDK/j1Q8MBQFtlVN2kScuqWj+8heDnGHv7t8mtJAYW
+ PXa8BGvftvlHmXXy24wVf7vMr/Yi6tadwv/lAAm7zMhJ+yIyTzfwHjO3cb+QXe0Bcxne4EC
+ GljojD1wbNs2HkvryITXg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:iL8f4dPo1Rw=:S3WW4RyLUnfft+6QgGp5ZX
+ kEots8+s1rd0/E1cCgxhUm0jyLwMur8dlJ+h7Jg6S0Jlu56W9hzdHViNemekT6shmGSfqk6Pg
+ sQqtfuROD0+ks15uujc96m+WmXwKQVCnIq335B1XypwOwA8ikVlOPw86AhljVnEUBhF3sMs6i
+ eDxOSV/8r7ZD9rgY0VcWbTdNJZXVyYIIVdIGo/vmPICsziMJFSttgZnjlNv1LU2/fkDao2soC
+ YyHaL6qzrCYtUP8/s7KysUFC9fbBazSEAeAtWaZXNTQrkwPu1zK4qB1JJk2Kwsp+WTXJJ+1Wo
+ QBSUIyoP1o/DSwSGalKymumwJn++CNZpE5OI2icWncWcojRUIXP9MuRnTlKZN7e9XoiKaDjKw
+ IWVUZuEOVYRnW1N/dpEIUkV9kYsrsCNdwhvdAVYG/uGGnB1n8/5orn2voVrsr4Lts8mdWU1mt
+ DEaDn7QWRl6OjtfHK7E8K6VipHPPMkdSW7DcrxbbOq8S3jaat6Gft+m6yZhHkECYGiheMIY9w
+ 5lyxgVcJYGiR4JkP3FVv0EnH2DpGDnpvxKjeLXvhYp6lH9ZAPCRuPwWrND/JRXIPNfebZPMCJ
+ AfdsrZY4BcoJZBpd2H+CWqEI6hCHMiZ5zUjuPbP+FnrMKGlejCAhiv0ip0q/0VK1/lbVZasVD
+ alJUShktACbEpKerj2hs0BZnPl/ON62/3uXazdJUw/7X4aoJGqVb7B6m0uJ31A9QwQWguiBcV
+ zdx6br35w3YrNCWLKibLS+X9OJeMf+d1m/cPhKZYdXhDspW9gsAhqMH2dnNwVuN4fiR3ood7T
+ vM2TTnftg4CNunuYHKRkj9+foW4coOYW0KSIN8TM6qvzBLq2p/1UmiYhFNJjj3i+KsXIE5Mgb
+ Ic3coEy4m3hOIAntLvPc+Gzzi9w6EaiT87veLsOOJF4esoqLDvU71DZCZfHAUlrP227xhMJWQ
+ 4aO1jlegDmjMN+//x1kHC7BSFb6v2VKTkAE58ynQ1Vhu3jrbyeL7QZs4fEVh9LR+/lsDM+joJ
+ G1MpKxvEuQ6criE5qzALBKouI3wvE+ILtIcqU6zaYT0q1+71dLGZod7HhU+Q5jem0M/SXzmDd
+ TlAS3gFl9iZ26I=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Elijah,
 
-On Fri, Feb 25 2022, Johannes Schindelin wrote:
+On Tue, 22 Feb 2022, Elijah Newren wrote:
 
-> Hi,
+> Sidenote: Do you lump in binary merge conflicts with "non-semantic
+> merge conflicts"?  You would by your definition, but I'm not sure it
+> matches.
 >
-> On Tue, 22 Feb 2022, Abhradeep Chakraborty wrote:
->
->> Julia Lawall wrote:
->>
->> > Of there are some cases that are useful to do statically, with only local
->> > information, then using Coccinelle could be useful to get the problem out
->> > of the way once and for all.  Coccinelle doesn't support much processing
->> > of strings directly, but you can always write some python code to test the
->> > contents of a string and to create a new one.
->> >
->> > Let me know if you want to try this.  You can also check, eg the demo
->> > demos/pythontococci.cocci to see how to create code in a python script and
->> > then use it in a normal SmPL rule.
->> > ...
->> > If the context that you are interested in is in a called function or is in
->> > the calling context, then Coccinelle might not be the ideal choice.
->> > Coccinelle works on one function at a time, so to do anything
->> > interprocedural, you have to do some hacks.
->>
->> Though in this case, `parse-options.c check` method is better [...]
->
-> I fear that this is incorrect.
->
-> In general, it is my experience that it is a mistake any time a static
-> check is replaced by a runtime check.
->
-> I was ready to let it slide in this instance, but in this case I now have
-> proof that the `parse-options.c` check is worse than the originally
-> suggested `sed` chain.
->
-> That concrete proof is in the output of
-> https://github.com/git/git/actions/runs/1890665968, where the combination
-> of `ac/usage-string-fixups` and `jh/builtin-fsmonitor-part2` causes many,
-> many failures, but all of those failures have the same root cause: the
-> runtime check.
->
-> With the original `check-usage-strings.sh`, the user inspecting any
-> failure would see precisely what the issue is, in the `static-analysis`
-> job's logs. It would display something like this:
->
-> 	HEAD:builtin/fsmonitor--daemon.c:1507:          N_("Max seconds to wait for background daemon startup")),
->
-> With v4 of the patch series, it does not spell out anything in
-> `static-analysis`. Instead, it causes 8 separate jobs to fail,
-> it causes failures not only in `t0012-help.sh` but also in
-> `t7519-status-fsmonitor.sh` and in `t7527-builtin-fsmonitor.sh`.
->
-> The purpose of t7519 and t7527 is _not_ to verify those usage strings,
-> though.
->
-> The worst part? Look at the relevant output of t0012 (see
-> https://github.com/git/git/runs/5312844492?check_suite_focus=true#step:5:4902):
->
-> 	[...]
-> 	++ git -C sub fsmonitor--daemon -h
-> 	++ exit_code=128
-> 	++ test 128 = 129
-> 	++ echo 'test_expect_code: command exited with 128, we wanted 129 git -C sub fsmonitor--daemon -h'
-> 	test_expect_code: command exited with 128, we wanted 129 git -C sub fsmonitor--daemon -h
-> 	++ return 1
-> 	error: last command exited with $?=1
-> 	not ok 81 - fsmonitor--daemon can handle -h
-> 	[...]
->
-> Do you see what usage string caused the failure? You can't. And that's
-> even by design:
->
-> 	(
-> 		GIT_CEILING_DIRECTORIES=$(pwd) &&
-> 		export GIT_CEILING_DIRECTORIES &&
-> 		test_expect_code 129 git -C sub $builtin -h >output 2>&1
-> 	) &&
-> 	test_i18ngrep usage output
->
-> The output is redirected, and since the runtime check added to
-> `parse-options.c` causes the exit code to be different from the expected
-> one, the output is never shown.
->
-> Arguably the most important job of a regression test is to help software
-> engineers to diagnose and fix the regression. As quickly and as
-> conveniently as possible. That means that it is not enough to point out
-> that there is a regression, the output should be as helpful and concise as
-> possible to facilitate fixing the problem.
->
-> In the above-mentioned case, it was neither as helpful nor as concise as
-> possible because in the test case that was supposed to identify the
-> problem, the actual error message was swallowed, and instead of causing
-> one test failure, it caused a whopping 42 test cases to fail (some of
-> which even show the error message, but that's not even the purpose of
-> those test cases).
->
-> Since the entire point of this here patch series is to help enforce Git's
-> rules regarding usage strings, it should expect things like the issue with
-> `fsmonitor--daemon` _and_ make it as painless to address such an issue.
->
-> I am afraid that I have to NAK the `parse-options.c` approach because v1
-> of this patch series did so much better a job.
+> I tend to call things either content-based conflicts or path-based
+> conflicts, where content-based usually means textual-based but also
+> includes merges of binaries.
 
-I think that's a bit of an overreaction to what I think is a solid v2 in
-<pull.1147.v2.git.1645545507689.gitgitgadget@gmail.com>, i.e. that we
-must go back to v1 because we encountered this issue.
+I like "content-based conflicts".
 
-A. I think you're right about the t0012-help.sh output being bad,
-   but that's rather easily fixed with something like the [1] below.
+And no, I had not even thought about binary merge conflicts yet...
 
-   I've run into that a few times, wished it was better, and manually
-   grepped or cat'd the "output" file.
+> On Mon, Feb 21, 2022 at 2:46 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > Concretely: while I am not currently aware of any web UI that allows
+> > to resolve simple rename/rename conflicts, it is easily conceivable
+> > how to implement such a thing. When that happens, we will need to be
+> > able to teach the server-side code to discern between the cases that
+> > can be handled in the web UI (trivial merge conflicts, trivial
+> > rename/rename conflicts) as compared to scenarios where the conflicts
+> > are just too complex.
+>
+> Um, I'm really worried about attempting to make the conflict notices
+> machine parseable.  I don't like that idea at all, and I even tried to
+> rule that out already with my wording:
+> """
+> In all cases, the
+> <Informational messages> section has the necessary info, though it is
+> not designed to be machine parseable.
+> """
+> though maybe I should have been even more explicit.  The restrictions
+> that those messages be stable is too rigid, I think.  I also think
+> they're a poor way to communicate information to a higher level tool.
+> I would much rather us add some kind of additional return data
+> structures from merge ort and use them if we want extra info.
 
-   Part of that is ultimately because we're mixing and matching whether this
-   "usage" output goes on stdout or stderr in various commands.
+Okay.
 
-B. The fsmonitor--daemon case is worse than most because it's only running on
-   OS or Windows, i.e. the error we'd get in various other CI jobs is ifdef'd
-   away, even though we could run the parse_options() part there.
+I thought that we could keep the `CONFLICT (<type>)` constant enough to
+serve as such a machine-parseable thing. And then presenting
+`<path>NUL<message>NUL` could have served my use case well...
 
-   IIRC that's something I commented on in previous rounds of that series...
+> > Here's an excerpt from t4301:
+> >
+> > -- snip --
+> > Auto-merging greeting
+> > CONFLICT (content): Merge conflict in greeting
+> > Auto-merging numbers
+> > CONFLICT (file/directory): directory in the way of whatever from side1=
+; moving it to whatever~side1 instead.
+> > CONFLICT (modify/delete): whatever~side1 deleted in side2 and modified=
+ in side1.  Version side1 of whatever~side1 left in tree.
+> > -- snap --
+> >
+> > This is the complete set of messages provided in the `test conflict
+> > notices and such` test case.
+> >
+> > I immediately notice that every line contains at least one file name.
+> > Looking at https://github.com/git/git/blob/v2.35.1/merge-ort.c#L1899, =
+it
+> > does not seem as if the file names are quoted:
+> >
+> >                 path_msg(opt, path, 1, _("Auto-merging %s"), path);
+> >
+> > (where `path` is used verbatim in a call to `merge_3way()` before that=
+,
+> > i.e. it must not have been quoted)
+> >
+> > I would like to register a wish to ensure that file names with special
+> > characters (such as most notably line-feed characters) are quoted in t=
+hese
+> > messages, so that a simple server-side parser can handle messages star=
+ting
+> > with `Auto-merging` and with `CONFLICT (content): Merge conflict in `,=
+ and
+> > "throw the hands up in the air" if any other message prefix is seen.
+> >
+> > Do you think we can switch to `sq_quote_buf_pretty()` for these messag=
+es?
+> > For the `Auto-merging` one, it would be trivial, but I fear that we wi=
+ll
+> > have to work a bit on the `path_msg()` function
+> > (https://github.com/git/git/blob/v2.35.1/merge-ort.c#L630-L649) becaus=
+e it
+> > accepts a variable list of arguments without any clue whether the
+> > arguments refer to paths or not. (And I would be loathe to switch _all=
+_
+> > callers to do the quoting themselves.)
+> >
+> > I see 28 calls to that function, and at least a couple that pass not o=
+nly
+> > a path but also an OID (e.g.
+> > https://github.com/git/git/blob/v2.35.1/merge-ort.c#L1611-L1613).
+> >
+> > We could of course be sloppy and pass even OIDs through
+> > `sq_quote_buf_pretty()` in `path_msg()`, knowing that there won't be a=
+ny
+> > special characters in them, but it gets more complicated e.g. in
+> > https://github.com/git/git/blob/v2.35.1/merge-ort.c#L1648-L1651, where=
+ we
+> > pass an `strbuf` that contains a somewhat free-form commit message.
+> >
+> > I guess we could still pass those through `sq_quote_buf_pretty()`, eve=
+n if
+> > they are not paths, to ensure that there are no special characters in =
+the
+> > machine-parseable lines.
+> >
+> > What do you think?
+>
+> Switching to single quoting paths as a matter of style might make
+> sense, but only if we go through and change every caller to do so so
+> that we can make sure it applies to all paths.  And only paths and not
+> OIDs.
 
-C. The case of 42 tests failing because of this could be addressed by just having
-   t0012-help.sh do these checks if we wanted, although in that case we'd need to
-   make sure we deal with other test blind spots. I.e. the
-   "GIT_TEST_PARSE_OPTIONS_DUMP_FIELD_HELP" suggestion I had.
+Yes, that sounds unappealing.
 
-D. These sorts of check, by their nature, have an initial period of growing
-   pains due to other in-flight topics. Once we move past that it's usually a
-   non-issue going forward, as issues will be caught locally before patch
-   submission.
+> But I'm going to reserve the right in merge-ort to modify, add, or
+> delete any of those messages passed to path_msg(), which might wreak
+> havoc on your attempts to parse those strings.  I think they're a bad
+> form for communicating information to a script or program, and trying
+> to transform them into such risks making them suboptimal at
+> communicating info to humans.  These messages should optimize the
+> latter, and if we want something for the former, it should probably be
+> a new independent bit of info.
 
-   Data in favor of that is various other checks in parse_options_check() being
-   mostly a non-issue, e.g. Junio's b6c2a0d45d4 (parse-options: make sure argh
-   string does not have SP or _, 2014-03-23).
+Makes sense.
 
-In this case I don't see how some minor issues when merging this with
-"seen" would have us abandon the v1 and commit to a fragile parsing of C
-code in shellscript instead, or with some coccinelle check that would
-have inherent issues finding the full context we need (passed-down flags
-etc.).
+So we need something in addition to those messages.
 
-1. 
-
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index 6c3e1f7159d..5474d463467 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -237,15 +237,24 @@ test_expect_success 'generate builtin list' '
- 	git --list-cmds=builtins >builtins
- '
- 
-+builtin_in_sub () {
-+	(
-+		GIT_CEILING_DIRECTORIES=$(pwd) &&
-+		export GIT_CEILING_DIRECTORIES &&
-+		"$@"
-+	)
-+}
-+
-+
- while read builtin
- do
--	test_expect_success "$builtin can handle -h" '
--		(
--			GIT_CEILING_DIRECTORIES=$(pwd) &&
--			export GIT_CEILING_DIRECTORIES &&
--			test_expect_code 129 git -C sub $builtin -h >output 2>&1
--		) &&
--		test_i18ngrep usage output
-+	test_expect_success "invoking '$builtin -h' yields exit code 129" '
-+		builtin_in_sub test_expect_code 129 git -C sub $builtin -h
-+	'
-+
-+	test_expect_success "invoking '$builtin -h' output" '
-+		builtin_in_sub test_expect_code 129 git -C sub $builtin -h >output 2>&1 &&
-+		grep usage output
- 	'
- done <builtins
- 
+Ciao,
+Dscho
