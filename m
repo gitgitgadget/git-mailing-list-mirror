@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFD6CC433FE
-	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 09:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B708C433F5
+	for <git@archiver.kernel.org>; Fri, 25 Feb 2022 09:04:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238874AbiBYJFW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Feb 2022 04:05:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53450 "EHLO
+        id S238891AbiBYJFX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Feb 2022 04:05:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238862AbiBYJFP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Feb 2022 04:05:15 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E982F22B97D
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 01:04:43 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id x15so3381489wrg.8
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 01:04:43 -0800 (PST)
+        with ESMTP id S238879AbiBYJFR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Feb 2022 04:05:17 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F773235317
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 01:04:46 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id x15so3381671wrg.8
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 01:04:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9hH9YZkZqxD7XhacnhN7uYdoqAWWEYpoX62Cx4nE1zg=;
-        b=fASsewY6uQSDuFlZCs2rHDfwZ6xdeH07+XgDQay5/BMVuT9PiCqps0Y0h+wvupU2uM
-         WbcKdUslwuwtM+6DlooiUXtmMPnCiAUyRXmlD49DOfZSIqp/UYhoV1GVe1gazLHQiHdi
-         sdAIG2sc2ZYtPkRSxB2LmhfzrP+AjI9QLjKbnOLIFqEAkF7kj9opw49Pu1QU+deQGOqx
-         0HM/1xNrIyXlH9EFf3D/PA2IiQk+D6eyqYJVSnftpOYYsT7Ajs4dUfIMM+pXUVwuMvSA
-         EtEFWLryJHFTZXoER/uubztbwoyg/lcHmrPwC8/QkIhHBB/1E9ViUB0fFFj6KiWyX273
-         0WUA==
+        bh=3UU5X4Bs1MY/YcD4ci+q2xLF+X5pDV4/L1exKw+sSyI=;
+        b=g6+0+bXOI1uM15GVOx4gB3WKietrMlLeMreI+WHUlADRg/ILYYYu4yVB7MSYTNy+ou
+         DijSM01a3DFfygOYXt4l40z/SrTkRLeLQdBK0iUmq9Ib6zfeJZNsr8LdjYwiTa/ueMEf
+         orAtNc2tG+lQrRJtgJLET74bMvx6ierv3SKAbgrJqgs+6iVKNacjdOy9qkKlMp1VUmkD
+         lFGtu2r7wjbe/hnCM1k519SpcIqnnaNSFkLq5baL0YpjCm8Jgn8mIO/sF/HvVaaLl1Tq
+         pX9DadACy3zfe0gnjaW5YzRoKxYnubkDE/YwY/9EiO4aOdtsWA0D1DS6Y1OHPiiHlMuA
+         XAqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9hH9YZkZqxD7XhacnhN7uYdoqAWWEYpoX62Cx4nE1zg=;
-        b=QPu+/ArounJrWOoJdvYbffx4sw9pWTanPIfWa3aqC7AsYU1iWjY08vCGSv9LXGzXDr
-         /lKHDQbdrbtEcbuG2OMqCvxniZIneRt6xJOLnQQVTDtdYUNthCeMdh55EskOuP1fwlC3
-         2MVfLk57Ei61pq0gDbD/ckbk+ESPOqVprB1kpqINkSvcbvv+KxTL21pNirlBShEzVV6a
-         6SPqC5m2O1+iBSZ4IRNho3Ih7U6AHuvCkoJ8MFHBL6BTC2iIzEPtbraI2VbLScCS93nW
-         iqNMm0fqgFONQQt1k5bJ9fS9t2Gmvy3gdnwI4vKtDRYlY74tRiEkhUg4usfYL6vnsTXf
-         eoSg==
-X-Gm-Message-State: AOAM530Rj8LsHWT/h/xDodl2HSjkQnY/Md5wqvhkVNXkS4s/yB8krjYI
-        4xSYrtjV0ypqnaGfVrHj83lk1ERAwYlREA==
-X-Google-Smtp-Source: ABdhPJyIoPe6yumPaPwvQmVU9X5Ihp3iBAViZbslZxHQgFG6xcT3Qz0/d3sfFfZ7+laqz9mWV5Babw==
-X-Received: by 2002:a5d:43d1:0:b0:1ed:d1de:2141 with SMTP id v17-20020a5d43d1000000b001edd1de2141mr5246670wrr.394.1645779882215;
-        Fri, 25 Feb 2022 01:04:42 -0800 (PST)
+        bh=3UU5X4Bs1MY/YcD4ci+q2xLF+X5pDV4/L1exKw+sSyI=;
+        b=h26SaugnmEesdjY+bwTFHroNH+2QgApsmJYIlOsT2RAr1THsBpTw6jVDaL4evhMhTs
+         o3pkiFYXZ4vdSvFZIBDUqe2uy1KIuD+7jTqKHvPeFmneOU1cbtHB9qMBkzFQYBbQ+i0j
+         5L3ZDE6d7gJ3o3fw1bS83qyqAdKMTnU+/GKAppuAfqQ91gAxB4CrZXClVsIKMAkO96Ch
+         eMcZbjbaOCy/AUJbFBWTkSE68vqRDBSLwaKWIqCwwi0f/WdIEA5Pwo5/NMTeiJAtiEya
+         yGY7a1laM8HGli7fxoK3eO+QTsLpJnfv2nnKokuv9DNQF40DguAKvzmsO7CpJLfjUgqC
+         oeGA==
+X-Gm-Message-State: AOAM531WFAiNyHMg/Ase+nh5gqkiLUbSG9uMhl3cRGww00iShltb/BFd
+        er0NVBPA7zbNXBClgD+Ej6MJqTplyUe2hQ==
+X-Google-Smtp-Source: ABdhPJwnCpEz4H8RB8vAMsEpEJlKsMUFKZCRfk+uChj2cVyWmCd4iHEhezFRjDLTIv9Sa2JvQ8qOew==
+X-Received: by 2002:a5d:48d1:0:b0:1e3:2401:f229 with SMTP id p17-20020a5d48d1000000b001e32401f229mr5294588wrs.694.1645779884313;
+        Fri, 25 Feb 2022 01:04:44 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l38-20020a05600c1d2600b0037e9090fb1esm5636657wms.24.2022.02.25.01.04.41
+        by smtp.gmail.com with ESMTPSA id l38-20020a05600c1d2600b0037e9090fb1esm5636657wms.24.2022.02.25.01.04.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Feb 2022 01:04:41 -0800 (PST)
+        Fri, 25 Feb 2022 01:04:43 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 3/9] Makefile: disable GNU make built-in wildcard rules
-Date:   Fri, 25 Feb 2022 10:04:29 +0100
-Message-Id: <patch-v3-3.9-9392e3c3e97-20220225T090127Z-avarab@gmail.com>
+Subject: [PATCH v3 5/9] Makefile: move ".SUFFIXES" rule to shared.mak
+Date:   Fri, 25 Feb 2022 10:04:31 +0100
+Message-Id: <patch-v3-5.9-16f2e3ff35b-20220225T090127Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1175.gf9e1b23ea35
 In-Reply-To: <cover-v3-0.9-00000000000-20220225T090127Z-avarab@gmail.com>
 References: <cover-v2-0.8-00000000000-20211224T173558Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20220225T090127Z-avarab@gmail.com>
@@ -74,52 +74,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Override built-in rules of GNU make that use a wildcard target. This
-can speeds things up significantly as we don't need to stat() so many
-files. GNU make does that by default to see if it can retrieve their
-contents from RCS or SCCS. See [1] for an old mailing list discussion
-about how to disable these.
+This was added in 30248886ce8 (Makefile: disable default implicit
+rules, 2010-01-26), let's move it to the top of "shared.mak" so it'll
+apply to all our Makefiles.
 
-The speed-up may wary. I've seen 1-10% depending on the speed of the
-local disk, caches, -jN etc. Running:
+This doesn't benefit the main Makefile at all, since it already had
+the rule, but since we're including shared.mak in other Makefiles
+starts to benefit them. E.g. running the 'man" target is now faster:
 
-    strace -f -c -S calls make -j1 NO_TCLTK=Y
+    $ git -c hyperfine.hook.setup= hyperfine -L rev HEAD~1,HEAD~0 -s 'make -C Documentation man' 'make -C Documentation -j1 man'
+    Benchmark 1: make -C Documentation -j1 man' in 'HEAD~1
+      Time (mean ± σ):     121.7 ms ±   8.8 ms    [User: 105.8 ms, System: 18.6 ms]
+      Range (min … max):   112.8 ms … 148.4 ms    26 runs
 
-Shows that we reduce the number of syscalls we make, mostly in "stat"
-calls.
+    Benchmark 2: make -C Documentation -j1 man' in 'HEAD~0
+      Time (mean ± σ):      97.5 ms ±   8.0 ms    [User: 80.1 ms, System: 20.1 ms]
+      Range (min … max):    89.8 ms … 111.8 ms    32 runs
 
-We could also invoke make with "-r" by setting "MAKEFLAGS = -r"
-early. Doing so might make us a bit faster still. But doing so is a
-much bigger hammer, since it will disable all built-in rules,
-some (all?) of which can be seen with:
+    Summary
+      'make -C Documentation -j1 man' in 'HEAD~0' ran
+        1.25 ± 0.14 times faster than 'make -C Documentation -j1 man' in 'HEAD~1'
 
-    make -f/dev/null -p | grep -v -e ^# -e ^$
+The reason for that can be seen when comparing that run with
+"--debug=a". Without this change making a target like "git-status.1"
+will cause "make" to consider not only "git-status.txt", but
+"git-status.txt.o", as well as numerous other implicit suffixes such
+as ".c", ".cc", ".cpp" etc. See [1] for a more detailed before/after
+example.
 
-We may have something that relies on them, so let's go for the more
-isolated optimization here that gives us most or all of the wins.
+So this is causing us to omit a bunch of work we didn't need to
+do. For making "git-status.1" the "--debug=a" output is reduced from
+~140k lines to ~6k.
 
-1. https://lists.gnu.org/archive/html/help-make/2002-11/msg00063.html
+1. https://lore.kernel.org/git/220222.86bkyz875k.gmgdl@evledraar.gmail.com/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- shared.mak | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ Makefile   | 2 --
+ shared.mak | 5 +++++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index 185bfa71df3..1462016a3f4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2580,8 +2580,6 @@ ASM_SRC := $(wildcard $(OBJECTS:o=S))
+ ASM_OBJ := $(ASM_SRC:S=o)
+ C_OBJ := $(filter-out $(ASM_OBJ),$(OBJECTS))
+ 
+-.SUFFIXES:
+-
+ $(C_OBJ): %.o: %.c GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
+ 	$(QUIET_CC)$(CC) -o $*.o -c $(dep_args) $(compdb_args) $(ALL_CFLAGS) $(EXTRA_CPPFLAGS) $<
+ $(ASM_OBJ): %.o: %.S GIT-CFLAGS $(missing_dep_dirs) $(missing_compdb_dir)
 diff --git a/shared.mak b/shared.mak
-index 0170bb397ae..29f0e69ecb9 100644
+index 29f0e69ecb9..1dda948df09 100644
 --- a/shared.mak
 +++ b/shared.mak
-@@ -1,3 +1,14 @@
-+### Remove GNU make implicit rules
-+
-+## This speeds things up since we don't need to look for and stat() a
-+## "foo.c,v" every time a rule referring to "foo.c" is in play. See
-+## "make -p -f/dev/null | grep ^%::'".
-+%:: %,v
-+%:: RCS/%,v
-+%:: RCS/%
-+%:: s.%
-+%:: SCCS/s.%
+@@ -9,6 +9,11 @@
+ %:: s.%
+ %:: SCCS/s.%
+ 
++## Likewise delete default $(SUFFIXES). See:
++##
++##     info make --index-search=.SUFFIXES
++.SUFFIXES:
 +
  ### Flags affecting all rules
  
