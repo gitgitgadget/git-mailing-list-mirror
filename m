@@ -2,63 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7298C433F5
-	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 16:01:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55604C433EF
+	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 17:29:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232297AbiBZQCZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Feb 2022 11:02:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57920 "EHLO
+        id S232419AbiBZR34 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Feb 2022 12:29:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232281AbiBZQCY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Feb 2022 11:02:24 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 766351795FC
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 08:01:49 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id a1so738512qta.13
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 08:01:49 -0800 (PST)
+        with ESMTP id S230160AbiBZR3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Feb 2022 12:29:55 -0500
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EB881DF85D
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 09:29:19 -0800 (PST)
+Received: by mail-il1-x132.google.com with SMTP id q4so6903975ilt.0
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 09:29:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version;
-        bh=Tt0Y33GbxEbrLxBecX8aUNCfDGXF1k6ESavZI9Sz9L4=;
-        b=bbhzR7SPhOZ/WCanqn3cWH19NI5VtgECdLT97rdAXa8G7La+Y4uKq7Br+t9UkjA3zN
-         VjgCK4BS6AS3I6AtuqBJi5GPSPhbSaco1qLUCnN/dtCJP5VINaTRpI2xns6Psxb+M5MR
-         6pR1EriEaT1TNRiEgKJH68Fezzx99n313Tyk14Srt1FX+sJZdYn3YibzJtkG/sKJU4v3
-         TFKShVhid59+3uKSEnzMgIRGBFp8Eu9fdqyi8YFQAogkT1fCmCXsZ0djxsgtFsapVBxr
-         wQD142LG2cQXmvyPlOps4idhCrFPSuYnY1p1l8w92FRq9+R4HdQu3tSiSd7MjssyoiJ3
-         RdGQ==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=MDC1yevS/WTScx4fKXxkG64xQ1qEKRuUpxCD6rgtblk=;
+        b=lxO7TnOu0o04wDYXnR8fHqUeQytOQzbWoB2dg6cKL+EpQJO5rtD7HJ8ijf5WMsdfzx
+         DNpvrsf8XznLkfaD/xz0eqig3ENuOm23qF82ia5vhY9CG1Y8ZK19hCrFU9M4VWNTLAmg
+         gV9Mmn+iV14LkRHVZVeLxwEjJfxLxjfQHIsggOtNNYm4GQyBhETne3Vm8rcfrs/jEtAW
+         +5DPUuCDNykwZ2WpJiF4WbzbWCDWbOX8YOpnT6n2XQ5/suKgtk3ExWWd84cVOgSa4tsO
+         qxO6mOjgL+gytFNOvPonGVwHvqQawfj08Y0nuFTlBkOezr8XBgjBnqXy0xFzCyHzlFFW
+         TjyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version;
-        bh=Tt0Y33GbxEbrLxBecX8aUNCfDGXF1k6ESavZI9Sz9L4=;
-        b=xBbrdCXaF2XddXEieNc6arYwshcfIi/6UwxmyJtvbRLVeCNpYSWRkXvqgAn2zXOYeH
-         scADHatScrQuFGWRo2Mj4sz5l8FmitQN+gK23YsOHsAGWUdIHyaA0fjwND3zYy8WdQCN
-         5rzI9AiQvMgp/3qXiK8IujAahJzVAb3ShBXC5yl/0F8V9mNyLU7K7xMbeu1anxN7ZFua
-         sDN+tJIlyhiren0OX9v90iDo1SD8/251Op9Y4nsHL+E/2GR+8EvKSMxrDHBsQnRg/CV+
-         +qyCLikFD25Dx5H39aFxmgPxerf8Ia3jLnordy8wxcr/tVPMbLv8SIytpNG2PP7kpdDg
-         oGEw==
-X-Gm-Message-State: AOAM531fRbK8OL2krRkG0HvGkSvYV/QU05UN6qsTihIKRIfNcRSUCfg7
-        cOLpTFWNTZoJw4esyLzTWYY=
-X-Google-Smtp-Source: ABdhPJywVxwjRcTOoY754v1siLG0B6ax2awcGOmqsSs31MtbUrZXoEqKCR2Eaxz4V7cJC4fhrMcKYA==
-X-Received: by 2002:a05:622a:1902:b0:2dd:33ce:4813 with SMTP id w2-20020a05622a190200b002dd33ce4813mr10889827qtc.659.1645891308538;
-        Sat, 26 Feb 2022 08:01:48 -0800 (PST)
-Received: from [10.37.129.2] ([2600:1001:b11e:18ab:f5f7:1c48:323c:e2a9])
-        by smtp.gmail.com with ESMTPSA id a143-20020a376695000000b00648cb6bb2ecsm2665419qkc.54.2022.02.26.08.01.47
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 26 Feb 2022 08:01:48 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=MDC1yevS/WTScx4fKXxkG64xQ1qEKRuUpxCD6rgtblk=;
+        b=saP6TYp0W7/iMgWfSt/I7uG8nXgchIIpL4H3ixA3cGLV1Ro8S98Tak96Tr4RZOGG2h
+         J1bEFlFQNrs3UhjC8gg2al5veEStzGh4MLG7YrHRodZL/NmnHXSERCRNtxvC3RNISA+T
+         LPe1vYzx8eV8w4HEh1YbbfLPTxgroy0+KOBvCW0OAQJi3Q/tAYFiJ1Om9gBCgVE1ljod
+         E1/WqH3y5gZQ9WNQ1+EUxRx0WRP2KorxuE9/RnxF+mTNkGGcb1NrtGHTB4K+b1KbrTm+
+         191AWEa4z9Xeq50otag6HtPUAfJ4miYofhg8E1uTxVCgBRFJnsslLnQv33eY0amFng7P
+         e2qw==
+X-Gm-Message-State: AOAM5334ub/a5eBHBKIXx8b3pxzWtfr76KXamBHnvKZxySAS5lOkYo/f
+        uom9SIXlpElVku9ddOnKUEv1CKGfQvNaCwXH
+X-Google-Smtp-Source: ABdhPJx4YRnYxQbwVWLCZXPmg8tIxBLX8seghzwISpEA1xXzumiiRhVPdahDb9A4+TtkuyObsrDLXQ==
+X-Received: by 2002:a92:c990:0:b0:2be:4192:79d8 with SMTP id y16-20020a92c990000000b002be419279d8mr10237540iln.29.1645896558895;
+        Sat, 26 Feb 2022 09:29:18 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id d13-20020a92680d000000b002c26a84184dsm3447734ilc.51.2022.02.26.09.29.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Feb 2022 09:29:18 -0800 (PST)
+Date:   Sat, 26 Feb 2022 12:29:17 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     John Cai <johncai86@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
         Robert Coup <robert.coup@koordinates.com>,
         John Cai via GitGitGadget <gitgitgadget@gmail.com>,
         git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
 Subject: Re: [PATCH v2 0/4] [RFC] repack: add --filter=
-Date:   Sat, 26 Feb 2022 11:01:46 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <36CA51FE-8B7F-4D08-A91D-95D8F76606C9@gmail.com>
-In-Reply-To: <xmqqv8x5v0qc.fsf@gitster.g>
+Message-ID: <YhpjbQeFaMNVnyP9@nand.local>
 References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
  <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
  <CAFLLRpJ1aDyLb4qAoQwYDyGdP1_PH8kzLAQCKJpQwiYiapZ5Aw@mail.gmail.com>
@@ -68,107 +66,57 @@ References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
  <YhQHYQ9b9bYYv10r@nand.local>
  <CAP8UFD3U4t-inWC5mZYhybWpjVwkqA7v4hYZ5voBOEJ=+_Y1kQ@mail.gmail.com>
  <xmqqv8x5v0qc.fsf@gitster.g>
+ <36CA51FE-8B7F-4D08-A91D-95D8F76606C9@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <36CA51FE-8B7F-4D08-A91D-95D8F76606C9@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for everyone's feedback. Really appreciate the collaboration!
-
-On 23 Feb 2022, at 14:31, Junio C Hamano wrote:
-
-> Christian Couder <christian.couder@gmail.com> writes:
+On Sat, Feb 26, 2022 at 11:01:46AM -0500, John Cai wrote:
+> let me try to summarize (perhaps over simplify) the main concern folks
+> have with this feature, so please correct me if I'm wrong!
 >
->>> For what it's worth, I am fine having a mode of repack which allows us
->>> to remove objects that we know are stored by a promisor remote. But this
->>> series doesn't do that, so users could easily run `git repack -d
->>> --filter=...` and find that they have irrecoverably corrupted their
->>> repository.
->>
->> In some cases we just know the objects we are removing are stored by a
->> promisor remote or are replicated on different physical machines or
->> both, so you should be fine with this.
+> As a user, if I apply a filter that ends up deleting objects that it
+> turns out do not exist anywhere else, then I have irrecoverably
+> corrupted my repository.
 >
-> So, we need to decide if an object we have that is outside the
-> narrowed filter definition was (and still is, but let's keep the
-> assumption the whole lazy clone mechanism makes: promisor remotes
-> will never shed objects that they once served) available at the
-> promisor remote, but I suspect we have too little information to
-> reliably do so.  It is OK to assume that objects in existing packs
-> taken from the promisor remotes and everything reachable from them
-> (but missing from our object store) will be available to us from
-> there.  But if we see an object that is outside of _new_ filter spec
-> (e.g. you fetched with "max 100MB", now you are refiltering with
-> "max 50MB", narrowing the spec, and you need to decide for an object
-> that weigh 70MB), can we tell if that can be retrieved from the
-> promisor or is it unique to our repository until we push it out?  I
-> am not sure.  For that matter, do we even have a way to compare if
-> the new filter spec is a subset, a superset, or neither, of the
-> original filter spec?
-
-let me try to summarize (perhaps over simplify) the main concern folks have
-with this feature, so please correct me if I'm wrong!
-
-As a user, if I apply a filter that ends up deleting objects that it turns
-out do not exist anywhere else, then I have irrecoverably corrupted my
-repository.
-
-Before git allows me to delete objects from my repository, it should be pretty
-certain that I have path to recover those objects if I need to.
-
-Is that correct? It seems to me that, put another way, we don't want to give
-users too much rope to hang themselves.
-
-I can see why we would want to do this. In this case, there have been a couple
-of alternative ideas proposed throughout this thread that I think are viable and
-I wanted to get folks thoughts.
-
-1. split pack file - (Rob gave this idea and Taylor provided some more detail on
-   how using pack-objects would make it fairly straightforward to implement)
-
-when a user wants to apply a filter that removes objects from their repository,
-split the packfile into one containing objects that are filtered out, and
-another packfile with objects that remain.
-
-pros: simple to implement
-cons: does not address the question "how sure am I that the objects I want to
-filter out of my repository exist on a promsior remote?"
-
-2. check the promisor remotes to see if they contain the objects that are about
-   to get deleted. Only delete objects that we find on promisor remotes.
-
-pros: provides assurance that I have access to objects I am about to delete from
-a promsior remote.
-cons: more complex to implement. [*]
-
-Out of these two, I like 2 more for the aforementioned pros.
-
-* I am beginning to look into how fetches work and am still pretty new to the
-codebase so I don't know if this is even feasible, but I was thinking perhaps
-we could write a function that fetches with a --filter and create a promisor
-packfile containing promisor objects (this operaiton would have to somehow
-ignore the presence of the actual objects in the repository). Then, we would
-have a record of objects we have access to. Then, repack --filter can remove
-only the objects contained in this promisor packfile.
-
+> Before git allows me to delete objects from my repository, it should
+> be pretty certain that I have path to recover those objects if I need
+> to.
 >
->> If you are not fine with this because sometimes a user might use it
->> without knowing, then why are you ok with commands deleting refs not
->> checking that there isn't a regular repack removing dangling objects?
->
-> Sorry, I do not follow this argument.  Your user may do "branch -D"
-> because the branch deleted is no longer needed, which may mean that
-> objects only reachable from the deleted branch are no longer needed.
-> I do not see what repack has anything to do with that.  As long as
-> the filter spec does not change (in other words, before this series
-> is applied), the repack that discards objects that are known to be
-> reachable from objects in packs retrieved from promisor remote, the
-> objects that are no longer reachable may be removed and that will
-> not lose objects that we do not know to be retrievable from there
-> (which is different from objects that we know are unretrievable).
-> But with filter spec changing after the fact, I am not sure if that
-> is safe.  IOW, "commands deleting refs" may have been OK without
-> this series, but this series may be what makes it not OK, no?
->
-> Puzzled.
+> Is that correct? It seems to me that, put another way, we don't want
+> to give users too much rope to hang themselves.
+
+I wrote about my concerns in some more detail in [1], but the thing I
+was most unclear on was how your demo script[2] was supposed to work.
+
+Namely, I wasn't sure if you had intended to use two separate filters to
+"re-filter" a repository, one to filter objects to be uploaded to a
+content store, and another to filter objects to be expunged from the
+repository. I have major concerns with that approach, namely that if
+each of the filters is not exactly the inverse of the other, then we
+will either upload too few objects, or delete too many.
+
+My other concern was around what guarantees we currently provide for a
+promisor remote. My understanding is that we expect an object which was
+received from the promisor remote to always be fetch-able later on. If
+that's the case, then I don't mind the idea of refiltering a repository,
+provided that you only need to specify a filter once.
+
+So the suggestion about splitting a repository into two packs was a
+potential way to mediate the "two filter" problem, since the two packs
+you get exactly correspond to the set of objects that match the filter,
+and the set of objects that _don't_ match the filter.
+
+In either case, I tried to use the patches in [1] and was able to
+corrupt my local repository (even when fetching from a remote that held
+onto the objects I had pruned locally).
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/YhUeUCIetu%2FaOu6k@nand.local/
+[2]: https://gitlab.com/chriscool/partial-clone-demo/-/blob/master/http-promisor/server_demo.txt#L47-52
