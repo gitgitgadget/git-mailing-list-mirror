@@ -2,123 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45262C433EF
-	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 09:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C64CC433F5
+	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 09:58:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230439AbiBZJkI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Feb 2022 04:40:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57440 "EHLO
+        id S230484AbiBZJ73 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Feb 2022 04:59:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230435AbiBZJkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Feb 2022 04:40:06 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F967286A75
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 01:39:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1645868369;
-        bh=UWo+hSZJbVajfSwcZhM/NJgoIjV19ertQhOKAYVkWQ4=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=q7h+RbzGY1AVCxdscwiVZrJN5n+G7FPcLHEGOoEIEx2N1eT965Ec6xCcPcOZhDyVl
-         39fo2QGxd8P2W+kgAhhaOUtKePsxEMc/X6DxAHJCKPPKLNA/tLi+IHRNwOObKPse2S
-         OFtkUKtbOGxyV0JbTxZlOc0wmEkj0zfLauJfXw/o=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M7elj-1nI6ea2Rqf-007zfn; Sat, 26
- Feb 2022 10:39:29 +0100
-Date:   Sat, 26 Feb 2022 10:39:29 +0100
-From:   Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To:     Hunter Laux <hunterlaux@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git-p4 UnicodeDecodeError on ascii 0x93 character
-Message-ID: <20220226093929.uujvrauwatssl2mw@tb-raspi4>
-References: <CAMQF8MhTmVs_LE8Te=9EL66Py8OtAMo7APf-cC=Ot6tykvaBpg@mail.gmail.com>
+        with ESMTP id S229819AbiBZJ72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Feb 2022 04:59:28 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECD02220FC
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 01:58:54 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id p14so15311460ejf.11
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 01:58:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=ZA2tmi2B9ompp2ZcirVtbzoQN8NPHDXXw4L5IfWIfn4=;
+        b=o4T01Px1emIVonyUqBfelPOpfCCEw47OC1PamMcdohRWtzIrUZHjDUB83Fyk/AogZY
+         rxQU6pewxPQ+TnWGlhoL4vF4OHd/0+Kdx9fVelETST8ybgedM1T9qhPpusVK/SU3A6Fz
+         YOVoSLQqkOJPUeWz4fvOKme38/HRAAlD1tpWQj5piDm6xDmxN/Qfqz/LJAVBckmaivG0
+         +GKn6JeLlDKF4MfmwVSw8xDVe2vd0A/90ChJvYNOO/R8zgtqastTxGfSgMvJR2dwLRLH
+         yVFa20sPskccdOKNdqH/pfrRpdMVVscw0xPwtGQCv+VFRm5vBguFaK2wqQvG/JTYmzF3
+         gFbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=ZA2tmi2B9ompp2ZcirVtbzoQN8NPHDXXw4L5IfWIfn4=;
+        b=bI2dgwcGvizIR8yThHg/119lpH31BuOf2Uc9Ci67q8uTCH+pYab5zM1bQmKLkorOru
+         JiO8I3lv+IrYIG3et0JndugEgHKZrkw3cL+CEdyDOT9bAa9v/JF7Eou5LrLtCDH9oyGZ
+         FrxjHhWswv0Hol3RlH1eXFo9zVxtAf2zb0uDADibg3pyvKLOjdAQ7wmbgc+Jb8dvIDF3
+         zbIz6OJ+v2Rj6i1aEG7TXDPi7XYpZmyQrFFdHRSnNWH3PfZpZx7PgSx0iYdrvnFKOs6R
+         7W36YoSn+WST/n/ROKjf1rFD1M/9z9oUNBfaUtE2tkDLTJ/hB35FTRUNKQSKQb34pLit
+         3zLQ==
+X-Gm-Message-State: AOAM532uQ2q6rhT63LxHXH9uPBcfYjVVHEIUWgwV85E0fy+Kw5EIrgA6
+        psPAiXeiPNI2zuGr53udFNC9XwzphS91A+bUMziaajGU0IE=
+X-Google-Smtp-Source: ABdhPJzpJ8BGvGGLBhHkvCOI1fLPQpNUl5DK5MuE8uGTOCHiAo2NMCTpVxEC1Mwu3RuEFAyKDAIVll9dNx4DCo8MBec=
+X-Received: by 2002:a17:906:af79:b0:6ce:61d3:7e9b with SMTP id
+ os25-20020a170906af7900b006ce61d37e9bmr9188478ejb.191.1645869532611; Sat, 26
+ Feb 2022 01:58:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMQF8MhTmVs_LE8Te=9EL66Py8OtAMo7APf-cC=Ot6tykvaBpg@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:LbmysXeFl+92L1I5DSXt424U2pWJ1xVWrU+kGnIlTH+l7VSsHgk
- Y7ECMJWPBqAOGOgez0dIBAjEbns2DKif2v45ec3L7ZQv1AK5VZ4fb1N5g7hRLzPuQ6jDX+I
- bq3gGItZPzenl3/FKc67+hN2WQKBICHoJP9J5dUdEgJk/Kd1bKH5UHFlYGsWpd+F7R7FSoP
- GZfjv0ivBEFvmWxcu30Pg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:VkZuxw308g0=:/6emCdhIIvl/i7CeN7Y5/Q
- E9RYVx3mpPnBgpH3f9UbBAiSEFlBm6OYy1OR72C8MxpFtqnvZCo9iEIYAVRQFUD6JvFdQdnMW
- m4C4ndFGXprfz9G1PQ/ptzw7vJ01dDes6/fb5wFeg59ODio+bkhItMq3lg5yHEbUMUEj4LyqZ
- BzSrAqwGo1W/9oBm1wmI6LmjfnRPgqOH4FsX+IOMzKrsEjal7s8qo2S31/XUMb6pW6pv3Kfb0
- 7kFZE8Fwh0vkMQ+Su3TlHNVCF/B4aYDChCc4NMayW9oVHokMg7UThTSHblu2Q2Wi7vX9TDPMh
- ILSgWl2dvtKwwXiJ6a0/NYUEz3UxZXbzNMwh0MTbGiQ7jUKhFYhRwVyxtTs+4ItYXg8kKiq8e
- 6xw05ct7WYJNLaPaEX4XLgEQopK91XqjmFg+Mkiu6vO3rj8+IsmO/UOfLhSg+6TO7osgDjx8M
- Whf3VnXfR6RzSnSgHFmK+tJVB1ZtFRuhlb3U6H5G5OQelgSSZzs3FXRkF2zDNnuzjZIjIEmGk
- bXmUZpyv9HlOqhOQ9LVK+PcYKXnkO8yXMNpJdjmTRf8chO7qe/I40h0IBL7sLeH7aQQcjkJGk
- i+66/z9l0dc2MtlhhNmy7GM40NjIpVBKMxVYtEbUvDL75vl/GfmLxVtKNX09KzOOGFK+dHpV/
- 5KVIldddEbjymOoYnohjikLQIQ6xAhubZEiuP6djylIpDI/riK1abCRm09WjfGdMaVDf9rvHk
- zhAFhn7VvWjGUuqbNz9LnxEBAMAmjW48tX2RYrkWR3HeHBQe6Dvtl+SFXy1IFvPdjR2VNjaYT
- +p95IQW3+Gs2yi5NJpXmbP91xFFzcCFYmG84XEv4wI6ZcYfd4vs04yPJmvTyHZIsMc4sWqyH0
- 1hnIj27JPaZ+z3iTJn1PnuwoIdte8+ypvYTc/zWKsVvKIKjyM0UU7b7ByFkH4jDpVpfdHL4uS
- kTyCK0TltVtBqlUoDDuj3aQaixfzI/cnMOGRLiUpKBo14j44e3dpzJIgbrYLgXUn77eV40meq
- TFbo9N+fnu3bU0nACrD0cwVpoax9ncMU/qK3e7ra0Y7S+VWaaFAOoQKBZhaF05OFaC8vklrUW
- LB0HebY0Y55FfA=
-Content-Transfer-Encoding: quoted-printable
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 26 Feb 2022 10:58:41 +0100
+Message-ID: <CAP8UFD3U_XW2TvaX6EAQY41r0YXMbsy_1JjJPPwy4YHaC=TW0w@mail.gmail.com>
+Subject: Draft of Git Rev News edition 84
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Josh Steadmon <steadmon@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 25, 2022 at 09:20:51PM -0800, Hunter Laux wrote:
-> One of my p4 commits has an ???(0x93) character in the p4 description
-> and I'm trying to export it to git.
-> I'm using the latest git-p4.py as of c70bc33.
->
-> I think python2 didn't throw an error, but python3 now treats this as an=
- error.
-> The error is.
-> Traceback (most recent call last):
->   File "/home/hlaux/.local/bin/git-p4", line 4292, in <module>
->     main()
->   File "/home/hlaux/.local/bin/git-p4", line 4286, in main
->     if not cmd.run(args):
->   File "/home/hlaux/.local/bin/git-p4", line 4043, in run
->     if not P4Sync.run(self, depotPaths):
->   File "/home/hlaux/.local/bin/git-p4", line 3910, in run
->     self.importRevisions(args, branch_arg_given)
->   File "/home/hlaux/.local/bin/git-p4", line 3658, in importRevisions
->     changes =3D p4ChangesForPaths(self.depotPaths, self.changeRange,
-> self.changes_block_size)
->   File "/home/hlaux/.local/bin/git-p4", line 1080, in p4ChangesForPaths
->     result =3D p4CmdList(cmd, errors_as_exceptions=3DTrue)
->   File "/home/hlaux/.local/bin/git-p4", line 711, in p4CmdList
->     value =3D value.decode()
-> UnicodeDecodeError: 'utf-8' codec can't decode byte 0x93 in position
-> 21: invalid start byte
->
-> This patch seems to work.
->
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -707,7 +707,7 @@ def p4CmdList(cmd, stdin=3DNone, stdin_mode=3D'w+b',
-> cb=3DNone, skip_info=3DFalse,
->                  for key, value in entry.items():
->                      key =3D key.decode()
->                      if isinstance(value, bytes) and not (key in
-> ('data', 'path', 'clientFile') or key.startswith('depotFile')):
-> -                        value =3D value.decode()
-> +                        value =3D value.decode('latin1')
->                      decoded_entry[key] =3D value
->                  # Parse out data if it's an error response
->                  if decoded_entry.get('code') =3D=3D 'error' and 'data' =
-in
-> decoded_entry:
->
->
-> Does anyone have a better fix?
->
-> Thanks,
->
-> Hunter Laux
+Hi everyone!
 
+A draft of a new Git Rev News edition is available here:
 
-Thanks for reporting.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-84.md
 
-I think there was a patch for this problem some time ago:
-https://lore.kernel.org/git/20210422050504.441-1-tzadik.vanderhoof@gmail.c=
-om/
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
+  https://github.com/git/git.github.io/issues/544
+
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition on Monday
+February 28th.
+
+Thanks,
+Christian.
