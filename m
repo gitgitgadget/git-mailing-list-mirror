@@ -2,56 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6128EC433EF
-	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 08:41:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BEDDC433EF
+	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 08:47:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230247AbiBZImP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Feb 2022 03:42:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60698 "EHLO
+        id S230266AbiBZIrj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Feb 2022 03:47:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbiBZImP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Feb 2022 03:42:15 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E90B171ED7
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 00:41:41 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id gb39so15185703ejc.1
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 00:41:40 -0800 (PST)
+        with ESMTP id S229455AbiBZIrh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Feb 2022 03:47:37 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A236E1B84EC
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 00:47:03 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id qk11so15221318ejb.2
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 00:47:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=+NybsobLpbYbs6PCTirYaif/KKcC9o5SXEyDs5puoy8=;
-        b=OWnQg0eNQhHd6ZtiVhHBhGdwVU9vjStHA4DZHkB8inRoOnM2BzxLXr2x4pSvJ3y8oS
-         ebQgxJMs8ir7x19ycktt0376lfQVfr/d6dbQkJ5af0t3ivpzDxZ5uYlWN6hlJjFKpdOg
-         BlCvaYzmJ1uBNHxTsqz/p5Xak1fHmuDQI318TCPNNr56RncJ6P/OsvG4DmakwPbauqo4
-         nRMf2dpjjT1Ar/viN045vZT1VFJ/OxvJ1TkZbejafi3VTmECPbgc3rxZOTJ8LH2QKPv+
-         ZJcjVRy3MXZb4YZhPWrjj+23A2BNAuRxpheu0ZhXU42FpoEany5AEW6Rmv0RBYd0JDry
-         ZukA==
+        bh=zoVpoL2cX1TLk+1EHaY0HwMCkL5GtdYtLUZZ06R5cIk=;
+        b=SKk6zOVy40VFPqj1LhtO+Rugaj+FID0PsjPvDJhFTTKcsOt7wZijm0r6f2ygeVCN0a
+         eyp8uQR/tfT6TyQZJ8ToYJjXWty1p1NCmN4S4qc5cQ6HeMZMAZupi2pNSdvddaUA/cf4
+         ieINsDOooWtya0rQyDkJoTJgyoiLzVEoJZItIrBetz0HbsTuBh1C6Qi7NSC0YFr1veZc
+         pOs1PU+S/JYJKcYNKi4y/KI1MCRKTksv3BofG7wJcPkFY3L0vlhKzmQW2OVOHlJDHgg2
+         4t5f1o9wizKJYHftUPzfSOJETY+DfIOXLkeyyZKLnHEudXlhnmcaGd/4pJi4uJD95wUC
+         HSgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=+NybsobLpbYbs6PCTirYaif/KKcC9o5SXEyDs5puoy8=;
-        b=IhwKTU99Q/CaqCyqcY9342WuLXmB6QfdegXRm7A8w9r7NZLtvINllMKnboiZKNg2ow
-         pe8ZT/XPiPmd7G/T5gox9anVPJLVcW8KhGawvy3ONrWJgbMGlG5e9o+QU9trrGeM0pGt
-         GetMidAnH2viCNzNgR9IZXYsUH91CVUHa+xotLTYpDm43z3KmZk1h6Rkfof17BIgnx+C
-         e1LIeywDEsr58QmICKzrX/hJS3pJxnNdJn3E8MKfhHaLedp58MRYQSmUkFHUSck9LokZ
-         0sAMFg234KT3pjpmVCZmrMm48OrbxeA8GtkD/We2t4/PV6CuD/SGhNB9O6FAfG8JhNZW
-         IYnA==
-X-Gm-Message-State: AOAM531ngWGFFKU4YALLUWN0HzQD+jD6wtahlcf512xkjnsFATjGUeRC
-        vSQW7Ez30MbYYkTQt5Y3fd4Pj3hJhVdZqtFGxEc=
-X-Google-Smtp-Source: ABdhPJx42wF+UFGGRwJl6XKyPdK9Q0ATxY53tUY9lZ2HNYbjr7YDZKGM15xqkU7iztzwKNS5s7FCuH379nqjD5l78mE=
-X-Received: by 2002:a17:906:7e09:b0:6d6:80f5:e00f with SMTP id
- e9-20020a1709067e0900b006d680f5e00fmr688396ejr.192.1645864899522; Sat, 26 Feb
- 2022 00:41:39 -0800 (PST)
+        bh=zoVpoL2cX1TLk+1EHaY0HwMCkL5GtdYtLUZZ06R5cIk=;
+        b=acEjWBxKFRlj/jyPi/XwxgIG8ypGLpeVR0BBvdTZgXmyExK/oOgtG3HBf2+De61zCL
+         B0k443i0rCk3Noxs40IdXm/ej3MSqClqxBntcGIOdEFxZ3HDZd8TEkTCazdjk3k3V51r
+         ieCPblyUxGpRtS6jW6uzRFFetAtUy/RSLZaI67uzQueyG2ePNcoZQNM6Zgw9YF+iz+oq
+         qWlF1t9POL5YfOFXqMtmW9G6kqvd3wAcApGE1pE8qqB3jGy6QEpDGMXsOenlzvLASWvj
+         G9zMuWxmX2UM9SDRjXPSk0HhN/ucsFi2UJukEMKTstZg+gSFk7GYO2HuBs+mKRGDPprn
+         xZ0A==
+X-Gm-Message-State: AOAM530KA2FRKJpXC01eRAkhOpN0paWkVQSTJwhls5Im1i3u49/bIHE3
+        bMNfSZnCNWfQu8w7rcgk8Y2v55dKPOGxzxt6eq4=
+X-Google-Smtp-Source: ABdhPJwNLA8YsCxKTY4zFyJfyR6ISY0WKjD3yYLojoxpExqcNLrta+ELVSGQzXLvcnWshvyAbdIdPJAFCMfFkSZTLdc=
+X-Received: by 2002:a17:907:11c1:b0:6cf:723b:37af with SMTP id
+ va1-20020a17090711c100b006cf723b37afmr8978622ejb.476.1645865222114; Sat, 26
+ Feb 2022 00:47:02 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
- <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com> <ffe0b6aff2baee238f77ae57561a62ea5473321f.1645742073.git.gitgitgadget@gmail.com>
-In-Reply-To: <ffe0b6aff2baee238f77ae57561a62ea5473321f.1645742073.git.gitgitgadget@gmail.com>
+References: <pull.1157.git.1645640717.gitgitgadget@gmail.com> <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 26 Feb 2022 00:41:28 -0800
-Message-ID: <CABPp-BF4jtEzyUBEymhFJxaGOMRaUs-XyBdr89Fs7E_ehnwWMg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/7] read-tree: expand sparse checkout test coverage
+Date:   Sat, 26 Feb 2022 00:46:50 -0800
+Message-ID: <CABPp-BHu2sDFiDU=xGEr-MzqbtGwcwu+_m3b3gMWri561JyqWA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/7] Sparse index: integrate with 'read-tree'
 To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -65,132 +64,117 @@ X-Mailing-List: git@vger.kernel.org
 On Thu, Feb 24, 2022 at 2:34 PM Victoria Dye via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
 >
-> From: Victoria Dye <vdye@github.com>
+> Like previous integrations [1] [2], this series allows 'git read-tree' to
+> operate using a sparse index.
 >
-> Add tests focused on how 'git read-tree' behaves in sparse checkouts. Extra
-> emphasis is placed on interactions with files outside the sparse cone, e.g.
-> merges with out-of-cone conflicts.
+> The first two patches are bugfixes for issues found while implementing the
+> 'read-tree' integration:
 >
-> Signed-off-by: Victoria Dye <vdye@github.com>
-> ---
->  t/perf/p2000-sparse-operations.sh        |  1 +
->  t/t1092-sparse-checkout-compatibility.sh | 85 ++++++++++++++++++++++++
->  2 files changed, 86 insertions(+)
+>  * The first (patch 1/7) fixes an edge case in which a repo with no in-cone
+>    files or directories would have its root collapsed into a sparse
+>    directory; the fix ensures the root directory is never collapsed into a
+>    sparse directory.
+>  * The second (patch 2/7) corrects the 'git status' reporting of changes
+>    nested inside the subdirectory of a sparse directory, ensuring that the
+>    modified file (not the subdirectory) is correctly reported as having
+>    changes.
 >
-> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-> index 2a7106b9495..382716cfca9 100755
-> --- a/t/perf/p2000-sparse-operations.sh
-> +++ b/t/perf/p2000-sparse-operations.sh
-> @@ -117,6 +117,7 @@ test_perf_on_all git diff
->  test_perf_on_all git diff --cached
->  test_perf_on_all git blame $SPARSE_CONE/a
->  test_perf_on_all git blame $SPARSE_CONE/f3/a
-> +test_perf_on_all git read-tree -mu HEAD
->  test_perf_on_all git checkout-index -f --all
->  test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
+> The remainder of the series focuses on utilizing the sparse index in 'git
+> read-tree'. After some baseline behavior-establishing tests (patch 3/7),
+> sparse index usage is trivially enabled (patch 4/7) for 'read-tree' except:
 >
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index b1dcaa0e642..9d58da4e925 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -819,6 +819,91 @@ test_expect_success 'update-index --cacheinfo' '
->         test_cmp expect sparse-checkout-out
->  '
+>  * usage with '--prefix'
+>  * two- and three-way merge
 >
-> +test_expect_success 'read-tree --merge with files outside sparse definition' '
-> +       init_repos &&
-> +
-> +       test_all_match git checkout -b test-branch update-folder1 &&
-> +       for MERGE_TREES in "base HEAD update-folder2" \
-> +                          "update-folder1 update-folder2" \
-> +                          "update-folder2"
-> +       do
-> +               # Clean up and remove on-disk files
-> +               test_all_match git reset --hard HEAD &&
-> +               test_sparse_match git sparse-checkout reapply &&
-> +
-> +               # Although the index matches, without --no-sparse-checkout, outside-of-
-> +               # definition files will not exist on disk for sparse checkouts
-> +               test_all_match git read-tree -mu $MERGE_TREES &&
-> +               test_all_match git status --porcelain=v2 &&
-> +               test_path_is_missing sparse-checkout/folder2 &&
-> +               test_path_is_missing sparse-index/folder2 &&
-> +
-> +               test_all_match git read-tree --reset -u HEAD &&
-> +               test_all_match git status --porcelain=v2 &&
-> +
-> +               test_all_match git read-tree -mu --no-sparse-checkout $MERGE_TREES &&
-> +               test_all_match git status --porcelain=v2 &&
-> +               test_cmp sparse-checkout/folder2/a sparse-index/folder2/a &&
-> +               test_cmp sparse-checkout/folder2/a full-checkout/folder2/a || return 1
-> +       done
-> +'
-> +
-> +test_expect_success 'read-tree --merge with edit/edit conflicts in sparse directories' '
-> +       init_repos &&
-> +
-> +       # Merge of multiple changes to same directory (but not same files) should
-> +       # succeed
-> +       test_all_match git read-tree -mu base rename-base update-folder1 &&
-> +       test_all_match git status --porcelain=v2 &&
-> +
-> +       test_all_match git reset --hard &&
-> +
-> +       test_all_match git read-tree -mu rename-base update-folder2 &&
-> +       test_all_match git status --porcelain=v2 &&
-> +
-> +       test_all_match git reset --hard &&
-> +
-> +       test_all_match test_must_fail git read-tree -mu base update-folder1 rename-out-to-in &&
-> +       test_all_match test_must_fail git read-tree -mu rename-out-to-in update-folder1
-> +'
-> +
-> +test_expect_success 'read-tree --prefix outside sparse definition' '
-> +       init_repos &&
-> +
-> +       # Cannot read-tree --prefix with a single argument when files exist within
-> +       # prefix
+> These cases require additional changes in order to work as expected (i.e.,
+> outwardly matching non-sparse index sparse-checkout). For the former, the
+> sparse index can be enabled as long as the index is expanded when the prefix
+> is a directory outside the sparse cone (patch 5/7). For the latter, sparse
+> directories that cannot be trivially merged must have their contents merged
+> file-by-file, done by recursively traversing the trees represented by the
+> sparse directories (patches 6/7 & 7/7).
+>
+>
+> Changes since V1
+> ================
+>
+>  * switched an empty string check from '!strlen(path)' to the
+>    slightly-less-expensive '!*path'
 
-Given the comments in the cover letter about --prefix needing special
-work, it's not clear to me whether the below is expected behavior or
-current-but-buggy behavior that you are testing and documenting.
-Could you clarify?
+I've read over the series.  It was a nice read, well motivated, and
+split up rather nicely.  I only had a few small commetns.
 
-> +       test_all_match test_must_fail git read-tree --prefix=folder1/ -u update-folder1 &&
-> +
-> +       test_all_match git read-tree --prefix=folder2/0 -u rename-base &&
-> +       test_path_is_missing sparse-checkout/folder2 &&
-> +       test_path_is_missing sparse-index/folder2 &&
-> +
-> +       test_all_match git read-tree --reset -u HEAD &&
-> +       test_all_match git read-tree --prefix=folder2/0 -u --no-sparse-checkout rename-base &&
-> +       test_cmp sparse-checkout/folder2/0/a sparse-index/folder2/0/a &&
-> +       test_cmp sparse-checkout/folder2/0/a full-checkout/folder2/0/a
-> +'
-> +
-> +test_expect_success 'read-tree --merge with directory-file conflicts' '
-> +       init_repos &&
-> +
-> +       test_all_match git checkout -b test-branch rename-base &&
-> +
-> +       # Although the index matches, without --no-sparse-checkout, outside-of-
-> +       # definition files will not exist on disk for sparse checkouts
-> +       test_sparse_match git read-tree -mu rename-out-to-out &&
-> +       test_sparse_match git status --porcelain=v2 &&
-> +       test_path_is_missing sparse-checkout/folder2 &&
-> +       test_path_is_missing sparse-index/folder2 &&
-> +
-> +       test_sparse_match git read-tree --reset -u HEAD &&
-> +       test_sparse_match git status --porcelain=v2 &&
-> +
-> +       test_sparse_match git read-tree -mu --no-sparse-checkout rename-out-to-out &&
-> +       test_sparse_match git status --porcelain=v2 &&
-> +       test_cmp sparse-checkout/folder2/0/1 sparse-index/folder2/0/1
-> +'
-> +
->  test_expect_success 'merge, cherry-pick, and rebase' '
->         init_repos &&
+I think it'd be nice to insert another patch into the series that
+throws an error if the argument to --prefix starts with a '/'.  That
+would also allow you to simplify patch 5/7 a little.
+
+Patch 6/7 has the right idea, but I'm worried about one part of it; a
+test would go a long way towards verifying whether that aspect is
+handled correctly or whether my concern is warranted.
+
+I had a couple smaller comments on some of the other patches.
+
+Overall, nicely done.
+
+
+> Thanks!
+>
+>  * Victoria
+>
+> [1]
+> https://lore.kernel.org/git/pull.1109.v2.git.1641924306.gitgitgadget@gmail.com/
+> [2]
+> https://lore.kernel.org/git/pull.1048.v6.git.1638201164.gitgitgadget@gmail.com/
+>
+> Victoria Dye (7):
+>   sparse-index: prevent repo root from becoming sparse
+>   status: fix nested sparse directory diff in sparse index
+>   read-tree: expand sparse checkout test coverage
+>   read-tree: integrate with sparse index
+>   read-tree: narrow scope of index expansion for '--prefix'
+>   read-tree: make two-way merge sparse-aware
+>   read-tree: make three-way merge sparse-aware
+>
+>  builtin/read-tree.c                      |  10 +-
+>  dir.c                                    |   7 +-
+>  t/perf/p2000-sparse-operations.sh        |   1 +
+>  t/t1092-sparse-checkout-compatibility.sh | 129 +++++++++++++++++++++++
+>  unpack-trees.c                           | 121 ++++++++++++++++++++-
+>  wt-status.c                              |   9 ++
+>  6 files changed, 268 insertions(+), 9 deletions(-)
+>
+>
+> base-commit: e6ebfd0e8cbbd10878070c8a356b5ad1b3ca464e
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1157%2Fvdye%2Fsparse%2Fread-tree-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1157/vdye/sparse/read-tree-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1157
+>
+> Range-diff vs v1:
+>
+>  1:  90da1f9f33a ! 1:  744668eeece sparse-index: prevent repo root from becoming sparse
+>      @@ Commit message
+>           non-cone sparse-checkouts), the new check does not cause additional changes
+>           to how sparse patterns are applied.
+>
+>      +    Helped-by: Derrick Stolee <derrickstolee@github.com>
+>           Signed-off-by: Victoria Dye <vdye@github.com>
+>
+>        ## dir.c ##
+>      @@ dir.c: static int path_in_sparse_checkout_1(const char *path,
+>       +  * patterns, or the patterns are of the wrong type.
+>          */
+>       - if (init_sparse_checkout_patterns(istate) ||
+>      -+ if (!strlen(path) ||
+>      ++ if (!*path ||
+>       +     init_sparse_checkout_patterns(istate) ||
+>             (require_cone_mode &&
+>              !istate->sparse_checkout_patterns->use_cone_patterns))
+>  2:  c21c9b9be34 = 2:  f0cff03b95d status: fix nested sparse directory diff in sparse index
+>  3:  ac42ae21d4a = 3:  ffe0b6aff2b read-tree: expand sparse checkout test coverage
+>  4:  5ee193bfa87 = 4:  cb7e0cf419c read-tree: integrate with sparse index
+>  5:  bea482b6b28 = 5:  4f05fa70209 read-tree: narrow scope of index expansion for '--prefix'
+>  6:  9fdcab038b2 = 6:  94c2aad2f93 read-tree: make two-way merge sparse-aware
+>  7:  1502e9acb32 = 7:  c4080e99d6e read-tree: make three-way merge sparse-aware
 >
 > --
 > gitgitgadget
->
