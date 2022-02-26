@@ -2,179 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BEDDC433EF
-	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 08:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AD34C433EF
+	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 08:55:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230266AbiBZIrj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Feb 2022 03:47:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42810 "EHLO
+        id S230236AbiBZIzp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Feb 2022 03:55:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbiBZIrh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Feb 2022 03:47:37 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A236E1B84EC
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 00:47:03 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id qk11so15221318ejb.2
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 00:47:03 -0800 (PST)
+        with ESMTP id S229633AbiBZIzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Feb 2022 03:55:44 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05BDF1D9B79
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 00:55:10 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id h15so10467097edv.7
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 00:55:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=zoVpoL2cX1TLk+1EHaY0HwMCkL5GtdYtLUZZ06R5cIk=;
-        b=SKk6zOVy40VFPqj1LhtO+Rugaj+FID0PsjPvDJhFTTKcsOt7wZijm0r6f2ygeVCN0a
-         eyp8uQR/tfT6TyQZJ8ToYJjXWty1p1NCmN4S4qc5cQ6HeMZMAZupi2pNSdvddaUA/cf4
-         ieINsDOooWtya0rQyDkJoTJgyoiLzVEoJZItIrBetz0HbsTuBh1C6Qi7NSC0YFr1veZc
-         pOs1PU+S/JYJKcYNKi4y/KI1MCRKTksv3BofG7wJcPkFY3L0vlhKzmQW2OVOHlJDHgg2
-         4t5f1o9wizKJYHftUPzfSOJETY+DfIOXLkeyyZKLnHEudXlhnmcaGd/4pJi4uJD95wUC
-         HSgw==
+        bh=kQlUKheHksESm7BZM2aMofytnoD+CcbJIazHIn+PFjg=;
+        b=FF0nqDU6hE9Ka0Ym0pHVdyhAbOSzEHTvfLZWl7KV8EY+qTmty0+vbQrk6itcSF0pFh
+         CQO5BzCILwWKT5IIohKPVcCmH5EK+9vlu94fTuKXawJTSvhOq5L2RxbPsQ6gFwb2C2DR
+         x2lHe1uRSxSp0waWZVI+ohN6TFUjacSZqxaf5IcabOOH+I5MdQRvoHbOMziAHpCt9TJ1
+         WD+v9ds/ObRAeXBEOBVJ9O6Qqj+UdusGNYYjGttkn4wKwy1bLEn5DgJfbHHFOAcKB3lL
+         soq8DsZW6EaIpSk0VUqQ81prcpRzDnAlqo+IgtkSByPjn6k0CKZmFxa+2eKTzdhRVzA6
+         y8hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=zoVpoL2cX1TLk+1EHaY0HwMCkL5GtdYtLUZZ06R5cIk=;
-        b=acEjWBxKFRlj/jyPi/XwxgIG8ypGLpeVR0BBvdTZgXmyExK/oOgtG3HBf2+De61zCL
-         B0k443i0rCk3Noxs40IdXm/ej3MSqClqxBntcGIOdEFxZ3HDZd8TEkTCazdjk3k3V51r
-         ieCPblyUxGpRtS6jW6uzRFFetAtUy/RSLZaI67uzQueyG2ePNcoZQNM6Zgw9YF+iz+oq
-         qWlF1t9POL5YfOFXqMtmW9G6kqvd3wAcApGE1pE8qqB3jGy6QEpDGMXsOenlzvLASWvj
-         G9zMuWxmX2UM9SDRjXPSk0HhN/ucsFi2UJukEMKTstZg+gSFk7GYO2HuBs+mKRGDPprn
-         xZ0A==
-X-Gm-Message-State: AOAM530KA2FRKJpXC01eRAkhOpN0paWkVQSTJwhls5Im1i3u49/bIHE3
-        bMNfSZnCNWfQu8w7rcgk8Y2v55dKPOGxzxt6eq4=
-X-Google-Smtp-Source: ABdhPJwNLA8YsCxKTY4zFyJfyR6ISY0WKjD3yYLojoxpExqcNLrta+ELVSGQzXLvcnWshvyAbdIdPJAFCMfFkSZTLdc=
-X-Received: by 2002:a17:907:11c1:b0:6cf:723b:37af with SMTP id
- va1-20020a17090711c100b006cf723b37afmr8978622ejb.476.1645865222114; Sat, 26
- Feb 2022 00:47:02 -0800 (PST)
+        bh=kQlUKheHksESm7BZM2aMofytnoD+CcbJIazHIn+PFjg=;
+        b=6ezAzG7vIsohtDvmNMuCQ+YN0zxOyYtvCXmfGVZpQXPHMSiJlif4mgZN8rQh3H9/1J
+         JaxLBmBC0FIQtx87dwscUT1TTrX/ParUfjaJmez/0OXxNCAM3VcSj9NAonudnGidDEHz
+         igVrDhZbsf+/oCI8GQET/4tvxf83UyNYVHdINpoXSz6TiEi41MGYGbAZSr+F+TcFyKXt
+         7x82R6Bh8E/tBuN4/s/hmAzm/JVw6SCrab/auO3oz0e1q9XFcWLsIEb1fhWQ8uE7tXxk
+         74AMafGgAQuFsvGDUGT2apLfziKYK1xubIFUY0/XIfsPLE6i8iFuUwwpAM+mKZGXOGFT
+         gWcg==
+X-Gm-Message-State: AOAM531sPHL1XdrSvPyp3AcG58Z/0mqUpeRnfYQ7iSIJcbtJe9EkMwgw
+        HImKpfRUDTqbn2aVb8SKLcmzCEa/0JMSd5shoLTsSXTNARg=
+X-Google-Smtp-Source: ABdhPJwvAKnSm5N2VNVlRP9setZQwoBI9cZQX4BpxNh/L99bHXgEm0gRK/PDVmnuonVzXb4HmIqmswUa8s/yo0YVD8o=
+X-Received: by 2002:a05:6402:491:b0:413:6c2e:bb2c with SMTP id
+ k17-20020a056402049100b004136c2ebb2cmr6765428edv.196.1645865708569; Sat, 26
+ Feb 2022 00:55:08 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1157.git.1645640717.gitgitgadget@gmail.com> <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
+References: <xmqqee3q73e1.fsf@gitster.g>
+In-Reply-To: <xmqqee3q73e1.fsf@gitster.g>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 26 Feb 2022 00:46:50 -0800
-Message-ID: <CABPp-BHu2sDFiDU=xGEr-MzqbtGwcwu+_m3b3gMWri561JyqWA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/7] Sparse index: integrate with 'read-tree'
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>
+Date:   Sat, 26 Feb 2022 00:54:57 -0800
+Message-ID: <CABPp-BG++YqesTxp+JL3XzwrogfMag1NscoMpCOExmV9z6Py9A@mail.gmail.com>
+Subject: en/merge-tree (Was: Re: What's cooking in git.git (Feb 2022, #07;
+ Fri, 25))
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 24, 2022 at 2:34 PM Victoria Dye via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Fri, Feb 25, 2022 at 7:07 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Like previous integrations [1] [2], this series allows 'git read-tree' to
-> operate using a sparse index.
+> * en/merge-tree (2022-02-23) 13 commits
+>  - git-merge-tree.txt: add a section on potentional usage mistakes
+>  - merge-tree: add a --allow-unrelated-histories flag
+>  - merge-tree: allow `ls-files -u` style info to be NUL terminated
+>  - merge-tree: provide easy access to `ls-files -u` style info
+>  - merge-tree: provide a list of which files have conflicts
+>  - merge-ort: provide a merge_get_conflicted_files() helper function
+>  - merge-tree: support including merge messages in output
+>  - merge-ort: split out a separate display_update_messages() function
+>  - merge-tree: implement real merges
+>  - merge-tree: add option parsing and initial shell for real merge function
+>  - merge-tree: move logic for existing merge into new function
+>  - merge-tree: rename merge_trees() to trivial_merge_trees()
+>  - Merge branch 'en/remerge-diff' into en/merge-trees
 >
-> The first two patches are bugfixes for issues found while implementing the
-> 'read-tree' integration:
+>  A new command is introduced that takes two commits and computes a
+>  tree that would be contained in the resulting merge commit, if the
+>  histories leading to these two commits were to be merged, and is
+>  added as a new mode of "git merge-tree" subcommand.
 >
->  * The first (patch 1/7) fixes an edge case in which a repo with no in-cone
->    files or directories would have its root collapsed into a sparse
->    directory; the fix ensures the root directory is never collapsed into a
->    sparse directory.
->  * The second (patch 2/7) corrects the 'git status' reporting of changes
->    nested inside the subdirectory of a sparse directory, ensuring that the
->    modified file (not the subdirectory) is correctly reported as having
->    changes.
->
-> The remainder of the series focuses on utilizing the sparse index in 'git
-> read-tree'. After some baseline behavior-establishing tests (patch 3/7),
-> sparse index usage is trivially enabled (patch 4/7) for 'read-tree' except:
->
->  * usage with '--prefix'
->  * two- and three-way merge
->
-> These cases require additional changes in order to work as expected (i.e.,
-> outwardly matching non-sparse index sparse-checkout). For the former, the
-> sparse index can be enabled as long as the index is expanded when the prefix
-> is a directory outside the sparse cone (patch 5/7). For the latter, sparse
-> directories that cannot be trivially merged must have their contents merged
-> file-by-file, done by recursively traversing the trees represented by the
-> sparse directories (patches 6/7 & 7/7).
->
->
-> Changes since V1
-> ================
->
->  * switched an empty string check from '!strlen(path)' to the
->    slightly-less-expensive '!*path'
+>  Will merge to 'next'.
+>  source: <pull.1122.v6.git.1645602413.gitgitgadget@gmail.com>
 
-I've read over the series.  It was a nice read, well motivated, and
-split up rather nicely.  I only had a few small commetns.
-
-I think it'd be nice to insert another patch into the series that
-throws an error if the argument to --prefix starts with a '/'.  That
-would also allow you to simplify patch 5/7 a little.
-
-Patch 6/7 has the right idea, but I'm worried about one part of it; a
-test would go a long way towards verifying whether that aspect is
-handled correctly or whether my concern is warranted.
-
-I had a couple smaller comments on some of the other patches.
-
-Overall, nicely done.
-
-
-> Thanks!
->
->  * Victoria
->
-> [1]
-> https://lore.kernel.org/git/pull.1109.v2.git.1641924306.gitgitgadget@gmail.com/
-> [2]
-> https://lore.kernel.org/git/pull.1048.v6.git.1638201164.gitgitgadget@gmail.com/
->
-> Victoria Dye (7):
->   sparse-index: prevent repo root from becoming sparse
->   status: fix nested sparse directory diff in sparse index
->   read-tree: expand sparse checkout test coverage
->   read-tree: integrate with sparse index
->   read-tree: narrow scope of index expansion for '--prefix'
->   read-tree: make two-way merge sparse-aware
->   read-tree: make three-way merge sparse-aware
->
->  builtin/read-tree.c                      |  10 +-
->  dir.c                                    |   7 +-
->  t/perf/p2000-sparse-operations.sh        |   1 +
->  t/t1092-sparse-checkout-compatibility.sh | 129 +++++++++++++++++++++++
->  unpack-trees.c                           | 121 ++++++++++++++++++++-
->  wt-status.c                              |   9 ++
->  6 files changed, 268 insertions(+), 9 deletions(-)
->
->
-> base-commit: e6ebfd0e8cbbd10878070c8a356b5ad1b3ca464e
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1157%2Fvdye%2Fsparse%2Fread-tree-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1157/vdye/sparse/read-tree-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1157
->
-> Range-diff vs v1:
->
->  1:  90da1f9f33a ! 1:  744668eeece sparse-index: prevent repo root from becoming sparse
->      @@ Commit message
->           non-cone sparse-checkouts), the new check does not cause additional changes
->           to how sparse patterns are applied.
->
->      +    Helped-by: Derrick Stolee <derrickstolee@github.com>
->           Signed-off-by: Victoria Dye <vdye@github.com>
->
->        ## dir.c ##
->      @@ dir.c: static int path_in_sparse_checkout_1(const char *path,
->       +  * patterns, or the patterns are of the wrong type.
->          */
->       - if (init_sparse_checkout_patterns(istate) ||
->      -+ if (!strlen(path) ||
->      ++ if (!*path ||
->       +     init_sparse_checkout_patterns(istate) ||
->             (require_cone_mode &&
->              !istate->sparse_checkout_patterns->use_cone_patterns))
->  2:  c21c9b9be34 = 2:  f0cff03b95d status: fix nested sparse directory diff in sparse index
->  3:  ac42ae21d4a = 3:  ffe0b6aff2b read-tree: expand sparse checkout test coverage
->  4:  5ee193bfa87 = 4:  cb7e0cf419c read-tree: integrate with sparse index
->  5:  bea482b6b28 = 5:  4f05fa70209 read-tree: narrow scope of index expansion for '--prefix'
->  6:  9fdcab038b2 = 6:  94c2aad2f93 read-tree: make two-way merge sparse-aware
->  7:  1502e9acb32 = 7:  c4080e99d6e read-tree: make three-way merge sparse-aware
->
-> --
-> gitgitgadget
+Let's wait.  The extra data needed to handle Dscho's usecase might
+still suggest an output format change, and the command is intended to
+be plumbing-ish, so I'd like a bit more time to make sure we've got
+the format we want.  Also, his comment/suggestion about -z affecting
+"Informational Messages" section is also interesting and might be
+worth doing even if it doesn't provide all the things Dscho wants for
+his usecase.
