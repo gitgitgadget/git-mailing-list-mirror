@@ -2,188 +2,186 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05CF8C433F5
-	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 06:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0538EC433EF
+	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 06:53:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229878AbiBZGQD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Feb 2022 01:16:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52728 "EHLO
+        id S230089AbiBZGyT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Feb 2022 01:54:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiBZGQC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Feb 2022 01:16:02 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3DC718A780
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 22:15:28 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id 132so6591507pga.5
-        for <git@vger.kernel.org>; Fri, 25 Feb 2022 22:15:28 -0800 (PST)
+        with ESMTP id S230083AbiBZGyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Feb 2022 01:54:17 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B8C81A7D84
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 22:53:42 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id p14so14809833ejf.11
+        for <git@vger.kernel.org>; Fri, 25 Feb 2022 22:53:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DCabWHHYv+TbaQwfVFraHCE1Qj0xdgrEUKV03d4yjtA=;
-        b=cMrGQC/UQBdHo4iHbuVupwhnv4eypSCdY4FTlJOTSyUuG1as8r9iICIZLXoGqI+aGY
-         0M6QDHyfFY3mfKJ6l3u6GWdowWWvR3up8wtV1EKDAtyhn8fcPb6jYLMaOB6frkv1V9oW
-         La6G/VGeoJfWgKEXzEJE+vZB0zXSRouehfhip7A08iSQJFXFixFVnoh+bi/nLSvQARbi
-         bOgytqSKzkfD8JMt6sG8pt43GWnaK7sh2kFg6IkN9uowfC6lcIyEF7bj1KG+q2ysX/69
-         y8Gsc3X4EJRn76ZGeEuc2pSHXZJkT+7KTVRZJL9xrrp8A4Qn/8Ybj7oC93cO4VPRnxPq
-         wYFg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gI70R8hAQfDmY9SpOPaOcyBPLDQfTZUt7NSUQtWN/hI=;
+        b=WOmMpO9Nyle0loWIZnYm8jhrGry2h2OW837T9kcSN1//TxC6SzaVED36o+HbSzDB23
+         EM9HywNgxg2wVJIcRKpO6AOmvN8vVsvYR2A7PzWSwXBRBS5/3BPuHJ7BcHhOF03koGAR
+         47emg5jo5KA6prvcG+yr7mkkfoRSzUBV7XbxeTx7KKEQzq1JypdxFMGOsjPIKpmWS14f
+         a4+E1Xn1QxLly7jMO+xImQQ6xI/LsEr4rycTIhAqOn40VJDwAoxTH4FBg+RHfz/lgHBT
+         bGB3uRWhFKLRBUikXg2Nct4okOVJ1jGqKqhv5GGegsOBWhxw54YDXh+XgQzDwtEXNnRj
+         +kkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=DCabWHHYv+TbaQwfVFraHCE1Qj0xdgrEUKV03d4yjtA=;
-        b=K1uhsj3KhMSuka5ma5/fhn0SoEy72iR5GMflptDl70SaSohQUYWM5uZpZxStWxjreh
-         AxiabN7H94CcC+4nJR5B5AvnayF2RvK2Ch+ZbBCxTNBgfJF+zelY9HIvLSfF5UtgpFNd
-         6Whp23LzUCDLSeZ5eCIWODaSLuZb6lTXLQ79R+HxJ4LPrWUpjWgIxxnpTMABRQaJqyu5
-         3rfQwmVFL9pA4n4rz0//r5Hv6q9Slv374apsyRqZN2+FsW9vBBESzEod9Afk5kvq3l2A
-         xR9XkneUtzBMOvLxK6L5wDTUu40nev58X4JzIsQUP4CESazOZu6R3odXEx/1OPilts9O
-         wexw==
-X-Gm-Message-State: AOAM532/X5LrzBxfQEYlutIR6ZnK34bn154xA2xwsnaaeaFoxdA1MxN+
-        iDag4sidmiFsHNaM/zkvRkGbFtLhryfCAg==
-X-Google-Smtp-Source: ABdhPJynnUmdOOSO+NFkEry529yqEBzpe7VujIe++xWhDkLprTXAENsevhvaA0yvFTnGZCH8DnLBXA==
-X-Received: by 2002:a63:64c5:0:b0:34d:3d6c:31d2 with SMTP id y188-20020a6364c5000000b0034d3d6c31d2mr8960768pgb.499.1645856127943;
-        Fri, 25 Feb 2022 22:15:27 -0800 (PST)
-Received: from xavier.lan ([2001:470:b:114::cc1])
-        by smtp.gmail.com with ESMTPSA id h2-20020a056a00170200b004e0f0c0e13esm5214447pfc.66.2022.02.25.22.15.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Feb 2022 22:15:27 -0800 (PST)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
-        pclouds@gmail.com
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v3] switch: mention the --detach option when dying due to lack of a branch
-Date:   Fri, 25 Feb 2022 23:12:13 -0700
-Message-Id: <20220226061213.1590341-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gI70R8hAQfDmY9SpOPaOcyBPLDQfTZUt7NSUQtWN/hI=;
+        b=KOB7TT8RfY9aKVwSGTh94EOfTtnbXqa36T0EDwlq3NZ/Vg3KTGDL9g/seJZ7MHLhnf
+         RcpM7/KuN0VRtlrzrVh0jCqoka44wzYHpDGkS2wsTjPDJVOJdRAI93lKHNhsx6JTC6fw
+         rXAP19/cKxzCqUNnTZEtV6tXfqu7H+2Tu9tmzSHnt6Jge0Zfv1He4n5lAkhAmk11PN43
+         zX5Riw0tjRn2Ko52UAXEoivt5On5iplW/ZSS1W1nUklYtSQhxqxNX4mYGmwwJUg7nj6S
+         5lNgHuT9+5/az/CLOmcNtvxD32jGFNBquEGnX/xepH8HadTQZVFplQ7JmBLEffYAliMD
+         qgWw==
+X-Gm-Message-State: AOAM5319Nxw4y1qcTkflKp2jmaF3DqshsUhwaDWWARV4Rp4ht6vh2Ut6
+        pzgRB4ez7oj3lMCxg67CxkDV1XlMRaoWJYtvO2o=
+X-Google-Smtp-Source: ABdhPJy/oYrfug9uAyrKj2y9x7twFb+z3YprJx12UcdIqpNBfXzcQOHIBDCeXPEZhvc3NOwKLKA8asaLdaoExr3nR10=
+X-Received: by 2002:a17:906:3a18:b0:6cd:ba45:995f with SMTP id
+ z24-20020a1709063a1800b006cdba45995fmr8919265eje.328.1645858420518; Fri, 25
+ Feb 2022 22:53:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
+ <35e0ed9271a0229fe2acd2385a7e4171d4dfe077.1642888562.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2201281744280.347@tvgsbejvaqbjf.bet> <CABPp-BG2rMEYBLuBW=0wtpJe4aUFGCFa8D0NTSKz9Sm+CkXPxw@mail.gmail.com>
+ <0d7ba76c-9824-9953-b8ce-6abe810e2778@kdbg.org> <CABPp-BERtRDeyF3MhOQhAFwjoykOKwXoz6635NK7j2SEKp1b3A@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202050009220.347@tvgsbejvaqbjf.bet> <CABPp-BGCL0onSmpgKuO1k2spYCkx=v27ed9TSSxFib=OdDcLbw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet> <CABPp-BFG_05RyVVyiHzOkuoT8=9NftJGp_W+DXd7ktqC5UfvwQ@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202251726500.11118@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2202251726500.11118@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 25 Feb 2022 22:53:28 -0800
+Message-ID: <CABPp-BGnqXdFBNAyKRXgvCHv+aUZTMg-CgcQf95dKAR-e1zSjQ@mail.gmail.com>
+Subject: Re: [PATCH 08/12] merge-ort: provide a merge_get_conflicted_files()
+ helper function
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Users who are accustomed to doing `git checkout <tag>` assume that
-`git switch <tag>` will do the same thing. Inform them of the --detach
-option so they aren't left wondering why `git switch` doesn't work but
-`git checkout` does.
+Hi Dscho,
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
-v3: Use plain grep instead of test_i18ngrep
----
- Documentation/config/advice.txt |  3 +++
- advice.c                        |  1 +
- advice.h                        |  1 +
- builtin/checkout.c              | 30 +++++++++++++++++++-----------
- t/t2060-switch.sh               | 11 +++++++++++
- 5 files changed, 35 insertions(+), 11 deletions(-)
+On Fri, Feb 25, 2022 at 8:31 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah,
+>
+> On Tue, 22 Feb 2022, Elijah Newren wrote:
+>
+> > Sidenote: Do you lump in binary merge conflicts with "non-semantic
+> > merge conflicts"?  You would by your definition, but I'm not sure it
+> > matches.
+> >
+> > I tend to call things either content-based conflicts or path-based
+> > conflicts, where content-based usually means textual-based but also
+> > includes merges of binaries.
+>
+> I like "content-based conflicts".
+>
+> And no, I had not even thought about binary merge conflicts yet...
+>
+> > On Mon, Feb 21, 2022 at 2:46 AM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > Concretely: while I am not currently aware of any web UI that allows
+> > > to resolve simple rename/rename conflicts, it is easily conceivable
+> > > how to implement such a thing. When that happens, we will need to be
+> > > able to teach the server-side code to discern between the cases that
+> > > can be handled in the web UI (trivial merge conflicts, trivial
+> > > rename/rename conflicts) as compared to scenarios where the conflicts
+> > > are just too complex.
+> >
+> > Um, I'm really worried about attempting to make the conflict notices
+> > machine parseable.  I don't like that idea at all, and I even tried to
+> > rule that out already with my wording:
+> > """
+> > In all cases, the
+> > <Informational messages> section has the necessary info, though it is
+> > not designed to be machine parseable.
+> > """
+> > though maybe I should have been even more explicit.  The restrictions
+> > that those messages be stable is too rigid, I think.  I also think
+> > they're a poor way to communicate information to a higher level tool.
+> > I would much rather us add some kind of additional return data
+> > structures from merge ort and use them if we want extra info.
+>
+> Okay.
+>
+> I thought that we could keep the `CONFLICT (<type>)` constant enough to
+> serve as such a machine-parseable thing.
 
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index adee26fbbb..c40eb09cb7 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -85,6 +85,9 @@ advice.*::
- 		linkgit:git-switch[1] or linkgit:git-checkout[1]
- 		to move to the detach HEAD state, to instruct how to
- 		create a local branch after the fact.
-+	suggestDetachingHead::
-+		Advice shown when linkgit:git-switch[1] refuses to detach HEAD
-+		without the explicit `--detach` option.
- 	checkoutAmbiguousRemoteBranchName::
- 		Advice shown when the argument to
- 		linkgit:git-checkout[1] and linkgit:git-switch[1]
-diff --git a/advice.c b/advice.c
-index e00d30254c..2e1fd48304 100644
---- a/advice.c
-+++ b/advice.c
-@@ -42,6 +42,7 @@ static struct {
- 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName", 1 },
- 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge", 1 },
- 	[ADVICE_DETACHED_HEAD]				= { "detachedHead", 1 },
-+	[ADVICE_SUGGEST_DETACHING_HEAD]			= { "suggestDetachingHead", 1 },
- 	[ADVICE_FETCH_SHOW_FORCED_UPDATES]		= { "fetchShowForcedUpdates", 1 },
- 	[ADVICE_GRAFT_FILE_DEPRECATED]			= { "graftFileDeprecated", 1 },
- 	[ADVICE_IGNORED_HOOK]				= { "ignoredHook", 1 },
-diff --git a/advice.h b/advice.h
-index a7521d6087..a3957123a1 100644
---- a/advice.h
-+++ b/advice.h
-@@ -20,6 +20,7 @@ struct string_list;
- 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
- 	ADVICE_COMMIT_BEFORE_MERGE,
- 	ADVICE_DETACHED_HEAD,
-+	ADVICE_SUGGEST_DETACHING_HEAD,
- 	ADVICE_FETCH_SHOW_FORCED_UPDATES,
- 	ADVICE_GRAFT_FILE_DEPRECATED,
- 	ADVICE_IGNORED_HOOK,
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index d9b31bbb6d..9244827ca0 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1397,23 +1397,31 @@ static void die_expecting_a_branch(const struct branch_info *branch_info)
- {
- 	struct object_id oid;
- 	char *to_free;
-+	int code;
- 
- 	if (dwim_ref(branch_info->name, strlen(branch_info->name), &oid, &to_free, 0) == 1) {
- 		const char *ref = to_free;
- 
- 		if (skip_prefix(ref, "refs/tags/", &ref))
--			die(_("a branch is expected, got tag '%s'"), ref);
--		if (skip_prefix(ref, "refs/remotes/", &ref))
--			die(_("a branch is expected, got remote branch '%s'"), ref);
--		die(_("a branch is expected, got '%s'"), ref);
-+			code = die_message(_("a branch is expected, got tag '%s'"), ref);
-+		else if (skip_prefix(ref, "refs/remotes/", &ref))
-+			code = die_message(_("a branch is expected, got remote branch '%s'"), ref);
-+		else
-+			code = die_message(_("a branch is expected, got '%s'"), ref);
- 	}
--	if (branch_info->commit)
--		die(_("a branch is expected, got commit '%s'"), branch_info->name);
--	/*
--	 * This case should never happen because we already die() on
--	 * non-commit, but just in case.
--	 */
--	die(_("a branch is expected, got '%s'"), branch_info->name);
-+	else if (branch_info->commit)
-+		code = die_message(_("a branch is expected, got commit '%s'"), branch_info->name);
-+	else
-+		/*
-+		 * This case should never happen because we already die() on
-+		 * non-commit, but just in case.
-+		 */
-+		code = die_message(_("a branch is expected, got '%s'"), branch_info->name);
-+
-+	if (advice_enabled(ADVICE_SUGGEST_DETACHING_HEAD))
-+		advise(_("If you want to detach HEAD at the commit, try again with the --detach option."));
-+
-+	exit(code);
- }
- 
- static void die_if_some_operation_in_progress(void)
-diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
-index ebb961be29..5a7caf958c 100755
---- a/t/t2060-switch.sh
-+++ b/t/t2060-switch.sh
-@@ -32,6 +32,17 @@ test_expect_success 'switch and detach' '
- 	test_must_fail git symbolic-ref HEAD
- '
- 
-+test_expect_success 'suggestion to detach' '
-+	test_must_fail git switch main^{commit} 2>stderr &&
-+	grep "try again with the --detach option" stderr
-+'
-+
-+test_expect_success 'suggestion to detach is suppressed with advice.suggestDetachingHead=false' '
-+	test_config advice.suggestDetachingHead false &&
-+	test_must_fail git switch main^{commit} 2>stderr &&
-+	! grep "try again with the --detach option" stderr
-+'
-+
- test_expect_success 'switch and detach current branch' '
- 	test_when_finished git switch main &&
- 	git switch main &&
--- 
-2.35.1
+That _probably_ is, but I thought you wanted to parse all N paths
+embedded in the message after that part as well?
 
+> And then presenting
+> `<path>NUL<message>NUL` could have served my use case well...
+
+Would it?  Wouldn't you need something more like
+
+<number-of-paths>NUL<path1>NUL<path2>NUL<pathN>NUL<stable-short-type-description>NUL<message>NUL
+ ?
+
+I mean, if rename/rename is what you want to handle, there are three
+paths in that message.  And you need to know all three paths in order
+to combine the relevant parts of the <Conflicted File Info> section
+together.
+
+(Also, while we're at it, I decided to throw a stable short-type
+description string (e.g. "CONFLICT (rename/rename)") in there, which
+will _probably_ be the first part of the message string but still
+allow us to change the message string later if we want.)
+
+
+Also, we'd want those parsing this information to keep in mind that:
+  * Any given conflict can affect multiple paths
+  * Any path can be part of multiple conflicts
+  * (The above two items imply a potentially many-to-many relationship
+between paths and conflicts)
+  * Paths listed in these logical conflicts may not correspond to a
+file in the index (they could be a directory, or file that was in a
+previous version)
+  * Some of these "logical conflicts" are not actually conflicts but
+just notices (e.g. "auto-merging" or "submodule updated" or "WARNING"
+or "<submodules are weird>" messages)
+
+and we'd have to do some work to make sure the paths in the given
+messages lined up with the files actually recorded in the index (e.g.
+with distinct types we rename both files to avoid the collision, but
+print the conflict notice for the original path rather than the new
+paths)
+
+[...]
+> > But I'm going to reserve the right in merge-ort to modify, add, or
+> > delete any of those messages passed to path_msg(), which might wreak
+> > havoc on your attempts to parse those strings.  I think they're a bad
+> > form for communicating information to a script or program, and trying
+> > to transform them into such risks making them suboptimal at
+> > communicating info to humans.  These messages should optimize the
+> > latter, and if we want something for the former, it should probably be
+> > a new independent bit of info.
+>
+> Makes sense.
+>
+> So we need something in addition to those messages.
+
+Yes.  Does the proposal above sound like it'd cover your needs?  If
+so, we'd probably need to go through all the callers to path_msg() and
+either add an immediate call to another function immediately
+afterwards that stores this additional information or somehow change
+the path_msg() call itself to somehow take an additional arbitrary
+list of arguments representing the paths and short-desc we want to
+store somewhere.
