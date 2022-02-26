@@ -2,114 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15205C433F5
-	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 12:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7298C433F5
+	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 16:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231559AbiBZMKO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Feb 2022 07:10:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48820 "EHLO
+        id S232297AbiBZQCZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Feb 2022 11:02:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231520AbiBZMKM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Feb 2022 07:10:12 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4711E403D6
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 04:09:38 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id r13so15778682ejd.5
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 04:09:38 -0800 (PST)
+        with ESMTP id S232281AbiBZQCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Feb 2022 11:02:24 -0500
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 766351795FC
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 08:01:49 -0800 (PST)
+Received: by mail-qt1-x832.google.com with SMTP id a1so738512qta.13
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 08:01:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BbIuuxVMbJjU+ErGkC/UeA5MOuiIqFq/o7eRywD86sc=;
-        b=Xhi+NEg+xdHELcshIqYdcAobh4Wt1w1EuxCm0wTccgetripLNdWZOky9fSOPXtna/i
-         giMz0TednB4svq0XicZBnHu44YfPjafUWTpphZc6Rg6yTJ7aDVWbwfkfr1guo4Yn4p6Q
-         lhG3kZ4TtRPxMG2mfM/Pss6riPAzgssqz/Aj8BaLPidFdlh7/+rMegb00ectWlZ0te/f
-         5ARLQxeeysFz44MCYLONocy0Ig5uEMcAPF8TLuqgr+RwcBgPkGryxSISnhPwdb2BSQkW
-         KkDzpizh8V4yFsmaUJHmkkn491KGvDQjByHhfZirQ6CLUJhfLKypy2z6ckc+4em197NV
-         qD9A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version;
+        bh=Tt0Y33GbxEbrLxBecX8aUNCfDGXF1k6ESavZI9Sz9L4=;
+        b=bbhzR7SPhOZ/WCanqn3cWH19NI5VtgECdLT97rdAXa8G7La+Y4uKq7Br+t9UkjA3zN
+         VjgCK4BS6AS3I6AtuqBJi5GPSPhbSaco1qLUCnN/dtCJP5VINaTRpI2xns6Psxb+M5MR
+         6pR1EriEaT1TNRiEgKJH68Fezzx99n313Tyk14Srt1FX+sJZdYn3YibzJtkG/sKJU4v3
+         TFKShVhid59+3uKSEnzMgIRGBFp8Eu9fdqyi8YFQAogkT1fCmCXsZ0djxsgtFsapVBxr
+         wQD142LG2cQXmvyPlOps4idhCrFPSuYnY1p1l8w92FRq9+R4HdQu3tSiSd7MjssyoiJ3
+         RdGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BbIuuxVMbJjU+ErGkC/UeA5MOuiIqFq/o7eRywD86sc=;
-        b=VsO2k5DtTVO7bdNmRA9F95AYpLjOAyCrHRr2fLOA4JJkpHycvrGEsqyzt9748QKz2O
-         Mk0jkprfrv8/vm3TLY2k3sUzrU87QGzzn8Mx5YuY5T7IfEh202YRtKYTHeb9XqDnL230
-         +9DD43Liwxzj8fl/6crLRBkNmaYkrVl7Rs4ceYBvozJ53Q/j2RsI9p8c4LzNQM4xDtOK
-         q+GghCNN7Y0oeqQHmsQawIWkSvMUObliriAaI64QU3R79zXVaGcFHSijKszggpl+DkuI
-         p+U8J/eucqTOOOA+Eb6neUllwWLkzhxkbZ9zMuN5KIV88HVC0rG0dlKLuAEeHHecB8cT
-         ryGw==
-X-Gm-Message-State: AOAM5303XUByoOMEFVU4X9GmqfZZHcYcTEkL7k793L/TBhOZBRpceBEJ
-        2yy0JLhkhdipwnzg+3GoFcVr348oop+yDflD1XIf91j5uJzeBsxV
-X-Google-Smtp-Source: ABdhPJwBHC3TX6WCJ0+vvXPwT+0apxPfNRpdHjQ30aymmb90Dt/GdlS4QsX9/yHiUc3zqxX6Rf/HBx4dHj0HEWsHYzU=
-X-Received: by 2002:a17:907:334c:b0:6cd:76b7:3948 with SMTP id
- yr12-20020a170907334c00b006cd76b73948mr10134431ejb.55.1645877376593; Sat, 26
- Feb 2022 04:09:36 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version;
+        bh=Tt0Y33GbxEbrLxBecX8aUNCfDGXF1k6ESavZI9Sz9L4=;
+        b=xBbrdCXaF2XddXEieNc6arYwshcfIi/6UwxmyJtvbRLVeCNpYSWRkXvqgAn2zXOYeH
+         scADHatScrQuFGWRo2Mj4sz5l8FmitQN+gK23YsOHsAGWUdIHyaA0fjwND3zYy8WdQCN
+         5rzI9AiQvMgp/3qXiK8IujAahJzVAb3ShBXC5yl/0F8V9mNyLU7K7xMbeu1anxN7ZFua
+         sDN+tJIlyhiren0OX9v90iDo1SD8/251Op9Y4nsHL+E/2GR+8EvKSMxrDHBsQnRg/CV+
+         +qyCLikFD25Dx5H39aFxmgPxerf8Ia3jLnordy8wxcr/tVPMbLv8SIytpNG2PP7kpdDg
+         oGEw==
+X-Gm-Message-State: AOAM531fRbK8OL2krRkG0HvGkSvYV/QU05UN6qsTihIKRIfNcRSUCfg7
+        cOLpTFWNTZoJw4esyLzTWYY=
+X-Google-Smtp-Source: ABdhPJywVxwjRcTOoY754v1siLG0B6ax2awcGOmqsSs31MtbUrZXoEqKCR2Eaxz4V7cJC4fhrMcKYA==
+X-Received: by 2002:a05:622a:1902:b0:2dd:33ce:4813 with SMTP id w2-20020a05622a190200b002dd33ce4813mr10889827qtc.659.1645891308538;
+        Sat, 26 Feb 2022 08:01:48 -0800 (PST)
+Received: from [10.37.129.2] ([2600:1001:b11e:18ab:f5f7:1c48:323c:e2a9])
+        by smtp.gmail.com with ESMTPSA id a143-20020a376695000000b00648cb6bb2ecsm2665419qkc.54.2022.02.26.08.01.47
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 26 Feb 2022 08:01:48 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Robert Coup <robert.coup@koordinates.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 0/4] [RFC] repack: add --filter=
+Date:   Sat, 26 Feb 2022 11:01:46 -0500
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <36CA51FE-8B7F-4D08-A91D-95D8F76606C9@gmail.com>
+In-Reply-To: <xmqqv8x5v0qc.fsf@gitster.g>
+References: <pull.1206.git.git.1643248180.gitgitgadget@gmail.com>
+ <pull.1206.v2.git.git.1644372606.gitgitgadget@gmail.com>
+ <CAFLLRpJ1aDyLb4qAoQwYDyGdP1_PH8kzLAQCKJpQwiYiapZ5Aw@mail.gmail.com>
+ <CB2ACEF7-76A9-4253-AD43-7BC842F9576D@gmail.com>
+ <YhMC+3FdSEZz22qX@nand.local>
+ <CAP8UFD2dpicW64eqBK47g43xDWA1qv2BMBEOSqj_My5PUs8TSg@mail.gmail.com>
+ <YhQHYQ9b9bYYv10r@nand.local>
+ <CAP8UFD3U4t-inWC5mZYhybWpjVwkqA7v4hYZ5voBOEJ=+_Y1kQ@mail.gmail.com>
+ <xmqqv8x5v0qc.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20220224054720.23996-1-shivam828787@gmail.com>
- <20220224054720.23996-3-shivam828787@gmail.com> <220224.86o82wab31.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220224.86o82wab31.gmgdl@evledraar.gmail.com>
-From:   Shubham Mishra <shivam828787@gmail.com>
-Date:   Sat, 26 Feb 2022 17:39:22 +0530
-Message-ID: <CAC316V4a37rsVpemARu17h2e0bj=ahsWOxjBEwO=BiWou+4aBw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] t0030-t0050: avoid pipes with Git on LHS
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Thank you for everyone's feedback. Really appreciate the collaboration!
 
-Thanks for Reviewing.
+On 23 Feb 2022, at 14:31, Junio C Hamano wrote:
 
-> You're modifying some tests here that are using some old coding style,
-> so maybe it's better to adjust it while we're at it?
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> Also I think this would be a lot nicer with test_stdout_line_count and a
-> helper to deal with that pritnf, e.g.:
+>>> For what it's worth, I am fine having a mode of repack which allows us
+>>> to remove objects that we know are stored by a promisor remote. But this
+>>> series doesn't do that, so users could easily run `git repack -d
+>>> --filter=...` and find that they have irrecoverably corrupted their
+>>> repository.
+>>
+>> In some cases we just know the objects we are removing are stored by a
+>> promisor remote or are replicated on different physical machines or
+>> both, so you should be fine with this.
 >
->         diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
->         index ae1ca380c1a..d48a3579511 100755
->         --- a/t/t0030-stripspace.sh
->         +++ b/t/t0030-stripspace.sh
->         @@ -223,12 +223,15 @@ test_expect_success \
->              test_cmp expect actual
->          '
+> So, we need to decide if an object we have that is outside the
+> narrowed filter definition was (and still is, but let's keep the
+> assumption the whole lazy clone mechanism makes: promisor remotes
+> will never shed objects that they once served) available at the
+> promisor remote, but I suspect we have too little information to
+> reliably do so.  It is OK to assume that objects in existing packs
+> taken from the promisor remotes and everything reachable from them
+> (but missing from our object store) will be available to us from
+> there.  But if we see an object that is outside of _new_ filter spec
+> (e.g. you fetched with "max 100MB", now you are refiltering with
+> "max 50MB", narrowing the spec, and you need to decide for an object
+> that weigh 70MB), can we tell if that can be retrieved from the
+> promisor or is it unique to our repository until we push it out?  I
+> am not sure.  For that matter, do we even have a way to compare if
+> the new filter spec is a subset, a superset, or neither, of the
+> original filter spec?
+
+let me try to summarize (perhaps over simplify) the main concern folks have
+with this feature, so please correct me if I'm wrong!
+
+As a user, if I apply a filter that ends up deleting objects that it turns
+out do not exist anywhere else, then I have irrecoverably corrupted my
+repository.
+
+Before git allows me to delete objects from my repository, it should be pretty
+certain that I have path to recover those objects if I need to.
+
+Is that correct? It seems to me that, put another way, we don't want to give
+users too much rope to hang themselves.
+
+I can see why we would want to do this. In this case, there have been a couple
+of alternative ideas proposed throughout this thread that I think are viable and
+I wanted to get folks thoughts.
+
+1. split pack file - (Rob gave this idea and Taylor provided some more detail on
+   how using pack-objects would make it fairly straightforward to implement)
+
+when a user wants to apply a filter that removes objects from their repository,
+split the packfile into one containing objects that are filtered out, and
+another packfile with objects that remain.
+
+pros: simple to implement
+cons: does not address the question "how sure am I that the objects I want to
+filter out of my repository exist on a promsior remote?"
+
+2. check the promisor remotes to see if they contain the objects that are about
+   to get deleted. Only delete objects that we find on promisor remotes.
+
+pros: provides assurance that I have access to objects I am about to delete from
+a promsior remote.
+cons: more complex to implement. [*]
+
+Out of these two, I like 2 more for the aforementioned pros.
+
+* I am beginning to look into how fetches work and am still pretty new to the
+codebase so I don't know if this is even feasible, but I was thinking perhaps
+we could write a function that fetches with a --filter and create a promisor
+packfile containing promisor objects (this operaiton would have to somehow
+ignore the presence of the actual objects in the repository). Then, we would
+have a record of objects we have access to. Then, repack --filter can remove
+only the objects contained in this promisor packfile.
+
 >
->         -test_expect_success \
->         -    'text without newline at end should end with newline' '
->         -    test $(printf "$ttt" | git stripspace | wc -l) -gt 0 &&
->         -    test $(printf "$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
->         -    test $(printf "$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
->         -    test $(printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0
->         +printf_git_stripspace () {
->         +       printf "$1" | git stripspace
->         +}
->         +
->         +test_expect_success 'text without newline at end should end with newline' '
->         +       test_stdout_line_count -gt 0 printf_git_stripspace "$ttt" &&
->         +       test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$ttt" &&
->         +       test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$ttt$ttt" &&
->         +       test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$ttt$ttt$ttt"
->          '
+>> If you are not fine with this because sometimes a user might use it
+>> without knowing, then why are you ok with commands deleting refs not
+>> checking that there isn't a regular repack removing dangling objects?
 >
->          # text plus spaces at the end:
+> Sorry, I do not follow this argument.  Your user may do "branch -D"
+> because the branch deleted is no longer needed, which may mean that
+> objects only reachable from the deleted branch are no longer needed.
+> I do not see what repack has anything to do with that.  As long as
+> the filter spec does not change (in other words, before this series
+> is applied), the repack that discards objects that are known to be
+> reachable from objects in packs retrieved from promisor remote, the
+> objects that are no longer reachable may be removed and that will
+> not lose objects that we do not know to be retrievable from there
+> (which is different from objects that we know are unretrievable).
+> But with filter spec changing after the fact, I am not sure if that
+> is safe.  IOW, "commands deleting refs" may have been OK without
+> this series, but this series may be what makes it not OK, no?
 >
-
-it makes sense to improve this code as we are touching it, this way
-looks much better. I will implement it.
-
-
-> This is not on you, but generally we don't pipe "grep" to >/dev/null,
-> and just let the --verbose option do its work.
-I don't think I understood this, I guess you are talking about the
-"-v" flag that stands for invert match? I didn't find "--verbose" with
-grep.
-Please correct me if I am wrong.
-
-> With/without that change you no longer need the () subshell here.
-sure.
-
-Thanks,
-Shubham
+> Puzzled.
