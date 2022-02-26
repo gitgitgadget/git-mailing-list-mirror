@@ -2,88 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 432A6C433F5
-	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 18:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0476C433EF
+	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 18:43:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232514AbiBZSCO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Feb 2022 13:02:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58380 "EHLO
+        id S232529AbiBZSoR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Feb 2022 13:44:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230391AbiBZSCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Feb 2022 13:02:14 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A7C81C232C
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 10:01:39 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id e11so6916160ils.3
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 10:01:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=6BMMBp017OCOaEEwLszoqcAw4z/bBE4MFrr+jErLbXc=;
-        b=I8XJKtogahMbd+l7qr6f4oI7vNSPvXXG98aTwmMGfj1DMSW8cjg9rg3WOcxXGtyGgw
-         j3R1btUAo/dy5ZBvG1opmsxglrY9HgB+l9TgKRtSQiVWoESBOn00OXZEA4f/fhaFbrSK
-         9Kh9gDiyTCEWgFFEZwXR5S74kMOYTO1p7B6Da5mgoXEHAB5ReKkxUyt0jC2gloD+l7Nk
-         N2JnJLGbCfquzcxXsTaAAe4EedDxx/JyT9vIIzxZH3c5E9sQVX9rva4jcH8sDtgbL9TP
-         8LaGelpukQskmjnPqDCvyUJEq3rofz034/vpk1eAyLgVC7y5fEYj85MBeVuzCZATDAkT
-         beBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=6BMMBp017OCOaEEwLszoqcAw4z/bBE4MFrr+jErLbXc=;
-        b=QsAgSEshRY2msE+vXwAW/Ep3HPwBzlp0c+uk8WyDv5OsuuVlvPjDI4S6YpOFIu59+P
-         E6sIXUbfItpkvtMEGdU1YzAxRlLIsF85L0IH3ZsL/w07YQ6WxXKDGc5PIXsUEhkuIKob
-         Xb0ykZehWi4NmB3hDFuFY6eF9duY0/fLUS9cxvnOzUDxeswBWjXK7MpaMbOD6SUoLerr
-         kaSUgNwBSVyLklG/mGe8S0VxvmrtqNRr/Q5wga4vW5usGMpi5gDlDNW26TPIOu+fsjKb
-         Z+B0/B/ji7P31h1wGe2Z9c+OYY5qqBvVSqxCEkVZOlu4ekO/ZdCO4GKuS21oAJqao6IC
-         3Mlw==
-X-Gm-Message-State: AOAM5319OGyS/ymzAtO0ymxy/GA653uRxbyZlQVi/xOfc2EWS15+V2oL
-        SzPBDZeBl6pst5ZBvO0aQRva0g==
-X-Google-Smtp-Source: ABdhPJxSm/aYsqYOKEsTKri9xzPnwnbzYFtkLmg8yUbeyYS6DzB7cHtNA7d+atulphhu3P79jV2MEg==
-X-Received: by 2002:a05:6e02:1be9:b0:2c2:85a8:50cc with SMTP id y9-20020a056e021be900b002c285a850ccmr11528061ilv.131.1645898498889;
-        Sat, 26 Feb 2022 10:01:38 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j9-20020a92ca09000000b002c21fd9d87csm3892807ils.58.2022.02.26.10.01.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Feb 2022 10:01:38 -0800 (PST)
-Date:   Sat, 26 Feb 2022 13:01:37 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] http API: fix dangling pointer issue noted by GCC 12.0
-Message-ID: <YhprAb1f1WYIktCV@nand.local>
-References: <patch-1.1-1cec367e805-20220126T212921Z-avarab@gmail.com>
- <patch-v2-1.1-777838267a5-20220225T090816Z-avarab@gmail.com>
+        with ESMTP id S232861AbiBZSoO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Feb 2022 13:44:14 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73F0614893F
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 10:43:36 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0707C11FAF4;
+        Sat, 26 Feb 2022 13:43:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=CyYfLeOvCYM2
+        pcx0caruLkoNpOD/31P/dsIWO2v7TOY=; b=exY0BPXhyVLUKdpCEqf4EUnMes5E
+        MBa/8sYtMBCe45xSMDphKHekG4YesvlzQCHflxpF5zMbZVGoLwh5XDaIF0JnAFuX
+        SwXgM47pGNU7pbsV2lucylf0kpaXYWG6YrNZnxoDWBi0pOwklEFgvRk6ICNiqATu
+        TvEYi7Rvh9Nn9q0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F257811FAF3;
+        Sat, 26 Feb 2022 13:43:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66E2611FAF2;
+        Sat, 26 Feb 2022 13:43:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     phillip.wood@dunelm.org.uk,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet>
+        <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com>
+        <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet>
+        <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
+        <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com>
+        <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet>
+        <xmqqv8x2dd7j.fsf@gitster.g>
+Date:   Sat, 26 Feb 2022 10:43:33 -0800
+In-Reply-To: <xmqqv8x2dd7j.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        25 Feb 2022 10:16:00 -0800")
+Message-ID: <xmqqzgmd5uzu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v2-1.1-777838267a5-20220225T090816Z-avarab@gmail.com>
+X-Pobox-Relay-ID: 0083BD82-9734-11EC-AD5A-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 25, 2022 at 10:09:11AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> There's a few possible ways to fix this, but the simplest is to assign
-> NULL to "slot->finished" at the end of run_active_slot(), it's the
-> only caller that ever assigns non-NULL to it. It was suggested[2] to
-> guard that with "if (slot->finished == &finished)", but that'll still
-> trigger the warning.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I'm not quite sure that I follow this. This isn't the only spot that
-assigns non-NULL to "slot->finished", see the assignments in
-http-walker.c:process_alternates_response() and
-http.c:finish_active_slot().
+> Let me tell my experience:
+>
+>  - Clicking on macos+clang in the map-looking thing, it did show and
+>    scroll down automatically to show the last failure link ready to
+>    be clicked after a few seconds, which was nice, but made me
+>    scroll back to see the first failure, which could have been
+>    better.
+>
+>  - Clicking on win+VS test (2), the failed <test> part was
+>    automatically opened, and a circle spinned for several dozens of
+>    seconds to make me wait, but after that, nothing happened.  It
+>    was somewhat hard to know if I were expected to do something to
+>    view the first error and when the UI is ready to let me do so, or
+>    if I were just expected to wait a bit longer for it to all happen
+>    automatically.
+>
+> Either case, the presentation to fold all the pieces that finished
+> successfully made it usable, as that saved human time to scan to
+> where failures are shown.
+>
+> I personally do not care about the initial latency when viewing the
+> output from CI run that may have happened a few dozens of minutes
+> ago (I do not sit in front of GitHub CI UI and wait until it
+> finishes). As long as it is made clear when I can start interacting
+> with it, I can just open the page and let it load while I am working
+> on something else.
 
-But even if it were, I'm not sure how this being the only spot that
-*writes* non-NULL matters from a reader's perspective.
+FWIW, CI run on "seen" uses this series.
 
-Looking more at process_alternates_response(), it really looks like this
-variable wants to hold a tri-state value. I wonder if it would be
-clearer to replace the NULL/(pointer to) 0/(pointer to) 1 with a
-UNKNOWN/TRUE/FALSE enum.
+When I highlight a failure at CI, I often give a URL like this:
 
-Thanks,
-Taylor
+https://github.com/git/git/runs/5343133021?check_suite_focus=3Dtrue#step:=
+4:5520
+
+I notice that this "hide by default" forces the recipient of the URL
+to click the line after the line with a red highlight before they
+can view the breakage.
+
+For example, an URL to show a similar breakage from the old run
+(without this series) looks like this:
+
+https://github.com/git/git/runs/5341052811?check_suite_focus=3Dtrue#step:=
+5:3968
+
+This directly jumps to the error and the recipient of the URL does
+not have to do anything special, which I have been using as a
+convenient way to give developers a starting point.
+
+I haven't compared the implementation of this one and =C3=86var's series
+that aims for a different goal, so I do not yet have an opinion on
+which one should come first (if we want to achieve both of what each
+of them wants to achieve, that is).
+
+Thanks.
+
