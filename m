@@ -2,327 +2,369 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D9EC433F5
-	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 11:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C9E7C433EF
+	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 11:23:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230222AbiB0LWV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Feb 2022 06:22:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60882 "EHLO
+        id S230231AbiB0LXf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Feb 2022 06:23:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229604AbiB0LWU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Feb 2022 06:22:20 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 961785D675
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 03:21:43 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id p14so19422143ejf.11
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 03:21:43 -0800 (PST)
+        with ESMTP id S229604AbiB0LXe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Feb 2022 06:23:34 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1976F41FA0
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 03:22:57 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id n13-20020a05600c3b8d00b0037bff8a24ebso4222561wms.4
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 03:22:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NLB9IOlXh3DbzN8TqBQHMi0YlNu/YP/exut73hKauKQ=;
-        b=e7MSAtrAGFANzTnT6onsII5oJKsbIzynPF+2PcNESyYcu//lRQbfwQtZxQhLAvXbZy
-         I9d3dkmroDeFpry2sN3ZzfJCgst7dpOsp6GRU/yQdxVUJTOH1O88s6nLHjaAelukqzMj
-         1/09FKNgUI0ibRvZ0W95xKn9dc8YBWe7Ss+4UHYQC7yzliRjHzUE9PAeUUQAKtRH9eUt
-         1T+MhUSNvf8oheQNweNh20EwhIx9ixweOEX6KMmt3lmHMXbP5WdpoJeBb7oJj5UPyB3J
-         hhG+uafDcV0RFB4yosNHkec5aF5wLX4lknzlgdfZ7Y0VZGG7x2P+I6c8zqYD7Wis1iKe
-         B+uw==
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=zmSy1JrYgfLa4eeIKCiV4DCCm19YdwTkMu6PaUQ9XIY=;
+        b=CwrCJGThLRMUXNDS3O+pBUKT1pAfOzy/VHA34CrtBTnSVJv3FJVWMZnsp4VdkOvoHv
+         Vv8Mw2dopqPsCJiWQn63jA8KzyODpxFSyoASm6DHpyEG/alrMXLZ3/5z3a73DrB2QxPG
+         R/VRRa4Ulwf8Ipb+ElKa5CgyTa+58LobNvbJlOVwYKCgr8gR3TLjL5CCOIG2DMwDvkvt
+         AuCWAQuhFzsMPic2ECqApVfrpIH4tZTEU4yWAEPdYOKe6RUj/PNl5wxDNaqJApNut5+K
+         0tEI3b/6ozDjXOd6uun7XJxaavpub03cyv+LtvjlQCXijzXdj2gfz/wCpUtVXBuP2n3m
+         qMQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NLB9IOlXh3DbzN8TqBQHMi0YlNu/YP/exut73hKauKQ=;
-        b=xp0MuEqkGzqKzaSf9nplq0nL9BUmyLGaFG3IIIBb0OzqRz7KW35zsXaFlsHxXre3k6
-         aSb7FqInPZTN/1OiU/l+RY2E+/2FUAXxzFKKJkgg/I4Te2iB5qhdPgTlLIogug0J6FLG
-         fz4gx5Ew1R9QutpvQ7krolYojEvTwQteXl5qZcxMNFpae12tEVtzhlCjt+ruR1YxLbA6
-         wtlEaT5aXStpOPxYLt+jiIc2HAkRRg5DTr7++0GHPZHWE9WKRsUnyFPIkByz7Pymg62w
-         B8D1d6j6BSgAJMuaIxuBHVOGGf2Xyd0Bphe5P5bVNXDLvaXo72JvwnozlriN4eqTWjqy
-         h63Q==
-X-Gm-Message-State: AOAM531bIlxd3V5rpQf1ZdLiHxalvD3xeuNWF3xjjRzlNqOgm8zpj3Je
-        acvc/TbfTSgRJRKIEn7dpAAfhQyy/dg3SnH8G8974/1tCfn1eg==
-X-Google-Smtp-Source: ABdhPJxsUH9xAQES3pCvBnIDpqAsGI/qYEkdQFcTOxJrRJBJH6F+uUxOO6k5r5/7W3qD1SQZXm3LkHaxpOD8nMYbAVA=
-X-Received: by 2002:a17:906:a210:b0:6d5:9fa:11ce with SMTP id
- r16-20020a170906a21000b006d509fa11cemr12176749ejy.172.1645960902004; Sun, 27
- Feb 2022 03:21:42 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=zmSy1JrYgfLa4eeIKCiV4DCCm19YdwTkMu6PaUQ9XIY=;
+        b=NI9hDZx29VK1Lyo3UY+QPMeakfPd5orYK0G78bHWKKh+VPKCU5AexaIlDpAs+prj1+
+         P2hhPOa4pRJESsjmkq65QHNKVG9iwGjD/w2XF0C6VSRnGCP6vEdetoURYu7mQ1hQI3Xt
+         0GTXHx3BSUS+OVMZehKv6cXhkmJPLDTHZUHUUh/jFQePQ95syPDfJXMebVfQ3cVoOx3y
+         gyuXOBrIOG2y78Mwz6Qodp26+0l0hX1PrJF9Uo0AwjQ+0AW9TLCK6iEcsSASexveKs7Y
+         ljrfjrtYeWDGCZbn35X+x/YHQEQ7NDh6ZhUcNe5QJ8aIkXjI7daoIBE35q+DpcziKJTH
+         /MfA==
+X-Gm-Message-State: AOAM532FBfukUhesjR22FRDMectSt9aB16KxiGXjd/QJCVueOP5e0spD
+        RaqeurEfuu2lIOPSbYn0IN/BjKV1Owg=
+X-Google-Smtp-Source: ABdhPJyVhK1FJKxfdP1s1bBxb3urGFZoEkipUEmMohwCUe7JH/R81MnNEYhdcFxv/duBkLkpuhR2Eg==
+X-Received: by 2002:a7b:c747:0:b0:381:3f3a:40b9 with SMTP id w7-20020a7bc747000000b003813f3a40b9mr8132508wmk.190.1645960975149;
+        Sun, 27 Feb 2022 03:22:55 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g17-20020a5d4891000000b001e74e998bf9sm7389137wrq.33.2022.02.27.03.22.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Feb 2022 03:22:54 -0800 (PST)
+Message-Id: <pull.985.v3.git.1645960973798.gitgitgadget@gmail.com>
+In-Reply-To: <pull.985.v2.git.1645811564461.gitgitgadget@gmail.com>
+References: <pull.985.v2.git.1645811564461.gitgitgadget@gmail.com>
+From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 27 Feb 2022 11:22:53 +0000
+Subject: [PATCH v3] untracked-cache: support '--untracked-files=all' if
+ configured
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.985.git.1624430668741.gitgitgadget@gmail.com>
- <pull.985.v2.git.1645811564461.gitgitgadget@gmail.com> <xmqqtucmag00.fsf@gitster.g>
-In-Reply-To: <xmqqtucmag00.fsf@gitster.g>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Sun, 27 Feb 2022 12:21:30 +0100
-Message-ID: <CAPMMpoixi3x1PHrSHJPV1GRBzMpuOQ4meMr-fipXuDvz-96MEA@mail.gmail.com>
-Subject: Re: [PATCH v2] untracked-cache: support '--untracked-files=all' if configured
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 25, 2022 at 8:44 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > If the previously stored flags no longer match the current
-> > configuration, but the currently-applicable flags do match the current
-> > configuration, then the previously stored untracked cache data is
-> > discarded.
-> >
-> > For most users there will be no change in behavior. Users who need
-> > '--untracked-files=all' to perform well will have the option of
-> > setting "status.showuntrackedfiles" to "all".
-> >
-> > Users who need '--untracked-files=all' to perform well for their
-> > tooling AND prefer to avoid the verbosity of "all" when running
-> > git status explicitly without options... are out of luck for now (no
-> > change).
->
-> So, in short, the root of the problem is that untracked cache can be
-> used to serve only one mode (between normal and all) of operation,
-> and the real solution to that problem must come in a different form,
-> i.e. allowing a single unified untracked cache to be usable in both
-> modes, perhaps by maintaining all the untracked ones in the cache,
-> but filter out upon output when the 'normal' mode is asked for?
+From: Tao Klerks <tao@klerks.biz>
 
-I wouldn't call this the root of the problem I was trying to solve with this
-patch, but rather the root of the remaining problem, yes.
+Untracked cache was originally designed to only work with
+'-untracked-files=normal', but this causes performance issues for UI
+tooling that wants to see "all" on a frequent basis. On the other hand,
+the conditions that prevented applicability to the "all" mode no
+longer seem to apply.
 
-The challenge that I can't get my head around for this longer-term
-approach or objective, is *when* the untracked-folder nested files
-should be enumerated.
+The disqualification of untracked cache has a particularly significant
+impact on Windows with the defaulted fscache, where the introduction
+of fsmonitor can make the first and costly directory-iteration happen
+in untracked file detection, single-threaded, rather than in
+preload-index on multiple threads. Improving the performance of a
+"normal" 'git status' run with fsmonitor can make
+'git status --untracked-files=all' perform much worse.
 
-Currently, untracked folders are only recursed into if -uall is
-specified or configured - and that's a significant characteristic:
-It's perfectly plausible that some users sometimes have huge
-deep untracked folder hierarchies that take a long time to explore,
-but git never needs to because they never specify -uall.
+To partially address this, align the supported directory flags for the
+stored untracked cache data with the git config. If a user specifies
+an '--untracked-files=' commandline parameter that does not align with
+their 'status.showuntrackedfiles' config value, then the untracked
+cache will be ignored - as it is for other unsupported situations like
+when a pathspec is specified.
 
-If we decided to serve both modes with one single untracked
-cache structure, then we would either need to always fully
-recurse, or implement some sort of "just-in-time" filling in of the
-recursive bits when someone specifies -uall for the first time.
+If the previously stored flags no longer match the current
+configuration, but the currently-applicable flags do match the current
+configuration, then discard the previously stored untracked cache
+data.
 
-Either way, I'm pretty sure it's beyond me to do that right. Hence
-this very-pragmatic approach that makes it *possible* to get
-good/normal performance with -uall.
+For most users there will be no change in behavior. Users who need
+'--untracked-files=all' to perform well will now have the option of
+setting "status.showuntrackedfiles" to "all" for better / more
+consistent performance.
 
->
-> > Users who set "status.showuntrackedfiles" to "all" and yet most
-> > frequently explicitly call 'git status --untracked-files=normal' (and
-> > use the untracked cache) are the only ones who would be disadvantaged
-> > by this change. It seems unlikely there are any such users.
->
-> Given how widely used we are these days, I am afraid that the days
-> we can safely say "users with such a strange use pattern would not
-> exist at all" is long gone.
->
-> > +static unsigned configured_default_dir_flags(struct index_state *istate)
-> > +{
-> > +     /* This logic is coordinated with the setting of these flags in
-> > +      * wt-status.c#wt_status_collect_untracked(), and the evaluation
-> > +      * of the config setting in commit.c#git_status_config()
-> > +      */
->
-> Good thing to note here.
->
-> Style.
->
->   /*
->    * Our multi-line comments reads more like this, with
->    * slash-asterisk that opens, and asterisk-slash that closes,
->    * sitting on their own lines.
->    */
+Users who need '--untracked-files=all' to perform well for their
+tooling AND prefer to avoid the verbosity of "all" when running
+git status explicitly without options... are out of luck for now (no
+change).
 
-Thanks, sorry, I thought I'd corrected them all but clearly missed some.
+Users who have the "status.showuntrackedfiles" config set to "all"
+and yet frequently explicitly call
+'git status --untracked-files=normal' (and use the untracked cache)
+are the only ones who will be disadvantaged by this change. Their
+"--untracked-files=normal" calls will, after this change, no longer
+use the untracked cache.
 
->
-> > +     char *status_untracked_files_config_value;
-> > +     int config_outcome = repo_config_get_string(istate->repo,
-> > +                                                             "status.showuntrackedfiles",
->
-> The indentation looks a bit off.
->
-> In this project, tab width is 8.  The beginning of the second
-> parameter to the function call on the second line should align with
-> the beginning of the first parameter that immediately follows the
-> open parenthesis '('.
->
+Signed-off-by: Tao Klerks <tao@klerks.biz>
+---
+    Support untracked cache with '--untracked-files=all' if configured
+    
+    Resending this patch from a few months ago (with better standards
+    compliance) - it hasn't seen any comments yet, I would dearly love some
+    eyes on this as the change can make a big difference to hundreds of
+    windows users in my environment (and I'd really rather not start
+    distributing customized git builds!)
+    
+    This patch aims to make it possible for users of the -uall flag to git
+    status, either by preference or by need (eg UI tooling), to benefit from
+    the untracked cache when they set their 'status.showuntrackedfiles'
+    config setting to 'all'. This is very important for large repos in
+    Windows.
+    
+    More detail on the change and context in the commit message, I assume
+    repeating a verbose message here is discouraged.
+    
+    These changes result from a couple of conversations,
+    81153d02-8e7a-be59-e709-e90cd5906f3a@jeffhostetler.com and
+    CABPp-BFiwzzUgiTj_zu+vF5x20L0=1cf25cHwk7KZQj2YkVzXw@mail.gmail.com>.
+    
+    The test suite passes, but as a n00b I do have questions:
+    
+     * Is there any additional validation that could/should be done to
+       confirm that "-uall" untracked data can be cached safely?
+       * It looks safe from following the code
+       * It seems from discussing briefly with Elijah Newren in the thread
+         above that thare are no obvious red flags
+       * Manual testing, explicitly and implicitly through months of use,
+         yields no issues
+     * Is it OK to check the repo configuration in the body of processing?
+       It seems to be a rare pattern
+     * Can anyone think of a way to test this change?
 
-Fixed, thx.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-985%2FTaoK%2Ftaok-untracked-cache-with-uall-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-985/TaoK/taok-untracked-cache-with-uall-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/985
 
-> > +                                                             &status_untracked_files_config_value);
-> > +     if (!config_outcome && !strcmp(status_untracked_files_config_value, "all")) {
-> > +             return 0;
-> > +     } else {
-> > +             /*
-> > +              * The default, if "all" is not set, is "normal" - leading us here.
-> > +              * If the value is "none" then it really doesn't matter.
-> > +              */
-> > +             return DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
-> > +     }
-> > +}
->
-> I didn't see the need to pass istate to this function, though.
-> Shouldn't it take a repository instead?
+Range-diff vs v2:
 
-Makes sense, fixed, thx.
+ 1:  e2f1ad26c78 ! 1:  49cf90bfab5 untracked-cache: support '--untracked-files=all' if configured
+     @@ Commit message
+          untracked-cache: support '--untracked-files=all' if configured
+      
+          Untracked cache was originally designed to only work with
+     -    '-untracked-files=normal', but this is a concern for UI tooling that
+     -    wants to see "all" on a frequent basis, and the conditions that
+     -    prevented applicability to the "all" mode no longer seem to apply.
+     +    '-untracked-files=normal', but this causes performance issues for UI
+     +    tooling that wants to see "all" on a frequent basis. On the other hand,
+     +    the conditions that prevented applicability to the "all" mode no
+     +    longer seem to apply.
+      
+     -    The disqualification of untracked cache is a particular problem on
+     -    Windows with the defaulted fscache, where the introduction of
+     -    fsmonitor can make the first and costly directory-iteration happen
+     +    The disqualification of untracked cache has a particularly significant
+     +    impact on Windows with the defaulted fscache, where the introduction
+     +    of fsmonitor can make the first and costly directory-iteration happen
+          in untracked file detection, single-threaded, rather than in
+          preload-index on multiple threads. Improving the performance of a
+          "normal" 'git status' run with fsmonitor can make
+          'git status --untracked-files=all' perform much worse.
+      
+     -    In this change, align the supported directory flags for the stored
+     -    untracked cache data with the git config. If a user specifies an
+     -    '--untracked-files=' commandline parameter that does not align with
+     +    To partially address this, align the supported directory flags for the
+     +    stored untracked cache data with the git config. If a user specifies
+     +    an '--untracked-files=' commandline parameter that does not align with
+          their 'status.showuntrackedfiles' config value, then the untracked
+          cache will be ignored - as it is for other unsupported situations like
+          when a pathspec is specified.
+      
+          If the previously stored flags no longer match the current
+          configuration, but the currently-applicable flags do match the current
+     -    configuration, then the previously stored untracked cache data is
+     -    discarded.
+     +    configuration, then discard the previously stored untracked cache
+     +    data.
+      
+          For most users there will be no change in behavior. Users who need
+     -    '--untracked-files=all' to perform well will have the option of
+     -    setting "status.showuntrackedfiles" to "all".
+     +    '--untracked-files=all' to perform well will now have the option of
+     +    setting "status.showuntrackedfiles" to "all" for better / more
+     +    consistent performance.
+      
+          Users who need '--untracked-files=all' to perform well for their
+          tooling AND prefer to avoid the verbosity of "all" when running
+          git status explicitly without options... are out of luck for now (no
+          change).
+      
+     -    Users who set "status.showuntrackedfiles" to "all" and yet most
+     -    frequently explicitly call 'git status --untracked-files=normal' (and
+     -    use the untracked cache) are the only ones who would be disadvantaged
+     -    by this change. It seems unlikely there are any such users.
+     +    Users who have the "status.showuntrackedfiles" config set to "all"
+     +    and yet frequently explicitly call
+     +    'git status --untracked-files=normal' (and use the untracked cache)
+     +    are the only ones who will be disadvantaged by this change. Their
+     +    "--untracked-files=normal" calls will, after this change, no longer
+     +    use the untracked cache.
+      
+          Signed-off-by: Tao Klerks <tao@klerks.biz>
+      
 
->
-> > -static void new_untracked_cache(struct index_state *istate)
-> > +static void new_untracked_cache(struct index_state *istate, unsigned flags)
-> >  {
-> >       struct untracked_cache *uc = xcalloc(1, sizeof(*uc));
-> >       strbuf_init(&uc->ident, 100);
-> >       uc->exclude_per_dir = ".gitignore";
-> > -     /* should be the same flags used by git-status */
-> > -     uc->dir_flags = DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
-> > +     uc->dir_flags = flags;
->
-> So we used to hardcode these two flags to match what is done in
-> wt-status.c when show_untracked_files != SHOW_ALL_UNTRACKEDFILES;
-> we allow a different set of flags to be given by the caller.
->
-> > @@ -2761,11 +2781,13 @@ static void new_untracked_cache(struct index_state *istate)
-> >  void add_untracked_cache(struct index_state *istate)
-> >  {
-> >       if (!istate->untracked) {
-> > -             new_untracked_cache(istate);
-> > +             new_untracked_cache(istate,
-> > +                             configured_default_dir_flags(istate));
-> >       } else {
-> >               if (!ident_in_untracked(istate->untracked)) {
-> >                       free_untracked_cache(istate->untracked);
-> > -                     new_untracked_cache(istate);
-> > +                     new_untracked_cache(istate,
-> > +                                     configured_default_dir_flags(istate));
-> >               }
-> >       }
-> >  }
->
-> OK.  That's quite straight-forward to see how the tweak is made.
->
-> > @@ -2781,10 +2803,12 @@ void remove_untracked_cache(struct index_state *istate)
-> >
-> >  static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
-> >                                                     int base_len,
-> > -                                                   const struct pathspec *pathspec)
-> > +                                                   const struct pathspec *pathspec,
-> > +                                                       struct index_state *istate)
-> >  {
-> >       struct untracked_cache_dir *root;
-> >       static int untracked_cache_disabled = -1;
-> > +     unsigned configured_dir_flags;
-> >
-> >       if (!dir->untracked)
-> >               return NULL;
-> > @@ -2812,17 +2836,9 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
-> >       if (base_len || (pathspec && pathspec->nr))
-> >               return NULL;
-> >
-> > -     /* Different set of flags may produce different results */
-> > -     if (dir->flags != dir->untracked->dir_flags ||
->
-> This is removed because we are making sure that dir->flags and
-> dir->untracked->dir_flags match?
->
-> > -         /*
-> > -          * See treat_directory(), case index_nonexistent. Without
-> > -          * this flag, we may need to also cache .git file content
-> > -          * for the resolve_gitlink_ref() call, which we don't.
-> > -          */
-> > -         !(dir->flags & DIR_SHOW_OTHER_DIRECTORIES) ||
->
-> This is removed because...?
 
-Because we *do* now support using untracked cache with -uall...
-As long as the config matches the runtime flags (new check later).
+ dir.c | 86 ++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 68 insertions(+), 18 deletions(-)
 
->
-> > -         /* We don't support collecting ignore files */
-> > -         (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
-> > -                        DIR_COLLECT_IGNORED)))
->
-> > +     /* We don't support collecting ignore files */
-> > +     if (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
-> > +                     DIR_COLLECT_IGNORED))
-> >               return NULL;
-> >
-> >       /*
-> > @@ -2845,6 +2861,40 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
-> >               return NULL;
-> >       }
-> >
-> > +     /* We don't support using or preparing the untracked cache if
-> > +      * the current effective flags don't match the configured
-> > +      * flags.
-> > +      */
->
-> Style (another one in large comment below).
->
+diff --git a/dir.c b/dir.c
+index d91295f2bcd..e35331d3f71 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2746,13 +2746,33 @@ static void set_untracked_ident(struct untracked_cache *uc)
+ 	strbuf_addch(&uc->ident, 0);
+ }
+ 
+-static void new_untracked_cache(struct index_state *istate)
++static unsigned configured_default_dir_flags(struct index_state *istate)
++{
++	/* This logic is coordinated with the setting of these flags in
++	 * wt-status.c#wt_status_collect_untracked(), and the evaluation
++	 * of the config setting in commit.c#git_status_config()
++	 */
++	char *status_untracked_files_config_value;
++	int config_outcome = repo_config_get_string(istate->repo,
++								"status.showuntrackedfiles",
++								&status_untracked_files_config_value);
++	if (!config_outcome && !strcmp(status_untracked_files_config_value, "all")) {
++		return 0;
++	} else {
++		/*
++		 * The default, if "all" is not set, is "normal" - leading us here.
++		 * If the value is "none" then it really doesn't matter.
++		 */
++		return DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
++	}
++}
++
++static void new_untracked_cache(struct index_state *istate, unsigned flags)
+ {
+ 	struct untracked_cache *uc = xcalloc(1, sizeof(*uc));
+ 	strbuf_init(&uc->ident, 100);
+ 	uc->exclude_per_dir = ".gitignore";
+-	/* should be the same flags used by git-status */
+-	uc->dir_flags = DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
++	uc->dir_flags = flags;
+ 	set_untracked_ident(uc);
+ 	istate->untracked = uc;
+ 	istate->cache_changed |= UNTRACKED_CHANGED;
+@@ -2761,11 +2781,13 @@ static void new_untracked_cache(struct index_state *istate)
+ void add_untracked_cache(struct index_state *istate)
+ {
+ 	if (!istate->untracked) {
+-		new_untracked_cache(istate);
++		new_untracked_cache(istate,
++				configured_default_dir_flags(istate));
+ 	} else {
+ 		if (!ident_in_untracked(istate->untracked)) {
+ 			free_untracked_cache(istate->untracked);
+-			new_untracked_cache(istate);
++			new_untracked_cache(istate,
++					configured_default_dir_flags(istate));
+ 		}
+ 	}
+ }
+@@ -2781,10 +2803,12 @@ void remove_untracked_cache(struct index_state *istate)
+ 
+ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
+ 						      int base_len,
+-						      const struct pathspec *pathspec)
++						      const struct pathspec *pathspec,
++							  struct index_state *istate)
+ {
+ 	struct untracked_cache_dir *root;
+ 	static int untracked_cache_disabled = -1;
++	unsigned configured_dir_flags;
+ 
+ 	if (!dir->untracked)
+ 		return NULL;
+@@ -2812,17 +2836,9 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+ 	if (base_len || (pathspec && pathspec->nr))
+ 		return NULL;
+ 
+-	/* Different set of flags may produce different results */
+-	if (dir->flags != dir->untracked->dir_flags ||
+-	    /*
+-	     * See treat_directory(), case index_nonexistent. Without
+-	     * this flag, we may need to also cache .git file content
+-	     * for the resolve_gitlink_ref() call, which we don't.
+-	     */
+-	    !(dir->flags & DIR_SHOW_OTHER_DIRECTORIES) ||
+-	    /* We don't support collecting ignore files */
+-	    (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
+-			   DIR_COLLECT_IGNORED)))
++	/* We don't support collecting ignore files */
++	if (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
++			DIR_COLLECT_IGNORED))
+ 		return NULL;
+ 
+ 	/*
+@@ -2845,6 +2861,40 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+ 		return NULL;
+ 	}
+ 
++	/* We don't support using or preparing the untracked cache if
++	 * the current effective flags don't match the configured
++	 * flags.
++	 */
++	configured_dir_flags = configured_default_dir_flags(istate);
++	if (dir->flags != configured_dir_flags)
++		return NULL;
++
++	/* If the untracked structure we received does not have the same flags
++	 * as configured, but the configured flags do match the effective flags,
++	 * then we need to reset / create a new "untracked" structure to match
++	 * the new config.
++	 * Keeping the saved and used untracked cache in-line with the
++	 * configuration provides an opportunity for frequent users of
++	 * "git status -uall" to leverage the untracked cache by aligning their
++	 * configuration (setting "status.showuntrackedfiles" to "all" or
++	 * "normal" as appropriate), where previously this option was
++	 * incompatible with untracked cache and *consistently* caused
++	 * surprisingly bad performance (with fscache and fsmonitor enabled) on
++	 * Windows.
++	 *
++	 * IMPROVEMENT OPPORTUNITY: If we reworked the untracked cache storage
++	 * to not be as bound up with the desired output in a given run,
++	 * and instead iterated through and stored enough information to
++	 * correctly serve both "modes", then users could get peak performance
++	 * with or without '-uall' regardless of their
++	 * "status.showuntrackedfiles" config.
++	 */
++	if (dir->flags != dir->untracked->dir_flags) {
++		free_untracked_cache(istate->untracked);
++		new_untracked_cache(istate, configured_dir_flags);
++		dir->untracked = istate->untracked;
++	}
++
+ 	if (!dir->untracked->root)
+ 		FLEX_ALLOC_STR(dir->untracked->root, name, "");
+ 
+@@ -2916,7 +2966,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+ 		return dir->nr;
+ 	}
+ 
+-	untracked = validate_untracked_cache(dir, len, pathspec);
++	untracked = validate_untracked_cache(dir, len, pathspec, istate);
+ 	if (!untracked)
+ 		/*
+ 		 * make sure untracked cache code path is disabled,
 
-Thx.
-
-> > +     configured_dir_flags = configured_default_dir_flags(istate);
-> > +     if (dir->flags != configured_dir_flags)
-> > +             return NULL;
->
-> Hmph.  If this weren't necessary, this function does not need to
-> call configured_default_dir_flags(), and it can lose the
-> configured_dir_flags variable, too.  Which means that
-> new_untracked_cache() function does not need to take the flags word
-> as a caller-supplied parameter.  Instead, it can make a call to
-> configured_dir_flags() and assign the result to uc->dir_flags
-> itself, which would have been much nicer.
-
-I've tightened this up a little with an inline call to
-configured_default_dir_flags(), getting rid of the variable, let's see
-if that makes more sense / is cleaner.
-
-Sending new version with these changes.
-
->
-> > +     /* If the untracked structure we received does not have the same flags
-> > +      * as configured, but the configured flags do match the effective flags,
-> > +      * then we need to reset / create a new "untracked" structure to match
-> > +      * the new config.
-> > +      * Keeping the saved and used untracked cache in-line with the
-> > +      * configuration provides an opportunity for frequent users of
-> > +      * "git status -uall" to leverage the untracked cache by aligning their
-> > +      * configuration (setting "status.showuntrackedfiles" to "all" or
-> > +      * "normal" as appropriate), where previously this option was
-> > +      * incompatible with untracked cache and *consistently* caused
-> > +      * surprisingly bad performance (with fscache and fsmonitor enabled) on
-> > +      * Windows.
-> > +      *
-> > +      * IMPROVEMENT OPPORTUNITY: If we reworked the untracked cache storage
-> > +      * to not be as bound up with the desired output in a given run,
-> > +      * and instead iterated through and stored enough information to
-> > +      * correctly serve both "modes", then users could get peak performance
-> > +      * with or without '-uall' regardless of their
-> > +      * "status.showuntrackedfiles" config.
-> > +      */
-> > +     if (dir->flags != dir->untracked->dir_flags) {
-> > +             free_untracked_cache(istate->untracked);
-> > +             new_untracked_cache(istate, configured_dir_flags);
-> > +             dir->untracked = istate->untracked;
-> > +     }
->
->
-> This compensates what we lost in the validate_untracked_cache()
-> above by making them match.  Looking reasonable.
->
-> >       if (!dir->untracked->root)
-> >               FLEX_ALLOC_STR(dir->untracked->root, name, "");
-> >
-> > @@ -2916,7 +2966,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
-> >               return dir->nr;
-> >       }
-> >
-> > -     untracked = validate_untracked_cache(dir, len, pathspec);
-> > +     untracked = validate_untracked_cache(dir, len, pathspec, istate);
-> >       if (!untracked)
-> >               /*
-> >                * make sure untracked cache code path is disabled,
-> >
-> > base-commit: dab1b7905d0b295f1acef9785bb2b9cbb0fdec84
+base-commit: dab1b7905d0b295f1acef9785bb2b9cbb0fdec84
+-- 
+gitgitgadget
