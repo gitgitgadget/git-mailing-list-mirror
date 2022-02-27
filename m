@@ -2,396 +2,247 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E90CC433EF
-	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 15:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ABF9FC433EF
+	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 17:35:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231196AbiB0PNp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Feb 2022 10:13:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48414 "EHLO
+        id S229776AbiB0RgB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Feb 2022 12:36:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229569AbiB0PNn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Feb 2022 10:13:43 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADB7913EAE
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 07:13:05 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id v2-20020a7bcb42000000b0037b9d960079so4448794wmj.0
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 07:13:05 -0800 (PST)
+        with ESMTP id S229697AbiB0RgA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Feb 2022 12:36:00 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7077928E39
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 09:35:23 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id r13so20509721ejd.5
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 09:35:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=dA4t+a9iWDJM3S9aKv6y70iw9RChI45dO8CoJSkMnWs=;
-        b=McX1AMpHK4l6rht3st0EbMsHJEYOWsXKHdEhBR0oIjZ0QBR+ueDI/ZMgEtR/GQyJyT
-         +MSMsVH644o+JILugWRa7gBaONZxbr5m2lub0m3gCA3pHibDufMIbNrsSvG3tIcItZrU
-         Ww1I0tNcwM0ISVQap5m0s6lBQoqxA+e2DjoPEhW1K/dr1wG7hqHsrEnfJD4J6iYxE2Wu
-         K85+4n5ppYUKkKAyXmDclJqkJaGMaiANWnJoEg9rCkvufnCyxsO/zMB5uNs/k7s6C1Qp
-         VfhTPbtDMceVgWQ3Avx9AgzjU+7hDY1p5z7T+55Ohy4gxFikkM/pPBZGPxmo/hbMJKEO
-         kg1g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=WoGHzs4myQC+efgHe7l96DXZC+oGv/KUvb6VCZ5fxYg=;
+        b=kTx02VzTUvzg7A5jVJHoopiogBQJw1Hpr0lNwN02frsPxjOxOY9h8XeBsRecOparXp
+         SgrMxalTv3efzeySgCuBHo7gYRL///QYnSVQ1HKmuwsl1E7JS38LE+4o3kuyPeC+2Blf
+         H6B0NceFp6DI0Tpx4wmxnTscBz+NTPgRtCk3KwcIeEOvlnLYekZJSQHaSlnIcvZEAhwF
+         BRhyuh/cVCMTpuMNRKwq1w7XEEKv8+/B0V3EuCaiAuZPqVsPxO3XXs+jLVzZsa71yJSG
+         G5F/nWCbXgy94wM8V5VK2AylNJTRSDr9KNMh+k57Zcp1rL4nWGX+DHRlwCVsMOl+3wIJ
+         dbQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=dA4t+a9iWDJM3S9aKv6y70iw9RChI45dO8CoJSkMnWs=;
-        b=IHC/j/ni/pC0zNueBm7Ex8Z2Dl67pgFR9zjLMjjE25TfpsFIYGeUaEd6dOAcAfcb9b
-         DG3YNQPqLTi1qspHiTWePQj7/xkFsWHU9pey700D8pE5Ho/eZEBleeJr8gz2x11vetyd
-         DK6KqoxyBSaQk2dQJe+jpQ6tzDvr88NDDVfUZm3bbQXOng7Fg+Klkz/f7xIqCBu5aCJy
-         rCzm/dg21RhAGy0Bfu4bnnjXTHcDE7QnEFDyaLmHkCvZgEdIVwsltA9WZXJVaq6FpkgI
-         W2iDdMfVqM6xYIfIZo0dnIdC40WEiwNIwgwfBZFzPDDDQe1yv9h9BCTAA3Yh9Jkb9LXK
-         eSow==
-X-Gm-Message-State: AOAM530oZeNl5ADFwEafpTatoQwpQYV24UGemv2ZvvEq/hFpUuSsPu31
-        BFeJiFhwxPvk6cqkjX0j6tM69gEB4OA=
-X-Google-Smtp-Source: ABdhPJyezdxv+0b0QWUvvj2NwBArEOWQCrnFHVyYEsOOpdE/5KAQ/wOp0BHaALZQ6bXXfbEpaUFEvw==
-X-Received: by 2002:a05:600c:384b:b0:381:10bc:9e43 with SMTP id s11-20020a05600c384b00b0038110bc9e43mr5343865wmr.181.1645974783777;
-        Sun, 27 Feb 2022 07:13:03 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z16-20020a7bc7d0000000b00381004c643asm11628183wmk.30.2022.02.27.07.13.02
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=WoGHzs4myQC+efgHe7l96DXZC+oGv/KUvb6VCZ5fxYg=;
+        b=8OoC3+C2HtHjiLc07hh7zxIqpsgDlFPeFi9UIy2Rud2TwsJP4INrpIB8NCal2Fg4ih
+         fb78Pg6jqnnsJFtNTxOwB7r3lBNqA+jbgG4X2i1ZlphhrdRaYWBzIruq5Qe7W01yyu+h
+         BgjUkrklW/ijFVTL3OnyZ3w4hgCCEaJyDczwUOMq0kDxKN6s717kw0ur6d1H7VpfgRVC
+         rNAFJ7lHKhQzEh6hKCImnqYNyrpph3vblTgxDZjaBe6NWnotkHP+19uwiNu6uUGmoVHD
+         8EoMBljykgmBOVNY3x55XL7QkjiN01X9mU5MiBvs9nz9P/X+k46LusKHtxwnR9kleTWV
+         XJgw==
+X-Gm-Message-State: AOAM533tRdKOE2Qp7s3KukQ5Gkke9YD1ojG2BKWoS1ueBBRFRYRi3Hlr
+        ju6I+wgB1lMvIa8RJF/cWNY=
+X-Google-Smtp-Source: ABdhPJzEBUHEtXhk3KUUm5ps0k0xuE2HB3jymJer3aCTSWBdFkbD6CNdNhSxBBMLw5sbczpSnYunAw==
+X-Received: by 2002:a17:906:2daa:b0:6cf:3c6:dbb7 with SMTP id g10-20020a1709062daa00b006cf03c6dbb7mr12563442eji.688.1645983321766;
+        Sun, 27 Feb 2022 09:35:21 -0800 (PST)
+Received: from gmail.com (91.141.32.73.wireless.dyn.drei.com. [91.141.32.73])
+        by smtp.gmail.com with ESMTPSA id s2-20020a056402014200b0041285556b7csm5006523edu.72.2022.02.27.09.35.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Feb 2022 07:13:03 -0800 (PST)
-Message-Id: <pull.985.v4.git.1645974782256.gitgitgadget@gmail.com>
-In-Reply-To: <pull.985.v3.git.1645960973798.gitgitgadget@gmail.com>
-References: <pull.985.v3.git.1645960973798.gitgitgadget@gmail.com>
-From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 27 Feb 2022 15:13:02 +0000
-Subject: [PATCH v4] untracked-cache: support '--untracked-files=all' if
- configured
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sun, 27 Feb 2022 09:35:21 -0800 (PST)
+Date:   Sun, 27 Feb 2022 18:35:17 +0100
+From:   Johannes Altmanninger <aclopte@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 04/15] merge-tree: implement real merges
+Message-ID: <20220227173517.qrosjw75y3bcbglt@gmail.com>
+References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
+ <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
+ <02c29f920d0d5fde6d85f7b86a69be92e3f0f34d.1643787281.git.gitgitgadget@gmail.com>
+ <xmqqy22tx8t1.fsf@gitster.g>
+ <CABPp-BGpD6g5QH3=4X_dCuSX0Bs0utHn5hyuU4_UiwNhU0h8sg@mail.gmail.com>
+ <xmqqh79hvsgn.fsf@gitster.g>
+ <CABPp-BEaemkGGm0cSofP0gau7YN-y6HFoi0yJbHA8+iGjxsYSA@mail.gmail.com>
+ <xmqqee3wt5g3.fsf@gitster.g>
+ <CABPp-BE+DaBkis0r7pqs-kaChCvFhCEsyDg=gs3=QjWOPERaXQ@mail.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>,
-        Tao Klerks <tao@klerks.biz>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABPp-BE+DaBkis0r7pqs-kaChCvFhCEsyDg=gs3=QjWOPERaXQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tao Klerks <tao@klerks.biz>
+On Tue, Feb 22, 2022 at 08:26:41AM -0800, Elijah Newren wrote:
+> On Mon, Feb 21, 2022 at 10:55 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Elijah Newren <newren@gmail.com> writes:
+> >
+> > > Adding such an ability to merge-tree would be trivial -- it basically
+> > > involves just two things: (1) accepting one extra argument, and (2)
+> > > calling merge_incore_nonrecursive() instead of
+> > > merge_incore_recursive().
+> > >
+> > > However, I think forking a subprocess for every merge of a series of
+> > > commits is a completely unreasonable overhead, so even if we provide
+> > > such an option to merge-tree, I still want a separate plumbing-ish
+> > > tool that does non-worktree/non-index replaying of commits which is
+> > > not written as a driver of merge-tree.  That other tool should just
+> > > call merge_incore_nonrecursive() directly.  And such a tool, since it
+> > > should handle an arbitrary number of commits, should certainly be able
+> > > to handle just one commit.  From that angle, it feels like adding
+> > > another mode to merge-tree would just be a partial duplication of the
+> > > other tool.
 
-Untracked cache was originally designed to only work with
-'-untracked-files=normal', but this causes performance issues for UI
-tooling that wants to see "all" on a frequent basis. On the other hand,
-the conditions that prevented applicability to the "all" mode no
-longer seem to apply.
+I don't think "to avoid duplication" is a good argument for making this
+plumbing command less flexible, because that's just chasing a local minimum
+w.r.t. redundancy. More general APIs will lead to a global minimum.
 
-The disqualification of untracked cache has a particularly significant
-impact on Windows with the defaulted fscache, where the introduction
-of fsmonitor can make the first and costly directory-iteration happen
-in untracked file detection, single-threaded, rather than in
-preload-index on multiple threads. Improving the performance of a
-"normal" 'git status' run with fsmonitor can make
-'git status --untracked-files=all' perform much worse.
+> >
+> > The above does not make much sense to me.
+> >
+> > I am hearing that "multi-step cherry-picks and reverts need to be
+> > fast and we need something like sequencer that is all written in C,
+> 
+> Yes, I agree with that part so far.  jj is kicking our butt on rebase
+> speed; I'm not sure if we can catch it, but it'd be nice to see us not
+> be more than a hundred times slower.
+> 
+> > and single-step cherry-pick is merely a special case that does not
+> > deserve a plumbing".
+> 
+> Well, apparently I failed at communication if that's what you heard.
+> Perhaps I can step back and provide my high-level goals, and then
+> mention how this series fits in.  My high-level goals:
+> 
+>   * new sequencer-like replay tool, including multiple abilities
+> today's rebase/cherry-pick tools don't have
+>   * enable folks to use merging machinery for server side operations
+> (merge, rebase, cherry-pick, revert)
+>   * do not repeat or encourage the rebase-as-shell-script mistakes of yesteryear
+>   * somehow split this up into reviewable chunks
+> 
+> Now, in particular, the "merge divergent branches" piece seemed like a
+> really simple portion of the problem space for which I could get some
+> early feedback without having to address the whole problem space all
+> at once, and which doesn't seem to have any downside risk.
+> 
+> And even with my attempt to narrow it in scope, and even despite lots
+> of early feedback from the Git Virtual Contributor Summit six months
+> ago, it's been nearly two months of active discussions including all
+> kinds of intrinsic and tangential points about the UI and design.  Why
+> try to prematurely widen the scope?  Can we just focus on merging
+> divergent branches for now, and cover the rest later?
+> 
+> > But that argument leads to "and the same something-like-sequencer
+> > that is all written in C would need '--rebase-merges' that can pick
+> > multi-step merge sequences, and single-step merge does not deserve a
+> > plumbing", which is an argument against this topic that is utterly
+> > absurd.
+> >
+> > So why isn't your objection not equally absurd against having a
+> > single step cherry-pick or revert primitive as a plumbing?
+> 
+> The objection you are arguing against is not my position.  In fact,
+> I'm not even objecting to having a single-step cherry-pick, I'm
+> objecting to providing it _now_, which I thought would have been clear
+> from the portion of my email you snipped ("...I'm happy to add [a
+> single step cherry-pick primitive] along with the tool I submit
+> later...").  Since that wasn't clear, and since that wasn't my only
+> communication failure here, let me attempt to be clearer about my
+> objection(s):
+> 
+> 1. I'm really trying to pick off a small piece of the problem space
+> and get feedback on it without unnecessarily complicating things with
+> unrelated issues.  Thus, this series is _only_ about merging branches
+> that have diverged, and leaves commit replaying for later.
+> 
+> 2. Two folks have chimed in about the single step cherry-pick, and the
+> ONLY reason given for wanting such a thing was to create a
+> rebasing/cherry-picking script which was driven by repeatedly invoking
+> this low-level primitive command.  That's also the only usecase I can
+> currently think of for such a primitive.  To me, that means providing
+> such a low-level command now would be likely to result in the
+> rebase-as-a-script mistake of yesteryear.  I think we can avoid that
+> pitfall by first providing a tool that avoids the
+> repeatedly-fork-git-subprocesses model.  (Also, providing a low-level
+> single-step cherry-pick command also has the added negative of further
+> distracting from the focus on merging divergent branches.)
 
-To partially address this, align the supported directory flags for the
-stored untracked cache data with the git config. If a user specifies
-an '--untracked-files=' commandline parameter that does not align with
-their 'status.showuntrackedfiles' config value, then the untracked
-cache will be ignored - as it is for other unsupported situations like
-when a pathspec is specified.
+I agree that it's not a good idea to call merge-tree in a loop for
+cherry-picking commit sequences.
 
-If the previously stored flags no longer match the current
-configuration, but the currently-applicable flags do match the current
-configuration, then discard the previously stored untracked cache
-data.
+At the same time, it is weird for such a low-level tool to not allow
+specifying merge bases.
+Accepting merge bases is the more logical API, that might allow curious
+users to figure out how revert/cherry-pick are implemented.
 
-For most users there will be no change in behavior. Users who need
-'--untracked-files=all' to perform well will now have the option of
-setting "status.showuntrackedfiles" to "all" for better / more
-consistent performance.
+I intuitively prefer the version that accepts merge bases but I don't have
+a good use case, so I think it's okay to add that later if we ever find use
+for it.
 
-Users who need '--untracked-files=all' to perform well for their
-tooling AND prefer to avoid the verbosity of "all" when running
-git status explicitly without options... are out of luck for now (no
-change).
+> 
+> 3. The merge primitive in this series is useful completely independent
+> of any rebasing script (it would not be used solely for rebasing
+> merges, if it's used for that purpose at all, as evidenced by the fact
+> that dscho is already trying to use it for doing new real merges).
+> 
+> 4. Once we have a git-replay tool that can replay a sequence of
+> commits, there _might_ not be a need for a single commit replaying
+> primitive.  If we provided one as you and Johannes Altimanninger were
+> asking for, and it turned out to be deemed useless because the later
+> tool I provide can do everything it can and more, haven't we just
+> wasted time in providing it?  And perhaps also wasted future time as
+> we then have work to do to deprecate and remove the new command or
+> mode? (NOTE: I did *not* say there was "no need" for a single-commit
+> replaying primitive -- I said there "might not" be a need.)
 
-Users who have the "status.showuntrackedfiles" config set to "all"
-and yet frequently explicitly call
-'git status --untracked-files=normal' (and use the untracked cache)
-are the only ones who will be disadvantaged by this change. Their
-"--untracked-files=normal" calls will, after this change, no longer
-use the untracked cache.
+If we get a tool that can do multiple cherry-picks, I think there is no
+technical reason against having an equivalent tool that can do multiple merges.
+In that future, merge-tree might be mostly obsolete.
 
-Signed-off-by: Tao Klerks <tao@klerks.biz>
----
-    Support untracked cache with '--untracked-files=all' if configured
-    
-    Resending this patch from a few months ago (with better standards
-    compliance) - it hasn't seen any comments yet, I would dearly love some
-    eyes on this as the change can make a big difference to hundreds of
-    windows users in my environment (and I'd really rather not start
-    distributing customized git builds!)
-    
-    This patch aims to make it possible for users of the -uall flag to git
-    status, either by preference or by need (eg UI tooling), to benefit from
-    the untracked cache when they set their 'status.showuntrackedfiles'
-    config setting to 'all'. This is very important for large repos in
-    Windows.
-    
-    More detail on the change and context in the commit message, I assume
-    repeating a verbose message here is discouraged.
-    
-    These changes result from a couple of conversations,
-    81153d02-8e7a-be59-e709-e90cd5906f3a@jeffhostetler.com and
-    CABPp-BFiwzzUgiTj_zu+vF5x20L0=1cf25cHwk7KZQj2YkVzXw@mail.gmail.com>.
-    
-    The test suite passes, but as a n00b I do have questions:
-    
-     * Is there any additional validation that could/should be done to
-       confirm that "-uall" untracked data can be cached safely?
-       * It looks safe from following the code
-       * It seems from discussing briefly with Elijah Newren in the thread
-         above that thare are no obvious red flags
-       * Manual testing, explicitly and implicitly through months of use,
-         yields no issues
-     * Is it OK to check the repo configuration in the body of processing?
-       It seems to be a rare pattern
-     * Can anyone think of a way to test this change?
+In general, this is a difficult discussion.  It's really hard to judge
+this series without a bigger picture of how our future UI will look like.
+(Thanks for sharing the replay code BTW, there are some nice features in
+there.)  Though I agree that integrating this (minimal) series first makes
+a ton of sense, because it already supports a valid use case.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-985%2FTaoK%2Ftaok-untracked-cache-with-uall-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-985/TaoK/taok-untracked-cache-with-uall-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/985
+I feel like the output format is a bit experimental because it doesn't give
+much of the conflict information in a machine-parseable format.  Of course
+it's good enough for many uses (so I don't think this should block this
+topic) but I think we should have a plan on how to change the output format
+in future without adding ugly compatibility hacks. Marking merge-tree as
+"experimental" (like git-switch/git-restore) comes to mind.  That would work
+although it's not the most user-friendly way.
 
-Range-diff vs v3:
+(OK I just saw that you are still looking into the output format in
+CABPp-BG++YqesTxp+JL3XzwrogfMag1NscoMpCOExmV9z6Py9A@mail.gmail.com )
 
- 1:  49cf90bfab5 ! 1:  5da418e5c60 untracked-cache: support '--untracked-files=all' if configured
-     @@ dir.c: static void set_untracked_ident(struct untracked_cache *uc)
-       }
-       
-      -static void new_untracked_cache(struct index_state *istate)
-     -+static unsigned configured_default_dir_flags(struct index_state *istate)
-     ++static unsigned configured_default_dir_flags(struct repository *repo)
-      +{
-     -+	/* This logic is coordinated with the setting of these flags in
-     ++	/*
-     ++	 * This logic is coordinated with the setting of these flags in
-      +	 * wt-status.c#wt_status_collect_untracked(), and the evaluation
-      +	 * of the config setting in commit.c#git_status_config()
-      +	 */
-      +	char *status_untracked_files_config_value;
-     -+	int config_outcome = repo_config_get_string(istate->repo,
-     -+								"status.showuntrackedfiles",
-     -+								&status_untracked_files_config_value);
-     ++	int config_outcome = repo_config_get_string(repo,
-     ++						    "status.showuntrackedfiles",
-     ++						    &status_untracked_files_config_value);
-      +	if (!config_outcome && !strcmp(status_untracked_files_config_value, "all")) {
-      +		return 0;
-      +	} else {
-     @@ dir.c: static void new_untracked_cache(struct index_state *istate)
-       	if (!istate->untracked) {
-      -		new_untracked_cache(istate);
-      +		new_untracked_cache(istate,
-     -+				configured_default_dir_flags(istate));
-     ++				    configured_default_dir_flags(istate->repo));
-       	} else {
-       		if (!ident_in_untracked(istate->untracked)) {
-       			free_untracked_cache(istate->untracked);
-      -			new_untracked_cache(istate);
-      +			new_untracked_cache(istate,
-     -+					configured_default_dir_flags(istate));
-     ++					    configured_default_dir_flags(istate->repo));
-       		}
-       	}
-       }
-      @@ dir.c: void remove_untracked_cache(struct index_state *istate)
-     + }
-       
-       static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
-     - 						      int base_len,
-     +-						      int base_len,
-      -						      const struct pathspec *pathspec)
-     -+						      const struct pathspec *pathspec,
-     -+							  struct index_state *istate)
-     ++							    int base_len,
-     ++							    const struct pathspec *pathspec,
-     ++							    struct index_state *istate)
-       {
-       	struct untracked_cache_dir *root;
-       	static int untracked_cache_disabled = -1;
-     -+	unsigned configured_dir_flags;
-     - 
-     - 	if (!dir->untracked)
-     - 		return NULL;
-      @@ dir.c: static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
-       	if (base_len || (pathspec && pathspec->nr))
-       		return NULL;
-     @@ dir.c: static struct untracked_cache_dir *validate_untracked_cache(struct dir_st
-       		return NULL;
-       	}
-       
-     -+	/* We don't support using or preparing the untracked cache if
-     ++	/*
-     ++	 * We don't support using or preparing the untracked cache if
-      +	 * the current effective flags don't match the configured
-      +	 * flags.
-      +	 */
-     -+	configured_dir_flags = configured_default_dir_flags(istate);
-     -+	if (dir->flags != configured_dir_flags)
-     ++	if (dir->flags != configured_default_dir_flags(istate->repo))
-      +		return NULL;
-      +
-     -+	/* If the untracked structure we received does not have the same flags
-     ++	/*
-     ++	 * If the untracked structure we received does not have the same flags
-      +	 * as configured, but the configured flags do match the effective flags,
-      +	 * then we need to reset / create a new "untracked" structure to match
-      +	 * the new config.
-     @@ dir.c: static struct untracked_cache_dir *validate_untracked_cache(struct dir_st
-      +	 */
-      +	if (dir->flags != dir->untracked->dir_flags) {
-      +		free_untracked_cache(istate->untracked);
-     -+		new_untracked_cache(istate, configured_dir_flags);
-     ++		new_untracked_cache(istate, dir->flags);
-      +		dir->untracked = istate->untracked;
-      +	}
-      +
+I wanted to implement some (cherry-picking) scripts using merge-tree but I
+don't have enough time or need, so I don't have much feedback on the output
+format today. I can imagine that it would be nice to have a clear distinction
+between content conflicts and non-content conflicts, but let's worry about
+that later..
 
-
- dir.c | 89 ++++++++++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 70 insertions(+), 19 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index d91295f2bcd..57a7d42482f 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2746,13 +2746,34 @@ static void set_untracked_ident(struct untracked_cache *uc)
- 	strbuf_addch(&uc->ident, 0);
- }
- 
--static void new_untracked_cache(struct index_state *istate)
-+static unsigned configured_default_dir_flags(struct repository *repo)
-+{
-+	/*
-+	 * This logic is coordinated with the setting of these flags in
-+	 * wt-status.c#wt_status_collect_untracked(), and the evaluation
-+	 * of the config setting in commit.c#git_status_config()
-+	 */
-+	char *status_untracked_files_config_value;
-+	int config_outcome = repo_config_get_string(repo,
-+						    "status.showuntrackedfiles",
-+						    &status_untracked_files_config_value);
-+	if (!config_outcome && !strcmp(status_untracked_files_config_value, "all")) {
-+		return 0;
-+	} else {
-+		/*
-+		 * The default, if "all" is not set, is "normal" - leading us here.
-+		 * If the value is "none" then it really doesn't matter.
-+		 */
-+		return DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
-+	}
-+}
-+
-+static void new_untracked_cache(struct index_state *istate, unsigned flags)
- {
- 	struct untracked_cache *uc = xcalloc(1, sizeof(*uc));
- 	strbuf_init(&uc->ident, 100);
- 	uc->exclude_per_dir = ".gitignore";
--	/* should be the same flags used by git-status */
--	uc->dir_flags = DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
-+	uc->dir_flags = flags;
- 	set_untracked_ident(uc);
- 	istate->untracked = uc;
- 	istate->cache_changed |= UNTRACKED_CHANGED;
-@@ -2761,11 +2782,13 @@ static void new_untracked_cache(struct index_state *istate)
- void add_untracked_cache(struct index_state *istate)
- {
- 	if (!istate->untracked) {
--		new_untracked_cache(istate);
-+		new_untracked_cache(istate,
-+				    configured_default_dir_flags(istate->repo));
- 	} else {
- 		if (!ident_in_untracked(istate->untracked)) {
- 			free_untracked_cache(istate->untracked);
--			new_untracked_cache(istate);
-+			new_untracked_cache(istate,
-+					    configured_default_dir_flags(istate->repo));
- 		}
- 	}
- }
-@@ -2780,8 +2803,9 @@ void remove_untracked_cache(struct index_state *istate)
- }
- 
- static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
--						      int base_len,
--						      const struct pathspec *pathspec)
-+							    int base_len,
-+							    const struct pathspec *pathspec,
-+							    struct index_state *istate)
- {
- 	struct untracked_cache_dir *root;
- 	static int untracked_cache_disabled = -1;
-@@ -2812,17 +2836,9 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
- 	if (base_len || (pathspec && pathspec->nr))
- 		return NULL;
- 
--	/* Different set of flags may produce different results */
--	if (dir->flags != dir->untracked->dir_flags ||
--	    /*
--	     * See treat_directory(), case index_nonexistent. Without
--	     * this flag, we may need to also cache .git file content
--	     * for the resolve_gitlink_ref() call, which we don't.
--	     */
--	    !(dir->flags & DIR_SHOW_OTHER_DIRECTORIES) ||
--	    /* We don't support collecting ignore files */
--	    (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
--			   DIR_COLLECT_IGNORED)))
-+	/* We don't support collecting ignore files */
-+	if (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
-+			DIR_COLLECT_IGNORED))
- 		return NULL;
- 
- 	/*
-@@ -2845,6 +2861,41 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
- 		return NULL;
- 	}
- 
-+	/*
-+	 * We don't support using or preparing the untracked cache if
-+	 * the current effective flags don't match the configured
-+	 * flags.
-+	 */
-+	if (dir->flags != configured_default_dir_flags(istate->repo))
-+		return NULL;
-+
-+	/*
-+	 * If the untracked structure we received does not have the same flags
-+	 * as configured, but the configured flags do match the effective flags,
-+	 * then we need to reset / create a new "untracked" structure to match
-+	 * the new config.
-+	 * Keeping the saved and used untracked cache in-line with the
-+	 * configuration provides an opportunity for frequent users of
-+	 * "git status -uall" to leverage the untracked cache by aligning their
-+	 * configuration (setting "status.showuntrackedfiles" to "all" or
-+	 * "normal" as appropriate), where previously this option was
-+	 * incompatible with untracked cache and *consistently* caused
-+	 * surprisingly bad performance (with fscache and fsmonitor enabled) on
-+	 * Windows.
-+	 *
-+	 * IMPROVEMENT OPPORTUNITY: If we reworked the untracked cache storage
-+	 * to not be as bound up with the desired output in a given run,
-+	 * and instead iterated through and stored enough information to
-+	 * correctly serve both "modes", then users could get peak performance
-+	 * with or without '-uall' regardless of their
-+	 * "status.showuntrackedfiles" config.
-+	 */
-+	if (dir->flags != dir->untracked->dir_flags) {
-+		free_untracked_cache(istate->untracked);
-+		new_untracked_cache(istate, dir->flags);
-+		dir->untracked = istate->untracked;
-+	}
-+
- 	if (!dir->untracked->root)
- 		FLEX_ALLOC_STR(dir->untracked->root, name, "");
- 
-@@ -2916,7 +2967,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
- 		return dir->nr;
- 	}
- 
--	untracked = validate_untracked_cache(dir, len, pathspec);
-+	untracked = validate_untracked_cache(dir, len, pathspec, istate);
- 	if (!untracked)
- 		/*
- 		 * make sure untracked cache code path is disabled,
-
-base-commit: dab1b7905d0b295f1acef9785bb2b9cbb0fdec84
--- 
-gitgitgadget
+> 
+> Also, since you bring up --rebase-merges, there's an additional point
+> about it that might be relevant:
+> 
+> 5. While you could implement a naive --rebase-merges in terms of a
+> primitive for merging divergent branches (or vice-versa, i.e.
+> implement merging divergent branches from a naive --rebase-merges
+> implementation), I think replaying merges more intelligently[*] is
+> actually a distinct operation from doing a new merge of divergent
+> branches and that you probably can't implement one in terms of the
+> other.  (I'm not certain on this, and definitely don't want to argue
+> the finer points on it while my implementation is still half-baked,
+> but I really do think they are different things right now.)
+> 
+> [*] https://lore.kernel.org/git/CABPp-BHp+d62dCyAaJfh1cZ8xVpGyb97mZryd02aCOX=Qn=Ltw@mail.gmail.com/
