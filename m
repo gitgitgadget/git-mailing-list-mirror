@@ -2,128 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39894C433EF
-	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 18:02:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0209C433EF
+	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 19:08:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230013AbiB0SC5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Feb 2022 13:02:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50682 "EHLO
+        id S231265AbiB0TIj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Feb 2022 14:08:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiB0SC4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Feb 2022 13:02:56 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D676B0A1
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 10:02:19 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id cm8so14504112edb.3
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 10:02:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=F1IHHKwhvA+g7o9SINMIEXXBkpu4XCYeNs6D5U9jr1I=;
-        b=qbfMSJf+fmtFhovyx51WPdoLKeIYCaTlj0fXHbism+qxXJJCtYz7tcStxe4HwXq+N2
-         rdblJEuOH/okDR0f4jjYa6pfWZYldBWhYDqEl28TVImRljvTkDEB5yT/Eh0SlhcSWzLK
-         +s6yYtFwtIaAdDRfPFGs3a8MTcnSDyCaUK04QsXepo9o+EIr6QZdRJFFTyeXV3X3MAbA
-         oRA2jhLTNpYwEpvUdgCMQ42EQn5NH09+8ioPNP5GL6DgCjcGprCxR0n5b4xbHFX8zFW4
-         4ueaHtJWxnEmifBE6ZnAvTrxGnZIxBYJ2sqTM6Q/Gq4NuF8L72ZJsp5MEDjfiqDcNgEy
-         V+tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=F1IHHKwhvA+g7o9SINMIEXXBkpu4XCYeNs6D5U9jr1I=;
-        b=nbbsHZIyKFlFdr01d2iKc2xp3I+iaoo7D1xxrn07ddW0NaYNuF/yYAe04CHQBPjayd
-         lPcueizMRQ8HHimBa//7xFp1jSJUIjjp2mYc7IszT3hjGxGmPs51afgP+TzoM5ppzWtC
-         Qgcr8E4htE6Tfpe2qeC9CYvv+fV3EkY+EPRg+b2IKV3JaIWafsjf/pJiButFIVmPkx8c
-         YTVs6IItWcq9NQaoy4GPhILkpkSgjx7lQKwaVdbYTm5GmswPrkAJ20cExXKndaPID2+w
-         KZYhsHzy4b0WXWx4OAbLriN+B1O0TouzizJ3F3EeLgnxkGCF2jyyPfEwkfy0KrXxzu1Y
-         OBPA==
-X-Gm-Message-State: AOAM5333DW9ARSWijefaJR7WOkbL2A9MherX8kuVgQlSqIx6tFGHuLV5
-        BcQv1CXilQRepD3strlhZ4gZOsKgIgEcSvJ3
-X-Google-Smtp-Source: ABdhPJwZCuUheo05Bg5Y3xlg8njXGYq9dAy+6UPjuV9I5iF0GhvS4T+NQR261cHNoilA8i7Okj/p+g==
-X-Received: by 2002:aa7:d4ca:0:b0:410:d232:6b76 with SMTP id t10-20020aa7d4ca000000b00410d2326b76mr16200506edr.370.1645984938337;
-        Sun, 27 Feb 2022 10:02:18 -0800 (PST)
-Received: from gmail.com (91.141.32.73.wireless.dyn.drei.com. [91.141.32.73])
-        by smtp.gmail.com with ESMTPSA id i12-20020a50870c000000b0040f3f1d4497sm4902060edb.27.2022.02.27.10.02.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Feb 2022 10:02:17 -0800 (PST)
-Date:   Sun, 27 Feb 2022 19:02:03 +0100
-From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S229794AbiB0TIi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Feb 2022 14:08:38 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7865A25C4E
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 11:08:00 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 57AE3115795;
+        Sun, 27 Feb 2022 14:07:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=g4J71iCsNWcDYdTLAVXWnzHsON8AVz2TndEPSZ
+        k6iSA=; b=IKRXvoD3TeimbOLkhwUTvU59Ck7UXfBSMr1XLzDBRqdTWs5jUOEhQP
+        UxNPXcJx2G/+NeQi/sO5mgRfLIkodFLjWDRTVMyVr/c4TKWiQ2SCJtWN+odscY90
+        G6/eqAnKvraClyh9dlPjdHJxG7ih3kKNOZRC5cp6snbHYICRNE3l8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4DF42115794;
+        Sun, 27 Feb 2022 14:07:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AE478115793;
+        Sun, 27 Feb 2022 14:07:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Altmanninger <aclopte@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] rerere-train: modernise a bit
-Message-ID: <20220227180203.pakrqimsxbjx47tu@gmail.com>
+Subject: Re* [PATCH] rerere-train: modernise a bit
 References: <xmqqsfsjuw8m.fsf@gitster.g>
+        <20220227180203.pakrqimsxbjx47tu@gmail.com>
+Date:   Sun, 27 Feb 2022 11:07:55 -0800
+In-Reply-To: <20220227180203.pakrqimsxbjx47tu@gmail.com> (Johannes
+        Altmanninger's message of "Sun, 27 Feb 2022 19:02:03 +0100")
+Message-ID: <xmqqy21w3z78.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqsfsjuw8m.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9285A066-9800-11EC-B088-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 15, 2022 at 11:05:45PM -0800, Junio C Hamano wrote:
-> The script wants to create a list of merges using "rev-list" and
-> filters commits that do not have more than one parent, but if we
-> always pass "--merges" to "rev-list", there is no need to filter.
-> 
-> The command uses "git show --pretty=format:..." on a single commit
-> while generating progress reports, which means this title line is
-> left unterminated.  It should have used --pretty=tformat:...
+Johannes Altmanninger <aclopte@gmail.com> writes:
 
-Yep, tformat is more correct semantically, but it's worth noting that there
-is no behavior change here. These commands behave the same
+> Yep, tformat is more correct semantically, but it's worth noting that there
+> is no behavior change here. These commands behave the same
+>
+> 	git show -s --pretty=tformat:"Learning" HEAD
+> 	git show -s --pretty=format:"Learning" HEAD
 
-	git show -s --pretty=tformat:"Learning" HEAD
-	git show -s --pretty=format:"Learning" HEAD
+Your observation is not quite right.
 
-I guess we automagically add a final newline somewhere, if it's missing.
+The difference between tformat and format does matter in practice,
+unless your pager is hiding the difference.
 
-If there is a final newline ("Learning%n"), then the commands show different
-behavior. The subject (%s) can never have a newline, so that's not the
-case here.
+    $ export GIT_PAGER=cat; # disable the pager
+    $ git show -s --pretty=format:"%s" HEAD; echo Q
+    The eighth batchQ
+    $ exit
 
-I'd add something like this (for the lack of knowing where exactly the
-implicit newline comes from):
+This episode also exposes another bug in the rerere-train script,
+caused by the fact that it lets GIT_PAGER to interfere.
 
-	No harm was done because we implicitly add the trailing newline,
-	but it should have used --pretty=tformat:...
+--- >8 ---
+Subject: rerere-train: prevent GIT_PAGER from pausing 'git show -s'
 
-> instead, or better yet, use the more modern --format=... to ensure
-> that the title line is properly terminated.
+The script uses "git show -s --format" to display the title of the
+merge commit being studied, without explicitly disabling the pager,
+which is not a safe thing to do in a script.
 
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  contrib/rerere-train.sh | 9 ++-------
->  1 file changed, 2 insertions(+), 7 deletions(-)
-> 
-> diff --git c/contrib/rerere-train.sh w/contrib/rerere-train.sh
-> index 75125d6ae0..499b07e4a6 100755
-> --- c/contrib/rerere-train.sh
-> +++ w/contrib/rerere-train.sh
-> @@ -66,14 +66,9 @@ original_HEAD=$(git rev-parse --verify HEAD) || {
->  
->  mkdir -p "$GIT_DIR/rr-cache" || exit
->  
-> -git rev-list --parents "$@" |
-> +git rev-list --parents --merges "$@" |
->  while read commit parent1 other_parents
->  do
-> -	if test -z "$other_parents"
-> -	then
-> -		# Skip non-merges
-> -		continue
-> -	fi
->  	git checkout -q "$parent1^0"
->  	if git merge $other_parents >/dev/null 2>&1
->  	then
-> @@ -86,7 +81,7 @@ do
->  	fi
->  	if test -s "$GIT_DIR/MERGE_RR"
->  	then
-> -		git show -s --pretty=format:"Learning from %h %s" "$commit"
-> +		git show -s --format="Learning from %h %s" "$commit"
->  		git rerere
->  		git checkout -q $commit -- .
->  		git rerere
+For example, when the pager is set to "less" with "-SF" options (-S
+tells the pager not to fold lines but allow horizontal scrolling to
+show the overly long lines, -F tells the pager not to wait if the
+output in its entirety is shown on a single page), and the title of
+the merge commit is longer than the width of the terminal, the pager
+will wait until the end-user tells it to quit after showing the
+single line.
+
+Explicitly disable the pager for this "git show" invocation to avoid
+this.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ contrib/rerere-train.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git c/contrib/rerere-train.sh w/contrib/rerere-train.sh
+index 499b07e4a6..2b9df7b6f2 100755
+--- c/contrib/rerere-train.sh
++++ w/contrib/rerere-train.sh
+@@ -81,7 +81,7 @@ do
+ 	fi
+ 	if test -s "$GIT_DIR/MERGE_RR"
+ 	then
+-		git show -s --format="Learning from %h %s" "$commit"
++		git --no-pager show -s --format="Learning from %h %s" "$commit"
+ 		git rerere
+ 		git checkout -q $commit -- .
+ 		git rerere
