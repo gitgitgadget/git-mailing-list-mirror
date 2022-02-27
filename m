@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABF9FC433EF
-	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 17:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7782BC433F5
+	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 17:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229776AbiB0RgB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Feb 2022 12:36:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37476 "EHLO
+        id S229794AbiB0RgH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Feb 2022 12:36:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbiB0RgA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Feb 2022 12:36:00 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7077928E39
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 09:35:23 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id r13so20509721ejd.5
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 09:35:23 -0800 (PST)
+        with ESMTP id S229697AbiB0RgE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Feb 2022 12:36:04 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9B89522FA
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 09:35:27 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id r13so20509934ejd.5
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 09:35:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=WoGHzs4myQC+efgHe7l96DXZC+oGv/KUvb6VCZ5fxYg=;
-        b=kTx02VzTUvzg7A5jVJHoopiogBQJw1Hpr0lNwN02frsPxjOxOY9h8XeBsRecOparXp
-         SgrMxalTv3efzeySgCuBHo7gYRL///QYnSVQ1HKmuwsl1E7JS38LE+4o3kuyPeC+2Blf
-         H6B0NceFp6DI0Tpx4wmxnTscBz+NTPgRtCk3KwcIeEOvlnLYekZJSQHaSlnIcvZEAhwF
-         BRhyuh/cVCMTpuMNRKwq1w7XEEKv8+/B0V3EuCaiAuZPqVsPxO3XXs+jLVzZsa71yJSG
-         G5F/nWCbXgy94wM8V5VK2AylNJTRSDr9KNMh+k57Zcp1rL4nWGX+DHRlwCVsMOl+3wIJ
-         dbQQ==
+        bh=udc4OOdFA48VSGGa8kda/JqN4hAnIcMnBN61+3WGgAg=;
+        b=n7dK1jd6pEoQ+CFnwLZUA4qI7ogp++lBxeTDJOFW8ZW2omLW937MefOoPAeBzBxKmb
+         TbGCn2dFlSs0yJCqjMpO7NnG02y6IlFZOURD2PxnFSR+Mmz2j9goqx4HEqBxtTQSnJLM
+         3REB9VYoaDXkxyHozzQO5nDft1I63FXFNjRe5lCkwFTH8aSXcu2crIZfNFPazCxmVZHn
+         WZwxlrOlND70g8dC2YJ3unUSNfTFdUm5i/9cV+OD+tfmfeiScnjYVtZ0XvXjID2KIYMk
+         pgJkEWGRIUMSNs8aHnlG4jhmv5l1lQm38tyQJH15LGcbUFYEc7OVB75Ca9N8YEAMwkMt
+         UWTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=WoGHzs4myQC+efgHe7l96DXZC+oGv/KUvb6VCZ5fxYg=;
-        b=8OoC3+C2HtHjiLc07hh7zxIqpsgDlFPeFi9UIy2Rud2TwsJP4INrpIB8NCal2Fg4ih
-         fb78Pg6jqnnsJFtNTxOwB7r3lBNqA+jbgG4X2i1ZlphhrdRaYWBzIruq5Qe7W01yyu+h
-         BgjUkrklW/ijFVTL3OnyZ3w4hgCCEaJyDczwUOMq0kDxKN6s717kw0ur6d1H7VpfgRVC
-         rNAFJ7lHKhQzEh6hKCImnqYNyrpph3vblTgxDZjaBe6NWnotkHP+19uwiNu6uUGmoVHD
-         8EoMBljykgmBOVNY3x55XL7QkjiN01X9mU5MiBvs9nz9P/X+k46LusKHtxwnR9kleTWV
-         XJgw==
-X-Gm-Message-State: AOAM533tRdKOE2Qp7s3KukQ5Gkke9YD1ojG2BKWoS1ueBBRFRYRi3Hlr
-        ju6I+wgB1lMvIa8RJF/cWNY=
-X-Google-Smtp-Source: ABdhPJzEBUHEtXhk3KUUm5ps0k0xuE2HB3jymJer3aCTSWBdFkbD6CNdNhSxBBMLw5sbczpSnYunAw==
-X-Received: by 2002:a17:906:2daa:b0:6cf:3c6:dbb7 with SMTP id g10-20020a1709062daa00b006cf03c6dbb7mr12563442eji.688.1645983321766;
-        Sun, 27 Feb 2022 09:35:21 -0800 (PST)
+        bh=udc4OOdFA48VSGGa8kda/JqN4hAnIcMnBN61+3WGgAg=;
+        b=Skg+PMf/TF/1kyJ+PAOMWlQQgftFTO0GW8gRVad0Ym7ZA0pbpxf9TvndIPapXjA8Tr
+         ZfoYLBboZUfs0P/WDesz2ww+UtREl4SGldgp662tnD5Se102mIqXbrUG2gFMzVZw/Os6
+         Ag6axh7xY3H/9CRiPrRfxXHLnemo/Ms0NnHNgVxXgCHPcOS/JqFZVLCvcuDT3QEa9qmr
+         54LIzUXT5QFo7PXsfvixtCofv2YwX6QyNI0r7xLaPcBsdlReTH71gidWhD+CL/Ggd/7k
+         mwlHaXjHzEkzl6Q/J54rcjaU5fbfuV2JU5dTqhJjSVTTSdr6esXmXUAfUOy4K1jX+kdw
+         ovFA==
+X-Gm-Message-State: AOAM532nrcCtjuAX+ymw5PH+880eCfbZ/J/SYgN8/5Kg/CpD9jIzAJvy
+        udDcffsTUPRmnIe1rKD1r+s=
+X-Google-Smtp-Source: ABdhPJzVrJG1zhIjR6CaO3uEN0dCP432SI2SzMZ4cjhmOaj+OtfT5R3IWkElHP48430KB5RVF0eGDA==
+X-Received: by 2002:a17:906:a855:b0:6cd:ba20:39c5 with SMTP id dx21-20020a170906a85500b006cdba2039c5mr12490992ejb.100.1645983326164;
+        Sun, 27 Feb 2022 09:35:26 -0800 (PST)
 Received: from gmail.com (91.141.32.73.wireless.dyn.drei.com. [91.141.32.73])
-        by smtp.gmail.com with ESMTPSA id s2-20020a056402014200b0041285556b7csm5006523edu.72.2022.02.27.09.35.19
+        by smtp.gmail.com with ESMTPSA id da19-20020a056402177300b00413583e0996sm4800494edb.14.2022.02.27.09.35.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Feb 2022 09:35:21 -0800 (PST)
-Date:   Sun, 27 Feb 2022 18:35:17 +0100
+        Sun, 27 Feb 2022 09:35:25 -0800 (PST)
+Date:   Sun, 27 Feb 2022 18:35:22 +0100
 From:   Johannes Altmanninger <aclopte@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
         Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Christian Couder <chriscool@tuxfamily.org>,
@@ -62,187 +62,93 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
 Subject: Re: [PATCH v3 04/15] merge-tree: implement real merges
-Message-ID: <20220227173517.qrosjw75y3bcbglt@gmail.com>
-References: <pull.1122.v2.git.1643479633.gitgitgadget@gmail.com>
- <pull.1122.v3.git.1643787281.gitgitgadget@gmail.com>
- <02c29f920d0d5fde6d85f7b86a69be92e3f0f34d.1643787281.git.gitgitgadget@gmail.com>
- <xmqqy22tx8t1.fsf@gitster.g>
+Message-ID: <20220227173522.wfshhu2rsyss576e@gmail.com>
+References: <xmqqy22tx8t1.fsf@gitster.g>
  <CABPp-BGpD6g5QH3=4X_dCuSX0Bs0utHn5hyuU4_UiwNhU0h8sg@mail.gmail.com>
  <xmqqh79hvsgn.fsf@gitster.g>
  <CABPp-BEaemkGGm0cSofP0gau7YN-y6HFoi0yJbHA8+iGjxsYSA@mail.gmail.com>
  <xmqqee3wt5g3.fsf@gitster.g>
  <CABPp-BE+DaBkis0r7pqs-kaChCvFhCEsyDg=gs3=QjWOPERaXQ@mail.gmail.com>
+ <xmqqczjduz2h.fsf@gitster.g>
+ <CABPp-BEsYTz35XpXy_j09J9-ke4UoCTED4z3L1sq0vYHuvuKPQ@mail.gmail.com>
+ <xmqqee3skp3x.fsf@gitster.g>
+ <xmqqh78nj0q0.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABPp-BE+DaBkis0r7pqs-kaChCvFhCEsyDg=gs3=QjWOPERaXQ@mail.gmail.com>
+In-Reply-To: <xmqqh78nj0q0.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 22, 2022 at 08:26:41AM -0800, Elijah Newren wrote:
-> On Mon, Feb 21, 2022 at 10:55 AM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Elijah Newren <newren@gmail.com> writes:
-> >
-> > > Adding such an ability to merge-tree would be trivial -- it basically
-> > > involves just two things: (1) accepting one extra argument, and (2)
-> > > calling merge_incore_nonrecursive() instead of
-> > > merge_incore_recursive().
-> > >
-> > > However, I think forking a subprocess for every merge of a series of
-> > > commits is a completely unreasonable overhead, so even if we provide
-> > > such an option to merge-tree, I still want a separate plumbing-ish
-> > > tool that does non-worktree/non-index replaying of commits which is
-> > > not written as a driver of merge-tree.  That other tool should just
-> > > call merge_incore_nonrecursive() directly.  And such a tool, since it
-> > > should handle an arbitrary number of commits, should certainly be able
-> > > to handle just one commit.  From that angle, it feels like adding
-> > > another mode to merge-tree would just be a partial duplication of the
-> > > other tool.
+On Thu, Feb 24, 2022 at 03:36:55PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > It is more like
+> > ...
+> 
+> Actually, I misspoke.  It is a bit different.
+> 
+> In my mind, the building block hierarchy would have been
+> 
+>  (1) Take three tree objects A, B, and O, and do the three-way
+>      merge.  No history relation is assumed among them.
+> 
+>  (2) Take two tree objects A and B, with one or more commit objects
+>      Os; use (2) recursively to reduce Os into a single O and then
+>      apply (1) on A, B and O.
 
-I don't think "to avoid duplication" is a good argument for making this
-plumbing command less flexible, because that's just chasing a local minimum
-w.r.t. redundancy. More general APIs will lead to a global minimum.
+Accepting multiple bases is nice (because it frees users of having
+to recursively merge their merge-bases),
 
-> >
-> > The above does not make much sense to me.
-> >
-> > I am hearing that "multi-step cherry-picks and reverts need to be
-> > fast and we need something like sequencer that is all written in C,
-> 
-> Yes, I agree with that part so far.  jj is kicking our butt on rebase
-> speed; I'm not sure if we can catch it, but it'd be nice to see us not
-> be more than a hundred times slower.
-> 
-> > and single-step cherry-pick is merely a special case that does not
-> > deserve a plumbing".
-> 
-> Well, apparently I failed at communication if that's what you heard.
-> Perhaps I can step back and provide my high-level goals, and then
-> mention how this series fits in.  My high-level goals:
-> 
->   * new sequencer-like replay tool, including multiple abilities
-> today's rebase/cherry-pick tools don't have
->   * enable folks to use merging machinery for server side operations
-> (merge, rebase, cherry-pick, revert)
->   * do not repeat or encourage the rebase-as-shell-script mistakes of yesteryear
->   * somehow split this up into reviewable chunks
-> 
-> Now, in particular, the "merge divergent branches" piece seemed like a
-> really simple portion of the problem space for which I could get some
-> early feedback without having to address the whole problem space all
-> at once, and which doesn't seem to have any downside risk.
-> 
-> And even with my attempt to narrow it in scope, and even despite lots
-> of early feedback from the Git Virtual Contributor Summit six months
-> ago, it's been nearly two months of active discussions including all
-> kinds of intrinsic and tangential points about the UI and design.  Why
-> try to prematurely widen the scope?  Can we just focus on merging
-> divergent branches for now, and cover the rest later?
-> 
-> > But that argument leads to "and the same something-like-sequencer
-> > that is all written in C would need '--rebase-merges' that can pick
-> > multi-step merge sequences, and single-step merge does not deserve a
-> > plumbing", which is an argument against this topic that is utterly
-> > absurd.
-> >
-> > So why isn't your objection not equally absurd against having a
-> > single step cherry-pick or revert primitive as a plumbing?
-> 
-> The objection you are arguing against is not my position.  In fact,
-> I'm not even objecting to having a single-step cherry-pick, I'm
-> objecting to providing it _now_, which I thought would have been clear
-> from the portion of my email you snipped ("...I'm happy to add [a
-> single step cherry-pick primitive] along with the tool I submit
-> later...").  Since that wasn't clear, and since that wasn't my only
-> communication failure here, let me attempt to be clearer about my
-> objection(s):
-> 
-> 1. I'm really trying to pick off a small piece of the problem space
-> and get feedback on it without unnecessarily complicating things with
-> unrelated issues.  Thus, this series is _only_ about merging branches
-> that have diverged, and leaves commit replaying for later.
-> 
-> 2. Two folks have chimed in about the single step cherry-pick, and the
-> ONLY reason given for wanting such a thing was to create a
-> rebasing/cherry-picking script which was driven by repeatedly invoking
-> this low-level primitive command.  That's also the only usecase I can
-> currently think of for such a primitive.  To me, that means providing
-> such a low-level command now would be likely to result in the
-> rebase-as-a-script mistake of yesteryear.  I think we can avoid that
-> pitfall by first providing a tool that avoids the
-> repeatedly-fork-git-subprocesses model.  (Also, providing a low-level
-> single-step cherry-pick command also has the added negative of further
-> distracting from the focus on merging divergent branches.)
+Let's say we take this series in its current form:
 
-I agree that it's not a good idea to call merge-tree in a loop for
-cherry-picking commit sequences.
+	git merge-tree [--write-tree] [<options>] <branch1> <branch2>
+	git merge-tree [--trivial-merge] <base-tree> <branch1> <branch2> (deprecated)
 
-At the same time, it is weird for such a low-level tool to not allow
-specifying merge bases.
-Accepting merge bases is the more logical API, that might allow curious
-users to figure out how revert/cherry-pick are implemented.
+and later discover we want to add (2), one possible syntax would be
 
-I intuitively prefer the version that accepts merge bases but I don't have
-a good use case, so I think it's okay to add that later if we ever find use
-for it.
+	git merge-tree --write-tree [<options>] <branch1> <branch2> <base>...
+
+(or put the bases in the middle like merge-file).
+Though the mandatory --write-tree leaves a bad taste.
+
+A separate option is a better alternative:
+
+	git merge-tree [--write-tree] [<options>] --base=<base1>,<base2>,... <branch1> <branch2>
+
+Anyway, no need to worry about that now, especially since the root cause of
+the ugliness is the legacy --trivial-merge, and there is no way avoid that,
+even if we add this now.
 
 > 
-> 3. The merge primitive in this series is useful completely independent
-> of any rebasing script (it would not be used solely for rebasing
-> merges, if it's used for that purpose at all, as evidenced by the fact
-> that dscho is already trying to use it for doing new real merges).
+>  (3) Take two commit objects A and B.  Compute Os out of A and B and
+>      use (2) once to merge A and B.
 > 
-> 4. Once we have a git-replay tool that can replay a sequence of
-> commits, there _might_ not be a need for a single commit replaying
-> primitive.  If we provided one as you and Johannes Altimanninger were
-> asking for, and it turned out to be deemed useless because the later
-> tool I provide can do everything it can and more, haven't we just
-> wasted time in providing it?  And perhaps also wasted future time as
-> we then have work to do to deprecate and remove the new command or
-> mode? (NOTE: I did *not* say there was "no need" for a single-commit
-> replaying primitive -- I said there "might not" be a need.)
-
-If we get a tool that can do multiple cherry-picks, I think there is no
-technical reason against having an equivalent tool that can do multiple merges.
-In that future, merge-tree might be mostly obsolete.
-
-In general, this is a difficult discussion.  It's really hard to judge
-this series without a bigger picture of how our future UI will look like.
-(Thanks for sharing the replay code BTW, there are some nice features in
-there.)  Though I agree that integrating this (minimal) series first makes
-a ton of sense, because it already supports a valid use case.
-
-I feel like the output format is a bit experimental because it doesn't give
-much of the conflict information in a machine-parseable format.  Of course
-it's good enough for many uses (so I don't think this should block this
-topic) but I think we should have a plan on how to change the output format
-in future without adding ugly compatibility hacks. Marking merge-tree as
-"experimental" (like git-switch/git-restore) comes to mind.  That would work
-although it's not the most user-friendly way.
-
-(OK I just saw that you are still looking into the output format in
-CABPp-BG++YqesTxp+JL3XzwrogfMag1NscoMpCOExmV9z6Py9A@mail.gmail.com )
-
-I wanted to implement some (cherry-picking) scripts using merge-tree but I
-don't have enough time or need, so I don't have much feedback on the output
-format today. I can imagine that it would be nice to have a clear distinction
-between content conflicts and non-content conflicts, but let's worry about
-that later..
-
+> I think the basic primitive that should be exposed to an external
+> world (read: plumbing) this year, after all years of experience with
+> merge-recursive, should be (2), not (1).  
 > 
-> Also, since you bring up --rebase-merges, there's an additional point
-> about it that might be relevant:
+> If you have (2), then (3) is trivially possible (it is just a single
+> call to get_merge_base()).  "git merge-tree A B" without having to
+> spell out bases is so convenent and you do not have to write
+> "git merge-tree A B $(git merge-base --all A B)", so I am OK for it
+> to exist, but it is not essential.
 > 
-> 5. While you could implement a naive --rebase-merges in terms of a
-> primitive for merging divergent branches (or vice-versa, i.e.
-> implement merging divergent branches from a naive --rebase-merges
-> implementation), I think replaying merges more intelligently[*] is
-> actually a distinct operation from doing a new merge of divergent
-> branches and that you probably can't implement one in terms of the
-> other.  (I'm not certain on this, and definitely don't want to argue
-> the finer points on it while my implementation is still half-baked,
-> but I really do think they are different things right now.)
+> If you have (2) and exposed (2) as the primitive plumbing,
+> cherry-pick and revert would be a narrow special case of passing
+> only one O to the machinery.
 > 
-> [*] https://lore.kernel.org/git/CABPp-BHp+d62dCyAaJfh1cZ8xVpGyb97mZryd02aCOX=Qn=Ltw@mail.gmail.com/
+> And coming from the above point of view, exposing (3) as the
+> primitive plumbing to scripters and system builders, and later
+> having to _add_ support to allow (2), felt backwards.  It should be
+> trivial for us to make (2) available before we can even offer (3),
+> but what is happening to this new plumbing command goes in the
+> opposite order.
+> 
+> It may be, as you said, the problem the underlying ort API has that
+> somehow makes it harder to expose (2), in which case, yes, I think
+> that is what bugs me.
+> 
+> 
+> 
