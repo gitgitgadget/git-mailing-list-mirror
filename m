@@ -2,135 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC64CC433FE
-	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 21:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25800C433F5
+	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 22:05:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231991AbiB0V5v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Feb 2022 16:57:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53312 "EHLO
+        id S232021AbiB0WGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Feb 2022 17:06:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231976AbiB0V5o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Feb 2022 16:57:44 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 172E46E4D5
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 13:57:07 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id s13so12600178wrb.6
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 13:57:07 -0800 (PST)
+        with ESMTP id S230205AbiB0WGD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Feb 2022 17:06:03 -0500
+Received: from mail-vs1-xe2d.google.com (mail-vs1-xe2d.google.com [IPv6:2607:f8b0:4864:20::e2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FAB26C909
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 14:05:26 -0800 (PST)
+Received: by mail-vs1-xe2d.google.com with SMTP id t22so11136935vsa.4
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 14:05:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Em19lLcMqW9ZtBoxwCezKUkfBKndxDcsrBMBl5tkRY0=;
-        b=AhEPr7qpHIeDqrgZZ9F9+PPCJYBshC4nLL+lXY6p/7Uc52/5+VNrJokMNtSsjmxbIP
-         f45zMEVazh1D/vOsxy7ufwSU5WZYtggQW6c2saEyIB5421GJXRXUigBVoeV6pstkqaRq
-         gNQ3tiXA67jsGqCvtg7DUImqJ0PjA74PlSG043DI4PaRwbW6afApVmbioqhmNLi0uAx8
-         HfvXLM3zRMkyEICv20j0+Cf11vIbSANiOv5AUNHGC/4SzZNqEgvYWZFVWWUJUhm7gwCj
-         mK2h0lv2APCbRyqIBqrgcXGEORG1b6GaCGMpLu/kZuf8vcy0xq8UPy9iog2UeSINOq+D
-         N/rA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/LskwUhD5NRuOqvEdcxttyGZHwEgG7mFh45ITeP/HyU=;
+        b=czm5os7xGdQuMhidyH9RiUJEznxpr7ikRTtpRqCeiBoxWUycPa3ehjWsV0lA0N7/mm
+         LvyCV2eCxNMlFM3uVDV/W5lS32GJDVEL1xoxCB2bNfBIjNl+dyXy7jUmhvmVXuaQzWdZ
+         9PKuVVU6+3j67nd29+3CGpPnvcCahUZR4lf5yTebTVrVks3H5zXM2f1Zyt9iftkvwZgJ
+         vgwItI9bH4odfvuSGj4nB75bEsKR62VyTsBcRx9/XdPWMErsMTqsVFxJnKDnWnjWU68F
+         xNkoF3TMfYCqpktKr+MLhKxN2xUvhlaTwZze9PWIIKcwjiATGFZaSKwoAqbbZqOa3Uly
+         BoMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Em19lLcMqW9ZtBoxwCezKUkfBKndxDcsrBMBl5tkRY0=;
-        b=Sup0dnU1w71Yk+ps+wMk0GIuB5a13uqXKLJXqfpfw7BPqjoxk00Tu/cMEYBM/DJpzG
-         /GpKg5H8B9BUOduCEu1SlQ+RkUFKKHRC90uAr8/UqhmCflw7pE30/O3HiZjxLbz/pEe/
-         ACXaOXlCpy5dLB2lKCsBOWi4YQPGnf35D2bf+0TGXpthD8DWDUwaXL2NlNj3zrl+Ef1J
-         SS8Fst7vCKdMdcCD7bWrx8YEJRDfJ9BDRUyzm7x71X+LtlRSESbatp1F/fTgerziMcm6
-         4RSgv4sC/d4nr7pQdZ9QXj8HjLgLk6t+KEY7PZz8JziCqNSJ9SiHJAi6xRgKEMOmR9Iu
-         4cNw==
-X-Gm-Message-State: AOAM530FwtNzgX6A0kFGK3FYD3hYBt1KLSE1ZgnoRXgrLZiPJS823YJz
-        YHs6V3O6KuSZpYND9J5MTNn4umXOJlI=
-X-Google-Smtp-Source: ABdhPJxqjgeZYIuEq2F8SM5om8ZHN97UK26g3sauuYiGI26PdXQ4zx0PZ3tpcb3uHSGVyZounehIWA==
-X-Received: by 2002:adf:f689:0:b0:1ef:5d40:a0cd with SMTP id v9-20020adff689000000b001ef5d40a0cdmr11028553wrp.89.1645999025477;
-        Sun, 27 Feb 2022 13:57:05 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s3-20020adfbc03000000b001e4b0e4a7fdsm8868778wrg.93.2022.02.27.13.57.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Feb 2022 13:57:05 -0800 (PST)
-Message-Id: <9795a08414a9269bc6ae929ea8e8b22ad6ec0762.1645999021.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.986.v3.git.1645999021.gitgitgadget@gmail.com>
-References: <pull.986.v2.git.1645809015.gitgitgadget@gmail.com>
-        <pull.986.v3.git.1645999021.gitgitgadget@gmail.com>
-From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 27 Feb 2022 21:57:01 +0000
-Subject: [PATCH v3 3/3] untracked-cache: write index when populating empty
- untracked cache
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/LskwUhD5NRuOqvEdcxttyGZHwEgG7mFh45ITeP/HyU=;
+        b=SHuRyf+9yrpbPqpHzR8c3xDseE2lp8qjyOmR9QvhyDZoCnI68anugDO9qhyL9txxpG
+         mV68Ul5PiSqVmGQnDFAKGs5gzZayZRLzGn3cOKwqM27wrzKObzb3i12O1YkmgNbutxdd
+         kFrSKzGyRdWtMOhH8MjkYFiDdcBNTWDHG9HVVZbPSwWFoN64Uk4aDqYZrmQqA4ARhlB0
+         mMK66gdCqZIdogORzuQ+P1eIHFJFwOumrc00W8YwUTNV6UvV0XMDkT9LsbzHIbjcnZOs
+         PIswk1KoUoNHyxC9CJA8RNRxjObKvIPCcizzf2FmnocCnOHxHTKlElu3T8sypAW4dhZ8
+         Ax9Q==
+X-Gm-Message-State: AOAM533LZ4l9zyPOLhfBoAfFJHWlfFASsDhF6H5d3cLgnPfL0nQpm74n
+        0/UyIY4jZHA28QIirEsGEjJ8IVsztuniygxhOVw=
+X-Google-Smtp-Source: ABdhPJyy8aIf9QCXJ76UXAmkiDr9sFSVbguaII2TYFV/qiiMXr+CZU8DUOXthlJrXubuF0PUF9TvLtbNV1OvyunYXzY=
+X-Received: by 2002:a05:6102:5715:b0:31a:511d:886a with SMTP id
+ dg21-20020a056102571500b0031a511d886amr6554923vsb.72.1645999525045; Sun, 27
+ Feb 2022 14:05:25 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Tao Klerks <tao@klerks.biz>, Tao Klerks <tao@klerks.biz>
+References: <20220214210136.1532574-1-jacob.e.keller@intel.com>
+ <xmqqr18515jr.fsf@gitster.g> <CA+P7+xrN0zPWfxO1roWzR+MBHntTv8jr9OGdNcN9RPA=ebK24A@mail.gmail.com>
+ <42d2a9fe-a3f2-f841-dcd1-27a0440521b6@github.com> <xmqq1r03zl9z.fsf@gitster.g>
+In-Reply-To: <xmqq1r03zl9z.fsf@gitster.g>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sun, 27 Feb 2022 14:05:15 -0800
+Message-ID: <CA+P7+xoaHtHMxE_RVBRyhOqVfuP_1s+2NGpGDo_eKfb25_ty7g@mail.gmail.com>
+Subject: Re: [PATCH] name-rev: test showing failure with non-monotonic commit dates
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Jacob Keller <jacob.e.keller@intel.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tao Klerks <tao@klerks.biz>
+On Tue, Feb 15, 2022 at 4:51 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> In "name-rev [--tags] C", we look for a tag to use in describing the
+> given commit C as an ancestry path starting at the tag T (e.g. T~4,
+> T~2^2).  There can be multiple such tags (e.g. it is likely that a
+> commit that is v1.0~2 is also reachable from tag v2.0, even though
+> it would require more hops).  We try to and find a tag that gives
+> the "simplest" path.  For that purpose, it is no use to consider any
+> tag that is not a descendant of the given commit, because doing an
+> ancestry traversal starting from such a tag will never reach the
+> commit.  In a world where everybody's clock is in sync, if commit
+> was made at time X, any tag that was made before time X will not be
+> a descendant of the commit, so we do not add such a tag to the
+> candidate pool.
+>
+> I think the idea of "cutoff" heuristic is exactly what generation
+> numbers can improve, in an imperfect world where there are imperfect
+> clocks.
 
-It is expected that an empty/unpopulated untracked cache structure can
-be written to the index - by update-index, or by a "git status" call
-that sees the untracked cache should be enabled and is not, but is
-running with options that make the untracked cache non-applicable in
-that run (eg a pathspec).
+Yep. I have a patch that will implement this behavior based on
+Derrick's suggestion.
 
-Currently, if that happens, then subsequent "git status" calls end up
-populating the untracked cache, but not writing the index (not saving
-their work) - so the performance outcome is almost identical to the
-cache being altogether disabled.
-
-This continues until the index gets written with the untracked cache
-populated, for some *other* reason, such as a working tree change.
-
-Detect the condition where an empty untracked cache exists in the
-index and we will collect the list of untracked paths, and queue an
-index write under that condition, so that the collected untracked
-paths can be written out to the untracked cache extension in the
-index.
-
-This change depends on previous fixes to t7519 for the "ignore .git
-changes when invalidating UNTR" test case to pass - before this fix,
-the test never actually did anything as it was not set up correctly.
-
-Signed-off-by: Tao Klerks <tao@klerks.biz>
----
- dir.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index d91295f2bcd..4eee45dec91 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2781,7 +2781,8 @@ void remove_untracked_cache(struct index_state *istate)
- 
- static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
- 						      int base_len,
--						      const struct pathspec *pathspec)
-+						      const struct pathspec *pathspec,
-+						      struct index_state *istate)
- {
- 	struct untracked_cache_dir *root;
- 	static int untracked_cache_disabled = -1;
-@@ -2845,8 +2846,11 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
- 		return NULL;
- 	}
- 
--	if (!dir->untracked->root)
-+	if (!dir->untracked->root) {
-+		/* Untracked cache existed but is not initialized; fix that */
- 		FLEX_ALLOC_STR(dir->untracked->root, name, "");
-+		istate->cache_changed |= UNTRACKED_CHANGED;
-+	}
- 
- 	/* Validate $GIT_DIR/info/exclude and core.excludesfile */
- 	root = dir->untracked->root;
-@@ -2916,7 +2920,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
- 		return dir->nr;
- 	}
- 
--	untracked = validate_untracked_cache(dir, len, pathspec);
-+	untracked = validate_untracked_cache(dir, len, pathspec, istate);
- 	if (!untracked)
- 		/*
- 		 * make sure untracked cache code path is disabled,
--- 
-gitgitgadget
+Thanks,
+Jake
