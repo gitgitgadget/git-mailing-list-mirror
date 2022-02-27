@@ -2,121 +2,202 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63B3EC433EF
-	for <git@archiver.kernel.org>; Sat, 26 Feb 2022 21:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07285C433F5
+	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 00:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229796AbiBZVop (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Feb 2022 16:44:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57780 "EHLO
+        id S229533AbiB0AeF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Feb 2022 19:34:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbiBZVoo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Feb 2022 16:44:44 -0500
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88DB557166
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 13:44:09 -0800 (PST)
-Received: by mail-io1-xd31.google.com with SMTP id q8so10708612iod.2
-        for <git@vger.kernel.org>; Sat, 26 Feb 2022 13:44:09 -0800 (PST)
+        with ESMTP id S229501AbiB0AeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Feb 2022 19:34:04 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C0514892A
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 16:33:28 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id d21so13268464yba.11
+        for <git@vger.kernel.org>; Sat, 26 Feb 2022 16:33:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=dZ/h1L8+W41soGKQbGrF7MSSlJyeoDSW9eCu25DZmlg=;
-        b=gxGhNgwO0+IsJsf6TR7WEv3Gt1256kr05aGCq3lgstRov8lKkOq276lqwLK15jxh+o
-         aUKZS06OFMpTSoY1VNpjC3vFBHj6oAD6gWV9knT3Kdf3YlWNROowuDSEUMHPQF0JLj9l
-         3yVuTU3p5wkZGTBzhv8xOHSLCcjqysLr1HEQklobXrfZeVLlLeIGNHuL+tqsZAGLlNrW
-         4gAJC2J31U4rsJTRu0FfemoTVoF7bzogUQsYtOE1fPsgv1yiiKgbEkUwrUEB9W9Wb4fy
-         8kWULIv3fC8xStOOfc0orHMH+LBFRaHvtwJUHX493q50OIlYFQctM8ewQQ5FdiEF+CJ2
-         RKLw==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=BE+5u7qgUeM+p63Ui+SYxBSBPrt+ouU8PW94kQOH+IY=;
+        b=qdy/HL+IYTdZfR6o0u0MuPXmmkrjinhRmMpgH2uiBrcCNhkG7juDpbVjjjYhIjH0rv
+         pHMpghuXGS+BY7rwm2AEqKx0OOQ4hCX/K0Ziqgikli7KWNZMsGjQM0VmShuIxnH4Pqkm
+         CcLLKAX0aCaW8vQy7o6trn4Dmk+IR+AwkDdU2zGsD2ytO+9WCbcEWkV9taIrKKUF6Y3J
+         qrMRFFoB7gvC54mm6J2/tZNgUzcnwp/jbZVQF7XYBZn0+RQplN86Daiem8LbTYBVQW/S
+         zOcybjXNIhpoSX05fvG5vtGmBizcS6/9RJa3p5m7W/ow9sCegLqqjhSwrHk/h/zRDcdI
+         uGqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=dZ/h1L8+W41soGKQbGrF7MSSlJyeoDSW9eCu25DZmlg=;
-        b=0QnjRp6Vv8on9m9leLMQ3Ay43JRbCeuBM+ZZKuTghiqrqqmnRF2/gFg/+qT160fwtA
-         jw2JHBFsSeFdisaTEZt+idHgxQF5X1YLyULa59jzUaA9o5jDnzA/VEN63A7oz03hznn1
-         qYR/GDifdRSLFcL/frHlqlMGClm1rR5xK8/zgmCBh7iepqFt5L+4jl+IqzGj4fzRHpjl
-         PdPwNFh4AZJZcPkpEPYsN4EV8BAZrVwnP5rriZfekc4N1lqPIeu4bYogxv9i/tB44QoK
-         gwytuGXrPp6auszS6NmB3q8jcy9KhlO36ShSC9XwykfLOoHpYQrlVgTclr65xiN16+Hr
-         U6BA==
-X-Gm-Message-State: AOAM533fVUM8zEN4I83n83qdiZand/zh6pQ6v26gtfAqQ1YhH/sKgCFs
-        FY97VtngH3Ufl4zsgvElSRN8fA==
-X-Google-Smtp-Source: ABdhPJwwt8n4bdCInRdUpM4vyKcWZq6Ar4lPeENqHkriNwaku58Sr7kf24QD/nC0O1Vg7mPNn4U0ng==
-X-Received: by 2002:a05:6638:25cc:b0:311:9033:4496 with SMTP id u12-20020a05663825cc00b0031190334496mr11523655jat.225.1645911848902;
-        Sat, 26 Feb 2022 13:44:08 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 7-20020a056e0220c700b002c22480d578sm3769899ilq.66.2022.02.26.13.44.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Feb 2022 13:44:08 -0800 (PST)
-Date:   Sat, 26 Feb 2022 16:44:07 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     John Cai <johncai86@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Robert Coup <robert.coup@koordinates.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2 0/4] [RFC] repack: add --filter=
-Message-ID: <YhqfJ8lFD9p6BPBx@nand.local>
-References: <YhMC+3FdSEZz22qX@nand.local>
- <CAP8UFD2dpicW64eqBK47g43xDWA1qv2BMBEOSqj_My5PUs8TSg@mail.gmail.com>
- <YhQHYQ9b9bYYv10r@nand.local>
- <CAP8UFD3U4t-inWC5mZYhybWpjVwkqA7v4hYZ5voBOEJ=+_Y1kQ@mail.gmail.com>
- <xmqqv8x5v0qc.fsf@gitster.g>
- <36CA51FE-8B7F-4D08-A91D-95D8F76606C9@gmail.com>
- <YhpjbQeFaMNVnyP9@nand.local>
- <47AC2D8D-ADB2-4280-86F0-6B1E239C1EBE@gmail.com>
- <YhqNy+t5SARNivQ5@nand.local>
- <5106811D-2937-49CB-AC93-875D3B3BC241@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=BE+5u7qgUeM+p63Ui+SYxBSBPrt+ouU8PW94kQOH+IY=;
+        b=owxt9TkPrg72fe4R0oa6G9jOYE56VQTy+jeDKNBxm05vBWB529XaBEtIG7N2e6mPiW
+         K7FDOtGNTE+EW5/wnINWKJWcpFw83zzz9xEMmth8zXrXW1zDwStwwxCFshM+MH1id9BX
+         EP++Y/xQuU9qf6CnwfXf/lqpnW1YiSFa8pe1UCwEvtbG3V6vnBfNkpuKtsqUMhEXeENn
+         PN05K4DrTe7c7ELzq6y5nECrx0oljClc+WG6Mjb1nW1c6PdZd94HfRXGM3O9j8sIWuel
+         D2uchO8wamJxaI1M+3BXcELvi2tTFYBess04NHJz9cSSdQI11fmIOif2w/0vTG7gr2oW
+         JCrQ==
+X-Gm-Message-State: AOAM530KnSG3YwoWCalGQifny5HbAL/fuRh1sRFFIK+8ZDjBbf9uhVaU
+        3h+FD/pu2Hv+mPFnFXqUiQkU159QJUVCZrktzR7QKHlTjp0=
+X-Google-Smtp-Source: ABdhPJy0ZyxPWi+fu3JrVvGaahcW5778HZg+tJVKB3x1DT/TBIHr1TfhL04xrYowR1BDLHIGVrbD0O3m1HZD+zYqYAQ=
+X-Received: by 2002:a25:748e:0:b0:624:3bae:fa32 with SMTP id
+ p136-20020a25748e000000b006243baefa32mr13402202ybc.255.1645922008059; Sat, 26
+ Feb 2022 16:33:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5106811D-2937-49CB-AC93-875D3B3BC241@gmail.com>
+References: <pull.1162.git.1645789446.gitgitgadget@gmail.com> <220225.86czjb874f.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220225.86czjb874f.gmgdl@evledraar.gmail.com>
+From:   Justin Donnelly <justinrdonnelly@gmail.com>
+Date:   Sat, 26 Feb 2022 19:32:52 -0500
+Message-ID: <CAGTqyRwTEdwut4HKD2=MaBfG_tZqN_TjGPAjChzmjBubC0-wuQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] In PS1 prompt, make upstream state indicators
+ consistent with other state indicators
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Justin Donnelly via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 26, 2022 at 04:05:37PM -0500, John Cai wrote:
-> Hi Taylor,
+Thanks for the feedback. Comments interleaved below.
+
+On Fri, Feb 25, 2022 at 7:26 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> On 26 Feb 2022, at 15:30, Taylor Blau wrote:
 >
-> > On Sat, Feb 26, 2022 at 03:19:11PM -0500, John Cai wrote:
-> >> Thanks for bringing this up again. I meant to write back regarding what you raised
-> >> in the other part of this thread. I think this is a valid concern. To attain the
-> >> goal of offloading certain blobs onto another server(B) and saving space on a git
-> >> server(A), then there will essentially be two steps. One to upload objects to (B),
-> >> and one to remove objects from (A). As you said, these two need to be the inverse of each
-> >> other or else you might end up with missing objects.
+> On Fri, Feb 25 2022, Justin Donnelly via GitGitGadget wrote:
+>
+> I couldn't find any glaring issues here on a quick review, just a note.
+>
+> > These patches are about the characters and words that can be configured=
+ to
+> > display in the PS1 prompt after the branch name. I've been unable to fi=
+nd a
+> > consistent terminology. I refer to them as follows: [short | long] [typ=
+e]
+> > state indicator where short is for characters (e.g. ?), long is for wor=
+ds
+> > (e.g. |SPARSE), and type is the type of indicator (e.g. sparse or upstr=
+eam).
+> > I'd be happy to change the commit messages to a different terminology i=
+f
+> > that's preferred.
+>
+> I think that terminology is correct, in case you haven't seen it
+> git-for-each-ref(1) talks about the "short" here as "short",
+> "trackshort" etc.
+>
+> > There are a few inconsistencies with the PS1 prompt upstream state indi=
+cator
+> > (GIT_PS1_SHOWUPSTREAM).
 > >
-> > Do you mean that you want to offload objects both from a local clone of
-> > some repository, _and_ the original remote it was cloned from?
+> >  * With GIT_PS1_SHOWUPSTREAM=3D"auto", if there are no other short stat=
+e
+> >    indicators (e.g. + for staged changes, $ for stashed changes, etc.),=
+ the
+> >    upstream state indicator appears adjacent to the branch name (e.g.
+> >    (main=3D)) instead of being separated by SP or GIT_PS1_STATESEPARATO=
+R (e.g.
+> >    (main =3D)).
+> >  * If there are long state indicators (e.g. |SPARSE), a short upstream =
+state
+> >    indicator (i.e. GIT_PS1_SHOWUPSTREAM=3D"auto") is to the right of th=
+e long
+> >    state indicator (e.g. (main +|SPARSE=3D)) instead of with the other =
+short
+> >    state indicators (e.g. (main +=3D|SPARSE)).
 >
-> yes, exactly. The "another server" would be something like an http server, OR another remote
-> which hosts a subset of the objects (let's say the large blobs).
-> >
-> > I don't understand what the role of "another server" is here. If this
-> > proposal was about making it easy to remove objects from a local copy of
-> > a repository based on a filter provided that there was a Git server
-> > elsewhere that could act as a promisor remote, than that makes sense to
-> > me.
-> >
-> > But I think I'm not quite understanding the rest of what you're
-> > suggesting.
+> I think it would really help to in each commit message have a
+> before/after comparison of the relevant PS1 output that's being changed.
+
+I agree that a before/after comparison would probably make it easier
+to understand. Maybe some examples without upstream (for a baseline to
+compare against) and a table that shows before/after for upstream.
+
+`__git_ps1` examples without upstream:
+(main)
+(main %)
+(main *%)
+(main|SPARSE)
+(main %|SPARSE)
+(main *%|SPARSE)
+(main|SPARSE|REBASE 1/2)
+(main %|SPARSE|REBASE 1/2)
+
+Of note:
+1. If there are short state indicators, they appear together after the
+branch name and separated from it by `SP` or `GIT_PS1_STATESEPARATOR`.
+2. If there are long state indicators, they appear after short state
+indicators if there are any, or after the branch name if there are no
+short state indicators. Each long state indicator begins with a pipe
+(`|`) as a separator.
+
+Patch 2 before/after:
+| Before           | After            |
+| ---------------- | ---------------- |
+| (main=3D)          | (main =3D)         |
+| (main|SPARSE=3D)   | (main =3D|SPARSE)  |
+| (main %|SPARSE=3D) | (main %=3D|SPARSE) |
+
+Patch 3 before/after:
+| Before                          | After                           |
+| ------------------------------- | ------------------------------- |
+| (main u=3D)                       | (main|u=3D)                       |
+| (main u=3D origin/main)           | (main|u=3D origin/main)           |
+| (main u+1)                      | (main|u+1)                      |
+| (main u+1 origin/main)          | (main|u+1 origin/main)          |
+| (main % u=3D)                     | (main %|u=3D)                     |
+| (main % u=3D origin/main)         | (main %|u=3D origin/main)         |
+| (main % u+1)                    | (main %|u+1)                    |
+| (main % u+1 origin/main)        | (main %|u+1 origin/main)        |
+| (main|SPARSE u=3D)                | (main|SPARSE|u=3D)                |
+| (main|SPARSE u=3D origin/main)    | (main|SPARSE|u=3D origin/main)    |
+| (main|SPARSE u+1)               | (main|SPARSE|u+1)               |
+| (main|SPARSE u+1 origin/main)   | (main|SPARSE|u+1 origin/main)   |
+| (main %|SPARSE u=3D)              | (main %|SPARSE|u=3D)              |
+| (main %|SPARSE u=3D origin/main)  | (main %|SPARSE|u=3D origin/main)  |
+| (main %|SPARSE u+1)             | (main %|SPARSE|u+1)             |
+| (main %|SPARSE u+1 origin/main) | (main %|SPARSE|u+1 origin/main) |
+
+Note: These tables are inspired by [Markdown Guide extended
+syntax](https://www.markdownguide.org/extended-syntax/#tables), but I
+didn't wrap the PS1 prompt text in backticks or escape the pipe
+because I thought that would make it more confusing. In short, they're
+meant to be viewed as (monospaced font) text, not Markdown.
+
 >
-> Sorry for the lack of clarity here. The goal is to make it easy for a remote to offload a subset
-> of its objects to __another__ remote (either a Git server or an http server through a remote helper).
+>
+> I'm not sure how to readthis example. So before we said "main +=3D|SPARSE=
+"
+> but now we'll say "main +|SPARSE=3D", but without sparse we'll say
+> "main=3D"?
+>
+> Aren't both of those harder to read than they need to be, shouldn't it
+> be closer to:
+>
+>     main=3D |SPARSE
+>
+> Or:
+>
+>     main=3D |+SPARSE
+>
+> Or:
+>
+>     main=3D +|SPARSE
+>
+> I can't recall what the "+" there is (if any).
 
-Does the other server then act as a promisor remote in conjunction with
-the Git server? I'm having trouble understanding why the _Git_ remote
-you originally cloned from needs to offload its objects, too.
 
-So I think the list would benefit from understanding some more of the
-details and motivation there. But it would also benefit us to have some
-understanding of how we'll ensure that any objects which are moved out
-of a Git repository make their way to another server.
+`+` is for staged changes (if `GIT_PS1_SHOWDIRTYSTATE` is a nonempty
+value). So it's not directly related to upstream, but the addition of
+another short state indicator changes things.
 
-I am curious to hear Jonathan Tan's thoughts on this all, too.
-
-Thanks,
-Taylor
+>
+>
+> I.e. the "=3D" refers to the ahead/behind state of "main, it seems odd in
+> both versions of your example that we're splitting it off from "main"
+> because we have "SPARSE" too.
+>
+> But maybe I'm missing something...
