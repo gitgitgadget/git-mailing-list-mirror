@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49362C433F5
-	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 21:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC64CC433FE
+	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 21:57:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231986AbiB0V5t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Feb 2022 16:57:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53300 "EHLO
+        id S231991AbiB0V5v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Feb 2022 16:57:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231972AbiB0V5o (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231976AbiB0V5o (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 27 Feb 2022 16:57:44 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 587916E4E6
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 13:57:06 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id p184-20020a1c29c1000000b0037f76d8b484so4919436wmp.5
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 13:57:06 -0800 (PST)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 172E46E4D5
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 13:57:07 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id s13so12600178wrb.6
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 13:57:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=raZeHnz0d+CORTk9WwiMcBzUr8yYuX4fJZnnYzX4to8=;
-        b=fVYEw70ricl/Zt8Y7j8ItREnTU5svrnludcQM/PlVJoLne49AF2M2/zJuD7fhXjmYX
-         ulFp2ccCmhi14roMpptJE4P1n5xEIAsoa09nYcWmKnW02ILLm0OdLV6n5vWxdlIwYtYz
-         ATLzOMEM78mFu7yidIW6EuhNkTQNZ9+n9G0/UzeHFVS2O1JZ9sbfrurpNlFhGBOwEOGP
-         FScZEVnLcMQLgUCZirFp766IRT0ALVK3VRdvtzv1SBmnezpZ7hnUamsapwIy9RCBaWhh
-         gG/wUUkv6fPpJzGG5tYuh3c0NUOiyl4WVH34v8EEkSiHXutzYa0zCTtaIy2yI0Rj7AD1
-         e7/A==
+        bh=Em19lLcMqW9ZtBoxwCezKUkfBKndxDcsrBMBl5tkRY0=;
+        b=AhEPr7qpHIeDqrgZZ9F9+PPCJYBshC4nLL+lXY6p/7Uc52/5+VNrJokMNtSsjmxbIP
+         f45zMEVazh1D/vOsxy7ufwSU5WZYtggQW6c2saEyIB5421GJXRXUigBVoeV6pstkqaRq
+         gNQ3tiXA67jsGqCvtg7DUImqJ0PjA74PlSG043DI4PaRwbW6afApVmbioqhmNLi0uAx8
+         HfvXLM3zRMkyEICv20j0+Cf11vIbSANiOv5AUNHGC/4SzZNqEgvYWZFVWWUJUhm7gwCj
+         mK2h0lv2APCbRyqIBqrgcXGEORG1b6GaCGMpLu/kZuf8vcy0xq8UPy9iog2UeSINOq+D
+         N/rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=raZeHnz0d+CORTk9WwiMcBzUr8yYuX4fJZnnYzX4to8=;
-        b=xHnle1arUE54/i8KsX12aT94ny7gVcSxMOLOrrD371YBY7n7Y5N9vdqAqVOpwZzCzb
-         6QcIx+rdBPzTxnJ9mVYvzOsz9W19loy8WTclyE/xH4/TNzC82jNhFb1Uunh43ztYTP8D
-         Qy0bEmp8gBxWPYOUDQpI4IDp4FgMuKakTliOsXFQCkG7st4cRSqvljF7o3EspXO07WFw
-         CFoBa7SM7qgBRvK/8yfkAC5rzFPocukwR62d3RuLKWC+cEAcwlBXWHxR1raiG/gGZIyr
-         pZks9BQ4cQeDdDNqoB4SuDozE+W+GU+YS+4V1UOH0586LkhCesm4r07kvNGd0+5NNrOb
-         daKQ==
-X-Gm-Message-State: AOAM533egcbQS3VlHxN2X9q8p78IcoukWQC4q5UTnVCKE5S44H61CLKk
-        rJr7KjJTJ8IXx88LupjTlfi2wyatTnk=
-X-Google-Smtp-Source: ABdhPJwwezYLANgSyx4PU/9nQhca+JALgaSNbN6cRrJilkobeQD7c2hMaLJjYdfCZ/RJCUxBePkuaQ==
-X-Received: by 2002:a1c:2b41:0:b0:380:e379:b8b0 with SMTP id r62-20020a1c2b41000000b00380e379b8b0mr11129959wmr.87.1645999024643;
-        Sun, 27 Feb 2022 13:57:04 -0800 (PST)
+        bh=Em19lLcMqW9ZtBoxwCezKUkfBKndxDcsrBMBl5tkRY0=;
+        b=Sup0dnU1w71Yk+ps+wMk0GIuB5a13uqXKLJXqfpfw7BPqjoxk00Tu/cMEYBM/DJpzG
+         /GpKg5H8B9BUOduCEu1SlQ+RkUFKKHRC90uAr8/UqhmCflw7pE30/O3HiZjxLbz/pEe/
+         ACXaOXlCpy5dLB2lKCsBOWi4YQPGnf35D2bf+0TGXpthD8DWDUwaXL2NlNj3zrl+Ef1J
+         SS8Fst7vCKdMdcCD7bWrx8YEJRDfJ9BDRUyzm7x71X+LtlRSESbatp1F/fTgerziMcm6
+         4RSgv4sC/d4nr7pQdZ9QXj8HjLgLk6t+KEY7PZz8JziCqNSJ9SiHJAi6xRgKEMOmR9Iu
+         4cNw==
+X-Gm-Message-State: AOAM530FwtNzgX6A0kFGK3FYD3hYBt1KLSE1ZgnoRXgrLZiPJS823YJz
+        YHs6V3O6KuSZpYND9J5MTNn4umXOJlI=
+X-Google-Smtp-Source: ABdhPJxqjgeZYIuEq2F8SM5om8ZHN97UK26g3sauuYiGI26PdXQ4zx0PZ3tpcb3uHSGVyZounehIWA==
+X-Received: by 2002:adf:f689:0:b0:1ef:5d40:a0cd with SMTP id v9-20020adff689000000b001ef5d40a0cdmr11028553wrp.89.1645999025477;
+        Sun, 27 Feb 2022 13:57:05 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t15-20020adfe44f000000b001edbea974cesm8558566wrm.53.2022.02.27.13.57.04
+        by smtp.gmail.com with ESMTPSA id s3-20020adfbc03000000b001e4b0e4a7fdsm8868778wrg.93.2022.02.27.13.57.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Feb 2022 13:57:04 -0800 (PST)
-Message-Id: <c901f9d96ca35da24aa36e1978f6ec27981d0e44.1645999021.git.gitgitgadget@gmail.com>
+        Sun, 27 Feb 2022 13:57:05 -0800 (PST)
+Message-Id: <9795a08414a9269bc6ae929ea8e8b22ad6ec0762.1645999021.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.986.v3.git.1645999021.gitgitgadget@gmail.com>
 References: <pull.986.v2.git.1645809015.gitgitgadget@gmail.com>
         <pull.986.v3.git.1645999021.gitgitgadget@gmail.com>
 From:   "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 27 Feb 2022 21:57:00 +0000
-Subject: [PATCH v3 2/3] t7519: populate untracked cache before test
+Date:   Sun, 27 Feb 2022 21:57:01 +0000
+Subject: [PATCH v3 3/3] untracked-cache: write index when populating empty
+ untracked cache
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,43 +67,70 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Tao Klerks <tao@klerks.biz>
 
-In its current state, the t7519 test dealing with untracked cache
-assumes that "git update-index --untracked-cache" will *populate* the
-untracked cache. This is not correct - it will only add an empty
-untracked cache structure to the index.
+It is expected that an empty/unpopulated untracked cache structure can
+be written to the index - by update-index, or by a "git status" call
+that sees the untracked cache should be enabled and is not, but is
+running with options that make the untracked cache non-applicable in
+that run (eg a pathspec).
 
-If we're going to compare two git status runs with something
-interesting happening in-between, we need to ensure that the index is
-in a stable/steady state *before* that first run.
+Currently, if that happens, then subsequent "git status" calls end up
+populating the untracked cache, but not writing the index (not saving
+their work) - so the performance outcome is almost identical to the
+cache being altogether disabled.
 
-Achieve this by adding another prior "git status" run.
+This continues until the index gets written with the untracked cache
+populated, for some *other* reason, such as a working tree change.
 
-At this stage this change does nothing, because there is a bug,
-addressed in the next patch, whereby once the empty untracked cache
-structure is added by the update-index invocation, the untracked cache
-gets updated in every subsequent "git status" call, but the index with
-these updates does not get written down.
+Detect the condition where an empty untracked cache exists in the
+index and we will collect the list of untracked paths, and queue an
+index write under that condition, so that the collected untracked
+paths can be written out to the untracked cache extension in the
+index.
 
-That bug actually invalidates this entire test case - but we're fixing
-that next.
+This change depends on previous fixes to t7519 for the "ignore .git
+changes when invalidating UNTR" test case to pass - before this fix,
+the test never actually did anything as it was not set up correctly.
 
 Signed-off-by: Tao Klerks <tao@klerks.biz>
 ---
- t/t7519-status-fsmonitor.sh | 1 +
- 1 file changed, 1 insertion(+)
+ dir.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 3f984136ea9..fffc57120d6 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -341,6 +341,7 @@ test_expect_success UNTRACKED_CACHE 'ignore .git changes when invalidating UNTR'
- 		git config core.fsmonitor .git/hooks/fsmonitor-test &&
- 		git update-index --untracked-cache &&
- 		git update-index --fsmonitor &&
-+		git status &&
- 		GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace-before" \
- 		git status &&
- 		test-tool dump-untracked-cache >../before
+diff --git a/dir.c b/dir.c
+index d91295f2bcd..4eee45dec91 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2781,7 +2781,8 @@ void remove_untracked_cache(struct index_state *istate)
+ 
+ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
+ 						      int base_len,
+-						      const struct pathspec *pathspec)
++						      const struct pathspec *pathspec,
++						      struct index_state *istate)
+ {
+ 	struct untracked_cache_dir *root;
+ 	static int untracked_cache_disabled = -1;
+@@ -2845,8 +2846,11 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+ 		return NULL;
+ 	}
+ 
+-	if (!dir->untracked->root)
++	if (!dir->untracked->root) {
++		/* Untracked cache existed but is not initialized; fix that */
+ 		FLEX_ALLOC_STR(dir->untracked->root, name, "");
++		istate->cache_changed |= UNTRACKED_CHANGED;
++	}
+ 
+ 	/* Validate $GIT_DIR/info/exclude and core.excludesfile */
+ 	root = dir->untracked->root;
+@@ -2916,7 +2920,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+ 		return dir->nr;
+ 	}
+ 
+-	untracked = validate_untracked_cache(dir, len, pathspec);
++	untracked = validate_untracked_cache(dir, len, pathspec, istate);
+ 	if (!untracked)
+ 		/*
+ 		 * make sure untracked cache code path is disabled,
 -- 
 gitgitgadget
-
