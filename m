@@ -2,209 +2,369 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5635CC433EF
-	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 12:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0A29C433EF
+	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 14:39:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230458AbiB0M1B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Feb 2022 07:27:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37022 "EHLO
+        id S230268AbiB0OkM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Feb 2022 09:40:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230461AbiB0M07 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Feb 2022 07:26:59 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 209DE6D951
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 04:26:23 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id o26so8434995pgb.8
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 04:26:23 -0800 (PST)
+        with ESMTP id S229695AbiB0OkM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Feb 2022 09:40:12 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C90845AED9
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 06:39:33 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id z22so14059371edd.1
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 06:39:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=w/egdeIQHmPwktkzRr3IFjI7RoxTnYuBhKFh3O0fI+w=;
-        b=ap1cSLIWWYktBJFFuytEQcdJ0tjd4QVLGlUZGNYwEIqNi/QUK8shfHzLIuQon37uBv
-         rJpdB1j18Fy+5u0NE8XFK9kCR0mABt/fwhP/VoClB7Jv0jNagEoRLo50t78SF3Wh9Jhj
-         +u8uFEd+yaYjUJ0ApNKUtXFcqyCJzUddEQouKc8hyd8dd0OH6iSZFSVYSHYVJ+0fbcd9
-         T8YTi35/lBAOSdmRKopUl/9JZguyqoY+mFQY4UrAN9CDhlYu6hbHelCSeaVVx24ozphe
-         K96BzpIPcN01sWf+2p5teq3AX3bUFlAHRePRGRvHxu/3GHoujEeZlgPXpdA+4hp6n+8Y
-         CqXQ==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oyOS9XjUaOCAmrVcvk8K0UHdr1O1M2fvhNzODeLL3hs=;
+        b=yrlA1kIUPG4ydAwbC89DDRuwtzc8kAwJgva+kn7qI2wKXsj0giyu1SOdiqHEOS8Roe
+         ohSQcgZpfqCEtk7yutHnaeiCxpF/0dq+ehKPfn8crT0opwvfP7W4IqRTHv3EO753bA+P
+         w4CtadzrD9J2LXitnge06f6qPQ2/7tWzwQ97VTZMcTxQpGqNNfhSpwSLPM9rojyZIORZ
+         oRsavebTrPIocGTdOnHK6DPRkhrirGKxHGlfy0zkMqZQ0a8DvnluG+9R4hpITz0Qbj1Q
+         YdnVGfozsYB0q5F84o5NG416z+o42CKecjmuDRvgpjMHtyFBtQHtDoA/6mNA9TkcOHAC
+         m5Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=w/egdeIQHmPwktkzRr3IFjI7RoxTnYuBhKFh3O0fI+w=;
-        b=rIgNAs8VAv268shNjSODMiferC5jSlqgO2/NiLnz7Iv8B23T3LrknTLvBYzg7ezy44
-         fUM/nXAjHk9DQEzYIHmiRNypOe6s+r5BR87ZRlk5dAQ4MjUa7atOjckoaETeJ5NNEHW5
-         7TVYXI9CYG5i/XWKONPUE+RGi1vpwa2ChowfPn2/t7c5LD1RoQL2AJT7COqMQ6LAQTBK
-         2EER1ixg5HzvVq2fz2psCKVWglgXkQTXMwp7ECopTVWSuYnB7lrlU24hlv30UnmeNQkF
-         vG7B3uC2Tapp8Cyku35VPRdVrKGUXQ3X35ixZyr/0dAyzSC7AaYMDYlcsbOK9Ad7WGJ1
-         K/VA==
-X-Gm-Message-State: AOAM530fpMjQet7gPCvAuh4iZ7dPfIYbRyVB3Qih973WyZbBNunlvzYs
-        GyG1DnS4eSDDkGOlrFs6Y9hwtr+SJQ59rwN6
-X-Google-Smtp-Source: ABdhPJw0DG9q/U0C+pIR9GuXN1pOs74IkMDbdRtHaSXFVo3PGmMmoNwU5ObcpiYh3Mx5gF0PSBDExw==
-X-Received: by 2002:a05:6a00:1f07:b0:4e1:3335:9dd6 with SMTP id be7-20020a056a001f0700b004e133359dd6mr16404924pfb.76.1645964782160;
-        Sun, 27 Feb 2022 04:26:22 -0800 (PST)
-Received: from DESKTOP-MEF584H.localdomain ([103.108.4.152])
-        by smtp.gmail.com with ESMTPSA id z16-20020a056a00241000b004f3a647ae89sm9802969pfh.174.2022.02.27.04.26.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Feb 2022 04:26:21 -0800 (PST)
-From:   Shubham Mishra <shivam828787@gmail.com>
-To:     git@vger.kernel.org
-Cc:     me@ttaylorr.com, avarab@gmail.com,
-        Shubham Mishra <shivam828787@gmail.com>
-Subject: [PATCH v2 2/2] t0030-t0050: avoid pipes with Git on LHS
-Date:   Sun, 27 Feb 2022 17:54:53 +0530
-Message-Id: <20220227122453.25278-3-shivam828787@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220227122453.25278-1-shivam828787@gmail.com>
-References: <220224.86o82wab31.gmgdl@evledraar.gmail.com>
- <20220227122453.25278-1-shivam828787@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oyOS9XjUaOCAmrVcvk8K0UHdr1O1M2fvhNzODeLL3hs=;
+        b=upyr85oj1Oqka0kaXTklh+FjhG7H6RELXW59jvuA4vZtwYsdSJxDiqILk/ifIYxcOa
+         KPwIRYM8yG2GVJgrA5q0IFc9zG4HbvsOam0H5hyhIxU8s4GuMKNejQdxXy+a6MaFCFYa
+         R4gpA9XXVeIa/DUhJF9MtU2l5kNEJcd00+J4lboloSwbjSHiD2Gy0lp2qGX/yiiE7ToF
+         x/4LhxaInzAQFgJ0bOJGTtvPacw5TAit2q3JyLRQqgzNtHpXgk7kw5nDQzCXEXRah2ZE
+         jwRA2mbezm04D665LA1iLcktonaPPjeHWUeV3cbLRwMGOurNhOl5cN4GpBjjTzoMQKo7
+         UhAw==
+X-Gm-Message-State: AOAM532OmOwNuBkFFkaxQFzxmbttdeEn+jLIfSqRnlaWgsCaeczQuWps
+        0/gMxF6Jd+QAyYCevJQFg/sPNVz9K5aN6axA81Z//w==
+X-Google-Smtp-Source: ABdhPJwNCQDFPy6UCL2jtnh08yMBtWsheyh1fEgOM47O40z1jRI23YosYZLn8YYbjKE5exmG9N0UgrOKbCCXm90ueng=
+X-Received: by 2002:a05:6402:168a:b0:3fb:600e:4cc3 with SMTP id
+ a10-20020a056402168a00b003fb600e4cc3mr15359429edv.32.1645972771922; Sun, 27
+ Feb 2022 06:39:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.985.v2.git.1645811564461.gitgitgadget@gmail.com> <pull.985.v3.git.1645960973798.gitgitgadget@gmail.com>
+In-Reply-To: <pull.985.v3.git.1645960973798.gitgitgadget@gmail.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Sun, 27 Feb 2022 15:39:20 +0100
+Message-ID: <CAPMMpojQa05yq6ePuK0T8GKhsULPzv-kdjC6DUDpaED9gU17_g@mail.gmail.com>
+Subject: Re: [PATCH v3] untracked-cache: support '--untracked-files=all' if configured
+To:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pipes ignore error codes of LHS command and thus we should not use
-them with Git in tests. As an alternative, use a 'tmp' file to write
-the Git output so we can test the exit code.
+Bad submission, my apologies - commit message is right but code
+changes are missing. New one coming soon.
 
-Signed-off-by: Shubham Mishra <shivam828787@gmail.com>
----
- t/t0030-stripspace.sh | 75 +++++++++++++++++++++++++++----------------
- t/t0050-filesystem.sh |  3 +-
- 2 files changed, 50 insertions(+), 28 deletions(-)
-
-diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-index ae1ca380c1..7bc3dcd07c 100755
---- a/t/t0030-stripspace.sh
-+++ b/t/t0030-stripspace.sh
-@@ -13,6 +13,10 @@ s40='                                        '
- sss="$s40$s40$s40$s40$s40$s40$s40$s40$s40$s40" # 400
- ttt="$t40$t40$t40$t40$t40$t40$t40$t40$t40$t40" # 400
- 
-+printf_git_stripspace () {
-+    printf "$1" | git stripspace
-+}
-+
- test_expect_success \
-     'long lines without spaces should be unchanged' '
-     echo "$ttt" >expect &&
-@@ -225,32 +229,38 @@ test_expect_success \
- 
- test_expect_success \
-     'text without newline at end should end with newline' '
--    test $(printf "$ttt" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt$ttt$ttt" | git stripspace | wc -l) -gt 0
-+    test_stdout_line_count -gt 0 printf_git_stripspace "$ttt" &&
-+    test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$ttt" &&
-+    test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$ttt$ttt" &&
-+    test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$ttt$ttt$ttt"
- '
- 
- # text plus spaces at the end:
- 
- test_expect_success \
-     'text plus spaces without newline at end should end with newline' '
--    test $(printf "$ttt$sss" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt$ttt$sss" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$ttt$sss$sss" | git stripspace | wc -l) -gt 0 &&
--    test $(printf "$ttt$sss$sss$sss" | git stripspace | wc -l) -gt 0
-+    test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$sss" &&
-+    test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$ttt$sss" &&
-+    test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$ttt$ttt$sss" &&
-+    test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$sss$sss" &&
-+    test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$ttt$sss$sss" &&
-+    test_stdout_line_count -gt 0 printf_git_stripspace "$ttt$sss$sss$sss"
- '
- 
- test_expect_success \
-     'text plus spaces without newline at end should not show spaces' '
--    ! (printf "$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (printf "$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (printf "$ttt$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (printf "$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (printf "$ttt$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (printf "$ttt$sss$sss$sss" | git stripspace | grep "  " >/dev/null)
-+    printf "$ttt$sss" | git stripspace >tmp &&
-+    ! grep "  " tmp >/dev/null &&
-+    printf "$ttt$ttt$sss" | git stripspace &&
-+    ! grep "  " tmp >/dev/null &&
-+    printf "$ttt$ttt$ttt$sss" | git stripspace &&
-+    ! grep "  " tmp >/dev/null &&
-+    printf "$ttt$sss$sss" | git stripspace &&
-+    ! grep "  " tmp >/dev/null &&
-+    printf "$ttt$ttt$sss$sss" | git stripspace &&
-+    ! grep "  " tmp >/dev/null &&
-+    printf "$ttt$sss$sss$sss" | git stripspace &&
-+    ! grep "  " tmp >/dev/null
- '
- 
- test_expect_success \
-@@ -282,12 +292,18 @@ test_expect_success \
- 
- test_expect_success \
-     'text plus spaces at end should not show spaces' '
--    ! (echo "$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (echo "$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (echo "$ttt$ttt$ttt$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (echo "$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (echo "$ttt$ttt$sss$sss" | git stripspace | grep "  " >/dev/null) &&
--    ! (echo "$ttt$sss$sss$sss" | git stripspace | grep "  " >/dev/null)
-+    echo "$ttt$sss" | git stripspace >tmp &&
-+    ! grep "  " tmp >/dev/null &&
-+    echo "$ttt$ttt$sss" | git stripspace >tmp &&
-+    ! grep "  " tmp>/dev/null &&
-+    echo "$ttt$ttt$ttt$sss" &&
-+    ! grep "  " tmp >/dev/null &&
-+    echo "$ttt$sss$sss" | git stripspace >tmp &&
-+    ! grep "  " tmp >/dev/null &&
-+    echo "$ttt$ttt$sss$sss" | git stripspace >tmp &&
-+    ! grep "  " tmp >/dev/null &&
-+    echo "$ttt$sss$sss$sss" | git stripspace >tmp &&
-+    ! grep "  " tmp >/dev/null
- '
- 
- test_expect_success \
-@@ -339,11 +355,16 @@ test_expect_success \
- 
- test_expect_success \
-     'spaces without newline at end should not show spaces' '
--    ! (printf "" | git stripspace | grep " " >/dev/null) &&
--    ! (printf "$sss" | git stripspace | grep " " >/dev/null) &&
--    ! (printf "$sss$sss" | git stripspace | grep " " >/dev/null) &&
--    ! (printf "$sss$sss$sss" | git stripspace | grep " " >/dev/null) &&
--    ! (printf "$sss$sss$sss$sss" | git stripspace | grep " " >/dev/null)
-+    printf "" | git stripspace >tmp &&
-+    ! grep " " tmp >/dev/null &&
-+    printf "$sss" | git stripspace >tmp &&
-+    ! grep " " tmp >/dev/null &&
-+    printf "$sss$sss" | git stripspace >tmp &&
-+    ! grep " " tmp >/dev/null &&
-+    printf "$sss$sss$sss" | git stripspace >tmp &&
-+    ! grep " " tmp >/dev/null &&
-+    printf "$sss$sss$sss$sss" | git stripspace >tmp &&
-+    ! grep " " tmp >/dev/null
- '
- 
- test_expect_success \
-diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-index afc343cf9b..5c9dc90d0b 100755
---- a/t/t0050-filesystem.sh
-+++ b/t/t0050-filesystem.sh
-@@ -104,7 +104,8 @@ test_expect_failure CASE_INSENSITIVE_FS 'add (with different case)' '
- 	rm camelcase &&
- 	echo 1 >CamelCase &&
- 	git add CamelCase &&
--	camel=$(git ls-files | grep -i camelcase) &&
-+	git ls-files >tmp &&
-+	camel=$(grep -i camelcase tmp) &&
- 	test $(echo "$camel" | wc -l) = 1 &&
- 	test "z$(git cat-file blob :$camel)" = z1
- '
--- 
-2.25.1
-
+On Sun, Feb 27, 2022 at 12:22 PM Tao Klerks via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Tao Klerks <tao@klerks.biz>
+>
+> Untracked cache was originally designed to only work with
+> '-untracked-files=normal', but this causes performance issues for UI
+> tooling that wants to see "all" on a frequent basis. On the other hand,
+> the conditions that prevented applicability to the "all" mode no
+> longer seem to apply.
+>
+> The disqualification of untracked cache has a particularly significant
+> impact on Windows with the defaulted fscache, where the introduction
+> of fsmonitor can make the first and costly directory-iteration happen
+> in untracked file detection, single-threaded, rather than in
+> preload-index on multiple threads. Improving the performance of a
+> "normal" 'git status' run with fsmonitor can make
+> 'git status --untracked-files=all' perform much worse.
+>
+> To partially address this, align the supported directory flags for the
+> stored untracked cache data with the git config. If a user specifies
+> an '--untracked-files=' commandline parameter that does not align with
+> their 'status.showuntrackedfiles' config value, then the untracked
+> cache will be ignored - as it is for other unsupported situations like
+> when a pathspec is specified.
+>
+> If the previously stored flags no longer match the current
+> configuration, but the currently-applicable flags do match the current
+> configuration, then discard the previously stored untracked cache
+> data.
+>
+> For most users there will be no change in behavior. Users who need
+> '--untracked-files=all' to perform well will now have the option of
+> setting "status.showuntrackedfiles" to "all" for better / more
+> consistent performance.
+>
+> Users who need '--untracked-files=all' to perform well for their
+> tooling AND prefer to avoid the verbosity of "all" when running
+> git status explicitly without options... are out of luck for now (no
+> change).
+>
+> Users who have the "status.showuntrackedfiles" config set to "all"
+> and yet frequently explicitly call
+> 'git status --untracked-files=normal' (and use the untracked cache)
+> are the only ones who will be disadvantaged by this change. Their
+> "--untracked-files=normal" calls will, after this change, no longer
+> use the untracked cache.
+>
+> Signed-off-by: Tao Klerks <tao@klerks.biz>
+> ---
+>     Support untracked cache with '--untracked-files=all' if configured
+>
+>     Resending this patch from a few months ago (with better standards
+>     compliance) - it hasn't seen any comments yet, I would dearly love some
+>     eyes on this as the change can make a big difference to hundreds of
+>     windows users in my environment (and I'd really rather not start
+>     distributing customized git builds!)
+>
+>     This patch aims to make it possible for users of the -uall flag to git
+>     status, either by preference or by need (eg UI tooling), to benefit from
+>     the untracked cache when they set their 'status.showuntrackedfiles'
+>     config setting to 'all'. This is very important for large repos in
+>     Windows.
+>
+>     More detail on the change and context in the commit message, I assume
+>     repeating a verbose message here is discouraged.
+>
+>     These changes result from a couple of conversations,
+>     81153d02-8e7a-be59-e709-e90cd5906f3a@jeffhostetler.com and
+>     CABPp-BFiwzzUgiTj_zu+vF5x20L0=1cf25cHwk7KZQj2YkVzXw@mail.gmail.com>.
+>
+>     The test suite passes, but as a n00b I do have questions:
+>
+>      * Is there any additional validation that could/should be done to
+>        confirm that "-uall" untracked data can be cached safely?
+>        * It looks safe from following the code
+>        * It seems from discussing briefly with Elijah Newren in the thread
+>          above that thare are no obvious red flags
+>        * Manual testing, explicitly and implicitly through months of use,
+>          yields no issues
+>      * Is it OK to check the repo configuration in the body of processing?
+>        It seems to be a rare pattern
+>      * Can anyone think of a way to test this change?
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-985%2FTaoK%2Ftaok-untracked-cache-with-uall-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-985/TaoK/taok-untracked-cache-with-uall-v3
+> Pull-Request: https://github.com/gitgitgadget/git/pull/985
+>
+> Range-diff vs v2:
+>
+>  1:  e2f1ad26c78 ! 1:  49cf90bfab5 untracked-cache: support '--untracked-files=all' if configured
+>      @@ Commit message
+>           untracked-cache: support '--untracked-files=all' if configured
+>
+>           Untracked cache was originally designed to only work with
+>      -    '-untracked-files=normal', but this is a concern for UI tooling that
+>      -    wants to see "all" on a frequent basis, and the conditions that
+>      -    prevented applicability to the "all" mode no longer seem to apply.
+>      +    '-untracked-files=normal', but this causes performance issues for UI
+>      +    tooling that wants to see "all" on a frequent basis. On the other hand,
+>      +    the conditions that prevented applicability to the "all" mode no
+>      +    longer seem to apply.
+>
+>      -    The disqualification of untracked cache is a particular problem on
+>      -    Windows with the defaulted fscache, where the introduction of
+>      -    fsmonitor can make the first and costly directory-iteration happen
+>      +    The disqualification of untracked cache has a particularly significant
+>      +    impact on Windows with the defaulted fscache, where the introduction
+>      +    of fsmonitor can make the first and costly directory-iteration happen
+>           in untracked file detection, single-threaded, rather than in
+>           preload-index on multiple threads. Improving the performance of a
+>           "normal" 'git status' run with fsmonitor can make
+>           'git status --untracked-files=all' perform much worse.
+>
+>      -    In this change, align the supported directory flags for the stored
+>      -    untracked cache data with the git config. If a user specifies an
+>      -    '--untracked-files=' commandline parameter that does not align with
+>      +    To partially address this, align the supported directory flags for the
+>      +    stored untracked cache data with the git config. If a user specifies
+>      +    an '--untracked-files=' commandline parameter that does not align with
+>           their 'status.showuntrackedfiles' config value, then the untracked
+>           cache will be ignored - as it is for other unsupported situations like
+>           when a pathspec is specified.
+>
+>           If the previously stored flags no longer match the current
+>           configuration, but the currently-applicable flags do match the current
+>      -    configuration, then the previously stored untracked cache data is
+>      -    discarded.
+>      +    configuration, then discard the previously stored untracked cache
+>      +    data.
+>
+>           For most users there will be no change in behavior. Users who need
+>      -    '--untracked-files=all' to perform well will have the option of
+>      -    setting "status.showuntrackedfiles" to "all".
+>      +    '--untracked-files=all' to perform well will now have the option of
+>      +    setting "status.showuntrackedfiles" to "all" for better / more
+>      +    consistent performance.
+>
+>           Users who need '--untracked-files=all' to perform well for their
+>           tooling AND prefer to avoid the verbosity of "all" when running
+>           git status explicitly without options... are out of luck for now (no
+>           change).
+>
+>      -    Users who set "status.showuntrackedfiles" to "all" and yet most
+>      -    frequently explicitly call 'git status --untracked-files=normal' (and
+>      -    use the untracked cache) are the only ones who would be disadvantaged
+>      -    by this change. It seems unlikely there are any such users.
+>      +    Users who have the "status.showuntrackedfiles" config set to "all"
+>      +    and yet frequently explicitly call
+>      +    'git status --untracked-files=normal' (and use the untracked cache)
+>      +    are the only ones who will be disadvantaged by this change. Their
+>      +    "--untracked-files=normal" calls will, after this change, no longer
+>      +    use the untracked cache.
+>
+>           Signed-off-by: Tao Klerks <tao@klerks.biz>
+>
+>
+>
+>  dir.c | 86 ++++++++++++++++++++++++++++++++++++++++++++++-------------
+>  1 file changed, 68 insertions(+), 18 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index d91295f2bcd..e35331d3f71 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2746,13 +2746,33 @@ static void set_untracked_ident(struct untracked_cache *uc)
+>         strbuf_addch(&uc->ident, 0);
+>  }
+>
+> -static void new_untracked_cache(struct index_state *istate)
+> +static unsigned configured_default_dir_flags(struct index_state *istate)
+> +{
+> +       /* This logic is coordinated with the setting of these flags in
+> +        * wt-status.c#wt_status_collect_untracked(), and the evaluation
+> +        * of the config setting in commit.c#git_status_config()
+> +        */
+> +       char *status_untracked_files_config_value;
+> +       int config_outcome = repo_config_get_string(istate->repo,
+> +                                                               "status.showuntrackedfiles",
+> +                                                               &status_untracked_files_config_value);
+> +       if (!config_outcome && !strcmp(status_untracked_files_config_value, "all")) {
+> +               return 0;
+> +       } else {
+> +               /*
+> +                * The default, if "all" is not set, is "normal" - leading us here.
+> +                * If the value is "none" then it really doesn't matter.
+> +                */
+> +               return DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
+> +       }
+> +}
+> +
+> +static void new_untracked_cache(struct index_state *istate, unsigned flags)
+>  {
+>         struct untracked_cache *uc = xcalloc(1, sizeof(*uc));
+>         strbuf_init(&uc->ident, 100);
+>         uc->exclude_per_dir = ".gitignore";
+> -       /* should be the same flags used by git-status */
+> -       uc->dir_flags = DIR_SHOW_OTHER_DIRECTORIES | DIR_HIDE_EMPTY_DIRECTORIES;
+> +       uc->dir_flags = flags;
+>         set_untracked_ident(uc);
+>         istate->untracked = uc;
+>         istate->cache_changed |= UNTRACKED_CHANGED;
+> @@ -2761,11 +2781,13 @@ static void new_untracked_cache(struct index_state *istate)
+>  void add_untracked_cache(struct index_state *istate)
+>  {
+>         if (!istate->untracked) {
+> -               new_untracked_cache(istate);
+> +               new_untracked_cache(istate,
+> +                               configured_default_dir_flags(istate));
+>         } else {
+>                 if (!ident_in_untracked(istate->untracked)) {
+>                         free_untracked_cache(istate->untracked);
+> -                       new_untracked_cache(istate);
+> +                       new_untracked_cache(istate,
+> +                                       configured_default_dir_flags(istate));
+>                 }
+>         }
+>  }
+> @@ -2781,10 +2803,12 @@ void remove_untracked_cache(struct index_state *istate)
+>
+>  static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *dir,
+>                                                       int base_len,
+> -                                                     const struct pathspec *pathspec)
+> +                                                     const struct pathspec *pathspec,
+> +                                                         struct index_state *istate)
+>  {
+>         struct untracked_cache_dir *root;
+>         static int untracked_cache_disabled = -1;
+> +       unsigned configured_dir_flags;
+>
+>         if (!dir->untracked)
+>                 return NULL;
+> @@ -2812,17 +2836,9 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+>         if (base_len || (pathspec && pathspec->nr))
+>                 return NULL;
+>
+> -       /* Different set of flags may produce different results */
+> -       if (dir->flags != dir->untracked->dir_flags ||
+> -           /*
+> -            * See treat_directory(), case index_nonexistent. Without
+> -            * this flag, we may need to also cache .git file content
+> -            * for the resolve_gitlink_ref() call, which we don't.
+> -            */
+> -           !(dir->flags & DIR_SHOW_OTHER_DIRECTORIES) ||
+> -           /* We don't support collecting ignore files */
+> -           (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
+> -                          DIR_COLLECT_IGNORED)))
+> +       /* We don't support collecting ignore files */
+> +       if (dir->flags & (DIR_SHOW_IGNORED | DIR_SHOW_IGNORED_TOO |
+> +                       DIR_COLLECT_IGNORED))
+>                 return NULL;
+>
+>         /*
+> @@ -2845,6 +2861,40 @@ static struct untracked_cache_dir *validate_untracked_cache(struct dir_struct *d
+>                 return NULL;
+>         }
+>
+> +       /* We don't support using or preparing the untracked cache if
+> +        * the current effective flags don't match the configured
+> +        * flags.
+> +        */
+> +       configured_dir_flags = configured_default_dir_flags(istate);
+> +       if (dir->flags != configured_dir_flags)
+> +               return NULL;
+> +
+> +       /* If the untracked structure we received does not have the same flags
+> +        * as configured, but the configured flags do match the effective flags,
+> +        * then we need to reset / create a new "untracked" structure to match
+> +        * the new config.
+> +        * Keeping the saved and used untracked cache in-line with the
+> +        * configuration provides an opportunity for frequent users of
+> +        * "git status -uall" to leverage the untracked cache by aligning their
+> +        * configuration (setting "status.showuntrackedfiles" to "all" or
+> +        * "normal" as appropriate), where previously this option was
+> +        * incompatible with untracked cache and *consistently* caused
+> +        * surprisingly bad performance (with fscache and fsmonitor enabled) on
+> +        * Windows.
+> +        *
+> +        * IMPROVEMENT OPPORTUNITY: If we reworked the untracked cache storage
+> +        * to not be as bound up with the desired output in a given run,
+> +        * and instead iterated through and stored enough information to
+> +        * correctly serve both "modes", then users could get peak performance
+> +        * with or without '-uall' regardless of their
+> +        * "status.showuntrackedfiles" config.
+> +        */
+> +       if (dir->flags != dir->untracked->dir_flags) {
+> +               free_untracked_cache(istate->untracked);
+> +               new_untracked_cache(istate, configured_dir_flags);
+> +               dir->untracked = istate->untracked;
+> +       }
+> +
+>         if (!dir->untracked->root)
+>                 FLEX_ALLOC_STR(dir->untracked->root, name, "");
+>
+> @@ -2916,7 +2966,7 @@ int read_directory(struct dir_struct *dir, struct index_state *istate,
+>                 return dir->nr;
+>         }
+>
+> -       untracked = validate_untracked_cache(dir, len, pathspec);
+> +       untracked = validate_untracked_cache(dir, len, pathspec, istate);
+>         if (!untracked)
+>                 /*
+>                  * make sure untracked cache code path is disabled,
+>
+> base-commit: dab1b7905d0b295f1acef9785bb2b9cbb0fdec84
+> --
+> gitgitgadget
