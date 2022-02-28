@@ -2,108 +2,215 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEA61C433EF
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 18:28:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6837BC433EF
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 18:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240853AbiB1S2y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 13:28:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47294 "EHLO
+        id S231854AbiB1Sd4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 13:33:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240795AbiB1S2n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 13:28:43 -0500
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96E57E4486
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 10:11:50 -0800 (PST)
-Received: by mail-pl1-x649.google.com with SMTP id 17-20020a170902ee5100b0014fef809980so5129219plo.10
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 10:11:50 -0800 (PST)
+        with ESMTP id S240708AbiB1ScF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 13:32:05 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FF3CF11AD
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 10:15:07 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id b8so11850382pjb.4
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 10:15:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=J93nlxVGqTmyJVtxJRMuzGNHoty7+jRmxp8daxmiFPg=;
-        b=PNBkqr//Vaz38NJ9K2Kgda0CJ86KNWBStuflWMQMa/0GM9+X2UEKvGvFQwyw3ijeKZ
-         v6Mp/+aQbXRPmEoZvJoaR1g3UG6P5gJK9WqZRB5MqrgfJ0MvwX4quah6COq4rNfhaBAW
-         hRxRjss9SY7mQDDabA3JQU2Ipcy5f91QwPVFIKIcPj5hloByP2jB/TCC4CjcPxWDfudt
-         rPcOZ9EBi0qzijvsf1x2jjK90rUGDwmU/TJ0uyk6qwZbWzo12pGy51XF3Lyi6qIjFh7I
-         /EnSCWL7P/6TruG59MD5A9Ufs09UWSTbWWrmpLygXGnBkH1T/lvdSkA/CYcE9TWaHkv8
-         1tXA==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=xvhMGYPq3Z4YETVnK5DjOGvo5m/No5Mmm0eI3qsH1uU=;
+        b=Ky5FA7heAM+hNw0TyHORQdhRo0DT11h2Jz5ne5biZ5yVF1GQbGAfI8YJlN9vQn6Z9+
+         NjnQPQ2mAqooH1fFJ5JZ0O/HPH1/4gwkxAhHiLWxGAODfNVud6Z7a5QJx4cz3iuZqi/7
+         244z6ymYetK8Rym+zRxk8LBmNslDVkXNTh5z2VInMYwW155O03iJvmKYWnHeith8wpkq
+         Zq54nRHIRP6s+ymbBDG3gNRRT0imhcpFDBgjUYKPavMhzyBQE0VeZmFBGCdN+VOq0I/H
+         oIdOvGSKg1qbuF5VEiBQDQ3lMoa7N5vJDHAqLNdDKIRdKZ607skFEjABR3Wm3mGqARhe
+         4iWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=J93nlxVGqTmyJVtxJRMuzGNHoty7+jRmxp8daxmiFPg=;
-        b=5HtcbxQohpOJGuK5o6vBiUs/mWN6dvNba85lVKNWbpDkCB5ifQ9aBqnIw3CavBATyO
-         c7/liA0WFIya6EXZy7JjVLGT+0PBXaqjPZv3wXUUc6ZdK8r5Iu1/3Mpt8uqYsygPtXET
-         e3s9i+auZ3TPjQ/5OSgmrhU+OODlcCR3oINF+5S2JyB/grJpAjU4I8mPJYfO1jQv7nZN
-         GsacsCPwIAFmoEvZ8R03jvDqN21UPqaK3zFBEsDe1bgQgQf4lKaOcqlgeIOSEaxLkiYZ
-         fCB1yRBLThcXMMjpgtybp9Su1Od3QTabzfxQRli1S/6RX+WftDa0cwJdPUhGvcReMgcx
-         3TVw==
-X-Gm-Message-State: AOAM53225qhpNNPtpWfmgcTl8SNjtFQNTA5VrbyonKS5ryAOnMKdUbEG
-        2JiTOzfYFEg/WV07KiQu8yRmG4GKiBhdqw==
-X-Google-Smtp-Source: ABdhPJx+7JGohPTnCLqMw8oa/KBh6krHYbrACvNFALe3zkBKbz+EaI4782NioT24E05lmpsjH2/yjyt40JzF9A==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:4581:b0:1bc:d215:8722 with SMTP
- id v1-20020a17090a458100b001bcd2158722mr17909195pjg.149.1646071901716; Mon,
- 28 Feb 2022 10:11:41 -0800 (PST)
-Date:   Mon, 28 Feb 2022 10:11:39 -0800
-In-Reply-To: <220225.86pmnb8931.gmgdl@evledraar.gmail.com>
-Message-Id: <kl6l8rtuq2sk.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220224231420.2878760-1-jonathantanmy@google.com>
- <kl6lfso74pzm.fsf@chooglen-macbookpro.roam.corp.google.com> <220225.86pmnb8931.gmgdl@evledraar.gmail.com>
-Subject: Re: [PATCH v3 03/10] t5526: create superproject commits with test helper
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=xvhMGYPq3Z4YETVnK5DjOGvo5m/No5Mmm0eI3qsH1uU=;
+        b=CILzDFBXe4Ks2RPbNVbiZUcRQQL/0X6e0SoGIkdAH99yaaiU6JbtBqt9P1wFGCPCAU
+         ZXGelDqTlsWsh/5kWxJNQGI6DVWk3Ooyvvdp5UN8B49zbc7lnYBSCtMIJgbxg3hHUOhi
+         yJmY/w6W5xo8nH4TnGD/1RtOq9shtowAEkxrjlhgXt0zQhHOm2RMEkR1H+Ucakq+fRxk
+         I4ciW3xDcU/I3olC8YxoDZd142/0cxfi9FdZBNZjE2FSUPApOTHxJki6ADaKXm9DB+uD
+         cQ7TTBeWT6TWNpuRikNAbRLoPxlxGF9IK+DQt+av8nNJFuQRhcTjwoDIBKgTZNP5LEP2
+         SmIw==
+X-Gm-Message-State: AOAM531EpyGVKF+t1L7eJxzxZilVZuh4OZDXBEYqjDXGVoS44pm2IosU
+        NoHgOmOD+gibrpeA75sLHkp9
+X-Google-Smtp-Source: ABdhPJyuEuMriMZ4AFDCoZlwtK5vzWsrinJsmZqh4V8ZBpbWm8jIgmYx1AwpLa4iyZmblReDz87nmQ==
+X-Received: by 2002:a17:90a:2f41:b0:1bc:46ce:6364 with SMTP id s59-20020a17090a2f4100b001bc46ce6364mr17768034pjd.159.1646072095235;
+        Mon, 28 Feb 2022 10:14:55 -0800 (PST)
+Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
+        by smtp.gmail.com with ESMTPSA id b2-20020a056a000a8200b004f1111c66afsm14308727pfl.148.2022.02.28.10.14.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Feb 2022 10:14:54 -0800 (PST)
+Message-ID: <472bdb5f-4bf2-4d62-3dd5-bb6ba4f4162a@github.com>
+Date:   Mon, 28 Feb 2022 10:14:53 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.6.1
+Subject: Re: [PATCH v2 3/7] read-tree: expand sparse checkout test coverage
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
+ <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
+ <ffe0b6aff2baee238f77ae57561a62ea5473321f.1645742073.git.gitgitgadget@gmail.com>
+ <CABPp-BF4jtEzyUBEymhFJxaGOMRaUs-XyBdr89Fs7E_ehnwWMg@mail.gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <CABPp-BF4jtEzyUBEymhFJxaGOMRaUs-XyBdr89Fs7E_ehnwWMg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> On Fri, Feb 25 2022, Glen Choo wrote:
->
->> Jonathan Tan <jonathantanmy@google.com> writes:
+Elijah Newren wrote:
+> On Thu, Feb 24, 2022 at 2:34 PM Victoria Dye via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 >>
->>> Glen Choo <chooglen@google.com> writes:
->>>> +# For each superproject in the test setup, update its submodule, add =
-the
->>>> +# submodule and create a new commit with the submodule change.
->>>> +#
->>>> +# This requires add_submodule_commits() to be called first, otherwise
->>>> +# the submodules will not have changed and cannot be "git add"-ed.
->>>> +add_superproject_commits() {
->>>> +(
->>>> +	cd submodule &&
->>>> +	(
->>>> +		cd subdir/deepsubmodule &&
->>>> +		git fetch &&
->>>> +		git checkout -q FETCH_HEAD
->>>> +	) &&
->>>> +		git add subdir/deepsubmodule &&
->>>> +		git commit -m "new deep submodule"
->>>> +	) &&
->>>
->>> The indentation looks off. Also, no need for "-q".
+>> From: Victoria Dye <vdye@github.com>
 >>
->> Ah thanks. I think the "-q" is there to suppress the detached HEAD
->> warning, which is very large.
+>> Add tests focused on how 'git read-tree' behaves in sparse checkouts. Extra
+>> emphasis is placed on interactions with files outside the sparse cone, e.g.
+>> merges with out-of-cone conflicts.
 >>
->> I'd prefer to keep it unless there are stronger reasons than "it's not
->> needed for correctness".=20
->
-> FWIW I was going to comment on the -q, but didn't because you're just
-> moving this around.
->
-> I think even for large warnings it's fine to omit -q etc, since that's
-> what --verbose (as in the test-lib.sh argument) is for.
+>> Signed-off-by: Victoria Dye <vdye@github.com>
+>> ---
+>>  t/perf/p2000-sparse-operations.sh        |  1 +
+>>  t/t1092-sparse-checkout-compatibility.sh | 85 ++++++++++++++++++++++++
+>>  2 files changed, 86 insertions(+)
+>>
+>> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+>> index 2a7106b9495..382716cfca9 100755
+>> --- a/t/perf/p2000-sparse-operations.sh
+>> +++ b/t/perf/p2000-sparse-operations.sh
+>> @@ -117,6 +117,7 @@ test_perf_on_all git diff
+>>  test_perf_on_all git diff --cached
+>>  test_perf_on_all git blame $SPARSE_CONE/a
+>>  test_perf_on_all git blame $SPARSE_CONE/f3/a
+>> +test_perf_on_all git read-tree -mu HEAD
+>>  test_perf_on_all git checkout-index -f --all
+>>  test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
+>>
+>> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+>> index b1dcaa0e642..9d58da4e925 100755
+>> --- a/t/t1092-sparse-checkout-compatibility.sh
+>> +++ b/t/t1092-sparse-checkout-compatibility.sh
+>> @@ -819,6 +819,91 @@ test_expect_success 'update-index --cacheinfo' '
+>>         test_cmp expect sparse-checkout-out
+>>  '
+>>
+>> +test_expect_success 'read-tree --merge with files outside sparse definition' '
+>> +       init_repos &&
+>> +
+>> +       test_all_match git checkout -b test-branch update-folder1 &&
+>> +       for MERGE_TREES in "base HEAD update-folder2" \
+>> +                          "update-folder1 update-folder2" \
+>> +                          "update-folder2"
+>> +       do
+>> +               # Clean up and remove on-disk files
+>> +               test_all_match git reset --hard HEAD &&
+>> +               test_sparse_match git sparse-checkout reapply &&
+>> +
+>> +               # Although the index matches, without --no-sparse-checkout, outside-of-
+>> +               # definition files will not exist on disk for sparse checkouts
+>> +               test_all_match git read-tree -mu $MERGE_TREES &&
+>> +               test_all_match git status --porcelain=v2 &&
+>> +               test_path_is_missing sparse-checkout/folder2 &&
+>> +               test_path_is_missing sparse-index/folder2 &&
+>> +
+>> +               test_all_match git read-tree --reset -u HEAD &&
+>> +               test_all_match git status --porcelain=v2 &&
+>> +
+>> +               test_all_match git read-tree -mu --no-sparse-checkout $MERGE_TREES &&
+>> +               test_all_match git status --porcelain=v2 &&
+>> +               test_cmp sparse-checkout/folder2/a sparse-index/folder2/a &&
+>> +               test_cmp sparse-checkout/folder2/a full-checkout/folder2/a || return 1
+>> +       done
+>> +'
+>> +
+>> +test_expect_success 'read-tree --merge with edit/edit conflicts in sparse directories' '
+>> +       init_repos &&
+>> +
+>> +       # Merge of multiple changes to same directory (but not same files) should
+>> +       # succeed
+>> +       test_all_match git read-tree -mu base rename-base update-folder1 &&
+>> +       test_all_match git status --porcelain=v2 &&
+>> +
+>> +       test_all_match git reset --hard &&
+>> +
+>> +       test_all_match git read-tree -mu rename-base update-folder2 &&
+>> +       test_all_match git status --porcelain=v2 &&
+>> +
+>> +       test_all_match git reset --hard &&
+>> +
+>> +       test_all_match test_must_fail git read-tree -mu base update-folder1 rename-out-to-in &&
+>> +       test_all_match test_must_fail git read-tree -mu rename-out-to-in update-folder1
+>> +'
+>> +
+>> +test_expect_success 'read-tree --prefix outside sparse definition' '
+>> +       init_repos &&
+>> +
+>> +       # Cannot read-tree --prefix with a single argument when files exist within
+>> +       # prefix
+> 
+> Given the comments in the cover letter about --prefix needing special
+> work, it's not clear to me whether the below is expected behavior or
+> current-but-buggy behavior that you are testing and documenting.
+> Could you clarify?
+> 
 
-Ah interesting, I didn't consider that. Thanks!
+It's expected - per 'Documentation/git-read-tree.txt':
 
-> But in this case it's probably better to leave it as-is.
+	The command will refuse to overwrite entries that already
+	existed in the original index file.
 
-I'm also leaning towards this because I'm just moving things around, but
-I could be convinced otherwise.
+I'll update the comment to make that clearer. Thanks!
+
+>> +       test_all_match test_must_fail git read-tree --prefix=folder1/ -u update-folder1 &&
+>> +
+>> +       test_all_match git read-tree --prefix=folder2/0 -u rename-base &&
+>> +       test_path_is_missing sparse-checkout/folder2 &&
+>> +       test_path_is_missing sparse-index/folder2 &&
+>> +
+>> +       test_all_match git read-tree --reset -u HEAD &&
+>> +       test_all_match git read-tree --prefix=folder2/0 -u --no-sparse-checkout rename-base &&
+>> +       test_cmp sparse-checkout/folder2/0/a sparse-index/folder2/0/a &&
+>> +       test_cmp sparse-checkout/folder2/0/a full-checkout/folder2/0/a
+>> +'
+>> +
+>> +test_expect_success 'read-tree --merge with directory-file conflicts' '
+>> +       init_repos &&
+>> +
+>> +       test_all_match git checkout -b test-branch rename-base &&
+>> +
+>> +       # Although the index matches, without --no-sparse-checkout, outside-of-
+>> +       # definition files will not exist on disk for sparse checkouts
+>> +       test_sparse_match git read-tree -mu rename-out-to-out &&
+>> +       test_sparse_match git status --porcelain=v2 &&
+>> +       test_path_is_missing sparse-checkout/folder2 &&
+>> +       test_path_is_missing sparse-index/folder2 &&
+>> +
+>> +       test_sparse_match git read-tree --reset -u HEAD &&
+>> +       test_sparse_match git status --porcelain=v2 &&
+>> +
+>> +       test_sparse_match git read-tree -mu --no-sparse-checkout rename-out-to-out &&
+>> +       test_sparse_match git status --porcelain=v2 &&
+>> +       test_cmp sparse-checkout/folder2/0/1 sparse-index/folder2/0/1
+>> +'
+>> +
+>>  test_expect_success 'merge, cherry-pick, and rebase' '
+>>         init_repos &&
+>>
+>> --
+>> gitgitgadget
+>>
+
