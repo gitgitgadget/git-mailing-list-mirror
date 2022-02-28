@@ -2,149 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB416C433EF
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 13:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91E39C433F5
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 13:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233984AbiB1NyZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 08:54:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42386 "EHLO
+        id S235958AbiB1Ny3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 08:54:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
         with ESMTP id S230155AbiB1NyZ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 28 Feb 2022 08:54:25 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9933ED1E
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 05:53:46 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id r10so5743357wma.2
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09842403C0
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 05:53:47 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id r10so15599944wrp.3
         for <git@vger.kernel.org>; Mon, 28 Feb 2022 05:53:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=xrnXv4tY1nllDHhoczWLEcmc4mJHyOw/SgZ9DQyxI2I=;
-        b=TUHTya9TIiaDoB3cP5V+2TnfINQdM/1JkrNbfPN5ZKKLK3/ZaCL7Oy3cyB05eDWpVT
-         YUBOGK+qOvYnGWFY9L5BQbwt/S2FJB69oLwmoxqY/cLQzCYUJqOlcXBfE/mePvCVONCr
-         ConemCdRDThIJaCg96ezDRTFLi+o/Bp/aJBE9foS39bNot+YnbNrHRI2t3pucYZoK1xt
-         k2M/OBjaTCspC46BPpxMz3avSoSevaQfkiz8ADFM0m4mtZAnqAP6kaHkT3QNDPxScSIa
-         jONVa+HZyw8ICtHxUD3qjsmtqPkV2YU3Vzeb/dTuLD+TvwsITZMJC4iagx7BSuXAlqR9
-         cbIQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Wvtv2pR79CcNIaHW+fTGq/M5gGXZdqURJ8pamHD494U=;
+        b=H0Xe1WApma9LkzyivbiZC0XourDR5hbim3a/Bwrs28+3uhRUjGx5Io5Pn6P/DSqCOB
+         tX/LTbInD6QRF26F/IhEccB+dJ5nR73ySq+0Xwr7bQEdB0FTbnRAMqc+R1tGM9kIHeeB
+         6tEdr1G41YJeXH6Z4JfvmeXfQEIOlgDulHefGJcE7Iea7rEPPycPoQzIowY4Tf5vPnfL
+         gzLMHMCivgTy49bEiiN8TMePNdsvjUv3h0YHK6gSvZTVXEYaCZKs5buXrIcMc2YmtAS9
+         a+NkhF3dKTCqNgGBb+a9Z54XRekoDZvti10q4AeLgi4G+f75+vXlX0t97/GCkCbKRYSc
+         Ju4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=xrnXv4tY1nllDHhoczWLEcmc4mJHyOw/SgZ9DQyxI2I=;
-        b=kbwYY0mKXuEUzqgzegcF65xxxHmhzM30jZJ8lTRE4N/c68T08c1UtuPxsb70X1Hhew
-         RhS9pi1VIqWjfZ2RE65ymt9Dmk2iDSeGs5GS1ZMTa3t10oT9dissN5aGfKHnRJh3yUHF
-         a4AHA2c8bmkL76dUCiR8jip2k7DyRvYeA6BrRlYIhNHfnhRwlZTdYOtkAZ1cBM4Ga0KV
-         GYZuhLpcqYtEETyl0iTOfVA/GErCFJWp5G8NVWtC9Bzj+rchENUMftuptkszhFUwJ8Vp
-         uDm15kCYPII4guPJ0fDOgWNNrvAn5fPpv9xdLp5hR+v8Hm1Apx6elbsknUV+ylnfZGeT
-         GeUw==
-X-Gm-Message-State: AOAM530q/Go5C4L70CCuq1T+GlqI/c+Stqmx1dll4Aat8siNgNaLcA5p
-        CNvEinSIodnZMs7FtSjl1dw4qR0Os1s=
-X-Google-Smtp-Source: ABdhPJxGZRZ5B6NQtDBZ5HNzly0zZqTw8a/UMxilRj1U/of56Kd+YJovmyoIKTpcJ4C2Rrk0exwQVQ==
-X-Received: by 2002:a05:600c:4e47:b0:37f:d688:90d1 with SMTP id e7-20020a05600c4e4700b0037fd68890d1mr13627361wmq.18.1646056424490;
-        Mon, 28 Feb 2022 05:53:44 -0800 (PST)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Wvtv2pR79CcNIaHW+fTGq/M5gGXZdqURJ8pamHD494U=;
+        b=qd9n94vTpyUN0cKL0RmQTOx0FVR43ANP0rgTlRCFbO0LVOy8vSVCqnVb2cSzz0HbV+
+         MhVKS8UKezfm1CzQ8BIE7ZDEBaSp5vEObBtw09IftCw0cfMnrnNF0Ui3N8yPpWUZmnDa
+         mryQP4SZoc475SfaAsbCGTxy6DbtfQBaIWRZo5bf9Luy9awaEwAnONfDtpEZikVzPZI7
+         qKUzhNL5P48t7h56KQh5CnNk6rtUAugRSJNtUAR35nckV2mIdwc1Jj9UpU0RezNhdudW
+         22jDhU0P0l4+fA9xscbVkB8UeNb/fsaR4w/K0K5Uwe3YvaurPuESRgqnOszjd08dW6Y0
+         W8JQ==
+X-Gm-Message-State: AOAM5309fYnnoq1xLdynkZICXbVMXb7IumCJZwq/QQ/kUjDKCA2IM+Ol
+        FZKTLHrW7XurVxwXPFHF8nX1n6O0bRk=
+X-Google-Smtp-Source: ABdhPJxkyUMLD4/N8bVpyBwkyVpukB8/kfOJDePR9StOcRIxIeysaCPFRWwcuahSJmiqapSYnwB4bg==
+X-Received: by 2002:adf:fbd0:0:b0:1e6:8ec3:570 with SMTP id d16-20020adffbd0000000b001e68ec30570mr16810464wrs.396.1646056425432;
+        Mon, 28 Feb 2022 05:53:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n5-20020adffe05000000b001edf8fc0cc3sm10542957wrr.41.2022.02.28.05.53.43
+        by smtp.gmail.com with ESMTPSA id n7-20020a5d51c7000000b001a38105483dsm10648944wrv.24.2022.02.28.05.53.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 05:53:43 -0800 (PST)
-Message-Id: <pull.1163.v2.git.1646056423.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1163.git.1645735117.gitgitgadget@gmail.com>
+        Mon, 28 Feb 2022 05:53:44 -0800 (PST)
+Message-Id: <2f89275314b4a2a89a18d14e41602bbe2e1988dc.1646056423.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1163.v2.git.1646056423.gitgitgadget@gmail.com>
 References: <pull.1163.git.1645735117.gitgitgadget@gmail.com>
+        <pull.1163.v2.git.1646056423.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 28 Feb 2022 13:53:39 +0000
-Subject: [PATCH v2 0/4] Commit-graph: Generation Number v2 Fixes
-MIME-Version: 1.0
+Date:   Mon, 28 Feb 2022 13:53:40 +0000
+Subject: [PATCH v2 1/4] test-read-graph: include extra post-parse info
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     me@ttaylorr.com, gitster@pobox.com, abhishekkumar8222@gmail.com,
-        avarab@gmail.com, Derrick Stolee <derrickstolee@github.com>
+        avarab@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series fixes some bugs in generation number v2. They were
-discovered while building generation number v3, but that implementation will
-be delayed until these fixes are merged.
+From: Derrick Stolee <derrickstolee@github.com>
 
-In particular, Git has been ignoring corrected commit dates since shortly
-after they were introduced. This is due to a bug I introduced when trying to
-make split commit-graphs safer with mixed generation number versions. I also
-noticed an issue with the offset overflows that I only noticed after writing
-generation number v3 using a smaller offset size, actually triggering the
-bug in the test suite.
+It can be helpful to verify that the 'struct commit_graph' that results
+from parsing a commit-graph is correctly structured. The existence of
+different chunks is not enough to verify that all of the optional
+features are correctly enabled.
 
+Update 'test-tool read-graph' to output an "options:" line that includes
+information for different parts of the struct commit_graph.
 
-Updates in v2
-=============
+In particular, this change demonstrates that the read_generation_data
+option is never being enabled, which will be fixed in a later change.
 
- * Dropped generation v3 patches, saving them for later.
- * Updated a commit message to more clearly describe the problem with the
-   old code.
- * Used an || instead of two if statements in test script.
-
-Thanks, -Stolee
-
-Derrick Stolee (4):
-  test-read-graph: include extra post-parse info
-  commit-graph: fix ordering bug in generation numbers
-  commit-graph: start parsing generation v2 (again)
-  commit-graph: fix generation number v2 overflow values
-
- commit-graph.c                | 15 +++++++++++----
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
  t/helper/test-read-graph.c    | 13 +++++++++++++
  t/t4216-log-bloom.sh          |  1 +
- t/t5318-commit-graph.sh       | 34 +++++++++++++++++++++++++++++-----
- t/t5324-split-commit-graph.sh | 10 ++++++++++
- 5 files changed, 64 insertions(+), 9 deletions(-)
+ t/t5318-commit-graph.sh       |  1 +
+ t/t5324-split-commit-graph.sh |  5 +++++
+ 4 files changed, 20 insertions(+)
 
-
-base-commit: dab1b7905d0b295f1acef9785bb2b9cbb0fdec84
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1163%2Fderrickstolee%2Fgen-v3-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1163/derrickstolee/gen-v3-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1163
-
-Range-diff vs v1:
-
- 1:  2f89275314b = 1:  2f89275314b test-read-graph: include extra post-parse info
- 2:  6e47ffed257 ! 2:  cbcbf10e699 commit-graph: fix ordering bug in generation numbers
-     @@ Commit message
-          actual dates is too large to fit in the 32-bit Generation Data chunk.
-          However, there is a problem with this approach: if we have parsed the
-          generation data from the previous commit-graph, then we continue the
-     -    loop because the corrected commit date is already computed.
-     +    loop because the corrected commit date is already computed. This causes
-     +    an under-count in the number of overflow values.
-      
-          It is incorrect to add an increment to num_generation_data_overflows
-     -    here, because we might start double-counting commits that are computed
-     -    because of the depth-first search walk from a commit with an earlier
-     -    OID.
-     +    next to this 'continue' statement, because we might start
-     +    double-counting commits that are computed because of the depth-first
-     +    search walk from a commit with an earlier OID.
-      
-          Instead, iterate over the full commit list at the end, checking the
-          offsets to see how many grow beyond the maximum value.
- 3:  a3436b92a32 = 3:  5bc6a7660d8 commit-graph: start parsing generation v2 (again)
- 4:  de7ab2f39d9 ! 4:  193217c71e0 commit-graph: fix generation number v2 overflow values
-     @@ t/t5318-commit-graph.sh: test_expect_success 'corrupt commit-graph write (missin
-      +# 32-bits. The graph_git_behavior checks can't take a
-      +# prereq, so just stop here if we are on a 32-bit machine.
-      +
-     -+if ! test_have_prereq TIME_IS_64BIT
-     -+then
-     -+	test_done
-     -+fi
-     -+if ! test_have_prereq TIME_T_IS_64BIT
-     ++if ! test_have_prereq TIME_IS_64BIT || ! test_have_prereq TIME_T_IS_64BIT
-      +then
-      +	test_done
-      +fi
- 5:  7f9b65bd225 < -:  ----------- commit-graph: document file format v2
- 6:  28fe8824ba7 < -:  ----------- commit-graph: parse file format v2
- 7:  ade697c4d34 < -:  ----------- commit-graph: write file format v2
-
+diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
+index 75927b2c81d..c3b6b8d1734 100644
+--- a/t/helper/test-read-graph.c
++++ b/t/helper/test-read-graph.c
+@@ -3,6 +3,7 @@
+ #include "commit-graph.h"
+ #include "repository.h"
+ #include "object-store.h"
++#include "bloom.h"
+ 
+ int cmd__read_graph(int argc, const char **argv)
+ {
+@@ -45,6 +46,18 @@ int cmd__read_graph(int argc, const char **argv)
+ 		printf(" bloom_data");
+ 	printf("\n");
+ 
++	printf("options:");
++	if (graph->bloom_filter_settings)
++		printf(" bloom(%d,%d,%d)",
++		       graph->bloom_filter_settings->hash_version,
++		       graph->bloom_filter_settings->bits_per_entry,
++		       graph->bloom_filter_settings->num_hashes);
++	if (graph->read_generation_data)
++		printf(" read_generation_data");
++	if (graph->topo_levels)
++		printf(" topo_levels");
++	printf("\n");
++
+ 	UNLEAK(graph);
+ 
+ 	return 0;
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index cc3cebf6722..5ed6d2a21c1 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -48,6 +48,7 @@ graph_read_expect () {
+ 	header: 43475048 1 $(test_oid oid_version) $NUM_CHUNKS 0
+ 	num_commits: $1
+ 	chunks: oid_fanout oid_lookup commit_metadata generation_data bloom_indexes bloom_data
++	options: bloom(1,10,7)
+ 	EOF
+ 	test-tool read-graph >actual &&
+ 	test_cmp expect actual
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index edb728f77c3..2b05026cf6d 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -104,6 +104,7 @@ graph_read_expect() {
+ 	header: 43475048 1 $(test_oid oid_version) $NUM_CHUNKS 0
+ 	num_commits: $1
+ 	chunks: oid_fanout oid_lookup commit_metadata$OPTIONAL
++	options:
+ 	EOF
+ 	test-tool read-graph >output &&
+ 	test_cmp expect output
+diff --git a/t/t5324-split-commit-graph.sh b/t/t5324-split-commit-graph.sh
+index 847b8097109..778fa418de2 100755
+--- a/t/t5324-split-commit-graph.sh
++++ b/t/t5324-split-commit-graph.sh
+@@ -34,6 +34,7 @@ graph_read_expect() {
+ 	header: 43475048 1 $(test_oid oid_version) 4 $NUM_BASE
+ 	num_commits: $1
+ 	chunks: oid_fanout oid_lookup commit_metadata generation_data
++	options:
+ 	EOF
+ 	test-tool read-graph >output &&
+ 	test_cmp expect output
+@@ -508,6 +509,7 @@ test_expect_success 'setup repo for mixed generation commit-graph-chain' '
+ 		header: 43475048 1 $(test_oid oid_version) 4 1
+ 		num_commits: $NUM_SECOND_LAYER_COMMITS
+ 		chunks: oid_fanout oid_lookup commit_metadata
++		options:
+ 		EOF
+ 		test_cmp expect output &&
+ 		git commit-graph verify &&
+@@ -540,6 +542,7 @@ test_expect_success 'do not write generation data chunk if not present on existi
+ 		header: 43475048 1 $(test_oid oid_version) 4 2
+ 		num_commits: $NUM_THIRD_LAYER_COMMITS
+ 		chunks: oid_fanout oid_lookup commit_metadata
++		options:
+ 		EOF
+ 		test_cmp expect output &&
+ 		git commit-graph verify
+@@ -581,6 +584,7 @@ test_expect_success 'do not write generation data chunk if the topmost remaining
+ 		header: 43475048 1 $(test_oid oid_version) 4 2
+ 		num_commits: $(($NUM_THIRD_LAYER_COMMITS + $NUM_FOURTH_LAYER_COMMITS))
+ 		chunks: oid_fanout oid_lookup commit_metadata
++		options:
+ 		EOF
+ 		test_cmp expect output &&
+ 		git commit-graph verify
+@@ -620,6 +624,7 @@ test_expect_success 'write generation data chunk if topmost remaining layer has
+ 		header: 43475048 1 $(test_oid oid_version) 5 1
+ 		num_commits: $(($NUM_SECOND_LAYER_COMMITS + $NUM_THIRD_LAYER_COMMITS + $NUM_FOURTH_LAYER_COMMITS + $NUM_FIFTH_LAYER_COMMITS))
+ 		chunks: oid_fanout oid_lookup commit_metadata generation_data
++		options:
+ 		EOF
+ 		test_cmp expect output
+ 	)
 -- 
 gitgitgadget
+
