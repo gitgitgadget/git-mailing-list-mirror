@@ -2,148 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFA78C433F5
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 22:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CB44C433F5
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 22:53:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231463AbiB1WrS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 17:47:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46494 "EHLO
+        id S231624AbiB1WyT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 17:54:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbiB1WrQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 17:47:16 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A921B13A1E8
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 14:46:36 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id i11so19625088eda.9
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 14:46:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=TL8RrY8X4fQeSRDOQbCTmcCL4ST3zoPSoM3RKYUZcyo=;
-        b=eBGoa7DaTQOxFJy3kIPKP2JslU39uZryf0ZLkRP/gE0van8xlu0Uk5EC86DJQHDFmX
-         LB0INMiyRutezsQ+DOdbOrhYm83AUG4sFlAFBO1GgsWpZhdqH/9GVbKgxyHuJOgBhObE
-         8660up3dDQ1A6GAlVUUDtmqf1ysuLSQLBhCyMpu0s570o0oX0tttfe+fY9+nFudLscS6
-         krCvVTT59Ad3nyoG1sYJYVBXNHG0+NJif8UfsU8GKdiyJBZWNlYOidjGqUgNJqTanMBQ
-         SMKGDeh/egMmx/TqzUp5MAKDlp6zM7NfpVbKvI9K434y9jr56y3mMsJDqvGM8RyQJY/o
-         GrGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=TL8RrY8X4fQeSRDOQbCTmcCL4ST3zoPSoM3RKYUZcyo=;
-        b=KCKMvAzGviiB/G43On/u1IDgF1uwK+Fo0QtoVL3juZu+g3EwiVh4785Ft7h67Y6L88
-         YU3Zg1t6Ie77sOV+YtY9UzynQEva9EPCuZBMAVMAWreJ3I6praL/10fIzwnkAL0SnEPM
-         MY8bqAce3aO1twy47PRbTGjGQYk0Cu5Ys6zFwr/+MPUIas/ZGnn/BjIBHjDRLbdILI+0
-         Wc5ifxpqlDZ+JIeUwiQP33fef7prLyOoC8RP7Ot0/3SCbo5O9xcYVP9BWLkYlCfrJVlt
-         YVUIeTrQKpgbKXhEYZNmGOTWZBZ+Uy+x635w5On05rCyaOq0CyLBRzu92X2XaT1Yj9Y3
-         rYzw==
-X-Gm-Message-State: AOAM533yvINGobZ85YdZMZn10e4a4K7H3kjzz1OvDXXO65C+vB/LLf2X
-        QAGpSrOqugSeji85hNhfWkw=
-X-Google-Smtp-Source: ABdhPJyZvUisQQNJdLFkwu8rjQaBSJsHKyygOy/Yx8EJhgcVrFqnBTB/7huMg80Oo948SCFTbcpiRQ==
-X-Received: by 2002:a50:e696:0:b0:413:3846:20a9 with SMTP id z22-20020a50e696000000b00413384620a9mr21874601edm.96.1646088395112;
-        Mon, 28 Feb 2022 14:46:35 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id gz6-20020a170907a04600b006cec40b2d34sm4819920ejc.15.2022.02.28.14.46.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 14:46:34 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nOomo-001dL2-45;
-        Mon, 28 Feb 2022 23:46:34 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Matheus Felipe via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Matheus Felipe <matheusfelipeog@protonmail.com>
-Subject: Re: [PATCH] fix: include the type flag in the cli docs
-Date:   Mon, 28 Feb 2022 23:42:21 +0100
-References: <pull.1220.git.git.1645853661519.gitgitgadget@gmail.com>
- <f171e157-7dbc-b07e-7164-c62e2427fbe2@gmail.com>
- <xmqqilt03xat.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqilt03xat.fsf@gitster.g>
-Message-ID: <220228.86a6ea38z9.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231616AbiB1WyQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 17:54:16 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58C80259
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 14:53:35 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 35C05184AF3;
+        Mon, 28 Feb 2022 17:53:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=rEpg+jpY0Ttt
+        MQclUqWDu+Y6oxcZgrUcxCMQUUTtQhs=; b=VELgx1/XXURO2hfzyO7jMcGRwnzL
+        Beqp5dLLGnTOhMFC/zS8MJHqO0lDhJPqRnI7lZADOF+vJ0tx+LN52awuASyE3K5v
+        8G5K8LgWBLHMNaJgEnuI1JplU3oWFfERe0ENmRJBwOGK9OPruySgef2F/p/yU9fW
+        Kjwv9/EnKz6/O4U=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E882184AF2;
+        Mon, 28 Feb 2022 17:53:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ACE0C184AF0;
+        Mon, 28 Feb 2022 17:53:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Rolf Eike Beer <eb@emlix.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: Please add support for "git merge --continue -S"
+References: <3769291.LUJhsIL6D6@mobilepool36.emlix.com>
+        <220228.86fso35k61.gmgdl@evledraar.gmail.com>
+Date:   Mon, 28 Feb 2022 14:53:31 -0800
+In-Reply-To: <220228.86fso35k61.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 28 Feb 2022 11:58:11 +0100")
+Message-ID: <xmqq1qzmy55g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4103B1E4-98E9-11EC-8E9D-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On Sun, Feb 27 2022, Junio C Hamano wrote:
+> You can just drop the use of "merge --continue" entirely and use
+> "commit" instead.
+>
+> Caveats related to this were recently discussed on-list:
+> https://lore.kernel.org/git/CALRdAfcyfesNqfLhhe2GW_5V9s2hf++i6mZS1Lw5hq=
+QYTca85w@mail.gmail.com/
 
-> Bagas Sanjaya <bagasdotme@gmail.com> writes:
->
->> On 26/02/22 12.34, Matheus Felipe via GitGitGadget wrote:
->>> From: Matheus Felipe <matheusfelipeog@protonmail.com>
->>> When the `git config --global --help` command is invoked,
->>> the cli documentation is shown in the terminal with a small
->>> error in one of the values of the Type group, which is the
->>> absence of the type flag in the `--type` argument.
->>> This commit fixes that.
->>> 
->>
->> What about the commit message below?
->>
->> ```
->> The usage help for --type option of `git config` is missing `type`
->> in the argument placeholder (`<>`). Add it.
->> ```
->
-> It is more concise, and at the same time points out the problem
-> being addressed a lot more explicitly.  Much better.
->
->>> -	OPT_CALLBACK('t', "type", &type, "", N_("value is given this type"), option_parse_type),
->>> +	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type"), option_parse_type),
->>
->>
->> The help should be `give the value the specified type`.
->
-> I am not sure if this is much of an improvement.
->
->     $ git config --type=bool junk.flag 0
->     $ git config junk.flag
->     false
->
-> uses the type information to turn "0" into "false" before it writes
-> the value set to the variable to the file, while
->
->     $ git config junk.flag 0
->     $ git config junk.flag
->     0
->     $ git config --type=bool junk.flag
->     false
->
-> shows that a stored value of "0" can be turned into "false" when
-> showing.  "Give the value the specified type" does not capture the
-> essense in either direction.
->
->     Before setting or showing, convert the value to its canonical
->     representation according to the given type.
->
-> is what we want to convey, but it is quote a mouthful as-is.
->
-> Saying "Assume the value is of this type" would strongly imply
-> "Convert ... to its canonical reporesentation", and the current
-> "value is given this type" may be a close enough and shorter
-> approximation of it.  I dunno.
+Ah, that one.  We need to close the #leftoverbits on the topic.
+Here is a starter.
 
-Perhaps:
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+Subject: merge: 'git merge --continue' is merely 'git commit'
 
-	"coerce (on read and write) <value> to <type>"
+Among the commands with "--continue", "merge --continue" came much
+later, and it did not even need to exist.  The other commands with
+"--continue", e.g. "rebase", deal with multi-step operations, and it
+is worth to have a way to say "I am finished with this step, let's
+CONTINUE WITH THE REST".  But in "merge", there is no remaining
+thing to do after you are done with the conflict you saw.
 
-or:
+In hindsight, we probably should have resisted the urge to add
+"merge --continue", just for the sake of misguided "consistency"
+perceived on non-existent similarity with other commands that truly
+need "--continue".  What is called "merge --continue" should have
+been called "merge --finish", if we needed to add something back
+then.
 
-	"coerce (on read & write) <value> to <type>"
+The way to finish a conflicted merge has always been to run "git
+commit" before "merge --continue" was added, and it still is not
+just accepted but is the right way to finish a conflicted merge.
 
-or:
+There is an argument that it makes it somehow "safer" to use "merge
+--continue" because the command fails when there is no interrupted
+merge going on, but what the user sees from "git commit" when there
+is and there is not interrupted merge are so different, there is not
+much "safety" benefit in practice.  We probably should deprecate and
+eventually remove "git merge --continue" eventually, but one step at
+a time.
 
-	"coerce (on rw) <value> to <type>"
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-merge.txt | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-For the short help, depending on how verbose we'd like to be?
-
-In any case a follow-up fix, just the "" to "type" being proposed here
-is orthagonal & looks good to me.
-
+diff --git c/Documentation/git-merge.txt w/Documentation/git-merge.txt
+index 3125473cc1..95f252598e 100644
+--- c/Documentation/git-merge.txt
++++ w/Documentation/git-merge.txt
+@@ -122,9 +122,9 @@ list.
+ 	stash entry will be saved to the stash list.
+=20
+ --continue::
+-	After a 'git merge' stops due to conflicts you can conclude the
+-	merge by running 'git merge --continue' (see "HOW TO RESOLVE
+-	CONFLICTS" section below).
++	After a 'git merge' stops due to conflicts, you can conclude
++	the merge with "git commit" (see "HOW TO RESOLVE CONFLICTS"
++	section below).  'git merge --continue' is a synonym for it.
+=20
+ <commit>...::
+ 	Commits, usually other branch heads, to merge into our branch.
+@@ -326,10 +326,9 @@ After seeing a conflict, you can do two things:
+=20
+  * Resolve the conflicts.  Git will mark the conflicts in
+    the working tree.  Edit the files into shape and
+-   'git add' them to the index.  Use 'git commit' or
+-   'git merge --continue' to seal the deal. The latter command
+-   checks whether there is a (interrupted) merge in progress
+-   before calling 'git commit'.
++   'git add' them to the index.  Use 'git commit' (or
++   'git merge --continue', which stops if there is no=20
++   interrupted merge in progress) to seal the deal.
+=20
+ You can work through the conflict with a number of tools:
+=20
