@@ -2,160 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA853C433EF
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 23:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0739EC433F5
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 23:45:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230019AbiB1X1n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 18:27:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48260 "EHLO
+        id S231232AbiB1XqC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 18:46:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229842AbiB1X1m (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 18:27:42 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C9FCDE2E6
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 15:27:02 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id u16so12460548pfg.12
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 15:27:02 -0800 (PST)
+        with ESMTP id S231240AbiB1Xp7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 18:45:59 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C894FDF95
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 15:45:01 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id p14so27994398ejf.11
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 15:45:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=G127K9UotDH2nDl033nOQHc3v58n2USF62dEsGtdc0A=;
-        b=gjZv3MZIJMHKa0T7zg7Q5YTmMGROsxSmeEx8gdK4ocT86+uOaUkj49FnBubxgKo3DI
-         TwHbQcIo7PCkpPSeIvy3S5vlqHqj5m16pcmybOs/2mJpn1ac2fWK+6hYV9CsTScQGG8m
-         QeItvCaCc2zqAbpymWQhoRBSh1KFfBWtTIBVSUNLZrJ2LHYV9gtOQCoy/WzojqcY9zdS
-         8SaHK3zMvtQVON5714flpLVgA6sPC7VVP/7dXRsyTLiJGzZuzhPW5nJCcf9CW/sVm4uT
-         PdLnGzYxyiWIf73l5oT2JXZZCRX9ycewXsdb4R3/1XVWqud3kH6AuO1HI5YeDCkUJxIR
-         t7IA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=nQIJSY7Ba4ZBF2zbpM44IQe6iiPDGhGVn071NJUvzyE=;
+        b=fJUhwhLfpdWGvpJjLUrzNgN5CvrrcQ75IcmFh1waIZYDV8e6VO9s3UQ0TOM85fae4I
+         4no8uf7EP/tExXYvLm9+zmWehNDfM4Vn1tdZveMF2BYJEoN4nWav++OPoHGtntzg4xeo
+         r/rEWYb81XbZLIOhVV3N5mgYLQSO7NtZQQuPdvem1Q/jqoFxALyCojsmCCHppWAO8I1u
+         LG05GL26qRI907DTG2YuvuDFkx5mcc3opaLB6Kygeh4zOPe1a30RGQYJYCfIZ+cQXOj2
+         aVzGwDFAYJ+DX2Bu/39/2JqT5GfoUQhP1xcekqhQTiy14tk/YlTm3U8hyQiuBGJ6x2D4
+         qwtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=G127K9UotDH2nDl033nOQHc3v58n2USF62dEsGtdc0A=;
-        b=ApxzthrN37qmlQoIGVGKyzYZIf0ixoOgpgLgkEUuuVRN4a22eFhQzS2m4zBlg2RqJM
-         1Z0m3FW4pLREjUs2VOfqVXLDYDBo/f9HPIoLC2ef5azfm3a4AB+DCWgIukm1+yQpNrS0
-         KSopDsVqP8pr3QvGPw5UTqGmUSiLrIsqxEF/nmEkeVlctazbuGuKP0JShTUMlA8ayQ/9
-         ekgIoiuNNrqqzxWKRnpBSi7dFoKhT8MWYtMDX+1PDKB7gtuhUGtL+Ps5vVd+hnXISbGc
-         C18OzX6fCetn7qkZoWtI31HTtl2s8nac9FbYaXKP5YXSq8k/DkXU8SzMrfMFtTogoDcg
-         BzWw==
-X-Gm-Message-State: AOAM532sPWxWBBB6thIln92tPKMtJGdYLctErQU0cpnpN1jQ92LD7a2G
-        5k7IehpRJaWJzCkgYK846mbY
-X-Google-Smtp-Source: ABdhPJxmpQwXoo2CYVgEoEV65Pd32dVcictPkBXUFJSU2hdCekY5dWjpDV8oYTMDojKXM2B4Z8vt8g==
-X-Received: by 2002:a05:6a00:2301:b0:4e1:5842:48d7 with SMTP id h1-20020a056a00230100b004e1584248d7mr24268814pfh.14.1646090821873;
-        Mon, 28 Feb 2022 15:27:01 -0800 (PST)
-Received: from [192.168.0.102] (cpe-172-249-73-112.socal.res.rr.com. [172.249.73.112])
-        by smtp.gmail.com with ESMTPSA id t41-20020a056a0013a900b004e167af0c0dsm15401745pfg.89.2022.02.28.15.27.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Feb 2022 15:27:01 -0800 (PST)
-Message-ID: <509e860c-5bda-b92f-96c5-39f9a54f1e9b@github.com>
-Date:   Mon, 28 Feb 2022 15:27:00 -0800
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=nQIJSY7Ba4ZBF2zbpM44IQe6iiPDGhGVn071NJUvzyE=;
+        b=6nBjUoIv+6u3avYThC+SMQ6kAc8jieqgDh2Zbm33qENJ1V+Yy4dcnMGNkk28OeWyUq
+         wdAlWbGXW9pHL2tQDwkGjT4BXW4X3uCCFHaeclPkJneJzpgIwjD9GZoH+oGqcwBjcJEY
+         Pmyy/NIeQIx1bA6TfmW9DBz9d9APUx67VnT+m8ah9wE5FHAdW82urfIWJNNxQjStDFpV
+         riIC0lxlq+bAQju8F/bgFbtDDy9gbuXwioFnVz44xiNFDTuIx6p/vJT3QDl9cg04ZvCk
+         CM24vbHhsJGnNRT3XVZgOpW2YN7C8qEMV+1xivG25D0MuWAHz07UclSLF3A86N9tJyTK
+         0PSQ==
+X-Gm-Message-State: AOAM530V3fKI8phdgQIFdtlHneq3scKPV5u0Xdq/cFIN51WmpKIQ6NSD
+        AU3l4j1y7Y2jfNLY993IOCw=
+X-Google-Smtp-Source: ABdhPJz03T4EHSFGZ0dV7Y56B9vDA63EhyDpAThJADu2HmdJ0jEFxhks68hzCHsYZarAYSRowsmgeA==
+X-Received: by 2002:a17:906:b252:b0:6ce:41e2:5bb7 with SMTP id ce18-20020a170906b25200b006ce41e25bb7mr16720446ejb.179.1646091899654;
+        Mon, 28 Feb 2022 15:44:59 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id hz20-20020a1709072cf400b006d1b5df5c1fsm4797476ejc.17.2022.02.28.15.44.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Feb 2022 15:44:59 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nOphK-001fVM-JK;
+        Tue, 01 Mar 2022 00:44:58 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Rolf Eike Beer <eb@emlix.com>
+Subject: Re: Please add support for "git merge --continue -S"
+Date:   Tue, 01 Mar 2022 00:28:39 +0100
+References: <3769291.LUJhsIL6D6@mobilepool36.emlix.com>
+ <220228.86fso35k61.gmgdl@evledraar.gmail.com> <xmqq1qzmy55g.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqq1qzmy55g.fsf@gitster.g>
+Message-ID: <220301.86wnhe1rph.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.1
-Subject: Re: [PATCH v2 3/7] read-tree: expand sparse checkout test coverage
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
- <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
- <ffe0b6aff2baee238f77ae57561a62ea5473321f.1645742073.git.gitgitgadget@gmail.com>
- <220301.861qzm37qt.gmgdl@evledraar.gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <220301.861qzm37qt.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Feb 24 2022, Victoria Dye via GitGitGadget wrote:
-> 
->> From: Victoria Dye <vdye@github.com>
->>
->> Add tests focused on how 'git read-tree' behaves in sparse checkouts. Extra
->> emphasis is placed on interactions with files outside the sparse cone, e.g.
->> merges with out-of-cone conflicts.
->>
->> Signed-off-by: Victoria Dye <vdye@github.com>
->> ---
->>  t/perf/p2000-sparse-operations.sh        |  1 +
->>  t/t1092-sparse-checkout-compatibility.sh | 85 ++++++++++++++++++++++++
->>  2 files changed, 86 insertions(+)
->>
->> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
->> index 2a7106b9495..382716cfca9 100755
->> --- a/t/perf/p2000-sparse-operations.sh
->> +++ b/t/perf/p2000-sparse-operations.sh
->> @@ -117,6 +117,7 @@ test_perf_on_all git diff
->>  test_perf_on_all git diff --cached
->>  test_perf_on_all git blame $SPARSE_CONE/a
->>  test_perf_on_all git blame $SPARSE_CONE/f3/a
->> +test_perf_on_all git read-tree -mu HEAD
->>  test_perf_on_all git checkout-index -f --all
->>  test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
->>  
->> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
->> index b1dcaa0e642..9d58da4e925 100755
->> --- a/t/t1092-sparse-checkout-compatibility.sh
->> +++ b/t/t1092-sparse-checkout-compatibility.sh
->> @@ -819,6 +819,91 @@ test_expect_success 'update-index --cacheinfo' '
->>  	test_cmp expect sparse-checkout-out
->>  '
->>  
->> +test_expect_success 'read-tree --merge with files outside sparse definition' '
->> +	init_repos &&
->> +
->> +	test_all_match git checkout -b test-branch update-folder1 &&
->> +	for MERGE_TREES in "base HEAD update-folder2" \
->> +			   "update-folder1 update-folder2" \
->> +			   "update-folder2"
->> +	do
->> +		# Clean up and remove on-disk files
->> +		test_all_match git reset --hard HEAD &&
->> +		test_sparse_match git sparse-checkout reapply &&
->> +
->> +		# Although the index matches, without --no-sparse-checkout, outside-of-
->> +		# definition files will not exist on disk for sparse checkouts
->> +		test_all_match git read-tree -mu $MERGE_TREES &&
->> +		test_all_match git status --porcelain=v2 &&
->> +		test_path_is_missing sparse-checkout/folder2 &&
->> +		test_path_is_missing sparse-index/folder2 &&
->> +
->> +		test_all_match git read-tree --reset -u HEAD &&
->> +		test_all_match git status --porcelain=v2 &&
->> +
->> +		test_all_match git read-tree -mu --no-sparse-checkout $MERGE_TREES &&
->> +		test_all_match git status --porcelain=v2 &&
->> +		test_cmp sparse-checkout/folder2/a sparse-index/folder2/a &&
->> +		test_cmp sparse-checkout/folder2/a full-checkout/folder2/a || return 1
->> +	done
->> +'
-> 
-> Nit: Isn't this nicer/easier by unrolling the for-loop to the top-level, i.e.:
-> 
-> for MERGE_TREES in "base HEAD update-folder2" [...]
-> do
-> 	test_expect_success "'read-tree -mu $MERGE_TREES' with files outside sparse definition" '
-> 		init_repos &&
-> 		test_when_finished "test_all_match git reset --hard HEAD" &&
->                 ...
-> 	'
-> done
-> 
-> It makes failures easier to reason about since you see which for-loop
-> iteration you're in right away, and can e.g. pick one with --run.
-> 
 
-I like how this separates the test cases (while not adding any
-redundant/copied code). I'll update in the next version, thanks!
+On Mon, Feb 28 2022, Junio C Hamano wrote:
 
-> And we can do the cleanup in test_when_finished instead of at the start
-> of every loop.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> [...]
+> There is an argument that it makes it somehow "safer" to use "merge
+> --continue" because the command fails when there is no interrupted
+> merge going on, but what the user sees from "git commit" when there
+> is and there is not interrupted merge are so different, there is not
+> much "safety" benefit in practice.  We probably should deprecate and
+> eventually remove "git merge --continue" eventually, but one step at
+> a time.
 
-Because `init_repos` completely resets the test repos, this actually lets me
-remove the extra cleanup steps completely.
+If you run "git status" it'll look like you have a bunch of stuff
+staged, and it's easy to miss if it's telling you you're in a merge
+conflict or not (especially if it scrolls off the screen).
+
+If we're just taking personal experience into account when deciding if
+something improves safety I've made that mistake more than once & more
+than twice. I.e. done a parents=3D1 commit when I thought I was in a merge
+(maybe confused about what terminal I was in etc).
+
+If someone with N number of commits in this project can make that
+mistake, I daresay it helps some regular users too :)
+
+> diff --git c/Documentation/git-merge.txt w/Documentation/git-merge.txt
+> index 3125473cc1..95f252598e 100644
+> --- c/Documentation/git-merge.txt
+> +++ w/Documentation/git-merge.txt
+> @@ -122,9 +122,9 @@ list.
+>  	stash entry will be saved to the stash list.
+>=20=20
+>  --continue::
+> -	After a 'git merge' stops due to conflicts you can conclude the
+> -	merge by running 'git merge --continue' (see "HOW TO RESOLVE
+> -	CONFLICTS" section below).
+> +	After a 'git merge' stops due to conflicts, you can conclude
+> +	the merge with "git commit" (see "HOW TO RESOLVE CONFLICTS"
+> +	section below).  'git merge --continue' is a synonym for it.
+
+Saying it's a synonym isn't correct, and also now contradicts the last
+paragraph of the DESCRIPTION section. Saying something like:
+
+    'git merge --continue' will run 'git commit', after first checking
+    whether a conflicted merge is underway.
+
+Would be correct, consistent with DESCRIPTION, and basically paraphrases
+what it says there.
+
+>  <commit>...::
+>  	Commits, usually other branch heads, to merge into our branch.
+> @@ -326,10 +326,9 @@ After seeing a conflict, you can do two things:
+>=20=20
+>   * Resolve the conflicts.  Git will mark the conflicts in
+>     the working tree.  Edit the files into shape and
+> -   'git add' them to the index.  Use 'git commit' or
+> -   'git merge --continue' to seal the deal. The latter command
+> -   checks whether there is a (interrupted) merge in progress
+> -   before calling 'git commit'.
+> +   'git add' them to the index.  Use 'git commit' (or
+> +   'git merge --continue', which stops if there is no=20
+> +   interrupted merge in progress) to seal the deal.
+>=20=20
+>  You can work through the conflict with a number of tools:
+
+I think the former hunk with a minor edit is an improvement, i.e. let's
+say 'git commit' works too.
+
+But losing the description of the difference between the two here in the
+more detailed section, whose job it is to explain the minor details,
+makes the documentation worse IMO.
+
+The "seal the deal" wording in the pre-image is a bit odd and
+inconsistent with our general tone, that's worth changing.
+
+But there should still be some variant of "'merge --continue', unlike
+'commit' will abort if no merge is in progress".
+
+Aside: After the last time this came up & looking at this again I looked
+at some of the tests, and I'm entirely confused about what f8b863598c9
+(builtin/merge: honor commit-msg hook for merges, 2017-09-07) is talking
+about.
+
+I.e. it's "just a synonym", but it seems to claim that "merge
+--continue" somehow remembers --allow-unrelated-histories, but not
+--no-verify (for which we have a TODO test).
+
+If you're set on deprecating it, as opposed to us supporting "merge
+--continue -S" or whatever, amending/removing that TODO test seem like a
+good addition.
+
+Also, after this came up the other day I came up with this WIP to have
+the "reflog" reflect what command we ran, just as we do with rebase.
+
+IMO that really makes the difference beween the two worth it. E.g. for
+my git.git integration branch running 'git reflog' and seeing at a
+glance wheher something was a conflicted merge or not (as long as I
+consistently use "merge --continue", which I do) really aids
+readability:
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 74e53cf20a7..3cbb47c96f9 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1362,6 +1362,7 @@ int cmd_merge(int argc, const char **argv, const char=
+ *prefix)
+ 		if (!file_exists(git_path_merge_head(the_repository)))
+ 			die(_("There is no merge in progress (MERGE_HEAD missing)."));
+=20
+ 		/* Invoke 'git commit' */
++		setenv("GIT_REFLOG_ACTION", "merge (continue)", 0);
+ 		ret =3D cmd_commit(nargc, nargv, prefix);
+ 		goto done;
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index f0f6fda150b..f4a0b70a213 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -772,6 +772,8 @@ test_expect_success 'completed merge (git merge --conti=
+nue) with --no-commit and
+ 	git stash show -p MERGE_AUTOSTASH >actual &&
+ 	test_cmp expect actual &&
+ 	git merge --continue 2>err &&
++	git reflog -1 >reflog &&
++	grep -F "merge (continue)" reflog &&
+ 	test_i18ngrep "Applied autostash." err &&
+ 	git show HEAD:file >merge-result &&
+ 	test_cmp result.1-5 merge-result &&
+
+
