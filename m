@@ -2,155 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD821C433EF
-	for <git@archiver.kernel.org>; Sun, 27 Feb 2022 23:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B581DC433F5
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 05:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229662AbiB1AAW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 27 Feb 2022 19:00:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38784 "EHLO
+        id S233099AbiB1FeI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 00:34:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbiB1AAW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 27 Feb 2022 19:00:22 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69FEB5A593
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 15:59:44 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id p4so116806edi.1
-        for <git@vger.kernel.org>; Sun, 27 Feb 2022 15:59:44 -0800 (PST)
+        with ESMTP id S230221AbiB1FeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 00:34:04 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3FD641F82
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 21:33:22 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id s14so15979612edw.0
+        for <git@vger.kernel.org>; Sun, 27 Feb 2022 21:33:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mwkpZ0JEmRF5mTS7ZZxqsNHi6pyoJ9wojhfDzNItRnk=;
-        b=2E47JBYRc8QYUKlDWAMJSxyMHecQHufxBXChIsG1L67Pglp4EOJWfNijfKm3d95Rnu
-         lZr7BAXSu3t+SszcR/GDSfD9GLUtlOXzqMNaUcXKtwO1V9I50MOZQwrIsbPA/OiWPDZt
-         r1+yPuqNIARe/Z63DKSvR3VMCxeCD4kKnS6evpB1lxVSBU3dCFcFaUnMta6zC68/4o4K
-         RMYA0RZ5fGHSRNzPiWuE/qqWE47DHQ0mxcShylrIfNBVW+rIhOidoY0tb/WPnr00WJUm
-         rkSa8FWIUrI7NAYQJpUKJ0HPaIz6ta3gzFPoR+V8blon/aN1bfjVTWnRw27Obkw6NSNs
-         Begw==
+        d=gmail.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=xE63rorayhzGY2LHpJrb+inwYGWNLyNS2786iOIZ9Z4=;
+        b=Gg1/g+DAVB7pqPSFaPveMO4qX4IqK1xadqTz4GEEzt7G0b94Cl1RNpGGnEZayiIFfO
+         vUU0Q7/LfqhppZomUyiSo4RHIUGxbm+Zztl8rnftO/33aeAupeXSf2EsxfpmHhs2+eHu
+         JnnLVF1rKmTntUbv7NZLYsLgE44mFO9PCC9CxudwSS//KGIHEfsknnupfyQYrD1lJHL9
+         IAQjZtHq4qWx0caEsmkDXV9xvdH5s3mZjCR13LtqrffImFKtr2TaV+Oqlhl5pdXssXlE
+         kSBDxM/wXgEfUnsoHNcN8hvt0dEDhCMbDq9OR/RAj+Zwlp3GxpDCxPr35WeT3It2h9l9
+         7wNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mwkpZ0JEmRF5mTS7ZZxqsNHi6pyoJ9wojhfDzNItRnk=;
-        b=HcMlkN8f0uZdcFCNk5nbl1uTwh9hBR+CrIRpLeSD4aKOnOuX2CpPeRG5BMxggpV/0R
-         fWBH7A/NkOE4MHmsVsRJyWmKsiFpp8UNshZMGCTDPsnEk/f13ZmbbMUz0FDQ6BNm/Bu6
-         qOrPua8GbWI/XZQXc/HS3Fv4L4uQxFQY8BUDEoqExuDMgffofXgmHcHHQsS/33DPVE8B
-         SW3ExVIlUnukv7o/l22nSXXLlWQdid3C1QBrwmEfuD3qfELog7/ZAA0Pgp7GCe0iGtR3
-         h/bUnafs+fx77dA0QwZ9Lco/nGKVHkHLaDbDPK1Tx3gmgLwRfu7J/NoUGaNJsRaqxvid
-         Vasw==
-X-Gm-Message-State: AOAM532CZv9w3lHo3xPxoq3E118B3bhJ8xy4UJ1tD4uX1fjwby5QNs/7
-        2NsXAaN4KTo0hb8b2c0ryuLLs8UM5/YAn7KM5Gq+DtKEVVU=
-X-Google-Smtp-Source: ABdhPJw8x3viN8dZ7S6OF39YVAcm9M/vhJCda5xPe3AY7zUYk7ntWN5IyinKuk/Bo+OgAtlkaFGTLCxgSB+a7ju9RME=
-X-Received: by 2002:a05:6402:5244:b0:410:f41c:ebe7 with SMTP id
- t4-20020a056402524400b00410f41cebe7mr17080494edd.77.1646006382935; Sun, 27
- Feb 2022 15:59:42 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1161.git.1645695940.gitgitgadget@gmail.com>
- <pull.1161.v2.git.1645815142.gitgitgadget@gmail.com> <890e016bfc0809d25a4ae8ae924b23895f520810.1645815142.git.gitgitgadget@gmail.com>
- <xmqqczjaaeiv.fsf@gitster.g>
-In-Reply-To: <xmqqczjaaeiv.fsf@gitster.g>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Mon, 28 Feb 2022 00:59:31 +0100
-Message-ID: <CAPMMpoiJyWQp+UtaZWeWodkjVkm0buSykfuDZDrM4d1eC3vstQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] merge: new autosetupmerge option 'simple' for
- matching branches
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xE63rorayhzGY2LHpJrb+inwYGWNLyNS2786iOIZ9Z4=;
+        b=3mxmIPmix3ttiBsE/pN1+3r5pbD0aDj4RGT5Uheyr9XScxFvoMe6Nz0HvKk3bhcESU
+         FKabIjk8hRDP2HZEGmQcM87ioGXpSOLJFsGf18b1uAfN33unO27RCAWFiYUZlQsnv0VY
+         M4jWX40Gfqt5g8nh68fmoZ5t4C8zbIrHNUYMx7KZwB2Ok7UEX7pWs8G/LCa6D3hkfKmV
+         3PvjfL61uavADSTF9VDRyx2g70V/LUVDa6iHPiMERfo6HoAqrXU69umSUIuSn4y0nIgp
+         CeCWniCNMstm9ya6/kSQLM7fcJxLf725hb2nb8On8+3Tgj6jQDRDXKXPRkpx3yOay8rX
+         wgHQ==
+X-Gm-Message-State: AOAM530rU9C666fIAGbJ1Us5ASKkLXqrReWNCJRfT14s+bvBqOC1y1KB
+        WmvH5Yxg3kEOI0v7Wv5mCYw=
+X-Google-Smtp-Source: ABdhPJxcsCpB2HxYx/peWVqRJkqNW0kOHcM9blRIVCckWQX5SiKDgnJ8UUOWwsbYa5MP00DuDBqsJw==
+X-Received: by 2002:a05:6402:90b:b0:412:a7cc:f5f9 with SMTP id g11-20020a056402090b00b00412a7ccf5f9mr17487294edz.136.1646026401392;
+        Sun, 27 Feb 2022 21:33:21 -0800 (PST)
+Received: from gmail.com (91.141.32.73.wireless.dyn.drei.com. [91.141.32.73])
+        by smtp.gmail.com with ESMTPSA id q11-20020a170906144b00b006cf61dfb03esm4003609ejc.62.2022.02.27.21.33.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Feb 2022 21:33:20 -0800 (PST)
+Date:   Mon, 28 Feb 2022 06:33:15 +0100
+From:   Johannes Altmanninger <aclopte@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] rerere-train: two fixes to the use of "git show -s"
+Message-ID: <20220228053315.czkke7hfiav4qh3s@gmail.com>
+References: <xmqqsfsjuw8m.fsf@gitster.g>
+ <20220227220924.2144325-1-gitster@pobox.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220227220924.2144325-1-gitster@pobox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 25, 2022 at 9:15 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > This commit introduces a new option to the branch.autosetupmerge
-> > setting, "simple", which is intended to be consistent with and
-> > complementary to the push.default "simple" option.
->
-> Documentation/SubmittingPatches.
->
-> We do not say "This commit does this".  Instead, we say "Add a new
-> option that does X".  Usually that is done after the explanation of
-> the status quo is finished to make readers understand what the
-> problem the change is trying to solve is.  So...
+On Sun, Feb 27, 2022 at 02:09:24PM -0800, Junio C Hamano wrote:
+> The script uses "git show -s" to display the title of the merge
+> commit being studied, without explicitly disabling the pager, which
+> is not a safe thing to do in a script.
+> 
+> For example, when the pager is set to "less" with "-SF" options (-S
+> tells the pager not to fold lines but allow horizontal scrolling to
+> show the overly long lines, -F tells the pager not to wait if the
+> output in its entirety is shown on a single page), and the title of
+> the merge commit is longer than the width of the terminal, the pager
+> will wait until the end-user tells it to quit after showing the
+> single line.
+> 
+> Explicitly disable the pager with this "git show" invocation to fix
+> this.
+> 
+> The command uses the "--pretty=format:..." format, which adds LF in
+> between each pair of commits it outputs, which means that the label
+> for the merge being learned from will be followed by the next
+> message on the same line.  "--pretty=tformat:..." is what we should
+> instead, which adds LF after each commit, or a more modern way to
+> spell it, i.e. "--format=...".  This existing breakage becomes
+> easier to see, now we no longer use the pager.
 
-Yep, sorry, thx! (fixed, reroll coming!)
+Sounds good (definitely better than two separate commits).
 
->
-> > The push.defaut option "simple" helps produce
-> > predictable/understandable behavior for beginners, where they don't
-> > accidentally push to the "wrong" branch in centralized workflows. If
-> > they create a local branch with a different name and then try to do a
-> > plain push, it will helpfully fail and explain why.
->
-> ... this would be a better first paragraph to start the proposed log
-> message with.
->
->         With push.default set to "simple", the users fork from a
->         local branch from a remote-tracking branch of the same name,
->         and are protected from a mistake to push to a wrong branch.
->         If they create a ... and explain why.
->
-> > However, such users can often find themselves confused by the behavior
-> > of git after they first branch, and before they push. At that stage,
->
-> Depending on how they "branch", they may or may not be confused.  Be
-> more specific to illustrate what problem you are solving, e.g.
->
->         ... after they create a new local branch from a
->         remote-tracking branch with a different name.
->
-> > their upstream tracking branch is the original remote branch, and pull
-> > will be bringing in "upstream changes" - eg all changes to "main", in
-> > a typical project where that's where they branched from.
->
-> OK.  So "pull" tries to grab from the upstream (which is most likely
-> an integration branch with bland name like 'master', 'main' or
-> 'trunk'), while "push" does not allow the work on a branch (which is
-> named after the theme of the work and not a bland name suitable for
-> integration branches) to be pushed to the upstream.
->
-> It may probably not be so clear why it is a problem to many readers,
-> I suspect.  Isn't that what happens in a typical triangular workflow
-> to work with a project with a centralized repository?  You fork from
-> the integration branch shared among project participants, you work on
-> your own branch, occasionally rebasing on top of the updated upstream,
-> and when you are done, try to push it out to the integration branch,
-> and that final leg needs to be explicit to make sure you won't push
-> out to a wrong branch (in this case, a new branch at the remote with
-> the same name as your local topic branch) by mistake?
->
-> > On the other hand, once they push their new branch (dealing with the
-> > initial error, following instructions to push to the right name),
-> > subsequent "pull" calls will behave as expected, only bring in any
-> > changes to that new branch they pushed.
->
-> Is that because the upstream for this local branch is updated?
-> The "following instructions..." part may want to clarify.
->
-> It somehow feels that a better solution might be to suggest
-> updating the push.default to 'upstream' when it happens?  I dunno.
->
-> In any case, now we have explained what happens with today's code,
-> here is a good place to propose a solution.  Do so in imperative,
-> e.g.
->
->     Allow branch.autosetupmerge to take a new value, 'simple', which
->     sets the upstream of the new branch only when the local branch
->     being created has the same name as the remote-tracking branch it
->     was created out of.  Otherwise the new local branch will not get
->     any tracking information and
->
-> or something, perhaps?
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> 
+>  * Relative to the initial version, the "--no-merges" change has
 
-Thank you for taking the time to make sense of the rambling /
-largely incoherent message and helping me identify some context
-other reviewers will expect.
+it was "--merges", not "--no-merges"
 
-I've rewritten the whole thing to try to address these concerns, but of
-course I may well have introduced a whole new set. If nothing else, it's
-become even more rambling. Is there a recommended limit to the
-length of a commit message?
+>    been removed because the end user can still give --merges from
+>    the command line and the filtering of merges done by the script
+>    is still needed for correctness.
+
+You probably mean that the user can pass "--no-merges HEAD"
+but that would just make the effective command
+
+	git rev-list --merges --no-merges HEAD
+
+which outputs nothing. I don't think `git rev-list --merges "$@"` will
+ever output non-merge commits, so the filtering should not be necessary.
+
+> 
+>  contrib/rerere-train.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/contrib/rerere-train.sh b/contrib/rerere-train.sh
+> index 75125d6ae0..26b724c8c6 100755
+> --- a/contrib/rerere-train.sh
+> +++ b/contrib/rerere-train.sh
+> @@ -86,7 +86,7 @@ do
+>  	fi
+>  	if test -s "$GIT_DIR/MERGE_RR"
+>  	then
+> -		git show -s --pretty=format:"Learning from %h %s" "$commit"
+> +		git --no-pager show -s --format="Learning from %h %s" "$commit"
+>  		git rerere
+>  		git checkout -q $commit -- .
+>  		git rerere
+> -- 
+> 2.35.1-354-g715d08a9e5
+> 
