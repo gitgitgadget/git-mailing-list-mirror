@@ -2,255 +2,245 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1852FC433FE
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 15:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20A10C433EF
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 15:19:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233468AbiB1PTQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 10:19:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42460 "EHLO
+        id S234924AbiB1PUE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 10:20:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbiB1PTO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 10:19:14 -0500
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B605522C4
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 07:18:34 -0800 (PST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id 7ACE03200AF3;
-        Mon, 28 Feb 2022 10:18:31 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Mon, 28 Feb 2022 10:18:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=9HEpEFO7ITVntOwX8n6I4NEwsNCu9zY5zKPI9H
-        fSTeo=; b=ggLNsL5oBkuOpNs2s4RVoPjSlYXSPZZESaV8BrpMJJij7j0/8RUeJv
-        CjC2gF4r4dFQyRyy0Gdz9c6gUyvLxjKOsmAYR18fubgeKIUjH49EUcWmYqddFDni
-        BqRy9ryc6Wlzj8rOGQJxLbQ+sZv7WNihuqTHdLwIBzdTRLcM2Tec2yBt+b3x8Pj/
-        Z7ri34L/zfky4tAMfHtQTMXIKnTyqnWEE7IgGc6pLz0NXw2nvQSpGmnPVvOLT8kb
-        +gbad3hVYJuqh8fq3n6uVlC2hjj+/OBfxajYwcHWRQp/mNbyi6g6qBTFFBl+rfh+
-        Awf4ona7nqZ5rlVM1I16QR7XHUAezKlw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=9HEpEFO7ITVntOwX8
-        n6I4NEwsNCu9zY5zKPI9HfSTeo=; b=e0rQEAHSFpAuFWOXJg/4FE9kdZzy+lGNr
-        JHyj3Ea1dKUuatBOYaNWZwKJt8H9xS0PIMdsfcL1qLTqfZmwBacWUNnM5CNXmgN0
-        qztK48tM+bQHb1TmFzD1GLFUPMWY6L1AnM3lMeoNXtcdnF+EpiN3T39P4xzSDRUQ
-        fiWGtMjwv0LDp29dnck9T227Yyp/UnB2u0IFFmS+kTGlf6VH62zTglb0eMpysWVp
-        b67xGcRC6JcOlvkyVgmKehFxseQvjC7/Y3fvYz1xiu2/x42jNNVn8IJAQ2Hzv2YM
-        hyI8ubMesM3mUr+074sEkura0qqCANRlqKWEOlkAfDOshsKGGS1lA==
-X-ME-Sender: <xms:xuccYpFV__VUrAMPYmZK6V-vBHfPSs1E1h7D7AYvQlSffKmx_DONEA>
-    <xme:xuccYuXQOQwRwBiJ03eN069ZMGfBBN5HtozQAE-GplkrMNniAWzG-3lVWvXNMMjzr
-    m0HKp3ozmJzRRcuzg>
-X-ME-Received: <xmr:xuccYrIHyEaaG78ovW5cK0TtpZ1Ca8Md7orRX84dAqbsEdBAPaTJHTR-6Soe_9_L9PbO3mSHt0x5e-tdyuf0-uXeGF7tPQ2hMBZ-95Ha450CoNgr9cjYaVrFyw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddttddgjeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeevudeuieetgfeiveevgfdtueeuveevgeegvefggedvueeliedvleelleekuedvuden
-    ucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:xuccYvGeEJP5pE2B9ixUpjA5K1wAkr7bLhaO53YhpUqCkr3yAF696A>
-    <xmx:xuccYvX2T01ZmhbQDNx0oWlMn2F423dB12nQIILRyhBjBcXAiJW2UQ>
-    <xmx:xuccYqPgrmOh1oa7lJOUfPwWS4Da4ZpK0Fgef6yt7HBqc1LqkS5M4g>
-    <xmx:xuccYlyIfInE0ht61bVrBLPHYn_0A57tQOzYsFbMPkV2zgyAFeSwEg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Feb 2022 10:18:29 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 1dacc414 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 28 Feb 2022 15:18:28 +0000 (UTC)
-Date:   Mon, 28 Feb 2022 16:18:20 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
-        abhishekkumar8222@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 3/7] commit-graph: start parsing generation v2 (again)
-Message-ID: <YhzkdMxrIGlNutr6@ncase>
+        with ESMTP id S236527AbiB1PUC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 10:20:02 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE6F980927
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 07:19:20 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id cm8so18103451edb.3
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 07:19:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=/7HQdGx+58YO5jF0Ux75tafMBw10R0H3HE4+YIgq+gc=;
+        b=JkMZP9S5B3GU4eGRbluxuAKa3Qdy2sgpwjixjyDQSEK2vlVTKWBVIXy+8BVo/IQyp2
+         mDL/kFq9eVh3s09N8VBACIuCIjp0hXiYh+ZuMf3D7x0u5LqhNWQcf9B8a1PAmaClArhP
+         YwJgaxgD6EzfPWToUEzwJAv8YICjhKLyRaTRN+dszC+Nf09mTqSUO57tVobcwmRhE2CT
+         /9GYXwSTuH0f2XpXf3VbGY0rau7fuiQH8aS8WAyLsM/Q08K7Lup4L364+16UVSkbmNEM
+         4RFWUOkgT2lXhxYC4hANpQCgf1NWpV5eB2oVBL77aSf2jyNtUp4N8Wevopaz3psycNWU
+         uoWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=/7HQdGx+58YO5jF0Ux75tafMBw10R0H3HE4+YIgq+gc=;
+        b=wZhPHfIr7KyIqNpdwvr3gmL0wbKTbKGpyxHugWnsYYIEC4cZHTmyLwmA71DLvQ3jd0
+         PVMTiylPacxNIPaufp7wvWQQBm3fpsnfWZlJgMeMh/mf4xIUWJRTZ+pSbbDqlQEEDQT7
+         EcvjhP/oJH6pZLvbY8PilI7e/szqBu9OY9BJM+7epYyXNbfveMVcPJdNdgWMXEQ2zuzR
+         nZgjtHz8DAsLUIYD0cRCbTEe1DhIDySlxHniC1+oT8nn9HkMB+uwEmuSgFiEw5EEvrTL
+         yymM8A5CpGpVlqfkKEhzkrGmBOrE1m00PeFcuA86p6CEdf+y2nKrWXCZ7z7+DFjEIYNY
+         rFaQ==
+X-Gm-Message-State: AOAM530eJ33lapLLu7Oms/ZOPjWA3HzAX6jAyuSqiFEIsMvny2zryaVV
+        DDht1ba7sPTprr+CsGIv3fk=
+X-Google-Smtp-Source: ABdhPJyryvO85KBZ54FwkSF6FRh6ycCPh3a1kM/ozayeGtQSmnoFXiwcVY1Uc5hPmAfHDFXLlJSldQ==
+X-Received: by 2002:a05:6402:d08:b0:412:a33e:24fe with SMTP id eb8-20020a0564020d0800b00412a33e24femr20573045edb.281.1646061559150;
+        Mon, 28 Feb 2022 07:19:19 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id u5-20020a170906780500b006d0b99162casm4465680ejm.114.2022.02.28.07.19.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Feb 2022 07:19:18 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nOhnx-001QLH-Oq;
+        Mon, 28 Feb 2022 16:19:17 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
+        abhishekkumar8222@gmail.com
+Subject: Re: [PATCH 5/7] commit-graph: document file format v2
+Date:   Mon, 28 Feb 2022 15:27:49 +0100
 References: <pull.1163.git.1645735117.gitgitgadget@gmail.com>
- <a3436b92a32f7f6dd02ad61eb2337a4d088d5e9c.1645735117.git.gitgitgadget@gmail.com>
+ <7f9b65bd22551fd7fd5d2f0bf18aee8c25f1db99.1645735117.git.gitgitgadget@gmail.com>
+ <220225.86a6ee7eid.gmgdl@evledraar.gmail.com>
+ <d19f5ee8-af92-805f-7ea2-8285862c1123@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <d19f5ee8-af92-805f-7ea2-8285862c1123@github.com>
+Message-ID: <220228.86pmn73toq.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cxUu0K2JubPRlOTl"
-Content-Disposition: inline
-In-Reply-To: <a3436b92a32f7f6dd02ad61eb2337a4d088d5e9c.1645735117.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---cxUu0K2JubPRlOTl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Feb 28 2022, Derrick Stolee wrote:
 
-On Thu, Feb 24, 2022 at 08:38:32PM +0000, Derrick Stolee via GitGitGadget w=
-rote:
-> From: Derrick Stolee <derrickstolee@github.com>
->=20
-> The 'read_generation_data' member of 'struct commit_graph' was
-> introduced by 1fdc383c5 (commit-graph: use generation v2 only if entire
-> chain does, 2021-01-16). The intention was to avoid using corrected
-> commit dates if not all layers of a commit-graph had that data stored.
-> The logic in validate_mixed_generation_chain() at that point incorrectly
-> initialized read_generation_data to 1 if and only if the tip
-> commit-graph contained the Corrected Commit Date chunk.
->=20
-> This was "fixed" in 448a39e65 (commit-graph: validate layers for
-> generation data, 2021-02-02) to validate that read_generation_data was
-> either non-zero for all layers, or it would set read_generation_data to
-> zero for all layers.
->=20
-> The problem here is that read_generation_data is not initialized to be
-> non-zero anywhere!
->=20
-> This change initializes read_generation_data immediately after the chunk
-> is parsed, so each layer will have its value present as soon as
-> possible.
->=20
-> The read_generation_data member is used in fill_commit_graph_info() to
-> determine if we should use the corrected commit date or the topological
-> levels stored in the Commit Data chunk. Due to this bug, all previous
-> versions of Git were defaulting to topological levels in all cases!
->=20
-> This can be measured with some performance tests. Using the Linux kernel
-> as a testbed, I generated a complete commit-graph containing corrected
-> commit dates and tested the 'new' version against the previous, 'old'
-> version.
->=20
-> First, rev-list with --topo-order demonstrates a 26% improvement using
-> corrected commit dates:
->=20
-> hyperfine \
-> 	-n "old" "$OLD_GIT rev-list --topo-order -1000 v3.6" \
-> 	-n "new" "$NEW_GIT rev-list --topo-order -1000 v3.6" \
-> 	--warmup=3D10
->=20
-> Benchmark 1: old
->   Time (mean =C2=B1 =CF=83):      57.1 ms =C2=B1   3.1 ms
->   Range (min =E2=80=A6 max):    52.9 ms =E2=80=A6  62.0 ms    55 runs
->=20
-> Benchmark 2: new
->   Time (mean =C2=B1 =CF=83):      45.5 ms =C2=B1   3.3 ms
->   Range (min =E2=80=A6 max):    39.9 ms =E2=80=A6  51.7 ms    59 runs
->=20
-> Summary
->   'new' ran
->     1.26 =C2=B1 0.11 times faster than 'old'
->=20
-> These performance improvements are due to the algorithmic improvements
-> given by walking fewer commits due to the higher cutoffs from corrected
-> commit dates.
->=20
-> However, this comes at a cost. The additional I/O cost of parsing the
-> corrected commit dates is visible in case of merge-base commands that do
-> not reduce the overall number of walked commits.
->=20
-> hyperfine \
->         -n "old" "$OLD_GIT merge-base v4.8 v4.9" \
->         -n "new" "$NEW_GIT merge-base v4.8 v4.9" \
->         --warmup=3D10
->=20
-> Benchmark 1: old
->   Time (mean =C2=B1 =CF=83):     110.4 ms =C2=B1   6.4 ms
->   Range (min =E2=80=A6 max):    96.0 ms =E2=80=A6 118.3 ms    25 runs
->=20
-> Benchmark 2: new
->   Time (mean =C2=B1 =CF=83):     150.7 ms =C2=B1   1.1 ms
->   Range (min =E2=80=A6 max):   149.3 ms =E2=80=A6 153.4 ms    19 runs
->=20
-> Summary
->   'old' ran
->     1.36 =C2=B1 0.08 times faster than 'new'
->=20
-> Performance issues like this are what motivated 702110aac (commit-graph:
-> use config to specify generation type, 2021-02-25).
->=20
-> In the future, we could fix this performance problem by inserting the
-> corrected commit date offsets into the Commit Date chunk instead of
-> having that data in an extra chunk.
->=20
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  commit-graph.c                |  3 +++
->  t/t4216-log-bloom.sh          |  2 +-
->  t/t5318-commit-graph.sh       | 14 ++++++++++++--
->  t/t5324-split-commit-graph.sh |  9 +++++++--
->  4 files changed, 23 insertions(+), 5 deletions(-)
->=20
-> diff --git a/commit-graph.c b/commit-graph.c
-> index a19bd96c2ee..8e52bb09552 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -407,6 +407,9 @@ struct commit_graph *parse_commit_graph(struct reposi=
-tory *r,
->  			&graph->chunk_generation_data);
->  		pair_chunk(cf, GRAPH_CHUNKID_GENERATION_DATA_OVERFLOW,
->  			&graph->chunk_generation_data_overflow);
-> +
-> +		if (graph->chunk_generation_data)
-> +			graph->read_generation_data =3D 1;
->  	}
-> =20
->  	if (r->settings.commit_graph_read_changed_paths) {
+> On 2/25/2022 5:31 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Thu, Feb 24 2022, Derrick Stolee via GitGitGadget wrote:
+>>=20
+> ...
+>>>    Generation Data (ID: {'G', 'D', 'A', 'T' }) (N * 4 bytes) [Optional]
+>>>      * This list of 4-byte values store corrected commit date offsets f=
+or the
+>>> @@ -103,6 +112,9 @@ CHUNK DATA:
+>>>      * Generation Data chunk is present only when commit-graph file is =
+written
+>>>        by compatible versions of Git and in case of split commit-graph =
+chains,
+>>>        the topmost layer also has Generation Data chunk.
+>>> +    * This chunk does not exist if the commit-graph file format versio=
+n is 2,
+>>> +      because the corrected commit date offset data is stored in the C=
+ommit
+>>> +      Data chunk.
+>>>=20=20
+>>>    Generation Data Overflow (ID: {'G', 'D', 'O', 'V' }) [Optional]
+>>>      * This list of 8-byte values stores the corrected commit date offs=
+ets
+>>=20
+>> We talked a while ago now about how we do commit-graph format changes
+>> and this is partially echoing those earlier questions[1] from 2019.
+>>=20
+>> I fully understand why we're writing this amended CDAT chunk in a
+>> different layout. By not having the GDAT side-chunk to look up in the
+>> data is more local, that part of the file is more compact etc.
+>>=20
+>> What I don't understand is why getting those performance improvements
+>> requires the breaking version change & the writing of the incompatible
+>> version number.
+>>=20
+>> I.e. couldn't the differently formatted CDAT chunk be written instead to=
+ a new
+>> chunk name (say "2DAT") instead? Per [1] we'd pay a small fixed cost for
+>> a possibly empty chunk (I didn't re-do those numbers), but surely the
+>> performance improvements will be about the same for that miniscule
+>> overhead.
+>
+> CDAT is a required chunk. It is part of the v1 spec that CDAT exists
+> and is correct. All other Git clients will error out when reading a
+> "v1" graph without such a chunk, and in a way that is less helpful to
+> users. Instead of clearly indicating "file version is too new" it will
+> say "commit-graph is missing the Commit Data chunk" which is not
+> helpful.
 
-I wanted to test your changes because they seem quite exciting in the
-context of my work as well, but this commit seems to uncover a bug with
-how we handle overflows. I originally triggered the bug when trying to
-do a mirror-fetch, but as it turns it seems to trigger now whenever the
-commit-graph is being read:
+Yes. That would be the worst of both worlds.
 
-    $ git commit-graph verify
-    fatal: commit-graph requires overflow generation data but has none
+I thought the reference to the 2019-era post made it clear (which is
+explicit about this aspect), but I'm talking about writing one of:
 
-    $ git commit-graph write --split
-    Finding commits for commit graph among packed objects: 100% (10235119/1=
-0235119), done.
-    fatal: commit-graph requires overflow generation data but has none
+ A. An empty chunk
+ B. Keeping a "stale" chunk around (as we re-write the graph)
+ C. Duplicate writes of new/old chunks.
 
-    $ git commit-graph write --split=3Dreplace
-    Finding commits for commit graph among packed objects: 100% (10235119/1=
-0235119), done.
-    fatal: commit-graph requires overflow generation data but has none
+And not simply omitting the CDAT chunk. As you point out would give you
+all the drawbacks of a version number change, with none of the benefits.
 
-I initially assumed this may be a bug with how we previously wrote the
-commit-graph, but removing all chains still reliably triggers it:
+I haven't re-tested this now, but at the time doing any of (A..C) would
+work smoothly for older clients, while giving newer ones improved data.
 
-    $ rm -f objects/info/commit-graphs/*
-    $ git commit-graph write --split
-    Finding commits for commit graph among packed objects: 100% (10235119/1=
-0235119), done.
-    fatal: commit-graph requires overflow generation data but has none
+>> It will give you something you can't have here, which is optional
+>> compatibility with older clients by writing both versions. That'll be a
+>> ~2x as large file on disk, but with the page cache & each client version
+>> skipping to the data it needs caching characteristics & data locality
+>> should work out to about the same thing.
+>
+> Writing both is the only way that this could work without incrementing
+> the graph version number, but I'd rather just update the number and
+> avoid wasting the effort to write that extra data.
 
-I haven't yet found the time to dig deeper into why this is happening.
-While the repository is publicly accessible at [1], unfortunately the
-bug seems to be triggered by a commit that's only kept alive by an
-internal reference.
+...
 
-Patrick
+> It seems you are hyper-focused on "we don't _need_ to update the version
+> number" and you are willing to recommend wasteful approaches in order to
+> support that stance.
 
-[1]: https://gitlab.com/gitlab-com/www-gitlab-com.git
+I'd say less hyper-focused, and more clarifying an IMO major unstated
+trade-off of the proposed format change.
 
---cxUu0K2JubPRlOTl
-Content-Type: application/pgp-signature; name="signature.asc"
+> So: you're right. We don't _need_ to update the version number. But this
+> is the best choice among the options available.
 
------BEGIN PGP SIGNATURE-----
+...
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIc57sACgkQVbJhu7ck
-PpTOHw//UYp2A6KSa5C/CKE2MrPh3eGRySUiUN2AZAIAWU/sem9tB2ZaO37JyQ+6
-RKAawyDrIfbx5hK2oZielKqNjxRmHWY7knqwpsrTRQ1lbJuw1E3MfYUNFkxRkrZF
-YpcAkfmRvKMEovqnzJ4Btr7J/C93w9hB8xCRakvSF5fXlMHy9/7NSYdNgfMH2C32
-zjWQ0JZcvDMJQttq80IOp4lNSxudWNdAJnMpWVe3fewj0MIjJj69oILh2JH6wVyP
-MmYBX2aE3EEa8/ct0TuJ/0fzeF79bdrfsbWrqzwqKgYx+YQ7f7wN3VoFbh1N8NZB
-kZUBbDXXKZqKq6lj7Fyb4YkTyXvXUJzg5Y2+VY6VJB1QDz+55TgFYsZHvQABalt8
-lbetuBxPs1SSqboTiIW54AkQvH4tF4jI627HReR/5EL6/+YpSvjx5H72fkLTzwIE
-VV5yb6AzhjUNe/dm+MyqSlc6XEPjUMkcLs9uAqkXEfeaQKGvchJkoAitIC0vxBPL
-pyXAjMOC8jvaDjOCDdOAeslAuma+kE3ufz9kSY8HKKm3yMsfAz/DKVgCpxR8kSqu
-FxvGXqC7HpPsNgsdivZVAmXkBcK9ybtFmCbklFcW2UvvriaIiLU410iyfMRoD1dI
-rCHGp2DNiHS+N/TzN8O2YlXyrYZFpdOTqttrxUMT5MbDGYieIyk=
-=xgJw
------END PGP SIGNATURE-----
+>> Or maybe they won't. I just found it surprising when reviewing this to
+>> not find an answer to why that approach wasn't
+>> considered.
+>
+> The point is to create a new format that can be chosen when deployed
+> in an environment where older Git versions will not exist (such as
+> a Git server). The new version is not chosen by default and instead
+> is opt-in through the commitGraph.generationVersion config option.
+>
+> Perhaps in a year or two we would consider making this the new
+> default, but there is no rush to do so.
 
---cxUu0K2JubPRlOTl--
+Looking into this a bit more I think that in either case this is less of
+a big deal after my 43d35618055 (commit-graph write: don't die if the
+existing graph is corrupt, 2019-03-25), which came out of some of those
+discussions at the time of [1].
+
+I.e. now a client that only understands version N-1 will warn when
+loading it, wheras it's only if a pre-v2.22.0 client (which has that
+commit) reads the repository that we'd hard die on it, correct?
+
+But speaking of hyper-focus. I think that arguably applies to you in
+this case when considering the trade-offs of these sorts of format
+changes :)
+
+I.e. you're primarily considering cases of say a git server (presumably
+running on GitHub) or another such deployment where it's easy to have
+full control over all of your versions "in the wild".
+
+And thus a three-phase rollout of something like a format change can be
+done in a timely and predictable manner.
+
+But git is used by *a lot* of people in a bunch of different
+scenarios. E.g.:
+
+ * A shared (hopefully read-only) NFS mounted by remote "unmanaged" clients.
+ * A tarred-up directory including a .git, which may be transferred to
+   a machine with a pre-v2.22.0 version.
+
+Or even softer cases of failure, such as:
+
+ * A cronjob causes an alert/incident somewhere because the server=20
+   operator started writing a new version, but forgot about a set
+   of machines that are still on the old version.
+
+I think that even if it's less conceptually clean it's worth considering
+being over backwards to be kinder to such use-cases, unless it's really
+required for other reasons to break such in-the-wild use-cases.
+
+Or in this case, if it's thought to be worth it to help reviewers decide
+by separating the performance improvement aspect from the changed
+interaction between new graphs and older clients.
+
+As a further nit on the proposed end-state here: Do I understand it
+correctly that commitGraph.generationVersion=3D[1|2] (i.e. on current
+"master") will always result in a file that's compatible with older
+versions, since the only thing "v2" there controls now is to write the
+optional GDAT and GDOV chunks?
+
+Whereas going from commitGraph.generationVersion=3D2 to
+commitGraph.generationVersion=3D3 in this series will impact older clients
+as noted above, since we're bumping the version (of the file, to 2 if
+the config is 3, which as Junio noted is a bit confusing).
+
+I think if you're set on going down the path of bumping the top-level
+version that deserves to be made much clearer in the added
+documentation. Right now the only hint to that is a passing mention that
+for v3:
+
+    [it] will be incompatible with some old versions of Git
+
+Which if we're opting for breaking format changes really should note
+some of the caveats above, that pre-v2.22.0 hard-dies, and probably
+describe "some old versions of Git" a bit more clearly.
+
+It actually means once this gets released "the git version that was the
+latest one you could download yesterday". Which a reader of the docs
+probably won't expect when starting to play with this in mixed-version
+environment.
+
+1. https://lore.kernel.org/git/87h8acivkh.fsf@evledraar.gmail.com/
