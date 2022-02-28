@@ -2,127 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1A6BC433F5
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 16:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51495C433EF
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 16:00:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237704AbiB1QAr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 11:00:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49946 "EHLO
+        id S237716AbiB1QBE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 11:01:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237717AbiB1QAp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 11:00:45 -0500
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925B170922
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 08:00:06 -0800 (PST)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id A2F0E3F482E;
-        Mon, 28 Feb 2022 11:00:05 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 486113F482D;
-        Mon, 28 Feb 2022 11:00:05 -0500 (EST)
-Subject: Re: [PATCH 07/11] bundle: safely handle --objects option
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     stolee@gmail.com, avarab@gmail.com, gitster@pobox.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
-        Derrick Stolee <derrickstolee@github.com>
-References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
- <1476a9495c53a165e6971afe75205889524fe7ca.1645638911.git.gitgitgadget@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <83bfbce4-3c79-031a-5961-429145910409@jeffhostetler.com>
-Date:   Mon, 28 Feb 2022 11:00:03 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S237707AbiB1QBD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 11:01:03 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E33767091D
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 08:00:23 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id n13-20020a05600c3b8d00b0037bff8a24ebso6007493wms.4
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 08:00:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=PM3ey4oWLPHRIC6ugC7KEkJij/tQLewdQxCQZ8KxqnQ=;
+        b=VY7q/s7Bo4IwJ9Vr/7Id51YZ276ogM88ENlZdf4CkFSCGiPigLeo7gSLCX3n4e4cYk
+         ipuS9crGe7Jmk/60Vm/ziniTqOOutIeacOE1cEquHGo3P6PboKzcV0iN/2wMRjXl+T/l
+         7qFLrG9SB0vnIGPZb1sOZpseUlA1BzMau6/Krj3wNCBT/nzsmq8ZvwWoWUM32f6tui1t
+         0CKIE0MyhBf4AQq9J+AmenRBACCyc6hGDx8J2TOwzMTg2ciopTcp7Ls6miLYj3vvprGX
+         CiVEMRdihy0jMvmSU01IH6mq/uA5E4sw3AvLb/ykkLcnO/OCnoRLuGNIlZgxgm2fnPk4
+         d1sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=PM3ey4oWLPHRIC6ugC7KEkJij/tQLewdQxCQZ8KxqnQ=;
+        b=K6AK2cjHioTdkaJub7FPzSXbzWw3MBfJ9FQmhNNMvDJgIisM0C2KjKSvo9LTySo7dr
+         fcG4Yn0E0EJm7OBXMT20Geb+2vmwJveJ8HFxieXca16NG81bbyZFHcDRl6yBAoKW04MM
+         +tMKLedl+7/QWbmCbhLHrXgC41D+6Ey3DJ5uHB4eP8TeCSSxZVzxQXYxBnt7dD8CHn5u
+         uCGFAVHUNPaOfaak8sauAV9KVRfT9S3xK3yREcjY19eEYLVvKRYNvmk6m0dLwEhqZsh0
+         96T/2b0LH8k5YYwDCA7g6RLxHn5PpUSMCc57SlS7+XrOuhKz2MMhMKg4bbA5HTWh6Wta
+         oKqw==
+X-Gm-Message-State: AOAM531NKY6AjypzF7ghCoes95nDPbZV2sgmQCAvFwvQ/+EoKFrclq/f
+        B6T9MmcDKwaD85x8HQzxnu8=
+X-Google-Smtp-Source: ABdhPJyIBzyIdOqHKz+Qr++PknKg2KSeTRVUoo0/ZZx+x/v0J1FjrddwLnA5Lbjb9uGTBgB+Zx4svw==
+X-Received: by 2002:a05:600c:3785:b0:380:ce6c:cece with SMTP id o5-20020a05600c378500b00380ce6ccecemr13931332wmr.0.1646064022506;
+        Mon, 28 Feb 2022 08:00:22 -0800 (PST)
+Received: from [192.168.1.201] ([31.185.185.186])
+        by smtp.googlemail.com with ESMTPSA id n8-20020a5d6608000000b001e73a0f21ffsm10879822wru.6.2022.02.28.08.00.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Feb 2022 08:00:22 -0800 (PST)
+Message-ID: <e90340b0-09da-bf3a-f8eb-47fa408c51f1@gmail.com>
+Date:   Mon, 28 Feb 2022 16:00:21 +0000
 MIME-Version: 1.0
-In-Reply-To: <1476a9495c53a165e6971afe75205889524fe7ca.1645638911.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] worktree: add -z option for list subcommand
 Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1164.git.1645801727732.gitgitgadget@gmail.com>
+ <xmqqh78mesj6.fsf@gitster.g>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqh78mesj6.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 25/02/2022 17:59, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> [...]
+>>   	reason = worktree_lock_reason(wt);
+>>   	if (reason && *reason) {
+>>   		struct strbuf sb = STRBUF_INIT;
+>> -		quote_c_style(reason, &sb, NULL, 0);
+>> -		printf("locked %s\n", sb.buf);
+>> +		if (line_terminator) {
+>> +			quote_c_style(reason, &sb, NULL, 0);
+>> +			reason = sb.buf;
+>> +		}
+>> +		printf("locked %s%c", reason, line_terminator);
+> 
+> OK.  I suspect write_name_quoted() may be a better fit that does not
+> require us to have our own strbuf, but this should be OK.
+> 
+>>   		strbuf_release(&sb);
+>>   	} else if (reason)
+>> -		printf("locked\n");
+>> +		printf("locked%c", line_terminator);
+> 
+> It is a shame that we need a special code path for an empty string
+> given as the reason, only for the single SP after "locked", but we
+> have to live with it, I guess.
+
+We could have
+
+	if (reason) {
+		fputs("locked", stdout);
+		if (*reason) {
+			fputc(" ", stdout)
+			write_name_quoted(reason, stdout, line_terminator);
+		} else {
+			fputc(line_terminator, stdout)
+		
+	}
+
+which shares the code to print "locked" but I'm not sure it is any 
+bettor overall though especially as write_name_quoted() means we only 
+want to output a terminator when there is no reason text.
 
 
-On 2/23/22 12:55 PM, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <derrickstolee@github.com>
-> 
-> Since 'git bundle' uses setup_revisions() to specify the object walk,
-> some options do not make sense to include during the pack-objects child
-> process. Further, these options are used for a call to
-> traverse_commit_list() which would then require a callback which is
-> currently NULL.
-> 
-> By populating the callback we prevent a segfault in the case of adding
-> the --objects flag. This is really a redundant statement because the
+Best Wishes
 
-Nit: I stumbled over "...because the bundles are constructing..."
-Is there a better wording here??
-
-> bundles are constructing a pack-file containing all objects in the
-> discovered commit range.
-> 
-> Adding --objects to a 'git bundle' command might cause a slower command,
-> but at least it will not have a hard failure when the user supplies this
-> option. We can also disable walking trees and blobs in advance of this
-> walk.
-> 
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->   bundle.c               | 10 +++++++++-
->   t/t6020-bundle-misc.sh | 12 ++++++++++++
->   2 files changed, 21 insertions(+), 1 deletion(-)
-> 
-> diff --git a/bundle.c b/bundle.c
-> index a0bb687b0f4..dc56db9a50a 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -451,6 +451,12 @@ struct bundle_prerequisites_info {
->   	int fd;
->   };
->   
-> +
-> +static void ignore_object(struct object *obj, const char *v, void *data)
-> +{
-> +	/* Do nothing. */
-> +}
-> +
->   static void write_bundle_prerequisites(struct commit *commit, void *data)
->   {
->   	struct bundle_prerequisites_info *bpi = data;
-> @@ -544,7 +550,9 @@ int create_bundle(struct repository *r, const char *path,
->   		die("revision walk setup failed");
->   	bpi.fd = bundle_fd;
->   	bpi.pending = &revs_copy.pending;
-> -	traverse_commit_list(&revs, write_bundle_prerequisites, NULL, &bpi);
-> +
-> +	revs.blob_objects = revs.tree_objects = 0;
-> +	traverse_commit_list(&revs, write_bundle_prerequisites, ignore_object, &bpi);
->   	object_array_remove_duplicates(&revs_copy.pending);
->   
->   	/* write bundle refs */
-> diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-> index b13e8a52a93..6522401617d 100755
-> --- a/t/t6020-bundle-misc.sh
-> +++ b/t/t6020-bundle-misc.sh
-> @@ -475,4 +475,16 @@ test_expect_success 'clone from bundle' '
->   	test_cmp expect actual
->   '
->   
-> +test_expect_success 'unfiltered bundle with --objects' '
-> +	git bundle create all-objects.bdl \
-> +		--all --objects &&
-> +	git bundle create all.bdl \
-> +		--all &&
-> +
-> +	# Compare the headers of these files.
-> +	head -11 all.bdl >expect &&
-> +	head -11 all-objects.bdl >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->   test_done
-> 
+Phillip
