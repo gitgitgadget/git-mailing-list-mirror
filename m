@@ -2,48 +2,48 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46FACC433EF
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 21:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE300C433FE
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 21:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230520AbiB1VvS (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231202AbiB1VvS (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 28 Feb 2022 16:51:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39658 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230371AbiB1VvP (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229603AbiB1VvP (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 28 Feb 2022 16:51:15 -0500
 Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB56BB1520
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B1B9C682F
         for <git@vger.kernel.org>; Mon, 28 Feb 2022 13:50:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1646085035; x=1677621035;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=1vSdt4npzijOq5zw8nwHgD0geQ/2AQHkQlA5CFm6wJ4=;
-  b=dnASuhk+OA0l0TOp+jLhkzaI36XK1tr3DzfdBDr09ZDHTjCy4IzA8+v+
-   MBDFU9i/FX8ic9fIXWB97I0Kok8tur8cdivbPpJAz+548/vZcf7lXBlbx
-   P/f8FjoUCTu3QAgL7kdrtmVWG9g93VnYO1zYch0W7zT+038VpXbvrTHtd
-   /IkXR4q1hKTPLlG1txCKmr4GZD7uQiXi1aXJKyrDM1xZk3BUFXHeLDpva
-   ue4pO8g+CrNEuSM45R1d/nLozzW8krS8xMSeZ3m73o7SXBRh6PdepVWUY
-   QQ5gkdkLx5raEXVBKZemC77ONhxFvz9HEux54Q2nva8sZPj3rrJiDHCqw
-   Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10272"; a="236503912"
+  bh=vo9sH0UFaGzRIBooHspyUdnQMy7OenrEKkRz9AJTZiI=;
+  b=FIcle1QwK/4bs4AA0kNzLbvDeMLsfL66uYRmahoUj9UfDMEXXgPC6PPF
+   sqkSxnawLReaq6ltUqBNwmdtCHWXMejuTbEZbBW+8AMIA42t/rSWXHf52
+   ZfqqhRVykInqTPApCM6ddlET8xQFAmVie5CZ0xWY75Y+XfdbAfKciewvC
+   K+PsPzB9aPz37vckS2APtsn45B0WnjwwYDxIAr8jaWMyNic7y2+Ibm6o0
+   GaYJ15cTdN1s7EljyucoGWKl78WtL91TmQmggDG8wUgs4YfdP1ZUahvL+
+   vEsuLaWvxc1PBB3RJBMVOfOc4t9cu5ISUCcKfs4MikkRxkUX9ty6X0nCT
+   w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10272"; a="236503910"
 X-IronPort-AV: E=Sophos;i="5.90,144,1643702400"; 
-   d="scan'208";a="236503912"
+   d="scan'208";a="236503910"
 Received: from fmsmga007.fm.intel.com ([10.253.24.52])
   by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 13:50:34 -0800
 X-IronPort-AV: E=Sophos;i="5.90,144,1643702400"; 
-   d="scan'208";a="544875865"
+   d="scan'208";a="544875864"
 Received: from jekeller-desk.amr.corp.intel.com ([10.166.241.10])
-  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 13:50:34 -0800
+  by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2022 13:50:33 -0800
 From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH] name-rev: use generation numbers if available
-Date:   Mon, 28 Feb 2022 13:50:25 -0800
-Message-Id: <20220228215025.325904-3-jacob.e.keller@intel.com>
+Subject: [PATCH v2 1/1] name-rev: use generation numbers if available
+Date:   Mon, 28 Feb 2022 13:50:24 -0800
+Message-Id: <20220228215025.325904-2-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.35.1.355.ge7e302376dd6
 In-Reply-To: <20220228215025.325904-1-jacob.e.keller@intel.com>
 References: <20220228215025.325904-1-jacob.e.keller@intel.com>
@@ -87,6 +87,15 @@ commit graphs enabled.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
+Changes since v1:
+* Extract all accesses to generation_cutoff and cutoff into helper
+  functions. This way only the helper functions access the global variables
+
+* Add several tests to cover all the behavior with and without commit graphs
+
+* Apply Stolee's suggestion of checking generation_cutoff is zero so that we
+  can avoid unnecessarily accessing the commit graph data.
+
  builtin/name-rev.c  |  71 +++++++++++++++++++-----
  t/t6120-describe.sh | 132 ++++++++++++++++++++++++++++++++++++++++++++
  2 files changed, 189 insertions(+), 14 deletions(-)
