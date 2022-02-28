@@ -2,126 +2,241 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 469FDC433EF
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 19:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B82AC433FE
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 19:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229644AbiB1Tuq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 14:50:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45512 "EHLO
+        id S229807AbiB1TwX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 14:52:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbiB1TuV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 14:50:21 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA7F5F65F7
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 11:48:42 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id i11so19091346eda.9
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 11:48:42 -0800 (PST)
+        with ESMTP id S229810AbiB1TwL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 14:52:11 -0500
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5806E10217B
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 11:50:58 -0800 (PST)
+Received: by mail-oo1-xc35.google.com with SMTP id w3-20020a4ac183000000b0031d806bbd7eso4348070oop.13
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 11:50:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=dZfq44SkZrtqS3I0kSCUioQe0QAaM4Md+TKZUfiycC8=;
-        b=bcyrOUK3Jq04MlKBqMYzsCQgi7dIFIhLwqxAC0Ht268pNsvUQKCKVvDsdSmxnVels6
-         3pYWxjR/03k0sSreBicNlY7lzvNjr+1GmRS+JfdhcSl3i0fQlhduVq7/QN4ymfYIhrkl
-         gpxpQaTxYIKBy91Jwngc4oGuBEhYZDl9pdPlZ5HSza/vSJitJDi6zkQnprUD76JuNtMH
-         MFVY35E4mXieRtSH/J9w2utKNpImINoUr754Ct8g5awehGvf3V9lnrUj7qmMFNFl8/yf
-         wPUaPaDRS0OO0iz5JVRarrHgDQRRH7gtG2yygbY205NFAFq63fDXefuT2euthlkB5d7i
-         834w==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=x7nb1aglhi6elY+9ugs1IrCPqbE4s4yIdFPORuIrng4=;
+        b=NLIjUYiPbJNPw3FMk/AsONmGxvbDf4AVHrZ6TiZj5JmS5egTwqivhDy6TjBpRoL+VU
+         GKi6/DV5FA1Z5k4qwjHLbAMlaPB+43agGPhy/28XjbIwRt8G6GTFil3JaxGOtUbtAie0
+         rIkDZpPnBu2CZxmUwWvBk7ZrvT4KCUUsfdG5uWFtZXG8BJu3uVGAce9/2MVbDmQHd1ZC
+         KPZgY2f253dl7Crz2ses1A6A9BjTjYdllCMMt0qxCegiRZgHAEQn+/A9B1LH11u4ixOb
+         uPVLIyDfnWAzfNhGmdz7mvj01Ob0Or46IFSuXwtVHS2W2Nie9RlXqRDQzpuf8Kg/MiCu
+         bKIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=dZfq44SkZrtqS3I0kSCUioQe0QAaM4Md+TKZUfiycC8=;
-        b=B2uW36t4y/zBUZcpY7UCSnM+LBSsH8vXbUjA3+iT/bMXlHgUqqVHUZmffcCzZrTf+o
-         NfbcJaDnBBelcVu75k4iVyOG80pcdJS4u4c8Cs/Acr9bYLDTv6mW87h3vd6gmvP69LPd
-         n/AAqpQIF7wu+4qsDUSpJTLpuyhHVuu7glWFfmu4Ci6SEMk+sajMw5RMrLlNVD5yGxts
-         q8g13+44ERHiiTNBBMd4Y098JzzXzLRe3dwxlGRZyvwCbPZfPUZU7y2tnD6Tr7AyQwbk
-         I1PegFt/36qq1pxjs+RsdDV3hmM49woDhlR2bUkqJerMmKAjtOdExaTwvUKyjGPW8fWD
-         p8pg==
-X-Gm-Message-State: AOAM533ewUOwGz70c3HuLGWW8OZ8tsfzAIRQnpCRBujfwDhRRv4sg90G
-        JAbDn0E0vaxqATZytEwtKyvQjMtaNjs=
-X-Google-Smtp-Source: ABdhPJyI7tshdKZ7nytH8W4VU1YRSv615B27NgcCQ0otyrV5JUnE/7WwyOWd5nk4L1QP7hk/dmSLHA==
-X-Received: by 2002:a17:906:3905:b0:6cf:7ef5:fee0 with SMTP id f5-20020a170906390500b006cf7ef5fee0mr15862439eje.307.1646077047052;
-        Mon, 28 Feb 2022 11:37:27 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id i5-20020aa7dd05000000b00410d26d170bsm6492515edv.4.2022.02.28.11.37.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 11:37:26 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nOlpl-001ZiD-S7;
-        Mon, 28 Feb 2022 20:37:25 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH v4 2/2] parse-options.c: add style checks for usage-strings
-Date:   Mon, 28 Feb 2022 20:32:18 +0100
-References: <xmqqtuck3yv2.fsf@gitster.g>
- <20220228073908.20553-1-chakrabortyabhradeep79@gmail.com>
- <xmqqzgma287n.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqzgma287n.fsf@gitster.g>
-Message-ID: <220228.86mtia3hqi.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=x7nb1aglhi6elY+9ugs1IrCPqbE4s4yIdFPORuIrng4=;
+        b=et10DMm/zXSOW16acKcsI7xFMF5WQwMlrXDsJp2ciUc6qtfIPEXSEDHZoKLsx/96+l
+         dpcLoiMW73qpoJIyOZrxAI3T7+Ve5f8S3kX3ZsFsNYGFI5NCGZnm359N2lJsb7DDkBQp
+         /ElsotyZKCVbUVfjfVu2Mc8qfF5+3IDx2Sa2/MFAoBTfzFLpGIyLuL4dV+7lVkfuxgOs
+         E0LQUaB4vAGj6KKalSwSns6DjrBbAeLRRnl7JLOQHcW22W/NAKWcLN9Z1qwfvubDvLN5
+         ghJItzBO0G0nAWiKpcnr4OxL0q7VLjZQTJcW499VDfuo0H5boxSe5QL+IRcL4BPBgzt8
+         jySg==
+X-Gm-Message-State: AOAM532AQnFjJDboZAdZ0fG7KEehAOM6NTEn6QnDre09PDIMLzMhqdp4
+        dcfb8XuTX/OiMHRnIUyaNZHl
+X-Google-Smtp-Source: ABdhPJyv9ru/epFw/O/GUV3kBtylhTxDfAwwvRZh+Y+5UYyt57Tof1dDo5S1NpWWfveaNsA5Qu6apg==
+X-Received: by 2002:a05:6870:1041:b0:d3:521b:f78a with SMTP id 1-20020a056870104100b000d3521bf78amr8703486oaj.13.1646077857653;
+        Mon, 28 Feb 2022 11:50:57 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id x12-20020a056830244c00b005ad233e0ba3sm5483499otr.48.2022.02.28.11.50.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Feb 2022 11:50:57 -0800 (PST)
+Message-ID: <e4096124-e566-0842-f17c-366645c3e37c@github.com>
+Date:   Mon, 28 Feb 2022 14:50:55 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH] name-rev: use generation numbers if available
+Content-Language: en-US
+To:     Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+References: <20220228190738.2112503-1-jacob.e.keller@intel.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20220228190738.2112503-1-jacob.e.keller@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2/28/2022 2:07 PM, Jacob Keller wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
+> 
+> If a commit in a sequence of linear history has a non-monotonically
+> increasing commit timestamp, git name-rev might not properly name the
+> commit.
+> 
+> This occurs because name-rev uses a heuristic of the commit date to
+> avoid searching down tags which lead to commits that are older than the
+> named commit. This is intended to avoid work on larger repositories.
+> 
+> This heuristic impacts git name-rev, and by extension git describe
+> --contains which is built on top of name-rev.
+> 
+> Further more, if --annotate-stdin is used, the heuristic is not enabled
+> because the full history has to be analyzed anyways. This results in
+> some confusion if a user sees that --annotate-stdin works but a normal
+> name-rev does not.
+> 
+> If the repository has a commit graph, we can use the generation numbers
+> instead of using the commit dates. This is essentially the same check
+> except that generation numbers make it exact, where the commit date
+> heuristic could be incorrect due to clock errors.
+> 
+> Add a test case which covers this behavior and shows how the commit
+> graph makes the name-rev process work.
+> 
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> The initial implementation of this came from [1]. Should this have Stolee's
+> sign-off?
+> 
+> [1]: https://lore.kernel.org/git/42d2a9fe-a3f2-f841-dcd1-27a0440521b6@github.com/
 
-On Mon, Feb 28 2022, Junio C Hamano wrote:
+I think your implementation is sufficiently different (and better)
+that you don't need my co-authorship _or_ sign-off.
 
-> [...]
-> So from my point of view, plan should be
->
->  (0) I have been assuming that the check we removed tentatively is
->      correct and the breakage in in-flight topic caught usage
->      strings that were malformed.  If not, we need to tweak it to
->      make sure it does not produce false positives.
->
->  (1) Help Microsoft folks fix the in-flight topic with faulty usage
->      strings.
+> +static void set_commit_cutoff(struct commit *commit)
+> +{
+> +	timestamp_t generation;
+> +
+> +	if (cutoff > commit->date)
+> +		cutoff = commit->date;
+> +
+> +	generation = commit_graph_generation(commit);
+> +	if (generation_cutoff > generation)
+> +		generation_cutoff = generation;
+> +}
 
-Agreed.
+I appreciate that you split this out into its own method to isolate
+the logic.
 
->  (2) Rethink if parse_options_check() can be made optional at
->      runtime, which would (a) allow our test to enable it, and allow
->      us to test all code paths that use parse_options() centrally,
->      and (b) allow us to bypass the check while the end-user runs
->      "git", to avoid overhead of checking the same option[] array,
->      which does not change between invocations of "git", over and
->      over again all over the world.
->
->      We may add the check back to parse_options_check() after doing
->      the above.  There are already tons of "check sanity of what is
->      inside option[]" in there, and it would be beneficial if we can
->      separate out from parse_options_start() the sanity checking
->      code, regardless of this topic.
+> +/* Check if a commit is before the cutoff. Prioritize generation numbers
+> + * first, but use the commit timestamp if we lack generation data.
+> + */
+> +static int commit_is_before_cutoff(struct commit *commit)
+> +{
+> +	if (generation_cutoff < GENERATION_NUMBER_INFINITY)
+> +		return commit_graph_generation(commit) < generation_cutoff;
+> +
+> +	return commit->date < cutoff;
+> +}
 
-This is a good idea, but while t0012-help.sh catches most of it, it
-doesn't cover e.g. sub-commands that call parse_options() in N functions
-one after the other.
+There are two subtle things going on here when generation_cutoff is
+zero:
 
-We could that in t0012-help.sh with (pseudocode):
+1. In a commit-graph with topological levels _or_ generation numbers v2,
+   commit_graph_generation(commit) will always be positive, so we don't
+   need to do the lookup.
 
-    for subcmd write verify ...
-    do
-        test_expect_success '...' 'git commit-graph $subcmd -h'
-    done
+2. If the commit-graph was written by an older Git version before
+   topological levels were implemented, then the generation of commits
+   in the commit-graph are all zero(!). This means that the logic here
+   would be incorrect for the "all" case.
 
-etc., but that still won't catch *all* of it, and we don't have a way to
-spew out "what commands use subcommands".
+The fix for both cases is to return 1 if generation_cutoff is zero:
 
-Hence why we need to run the rest of the test suite, and why these
-things aren't some one-off GIT_TEST_ mode or t/helper/*.c code already.
+	if (!generaton_cutoff)
+		return 1;
+> -	if (start_commit->date < cutoff)
+> +	if (commit_is_before_cutoff(start_commit))
 
->  (3) While (2) is ongoing, we can let people also explore static
->      analysis possibilities.
+> -			if (parent->date < cutoff)
+> +			if (commit_is_before_cutoff(parent))
 
-I think with in-flight concerns with (0) and (1) addressed what we have
-here is really good enough for now, and we could just add it to the
-existing parse_options_check() without needing (2) and (3) at this
-point.
+Nice replacements.
+
+> -	if (all || annotate_stdin)
+> +	if (all || annotate_stdin) {
+> +		generation_cutoff = 0;
+>  		cutoff = 0;
+> +	}
+
+Good.
+
+> -		if (commit) {
+> -			if (cutoff > commit->date)
+> -				cutoff = commit->date;
+> -		}
+> +		if (commit)
+> +			set_commit_cutoff(commit);
+
+Another nice replacement.
+
+> +# A-B-C-D-E-main
+> +#
+> +# Where C has a non-monotonically increasing commit timestamp w.r.t. other
+> +# commits
+> +test_expect_success 'non-monotonic commit dates setup' '
+> +	UNIX_EPOCH_ZERO="@0 +0000" &&
+> +	git init non-monotonic &&
+> +	test_commit -C non-monotonic A &&
+> +	test_commit -C non-monotonic --no-tag B &&
+> +	test_commit -C non-monotonic --no-tag --date "$UNIX_EPOCH_ZERO" C &&
+> +	test_commit -C non-monotonic D &&
+> +	test_commit -C non-monotonic E
+> +'
+> +
+> +test_expect_success 'name-rev with commitGraph handles non-monotonic timestamps' '
+> +	test_config -C non-monotonic core.commitGraph true &&
+> +	(
+> +		cd non-monotonic &&
+> +
+> +		# Ensure commit graph is up to date
+> +		git -c gc.writeCommitGraph=true gc &&
+
+"git commit-graph write --reachable" would suffice here.
+
+
+> +
+> +		echo "main~3 tags/D~2" >expect &&
+> +		git name-rev --tags main~3 >actual &&
+> +
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'name-rev --all works with non-monotonic' '
+
+This is working because of the commit-graph, right? We still have
+it from the previous test, so we aren't testing that this works
+when we only have the commit date as a cutoff.
+
+> +	(
+> +		cd non-monotonic &&
+> +
+> +		cat >expect <<-\EOF &&
+> +		E
+> +		D
+> +		D~1
+> +		D~2
+> +		A
+> +		EOF
+> +
+> +		git log --pretty=%H >revs &&
+> +		git name-rev --tags --annotate-stdin --name-only <revs >actual &&
+> +
+> +		test_cmp expect actual
+> +	)
+
+Do you want to include a test showing the "expected" behavior
+when there isn't a commit-graph file? You might need to delete
+an existing commit-graph (it will exist in the case of
+GIT_TEST_COMMIT_GRAPH=1).
+
+I also see that you intended to test the "--all" option, which
+is not included in your test. That's probably the real key to
+getting this test to work correctly. Deleting the graph will
+probably cause a failure on this test unless "--all" is added.
+
+Thanks,
+-Stolee
+
