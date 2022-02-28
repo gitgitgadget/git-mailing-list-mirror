@@ -2,134 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CB44C433F5
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 22:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4BB4C433EF
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 23:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231624AbiB1WyT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 17:54:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37900 "EHLO
+        id S229516AbiB1XOB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 18:14:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231616AbiB1WyQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 17:54:16 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58C80259
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 14:53:35 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 35C05184AF3;
-        Mon, 28 Feb 2022 17:53:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=rEpg+jpY0Ttt
-        MQclUqWDu+Y6oxcZgrUcxCMQUUTtQhs=; b=VELgx1/XXURO2hfzyO7jMcGRwnzL
-        Beqp5dLLGnTOhMFC/zS8MJHqO0lDhJPqRnI7lZADOF+vJ0tx+LN52awuASyE3K5v
-        8G5K8LgWBLHMNaJgEnuI1JplU3oWFfERe0ENmRJBwOGK9OPruySgef2F/p/yU9fW
-        Kjwv9/EnKz6/O4U=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E882184AF2;
-        Mon, 28 Feb 2022 17:53:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ACE0C184AF0;
-        Mon, 28 Feb 2022 17:53:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Rolf Eike Beer <eb@emlix.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: Please add support for "git merge --continue -S"
-References: <3769291.LUJhsIL6D6@mobilepool36.emlix.com>
-        <220228.86fso35k61.gmgdl@evledraar.gmail.com>
-Date:   Mon, 28 Feb 2022 14:53:31 -0800
-In-Reply-To: <220228.86fso35k61.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 28 Feb 2022 11:58:11 +0100")
-Message-ID: <xmqq1qzmy55g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S229457AbiB1XOA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 18:14:00 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B499C17ABD
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 15:13:18 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id bq11so19746942edb.2
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 15:13:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=LDHXzt8UtkRO1++CNIDqUitVzb/BriI2SDhAzwa1JtA=;
+        b=cp3gZ2m3hbmU0NxMNw8mhLh7fdWxL1V0thWPnrmw1/Vfu/dctdAdE872HIv1+1EkB8
+         WLt0/JgkfVEUgIX8QjnnOq0iiI9NHqgsOXNTQ9Cvs7vldtIFMOEpWwmP4sXk7RJkT9zu
+         aoYbMqrxdYNefdNqYM31jtQoQiLC+aE9n4sSKxRGhFFhYI7vIkRkNzNAKXKuHIiNYO1j
+         ZFEHElI7XJm+uCrr6qp2G685b5MALRd3bIpVMhOjKs2oQpyrRb88tBJa7N1u8kZ9GbMB
+         SF7E9gOupvmQMf79M6snrQnXEkYF+6vmOLy8+5OpgdjToj0o5ZZMSMVWIYfpCjShVyTo
+         FQJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=LDHXzt8UtkRO1++CNIDqUitVzb/BriI2SDhAzwa1JtA=;
+        b=F3yrlAOrs3x58NBbSzxqcxlHHF2p3UArdKpLf+AR0ZD+T/y+4dMAIE6FIx2LWmmP+b
+         O5mAoP+kpvr7MKxa3ltxZzXEp4bHTs3AejgNRmFD+LY+mQSlXd1hQzoEMfEqRmuC/+Da
+         JVjWADFNQiqqj4bcorTPj89xy2TCJj8WmECXjZRPeWw8yZkctaYk1wFEpmOv/fTGKJdI
+         YgFHAwsA3hYfHCvoLpjGo9DRP4s57RVvOHS30TyFYvqcACLcEYhs5Kr5tDars2+wuiqr
+         C06Lhs970w6qV1bR1wwR+/c+Z4DXH8VNTVTVw3FsDuVs99Dbbdw8SY3QAdOguNEY8L48
+         Eo+A==
+X-Gm-Message-State: AOAM532F+XveqZZW0yTq8rjf+YJLoI3mYI5QRMtOxpo8o7sgA0X9JF8b
+        0oNShHP0OXZ0WeEpI6qw4XMEyclREYo=
+X-Google-Smtp-Source: ABdhPJw0UihV0AE1Goa1JvDDGLQm4DkVjTJk2/EblwjdGZgGorqMNP/yMy5XqvOZKE5IEk7upukloA==
+X-Received: by 2002:a05:6402:27cb:b0:412:124:e0db with SMTP id c11-20020a05640227cb00b004120124e0dbmr21932204ede.72.1646089995615;
+        Mon, 28 Feb 2022 15:13:15 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id pg27-20020a170907205b00b006d6e5102ca2sm67384ejb.97.2022.02.28.15.13.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Feb 2022 15:13:15 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nOpCc-001eIQ-GM;
+        Tue, 01 Mar 2022 00:13:14 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2 3/7] read-tree: expand sparse checkout test coverage
+Date:   Tue, 01 Mar 2022 00:09:40 +0100
+References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
+ <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
+ <ffe0b6aff2baee238f77ae57561a62ea5473321f.1645742073.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <ffe0b6aff2baee238f77ae57561a62ea5473321f.1645742073.git.gitgitgadget@gmail.com>
+Message-ID: <220301.861qzm37qt.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4103B1E4-98E9-11EC-8E9D-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> You can just drop the use of "merge --continue" entirely and use
-> "commit" instead.
+On Thu, Feb 24 2022, Victoria Dye via GitGitGadget wrote:
+
+> From: Victoria Dye <vdye@github.com>
 >
-> Caveats related to this were recently discussed on-list:
-> https://lore.kernel.org/git/CALRdAfcyfesNqfLhhe2GW_5V9s2hf++i6mZS1Lw5hq=
-QYTca85w@mail.gmail.com/
+> Add tests focused on how 'git read-tree' behaves in sparse checkouts. Extra
+> emphasis is placed on interactions with files outside the sparse cone, e.g.
+> merges with out-of-cone conflicts.
+>
+> Signed-off-by: Victoria Dye <vdye@github.com>
+> ---
+>  t/perf/p2000-sparse-operations.sh        |  1 +
+>  t/t1092-sparse-checkout-compatibility.sh | 85 ++++++++++++++++++++++++
+>  2 files changed, 86 insertions(+)
+>
+> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+> index 2a7106b9495..382716cfca9 100755
+> --- a/t/perf/p2000-sparse-operations.sh
+> +++ b/t/perf/p2000-sparse-operations.sh
+> @@ -117,6 +117,7 @@ test_perf_on_all git diff
+>  test_perf_on_all git diff --cached
+>  test_perf_on_all git blame $SPARSE_CONE/a
+>  test_perf_on_all git blame $SPARSE_CONE/f3/a
+> +test_perf_on_all git read-tree -mu HEAD
+>  test_perf_on_all git checkout-index -f --all
+>  test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
+>  
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index b1dcaa0e642..9d58da4e925 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -819,6 +819,91 @@ test_expect_success 'update-index --cacheinfo' '
+>  	test_cmp expect sparse-checkout-out
+>  '
+>  
+> +test_expect_success 'read-tree --merge with files outside sparse definition' '
+> +	init_repos &&
+> +
+> +	test_all_match git checkout -b test-branch update-folder1 &&
+> +	for MERGE_TREES in "base HEAD update-folder2" \
+> +			   "update-folder1 update-folder2" \
+> +			   "update-folder2"
+> +	do
+> +		# Clean up and remove on-disk files
+> +		test_all_match git reset --hard HEAD &&
+> +		test_sparse_match git sparse-checkout reapply &&
+> +
+> +		# Although the index matches, without --no-sparse-checkout, outside-of-
+> +		# definition files will not exist on disk for sparse checkouts
+> +		test_all_match git read-tree -mu $MERGE_TREES &&
+> +		test_all_match git status --porcelain=v2 &&
+> +		test_path_is_missing sparse-checkout/folder2 &&
+> +		test_path_is_missing sparse-index/folder2 &&
+> +
+> +		test_all_match git read-tree --reset -u HEAD &&
+> +		test_all_match git status --porcelain=v2 &&
+> +
+> +		test_all_match git read-tree -mu --no-sparse-checkout $MERGE_TREES &&
+> +		test_all_match git status --porcelain=v2 &&
+> +		test_cmp sparse-checkout/folder2/a sparse-index/folder2/a &&
+> +		test_cmp sparse-checkout/folder2/a full-checkout/folder2/a || return 1
+> +	done
+> +'
 
-Ah, that one.  We need to close the #leftoverbits on the topic.
-Here is a starter.
+Nit: Isn't this nicer/easier by unrolling the for-loop to the top-level, i.e.:
 
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
-Subject: merge: 'git merge --continue' is merely 'git commit'
+for MERGE_TREES in "base HEAD update-folder2" [...]
+do
+	test_expect_success "'read-tree -mu $MERGE_TREES' with files outside sparse definition" '
+		init_repos &&
+		test_when_finished "test_all_match git reset --hard HEAD" &&
+                ...
+	'
+done
 
-Among the commands with "--continue", "merge --continue" came much
-later, and it did not even need to exist.  The other commands with
-"--continue", e.g. "rebase", deal with multi-step operations, and it
-is worth to have a way to say "I am finished with this step, let's
-CONTINUE WITH THE REST".  But in "merge", there is no remaining
-thing to do after you are done with the conflict you saw.
+It makes failures easier to reason about since you see which for-loop
+iteration you're in right away, and can e.g. pick one with --run.
 
-In hindsight, we probably should have resisted the urge to add
-"merge --continue", just for the sake of misguided "consistency"
-perceived on non-existent similarity with other commands that truly
-need "--continue".  What is called "merge --continue" should have
-been called "merge --finish", if we needed to add something back
-then.
-
-The way to finish a conflicted merge has always been to run "git
-commit" before "merge --continue" was added, and it still is not
-just accepted but is the right way to finish a conflicted merge.
-
-There is an argument that it makes it somehow "safer" to use "merge
---continue" because the command fails when there is no interrupted
-merge going on, but what the user sees from "git commit" when there
-is and there is not interrupted merge are so different, there is not
-much "safety" benefit in practice.  We probably should deprecate and
-eventually remove "git merge --continue" eventually, but one step at
-a time.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-merge.txt | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
-
-diff --git c/Documentation/git-merge.txt w/Documentation/git-merge.txt
-index 3125473cc1..95f252598e 100644
---- c/Documentation/git-merge.txt
-+++ w/Documentation/git-merge.txt
-@@ -122,9 +122,9 @@ list.
- 	stash entry will be saved to the stash list.
-=20
- --continue::
--	After a 'git merge' stops due to conflicts you can conclude the
--	merge by running 'git merge --continue' (see "HOW TO RESOLVE
--	CONFLICTS" section below).
-+	After a 'git merge' stops due to conflicts, you can conclude
-+	the merge with "git commit" (see "HOW TO RESOLVE CONFLICTS"
-+	section below).  'git merge --continue' is a synonym for it.
-=20
- <commit>...::
- 	Commits, usually other branch heads, to merge into our branch.
-@@ -326,10 +326,9 @@ After seeing a conflict, you can do two things:
-=20
-  * Resolve the conflicts.  Git will mark the conflicts in
-    the working tree.  Edit the files into shape and
--   'git add' them to the index.  Use 'git commit' or
--   'git merge --continue' to seal the deal. The latter command
--   checks whether there is a (interrupted) merge in progress
--   before calling 'git commit'.
-+   'git add' them to the index.  Use 'git commit' (or
-+   'git merge --continue', which stops if there is no=20
-+   interrupted merge in progress) to seal the deal.
-=20
- You can work through the conflict with a number of tools:
-=20
+And we can do the cleanup in test_when_finished instead of at the start
+of every loop.
