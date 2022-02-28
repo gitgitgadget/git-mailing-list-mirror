@@ -2,119 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51495C433EF
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 16:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBBD2C433F5
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 16:08:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237716AbiB1QBE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 11:01:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51226 "EHLO
+        id S237761AbiB1QJZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 11:09:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237707AbiB1QBD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 11:01:03 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E33767091D
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 08:00:23 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id n13-20020a05600c3b8d00b0037bff8a24ebso6007493wms.4
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 08:00:23 -0800 (PST)
+        with ESMTP id S237754AbiB1QJY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 11:09:24 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83DD83EA9E
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 08:08:40 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id lw4so25730318ejb.12
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 08:08:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=PM3ey4oWLPHRIC6ugC7KEkJij/tQLewdQxCQZ8KxqnQ=;
-        b=VY7q/s7Bo4IwJ9Vr/7Id51YZ276ogM88ENlZdf4CkFSCGiPigLeo7gSLCX3n4e4cYk
-         ipuS9crGe7Jmk/60Vm/ziniTqOOutIeacOE1cEquHGo3P6PboKzcV0iN/2wMRjXl+T/l
-         7qFLrG9SB0vnIGPZb1sOZpseUlA1BzMau6/Krj3wNCBT/nzsmq8ZvwWoWUM32f6tui1t
-         0CKIE0MyhBf4AQq9J+AmenRBACCyc6hGDx8J2TOwzMTg2ciopTcp7Ls6miLYj3vvprGX
-         CiVEMRdihy0jMvmSU01IH6mq/uA5E4sw3AvLb/ykkLcnO/OCnoRLuGNIlZgxgm2fnPk4
-         d1sw==
+        bh=4XPJgUzhJnFn2xssXnfA70o4872bTpFrxoFe5AQrZpk=;
+        b=b0oE7r2VYVz/S1KEChG19u4GtRaM33+hRlakswDpPpLNPLWuAzRH8Wgai/aT6cun4R
+         zG1NDXJqR/CmMb3hvlmm/coHUZNU2W57UP6WYd2re8EyjV3ndzMmansgUUgAvWqjFhBo
+         ci7iVXn+shxqNZI6DH5uxezHn902nR7KfRoGsXTxQn+dG2qps4SvEhHOigw51NQmY96C
+         DgBqjeOU2BSwvWY0k0+PzZCqoVtZuIsIcWN723Ka6b6MwJxHkd32eWH4dwaQZQXhZ1OA
+         xglmSBzXBR6pZ19oxfq1Xdtkr/auAnwu5OCabtQZm+6ZgkY8x7uhKZC5yoFR/0a9xNQt
+         pAHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=PM3ey4oWLPHRIC6ugC7KEkJij/tQLewdQxCQZ8KxqnQ=;
-        b=K6AK2cjHioTdkaJub7FPzSXbzWw3MBfJ9FQmhNNMvDJgIisM0C2KjKSvo9LTySo7dr
-         fcG4Yn0E0EJm7OBXMT20Geb+2vmwJveJ8HFxieXca16NG81bbyZFHcDRl6yBAoKW04MM
-         +tMKLedl+7/QWbmCbhLHrXgC41D+6Ey3DJ5uHB4eP8TeCSSxZVzxQXYxBnt7dD8CHn5u
-         uCGFAVHUNPaOfaak8sauAV9KVRfT9S3xK3yREcjY19eEYLVvKRYNvmk6m0dLwEhqZsh0
-         96T/2b0LH8k5YYwDCA7g6RLxHn5PpUSMCc57SlS7+XrOuhKz2MMhMKg4bbA5HTWh6Wta
-         oKqw==
-X-Gm-Message-State: AOAM531NKY6AjypzF7ghCoes95nDPbZV2sgmQCAvFwvQ/+EoKFrclq/f
-        B6T9MmcDKwaD85x8HQzxnu8=
-X-Google-Smtp-Source: ABdhPJyIBzyIdOqHKz+Qr++PknKg2KSeTRVUoo0/ZZx+x/v0J1FjrddwLnA5Lbjb9uGTBgB+Zx4svw==
-X-Received: by 2002:a05:600c:3785:b0:380:ce6c:cece with SMTP id o5-20020a05600c378500b00380ce6ccecemr13931332wmr.0.1646064022506;
-        Mon, 28 Feb 2022 08:00:22 -0800 (PST)
-Received: from [192.168.1.201] ([31.185.185.186])
-        by smtp.googlemail.com with ESMTPSA id n8-20020a5d6608000000b001e73a0f21ffsm10879822wru.6.2022.02.28.08.00.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Feb 2022 08:00:22 -0800 (PST)
-Message-ID: <e90340b0-09da-bf3a-f8eb-47fa408c51f1@gmail.com>
-Date:   Mon, 28 Feb 2022 16:00:21 +0000
+        bh=4XPJgUzhJnFn2xssXnfA70o4872bTpFrxoFe5AQrZpk=;
+        b=OVq5Qcky/7TVrW9pw/AFe/YtfsOlEx7f/u2SvupRArubnm2x7rjHuymsmf0VDev7kM
+         5ufKFzl6jXjHf6runCTaizcoBdLkH3JKOZ/YxKbPy7z5jgFlITAIx30PIGft4rBls330
+         2sfO+R0pW7TOpD6B5a77w97yPFP66pbdBa4o+YPvVhHoorsd6NrhYmmMe4cWR2+1/Bov
+         ThFhI17j/QHRpvJR97zhSRBkpxaUhJVx0cXo+E4RUOJBY4pbdAoSAnJWS9lnwFpcxPLl
+         9goY5rpmsQ1ac49tNzh0E19nVcXNmadGejbWMLfn+kNY1H5o1hgtYmLVpo11K1Ct3pb6
+         RMhQ==
+X-Gm-Message-State: AOAM533idISV/7yT++cc21gJboy0IZeIacpTjk3MKOyG5cIweaSmtsan
+        iKbqu0A/QdodGw6WM2yz6h1+CFYBnKY=
+X-Google-Smtp-Source: ABdhPJx+dq9wgSBibyY/F4MHO+AHqrUhF+8M8yyPUUVVg2n8rkoUq7Y6TkAmMawYp1bsZeIpl8SQRw==
+X-Received: by 2002:a17:906:9c12:b0:6cf:b429:b645 with SMTP id ff18-20020a1709069c1200b006cfb429b645mr16321959ejc.386.1646064518515;
+        Mon, 28 Feb 2022 08:08:38 -0800 (PST)
+Received: from fedora35.example.com ([151.27.147.41])
+        by smtp.gmail.com with ESMTPSA id iy20-20020a170907819400b006d5c6bd4eccsm4457957ejc.162.2022.02.28.08.08.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Feb 2022 08:08:37 -0800 (PST)
+From:   Elia Pinto <gitter.spiros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] test-lib.sh: Use GLIBC_TUNABLES instead of MALLOC_CHECK_ on glibc >= 2.34
+Date:   Mon, 28 Feb 2022 16:08:27 +0000
+Message-Id: <20220228160827.465488-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] worktree: add -z option for list subcommand
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1164.git.1645801727732.gitgitgadget@gmail.com>
- <xmqqh78mesj6.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqh78mesj6.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/02/2022 17:59, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+In glibc >= 2.34 MALLOC_CHECK_ and MALLOC_PERTURB_ environment
+variables have been replaced by GLIBC_TUNABLES.  Also the new
+glibc requires that you preload a library called libc_malloc_debug.so
+to get these features.
 
-> [...]
->>   	reason = worktree_lock_reason(wt);
->>   	if (reason && *reason) {
->>   		struct strbuf sb = STRBUF_INIT;
->> -		quote_c_style(reason, &sb, NULL, 0);
->> -		printf("locked %s\n", sb.buf);
->> +		if (line_terminator) {
->> +			quote_c_style(reason, &sb, NULL, 0);
->> +			reason = sb.buf;
->> +		}
->> +		printf("locked %s%c", reason, line_terminator);
-> 
-> OK.  I suspect write_name_quoted() may be a better fit that does not
-> require us to have our own strbuf, but this should be OK.
-> 
->>   		strbuf_release(&sb);
->>   	} else if (reason)
->> -		printf("locked\n");
->> +		printf("locked%c", line_terminator);
-> 
-> It is a shame that we need a special code path for an empty string
-> given as the reason, only for the single SP after "locked", but we
-> have to live with it, I guess.
+Using the ordinary glibc system variable detect if this is glibc >= 2.34 and
+use GLIBC_TUNABLES and the new library.
 
-We could have
+This patch was inspired by a Richard W.M. Jones ndbkit patch
 
-	if (reason) {
-		fputs("locked", stdout);
-		if (*reason) {
-			fputc(" ", stdout)
-			write_name_quoted(reason, stdout, line_terminator);
-		} else {
-			fputc(line_terminator, stdout)
-		
-	}
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ t/test-lib.sh | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-which shares the code to print "locked" but I'm not sure it is any 
-bettor overall though especially as write_name_quoted() means we only 
-want to output a terminator when there is no reason text.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index e4716b0b86..136614ac8c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -517,12 +517,27 @@ then
+ 		: nothing
+ 	}
+ else
++	if type -p getconf >/dev/null 2>&1; then
++		_GLIBC_VERSION="$(getconf GNU_LIBC_VERSION 2>/dev/null | awk '{ print $2 }')"
++		if [ -n "$_GLIBC_VERSION" -a $(expr "$_GLIBC_VERSION" \>= "2.34") ]; then
++			_HAVE_GLIBC_234="yes"
++		fi
++	fi
+ 	setup_malloc_check () {
+-		MALLOC_CHECK_=3	MALLOC_PERTURB_=165
+-		export MALLOC_CHECK_ MALLOC_PERTURB_
++			if test "x$_HAVE_GLIBC_234" = xyes ; then
++				LD_PRELOAD="libc_malloc_debug.so.0" GLIBC_TUNABLES="glibc.malloc.check=1:glibc.malloc.perturb=165"
++				export LD_PRELOAD GLIBC_TUNABLES
++			else
++				MALLOC_CHECK_=3	MALLOC_PERTURB_=165
++				export MALLOC_CHECK_ MALLOC_PERTURB_
++			fi
+ 	}
+ 	teardown_malloc_check () {
+-		unset MALLOC_CHECK_ MALLOC_PERTURB_
++			if test "x$_HAVE_GLIBC_234" = xyes ; then
++				unset LD_PRELOAD GLIBC_TUNABLES
++			else
++				unset MALLOC_CHECK_ MALLOC_PERTURB_
++			fi
+ 	}
+ fi
+ 
+-- 
+2.35.1
 
-
-Best Wishes
-
-Phillip
