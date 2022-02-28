@@ -2,74 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C951C433F5
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 17:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AF2EC433FE
+	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 17:28:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233023AbiB1RRV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 12:17:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44950 "EHLO
+        id S232997AbiB1R3J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 12:29:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231156AbiB1RRU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 12:17:20 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8128970CE7
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 09:16:41 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0F7CF181F81;
-        Mon, 28 Feb 2022 12:16:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=028T/ZIvDB2lwcnSMzMdXqkEw8S0dc1RteE6Qb
-        i6n7o=; b=MRJN6rFKBN/9WD+2j3bAsDPJWhTLUDziZaOh1u2oQ5m80mWaFnFyCL
-        PctiFFLlKa05VHI3NaRe4p3prpOuuVaPLm0nEr36yo2mxksrddAcqKwlmlTzaaXp
-        /FndW115K/8eHYUtftS3kJ83Y986kjxp0ACaOc8HBrt+S6wxUlrLw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 09838181F80;
-        Mon, 28 Feb 2022 12:16:41 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 830CF181F7C;
-        Mon, 28 Feb 2022 12:16:38 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] worktree: add -z option for list subcommand
-References: <pull.1164.git.1645801727732.gitgitgadget@gmail.com>
-        <xmqqh78mesj6.fsf@gitster.g>
-        <CAPig+cQF3y64bPN8h4XvAYGX-g0LZedh-cAM+JLKdW_DPAWJaw@mail.gmail.com>
-Date:   Mon, 28 Feb 2022 09:16:37 -0800
-In-Reply-To: <CAPig+cQF3y64bPN8h4XvAYGX-g0LZedh-cAM+JLKdW_DPAWJaw@mail.gmail.com>
-        (Eric Sunshine's message of "Mon, 28 Feb 2022 03:35:09 -0500")
-Message-ID: <xmqqwnhe3o96.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S236220AbiB1R2z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 12:28:55 -0500
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AFA254FBF
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 09:27:56 -0800 (PST)
+Received: by mail-pg1-x52d.google.com with SMTP id t14so9216893pgr.3
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 09:27:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=coup.net.nz; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=eAbaN7SSjvYgWmshBNWajLGKh4EJUjr/aMAw5aToTvM=;
+        b=H4HBDjSCxLokUObr5s/nvCCXzg48wUmXBg8Ze59rAujs9E18cayvKy3cTdgvMQ6Wpd
+         ErQ7TWeqC4KtOwIX5vfb4+9PILJYIPPB18VlHX22RdOsyCgkJrpO/iKgCuuVYKfjTupV
+         pGKZZ0c63I4aRKxiFae3l0Wb35weAc0y9FmCE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=eAbaN7SSjvYgWmshBNWajLGKh4EJUjr/aMAw5aToTvM=;
+        b=3/QOdsARGAQ2rxp7L+AxtdHqj7NdtTkqiSxGappd4Oz64IOoGzbd4qSuvxFHP8XZHs
+         /YF+8CBMnFPq59YSMof45iQH3YR+FbfT5jkOoXbWJPJXdybmzgS7rOBVqm3OxTk78IEP
+         AnjHj5gCGM8Udvt/33nJsmZbYGzpBslwITveLqDtjztzDmnzlTZxSiqRGQprD/Pw+42w
+         h4PLs5Kp6uhcAq9eE8kHBKfUrNZtEbDeYlFPW4kri/7MuOCeDEqmfTPivDKIb8RDGklJ
+         q1n9TC63of1R8F8o94gAp2cEBsEuiVyMJqMgUWcDZPUcHSiFFyVlYGErw3OzCCTcdn0L
+         TlcQ==
+X-Gm-Message-State: AOAM5321rhInVzcccFuNkDEgGWDRYtvM018WTs7Do1fvuxnPf0NCRjGq
+        JqGioinw9THR5jcs+x4EpXrel67bqlWKqI9jrHG/YHT6H+WBqwR0nq9+Uw==
+X-Google-Smtp-Source: ABdhPJzKF/RYUlLoFYNicAO2/z3o1SRn2/krf1Szy7Pt4IMw3eD0TQMqu98gvttILlv4UzJXCfaE4xoqbtwlbLKnQCE=
+X-Received: by 2002:a05:6a00:1c4c:b0:4f4:236b:4382 with SMTP id
+ s12-20020a056a001c4c00b004f4236b4382mr1234532pfw.29.1646069276053; Mon, 28
+ Feb 2022 09:27:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 306E6448-98BA-11EC-A9F9-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+References: <pull.1138.git.1643730593.gitgitgadget@gmail.com>
+ <pull.1138.v2.git.1645719218.gitgitgadget@gmail.com> <220228.86r17n2aqd.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220228.86r17n2aqd.gmgdl@evledraar.gmail.com>
+From:   Robert Coup <robert@coup.net.nz>
+Date:   Mon, 28 Feb 2022 17:27:45 +0000
+Message-ID: <CACf-nVcy8xsf+STJoE5vwcsUauHRcR5wmwmCfnUnSW=4jDcgYQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] fetch: add repair: full refetch without
+ negotiation (was: "refiltering")
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Robert Coup via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        John Cai <johncai86@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi =C3=86var,
 
->> Unless the original wasn't using quote_c_style() correctly and
->> wasn't quoting its output, that is?
+Thanks for taking the time to look into this,
+
+On Mon, 28 Feb 2022 at 16:54, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
+b@gmail.com> wrote:
+> I realize this was probably based on feedback on v1 (I didn't go back
+> and re-read it, sorry).
+
+Yes, `fetch --repair` was from Jonathan Tan's v1 feedback[1], where he
+pointed out it could fill in lost objects from any remote in a more
+generally useful fashion.
+
+My goal here is to refetch with a different filter so that I get the
+outcome of a `clone --filter=3D` without having to chuck my object
+directory. But the actual implementation doesn't need to know anything
+specific about filters, so the original "refilter" name I had isn't
+really right.
+
+> But I feel strongly that we really should name this something other than
+> --repair. I don't care much if it isn't that :) But maybe
+> --expand-filters, --fleshen-partial or something like that?
+
+fleshen-partial sounds like a horror movie scene to me.
+
+1. `--refetch`
+2. `--as-clone`
+3. `--expand-filter` (though TBC you don't necessarily need a filter)
+4. `--refilter`
+5. something else
+
+> So first (and partially as an aside): Is a "noop" negotiatior really
+> want we want at all? Don't we instead want to be discovering those parts
+> of our history that are closed under reachability (if any) and say we
+> HAVE those things during negotiation?
+
+At an object level we don't have any means of knowing what has or
+hasn't been obtained via fetch to a partial clone with different
+`--filter` args (via config or cli), dynamic fault-ins, or sourced
+from a different remote. Fetch negotiation only occurs for refs and
+their associated commits/histories, but filtering occurs at the blob
+or tree level =E2=80=94 so we often HAVE a commit but not all of its
+trees/blobs, whereupon negotiation skips that commit and all it's
+associated objects.
+
+> But secondly, on the "--repair" name: The reason I mentioned that is
+> that I'd really like us to actually have a "my repo is screwed, please
+> repair it".
+
+Feels like people would look at `fsck` for that over `fetch`? Maybe
+not. Anyway, I get the point about the naming still not being right
+:-)
+
+> But (and I haven't tested, but I'm pretty sure), this patch series isn't
+> going to give you that. The reasons are elaborated on in [1], basically
+> we try really hard to re-use local data, and due to that & the collision
+> detection will often just hard die early in object walking.
 >
-> That's the case. It is impossible without this patch since `git
-> worktree list --porcelain` does not call quote_c_style() for the
-> worktree path; it only calls quote_c_style() for the lock reason.
+> But maybe I'm wrong, have you actually tested this with *broken* objects
+> as opposed to just missing ones with repo filters + promisors in play?
+> Our t/*fsck* and t/*corrupt*/ etc. tests have some of those.
 
-Yuck.  That's an outright bug that we should fix.  I do not think it
-makes "-z" unnecessary, but those who want to read from non-z output
-cannot sensibly do so with funny letters in their paths with today's
-output, and as long as quote_c_style() tweaks the output only when
-funny letters need to be quoted, those who are reading from today's
-non-z output will not be hurt, so let's fix that first or at the
-same time as we add "-z".
+Correct: I haven't tested with such objects/broken ODBs. Ideally
+repack/gc/etc would prefer a new-fixed pack over the old-broken
+pack/object but that's not really what I'm aiming to achieve here or
+am interested in.
 
-Thanks.
+1. https://lore.kernel.org/git/20220202185957.1928631-1-jonathantanmy@googl=
+e.com/
+
+Thanks,
+
+Rob :)
