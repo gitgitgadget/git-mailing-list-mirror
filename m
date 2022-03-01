@@ -2,77 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE367C433EF
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 09:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C11FC433EF
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 09:34:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230116AbiCAJev (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 04:34:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53160 "EHLO
+        id S232098AbiCAJex (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 04:34:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233087AbiCAJeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 04:34:44 -0500
+        with ESMTP id S233877AbiCAJeu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 04:34:50 -0500
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31C1F8A6DF
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 01:33:47 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 539CE5C0166;
-        Tue,  1 Mar 2022 04:33:44 -0500 (EST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BF5B5F8F4
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 01:33:49 -0800 (PST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 3EA785C021A;
+        Tue,  1 Mar 2022 04:33:48 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 01 Mar 2022 04:33:44 -0500
+  by compute4.internal (MEProxy); Tue, 01 Mar 2022 04:33:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=0Y4LN/xtCIDLx+DPtptCrteBEg3LAUq/Lbl2II
-        Jada8=; b=X/8RD3ILUiH73kqgnh24lJLrxPo5ulV1UOXyk3f8HVHT5ZW3WOmd9h
-        YQw3pWj/YDlPrj5P7pZCYZABy/o2spPzCQpop9dTdq0zKO9FBT+G8Y+nXfDoYcLO
-        IcFsodYkARmTjkXBh3Rt4bE6zsUloR+bX+8h1ZaEqjbP6rLsZ1pjRgZKB5f7M7QO
-        oXmDOyX/g8yuQW8wf3GSGXOq7iE/ns1Qd2llYMajljsuc/ZLAT5g7xKisDp3c3g4
-        WqqBC3NJ/o9UU9tVE8veBlZEbJglgd2cJa77AroKW/nTANhLrAp97fBaP3JuZQ/E
-        l61X5twuHycWtG3U44kQNpO6LDzRRK6Q==
+        :subject:to:to; s=fm3; bh=342M7DnLmCkA4aADhmXNC72DSdxDUizWZpcAKm
+        iiTdE=; b=Jn7246bPmfjiRKIDmHmO7Nng5GPPdg5C34/z0MkvkWcKciQbWCH1cK
+        /KEmmqN4icndt4DOy8te9+acQDZlE9EhZon4oxfZDmcddNIggqNLgN8x44GhBSNI
+        hfbIYSqU+orETTF0q/2VQIvPUJnOg7TvPc89//eyzmYsoYwv0EnqMcxliPONm9Hq
+        CJzN9A+F9AFMrys5PNCtlpNXJpV4esGfENSeLolg1Az3h+XsMflDVPNVBbNiTFqY
+        MUPIzpwbZiAxTgJr/2t1RJEhlACkIKKpoRMmvSbUGOywqsThtYtVcdoBgmAG6prs
+        brhG3m7eYlNt5Vfd0AyXt5DbLb/uZ8tw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=0Y4LN/xtCIDLx+DPt
-        ptCrteBEg3LAUq/Lbl2IIJada8=; b=QbMxItfh6tN4bQCorTK0RV5deOL34UNTn
-        PXi8psVUZdMGGoPWT7F5ijR1NkxEDGvlZRcuzl7nstXd5rXIg47X7jNPLB5rcCrW
-        7cMrh4YOHaMX0dMfcnS0XBJXB/HArOHBO605AeHnZo62K7NM+BLok4K/JE31K1zw
-        tg6s+glgRjPOvcikOa0o9u4cvRj985KJENajgRtQ87BdVqqHzDk4KqyGeWyteFGC
-        LOmrD5xeIUd3DcqB8vrB6eotrx/+80MizavreweLFeebrvoDGHS5iy+NqygNDh6T
-        ZrZuq1aObsYIYXboLh0dKGqN+NywnqxyKH3X7QM3hTRTKH5rpBkoQ==
-X-ME-Sender: <xms:eOgdYniByXZYGtlhwq28o3IaCdLMCD1rLgZRHla6ABScsWTa_ICeTQ>
-    <xme:eOgdYkAMtFAo3PaiDaOiHdc6XrTFTp88Sj-ouyTUWfzjSMg_KoCLCf91EF1V3jnqX
-    K9JpI25OnHDnawaIw>
-X-ME-Received: <xmr:eOgdYnEPC-LMhjA2vpSyFpg2lCuduuPBWDxs1GhgFp3Rh7YVLm3KLlAYRXF1HUc7oyROTw7Ifbdc8w2Rv-HQmqLIeFb92uv7HCiqHFUwRtA0Y0bpobxsdBg5>
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=342M7DnLmCkA4aADh
+        mXNC72DSdxDUizWZpcAKmiiTdE=; b=j8jOwqp0QhFktk9C45Qo5qhhLJqlK3Iqf
+        iLOJW70XoTWP3hVzllLhlCzlcFWsZggTN56004RbVp6Ku2Ph7wM5WCQfw+640crW
+        4RNbfwYignLT31HYrqqNfsq2GFI8yK9o8giiZuVj+oCEOk2AyQhPL+Wq2XaB8r2T
+        4UO5yj2t03qFAt2mW5p3BOpC4XzVDIYQDCSrFpRaf6yebYTGqEHiIovfXdvvZw+Q
+        IjwR/XtGEpKWPI3lnrMxyoByr7dlTu1cvUn+oNaxuZM78HvYLromwd44sBELU2Fb
+        UUAugtTGxD/oKw7MDHC1QIRttGiAa8z2XD64c1nKYjHa8f5hk+eog==
+X-ME-Sender: <xms:fOgdYkyu129V0Yjbm7bUvEIJFrxlGDq-cL4XisAnTWYYp0ksls_igA>
+    <xme:fOgdYoSac0O5HTfizaXWbvd6NKdsdqUjlPwYF8e-cpSEaHMNuEQi8J5zsGH4kr5k3
+    54iHZVPZF0gO2ydww>
+X-ME-Received: <xmr:fOgdYmW6G3afOrtTOdODvyGvU2nOUwWYXf2DIjKASdLPTfc-_pQfhNSIXsaK2HCN0XlvwW_K2ytGeTEU-vr2oynY2t9Osxb9jQ8-tXq6ZrV8tp6YJ2dxRUCv>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddtvddgtdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgfejueevjeetudehgffffeffvdejfeejiedvkeffgfekuefgheevteeufeelkeen
+    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:eOgdYkSFpK1w7y59t4dHzcbLoops9oE9idm2GUXGCCtXLcYJ_j1UuQ>
-    <xmx:eOgdYkyau820Xr78iVSeoq16tjrE9r599Rw7fBU6_kkomTIDStUPqQ>
-    <xmx:eOgdYq6Wd8ysRm-n-pevJuX9bA-eEVY4aEk5aw1dPTpRPe_l5ed6dQ>
-    <xmx:eOgdYqZJppRmLYp13MteLHZXfXF5YnyDyb0RWHaV2xsGWPGNISP0tg>
+X-ME-Proxy: <xmx:fOgdYiiHROOHO1TX72NBftA3WOwR_KZYFcyoamquM2Qp9B7yX1XMdg>
+    <xmx:fOgdYmBAv9pohN7t_kauiO9Hb8jMikO0OI8La8tumBsqOTK4jg9WJQ>
+    <xmx:fOgdYjJFqxBraG-gq0icj71tcc4Z0Ag97qZyTl2H7Ufgz4KHAXwgGw>
+    <xmx:fOgdYhrfPUYxSjPcq0l8maPLteWQZXWWo9VVG9-ifoBzRdr-w6XnWw>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Mar 2022 04:33:43 -0500 (EST)
+ 1 Mar 2022 04:33:47 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id b805b5a9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 1 Mar 2022 09:33:43 +0000 (UTC)
-Date:   Tue, 1 Mar 2022 10:33:41 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id c950ba61 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 1 Mar 2022 09:33:47 +0000 (UTC)
+Date:   Tue, 1 Mar 2022 10:33:46 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>
-Subject: [PATCH v2 2/5] fetch: avoid lookup of commits when not appending to
- FETCH_HEAD
-Message-ID: <fbe76b78c30d98f1b10c474b1e0ddf6fa4db44fc.1646127015.git.ps@pks.im>
+Subject: [PATCH v2 3/5] refs: add ability for backends to special-case
+ reading of symbolic refs
+Message-ID: <29eb81d37c8fef63858d8e066795e308692d219c.1646127015.git.ps@pks.im>
 References: <cover.1645619224.git.ps@pks.im>
  <cover.1646127015.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hfZeslaEjmYcJRkd"
+        protocol="application/pgp-signature"; boundary="ZOQnAlKm9xeDTzed"
 Content-Disposition: inline
 In-Reply-To: <cover.1646127015.git.ps@pks.im>
 Precedence: bulk
@@ -80,140 +80,198 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---hfZeslaEjmYcJRkd
-Content-Type: text/plain; charset=utf-8
+--ZOQnAlKm9xeDTzed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When fetching from a remote repository we will by default write what has
-been fetched into the special FETCH_HEAD reference. The order in which
-references are written depends on whether the reference is for merge or
-not, which, despite some other conditions, is also determined based on
-whether the old object ID the reference is being updated from actually
-exists in the repository.
+Reading of symbolic and non-symbolic references is currently treated the
+same in reference backends: we always call `refs_read_raw_ref()` and
+then decide based on the returned flags what type it is. This has one
+downside though: symbolic references may be treated different from
+normal references in a backend from normal references. The packed-refs
+backend for example doesn't even know about symbolic references, and as
+a result it is pointless to even ask it for one.
 
-To write FETCH_HEAD we thus loop through all references thrice: once for
-the references that are about to be merged, once for the references that
-are not for merge, and finally for all references that are ignored. For
-every iteration, we then look up the old object ID to determine whether
-the referenced object exists so that we can label it as "not-for-merge"
-if it doesn't exist. It goes without saying that this can be expensive
-in case where we are fetching a lot of references.
+There are cases where we really only care about whether a reference is
+symbolic or not, but don't care about whether it exists at all or may be
+a non-symbolic reference. But it is not possible to optimize for this
+case right now, and as a consequence we will always first check for a
+loose reference to exist, and if it doesn't, we'll query the packed-refs
+backend for a known-to-not-be-symbolic reference. This is inefficient
+and requires us to search all packed references even though we know to
+not care for the result at all.
 
-While this is hard to avoid in the case where we're writing FETCH_HEAD,
-users can in fact ask us to skip this work via `--no-write-fetch-head`.
-In that case, we do not care for the result of those lookups at all
-because we don't have to order writes to FETCH_HEAD in the first place.
+Introduce a new function `refs_read_symbolic_ref()` which allows us to
+fix this case. This function will only ever return symbolic references
+and can thus optimize for the scenario layed out above. By default, if
+the backend doesn't provide an implementation for it, we just use the
+old code path and fall back to `read_raw_ref()`. But in case the backend
+provides its own, more efficient implementation, we will use that one
+instead.
 
-Skip this busywork in case we're not writing to FETCH_HEAD. The
-following benchmark performs a mirror-fetch in a repository with about
-two million references via `git fetch --prune --no-write-fetch-head
-+refs/*:refs/*`:
-
-    Benchmark 1: HEAD~
-      Time (mean =C2=B1 =CF=83):     75.388 s =C2=B1  1.942 s    [User: 71.=
-103 s, System: 8.953 s]
-      Range (min =E2=80=A6 max):   73.184 s =E2=80=A6 76.845 s    3 runs
-
-    Benchmark 2: HEAD
-      Time (mean =C2=B1 =CF=83):     69.486 s =C2=B1  1.016 s    [User: 65.=
-941 s, System: 8.806 s]
-      Range (min =E2=80=A6 max):   68.864 s =E2=80=A6 70.659 s    3 runs
-
-    Summary
-      'HEAD' ran
-        1.08 =C2=B1 0.03 times faster than 'HEAD~'
+Note that this function is explicitly designed to not distinguish
+between missing references and non-symbolic references. If it did, we'd
+be forced to always search the packed-refs backend to see whether the
+symbolic reference the user asked for really doesn't exist, or if it
+exists as a non-symbolic reference.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fetch.c | 42 +++++++++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 15 deletions(-)
+ refs.c                | 17 +++++++++++++++++
+ refs.h                |  3 +++
+ refs/debug.c          |  1 +
+ refs/files-backend.c  |  1 +
+ refs/packed-backend.c |  1 +
+ refs/refs-internal.h  | 16 ++++++++++++++++
+ 6 files changed, 39 insertions(+)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e8305b6662..4d12c2fd4d 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1146,7 +1146,6 @@ static int store_updated_refs(const char *raw_url, co=
-nst char *remote_name,
- 	     want_status <=3D FETCH_HEAD_IGNORE;
- 	     want_status++) {
- 		for (rm =3D ref_map; rm; rm =3D rm->next) {
--			struct commit *commit =3D NULL;
- 			struct ref *ref =3D NULL;
+diff --git a/refs.c b/refs.c
+index 1598fb13e2..0b79bdd7c3 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1673,6 +1673,23 @@ int refs_read_raw_ref(struct ref_store *ref_store, c=
+onst char *refname,
+ 					   type, failure_errno);
+ }
 =20
- 			if (rm->status =3D=3D REF_STATUS_REJECT_SHALLOW) {
-@@ -1157,21 +1156,34 @@ static int store_updated_refs(const char *raw_url, =
-const char *remote_name,
- 			}
-=20
- 			/*
--			 * References in "refs/tags/" are often going to point
--			 * to annotated tags, which are not part of the
--			 * commit-graph. We thus only try to look up refs in
--			 * the graph which are not in that namespace to not
--			 * regress performance in repositories with many
--			 * annotated tags.
-+			 * When writing FETCH_HEAD we need to determine whether
-+			 * we already have the commit or not. If not, then the
-+			 * reference is not for merge and needs to be written
-+			 * to the reflog after other commits which we already
-+			 * have. We're not interested in this property though
-+			 * in case FETCH_HEAD is not to be updated, so we can
-+			 * skip the classification in that case.
- 			 */
--			if (!starts_with(rm->name, "refs/tags/"))
--				commit =3D lookup_commit_in_graph(the_repository, &rm->old_oid);
--			if (!commit) {
--				commit =3D lookup_commit_reference_gently(the_repository,
--									&rm->old_oid,
--									1);
--				if (!commit)
--					rm->fetch_head_status =3D FETCH_HEAD_NOT_FOR_MERGE;
-+			if (fetch_head->fp) {
-+				struct commit *commit =3D NULL;
++int refs_read_symbolic_ref(struct ref_store *ref_store, const char *refnam=
+e,
++			   struct strbuf *referent)
++{
++	struct object_id oid;
++	int ret, failure_errno =3D 0;
++	unsigned int type =3D 0;
 +
-+				/*
-+				 * References in "refs/tags/" are often going to point
-+				 * to annotated tags, which are not part of the
-+				 * commit-graph. We thus only try to look up refs in
-+				 * the graph which are not in that namespace to not
-+				 * regress performance in repositories with many
-+				 * annotated tags.
-+				 */
-+				if (!starts_with(rm->name, "refs/tags/"))
-+					commit =3D lookup_commit_in_graph(the_repository, &rm->old_oid);
-+				if (!commit) {
-+					commit =3D lookup_commit_reference_gently(the_repository,
-+										&rm->old_oid,
-+										1);
-+					if (!commit)
-+						rm->fetch_head_status =3D FETCH_HEAD_NOT_FOR_MERGE;
-+				}
- 			}
++	if (ref_store->be->read_symbolic_ref)
++		return ref_store->be->read_symbolic_ref(ref_store, refname, referent);
++
++	ret =3D refs_read_raw_ref(ref_store, refname, &oid, referent, &type, &fai=
+lure_errno);
++	if (ret || !(type & REF_ISSYMREF))
++		return -1;
++
++	return 0;
++}
++
+ const char *refs_resolve_ref_unsafe(struct ref_store *refs,
+ 				    const char *refname,
+ 				    int resolve_flags,
+diff --git a/refs.h b/refs.h
+index 1ae12c410a..23479c7ee0 100644
+--- a/refs.h
++++ b/refs.h
+@@ -82,6 +82,9 @@ int read_ref_full(const char *refname, int resolve_flags,
+ 		  struct object_id *oid, int *flags);
+ int read_ref(const char *refname, struct object_id *oid);
 =20
- 			if (rm->fetch_head_status !=3D want_status)
++int refs_read_symbolic_ref(struct ref_store *ref_store, const char *refnam=
+e,
++			   struct strbuf *referent);
++
+ /*
+  * Return 0 if a reference named refname could be created without
+  * conflicting with the name of an existing reference. Otherwise,
+diff --git a/refs/debug.c b/refs/debug.c
+index 2b0771ca53..c590d37720 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -435,6 +435,7 @@ struct ref_storage_be refs_be_debug =3D {
+=20
+ 	debug_ref_iterator_begin,
+ 	debug_read_raw_ref,
++	NULL,
+=20
+ 	debug_reflog_iterator_begin,
+ 	debug_for_each_reflog_ent,
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index f59589d6cc..f3428a9f12 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3286,6 +3286,7 @@ struct ref_storage_be refs_be_files =3D {
+=20
+ 	files_ref_iterator_begin,
+ 	files_read_raw_ref,
++	NULL,
+=20
+ 	files_reflog_iterator_begin,
+ 	files_for_each_reflog_ent,
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 27dd8c3922..f56e2cc635 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1684,6 +1684,7 @@ struct ref_storage_be refs_be_packed =3D {
+=20
+ 	packed_ref_iterator_begin,
+ 	packed_read_raw_ref,
++	NULL,
+=20
+ 	packed_reflog_iterator_begin,
+ 	packed_for_each_reflog_ent,
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 6e15db3ca4..001ef15835 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -649,6 +649,21 @@ typedef int read_raw_ref_fn(struct ref_store *ref_stor=
+e, const char *refname,
+ 			    struct object_id *oid, struct strbuf *referent,
+ 			    unsigned int *type, int *failure_errno);
+=20
++/*
++ * Read a symbolic reference from the specified reference store. This func=
+tion
++ * is optional: if not implemented by a backend, then `read_raw_ref_fn` is=
+ used
++ * to read the symbolcic reference instead. It is intended to be implement=
+ed
++ * only in case the backend can optimize the reading of symbolic reference=
+s.
++ *
++ * Return 0 on success, or -1 on failure. `referent` will be set to the ta=
+rget
++ * of the symbolic reference on success. This function explicitly does not
++ * distinguish between error cases and the reference not being a symbolic
++ * reference to allow backends to optimize this operation in case symbolic=
+ and
++ * non-symbolic references are treated differently.
++ */
++typedef int read_symbolic_ref_fn(struct ref_store *ref_store, const char *=
+refname,
++				 struct strbuf *referent);
++
+ struct ref_storage_be {
+ 	struct ref_storage_be *next;
+ 	const char *name;
+@@ -668,6 +683,7 @@ struct ref_storage_be {
+=20
+ 	ref_iterator_begin_fn *iterator_begin;
+ 	read_raw_ref_fn *read_raw_ref;
++	read_symbolic_ref_fn *read_symbolic_ref;
+=20
+ 	reflog_iterator_begin_fn *reflog_iterator_begin;
+ 	for_each_reflog_ent_fn *for_each_reflog_ent;
 --=20
 2.35.1
 
 
---hfZeslaEjmYcJRkd
+--ZOQnAlKm9xeDTzed
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmId6HUACgkQVbJhu7ck
-PpTtNQ/9HDTxSdLBA4OL9OsRf3zQNW2Nqi4N/i8BZ3HoYZenDL9wBvoP0y74jf3W
-sockIX0V+FRcCBXeHYScOGO4ByIb2iEmLWONHYq/6kl5FW/ogzm45Sfm2SRNUy3i
-6qgKVgxx4MnRqqPjEl9GyfyJATBcPyTXFFfwDuAVWfEkL0+W9/4zdSqDtnUt1Ziy
-tBWg58tKqF5XAfsW55urbN2Ih9IKqiKcv7NNOr9vTiUOoDuIvK/L/BVoMaoocby+
-l7NKA8pF+hnsfvX1dGylj+S/gUtpZc8DA6jQyi3Hj7+E0yoL1O7si8q3Z2ebC6P/
-sSxoseZ7OSgADa4ImvCTLwXPfWUJiF9zDP4ho32GflYjOeTg54mlQQjWvBccoMu9
-puVKRHRDbNoAAx325xi/4dKkHOojAF76k4qgmIfKitLADnaJfUE3Qfu2Y2k9WAXK
-EEqXWAqtgfrk6gJKI62WkmJc73ZHIg6gBXJC3j6p+JOg7n+zNTJFeULG9qfyORJB
-uF2dWewYqccX+wlL/YFlQ9m9emLIHUf0BeGSr9AeoUAzx1njmFxo8+igEa4XA2/P
-NWxnWq4pwl2veneWJvYnb+BsL2UqiJAZeOea+QqsxZRTI2ofAJ3Wi8TTlimzlg7k
-ZX4TDdbb+snAedm+muxRPjRcW8/YiOWgCPZ2BMddDX98Jb3cqMg=
-=Ndfm
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmId6HkACgkQVbJhu7ck
+PpQa/xAAnBCJkMY0aZXTo9nOeiBRLzzWSPNLq7iiDQDb/o3i3l2QKK9L9oIHE0vj
+thubbqb1p4Ptmov60bDOEebMb+Qtv78R8Rt15fyZCIqusrpSsGazOQp/7ni329zb
+wc9t5dcWx5PIt+EEhrmubc6B5zaKzHePUe4LRRglnsx0FUwKXF2JI5f7lpwrdT9b
+CoEgFswTzpVSpd3O/gZ16lDLaIP6pgcmfc2llPB/72EAhndiZEzfQfg85I9x2c1B
+OPpMtkXy7yNVV1c6mMLEC0stNtiWIs28xfKr9DYzg2wtNFibwqlDcriW/qOBv+9Y
+GJ2GaW7RcQA11EfRVp/Pb7l0DYh8DWqLAsniHSuUxKIQkinAEIE1TzPppYlfdUho
+Is72REcyhOa7bV03a3jwbHLhnvMpUPfppfUEwndip0p01QqlNhEjD5pqdBT0DUpz
+Gh3MNUHLRi5XIV7gP8ffCdGw5DKSDjXj2urWrijn9xM+75z40Yx5f1bG5h4p0r1p
+mnNqkNS8g3oxhldgP2CTuaoj95g3lZnQx3gkyj6hsYI78X/ctPmuFA013z20ETNw
+n2LhCLSX8dUNKd20XCbO1H97oeVKlQpU6VjW3BfcZHunHhlQhJ8lnQ7NclRyeNq0
+A2+zi0ez+fQUtCFv6FOC2eLhtp41xATfZE83lkzydrvrATL6SwU=
+=OxHD
 -----END PGP SIGNATURE-----
 
---hfZeslaEjmYcJRkd--
+--ZOQnAlKm9xeDTzed--
