@@ -2,128 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64EBCC433EF
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 06:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36949C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 06:44:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231815AbiCAGjW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 01:39:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44156 "EHLO
+        id S232277AbiCAGp2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 01:45:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230338AbiCAGjV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 01:39:21 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2CC2BC1F
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 22:38:40 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id o23so13599675pgk.13
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 22:38:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=t0qRt0aS619E2RoI6/kd/hKxAsIKRaCVzycx/SZs06Y=;
-        b=OjpXNu65HjnevEP3QYLHxPbkaln82p0ztyOKvZz2tAWZuMqpQqsmaoqmZlO0Q2aLiw
-         2z0UtlVXNXP6Z9IWREszWFoVo0cBip7ZIPF5Cekx0guWWvXn5gQG7VXXUV8U/LrnATCx
-         pxq8vi2HbZFqpQ7Tuy4sXc8T8ZXV2ei0MvrKk9M63tUvY62w3twTK0fElGWzXj/0maM3
-         CUZjZZ7EE1eoX7fiX9vItZQgGbYYZ/iJJyp/qVQyEg6QO+5cOAfhrdhLFiGODD7uxMkZ
-         CAwnu/gGaxfAXHOz6rFmsJQ9Ipnl+3c2kHU8vlJZXprob1zeMZA4jMq/cZbJUjIhLRPL
-         CBNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=t0qRt0aS619E2RoI6/kd/hKxAsIKRaCVzycx/SZs06Y=;
-        b=P4wg4Nu3h/oui3g5vjSK1XHdihklBsIwFmag/CxQsvAmChF1GD6p+g3kXj2sPGU9oY
-         U4B/XpRYZ50VzU9JftjZFE242k2ca8HQGC0EpIY+49pvSftvF+sA1UW+52SpoSJgpGJ4
-         aMJg7h+aBhtFK2vm31616J+p5L0lKD2X2sl1lqbGk/nUFORHx3JsFCZaWARgLU8f6xlk
-         ry7fh57TX4JMQG9slIURyiJi0I83OVpeACE9J2N1E8KZvF8c8yVKAz4sWW/O3E00K4CK
-         ng4kU/ojeDiI79QYvNzAtbgQEGRRgbrIC7vd3BPPJpOeussxp95LVRGa3bp1YT3olmFq
-         evZg==
-X-Gm-Message-State: AOAM533Mx9Hfjztys0AKMP+hkZzPXcN85cJGqwQsiRm5x2Xep9CctESO
-        WqT+o8+UvtDcMIIGPjW9VZU=
-X-Google-Smtp-Source: ABdhPJxeCxZul+c8ZwoGa11aly0g3oeW47OSxOWLB9QxklylEC0NCjDRtUwHYb53hpntJqUBg2qNhw==
-X-Received: by 2002:a63:fa4a:0:b0:378:5d07:96d3 with SMTP id g10-20020a63fa4a000000b003785d0796d3mr14103525pgk.54.1646116719899;
-        Mon, 28 Feb 2022 22:38:39 -0800 (PST)
-Received: from localhost.localdomain ([202.142.96.67])
-        by smtp.gmail.com with ESMTPSA id lb4-20020a17090b4a4400b001b9b20eabc4sm1063930pjb.5.2022.02.28.22.38.36
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 28 Feb 2022 22:38:39 -0800 (PST)
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH v4 2/2] parse-options.c: add style checks for usage-strings
-Date:   Tue,  1 Mar 2022 12:08:01 +0530
-Message-Id: <20220301063801.26732-1-chakrabortyabhradeep79@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <xmqqzgma287n.fsf@gitster.g>
-References: <xmqqzgma287n.fsf@gitster.g>
+        with ESMTP id S232707AbiCAGp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 01:45:26 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF80E70CD6
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 22:44:45 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A3BD310CF0D;
+        Tue,  1 Mar 2022 01:44:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iOZoyl2EFOrwu8xyffmiPr98hpIu6jbrcrotoa
+        GaUY4=; b=hS4mqQAdDLFJJNtdiP1U2jvoWZhQgq9G6XCqSzfbXSvEE65B8Ah/Mi
+        7h5wT7kLcEKjGggWh3AmjyaMYDEcPQ+5uvmKNW91PGOPsHeIdBcEKB0ifq0lqjsS
+        G8K+p3gi+wDp4hNIdMHUDXoh+Ce1m9y6oq5hgKK1o4h3fJ++JhN6o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A45910CF0C;
+        Tue,  1 Mar 2022 01:44:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DDB4F10CF0B;
+        Tue,  1 Mar 2022 01:44:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] merge-ort: make informational messages from recursive
+ merges clearer
+References: <pull.1121.git.1645079923090.gitgitgadget@gmail.com>
+        <xmqqsfsh5btd.fsf@gitster.g>
+Date:   Mon, 28 Feb 2022 22:44:42 -0800
+In-Reply-To: <xmqqsfsh5btd.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        17 Feb 2022 15:10:38 -0800")
+Message-ID: <xmqqwnheuq79.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 13F72356-992B-11EC-80DE-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-Junio C Hamano <gitster@pobox.com> wrote:
-
-> I  also think Dscho simply overreacted only because the check broke
-> an in-flight topic that is from his group, which is not universally
-> built, and the tests in it was written in such a way that the error
-> output from the embedded check was not immediately available when
-> run in the CI, making it harder to debug.  None of that is a fault
-> in the approach of using the embedded check.
+>> One other thing to note here, that I didn't notice until typing up this
+>> commit message, is that merge-recursive does not print any messages from
+>> the inner merges by default; the extra verbosity has to be requested.
+>> merge-ort currently has no verbosity controls and always prints these.
+>> We may also want to change that, but for now, just make the output
+>> clearer with these extra markings and indentation.
 >
-> If the embedded check were there from the beginning, together with
-> tons of the existing checks done by parse_options_check(), the
-> developers themselves of the in-flight topic(s) would have caught
-> the problem, even before it hit the public CI.  I am very sure Dscho
-> wouldn't have complained or even noticed that you added a new check
-> to the parse_options_check().
+> Yup, I found that the messages on inner conflicts, especially when
+> they "cancel out" at the outer merge, are mostly noise that carries
+> very little useful information (by being noisy, the user gets a sense
+> of how complex the histories being merged are).  Reducing the default
+> messaging level would probably be a good idea.
 
-Hmm, that's true.
+Here is what I just had to scroll through to update 'next' by
+merging back 'master', only to grab the updates to the release
+notes.  Needless to say, this would have been somewhat baffling
+if I didn't know to expect it.
 
->  (2) Rethink if parse_options_check() can be made optional at
->      runtime, which would (a) allow our test to enable it, and allow
->      us to test all code paths that use parse_options() centrally,
->      and (b) allow us to bypass the check while the end-user runs
->      "git", to avoid overhead of checking the same option[] array,
->      which does not change between invocations of "git", over and
->      over again all over the world.
->
->      We may add the check back to parse_options_check() after doing
->      the above.  There are already tons of "check sanity of what is
->      inside option[]" in there, and it would be beneficial if we can
->      separate out from parse_options_start() the sanity checking
->      code, regardless of this topic.
->
->  (3) While (2) is ongoing, we can let people also explore static
->      analysis possibilities.
+It would be good to squelch it before we hear another complaints
+from old-timer power users ;-)
 
-I agree with you. But I think these two points(specially (2)) deserve
-a dedicated discussion/patch thread. Because, the latest version of this
-patch series (actually this patch series itself) only cares about the
-`usage strings`.
+$ git merge -m 'Sync with master' --no-log master
+  From inner merge:  Auto-merging blame.c
+  From inner merge:  Auto-merging builtin/am.c
+  From inner merge:  Auto-merging builtin/blame.c
+  From inner merge:  Auto-merging builtin/clone.c
+  From inner merge:  Auto-merging builtin/clone.c
+  From inner merge:  Auto-merging builtin/commit.c
+  From inner merge:  Auto-merging builtin/fetch.c
+  From inner merge:  Auto-merging builtin/fetch.c
+  From inner merge:  Auto-merging builtin/grep.c
+  From inner merge:  Auto-merging builtin/hash-object.c
+  From inner merge:  Auto-merging builtin/log.c
+  From inner merge:  Auto-merging builtin/log.c
+  From inner merge:  Auto-merging builtin/pack-objects.c
+  From inner merge:  Auto-merging builtin/pull.c
+  From inner merge:  Auto-merging builtin/pull.c
+  From inner merge:  Auto-merging builtin/rebase.c
+  From inner merge:  Auto-merging builtin/rebase.c
+  From inner merge:  Auto-merging builtin/reflog.c
+  From inner merge:  CONFLICT (content): Merge conflict in builtin/reflog.c
+Auto-merging builtin/reflog.c
+  From inner merge:  Auto-merging builtin/reset.c
+  From inner merge:  Auto-merging builtin/sparse-checkout.c
+  From inner merge:  Auto-merging builtin/sparse-checkout.c
+  From inner merge:  Auto-merging builtin/submodule--helper.c
+  From inner merge:  Auto-merging builtin/submodule--helper.c
+  From inner merge:  CONFLICT (content): Merge conflict in builtin/submodule--helper.c
+Auto-merging builtin/submodule--helper.c
+  From inner merge:  Auto-merging builtin/worktree.c
+  From inner merge:  Auto-merging cache.h
+  From inner merge:  Auto-merging config.c
+  From inner merge:  Auto-merging config.h
+  From inner merge:  Auto-merging diff-merges.c
+  From inner merge:  Auto-merging diff.c
+  From inner merge:  Auto-merging git.c
+  From inner merge:  Auto-merging gpg-interface.c
+  From inner merge:  Auto-merging grep.c
+  From inner merge:  Auto-merging grep.c
+  From inner merge:  Auto-merging notes-merge.c
+  From inner merge:  Auto-merging object-name.c
+  From inner merge:  Auto-merging pack-bitmap-write.c
+  From inner merge:  Auto-merging parse-options.c
+  From inner merge:  CONFLICT (content): Merge conflict in parse-options.c
+  From inner merge:  Auto-merging parse-options.h
+  From inner merge:  CONFLICT (content): Merge conflict in parse-options.h
+  From inner merge:  Auto-merging refs.c
+  From inner merge:  Auto-merging revision.c
+  From inner merge:  Auto-merging sequencer.c
+  From inner merge:  Auto-merging sequencer.c
+  From inner merge:  Auto-merging sparse-index.c
+  From inner merge:  Auto-merging submodule-config.c
+  From inner merge:  Auto-merging t/t1091-sparse-checkout-builtin.sh
+  From inner merge:  CONFLICT (content): Merge conflict in t/t1091-sparse-checkout-builtin.sh
+Auto-merging t/t1091-sparse-checkout-builtin.sh
+  From inner merge:  Auto-merging t/t1512-rev-parse-disambiguation.sh
+  From inner merge:  Auto-merging t/t4202-log.sh
+  From inner merge:  Auto-merging t/t4202-log.sh
+  From inner merge:    Auto-merging t/t4202-log.sh
+  From inner merge:  Auto-merging t/t4202-log.sh
+  From inner merge:  Auto-merging t/t4202-log.sh
+  From inner merge:  Auto-merging t/t5316-pack-delta-depth.sh
+  From inner merge:  Auto-merging t/t6120-describe.sh
+  From inner merge:    Auto-merging t/t6120-describe.sh
+  From inner merge:  Auto-merging worktree.c
+Merge made by the 'ort' strategy.
+ Documentation/RelNotes/2.36.0.txt | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-So, I argue you to not discard the last commit for now. As you said `There are
-already tons of "check sanity of what is inside option[]"`, integrating
-one more sanity check would not affect it. I am saying it not because
-I made that commit. The discussion or patch integration of (2) and (3)
-may take few weeks (or more than a month may be; I also would like to
-take part/contribute to that discussion/PR). I fear that another
-set of invalid usage-strings would be added in that time. In that case,
-we have to make another commit/PR for correcting those strings - disrupting
-the purpose of this first commit you are willing to merge.
 
-As Ævar also said - 
-
-> I think with in-flight concerns with (0) and (1) addressed what we have
-> here is really good enough for now, and we could just add it to the
-> existing parse_options_check() without needing (2) and (3) at this
-> point.
-
-Thanks :)
