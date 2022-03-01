@@ -2,79 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18FFBC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 18:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 659A0C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 18:34:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234416AbiCASb1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 13:31:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54306 "EHLO
+        id S234111AbiCASfe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 13:35:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232775AbiCASbZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 13:31:25 -0500
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 192501DA49
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 10:30:44 -0800 (PST)
-Received: by mail-qk1-x72f.google.com with SMTP id g24so13641089qkl.3
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 10:30:44 -0800 (PST)
+        with ESMTP id S230328AbiCASfd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 13:35:33 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7038A583B6
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 10:34:52 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id i7-20020a170902cf0700b0015163eb319eso2887648plg.18
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 10:34:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=pQGF4A3QLEIkfmysqpvw8KtircBLsismUp/CbTIj/+E=;
-        b=PXIAmaBYp7OxUfdf294axGyuk/wmOb+DJpZHAvm2Pkiv7dtbg9D0vHKHyEtrqTxc64
-         2eWIknlFrCiTO/N/T+YKn70G/f2RZ5V5EWGtr3Tmj7ztVFkl/FUSqz26Br9t0o8zH1eq
-         zF6Zcx6AW0GDgSQKL3uHRjp+F92vnokjbhpS0=
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=fF8zlNMrIW2jWwIZWqUP0y+T9AWfQv7Rs8MgmdSX3Vs=;
+        b=P0w0O+PoeH4NvxXU3TXaTrj3/uB0XPbRXG1ZeeoMaxo0lEzNIrxXO25Y6rSJ205OYQ
+         et5lcZqyc+jGJh2uQaLCpes3AoToicJam+v75YmzkK74VJTRFEVDAmWhlqrylrKoQDSl
+         QVow5QhOUwzlOrUd3pUzfrZ/2GyLxghMe8meqSWwnY8aEujo/qPLdOeGAMhV5xazY3m4
+         G9ub7HhAjKzKzdA+uhH2sx5DIjmJCdJWNdsOQ3GwopdnmtIYI8vz6q23WhTWBwr1rFxd
+         LdQqJ36QwGqjvcLaEHuJlVYcZ8B6NfpFJO5BLrcWo+XPkdlK9CWaI+xXGENg0Pih2EPh
+         oS0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pQGF4A3QLEIkfmysqpvw8KtircBLsismUp/CbTIj/+E=;
-        b=uPXLHQPdQqLkB1FbeDRHJvEFA0PVSmPi2XUIxNTxvkhQv+x5UWavce+XhOqswxbuIm
-         O9lmcrf5i42P1VmiFGIs0e3mYTJkQlgW2rIc0z1Jd649oGQZvfKnbzxUxLaQxoBWF7nV
-         oNzgvnfsoDY7R5IISc6SVZe4X5QtDkGn3yfsbctkrFn4P0/TNFaRgzmWkZjSU8yu5jPq
-         I45dxBcuWgxDA/JeI8/ZAKh6j0hTQJGtSO2+tMg9OH86lZNxN6cWp94OPu1Nhbbn1ybp
-         x2n3DAPSRMDG7Q+LaS0woSrfdw+LQmzyVtVrS961aQ0OQK4Be/Av2KuB1GHKcS3VO6qo
-         Olbg==
-X-Gm-Message-State: AOAM533hstMmYUnRPIyqXbmGGMUgtVWim2f2SMX5ltnwGE/oqXIJFFZh
-        YD8tejib6oOyoGvaNRmKM++qYuYotnaPvQ==
-X-Google-Smtp-Source: ABdhPJyG7r+AX9RFlQENqn9n3iQoUJRVfD+/Dm97ps8bSXNskcpMXJFORurKITO/b7c9viEtqVw2Og==
-X-Received: by 2002:a37:2d85:0:b0:60d:d69d:9f28 with SMTP id t127-20020a372d85000000b0060dd69d9f28mr14403733qkh.227.1646159443123;
-        Tue, 01 Mar 2022 10:30:43 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-127.dsl.bell.ca. [216.209.220.127])
-        by smtp.gmail.com with ESMTPSA id t22-20020a05622a181600b002dd4f62308dsm9426707qtc.57.2022.03.01.10.30.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 10:30:42 -0800 (PST)
-Date:   Tue, 1 Mar 2022 13:30:40 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Ed Warnicke <hagbard@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=fF8zlNMrIW2jWwIZWqUP0y+T9AWfQv7Rs8MgmdSX3Vs=;
+        b=1R6zHCnHfor/aHtmVu2u3FWCLW+g/rM8yk/pfcU3JTA8lD1sCwR9UmVK5+a8AYRNw8
+         P7YY79vqM8MUUCAT6cBnBJFIeBBoPWlrrVrEMNFtYNmf8fEKRmAmHwLDltqdHpbenf31
+         M/WDCLzw9SML6lTT8YzyKim5tFKWNkLpp4TWzYJVK0DpCx21WKo3U+/sGrmbbNhHgv0k
+         ZFvT4/WruDG4/qTmhRC06XU6YuwUEM4ByNi0RGl35O6YdVkYrIgQz6xbpL4+XiIFb3ng
+         xSiotUM2g+LQ+wLmqA9vV7UQT/bD8QkvxNrB7i32t0NoY4cRWv3G+RbHz2OdLGeHa39B
+         neeg==
+X-Gm-Message-State: AOAM5312HWqyXV5Y4nGWJ80ltYK8f8OoADVVVDvd8UK6d++WY7/bjei+
+        Y4kJSYhzrySoQP2Vu6zD+yT+YcNwVyswLw==
+X-Google-Smtp-Source: ABdhPJxLHmrGasKwg1a8VMw0N3ZeI/Wq1mC9psydUz7KDnzolo+rJGt84S9t5a9OkKzsYJWRDTzAdcUAuq9qiA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:ceca:b0:14f:ce67:d087 with SMTP
+ id d10-20020a170902ceca00b0014fce67d087mr27360899plg.59.1646159691880; Tue,
+ 01 Mar 2022 10:34:51 -0800 (PST)
+Date:   Tue, 01 Mar 2022 10:34:50 -0800
+In-Reply-To: <xmqqbkyqt9b2.fsf@gitster.g>
+Message-Id: <kl6llexted2t.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20220301000816.56177-1-chooglen@google.com> <20220301044132.39474-1-chooglen@google.com>
+ <20220301044132.39474-14-chooglen@google.com> <220301.86o82q16ib.gmgdl@evledraar.gmail.com>
+ <xmqqbkyqt9b2.fsf@gitster.g>
+Subject: Re: [PATCH v2 13/13] submodule--helper update-clone: check for
+ --filter and --init
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: URI Scheme for git object ids?
-Message-ID: <20220301183040.rvj6jb2mfc46kv6t@meerkat.local>
-References: <CAFVSqg1arVNwWMANwR6CDP++5hXAEW1a_ajekNe+TXNpSSZFPA@mail.gmail.com>
- <20220301175334.ctem25nxckynnvco@meerkat.local>
- <CAFVSqg3i_ANc1sTmEHaxjxxdkkN9HbUEUwejV5S5V5tM2fhWWA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFVSqg3i_ANc1sTmEHaxjxxdkkN9HbUEUwejV5S5V5tM2fhWWA@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 01, 2022 at 11:58:01AM -0600, Ed Warnicke wrote:
-> Konstantin,
-> 
-> I suspect you read a bit more into my question than I intended :)  I
-> do appreciate the breadth of your thought about it though :)
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ah. Sorry, my perception is understandably tainted in the past few days.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>>> index 2ffc070319..3e8a05a052 100644
+>>> --- a/builtin/submodule--helper.c
+>>> +++ b/builtin/submodule--helper.c
+>>> @@ -2543,7 +2543,12 @@ static int update_clone(int argc, const char **a=
+rgv, const char *prefix)
+>>>  	};
+>>> =20
+>>>  	const char *const git_submodule_helper_usage[] =3D {
+>>> -		N_("git submodule--helper update-clone [--prefix=3D<path>] [<path>..=
+.]"),
+>>> +		N_("git submodule [--quiet] update"
+>>> +		"[--init [--filter=3D<filter-spec>]] [--remote]"
+>>> +		"[-N|--no-fetch] [-f|--force]"
+>>> +		"[--checkout|--merge|--rebase]"
+>>> +		"[--[no-]recommend-shallow] [--reference <repository>]"
+>>> +		"[--recursive] [--[no-]single-branch] [--] [<path>...]"),
+>>
+>> Since this has <repository>, <path> etc. it should still be marked for
+>> translation with N_().
+>
+> Yeah, that sounds like a good idea.  Isn't it already inside N_()?
 
-> Mostly, I'm just looking for a way to express the git object id as a
-> uri scheme so completely outside-of-git things can refer to it clearly
-> (ie, know to prepend the object header before hashing to see if the
-> contents match).
+Did I do this correctly? e.g. an alternative interpretation is that =C3=86v=
+ar
+misread this as:
 
-Okay, I understand -- so for purposes like adding to sigstore or other supply
-chain tracking systems?
-
--K
+  	const char *const git_submodule_helper_usage[] =3D {
+      N_("git submodule [--quiet] update"),
+      "[--init [--filter=3D<filter-spec>]] [--remote]",
+      "[-N|--no-fetch] [-f|--force]",
+      "[--checkout|--merge|--rebase]",
+      "[--[no-]recommend-shallow] [--reference <repository>]",
+      "[--recursive] [--[no-]single-branch] [--] [<path>...]",
