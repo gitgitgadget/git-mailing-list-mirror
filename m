@@ -2,101 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A26AC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 07:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D44A6C433EF
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 07:08:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231480AbiCAHGy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 02:06:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34160 "EHLO
+        id S232517AbiCAHJM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 02:09:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229928AbiCAHGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 02:06:54 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 330386A075
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 23:06:13 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 82BE3168560;
-        Tue,  1 Mar 2022 02:06:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aGCB/lmGdWEJmKA4EMdIGXDTqgjp2AY46PWYTC
-        iLs1Q=; b=d7a+6cM9Xha40FbaFI2/EaLW9gOnGRfi6fHmQX9EVPsVOS3FYFIPxn
-        iUHdX2t7q4QmoDZXw1qJTqnKNTzvE4XZ0XigFV38xTLhZEg8erQlHbRd4Un5FIh0
-        UVEvZik/iEoTYPpCcxuGgLF53IM8bd+EHcAhS6uJr9aHbi0dnAP1w=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7B54516855F;
-        Tue,  1 Mar 2022 02:06:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D82B916855E;
-        Tue,  1 Mar 2022 02:06:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v8 3/3] rev-parse: short-circuit superproject worktree
- when config unset
-References: <20220203215914.683922-1-emilyshaffer@google.com>
-        <20220301002613.1459916-1-emilyshaffer@google.com>
-        <20220301002613.1459916-4-emilyshaffer@google.com>
-Date:   Mon, 28 Feb 2022 23:06:07 -0800
-In-Reply-To: <20220301002613.1459916-4-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Mon, 28 Feb 2022 16:26:13 -0800")
-Message-ID: <xmqq7d9eup7k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S231728AbiCAHJL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 02:09:11 -0500
+Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com [IPv6:2607:f8b0:4864:20::e2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7650C616A
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 23:08:31 -0800 (PST)
+Received: by mail-vs1-xe2c.google.com with SMTP id d26so15624041vsh.0
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 23:08:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZYcrCEGnFT7fVonbc67KMiZZ769zhdlbt6MgHFFngBw=;
+        b=UTm7tllRtX5gq98pDf/u50+yV0WWAXgh+VoZQz5nRFEASINAwJZ5wwuVUGvu7R0rfP
+         UVuE0GVHK4x5CGsTmL10ToiVWgfFoOIClTnxeOiDhKcqvEk0P8j8/KdUB9+q9SLHenLV
+         27RzqGHxfqZiCeLq81wWfLAJk9ik4tEVeEqAjoPT55J1JibPLTuYlAbzZ7M4pZYD61MI
+         V52h1G/+wh819BBzyIkzJE1NdI4NVkuVBZkyTdduuSp3Fhg5stl+1ozcYRawaOR6RGjD
+         CKgNEwh/pojYUG79QL8zWkAghSL/K0WrpWaLqny5AKtNkT+IA7/z6B5N05+tSzFxgazO
+         v5CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZYcrCEGnFT7fVonbc67KMiZZ769zhdlbt6MgHFFngBw=;
+        b=a0wD3kXLMZZba9iUzlQ7+cywQ9dFNIgooT6aHvv64qoL3ZOM7BSb9FCtmYuseyV150
+         wvLfuy79JtfFFChKHDvRhvNHf/DMU3tJT5xLvqFqNUOfxFJNQEQn3JXG/q8S3zN2pPLk
+         1bXiw6hIZTl+qCIXaghdcxMLd3vpI7JuuHBI5zp8XRSBTW/TzjZtvW1uXg1p/4KoTBnz
+         K8voFlA7R1e2Qexl+nYaTdRCYESsfsG9nRjFCqPVJZ54QOxkVuLEJK/1i/QHO1ogD3qQ
+         /wfsptXBEcUyHkug/r5OTxcy5TvT5iz3wW8vbDBtuFe7Ql/r6WaUdtUd5HBrEIQRnwLR
+         n55Q==
+X-Gm-Message-State: AOAM533xNoKWWln83eOaW0t2l4anUBGwtvtiJQ6t3k6hNsWLpHtbbRvV
+        oUf/zdOPDJgFlizAbmWsdwDNzA7EiEL1uRdQE6I=
+X-Google-Smtp-Source: ABdhPJynopDeGy8gNn6hFUOMTORux0j5CpLU+p4OMMALNo2qdq8j8Kn7Kzx4Zn4nR0uLtSx5Nn3Izl0tD9tm68A0fwE=
+X-Received: by 2002:a05:6102:3712:b0:31e:af66:6316 with SMTP id
+ s18-20020a056102371200b0031eaf666316mr1209187vst.87.1646118510385; Mon, 28
+ Feb 2022 23:08:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 127785CC-992E-11EC-AAD1-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+References: <20220228215025.325904-1-jacob.e.keller@intel.com>
+ <20220228215025.325904-3-jacob.e.keller@intel.com> <xmqqpmn6wg98.fsf@gitster.g>
+In-Reply-To: <xmqqpmn6wg98.fsf@gitster.g>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 28 Feb 2022 23:08:19 -0800
+Message-ID: <CA+P7+xoECs-rXb4vpRrw40Q-oRvfu97kMig9zu0rEE6KagAyiw@mail.gmail.com>
+Subject: Re: [PATCH] name-rev: use generation numbers if available
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+On Mon, Feb 28, 2022 at 6:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Jacob Keller <jacob.e.keller@intel.com> writes:
+>
+> > +test_expect_success 'name-rev without commitGraph does not handle non-monotonic timestamps' '
+> > +     test_config -C non-monotonic core.commitGraph false &&
+> > +     (
+> > +             cd non-monotonic &&
+> > +
+> > +             rm -rf .git/info/commit-graph* &&
+> > +
+> > +             echo "main~3 undefined" >expect &&
+> > +             git name-rev --tags main~3 >actual &&
+> > +
+> > +             test_cmp expect actual
+> > +     )
+> > +'
+>
+> I doubt it is wise to "test" that a program does _not_ produce a
+> correct output, or even worse, it produces a particular wrong
+> output.  This test, for example, casts in stone that any future
+> optimization that does not depend on the commit-graph is forever
+> prohibited.
+>
+> Just dropping the test would be fine, I would think.
 
-> diff --git a/submodule.c b/submodule.c
-> index 741104af8a..463e7f0c48 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -2237,6 +2237,7 @@ int get_superproject_working_tree(struct strbuf *buf)
->  	struct strbuf sb = STRBUF_INIT;
->  	struct strbuf one_up = STRBUF_INIT;
->  	const char *cwd = xgetcwd();
-> +	int has_superproject_cfg = 0;
->  	int ret = 0;
->  	const char *subpath;
->  	int code;
-> @@ -2250,6 +2251,17 @@ int get_superproject_working_tree(struct strbuf *buf)
->  		 */
->  		return 0;
->  
-> +	if (git_config_get_bool("submodule.hassuperproject", &has_superproject_cfg)
-> +	    || !has_superproject_cfg) {
-
-git_config_get_bool() returns 0 when it successfully finds the
-variable, so the above says "If submodule.hasSuperproject is not set
-at all, or if it is set to false, then..."
-
-> +		/*
-> +		 * If we don't have a superproject, then we're probably not a
-> +		 * submodule. If this is failing and shouldn't be, investigate
-> +		 * why the config was never set.
-> +		 */
-> +		error(_("Asked to find a superproject, but submodule.hasSuperproject != true"));
-> +		return 0;
-
-But given that this thing is new, I am not sure if that is a
-sensible guard to use here.  Shouldn't we say 
-
- - If submodule.hasSuperproject is EXPLICITLY set to false then ...
-
-instead?  I.e.
-
-	if (!git_config_get_bool("submodule.hassuperproject", &value) &&
-	    !value) {
-		error(_("asked to ..."));
-		return 0;
-	}
-
+Stolee mentioned it. We could also convert it to a
+"test_expect_failure" with the expected output too... But that makes
+it look like something we'll fix
