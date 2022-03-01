@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91D65C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 04:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C4ABC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 04:42:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232413AbiCAEnC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 23:43:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54790 "EHLO
+        id S232440AbiCAEnF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 23:43:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232384AbiCAEmj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 23:42:39 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE6876E29E
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:41:58 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id u10-20020a63df0a000000b0037886b8707bso3039651pgg.23
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:41:58 -0800 (PST)
+        with ESMTP id S232389AbiCAEmo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 23:42:44 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D812E6FA33
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:42:02 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id c192-20020a621cc9000000b004e0ff94313dso9004073pfc.17
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:42:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=eiA/gy55NgWHxnholqKVR1Lek5s+reuzIp59lub6xig=;
-        b=iDg27KrVOLWWvQw9rLSBlSzR9+VkpgwhLYagAwOCMaKVxBWOBkjNNRDHvB9TYJ1nSP
-         y/m/RzcExexhSLjTXjGyWH5a9PVhKj2ELr6TxBF4dRnpUUoG2Zp6b4RaEUuBZXdP4Fkx
-         S9bZvFjSa+xm/IBbRDHQXYc+X+nnESjcZFiF8Ka/kwtkfmxKPArIQXAnyg9SDpyExS3x
-         RWG+mQy0VCVqBFk8cOAtFlg1trmqwnFlhG7MgmV53ZgOgHb1iw23jpv7pEXKcvXSW2Wu
-         KpcNAdcI3Ny/UFwJkoobVKghzS1u1lzFDM7ZTZpLiMmbYpy+Jgt/HOlA34r8goFXGIci
-         fiqA==
+        bh=SxQM2cxFgTJkz187BLMpOB9JRuL0P/ov+6eGJwePauo=;
+        b=WeSk1R6cCb/u2AkNnG01CWEjzrxUFy2f6Z5M6qh7AjgRwioG6WVgMZjpPniM6beBEZ
+         paBjplT678baxmjKVomo4Papc7Ks0cHnk/p3DB0XMC5dsO77okYg5PtvUHdezp2osdxw
+         6n1C8P/hrMecbUd+OyWsJdsGAdg2fAP0o7fG39NA0s7DptSOx4/W1TvfyWhYV1GTzXeL
+         FxbGRzbx8t8Tb8QgcSZdeNgV80IPPBZo8xo32MFpqwSYLi9W1xId4PITK46kfBSI+Gau
+         mCCo9eHcO4oafOjnhMiyE55h3mQJLqOJyTr2dHXFxmDzGwAmWSmCldD0L33vzO1b211N
+         pT8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=eiA/gy55NgWHxnholqKVR1Lek5s+reuzIp59lub6xig=;
-        b=LLG26MaQ2WUeweHz4W0BO+56P+J6p0Yllkx6mMofwm0Cfqm8qH4Nipv4aI0S+uaaq4
-         1Ee6Pte3THF2cc4r5+K5RaQkrDrnJ/OarkNmONsCGya1WSzT1c0Uo+rPjEyORKqx8gya
-         BBKymJa7F55o4ML8Ag2jx9oFkRN8Pb1mWpIkndWpd7WVUc6wRVTVibhHmaDg8qLVHNBM
-         793YN/5Yt4nRnAAJaplp4dgqtY3lsBIzH5+uHrUj9miyMStMvV/k7s2o65ixrv+t192M
-         7MpAVJfDz0M6iXqZE4wYFISUO7Nk3y8L10ooxEmNMdNWPD+UAlRAj71qDLHgGniCuS1z
-         dd+g==
-X-Gm-Message-State: AOAM531AUtWVJ3Pg+q2NFmt8XLWb6Dm+dtLffUiHCcm6zvKKwCme7h9L
-        CmURjkIG1ddgDg3Qffq0Bgr4JyS8Jj4ZOX3TA3498IxoVqjO1jutPUMunniOABcC8yW2zBGDhL8
-        xx7uGlSS/cp50DmLIj0OaD9EMzeA7Dn5Ul0W977Soe8+Ru62bALaj433RwU/nRfk=
-X-Google-Smtp-Source: ABdhPJxd0gmFrtTbG/KdDMBQ6q27Fk7kUG29ZK5ELxyda9XmLSYC+0eWyk4phzx5WzKH0b6eMSodCDgKoMKs7A==
+        bh=SxQM2cxFgTJkz187BLMpOB9JRuL0P/ov+6eGJwePauo=;
+        b=6IkSQ2Y5/KYc+n9z863koDkGv8cVSiLV2xr1KtTagrzvLWX3vOixrdKGNAYue8pJR0
+         01iGdHPED7Xt7hbuzz+b8OK2ffVRLd7z0eCjaiswUv3GlaQdxxfMTldNO3ausGCYUDdS
+         vsavlf572XFMLuZ4Uvm3hH2fAz4KbFis1hf9OqMcwlKmLbElzr/GuepN2E2GUH7oNMsZ
+         L/sZh5ZkmcZZUG70TnSUXENaRoz2w7DV+OYZ03NgSjom0xoV3n9YXMkQO+azCrjVNBtY
+         /moB+VsmSy7YTJ++8wxllVXke5TIJl+IMQNsS+9CEfAWbMm5BO8pQUQQxTNC3gngzl2D
+         xdJw==
+X-Gm-Message-State: AOAM531FxMRj47RDFk95hpxbB2lZum2SNB/AOyFIX6+1O5XzgP3T2H7F
+        UZv7zLyfJCfu2dgkur8XtFOkW2eRP5fq1GEktfJX41eqbTXasNC+EaF4w8xjd0pcy5OcoQWDNZy
+        E/GO8NkmSz9Rt5PfDFLfwfdkkbn/KBKe7NEq0BoLWkyRp+hJHhXdIQFzDRYHAT94=
+X-Google-Smtp-Source: ABdhPJxxGtM2YqUgLAHP7XOJ3TF1YfnXCB8DWSXV7xkZ5wfGkblGY9VqEbJ0jT2OuJY7tL1VNaKlVTerU0xRgA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:2405:b0:4e1:5008:adcc with SMTP
- id z5-20020a056a00240500b004e15008adccmr25515869pfh.35.1646109718098; Mon, 28
- Feb 2022 20:41:58 -0800 (PST)
-Date:   Mon, 28 Feb 2022 20:41:30 -0800
+ (user=chooglen job=sendgmr) by 2002:a17:902:8f94:b0:151:64c5:7759 with SMTP
+ id z20-20020a1709028f9400b0015164c57759mr9057509plo.4.1646109722245; Mon, 28
+ Feb 2022 20:42:02 -0800 (PST)
+Date:   Mon, 28 Feb 2022 20:41:32 -0800
 In-Reply-To: <20220301044132.39474-1-chooglen@google.com>
-Message-Id: <20220301044132.39474-12-chooglen@google.com>
+Message-Id: <20220301044132.39474-14-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220301000816.56177-1-chooglen@google.com> <20220301044132.39474-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH v2 11/13] submodule--helper update-clone: learn --init
+Subject: [PATCH v2 13/13] submodule--helper update-clone: check for --filter
+ and --init
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>
@@ -61,96 +62,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach "git submodule--helper update-clone" the --init flag and remove
-the corresponding shell code.
+"git submodule update --filter" also requires the "--init" option. Teach
+update-clone to do this usage check in C and remove the check from
+git-submodule.sh.
 
-When the `--init` flag is passed to the subcommand, we do not spawn a
-new subprocess and call `submodule--helper init` on the submodule paths,
-because the Git machinery is not able to pick up the configuration
-changes introduced by that init call. So we instead run the
-`init_submodule_cb()` callback over each submodule in the same process.
-
-[1] https://lore.kernel.org/git/CAP8UFD0NCQ5w_3GtT_xHr35i7h8BuLX4UcHNY6VHPGREmDVObA@mail.gmail.com/
+In addition, change update-clone's usage string so that it teaches users
+about "git submodule update" instead of "git submodule--helper
+update-clone" (the string is copied from git-submodule.sh). This should
+be more helpful to users since they don't invoke update-clone directly.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c | 26 ++++++++++++++++++++++++++
- git-submodule.sh            |  9 +++------
- 2 files changed, 29 insertions(+), 6 deletions(-)
+Since we expect users to act upon the usage string, I've updated it to
+reflect "git submodule update" [1] (since that's what users actually
+invoke), but I feel a bit iffy about not being able to use
+usage_with_options() (because the options and usage string are for
+different commands).
+
+This might indicate that this is work we should put off until the
+conversion to C is mostly complete, but on the other hand, the usage
+string is still more helpful than it used to be because we never
+presented users with the options anyway.
+
+[1] It's not immediately obvious which command we prefer to show - some
+other commands use "git submodule--helper" and others use "git
+submodule".
+
+ builtin/submodule--helper.c | 20 +++++++++++++++++++-
+ git-submodule.sh            |  5 -----
+ 2 files changed, 19 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 052b247726..2ffc070319 100644
+index 2ffc070319..3e8a05a052 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1998,6 +1998,7 @@ struct submodule_update_clone {
- 	int failed_clones_nr, failed_clones_alloc;
+@@ -2543,7 +2543,12 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 	};
  
- 	int max_jobs;
-+	unsigned int init;
- };
- #define SUBMODULE_UPDATE_CLONE_INIT { \
- 	.list = MODULE_LIST_INIT, \
-@@ -2507,6 +2508,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	int ret;
- 
- 	struct option module_update_clone_options[] = {
-+		OPT_BOOL(0, "init", &suc.init,
-+			 N_("initialize uninitialized submodules before update")),
- 		OPT_STRING(0, "prefix", &prefix,
- 			   N_("path"),
- 			   N_("path into the working tree")),
-@@ -2565,6 +2568,29 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	if (pathspec.nr)
- 		suc.warn_if_uninitialized = 1;
- 
-+	if (suc.init) {
-+		struct module_list list = MODULE_LIST_INIT;
-+		struct init_cb info = INIT_CB_INIT;
+ 	const char *const git_submodule_helper_usage[] = {
+-		N_("git submodule--helper update-clone [--prefix=<path>] [<path>...]"),
++		N_("git submodule [--quiet] update"
++		"[--init [--filter=<filter-spec>]] [--remote]"
++		"[-N|--no-fetch] [-f|--force]"
++		"[--checkout|--merge|--rebase]"
++		"[--[no-]recommend-shallow] [--reference <repository>]"
++		"[--recursive] [--[no-]single-branch] [--] [<path>...]"),
+ 		NULL
+ 	};
+ 	suc.prefix = prefix;
+@@ -2554,6 +2559,19 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 	memset(&filter_options, 0, sizeof(filter_options));
+ 	argc = parse_options(argc, argv, prefix, module_update_clone_options,
+ 			     git_submodule_helper_usage, 0);
 +
-+		if (module_list_compute(argc, argv, suc.prefix,
-+					&pathspec, &list) < 0)
-+			return 1;
-+
++	if (filter_options.choice && !suc.init) {
 +		/*
-+		 * If there are no path args and submodule.active is set then,
-+		 * by default, only initialize 'active' modules.
++		 * NEEDSWORK: Don't use usage_with_options() because the
++		 * usage string is for "git submodule update", but the
++		 * options are for "git submodule--helper update-clone".
++		 *
++		 * This will no longer be an issue when "update-clone"
++		 * is replaced by "git submodule--helper update".
 +		 */
-+		if (!argc && git_config_get_value_multi("submodule.active"))
-+			module_list_active(&list);
-+
-+		info.prefix = suc.prefix;
-+		info.superprefix = suc.recursive_prefix;
-+		if (suc.quiet)
-+			info.flags |= OPT_QUIET;
-+
-+		for_each_listed_submodule(&list, init_submodule_cb, &info);
++		usage(git_submodule_helper_usage[0]);
 +	}
 +
- 	ret = update_submodules(&suc);
- 	list_objects_filter_release(&filter_options);
- 	return ret;
+ 	suc.filter_options = &filter_options;
+ 
+ 	if (update)
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 23ebd90892..51be7c7f7e 100755
+index 51be7c7f7e..aa8bdfca9d 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -361,14 +361,11 @@ cmd_update()
- 		usage
- 	fi
+@@ -356,11 +356,6 @@ cmd_update()
+ 		shift
+ 	done
  
--	if test -n "$init"
+-	if test -n "$filter" && test "$init" != "1"
 -	then
--		cmd_init "--" "$@" || return
+-		usage
 -	fi
 -
  	{
--	git submodule--helper update-clone ${GIT_QUIET:+--quiet} \
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update-clone \
-+		${GIT_QUIET:+--quiet} \
- 		${progress:+"--progress"} \
-+		${init:+--init} \
- 		${wt_prefix:+--prefix "$wt_prefix"} \
- 		${prefix:+--recursive-prefix "$prefix"} \
- 		${update:+--update "$update"} \
+ 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update-clone \
+ 		${GIT_QUIET:+--quiet} \
 -- 
 2.33.GIT
 
