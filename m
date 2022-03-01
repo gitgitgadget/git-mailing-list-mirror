@@ -2,134 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97EC7C433EF
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 03:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AA18C433EF
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 03:49:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230199AbiCADKO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 22:10:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51342 "EHLO
+        id S232115AbiCADuQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 22:50:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229636AbiCADKM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 22:10:12 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A433DDD7
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 19:09:30 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id b9so24689543lfv.7
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 19:09:30 -0800 (PST)
+        with ESMTP id S229781AbiCADuN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 22:50:13 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C0C2182F
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 19:49:33 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id f8so8147185edf.10
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 19:49:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=kXBeUp8i4aS7csZqmwkWFXeTYtHV7M7K8wg5jItLqE0=;
-        b=HwS2JXcgtHVTc9N4CSB1oVfjC/DAQREWlRJMrKa4xti90NLz+kwS/t4Py03W+UgPKn
-         ue0D3xS3v8FodK2H5F58GWfD+jXbizDpc0wrqF3nnsZmOpNFcgE8gILPfoASMrPTVx5U
-         mHcYPtApiG2Ves1auKRloOqgyMYkVVGBputRLqqwJGnzgosc1bN3BPdMueFFE4Nlx+7+
-         8o4wy/4tiYRgWvNAxU0tZ7Dfq1ZXs0VxoGs4Eoc2u8G7VbZtV60w0hGklTbrmmTcnH2w
-         0yxggA1g0c57kLj8noWUXa+ZJEUCssfi6bvrSc6x2BXesDbakLw6MlsvQQO8OpGaNXPg
-         U57A==
+        bh=sCUjjhu9lkQ6SZoV/vqGVT11h4aKdr6tI8Hh86xr1XA=;
+        b=QcA31aQ0JEULkDqDZFIBopQmrd7z7F3QBALbHwBGevQXschVwFtTLVdeYdd4JPBWoR
+         3ub+5IJiAE+65gRgGLRSoq1U8OCnmu7QeT8E7J/FQQymaQCN6gOWjXvfUBECPQ+u5z/s
+         ifF6ojKgNuTA4QD/iBTH5bLhIOOTcjjph5SLwbU9AhPcAEwU5TjpXxQqMxj9cYdyM6zf
+         AxGE3tEklyiZIo91vkFwho+qC+OwqcCY3onGyIM9PWZArxfLP/GkRjg1eSilYSnf0MM9
+         YLYijuTPLO0sB0WsYeaQIIx0ef6GH7l++waZcD8ZUTSMLK1u2J9iMXui7Yc1rKI/lDzz
+         kzFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=kXBeUp8i4aS7csZqmwkWFXeTYtHV7M7K8wg5jItLqE0=;
-        b=Tt8IBc0g6u23oddTQUNSRpMv+LB+LkYK4WjoorjBhvphvUrdFK0qKBfs2XzJXsKahj
-         OqrZPiCtEDT2/2D3plJDWiVacAoQNfwuOe156wZHAq7Ra3FHZNsptbllRpWUN7c7gi1R
-         dK4yxO6t6JCrCrG6VEmXkc4PEBAePj+nC18hrrfOwiUszZ9M0nitr88dJGhwVx/V0sbl
-         cRfaPXbe20WI8qHI5KAmIfo+CcVk3r02e1A2HneKFHacSyd7dS28Wswx1k0ZAvwdlMRH
-         3Es4QqjNmj7fDYJGmxbVTwxf6Escqpg0mnkbgLVyBPMATzP4a1+IAjyJpvl8nhppXOjL
-         oV3A==
-X-Gm-Message-State: AOAM532jx24Tlt+abeu5PHM8WBf6tpic6Kb2NaRXXf0bda/p5ixuJwEn
-        rYwETYlpqadVEfG4idd/ed9EfutBDm8n9LGXxCk=
-X-Google-Smtp-Source: ABdhPJy6qyYNvyXtg5WH4U6hDU57PXQcy6IL6rx60Tco+Xyps3rmL6kh3lWmgnQdyyYLYDAq/CfDL88KXqlKJ0VFVzU=
-X-Received: by 2002:a05:6512:402a:b0:431:f517:17f1 with SMTP id
- br42-20020a056512402a00b00431f51717f1mr14254305lfb.567.1646104168685; Mon, 28
- Feb 2022 19:09:28 -0800 (PST)
+        bh=sCUjjhu9lkQ6SZoV/vqGVT11h4aKdr6tI8Hh86xr1XA=;
+        b=Kqx5YXY836TBOBLxe5Chc9TIl7ydOya4F3h6jlW1pAeoBRkGcvqjrV8uf0BURxHrWi
+         5J2ntcwx1wb50EoTzDnCJQhSODp6lX0WqeWyGHf/Y7acVSx7G0ctApz2h+lSOnMfsuMb
+         VeiC3ipnlQRMc3jF2TQ8vUdP6lScCVmd3PEMrCzT2EnRWZefzlqXrEsBokDw6VChhWPk
+         aTgSlWNawrAVLzGDHs4vNRBB3gsT+2yhCUBe811nEZAmowSvu1JS2EgEb8JmUoYmRqHA
+         BRZNnV5M+hMRa6GD0+w1DAH9HKfMnGl51PYCWKxRERfEykP7hqS5UTMu+fKLxAA3CMLv
+         ZPuA==
+X-Gm-Message-State: AOAM533UdVcmukR/KkLHbo0OVPcbzGJZOEkkRjlTtWNfcJleFqFTxcAK
+        V6AEa6i3o3vplXoVYmPAO1CHopXbSBVFJalDSM1KC2EmWsM=
+X-Google-Smtp-Source: ABdhPJwyYC3pK3OTcwWOA7LcW4D5UyG79HcFsJvyU/50DCjXPC67K4pGNrFkxhX67A/UsQ2YTJW1C6TIdluNmg7fkuI=
+X-Received: by 2002:a50:ee86:0:b0:410:9aa1:1a26 with SMTP id
+ f6-20020a50ee86000000b004109aa11a26mr22801990edr.153.1646106571991; Mon, 28
+ Feb 2022 19:49:31 -0800 (PST)
 MIME-Version: 1.0
-References: <patch-v3-03.12-92fd020d199-20220204T234435Z-avarab@gmail.com>
- <20220217045943.30223-1-worldhello.net@gmail.com> <220217.86mtipj14m.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220217.86mtipj14m.gmgdl@evledraar.gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Tue, 1 Mar 2022 11:09:16 +0800
-Message-ID: <CANYiYbFZN=mvcxRT4Cf4Gzao89KR2UjMJXnJM63S2zAtbD32Jg@mail.gmail.com>
-Subject: Re: [PATCH v3 03/12] object-file API: add a format_object_header() function
+References: <pull.1122.git.1642888562.gitgitgadget@gmail.com>
+ <35e0ed9271a0229fe2acd2385a7e4171d4dfe077.1642888562.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.2201281744280.347@tvgsbejvaqbjf.bet> <CABPp-BG2rMEYBLuBW=0wtpJe4aUFGCFa8D0NTSKz9Sm+CkXPxw@mail.gmail.com>
+ <0d7ba76c-9824-9953-b8ce-6abe810e2778@kdbg.org> <CABPp-BERtRDeyF3MhOQhAFwjoykOKwXoz6635NK7j2SEKp1b3A@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202050009220.347@tvgsbejvaqbjf.bet> <CABPp-BGCL0onSmpgKuO1k2spYCkx=v27ed9TSSxFib=OdDcLbw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2202211059430.26495@tvgsbejvaqbjf.bet> <220221.86y224b80b.gmgdl@evledraar.gmail.com>
+ <CABPp-BFc=hcWz1BMW7fAR=Zp3fQ3vxvBtnSYESreYwef_v1K5g@mail.gmail.com> <220228.86sfs35ojn.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220228.86sfs35ojn.gmgdl@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 28 Feb 2022 19:49:20 -0800
+Message-ID: <CABPp-BG25_TutatgNmK6vgq3akxpYHQ8QBnz-65_F_3oCA1nJA@mail.gmail.com>
+Subject: Re: machine-parsable git-merge-tree messages (was: [PATCH 08/12]
+ merge-ort: provide a merge_get_conflicted_files() helper function)
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Han Xin <chiyutianyi@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Derrick Stolee <stolee@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Altmanninger <aclopte@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 17, 2022 at 5:25 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Mon, Feb 28, 2022 at 1:27 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
 >
+> On Tue, Feb 22 2022, Elijah Newren wrote:
 >
-> On Thu, Feb 17 2022, Jiang Xin wrote:
->
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+[...]
+> > I don't see how this helps solve the problem Dscho was bringing up at
+> > all.  Your reference to "the path" means you've missed his whole
+> > complaint -- that with more complex conflicts (renames, directory/file
+> > conflicts resolved via moving the file out of the way, mode conflicts
+> > resolved by moving both files out of the way, etc) there are multiple
+> > paths involved and he's trying to determine what those paths are.
+> > He's particularly focusing on rename/rename cases where a single path
+> > was renamed differently by the two sides of history (which results in
+> > a conflict message only being associated with the path from the merge
+> > base in order to avoid repeating the same message 2-3 times, but that
+> > one message has three distinct paths embedded in the string).
 > >
-> > Type casting can be avoid if we use "void *" as the first parameter of
-> > "format_object_header", and do type casting inside the helper function.
-> > [...]
-> > The return value of `type_name(type)` has not been checked for the orig=
-inal
-> > implement, how about write a online inline-function in a header file li=
-ke this:
+> > Also, the additional paths is not part of the API to path_msg; it's
+> > merely embedded in a string.  (And, in case it bears repeating: as
+> > mentioned elsewhere, we cannot assume there will only be one
+> > path_msg() call per path, and we at least currently can't assume that
+> > each path_msg() call is for a separate logical conflict; there might
+> > be two for a single "conflict".)
 > >
-> >       static inline int format_object_header(void *str, size_t size,
-> >                                              const char *type_name,
-> >                                              size_t objsize)
-> >       {
-> >               return xsnprintf((char *)str, size, "%s %"PRIuMAX, type_n=
-ame,
-> >                                (uintmax_t)objsize) + 1;
-> >       }
+> > I agree that parsing these meant-for-human-consumption (and not
+> > promised to be stable) messages is not a good way to go, but
+> > pretending the current API has enough info to answer his questions
+> > isn't right either.
 >
-> I don't think the casting in the callers is bad, in that for the callers
-> that do use "char *" we get the compiler to help us with type checking.
+> The intent here wasn't to present a complete solution, but to reply to
+> the part of Johannes's E-Mail that e.g. mention "and I would be loathe
+> to switch _all_ callers to do the quoting themselves.".
 >
-> Using a void * is something we really reserve only for callback-type
-> values, because it mens that now nobody gets any type checking.
+> I.e. it's a POC for passing this data further up the stack. The issue
+> you mention with the renaming case could/should be handled by having
+> whatever handles the vargs accept those N arguments, the POC doesn't
+> handle it.
 >
-> I think if we wanted to avoid the casts it would make more sense to add
-> a trivial ucformat_object_header() wrapper or whatever, which would take
-> "unsigned chan *" and do the cast, or just tweak the relevant calling
-> code to change the type (IIRC some of it used unsigned v.s. signed for
-> no particular reason).
+> But in any case, needing to convert "28 calls to [path_msg()]" doesn't
+> seem like it's required.
+
+The problem isn't that it's an incomplete solution, it's that AFAICT,
+the user's stated problem is not aided at all by this POC.  Passing
+existing data further up the stack cannot solve the problem if the
+data being passed is insufficient for the problem at hand.
+
+Perhaps you have some clever solution to get the extra information,
+though?  Could you elaborate on how path_msg() could handle its
+varargs differently to deduce which of those correspond to paths?  The
+only way I can see how to do that, short of modifying all 28 callers
+of path_msg() to pass those paths as additional information, is hacks
+like parsing the (non-stable, not-meant-for-machine-parseability)
+format string.
+
+(Getting the paths would get us most of the way to a solution, though
+it's still incomplete.  But it's the relevant bit under discussion
+here.)
+
+> But obviously we wouldn't want to use trace2 as a plumbing layer for
+> message passing, but could format the same data in a similar way,
+> especially in the context of a discussion about filenames with odd
+> characters in them (some of which JSON is inherently incapable of
+> encoding).
 >
-> But I think just leaving this part as it is is better here...
->
-> > [...]
-> >> +    if (!name)
-> >> +            BUG("could not get a type name for 'enum object_type' val=
-ue %d", type);
-> >> +
+> >> I think that would be particularly useful in conjuction with the
+> >> --format changes I was proposing for this (and hacked up a WIP patch
+> >> for). You could just have a similar --format-messages or whatever.
+> >>
+> >> Then you could pick \0\0 as a delimiter for your "main" --format, and
+> >> "\0" as the delimiter for your --format-messages, and thus be able to
+> >> parse N-nested \0-delimited content.
 > >
-> > The return value of `type_name(type)` has not been checked for the orig=
-inal
-> > implement, how about write a online inline-function in a header file li=
-ke this:
+> > To be honest, the --format stuff is sounding a little bit like a
+> > solution in search of a problem.
 >
-> Yes, this part is not a faithful conversion on my part, but I think it
-> made sense when converting this to a library function.
+> Opinions on this obviously differ, and I'm not going to pick this as my
+> particular hill to die on :)
 >
-> The alternative is that we'd segfault on some platforms (not glibc,
-> since it's OK with null %s arguments), just checking it is cheap & I
-> think a good sanity check...
+> But I do think it's the other way around, in that hardcoded output
+> formats are a problem requiring solutions.
 
-After sending the last email, I was offline for over a week due to an
-emergency at home.
-
-According to the rest patches of this series, your implementation of
-"format_object_header()" which uses "enum object_type" as the
-parameter instead of "char *type" is better.  And adding a validation
-for `type_name(type)` is also better than my one-line inline function.
-This series of patches LGTM.
-
---
-Jiang Xin
+I might be more convinced if folks tried to address how to output
+things _after_ we had determined *what* things should be output.  If
+we don't have sufficient information to solve what users want,
+discussing how we format the information we do have cannot help solve
+the actual problems.  It might be useful as an add-on later, but
+discussing it first is putting the cart before the horse.
