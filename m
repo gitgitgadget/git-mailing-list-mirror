@@ -2,97 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FD97C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 22:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E147C433EF
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 22:13:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238212AbiCAWFE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 17:05:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44408 "EHLO
+        id S234577AbiCAWOd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 17:14:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237523AbiCAWFC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 17:05:02 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9886165482
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 14:04:20 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id bq11so23864285edb.2
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 14:04:20 -0800 (PST)
+        with ESMTP id S231537AbiCAWOc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 17:14:32 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 041053F33B
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 14:13:51 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id x5so23845401edd.11
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 14:13:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=2qJ3sWz5AMCcWA7dYF4c+e2eeXFTOkDm+P0JqdC+8Pg=;
-        b=KtbXj7DeynoNd8PKK89eBce1rbxxdgf2j5+Mh0TjOtOW60x/tx9teCN1WrcArEwU9b
-         mNLHywmGU9BpqmCU1AJKAEYg3tPgqpYOtqK3zBOTXiHSqe/P8675fWOZiOWluBLeA/NE
-         39pTZ26jvTByEe7HvK1t717MX8aCuioszOp8vnZpoF5qwZ3QATudM0NsRyxYjiiXFQvQ
-         2DkFzEBHr6twB9/hckOUacPXV/uXtqcs7pfJANKCvl3ppw0nIfC416jDbQaBcF3O1hm0
-         /2tX1lxM6JQzBvejEu07orMTOX7eUICwIcRBftPLkkcO4wXD0eQvbiWh4gkg+rdw2Ikr
-         NWvg==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9+RmzTZGyW8r4gSJGiI+DXFgk4H7UHv3frGxVSpkYhU=;
+        b=qhdSqnf+LFU18SyMmpNcz092uoClQ8DjjpslvpCJQLAuQmElQ7j3AqGRp46h139oz/
+         52m5+N7srdLvzJoX9T34A4L1QdE65CWZ/jY/RO6OLg0dqyuz1DhJSNUaEdoqiNsQyKb0
+         IdyfdT7XpB72WEJj1aOwzt4lzCTJVU7IWzEyh4cw4xLRYEGKdqR95gId45AEihWCW2LO
+         +/Hd9UL9zrgKYo/JmPNJbU6doGRqDl7VoGpdGLJY0bzxaTVy52Jq7ueowO1ghV7NziCK
+         yB7NnB4KFLWY/fgDHEau33hVhBgXDc/tKk0UO11yF4p5VwaKBeqxIag5BS8sbtPPgNoH
+         /ubA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=2qJ3sWz5AMCcWA7dYF4c+e2eeXFTOkDm+P0JqdC+8Pg=;
-        b=DXxdJvBHK/RdXSDckfDU8Uc//5AOcMB9l63nBHIpGj465lNDuqbWH9lIYxDkDF/hd6
-         TlcLkdDuW9yoiCnNbr5zFxze/cYOURwyTIriIC15pt/lZUeT5JstvnyzYmvEXQ5LDrrX
-         2PWiWCmLQ1eVEhFtKkoPJZ7w7VV4tNN+n/WQfdMOy1ASh34jVMStaGLaEdcP3VACsGCt
-         PmSyy4Cr5fhj09zTLVqHOisMXCuD0aViOMGPuh6a1SRK6Vkscf+BJKX9yE4keQM3R+Y8
-         cjiO7cdKdq8QE9SxZvsO3O2TnWgt7p6hbaQuMYBv2ESg8IUXUgmsPk2dQjIX6pudo7WI
-         ptug==
-X-Gm-Message-State: AOAM53205mcIY2jV4UupF8r8IWI6iFoWAWwCBznEkLlmqVT9bndase1l
-        iBXj6eaJKK53g+XpPw91rX2LdnXr58M=
-X-Google-Smtp-Source: ABdhPJzqSSSYJYxYe1pfpqMCjGXjxytLIg0wGmgAVnlAIguzrWIc5pN0YUgpIC5eDvI1lO30Y6fz6Q==
-X-Received: by 2002:a05:6402:40d4:b0:415:b355:a72a with SMTP id z20-20020a05640240d400b00415b355a72amr869307edb.153.1646172258948;
-        Tue, 01 Mar 2022 14:04:18 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id ee21-20020a056402291500b00410d4261313sm7581842edb.24.2022.03.01.14.04.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 14:04:18 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nPAbR-002Hmk-Nd;
-        Tue, 01 Mar 2022 23:04:17 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH] parse-options: make parse_options_check() test-only
-Date:   Tue, 01 Mar 2022 22:57:17 +0100
-References: <xmqqtuck3yv2.fsf@gitster.g>
- <20220228073908.20553-1-chakrabortyabhradeep79@gmail.com>
- <xmqqzgma287n.fsf@gitster.g> <xmqqr17lphav.fsf_-_@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqr17lphav.fsf_-_@gitster.g>
-Message-ID: <220301.86pmn5z5we.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9+RmzTZGyW8r4gSJGiI+DXFgk4H7UHv3frGxVSpkYhU=;
+        b=OlK/pB3LDdk++uEA8xNzLT2H/0SRmAbT0EAOlTIUyp0hQx4iLZpGJfYGEtEfZeH0fe
+         3G8UGunLwF3PykH4Dv1gC+FSkoPnM4l+COVaiApNbu3lkuJhQc15oC0su4EZeUWT/zb1
+         wDsfDfKy9npPS8DR3uWb6yKwaPeG16ZVlm/XzGJ9gQiu4McO7OxSV2Domp4rikEKUrjE
+         UbhruoaxIXxwjwsRQxwOoD0/hVj49gn2pH2n+pg/k4ermZvb8QdfF7wNjC0E29EybTOA
+         gRprESFwnNe7GCpMf82mcS71ynJv/0jDtPoHxB08xAXVdbTBfJy1rzJAHxXhZYcGQD7R
+         VKGQ==
+X-Gm-Message-State: AOAM530cg7BcNUGmTNqdRkd9egQySRBJ5U+GjCowTfzA81/WAeg2D1Z0
+        kyRryUnTuqpY6RJlklIaOryNDuOJmplYf14mmqg6YA==
+X-Google-Smtp-Source: ABdhPJzaSHbkOEQIx+s9UJS9CcekEdxJ0ZHm3kYdIsQlfV7f7PL/izn81ZR0sfandq06WmNoq7ZBdRKEts0zSbLk6Fs=
+X-Received: by 2002:a05:6402:528e:b0:407:80ff:6eed with SMTP id
+ en14-20020a056402528e00b0040780ff6eedmr26543808edb.165.1646172829565; Tue, 01
+ Mar 2022 14:13:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1166.git.1646041236.gitgitgadget@gmail.com>
+ <pull.1166.v2.git.1646127910.gitgitgadget@gmail.com> <3e3c9c7faace505958aa01ff82bef5fad3204c67.1646127910.git.gitgitgadget@gmail.com>
+ <xmqqk0ddr1n1.fsf@gitster.g>
+In-Reply-To: <xmqqk0ddr1n1.fsf@gitster.g>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Tue, 1 Mar 2022 23:13:38 +0100
+Message-ID: <CAPMMpojJhw40DK7mEpZ-4ht6FHohAms=G9LsPQQx6+LCMmWtwA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] t7063: mtime-mangling instead of delays in
+ untracked cache testing
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Mar 1, 2022 at 7:03 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > +chmtime_worktree_root () {
+> > +     # chmtime doesnt handle relative paths on windows, so need
+> > +     # to "hardcode" a reference to the worktree folder name.
+> > +     test-tool -C .. chmtime $1 worktree
+> > +}
+> > +
+>
+> Enclose $1 in a pair of double-quotes to help readers.  They do not
+> have to wonder if the caller is interested in (or has to worry
+> about) triggering word splitting at $IFS if you did so.
 
-On Tue, Mar 01 2022, Junio C Hamano wrote:
+Absolutely, thx.
 
-> The array of options given to the parse-options API is sanity
-> checked for reuse of a single-letter option for multiple entries and
-> other programmer mistakes by calling parse_options_check() from
-> parse_options_start().  This allows our developers to catch silly
-> mistakes early, but all callers of parse-options API pays this cost.
-> Once the set of options in an array is validated and passes this
-> check, until a programmer modifies the array, there is no way for it
-> to fail the check, which is wasteful.
+>
+> >  avoid_racy() {
+> >       sleep 1
+> >  }
+> > @@ -90,6 +96,9 @@ test_expect_success 'setup' '
+> >       cd worktree &&
+> >       mkdir done dtwo dthree &&
+> >       touch one two three done/one dtwo/two dthree/three &&
+> > +     test-tool chmtime =-300 one two three done/one dtwo/two dthree/three &&
+> > +     test-tool chmtime =-300 done dtwo dthree &&
+> > +     chmtime_worktree_root =-300 &&
+>
+> I am wondering if it is better to spelling it out like this:
+>
+>         test-tool -C.. chmtime =-300 worktree &&
+>
+> instead of hiding the fact that "../worktree" is being touched
+> behind a one-line helper.  Being able to explicitly write "worktree"
+> in the context that this particular code path uses the "worktree"
+> directory is a big plus, but at the same time, bypassing the helper
+> makes it unclear why we just don't chmtime "../worktree", and will
+> strongly tempt future developers into breaking it, so, I dunno.
+>
+> What's the reason why utime() works only on a path in the current
+> directory and cannot take "../worktree" again? If we cannot solve
+> that, I guess an extra helper with a big comment, like we see in
+> this patch, would be the least bad solution.
+>
 
-That's not true due to the "git rev-parse --parseopt" interface. I'd be
-happy to deprecate it, but I think the last time I brought it up you
-were opposed, i.e. it's documented as plumbing in "git-rev-parse", and
-it's easy to have it hit some of these BUG()'s.
+Heh. It didn't work, in my initial tests. Now it does. It turns out I was
+initially getting the directory handle with
+"FILE_WRITE_DATA | FILE_WRITE_ATTRIBUTES", and
+everything worked except modifying the current folder via a relative
+path expression, which yielded a "Permission denied" error. I
+worked around it by explicitly changing the current directory...
 
-I see the benifit of Johannes's suggestion of checking this once (but
-with t0012-help.sh etc. we're nowhere near being able to do that).
+Then I realized FILE_WRITE_DATA wasn't necessary (but didn't
+connect the dots). Then you noted the "-C .." arg to test-tool
+(and I still didn't connect the dots).
 
-Now this runs for the whole test suite, so our tests will have the the
-same behavior.
+The problem was never relative paths, but rather trying to get a
+writable handle to the current directory. The only reason "-C .."
+worked was that I already stopped trying to get a writable handle.
 
-So it's just an optimization? Isn't it premature, if you run
-parse_options_check() in a loop how many checks/sec can we do? I haven't
-tested, but I'm betting it's a *lot*.
+I have no idea what it means to get a writable handle to a
+directory, but apparently you can't do it for your current
+directory. Now I know.
 
-So aren't we shaving microseconds off the runtime here?
+Thanks for the nudge, this is all clean now.
