@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D982CC433FE
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 20:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C644C4332F
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 20:26:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238389AbiCAU1E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 15:27:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50134 "EHLO
+        id S237095AbiCAU1H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 15:27:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230144AbiCAU0s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 15:26:48 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93C8E8F63E
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 12:24:42 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id m6so5087179wrr.10
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 12:24:42 -0800 (PST)
+        with ESMTP id S238232AbiCAU0q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 15:26:46 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D1448F62B
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 12:24:41 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id j17so22375192wrc.0
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 12:24:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=H9bNahYcVt/ihTGOw2n84IRXC5Bf/4XszC0K41jHOqQ=;
-        b=OgQy4VbtaiqKSLFPQFGfv78dEGb37wNew8ycpwvwqwEWgLorqQ+BstlJ472BfTvNfv
-         ygnJ2AkYxQ89PCFXk/7vTpyWK8+MqDk6FIZipnc7scIUpprlB72SUHPiivnI0dy/BdlS
-         +cpTs72XZOl7bKmW+ibqegxEx/33mVbZ2NHamQR9R1EVWmIEhlo9e3m/bmzzj4HVP2nu
-         2wWxxRgFaJA553zCcz6HmxiwqlvkIdyN6ywc7ezWuAGBKAMK37Y0HmWw0ULDJtE9sMrj
-         Hri2rRwg62MbStnzf04kTgTmU5IQnOHUJyiosyT5azab+b+3lrMDs8IdsZGBj+f9nzFW
-         iBSg==
+        bh=9DBogxSaFTyTsGIWfubnq62UOyMlN/cANTvCvx2wkGI=;
+        b=UG19Dx7hiBfPTQ1pIPqdnCBJQfPRye+apL0Kq7GEcug3PwU4GVR8uQh6iwd+ZGX4hd
+         p31wVVFT62g8OqkO2aWdS9XS4QNppHkMGC0e710bgus4NLwldnFbDTN0OpeAyfwTiGok
+         eqI1N+lFfDGPZokfNweNVuJSgIcoq+xl1qlcAMll0l98kOcFHCgPIObTCaVw3GazjLmo
+         eaiTi9/1jqqn2elx+kl3ysVaIll3ygU5HatL+DuqVDp61xa4InAaY8JCQUp5I45z253V
+         JhHNsx8YA3aa4++47MEdwRNMGi5EyBJf5zuod+KkiNbW3D4td43WkjNbUVfhY1u2N+lB
+         yNaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=H9bNahYcVt/ihTGOw2n84IRXC5Bf/4XszC0K41jHOqQ=;
-        b=DkCvsxUz2q4sn0yXOsjCF9tFqHTNBCBWJuv5gqSDCb4quAehpBcKPczN66cLSIXdTo
-         RlZ9zGkZBdHGw99ESE2LxtwgftKZU1DsZj8rok64R74bak4UwJMdU1LIHZS6LRO49+IL
-         k+6VjFbv4mB0t7mM6IFt1jJG3DfRHOmQ/RHRRCNX93noU09zE+jNcb1YejvGLzjIWyVC
-         rxf+945K34g3M3r3suuPkcWvC14hBV6lqgsO4a7UxMeKqHkSxm0X/tODesravqrCYKdB
-         sFRiO4tTd3mtv0tTytS21kkwayizTyMoMDbPuJcRerK400GYLjTkNjwGIXC4wfIDnT9S
-         AL0g==
-X-Gm-Message-State: AOAM5320x2AlezbiULmn7oSPI7AfCZyCreyf8u5mm+qrQgJeAOLDAnEi
-        c7VIrO6WEJvd2PxA6jEQ5TOTfDQSEes=
-X-Google-Smtp-Source: ABdhPJw6DttkBEOBuDHrYfgp5faSgrDwxK1gVGOCWntbSwRuSop9lbRxJTERuQ1uet740LBTKfGTZA==
-X-Received: by 2002:a05:6000:2c6:b0:1f0:77e:4ed2 with SMTP id o6-20020a05600002c600b001f0077e4ed2mr3778581wry.330.1646166279297;
-        Tue, 01 Mar 2022 12:24:39 -0800 (PST)
+        bh=9DBogxSaFTyTsGIWfubnq62UOyMlN/cANTvCvx2wkGI=;
+        b=EsObW3D5Ooxaaj5orMyCK9g4FUX5TIOSuSceBBejUIpnj48+rjLDLoC7MiNJNgrhta
+         4kwqWSO56kq3FWgWM189NEaYyAzqpIIYuaZPqyJ4koat3iJgNlf08bIseNvANropY4JI
+         npp4ddB91fCf1mTdZGRA7Bci1pilCQU5tllKdCLrPWj+huGQizGO+lhuxBjWehZCn6n3
+         c27ZGAYzvWpFTWrLngg41vLJ2bnJVMUOdOB2M5EunGQ4OojEolRw3omm+Jy5VBu2zp4/
+         DOdf4vB87AkQAOt44vS4jV6rma1DzCecbuG19dS2bICYqtmqawpapKLroSM4qY8k2Q7h
+         t/lg==
+X-Gm-Message-State: AOAM532XWAHvdVvZ+bAR/aBNvfdMtAw7Mi74fH+CgBSIl4NumWI3JFBd
+        RVkh4KRMwRYyWWVgsjjhkyLsafdANe4=
+X-Google-Smtp-Source: ABdhPJwQhbhVNPL0Cu6m7J5n4wUKWHgLBGM1fqUmkWUzGzKJn+aIftCOGuFxwgnXYrRHuqCtyW9nww==
+X-Received: by 2002:a5d:5983:0:b0:1e5:7dd6:710 with SMTP id n3-20020a5d5983000000b001e57dd60710mr21647445wri.392.1646166277580;
+        Tue, 01 Mar 2022 12:24:37 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d8-20020adfe888000000b001e060f07236sm14460637wrm.14.2022.03.01.12.24.38
+        by smtp.gmail.com with ESMTPSA id e4-20020a05600c218400b003818133ab4dsm3359775wme.14.2022.03.01.12.24.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 12:24:38 -0800 (PST)
-Message-Id: <6bc11325dd14a67121cf5f5a8e20d83e1d7f4047.1646166271.git.gitgitgadget@gmail.com>
+        Tue, 01 Mar 2022 12:24:37 -0800 (PST)
+Message-Id: <1a9365c3bc5b810a60593612bfba97a8b0c1d657.1646166271.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1157.v3.git.1646166271.gitgitgadget@gmail.com>
 References: <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
         <pull.1157.v3.git.1646166271.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Mar 2022 20:24:31 +0000
-Subject: [PATCH v3 8/8] read-tree: make three-way merge sparse-aware
+Date:   Tue, 01 Mar 2022 20:24:29 +0000
+Subject: [PATCH v3 6/8] read-tree: narrow scope of index expansion for
+ '--prefix'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,113 +71,118 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Enable use of 'merged_sparse_dir' in 'threeway_merge'. As with two-way
-merge, the contents of each conflicted sparse directory are merged without
-referencing the index, avoiding sparse index expansion.
+When 'git read-tree' is provided with a prefix, expand the index only if the
+prefix is equivalent to a sparse directory or contained within one. If the
+index is not expanded in these cases, 'ce_in_traverse_path' will indicate
+that the relevant sparse directory is not in the prefix/traverse path,
+skipping past it and not unpacking the appropriate tree(s).
 
-As with two-way merge, the 't/t1092-sparse-checkout-compatibility.sh' test
-'read-tree --merge with edit/edit conflicts in sparse directories' confirms
-that three-way merges with edit/edit changes (both with and without
-conflicts) inside a sparse directory result in the correct index state or
-error message. To ensure the index is not unnecessarily expanded, add
-three-way merge cases to 'sparse index is not expanded: read-tree'.
+If the prefix is in-cone, its sparse subdirectories (if any) will be
+traversed correctly without index expansion.
 
+The behavior of 'git read-tree' with prefixes 1) inside of cone, 2) equal to
+a sparse directory, and 3) inside a sparse directory are all tested as part
+of the 't/t1092-sparse-checkout-compatibility.sh' test 'read-tree --prefix',
+ensuring that the sparse index case works the way it did prior to this
+change as well as matching non-sparse index sparse-checkout.
+
+Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/read-tree.c                      |  5 ----
- t/t1092-sparse-checkout-compatibility.sh |  4 ++-
- unpack-trees.c                           | 34 ++++++++++++++++++------
- 3 files changed, 29 insertions(+), 14 deletions(-)
+ builtin/read-tree.c                      |  3 +-
+ t/t1092-sparse-checkout-compatibility.sh |  8 ++++-
+ unpack-trees.c                           | 38 ++++++++++++++++++++++++
+ 3 files changed, 46 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index 9227f07ab15..9f1f33e9546 100644
+index 0a52cab7752..ec6d038242a 100644
 --- a/builtin/read-tree.c
 +++ b/builtin/read-tree.c
-@@ -234,11 +234,6 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
- 			break;
- 		case 3:
- 		default:
--			/*
--			 * TODO: update threeway_merge to handle edit/edit conflicts in
--			 * sparse directories.
--			 */
--			ensure_full_index(&the_index);
- 			opts.fn = threeway_merge;
- 			break;
- 		}
+@@ -217,8 +217,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+ 	if (opts.merge && !opts.index_only)
+ 		setup_work_tree();
+ 
+-	/* TODO: audit sparse index behavior in unpack_trees */
+-	if (opts.skip_sparse_checkout || opts.prefix)
++	if (opts.skip_sparse_checkout)
+ 		ensure_full_index(&the_index);
+ 
+ 	if (opts.merge) {
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 61dc2ea777c..8be8e3c06a6 100755
+index 86241b01a59..d98558f3238 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1413,7 +1413,9 @@ test_expect_success 'sparse index is not expanded: read-tree' '
- 	init_repos &&
- 
- 	ensure_not_expanded checkout -b test-branch update-folder1 &&
--	for MERGE_TREES in "base update-folder2" \
-+	for MERGE_TREES in "base HEAD update-folder2" \
-+			   "base HEAD rename-base" \
-+			   "base update-folder2" \
- 			   "base rename-base" \
- 			   "update-folder2"
+@@ -1417,7 +1417,13 @@ test_expect_success 'sparse index is not expanded: read-tree' '
  	do
+ 		ensure_not_expanded read-tree -mu $MERGE_TREES &&
+ 		ensure_not_expanded reset --hard || return 1
+-	done
++	done &&
++
++	rm -rf sparse-index/deep/deeper2 &&
++	ensure_not_expanded add . &&
++	ensure_not_expanded commit -m "test" &&
++
++	ensure_not_expanded read-tree --prefix=deep/deeper2 -u deepest
+ '
+ 
+ test_expect_success 'ls-files' '
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 0c2a678cd6d..b876caca0d1 100644
+index 360844bda3a..f3667d85ec5 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -2643,16 +2643,24 @@ int threeway_merge(const struct cache_entry * const *stages,
- 	 */
- 	/* #14, #14ALT, #2ALT */
- 	if (remote && !df_conflict_head && head_match && !remote_match) {
--		if (index && !same(index, remote) && !same(index, head))
--			return reject_merge(index, o);
-+		if (index && !same(index, remote) && !same(index, head)) {
-+			if (S_ISSPARSEDIR(index->ce_mode))
-+				return merged_sparse_dir(stages, 4, o);
-+			else
-+				return reject_merge(index, o);
-+		}
- 		return merged_entry(remote, index, o);
- 	}
- 	/*
- 	 * If we have an entry in the index cache, then we want to
- 	 * make sure that it matches head.
- 	 */
--	if (index && !same(index, head))
--		return reject_merge(index, o);
-+	if (index && !same(index, head)) {
-+		if (S_ISSPARSEDIR(index->ce_mode))
-+			return merged_sparse_dir(stages, 4, o);
-+		else
-+			return reject_merge(index, o);
-+	}
+@@ -1693,6 +1693,41 @@ static void populate_from_existing_patterns(struct unpack_trees_options *o,
+ 		o->pl = pl;
+ }
  
- 	if (head) {
- 		/* #5ALT, #15 */
-@@ -2714,11 +2722,21 @@ int threeway_merge(const struct cache_entry * const *stages,
- 
- 	}
- 
--	/* Below are "no merge" cases, which require that the index be
--	 * up-to-date to avoid the files getting overwritten with
--	 * conflict resolution files.
--	 */
-+	/* Handle "no merge" cases (see t/t1000-read-tree-m-3way.sh) */
- 	if (index) {
-+		/*
-+		 * If we've reached the "no merge" cases and we're merging
-+		 * a sparse directory, we may have an "edit/edit" conflict that
-+		 * can be resolved by individually merging directory contents.
-+		 */
-+		if (S_ISSPARSEDIR(index->ce_mode))
-+			return merged_sparse_dir(stages, 4, o);
++static void update_sparsity_for_prefix(const char *prefix,
++				       struct index_state *istate)
++{
++	int prefix_len = strlen(prefix);
++	struct strbuf ce_prefix = STRBUF_INIT;
 +
-+		/*
-+		 * If we're not merging a sparse directory, ensure the index is
-+		 * up-to-date to avoid files getting overwritten with conflict
-+		 * resolution files
-+		 */
- 		if (verify_uptodate(index, o))
- 			return -1;
++	if (!istate->sparse_index)
++		return;
++
++	while (prefix_len > 0 && prefix[prefix_len - 1] == '/')
++		prefix_len--;
++
++	if (prefix_len <= 0)
++		BUG("Invalid prefix passed to update_sparsity_for_prefix");
++
++	strbuf_grow(&ce_prefix, prefix_len + 1);
++	strbuf_add(&ce_prefix, prefix, prefix_len);
++	strbuf_addch(&ce_prefix, '/');
++
++	/*
++	 * If the prefix points to a sparse directory or a path inside a sparse
++	 * directory, the index should be expanded. This is accomplished in one
++	 * of two ways:
++	 * - if the prefix is inside a sparse directory, it will be expanded by
++	 *   the 'ensure_full_index(...)' call in 'index_name_pos(...)'.
++	 * - if the prefix matches an existing sparse directory entry,
++	 *   'index_name_pos(...)' will return its index position, triggering
++	 *   the 'ensure_full_index(...)' below.
++	 */
++	if (!path_in_cone_mode_sparse_checkout(ce_prefix.buf, istate) &&
++	    index_name_pos(istate, ce_prefix.buf, ce_prefix.len) >= 0)
++		ensure_full_index(istate);
++
++	strbuf_release(&ce_prefix);
++}
+ 
+ static int verify_absent(const struct cache_entry *,
+ 			 enum unpack_trees_error_types,
+@@ -1739,6 +1774,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		setup_standard_excludes(o->dir);
  	}
+ 
++	if (o->prefix)
++		update_sparsity_for_prefix(o->prefix, o->src_index);
++
+ 	if (!core_apply_sparse_checkout || !o->update)
+ 		o->skip_sparse_checkout = 1;
+ 	if (!o->skip_sparse_checkout && !o->pl) {
 -- 
 gitgitgadget
+
