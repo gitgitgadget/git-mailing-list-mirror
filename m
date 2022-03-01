@@ -2,195 +2,497 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04034C433EF
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 02:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 925B6C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 02:57:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231346AbiCACtP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 21:49:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57750 "EHLO
+        id S231436AbiCAC5y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 21:57:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231316AbiCACtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 21:49:14 -0500
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 632B24615A
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 18:48:34 -0800 (PST)
-Received: by mail-il1-x136.google.com with SMTP id 9so11536729ily.11
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 18:48:34 -0800 (PST)
+        with ESMTP id S230498AbiCAC5x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 21:57:53 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B30C506D2
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 18:57:12 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id p15so28698820ejc.7
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 18:57:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=M5bHeff1baEwP3J78WKwUudfyTPMpLHBTPASIBruWno=;
-        b=exn+kGVV+Qk/ffF24QKjNgTUNvIbFuycMhC5yxLvkUvR/EKf7H4lhB4h842E794l6v
-         PaVVLnFt8pS83OlZk/1M2E/5ELavEyYaO4hf34gzkk6aam6yIjN724TiNrsBnvW+DwXL
-         H7pezvOQH12CcBPOwkifRPwuBo4Qrcw83UOaPCJ+8OaVoqjwA6ypxHswQokEoPfKy2ob
-         /6BYm9dVvO0OSZMlI13LxGAtmTOYe6TVbD7Stj03zzWFqaN2k+xU8LfT0vEBThmVKd1o
-         835jXFDMys72iHKlSpej5nR7iFOMdXC81jovpEd6lqHx1ynNWQn4Gd8bdpNLk+fRBlhj
-         kk+w==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Ah9+QbwvM0C2k5yZ4lUuWqHfV/M3Xfv64Yr7b8fth2k=;
+        b=bxzyqv4pagqFLOn5nKt5j5E3Eib9uKsnTN+/NAIzTnKjU//Kr7nLp6aQAUUkIGoXF5
+         druPYOgDgDd+yg2Ym4wy98IWR0XW/igsQzrascpggu57ODsCL/l3iLXqqMzIf/ggI1oa
+         kLZVmZMJS/C7GgvqDHGTaTKIXYU36Wl0QflLC1zfPQEAViI3k9+zMV3HON1UH8AEzyOg
+         toiEfGiK/hnmDLtK1UsY8RuDVDmSLGfy5KI30+sPjgrQejZYeoc15WFqKpOueyKi6sQu
+         Tcd6CSagFOV0BH/cAXojbBhOkN2cMjqC4+2NzgxRKNqN5DyqAfzs218nlL2qWDJYpBZF
+         5ZtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=M5bHeff1baEwP3J78WKwUudfyTPMpLHBTPASIBruWno=;
-        b=D0Mjuz5RlM/BQZ0OQ5oUXrw3ioK5RPWnZe4G6OLIAXuiYxTvIEieyBEvpG8PDj82ny
-         0hXxEiJ9Yi+mrQN2pdboYqBHXqPJ2+iBCbM1vCiDfea8zn2eGHLC0k18KvuZKR0hcJ/I
-         tIPHDBXaJ20xvWOTayAQ++flz10aan28hT1TgxODSUbYYcKbBYN0lJ3b0PdtgDEUjaLj
-         4wEeNtJ1d2BRy4nxPz+tZhKpJ7TbFrpNy6xE55mZubxB/frSxN/lmHiMADZ/YAi3BPdo
-         +9VjE2riIwKklCOxDQIHEi2Ogx9JPgN1K8S7ltOTB1OzZSHvKI3DaYab7TpRYWkh6kSh
-         h3zQ==
-X-Gm-Message-State: AOAM530JPSZowqwL5nt1TAozsNTgdld4dmJhu3OmDPptR58mnx4J0QFR
-        nlA5FPIrXyyWJN1y0xxvuv6W24ly/Z1JHKWE
-X-Google-Smtp-Source: ABdhPJw98VxzDPCbgmOJUw/yrWXK1GHNPrntHRWqJRwS6OYqt3vPXm0ve1rWdIe26PM/TjYSS0VwlA==
-X-Received: by 2002:a05:6e02:1746:b0:2c2:8a1f:8ca6 with SMTP id y6-20020a056e02174600b002c28a1f8ca6mr20515924ill.178.1646102913669;
-        Mon, 28 Feb 2022 18:48:33 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o12-20020a92d38c000000b002c25f9905fasm7111456ilo.57.2022.02.28.18.48.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 18:48:33 -0800 (PST)
-Date:   Mon, 28 Feb 2022 21:48:32 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, larsxschneider@gmail.com,
-        peff@peff.net, tytso@mit.edu
-Subject: Re: [PATCH 08/17] builtin/pack-objects.c: --cruft without expiration
-Message-ID: <Yh2JgPzR4Tg3PmNL@nand.local>
-References: <cover.1638224692.git.me@ttaylorr.com>
- <66165917a4660f63ce60b820d178d52a51304d20.1638224692.git.me@ttaylorr.com>
- <b3a30e27-7821-1fcb-bacc-07a6d2b3df76@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Ah9+QbwvM0C2k5yZ4lUuWqHfV/M3Xfv64Yr7b8fth2k=;
+        b=4siv2lalyLXKkKyRXHeR0hnIGu/0gTwMuyfXJIrMcsqBDCfxWLm1uzEAWOQ/g+RHqh
+         KfS6RjErLWyGOv2+9HHHSAAXY6W9fdFz0ktD2pjdP4bgGsk0X/c9mZ1+ePGt9lTRfzWX
+         mDomsLHJcyRfZWz86QMURJId1vkCJKw6buzpskROESO/odCNXgt5r/CEsgV/RiyDguAU
+         YGm1yDVPmvwKszkrXyDBiBjKLcRIWgpmN2pZ5Puq6VHZvqTtmLwy0UV4eKaJ6kMhDhP7
+         vseVacit8tRPnzfqrAQtsPNuunTv7mampJFDBa5DMq9EDKTM4DJW5JrDhrYS6FwEwhbK
+         LhGA==
+X-Gm-Message-State: AOAM531/HD1IkrfmYH02zWmBuyGh2OlA31wbpl5hh/aGtrwLn7CyScfA
+        b3lADCP0fsE8/ChbXQZCbFAwT6gg9x/0I1AHJKVXo6jOY0I6mw==
+X-Google-Smtp-Source: ABdhPJy38MEan9qLgNyJahY3Md+siYb/CaCdyokJCQWlFCwpGv8Mb4Ym1ZLlzhZf7nb1pbXNlBR5yLS6JrkXrhgdSfs=
+X-Received: by 2002:a17:906:7e09:b0:6d6:80f5:e00f with SMTP id
+ e9-20020a1709067e0900b006d680f5e00fmr9171255ejr.192.1646103430337; Mon, 28
+ Feb 2022 18:57:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <b3a30e27-7821-1fcb-bacc-07a6d2b3df76@gmail.com>
+References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
+ <9fdcab038b2962b7f954363e32d04591476cf219.1645640717.git.gitgitgadget@gmail.com>
+ <CABPp-BHihsVQZWTE4ppOcFyk8-eVa+zZ1MhkssiTByxjPO4kcg@mail.gmail.com> <dc47f12b-8724-22ef-ed2c-096badfafd76@github.com>
+In-Reply-To: <dc47f12b-8724-22ef-ed2c-096badfafd76@github.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 28 Feb 2022 18:56:58 -0800
+Message-ID: <CABPp-BH4jf6z5umYpWB_A+gokUtDkjkiLOahB3FKed_Pe4sZ2g@mail.gmail.com>
+Subject: Re: [PATCH 6/7] read-tree: make two-way merge sparse-aware
+To:     Victoria Dye <vdye@github.com>
+Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 06, 2021 at 04:44:31PM -0500, Derrick Stolee wrote:
-> On 11/29/2021 5:25 PM, Taylor Blau wrote:
-> > Generating a non-expiring cruft packs works as follows:
+On Mon, Feb 28, 2022 at 10:04 AM Victoria Dye <vdye@github.com> wrote:
 >
-> I had trouble parsing the documentation changes below, so I came back
-> to this commit message to see if that helps.
+> Elijah Newren wrote:
+> > On Wed, Feb 23, 2022 at 4:09 PM Victoria Dye via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> >>
+> >> From: Victoria Dye <vdye@github.com>
+> >>
+> >> Enable two-way merge with 'git read-tree' without expanding the sparse
+> >> index. When in a sparse index, a two-way merge will trivially succeed =
+as
+> >> long as there are not changes to the same sparse directory in multiple=
+ trees
+> >> (i.e., sparse directory-level "edit-edit" conflicts). If there are suc=
+h
+> >> conflicts, the merge will fail despite the possibility that individual=
+ files
+> >> could merge cleanly.
+> >>
+> >> In order to resolve these "edit-edit" conflicts, "conflicted" sparse
+> >> directories are - rather than rejected - merged by traversing their
+> >> associated trees by OID. For each child of the sparse directory:
+> >>
+> >> 1. Files are merged as normal (see Documentation/git-read-tree.txt for
+> >>    details).
+> >> 2. Subdirectories are treated as sparse directories and merged in
+> >>    'twoway_merge'. If there are no conflicts, they are merged accordin=
+g to
+> >>    the rules in Documentation/git-read-tree.txt; otherwise, the subdir=
+ectory
+> >>    is recursively traversed and merged.
+> >>
+> >> This process allows sparse directories to be individually merged at th=
+e
+> >> necessary depth *without* expanding a full index.
+> >
+> > The idea of merging directory-level entries turns out to be
+> > problematic _if_ rename detection is involved, but read-tree-style
+> > merges are only trivial merges that ignore rename detection.  As such,
+> > this idea is perfectly reasonable, and is a good way to go.  Nicely
+> > done.
+> >
+> > Mostly the patch looks good.  There's one thing I'm wondering about, th=
+ough...
+> >
+> >>
+> >> Signed-off-by: Victoria Dye <vdye@github.com>
+> >> ---
+> >>  builtin/read-tree.c                      |  5 --
+> >>  t/t1092-sparse-checkout-compatibility.sh |  3 +-
+> >>  unpack-trees.c                           | 75 +++++++++++++++++++++++=
++
+> >>  3 files changed, 77 insertions(+), 6 deletions(-)
+> >>
+> >> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+> >> index a7b7f822281..5a421de2629 100644
+> >> --- a/builtin/read-tree.c
+> >> +++ b/builtin/read-tree.c
+> >> @@ -225,11 +225,6 @@ int cmd_read_tree(int argc, const char **argv, co=
+nst char *cmd_prefix)
+> >>                         opts.fn =3D opts.prefix ? bind_merge : oneway_=
+merge;
+> >>                         break;
+> >>                 case 2:
+> >> -                       /*
+> >> -                        * TODO: update twoway_merge to handle edit/ed=
+it conflicts in
+> >> -                        * sparse directories.
+> >> -                        */
+> >> -                       ensure_full_index(&the_index);
+> >>                         opts.fn =3D twoway_merge;
+> >>                         opts.initial_checkout =3D is_cache_unborn();
+> >>                         break;
+> >> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse=
+-checkout-compatibility.sh
+> >> index a404be0a10f..d6f19682d65 100755
+> >> --- a/t/t1092-sparse-checkout-compatibility.sh
+> >> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> >> @@ -1411,7 +1411,8 @@ test_expect_success 'sparse index is not expande=
+d: read-tree' '
+> >>         init_repos &&
+> >>
+> >>         ensure_not_expanded checkout -b test-branch update-folder1 &&
+> >> -       for MERGE_TREES in "update-folder2"
+> >> +       for MERGE_TREES in "update-folder2" \
+> >> +                          "base update-folder2"
+> >>         do
+> >>                 ensure_not_expanded read-tree -mu $MERGE_TREES &&
+> >>                 ensure_not_expanded reset --hard HEAD || return 1
+> >> diff --git a/unpack-trees.c b/unpack-trees.c
+> >> index dba122a02bb..a4ace53904e 100644
+> >> --- a/unpack-trees.c
+> >> +++ b/unpack-trees.c
+> >> @@ -1360,6 +1360,42 @@ static int is_sparse_directory_entry(struct cac=
+he_entry *ce,
+> >>         return sparse_dir_matches_path(ce, info, name);
+> >>  }
+> >>
+> >> +static int unpack_sparse_callback(int n, unsigned long mask, unsigned=
+ long dirmask, struct name_entry *names, struct traverse_info *info)
+> >> +{
+> >> +       struct cache_entry *src[MAX_UNPACK_TREES + 1] =3D { NULL, };
+> >> +       struct unpack_trees_options *o =3D info->data;
+> >> +       int ret;
+> >> +
+> >> +       assert(o->merge);
+> >> +
+> >> +       /*
+> >> +        * Unlike in 'unpack_callback', where src[0] is derived from t=
+he index when
+> >> +        * merging, src[0] is a transient cache entry derived from the=
+ first tree
+> >> +        * provided. Create the temporary entry as if it came from a n=
+on-sparse index.
+> >> +        */
+> >> +       if (!is_null_oid(&names[0].oid)) {
+> >> +               src[0] =3D create_ce_entry(info, &names[0], 0,
+> >> +                                       &o->result, 1,
+> >> +                                       dirmask & (1ul << 0));
+> >> +               src[0]->ce_flags |=3D (CE_SKIP_WORKTREE | CE_NEW_SKIP_=
+WORKTREE);
+> >> +       }
+> >> +
+> >> +       /*
+> >> +        * 'unpack_single_entry' assumes that src[0] is derived direct=
+ly from
+> >> +        * the index, rather than from an entry in 'names'. This is *n=
+ot* true when
+> >> +        * merging a sparse directory, in which case names[0] is the "=
+index" source
+> >> +        * entry. To match the expectations of 'unpack_single_entry', =
+shift past the
+> >> +        * "index" tree (i.e., names[0]) and adjust 'names', 'n', 'mas=
+k', and
+> >> +        * 'dirmask' accordingly.
+> >> +        */
+> >> +       ret =3D unpack_single_entry(n - 1, mask >> 1, dirmask >> 1, sr=
+c, names + 1, info);
+> >
+> > So, you're passing one less entry to unpack_single_entry() when you've
+> > traversed into a sparse directory...won't the traversal at the next
+> > subdirectory deeper then also pass one less entry to
+> > unpack_single_entry(), so after recursing a directory or two, you only
+> > have one directory left and it won't conflict with anything so it just
+> > uses that remaining tree?  (Or maybe it passes the wrong number of
+> > arguments into twoway_merge()?)  Did I miss something in the logic
+> > somewhere that avoids that issue?  It'd be nice to test it out, which
+> > brings me to...
+> >
 >
-> >   - Callers provide a list of every pack they know about, and indicate
-> >     which packs are about to be removed.
+> The answer itself is pretty straightforward (`merged_sparse_dir(...)` is
+> called with `n =3D 3`, which is +1 to the `n` propagated throughout
+> `unpack_trees(...)` for a two-way merge), but I'd like to take a more
+> in-depth approach answering "why" in case it helps with review and/or any=
+one
+> reading along.
 >
-> This corresponds to the list over stdin.
+> Suppose you are performing a two-way merge, e.g. with the command `git
+> read-tree my-base other-commit`. The repo contains the following files:
 >
-> >   - All packs which are going to be removed (we'll call these the
-> >     redundant ones) are marked as kept in-core, as well as any packs
-> >     that `pack-objects` found but the caller did not specify.
+> .
+> =E2=94=9C=E2=94=80=E2=94=80 bar
+> =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 f1
+> =E2=94=9C=E2=94=80=E2=94=80 baz
+> =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 deep
+> =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 a
+> =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 f2
+> =E2=94=9C=E2=94=80=E2=94=80 foo
+> =E2=94=94=E2=94=80=E2=94=80 foo1
 >
-> Ok, so as an implementation detail we mark these as keep packs.
+> Additionally:
+>
+> 1. 'other-commit' is identical to the index
+> 2. 'baz/' is a sparse directory
+>
+> With those assumptions in mind, below are excerpts of the execution path =
+for
+> merging a file, a non-sparse directory, and a sparse directory (with valu=
+es
+> for arguments indicated where appropriate):
+>
+> MERGING FILE 'foo'
+> ------------------
+> unpack_trees(len =3D 2, t =3D [my-base, other-commit], ...)
+> -> traverse_trees(..., n =3D 2, t =3D [my-base, other-commit], ...)
+>   -> unpack_callback(n =3D 2, ..., names =3D [my-base:foo, other-commit:f=
+oo], ...)
+>     -> unpack_single_entry(n =3D 2, ..., src =3D [INDEX:foo, NULL, NULL],
+>                            names =3D [my-base:foo, other-commit:foo], ...=
+)
+>       -> call_unpack_fn(src =3D [INDEX:foo, my-base:foo, other-commit:foo=
+], ...)
+>         -> twoway_merge(src =3D [INDEX:foo, my-base:foo, other-commit:foo=
+] ...)
+>   -> unpack_callback(n =3D 2, ..., names =3D [my-base:foo1, other-commit:=
+foo1], ...)
+>     ...
+>
+> MERGING NON-SPARSE DIRECTORY 'bar/'
+> ----------------------------------
+> unpack_trees(len =3D 2, t =3D [my-base, other-commit], ...)
+> -> traverse_trees(..., n =3D 2, t =3D [my-base, other-commit], ...)
+>   -> unpack_callback(n =3D 2, ..., names =3D [my-base:bar/, other-commit:=
+bar/], ...)
+>     -> unpack_single_entry(n =3D 2, ..., src =3D [NULL, NULL, NULL],
+>                            names =3D [my-base:bar/, other-commit:bar/], .=
+..)
+>     -> traverse_trees_recursive(n =3D 2, ..., names =3D [my-base:bar/, ot=
+her-commit:bar/], ...)
+>       -> traverse_trees(..., n =3D 2, t =3D [my-base, other-commit], ...)
+>         -> unpack_callback(n =3D 2, ..., names =3D [my-base:bar/f1, other=
+-commit:bar/f1], ...)
+>           ...
+>
+> MERGING SPARSE DIRECTORY 'baz/'
+> ------------------------------
+> unpack_trees(len =3D 2, t =3D [my-base, other-commit], ...)
+> -> traverse_trees(..., n =3D 2, t =3D [my-base, other-commit], ...)
+>   -> unpack_callback(n =3D 2, ..., names =3D [my-base:baz/, other-commit:=
+baz/], ...)
+>     -> unpack_single_entry(n =3D 2, ..., src =3D [INDEX:baz/, NULL, NULL]=
+,
+>                            names =3D [my-base:baz/, other-commit:baz/], .=
+..)
+>       -> call_unpack_fn(src =3D [INDEX:baz/, my-base:baz/, other-commit:b=
+az/], ...)
+>         -> twoway_merge(src =3D [INDEX:baz/, my-base:baz/, other-commit:b=
+az/] ...)
+>   -> unpack_callback(n =3D 2, ..., names =3D [my-base:foo, other-commit:f=
+oo], ...)
+>     ...
+>
+> Note that, throughout this process, `n =3D 2` despite the fact that
+> `twoway_merge` is actually called with *three* source entries, because
+> `src[0]` is the traversed entry *as it appears in the index*. Additionall=
+y,
+> because there are no differences between the index and 'other-commit',
+> 'baz/' is merged without conflict in basically the same way as 'foo'.
+>
+> Now suppose you update the the index to differ from 'other-commit':
+>
+> 1. 'baz/deep/a' is different between the index and 'my-base', same betwee=
+n
+>    'my-base' and 'other-commit'
+> 2. 'baz/f2' is different between 'my-base' and 'other-commit', same betwe=
+en
+>    the index and 'my-base'
+>
+> Before this patch, `twoway_merge` would reject the merge entirely because
+> the sparse directory 'baz/' has three different tree OIDs between the ind=
+ex,
+> 'my-base' , and 'other-commit'. However, these changes *should* be mergea=
+ble
+> as long as you merge 'baz/deep/' separately from 'baz/f2'.
+>
+> The way we do this is by traversing the 'baz/' index entry the same way w=
+e
+> traverse 'my-base' and 'other-commit' so we can circumvent populating
+> `src[0]` from the index. The execution path looks something like this (wh=
+en
+> started at the sparse directory's `twoway_merge`):
+>
+> MERGING CONFLICT IN SPARSE 'baz/'
+> ---------------------------------
+> twoway_merge(src =3D [INDEX:baz/, my-base:baz/, other-commit:baz/] ...)
+> -> merged_sparse_dir(src =3D [INDEX:baz/, my-base:baz/, other-commit:baz/=
+], n =3D 3, ...)
+>   -> traverse_trees(..., n =3D 3, t =3D [INDEX^{tree}, my-base, other-com=
+mit], ...)
+>     -> unpack_sparse_callback(n =3D 3, ...,
+>                               names =3D [INDEX^{tree}:baz/deep/, my-base:=
+baz/deep/, other-commit:baz/deep/])
+>       -> unpack_single_entry(n =3D 2, ..., src =3D [INDEX^{tree}:baz/deep=
+/, NULL, NULL],
+>                              names =3D [my-base:baz/deep/, other-commit:b=
+az/deep/], ...)
+>         -> call_unpack_fn(src =3D [INDEX^{tree}:baz/deep/, my-base:baz/de=
+ep/, other-commit:baz/deep/], ...)
+>           -> twoway_merge(src =3D [INDEX^{tree}:baz/deep/, my-base:baz/de=
+ep/, other-commit:baz/deep/] ...)
+>     -> unpack_sparse_callback(n =3D 3, ...,
+>                               names =3D [INDEX^{tree}:baz/f2, my-base:baz=
+/f2, other-commit:baz/f2])
+>       -> unpack_single_entry(n =3D 2, ..., src =3D [INDEX^{tree}:baz/f2, =
+NULL, NULL],
+>                              names =3D [my-base:baz/f2, other-commit:baz/=
+f2], ...)
+>         -> call_unpack_fn(src =3D [INDEX^{tree}:baz/f2, my-base:baz/f2, o=
+ther-commit:baz/f2], ...)
+>           -> twoway_merge(src =3D [INDEX^{tree}:baz/f2, my-base:baz/f2, o=
+ther-commit:baz/f2] ...)
+>
+> Here, `unpack_sparse_callback` transforms its inputs (from `traverse_tree=
+s`)
+> into the those needed by `unpack_single_entry`. Unlike `unpack_callback`,
+> which extracts its `src[0]` from the index, `unpack_sparse_callback` crea=
+tes
+> `src[0]` from the first tree in `names`. Then, because `unpack_single_ent=
+ry`
+> expects `n =3D 2` with a populated `src[0]` and the two remaining trees i=
+n
+> `names`, it subtracts 1 from its value of `n` and shifts `names` (along w=
+ith
+> other arguments like `mask` and `dirmask`). As you can see, this could
+> continue recursing without losing trees, since the first tree in the
+> `merged_sparse_dir` path is basically storage for the index as the traver=
+sal
+> continues.
+>
+> Please let me know if I can clarify anything - this explanation more-or-l=
+ess
+> corresponds to how I understood the problem while solving it, but it's st=
+ill
+> pretty dense and there could be details I'm not conveying well or taking =
+for
+> granted.
 
+Thanks for taking the time to explain this.  For some reason, I tend
+to get confused by the extra index entry.  I blame the fact that I
+mostly only ever looked at threeway_merge() (since it was the one used
+by merge-recursive.c), and there we get to assume that the HEAD tree
+is equal to the index always, so there really isn't a separate fourth
+argument from the index to worry about.  So the combination of having
+to look at twoway_merge() as well as the special index entry for some
+reason was throwing me a bit.  This clears it up nicely.
 
-> >     These packs are presumed to have entered the repository between
-> >     the caller collecting packs and invoking `pack-objects`. Since we
-> >     do not want to include objects in these packs (because we don't know
-> >     which of their objects are or aren't reachable), these are also
-> >     marked as kept in-core.
->
-> Here, "are presumed" is doing a lot of work. Theoretically, there could
-> be three categories:
->
-> 1. This pack was just repacked and will be removed because all of its
->    objects were placed into new objects.
->
-> 2. Either this pack was repacked and contains important reachable objects
->    OR we did a repack of reachable objects and this pack contained some
->    extra, unreachable objects.
->
-> 3. This pack was added to the repository while creating those repacked
->    packs from category 2, so we don't know if things are reachable or
->    not.
->
-> So, the packs that we discover on-disk but are not specified over stdin
-> are in this third category, but these are grouped with category 1 as we
-> will treat them the same.
+(Once upon a time we only claimed but didn't enforce that index was
+equal to the HEAD tree for the three way merging, but that was an
+abject failure; if you're curious about it, see the fun commit message
+at 9822175d2b ("Ensure index matches head before invoking merge
+machinery, round N", 2019-08-17) explaining it.)
 
-Ah, I think I caused some unintentional confusion by attaching "are
-presumed" to "these packs", when it wasn't clear that "these packs"
-meant "ones that aren't listed over stdin".
-
-Since the caller is supposed to provide a complete picture of the
-repository as they see it, any packs known to the pack-objects process
-that aren't mentioned over stdin are assumed to have entered the
-repository after the caller was spun up.
-
-I'll clarify this section of the commit message, since I agree it is
-unnecessarily confusing.
-
-> >   - Then, we enumerate all objects in the repository, and add them to
-> >     our packing list if they do not appear in an in-core kept pack.
+> >> +
+> >> +       if (src[0])
+> >> +               discard_cache_entry(src[0]);
+> >> +
+> >> +       return ret >=3D 0 ? mask : -1;
+> >> +}
+> >> +
+> >>  /*
+> >>   * Note that traverse_by_cache_tree() duplicates some logic in this f=
+unction
+> >>   * without actually calling it. If you change the logic here you may =
+need to
+> >> @@ -2464,6 +2500,37 @@ static int merged_entry(const struct cache_entr=
+y *ce,
+> >>         return 1;
+> >>  }
+> >>
+> >> +static int merged_sparse_dir(const struct cache_entry * const *src, i=
+nt n,
+> >> +                            struct unpack_trees_options *o)
+> >> +{
+> >> +       struct tree_desc t[MAX_UNPACK_TREES + 1];
+> >> +       void * tree_bufs[MAX_UNPACK_TREES + 1];
+> >> +       struct traverse_info info;
+> >> +       int i, ret;
+> >> +
+> >> +       /*
+> >> +        * Create the tree traversal information for traversing into *=
+only* the
+> >> +        * sparse directory.
+> >> +        */
+> >> +       setup_traverse_info(&info, src[0]->name);
+> >> +       info.fn =3D unpack_sparse_callback;
+> >> +       info.data =3D o;
+> >> +       info.show_all_errors =3D o->show_all_errors;
+> >> +       info.pathspec =3D o->pathspec;
+> >> +
+> >> +       /* Get the tree descriptors of the sparse directory in each of=
+ the merging trees */
+> >> +       for (i =3D 0; i < n; i++)
+> >> +               tree_bufs[i] =3D fill_tree_descriptor(o->src_index->re=
+po, &t[i],
+> >> +                                                   src[i] && !is_null=
+_oid(&src[i]->oid) ? &src[i]->oid : NULL);
+> >> +
+> >> +       ret =3D traverse_trees(o->src_index, n, t, &info);
+> >> +
+> >> +       for (i =3D 0; i < n; i++)
+> >> +               free(tree_bufs[i]);
+> >> +
+> >> +       return ret;
+> >> +}
+> >> +
+> >>  static int deleted_entry(const struct cache_entry *ce,
+> >>                          const struct cache_entry *old,
+> >>                          struct unpack_trees_options *o)
+> >> @@ -2734,6 +2801,14 @@ int twoway_merge(const struct cache_entry * con=
+st *src,
+> >>                          * reject the merge instead.
+> >>                          */
+> >>                         return merged_entry(newtree, current, o);
+> >> +               } else if (S_ISSPARSEDIR(current->ce_mode)) {
+> >> +                       /*
+> >> +                        * The sparse directories differ, but we don't=
+ know whether that's
+> >> +                        * because of two different files in the direc=
+tory being modified
+> >> +                        * (can be trivially merged) or if there is a =
+real file conflict.
+> >> +                        * Merge the sparse directory by OID to compar=
+e file-by-file.
+> >> +                        */
+> >> +                       return merged_sparse_dir(src, 3, o);
+> >>                 } else
+> >>                         return reject_merge(current, o);
+> >>         }
+> >> --
+> >> gitgitgadget
+> >
+> > It would be nice to have a couple of tests.  In particular, one
+> > designed to see what happens when we need to traverse into
+> > subdirectories of sparse directory entries and paths different between
+> > the two trees being merged.
 >
-> Here, we are looking at all of the objects in category 2 as well as
-> loose objects.
+> There were supposed to be "ensure_not_expanded" tests added in this patch=
+,
+> but they ended up in [7/7] - I'll move them back in my next version.
 
-We're enumerating any objects that aren't in packs which are marked as
-kept in-core (along with loose objects which don't appear in packs that
-are marked as kept in-core).
+Awesome.
 
-The in-core kept packs are ones that the caller (and I find it's helpful
-to read "the caller" as "git repack") has marked as "will delete". So
-the non in-core pack(s) that we're looking at here contain all reachable
-objects (e.g., like you would get with `git repack -A`).
+> Additionally, the 't1092' test 'read-tree --merge with edit/edit conflict=
+s
+> in sparse directories' contains examples of merges that require recursing
+> into sparse directories (added back in [3/7] to establish expected behavi=
+or
+> before changing `read-tree`).
 
-> > +	Packs unreachable objects into a separate "cruft" pack, denoted
-> > +	by the existence of a `.mtimes` file. Pack names provided over
-> > +	stdin indicate which packs will remain after a `git repack`.
-> > +	Pack names prefixed with a `-` indicate those which will be
-> > +	removed. (...)
->
-> This description is too tied to 'git repack'. Can we describe the
-> input using terms independent of the 'git repack' operation? I need
-> to keep reading.
->
-> > (...) The contents of the cruft pack are all objects not
-> > +	contained in the surviving packs specified by `--keep-pack`)
->
-> Now you use --keep-pack, which is a way of specifying a pack as
-> "in-core keep" which was not in your commit message. Here, we also
-> don't link the packs over stdin to the concept of keep packs.
-
-The mention of `--keep-pack` is a mistake left over from a previous
-version; thanks for spotting. Here's a version of the first paragraph
-from this piece of documentation which is less tied to `git repack` and
-hopefully a little clearer:
-
-    --cruft::
-            Packs unreachable objects into a separate "cruft" pack, denoted
-            by the existence of a `.mtimes` file. Typically used by `git
-            repack --cruft`. Callers provide a list of pack names and
-            indicate which packs will remain in the repository, along with
-            which packs will be deleted (indicated by the `-` prefix). The
-            contents of the cruft pack are all objects not contained in the
-            surviving packs which have not exceeded the grace period (see
-            `--cruft-expiration` below), or which have exceeded the grace
-            period, but are reachable from an other object which hasn't.
-
-> > +	which have not exceeded the grace period (see
-> > +	`--cruft-expiration` below), or which have exceeded the grace
-> > +	period, but are reachable from an other object which hasn't.
->
-> And now we think about the grace period! There is so much going on
-> that I need to break it down to understand.
->
->   An object is _excluded_ from the new cruft pack if
->
->   1. It is reachable from at least one reference.
->   2. It is in a pack from stdin prefixed with "-"
->   3. It is in a pack specified by `--keep-pack`
->   4. It is in an existing cruft pack and the .mtimes file states
->      that its mtime is at least as recent as the time specified by
->      the --cruft-expiration option.
->
-> Breaking it down into a list like this helps me, at least. I'm not
-> sure what the best way would look like.
-
-Given some expiration T, cruft packs contain all unreachable objects
-which are newer than T, along with any cruft objects (i.e., those not
-directly reachable from any ref) which are older than T, but reachable
-from another cruft object newer than T.
-
-Thanks,
-Taylor
+Any chance you could reference the testcase from 3/7 in your commit
+message just so other reviewers or our future selves can find it more
+easily?
