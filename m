@@ -2,88 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE0DDC433FE
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 20:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDD7EC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 21:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238307AbiCAUe3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 15:34:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47240 "EHLO
+        id S238387AbiCAVCc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 16:02:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238142AbiCAUe0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 15:34:26 -0500
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 982A13A5D9
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 12:33:44 -0800 (PST)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C22818DF51;
-        Tue,  1 Mar 2022 15:33:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=r+nhBHb4V24zW//DAXzBdbvo7o/bVrPEv86Dmy
-        Gy7yE=; b=Lom5KBqQCgV18PAHP8zNAsTVfVbxzV5jp8AwTTEJFMOCAaSobGuWVR
-        KQHEXKdo+HJfaUoxpQBz/24VwaIpuuDrEEX9OekjVWig7RpM/M0kh1jgubWz8e6U
-        /uO+gTnsEvkQjOUmHTdCyBlS1cLouS/SipH9+zwJwXc9MQ3KLQhXI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4481618DF50;
-        Tue,  1 Mar 2022 15:33:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S233639AbiCAVCc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 16:02:32 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97B097086C
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 13:01:50 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id B771E3F4802;
+        Tue,  1 Mar 2022 16:01:49 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7A18A18DF4F;
-        Tue,  1 Mar 2022 15:33:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v3 09/10] fetch: fetch unpopulated, changed submodules
-References: <20220215172318.73533-1-chooglen@google.com>
-        <20220224100842.95827-1-chooglen@google.com>
-        <20220224100842.95827-10-chooglen@google.com>
-        <xmqqr17p5ujf.fsf@gitster.g>
-        <nycvar.QRO.7.76.6.2203012039080.11118@tvgsbejvaqbjf.bet>
-Date:   Tue, 01 Mar 2022 12:33:39 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2203012039080.11118@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Tue, 1 Mar 2022 21:24:15 +0100
-        (CET)")
-Message-ID: <xmqq35k1pg4c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 5DE843F4808;
+        Tue,  1 Mar 2022 16:01:49 -0500 (EST)
+Subject: Re: [PATCH 07/23] fsmonitor-settings: virtual repos are incompatible
+ with FSMonitor
+To:     Derrick Stolee <derrickstolee@github.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff Hostetler <jeffhost@microsoft.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
+ <4e856d60e385d64158f17ec1226f97eb323bc55e.1644940774.git.gitgitgadget@gmail.com>
+ <05747ff2-f839-5408-e25b-698b147ef158@github.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <49d981a6-be6e-c995-160f-593d3ef3cf27@jeffhostetler.com>
+Date:   Tue, 1 Mar 2022 16:01:48 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E1487EE0-999E-11EC-A10F-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+In-Reply-To: <05747ff2-f839-5408-e25b-698b147ef158@github.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hi,
->
-> On Sat, 26 Feb 2022, Junio C Hamano wrote:
->
->> A few tests added by this patch have been failing on one specific
->> job (linux-gcc ubuntu-latest) at GitHub CI.
->>
->> https://github.com/git/git/runs/5341052811?check_suite_focus=true#step:5:3968
->> https://github.com/git/git/runs/5343133021?check_suite_focus=true#step:4:5520
->>
->>     Side note: you may need to be logged in to GitHub to view them.
->>     These two use different versions of CI to show the test traces;
->>     in the latter you may have to click on right-facing rectangle on
->>     the line with label "5520" to see the breakage.
->>
->> I think there is some baked-in assumption in the failing test what
->> the name of the initial branch by default is, which may be the reason
->> why this particular job fails while others don't.
->>
->> Can you take a look at it?
->
-> The log says this:
-> ...
-> At least that's how _I_ tried to address similar issues in the test suite
-> in the past.
 
-Yes, I had a squashable fix/workaround queued since last night.
+On 2/24/22 10:11 AM, Derrick Stolee wrote:
+> On 2/15/2022 10:59 AM, Jeff Hostetler via GitGitGadget wrote:
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Virtual repos, such as GVFS (aka VFS for Git), are incompatible
+>> with FSMonitor.
+> 
+> I would swap all of your "GVFS (aka VFS for Git)" for just
+> "VFS for Git".
+> 
+>> +/*
+>> + * GVFS (aka VFS for Git) is incompatible with FSMonitor.
+>> + *
+>> + * Granted, core Git does not know anything about GVFS and we
+>> + * shouldn't make assumptions about a downstream feature, but users
+>> + * can install both versions.  And this can lead to incorrect results
+>> + * from core Git commands.  So, without bringing in any of the GVFS
+>> + * code, do a simple config test for a published config setting.  (We
+>> + * do not look at the various *_TEST_* environment variables.)
+>> + */
+>> +static enum fsmonitor_reason is_virtual(struct repository *r)
+>> +{
+>> +	const char *const_str;
+>> +
+>> +	if (!repo_config_get_value(r, "core.virtualfilesystem", &const_str))
+>> +		return FSMONITOR_REASON_VIRTUAL;
+>> +
+>> +	return FSMONITOR_REASON_ZERO;
+>> +}
+> 
+> This reason seems to be specific to a config setting that only
+> exists in the microsoft/git fork. Perhaps this patch should remain
+> there.
+> 
+> However, there is also the discussion of vfsd going on, so something
+> similar might be necessary for that system. Junio also mentioned
+> wanting to collaborate on a common indicator that virtualization was
+> being used, so maybe we _should_ make core.virtualFilesystem a config
+> setting in the core Git project.
+> 
+> The reason for the incompatibility here is that VFS for Git has its
+> own filesystem watcher and Git gets updates from it via custom code
+> that is a precursor to this FS Monitor feature. I don't know if vfsd
+> has plans for a similar setup. (It would probably be best to fit
+> into the FS Monitor client/server model and use a different daemon
+> for those virtualized repos, but I don't know enough details to be
+> sure.)
+> 
+> CC'ing Jonathan Nieder for thoughts on this.
+
+I was wondering whether this should be upstream or just in our
+downstream forks, but I thought it better to include it so that
+we don't try to monitor a virtualized repo and not mislead the
+user.  It may be that we can correctly watch the repo and
+generate correct results, but without knowing any details of
+what the virtualization is doing behind the scenes, we would
+be making some unsafe assumptions.  And since Windows users often
+have multiple versions of Git installed (their CL tools and
+whatever their IDE installed), promoting this check to upstream
+felt important.
+
+WRT the ongoing "vfsd" effort, I'm not sure what that looks like
+yet and/or whether repos managed by "vfsd" have similar concerns.
+
+I'll rename the variables in my patch here to be "vfs4git" rather
+the generic "virtual".  This will avoid confusion later if another
+case needs to be added for "vfsd".  My code is Win32-specific and
+it is unclear it theirs will be Linux-only or cross-platform, so
+hopefully with the rename we can coexist sanely.
+
+Jeff
+
+
