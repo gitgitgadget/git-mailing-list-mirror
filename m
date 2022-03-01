@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1513C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 18:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C627C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 18:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237057AbiCASpH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 13:45:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56952 "EHLO
+        id S237108AbiCASpJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 13:45:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237035AbiCASox (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 13:44:53 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D959C5D1B7
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 10:43:45 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id i66so1821845wma.5
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 10:43:45 -0800 (PST)
+        with ESMTP id S237059AbiCASoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 13:44:54 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82D065D645
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 10:43:48 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id m42-20020a05600c3b2a00b00382ab337e14so600768wms.3
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 10:43:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=s2EOuiBEqM7u7pum9IZt5+l8da9mgIKwm8vheBUni5E=;
-        b=htTMEtGgmEV5L7TJwUqR63n9tXM/p/BSJ2O+wA2/dBkJW7wsug8xG8d7CDAfDYcTrT
-         yvFtIE/CmDTmHpERGl2Dw7OY1HNCD8Q2JDy4xDEnqv6x+CCd+SFiplPPFIB7KBMuMVkX
-         npeIy2fvgyDAP4Cj0y84cyEHSr2Ue3lMgCP0isvYHLvA5AORSlFGYsOhuTOKACK4/JLV
-         AnBXbBLYxokJk4HDy391FeZipVmWg6bnGDc1Ch5Kli2fxWnctEOd12yDOamz3ccm1Y0w
-         OxofkRA2YIs0l5BfDQxzV4AA2Y6Dk1u5hA1CEQMmGptNmqa47VjKyyhgKBzXUyPb0YzY
-         JitQ==
+        bh=s9ZsHzr8stBhqDrckg+BWrFd0IydVX8ZjQzZ1ZozFrI=;
+        b=iAzFxjtPa6fYMfQ7QmdC/RjSXdzpCCil/o3JcPWEk2b5yb80PZmf4PRnI2LuMWYArd
+         TNJTreKTNKYt4ENzJTCsCVebk7dy3DGVK59kKARab8XNHTnVEgZ42vwysRtqRGDq752e
+         VXQ30t9RiQCfcHFoP9iD2cvFEQlm0bNXjTPK90Kgw0yHSwe+ZjFKvWkB+fVab1e6CySF
+         cKX7aN2pYrAguHLrsqv46xUBPoxKW86Qhu6ntlxQoHgXgn3LoxSJeCS0J+XF3Xh0Oi72
+         o3cnmT+TJZBkAt9Tdi5mjIzq/ZszwJeBqyNeeYMe2EkDcGsoNmcQOArw2ji7Ei3fOjio
+         7YgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=s2EOuiBEqM7u7pum9IZt5+l8da9mgIKwm8vheBUni5E=;
-        b=76SrO7YePRC69eIrV48w3SRbHu11yPmH/txvJP6tJy2hyQ3h0vQaeGUMmIWu4vzcoj
-         LWoxBv2uMpVctJjDNA6+gnmzJuIiorcUvQiX6x3ZMiWEN5p9bqbqNmJKkG2soo3At4FP
-         EkJfPClyvDE8CIKbagYhHKcRz8OqPaKdmak5EeHAon4A2iGBOFxfd7NrsXeoFyLhQTwG
-         dkRKm7vWmog53LCDZc5mg8acw2TxyEO50KLxn6U30OBRSCZmck4rXGXRguTwcroTQosx
-         YQUYjPjhWrXiu+cXIhecbAEWQOezS+SxKSPvAeGnqz5+bQS+sheoC41PWxa89QTntRu1
-         ybaw==
-X-Gm-Message-State: AOAM530KlOaCNhT2ouyMNRjyvRDWjhlYN3MAh6PWOcD5SiikMHnjcO+f
-        gKO+YOFjj/VBMO1rC8WFLcR9pYq7HxI=
-X-Google-Smtp-Source: ABdhPJwSWKkkx6AGEq8YWQ4kujujdhLaJJKW6f0Wew6gKwT696+o8Oi2PYm6teI7TSOqD3b5Z3WVUw==
-X-Received: by 2002:a05:600c:4202:b0:382:a5d7:9ce5 with SMTP id x2-20020a05600c420200b00382a5d79ce5mr2038077wmh.45.1646160224178;
-        Tue, 01 Mar 2022 10:43:44 -0800 (PST)
+        bh=s9ZsHzr8stBhqDrckg+BWrFd0IydVX8ZjQzZ1ZozFrI=;
+        b=UObpX87uGXyy56S+zg6AJTqJ0dXPPEswfGrtn1eBLe7wPUozVBrJHDd4v4lX446+1M
+         bZA1i881It//F3rqH8/K4Yets2YqDBfj0Jj6knFx34AzjMOI8mkJNt5n8dsYqaIfM+Em
+         gDlttxa3Tio0YXFST/sjc+7GGRJL+BglKYIb3VTmUJkJDVE5NMoY1o6jGeSsUxkXJfSk
+         IC24F8gLcB28zlncbL8a04QMdmx6gews1Tsrwe+CkrVWO5baUMN8AwrKlwsyIaMWiJkV
+         ZfZs4hCuTuW/GpEmonCcwGbZGivHQuMsZl+lPsyU5Mr926zrgfce9Ncee1JhB6xzXgJW
+         PCzg==
+X-Gm-Message-State: AOAM531H4lrTWNa7XJph4ZMq6KB9Cx+BMCDhJ3nIm9BdP+R/OFLnHOM4
+        1CsrI+P9UKmJHWh3e9+dpDvGA2TJysk=
+X-Google-Smtp-Source: ABdhPJzrtijJt41tQf2xL44rdoH9J0ucfpy2/D+b2lVs4XEEYKCr/QtsxydWfp4ee7wfYR5BdBGU6Q==
+X-Received: by 2002:a05:600c:3651:b0:381:8654:876f with SMTP id y17-20020a05600c365100b003818654876fmr3565209wmq.162.1646160226742;
+        Tue, 01 Mar 2022 10:43:46 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b1-20020a5d4d81000000b001e6993398e2sm14125775wru.75.2022.03.01.10.43.43
+        by smtp.gmail.com with ESMTPSA id p2-20020a05600c418200b00380e4fa28b8sm2962435wmh.23.2022.03.01.10.43.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 10:43:43 -0800 (PST)
-Message-Id: <8de40b0fe8b097534630cfac28fc7c84dd304463.1646160212.git.gitgitgadget@gmail.com>
+        Tue, 01 Mar 2022 10:43:46 -0800 (PST)
+Message-Id: <bd492d13fb154dd1dcae4e85d088afc0c68e93f6.1646160212.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
 References: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
         <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Mar 2022 18:43:13 +0000
-Subject: [PATCH v6 11/30] fsmonitor--daemon: implement 'start' command
+Date:   Tue, 01 Mar 2022 18:43:16 +0000
+Subject: [PATCH v6 14/30] fsmonitor--daemon: create token-based changed path
+ cache
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,195 +74,359 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Implement 'git fsmonitor--daemon start' command.  This command starts
-an instance of 'git fsmonitor--daemon run' in the background using
-the new 'start_bg_command()' function.
+Teach fsmonitor--daemon to build a list of changed paths and associate
+them with a token-id.  This will be used by the platform-specific
+backends to accumulate changed paths in response to filesystem events.
 
-We avoid the fork-and-call technique on Unix systems in favor of a
-fork-and-exec technique.  This gives us more uniform Trace2 child-*
-events.  It also makes our usage more consistent with Windows usage.
+The platform-specific file system listener thread receives file system
+events containing one or more changed pathnames (with whatever
+bucketing or grouping that is convenient for the file system).  These
+paths are accumulated (without locking) by the file system layer into
+a `fsmonitor_batch`.
 
-On Windows, teach 'git fsmonitor--daemon run' to optionally call
-'FreeConsole()' to release handles to the inherited Win32 console
-(despite being passed invalid handles for stdin/out/err).  Without
-this, command prompts and powershell terminal windows could hang
-in "exit" until the last background child process exited or released
-their Win32 console handle.  (This was not seen with git-bash shells
-because they don't have a Win32 console attached to them.)
+When the file system layer has drained the kernel event queue, it will
+"publish" them to our token queue and make them visible to concurrent
+client worker threads.  The token layer is free to combine and/or de-dup
+paths within these batches for efficient presentation to clients.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fsmonitor--daemon.c | 109 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 107 insertions(+), 2 deletions(-)
+ builtin/fsmonitor--daemon.c | 230 +++++++++++++++++++++++++++++++++++-
+ fsmonitor--daemon.h         |  40 +++++++
+ 2 files changed, 268 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 950614f82f6..2f721aae016 100644
+index c8d1509d87d..7c44b979035 100644
 --- a/builtin/fsmonitor--daemon.c
 +++ b/builtin/fsmonitor--daemon.c
-@@ -9,6 +9,7 @@
- #include "khash.h"
+@@ -181,17 +181,27 @@ struct fsmonitor_token_data {
+ 	uint64_t client_ref_count;
+ };
  
- static const char * const builtin_fsmonitor__daemon_usage[] = {
-+	N_("git fsmonitor--daemon start [<options>]"),
- 	N_("git fsmonitor--daemon run [<options>]"),
- 	N_("git fsmonitor--daemon stop"),
- 	N_("git fsmonitor--daemon status"),
-@@ -22,6 +23,9 @@ static const char * const builtin_fsmonitor__daemon_usage[] = {
- #define FSMONITOR__IPC_THREADS "fsmonitor.ipcthreads"
- static int fsmonitor__ipc_threads = 8;
- 
-+#define FSMONITOR__START_TIMEOUT "fsmonitor.starttimeout"
-+static int fsmonitor__start_timeout_sec = 60;
++struct fsmonitor_batch {
++	struct fsmonitor_batch *next;
++	uint64_t batch_seq_nr;
++	const char **interned_paths;
++	size_t nr, alloc;
++	time_t pinned_time;
++};
 +
- #define FSMONITOR__ANNOUNCE_STARTUP "fsmonitor.announcestartup"
- static int fsmonitor__announce_startup = 0;
- 
-@@ -36,6 +40,15 @@ static int fsmonitor_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, FSMONITOR__START_TIMEOUT)) {
-+		int i = git_config_int(var, value);
-+		if (i < 0)
-+			return error(_("value of '%s' out of range: %d"),
-+				     FSMONITOR__START_TIMEOUT, i);
-+		fsmonitor__start_timeout_sec = i;
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, FSMONITOR__ANNOUNCE_STARTUP)) {
- 		int is_bool;
- 		int i = git_config_bool_or_int(var, value, &is_bool);
-@@ -250,7 +263,7 @@ done:
- 	return err;
- }
- 
--static int try_to_run_foreground_daemon(void)
-+static int try_to_run_foreground_daemon(int detach_console)
+ static struct fsmonitor_token_data *fsmonitor_new_token_data(void)
  {
- 	/*
- 	 * Technically, we don't need to probe for an existing daemon
-@@ -270,17 +283,106 @@ static int try_to_run_foreground_daemon(void)
- 		fflush(stderr);
+ 	static int test_env_value = -1;
+ 	static uint64_t flush_count = 0;
+ 	struct fsmonitor_token_data *token;
++	struct fsmonitor_batch *batch;
+ 
+ 	CALLOC_ARRAY(token, 1);
++	batch = fsmonitor_batch__new();
+ 
+ 	strbuf_init(&token->token_id, 0);
+-	token->batch_head = NULL;
+-	token->batch_tail = NULL;
++	token->batch_head = batch;
++	token->batch_tail = batch;
+ 	token->client_ref_count = 0;
+ 
+ 	if (test_env_value < 0)
+@@ -217,9 +227,143 @@ static struct fsmonitor_token_data *fsmonitor_new_token_data(void)
+ 		strbuf_addf(&token->token_id, "test_%08x", test_env_value++);
  	}
  
-+#ifdef GIT_WINDOWS_NATIVE
-+	if (detach_console)
-+		FreeConsole();
-+#endif
-+
- 	return !!fsmonitor_run_daemon();
- }
- 
-+static start_bg_wait_cb bg_wait_cb;
-+
-+static int bg_wait_cb(const struct child_process *cp, void *cb_data)
-+{
-+	enum ipc_active_state s = fsmonitor_ipc__get_state();
-+
-+	switch (s) {
-+	case IPC_STATE__LISTENING:
-+		/* child is "ready" */
-+		return 0;
-+
-+	case IPC_STATE__NOT_LISTENING:
-+	case IPC_STATE__PATH_NOT_FOUND:
-+		/* give child more time */
-+		return 1;
-+
-+	default:
-+	case IPC_STATE__INVALID_PATH:
-+	case IPC_STATE__OTHER_ERROR:
-+		/* all the time in world won't help */
-+		return -1;
-+	}
-+}
-+
-+static int try_to_start_background_daemon(void)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	enum start_bg_result sbgr;
-+
 +	/*
-+	 * Before we try to create a background daemon process, see
-+	 * if a daemon process is already listening.  This makes it
-+	 * easier for us to report an already-listening error to the
-+	 * console, since our spawn/daemon can only report the success
-+	 * of creating the background process (and not whether it
-+	 * immediately exited).
++	 * We created a new <token_id> and are starting a new series
++	 * of tokens with a zero <seq_nr>.
++	 *
++	 * Since clients cannot guess our new (non test) <token_id>
++	 * they will always receive a trivial response (because of the
++	 * mismatch on the <token_id>).  The trivial response will
++	 * tell them our new <token_id> so that subsequent requests
++	 * will be relative to our new series.  (And when sending that
++	 * response, we pin the current head of the batch list.)
++	 *
++	 * Even if the client correctly guesses the <token_id>, their
++	 * request of "builtin:<token_id>:0" asks for all changes MORE
++	 * RECENT than batch/bin 0.
++	 *
++	 * This implies that it is a waste to accumulate paths in the
++	 * initial batch/bin (because they will never be transmitted).
++	 *
++	 * So the daemon could be running for days and watching the
++	 * file system, but doesn't need to actually accumulate any
++	 * paths UNTIL we need to set a reference point for a later
++	 * relative request.
++	 *
++	 * However, it is very useful for testing to always have a
++	 * reference point set.  Pin batch 0 to force early file system
++	 * events to accumulate.
 +	 */
-+	if (fsmonitor_ipc__get_state() == IPC_STATE__LISTENING)
-+		die("fsmonitor--daemon is already running '%s'",
-+		    the_repository->worktree);
++	if (test_env_value)
++		batch->pinned_time = time(NULL);
 +
-+	if (fsmonitor__announce_startup) {
-+		fprintf(stderr, _("starting fsmonitor-daemon in '%s'\n"),
-+			the_repository->worktree);
-+		fflush(stderr);
-+	}
+ 	return token;
+ }
+ 
++struct fsmonitor_batch *fsmonitor_batch__new(void)
++{
++	struct fsmonitor_batch *batch;
 +
-+	cp.git_cmd = 1;
++	CALLOC_ARRAY(batch, 1);
 +
-+	strvec_push(&cp.args, "fsmonitor--daemon");
-+	strvec_push(&cp.args, "run");
-+	strvec_push(&cp.args, "--detach");
-+	strvec_pushf(&cp.args, "--ipc-threads=%d", fsmonitor__ipc_threads);
++	return batch;
++}
 +
-+	cp.no_stdin = 1;
-+	cp.no_stdout = 1;
-+	cp.no_stderr = 1;
++void fsmonitor_batch__free_list(struct fsmonitor_batch *batch)
++{
++	while (batch) {
++		struct fsmonitor_batch *next = batch->next;
 +
-+	sbgr = start_bg_command(&cp, bg_wait_cb, NULL,
-+				fsmonitor__start_timeout_sec);
++		/*
++		 * The actual strings within the array of this batch
++		 * are interned, so we don't own them.  We only own
++		 * the array.
++		 */
++		free(batch->interned_paths);
++		free(batch);
 +
-+	switch (sbgr) {
-+	case SBGR_READY:
-+		return 0;
-+
-+	default:
-+	case SBGR_ERROR:
-+	case SBGR_CB_ERROR:
-+		return error("daemon failed to start");
-+
-+	case SBGR_TIMEOUT:
-+		return error("daemon not online yet");
-+
-+	case SBGR_DIED:
-+		return error("daemon terminated");
++		batch = next;
 +	}
 +}
 +
- int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
++void fsmonitor_batch__add_path(struct fsmonitor_batch *batch,
++			       const char *path)
++{
++	const char *interned_path = strintern(path);
++
++	trace_printf_key(&trace_fsmonitor, "event: %s", interned_path);
++
++	ALLOC_GROW(batch->interned_paths, batch->nr + 1, batch->alloc);
++	batch->interned_paths[batch->nr++] = interned_path;
++}
++
++static void fsmonitor_batch__combine(struct fsmonitor_batch *batch_dest,
++				     const struct fsmonitor_batch *batch_src)
++{
++	size_t k;
++
++	ALLOC_GROW(batch_dest->interned_paths,
++		   batch_dest->nr + batch_src->nr + 1,
++		   batch_dest->alloc);
++
++	for (k = 0; k < batch_src->nr; k++)
++		batch_dest->interned_paths[batch_dest->nr++] =
++			batch_src->interned_paths[k];
++}
++
++static void fsmonitor_free_token_data(struct fsmonitor_token_data *token)
++{
++	if (!token)
++		return;
++
++	assert(token->client_ref_count == 0);
++
++	strbuf_release(&token->token_id);
++
++	fsmonitor_batch__free_list(token->batch_head);
++
++	free(token);
++}
++
++/*
++ * Flush all of our cached data about the filesystem.  Call this if we
++ * lose sync with the filesystem and miss some notification events.
++ *
++ * [1] If we are missing events, then we no longer have a complete
++ *     history of the directory (relative to our current start token).
++ *     We should create a new token and start fresh (as if we just
++ *     booted up).
++ *
++ * If there are no concurrent threads reading the current token data
++ * series, we can free it now.  Otherwise, let the last reader free
++ * it.
++ *
++ * Either way, the old token data series is no longer associated with
++ * our state data.
++ */
++static void with_lock__do_force_resync(struct fsmonitor_daemon_state *state)
++{
++	/* assert current thread holding state->main_lock */
++
++	struct fsmonitor_token_data *free_me = NULL;
++	struct fsmonitor_token_data *new_one = NULL;
++
++	new_one = fsmonitor_new_token_data();
++
++	if (state->current_token_data->client_ref_count == 0)
++		free_me = state->current_token_data;
++	state->current_token_data = new_one;
++
++	fsmonitor_free_token_data(free_me);
++}
++
++void fsmonitor_force_resync(struct fsmonitor_daemon_state *state)
++{
++	pthread_mutex_lock(&state->main_lock);
++	with_lock__do_force_resync(state);
++	pthread_mutex_unlock(&state->main_lock);
++}
++
+ static ipc_server_application_cb handle_client;
+ 
+ static int handle_client(void *data,
+@@ -329,6 +473,81 @@ enum fsmonitor_path_type fsmonitor_classify_path_absolute(
+ 	return fsmonitor_classify_path_gitdir_relative(rel);
+ }
+ 
++/*
++ * We try to combine small batches at the front of the batch-list to avoid
++ * having a long list.  This hopefully makes it a little easier when we want
++ * to truncate and maintain the list.  However, we don't want the paths array
++ * to just keep growing and growing with realloc, so we insert an arbitrary
++ * limit.
++ */
++#define MY_COMBINE_LIMIT (1024)
++
++void fsmonitor_publish(struct fsmonitor_daemon_state *state,
++		       struct fsmonitor_batch *batch,
++		       const struct string_list *cookie_names)
++{
++	if (!batch && !cookie_names->nr)
++		return;
++
++	pthread_mutex_lock(&state->main_lock);
++
++	if (batch) {
++		struct fsmonitor_batch *head;
++
++		head = state->current_token_data->batch_head;
++		if (!head) {
++			BUG("token does not have batch");
++		} else if (head->pinned_time) {
++			/*
++			 * We cannot alter the current batch list
++			 * because:
++			 *
++			 * [a] it is being transmitted to at least one
++			 * client and the handle_client() thread has a
++			 * ref-count, but not a lock on the batch list
++			 * starting with this item.
++			 *
++			 * [b] it has been transmitted in the past to
++			 * at least one client such that future
++			 * requests are relative to this head batch.
++			 *
++			 * So, we can only prepend a new batch onto
++			 * the front of the list.
++			 */
++			batch->batch_seq_nr = head->batch_seq_nr + 1;
++			batch->next = head;
++			state->current_token_data->batch_head = batch;
++		} else if (!head->batch_seq_nr) {
++			/*
++			 * Batch 0 is unpinned.  See the note in
++			 * `fsmonitor_new_token_data()` about why we
++			 * don't need to accumulate these paths.
++			 */
++			fsmonitor_batch__free_list(batch);
++		} else if (head->nr + batch->nr > MY_COMBINE_LIMIT) {
++			/*
++			 * The head batch in the list has never been
++			 * transmitted to a client, but folding the
++			 * contents of the new batch onto it would
++			 * exceed our arbitrary limit, so just prepend
++			 * the new batch onto the list.
++			 */
++			batch->batch_seq_nr = head->batch_seq_nr + 1;
++			batch->next = head;
++			state->current_token_data->batch_head = batch;
++		} else {
++			/*
++			 * We are free to add the paths in the given
++			 * batch onto the end of the current head batch.
++			 */
++			fsmonitor_batch__combine(head, batch);
++			fsmonitor_batch__free_list(batch);
++		}
++	}
++
++	pthread_mutex_unlock(&state->main_lock);
++}
++
+ static void *fsm_listen__thread_proc(void *_state)
  {
- 	const char *subcmd;
-+	int detach_console = 0;
+ 	struct fsmonitor_daemon_state *state = _state;
+@@ -343,6 +562,13 @@ static void *fsm_listen__thread_proc(void *_state)
  
- 	struct option options[] = {
-+		OPT_BOOL(0, "detach", &detach_console, N_("detach from console")),
- 		OPT_INTEGER(0, "ipc-threads",
- 			    &fsmonitor__ipc_threads,
- 			    N_("use <n> ipc worker threads")),
-+		OPT_INTEGER(0, "start-timeout",
-+			    &fsmonitor__start_timeout_sec,
-+			    N_("max seconds to wait for background daemon startup")),
+ 	fsm_listen__loop(state);
+ 
++	pthread_mutex_lock(&state->main_lock);
++	if (state->current_token_data &&
++	    state->current_token_data->client_ref_count == 0)
++		fsmonitor_free_token_data(state->current_token_data);
++	state->current_token_data = NULL;
++	pthread_mutex_unlock(&state->main_lock);
 +
- 		OPT_END()
- 	};
+ 	trace2_thread_exit();
+ 	return NULL;
+ }
+diff --git a/fsmonitor--daemon.h b/fsmonitor--daemon.h
+index 8c3a71a48bd..010fbfe60e9 100644
+--- a/fsmonitor--daemon.h
++++ b/fsmonitor--daemon.h
+@@ -12,6 +12,27 @@
+ struct fsmonitor_batch;
+ struct fsmonitor_token_data;
  
-@@ -296,8 +398,11 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix)
- 		die(_("invalid 'ipc-threads' value (%d)"),
- 		    fsmonitor__ipc_threads);
- 
-+	if (!strcmp(subcmd, "start"))
-+		return !!try_to_start_background_daemon();
++/*
++ * Create a new batch of path(s).  The returned batch is considered
++ * private and not linked into the fsmonitor daemon state.  The caller
++ * should fill this batch with one or more paths and then publish it.
++ */
++struct fsmonitor_batch *fsmonitor_batch__new(void);
 +
- 	if (!strcmp(subcmd, "run"))
--		return !!try_to_run_foreground_daemon();
-+		return !!try_to_run_foreground_daemon(detach_console);
++/*
++ * Free the list of batches starting with this one.
++ */
++void fsmonitor_batch__free_list(struct fsmonitor_batch *batch);
++
++/*
++ * Add this path to this batch of modified files.
++ *
++ * The batch should be private and NOT (yet) linked into the fsmonitor
++ * daemon state and therefore not yet visible to worker threads and so
++ * no locking is required.
++ */
++void fsmonitor_batch__add_path(struct fsmonitor_batch *batch, const char *path);
++
+ struct fsmonitor_daemon_backend_data; /* opaque platform-specific data */
  
- 	if (!strcmp(subcmd, "stop"))
- 		return !!do_as_client__send_stop();
+ struct fsmonitor_daemon_state {
+@@ -117,5 +138,24 @@ enum fsmonitor_path_type fsmonitor_classify_path_absolute(
+ 	struct fsmonitor_daemon_state *state,
+ 	const char *path);
+ 
++/*
++ * Prepend the this batch of path(s) onto the list of batches associated
++ * with the current token.  This makes the batch visible to worker threads.
++ *
++ * The caller no longer owns the batch and must not free it.
++ *
++ * Wake up the client threads waiting on these cookies.
++ */
++void fsmonitor_publish(struct fsmonitor_daemon_state *state,
++		       struct fsmonitor_batch *batch,
++		       const struct string_list *cookie_names);
++
++/*
++ * If the platform-specific layer loses sync with the filesystem,
++ * it should call this to invalidate cached data and abort waiting
++ * threads.
++ */
++void fsmonitor_force_resync(struct fsmonitor_daemon_state *state);
++
+ #endif /* HAVE_FSMONITOR_DAEMON_BACKEND */
+ #endif /* FSMONITOR_DAEMON_H */
 -- 
 gitgitgadget
 
