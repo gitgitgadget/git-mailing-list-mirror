@@ -2,72 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94C56C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 09:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DDB8C433FE
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 09:32:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233505AbiCAJ0J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 04:26:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57700 "EHLO
+        id S233797AbiCAJd1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 04:33:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbiCAJ0H (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 04:26:07 -0500
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96B5849C87
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 01:25:27 -0800 (PST)
-Received: by mail-il1-f181.google.com with SMTP id f2so12095653ilq.1
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 01:25:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5+qu3dKD6o4kDmHZjJ1AwLE6CDMB0BX7OIWm9BDZKrY=;
-        b=Nci8v+WGCNuyBv+sfsH8vGSm5qaUYBr7LD1MCplRAUKgo8K5LYXcRZS1LXr+IfZpt+
-         zCfJw6dhy6m5B3rpk3yMTtjJ8GjAz5kW2fgspr+X1RD4FCBX4lAx1AlNqxbjPyWcK3D8
-         N7pBWUBITVK9TRRa8t7VSSN17z1SSHIbylZ64wVkyAqAzizcADgR+za36VH7mBwHfEs0
-         +nq5etUR8j8XmhTByTUViPi6JdpkO1H2nWHICVwsN6oFcrTDUqE5DDR5Tbg+XBVl0ZRU
-         v23tn5EpnrdMfjoWTUhcPFbskTXzpch8Rpegfhs2DgtVk3UHKgi9ZEFolMsF59GAePSm
-         p6dw==
-X-Gm-Message-State: AOAM533ZXfCzQRgdkwEEnubkFya8TNXWRj7UghmGGqtHVXVDoFlc2zCv
-        o5U7tM61NUXK5ElzF1HelGoH8A0dEf+mPWySHjdzT/i0hAI=
-X-Google-Smtp-Source: ABdhPJyIdr4X9f9sg4fgBzUGekkobGBnQbXDfqg4iVMyB81Ey2oAz22IQkPOi27yhAiyoVyltL4z9G3t6REpF6OZces=
-X-Received: by 2002:a05:6e02:2168:b0:2c1:a436:d18c with SMTP id
- s8-20020a056e02216800b002c1a436d18cmr21534794ilv.49.1646126726827; Tue, 01
- Mar 2022 01:25:26 -0800 (PST)
-MIME-Version: 1.0
-References: <YhPiqlM81XCjNWpk@ugly>
-In-Reply-To: <YhPiqlM81XCjNWpk@ugly>
-From:   Erik Cervin Edin <erik@cervined.in>
-Date:   Tue, 1 Mar 2022 10:24:50 +0100
-Message-ID: <CA+JQ7M-+kq1MTh+DG+HCmXkpsF5Esm_0V=4=2_DS2_ZYdjP2+g@mail.gmail.com>
-Subject: Re: rewinding interactive rebases
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+        with ESMTP id S233812AbiCAJdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 04:33:25 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9657A3889
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 01:32:36 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B86C2189281;
+        Tue,  1 Mar 2022 04:32:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=XjdZbG3nESRJigrw1TiLg/RcubJ7Lo8IFTpiaIS3ZPE=; b=pHCd
+        eKrsADfG3yDKcvBpaZ41ox9GyrK48kximaktf53tPwdkA7d/3GlTU/IPzfy1RrmI
+        S4KxCpgyDbRTUYCpv1Aka+McSK4Gfs9v467P8KXGd7L/jaNXexjgOKrw2UOOH4YC
+        SvvK5pkm0fy73vaWGUKd/zpNwVjiDrEdqNJfauY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B11FF189280;
+        Tue,  1 Mar 2022 04:32:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E460A18927F;
+        Tue,  1 Mar 2022 04:32:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jaydeep P Das <jaydeepjd.8914@gmail.com>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] userdiff: Add diff driver for Kotlin lang and tests
+References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
+        <20220301070226.2477769-2-jaydeepjd.8914@gmail.com>
+Date:   Tue, 01 Mar 2022 01:32:30 -0800
+Message-ID: <xmqqy21urpap.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 84F9F77E-9942-11EC-B72E-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 1, 2022 at 1:21 AM Oswald Buddenhagen
-<oswald.buddenhagen@gmx.de> wrote:
-> did you mean to answer only privately?
+Jaydeep P Das <jaydeepjd.8914@gmail.com> writes:
 
-No, mea culpa :(
+> Subject: Re: [PATCH] userdiff: Add diff driver for Kotlin lang and tests
 
-> On Mon, Feb 28, 2022 at 10:32:16PM +0100, Erik Cervin Edin wrote:
-> >What's the connection to the original thread [...]?
-> >
-> that depends on what you want to interpret into the original thread,
-> given that a bunch of use cases and solutions were mentioned. my
-> solution is actually functionally identical to one of the later
-> subthreads, as i found after the fact.
+"Add" -> "add".  "lang and tests" -> "language".
 
-Sorry but it's a long thread and at least I am unsure which parts you
-are referring to and how your script fits into that.
+> The xfuncname pattern finds func/class declarations in diffs to
+> display as a hunk header.
 
-> >Maybe you could explain it a bit in the context of the problem.
-> >
-> there really isn't much to it. the git log + git reset are the essence.
-> just run it in the middle of an interactive rebase to see yourself.
+Yes, but an entry for a language in userdiff.c consists of the
+funcname pattern AND the word_regex.  And I think the patch is
+adding both, not just funcname pattern.
 
-Could you elaborate on the intended/usual flow here?
-Rebase => Get conflict => Fix conflict => run the script => ..??
+> This patch adds xfuncname regex and some respective
+> tests for Kotlin language.
+>
+> Also modifies `Documentation./gitattributes.txt` to state
+> the same.
+
+See Documenation/SubmittingPatches::[[imperative-mood]].
+
+But it probably is better to leave these unsaid.  The patterns,
+tests and documentation updates go hand in hand.
+
+>  11 files changed, 59 insertions(+)
+>  create mode 100644 t/t4018/kotlin-class
+>  create mode 100644 t/t4018/kotlin-enum-class
+>  create mode 100644 t/t4018/kotlin-fun
+>  create mode 100644 t/t4018/kotlin-inheritace-class
+>  create mode 100644 t/t4018/kotlin-inline-class
+>  create mode 100644 t/t4018/kotlin-interface
+>  create mode 100644 t/t4018/kotlin-nested-fun
+>  create mode 100644 t/t4018/kotlin-public-class
+>  create mode 100644 t/t4018/kotlin-sealed-class
+>
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+> index a71dad2674..94d06dc337 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -829,6 +829,8 @@ patterns are available:
+>  
+>  - `java` suitable for source code in the Java language.
+>  
+> +- `kotlin` suitable for source code in the Kotlin language
+> +
+>  - `markdown` suitable for Markdown documents.
+
+The entries before and after this new one both end with a full stop,
+and this new entry should do the same.
+
+> diff --git a/userdiff.c b/userdiff.c
+> index 8578cb0d12..a6cc6dc3b7 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -168,6 +168,14 @@ PATTERNS("java",
+>  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+>  	 "|[-+*/<>%&^|=!]="
+>  	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
+> +PATTERNS("kotlin",
+> +	 /* fun, class, interface, declarations */
+> +  	 "^[ \t]*(([a-z]+[ \t]+)*(fun|class|interface)[ \t]+.*[ \t]*)$",
+
+With the three keywords clearly visible in the pattern, the comment
+looks somewhat redundant.  I dunno.
+
+> +	 /* -- */
+> +	 "[a-zA-Z_][a-zA-Z0-9_]*"
+> +	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+> +	 "|[-+*/<>%&^|=!]="
+> +	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
+
+The latter half is word regex, which is tested in t4034 to at least
+ensure that it is well formed.  We can also add t/t4034/$language/
+to see the patterns hit the word boundary as expected.
+
+>  PATTERNS("markdown",
+>  	 "^ {0,3}#{1,6}[ \t].*",
+>  	 /* -- */
