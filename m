@@ -2,150 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C4ABC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 04:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC9F7C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 06:35:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232440AbiCAEnF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 23:43:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54646 "EHLO
+        id S232433AbiCAGgc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 01:36:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232389AbiCAEmo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 23:42:44 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D812E6FA33
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:42:02 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id c192-20020a621cc9000000b004e0ff94313dso9004073pfc.17
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:42:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=SxQM2cxFgTJkz187BLMpOB9JRuL0P/ov+6eGJwePauo=;
-        b=WeSk1R6cCb/u2AkNnG01CWEjzrxUFy2f6Z5M6qh7AjgRwioG6WVgMZjpPniM6beBEZ
-         paBjplT678baxmjKVomo4Papc7Ks0cHnk/p3DB0XMC5dsO77okYg5PtvUHdezp2osdxw
-         6n1C8P/hrMecbUd+OyWsJdsGAdg2fAP0o7fG39NA0s7DptSOx4/W1TvfyWhYV1GTzXeL
-         FxbGRzbx8t8Tb8QgcSZdeNgV80IPPBZo8xo32MFpqwSYLi9W1xId4PITK46kfBSI+Gau
-         mCCo9eHcO4oafOjnhMiyE55h3mQJLqOJyTr2dHXFxmDzGwAmWSmCldD0L33vzO1b211N
-         pT8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=SxQM2cxFgTJkz187BLMpOB9JRuL0P/ov+6eGJwePauo=;
-        b=6IkSQ2Y5/KYc+n9z863koDkGv8cVSiLV2xr1KtTagrzvLWX3vOixrdKGNAYue8pJR0
-         01iGdHPED7Xt7hbuzz+b8OK2ffVRLd7z0eCjaiswUv3GlaQdxxfMTldNO3ausGCYUDdS
-         vsavlf572XFMLuZ4Uvm3hH2fAz4KbFis1hf9OqMcwlKmLbElzr/GuepN2E2GUH7oNMsZ
-         L/sZh5ZkmcZZUG70TnSUXENaRoz2w7DV+OYZ03NgSjom0xoV3n9YXMkQO+azCrjVNBtY
-         /moB+VsmSy7YTJ++8wxllVXke5TIJl+IMQNsS+9CEfAWbMm5BO8pQUQQxTNC3gngzl2D
-         xdJw==
-X-Gm-Message-State: AOAM531FxMRj47RDFk95hpxbB2lZum2SNB/AOyFIX6+1O5XzgP3T2H7F
-        UZv7zLyfJCfu2dgkur8XtFOkW2eRP5fq1GEktfJX41eqbTXasNC+EaF4w8xjd0pcy5OcoQWDNZy
-        E/GO8NkmSz9Rt5PfDFLfwfdkkbn/KBKe7NEq0BoLWkyRp+hJHhXdIQFzDRYHAT94=
-X-Google-Smtp-Source: ABdhPJxxGtM2YqUgLAHP7XOJ3TF1YfnXCB8DWSXV7xkZ5wfGkblGY9VqEbJ0jT2OuJY7tL1VNaKlVTerU0xRgA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:8f94:b0:151:64c5:7759 with SMTP
- id z20-20020a1709028f9400b0015164c57759mr9057509plo.4.1646109722245; Mon, 28
- Feb 2022 20:42:02 -0800 (PST)
-Date:   Mon, 28 Feb 2022 20:41:32 -0800
-In-Reply-To: <20220301044132.39474-1-chooglen@google.com>
-Message-Id: <20220301044132.39474-14-chooglen@google.com>
-Mime-Version: 1.0
-References: <20220301000816.56177-1-chooglen@google.com> <20220301044132.39474-1-chooglen@google.com>
-X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH v2 13/13] submodule--helper update-clone: check for --filter
- and --init
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S231773AbiCAGgb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 01:36:31 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37CAA11C2B
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 22:35:48 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 34EDE1880DF;
+        Tue,  1 Mar 2022 01:35:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=XRXCThIxz2Jw6bKo0jweB9wMS5/U5Cakm6fVIN
+        QAeVY=; b=G2iUONmvEmsma6oFS6M969qJhFHQjjw07IdAr2ezWiu24PmIw6g94/
+        uNdzt03T4VYKlL74nKkKLzxMvFwnV+5vF5l/nd1xF/IWwVGHULyBVLT+w4heSmMR
+        PvpyuZENUbLG5A+ZYn4ufYIL2Qk2Uy1XG8g0aSovq/oqL52AyhpYg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2CFD71880DE;
+        Tue,  1 Mar 2022 01:35:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AAAD31880DB;
+        Tue,  1 Mar 2022 01:35:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     phillip.wood@dunelm.org.uk,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet>
+        <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com>
+        <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet>
+        <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
+        <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com>
+        <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet>
+        <xmqqv8x2dd7j.fsf@gitster.g> <xmqqzgmd5uzu.fsf@gitster.g>
+        <xmqqee3mwf7k.fsf@gitster.g>
+Date:   Mon, 28 Feb 2022 22:35:44 -0800
+In-Reply-To: <xmqqee3mwf7k.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        28 Feb 2022 18:59:11 -0800")
+Message-ID: <xmqq35k2w56n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: D32A4DCC-9929-11EC-A8D3-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git submodule update --filter" also requires the "--init" option. Teach
-update-clone to do this usage check in C and remove the check from
-git-submodule.sh.
+Junio C Hamano <gitster@pobox.com> writes:
 
-In addition, change update-clone's usage string so that it teaches users
-about "git submodule update" instead of "git submodule--helper
-update-clone" (the string is copied from git-submodule.sh). This should
-be more helpful to users since they don't invoke update-clone directly.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> FWIW, CI run on "seen" uses this series.
+>
+> Another "early impression".  I had to open this one today,
+>
+>     https://github.com/git/git/runs/5367854000?check_suite_focus=true
+>
+> which was a jarring experience.  It correctly painted the fourth
+> circle "Run ci/run-build-and-tests.sh" in red with X in it, and
+> after waiting for a while (which I already said that I do not mind
+> at all), showed a bunch of line, and then auto-scrolled down to the
+> end of that section.
+>
+> It _looked_ like that it was now ready for me to interact with it,
+> so I started to scroll up to the beginning of that section, but I
+> had to stare at blank space for several minutes before lines are
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
-Since we expect users to act upon the usage string, I've updated it to
-reflect "git submodule update" [1] (since that's what users actually
-invoke), but I feel a bit iffy about not being able to use
-usage_with_options() (because the options and usage string are for
-different commands).
+Nah, that was several seconds, not minutes.  Even though I am on
+Chromebooks, they are not _that_ slow ;-)
 
-This might indicate that this is work we should put off until the
-conversion to C is mostly complete, but on the other hand, the usage
-string is still more helpful than it used to be because we never
-presented users with the options anyway.
-
-[1] It's not immediately obvious which command we prefer to show - some
-other commands use "git submodule--helper" and others use "git
-submodule".
-
- builtin/submodule--helper.c | 20 +++++++++++++++++++-
- git-submodule.sh            |  5 -----
- 2 files changed, 19 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 2ffc070319..3e8a05a052 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2543,7 +2543,12 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper update-clone [--prefix=<path>] [<path>...]"),
-+		N_("git submodule [--quiet] update"
-+		"[--init [--filter=<filter-spec>]] [--remote]"
-+		"[-N|--no-fetch] [-f|--force]"
-+		"[--checkout|--merge|--rebase]"
-+		"[--[no-]recommend-shallow] [--reference <repository>]"
-+		"[--recursive] [--[no-]single-branch] [--] [<path>...]"),
- 		NULL
- 	};
- 	suc.prefix = prefix;
-@@ -2554,6 +2559,19 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	memset(&filter_options, 0, sizeof(filter_options));
- 	argc = parse_options(argc, argv, prefix, module_update_clone_options,
- 			     git_submodule_helper_usage, 0);
-+
-+	if (filter_options.choice && !suc.init) {
-+		/*
-+		 * NEEDSWORK: Don't use usage_with_options() because the
-+		 * usage string is for "git submodule update", but the
-+		 * options are for "git submodule--helper update-clone".
-+		 *
-+		 * This will no longer be an issue when "update-clone"
-+		 * is replaced by "git submodule--helper update".
-+		 */
-+		usage(git_submodule_helper_usage[0]);
-+	}
-+
- 	suc.filter_options = &filter_options;
- 
- 	if (update)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 51be7c7f7e..aa8bdfca9d 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -356,11 +356,6 @@ cmd_update()
- 		shift
- 	done
- 
--	if test -n "$filter" && test "$init" != "1"
--	then
--		usage
--	fi
--
- 	{
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update-clone \
- 		${GIT_QUIET:+--quiet} \
--- 
-2.33.GIT
-
+> shown to occupy that space.  During the repainting, unlike the
+> initial delay-wait that lets me know that it is not ready by showing
+> the spinning circle, there was no indication that it wants me to
+> wait until it fills the blank space with lines.  Not very pleasant.
+>
+> I do not think it is so bad to say that it is less pleasant than
+> opening the large "print test failures" section and looking for "not
+> ok", which was what the original CI UI we had before this series.
+> But at least with the old one, once the UI becomes ready for me to
+> interact with, I didn't have to wait for (for the lack of better
+> phrase) such UI hiccups.  Responses to looking for the next instance
+> of "not ok" was predictable.
+>
+> Thanks.
