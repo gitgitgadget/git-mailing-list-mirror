@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5C11C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 08:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DCA9C433EF
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 08:22:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233305AbiCAISO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 03:18:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45216 "EHLO
+        id S232487AbiCAIWm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 03:22:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233332AbiCAIRs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 03:17:48 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E3E485669
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 00:17:06 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id p14so29774981ejf.11
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 00:17:06 -0800 (PST)
+        with ESMTP id S229956AbiCAIWl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 03:22:41 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61C546C935
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 00:21:59 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id qx21so29815649ejb.13
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 00:21:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=klerks-biz.20210112.gappssmtp.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=0i9zYCzjq7o7QLO7rCw85Hq3awRioi/mdciwLn+OFR0=;
-        b=6xPJivyAqhAFdmT1WohR32EgMJy7WW/rRF/sVWniFiJj+RCb4QeiG+Eg0MeFThmqcm
-         F9wOPNPaZirxUMV69AIgNyCqHEMVul0FbxI21J3To+/OFbVDAKxnmIljs8+Cr6QDdXyI
-         +p1W4bYLIYWOBaCcjleWTxCT+3qslkBf2TxtgRAGk1Ngy++iYEM4266n/JkfP/c+38+P
-         770URqSfR9EMz5BapYiRAa5yHAptsxWMkxoWIGGB7KBK83auVnRLBJ/FybtwWDsIdTGN
-         DkC5j1ZtXiZjCOIK/6b4kKsutGnpcRFqT5vSdNIwC52vqamORwrYfMJ6MAc+RDt+oIjb
-         o9vw==
+        bh=IILeCGuJpR+v6+Ih7aqLHpLRZrMCcg8+eSJuxvGgUUU=;
+        b=Y7YsOcMAVh42XJrv2ZBB2IlzWR3gpUVBfETFz2LKfWbEdwf90UVJNIB1PlqMdsaRXZ
+         woFSZ1onZu1aKFjfsDQzYcQOaT+qlV8zDTOUIywMtBgVInVPTw6BnIVMhSw6C3awGeA/
+         fC9b+KD913jEzId0obsH95p3lJBa38pSeBAB5c+ueA7Rv4CEjfx9MNvbX2PhEzknane+
+         tgduI1EcPcqOhwghLD57pBL/GoG7dfenkOkaFhiROn7rtym6NZnGC+LNz3SqN+ENl3v2
+         fCSKKYnrue0q1OPt+VUrwo+Xqv517o4IwvZfZavN3uyK16312aqBU0m8+GMS+0RIG5s3
+         2ZVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=0i9zYCzjq7o7QLO7rCw85Hq3awRioi/mdciwLn+OFR0=;
-        b=3/L5wIjy7zUcYW0d2QegHGMzJ68KG6M/WThzrFarAiWMq9gFOHv2kbqBGq1g7HCm6+
-         uyHyXbk1z4wj88qKw02+mPFVRcXJNCGTzQn/enJgcqcdWsS7JWxpuF/hNwUUIQNybL85
-         pqVk03zuNfwCoihDx7578NI4SHhwlWV+KwHiC4SPqmSo4H1mXJ2oJnFhpE4q8GTwPP4P
-         +7BpAUxq/KYURTs6PQsD8VsJ0YmvXFevDIdxG0P8uDXffeg8IKbEZFKhmYc6GdUgf/K8
-         vA16F29SRex8FDgYojKFxdLybfEMKLg7vtSJY1wHT4GpBGEDGyjd9op5YWZA7buJwlnf
-         Zz7w==
-X-Gm-Message-State: AOAM5311YYuordGiIJfCIp4vPX2Rv0X2LSTJbk+lZADfr+ZDOp8q4Nyo
-        zUOkUzB86e58fRXLaQyHVl7P/yQMQvTif38aQ90EA5KTP57TxFl8
-X-Google-Smtp-Source: ABdhPJxKptPBZxmMMgBwaxNdpZOCd4xCpg1ILQ55pbP1ixudChLId03hCnDGq2v9wXWTPS0P6ghydwgL0ldwffgUBQY=
-X-Received: by 2002:a17:906:a210:b0:6d5:9fa:11ce with SMTP id
- r16-20020a170906a21000b006d509fa11cemr18557212ejy.172.1646122625009; Tue, 01
- Mar 2022 00:17:05 -0800 (PST)
+        bh=IILeCGuJpR+v6+Ih7aqLHpLRZrMCcg8+eSJuxvGgUUU=;
+        b=5PuXhXI3o++ob3Xu9+cpf2gO53QQ2oxhuDM5GofffQKv9Ur2tVjlJ4NQ30XLAi3cGY
+         q/BDBrXwofxCZ2RUjIM8joectTIbWssRvzs9JTwQRIKOe+BZzjzsd59uyTOUihMl0kNo
+         wiH5ERoFeTEe93GpfBYcucwPE3fWaD2mzG2iGHh32Jf5ipHh9LVvIvfEZDNY3RyEtE02
+         DjbAyGvfAgvrbzVACN5gDKXnI6nK9Xl/SRxagajAPyWEZNBT6hnkAee3tRC7/jTIcyLr
+         Cer2yoURL06bKRDsN65lFE4D/LGp24zUC9QndfE9knyPfejhi6KXAqvRd7q1+emfgwM0
+         1Dmw==
+X-Gm-Message-State: AOAM533gH5yBqJ297oY0VOXNjlpcz7exUZYZDRyUyfFKh/qno1KWYbYf
+        MamVq85EOS36jGYzLDWHu3ExrCtlt9C9thh6V2uImCJVqRmEUMIr
+X-Google-Smtp-Source: ABdhPJxP47m2C+rLgOi29gt9BdmXbUHVyf5XBtodoZaxbv0U49VdT47uS8s5rL0ZDR0VtMSpWQ139kYHpeqgbY9B60c=
+X-Received: by 2002:a17:907:7613:b0:6d0:ee20:8a37 with SMTP id
+ jx19-20020a170907761300b006d0ee208a37mr17764501ejc.316.1646122917796; Tue, 01
+ Mar 2022 00:21:57 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1166.git.1646041236.gitgitgadget@gmail.com>
  <76b6216281e3463821e650495f3090c677905f73.1646041236.git.gitgitgadget@gmail.com>
- <b5fb21f5-4aa6-fa36-a8f6-abf82b543c1d@jeffhostetler.com>
-In-Reply-To: <b5fb21f5-4aa6-fa36-a8f6-abf82b543c1d@jeffhostetler.com>
+ <xmqqfso2zm6l.fsf@gitster.g>
+In-Reply-To: <xmqqfso2zm6l.fsf@gitster.g>
 From:   Tao Klerks <tao@klerks.biz>
-Date:   Tue, 1 Mar 2022 09:16:52 +0100
-Message-ID: <CAPMMpoiQw0UhnH0WP_opB0iQn8cRx8qT_Cy_W8PnHpxbwATw2A@mail.gmail.com>
+Date:   Tue, 1 Mar 2022 09:21:45 +0100
+Message-ID: <CAPMMpoi_2iczL94jfVktH0Whnr8Gn-54cLgpH6Q0iM0uteQsyg@mail.gmail.com>
 Subject: Re: [PATCH 1/2] t/helper/test-chmtime: update mingw to support
  chmtime on directories
-To:     Jeff Hostetler <git@jeffhostetler.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -62,66 +62,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 28, 2022 at 4:27 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
+On Mon, Feb 28, 2022 at 11:00 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
+> "Tao Klerks via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
+> > The mingw_utime implementation in mingw.c does not support
+> > directories. This means that "test-tool chmtime" fails on Windows when
+> > targeting directories. This has previously been noted and sidestepped
+> > by Jeff Hostetler, in "t/helper/test-chmtime: skip directories
+> > on Windows" in the "Builtin FSMonitor Part 2" work.
 >
-> On 2/28/22 4:40 AM, Tao Klerks via GitGitGadget wrote:
+> I was expecting that this will be applicable _before_ FSMonitor Part
+> 2 and later.  This mention would probably belong to the comment
+> after three-dashes?
+>
 
-> > +     HANDLE osfilehandle;
->
-> I'd be more comfortable initializing this variable to
-> INVALID_HANDLE_VALUE.
->
-
-Makes sense, thanks. (but less relevant after switch to CreateFileW)
+I've updated the text slightly in the next re-roll, but I didn't understand the
+bit about dashes... What is "the comment after three dashes"?
 
 > > +             fh = 0;
 >
-> and here initializing fh = -1.
-
-Makes sense, thanks. (but overshadowed by switch to CreateFileW)
-
-> > +             osfilehandle = CreateFileW(wfilename,
-> > +                                        0x100 /*FILE_WRITE_ATTRIBUTES*/,
-> > +                                        0 /*FileShare.None*/,
+> This should be
 >
-> Is there a reason that you're not using the #define's here?
-> I assume you ran into a header file problem or something, but
-> there are other symbols used nearby, so I'm not sure.
+>                 fh = -1;
+>
+> instead.  More on this later.
+>
 
-I couldn't find these, and am a complete C APIs n00b - I have no idea
-whether or how to add them. I figured commenting on their meaning
-is the simplest safest thing to do locally?
+Makes sense, but obviated by full switch to CreateFileW().
 
 > > +     if (fh)
 > > +             close(fh);
 > > +     else if (osfilehandle)
 > > +             CloseHandle(osfilehandle);
 >
-> And then this becomes:
+> In the context of "git" process, I do not think we would ever close
+> FD#0, so it may be safe to assume that _wopen() above will never
+> yield FD#0, so this is not quite wrong per-se, but to be
+> future-proof, it would be even safer to instead do:
 >
->         if (fh != -1)
->                 close(fh)
->         else if (osfilehandle != INVALID_HANDLE_VALUE)
->                 Closehandle(osfilehandle);
+>         if (0 <= fh)
+>                 close(fh);
+>         else if (osfilehandle)
+>                 CloseHandle(osfilehandle);
 >
-> Which I think makes it more clear that we'll properly close the handle.
-
-Perfect, thx.
-
+> here.  That is consistent with the error checking done where
+> _wopen() was called to obtain it above, i.e.
 >
-> >
-> >   revert_attrs:
-> >       if (attrs != INVALID_FILE_ATTRIBUTES &&
-> >
->
-> An alternative solution would be to replace the _wopen() with
-> a call to CreateFileW() without the backup flag for non-directories
-> and just convert the whole routine to use HANDLE's rather fd's.
+>         if ((fh = _wopen(...)) < 0)
+>                 ... error ...
 >
 
-I was at first scared of making changes to things I don't fully
-understand, but looking at the existing use of GetFileAttributesW
-I don't think that makes much sense. This is cleaner/simpler
-even if it is a bigger change, and consistent with other things.
+Makes sense, but obviated by full switch to CreateFileW().
