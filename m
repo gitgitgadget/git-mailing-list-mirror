@@ -2,116 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4142C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 01:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E5A9C433EF
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 01:29:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229540AbiCAB0Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 20:26:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56022 "EHLO
+        id S229904AbiCAB34 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 20:29:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229590AbiCAB0Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 20:26:24 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA52B1E6
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 17:25:43 -0800 (PST)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 091115A0D2;
-        Tue,  1 Mar 2022 01:25:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1646097943;
-        bh=dkb/M03hewlCKOJEqRZmQj8mhTCuSK0Gsx7wqeXSd7Q=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=d/o8OaMZweAenWIKcDa8ZFoynp7QkCmyP+EAT8X7nLnNeeptT2svkl2Aq8ldZ5HZc
-         oj5rZyP4XZx7V+Ur6PE+iCQforteRQAYxym5nJ11/xf2UdSL/GNGKzqgZ+Y1AnzBCD
-         hQPbRVFREQcUqpyJgWmgVMn0YxUOutDu90f6xlqgrENKw6qGXCtTNqfKTtvwk/BfyZ
-         AjaNgzNw3YXlGTnlLrlhK2Yd8a+3KneikdJtxCkUspMGbRCEQHMTTgKsNw73Mv1+Bz
-         PCA21cTWjDL/3UPnNbcjSfovA3K5dBJnCm7MQPIx3GhkplO960dZFU7jwK8hyuS6uA
-         ytw5Q7JEpcVtoRdjW4MhZoIz0HnIZQaHdUv0v/u0P9Vm0e3uEWu9lHn8vbMcA5/9QX
-         agOT78/XUNClTimIO5+2hEGBKjNgLBjeHqsDlpdOtSntj1w8KKvhiAKs9o0gHVDt4V
-         Y3/arje4XF9RPFZPKK1rxbvo0qi+W03VG3j7gbJ4BflIvY4lWzL
-Date:   Tue, 1 Mar 2022 01:25:40 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] test-lib.sh: Use GLIBC_TUNABLES instead of MALLOC_CHECK_
- on glibc >= 2.34
-Message-ID: <Yh12FNTGuJkRlqBE@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-References: <20220228160827.465488-1-gitter.spiros@gmail.com>
- <xmqq7d9e249n.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Wf7uqRc0lQvly4vt"
-Content-Disposition: inline
-In-Reply-To: <xmqq7d9e249n.fsf@gitster.g>
-User-Agent: Mutt/2.1.4 (2021-12-11)
+        with ESMTP id S229817AbiCAB3x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 20:29:53 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E4AD2659
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 17:29:13 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id b5-20020a170902e94500b0014f6d0a417bso5410746pll.6
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 17:29:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc:content-transfer-encoding;
+        bh=LRplzxxmMZp+qHOObO2FRK3ySnMLCNGlS1beJplcAzk=;
+        b=XyuxPiIzVrdQf6Z8BfDrEbpJ4jq9aR8CnLXu2Xkke1q4/e2hKoD0WpKf4HvCtFCq2K
+         jyCmo/LFNOnwVlxLFvF2CzovZV7eyws8k9JQ7f/tDwoHUMCN63Gyp5GYPirUd9fekXCs
+         opIXyBlI6NdJbhxZIgYsQbQSGyaHauM2x0M8h9ypl3/89rOmnUPHJKuNe3TK75tZ58px
+         lOMlldagrB0VvV18OgykNBPWKoNvabGlEuTWb0M4zo+tXYUjfEOTTNCTyyhzJKTzn9Gs
+         qEKHzZeR62UeG+llvbz8hIFlgXonEkjuHu5ghs1LYkkJtroSdhMfcbt+t2UsNl1hAVws
+         cJWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=LRplzxxmMZp+qHOObO2FRK3ySnMLCNGlS1beJplcAzk=;
+        b=BCp8W3l2RWJCwlz7q+A0S7W9wa/zSt5rppKSiofuPSaF/3Hrc/zacZSld0zLS33ZBo
+         inIfcsmTjeoOAGg5/61Ec1d7Z5YeYfyRikAUFgPK4j/N/tVNX93HspmEm38ONr6Sm5bM
+         Nt6Q6NYtYXyse9l7dNqS0PLDk6JoUJhz3YP1gaOmxVOw5dPBoiGGeSJ3E8s7ktn8BJDS
+         NeDOGvEcfcNPvS+UcC7Eda6LhJYpKILTDGKjvK9ydhXtdIIigFkffuphjVLmuc8Mx52c
+         UcOQ8Nf0PXt48B9oKsFWm8gRpcx3CMFG2IdROhEqGsGaTf9OYGR/STIbhj4/DQzqAEVG
+         m8ew==
+X-Gm-Message-State: AOAM5334pid6oZ23mlmAxQzYgmzqocbayRfOT+PNiviS5tJFWCHsS4IC
+        HeH/LA7bhapHm6ybJ3V3udiS4sG+OgXHyEI4Z3R3TzhTgIxBlZXfbLTRwzca1M3MRB/+eWBBbCb
+        R5NId9qmhRz9ehVNTcW66xxba2s1sM0+RiH+LPg8i81Xe2SSUTePa/u/G8QpT+W4=
+X-Google-Smtp-Source: ABdhPJzV7vDKSuIXt2u+CHHSF4eW8r+aF6pb3rSVuhRJNLgPbi4xbrNdiQ+6mVOL1JcuBIuU+mG9zb1u8/gFjQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a63:d64d:0:b0:374:6edc:989c with SMTP id
+ d13-20020a63d64d000000b003746edc989cmr19324187pgj.434.1646098152608; Mon, 28
+ Feb 2022 17:29:12 -0800 (PST)
+Date:   Mon, 28 Feb 2022 17:29:10 -0800
+In-Reply-To: <20220301000816.56177-1-chooglen@google.com>
+Message-Id: <kl6l35k2pijd.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <20220301000816.56177-1-chooglen@google.com>
+Subject: Re: [PATCH 00/13] submodule: convert parts of 'update' to C
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Josh Steadmon <steadmon@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Glen Choo <chooglen@google.com> writes:
 
---Wf7uqRc0lQvly4vt
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Original series: https://lore.kernel.org/git/20220210092833.55360-1-choog=
+len@google.com
+> (I've trimmed the cc list down to the 'most interested' parties)
+>
+> =3D Overview
+>
+> This is part 1 of 2 series that will supersede ar/submodule-update (as la=
+id out
+> in [1]). This series prepares for the eventual conversion of "git submodu=
+le
+> update" to C by doing 'obvious' conversions first, and leaving more invol=
+ved
+> conversions for later.
+>
+> Part 1 is a lot simpler than the original series in its entirety, and sho=
+uld
+> play better with topics that Junio identified:
+>
+> - This series is based off a later version of 'master' that already has
+>   'js/apply-partial-clone-filters-recursively' merged in [2].
+> - There is only one, trivial, conflict with 'es/superproject-aware-submod=
+ules'
+>   (both add tests to the end of t7406) [3].
+>
+> Most of these patches were originally from ar/submodule-update, but becau=
+se of
+> the new organization, some commit messages have been amended to make more=
+ sense
+> in context. However, patches 12 and 13 are new - they were added to handl=
+e the
+> "--filter" option introduced by 'js/apply-partial-clone-filters-recursive=
+ly'.
+>
+> Cc-ed Josh, who might be interested in "--filter" changes e.g. the new
+> tests.
+>
+> [1] https://lore.kernel.org/git/kl6lmtig40l4.fsf@chooglen-macbookpro.roam=
+.corp.google.com
+> [2] This also fixes some trivial merge conflicts with 'master'.
+> [3] Part 2 has nontrival conflicts though. Offline, Emily mentioned that
+>     conflicts might go away in the next iteration of
+>     'es/superproject-aware-submodules', but if not, the next round of pat=
+ches
+>     will probably be based on a merge of this series +
+>     'es/superproject-aware-submodules'.
+>
+> =3D Patch summary
+>
+> I'm not certain whether to keep patch 13, see the extra discussion in
+> the --- description for details.
+>
+> - Patch 1 adds extra tests to "git submodule update" to make sure we
+>   don't break anything
+> - Patch 2 removes dead code that used to be part of "git submodule
+>   update"
+> - Patch 3 prepares for later changes by introducing the C function that
+>   will hold most of the newly converted code
+> - Patch 4 moves run-update-procedure's --suboid option into C
+> - Patch 5 moves ensure-core-worktree into C
+> - Patches 6-8 move run-update-procedure's --remote option into C
+> - Patches 9-11 move "git submodule update"'s --init into C
+> - Patches 12-13 move "git submodule update"'s --filter option into C
+>
+> Atharva Raykar (3):
+>   submodule--helper: get remote names from any repository
+>   submodule--helper: refactor get_submodule_displaypath()
+>   submodule--helper: allow setting superprefix for init_submodule()
+>
+> Glen Choo (8):
+>   submodule--helper: remove update-module-mode
+>   submodule--helper: reorganize code for sh to C conversion
+>   submodule--helper run-update-procedure: remove --suboid
+>   submodule--helper: remove ensure-core-worktree
+>   submodule--helper run-update-procedure: learn --remote
+>   submodule--helper update-clone: learn --init
+>   submodule update: add tests for --filter
+>   submodule--helper update-clone: check for --filter and --init
+>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (2):
+>   submodule tests: test for init and update failure output
+>   submodule--helper: don't use bitfield indirection for parse_options()
+>
+>  builtin/submodule--helper.c    | 230 ++++++++++++++++++++-------------
+>  git-submodule.sh               |  54 +-------
+>  t/t7406-submodule-update.sh    |  54 +++++++-
+>  t/t7408-submodule-reference.sh |  14 +-
+>  4 files changed, 211 insertions(+), 141 deletions(-)
+>
+>
+> base-commit: 715d08a9e51251ad8290b181b6ac3b9e1f9719d7
+> --=20
+> 2.33.GIT
 
-On 2022-02-28 at 19:13:40, Junio C Hamano wrote:
-> Elia Pinto <gitter.spiros@gmail.com> writes:
->=20
-> > In glibc >=3D 2.34 MALLOC_CHECK_ and MALLOC_PERTURB_ environment
-> > variables have been replaced by GLIBC_TUNABLES.  Also the new
->=20
-> Does it hurt to have these older environment variables?  If not,
-> we would prefer to see redundant but less deeply indented code,
-> I would imagine.
+Ugh, this version doesn't compile (I rebased it onto 'master' and forgot
+to take into account ce14de03db (refs API: remove "failure_errno" from
+refs_resolve_ref_unsafe(), 2022-01-26)).
 
-Setting both sets of environment variables is probably just fine and the
-simplest solution, I'd imagine.
-
-> > +	if type -p getconf >/dev/null 2>&1; then
-> > +		_GLIBC_VERSION=3D"$(getconf GNU_LIBC_VERSION 2>/dev/null | awk '{ pr=
-int $2 }')"
-> > +		if [ -n "$_GLIBC_VERSION" -a $(expr "$_GLIBC_VERSION" \>=3D "2.34") =
-]; then
-> > +			_HAVE_GLIBC_234=3D"yes"
-> > +		fi
-> > +	fi
->=20
-> Style.  We prefer "test ..." over "[ ... ]" and more importantly we
-> don't use "test X -a Y".
->=20
-> Do we absolutely need "test -p getconf" with an extra indentation?
-> I suspect we don't.
-
-getconf is specified by POSIX, but that doesn't mean it's in the default
-install or in PATH on all systems.  However, we should write "command -v
-getconf" instead if we need to check, since that's the POSIX way to
-write it, and "type" is not guaranteed to be present on all systems.
-
-It looks like the code might silently not match if getconf isn't
-present, and if so then we can avoid the check, but we should of course
-put a comment noting that behavior to help future readers.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---Wf7uqRc0lQvly4vt
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYh12EwAKCRB8DEliiIei
-gf3KAQD+RTP/cNrHWcPNJ5RG1bAA1+DFVLp9BmvHafVyPrDgbQEA/TnPChmDh4oe
-S2sSTskGrULJQi4rc/y1hzPpCLjtZww=
-=vm/o
------END PGP SIGNATURE-----
-
---Wf7uqRc0lQvly4vt--
+This version is still reviewable, but I'll run this through CI again
+before I send out v2.
