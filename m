@@ -2,59 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF3EDC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 20:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D982CC433FE
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 20:26:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238326AbiCAU1B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 15:27:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49910 "EHLO
+        id S238389AbiCAU1E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 15:27:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238308AbiCAU0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 15:26:40 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEC43888C3
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 12:24:36 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id d3so22336643wrf.1
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 12:24:36 -0800 (PST)
+        with ESMTP id S230144AbiCAU0s (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 15:26:48 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93C8E8F63E
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 12:24:42 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id m6so5087179wrr.10
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 12:24:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ql7OrUv2dimnvaZBSchTpW1zo/+46L/f+KWulvTkios=;
-        b=MkEkupKHdtdTqC6InYYm+pcioeqD7ysFvdIiMbl/USFns0ZzlWjnry7PwbMrmeGj1Y
-         4TpkRdRdWjUHPW72jqTupn9yCyh7PIVli9yIU2BRie0k2pCJ1mXtWF/7i0OhRJDPSemr
-         hrdoAnOHxvv6/RyB2WMBzFeHTDJM0yrQP4uUEdZc+0NwmWOnywLUTLbfoDX8Gslq4PVZ
-         XkFceDtn0KxBBHFQig9LaYYhEWMT7S+kfJrDcbffMZThPxEOh8X0VlNG+hjAS9/MGxrr
-         ubANOPudIpjcgcVcfqZ0Y0AmgxQFjtS6OVIUYRkoMX1sNGXIuckXExKolrG/48X8n7cQ
-         LgNg==
+        bh=H9bNahYcVt/ihTGOw2n84IRXC5Bf/4XszC0K41jHOqQ=;
+        b=OgQy4VbtaiqKSLFPQFGfv78dEGb37wNew8ycpwvwqwEWgLorqQ+BstlJ472BfTvNfv
+         ygnJ2AkYxQ89PCFXk/7vTpyWK8+MqDk6FIZipnc7scIUpprlB72SUHPiivnI0dy/BdlS
+         +cpTs72XZOl7bKmW+ibqegxEx/33mVbZ2NHamQR9R1EVWmIEhlo9e3m/bmzzj4HVP2nu
+         2wWxxRgFaJA553zCcz6HmxiwqlvkIdyN6ywc7ezWuAGBKAMK37Y0HmWw0ULDJtE9sMrj
+         Hri2rRwg62MbStnzf04kTgTmU5IQnOHUJyiosyT5azab+b+3lrMDs8IdsZGBj+f9nzFW
+         iBSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ql7OrUv2dimnvaZBSchTpW1zo/+46L/f+KWulvTkios=;
-        b=c8NYY+IgqKXndDZvVHmPYZsj1Cui3dvw9vaGH8sRPHsPu09zqzerinbp/niNFLJ6/S
-         CnqiP9VegFTxm8R5b3X4qc+PMqi84gIsZ3++HWFSR2htAQPKtTvSCkTmnbeklGKkKJrm
-         ffbnROIAwLDg4ofwLURawjcBmTvbZlCnOjnLuhs2a7AY2SWZkpYFIeioSJykKtvxZY8E
-         teqiHnBgbIla/AwD3+tjgYNTatZVSob3elsx0CX5/lpeLBwA7AiVSidS2UxIAwHdRom6
-         O0+ydZtInoSRS3A7HHcfpLLVKjcxRNP0MdCgWo6WXLmE7PvTRJej2+072Bjc2+JEauGS
-         Xyew==
-X-Gm-Message-State: AOAM532nTwTSdUIk1O+mvIwpkcOJ78gLUTXn3oMlDJqvre3J/oOpF00Z
-        j/uiSaka495rgVDQzC/D8KPKC7Gz9pI=
-X-Google-Smtp-Source: ABdhPJzlCkdbGnwuUam7aLoliEOosAdf2clPEfbdwMZjc3nAIxo6BohUqMmzhc2bUjH01llfWwlIQA==
-X-Received: by 2002:a05:6000:50a:b0:1e3:5af:153e with SMTP id a10-20020a056000050a00b001e305af153emr20699535wrf.385.1646166275029;
-        Tue, 01 Mar 2022 12:24:35 -0800 (PST)
+        bh=H9bNahYcVt/ihTGOw2n84IRXC5Bf/4XszC0K41jHOqQ=;
+        b=DkCvsxUz2q4sn0yXOsjCF9tFqHTNBCBWJuv5gqSDCb4quAehpBcKPczN66cLSIXdTo
+         RlZ9zGkZBdHGw99ESE2LxtwgftKZU1DsZj8rok64R74bak4UwJMdU1LIHZS6LRO49+IL
+         k+6VjFbv4mB0t7mM6IFt1jJG3DfRHOmQ/RHRRCNX93noU09zE+jNcb1YejvGLzjIWyVC
+         rxf+945K34g3M3r3suuPkcWvC14hBV6lqgsO4a7UxMeKqHkSxm0X/tODesravqrCYKdB
+         sFRiO4tTd3mtv0tTytS21kkwayizTyMoMDbPuJcRerK400GYLjTkNjwGIXC4wfIDnT9S
+         AL0g==
+X-Gm-Message-State: AOAM5320x2AlezbiULmn7oSPI7AfCZyCreyf8u5mm+qrQgJeAOLDAnEi
+        c7VIrO6WEJvd2PxA6jEQ5TOTfDQSEes=
+X-Google-Smtp-Source: ABdhPJw6DttkBEOBuDHrYfgp5faSgrDwxK1gVGOCWntbSwRuSop9lbRxJTERuQ1uet740LBTKfGTZA==
+X-Received: by 2002:a05:6000:2c6:b0:1f0:77e:4ed2 with SMTP id o6-20020a05600002c600b001f0077e4ed2mr3778581wry.330.1646166279297;
+        Tue, 01 Mar 2022 12:24:39 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v14-20020a7bcb4e000000b0034492fa24c6sm3419003wmj.34.2022.03.01.12.24.34
+        by smtp.gmail.com with ESMTPSA id d8-20020adfe888000000b001e060f07236sm14460637wrm.14.2022.03.01.12.24.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 12:24:34 -0800 (PST)
-Message-Id: <e48a281a4d3db0a04c0609fcb8658e4fcc797210.1646166271.git.gitgitgadget@gmail.com>
+        Tue, 01 Mar 2022 12:24:38 -0800 (PST)
+Message-Id: <6bc11325dd14a67121cf5f5a8e20d83e1d7f4047.1646166271.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1157.v3.git.1646166271.gitgitgadget@gmail.com>
 References: <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
         <pull.1157.v3.git.1646166271.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Mar 2022 20:24:26 +0000
-Subject: [PATCH v3 3/8] read-tree: explicitly disallow prefixes with a leading
- '/'
+Date:   Tue, 01 Mar 2022 20:24:31 +0000
+Subject: [PATCH v3 8/8] read-tree: make three-way merge sparse-aware
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,59 +70,113 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Exit with an error if a prefix provided to `git read-tree --prefix` begins
-with '/'. In most cases, prefixes like this result in an "invalid path"
-error; however, the repository root would be interpreted as valid when
-specified as '--prefix=/'. This is due to leniency around trailing directory
-separators on prefixes (e.g., allowing both '--prefix=my-dir' and
-'--prefix=my-dir/') - the '/' in the prefix is actually the *trailing*
-slash, although it could be misinterpreted as a *leading* slash.
+Enable use of 'merged_sparse_dir' in 'threeway_merge'. As with two-way
+merge, the contents of each conflicted sparse directory are merged without
+referencing the index, avoiding sparse index expansion.
 
-To remove the confusing repo root-as-'/' case and make it clear that
-prefixes should not begin with '/', exit with an error if the first
-character of the provided prefix is '/'.
+As with two-way merge, the 't/t1092-sparse-checkout-compatibility.sh' test
+'read-tree --merge with edit/edit conflicts in sparse directories' confirms
+that three-way merges with edit/edit changes (both with and without
+conflicts) inside a sparse directory result in the correct index state or
+error message. To ensure the index is not unnecessarily expanded, add
+three-way merge cases to 'sparse index is not expanded: read-tree'.
 
-Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- builtin/read-tree.c         |  4 ++++
- t/t1003-read-tree-prefix.sh | 10 ++++++++++
- 2 files changed, 14 insertions(+)
+ builtin/read-tree.c                      |  5 ----
+ t/t1092-sparse-checkout-compatibility.sh |  4 ++-
+ unpack-trees.c                           | 34 ++++++++++++++++++------
+ 3 files changed, 29 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index 2109c4c9e5c..c1a401971c2 100644
+index 9227f07ab15..9f1f33e9546 100644
 --- a/builtin/read-tree.c
 +++ b/builtin/read-tree.c
-@@ -166,6 +166,10 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
- 	if (1 < opts.merge + opts.reset + prefix_set)
- 		die("Which one? -m, --reset, or --prefix?");
+@@ -234,11 +234,6 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+ 			break;
+ 		case 3:
+ 		default:
+-			/*
+-			 * TODO: update threeway_merge to handle edit/edit conflicts in
+-			 * sparse directories.
+-			 */
+-			ensure_full_index(&the_index);
+ 			opts.fn = threeway_merge;
+ 			break;
+ 		}
+diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+index 61dc2ea777c..8be8e3c06a6 100755
+--- a/t/t1092-sparse-checkout-compatibility.sh
++++ b/t/t1092-sparse-checkout-compatibility.sh
+@@ -1413,7 +1413,9 @@ test_expect_success 'sparse index is not expanded: read-tree' '
+ 	init_repos &&
  
-+	/* Prefix should not start with a directory separator */
-+	if (opts.prefix && opts.prefix[0] == '/')
-+		die("Invalid prefix, prefix cannot start with '/'");
-+
- 	if (opts.reset)
- 		opts.reset = UNPACK_RESET_OVERWRITE_UNTRACKED;
+ 	ensure_not_expanded checkout -b test-branch update-folder1 &&
+-	for MERGE_TREES in "base update-folder2" \
++	for MERGE_TREES in "base HEAD update-folder2" \
++			   "base HEAD rename-base" \
++			   "base update-folder2" \
+ 			   "base rename-base" \
+ 			   "update-folder2"
+ 	do
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 0c2a678cd6d..b876caca0d1 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -2643,16 +2643,24 @@ int threeway_merge(const struct cache_entry * const *stages,
+ 	 */
+ 	/* #14, #14ALT, #2ALT */
+ 	if (remote && !df_conflict_head && head_match && !remote_match) {
+-		if (index && !same(index, remote) && !same(index, head))
+-			return reject_merge(index, o);
++		if (index && !same(index, remote) && !same(index, head)) {
++			if (S_ISSPARSEDIR(index->ce_mode))
++				return merged_sparse_dir(stages, 4, o);
++			else
++				return reject_merge(index, o);
++		}
+ 		return merged_entry(remote, index, o);
+ 	}
+ 	/*
+ 	 * If we have an entry in the index cache, then we want to
+ 	 * make sure that it matches head.
+ 	 */
+-	if (index && !same(index, head))
+-		return reject_merge(index, o);
++	if (index && !same(index, head)) {
++		if (S_ISSPARSEDIR(index->ce_mode))
++			return merged_sparse_dir(stages, 4, o);
++		else
++			return reject_merge(index, o);
++	}
  
-diff --git a/t/t1003-read-tree-prefix.sh b/t/t1003-read-tree-prefix.sh
-index e0db2066f31..c860c08ecb4 100755
---- a/t/t1003-read-tree-prefix.sh
-+++ b/t/t1003-read-tree-prefix.sh
-@@ -25,4 +25,14 @@ test_expect_success 'read-tree --prefix' '
- 	cmp expect actual
- '
+ 	if (head) {
+ 		/* #5ALT, #15 */
+@@ -2714,11 +2722,21 @@ int threeway_merge(const struct cache_entry * const *stages,
  
-+test_expect_success 'read-tree --prefix with leading slash exits with error' '
-+	git rm -rf . &&
-+	test_must_fail git read-tree --prefix=/two/ $tree &&
-+	git read-tree --prefix=two/ $tree &&
+ 	}
+ 
+-	/* Below are "no merge" cases, which require that the index be
+-	 * up-to-date to avoid the files getting overwritten with
+-	 * conflict resolution files.
+-	 */
++	/* Handle "no merge" cases (see t/t1000-read-tree-m-3way.sh) */
+ 	if (index) {
++		/*
++		 * If we've reached the "no merge" cases and we're merging
++		 * a sparse directory, we may have an "edit/edit" conflict that
++		 * can be resolved by individually merging directory contents.
++		 */
++		if (S_ISSPARSEDIR(index->ce_mode))
++			return merged_sparse_dir(stages, 4, o);
 +
-+	git rm -rf . &&
-+	test_must_fail git read-tree --prefix=/ $tree &&
-+	git read-tree --prefix= $tree
-+'
-+
- test_done
++		/*
++		 * If we're not merging a sparse directory, ensure the index is
++		 * up-to-date to avoid files getting overwritten with conflict
++		 * resolution files
++		 */
+ 		if (verify_uptodate(index, o))
+ 			return -1;
+ 	}
 -- 
 gitgitgadget
-
