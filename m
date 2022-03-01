@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12E10C433FE
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 20:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF3EDC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 20:26:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238408AbiCAU07 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 15:26:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49912 "EHLO
+        id S238326AbiCAU1B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 15:27:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238385AbiCAU0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 15:26:30 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 481858D69B
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 12:24:35 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id r65so562593wma.2
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 12:24:35 -0800 (PST)
+        with ESMTP id S238308AbiCAU0k (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 15:26:40 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEC43888C3
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 12:24:36 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id d3so22336643wrf.1
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 12:24:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=g1HUFkbhfUBZN6xi/xbSLkpwawNhxPTM9wfs8BMBgzo=;
-        b=FTXfpHjlbMg4dYNgOVzaLYKzG79eoQztJ6tXpFp5llgFBNWhpRsbkvl2qTDPs6pdnI
-         YBGljoJBL/qP1Ix4PQYHmKEDpYpGyKXwb4mPJxmJh+7zIfGWfH7ArFmiPJjG9Dl3+cUE
-         QG55d8/cUr2AAsssoj8/eS483y6nLo1Xz0G7o3A8Yc/YmEKWa4FufgBelg7yh0xto6Mx
-         o7VtasY7lsthIIh1hr5tuyBXAwe1e8as2SGRNjvRPHyZoJJP9EC//S0dkPEkTA5GfHoA
-         Ir2KZlQu/LzzNDp+k43Oew5/1X4p/uLRq9Fe8DDy012Mj8w2v24IXXHIg+Gu9hnyfJhx
-         dugA==
+        bh=ql7OrUv2dimnvaZBSchTpW1zo/+46L/f+KWulvTkios=;
+        b=MkEkupKHdtdTqC6InYYm+pcioeqD7ysFvdIiMbl/USFns0ZzlWjnry7PwbMrmeGj1Y
+         4TpkRdRdWjUHPW72jqTupn9yCyh7PIVli9yIU2BRie0k2pCJ1mXtWF/7i0OhRJDPSemr
+         hrdoAnOHxvv6/RyB2WMBzFeHTDJM0yrQP4uUEdZc+0NwmWOnywLUTLbfoDX8Gslq4PVZ
+         XkFceDtn0KxBBHFQig9LaYYhEWMT7S+kfJrDcbffMZThPxEOh8X0VlNG+hjAS9/MGxrr
+         ubANOPudIpjcgcVcfqZ0Y0AmgxQFjtS6OVIUYRkoMX1sNGXIuckXExKolrG/48X8n7cQ
+         LgNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=g1HUFkbhfUBZN6xi/xbSLkpwawNhxPTM9wfs8BMBgzo=;
-        b=jxw1TUflcMQpvkTwpC7SCMob1fUHoMuxzH0Uvyt2+ow8EshxEzhsNMxxvgE6azMmNU
-         jgMqawSPW3+bHnoE1xND7ml7pJJK13kSgs9pjQt+0oUq94gKigaQPtH8rIIdnCoPJW9T
-         PQUJI/V99h/CBugPrBVUv6GAY7vdRLHmzySwCgGYirSEQcecCzbs8WyLNULISqeZWl0p
-         kFMBWVI9wEGuS3Am23NWp24Qbc/wiGJ/Yr+hgvZCF7hdF0KHQEWvfA1Zq8g2fg1LTNf6
-         N5LayQtI8mElcEL5vgOjBCbMgVDF2YsuG7vbTCG55ec3A9AiMLjaxwG0rH0Er49fuQ04
-         qJ/A==
-X-Gm-Message-State: AOAM530uUWx/3P9d7gp423S5+q1/AzBGx7zYm85FJ3GMFMKoFap+3Whh
-        puzFairbffb5SW9DdANb8ywfsVZxOb8=
-X-Google-Smtp-Source: ABdhPJz9SVJPgUO/FEX3heYmvgrKOmg1U/MQ0Z4uv1AHzFMySXnPk/H9FiuOCD6bhhFXYL4EE8GFuw==
-X-Received: by 2002:a05:600c:3d99:b0:381:546c:8195 with SMTP id bi25-20020a05600c3d9900b00381546c8195mr10668012wmb.112.1646166274181;
-        Tue, 01 Mar 2022 12:24:34 -0800 (PST)
+        bh=ql7OrUv2dimnvaZBSchTpW1zo/+46L/f+KWulvTkios=;
+        b=c8NYY+IgqKXndDZvVHmPYZsj1Cui3dvw9vaGH8sRPHsPu09zqzerinbp/niNFLJ6/S
+         CnqiP9VegFTxm8R5b3X4qc+PMqi84gIsZ3++HWFSR2htAQPKtTvSCkTmnbeklGKkKJrm
+         ffbnROIAwLDg4ofwLURawjcBmTvbZlCnOjnLuhs2a7AY2SWZkpYFIeioSJykKtvxZY8E
+         teqiHnBgbIla/AwD3+tjgYNTatZVSob3elsx0CX5/lpeLBwA7AiVSidS2UxIAwHdRom6
+         O0+ydZtInoSRS3A7HHcfpLLVKjcxRNP0MdCgWo6WXLmE7PvTRJej2+072Bjc2+JEauGS
+         Xyew==
+X-Gm-Message-State: AOAM532nTwTSdUIk1O+mvIwpkcOJ78gLUTXn3oMlDJqvre3J/oOpF00Z
+        j/uiSaka495rgVDQzC/D8KPKC7Gz9pI=
+X-Google-Smtp-Source: ABdhPJzlCkdbGnwuUam7aLoliEOosAdf2clPEfbdwMZjc3nAIxo6BohUqMmzhc2bUjH01llfWwlIQA==
+X-Received: by 2002:a05:6000:50a:b0:1e3:5af:153e with SMTP id a10-20020a056000050a00b001e305af153emr20699535wrf.385.1646166275029;
+        Tue, 01 Mar 2022 12:24:35 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t8-20020a5d6908000000b001e3169cc6afsm14804348wru.94.2022.03.01.12.24.33
+        by smtp.gmail.com with ESMTPSA id v14-20020a7bcb4e000000b0034492fa24c6sm3419003wmj.34.2022.03.01.12.24.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 12:24:33 -0800 (PST)
-Message-Id: <26f4d30bd9546cf940ddd6827ddfc271c99b6665.1646166271.git.gitgitgadget@gmail.com>
+        Tue, 01 Mar 2022 12:24:34 -0800 (PST)
+Message-Id: <e48a281a4d3db0a04c0609fcb8658e4fcc797210.1646166271.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1157.v3.git.1646166271.gitgitgadget@gmail.com>
 References: <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
         <pull.1157.v3.git.1646166271.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Mar 2022 20:24:25 +0000
-Subject: [PATCH v3 2/8] status: fix nested sparse directory diff in sparse
- index
+Date:   Tue, 01 Mar 2022 20:24:26 +0000
+Subject: [PATCH v3 3/8] read-tree: explicitly disallow prefixes with a leading
+ '/'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,98 +71,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Enable the 'recursive' diff option for the diff executed as part of 'git
-status'. Without the 'recursive' enabled, 'git status' reports index
-changes incorrectly when the following conditions were met:
+Exit with an error if a prefix provided to `git read-tree --prefix` begins
+with '/'. In most cases, prefixes like this result in an "invalid path"
+error; however, the repository root would be interpreted as valid when
+specified as '--prefix=/'. This is due to leniency around trailing directory
+separators on prefixes (e.g., allowing both '--prefix=my-dir' and
+'--prefix=my-dir/') - the '/' in the prefix is actually the *trailing*
+slash, although it could be misinterpreted as a *leading* slash.
 
-* sparse index is enabled
-* there is a difference between the index and HEAD in a file inside a
-  *subdirectory* of a sparse directory
-* the sparse directory index entry is *not* expanded in-core
+To remove the confusing repo root-as-'/' case and make it clear that
+prefixes should not begin with '/', exit with an error if the first
+character of the provided prefix is '/'.
 
-Because it is not recursive by default, the diff in 'git status' reports
-changes only at the level of files and directories that are immediate
-children of a sparse directory, rather than recursing into directories with
-changes to identify the modified file(s). As a result, 'git status' reports
-the immediate subdirectory itself as "modified".
-
-Example:
-
-$ git init
-$ mkdir -p sparse/sub
-$ echo test >sparse/sub/foo
-$ git add .
-$ git commit -m "commit 1"
-$ echo somethingelse >sparse/sub/foo
-$ git add .
-$ git commit -a -m "commit 2"
-$ git sparse-checkout set --cone --sparse-index 'sparse'
-$ git reset --soft HEAD~1
-$ git status
-On branch master
-You are in a sparse checkout.
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        modified:   sparse/sub
-
-Enabling the 'recursive' diff option in 'wt_status_collect_changes_index'
-corrects this issue by allowing the diff to recurse into subdirectories of
-sparse directories to find modified files. Given the same repository setup
-as the example above, the corrected result of `git status` is:
-
-$ git status
-On branch master
-You are in a sparse checkout.
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-        modified:   sparse/sub/foo
-
+Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 7 +++++++
- wt-status.c                              | 9 +++++++++
- 2 files changed, 16 insertions(+)
+ builtin/read-tree.c         |  4 ++++
+ t/t1003-read-tree-prefix.sh | 10 ++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 9ef7cd80885..b1dcaa0e642 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -278,6 +278,13 @@ test_expect_success 'status with options' '
- 	test_all_match git status --porcelain=v2 -uno
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index 2109c4c9e5c..c1a401971c2 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -166,6 +166,10 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+ 	if (1 < opts.merge + opts.reset + prefix_set)
+ 		die("Which one? -m, --reset, or --prefix?");
+ 
++	/* Prefix should not start with a directory separator */
++	if (opts.prefix && opts.prefix[0] == '/')
++		die("Invalid prefix, prefix cannot start with '/'");
++
+ 	if (opts.reset)
+ 		opts.reset = UNPACK_RESET_OVERWRITE_UNTRACKED;
+ 
+diff --git a/t/t1003-read-tree-prefix.sh b/t/t1003-read-tree-prefix.sh
+index e0db2066f31..c860c08ecb4 100755
+--- a/t/t1003-read-tree-prefix.sh
++++ b/t/t1003-read-tree-prefix.sh
+@@ -25,4 +25,14 @@ test_expect_success 'read-tree --prefix' '
+ 	cmp expect actual
  '
  
-+test_expect_success 'status with diff in unexpanded sparse directory' '
-+	init_repos &&
-+	test_all_match git checkout rename-base &&
-+	test_all_match git reset --soft rename-out-to-out &&
-+	test_all_match git status --porcelain=v2
++test_expect_success 'read-tree --prefix with leading slash exits with error' '
++	git rm -rf . &&
++	test_must_fail git read-tree --prefix=/two/ $tree &&
++	git read-tree --prefix=two/ $tree &&
++
++	git rm -rf . &&
++	test_must_fail git read-tree --prefix=/ $tree &&
++	git read-tree --prefix= $tree
 +'
 +
- test_expect_success 'status reports sparse-checkout' '
- 	init_repos &&
- 	git -C sparse-checkout status >full &&
-diff --git a/wt-status.c b/wt-status.c
-index 335e723a71e..7da8bbe261a 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -651,6 +651,15 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- 	rev.diffopt.detect_rename = s->detect_rename >= 0 ? s->detect_rename : rev.diffopt.detect_rename;
- 	rev.diffopt.rename_limit = s->rename_limit >= 0 ? s->rename_limit : rev.diffopt.rename_limit;
- 	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
-+
-+	/*
-+	 * The `recursive` option must be enabled to allow the diff to recurse
-+	 * into subdirectories of sparse directory index entries. If it is not
-+	 * enabled, a subdirectory containing file(s) with changes is reported
-+	 * as "modified", rather than the modified files themselves.
-+	 */
-+	rev.diffopt.flags.recursive = 1;
-+
- 	copy_pathspec(&rev.prune_data, &s->pathspec);
- 	run_diff_index(&rev, 1);
- 	object_array_clear(&rev.pending);
+ test_done
 -- 
 gitgitgadget
 
