@@ -2,135 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81EFBC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 10:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E979BC433EF
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 10:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234259AbiCAKZy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 05:25:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43202 "EHLO
+        id S232908AbiCAK2h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 05:28:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234231AbiCAKZl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 05:25:41 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C51D38EB77
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 02:24:58 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id i8so2622931wrr.8
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 02:24:58 -0800 (PST)
+        with ESMTP id S230272AbiCAK2f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 05:28:35 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A6B4E395
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 02:27:55 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id g1so13805385pfv.1
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 02:27:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=DXZZJDCDLve1Q2lw1hcqjmq9lJ9AxwHRnRwUJFeatvM=;
-        b=BkrTuv6hGwwunkyDAYGhudDIlv1ez+YCDYigDX/XH6WNFhRwOGAf2DA6vnkzyey5Sz
-         DJPxa0XPJdvhE3qAiLaickobjrYmclCf/vE0LOQDBA73zWKis3G2Hnyi5Crq+8fnYb2M
-         cOjXgHHEO5oTzp5DFkrwnUIl8/ZAUl6o+Bwd51k3uVvAP7TgYsYVsFNPZnzFxMfuWx8E
-         BGuITLyzQfPOq5DxWHE2EElidjWV8MIuViWfSqwG8E++0b9Nf2t8g2gaOU1vLpTI8t/T
-         6rwc62T7/3+tNsSZKi2DY333iSVmb8h2ZlAQ8uK44RuudojiELi2eoYr1L2pjCJzo+IF
-         h7vg==
+        h=message-id:date:mime-version:user-agent:from:to:subject:references
+         :in-reply-to:content-transfer-encoding;
+        bh=IaIci53G0xezjSlXWUKK5Nt2Cdp/CPsnK2BCrX6436Y=;
+        b=g1J0xTR7mwG+AHoZsK72TdhQSCW059MN6ZSThCmScNDyZESvsv+hCNrpfraUO8se9/
+         nqOHikxIcHwnfL71oxaBX1lMihdPORVvQ2x8m3zseYKp4xS1k83FsgvRB7jGanN6i0mF
+         yRGsnxuhsHDz6/jDahYdKM8p+CG1MSXIj/0daxu+Oi01LWJfS94maRFSD3Z39BA4n3J5
+         LVdFKF/fm3iBapDwVun330TKjKpvvvPMU4XwqpmBpgb5YL+zQMw75TkJJ/LtGcIqug2j
+         3iAmVOAgro9hhi+l/Aadb+PcTe166G9YAGYVwPbXI5KtZJ2CkKFpYSGx5uF/JWGbVVEZ
+         HbiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DXZZJDCDLve1Q2lw1hcqjmq9lJ9AxwHRnRwUJFeatvM=;
-        b=ABX61Y+ttpe79y9sd6ladhJ8itewMVvtf+DsVKhTegH8/KUhLr/bg5Gpeumaw6pa3N
-         BjdqSNwEPiCol4O9ob6a+VLMCWS24BgfvxzeQaUzI1LN4Wi9dk2D+oFcbFP4GR9eFlVO
-         YNxzKybnC/BlUlyI0fjsqjZWwNtV5U5csZxoWEjq795HJNzzPz1LVHkyt4zBD0q6lXro
-         Yrc0F4zj0QbiQl3ce/xeYlRR2/l0LaNK/IENX4fH6rs3Z0RtW5EvYTpMNqo4NCzUZigj
-         cYHq9FnealjZXGNsQPBeKc8CmXo+3dKohy/epwA5nxydwlzktAXRHwzj2ViM3w9IPeqV
-         Xydw==
-X-Gm-Message-State: AOAM530vROD8MOLRYRWeWP/DQqXtWKYEzfQ+WfUDPZkEm5x5KwTvhClt
-        T1AgKYn6zqLoWUGipsWeDl9sfAiI08Q=
-X-Google-Smtp-Source: ABdhPJwac4AqZKaomh6TMb1g0heL6xCeXubK+mVTIgrncO7FHfvx4sGEJ+WaXLgGmtevrJn7nziiLw==
-X-Received: by 2002:adf:d1e9:0:b0:1ea:7fc0:6625 with SMTP id g9-20020adfd1e9000000b001ea7fc06625mr18249637wrd.152.1646130297197;
-        Tue, 01 Mar 2022 02:24:57 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z16-20020a7bc7d0000000b00381004c643asm1983794wmk.30.2022.03.01.02.24.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 02:24:56 -0800 (PST)
-Message-Id: <be2a83f5da3cdd74ee8d5166dea8170344185600.1646130289.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
-        <pull.1117.v2.git.1646130289.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Mar 2022 10:24:49 +0000
-Subject: [PATCH v2 9/9] ci: call `finalize_test_case_output` a little later
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:from:to
+         :subject:references:in-reply-to:content-transfer-encoding;
+        bh=IaIci53G0xezjSlXWUKK5Nt2Cdp/CPsnK2BCrX6436Y=;
+        b=5HBxHGG4lk8ldb+0jEy/lvWu6rZFIwK5gTKDk0M8dLlEa+h/Z6e7f2x5xLfCjhbUVL
+         G+jfeKRZzcxf1wU1eoEf3zGzgG+15pz7/DrQ4HNpucNeI02Fc9TQ6dHvmiUhYENixLVr
+         cSzh6joS3fV4v0asWTmcrJ/kjSyH7tFczfPyxFK5e1kwtTS+ZJTzTNKGBpQaGQLfYzTn
+         JZ3lUFCxiLKCY5bOFUb6k9mm3FF35s/KlxKdHJ/s7IUolNBvD0KWkVXonjOu7hB8kvZF
+         BTARcF/xm+PQg2pkaCIYdbyNUWb15lHu1yspl9fs9n4ViUqiPmxBMIUGvajNlKTk2Kg7
+         VT6g==
+X-Gm-Message-State: AOAM533p4NfMrx8wfomNBRE1++WyFzfvpko0HmnhRUo7AQUgZwEB989V
+        SLUKFw3MA/raTCNjWWL3MKU=
+X-Google-Smtp-Source: ABdhPJzmnVP1mW4v8TbS4jRuaBkELGB6TbQuGDkNmO9y9CMBavKKTGdMGdXnnq7YmIWdqqcCHOlq7g==
+X-Received: by 2002:a63:fb44:0:b0:372:9ec8:745a with SMTP id w4-20020a63fb44000000b003729ec8745amr21320209pgj.551.1646130474647;
+        Tue, 01 Mar 2022 02:27:54 -0800 (PST)
+Received: from ?IPV6:2405:201:a800:4df9:6560:dadc:f905:6d19? ([2405:201:a800:4df9:6560:dadc:f905:6d19])
+        by smtp.gmail.com with ESMTPSA id q13-20020aa7960d000000b004f13804c100sm15418066pfg.165.2022.03.01.02.27.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Mar 2022 02:27:54 -0800 (PST)
+Message-ID: <806840db-e353-860a-e7ec-a83e303b648c@gmail.com>
+Date:   Tue, 1 Mar 2022 15:57:49 +0530
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+From:   jaydeepjd.8914@gmail.com
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] userdiff: Add diff driver for Kotlin lang and tests
+References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
+ <20220301070226.2477769-2-jaydeepjd.8914@gmail.com>
+ <220301.867d9e107u.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220301.867d9e107u.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Thanks for the review. I will be submitting another patch with
+the requested changes shortly.
 
-We used to call that function already before printing the final verdict.
-However, now that we added grouping to the GitHub workflow output, we
-will want to include even that part in the collapsible group for that
-test case.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/test-lib.sh | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 076bee58c19..1e683ad879b 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -732,30 +732,31 @@ trap '{ code=$?; set +x; } 2>/dev/null; exit $code' INT TERM HUP
- # the test_expect_* functions instead.
- 
- test_ok_ () {
--	finalize_test_case_output ok "$@"
- 	test_success=$(($test_success + 1))
- 	say_color "" "ok $test_count - $@"
-+	finalize_test_case_output ok "$@"
- }
- 
- test_failure_ () {
--	finalize_test_case_output failure "$@"
-+	failure_label=$1
- 	test_failure=$(($test_failure + 1))
- 	say_color error "not ok $test_count - $1"
- 	shift
- 	printf '%s\n' "$*" | sed -e 's/^/#	/'
- 	test "$immediate" = "" || _error_exit
-+	finalize_test_case_output failure "$failure_label" "$@"
- }
- 
- test_known_broken_ok_ () {
--	finalize_test_case_output fixed "$@"
- 	test_fixed=$(($test_fixed+1))
- 	say_color error "ok $test_count - $@ # TODO known breakage vanished"
-+	finalize_test_case_output fixed "$@"
- }
- 
- test_known_broken_failure_ () {
--	finalize_test_case_output broken "$@"
- 	test_broken=$(($test_broken+1))
- 	say_color warn "not ok $test_count - $@ # TODO known breakage"
-+	finalize_test_case_output broken "$@"
- }
- 
- test_debug () {
-@@ -1081,10 +1082,10 @@ test_skip () {
- 
- 	case "$to_skip" in
- 	t)
--		finalize_test_case_output skip "$@"
- 
- 		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
- 		: true
-+		finalize_test_case_output skip "$@"
- 		;;
- 	*)
- 		false
--- 
-gitgitgadget
+Thanks,
+Jaydeep.
