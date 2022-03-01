@@ -2,140 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57915C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 04:41:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1608CC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 04:41:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232270AbiCAEmX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 23:42:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53368 "EHLO
+        id S232326AbiCAEm1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 23:42:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232277AbiCAEmT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 23:42:19 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 271D56E2BC
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:41:38 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id k130-20020a628488000000b004f362b45f28so9006444pfd.9
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:41:38 -0800 (PST)
+        with ESMTP id S232238AbiCAEmU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 23:42:20 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FF1F6E352
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:41:40 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id 97-20020a17090a09ea00b001bc54996b62so745342pjo.3
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:41:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=psWNFvxVHzRNwn7LAZ1WWs1LyNdO3zDnyzLnegifRc4=;
-        b=HH4/Xbq9xpXIOhLTAVxcuha1fO59qEwSHoRz5dUCZAKynAUmWaO3+5nEK9+z1bKZdq
-         AQDYmnT6sZmiphEq7gc/PjdIsa7V7cW2vLnuDJemDTfmWR4A/Ipw0OVd3/+zmE/iOXto
-         dnogociS0ytgkyx8M4axh2B8JS7b5jsyDXVfLGeGJtMeb9NWWyzL4CI6slEwZcfQkk9W
-         RM1+YUW+0FCKwbl2iKCF1OrdpXdpCTyRL550wsq4Nk3yvBnUHBC7HMkGNh7jv9Zaw6F6
-         HJh59go+4/TVOTwWNnVL9ktRUOfm91QC7yvViQFdVZdybJV0ABFx3T5DtjL0YGr8a27c
-         dPmg==
+         :cc;
+        bh=UH8t/E0TczNz4tziesvMRSUOID+d/VyUA9f/OELjrWw=;
+        b=GxIsdbQgAQyVrq8wij/eYLOLjSjVSiUnDACjpwQoZSFONadyl5vLIdGLgneTnuLAd3
+         BBgQvcNEvs2CbhohyDdtYIzOWz9D/a68nzVoPFvInIgXcJ2Jv4jlZ4JWfYCjtrLsxzkd
+         GcUfeC5k3UjuYee7zIL7Prg/BbWIMO5iu3vDdZMsCsAz5+es7PSR12XKlf+kzmkAlQNK
+         Z9BpArLwTBceCwng0M7mLKyIcAAwNX2KOr7J388Q1MD6Q7TcXH2MiA0ONCYR84kJ9pxt
+         57eAGsuDH+FRTEQQ+2KnjqDSXCjUXNc38CWFmiR1oAruItiQzuYazfhTx2kLR60ib8Qr
+         a0Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=psWNFvxVHzRNwn7LAZ1WWs1LyNdO3zDnyzLnegifRc4=;
-        b=HhFx3hbgqadYDYaR7yQYZSk5eB9VzMznJGuZ/TFglkZpO91b+5npAP/e9ukSqZS3cg
-         vAI9COft56B9Xg40wV1v7LjCHGllru1NDHXcmXPw+4659QKPfYRDOJRjytaEd2FRIzlb
-         POsrDsGLvi56oJGApKViGVIiv/hKGkixWOGpjS6BdDK4MovvMbp9vJBmwSGQb0SJIkwa
-         2BrFRM53/RT2Ar/TT0lc9/R6Lnxrfjsbp3DmPw/3dphXskNy+YHh12jtD/bUmZrx1H7/
-         BLm8tyE5iz5uCdJV1JALF90TWKVyStFJiXIm5+ZqXVsQqx997XZnEQmBrYwIIfFWJDp7
-         mbFw==
-X-Gm-Message-State: AOAM533quOOik3Xn1UVOCKsho9N0u3DCp0G/JsXtg5jgvPNtZGnXE+rN
-        WEZQwm+U6NLNgYfuHAaARbLK7jgb5JtvGUQqTWTUKEteSe+AiHabgeAmuo/UVolZgl+v68aRndT
-        MSqBnPitn+Z4OAhtaAWLQI1hR2e6pj+6vQIg9p9NKbXXRBSJQYPKtDnz5gdGzO60=
-X-Google-Smtp-Source: ABdhPJw2WMvKqVDWmrMcoWXOgMdU0AANd+ZiIaL/Whl87f16mIDAEY3TAyLljXCxGqwQAUp1q+7SgNHAjujdsQ==
+         :references:subject:from:to:cc;
+        bh=UH8t/E0TczNz4tziesvMRSUOID+d/VyUA9f/OELjrWw=;
+        b=hTXQQ1+3MEtvgtGYvrNYj+fcofj+t4TGGLzEPS9HOUe+K8KWbRvqpVuByuNv8dOpVU
+         cQ2LyWsf8nkm2xf4Q7MkbT7ShsvmWCRmoq+5hioUZ3Walgaa/slYK8XAkegjVKlWpHZ2
+         qHa3Fe/70rq/kqnrOoIJhTDp7C3fvrEpwYPBNHWllVapu33lshvBJZuzZPSgMEiSsiit
+         flEX3SdmNkonkOzo9Bbg5OSfK92LR/fiDIOkMcKnoDOrRYZgR3pR6dm5k0kB8Qe+BBn2
+         N96mxEj/lJVXrFo45iGAPrr+gS1XtGIDuHZ27UUl3+36YjPhedcI5cEKPQ77ZOMdS0HF
+         IHww==
+X-Gm-Message-State: AOAM533vw0KtKGcMzFG91lGt+U8aJDdCagInl/STS466bhuIOFqWNNUk
+        Eh+abzC93IOaeIss5z/2vrHfhZ9vpzFzJNG8vviolOKANYYgWBJk1vY95a2NdreinCLlmdnJ5KH
+        djQQIkzQG2jA6ZXu4oDQriU9CpHrWqrrqgTNaY40En5E/MycZARCqs7B0Kxpxq6c=
+X-Google-Smtp-Source: ABdhPJw0Hz5Vy0OM2h2OLu5X50MQjkXCvdWhFvJHlzUnpUa/uYdhq5fQ2zeKnn8U24mRKtK9RLQxe1DoG6GZMw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:ea02:b0:14f:fd0e:e433 with SMTP
- id s2-20020a170902ea0200b0014ffd0ee433mr24621306plg.24.1646109697606; Mon, 28
- Feb 2022 20:41:37 -0800 (PST)
-Date:   Mon, 28 Feb 2022 20:41:20 -0800
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:22cc:b0:4e0:58dc:e489 with SMTP
+ id f12-20020a056a0022cc00b004e058dce489mr25421244pfj.58.1646109699730; Mon,
+ 28 Feb 2022 20:41:39 -0800 (PST)
+Date:   Mon, 28 Feb 2022 20:41:21 -0800
 In-Reply-To: <20220301044132.39474-1-chooglen@google.com>
-Message-Id: <20220301044132.39474-2-chooglen@google.com>
+Message-Id: <20220301044132.39474-3-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220301000816.56177-1-chooglen@google.com> <20220301044132.39474-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH v2 01/13] submodule tests: test for init and update failure output
+Subject: [PATCH v2 02/13] submodule--helper: remove update-module-mode
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>,
-        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Glen Choo <chooglen@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+This is dead code - it has not been used since c51f8f94e5
+(submodule--helper: run update procedures from C, 2021-08-24).
 
-Amend some submodule tests to test for the failure output of "git
-submodule [update|init]". The lack of such tests hid a regression in
-an earlier version of a subsequent commit.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- t/t7406-submodule-update.sh    | 14 ++++++++++++--
- t/t7408-submodule-reference.sh | 14 +++++++++++++-
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ builtin/submodule--helper.c | 24 ------------------------
+ 1 file changed, 24 deletions(-)
 
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 11cccbb333..7764c1c3cb 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -205,8 +205,18 @@ test_expect_success 'submodule update should fail due =
-to local changes' '
- 	 (cd submodule &&
- 	  compare_head
- 	 ) &&
--	 test_must_fail git submodule update submodule
--	)
-+	 test_must_fail git submodule update submodule 2>../actual.raw
-+	) &&
-+	sed "s/^> //" >expect <<-\EOF &&
-+	> error: Your local changes to the following files would be overwritten b=
-y checkout:
-+	> 	file
-+	> Please commit your changes or stash them before you switch branches.
-+	> Aborting
-+	> fatal: Unable to checkout OID in submodule path '\''submodule'\''
-+	EOF
-+	sed -e "s/checkout $SQ[^$SQ]*$SQ/checkout OID/" <actual.raw >actual &&
-+	test_cmp expect actual
-+
- '
- test_expect_success 'submodule update should throw away changes with --for=
-ce ' '
- 	(cd super &&
-diff --git a/t/t7408-submodule-reference.sh b/t/t7408-submodule-reference.s=
-h
-index a3892f494b..c3a4545510 100755
---- a/t/t7408-submodule-reference.sh
-+++ b/t/t7408-submodule-reference.sh
-@@ -193,7 +193,19 @@ test_expect_success 'missing nested submodule alternat=
-e fails clone and submodul
- 		cd supersuper-clone &&
- 		check_that_two_of_three_alternates_are_used &&
- 		# update of the submodule fails
--		test_must_fail git submodule update --init --recursive
-+		cat >expect <<-\EOF &&
-+		fatal: submodule '\''sub'\'' cannot add alternate: path ... does not exi=
-st
-+		Failed to clone '\''sub'\''. Retry scheduled
-+		fatal: submodule '\''sub-dissociate'\'' cannot add alternate: path ... d=
-oes not exist
-+		Failed to clone '\''sub-dissociate'\''. Retry scheduled
-+		fatal: submodule '\''sub'\'' cannot add alternate: path ... does not exi=
-st
-+		Failed to clone '\''sub'\'' a second time, aborting
-+		fatal: Failed to recurse into submodule path ...
-+		EOF
-+		test_must_fail git submodule update --init --recursive 2>err &&
-+		grep -e fatal: -e ^Failed err >actual.raw &&
-+		sed -e "s/path $SQ[^$SQ]*$SQ/path .../" <actual.raw >actual &&
-+		test_cmp expect actual
- 	)
- '
-=20
---=20
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index eeacefcc38..c11ee1ea2b 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1957,29 +1957,6 @@ static void determine_submodule_update_strategy(struct repository *r,
+ 	free(key);
+ }
+ 
+-static int module_update_module_mode(int argc, const char **argv, const char *prefix)
+-{
+-	const char *path, *update = NULL;
+-	int just_cloned;
+-	struct submodule_update_strategy update_strategy = { .type = SM_UPDATE_CHECKOUT };
+-
+-	if (argc < 3 || argc > 4)
+-		die("submodule--helper update-module-clone expects <just-cloned> <path> [<update>]");
+-
+-	just_cloned = git_config_int("just_cloned", argv[1]);
+-	path = argv[2];
+-
+-	if (argc == 4)
+-		update = argv[3];
+-
+-	determine_submodule_update_strategy(the_repository,
+-					    just_cloned, path, update,
+-					    &update_strategy);
+-	fputs(submodule_strategy_to_string(&update_strategy), stdout);
+-
+-	return 0;
+-}
+-
+ struct update_clone_data {
+ 	const struct submodule *sub;
+ 	struct object_id oid;
+@@ -3430,7 +3407,6 @@ static struct cmd_struct commands[] = {
+ 	{"name", module_name, 0},
+ 	{"clone", module_clone, 0},
+ 	{"add", module_add, SUPPORT_SUPER_PREFIX},
+-	{"update-module-mode", module_update_module_mode, 0},
+ 	{"update-clone", update_clone, 0},
+ 	{"run-update-procedure", run_update_procedure, 0},
+ 	{"ensure-core-worktree", ensure_core_worktree, 0},
+-- 
 2.33.GIT
 
