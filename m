@@ -2,71 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69654C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 02:59:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E48DC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 02:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231990AbiCAC7v convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 28 Feb 2022 21:59:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53260 "EHLO
+        id S231992AbiCAC76 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 21:59:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230498AbiCAC7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 21:59:50 -0500
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E409D5AEE9
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 18:59:09 -0800 (PST)
-Received: by mail-pl1-f169.google.com with SMTP id h17so6786505plc.5
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 18:59:09 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zwJhaGU7fOIA4KU9NzccXKf/eFbnugwYaD5wnF9cU/Y=;
-        b=aqt6sM7QQcyp1M/xYuUxJ23m+SYSLQBrL3LBJ6qq0yjLVuMY7gOsjpOWHFKk6ViZ2p
-         iSd7EymX5HGNxv0l2x6tk7NYG5Riv2jC+0IFUjDuZKTZ2AlpQuWdLZq206gEpCfFGWkJ
-         FeVo3KLMSsIpLOTkAip/Ly0nMbNNe1y1teHeSpwrphhXeo9l2ZGNX0Xkv7UE5jBZckXb
-         Ay/c/HJS8PoCoKb/r1tU4rPrDIt60LPX1segLGjcb8p46wYPHXGZtX8B3tKcPKTrTFec
-         5AHGvYm0frLseBocaj0GAkuOTRdGBraNV09qlro+P/E5LMm4mwSqsp5+XGxwf6uT4oGp
-         Z5zg==
-X-Gm-Message-State: AOAM5315kXmSyBs5t9QJQyv8yvQVPKO84RC9a6hBC9GFHNj923u4jvth
-        TH6/KUQj2XrlLpJH2qRINP9qxKYR07Z2MnP+lfkH7hvmng1DUA==
-X-Google-Smtp-Source: ABdhPJyuDSQHSJyhRO8WU1qcV+OKs5dH2h4rdHLhi4LV7Ess1SaF6gX+CuShrJ7aXGOrRo1JLDT9qtkkvlgsGQ2yUp4=
-X-Received: by 2002:a17:903:2289:b0:151:64c6:20fd with SMTP id
- b9-20020a170903228900b0015164c620fdmr8873889plh.64.1646103549310; Mon, 28 Feb
- 2022 18:59:09 -0800 (PST)
+        with ESMTP id S230498AbiCAC74 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 21:59:56 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCA295AEFF
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 18:59:15 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3533918686E;
+        Mon, 28 Feb 2022 21:59:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1U4DJNtsFs4Jwwqb6CXZouWTwqeqYcec8ThjNb
+        9fBJw=; b=gzMK4lJK1l8zsr35kMQkkFp1d6geu17Un8H9w3XUOcC5smK6QbbAZE
+        3CwumIuKpOUsMInPH0tuzIKJe31DeFWZNbhBMZXBpD3jxm54qnsMwpG3tRcBXUwp
+        gVvuN5DpION2IyDZNjU14Kp50AorisPb+fVf1kBv3zbbyzZlWgYSg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2D71218686D;
+        Mon, 28 Feb 2022 21:59:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ADB3E18686C;
+        Mon, 28 Feb 2022 21:59:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     phillip.wood@dunelm.org.uk,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/9] ci: make Git's GitHub workflow output much more
+ helpful
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet>
+        <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com>
+        <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet>
+        <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
+        <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com>
+        <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet>
+        <xmqqv8x2dd7j.fsf@gitster.g> <xmqqzgmd5uzu.fsf@gitster.g>
+Date:   Mon, 28 Feb 2022 18:59:11 -0800
+In-Reply-To: <xmqqzgmd5uzu.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+        26 Feb 2022 10:43:33 -0800")
+Message-ID: <xmqqee3mwf7k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1161.v2.git.1645815142.gitgitgadget@gmail.com>
- <pull.1161.v3.git.1646032466.gitgitgadget@gmail.com> <d5b18c7949fdea966d31b2b8ca3f8aa8ed3a86b6.1646032466.git.gitgitgadget@gmail.com>
- <220228.86o82r5nzm.gmgdl@evledraar.gmail.com>
-In-Reply-To: <220228.86o82r5nzm.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 28 Feb 2022 21:58:58 -0500
-Message-ID: <CAPig+cQQ30XZ1zAguZNgEMTFK3P029Ds-miXQq=A-_pd4HGiGQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] t3200: tests for new branch.autosetupmerge option "simple"
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>, Tao Klerks <tao@klerks.biz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: 92BE0EAE-990B-11EC-90D7-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 28, 2022 at 5:54 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> On Mon, Feb 28 2022, Tao Klerks via GitGitGadget wrote:
-> > +     test $(git config branch.feature.remote) = otherserver &&
-> > +     test $(git config branch.feature.merge) = refs/heads/feature
->
-> Use:
->
->     echo otherserver >expect &&
->     git config ... >actual &&
->     test_cmp expect actual
->
-> etc., the pattern you're using here will hide git's exit code on
-> segfaults, abort() etc., and also makes for less useful debug info on
-> failure than test_cmp.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Better yet, use test_cmp_config():
+> FWIW, CI run on "seen" uses this series.
 
-    test_cmp_config otherserver branch.feature.remote &&
+Another "early impression".  I had to open this one today,
+
+    https://github.com/git/git/runs/5367854000?check_suite_focus=true
+
+which was a jarring experience.  It correctly painted the fourth
+circle "Run ci/run-build-and-tests.sh" in red with X in it, and
+after waiting for a while (which I already said that I do not mind
+at all), showed a bunch of line, and then auto-scrolled down to the
+end of that section.
+
+It _looked_ like that it was now ready for me to interact with it,
+so I started to scroll up to the beginning of that section, but I
+had to stare at blank space for several minutes before lines are
+shown to occupy that space.  During the repainting, unlike the
+initial delay-wait that lets me know that it is not ready by showing
+the spinning circle, there was no indication that it wants me to
+wait until it fills the blank space with lines.  Not very pleasant.
+
+I do not think it is so bad to say that it is less pleasant than
+opening the large "print test failures" section and looking for "not
+ok", which was what the original CI UI we had before this series.
+But at least with the old one, once the UI becomes ready for me to
+interact with, I didn't have to wait for (for the lack of better
+phrase) such UI hiccups.  Responses to looking for the next instance
+of "not ok" was predictable.
+
+Thanks.
