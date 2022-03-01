@@ -2,236 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 034FFC433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 04:42:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7EABC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 04:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232378AbiCAEms (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 23:42:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54770 "EHLO
+        id S232403AbiCAEmw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 23:42:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232372AbiCAEmj (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232376AbiCAEmj (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 28 Feb 2022 23:42:39 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B45D570070
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:41:52 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id d5-20020a623605000000b004e01ccd08abso8975084pfa.10
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:41:52 -0800 (PST)
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA1CD70077
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:41:54 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id c15-20020a17090a674f00b001bc9019ce17so827434pjm.8
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 20:41:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=pVUeq3Y5jSxZALpUcz7YtbpU/lAeG5FYv4uMaBelxgw=;
-        b=jhJCLEib3RhmEVS+TPbRG+9IXaKZPT4pihOTg4VkKangekrrnvddMezUfEfPxSQhxG
-         4KHQxB4YOQ101QV7nmX/odHlPGt7ttJZ0ybhJhOqznbpmGDIYcIQvsaDC8EkTn2WBnSI
-         oIyQ94o8dWlhJvFAaltATVTRzxx09cneDCqYkPHXaB8qXxaPSChEir2N/ostrZHuacLn
-         i0KYpnfQx2tRLDaWcp68g+PkyTdda2AKSUSI5MWNmNL/IrOy2DRlaoIp2vtWL9BrHNv2
-         CVju1TddzFOp9SWhgltBjGk7cv52hamGpPMwAnwPgD5s6NCy7Gh0AZSeJDOIbHe0SpCN
-         a8vQ==
+         :cc:content-transfer-encoding;
+        bh=R4gn/Lgz/0jYl0rWTMo4SAD9i7exfSROby50q/4fVN8=;
+        b=MOqHLVeMUN69QEpmbrR4cJOMQtf2oj8FM85+Kjf1s5Xoww8w62sUu15mHSVebITqVG
+         UUoO3dpDp5O6dtxfC/zmBEEi69LlQvOeF625SpRe3Jtr6rakSRvyV2UghsoBij2egh+W
+         B+qXgnjtxvQF1y914Ik41Dy5IE/hZn1wT+ybj+GFx/8R2XHjqioSftEo9f3S2zrFf2yc
+         21g0WJU1M4rV2pw6j4TgBCMeKKYK9PoHEwTs+/LuDvt8CImjAKnb9GLcd2i2ZGtcrtL2
+         FtP0uLeKRxRbo+NYSwrnwUtiYpiJe4+fupvCps7pnR1imZQmXU7Gh6+w6PDpNocJfJXD
+         4aig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=pVUeq3Y5jSxZALpUcz7YtbpU/lAeG5FYv4uMaBelxgw=;
-        b=Pb86GoffKyv8Xf20E0WVr0vzYRFEERGszz4VOf8DsNIzakCqDSM8kRivCbeiX6Knj8
-         tVGFWUzmXKUteF60GuaSV0jjk4PkQbz/1xl/X5DuH9xKKuqP7tjwl7B37Q6F6tAA56A8
-         OdAmnKwcEnANwOHmEa3WE3DHzpg8jX8/JY4AXzI6uICzcaT1AqJaHVbC+cshzdOVDdPZ
-         Pp9pEqR5oWm9hKICgGdQuX5OIDL/5eHm9bMV1WFj4ZeEi0rbBEFUK20e+pzVIji86byx
-         M9p4kxC8MOQnjicsDc72hIhcg6BBBOPcfI7o3ZHd/duOuL8M+b7gV4ZuBewyEX4/RAjg
-         /ReA==
-X-Gm-Message-State: AOAM533T8oziDGvaYmkQPif+CynthZu7cUVjSJnBFQPTEitq4UY+JB80
-        +d8mqWTENa+20f/T03h9QKpPH1rWxn3ZViLi07EPNY39yPMv188J1Uovf/4Eygj1HHe56RtOyMS
-        OqwZmSRxhY/lY4xdX/oGx1RbcGsVKsz6AnkqGQ32bZN+g/6H9vOMyLGEqcwrQMVY=
-X-Google-Smtp-Source: ABdhPJyxADua15+1DJ67iagCcw65EO5q+26D/0h8UFHPb/d7c/+zXoLM+yRz2c6FcjFMSQnrp9SdAT2Gz4UwSg==
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=R4gn/Lgz/0jYl0rWTMo4SAD9i7exfSROby50q/4fVN8=;
+        b=sDJ6i6UBTUphYl5UNaVbUleUE6F6/bHsGS8hSoD4/UQVOtsdzaDxg+k8purOpUwSV/
+         qtQDBhxFw39b3nTldZAcRMRxPgDduYR+NnBOe60D2Q4fCD0e1Cf2E0WaJ8iwajvg+KBf
+         FQtoVpgqYP/KBPkAWCYDF+zoZkF6NFFrZMPx8XH4eCjUduwAVEyWgSAt1tEx9FYpfFLk
+         ls3cBxPvcVmR7uOjec6rr4UzNEURY3TaVV643piPgkasCdE/dKWxVVKtIO1BqSDmZd1A
+         Xqb8N0Ja6zmnYAv54YtI1/BW/qblpYySXJdIEf8fjl2wbplzgXo08+Xn91n3fsThbndI
+         lU8A==
+X-Gm-Message-State: AOAM531u1+wXBqZBvJQ9ihuGk2p41vrYzYbE8G6YpRgVLlroL2saSeHV
+        01CtPdRKRouyrm+Pzpj/Fu9oOMW+9xXJyKEowP5QApIfGNl31RPwaeYB5ldHYxHrs7SArlK4X4o
+        m0LZTN41aKE+SHXl0PYwEqyM/RjMf4WV+vY4te6/5j45tq/o0vyh47wl2n8YMMO4=
+X-Google-Smtp-Source: ABdhPJx04YxFDP3PA4u7TQV6d/Y1+1xEsXGB1A7e6096H/D3pSgeL7P5KrV7zC1bYO3Mjk0m6SzPAoa775x89A==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:d816:b0:1bd:3194:70fc with SMTP
- id a22-20020a17090ad81600b001bd319470fcmr11451766pjv.136.1646109712081; Mon,
- 28 Feb 2022 20:41:52 -0800 (PST)
-Date:   Mon, 28 Feb 2022 20:41:27 -0800
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1d13:b0:4e1:7958:b59d with SMTP
+ id a19-20020a056a001d1300b004e17958b59dmr25156571pfx.68.1646109714055; Mon,
+ 28 Feb 2022 20:41:54 -0800 (PST)
+Date:   Mon, 28 Feb 2022 20:41:28 -0800
 In-Reply-To: <20220301044132.39474-1-chooglen@google.com>
-Message-Id: <20220301044132.39474-9-chooglen@google.com>
+Message-Id: <20220301044132.39474-10-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220301000816.56177-1-chooglen@google.com> <20220301044132.39474-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH v2 08/13] submodule--helper run-update-procedure: learn --remote
+Subject: [PATCH v2 09/13] submodule--helper: refactor get_submodule_displaypath()
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>
+Cc:     Glen Choo <chooglen@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach run-update-procedure to handle --remote instead of parsing
---remote in git-submodule.sh. As a result, "git submodule--helper
-[print-default-remote|remote-branch]" have no more callers, so remove
-them.
+From: Atharva Raykar <raykar.ath@gmail.com>
 
-Signed-off-by: Glen Choo <chooglen@google.com>
+We create a function called `do_get_submodule_displaypath()` that
+generates the display path required by several submodule functions, and
+takes a custom superprefix parameter, instead of reading it from the
+environment.
+
+We then redefine the existing `get_submodule_displaypath()` function
+as a call to this new function, where the superprefix is obtained from
+the environment.
+
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Shourya Shukla <periperidip@gmail.com>
+Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/submodule--helper.c | 56 +++++++++++++++----------------------
- git-submodule.sh            | 30 +-------------------
- 2 files changed, 23 insertions(+), 63 deletions(-)
+ builtin/submodule--helper.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 3a96c35b86..99341fb343 100644
+index 99341fb343..11afdeea8a 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -72,21 +72,6 @@ static char *get_default_remote(void)
- 	return repo_get_default_remote(the_repository);
+@@ -247,11 +247,8 @@ static int resolve_relative_url_test(int argc, const c=
+har **argv, const char *pr
+ 	return 0;
  }
- 
--static int print_default_remote(int argc, const char **argv, const char *prefix)
--{
--	char *remote;
--
--	if (argc != 1)
--		die(_("submodule--helper print-default-remote takes no arguments"));
--
--	remote = get_default_remote();
--	if (remote)
--		printf("%s\n", remote);
--
--	free(remote);
--	return 0;
--}
--
- static int starts_with_dot_slash(const char *str)
+=20
+-/* the result should be freed by the caller. */
+-static char *get_submodule_displaypath(const char *path, const char *prefi=
+x)
++static char *do_get_submodule_displaypath(const char *path, const char *pr=
+efix, const char *super_prefix)
  {
- 	return str[0] == '.' && is_dir_sep(str[1]);
-@@ -2027,6 +2012,7 @@ struct update_data {
- 	unsigned int quiet;
- 	unsigned int nofetch;
- 	unsigned int just_cloned;
-+	unsigned int remote;
- };
- #define UPDATE_DATA_INIT { .update_strategy = SUBMODULE_UPDATE_STRATEGY_INIT }
- 
-@@ -2603,6 +2589,8 @@ static int run_update_procedure(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK_F(0, "oid", &update_data.oid, N_("sha1"),
- 			       N_("SHA1 expected by superproject"), PARSE_OPT_NONEG,
- 			       parse_opt_object_id),
-+		OPT_BOOL(0, "remote", &update_data.remote,
-+			 N_("use SHA-1 of submodule's remote tracking branch")),
- 		OPT_END()
- 	};
- 
-@@ -2682,23 +2670,6 @@ static const char *remote_submodule_branch(const char *path)
- 	return branch;
+-	const char *super_prefix =3D get_super_prefix();
+-
+ 	if (prefix && super_prefix) {
+ 		BUG("cannot have prefix '%s' and superprefix '%s'",
+ 		    prefix, super_prefix);
+@@ -267,6 +264,13 @@ static char *get_submodule_displaypath(const char *pat=
+h, const char *prefix)
+ 	}
  }
- 
--static int resolve_remote_submodule_branch(int argc, const char **argv,
--		const char *prefix)
--{
--	const char *ret;
--	struct strbuf sb = STRBUF_INIT;
--	if (argc != 2)
--		die("submodule--helper remote-branch takes exactly one arguments, got %d", argc);
--
--	ret = remote_submodule_branch(argv[1]);
--	if (!ret)
--		die("submodule %s doesn't exist", argv[1]);
--
--	printf("%s", ret);
--	strbuf_release(&sb);
--	return 0;
--}
--
- static int push_check(int argc, const char **argv, const char *prefix)
+=20
++/* the result should be freed by the caller. */
++static char *get_submodule_displaypath(const char *path, const char *prefi=
+x)
++{
++	const char *super_prefix =3D get_super_prefix();
++	return do_get_submodule_displaypath(path, prefix, super_prefix);
++}
++
+ static char *compute_rev_name(const char *sub_path, const char* object_id)
  {
- 	struct remote *remote;
-@@ -3033,6 +3004,25 @@ static int update_submodule2(struct update_data *update_data)
- 		die(_("Unable to find current revision in submodule path '%s'"),
- 			update_data->displaypath);
- 
-+	if (update_data->remote) {
-+		char *remote_name = get_default_remote_submodule(update_data->sm_path);
-+		const char *branch = remote_submodule_branch(update_data->sm_path);
-+		char *remote_ref = xstrfmt("refs/remotes/%s/%s", remote_name, branch);
-+
-+		if (!update_data->nofetch) {
-+			if (fetch_in_submodule(update_data->sm_path, update_data->depth,
-+					      0, NULL))
-+				die(_("Unable to fetch in submodule path '%s'"),
-+				    update_data->sm_path);
-+		}
-+
-+		if (resolve_gitlink_ref(update_data->sm_path, remote_ref, &update_data->oid))
-+			die(_("Unable to find %s revision in submodule path '%s'"),
-+			    remote_ref, update_data->sm_path);
-+
-+		free(remote_ref);
-+	}
-+
- 	if (!oideq(&update_data->oid, &update_data->suboid) || update_data->force)
- 		return do_run_update_procedure(update_data);
- 
-@@ -3431,11 +3421,9 @@ static struct cmd_struct commands[] = {
- 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
- 	{"init", module_init, SUPPORT_SUPER_PREFIX},
- 	{"status", module_status, SUPPORT_SUPER_PREFIX},
--	{"print-default-remote", print_default_remote, 0},
- 	{"sync", module_sync, SUPPORT_SUPER_PREFIX},
- 	{"deinit", module_deinit, 0},
- 	{"summary", module_summary, SUPPORT_SUPER_PREFIX},
--	{"remote-branch", resolve_remote_submodule_branch, 0},
- 	{"push-check", push_check, 0},
- 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
- 	{"is-active", is_active, 0},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 458ce73ac6..23ebd90892 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -247,20 +247,6 @@ cmd_deinit()
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${GIT_QUIET:+--quiet} ${force:+--force} ${deinit_all:+--all} -- "$@"
- }
- 
--# usage: fetch_in_submodule <module_path> [<depth>] [<sha1>]
--# Because arguments are positional, use an empty string to omit <depth>
--# but include <sha1>.
--fetch_in_submodule () (
--	sanitize_submodule_env &&
--	cd "$1" &&
--	if test $# -eq 3
--	then
--		echo "$3" | git fetch ${GIT_QUIET:+--quiet} --stdin ${2:+"$2"}
--	else
--		git fetch ${GIT_QUIET:+--quiet} ${2:+"$2"}
--	fi
--)
--
- #
- # Update each submodule path to correct revision, using clone and checkout as needed
- #
-@@ -409,21 +395,6 @@ cmd_update()
- 			just_cloned=
- 		fi
- 
--		if test -n "$remote"
--		then
--			branch=$(git submodule--helper remote-branch "$sm_path")
--			if test -z "$nofetch"
--			then
--				# Fetch remote before determining tracking $sha1
--				fetch_in_submodule "$sm_path" $depth ||
--				die "fatal: $(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
--			fi
--			remote_name=$(sanitize_submodule_env; cd "$sm_path" && git submodule--helper print-default-remote)
--			sha1=$(sanitize_submodule_env; cd "$sm_path" &&
--				git rev-parse --verify "${remote_name}/${branch}") ||
--			die "fatal: $(eval_gettext "Unable to find current \${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
--		fi
--
- 		out=$(git submodule--helper run-update-procedure \
- 			  ${wt_prefix:+--prefix "$wt_prefix"} \
- 			  ${GIT_QUIET:+--quiet} \
-@@ -434,6 +405,7 @@ cmd_update()
- 			  ${update:+--update "$update"} \
- 			  ${prefix:+--recursive-prefix "$prefix"} \
- 			  ${sha1:+--oid "$sha1"} \
-+			  ${remote:+--remote} \
- 			  "--" \
- 			  "$sm_path")
- 
--- 
+ 	struct strbuf sb =3D STRBUF_INIT;
+--=20
 2.33.GIT
 
