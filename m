@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98866C433EF
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 00:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1A78C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 00:08:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231654AbiCAAJd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 19:09:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43952 "EHLO
+        id S231717AbiCAAJf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 19:09:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231304AbiCAAJX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 19:09:23 -0500
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16EB39BBBA
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:08:44 -0800 (PST)
-Received: by mail-yb1-xb49.google.com with SMTP id w1-20020a05690204e100b006244315a721so11907582ybs.0
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:08:44 -0800 (PST)
+        with ESMTP id S231615AbiCAAJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 19:09:29 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4DC3D4C98
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:08:45 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id y1-20020a17090a644100b001bc901aba0dso7371081pjm.8
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:08:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=ifSK06p32C23BmYfMyrll+/iFLQK/m8pYXO3M2+HaJc=;
-        b=F17CXjQtz4tf1Ev5b8ndPsrORN7M5LVlzw5K7Ot85b4j+OlUMwTXpzNbhbln15xY0U
-         DlfaI3ArSWLcb3l1ghQebuJBOuHOUg4UKL0maYvt1LHpZ82La+M8+TMSWhk6Fch6p8p1
-         GaDj09AFOAGaehu7/b+bjeLMMO5DvVpEMColNjtrlWCwzTaxCzsxcmpd523idVcSNQSF
-         wrK3P3SEwTZ/N2Rq7RHQY3LVSsWi7JzPtB7Szt0M18qJS6QbybhjTF+PAs3KW7xm4kXg
-         T+AwfA8adX9EBJyC0RcDR1JyjjndsrvuK4JtryKwq3/q1Ie5fW+Jif9JcieByj8gUYuz
-         s/yQ==
+        bh=o5nkxgDZrdwzBZ20XpsGRZ4cU+SIy1n8uBmoDWH1UMs=;
+        b=lpkf6ZO79Kqy3GfF6ni3U10m1v8WbNTMDYIJ7essKIqwkhw+8qKg8ut3XCF5PRah1O
+         voqTUMzfv6CCSiV6eJVEwEoaWVkNGMZ4RkMcq/4ULVfyIaGgEBU8t167pjbIozgEA0IZ
+         Dzm4UWr2huW5dK/cbJpqffxnq3vnokVUAkyBW0JqtQnAcNqh1/kfR2g4NdvRnIG3DpLD
+         FnnXx5qb12LuIIt4W00oTLhRKa1oMAQ0bq3eVAKnpYgfIHR6+iXrHg1Ou7spbFK5kQw8
+         zGAawH8iKvrIPLt8cX2UZm66EPg45C7EOdY2/sCHBiGSMR9/CARRAaNlgHa3jL80fsI6
+         tnVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=ifSK06p32C23BmYfMyrll+/iFLQK/m8pYXO3M2+HaJc=;
-        b=wyNsYmWCDMFc5mOm4279ziUYRGnvIIGi0y8m81J/aebZUlghgdXPbsWj5pkX5bzwwj
-         szNfQJXtiWLGHAdAPrN2kA5aAFA1Tot5kSaPTfXNC7X9qyK8ppheeBlya9SRZcl4gJ78
-         4j/jdZTFsM9jQ78dqB1qpN9OguY5OdwywhTyDUKsFzw2VO85PV1rNcaUA1ZwJ1ThfgwD
-         VXliF7oliZqC7OEtaWYlmm/2DZdvqhLXb6NQP0MY5tbaQ5wrHcysjHOk3XYrBTvxFKuh
-         MuLk5oWyYWfNT18mDZrlYffkBRF4C/IUUEtoznXbneLov88P5L/NNDAJzC33qf/bAW4a
-         93fw==
-X-Gm-Message-State: AOAM5311NwWj3psIKkx0PJvmKwsfe5Sd3QdY/hzfTo80UmGFqGyt/3Z2
-        1AaFe4lcPkEf5sg5GbYdITg4s/tvyBioAsYiCeG9ZIhl2JtxS0iNQ5aLQlGbfm0S6RnB3PuVcj2
-        MrGlJ+0LP9uh5yGDrVx0EFwli+hIbsZkj8u1pYBPl8W9ApuD0/VFkCrA8sG3P9R8=
-X-Google-Smtp-Source: ABdhPJyVY3b9i2aonKLCL4rSzzo7LTfsk+PxK/bMwIOWE8avl/2h6WZj+K826L2zOpkpLjBW24eRtwfsjGmeNg==
+        bh=o5nkxgDZrdwzBZ20XpsGRZ4cU+SIy1n8uBmoDWH1UMs=;
+        b=BTGH2aW5nLXXSUjAknEI4rQARIUJYKPKZZNAPj3Rte7PPSnbMukt55BhPIofl84CIs
+         bSSnIS8fwdPTaVywVBEnd6p1JsxO2sbdo6PAmqoYNYo3+rkBCLMj88yh14p+AjfG0tLs
+         A+0YOURCC/JSTnOJVmAmH7J9Jmo3ajiw7QnwIqpbYOY6Np7d9GmdhoOhGAp0JoqiAHt9
+         h5v4xnlM6d3BblRErCOwjG4kLiRuSHMo03TAKKFNbpcN7AYYAWP4asjMc13gxHLNwMhP
+         zFWIOeTyoBO8uJaBQgboClC2PTHwsTVfH4NXR4NnVy8Gv3jhBZL2EvBuNN7xT6vJsK0W
+         7mQg==
+X-Gm-Message-State: AOAM530SVakZ5SY2SVYtmB+Qv02mBGDNsMKFjYOOfwNMgXbTQpQe4Ova
+        +RNXvRnd3NqioabH2cO9W+WQaHMKB8vpj8KLxkirXoytd/l2qlGDelKQhl3GEQqIyVKW57i99+Z
+        DPT3KSW0a6jX5ToeS8h0wmfsjl7Y0kIVAQ/sXyvp2iQha+Co9CwHz4YJHguDkRCs=
+X-Google-Smtp-Source: ABdhPJz8QxdNStJHKNd+n/6JKoRMw8XIaN20hbU8nGRJUL3RBd+ntcjZADvcL9aixzZMFuJIk298g6uiJVFt0w==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a81:764d:0:b0:2d0:9d71:2de2 with SMTP id
- j13-20020a81764d000000b002d09d712de2mr22838807ywk.493.1646093323251; Mon, 28
- Feb 2022 16:08:43 -0800 (PST)
-Date:   Mon, 28 Feb 2022 16:08:14 -0800
+ (user=chooglen job=sendgmr) by 2002:a63:1a51:0:b0:34d:c269:566 with SMTP id
+ a17-20020a631a51000000b0034dc2690566mr19165417pgm.305.1646093325168; Mon, 28
+ Feb 2022 16:08:45 -0800 (PST)
+Date:   Mon, 28 Feb 2022 16:08:15 -0800
 In-Reply-To: <20220301000816.56177-1-chooglen@google.com>
-Message-Id: <20220301000816.56177-12-chooglen@google.com>
+Message-Id: <20220301000816.56177-13-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220301000816.56177-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH 11/13] submodule--helper update-clone: learn --init
+Subject: [PATCH 12/13] submodule update: add tests for --filter
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -66,96 +66,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach "git submodule--helper update-clone" the `--init` flag and remove
-the corresponding shell code.
-
-When the `--init` flag is passed to the subcommand, we do not spawn a
-new subprocess and call `submodule--helper init` on the submodule paths,
-because the Git machinery is not able to pick up the configuration
-changes introduced by that init call. So we instead run the
-`init_submodule_cb()` callback over each submodule in the same process.
-
-[1] https://lore.kernel.org/git/CAP8UFD0NCQ5w_3GtT_xHr35i7h8BuLX4UcHNY6VHPGREmDVObA@mail.gmail.com/
+Test the "--filter" option to make sure we don't break it while
+refactoring "git submodule update".
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c | 26 ++++++++++++++++++++++++++
- git-submodule.sh            |  9 +++------
- 2 files changed, 29 insertions(+), 6 deletions(-)
+ t/t7406-submodule-update.sh | 40 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c3760f511d..0fc07d35ae 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1999,6 +1999,7 @@ struct submodule_update_clone {
- 	int failed_clones_nr, failed_clones_alloc;
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 7764c1c3cb..86616bf8c7 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -1071,4 +1071,44 @@ test_expect_success 'submodule update --quiet passes quietness to fetch with a s
+ 	)
+ '
  
- 	int max_jobs;
-+	unsigned int init;
- };
- #define SUBMODULE_UPDATE_CLONE_INIT { \
- 	.list = MODULE_LIST_INIT, \
-@@ -2508,6 +2509,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	int ret;
- 
- 	struct option module_update_clone_options[] = {
-+		OPT_BOOL(0, "init", &suc.init,
-+			 N_("initialize uninitialized submodules before update")),
- 		OPT_STRING(0, "prefix", &prefix,
- 			   N_("path"),
- 			   N_("path into the working tree")),
-@@ -2566,6 +2569,29 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	if (pathspec.nr)
- 		suc.warn_if_uninitialized = 1;
- 
-+	if (suc.init) {
-+		struct module_list list = MODULE_LIST_INIT;
-+		struct init_cb info = INIT_CB_INIT;
++test_expect_success 'submodule update adds superproject gitdir to older repos' '
++	(cd super &&
++	 git -C submodule config --unset submodule.superprojectGitdir &&
++	 git submodule update &&
++	 test-tool path-utils relative_path \
++		"$(git rev-parse --absolute-git-dir)" \
++		"$(git -C submodule rev-parse --absolute-git-dir)" >expect &&
++	 git -C submodule config submodule.superprojectGitdir >actual &&
++	 test_cmp expect actual
++	)
++'
 +
-+		if (module_list_compute(argc, argv, suc.prefix,
-+					&pathspec, &list) < 0)
-+			return 1;
++test_expect_success 'submodule update uses config.worktree if applicable' '
++	(cd super &&
++	 git -C submodule config --unset submodule.superprojectGitDir &&
++	 git -C submodule config extensions.worktreeConfig true &&
++	 git submodule update &&
++	 test-tool path-utils relative_path \
++		"$(git rev-parse --absolute-git-dir)" \
++		"$(git -C submodule rev-parse --absolute-git-dir)" >expect &&
++	 git -C submodule config submodule.superprojectGitdir >actual &&
++	 test_cmp expect actual &&
 +
-+		/*
-+		 * If there are no path args and submodule.active is set then,
-+		 * by default, only initialize 'active' modules.
-+		 */
-+		if (!argc && git_config_get_value_multi("submodule.active"))
-+			module_list_active(&list);
++	 test_file_not_empty "$(git -C submodule rev-parse --absolute-git-dir)/config.worktree"
++	)
++'
 +
-+		info.prefix = suc.prefix;
-+		info.superprefix = suc.recursive_prefix;
-+		if (suc.quiet)
-+			info.flags |= OPT_QUIET;
++test_expect_success 'submodule update --filter requires --init' '
++	test_must_fail git -C super submodule update --filter blob:none 2>err &&
++	grep "usage:" err
++'
 +
-+		for_each_listed_submodule(&list, init_submodule_cb, &info);
-+	}
++test_expect_success 'submodule update --filter sets partial clone settings' '
++	test_when_finished "rm -rf super-filter" &&
++	git clone cloned super-filter &&
++	git -C super-filter submodule update --init --filter blob:none &&
++	test_cmp_config -C super-filter/submodule true remote.origin.promisor &&
++	test_cmp_config -C super-filter/submodule blob:none remote.origin.partialclonefilter
++'
 +
- 	ret = update_submodules(&suc);
- 	list_objects_filter_release(&filter_options);
- 	return ret;
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 23ebd90892..51be7c7f7e 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -361,14 +361,11 @@ cmd_update()
- 		usage
- 	fi
- 
--	if test -n "$init"
--	then
--		cmd_init "--" "$@" || return
--	fi
--
- 	{
--	git submodule--helper update-clone ${GIT_QUIET:+--quiet} \
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update-clone \
-+		${GIT_QUIET:+--quiet} \
- 		${progress:+"--progress"} \
-+		${init:+--init} \
- 		${wt_prefix:+--prefix "$wt_prefix"} \
- 		${prefix:+--recursive-prefix "$prefix"} \
- 		${update:+--update "$update"} \
+ test_done
 -- 
 2.33.GIT
 
