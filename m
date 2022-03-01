@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C743FC433EF
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 00:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D95AC433EF
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 00:08:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231159AbiCAAJH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 19:09:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42392 "EHLO
+        id S231126AbiCAAJL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 19:09:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230458AbiCAAJF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 19:09:05 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE8D99A99D
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:08:25 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id x17-20020a17090ab01100b001bbffb2c5f3so365642pjq.9
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:08:25 -0800 (PST)
+        with ESMTP id S231173AbiCAAJJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 19:09:09 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD2FD9AE75
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:08:29 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id t18-20020a63dd12000000b00342725203b5so7417833pgg.16
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:08:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=UH8t/E0TczNz4tziesvMRSUOID+d/VyUA9f/OELjrWw=;
-        b=lgBNiQlSH4SXN+Yp2yAlZcf2q6Kqv8rEPBg5FV8m0fRrMgOt2r3/BtfWTymao/j/3b
-         TStFCj/ETcqTCghbJg60EZ4cD7h2HL88fYul5BN+WS9ewjonThXprBr2EUuUmYwDvj5m
-         nmcbWbFtmqq8j/A3D04EwWLfr6FiBniT0GhJVNQrgEuJbknf41FuBYi/svG7EG+8uB3N
-         7v0kAql1NeCfs/gH2tlgSwD4PgOK+wui93WlVGrR62iDTH6UG2VwH5+g30824BjcV32u
-         9IPMfFizWXiyrfk81AYHUF0nnyM7bq40hqL1IM6Rx9FkppAw6TNTd2HivLSKVETISbUw
-         IhMQ==
+        bh=6b3Koiu50iGgu4+CvsJvU3gtyLeMDqKt6mcoMXU061M=;
+        b=X2X1gruFX/PVXzvJI0HOZAXPDf00yApcAm1DzU1GOIzZAeIOFLVyLonHbNnCIT6qP6
+         bhxSXx1SAU9VNT7CCvIwttEoHrrd4hsieSWiRoDmqn6j85LwWkEkpxZlRDSutelU2+Sw
+         A/QdrFKhKG0kkErzVpu24oaW3GFRkuPgJE/YIu6kxUXg1mPIRBtmXCSIs9ClhPb1ZuYp
+         h88aGhEY6YxvAKucROp7fTN7qB1D4xZo9DRe59+SC57JR5rRd17Oc7FEwvLTZUlEQVQN
+         /IrI+TxJoi5BN8fN50ZEUN9QdTTGSotSJyV0iWmBuYQScdKlmCWPbSnCxuZ4uZWovMJV
+         O8Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=UH8t/E0TczNz4tziesvMRSUOID+d/VyUA9f/OELjrWw=;
-        b=ZlN2IYwC4XgO88KyFhSh4U/qHkKbqK3THOZCx5Qf4CKPkJm1PFBzwLBGj4JRHTwxpF
-         xPAYB+mwAtPm9Qg2zq+brFF3g8yLNyAVZWpPYm5Zo+cA2PLbijwCgpjqjEVtlXeDG4KF
-         3cPzHXdxPS4Sq0FhO7jzmiH/l5GvuJ2wfTL1MuP//UFT20vPiVtMaE3xHKwPw4bfzt8X
-         FhkOxZUHZjsnYeFCN8AHte+Y55UiYLO3HyH4mMeRGmv9F+y8qVlK5YWDJtEVldqwP+dK
-         8kuAEWZ4t2uhxuEIWIHrTZGbOcPIAk8nu7RQlpGhrAa+yinCIVUHOnCheX7KbLvKgXC5
-         1EsA==
-X-Gm-Message-State: AOAM533z5EF0i01hM1oPqM9sJJ2M7YZ6BYx4KnSjfUznCLOOkNUmDLjz
-        sbofe99kG3gAnQFIJ8ahfw/KJoiVZMdMLbBXRuHHzJeRPQJXU5uU+oCVewKMS4T/+kUHLmxMFDL
-        rtaPIwVsE2LcUwHWIOtNCgHEum1uCkAyqeq1eiZm/b51rTKlDpTvKeUroCg1d2z8=
-X-Google-Smtp-Source: ABdhPJy1biFBBM2uAV5MadEaMj78idHnqPio7iaboW+67N3AEOJ2zMkhzw15jlJqrKeHdZq9c1S2o5vKbwXYxQ==
+        bh=6b3Koiu50iGgu4+CvsJvU3gtyLeMDqKt6mcoMXU061M=;
+        b=oN+F/1Hr7lAQ+k8Dhv0QH4vo8Q3ueQvHgfExQBjxE+3aUGGTjn/LfHPIDPsmC1txNj
+         /vLoyoOoBED7SOZxWoAJZcGRb+GT9RuNFypXaxyRjlNwico1kQ9+su4sg9i4z1/heTgc
+         WPUHN17s5fMRAZ1nShgCTDVccJ3fokaPDdR9K8wo/f6kd5D2YFoUNDGdQsGCT1mr1QVi
+         cmvvbEzJP6bEpin3L9+scQF7X24oRbpIa+Xu6ABnBaYyUqZExaDQNowZyfGiRW6EzibF
+         WFMTxqZPZ1TSS3YbkKf4kdJ98ExITFCb2hQ233CT3maMYppuvw5zxX1RNyuuHF/TeEEm
+         ae0g==
+X-Gm-Message-State: AOAM532op/69Hws9bSsufs+n+LCay9WZ9q2b65vCTWXReTzFH9ifaBfp
+        tO4KWwS1TVgy2CPEBXxjl9RQd8z/W0PRrYwCI219Yu/BSW0gfOpX+dGQmz3MU1sjn4kUuDnWGT4
+        88sQB7VhiDyNfnPEuIJIqr9DnWTnxblng9G2ZIrbRTfcVVQBz9Gf/qj+GQs6ZHHU=
+X-Google-Smtp-Source: ABdhPJwVoXppr973pyVI3Z/mR6/2aSd2DdbCOD0vN2hvN5ZC95KkDaHWa2MeujuZxmlDzBsS88+CfwbL/ia+aQ==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a63:86:0:b0:36c:48e8:627e with SMTP id
- 128-20020a630086000000b0036c48e8627emr19506515pga.53.1646093305009; Mon, 28
- Feb 2022 16:08:25 -0800 (PST)
-Date:   Mon, 28 Feb 2022 16:08:05 -0800
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:d5b:b0:4e1:2007:87fb with SMTP
+ id n27-20020a056a000d5b00b004e1200787fbmr24706393pfv.38.1646093308880; Mon,
+ 28 Feb 2022 16:08:28 -0800 (PST)
+Date:   Mon, 28 Feb 2022 16:08:07 -0800
 In-Reply-To: <20220301000816.56177-1-chooglen@google.com>
-Message-Id: <20220301000816.56177-3-chooglen@google.com>
+Message-Id: <20220301000816.56177-5-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220301000816.56177-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH 02/13] submodule--helper: remove update-module-mode
+Subject: [PATCH 04/13] submodule--helper run-update-procedure: remove --suboid
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -66,56 +66,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is dead code - it has not been used since c51f8f94e5
-(submodule--helper: run update procedures from C, 2021-08-24).
+Teach run-update-procedure to determine the oid of the submodule's HEAD
+instead of doing it in git-subomdule.sh.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c | 24 ------------------------
- 1 file changed, 24 deletions(-)
+ builtin/submodule--helper.c | 9 ++++++---
+ git-submodule.sh            | 8 +-------
+ 2 files changed, 7 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index eeacefcc38..c11ee1ea2b 100644
+index 1b67a3887c..77ca4270f4 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1957,29 +1957,6 @@ static void determine_submodule_update_strategy(struct repository *r,
- 	free(key);
- }
+@@ -2594,9 +2594,6 @@ static int run_update_procedure(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK_F(0, "oid", &update_data.oid, N_("sha1"),
+ 			       N_("SHA1 expected by superproject"), PARSE_OPT_NONEG,
+ 			       parse_opt_object_id),
+-		OPT_CALLBACK_F(0, "suboid", &update_data.suboid, N_("subsha1"),
+-			       N_("SHA1 of submodule's HEAD"), PARSE_OPT_NONEG,
+-			       parse_opt_object_id),
+ 		OPT_END()
+ 	};
  
--static int module_update_module_mode(int argc, const char **argv, const char *prefix)
--{
--	const char *path, *update = NULL;
--	int just_cloned;
--	struct submodule_update_strategy update_strategy = { .type = SM_UPDATE_CHECKOUT };
--
--	if (argc < 3 || argc > 4)
--		die("submodule--helper update-module-clone expects <just-cloned> <path> [<update>]");
--
--	just_cloned = git_config_int("just_cloned", argv[1]);
--	path = argv[2];
--
--	if (argc == 4)
--		update = argv[3];
--
--	determine_submodule_update_strategy(the_repository,
--					    just_cloned, path, update,
--					    &update_strategy);
--	fputs(submodule_strategy_to_string(&update_strategy), stdout);
--
--	return 0;
--}
--
- struct update_clone_data {
- 	const struct submodule *sub;
- 	struct object_id oid;
-@@ -3430,7 +3407,6 @@ static struct cmd_struct commands[] = {
- 	{"name", module_name, 0},
- 	{"clone", module_clone, 0},
- 	{"add", module_add, SUPPORT_SUPER_PREFIX},
--	{"update-module-mode", module_update_module_mode, 0},
- 	{"update-clone", update_clone, 0},
- 	{"run-update-procedure", run_update_procedure, 0},
- 	{"ensure-core-worktree", ensure_core_worktree, 0},
+@@ -3032,6 +3029,12 @@ static int module_create_branch(int argc, const char **argv, const char *prefix)
+ /* NEEDSWORK: this is a temporary name until we delete update_submodule() */
+ static int update_submodule2(struct update_data *update_data)
+ {
++	if (update_data->just_cloned)
++		oidcpy(&update_data->suboid, null_oid());
++	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD", &update_data->suboid))
++		die(_("Unable to find current revision in submodule path '%s'"),
++			update_data->displaypath);
++
+ 	if (!oideq(&update_data->oid, &update_data->suboid) || update_data->force)
+ 		return do_run_update_procedure(update_data);
+ 
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 87772ac891..32a09302ab 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -406,14 +406,9 @@ cmd_update()
+ 
+ 		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+ 
+-		if test $just_cloned -eq 1
++		if test $just_cloned -eq 0
+ 		then
+-			subsha1=
+-		else
+ 			just_cloned=
+-			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
+-				git rev-parse --verify HEAD) ||
+-			die "fatal: $(eval_gettext "Unable to find current revision in submodule path '\$displaypath'")"
+ 		fi
+ 
+ 		if test -n "$remote"
+@@ -441,7 +436,6 @@ cmd_update()
+ 			  ${update:+--update "$update"} \
+ 			  ${prefix:+--recursive-prefix "$prefix"} \
+ 			  ${sha1:+--oid "$sha1"} \
+-			  ${subsha1:+--suboid "$subsha1"} \
+ 			  "--" \
+ 			  "$sm_path")
+ 
 -- 
 2.33.GIT
 
