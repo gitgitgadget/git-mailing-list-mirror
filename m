@@ -2,198 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0755EC433EF
-	for <git@archiver.kernel.org>; Mon, 28 Feb 2022 23:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AE35C433EF
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 00:08:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231168AbiB1XuE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 18:50:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56690 "EHLO
+        id S230192AbiCAAJB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 19:09:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230102AbiB1XuC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 18:50:02 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95184119863
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 15:49:22 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id x5so19776292edd.11
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 15:49:22 -0800 (PST)
+        with ESMTP id S229490AbiCAAJB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 19:09:01 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3251696815
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:08:21 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id j22-20020a17090aeb1600b001bc32977e07so369450pjz.7
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:08:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version:content-transfer-encoding;
-        bh=jbdC1cOjIV1PITsyGeIwTrcs4eV38RWEyJphfmAqp64=;
-        b=aeN6vZMGK/spVdIZHCJvTxzkVMXHWVY7UOMuxhZ59ofv1xQ92JGon4Tu4ByUUV8VCA
-         a4jDM2NqHDkIznFwqOw8/611dgPHJ9GDvTR9EXTfkao2YyWGXFNbUmIBoJVfe4qteVvt
-         jpIMkmdy0A8g0DV79DirKkFg3evkyhE8mrxXMFQ6QSsJ47p5u8/8FBoIBW2c9gbzzYUG
-         LbQLHh5EV50vIXjyrv0IeRT8cVB1EE3bulxUpL3Amha67PcOGe/zBZSxZvwIHYXIbLme
-         +cAlPDVnZ/yypjogx3lLS1OFpaFrMf8L0Qp6gdlckn+cshePmfRfPVm97NXaAN3lIAdI
-         dRvQ==
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=NUrPep/15sIy2S0XfJjfpFwlLbbFZ6+V3NUod6JhKQE=;
+        b=MTZAmknvR/keCu15EelAO3PpQHzNExmXFg9MPrnSqW5xKU4aokvDfJVplwg5k1kfNM
+         pq58hHCtOopu+humYLpzDEo0Uo+Wh9ZX2/0YxwdEf1jSpShlltSzpNh1QOr1iShnFzO/
+         YK15SHWb3EJD6H8xk0R8YFwh6rphuPC3eN6cXhrkCXzekzbdetDnR5yOY4IdAtrNn+yC
+         +7jcbRCYPiXHw57izQlQ5P/yr3K+WcRaoJULrYDdqI0bD9pmvd2PWORoZIB4FsfURlv1
+         xui3PolK+JRRyV7q5YD0WKjSXC9p7RlANoU4Z7b6OvOVZoVBqYSxGIlld0iGi/JMcvpc
+         vz8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version:content-transfer-encoding;
-        bh=jbdC1cOjIV1PITsyGeIwTrcs4eV38RWEyJphfmAqp64=;
-        b=RuNU2euWnImy29KyPfkIUAF1hGhiRcujUoCX7yHaJgylW1bpFyM8VssiQR7sj1taq9
-         ezyPStdyovtxQekHm/fwX1V4exVtztrdtY5fpJvNLO7g6/QrZczPjgIcOqurXSK8czgs
-         S/4Lm1SS/Vjh6KXYQHlt/C1W3NUp2nVSUuuwVjtszz90tALTUHouFL6lSbeAuWoKgIPt
-         qpIZUFm1Rs+P7uOpFySzMejLGXcAhqIX1u27RxCib7WxnIBIjF6y2/xgLoGZMDKGlFB3
-         ZcwlJ4EoOPuVeyRbSCN4KeTqIc0NLLlT7KFhwbjoBXX1iuAksbQItMeSUVpmKquO0xAE
-         3AMQ==
-X-Gm-Message-State: AOAM533+jOie93kguDMRig6cmnTFftXwqUIHMaS/nHKu+iM0lIXr/hyZ
-        Nr6fs7DOuu7mY+sggCFxkdVDgy1cxUE=
-X-Google-Smtp-Source: ABdhPJyvSS2xj+hCm0BTl5Hf4SU8bWLy5Znj2gw44CfWOlO198DrlOdUOfCtdJ2cNh0lkrBJaeYiTw==
-X-Received: by 2002:aa7:db47:0:b0:413:7649:c2bb with SMTP id n7-20020aa7db47000000b004137649c2bbmr17281603edt.123.1646092160762;
-        Mon, 28 Feb 2022 15:49:20 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id iy8-20020a170907818800b006d1c553ed1esm4757111ejc.102.2022.02.28.15.49.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Feb 2022 15:49:20 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nOplX-001fet-GP;
-        Tue, 01 Mar 2022 00:49:19 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, newren@gmail.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 3/7] read-tree: expand sparse checkout test coverage
-Date:   Tue, 01 Mar 2022 00:46:40 +0100
-References: <pull.1157.git.1645640717.gitgitgadget@gmail.com>
- <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
- <ffe0b6aff2baee238f77ae57561a62ea5473321f.1645742073.git.gitgitgadget@gmail.com>
- <220301.861qzm37qt.gmgdl@evledraar.gmail.com>
- <509e860c-5bda-b92f-96c5-39f9a54f1e9b@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <509e860c-5bda-b92f-96c5-39f9a54f1e9b@github.com>
-Message-ID: <220301.86sfs21ri8.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc
+         :content-transfer-encoding;
+        bh=NUrPep/15sIy2S0XfJjfpFwlLbbFZ6+V3NUod6JhKQE=;
+        b=kSwiLqx+S7gKc167aCBsc77rqKW4+35i01jHwZJP+YUjURlh0WCmZPH4iSPGfmlyMR
+         mIiVOhrwbVrET1gBFqBZa/IdEpvatKyx4YCXoDderBggJct2ZzHjoQzjItfJfoVvbK+y
+         oSTU6L0k9JFQ3yJhgekruvshSvhXcVv1S3zfqadxymD3nMwPUq28b5veBAoVxfMPmV3S
+         H5iJu+OuLxma0qk3G0i4mUvHEddyRw7xCTDeIlCD10iipEUDaJeK5uifVEhMtkiVaPWW
+         +o7w1Z6v1ixDKsl5MQngFHRSME4wjtwWSOO9MKT+C/kWi5Bscs5Mp2nArcKs9O60grsP
+         ZnxQ==
+X-Gm-Message-State: AOAM532oCyRKt4ESkTSeHM7QSqSbkJTu4yGcO6csXuDJ6e5LW6E4QTs6
+        F1LvFS0YpJIpqX5wLPNdn67RhgxOb+lcbVDfdXJq4xY6IXWWKUfAwmbIY4QwMxcsN5oiK2ti8xg
+        09hWJHq9d0X2IXfMtSZPPGIbBPIv7ZLN+W9uNOeIrnOoVzZFuVAC1ANOntkzKhGo=
+X-Google-Smtp-Source: ABdhPJymoNXSGWrSfQ15MklVd4fn4TCyBSn/gRA4lU/LzAPEkIqdaDCP/CRQ7l/waBwG92eZth2gvgAUk9XqrQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:903:32ca:b0:151:440d:a147 with SMTP
+ id i10-20020a17090332ca00b00151440da147mr14724616plr.37.1646093300539; Mon,
+ 28 Feb 2022 16:08:20 -0800 (PST)
+Date:   Mon, 28 Feb 2022 16:08:03 -0800
+Message-Id: <20220301000816.56177-1-chooglen@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
+Subject: [PATCH 00/13] submodule: convert parts of 'update' to C
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Glen Choo <chooglen@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, Josh Steadmon <steadmon@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Original series: https://lore.kernel.org/git/20220210092833.55360-1-choogle=
+n@google.com
+(I've trimmed the cc list down to the 'most interested' parties)
 
-On Mon, Feb 28 2022, Victoria Dye wrote:
+=3D Overview
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> On Thu, Feb 24 2022, Victoria Dye via GitGitGadget wrote:
->>=20
->>> From: Victoria Dye <vdye@github.com>
->>>
->>> Add tests focused on how 'git read-tree' behaves in sparse checkouts. E=
-xtra
->>> emphasis is placed on interactions with files outside the sparse cone, =
-e.g.
->>> merges with out-of-cone conflicts.
->>>
->>> Signed-off-by: Victoria Dye <vdye@github.com>
->>> ---
->>>  t/perf/p2000-sparse-operations.sh        |  1 +
->>>  t/t1092-sparse-checkout-compatibility.sh | 85 ++++++++++++++++++++++++
->>>  2 files changed, 86 insertions(+)
->>>
->>> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-op=
-erations.sh
->>> index 2a7106b9495..382716cfca9 100755
->>> --- a/t/perf/p2000-sparse-operations.sh
->>> +++ b/t/perf/p2000-sparse-operations.sh
->>> @@ -117,6 +117,7 @@ test_perf_on_all git diff
->>>  test_perf_on_all git diff --cached
->>>  test_perf_on_all git blame $SPARSE_CONE/a
->>>  test_perf_on_all git blame $SPARSE_CONE/f3/a
->>> +test_perf_on_all git read-tree -mu HEAD
->>>  test_perf_on_all git checkout-index -f --all
->>>  test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
->>>=20=20
->>> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-=
-checkout-compatibility.sh
->>> index b1dcaa0e642..9d58da4e925 100755
->>> --- a/t/t1092-sparse-checkout-compatibility.sh
->>> +++ b/t/t1092-sparse-checkout-compatibility.sh
->>> @@ -819,6 +819,91 @@ test_expect_success 'update-index --cacheinfo' '
->>>  	test_cmp expect sparse-checkout-out
->>>  '
->>>=20=20
->>> +test_expect_success 'read-tree --merge with files outside sparse defin=
-ition' '
->>> +	init_repos &&
->>> +
->>> +	test_all_match git checkout -b test-branch update-folder1 &&
->>> +	for MERGE_TREES in "base HEAD update-folder2" \
->>> +			   "update-folder1 update-folder2" \
->>> +			   "update-folder2"
->>> +	do
->>> +		# Clean up and remove on-disk files
->>> +		test_all_match git reset --hard HEAD &&
->>> +		test_sparse_match git sparse-checkout reapply &&
->>> +
->>> +		# Although the index matches, without --no-sparse-checkout, outside-=
-of-
->>> +		# definition files will not exist on disk for sparse checkouts
->>> +		test_all_match git read-tree -mu $MERGE_TREES &&
->>> +		test_all_match git status --porcelain=3Dv2 &&
->>> +		test_path_is_missing sparse-checkout/folder2 &&
->>> +		test_path_is_missing sparse-index/folder2 &&
->>> +
->>> +		test_all_match git read-tree --reset -u HEAD &&
->>> +		test_all_match git status --porcelain=3Dv2 &&
->>> +
->>> +		test_all_match git read-tree -mu --no-sparse-checkout $MERGE_TREES &&
->>> +		test_all_match git status --porcelain=3Dv2 &&
->>> +		test_cmp sparse-checkout/folder2/a sparse-index/folder2/a &&
->>> +		test_cmp sparse-checkout/folder2/a full-checkout/folder2/a || return=
- 1
->>> +	done
->>> +'
->>=20
->> Nit: Isn't this nicer/easier by unrolling the for-loop to the top-level,=
- i.e.:
->>=20
->> for MERGE_TREES in "base HEAD update-folder2" [...]
->> do
->> 	test_expect_success "'read-tree -mu $MERGE_TREES' with files outside sp=
-arse definition" '
->> 		init_repos &&
->> 		test_when_finished "test_all_match git reset --hard HEAD" &&
->>                 ...
->> 	'
->> done
->>=20
->> It makes failures easier to reason about since you see which for-loop
->> iteration you're in right away, and can e.g. pick one with --run.
->>=20
->
-> I like how this separates the test cases (while not adding any
-> redundant/copied code). I'll update in the next version, thanks!
->
->> And we can do the cleanup in test_when_finished instead of at the start
->> of every loop.
+This is part 1 of 2 series that will supersede ar/submodule-update (as laid=
+ out
+in [1]). This series prepares for the eventual conversion of "git submodule
+update" to C by doing 'obvious' conversions first, and leaving more involve=
+d
+conversions for later.
 
-Sounds good!
+Part 1 is a lot simpler than the original series in its entirety, and shoul=
+d
+play better with topics that Junio identified:
 
-Note for <reasons> we eval the body of the test into existence, but
-*not* the description. So:
+- This series is based off a later version of 'master' that already has
+  'js/apply-partial-clone-filters-recursively' merged in [2].
+- There is only one, trivial, conflict with 'es/superproject-aware-submodul=
+es'
+  (both add tests to the end of t7406) [3].
 
-    for x in [...] test_expect_success "$x" '$x'
+Most of these patches were originally from ar/submodule-update, but because=
+ of
+the new organization, some commit messages have been amended to make more s=
+ense
+in context. However, patches 12 and 13 are new - they were added to handle =
+the
+"--filter" option introduced by 'js/apply-partial-clone-filters-recursively=
+'.
 
-Works to expand "$x" in both cases, but not:
+Cc-ed Josh, who might be interested in "--filter" changes e.g. the new
+tests.
 
-    for x in [...] test_expect_success '$x' '$x'
+[1] https://lore.kernel.org/git/kl6lmtig40l4.fsf@chooglen-macbookpro.roam.c=
+orp.google.com
+[2] This also fixes some trivial merge conflicts with 'master'.
+[3] Part 2 has nontrival conflicts though. Offline, Emily mentioned that
+    conflicts might go away in the next iteration of
+    'es/superproject-aware-submodules', but if not, the next round of patch=
+es
+    will probably be based on a merge of this series +
+    'es/superproject-aware-submodules'.
 
-And you don't need to do:
+=3D Patch summary
 
-    for x in [...] test_expect_success "$x" "$x"
+I'm not certain whether to keep patch 13, see the extra discussion in
+the --- description for details.
 
-Which is handy as double-quoting the body is often a hassle with
-escaping stuff.
+- Patch 1 adds extra tests to "git submodule update" to make sure we
+  don't break anything
+- Patch 2 removes dead code that used to be part of "git submodule
+  update"
+- Patch 3 prepares for later changes by introducing the C function that
+  will hold most of the newly converted code
+- Patch 4 moves run-update-procedure's --suboid option into C
+- Patch 5 moves ensure-core-worktree into C
+- Patches 6-8 move run-update-procedure's --remote option into C
+- Patches 9-11 move "git submodule update"'s --init into C
+- Patches 12-13 move "git submodule update"'s --filter option into C
 
-I only think I got that wrong the first 1, 2, 3.... etc. times I used
-this pattern, so I thought I'd mention it :)
+Atharva Raykar (3):
+  submodule--helper: get remote names from any repository
+  submodule--helper: refactor get_submodule_displaypath()
+  submodule--helper: allow setting superprefix for init_submodule()
 
-> Because `init_repos` completely resets the test repos, this actually lets=
- me
-> remove the extra cleanup steps completely.
+Glen Choo (8):
+  submodule--helper: remove update-module-mode
+  submodule--helper: reorganize code for sh to C conversion
+  submodule--helper run-update-procedure: remove --suboid
+  submodule--helper: remove ensure-core-worktree
+  submodule--helper run-update-procedure: learn --remote
+  submodule--helper update-clone: learn --init
+  submodule update: add tests for --filter
+  submodule--helper update-clone: check for --filter and --init
 
-\o/
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (2):
+  submodule tests: test for init and update failure output
+  submodule--helper: don't use bitfield indirection for parse_options()
+
+ builtin/submodule--helper.c    | 230 ++++++++++++++++++++-------------
+ git-submodule.sh               |  54 +-------
+ t/t7406-submodule-update.sh    |  54 +++++++-
+ t/t7408-submodule-reference.sh |  14 +-
+ 4 files changed, 211 insertions(+), 141 deletions(-)
+
+
+base-commit: 715d08a9e51251ad8290b181b6ac3b9e1f9719d7
+--=20
+2.33.GIT
+
