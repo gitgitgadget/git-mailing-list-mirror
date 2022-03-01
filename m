@@ -2,120 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49865C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 00:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4142C433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 01:25:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231786AbiCAA1Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Feb 2022 19:27:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55702 "EHLO
+        id S229540AbiCAB0Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Feb 2022 20:26:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231792AbiCAA1S (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Feb 2022 19:27:18 -0500
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4318D4E38C
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:26:39 -0800 (PST)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-2d81518795fso114137507b3.0
-        for <git@vger.kernel.org>; Mon, 28 Feb 2022 16:26:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=pw7VDnE+Q7RjqtzDf+S09Y6g+alm2MUglH4XXxmKXwc=;
-        b=Bd4Cp7sWwumZ0qds1p01vxIOvjmjuHjQK6YGGrxFrzmlbkT6aWrY0R/FnOi2cDmj2K
-         b5LOv6ZWKR2obw088RlUHX/5TutqQvFxsRKZp3IwqY3AdcNyId8IWPOLgtXIuXEk3aXS
-         H522SdmT9bSmiRLsTVm8CAzc+NLlDnIyP2+K4th1TY3/Y11dJ/c3i+EI3jj8pk3SYFDr
-         fJRZEW3wPLwCH7RLq8arh2ISFWTrWLi7sh6QC45mPLlfXQRJI3ERHMHlNo76diEh7UPc
-         ouhGtpPTUj9a0jltIGkJlJvHmRgl5KTZizi1A8m89VvPibRLxJGkXezWDJsOqK5foXKW
-         ziSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=pw7VDnE+Q7RjqtzDf+S09Y6g+alm2MUglH4XXxmKXwc=;
-        b=qo1EUKsbQR7WFIRYYHMdHGymMx2mItILJjYTmGrnXKlQx4VSWj93DDRd+gZUCsIu2o
-         vH2AoBdA/zMiPhydvUc8JmvidLv3SK2kfCKRXI3eqnbDwKTL2uEV7QjRVMRaZ6MWk3MW
-         KZhsZYflDlPqAMJosHEwMUckeGjZU6caKPzaZJgUhx6p80OAOCiASWB5Ky4kuuZOYKsB
-         Rm5X2SaS96mfBiLk5dUvi4PDcxx+TVCg+N5AY/K4UFjcEq5J0+ei6UyZjIjgQp74nK59
-         o4/u+OxY9yKA7ysr/PVgRLGTNKSLu/rNxWIX0bnqA4Bp1Jy97/A8Xdy4CSxcV8qbtaoH
-         HYRw==
-X-Gm-Message-State: AOAM531FYi++dFGURRlcsC4WiF9Za+GZ41VtyhFHoXVMWo1IVjXq1EKV
-        3wEHjcDaESIJ5GnGFv/BGpTZ+wZhxio9sOcolvLq7O5Nsqy/3K7RlULPJrlTJ5vy40hgtT31mWt
-        rpuCkjq3cXRNE0FCGWdXuKAtly1BTKpdfLsj0rl3X/h/5UgreCVPzwXIw+F6r7LS5zuRCxRPuYA
-        ==
-X-Google-Smtp-Source: ABdhPJzg7bjW5DSu8lLLWjrdAUrTIoe4soBAYjyMgbDH10F5epTuCrPzjIssjrd5iGVGxB7b8GnfF0KGOkuMKQCmxDA=
-X-Received: from podkayne.svl.corp.google.com ([2620:15c:2ce:200:3f0e:8f7:9f8d:6e8c])
- (user=emilyshaffer job=sendgmr) by 2002:a0d:e8d2:0:b0:2d6:1743:4023 with SMTP
- id r201-20020a0de8d2000000b002d617434023mr22974428ywe.7.1646094398425; Mon,
- 28 Feb 2022 16:26:38 -0800 (PST)
-Date:   Mon, 28 Feb 2022 16:26:13 -0800
-In-Reply-To: <20220301002613.1459916-1-emilyshaffer@google.com>
-Message-Id: <20220301002613.1459916-4-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20220203215914.683922-1-emilyshaffer@google.com> <20220301002613.1459916-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH v8 3/3] rev-parse: short-circuit superproject worktree when
- config unset
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229590AbiCAB0Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Feb 2022 20:26:24 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA52B1E6
+        for <git@vger.kernel.org>; Mon, 28 Feb 2022 17:25:43 -0800 (PST)
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 091115A0D2;
+        Tue,  1 Mar 2022 01:25:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1646097943;
+        bh=dkb/M03hewlCKOJEqRZmQj8mhTCuSK0Gsx7wqeXSd7Q=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=d/o8OaMZweAenWIKcDa8ZFoynp7QkCmyP+EAT8X7nLnNeeptT2svkl2Aq8ldZ5HZc
+         oj5rZyP4XZx7V+Ur6PE+iCQforteRQAYxym5nJ11/xf2UdSL/GNGKzqgZ+Y1AnzBCD
+         hQPbRVFREQcUqpyJgWmgVMn0YxUOutDu90f6xlqgrENKw6qGXCtTNqfKTtvwk/BfyZ
+         AjaNgzNw3YXlGTnlLrlhK2Yd8a+3KneikdJtxCkUspMGbRCEQHMTTgKsNw73Mv1+Bz
+         PCA21cTWjDL/3UPnNbcjSfovA3K5dBJnCm7MQPIx3GhkplO960dZFU7jwK8hyuS6uA
+         ytw5Q7JEpcVtoRdjW4MhZoIz0HnIZQaHdUv0v/u0P9Vm0e3uEWu9lHn8vbMcA5/9QX
+         agOT78/XUNClTimIO5+2hEGBKjNgLBjeHqsDlpdOtSntj1w8KKvhiAKs9o0gHVDt4V
+         Y3/arje4XF9RPFZPKK1rxbvo0qi+W03VG3j7gbJ4BflIvY4lWzL
+Date:   Tue, 1 Mar 2022 01:25:40 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] test-lib.sh: Use GLIBC_TUNABLES instead of MALLOC_CHECK_
+ on glibc >= 2.34
+Message-ID: <Yh12FNTGuJkRlqBE@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
+References: <20220228160827.465488-1-gitter.spiros@gmail.com>
+ <xmqq7d9e249n.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Wf7uqRc0lQvly4vt"
+Content-Disposition: inline
+In-Reply-To: <xmqq7d9e249n.fsf@gitster.g>
+User-Agent: Mutt/2.1.4 (2021-12-11)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the previous commit, submodules learned a config
-'submodule.hasSuperproject' to indicate whether or not we should attempt
-to traverse the filesystem to find their superproject. To help test that
-this config was added everywhere it should have been, begin using it to
-decide whether to exit early from 'git rev-parse
---show-superproject-working-dir'.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+--Wf7uqRc0lQvly4vt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
----
+On 2022-02-28 at 19:13:40, Junio C Hamano wrote:
+> Elia Pinto <gitter.spiros@gmail.com> writes:
+>=20
+> > In glibc >=3D 2.34 MALLOC_CHECK_ and MALLOC_PERTURB_ environment
+> > variables have been replaced by GLIBC_TUNABLES.  Also the new
+>=20
+> Does it hurt to have these older environment variables?  If not,
+> we would prefer to see redundant but less deeply indented code,
+> I would imagine.
 
-Maybe it's actually better to warn instead of error here? Or maybe it's
-best not to say anything, but to set 'submodule.hasSuperproject' after
-we successfully find the superproject?
+Setting both sets of environment variables is probably just fine and the
+simplest solution, I'd imagine.
 
-Either way - I ran the test suite with this early exit added and
-everything still passed. I made this change hoping to get a little
-signal on whether the series achieved its goal, and in that regard I'm
-satisfied.
----
- submodule.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+> > +	if type -p getconf >/dev/null 2>&1; then
+> > +		_GLIBC_VERSION=3D"$(getconf GNU_LIBC_VERSION 2>/dev/null | awk '{ pr=
+int $2 }')"
+> > +		if [ -n "$_GLIBC_VERSION" -a $(expr "$_GLIBC_VERSION" \>=3D "2.34") =
+]; then
+> > +			_HAVE_GLIBC_234=3D"yes"
+> > +		fi
+> > +	fi
+>=20
+> Style.  We prefer "test ..." over "[ ... ]" and more importantly we
+> don't use "test X -a Y".
+>=20
+> Do we absolutely need "test -p getconf" with an extra indentation?
+> I suspect we don't.
 
-diff --git a/submodule.c b/submodule.c
-index 741104af8a..463e7f0c48 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2237,6 +2237,7 @@ int get_superproject_working_tree(struct strbuf *buf)
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf one_up = STRBUF_INIT;
- 	const char *cwd = xgetcwd();
-+	int has_superproject_cfg = 0;
- 	int ret = 0;
- 	const char *subpath;
- 	int code;
-@@ -2250,6 +2251,17 @@ int get_superproject_working_tree(struct strbuf *buf)
- 		 */
- 		return 0;
- 
-+	if (git_config_get_bool("submodule.hassuperproject", &has_superproject_cfg)
-+	    || !has_superproject_cfg) {
-+		/*
-+		 * If we don't have a superproject, then we're probably not a
-+		 * submodule. If this is failing and shouldn't be, investigate
-+		 * why the config was never set.
-+		 */
-+		error(_("Asked to find a superproject, but submodule.hasSuperproject != true"));
-+		return 0;
-+	}
-+
- 	if (!strbuf_realpath(&one_up, "../", 0))
- 		return 0;
- 
--- 
-2.35.1.574.g5d30c73bfb-goog
+getconf is specified by POSIX, but that doesn't mean it's in the default
+install or in PATH on all systems.  However, we should write "command -v
+getconf" instead if we need to check, since that's the POSIX way to
+write it, and "type" is not guaranteed to be present on all systems.
 
+It looks like the code might silently not match if getconf isn't
+present, and if so then we can avoid the check, but we should of course
+put a comment noting that behavior to help future readers.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--Wf7uqRc0lQvly4vt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.3.1 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYh12EwAKCRB8DEliiIei
+gf3KAQD+RTP/cNrHWcPNJ5RG1bAA1+DFVLp9BmvHafVyPrDgbQEA/TnPChmDh4oe
+S2sSTskGrULJQi4rc/y1hzPpCLjtZww=
+=vm/o
+-----END PGP SIGNATURE-----
+
+--Wf7uqRc0lQvly4vt--
