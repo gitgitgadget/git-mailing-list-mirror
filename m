@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4872EC433EF
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 18:44:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39B61C433FE
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 18:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237151AbiCASp2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 13:45:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57088 "EHLO
+        id S237153AbiCASp3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 13:45:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237091AbiCASoz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 13:44:55 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5D2B2A24B
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 10:43:51 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id c192so8031554wma.4
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 10:43:51 -0800 (PST)
+        with ESMTP id S237075AbiCASoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 13:44:54 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CF8861A3C
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 10:43:49 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id m42-20020a05600c3b2a00b00382ab337e14so600786wms.3
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 10:43:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RhlYIwHUBo47mOG4YPeLwxrjGp3T3Jj14AUKPUXNhbc=;
-        b=nFytLpr8peM8e+86tHqtI9QeX5uIc6xrBiOHUObPKnKF4dKxKp0XVysoepIVf1mN3D
-         S3mclGs5yZcx/i76/vjal+LLisAsirIT70pAEVdKjWUuC4L9dFjMA5i7nwvKA0G6BmDK
-         46BSxdY4HvyeIdgJAiLAtGHwBxcIgw2M6fnmZCeRSeqckrHD2rXBzlL2mKNsUf27Jl5R
-         /5c4SUse2F007WlFiiv+vZ75TH7jOosdk+9cE3+6YHMOO//0QL04A8ViwnBbxIduyrAb
-         FVxe5d9ZxuO5bIeYoZEcp5jRKXJbo7+aP5A5umss5tE8c2906zQ4EnDoURkyY5rjv+z4
-         D9qA==
+        bh=wtNF9S9rmANvPotmjCgliX0XzOPCCgI0VnLmKRFS+PA=;
+        b=NIwXlqivTt55cQhOcePYV6KLvrtvklw7t24YVau7iPTXdWZf1aE1wy8q6YGLQtya9T
+         70EEqTMPRNdUWv7HlgkDQWO3vx2V5GaeNcUVs+nZnnT7cxc63/GcAD/9IDAwyk4oSFBJ
+         ILR/8vz/++1YPvw+4nc4MQF7TeHojwzw1cKwWOxdxqugMY9M5HZwDF4NJUuehYlT9ARH
+         6l7lbaG5h6AlRTlnhG2ptCSSHZ/N4MI+fk9qsxw+/1kc3i1qvXBt3mYrbmOoWrnbUpnt
+         dcqwPxdkx6+7D5+5sYEsEwJ0SkK0AJ6BfdtWLPaRSkhrRLVBQqe1XDsPVA/Bq5Sntrus
+         v7DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RhlYIwHUBo47mOG4YPeLwxrjGp3T3Jj14AUKPUXNhbc=;
-        b=QbeWysEa1qL5NAKJgIJATz2C2HgkAJDgq1YupAA3+l7It/UCmwM5Ea8R2W8hjvZ4U6
-         pKG5BZWbTrI9SJitgYSZLHag/vrlBOJpUFnSvXjXKNYHF4rwRpn91/dVfGv7slbI5i8/
-         Ff68IqG+Mc7IAB9RaMakQ1AYn9vtpqrMYUWE2XHZF8q86RMurCGLohlI9aZoqD4Fp562
-         HDppv54bU44TsbCVAq/5TQL8yUHnGvtUPurjD6qhHO0Hm6TooupIWskDCs411P6Ur11M
-         3lSh3FkUnSAJ8wwGds/Dl5KbPz834JQoCYM+sFYzV2+47Qah1BA6Kuzq4r+PZkRY3oBL
-         CT8g==
-X-Gm-Message-State: AOAM53382oODgMko1IzXI4xDjGvJ6qrWUNEQECeUiXoKdXhrs6PctQ1i
-        48wo1U/9iMTbIiIZK6r6iXOz5P3czeY=
-X-Google-Smtp-Source: ABdhPJyrALlyS1VcXd+LzZpHO1W2RW68sjX5knFqjKSxjsAH3yEIyYyeQRIX8wW2Z5TkitKnCMCBkQ==
-X-Received: by 2002:a1c:a7ce:0:b0:380:eb26:f41a with SMTP id q197-20020a1ca7ce000000b00380eb26f41amr18112668wme.105.1646160230240;
-        Tue, 01 Mar 2022 10:43:50 -0800 (PST)
+        bh=wtNF9S9rmANvPotmjCgliX0XzOPCCgI0VnLmKRFS+PA=;
+        b=7n5hieJ02nDtn6zWME/fQpmn5inPtvHjpCwmJ9O6TUEXjWnLjvjBBWjccgFNgYVmNM
+         uw6V1Nj3ro2JYRGZbdoKWUscZ0WWlT08DR8zoTQCdDH529YfQHEFxOJZtpc/nce76XhJ
+         NfLTszmIWEavwbVgjFdodbJ8mirZhSy4gv9HnGHoGZU9HOvmM5mv92/n+jy5UcKB/ipy
+         MQVnGWXCmtXUltYhLYwrRpvVsHdXOrUFXK7xHUiFdUy+CIx0ZHEl5438GN8BPj3lF61g
+         mbNa3Z4cbOsn4NM1pq7ghQK26VXbjQMzJN4Z/oflwh17QrLFizC+CC95LDmjaRgVZlAd
+         L+dw==
+X-Gm-Message-State: AOAM530rBGT/LSc2ebEmtMEsEXPEB5y8yQ1O5dL2WI/bTcrVhOlitMGJ
+        1W0+QlEmT0KdJWFQGHQsevyJqUfjetE=
+X-Google-Smtp-Source: ABdhPJzyUhCJLM0Htl3uF5BsWvAQpXKYaudSp7QRekYinQuRW5Y2tiu7v/FB7FFLU9UghDN1Xzs9YA==
+X-Received: by 2002:a05:600c:3486:b0:381:65ec:f8ed with SMTP id a6-20020a05600c348600b0038165ecf8edmr9022151wmq.68.1646160227534;
+        Tue, 01 Mar 2022 10:43:47 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bk19-20020a0560001d9300b001a65e479d20sm13644863wrb.83.2022.03.01.10.43.49
+        by smtp.gmail.com with ESMTPSA id m62-20020a1c2641000000b00380d0cff5f3sm3404226wmm.8.2022.03.01.10.43.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 10:43:49 -0800 (PST)
-Message-Id: <0896e72e2b8e23354de9d476fbda55008a11de68.1646160212.git.gitgitgadget@gmail.com>
+        Tue, 01 Mar 2022 10:43:47 -0800 (PST)
+Message-Id: <6b5b3d08227df88a54084860557cc1895acb7202.1646160212.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
 References: <pull.1041.v5.git.1644612979.gitgitgadget@gmail.com>
         <pull.1041.v6.git.1646160212.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 01 Mar 2022 18:43:20 +0000
-Subject: [PATCH v6 18/30] fsmonitor--daemon: implement handle_client callback
+Date:   Tue, 01 Mar 2022 18:43:17 +0000
+Subject: [PATCH v6 15/30] compat/fsmonitor/fsm-listen-win32: implement
+ FSMonitor backend on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,363 +74,607 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach fsmonitor--daemon to respond to IPC requests from client
-Git processes and respond with a list of modified pathnames
-relative to the provided token.
+Teach the win32 backend to register a watch on the working tree
+root directory (recursively).  Also watch the <gitdir> if it is
+not inside the working tree.  And to collect path change notifications
+into batches and publish.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/fsmonitor--daemon.c | 312 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 310 insertions(+), 2 deletions(-)
+ compat/fsmonitor/fsm-listen-win32.c | 565 ++++++++++++++++++++++++++++
+ 1 file changed, 565 insertions(+)
 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index 7c44b979035..65c1ef7d4bf 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -7,6 +7,7 @@
- #include "fsmonitor--daemon.h"
- #include "simple-ipc.h"
- #include "khash.h"
-+#include "pkt-line.h"
+diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
+index 916cbea254f..c2d11acbc1e 100644
+--- a/compat/fsmonitor/fsm-listen-win32.c
++++ b/compat/fsmonitor/fsm-listen-win32.c
+@@ -2,20 +2,585 @@
+ #include "config.h"
+ #include "fsmonitor.h"
+ #include "fsm-listen.h"
++#include "fsmonitor--daemon.h"
++
++/*
++ * The documentation of ReadDirectoryChangesW() states that the maximum
++ * buffer size is 64K when the monitored directory is remote.
++ *
++ * Larger buffers may be used when the monitored directory is local and
++ * will help us receive events faster from the kernel and avoid dropped
++ * events.
++ *
++ * So we try to use a very large buffer and silently fallback to 64K if
++ * we get an error.
++ */
++#define MAX_RDCW_BUF_FALLBACK (65536)
++#define MAX_RDCW_BUF          (65536 * 8)
++
++struct one_watch
++{
++	char buffer[MAX_RDCW_BUF];
++	DWORD buf_len;
++	DWORD count;
++
++	struct strbuf path;
++	HANDLE hDir;
++	HANDLE hEvent;
++	OVERLAPPED overlapped;
++
++	/*
++	 * Is there an active ReadDirectoryChangesW() call pending.  If so, we
++	 * need to later call GetOverlappedResult() and possibly CancelIoEx().
++	 */
++	BOOL is_active;
++};
++
++struct fsmonitor_daemon_backend_data
++{
++	struct one_watch *watch_worktree;
++	struct one_watch *watch_gitdir;
++
++	HANDLE hEventShutdown;
++
++	HANDLE hListener[3]; /* we don't own these handles */
++#define LISTENER_SHUTDOWN 0
++#define LISTENER_HAVE_DATA_WORKTREE 1
++#define LISTENER_HAVE_DATA_GITDIR 2
++	int nr_listener_handles;
++};
++
++/*
++ * Convert the WCHAR path from the notification into UTF8 and
++ * then normalize it.
++ */
++static int normalize_path_in_utf8(FILE_NOTIFY_INFORMATION *info,
++				  struct strbuf *normalized_path)
++{
++	int reserve;
++	int len = 0;
++
++	strbuf_reset(normalized_path);
++	if (!info->FileNameLength)
++		goto normalize;
++
++	/*
++	 * Pre-reserve enough space in the UTF8 buffer for
++	 * each Unicode WCHAR character to be mapped into a
++	 * sequence of 2 UTF8 characters.  That should let us
++	 * avoid ERROR_INSUFFICIENT_BUFFER 99.9+% of the time.
++	 */
++	reserve = info->FileNameLength + 1;
++	strbuf_grow(normalized_path, reserve);
++
++	for (;;) {
++		len = WideCharToMultiByte(CP_UTF8, 0, info->FileName,
++					  info->FileNameLength / sizeof(WCHAR),
++					  normalized_path->buf,
++					  strbuf_avail(normalized_path) - 1,
++					  NULL, NULL);
++		if (len > 0)
++			goto normalize;
++		if (GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
++			error("[GLE %ld] could not convert path to UTF-8: '%.*ls'",
++			      GetLastError(),
++			      (int)(info->FileNameLength / sizeof(WCHAR)),
++			      info->FileName);
++			return -1;
++		}
++
++		strbuf_grow(normalized_path,
++			    strbuf_avail(normalized_path) + reserve);
++	}
++
++normalize:
++	strbuf_setlen(normalized_path, len);
++	return strbuf_normalize_path(normalized_path);
++}
  
- static const char * const builtin_fsmonitor__daemon_usage[] = {
- 	N_("git fsmonitor--daemon start [<options>]"),
-@@ -364,6 +365,311 @@ void fsmonitor_force_resync(struct fsmonitor_daemon_state *state)
- 	pthread_mutex_unlock(&state->main_lock);
+ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+ {
++	SetEvent(state->backend_data->hListener[LISTENER_SHUTDOWN]);
++}
++
++static struct one_watch *create_watch(struct fsmonitor_daemon_state *state,
++				      const char *path)
++{
++	struct one_watch *watch = NULL;
++	DWORD desired_access = FILE_LIST_DIRECTORY;
++	DWORD share_mode =
++		FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE;
++	HANDLE hDir;
++	wchar_t wpath[MAX_PATH];
++
++	if (xutftowcs_path(wpath, path) < 0) {
++		error(_("could not convert to wide characters: '%s'"), path);
++		return NULL;
++	}
++
++	hDir = CreateFileW(wpath,
++			   desired_access, share_mode, NULL, OPEN_EXISTING,
++			   FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OVERLAPPED,
++			   NULL);
++	if (hDir == INVALID_HANDLE_VALUE) {
++		error(_("[GLE %ld] could not watch '%s'"),
++		      GetLastError(), path);
++		return NULL;
++	}
++
++	CALLOC_ARRAY(watch, 1);
++
++	watch->buf_len = sizeof(watch->buffer); /* assume full MAX_RDCW_BUF */
++
++	strbuf_init(&watch->path, 0);
++	strbuf_addstr(&watch->path, path);
++
++	watch->hDir = hDir;
++	watch->hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
++
++	return watch;
++}
++
++static void destroy_watch(struct one_watch *watch)
++{
++	if (!watch)
++		return;
++
++	strbuf_release(&watch->path);
++	if (watch->hDir != INVALID_HANDLE_VALUE)
++		CloseHandle(watch->hDir);
++	if (watch->hEvent != INVALID_HANDLE_VALUE)
++		CloseHandle(watch->hEvent);
++
++	free(watch);
++}
++
++static int start_rdcw_watch(struct fsmonitor_daemon_backend_data *data,
++			    struct one_watch *watch)
++{
++	DWORD dwNotifyFilter =
++		FILE_NOTIFY_CHANGE_FILE_NAME |
++		FILE_NOTIFY_CHANGE_DIR_NAME |
++		FILE_NOTIFY_CHANGE_ATTRIBUTES |
++		FILE_NOTIFY_CHANGE_SIZE |
++		FILE_NOTIFY_CHANGE_LAST_WRITE |
++		FILE_NOTIFY_CHANGE_CREATION;
++
++	ResetEvent(watch->hEvent);
++
++	memset(&watch->overlapped, 0, sizeof(watch->overlapped));
++	watch->overlapped.hEvent = watch->hEvent;
++
++	/*
++	 * Queue an async call using Overlapped IO.  This returns immediately.
++	 * Our event handle will be signalled when the real result is available.
++	 *
++	 * The return value here just means that we successfully queued it.
++	 * We won't know if the Read...() actually produces data until later.
++	 */
++	watch->is_active = ReadDirectoryChangesW(
++		watch->hDir, watch->buffer, watch->buf_len, TRUE,
++		dwNotifyFilter, &watch->count, &watch->overlapped, NULL);
++
++	if (watch->is_active)
++		return 0;
++
++	error("ReadDirectoryChangedW failed on '%s' [GLE %ld]",
++	      watch->path.buf, GetLastError());
++	return -1;
++}
++
++static int recv_rdcw_watch(struct one_watch *watch)
++{
++	DWORD gle;
++
++	watch->is_active = FALSE;
++
++	/*
++	 * The overlapped result is ready.  If the Read...() was successful
++	 * we finally receive the actual result into our buffer.
++	 */
++	if (GetOverlappedResult(watch->hDir, &watch->overlapped, &watch->count,
++				TRUE))
++		return 0;
++
++	gle = GetLastError();
++	if (gle == ERROR_INVALID_PARAMETER &&
++	    /*
++	     * The kernel throws an invalid parameter error when our
++	     * buffer is too big and we are pointed at a remote
++	     * directory (and possibly for other reasons).  Quietly
++	     * set it down and try again.
++	     *
++	     * See note about MAX_RDCW_BUF at the top.
++	     */
++	    watch->buf_len > MAX_RDCW_BUF_FALLBACK) {
++		watch->buf_len = MAX_RDCW_BUF_FALLBACK;
++		return -2;
++	}
++
++	/*
++	 * NEEDSWORK: If an external <gitdir> is deleted, the above
++	 * returns an error.  I'm not sure that there's anything that
++	 * we can do here other than failing -- the <worktree>/.git
++	 * link file would be broken anyway.  We might try to check
++	 * for that and return a better error message, but I'm not
++	 * sure it is worth it.
++	 */
++
++	error("GetOverlappedResult failed on '%s' [GLE %ld]",
++	      watch->path.buf, gle);
++	return -1;
++}
++
++static void cancel_rdcw_watch(struct one_watch *watch)
++{
++	DWORD count;
++
++	if (!watch || !watch->is_active)
++		return;
++
++	/*
++	 * The calls to ReadDirectoryChangesW() and GetOverlappedResult()
++	 * form a "pair" (my term) where we queue an IO and promise to
++	 * hang around and wait for the kernel to give us the result.
++	 *
++	 * If for some reason after we queue the IO, we have to quit
++	 * or otherwise not stick around for the second half, we must
++	 * tell the kernel to abort the IO.  This prevents the kernel
++	 * from writing to our buffer and/or signalling our event
++	 * after we free them.
++	 *
++	 * (Ask me how much fun it was to track that one down).
++	 */
++	CancelIoEx(watch->hDir, &watch->overlapped);
++	GetOverlappedResult(watch->hDir, &watch->overlapped, &count, TRUE);
++	watch->is_active = FALSE;
++}
++
++/*
++ * Process filesystem events that happen anywhere (recursively) under the
++ * <worktree> root directory.  For a normal working directory, this includes
++ * both version controlled files and the contents of the .git/ directory.
++ *
++ * If <worktree>/.git is a file, then we only see events for the file
++ * itself.
++ */
++static int process_worktree_events(struct fsmonitor_daemon_state *state)
++{
++	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct one_watch *watch = data->watch_worktree;
++	struct strbuf path = STRBUF_INIT;
++	struct string_list cookie_list = STRING_LIST_INIT_DUP;
++	struct fsmonitor_batch *batch = NULL;
++	const char *p = watch->buffer;
++
++	/*
++	 * If the kernel gets more events than will fit in the kernel
++	 * buffer associated with our RDCW handle, it drops them and
++	 * returns a count of zero.
++	 *
++	 * Yes, the call returns WITHOUT error and with length zero.
++	 * This is the documented behavior.  (My testing has confirmed
++	 * that it also sets the last error to ERROR_NOTIFY_ENUM_DIR,
++	 * but we do not rely on that since the function did not
++	 * return an error and it is not documented.)
++	 *
++	 * (The "overflow" case is not ambiguous with the "no data" case
++	 * because we did an INFINITE wait.)
++	 *
++	 * This means we have a gap in coverage.  Tell the daemon layer
++	 * to resync.
++	 */
++	if (!watch->count) {
++		trace2_data_string("fsmonitor", NULL, "fsm-listen/kernel",
++				   "overflow");
++		fsmonitor_force_resync(state);
++		return LISTENER_HAVE_DATA_WORKTREE;
++	}
++
++	/*
++	 * On Windows, `info` contains an "array" of paths that are
++	 * relative to the root of whichever directory handle received
++	 * the event.
++	 */
++	for (;;) {
++		FILE_NOTIFY_INFORMATION *info = (void *)p;
++		const char *slash;
++		enum fsmonitor_path_type t;
++
++		strbuf_reset(&path);
++		if (normalize_path_in_utf8(info, &path) == -1)
++			goto skip_this_path;
++
++		t = fsmonitor_classify_path_workdir_relative(path.buf);
++
++		switch (t) {
++		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
++			/* special case cookie files within .git */
++
++			/* Use just the filename of the cookie file. */
++			slash = find_last_dir_sep(path.buf);
++			string_list_append(&cookie_list,
++					   slash ? slash + 1 : path.buf);
++			break;
++
++		case IS_INSIDE_DOT_GIT:
++			/* ignore everything inside of "<worktree>/.git/" */
++			break;
++
++		case IS_DOT_GIT:
++			/* "<worktree>/.git" was deleted (or renamed away) */
++			if ((info->Action == FILE_ACTION_REMOVED) ||
++			    (info->Action == FILE_ACTION_RENAMED_OLD_NAME)) {
++				trace2_data_string("fsmonitor", NULL,
++						   "fsm-listen/dotgit",
++						   "removed");
++				goto force_shutdown;
++			}
++			break;
++
++		case IS_WORKDIR_PATH:
++			/* queue normal pathname */
++			if (!batch)
++				batch = fsmonitor_batch__new();
++			fsmonitor_batch__add_path(batch, path.buf);
++			break;
++
++		case IS_GITDIR:
++		case IS_INSIDE_GITDIR:
++		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
++		default:
++			BUG("unexpected path classification '%d' for '%s'",
++			    t, path.buf);
++		}
++
++skip_this_path:
++		if (!info->NextEntryOffset)
++			break;
++		p += info->NextEntryOffset;
++	}
++
++	fsmonitor_publish(state, batch, &cookie_list);
++	batch = NULL;
++	string_list_clear(&cookie_list, 0);
++	strbuf_release(&path);
++	return LISTENER_HAVE_DATA_WORKTREE;
++
++force_shutdown:
++	fsmonitor_batch__free_list(batch);
++	string_list_clear(&cookie_list, 0);
++	strbuf_release(&path);
++	return LISTENER_SHUTDOWN;
++}
++
++/*
++ * Process filesystem events that happened anywhere (recursively) under the
++ * external <gitdir> (such as non-primary worktrees or submodules).
++ * We only care about cookie files that our client threads created here.
++ *
++ * Note that we DO NOT get filesystem events on the external <gitdir>
++ * itself (it is not inside something that we are watching).  In particular,
++ * we do not get an event if the external <gitdir> is deleted.
++ */
++static int process_gitdir_events(struct fsmonitor_daemon_state *state)
++{
++	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	struct one_watch *watch = data->watch_gitdir;
++	struct strbuf path = STRBUF_INIT;
++	struct string_list cookie_list = STRING_LIST_INIT_DUP;
++	const char *p = watch->buffer;
++
++	if (!watch->count) {
++		trace2_data_string("fsmonitor", NULL, "fsm-listen/kernel",
++				   "overflow");
++		fsmonitor_force_resync(state);
++		return LISTENER_HAVE_DATA_GITDIR;
++	}
++
++	for (;;) {
++		FILE_NOTIFY_INFORMATION *info = (void *)p;
++		const char *slash;
++		enum fsmonitor_path_type t;
++
++		strbuf_reset(&path);
++		if (normalize_path_in_utf8(info, &path) == -1)
++			goto skip_this_path;
++
++		t = fsmonitor_classify_path_gitdir_relative(path.buf);
++
++		switch (t) {
++		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
++			/* special case cookie files within gitdir */
++
++			/* Use just the filename of the cookie file. */
++			slash = find_last_dir_sep(path.buf);
++			string_list_append(&cookie_list,
++					   slash ? slash + 1 : path.buf);
++			break;
++
++		case IS_INSIDE_GITDIR:
++			goto skip_this_path;
++
++		default:
++			BUG("unexpected path classification '%d' for '%s'",
++			    t, path.buf);
++		}
++
++skip_this_path:
++		if (!info->NextEntryOffset)
++			break;
++		p += info->NextEntryOffset;
++	}
++
++	fsmonitor_publish(state, NULL, &cookie_list);
++	string_list_clear(&cookie_list, 0);
++	strbuf_release(&path);
++	return LISTENER_HAVE_DATA_GITDIR;
  }
  
-+/*
-+ * Format an opaque token string to send to the client.
-+ */
-+static void with_lock__format_response_token(
-+	struct strbuf *response_token,
-+	const struct strbuf *response_token_id,
-+	const struct fsmonitor_batch *batch)
-+{
-+	/* assert current thread holding state->main_lock */
-+
-+	strbuf_reset(response_token);
-+	strbuf_addf(response_token, "builtin:%s:%"PRIu64,
-+		    response_token_id->buf, batch->batch_seq_nr);
-+}
-+
-+/*
-+ * Parse an opaque token from the client.
-+ * Returns -1 on error.
-+ */
-+static int fsmonitor_parse_client_token(const char *buf_token,
-+					struct strbuf *requested_token_id,
-+					uint64_t *seq_nr)
-+{
-+	const char *p;
-+	char *p_end;
-+
-+	strbuf_reset(requested_token_id);
-+	*seq_nr = 0;
-+
-+	if (!skip_prefix(buf_token, "builtin:", &p))
-+		return -1;
-+
-+	while (*p && *p != ':')
-+		strbuf_addch(requested_token_id, *p++);
-+	if (!*p++)
-+		return -1;
-+
-+	*seq_nr = (uint64_t)strtoumax(p, &p_end, 10);
-+	if (*p_end)
-+		return -1;
-+
-+	return 0;
-+}
-+
-+KHASH_INIT(str, const char *, int, 0, kh_str_hash_func, kh_str_hash_equal)
-+
-+static int do_handle_client(struct fsmonitor_daemon_state *state,
-+			    const char *command,
-+			    ipc_server_reply_cb *reply,
-+			    struct ipc_server_reply_data *reply_data)
-+{
-+	struct fsmonitor_token_data *token_data = NULL;
-+	struct strbuf response_token = STRBUF_INIT;
-+	struct strbuf requested_token_id = STRBUF_INIT;
-+	struct strbuf payload = STRBUF_INIT;
-+	uint64_t requested_oldest_seq_nr = 0;
-+	uint64_t total_response_len = 0;
-+	const char *p;
-+	const struct fsmonitor_batch *batch_head;
-+	const struct fsmonitor_batch *batch;
-+	intmax_t count = 0, duplicates = 0;
-+	kh_str_t *shown;
-+	int hash_ret;
-+	int do_trivial = 0;
-+	int do_flush = 0;
-+
-+	/*
-+	 * We expect `command` to be of the form:
-+	 *
-+	 * <command> := quit NUL
-+	 *            | flush NUL
-+	 *            | <V1-time-since-epoch-ns> NUL
-+	 *            | <V2-opaque-fsmonitor-token> NUL
-+	 */
-+
-+	if (!strcmp(command, "quit")) {
-+		/*
-+		 * A client has requested over the socket/pipe that the
-+		 * daemon shutdown.
-+		 *
-+		 * Tell the IPC thread pool to shutdown (which completes
-+		 * the await in the main thread (which can stop the
-+		 * fsmonitor listener thread)).
-+		 *
-+		 * There is no reply to the client.
-+		 */
-+		return SIMPLE_IPC_QUIT;
-+
-+	} else if (!strcmp(command, "flush")) {
-+		/*
-+		 * Flush all of our cached data and generate a new token
-+		 * just like if we lost sync with the filesystem.
-+		 *
-+		 * Then send a trivial response using the new token.
-+		 */
-+		do_flush = 1;
-+		do_trivial = 1;
-+
-+	} else if (!skip_prefix(command, "builtin:", &p)) {
-+		/* assume V1 timestamp or garbage */
-+
-+		char *p_end;
-+
-+		strtoumax(command, &p_end, 10);
-+		trace_printf_key(&trace_fsmonitor,
-+				 ((*p_end) ?
-+				  "fsmonitor: invalid command line '%s'" :
-+				  "fsmonitor: unsupported V1 protocol '%s'"),
-+				 command);
-+		do_trivial = 1;
-+
-+	} else {
-+		/* We have "builtin:*" */
-+		if (fsmonitor_parse_client_token(command, &requested_token_id,
-+						 &requested_oldest_seq_nr)) {
-+			trace_printf_key(&trace_fsmonitor,
-+					 "fsmonitor: invalid V2 protocol token '%s'",
-+					 command);
-+			do_trivial = 1;
-+
-+		} else {
-+			/*
-+			 * We have a V2 valid token:
-+			 *     "builtin:<token_id>:<seq_nr>"
-+			 */
-+		}
-+	}
-+
-+	pthread_mutex_lock(&state->main_lock);
-+
-+	if (!state->current_token_data)
-+		BUG("fsmonitor state does not have a current token");
-+
-+	if (do_flush)
-+		with_lock__do_force_resync(state);
-+
-+	/*
-+	 * We mark the current head of the batch list as "pinned" so
-+	 * that the listener thread will treat this item as read-only
-+	 * (and prevent any more paths from being added to it) from
-+	 * now on.
-+	 */
-+	token_data = state->current_token_data;
-+	batch_head = token_data->batch_head;
-+	((struct fsmonitor_batch *)batch_head)->pinned_time = time(NULL);
-+
-+	/*
-+	 * FSMonitor Protocol V2 requires that we send a response header
-+	 * with a "new current token" and then all of the paths that changed
-+	 * since the "requested token".  We send the seq_nr of the just-pinned
-+	 * head batch so that future requests from a client will be relative
-+	 * to it.
-+	 */
-+	with_lock__format_response_token(&response_token,
-+					 &token_data->token_id, batch_head);
-+
-+	reply(reply_data, response_token.buf, response_token.len + 1);
-+	total_response_len += response_token.len + 1;
-+
-+	trace2_data_string("fsmonitor", the_repository, "response/token",
-+			   response_token.buf);
-+	trace_printf_key(&trace_fsmonitor, "response token: %s",
-+			 response_token.buf);
-+
-+	if (!do_trivial) {
-+		if (strcmp(requested_token_id.buf, token_data->token_id.buf)) {
-+			/*
-+			 * The client last spoke to a different daemon
-+			 * instance -OR- the daemon had to resync with
-+			 * the filesystem (and lost events), so reject.
-+			 */
-+			trace2_data_string("fsmonitor", the_repository,
-+					   "response/token", "different");
-+			do_trivial = 1;
-+
-+		} else if (requested_oldest_seq_nr <
-+			   token_data->batch_tail->batch_seq_nr) {
-+			/*
-+			 * The client wants older events than we have for
-+			 * this token_id.  This means that the end of our
-+			 * batch list was truncated and we cannot give the
-+			 * client a complete snapshot relative to their
-+			 * request.
-+			 */
-+			trace_printf_key(&trace_fsmonitor,
-+					 "client requested truncated data");
-+			do_trivial = 1;
-+		}
-+	}
-+
-+	if (do_trivial) {
-+		pthread_mutex_unlock(&state->main_lock);
-+
-+		reply(reply_data, "/", 2);
-+
-+		trace2_data_intmax("fsmonitor", the_repository,
-+				   "response/trivial", 1);
-+
-+		strbuf_release(&response_token);
-+		strbuf_release(&requested_token_id);
-+		return 0;
-+	}
-+
-+	/*
-+	 * We're going to hold onto a pointer to the current
-+	 * token-data while we walk the list of batches of files.
-+	 * During this time, we will NOT be under the lock.
-+	 * So we ref-count it.
-+	 *
-+	 * This allows the listener thread to continue prepending
-+	 * new batches of items to the token-data (which we'll ignore).
-+	 *
-+	 * AND it allows the listener thread to do a token-reset
-+	 * (and install a new `current_token_data`).
-+	 */
-+	token_data->client_ref_count++;
-+
-+	pthread_mutex_unlock(&state->main_lock);
-+
-+	/*
-+	 * The client request is relative to the token that they sent,
-+	 * so walk the batch list backwards from the current head back
-+	 * to the batch (sequence number) they named.
-+	 *
-+	 * We use khash to de-dup the list of pathnames.
-+	 *
-+	 * NEEDSWORK: each batch contains a list of interned strings,
-+	 * so we only need to do pointer comparisons here to build the
-+	 * hash table.  Currently, we're still comparing the string
-+	 * values.
-+	 */
-+	shown = kh_init_str();
-+	for (batch = batch_head;
-+	     batch && batch->batch_seq_nr > requested_oldest_seq_nr;
-+	     batch = batch->next) {
-+		size_t k;
-+
-+		for (k = 0; k < batch->nr; k++) {
-+			const char *s = batch->interned_paths[k];
-+			size_t s_len;
-+
-+			if (kh_get_str(shown, s) != kh_end(shown))
-+				duplicates++;
-+			else {
-+				kh_put_str(shown, s, &hash_ret);
-+
-+				trace_printf_key(&trace_fsmonitor,
-+						 "send[%"PRIuMAX"]: %s",
-+						 count, s);
-+
-+				/* Each path gets written with a trailing NUL */
-+				s_len = strlen(s) + 1;
-+
-+				if (payload.len + s_len >=
-+				    LARGE_PACKET_DATA_MAX) {
-+					reply(reply_data, payload.buf,
-+					      payload.len);
-+					total_response_len += payload.len;
-+					strbuf_reset(&payload);
-+				}
-+
-+				strbuf_add(&payload, s, s_len);
-+				count++;
-+			}
-+		}
-+	}
-+
-+	if (payload.len) {
-+		reply(reply_data, payload.buf, payload.len);
-+		total_response_len += payload.len;
-+	}
-+
-+	kh_release_str(shown);
-+
-+	pthread_mutex_lock(&state->main_lock);
-+
-+	if (token_data->client_ref_count > 0)
-+		token_data->client_ref_count--;
-+
-+	if (token_data->client_ref_count == 0) {
-+		if (token_data != state->current_token_data) {
-+			/*
-+			 * The listener thread did a token-reset while we were
-+			 * walking the batch list.  Therefore, this token is
-+			 * stale and can be discarded completely.  If we are
-+			 * the last reader thread using this token, we own
-+			 * that work.
-+			 */
-+			fsmonitor_free_token_data(token_data);
-+		}
-+	}
-+
-+	pthread_mutex_unlock(&state->main_lock);
-+
-+	trace2_data_intmax("fsmonitor", the_repository, "response/length", total_response_len);
-+	trace2_data_intmax("fsmonitor", the_repository, "response/count/files", count);
-+	trace2_data_intmax("fsmonitor", the_repository, "response/count/duplicates", duplicates);
-+
-+	strbuf_release(&response_token);
-+	strbuf_release(&requested_token_id);
-+	strbuf_release(&payload);
-+
-+	return 0;
-+}
-+
- static ipc_server_application_cb handle_client;
- 
- static int handle_client(void *data,
-@@ -371,7 +677,7 @@ static int handle_client(void *data,
- 			 ipc_server_reply_cb *reply,
- 			 struct ipc_server_reply_data *reply_data)
+ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
  {
--	/* struct fsmonitor_daemon_state *state = data; */
-+	struct fsmonitor_daemon_state *state = data;
- 	int result;
- 
- 	/*
-@@ -382,10 +688,12 @@ static int handle_client(void *data,
- 	if (command_len != strlen(command))
- 		BUG("FSMonitor assumes text messages");
- 
-+	trace_printf_key(&trace_fsmonitor, "requested token: %s", command);
++	struct fsmonitor_daemon_backend_data *data = state->backend_data;
++	DWORD dwWait;
++	int result;
 +
- 	trace2_region_enter("fsmonitor", "handle_client", the_repository);
- 	trace2_data_string("fsmonitor", the_repository, "request", command);
++	state->error_code = 0;
++
++	if (start_rdcw_watch(data, data->watch_worktree) == -1)
++		goto force_error_stop;
++
++	if (data->watch_gitdir &&
++	    start_rdcw_watch(data, data->watch_gitdir) == -1)
++		goto force_error_stop;
++
++	for (;;) {
++		dwWait = WaitForMultipleObjects(data->nr_listener_handles,
++						data->hListener,
++						FALSE, INFINITE);
++
++		if (dwWait == WAIT_OBJECT_0 + LISTENER_HAVE_DATA_WORKTREE) {
++			result = recv_rdcw_watch(data->watch_worktree);
++			if (result == -1) {
++				/* hard error */
++				goto force_error_stop;
++			}
++			if (result == -2) {
++				/* retryable error */
++				if (start_rdcw_watch(data, data->watch_worktree) == -1)
++					goto force_error_stop;
++				continue;
++			}
++
++			/* have data */
++			if (process_worktree_events(state) == LISTENER_SHUTDOWN)
++				goto force_shutdown;
++			if (start_rdcw_watch(data, data->watch_worktree) == -1)
++				goto force_error_stop;
++			continue;
++		}
++
++		if (dwWait == WAIT_OBJECT_0 + LISTENER_HAVE_DATA_GITDIR) {
++			result = recv_rdcw_watch(data->watch_gitdir);
++			if (result == -1) {
++				/* hard error */
++				goto force_error_stop;
++			}
++			if (result == -2) {
++				/* retryable error */
++				if (start_rdcw_watch(data, data->watch_gitdir) == -1)
++					goto force_error_stop;
++				continue;
++			}
++
++			/* have data */
++			if (process_gitdir_events(state) == LISTENER_SHUTDOWN)
++				goto force_shutdown;
++			if (start_rdcw_watch(data, data->watch_gitdir) == -1)
++				goto force_error_stop;
++			continue;
++		}
++
++		if (dwWait == WAIT_OBJECT_0 + LISTENER_SHUTDOWN)
++			goto clean_shutdown;
++
++		error(_("could not read directory changes [GLE %ld]"),
++		      GetLastError());
++		goto force_error_stop;
++	}
++
++force_error_stop:
++	state->error_code = -1;
++
++force_shutdown:
++	/*
++	 * Tell the IPC thead pool to stop (which completes the await
++	 * in the main thread (which will also signal this thread (if
++	 * we are still alive))).
++	 */
++	ipc_server_stop_async(state->ipc_server_data);
++
++clean_shutdown:
++	cancel_rdcw_watch(data->watch_worktree);
++	cancel_rdcw_watch(data->watch_gitdir);
+ }
  
--	result = 0; /* TODO Do something here. */
-+	result = do_handle_client(state, command, reply, reply_data);
+ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ {
++	struct fsmonitor_daemon_backend_data *data;
++
++	CALLOC_ARRAY(data, 1);
++
++	data->hEventShutdown = CreateEvent(NULL, TRUE, FALSE, NULL);
++
++	data->watch_worktree = create_watch(state,
++					    state->path_worktree_watch.buf);
++	if (!data->watch_worktree)
++		goto failed;
++
++	if (state->nr_paths_watching > 1) {
++		data->watch_gitdir = create_watch(state,
++						  state->path_gitdir_watch.buf);
++		if (!data->watch_gitdir)
++			goto failed;
++	}
++
++	data->hListener[LISTENER_SHUTDOWN] = data->hEventShutdown;
++	data->nr_listener_handles++;
++
++	data->hListener[LISTENER_HAVE_DATA_WORKTREE] =
++		data->watch_worktree->hEvent;
++	data->nr_listener_handles++;
++
++	if (data->watch_gitdir) {
++		data->hListener[LISTENER_HAVE_DATA_GITDIR] =
++			data->watch_gitdir->hEvent;
++		data->nr_listener_handles++;
++	}
++
++	state->backend_data = data;
++	return 0;
++
++failed:
++	CloseHandle(data->hEventShutdown);
++	destroy_watch(data->watch_worktree);
++	destroy_watch(data->watch_gitdir);
++
+ 	return -1;
+ }
  
- 	trace2_region_leave("fsmonitor", "handle_client", the_repository);
- 
+ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
+ {
++	struct fsmonitor_daemon_backend_data *data;
++
++	if (!state || !state->backend_data)
++		return;
++
++	data = state->backend_data;
++
++	CloseHandle(data->hEventShutdown);
++	destroy_watch(data->watch_worktree);
++	destroy_watch(data->watch_gitdir);
++
++	FREE_AND_NULL(state->backend_data);
+ }
 -- 
 gitgitgadget
 
