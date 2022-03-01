@@ -2,77 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8A04C433EF
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 09:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE30CC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 09:34:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233908AbiCAJe4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 04:34:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53514 "EHLO
+        id S233546AbiCAJfB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 04:35:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233899AbiCAJeu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 04:34:50 -0500
+        with ESMTP id S231383AbiCAJex (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 04:34:53 -0500
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C176C61A18
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 01:33:53 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B0DE5DA78
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 01:34:00 -0800 (PST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 2BE005C0222;
-        Tue,  1 Mar 2022 04:33:53 -0500 (EST)
+        by mailout.nyi.internal (Postfix) with ESMTP id 18BCB5C0145;
+        Tue,  1 Mar 2022 04:33:57 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Tue, 01 Mar 2022 04:33:53 -0500
+  by compute3.internal (MEProxy); Tue, 01 Mar 2022 04:33:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=sHexnTpHGh004nhNBlhctc3vSj6gB6KihvkUSl
-        cxXag=; b=TOb1weRPX5OYOu10GaUsnC9OD1+tHAhpyqKmNlCLUSE1TPSGORptmQ
-        WdQGEW2TCnTTDu1lcaKlEmuIw1Wwh0jrsB9UciPp+UpUpbmUlTvV3dvLkD4AStIt
-        FKAfN1DpLaoMJ/zsNZ6MpYm7peB/EJoUox3LqwG6AV1SUoIJr/ozW+EUkGRDJlsj
-        WHy+pqApGIhh1wyGNr8+fv6ZbhQemMUkzOFZMwiiyQbBvXgY0HWagA1DTjG+vrgO
-        j7c8Flqro5YiqpoevdtOKZp9yItGcg63lsaAgZSH9rMMD7WExQXY0J+xqwkxKAW0
-        6gvETVcRa1XEkN2Hev13WyahOsNm5gBQ==
+        :subject:to:to; s=fm3; bh=6peoBySk0X0zZGaI1WUxEctTky5N6/+PBxulkD
+        R1fVM=; b=fec+ZOf73PeVx9SXTrjOd2coiyJFkd1NXRIv9gFf314QgAnybehDr2
+        zKzjqwaT0z6toxe+RRra/YJiEpnWW1XRezyhppsgq7+9X1JZb0q94tcIicFejtUY
+        gP9TFcPvZtod9OIght5ywSFu0Ta3KrRJh6NvwmGzSvee5qFMCx1DGPpj3lVSZI4Z
+        TUb9uughnjYIpeyLwPInxijDxg34ZrY6vC8k3A3WfmHcxQhwjfcUYW2v9bLQ9laB
+        H6Euf1ctlUnVA4YalihRlwt5tKS4oENgaq5AJbkNFdYqdhxUI9hqQiNnWUUsKbf1
+        zdSGFllG4kGIE8miGdnJOrcghcSVhqPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:from:from
         :in-reply-to:in-reply-to:message-id:mime-version:references
         :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=sHexnTpHGh004nhNB
-        lhctc3vSj6gB6KihvkUSlcxXag=; b=IS+/UcPFuMXx3LyYl2Mj4QZ1j1FuJb0nB
-        0dDtWJzQKq5xDyFygl33RmXwuT3TfEwQZam1ZLyBIRDP+7P31YCVyTkLQXHjAHjy
-        PyjHStRvTcmLhP/WHANoMX8SlPgNJgRGS7E/Pwou24hBDYeZ45cXBKiOxs5OoZ/a
-        6ZTgiMvQ2QLmoJx715jpjYWVE4TV6RFUl9xSBL9jXFKgCkj6Fdms8hqIuyo8r2k4
-        2CI05zF5sJUUBmDkmB7Jx2Gio2gYMS87maxDi5TTHbptgBul3TGd3WLJEhEnJMpo
-        xpBwEt/OUj/P4z5MKveVNm5eMB4GXFGGUETz9gZ7Ok+Ll7QTkGRSQ==
-X-ME-Sender: <xms:gegdYukfDdNJPShA8IkAeq_TjxsLtfFtlf4hhaZBCe7sZLBWv-DsGA>
-    <xme:gegdYl0IBGhLEjVX17VL4iE8IzWL7QOVX6uuEMO4W1U34LELiy4EOVz8v-IaazS2S
-    fWhnzZbvUphlTTcsg>
-X-ME-Received: <xmr:gegdYsp1Vzxz-zUo9rjIC5webTJ3I3WLOG6pv151Obp5HEqDgogpuGeN0bPK6y1fcFX1DD9pUtYeHyBC6F99o4AgNf8JX8_L3e1Gyp9Px3DeSVVFn7fwWPkx>
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=6peoBySk0X0zZGaI1
+        WUxEctTky5N6/+PBxulkDR1fVM=; b=Jpyp0Bvl0+2sD1Dw/C7pFuFkJnMaOt9BU
+        DBVOvLckb8sj/i6ycUQfAsMZGFPqC0DOs5DH+bxBnXfyA+xJKIlNzXE5rzuiYbJy
+        N51hWGqtU9Y4hEerrv2kuJRe7uizaYEXMiInVbT4aCJSQy8jdtxDJ63EPlGVUgL6
+        872bcKtVtUiSYmq+NRtks9VnLmoABuyvO0rIvHHFQfstGIz+xDfDdRKa3hC26F3X
+        fuu/yiF4WITZTBq6P9HDSoRnK2UFZkn3PCA8pDi7DlqXXUn97HbsWDZjgC5bp+Eq
+        cpE7IS0aUAUVveTiZXv1dbfqCcPuenEwZans4ZDJhYYPjWqzRTuDA==
+X-ME-Sender: <xms:hOgdYlNvL3qR0pWv86d__h494em5Kjc5HaQIOg63cbVAMvhSxCjEig>
+    <xme:hOgdYn8UsYaPYEb_STpAU5JYp4xP5LnVDNrQjUjVVZep-H9TdGkhn0JESvWRhNj64
+    OTzYzx7aj_l9Z7dGA>
+X-ME-Received: <xmr:hOgdYkQsRHBNzEdaWXVlXf1l7p21alxIZFhAptzH4qBZNfBKAwmCONHxn6OzzZFEDgXKlyF7GXMQF8Ysccgh7Q6iF8tBxtdooo76Y4ZYA2KSNTbzHVsn5wBt>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddtvddgtdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeehgefhtdefueffheekgfffudelffejtdfhvdejkedthfehvdelgfetgfdvtedthfen
+    hnpeehgfejueevjeetudehgffffeffvdejfeejiedvkeffgfekuefgheevteeufeelkeen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:gegdYikPLExygBTVhjXrm8wq9I_kuqiH5Dc1rYbB1hHb9PQZQtMxdw>
-    <xmx:gegdYs0OcchZDQB0_o4QBiigU8frnP7eoNaeMyPwApDNUZiMVbAIVA>
-    <xmx:gegdYpsXUtfuSWX5DMa4C18F_0qzXxykm0ZYJk0O2a6V8wJvVWtKLA>
-    <xmx:gegdYh_C7b2IPEwBB7ZcxyLVZy_RLM2MZYdKqMfZmfPs8CofcbWUgw>
+X-ME-Proxy: <xmx:hOgdYhtdXxhaRy2__vsQ5df6as-em3Lb2hdNEnPXeyqrBIvUj_DYIg>
+    <xmx:hOgdYteqaIn9XNC4uoTM-p-PFrdstSxPRDq5U-pWJvds70x6WlVLUA>
+    <xmx:hOgdYt2DKPyhl4EKuQOZWcIMjDdpRlGdrv3B-h1XxYJhcDys3tufUw>
+    <xmx:hegdYtkNaZpSGN-0YmeWEaRv7SVE8BTkOSQzGoFKGcLmuKlysGoj7w>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Mar 2022 04:33:52 -0500 (EST)
+ 1 Mar 2022 04:33:56 -0500 (EST)
 Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 433632da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 1 Mar 2022 09:33:51 +0000 (UTC)
-Date:   Tue, 1 Mar 2022 10:33:50 +0100
+        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 2a21fc06 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 1 Mar 2022 09:33:55 +0000 (UTC)
+Date:   Tue, 1 Mar 2022 10:33:54 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>
-Subject: [PATCH v2 4/5] remote: read symbolic refs via
- `refs_read_symbolic_ref()`
-Message-ID: <0489380e00357dcdd14e399a88d420eab66b19bb.1646127015.git.ps@pks.im>
+Subject: [PATCH v2 5/5] refs/files-backend: optimize reading of symbolic refs
+Message-ID: <b6eca63d3b9d9ff60778d6dabe13e4d087f2ff63.1646127015.git.ps@pks.im>
 References: <cover.1645619224.git.ps@pks.im>
  <cover.1646127015.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cZEu1l5gr4zjcpWQ"
+        protocol="application/pgp-signature"; boundary="jSkBbGPWum49NfSC"
 Content-Disposition: inline
 In-Reply-To: <cover.1646127015.git.ps@pks.im>
 Precedence: bulk
@@ -80,127 +79,152 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---cZEu1l5gr4zjcpWQ
-Content-Type: text/plain; charset=us-ascii
+--jSkBbGPWum49NfSC
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-We have two cases in the remote code where we check whether a reference
-is symbolic or not, but don't mind in case it doesn't exist or in case
-it exists but is a non-symbolic reference. Convert these two callsites
-to use the new `refs_read_symbolic_ref()` function, whose intent is to
-implement exactly that usecase.
+When reading references via `files_read_raw_ref()` we always consult
+both the loose reference, and if that wasn't found, we also consult the
+packed-refs file. While this makes sense to read a generic reference, it
+is wasteful in the case where we only care about symbolic references:
+the packed-refs backend does not support them, and thus it cannot ever
+return one for us.
 
-No change in behaviour is expected from this change.
+Special-case reading of symbolic references for the files backend such
+that we always skip asking the packed-refs backend.
+
+We use `refs_read_symbolic_ref()` extensively to determine whether we
+need to skip updating local symbolic references during a fetch, which is
+why the change results in a significant speedup when doing fetches in
+repositories with huge numbers of references. The following benchmark
+executes a mirror-fetch in a repository with about 2 million references
+via `git fetch --prune --no-write-fetch-head +refs/*:refs/*`:
+
+    Benchmark 1: HEAD~
+      Time (mean =C2=B1 =CF=83):     68.372 s =C2=B1  2.344 s    [User: 65.=
+629 s, System: 8.786 s]
+      Range (min =E2=80=A6 max):   65.745 s =E2=80=A6 70.246 s    3 runs
+
+    Benchmark 2: HEAD
+      Time (mean =C2=B1 =CF=83):     60.259 s =C2=B1  0.343 s    [User: 61.=
+019 s, System: 7.245 s]
+      Range (min =E2=80=A6 max):   60.003 s =E2=80=A6 60.649 s    3 runs
+
+    Summary
+      'HEAD' ran
+        1.13 =C2=B1 0.04 times faster than 'HEAD~'
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/remote.c |  8 +++++---
- remote.c         | 14 +++++++-------
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ refs/files-backend.c | 34 ++++++++++++++++++++++++++++------
+ 1 file changed, 28 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 6f27ddc47b..0142ed09b5 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -766,13 +766,15 @@ static int mv(int argc, const char **argv)
- 	for_each_ref(read_remote_branches, &rename);
- 	for (i =3D 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item =3D remote_branches.items + i;
--		int flag =3D 0;
-+		struct strbuf referent =3D STRBUF_INIT;
-=20
--		read_ref_full(item->string, RESOLVE_REF_READING, NULL, &flag);
--		if (!(flag & REF_ISSYMREF))
-+		if (refs_read_symbolic_ref(get_main_ref_store(the_repository), item->str=
-ing,
-+					   &referent))
- 			continue;
- 		if (delete_ref(NULL, item->string, NULL, REF_NO_DEREF))
- 			die(_("deleting '%s' failed"), item->string);
-+
-+		strbuf_release(&referent);
- 	}
- 	for (i =3D 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item =3D remote_branches.items + i;
-diff --git a/remote.c b/remote.c
-index c97c626eaa..42a4e7106e 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1945,13 +1945,9 @@ const char *branch_get_push(struct branch *branch, s=
-truct strbuf *err)
- 	return branch->push_tracking_ref;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index f3428a9f12..0457ecdb42 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -338,9 +338,9 @@ static struct ref_cache *get_loose_ref_cache(struct fil=
+es_ref_store *refs)
+ 	return refs->loose;
  }
 =20
--static int ignore_symref_update(const char *refname)
-+static int ignore_symref_update(const char *refname, struct strbuf *scratc=
-h)
+-static int files_read_raw_ref(struct ref_store *ref_store, const char *ref=
+name,
+-			      struct object_id *oid, struct strbuf *referent,
+-			      unsigned int *type, int *failure_errno)
++static int read_ref_internal(struct ref_store *ref_store, const char *refn=
+ame,
++			     struct object_id *oid, struct strbuf *referent,
++			     unsigned int *type, int *failure_errno, int skip_packed_refs)
  {
--	int flag;
--
--	if (!resolve_ref_unsafe(refname, 0, NULL, &flag))
--		return 0; /* non-existing refs are OK */
--	return (flag & REF_ISSYMREF);
-+	return !refs_read_symbolic_ref(get_main_ref_store(the_repository), refnam=
-e, scratch);
- }
-=20
- /*
-@@ -1964,6 +1960,7 @@ static int ignore_symref_update(const char *refname)
- static struct ref *get_expanded_map(const struct ref *remote_refs,
- 				    const struct refspec_item *refspec)
- {
-+	struct strbuf scratch =3D STRBUF_INIT;
- 	const struct ref *ref;
- 	struct ref *ret =3D NULL;
- 	struct ref **tail =3D &ret;
-@@ -1971,11 +1968,13 @@ static struct ref *get_expanded_map(const struct re=
-f *remote_refs,
- 	for (ref =3D remote_refs; ref; ref =3D ref->next) {
- 		char *expn_name =3D NULL;
-=20
-+		strbuf_reset(&scratch);
-+
- 		if (strchr(ref->name, '^'))
- 			continue; /* a dereference item */
- 		if (match_name_with_pattern(refspec->src, ref->name,
- 					    refspec->dst, &expn_name) &&
--		    !ignore_symref_update(expn_name)) {
-+		    !ignore_symref_update(expn_name, &scratch)) {
- 			struct ref *cpy =3D copy_ref(ref);
-=20
- 			cpy->peer_ref =3D alloc_ref(expn_name);
-@@ -1987,6 +1986,7 @@ static struct ref *get_expanded_map(const struct ref =
-*remote_refs,
- 		free(expn_name);
- 	}
-=20
-+	strbuf_release(&scratch);
+ 	struct files_ref_store *refs =3D
+ 		files_downcast(ref_store, REF_STORE_READ, "read_raw_ref");
+@@ -381,7 +381,7 @@ static int files_read_raw_ref(struct ref_store *ref_sto=
+re, const char *refname,
+ 	if (lstat(path, &st) < 0) {
+ 		int ignore_errno;
+ 		myerr =3D errno;
+-		if (myerr !=3D ENOENT)
++		if (myerr !=3D ENOENT || skip_packed_refs)
+ 			goto out;
+ 		if (refs_read_raw_ref(refs->packed_ref_store, refname, oid,
+ 				      referent, type, &ignore_errno)) {
+@@ -425,7 +425,8 @@ static int files_read_raw_ref(struct ref_store *ref_sto=
+re, const char *refname,
+ 		 * ref is supposed to be, there could still be a
+ 		 * packed ref:
+ 		 */
+-		if (refs_read_raw_ref(refs->packed_ref_store, refname, oid,
++		if (skip_packed_refs ||
++		    refs_read_raw_ref(refs->packed_ref_store, refname, oid,
+ 				      referent, type, &ignore_errno)) {
+ 			myerr =3D EISDIR;
+ 			goto out;
+@@ -470,6 +471,27 @@ static int files_read_raw_ref(struct ref_store *ref_st=
+ore, const char *refname,
  	return ret;
  }
 =20
++static int files_read_raw_ref(struct ref_store *ref_store, const char *ref=
+name,
++			      struct object_id *oid, struct strbuf *referent,
++			      unsigned int *type, int *failure_errno)
++{
++	return read_ref_internal(ref_store, refname, oid, referent, type, failure=
+_errno, 0);
++}
++
++static int files_read_symbolic_ref(struct ref_store *ref_store, const char=
+ *refname,
++				   struct strbuf *referent)
++{
++	struct object_id oid;
++	int failure_errno, ret;
++	unsigned int type;
++
++	ret =3D read_ref_internal(ref_store, refname, &oid, referent, &type, &fai=
+lure_errno, 1);
++	if (ret)
++		return ret;
++
++	return !(type & REF_ISSYMREF);
++}
++
+ int parse_loose_ref_contents(const char *buf, struct object_id *oid,
+ 			     struct strbuf *referent, unsigned int *type,
+ 			     int *failure_errno)
+@@ -3286,7 +3308,7 @@ struct ref_storage_be refs_be_files =3D {
+=20
+ 	files_ref_iterator_begin,
+ 	files_read_raw_ref,
+-	NULL,
++	files_read_symbolic_ref,
+=20
+ 	files_reflog_iterator_begin,
+ 	files_for_each_reflog_ent,
 --=20
 2.35.1
 
 
---cZEu1l5gr4zjcpWQ
+--jSkBbGPWum49NfSC
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmId6H0ACgkQVbJhu7ck
-PpQK6g/9HDNn4HYv8dJGmrqzmI1/wkQmT7R95h6DfYJCo9q/RYysnYLRpjB4wpW2
-a+yTLWnBimB4zJbnwA+5ZjTU5yGfvcj0G+fz0rlgtzbRnlYldgNLt7eWjj4Pi6zd
-fFYaoqPPbIg1xlvIa1GXlG/DwjjNMNpRRmYDZTbxppwwVpw++TyM1ReXXl2K2x5f
-Gj7H97hx6yuIca7uJu3CTEUkVY2Xk63NvnYdqkE7pNCsf7YKLvIo2NbcQEkWnzQ6
-4CL4B4y7DgNHCB3ZWYt0/mL4GO17PGoGnlAb0gaG9xhpkR00cNx7RGj8DGHQrqRu
-hmB89OL5+27pL5fOTc5qAzfuHsw0DzwGraS8G2y5N04tytUaAhYotwgGTWPQG2qR
-ZTZAvJre/YFgNEmiPRbxTn6xwCqN6TfTQyFYj6243qKLVj6ennQX+kGDRXje5EUQ
-8vJms3FsK5TVxBkhPZAy9tDvz0L6JcJv6MC0JlMHtpzYViVHQlxaXOclN28DI9Sr
-QrA3qAKWqZ2iDDNw4Wl9EHk3o0AKiIFVa7kXtF1xvzYEo30CC8wRkOqCDBt3+uPJ
-rG0kLNjGAvR3/dCqVsGr8LQv+ESEd8UA6OLctQAA5dFSGwvNEO8rGNvPZCUrEvK4
-sTR3zlkjpu0t9n8sZ8LDV1VxElPGQ5Ol0Y1gk81GWLlihyKzp0U=
-=Xtw0
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmId6IEACgkQVbJhu7ck
+PpTEAQ/+IUli2Sx/ZnH0pn4Wg2kLxCilyUAUkn16ibEBLu8LEvW73VZdyvbwAc/d
+oTcHeB29Z/CKHbrq9pZJirbRSSwDMnX9Xv0OTuw+HRGB3l8lGrLADYVYpFvEBmEx
+FcK1uJclWKpZd8Av8u3JxmM21802A9PxylpVWGmt7vmT/mnGBVUkvegf0VCcs6gj
+GNeQFQSRRu+NBcVzbYpzI/uUxBIJxM+AxXid6mIEPzmc4PD5s2zITkCBM9vqi654
+OMms4nin81d2dVhEh1RIOWR1qLFQZZW9rgGUxyS1pXsNlt8dDlN41eKZP+x+ECLL
+omgJ2t+ehAy/Mj4MWLA1DriSB/nYdgJEHO0KmtIth528Jmvo1oJKlWQEp56nUrv1
+QdvkUAyJTM5ngaQG1rDL/ej7XbFqSXHbxj55Hhkkw1OWgPLClR1sWiMMGF5LE7kR
+d723gibBcaD0/zsdDNK3/RQYKIegUeSf4VuS1v27Xz/xhEanDRTqEDxyl8iQeIwI
+HMWqqlAlXf5qeTqCecH6jsQWWfjDaboCP3yZjzdd3aLEST4jpEpJIY4v13EFctbH
+0W8KU96yXrpav+VjFWnpOOe0jFO6qSmRqE6J5qD3Jj24tqdGOFNOKFKfHedeaGVn
+Zyr9bpHhfVwl97ScoVdJVXzRBTGRjcUxy0s0/0N6YIXK8jMfOM8=
+=dB3Q
 -----END PGP SIGNATURE-----
 
---cZEu1l5gr4zjcpWQ--
+--jSkBbGPWum49NfSC--
