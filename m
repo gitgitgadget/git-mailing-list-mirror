@@ -2,93 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81760C433F5
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 17:17:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5BECC433F5
+	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 17:36:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235851AbiCARSX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 12:18:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43268 "EHLO
+        id S236503AbiCARgu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 12:36:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235764AbiCARSW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 12:18:22 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAC8B63C4
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 09:17:39 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5795816D249;
-        Tue,  1 Mar 2022 12:17:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HKHPDF6mNRM0PyI03t20d+2zuei1k9GclVGQtg
-        oyDaM=; b=LeBkyM6Nizu0Z4vsrwzbIf0TOLXpUiIHYe+nWbnGnYNRggjVDI1KNK
-        v/bLYLwPQIvSCqSPN70GHHJ9peT/zMDMdKff6fBJ/Ob8rAfiECUjuHhffwwKqeVi
-        l4qhN/Vyjx4l5EIRrR6zvtE9fWoPN/Al2fCYf8X0Fqsu3CcI/ibCI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3BD7D16D248;
-        Tue,  1 Mar 2022 12:17:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 77A0D16D246;
-        Tue,  1 Mar 2022 12:17:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jaydeep P Das <jaydeepjd.8914@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] userdiff: add builtin diff driver for Kotlin language.
-References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
-        <20220301155431.2534136-1-jaydeepjd.8914@gmail.com>
-Date:   Tue, 01 Mar 2022 09:17:34 -0800
-In-Reply-To: <20220301155431.2534136-1-jaydeepjd.8914@gmail.com> (Jaydeep
-        P. Das's message of "Tue, 1 Mar 2022 21:24:31 +0530")
-Message-ID: <xmqq8rttsic1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232545AbiCARgt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 12:36:49 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A197E0A9
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 09:36:05 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id j17so21750391wrc.0
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 09:36:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=mYFH2tb0YE54KnwXvLfPulTvLY80PuG7PyQjjYW/+2Y=;
+        b=mrl7VPIROgiiDrefoQeaRu2tZeHGD5NoC6cVJEoQXHGchdIlXURABERixy/+r88wj0
+         oKHCg3urQqYiUM/TLJYFIID9y2X6pugIwf06JLses6gvr58e/v8tPQwlcDl8wNq/bKeE
+         XlFpm9j3sAEN9veYXhJ1tV/O8tROeYjJ2c04c3w8UcUDkPrmeDMJ9kc0rj3QUhnLbt3j
+         nZtLevHyY3L4MxUDxoGIc+PEud9hXLNt1PATLyGFx22OIuEhxgWAC+fb1aVDnYZqhSPa
+         vpaKK4ZenTri6M/2evKQ2GleABHuaGHKVrEu/GscF/ckn30v7qi8LPwNwKfLbJ+hw7tM
+         xGYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=mYFH2tb0YE54KnwXvLfPulTvLY80PuG7PyQjjYW/+2Y=;
+        b=c+Yi5kEkmQ/yXhfTY4kfHrGwR/ti0bBry8ku34jaMs4w2zJCh8ADgcw8QaTUdm48TW
+         XLXXdMoHEPHl9Yb7cMHiuI9gSJtc8rTmgN4WRD3EKJjQ1hjOlsvTsZWvkB+O7asfFETV
+         fL0dJoVew2kYtGxrV2MQQe020gKT38iq4wmL5VwwguvQNCsPm3TpSpUgYo9YUgaXFJOJ
+         D9UZNaDbistzxMtNrM8Fw9FhDM46EGrIMBGzW4bEmV2xS96x+4J0U+3JQlstjzL7FS4E
+         j1E839jObtyFs+T/lqfRzGYjKG3a3ykHGgLSFLeznlCZX5AFu2EMLqTddrqvDCKaRxxL
+         2syA==
+X-Gm-Message-State: AOAM532jg7zAsEPTot4tzWv+bhvjunsHAcHMZMUi/MLcBB0dm6qXjcGL
+        EdWwRF1xaigo+DhBH6ajTYuh4rjsP8ZA+Yo/Qqge/wavAtmSUQ==
+X-Google-Smtp-Source: ABdhPJy3bS9h3VLs47d+NKd6n7ySkxqVkDu4Hk4iqY+F4i2iTvyjZi5o6nUBKQCA4voEaaa86vdhBg+UdAVLa41A+Gk=
+X-Received: by 2002:a5d:6d0d:0:b0:1e8:7b6a:38e7 with SMTP id
+ e13-20020a5d6d0d000000b001e87b6a38e7mr20548308wrq.625.1646156163518; Tue, 01
+ Mar 2022 09:36:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7CCA8E6A-9983-11EC-A404-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+From:   Ed Warnicke <hagbard@gmail.com>
+Date:   Tue, 1 Mar 2022 11:35:52 -0600
+Message-ID: <CAFVSqg1arVNwWMANwR6CDP++5hXAEW1a_ajekNe+TXNpSSZFPA@mail.gmail.com>
+Subject: URI Scheme for git object ids?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jaydeep P Das <jaydeepjd.8914@gmail.com> writes:
+Has there been any discussion of how one might represent a git object
+id as a urn or uri?
 
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> index a71dad2674..4b36d51beb 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -829,6 +829,8 @@ patterns are available:
->  
->  - `java` suitable for source code in the Java language.
->  
-> +- `kotlin` suitable for source code in the Kotlin language.
-> +
->  - `markdown` suitable for Markdown documents.
->  
->  - `matlab` suitable for source code in the MATLAB and Octave languages.
+It's clear that 'git:' is registered with IANA as a URI prefix for
+locations of git repos.
 
-I do not speak the language, but hopefully those who do will find
-issues and help us correct them if there still are any.  The patch
-organization looks good.  Will queue.
+I was wondering if there was any existing use of something like:
 
-Thanks.
+'gitoid:${type}:${hash type}:${hash of git object}' ?
 
-> diff --git a/userdiff.c b/userdiff.c
-> index 8578cb0d12..f23f098f19 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -168,6 +168,13 @@ PATTERNS("java",
->  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
->  	 "|[-+*/<>%&^|=!]="
->  	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
-> +PATTERNS("kotlin",
-> +	 "^[ \t]*(([a-z]+[ \t]+)*(fun|class|interface)[ \t]+.*[ \t]*)$",
-> +	 /* -- */
-> +	 "[a-zA-Z_][a-zA-Z0-9_]*"
-> +	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
-> +	 "|[-+*/<>%&^|=!]="
-> +	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
->  PATTERNS("markdown",
->  	 "^ {0,3}#{1,6}[ \t].*",
->  	 /* -- */
+So for example:
+
+gitoid:blob:sha1:261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64
+
+which could be used to communicate generic git object ids.
+
+Ed
