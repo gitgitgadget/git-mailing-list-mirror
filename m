@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 293E4C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 00:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58C3BC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 00:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238928AbiCBA7o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 19:59:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57600 "EHLO
+        id S238944AbiCBA7p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 19:59:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238841AbiCBA7S (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 19:59:18 -0500
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DBCD90268
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 16:58:35 -0800 (PST)
-Received: by mail-io1-xd30.google.com with SMTP id r8so135943ioj.9
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 16:58:35 -0800 (PST)
+        with ESMTP id S238857AbiCBA7V (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 19:59:21 -0500
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 162C396821
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 16:58:38 -0800 (PST)
+Received: by mail-il1-x132.google.com with SMTP id x14so220215ill.12
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 16:58:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=BOC5DUwQBSar7jUJrq+622ol1tE8O3U8tCSOTGdW45w=;
-        b=j6XHLLMDlevPfBQqMEJRUcmc1tPTHWBoDYqbQNMQ4VK4Pinj4mp4oxNvtm70iU0izr
-         gEJRMBAzLnIXduGLHW1wm2ouSc38mtIuwYOI7y55UiMQn2P+7pNXv8ZL3pV2ItNA2xw9
-         Mz/lpRDDBbHrUdvPhYP+pt+RtK9xILcNw+Sh/5F9THJXCr+S+3JrdTe+nWC+EKwKp4Kj
-         a9fIDMMDEeVhBKgYLsC12B9abDVQ3IhZjIUgcr13TsXAB+6Xcei2nnnkdPTF9CE0iquJ
-         G3erjo83K/K8ZN8FqgLMTqhHYDaVfHZpqfEYxJsBLjuLmEsRsmAhKw473iCAVl1F41cu
-         0HZQ==
+        bh=tJ5y9v0gXaKx24xZzUVGCytrnbRLdE4kNZ9zqtJ4x9U=;
+        b=wgLtl3lrQKPy15wkW8hvtLnDTGAyygim0ILbaST7+aYjGkLdZUFYoYl9OsSMINUZJ1
+         FaLmv6/KC1AQ5vMX1ZrwAaSjbX5Kd9J1cQHB9btdgN62Wa1SscvB5/DARqIaI/alTHHp
+         bgx1IZF/Wtntr/fLajhBqRG8M5cRvLn5mstWh0gullwXec1+lLyFOX5oESD9TxRQ31tR
+         dFayugQj4NDmU4Fcsot0wMftOFyeqcN8SCjLMj6rLmi///lzN3kRS/pNHyTUn5y2q1F/
+         FbcrkjHGXia7BLKRrXMx7531ghpjDot8xE9Zb3G8wLKzHaBBywi+VkBWXvxelx/I74Ab
+         Xp2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=BOC5DUwQBSar7jUJrq+622ol1tE8O3U8tCSOTGdW45w=;
-        b=Df2bnEH5QVNfDrIIRwDGPZs64FtnLZW1sttGUdz1yCAitxp0F6eEbvoLzTFAR87ipw
-         blCKwXWeJge++fzbku9msVHtG3QRNPOY+AB+bT7FC4VTG5jy6WpTK84HhzIYYE1BBpRx
-         jGrjh90ie786LBX6yoy+l1VtH4/bYhcfThO2yqJfJpvQ3u9dYJ27DR3BJnoAUQE1/6Fw
-         wNpbdRb/LtXQA0nwn++2k8dEqTv29eLoLRIHtRbU+L+OVuefoCq0N8Wh6iqLb4xDgS6r
-         wEAmXWG279+FKOgLb1Frsq1Z9DIl4tkaTp+IWZnFXRucTP0S7I9Ld7Nm9eeoMw9MZyd6
-         iyjA==
-X-Gm-Message-State: AOAM5338m+u9uliPlB4KUlko7/NwHQQfxSsS8MXwezYqao5amOO8T+t0
-        DekB/D3LFoo5qqAquXMnwQPK0PXrscs9sme1
-X-Google-Smtp-Source: ABdhPJwPPwKEx45lpoGcap7zQ89wwZ5x2MX9wMSCxN0Q8rO4Y/cQBjJOaHN7j0ry4Meqg61uZL+Zvg==
-X-Received: by 2002:a02:7742:0:b0:311:626c:d554 with SMTP id g63-20020a027742000000b00311626cd554mr23210247jac.134.1646182714971;
-        Tue, 01 Mar 2022 16:58:34 -0800 (PST)
+        bh=tJ5y9v0gXaKx24xZzUVGCytrnbRLdE4kNZ9zqtJ4x9U=;
+        b=lx/XjNp/lJgu0ZXwsl0NYT4T2XpALAtfe9EiiRfK6MgIiQJLgmQAP9bgeaCf0zjPI2
+         xTlVe6mThlxZZ7hb2Q9WsmdHoLy1F6a70d8B8d9zogaLC9eoT3qmiHUgMYolkWr7io8j
+         XZFi6odsknoLlzXjQDCy62b501G8kzsyLspjE4buBWRM9h0pKpm7+Re6Uyp3yhJGo2p1
+         Uoi6zQ+N57I/nH5iKxFzJrKr1gvbUZZMYq8C+po0mmd+x7+MqXj2EdubC0LFXNvm0cxf
+         9IlVt3FW3ZM+4W55JLquSSO+T6xreOzmofrni5R4x4b3sd1IJFhYzFglc61GOW1wiHri
+         S2YA==
+X-Gm-Message-State: AOAM531IKFOLTLPsXG6m9gLX5qP/SWjWBA1I2E9bJXepfm/B3Yckyy+M
+        LqoxLTpKGClyCsmdKdmygACNq2XZUYGimoYp
+X-Google-Smtp-Source: ABdhPJwPzgSrjFtfDR9rTr7V4yH8g+tQ5RUUW5/g/Xd7TA31gCM7p1XO2xKEnravjsBEYaWt84Tf/A==
+X-Received: by 2002:a05:6e02:2168:b0:2c1:a436:d18c with SMTP id s8-20020a056e02216800b002c1a436d18cmr24376955ilv.49.1646182717220;
+        Tue, 01 Mar 2022 16:58:37 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v23-20020a056602015700b006409f5261a4sm8010899iot.40.2022.03.01.16.58.34
+        by smtp.gmail.com with ESMTPSA id o7-20020a056e02092700b002bdf00b573esm8312754ilt.6.2022.03.01.16.58.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 16:58:34 -0800 (PST)
-Date:   Tue, 1 Mar 2022 19:58:34 -0500
+        Tue, 01 Mar 2022 16:58:37 -0800 (PST)
+Date:   Tue, 1 Mar 2022 19:58:36 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     tytso@mit.edu, derrickstolee@github.com, gitster@pobox.com,
         larsxschneider@gmail.com
-Subject: [PATCH v2 15/17] builtin/repack.c: add cruft packs to MIDX during
- geometric repack
-Message-ID: <b09dbc9fe5f02b07f4b20503c4d8f427c6edb6fa.1646182671.git.me@ttaylorr.com>
+Subject: [PATCH v2 16/17] builtin/gc.c: conditionally avoid pruning objects
+ via loose
+Message-ID: <7a21ae1494eb59ab291b1c9cbdc2dcff93c4df9b.1646182671.git.me@ttaylorr.com>
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1646182671.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -65,118 +65,165 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using cruft packs, the following race can occur when a geometric
-repack that writes a MIDX bitmap takes place afterwords:
-
-  - First, create an unreachable object and do an all-into-one cruft
-    repack which stores that object in the repository's cruft pack.
-  - Then make that object reachable.
-  - Finally, do a geometric repack and write a MIDX bitmap.
-
-Assuming that we are sufficiently unlucky as to select a commit from the
-MIDX which reaches that object for bitmapping, then the `git
-multi-pack-index` process will complain that that object is missing.
-
-The reason is because we don't include cruft packs in the MIDX when
-doing a geometric repack. Since the "make that object reachable" doesn't
-necessarily mean that we'll create a new copy of that object in one of
-the packs that will get rolled up as part of a geometric repack, it's
-possible that the MIDX won't see any copies of that now-reachable
-object.
-
-Of course, it's desirable to avoid including cruft packs in the MIDX
-because it causes the MIDX to store a bunch of objects which are likely
-to get thrown away. But excluding that pack does open us up to the above
-race.
-
-This patch demonstrates the bug, and resolves it by including cruft
-packs in the MIDX even when doing a geometric repack.
+Expose the new `git repack --cruft` mode from `git gc` via a new opt-in
+flag. When invoked like `git gc --cruft`, `git gc` will avoid exploding
+unreachable objects as loose ones, and instead create a cruft pack and
+`.mtimes` file.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/repack.c              | 19 +++++++++++++++++--
- t/t5328-pack-objects-cruft.sh | 26 ++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 2 deletions(-)
+ Documentation/config/gc.txt   | 21 +++++++++++++-------
+ Documentation/git-gc.txt      |  5 +++++
+ builtin/gc.c                  | 10 +++++++++-
+ t/t5328-pack-objects-cruft.sh | 37 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 65 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index afa4d51a22..59b60cd309 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -23,6 +23,7 @@
- #define PACK_CRUFT 4
+diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
+index c834e07991..38fea076a2 100644
+--- a/Documentation/config/gc.txt
++++ b/Documentation/config/gc.txt
+@@ -81,14 +81,21 @@ gc.packRefs::
+ 	to enable it within all non-bare repos or it can be set to a
+ 	boolean value.  The default is `true`.
  
- #define DELETE_PACK 1
-+#define CRUFT_PACK 2
- 
- static int pack_everything;
- static int delta_base_offset = 1;
-@@ -158,8 +159,11 @@ static void collect_pack_filenames(struct string_list *fname_nonkept_list,
- 		if ((extra_keep->nr > 0 && i < extra_keep->nr) ||
- 		    (file_exists(mkpath("%s/%s.keep", packdir, fname))))
- 			string_list_append_nodup(fname_kept_list, fname);
--		else
--			string_list_append_nodup(fname_nonkept_list, fname);
-+		else {
-+			struct string_list_item *item = string_list_append_nodup(fname_nonkept_list, fname);
-+			if (file_exists(mkpath("%s/%s.mtimes", packdir, fname)))
-+				item->util = (void*)(uintptr_t)CRUFT_PACK;
-+		}
- 	}
- 	closedir(dir);
- }
-@@ -561,6 +565,17 @@ static void midx_included_packs(struct string_list *include,
- 
- 			string_list_insert(include, strbuf_detach(&buf, NULL));
- 		}
++gc.cruftPacks::
++	Store unreachable objects in a cruft pack (see
++	linkgit:git-repack[1]) instead of as loose objects. The default
++	is `false`.
 +
-+		for_each_string_list_item(item, existing_nonkept_packs) {
-+			if (!((uintptr_t)item->util & CRUFT_PACK)) {
-+				/*
-+				 * no need to check DELETE_PACK, since we're not
-+				 * doing an ALL_INTO_ONE repack
-+				 */
-+				continue;
-+			}
-+			string_list_insert(include, xstrfmt("%s.idx", item->string));
-+		}
- 	} else {
- 		for_each_string_list_item(item, existing_nonkept_packs) {
- 			if ((uintptr_t)item->util & DELETE_PACK)
+ gc.pruneExpire::
+-	When 'git gc' is run, it will call 'prune --expire 2.weeks.ago'.
+-	Override the grace period with this config variable.  The value
+-	"now" may be used to disable this grace period and always prune
+-	unreachable objects immediately, or "never" may be used to
+-	suppress pruning.  This feature helps prevent corruption when
+-	'git gc' runs concurrently with another process writing to the
+-	repository; see the "NOTES" section of linkgit:git-gc[1].
++	When 'git gc' is run, it will call 'prune --expire 2.weeks.ago'
++	(and 'repack --cruft --cruft-expiration 2.weeks.ago' if using
++	cruft packs via `gc.cruftPacks` or `--cruft`).  Override the
++	grace period with this config variable.  The value "now" may be
++	used to disable this grace period and always prune unreachable
++	objects immediately, or "never" may be used to suppress pruning.
++	This feature helps prevent corruption when 'git gc' runs
++	concurrently with another process writing to the repository; see
++	the "NOTES" section of linkgit:git-gc[1].
+ 
+ gc.worktreePruneExpire::
+ 	When 'git gc' is run, it calls
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 853967dea0..ba4e67700e 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -54,6 +54,11 @@ other housekeeping tasks (e.g. rerere, working trees, reflog...) will
+ be performed as well.
+ 
+ 
++--cruft::
++	When expiring unreachable objects, pack them separately into a
++	cruft pack instead of storing the loose objects as loose
++	objects.
++
+ --prune=<date>::
+ 	Prune loose objects older than date (default is 2 weeks ago,
+ 	overridable by the config variable `gc.pruneExpire`).
+diff --git a/builtin/gc.c b/builtin/gc.c
+index ffaf0daf5d..11f5150234 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -43,6 +43,7 @@ static const char * const builtin_gc_usage[] = {
+ 
+ static int pack_refs = 1;
+ static int prune_reflogs = 1;
++static int cruft_packs = 0;
+ static int aggressive_depth = 50;
+ static int aggressive_window = 250;
+ static int gc_auto_threshold = 6700;
+@@ -153,6 +154,7 @@ static void gc_config(void)
+ 	git_config_get_int("gc.auto", &gc_auto_threshold);
+ 	git_config_get_int("gc.autopacklimit", &gc_auto_pack_limit);
+ 	git_config_get_bool("gc.autodetach", &detach_auto);
++	git_config_get_bool("gc.cruftpacks", &cruft_packs);
+ 	git_config_get_expiry("gc.pruneexpire", &prune_expire);
+ 	git_config_get_expiry("gc.worktreepruneexpire", &prune_worktrees_expire);
+ 	git_config_get_expiry("gc.logexpiry", &gc_log_expire);
+@@ -332,7 +334,11 @@ static void add_repack_all_option(struct string_list *keep_pack)
+ {
+ 	if (prune_expire && !strcmp(prune_expire, "now"))
+ 		strvec_push(&repack, "-a");
+-	else {
++	else if (cruft_packs) {
++		strvec_push(&repack, "--cruft");
++		if (prune_expire)
++			strvec_pushf(&repack, "--cruft-expiration=%s", prune_expire);
++	} else {
+ 		strvec_push(&repack, "-A");
+ 		if (prune_expire)
+ 			strvec_pushf(&repack, "--unpack-unreachable=%s", prune_expire);
+@@ -552,6 +558,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_STRING, 0, "prune", &prune_expire, N_("date"),
+ 			N_("prune unreferenced objects"),
+ 			PARSE_OPT_OPTARG, NULL, (intptr_t)prune_expire },
++		OPT_BOOL(0, "cruft", &cruft_packs, N_("pack unreferenced objects separately")),
+ 		OPT_BOOL(0, "aggressive", &aggressive, N_("be more thorough (increased runtime)")),
+ 		OPT_BOOL_F(0, "auto", &auto_gc, N_("enable auto-gc mode"),
+ 			   PARSE_OPT_NOCOMPLETE),
+@@ -671,6 +678,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 			die(FAILED_RUN, repack.v[0]);
+ 
+ 		if (prune_expire) {
++			/* run `git prune` even if using cruft packs */
+ 			strvec_push(&prune, prune_expire);
+ 			if (quiet)
+ 				strvec_push(&prune, "--no-progress");
 diff --git a/t/t5328-pack-objects-cruft.sh b/t/t5328-pack-objects-cruft.sh
-index e4744e4465..13158e4ab7 100755
+index 13158e4ab7..3910e186ef 100755
 --- a/t/t5328-pack-objects-cruft.sh
 +++ b/t/t5328-pack-objects-cruft.sh
-@@ -648,4 +648,30 @@ test_expect_success 'cruft --local drops unreachable objects' '
+@@ -429,6 +429,43 @@ test_expect_success 'loose objects mtimes upsert others' '
  	)
  '
  
-+test_expect_success 'MIDX bitmaps tolerate reachable cruft objects' '
++test_expect_success 'expiring cruft objects with git gc' '
 +	git init repo &&
 +	test_when_finished "rm -fr repo" &&
 +	(
 +		cd repo &&
 +
 +		test_commit reachable &&
-+		test_commit cruft &&
-+		unreachable="$(git rev-parse cruft)" &&
++		git branch -M main &&
++		git checkout --orphan other &&
++		test_commit unreachable &&
 +
-+		git reset --hard $unreachable^ &&
-+		git tag -d cruft &&
++		git checkout main &&
++		git branch -D other &&
++		git tag -d unreachable &&
++		# objects are not cruft if they are contained in the reflogs
 +		git reflog expire --all --expire=all &&
++
++		git rev-list --objects --all --no-object-names >reachable.raw &&
++		git cat-file --batch-all-objects --batch-check="%(objectname)" >objects &&
++		sort <reachable.raw >reachable &&
++		comm -13 reachable objects >unreachable &&
 +
 +		git repack --cruft -d &&
 +
-+		# resurrect the unreachable object via a new commit. the
-+		# new commit will get selected for a bitmap, but be
-+		# missing one of its parents from the selected packs.
-+		git reset --hard $unreachable &&
-+		test_commit resurrect &&
++		mtimes=$(ls .git/objects/pack/pack-*.mtimes) &&
++		test_path_is_file $mtimes &&
 +
-+		git repack --write-midx --write-bitmap-index --geometric=2 -d
++		git gc --cruft --prune=now &&
++
++		git cat-file --batch-all-objects --batch-check="%(objectname)" >objects &&
++
++		comm -23 unreachable objects >removed &&
++		test_cmp unreachable removed &&
++		test_path_is_missing $mtimes
 +	)
 +'
 +
- test_done
+ test_expect_success 'cruft packs are not included in geometric repack' '
+ 	git init repo &&
+ 	test_when_finished "rm -fr repo" &&
 -- 
 2.35.1.73.gccc5557600
 
