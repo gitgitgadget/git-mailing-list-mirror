@@ -2,84 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1C62C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 15:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDC0FC433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 16:43:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238496AbiCBPzZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 10:55:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49012 "EHLO
+        id S237982AbiCBQoR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 11:44:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231392AbiCBPzY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 10:55:24 -0500
-Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B9734CD6B
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 07:54:40 -0800 (PST)
-Received: by mail-qv1-xf32.google.com with SMTP id e22so1803227qvf.9
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 07:54:40 -0800 (PST)
+        with ESMTP id S233688AbiCBQoQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 11:44:16 -0500
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8524E52E50
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 08:43:32 -0800 (PST)
+Received: by mail-qv1-xf2a.google.com with SMTP id e22so1927903qvf.9
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 08:43:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=IyLYk3iyuXCBGvaYfDkOiz2xz4VwT/xuN3em39Lkubc=;
-        b=LvYHP8G06bTThjXtcdsdIfM+LFCmlLixxXIXfOAzQb+tp2XnbQnk+7E6pQjvJiTROC
-         wTmaWsNTWocsvq7YLeQvYvK9Fd+M56Gum+32NchooOj06ZTChRVWggB5tK7KctW2jH1d
-         aJGp36++TuZJMnRYRHwaKpEfWd5wf8gRxzaptFkcQtnRo6S7U72yHeV7zzAANS5ebme1
-         F7uJ98Bq4eSiyk1xXQYHY1rlTRlVSfSAkQkE6JDGMHJs/iyj3E5I3gJ5f46cqbP1YGGF
-         +r0VHUZmc5lqsN70cmHXr9TMuZ4LS8fIG2xsm6W/lgo4CUDDO3/P92Nw1fCJOft+EJiz
-         heFg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ScMKSgg6ANDowyG/BlGWQS/AhqNGuanDzG+o8QxEAmk=;
+        b=cp0t6s4OvSr1osb47mcKKi6zEmtNldG45uQiChwO/4iDJsUTupAuy9VChq0EGTO+6f
+         Jon04HyN67iCP9hcttIbKse1SDFk/SM2WXaqXXYhfzpYXutBm6QYzL7Ym7ItXOKpZTsV
+         9AT5VGxJOSqxCZgLbAm6BrgWYmdaHj/Zgal0OD2FdWdKWctalF9n8rSY9b1FYNUogPqp
+         H7KusYf9CJ7Mui5sIQf5xbQkv5lDnKhLzTTp5j2LxuK8EZsp598SYdzRRzx/ZqSo+XVi
+         gDtHEKZ1QqhBsPYdDcXDcH3x1h1EegBQH+SkN2EdFkoQTdNNoOah2H3f2n+rWBs3ic/A
+         xHcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=IyLYk3iyuXCBGvaYfDkOiz2xz4VwT/xuN3em39Lkubc=;
-        b=j0BLhW3UPatabSqgpkowfoMv4ohLwdt2gzhsuxeEm7H21rGEZ8qr6tY0sfkIgB2O30
-         ntjUvtV7Zmi8wZb96Achvbos+dBJ47pJbhlsptiWJxP/fO9wtTsADTzJ7l1EGGEoXQCM
-         rS5azkFGORwnHzp707Ml1bGCbcsCUWkT4rNXEBtKMSu5Pv5NXJ6rXl4cL3xVccSUjr9q
-         FEMB/rwaOyJLdD9ILJmB+9ztDvTSNxplwPhadloircQBUBdCJmSORXZ9QM/lLndOUAMo
-         aDxpUridpuqLXI9RRZsftaPaqe5kh7xtolr4PQtzDtDj5UWDX4gsB2YHNP3V2qeBICG9
-         vIeg==
-X-Gm-Message-State: AOAM532MrTNerJKnhw9QpFIt0oLcJ0wWJCZSOr9zZzCk3uNIWTW3QcvG
-        e5UEqNHNoTHS8X6IuoGSXvIkz6WesN8aBYEG
-X-Google-Smtp-Source: ABdhPJztxU87txUEvhSIMeUJwxzV2AdjJqE+pv5ENDQUqjsSJxoWUeEuXLboEXyuOhJbz9+cXaZTTQ==
-X-Received: by 2002:ad4:53a4:0:b0:430:1d8c:18ea with SMTP id j4-20020ad453a4000000b004301d8c18eamr21016407qvv.115.1646236479308;
-        Wed, 02 Mar 2022 07:54:39 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y16-20020a37e310000000b00648c706dda1sm8230965qki.6.2022.03.02.07.54.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 07:54:38 -0800 (PST)
-Date:   Wed, 2 Mar 2022 10:54:38 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, tytso@mit.edu,
-        derrickstolee@github.com, larsxschneider@gmail.com
-Subject: Re: [PATCH v2 11/17] builtin/pack-objects.c: --cruft with expiration
-Message-ID: <Yh+TPppXFoBU2zbN@nand.local>
-References: <cover.1638224692.git.me@ttaylorr.com>
- <cover.1646182671.git.me@ttaylorr.com>
- <d68ce281324097e10e4c1921d84c577bed6943e7.1646182671.git.me@ttaylorr.com>
- <xmqqwnhcn6ke.fsf@gitster.g>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ScMKSgg6ANDowyG/BlGWQS/AhqNGuanDzG+o8QxEAmk=;
+        b=xAB4ss8V+Eor+R7S7te1MeuUld/5/+w0f3pPQo2jcfRz821n2n2L0occ0ycvXnxoIH
+         GyqklPxf+x1WOa8Y3uFE2Dsv+Nf6nq4fflU3eoxUXOSj279xD3hh2smkuW6Jvt5v2Kqa
+         CgdA7hLy4QMUBuVJtmZqfvboUUGk+/j6uisQ5BpwU/BgJ0el2DBmyc4hafVqD1nGAS3z
+         RurBOhUr+JTF+kZfDGT8Gk97DVEJNW4SwG2eae2vsxNxLNezc1CDa7Wd6UfFiJzg3Le5
+         RJAwnUKWya+OCwtO/dEkyiVApJsq+kT2rGshtJTyhZC3jpUAfqE106FCnwRBsOuzowKa
+         v1Vw==
+X-Gm-Message-State: AOAM533WearcutoZdHN8q9U/HZUculMskc1wRmPNZT1Njp8fMam7mCSZ
+        dYiLKa57DMOieo21CJFM7Gz5FcQcbDU=
+X-Google-Smtp-Source: ABdhPJyYNjWOFTZdio3rOmLm1c0svTVnyAStmeONW2ZOWzELna1yX2ahHR4vIIGJNq2Sgyhb4yDiIA==
+X-Received: by 2002:a05:6214:c2b:b0:435:2ae8:e9a8 with SMTP id a11-20020a0562140c2b00b004352ae8e9a8mr1239577qvd.40.1646239411513;
+        Wed, 02 Mar 2022 08:43:31 -0800 (PST)
+Received: from [10.37.129.2] (c-73-165-109-16.hsd1.pa.comcast.net. [73.165.109.16])
+        by smtp.gmail.com with ESMTPSA id p25-20020a05620a057900b005f1928e8cd0sm8048853qkp.134.2022.03.02.08.43.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 02 Mar 2022 08:43:30 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     git@vger.kernel.org
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 0/3] libify reflog
+Date:   Wed, 02 Mar 2022 11:43:29 -0500
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <69041BB1-569D-4462-A1CE-2F1BDA9A76C0@gmail.com>
+In-Reply-To: <YhkwG5JGNKB2yl3i@nand.local>
+References: <pull.1218.v2.git.git.1645554651.gitgitgadget@gmail.com>
+ <pull.1218.v3.git.git.1645817452.gitgitgadget@gmail.com>
+ <YhkwG5JGNKB2yl3i@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwnhcn6ke.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 01, 2022 at 11:42:57PM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+Hi,
+
+Just wanted to bump this thread. It'd be good to get another ack on these
+last set of changes.
+
+On 25 Feb 2022, at 14:38, Taylor Blau wrote:
+
+> On Fri, Feb 25, 2022 at 07:30:49PM +0000, John Cai via GitGitGadget wrote:
+>> John Cai (3):
+>>   stash: add tests to ensure reflog --rewrite --updatref behavior
+>>   reflog: libify delete reflog function and helpers
+>>   stash: call reflog_delete() in reflog.c
+>>
+>>  Makefile         |   1 +
+>>  builtin/reflog.c | 455 +----------------------------------------------
+>>  builtin/stash.c  |  18 +-
+>>  object.h         |   2 +-
+>>  reflog.c         | 432 ++++++++++++++++++++++++++++++++++++++++++++
+>>  reflog.h         |  43 +++++
+>>  t/t3903-stash.sh |  65 +++++--
+>>  7 files changed, 539 insertions(+), 477 deletions(-)
+>>  create mode 100644 reflog.c
+>>  create mode 100644 reflog.h
 >
-> >  builtin/pack-objects.c        |  84 +++++++++++++++++++-
-> >  t/t5328-pack-objects-cruft.sh | 143 ++++++++++++++++++++++++++++++++++
-> >  2 files changed, 226 insertions(+), 1 deletion(-)
+> Thanks; I glossed over the discussion about tests (since it looks like
+> you and Ævar already have a good handle on how things are going there).
 >
-> I'd renumber this to 5329, as the latest iteration of generation
-> number v2 series took 5328, while queuing.
-
-Oops. I had scanned that series, but glossed over the new test number.
-
-Thanks for renaming (I'll do the same, in case we end up accumulating
-more reroll-able bits).
-
-Thanks,
-Taylor
+> The rest of this version of the series (which I looked at more closely)
+> looks good to me.
+>
+> Thanks
+> Taylor
