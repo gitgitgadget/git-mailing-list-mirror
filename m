@@ -2,74 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F80DC433FE
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 21:27:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9889C433EF
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 21:28:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245280AbiCBV15 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 16:27:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50684 "EHLO
+        id S245291AbiCBV3F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 16:29:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245232AbiCBV14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 16:27:56 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C35BF965
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 13:27:12 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 98F9017AFBB;
-        Wed,  2 Mar 2022 16:27:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=HZiVbrQSHI4v
-        r9YLS3Ma/tFq47Xo5SkPyNnkL6Txmh0=; b=SYCUJD6ilCt1l6C6RpZGCr0zbdvV
-        0gfHHJybkxsrtr/PaxD/0DmC9KzvQCuviMyqSRsrMHiTGhOaemTaxPR2Yod+MeLv
-        iA7opH1D6ouKJkFgmZo6l7/z5mQP81CA9agSKMWQUOiMd/VaYBjNQ+U1MiIjnAad
-        DkrBTQYo5vtQ8yc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8F71C17AFBA;
-        Wed,  2 Mar 2022 16:27:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0822D17AFB9;
-        Wed,  2 Mar 2022 16:27:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 05/10] tests: indent and add hook setup to
- "test_expect_success"
-References: <cover-00.10-00000000000-20220302T131859Z-avarab@gmail.com>
-        <patch-05.10-8dc478460ee-20220302T131859Z-avarab@gmail.com>
-Date:   Wed, 02 Mar 2022 13:27:09 -0800
-In-Reply-To: <patch-05.10-8dc478460ee-20220302T131859Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 2 Mar
- 2022 14:22:24
-        +0100")
-Message-ID: <xmqqv8wwhwpe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S239969AbiCBV3D (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 16:29:03 -0500
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABF4847071
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 13:28:19 -0800 (PST)
+Received: by mail-io1-xd29.google.com with SMTP id c14so3421640ioa.12
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 13:28:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=osoCjvukOvEe+yKRmaLgPgx87mLWNonWfG24M+yKh2k=;
+        b=fkXYtCHMQhWv/44ALBcIM3XmZRcUCmkJMe6HrHdRwdm8UvpdDlI7JBzu3RjYCYlJp1
+         dQ9WVHhDx7GfnuyOTpjqSwodJQqLrz6/VwDhTqgot0DQNVgvdxITEoQMGBV6wg2Dq8jm
+         ZocCDmtabJUj8hmgb3pSWLzBVZR2c4Uv+O3zIaPeSzN6b7fk4oSL9kwCx3FV0Vk160xU
+         IBKj2P9XvBxV2hHyAuCIlu9Q2a/uE4rHjmLHmgufYp1gTT4bbGoaUjnzfZmJyoQlOfCn
+         CTl2yMYEcjsSamoVqTQwropUrQrDMnK+1XdVOHq/i86ItMpmOfSLtznDaM/J8AXQo6Zb
+         CHOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=osoCjvukOvEe+yKRmaLgPgx87mLWNonWfG24M+yKh2k=;
+        b=SLIiroY153rITGFpi/apDA1CoQsMvP3QCe5NxEgr2PB2Goct/LtzOEk51y9Kho5kRq
+         ERLLMNRBvp8acyOfJ1i9WL1NS7iq17WuVxMedMHEKZZaU5xWcmiQoW3nfVJcZvAkmGsi
+         I7IBCS4a22/ckrLq977t8w2Y3swnJKr7bYmDd3aU6sgxSh+1uNgzpC2wVbTORM+eYrLJ
+         D3xe0gEtwZ2dLWzepYFgJiVOhvL4x6DwVUrqkyDz6VbHfHa/wSQHbeMl9gtLj4/TWAY5
+         7udiN9SA522yGDwrEMU/l7xDnD9LJcwJTQ4IgudbXgI6437M5uqo4yH/QFotUkYZqmDD
+         2bVg==
+X-Gm-Message-State: AOAM531teyZYfiPUVzWureL/zLBOXUx0lTiJW2pbsfvCsYKPuMCSOgLr
+        TBJDfrJk1TBc60ePakHULhPXJg==
+X-Google-Smtp-Source: ABdhPJwXZL29SAVvK+PkzLky4WAHMEjiThN0qPEd0imZkU5WU9oJg9vqt35Bmy+SFP5mTFGAGXilRw==
+X-Received: by 2002:a05:6638:2688:b0:314:e214:d996 with SMTP id o8-20020a056638268800b00314e214d996mr26089081jat.167.1646256499065;
+        Wed, 02 Mar 2022 13:28:19 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id j22-20020a0566022cd600b0060c10684623sm123115iow.6.2022.03.02.13.28.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Mar 2022 13:28:18 -0800 (PST)
+Date:   Wed, 2 Mar 2022 16:28:18 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org, tytso@mit.edu, gitster@pobox.com,
+        larsxschneider@gmail.com
+Subject: Re: [PATCH v2 09/17] reachable: add options to
+ add_unseen_recent_objects_to_traversal
+Message-ID: <Yh/hctKsg1gzmo3o@nand.local>
+References: <cover.1638224692.git.me@ttaylorr.com>
+ <cover.1646182671.git.me@ttaylorr.com>
+ <6f0e84273f78797c728058521969e73f8817b49c.1646182671.git.me@ttaylorr.com>
+ <245e34c3-ba85-2bb3-d17a-e48ee5b142bd@github.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 84BA6130-9A6F-11EC-9605-C85A9F429DF0-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <245e34c3-ba85-2bb3-d17a-e48ee5b142bd@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
-
-> Indent various hook setup code in the test suite that's using a manual
-> "cat && chmod" pattern.
+On Wed, Mar 02, 2022 at 03:19:57PM -0500, Derrick Stolee wrote:
+> Nit: just realized this include could be replaced by a struct
+> declaration:
 >
-> These should also consistently use "#!$SHELL_PATH" instead of
-> "#!/bin/sh", i.e. "test_script". Let's fix that in a subsequent
-> commit, which will be easier to review after this smaller change.
+> >  struct progress;
+> >  struct rev_info;
+>
+> Like these. 'struct object;' should be enough for the typedef.
 
-These do move them in the right direction, but I am not sure if a
-step-wise "first we do <<- trick to kill unindented mess, and then
-another "use write_script" to touch the same places, consuming twice
-the reviewer bandwidth.  I certainly would hate to have to see these
-lines twice X-<.
+Good catch. We would need one for the packed_git struct, too. I don't
+have a strong opinion about including object.h or not, though needing
+two stubs pushes me slightly in the direction of leaving the include
+alone.
 
+Thanks,
+Taylor
