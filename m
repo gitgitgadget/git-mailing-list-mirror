@@ -2,116 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6648C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 20:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A061EC433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 20:23:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240406AbiCBUXF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 15:23:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39994 "EHLO
+        id S243310AbiCBUXy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 15:23:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234311AbiCBUXD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 15:23:03 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88A1FCA0D0
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 12:22:20 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id j3-20020a9d7683000000b005aeed94f4e9so2686446otl.6
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 12:22:20 -0800 (PST)
+        with ESMTP id S234311AbiCBUXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 15:23:53 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B4048E76
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 12:23:08 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id k9-20020a056830242900b005ad25f8ebfdso2684569ots.7
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 12:23:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=0Ce2nekec6G78wMEafGlkJAv8ibYxMV2jVoRuXdOlIM=;
-        b=Yl6v/Pqye0PlHvDhhaP7Z4WLuzIpqty/oJ3Ag9lKGuzhZyo8VzBPuEsa3SVnVjNgZo
-         lshi5to5bXncptIznooXd34EWP711hVB1TdVYr81spvqmHgQpOSR/EgdB5JJSeXZv5Pc
-         4ew1k/Ef3f2SmigmNTrnkwK+X5zHKf5YNXb9gx7J34B0eumn4RVH6wAF41RVSlNGhTH8
-         ed60UXobLROtXo67VE/geb1L+/YVpK+NCehUYEHF6EfNmWVbk13EEtH5JMolOPC+EtVr
-         GVtvapQK4E1LxXTot34mw6KWP3vBJ5apbANwwxn9RQRmkvvPgZxbTAjDvINSXORe+gfn
-         8GIQ==
+        bh=3v1/9TCjRC82hbRUxj4NUn1FbGHnsRgRPASubqKaff8=;
+        b=d6SIJoxGSU+MrO/2svCY0d+AiushEd8aYdAmQaqIFNd9mN59sRGMw4J7sae4YB33oy
+         lpsd/KTVqoSaGzryebWYv2DDOK8J8MqDfyL62D5WGUYUaBWajRpZKbRSD4M0wKDfID1q
+         sYBDxTRO3bWHHrMQRknTnj9isWJaXqpDc8P9C5iFKbK9kj3X6n+0D2lT8TK8oy3JDQ3Z
+         SS5yKVuLZ1vuKUy5QOaRRnDou+SpMfpHP6SNHn4Qw81YQUphmCvpDFr2x7jFcNSe2pB4
+         +OO3fNe7b5Pd27TauD84cmhl0Ubi5jgJxmDkGBrDGm6q51D9wQu8ITNSA9GMibJrpkhP
+         XXOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=0Ce2nekec6G78wMEafGlkJAv8ibYxMV2jVoRuXdOlIM=;
-        b=FIiYRcVfxniID8OdENmSfNWaKU23Nnz9TlNCdws9zXtpxwOaQP+L0ZLYBcqMIqad5K
-         TwQLWY/9F7D4ryb4/AJgqn8i7KuvZdTuwvzsEWTVgZXH1fLYicvWLy8hXTMCYLKpzJyA
-         m6urwZUEvKeGcao0DKyP0YzbL/q91fd7fWfA3xwnZkSOhjxKJVO6l7SmgxLgyrCfALut
-         l9eM4ATz61z1HdHZLWFjcWNo/N4gO/+TpVGq/0pWUjDWxmf1r7Itw2JmukX77ZiexoMm
-         C6O+6w1lQFy0fwWXU9aHcOBItIywZbntQF5/vYUrZkzI8S7qDNJGTmM3Ls9xw1l5toQu
-         hV3w==
-X-Gm-Message-State: AOAM533fBvk9lCy7RRSpZiq1WaVb9FvKt+ikI8F933PdNSHSQYitRe7S
-        jID6QArNW/JHWmhXkxGMwP4m
-X-Google-Smtp-Source: ABdhPJxNaffoIgr1ksEL9zg5R1fGH1YBohI34jcjzFrP4NIK9D9S9+Fd1Wq3Bco6qEBSnwRgXjjD9A==
-X-Received: by 2002:a05:6830:11c8:b0:5ad:10dd:48b5 with SMTP id v8-20020a05683011c800b005ad10dd48b5mr16990909otq.220.1646252539867;
-        Wed, 02 Mar 2022 12:22:19 -0800 (PST)
+        bh=3v1/9TCjRC82hbRUxj4NUn1FbGHnsRgRPASubqKaff8=;
+        b=VDYX4dGDNX+Z+Y8yIxNJit1tKaqo5v+nEDYIf2vD7QHmlvBU0Olr/EHDej9d1WohMW
+         4uzK5o9+at5kdk8YR75u/oa7XQIhpeNWLDaMccIuRdsQrPxnL7r8Hf7sAMzVzjnay7cV
+         IB0nRi0ttK/2xWE0QPBiJqY1QNMsmqm/cYXAzpSQDgiX4ZdtvpR6uzL/FibVaP7WvxZk
+         5UQdP1WMJK+qK0D5kL9M1vHqeIHLufQbdoInH33p1KwArktiHy2e+PDuN2MkTsXDozVF
+         f1qIKePoIYqaBDq4KRxV9+VqbBjqWoOB7oZ82XT+GTnd70uM6JIYsDPF4AWfWz6bup7o
+         FMbQ==
+X-Gm-Message-State: AOAM532dA3F1OYC5Cdc6+U/g6jpQvoWAn6ZvqywWNF5l+Bf3GEiAgzEd
+        XPG3YY93UFkwlgrDvWrmBla5
+X-Google-Smtp-Source: ABdhPJxnlog4aZLxZ3xf5Lf3OidhmTM6VFSfJ5MC2o7uWu0hHpGIklkQyXmJq3oY9ySpTobNrwS6Tw==
+X-Received: by 2002:a05:6830:3113:b0:5af:4eec:6132 with SMTP id b19-20020a056830311300b005af4eec6132mr16951026ots.6.1646252587421;
+        Wed, 02 Mar 2022 12:23:07 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id l84-20020aca3e57000000b002d97bda3872sm147398oia.55.2022.03.02.12.22.19
+        by smtp.gmail.com with ESMTPSA id hq12-20020a0568709b0c00b000d3d5d4def7sm41085oab.29.2022.03.02.12.23.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Mar 2022 12:22:19 -0800 (PST)
-Message-ID: <66eeada0-f2b4-6849-bf14-029bb6c6083d@github.com>
-Date:   Wed, 2 Mar 2022 15:22:18 -0500
+        Wed, 02 Mar 2022 12:23:07 -0800 (PST)
+Message-ID: <138d98bd-928d-1708-128f-217bfe9a2788@github.com>
+Date:   Wed, 2 Mar 2022 15:23:05 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCH v2 02/17] pack-mtimes: support reading .mtimes files
+Subject: Re: [PATCH v2 00/17] cruft packs
 Content-Language: en-US
 To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Cc:     tytso@mit.edu, gitster@pobox.com, larsxschneider@gmail.com
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1646182671.git.me@ttaylorr.com>
- <101b34660c0c5028ba591d052dc587bb8918ccb2.1646182671.git.me@ttaylorr.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <101b34660c0c5028ba591d052dc587bb8918ccb2.1646182671.git.me@ttaylorr.com>
+In-Reply-To: <cover.1646182671.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/1/2022 7:58 PM, Taylor Blau wrote:
-> To store the individual mtimes of objects in a cruft pack, introduce a
-> new `.mtimes` format that can optionally accompany a single pack in the
-> repository.
+On 3/1/2022 7:57 PM, Taylor Blau wrote:
+> Here is a reroll of my series to implement "cruft packs", a pack which
+> stores accumulated unreachable objects, along with a new ".mtimes" file
+> which tracks each object's last known modification time.
 > 
-> The format is defined in Documentation/technical/pack-format.txt, and
-> stores a 4-byte network order timestamp for each object in name (index)
-> order.
+> This was on the list towards the end of 2021[1], and I have been
+> accumulating small changes to it locally for a couple of months now.
+> Major changes since last time include:
 > 
-> This patch prepares for cruft packs by defining the `.mtimes` format,
-> and introducing a basic API that callers can use to read out individual
-> mtimes.
-...
-> +int load_pack_mtimes(struct packed_git *p)
-> +{
-> +	char *mtimes_name = NULL;
-> +	int ret = 0;
-> +
-> +	if (!p->is_cruft)
-> +		return ret; /* not a cruft pack */
-> +	if (p->mtimes_map)
-> +		return ret; /* already loaded */
-> +
-> +	ret = open_pack_index(p);
-> +	if (ret < 0)
-> +		goto cleanup;
-> +
-> +	mtimes_name = pack_mtimes_filename(p);
-> +	ret = load_pack_mtimes_file(mtimes_name,
-> +				    p->num_objects,
-> +				    &p->mtimes_map,
-> +				    &p->mtimes_size);
-> +	if (ret)
-> +		goto cleanup;
+>   - Clearer documentation and commit message(s) to better illustrate how
+>     the feature works and is supposed to be used.
+> 
+>   - Some minor documentation updates to pack-format.txt, which make some
+>     ambiguous details more explicit.
+> 
+>   - Minor code movement / tweaks to make things easier to read, ensure
+>     that functions aren't introduced in patches before they are used /
+>     etc.
+> 
+>   - Moved the new test script to t5328 (instead of t5327, which happens
+>     to be taken up by a new MIDX bitmap-related test), and purged it of
+>     all "rm -fr .git/logs" (replacing them with "git reflog --expire
+>     --all --expire=all" instead).
+> 
+>   - A new test which fixes a bug where loose objects which have copies
+>     that appear in a cruft pack would not get accumulated when doing a
+>     `--geometric` repack.
+> 
+> For convenience, a range-diff is below. Thanks in advance for taking
+> another look!
 
-This looked odd to me, so I supposed that you had some code
-that would be inserted between this 'goto cleanup' and the
-'cleanup:' label, but I did not find such an insertion in
-the remaining patchs. This 'if' can be deleted.
-
-> +cleanup:
-> +	free(mtimes_name);
-> +	return ret;
-> +}
+It had been a while since my last read, so I read the patches
+in full one more time. I found a couple nitpicks, but otherwise
+everything is looking good.
 
 Thanks,
 -Stolee
