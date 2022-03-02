@@ -2,128 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB076C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 19:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 883BAC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 19:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237009AbiCBTT0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 14:19:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48118 "EHLO
+        id S234618AbiCBTWW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 14:22:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242348AbiCBTTY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 14:19:24 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54AAE2AC76
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 11:18:36 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BA5611CCE9;
-        Wed,  2 Mar 2022 14:18:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ni/8sVs74mmlmH6IHZaWmXlbNsjwW+smiLlUEx
-        5v1Nw=; b=DI/bU2VQE6ScwfIcDfwWUE3PE0xI/XNI1xREIXi5GHmsq36tvyoFQr
-        pGwroFDp/LR4o+i72LUYmGaW9Clu1Wbbvsx4xxKbVZtCsufDdVU6sWL1BJaSdwHV
-        KmqQl0mYweco7IkjJOFulHPcmw9LWVmYYt72b2wnnX4VPXBBveaJU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 71CE811CCE8;
-        Wed,  2 Mar 2022 14:18:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D450E11CCE7;
-        Wed,  2 Mar 2022 14:18:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     git@vger.kernel.org, Henning Schild <henning.schild@siemens.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH v3 1/3] gpg-interface/gpgsm: fix for v2.3
-References: <20220224100628.612789-1-fs@gigacodes.de>
-        <20220302090250.590450-1-fs@gigacodes.de>
-Date:   Wed, 02 Mar 2022 11:18:33 -0800
-In-Reply-To: <20220302090250.590450-1-fs@gigacodes.de> (Fabian Stelzer's
-        message of "Wed, 2 Mar 2022 10:02:48 +0100")
-Message-ID: <xmqqh78gkvsm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S232644AbiCBTWV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 14:22:21 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76E9DCA713
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 11:21:37 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id qt6so5819570ejb.11
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 11:21:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=Sbit2Vc9qXcoK0IRQnohEWFSFev5DA/NGqdEwRzy5co=;
+        b=DZoQ+PHf50sDPd1UwjbTtf9ZcT9vIMaksVADPAIlmn8TgVWWfcu2uvot+hAYlFn+uh
+         NTDht/V+UbRA8q2LDWADwhpgT5DVlIpPnQW5l93ieXtxDL7BfTjieIdEuLefH9ZteH2B
+         8O85yusJho46b2ETcDXRPk8oUfjxZ50sGPgi+hxFAZevYkyefoBb+SXG8QApHPIwuF0q
+         gld1x+0IDdxHuzD2M+fAY8wAEBX6+9+HhbQzzGvrAkGwtPsjkWaRwYPceiOc5IPbp5Xd
+         92p3vn54jaxvNT3+QxfMIISVwuuITBU4DQS5dYBdGlLUFi58Wq6SZ/3DK0LY/hBNA9R/
+         Zd7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=Sbit2Vc9qXcoK0IRQnohEWFSFev5DA/NGqdEwRzy5co=;
+        b=YPbhIs1/L1MJYNfyZoscJW0kXoxhXMIaT6HtPwS+nYeGx4d+aD5c+SiFust+D4tkMY
+         lwW+VgECffIujmKQKUo++OvxZwECywhM3MmWFpLwb+unN5oivgh56P9HtNCIZ7amfN5U
+         O2r/B1Mxm5jzq9DO+G5SaonTeJaq+XwrY46tghWKO6jyfbr/shCK8L4ZQDHH8Scr8Biv
+         X87VlrwpUQPGGK64wVlvAT3CrAUxNmIT4kA/ca9TBfDvbS6Vlcwly+6+IrwYw6pFqrVA
+         +/rwH3swkZrj3Xmxtda5Jzhf5BjmJFxu1Jdu2SnCXpvuPFb7Rmln+WSI0fLHIqsnXjFO
+         lr+Q==
+X-Gm-Message-State: AOAM530+OUfrbX3tS9HYGyXw6+TXOhQRtKkpIIj6VNd0VRLakfCCiCQS
+        JrbkeO1VPjNobHFKLp7/07bZJhsWrpL/TA==
+X-Google-Smtp-Source: ABdhPJwIdaJe9KAs6wu0vy8JNY0ShrWcqHjHiN27TknLFc2qhXPEfgSrI6YxbdKBANzqmqs/8kLh2A==
+X-Received: by 2002:a17:906:af57:b0:6cf:7f1d:ddd7 with SMTP id ly23-20020a170906af5700b006cf7f1dddd7mr23508337ejb.453.1646248895890;
+        Wed, 02 Mar 2022 11:21:35 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id ey10-20020a1709070b8a00b006cee56b87b9sm6651606ejc.141.2022.03.02.11.21.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Mar 2022 11:21:35 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nPUXW-000JKC-Je;
+        Wed, 02 Mar 2022 20:21:34 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: [PATCH] parse-options: make parse_options_check() test-only
+Date:   Wed, 02 Mar 2022 20:17:13 +0100
+References: <xmqqtuck3yv2.fsf@gitster.g>
+        <20220228073908.20553-1-chakrabortyabhradeep79@gmail.com>
+        <xmqqzgma287n.fsf@gitster.g> <xmqqr17lphav.fsf_-_@gitster.g>
+        <220301.86pmn5z5we.gmgdl@evledraar.gmail.com>
+        <xmqqo82pnwoc.fsf@gitster.g>
+        <220302.86r17k7gry.gmgdl@evledraar.gmail.com>
+        <xmqq1qzkmb8q.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqq1qzkmb8q.fsf@gitster.g>
+Message-ID: <220302.861qzk6tz5.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8E227486-9A5D-11EC-A773-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fabian Stelzer <fs@gigacodes.de> writes:
 
-> Checking if signing was successful will now accept '[GNUPG]:
-> SIG_CREATED' on any beginning of a line. Not just explictly the second
-> one anymore.
+On Wed, Mar 02 2022, Junio C Hamano wrote:
 
-"the second or subsequent one", I would think, but the code change
-looks correct anyway.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> [...]
+>> So the performance cost is trivial & not worth worrying about.
+>
+> I already said I am not worried about it, didn't I?  These numbers
+> do not matter in this discussion.
 
-> Switch to gpg's `--with-colons` output format to make
-> parsing more robust.  This avoids issues where the
-> human-readable output from gpg commands changes.
+Sorry, but I really don't see the point then.
 
-Does this refer only to how parsing in tests is done?
+You'd like to keep "git rev-parse --parseopt", but now if you feed bad
+input to it you'll get worse error messages from it, and it's not for a
+performance benefit then why? Why would we have worse error reporting
+without any upside?
 
-> Adjust error messages checking in tests for v2.3 specific output changes.
+Another common case would be locally hacking a command that uses
+parse_options(), having it do the wrong thing for some cryptic reason
+we'd catch in parse_options_check().
 
-Does this refer only to the change to 4202 where "failed to find
-the" and the colon after "certificate" are made optional, so that
-the regexp can read messages from both pre- and post-2.3 versions?
-
-> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-> index 3e7ee1386a..6bc083ca77 100644
-> --- a/t/lib-gpg.sh
-> +++ b/t/lib-gpg.sh
-> @@ -72,12 +72,10 @@ test_lazy_prereq GPGSM '
->  		--passphrase-fd 0 --pinentry-mode loopback \
->  		--import "$TEST_DIRECTORY"/lib-gpg/gpgsm_cert.p12 &&
->  
-> -	gpgsm --homedir "${GNUPGHOME}" -K |
-> -	grep fingerprint: |
-> -	cut -d" " -f4 |
-> -	tr -d "\\n" >"${GNUPGHOME}/trustlist.txt" &&
-> +	gpgsm --homedir "${GNUPGHOME}" -K --with-colons |
-> +	awk -F ":" "/^fpr:/ {printf \"%s S relax\\n\", \$10}" \
-> +		>"${GNUPGHOME}/trustlist.txt" &&
-
-The old iteration had (fpr|fingerprint) which appeared as if it were
-catering to both pre- and post-2.3 versions, but "with colons", all
-versions we care about would say "fpr" and that is the reason why we
-no longer have such an alternative here?  Just checking my
-understanding.
-
-> -	echo " S relax" >>"${GNUPGHOME}/trustlist.txt" &&
-
-This removal is because...?  I do not recall seeing the explanation
-in the proposed log message.
-
->  	echo hello | gpgsm --homedir "${GNUPGHOME}" >/dev/null \
->  	       -u committer@example.com -o /dev/null --sign -
->  '
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index 55fac64446..d599bf4b11 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -2037,7 +2037,7 @@ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 miss
->  	git merge --no-ff -m msg signed_tag_x509_nokey &&
->  	GNUPGHOME=. git log --graph --show-signature -n1 plain-x509-nokey >actual &&
->  	grep "^|\\\  merged tag" actual &&
-> -	grep "^| | gpgsm: certificate not found" actual
-> +	grep -Ei "^| | gpgsm:( failed to find the)? certificate:? not found" actual
->  '
-
-OK.  It might be easier to read if we give two expressions
-separately and say "we can take either of these", i.e.
-
-	# the former is from pre-2.3, the latter is from 2.3 and later
-	grep -e "^| | gpgsm: certificate not found" \
-	     -e "^| | gpgsm: failed to find the certificate: not found" \
-	     actual
-
-Thanks for working on this update.
+Then eventually remember to turn on this GIT_TEST_* knob (i.e.  if
+testing via the command-line/debugger instead of the test suite). I for
+one do that a lot when working on the parse_options()-using commands
+in-tree, if this land I'll probably remember to add this knob to my
+.bashrc, but everyone else will find out the hard way...
