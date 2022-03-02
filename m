@@ -2,122 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46A4EC433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 19:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEE27C433EF
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 19:35:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241117AbiCBTgQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 14:36:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38114 "EHLO
+        id S241557AbiCBTga (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 14:36:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241521AbiCBTgO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 14:36:14 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0505FD7622
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 11:35:31 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id 62-20020a621541000000b004f110fdb1aeso1794245pfv.13
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 11:35:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=07tArAKbJtTaczthFjppVGY4jTC4DHHsLieNQNWeDV4=;
-        b=Od3QmNu7Jmd5NQk+tZZqG/qgE7z4lgpppYRdtNvFuw/rtrODplYYgTzPebWdoL0WUH
-         /hqZ1+384021tf4XXwR0LNKQOHkrnMouORIpeMlrgQQV7k7lMhj6sb7Lj3uLmDEZl/S0
-         r4ahz7+ysEXiXhKLklzV/XBgTAiJswOz1ZEBYgCTf2Ye41d0A4HyinNzUdHoTJsYGj8W
-         zGwoIG/lUgwt8St6hbBIgC9uuKfZe+5Vb8eGrp5fXFUglTNymb2arUmqdnMlO7w4hvMe
-         Fp61R+drry7O3RetM/mxNyA98MpByeTakcr6V370djacZnmWXS0R0WxlreApaKfBy0vj
-         x3eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=07tArAKbJtTaczthFjppVGY4jTC4DHHsLieNQNWeDV4=;
-        b=AsCt2OQpTcaFDtmOwcEckxu55gXIH0A3ZBq2FUBzmSzBTU0p6SXKQZ0gj97nd4ROM1
-         sS7ZcHEG1JqEwqCFc47J3KyEatinKyrqJYTYVAyZjeU02XaqJJvnBMEnkCdTwJ1frWZO
-         OrbT1ev6H9epbBaWfyBoFXuiqU0qsVJsC0DWy759OBgYbTJAIR/N0BVFvjsmhG/Qa5fx
-         Q6C9snS1HFOomeWz7clRF/JlsGdPNZ1RKIfEVmzoe2kThnsYDXxzThMk0iDIcaCFnIQ/
-         2VObjIjCfM6zDojs7LMkK4/42JsbnnuKcjEzGs8m8YmEs7qXlwNqXLKjfZSbSRg6MuoR
-         yxkQ==
-X-Gm-Message-State: AOAM5332IjNS36mbji2lwNl1NNx7WIOwxGGprFa6TuUVaXadJ0yhfQ8E
-        aSC7I0ARhbJD95Qg+QqGG6sngDVbkZf5lg==
-X-Google-Smtp-Source: ABdhPJxem2MuCgzWtlP8nwBAD3Ott+TPva34XD8dMmHS4Xwzsx+ECiJrtdivxzuCIJZtWK/IXxU4uOWQJ8/oVA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:4f43:b0:1bc:7e5c:e024 with SMTP
- id pj3-20020a17090b4f4300b001bc7e5ce024mr699894pjb.0.1646249730146; Wed, 02
- Mar 2022 11:35:30 -0800 (PST)
-Date:   Wed, 02 Mar 2022 11:35:27 -0800
-In-Reply-To: <xmqq5yowolvs.fsf@gitster.g>
-Message-Id: <kl6lilswdu68.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220302003613.15567-1-chooglen@google.com> <xmqq5yowolvs.fsf@gitster.g>
-Subject: Re: [PATCH] checkout, clone: die if tree cannot be parsed
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S241554AbiCBTgY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 14:36:24 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FAA2D76C4
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 11:35:40 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD1AA11AC0D;
+        Wed,  2 Mar 2022 14:35:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=zj5sNKp6w58K
+        BoTqoAlzAjeaMMaYTfgrZO9kWdc56dw=; b=xVYypGD6t7XcNlODZl02FvIRjPiy
+        WnVHYT8OWHNTsLpL87+0pvj/R6+CdA68+Fi2GIPYelMUjdaFonbmVZRY1rxYkl4J
+        THiyASVURLXl+0ZmiN2MbhCCTW8hADg7RfovxRoAxBZ2iGLceE+QOxSZIbtv7Yhi
+        qIK1KGccpW2F4C8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B1A7911AC08;
+        Wed,  2 Mar 2022 14:35:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 12F2A11AC07;
+        Wed,  2 Mar 2022 14:35:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>, Dan Jacques <dnj@google.com>,
+        Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, Victoria Dye <vdye@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v4 1/9] scalar Makefile: use "The default target of..."
+ pattern
+References: <cover-v3-0.9-00000000000-20220225T090127Z-avarab@gmail.com>
+        <cover-v4-0.9-00000000000-20220302T124320Z-avarab@gmail.com>
+        <patch-v4-1.9-26c6bb897cf-20220302T124320Z-avarab@gmail.com>
+Date:   Wed, 02 Mar 2022 11:35:37 -0800
+In-Reply-To: <patch-v4-1.9-26c6bb897cf-20220302T124320Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 2 Mar
+ 2022 13:49:09
+        +0100")
+Message-ID: <xmqqzgm8jgfq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F09CC114-9A5F-11EC-A986-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Glen Choo <chooglen@google.com> writes:
+> Make have the "contrib/scalar/Makefile" be stylistically consistent
+> with the top-level "Makefile" in first declaring "all" to be the
+> default rule, follwed by including other Makefile snippets.
+
+Sorry, but I cannot quite parse it.  Perhaps remove "have"?
+
+> This adjusts code added in 0a43fb22026 (scalar: create a rudimentary
+> executable, 2021-12-03), it's a style-only change, in a subsequent
+> commit the "QUIET" boilerplate at the beginning of this file will be
+> retrieved via an include, and having an "all:" between the two set of
+> "include"'s after that change would look odd.
+
+In other words, raising these includes to the top is not style-only
+but is more significant change.  I think these two are logically
+distinct changes, but I am fine to see both in the same commit, as
+long as they are explained as such.
+
+
 >
->> -		tree = parse_tree_indirect(old_branch_info->commit ?
->> -					   &old_branch_info->commit->object.oid :
->> -					   the_hash_algo->empty_tree);
->> +
->> +		old_commit_oid = old_branch_info->commit ?
->> +			&old_branch_info->commit->object.oid :
->> +			the_hash_algo->empty_tree;
->
-> I guess this is done only so that you can use the object name in the
-> error message, which is fine.
+> As noted in [1] using ".DEFAULT_GOAL =3D all" is another way to do this
+> in more modern GNU make versions, which we already have a hard
+> dependency on, but let's leave any such change for a future
+> improvement and go with using our established pattern consistently for
+> now.
 
-That's correct.
+I would suggest dropping this paragraph.  In the discussion, we
+didn't even establish that such a change would be an "improvement",
+and in fact, not everything new is an improvement.  If we know
+.DEFAULT_GOAL is not used, readers of Makefile do not have to run
+around and look for it to figure out what happens when "make" is run
+without argument.
 
->> +		tree = parse_tree_indirect(old_commit_oid);
->> +		if (!tree)
->> +			die(_("unable to parse commit %s"),
->> +				oid_to_hex(old_commit_oid));
->
-> "unable to parse commit" is a bit of a white lie.  In fact, there is
-> nothing that makes oid_commit_oid the name of a commit object.
->
-> "unable to parse object '%s' as a tree" would be more technically
-> correct,
-
-Hm, yes. With regards to parse_tree_indirect(), "unable to parse object
-'%s' as a tree" is a more accurate description of the failure. But since
-we know that the oid is a commit in this context, I'm not sure if we
-need to offload that much information to the user - if we failed to
-parse the given object id in the appropriate manner, the user would
-still be directed to figure out what's wrong with the object.
-
->          but one random-looking hexadecimal string is almost
-> indistinguishable from another, and neither would be a very useful
-> message from the end user's point of view.  I am wondering if we can
-> use old_branch_info to formulate something easier to understand for
-> the user.  update_refs_for_switch() seems to compute old_desc as a
-> human readable name by using old_branch_info->name if available
-> before falling back to old_branch_info->commit object name, which
-> might be a source of inspiration.
-
-I think it's actually more helpful to have the oid instead of a
-human-readable description like old_branch_info->name.
-
-For an advanced user/repo admin, seeing the oid makes it very obvious
-that there's a particular problem with the given object, and this would
-direct them to hunt down the object locally (without partial clone) or
-on the remote (with partial clone, as in the original motivation). From
-there, it's easy to figure out which branch points to the offending
-object. The branch name might be misleading - the user would presumably
-start with hunting down the ref, then explore several possibilities
-before realizing the problem is actually with the _object_.
-
-For a novice user, neither the branch name nor the object id is
-actionable because they probably wouldn't be able to fix the issue
-anyway. The advantage of the opaque hex string is that by being
-intimidating and unrecognizable, it indicates to the user that they
-shouldn't try to debug the issue and so they might give up sooner and
-ask for help from someone who might be able to fix it.
