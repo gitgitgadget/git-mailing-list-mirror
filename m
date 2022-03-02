@@ -2,99 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1FE5C433EF
-	for <git@archiver.kernel.org>; Tue,  1 Mar 2022 22:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7402DC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 00:36:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237115AbiCAW4I (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 17:56:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60308 "EHLO
+        id S238750AbiCBAhJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 19:37:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233006AbiCAW4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 17:56:07 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D706730F47
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 14:55:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1646175320;
-        bh=6uexDRnx/SvVO3t02Mr/QKPufAOyj74PUBkXlOhRvgI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=L5haOkgrUqW7IXpRyR82PqxsSQijnBI7wN4pDVDM9hkyzz3J7H1EHZI0potvSJOZq
-         qBeBsu7M1NpWfrguqQARH1Sq9hsuYRcUhtHQxQTDyJFxS7OKmsRLl/QRxUincLsbec
-         Jt0XS1bnx+25QKXEelJryhWYuFuR4Sn5r9Nc2mk0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [172.28.129.168] ([89.1.214.47]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MJVDW-1neeum0oZ6-00JrQF; Tue, 01
- Mar 2022 23:55:20 +0100
-Date:   Tue, 1 Mar 2022 23:55:18 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: js/scalar-diagnose, was Re: What's cooking in git.git (Feb 2022,
- #08; Mon, 28)
-In-Reply-To: <xmqqmti9ssah.fsf@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2203012353090.11118@tvgsbejvaqbjf.bet>
-References: <xmqqmti9ssah.fsf@gitster.g>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1209313880-1646175320=:11118"
-X-Provags-ID: V03:K1:mvhUcIsJGzm6yuTTBEzCBQ0AlT9vLBIEjKlk2Z4gsEs4gYHnocf
- KCWvHoUMOzoZXdmUdf5wRadEb962UzZSgC8+Xlw5fbubI+VThEUJYK4KfQ5R6QKp4aU1lx6
- 2l8Ewn6gXviTu5uTyeE33lf8OhBcpuzfmw/0mrTQ0zSWiEYYcbcnLtk/fHFUhAJY79hM63e
- gNXmR5bBwsCjJ7svsRXPA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uZgfwyn3v28=:/JvoyGUr4UYGsOKfFWJxqk
- m9itC3vl03gTmT6PCwW03pjWf21ng/pgyj3IwhvX839YfUajoNli1kRXZm+6wX8XhldGZEBqc
- G5WlK9QCRpOGJnaAo8oDz6zN+nCGtnpaHz3cyqIxwupkna9mFrMXiWI3L6xrrmPk8jW5M/qdj
- +2Q/lgDqm7KTJrVnjXsUS7rtZzfoRiZOK44620Vnc+856vvRrUAgnA0E2qhqDUSiXcdfuzqZd
- s9teGJ1vokeXsRpP28CFaLntXiFe1CfsfnQjETFgAdvmNd3Nn6Ac/F1XtKtG4DVTQAhm/hIpd
- DSfyzIzKbuff3y1r6bEjIBYwFl1NzEcNZCXJ4qOwwqWJeFQ7/LN0o/WunuCZvo/I2tkw+/bkq
- oW3CdncRWsNChCU3V2X+qp0gm2p68svpKk5k9s7Kg1RUynI7PtovO9+aqLKzeTe2LCzVJC7pK
- IVD8MNckjDZM1ys2kI7WrUD+PKgPfJWLSUQXT6pAnQcUC2bx1UHgaqovwjRpJf3CWVtAGX5tc
- 5UwyAh1VETvjE2IlU8x3exwdwWgvpVdYwG50yXItyq4xz/Nbx5NGApjIc9BhEikl8KSEaOIPH
- oWI1JimFg+lMEEj+GMI3AO8lXWWzVJN69bS5krEdVgzkyc6s8okLD6o17kQ4lqVLtqK2astvw
- QDziJj35dcAY7RxfKTLwiFcrciLQ1feE26Qc3IEwmZBwqQjEiT65+kwTVt4XKuxCyzTcePg8L
- /sUknPQHfwuFrUXCLPK9agm0OkF1pJd1DosLatLt+tgkoPSTZwO+2RskBtVBhxohRvYR8yHvL
- Ll8UVvveF09wdZt4bgwPI5eFyk9GnRrSO4IOjLhJes2V6wvqb7ZZrNZq3uv18cCoH6Iq7NNl3
- vF3z3SAh8TWHYxR+mBsbfKLwl+VYZ/EVHiOWKczYg/kAeS8dgN4byQQWmlsxawUh2jfD1WXuW
- czGZza1J6hyZ3KGtb0BSTnBq69V9o2dhuJbMq1AMLLAp7Ssrf5UWplNkLVm4IFTI4XA9Ucmdq
- HWIw6ewNaWdoD3GNi/k2iVpsTfdFkLdePa1ZhZ5k4S/OqBph16d6ewbnFW1hbzuCDeNb/3ywp
- xjapAUwNupy2hA=
+        with ESMTP id S229792AbiCBAhI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 19:37:08 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E50613F9B
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 16:36:27 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id n12-20020a170902e54c00b0015011534fa3so110551plf.9
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 16:36:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=xaw7KJcH0cTwWL1nQaT6K3mY6NobthsgtfljbPDtlEk=;
+        b=I0ODrpSYE1JNhTqQBzzB59umYOhY/jJ8itmUXYSZTjGntVDkkHWhcSi+DAE+gdUjjj
+         RaYwBeX6AP51SdsRjDzr2rH4EUIIL24JQmopn2eWkDA5h2+J1OEyFnDuavS5WTh19fUY
+         PfweDSmzqbQ1LkvADhh7mkHB5quNtIEy5MNM42Bwo7GDiGZsC1ZqFwmxa3LwME8Bewmj
+         b1S12X1ku+iFPTnazqiqpcM8TPCXKAXX8TaIZRqKzA127/qewWiLnRN10saidTP9+nuy
+         Q8RHy0VIZWmAvcYUX+wMTYMY7c7YoGeXJN+1b6xmUmRQ57E77TMD4CfSW1IRcJR9sYUZ
+         qbCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=xaw7KJcH0cTwWL1nQaT6K3mY6NobthsgtfljbPDtlEk=;
+        b=WcaFSxWHNgX675J9cw5DMUnUx4x5gyMpLxCxLmar5+G1zYYR9HJgsFPEmftGLMJVqT
+         K/OZTP6+pHO0FpS5bl2+8qu6S6e9Fsi6dHpFv9wgdDKr8c51KhPSRXNbWO+XTq+pb8YW
+         O9ukmmh8v0JCQf7gQzEVi0rZ3W222/cUapwLsdNdvNsiLlyATpTq66IHzIs1+QJ3XGgf
+         DQckz519p3lEPTnFWC/OSnq2S8RwT2dWoxruPYRpx+4BjAgkTBC6wM413f+W2lPAa9aX
+         aTt1aDnprfsPdUWH2lgbqVHMqx5Dl7V+NJLkFTRR61nH5RiTJqLtn40ehzkdazAczbcG
+         y2Jg==
+X-Gm-Message-State: AOAM5329JTzWp6DlyHhDlVJeaTt1VoRXuvtb2iK+mIzQrwFlJflA3h9P
+        eVoBPtJykMPJawDm52kW9l5szYcs8LmxLqbvdLPMX5jz2jDV9/JUwLq7qRqNEHb9j6k3upwhel2
+        bVrBg029lOu6b3/n5W/nSlrk4SHbOAxE7BN+D33DvkOhOi6cIvCD3O/7RHXf88lU=
+X-Google-Smtp-Source: ABdhPJw+kcMZ3EeWui0tke596GJVILXAgdr12oTz6mSrCe3oMy/zpf6SxdpI0+nvIlesGkgPVFtQmcaJ0YSs2w==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:90a:4385:b0:1bc:d480:91c5 with SMTP
+ id r5-20020a17090a438500b001bcd48091c5mr24316111pjg.212.1646181386446; Tue,
+ 01 Mar 2022 16:36:26 -0800 (PST)
+Date:   Tue,  1 Mar 2022 16:36:13 -0800
+Message-Id: <20220302003613.15567-1-chooglen@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
+Subject: [PATCH] checkout, clone: die if tree cannot be parsed
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Glen Choo <chooglen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+When a tree oid is invalid, parse_tree_indirect() can return NULL. Check
+for NULL instead of proceeding as though it were a valid pointer and
+segfaulting.
 
---8323328-1209313880-1646175320=:11118
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+At $DAYJOB, this bug was discovered due to some interactions between
+"git clone --filter=tree:0" and a buggy server that failed to transfer
+certain commits.
 
-Hi Junio,
+In the 'checkout' step of "git clone --filter=tree:0", the repo tries to
+get the HEAD commit from the server (since it's not present locally),
+but this fails due to an unrelated bug in the server. Since the commit
+tree is invalid, parse_tree_indirect() returns NULL, causing
+parse_tree(NULL) to segfault.
 
-On Tue, 1 Mar 2022, Junio C Hamano wrote:
+I tried to write a test for this segfault, but I couldn't quite figure
+out how:
 
-> * js/scalar-diagnose (2022-02-06) 6 commits
->  - scalar: teach `diagnose` to gather loose objects information
->  - scalar: teach `diagnose` to gather packfile info
->  - scalar diagnose: include disk space information
->  - scalar: add `diagnose`
->  - scalar: validate the optional enlistment argument
->  - archive: optionally add "virtual" files
->
->  Implementation of "scalar diagnose" subcommand.
->
->  Expecting a reroll.
->  cf. What is the status of this thing?
->  source: <pull.1128.v2.git.1644187146.gitgitgadget@gmail.com>
+- Invalid trees are typically caught pretty early, so I suspect that any
+  reproduction scenario would need to replicate the partial clone +
+  buggy server setup.
+- I couldn't figure out how to replicate the aforementioned buggy setup
 
-The status is that I'm woefully short on time and did not even manage to
-read the sub-thread between you and Ren=C3=A9 (which might need another
-adjustment to the code).
+I'd appreciate any suggestions on how to test this though :)
 
-So maybe set it to `On Hold` for now?
+Note that there are many other callsites that don't check for NULLs from
+parse_tree_indirect(), and some of which are fairly subtle. I wasn't
+confident in changing those, so I stayed on the conservative side and
+only changed the ones that I could get to segfault.
 
-Ciao,
-Dscho
+ builtin/checkout.c | 13 ++++++++++---
+ builtin/clone.c    |  2 ++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
---8323328-1209313880-1646175320=:11118--
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index d9b31bbb6d..c1035304a5 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -738,6 +738,7 @@
+ 		struct tree_desc trees[2];
+ 		struct tree *tree;
+ 		struct unpack_trees_options topts;
++		const struct object_id *old_commit_oid;
+ 
+ 		memset(&topts, 0, sizeof(topts));
+ 		topts.head_idx = -1;
+@@ -765,9 +766,15 @@
+ 				       &new_branch_info->commit->object.oid :
+ 				       &new_branch_info->oid, NULL);
+ 		topts.preserve_ignored = !opts->overwrite_ignore;
+-		tree = parse_tree_indirect(old_branch_info->commit ?
+-					   &old_branch_info->commit->object.oid :
+-					   the_hash_algo->empty_tree);
++
++		old_commit_oid = old_branch_info->commit ?
++			&old_branch_info->commit->object.oid :
++			the_hash_algo->empty_tree;
++		tree = parse_tree_indirect(old_commit_oid);
++		if (!tree)
++			die(_("unable to parse commit %s"),
++				oid_to_hex(old_commit_oid));
++
+ 		init_tree_desc(&trees[0], tree->buffer, tree->size);
+ 		parse_tree(new_tree);
+ 		tree = new_tree;
+diff --git a/builtin/clone.c b/builtin/clone.c
+index a572cda503..0aea177660 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -700,6 +700,8 @@
+ 	init_checkout_metadata(&opts.meta, head, &oid, NULL);
+ 
+ 	tree = parse_tree_indirect(&oid);
++	if (!tree)
++		die(_("unable to parse commit %s"), oid_to_hex(&oid));
+ 	parse_tree(tree);
+ 	init_tree_desc(&t, tree->buffer, tree->size);
+ 	if (unpack_trees(1, &t, &opts) < 0)
+
+base-commit: 715d08a9e51251ad8290b181b6ac3b9e1f9719d7
+-- 
+2.33.GIT
+
