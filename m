@@ -2,159 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BC65C433EF
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 02:32:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ABE3C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 04:19:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237114AbiCBCdR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 21:33:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48000 "EHLO
+        id S239404AbiCBEUH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 23:20:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232531AbiCBCdQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 21:33:16 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59AE336E05
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 18:32:33 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id i11so334961eda.9
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 18:32:33 -0800 (PST)
+        with ESMTP id S229980AbiCBEUG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 23:20:06 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 862721C12F
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 20:19:24 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id x15so713426wru.13
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 20:19:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SS9hUhg78FT6bUIxkhEr+mazVkEcNm/syLCJ32ovF7c=;
-        b=FpTXzl3KvtfyxtctsG6GbjC4+hNDYR40Po9NJR9sGCSn0Hre2CioCZu/NjHZoZIkw0
-         GI3RjPw3cx0mscriWgrftAt7Zib3mhi9rYni4f4AOocAh6KY89eNteGeH9oqGOrTHQ4x
-         W9hn51d+FXqyqPe/JgZANP3VmD6MG0+eatCkdVtb/Dg58SkSUiib4yaiHxbIUFymsSiP
-         83Cz3KkCi5CBBzWVw7/ukgbt2wdmJnAZyeM/lI6aG055A5WZONI/U/fePqTAZ4L7y9w1
-         paefpdl5yFrdDkrdyAr7tMZk6d71023NrrmBeuBaGkdJE5JwS7bRCUOUm93zb63Ex0TD
-         b+Lg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=cSj0svtJC4XYerZk2siDftcfo4vZgzCJwSit1103VpU=;
+        b=qt4hv1CoWG4oBfjpNFuUMqfX66IjuAp9VyYpJpP57BuHG6OmWg2YCAmuWIkrKa1qvc
+         lGS20NZtTPKpeYA9tiVJzyr4krS9bQp/M/JcaUfEWud9IBSiNFXWnq5drZTFawYX2KxP
+         JDVboFAaLlQ0iSmcoKZtpYNBa6+sAMnP233995YcgTm+l47+Fb2m+W0RaWLJyU+FyflA
+         9PDovs/vPBH+jrpwdcRAJdELc7vShhdI7Cog4lH3n96wO29X0RV5KpYRYDtVf4HKKNZD
+         dKcdISETI+z5NsX9VvwLNBMmcCxMGa5YKty/AHXEGwWi0f9/qvGarYK+tUZ1hr7QavEn
+         +iew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SS9hUhg78FT6bUIxkhEr+mazVkEcNm/syLCJ32ovF7c=;
-        b=uEpUBhqh4K8IVMtnNx0JIpIjAt6jyy3xzuCSx9c6rM1K9ujN0AgRvqgMTPG7ahP3Sl
-         vzh0fEXydyY7GF+yFUFL7260hIWC6FSLMNgc/1ea4TSeisKkwW9dlPYVrgMYq0EcpHSV
-         Y4nDOTCpucAsVeoTsElEpQlW+7pV9mP7Q9zfYMAkF4p4rp9UA+4++T1ixtbFS9i26yM+
-         vSZiyy6d/R4zvKwph1rcn7IC7vFuv74Zx2biMQvqQlczUbEBQ60hPrrE3TPPOCeqf49o
-         tXQwD+TgMWdN5SOqDaMfY6C8tbXk1NGlI0ZKw79/SQZ8uweaysQlOEYlZeK002C3eYzc
-         HomA==
-X-Gm-Message-State: AOAM532/8BVFsQN0S0ADew8YwHs7rZ9O3wQeKsVKHQR8P2egFPXFCv04
-        jtKEFqSzeniRedIEiyU7qWVMMQYw9tJ7yeogFoM=
-X-Google-Smtp-Source: ABdhPJzbXeVLZy0sAsiwESMbMRkqCTUelLfAlXsa95IbzSZIQ3ZNUViOzp85PGIosC1KQ9/17GQQ3WQIQAQG+7ZDl4s=
-X-Received: by 2002:a05:6402:1385:b0:413:2bc6:4400 with SMTP id
- b5-20020a056402138500b004132bc64400mr27228177edv.94.1646188351912; Tue, 01
- Mar 2022 18:32:31 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cSj0svtJC4XYerZk2siDftcfo4vZgzCJwSit1103VpU=;
+        b=YbeQB6/TJo+FY7m3l3Gorv7lKDthY9bPV0yum1N3JLxfM12KslvUFwazrM8T7tOK2x
+         U0e7iui0ThwXo1AUVSZl8o1HprHn1Q74dK6Ah8RiqbSWbcwvWXJ9hmD+lwBIUiIQefZT
+         zYh99qSBtgUJxGNWt6AtvvAJNG7LGi1XYQt6Tzv4sAJ6ybFyFxkUAwLbt+SgH4mCCJ/N
+         XutK/2i4oYjIsH/BFpKH0ZtvjH10mGrr9lWCH+yQ2+WRuyYOVmPy4XJb1hf4H/ewNU0R
+         n19Ref4wCSYqT8lJtsp8wjlVs9kDa9LrENt8ZYuiXzTzHloClD4/gSxg17gwL5ER64os
+         2yWg==
+X-Gm-Message-State: AOAM531fH+JFgkR8rl4lZVuhC8yfJZfLnDBcZZY8O+6wp4fKCWL1yZt8
+        W7xMU9cRazU/n38NffSfasVHUvhYJzs=
+X-Google-Smtp-Source: ABdhPJxfH3eLUUzCXbtna23p8lASLemllSao9hDvaVp8cjhQAs8S0H2a9EX7UktNniNjeVf3SWQ7ew==
+X-Received: by 2002:adf:806e:0:b0:1e3:2a17:bd60 with SMTP id 101-20020adf806e000000b001e32a17bd60mr20594789wrk.719.1646194762797;
+        Tue, 01 Mar 2022 20:19:22 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n5-20020a05600c3b8500b00380fc02ff76sm4662066wms.15.2022.03.01.20.19.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Mar 2022 20:19:22 -0800 (PST)
+Message-Id: <pull.1167.git.1646194761463.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 02 Mar 2022 04:19:21 +0000
+Subject: [PATCH] merge-ort: exclude messages from inner merges by default
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1121.git.1645079923090.gitgitgadget@gmail.com>
- <xmqqsfsh5btd.fsf@gitster.g> <xmqqwnheuq79.fsf@gitster.g>
-In-Reply-To: <xmqqwnheuq79.fsf@gitster.g>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 1 Mar 2022 18:32:20 -0800
-Message-ID: <CABPp-BFgLfjLBEK96SLaLxoq6Nspse=FBgViKfiQPk4GaQadFQ@mail.gmail.com>
-Subject: Re: [PATCH] merge-ort: make informational messages from recursive
- merges clearer
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Feb 28, 2022 at 10:44 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> >> One other thing to note here, that I didn't notice until typing up this
-> >> commit message, is that merge-recursive does not print any messages from
-> >> the inner merges by default; the extra verbosity has to be requested.
-> >> merge-ort currently has no verbosity controls and always prints these.
-> >> We may also want to change that, but for now, just make the output
-> >> clearer with these extra markings and indentation.
-> >
-> > Yup, I found that the messages on inner conflicts, especially when
-> > they "cancel out" at the outer merge, are mostly noise that carries
-> > very little useful information (by being noisy, the user gets a sense
-> > of how complex the histories being merged are).  Reducing the default
-> > messaging level would probably be a good idea.
->
-> Here is what I just had to scroll through to update 'next' by
-> merging back 'master', only to grab the updates to the release
-> notes.  Needless to say, this would have been somewhat baffling
-> if I didn't know to expect it.
->
-> It would be good to squelch it before we hear another complaints
-> from old-timer power users ;-)
+From: Elijah Newren <newren@gmail.com>
 
-I'll submit a patch soon.
+merge-recursive would only report messages from inner merges when the
+GIT_MERGE_VERBOSITY was set to 5.  Do the same for merge-ort.
 
->
-> $ git merge -m 'Sync with master' --no-log master
->   From inner merge:  Auto-merging blame.c
->   From inner merge:  Auto-merging builtin/am.c
->   From inner merge:  Auto-merging builtin/blame.c
->   From inner merge:  Auto-merging builtin/clone.c
->   From inner merge:  Auto-merging builtin/clone.c
->   From inner merge:  Auto-merging builtin/commit.c
->   From inner merge:  Auto-merging builtin/fetch.c
->   From inner merge:  Auto-merging builtin/fetch.c
->   From inner merge:  Auto-merging builtin/grep.c
->   From inner merge:  Auto-merging builtin/hash-object.c
->   From inner merge:  Auto-merging builtin/log.c
->   From inner merge:  Auto-merging builtin/log.c
->   From inner merge:  Auto-merging builtin/pack-objects.c
->   From inner merge:  Auto-merging builtin/pull.c
->   From inner merge:  Auto-merging builtin/pull.c
->   From inner merge:  Auto-merging builtin/rebase.c
->   From inner merge:  Auto-merging builtin/rebase.c
->   From inner merge:  Auto-merging builtin/reflog.c
->   From inner merge:  CONFLICT (content): Merge conflict in builtin/reflog.c
-> Auto-merging builtin/reflog.c
->   From inner merge:  Auto-merging builtin/reset.c
->   From inner merge:  Auto-merging builtin/sparse-checkout.c
->   From inner merge:  Auto-merging builtin/sparse-checkout.c
->   From inner merge:  Auto-merging builtin/submodule--helper.c
->   From inner merge:  Auto-merging builtin/submodule--helper.c
->   From inner merge:  CONFLICT (content): Merge conflict in builtin/submodule--helper.c
-> Auto-merging builtin/submodule--helper.c
->   From inner merge:  Auto-merging builtin/worktree.c
->   From inner merge:  Auto-merging cache.h
->   From inner merge:  Auto-merging config.c
->   From inner merge:  Auto-merging config.h
->   From inner merge:  Auto-merging diff-merges.c
->   From inner merge:  Auto-merging diff.c
->   From inner merge:  Auto-merging git.c
->   From inner merge:  Auto-merging gpg-interface.c
->   From inner merge:  Auto-merging grep.c
->   From inner merge:  Auto-merging grep.c
->   From inner merge:  Auto-merging notes-merge.c
->   From inner merge:  Auto-merging object-name.c
->   From inner merge:  Auto-merging pack-bitmap-write.c
->   From inner merge:  Auto-merging parse-options.c
->   From inner merge:  CONFLICT (content): Merge conflict in parse-options.c
->   From inner merge:  Auto-merging parse-options.h
->   From inner merge:  CONFLICT (content): Merge conflict in parse-options.h
->   From inner merge:  Auto-merging refs.c
->   From inner merge:  Auto-merging revision.c
->   From inner merge:  Auto-merging sequencer.c
->   From inner merge:  Auto-merging sequencer.c
->   From inner merge:  Auto-merging sparse-index.c
->   From inner merge:  Auto-merging submodule-config.c
->   From inner merge:  Auto-merging t/t1091-sparse-checkout-builtin.sh
->   From inner merge:  CONFLICT (content): Merge conflict in t/t1091-sparse-checkout-builtin.sh
-> Auto-merging t/t1091-sparse-checkout-builtin.sh
->   From inner merge:  Auto-merging t/t1512-rev-parse-disambiguation.sh
->   From inner merge:  Auto-merging t/t4202-log.sh
->   From inner merge:  Auto-merging t/t4202-log.sh
->   From inner merge:    Auto-merging t/t4202-log.sh
->   From inner merge:  Auto-merging t/t4202-log.sh
->   From inner merge:  Auto-merging t/t4202-log.sh
->   From inner merge:  Auto-merging t/t5316-pack-delta-depth.sh
->   From inner merge:  Auto-merging t/t6120-describe.sh
->   From inner merge:    Auto-merging t/t6120-describe.sh
->   From inner merge:  Auto-merging worktree.c
-> Merge made by the 'ort' strategy.
->  Documentation/RelNotes/2.36.0.txt | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
->
->
+Note that somewhat reverts 0d83d8240d ("merge-ort: mark conflict/warning
+messages from inner merges as omittable", 2022-02-02) based on two
+facts:
+
+  * This commit basically removes the showing of messages from inner
+    merges as well, at least by default.  The only difference is that
+    users can request to get them back by turning up the verbosity.
+  * Messages from inner merges are specially annotated since 4a3d86e1bb
+    ("merge-ort: make informational messages from recursive merges
+    clearer", 2022-02-17).  The ability to distinguish them from outer
+    merge comments make them less problematic to include, and easier
+    for humans to parse.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    merge-ort: exclude messages from inner merges by default
+    
+    cf. https://lore.kernel.org/git/xmqqwnheuq79.fsf@gitster.g/
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1167%2Fnewren%2Fmerge-ort-squelch-inner-msgs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1167/newren/merge-ort-squelch-inner-msgs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1167
+
+ merge-ort.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/merge-ort.c b/merge-ort.c
+index 55decb2587e..be85273c727 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -639,8 +639,9 @@ static void path_msg(struct merge_options *opt,
+ 
+ 	if (opt->record_conflict_msgs_as_headers && omittable_hint)
+ 		return; /* Do not record mere hints in headers */
+-	if (opt->record_conflict_msgs_as_headers && opt->priv->call_depth)
+-		return; /* Do not record inner merge issues in headers */
++	if (opt->priv->call_depth && opt->verbosity < 5)
++		return; /* Ignore messages from inner merges */
++
+ 	sb = strmap_get(&opt->priv->output, path);
+ 	if (!sb) {
+ 		sb = xmalloc(sizeof(*sb));
+
+base-commit: 715d08a9e51251ad8290b181b6ac3b9e1f9719d7
+-- 
+gitgitgadget
