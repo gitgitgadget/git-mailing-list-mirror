@@ -2,154 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 142DFC433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 09:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39FC1C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 09:09:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240355AbiCBJEC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 04:04:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41258 "EHLO
+        id S236146AbiCBJKQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 04:10:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240319AbiCBJDt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 04:03:49 -0500
-Received: from EUR03-VE1-obe.outbound.protection.outlook.com (mail-eopbgr50069.outbound.protection.outlook.com [40.107.5.69])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F26461C138
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 01:03:04 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZisF6NQtIc2binSQ7DZv1Sb925EAJF6LQDGLTMuazbWq8c9sRL4HzgDVnjTi4PqyvWhrZmsK/RxZYW9O0+bFOd9QhCzONQa0bw8c/Qkwga/uE0Y4fXpI6WrIMpjHqXYpzLfQ56wtUEA64UJ5U1sm3ljotHm5OuDYcLIy8W7XxuLKdXKq/tXhXKAz3SYLdtvtLVh1icjMQKntFqy8C7SE/srIDJvjcyHDgNudClMgXTTHKCjvY8rrx1l0ZfUEb/AB5COnNZDTbmUic5Dm9VQ2n5qC8EFpR6UamFhco/mhqQ28A4cWxnSFfGphuRQXEpaeksScUuuT9yh8dxl+YwgDvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=oVSdiDXFIjMdIFa7p7N/jLr0vnjb76Jgq9wuTkoF8yI=;
- b=KvxP18Y9u8bgrPGzyh2N2zQspX4CzyOcBMFBRYzky5zN7Sfx+nsUCMGqzxd4zCQ2LFjLdwJpJXpo6Q426JGNfHaoY7J1Olp0ATs9H9r+KyH3uv6tzwb8kqZUO8fCxLS2Lx/cUAyAQfFvvyWk+Ey5ExjUiroWVR7wS8neqF8fYFAQbQR1YvKdd8oEuRj98lc/DXxPK8FioLLXdohywVTyjrwfSrydjJXlpu70mPQZ5sncgOckfmPmFH4pYF48cVe9crrLErV0lNMPXHC1KkPHlpJgOlpV8fQGDe2a7k+Pe01MH7rJ6l6Cc22DAYlxLoZB/B5HD7tyavj7OcjwiUMX2A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=oVSdiDXFIjMdIFa7p7N/jLr0vnjb76Jgq9wuTkoF8yI=;
- b=M5SAF2DOVwF4wQVC5RJU8/2lI3dCtM4aGonrT5pDcG4MCcRB5dDf8RT9r/V6MONt/zGifVzx7i7UDwty0dFLJ9cjAABPpQ+Z/BjpvrfelXcx/Tr3y8/pV/hfTwhJ8MDz1dUIwHHAt5NsaP9IC/HIpU7+4CiW6n2elsCjOj3my/8=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by VI1PR10MB2015.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:803:38::30) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5017.26; Wed, 2 Mar
- 2022 09:02:55 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::116e:6242:98da:22ba]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::116e:6242:98da:22ba%8]) with mapi id 15.20.5038.014; Wed, 2 Mar 2022
- 09:02:55 +0000
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     git@vger.kernel.org
-Cc:     Todd Zullinger <tmz@pobox.com>,
-        Henning Schild <henning.schild@siemens.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 3/3] t/lib-gpg: kill all gpg components, not just gpg-agent
-Date:   Wed,  2 Mar 2022 10:02:50 +0100
-Message-Id: <20220302090250.590450-3-fs@gigacodes.de>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220224100628.612789-1-fs@gigacodes.de>
-References: <20220224100628.612789-1-fs@gigacodes.de>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: AM7PR03CA0021.eurprd03.prod.outlook.com
- (2603:10a6:20b:130::31) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        with ESMTP id S230422AbiCBJKP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 04:10:15 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629B091AF5
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 01:09:32 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id 15-20020a17090a098f00b001bef0376d5cso1221630pjo.5
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 01:09:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:from:to:subject:references
+         :in-reply-to:content-transfer-encoding;
+        bh=Z8ta2bRnxW9+NRMtXbW77cRtRBGQSAxMaqBGBZC3GsQ=;
+        b=Dn7RrtniEFo07reZP9ANbV6vEdkHL80RzNx5QnK84ObKvbEL0WJtEviH8KvwStQcNW
+         rqPL0RKyFxTP/x/S15HZgClmrtZY0gB6cgcAFMAaHCbONdU8Yf5ORkARKiY8Qzuh7rMd
+         Gt0bKPWTZD8+9i24IHbgydO0VlxQEHI+CcZax1M0SWdVEvLAjdyhp6iWCoDd/BaQKKWF
+         3IBQZjTIBPeOH6iAwA1vIh4juADiO3TruStb9s9zGmS0qhTmnhVpzQYUhFi/tcQH5nTT
+         OrIk/yKlCJ6mImU6JDu51caGbnOFzS98hZ2YxaC7vyshlZvWOWjy/xuYP69Qs3RNEdkF
+         QYTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:from:to
+         :subject:references:in-reply-to:content-transfer-encoding;
+        bh=Z8ta2bRnxW9+NRMtXbW77cRtRBGQSAxMaqBGBZC3GsQ=;
+        b=YSN412GgFAabxdV5TgR/PeXqakbmTDcrBafyl82EUmiSX1gyOYJB2+dx8YAk9S+N7I
+         Q1/9XESCod6X1IIaEWm1qnY3IfgiFGxyO+uP+O0xogMYiRPqJMj/uEO/BjL8ZM6h8CMR
+         HiwrItwKx9c/gvuy+vXlnOKFMijZMp6a2o+5Me3vGrR75j9491bczWvNq+QEbOTMqcPi
+         J9Xa6TTy8YQhk7TklbzrMkpViMCu0XJCj3ihYEieOdgIO5d8Dt68OuWmydNowvyx7FBe
+         xDZ7QcjpxRHgkjB0I3+82q89QJMecrLrFcE0ijgz67srwuFlvV7GjxlJV3u9D+3ZIuhB
+         qHCg==
+X-Gm-Message-State: AOAM5322rFpbIdUDiWhEm+4iOXHRukjnvLo3ItES7cz3gKtZWNVUlfYV
+        sOjOr8YBGSkArSipx5cyOqc=
+X-Google-Smtp-Source: ABdhPJxMhE1xfdNduJknueitRR947eSL4zMH5wO01Os5R3iprjWrHgjcKpV16reOJfU7iVvIp84mqg==
+X-Received: by 2002:a17:90a:7f84:b0:1bc:aba8:f281 with SMTP id m4-20020a17090a7f8400b001bcaba8f281mr26012478pjl.101.1646212171707;
+        Wed, 02 Mar 2022 01:09:31 -0800 (PST)
+Received: from ?IPV6:2405:201:a800:4df9:6560:dadc:f905:6d19? ([2405:201:a800:4df9:6560:dadc:f905:6d19])
+        by smtp.gmail.com with ESMTPSA id d17-20020a056a00199100b004dfa7f02369sm20320091pfl.205.2022.03.02.01.09.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Mar 2022 01:09:31 -0800 (PST)
+Message-ID: <f16cf3aa-dbae-8645-1d59-a8d5639d22fc@gmail.com>
+Date:   Wed, 2 Mar 2022 14:39:23 +0530
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 1ba8b1e2-bbde-4ef1-17da-08d9fc2b70ca
-X-MS-TrafficTypeDiagnostic: VI1PR10MB2015:EE_
-X-Microsoft-Antispam-PRVS: <VI1PR10MB20159E9CF99242814153CC50B6039@VI1PR10MB2015.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: bn5D6e7YIRfNyhH+K16+HWG84JYyTUHa+RKov++OnUVvpu707RUB0+AXT4W3qGAZx6xQB0ne3Hdzs9BTZe1uPTzhwOJJrJjOxgmX/xNIMbb0DvhvwOHhud0I1GShQYDKBjIAD4/X7NJVxfL63xxTvMH3IPyGJBGEYNfkGsGlgIdYVSVF1dtDIwcWpbTbX6lSyI7rg6Pup6orPXVPjqwJA/nZmaYRF1BDgAdc6fJKsotdLDCG8GMqPlkcAOKXYnkK4VS+mW7UrRJ7PdEckWwG14lYt3WrrA0scmMAUCOTQlXPtYOx0XkPRoyQyVGY2ZdFDcCXVhl8Md61RuQiC0cL0i1z8A9WLy8QyEo22t1hkT+sApBUmt0e8PEhKf1RCxhS3Utx+dpjjPFCv8Kk5B9H5fARktYxPr4fkKD10kZqu7Ku5Uokq2kw6cb0XIKpgwQYHCjtPF6g9znu75Y+a6Xb3Wr6CVj3P7sEhUEz/fPlo+sIsIpKxM78+lGECJKFIIiABwgMAN81f99SpXOpbALS/hdRRAF2VwiIpfn6oN3qgKPG2hGLFcKoVFwGHbHfLEzcC/ktdBJvQqPKCoxyzA4e6017iVqfBVBx+zIz5C9rQxEkr4MxXCeF2B4Y4LhgpqhD7VimVxb7as0klV+s5sJWyQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(136003)(39840400004)(396003)(376002)(346002)(36756003)(83380400001)(38100700002)(186003)(8936002)(5660300002)(1076003)(2616005)(4326008)(6916009)(8676002)(316002)(66556008)(66476007)(26005)(66946007)(86362001)(6666004)(6512007)(6506007)(54906003)(508600001)(6486002)(2906002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?xZbAEjWuj4aycjqL7tTU/mUHHeW1AD6t8/dPfZQZlUTt2XKiffL7ZJfiWVMh?=
- =?us-ascii?Q?xqAR0mavEErMTL8MKVaBBwpzI6x6kpXGJBGwp7kUcZSLt2qxL2IGgXKyj6rc?=
- =?us-ascii?Q?fiVdb7pUFFmPbtwpGJyvxvLckGH3yvMTZPS0J8ehqFCISbHWS4VP2oK6rgLq?=
- =?us-ascii?Q?Elm/RBbpPnnbYbImm+nxnuaCa3R0vtgUowxHhiMjHbXkYyskJguwryhjEPut?=
- =?us-ascii?Q?PnSYhC7HE6dYZbOiVe5G5uCTpDDmjyad+DIRTmz0ySq8Uzh67XDBIKZxvRHa?=
- =?us-ascii?Q?9ilCnhdbB+Z+7Gv4ljyCkKXIaO35SN2PAmVoDdNbR6VBkpVDHFVxRaDbHrLv?=
- =?us-ascii?Q?TveP4vB9gxBb88SGa+rtX8HtWPptxjz3M0hGzdzwfg7CwVsOI5nsN28l0O5r?=
- =?us-ascii?Q?53NIsvGi9HZ/ADiRk+lvBkTwtKguQQTvH5VNC9ErqR2juH92aoEW6Wq4Tj+o?=
- =?us-ascii?Q?LajllWK3vGFX2UZDTRs34a2nzB0JbhjmdVhr11R+aeQx/reImFa2gKEUqQsO?=
- =?us-ascii?Q?CXAjImw0ehWqkNDvot1eeGUfG01TO8W9LRtLd2VfJrURJ/kxqEIoYv5cGuZX?=
- =?us-ascii?Q?bu1WJwSTvoB/mQcPNumoHwCcdWvVq8HuF1w6sUnUBZuKc5jeeRBTjXUVnCkX?=
- =?us-ascii?Q?ppbv+23j+9CprgDO0MxFFz//zzLr0uRAay12O2SKjD+o4dBSDQ7SJPS90QpL?=
- =?us-ascii?Q?Awx56A4HojhVwTIyu0bJa8vxc2whDrrh1EnGiqKqJEzy4wk1jtxW7fP/Jtzr?=
- =?us-ascii?Q?dd5AdBTdnVqdzm/ntZ+NAkApC6BTcmjb1gbIs9dfdd9r98osoTC5DxES4yRi?=
- =?us-ascii?Q?US1OLaL/RBpkM9gPU0oUzprtE0y3KrtnakReyUOZ33DD0F2Jv2x2vceA0z7P?=
- =?us-ascii?Q?xLppCkVnDNiQMmsyFxagDq5W4CPQtGLKtdXxkwNkb0FsyYmf2My1oTSloW5w?=
- =?us-ascii?Q?w8Nz0H2S7Ayyin8C3WFvxv5h4p56TSxyBE9MI7Skv36MkG9RxZxsq2aZYx14?=
- =?us-ascii?Q?UCe/x70pAuDdzQZvODwRSg0eFIpEmlKgGwd9/miX92GYoeHpwBZodihqUUOB?=
- =?us-ascii?Q?C2zRn/xXjnqSnfVnRkVFFvcycgzH9PfsSB5u0xH8Dd3aWpzzDvfJf4HacdCM?=
- =?us-ascii?Q?LJWeCW1Hj655JqRneQEKwLIxDcrWnR4Ym/K3Cc/uAR+S/hLADajFBtXrW9hM?=
- =?us-ascii?Q?6r6MQdq8Lcp1IREJpFQQQHV/s8ieEe+nJ46d3kEJipj/tj/y5Oae+fqzmgyv?=
- =?us-ascii?Q?Ixttc5AaspOdj2n6YbcYTCpLKAVWrvXcX7wN8bVWQSwqTJH6dk3uaRl2CLdK?=
- =?us-ascii?Q?+Jg6itbMd4Ruqj+Gh5aJqv2QSalUU5vwXpLCrz0TzuQTfdT219/pGt7afDZm?=
- =?us-ascii?Q?a4ecpMuPDb61tRgT/UGH8WcJ9UaHTIgnlMA6QH2JQWZXFTNi/9cZkjWoQayS?=
- =?us-ascii?Q?GpyrdQGLdn/Q55KSgi/r/zbo3d6hW3mM6nPp3cOZxeUx7Fm01e8vrE8YtlD9?=
- =?us-ascii?Q?u0+Dg7VsFbyGv8N/PS8s5dlASyW2pM2N/Cfc9pvNJhC4xr5nA48NWPeb/Zrm?=
- =?us-ascii?Q?ewQefbl4zgDorHrHxNAqdQs1RaHbX0lGNkBJ0t/9GZMQP0BpXSmUM4dC6G8O?=
- =?us-ascii?Q?OMHCLfM4rUvMR3wp1Q9qquqxP0kfrqmPUO42jsPW90RXjbSe4NLdjFcEEl+a?=
- =?us-ascii?Q?l6B21QMebIvI+K5YT4zlswd7sYo=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1ba8b1e2-bbde-4ef1-17da-08d9fc2b70ca
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2022 09:02:55.6638
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 80o5u60ggPYG2VblmvfhtZQ+5PBKPyIbP4C4kcUJ8Ukrf399j14jrg1udhn8huupatWXKb0LRbUTlMns+J/KfSEm0TPPTGPlvgkIwMlBQ0Q=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR10MB2015
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+From:   jaydeepjd.8914@gmail.com
+To:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] userdiff: add builtin driver for kotlin language
+References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
+ <20220302064504.2651079-1-jaydeepjd.8914@gmail.com>
+ <20220302064504.2651079-2-jaydeepjd.8914@gmail.com>
+ <34a2ad39-604c-4edd-ea1c-de1212fc506b@kdbg.org>
+In-Reply-To: <34a2ad39-604c-4edd-ea1c-de1212fc506b@kdbg.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Todd Zullinger <tmz@pobox.com>
+> This test does not demonstrates that numbers do not end at an '_',
+> because if it did end there, the change would be from the single token
+> 100000 to two tokens 100 and _000, and the mark-up would look exactly
+> the same as we see here, and would remain undiagnosed.
 
-The gpg-agent is one of several processes that newer releases of GnuPG
-start automatically.  Issue a kill to each of them to ensure they do not
-affect separate tests.  (Yes, the separate GNUPGHOME should do that
-already. If we find that is case, we could drop the --kill entirely.)
+Yes but numbers ending in `_` would be illegal syntax in Kotlin so the regex
+assumes that user is writing correct code.
 
-In terms of compatibility, the 'all' keyword was added to the --kill &
---reload options in GnuPG 2.1.18.  Debian and RHEL are often used as
-indicators of how a change might affect older systems we often try to
-support.
+> Instead, write the pre-image as 100_000 and the post image as 200_000.
+> Then the correct mark-up would be
+> 
+> <RED>100_000<RESET><GREEN>200_000<RESET>
+> 
+> and a bogus markup (that the test wants to diagnose) would look like
+> 
+> <RED>100<RESET><GREEN>200<RESET>_000
 
-    - Debian Strech (old old stable), which has limited security support
-      until June 2022, has GnuPG 2.1.18 (or 2.2.x in backports).
+Right. I will add that test too.
 
-    - CentOS/RHEL 7, which is supported until June 2024, has GnuPG
-      2.0.22, which lacks the --kill option, so the change won't have
-      any impact.
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
- t/lib-gpg.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> What is this "0x0F"? Did you mean just "0x"? 
 
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index 38e2c0f4fb..114785586a 100644
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -40,7 +40,7 @@ test_lazy_prereq GPG '
- 		#		> lib-gpg/ownertrust
- 		mkdir "$GNUPGHOME" &&
- 		chmod 0700 "$GNUPGHOME" &&
--		(gpgconf --kill gpg-agent || : ) &&
-+		(gpgconf --kill all || : ) &&
- 		gpg --homedir "${GNUPGHOME}" --import \
- 			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
- 		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
--- 
-2.35.1
+`0x0F` indicates that its a hexadecimal literal in Kotlin.
 
+> And what about prefixes 0X
+> and 0B? Are they not used as prefixes for hex and binary numbers?
+> Moreover, I do not see how a hex number 0xff would be matched as a
+> single token.
+> 
+> > +	 /*match unary and binary operators*/
+> > +	 "|[-+*/<>%&^|=!]*"),
+
+Yes. I would make the changes.
+
+> Do not do this. There is an implicit single-character match that need
+> not be written down in the regex. List all multi-character operators
+> (but not the single-character operators) like you did in earlier rounds.
+> As written, the "++!=" in an expression such as "a++!=b++" (which is not
+> unlikely to be seen in real code) would be regarded as a single token.
+> 
+> The verb "match" in the comment does not match the style of the other
+> comments (drop the word), and please insert blanks between the comment
+> delimiters and the text.
+> 
+> >   PATTERNS("markdown",
+> >   	 "^ {0,3}#{1,6}[ \t].*",
+> >   	 /* -- */
+
+Noted.
+
+
+Thanks,
+Jaydeep.
