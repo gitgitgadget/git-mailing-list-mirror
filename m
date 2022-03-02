@@ -2,98 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5114AC433EF
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 23:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B98FCC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 23:51:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229669AbiCBXvX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 18:51:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46640 "EHLO
+        id S229681AbiCBXvs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 18:51:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbiCBXvW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 18:51:22 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 082F13A0
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 15:50:37 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id 145-20020a630397000000b00373b72d65f5so1806943pgd.12
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 15:50:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=9/MYvu2BUgcZYELJSHvVbFIKrHKnssJlfQvnhaMKJeQ=;
-        b=UvmNyFhcNsw6jyhv190TqQKuJBrJflMXWqK3SEttWm+PZFIDiTOm7DSev9lWCyaxUS
-         VuOzZ16QdQrTbI3yVt7/5WWkGe9C9UCunmewdlmOtWYvrX5lmQhbe6EMDHlnN2nNoHAU
-         BjJWC50ibm/Fxbc9psNP3iITLRpyKerMPinKLhZ7TcWGFkHerTwbUx9LzQ0Y954S9/iB
-         eKB6xGPxGZ25jlKcGbzsZBPtf7EuWwfZoeXoADVCQbfuu+7DuOZkNHx3xExOHHpKW6vi
-         sdZFaCtAP3V0IaUQsmU1VovQPU3WE5ttO4ARse1/AAbvNRn7qDkmgKSNmjmj7y4k/vbn
-         7GPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=9/MYvu2BUgcZYELJSHvVbFIKrHKnssJlfQvnhaMKJeQ=;
-        b=JGxE8mExqLIb4iFvOEJVlcQiuMlMM4yyPe46twh1bQ1Mz3jc23qSILnB9jXqs/Ybk2
-         UtsbJsCFNNCfbg4pht4LfWr/yvtDBr4RbHOv9968RweZdFrciXXzaxZbDJ9iTqqbbYO8
-         N9hEQEVeWCB+buWvrIPoQthNGw6UrZCu4sRV9WRR+0glPOD6D/qWAlFSxdm0+vOELFGt
-         16Wyssvz5dfTNQepI5IJ4uECUCDx1ne/1aizAshh5MrHtRLJGmoj0R/+E3UCj3e6uAmp
-         dWbVfW7Tn0OI/4R+HXKXcLHBSf5Szw089MycIMh0Csxse1PhFbeqX1QCWo914mV+Q9hv
-         mk2A==
-X-Gm-Message-State: AOAM5337FcE7Ucw+VwZV8joyJiMAnodAdpgh4KGYUppDPlZ/XwxJsHEA
-        8lqaGb07xw108tSHnRJdTqEpkDjdYZ0o5A==
-X-Google-Smtp-Source: ABdhPJxBSfiM1ac+V4QNc2KuuSAr/+sM1VXgTIue+23X++/Gsfq/eXb5KwU0h91CcdjIaAkUjy4i78Dt9y3v2A==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:f650:b0:14f:139e:aef2 with SMTP
- id m16-20020a170902f65000b0014f139eaef2mr32690534plg.151.1646263525295; Wed,
- 02 Mar 2022 15:25:25 -0800 (PST)
-Date:   Wed, 02 Mar 2022 15:25:15 -0800
-In-Reply-To: <xmqq35k1pg4c.fsf@gitster.g>
-Message-Id: <kl6lfso0djj8.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220215172318.73533-1-chooglen@google.com> <20220224100842.95827-1-chooglen@google.com>
- <20220224100842.95827-10-chooglen@google.com> <xmqqr17p5ujf.fsf@gitster.g>
- <nycvar.QRO.7.76.6.2203012039080.11118@tvgsbejvaqbjf.bet> <xmqq35k1pg4c.fsf@gitster.g>
-Subject: Re: [PATCH v3 09/10] fetch: fetch unpopulated, changed submodules
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229693AbiCBXvr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 18:51:47 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86FF34C412
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 15:51:03 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9B84D17C139;
+        Wed,  2 Mar 2022 18:32:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=qDwvyb/OtXGg
+        hKc+wJjeSQfOnU/0jg43KEyS5vOdsII=; b=Sx/k4b33cZFyGDLmiDTjHSIarc3y
+        oj9BJ4TSoAXniAPFySap/arEG+xSZUzaCR3hfMRDHYvogMxGdrabyQTtnX6RhF3M
+        hgjnN/uwCrpPgHbRYWA29RkEekU8ekCoFsM/EaA44pUqE4HQ6JJrFYsUtRiryCQZ
+        nPI88cMAv771HQQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 91E3517C138;
+        Wed,  2 Mar 2022 18:32:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0FEBD17C136;
+        Wed,  2 Mar 2022 18:32:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v4 1/3] stash: add tests to ensure reflog --rewrite
+ --updatref behavior
+References: <pull.1218.v3.git.git.1645817452.gitgitgadget@gmail.com>
+        <pull.1218.v4.git.git.1646260044.gitgitgadget@gmail.com>
+        <08bb8d3a9b9cd75c8b2aed11db9456baef6f415b.1646260044.git.gitgitgadget@gmail.com>
+Date:   Wed, 02 Mar 2022 15:32:01 -0800
+In-Reply-To: <08bb8d3a9b9cd75c8b2aed11db9456baef6f415b.1646260044.git.gitgitgadget@gmail.com>
+        (John Cai via GitGitGadget's message of "Wed, 02 Mar 2022 22:27:22
+        +0000")
+Message-ID: <xmqqlexsexse.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F653BC68-9A80-11EC-97E4-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> From: John Cai <johncai86@gmail.com>
 >
->> Hi,
->>
->> On Sat, 26 Feb 2022, Junio C Hamano wrote:
->>
->>> A few tests added by this patch have been failing on one specific
->>> job (linux-gcc ubuntu-latest) at GitHub CI.
->>>
->>> https://github.com/git/git/runs/5341052811?check_suite_focus=true#step:5:3968
->>> https://github.com/git/git/runs/5343133021?check_suite_focus=true#step:4:5520
->>>
->>>     Side note: you may need to be logged in to GitHub to view them.
->>>     These two use different versions of CI to show the test traces;
->>>     in the latter you may have to click on right-facing rectangle on
->>>     the line with label "5520" to see the breakage.
->>>
->>> I think there is some baked-in assumption in the failing test what
->>> the name of the initial branch by default is, which may be the reason
->>> why this particular job fails while others don't.
->>>
->>> Can you take a look at it?
->>
->> The log says this:
->> ...
->> At least that's how _I_ tried to address similar issues in the test suite
->> in the past.
+> There is missing test coverage to ensure that the resulting reflogs
+> after a git stash drop has had its old oid rewritten if applicable, and
+> if the refs/stash has been updated if applicable.
 >
-> Yes, I had a squashable fix/workaround queued since last night.
+> Add two tests that verify both of these happen.
+>
+> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>  t/t3903-stash.sh | 43 ++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 42 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index b149e2af441..a2f8d0c52e7 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -41,7 +41,7 @@ diff_cmp () {
+>  	rm -f "$1.compare" "$2.compare"
+>  }
+> =20
+> -test_expect_success 'stash some dirty working directory' '
+> +setup_stash() {
 
-Thanks, both! I especially appreciate the pointers because I couldn't
-remember how to set the default branch off the top of my head.
+Style.
+
+	setup_stash () {
+
+but more importantly, is this really setting up "stash"?
+"setup_stash_test" or something, perhaps?
+
+> +test_expect_success 'stash some dirty working directory' '
+> +	setup_stash
+>  '
+
+OK.
+
+> +test_expect_success 'drop stash reflog updates refs/stash' '
+> +	git reset --hard &&
+> +	git rev-parse refs/stash >expect &&
+> +	echo 9 >file &&
+> +	git stash &&
+> +	git stash drop stash@{0} &&
+> +	git rev-parse refs/stash >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success REFFILES 'drop stash reflog updates refs/stash wit=
+h rewrite' '
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		setup_stash
+> +	) &&
+
+Hmph, so this is done inside the subdirectory.  The implementation
+of the helper in this iteration does look cleaner than in the
+previous iteration.
+
+But these many references to "repo/" and "-C repo" we see below
+makes me wonder why we do not put the whole thing inside the
+subshell we started earlier.
+
+i.e.
+
+	git init repo &&
+	(
+		cd repo &&
+		setup_stash_test &&
+
+		echo 9 >file &&
+		old=3D$(git rev-parse stash@{0}) &&
+		git stash &&
+		new=3D$(git rev-parse stash@{0}) &&
+		...
+
+		test_cmp expect actual
+	)
+
+> +	echo 9 >repo/file &&
+> +
+> +	old_oid=3D"$(git -C repo rev-parse stash@{0})" &&
+> +	git -C repo stash &&
+> +	new_oid=3D"$(git -C repo rev-parse stash@{0})" &&
+> +
+> +	cat >expect <<-EOF &&
+> +	$(test_oid zero) $old_oid
+> +	$old_oid $new_oid
+> +	EOF
+> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
+> +	test_cmp expect actual &&
+> +
+> +	git -C repo stash drop stash@{1} &&
+> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
+> +	cat >expect <<-EOF &&
+> +	$(test_oid zero) $new_oid
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'stash pop' '
+>  	git reset --hard &&
+>  	git stash pop &&
