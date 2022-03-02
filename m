@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25587C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 17:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33B11C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 17:28:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243844AbiCBR3B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 12:29:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59880 "EHLO
+        id S243831AbiCBR3F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 12:29:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243831AbiCBR2a (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S240774AbiCBR2a (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 2 Mar 2022 12:28:30 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29C93DF9B
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 09:27:34 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id q7-20020a7bce87000000b00382255f4ca9so3266162wmj.2
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 09:27:34 -0800 (PST)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A176DFCE
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 09:27:36 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id a5-20020a05600c224500b003832be89f25so1712517wmm.2
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 09:27:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZxKgkV3DVbuKgapAZ1Rbuk7060U/0rZJjX6KXsUJmGo=;
-        b=P9JZpuMgyIJ+RtXNexs1MWbrIuJ2bD96w4bTPOZgkw1LF+ipOsn7DqwP+rhzTPf9dZ
-         zj4UX2lurxmnYFQvc3qRt39GGnA28QVB8744FGSHlcOGbbCXyTVx5HcyEYL0M6x4FhIB
-         4DaoICQHXbgFWCLdVw4FU6+W8ydWxkr2rvi1HgFxUVMZ3ExW3EtnDDbruuEtQGWmD3gG
-         0vWBXp81tc2n0JCbXdVtoTY4oncOUzyRiNheVyOVDM7ogOJgKpsZ+k3Q4H2zEsFFLLxc
-         02nggMytbgUzqFRnbim72QHcOtC2OblBJqzXdmPEPI1Usx6R2iHD7d4ctluH3pWOWEz7
-         e5kQ==
+        bh=LVhMduWjY0+ZV5ohOgkGQuyvuX3pmF6ixfLxtAgmbd4=;
+        b=lg8dvEwAn3pcMTAvhFnRGadDhQ3ivzSxdRyMxriQTxjIDW1PsfauqvT3HIz92zte3a
+         2vySf6mumzgU/vGGs+8sM4BnvmFNaGnprGjy9qJlCawNOsMZU48N9BH5BBgK9AE5fjTG
+         j1JSUqL/3Botllj7ozSCbaxADFaN7lCD8EwDdwtQnYm9lpeGC0Nj+7qHku6vNcwvlxf1
+         sN9Rb1F6T/0t3zTdO+ksMg5KVD9RSRTZ7vVWIlADx3dO1H8gjJHO82fl2L4wZPQIqjKt
+         pSwxV+LM2re8Bj5XglXzo2nw2M8Frk2WkUsmdgVGXm0AVr4xnGjnzh7hXw1aydBxk1bO
+         28Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZxKgkV3DVbuKgapAZ1Rbuk7060U/0rZJjX6KXsUJmGo=;
-        b=TS4cljHGVUDZ89Ysie49OV89FgjEJUcx+6AxwRF/VEfv237A+g4EIO+LoY0Wjo/L3K
-         b8z9M8wXHQNNBmyGZOVeWLI7cQ5lE2zYIVmjL6bcEe7U2G0PQmzJ2JiqHCAA1RQjph8U
-         F1/N0YLG7TQYO/2MqMl6uOEsAHwqSP3OBnbkJWP+njfuJjaqWuXJV1DuLORbP3YMNjLC
-         wIhFCYHfAgtFRTa6ZRLk6xFya+04LEVTIZUGwOl3d+rSDwom6HnYip3bt8lA06EyqTRt
-         KGIrwIV3/+2PSS5yb6FG6Imr4D6UjNSBxC2dmM1fCRLmYnvvtnrhvb2wIDpiMg35PXWE
-         KuBA==
-X-Gm-Message-State: AOAM532c7BxSIw4mnLPFSu9GrS+lM7PikSUcDbxhEqdT9QPvfssr4k0E
-        LHCXIroV3NyOkpRpxh4BbVMXXi2R3FKU4Q==
-X-Google-Smtp-Source: ABdhPJzTkdsqdjscPN7hA+ZN1hFDVVnIT84v6dbqHBRW//VSwvxTsicN0KpibcRdUbWvFZQ8paySNA==
-X-Received: by 2002:a7b:ce83:0:b0:37b:f1f1:3a0c with SMTP id q3-20020a7bce83000000b0037bf1f13a0cmr698273wmj.10.1646242052660;
-        Wed, 02 Mar 2022 09:27:32 -0800 (PST)
+        bh=LVhMduWjY0+ZV5ohOgkGQuyvuX3pmF6ixfLxtAgmbd4=;
+        b=ZBi9DCqoj4lOLFya/82khzzF2V6NLi5M3IvckqXDcDAlSjvPaUxNyuIZ/ULcnsqgcT
+         UxnckNIgOXQvcme2/rLRS4YyLopoMSug73YU+Hbmd1yLTTulL2idp2cGKMk3MwMC+hPf
+         fMHNGVdWiemqYGXT0WzgbxM/3EEkS8Kj39uK5qUKxOe9bQbz6Pd3zH2q60mwgr9d/skz
+         FuoG4l8QKYe60JP66CVC/ldE5y6N0wW8Dsr64Xo32czcRINnDFu87bx9ef+ozjP1IBMQ
+         RMXE0HUIUttBKomcapGSvl9y1qSRFRb0vCwnIyWJPT1J9AquLgqwD5suwI3E8a0HrpzB
+         b8Sg==
+X-Gm-Message-State: AOAM530woCPcbZwQYJLutoQ8Hy2fw/MeNWWjaKC05xbRP7gSeUAoLUav
+        Op9Y4eF3fxMz5tTrge65LzqBfS8ZbNu4hw==
+X-Google-Smtp-Source: ABdhPJwkXfFHFBSBzQIBBe6pv2zG8JRH13SjsPKpQasRyiWzHu9oSYfk5sN5nRvm3hmsQiTjGbbd7w==
+X-Received: by 2002:a1c:a382:0:b0:381:cfd:5564 with SMTP id m124-20020a1ca382000000b003810cfd5564mr664592wme.103.1646242055204;
+        Wed, 02 Mar 2022 09:27:35 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r20-20020adfa154000000b001f0326a23e1sm2537377wrr.88.2022.03.02.09.27.31
+        by smtp.gmail.com with ESMTPSA id r20-20020adfa154000000b001f0326a23e1sm2537377wrr.88.2022.03.02.09.27.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 09:27:32 -0800 (PST)
+        Wed, 02 Mar 2022 09:27:34 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 03/15] read-tree tests: check "diff-files" exit code on failure
-Date:   Wed,  2 Mar 2022 18:27:12 +0100
-Message-Id: <patch-03.15-5f02e30d1ab-20220302T171755Z-avarab@gmail.com>
+Subject: [PATCH 06/15] apply tests: use "test_must_fail" instead of ad-hoc pattern
+Date:   Wed,  2 Mar 2022 18:27:15 +0100
+Message-Id: <patch-06.15-7952ae1f3b5-20220302T171755Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1226.g8b497615d32
 In-Reply-To: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
 References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
@@ -69,82 +69,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix an issue with the exit code of "diff-files" being ignored, which
-has been ignored ever since these tests were originally added in
-c859600954d ([PATCH] read-tree: save more user hassles during
-fast-forward., 2005-06-07).
+Change a fragile test pattern introduced in 6b763c424e4 (git-apply: do
+not read past the end of buffer, 2007-09-05). Before this we wouldn't
+distinguish normal "git apply" failures from segfaults or abort().
 
-Since the exit code was ignored we'd hide errors here under
-SANITIZE=leak, which resulted in me mistakenly marking these tests as
-passing under SANITIZE=leak in e5a917fcf42 (unpack-trees: don't leak
-memory in verify_clean_subdirectory(), 2021-10-07) and
-4ea08416b8e (leak tests: mark a read-tree test as passing
-SANITIZE=leak, 2021-10-31).
-
-As it would be non-trivial to fix these tests (the leak is in
-revision.c) let's un-mark them as passing under SANITIZE=leak in
-addition to fixing the issue of ignoring the exit code.
+I'd previously marked this test as passing under SANITIZE=leak in
+f54f48fc074 (leak tests: mark some apply tests as passing with
+SANITIZE=leak, 2021-10-31). Let's remove that annotation as this test
+will no longer pass.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t1001-read-tree-m-2way.sh   | 6 +++---
- t/t1002-read-tree-m-u-2way.sh | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ t/t4123-apply-shrink.sh | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
-index d1115528cb9..0710b1fb1e9 100755
---- a/t/t1001-read-tree-m-2way.sh
-+++ b/t/t1001-read-tree-m-2way.sh
-@@ -21,7 +21,6 @@ In the test, these paths are used:
- 	yomin   - not in H or M
- '
+diff --git a/t/t4123-apply-shrink.sh b/t/t4123-apply-shrink.sh
+index dfa053ff28e..3ef84619f53 100755
+--- a/t/t4123-apply-shrink.sh
++++ b/t/t4123-apply-shrink.sh
+@@ -2,8 +2,6 @@
  
+ test_description='apply a patch that is larger than the preimage'
+ 
+-
 -TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-read-tree.sh
  
-@@ -38,11 +37,12 @@ compare_change () {
- }
- 
- check_cache_at () {
--	clean_if_empty=$(git diff-files -- "$1")
-+	git diff-files -- "$1" >out &&
-+	clean_if_empty=$(cat out) &&
- 	case "$clean_if_empty" in
- 	'')  echo "$1: clean" ;;
- 	?*)  echo "$1: dirty" ;;
--	esac
-+	esac &&
- 	case "$2,$clean_if_empty" in
- 	clean,)		:     ;;
- 	clean,?*)	false ;;
-diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
-index ca5c5510c73..46cbd5514a6 100755
---- a/t/t1002-read-tree-m-u-2way.sh
-+++ b/t/t1002-read-tree-m-u-2way.sh
-@@ -9,7 +9,6 @@ This is identical to t1001, but uses -u to update the work tree as well.
- 
+ cat >F  <<\EOF
+@@ -41,20 +39,8 @@ test_expect_success setup '
  '
  
--TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-read-tree.sh
+ test_expect_success 'apply should fail gracefully' '
+-
+-	if git apply --index patch
+-	then
+-		echo Oops, should not have succeeded
+-		false
+-	else
+-		status=$? &&
+-		echo "Status was $status" &&
+-		if test -f .git/index.lock
+-		then
+-			echo Oops, should not have crashed
+-			false
+-		fi
+-	fi
++	test_must_fail git apply --index patch &&
++	test_path_is_missing .git/index.lock
+ '
  
-@@ -23,11 +22,12 @@ compare_change () {
- }
- 
- check_cache_at () {
--	clean_if_empty=$(git diff-files -- "$1")
-+	git diff-files -- "$1" >out &&
-+	clean_if_empty=$(cat out) &&
- 	case "$clean_if_empty" in
- 	'')  echo "$1: clean" ;;
- 	?*)  echo "$1: dirty" ;;
--	esac
-+	esac &&
- 	case "$2,$clean_if_empty" in
- 	clean,)		:     ;;
- 	clean,?*)	false ;;
+ test_done
 -- 
 2.35.1.1226.g8b497615d32
 
