@@ -2,256 +2,438 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBA7FC433EF
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 13:57:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57EDCC433FE
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 14:07:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238183AbiCBN6H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 08:58:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45238 "EHLO
+        id S242711AbiCBOII (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 09:08:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234515AbiCBN6G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 08:58:06 -0500
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36EFDBB7
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 05:57:23 -0800 (PST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id 493093200A2A;
-        Wed,  2 Mar 2022 08:57:22 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 02 Mar 2022 08:57:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; bh=WYcW/tVUrJyivw65ooErZStS2nRNktybsLYhaT
-        +ni7Q=; b=hc3fxMDGW9x3x4CQCt8GXqVgPnSE4PaElnILkgkVd2UoGlv6wWON8s
-        S6LO/j8P5bbzrNpuAu2nuBslEKbieRn8FmpYqgB5Yi+CDmXgBWbtUvRLFdB0bjEV
-        AA+mTDCQcpEyaIlzbdUcQNbLkqAF49fZ+kkK9tY8lutntZ/f4pZcv+OA10/iJDdY
-        tBu/qeKey/9YQeNnmlOUSfSYa/cl/Yp0aKR44yIlo+DbWOse94szAFXzW87Jynth
-        pul4fdPMoyHhMySZ89gULuJcK6XiAIQJZzBaAHfdEkfgCdA9WCwnqSU01/Fxl6sJ
-        OCSzxYDwyMQyijrCmY7ykr+G46j1fyUA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=WYcW/tVUrJyivw65o
-        oErZStS2nRNktybsLYhaT+ni7Q=; b=hZQRj2o2nY6Gqqa+5BRCbxCrl3IxxdN2U
-        g+tyPyEuMV133gVYks+uCyzP3+OS8U3e4eudqIPaYOBlj5LKbWOvfazDjTgqlatL
-        V56HuUijx4BtEbrQhCbwboo6bZYMFrHevkdee/+rHS0/XDokAehEhF6IiP2Zj1ZD
-        e7hMy44qxz2VAr4lswMJEMm0gYSIzB/pzGCh/Vj11Ff2VtAtCEdmHVKd99q8bE3D
-        wtZgUe5SaH9vXhh4ZjbCNWEdsBvrJcqENFf80tbuqjf7job9XIT+zHKjAa4aNfNt
-        4qZwoL77HfVBI/9WtEyKo+3d8ockoM970keqNe+iNtCjZWy2c/QsA==
-X-ME-Sender: <xms:wXcfYmlMN3EXj8S-JPhy3AxzVdLJtI9Ma6gRC4CSQ8eIb2-l39j7PA>
-    <xme:wXcfYt3686kxAIFm7YeLSm3pCFtGZjSqVLTbxQMaRN1xkmbZZWH4XmJATXn1jpnXb
-    1yYaVDZiORMaqJa_g>
-X-ME-Received: <xmr:wXcfYkq2YHHc31wdy7IVTYbsIrG1Vlk2Y2oxbpdUNY9myQu2AF5Y21H3d-GM7GXp-DywZ2Ua7BwozhB4PhL-x6dSaqnO_MBh-GZk5nfiasXFjArL7Tr3BQc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddtgedghedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeejjedtiefggeekgfejheevveejjeevuedvtdeikeffveelgeelhffggfejjeeffeen
-    ucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:wXcfYqmFD6dxxxHjRVlEs5GmetiXRn3TBVGlr0YD4pPR8jVZnkSc6g>
-    <xmx:wXcfYk2DwRUPZJwU5Jj9S_lV6N3DKndFo3Clq5VJ6OKJn04-lHTPLw>
-    <xmx:wXcfYhuyPnF3iNEoC2Ck2I0SebFHLlUJAH2SSXX1hlucj0a19bwhXg>
-    <xmx:wXcfYnRz0S9fScqtWSGjICiBwFBmI8KQIeZlRKEHvAPGI_QmRadQFw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Mar 2022 08:57:20 -0500 (EST)
-Received: from localhost (ncase [10.192.0.11])
-        by vm-mail.pks.im (OpenSMTPD) with ESMTPSA id 3371541d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 2 Mar 2022 13:57:17 +0000 (UTC)
-Date:   Wed, 2 Mar 2022 14:57:16 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, gitster@pobox.com,
-        abhishekkumar8222@gmail.com
-Subject: Re: [PATCH 3/7] commit-graph: start parsing generation v2 (again)
-Message-ID: <Yh93vOkt2DkrGPh2@ncase>
-References: <a3436b92a32f7f6dd02ad61eb2337a4d088d5e9c.1645735117.git.gitgitgadget@gmail.com>
- <YhzkdMxrIGlNutr6@ncase>
- <e29ec01f-3039-6992-8ade-800ad32fcf34@github.com>
- <Yhz/hsDDGNVjt64R@xps>
- <dbb59fe7-4918-50ef-33a6-79eb430445e8@github.com>
- <Yh3rZX6cJpkHmRZc@ncase>
- <Yh325v3RBDMxjFnD@ncase>
- <f50e74f0-9ffa-f4f2-4663-269801495ed3@github.com>
- <Yh4zehdSnHLW1HuK@ncase>
- <1b9912f7-87be-2520-bb53-9e23529ad233@github.com>
+        with ESMTP id S242799AbiCBOH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 09:07:58 -0500
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 954B88CD84
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 06:06:57 -0800 (PST)
+Received: by mail-oo1-xc2d.google.com with SMTP id o7-20020a056820040700b003205d5eae6eso1470268oou.5
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 06:06:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=1FiTFW5iKrsSEEocS1tUG2Iv6toBTnhsNFQGkCHCbag=;
+        b=CyNbv07gzzAvYDae/u89QYLcMP/Jf3bXhpSOsf3ws5dLgNtsgYoKZ7Y35nNNbbVUQv
+         LhvznFq+HG+USR/9jJmJwhJbJIJvn+gJW8ApY4/EgQEmzz0sXzwNejifcAe0OTO4rsQa
+         aDbtNU1H7FGQLCmbKQ9d4aqoXxEPcTr050CMknJELkqnILv7dKZ/gHr6fjDU3m6EORGB
+         RvNJuEF6T9yIhsvvth1AtVGr4LMz8fL5UTtvfFCBbs9Qtpv8A7fNzwd/zdA9U1rSWqaU
+         goPDIyr9NjIkppHRuQvvwJFV1gpLx/VT1aFbebf8SeHXMx7zY9DER6d65DEugUrdPXfS
+         MHMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=1FiTFW5iKrsSEEocS1tUG2Iv6toBTnhsNFQGkCHCbag=;
+        b=INF3fX7tpsEYkro5RGGI7NtjeJhE05JI4jWqRJRTfAuuClKsPGgpAAw5ACQLBQ4V6/
+         0isf0TSUN8rh6DHcF1s9RrOQPP6WGYPE5DAQXY11/VholWdYtKjIiSjMK51VlhUHbn2X
+         R/9DSx84cOIptVhQWKN0xFc/Yc7EZRsvBHbagO5oqBY2ByC/fI+o2ifvEF9FaZ/ETNJf
+         32O/MH64ITkyIz/8Wet1KGu8cxn+BRlsmfGbViA1hirmr+XDpGZi/su1arzb6vIT4I+S
+         WJVa7tRXj49KbXdwCv83WsBpUVCpQGvWhE7H3jCt4eDLAvVcNcBhGFA2UhSZ7b/9Z3MU
+         SSHA==
+X-Gm-Message-State: AOAM531SWQbhPrDGDLjYFWwRyfaclwTyZzHiFVrVbqQJVY6R+Qim2RPg
+        rVwgpW2Sl72IFcVT7PmRfN1P
+X-Google-Smtp-Source: ABdhPJxfkgnq+mYHFFAEBxBB2tVVaezVRCRPJjSrlsOk2PhDRe0hpNyPPUu+5td5mvJFW/xj9hgwTw==
+X-Received: by 2002:a05:6870:1ca:b0:d6:d04a:5670 with SMTP id n10-20020a05687001ca00b000d6d04a5670mr15313722oad.47.1646230015508;
+        Wed, 02 Mar 2022 06:06:55 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id e28-20020a0568301e5c00b005af640ec226sm7976972otj.56.2022.03.02.06.06.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Mar 2022 06:06:55 -0800 (PST)
+Message-ID: <4f5f4751-c047-b9de-28a7-6ee3c31826f0@github.com>
+Date:   Wed, 2 Mar 2022 09:06:53 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hUKd3d7OGK9aaliO"
-Content-Disposition: inline
-In-Reply-To: <1b9912f7-87be-2520-bb53-9e23529ad233@github.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH 01/25] docs: document bundle URI standard
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
+ <0abec796b0089b84d23cb52bb127788fdd04961c.1645641063.git.gitgitgadget@gmail.com>
+ <CABPp-BEXgmGW=Lk5-JE6bc1F8RbGidDVjALAZraeZ-2_u476gg@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CABPp-BEXgmGW=Lk5-JE6bc1F8RbGidDVjALAZraeZ-2_u476gg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 3/1/2022 9:28 PM, Elijah Newren wrote:
+> On Wed, Feb 23, 2022 at 10:31 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Derrick Stolee <derrickstolee@github.com>
+>>
+>> Introduce the idea of bundle URIs to the Git codebase through an
+>> aspirational design document. This document includes the full design
+>> intended to include the feature in its fully-implemented form. This will
+>> take several steps as detailed in the Implementation Plan section.
+>>
+>> By committing this document now, it can be used to motivate changes
+>> necessary to reach these final goals. The design can still be altered as
+>> new information is discovered.
+>>
+>> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+>> ---
+>>  Documentation/technical/bundle-uri.txt | 404 +++++++++++++++++++++++++
+>>  1 file changed, 404 insertions(+)
+>>  create mode 100644 Documentation/technical/bundle-uri.txt
+>>
+>> diff --git a/Documentation/technical/bundle-uri.txt b/Documentation/technical/bundle-uri.txt
+>> new file mode 100644
+>> index 00000000000..5c0b9e8e3ef
+>> --- /dev/null
+>> +++ b/Documentation/technical/bundle-uri.txt
+>> @@ -0,0 +1,404 @@
+>> +Bundle URIs
+>> +===========
+>> +
+>> +Bundle URIs are locations where Git can download one or more bundles in
+>> +order to bootstrap the object database in advance of fetching the remaining
+>> +objects from a remote.
+>> +
+>> +One goal is to speed up clones and fetches for users with poor network
+>> +connectivity to the origin server. Another benefit is to allow heavy users,
+>> +such as CI build farms, to use local resources for the majority of Git data
+>> +and thereby reducing the load on the origin server.
+>> +
+>> +To enable the bundle URI feature, users can specify a bundle URI using
+>> +command-line options or the origin server can advertise one or more URIs
+>> +via a protocol v2 capability.
+>> +
+>> +Server requirements
+>> +-------------------
+>> +
+>> +To provide a server-side implementation of bundle servers, no other parts
+>> +of the Git protocol are required. This allows server maintainers to use
+>> +static content solutions such as CDNs in order to serve the bundle files.
+>> +
+>> +At the current scope of the bundle URI feature, all URIs are expected to
+>> +be HTTP(S) URLs where content is downloaded to a local file using a `GET`
+>> +request to that URL. The server could include authentication requirements
+>> +to those requests with the aim of triggering the configured credential
+>> +helper for secure access.
+> 
+> So folks using ssh to clone, who have never configured a credential
+> helper before, might need to start doing so.  This makes sense and I
+> don't think I see a way around it, but we might want to call it out a
+> bit more prominently.  Cloning over https seems to be rare in the
+> various setups I've seen (I know there are others where it's common,
+> just noting that many users may never have had to use https for
+> cloning before), so this is a potentially big point for users to be
+> aware of in terms of setup.
 
---hUKd3d7OGK9aaliO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+We could even go so far as to skip the credential manager if the
+Git remote is SSH, requiring the bundle URIs to work only if
+unauthenticated. Likely, we will want clear knobs that the user
+can toggle for how to behave when a bundle URI is advertised with
+modes such as
 
-On Tue, Mar 01, 2022 at 10:25:46AM -0500, Derrick Stolee wrote:
-> On 3/1/2022 9:53 AM, Patrick Steinhardt wrote:
-> > On Tue, Mar 01, 2022 at 09:06:44AM -0500, Derrick Stolee wrote:
-> >> On 3/1/2022 5:35 AM, Patrick Steinhardt wrote:
-> >>> On Tue, Mar 01, 2022 at 10:46:14AM +0100, Patrick Steinhardt wrote:
-> >>>> On Mon, Feb 28, 2022 at 01:44:01PM -0500, Derrick Stolee wrote:
-> >>>>> On 2/28/2022 11:59 AM, Patrick Steinhardt wrote:
-> >>>>>> On Mon, Feb 28, 2022 at 11:23:38AM -0500, Derrick Stolee wrote:
-> >>>>>>> On 2/28/2022 10:18 AM, Patrick Steinhardt wrote:
-> >>>>>>>> [1]: https://gitlab.com/gitlab-com/www-gitlab-com.git
-> ...
-> >>> So the question is whether this is a change that needs to be rolled o=
-ut
-> >>> over multiple releases. First we'd get in the bug fix such that we wr=
-ite
-> >>> correct commit-graphs, and after this fix has been released we can al=
-so
-> >>> release the fix that starts to actually parse the generation. This
-> >>> ensures there's a grace period during which we can hopefully correct =
-the
-> >>> data on-disk such that users are not faced with failures.
-> >>
-> >> You are right that we need to be careful here, but I also think that
-> >> previous versions of Git always wrote the correct data. Here is my
-> >> thought process:
-> >>
-> >> 1. To get this bug, we need to have parsed the corrected commit date
-> >>    from an existing commit-graph in order to under-count the number
-> >>    of overflow values.
-> >>
-> >> 2. Before this series, Git versions were not parsing the corrected
-> >>    commit date, so they recompute the corrected commit date every
-> >>    time the commit-graph is written, getting the proper count of
-> >>    overflow values.
-> >>
-> >> For these reasons, data written by previous versions of Git are
-> >> correct and can be trusted without a staged release.
-> >>
-> >> Does this make sense? Or, do you experience a different result when
-> >> you build commit-graphs with a released Git version and then when
-> >> writing on top with all patches applied?
-> >=20
-> > Just to verify my understanding: you claim that the bug I was hitting
-> > shouldn't be encountered in the wild when the release , but
-> > only if one were to write a commit-graph with the intermediate stafe
-> > until patch 3/4 of your patch series?
->=20
-> That is my claim. And my testing of the repo at [1] has demonstrated
-> that it works correctly in these cases.
-> =20
-> > Hum. I have re-verified, and this indeed seems to play out. So I must've
-> > accidentally ran all my testing with the state generated without the
-> > final patch which fixes the corruption. I do see lots of the following
-> > warnings, but overall I can verify and write the commit-graph just fine:
-> >=20
-> >     commit-graph generation for commit c80a42de8803e2d77818d0c82f88e748=
-d7f9425f is 1623362063 < 1623362139
->=20
-> But I'm not able to generate these warnings from either version. I
-> tried generating different levels of a split commit-graph, but
-> could not reproduce it. If you have reproduction steps using current
-> 'master' (or any released Git version) and the four patches here,
-> then I would love to get a full understanding of your errors.
->=20
-> Thanks,
-> -Stolee
+* always attempt with authentication
+* always attempt, but skip authentication when Git remote is not HTTP(S)
+* attempt only when Git remote is HTTP(S)
+* never attempt
 
-I haven't yet been able to reproduce it with publicly available data,
-but with the internal references I'm able to evoke the warnings
-reliably. It only works when I have two repositories connected via
-alternates, when generating the commit-graph in the linked-to repo
-first, and then generating the commit-graph in the linking repo.
+These are all things that are separate from the bundle URI standard
+being documented here, but instead would be saved for the last set of
+patches that allow a server to advertise a bundle URI at clone time.
 
-The following recipe allows me to reproduce, but rely on private data:
+>> +bundle.tableOfContents.version::
+>> +       This value provides a version number for the table of contents. If
+>> +       a future Git change enables a feature that needs the Git client to
+>> +       react to a new key in the table of contents file, then this version
+>> +       will increment. The only current version number is 1, and if any
+>> +       other value is specified then Git will fail to use this file.
+> 
+> What does "Git will fail to use this file" mean?  Does it mean Git
+> will throw an error?  clone/fetch without the aid of bundle uris but
+> show a warning?  something else?
 
-    $ git --version
-    git version 2.35.1
+I mean "Git will continue as if the bundle URI was not specified". It would
+show a warning, probably. This could be converted into a failure if valuable
+for the user, but I don't expect that will be the default behavior.
 
-    # The pool repository is the one we're linked to from the fork.
-    $ cd "$pool"
-    $ rm -rf objects/info/commit-graph objects/info/commit-graph
-    $ git commit-graph write --split
+>> +bundle.<id>.timestamp::
+>> +       (Optional) This value is the number of seconds since Unix epoch
+>> +       (UTC) that this bundle was created. This is used as an approximation
+>> +       of a point in time that the bundle matches the data available at
+>> +       the origin server.
+> 
+> As an approximation, is there a risk of drift where the user has
+> timetamp A which is very close to B and makes decisions based upon it
+> which results in their not getting dependent objects they need?  Or is
+> it just an optimization for them to only download certain bundles and
+> look at them, and then they'll iteratively go back and download more
+> (as per the 'requires' field below) if they don't have enough objects
+> to unbundle what they previously downloaded?
 
-    $ cd "$fork"
-    $ rm -rf objects/info/commit-graph objects/info/commit-graph
-    $ git commit-graph write --split
+The user doesn't ever generate the timestamp. It saves the timestamp
+from the most-recent bundle it downloaded. The only risk of timestamp
+drift is if the server has multiple machines generating different sets
+of bundles, and places those machines behind a load balancer.
 
-    $ git commit-graph verify --no-progress
-    $ echo $?
-    0
+This is something the server can control, likely by having one job
+generate the bundle set and then distributing them to various storage
+locations.
 
-    # This is 715d08a9e51251ad8290b181b6ac3b9e1f9719d7 with your full v2
-    # applied on top.
-    $ ~/Development/git/bin-wrappers/git --version
-    git version 2.35.1.358.g7ede1bea24
+>> +Cloning with Bundle URIs
+>> +------------------------
+>> +
+>> +The primary need for bundle URIs is to speed up clones. The Git client
+>> +will interact with bundle URIs according to the following flow:
+>> +
+>> +1. The user specifies a bundle URI with the `--bundle-uri` command-line
+>> +   option _or_ the client discovers a bundle URI that was advertised by
+>> +   the remote server.
+>> +
+>> +2. The client downloads the file at the bundle URI. If it is a bundle, then
+>> +   it is unbundled with the refs being stored in `refs/bundle/*`.
+>> +
+>> +3. If the file is instead a table of contents, then the bundles with
+>> +   matching `filter` settings are sorted by `timestamp` (if present),
+>> +   and the most-recent bundle is downloaded.
+>> +
+>> +4. If the current bundle header mentions negative commid OIDs that are not
+>> +   in the object database, then download the `requires` bundle and try
+>> +   again.
+>> +
+>> +5. After inspecting a bundle with no negative commit OIDs (or all OIDs are
+>> +   already in the object database somehow), then unbundle all of the
+>> +   bundles in reverse order, placing references within `refs/bundle/*`.
+>> +
+>> +6. The client performs a fetch negotiation with the origin server, using
+>> +   the `refs/bundle/*` references as `have`s and the server's ref
+>> +   advertisement as `want`s. This results in a pack-file containing the
+>> +   remaining objects requested by the clone but not in the bundles.
+> 
+> Does step 6 potentially involve a new, second connection to the origin
+> server?  I'm wondering about timeouts closing the original connection
+> while the client is downloading the bundle uris.  Will the client
+> handle that automatically, or will they potentially be forced to
+> re-issue the clone/fetch command?  I'm also wondering if we want to be
+> "nice" and pre-emptively close the original connection to the server
+> while we fetch the bundles -- for example, some servers have a
+> threadpool for processing fetch/clone requests and will only serve a
+> limited number; IIRC Gerrit operates this way.  I have no idea if
+> that's a good idea or a horrible one.  If a second connection is tried
+> automatically, will the user potentially be forced to re-enter
+> connection credentials again?  And is there a risk that after the
+> second connection, there are new bundle uris for the client to go
+> fetch (and/or a removal of the original ones, e.g. replacing the old
+> "daily" bundle with a new one)?  Does this possibly cause us some
+> timestamp confusion as I noted earlier?
 
-    $ ~/Development/git/bin-wrappers/git commit-graph verify --no-progress
-    commit-graph generation for commit 06a91bac00ed11128becd48d5ae77eacd8f2=
-4c97 is 1623273624 < 1623273710
-    commit-graph generation for commit 0ae91029f27238e8f8e109c6bb3907f864dd=
-a14f is 1622151146 < 1622151220
-    commit-graph generation for commit 0d4582a33d8c8e3eb01adbf564f5e1deeb3b=
-56a2 is 1631045222 < 1631045225
-    commit-graph generation for commit 0daf8976439d7e0bb9710c5ee63b570580e0=
-dc03 is 1620347739 < 1620347789
-    commit-graph generation for commit 0e0ee8ffb3fa22cee7d28e21cbd6df264549=
-32cf is 1623783297 < 1623783380
-    commit-graph generation for commit 0f08ab3de6ec115ea8a956a1996cb9759e64=
-0e74 is 1621543278 < 1621543339
-    commit-graph generation for commit 133ed0319b5a66ae0c2be76e5a887b880452=
-b111 is 1620949864 < 1620949915
-    commit-graph generation for commit 1341b3e6c63343ae94a8a473fa057126ddd4=
-669a is 1637344364 < 1637344384
-    commit-graph generation for commit 15bdfc501c2c9f23e9353bf6e6a5facd9c32=
-a07a is 1623348103 < 1623348133
-    ...
-    $ echo $?
-    1
+If the user is cloning over HTTPS, then the connections are stateless
+and this is not any different than how it works today.
 
-When generating commit-graphs with your patches applied the `verify`
-step works alright.
+When using SSH, we will probably want to close the SSH connection on
+the client and then reopen it to avoid keeping that connection open
+during the download. The implementation in this RFC does _not_ do this,
+but I think it would be valuable to do.
 
-I've also by accident stumbled over the original error again:
+>> +Note that during a clone we expect that all bundles will be required. The
+>> +client could be extended to download all bundles in parallel, though they
+>> +need to be unbundled in the correct order.
+> 
+> What does required mean?  That the origin server can refuse to service
+> requests if the client does not have commits found in said bundles?
+> That new enough Git clients are expected to download all the bundles
+> (and no config option will be provided to users to just do traditional
+> negotation without first downloading them)?  Something else?
 
-    fatal: commit-graph requires overflow generation data but has none
+The assumption I'm making here is that all but on bundle in the table
+of contents contains a thin pack, depending on an "earlier" bundle.
+The client would be unsuccessful unbundling any single bundle except
+the earliest one first.
 
-This time it's definitely not caused by generating commit-graphs with an
-in-between state of your patch series because the data comes straight
-=66rom production with no changes to the commit-graphs performed by
-myself. There we're running Git v2.33.1 with a couple of backported
-patches (see [1]). While those patches cause us to make more use of the
-commit-graph, none modify the way we generate them.
+The benefit of this assumption is that we could also implement parallel
+downloads of all bundles in the future.
 
-Of note is that the commit-graph contains references to commits which
-don't exist in the ODB anymore.
+This assumes that there is no way to organize the bundles to communicate
+that a user might want only the objects reachable from the default branch,
+but also some users want every reachable object. Such an organization
+would require extra information to describe two "parallel" lists of
+bundles that could be selected for each of those categories. If such an
+organization is valuable, then the table of contents can be extended with
+information to communicate such an organization. The downside is that
+clients with this "v1" version would download extra data based on this
+assumption.
 
-Patrick
+> If users are doing a single-branch clone or a shallow clone, will the
+> requirements still hold?  (I'm not a fan of shallow clones, but they
+> are sadly used in a number of places and I'm curious how the features
+> interact or conflict.)
 
-[1]: https://gitlab.com/gitlab-org/gitlab-git/-/commits/pks-v2.33.1.gl3
+The current specification does not focus on shallow clones. The TOC
+could be extended to say "this bundle is for a shallow clone of 
+commit <X>" if that was valuable.
 
---hUKd3d7OGK9aaliO
-Content-Type: application/pgp-signature; name="signature.asc"
+For single-branch clones, my expectation is that the bundles will
+give the user more information than they need for that clone. The
+negotiation will find out what they need from that branch that was
+not in the bundles, but the bundles will also contain a lot of
+objects that are not reachable from that ref. (This is also up to
+the discretion of the bundle server operator, since they could
+focus on only objects reachable from a subset of refs, minimizing
+the bundle data while increasing the potential size of that
+follow-up fetch.)
 
------BEGIN PGP SIGNATURE-----
+>> +If a table of contents is used and it contains
+>> +`bundle.tableOfContents.forFetch = true`, then the client can store a
+>> +config value indicating to reuse this URI for later `git fetch` commands.
+>> +In this case, the client will also want to store the maximum timestamp of
+>> +a downloaded bundle.
+>> +
+>> +Fetching with Bundle URIs
+>> +-------------------------
+>> +
+>> +When the client fetches new data, it can decide to fetch from bundle
+>> +servers before fetching from the origin remote. This could be done via
+>> +a command-line option, but it is more likely useful to use a config value
+>> +such as the one specified during the clone.
+>> +
+>> +The fetch operation follows the same procedure to download bundles from a
+>> +table of contents (although we do _not_ want to use parallel downloads
+>> +here). We expect that the process will end because all negative commit
+>> +OIDs in a thin bundle are already in the object database.
+>> +
+>> +A further optimization is that the client can avoid downloading any
+>> +bundles if their timestamps are not larger than the stored timestamp.
+>> +After fetching new bundles, this local timestamp value is updated.
+> 
+> What about the transition period where repositories were cloned before
+> bundle URIs became a thing (or were turned on within an organization),
+> and the user then goes to fetch?  Will git go and download a bunch of
+> useless large bundles (and maybe one small useful one) the day this
+> feature is turned on, making users think this is a bad feature?
+> 
+> Should git perhaps treat the already-cloned case without a stored
+> timestamp as a request to store a timestamp of "now", making it ignore
+> the current bundles?  (If so, are there races where it later goes to
+> grab a bundle slightly newer than "now" but which depends on an older
+> bundle that has some objects we are missing?)
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmIfd7sACgkQVbJhu7ck
-PpSsYg/+MjPeuS84E7sQ9KNwAYGNaqu+7POD7UESz3p7bAKeuh8wUt91MGTfTmL/
-+KpEfTchbF9T2U3p8wHcGYGfhkm/Oqbe9kAAdlFJ71K2m3dXazzLVQ8a4P7F2jX2
-Uuh01Q0uNLIbh5tbCvqQQ4/EHomeFbkbllvj2gB9RF04oC+m5l/Cwr4PQwlQ7jZ3
-2mRwScmlR8ew7TTMT3LaGPYmAXJdKIZ8gpm9urNt62NgyXxmhD99scWz5vn12tmj
-UnvVS9T7YBmUwg6vEkirgXrnNjilU7jZLdo6ZoTyIdKhUJza1Wv7Dc1nzEM3qS1d
-R5TVDgb0FnOu/J75urmq5KjWLwQt74xrzFxihmzYPuTl7l5iT59t9x7gCsEeUvvh
-DEk5YpW6IWE/1U+N4LelVtLLvQjEazP5+vsiRQzaBBWpf/Akw4kPh05hGz3SB16e
-xnSVhXmlKhsSBSlEVewKdzkfdpPWuEP3iQqR5I33JystrtQbUBq7Cn7rPk4R/rbk
-lv5mcQNCh9qFBwcr/xCMtAi477wvQtQl5K3RjD33B4t1OCT0Szt26UZU3qik25No
-valhczikQsQIL3YT5OFBy6y7KLInQAGzcUbanzHrNN8AmMX0iXqtljRIdEkliStJ
-cLlsdegMDaKSIm2L19rEB0Rp//5LXLV9Z9M0cv2oQyyx3J3tXaY=
-=9JS2
------END PGP SIGNATURE-----
+I expect that users who already cloned will never configure their
+repositories to include a bundle server.
 
---hUKd3d7OGK9aaliO--
+That said, if you run 'git bundle fetch <uri>' in an existing
+repository, then it will fetch only the newest bundle and see if you
+already have all of its negative refs. If so, then it stops and that
+is the only bundle that is downloaded. Its timestamp is stored for
+the next 'git bundle fetch'.
+
+In the case where the server starts advertising a bundle URI, a
+'git fetch' will not start using that URI. That check only happens
+during 'git clone' (as currently designed).
+
+>> +Error Conditions
+>> +----------------
+>> +
+>> +If the Git client discovers something unexpected while downloading
+>> +information according to a bundle URI or the table of contents found at
+>> +that location, then Git can ignore that data and continue as if it was not
+>> +given a bundle URI. The remote Git server is the ultimate source of truth,
+>> +not the bundle URI.
+> 
+> This seems to contradict the earlier statement that for clones all
+> bundle URIs would be "required".  I like the idea of bundle URIs only
+> being an optimization that can be ignored, just noting the potential
+> confusion.
+
+Perhaps I misnamed this section. These are things that could go wrong with
+a bundle server connection, and in such a case Git should recover by
+transitioning to the normal Git protocol to fetch the objects.
+
+>> +
+>> +Here are a few example error conditions:
+>> +
+>> +* The client fails to connect with a server at the given URI or a connection
+>> +  is lost without any chance to recover.
+>> +
+>> +* The client receives a response other than `200 OK` (such as `404 Not Found`,
+>> +  `401 Not Authorized`, or `500 Internal Server Error`).
+>> +
+>> +* The client receives data that is not parsable as a bundle or table of
+>> +  contents.
+>> +
+>> +* The table of contents describes a directed cycle in the
+>> +  `bundle.<id>.requires` links.
+>> +
+>> +* A bundle includes a filter that does not match expectations.
+>> +
+>> +* The client cannot unbundle the bundles because the negative commit OIDs
+>> +  are not in the object database and there are no more
+>> +  `bundle.<id>.requires` links to follow.
+> 
+> Should these result in warnings so that folks can diagnose slower
+> connections, or should they be squelched?  (I'm thinking particularly
+> of the `401 Not Authorized` case in combination with users never
+> having had to use a credential helper before.)
+
+There is a lot of work to be done around polishing the user ergonomics
+here, and that is an interesting thing to consider for a second round
+after the basic standard is established. I appreciate that you are
+already thinking about the user experience in these corner cases.
+
+>> +
+>> +There are also situations that could be seen as wasteful, but are not
+>> +error conditions:
+>> +
+>> +* The downloaded bundles contain more information than is requested by
+>> +  the clone or fetch request. A primary example is if the user requests
+>> +  a clone with `--single-branch` but downloads bundles that store every
+>> +  reachable commit from all `refs/heads/*` references. This might be
+>> +  initially wasteful, but perhaps these objects will become reachable by
+>> +  a later ref update that the client cares about.
+> 
+> Ah, this answers my --single-branch question.  Still curious about the
+> --shallow misfeature (yeah, I'm a bit opinionated) and how it
+> interacts, though.
+
+(Hopefully my previous reply to this topic is helpful.)
+
+>> +* A bundle download during a `git fetch` contains objects already in the
+>> +  object database. This is probably unavoidable if we are using bundles
+>> +  for fetches, since the client will almost always be slightly ahead of
+>> +  the bundle servers after performing its "catch-up" fetch to the remote
+>> +  server. This extra work is most wasteful when the client is fetching
+>> +  much more frequently than the server is computing bundles, such as if
+>> +  the client is using hourly prefetches with background maintenance, but
+>> +  the server is computing bundles weekly. For this reason, the client
+>> +  should not use bundle URIs for fetch unless the server has explicitly
+>> +  recommended it through the `bundle.tableOfContents.forFetch = true`
+>> +  value.
+> 
+> Makes sense, and certainly reduces my worry about the "transition
+> period" where users have existing clones that pre-dated the
+> introduction of the bundle URI feature.  But I'm still kind of curious
+> about how we handle that transition for folks that have recommended
+> their bundleUris for fetches.
+
+By "that transition" I believe you are talking about configuring bundle
+URIs on an existing repository. My earlier reply on that hopefully
+eases your concerns somewhat. Ævar also has some ideas about downloading
+only the header of a bundle and examining it to see if we need the rest
+of it, which would further reduce the amount of data necessary to do an
+initial first fetch from a bundle URI.
+
+Thanks for taking the time to read and give detailed thoughts on this
+proposal!
+
+Thanks,
+-Stolee
+
