@@ -2,90 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39B8AC433EF
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 20:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD8CFC433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 21:06:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244924AbiCBU7P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 15:59:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41298 "EHLO
+        id S241753AbiCBVH2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 16:07:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232801AbiCBU7O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 15:59:14 -0500
-Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27E2AD2057
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 12:58:31 -0800 (PST)
-Received: by mail-qt1-x82e.google.com with SMTP id c4so2853004qtx.1
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 12:58:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=1TGG52htElKPw3whcjO4SkQRukCf83zoz5tsBhwZW7c=;
-        b=Rgy5O4iOhnviT3Q76CP4c6Z7owptW8hBrKplQQzWf5BEy/A76c5PL061nlIzjJKmvi
-         9aYufY1Ru06U55LvEROfS6+2UxGrb+9mDKFRqaiTIjSf1oxOAblhm7efgEo0P1/sb3X0
-         ZsQnPaqczreAhgy8kgQN726YsX2tuPN5SxuF9UZkQ9jcbWsi/Iz0Z6o7uR4ogQGT0qk8
-         38seWthpFFz71K4sCPv8MFrm6jtNM5PgU2f869R2sdLkICRA1uLtsQt2lX/9kLdtzhzG
-         iUotLUPpq6a93c1UqsdF5o7ELt/DEQigFBjDoBgZEjzD+oUQXp1qY+vZO/etq0j4m0XR
-         Xnig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=1TGG52htElKPw3whcjO4SkQRukCf83zoz5tsBhwZW7c=;
-        b=wPIIbluRa/DRjIFfeMN7OA27yiQ05otlfvSAgWZ5zf8larKxejQL4Ef4ozoEBcN6Il
-         UG7sL0Y49hhQ5JL2wj9HgNRjwJlV2gZBJ1PPFGbGgiRV9bK+ryMoQVZlLckIzr1XYB2P
-         8c1hsq5s0Y5aeJDqbANSdHGU9p6Ts1mwdFEcu9As6h5UMcZlEFv897wQGASLiLtQhXGn
-         yEACHLmh2wqCzV3uvLzB24I6IlxA7yCdgea4hgYYmk+VLCgqUsLxCWMN0lXIxT3RuJS1
-         JAt4mimorZ9bgl+WsejQJadt5inFGnPvwAG4eJgMGxAUGypqv+V1zUTkGr4qbmFODWaC
-         PLWg==
-X-Gm-Message-State: AOAM533J7Ohflp8yq5MAcp6uO0HQWdKvPwWDxn6nGnGjSlVxcnZ3stZu
-        tvcAMdDL2AZ8zI8G8XXhbJbnC0wq1LNE
-X-Google-Smtp-Source: ABdhPJwlBmcXot+XYiQIT2gfaWzYWAcfqbTiwB91CaO437KUkKf6GEJlCxXLTq8EQODv72Xz+yHj6Q==
-X-Received: by 2002:ac8:588a:0:b0:2de:2dfc:77a5 with SMTP id t10-20020ac8588a000000b002de2dfc77a5mr25233824qta.357.1646254710247;
-        Wed, 02 Mar 2022 12:58:30 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id f19-20020ac859d3000000b002de4d014733sm70456qtf.13.2022.03.02.12.58.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Mar 2022 12:58:29 -0800 (PST)
-Message-ID: <1ff00775-c6da-2616-4032-9eb3a453669c@github.com>
-Date:   Wed, 2 Mar 2022 15:58:28 -0500
+        with ESMTP id S232218AbiCBVH1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 16:07:27 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C475A9FEE
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 13:06:40 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 176F411DC04;
+        Wed,  2 Mar 2022 16:06:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=/hBdChaQvn6m
+        UiV+J9kdil6z5JaUlG2EWfW8NG1+TQg=; b=rOIo7Yi+/MFQFuceYjb3iX4DXD1Q
+        6RCXH19Dpg2iJ851oSLEKD+q5ZGKOKBgySdG6vlWn/HlVzTv8i0P8/Ir08ea6AOJ
+        oqMUyDu8HT4xWo9STVzFCwlKvqIj7fjUCuXF5x9xswoWltiJNmdsuFgawcWYTToM
+        mMF+QRX6/bPWqY4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E42411DC03;
+        Wed,  2 Mar 2022 16:06:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6824011DC02;
+        Wed,  2 Mar 2022 16:06:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 02/10] t5540: don't rely on "hook/post-update.sample"
+References: <cover-00.10-00000000000-20220302T131859Z-avarab@gmail.com>
+        <patch-02.10-4bee939a894-20220302T131859Z-avarab@gmail.com>
+Date:   Wed, 02 Mar 2022 13:06:38 -0800
+In-Reply-To: <patch-02.10-4bee939a894-20220302T131859Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 2 Mar
+ 2022 14:22:21
+        +0100")
+Message-ID: <xmqqh78gjc81.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 00/14] tree-wide: small fixes for memory leaks
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A73AD4EA-9A6C-11EC-88C7-CB998F0A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/2/2022 12:10 PM, Ævar Arnfjörð Bjarmason wrote:
-> This is a collection of various otherwise unrelated tree-wide fixes
-> for memory leaks.
-> 
-> In fixing more targeted memory leaks in specific areas I've run into
-> small leaks here & there. Rather than submit e.g. a 2-series patch for
-> just small bundle leaks, the same for range-diff etc. I thought it
-> made sense to submit these together.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-I read these patches, and they were quite small, so it wasn't hard.
-The most difficult thing was going into the code just to get more
-context than the patches allowed.
+> Change code added in a87679339c0 (test: rename http fetch and push
+> test files, 2014-02-06) to stop relying on the "exec git
+> update-server-info" in "templates/hooks--post-update.sample", let's
+> instead inline the expected hook in the test itself.
 
-Thank you for fixing all of those memory leaks I introduced in the
-commit-graph code.
+For this particular hook, it indeed is a good change, as future
+post-update samples we ship may have something quite different.
 
-I had a few nitpick comments on the first commit message, but I
-think what I pointed out in patch 7 might be a problem that needs
-fixing before this merges.
+I do not know if it is a good idea in general, though.  We want
+to promise shipping certain sample scripts as part of the default
+install, and the default install is what our tests check.  We want
+to keep something that ensures the default install does ship the
+sample we want to include, and such tests do need to rely on the
+presence of .sample files.  But this script does not need to be
+the one to do so.
 
-Thanks,
--Stolee
+>  	git --bare update-server-info &&
+> -	mv hooks/post-update.sample hooks/post-update &&
+> +	write_script hooks/post-update <<-\EOF &&
+> +	exec git update-server-info
+> +	EOF
+>  	ORIG_HEAD=3D$(git rev-parse --verify HEAD) &&
+>  	cd - &&
+>  	mv test_repo.git "$HTTPD_DOCUMENT_ROOT_PATH"
+
+OK.
+
+We might want to deprecate and remove the support for dumb walkers,
+but until then, this looks superb.
+
+Thanks.
+
