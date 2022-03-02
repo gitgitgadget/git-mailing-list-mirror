@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52050C433EF
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 17:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54849C433EF
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 17:11:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243685AbiCBRLj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 12:11:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56788 "EHLO
+        id S243682AbiCBRLl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 12:11:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243689AbiCBRL2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 12:11:28 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55CF2CD325
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 09:10:37 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id i8so3827445wrr.8
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 09:10:37 -0800 (PST)
+        with ESMTP id S243702AbiCBRLg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 12:11:36 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71324C4B53
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 09:10:39 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id t11so3839712wrm.5
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 09:10:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lUjwAuWNRyPLWSkiDNzq/v6QrtFpmgzWY00NA9mmtdI=;
-        b=oC05jhlT+R/qqVgobGfVnRCKprhPedXP0kX3vMh1A8hZdqFoRiWoj8FMTmHgdQeJKF
-         xoPG4E/Td1Upz1VV8AUSmmiz9o7b7ok7V9em/Uk/ofCO/mmqugi9rh5aADn14I1FYrJs
-         kpRyDhZU7bR9YUZ3auOvdB2K15cRe+BYzYV9D9PH0Vqb38dFq9Cw7OkJtozuGM9CXQ8x
-         PTvbT6UtRyk3xkG2cBb5Zj3sHFeZttGkRsyBgLB2HWyWnwQxPJTmi5N4VHUKVx9rBT4d
-         pBNjdlEoIzbZpdDJO/30O/c3BFNK382w2JW3tS/fMo6QNC0EyDt+hSv2AFOlD9k5vtSC
-         5J4A==
+        bh=oQR9zKjxdfFJLNk8+W36FFhOWgjqIUfht7NZmwjIdQw=;
+        b=WJ/SxG/8sXLeY7tK0McwNnKoMqjh1QIdrlyX5XqeAYTtqNbIJzHxtxGQjDt3lEaJLo
+         MR4hHl9Ehx0r0EDOBX11UmDPL88kIjHXRscjwZoU11oC0ZikhnW+inHnb5fTPN0X8aLN
+         5dRgWPiD4p+CwExvqkLmO/dD/Jsizqmj4YLqa3PIFMQC3c2hXLBJ7Gpc7USH1nZ3OL6N
+         7C0elWhtYZKL/MiG+PwtoJiq2D5m347Bgh8T6DqmMF7YC8UnliEYWDJsWLHIu1StMzZT
+         pQH4L5p7cvp/06o+VRZQZUWWw+Fs8aLTCZpJzJ75AAk4Iw0CE5lDVYmpPzOfpM6aBE1s
+         eyEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=lUjwAuWNRyPLWSkiDNzq/v6QrtFpmgzWY00NA9mmtdI=;
-        b=l2B1WEqimP8FPFWOkX22bbH5BEbBG7XEs5IYd3RQQzkR2E8akHcUUQR0I2OM70wQXD
-         zkyJj42e6/9VG+tJ0aUemdtqCsATd61vjKb49+8oo5+JaopohOh2/4rO4Q8KuJA3NWHu
-         ZP9WWOadgI0qqoe38jGcT2XGy1k5dVmFEom0zMeObhyCetiIzg8dxdzpY8HSiJYOSCGV
-         yRFeh6Dh8eYP1ZHyhYTg/g4HwoweV9kZQyvGe0wsUSusaJDDCvMACCD6cWnQmsl8+ODL
-         0+RYKuj/m/JkUbU+3f0JCzmtSkjmLI/ll6vhlunt2oUJp9qPd/7Zd73JYOmck2UowXIv
-         rtIg==
-X-Gm-Message-State: AOAM530TMpcsuej/L7j/d5zJR8QNEgvTqRI3Jt7e4lQcrRastlpWTvAG
-        qR6MyGRO+seu9oaFS+dMX8d8VS00XL/M9g==
-X-Google-Smtp-Source: ABdhPJy8bCDUnDf5Btf6NzUhmOilZpMXrG3uICrqL6PGIsM/EVNuEbJkED9ap9npZUVkyzVRa4fhiA==
-X-Received: by 2002:adf:fbcf:0:b0:1ef:d5f2:23a5 with SMTP id d15-20020adffbcf000000b001efd5f223a5mr11344535wrs.567.1646241035664;
-        Wed, 02 Mar 2022 09:10:35 -0800 (PST)
+        bh=oQR9zKjxdfFJLNk8+W36FFhOWgjqIUfht7NZmwjIdQw=;
+        b=Ix5ZTAi6IY5Y4jymIA4j8iUvxVihk/drXLiCju0cK4HaSs9YL6QYrJMLpfz2kslpJw
+         SsyZ0b75PvhIJvvOfJrI3ykPffRwFrPwbysmOkbqntzd9qmuqDw3Cdg9xJsYDzQsKn5r
+         10JkVnncJ3Ni1KIFVrlIl35DlXf57DH+Q/u0uatraOTnGaE6dlDf+Acm7TejB+ETH/Fj
+         vNWhvpEKBzsTote3P4CnjOyiwiu5HEKGFegJd7drc+ODOcxXYMYpl9nQNBQu7xzuDgd2
+         qGY/VaIQ+O/g7LEYy8qSpCmYIfKWO9OpHlbLDFdPypiLpo5oQ1egPxtndwwEcpyurUoS
+         InDg==
+X-Gm-Message-State: AOAM530ldxHg9RsBn9GmFqhJB47EBHpeLCZas9DxJ4Fhsnn6HZppGxgO
+        VaOZ3A5S5be0A9K3b5b6yVrWKdG3eKAtfw==
+X-Google-Smtp-Source: ABdhPJwD8/QLrEEtqExNwUeADm9hpAHX7f75i9fxkVYOP4BE4MaQaE4wwdt73go2126AcyP8EWXD0w==
+X-Received: by 2002:adf:a319:0:b0:1ef:7cc6:d03 with SMTP id c25-20020adfa319000000b001ef7cc60d03mr18032178wrb.411.1646241037635;
+        Wed, 02 Mar 2022 09:10:37 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p9-20020a05600c1d8900b003813b489d75sm6178001wms.10.2022.03.02.09.10.34
+        by smtp.gmail.com with ESMTPSA id p9-20020a05600c1d8900b003813b489d75sm6178001wms.10.2022.03.02.09.10.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 09:10:34 -0800 (PST)
+        Wed, 02 Mar 2022 09:10:36 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 12/14] range-diff: plug memory leak in common invocation
-Date:   Wed,  2 Mar 2022 18:10:18 +0100
-Message-Id: <patch-12.14-6d13c2530db-20220302T170718Z-avarab@gmail.com>
+Subject: [PATCH 14/14] repository.c: free the "path cache" in repo_clear()
+Date:   Wed,  2 Mar 2022 18:10:20 +0100
+Message-Id: <patch-14.14-954de5191c3-20220302T170718Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1228.g56895c6ee86
 In-Reply-To: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
 References: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
@@ -66,76 +66,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a public release_patch() version of the private free_patch()
-function added in 13b5af22f39 (apply: move libified code from
-builtin/apply.c to apply.{c,h}, 2016-04-22). Unlike the existing
-function this one doesn't free() the "struct patch" itself, so we can
-use it for variables on the stack.
+The "struct path_cache" added in 102de880d24 (path.c: migrate global
+git_path_* to take a repository argument, 2018-05-17) is only used
+directly by code in repository.[ch] (but populated in path.[ch]).
 
-Use it in range-diff.c to fix a memory leak in common range-diff
-invocations, e.g.:
+Let's move this code to repository.[ch], and stop leaking this memory
+when we run repo_clear(). To avoid the cast change it from a "const
+char *" to a "char *".
 
-    git -P range-diff origin/master origin/next origin/seen
-
-Would emit several errors when compiled with SANITIZE=leak, but now
-runs cleanly.
+This also removes the "PATH_CACHE_INIT" macro, which has never been
+used for anything. For the "struct repository" we already make a hard
+assumption that it (and "the_repository") can be identically
+initialized by making it a "static" variable, so making use of a
+"PATH_CACHE_INIT" somewhere would have been confusing.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- apply.c      | 7 ++++++-
- apply.h      | 2 ++
- range-diff.c | 1 +
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ path.h       | 14 --------------
+ repository.c | 16 ++++++++++++++++
+ repository.h | 14 +++++++++++++-
+ 3 files changed, 29 insertions(+), 15 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 0912307bd91..01f91816428 100644
---- a/apply.c
-+++ b/apply.c
-@@ -219,13 +219,18 @@ static void free_fragment_list(struct fragment *list)
+diff --git a/path.h b/path.h
+index b68691a86b8..0a59c85a62e 100644
+--- a/path.h
++++ b/path.h
+@@ -169,20 +169,6 @@ void report_linked_checkout_garbage(void);
+ 		return r->cached_paths.var; \
  	}
+ 
+-struct path_cache {
+-	const char *squash_msg;
+-	const char *merge_msg;
+-	const char *merge_rr;
+-	const char *merge_mode;
+-	const char *merge_head;
+-	const char *merge_autostash;
+-	const char *auto_merge;
+-	const char *fetch_head;
+-	const char *shallow;
+-};
+-
+-#define PATH_CACHE_INIT { 0 }
+-
+ const char *git_path_squash_msg(struct repository *r);
+ const char *git_path_merge_msg(struct repository *r);
+ const char *git_path_merge_rr(struct repository *r);
+diff --git a/repository.c b/repository.c
+index 34610c5a33e..9b86f3f1214 100644
+--- a/repository.c
++++ b/repository.c
+@@ -240,6 +240,20 @@ int repo_submodule_init(struct repository *subrepo,
+ 	return ret;
  }
  
--static void free_patch(struct patch *patch)
-+void release_patch(struct patch *patch)
- {
- 	free_fragment_list(patch->fragments);
- 	free(patch->def_name);
- 	free(patch->old_name);
- 	free(patch->new_name);
- 	free(patch->result);
++static void repo_clear_path_cache(struct repo_path_cache *cache)
++{
++	FREE_AND_NULL(cache->squash_msg);
++	FREE_AND_NULL(cache->squash_msg);
++	FREE_AND_NULL(cache->merge_msg);
++	FREE_AND_NULL(cache->merge_rr);
++	FREE_AND_NULL(cache->merge_mode);
++	FREE_AND_NULL(cache->merge_head);
++	FREE_AND_NULL(cache->merge_autostash);
++	FREE_AND_NULL(cache->auto_merge);
++	FREE_AND_NULL(cache->fetch_head);
++	FREE_AND_NULL(cache->shallow);
 +}
 +
-+static void free_patch(struct patch *patch)
-+{
-+	release_patch(patch);
- 	free(patch);
+ void repo_clear(struct repository *repo)
+ {
+ 	FREE_AND_NULL(repo->gitdir);
+@@ -280,6 +294,8 @@ void repo_clear(struct repository *repo)
+ 		remote_state_clear(repo->remote_state);
+ 		FREE_AND_NULL(repo->remote_state);
+ 	}
++
++	repo_clear_path_cache(&repo->cached_paths);
  }
  
-diff --git a/apply.h b/apply.h
-index 4052da50c06..b9f18ce87d1 100644
---- a/apply.h
-+++ b/apply.h
-@@ -173,6 +173,8 @@ int parse_git_diff_header(struct strbuf *root,
- 			  unsigned int size,
- 			  struct patch *patch);
+ int repo_read_index(struct repository *repo)
+diff --git a/repository.h b/repository.h
+index ca837cb9e91..e29f361703d 100644
+--- a/repository.h
++++ b/repository.h
+@@ -44,6 +44,18 @@ struct repo_settings {
+ 	int core_multi_pack_index;
+ };
  
-+void release_patch(struct patch *patch);
++struct repo_path_cache {
++	char *squash_msg;
++	char *merge_msg;
++	char *merge_rr;
++	char *merge_mode;
++	char *merge_head;
++	char *merge_autostash;
++	char *auto_merge;
++	char *fetch_head;
++	char *shallow;
++};
 +
- /*
-  * Some aspects of the apply behavior are controlled by the following
-  * bits in the "options" parameter passed to apply_all_patches().
-diff --git a/range-diff.c b/range-diff.c
-index 30a4de5c2d8..b2a2961f521 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -165,6 +165,7 @@ static int read_patches(const char *range, struct string_list *list,
- 					    patch.old_mode, patch.new_mode);
+ struct repository {
+ 	/* Environment */
+ 	/*
+@@ -82,7 +94,7 @@ struct repository {
+ 	/*
+ 	 * Contains path to often used file names.
+ 	 */
+-	struct path_cache cached_paths;
++	struct repo_path_cache cached_paths;
  
- 			strbuf_addstr(&buf, " ##");
-+			release_patch(&patch);
- 		} else if (in_header) {
- 			if (starts_with(line, "Author: ")) {
- 				strbuf_addstr(&buf, " ## Metadata ##\n");
+ 	/*
+ 	 * Path to the repository's graft file.
 -- 
 2.35.1.1228.g56895c6ee86
 
