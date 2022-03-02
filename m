@@ -2,80 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B70C4332F
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 21:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F14D4C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 21:44:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245361AbiCBVhU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 16:37:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45210 "EHLO
+        id S245318AbiCBVo5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 16:44:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245350AbiCBVhH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 16:37:07 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBF06C7D6B
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 13:36:23 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id v3so2903945qta.11
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 13:36:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZvAAq8VUvKmqkorI15l43WY4nZerFsx4iUMTRr33+aE=;
-        b=tVfgHWJQsxkprQFOZfEDi4RzVXXufjGmdvoy1qhLmUCHbb2TAL9lGHwVS09E1P0EXJ
-         HLGV56eyJ40KbNxpUddqQWNoEWeXlfTnOrI2FTAHbHvzQdu7FPHMwzxcWH+26A/x5dVm
-         //zrWj5TOZVj2byEfvI1Ek+r7Fzn2mYZFW8HU6fg1ifCKYH7Df1yQ86cNq5doJVZqr/K
-         8KJCaTZUKwixoI/sSIJ8e2gJdk+ICYPMCPS03SgiFlh3RGKCs8VmyvWXjusFg9fD4PTk
-         61qdD5ou5Hw5FUWmii6LJL0dewl0gF1enWVbpBSfA3qpinduvjHUzUD7kOfYpj3It50k
-         omnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZvAAq8VUvKmqkorI15l43WY4nZerFsx4iUMTRr33+aE=;
-        b=nGphIWfuohYzNurl4lTbcYL1/bPP4DNkkHNRX8+xIcgCKAJ9db/Ios7Ota8/8kUOaz
-         h0WItC0CuMSVGPkKa8BkqGcuDIPN5VYa82jMBLXfJzddy21rltyHpeCucSDSiIOAyg4h
-         4YlsVNX1G7hyM00WDJ2pUlnPud/isUH5+h2l2bZScATjISvILuM0pdKfO7OOoZi6s2zm
-         qnKv7TTWUIwT6MRIJd5jVflTaKjcSa4DnQGxsz1vwfCalWImfG2RhDptWfcs43kIohl7
-         JjaU8imSz1Auziugo4xGgEiMgui2ZspLqYM9oQfLgTpHIi8YKr9XX77ZufzdC8TPtXtX
-         NrfA==
-X-Gm-Message-State: AOAM530XKbHBQSQamycU8OfDXFlqRQcC0xBdlS6cuIQmWlkFJCWEv6Di
-        e3s1bkS/Gtc5MQqngoQM3xt9mw==
-X-Google-Smtp-Source: ABdhPJxTVw2dYyY2vBG9Gi8JXHNjYoJD/buswNR+vsjOEU4tQnRnGx8X8Irrs6tXKICbKMIPNjfkkw==
-X-Received: by 2002:ac8:5b51:0:b0:2de:4b7b:9657 with SMTP id n17-20020ac85b51000000b002de4b7b9657mr25586861qtw.347.1646256982941;
-        Wed, 02 Mar 2022 13:36:22 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 7-20020ac85747000000b002de73a851ffsm103220qtx.89.2022.03.02.13.36.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 13:36:22 -0800 (PST)
-Date:   Wed, 2 Mar 2022 16:36:21 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, tytso@mit.edu, gitster@pobox.com,
-        larsxschneider@gmail.com
-Subject: Re: [PATCH v2 00/17] cruft packs
-Message-ID: <Yh/jVeXfohXJBu6t@nand.local>
-References: <cover.1638224692.git.me@ttaylorr.com>
- <cover.1646182671.git.me@ttaylorr.com>
- <138d98bd-928d-1708-128f-217bfe9a2788@github.com>
+        with ESMTP id S241447AbiCBVoz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 16:44:55 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 590945643F
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 13:44:11 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0167A1817DB;
+        Wed,  2 Mar 2022 16:44:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=AZ8kW6BAVzLj
+        vxVMB3ANa74tstcHSN47c7FUXp9wE6A=; b=Io6TVhrkiFYgyp0sZXRn0Mw97sy6
+        DMaOIw0xcLYvqdVsx2B8uyV++K2s+dYIRPWgA25CKXG69JegGNrg30LpKQ1D7xa9
+        tQAUd2Zz6CDL9bBM7AwIOTTKMfuqxev1GMtVzhXMNkbc8WxZ9L8RcMeW5lJpEYXw
+        nR1KEpUNktFTm74=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id EE7201817D9;
+        Wed,  2 Mar 2022 16:44:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 749171817D8;
+        Wed,  2 Mar 2022 16:44:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 07/10] fetch+push tests: have tests clean up their own mess
+References: <cover-00.10-00000000000-20220302T131859Z-avarab@gmail.com>
+        <patch-07.10-7ce22dbe738-20220302T131859Z-avarab@gmail.com>
+Date:   Wed, 02 Mar 2022 13:44:07 -0800
+In-Reply-To: <patch-07.10-7ce22dbe738-20220302T131859Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 2 Mar
+ 2022 14:22:26
+        +0100")
+Message-ID: <xmqqczj4hvx4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <138d98bd-928d-1708-128f-217bfe9a2788@github.com>
+X-Pobox-Relay-ID: E3C3ECDA-9A71-11EC-A3DF-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 02, 2022 at 03:23:05PM -0500, Derrick Stolee wrote:
-> > For convenience, a range-diff is below. Thanks in advance for taking
-> > another look!
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+
+> Change the "t5516-fetch-push.sh" test code to make use of
+> "test_when_finished" to remove data instead of having tests clean up
+> leftover data from earlier tests, which may or may not be
+> there (e.g. depending on the --run=3D* option).
 >
-> It had been a while since my last read, so I read the patches
-> in full one more time. I found a couple nitpicks, but otherwise
-> everything is looking good.
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> ---
+>  t/t5516-fetch-push.sh | 50 +++++++++++++++++++++++++------------------
+>  1 file changed, 29 insertions(+), 21 deletions(-)
+>
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index e4bb7581568..fbe0a72b0b2 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -23,7 +23,8 @@ D=3D$(pwd)
+> =20
+>  mk_empty () {
+>  	repo_name=3D"$1"
+> -	rm -fr "$repo_name" &&
+> +	test_when_finished "rm -rf \"$repo_name\"" &&
 
-Thanks for reading! I took both of your suggestions (along with Junio's
-to rename the test script to t5329 to avoid a clash with your series)
-and will re-submit a tiny reroll shortly.
+Any justification to swap between fr and rf?
 
-Thanks,
-Taylor
+> +	test_path_is_missing "$repo_name" &&
+
+So, the idea is that the philosophy so far was that each test clears
+whatever the mess the previous ones created and empties what it cares
+to be empty with "rm -fr", but now in the new world order, each test
+relies on test_when_finished to clear any and all effects it leaves
+to the environment?
+
+OK.  Since the clearing the "effects" is to remove the whole thing,
+there is little room for such a plan to go wrong.
+
+> @@ -191,32 +192,32 @@ grep_wrote () {
+>  	grep 'write_pack_file/wrote.*"value":"'$1'"' $2
+>  }
+> =20
+> -test_expect_success 'push with negotiation' '
+> -	# Without negotiation
+
+;-)
+
+> +test_expect_success 'push without negotiation' '
+>  	mk_empty testrepo &&
+>  	git push testrepo $the_first_commit:refs/remotes/origin/first_commit =
+&&
+>  	test_commit -C testrepo unrelated_commit &&
+>  	git -C testrepo config receive.hideRefs refs/remotes/origin/first_com=
+mit &&
+> -	echo now pushing without negotiation &&
+> +	test_when_finished "rm event" &&
+>  	GIT_TRACE2_EVENT=3D"$(pwd)/event" git -c protocol.version=3D2 push te=
+strepo refs/heads/main:refs/remotes/origin/main &&
+> -	grep_wrote 5 event && # 2 commits, 2 trees, 1 blob
+> +	grep_wrote 5 event # 2 commits, 2 trees, 1 blob
+> +'
+> =20
+> -	# Same commands, but with negotiation
+> -	rm event &&
+
+Good to split them into two.  Presumably the later part wasn't
+relying on the leftover side effects created by the early part?
+
+Thanks.  Looking good.
