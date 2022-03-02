@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFFA1C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 13:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CADEFC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 13:22:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242165AbiCBNXf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 08:23:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46764 "EHLO
+        id S242142AbiCBNXh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 08:23:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242140AbiCBNXX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 08:23:23 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB7DB218A
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 05:22:39 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id r10so2797681wrp.3
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 05:22:39 -0800 (PST)
+        with ESMTP id S242134AbiCBNXY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 08:23:24 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9ED92219C
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 05:22:40 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id n14so2772099wrq.7
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 05:22:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KFBqj4yqMLkzCfZqq3O6PsdGFjsb2eRhVwzE0/LsbN4=;
-        b=lbIhD6oS/u0sML4reYxTozYbcY36MXWfQmU4uXMQPApla4FO1TInLWe5VEANmb9sIL
-         siDv/XLtEwj6KrY8h+ULjhzC5PEn/mnkF808mYFAICwGkiSORsoOUAF8QDONztYY60ER
-         G9JOuGubhKmrUa6QD7fDFPYvNRN10ebjL/WD1w3CrIsQjkCH/yYoW5maMOBXv8DlWXDV
-         eUjpsW+RYJEqlNEANogqilh67ysvCdnUWvYGhZ6728wXq+s3QaDKUL8i+SwJNFC8r+Q+
-         /BxMUwqYehWK6sOobi8o8JoHhNGePcZ5KQSX54PMVnbzGDsIrtwv386bPx+8uX8XeSpF
-         aOWg==
+        bh=R+H1rvKBrSCyGKPtOv4WwqwWGhFLDlDHbpXDQqBmcUM=;
+        b=YGAyp2gax0/NFyBGL/mjKtX+MxwTfnv8X8w9NDp8TOx2d24tPkBoU/l2k5MVPGQQFS
+         JQucz+mIHLbfsqhJoBIocOChUnjZjk9THRYt1zeyCnoU6MeUyayoNQkeHqQi/5mQDXl4
+         Bc0krZQScj0CpUAGuUUB0f9yTmDb2TyZnTRlqVWOCiwu6a2KFec1NpByBM9MNXFffFFB
+         p2Z4VsaE2KSTefC3HBnsCcO8oG1VkpIo7r8eV1XZV+sgDH6B8HM6KIChkKPW3D2iv2WU
+         l6IcTmrbecmzIWL38ped0PvB3lH7bMB/TjuKGD0l3Gb3JR++DoSbeyJSTUNMOJlS0BXM
+         rTOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KFBqj4yqMLkzCfZqq3O6PsdGFjsb2eRhVwzE0/LsbN4=;
-        b=eFWtbpcrpntEqyfsWXJYnBw0hlN6yqxvlaGj0d8gn5zQHCHOGWdtcTeZ0GR4iYDhEv
-         Orna6UnoVNXeJ/innYBFnMLCq9LeJ1GWbRuOWCcj1oHQ3I7JQ6ToaHmsmLKoCqwKSoBp
-         +tPu00VtSIjbpy3haPCgB/xqSQToQWVBPvIiNTOu0we1J0zQllexesgCD6PrnXnG28dI
-         Q7foTZNy8St0oWJ9o1m5GLEHNI+WOLOhWo3GT5SO4JT0dyGluRIXiJOO3sW/ObL2+d2Z
-         RTdJoiWJiI8DuQp9S194LkM9tyKhW/uGcZgBlTpAX9OIyrAO5lNWrp2jtMQ+E/eRkT1c
-         YgTg==
-X-Gm-Message-State: AOAM530vR9+mzPAIPs2dXr7eR1WT/4c9H6qCUH+xjkxXeQ2UIQl10BRF
-        j7AiF+buAgwd3JKdLXz94JG32+2/SEgGag==
-X-Google-Smtp-Source: ABdhPJxC2UqBTVdW/kleI0wZLPdFyzKNErVvznUV2HxIRRhYfivRNQxCosTviI6xlSYaxNBUSaCqlw==
-X-Received: by 2002:a5d:47c8:0:b0:1ef:8e97:2b8c with SMTP id o8-20020a5d47c8000000b001ef8e972b8cmr15172348wrc.545.1646227358045;
+        bh=R+H1rvKBrSCyGKPtOv4WwqwWGhFLDlDHbpXDQqBmcUM=;
+        b=LXXElAJ5iRnXQZXpQ80AX8q3RL0gW/eIo8smOag+MnpNhL3FRgUqKpped++iSvbvpQ
+         fG0nWyX90jrPaQF1VdKeB0cIIuDtdHeZbDd0tjcpzlUTxyQiYfFAhD9ED8LWmqfnsuoS
+         MVw9T+LB+3Azh5aNAQEnM7gQcP4UykmiLcUz+91hIRWpP/V5X9puCbCsa30gfR+4Kn6S
+         k92yuZT280CO15FZ42cK7oaVNkfaKbvsfkV+aDSnqTiziJqwNvno1DauUwktSyrREcLI
+         IIf0e3gud+ZkWR6SL/AQZyKa7IU+gM1fIy4MJwm/M2dBa7JMaahD1rdbdoioL3elwm0R
+         1Msw==
+X-Gm-Message-State: AOAM532K1fvRrUIei+j5rVotEN7A8QyQRIbE1kPLeOrJFQtejsJ4oJ4F
+        7Nnh/bnW+poNqBsC08KO1fBoHQoQxj7s9Q==
+X-Google-Smtp-Source: ABdhPJx47NQ/8lifNxEPUndQHGGcCCGMrpUJYz7pVWfIEq6w3OaQn5Lr5GgcB3zgYmgNhFK0O0y21A==
+X-Received: by 2002:adf:bac5:0:b0:1f0:2233:5dd6 with SMTP id w5-20020adfbac5000000b001f022335dd6mr4586360wrg.474.1646227358925;
         Wed, 02 Mar 2022 05:22:38 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o13-20020a5d648d000000b001efd62a840dsm10814197wri.111.2022.03.02.05.22.37
+        by smtp.gmail.com with ESMTPSA id o13-20020a5d648d000000b001efd62a840dsm10814197wri.111.2022.03.02.05.22.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 05:22:37 -0800 (PST)
+        Wed, 02 Mar 2022 05:22:38 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -55,9 +55,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/10] bugreport tests: tighten up "git bugreport -s hooks" test
-Date:   Wed,  2 Mar 2022 14:22:23 +0100
-Message-Id: <patch-04.10-1da2efc9886-20220302T131859Z-avarab@gmail.com>
+Subject: [PATCH 05/10] tests: indent and add hook setup to "test_expect_success"
+Date:   Wed,  2 Mar 2022 14:22:24 +0100
+Message-Id: <patch-05.10-8dc478460ee-20220302T131859Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1228.g56895c6ee86
 In-Reply-To: <cover-00.10-00000000000-20220302T131859Z-avarab@gmail.com>
 References: <cover-00.10-00000000000-20220302T131859Z-avarab@gmail.com>
@@ -68,56 +68,243 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend a test added in 788a776069b (bugreport: collect list of
-populated hooks, 2020-05-07) to make more sense. As noted in a
-preceding commit our .git/hooks directory already contains *.sample
-hooks, so we have no need to clobber the prepare-commit-msg.sample
-hook in particular.
+Indent various hook setup code in the test suite that's using a manual
+"cat && chmod" pattern.
 
-Instead we should assert that those *.sample hooks are not included in
-the output, and for good measure let's add a new "unknown-hook", to
-check that we only look through our own known hooks. See
-cfe853e66be (hook-list.h: add a generated list of hooks, like
-config-list.h, 2021-09-26) for how we generate that data.
+These should also consistently use "#!$SHELL_PATH" instead of
+"#!/bin/sh", i.e. "test_script". Let's fix that in a subsequent
+commit, which will be easier to review after this smaller change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t0091-bugreport.sh | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ t/t3412-rebase-root.sh       | 16 ++++----
+ t/t3413-rebase-hook.sh       | 16 ++++----
+ t/t5401-update-hooks.sh      | 76 ++++++++++++++++++------------------
+ t/t5407-post-rewrite-hook.sh | 16 ++++----
+ t/t5541-http-push-smart.sh   | 24 ++++++------
+ 5 files changed, 75 insertions(+), 73 deletions(-)
 
-diff --git a/t/t0091-bugreport.sh b/t/t0091-bugreport.sh
-index eeedbfa9193..3025e685aaa 100755
---- a/t/t0091-bugreport.sh
-+++ b/t/t0091-bugreport.sh
-@@ -60,18 +60,18 @@ test_expect_success 'can create leading directories outside of a git dir' '
+diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
+index 1e9f7833dd6..239a9343d34 100755
+--- a/t/t3412-rebase-root.sh
++++ b/t/t3412-rebase-root.sh
+@@ -32,10 +32,10 @@ test_expect_success 'rebase --root fails with too many args' '
  
- test_expect_success 'indicates populated hooks' '
- 	test_when_finished rm git-bugreport-hooks.txt &&
--	test_when_finished rm -fr .git/hooks &&
--	rm -fr .git/hooks &&
--	mkdir .git/hooks &&
--	for hook in applypatch-msg prepare-commit-msg.sample
--	do
--		write_script ".git/hooks/$hook" <<-EOF || return 1
--		echo "hook $hook exists"
--		EOF
--	done &&
-+
-+	write_script .git/hooks/applypatch-msg <<-\EOF &&
-+	true
+ test_expect_success 'setup pre-rebase hook' '
+ 	mkdir -p .git/hooks &&
+-	cat >.git/hooks/pre-rebase <<EOF &&
+-#!$SHELL_PATH
+-echo "\$1,\$2" >.git/PRE-REBASE-INPUT
+-EOF
++	cat >.git/hooks/pre-rebase <<-EOF &&
++	#!$SHELL_PATH
++	echo "\$1,\$2" >.git/PRE-REBASE-INPUT
 +	EOF
-+	write_script .git/hooks/unknown-hook <<-\EOF &&
-+	true
+ 	chmod +x .git/hooks/pre-rebase
+ '
+ cat > expect <<EOF
+@@ -142,10 +142,10 @@ EOF
+ 
+ test_expect_success 'setup pre-rebase hook that fails' '
+ 	mkdir -p .git/hooks &&
+-	cat >.git/hooks/pre-rebase <<EOF &&
+-#!$SHELL_PATH
+-false
+-EOF
++	cat >.git/hooks/pre-rebase <<-EOF &&
++	#!$SHELL_PATH
++	false
 +	EOF
- 	git bugreport -s hooks &&
-+
- 	grep applypatch-msg git-bugreport-hooks.txt &&
--	! grep prepare-commit-msg git-bugreport-hooks.txt
-+	! grep unknown-hook git-bugreport-hooks.txt &&
-+	! grep -F .sample git-bugreport-hooks.txt
+ 	chmod +x .git/hooks/pre-rebase
  '
  
- test_done
+diff --git a/t/t3413-rebase-hook.sh b/t/t3413-rebase-hook.sh
+index b4acb3be5cf..bb241b26b2e 100755
+--- a/t/t3413-rebase-hook.sh
++++ b/t/t3413-rebase-hook.sh
+@@ -42,10 +42,10 @@ test_expect_success 'rebase -i' '
+ 
+ test_expect_success 'setup pre-rebase hook' '
+ 	mkdir -p .git/hooks &&
+-	cat >.git/hooks/pre-rebase <<EOF &&
+-#!$SHELL_PATH
+-echo "\$1,\$2" >.git/PRE-REBASE-INPUT
+-EOF
++	cat >.git/hooks/pre-rebase <<-EOF &&
++	#!$SHELL_PATH
++	echo "\$1,\$2" >.git/PRE-REBASE-INPUT
++	EOF
+ 	chmod +x .git/hooks/pre-rebase
+ '
+ 
+@@ -103,10 +103,10 @@ test_expect_success 'pre-rebase hook gets correct input (6)' '
+ 
+ test_expect_success 'setup pre-rebase hook that fails' '
+ 	mkdir -p .git/hooks &&
+-	cat >.git/hooks/pre-rebase <<EOF &&
+-#!$SHELL_PATH
+-false
+-EOF
++	cat >.git/hooks/pre-rebase <<-EOF &&
++	#!$SHELL_PATH
++	false
++	EOF
+ 	chmod +x .git/hooks/pre-rebase
+ '
+ 
+diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
+index 6012cc8172a..6392f71795d 100755
+--- a/t/t5401-update-hooks.sh
++++ b/t/t5401-update-hooks.sh
+@@ -20,46 +20,46 @@ test_expect_success setup '
+ 	git clone --bare ./. victim.git &&
+ 	GIT_DIR=victim.git git update-ref refs/heads/tofail $commit1 &&
+ 	git update-ref refs/heads/main $commit1 &&
+-	git update-ref refs/heads/tofail $commit0
++	git update-ref refs/heads/tofail $commit0 &&
++
++	cat >victim.git/hooks/pre-receive <<-\EOF &&
++	#!/bin/sh
++	printf %s "$@" >>$GIT_DIR/pre-receive.args
++	cat - >$GIT_DIR/pre-receive.stdin
++	echo STDOUT pre-receive
++	echo STDERR pre-receive >&2
++	EOF
++	chmod u+x victim.git/hooks/pre-receive &&
++
++	cat >victim.git/hooks/update <<-\EOF &&
++	#!/bin/sh
++	echo "$@" >>$GIT_DIR/update.args
++	read x; printf %s "$x" >$GIT_DIR/update.stdin
++	echo STDOUT update $1
++	echo STDERR update $1 >&2
++	test "$1" = refs/heads/main || exit
++	EOF
++	chmod u+x victim.git/hooks/update &&
++
++	cat >victim.git/hooks/post-receive <<-\EOF &&
++	#!/bin/sh
++	printf %s "$@" >>$GIT_DIR/post-receive.args
++	cat - >$GIT_DIR/post-receive.stdin
++	echo STDOUT post-receive
++	echo STDERR post-receive >&2
++	EOF
++	chmod u+x victim.git/hooks/post-receive &&
++
++	cat >victim.git/hooks/post-update <<-\EOF &&
++	#!/bin/sh
++	echo "$@" >>$GIT_DIR/post-update.args
++	read x; printf %s "$x" >$GIT_DIR/post-update.stdin
++	echo STDOUT post-update
++	echo STDERR post-update >&2
++	EOF
++	chmod u+x victim.git/hooks/post-update
+ '
+ 
+-cat >victim.git/hooks/pre-receive <<'EOF'
+-#!/bin/sh
+-printf %s "$@" >>$GIT_DIR/pre-receive.args
+-cat - >$GIT_DIR/pre-receive.stdin
+-echo STDOUT pre-receive
+-echo STDERR pre-receive >&2
+-EOF
+-chmod u+x victim.git/hooks/pre-receive
+-
+-cat >victim.git/hooks/update <<'EOF'
+-#!/bin/sh
+-echo "$@" >>$GIT_DIR/update.args
+-read x; printf %s "$x" >$GIT_DIR/update.stdin
+-echo STDOUT update $1
+-echo STDERR update $1 >&2
+-test "$1" = refs/heads/main || exit
+-EOF
+-chmod u+x victim.git/hooks/update
+-
+-cat >victim.git/hooks/post-receive <<'EOF'
+-#!/bin/sh
+-printf %s "$@" >>$GIT_DIR/post-receive.args
+-cat - >$GIT_DIR/post-receive.stdin
+-echo STDOUT post-receive
+-echo STDERR post-receive >&2
+-EOF
+-chmod u+x victim.git/hooks/post-receive
+-
+-cat >victim.git/hooks/post-update <<'EOF'
+-#!/bin/sh
+-echo "$@" >>$GIT_DIR/post-update.args
+-read x; printf %s "$x" >$GIT_DIR/post-update.stdin
+-echo STDOUT post-update
+-echo STDERR post-update >&2
+-EOF
+-chmod u+x victim.git/hooks/post-update
+-
+ test_expect_success push '
+ 	test_must_fail git send-pack --force ./victim.git \
+ 		main tofail >send.out 2>send.err
+diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+index 6da8d760e28..64f40ff7776 100755
+--- a/t/t5407-post-rewrite-hook.sh
++++ b/t/t5407-post-rewrite-hook.sh
+@@ -17,15 +17,15 @@ test_expect_success 'setup' '
+ 	git checkout A^0 &&
+ 	test_commit E bar E &&
+ 	test_commit F foo F &&
+-	git checkout main
+-'
++	git checkout main &&
+ 
+-cat >.git/hooks/post-rewrite <<EOF
+-#!/bin/sh
+-echo \$@ > "$TRASH_DIRECTORY"/post-rewrite.args
+-cat > "$TRASH_DIRECTORY"/post-rewrite.data
+-EOF
+-chmod u+x .git/hooks/post-rewrite
++	cat >.git/hooks/post-rewrite <<-EOF &&
++	#!/bin/sh
++	echo \$@ > "$TRASH_DIRECTORY"/post-rewrite.args
++	cat > "$TRASH_DIRECTORY"/post-rewrite.data
++	EOF
++	chmod u+x .git/hooks/post-rewrite
++'
+ 
+ clear_hook_input () {
+ 	rm -f post-rewrite.args post-rewrite.data
+diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
+index 8ca50f8b18c..0043b718f08 100755
+--- a/t/t5541-http-push-smart.sh
++++ b/t/t5541-http-push-smart.sh
+@@ -96,18 +96,20 @@ test_expect_success 'create and delete remote branch' '
+ 	test_must_fail git show-ref --verify refs/remotes/origin/dev
+ '
+ 
+-cat >"$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update" <<EOF
+-#!/bin/sh
+-exit 1
+-EOF
+-chmod a+x "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update"
++test_expect_success 'setup rejected update hook' '
++	cat >"$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update" <<-EOF &&
++	#!/bin/sh
++	exit 1
++	EOF
++	chmod a+x "$HTTPD_DOCUMENT_ROOT_PATH/test_repo.git/hooks/update" &&
+ 
+-cat >exp <<EOF
+-remote: error: hook declined to update refs/heads/dev2
+-To http://127.0.0.1:$LIB_HTTPD_PORT/smart/test_repo.git
+- ! [remote rejected] dev2 -> dev2 (hook declined)
+-error: failed to push some refs to 'http://127.0.0.1:$LIB_HTTPD_PORT/smart/test_repo.git'
+-EOF
++	cat >exp <<-EOF
++	remote: error: hook declined to update refs/heads/dev2
++	To http://127.0.0.1:$LIB_HTTPD_PORT/smart/test_repo.git
++	 ! [remote rejected] dev2 -> dev2 (hook declined)
++	error: failed to push some refs to '\''http://127.0.0.1:$LIB_HTTPD_PORT/smart/test_repo.git'\''
++	EOF
++'
+ 
+ test_expect_success 'rejected update prints status' '
+ 	cd "$ROOT_PATH"/test_repo_clone &&
 -- 
 2.35.1.1228.g56895c6ee86
 
