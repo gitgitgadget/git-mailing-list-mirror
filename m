@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79A40C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 17:10:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C858C433EF
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 17:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243660AbiCBRLO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 12:11:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55650 "EHLO
+        id S243665AbiCBRLQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 12:11:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241487AbiCBRLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 12:11:11 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6B7647550
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 09:10:27 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id u1so3802440wrg.11
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 09:10:27 -0800 (PST)
+        with ESMTP id S235296AbiCBRLM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 12:11:12 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7303BBC9
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 09:10:28 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id u10so2201071wra.9
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 09:10:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Dvx46+SeENqlGoHs+qZJ9oaF+B3m5vw7Era7zwkR4CI=;
-        b=BmzCN4eAmfsV7DWLhJn1npoElbNk7N1GbgEH1PwLqwxnkMdAeRUKuKVHgywpbp7qmO
-         Wecu87dqDBrTe4lc3zJhwahTsFZ/9rtP2nOrQxyD+yPLHQW8Vx3qC+qb4PcNOfKwGvfM
-         Dy1rHxf9Mk8QVZFmQGeDQTodJ+AOS6QL6g5pqbDA32L/RYV5rApexnZczMzGmLYTrnBi
-         3eS7ow9Oda2+t1ej0FQji7GHr2ZJD3vY9vieQOyGvaxOLTwwVRw/r5E4g7pWPTwfQ9z/
-         UW+e4DIpvu4bfzJ3Sz3ElGdJGViggDTJJRmNizovmrEjZ2H68HsZ5LKgPIiSyGWBiXOJ
-         FcCA==
+        bh=oqKIUZUV+OWpepECBzlHsaINd2dS3NK9oDdgtW5YWbA=;
+        b=irI/b9vzDe5eXRH83CkHVrJUYZPEjtWw44GBAxOmYKhn9VE9hA2l4pHwAgIhHYwAR5
+         xYmvRSJwiWLaNAnPquPL6JO0U6drrOTibQMQXK4qAVAAyJo3cnq/qznw8QHtvqRodg1X
+         7Os4u8EIAawKzROiTzrSco87tam52SIsdMHnQGbKbRHFhkxH1JDQUHn/W7JExsj/oOpi
+         VO1dW1ObwzqZBXc7iVs0btUODWMShXCz84Z/yjoXfMDKmsEM0Oo/EsqofXC/fZh2tNwM
+         LkIXgr2MT9EvxuwlJ2CVb0Az/j2zUE12ij4pX6uaXRCSrj5lbAJL/cFUB7e+JWNNwVdc
+         qgkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Dvx46+SeENqlGoHs+qZJ9oaF+B3m5vw7Era7zwkR4CI=;
-        b=jTs/NCbhweYuOnmdcY4+Skn6el1h2u1v5ZzadPEyLlf16QbchLyomi9Ub7O+i8jPrc
-         sFen9k7PC1UGkiBZXFnj0DOEgoUnvh60Je29Aky12dDw6eJrzT8C5yZDb+ZIhjtlK83m
-         OmxhbjnaoAZKxHYkoXncKF07pgriiKeKtuwiiR1GuGYrYcbJ+t8aCUmKaVWeOqwJ/aDF
-         hiP11MNrtLuUV2+wIuOn3KtGo724/GVF8A/d3jiibbCe61Rxv3+h/IWgIf8rtSivENwV
-         ZyzuKaoQaPEYmdM/7bqDpw4C63g8a1De0siSxfmnd4+YSETyeCZMvV+XTlMYDCd0qGuo
-         kpzA==
-X-Gm-Message-State: AOAM531UCOCxIpZVmIPNOa2HjmJki1GZzKXvyd+QOVKG9YMO8tgjfPh3
-        tAmSzMA6ABFPhRb5jdpKBV/ESFMPTS05/A==
-X-Google-Smtp-Source: ABdhPJwAtpSv5cM6MXNKeKaajT/VpYDVlk3SnBQe42dnBWqmc2BFle3rJqXLJq/Yu3jugYc/SCpOVQ==
-X-Received: by 2002:adf:ed0c:0:b0:1f0:4a32:4d0d with SMTP id a12-20020adfed0c000000b001f04a324d0dmr438098wro.136.1646241026105;
+        bh=oqKIUZUV+OWpepECBzlHsaINd2dS3NK9oDdgtW5YWbA=;
+        b=Dx5bN6GOzw/O1pXoejqJ2HczhjC3iNsK3T7CUd9D1ywiW9Xffwq352R0VBrHLuf1dG
+         jok41KCx/UXM2bCT3hu7jhwcTsJ3vbgV2APMCmQsT1U3PhckTTNnxQqNBvc7ir1SQO04
+         gyd6SYqwX8pvuomDQj4e4RRwECbpPYCRYCKnigJav1bGBFsepvpk1sVSfv9jkBtSUM89
+         4BLTnyNW9VgFdpVI8sWQz7grvbX4pxSsqhGmBtA9TPAzf9IBwJJY7YIo9l318d4zXZ0p
+         qoZXRDdRyFMjdMFCvKUbgoGQ1GTbLSmNcqV4Jib4nqu/S9Kl7JbqkbIo8NYpg2yqE+pC
+         kURA==
+X-Gm-Message-State: AOAM531bo4iH5fW/0WBfSDo+JzslNOetQEfnw5yYYinXj6Tz8feXzHvn
+        UW1sVAOw4XzUtxh3nxhS9gFhos3qk7wVYw==
+X-Google-Smtp-Source: ABdhPJw+o12FA6Wue5rJDeS8nrklBfUny9rKlhSGG/eQXmjr/8UYDAHhRVx1ZRTyaCfDVAjo+PBW3Q==
+X-Received: by 2002:adf:edc3:0:b0:1ec:5f11:5415 with SMTP id v3-20020adfedc3000000b001ec5f115415mr21881381wro.317.1646241026876;
         Wed, 02 Mar 2022 09:10:26 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p9-20020a05600c1d8900b003813b489d75sm6178001wms.10.2022.03.02.09.10.25
+        by smtp.gmail.com with ESMTPSA id p9-20020a05600c1d8900b003813b489d75sm6178001wms.10.2022.03.02.09.10.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 09:10:25 -0800 (PST)
+        Wed, 02 Mar 2022 09:10:26 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 02/14] merge-base: free() allocated "struct commit **" list
-Date:   Wed,  2 Mar 2022 18:10:08 +0100
-Message-Id: <patch-02.14-4c28f056ec2-20220302T170718Z-avarab@gmail.com>
+Subject: [PATCH 03/14] diff.c: free "buf" in diff_words_flush()
+Date:   Wed,  2 Mar 2022 18:10:09 +0100
+Message-Id: <patch-03.14-5d2793039ad-20220302T170718Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1228.g56895c6ee86
 In-Reply-To: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
 References: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
@@ -66,40 +66,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak in 53eda89b2fe (merge-base: teach "git merge-base"
-to drive underlying merge_bases_many(), 2008-07-30) by calling free()
-on the "struct commit **" list used by "git merge-base".
-
-This gets e.g. "t6010-merge-base.sh" closer to passing under
-SANITIZE=leak, it failed 8 tests before when compiled with that
-option, and now fails only 5 tests.
+Amend the freeing logic added in e6e045f8031 (diff.c: buffer all
+output if asked to, 2017-06-29) to free the containing "buf" in
+addition to its members.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/merge-base.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ diff.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index 26b84980dbd..a11f8c6e4bb 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -138,6 +138,7 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix)
- 	int rev_nr = 0;
- 	int show_all = 0;
- 	int cmdmode = 0;
-+	int ret;
+diff --git a/diff.c b/diff.c
+index c4ccb6b1a34..c5bc9bc5128 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2150,6 +2150,7 @@ static void diff_words_flush(struct emit_callback *ecbdata)
  
- 	struct option options[] = {
- 		OPT_BOOL('a', "all", &show_all, N_("output all common ancestors")),
-@@ -186,5 +187,7 @@ int cmd_merge_base(int argc, const char **argv, const char *prefix)
- 	ALLOC_ARRAY(rev, argc);
- 	while (argc-- > 0)
- 		rev[rev_nr++] = get_commit_reference(*argv++);
--	return show_merge_base(rev, rev_nr, show_all);
-+	ret = show_merge_base(rev, rev_nr, show_all);
-+	free(rev);
-+	return ret;
- }
+ 		for (i = 0; i < wol->nr; i++)
+ 			free((void *)wol->buf[i].line);
++		free(wol->buf);
+ 
+ 		wol->nr = 0;
+ 	}
 -- 
 2.35.1.1228.g56895c6ee86
 
