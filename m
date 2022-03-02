@@ -2,92 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD8CFC433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 21:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1FE7C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 21:09:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241753AbiCBVH2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 16:07:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58982 "EHLO
+        id S245033AbiCBVKR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 16:10:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232218AbiCBVH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 16:07:27 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C475A9FEE
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 13:06:40 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 176F411DC04;
-        Wed,  2 Mar 2022 16:06:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=/hBdChaQvn6m
-        UiV+J9kdil6z5JaUlG2EWfW8NG1+TQg=; b=rOIo7Yi+/MFQFuceYjb3iX4DXD1Q
-        6RCXH19Dpg2iJ851oSLEKD+q5ZGKOKBgySdG6vlWn/HlVzTv8i0P8/Ir08ea6AOJ
-        oqMUyDu8HT4xWo9STVzFCwlKvqIj7fjUCuXF5x9xswoWltiJNmdsuFgawcWYTToM
-        mMF+QRX6/bPWqY4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E42411DC03;
-        Wed,  2 Mar 2022 16:06:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.82.80.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S245054AbiCBVKP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 16:10:15 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99BCFA94E2
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 13:09:31 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id D5FDB3F47F5;
+        Wed,  2 Mar 2022 16:09:30 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6824011DC02;
-        Wed,  2 Mar 2022 16:06:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 02/10] t5540: don't rely on "hook/post-update.sample"
-References: <cover-00.10-00000000000-20220302T131859Z-avarab@gmail.com>
-        <patch-02.10-4bee939a894-20220302T131859Z-avarab@gmail.com>
-Date:   Wed, 02 Mar 2022 13:06:38 -0800
-In-Reply-To: <patch-02.10-4bee939a894-20220302T131859Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 2 Mar
- 2022 14:22:21
-        +0100")
-Message-ID: <xmqqh78gjc81.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        by siwi.pair.com (Postfix) with ESMTPSA id 9A0673F40F4;
+        Wed,  2 Mar 2022 16:09:30 -0500 (EST)
+Subject: Re: [PATCH 05/23] fsmonitor-settings: bare repos are incompatible
+ with FSMonitor
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
+ <44cc61e186cb65fa6b2c1d5a0f080fc0b2265e57.1644940773.git.gitgitgadget@gmail.com>
+ <220225.86ee3q7k2s.gmgdl@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <1fe07a1b-df7f-5230-5f49-4cb454c3df9f@jeffhostetler.com>
+Date:   Wed, 2 Mar 2022 16:09:28 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A73AD4EA-9A6C-11EC-88C7-CB998F0A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <220225.86ee3q7k2s.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Change code added in a87679339c0 (test: rename http fetch and push
-> test files, 2014-02-06) to stop relying on the "exec git
-> update-server-info" in "templates/hooks--post-update.sample", let's
-> instead inline the expected hook in the test itself.
 
-For this particular hook, it indeed is a good change, as future
-post-update samples we ship may have something quite different.
+On 2/25/22 3:42 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Feb 15 2022, Jeff Hostetler via GitGitGadget wrote:
+> 
+>> +static void create_reason_message(struct repository *r,
+>> +				  struct strbuf *buf_reason)
+>> +{
+>> +	struct fsmonitor_settings *s = r->settings.fsmonitor;
+>> +
+>> +	switch (s->reason) {
+>> +	case FSMONITOR_REASON_ZERO:
+>> +		return;
+>> +
+>> +	case FSMONITOR_REASON_BARE:
+>> +		strbuf_addstr(buf_reason,
+>> +			      _("bare repos are incompatible with fsmonitor"));
+>> +		return;
+>> +
+>> +	default:
+>> +		BUG("Unhandled case in create_reason_message '%d'", s->reason);
+>> +	}
+>> +}
+>> +
+>> +enum fsmonitor_reason fsm_settings__get_reason(struct repository *r,
+>> +					       struct strbuf *buf_reason)
+>> +{
+>> +	lookup_fsmonitor_settings(r);
+>> +
+>> +	strbuf_reset(buf_reason);
+>> +	if (r->settings.fsmonitor->mode == FSMONITOR_MODE_INCOMPATIBLE)
+>> +		create_reason_message(r, buf_reason);
+>> +
+>> +	return r->settings.fsmonitor->reason;
+>> +}
+> 
+> This API (just looking at one small bit discussed because related bits
+> conflict with another series) seems to require a lot of ceremony just to
+> get a const char * error.
 
-I do not know if it is a good idea in general, though.  We want
-to promise shipping certain sample scripts as part of the default
-install, and the default install is what our tests check.  We want
-to keep something that ensures the default install does ship the
-sample we want to include, and such tests do need to rely on the
-presence of .sample files.  But this script does not need to be
-the one to do so.
+My thought at the time was that the __get_reason() code might want to
+format a message and include details from the repo (such as the working
+directory root) or the kind of objection (such as a remote SMB mount).
+So I had it take a strbuf rather than a "const char *" return value.
 
->  	git --bare update-server-info &&
-> -	mv hooks/post-update.sample hooks/post-update &&
-> +	write_script hooks/post-update <<-\EOF &&
-> +	exec git update-server-info
-> +	EOF
->  	ORIG_HEAD=3D$(git rev-parse --verify HEAD) &&
->  	cd - &&
->  	mv test_repo.git "$HTTPD_DOCUMENT_ROOT_PATH"
+But so far (in the successive commits) all of the reason messages have
+been constant and I think I'm OK with having the non-specific messages.
 
-OK.
+So yes, I could simplify it.
 
-We might want to deprecate and remove the support for dumb walkers,
-but until then, this looks superb.
-
-Thanks.
+Thanks
+Jeff
 
