@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15D13C4332F
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 17:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F67FC433FE
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 17:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243853AbiCBR2r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 12:28:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59924 "EHLO
+        id S243884AbiCBR2t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 12:28:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59948 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243931AbiCBR2b (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S243935AbiCBR2b (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 2 Mar 2022 12:28:31 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D8D613F77
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3741E17A95
         for <git@vger.kernel.org>; Wed,  2 Mar 2022 09:27:42 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id u10so2272192wra.9
+Received: by mail-wr1-x42f.google.com with SMTP id x15so3868296wru.13
         for <git@vger.kernel.org>; Wed, 02 Mar 2022 09:27:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2fsmGshl7kkXCmKDy14XbDAEO/EEX9bnMvyB5ThBT10=;
-        b=pRczs67lixXnzYpv95ZrXOa30ciNqJBKzfiDy6l0P0RCOUVBNUlF0K8GmCOfGQvA5l
-         O0XgCfgp8dtu8b9psm7VQZZROPKaS3F/3S6W+7gV131BAVjDwVeNp0wQroP018nzUmmr
-         iWRcWxld1P4897CZZgFuCimXQCSdNl9Fxf/lG5bEQHxMQalSsecJR/qeVyzKVAc7QJaQ
-         MPcegk3PEap+pKrjX8SS1GJXGFBjX48R4MJAmtdeakk2twNRXptxUu5VCtf2bqk2NuPo
-         rbRF2iw8nXVfCC52TrEmb0jiRATJw4+DChHh/RdgLMOxhXPa6G+f9+NCRh7CxXJtwTqp
-         UdaA==
+        bh=Gk64hYmDDzx7I1kXYmzgn8G8sS/A1+pzGNK0kxNhdRI=;
+        b=WZje2nKu7dSzmLUndPjGgNiPP9DN6iozaCbay38drr8IRIILLclT1y/LrwGwdH9VRM
+         OdpMccdOSSOPfJ/k9bmySbwbP7YahMkTKSvX3o2ajx0G9fBRWtlWhRz1JShSwpZczjyo
+         T1UHSzYOAzC502oIou2jzSHEusMs+KgA5mOU16uytSLKdWmmmDfvjD1pXlQ+KiGT6Kya
+         H0+PU59ShRK+GmhSsoJwJdLFzGUy7UOBI72VNpCHwy6Q81f7s1d+73LGNLOWMJdHt4cE
+         F9sECu6DHFcQa3xDxcOXrLDzVnBY0Y1ybIm6jkCMApjqLFL8KciN/JixpQSj2ePuF3TF
+         uS1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2fsmGshl7kkXCmKDy14XbDAEO/EEX9bnMvyB5ThBT10=;
-        b=4Ryz2GkhHvNe8kK3W0a3/QPzdcQa59UGkmrba82Dcg4xvwsZMMif8fQohz3FqifpL/
-         m5LgreQTQTKP5mvF0Z0HTO5VSbTkYcbECeT/5FJvDA4YWBby/T23VgNQzNN5ApvWYlIb
-         PCosqomVuCY0QTjIMyID2u8Ac3NsHMlj1lHucpTRMB4Eyd2qUk+JLREB0MKRUuQUShWb
-         gt5OqdC+Pvhmge8D7eeYZzFbhUqLd6s52Is3peRVk+ZV17CLs2e6PO2MLOFd5ExFKy5s
-         Hkdgtjevt6GZm4KYTLQJoYuu3mTYFTC+1xcW1fGdV8NnRIuAM6j1i0DYyFyfQT44CZhb
-         Helg==
-X-Gm-Message-State: AOAM532DW5WZYzJeVVMMcOHqtUVRfF+pg/7phFVl/SG9EC10+mM2QnP6
-        LyZIA01U6xF6NUhwCF5VmYmS1hPrSutdfw==
-X-Google-Smtp-Source: ABdhPJyFj5J6aeLNMHo7WkyAm81FFBZKyVwNEKu2vcdNw/PPyI2RWL3AxI72s0MATHtPKoeiWeIQDQ==
-X-Received: by 2002:a05:6000:1864:b0:1ef:d2b0:560a with SMTP id d4-20020a056000186400b001efd2b0560amr11862654wri.38.1646242060554;
-        Wed, 02 Mar 2022 09:27:40 -0800 (PST)
+        bh=Gk64hYmDDzx7I1kXYmzgn8G8sS/A1+pzGNK0kxNhdRI=;
+        b=5hrbAwA4PJAW+Y/+2fMvQ5jLSUV2mR8/kNhJxQF/m0hH9sHSLfxW4M7LcJYnpSwXhY
+         wh/MDPY/+hX1kNHQIuHmy2e/rNfsS62vH0aq2ds/j+PGma0ZJOSMD+dVwq8i3WqkWx5s
+         XRBmXx8y65rbFTF8vl53x4dfpv7uoZ8bYxyP2ymopmZt8MulJckBtJz/RrWg+2IAsWhd
+         DY8Sz6+EhXxyUUj2f4N9x27+kvf94S9hcN9C0pLU7F+tPTSpNnBejfh+OZWYhEm1IhuF
+         oj/Km8oj3sme1pGj6PX7zPhAGFnGZQdxBYTC16e6Y46cyIZd+Z35WD9rbrDXUuecTfQp
+         XxzA==
+X-Gm-Message-State: AOAM531vxnBykjqMyoARPl42TjscrtQk0HvStc4gT42BnTE5ij2IlJ25
+        K38VJBd+gwYympPKMDeeEDKSxaN/RT1X8A==
+X-Google-Smtp-Source: ABdhPJxLlqgD0zBWgI7r17kd4d3adD6rgnSQxFOvN48P9M+9LdFwY0kCWTtJGblr8NFyfFUw3H7gOQ==
+X-Received: by 2002:adf:fd0a:0:b0:1f0:25fd:4082 with SMTP id e10-20020adffd0a000000b001f025fd4082mr3516792wrr.501.1646242061326;
+        Wed, 02 Mar 2022 09:27:41 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r20-20020adfa154000000b001f0326a23e1sm2537377wrr.88.2022.03.02.09.27.39
+        by smtp.gmail.com with ESMTPSA id r20-20020adfa154000000b001f0326a23e1sm2537377wrr.88.2022.03.02.09.27.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 09:27:39 -0800 (PST)
+        Wed, 02 Mar 2022 09:27:40 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 12/15] gettext tests: don't ignore "test-tool regex" exit code
-Date:   Wed,  2 Mar 2022 18:27:21 +0100
-Message-Id: <patch-12.15-f3cc5bc7eb9-20220302T171755Z-avarab@gmail.com>
+Subject: [PATCH 13/15] apply tests: don't ignore "git ls-files" exit code, drop sub-shell
+Date:   Wed,  2 Mar 2022 18:27:22 +0100
+Message-Id: <patch-13.15-834809b1b8a-20220302T171755Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1226.g8b497615d32
 In-Reply-To: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
 References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
@@ -69,61 +69,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend a prerequisite check added in 5c1ebcca4d1 (grep/icase: avoid
-kwsset on literal non-ascii strings, 2016-06-25) to do invoke
-'test-tool regex' in such a way that we'll notice if it dies under
-SANITIZE=leak due to having a memory leak, as opposed to us not having
-the "ICASE" support we're checking for.
+Fix code added in 969c877506c (git apply --directory broken for new
+files, 2008-10-12) so that it doesn't invoke "git ls-files" on the
+left-hand-side of a pipe, instead let's use an intermediate file.
 
-Because we weren't making a distinction between the two I'd marked
-these tests as passing under SANITIZE=leak in 03d85e21951 (leak tests:
-mark remaining leak-free tests as such, 2021-12-17).
+Since we're doing that we can also drop the sub-shell that was here to
+group the two.
 
-Doing this is tricky. Ideally "test_lazy_prereq" would materialize as
-a "real" test that we could check the exit code of with the same
-signal matching that "test_must_fail" does.
-
-However lazy prerequisites aren't real tests, and are instead lazily
-materialized in the guts of "test_have_prereq" when we've already
-started another test.
-
-We could detect the abort() (or similar) there and pass that exit code
-down, and fail the test that caused the prerequisites to be
-materialized.
-
-But that would require extensive changes to test-lib.sh and
-test-lib-functions.sh. Let's instead simply check if the exit code of
-"test-tool regex" is zero, and if so set the prerequisites. If it's
-non-zero let's run it again with "test_must_fail". We'll thus make a
-distinction between "bad" non-zero (segv etc) and "good" (exit 1 etc.).
+There are a lot of these sorts of patterns in the test suite, and
+there's no particular reason to fix this one other than in a preceding
+commit all similar patterns except this one were fixed in
+"t/t4128-apply-root.sh", so let's fix this one straggler as well.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7812-grep-icase-non-ascii.sh | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ t/t4128-apply-root.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
-index ca3f24f8079..347bf4a12f3 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -11,9 +11,14 @@ test_expect_success GETTEXT_LOCALE 'setup' '
- 	export LC_ALL
+diff --git a/t/t4128-apply-root.sh b/t/t4128-apply-root.sh
+index ba89a2f2d73..f6db5a79dd9 100755
+--- a/t/t4128-apply-root.sh
++++ b/t/t4128-apply-root.sh
+@@ -96,7 +96,8 @@ test_expect_success 'apply --directory (delete file)' '
+ 	echo content >some/sub/dir/delfile &&
+ 	git add some/sub/dir/delfile &&
+ 	git apply --directory=some/sub/dir/ --index patch &&
+-	! (git ls-files | grep delfile)
++	git ls-files >out &&
++	! grep delfile out
  '
  
--test_have_prereq GETTEXT_LOCALE &&
--test-tool regex "HALLÓ" "Halló" ICASE &&
--test_set_prereq REGEX_LOCALE
-+test_expect_success GETTEXT_LOCALE 'setup REGEX_LOCALE prerequisite' '
-+	if test-tool regex "HALLÓ" "Halló" ICASE
-+	then
-+		test_set_prereq REGEX_LOCALE
-+	else
-+		test_must_fail test-tool regex "HALLÓ" "Halló" ICASE
-+	fi
-+'
- 
- test_expect_success REGEX_LOCALE 'grep literal string, no -F' '
- 	git grep -i "TILRAUN: Halló Heimur!" &&
+ cat > patch << 'EOF'
 -- 
 2.35.1.1226.g8b497615d32
 
