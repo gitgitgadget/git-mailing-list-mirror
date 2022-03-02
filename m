@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F7D4C433EF
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 00:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7A29C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 00:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238821AbiCBA6v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Mar 2022 19:58:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55300 "EHLO
+        id S238825AbiCBA6w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Mar 2022 19:58:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238818AbiCBA6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Mar 2022 19:58:45 -0500
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B3403D483
-        for <git@vger.kernel.org>; Tue,  1 Mar 2022 16:58:02 -0800 (PST)
-Received: by mail-io1-xd36.google.com with SMTP id c14so39726ioa.12
-        for <git@vger.kernel.org>; Tue, 01 Mar 2022 16:58:02 -0800 (PST)
+        with ESMTP id S238823AbiCBA6u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Mar 2022 19:58:50 -0500
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2ED13ED35
+        for <git@vger.kernel.org>; Tue,  1 Mar 2022 16:58:06 -0800 (PST)
+Received: by mail-io1-xd31.google.com with SMTP id d19so139786ioc.8
+        for <git@vger.kernel.org>; Tue, 01 Mar 2022 16:58:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=U57WZotEOCKfboIeqgCsQcTnM0wsgdqmIpBbD+9WI7g=;
-        b=UHmlSWD6alRVXQbCxXM2ytsTEiy2cglCF63oZ/+SLo8PzaweYOHNYxrFwgYVaj1gKs
-         7P4ftzbuuTAdSXSCfzjzjszDRoYObihhxIAcUV0k9JQuXg9n7jo4peYwYVhBdi4BxZOR
-         TdecJhyT+sn1RA2wG4RSkR6TnwI4NyJEV50XqJzjoCxvVV6uprGAYIxllB1Q2SFLlu3F
-         mIND1EWXJfjVlfqOSZm0vx94rAUTclpR7Ds/9y3mHSlSlDu+Mt1dWXbVmCCp7Ataahi5
-         Jz4IhIwbveDO0SpwliEIhCVQSlfOFbW9lUEGdm67Nrog68Bhg/2opGxtn8XGSFcyjiID
-         PrVQ==
+        bh=h1/TaS4hJ7uvqeQbRpqvGUZQGPog/DBrFRJeVMB1op0=;
+        b=UN/NHbhY39ubb8pdoJyrtcQ2cjYWwxJoQQBtPEChAEFyr3mxrsoS4SCA+LssjpwP9x
+         xCaLTZ9Yp/xTW/Jm8GZqMdtt6kuFQ/UKk6HWTQodTOwcKN0MGIJN4+46k2V3jUI9925s
+         1DyMypzcieWrwvF7sbtGiqOSPrHXEZSza7EfRNz+kNTAcck/7DL/ArOMUu8/KXq5Q3e3
+         bkmkA9KYRRqTOTnmTEb2OcPUZl3f5s2qr0Ks6qhx+0dm8n4Do80bECKrwc1ICktkP+7l
+         t13KQxsBsWeH4EaRvK9nTyxArxwLUb8Rep9QXRGOKkaNW3L3epjjIr0ekUXCN0I/rHaq
+         B3xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=U57WZotEOCKfboIeqgCsQcTnM0wsgdqmIpBbD+9WI7g=;
-        b=r4VQ0jsy4QJbbC8mXSDTiIGyEWYc6stBq2woDEmsxNvMJXeJm/SK7xlae2faDypb+9
-         LOzf0B+5OMUN+yNkljLdY4BcExjx41VyOEgfv0Yi9ldO6OXcURigKvLKnsdLUJ9Dnz3i
-         071tERv3/t4zfHwUzMZ5zXjNJjsFqBp9oMhZwzYeBAXxgBbhjQXIZMKrSVLxY3zvoysO
-         QKtFmyaaZaFqomx3w7wUw3xQE5zAeRxbt5wXGMMWSeA+8EemxxtcfucU4B1Zo4Jg9S85
-         l8JxvTdjeyHIkHhHaime0Dy5rv76rxaYJYMpi4dikQQ6r3kTESr9fVXhFTa99+OZJtok
-         1R5Q==
-X-Gm-Message-State: AOAM53018l0h18/PFIyo7IKToVdcv1lpw7igbreSMZtLBIQcqok6CyGq
-        kd2WCzIYW0S45P5cKmdiA7ftfOaKUU3uxms8
-X-Google-Smtp-Source: ABdhPJzZ8qL3gf3fT3t1OHCfw38aea2R9/5HWnyoVq80c5DkZCHrilCNiG+1lfi8Z6jyJvKx5imC4w==
-X-Received: by 2002:a5d:8714:0:b0:636:13bb:bc89 with SMTP id u20-20020a5d8714000000b0063613bbbc89mr20834822iom.126.1646182681342;
-        Tue, 01 Mar 2022 16:58:01 -0800 (PST)
+        bh=h1/TaS4hJ7uvqeQbRpqvGUZQGPog/DBrFRJeVMB1op0=;
+        b=3QG4E3Q8IGyrv6pH9NLeQNAAsEXNzfgaZENRk2Q6TwV21LdxM14GlncoL6Np3vQdsf
+         +DefvcQGrZK9N8oM+OtIE134F3/q/meFjvDfEwDlDZHAMdX/5PYvbELuK7pFvZ+VcytY
+         2vxLbvJarsDN6KJbncIOVb9OtfhgGXqzTrnXr4Xz0ijMU5MovR9hkKyk5SVaszZ+oatu
+         CmKJL07eAvr0WDmBmlvP8fnbM5k5gJvDEkJOFGvVANExOhljjBFWTLrQ09E8EjxsGSWW
+         GzRBDXZQBsE389S6SM/rB6O0SaL8kjrs54uqks2AkIYR83nns0/JYcGWSXkPAsiVs3WE
+         JAAg==
+X-Gm-Message-State: AOAM533Eass/bq7HOckZkXu6YWSLxTTXy43qF2tQwRXhGn+ITdgsOoyW
+        zYDyTRZdvx6Sbg/c33MD2tmWFGo2bLJJPj3E
+X-Google-Smtp-Source: ABdhPJxV+cQJhG4SANdEUiax5E2TtVeYY8EJSd25NpquC38rio2j3KvHIoy3ZkoYhkbcrJUpr4SWVg==
+X-Received: by 2002:a02:271d:0:b0:307:ea12:ff8b with SMTP id g29-20020a02271d000000b00307ea12ff8bmr24261600jaa.274.1646182686231;
+        Tue, 01 Mar 2022 16:58:06 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a6-20020a92d346000000b002c1a6040691sm8757506ilh.70.2022.03.01.16.58.01
+        by smtp.gmail.com with ESMTPSA id e23-20020a6b5017000000b00635b8032d45sm7918049iob.22.2022.03.01.16.58.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Mar 2022 16:58:01 -0800 (PST)
-Date:   Tue, 1 Mar 2022 19:58:00 -0500
+        Tue, 01 Mar 2022 16:58:05 -0800 (PST)
+Date:   Tue, 1 Mar 2022 19:58:05 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     tytso@mit.edu, derrickstolee@github.com, gitster@pobox.com,
         larsxschneider@gmail.com
-Subject: [PATCH v2 01/17] Documentation/technical: add cruft-packs.txt
-Message-ID: <784ee7e0eec9ba520ebaaa27de2de810e2f6798a.1646182671.git.me@ttaylorr.com>
+Subject: [PATCH v2 03/17] pack-write: pass 'struct packing_data' to
+ 'stage_tmp_packfiles'
+Message-ID: <a94d7dfeb3fb847c3ad10e5b227344c5980defeb.1646182671.git.me@ttaylorr.com>
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1646182671.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -64,132 +65,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a technical document to explain cruft packs. It contains a brief
-overview of the problem, some background, details on the implementation,
-and a couple of alternative approaches not considered here.
+This structure will be used to communicate the per-object mtimes when
+writing a cruft pack. Here, we need the full packing_data structure
+because the mtime information is stored in an array there, not on the
+individual object_entry's themselves (to avoid paying the overhead in
+structure width for operations which do not generate a cruft pack).
+
+We haven't passed this information down before because one of the two
+callers (in bulk-checkin.c) does not have a packing_data structure at
+all. In that case (where no cruft pack will be generated), NULL is
+passed instead.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/Makefile                  |  1 +
- Documentation/technical/cruft-packs.txt | 97 +++++++++++++++++++++++++
- 2 files changed, 98 insertions(+)
- create mode 100644 Documentation/technical/cruft-packs.txt
+ builtin/pack-objects.c | 3 ++-
+ bulk-checkin.c         | 2 +-
+ pack-write.c           | 1 +
+ pack.h                 | 3 +++
+ 4 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index ed656db2ae..0b01c9408e 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -91,6 +91,7 @@ TECH_DOCS += MyFirstContribution
- TECH_DOCS += MyFirstObjectWalk
- TECH_DOCS += SubmittingPatches
- TECH_DOCS += technical/bundle-format
-+TECH_DOCS += technical/cruft-packs
- TECH_DOCS += technical/hash-function-transition
- TECH_DOCS += technical/http-protocol
- TECH_DOCS += technical/index-format
-diff --git a/Documentation/technical/cruft-packs.txt b/Documentation/technical/cruft-packs.txt
-new file mode 100644
-index 0000000000..2c3c5d93f8
---- /dev/null
-+++ b/Documentation/technical/cruft-packs.txt
-@@ -0,0 +1,97 @@
-+= Cruft packs
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 178e611f09..385970cb7b 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1254,7 +1254,8 @@ static void write_pack_file(void)
+ 
+ 			stage_tmp_packfiles(&tmpname, pack_tmp_name,
+ 					    written_list, nr_written,
+-					    &pack_idx_opts, hash, &idx_tmp_name);
++					    &to_pack, &pack_idx_opts, hash,
++					    &idx_tmp_name);
+ 
+ 			if (write_bitmap_index) {
+ 				size_t tmpname_len = tmpname.len;
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 8785b2ac80..99f7596c4e 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -33,7 +33,7 @@ static void finish_tmp_packfile(struct strbuf *basename,
+ 	char *idx_tmp_name = NULL;
+ 
+ 	stage_tmp_packfiles(basename, pack_tmp_name, written_list, nr_written,
+-			    pack_idx_opts, hash, &idx_tmp_name);
++			    NULL, pack_idx_opts, hash, &idx_tmp_name);
+ 	rename_tmp_packfile_idx(basename, &idx_tmp_name);
+ 
+ 	free(idx_tmp_name);
+diff --git a/pack-write.c b/pack-write.c
+index a5846f3a34..d594e3008e 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -483,6 +483,7 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 			 const char *pack_tmp_name,
+ 			 struct pack_idx_entry **written_list,
+ 			 uint32_t nr_written,
++			 struct packing_data *to_pack,
+ 			 struct pack_idx_option *pack_idx_opts,
+ 			 unsigned char hash[],
+ 			 char **idx_tmp_name)
+diff --git a/pack.h b/pack.h
+index b22bfc4a18..fd27cfdfd7 100644
+--- a/pack.h
++++ b/pack.h
+@@ -109,11 +109,14 @@ int encode_in_pack_object_header(unsigned char *hdr, int hdr_len,
+ #define PH_ERROR_PROTOCOL	(-3)
+ int read_pack_header(int fd, struct pack_header *);
+ 
++struct packing_data;
 +
-+The cruft packs feature offer an alternative to Git's traditional mechanism of
-+removing unreachable objects. This document provides an overview of Git's
-+pruning mechanism, and how a cruft pack can be used instead to accomplish the
-+same.
-+
-+== Background
-+
-+To remove unreachable objects from your repository, Git offers `git repack -Ad`
-+(see linkgit:git-repack[1]). Quoting from the documentation:
-+
-+[quote]
-+[...] unreachable objects in a previous pack become loose, unpacked objects,
-+instead of being left in the old pack. [...] loose unreachable objects will be
-+pruned according to normal expiry rules with the next 'git gc' invocation.
-+
-+Unreachable objects aren't removed immediately, since doing so could race with
-+an incoming push which may reference an object which is about to be deleted.
-+Instead, those unreachable objects are stored as loose object and stay that way
-+until they are older than the expiration window, at which point they are removed
-+by linkgit:git-prune[1].
-+
-+Git must store these unreachable objects loose in order to keep track of their
-+per-object mtimes. If these unreachable objects were written into one big pack,
-+then either freshening that pack (because an object contained within it was
-+re-written) or creating a new pack of unreachable objects would cause the pack's
-+mtime to get updated, and the objects within it would never leave the expiration
-+window. Instead, objects are stored loose in order to keep track of the
-+individual object mtimes and avoid a situation where all cruft objects are
-+freshened at once.
-+
-+This can lead to undesirable situations when a repository contains many
-+unreachable objects which have not yet left the grace period. Having large
-+directories in the shards of `.git/objects` can lead to decreased performance in
-+the repository. But given enough unreachable objects, this can lead to inode
-+starvation and degrade the performance of the whole system. Since we
-+can never pack those objects, these repositories often take up a large amount of
-+disk space, since we can only zlib compress them, but not store them in delta
-+chains.
-+
-+== Cruft packs
-+
-+A cruft pack eliminates the need for storing unreachable objects in a loose
-+state by including the per-object mtimes in a separate file alongside a single
-+pack containing all loose objects.
-+
-+A cruft pack is written by `git repack --cruft` when generating a new pack.
-+linkgit:git-pack-objects[1]'s `--cruft` option. Note that `git repack --cruft`
-+is a classic all-into-one repack, meaning that everything in the resulting pack is
-+reachable, and everything else is unreachable. Once written, the `--cruft`
-+option instructs `git repack` to generate another pack containing only objects
-+not packed in the previous step (which equates to packing all unreachable
-+objects together). This progresses as follows:
-+
-+  1. Enumerate every object, marking any object which is (a) not contained in a
-+     kept-pack, and (b) whose mtime is within the grace period as a traversal
-+     tip.
-+
-+  2. Perform a reachability traversal based on the tips gathered in the previous
-+     step, adding every object along the way to the pack.
-+
-+  3. Write the pack out, along with a `.mtimes` file that records the per-object
-+     timestamps.
-+
-+This mode is invoked internally by linkgit:git-repack[1] when instructed to
-+write a cruft pack. Crucially, the set of in-core kept packs is exactly the set
-+of packs which will not be deleted by the repack; in other words, they contain
-+all of the repository's reachable objects.
-+
-+When a repository already has a cruft pack, `git repack --cruft` typically only
-+adds objects to it. An exception to this is when `git repack` is given the
-+`--cruft-expiration` option, which allows the generated cruft pack to omit
-+expired objects instead of waiting for linkgit:git-gc[1] to expire those objects
-+later on.
-+
-+It is linkgit:git-gc[1] that is typically responsible for removing expired
-+unreachable objects.
-+
-+== Alternatives
-+
-+Notable alternatives to this design include:
-+
-+  - The location of the per-object mtime data, and
-+  - Storing unreachable objects in multiple cruft packs.
-+
-+On the location of mtime data, a new auxiliary file tied to the pack was chosen
-+to avoid complicating the `.idx` format. If the `.idx` format were ever to gain
-+support for optional chunks of data, it may make sense to consolidate the
-+`.mtimes` format into the `.idx` itself.
-+
-+Storing unreachable objects among multiple cruft packs (e.g., creating a new
-+cruft pack during each repacking operation including only unreachable objects
-+which aren't already stored in an earlier cruft pack) is significantly more
-+complicated to construct, and so aren't pursued here. The obvious drawback to
-+the current implementation is that the entire cruft pack must be re-written from
-+scratch.
+ struct hashfile *create_tmp_packfile(char **pack_tmp_name);
+ void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 			 const char *pack_tmp_name,
+ 			 struct pack_idx_entry **written_list,
+ 			 uint32_t nr_written,
++			 struct packing_data *to_pack,
+ 			 struct pack_idx_option *pack_idx_opts,
+ 			 unsigned char hash[],
+ 			 char **idx_tmp_name);
 -- 
 2.35.1.73.gccc5557600
 
