@@ -2,77 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C79FC433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 09:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD533C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 09:36:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbiCBJ32 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 04:29:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36350 "EHLO
+        id S240554AbiCBJgo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 04:36:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238149AbiCBJ30 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 04:29:26 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74262C111
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 01:28:43 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id 15-20020a17090a098f00b001bef0376d5cso1259504pjo.5
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 01:28:43 -0800 (PST)
+        with ESMTP id S229720AbiCBJgn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 04:36:43 -0500
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F36B7C61
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 01:36:00 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id y11so862746eda.12
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 01:36:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:from:to:subject:references
-         :in-reply-to:content-transfer-encoding;
-        bh=LxjKWHVafcvguU6Jtd3ORtp5KWuQXMPVILFGhvTam6w=;
-        b=HCbWDsKYFqK8hJlKNqSeF0IeUEx0wD5fRsqdvvU/IuVVV5o/h89il9s5thqL+Vht1G
-         PP/HfBKEF4lYKB1IFBrnfBtoKFy1WamHk+VLa9Xm8PNuSdCWNMPWjxeTI3poLtp3WTLH
-         Beh2AiSFJwXD06ZV8dGKKdtrTMN4ezfGoyuJnYQ9417KruSFcW24ihYkmXZzwp4k+3ZI
-         rbTR+bOWYa2jp9ypM94EMjmqQWzezWFWQnkpuIXKP3AV57jHX7GghrVbJCwct/45bhXT
-         QU/PVijuqzd9KOKnlXvBCszNmiEVVcEhb2pMtxzPmlNxi6zgIU672F3iZMloZaiLiXYU
-         9A8Q==
+        d=klerks-biz.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=bUhJsGi7EuhS9BjaisZqDy7mDtedCQAMHLmM4aC6flg=;
+        b=PZseYvAXLdXSyqFIUWziqQvMkOzlFvKGHy8CNVxG09QWIiPqe+HDqRVK8u9cO0NuLh
+         Kwy4GStnV8Slqg5b8oJbFpdIjdwD2aYJbpA7hgEPcBkOI7cnqjzMxgYGWruaSuBqBpGC
+         K2qsEEaJmum3swiO3DSg8CWseTmQlDuaMtf0LkGpLFzHnkMRgwPnGL/7QpI0P2gY3Nhv
+         An+6D1ovxWG8UX29ODtVt3LEH/qScZRWPCuvCMNJqCYujK1SvYFOFVIRbvPATfteaeV4
+         yDjyllp2TJW3FsvEZKIeYy/HsFCmVQhZNbfNJKg5zQgazTDM0FaOkDHSJn2lD+GUfFll
+         xYtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:from:to
-         :subject:references:in-reply-to:content-transfer-encoding;
-        bh=LxjKWHVafcvguU6Jtd3ORtp5KWuQXMPVILFGhvTam6w=;
-        b=75XFNky44YCIaSvfG2XCcxp3nRwrhA94p4CLS8f3RDMtFi27h78RJXNTBh6vJ+LV7/
-         tyILOPO4unOcpeIBwjVpunlYF/KprJfz9mP9eUq/RXe90UhXZhYrH414ldAGd1nHvWt4
-         6Nd6HsS/wbRZA/e8QyfyY3DQRJLvfJMmVJp4htrzwJbZUD7tAFwAO49C0CIAMKeiLzbM
-         7Ac5MBMDk+DKS4Ut11S6wJKKbYyVL+xEnKn5BN/12GzsaVxr9UeZZ777oeCaaqaIVgTe
-         XR9Z8MOc9YqZhkzpO0NAzG0HLNxBekfJ+1RfhOvKiJImmfYZ7f2oQP/BboKMVCq9a6Wd
-         IWUQ==
-X-Gm-Message-State: AOAM532YFeGsP62p9gtZzMY+2sh3BqnmKYFiPS27DJjRrvZvczLbcR2D
-        +b4AP+HDqCoNG8yn9Xk/VxA=
-X-Google-Smtp-Source: ABdhPJzq0/Mkh+mzgZAbe3MTHA2Rr1QkT5EiCFQiHTdSUHEqefw5ZougN6unx8ffovWwBDXJVEhhUw==
-X-Received: by 2002:a17:90a:df16:b0:1bc:46ce:636a with SMTP id gp22-20020a17090adf1600b001bc46ce636amr26126839pjb.155.1646213323429;
-        Wed, 02 Mar 2022 01:28:43 -0800 (PST)
-Received: from ?IPV6:2405:201:a800:4df9:6560:dadc:f905:6d19? ([2405:201:a800:4df9:6560:dadc:f905:6d19])
-        by smtp.gmail.com with ESMTPSA id 142-20020a621894000000b004dfc714b076sm20752512pfy.11.2022.03.02.01.28.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Mar 2022 01:28:43 -0800 (PST)
-Message-ID: <e3996526-e3c7-7126-e8c6-4868c8e07f27@gmail.com>
-Date:   Wed, 2 Mar 2022 14:58:38 +0530
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bUhJsGi7EuhS9BjaisZqDy7mDtedCQAMHLmM4aC6flg=;
+        b=OxGpPfbGfBxh/Uv43n97pmdMUJ1YVMB2MrmEczIauSsct7v38X/tSsFv+UBaSDfwMS
+         w9JafGJZJSxRHI76jcB5ldRR8WH2g3SoNgX28MQRRekyI3Mu6iqdjrcJU6xMf+jwQfqA
+         oy2pEe2EjxU7rNHrMyDgHFi9kvgOgr2T2zRlGoJrD+Zqat2tTgBKNJbGeMJ+6isJ4Rq8
+         bDEIXAvSmgB5+0XTHib6xuSlDC5j+NAkYCr/xIsGpgdDlVLf2lz+shQ6UEBWhmJijBCX
+         8cr3InZITWFQH5cyN/EM8IpcdK9KUkEld7zTYn2YfVkz0Dh2Wdqq8bg5nFqmaV9u1+QV
+         1xrQ==
+X-Gm-Message-State: AOAM530KVALmhnuQ8JIIDB1uZXPY2aM182iD20Xzu6hiboO6aY4oQs9X
+        krwofwrkZwgu4SLGAxq4geS/08w8yeB2hyLEbl4IyQ==
+X-Google-Smtp-Source: ABdhPJy0yH0FEYIzDwD57f3WQ12UAofxWandOQXtk/e5ilOrsnU55d5h5z1JF31lkrAVfeXk+rYUIhmsZ5WweM9D2+0=
+X-Received: by 2002:a50:fc05:0:b0:408:4d18:5070 with SMTP id
+ i5-20020a50fc05000000b004084d185070mr28630812edr.365.1646213758614; Wed, 02
+ Mar 2022 01:35:58 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-From:   jaydeepjd.8914@gmail.com
-To:     jaydeepjd.8914@gmail.com, Johannes Sixt <j6t@kdbg.org>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] userdiff: add builtin driver for kotlin language
-References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
- <20220302064504.2651079-1-jaydeepjd.8914@gmail.com>
- <20220302064504.2651079-2-jaydeepjd.8914@gmail.com>
- <34a2ad39-604c-4edd-ea1c-de1212fc506b@kdbg.org>
- <f16cf3aa-dbae-8645-1d59-a8d5639d22fc@gmail.com>
-In-Reply-To: <f16cf3aa-dbae-8645-1d59-a8d5639d22fc@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1161.v2.git.1645815142.gitgitgadget@gmail.com>
+ <pull.1161.v3.git.1646032466.gitgitgadget@gmail.com> <0b5d47895120539d6a72a91398f33a0e33df7cd5.1646032466.git.gitgitgadget@gmail.com>
+ <220228.86k0df5key.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220228.86k0df5key.gmgdl@evledraar.gmail.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Wed, 2 Mar 2022 10:35:47 +0100
+Message-ID: <CAPMMpoi9gQscSQ5Xn1xTb6WaCXu+qR67DJh9nCbqN0jp7-b_5A@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] merge: new autosetupmerge option 'simple' for
+ matching branches
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Feb 28, 2022 at 11:56 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Mon, Feb 28 2022, Tao Klerks via GitGitGadget wrote:
+>
+> I think squashing 2/2 inot this would make this much easier to follow,
+> i.e. to have tests along with the new feature.
+>
 
+OK! Doing.
 
-On 3/2/22 2:39 PM, jaydeepjd.8914@gmail.com wrote:
+> > +     /*
+> > +      * This check does not apply to the BRANCH_TRACK_INHERIT
+> > +      * option; you can inherit one or more tracking entries
+> > +      * and the tracking.matches counter is not incremented.
+> > +      */
+> >       if (tracking.matches > 1)
+> >               die(_("not tracking: ambiguous information for ref %s"),
+> >                   orig_ref);
+>
+> This function is the only user of find_tracked_branch(). For e.g. "git
+> checkout we emit";
+>
+>     fatal: builtin/checkout.c:1246: 'foo' matched multiple (4) remote tra=
+cking branches
+>
+> Perhaps we can do something similar here
 
-> `0x0F` indicates that its a hexadecimal literal in Kotlin.
+I'm not sure what you're pointing to specifically - the fact that the
+checkout message provides a count? If so I guess I understand/agree,
+find_tracked_branch() could be enhanced to keep counting rather than
+exiting at the first sign of trouble, to support such a
+slightly-more-explicit message here.
 
+I'm not convinced that this situation is common enough to warrant
+change: mapping multiple remotes to the same remote-tracking path
+seems like a strange setup - is this something we recommend or
+document anywhere? maybe to have 2 "remotes" that correspond to the
+same server over different protocols appear as one set of tracking
+branches?
 
-My bad. It was wrong. Hexadecimals are prefixed with 0xFF. I will fix it.
+On the other hand I am of course happy to make things better if we
+think this will do that!
+
+> even with some advise()
+> emit information about what other branches conflicted.
+
+I believe the conflict is not about different "branches" exactly, but
+about *refspecs* that map to the tracking branch.
+
+If I understand correctly this change would entail creating a new
+advice type (and documenting it), and figuring out what the advice
+should look like - something like "find and disambiguate your fetch
+refspecs to enable auto tracking setup! If you want to keep your
+ambiguous refspecs, set auto tracking setup to false!" - but nicer :)
+
+>
+> > +     if (track =3D=3D BRANCH_TRACK_SIMPLE) {
+> > +             /*
+> > +              * Only track if remote branch name matches.
+> > +              * Reaching into items[0].string is safe because
+> > +              * we know there is at least one and not more than
+> > +              * one entry (because not BRANCH_TRACK_INHERIT).
+> > +              */
+> > +             const char *tracked_branch;
+> > +             if (!skip_prefix(tracking.srcs->items[0].string,
+> > +                              "refs/heads/", &tracked_branch) ||
+> > +                 strcmp(tracked_branch, new_ref))
+> > +                     return;
+> > +     }
+> > +
+>
+> I wondered when reading this if there isn't a way to merge this and the
+> "branch_get" call made in "inherit_tracking" earlier in this function in
+> the "track !=3D BRANCH_TRACK_INHERIT" case.
+>
+> But maybe not, and that whole API entry point is a bit messy in needing
+> to cover both the use-case of an existing branch & nonexisting
+> (i.e. initial creation).
+
+Hmm, I had a hard time understanding this comment. I *think* you were
+saying "why don't you use an existing API to get the full ref name of the
+new local branch, and compare that to the full name of the remote
+branch you already have, rather than messing with a "refs/heads/"
+prefix explicitly/redundantly"... Is that right?
