@@ -2,85 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B37C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 18:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3E79C433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 18:57:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244735AbiCBSzW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 13:55:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48766 "EHLO
+        id S244763AbiCBS6Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 13:58:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237134AbiCBSzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 13:55:20 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 514AFCD5C1
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 10:54:36 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id s5so2580607oic.10
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 10:54:36 -0800 (PST)
+        with ESMTP id S229973AbiCBS6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 13:58:22 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9570C2E6B7
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 10:57:38 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id a8so5692831ejc.8
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 10:57:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :references:from:in-reply-to:content-transfer-encoding;
-        bh=NgEg7+NRUu2KXXJ9gzyhd1iMRVcwWO9YZmsdIrECq5A=;
-        b=iAv/rWTA3SMRnFHExlDTzNZsTKoljWRO3YHaREbt3J81UDvFEs2FElnr8D+kCBpLxI
-         sTsGSWjurYprSD938D8mN/03Uwx/DdnJ5H5xmk+qTNWyFMVGSXoyEbAQpALvwwoJ7skr
-         wdD32mbGsJJ0SA8l/v6Zq9NcdcbwuoNk9dVIeDwZ7JXdR0lCurVaUI4kvxpF8TnRkVbq
-         4Gx2/pyOAUjUAHq8eCr/igTIvOnGk1VNpfX76U1kfZ9zKds3KxOlVPHMWGVuzHNxufPu
-         mlr4G/jx9FsQNHFh499+I6Sih0NJZt/xtLRG4a2lr8dsH+Cs0p7H0ldpHh3Yc6w/IdP/
-         BLDw==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=nh+chtN4z+LQeWiohJ3W79mO+UT8iZ5W3TKTG2oUN+E=;
+        b=baOOFIMf6dL9Z5jP1p+SqLsRbuR1eENWqAtBuUq6yEulGCUL+H9cXkOUMoeUWfVaup
+         rZq3Bs9OCmu+Bcceo9Nws2fFE8dBGlBHLnLIZE0WJMMZyHYfsBdfl56LrzzRqYkmAcox
+         FgbBnGZUeoBFxV0hV9rzf3cSZ4X3ZKaMEDCChPsd95mp9HT0Ys+r480tnTcAMhA6940J
+         eIyAmgb/aeoLTRCyISVibdXUFZB6bI76pETBqQuJm9QekRYAbnAB5NqRbZwLjNLK/SPT
+         8zp1olerw0DuyglAbtyKVWa3yRz811YGe2m4rdUZMEGCCeMUqXvLenJ/XfyNfH3485AA
+         ouWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=NgEg7+NRUu2KXXJ9gzyhd1iMRVcwWO9YZmsdIrECq5A=;
-        b=5isZQPzEGOvgIpNRyzj/ggiIuuRgyY0eTiJaG1AXtAuq9T3q8osa3bPHPzCN+Bvwvs
-         O6EhtxdHrP77ZVoOpyV1A4/ytvBsRpsZGKPk29UF0PD9nKrzG7aTRzk1xUV1f/Hv1LYo
-         jL3+5M7MgQUI8c17fS0D0xqeN88aH0M3z0ij5dI/+C6doQb30HoeQNgNVAdLt4ZJUVRh
-         TPO75Ib1J62Lk8/gGFIzMPZ4ADmFtPggGMnK7XUmI1SKrOEU9mtTP5U8GSwSZVFgNMzH
-         q+wpRXuVOImNpYEc+0IZkCnr/jNaAwvuCay7LjxE+9RGVEn1aX1y/TEj60KJRwUMqWo7
-         F/MA==
-X-Gm-Message-State: AOAM532MHNvQuTrKp1JJcoWwAyhDcDXYRi4UY3oZIfYwp60W8Kf9+Mfs
-        mfSH9qnNRQ5uzRP0qaQmXxiCWxCMH8gS
-X-Google-Smtp-Source: ABdhPJxzxIfkK2TgWp01S6+oBrmTBgMkBzfwzfql6CEXd8UqotwHM8Ei9sW0//EvhOanmoVw30OA7w==
-X-Received: by 2002:a05:6808:1801:b0:2d7:206e:36fd with SMTP id bh1-20020a056808180100b002d7206e36fdmr1183302oib.3.1646247275728;
-        Wed, 02 Mar 2022 10:54:35 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id w11-20020a4a274b000000b0031c10e27c1esm7809479oow.3.2022.03.02.10.54.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Mar 2022 10:54:35 -0800 (PST)
-Message-ID: <49c21bac-0543-7c3e-33f2-d36cdac87362@github.com>
-Date:   Wed, 2 Mar 2022 13:54:34 -0500
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=nh+chtN4z+LQeWiohJ3W79mO+UT8iZ5W3TKTG2oUN+E=;
+        b=ouPMSAR1yu72kmITGfoHR8fhXpMheiZviDsK8sywR4vpoEfi3rIqshUQw60wB12loP
+         KK7kjkyOogYejt8ZpdFE08rBteU0lWXvq5mtp6fKrjxmmBuozJgzB3JV5zUDwWrSxJV1
+         OZ/yhic+yy6nu/v1exKRJkVwkC3ZVXsGOdrrQ5b0phZPXGNi0eOSFCHZe6tStCtO1UoA
+         SvtwLmw81GilGsosHJUiLcPKL2KsfMOhbogLSaFFhbT9qsgN+Pi/JNAzEzOEiTFKVs9t
+         xop2246xQ7fi9PGcxR3jkLgqcRrIBKGq9C1SnZDgLev9MYzjBjxO4avyjxyOm0IRI5nv
+         IREQ==
+X-Gm-Message-State: AOAM5317qv20SAV7V5lWMSuuhj/l4I8MGokXIdtAw/Hh+tEmWmzjeZ0q
+        ZqABtGbECptWV0bEv38iI2gSMSoyzXOTGw==
+X-Google-Smtp-Source: ABdhPJyVilcSb3MF0zZmonZUFT/g2WehDxBIYWklnzMKoKMPdZU5siljlQSGmUDcQo2GdSyhRCrEfA==
+X-Received: by 2002:a17:907:94cd:b0:6d9:89e1:3036 with SMTP id dn13-20020a17090794cd00b006d989e13036mr3946699ejc.231.1646247456819;
+        Wed, 02 Mar 2022 10:57:36 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id n4-20020a056402060400b00415a1f9a4dasm1620401edv.91.2022.03.02.10.57.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Mar 2022 10:57:35 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nPUAI-000Ihf-QR;
+        Wed, 02 Mar 2022 19:57:34 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     John Cai <johncai86@gmail.com>
+Cc:     git@vger.kernel.org,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 0/3] libify reflog
+Date:   Wed, 02 Mar 2022 19:55:52 +0100
+References: <pull.1218.v2.git.git.1645554651.gitgitgadget@gmail.com>
+ <pull.1218.v3.git.git.1645817452.gitgitgadget@gmail.com>
+ <YhkwG5JGNKB2yl3i@nand.local>
+ <69041BB1-569D-4462-A1CE-2F1BDA9A76C0@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <69041BB1-569D-4462-A1CE-2F1BDA9A76C0@gmail.com>
+Message-ID: <220302.86a6e86v35.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v2 0/5] fetch: more optimizations for mirror fetches
-Content-Language: en-US
-To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1645619224.git.ps@pks.im> <cover.1646127015.git.ps@pks.im>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <cover.1646127015.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/1/2022 4:33 AM, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this is another patch series with the aim to speed up mirror fetches. It
-> applies on top of e6ebfd0e8c (The sixth batch, 2022-02-18) with
-> 3824153b23 (Merge branch 'ps/fetch-atomic' into next, 2022-02-18) merged
-> into it to fix a conflict.
-> 
-> The only change compared to v2 is an update to the benchmarks so that
-> they're less verbose, as proposed by Derrick. I also had a look at
-> introducing a new helper `parse_object_probably_commit()`, but I didn't
-> find the end result to be much of an improvement compared to the ad-hoc
-> `lookup_commit_in_graph() || parse_object()` dance we do right now.
 
-I'm satisfied that you tried the helper idea. This version
-looks good to me.
+On Wed, Mar 02 2022, John Cai wrote:
 
-Thanks,
--Stolee
+> Just wanted to bump this thread. It'd be good to get another ack on these
+> last set of changes.
+
+Hi. Sorry that I didn't look at it earlier.
+
+This looks good to me and I think everything that's been brought up has
+been addressed.
+
+I left a nit on 1/3 suggesting a way to make that diff a bit smaller by
+using a subshell instead of refactoring an existing function.
+
+But I think with or without that & a ro-roll this would be good to
+advance to "next" etc.
+
+Thanks!
+
