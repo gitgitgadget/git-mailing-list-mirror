@@ -2,83 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60D0AC433EF
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 23:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 031D2C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:01:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229843AbiCBX7O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 18:59:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44180 "EHLO
+        id S229906AbiCCABz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 19:01:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229862AbiCBX7N (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 18:59:13 -0500
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11A845D648
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 15:58:28 -0800 (PST)
-Received: by mail-qt1-x833.google.com with SMTP id s15so3220820qtk.10
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 15:58:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=e5wQrAfek/p82DAlMLvTvPmOi0zWUjpQsn7qt5hDdWs=;
-        b=U4FdXlEwaIcxoOvlGHRH7xhCm0iCnS0AjQ7xhSiu3mzGpHkgcnsx7VZ9MXQwghamLF
-         bE5gXjCY/KkNhYViWIsQGJd/GElt+U5yqTiFIysd17JQ26dQm81o9edXFjS41zM1ecod
-         TiFtyFPixZnnPovIqS3LBjhYydCKiqFebZLB1p0NYBB/O3Tvn11RNXF4KhMFn2mgWe2C
-         Vr+cSQJqlGMrV6VIZIuyDQ+qaHdTQF0OrrFADyUyB74Eji1L8IRAIbvhMpBnFRKpMbbd
-         jxJFzD5TNhe0hLfdcUoSWM49BAtJ5dErM4Y3rLwutwvN8X5gdSblcsAnTHLgC4FC8/9L
-         ywRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=e5wQrAfek/p82DAlMLvTvPmOi0zWUjpQsn7qt5hDdWs=;
-        b=Sjy8YRkuR9yytB1F1OAjEFGhE89HVjIfb1kxr+zrG/0iY9HeSaJijL3alSKWuILdTO
-         NqAGWzl5nQN0ektRXrpqMjvQHQ9IxEFJwWbZ+DggahExVXJCi3rMvevaTuyVYb6OoT3M
-         OGhUgrnW+RilCFloviDHTRPfY22Im/uS7jccPhPdyVPFFsWhc7Z1rASlN4iDaQsp20gx
-         621ErsfXHGJEo6cDGoX61RivKFNsoEHWauiiz1lNJ5Ev3KlPlOqMJ79P9aoGAu4LRUko
-         OJbQSbA/+En7iETpMf6KXQcNNJguxGnilHjl8zlha06LnDyRuKRb9E0nCEtYwmyvx9LY
-         VY2A==
-X-Gm-Message-State: AOAM533VapcVmTAcg6zYfg+G9yVA1pWrRgzxYz0UzcQtTYkJHJ+4/3+m
-        862Pso1sE/m0SOVC7uJBEXRjukxtfuDCxm7T
-X-Google-Smtp-Source: ABdhPJwglr5D1D80WwpoSVk83aV//0HZfTCkkkbsGcT1XOtKEnlfpdZyoXg2CZb+S4zAsH80dPmpMA==
-X-Received: by 2002:a02:a797:0:b0:314:c435:12fd with SMTP id e23-20020a02a797000000b00314c43512fdmr25601178jaj.190.1646261823115;
-        Wed, 02 Mar 2022 14:57:03 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f4-20020a92b504000000b002c21ef70a81sm243989ile.7.2022.03.02.14.57.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 14:57:02 -0800 (PST)
-Date:   Wed, 2 Mar 2022 17:57:02 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] builtin/remote.c: show progress when renaming remote
- references
-Message-ID: <Yh/2Pkc493ABWv46@nand.local>
-References: <70a0325ca8ab0492a9b0873ee3fba576c5ab90b9.1646173186.git.me@ttaylorr.com>
- <Yh/t3HfKiEMx957i@camp.crustytoothpaste.net>
+        with ESMTP id S229921AbiCCABy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 19:01:54 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38CCC3EA9D
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:01:08 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AE838182410;
+        Wed,  2 Mar 2022 18:23:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=/KEcMs32YaRz
+        Ogk9E6BZ+ZZ0m9WIgBtJf9Y/WHPg5wA=; b=xmGqch7BQvt4of3itD+f0O/Oqccl
+        WsuWazlNl792gZsjcBb0yks+0rdUDdquAOXpWfadLyOknrJVn5Dx9APCJ7IYxNt/
+        /nN6ab15VbSJCM7KOSuR7utw2oykuIzkwxuwnzlGa6Kd6Rd1azKmRH6g8V1SoCBz
+        Q+30wvFcG29lHDg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A756418240E;
+        Wed,  2 Mar 2022 18:23:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 2677518240D;
+        Wed,  2 Mar 2022 18:23:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Shubham Mishra <shivam828787@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 00/15] tests: don't ignore "git" exit codes
+References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
+Date:   Wed, 02 Mar 2022 15:23:22 -0800
+In-Reply-To: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 2 Mar
+ 2022 18:27:09
+        +0100")
+Message-ID: <xmqqy21sey6t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Yh/t3HfKiEMx957i@camp.crustytoothpaste.net>
+X-Pobox-Relay-ID: C10899EE-9A7F-11EC-A0A6-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 02, 2022 at 10:21:16PM +0000, brian m. carlson wrote:
-> For context, I discovered this when I tried to rename a remote with tens
-> of thousands of branches and it just ran silently for an extended period
-> of time without any output.  I actually interrupted it with Ctrl-C
-> because I thought it had hung, so I'm hoping this will provide a better
-> experience for users in that situation.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Thanks again for pointing it out to me. To be honest, I'm skeptical that
-this patch alone will improve things much, since you still have to pass
-the '-v' flag to see the new progress meter.
+> This series fixes issues where we ignored the exit code of "git" due
+> to it being on the LHS of a pipe, or because we interpolated its
+> output with $() in a "test" construct, or had missing &&- chains in
+> helper functions etc.
 
-But perhaps users who suspect the command is hung will re-run it with
-the '-v' flag instinctually and get more helpful output. I'll look at
-making `git remote`'s `-v` behave a little more like `--[no-]progress'
-in another series.
+Thanks.  I've looked at all the steps, left some comments, and it
+was a pleasant read overall.  Writing and reviewing all these
+changes, both of us must have too much time on our hands ;-)
 
-Thanks,
-Taylor
+Will queue.
