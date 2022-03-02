@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7BF3C433FE
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 17:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6218DC433F5
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 17:10:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243668AbiCBRLR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 12:11:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55934 "EHLO
+        id S243670AbiCBRLT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 12:11:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243659AbiCBRLO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 12:11:14 -0500
+        with ESMTP id S243657AbiCBRLN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 12:11:13 -0500
 Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70A2B4C7AF
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 09:10:30 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id a5-20020a05600c224500b003832be89f25so1683447wmm.2
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 09:10:30 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CF1040936
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 09:10:29 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id p184-20020a1c29c1000000b0037f76d8b484so1662194wmp.5
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 09:10:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+HG9Hm146CEQQjR32qq3KjXs0RGFYK03/Q7VHDWUO3I=;
-        b=PWQt9h4AQEP6WprnWNPz1QL7nQc1Bevij9h3jsPVsxiAZgH/ChsQNbV/K4bqS4B2fD
-         X3Xqfd12ZU536FeOZFNN0NSm8mAo0s0fu//xUrO5QE90SPjJpEqhnLr7lV6xc28EHk2Z
-         XmkOfC2MknYYys4mDGuL4+FHQ+6R5dWQ22ePNzgmHVyPFRTTgvCQenPB5O6yF1hIsNkB
-         cMA3tBTujwvwQ3sMeIONJmGUQXqdl+mGa5J6w8+rGnr8qDKXE23LRjejUT6HLEH1CkEz
-         AnIGOFqM/CzTa4CjX3GzgsYT+kPEPAiRpn8xTXCAazvSoPCfPsU+16XQoXTw2p+ZntMF
-         tkoA==
+        bh=Gc3ut0ZvXd8IXWygrBAOEm8lNr2zlrd79hP19IRsVJw=;
+        b=Ac9tKtw18iTcUZerALE1vGr9aLEM8QYPEpgBhFuIlH0i7h0IaBthNH1oJ7lhH4YIeP
+         iHDWde/s+Kvjf+gWcaC0cbWmpq2SsNKeDaQmFdjOwEYJeKjPnOMl10jRshx4/ozhKFwQ
+         MGDNEUfIHWCIz/OihVktUns3bhPW6rzwxqBggUvpepwlCEc1aKaylbkrl37GMXo8wf5T
+         d1SlLUApAXCDJ0hf2c6L0Zb2IipAW7IDdFmy1VDuMIsNmAGxbLeK8KDxXjwUuKgzRz+c
+         oO5orecP2R+tFeiZSfFqFev59jbV+HhBXzgTU0CeQFCWVLkTNLg6JvPGtHBQcY/8Vueg
+         cuKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+HG9Hm146CEQQjR32qq3KjXs0RGFYK03/Q7VHDWUO3I=;
-        b=s6cMpLtbYxvKDsUotYmfZ7qxzSoRB3L8YqyyP3Y7xJLb46BfXteGkUrV3G3N5yYGWq
-         8OVkyPBxVsVhNLYduyucPTmo+tPGMY1FZ00vXy3o8zW7AnIwoQ/Z8AV32WkNUR7zNKyC
-         mxzIBtrCG9/m9hLKrIClZ3wSz4E5sLJIz8muakqCxPIuzzeLwJr98UDaTJYUyDv0aitI
-         RbdFJPX7GwifU/IGgE59XGRTjUwigz2P020c3luM7/YcPZQykhoMFDUj9FBHI4kKpWiT
-         LZkdlA3lBI7Sr8ejtkmE5Zy2jEnCIKtYZEzOXDlp8D44rfOdbIEA/nZ2mVHMdVAsAqS0
-         6jTg==
-X-Gm-Message-State: AOAM533TB0UUd4Niys88JzslWxn5Bm+voluoEX/dZAGw6+1tAFkyKwOU
-        xrIijDlijAQjh7T1DcgYS7YNDdp9j426sA==
-X-Google-Smtp-Source: ABdhPJz0szF0XcEFgvXFGZWghfjWBgp2UM3exBO6uBaI+txBYd4Qf0g/APg1/NhKHf8PKNopS7R44Q==
-X-Received: by 2002:a05:600c:4f04:b0:381:6ea1:8d7 with SMTP id l4-20020a05600c4f0400b003816ea108d7mr618881wmq.164.1646241028807;
-        Wed, 02 Mar 2022 09:10:28 -0800 (PST)
+        bh=Gc3ut0ZvXd8IXWygrBAOEm8lNr2zlrd79hP19IRsVJw=;
+        b=RUo/Sbg8GE/mCA/yLa+tZnXARN//WO/o/UNqiAxcbURV2kIJBMNJ1N3KlbHVNnorgq
+         wkDs/ZTVFrwfNFAqBf/pv9tlGbMD+dqv1QArEa/fzae+hUYwycNrlMpS86Lv0TuFzc53
+         9XFjsJqy3i81hffEqgrsQU80KPwa5hXq0U8IZVtb5jn1kj9/+UGjrmhiz0L5MZ4xPhqL
+         VUUdMhZZ1BJp3ebjxk566ra0pUKmkA/6t8UnGCg7jO+2MeaXlvbYa59MV+qvxSrG2Lpq
+         vxr+EVHS//qBpc50eDYYZz5KUShzfSNLrkozSosKOkpYiOv+Aiqcl/oICr/+Q4IfZrKU
+         K4Jw==
+X-Gm-Message-State: AOAM530Oo9o/V+Vtk2CmJA1qOmHGZnRaGmKE+aDFbX8gRxXj7+OLNY5P
+        xPzdWD1WjVnWpv/2/JL2Ba7zSjnWLsRNDQ==
+X-Google-Smtp-Source: ABdhPJyfu6V1/AgcR/f+N+rlUwLjRBCPunxXaHu8D5nYMeLT4PXO/MBBTcWluTP2SfGeDm+mgcQa8A==
+X-Received: by 2002:a7b:c216:0:b0:381:21f4:4965 with SMTP id x22-20020a7bc216000000b0038121f44965mr605102wmi.167.1646241027812;
+        Wed, 02 Mar 2022 09:10:27 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p9-20020a05600c1d8900b003813b489d75sm6178001wms.10.2022.03.02.09.10.27
+        by smtp.gmail.com with ESMTPSA id p9-20020a05600c1d8900b003813b489d75sm6178001wms.10.2022.03.02.09.10.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 09:10:28 -0800 (PST)
+        Wed, 02 Mar 2022 09:10:27 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 05/14] remote-curl.c: free memory in cmd_main()
-Date:   Wed,  2 Mar 2022 18:10:11 +0100
-Message-Id: <patch-05.14-8891fd44c7c-20220302T170718Z-avarab@gmail.com>
+Subject: [PATCH 04/14] urlmatch.c: add and use a *_release() function
+Date:   Wed,  2 Mar 2022 18:10:10 +0100
+Message-Id: <patch-04.14-7f7077e8476-20220302T170718Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1228.g56895c6ee86
 In-Reply-To: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
 References: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
@@ -66,63 +66,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Plug a trivial memory leak in code added in a2d725b7bdf (Use an
-external program to implement fetching with curl, 2009-08-05).
+Plug a memory leak in credential_apply_config() by adding and using a
+new urlmatch_config_release() function. This just does a
+string_list_clear() on the "vars" member.
 
-To do this have the cmd_main() use a "goto cleanup" pattern, and to
-return an error of 1 unless we can fall through to the http_cleanup()
-at the end.
+This finished up work on normalizing the init/free pattern in this
+API, started in 73ee449bbf2 (urlmatch.[ch]: add and use
+URLMATCH_CONFIG_INIT, 2021-10-01).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- remote-curl.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ builtin/config.c | 2 +-
+ credential.c     | 1 +
+ urlmatch.c       | 5 +++++
+ urlmatch.h       | 1 +
+ 4 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index 0dabef2dd7c..ff44f41011e 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -1472,11 +1472,12 @@ int cmd_main(int argc, const char **argv)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	int nongit;
-+	int ret = 1;
+diff --git a/builtin/config.c b/builtin/config.c
+index 542d8d02b2b..ebec61868be 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -612,7 +612,7 @@ static int get_urlmatch(const char *var, const char *url)
  
- 	setup_git_directory_gently(&nongit);
- 	if (argc < 2) {
- 		error(_("remote-curl: usage: git remote-curl <remote> [<url>]"));
--		return 1;
-+		goto cleanup;
+ 		strbuf_release(&matched->value);
  	}
+-	string_list_clear(&config.vars, 1);
++	urlmatch_config_release(&config);
+ 	string_list_clear(&values, 1);
+ 	free(config.url.url);
  
- 	options.verbosity = 1;
-@@ -1508,7 +1509,7 @@ int cmd_main(int argc, const char **argv)
- 		if (strbuf_getline_lf(&buf, stdin) == EOF) {
- 			if (ferror(stdin))
- 				error(_("remote-curl: error reading command stream from git"));
--			return 1;
-+			goto cleanup;
- 		}
- 		if (buf.len == 0)
- 			break;
-@@ -1556,12 +1557,15 @@ int cmd_main(int argc, const char **argv)
- 				break;
- 		} else {
- 			error(_("remote-curl: unknown command '%s' from git"), buf.buf);
--			return 1;
-+			goto cleanup;
- 		}
- 		strbuf_reset(&buf);
- 	} while (1);
+diff --git a/credential.c b/credential.c
+index e7240f3f636..f6389a50684 100644
+--- a/credential.c
++++ b/credential.c
+@@ -130,6 +130,7 @@ static void credential_apply_config(struct credential *c)
+ 	git_config(urlmatch_config_entry, &config);
+ 	string_list_clear(&config.vars, 1);
+ 	free(normalized_url);
++	urlmatch_config_release(&config);
+ 	strbuf_release(&url);
  
- 	http_cleanup();
-+	ret = 0;
-+cleanup:
-+	strbuf_release(&buf);
- 
--	return 0;
-+	return ret;
+ 	c->configured = 1;
+diff --git a/urlmatch.c b/urlmatch.c
+index 03ad3f30a9c..b615adc923a 100644
+--- a/urlmatch.c
++++ b/urlmatch.c
+@@ -611,3 +611,8 @@ int urlmatch_config_entry(const char *var, const char *value, void *cb)
+ 	strbuf_release(&synthkey);
+ 	return retval;
  }
++
++void urlmatch_config_release(struct urlmatch_config *config)
++{
++	string_list_clear(&config->vars, 1);
++}
+diff --git a/urlmatch.h b/urlmatch.h
+index 34a3ba6d197..9f40b00bfb8 100644
+--- a/urlmatch.h
++++ b/urlmatch.h
+@@ -71,5 +71,6 @@ struct urlmatch_config {
+ }
+ 
+ int urlmatch_config_entry(const char *var, const char *value, void *cb);
++void urlmatch_config_release(struct urlmatch_config *config);
+ 
+ #endif /* URL_MATCH_H */
 -- 
 2.35.1.1228.g56895c6ee86
 
