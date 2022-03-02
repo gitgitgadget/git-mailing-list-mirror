@@ -2,127 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DA85C433F5
-	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 22:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CA7FC433EF
+	for <git@archiver.kernel.org>; Wed,  2 Mar 2022 22:27:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239219AbiCBWWG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 17:22:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58484 "EHLO
+        id S235585AbiCBW2M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 17:28:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234048AbiCBWWF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 17:22:05 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC13BD836E
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 14:21:20 -0800 (PST)
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:a6ae:7d13:8741:9028])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 1CA5E5A0D2;
-        Wed,  2 Mar 2022 22:21:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1646259679;
-        bh=0fdreOVtQpfaq/YrzW7oBbyzOsxJk6t6/Jt0sV36At4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=mDRaKHx+cgER6E7N9XpmQhXWRlvZdrV+u24xMD7OTe3WTNij8K2ybgRg15Sb8IhYg
-         j5klaYC8PvY6GXZ4243yUhbrxtNf+HUTFIJpmt/Q/iI1Q902SGKK1kJKR8UzShLINU
-         NQzw95Y5qBSQn48prnMdj1e0RP7dLx5Y/vQABcbcmOCGj9WIRltKL3EJraoZp+pqip
-         1aLomf72QjojwrOI+jTnT6qtdYop3Fk+32bSPuljB9wf9AaujvCsdR0CKt6sfwYSH1
-         NaP/hFX6FfQlndgO0K9IN1TrZlmhLYSY7wAnH3UbldMW+gChZL5avLtbokw2ZwBLz0
-         2smoqxa7JmsCM8IJ1SWVPfUkn3QsDajGKz2QWawu+hWqyPlq3tzDP7VvS7Ad69svwI
-         QRubsX8JEQj1o1QYixzArqJ+GrzHWmfuPUFegLxykWPe63z21CI409NTL+63J1Oosl
-         Zr6SjxydADNY3jY1yiBYgKcAW1nysJAOJ8nZUj2kiuQGeoz/r57
-Date:   Wed, 2 Mar 2022 22:21:16 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] builtin/remote.c: show progress when renaming remote
- references
-Message-ID: <Yh/t3HfKiEMx957i@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        gitster@pobox.com
-References: <70a0325ca8ab0492a9b0873ee3fba576c5ab90b9.1646173186.git.me@ttaylorr.com>
+        with ESMTP id S230163AbiCBW2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 17:28:11 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A29F963BF
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 14:27:26 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id r10-20020a1c440a000000b00386f2897400so453634wma.5
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 14:27:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=eYzpzrP/68TiRV80A4vhgdDYfvp1aKOE9c4Azo+7/Yo=;
+        b=HOpYdq5ckK4EUT26BvF4VzJvGxAhLk+tUcyO8v01gTQaqvZMfz/JB1bkRgNIwBGOf1
+         W9/gmcybQqWQcxhZhGenhnXasDusSKV31JLmKjp5uAU9bGStrNwr8bU48XCb78J9iAa2
+         Lbi+yoasHRzkHBSoZ6fDJ7tkqZjnacPHCqyIRkCsXAR3wx6uziNQYq5efgCR16Xk57LG
+         KfF19yBHSYJK1J0xWfFlBCuZW/ED+cbY1gbriVtXBF4Vvs//6pGTOge2hmL+GIwGPxBx
+         bc4CfvKzUuB826oCBeFSy7HdWM0RrqnpP1oTKbwdHa52FTill87hPIwTvGhk40sdstVO
+         FWKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=eYzpzrP/68TiRV80A4vhgdDYfvp1aKOE9c4Azo+7/Yo=;
+        b=5Oj5mKT8LE8n5Mso7jTge6XheJxMucJ11eNNLPeIaNznN14SNhXSHZpdRMFa7x/RWS
+         HTyil24dueWRho4wzzCUXEXTbkuJmklQDWBKaDUqaYVNBomBDUOE4JF+aoE24h1U1wCE
+         9Yag21S+zkEiU40Ob2OtFLNWsPY4BCh7ZeWFtk5flsAEjix4+U1xZrKOQKw2DHrxlbBs
+         EHFMM2U5J9XFtxQph5pidlkD8MyHkG6Vw+ptiUFzOU9JkskMj7jHV/F/6x/kAsPgAU2f
+         2Pks9XYOVktFfWYAVGZgMrUuCqg2Ea645nurT/j1vWx2Jbs2UFsrEdCF8CbYseMqh9+k
+         05hQ==
+X-Gm-Message-State: AOAM532aEx0v69aOqLmVINFu2o75bw51BtqjKUql9tqgqdobwBzvoyi/
+        aK98Yv2ebk/nlLEl/JwUKLkwDzyvX5M=
+X-Google-Smtp-Source: ABdhPJyLii36GS2R8drF3oGHZqLmeK8ufKMWCV87KK4pj/iEBDA5/iSiLTjFF54miirlLIBd463/aQ==
+X-Received: by 2002:a05:600c:210e:b0:385:d649:b4ca with SMTP id u14-20020a05600c210e00b00385d649b4camr1531303wml.114.1646260045019;
+        Wed, 02 Mar 2022 14:27:25 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u23-20020a7bcb17000000b0037bdfa1665asm9207802wmj.18.2022.03.02.14.27.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Mar 2022 14:27:24 -0800 (PST)
+Message-Id: <pull.1218.v4.git.git.1646260044.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1218.v3.git.git.1645817452.gitgitgadget@gmail.com>
+References: <pull.1218.v3.git.git.1645817452.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 02 Mar 2022 22:27:21 +0000
+Subject: [PATCH v4 0/3] libify reflog
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="xJP0MbUoQfd8jlO2"
-Content-Disposition: inline
-In-Reply-To: <70a0325ca8ab0492a9b0873ee3fba576c5ab90b9.1646173186.git.me@ttaylorr.com>
-User-Agent: Mutt/2.1.4 (2021-12-11)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+In [1], there was a discussion around a bug report of stash not recovering
+in the middle of the process when killed with ctl-c. It turned out to not be
+a bug we need to fix. However, out of that discussion came the idea of
+libifying reflog. This can stand alone as a code improvement.
 
---xJP0MbUoQfd8jlO2
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+stash.c currently shells out to call reflog to delete reflogs. Libify reflog
+delete and call it from both builtin/reflog.c and builtin/stash.c.
 
-On 2022-03-01 at 22:20:33, Taylor Blau wrote:
-> When renaming a remote, Git needs to rename all remote tracking
-> references to the remote's new name (e.g., renaming
-> "refs/remotes/old/foo" to "refs/remotes/new/foo" when renaming a remote
-> from "old" to "new").
->=20
-> This can be somewhat slow when there are many references to rename,
-> since each rename is done in a separate call to rename_ref() as opposed
-> to grouping all renames together into the same transaction. It would be
-> nice to execute all renames as a single transaction, but there is a
-> snag: the reference transaction backend doesn't support renames during a
-> transaction (only individually, via rename_ref()).
->=20
-> The reasons there are described in more detail in [1], but the main
-> problem is that in order to preserve the existing reflog, it must be
-> moved while holding both locks (i.e., on "oldname" and "newname"), and
-> the ref transaction code doesn't support inserting arbitrary actions
-> into the middle of a transaction like that.
->=20
-> As an aside, adding support for this to the ref transaction code is
-> less straightforward than inserting both a ref_update() and ref_delete()
-> call into the same transaction. rename_ref()'s special handling to
-> detect D/F conflicts would need to be rewritten for the transaction code
-> if we wanted to proactively catch D/F conflicts when renaming a
-> reference during a transaction. The reftable backend could support this
-> much more readily because of its lack of D/F conflicts.
->=20
-> Instead of a more complex modification to the ref transaction code,
-> display a progress meter when running verbosely in order to convince the
-> user that Git is doing work while renaming a remote.
->=20
-> This is mostly done as-expected, with the minor caveat that we
-> intentionally count symrefs renames twice, since renaming a symref takes
-> place over two separate calls (one to delete the old one, and another to
-> create the new one).
->=20
-> [1]: https://lore.kernel.org/git/572367B4.4050207@alum.mit.edu/
->=20
-> Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+This patch has three parts:
 
-As I mentioned to you personally, I think this looks good.
+ * add missing test coverage for git stash delete
+ * libify reflog's delete functionality and move some of the helpers into a
+   reflog.c library and call reflog_delete from builtin/reflog.c
+ * call reflog_delete from builtin/stash.c
 
-For context, I discovered this when I tried to rename a remote with tens
-of thousands of branches and it just ran silently for an extended period
-of time without any output.  I actually interrupted it with Ctrl-C
-because I thought it had hung, so I'm hoping this will provide a better
-experience for users in that situation.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Updates since v3:
 
---xJP0MbUoQfd8jlO2
-Content-Type: application/pgp-signature; name="signature.asc"
+ * refactored test to have a smaller diff
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.3.1 (GNU/Linux)
+Updates since v2:
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCYh/t3AAKCRB8DEliiIei
-gSFKAQCgBNKKI+AKLjkf1CagfIRvrstYeBwC+uls55nitV9TwwD+MuK0s6iDbIEp
-vXpWdM7MEPFrYn0dXxGaXDDPT2LS3gA=
-=kdIJ
------END PGP SIGNATURE-----
+ * removed unnecessary includes
+ * adjusted wrapping/whitespace in reflog.h
+ * adjusted test to be isolated from other tests since currently tests for
+   stash depend on each other. There was some discussion around this and
+   even a possibility to refactor the tests. However, it would have been a
+   larger effort than is worth for this series, so instead I just made one
+   of the tests I added be isolated from the others.
 
---xJP0MbUoQfd8jlO2--
+Updates since v1:
+
+ * added missing test coverage
+ * squashed 1/3 and 2/3 together
+ * moved enum into reflog.c
+ * updated object.h's flag allocation mapping
+
+ 1. https://lore.kernel.org/git/220126.86h79qe692.gmgdl@evledraar.gmail.com/
+
+John Cai (3):
+  stash: add tests to ensure reflog --rewrite --updatref behavior
+  reflog: libify delete reflog function and helpers
+  stash: call reflog_delete() in reflog.c
+
+ Makefile         |   1 +
+ builtin/reflog.c | 455 +----------------------------------------------
+ builtin/stash.c  |  18 +-
+ object.h         |   2 +-
+ reflog.c         | 432 ++++++++++++++++++++++++++++++++++++++++++++
+ reflog.h         |  43 +++++
+ t/t3903-stash.sh |  43 ++++-
+ 7 files changed, 527 insertions(+), 467 deletions(-)
+ create mode 100644 reflog.c
+ create mode 100644 reflog.h
+
+
+base-commit: e6ebfd0e8cbbd10878070c8a356b5ad1b3ca464e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1218%2Fjohn-cai%2Fjc-libify-reflog-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1218/john-cai/jc-libify-reflog-v4
+Pull-Request: https://github.com/git/git/pull/1218
+
+Range-diff vs v3:
+
+ 1:  33299825fc4 ! 1:  08bb8d3a9b9 stash: add tests to ensure reflog --rewrite --updatref behavior
+     @@ t/t3903-stash.sh: diff_cmp () {
+       }
+       
+      -test_expect_success 'stash some dirty working directory' '
+     --	echo 1 >file &&
+     --	git add file &&
+     --	echo unrelated >other-file &&
+     --	git add other-file &&
+      +setup_stash() {
+     -+	repo_dir=$1
+     -+	if test -z $repo_dir; then
+     -+		repo_dir="."
+     -+	fi
+     -+
+     -+	echo 1 >$repo_dir/file &&
+     -+	git -C $repo_dir add file &&
+     -+	echo unrelated >$repo_dir/other-file &&
+     -+	git -C $repo_dir add other-file &&
+     - 	test_tick &&
+     --	git commit -m initial &&
+     --	echo 2 >file &&
+     -+	git -C $repo_dir commit -m initial &&
+     -+	echo 2 >$repo_dir/file &&
+     + 	echo 1 >file &&
+       	git add file &&
+     --	echo 3 >file &&
+     -+	echo 3 >$repo_dir/file &&
+     - 	test_tick &&
+     --	git stash &&
+     --	git diff-files --quiet &&
+     --	git diff-index --cached --quiet HEAD
+     -+	git -C $repo_dir stash &&
+     -+	git -C $repo_dir diff-files --quiet &&
+     -+	git -C $repo_dir diff-index --cached --quiet HEAD
+     + 	echo unrelated >other-file &&
+     +@@ t/t3903-stash.sh: test_expect_success 'stash some dirty working directory' '
+     + 	git stash &&
+     + 	git diff-files --quiet &&
+     + 	git diff-index --cached --quiet HEAD
+      +}
+      +
+      +test_expect_success 'stash some dirty working directory' '
+     @@ t/t3903-stash.sh: test_expect_success 'drop middle stash by index' '
+      +
+      +test_expect_success REFFILES 'drop stash reflog updates refs/stash with rewrite' '
+      +	git init repo &&
+     -+	setup_stash repo &&
+     ++	(
+     ++		cd repo &&
+     ++		setup_stash
+     ++	) &&
+      +	echo 9 >repo/file &&
+      +
+      +	old_oid="$(git -C repo rev-parse stash@{0})" &&
+ 2:  33adfee4ca6 = 2:  50471c2ee6f reflog: libify delete reflog function and helpers
+ 3:  b17d8e5d43a = 3:  cb32d9bfe60 stash: call reflog_delete() in reflog.c
+
+-- 
+gitgitgadget
