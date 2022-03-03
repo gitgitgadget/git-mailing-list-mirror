@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E1A4C433FE
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 16:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9CCAC4332F
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 16:04:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234804AbiCCQFg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 11:05:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37950 "EHLO
+        id S234811AbiCCQFi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 11:05:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234785AbiCCQFc (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230076AbiCCQFc (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 3 Mar 2022 11:05:32 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBCE5197B73
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 08:04:44 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id y5so3482870wmi.0
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 08:04:44 -0800 (PST)
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34B06197B43
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 08:04:46 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id 7-20020a05600c228700b00385fd860f49so2686834wmf.0
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 08:04:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uEXe0nov1gHh5dELbny/Vmi9PzrTf0qeYMuKSF4SBsM=;
-        b=DFbZrZ1oa7I9TJ+1b+nwz9bCutMS2eVu/E4HTM3ZKdXi9UDs91Iy1jVGS+JyhgiIjE
-         AxSCMuFX1Oe+p9Ntswykn4H7kvLQSZCIN0QWVDnEBroRjyuouwr7z8w1jK9rT3tGQa38
-         loQlHTNp9aRq1tvfI9RCRJ0bUknKM0pO+aFaZ/Gtm8GCnEQXwaQSmB187wDnumKeJrNW
-         9LoEgPyeNx9QiYw7RsUAYy+6Xsa2LIZswnhkZJvC1+My9KQW0nrekVNAzALIjSLzm/qH
-         PqDNbBY7G6Rk9JGYBOJYztJmmEevogUFLmHpqoHdbNgKG7ox4TljV1ZTdWskQtoDLjgA
-         IQ+w==
+        bh=zducfQTH4wQrdohNjeNlff+31JqYmwpRVXIf/4QALlQ=;
+        b=TFp7p95sKAhdGqXovINoExK4gMKaLZv9B63vFeFAK5CEs1Q3ZztFnDisTkgcVbObDS
+         D6/rwtXluDKN9TIcQRSYs/FMYzJn2vSgDpIcWpozDJJk1/ETxIRTy2UZl4D0/i8mhF1k
+         /sB9gly1/oStDAbSnHLhQb+ynTzdydbmQeEjKG6QWGMraxUwAFoF2tj4GKdZlpWGvlb3
+         W3yYe1qlDemO+Ml9iw8DcjkcEPlHmizv3SX2TNDB6pj37S9OK687yfBCLdPxEYQgRxz/
+         O3GSrgiY6h+2fO/LF0TUMgtF53MRtBSaaO0RRl1dWRZxrNj2ZyRmscaUWWgSkYTpC4Bf
+         timg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uEXe0nov1gHh5dELbny/Vmi9PzrTf0qeYMuKSF4SBsM=;
-        b=57Qa2aW5nGWIDcAFOIVr8y7TXt+qkgeC6Vn9OlXH8gHFhQVyaes8nnWkgNxbaMWXoY
-         TXJPFOhpLQWpXH30YMNf5z9q6jYl4mY5Lk4AjtQXy2jH4Uasj2Zc47ez1wuBnHJeRPeL
-         5JywTTy6vOiW2Kk1MMwEoHcuY0MqqAX7Go/d5JE37AOalHEpSbkvBe99KGtNpObRDCCX
-         5CJ8rql4x7Ejq7Y7zBRtG+50AY4JSBbQwc9Qhc981sRZWD1V/c3w916aJMXd5r96+98y
-         GvQLz9NI9wAQMQtnAODl+2ChNvS1k/yk7d9Au6yXsRTZ9AiJ7j7jOc80Sqw7qSmqkiEz
-         jugg==
-X-Gm-Message-State: AOAM532IWyHeEJIDTZRi/AbO3/zvOvPE8fJk8pWJ+157yYgT1GTtF/A0
-        ukH/GsObrMwAkOI9ppDU4WXov+dkX+g5fA==
-X-Google-Smtp-Source: ABdhPJxWRPqyOn8Jizaxai3WLXkXAowDI/G5HyaG5kjhCRGr2HxAlSj4iG/NYwR3Tey+7u9L+1ETBw==
-X-Received: by 2002:a05:600c:22c9:b0:381:3b27:89be with SMTP id 9-20020a05600c22c900b003813b2789bemr4298733wmg.83.1646323483159;
-        Thu, 03 Mar 2022 08:04:43 -0800 (PST)
+        bh=zducfQTH4wQrdohNjeNlff+31JqYmwpRVXIf/4QALlQ=;
+        b=65zuGyRoMrXcsf6rm4YpA9v+iV3At6Gs0SmCIgXPXnR9lc1kIfNnipbwyIzbCbmdI1
+         PJ9Rp7v4BPJivSCNnMA1OhSKxyIGLtIJ5pn3VER8HmxKJuj6ZCozIKyc1m/p+PF6/8ad
+         botlrZMRbMcMPKL+Px1uj0oq1mwJg85AFMjmxeOWdcwmsN8hDyPnsErhXyVrrbeMo7zm
+         MmoIY8dylZLLgsBr4G05aN5LC0AgwWPMJD/cMIv22i5fS5dI9z2IucpRZztJCHIvPDNR
+         32pOntNpK3lAxU0xHm28P2leMMBTzwkadhTAvBbTXr2hHd5Wb3ri0s/a6y4Jkfby4v5A
+         houg==
+X-Gm-Message-State: AOAM530MOksr45Iu52rzaf3xWJLnvDZKAdaSxeCTvTzPg1lb/XZhD6Nq
+        00OcYs55+Ps0/Ylcyql0e+A8+zoxVj/LtA==
+X-Google-Smtp-Source: ABdhPJxXX+uxQJpuc1oev1TabKupkpa7VGqNKu4zMRKlZ3PR2ObtmjFgECwmHasuBvGAwXbu35pmWA==
+X-Received: by 2002:a1c:a595:0:b0:385:92a:a135 with SMTP id o143-20020a1ca595000000b00385092aa135mr4193878wme.182.1646323484349;
+        Thu, 03 Mar 2022 08:04:44 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m13-20020a05600c4f4d00b00386744cb31bsm4040667wmq.35.2022.03.03.08.04.41
+        by smtp.gmail.com with ESMTPSA id m13-20020a05600c4f4d00b00386744cb31bsm4040667wmq.35.2022.03.03.08.04.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Mar 2022 08:04:42 -0800 (PST)
+        Thu, 03 Mar 2022 08:04:43 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 3/8] Makefile: disable GNU make built-in wildcard rules
-Date:   Thu,  3 Mar 2022 17:04:14 +0100
-Message-Id: <patch-v5-3.8-9f42f40b518-20220303T160155Z-avarab@gmail.com>
+Subject: [PATCH v5 4/8] Makefile: define $(LIB_H) in terms of $(FIND_SOURCE_FILES)
+Date:   Thu,  3 Mar 2022 17:04:15 +0100
+Message-Id: <patch-v5-4.8-034779ff7fb-20220303T160155Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1230.ga6e6579e98c
 In-Reply-To: <cover-v5-0.8-00000000000-20220303T160155Z-avarab@gmail.com>
 References: <cover-v4-0.9-00000000000-20220302T124320Z-avarab@gmail.com> <cover-v5-0.8-00000000000-20220303T160155Z-avarab@gmail.com>
@@ -74,56 +74,128 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Override built-in rules of GNU make that use a wildcard target. This
-can speeds things up significantly as we don't need to stat() so many
-files. GNU make does that by default to see if it can retrieve their
-contents from RCS or SCCS. See [1] for an old mailing list discussion
-about how to disable these.
+Combine the definitions of $(FIND_SOURCE_FILES) and $(LIB_H) to speed
+up the Makefile, as these are the two main expensive $(shell) commands
+that we execute unconditionally.
 
-The speed-up may vary. I've seen 1-10% depending on the speed of the
-local disk, caches, -jN etc. Running:
+When see what was in $(FOUND_SOURCE_FILES) that wasn't in $(LIB_H) via
+the ad-hoc test of:
 
-    strace -f -c -S calls make -j1 NO_TCLTK=Y
+    $(error $(filter-out $(LIB_H),$(filter %.h,$(ALL_SOURCE_FILES))))
+    $(error $(filter-out $(ALL_SOURCE_FILES),$(filter %.h,$(LIB_H))))
 
-Shows that we reduce the number of syscalls we make, mostly in "stat"
-calls.
+We'll get, respectively:
 
-We could also invoke make with "-r" by setting "MAKEFLAGS = -r"
-early. Doing so might make us a bit faster still. But doing so is a
-much bigger hammer, since it will disable all built-in rules,
-some (all?) of which can be seen with:
+    Makefile:850: *** t/helper/test-tool.h.  Stop.
+    Makefile:850: *** .  Stop.
 
-    make -f/dev/null -p | grep -v -e ^# -e ^$
+I.e. we only had a discrepancy when it came to
+t/helper/test-tool.h. In terms of correctness this was broken before,
+but now works:
 
-We may have something that relies on them, so let's go for the more
-isolated optimization here that gives us most or all of the wins.
+    $ make t/helper/test-tool.hco
+        HDR t/helper/test-tool.h
 
-1. https://lists.gnu.org/archive/html/help-make/2002-11/msg00063.html
+This speeds things up a lot:
+
+    $ git -c hyperfine.hook.setup= hyperfine -L rev HEAD~1,HEAD~0 -s 'make NO_TCLTK=Y' 'make -j1 NO_TCLTK=Y' --warmup 10 -M 10
+    Benchmark 1: make -j1 NO_TCLTK=Y' in 'HEAD~1
+      Time (mean ± σ):     159.9 ms ±   6.8 ms    [User: 137.2 ms, System: 28.0 ms]
+      Range (min … max):   154.6 ms … 175.9 ms    10 runs
+
+    Benchmark 2: make -j1 NO_TCLTK=Y' in 'HEAD~0
+      Time (mean ± σ):     100.0 ms ±   1.3 ms    [User: 84.2 ms, System: 20.2 ms]
+      Range (min … max):    98.8 ms … 102.8 ms    10 runs
+
+    Summary
+      'make -j1 NO_TCLTK=Y' in 'HEAD~0' ran
+        1.60 ± 0.07 times faster than 'make -j1 NO_TCLTK=Y' in 'HEAD~1'
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- shared.mak | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ Makefile | 54 ++++++++++++++++++++++++++----------------------------
+ 1 file changed, 26 insertions(+), 28 deletions(-)
 
-diff --git a/shared.mak b/shared.mak
-index 0170bb397ae..29f0e69ecb9 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -1,3 +1,14 @@
-+### Remove GNU make implicit rules
-+
-+## This speeds things up since we don't need to look for and stat() a
-+## "foo.c,v" every time a rule referring to "foo.c" is in play. See
-+## "make -p -f/dev/null | grep ^%::'".
-+%:: %,v
-+%:: RCS/%,v
-+%:: RCS/%
-+%:: s.%
-+%:: SCCS/s.%
-+
- ### Flags affecting all rules
+diff --git a/Makefile b/Makefile
+index aa5ff001b6e..1ac924bd844 100644
+--- a/Makefile
++++ b/Makefile
+@@ -833,12 +833,33 @@ GENERATED_H += hook-list.h
+ .PHONY: generated-hdrs
+ generated-hdrs: $(GENERATED_H)
  
- # A GNU make extension since gmake 3.72 (released in late 1994) to
+-LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
++## Exhaustive lists of our source files, either dynamically generated,
++## or hardcoded.
++SOURCES_CMD = ( \
++	git ls-files \
++		'*.[hcS]' \
++		'*.sh' \
++		':!*[tp][0-9][0-9][0-9][0-9]*' \
++		':!contrib' \
++		2>/dev/null || \
+ 	$(FIND) . \
+-	-name .git -prune -o \
+-	-name t -prune -o \
+-	-name Documentation -prune -o \
+-	-name '*.h' -print)))
++		\( -name .git -type d -prune \) \
++		-o \( -name '[tp][0-9][0-9][0-9][0-9]*' -prune \) \
++		-o \( -name contrib -type d -prune \) \
++		-o \( -name build -type d -prune \) \
++		-o \( -name 'trash*' -type d -prune \) \
++		-o \( -name '*.[hcS]' -type f -print \) \
++		-o \( -name '*.sh' -type f -print \) \
++		| sed -e 's|^\./||' \
++	)
++FOUND_SOURCE_FILES := $(shell $(SOURCES_CMD))
++
++FOUND_C_SOURCES = $(filter %.c,$(FOUND_SOURCE_FILES))
++FOUND_H_SOURCES = $(filter %.h,$(FOUND_SOURCE_FILES))
++
++COCCI_SOURCES = $(filter-out $(THIRD_PARTY_SOURCES),$(FOUND_C_SOURCES))
++
++LIB_H = $(FOUND_H_SOURCES)
+ 
+ LIB_OBJS += abspath.o
+ LIB_OBJS += add-interactive.o
+@@ -2789,26 +2810,6 @@ perl/build/man/man3/Git.3pm: perl/Git.pm
+ 	$(QUIET_GEN)mkdir -p $(dir $@) && \
+ 	pod2man $< $@
+ 
+-FIND_SOURCE_FILES = ( \
+-	git ls-files \
+-		'*.[hcS]' \
+-		'*.sh' \
+-		':!*[tp][0-9][0-9][0-9][0-9]*' \
+-		':!contrib' \
+-		2>/dev/null || \
+-	$(FIND) . \
+-		\( -name .git -type d -prune \) \
+-		-o \( -name '[tp][0-9][0-9][0-9][0-9]*' -prune \) \
+-		-o \( -name contrib -type d -prune \) \
+-		-o \( -name build -type d -prune \) \
+-		-o \( -name 'trash*' -type d -prune \) \
+-		-o \( -name '*.[hcS]' -type f -print \) \
+-		-o \( -name '*.sh' -type f -print \) \
+-		| sed -e 's|^\./||' \
+-	)
+-
+-FOUND_SOURCE_FILES = $(shell $(FIND_SOURCE_FILES))
+-
+ $(ETAGS_TARGET): $(FOUND_SOURCE_FILES)
+ 	$(QUIET_GEN)$(RM) $@+ && \
+ 	echo $(FOUND_SOURCE_FILES) | xargs etags -a -o $@+ && \
+@@ -3018,9 +3019,6 @@ check: $(GENERATED_H)
+ 		exit 1; \
+ 	fi
+ 
+-FOUND_C_SOURCES = $(filter %.c,$(FOUND_SOURCE_FILES))
+-COCCI_SOURCES = $(filter-out $(THIRD_PARTY_SOURCES),$(FOUND_C_SOURCES))
+-
+ %.cocci.patch: %.cocci $(COCCI_SOURCES)
+ 	$(QUIET_SPATCH) \
+ 	if test $(SPATCH_BATCH_SIZE) = 0; then \
 -- 
 2.35.1.1230.ga6e6579e98c
 
