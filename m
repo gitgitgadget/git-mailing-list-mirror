@@ -2,73 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1C22C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 05:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE38CC433FE
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 05:48:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229506AbiCCFKm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 00:10:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37784 "EHLO
+        id S229719AbiCCFrO convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 3 Mar 2022 00:47:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbiCCFKk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 00:10:40 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36CBD15470D
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 21:09:56 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id r13so8210817ejd.5
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 21:09:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4CG8yHDtcl+g8tViSTP5d8C08xrhixMYJDQLU7xeNTI=;
-        b=BUZ6A5EXVf+bWZPCV8/BJw5o1oDVBQk5Ifinqa569GtsOehxX296zfVY+Q5r3hMzJP
-         Nq4COyBqjy6Dkr+4yQ8w/E9KSjcbpNJfc+oeYbJy94mlemdoguJAKVp4empiF5tOoLl1
-         5ZgCsX/rDJVBjzBSiIBnWhb2cbL0nJrX7nTj/jojRF+L4LC6uYOqrPEnVpe4pqIe1dfm
-         ZOBuqYvlOUKz9gC52kcFFEE8fdYwZvnxDnnzaM2d/h7IkgIckUCJUkg7pvdwhdezgw5F
-         H+38xA//e3+iXt7hAbNcReJfbIcHfycKdtbzlJI9efqHDU2poeVcj25tTOSGzmKA0YCV
-         XkEw==
+        with ESMTP id S229491AbiCCFrN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 00:47:13 -0500
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 599B7119873
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 21:46:28 -0800 (PST)
+Received: by mail-pl1-f177.google.com with SMTP id bd1so3550447plb.13
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 21:46:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4CG8yHDtcl+g8tViSTP5d8C08xrhixMYJDQLU7xeNTI=;
-        b=cEWH4fTSSvhp9CYKMmd30z3cvPznnnjxAL83BIgCWUNTGfYSXjwDBV/ioPVDbuPcyk
-         U9CltalvDEtcchhTMiPr3eW+LaIV7QZcDY9uyUviDPibowLs6+MGtzkBZyOafZ4b4Qty
-         KWefg0VzwCgj1qvyIr4bO44yNvvAhqVrbp8HMXq6t831ssawzBY8hJVx4d4RAM/T4nDS
-         9tmglklAPBhLYkVHUA5ISlG2pl+buuV7xhqUEBVs2UgK7T4/cQZdC7G6d3HkaIrExLXz
-         ll4wQo/8Zk2K7A3WnwwdQX6padziIEdppvk3nlH0b78L6B+AZ+KJroBPG9OyXAenXW25
-         0dtw==
-X-Gm-Message-State: AOAM530l9TN4Xzrzm4H3yt/kc7YhuW4/29ll3yEX2tdxACPdXJ9F+U7k
-        KhIBDnGRGAbKMN499H30Y6UIxbc/3JxaMvJ0ZHQ=
-X-Google-Smtp-Source: ABdhPJxtRf99xwcbdVbQdRRHUwifGNwoLIZ8pwfm+q+m7HTBaid2C6f2/Y3hux8OtbKd+k6vD/RHT3yWwxL4OQFByYo=
-X-Received: by 2002:a17:907:334c:b0:6cd:76b7:3948 with SMTP id
- yr12-20020a170907334c00b006cd76b73948mr27697218ejb.55.1646284194678; Wed, 02
- Mar 2022 21:09:54 -0800 (PST)
+        bh=pmnuRewm/0rU6eRxAmzXOfQ0kddJCVd9fDTxY88r0ow=;
+        b=uNydFfkZl9HK2BaVcTBj5qBzTbmROuOl2vNbQ14d4TVVUiFvcnM4vMk24zkFkO7ycT
+         nqlgztA/jXxwcLitrQnG4ZDif6/yrCV0Q0AT3/Gq7JnWJEzubNWhAgAXA12XySOotpAu
+         s6MAA/vV6NWwgwa2K6E6UJl7ccIAOpISISVhxAeDVFqR9xuC0BLd1HjJ0hPaP7TDHfpG
+         d4jROFl0EK7lDYlsgtXDzjMoSgryI2+TDAEjlK1t7yu/JOVcDaMcDLwhsVBFNGEmzp5L
+         zr3zXpuqxp7aSuuclUU3nnc4aiMMQO2IcLj1Yd33g971zSdZ5adRfRYXVhfa+yHOSLSy
+         WVcw==
+X-Gm-Message-State: AOAM531Ed4IxQRQO8PYH0ialYVA/PXHpBz3IWREzrCfOE7d6CKsrcvvy
+        awO+I6ASofMXoyOMRSaN5PVLVIgQNhA1rGLkKsc=
+X-Google-Smtp-Source: ABdhPJwZ1GbqNxF3PhbCiFdegt5C+h9C+sYQ78lf0tHts1nXBYdGTkUJTg/1DjZEMSTo9krM2Abvozf3v6stA87Leuw=
+X-Received: by 2002:a17:903:2289:b0:151:64c6:20fd with SMTP id
+ b9-20020a170903228900b0015164c620fdmr20009298plh.64.1646286387594; Wed, 02
+ Mar 2022 21:46:27 -0800 (PST)
 MIME-Version: 1.0
-References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
-In-Reply-To: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
-From:   Shubham Mishra <shivam828787@gmail.com>
-Date:   Thu, 3 Mar 2022 10:39:42 +0530
-Message-ID: <CAC316V7jcHTVs7f_p5zMRqpvTZBPCa6X7=L_MUEy0Zx0PJZZ_A@mail.gmail.com>
-Subject: Re: [PATCH 00/15] tests: don't ignore "git" exit codes
+References: <cover-00.10-00000000000-20220302T131859Z-avarab@gmail.com> <patch-10.10-7fef92872f3-20220302T131859Z-avarab@gmail.com>
+In-Reply-To: <patch-10.10-7fef92872f3-20220302T131859Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 3 Mar 2022 00:46:16 -0500
+Message-ID: <CAPig+cRfb7AuJK-NhkdAV6P52HviSFqJXB9kvDpmtTYd=yJSUQ@mail.gmail.com>
+Subject: Re: [PATCH 10/10] tests: change "cat && chmod +x" to use "test_hook"
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks =C3=86var for CCing me. Your patch is insightful for me.
+On Wed, Mar 2, 2022 at 8:22 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> Refactor various test code to use the "test_hook" helper. This change:
+>
+>  - Fixes the long-standing issues with those tests using "#!/bin/sh"
+>    instead of "#!$SHELL_PATH". Using "#!/bin/sh" here happened to work
+>    because this code was so simply that it e.g. worked on Solaris
+>    /bin/sh.
 
-> This series is not made by string-replacing things in our test suite,
-> if it was it would be much larger. These are all tests I've seen real
-> hide real failures under SANITIZE=3Dleak, either on current "master", or
-> in combination with various local leak fixes I've got unsubmitted.
+s/simply/simple/
 
-Can you please tell me what "SANITIZE=3Dleak" do?
-
-Thanks,
-Shubham
+>  - Removes the "mkdir .git/hooks" invocation, as explained in a
+>    preceding commit we'll rely on the default templates to create that
+>    directory for us.
+>
+> For the test in "t5402-post-merge-hook.sh" it's easier and more
+> correct to unroll the for-loop into a test_expect_success, so let's do
+> that.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
