@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8B6DC433F5
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71BB9C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:58:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231226AbiCCA6l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 19:58:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53586 "EHLO
+        id S231234AbiCCA6o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 19:58:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231220AbiCCA6i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 19:58:38 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E044151D19
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:57:52 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id t68-20020a635f47000000b003732348b971so1897004pgb.7
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:57:52 -0800 (PST)
+        with ESMTP id S231195AbiCCA6l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 19:58:41 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF25B1520E2
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:57:53 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id o41-20020a17090a0a2c00b001bf06e5badfso794834pjo.3
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:57:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=HM/UFTvzycLuEtiSNLNKftDfScVvaGAHyX0/2+0MI0U=;
-        b=ZAS4j6oJU6GQyERqDf9j+ivsdQexnQVTa+D4K2z6t9YjibCTy7I0uMILZGISYZsL6A
-         aQ8S/xDuOgarr2OUApGcqFz6G4OWTUmDVOAProwenOEw8PJnLBzIn7+uoZPLSac2qozN
-         CYFnL/SlXLUDikPWEjK8qDQUZZcMsIfnozOMyKB6V/a/CTx5UBCiyXfyTjf8j1ByPKB7
-         JFAnoHfAPBd3vtcJSW5XTXQbCg55ebqtYo7NTGLAKQc/fMHC5+Thvgu4BIfEg2vtiRwK
-         eXb5QJXzGRCHnCAxY+RWzqbRR9O+tGTOvWYfH24xp+xmV8gRFM7vU0AdB8hNtWv2khve
-         SY9Q==
+         :cc:content-transfer-encoding;
+        bh=w0wuH61vxN7cIGWnPgt2xDcm4NacL81PL7lHRDWTnoI=;
+        b=Rj1JWp/BkcRWZfG5IRIsJZstejV1LG4yc3y34sQ39GNCmyZ23D1dXBCOKLjrGxdtOw
+         Lm/j7QhDyg2vhRN/z30Vbo45cdofFDIyESMrOQXL46Vi/faxQcb2GLWq6yDa/5wE7KLd
+         oniulLMP1Xc8DJnmYQaDnqfom3bee3MQWxj9TV8VUwVxNOxjFRtxCWiwHXl8m90TvpWT
+         VIGpPA6LxCtm/oHVt7T3Md8JQYzZhOzJHZ5rM0e882RCVAXn6YMkl9xJla8J7FOzmjli
+         EP+epyIhTKh9OG+qvKD+D++Ii0zcJ09V5bsKcL4imaMCX+xLAE6vcZti2e/rN0mCvrCD
+         DV5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=HM/UFTvzycLuEtiSNLNKftDfScVvaGAHyX0/2+0MI0U=;
-        b=J3auJKDvv7thJGVMiSoNqItSfb/CxE2MpVwL/LbBtYzp3tDV1j04ksnUwlcrO+RDkz
-         FA+KueRN1aLbpzMyw8DC+5IyPJ3HHpNsSYRdpbnLs0/fi3JtKi7oD1ff1mHVMm3pf7SH
-         7DbBLKpV25UmV2DqIQiMmIGohRBQm7KB1zSqvdGI+luoyxIMABWEPtXbKlCbLlIjPUKw
-         Th0AqkR+pDQTwYsMIlwtgItH8P5IIalsnaLqbWxIEHPdGCdq/i8EsEf2qeuTZuLhiEwz
-         IKyadX34jY8N80yKYrOCziCp+mp5Msge1naSr2CUALGjOkXK+ipOKKnNzsafPHu0EEZI
-         NSMg==
-X-Gm-Message-State: AOAM533VGshsOKKxDTsRBsyjtKZ/M4kLAgI4+/JDhbtwQ3omwB+kSSLM
-        1SoM/pmmTHxRb+3JaHy2mIWn7se1pJdyEhqUTlCBjzxi+7JMC41oAo4CzII+4tPovnGk1CZd/m0
-        4WcjODmnZrh9RPQMdb3pnjBh+CchojpAJ2yrmV0RNBHMzfYpIRxYhQ79b3rqLQjk=
-X-Google-Smtp-Source: ABdhPJxpZ1QskT39WaGrY3+7L5bSmLKM4JdvocbJrruXVJsmhG9a4Ta+rukDiy4RzVR3OkfIZ6d7ExUZAjJ0YA==
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=w0wuH61vxN7cIGWnPgt2xDcm4NacL81PL7lHRDWTnoI=;
+        b=gALIQRyyCibM0axFgFydVKb8ZRyCP4206ICZvFCvNS0eiufU4ihRIo90jAOApu1dw5
+         XItyxzriYQeJuNLz9kcnG2NFRTFNfCdodTxsqX+oIT7k2SqAB68a+30+WsByWJHGdwJl
+         s1CvGBF8SwPkyDJhCf4pgzMK0Xq9Wq/EvZX51CnECSuAyUigGmlFNGUIaYN82mCfuyOT
+         nKuv02izVmaY3VIJlNNR85SqF5WhAJbS7cuDqebG9MZF0lV03mYayy/rLv2lsRnjNbKc
+         UmiE8v/tU1p5GEAJudjp+0w5HO6bTwx9rHvwt63bxKfZOMAanftS79r0v3zIjYU4/pz6
+         9gmA==
+X-Gm-Message-State: AOAM532xOnY+8dcFnIVJSucMLWG6a3/z5E69kbXIocHnDpPJZ99+uYCc
+        Nz3GRx4hVlHJcrzhU90Te8GNEjnYNG5/Efjq5NNmGZYH75nTvELgub3ZJ6v509sm5Qg1FPwNFA7
+        KBLlbEmcPoenL7YqH85qqkw5tKy1nnxnm8MP0MKPtvyd3XaOX37acozxOF0gsv24=
+X-Google-Smtp-Source: ABdhPJyj28vISOVM99/CNwCXeLNiT+bC2F7hQ6xYgSBtas0ow6WlKQ8HBDNYUom46hUrxeQ48x07sjafiGA+bw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:4f43:b0:1bc:7e5c:e024 with SMTP
- id pj3-20020a17090b4f4300b001bc7e5ce024mr830864pjb.0.1646269071318; Wed, 02
- Mar 2022 16:57:51 -0800 (PST)
-Date:   Wed,  2 Mar 2022 16:57:19 -0800
+ (user=chooglen job=sendgmr) by 2002:a17:90a:a887:b0:1bc:388a:329f with SMTP
+ id h7-20020a17090aa88700b001bc388a329fmr2602786pjq.17.1646269073377; Wed, 02
+ Mar 2022 16:57:53 -0800 (PST)
+Date:   Wed,  2 Mar 2022 16:57:20 -0800
 In-Reply-To: <20220303005727.69270-1-chooglen@google.com>
-Message-Id: <20220303005727.69270-6-chooglen@google.com>
+Message-Id: <20220303005727.69270-7-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220301044132.39474-1-chooglen@google.com> <20220303005727.69270-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH v3 05/13] submodule--helper: remove ensure-core-worktree
+Subject: [PATCH v3 06/13] submodule--helper: get remote names from any repository
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -60,83 +60,142 @@ Cc:     Glen Choo <chooglen@google.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, Josh Steadmon <steadmon@google.com>
+        <avarab@gmail.com>, Josh Steadmon <steadmon@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Shourya Shukla <periperidip@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the logic of "git submodule--helper ensure-core-worktree" into
-run-update-procedure. Since the ensure-core-worktree command is
-obsolete, remove it.
+From: Atharva Raykar <raykar.ath@gmail.com>
 
+`get_default_remote()` retrieves the name of a remote by resolving the
+refs from of the current repository's ref store.
+
+Thus in order to use it for retrieving the remote name of a submodule,
+we have to start a new subprocess which runs from the submodule
+directory.
+
+Let's instead introduce a function called `repo_get_default_remote()`
+which takes any repository object and retrieves the remote accordingly.
+
+`get_default_remote()` is then defined as a call to
+`repo_get_default_remote()` with 'the_repository' passed to it.
+
+Now that we have `repo_get_default_remote()`, we no longer have to start
+a subprocess that called `submodule--helper get-default-remote` from
+within the submodule directory.
+
+So let's make a function called `get_default_remote_submodule()` which
+takes a submodule path, and returns the default remote for that
+submodule, all within the same process.
+
+We can now use this function to save an unnecessary subprocess spawn in
+`sync_submodule()`, and also in a subsequent patch, which will require
+this functionality.
+
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Shourya Shukla <periperidip@gmail.com>
+Helped-by: Glen Choo <chooglen@google.com>
+Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c | 12 ++----------
- git-submodule.sh            |  2 --
- 2 files changed, 2 insertions(+), 12 deletions(-)
+ builtin/submodule--helper.c | 38 ++++++++++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 77ca4270f4..6b473fc0d2 100644
+index 6b473fc0d2..a58df3e007 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2771,17 +2771,11 @@ static int push_check(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
--static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
-+static void ensure_core_worktree(const char *path)
+@@ -31,11 +31,13 @@
+ typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
+ 				  void *cb_data);
+=20
+-static char *get_default_remote(void)
++static char *repo_get_default_remote(struct repository *repo)
  {
--	const char *path;
- 	const char *cw;
- 	struct repository subrepo;
- 
--	if (argc != 2)
--		BUG("submodule--helper ensure-core-worktree <path>");
--
--	path = argv[1];
--
- 	if (repo_submodule_init(&subrepo, the_repository, path, null_oid()))
- 		die(_("could not get a repository handle for submodule '%s'"), path);
- 
-@@ -2801,8 +2795,6 @@ static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
- 		free(abs_path);
- 		strbuf_release(&sb);
- 	}
--
--	return 0;
+ 	char *dest =3D NULL, *ret;
+ 	struct strbuf sb =3D STRBUF_INIT;
+-	const char *refname =3D resolve_ref_unsafe("HEAD", 0, NULL, NULL);
++	struct ref_store *store =3D get_main_ref_store(repo);
++	const char *refname =3D refs_resolve_ref_unsafe(store, "HEAD", 0, NULL,
++						      NULL);
+=20
+ 	if (!refname)
+ 		die(_("No such ref: %s"), "HEAD");
+@@ -48,7 +50,7 @@ static char *get_default_remote(void)
+ 		die(_("Expecting a full ref name, got %s"), refname);
+=20
+ 	strbuf_addf(&sb, "branch.%s.remote", refname);
+-	if (git_config_get_string(sb.buf, &dest))
++	if (repo_config_get_string(repo, sb.buf, &dest))
+ 		ret =3D xstrdup("origin");
+ 	else
+ 		ret =3D dest;
+@@ -57,6 +59,19 @@ static char *get_default_remote(void)
+ 	return ret;
  }
- 
- static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
-@@ -3029,6 +3021,7 @@ static int module_create_branch(int argc, const char **argv, const char *prefix)
- /* NEEDSWORK: this is a temporary name until we delete update_submodule() */
- static int update_submodule2(struct update_data *update_data)
+=20
++static char *get_default_remote_submodule(const char *module_path)
++{
++	struct repository subrepo;
++
++	repo_submodule_init(&subrepo, the_repository, module_path, null_oid());
++	return repo_get_default_remote(&subrepo);
++}
++
++static char *get_default_remote(void)
++{
++	return repo_get_default_remote(the_repository);
++}
++
+ static int print_default_remote(int argc, const char **argv, const char *p=
+refix)
  {
-+	ensure_core_worktree(update_data->sm_path);
- 	if (update_data->just_cloned)
- 		oidcpy(&update_data->suboid, null_oid());
- 	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD", &update_data->suboid))
-@@ -3428,7 +3421,6 @@ static struct cmd_struct commands[] = {
- 	{"add", module_add, SUPPORT_SUPER_PREFIX},
- 	{"update-clone", update_clone, 0},
- 	{"run-update-procedure", run_update_procedure, 0},
--	{"ensure-core-worktree", ensure_core_worktree, 0},
- 	{"relative-path", resolve_relative_path, 0},
- 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
- 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 32a09302ab..458ce73ac6 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -402,8 +402,6 @@ cmd_update()
- 	do
- 		die_if_unmatched "$quickabort" "$sha1"
- 
--		git submodule--helper ensure-core-worktree "$sm_path" || exit 1
+ 	char *remote;
+@@ -1343,9 +1358,8 @@ static void sync_submodule(const char *path, const ch=
+ar *prefix,
+ {
+ 	const struct submodule *sub;
+ 	char *remote_key =3D NULL;
+-	char *sub_origin_url, *super_config_url, *displaypath;
++	char *sub_origin_url, *super_config_url, *displaypath, *default_remote;
+ 	struct strbuf sb =3D STRBUF_INIT;
+-	struct child_process cp =3D CHILD_PROCESS_INIT;
+ 	char *sub_config_path =3D NULL;
+=20
+ 	if (!is_submodule_active(the_repository, path))
+@@ -1384,21 +1398,15 @@ static void sync_submodule(const char *path, const =
+char *prefix,
+ 	if (!is_submodule_populated_gently(path, NULL))
+ 		goto cleanup;
+=20
+-	prepare_submodule_repo_env(&cp.env_array);
+-	cp.git_cmd =3D 1;
+-	cp.dir =3D path;
+-	strvec_pushl(&cp.args, "submodule--helper",
+-		     "print-default-remote", NULL);
 -
- 		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
- 
- 		if test $just_cloned -eq 0
--- 
+ 	strbuf_reset(&sb);
+-	if (capture_command(&cp, &sb, 0))
++	default_remote =3D get_default_remote_submodule(path);
++	if (!default_remote)
+ 		die(_("failed to get the default remote for submodule '%s'"),
+ 		      path);
+=20
+-	strbuf_strip_suffix(&sb, "\n");
+-	remote_key =3D xstrfmt("remote.%s.url", sb.buf);
++	remote_key =3D xstrfmt("remote.%s.url", default_remote);
++	free(default_remote);
+=20
+-	strbuf_reset(&sb);
+ 	submodule_to_gitdir(&sb, path);
+ 	strbuf_addstr(&sb, "/config");
+=20
+--=20
 2.33.GIT
 
