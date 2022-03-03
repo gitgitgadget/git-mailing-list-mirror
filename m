@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71BB9C433EF
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:58:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE130C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231234AbiCCA6o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 19:58:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53734 "EHLO
+        id S231243AbiCCA6u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 19:58:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231195AbiCCA6l (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231228AbiCCA6l (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 2 Mar 2022 19:58:41 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF25B1520E2
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:57:53 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id o41-20020a17090a0a2c00b001bf06e5badfso794834pjo.3
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:57:53 -0800 (PST)
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E0D01520DA
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:57:56 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id p21-20020a631e55000000b00372d919267cso1909323pgm.1
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:57:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc:content-transfer-encoding;
-        bh=w0wuH61vxN7cIGWnPgt2xDcm4NacL81PL7lHRDWTnoI=;
-        b=Rj1JWp/BkcRWZfG5IRIsJZstejV1LG4yc3y34sQ39GNCmyZ23D1dXBCOKLjrGxdtOw
-         Lm/j7QhDyg2vhRN/z30Vbo45cdofFDIyESMrOQXL46Vi/faxQcb2GLWq6yDa/5wE7KLd
-         oniulLMP1Xc8DJnmYQaDnqfom3bee3MQWxj9TV8VUwVxNOxjFRtxCWiwHXl8m90TvpWT
-         VIGpPA6LxCtm/oHVt7T3Md8JQYzZhOzJHZ5rM0e882RCVAXn6YMkl9xJla8J7FOzmjli
-         EP+epyIhTKh9OG+qvKD+D++Ii0zcJ09V5bsKcL4imaMCX+xLAE6vcZti2e/rN0mCvrCD
-         DV5A==
+        bh=gflS6XqN2dPNnSYpN0VO97t7AhA7GLgTGLUTgI03exQ=;
+        b=cFbfzwX6vstgE4GbbhiKe3An6rpCInnSwJtabL2rVITfw21jrsUu6RLdIBPelM1OQZ
+         oYOMqqkZ4oofsNxqc0RsG3fCF3Qyptk1rWZdzeqts12gZ27z/j+bwts+wfYqYF/crMFb
+         CBMuS9lDoAqvRcC8C6NkdMPxBHnyIVlIm21E3zt+Fbo9EhcSa2Mu1JC7VehCRTSBlyNe
+         PxmeK2r9OiaKcjmD+3Z13foHqdr4NedvRMjzTxefJ/fZFH3nVLpCJBpcEk0Vz5cdZSQP
+         R9arnF4D0YL78f8Hz0SBpXSt7CL1Ov+t2gePWjWfj8ziI4PiUKb+6kKYtoJpACcLMpcv
+         PRrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc:content-transfer-encoding;
-        bh=w0wuH61vxN7cIGWnPgt2xDcm4NacL81PL7lHRDWTnoI=;
-        b=gALIQRyyCibM0axFgFydVKb8ZRyCP4206ICZvFCvNS0eiufU4ihRIo90jAOApu1dw5
-         XItyxzriYQeJuNLz9kcnG2NFRTFNfCdodTxsqX+oIT7k2SqAB68a+30+WsByWJHGdwJl
-         s1CvGBF8SwPkyDJhCf4pgzMK0Xq9Wq/EvZX51CnECSuAyUigGmlFNGUIaYN82mCfuyOT
-         nKuv02izVmaY3VIJlNNR85SqF5WhAJbS7cuDqebG9MZF0lV03mYayy/rLv2lsRnjNbKc
-         UmiE8v/tU1p5GEAJudjp+0w5HO6bTwx9rHvwt63bxKfZOMAanftS79r0v3zIjYU4/pz6
-         9gmA==
-X-Gm-Message-State: AOAM532xOnY+8dcFnIVJSucMLWG6a3/z5E69kbXIocHnDpPJZ99+uYCc
-        Nz3GRx4hVlHJcrzhU90Te8GNEjnYNG5/Efjq5NNmGZYH75nTvELgub3ZJ6v509sm5Qg1FPwNFA7
-        KBLlbEmcPoenL7YqH85qqkw5tKy1nnxnm8MP0MKPtvyd3XaOX37acozxOF0gsv24=
-X-Google-Smtp-Source: ABdhPJyj28vISOVM99/CNwCXeLNiT+bC2F7hQ6xYgSBtas0ow6WlKQ8HBDNYUom46hUrxeQ48x07sjafiGA+bw==
+        bh=gflS6XqN2dPNnSYpN0VO97t7AhA7GLgTGLUTgI03exQ=;
+        b=XrlIVWu7RejSmH2xLUB/yXseLMwia5CLzOjlLrYLC9fdByL4Las+A5xPUYp5ZKvPgT
+         WdQV+GN1KzmrU6Hd4K+NVm/aSBQnAqFxBdwmvFwsPQKqktVIzXAgj6TaYz+9qDDYFZ7Z
+         x/sA2D39/BsS+Tb9Gv3sHzlMWxiO1EWpL8uvGOUd110WSUMPwIAaJe3795h7AV+b6Wd0
+         +7zxJ54M2NxxetVq4GwXB2627+tl5+5Hk4jnd/cPGFPDxbmdxWdaJ557JuGz5xrkJv/F
+         93ctdmUXifbUagq+CHi0OQl9HerbAfVXep/SZwfvngVp3Oc5HUC7ACvxABJIbC1n+SH/
+         iyKg==
+X-Gm-Message-State: AOAM531V2FwBh+VMwtVqTC+BYQuMBQ7PuHaEmHwZ9Ap77RTiWSyaVmg1
+        RlUT/4Hods9vJg7qxVXeR2zuAF4jCempFOuxjrt5LjgbwtZ88V5UJtITGejb6z4AJaLeFLXIKxP
+        NG5K+nhw+9pOh3te647R9xHHBJnwBLVGLby1dWwpv+iaeeHuMpZNMtsGefqdsBk4=
+X-Google-Smtp-Source: ABdhPJzvv3Mh+jXDba8YxO9vXJg/mKBQ12VZ4cWYuyz+EFuwEB95n8pQLZIzZ4mOhbpiG87/iwyF90+hr65NMw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:a887:b0:1bc:388a:329f with SMTP
- id h7-20020a17090aa88700b001bc388a329fmr2602786pjq.17.1646269073377; Wed, 02
- Mar 2022 16:57:53 -0800 (PST)
-Date:   Wed,  2 Mar 2022 16:57:20 -0800
+ (user=chooglen job=sendgmr) by 2002:a17:902:a40f:b0:14b:61:b19e with SMTP id
+ p15-20020a170902a40f00b0014b0061b19emr33404777plq.20.1646269075605; Wed, 02
+ Mar 2022 16:57:55 -0800 (PST)
+Date:   Wed,  2 Mar 2022 16:57:21 -0800
 In-Reply-To: <20220303005727.69270-1-chooglen@google.com>
-Message-Id: <20220303005727.69270-7-chooglen@google.com>
+Message-Id: <20220303005727.69270-8-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220301044132.39474-1-chooglen@google.com> <20220303005727.69270-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH v3 06/13] submodule--helper: get remote names from any repository
+Subject: [PATCH v3 07/13] submodule--helper: don't use bitfield indirection
+ for parse_options()
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -60,142 +61,87 @@ Cc:     Glen Choo <chooglen@google.com>,
         Atharva Raykar <raykar.ath@gmail.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, Josh Steadmon <steadmon@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Shourya Shukla <periperidip@gmail.com>
+        <avarab@gmail.com>, Josh Steadmon <steadmon@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Atharva Raykar <raykar.ath@gmail.com>
+From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 
-`get_default_remote()` retrieves the name of a remote by resolving the
-refs from of the current repository's ref store.
+Do away with the indirection of local variables added in
+c51f8f94e5b (submodule--helper: run update procedures from C,
+2021-08-24).
 
-Thus in order to use it for retrieving the remote name of a submodule,
-we have to start a new subprocess which runs from the submodule
-directory.
+These were only needed because in C you can't get a pointer to a
+single bit, so we were using intermediate variables instead.
 
-Let's instead introduce a function called `repo_get_default_remote()`
-which takes any repository object and retrieves the remote accordingly.
-
-`get_default_remote()` is then defined as a call to
-`repo_get_default_remote()` with 'the_repository' passed to it.
-
-Now that we have `repo_get_default_remote()`, we no longer have to start
-a subprocess that called `submodule--helper get-default-remote` from
-within the submodule directory.
-
-So let's make a function called `get_default_remote_submodule()` which
-takes a submodule path, and returns the default remote for that
-submodule, all within the same process.
-
-We can now use this function to save an unnecessary subprocess spawn in
-`sync_submodule()`, and also in a subsequent patch, which will require
-this functionality.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Shourya Shukla <periperidip@gmail.com>
-Helped-by: Glen Choo <chooglen@google.com>
-Signed-off-by: Atharva Raykar <raykar.ath@gmail.com>
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c | 38 ++++++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 15 deletions(-)
+ builtin/submodule--helper.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6b473fc0d2..a58df3e007 100644
+index a58df3e007..3a96c35b86 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -31,11 +31,13 @@
- typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
- 				  void *cb_data);
+@@ -2023,10 +2023,10 @@ struct update_data {
+ 	struct object_id suboid;
+ 	struct submodule_update_strategy update_strategy;
+ 	int depth;
+-	unsigned int force: 1;
+-	unsigned int quiet: 1;
+-	unsigned int nofetch: 1;
+-	unsigned int just_cloned: 1;
++	unsigned int force;
++	unsigned int quiet;
++	unsigned int nofetch;
++	unsigned int just_cloned;
+ };
+ #define UPDATE_DATA_INIT { .update_strategy =3D SUBMODULE_UPDATE_STRATEGY_=
+INIT }
 =20
--static char *get_default_remote(void)
-+static char *repo_get_default_remote(struct repository *repo)
- {
- 	char *dest =3D NULL, *ret;
- 	struct strbuf sb =3D STRBUF_INIT;
--	const char *refname =3D resolve_ref_unsafe("HEAD", 0, NULL, NULL);
-+	struct ref_store *store =3D get_main_ref_store(repo);
-+	const char *refname =3D refs_resolve_ref_unsafe(store, "HEAD", 0, NULL,
-+						      NULL);
+@@ -2578,16 +2578,17 @@ static int update_clone(int argc, const char **argv=
+, const char *prefix)
 =20
- 	if (!refname)
- 		die(_("No such ref: %s"), "HEAD");
-@@ -48,7 +50,7 @@ static char *get_default_remote(void)
- 		die(_("Expecting a full ref name, got %s"), refname);
-=20
- 	strbuf_addf(&sb, "branch.%s.remote", refname);
--	if (git_config_get_string(sb.buf, &dest))
-+	if (repo_config_get_string(repo, sb.buf, &dest))
- 		ret =3D xstrdup("origin");
- 	else
- 		ret =3D dest;
-@@ -57,6 +59,19 @@ static char *get_default_remote(void)
- 	return ret;
- }
-=20
-+static char *get_default_remote_submodule(const char *module_path)
-+{
-+	struct repository subrepo;
-+
-+	repo_submodule_init(&subrepo, the_repository, module_path, null_oid());
-+	return repo_get_default_remote(&subrepo);
-+}
-+
-+static char *get_default_remote(void)
-+{
-+	return repo_get_default_remote(the_repository);
-+}
-+
- static int print_default_remote(int argc, const char **argv, const char *p=
+ static int run_update_procedure(int argc, const char **argv, const char *p=
 refix)
  {
- 	char *remote;
-@@ -1343,9 +1358,8 @@ static void sync_submodule(const char *path, const ch=
-ar *prefix,
- {
- 	const struct submodule *sub;
- 	char *remote_key =3D NULL;
--	char *sub_origin_url, *super_config_url, *displaypath;
-+	char *sub_origin_url, *super_config_url, *displaypath, *default_remote;
- 	struct strbuf sb =3D STRBUF_INIT;
--	struct child_process cp =3D CHILD_PROCESS_INIT;
- 	char *sub_config_path =3D NULL;
+-	int force =3D 0, quiet =3D 0, nofetch =3D 0, just_cloned =3D 0;
+ 	char *prefixed_path, *update =3D NULL;
+ 	struct update_data update_data =3D UPDATE_DATA_INIT;
 =20
- 	if (!is_submodule_active(the_repository, path))
-@@ -1384,21 +1398,15 @@ static void sync_submodule(const char *path, const =
-char *prefix,
- 	if (!is_submodule_populated_gently(path, NULL))
- 		goto cleanup;
+ 	struct option options[] =3D {
+-		OPT__QUIET(&quiet, N_("suppress output for update by rebase or merge")),
+-		OPT__FORCE(&force, N_("force checkout updates"), 0),
+-		OPT_BOOL('N', "no-fetch", &nofetch,
++		OPT__QUIET(&update_data.quiet,
++			   N_("suppress output for update by rebase or merge")),
++		OPT__FORCE(&update_data.force, N_("force checkout updates"),
++			   0),
++		OPT_BOOL('N', "no-fetch", &update_data.nofetch,
+ 			 N_("don't fetch new objects from the remote site")),
+-		OPT_BOOL(0, "just-cloned", &just_cloned,
++		OPT_BOOL(0, "just-cloned", &update_data.just_cloned,
+ 			 N_("overrides update mode in case the repository is a fresh clone")),
+ 		OPT_INTEGER(0, "depth", &update_data.depth, N_("depth for shallow fetch"=
+)),
+ 		OPT_STRING(0, "prefix", &prefix,
+@@ -2615,10 +2616,6 @@ static int run_update_procedure(int argc, const char=
+ **argv, const char *prefix)
+ 	if (argc !=3D 1)
+ 		usage_with_options(usage, options);
 =20
--	prepare_submodule_repo_env(&cp.env_array);
--	cp.git_cmd =3D 1;
--	cp.dir =3D path;
--	strvec_pushl(&cp.args, "submodule--helper",
--		     "print-default-remote", NULL);
--
- 	strbuf_reset(&sb);
--	if (capture_command(&cp, &sb, 0))
-+	default_remote =3D get_default_remote_submodule(path);
-+	if (!default_remote)
- 		die(_("failed to get the default remote for submodule '%s'"),
- 		      path);
+-	update_data.force =3D !!force;
+-	update_data.quiet =3D !!quiet;
+-	update_data.nofetch =3D !!nofetch;
+-	update_data.just_cloned =3D !!just_cloned;
+ 	update_data.sm_path =3D argv[0];
 =20
--	strbuf_strip_suffix(&sb, "\n");
--	remote_key =3D xstrfmt("remote.%s.url", sb.buf);
-+	remote_key =3D xstrfmt("remote.%s.url", default_remote);
-+	free(default_remote);
-=20
--	strbuf_reset(&sb);
- 	submodule_to_gitdir(&sb, path);
- 	strbuf_addstr(&sb, "/config");
-=20
+ 	if (update_data.recursive_prefix)
 --=20
 2.33.GIT
 
