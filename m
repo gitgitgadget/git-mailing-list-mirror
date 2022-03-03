@@ -2,125 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4596CC433EF
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 22:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 606FEC433EF
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 22:25:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236854AbiCCWZI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 17:25:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37360 "EHLO
+        id S234158AbiCCW0D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 17:26:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231618AbiCCWZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 17:25:07 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D98E010C52F
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 14:24:20 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id y1-20020a17090a644100b001bc901aba0dso2957049pjm.8
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 14:24:20 -0800 (PST)
+        with ESMTP id S231707AbiCCW0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 17:26:01 -0500
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7615F3EA95
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 14:25:15 -0800 (PST)
+Received: by mail-il1-x12c.google.com with SMTP id w4so5184680ilj.5
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 14:25:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=Wu0hemQASFYkkNlTQPYrFrrMvoRnzLJ5paYsnGrjA+U=;
-        b=ZZaKFAmDQuBpb2SlNK/XFTZXJn17OOugqNWyGoQ0Q0eF8T64ddb9v9GE6tlj82sjHM
-         7AjiF+m3BdRU4AH3dZyRz1THJXuPtEYJC2EuFXgRUXSf9xWyhYU63GIxsglEBqAfrIRF
-         2LbyrO2jRhb/BOag0STbD9SMBCCPQfmq1XzearrRGmj0l4SKVhbbKy0N6+7GljxWXG2R
-         4NGFkxxsXzLEb9M6CsLKD+x4R+0dKEfgtw010hMdK9YXtaHvPj8dbaUsmDJP9C25TmW7
-         J2ChNmwfn8TIG7Q1VriOdh373zrQQKXyhisQhYtzckfz5LKAIrszdFILh0keQG+QQmBR
-         0YeQ==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=YA+Wl/9xws4N9b8m9FWfPDfMI/ODLRxRJWbxQX3I1tc=;
+        b=RCTho9GanVERLrV7iLnj0WWpESxyWd8kQ7iIWieCGtD9A/OwBUrIgEH8udO87tGCWS
+         8h2xWIe5dtkqBOgql+lwwJxX6WYBBWpo+7nNXO7RPdJUZsaa8Tgk8Pm82/+YVs8pZKpp
+         hAKoljYQAN2x8OtCXd3YcMj6tvPniEDIeCQQjSa3SZmV5nolu3MvtTQwOZJx2TsOKhXU
+         4lnSciBOliLqYz+ZWmbLECFbOVGhqQx5rNHl6rUtERbYylSMcNK6PAIOWUC5daj3DjrI
+         DwExg1oAqfup5Wo5Y1X8xjxmyUcKaszHCGDXoUOUQe15l0BNI4YsfNNTMSrhU1QVqFFE
+         Ngcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=Wu0hemQASFYkkNlTQPYrFrrMvoRnzLJ5paYsnGrjA+U=;
-        b=PVvdQW/yLY0JnRDFfFQhfP4e5oIA1sHCi6GoKdxD8X2ErZtV5CGWh+0fLWqKctEWit
-         FG5XmRGP+y/E2NYQjKf9f3VnuEctb8KxDKTpGQ+jpeUlsh87KNGguWvpExoy01UpiGMO
-         rTtLxmAn6qxyiLfsolf8qr0l4oLtEFoL89iRy2t3W4E2n5jX5Co5WcxINsBCo6UQHqGI
-         4G3gXVRj6MSCiPKCeGIhda8gFIkM4Nxh6mYeszVQQwDRKjVKyoCGUjWy5ASxRqciGMHJ
-         fJGTi/IlsjlA+Lx2uw4TU/BsTjlxD/BEJRcxLuIFtjy2UsioOk310S1LivytgnoIKrxQ
-         wWcA==
-X-Gm-Message-State: AOAM533JZXKUxNrV6nydxf3kn3AMX2xMCFCbaEdXicZt+EEHoxAU1lIU
-        o3e1GaQiwzE9MB5QA/c4QLp63oq8qziMDQ==
-X-Google-Smtp-Source: ABdhPJyal03+1j9zF0zLZ4uISa7YOWbp2bYadYpvHd/aEtmrseFiqE5/Zt6DmUht/I4Ulcqoi4CpJE+YB5TciA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:d882:b0:14f:efee:6de0 with SMTP
- id b2-20020a170902d88200b0014fefee6de0mr39559990plz.116.1646346260306; Thu,
- 03 Mar 2022 14:24:20 -0800 (PST)
-Date:   Thu, 03 Mar 2022 14:24:11 -0800
-In-Reply-To: <220303.868rtr42mg.gmgdl@evledraar.gmail.com>
-Message-Id: <kl6l4k4ek73o.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <CAPMMpoiTJAuadBEOPWOVa-kguSXMDvAhvD22B63QwYpu=H7xEw@mail.gmail.com>
- <220303.868rtr42mg.gmgdl@evledraar.gmail.com>
-Subject: Re: What does it mean to have multiple upstream tracking branches?
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Tao Klerks <tao@klerks.biz>
-Cc:     git <git@vger.kernel.org>, Josh Steadmon <steadmon@google.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=YA+Wl/9xws4N9b8m9FWfPDfMI/ODLRxRJWbxQX3I1tc=;
+        b=sOnyWAI+AfXmD81tOn+9ID/dJCHNIy89hBiohdnT/zU8tPFlN3BYjveknAOEr6+8RS
+         lcp1vnZNDPoGkzohyfsjXJfQqecWe6dehnh6YEabv1DW3D0rFarJOTLlt4pZKIaCIaWL
+         CxUdTeQYywW9EmScjOP32KHCZec1Qh8Mv74sT54PZ0oEHhVVZ962jNeGab2q6TueLHw7
+         NtTdhe6Wrz2swnWno4ZWGmS3Ogw432NDiNd19nhSEmfYNzqJWinXQBabaw73kAQsindQ
+         GbXS8iI0ZfIT4KDsfnR/JEXg2y1G8Mw3i/xGgnj6lKBDUYLldddoNEebHQoejdp9sxil
+         H3iA==
+X-Gm-Message-State: AOAM531Ul3Q8/TnygZPhOCTYRRdIhMr2oOQCvxrOo0N94xdn9zxQmf2I
+        isB+HIQsXYjXTx2Bclr/z9+5VUga2mSHSTGD
+X-Google-Smtp-Source: ABdhPJyiiTkL981ApMBR0gH3Q/jGDaXxAxhDxe8rpnKphYxHybm33H631eKFwKIx9JkwUgKAdCJQSA==
+X-Received: by 2002:a92:7513:0:b0:2b9:5b61:e376 with SMTP id q19-20020a927513000000b002b95b61e376mr34083842ilc.193.1646346314743;
+        Thu, 03 Mar 2022 14:25:14 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id u19-20020a6be413000000b0064103112badsm2866580iog.45.2022.03.03.14.25.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Mar 2022 14:25:14 -0800 (PST)
+Date:   Thu, 3 Mar 2022 17:25:13 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     sandals@crustytoothpaste.net, derrickstolee@github.com,
+        avarab@gmail.com, gitster@pobox.com
+Subject: [PATCH v3 0/2] remote: show progress display when renaming
+Message-ID: <cover.1646346286.git.me@ttaylorr.com>
+References: <70a0325ca8ab0492a9b0873ee3fba576c5ab90b9.1646173186.git.me@ttaylorr.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <70a0325ca8ab0492a9b0873ee3fba576c5ab90b9.1646173186.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Here is a reroll of the patch we've been discussing to add progress
+output when renaming remote-tracking references (as part of a `git
+remote rename <old> <new>`).
 
-> On Thu, Mar 03 2022, Tao Klerks wrote:
->
->>  Hi,
->>
->> In my recent attempt to create a "simple" branch.autosetupmerge
->> option, I have repeatedly been confused by the enforced rules around
->> what is and isn't valid for the branch.<name>.merge and
->> branch.<name>.remote configs.
->>
->> Until Josh Steadman's recent work on --track=3Dinherit, the "automatic"
->> addition of branch.<name>.merge could only ever result in a single
->> entry.
->>
->> Now we support multiple entries being added as a perpetuation of an
->> existing branch's setup - but what does it *mean*? I could understand
->> if the idea was to have transparent tracking across multiple remotes
->> that are supposed to have the same content (eg a single server set up
->> over multiple protocols), but that does not appear to be possible -
->> branch.<name>.remote can only have one value.
->>
->> Is there any documentation (or could someone provide pointers) as to
->> when multiple branch.<name>.merge values can make sense and what that
->> means / what it does?
->
-> Can you point out some existing tests where we end up with multiple
-> *.merge values? I looked a bit and couldn't find any.
->
-> Or maybe it's only possible to get into that state with some command we
-> have a test blind spot for?
+This single patch is now two (and hence, has a cover letter!) because of
+a slight change in approach which amounts to changing this behavior from
+an opt-in
 
-Based on the discussion on that thread you mentioned, I don't think we
-have any such tests. I think the only way to get into this state is to
-manually modify the config.
+    git remote -v rename <old> <new>
 
-The only docs I could find on 'multiple values' are from
-Documentation/config/branch.txt:
+to something much more in line with our existing use of the
+`--[no-]progress` option like:
 
-  branch.<name>.merge::
-    [...]
-    Specify multiple values to get an octopus merge.
+    git remote rename [--[no-]progress] <old> <new>
 
-So I'd imagine a use case would be something like:
+(where `--progress` is the default exactly when `isatty(2)` is true).
 
-- I'm preparing a feature on the branch 'topic'
-- It will get merged into 'origin/master'
-- The feature also depends on 'origin/other-topic'
+I think similar treatment could be applied to other `git remote`
+sub-commands, but I'm reasonably happy starting with just `git remote
+rename` and looking at the others later.
 
-I'd have entries like:
+Taylor Blau (2):
+  builtin/remote.c: parse options in 'rename'
+  builtin/remote.c: show progress when renaming remote references
 
-branch.topic.remote =3D origin
-branch.topic.merge =3D master
-branch.topic.merge =3D other-topic
+ Documentation/git-remote.txt |  2 +-
+ builtin/remote.c             | 39 ++++++++++++++++++++++++++++--------
+ t/t5505-remote.sh            |  4 +++-
+ 3 files changed, 35 insertions(+), 10 deletions(-)
 
-That way, if either 'origin/master' or 'origin/other-topic' changes, I
-can pull updates into 'topic' with "git pull".
-
-Not that I would ever _recommend_ someone to work like this though.
-Junio also wondered whether anyone uses this [1].
-
-[1] https://lore.kernel.org/git/xmqqbl2hw10h.fsf@gitster.g
+Range-diff against v2:
+-:  ---------- > 1:  b76da50b54 builtin/remote.c: parse options in 'rename'
+1:  dc63ec91ab ! 2:  d5b0a4b710 builtin/remote.c: show progress when renaming remote references
+    @@ Documentation/git-remote.txt: SYNOPSIS
+      'git remote' [-v | --verbose]
+      'git remote add' [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=(fetch|push)] <name> <URL>
+     -'git remote rename' <old> <new>
+    -+'git remote' [-v | --verbose] 'rename' <old> <new>
+    ++'git remote rename' [--[no-]progress] <old> <new>
+      'git remote remove' <name>
+      'git remote set-head' <name> (-a | --auto | -d | --delete | <branch>)
+      'git remote set-branches' [--add] <name> <branch>...
+    @@ builtin/remote.c
+      	"git remote [-v | --verbose]",
+      	N_("git remote add [-t <branch>] [-m <master>] [-f] [--tags | --no-tags] [--mirror=<fetch|push>] <name> <url>"),
+     -	N_("git remote rename <old> <new>"),
+    -+	N_("git remote [-v | --verbose] rename <old> <new>"),
+    ++	N_("git remote rename [--[no-]progress] <old> <new>"),
+      	N_("git remote remove <name>"),
+      	N_("git remote set-head <name> (-a | --auto | -d | --delete | <branch>)"),
+      	N_("git remote [-v | --verbose] show [-n] <name>"),
+    +@@ builtin/remote.c: static const char * const builtin_remote_add_usage[] = {
+    + };
+    + 
+    + static const char * const builtin_remote_rename_usage[] = {
+    +-	N_("git remote rename <old> <new>"),
+    ++	N_("git remote rename [--[no-]progress] <old> <new>"),
+    + 	NULL
+    + };
+    + 
+     @@ builtin/remote.c: struct rename_info {
+      	const char *old_name;
+      	const char *new_name;
+    @@ builtin/remote.c: static int read_remote_branches(const char *refname,
+      	}
+      	strbuf_release(&buf);
+      
+    +@@ builtin/remote.c: static void handle_push_default(const char* old_name, const char* new_name)
+    + 
+    + static int mv(int argc, const char **argv)
+    + {
+    ++	int show_progress = isatty(2);
+    + 	struct option options[] = {
+    ++		OPT_BOOL(0, "progress", &show_progress, N_("force progress reporting")),
+    + 		OPT_END()
+    + 	};
+    + 	struct remote *oldremote, *newremote;
+     @@ builtin/remote.c: static int mv(int argc, const char **argv)
+      		old_remote_context = STRBUF_INIT;
+      	struct string_list remote_branches = STRING_LIST_INIT_DUP;
+    @@ builtin/remote.c: static int mv(int argc, const char **argv)
+     +	int i, refs_renamed_nr = 0, refspec_updated = 0;
+     +	struct progress *progress = NULL;
+      
+    - 	if (argc != 3)
+    - 		usage_with_options(builtin_remote_rename_usage, options);
+    + 	argc = parse_options(argc, argv, NULL, options,
+    + 			     builtin_remote_rename_usage, 0);
+     @@ builtin/remote.c: static int mv(int argc, const char **argv)
+    - 	rename.old_name = argv[1];
+    - 	rename.new_name = argv[2];
+    + 	rename.old_name = argv[0];
+    + 	rename.new_name = argv[1];
+      	rename.remote_branches = &remote_branches;
+     +	rename.symrefs_nr = 0;
+      
+    @@ builtin/remote.c: static int mv(int argc, const char **argv)
+      	 * the new symrefs.
+      	 */
+      	for_each_ref(read_remote_branches, &rename);
+    -+	if (verbose) {
+    ++	if (show_progress) {
+     +		/*
+     +		 * Count symrefs twice, since "renaming" them is done by
+     +		 * deleting and recreating them in two separate passes.
+    @@ t/t5505-remote.sh: test_expect_success 'rename a remote' '
+      		cd four &&
+      		git config branch.main.pushRemote origin &&
+     -		git remote rename origin upstream &&
+    -+		GIT_PROGRESS_DELAY=0 git remote -v rename origin upstream 2>err &&
+    ++		GIT_TRACE2_EVENT=$(pwd)/trace \
+    ++			git remote rename --progress origin upstream &&
+    ++		test_region progress "Renaming remote references" trace &&
+      		grep "pushRemote" .git/config &&
+    -+		grep "Renaming remote references: 100% (4/4), done" err &&
+      		test -z "$(git for-each-ref refs/remotes/origin)" &&
+      		test "$(git symbolic-ref refs/remotes/upstream/HEAD)" = "refs/remotes/upstream/main" &&
+    - 		test "$(git rev-parse upstream/main)" = "$(git rev-parse main)" &&
+-- 
+2.35.1.73.gccc5557600
