@@ -2,114 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D793BC433F5
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 16:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5E52C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 16:53:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235175AbiCCQvO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 11:51:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40342 "EHLO
+        id S232531AbiCCQyH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 11:54:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235163AbiCCQvN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 11:51:13 -0500
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 805D819D772
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 08:50:27 -0800 (PST)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id BCA883F4851;
-        Thu,  3 Mar 2022 11:50:26 -0500 (EST)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 89FE43F4844;
-        Thu,  3 Mar 2022 11:50:26 -0500 (EST)
-Subject: Re: [PATCH 17/23] fsmonitor--daemon: stub in health thread
-To:     Derrick Stolee <derrickstolee@github.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
- <4a77f5b1fdef3af20fbfefccccc5fee194eb3422.1644940774.git.gitgitgadget@gmail.com>
- <4c784936-7b70-3910-6413-0438e86b23c4@github.com>
- <f9249541-bb92-1c61-825f-44a034a17bb8@github.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <3ac0116c-4d82-55d0-6e17-75c3de392bbf@jeffhostetler.com>
-Date:   Thu, 3 Mar 2022 11:50:24 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S230385AbiCCQyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 11:54:06 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7672F123422
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 08:53:18 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id o1so6358577edc.3
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 08:53:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=8mNg1Oz2Al04DHvtVqatNp9aVJVwO5KJKT458G0BfBQ=;
+        b=DGzcHkvtvpxmPXE46hNBFmVPYr1OcBM5Yd0lt4sUs+NPr0qDq6ahe6wS4+KaU8vvWG
+         EW+NGu6N6n7uSr4FfivuEoV124vusjFNYAQ9amJHwUbkco8zMrPjKHvQnTO3jzFAmEAP
+         h6pkcjn3zQG10w76qPBJ6//wbnbYdgx9oQ4VUWwmKjoXSU1BT0SQPYo5eHV59G74kHoq
+         RnqtHq0nuKJ9zWhpCXAD2f8GNiagXWVTpDLexBw5aoMP35bSGn+CvEVVMmHpM2X5w0oy
+         Jjaf/KQNMI21kDDVSnPydpC1ja6HJULPZ88fbZx/Br5wtLD2gPXEGXbLOxPDYkGYZ9kX
+         FTDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=8mNg1Oz2Al04DHvtVqatNp9aVJVwO5KJKT458G0BfBQ=;
+        b=a/x6K+f6Xi2Jy9f9ArVPAHKLsJ1hRAyghDSF+Z7bUfB9rbHKsbtZACuEolADYGbdkA
+         5zJzZo3hBDNh5M0ByNLFSlhwkAT9BmNOB2/T0ZSAhrgkE2wRBf5cU9JiKY/ULoMB+ZXp
+         4Lw5srF9XUb9sAwh8tQFvCMluHz8uA2KJTSms2kwELM0ixLuZf+Gp9c32yMtGPy1bp6f
+         vKgFPVkMEazTTqnpPG3Nyx13l/VHlIfAkKcBf6AWQm2kAiMOA30x0NFKmblOchYPZI05
+         cy9F8vLCrt5B61ZCloQoJ8PbAEJi72vLpfjDaT8YaIWM2SnUAjBjRiIcqDWpgKKynqvO
+         NB7g==
+X-Gm-Message-State: AOAM531xEU5itf+g20hCN1BbIMPHkrXLxEj0odhOboQCMFkLrwye9tQE
+        ANhnnZa02i5zKjXLXfwXMQY=
+X-Google-Smtp-Source: ABdhPJz8IrW74RBgO+e1hdKQLotJYLLXljdkVuK24O7bJQX+oxnOTY5T169t7rokTPXW8c0L4hxFlw==
+X-Received: by 2002:a50:fb02:0:b0:40f:bd67:205f with SMTP id d2-20020a50fb02000000b0040fbd67205fmr35060311edq.409.1646326396546;
+        Thu, 03 Mar 2022 08:53:16 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id t4-20020a056402524400b00415b90801edsm1094388edd.57.2022.03.03.08.53.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Mar 2022 08:53:16 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nPohX-000emO-GG;
+        Thu, 03 Mar 2022 17:53:15 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v4 1/3] stash: add tests to ensure reflog --rewrite
+ --updatref behavior
+Date:   Thu, 03 Mar 2022 17:52:23 +0100
+References: <pull.1218.v3.git.git.1645817452.gitgitgadget@gmail.com>
+ <pull.1218.v4.git.git.1646260044.gitgitgadget@gmail.com>
+ <08bb8d3a9b9cd75c8b2aed11db9456baef6f415b.1646260044.git.gitgitgadget@gmail.com>
+ <xmqqlexsexse.fsf@gitster.g>
+ <20334a5e-52b8-12a4-de93-a8baa5313858@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <20334a5e-52b8-12a4-de93-a8baa5313858@gmail.com>
+Message-ID: <220303.86a6e72d1g.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <f9249541-bb92-1c61-825f-44a034a17bb8@github.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Thu, Mar 03 2022, Phillip Wood wrote:
 
-On 2/24/22 11:15 AM, Derrick Stolee wrote:
-> On 2/24/2022 11:04 AM, Derrick Stolee wrote:
->> On 2/15/2022 10:59 AM, Jeff Hostetler via GitGitGadget wrote:
->>> From: Jeff Hostetler <jeffhost@microsoft.com>
->>>
->>> Create another thread to watch over the daemon process and
->>> automatically shut it down if necessary.
->>>
->>> This commit creates the basic framework for a "health" thread
->>> to monitor the daemon and/or the file system.  Later commits
->>> will add platform-specific code to do the actual work.
+> On 02/03/2022 23:32, Junio C Hamano wrote:
+>> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> [...]
+>>> +test_expect_success REFFILES 'drop stash reflog updates refs/stash with rewrite' '
+>>> +	git init repo &&
+>>> +	(
+>>> +		cd repo &&
+>>> +		setup_stash
+>>> +	) &&
+>> Hmph, so this is done inside the subdirectory.  The implementation
+>> of the helper in this iteration does look cleaner than in the
+>> previous iteration.
+>> But these many references to "repo/" and "-C repo" we see below
+>> makes me wonder why we do not put the whole thing inside the
+>> subshell we started earlier.
+>> i.e.
+>> 	git init repo &&
+>> 	(
+>> 		cd repo &&
+>> 		setup_stash_test &&
+>> 		echo 9 >file &&
+>> 		old=$(git rev-parse stash@{0}) &&
+>> 		git stash &&
+>> 		new=$(git rev-parse stash@{0}) &&
+>> 		...
+>> 		test_cmp expect actual
+>> 	)
 >>
->> ...
->>
->>> diff --git a/compat/fsmonitor/fsm-health-darwin.c b/compat/fsmonitor/fsm-health-darwin.c
->>> new file mode 100644
->>> index 00000000000..b9f709e8548
->>> --- /dev/null
->>> +++ b/compat/fsmonitor/fsm-health-darwin.c
->>> @@ -0,0 +1,24 @@
->>> +#include "cache.h"
->>> +#include "config.h"
->>> +#include "fsmonitor.h"
->>> +#include "fsm-health.h"
->>> +#include "fsmonitor--daemon.h"
->>> +
->>> +int fsm_health__ctor(struct fsmonitor_daemon_state *state)
->>> +{
->>> +	return 0;
->>> +}
->>> +
->>> +void fsm_health__dtor(struct fsmonitor_daemon_state *state)
->>> +{
->>> +	return;
->>> +}
->>> +
->>> +void fsm_health__loop(struct fsmonitor_daemon_state *state)
->>> +{
->>> +	return;
->>> +}
->>> +
->>> +void fsm_health__stop_async(struct fsmonitor_daemon_state *state)
->>> +{
->>> +}
->>
->> The macOS implementation is stubbed, as advertised.
-> 
-> After looking at the rest of the patch series, it seems that these
-> are never filled in. Are some of the win32 health monitors also
-> appropriate for macOS? (They would need platform-specific checks,
-> probably.)
+>
+> I wonder if we could avoid the subshell entirely and avoid relying on
+> REFFILES (assuming we're not trying to test the implementation details 
+> of that refs backend) by doing something like
+>
+> test_expect_success 'drop stash reflog updates refs/stash with rewrite' '
+> 	old=$(git rev-parse stash@{0}) &&
+> 	setup_stash_test &&
+> 	git rev-list -g stash >tmp &&
+> 	sed /$old/d tmp >expect &&
+> 	git rev-list -g stash >actual &&
+> 	test_cmp expect actual
+> '
 
-Yes, there are some asymmetries here.  For example: On MacOS we
-get a notification at part of the existing watch if the repo root
-directory is moved or renamed, so (in a later commit) we can add
-code to the listener thread to check for that; however, on Windows
-we don't, so we have to poll for it in the health thread using
-timers and the BY_HANDLE_FILE_INFORMATION data.
+Unless I'm missing something that "rev-list -g" will emit only the RHS
+of the stash logs, i.e. no "0000..." etc.
 
-Here I'm just stubbing in a trivial health thread so that the framework
-is complete for the supported platforms.
+And if we only look at that the difference with specifying the flag
+isn't visible, no?
 
-Thanks,
-Jeff
+>>> +	echo 9 >repo/file &&
+>>> +
+>>> +	old_oid="$(git -C repo rev-parse stash@{0})" &&
+>>> +	git -C repo stash &&
+>>> +	new_oid="$(git -C repo rev-parse stash@{0})" &&
+>>> +
+>>> +	cat >expect <<-EOF &&
+>>> +	$(test_oid zero) $old_oid
+>>> +	$old_oid $new_oid
+>>> +	EOF
+>>> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
+>>> +	test_cmp expect actual &&
+>>> +
+>>> +	git -C repo stash drop stash@{1} &&
+>>> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
+>>> +	cat >expect <<-EOF &&
+>>> +	$(test_oid zero) $new_oid
+>>> +	EOF
+>>> +	test_cmp expect actual
+>>> +'
+>>> +
+>>>   test_expect_success 'stash pop' '
+>>>   	git reset --hard &&
+>>>   	git stash pop &&
 
