@@ -2,152 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8063C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 16:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ED37C433F5
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 16:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234823AbiCCQME (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 11:12:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50422 "EHLO
+        id S234790AbiCCQO2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 11:14:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231336AbiCCQME (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 11:12:04 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6479B198D29
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 08:11:18 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id v2-20020a7bcb42000000b0037b9d960079so5642435wmj.0
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 08:11:18 -0800 (PST)
+        with ESMTP id S231204AbiCCQO2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 11:14:28 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE802106CA8
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 08:13:41 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id w4so4740340edc.7
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 08:13:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:reply-to:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=cFMD94d5hnX812e3Sz1geyFnD6ssRs0a2V922R4C1PA=;
-        b=L+U9GJBOAvYVjLmj7KbYxdx5tiMby0QFxTLZZKLtKC0s1kV35duXZf4QBK29olkDaG
-         sQxKlqVUPqa8T22XP5WwWK3qgG3jNc+pjwG2oR49/bQD2JRM7yEFgbRTWWzUau1Ox9Hp
-         SAhbZa4eypO1MD5Bj9P9GL6xp9WLO+bEZ4pdMDDtHgEEZuiB2T/srcq8ZrNRaaidLL02
-         OZtoZ4WS6QpYaUy3BY0PZWMlHuLnhmRL8sxMTEyU25snvv7fOXqzs0HOS/QNFCAc2+xV
-         warHKTlvbU2tR92J+CMLKtg6IkioUhYo9arnmkOF8LmIJ8vSHTn0DONQCWf/IQW1r8A4
-         facw==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=G7vS2Nvz5mG8b8Xp207bBYEkpj4JzbgRWqB/UqPYWRE=;
+        b=F2yrvN6FyDAV5nT9mxfk/5e+TRtQ4/Q2YyEKYwkPXPVJVr34voGO3MqBlExvjkrnXg
+         TNeEs2Dgw1e7VgbnMfQDV5fnA/3w3JWzhO53lrc1Pser64ESJCURG0dOl5IIYQ7dxF9U
+         WBwGiMfLteCrCUlhHsqmGr5bBwMaDXWFSjfjL19wFEVfcJfjxVh+kAIf5VnnieGn7WUh
+         ZPk+moE77HXc2MvZeKLzqFolJi6LgyVym3ExCTPywoRxIZjlhqrsXnwVj+RZUML0lbuR
+         aW13IK2wwjsxUsvkuC7QwrMf7TvBADbbA8xyqbJR2QNrJM6abSU6yj7GQPWsY1IfXQsT
+         bj4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
-         :subject:content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=cFMD94d5hnX812e3Sz1geyFnD6ssRs0a2V922R4C1PA=;
-        b=GgpiVOKCR54mkcppk9TzfRQOXU4cjMWizFkv/S+YOwAI8eBonBpG7yMtTH/G9h+n3i
-         UvIaah09MdbYx1L5e0TLwcA9SXEdFAl37eVKxe5YZ+W7DHRiApjdWULviivUenTyxmfE
-         2tUJ2nXnAxcK3vcd6QpWtH2bgoBwRLQoUthdMz7ZXZO73ArDgiXScbXKuwgdqfW82tpL
-         Yqmzusofs1jsWhuCz8ayB2l4vV4XjP8S5BFdlEldsq9SpXkChkjv7ibDt1GTY4hZc/Fv
-         ilt3SzxXEkoZheI6H2+Xa9Yz0o5+8LZB3BOdPU8JmBqnVDJc8WB5izwzNU+Pj54jsSwJ
-         HNvQ==
-X-Gm-Message-State: AOAM533Q9V/KRMJ6h9IS0J3IUe60v0/15YYmHWGUGEeAPcillRjqO7qa
-        WqJxKWZ0xZrzv0FdrqXkNpEtORqgHkE=
-X-Google-Smtp-Source: ABdhPJwKQyHKuXxrIjgPyQuHzCr3b51wNxi0dtLNuScP+qR30MOI9Fv/JNgy34abTzIoRfBqti6Ssw==
-X-Received: by 2002:a7b:c1ce:0:b0:381:86d6:d87c with SMTP id a14-20020a7bc1ce000000b0038186d6d87cmr4370749wmj.101.1646323876962;
-        Thu, 03 Mar 2022 08:11:16 -0800 (PST)
-Received: from [192.168.1.240] (230.2.7.51.dyn.plus.net. [51.7.2.230])
-        by smtp.gmail.com with ESMTPSA id p6-20020a5d4586000000b001f0436cb325sm2237189wrq.52.2022.03.03.08.11.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Mar 2022 08:11:16 -0800 (PST)
-Message-ID: <20334a5e-52b8-12a4-de93-a8baa5313858@gmail.com>
-Date:   Thu, 3 Mar 2022 16:11:12 +0000
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=G7vS2Nvz5mG8b8Xp207bBYEkpj4JzbgRWqB/UqPYWRE=;
+        b=pHEZ4GR3xd2gPr/q6jye3aBgunq3M70DZ0xwvUrWYXzgUvE5spH1jWmRChqgxo3zgy
+         T95wJK5p6SboDiy8TU3G8jCKXYym4uFJhZTCMy5CIO9N/e4bKTdu+1RiaLfH6IeCTwzk
+         32qzvpyjIuV2hP8f8Xt+1rTlqXrQEHRLe9iVF/6s7tQr1wORGSrtXJWbO6F6/ZzmUl79
+         61w62U44dIUViFLF859Nfah1Y68mFSttjCW8b9rU4R8cLChZWIhWCHjmiGy84e6lszTb
+         TssHbKh3/coCT2i/reZFrLHQN/rMjE7p2uZjWffbhNbgE785gIUrAlMa9Q4Zd3hRhah/
+         HQzQ==
+X-Gm-Message-State: AOAM531xr1fqXHlNYQ05fo6SlfENSnvKhUtlFNYpMlcLBpZjE5FuGFzP
+        xrW+VCbih0DdOoa5KDJCdE0=
+X-Google-Smtp-Source: ABdhPJxbuR7F6XFYhV9tXQLmnFsgvnPh7au5eYzQqYMAblCC+pI4DuXrzjmwhTlRic3msgqgVeWffQ==
+X-Received: by 2002:aa7:cb93:0:b0:415:d57a:4603 with SMTP id r19-20020aa7cb93000000b00415d57a4603mr4518376edt.62.1646324020415;
+        Thu, 03 Mar 2022 08:13:40 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id q22-20020a170906771600b006cf8a37ebf5sm829395ejm.103.2022.03.03.08.13.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Mar 2022 08:13:39 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nPo5D-000d6e-8f;
+        Thu, 03 Mar 2022 17:13:39 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>
+Subject: ab/object-file-api-updates (was: What's cooking in git.git (Feb
+ 2022, #08; Mon, 28))
+Date:   Thu, 03 Mar 2022 17:11:46 +0100
+References: <xmqqmti9ssah.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqqmti9ssah.fsf@gitster.g>
+Message-ID: <220303.86v8wv2evg.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 1/3] stash: add tests to ensure reflog --rewrite
- --updatref behavior
-Content-Language: en-GB-large
-To:     Junio C Hamano <gitster@pobox.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, John Cai <johncai86@gmail.com>
-References: <pull.1218.v3.git.git.1645817452.gitgitgadget@gmail.com>
- <pull.1218.v4.git.git.1646260044.gitgitgadget@gmail.com>
- <08bb8d3a9b9cd75c8b2aed11db9456baef6f415b.1646260044.git.gitgitgadget@gmail.com>
- <xmqqlexsexse.fsf@gitster.g>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqlexsexse.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/03/2022 23:32, Junio C Hamano wrote:
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> [...]
->> +test_expect_success REFFILES 'drop stash reflog updates refs/stash with rewrite' '
->> +	git init repo &&
->> +	(
->> +		cd repo &&
->> +		setup_stash
->> +	) &&
-> 
-> Hmph, so this is done inside the subdirectory.  The implementation
-> of the helper in this iteration does look cleaner than in the
-> previous iteration.
-> 
-> But these many references to "repo/" and "-C repo" we see below
-> makes me wonder why we do not put the whole thing inside the
-> subshell we started earlier.
-> 
-> i.e.
-> 
-> 	git init repo &&
-> 	(
-> 		cd repo &&
-> 		setup_stash_test &&
-> 
-> 		echo 9 >file &&
-> 		old=$(git rev-parse stash@{0}) &&
-> 		git stash &&
-> 		new=$(git rev-parse stash@{0}) &&
-> 		...
-> 
-> 		test_cmp expect actual
-> 	)
+
+On Tue, Mar 01 2022, Junio C Hamano wrote:
+
+> * ab/object-file-api-updates (2022-02-25) 12 commits
+>  - object-file API: pass an enum to read_object_with_reference()
+>  - object-file.c: add a literal version of write_object_file_prepare()
+>  - object-file API: have hash_object_file() take "enum object_type"
+>  - object API: rename hash_object_file_literally() to write_*()
+>  - object-file API: split up and simplify check_object_signature()
+>  - object API users + docs: check <0, not !0 with check_object_signature()
+>  - object API docs: move check_object_signature() docs to cache.h
+>  - object API: correct "buf" v.s. "map" mismatch in *.c and *.h
+>  - object-file API: have write_object_file() take "enum object_type"
+>  - object-file API: add a format_object_header() function
+>  - object-file API: return "void", not "int" from hash_object_file()
+>  - object-file.c: split up declaration of unrelated variables
 >
+>  Object-file API shuffling.
+>
+>  Needs review.
+>  source: <cover-v3-00.12-00000000000-20220204T234435Z-avarab@gmail.com>
 
-I wonder if we could avoid the subshell entirely and avoid relying on 
-REFFILES (assuming we're not trying to test the implementation details 
-of that refs backend) by doing something like
+Jiang Xin (whose git-unpack-objects series at [1] depends on this) has
+looked this over & acked it at [2].
 
-test_expect_success 'drop stash reflog updates refs/stash with rewrite' '
-	old=$(git rev-parse stash@{0}) &&
-	setup_stash_test &&
-	git rev-list -g stash >tmp &&
-	sed /$old/d tmp >expect &&
-	git rev-list -g stash >actual &&
-	test_cmp expect actual
-'
-
-Best Wishes
-
-Phillip
-
->> +	echo 9 >repo/file &&
->> +
->> +	old_oid="$(git -C repo rev-parse stash@{0})" &&
->> +	git -C repo stash &&
->> +	new_oid="$(git -C repo rev-parse stash@{0})" &&
->> +
->> +	cat >expect <<-EOF &&
->> +	$(test_oid zero) $old_oid
->> +	$old_oid $new_oid
->> +	EOF
->> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
->> +	test_cmp expect actual &&
->> +
->> +	git -C repo stash drop stash@{1} &&
->> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
->> +	cat >expect <<-EOF &&
->> +	$(test_oid zero) $new_oid
->> +	EOF
->> +	test_cmp expect actual
->> +'
->> +
->>   test_expect_success 'stash pop' '
->>   	git reset --hard &&
->>   	git stash pop &&
+1. https://lore.kernel.org/git/cover-v10-0.6-00000000000-20220204T135538Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/CANYiYbFZN=mvcxRT4Cf4Gzao89KR2UjMJXnJM63S2zAtbD32Jg@mail.gmail.com/
