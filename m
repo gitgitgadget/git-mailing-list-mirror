@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D0EFC433F5
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 16:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1094C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 16:48:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235103AbiCCQmn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 11:42:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39708 "EHLO
+        id S235155AbiCCQso (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 11:48:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235094AbiCCQmm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 11:42:42 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5966819D747
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 08:41:56 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id y11so6850970eda.12
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 08:41:56 -0800 (PST)
+        with ESMTP id S229547AbiCCQsm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 11:48:42 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19350148677
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 08:47:56 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id yy13so3085414ejb.2
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 08:47:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=GmMYDqAB/U3IP7oiCQ5EsfSUCbjGtfXzSK6D9+hJxNk=;
-        b=YKQQkLgZSUh5n9K7NP0yGs7jonTbWe3PA7KA+zCzr/wNgsIlaktbXOeeL42nEZSmjr
-         /PRRfWW52wA4MJeVNlzO5nZT1n6ZMxE8q1a95dAKEAsRnB2tJXEgF/+bFUePGafqzuQS
-         BI9X8dCp7ESGQgemMVrikTEb/pgnrfE4PAAaAZHwpNTNacgtEC6/3GzjhZIvtv4cmvFh
-         v8FOk20UlmEiayHjFBJR1xFFhSinLPbn0891kQdXhkgax1Kl8fqPjOVqQ4Fq5Q4VJmRh
-         z5mEn1D5WmzXrlZDZiovc4pHJEmbHFXnZ/Q6TTvSy2W5v3EFKdckSYOY7sAP7mOC/PY8
-         iEmw==
+        bh=Z5cERr8g6WtvtowF03KTdnI+FhY9xvWp5/2TuEpDN/Y=;
+        b=WLakf+lghMX4QIX7K6hZi02CMzw+sUK8GgPxYCvd1QDybM+Z3TieHVGWK0xo+t4WQd
+         OVlqtNvOl16+7EMKvnY+jwFHVX//ov17j/QlrACOfq7jWiDxkmvbI33AYx7G5mCrm122
+         pLBLKGAyGg6XWZ7NCfYDfheYohIMa5LviCtY6z9gV3NbA1dLaEZ1gIYZxN6MvO54jxXn
+         oFswT5avf0iIU8lT3xwkLrIOh07CtL5RSNrSz7cSa59XEs3sLb6B1q/K8dauXp7cjyMp
+         X2Dj9ceyIDbiNCtp98+uYxilD7CziUoPXHiCxkK6txju03UPlKnmiG88xr8bP8z9biSl
+         0Wjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=GmMYDqAB/U3IP7oiCQ5EsfSUCbjGtfXzSK6D9+hJxNk=;
-        b=g37rtJiLqujtnWlThCkIyypxsdjFThkA5CBete0mRYMhQzH3t/jbcbclezz8gdCgYV
-         Qsvl9qk7kzz+WJ4M/CecewghH7nXkyTnczPZB/FTWSAKYTQ+SXymBVIqJKJfJrWkLfMc
-         hWZtQn1ntsLWnjjAPLFApcTefrZEq5m39hynAXb6Qa1uxO6vU1vTWFIiibcLkUZn+i2P
-         UGUQ3i89X89ktIApE1oslx+mQA9IE6vbs+Hmy7uOT0QBQtykakVtYkXFQ5ynG1re7bzn
-         FYrjOpcsgoQpFnB5X/cdrog9YJ4WdWgljBwpMhe+T70b1T9MfeLJo8AgTDe8mlYd28H1
-         NkBQ==
-X-Gm-Message-State: AOAM531WJuu/rtdT0QQbHx977HuzFb55s8BbuQvhT/aTjqT+/0h6M+VZ
-        swZUVHvI4JCzaunRxJ78lTU=
-X-Google-Smtp-Source: ABdhPJzaa9in88kjcewmFyxJY+uS8xJmwSj2md9gGfObxtfNZhhqVGIxFS8TtlG44W9uqNhpaOMM6g==
-X-Received: by 2002:a50:a6da:0:b0:415:d7a5:3e02 with SMTP id f26-20020a50a6da000000b00415d7a53e02mr4396668edc.137.1646325714714;
-        Thu, 03 Mar 2022 08:41:54 -0800 (PST)
+        bh=Z5cERr8g6WtvtowF03KTdnI+FhY9xvWp5/2TuEpDN/Y=;
+        b=7J12EgTX22ZTtl03T+RKEB401UbIinwxQjD3XkOPBdboKV4E5Gn/bzm0Vp9TzMx1+0
+         uKi9zSE5AibHZhFAaNBjbaqKAydTdWk3OkeYp4Wz4bEPQ92u35wp7oK9rHeEgK5GuiWz
+         /wiNeGMbzymER0svnVPiwh9f2oTO2NyD2i8O0oiZf0Tl/acwUVdPK0llosGZhIjPSGXt
+         bgcMSer0ATWTjZoSAjOXGhDSMnScEoYPiJGr4xLDwK8uFfTo80gap1rb4golaJkMoFY2
+         zEPAvh4fxPD36c6vNFjrcOtZXMU7Hm3VC6+f9alsvbry4wRFOngcymffc8jWqnwKjg7S
+         wsmg==
+X-Gm-Message-State: AOAM533PbhsH4oMXkCbo0qK2e3TghaMHyI89jSeStJL00qS2MIqWlw6N
+        dE8i/OX88FeHnmdSZc8PIVA=
+X-Google-Smtp-Source: ABdhPJyYz9ho11IK/d7KQ3Rvz4Y4h2P7Lxw92E1zhq+ntqmZ+CUDbAvsL69ljQEDOarMc5s7HC3qhA==
+X-Received: by 2002:a17:907:7248:b0:6da:8410:c3c8 with SMTP id ds8-20020a170907724800b006da8410c3c8mr4915030ejc.200.1646326074544;
+        Thu, 03 Mar 2022 08:47:54 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id lb14-20020a170907784e00b006d5c0baa503sm845302ejc.110.2022.03.03.08.41.53
+        by smtp.gmail.com with ESMTPSA id ho38-20020a1709070ea600b006d6e9207e37sm898526ejc.66.2022.03.03.08.47.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Mar 2022 08:41:53 -0800 (PST)
+        Thu, 03 Mar 2022 08:47:53 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nPoWX-000eJw-59;
-        Thu, 03 Mar 2022 17:41:53 +0100
+        id 1nPocL-000eYB-1c;
+        Thu, 03 Mar 2022 17:47:53 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, tytso@mit.edu, derrickstolee@github.com,
         gitster@pobox.com, larsxschneider@gmail.com
-Subject: Re: [PATCH v3 04/17] chunk-format.h: extract oid_version()
-Date:   Thu, 03 Mar 2022 17:30:44 +0100
+Subject: Re: [PATCH v3 05/17] pack-mtimes: support writing pack .mtimes files
+Date:   Thu, 03 Mar 2022 17:45:23 +0100
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1646266835.git.me@ttaylorr.com>
- <135a07276b0a40b04f2c28d4f48c26b1af76c12c.1646266835.git.me@ttaylorr.com>
+ <0600503856dbccb135aaead27693b6815a774b4f.1646266835.git.me@ttaylorr.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <135a07276b0a40b04f2c28d4f48c26b1af76c12c.1646266835.git.me@ttaylorr.com>
-Message-ID: <220303.86ilsv2dke.gmgdl@evledraar.gmail.com>
+In-reply-to: <0600503856dbccb135aaead27693b6815a774b4f.1646266835.git.me@ttaylorr.com>
+Message-ID: <220303.86ee3j2dae.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -72,96 +72,26 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Mar 02 2022, Taylor Blau wrote:
 
-> Consolidate these into a single definition in chunk-format.h. It's not
-> clear that this is the best header to define this function in, but it
-> should do for now.
+> Now that the `.mtimes` format is defined, supplement the pack-write API
+> to be able to conditionally write an `.mtimes` file along with a pack by
+> setting an additional flag and passing an oidmap that contains the
+> timestamps corresponding to each object in the pack.
 > [...]
-> +
-> +uint8_t oid_version(const struct git_hash_algo *algop)
-> +{
-> +	switch (hash_algo_by_ptr(algop)) {
-> +	case GIT_HASH_SHA1:
-> +		return 1;
-> +	case GIT_HASH_SHA256:
-> +		return 2;
+>  void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought)
+> diff --git a/pack.h b/pack.h
+> index fd27cfdfd7..01d385903a 100644
+> --- a/pack.h
+> +++ b/pack.h
+> @@ -44,6 +44,7 @@ struct pack_idx_option {
+>  #define WRITE_IDX_STRICT 02
+>  #define WRITE_REV 04
+>  #define WRITE_REV_VERIFY 010
+> +#define WRITE_MTIMES 020
+>  
+>  	uint32_t version;
+>  	uint32_t off32_limit;
 
-Not a new issue, but I wonder why these don't return hash_algo_by_ptr
-aka GIT_HASH_WHATEVER here. I.e. this is the same as this more
-straightforward & obvious code that avoids re-hardcoding the magic
-constants:
-
-	const int algo = hash_algo_by_ptr(algop)
-
-	switch (algo) {
-	case GIT_HASH_SHA1:
-	case GIT_HASH_SHA256:
-		return algo;
-	default:
-        [...]
-        }
-
-Probably best left as a later cleanup. FWIW I came up with this on top
-of my designated init series:
-
-diff --git a/hash.h b/hash.h
-index 5d40368f18a..fd710ec6ae8 100644
---- a/hash.h
-+++ b/hash.h
-@@ -86,14 +86,18 @@ static inline void git_SHA256_Clone(git_SHA256_CTX *dst, const git_SHA256_CTX *s
-  * field for being non-zero.  Use the name field for user-visible situations and
-  * the format_id field for fixed-length fields on disk.
-  */
--/* An unknown hash function. */
--#define GIT_HASH_UNKNOWN 0
--/* SHA-1 */
--#define GIT_HASH_SHA1 1
--/* SHA-256  */
--#define GIT_HASH_SHA256 2
--/* Number of algorithms supported (including unknown). */
--#define GIT_HASH_NALGOS (GIT_HASH_SHA256 + 1)
-+enum git_hash_algo_name {
-+	/* An unknown hash function. */
-+	GIT_HASH_UNKNOWN,
-+	/* SHA-1 */
-+	GIT_HASH_SHA1,
-+	GIT_HASH_SHA256,
-+	/*
-+	 * Number of algorithms supported (including unknown). This
-+	 * must be kept last!
-+	 */
-+	GIT_HASH_NALGOS,
-+};
- 
- /* "sha1", big-endian */
- #define GIT_SHA1_FORMAT_ID 0x73686131
-diff --git a/object-file.c b/object-file.c
-index 5074471b471..f2d54a86969 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -166,7 +166,7 @@ static void git_hash_unknown_final_oid(struct object_id *oid, git_hash_ctx *ctx)
- }
- 
- const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
--	{
-+	[GIT_HASH_UNKNOWN] = {
- 		.name = NULL,
- 		.format_id = 0x00000000,
- 		.rawsz = 0,
-@@ -181,7 +181,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		.empty_blob = NULL,
- 		.null_oid = NULL,
- 	},
--	{
-+	[GIT_HASH_SHA1] = {
- 		.name = "sha1",
- 		.format_id = GIT_SHA1_FORMAT_ID,
- 		.rawsz = GIT_SHA1_RAWSZ,
-@@ -196,7 +196,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		.empty_blob = &empty_blob_oid,
- 		.null_oid = &null_oid_sha1,
- 	},
--	{
-+	[GIT_HASH_SHA256] = {
- 		.name = "sha256",
- 		.format_id = GIT_SHA256_FORMAT_ID,
- 		.rawsz = GIT_SHA256_RAWSZ,
+Why the hardcoding? The 010 was added in your 8ef50d9958f (pack-write.c:
+prepare to write 'pack-*.rev' files, 2021-01-25). That would be the same
+as 8|2, but there's no 8 there., ditto this new 020 that's the same as
+1<<4 | 1<<2, but there's no "16", just WRITE_REV=4.
