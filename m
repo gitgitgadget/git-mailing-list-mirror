@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AEE7C433EF
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8B6DC433F5
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:58:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231221AbiCCA6l (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S231226AbiCCA6l (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 2 Mar 2022 19:58:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53308 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231195AbiCCA6e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 19:58:34 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B83A5151D09
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:57:49 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id a12-20020a65640c000000b003756296df5cso1878438pgv.19
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:57:49 -0800 (PST)
+        with ESMTP id S231220AbiCCA6i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 19:58:38 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E044151D19
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:57:52 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id t68-20020a635f47000000b003732348b971so1897004pgb.7
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:57:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=6b3Koiu50iGgu4+CvsJvU3gtyLeMDqKt6mcoMXU061M=;
-        b=K16rjuSKGjZqYQxWjBvr0jkvjRbdpWZkMIHyx/5YB6qi1MCQF5QZF+byxQYkcksB7S
-         oq/j2k3kJ31UNzSRWISzZYU+6g45b5FxO11d9S46n2IHbaXXEE0ik4Agi258dCzrxVdR
-         YJjtnSWiXF/3DNlf3agozqECS1NCmFYI/stDeNgC+LaOH/krc3u3eLFoxetvmEsSmBru
-         kYVstGzCctQNHlh3iarN2BhMtVhRaNzfC3Dx6NeEW+5m6S/ofyJfYd/0+SL5fLF4b9xw
-         Ka1Gv3ECnYqTV31ZYShS7nSsucdWK+GoIzPpHnhBq5Z1PzRbSQOX7Kr2yBu239YydFkI
-         Zzww==
+        bh=HM/UFTvzycLuEtiSNLNKftDfScVvaGAHyX0/2+0MI0U=;
+        b=ZAS4j6oJU6GQyERqDf9j+ivsdQexnQVTa+D4K2z6t9YjibCTy7I0uMILZGISYZsL6A
+         aQ8S/xDuOgarr2OUApGcqFz6G4OWTUmDVOAProwenOEw8PJnLBzIn7+uoZPLSac2qozN
+         CYFnL/SlXLUDikPWEjK8qDQUZZcMsIfnozOMyKB6V/a/CTx5UBCiyXfyTjf8j1ByPKB7
+         JFAnoHfAPBd3vtcJSW5XTXQbCg55ebqtYo7NTGLAKQc/fMHC5+Thvgu4BIfEg2vtiRwK
+         eXb5QJXzGRCHnCAxY+RWzqbRR9O+tGTOvWYfH24xp+xmV8gRFM7vU0AdB8hNtWv2khve
+         SY9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=6b3Koiu50iGgu4+CvsJvU3gtyLeMDqKt6mcoMXU061M=;
-        b=T6ArXdlW7wwXumJIzcctYcq9iPRtsWLNyhROr3ZH2c7Xmo6T07zjpvU790cm7Sc8RN
-         UeVxlKN2cc6OCm340Dl7Zz4Z9LJtAmVLR+MTSs+KLDPvcjGZv4s5LYZMDZGBduR64MGl
-         hC46CM+KmFx0Z+9Ag5OvvylJ2QePfZWhMqnE0x3jYa8/fQHgFjpQe8E9CIEdi15D1uxm
-         UH/UVoX7uDL9Q1/wtp8A3WsmfYr4JO65s+7RJJS1x+Xv/i281hSs0A6+PTQQfAuxbk/o
-         HpiLhUov5nYPPuIUPUJCO/y3r9TsXmSwf0xm7Chn5gPapA9BfAqKd0I9HQ1L2cneSzJe
-         F3rw==
-X-Gm-Message-State: AOAM531xBXqWKlMOMyxrP0lJwNbUcn09iPmDLnHN/41/WZ31ccnNvkIH
-        cKFvMuNY9ys5TU9YSKwE4ZOIH6Tdbf38NOI1T4cTeq/74EM/AZmQLuIJkZ9VdY8UZwByXWDkLzY
-        yjdetkYYHy96nSbuW+z+D5gMMAT+1WGd+KhNd8HBYOXDIegPCr3wmS4icia+OVy0=
-X-Google-Smtp-Source: ABdhPJwk0mcI+CjSeR6iB6Qjz8C8nFVe/UZAci2eh++aaYxeTI8Br/RbOt/CHsq+LyN7Y5ZxKQaGwgSeJD/0Ww==
+        bh=HM/UFTvzycLuEtiSNLNKftDfScVvaGAHyX0/2+0MI0U=;
+        b=J3auJKDvv7thJGVMiSoNqItSfb/CxE2MpVwL/LbBtYzp3tDV1j04ksnUwlcrO+RDkz
+         FA+KueRN1aLbpzMyw8DC+5IyPJ3HHpNsSYRdpbnLs0/fi3JtKi7oD1ff1mHVMm3pf7SH
+         7DbBLKpV25UmV2DqIQiMmIGohRBQm7KB1zSqvdGI+luoyxIMABWEPtXbKlCbLlIjPUKw
+         Th0AqkR+pDQTwYsMIlwtgItH8P5IIalsnaLqbWxIEHPdGCdq/i8EsEf2qeuTZuLhiEwz
+         IKyadX34jY8N80yKYrOCziCp+mp5Msge1naSr2CUALGjOkXK+ipOKKnNzsafPHu0EEZI
+         NSMg==
+X-Gm-Message-State: AOAM533VGshsOKKxDTsRBsyjtKZ/M4kLAgI4+/JDhbtwQ3omwB+kSSLM
+        1SoM/pmmTHxRb+3JaHy2mIWn7se1pJdyEhqUTlCBjzxi+7JMC41oAo4CzII+4tPovnGk1CZd/m0
+        4WcjODmnZrh9RPQMdb3pnjBh+CchojpAJ2yrmV0RNBHMzfYpIRxYhQ79b3rqLQjk=
+X-Google-Smtp-Source: ABdhPJxpZ1QskT39WaGrY3+7L5bSmLKM4JdvocbJrruXVJsmhG9a4Ta+rukDiy4RzVR3OkfIZ6d7ExUZAjJ0YA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:f87:b0:1bc:b82b:69fc with SMTP id
- ft7-20020a17090b0f8700b001bcb82b69fcmr2581556pjb.236.1646269069143; Wed, 02
- Mar 2022 16:57:49 -0800 (PST)
-Date:   Wed,  2 Mar 2022 16:57:18 -0800
+ (user=chooglen job=sendgmr) by 2002:a17:90b:4f43:b0:1bc:7e5c:e024 with SMTP
+ id pj3-20020a17090b4f4300b001bc7e5ce024mr830864pjb.0.1646269071318; Wed, 02
+ Mar 2022 16:57:51 -0800 (PST)
+Date:   Wed,  2 Mar 2022 16:57:19 -0800
 In-Reply-To: <20220303005727.69270-1-chooglen@google.com>
-Message-Id: <20220303005727.69270-5-chooglen@google.com>
+Message-Id: <20220303005727.69270-6-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220301044132.39474-1-chooglen@google.com> <20220303005727.69270-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH v3 04/13] submodule--helper run-update-procedure: remove --suboid
+Subject: [PATCH v3 05/13] submodule--helper: remove ensure-core-worktree
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -66,70 +66,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach run-update-procedure to determine the oid of the submodule's HEAD
-instead of doing it in git-subomdule.sh.
+Move the logic of "git submodule--helper ensure-core-worktree" into
+run-update-procedure. Since the ensure-core-worktree command is
+obsolete, remove it.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c | 9 ++++++---
- git-submodule.sh            | 8 +-------
- 2 files changed, 7 insertions(+), 10 deletions(-)
+ builtin/submodule--helper.c | 12 ++----------
+ git-submodule.sh            |  2 --
+ 2 files changed, 2 insertions(+), 12 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 1b67a3887c..77ca4270f4 100644
+index 77ca4270f4..6b473fc0d2 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2594,9 +2594,6 @@ static int run_update_procedure(int argc, const char **argv, const char *prefix)
- 		OPT_CALLBACK_F(0, "oid", &update_data.oid, N_("sha1"),
- 			       N_("SHA1 expected by superproject"), PARSE_OPT_NONEG,
- 			       parse_opt_object_id),
--		OPT_CALLBACK_F(0, "suboid", &update_data.suboid, N_("subsha1"),
--			       N_("SHA1 of submodule's HEAD"), PARSE_OPT_NONEG,
--			       parse_opt_object_id),
- 		OPT_END()
- 	};
+@@ -2771,17 +2771,11 @@ static int push_check(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
  
-@@ -3032,6 +3029,12 @@ static int module_create_branch(int argc, const char **argv, const char *prefix)
+-static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
++static void ensure_core_worktree(const char *path)
+ {
+-	const char *path;
+ 	const char *cw;
+ 	struct repository subrepo;
+ 
+-	if (argc != 2)
+-		BUG("submodule--helper ensure-core-worktree <path>");
+-
+-	path = argv[1];
+-
+ 	if (repo_submodule_init(&subrepo, the_repository, path, null_oid()))
+ 		die(_("could not get a repository handle for submodule '%s'"), path);
+ 
+@@ -2801,8 +2795,6 @@ static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
+ 		free(abs_path);
+ 		strbuf_release(&sb);
+ 	}
+-
+-	return 0;
+ }
+ 
+ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
+@@ -3029,6 +3021,7 @@ static int module_create_branch(int argc, const char **argv, const char *prefix)
  /* NEEDSWORK: this is a temporary name until we delete update_submodule() */
  static int update_submodule2(struct update_data *update_data)
  {
-+	if (update_data->just_cloned)
-+		oidcpy(&update_data->suboid, null_oid());
-+	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD", &update_data->suboid))
-+		die(_("Unable to find current revision in submodule path '%s'"),
-+			update_data->displaypath);
-+
- 	if (!oideq(&update_data->oid, &update_data->suboid) || update_data->force)
- 		return do_run_update_procedure(update_data);
- 
++	ensure_core_worktree(update_data->sm_path);
+ 	if (update_data->just_cloned)
+ 		oidcpy(&update_data->suboid, null_oid());
+ 	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD", &update_data->suboid))
+@@ -3428,7 +3421,6 @@ static struct cmd_struct commands[] = {
+ 	{"add", module_add, SUPPORT_SUPER_PREFIX},
+ 	{"update-clone", update_clone, 0},
+ 	{"run-update-procedure", run_update_procedure, 0},
+-	{"ensure-core-worktree", ensure_core_worktree, 0},
+ 	{"relative-path", resolve_relative_path, 0},
+ 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
+ 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 87772ac891..32a09302ab 100755
+index 32a09302ab..458ce73ac6 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -406,14 +406,9 @@ cmd_update()
+@@ -402,8 +402,6 @@ cmd_update()
+ 	do
+ 		die_if_unmatched "$quickabort" "$sha1"
  
+-		git submodule--helper ensure-core-worktree "$sm_path" || exit 1
+-
  		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
  
--		if test $just_cloned -eq 1
-+		if test $just_cloned -eq 0
- 		then
--			subsha1=
--		else
- 			just_cloned=
--			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
--				git rev-parse --verify HEAD) ||
--			die "fatal: $(eval_gettext "Unable to find current revision in submodule path '\$displaypath'")"
- 		fi
- 
- 		if test -n "$remote"
-@@ -441,7 +436,6 @@ cmd_update()
- 			  ${update:+--update "$update"} \
- 			  ${prefix:+--recursive-prefix "$prefix"} \
- 			  ${sha1:+--oid "$sha1"} \
--			  ${subsha1:+--suboid "$subsha1"} \
- 			  "--" \
- 			  "$sm_path")
- 
+ 		if test $just_cloned -eq 0
 -- 
 2.33.GIT
 
