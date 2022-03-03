@@ -2,97 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86F23C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 12:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD5C3C433F5
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 14:06:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233466AbiCCM4K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 07:56:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34918 "EHLO
+        id S233298AbiCCOHE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 09:07:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233464AbiCCM4J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 07:56:09 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06FF1F65C1
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 04:55:24 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id i11so6464600eda.9
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 04:55:23 -0800 (PST)
+        with ESMTP id S230351AbiCCOHD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 09:07:03 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9B6418C7A9
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 06:06:17 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id u10so6387784wra.9
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 06:06:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=C6Jcv4RlRDyPafANSuxBdBis50GxKk6fUFhKHuAi54Y=;
-        b=A/VAfONHAAsgnUBCKGqsfigXS2ltqRBgGo+xvDggsvUudtM4VhbgtP+9ovXcYjZxD+
-         FmRNa2ue4wtB3qya2xRWgP4rNMwJe1f9K2PPzzP4vwAV60sdEzSn+nEZvNRUTs7poWJw
-         KSa8US3UV2pQ8tZnYT9CJlG1O0/CNoTIpWgrksPKOzBpceWwxYFNYdwBUZAQ1lTCFTHn
-         gxLbO0RkbHfTKrQ3hdvpyrcPzyIuyUqAd6nvO1HLoF1gzkz8UytcMEJSts7JU/RVaT/h
-         zMYI+NqPmsYUlbfBiwbIdZbKRGRPsvh21M/e+vW5gBuBBaS6W7bbZJuVHqwJsix8kQHn
-         gy3w==
+        h=message-id:date:mime-version:user-agent:reply-to:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=/pGrWGRywQxWXcIhjj7Fb50tXHVtCSiuE6OXRhMnosc=;
+        b=J3cUeZgEWKjZ1O8pv8StX+fqHhoo7RUcAXI/9bPEZydwD6YXWYDdsALpPOsUxgx1PF
+         Iazj6JDgOlcNVvQuWgyB+rUN/MXEmqHfy4J+R5smze9gyG4GBWrDAOZyVm6b2FQ9IS0R
+         7UCODpjJl3hG7erYEH4uQRI7g7RQUDfyIrR/koE5I4ZV72VS9rpeJELF1WWIOQ4az1Cq
+         DbORJoUKU2XDjr6jgslayl0CDgse0iOD+LW46paGOSN4iqezBewaQdw39q6W56LLmR2Q
+         /J972P9XsoW0FNcxItYP7ylDPVX3Pc6ceFL6BJ68qobRaR7mqx8FNY5uYakoveU1fwU1
+         uodg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=C6Jcv4RlRDyPafANSuxBdBis50GxKk6fUFhKHuAi54Y=;
-        b=KLm3bBrlfgYFFcw0f7p1h62B4Ts+rGc0EY7sBLxu39l3o2aKXP6GTGRtehCgRlPbCv
-         yt1hfujZWHJs0lGNxosbsIy9D9n/R98u3kWk6XM2f1nZrgaYD5rmeHxmkwXrD4gEpMYb
-         uuSkaciUAGHs6R/ugzwXLj1PyRDRwdFRKfbFAoMP3rsnPLYy6Rl7OFRzKTRfRCw7W5/l
-         /wrhKAZLFEvvUuCxZa2WchWThE6/DeHHZd95TJSA/t6l8Rk1o/S8NlvZ5yGCS2m8QXv9
-         i+cE6lhLdYSjieO5+Y3Nfr6EaYFZw4kUj4T2+iBQHJszLaKs96pu1lb9LOT8RsvPeJd4
-         fJPw==
-X-Gm-Message-State: AOAM5315587T+NviDW9SyR2elggNp2Mv/QT+ob3Z36eOBN6AbsUfnL7z
-        AwAJvxxBTknTSW1ofnFUc8k=
-X-Google-Smtp-Source: ABdhPJx7T0AaNwfFaEbf0R3UCJO//ZmsEe/Hdg+UxRNxExvV4nWklF7v33t/bHysmbMGOWJwpsOAZw==
-X-Received: by 2002:a05:6402:5cb:b0:415:e04a:5230 with SMTP id n11-20020a05640205cb00b00415e04a5230mr2376696edx.352.1646312122337;
-        Thu, 03 Mar 2022 04:55:22 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id a4-20020a170906274400b006da9456e802sm484551ejd.102.2022.03.03.04.55.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Mar 2022 04:55:21 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nPkzH-000VO9-IG;
-        Thu, 03 Mar 2022 13:55:19 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     git <git@vger.kernel.org>, Josh Steadmon <steadmon@google.com>
-Subject: Re: What does it mean to have multiple upstream tracking branches?
-Date:   Thu, 03 Mar 2022 13:54:38 +0100
-References: <CAPMMpoiTJAuadBEOPWOVa-kguSXMDvAhvD22B63QwYpu=H7xEw@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <CAPMMpoiTJAuadBEOPWOVa-kguSXMDvAhvD22B63QwYpu=H7xEw@mail.gmail.com>
-Message-ID: <220303.868rtr42mg.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:reply-to
+         :subject:content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=/pGrWGRywQxWXcIhjj7Fb50tXHVtCSiuE6OXRhMnosc=;
+        b=woNzZrE6dDFEJDJdo4wz7vbxcMB8PMm63tSV/8AOtfMVJw+toYVU57Pozoil395MKP
+         F5zvDITwpupbfrxAb1c6J5eGRfozbxgRJvvkAlkpS13omJSuQ8HNnvQSAdE+hQijQNpp
+         tGL8vb4uOTqLr6QSrKyLWf+VRQ15cyqkLs+20CR1s0+5cOIEvZTJjpVBN7F/i8rSpWF/
+         uZbWccFeiS+dBBwrDQHRI/GcgG0AcN4vRU5RzjA8IedWYDkFQXG3kOUWPKD0Pt4E6cSH
+         CxSYD7h1p9fFqYpniYI0Kg/CPgF2aL2uhhVJSBbTsbEeX8xdEjn84KcbYQ/mx3KrgQgH
+         LXFg==
+X-Gm-Message-State: AOAM5308BNlUzXSzhnGd2nDI6/n0cAgKbmP9PT4oDqKUSeT5SzzLOzqM
+        DyWqc6eJsD/JzGhlxT/jdDIfiQSNRqU=
+X-Google-Smtp-Source: ABdhPJzA+AuG2vdhKNj0uQJgrLL4A09uRo6oVJlcc73q9RRIqgydH57pQhV8ClOpv5Ja/YyKWwpOgA==
+X-Received: by 2002:adf:dfc2:0:b0:1f0:262a:d831 with SMTP id q2-20020adfdfc2000000b001f0262ad831mr6004308wrn.589.1646316376233;
+        Thu, 03 Mar 2022 06:06:16 -0800 (PST)
+Received: from [192.168.1.201] (230.2.7.51.dyn.plus.net. [51.7.2.230])
+        by smtp.googlemail.com with ESMTPSA id o12-20020a5d62cc000000b001f048bc25dfsm2080296wrv.67.2022.03.03.06.06.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Mar 2022 06:06:15 -0800 (PST)
+Message-ID: <e3090436-4479-bbc2-3b62-00473f6f530e@gmail.com>
+Date:   Thu, 3 Mar 2022 14:06:14 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 00/15] tests: don't ignore "git" exit codes
+Content-Language: en-US
+To:     Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Shubham Mishra <shivam828787@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
+ <76a1ff22-3eb0-08fb-5aa9-e612ee5b522f@github.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <76a1ff22-3eb0-08fb-5aa9-e612ee5b522f@github.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 03/03/2022 02:02, Derrick Stolee wrote:
+> On 3/2/2022 12:27 PM, Ævar Arnfjörð Bjarmason wrote:
+>> As an aside we still have various potential issues with hidden
+>> segfaults etc. in the test suite after this that are tricked to solve,
+>> because:
+>>
+>>   * Our tests will (mostly) catch segfaults and abort(), but if we
+>>     invoke a command that invokes another command it needs to ferry the
+>>     exit code up to us.
+>>
+>>   * run-command.c notably does not do that, so for e.g. "git push"
 
-On Thu, Mar 03 2022, Tao Klerks wrote:
+I'm not sure what you mean by this, the return value of run_command() 
+already indicates which signal if any killed the child see for example 
+run_specified_editor() which re-raises SIGINT and SIGQUIT if the editor 
+is killed by those signals.
 
->  Hi,
->
-> In my recent attempt to create a "simple" branch.autosetupmerge
-> option, I have repeatedly been confused by the enforced rules around
-> what is and isn't valid for the branch.<name>.merge and
-> branch.<name>.remote configs.
->
-> Until Josh Steadman's recent work on --track=inherit, the "automatic"
-> addition of branch.<name>.merge could only ever result in a single
-> entry.
->
-> Now we support multiple entries being added as a perpetuation of an
-> existing branch's setup - but what does it *mean*? I could understand
-> if the idea was to have transparent tracking across multiple remotes
-> that are supposed to have the same content (eg a single server set up
-> over multiple protocols), but that does not appear to be possible -
-> branch.<name>.remote can only have one value.
->
-> Is there any documentation (or could someone provide pointers) as to
-> when multiple branch.<name>.merge values can make sense and what that
-> means / what it does?
+>>     tests where we expect a failure and an underlying "git" command
+>>     fails we won't ferry up the segfault or abort exit code.
+ >
+> Perhaps run-command.c could auto-exit for certain well-known error
+> codes that could only happen on certain kinds of failures (segfault,
+> for example). A simple die() might be something that is expected to
+> be handled by the top-level command in some cases.
 
-Can you point out some existing tests where we end up with multiple
-*.merge values? I looked a bit and couldn't find any.
+I think we need to be careful that run_command() does not re-raise a 
+signal before the caller has a chance to do any cleanup. A caller to 
+run_command() can already check the return value and choose to die based 
+on that after doing any cleanup. If run_command() starts dying we'll end 
+up adding more unsafe signal handlers to do the cleanup.
 
-Or maybe it's only possible to get into that state with some command we
-have a test blind spot for?
+Best Wishes
+
+Phillip
+
+>>   * We have gitweb.perl and some other perl code ignoring return values
+>>     from close(), i.e. ignoring exit codes from "git rev-parse" et al.
+>>
+>>   * We have in-tree shellscripts like "git-merge-one-file.sh" invoking
+>>     git commands, and if they fail returning "1", not ferrying up the
+>>     segfault or abort() exit code.
+> 
+> These are more involved and harder to evaluate. Add them to the pile
+> of projects for new contributors?
+> 
+> Thanks,
+> -Stolee
+
