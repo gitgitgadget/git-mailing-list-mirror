@@ -2,123 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48E8FC433EF
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 09:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4C1CC433EF
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 09:57:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231797AbiCCJHn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 04:07:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60490 "EHLO
+        id S231400AbiCCJ57 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 04:57:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231792AbiCCJHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 04:07:39 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 144DB177757
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 01:06:54 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id u10so5082849wra.9
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 01:06:54 -0800 (PST)
+        with ESMTP id S231133AbiCCJ56 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 04:57:58 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A5D115F615
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 01:57:13 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id o1so4827158edc.3
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 01:57:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M8cNtToYBvXp3USoJ7DoBE4Q5QaKZUsmmPZAzTnljf0=;
-        b=Hzh+BlYUMOTPcBOF3sh8Eg282dmyZ4N1O10XuT8kzbrqJ6Tsah8yxU4d9qzQfzw+C+
-         asbWHTzz4zSKddfW0MsBBL9zN/Lre6ZwroFPh6Z4I3YDTHuY0eJODXg366h4INXPmL58
-         EbhiVz+HEHp1e9NmIIH4UBUhva5sNpHJTR2GqCt9IUX78GU6nHn83xRgjQ3dibbW5cqX
-         VJ3mkyPsxoDz3iAeNphHG57YaWhsJ1SzMNFhzC86kJNfvKxQxhPqdjGIMMenZEyyZzxt
-         kZd1ynILxqrPri2gnAKK+PxhP/aZ1dh/67a8yB3z83BrO1Q5ajNJ1qj+3vooXQ/6QRTh
-         kqNQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=qxA9AaNw4zelfBnw4/qv4tl3+SLbrEUNnGb06PcQT6A=;
+        b=BLyMEhmI8EMwdUSsCk2aMdmPlA5ewASJgu9AsdKTboPxzcMem6rqcj5TJ2Bw1Qu8pt
+         eJRseuuaMzEehseonryAAculSDd9JocvGLSQRkh7kFJoPXJrBsYezXSiMfgEUhWaf8s7
+         F32xdtwhui/r4QxcYVFagyZkqqGBgiEtje8dDms3nIzpE0D2eL7TtP3C5LV0xTrocYRq
+         jk5K4q/cxpj9tB7j8WtZsjWWVeR+S6QMfOKs8m0KcsEr+f397F6L3feBRBy5Rt2Jxz0q
+         G/epKQhKes6PFxEZv1uu7S2GZjr/dUzRQ549bAP2ZCEO2uGLNpfgFpHTOk3XHpffQPQU
+         L/NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=M8cNtToYBvXp3USoJ7DoBE4Q5QaKZUsmmPZAzTnljf0=;
-        b=KhVEs7qViXGYnTqvCesKFGTdMk0KC3coZXC3iPlGD2MmxUY10Tdebe0yZJ97/J0uuc
-         zwUkesA0TF1fTbjFqLo0Z0/wDw6P+VQAPFcAfnwcFK1MXp5sLW4NAngiqoXgNPUS6EG9
-         DUWVVLs2n2NMb+LUBV3Nd0p2/+6n4MRKJJOrwKpICoWcgkaujnirNWAwA5WpQpQnIYgY
-         dVXKROCmGokR0U2TUn/sKb/0g9gzCTEOLbrmyar77pDdFTGt6Zbx4q4zmbilA2MNstdF
-         v0UFJn+PCeXYXM9GyXzaVlLpOi8DukEDv2pngmQZWmAPRzkhjgfayW2bxyjCiz2k9vc3
-         YLFQ==
-X-Gm-Message-State: AOAM532POVzvRfVgUhKGpmhJk0oZriTgpIRFjqidW3MtV2VXIhDKDQs9
-        +sC57xwpwiR7VGJpm1pftow2tjyul4k=
-X-Google-Smtp-Source: ABdhPJwpTnFZ4hp+4/WTTIBIreQ3dteOU7DDAYo9ryzyqDQwS+PX/XVACf+xihsBq7xl+xxRIRgbTQ==
-X-Received: by 2002:a5d:4dca:0:b0:1f0:2543:e10e with SMTP id f10-20020a5d4dca000000b001f02543e10emr5851347wru.60.1646298412155;
-        Thu, 03 Mar 2022 01:06:52 -0800 (PST)
-Received: from fedora35.example.com ([151.27.250.17])
-        by smtp.gmail.com with ESMTPSA id j3-20020a5d6043000000b001f0247bbdf7sm1419496wrt.64.2022.03.03.01.06.51
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=qxA9AaNw4zelfBnw4/qv4tl3+SLbrEUNnGb06PcQT6A=;
+        b=LvjEFl4s3w00nITUAyvm4lQc/XLyR/hjjv5giRGn8mCcGjS+OwdjrDtwwyvdYwWd1j
+         LgBpHE8ytsRqW7OqWfSnbSgttU1CmxNXrEVM9O0bOLBcqQ9Fqe4clWGKGz42xbAkluGN
+         1n7l3o4lMh4mGD7Qb5TLWZg0okz9Ij948xYRlFjcxYTOevzNhKntU/CE6q1L42KbyJ8E
+         7xX3gUz0VYZ7MeuopVbuAFovrl5V5UDjFtUpHNfC5zBo2vAAtKBA8JmubnmBmitVAJoL
+         qP9YCeB3GloIfUVGl8qMydB8+i8rC/tb3ZhYeDauJZO+Mg55B7ZUb159YIJxo1D5X/U3
+         liEQ==
+X-Gm-Message-State: AOAM532/Sm3Y/46qPsivdE30YajddRxhYQE40QwrXn9pIp9uh9wDNm+0
+        fq4LT5LuxCxJ0l0mz8UYs6sk+RqOTINVKw==
+X-Google-Smtp-Source: ABdhPJxK+qMA/wXQaqf7Jp8BiYkji2pTM5ZLpPfuPpiX1JIti8iKHMXl+HsVYDQyBrN5NLr3nff2gA==
+X-Received: by 2002:a05:6402:17c4:b0:415:ed36:52cb with SMTP id s4-20020a05640217c400b00415ed3652cbmr221898edy.379.1646301431724;
+        Thu, 03 Mar 2022 01:57:11 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id h24-20020a170906261800b006da94c9ccc9sm308199ejc.129.2022.03.03.01.57.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Mar 2022 01:06:51 -0800 (PST)
-From:   Elia Pinto <gitter.spiros@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2] test-lib.sh: Use GLIBC_TUNABLES instead of MALLOC_CHECK_ on glibc >= 2.34
-Date:   Thu,  3 Mar 2022 09:06:40 +0000
-Message-Id: <20220303090640.190307-1-gitter.spiros@gmail.com>
-X-Mailer: git-send-email 2.35.1
+        Thu, 03 Mar 2022 01:57:11 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nPiCs-000OoZ-6E;
+        Thu, 03 Mar 2022 10:57:10 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Shubham Mishra <shivam828787@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 00/15] tests: don't ignore "git" exit codes
+Date:   Thu, 03 Mar 2022 10:53:20 +0100
+References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
+ <CAC316V7jcHTVs7f_p5zMRqpvTZBPCa6X7=L_MUEy0Zx0PJZZ_A@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <CAC316V7jcHTVs7f_p5zMRqpvTZBPCa6X7=L_MUEy0Zx0PJZZ_A@mail.gmail.com>
+Message-ID: <220303.86wnhb5pft.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In glibc >= 2.34 MALLOC_CHECK_ and MALLOC_PERTURB_ environment
-variables have been replaced by GLIBC_TUNABLES.  Also the new
-glibc requires that you preload a library called libc_malloc_debug.so
-to get these features.
 
-Using the ordinary glibc system variable detect if this is glibc >= 2.34 and
-use GLIBC_TUNABLES and the new library.
+On Thu, Mar 03 2022, Shubham Mishra wrote:
 
-This patch was inspired by a Richard W.M. Jones ndbkit patch
+> Thanks =C3=86var for CCing me. Your patch is insightful for me.
+>
+>> This series is not made by string-replacing things in our test suite,
+>> if it was it would be much larger. These are all tests I've seen real
+>> hide real failures under SANITIZE=3Dleak, either on current "master", or
+>> in combination with various local leak fixes I've got unsubmitted.
+>
+> Can you please tell me what "SANITIZE=3Dleak" do?
+>
+> Thanks,
+> Shubham
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
-This is the second version of the patch.
+SANITIZE=3Daddress and SANITIZE=3Dleak are the flags we use to turn on the
+AddressSanitizer
+(https://github.com/google/sanitizers/wiki/AddressSanitizer) and
+LeakSanitizer
+(https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer).
 
-Compared to the first version, the code has been simplified, based on Junio's
-indications, introducing some redundancy in the setting of the glibc variables
-covered by the patch
-(https://lore.kernel.org/all/20220228160827.465488-1-gitter.spiros@gmail.com/)
- t/test-lib.sh | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 9af5fb7674..b545013a14 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -548,11 +548,32 @@ then
- 	}
- else
- 	setup_malloc_check () {
-+		if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
-+		_GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
-+		expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
-+		then
-+			USE_GLIBC_TUNABLES=YesPlease
-+		fi
- 		MALLOC_CHECK_=3	MALLOC_PERTURB_=165
- 		export MALLOC_CHECK_ MALLOC_PERTURB_
-+		case "$USE_GLIBC_TUNABLES" in
-+		YesPlease)
-+			g=
-+			LD_PRELOAD="libc_malloc_debug.so.0"
-+			for t in \
-+				glibc.malloc.check=1 \
-+				glibc.malloc.perturb=165
-+			do
-+				g="${g##:}:$t"
-+			done
-+			GLIBC_TUNABLES=$g
-+			export LD_PRELOAD GLIBC_TUNABLES
-+			;;
-+		esac
- 	}
- 	teardown_malloc_check () {
- 		unset MALLOC_CHECK_ MALLOC_PERTURB_
-+		unset LD_PRELOAD GLIBC_TUNABLES
- 	}
- fi
- 
--- 
-2.35.1
-
+As the latter URL shows it's a way to instrument a program to die on
+exit if unreferenced malloc'd memory wasn't free'd.
