@@ -2,140 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 865D5C433FE
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A018C433F5
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 01:10:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231263AbiCCA7J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 19:59:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54650 "EHLO
+        id S231255AbiCCBLZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 20:11:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231249AbiCCA6x (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 19:58:53 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EA26156785
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:58:09 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id k130-20020a628488000000b004f362b45f28so2190158pfd.9
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:58:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=5/J/TQNvnprNfyNbTTu8oTUqdxY0t77pvG2ZrTX88sY=;
-        b=qVlF2ZcTOv4G4cwuGfLFSx0vuaqL3A9aETwgZQveRQbZ0IX+Pw5m13i8SE9eOshFYJ
-         cFyhAT+aC7TJAhhvZQZRcG7tR64gzUl9TPh5QaODM5dKGnzYH7BGI4Z1FF5gmG4WtKvE
-         hdmPe7tqy3mI2XjGaooq3gS4mR3y/WaoVpbjB34wm4Fn8cpHuE+epgkfqScRPYIzXxjc
-         kZHh2g7pGo6cBxc/qPqsSbSm6cBdWu8VOROA4/4EiO0l9l0QSd9Eg9WExQhDLLbYZHoZ
-         emL52YEH4uTzaC+IQJzKEqyMuQkzFrUfl5Lv5UTnruCIg7panmhxPuzkky4mcyRkl9T9
-         9cVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=5/J/TQNvnprNfyNbTTu8oTUqdxY0t77pvG2ZrTX88sY=;
-        b=Soz6jK/l2cQc0SlmI8yKNEXAmaWpGyfP1iQmncX/15drJLEyVzeLpkGxmWxnJl/3Zn
-         R7Mzs2i+kZnObwLumWB3Pc84JXjpxlqD+asANr4k0zcpGvy3lzpSZmLwnaN5CQtdMjiD
-         U1lsuUV0nXNRHc93Dw1YK4GwlpT2xpZ3eY0YAK3qFk4PFUDgzqrz5pGoFEfpnPHeYv9F
-         tKz2RDFVpknNlTBpYGWLNY21pG8krENjKIcnWPFVXfzWNu2WkrGhH95x886d/Ws++c6E
-         GgyNO7Avy+9zz20s2dEbIJFSztAEx/0KZsRfBxdEQPRGfLrKymkXQ79Z47GF0frq0HQy
-         tnyw==
-X-Gm-Message-State: AOAM5322RJ94Ldp7PkTZY7x88XUiG+9eH//RbzYT5DlIeZdrT4qOB9G1
-        l68BDbYCazlrtOhG1Ol4hGdGCyv1hge8nVQvSZ0CcHTszhjmMnnzbQVntfWx9VjAdaW8DAUZMhE
-        4HvWT5byM6xt7ogsClFQwdQ7q2GrCteDftLEbTOpsKkpYbY2MhZrZiKyKe61txsA=
-X-Google-Smtp-Source: ABdhPJwmXwK/5cIEmgAQFS9pFUfHfvOS8W4CAos6FOAcH7qZwNBjqsLgopOlvqaXODGNw/Jx5orE4BRedGMGjA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a63:920f:0:b0:378:9ef8:7978 with SMTP id
- o15-20020a63920f000000b003789ef87978mr15068496pgd.587.1646269088614; Wed, 02
- Mar 2022 16:58:08 -0800 (PST)
-Date:   Wed,  2 Mar 2022 16:57:27 -0800
-In-Reply-To: <20220303005727.69270-1-chooglen@google.com>
-Message-Id: <20220303005727.69270-14-chooglen@google.com>
-Mime-Version: 1.0
-References: <20220301044132.39474-1-chooglen@google.com> <20220303005727.69270-1-chooglen@google.com>
-X-Mailer: git-send-email 2.35.1.574.g5d30c73bfb-goog
-Subject: [PATCH v3 13/13] submodule--helper update-clone: check for --filter
- and --init
-From:   Glen Choo <chooglen@google.com>
-To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, Josh Steadmon <steadmon@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S231169AbiCCBLX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 20:11:23 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E488D159E82
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 17:10:39 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E090A11D519;
+        Wed,  2 Mar 2022 20:10:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PB9UIjylO95CkRqHXVJ+msWNZFZX6wMlm+hZt9
+        frqBY=; b=ZHhVTgYM5xQnqIA9HkbX0tDR6iMciPxxRUEl3ZJt2E3ZmgiyETr6gO
+        9DGyWH+Qa6+iMjbCeYISsXXlNjR8tc09VLYcsARcIi76bmkJQHjdMC0zN9XzUZiQ
+        KMhrfJ4DJjNUyAPIa1qmrOWfzSWxWWWuBMinvAc8uL7mNQt4wwfNI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D7BF811D518;
+        Wed,  2 Mar 2022 20:10:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4830411D516;
+        Wed,  2 Mar 2022 20:10:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Keller, Jacob E" <jacob.e.keller@intel.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] name-rev: use generation numbers if available
+References: <20220228215025.325904-1-jacob.e.keller@intel.com>
+        <20220228215025.325904-3-jacob.e.keller@intel.com>
+        <xmqqpmn6wg98.fsf@gitster.g>
+        <CA+P7+xoECs-rXb4vpRrw40Q-oRvfu97kMig9zu0rEE6KagAyiw@mail.gmail.com>
+        <xmqqfso2t9cu.fsf@gitster.g>
+        <6b00c67b-01c9-bf22-a8e6-904f47fa7acf@github.com>
+        <f5ca62f4-eb3d-eeb7-e7c8-7fb800f3d6cd@intel.com>
+        <3c3e6063-7eb4-7ff4-3a1b-a07db1fe969f@github.com>
+        <xmqqfso1pgmv.fsf@gitster.g>
+        <CO1PR11MB5089DC997DB42023324F1BF0D6029@CO1PR11MB5089.namprd11.prod.outlook.com>
+Date:   Wed, 02 Mar 2022 17:10:37 -0800
+In-Reply-To: <CO1PR11MB5089DC997DB42023324F1BF0D6029@CO1PR11MB5089.namprd11.prod.outlook.com>
+        (Jacob E. Keller's message of "Tue, 1 Mar 2022 22:46:06 +0000")
+Message-ID: <xmqqilsvet82.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: BCAD1BEA-9A8E-11EC-A828-5E84C8D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git submodule update --filter" also requires the "--init" option. Teach
-update-clone to do this usage check in C and remove the check from
-git-submodule.sh.
+"Keller, Jacob E" <jacob.e.keller@intel.com> writes:
 
-In addition, change update-clone's usage string so that it teaches users
-about "git submodule update" instead of "git submodule--helper
-update-clone" (the string is copied from git-submodule.sh). This should
-be more helpful to users since they don't invoke update-clone directly.
+> Let's clarify. There are two versions of the test in this version:
+>
+> 1) test which enables commit graph and tests that it does the right behavior.
+>
+> 2) test which removes commit graph and tests that it behaves the old way.
+>
+>
+> test (1) checks the flow with the commit graph enabled, and verifies that with a commit graph the new behavior is used. This test will fail if you revert the name-rev commit-graph support.
+>
+> test (2) always performs the way we don't like. (since we disable the commit graph and the new flow doesn't kick in) This is the test I think I will eliminate in the next revision.
+>
+>
+> I will remove the 2nd test, since the first test covers the change
+> in behavior just fine, and I think I agree we don't need to set
+> in-stone the implementation without commit graph.
+>
+> I will also look at adding a test which performs a count of which
+> revisions get inspected and makes sure that we actually are doing
+> the optimization.
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
- builtin/submodule--helper.c | 20 +++++++++++++++++++-
- git-submodule.sh            |  5 -----
- 2 files changed, 19 insertions(+), 6 deletions(-)
+Sounds like a sensible thing to do.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 296ab80bf2..bef9ab22d4 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2545,7 +2545,12 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	const char *const git_submodule_helper_usage[] = {
--		N_("git submodule--helper update-clone [--prefix=<path>] [<path>...]"),
-+		N_("git submodule [--quiet] update"
-+		" [--init [--filter=<filter-spec>]] [--remote]"
-+		" [-N|--no-fetch] [-f|--force]"
-+		" [--checkout|--merge|--rebase]"
-+		" [--[no-]recommend-shallow] [--reference <repository>]"
-+		" [--recursive] [--[no-]single-branch] [--] [<path>...]"),
- 		NULL
- 	};
- 	suc.prefix = prefix;
-@@ -2556,6 +2561,19 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	memset(&filter_options, 0, sizeof(filter_options));
- 	argc = parse_options(argc, argv, prefix, module_update_clone_options,
- 			     git_submodule_helper_usage, 0);
-+
-+	if (filter_options.choice && !suc.init) {
-+		/*
-+		 * NEEDSWORK: Don't use usage_with_options() because the
-+		 * usage string is for "git submodule update", but the
-+		 * options are for "git submodule--helper update-clone".
-+		 *
-+		 * This will no longer be an issue when "update-clone"
-+		 * is replaced by "git submodule--helper update".
-+		 */
-+		usage(git_submodule_helper_usage[0]);
-+	}
-+
- 	suc.filter_options = &filter_options;
- 
- 	if (update)
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 51be7c7f7e..aa8bdfca9d 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -356,11 +356,6 @@ cmd_update()
- 		shift
- 	done
- 
--	if test -n "$filter" && test "$init" != "1"
--	then
--		usage
--	fi
--
- 	{
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update-clone \
- 		${GIT_QUIET:+--quiet} \
--- 
-2.33.GIT
+In any case, in the current patch, #2 is not working in
+linux-TEST-vars job at CI.  You can visit this URL
 
+https://github.com/git/git/runs/5400048732?check_suite_focus=true#step:4:68062
+
+while logged into your GitHub account for details.
+
+Thanks.
