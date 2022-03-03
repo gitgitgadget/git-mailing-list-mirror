@@ -2,77 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35C45C433F5
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 12:48:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86F23C433F5
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 12:55:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233421AbiCCMtS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 07:49:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43064 "EHLO
+        id S233466AbiCCM4K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 07:56:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233403AbiCCMtS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 07:49:18 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9AD7C7D5A
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 04:48:32 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id gb39so10444439ejc.1
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 04:48:32 -0800 (PST)
+        with ESMTP id S233464AbiCCM4J (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 07:56:09 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06FF1F65C1
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 04:55:24 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id i11so6464600eda.9
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 04:55:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=s8xr2R93KoRh6/abGxJWqQ0/2178oOM3ggR8JwnlcMA=;
-        b=mCUL+uzzo4vBlSz2WwW+qir209QA9Nao/fh4pQmAYx+5SuSUsTCtaQ8SNeG5jH9KRI
-         pU9N4SnuPyI1CKzxfdCyAUEGw2ubYTd6LDcOWjeXnfXhNu5pU9Xm3nr89gA7dTddPh2u
-         KZtymooJ1ySIrxTuqGuTh2/ZoLVt5Dlurb5FQ7PhJ+ewJkeRn1P9yFUu7q09UzeKAeyP
-         rXVoQeRaUH0B0BAni3MQ4Y4r9wTLk7JttPfJhixbGAwJHvgNLBeYuhmEGsXRj3Q7eNXM
-         vMWLD+DGACN6NA9dO5omwTRZxGmfL/1AcswWbNlPRBncRbI4QhMUAKDGZw7RA8QNbXAS
-         hq5A==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=C6Jcv4RlRDyPafANSuxBdBis50GxKk6fUFhKHuAi54Y=;
+        b=A/VAfONHAAsgnUBCKGqsfigXS2ltqRBgGo+xvDggsvUudtM4VhbgtP+9ovXcYjZxD+
+         FmRNa2ue4wtB3qya2xRWgP4rNMwJe1f9K2PPzzP4vwAV60sdEzSn+nEZvNRUTs7poWJw
+         KSa8US3UV2pQ8tZnYT9CJlG1O0/CNoTIpWgrksPKOzBpceWwxYFNYdwBUZAQ1lTCFTHn
+         gxLbO0RkbHfTKrQ3hdvpyrcPzyIuyUqAd6nvO1HLoF1gzkz8UytcMEJSts7JU/RVaT/h
+         zMYI+NqPmsYUlbfBiwbIdZbKRGRPsvh21M/e+vW5gBuBBaS6W7bbZJuVHqwJsix8kQHn
+         gy3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=s8xr2R93KoRh6/abGxJWqQ0/2178oOM3ggR8JwnlcMA=;
-        b=cCHJbWLfCFeXpjfYaPqHTEwU35fp666mV2I/hVORmpYyNXBXQ2u5q15ctpLGhvni8i
-         x5oikaz/WwSnEpZipjH3Sss3EJXkNhdZZ6UwaG/6lvj8q9pf7dOHlPo43gWJbdem4kKl
-         8FLw3pdV3hOC6fvzzvTQoCkkVQyaj1Jvw55a5vKElZwx8O9Z2XjYVGncQjJ0JVQCkp8u
-         37cwjlH2gUYVXPLfewtBpQAsKL3SeEM2MqnX9Fx4kzwMjPbwgSilRpJdKmykF14RLIpE
-         Udu9tGhogr6LV6cMVmaizBBPTF7dnLXPgJAfyfJk3oAFrXNskeAMGWmQ9dJJREyvrlSV
-         ALzw==
-X-Gm-Message-State: AOAM531upFKe4yN8TtFj50BkwAZ67lNs1TFcTaAkSpD6HYsOJasZ0+9h
-        rXThYwE2gSMVsf55uS8RYe60DDQ3GyeVVV7Gn7Y=
-X-Google-Smtp-Source: ABdhPJxvWf4v+ex2H8+IACR70/Mrdna4vAQaWmVTjgTXRccHW2umlbFcwGNYTMjP3N22dulN7WPTFze18VkbQdOWYh0=
-X-Received: by 2002:a17:906:58d0:b0:6da:9e79:38f6 with SMTP id
- e16-20020a17090658d000b006da9e7938f6mr854025ejs.471.1646311711158; Thu, 03
- Mar 2022 04:48:31 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=C6Jcv4RlRDyPafANSuxBdBis50GxKk6fUFhKHuAi54Y=;
+        b=KLm3bBrlfgYFFcw0f7p1h62B4Ts+rGc0EY7sBLxu39l3o2aKXP6GTGRtehCgRlPbCv
+         yt1hfujZWHJs0lGNxosbsIy9D9n/R98u3kWk6XM2f1nZrgaYD5rmeHxmkwXrD4gEpMYb
+         uuSkaciUAGHs6R/ugzwXLj1PyRDRwdFRKfbFAoMP3rsnPLYy6Rl7OFRzKTRfRCw7W5/l
+         /wrhKAZLFEvvUuCxZa2WchWThE6/DeHHZd95TJSA/t6l8Rk1o/S8NlvZ5yGCS2m8QXv9
+         i+cE6lhLdYSjieO5+Y3Nfr6EaYFZw4kUj4T2+iBQHJszLaKs96pu1lb9LOT8RsvPeJd4
+         fJPw==
+X-Gm-Message-State: AOAM5315587T+NviDW9SyR2elggNp2Mv/QT+ob3Z36eOBN6AbsUfnL7z
+        AwAJvxxBTknTSW1ofnFUc8k=
+X-Google-Smtp-Source: ABdhPJx7T0AaNwfFaEbf0R3UCJO//ZmsEe/Hdg+UxRNxExvV4nWklF7v33t/bHysmbMGOWJwpsOAZw==
+X-Received: by 2002:a05:6402:5cb:b0:415:e04a:5230 with SMTP id n11-20020a05640205cb00b00415e04a5230mr2376696edx.352.1646312122337;
+        Thu, 03 Mar 2022 04:55:22 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id a4-20020a170906274400b006da9456e802sm484551ejd.102.2022.03.03.04.55.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Mar 2022 04:55:21 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nPkzH-000VO9-IG;
+        Thu, 03 Mar 2022 13:55:19 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     git <git@vger.kernel.org>, Josh Steadmon <steadmon@google.com>
+Subject: Re: What does it mean to have multiple upstream tracking branches?
+Date:   Thu, 03 Mar 2022 13:54:38 +0100
+References: <CAPMMpoiTJAuadBEOPWOVa-kguSXMDvAhvD22B63QwYpu=H7xEw@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <CAPMMpoiTJAuadBEOPWOVa-kguSXMDvAhvD22B63QwYpu=H7xEw@mail.gmail.com>
+Message-ID: <220303.868rtr42mg.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <220224.86o82wab31.gmgdl@evledraar.gmail.com> <20220227122453.25278-1-shivam828787@gmail.com>
- <20220227122453.25278-2-shivam828787@gmail.com> <177b8b40-9e27-5019-c4df-772642508c37@kdbg.org>
-In-Reply-To: <177b8b40-9e27-5019-c4df-772642508c37@kdbg.org>
-From:   Shubham Mishra <shivam828787@gmail.com>
-Date:   Thu, 3 Mar 2022 18:18:18 +0530
-Message-ID: <CAC316V7s5xQWP13YrwSV3ekt8T5oAWxpkmXTBsjff7C1KFrHyQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] t0001-t0028: avoid pipes with Git on LHS
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 27, 2022 at 11:13 PM Johannes Sixt <j6t@kdbg.org> wrote:
 
+On Thu, Mar 03 2022, Tao Klerks wrote:
 
-> We see a pipe here, and in the upstream of that pipe is a git
-> invocation. That should be fixed, too. After the rewrite that you
-> already did here, it should be sufficient to move the git invocation
-> before the parentheses.
+>  Hi,
+>
+> In my recent attempt to create a "simple" branch.autosetupmerge
+> option, I have repeatedly been confused by the enforced rules around
+> what is and isn't valid for the branch.<name>.merge and
+> branch.<name>.remote configs.
+>
+> Until Josh Steadman's recent work on --track=inherit, the "automatic"
+> addition of branch.<name>.merge could only ever result in a single
+> entry.
+>
+> Now we support multiple entries being added as a perpetuation of an
+> existing branch's setup - but what does it *mean*? I could understand
+> if the idea was to have transparent tracking across multiple remotes
+> that are supposed to have the same content (eg a single server set up
+> over multiple protocols), but that does not appear to be possible -
+> branch.<name>.remote can only have one value.
+>
+> Is there any documentation (or could someone provide pointers) as to
+> when multiple branch.<name>.merge values can make sense and what that
+> means / what it does?
 
-I missed that pipe, Thanks for pointing it out and reviewing.
+Can you point out some existing tests where we end up with multiple
+*.merge values? I looked a bit and couldn't find any.
 
-Sorry for responding late, I am in the middle of my exams, so I am
-hardly checking mails.
-
-Thanks,
-Shubham
+Or maybe it's only possible to get into that state with some command we
+have a test blind spot for?
