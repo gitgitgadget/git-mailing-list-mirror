@@ -2,58 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B190C433EF
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAA07C433F5
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230303AbiCCAWO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 19:22:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39368 "EHLO
+        id S230265AbiCCAWQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 19:22:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230309AbiCCAWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 19:22:04 -0500
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00681108BEB
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:21:14 -0800 (PST)
-Received: by mail-qk1-x730.google.com with SMTP id j78so2765168qke.2
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:21:14 -0800 (PST)
+        with ESMTP id S230294AbiCCAWI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 19:22:08 -0500
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE4013CA05
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:21:17 -0800 (PST)
+Received: by mail-qk1-x733.google.com with SMTP id j78so2765221qke.2
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:21:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=UPxwnco55y3KVMik+Hig4ofVjW1qyYM1nMSvNCw2Bc4=;
-        b=Rb8ikzNZttyz1Ozd3L3fyR4807WomaGo+dtaQGkbza++76io7JAwaabUlI1P2XpiZ9
-         ZbAWgi/golZUzMyuFcODNmpXI43gQ9NrRMXNbpGyGQ7Ah8tZotCtT3//iGkOeoQZa7J2
-         lVVvskSnqqF+mGG8l8lOrJhuxp2t9bzLTdoO87+fyxRVNejuXLbBcL11Ep0M7JtoF3ay
-         H68JevjQ7QyJuZgChiZNskqC9a5vgzs5D9o5J4hzukqzg7au0KBNz372ceyJHvx4/Bwx
-         odFIXLSin6D6WsX41IdsmX21QnA5WcKAEwHHq/m5FzpwSJNX/xtsobQXsKWDLLABjf13
-         vmug==
+        bh=EN4m9m33+QWVF/0GRkO+k7hH2n3BPLrRIUUUFoOpbLI=;
+        b=6B3qWEq9CgEaiKxK1obhjIZJNd4E5Bvjdc2Yle1vd+L0SvK5n6Ro7bbQ9om5HG0wrp
+         xTYJSuRnu0TgNKkAi2i3tmb5DTJmnFK9JfOjBL3c+fyhjfUUqbRZ+OJkWh0m/KQmhKc3
+         SG5XoCWdjbAhvH+gg2I0AG97YFSdRXsMW4UpcxGTQXvA1Y4uCADk8H87f4rFgftgjqom
+         SF6thK9f66Sy945LY0A+cPFED+To/lHwi92XrgQ7ArBgAzY/SIUKrNJAr1UxcVAA4gKk
+         bRx8h1mtIsDGjPa2f6WqndssqVJ6zYhanhtUQvGMOui7jmM9pomgpAHglbZIGVFy/g/C
+         5ZFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=UPxwnco55y3KVMik+Hig4ofVjW1qyYM1nMSvNCw2Bc4=;
-        b=AfQl69WaHvc3Z+SjwdmbrkQytJblPUTPllCzTARdX5dgaSV0Df+TwS3EIKtWKXtbzv
-         LMzOuE8H5vnc3CYmkmtyOAkvEYYy5Tsw5nC+bu7bvEWNyekzjQ4rI2/7zYi4kPQc3lW8
-         Xn4a2ZM17IUGic+SU/4d5jJYJvMEcBawxnzAYr1mYTytQRir9dmCzer4g+YVWW2vv5MD
-         u1zXVzPBFVhKp6aqV8QzJ6YgBbrEM5OtXOjn0ru2I3Gwm6sSkq469HchsLhAH1jF61r9
-         KE6WyfnwN6RA+ZB3208fYulgM+rHQ16gGftdEDukdzlCf+RQn84lsHdhYVCERKlHUIcS
-         Mp3A==
-X-Gm-Message-State: AOAM530MxgAOOEpFXMKRRNLaRzU6Lvd6VGk5EFmYFkV257wyRyULanBr
-        o80702xas51B8Iiq06PivZC7S7Y3R1LaVWoN
-X-Google-Smtp-Source: ABdhPJxgN/+lv7jvFjFliUoX2ZZTHrAR+fH9WB94T8coHN+9mODRNieKqB1vwR3erHRz2HNIcLNgcA==
-X-Received: by 2002:a37:a487:0:b0:60d:d3a1:a660 with SMTP id n129-20020a37a487000000b0060dd3a1a660mr17653397qke.178.1646266873730;
-        Wed, 02 Mar 2022 16:21:13 -0800 (PST)
+        bh=EN4m9m33+QWVF/0GRkO+k7hH2n3BPLrRIUUUFoOpbLI=;
+        b=32LmiAbQ3oq90QMOXawmY1xMyWPpLGku02VS80fj9zVdimpRixFg6CcuqUx/dQTk4t
+         aCeGMhbvoB3t8O7ilM1kN4IGwUWNs0i46J/QDF/igaZ/UWGje8SIzcKrBjtF4DXbFO0U
+         5JWM6WcXL7hGbGTLCK25QI2FfgPk1NMstUip+ypzrcGmq/7LPfWP/clqjOazFxljoYHi
+         BZCHq5G+YlXkQ0Pvw5dyh96la5ukzB7G0EHCC57RAd8nem90f38hK2tvyaQhfjdCoMaQ
+         6btwmBna/O3uAdyOFpi+xCkv1b9zmZfNIVV2+bi2bxz/cIlqZepv1/B0+hMSSOh68ENR
+         Vjeg==
+X-Gm-Message-State: AOAM530qC7H0xcTiZNmYEebE0UVhwnFasswSLS8XfPXKypeZMFXJmpq+
+        59XED1FK59w4FNka74lN21/py4Dm8bDQEy6r
+X-Google-Smtp-Source: ABdhPJzKYjTvmyxYkCojAJ35vIp7YOA+OsGZMDhh2JUOGYnCtQcL2kK1qFKutCwKg/Km0QmTx9Z1PA==
+X-Received: by 2002:a37:67d0:0:b0:646:d4fd:9217 with SMTP id b199-20020a3767d0000000b00646d4fd9217mr17622690qkc.198.1646266876345;
+        Wed, 02 Mar 2022 16:21:16 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id o18-20020a05620a111200b00508188ead26sm293120qkk.97.2022.03.02.16.21.13
+        by smtp.gmail.com with ESMTPSA id b13-20020ac85bcd000000b002d6a901ad4csm364152qtb.73.2022.03.02.16.21.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 16:21:13 -0800 (PST)
-Date:   Wed, 2 Mar 2022 19:21:12 -0500
+        Wed, 02 Mar 2022 16:21:16 -0800 (PST)
+Date:   Wed, 2 Mar 2022 19:21:15 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     tytso@mit.edu, derrickstolee@github.com, gitster@pobox.com,
         larsxschneider@gmail.com
-Subject: [PATCH v3 12/17] builtin/repack.c: support generating a cruft pack
-Message-ID: <1e94b33cb4d9f3e1f29ef754a9cc09898779836a.1646266835.git.me@ttaylorr.com>
+Subject: [PATCH v3 13/17] builtin/repack.c: allow configuring cruft pack
+ generation
+Message-ID: <9cfcd123bd107357bf36652976cad16a56c9e366.1646266835.git.me@ttaylorr.com>
 References: <cover.1638224692.git.me@ttaylorr.com>
  <cover.1646266835.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -64,450 +65,226 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Expose a way to split the contents of a repository into a main and cruft
-pack when doing an all-into-one repack with `git repack --cruft -d`, and
-a complementary configuration variable.
+In servers which set the pack.window configuration to a large value, we
+can wind up spending quite a lot of time finding new bases when breaking
+delta chains between reachable and unreachable objects while generating
+a cruft pack.
+
+Introduce a handful of `repack.cruft*` configuration variables to
+control the parameters used by pack-objects when generating a cruft
+pack.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-repack.txt            |  11 ++
- Documentation/technical/cruft-packs.txt |   2 +-
- builtin/repack.c                        | 106 +++++++++++-
- t/t5329-pack-objects-cruft.sh           | 207 ++++++++++++++++++++++++
- 4 files changed, 320 insertions(+), 6 deletions(-)
+ Documentation/config/repack.txt |  9 ++++
+ builtin/repack.c                | 50 ++++++++++++++------
+ t/t5329-pack-objects-cruft.sh   | 83 +++++++++++++++++++++++++++++++++
+ 3 files changed, 128 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index ee30edc178..0bf13893d8 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -63,6 +63,17 @@ to the new separate pack will be written.
- 	Also run  'git prune-packed' to remove redundant
- 	loose object files.
- 
-+--cruft::
-+	Same as `-a`, unless `-d` is used. Then any unreachable objects
-+	are packed into a separate cruft pack. Unreachable objects can
-+	be pruned using the normal expiry rules with the next `git gc`
-+	invocation (see linkgit:git-gc[1]). Incompatible with `-k`.
+diff --git a/Documentation/config/repack.txt b/Documentation/config/repack.txt
+index 9c413e177e..fd18d1fb89 100644
+--- a/Documentation/config/repack.txt
++++ b/Documentation/config/repack.txt
+@@ -25,3 +25,12 @@ repack.writeBitmaps::
+ 	space and extra time spent on the initial repack.  This has
+ 	no effect if multiple packfiles are created.
+ 	Defaults to true on bare repos, false otherwise.
 +
-+--cruft-expiration=<approxidate>::
-+	Expire unreachable objects older than `<approxidate>`
-+	immediately instead of waiting for the next `git gc` invocation.
-+	Only useful with `--cruft -d`.
-+
- -l::
- 	Pass the `--local` option to 'git pack-objects'. See
- 	linkgit:git-pack-objects[1].
-diff --git a/Documentation/technical/cruft-packs.txt b/Documentation/technical/cruft-packs.txt
-index 2c3c5d93f8..f80e975a47 100644
---- a/Documentation/technical/cruft-packs.txt
-+++ b/Documentation/technical/cruft-packs.txt
-@@ -17,7 +17,7 @@ pruned according to normal expiry rules with the next 'git gc' invocation.
- 
- Unreachable objects aren't removed immediately, since doing so could race with
- an incoming push which may reference an object which is about to be deleted.
--Instead, those unreachable objects are stored as loose object and stay that way
-+Instead, those unreachable objects are stored as loose objects and stay that way
- until they are older than the expiration window, at which point they are removed
- by linkgit:git-prune[1].
- 
++repack.cruftWindow::
++repack.cruftWindowMemory::
++repack.cruftDepth::
++repack.cruftThreads::
++	Parameters used by linkgit:git-pack-objects[1] when generating
++	a cruft pack and the respective parameters are not given over
++	the command line. See similarly named `pack.*` configuration
++	variables for defaults and meaning.
 diff --git a/builtin/repack.c b/builtin/repack.c
-index f908f7d5dd..f7fb88bcf1 100644
+index f7fb88bcf1..d61c78e94e 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -18,11 +18,17 @@
- #include "pack-bitmap.h"
- #include "refs.h"
+@@ -40,9 +40,21 @@ static const char incremental_bitmap_conflict_error[] = N_(
+ "--no-write-bitmap-index or disable the pack.writebitmaps configuration."
+ );
  
-+#define ALL_INTO_ONE 1
-+#define LOOSEN_UNREACHABLE 2
-+#define PACK_CRUFT 4
-+
-+static int pack_everything;
- static int delta_base_offset = 1;
- static int pack_kept_objects = -1;
- static int write_bitmaps = -1;
- static int use_delta_islands;
- static char *packdir, *packtmp_name, *packtmp;
-+static char *cruft_expiration;
++struct pack_objects_args {
++	const char *window;
++	const char *window_memory;
++	const char *depth;
++	const char *threads;
++	const char *max_pack_size;
++	int no_reuse_delta;
++	int no_reuse_object;
++	int quiet;
++	int local;
++};
  
- static const char *const git_repack_usage[] = {
- 	N_("git repack [<options>]"),
-@@ -54,6 +60,7 @@ static int repack_config(const char *var, const char *value, void *cb)
- 		use_delta_islands = git_config_bool(var, value);
+ static int repack_config(const char *var, const char *value, void *cb)
+ {
++	struct pack_objects_args *cruft_po_args = cb;
+ 	if (!strcmp(var, "repack.usedeltabaseoffset")) {
+ 		delta_base_offset = git_config_bool(var, value);
+ 		return 0;
+@@ -61,6 +73,15 @@ static int repack_config(const char *var, const char *value, void *cb)
  		return 0;
  	}
+ 
++	if (!strcmp(var, "repack.cruftwindow"))
++		return git_config_string(&cruft_po_args->window, var, value);
++	if (!strcmp(var, "repack.cruftwindowmemory"))
++		return git_config_string(&cruft_po_args->window_memory, var, value);
++	if (!strcmp(var, "repack.cruftdepth"))
++		return git_config_string(&cruft_po_args->depth, var, value);
++	if (!strcmp(var, "repack.cruftthreads"))
++		return git_config_string(&cruft_po_args->threads, var, value);
 +
  	return git_default_config(var, value, cb);
  }
  
-@@ -300,9 +307,6 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
- 		die(_("could not finish pack-objects to repack promisor objects"));
+@@ -153,18 +174,6 @@ static void remove_redundant_pack(const char *dir_name, const char *base_name)
+ 	strbuf_release(&buf);
  }
  
--#define ALL_INTO_ONE 1
--#define LOOSEN_UNREACHABLE 2
+-struct pack_objects_args {
+-	const char *window;
+-	const char *window_memory;
+-	const char *depth;
+-	const char *threads;
+-	const char *max_pack_size;
+-	int no_reuse_delta;
+-	int no_reuse_object;
+-	int quiet;
+-	int local;
+-};
 -
- struct pack_geometry {
- 	struct packed_git **pack;
- 	uint32_t pack_nr, pack_alloc;
-@@ -339,6 +343,8 @@ static void init_pack_geometry(struct pack_geometry **geometry_p)
- 	for (p = get_all_packs(the_repository); p; p = p->next) {
- 		if (!pack_kept_objects && p->pack_keep)
- 			continue;
-+		if (p->is_cruft)
-+			continue;
- 
- 		ALLOC_GROW(geometry->pack,
- 			   geometry->pack_nr + 1,
-@@ -600,6 +606,67 @@ static int write_midx_included_packs(struct string_list *include,
- 	return finish_command(&cmd);
- }
- 
-+static int write_cruft_pack(const struct pack_objects_args *args,
-+			    const char *pack_prefix,
-+			    struct string_list *names,
-+			    struct string_list *existing_packs,
-+			    struct string_list *existing_kept_packs)
-+{
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+	struct strbuf line = STRBUF_INIT;
-+	struct string_list_item *item;
-+	FILE *in, *out;
-+	int ret;
-+
-+	prepare_pack_objects(&cmd, args);
-+
-+	strvec_push(&cmd.args, "--cruft");
-+	if (cruft_expiration)
-+		strvec_pushf(&cmd.args, "--cruft-expiration=%s",
-+			     cruft_expiration);
-+
-+	strvec_push(&cmd.args, "--honor-pack-keep");
-+	strvec_push(&cmd.args, "--non-empty");
-+	strvec_push(&cmd.args, "--max-pack-size=0");
-+
-+	cmd.in = -1;
-+
-+	ret = start_command(&cmd);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * names has a confusing double use: it both provides the list
-+	 * of just-written new packs, and accepts the name of the cruft
-+	 * pack we are writing.
-+	 *
-+	 * By the time it is read here, it contains only the pack(s)
-+	 * that were just written, which is exactly the set of packs we
-+	 * want to consider kept.
-+	 */
-+	in = xfdopen(cmd.in, "w");
-+	for_each_string_list_item(item, names)
-+		fprintf(in, "%s-%s.pack\n", pack_prefix, item->string);
-+	for_each_string_list_item(item, existing_packs)
-+		fprintf(in, "-%s.pack\n", item->string);
-+	for_each_string_list_item(item, existing_kept_packs)
-+		fprintf(in, "%s.pack\n", item->string);
-+	fclose(in);
-+
-+	out = xfdopen(cmd.out, "r");
-+	while (strbuf_getline_lf(&line, out) != EOF) {
-+		if (line.len != the_hash_algo->hexsz)
-+			die(_("repack: Expecting full hex object ID lines only "
-+			      "from pack-objects."));
-+		string_list_append(names, line.buf);
-+	}
-+	fclose(out);
-+
-+	strbuf_release(&line);
-+
-+	return finish_command(&cmd);
-+}
-+
- int cmd_repack(int argc, const char **argv, const char *prefix)
+ static void prepare_pack_objects(struct child_process *cmd,
+ 				 const struct pack_objects_args *args)
  {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
-@@ -616,7 +683,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	int show_progress;
+@@ -689,6 +698,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
+ 	int no_update_server_info = 0;
+ 	struct pack_objects_args po_args = {NULL};
++	struct pack_objects_args cruft_po_args = {NULL};
+ 	int geometric_factor = 0;
+ 	int write_midx = 0;
  
- 	/* variables to be filled by option parsing */
--	int pack_everything = 0;
- 	int delete_redundant = 0;
- 	const char *unpack_unreachable = NULL;
- 	int keep_unreachable = 0;
-@@ -632,6 +698,11 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('A', NULL, &pack_everything,
- 				N_("same as -a, and turn unreachable objects loose"),
- 				   LOOSEN_UNREACHABLE | ALL_INTO_ONE),
-+		OPT_BIT(0, "cruft", &pack_everything,
-+				N_("same as -a, pack unreachable cruft objects separately"),
-+				   PACK_CRUFT),
-+		OPT_STRING(0, "cruft-expiration", &cruft_expiration, N_("approxidate"),
-+				N_("with -C, expire objects older than this")),
- 		OPT_BOOL('d', NULL, &delete_redundant,
- 				N_("remove redundant packs, and run git-prune-packed")),
- 		OPT_BOOL('f', NULL, &po_args.no_reuse_delta,
-@@ -684,6 +755,15 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	    (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE)))
- 		die(_("options '%s' and '%s' cannot be used together"), "--keep-unreachable", "-A");
+@@ -743,7 +753,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		OPT_END()
+ 	};
  
-+	if (pack_everything & PACK_CRUFT) {
-+		pack_everything |= ALL_INTO_ONE;
-+
-+		if (unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE))
-+			die(_("options '%s' and '%s' cannot be used together"), "--cruft", "-A");
-+		if (keep_unreachable)
-+			die(_("options '%s' and '%s' cannot be used together"), "--cruft", "-k");
-+	}
-+
- 	if (write_bitmaps < 0) {
- 		if (!write_midx &&
- 		    (!(pack_everything & ALL_INTO_ONE) || !is_bare_repository()))
-@@ -767,7 +847,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (pack_everything & ALL_INTO_ONE) {
- 		repack_promisor_objects(&po_args, &names);
+-	git_config(repack_config, NULL);
++	git_config(repack_config, &cruft_po_args);
  
--		if (existing_nonkept_packs.nr && delete_redundant) {
-+		if (existing_nonkept_packs.nr && delete_redundant &&
-+		    !(pack_everything & PACK_CRUFT)) {
- 			for_each_string_list_item(item, &names) {
- 				strvec_pushf(&cmd.args, "--keep-pack=%s-%s.pack",
- 					     packtmp_name, item->string);
-@@ -829,6 +910,21 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 	if (!names.nr && !po_args.quiet)
- 		printf_ln(_("Nothing new to pack."));
+ 	argc = parse_options(argc, argv, prefix, builtin_repack_options,
+ 				git_repack_usage, 0);
+@@ -918,7 +928,19 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		if (*pack_prefix == '/')
+ 			pack_prefix++;
  
-+	if (pack_everything & PACK_CRUFT) {
-+		const char *pack_prefix;
-+		if (!skip_prefix(packtmp, packdir, &pack_prefix))
-+			die(_("pack prefix %s does not begin with objdir %s"),
-+			    packtmp, packdir);
-+		if (*pack_prefix == '/')
-+			pack_prefix++;
+-		ret = write_cruft_pack(&po_args, pack_prefix, &names,
++		if (!cruft_po_args.window)
++			cruft_po_args.window = po_args.window;
++		if (!cruft_po_args.window_memory)
++			cruft_po_args.window_memory = po_args.window_memory;
++		if (!cruft_po_args.depth)
++			cruft_po_args.depth = po_args.depth;
++		if (!cruft_po_args.threads)
++			cruft_po_args.threads = po_args.threads;
 +
-+		ret = write_cruft_pack(&po_args, pack_prefix, &names,
-+				       &existing_nonkept_packs,
-+				       &existing_kept_packs);
-+		if (ret)
-+			return ret;
-+	}
++		cruft_po_args.local = po_args.local;
++		cruft_po_args.quiet = po_args.quiet;
 +
- 	for_each_string_list_item(item, &names) {
- 		item->util = (void *)(uintptr_t)populate_pack_exts(item->string);
- 	}
++		ret = write_cruft_pack(&cruft_po_args, pack_prefix, &names,
+ 				       &existing_nonkept_packs,
+ 				       &existing_kept_packs);
+ 		if (ret)
 diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
-index 939cdc297a..06c550c958 100755
+index 06c550c958..e4744e4465 100755
 --- a/t/t5329-pack-objects-cruft.sh
 +++ b/t/t5329-pack-objects-cruft.sh
-@@ -358,4 +358,211 @@ test_expect_success 'expired objects are pruned' '
+@@ -565,4 +565,87 @@ test_expect_success 'cruft repack ignores pack.packSizeLimit' '
  	)
  '
  
-+test_expect_success 'repack --cruft generates a cruft pack' '
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		test_commit reachable &&
-+		git branch -M main &&
-+		git checkout --orphan other &&
-+		test_commit unreachable &&
-+
-+		git checkout main &&
-+		git branch -D other &&
-+		git tag -d unreachable &&
-+		# objects are not cruft if they are contained in the reflogs
-+		git reflog expire --all --expire=all &&
-+
-+		git rev-list --objects --all --no-object-names >reachable.raw &&
-+		git cat-file --batch-all-objects --batch-check="%(objectname)" >objects &&
-+		sort <reachable.raw >reachable &&
-+		comm -13 reachable objects >unreachable &&
-+
-+		git repack --cruft -d &&
-+
-+		cruft=$(basename $(ls $packdir/pack-*.mtimes) .mtimes) &&
-+		pack=$(basename $(ls $packdir/pack-*.pack | grep -v $cruft) .pack) &&
-+
-+		git show-index <$packdir/$pack.idx >actual.raw &&
-+		cut -f2 -d" " actual.raw | sort >actual &&
-+		test_cmp reachable actual &&
-+
-+		git show-index <$packdir/$cruft.idx >actual.raw &&
-+		cut -f2 -d" " actual.raw | sort >actual &&
-+		test_cmp unreachable actual
-+	)
-+'
-+
-+test_expect_success 'loose objects mtimes upsert others' '
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		test_commit reachable &&
-+		git repack -Ad &&
-+		git branch -M main &&
-+
-+		git checkout --orphan other &&
-+		test_commit cruft &&
-+		# incremental repack, leaving existing objects loose (so
-+		# they can be "freshened")
-+		git repack &&
-+
-+		tip="$(git rev-parse cruft)" &&
-+		path="$objdir/$(test_oid_to_path "$(git rev-parse cruft)")" &&
-+		test-tool chmtime --get +1000 "$path" >expect &&
-+
-+		git checkout main &&
-+		git branch -D other &&
-+		git tag -d cruft &&
-+		git reflog expire --all --expire=all &&
-+
-+		git repack --cruft -d &&
-+
-+		mtimes="$(basename $(ls $packdir/pack-*.mtimes))" &&
-+		test-tool pack-mtimes "$mtimes" >actual.raw &&
-+		grep "$tip" actual.raw | cut -d" " -f2 >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'cruft packs are not included in geometric repack' '
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		test_commit reachable &&
-+		git repack -Ad &&
-+		git branch -M main &&
-+
-+		git checkout --orphan other &&
-+		test_commit cruft &&
-+		git repack -d &&
-+
-+		git checkout main &&
-+		git branch -D other &&
-+		git tag -d cruft &&
-+		git reflog expire --all --expire=all &&
-+
-+		git repack --cruft &&
-+
-+		find $packdir -type f | sort >before &&
-+		git repack --geometric=2 -d &&
-+		find $packdir -type f | sort >after &&
-+
-+		test_cmp before after
-+	)
-+'
-+
-+test_expect_success 'repack --geometric collects once-cruft objects' '
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		test_commit reachable &&
-+		git repack -Ad &&
-+		git branch -M main &&
-+
-+		git checkout --orphan other &&
-+		git rm -rf . &&
-+		test_commit --no-tag cruft &&
-+		cruft="$(git rev-parse HEAD)" &&
-+
-+		git checkout main &&
-+		git branch -D other &&
-+		git reflog expire --all --expire=all &&
-+
-+		# Pack the objects created in the previous step into a cruft
-+		# pack. Intentionally leave loose copies of those objects
-+		# around so we can pick them up in a subsequent --geometric
-+		# reapack.
-+		git repack --cruft &&
-+
-+		# Now make those objects reachable, and ensure that they are
-+		# packed into the new pack created via a --geometric repack.
-+		git update-ref refs/heads/other $cruft &&
-+
-+		# Without this object, the set of unpacked objects is exactly
-+		# the set of objects already in the cruft pack. Tweak that set
-+		# to ensure we do not overwrite the cruft pack entirely.
-+		test_commit reachable2 &&
-+
-+		find $packdir -name "pack-*.idx" | sort >before &&
-+		git repack --geometric=2 -d &&
-+		find $packdir -name "pack-*.idx" | sort >after &&
-+
-+		{
-+			git rev-list --objects --no-object-names $cruft &&
-+			git rev-list --objects --no-object-names reachable..reachable2
-+		} >want.raw &&
-+		sort want.raw >want &&
-+
-+		pack=$(comm -13 before after) &&
-+		git show-index <$pack >objects.raw &&
-+
-+		cut -d" " -f2 objects.raw | sort >got &&
-+
-+		test_cmp want got
-+	)
-+'
-+
-+test_expect_success 'cruft repack with no reachable objects' '
++test_expect_success 'cruft repack respects repack.cruftWindow' '
 +	git init repo &&
 +	test_when_finished "rm -fr repo" &&
 +	(
 +		cd repo &&
 +
 +		test_commit base &&
-+		git repack -ad &&
 +
-+		base="$(git rev-parse base)" &&
++		GIT_TRACE2_EVENT=$(pwd)/event.trace \
++		git -c pack.window=1 -c repack.cruftWindow=2 repack \
++		       --cruft --window=3 &&
 +
-+		git for-each-ref --format="delete %(refname)" >in &&
-+		git update-ref --stdin <in &&
-+		git reflog expire --all --expire=all &&
-+		rm -fr .git/index &&
-+
-+		git repack --cruft -d &&
-+
-+		git cat-file -t $base
++		grep "pack-objects.*--window=2.*--cruft" event.trace
 +	)
 +'
 +
-+test_expect_success 'cruft repack ignores --max-pack-size' '
-+	git init max-pack-size &&
++test_expect_success 'cruft repack respects --window by default' '
++	git init repo &&
++	test_when_finished "rm -fr repo" &&
 +	(
-+		cd max-pack-size &&
++		cd repo &&
++
 +		test_commit base &&
-+		# two cruft objects which exceed the maximum pack size
-+		test-tool genrandom foo 1048576 | git hash-object --stdin -w &&
-+		test-tool genrandom bar 1048576 | git hash-object --stdin -w &&
-+		git repack --cruft --max-pack-size=1M &&
-+		find $packdir -name "*.mtimes" >cruft &&
-+		test_line_count = 1 cruft &&
-+		test-tool pack-mtimes "$(basename "$(cat cruft)")" >objects &&
-+		test_line_count = 2 objects
++
++		GIT_TRACE2_EVENT=$(pwd)/event.trace \
++		git -c pack.window=2 repack --cruft --window=3 &&
++
++		grep "pack-objects.*--window=3.*--cruft" event.trace
 +	)
 +'
 +
-+test_expect_success 'cruft repack ignores pack.packSizeLimit' '
++test_expect_success 'cruft repack respects --quiet' '
++	git init repo &&
++	test_when_finished "rm -fr repo" &&
 +	(
-+		cd max-pack-size &&
-+		# repack everything back together to remove the existing cruft
-+		# pack (but to keep its objects)
-+		git repack -adk &&
-+		git -c pack.packSizeLimit=1M repack --cruft &&
-+		# ensure the same post condition is met when --max-pack-size
-+		# would otherwise be inferred from the configuration
-+		find $packdir -name "*.mtimes" >cruft &&
-+		test_line_count = 1 cruft &&
-+		test-tool pack-mtimes "$(basename "$(cat cruft)")" >objects &&
-+		test_line_count = 2 objects
++		cd repo &&
++
++		test_commit base &&
++		GIT_PROGRESS_DELAY=0 git repack --cruft --quiet 2>err &&
++		test_must_be_empty err
++	)
++'
++
++test_expect_success 'cruft --local drops unreachable objects' '
++	git init alternate &&
++	git init repo &&
++	test_when_finished "rm -fr alternate repo" &&
++
++	test_commit -C alternate base &&
++	# Pack all objects in alterate so that the cruft repack in "repo" sees
++	# the object it dropped due to `--local` as packed. Otherwise this
++	# object would not appear packed anywhere (since it is not packed in
++	# alternate and likewise not part of the cruft pack in the other repo
++	# because of `--local`).
++	git -C alternate repack -ad &&
++
++	(
++		cd repo &&
++
++		object="$(git -C ../alternate rev-parse HEAD:base.t)" &&
++		git -C ../alternate cat-file -p $object >contents &&
++
++		# Write some reachable objects and two unreachable ones: one
++		# that the alternate has and another that is unique.
++		test_commit other &&
++		git hash-object -w -t blob contents &&
++		cruft="$(echo cruft | git hash-object -w -t blob --stdin)" &&
++
++		( cd ../alternate/.git/objects && pwd ) \
++		       >.git/objects/info/alternates &&
++
++		test_path_is_file $objdir/$(test_oid_to_path $cruft) &&
++		test_path_is_file $objdir/$(test_oid_to_path $object) &&
++
++		git repack -d --cruft --local &&
++
++		test-tool pack-mtimes "$(basename $(ls $packdir/pack-*.mtimes))" \
++		       >objects &&
++		! grep $object objects &&
++		grep $cruft objects
 +	)
 +'
 +
