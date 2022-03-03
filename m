@@ -2,185 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51F8AC433EF
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 15:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DCF6C433F5
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 15:41:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234343AbiCCPXb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 10:23:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60190 "EHLO
+        id S232171AbiCCPly (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 10:41:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231584AbiCCPX3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 10:23:29 -0500
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB3B9427CF
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 07:22:42 -0800 (PST)
-Received: by mail-qv1-xf2e.google.com with SMTP id p8so1363149qvg.12
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 07:22:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hI3GwAPnNvmEaYqeogDX44UTXAICCal3YlxZnRxM27s=;
-        b=SR/coCQuRw4yReuFUgq0DFaUfaGQZ5lRCebLe5pA2IBZH81gCB5y6LyHlpi2ngUeSE
-         IDkd7ZOYvFLQen7Zj1g8i+yD7BMWjnqZ2vIWnx7HplLx0C7ZeOyyyBsUolR3V1CNMXuL
-         8r/S6eJYkfWzW2GTBzhOw4N4A584cS/OtYbNuqsWuha4HNoE5ssHMB2SbIh79zql9eZF
-         Iog/DFNulJ6sI0MWFYtykFkZMexszTbLGJxoSJ0IwFiXiolJD9CsPPbLR6n0dihu1O/q
-         gFriFGz0dS1lHfRzYs+OoSojacwAd1olZHXx2aO+Zzsq0g81Ny/JEP4jBNOV3YP6kO4c
-         CoyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hI3GwAPnNvmEaYqeogDX44UTXAICCal3YlxZnRxM27s=;
-        b=2ALshyDx/hD67rKng5QVoWH9Y9l76IKWWTovIRcdQFDQMNlZFerjAq4KDtYZ+kvJjS
-         em3mrLZ93vAEAUmsvnn3krhCUmcFNunFRlei1ERsvymcwZNmW7cx8Gdqphx3k/eJ3OfI
-         LABsp0png1XzTx6cEQH0V2KVpB8guKaphnqZCgM9ac6UpT6o25lU/KNPPM4IOqQNyIVg
-         iR48ZDa6QmOaiK1uKhq+bDu1HjaahH5FQ8aD16qb6qSY0Pu4UPyRgF/xaBxzAq9qNtBb
-         N/zVKKDWTYelf+jcvttszVmlkZlM6Fs46TI/Mml/ffHaZ0f87WdDnZ7vhN0ANGU4YGny
-         Csdg==
-X-Gm-Message-State: AOAM532VcfohHhuCy3JbgvLWQ0PnFrX8h97va5FzwlDdrlTA1PxtPm1s
-        l+BgsdJ9i9MG485QyVkOjm8=
-X-Google-Smtp-Source: ABdhPJzIgGjI3aavG8U7qg3ghRbBbNXT0KuT3PuDU2+GuJFyXbYsGwY6djNhQN/c/tldW6+zBnzuGw==
-X-Received: by 2002:ad4:5fc7:0:b0:435:3fea:ca29 with SMTP id jq7-20020ad45fc7000000b004353feaca29mr1280452qvb.112.1646320961871;
-        Thu, 03 Mar 2022 07:22:41 -0800 (PST)
-Received: from [10.37.129.2] (ool-ad03998c.dyn.optonline.net. [173.3.153.140])
-        by smtp.gmail.com with ESMTPSA id z14-20020a05622a028e00b002dc8e843596sm1588105qtw.61.2022.03.03.07.22.41
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 03 Mar 2022 07:22:41 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v4 1/3] stash: add tests to ensure reflog --rewrite --updatref behavior
-Date:   Thu, 03 Mar 2022 10:22:40 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <3F09AD9D-5A14-4F04-A9C5-D16C33B88101@gmail.com>
-In-Reply-To: <xmqqlexsexse.fsf@gitster.g>
-References: <pull.1218.v3.git.git.1645817452.gitgitgadget@gmail.com>
- <pull.1218.v4.git.git.1646260044.gitgitgadget@gmail.com>
- <08bb8d3a9b9cd75c8b2aed11db9456baef6f415b.1646260044.git.gitgitgadget@gmail.com>
- <xmqqlexsexse.fsf@gitster.g>
+        with ESMTP id S229621AbiCCPlx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 10:41:53 -0500
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5DF9195313
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 07:41:06 -0800 (PST)
+Received: from host-84-13-159-41.opaltelecom.net ([84.13.159.41] helo=[192.168.1.37])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1nPnZd-0004wg-BR;
+        Thu, 03 Mar 2022 15:41:05 +0000
+Message-ID: <f66fada7-cd94-880d-be7a-bc097d016908@iee.email>
+Date:   Thu, 3 Mar 2022 15:41:01 +0000
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: Re: [PATCH 05/11] worktree: use 'worktree' over 'working tree'
+Content-Language: en-GB
+To:     Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     "Elijah Newren [ ]" <newren@gmail.com>,
+        =?UTF-8?Q?Jean-No=c3=abl_AVILA_=5b_=5d?= <jn.avila@free.fr>
+References: <pull.1154.git.1645379667.gitgitgadget@gmail.com>
+ <a6a8eb8e7bb4520bfe37d3a79329cce7886af59c.1645379667.git.gitgitgadget@gmail.com>
+ <d9394947-f545-2dd9-b788-38fd7202243d@iee.email>
+ <545f0248-89ad-3194-02ae-2f1a47f949db@github.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <545f0248-89ad-3194-02ae-2f1a47f949db@github.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Sorry for the delay in replying. I had some family matters to attend to.
 
-On 2 Mar 2022, at 18:32, Junio C Hamano wrote:
+On 24/02/2022 15:53, Derrick Stolee wrote:
+> On 2/24/2022 9:33 AM, Philip Oakley wrote:
+>> On 20/02/2022 17:54, Derrick Stolee via GitGitGadget wrote:
+>>> From: Derrick Stolee <derrickstolee@github.com>
+>>>
+>>> It is helpful to distinguish between a 'working tree' and a 'worktree'.
+>>> A worktree contains a working tree plus additional metadata. This
+>>> metadata includes per-worktree refs and worktree-specific config.
+>> Doesn't this need a clear call-out in the text to highlight the
+>> distinction, so that it is obvious at first glance to the casual reader?
+>>
+>> I'd ended up with something like:
+>> - worktree
+>>     A directory whose files and sub-directories are (selectively) under
+>> Git revision management.
+>> - working tree
+>>     The working tree comprises Git revision management meta-data for the
+>> worktree,
+>>      and the worktree itself.
+>>     The meta-data may be independently located away from the worktree's
+>> data.
+>>
+>> The key feature is to have a layout structure that shows the distinction.
+> See below where I mention that the first paragraph points out this
+> distinction. Your use of bullets makes it even more clear, and I think
+> that would be more valuable if this wasn't the very first thing in the
+> document.
 
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: John Cai <johncai86@gmail.com>
->>
->> There is missing test coverage to ensure that the resulting reflogs
->> after a git stash drop has had its old oid rewritten if applicable, an=
-d
->> if the refs/stash has been updated if applicable.
->>
->> Add two tests that verify both of these happen.
->>
->> Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> Signed-off-by: John Cai <johncai86@gmail.com>
->> ---
->>  t/t3903-stash.sh | 43 ++++++++++++++++++++++++++++++++++++++++++-
->>  1 file changed, 42 insertions(+), 1 deletion(-)
->>
->> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
->> index b149e2af441..a2f8d0c52e7 100755
->> --- a/t/t3903-stash.sh
->> +++ b/t/t3903-stash.sh
->> @@ -41,7 +41,7 @@ diff_cmp () {
->>  	rm -f "$1.compare" "$2.compare"
->>  }
->>
->> -test_expect_success 'stash some dirty working directory' '
->> +setup_stash() {
->
-> Style.
->
-> 	setup_stash () {
->
-> but more importantly, is this really setting up "stash"?
-> "setup_stash_test" or something, perhaps?
->
->> +test_expect_success 'stash some dirty working directory' '
->> +	setup_stash
->>  '
->
-> OK.
->
->> +test_expect_success 'drop stash reflog updates refs/stash' '
->> +	git reset --hard &&
->> +	git rev-parse refs/stash >expect &&
->> +	echo 9 >file &&
->> +	git stash &&
->> +	git stash drop stash@{0} &&
->> +	git rev-parse refs/stash >actual &&
->> +	test_cmp expect actual
->> +'
->> +
->> +test_expect_success REFFILES 'drop stash reflog updates refs/stash wi=
-th rewrite' '
->> +	git init repo &&
->> +	(
->> +		cd repo &&
->> +		setup_stash
->> +	) &&
->
-> Hmph, so this is done inside the subdirectory.  The implementation
-> of the helper in this iteration does look cleaner than in the
-> previous iteration.
->
-> But these many references to "repo/" and "-C repo" we see below
-> makes me wonder why we do not put the whole thing inside the
-> subshell we started earlier.
->
-> i.e.
->
-> 	git init repo &&
-> 	(
-> 		cd repo &&
-> 		setup_stash_test &&
->
-> 		echo 9 >file &&
-> 		old=3D$(git rev-parse stash@{0}) &&
-> 		git stash &&
-> 		new=3D$(git rev-parse stash@{0}) &&
-> 		...
->
-> 		test_cmp expect actual
-> 	)
->
+I don't really buy the "first paragraph points out this distinction"
+because it's still part of a wall of text, so not easy to locate.
 
-makes sense to me. Is this worth a re-roll and sending out another series=
- to the list? or is it sufficient to make the change on my branch?
+It's not helped by the top line NAME which uses both `worktree` and
+`working tree` as if they are equivalent. Though that could be easily
+solved by making it:
 
->> +	echo 9 >repo/file &&
->> +
->> +	old_oid=3D"$(git -C repo rev-parse stash@{0})" &&
->> +	git -C repo stash &&
->> +	new_oid=3D"$(git -C repo rev-parse stash@{0})" &&
->> +
->> +	cat >expect <<-EOF &&
->> +	$(test_oid zero) $old_oid
->> +	$old_oid $new_oid
->> +	EOF
->> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
->> +	test_cmp expect actual &&
->> +
->> +	git -C repo stash drop stash@{1} &&
->> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
->> +	cat >expect <<-EOF &&
->> +	$(test_oid zero) $new_oid
->> +	EOF
->> +	test_cmp expect actual
->> +'
->> +
->>  test_expect_success 'stash pop' '
->>  	git reset --hard &&
->>  	git stash pop &&
+    git-worktree - Manage multiple working trees and their meta-data
+
+which would highlight the two distinct parts. (could also add the
+`git/user` distinction as below)
+
+
+You'll probably also have noticed how even in my original suggestion,
+I'd still misread the partition and got worktree/working-tree swapped
+over, so it is easily done.
+
+If we are trying to have clarity on the worktree/working-tree 
+distinction, I still think it needs to be made very obvious, with
+perhaps even the naming of the _git_ meta data part, or at least calling
+it out as being the independent of the _users_ working tree .
+
+Philip
+>
+>> Or are we trying to remove all references to "working tree"? Or have I
+>> misunderstood?
+> ...
+>>>  A git repository can support multiple working trees, allowing you to check
+>> Are we removing the above "working trees" phrases as well?
+> This one is important to keep. The worktree feature is how Git manages
+> multiple working trees.
+>
+> The reason for switching most of the other references is because the
+> discussion applies specifically to worktrees, not working trees.
+>
+>>>  out more than one branch at a time.  With `git worktree add` a new working
+>>> -tree is associated with the repository.  This new working tree is called a
+>>> -"linked working tree" as opposed to the "main working tree" prepared by
+>>> -linkgit:git-init[1] or linkgit:git-clone[1].
+>>> -A repository has one main working tree (if it's not a
+>>> -bare repository) and zero or more linked working trees. When you are done
+>>> -with a linked working tree, remove it with `git worktree remove`.
+>>> +tree is associated with the repository, along with additional metadata
+>>> +that differentiates that working tree from others in the same repository.
+>>> +The working tree, along with this metada, is called a "worktree".
+> This first paragraph is all about the distinction between working tree
+> and worktree, so it hopefully handles the concerns you had above.
+>
+> Thanks,
+> -Stolee
+
