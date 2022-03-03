@@ -2,181 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21380C433FE
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26967C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:25:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230348AbiCCAWk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 19:22:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40138 "EHLO
+        id S230317AbiCCA0F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 19:26:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230251AbiCCAWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 19:22:14 -0500
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78E6913DE33
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:21:22 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id f18so3286766qtb.3
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:21:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=GvktSRe3ZfbRs7bVfSI1U4BvamiSpw33fg6sft3UJ9s=;
-        b=jYgIdgGQXonBsoGEnsNOhyINU8Xke/+RSs6uzIpdF8/x1oSB0KzpNMAxmiVlCAk8c8
-         bdd9tmaeAhHIMTSeePHY5D930TWIeWFOCRpdd1BtuCmHDJoWzWdeRLI7D16IAsZQKB8h
-         5k9tqW5ihd3GJzOi/whO+bEJfKrbcuECzwMMaz0t0QOIj56QoqpAVxzCnBelE87reawx
-         ZQkmen3msaOmfIMYKHhLFjnFBChDoAPJQYyggo98BQJfIoRSBIzy4RwK3S+4Uoomt9Xn
-         wDLXqgagzSmm6Nbk7aVZOOY2VjmaCCYgBNV/Ox1YVXiIwgv4TJW3eRrLiJRpHKp5o8tN
-         9c5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=GvktSRe3ZfbRs7bVfSI1U4BvamiSpw33fg6sft3UJ9s=;
-        b=cl6VrsPfGT4pZvfnohP9gV88cBzh10uDoVbeJWgCXzMA5I0VaxKp54OzLe0huBigcv
-         S51aUYJTKP3QuCAmMZPiFcoMlGJakqNRf8esaBiiG39KPL1c1rnY0a7Ex3TtxEY/d915
-         vstchE53RWCJkLiTeh+XSrhdPjOLraZ+lKlAOajKITFOD2iv+RlKsWf1M96H2tv9H7Sr
-         O5bae9mzeT7yWZOsgQLGGhE5RJ2iR/tEwjUi4wOxq939Z45zv4cp+rujSl2RtASoJKGC
-         3mKcHr6LaEO7gn+mTDE+paphAK9/bnnD4neIxo4YKfPGDoQJWb8ohZ38hSBmrjWQ8eqM
-         9NBA==
-X-Gm-Message-State: AOAM531blV5Yq9DvjKpavt0WQ7hCq90oifYImN8sFBR2ni/S8DyDt5MV
-        m2Ai15qkhBnN+tOFlZiHsM8Ci4MqTOIHbjQ5
-X-Google-Smtp-Source: ABdhPJyIrD1UFrbVC5EJz+mjxadi0PmJf6HR8cpA+ljH/ztdnei7KrHLf6FOmtMeeQ7op9YF2kWK0Q==
-X-Received: by 2002:a05:622a:11d2:b0:2de:901e:49b5 with SMTP id n18-20020a05622a11d200b002de901e49b5mr25695603qtk.444.1646266881479;
-        Wed, 02 Mar 2022 16:21:21 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d186-20020a379bc3000000b006490a4e507esm306539qke.70.2022.03.02.16.21.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 16:21:21 -0800 (PST)
-Date:   Wed, 2 Mar 2022 19:21:20 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     tytso@mit.edu, derrickstolee@github.com, gitster@pobox.com,
-        larsxschneider@gmail.com
-Subject: [PATCH v3 15/17] builtin/repack.c: add cruft packs to MIDX during
- geometric repack
-Message-ID: <ed05cf536bdea62a2b512bb3a610ec7861ff68b5.1646266835.git.me@ttaylorr.com>
-References: <cover.1638224692.git.me@ttaylorr.com>
- <cover.1646266835.git.me@ttaylorr.com>
+        with ESMTP id S230272AbiCCA0C (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 19:26:02 -0500
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9BAE2F02C
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:25:17 -0800 (PST)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 8CD0E182BEB;
+        Wed,  2 Mar 2022 19:25:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BUCVjyALU5NUbWNQ7gO0Hl9ildyXdAqykKzPOg
+        TNOgo=; b=ZuU+1K6ngWErSpIkYRE8jr8dV0uMjc3FmUvLmqQHSA5qlrHvhRt6/k
+        CG0Yny0guji3IEEvfHHs1tp/Ac+8uVmSODHT+2sRIMef5QCPmZN6HDrpAUkigIO5
+        R1We2YLP9JZ3AfNHqgWjrV8i/7XpDU2vA9WjG3se1KsN70F70VY4g=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 84361182BEA;
+        Wed,  2 Mar 2022 19:25:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.82.80.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B4873182BE9;
+        Wed,  2 Mar 2022 19:25:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 1/7] fetch: increase test coverage of fetches
+References: <cover.1645102965.git.ps@pks.im>
+        <b4ca3f1f3baacde2aea7bae4f583f68c211a557a.1645102965.git.ps@pks.im>
+Date:   Wed, 02 Mar 2022 16:25:13 -0800
+In-Reply-To: <b4ca3f1f3baacde2aea7bae4f583f68c211a557a.1645102965.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Thu, 17 Feb 2022 14:04:16 +0100")
+Message-ID: <xmqqwnhbevbq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1646266835.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 654F09EA-9A88-11EC-B384-CBA7845BAAA9-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using cruft packs, the following race can occur when a geometric
-repack that writes a MIDX bitmap takes place afterwords:
+Patrick Steinhardt <ps@pks.im> writes:
 
-  - First, create an unreachable object and do an all-into-one cruft
-    repack which stores that object in the repository's cruft pack.
-  - Then make that object reachable.
-  - Finally, do a geometric repack and write a MIDX bitmap.
+> +test_expect_success 'atomic fetch with failing backfill' '
+> +	git init clone3 &&
+> +
+> +	# We want to test whether a failure when backfilling tags correctly
+> +	# aborts the complete transaction when `--atomic` is passed: we should
+> +	# neither create the branch nor should we create the tag when either
+> +	# one of both fails to update correctly.
+> +	#
+> +	# To trigger failure we simply abort when backfilling a tag.
+> +	write_script clone3/.git/hooks/reference-transaction <<-\EOF &&
+> +		while read oldrev newrev reference
+> +		do
+> +			if test "$reference" = refs/tags/tag1
+> +			then
+> +				exit 1
+> +			fi
+> +		done
+> +	EOF
 
-Assuming that we are sufficiently unlucky as to select a commit from the
-MIDX which reaches that object for bitmapping, then the `git
-multi-pack-index` process will complain that that object is missing.
+Without the extra indentation level, all your <<here-doc would
+become easier to read.  You are consistently doing this in your
+patches, which it is better than random mixes of indentation style,
+though.
 
-The reason is because we don't include cruft packs in the MIDX when
-doing a geometric repack. Since the "make that object reachable" doesn't
-necessarily mean that we'll create a new copy of that object in one of
-the packs that will get rolled up as part of a geometric repack, it's
-possible that the MIDX won't see any copies of that now-reachable
-object.
+> +	test_must_fail git -C clone3 fetch --atomic .. $B:refs/heads/something &&
+> +
+> +	# Creation of the tag has failed, so ideally refs/heads/something
+> +	# should not exist. The fact that it does demonstrates that there is
+> +	# a bug in the `--atomic` flag.
+> +	test $B = "$(git -C clone3 rev-parse --verify refs/heads/something)"
+> +'
 
-Of course, it's desirable to avoid including cruft packs in the MIDX
-because it causes the MIDX to store a bunch of objects which are likely
-to get thrown away. But excluding that pack does open us up to the above
-race.
+Makes sense.
 
-This patch demonstrates the bug, and resolves it by including cruft
-packs in the MIDX even when doing a geometric repack.
+> +test_expect_success 'atomic fetch with backfill should use single transaction' '
+> +	git init clone4 &&
+> +
+> +	# Fetching with the `--atomic` flag should update all references in a
+> +	# single transaction, including backfilled tags. We thus expect to see
+> +	# a single reference transaction for the created branch and tags.
+> +	cat >expected <<-EOF &&
+> +		prepared
+> +		$ZERO_OID $B refs/heads/something
+> +		$ZERO_OID $S refs/tags/tag2
+> +		committed
+> +		$ZERO_OID $B refs/heads/something
+> +		$ZERO_OID $S refs/tags/tag2
+> +		prepared
+> +		$ZERO_OID $T refs/tags/tag1
+> +		committed
+> +		$ZERO_OID $T refs/tags/tag1
+> +	EOF
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/repack.c              | 19 +++++++++++++++++--
- t/t5329-pack-objects-cruft.sh | 26 ++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 2 deletions(-)
+I think we see two transactions here, even though the comment says
+otherwise.  Is this expecting a known breakage?
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index afa4d51a22..59b60cd309 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -23,6 +23,7 @@
- #define PACK_CRUFT 4
- 
- #define DELETE_PACK 1
-+#define CRUFT_PACK 2
- 
- static int pack_everything;
- static int delta_base_offset = 1;
-@@ -158,8 +159,11 @@ static void collect_pack_filenames(struct string_list *fname_nonkept_list,
- 		if ((extra_keep->nr > 0 && i < extra_keep->nr) ||
- 		    (file_exists(mkpath("%s/%s.keep", packdir, fname))))
- 			string_list_append_nodup(fname_kept_list, fname);
--		else
--			string_list_append_nodup(fname_nonkept_list, fname);
-+		else {
-+			struct string_list_item *item = string_list_append_nodup(fname_nonkept_list, fname);
-+			if (file_exists(mkpath("%s/%s.mtimes", packdir, fname)))
-+				item->util = (void*)(uintptr_t)CRUFT_PACK;
-+		}
- 	}
- 	closedir(dir);
- }
-@@ -561,6 +565,17 @@ static void midx_included_packs(struct string_list *include,
- 
- 			string_list_insert(include, strbuf_detach(&buf, NULL));
- 		}
-+
-+		for_each_string_list_item(item, existing_nonkept_packs) {
-+			if (!((uintptr_t)item->util & CRUFT_PACK)) {
-+				/*
-+				 * no need to check DELETE_PACK, since we're not
-+				 * doing an ALL_INTO_ONE repack
-+				 */
-+				continue;
-+			}
-+			string_list_insert(include, xstrfmt("%s.idx", item->string));
-+		}
- 	} else {
- 		for_each_string_list_item(item, existing_nonkept_packs) {
- 			if ((uintptr_t)item->util & DELETE_PACK)
-diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
-index e4744e4465..13158e4ab7 100755
---- a/t/t5329-pack-objects-cruft.sh
-+++ b/t/t5329-pack-objects-cruft.sh
-@@ -648,4 +648,30 @@ test_expect_success 'cruft --local drops unreachable objects' '
- 	)
- '
- 
-+test_expect_success 'MIDX bitmaps tolerate reachable cruft objects' '
-+	git init repo &&
-+	test_when_finished "rm -fr repo" &&
-+	(
-+		cd repo &&
-+
-+		test_commit reachable &&
-+		test_commit cruft &&
-+		unreachable="$(git rev-parse cruft)" &&
-+
-+		git reset --hard $unreachable^ &&
-+		git tag -d cruft &&
-+		git reflog expire --all --expire=all &&
-+
-+		git repack --cruft -d &&
-+
-+		# resurrect the unreachable object via a new commit. the
-+		# new commit will get selected for a bitmap, but be
-+		# missing one of its parents from the selected packs.
-+		git reset --hard $unreachable &&
-+		test_commit resurrect &&
-+
-+		git repack --write-midx --write-bitmap-index --geometric=2 -d
-+	)
-+'
-+
- test_done
--- 
-2.35.1.73.gccc5557600
+> +	write_script clone4/.git/hooks/reference-transaction <<-\EOF &&
+> +		( echo "$*" && cat ) >>actual
+> +	EOF
+> +
+> +	git -C clone4 fetch --atomic .. $B:refs/heads/something &&
+> +	test_cmp expected clone4/actual
 
+Nice way to make sure what is and is not in each transaction.  I
+feels a bit too rigid (e.g. in the first transaction, there is no
+inherent reason to expect that the update to head/something is
+mentioned before the update to tags/tag2, for example).
+
+> +'
+> +
+> +test_expect_success 'backfill failure causes command to fail' '
+> +	git init clone5 &&
+> +
+> +	write_script clone5/.git/hooks/reference-transaction <<-EOF &&
+> +		while read oldrev newrev reference
+> +		do
+> +			if test "\$reference" = refs/tags/tag1
+> +			then
+> +				# Create a nested tag below the actual tag we
+> +				# wanted to write, which causes a D/F conflict
+> +				# later when we want to commit refs/tags/tag1.
+> +				# We cannot just `exit 1` here given that this
+> +				# would cause us to die immediately.
+
+> +				git update-ref refs/tags/tag1/nested $B
+
+I have been wondering if we need to do this from the hook?  If we
+have this ref before we start "fetch", would it have the same
+effect, or "fetch" notices that this interfering ref exists and
+removes it to make room for storing refs/tags/tag1, making the whole
+thing fail to fail?
+
+> +				exit \$!
+
+In any case, "exit 0" or "exit \$?" would be understandable, but
+exit with "$!", which is ...?  The process ID of the most recent
+background command?  Puzzled.
+
+> +			fi
+> +		done
+> +	EOF
