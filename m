@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80FFBC433EF
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 16:04:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F8B9C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 16:04:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232280AbiCCQF2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 11:05:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37852 "EHLO
+        id S234788AbiCCQFc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 11:05:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230076AbiCCQF2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 11:05:28 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34B53197B47
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 08:04:42 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id r10so8574507wrp.3
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 08:04:42 -0800 (PST)
+        with ESMTP id S234605AbiCCQFa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 11:05:30 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86193197B51
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 08:04:43 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id t11so8574977wrm.5
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 08:04:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=B5zXqhA9bTn/F6sYFAbG+nzimX/d7yNvejfWtMI5ZkM=;
-        b=aHMXAxMtjzCIi3GYvUUrtdPeSYxRi7UH3Cgsa7fCXaAckcqvsBbOvc6/aSJ1aPVCQY
-         lh7zVbQPYm6b720ajM7Ks1vOAXtXplzfClU8H/F/iXFOq9hinCasjKN2DOVIIPEfqGjs
-         idutvssX+ZaBMiEu31eBg9W3VgLfBfNvxMf4YUknilDQIwVnM/q4YM1zdNWlY43ifiRT
-         vcpMwbVcQQFUZOAGjXndK3maAqkZNzYUzdp9+IfE3108mlBNZt9liioTfVV/+ZQVpBIu
-         LJduLu38ldcGhBONudM5JxsMkDfWawSxykJ4rNrN+Vuip6Vu5dVf6j25c7dvACugaERj
-         7CMA==
+        bh=7acIjbXzpj92RkaLSI9nMlsKODhwMrzC+xLXcEXEEnk=;
+        b=BcEY6SniGvB7t4EbVeKwVVJOh+KB6lZtdiGkKkz5yfOjt0duvYqKQBe2yi1OoX9dnY
+         AFtYFtKEUco1dzVZZGTkgfrtMPxu6UKYjWmHPnBXNl5XTmLwfKbgBw0MBp+fJYxfhkgo
+         GASkt0YIaDBujwoXIsQemEy1bTWt6oxOR3deDwaOT8rE78CYNL/TBeyPIX6887i72UzK
+         L2O67g7JK2BD1ri+iJ0nDi8hbZ9SiCfe91if9Fc5Dt0IndmU6EAVMODqaBjOF4+t47LJ
+         mHKSr2Qc40/Tf8HHmF7hID5pITn4q38eiscIcvUhjy2DDpOemV6kuvoDG8B02rVoNarm
+         SyUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=B5zXqhA9bTn/F6sYFAbG+nzimX/d7yNvejfWtMI5ZkM=;
-        b=OtPy9Hk0SlLnKyQ8I0oxk66ADmfTWvq/rWLBapJAMV5b09QkYTT9NKM5x0qtzF2438
-         79dzR6EO7MlTV/H91ihieV5ldxav3IfOvQy/dhQT8QkHOSOx+n8jWC3GgzOC8G8qy+KZ
-         rRCWWiZ/TNU9QRuoF3I9gg52fr9OjJdND7JQKYhWQy0AGIBSeTANpd65MOAw8lvQf5+t
-         VXqAStKhsiSQeS6cSJVa7JykfHf2hoTnTcfDUq2g7aS/q8Cjym61fiaO4OndOrDZYe9s
-         lPgA1Uqm3tFAAnscS4NBvCml1y1/pmMm3vx4YUWal/QbDMlxm71+lBSLj26oihzDuaQX
-         XlaA==
-X-Gm-Message-State: AOAM531itKEwDPwX2Xhynhw/+sTYQvT/rN71IMKjfzGMHUP17U5tw4+c
-        lorSfK0x32wrs1UI+qeL+L1zvDqoSVg7XA==
-X-Google-Smtp-Source: ABdhPJyElhK8Dcqfo9SrK/GlRssVHDe0F9EKmSSLYpAuC/DfO7zy2L6kj/Nz1aDzoa8emFdsvpiZ4w==
-X-Received: by 2002:adf:b1da:0:b0:1f0:1205:89c1 with SMTP id r26-20020adfb1da000000b001f0120589c1mr9697246wra.27.1646323480420;
-        Thu, 03 Mar 2022 08:04:40 -0800 (PST)
+        bh=7acIjbXzpj92RkaLSI9nMlsKODhwMrzC+xLXcEXEEnk=;
+        b=cRKHUG0MaHKIerJL+W13km4krtgcODVS8FPu6yEKjOgCKkZSgnRik0ih0eHwSDQ8WQ
+         4BJRtiaTbJDWkAMANhbbdqUvFtr1bH35TdQM6WH7PR7DRZJ6GuGuvWkLliig1CmFVQBc
+         Z8e9gQzwQSy2D1PkdD8QdCYXI6ZxdOAazq1FxyR/oVauRFHaYkc7XGyTglCRqaahDg2e
+         5gWhXZEcTTkIAp9RZ84hH6k2CUVK18bbMRJwUT/0XZ2XwH8BmEuTzUHEIRF6v06LiTuX
+         DF2k4llIljMyQGOn1zIznY8nHuJNivVaOgfGJBT7oGp0QAIp/dl8hR9Y4bT5DG+V/DwS
+         cb7w==
+X-Gm-Message-State: AOAM531hP1g7XCQtn8M+ZB2xbAOvVtvkYGByMPQhsOGNqybNsiWRbQb6
+        8v9V/Irp+jT7H3v1MdPU0Wi6oeLVS6nTNA==
+X-Google-Smtp-Source: ABdhPJw0zkLTyNVw1xbuGUIanLQdTFU7CeC9BsFgAdMngQFXRMwGcOGk+idDE/Aeu5Wi9fHfiqFK0g==
+X-Received: by 2002:a5d:534a:0:b0:1f0:48f2:5f7c with SMTP id t10-20020a5d534a000000b001f048f25f7cmr4256580wrv.138.1646323481746;
+        Thu, 03 Mar 2022 08:04:41 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m13-20020a05600c4f4d00b00386744cb31bsm4040667wmq.35.2022.03.03.08.04.39
+        by smtp.gmail.com with ESMTPSA id m13-20020a05600c4f4d00b00386744cb31bsm4040667wmq.35.2022.03.03.08.04.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Mar 2022 08:04:39 -0800 (PST)
+        Thu, 03 Mar 2022 08:04:41 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 1/8] scalar Makefile: use "The default target of..." pattern
-Date:   Thu,  3 Mar 2022 17:04:12 +0100
-Message-Id: <patch-v5-1.8-7547bf3e481-20220303T160155Z-avarab@gmail.com>
+Subject: [PATCH v5 2/8] Makefiles: add "shared.mak", move ".DELETE_ON_ERROR" to it
+Date:   Thu,  3 Mar 2022 17:04:13 +0100
+Message-Id: <patch-v5-2.8-91795eccc32-20220303T160155Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1230.ga6e6579e98c
 In-Reply-To: <cover-v5-0.8-00000000000-20220303T160155Z-avarab@gmail.com>
 References: <cover-v4-0.9-00000000000-20220302T124320Z-avarab@gmail.com> <cover-v5-0.8-00000000000-20220303T160155Z-avarab@gmail.com>
@@ -74,48 +74,192 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make the "contrib/scalar/Makefile" be stylistically consistent with
-the top-level "Makefile" in first declaring "all" to be the default
-rule, followed by including other Makefile snippets.
+We have various behavior that's shared across our Makefiles, or that
+really should be (e.g. via defined templates). Let's create a
+top-level "shared.mak" to house those sorts of things, and start by
+adding the ".DELETE_ON_ERROR" flag to it.
 
-This adjusts code added in 0a43fb22026 (scalar: create a rudimentary
-executable, 2021-12-03), it further ensures that when we add another
-"include" file in a subsequent commit that the included file won't be
-the one to define our default target.
+See my own 7b76d6bf221 (Makefile: add and use the ".DELETE_ON_ERROR"
+flag, 2021-06-29) and db10fc6c09f (doc: simplify Makefile using
+.DELETE_ON_ERROR, 2021-05-21) for the addition and use of the
+".DELETE_ON_ERROR" flag.
+
+I.e. this changes the behavior of existing rules in the altered
+Makefiles (except "Makefile" & "Documentation/Makefile"). I'm
+confident that this is safe having read the relevant rules in those
+Makfiles, and as the GNU make manual notes that it isn't the default
+behavior is out of an abundance of backwards compatibility
+caution. From edition 0.75 of its manual, covering GNU make 4.3:
+
+    [Enabling '.DELETE_ON_ERROR' is] almost always what you want
+    'make' to do, but it is not historical practice; so for
+    compatibility, you must explicitly request it.
+
+This doesn't introduce a bug by e.g. having this
+".DELETE_ON_ERROR" flag only apply to this new shared.mak, Makefiles
+have no such scoping semantics.
+
+It does increase the danger that any Makefile without an explicit "The
+default target of this Makefile is..." snippet to define the default
+target as "all" could have its default rule changed if our new
+shared.mak ever defines a "real" rule. In subsequent commits we'll be
+careful not to do that, and such breakage would be obvious e.g. in the
+case of "make -C t".
+
+We might want to make that less fragile still (e.g. by using
+".DEFAULT_GOAL" as noted in the preceding commit), but for now let's
+simply include "shared.mak" without adding that boilerplate to all the
+Makefiles that don't have it already. Most of those are already
+exposed to that potential caveat e.g. due to including "config.mak*".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/scalar/Makefile | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ Documentation/Makefile    |  6 +++---
+ Makefile                  | 13 +++----------
+ contrib/scalar/Makefile   |  3 +++
+ contrib/scalar/t/Makefile |  3 +++
+ shared.mak                |  9 +++++++++
+ t/Makefile                |  3 +++
+ t/interop/Makefile        |  3 +++
+ t/perf/Makefile           |  3 +++
+ templates/Makefile        |  3 +++
+ 9 files changed, 33 insertions(+), 13 deletions(-)
+ create mode 100644 shared.mak
 
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index ed656db2ae9..ba27456c86a 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -1,3 +1,6 @@
++# Import tree-wide shared Makefile behavior and libraries
++include ../shared.mak
++
+ # Guard against environment variables
+ MAN1_TXT =
+ MAN5_TXT =
+@@ -524,7 +527,4 @@ doc-l10n install-l10n::
+ 	$(MAKE) -C po $@
+ endif
+ 
+-# Delete the target file on error
+-.DELETE_ON_ERROR:
+-
+ .PHONY: FORCE
+diff --git a/Makefile b/Makefile
+index 6f0b4b775fe..aa5ff001b6e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,9 @@
+ # The default target of this Makefile is...
+ all::
+ 
++# Import tree-wide shared Makefile behavior and libraries
++include shared.mak
++
+ # Define V=1 to have a more verbose compile.
+ #
+ # Define SHELL_PATH to a POSIX shell if your /bin/sh is broken.
+@@ -2194,16 +2197,6 @@ shell_compatibility_test: please_set_SHELL_PATH_to_a_more_modern_shell
+ strip: $(PROGRAMS) git$X
+ 	$(STRIP) $(STRIP_OPTS) $^
+ 
+-### Flags affecting all rules
+-
+-# A GNU make extension since gmake 3.72 (released in late 1994) to
+-# remove the target of rules if commands in those rules fail. The
+-# default is to only do that if make itself receives a signal. Affects
+-# all targets, see:
+-#
+-#    info make --index-search=.DELETE_ON_ERROR
+-.DELETE_ON_ERROR:
+-
+ ### Target-specific flags and dependencies
+ 
+ # The generic compilation pattern rule and automatically
 diff --git a/contrib/scalar/Makefile b/contrib/scalar/Makefile
-index 231b1ee1796..1e9b969f3df 100644
+index 1e9b969f3df..d585b319edc 100644
 --- a/contrib/scalar/Makefile
 +++ b/contrib/scalar/Makefile
-@@ -1,3 +1,10 @@
-+# The default target of this Makefile is...
-+all::
+@@ -1,6 +1,9 @@
+ # The default target of this Makefile is...
+ all::
+ 
++# Import tree-wide shared Makefile behavior and libraries
++include ../../shared.mak
 +
-+include ../../config.mak.uname
-+-include ../../config.mak.autogen
-+-include ../../config.mak
+ include ../../config.mak.uname
+ -include ../../config.mak.autogen
+ -include ../../config.mak
+diff --git a/contrib/scalar/t/Makefile b/contrib/scalar/t/Makefile
+index 6170672bb37..01e82e56d15 100644
+--- a/contrib/scalar/t/Makefile
++++ b/contrib/scalar/t/Makefile
+@@ -1,3 +1,6 @@
++# Import tree-wide shared Makefile behavior and libraries
++include ../../../shared.mak
 +
- QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
- QUIET_SUBDIR1  =
+ # Run scalar tests
+ #
+ # Copyright (c) 2005,2021 Junio C Hamano, Johannes Schindelin
+diff --git a/shared.mak b/shared.mak
+new file mode 100644
+index 00000000000..0170bb397ae
+--- /dev/null
++++ b/shared.mak
+@@ -0,0 +1,9 @@
++### Flags affecting all rules
++
++# A GNU make extension since gmake 3.72 (released in late 1994) to
++# remove the target of rules if commands in those rules fail. The
++# default is to only do that if make itself receives a signal. Affects
++# all targets, see:
++#
++#    info make --index-search=.DELETE_ON_ERROR
++.DELETE_ON_ERROR:
+diff --git a/t/Makefile b/t/Makefile
+index 46cd5fc5273..056ce55dcc9 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -1,3 +1,6 @@
++# Import tree-wide shared Makefile behavior and libraries
++include ../shared.mak
++
+ # Run tests
+ #
+ # Copyright (c) 2005 Junio C Hamano
+diff --git a/t/interop/Makefile b/t/interop/Makefile
+index 31a4bbc716a..6911c2915a7 100644
+--- a/t/interop/Makefile
++++ b/t/interop/Makefile
+@@ -1,3 +1,6 @@
++# Import tree-wide shared Makefile behavior and libraries
++include ../../shared.mak
++
+ -include ../../config.mak
+ export GIT_TEST_OPTIONS
  
-@@ -12,12 +19,6 @@ else
- endif
- endif
+diff --git a/t/perf/Makefile b/t/perf/Makefile
+index 2465770a782..e4808aebed0 100644
+--- a/t/perf/Makefile
++++ b/t/perf/Makefile
+@@ -1,3 +1,6 @@
++# Import tree-wide shared Makefile behavior and libraries
++include ../../shared.mak
++
+ -include ../../config.mak
+ export GIT_TEST_OPTIONS
  
--all:
--
--include ../../config.mak.uname
---include ../../config.mak.autogen
---include ../../config.mak
--
- TARGETS = scalar$(X) scalar.o
- GITLIBS = ../../common-main.o ../../libgit.a ../../xdiff/lib.a
+diff --git a/templates/Makefile b/templates/Makefile
+index d22a71a3999..636cee52f51 100644
+--- a/templates/Makefile
++++ b/templates/Makefile
+@@ -1,3 +1,6 @@
++# Import tree-wide shared Makefile behavior and libraries
++include ../shared.mak
++
+ # make and install sample templates
  
+ ifndef V
 -- 
 2.35.1.1230.ga6e6579e98c
 
