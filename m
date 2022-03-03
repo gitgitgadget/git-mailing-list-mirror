@@ -2,243 +2,252 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2A5EC433EF
-	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35156C433EF
+	for <git@archiver.kernel.org>; Thu,  3 Mar 2022 00:20:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230092AbiCCAJ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Mar 2022 19:09:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53988 "EHLO
+        id S230169AbiCCAVa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Mar 2022 19:21:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230087AbiCCAJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Mar 2022 19:09:26 -0500
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F6B1CFB97
-        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:08:38 -0800 (PST)
-Received: by mail-il1-x136.google.com with SMTP id i1so2751382ila.7
-        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:08:38 -0800 (PST)
+        with ESMTP id S230156AbiCCAV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Mar 2022 19:21:28 -0500
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ED4F13AA11
+        for <git@vger.kernel.org>; Wed,  2 Mar 2022 16:20:43 -0800 (PST)
+Received: by mail-qt1-x831.google.com with SMTP id bc10so3276854qtb.5
+        for <git@vger.kernel.org>; Wed, 02 Mar 2022 16:20:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=H483xgpq9qbNEL1THMTygHeR95erO/3HdJBTOFBSoew=;
-        b=IUampiot8LKQuw1zclR5Nr1sCmWwsR9a3gP8vv/UEHvbkbvqChUDNRg5epFIle8XUs
-         zje3zDQgQGaz94wD4UGhDzd70X3UUFfGvkiFpCINn95AMjz6uICO2iY6/P2ykbmICRQB
-         2ZNBnMD+i9NjAd45gjfCz5sp9CSW3wvrtrFX/nQ3+w3U1pXbMbfVG1Bw5zCcylbNT18N
-         5K3AJvHdWJ90kR8gr9oL2LFBlEV4JdPEF5Y0R8XhfV5wgPQTrCP8uAi/47p7QJutwNT5
-         4yYKkfbPA9ox8e8u2G1oBbdhdZyZmT8O4qB6UsFDgWKcsXQyPjiNNJZxY06Mj7DAORlE
-         pPZw==
+        bh=EHywdYmCfnCLYsFHf9zIRpzrkpDi9ZBFfkMN+EYW5zI=;
+        b=mLS+bdj2wbSsUBpCrulCOPUQMscK67h/gBVCOwbOr1en9RZGm12oEquTGVZEHcyjWV
+         r/+3FHDOA2BDUy5OrTX67cSNjCHVCUHKJHgykDOmtHGbz4+ARdXrL8Ey651T7XTf99aH
+         Uu6DUhpCfHrDaykABEfBVe1KyUMtNcgmCjJuOnoBvc+mhsCbKCAL49nrpziKiRUC7FMz
+         bM5qVB+pdrlsbVEGE0x4jeBAFRxZtGNsaCBWLq4+mhClAzwBpK6HP62Co4aM3PjPfKCm
+         C6HY4xVsmifc1xl0XI+LBuDbHfURyz7MW525vzwwg5f/hX5YU2dslJnkA6pHE2nSQipN
+         hgeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=H483xgpq9qbNEL1THMTygHeR95erO/3HdJBTOFBSoew=;
-        b=Ayk2VPUBaRwTILrahkD9x6skexxy+Eg2MxqY6wysMKHkygyCt7MKXpMr2c9dAq5VvP
-         Cdcsa6b5ymfk94gyt9fyRMpD01rPS5F6PFsbhS73wtYCkmWZ9bxRof0D+w/KCYxWDaDd
-         4C6r1D7u2nXLb2me91p/+SP/CL7AciIXKgpBN9aP87UbPZ4kDOI3zSGBnN+xdrv/M1GX
-         c1cWAyF8r867dWx+e4UlwsRfYh6VBa0BnUdEAy6iSEOHdX/uwfaRLBPzI7dGPEjeMBMo
-         U6CiI+T0K/DPnph+RxYhejjDFt20vTn+q8RM5NYMvjjX//BWrk4UArqKPpM3nZyeX/j7
-         6aXw==
-X-Gm-Message-State: AOAM533xAnMG9QsIuecyjv7pkXp5ipVe9pF6IXxP/b0h0HV53ynihTBO
-        fBPwK9MX73I8Jkaud+80krPE+oCFdcLSMZdl
-X-Google-Smtp-Source: ABdhPJyF3sQrpp0fa9qJTZAhc4wly7YJXlBb7yU/Z4lj2aIa6wjKzOdzQfWVADBCU5sDOGsCNFYhLQ==
-X-Received: by 2002:a6b:d60a:0:b0:63a:be64:c652 with SMTP id w10-20020a6bd60a000000b0063abe64c652mr24934255ioa.27.1646262013281;
-        Wed, 02 Mar 2022 15:00:13 -0800 (PST)
+        bh=EHywdYmCfnCLYsFHf9zIRpzrkpDi9ZBFfkMN+EYW5zI=;
+        b=ZvxWYsRq/mAz6zsRK14nctgQuzmwpPY13tLQx/6AztwrfYjYBqgVq5xc29x9XER51P
+         whk9vKoS9Kg78CjRyPC+hkvLRhoAtKIDjr6GAqBX+dWbaBo4AazX06+RWbumgldjIyx8
+         rSt7JeTlTP0k7+i6G78plLwb2+N4+n8qFIoe2dMlTjvwYm7CmmQ3wJ72VySozXQv+XQ/
+         R1+jZozUsMa6qMxQdNxWgaGfkgNqpEdP50t3KYfNkI/essjQ9zmwZItYXOlkqyLPidSR
+         cXD1hB2Ru2gUG5/lwfeGsUZSCNVObnNRS16nBfy2MHa/JE/T9+YRKYkdadUyob6PFU/Q
+         hg9A==
+X-Gm-Message-State: AOAM5312vPCGoKDfKHWB/UQh7ENUbW+5CaXTwjL8v2b97AfCfvu1jJ5N
+        0zubDfDoaS/kSuZOOjTlOacoQU1hfrKPrFsh
+X-Google-Smtp-Source: ABdhPJxn6USUhv1deiG8QaCpqvWdQhy5VGbMO30cQsgE62PdgHsKEbicgROclb/mXr9AJ6N6hPPGyg==
+X-Received: by 2002:ac8:588a:0:b0:2de:2dfc:77a5 with SMTP id t10-20020ac8588a000000b002de2dfc77a5mr25751638qta.357.1646266842568;
+        Wed, 02 Mar 2022 16:20:42 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i14-20020a056e02152e00b002bee249710csm254947ilu.15.2022.03.02.15.00.12
+        by smtp.gmail.com with ESMTPSA id d15-20020a05622a15cf00b002de711a190bsm368860qty.71.2022.03.02.16.20.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Mar 2022 15:00:12 -0800 (PST)
-Date:   Wed, 2 Mar 2022 18:00:12 -0500
+        Wed, 02 Mar 2022 16:20:42 -0800 (PST)
+Date:   Wed, 2 Mar 2022 19:20:41 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     sandals@crustytoothpaste.net, derrickstolee@github.com,
-        avarab@gmail.com, gitster@pobox.com
-Subject: [PATCH v2] builtin/remote.c: show progress when renaming remote
- references
-Message-ID: <dc63ec91ab24eb24a276de074138745fa061eba1.1646261969.git.me@ttaylorr.com>
-References: <70a0325ca8ab0492a9b0873ee3fba576c5ab90b9.1646173186.git.me@ttaylorr.com>
+Cc:     tytso@mit.edu, derrickstolee@github.com, gitster@pobox.com,
+        larsxschneider@gmail.com
+Subject: [PATCH v3 00/17] cruft packs
+Message-ID: <cover.1646266835.git.me@ttaylorr.com>
+References: <cover.1638224692.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <70a0325ca8ab0492a9b0873ee3fba576c5ab90b9.1646173186.git.me@ttaylorr.com>
+In-Reply-To: <cover.1638224692.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When renaming a remote, Git needs to rename all remote tracking
-references to the remote's new name (e.g., renaming
-"refs/remotes/old/foo" to "refs/remotes/new/foo" when renaming a remote
-from "old" to "new").
+Here is a small reroll of my series to implement "cruft packs", based on
+Stolee's review.
 
-This can be somewhat slow when there are many references to rename,
-since each rename is done in a separate call to rename_ref() as opposed
-to grouping all renames together into the same transaction. It would be
-nice to execute all renames as a single transaction, but there is a
-snag: the reference transaction backend doesn't support renames during a
-transaction (only individually, via rename_ref()).
+The changes here are minor, and mostly are limited to removing a
+redundant "if" statement, avoiding an unnecessary header include, and
+moving the tests (again!) to t5329's territory.
 
-The reasons there are described in more detail in [1], but the main
-problem is that in order to preserve the existing reflog, it must be
-moved while holding both locks (i.e., on "oldname" and "newname"), and
-the ref transaction code doesn't support inserting arbitrary actions
-into the middle of a transaction like that.
+As always, a range-diff is below. Thanks in advance for taking another
+look!
 
-As an aside, adding support for this to the ref transaction code is
-less straightforward than inserting both a ref_update() and ref_delete()
-call into the same transaction. rename_ref()'s special handling to
-detect D/F conflicts would need to be rewritten for the transaction code
-if we wanted to proactively catch D/F conflicts when renaming a
-reference during a transaction. The reftable backend could support this
-much more readily because of its lack of D/F conflicts.
+Taylor Blau (17):
+  Documentation/technical: add cruft-packs.txt
+  pack-mtimes: support reading .mtimes files
+  pack-write: pass 'struct packing_data' to 'stage_tmp_packfiles'
+  chunk-format.h: extract oid_version()
+  pack-mtimes: support writing pack .mtimes files
+  t/helper: add 'pack-mtimes' test-tool
+  builtin/pack-objects.c: return from create_object_entry()
+  builtin/pack-objects.c: --cruft without expiration
+  reachable: add options to add_unseen_recent_objects_to_traversal
+  reachable: report precise timestamps from objects in cruft packs
+  builtin/pack-objects.c: --cruft with expiration
+  builtin/repack.c: support generating a cruft pack
+  builtin/repack.c: allow configuring cruft pack generation
+  builtin/repack.c: use named flags for existing_packs
+  builtin/repack.c: add cruft packs to MIDX during geometric repack
+  builtin/gc.c: conditionally avoid pruning objects via loose
+  sha1-file.c: don't freshen cruft packs
 
-Instead of a more complex modification to the ref transaction code,
-display a progress meter when running verbosely in order to convince the
-user that Git is doing work while renaming a remote.
+ Documentation/Makefile                  |   1 +
+ Documentation/config/gc.txt             |  21 +-
+ Documentation/config/repack.txt         |   9 +
+ Documentation/git-gc.txt                |   5 +
+ Documentation/git-pack-objects.txt      |  30 +
+ Documentation/git-repack.txt            |  11 +
+ Documentation/technical/cruft-packs.txt |  97 ++++
+ Documentation/technical/pack-format.txt |  19 +
+ Makefile                                |   2 +
+ builtin/gc.c                            |  10 +-
+ builtin/pack-objects.c                  | 304 +++++++++-
+ builtin/repack.c                        | 183 +++++-
+ bulk-checkin.c                          |   2 +-
+ chunk-format.c                          |  12 +
+ chunk-format.h                          |   3 +
+ commit-graph.c                          |  18 +-
+ midx.c                                  |  18 +-
+ object-file.c                           |   4 +-
+ object-store.h                          |   7 +-
+ pack-mtimes.c                           | 126 ++++
+ pack-mtimes.h                           |  15 +
+ pack-objects.c                          |   6 +
+ pack-objects.h                          |  25 +
+ pack-write.c                            |  93 ++-
+ pack.h                                  |   4 +
+ packfile.c                              |  19 +-
+ reachable.c                             |  58 +-
+ reachable.h                             |   9 +-
+ t/helper/test-pack-mtimes.c             |  56 ++
+ t/helper/test-tool.c                    |   1 +
+ t/helper/test-tool.h                    |   1 +
+ t/t5329-pack-objects-cruft.sh           | 739 ++++++++++++++++++++++++
+ 32 files changed, 1807 insertions(+), 101 deletions(-)
+ create mode 100644 Documentation/technical/cruft-packs.txt
+ create mode 100644 pack-mtimes.c
+ create mode 100644 pack-mtimes.h
+ create mode 100644 t/helper/test-pack-mtimes.c
+ create mode 100755 t/t5329-pack-objects-cruft.sh
 
-This is mostly done as-expected, with the minor caveat that we
-intentionally count symrefs renames twice, since renaming a symref takes
-place over two separate calls (one to delete the old one, and another to
-create the new one).
-
-[1]: https://lore.kernel.org/git/572367B4.4050207@alum.mit.edu/
-
-Suggested-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-A small reroll which renames the variable used to keep track of our
-progress from "j" to "refs_renamed_nr" for clarity.
-
- Documentation/git-remote.txt |  2 +-
- builtin/remote.c             | 26 ++++++++++++++++++++++----
- t/t5505-remote.sh            |  3 ++-
- 3 files changed, 25 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 2bebc32566..626f9d0afc 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git remote' [-v | --verbose]
- 'git remote add' [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=(fetch|push)] <name> <URL>
--'git remote rename' <old> <new>
-+'git remote' [-v | --verbose] 'rename' <old> <new>
- 'git remote remove' <name>
- 'git remote set-head' <name> (-a | --auto | -d | --delete | <branch>)
- 'git remote set-branches' [--add] <name> <branch>...
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 6f27ddc47b..00668af5c9 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -12,11 +12,12 @@
- #include "object-store.h"
- #include "strvec.h"
- #include "commit-reach.h"
-+#include "progress.h"
-
- static const char * const builtin_remote_usage[] = {
- 	"git remote [-v | --verbose]",
- 	N_("git remote add [-t <branch>] [-m <master>] [-f] [--tags | --no-tags] [--mirror=<fetch|push>] <name> <url>"),
--	N_("git remote rename <old> <new>"),
-+	N_("git remote [-v | --verbose] rename <old> <new>"),
- 	N_("git remote remove <name>"),
- 	N_("git remote set-head <name> (-a | --auto | -d | --delete | <branch>)"),
- 	N_("git remote [-v | --verbose] show [-n] <name>"),
-@@ -571,6 +572,7 @@ struct rename_info {
- 	const char *old_name;
- 	const char *new_name;
- 	struct string_list *remote_branches;
-+	uint32_t symrefs_nr;
- };
-
- static int read_remote_branches(const char *refname,
-@@ -587,10 +589,12 @@ static int read_remote_branches(const char *refname,
- 		item = string_list_append(rename->remote_branches, refname);
- 		symref = resolve_ref_unsafe(refname, RESOLVE_REF_READING,
- 					    NULL, &flag);
--		if (symref && (flag & REF_ISSYMREF))
-+		if (symref && (flag & REF_ISSYMREF)) {
- 			item->util = xstrdup(symref);
--		else
-+			rename->symrefs_nr++;
-+		} else {
- 			item->util = NULL;
-+		}
- 	}
- 	strbuf_release(&buf);
-
-@@ -682,7 +686,8 @@ static int mv(int argc, const char **argv)
- 		old_remote_context = STRBUF_INIT;
- 	struct string_list remote_branches = STRING_LIST_INIT_DUP;
- 	struct rename_info rename;
--	int i, refspec_updated = 0;
-+	int i, refs_renamed_nr = 0, refspec_updated = 0;
-+	struct progress *progress = NULL;
-
- 	if (argc != 3)
- 		usage_with_options(builtin_remote_rename_usage, options);
-@@ -690,6 +695,7 @@ static int mv(int argc, const char **argv)
- 	rename.old_name = argv[1];
- 	rename.new_name = argv[2];
- 	rename.remote_branches = &remote_branches;
-+	rename.symrefs_nr = 0;
-
- 	oldremote = remote_get(rename.old_name);
- 	if (!remote_is_configured(oldremote, 1)) {
-@@ -764,6 +770,14 @@ static int mv(int argc, const char **argv)
- 	 * the new symrefs.
- 	 */
- 	for_each_ref(read_remote_branches, &rename);
-+	if (verbose) {
-+		/*
-+		 * Count symrefs twice, since "renaming" them is done by
-+		 * deleting and recreating them in two separate passes.
-+		 */
-+		progress = start_progress(_("Renaming remote references"),
-+					  rename.remote_branches->nr + rename.symrefs_nr);
-+	}
- 	for (i = 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item = remote_branches.items + i;
- 		int flag = 0;
-@@ -773,6 +787,7 @@ static int mv(int argc, const char **argv)
- 			continue;
- 		if (delete_ref(NULL, item->string, NULL, REF_NO_DEREF))
- 			die(_("deleting '%s' failed"), item->string);
-+		display_progress(progress, ++refs_renamed_nr);
- 	}
- 	for (i = 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item = remote_branches.items + i;
-@@ -788,6 +803,7 @@ static int mv(int argc, const char **argv)
- 				item->string, buf.buf);
- 		if (rename_ref(item->string, buf.buf, buf2.buf))
- 			die(_("renaming '%s' failed"), item->string);
-+		display_progress(progress, ++refs_renamed_nr);
- 	}
- 	for (i = 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item = remote_branches.items + i;
-@@ -807,7 +823,9 @@ static int mv(int argc, const char **argv)
- 				item->string, buf.buf);
- 		if (create_symref(buf.buf, buf2.buf, buf3.buf))
- 			die(_("creating '%s' failed"), buf.buf);
-+		display_progress(progress, ++refs_renamed_nr);
- 	}
-+	stop_progress(&progress);
- 	string_list_clear(&remote_branches, 1);
-
- 	handle_push_default(rename.old_name, rename.new_name);
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 9ab315424c..c4b76485e0 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -753,8 +753,9 @@ test_expect_success 'rename a remote' '
- 	(
- 		cd four &&
- 		git config branch.main.pushRemote origin &&
--		git remote rename origin upstream &&
-+		GIT_PROGRESS_DELAY=0 git remote -v rename origin upstream 2>err &&
- 		grep "pushRemote" .git/config &&
-+		grep "Renaming remote references: 100% (4/4), done" err &&
- 		test -z "$(git for-each-ref refs/remotes/origin)" &&
- 		test "$(git symbolic-ref refs/remotes/upstream/HEAD)" = "refs/remotes/upstream/main" &&
- 		test "$(git rev-parse upstream/main)" = "$(git rev-parse main)" &&
---
+Range-diff against v2:
+ -:  ---------- >  1:  784ee7e0ee Documentation/technical: add cruft-packs.txt
+ 1:  101b34660c !  2:  1ec754ad1b pack-mtimes: support reading .mtimes files
+    @@ pack-mtimes.c (new)
+     +				    p->num_objects,
+     +				    &p->mtimes_map,
+     +				    &p->mtimes_size);
+    -+	if (ret)
+    -+		goto cleanup;
+    -+
+     +cleanup:
+     +	free(mtimes_name);
+     +	return ret;
+ 2:  a94d7dfeb3 =  3:  0f5d6d6492 pack-write: pass 'struct packing_data' to 'stage_tmp_packfiles'
+ 3:  1e0ed363ae =  4:  135a07276b chunk-format.h: extract oid_version()
+ 4:  5236490688 =  5:  0600503856 pack-mtimes: support writing pack .mtimes files
+ 5:  78313bc441 =  6:  4780c8437b t/helper: add 'pack-mtimes' test-tool
+ 6:  142098668d =  7:  33862a07c9 builtin/pack-objects.c: return from create_object_entry()
+ 7:  2517a6be3d !  8:  22705e4887 builtin/pack-objects.c: --cruft without expiration
+    @@ object-store.h: int repo_has_object_file_with_flags(struct repository *r,
+      
+      /*
+     
+    - ## t/t5328-pack-objects-cruft.sh (new) ##
+    + ## t/t5329-pack-objects-cruft.sh (new) ##
+     @@
+     +#!/bin/sh
+     +
+ 8:  6f0e84273f =  9:  cebb30b667 reachable: add options to add_unseen_recent_objects_to_traversal
+ 9:  a8bde361f9 = 10:  fa4de8859d reachable: report precise timestamps from objects in cruft packs
+10:  d68ce28132 ! 11:  92318f8700 builtin/pack-objects.c: --cruft with expiration
+    @@ builtin/pack-objects.c: static void read_cruft_objects(void)
+      		enumerate_cruft_objects();
+      
+     
+    - ## t/t5328-pack-objects-cruft.sh ##
+    -@@ t/t5328-pack-objects-cruft.sh: basic_cruft_pack_tests () {
+    + ## reachable.h ##
+    +@@
+    + #ifndef REACHEABLE_H
+    + #define REACHEABLE_H
+    + 
+    +-#include "object.h"
+    +-
+    + struct progress;
+    + struct rev_info;
+    ++struct object;
+    ++struct packed_git;
+    + 
+    + typedef void report_recent_object_fn(const struct object *, struct packed_git *,
+    + 				     off_t, time_t);
+    +
+    + ## t/t5329-pack-objects-cruft.sh ##
+    +@@ t/t5329-pack-objects-cruft.sh: basic_cruft_pack_tests () {
+      }
+      
+      basic_cruft_pack_tests never
+11:  e5317cd472 ! 12:  1e94b33cb4 builtin/repack.c: support generating a cruft pack
+    @@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix
+      		item->util = (void *)(uintptr_t)populate_pack_exts(item->string);
+      	}
+     
+    - ## t/t5328-pack-objects-cruft.sh ##
+    -@@ t/t5328-pack-objects-cruft.sh: test_expect_success 'expired objects are pruned' '
+    + ## t/t5329-pack-objects-cruft.sh ##
+    +@@ t/t5329-pack-objects-cruft.sh: test_expect_success 'expired objects are pruned' '
+      	)
+      '
+      
+12:  b548dbbf80 ! 13:  9cfcd123bd builtin/repack.c: allow configuring cruft pack generation
+    @@ builtin/repack.c: int cmd_repack(int argc, const char **argv, const char *prefix
+      				       &existing_kept_packs);
+      		if (ret)
+     
+    - ## t/t5328-pack-objects-cruft.sh ##
+    -@@ t/t5328-pack-objects-cruft.sh: test_expect_success 'cruft repack ignores pack.packSizeLimit' '
+    + ## t/t5329-pack-objects-cruft.sh ##
+    +@@ t/t5329-pack-objects-cruft.sh: test_expect_success 'cruft repack ignores pack.packSizeLimit' '
+      	)
+      '
+      
+13:  e6eee7f15c = 14:  1a58807df0 builtin/repack.c: use named flags for existing_packs
+14:  b09dbc9fe5 ! 15:  ed05cf536b builtin/repack.c: add cruft packs to MIDX during geometric repack
+    @@ builtin/repack.c: static void midx_included_packs(struct string_list *include,
+      		for_each_string_list_item(item, existing_nonkept_packs) {
+      			if ((uintptr_t)item->util & DELETE_PACK)
+     
+    - ## t/t5328-pack-objects-cruft.sh ##
+    -@@ t/t5328-pack-objects-cruft.sh: test_expect_success 'cruft --local drops unreachable objects' '
+    + ## t/t5329-pack-objects-cruft.sh ##
+    +@@ t/t5329-pack-objects-cruft.sh: test_expect_success 'cruft --local drops unreachable objects' '
+      	)
+      '
+      
+15:  7a21ae1494 ! 16:  1d5f334138 builtin/gc.c: conditionally avoid pruning objects via loose
+    @@ builtin/gc.c: int cmd_gc(int argc, const char **argv, const char *prefix)
+      			if (quiet)
+      				strvec_push(&prune, "--no-progress");
+     
+    - ## t/t5328-pack-objects-cruft.sh ##
+    -@@ t/t5328-pack-objects-cruft.sh: test_expect_success 'loose objects mtimes upsert others' '
+    + ## t/t5329-pack-objects-cruft.sh ##
+    +@@ t/t5329-pack-objects-cruft.sh: test_expect_success 'loose objects mtimes upsert others' '
+      	)
+      '
+      
+16:  b729b80963 ! 17:  f74b425872 sha1-file.c: don't freshen cruft packs
+    @@ object-file.c: static int freshen_packed_object(const struct object_id *oid)
+      		return 1;
+      	if (!freshen_file(e.p->pack_name))
+     
+    - ## t/t5328-pack-objects-cruft.sh ##
+    -@@ t/t5328-pack-objects-cruft.sh: test_expect_success 'MIDX bitmaps tolerate reachable cruft objects' '
+    + ## t/t5329-pack-objects-cruft.sh ##
+    +@@ t/t5329-pack-objects-cruft.sh: test_expect_success 'MIDX bitmaps tolerate reachable cruft objects' '
+      	)
+      '
+      
+-- 
 2.35.1.73.gccc5557600
