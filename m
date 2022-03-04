@@ -2,130 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06617C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 13:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 112BCC433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 13:37:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236718AbiCDNbT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 08:31:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44328 "EHLO
+        id S234055AbiCDNiB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 08:38:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230046AbiCDNbT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 08:31:19 -0500
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5A361AF8DE
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 05:30:31 -0800 (PST)
-Received: by mail-ot1-x32a.google.com with SMTP id s1-20020a056830148100b005acfdcb1f4bso7453235otq.4
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 05:30:31 -0800 (PST)
+        with ESMTP id S239725AbiCDNh6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 08:37:58 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FC751B84D5
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 05:37:11 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id a8so17536426ejc.8
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 05:37:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:cc:references:in-reply-to:content-transfer-encoding;
-        bh=MKJpi10rA4ExVIBC21PnsOmQLJU0w0dcRLro/nx/uXk=;
-        b=f6SqRGb7LnRBYZwaKHLJDFnnM34IFYk61QQgX8WrQJN3JaHpeIC4F2eHLHQkQuiAHo
-         wYoE0AqVTzQMdQM3F0OaHADTXbXkGM972c3nziQTsGlBSeP7XCIwcOaCuhJa3thZ38oO
-         Z1EHK2WN8dQZhQdiy1Ugycoy2joTC0ZiduzDcUVOV7Ja4UkuQaBHl0q2cqogW44gacE0
-         WWpmC6i1wxbHdeS+sk461GOZ3qoS5Es2TxB3rJnkBwCeNBzRAAtljmSEclrJoy5TLPEU
-         P3kGp29NHV2U7YJXfzN1pDQazhv0lL2dTBnhmwvgX7UoFJuqHEeFgnfzlVdM/c13NV9S
-         U7jA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GPEZOxdOUscwIoyXSkbxLRVSOtDoiLIGmhnGD/WEIms=;
+        b=HRM64H6FtrKe6nlLCeTtxGbbxiDmOHzfqY0jt22Nzp6JM0paTUQM2j1wKA8WSfxMxm
+         DJka5svp37lUGIZve7k0wuoJIPPKNGalLzkr6L1G7JswGoBhnxD3tPERAfgiCkDG8N9h
+         +xg9Co9Phf2WDNsJ4NvA7zcRHEwnm6selajj1OVSg8eZRRFoVUnvQyGuAalGuwH679QH
+         Rgi3pWpWunE8vqa/UU3mmh1gqjIskYjx00PiXNNCFGEaltYfmXvTBvmFmNFK+0eactAM
+         tSiVxki4B5MZLCL4XyJAJL0kmy7QQ4y29d3aX7r78ZRjJap4E+o8GQ4Fyo07H9rEHuZ0
+         y7dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:cc:references:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=MKJpi10rA4ExVIBC21PnsOmQLJU0w0dcRLro/nx/uXk=;
-        b=pZkGhnzqTKQa2lWwriWnuYfkz3yg5vd0LXiiikTnoYfAF7XgJBk0l7fDCZ6Mjgiyus
-         DTRYxOt0iCbdG4FWKKqLPVZhwPvDQkY9e82P7ON5IjF0FpMtyKdLatxM0KQQ/aXoLbaF
-         EUsJKoEXT/WkXi6tPWy2PIH8HeH0r60iApgcrLj5WVXitdyNrP9ksS+N/IfC3fD/tn9F
-         eR31sKs2bDix4sjukayNTk8XajMcSqpj3mPT6JCOVvGxS22Np3two+llHyYmK2oelkcw
-         CfGKJTtKFB5eduOiUVflW3jxGaLrHzZ/X0Ljn/C8N9EFeMTuhhHbgcmxQZdcN/rMUsfp
-         RTdw==
-X-Gm-Message-State: AOAM531kFiNplrMyrnNM6jcQGiRJyNqTSUCMJUmgzjS+FuCrSB3gkH8E
-        /TuCVpK+KvhElutqLJH9qIuk
-X-Google-Smtp-Source: ABdhPJxW4+IO88dM4D+NA42hvBn03w51cZ+8C07s2M+D7pGfNCqX89KvtTAIy+gIk8aSnmyor2CB8Q==
-X-Received: by 2002:a9d:bb4:0:b0:5ad:1287:7a11 with SMTP id 49-20020a9d0bb4000000b005ad12877a11mr22375172oth.166.1646400630998;
-        Fri, 04 Mar 2022 05:30:30 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id l84-20020aca3e57000000b002d97bda3872sm2488107oia.55.2022.03.04.05.30.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Mar 2022 05:30:30 -0800 (PST)
-Message-ID: <a6981d6e-16b0-b0e1-a94d-a87ec20871bd@github.com>
-Date:   Fri, 4 Mar 2022 08:30:29 -0500
+        bh=GPEZOxdOUscwIoyXSkbxLRVSOtDoiLIGmhnGD/WEIms=;
+        b=5hBE+GPaOeC+TpFKYxW4YOFZl1G1BISrSQX0gqg4sq72gAZgBWUgNnPfDmFzsBpIIB
+         ggLBTc17JyaankOh2xT9pO+avplKKH56oyiyT5p+GSvexqvmyAL+LWKNyPpJGPxsJdEv
+         v1ZZJqAjTYnNG/YhakbHBq4z0veM3eBYcbPpFmgdAZba7Jt3TxrWWLMYoTkfzv7SCk2p
+         GZL5VHZFxXOWQi8DvD7wanRQXyMBCn4D6Hn8qPudJ2xingsafLsnALArpslKpDxFQaRZ
+         ZQ/oSHB83Z9NYcb058XV7W2FBkrS28/CWXHF0+Ck4Z8/nV/9K7VCrkNfREu5vA2P7RP9
+         VJnw==
+X-Gm-Message-State: AOAM5310OXGZl8tRNC+0rwnoXabHOqZRUNEeYR5jSQk6V/PsRFtAFbGP
+        NqnXPR8qsSsIpDvNStTJ92/WTqqeUqQ=
+X-Google-Smtp-Source: ABdhPJw9LDlGjDictjhzGyDic07P6P7FrXvZyo6i4AWGlGsWizn3AHgg4MSJ95GOBJOVdEWXAA4Zbw==
+X-Received: by 2002:a17:907:2d90:b0:6d8:9fc9:ac36 with SMTP id gt16-20020a1709072d9000b006d89fc9ac36mr11528741ejc.28.1646401029167;
+        Fri, 04 Mar 2022 05:37:09 -0800 (PST)
+Received: from fedora35.example.com ([151.27.250.17])
+        by smtp.gmail.com with ESMTPSA id l9-20020a1709060cc900b006ce04bb8668sm1771107ejh.184.2022.03.04.05.37.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Mar 2022 05:37:08 -0800 (PST)
+From:   Elia Pinto <gitter.spiros@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH v3] test-lib.sh: Use GLIBC_TUNABLES instead of MALLOC_CHECK_ on glibc >= 2.34
+Date:   Fri,  4 Mar 2022 13:37:02 +0000
+Message-Id: <20220304133702.26706-1-gitter.spiros@gmail.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 00/25] [RFC] Bundle URIs
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        newren@gmail.com, "Robin H . Johnson" <robbat2@gentoo.org>,
-        Teng Long <dyroneteng@gmail.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-References: <pull.1160.git.1645641063.gitgitgadget@gmail.com>
- <220224.86czjdb22l.gmgdl@evledraar.gmail.com>
- <15aed4cc-2d16-0b3f-5235-f7858a705c52@github.com>
-In-Reply-To: <15aed4cc-2d16-0b3f-5235-f7858a705c52@github.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/24/2022 9:11 AM, Derrick Stolee wrote:
-> On 2/23/2022 5:17 PM, Ævar Arnfjörð Bjarmason wrote:
->>
->> On Wed, Feb 23 2022, Derrick Stolee via GitGitGadget wrote:
+In glibc >= 2.34 MALLOC_CHECK_ and MALLOC_PERTURB_ environment
+variables have been replaced by GLIBC_TUNABLES.  Also the new
+glibc requires that you preload a library called libc_malloc_debug.so
+to get these features.
 
->>> There have been several suggestions to improve Git clone speeds and
->>> reliability by supplementing the Git protocol with static content. The
->>> Packfile URI [0] feature lets the Git response include URIs that point to
->>> packfiles that the client must download to complete the request.
->>>
->>> Last year, Ævar suggested using bundles instead of packfiles [1] [2]. This
->>> design has the same benefits to the packfile URI feature because it offloads
->>> most object downloads to static content fetches. The main advantage over
->>> packfile URIs is that the remote Git server does not need to know what is in
->>> those bundles. The Git client tells the server what it downloaded during the
->>> fetch negotiation afterwards. This includes any chance that the client did
->>> not have access to those bundles or otherwise failed to access them. I
->>> agreed that this was a much more desirable way to serve static content, but
->>> had concerns about the flexibility of that design [3]. I have not heard more
->>> on the topic since October, so I started investigating this idea myself in
->>> December, resulting in this RFC.
->>
->> This timing is both quite fortunate & unfortunate for me, since I'd been
->> blocked / waiting on various things until very recently to submit a
->> non-RFC re-roll of (a larger version of) that series you mentioned from
->> October.
->>
->> I guess the good news is that we'll have at least one guaranteed very
->> interested reviewer for each other's patches, and that the design that
->> makes it into git.git in the end will definitely be well hashed out :)
->>
->> I won't be able to review this in any detail right at this hour, but
->> will be doing so. I'd also like to submit what I've got in some form
->> soon for hashing the two out.
->>
->> It will be some 50+ patches on the ML in total though related to this
->> topic, so I think the two of us coming up with some way to manage all of
->> that for both ourselves & others would be nice. Perhaps we could also
->> have an off-list (video) chat in real time to clarify/discuss various
->> thing related to this.
-> 
-> I look forward to seeing your full implementation. There are many things
-> about your RFC that left me confused and not fully understanding your
-> vision.
+Using the ordinary glibc system variable detect if this is glibc >= 2.34 and
+use GLIBC_TUNABLES and the new library.
 
-I am genuinely curious to see your full implementation of bundle URIs.
-I've been having trouble joining the Git IRC chats, but I saw from the
-logs that you are working on getting patches together.
+This patch was inspired by a Richard W.M. Jones ndbkit patch
 
-Do you have an expected timeline on that progress?
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+This is the third version of the patch.
 
-I would like to move forward in getting bundle URIs submitted as a full
-feature, but it is important to see your intended design so we can take
-the best parts of both to create a version that satisfies us both.
+Compared to the second version[1], the code is further simplified,
+eliminating a case statement and modifying a string statement.
 
-Thanks,
--Stolee
+[1] https://www.spinics.net/lists/git/msg433917.html
+
+ t/test-lib.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 9af5fb7674..4d10646015 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -550,9 +550,25 @@ else
+ 	setup_malloc_check () {
+ 		MALLOC_CHECK_=3	MALLOC_PERTURB_=165
+ 		export MALLOC_CHECK_ MALLOC_PERTURB_
++		if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
++		_GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
++		expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
++		then
++			g=
++			LD_PRELOAD="libc_malloc_debug.so.0"
++			for t in \
++				glibc.malloc.check=1 \
++				glibc.malloc.perturb=165
++			do
++				g="${g#:}:$t"
++			done
++			GLIBC_TUNABLES=$g
++			export LD_PRELOAD GLIBC_TUNABLES
++		fi
+ 	}
+ 	teardown_malloc_check () {
+ 		unset MALLOC_CHECK_ MALLOC_PERTURB_
++		unset LD_PRELOAD GLIBC_TUNABLES
+ 	}
+ fi
+
+--
+2.35.1
+
