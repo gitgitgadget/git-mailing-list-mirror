@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C19AEC433F5
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 18:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6494C43219
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 18:33:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241724AbiCDSdr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 13:33:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51976 "EHLO
+        id S241745AbiCDSds (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 13:33:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241732AbiCDSdj (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241731AbiCDSdj (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 4 Mar 2022 13:33:39 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA1A35F66
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 10:32:34 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id t11so13931554wrm.5
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:32:34 -0800 (PST)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAED84A3C9
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 10:32:37 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id n33-20020a05600c3ba100b003832caf7f3aso4400465wms.0
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:32:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3E3QcWzdHFRs9rdSlHOOuV6A/S6L2GoKPxiHS0KaoFM=;
-        b=ZsB4pTsX1yXsSatLZUt48fXZLFJh8Bju2u/mz5fAItWRKRTHdmPnl0TC5oTBZBaG62
-         jwboXzf3T13k+AiJNO6BgscLVIJWjJoetk3vJwGnJosnXW/vi2sPNLdEvMJvtlg9PJbQ
-         ybiwat0SkMGvmlyRu+lLr3FUXph0xJaymKKFcBjLDLC/S8Z7BSGn6wU2E6bIF3zZmgD2
-         MOJqeUOvRc/YIF5u7XRVmUGNLKCv8G+/lpM8idgeXWqnXgIeVdpy+9TsRD/fBYHEaX0b
-         elaEPMQ3YI0z+qCDGhrJaZrltArZICGfnUtJudQaUff6k+6ugA7/0lMdEqg/QUBB8kko
-         5dRQ==
+        bh=lfiTc0eZSBfsbMOse4DFVbrZ/fI5b+Aw1x1MWDNSQY0=;
+        b=ajtUFWZCX7SlQaq4Hx149YeerhTODNYJvh/acRDyWjbbiRDHEsCsrmnoXeBDElpdGD
+         qF79WOz0NHUbXYOIVZh0pS9VrHhBc3Cu116CnJ3Pr71vPOkavQRMwXVZ+RdnZ/vWG/rX
+         pSVjONNbu3ln5GiKBnr+/UI7gk+n392LEgnv6EmY6Sr7HMis/5vzLt1g68SRsev3UdP2
+         756zRE8D3Wylnii2u0RDC8vpoy74icvoBRcmEx2zDIt2otcKxr6zMjk0FfB3mvdtygOQ
+         TdBRhEr3Nk5Ndc8PEwBqM+zXtDJXB5C4Vaj+jTiWYPHqEImnp77dIGqqTe6j9LDPYfNq
+         MMBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3E3QcWzdHFRs9rdSlHOOuV6A/S6L2GoKPxiHS0KaoFM=;
-        b=fLgkgeyGBAa9IWyy5o0DNnykyueb8eAOpY1m2abJrY55eWVM+tV+Fh6F34qmfIJE1w
-         Z04aZZlHh7YnTrjQB+cjh5+JOucUD09pRGRhNbf8nUhqLaltAJc2l76Z5R5D3M6vPmg7
-         r8oNsBP/eTLKTx3Ij/Ths5Qd6gTRds/x+5pA9IS+sA0tEaAjX5cW3/5eyZBlghhq/U2D
-         cBlMSBUg5slnFttVk6+YMcrQVo5jXzU37NHmX4hVzu72Tey2diyXTRCjz1EqNuzjn7VW
-         6C3lOoUiyusyfG1LCezbr31mzJMD4K5lQNxhIWYI6UzrnMo1AhEtppHVWoFzvocyBk+I
-         OxPA==
-X-Gm-Message-State: AOAM533h/kRmcnHiHaHq4eJYm6wd2nuTt5OojatB5lg8qROp5tuXitjk
-        a23UiMlpV+f1xXP/bv4bepX8egH1al7EVw==
-X-Google-Smtp-Source: ABdhPJwwrMdhfZVAZckhL499B3RbESFz0b30ZRyd/CJyNbU6072sR098GMdqO+W2j1J7Yf53jBOI4w==
-X-Received: by 2002:a05:6000:143:b0:1f0:25a1:874c with SMTP id r3-20020a056000014300b001f025a1874cmr19401wrx.191.1646418752659;
-        Fri, 04 Mar 2022 10:32:32 -0800 (PST)
+        bh=lfiTc0eZSBfsbMOse4DFVbrZ/fI5b+Aw1x1MWDNSQY0=;
+        b=sYK5TEd4d4Nt3kN0/3oxeoPSh/95XnBqVvAVwPyJToy+mLcDymh06Bj2WUKKOKM8yB
+         YSlX7+eri5px2QKUmDOB5uh1+DfdrBR6NUMRckP+BUbmuhzzpMwU1tJxtJ0kBxUK9OAM
+         p7I5WztEDzVpLq013WoI5ZMzUIHl0UA1X+ApWUoVhe0HAMLJtsPOwR9RcAEW9hB9orll
+         7xZSgBoq77ijA9LN+pd0UKYLDbwzsxs1ArNyChNnvPD9/pIAXDQC0smfTipOdU7W+CQg
+         +EDLDoEFznYKa+8PikuFnNTdIzYTVdaE9oTrHmZ6/MxejlE1a/S8c1ePevEyWAlhawZz
+         7/6g==
+X-Gm-Message-State: AOAM532PfgN9gIImHhfTLYc0AvUJ4EhP0F7+ETAX9MdpGyZJ4KSoPX8K
+        PIRz1UzvQBu3f4wl9ON2UBYGr9EJSho3tQ==
+X-Google-Smtp-Source: ABdhPJyDmLCF0RrCwLxYKyMu46Uyy8amf1VJTKMcVD1zYaIpqqBVe3TI9VbT8X7ZdQ93yq1WxMgIbg==
+X-Received: by 2002:a05:600c:6014:b0:381:832b:95a4 with SMTP id az20-20020a05600c601400b00381832b95a4mr8826519wmb.1.1646418755435;
+        Fri, 04 Mar 2022 10:32:35 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05600c22cb00b00382a960b17csm10573990wmg.7.2022.03.04.10.32.31
+        by smtp.gmail.com with ESMTPSA id 11-20020a05600c22cb00b00382a960b17csm10573990wmg.7.2022.03.04.10.32.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 10:32:31 -0800 (PST)
+        Fri, 04 Mar 2022 10:32:34 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 11/14] lockfile API users: simplify and don't leak "path"
-Date:   Fri,  4 Mar 2022 19:32:14 +0100
-Message-Id: <patch-v2-11.14-217754edc62-20220304T182902Z-avarab@gmail.com>
+Subject: [PATCH v2 14/14] repository.c: free the "path cache" in repo_clear()
+Date:   Fri,  4 Mar 2022 19:32:17 +0100
+Message-Id: <patch-v2-14.14-d70a4394f2b-20220304T182902Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1248.gb68c9165ad8
 In-Reply-To: <cover-v2-00.14-00000000000-20220304T182902Z-avarab@gmail.com>
 References: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com> <cover-v2-00.14-00000000000-20220304T182902Z-avarab@gmail.com>
@@ -67,76 +67,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak in code added in 6c622f9f0bb (commit-graph: write
-commit-graph chains, 2019-06-18). We needed to free the "lock_name" if
-we encounter errors, and the "graph_name" after we'd run unlink() on
-it.
+The "struct path_cache" added in 102de880d24 (path.c: migrate global
+git_path_* to take a repository argument, 2018-05-17) is only used
+directly by code in repository.[ch] (but populated in path.[ch]).
 
-For the case of write_commit_graph_file() refactoring the code to free
-the "lock_name" after we were done using the "struct lock_file lk"
-would have made the control flow more complex. Luckily we can free the
-"lock_file" right after the hold_lock_file_for_update() call, if it
-makes use of "path" at all it'll have copied its contents to a "struct
-strbuf" of its own.
+Let's move this code to repository.[ch], and stop leaking this memory
+when we run repo_clear(). To avoid the cast change it from a "const
+char *" to a "char *".
 
-While I'm at it let's fix code added in fb10ca5b543 (sparse-checkout:
-write using lockfile, 2019-11-21) in write_patterns_and_update() to
-avoid the same complexity that I thought I needed when I wrote the
-initial fix for write_commit_graph_file(). We can free the
-"sparse_filename" right after calling hold_lock_file_for_update(), we
-don't need to wait until we're exiting the function to do so.
+This also removes the "PATH_CACHE_INIT" macro, which has never been
+used for anything. For the "struct repository" we already make a hard
+assumption that it (and "the_repository") can be identically
+initialized by making it a "static" variable, so making use of a
+"PATH_CACHE_INIT" somewhere would have been confusing.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/sparse-checkout.c | 3 +--
- commit-graph.c            | 2 ++
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ path.h       | 14 --------------
+ repository.c | 16 ++++++++++++++++
+ repository.h | 14 +++++++++++++-
+ 3 files changed, 29 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 9c338d33ea2..270ad49c2b8 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -328,11 +328,11 @@ static int write_patterns_and_update(struct pattern_list *pl)
+diff --git a/path.h b/path.h
+index b68691a86b8..0a59c85a62e 100644
+--- a/path.h
++++ b/path.h
+@@ -169,20 +169,6 @@ void report_linked_checkout_garbage(void);
+ 		return r->cached_paths.var; \
+ 	}
  
- 	fd = hold_lock_file_for_update(&lk, sparse_filename,
- 				      LOCK_DIE_ON_ERROR);
-+	free(sparse_filename);
+-struct path_cache {
+-	const char *squash_msg;
+-	const char *merge_msg;
+-	const char *merge_rr;
+-	const char *merge_mode;
+-	const char *merge_head;
+-	const char *merge_autostash;
+-	const char *auto_merge;
+-	const char *fetch_head;
+-	const char *shallow;
+-};
+-
+-#define PATH_CACHE_INIT { 0 }
+-
+ const char *git_path_squash_msg(struct repository *r);
+ const char *git_path_merge_msg(struct repository *r);
+ const char *git_path_merge_rr(struct repository *r);
+diff --git a/repository.c b/repository.c
+index 34610c5a33e..9b86f3f1214 100644
+--- a/repository.c
++++ b/repository.c
+@@ -240,6 +240,20 @@ int repo_submodule_init(struct repository *subrepo,
+ 	return ret;
+ }
  
- 	result = update_working_directory(pl);
- 	if (result) {
- 		rollback_lock_file(&lk);
--		free(sparse_filename);
- 		clear_pattern_list(pl);
- 		update_working_directory(NULL);
- 		return result;
-@@ -348,7 +348,6 @@ static int write_patterns_and_update(struct pattern_list *pl)
- 	fflush(fp);
- 	commit_lock_file(&lk);
++static void repo_clear_path_cache(struct repo_path_cache *cache)
++{
++	FREE_AND_NULL(cache->squash_msg);
++	FREE_AND_NULL(cache->squash_msg);
++	FREE_AND_NULL(cache->merge_msg);
++	FREE_AND_NULL(cache->merge_rr);
++	FREE_AND_NULL(cache->merge_mode);
++	FREE_AND_NULL(cache->merge_head);
++	FREE_AND_NULL(cache->merge_autostash);
++	FREE_AND_NULL(cache->auto_merge);
++	FREE_AND_NULL(cache->fetch_head);
++	FREE_AND_NULL(cache->shallow);
++}
++
+ void repo_clear(struct repository *repo)
+ {
+ 	FREE_AND_NULL(repo->gitdir);
+@@ -280,6 +294,8 @@ void repo_clear(struct repository *repo)
+ 		remote_state_clear(repo->remote_state);
+ 		FREE_AND_NULL(repo->remote_state);
+ 	}
++
++	repo_clear_path_cache(&repo->cached_paths);
+ }
  
--	free(sparse_filename);
- 	clear_pattern_list(pl);
+ int repo_read_index(struct repository *repo)
+diff --git a/repository.h b/repository.h
+index ca837cb9e91..e29f361703d 100644
+--- a/repository.h
++++ b/repository.h
+@@ -44,6 +44,18 @@ struct repo_settings {
+ 	int core_multi_pack_index;
+ };
  
- 	return 0;
-diff --git a/commit-graph.c b/commit-graph.c
-index aab0b292774..b8cde7ea27d 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1854,6 +1854,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
++struct repo_path_cache {
++	char *squash_msg;
++	char *merge_msg;
++	char *merge_rr;
++	char *merge_mode;
++	char *merge_head;
++	char *merge_autostash;
++	char *auto_merge;
++	char *fetch_head;
++	char *shallow;
++};
++
+ struct repository {
+ 	/* Environment */
+ 	/*
+@@ -82,7 +94,7 @@ struct repository {
+ 	/*
+ 	 * Contains path to often used file names.
+ 	 */
+-	struct path_cache cached_paths;
++	struct repo_path_cache cached_paths;
  
- 		hold_lock_file_for_update_mode(&lk, lock_name,
- 					       LOCK_DIE_ON_ERROR, 0444);
-+		free(lock_name);
- 
- 		fd = git_mkstemp_mode(ctx->graph_name, 0444);
- 		if (fd < 0) {
-@@ -1978,6 +1979,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 		} else {
- 			char *graph_name = get_commit_graph_filename(ctx->odb);
- 			unlink(graph_name);
-+			free(graph_name);
- 		}
- 
- 		ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1] = xstrdup(hash_to_hex(file_hash));
+ 	/*
+ 	 * Path to the repository's graft file.
 -- 
 2.35.1.1248.gb68c9165ad8
 
