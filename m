@@ -2,110 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8008C433F5
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 18:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B8D4C433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 18:47:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240485AbiCDSho (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 13:37:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37786 "EHLO
+        id S241850AbiCDSr4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 13:47:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233098AbiCDShn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 13:37:43 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0731D63AE
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 10:36:54 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id gj15-20020a17090b108f00b001bef86c67c1so8579169pjb.3
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:36:54 -0800 (PST)
+        with ESMTP id S241846AbiCDSrz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 13:47:55 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C79FA8A6E9
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 10:47:06 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id j9-20020a170903024900b0015195e68490so5116672plh.19
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:47:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=TH2Mzlst4I5DPOlZB0tBWwJ8wEWvzi559I/8Gi1CbgY=;
-        b=LalyaaSieBftoK6pK06z6LAm0VWfSrsRX+Cn+eDIzhiyudsLzvG8dmX/X/FWGlmeB7
-         bed7Bt/eWSNS4E64jeK3iISh8UKO5KE22+3JzJQOi6nK2OlU7AMv9wNQmDmUpRmTJuoG
-         y+eJP+BjKge3J+zFk3JVopI91L06wiY6Cpei3fUOVMeqroZFRGUrND7TAZE5abYLPJG5
-         Iqk04g20+bF5lOwKXMqDMNxXm+geCmk/NYKnitvd7wC4Bde+7bRbqpikizuH73ut5GhG
-         4LB+b1dO+dX4Os8sa5wdyLkHFCE1exUAzLkYgHrL+pji20fPAZOHS3zQet36iGM30iNF
-         9RsA==
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=evRtAHxcGyTF4HIMCNCGXylECyJyLVP/Vc9aLMMojVk=;
+        b=kT9DeBlSSfMSagK+V33SUTogiQ5oIscp3fRe4VtAzluHqUiR8lYrQJn0Pq4HuIyUA2
+         HO/gtV6aJjVzmOOJzDt8HJ/E04wUEUSe3TpS7QO7SSUQK2dc6EcJqvA0AN7yM48K2+oY
+         UzdiPkG7/pAJam0njvR9OWxDb2YlVMlM8tLsjo1V22o8rkfVQkvg0sscYKakdu04lkB3
+         FZGaPQybQfYP5NAEqda5B3z4XQu88o2aAA5peWAMffCcvIbV7TINm8VFdyCOjYQ//nPm
+         x4muY+TMfVr50cWgZOOTh+tTqv7NIE04jPS9K/RF4sPKQyRUb5c5E6DokSPhCS6Tyx1C
+         lxgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=TH2Mzlst4I5DPOlZB0tBWwJ8wEWvzi559I/8Gi1CbgY=;
-        b=UFpv8Dfy/s+Iw+w95IgL36Nxt9J+G4dZbiX8kA54eGaxca5vXWcDfkD1xl8H5ElRUG
-         TL4LOO3o892hjAoOiE8TodnG1ahlxYD/ZUkbvawUJv5PaXPhjtU7SqKqWP6G/MsirvAc
-         gNLXXyO/XBXDhKtNzrAHzxa47ZaH8nJErxW4Ee0LtPfE4oZcORXZBjhuTUEkgwdjuI1v
-         +KxUg4DezlCpsCZf3w3YUN1p8iPY51QHTMVuGQC4JuUTIvszzNoDWvLt2qgSA82Ccsce
-         OX5In3D9p31/GM6x3o4tk+hI2s0/sW5ID6p7CM30nMPO8f8g2sY6zojRJvhmMdTRaKTb
-         wo7Q==
-X-Gm-Message-State: AOAM533awIEO8Bfda6/iYhl45t/n/14IieHiYr5aN+N73S+sh98GYOEd
-        1dYHn5HbEN7oq007RwuM7jk=
-X-Google-Smtp-Source: ABdhPJzpXnQBO6CD4XgFWR89cgNgWavcSG1HCsbSX/D1BMcByhvc4ek+AfLX+L6bb9ZykfsOaG3raQ==
-X-Received: by 2002:a17:90a:d145:b0:1bd:5400:cba9 with SMTP id t5-20020a17090ad14500b001bd5400cba9mr12088190pjw.232.1646419014179;
-        Fri, 04 Mar 2022 10:36:54 -0800 (PST)
-Received: from [192.168.1.11] ([171.78.134.145])
-        by smtp.gmail.com with ESMTPSA id rm4-20020a17090b3ec400b001bf2f7e86b1sm1512643pjb.4.2022.03.04.10.36.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Mar 2022 10:36:53 -0800 (PST)
-Subject: Re: Git in GSoC 2022?
-To:     Christian Couder <christian.couder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Cc:     Git Community <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Atharva Raykar <raykar.ath@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
- <YfGpjm8mCkWIPM6V@nand.local>
- <742c7455-8f74-ac03-350a-7c3851f2b792@gmail.com>
- <CAP8UFD1bEjg20Twn0pjVqxmgCU7Nhzkg16O2t6gacSsqCYfXng@mail.gmail.com>
- <CA+ARAtrwt-Ov=b13s2g8AGuATS8fNfk_ohNQPscSjAs3n0y=0w@mail.gmail.com>
- <CAP8UFD1WMn=-6Ais10xpJR70BR28UzEtbTeGSx3uNfkNt2kJ3Q@mail.gmail.com>
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Message-ID: <3849de1a-ef47-1615-128b-b0053cb2f4bf@gmail.com>
-Date:   Sat, 5 Mar 2022 00:04:40 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <CAP8UFD1WMn=-6Ais10xpJR70BR28UzEtbTeGSx3uNfkNt2kJ3Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=evRtAHxcGyTF4HIMCNCGXylECyJyLVP/Vc9aLMMojVk=;
+        b=4KLlihjvsaHqYmvO9wtb8jz5OcLs9P4WneR0L+oC5GRa9uuYfwdrM5CzAF6z+Yk+ah
+         LOVYpJdcw6yIOpdAPw0Hbf9YLd+wojJRpuXBUGzFIzBcQlJxP2ShkpjCEG4QKxeaSVpD
+         /5LX63ECnDTLKiIG4SbwTpuolegBoj8HTqbyCwIbzGK07HrYRAv/tmNKP6249Nvd+l3E
+         O69gcM5Uv95f7O7BoGh7fY8Xo7jc91nlx5cllUca5LpXAvj0TxyZNX2uwEYBL2to29Np
+         WWOse9L42VrKdz2fObEogguZbJ4NNfuSW2kAsOBsJyuFTTYqx6gi6o+JenLObamlNuum
+         kxLw==
+X-Gm-Message-State: AOAM530S8k86qgOzzgNeMtgTIJ1ZLrbjEl+y3i5RK8Ng6k1oG+xIDmTo
+        nnjAeg9dpavZIlHX7AcMD3FcdUyXQubd9g==
+X-Google-Smtp-Source: ABdhPJzgN0OGY3bVuU1YtQ2JD7fAI66TsFeyOJ9wOrYXHCflTwL/KzjB6CME0UzR3UpRPk0BVsiYtPdPYJ++Ow==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a62:ddcc:0:b0:4e1:c248:d4a7 with SMTP id
+ w195-20020a62ddcc000000b004e1c248d4a7mr72459pff.63.1646419626193; Fri, 04 Mar
+ 2022 10:47:06 -0800 (PST)
+Date:   Fri, 04 Mar 2022 10:47:04 -0800
+In-Reply-To: <5353fb06-09e4-77bf-554c-1cd750158730@github.com>
+Message-Id: <kl6lilst4kt3.fsf@chooglen-macbookpro.roam.corp.google.com>
+Mime-Version: 1.0
+References: <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
+ <pull.1157.v3.git.1646166271.gitgitgadget@gmail.com> <1a9365c3bc5b810a60593612bfba97a8b0c1d657.1646166271.git.gitgitgadget@gmail.com>
+ <kl6lczj2exbn.fsf@chooglen-macbookpro.roam.corp.google.com> <5353fb06-09e4-77bf-554c-1cd750158730@github.com>
+Subject: Re: [PATCH v3 6/8] read-tree: narrow scope of index expansion for '--prefix'
+From:   Glen Choo <chooglen@google.com>
+To:     Victoria Dye <vdye@github.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     newren@gmail.com, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/03/22 7:21 pm, Christian Couder wrote:
-> On Mon, Feb 28, 2022 at 7:02 PM Kaartic Sivaraam
-> <kaartic.sivaraam@gmail.com> wrote:
-> 
->> On Mon, Feb 28, 2022 at 4:33 PM Christian Couder
->> <christian.couder@gmail.com> wrote:
->>> On Sat, Feb 26, 2022 at 9:30 PM Kaartic Sivaraam
->>> <kaartic.sivaraam@gmail.com> wrote:
->>>
->>>> Thanks for adding the ideas to the SoC-2022-Ideas[1] list! I noticed that
->>>> you're the only one mentioned as mentor for the idea there. It's usually
->>>> good to have at least 2 mentors per project. Is anyone else interested
->>>> in co-mentoring with Taylor for the idea?
->>>
->>> If no one else wants to co-mentor with Taylor, I am happy with it.
->>
->> If it's fine, I would be willing to co-mentor with Taylor. In case
->> there are other
->> potential mentors who are willing to volunteer, do chime in :-)
-> 
-> Great! As I already co-mentor another project, I will let you
-> co-mentor this one with Taylor.
-> 
+Victoria Dye <vdye@github.com> writes:
+> There's an (admittedly subtle if you aren't familiar with sparse index)
+> distinction between a "sparse directory" index entry and "a directory
+> outside the sparse-checkout cone with SKIP_WORKTREE enabled on its entries".
+> Ultimately, that's what necessitates the two checks but, as in [1], I want
+> to use this as an opportunity to shed some light on what 'unpack_trees(...)'
+> does.
 
-Nice. Thanks for the opportunity! I've mentioned myself as a
-co-mentor for the bitmap improvements project [1].
+Thanks! This explanation was really helpful.
 
-Taylor, do let me know in case you have any concerns about this.
+> Using our example above, suppose 'baz/' is partially expanded in the index,
+> with the following index contents:
+>
+> H bar/f1
+> S baz/deep/
+> S baz/f2
+> H foo
+> H foo1
+>
+> If we use the prefix 'baz/' here, we actually traverse the trees properly:
+> 'baz/deep/' and 'baz/f2' will be found and merged - no index expansion
+> needed! But if we only checked '!path_in_cone_mode_sparse_checkout(...)', we
+> would have expanded the index because 'baz/' is outside the sparse cone. 
 
-[1]: https://git.github.io/SoC-2022-Ideas/
+In particular, I didn't consider that a directory outside of the
+sparse-checkout cone could be partially expanded. This seems to be the
+crux of it, which is that even if the path is outside of the
+sparse-checkout clone, we can still get correct behavior (without
+expanding the index) if its entries are expanded...
 
--- 
-Sivaraam
+> This presents a problem because index expansion is *extremely* expensive -
+> we should avoid it whenever possible. That's where checking
+> 'index_name_pos(...)' comes in: if the directory is in the index as a sparse
+> directory, the position is '>= 0' and 'ensure_full_index(...)' is called; if
+> the directory is inside an existing sparse directory, the position will be
+> '< 0' but the index will be expanded implicitly. In every other case, we
+> avoid expanding the index and proceed with the merge as normal.
+
+and because of this, we don't always need to expand the index when the
+path is outside of the cone, so my suggested patch expands the index in
+too many cases.
+
+What I also didn't consider is that index_name_pos() doesn't _always_
+expand the index, it only expands the index when the directory is
+inside a sparse directory entry.
+
+So the side-effect of index_name_pos() is actually _exactly_ what we
+want. Granted, it would be clearer if we had a function that did _only_
+'expand if path is inside a sparse directory entry', but I suppose it's
+overkill.
+
+(Purely optional suggestion) I wonder if we could add a test that can
+distinguish between 'always expand if --prefix is outside of the cone'
+vs 'expand only if path is outside of cone AND inside a sparse directory
+entry'. The scenario you described sounds perfect as a test case, though
+I don't know how feasible it is to set up.
