@@ -2,141 +2,451 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F6DAC433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 00:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B9E8C433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 00:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233689AbiCDAnp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 19:43:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37856 "EHLO
+        id S237471AbiCDA65 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 19:58:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232482AbiCDAnn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 19:43:43 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A76C53982A
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 16:42:54 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id y24so8932268ljh.11
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 16:42:54 -0800 (PST)
+        with ESMTP id S236860AbiCDA6z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 19:58:55 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB04F1EB1
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 16:58:08 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id x6-20020a1709029a4600b0014efe26b04fso3752245plv.21
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 16:58:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        d=google.com; s=20210112;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=yc/CxMuotqDKy0EMm7WT3doZ/LbZcikBo/RSIQGEQg8=;
-        b=eBhVeQ8JbtTylpCjPRmVIApqHYvueuqtmPX6SCUEZpDWWzRwP2L/D1FKtKdSnrMLFd
-         YgcUgDw23vupEPH1JP5n8EgtNtFRgbGkNKSmrEz1m5P4EMX4Al7GgjKZSpAtQ3iM49B0
-         aMVdaMIIGg4F/ThrnvpRahn3MtyIM7nJGFfy4=
+        bh=OmedMzQwk2A+2KKPR+3WZqRF/VcgdnACdWhsY0RDGWg=;
+        b=l6FRu+3SN0mfdnT2JMxqdd/mbCbYPGj0O9MSRKRWNnlgIGkTkFSOnUugxXymDd2H1p
+         P403BOsktxZBlAIM2e8Rf9W9/LE8f1sMuJ9peeSdA8khLGRXDkw8BiN8OodPJ0vKAAde
+         bAyxTbcu6MjziHWHEY7DV3+ZIyuGXFBBbzpRO4bRvaKSRq0lTaXxGoYuSeVIlmLUFeRN
+         YqYTI2Zb0z7CuJ7XxTK0fZg7UttHYv7oogwOQL+kx5CilyeoAcDS5xUYe/Snz8tJklHk
+         poej7XXNmH2B+Bn4gIibhVI81d1Hncxct6X6MpmBsx2BITomSu67Ac9ten0TGEpHGMuZ
+         jE0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yc/CxMuotqDKy0EMm7WT3doZ/LbZcikBo/RSIQGEQg8=;
-        b=Ziy6KjqaRAXiZlN5lBK179RdqDQBY6ouEHhdZfzO/wInWk77c8+n4O4BeNLD33K4oH
-         w4+vCjrQRYwITqnQhv0DK0HcO9e2v5KZoL2U4EnsuXCKif6ir8StujfymEgrJ4t4D1FF
-         PzVDsae+7AWNkq9pIMXKO43TtOoHVHy0yADKqojiC8L5nPS/cmhE4gUWWkvQ+mOocght
-         JazqYvkoqNiWqVkBrQyos5TLA4CtfY/cLPDtCFPrlQRtoxkCKZVw2ongwtlW19w5l0C5
-         1ACAIUHQboHuCVA2X3iS3t2ZiKI8+EgaM5Gd0qcvFi82lAGi3L4Jk9TlJ5CF2waC5ooP
-         uIBg==
-X-Gm-Message-State: AOAM532B/ZApSkvumxygA1dqY2ys0aQ/1R04QZoCTrSq2bt9+gVt2YVz
-        hY27MMhXcQee9rGEcIKTfYlkQhWqfTI510lX
-X-Google-Smtp-Source: ABdhPJwk9I1btxSEIovGL/k+3kIgUdLRRpabLAEySfFxgLL89jlVaTrYk3LXxEY41FXyEY+LWZPhrg==
-X-Received: by 2002:a2e:881a:0:b0:22e:b61:9d9b with SMTP id x26-20020a2e881a000000b0022e0b619d9bmr24516253ljh.48.1646354572473;
-        Thu, 03 Mar 2022 16:42:52 -0800 (PST)
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com. [209.85.167.49])
-        by smtp.gmail.com with ESMTPSA id i6-20020a198c46000000b0044424910c94sm718699lfj.113.2022.03.03.16.42.51
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Mar 2022 16:42:51 -0800 (PST)
-Received: by mail-lf1-f49.google.com with SMTP id f37so11373258lfv.8
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 16:42:51 -0800 (PST)
-X-Received: by 2002:a05:6512:3049:b0:447:d55d:4798 with SMTP id
- b9-20020a056512304900b00447d55d4798mr544549lfb.531.1646354571158; Thu, 03 Mar
- 2022 16:42:51 -0800 (PST)
-MIME-Version: 1.0
-References: <CAHk-=wi2HkQ648sYe3BusCEh5tBYjJbQ9c5T-DrykfEdgRbi=g@mail.gmail.com>
- <xmqqlexq8zqo.fsf@gitster.g>
-In-Reply-To: <xmqqlexq8zqo.fsf@gitster.g>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Thu, 3 Mar 2022 16:42:34 -0800
-X-Gmail-Original-Message-ID: <CAHk-=wjQP8PwYZMYUhKu3s9wMhE2yDqdAO_OKagqXuvPrHRyAQ@mail.gmail.com>
-Message-ID: <CAHk-=wjQP8PwYZMYUhKu3s9wMhE2yDqdAO_OKagqXuvPrHRyAQ@mail.gmail.com>
-Subject: Re: Silly 'git am' UI issue
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List Mailing <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="000000000000641a3705d959cb87"
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=OmedMzQwk2A+2KKPR+3WZqRF/VcgdnACdWhsY0RDGWg=;
+        b=hVKFvq7NfSqVloJY6mHUm3ArfRwWMz1Snc+qrU9p8yHZSLTAVskLTAhdmfgwvdqirL
+         ytRsm/d2Nc2ZobuQiQI4hgWIjaA6KWz21l1Icwguq79iHuqtzcn7EMe5ALuPgwI42jS/
+         na1HPJYTXMfpgizLtcHmUQHyKbo0HTxDrmal2k4EmCFQ8XoYcJqhBZqcKfWQs+Ds92q+
+         nNfk1PIQ8Zb1pDQO6WjjtEm283uAC4U/PiNvJkwqK+kr/01Ea67oj3iGmTyBR3izaFxF
+         fu/X3IZqi5zzSN3VGfuBiZrORto3KokW+drkBGpnNwdS9MgSt/VLeIXmXzph1l/BEwaS
+         ZxgQ==
+X-Gm-Message-State: AOAM533FY8pOwrTGq7PDY96eJv085ASg4NtpKfAOUHF3bz89vFDizM9H
+        ph8iw8YqatOn4D/dQPAri/DXb3GgszjCy6EvZLCIGE/zKEA2wanhpjcLZnDzWiFCqtILY0H/VCs
+        a7tLps20suavu4GZXSOGV1v80QDf+0OQbqg/2ZrWswD+0V8Ct3octSvSMeu+jXdU=
+X-Google-Smtp-Source: ABdhPJwXILvI2IjVee1nSwn8q4IikKn1jigcWxmKR+mc4H0kdUzGIPli371lAbMa7V8fbmx2Rcvuy66p8yFJFA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:26c1:b0:4e1:3135:97a9 with SMTP
+ id p1-20020a056a0026c100b004e1313597a9mr40985916pfw.13.1646355487231; Thu, 03
+ Mar 2022 16:58:07 -0800 (PST)
+Date:   Thu,  3 Mar 2022 16:57:48 -0800
+In-Reply-To: <20220304005757.70107-1-chooglen@google.com>
+Message-Id: <20220304005757.70107-2-chooglen@google.com>
+Mime-Version: 1.0
+References: <20220224100842.95827-1-chooglen@google.com> <20220304005757.70107-1-chooglen@google.com>
+X-Mailer: git-send-email 2.35.1.616.g0bdcbb4464-goog
+Subject: [PATCH v4 01/10] t5526: introduce test helper to assert on fetches
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org
+Cc:     Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---000000000000641a3705d959cb87
-Content-Type: text/plain; charset="UTF-8"
+Tests in t/t5526-fetch-submodules.sh are unnecessarily noisy:
 
-On Thu, Mar 3, 2022 at 1:58 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> I wonder if something like this would have helped.
+* The tests have extra logic in order to reproduce the expected stderr
+  literally, but not all of these details (e.g. the head of the
+  remote-tracking branch before the fetch) are relevant to the test.
 
-That would certainly have helped, yes.
+* The expect.err file is constructed by the add_upstream_commit() helper
+  as input into test_cmp, but most tests fetch a different combination
+  of repos from expect.err. This results in noisy tests that modify
+  parts of that expect.err to generate the expected output.
 
-But I think we can do better.
+To address both of these issues, introduce a verify_fetch_result()
+helper to t/t5526-fetch-submodules.sh that asserts on the output of "git
+fetch --recurse-submodules" and handles the ordering of expect.err.
 
-How about just parsing the "--whitespace" option in 'git am' before
-passing it through?
+As a result, the tests no longer construct expect.err manually. Tests
+still consider the old head of the remote-tracking branch ("$head1"),
+but that will be fixed in a later commit.
 
-Something like the attached patch seems to work for me.
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+ t/t5526-fetch-submodules.sh | 139 ++++++++++++++++++++++--------------
+ 1 file changed, 84 insertions(+), 55 deletions(-)
 
-With this one, I simply get
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 840c89cc8b..dff7a4b90b 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -10,6 +10,10 @@ export GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB
+ 
+ pwd=$(pwd)
+ 
++# For each submodule in the test setup, this creates a commit and writes
++# a file that contains the expected err if that new commit were fetched.
++# These output files get concatenated in the right order by
++# verify_fetch_result().
+ add_upstream_commit() {
+ 	(
+ 		cd submodule &&
+@@ -19,9 +23,9 @@ add_upstream_commit() {
+ 		git add subfile &&
+ 		git commit -m new subfile &&
+ 		head2=$(git rev-parse --short HEAD) &&
+-		echo "Fetching submodule submodule" > ../expect.err &&
+-		echo "From $pwd/submodule" >> ../expect.err &&
+-		echo "   $head1..$head2  sub        -> origin/sub" >> ../expect.err
++		echo "Fetching submodule submodule" > ../expect.err.sub &&
++		echo "From $pwd/submodule" >> ../expect.err.sub &&
++		echo "   $head1..$head2  sub        -> origin/sub" >> ../expect.err.sub
+ 	) &&
+ 	(
+ 		cd deepsubmodule &&
+@@ -31,12 +35,36 @@ add_upstream_commit() {
+ 		git add deepsubfile &&
+ 		git commit -m new deepsubfile &&
+ 		head2=$(git rev-parse --short HEAD) &&
+-		echo "Fetching submodule submodule/subdir/deepsubmodule" >> ../expect.err
+-		echo "From $pwd/deepsubmodule" >> ../expect.err &&
+-		echo "   $head1..$head2  deep       -> origin/deep" >> ../expect.err
++		echo "Fetching submodule submodule/subdir/deepsubmodule" > ../expect.err.deep
++		echo "From $pwd/deepsubmodule" >> ../expect.err.deep &&
++		echo "   $head1..$head2  deep       -> origin/deep" >> ../expect.err.deep
+ 	)
+ }
+ 
++# Verifies that the expected repositories were fetched. This is done by
++# concatenating the files expect.err.[super|sub|deep] in the correct
++# order and comparing it to the actual stderr.
++#
++# If a repo should not be fetched in the test, its corresponding
++# expect.err file should be rm-ed.
++verify_fetch_result() {
++	ACTUAL_ERR=$1 &&
++	rm -f expect.err.combined &&
++	if test -f expect.err.super
++	then
++		cat expect.err.super >>expect.err.combined
++	fi &&
++	if test -f expect.err.sub
++	then
++		cat expect.err.sub >>expect.err.combined
++	fi &&
++	if test -f expect.err.deep
++	then
++		cat expect.err.deep >>expect.err.combined
++	fi &&
++	test_cmp expect.err.combined $ACTUAL_ERR
++}
++
+ test_expect_success setup '
+ 	mkdir deepsubmodule &&
+ 	(
+@@ -74,7 +102,7 @@ test_expect_success "fetch --recurse-submodules recurses into submodules" '
+ 		git fetch --recurse-submodules >../actual.out 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "submodule.recurse option triggers recursive fetch" '
+@@ -84,7 +112,7 @@ test_expect_success "submodule.recurse option triggers recursive fetch" '
+ 		git -c submodule.recurse fetch >../actual.out 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "fetch --recurse-submodules -j2 has the same output behaviour" '
+@@ -94,7 +122,7 @@ test_expect_success "fetch --recurse-submodules -j2 has the same output behaviou
+ 		GIT_TRACE="$TRASH_DIRECTORY/trace.out" git fetch --recurse-submodules -j2 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err &&
++	verify_fetch_result actual.err &&
+ 	grep "2 tasks" trace.out
+ '
+ 
+@@ -124,7 +152,7 @@ test_expect_success "using fetchRecurseSubmodules=true in .gitmodules recurses i
+ 		git fetch >../actual.out 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "--no-recurse-submodules overrides .gitmodules config" '
+@@ -155,7 +183,7 @@ test_expect_success "--recurse-submodules overrides fetchRecurseSubmodules setti
+ 		git config --unset submodule.submodule.fetchRecurseSubmodules
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "--quiet propagates to submodules" '
+@@ -183,7 +211,7 @@ test_expect_success "--dry-run propagates to submodules" '
+ 		git fetch --recurse-submodules --dry-run >../actual.out 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "Without --dry-run propagates to submodules" '
+@@ -192,7 +220,7 @@ test_expect_success "Without --dry-run propagates to submodules" '
+ 		git fetch --recurse-submodules >../actual.out 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "recurseSubmodules=true propagates into submodules" '
+@@ -203,7 +231,7 @@ test_expect_success "recurseSubmodules=true propagates into submodules" '
+ 		git fetch >../actual.out 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "--recurse-submodules overrides config in submodule" '
+@@ -217,7 +245,7 @@ test_expect_success "--recurse-submodules overrides config in submodule" '
+ 		git fetch --recurse-submodules >../actual.out 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "--no-recurse-submodules overrides config setting" '
+@@ -250,14 +278,14 @@ test_expect_success "Recursion stops when no new submodule commits are fetched"
+ 	git add submodule &&
+ 	git commit -m "new submodule" &&
+ 	head2=$(git rev-parse --short HEAD) &&
+-	echo "From $pwd/." > expect.err.sub &&
+-	echo "   $head1..$head2  super      -> origin/super" >>expect.err.sub &&
+-	head -3 expect.err >> expect.err.sub &&
++	echo "From $pwd/." > expect.err.super &&
++	echo "   $head1..$head2  super      -> origin/super" >>expect.err.super &&
++	rm expect.err.deep &&
+ 	(
+ 		cd downstream &&
+ 		git fetch >../actual.out 2>../actual.err
+ 	) &&
+-	test_cmp expect.err.sub actual.err &&
++	verify_fetch_result actual.err &&
+ 	test_must_be_empty actual.out
+ '
+ 
+@@ -268,14 +296,16 @@ test_expect_success "Recursion doesn't happen when new superproject commits don'
+ 	git add file &&
+ 	git commit -m "new file" &&
+ 	head2=$(git rev-parse --short HEAD) &&
+-	echo "From $pwd/." > expect.err.file &&
+-	echo "   $head1..$head2  super      -> origin/super" >> expect.err.file &&
++	echo "From $pwd/." > expect.err.super &&
++	echo "   $head1..$head2  super      -> origin/super" >> expect.err.super &&
++	rm expect.err.sub &&
++	rm expect.err.deep &&
+ 	(
+ 		cd downstream &&
+ 		git fetch >../actual.out 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err.file actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "Recursion picks up config in submodule" '
+@@ -292,9 +322,8 @@ test_expect_success "Recursion picks up config in submodule" '
+ 	git add submodule &&
+ 	git commit -m "new submodule" &&
+ 	head2=$(git rev-parse --short HEAD) &&
+-	echo "From $pwd/." > expect.err.sub &&
+-	echo "   $head1..$head2  super      -> origin/super" >> expect.err.sub &&
+-	cat expect.err >> expect.err.sub &&
++	echo "From $pwd/." > expect.err.super &&
++	echo "   $head1..$head2  super      -> origin/super" >> expect.err.super &&
+ 	(
+ 		cd downstream &&
+ 		git fetch >../actual.out 2>../actual.err &&
+@@ -303,7 +332,7 @@ test_expect_success "Recursion picks up config in submodule" '
+ 			git config --unset fetch.recurseSubmodules
+ 		)
+ 	) &&
+-	test_cmp expect.err.sub actual.err &&
++	verify_fetch_result actual.err &&
+ 	test_must_be_empty actual.out
+ '
+ 
+@@ -328,15 +357,13 @@ test_expect_success "Recursion picks up all submodules when necessary" '
+ 	git add submodule &&
+ 	git commit -m "new submodule" &&
+ 	head2=$(git rev-parse --short HEAD) &&
+-	echo "From $pwd/." > expect.err.2 &&
+-	echo "   $head1..$head2  super      -> origin/super" >> expect.err.2 &&
+-	cat expect.err.sub >> expect.err.2 &&
+-	tail -3 expect.err >> expect.err.2 &&
++	echo "From $pwd/." > expect.err.super &&
++	echo "   $head1..$head2  super      -> origin/super" >> expect.err.super &&
+ 	(
+ 		cd downstream &&
+ 		git fetch >../actual.out 2>../actual.err
+ 	) &&
+-	test_cmp expect.err.2 actual.err &&
++	verify_fetch_result actual.err &&
+ 	test_must_be_empty actual.out
+ '
+ 
+@@ -372,11 +399,8 @@ test_expect_success "'--recurse-submodules=on-demand' recurses as deep as necess
+ 	git add submodule &&
+ 	git commit -m "new submodule" &&
+ 	head2=$(git rev-parse --short HEAD) &&
+-	tail -3 expect.err > expect.err.deepsub &&
+-	echo "From $pwd/." > expect.err &&
+-	echo "   $head1..$head2  super      -> origin/super" >>expect.err &&
+-	cat expect.err.sub >> expect.err &&
+-	cat expect.err.deepsub >> expect.err &&
++	echo "From $pwd/." > expect.err.super &&
++	echo "   $head1..$head2  super      -> origin/super" >>expect.err.super &&
+ 	(
+ 		cd downstream &&
+ 		git config fetch.recurseSubmodules false &&
+@@ -392,7 +416,7 @@ test_expect_success "'--recurse-submodules=on-demand' recurses as deep as necess
+ 		)
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "'--recurse-submodules=on-demand' stops when no new submodule commits are found in the superproject (and ignores config)" '
+@@ -402,14 +426,16 @@ test_expect_success "'--recurse-submodules=on-demand' stops when no new submodul
+ 	git add file &&
+ 	git commit -m "new file" &&
+ 	head2=$(git rev-parse --short HEAD) &&
+-	echo "From $pwd/." > expect.err.file &&
+-	echo "   $head1..$head2  super      -> origin/super" >> expect.err.file &&
++	echo "From $pwd/." > expect.err.super &&
++	echo "   $head1..$head2  super      -> origin/super" >> expect.err.super &&
++	rm expect.err.sub &&
++	rm expect.err.deep &&
+ 	(
+ 		cd downstream &&
+ 		git fetch --recurse-submodules=on-demand >../actual.out 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err.file actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "'fetch.recurseSubmodules=on-demand' overrides global config" '
+@@ -423,9 +449,9 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' overrides global config
+ 	git add submodule &&
+ 	git commit -m "new submodule" &&
+ 	head2=$(git rev-parse --short HEAD) &&
+-	echo "From $pwd/." > expect.err.2 &&
+-	echo "   $head1..$head2  super      -> origin/super" >>expect.err.2 &&
+-	head -3 expect.err >> expect.err.2 &&
++	echo "From $pwd/." > expect.err.super &&
++	echo "   $head1..$head2  super      -> origin/super" >>expect.err.super &&
++	rm expect.err.deep &&
+ 	(
+ 		cd downstream &&
+ 		git config fetch.recurseSubmodules on-demand &&
+@@ -437,7 +463,7 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' overrides global config
+ 		git config --unset fetch.recurseSubmodules
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err.2 actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "'submodule.<sub>.fetchRecurseSubmodules=on-demand' overrides fetch.recurseSubmodules" '
+@@ -451,9 +477,9 @@ test_expect_success "'submodule.<sub>.fetchRecurseSubmodules=on-demand' override
+ 	git add submodule &&
+ 	git commit -m "new submodule" &&
+ 	head2=$(git rev-parse --short HEAD) &&
+-	echo "From $pwd/." > expect.err.2 &&
+-	echo "   $head1..$head2  super      -> origin/super" >>expect.err.2 &&
+-	head -3 expect.err >> expect.err.2 &&
++	echo "From $pwd/." > expect.err.super &&
++	echo "   $head1..$head2  super      -> origin/super" >>expect.err.super &&
++	rm expect.err.deep &&
+ 	(
+ 		cd downstream &&
+ 		git config submodule.submodule.fetchRecurseSubmodules on-demand &&
+@@ -465,7 +491,7 @@ test_expect_success "'submodule.<sub>.fetchRecurseSubmodules=on-demand' override
+ 		git config --unset submodule.submodule.fetchRecurseSubmodules
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err.2 actual.err
++	verify_fetch_result actual.err
+ '
+ 
+ test_expect_success "don't fetch submodule when newly recorded commits are already present" '
+@@ -477,14 +503,17 @@ test_expect_success "don't fetch submodule when newly recorded commits are alrea
+ 	git add submodule &&
+ 	git commit -m "submodule rewound" &&
+ 	head2=$(git rev-parse --short HEAD) &&
+-	echo "From $pwd/." > expect.err &&
+-	echo "   $head1..$head2  super      -> origin/super" >> expect.err &&
++	echo "From $pwd/." > expect.err.super &&
++	echo "   $head1..$head2  super      -> origin/super" >> expect.err.super &&
++	rm expect.err.sub &&
++	# This file does not exist, but rm -f for readability
++	rm -f expect.err.deep &&
+ 	(
+ 		cd downstream &&
+ 		git fetch >../actual.out 2>../actual.err
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err actual.err &&
++	verify_fetch_result actual.err &&
+ 	(
+ 		cd submodule &&
+ 		git checkout -q sub
+@@ -502,9 +531,9 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' works also without .git
+ 	git rm .gitmodules &&
+ 	git commit -m "new submodule without .gitmodules" &&
+ 	head2=$(git rev-parse --short HEAD) &&
+-	echo "From $pwd/." >expect.err.2 &&
+-	echo "   $head1..$head2  super      -> origin/super" >>expect.err.2 &&
+-	head -3 expect.err >>expect.err.2 &&
++	echo "From $pwd/." >expect.err.super &&
++	echo "   $head1..$head2  super      -> origin/super" >>expect.err.super &&
++	rm expect.err.deep &&
+ 	(
+ 		cd downstream &&
+ 		rm .gitmodules &&
+@@ -520,7 +549,7 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' works also without .git
+ 		git reset --hard
+ 	) &&
+ 	test_must_be_empty actual.out &&
+-	test_cmp expect.err.2 actual.err &&
++	verify_fetch_result actual.err &&
+ 	git checkout HEAD^ -- .gitmodules &&
+ 	git add .gitmodules &&
+ 	git commit -m "new submodule restored .gitmodules"
+-- 
+2.33.GIT
 
-    $ git am --whitespace 0001-Dummy.patch
-    error: unrecognized whitespace option '0001-Dummy.patch'
-
-when I make the mistake of not giving that whitespace argument.
-
-I'm not claiming this is extensively tested, but I did *some* testing
-on it, and it's not a complicated patch.
-
-             Linus
-
---000000000000641a3705d959cb87
-Content-Type: text/x-patch; charset="US-ASCII"; name="patch.diff"
-Content-Disposition: attachment; filename="patch.diff"
-Content-Transfer-Encoding: base64
-Content-ID: <f_l0boysn10>
-X-Attachment-Id: f_l0boysn10
-
-IGFwcGx5LmMgICAgICB8ICAyICstCiBhcHBseS5oICAgICAgfCAgMiArKwogYnVpbHRpbi9hbS5j
-IHwgMTQgKysrKysrKysrKysrLS0KIDMgZmlsZXMgY2hhbmdlZCwgMTUgaW5zZXJ0aW9ucygrKSwg
-MyBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9hcHBseS5jIGIvYXBwbHkuYwppbmRleCAwOTEy
-MzA3YmQ5Li4yOGU2ZmUwY2ZhIDEwMDY0NAotLS0gYS9hcHBseS5jCisrKyBiL2FwcGx5LmMKQEAg
-LTM2LDcgKzM2LDcgQEAgc3RhdGljIHZvaWQgZ2l0X2FwcGx5X2NvbmZpZyh2b2lkKQogCWdpdF9j
-b25maWcoZ2l0X3htZXJnZV9jb25maWcsIE5VTEwpOwogfQogCi1zdGF0aWMgaW50IHBhcnNlX3do
-aXRlc3BhY2Vfb3B0aW9uKHN0cnVjdCBhcHBseV9zdGF0ZSAqc3RhdGUsIGNvbnN0IGNoYXIgKm9w
-dGlvbikKK2ludCBwYXJzZV93aGl0ZXNwYWNlX29wdGlvbihzdHJ1Y3QgYXBwbHlfc3RhdGUgKnN0
-YXRlLCBjb25zdCBjaGFyICpvcHRpb24pCiB7CiAJaWYgKCFvcHRpb24pIHsKIAkJc3RhdGUtPndz
-X2Vycm9yX2FjdGlvbiA9IHdhcm5fb25fd3NfZXJyb3I7CmRpZmYgLS1naXQgYS9hcHBseS5oIGIv
-YXBwbHkuaAppbmRleCA0MDUyZGE1MGMwLi5jOTMxNzg2YTJhIDEwMDY0NAotLS0gYS9hcHBseS5o
-CisrKyBiL2FwcGx5LmgKQEAgLTE3Myw2ICsxNzMsOCBAQCBpbnQgcGFyc2VfZ2l0X2RpZmZfaGVh
-ZGVyKHN0cnVjdCBzdHJidWYgKnJvb3QsCiAJCQkgIHVuc2lnbmVkIGludCBzaXplLAogCQkJICBz
-dHJ1Y3QgcGF0Y2ggKnBhdGNoKTsKIAoraW50IHBhcnNlX3doaXRlc3BhY2Vfb3B0aW9uKHN0cnVj
-dCBhcHBseV9zdGF0ZSAqc3RhdGUsIGNvbnN0IGNoYXIgKm9wdGlvbik7CisKIC8qCiAgKiBTb21l
-IGFzcGVjdHMgb2YgdGhlIGFwcGx5IGJlaGF2aW9yIGFyZSBjb250cm9sbGVkIGJ5IHRoZSBmb2xs
-b3dpbmcKICAqIGJpdHMgaW4gdGhlICJvcHRpb25zIiBwYXJhbWV0ZXIgcGFzc2VkIHRvIGFwcGx5
-X2FsbF9wYXRjaGVzKCkuCmRpZmYgLS1naXQgYS9idWlsdGluL2FtLmMgYi9idWlsdGluL2FtLmMK
-aW5kZXggMGY0MTExYmFmYS4uNTQyYzZjNWNhYiAxMDA2NDQKLS0tIGEvYnVpbHRpbi9hbS5jCisr
-KyBiL2J1aWx0aW4vYW0uYwpAQCAtMjI5OCw2ICsyMjk4LDE2IEBAIHN0YXRpYyBpbnQgcGFyc2Vf
-b3B0X3Nob3dfY3VycmVudF9wYXRjaChjb25zdCBzdHJ1Y3Qgb3B0aW9uICpvcHQsIGNvbnN0IGNo
-YXIgKmFyCiAJcmV0dXJuIDA7CiB9CiAKK3N0YXRpYyBpbnQgcGFyc2Vfb3B0X3doaXRlc3BhY2Uo
-Y29uc3Qgc3RydWN0IG9wdGlvbiAqb3B0LCBjb25zdCBjaGFyICphcmcsIGludCB1bnNldCkKK3sK
-KwlzdHJ1Y3QgYXBwbHlfc3RhdGUgZHVtbXkgPSB7IH07CisKKwlpZiAocGFyc2Vfd2hpdGVzcGFj
-ZV9vcHRpb24oJmR1bW15LCBhcmcpKQorCQlyZXR1cm4gLTE7CisKKwlyZXR1cm4gcGFyc2Vfb3B0
-X3Bhc3N0aHJ1X2FyZ3Yob3B0LCBhcmcsIHVuc2V0KTsKK30KKwogc3RhdGljIGludCBnaXRfYW1f
-Y29uZmlnKGNvbnN0IGNoYXIgKmssIGNvbnN0IGNoYXIgKnYsIHZvaWQgKmNiKQogewogCWludCBz
-dGF0dXM7CkBAIC0yMzU1LDkgKzIzNjUsOSBAQCBpbnQgY21kX2FtKGludCBhcmdjLCBjb25zdCBj
-aGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQogCQlPUFRfQ0FMTEJBQ0tfRigwLCAicXVv
-dGVkLWNyIiwgJnN0YXRlLnF1b3RlZF9jciwgTl8oImFjdGlvbiIpLAogCQkJICAgICAgIE5fKCJw
-YXNzIGl0IHRocm91Z2ggZ2l0LW1haWxpbmZvIiksCiAJCQkgICAgICAgUEFSU0VfT1BUX05PTkVH
-LCBhbV9vcHRpb25fcGFyc2VfcXVvdGVkX2NyKSwKLQkJT1BUX1BBU1NUSFJVX0FSR1YoMCwgIndo
-aXRlc3BhY2UiLCAmc3RhdGUuZ2l0X2FwcGx5X29wdHMsIE5fKCJhY3Rpb24iKSwKKwkJT1BUX0NB
-TExCQUNLKDAsICJ3aGl0ZXNwYWNlIiwgJnN0YXRlLmdpdF9hcHBseV9vcHRzLCBOXygiYWN0aW9u
-IiksCiAJCQlOXygicGFzcyBpdCB0aHJvdWdoIGdpdC1hcHBseSIpLAotCQkJMCksCisJCQlwYXJz
-ZV9vcHRfd2hpdGVzcGFjZSksCiAJCU9QVF9QQVNTVEhSVV9BUkdWKDAsICJpZ25vcmUtc3BhY2Ut
-Y2hhbmdlIiwgJnN0YXRlLmdpdF9hcHBseV9vcHRzLCBOVUxMLAogCQkJTl8oInBhc3MgaXQgdGhy
-b3VnaCBnaXQtYXBwbHkiKSwKIAkJCVBBUlNFX09QVF9OT0FSRyksCg==
---000000000000641a3705d959cb87--
