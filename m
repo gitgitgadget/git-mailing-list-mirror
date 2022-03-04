@@ -2,57 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31B83C433F5
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 00:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7228FC433FE
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 00:58:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237497AbiCDA7L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Mar 2022 19:59:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43946 "EHLO
+        id S237485AbiCDA7M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Mar 2022 19:59:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237474AbiCDA66 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Mar 2022 19:58:58 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A709DE2F1
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 16:58:12 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id s12-20020a17090a13cc00b001bee1e1677fso3091687pjf.0
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 16:58:12 -0800 (PST)
+        with ESMTP id S237480AbiCDA7J (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Mar 2022 19:59:09 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BDE41201AD
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 16:58:14 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id t184-20020a6281c1000000b004e103c5f726so4087256pfd.8
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 16:58:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=sjsCTsfNsW+DgcsxwDdXr8+Pg/0xxaH4ZN6XwoYz89o=;
-        b=Jr316B7dhf3Kz4pCc5OZOBSbeMxNHfXHIMvF9JXW+8cxwtTuB0SpLH6y6kGm1CIJ2S
-         P2FKILMnKRNvzkfnkbmYqi0xa0xlfCjTXyT0eXzhamAc6UkpjN/tZhLJLphZRHO3opVI
-         1qKfwV4qiaQbT3ai4BAuIquoAHstaR8JQTR7aZ30IjpfhY1nIglFwCUdcEs5PnAqiY5x
-         /5KVaO0OL2Ctcvo+ErBdF8Yxy+OHVLPFFCpd16KWsbbR6okVy+g4grg15DCAUFuMXndl
-         O6lNFUTqqkg0cST4zy/s1vQLm6UYd7JeGu7UYGMLWFuth6Ps45LcFEWPKeP7oCb+oqpq
-         9WUA==
+        bh=jMKFFMj25zrRdrj/VKq4uwdhmkhAO9UMRLTmQPqt2tU=;
+        b=BrF9fDQqyYkef1lgYdFYq5Eom7uGqe/nhAvj6653Oqt+UD1zfTq84Zb15Zy1ETxHD7
+         ydaOxPUpr4MkhJm1tznxucGCX/PeyaE77VYFsEU+4cORk+3ESpN+7q7/YXI+u5Mrwr3i
+         gMlZAxYjywQr55tKsKhQdEWrRNcTNsf3kmbh1a4c7yARyxYRYNlUwtbyzHLO6ZRXIoBv
+         K2xwlb93DwsGI9mEJT2lMNrwK/kCv7DkRALu+Ljx34KfGrILrFbRXi7S3WOhpA8XizTZ
+         +CauBZnKrgnkPF60pbSuhfaSK4F6e/zwSskDh9T8UhUqbRymH1nbhQhRxd3auPER7u+b
+         aXzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=sjsCTsfNsW+DgcsxwDdXr8+Pg/0xxaH4ZN6XwoYz89o=;
-        b=O5zH1WJlTq/kp+FHTt7R1VtobZx8SMjIglVtpfap+jaXVHbCmm8nj81aIeSq7sXn60
-         GJWq4iITzozoVb5ODFSSeq05aF1+7Hns40ZIwVKHn8hIgkJjC42asCyMT5XmsI66VMn2
-         MVz25++aug6osQ5GoU0AhnS905GREKYiir9NBSFiYTuaRiwmAtxoCqpRvdw0NPO2JS5p
-         Tjn8lPZUVlN0Nd6ZTdWRqYl0Q4A/4ULt9CXPieb0cbGa9lN0iTS+c28oEHyfWX8K3EPQ
-         zzyAShoP94AM/FDs2F1oao25TJ1v4moxk1lwb1cnttcmnP9Ls/yj4uB1VbhtMOfBcW0c
-         Ojmw==
-X-Gm-Message-State: AOAM532JCw8rlFJl0h9N1bBKzm5xXNGWfzZkR6LJgkTrBjF4EYGlCkqV
-        8KfihuAyioAYLEVaEzPTSRAC8v/iieXCv+M0C7QN2FBhO31ySUzzue2MlLvnV8Dhhh/Xu9X7L1V
-        kd7go2AdDGxliJjjtoxqe9ThcExfIjeiJsglrnlZaMy/udfXOKa6UZVcOMgVgFyA=
-X-Google-Smtp-Source: ABdhPJw1K2iPgjsV71YKeE+lgWAO3P0gPsB29Zf5UbAHxjG3v7DB/9JPRxxfBCXev3et4pBbJ38IiDsw9Obk9Q==
+        bh=jMKFFMj25zrRdrj/VKq4uwdhmkhAO9UMRLTmQPqt2tU=;
+        b=xZYBvZuUvR5kUYWoRbfh9VVhG4z+CY9lNHmUfd0eN+NK8vQNVhHf+TI0f72tL15X9I
+         eKILtSjGVWgTVX1lmxq2Zq9CkOTo7O2rybJoTm7PYnxk9oDpoOM/o5ywG87JD4Xcrc/G
+         0elZy6nXAjgVIrTj1lit2iKcQXBRJNy2EbXMvRpxcLDV0XGAC556dPoayN88vmFpHf9Y
+         PL8uug6K6jNP3GVSvkqWfNZmrjGJ4abgrTu9aDMMPdQQ+RCi4aDd+JixABj0TZT8aUbo
+         ayQghQUS4hA+RQNm9fPsFweiQE7/luCVInCbenFrMaaYznNRc2/KuSW1cL+u/gOpTsp6
+         c1AQ==
+X-Gm-Message-State: AOAM530SAWOE97jcMaZ91DKoma0mAEW7bucf5KlXMrOMpWBt56TT8MMy
+        jqzxxdfI3DeYX5J/k8qgX8Rv6j4FnpuzB/2uDy2u2xozfNtg0JrzGQJxOoPZilUfSkvxSD4n+AV
+        HtVkgTXmWcO4a69nzutMzkJlFMXp26V/54W0B6370EgBdxHqXnZQe6dBUjI+pL/I=
+X-Google-Smtp-Source: ABdhPJwJMYtzcKMQdrJMEj5hmm4yR3i3wS1+8uj3Kwzr8GKT8hu3BPongXUWZvaBS3PLMhpAUKSgfvOxYU49Vw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90b:945:b0:1bd:561e:b24d with SMTP id
- dw5-20020a17090b094500b001bd561eb24dmr8191832pjb.202.1646355491467; Thu, 03
- Mar 2022 16:58:11 -0800 (PST)
-Date:   Thu,  3 Mar 2022 16:57:50 -0800
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1646:b0:4f4:58f:b64 with SMTP id
+ m6-20020a056a00164600b004f4058f0b64mr25132783pfc.47.1646355493648; Thu, 03
+ Mar 2022 16:58:13 -0800 (PST)
+Date:   Thu,  3 Mar 2022 16:57:51 -0800
 In-Reply-To: <20220304005757.70107-1-chooglen@google.com>
-Message-Id: <20220304005757.70107-4-chooglen@google.com>
+Message-Id: <20220304005757.70107-5-chooglen@google.com>
 Mime-Version: 1.0
 References: <20220224100842.95827-1-chooglen@google.com> <20220304005757.70107-1-chooglen@google.com>
 X-Mailer: git-send-email 2.35.1.616.g0bdcbb4464-goog
-Subject: [PATCH v4 03/10] t5526: create superproject commits with test helper
+Subject: [PATCH v4 04/10] submodule: make static functions read submodules
+ from commits
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -65,262 +66,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A few tests in t5526 use this pattern as part of their setup:
-
-1. Create new commits in the upstream submodules (using
-   add_upstream_commit()).
-2. In the upstream superprojects, add the new submodule commits from the
-   previous step.
-
-A future commit will add more tests with this pattern, so reduce the
-verbosity of present and future tests by introducing a test helper that
-creates superproject commits. Since we now have two helpers that add
-upstream commits, rename add_upstream_commit() to
-add_submodule_commits().
+A future commit will teach "fetch --recurse-submodules" to fetch
+unpopulated submodules. To prepare for this, teach the necessary static
+functions how to read submodules from superproject commits using a
+"treeish_name" argument (instead of always reading from the index and
+filesystem) but do not actually change where submodules are read from.
+Submodules will be read from commits when we fetch unpopulated
+submodules.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- t/t5526-fetch-submodules.sh | 94 +++++++++++++++++--------------------
- 1 file changed, 44 insertions(+), 50 deletions(-)
+ submodule.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 6b24d37b2b..4cae2e4f7c 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -40,7 +40,7 @@ check_super () {
- # a file that contains the expected err if that new commit were fetched.
- # These output files get concatenated in the right order by
- # verify_fetch_result().
--add_upstream_commit() {
-+add_submodule_commits () {
- 	(
- 		cd submodule &&
- 		echo new >> subfile &&
-@@ -61,6 +61,30 @@ add_upstream_commit() {
- 	)
+diff --git a/submodule.c b/submodule.c
+index 5ace18a7d9..4f3300f2cb 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -932,6 +932,7 @@ struct has_commit_data {
+ 	struct repository *repo;
+ 	int result;
+ 	const char *path;
++	const struct object_id *super_oid;
+ };
+ 
+ static int check_has_commit(const struct object_id *oid, void *data)
+@@ -940,7 +941,7 @@ static int check_has_commit(const struct object_id *oid, void *data)
+ 	struct repository subrepo;
+ 	enum object_type type;
+ 
+-	if (repo_submodule_init(&subrepo, cb->repo, cb->path, null_oid())) {
++	if (repo_submodule_init(&subrepo, cb->repo, cb->path, cb->super_oid)) {
+ 		cb->result = 0;
+ 		goto cleanup;
+ 	}
+@@ -968,9 +969,15 @@ static int check_has_commit(const struct object_id *oid, void *data)
+ 
+ static int submodule_has_commits(struct repository *r,
+ 				 const char *path,
++				 const struct object_id *super_oid,
+ 				 struct oid_array *commits)
+ {
+-	struct has_commit_data has_commit = { r, 1, path };
++	struct has_commit_data has_commit = {
++		.repo = r,
++		.result = 1,
++		.path = path,
++		.super_oid = super_oid
++	};
+ 
+ 	/*
+ 	 * Perform a cheap, but incorrect check for the existence of 'commits'.
+@@ -1017,7 +1024,7 @@ static int submodule_needs_pushing(struct repository *r,
+ 				   const char *path,
+ 				   struct oid_array *commits)
+ {
+-	if (!submodule_has_commits(r, path, commits))
++	if (!submodule_has_commits(r, path, null_oid(), commits))
+ 		/*
+ 		 * NOTE: We do consider it safe to return "no" here. The
+ 		 * correct answer would be "We do not know" instead of
+@@ -1277,7 +1284,7 @@ static void calculate_changed_submodule_paths(struct repository *r,
+ 		if (!path)
+ 			continue;
+ 
+-		if (submodule_has_commits(r, path, commits)) {
++		if (submodule_has_commits(r, path, null_oid(), commits)) {
+ 			oid_array_clear(commits);
+ 			*name->string = '\0';
+ 		}
+@@ -1402,12 +1409,13 @@ static const struct submodule *get_non_gitmodules_submodule(const char *path)
  }
  
-+# For each superproject in the test setup, update its submodule, add the
-+# submodule and create a new commit with the submodule change.
-+#
-+# This requires add_submodule_commits() to be called first, otherwise
-+# the submodules will not have changed and cannot be "git add"-ed.
-+add_superproject_commits () {
-+	(
-+		cd submodule &&
-+		(
-+			cd subdir/deepsubmodule &&
-+			git fetch &&
-+			git checkout -q FETCH_HEAD
-+		) &&
-+		git add subdir/deepsubmodule &&
-+		git commit -m "new deep submodule"
-+	) &&
-+	git add submodule &&
-+	git commit -m "new submodule" &&
-+	super_head=$(git rev-parse --short HEAD) &&
-+	sub_head=$(git -C submodule rev-parse --short HEAD) &&
-+	check_super $super_head &&
-+	check_sub $sub_head
-+}
-+
- # Verifies that the expected repositories were fetched. This is done by
- # concatenating the files expect.err.[super|sub|deep] in the correct
- # order and comparing it to the actual stderr.
-@@ -117,7 +141,7 @@ test_expect_success setup '
- '
+ static struct fetch_task *fetch_task_create(struct repository *r,
+-					    const char *path)
++					    const char *path,
++					    const struct object_id *treeish_name)
+ {
+ 	struct fetch_task *task = xmalloc(sizeof(*task));
+ 	memset(task, 0, sizeof(*task));
  
- test_expect_success "fetch --recurse-submodules recurses into submodules" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	(
- 		cd downstream &&
- 		git fetch --recurse-submodules >../actual.out 2>../actual.err
-@@ -127,7 +151,7 @@ test_expect_success "fetch --recurse-submodules recurses into submodules" '
- '
+-	task->sub = submodule_from_path(r, null_oid(), path);
++	task->sub = submodule_from_path(r, treeish_name, path);
+ 	if (!task->sub) {
+ 		/*
+ 		 * No entry in .gitmodules? Technically not a submodule,
+@@ -1439,11 +1447,12 @@ static void fetch_task_release(struct fetch_task *p)
+ }
  
- test_expect_success "submodule.recurse option triggers recursive fetch" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	(
- 		cd downstream &&
- 		git -c submodule.recurse fetch >../actual.out 2>../actual.err
-@@ -137,7 +161,7 @@ test_expect_success "submodule.recurse option triggers recursive fetch" '
- '
+ static struct repository *get_submodule_repo_for(struct repository *r,
+-						 const char *path)
++						 const char *path,
++						 const struct object_id *treeish_name)
+ {
+ 	struct repository *ret = xmalloc(sizeof(*ret));
  
- test_expect_success "fetch --recurse-submodules -j2 has the same output behaviour" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	(
- 		cd downstream &&
- 		GIT_TRACE="$TRASH_DIRECTORY/trace.out" git fetch --recurse-submodules -j2 2>../actual.err
-@@ -148,7 +172,7 @@ test_expect_success "fetch --recurse-submodules -j2 has the same output behaviou
- '
+-	if (repo_submodule_init(ret, r, path, null_oid())) {
++	if (repo_submodule_init(ret, r, path, treeish_name)) {
+ 		free(ret);
+ 		return NULL;
+ 	}
+@@ -1464,7 +1473,7 @@ static int get_next_submodule(struct child_process *cp,
+ 		if (!S_ISGITLINK(ce->ce_mode))
+ 			continue;
  
- test_expect_success "fetch alone only fetches superproject" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	(
- 		cd downstream &&
- 		git fetch >../actual.out 2>../actual.err
-@@ -177,7 +201,7 @@ test_expect_success "using fetchRecurseSubmodules=true in .gitmodules recurses i
- '
+-		task = fetch_task_create(spf->r, ce->name);
++		task = fetch_task_create(spf->r, ce->name, null_oid());
+ 		if (!task)
+ 			continue;
  
- test_expect_success "--no-recurse-submodules overrides .gitmodules config" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	(
- 		cd downstream &&
- 		git fetch --no-recurse-submodules >../actual.out 2>../actual.err
-@@ -226,7 +250,7 @@ test_expect_success "--quiet propagates to parallel submodules" '
- '
+@@ -1487,7 +1496,7 @@ static int get_next_submodule(struct child_process *cp,
+ 			continue;
+ 		}
  
- test_expect_success "--dry-run propagates to submodules" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	(
- 		cd downstream &&
- 		git fetch --recurse-submodules --dry-run >../actual.out 2>../actual.err
-@@ -245,7 +269,7 @@ test_expect_success "Without --dry-run propagates to submodules" '
- '
- 
- test_expect_success "recurseSubmodules=true propagates into submodules" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	(
- 		cd downstream &&
- 		git config fetch.recurseSubmodules true &&
-@@ -256,7 +280,7 @@ test_expect_success "recurseSubmodules=true propagates into submodules" '
- '
- 
- test_expect_success "--recurse-submodules overrides config in submodule" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	(
- 		cd downstream &&
- 		(
-@@ -270,7 +294,7 @@ test_expect_success "--recurse-submodules overrides config in submodule" '
- '
- 
- test_expect_success "--no-recurse-submodules overrides config setting" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	(
- 		cd downstream &&
- 		git config fetch.recurseSubmodules true &&
-@@ -309,7 +333,7 @@ test_expect_success "Recursion stops when no new submodule commits are fetched"
- '
- 
- test_expect_success "Recursion doesn't happen when new superproject commits don't change any submodules" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	echo a > file &&
- 	git add file &&
- 	git commit -m "new file" &&
-@@ -334,7 +358,7 @@ test_expect_success "Recursion picks up config in submodule" '
- 			git config fetch.recurseSubmodules true
- 		)
- 	) &&
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	git add submodule &&
- 	git commit -m "new submodule" &&
- 	new_head=$(git rev-parse --short HEAD) &&
-@@ -352,23 +376,8 @@ test_expect_success "Recursion picks up config in submodule" '
- '
- 
- test_expect_success "Recursion picks up all submodules when necessary" '
--	add_upstream_commit &&
--	(
--		cd submodule &&
--		(
--			cd subdir/deepsubmodule &&
--			git fetch &&
--			git checkout -q FETCH_HEAD
--		) &&
--		git add subdir/deepsubmodule &&
--		git commit -m "new deepsubmodule" &&
--		new_head=$(git rev-parse --short HEAD) &&
--		check_sub $new_head
--	) &&
--	git add submodule &&
--	git commit -m "new submodule" &&
--	new_head=$(git rev-parse --short HEAD) &&
--	check_super $new_head &&
-+	add_submodule_commits &&
-+	add_superproject_commits &&
- 	(
- 		cd downstream &&
- 		git fetch >../actual.out 2>../actual.err
-@@ -378,19 +387,7 @@ test_expect_success "Recursion picks up all submodules when necessary" '
- '
- 
- test_expect_success "'--recurse-submodules=on-demand' doesn't recurse when no new commits are fetched in the superproject (and ignores config)" '
--	add_upstream_commit &&
--	(
--		cd submodule &&
--		(
--			cd subdir/deepsubmodule &&
--			git fetch &&
--			git checkout -q FETCH_HEAD
--		) &&
--		git add subdir/deepsubmodule &&
--		git commit -m "new deepsubmodule" &&
--		new_head=$(git rev-parse --short HEAD) &&
--		check_sub $new_head
--	) &&
-+	add_submodule_commits &&
- 	(
- 		cd downstream &&
- 		git config fetch.recurseSubmodules true &&
-@@ -402,10 +399,7 @@ test_expect_success "'--recurse-submodules=on-demand' doesn't recurse when no ne
- '
- 
- test_expect_success "'--recurse-submodules=on-demand' recurses as deep as necessary (and ignores config)" '
--	git add submodule &&
--	git commit -m "new submodule" &&
--	new_head=$(git rev-parse --short HEAD) &&
--	check_super $new_head &&
-+	add_superproject_commits &&
- 	(
- 		cd downstream &&
- 		git config fetch.recurseSubmodules false &&
-@@ -425,7 +419,7 @@ test_expect_success "'--recurse-submodules=on-demand' recurses as deep as necess
- '
- 
- test_expect_success "'--recurse-submodules=on-demand' stops when no new submodule commits are found in the superproject (and ignores config)" '
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	echo a >> file &&
- 	git add file &&
- 	git commit -m "new file" &&
-@@ -446,7 +440,7 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' overrides global config
- 		cd downstream &&
- 		git fetch --recurse-submodules
- 	) &&
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	git config --global fetch.recurseSubmodules false &&
- 	git add submodule &&
- 	git commit -m "new submodule" &&
-@@ -472,7 +466,7 @@ test_expect_success "'submodule.<sub>.fetchRecurseSubmodules=on-demand' override
- 		cd downstream &&
- 		git fetch --recurse-submodules
- 	) &&
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	git config fetch.recurseSubmodules false &&
- 	git add submodule &&
- 	git commit -m "new submodule" &&
-@@ -522,7 +516,7 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' works also without .git
- 		cd downstream &&
- 		git fetch --recurse-submodules
- 	) &&
--	add_upstream_commit &&
-+	add_submodule_commits &&
- 	git add submodule &&
- 	git rm .gitmodules &&
- 	git commit -m "new submodule without .gitmodules" &&
+-		task->repo = get_submodule_repo_for(spf->r, task->sub->path);
++		task->repo = get_submodule_repo_for(spf->r, task->sub->path, null_oid());
+ 		if (task->repo) {
+ 			struct strbuf submodule_prefix = STRBUF_INIT;
+ 			child_process_init(cp);
 -- 
 2.33.GIT
 
