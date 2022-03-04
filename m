@@ -2,122 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B8D4C433F5
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 18:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD145C433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 18:51:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241850AbiCDSr4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 13:47:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37634 "EHLO
+        id S237690AbiCDSwI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 13:52:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241846AbiCDSrz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 13:47:55 -0500
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C79FA8A6E9
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 10:47:06 -0800 (PST)
-Received: by mail-pl1-x649.google.com with SMTP id j9-20020a170903024900b0015195e68490so5116672plh.19
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:47:06 -0800 (PST)
+        with ESMTP id S236781AbiCDSwH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 13:52:07 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD1F41D67CC
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 10:51:18 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id i11so15725766lfu.3
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:51:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=evRtAHxcGyTF4HIMCNCGXylECyJyLVP/Vc9aLMMojVk=;
-        b=kT9DeBlSSfMSagK+V33SUTogiQ5oIscp3fRe4VtAzluHqUiR8lYrQJn0Pq4HuIyUA2
-         HO/gtV6aJjVzmOOJzDt8HJ/E04wUEUSe3TpS7QO7SSUQK2dc6EcJqvA0AN7yM48K2+oY
-         UzdiPkG7/pAJam0njvR9OWxDb2YlVMlM8tLsjo1V22o8rkfVQkvg0sscYKakdu04lkB3
-         FZGaPQybQfYP5NAEqda5B3z4XQu88o2aAA5peWAMffCcvIbV7TINm8VFdyCOjYQ//nPm
-         x4muY+TMfVr50cWgZOOTh+tTqv7NIE04jPS9K/RF4sPKQyRUb5c5E6DokSPhCS6Tyx1C
-         lxgw==
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Xy9kzSWtQZDYtlGBlXmIYEmfxpLyEgIcJFHxSFlb/w0=;
+        b=Zn+VYIABHuVEDbetjEsqbm4b+ASLxnfoZunOFRm6pTyvW7pmxrfbssNtSZ9vZkicDv
+         RjnT2gfO3z3caf7c2jmghlRNDjv/NoyHKIvjW0umShxmAizu59BZHZ8ylhImEOPj760V
+         /Dw9vcTt9N4aj9R1PJztpUARu7RckhiBAPe8U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=evRtAHxcGyTF4HIMCNCGXylECyJyLVP/Vc9aLMMojVk=;
-        b=4KLlihjvsaHqYmvO9wtb8jz5OcLs9P4WneR0L+oC5GRa9uuYfwdrM5CzAF6z+Yk+ah
-         LOVYpJdcw6yIOpdAPw0Hbf9YLd+wojJRpuXBUGzFIzBcQlJxP2ShkpjCEG4QKxeaSVpD
-         /5LX63ECnDTLKiIG4SbwTpuolegBoj8HTqbyCwIbzGK07HrYRAv/tmNKP6249Nvd+l3E
-         O69gcM5Uv95f7O7BoGh7fY8Xo7jc91nlx5cllUca5LpXAvj0TxyZNX2uwEYBL2to29Np
-         WWOse9L42VrKdz2fObEogguZbJ4NNfuSW2kAsOBsJyuFTTYqx6gi6o+JenLObamlNuum
-         kxLw==
-X-Gm-Message-State: AOAM530S8k86qgOzzgNeMtgTIJ1ZLrbjEl+y3i5RK8Ng6k1oG+xIDmTo
-        nnjAeg9dpavZIlHX7AcMD3FcdUyXQubd9g==
-X-Google-Smtp-Source: ABdhPJzgN0OGY3bVuU1YtQ2JD7fAI66TsFeyOJ9wOrYXHCflTwL/KzjB6CME0UzR3UpRPk0BVsiYtPdPYJ++Ow==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a62:ddcc:0:b0:4e1:c248:d4a7 with SMTP id
- w195-20020a62ddcc000000b004e1c248d4a7mr72459pff.63.1646419626193; Fri, 04 Mar
- 2022 10:47:06 -0800 (PST)
-Date:   Fri, 04 Mar 2022 10:47:04 -0800
-In-Reply-To: <5353fb06-09e4-77bf-554c-1cd750158730@github.com>
-Message-Id: <kl6lilst4kt3.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <pull.1157.v2.git.1645742073.gitgitgadget@gmail.com>
- <pull.1157.v3.git.1646166271.gitgitgadget@gmail.com> <1a9365c3bc5b810a60593612bfba97a8b0c1d657.1646166271.git.gitgitgadget@gmail.com>
- <kl6lczj2exbn.fsf@chooglen-macbookpro.roam.corp.google.com> <5353fb06-09e4-77bf-554c-1cd750158730@github.com>
-Subject: Re: [PATCH v3 6/8] read-tree: narrow scope of index expansion for '--prefix'
-From:   Glen Choo <chooglen@google.com>
-To:     Victoria Dye <vdye@github.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     newren@gmail.com, gitster@pobox.com,
-        Derrick Stolee <derrickstolee@github.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Xy9kzSWtQZDYtlGBlXmIYEmfxpLyEgIcJFHxSFlb/w0=;
+        b=6nfn4I0Iop7xAaZaqJT9neEAt22e0wTjHv9U7nk0SmcifJjF5BFbP5TKkyv6EEhEpV
+         7QvFSb/2n/+w1oUj25Ofo731I1WrpQBMqh76xh2ZbvgBd9t5siveqreXjDVKG5bMNWp8
+         020BasfNMXB9wTFuBtLXlWipHCVLRsz7C6AkclXjZIw7MXDmn5+ZvW4y2PxUdgCXJ+TZ
+         eF3m74bSIFb1yBytmKmoRzjRXwVjK2VRCUei1FzOSh5xuTNgO5FjOo9nU4EECzJdXunE
+         H8yA87yrpUtPDgCmirsNQFTY/eDs9rOZ/VOQOyE5Vo3WylBIyMhifZgLJfbO8y40ZrAQ
+         MOfQ==
+X-Gm-Message-State: AOAM533Z4E87wkrIYoDoG7mg9txFGwPy969cVSTZuwqqd7/VZOWzjo0K
+        7BqaTPyyVu9Y2K4Vid8xCmB1l7a2i9HWb22b
+X-Google-Smtp-Source: ABdhPJw6Sdy4iNawAgC+Uveag2W7VJBC//hTO1v7X0uQBB1lbF/F9Lo7EjbGuNpkTU0sCvqm/cujFA==
+X-Received: by 2002:a05:6512:104f:b0:447:f9b6:9217 with SMTP id c15-20020a056512104f00b00447f9b69217mr65973lfb.575.1646419874959;
+        Fri, 04 Mar 2022 10:51:14 -0800 (PST)
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com. [209.85.167.47])
+        by smtp.gmail.com with ESMTPSA id c16-20020a056512105000b004433ce86133sm1194544lfb.51.2022.03.04.10.51.13
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Mar 2022 10:51:13 -0800 (PST)
+Received: by mail-lf1-f47.google.com with SMTP id g39so15674444lfv.10
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:51:13 -0800 (PST)
+X-Received: by 2002:a05:6512:3042:b0:437:96f5:e68a with SMTP id
+ b2-20020a056512304200b0043796f5e68amr69986lfb.449.1646419873326; Fri, 04 Mar
+ 2022 10:51:13 -0800 (PST)
+MIME-Version: 1.0
+References: <CAHk-=wi2HkQ648sYe3BusCEh5tBYjJbQ9c5T-DrykfEdgRbi=g@mail.gmail.com>
+ <xmqqlexq8zqo.fsf@gitster.g> <CAHk-=wjQP8PwYZMYUhKu3s9wMhE2yDqdAO_OKagqXuvPrHRyAQ@mail.gmail.com>
+ <xmqq1qzi4bpk.fsf@gitster.g> <220304.86r17ifahr.gmgdl@evledraar.gmail.com>
+In-Reply-To: <220304.86r17ifahr.gmgdl@evledraar.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Fri, 4 Mar 2022 10:50:57 -0800
+X-Gmail-Original-Message-ID: <CAHk-=whaqdakNBwVZ-AZ0Ei2WLA+=3oqofhKfdQ618dWrYySfQ@mail.gmail.com>
+Message-ID: <CAHk-=whaqdakNBwVZ-AZ0Ei2WLA+=3oqofhKfdQ618dWrYySfQ@mail.gmail.com>
+Subject: Re: Silly 'git am' UI issue
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git List Mailing <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
-> There's an (admittedly subtle if you aren't familiar with sparse index)
-> distinction between a "sparse directory" index entry and "a directory
-> outside the sparse-checkout cone with SKIP_WORKTREE enabled on its entries".
-> Ultimately, that's what necessitates the two checks but, as in [1], I want
-> to use this as an opportunity to shed some light on what 'unpack_trees(...)'
-> does.
-
-Thanks! This explanation was really helpful.
-
-> Using our example above, suppose 'baz/' is partially expanded in the index,
-> with the following index contents:
+On Thu, Mar 3, 2022 at 11:22 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> H bar/f1
-> S baz/deep/
-> S baz/f2
-> H foo
-> H foo1
->
-> If we use the prefix 'baz/' here, we actually traverse the trees properly:
-> 'baz/deep/' and 'baz/f2' will be found and merged - no index expansion
-> needed! But if we only checked '!path_in_cone_mode_sparse_checkout(...)', we
-> would have expanded the index because 'baz/' is outside the sparse cone. 
+> A more general solution would be some continuation of this, i.e. we can
+> use the "defval" in "struct option" as a pointer to a validation
+> function for any arguments.
 
-In particular, I didn't consider that a directory outside of the
-sparse-checkout cone could be partially expanded. This seems to be the
-crux of it, which is that even if the path is outside of the
-sparse-checkout clone, we can still get correct behavior (without
-expanding the index) if its entries are expanded...
+I wasn't familiar enough with the option parsing code to do this, but
+yes, I think your approach is nicer and makes it easier to add
+checking to the other passthrough cases
 
-> This presents a problem because index expansion is *extremely* expensive -
-> we should avoid it whenever possible. That's where checking
-> 'index_name_pos(...)' comes in: if the directory is in the index as a sparse
-> directory, the position is '>= 0' and 'ensure_full_index(...)' is called; if
-> the directory is inside an existing sparse directory, the position will be
-> '< 0' but the index will be expanded implicitly. In every other case, we
-> avoid expanding the index and proceed with the merge as normal.
+So Ack from me on that approach instead.
 
-and because of this, we don't always need to expand the index when the
-path is outside of the cone, so my suggested patch expands the index in
-too many cases.
+I do suspect that you'll notice when trying to code up a proper patch
+that it's probably complicated by the fact that the "validation"
+function wants a different argument (in this case a 'struct
+apply_state') than the "passthrough" function does (it wants that
+"struct strvec").
 
-What I also didn't consider is that index_name_pos() doesn't _always_
-expand the index, it only expands the index when the directory is
-inside a sparse directory entry.
+Again, I'm not familiar with the argument parsing code, it all
+post-dates my work, so what do I know..
 
-So the side-effect of index_name_pos() is actually _exactly_ what we
-want. Granted, it would be clearer if we had a function that did _only_
-'expand if path is inside a sparse directory entry', but I suppose it's
-overkill.
-
-(Purely optional suggestion) I wonder if we could add a test that can
-distinguish between 'always expand if --prefix is outside of the cone'
-vs 'expand only if path is outside of cone AND inside a sparse directory
-entry'. The scenario you described sounds perfect as a test case, though
-I don't know how feasible it is to set up.
+                Linus
