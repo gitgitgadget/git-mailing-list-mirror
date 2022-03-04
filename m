@@ -2,85 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5031C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 19:11:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99D0DC433EF
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 19:19:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229767AbiCDTMP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 14:12:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39304 "EHLO
+        id S229652AbiCDTUK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 14:20:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229598AbiCDTMM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 14:12:12 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69E3E199D7F
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 11:11:21 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id ay7so8781479oib.8
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 11:11:21 -0800 (PST)
+        with ESMTP id S229656AbiCDTUG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 14:20:06 -0500
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0037FEBBB0
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 11:19:10 -0800 (PST)
+Received: by mail-qk1-x72f.google.com with SMTP id f21so7196955qke.13
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 11:19:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=AiDxHS2NdQhOu+KFhPqadeaaVXP/ilpPvsbeyXBMJ7A=;
-        b=KR9ub9K3Iro7q3PvGmJpg5EoMCOBlHBs7205Awc3dTfSaZzcG8eYRsVckBAxfDGQGo
-         13n50zgRp4mFUCWhZL8yh75DcmlByFadGV8ktckVNMlr90NsPav5iytTGy1PycIq8Ivq
-         bUpkubmNVmBdserC5bSiQEbu81WV9UshGQDHhOtEpfwxrSZ9AoNqpLhySacy3Sktk9rJ
-         ise7OYSki3tgFD04MDpAkRCwYbZCvzN3GH9yudaEMmv5JdxwwV4r1xOeTBxJ5jniNX5w
-         7FtAeTbcaTOajTTjKe1dU5Jl29D8syE+mVPYw80j/aWuN58x38hWKSOsfkzlvsg1ommm
-         hmbg==
+        bh=Z77oDzyX/wOLZ6q63WM9E1ozmC+PbxP8XjtVOB9hwUY=;
+        b=VpPtqEYeMcHM6Rk5aPWGTGWL3ChL2X0tOQ/hNJ2XrXpH+tNbJ/I2fVCjW0PCLNrDWE
+         TsKZ7yisZMZzQ/Itmt22Fbil3Bl+WgqC1N2ute+YCTWZ6dxZrnr8cEqJtwmC5X4QD4cz
+         XRu0bvC8tGdSW0XvxE7oNTRaQ/9D0uG1gRmyvd1vTgo0nlRzHJ1/QYEAL20HdczKGDab
+         67x2TBoM4peoJqUso0eOfe7YtTq+vh6fRjeLUqUdDKifQOUq2HdnvPJcdmmI7fDAtlQE
+         xbElQ70VgCo6FTx1GiDTU31gSmp5/zbny87MXWfu/cmhuIHi9OqF6BKY9iBZqhtQ2ogk
+         K2nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=AiDxHS2NdQhOu+KFhPqadeaaVXP/ilpPvsbeyXBMJ7A=;
-        b=hr49GIj7biDWWEP8Vzfm14IYnadjg8Xl2Vq0Z474ndjx23Lz+XgTak+9poEuTRix4x
-         z4795fY9ybpDnCMNe9JZrg7ugOlisz2WVGCux+GAc+596SQEC6Qtz+q0xZFwmfJBRn6/
-         9McdKuGuNPvvitcHNyxV/jMxXwBMfnj/oyBAtN4gjanJ3KH+ggVJYKdbQSoLgGZFshKY
-         AHeyb4uJFM50A2yuOhZrmcg2xuu6H2AHn0YA/CeBzhsF+r7khKPB2SoOaS/qVt9CzkWD
-         jFLrSIkwIM/qdyoPVbhciFy+YfWZxXtK1MAo0gL9gP1iG+WqtBxzkR2UEa93fLWtU6fJ
-         QZuA==
-X-Gm-Message-State: AOAM532TW4m09kvrDeyye7HFlaFoLXG90fQVJ26LyhwZ2NF87YECpX1F
-        5K/pqcs7hJOSg0KmX9lyRi57
-X-Google-Smtp-Source: ABdhPJwLXu2QH653F3g6ff4Errps/4wem0d7LQp+NNxzWaG4gvO7OGjPMmo0OshCAr/+r5jyBL4kpA==
-X-Received: by 2002:a05:6808:f11:b0:2d9:a01a:4b9b with SMTP id m17-20020a0568080f1100b002d9a01a4b9bmr22032oiw.194.1646421080791;
-        Fri, 04 Mar 2022 11:11:20 -0800 (PST)
+        bh=Z77oDzyX/wOLZ6q63WM9E1ozmC+PbxP8XjtVOB9hwUY=;
+        b=O14O/2+K1S55QtSt4xJ9j5K2GZQV7uJuHa1iDvGDQk4MFKY3xN6WCC06G3MaDzUkuD
+         HruntnrOqszvc50d7IZlGof3NNrz1eBMh5QNruEXUZIahh4mbB2ilonqJgF43Iy6th4J
+         gDcn91cUEa/pMHFZHi0bRg3ZIpufdKTGHH7tfu3gIAnxPskc2BggiQrL1YFmgVDBqK/q
+         nYZtLaSF6rF7koA2Y0t71I6hfoVJA/JMW9qtr+3HZvcgDrFbIjnOGJUm9mfQpu/lxbUo
+         4QekNfEaWhhROmCl7VotjPSsfn1SDm6qWRna/HtOzGrJ1fbBtq29GzBioAfeTFPx73wq
+         VhLg==
+X-Gm-Message-State: AOAM5306IglIMvsdai9RI1DYaVAwKcHMiLz4dHD8O73rRPq4IxFXp5YB
+        pF68r6BzLBi5krCWzBK1yHug
+X-Google-Smtp-Source: ABdhPJyz3Xz2ti6wTwDYNXKKs97KzEjhDm9D4EPivW0GatNnr0kVEvzPrBfIX1AAAAGYI1wgU+5VwQ==
+X-Received: by 2002:a05:620a:20c8:b0:475:d0cb:e6eb with SMTP id f8-20020a05620a20c800b00475d0cbe6ebmr97048qka.612.1646421549106;
+        Fri, 04 Mar 2022 11:19:09 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id j9-20020a056808056900b002d3ebd30b3esm2858297oig.41.2022.03.04.11.11.19
+        by smtp.gmail.com with ESMTPSA id s8-20020a05622a1a8800b002de08a30becsm3862617qtc.80.2022.03.04.11.19.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Mar 2022 11:11:20 -0800 (PST)
-Message-ID: <2e32b2cf-0208-1476-57f0-88f68a5936a1@github.com>
-Date:   Fri, 4 Mar 2022 14:11:19 -0500
+        Fri, 04 Mar 2022 11:19:08 -0800 (PST)
+Message-ID: <6442a1ce-d3ef-d564-ef98-a621e88a0b02@github.com>
+Date:   Fri, 4 Mar 2022 14:19:07 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [PATCH v2 00/14] tree-wide: small fixes for memory leaks
+Subject: Re: [PATCH 00/11] Partial bundles
 Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
- <cover-v2-00.14-00000000000-20220304T182902Z-avarab@gmail.com>
+Cc:     stolee@gmail.com, avarab@gmail.com, gitster@pobox.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <cover-v2-00.14-00000000000-20220304T182902Z-avarab@gmail.com>
+In-Reply-To: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/4/2022 1:32 PM, Ævar Arnfjörð Bjarmason wrote:
-> This is a collection of various otherwise unrelated tree-wide fixes
-> for memory leaks. See v1 for a (short) overview:
-> https://lore.kernel.org/git/cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com/
+On 2/23/2022 12:55 PM, Derrick Stolee via GitGitGadget wrote:
+> While discussing bundle-URIs [1], it came to my attention that bundles have
+> no way to specify an object filter, so bundles cannot be used with partial
+> clones.
 > 
-> This re-roll addresses issues Derrick Stolee noted. There's a trivial
-> commit-message change in 1/14, and a rather trivial (but important)
-> change in how a variable is incremented in 7/14.
+> [1]
+> https://lore.kernel.org/git/7fab28bf-54e7-d0e9-110a-53fad6244cc9@gmail.com/
 > 
-> That change to v1 is actually small, but the range-diff is big since
-> "git diff" picks a different way to "anchor" the diff as a result.
+> This series provides a way to fix that by adding a 'filter' capability to
+> the bundle file format and allowing one to create a partial bundle with 'git
+> bundle create --filter=blob:none '.
+> 
+> There are a couple things that I want to point out about this implementation
+> that could use some high-level feedback:
+> 
+>  1. I moved the '--filter' parsing into setup_revisions() instead of adding
+>     another place to parse it. This works for 'git bundle' but it also
+>     allows it to be parsed successfully in commands such as 'git diff' which
+>     doesn't make sense. Options such as '--objects' are already being parsed
+>     there, and they don't make sense either, so I want some thoughts on
+>     this.
+> 
+>  2. If someone uses 'git clone partial.bdl partial' where 'partial.bdl' is a
+>     filtered bundle, then the clone will fail with a message such as
+> 
+> fatal: missing blob object '9444604d515c0b162e37e59accd54a0bac50ed2e' fatal:
+> remote did not send all necessary objects
+> 
+> This might be fine. We don't expect users to clone partial bundles or fetch
+> partial bundles into an unfiltered repo and these failures are expected. It
+> is possible that we could put in custom logic to fail faster by reading the
+> bundle header for a filter.
+> 
+> Generally, the idea is to open this up as a potential way to bootstrap a
+> clone of a partial clone using a set of precomputed partial bundles.
 
-Yep. This version looks good to go. Thanks for the re-roll.
+Thanks Jeff, for providing a review of this series. I hope that at
+least one other reviewer could take a look sometime.
 
+Thanks,
 -Stolee
-
