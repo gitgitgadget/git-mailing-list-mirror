@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0475C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 18:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C19AEC433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 18:33:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240762AbiCDSdp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 13:33:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51974 "EHLO
+        id S241724AbiCDSdr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 13:33:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241730AbiCDSdj (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241732AbiCDSdj (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 4 Mar 2022 13:33:39 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BABE949912
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 10:32:36 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id v2-20020a7bcb42000000b0037b9d960079so7704734wmj.0
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:32:36 -0800 (PST)
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA1A35F66
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 10:32:34 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id t11so13931554wrm.5
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:32:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Cayrol9sUQQWr8TuL5vBd4wrgyOhpaWRL7CIrzAwQKc=;
-        b=ej8nwsy4225Rf5wuXQarFTCqKVMYAb8zhqOl/cf7jsgHyj5szEvOTONjjm4thiJkzI
-         FtZkBoXotfDq0V8e07+H5QOCtnUJeAjEQvf/G6cLeHilAcx4YeK9zJmc7ydQWeXUMxKz
-         0T1ynuvblTi+2Eb1xTNI4RFFi9Tn6Ni9iB5zZgyIH0DfZzc+h139gk0GK+jSKj4XtuRM
-         FUZYkEWoRAjPjKDxGQ95QDPGzeeGhhHiR6DhYkEKRzDYAnxj6rCCKMtj+7HsuzEAIjMU
-         7e4Tz0KiNaInRVQ8NDNiyXP82r/9nypLOEgY9qXFpxVi6fW3qiJGBmV04rYo1Dgt6GyG
-         hupQ==
+        bh=3E3QcWzdHFRs9rdSlHOOuV6A/S6L2GoKPxiHS0KaoFM=;
+        b=ZsB4pTsX1yXsSatLZUt48fXZLFJh8Bju2u/mz5fAItWRKRTHdmPnl0TC5oTBZBaG62
+         jwboXzf3T13k+AiJNO6BgscLVIJWjJoetk3vJwGnJosnXW/vi2sPNLdEvMJvtlg9PJbQ
+         ybiwat0SkMGvmlyRu+lLr3FUXph0xJaymKKFcBjLDLC/S8Z7BSGn6wU2E6bIF3zZmgD2
+         MOJqeUOvRc/YIF5u7XRVmUGNLKCv8G+/lpM8idgeXWqnXgIeVdpy+9TsRD/fBYHEaX0b
+         elaEPMQ3YI0z+qCDGhrJaZrltArZICGfnUtJudQaUff6k+6ugA7/0lMdEqg/QUBB8kko
+         5dRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Cayrol9sUQQWr8TuL5vBd4wrgyOhpaWRL7CIrzAwQKc=;
-        b=hMZxB269VvXICZk6k6CkwfdxfoB9TfQL6rJVs6LVpwSmCdye0v22Z8XvOlVL7+vfs1
-         SVeAv7icpNDj7wBiqwjoQPH44lvSlDvK2TDhWGuiNHIQHFQ7ZnIX8icKduPemjK+hvI7
-         9UWinih7KTx3YUNS39+CRlfKrMn29FYFTDUbvt0YVYI/+a3MfPOor7Ltr5h/sekxDidp
-         qiJZWTrh8RGOpJNHGGSfHkRpLUeRMXinZv4ayK4uV9+RHVRmiLbSUn7lZLjCtdjrpQxz
-         sMffzCNIOlP3XnN0yN9+mlsbZKZUS31C6s3KaX4vde4aCYovwAmqi9enzbYgshyU/HV6
-         u70Q==
-X-Gm-Message-State: AOAM532a8T0SkCIlp+Uzy2du1II0Zva3m98eXR+kAxZ877azQ8dyzrC7
-        3ag+kuNQYu0ODyvH/Mb+vASvfnq6aYfENQ==
-X-Google-Smtp-Source: ABdhPJzyEvgn/4diNHhiq5BWXdR7baoJyJgALeuyNpArNN6sPcH6vDnx/C3mfM8ll1QZdUjde5x4og==
-X-Received: by 2002:a05:600c:1d13:b0:389:7a40:56e2 with SMTP id l19-20020a05600c1d1300b003897a4056e2mr4005557wms.69.1646418754568;
-        Fri, 04 Mar 2022 10:32:34 -0800 (PST)
+        bh=3E3QcWzdHFRs9rdSlHOOuV6A/S6L2GoKPxiHS0KaoFM=;
+        b=fLgkgeyGBAa9IWyy5o0DNnykyueb8eAOpY1m2abJrY55eWVM+tV+Fh6F34qmfIJE1w
+         Z04aZZlHh7YnTrjQB+cjh5+JOucUD09pRGRhNbf8nUhqLaltAJc2l76Z5R5D3M6vPmg7
+         r8oNsBP/eTLKTx3Ij/Ths5Qd6gTRds/x+5pA9IS+sA0tEaAjX5cW3/5eyZBlghhq/U2D
+         cBlMSBUg5slnFttVk6+YMcrQVo5jXzU37NHmX4hVzu72Tey2diyXTRCjz1EqNuzjn7VW
+         6C3lOoUiyusyfG1LCezbr31mzJMD4K5lQNxhIWYI6UzrnMo1AhEtppHVWoFzvocyBk+I
+         OxPA==
+X-Gm-Message-State: AOAM533h/kRmcnHiHaHq4eJYm6wd2nuTt5OojatB5lg8qROp5tuXitjk
+        a23UiMlpV+f1xXP/bv4bepX8egH1al7EVw==
+X-Google-Smtp-Source: ABdhPJwwrMdhfZVAZckhL499B3RbESFz0b30ZRyd/CJyNbU6072sR098GMdqO+W2j1J7Yf53jBOI4w==
+X-Received: by 2002:a05:6000:143:b0:1f0:25a1:874c with SMTP id r3-20020a056000014300b001f025a1874cmr19401wrx.191.1646418752659;
+        Fri, 04 Mar 2022 10:32:32 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 11-20020a05600c22cb00b00382a960b17csm10573990wmg.7.2022.03.04.10.32.33
+        by smtp.gmail.com with ESMTPSA id 11-20020a05600c22cb00b00382a960b17csm10573990wmg.7.2022.03.04.10.32.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 10:32:33 -0800 (PST)
+        Fri, 04 Mar 2022 10:32:31 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,9 +54,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 13/14] range-diff: plug memory leak in read_patches()
-Date:   Fri,  4 Mar 2022 19:32:16 +0100
-Message-Id: <patch-v2-13.14-c6e61b85491-20220304T182902Z-avarab@gmail.com>
+Subject: [PATCH v2 11/14] lockfile API users: simplify and don't leak "path"
+Date:   Fri,  4 Mar 2022 19:32:14 +0100
+Message-Id: <patch-v2-11.14-217754edc62-20220304T182902Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.35.1.1248.gb68c9165ad8
 In-Reply-To: <cover-v2-00.14-00000000000-20220304T182902Z-avarab@gmail.com>
 References: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com> <cover-v2-00.14-00000000000-20220304T182902Z-avarab@gmail.com>
@@ -67,106 +67,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend code added in d9c66f0b5bf (range-diff: first rudimentary
-implementation, 2018-08-13) to use a "goto cleanup" pattern. This
-makes for less code, and frees memory that we'd previously leak.
+Fix a memory leak in code added in 6c622f9f0bb (commit-graph: write
+commit-graph chains, 2019-06-18). We needed to free the "lock_name" if
+we encounter errors, and the "graph_name" after we'd run unlink() on
+it.
 
-The reason for changing free(util) to FREE_AND_NULL(util) is because
-at the end of the function we append the contents of "util" to a
-"struct string_list" if it's non-NULL.
+For the case of write_commit_graph_file() refactoring the code to free
+the "lock_name" after we were done using the "struct lock_file lk"
+would have made the control flow more complex. Luckily we can free the
+"lock_file" right after the hold_lock_file_for_update() call, if it
+makes use of "path" at all it'll have copied its contents to a "struct
+strbuf" of its own.
+
+While I'm at it let's fix code added in fb10ca5b543 (sparse-checkout:
+write using lockfile, 2019-11-21) in write_patterns_and_update() to
+avoid the same complexity that I thought I needed when I wrote the
+initial fix for write_commit_graph_file(). We can free the
+"sparse_filename" right after calling hold_lock_file_for_update(), we
+don't need to wait until we're exiting the function to do so.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- range-diff.c | 29 ++++++++++++-----------------
- 1 file changed, 12 insertions(+), 17 deletions(-)
+ builtin/sparse-checkout.c | 3 +--
+ commit-graph.c            | 2 ++
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/range-diff.c b/range-diff.c
-index b2a2961f521..b72eb9fdbee 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -40,6 +40,7 @@ static int read_patches(const char *range, struct string_list *list,
- 	char *line, *current_filename = NULL;
- 	ssize_t len;
- 	size_t size;
-+	int ret = -1;
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 9c338d33ea2..270ad49c2b8 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -328,11 +328,11 @@ static int write_patterns_and_update(struct pattern_list *pl)
  
- 	strvec_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
- 		     "--reverse", "--date-order", "--decorate=no",
-@@ -68,10 +69,10 @@ static int read_patches(const char *range, struct string_list *list,
- 	if (strbuf_read(&contents, cp.out, 0) < 0) {
- 		error_errno(_("could not read `log` output"));
- 		finish_command(&cp);
--		return -1;
-+		goto cleanup;
- 	}
- 	if (finish_command(&cp))
--		return -1;
-+		goto cleanup;
+ 	fd = hold_lock_file_for_update(&lk, sparse_filename,
+ 				      LOCK_DIE_ON_ERROR);
++	free(sparse_filename);
  
- 	line = contents.buf;
- 	size = contents.len;
-@@ -95,12 +96,9 @@ static int read_patches(const char *range, struct string_list *list,
- 			CALLOC_ARRAY(util, 1);
- 			if (get_oid(p, &util->oid)) {
- 				error(_("could not parse commit '%s'"), p);
--				free(util);
--				free(current_filename);
-+				FREE_AND_NULL(util);
- 				string_list_clear(list, 1);
--				strbuf_release(&buf);
--				strbuf_release(&contents);
--				return -1;
-+				goto cleanup;
- 			}
- 			util->matching = -1;
- 			in_header = 1;
-@@ -111,11 +109,8 @@ static int read_patches(const char *range, struct string_list *list,
- 			error(_("could not parse first line of `log` output: "
- 				"did not start with 'commit ': '%s'"),
- 			      line);
--			free(current_filename);
- 			string_list_clear(list, 1);
--			strbuf_release(&buf);
--			strbuf_release(&contents);
--			return -1;
-+			goto cleanup;
+ 	result = update_working_directory(pl);
+ 	if (result) {
+ 		rollback_lock_file(&lk);
+-		free(sparse_filename);
+ 		clear_pattern_list(pl);
+ 		update_working_directory(NULL);
+ 		return result;
+@@ -348,7 +348,6 @@ static int write_patterns_and_update(struct pattern_list *pl)
+ 	fflush(fp);
+ 	commit_lock_file(&lk);
+ 
+-	free(sparse_filename);
+ 	clear_pattern_list(pl);
+ 
+ 	return 0;
+diff --git a/commit-graph.c b/commit-graph.c
+index aab0b292774..b8cde7ea27d 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1854,6 +1854,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 
+ 		hold_lock_file_for_update_mode(&lk, lock_name,
+ 					       LOCK_DIE_ON_ERROR, 0444);
++		free(lock_name);
+ 
+ 		fd = git_mkstemp_mode(ctx->graph_name, 0444);
+ 		if (fd < 0) {
+@@ -1978,6 +1979,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+ 		} else {
+ 			char *graph_name = get_commit_graph_filename(ctx->odb);
+ 			unlink(graph_name);
++			free(graph_name);
  		}
  
- 		if (starts_with(line, "diff --git")) {
-@@ -136,12 +131,9 @@ static int read_patches(const char *range, struct string_list *list,
- 			if (len < 0) {
- 				error(_("could not parse git header '%.*s'"),
- 				      orig_len, line);
--				free(util);
--				free(current_filename);
-+				FREE_AND_NULL(util);
- 				string_list_clear(list, 1);
--				strbuf_release(&buf);
--				strbuf_release(&contents);
--				return -1;
-+				goto cleanup;
- 			}
- 			strbuf_addstr(&buf, " ## ");
- 			if (patch.is_new > 0)
-@@ -219,6 +211,9 @@ static int read_patches(const char *range, struct string_list *list,
- 		strbuf_addch(&buf, '\n');
- 		util->diffsize++;
- 	}
-+
-+	ret = 0;
-+cleanup:
- 	strbuf_release(&contents);
- 
- 	if (util)
-@@ -226,7 +221,7 @@ static int read_patches(const char *range, struct string_list *list,
- 	strbuf_release(&buf);
- 	free(current_filename);
- 
--	return 0;
-+	return ret;
- }
- 
- static int patch_util_cmp(const void *dummy, const struct patch_util *a,
+ 		ctx->commit_graph_hash_after[ctx->num_commit_graphs_after - 1] = xstrdup(hash_to_hex(file_hash));
 -- 
 2.35.1.1248.gb68c9165ad8
 
