@@ -2,152 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78520C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 13:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0591C433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 13:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239766AbiCDNKU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 08:10:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51492 "EHLO
+        id S239778AbiCDNKX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 08:10:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238779AbiCDNJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 08:09:50 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC8A01B45C7
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 05:08:57 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id b8so7298612pjb.4
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 05:08:57 -0800 (PST)
+        with ESMTP id S239161AbiCDNJv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 08:09:51 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BD3E1B45CF
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 05:08:59 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id t187so3212477pgb.1
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 05:08:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ay/ktnK+cq01Lf8szp+Tz08UTxiSgd+2T91yIAsnViU=;
-        b=nBFfqW8KeiM9o7pRJSuNQ7JAo8DMOEeAXc2nvXGq/m6+RuOq7eTgq5suY24fXS53+e
-         sIn08tslDVngcKfGoa675xnLCKMjIgOtyJHArw12YPhhjWgi/d+1u++asfIfW8wf/ZX9
-         82w4Pcx+/KFh+gQm5wOkV4N18B7i28f0KB7q0fz9+Dinj+EwchCI7LhKY6KywHtY2wDl
-         U/B1gjeyLny1gLCVunwCkXU+JAwHm640DuGHm1lJvA4axAFTx0EIq/EES0m8VahEtY6Q
-         bg49rEA1PvU2EC4eX7EB+uk33CM9r+mRp74YpWNJF+wUynC8VuAZFclvecK9HDaJi+vn
-         fIyg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7U+tkTko6hIrekc37uGzYWPT4LYUml7HX9+uJ+ns+98=;
+        b=P2UxLIvW+42sd8nZ+Qq7ADOU9RKeggF/N1GaOnofAoy/jgKFF+25MHPtHdhZevTIxG
+         z3fiDLKnHb5833XLF0x8kOKgwD7nRpvcFlnnY9M2eWcl4wM5B50rLPaKEQfP6YRbzO4w
+         MH0UJI9esrVa4/4kY3m2CRKpn9IWFgLf/2olD2imZG2L3B26imEBx5GIt9sDyKHtaSJz
+         P2mrIg749fMdA/5PjKlXDPYdiUVHj+J2/k7x5OcKIVqSfLyKcUtB3RP8sw2ohIIuYYzO
+         ZgmKyP5rJeqzCeRLOLELtjWKxLhO0vJgrcHqT1QNAmukQfxapCnpIa9wEhErJeh/Sz7T
+         aAGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ay/ktnK+cq01Lf8szp+Tz08UTxiSgd+2T91yIAsnViU=;
-        b=RdLIXd2cqRTDAM8iImnCOiWqOTys1cRQ6I+P9KFyTOGFGT6RMPhX6LxrOUTMmwlmv8
-         o4PlNg7r1t2gAR39cX/bA7aCHzi+F54Goo7s+/iAF8kHxlfccVmKZ//ddurn1c/MBXtK
-         qYNcZXYzo4C2Db5eqm62J5YnxRD7TlnaDlG+c68a53mBCdAHlByADttBGJTn9VWwatpF
-         3O99y2/GrgnySERJZ5QpfYNTI8YEs2MF3Cetthg1LqT8YGm1TFTCPqtyAWN6pTdrhgK7
-         LAKNW0O1iC+Jj0JG0h8SaNtLWMPr7tUZNaG7ZnmqtfiJrfuY3frHyrEMThQb0Ut7HzQ6
-         vjlQ==
-X-Gm-Message-State: AOAM532hd29HJsfYocfq1WW2CJPmNU+mg1yDzrhRuCgmzAn7jBO9xJ3A
-        /DQQmW+A1Sgd34poIUDGZEuskrqWJpWr0Q==
-X-Google-Smtp-Source: ABdhPJygg1ODQ2l/CY59KevI+Q967LG+rlzHNjpkmtDEW2futZdCClwI6Odb1ZYMyGvn2QDqNN0few==
-X-Received: by 2002:a17:902:6e09:b0:151:76bc:8af9 with SMTP id u9-20020a1709026e0900b0015176bc8af9mr21566476plk.152.1646399336715;
-        Fri, 04 Mar 2022 05:08:56 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7U+tkTko6hIrekc37uGzYWPT4LYUml7HX9+uJ+ns+98=;
+        b=yqYRnV9P3PfjR8Ty5iDFQ/3+RzFcHHDVpcID5Exnyd01YKiJHy/FNK8ArEVNS9BoDC
+         l55BJyeADfvoM0Ot+kwAkRRsDD0LwWmib9yQAAvoQwmVwdk5zTfcUdqQa7DBB+gaczUl
+         DWg8+i3Gb/q2V0o8pebF/DZk9xPsv21XbmVCZ8ggRiOWkHMYt3jIsvKdwuBxCe5JNHSi
+         3F+EDpiyyn8ElBEfdYG3EOA7A+2yS9LOd5AUmsQZmvWLUWWglBZeFP/57PXTJnQGo3go
+         feh+veIw67J8b1xOuKqolv/OqXV4J6EH8cJEbWiuaArNAKTvyIb5Se4/HSlkAIhHxLkQ
+         qj1A==
+X-Gm-Message-State: AOAM532PT34Mx9XKY6CzK2s+LZ8iXO1JpDcCu9fSthykcZecut2lKylz
+        Z/wz6WVD5XpCtrlKjkWoSmLjDfV7wLxjLA==
+X-Google-Smtp-Source: ABdhPJwFMM/Iy4rBxUsnE0SBPJilbEXMIHNfOE92InT12S7bv25T6GMUvH2qlwzU+mXRdzjXS9DolA==
+X-Received: by 2002:a63:445c:0:b0:375:9c0c:c360 with SMTP id t28-20020a63445c000000b003759c0cc360mr32675292pgk.588.1646399338281;
+        Fri, 04 Mar 2022 05:08:58 -0800 (PST)
 Received: from ubuntu.localdomain ([140.115.59.167])
-        by smtp.gmail.com with ESMTPSA id nm14-20020a17090b19ce00b001bf2404fd9dsm2205891pjb.31.2022.03.04.05.08.55
+        by smtp.gmail.com with ESMTPSA id nm14-20020a17090b19ce00b001bf2404fd9dsm2205891pjb.31.2022.03.04.05.08.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 05:08:56 -0800 (PST)
+        Fri, 04 Mar 2022 05:08:57 -0800 (PST)
 From:   xing zhi jiang <a97410985new@gmail.com>
 To:     git@vger.kernel.org
 Cc:     a97410985new@gmail.com
-Subject: [GSoC][PATCH 0/1] userdiff: add buildin diff driver for JavaScript language
-Date:   Fri,  4 Mar 2022 05:08:53 -0800
-Message-Id: <20220304130854.857746-1-a97410985new@gmail.com>
+Subject: [GSoC][PATCH 1/1] Add a diff driver for JavaScript languages.
+Date:   Fri,  4 Mar 2022 05:08:54 -0800
+Message-Id: <20220304130854.857746-2-a97410985new@gmail.com>
 X-Mailer: git-send-email 2.35.1.273.ge6ebfd0e8c.dirty
+In-Reply-To: <20220304130854.857746-1-a97410985new@gmail.com>
+References: <20220304130854.857746-1-a97410985new@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have already searched the git public-inbox don't find any active patch about
-userdiff build-in driver for JavaScript(there is an unfinished patch about 
-three years ago). So I pick this as my GSoC micro project.
+In the xfunction part that matches normal functions,
+a variable declaration with an assignment of function, the function declaration
+in the class, and also the function is object literal's property.
 
-Below are typical function patterns from JavaScript, and 
-also has an example that matches the corresponding pattern. 
-These examples come from many popular JavaScript projects. 
-Because I want to make sure the hunk header would work well 
-on real-world projects.
+And in the word regex part, that matches numbers, punctuations, and also the
+JavaScript identifier.
+This part heavily references the formal ECMA sepcification[1].
 
-Common function's pattern for JavaScript
-1. normal function
-  `^[\t ]*((export[\t ]+)?((async|get|set)[\t ]+)?function[\t ]*([\t ]*\\*[\t ]*|[\t ]*)?[$_[:alpha:]][$_[:alnum:]]*[\t ]*\\(.*)`
-  example: 
-  1. https://github.com/mozilla/pdf.js/blob/85ff7b117e04471c550914b7a13193ab7f7ecc6a/src/display/canvas.js#L648
-  2. https://github.com/mozilla/pdf.js/blob/ad4b2ce021277ff7cea8ec7e32775c65d74ee673/test/unit/evaluator_spec.js#L40
-2. JavaScript variable declaration with a lambda expression
-  `^^[\t ]*((const|let|var)[\t ]*[$_[:alpha:]][$_[:alnum:]]*[\t ]*=[\t ]*"
-	 "(\\(.*\\)|[$_[:alpha:]][$_[:alnum:]]*[\t ])[\t ]*=>[\t ]*\\{?)`
-   example:
-   1. https://github.com/webpack/webpack/blob/2279c5a2105ea1498b83a4854919aefe1a28c553/lib/ChunkGraph.js#L91
-   2. https://github.com/webpack/webpack/blob/2279c5a2105ea1498b83a4854919aefe1a28c553/lib/ChunkGraph.js#L122
-    
-   I found sometimes would define function on this way. But this should only match the top level? Because 
-   it may match inside the function, and the below code would match the wrong function[1].
+[1]https://262.ecma-international.org/12.0/#sec-ecmascript-language-lexical-grammar
 
-3. exports methods by assigning an anonymous function
-  `^[\t ]*(exports\\.[$_[:alpha:]][$_[:alnum:]]*[\t ]*=[\t ]*(\\(.*\\)|[$_[:alpha:]][$_[:alnum:]]*)[\t ]*=>.*)`
-   example:
-   1. https://github.com/webpack/webpack/blob/c181294865dca01b28e6e316636fef5f2aad4eb6/lib/dependencies/DynamicExports.js#L17
-   2. https://github.com/ajaxorg/ace/blob/d95725983b363a616c584237013dfd36eaadbba4/lib/ace/lib/dom.js#L37
-4. expression about assign function to LHS
-  `^(.*=[\t ]*function[\t ]*([$_[:alpha:]][$_[:alnum:]]*)?[\t ]*\\(.*)`
-   example:
-   1. https://github.com/ajaxorg/ace/blob/94422a4a892495564c56089af85019a8f8f24673/lib/ace/anchor.js#L102
-   2. https://github.com/ajaxorg/ace/blob/d95725983b363a616c584237013dfd36eaadbba4/lib/ace/lib/dom.js#L37
-   3. https://github.com/ajaxorg/ace/blob/4257621787b4253d6d493611f4ec5a37829da323/lib/ace/search.js#L350
-   4. https://github.com/mozilla/pdf.js/blob/85ff7b117e04471c550914b7a13193ab7f7ecc6a/src/display/canvas.js#L299
-   
-   Maybe this should only match on the 0,1,2 indent level? Because JavaScript may match the function assignment in another function.
-5. normal function in object literal
-  `^[\t ]*([$_[:alpha:]][$_[:alnum:]]*[\t ]*:[\t ]*function[\t ].*)`
-    1. https://github.com/jquery/jquery/blob/de5398a6ad088dc006b46c6a870a2a053f4cd663/src/core.js#L201
-    2. https://github.com/mozilla/pdf.js/blob/85ff7b117e04471c550914b7a13193ab7f7ecc6a/src/display/canvas.js#L242
-6. function in class
-  `^[\t ]*((static[\t ]+)?((async|get|set)[\t ]+)?[$_[:alpha:]][$_[:alnum:]]*[\t ]*\\(.*)`
-    
-   This regex is tricky because the class's function is no function keyword in JavaScript. 
-   If you write the regex to match them, it will match many non-function declaration things!!! 
-   Like examples below:
-   1. the non-function matches
-     1. https://github.com/ajaxorg/ace/blob/94422a4a892495564c56089af85019a8f8f24673/lib/ace/anchor.js#L58
-     2. https://github.com/ajaxorg/ace/blob/d95725983b363a616c584237013dfd36eaadbba4/lib/ace/lib/dom.js#L132
-   2. the function in class
-     1. https://github.com/mozilla/pdf.js/blob/85ff7b117e04471c550914b7a13193ab7f7ecc6a/src/display/canvas.js#L1929
-     2. https://github.com/webpack/webpack/blob/ccecc17c01af96edddb931a76e7a3b21ef2969d8/lib/Chunk.js#L179
-     3. https://github.com/webpack/webpack/blob/612de998f186a9bb2fe8769a91678df689a0541e/lib/Module.js#L242
-     4. https://github.com/mozilla/pdf.js/blob/5cf116a958548f6596674bf8d5ca0fe64aa2df3c/web/view_history.js#L75
-     5. https://github.com/mozilla/pdf.js/blob/5cf116a958548f6596674bf8d5ca0fe64aa2df3c/web/view_history.js#L89
-   
-    My solution is to add some negation rules, and one rule is skipping the keywords that may have characters immediately 
-    following them in the parenthesis, rule is `!^[ \t]*(if|do|while|for|with|switch|catch|import|return)`.
-    Another negation rule is only before this 「function in class」 regex, that skips the line's indent level more than 
-    one because most of the function in class has one indent level(the class is on top-level). The negation rule is 
-    `!^(\t{2,}|[ ]{5,})`.
-    
-    But this is not enough, because maybe has function call on one indent level. So need an negation rule for skipping 
-    statement. The negation rule is `!^.*;[ \t]*`. But the bad news is JavaScript's statement can end without a semicolon. 
-    So it still has an opportunity to recognize function call as the function declaration if the code's statement does not 
-    end with semicolons.
-
-Word's pattern for JavaScript
-In this part, I reference the formal ECMA specification heavily[2].
-JavaScript has some special syntax, such as numbers can be separated with an underscore for readability[3]. 
-And has BigInt literal, which is number end with a 「n」 character. So the number-related regex would be some 
-differences with another language.
-
-In the last, I had a fork git project on Github. And has the CI's result, the all test cases pass[4].
-
-[1] https://github.com/webpack/webpack/blob/2279c5a2105ea1498b83a4854919aefe1a28c553/lib/ChunkGraph.js#L279
-[2] https://262.ecma-international.org/12.0/#sec-ecmascript-language-lexical-grammar
-[3] https://v8.dev/features/numeric-separators
-[4] https://github.com/a97410985/git/actions/runs/1933091300
-
-xing zhi jiang (1):
-  Add a diff driver for JavaScript languages.
-
+Signed-off-by: xing zhi jiang <a97410985new@gmail.com>
+---
  .gitignore                                    |  1 +
  Documentation/gitattributes.txt               |  2 +
  ...avascript-assignment-of-anonymous-function |  4 ++
@@ -204,8 +130,527 @@ xing zhi jiang (1):
  create mode 100644 t/t4034/javascript/post
  create mode 100644 t/t4034/javascript/pre
 
-
-base-commit: e6ebfd0e8cbbd10878070c8a356b5ad1b3ca464e
+diff --git a/.gitignore b/.gitignore
+index f817c509ec..de628c53f8 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -244,3 +244,4 @@ Release/
+ /git.VC.db
+ *.dSYM
+ /contrib/buildsystems/out
++/.cache
+\ No newline at end of file
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 60984a4682..f6554a4651 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -828,6 +828,8 @@ patterns are available:
+ 
+ - `java` suitable for source code in the Java language.
+ 
++- `javascript suitable for source code in the JavaScript language.
++
+ - `markdown` suitable for Markdown documents.
+ 
+ - `matlab` suitable for source code in the MATLAB and Octave languages.
+diff --git a/t/t4018/javascript-assignment-of-anonymous-function b/t/t4018/javascript-assignment-of-anonymous-function
+new file mode 100644
+index 0000000000..5d4701e84c
+--- /dev/null
++++ b/t/t4018/javascript-assignment-of-anonymous-function
+@@ -0,0 +1,4 @@
++const RIGHT = function (a, b) {
++	
++    return a + b; // ChangeMe
++};
+\ No newline at end of file
+diff --git a/t/t4018/javascript-assignment-of-arrow-function b/t/t4018/javascript-assignment-of-arrow-function
+new file mode 100644
+index 0000000000..6ab73ccb7a
+--- /dev/null
++++ b/t/t4018/javascript-assignment-of-arrow-function
+@@ -0,0 +1,4 @@
++const RIGHT = (a, b) => {
++	
++    return a + b; // ChangeMe
++};
+\ No newline at end of file
+diff --git a/t/t4018/javascript-assignment-of-named-function b/t/t4018/javascript-assignment-of-named-function
+new file mode 100644
+index 0000000000..85d43123a6
+--- /dev/null
++++ b/t/t4018/javascript-assignment-of-named-function
+@@ -0,0 +1,4 @@
++const RIGHT = function test (a, b) {
++	
++    return a + b; // ChangeMe
++};
+\ No newline at end of file
+diff --git a/t/t4018/javascript-async-function b/t/t4018/javascript-async-function
+new file mode 100644
+index 0000000000..ebc7c8c05b
+--- /dev/null
++++ b/t/t4018/javascript-async-function
+@@ -0,0 +1,4 @@
++async function RIGHT(a, b) {
++  
++  return a + b; // ChangeMe
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-export-async-function b/t/t4018/javascript-export-async-function
+new file mode 100644
+index 0000000000..3cd60b7980
+--- /dev/null
++++ b/t/t4018/javascript-export-async-function
+@@ -0,0 +1,4 @@
++export async function RIGHT(a, b) {
++  
++  return a + b; // ChangeMe
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-export-function b/t/t4018/javascript-export-function
+new file mode 100644
+index 0000000000..177ddec779
+--- /dev/null
++++ b/t/t4018/javascript-export-function
+@@ -0,0 +1,4 @@
++export function RIGHT(a, b) {
++  
++  return a + b; // ChangeMe
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-exports-anomyous-function b/t/t4018/javascript-exports-anomyous-function
+new file mode 100644
+index 0000000000..45b0ecd659
+--- /dev/null
++++ b/t/t4018/javascript-exports-anomyous-function
+@@ -0,0 +1,4 @@
++exports.setFlagged = RIGHT => {
++	
++    return ChangeMe;
++};
+\ No newline at end of file
+diff --git a/t/t4018/javascript-exports-anomyous-function-2 b/t/t4018/javascript-exports-anomyous-function-2
+new file mode 100644
+index 0000000000..0c572bfde3
+--- /dev/null
++++ b/t/t4018/javascript-exports-anomyous-function-2
+@@ -0,0 +1,4 @@
++exports.RIGHT = (a, b, runtime) => {
++	
++    return ChangeMe;
++};
+\ No newline at end of file
+diff --git a/t/t4018/javascript-exports-function b/t/t4018/javascript-exports-function
+new file mode 100644
+index 0000000000..f1587fddac
+--- /dev/null
++++ b/t/t4018/javascript-exports-function
+@@ -0,0 +1,4 @@
++exports.RIGHT = function(document) {
++    
++    return ChangeMe
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-function b/t/t4018/javascript-function
+new file mode 100644
+index 0000000000..dd8ab54c9b
+--- /dev/null
++++ b/t/t4018/javascript-function
+@@ -0,0 +1,4 @@
++function RIGHT(a, b) {
++
++  return a + b; // ChangeMe
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-function-2 b/t/t4018/javascript-function-2
+new file mode 100644
+index 0000000000..d72063cdf0
+--- /dev/null
++++ b/t/t4018/javascript-function-2
+@@ -0,0 +1,10 @@
++function test(a, b) {
++  return {
++			RIGHT: function () {
++				currentUpdateRemovedChunks.forEach(function (chunkId) {
++					delete $installedChunks$[chunkId];
++				});
++				currentUpdateRemovedChunks = ChangeMe;
++   }
++  }
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-function-belong-to-IIFE b/t/t4018/javascript-function-belong-to-IIFE
+new file mode 100644
+index 0000000000..6a80118e8a
+--- /dev/null
++++ b/t/t4018/javascript-function-belong-to-IIFE
+@@ -0,0 +1,6 @@
++(function () {
++  this.$RIGHT = function (needle, modifier) {
++      let a = 5;
++      return ChangeMe;
++  };
++}).call(aaaa.prototype);
+\ No newline at end of file
+diff --git a/t/t4018/javascript-function-in-class b/t/t4018/javascript-function-in-class
+new file mode 100644
+index 0000000000..4b2f9c37e0
+--- /dev/null
++++ b/t/t4018/javascript-function-in-class
+@@ -0,0 +1,6 @@
++class Test {
++  RIGHT() {
++    let a = 4;
++    let b = ChangeMe;
++  }
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-function-in-class-2 b/t/t4018/javascript-function-in-class-2
+new file mode 100644
+index 0000000000..402c4aecc3
+--- /dev/null
++++ b/t/t4018/javascript-function-in-class-2
+@@ -0,0 +1,11 @@
++class Test {
++  RIGHT(
++      aaaaaaaaaa,
++      bbbbbbbbbb,
++      cccccccccc,
++      dddddddddd
++  ) {
++    let a = 4;
++    let b = ChangeMe;
++  }
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-function-in-object-literal b/t/t4018/javascript-function-in-object-literal
+new file mode 100644
+index 0000000000..37f7ef72ee
+--- /dev/null
++++ b/t/t4018/javascript-function-in-object-literal
+@@ -0,0 +1,7 @@
++const obj = {
++    RIGHT: function (elems, callback, arg) {
++        var length, value;
++        // ...
++        return ChangeMe
++    }
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-generator-function b/t/t4018/javascript-generator-function
+new file mode 100644
+index 0000000000..caf0b9f04f
+--- /dev/null
++++ b/t/t4018/javascript-generator-function
+@@ -0,0 +1,4 @@
++function* RIGHT(a, b) {
++  
++  return a + b; // ChangeMe
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-generator-function-2 b/t/t4018/javascript-generator-function-2
+new file mode 100644
+index 0000000000..6fc3b74a0d
+--- /dev/null
++++ b/t/t4018/javascript-generator-function-2
+@@ -0,0 +1,4 @@
++function *RIGHT(a, b) {
++  
++  return a + b; // ChangeMe
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-getter-function-in-class b/t/t4018/javascript-getter-function-in-class
+new file mode 100644
+index 0000000000..0159541be7
+--- /dev/null
++++ b/t/t4018/javascript-getter-function-in-class
+@@ -0,0 +1,6 @@
++class Test {
++  get RIGHT() {
++    let a = 4;
++    let b = ChangeMe;
++  }
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-setter-function-in-class b/t/t4018/javascript-setter-function-in-class
+new file mode 100644
+index 0000000000..3e17f47aa2
+--- /dev/null
++++ b/t/t4018/javascript-setter-function-in-class
+@@ -0,0 +1,6 @@
++class Test {
++  set RIGHT() {
++    let a = 4;
++    let b = ChangeMe;
++  }
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-skip-function-call-statement b/t/t4018/javascript-skip-function-call-statement
+new file mode 100644
+index 0000000000..84b51514d2
+--- /dev/null
++++ b/t/t4018/javascript-skip-function-call-statement
+@@ -0,0 +1,7 @@
++class Test {
++  static RIGHT() {
++    haha();
++    haha2()
++    let b = ChangeMe;
++  }
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-skip-keywords b/t/t4018/javascript-skip-keywords
+new file mode 100644
+index 0000000000..1ed56c08de
+--- /dev/null
++++ b/t/t4018/javascript-skip-keywords
+@@ -0,0 +1,34 @@
++function RIGHT(a, b) {
++  import("./async1")
++  if (a > 1) {
++    // ...
++  }
++  do {
++    // ...
++  } while (i < 5);
++  for (const element of array1) {
++    console.log(element)
++  }
++  with(o) {
++    console.log(x)
++  }
++  switch (expr) {
++    case 'a':
++      // ...
++      break;
++    case 'b':
++      // ...
++      break;
++    default:
++      // ...
++  }
++  try {
++    // ...
++    return (a + c)
++  } 
++  catch (error) {
++    // ...
++  }
++
++  return a + b; // ChangeMe
++}
+\ No newline at end of file
+diff --git a/t/t4018/javascript-static-function-in-class b/t/t4018/javascript-static-function-in-class
+new file mode 100644
+index 0000000000..efbccaf113
+--- /dev/null
++++ b/t/t4018/javascript-static-function-in-class
+@@ -0,0 +1,6 @@
++class Test {
++  static RIGHT() {
++    let a = 4;
++    let b = ChangeMe;
++  }
++}
+\ No newline at end of file
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index d5abcf4b4c..33073edeca 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -324,6 +324,7 @@ test_language_driver dts
+ test_language_driver fortran
+ test_language_driver html
+ test_language_driver java
++test_language_driver javascript
+ test_language_driver matlab
+ test_language_driver objc
+ test_language_driver pascal
+diff --git a/t/t4034/javascript/expect b/t/t4034/javascript/expect
+new file mode 100644
+index 0000000000..602513c651
+--- /dev/null
++++ b/t/t4034/javascript/expect
+@@ -0,0 +1,52 @@
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index b72238f..8bc3e3a 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
++<CYAN>@@ -1,32 +1,32 @@<RESET>
++// DecimalLiteral<RESET>
++<RED>123<RESET>
++<RED>0.123<RESET>
++<RED>0.123e+5<RESET>
++<RED>0.123E+5<RESET>
++<RED>0.123e5<RESET>
++<RED>1222222222222222223334444n<RESET><GREEN>124<RESET>
++<GREEN>0.124<RESET>
++<GREEN>0.123e-5<RESET>
++<GREEN>0.123E-5<RESET>
++<GREEN>0.123E5<RESET>
++<GREEN>12222222222222222233344445n<RESET>
++// HexIntegerLiteral<RESET>
++<RED>0x10<RESET>
++<RED>0X6Fa1<RESET>
++<RED>0x123_456<RESET>
++<RED>0x1234182989812f1289an<RESET><GREEN>0x11<RESET>
++<GREEN>0X5Fa1<RESET>
++<GREEN>0x123_756<RESET>
++<GREEN>0x1234182989812f1289bn<RESET>
++// OctalIntegerLiteral<RESET>
++<RED>05<RESET>
++<RED>0o6<RESET>
++<RED>0O7<RESET>
++<RED>0512_567<RESET>
++<RED>0o424242424242424242424242424242666666n<RESET><GREEN>06<RESET>
++<GREEN>0o5<RESET>
++<GREEN>0O4<RESET>
++<GREEN>0511_567<RESET>
++<GREEN>0o424242424242424242424242424242666667n<RESET>
++// BinaryIntegerLiteral<RESET>
++<RED>0b1001<RESET>
++<RED>0B0110<RESET>
++<RED>0b0001_1001_0011<RESET>
++<RED>0b1111111111111111111111111111111111111n<RESET><GREEN>0b1101<RESET>
++<GREEN>0B0010<RESET>
++<GREEN>0b0001_1101_0011<RESET>
++<GREEN>0b11111111111111000011111111111111111n<RESET>
++// punctuations<RESET>
++{<RED>a<RESET><GREEN>b<RESET>} (<RED>a<RESET><GREEN>b<RESET>)
++<RED>a<RESET><GREEN>b<RESET>;
++[<RED>1,<RESET>2<GREEN>,3<RESET>]
++[<RED>1, 2,<RESET> ...<RED>params<RESET><GREEN>params_v2<RESET> ]
++a<RED><=<RESET><GREEN>=<RESET>2 a<RED>>=<RESET><GREEN>=<RESET>2 a<RED>==<RESET><GREEN>=<RESET>2 a<RED>!=<RESET><GREEN>=<RESET>2 a<RED>===<RESET><GREEN>=<RESET>2 a<RED>!==<RESET><GREEN>=<RESET>2 a<RED>^=<RESET><GREEN>=<RESET>2 a<RED>=><RESET><GREEN>=<RESET>2
++a<RED>+=<RESET><GREEN>-=<RESET>b a<RED>*=<RESET><GREEN>%=<RESET>b a<RED>**=<RESET><GREEN>&&=<RESET>b a<RED>||=<RESET><GREEN>|=<RESET>b
++b<RED>+<RESET><GREEN>-<RESET>c a<RED>--<RESET><GREEN>++<RESET> a<RED>>><RESET><GREEN><<<RESET>b a<RED>>>><RESET><GREEN>>>>=<RESET>b a<RED>>>=<RESET><GREEN><<=<RESET>b
++a<RED>&&<RESET><GREEN>&<RESET>b a<RED>||<RESET><GREEN>|<RESET>b a<RED>&&=<RESET><GREEN>??=<RESET>b
+diff --git a/t/t4034/javascript/post b/t/t4034/javascript/post
+new file mode 100644
+index 0000000000..8bc3e3af12
+--- /dev/null
++++ b/t/t4034/javascript/post
+@@ -0,0 +1,32 @@
++// DecimalLiteral
++124
++0.124
++0.123e-5
++0.123E-5
++0.123E5
++12222222222222222233344445n
++// HexIntegerLiteral
++0x11
++0X5Fa1
++0x123_756
++0x1234182989812f1289bn
++// OctalIntegerLiteral
++06
++0o5
++0O4
++0511_567
++0o424242424242424242424242424242666667n
++// BinaryIntegerLiteral
++0b1101
++0B0010
++0b0001_1101_0011
++0b11111111111111000011111111111111111n
++// punctuations
++{b} (b)
++b;
++[2,3]
++[ ...params_v2 ]
++a=2 a=2 a=2 a=2 a=2 a=2 a=2 a=2
++a-=b a%=b a&&=b a|=b
++b-c a++ a<<b a>>>=b a<<=b
++a&b a|b a??=b
+\ No newline at end of file
+diff --git a/t/t4034/javascript/pre b/t/t4034/javascript/pre
+new file mode 100644
+index 0000000000..b72238f779
+--- /dev/null
++++ b/t/t4034/javascript/pre
+@@ -0,0 +1,32 @@
++// DecimalLiteral
++123
++0.123
++0.123e+5
++0.123E+5
++0.123e5
++1222222222222222223334444n
++// HexIntegerLiteral
++0x10
++0X6Fa1
++0x123_456
++0x1234182989812f1289an
++// OctalIntegerLiteral
++05
++0o6
++0O7
++0512_567
++0o424242424242424242424242424242666666n
++// BinaryIntegerLiteral
++0b1001
++0B0110
++0b0001_1001_0011
++0b1111111111111111111111111111111111111n
++// punctuations
++{a} (a)
++a;
++[1,2]
++[ 1, 2, ...params ]
++a<=2 a>=2 a==2 a!=2 a===2 a!==2 a^=2 a=>2
++a+=b a*=b a**=b a||=b
++b+c a-- a>>b a>>>b a>>=b
++a&&b a||b a&&=b
+\ No newline at end of file
+diff --git a/userdiff.c b/userdiff.c
+index 8578cb0d12..a6a341e3c1 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -168,6 +168,44 @@ PATTERNS("java",
+ 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+ 	 "|[-+*/<>%&^|=!]="
+ 	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
++
++PATTERNS("javascript",
++	 /* don't match the expression may contain parenthesis, because it is not a function declaration */
++	 "!^[ \t]*(if|do|while|for|with|switch|catch|import|return)\n"
++	 /* don't match statement */
++	 "!^.*;[ \t]*\n"
++	 /* match normal function */
++	 "^[\t ]*((export[\t ]+)?(async[\t ]+)?function[\t ]*([\t ]*\\*[\t ]*|[\t ]*)?[$_[:alpha:]][$_[:alnum:]]*[\t ]*\\(.*)\n"
++	 /* match JavaScript variable declaration with a lambda expression */
++	 "^[\t ]*((const|let|var)[\t ]*[$_[:alpha:]][$_[:alnum:]]*[\t ]*=[\t ]*"
++	 "(\\(.*\\)|[$_[:alpha:]][$_[:alnum:]]*[\t ])[\t ]*=>[\t ]*\\{?)\n"
++	 /* match exports for anonymous fucntion */
++	 "^[\t ]*(exports\\.[$_[:alpha:]][$_[:alnum:]]*[\t ]*=[\t ]*(\\(.*\\)|[$_[:alpha:]][$_[:alnum:]]*)[\t ]*=>.*)\n"
++	 /* match assign function to LHS */
++	 "^(.*=[\t ]*function[\t ]*([$_[:alpha:]][$_[:alnum:]]*)?[\t ]*\\(.*)\n"
++	 /* match normal function in object literal */
++	 "^[\t ]*([$_[:alpha:]][$_[:alnum:]]*[\t ]*:[\t ]*function[\t ].*)\n"
++	 /* don't match the function in class, which has more than one ident level */
++	 "!^(\t{2,}|[ ]{5,})\n"
++	 /* match function in class */
++	 "^[\t ]*((static[\t ]+)?((async|get|set)[\t ]+)?[$_[:alpha:]][$_[:alnum:]]*[\t ]*\\(.*)",
++	 /* word regex */
++	 /* hexIntegerLiteral and bigHexIntegerLiteral*/
++	 "0[xX][0-9a-fA-F][_0-9a-fA-F]*n?|"
++	 /* octalIntegerLiteral and bigOctalIntegerLiteral */
++	 "0[oO]?[0-7][_0-7]*n?|"
++	 /* binaryIntegerLiteral and bigBinaryIntegerLiteral */
++	 "(0[bB][01][_01]*n?)|"
++	 /* decimalLiteral */
++	 "(0|[1-9][_0-9]*)?\\.?[0-9][_0-9]*([eE][+-]?[_0-9]+)?|"
++	 /* bigDecimalLiteral */
++	 "(0|[1-9][_0-9]*)n|"
++	 /* punctuations */
++	 "\\{|\\}|\\(|\\)|\\.|\\.{3}|;|,|<|>|<=|>=|==|!=|={3}|!==|\\+|-|\\*|/|%|\\*{2}|"
++	 "\\+{2}|--|<<|>>|>>>|&|\\||\\^|!|~|&&|\\|{2}|\\?{1,2}|:|=|\\+=|-=|\\*=|%=|\\*{2}=|"
++	 "<<=|>>=|>>>=|&=|\\|=|\\^=|&&=|\\|{2}=|\\?{2}=|=>|"
++	 /* identifiers */
++	 "[$_[:alpha:]][$_[:alnum:]]*"),
+ PATTERNS("markdown",
+ 	 "^ {0,3}#{1,6}[ \t].*",
+ 	 /* -- */
 -- 
 2.35.1.273.ge6ebfd0e8c.dirty
 
