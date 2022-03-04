@@ -2,111 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99D0DC433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 19:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62448C433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 20:01:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229652AbiCDTUK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 14:20:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46266 "EHLO
+        id S229972AbiCDUBx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 15:01:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbiCDTUG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 14:20:06 -0500
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0037FEBBB0
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 11:19:10 -0800 (PST)
-Received: by mail-qk1-x72f.google.com with SMTP id f21so7196955qke.13
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 11:19:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Z77oDzyX/wOLZ6q63WM9E1ozmC+PbxP8XjtVOB9hwUY=;
-        b=VpPtqEYeMcHM6Rk5aPWGTGWL3ChL2X0tOQ/hNJ2XrXpH+tNbJ/I2fVCjW0PCLNrDWE
-         TsKZ7yisZMZzQ/Itmt22Fbil3Bl+WgqC1N2ute+YCTWZ6dxZrnr8cEqJtwmC5X4QD4cz
-         XRu0bvC8tGdSW0XvxE7oNTRaQ/9D0uG1gRmyvd1vTgo0nlRzHJ1/QYEAL20HdczKGDab
-         67x2TBoM4peoJqUso0eOfe7YtTq+vh6fRjeLUqUdDKifQOUq2HdnvPJcdmmI7fDAtlQE
-         xbElQ70VgCo6FTx1GiDTU31gSmp5/zbny87MXWfu/cmhuIHi9OqF6BKY9iBZqhtQ2ogk
-         K2nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=Z77oDzyX/wOLZ6q63WM9E1ozmC+PbxP8XjtVOB9hwUY=;
-        b=O14O/2+K1S55QtSt4xJ9j5K2GZQV7uJuHa1iDvGDQk4MFKY3xN6WCC06G3MaDzUkuD
-         HruntnrOqszvc50d7IZlGof3NNrz1eBMh5QNruEXUZIahh4mbB2ilonqJgF43Iy6th4J
-         gDcn91cUEa/pMHFZHi0bRg3ZIpufdKTGHH7tfu3gIAnxPskc2BggiQrL1YFmgVDBqK/q
-         nYZtLaSF6rF7koA2Y0t71I6hfoVJA/JMW9qtr+3HZvcgDrFbIjnOGJUm9mfQpu/lxbUo
-         4QekNfEaWhhROmCl7VotjPSsfn1SDm6qWRna/HtOzGrJ1fbBtq29GzBioAfeTFPx73wq
-         VhLg==
-X-Gm-Message-State: AOAM5306IglIMvsdai9RI1DYaVAwKcHMiLz4dHD8O73rRPq4IxFXp5YB
-        pF68r6BzLBi5krCWzBK1yHug
-X-Google-Smtp-Source: ABdhPJyz3Xz2ti6wTwDYNXKKs97KzEjhDm9D4EPivW0GatNnr0kVEvzPrBfIX1AAAAGYI1wgU+5VwQ==
-X-Received: by 2002:a05:620a:20c8:b0:475:d0cb:e6eb with SMTP id f8-20020a05620a20c800b00475d0cbe6ebmr97048qka.612.1646421549106;
-        Fri, 04 Mar 2022 11:19:09 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id s8-20020a05622a1a8800b002de08a30becsm3862617qtc.80.2022.03.04.11.19.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Mar 2022 11:19:08 -0800 (PST)
-Message-ID: <6442a1ce-d3ef-d564-ef98-a621e88a0b02@github.com>
-Date:   Fri, 4 Mar 2022 14:19:07 -0500
+        with ESMTP id S230029AbiCDUBs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 15:01:48 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2698D286728
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 11:56:06 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8577D17843C;
+        Fri,  4 Mar 2022 14:41:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type
+        :content-transfer-encoding; s=sasl; bh=cfFiw9FqvgqfKBNUFXemyn8Dj
+        NUP+PMGMdIgGEnfVbU=; b=CD91iDp6WZ17zOWXYu50RQC/uM3l7OrfjLrwq7sx6
+        tmQVK9y7Tz2mQWU23y8Aa4otXmJzJR866tC9ubt39UYIL+n0v5wKkPn6xtsZwjTr
+        KzRAp0/Wk/PnpdQiyfSVL5mBtLQ40J0tbyR/PDVHW4SuYI5XoMOsIslTCE6yiPu3
+        9g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7DDBA17843B;
+        Fri,  4 Mar 2022 14:41:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.230.65.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D7C6E178439;
+        Fri,  4 Mar 2022 14:41:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: log messages > comments
+References: <20220126234205.2923388-1-gitster@pobox.com>
+        <20220127190259.2470753-4-gitster@pobox.com>
+        <YiFY693P6E/eVS3k@google.com> <xmqqr17i5zlu.fsf@gitster.g>
+        <220304.86ilsuf1e8.gmgdl@evledraar.gmail.com>
+Date:   Fri, 04 Mar 2022 11:41:19 -0800
+Message-ID: <xmqqk0d91p5s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH 00/11] Partial bundles
-Content-Language: en-US
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     stolee@gmail.com, avarab@gmail.com, gitster@pobox.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 112A5A24-9BF3-11EC-84CC-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/23/2022 12:55 PM, Derrick Stolee via GitGitGadget wrote:
-> While discussing bundle-URIs [1], it came to my attention that bundles have
-> no way to specify an object filter, so bundles cannot be used with partial
-> clones.
-> 
-> [1]
-> https://lore.kernel.org/git/7fab28bf-54e7-d0e9-110a-53fad6244cc9@gmail.com/
-> 
-> This series provides a way to fix that by adding a 'filter' capability to
-> the bundle file format and allowing one to create a partial bundle with 'git
-> bundle create --filter=blob:none '.
-> 
-> There are a couple things that I want to point out about this implementation
-> that could use some high-level feedback:
-> 
->  1. I moved the '--filter' parsing into setup_revisions() instead of adding
->     another place to parse it. This works for 'git bundle' but it also
->     allows it to be parsed successfully in commands such as 'git diff' which
->     doesn't make sense. Options such as '--objects' are already being parsed
->     there, and they don't make sense either, so I want some thoughts on
->     this.
-> 
->  2. If someone uses 'git clone partial.bdl partial' where 'partial.bdl' is a
->     filtered bundle, then the clone will fail with a message such as
-> 
-> fatal: missing blob object '9444604d515c0b162e37e59accd54a0bac50ed2e' fatal:
-> remote did not send all necessary objects
-> 
-> This might be fine. We don't expect users to clone partial bundles or fetch
-> partial bundles into an unfiltered repo and these failures are expected. It
-> is possible that we could put in custom logic to fail faster by reading the
-> bundle header for a filter.
-> 
-> Generally, the idea is to open this up as a potential way to bootstrap a
-> clone of a partial clone using a set of precomputed partial bundles.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Thanks Jeff, for providing a review of this series. I hope that at
-least one other reviewer could take a look sometime.
+> On Thu, Mar 03 2022, Junio C Hamano wrote:
+>
+>> Emily Shaffer <emilyshaffer@google.com> writes:
+>>
+>>>> +The goal of your log message is to convey the _why_ behind your
+>>>> +change to help future developers.
+>>>> +
+>>>
+>>> This is pretty compelling. Is it clear enough why we care about this =
+in
+>>> the commit message, as opposed to in the patch description (cover let=
+ter
+>>> or post-"---" blurb)? Is it too obvious to explicitly mention that th=
+e
+>>> commit message is the first thing we try to make sense of during a 'g=
+it
+>>> blame' or 'git bisect'?
+>>
+>> Again, patches welcome ;-)
+>
+> I think for something that's a stylistic preference I'd see why Emily
+> would try to see how you feel about it first.
 
-Thanks,
--Stolee
+I do not think there is a need to write down stylistic preference.
+I may show my preference during my reviews, of course, but I won't
+take preference-only things as a blocker.
+
+I also do not think things like "'We used to do X here but we do Y
+because ...' does not belong to in-code comment, but to log message"
+is "stylistic preference", and if people are unclear about, I agree
+that we should spell it out.
+
+An example, I can think of offhand, of what should be in comment,
+whether we also write in the log, is "We do X here because that
+other code expects us to", when it is tricky to figure out by
+reading the code by itself without going back to "git blame".
+
+"git blame" certainly can be used to figure out which commit touched
+the line that does X (which is hard to figure out why), and the log
+message can refer to "that other code expects us to", but that is an
+extra operation.
+
+Also, when we really need to figure out, it is wonderful that we can
+ask "blame" to give us the commit, and can look at "that other code"
+in the same commit by checking it out to the working tree,
+especially when "that other code" may have drifted and the original
+reasoning no longer applies (iow, what we find out from "git blame"
+may become stale, and it will stay stale forever because we cannot
+rewrite the history that old).
+
+Now, it is certainly not black/white decision to say what is and
+what is not tricky to figure out in the code.  We shouldn't be
+commenting obvious things.  Two yardsticks I use are
+
+ (1) if reviewers raise questions during a review, it may indicate
+     that it is worth commenting.
+
+ (2) if an earlier round of the same series had a bug around the
+     area, it may indicate that the fixed code is worth commenting.
+
+but the way I use them is more to say "I found this uncommented code
+somewhat tricky---but nobody asked a question and it has stayed the
+same from the initial round, so it may be clear enough for other
+people, and after all I managed to figure out myself, so it probably
+is OK to leave it uncommented".
