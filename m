@@ -2,150 +2,222 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A844BC433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 22:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4F7BC433EF
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 23:35:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230064AbiCDXAJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 18:00:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46468 "EHLO
+        id S229680AbiCDXgY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 18:36:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbiCDXAI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 18:00:08 -0500
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3289235322
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 14:59:20 -0800 (PST)
-Received: by mail-pl1-x64a.google.com with SMTP id x6-20020a1709029a4600b0014efe26b04fso5302357plv.21
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 14:59:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=PVzy2uZbM/3sBuriWQxQq+mxYBCLaQYekJwCYo6tSPc=;
-        b=AFKEA2dfZYvgCxxt2SFmfCtfRU+KBVL6nvwy9BgVH/zDkAupcPCWd4938rItZ1URdv
-         Bz+hbH06kIPI/AcXNE/dvur1AeOMoK80mjd7eLKEqnYR+8I2OVJSzVzkH5TXtmRsY0ic
-         AwBxsyK3/k+owwRZSed7b8I53Npaogun1lkiT3r2wHwyZ2X97vpd2wN1ovgKzhjr76Ts
-         DZBqhb0IDFkgQRmUGdPaiMXqks760vx0kr7P/yxEgYBhl8KHV2sG3yELrvMqG8mZ7+VQ
-         F1DMAyAJ5zYniai0xxG1BrnzrfGZtMqx3uOXBty70VFiy8ZCoiVBqsGwEa7KyQh4Tiup
-         nIWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=PVzy2uZbM/3sBuriWQxQq+mxYBCLaQYekJwCYo6tSPc=;
-        b=rPpXMawB12WaAj30Aht/X7gGMjYzLWYvxpP/03RHSwgqAZpT6kh509rPxTfuWfIfaN
-         ab9V6ObCoqa5bLjSPG1BVGmyLrvqEoZsDId0K6j8sDSLXZQkBYqiDr9zX7ZVMXs634kU
-         KqjUQNTWa+ZqBoNWdyST0XQExyYDPKTcyNCot0VbT/MP1DOQJ6RtIYqzQBhRV+ndiK7X
-         kYPn2mwXbAPbtqucRs7QFAUyOSXggByNF8RCyzC1EIe0Jexr1bXRzBDQdyCfMb2VdL75
-         Gs7GlDfgUUZW2A/6bJyvfcZ83O1emwmaFS+2FAAZDlm068aHmQ8nyKlSBUrtL8L7UFt1
-         mxjw==
-X-Gm-Message-State: AOAM530ejXzvk9VGmyfgBLf15edjOjEECtVQQAA/WFvV9q3sxEDfIlod
-        gR/n7YLbA+X1lduzYYJWXAB06vaEjpic6g==
-X-Google-Smtp-Source: ABdhPJwXahfddxbAgMXtAza8TjGcuazybDzk9fijc+NmAc4W4n2NxMB9Wbm2AhHVVCz7uFEeH2HMMqJBt+gHjA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a63:d252:0:b0:363:271c:fe63 with SMTP id
- t18-20020a63d252000000b00363271cfe63mr537464pgi.524.1646434760135; Fri, 04
- Mar 2022 14:59:20 -0800 (PST)
-Date:   Fri, 04 Mar 2022 14:59:18 -0800
-In-Reply-To: <xmqqsfry4f3z.fsf@gitster.g>
-Message-Id: <kl6l7d99494p.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-References: <20220224100842.95827-1-chooglen@google.com> <20220304005757.70107-1-chooglen@google.com>
- <20220304005757.70107-10-chooglen@google.com> <xmqqsfry4f3z.fsf@gitster.g>
-Subject: Re: [PATCH v4 09/10] fetch: fetch unpopulated, changed submodules
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229449AbiCDXgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 18:36:23 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F417D1C7EB4
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 15:35:33 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3F05112EC2;
+        Fri,  4 Mar 2022 18:35:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ns0CFZsiWKh4sdGUOD6BmqbH3zWX4gsdRMkT4q
+        41fSk=; b=pTtq46JotDV/b4cVsKyJ0v24DjTgk4uatlrnTfogwh949QcSH2X0tg
+        5TsqFNruFcigIEjKdEvTk2FDKxHJR3h+1JClVjtS9Q10UQchvfwQw/Tp/Om4FONU
+        R3whDulIFLZs0aZUh+uqN2RQhQRfH5FZ9H8yf/oLqPKbWVBAbAOl0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EC38E112EC1;
+        Fri,  4 Mar 2022 18:35:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.230.65.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 60F8F112EC0;
+        Fri,  4 Mar 2022 18:35:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 10/11] bundle: create filtered bundles
+References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
+        <5393e74708dfd38e5596d9e877a491e6ed8dda24.1645638911.git.gitgitgadget@gmail.com>
+Date:   Fri, 04 Mar 2022 15:35:31 -0800
+In-Reply-To: <5393e74708dfd38e5596d9e877a491e6ed8dda24.1645638911.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Wed, 23 Feb 2022
+        17:55:10 +0000")
+Message-ID: <xmqq5yotxpdo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: C8853318-9C13-11EC-8C7F-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Glen Choo <chooglen@google.com> writes:
+> From: Derrick Stolee <derrickstolee@github.com>
 >
->>  		item = string_list_insert(changed, name);
->> -		if (!item->util)
->> +		if (item->util)
->> +			cs_data = item->util;
->> +		else {
->>  			item->util = xcalloc(1, sizeof(struct changed_submodule_data));
->> -		cs_data = item->util;
->> +			cs_data = item->util;
->> +			cs_data->super_oid = commit_oid;
->> +			cs_data->path = xstrdup(p->two->path);
->> +		}
+> A previous change allowed Git to parse bundles with the 'filter'
+> capability. Now, teach Git to create bundles with this option.
 >
-> I do not quite get this change.
+> Some rearranging of code is required to get the option parsing in the
+> correct spot. There are now two reasons why we might need capabilities
+> (a new hash algorithm or an object filter) so that is pulled out into a
+> place where we can check both at the same time.
 >
-> collect_changed_submodules() walks a range of revisions in the
-> superproject, doing an equivalent of "git log --raw" and feeding the
-> differences to this callback function.  The above code looks at the
-> path and uses the "changed" string list to record which submodule
-> was modified, what commit in the submodule is needed, etc.
+> The --filter option is parsed as part of setup_revisions(), but it
+> expected the --objects flag, too. That flag is somewhat implied by 'git
+> bundle' because it creates a pack-file walking objects, but there is
+> also a walk that walks the revision range expecting only commits. Make
+> this parsing work by setting 'revs.tree_objects' and 'revs.blob_objects'
+> before the call to setup_revisions().
 >
-> What happens when the range has more than one change to the same
-> submodule?  cs_data has only one room for recording .super_oid
-> (which commit in the superproject touches the submodule) and .path
-> (where in the superproject's tree the submodule exists).  "git mv"
-> of a submodule might be rare and it may not hurt too much that only
-> a single .path can be kept, but it looks somewhat iffy.
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
 
-Yes, I agree that it looks odd, which is why I added this comment to
-hopefully make it less opaque:
+Now, the gem of the series ;-)
 
-  + * (super_oid, path) allows the submodule config to be read from _some_
-  + * .gitmodules file. We store this information the first time we find a
-  + * superproject commit that points to the submodule, but this is
-  + * arbitrary - we can choose any (super_oid, path) that matches the
-  + * submodule's name.
+> @@ -334,6 +334,9 @@ static int write_pack_data(int bundle_fd, struct rev_info *revs, struct strvec *
+>  		     "--stdout", "--thin", "--delta-base-offset",
+>  		     NULL);
+>  	strvec_pushv(&pack_objects.args, pack_options->v);
+> +	if (revs->filter)
+> +		strvec_pushf(&pack_objects.args, "--filter=%s",
+> +			     list_objects_filter_spec(revs->filter));
+>  	pack_objects.in = -1;
+>  	pack_objects.out = bundle_fd;
+>  	pack_objects.git_cmd = 1;
 
-I guess this only says that it is ok to store .super_oid and .path from
-any commit, but doesn't go in depth into _why_. It's ok because we only
-need (.super_oid, .path) because repo_submodule_init(..., path,
-treeish_name) maps these args to the submodule's name and gitdir (i.e.
-.git/modules/<name>).
+Quite expected.
 
-This means we don't worry about 'git mv' (super_oid's .gitmodules will
-tell us the correct name even if the path changed relative to some other
-commit), nor seeing the submodule more than once (it doesn't matter
-whose .gitmodules we look at so long as repo_submodule_init() derives
-the correct gitdir).
+> @@ -507,10 +510,38 @@ int create_bundle(struct repository *r, const char *path,
+>  	int bundle_to_stdout;
+>  	int ref_count = 0;
+>  	struct rev_info revs, revs_copy;
+> -	int min_version = the_hash_algo == &hash_algos[GIT_HASH_SHA1] ? 2 : 3;
+> +	int min_version = 2;
+>  	struct bundle_prerequisites_info bpi;
+>  	int i;
+>  
+> +	/* init revs to list objects for pack-objects later */
+> +	save_commit_buffer = 0;
+> +	repo_init_revisions(r, &revs, NULL);
+> +
+> +	/*
+> +	 * Pre-initialize the '--objects' flag so we can parse a
+> +	 * --filter option successfully.
+> +	 */
+> +	revs.tree_objects = revs.blob_objects = 1;
 
-And now that you've pointed this out, I realize that we could do away
-with (.super_oid, .path) altogether if we had a variant of
-repo_submodule_init() that takes the submodule name instead of (path,
-treeish_name). (We have a similar submodule_from_name(), but that only
-reads the submodule config, not a struct repository.) I would prefer not
-to introduce such a function so late into the review cycle, but I could
-clean this up later.
+Tricky, but true.
 
->>  		oid_array_append(&cs_data->new_commits, &p->two->oid);
->
-> At least, we are not losing any submodule commit even when the same
-> submodule is touched more than once by the superproject, but it is
-> dubious why we have cs_data.super_oid and cs_data.path in the first
-> place.
+> +	argc = setup_revisions(argc, argv, &revs, NULL);
+> +
+> +	/*
+> +	 * Reasons to require version 3:
+> +	 *
+> +	 * 1. @object-format is required because our hash algorithm is not
+> +	 *    SHA1.
+> +	 * 2. @filter is required because we parsed an object filter.
+> +	 */
 
-On the hand, we actually need to record every submodule commit, so yes.
+OK.
 
-> How are they used, or are they something that seemed useful when the
-> code was first written but it turned out that they weren't and left
-> unused?
->
-> Or do we need to make cs_data an array of 3-tuple { .super_oid,
-> .submodule_oid, .path } for each submodule name?
+> +	if (the_hash_algo != &hash_algos[GIT_HASH_SHA1] ||
+> +	    revs.filter)
 
-To conclude:
+Did we need to wrap?  With these on a single line, the line is way
+shorter than the line with "because our hash algorithm is not" on
+it.
 
-- The changed_submodules string_list is basically a map that tells us,
-  for a given submodule _name_, which commits we need to fetch and where
-  repo_submodule_init() can read the submodule name from.
-- We only use cs_data as a string_list_item.util, and the
-  string_list_item.string is the submodule name itself.
-- .new_commits tells us which commits to fetch.
-- .super_oid and .path tells repo_submodule_init() how to get the name
-  of the submodule.
+> +		min_version = 3;
+> +
+> +	if (argc > 1) {
+> +		error(_("unrecognized argument: %s"), argv[1]);
+> +		goto err;
+> +	}
+> +
 
-So we don't need to make this a 3-tuple.
+OK.  We are moving original logic around correctly and there is not
+much to see here ;-)
+
+> @@ -533,17 +564,14 @@ int create_bundle(struct repository *r, const char *path,
+>  		write_or_die(bundle_fd, capability, strlen(capability));
+>  		write_or_die(bundle_fd, the_hash_algo->name, strlen(the_hash_algo->name));
+>  		write_or_die(bundle_fd, "\n", 1);
+> ...
+> +		if (revs.filter) {
+> +			const char *value = expand_list_objects_filter_spec(revs.filter);
+> +			capability = "@filter=";
+> +			write_or_die(bundle_fd, capability, strlen(capability));
+> +			write_or_die(bundle_fd, value, strlen(value));
+> +			write_or_die(bundle_fd, "\n", 1);
+> +		}
+
+This block is added at the end of the code to write the v3 preamble
+and it adds the @filter= capability.  Looking good.
+
+> @@ -566,6 +594,12 @@ int create_bundle(struct repository *r, const char *path,
+>  	bpi.fd = bundle_fd;
+>  	bpi.pending = &revs_copy.pending;
+>  
+> +	/*
+> +	 * Nullify the filter here, and any object walking. We only care
+> +	 * about commits and tags here. The revs_copy has the right
+> +	 * instances of these values.
+> +	 */
+> +	revs.filter = NULL;
+>  	revs.blob_objects = revs.tree_objects = 0;
+>  	traverse_commit_list(&revs, write_bundle_prerequisites, ignore_object, &bpi);
+>  	object_array_remove_duplicates(&revs_copy.pending);
+
+OK.  We prepare revs, and we save it to revs_copy, because we
+perform two traversals, one to determine which bottom commits are
+required to unbundle the bundle (which is done with the instance
+"revs"), and then later to actually enumerate the objects to place
+in the bundle (using "revs_copy").  Is there a reason why we need to
+remove .filter in order to perform the first traversal?
+
+This is a tangent, but I wish we could reliably determine when we
+can optimize the first traversal away, by inspecting revs.  If there
+are any pending objects with UNINTERESTING bit, or members like
+max_count, max_age, min_age are set, we'd end up traversing down to
+all roots and the prerequisites list would be empty.
+
+> +	test_expect_success 'filtered bundle: $filter' '
+> +		test_when_finished rm -rf .git/objects/pack &&
+> +		git bundle create partial.bdl \
+> +			--all \
+> +			--filter=$filter &&
+> +
+> +		git bundle verify partial.bdl >unfiltered &&
+> +		make_user_friendly_and_stable_output <unfiltered >actual &&
+> +
+> +		cat >expect <<-EOF &&
+> +		The bundle contains these 10 refs:
+> +		<COMMIT-P> refs/heads/main
+> +		<COMMIT-N> refs/heads/release
+> +		<COMMIT-D> refs/heads/topic/1
+> +		<COMMIT-H> refs/heads/topic/2
+> +		<COMMIT-D> refs/pull/1/head
+> +		<COMMIT-G> refs/pull/2/head
+> +		<TAG-1> refs/tags/v1
+> +		<TAG-2> refs/tags/v2
+> +		<TAG-3> refs/tags/v3
+> +		<COMMIT-P> HEAD
+> +		The bundle uses this filter: $filter
+> +		The bundle records a complete history.
+> +		EOF
+> +		test_cmp expect actual
+> +	'
+
+OK.
+
+It is somewhat curious why our bundle tests do not unbundle and
+check the resulting contents of the repository we unbundle it in.
+
+> +done
+> +
+>  test_done
