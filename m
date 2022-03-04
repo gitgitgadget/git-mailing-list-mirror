@@ -2,130 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D6C5C433F5
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 09:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 288C1C433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 09:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236654AbiCDJ2x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 04:28:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33076 "EHLO
+        id S239384AbiCDJwb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 04:52:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236000AbiCDJ2w (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 04:28:52 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F141154D24
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 01:28:05 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id i11so9931325eda.9
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 01:28:04 -0800 (PST)
+        with ESMTP id S231233AbiCDJwa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 04:52:30 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FA9B6D979
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 01:51:43 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id qa43so16250548ejc.12
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 01:51:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=Zwej+a+bW4I98b6XLRNIucsdyyVEx7B3OztZWRt9QVQ=;
-        b=pb/KsIv86TXH64VDyr2xmuO9lID9zQgECUCcTNOj5K4I7hUkSIqPn+2BStoSk7idow
-         cqEwSP523D8de0F9gDDZRcwhmkGW5FrT2/VxvJUhR0vAqBCCuxCyiHGkEHZ3A0aHXoPm
-         GF3YdZBbjb+xcQkuNihvQs7yVbujQCumv1umrex2oQZP2x45EwMivFd5pIL7ooUs4yhe
-         wAC9nZIUXKvy6wVeKVY/+oSqxfe9S1wO21h4i2rPsx3kWtTWm7q23fKQRAm3IAdaYGbA
-         8DLT1CoAHxe8E2Vbf1g1gDaGWsAUDZ3urxenEFIvgD3FBXAdbWrR0jTqRXyNk7u0TnUF
-         L83A==
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :cc:references:from:in-reply-to:content-transfer-encoding;
+        bh=E3rva0S9K4FjGRtRvxmoKMAm319ZtPK+U1RQXa3Iyl4=;
+        b=W8vW7casYpAbU4mtUQUJNFoOIickd8wXFFfunwDBZC6sUnEBrdquyjDlWYVZss4zx6
+         SvN2GnV7FAELTcerE3o5W3z6IR1Jq5pT8o9TzfoC8DLIqaSekhmw/FQSgaLDOg0rfg8J
+         lhd6fic4JYokR77Z7vPuEiNvA7mYBbwYn0ruZnQ/sv42cORVEJFoDQPog8smRkxgOr3K
+         wwAfWG9x+OTvAXc1VA6K17N8x645bWjQMID1wMZAnt05wZpauf+hPp1UUXcqw3y3IvFM
+         dWXfmpLWCcix2CS34IoRoywDIORnMphnG1OfAHHrzMIOfnyFXFJr4AuLJiVi9DIvh7FE
+         Lpfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=Zwej+a+bW4I98b6XLRNIucsdyyVEx7B3OztZWRt9QVQ=;
-        b=ZjRFJuxpXNqcBvyyenxQILrwIwIOIjoFiGZBoMcHFRHae5U22Md5dfjCN42juySaoQ
-         R73567TLRfNRcGQe36YxGFz6f+GOWcNEDRmm9JOhMnnq1JmBs9yoRl5UVUGD0vsnyl6d
-         5V/kwKlRd1f+MMuo+1+PXU+5ej9VoYTaAarwHdeYsVaF8JUkEjA3DfCfIrwU4+z/HZlC
-         0Lafjq2N4nCD+pGv2CCdsXhjF/pXONkxDZe10Ttvc3pZgQNsx2MBKQGSnzG3aVjO+Vai
-         nHI4fAru3iC1Ngiq51+DUcVxoDwIB+Ta0MC8IpY5ODsL4Xna/sapE2APAgTnjTBeUNIS
-         Lqag==
-X-Gm-Message-State: AOAM533VYi4oLYPYTcmx1fBkDN/zizIz8QVPu9XN7P8CvlGpoW5Q4D9z
-        gKkJ0sQs5RXhPRnjw0CJAOO7ik8FszzvOA==
-X-Google-Smtp-Source: ABdhPJxHdS+bftZXvBMkbR5lSzxrY88vrM9lH8KZJXFHqpYhpHFI6JFJoD48nAwufc/WQBsuWsHRRw==
-X-Received: by 2002:a05:6402:177b:b0:413:2822:1705 with SMTP id da27-20020a056402177b00b0041328221705mr38154941edb.270.1646386083334;
-        Fri, 04 Mar 2022 01:28:03 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bx1-20020a0564020b4100b00410f01a91f0sm1911330edb.73.2022.03.04.01.28.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 01:28:02 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nQ4ED-000Bk8-Ua;
-        Fri, 04 Mar 2022 10:28:01 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: win+VS environment has "cut" but not "paste"?
-Date:   Fri, 04 Mar 2022 10:04:23 +0100
-References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet>
- <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet>
- <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
- <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com>
- <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet>
- <xmqqv8x2dd7j.fsf@gitster.g> <xmqqee3i2mlw.fsf_-_@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqee3i2mlw.fsf_-_@gitster.g>
-Message-ID: <220304.86mti6f4ny.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:cc:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=E3rva0S9K4FjGRtRvxmoKMAm319ZtPK+U1RQXa3Iyl4=;
+        b=IcECrQLFEn8/VNprXspJEIN4pJZwOUuX1XexaK2J66yLHERun99LXT9ws8m6ByeyRI
+         PIXVdPiQCFi5jUb/EVM5NQVAkQPpdUVhBvSH8geP8NjlqQhdjWPUYDJB3C5h+OhFVAtF
+         EgjiUWnUMCzdggf7LwIBqv6pCK8VDSqk+wCjTAWZU2x0oeb4+i0H+S9QrIpojYoeumic
+         Zcpaddvs4jqbYqR3pf6n6l99wVfk14oCW1Ez7LipVBd2q6zfZMixVu4TRpJBhu5+WoLS
+         9Ql4ZnYGFgwdMHYJltW0gMvM2EwUMq1hNj0BnMTYiCpZpjuL7m77+FbANfjo8hLc7c+c
+         wBTQ==
+X-Gm-Message-State: AOAM531XVx673cdDLcETFJBkuq1le4gm1ek7Tiz/FA0lekKkP/gPJlHY
+        8NAYqb6xyR30gKkBKcQ1TXg=
+X-Google-Smtp-Source: ABdhPJwtRB+v0qQTjt4pwSfzQUIndhnx1sD6aJg2qOkAmwNwi4CZVBhspZwX73zCYCjonKle7jyC4g==
+X-Received: by 2002:a17:907:1c13:b0:6da:62bb:f1ff with SMTP id nc19-20020a1709071c1300b006da62bbf1ffmr9721172ejc.276.1646387501631;
+        Fri, 04 Mar 2022 01:51:41 -0800 (PST)
+Received: from [192.168.1.29] (176-136-227-224.abo.bbox.fr. [176.136.227.224])
+        by smtp.gmail.com with ESMTPSA id z23-20020a170906435700b006b0e62bee84sm1578279ejm.115.2022.03.04.01.51.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Mar 2022 01:51:41 -0800 (PST)
+Message-ID: <a30ebbe3-596e-84a5-9023-b53402dfe70c@gmail.com>
+Date:   Fri, 4 Mar 2022 10:51:43 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 0/1] blame: Skip missing ignore-revs file
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Noah Pendleton <noah.pendleton@gmail.com>
+Cc:     git@vger.kernel.org
+References: <20210807202752.1278672-1-noah.pendleton@gmail.com>
+ <xmqqr1f5hszw.fsf@gitster.g>
+From:   Thranur Andul <thranur@gmail.com>
+In-Reply-To: <xmqqr1f5hszw.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Mar 03 2022, Junio C Hamano wrote:
 
-> GitHub CI seems to fail due to lack of "paste" for win+VS job.  This
-> was somewhat unexpected, as our test scripts seem to make liberal
-> use of "cut" that goes together with it.
+On 07/08/2021 22:58, Junio C Hamano wrote:
+> Noah Pendleton <noah.pendleton@gmail.com> writes:
+> 
+> 
+> That cuts both ways, though.  Failing upon missing configuration
+> file is a way to catch misconfiguration that is hard to diagnose.
+> 
+> I wonder if we can easily learn where the configuration variable
+> came from in the codepath that diagnoses it as a misconfiguration.
+> 
+> If it came from a per-repo configuration and names a non-existent
+> file, it clearly is a misconfiguration that we want to flag as an
+> error.  Even if it came from a per-user configuration, if it was
+> specified in a conditionally included file, it is likely to be a
+> misconfiguration.  If it came from a per-user configuration that
+> applies without any condition, it can be a good convenience feature
+> to silently (or with a warning) ignore missing file.
 >
->     https://github.com/git/git/runs/5415486631?check_suite_focus=true#step:5:6199
->
-> The particular failure at the URL comes from the use of "paste" in
-> 5ea4f3a5 (name-rev: use generation numbers if available,
-> 2022-02-28), but it hardly is the first use of the command.  There
-> is one use of it in t/aggregate-results.sh in 'master/main' already.
-
-I think it's the first use, the t/aggregate-results.sh is run on
-"DEFAULT_TEST_TARGET=test make -C t", but we use
-"DEFAULT_TEST_TARGET=prove".
-
-Re your upthread:
-
-> I personally do not care about the initial latency when viewing the
-> output from CI run that may have happened a few dozens of minutes
-> ago (I do not sit in front of GitHub CI UI and wait until it
-> finishes). 
-
-I think this URL is a good example of what I noted in [1]. Your link
-loads relatively quickly, but I then saw a "linux-TEST-vars" failure and
-clicked on it, wanting to see why that fails.
-
-It opens relatively quickly, but no failure can be seen. It stalls with
-a spinner next to "t/run-build-and-test.sh", and stalled like that for
-75[2] seconds before finally loading past line ~3.5k to line ~70k
-showing the relevant failure in t6120*.sh.
-
-I really don't think it's a reasonable claim to say that only "veterans"
-of git development[3] are likely to find the workflow of seeing a CI
-failure right away useful, or wanting to browse through the N different
-"job" failures without having to pre-open them, go find something else
-to do, then come back to it etc.
-
-I also noted in [1] that it takes a lot more CPU now, so even if that is
-your workflow for looking at CI you'll need a fairly performant machine
-if you have a few job failures (which isn't a typical), as each tab will
-be pegging a CPU core at ~100% for a while.
-
-I have fairly normally spec'd quad-core laptop that I almost never hear,
-and this new CI UI is pretty reliable in making it sound as though it's
-about to take flight.
-
-1. https://lore.kernel.org/git/220222.86tucr6kz5.gmgdl@evledraar.gmail.com/
-2. I reported large N seconds, but nothing so bad before. For some reason
-   this one's particularly bad, but in [1] it was the same CPU use with ~20s
-   etc (but that one was 1/2 the amount of lines)
-3. https://lore.kernel.org/git/nycvar.QRO.7.76.6.2203011111150.11118@tvgsbejvaqbjf.bet/
+I am very interested in this feature, but I'd like to add another point 
+to the discussion: in the case of ignoreRevsFile in particular, no one 
+creates a repository with such a file; it is always added later. 
+However, when bisecting (a typical usage scenario for git-blame), we may 
+end up returning back to a point _before_ the file had been added, and 
+then, git-blame fails. This often happens to me, and I am then forced to 
+`touch` the file to create it again, only to ensure git-blame keeps 
+working. And then, when I want to return to the HEAD commit, the file 
+must be erased again otherwise there is a conflict. So, for me, the 
+"ignore if absent" behavior seems to me like it should be the default.
