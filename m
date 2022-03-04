@@ -2,53 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DBFDC433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 07:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 752A5C433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 07:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237474AbiCDH0u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 02:26:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52746 "EHLO
+        id S238870AbiCDHjn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 02:39:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236030AbiCDH0q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 02:26:46 -0500
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC6DC190B6C
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 23:25:58 -0800 (PST)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4K8zsw0TXlz5tlH;
-        Fri,  4 Mar 2022 08:25:54 +0100 (CET)
-Message-ID: <d8d239bc-f5c3-4cac-91a1-16620f0b1f17@kdbg.org>
-Date:   Fri, 4 Mar 2022 08:25:54 +0100
+        with ESMTP id S232100AbiCDHjn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 02:39:43 -0500
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF681107A89
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 23:38:55 -0800 (PST)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A0C7710B6A8;
+        Fri,  4 Mar 2022 02:38:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xBMSRRBV4zspPEKPwwPyKiqejPNDyLWzVg0UIh
+        vfXvI=; b=BeLEskG1AZpj94bQRiK1DAj+zgY/tNK0PLVxZ3Qf7LJc6jlTvvkDuL
+        nBjhefwB/iD9WfxAdxKIx+ru6QZiU7Y/9pOP3e+eEgeHAKWgY5pzpuUOyVj0a2n5
+        bz+9NMnzlKDvhZzCsOZdqO9+/5fnAAqAKLigAyztWqdCbt4RIdcDQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9729910B6A7;
+        Fri,  4 Mar 2022 02:38:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.230.65.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C2AB10B6A6;
+        Fri,  4 Mar 2022 02:38:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+Subject: win+VS environment has "cut" but not "paste"?
+References: <pull.1117.git.1643050574.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet>
+        <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com>
+        <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet>
+        <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
+        <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com>
+        <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet>
+        <xmqqv8x2dd7j.fsf@gitster.g>
+Date:   Thu, 03 Mar 2022 23:38:51 -0800
+In-Reply-To: <xmqqv8x2dd7j.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        25 Feb 2022 10:16:00 -0800")
+Message-ID: <xmqqee3i2mlw.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH] userdiff: add builtin diff driver for Kotlin language.
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jaydeep P Das <jaydeepjd.8914@gmail.com>
-Cc:     git@vger.kernel.org
-References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
- <20220303181517.70682-1-jaydeepjd.8914@gmail.com>
- <xmqqee3i4eso.fsf@gitster.g>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <xmqqee3i4eso.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2399EB62-9B8E-11EC-9245-CB998F0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 04.03.22 um 03:44 schrieb Junio C Hamano:
-> Jaydeep P Das <jaydeepjd.8914@gmail.com> writes:
-> 
->> Subject: Re: [PATCH] userdiff: add builtin diff driver for Kotlin language.
-> 
-> "git format-patch --help" and look for "-v <n>", perhaps.  This is
-> the fourth iteration, so [PATCH v4], I guess?
+GitHub CI seems to fail due to lack of "paste" for win+VS job.  This
+was somewhat unexpected, as our test scripts seem to make liberal
+use of "cut" that goes together with it.
 
-Note though, that this iteration is a step in the wrong direction. Let's
-forget that it has been submitted. (I saw this submission only long
-after I responded in the thread on the earlier round
-https://lore.kernel.org/git/c1298c9d-0f4a-40b8-b337-896f4d4777f3@kdbg.org/)
+    https://github.com/git/git/runs/5415486631?check_suite_focus=true#step:5:6199
 
--- Hannes
+The particular failure at the URL comes from the use of "paste" in
+5ea4f3a5 (name-rev: use generation numbers if available,
+2022-02-28), but it hardly is the first use of the command.  There
+is one use of it in t/aggregate-results.sh in 'master/main' already.
+
+We could rewrite the tests that use "paste" but looking at the use
+of the tool in the test (and the aggregate thing), rewriting them
+due to lack of a tool, whose source should be freely available from
+where "cut" was taken from, does not sound like too attractive a
+direction to go in, but I do not know how much work is involved in
+adding it (and in general, any basic tool with similar complexity
+that we may find missing in the future) to the win+VS environment.
+
+Thoughts?
+
+Thanks.
+
+
