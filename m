@@ -2,201 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6328DC433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 10:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DC4EC433FE
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 10:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233847AbiCDK0O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 05:26:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37598 "EHLO
+        id S234019AbiCDK0P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 05:26:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231445AbiCDK0N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 05:26:13 -0500
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2076.outbound.protection.outlook.com [40.107.21.76])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77B2E195308
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 02:25:24 -0800 (PST)
+        with ESMTP id S233758AbiCDK0O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 05:26:14 -0500
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2059.outbound.protection.outlook.com [40.107.21.59])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00A05194ABC
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 02:25:26 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WjZT8rAyg/CEyCXFMKsL/4WsirQWtVqxvvnnCkNqhToi7KEjpMYFLe7efQ6mquWzSY/YppQyeoIHErXN4gHFLWudmrFey/7xWLkN9ipywEkTSrGm+DRQ5VrNemhCKQZMfboCHWvVJdo5Z31X4w5BNuzA98iJ7WP2EHaIj3b3mN3iLz+Anl1LVx2ufwRb0E9h4jdYEM3w1oanA9Oni/Nt7Wn46lDbpQWCH65miGU3JmR7QA3IDHk2CLrU8uRh78S8mX52Y8PjJWaSpgEFYZXmCgXPJjTBtSXHSBTGc6r1wmehf1uskwSLBq2ZuSMBjF+4tiBATSMeAjiRoZM/Ptfdrg==
+ b=ZGX8r7Fmypc7zy7lJwFcZg/gK7LOlBmVd4POi+dHAS/A2DLeyhhF7j34XnbY03qZ2TO/9TnGLO7ENusN35yHQwqbs3jtyCrWRyVDNyw7QDoP8i5DVeUjkBi1zTHO67eToy+NwmHvVsxaeEZtUmEtwnPzCzi8IAxWRDvRVtZoIkVcCM1B9YaoDgj2n/B6PjySG3f462AyXBTubPQAKF4ePmW8vHc6sJVGf2E2aIg+SnMBmSrIOxA5/o8nIHjx0nsA6hVkiPQgNSYljaeUxRMBVpYDOUPaQ83hWTNJzFIVKYQEr5cGfruwPgwDiguDpvCvx+QpH1mBBZZHVt9icOwM3g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZPw5ux++LwsikNYaj+gT3teygmlMvhDEUJ+NYBf48vg=;
- b=KvMBEzHIg8U5E4k36/DvffjS2KnSzlJ18/kZH6+X8KEHNo0nquLzlIKoeKCXnZJx5qoIoexgI/i5/2HXRdNTMp6GPrG4nEr6Ok/LUJuXJF2LYlWDCXCjEj1Z0OHl6/ZMSkk+1j9+OTeaYtk3CDbh9c28y7Vfm1iUdjilCj7ZFXsDLR5ViEerN74tZt8CGiNpAVUtT5VffHuhnEvM1WvwIJmG8AIxdrJVxQiZAJVmvdmeIdfcs5toB7Wz+hyQI9LGqFg0VYCk6gAegbEUzDrloDX3A6EAqmzH6EP7IEY2catqVky0qnnxhhPOPQrGGMjOiEd1F3Z6N4JSzsw76vDnRQ==
+ bh=oVSdiDXFIjMdIFa7p7N/jLr0vnjb76Jgq9wuTkoF8yI=;
+ b=OcyFT/vbkwIcJvc1Lm8SbgBUNWP9VShOJ8Wxlci6xvrPQO8jmViCC04JwNz7XGMBGixtFpDeBzk5UKRkb2mFXz4dcW3y4qf+rXjV4/Kf/aQltqPxWhXhAohZJE8ycZC9jpQ+FivRe6P2iVX0r9hRlyjVi7DDHWvY42EPTGjJPope8ch40AvDP77lY+OiuDfFZ8HpWDtefFnTpX2fIUW3A0DWivfjqrfepxUA+nSB4yYDUR68r8lMabjaz/XEckMT6eqaT46eVPYhtRgvpSCmMKwDloW9nTyPlwGl3vbax2FUX2XT0Hmr0SAXABBU99pykmrbhB8Rzy+df9HSuiPEOg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
  dkim=pass header.d=gigacodes.de; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZPw5ux++LwsikNYaj+gT3teygmlMvhDEUJ+NYBf48vg=;
- b=cnf/x63Wa5tleGltU/gqZudRV7uix+f4oYmWpazB//SSh3PCIv6q+RysN2ImGQ+Ry9vEf6qaNWkxULBVjz/LLoIRcMSQb7g0qwbzwJPnhdyIdcZ2XO+cYVlsBWrvVKtma7J/ArQhucohpySL+QkAeeQgQ9sWmee7juv5FulhHk8=
+ bh=oVSdiDXFIjMdIFa7p7N/jLr0vnjb76Jgq9wuTkoF8yI=;
+ b=u53JnH30Vnr3OCJGB03lvzdW5zHBoKhDZFwWnYRtsaeM84yrB1Ozy1J1YUhvGKHp8HInyqGWmrsrFXDK0BiaXYMgmmPncKnrCr9lSXN3xcrjyCfZqDSPun5jIODf2/4r92/dq0eHD0e5c45wqvJT8L64rclb/jkY0gUmBzrCj9k=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=gigacodes.de;
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by DB6PR1001MB1222.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:4:b2::12) with
+ by DB8PR10MB2572.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:b2::21) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5017.26; Fri, 4 Mar
- 2022 10:25:21 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5038.16; Fri, 4 Mar
+ 2022 10:25:24 +0000
 Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::116e:6242:98da:22ba]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  ([fe80::116e:6242:98da:22ba%8]) with mapi id 15.20.5038.017; Fri, 4 Mar 2022
- 10:25:21 +0000
+ 10:25:24 +0000
 From:   Fabian Stelzer <fs@gigacodes.de>
 To:     git@vger.kernel.org
-Cc:     Fabian Stelzer <fs@gigacodes.de>,
+Cc:     Todd Zullinger <tmz@pobox.com>,
         Henning Schild <henning.schild@siemens.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Hans Jerry Illikainen <hji@dyntopia.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Todd Zullinger <tmz@pobox.com>
-Subject: [PATCH v4 1/3] gpg-interface/gpgsm: fix for v2.3
-Date:   Fri,  4 Mar 2022 11:25:17 +0100
-Message-Id: <20220304102519.623896-1-fs@gigacodes.de>
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v4 3/3] t/lib-gpg: kill all gpg components, not just gpg-agent
+Date:   Fri,  4 Mar 2022 11:25:19 +0100
+Message-Id: <20220304102519.623896-3-fs@gigacodes.de>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220302090250.590450-1-fs@gigacodes.de>
 References: <20220302090250.590450-1-fs@gigacodes.de>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: AM5PR0701CA0061.eurprd07.prod.outlook.com
- (2603:10a6:203:2::23) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
+X-ClientProxiedBy: AM5PR0701CA0067.eurprd07.prod.outlook.com
+ (2603:10a6:203:2::29) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
  (2603:10a6:102:12e::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 3847ec84-fd62-4489-7295-08d9fdc94986
-X-MS-TrafficTypeDiagnostic: DB6PR1001MB1222:EE_
-X-Microsoft-Antispam-PRVS: <DB6PR1001MB1222592B169A29D4E0B6C984B6059@DB6PR1001MB1222.EURPRD10.PROD.OUTLOOK.COM>
+X-MS-Office365-Filtering-Correlation-Id: 05246ad2-e341-4105-bdf9-08d9fdc94b20
+X-MS-TrafficTypeDiagnostic: DB8PR10MB2572:EE_
+X-Microsoft-Antispam-PRVS: <DB8PR10MB2572AB3F1F20C5898857169FB6059@DB8PR10MB2572.EURPRD10.PROD.OUTLOOK.COM>
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: hWs4AxjTr+Ra0GueLlEGT0zlHndyiF3Q5jKfF1Hh87FcHnLnxP+3EWEeHGG7rsI4No6d1IfRRM1w66yyA6A3AS+KO7M38Cr09LfRbdVoCUkFGfqYSpIqew8t7elknFHWbGDZxdztKGwL3vKgkvRc1wO1N4/ZQtP+Z8QGyVKuW7T1OQ1XghhnACpWy0WWTn4IcWKzRes5VWrYxxG6uNKdyPU76M3CkrNJudpv0XZcg1RCHyBs+nyMH3ugOu+dwJeZt/K4kY4E85nrUgC1OQs1f2luC+lOCBgWlAR/GBnJJQpLHHpDLfriLpB29EpYga12WWlPfoeHWEXpHV7qheqzfWSGTZeFNgHlto2IWvZAQtu4DpOKvI8/zXKACxN3hs5TYnnK4RcNiljNJs5rEymGl6rcKkHPTh+8lxMtCVsaKXeoqtNY5/Cxtf/z5jLVEbHcpAe6/kpGoisHfUNHyt8qfIBQ2ycJxp7XyxVnLW1p9cnKF/suTuN9wzeWGy+6V8YcibYj4pIYdWvnBxbMj5MF0sGQmdC170Pyb4rMO00sSVajiW64i/thJTP3rkUOp/FcHiQbcSXjswnqC3BjpwRPDu2mACa26xOS8ZXBQTCHKXQ6Huu+0gpLEB/8aDKTW9Um3IaUhI99ibWBcmfM36zHeQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(4636009)(39830400003)(376002)(346002)(136003)(366004)(396003)(6666004)(54906003)(6916009)(38100700002)(186003)(1076003)(6506007)(6512007)(2906002)(36756003)(508600001)(6486002)(2616005)(83380400001)(4326008)(66946007)(8676002)(66556008)(66476007)(26005)(5660300002)(8936002)(316002)(86362001);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: RdmEe0YIGQM3fmXffoTw3Y2oWc0MmnNTPYRYE+vI3rgjGZUsLnPu7UbK41/VCeCD1qgSCpC1frsmL52xkBUABa4mq0JMpKVOwGPCRfm9RNtOJjZCRv3xUkjFykeLPSBPpJfaduTmr+oA3wIU4BPZT/Mw8EzdReDV0Zk1pMvEnsxOZCBMzcovpBOS8D6mNhgO5pzHQJBmr5+HelcRMn0fuvSAH4bZZolUXnoTCFmrCvWAje95/12P4jrhY0/XFMvj837DDk2Ej7AliYgER/EAMEfDMWGmFsSGr7yegMxZZ3WzVHAs8aqk96ipQXcaGQcbCPB7iJJxMDlC5G6cFli02uyoYQaGZLbIg3lu7798Ss6Rx9z8kQuMUSyZpfd41FvF9mXkmxsuu2C2kjaXDQO2lc/iR6LmpjNAnsQiiC7jB/rwkpZLJMvuzdhGqg9Zrk1UYHvIrWZhn9V+cJ12QNlooNWfoVnDstw7d4m5WaN1O+82iE79VP2kNBqNr1tBLGUK2dOZon14cBSUb8NLfyL0y+A6stjggDJPyNaGGNtwMsB+3CKzG6K3vX68zvqLBeJ1W54daggA5bc1XK1f5ZoB3gJhCc47GfdKD20ws/SF41sOyse6Jg68MV+rMcyOggPyLvuvNzvpT5KU4ctbeTwJvQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(4636009)(136003)(376002)(366004)(39830400003)(346002)(396003)(2616005)(1076003)(86362001)(66476007)(66556008)(66946007)(316002)(6916009)(4326008)(8676002)(36756003)(186003)(26005)(38100700002)(83380400001)(54906003)(508600001)(5660300002)(6506007)(6486002)(6512007)(6666004)(8936002)(2906002);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Tdw/39vo8QV4Pgfv46nJ+PHpch7r7LP5wW4VnA/cc+UfioRAMAym/LIAEhEa?=
- =?us-ascii?Q?GeaFIWKWfAGAEy1T4VFKaEeRdAEiuY8vHBEoSTPQU6P6ZJ3qUd06RYW7VHli?=
- =?us-ascii?Q?F25D2j0FLxEW1tH9mzy533LQjfZ8JKsZUorFGc1mNAXIGm610d4vUknyAlxv?=
- =?us-ascii?Q?MffYQ7NgvlqcOE6n0VivuYUae+Kt1LHqObAhILiSCGqCJ6LkA1GvKZH/dQiF?=
- =?us-ascii?Q?QgC1YyjYav3r+AU5ybUz5qWMFnvUm3BHDhuv9VeWaAf9ArS4wQ7Ak8wGFq9z?=
- =?us-ascii?Q?Ze48vr8HA3Waiaf7dTEnSV5AEHsryfz5w2bjfZd+kfSdYpMqgM0PnOomrM5t?=
- =?us-ascii?Q?Jv7A8NRkp8CZC6NfizYdrsLaFyxbuvsNafVHgepajaeo4UpUtKxrSklGko5Y?=
- =?us-ascii?Q?XTYxdVkUi2fSC0EO/LKIbkmUbpB9bbxAr2voApL8jLIEDGNSq3r9VQYGIAJe?=
- =?us-ascii?Q?Q7AxHUsOydWWlDnBgFuSF3md/XlwEnlDLtoTMfm0fppTZWx+zvWroCj0UWZn?=
- =?us-ascii?Q?8Ayj2e0VWDgwoe4SA5mdDXaOavqgTCz+7rvaZ2+PlsqZhDXYg2ITTt+cbnxO?=
- =?us-ascii?Q?iOzD79Tt7QkTgE6/2YtqJP1UyxHUi/SHppmPCwK+d6O3Y6PtthJIyk247vRn?=
- =?us-ascii?Q?4bBsaxjuiIq1cXs1AJQPghIxfv/5Y2VkzlhIt9S7VFer4zvdjMtHS+QbUN/g?=
- =?us-ascii?Q?sPgf552Rfebtfj6IlwRmXL0qxEgvldWfBL/jM9b/U1P9vjH+4JBw8INapWPf?=
- =?us-ascii?Q?TKpIcgR6iC2guZH8Qsk8uzdk/ip1M8CIrBERF3ZqzQrhUTO0d/Dj2lopTrRC?=
- =?us-ascii?Q?FNm8uOjWLpORmDcgUdrnsANKPBCP2VxtqKUSbEJds5/SSnM8jEV+00sl33o1?=
- =?us-ascii?Q?B3R2YJ6yD0aWYwHZ+neHPG2Q0cMll/v1VejT/7uP8jtkx+8EmWyObn4q+2Ol?=
- =?us-ascii?Q?pI7QFPOKZ6Zzr2stnv9AZ8HqxlTkKjYvelqCNokFcBO+sOoKqLMelcCEDm7e?=
- =?us-ascii?Q?wDKoqaclK9RF65YaE+x+UFDV9BBNcP12E95z/DgFfxbDi5oBHg7Ux+mB4z5i?=
- =?us-ascii?Q?ns9cS1Qv4XnfdNFukWy9dcw9CN4hUbzZ/XBSW68I0xDrxqSHaDhAPpm8vO+X?=
- =?us-ascii?Q?ZFioouoA9oPN4ucP2YEPtlMrmmFXWuMUftkAHXsPuVbNnVHtJxRbZw8efQJV?=
- =?us-ascii?Q?xrYBOabnH1VRUXT9Cn/Pd93o0qK4Y09RjaEVUxZFrgigQOv+1lCmXLhxbV2l?=
- =?us-ascii?Q?HI50uuFrDmJKE/KRAeg/x3NElDJS6CjQUUNo+oe3PZQrjM7jtfY8W8rzjVUJ?=
- =?us-ascii?Q?qmLbfk+gE9bZXDRKIX1adIPj0WwmzmauLzcQNxBIm7T6Zh6a+xu6/fLxMh/G?=
- =?us-ascii?Q?NQ+gwo3EknSTZhLrx9fqwfAN9K6bJgKYm2rTdYi/Um3Dz8ya72+cdglpIVUm?=
- =?us-ascii?Q?Ej+Y98X+zHoHAI3VoTmDalXpEFn54yanazL/93v/pJXGQ3bRmlo7CpMrIUDM?=
- =?us-ascii?Q?scX4rCXT4JZSGET+ApWS4UUlK/KEtS/x1Fa/c72BV+WkdAw+5Ru1lmf0Tjnc?=
- =?us-ascii?Q?Fz54IWleYvw8Lb4eGg/cizWNq2g6nU0jt50SiMh3B9EXbQ3QN8iH/wyeeGpQ?=
- =?us-ascii?Q?BwPZNPtItvju0z0OuWAB7v/2A9ZWe0lbCn0eqXhcbcw+Gl//Vb/W22Ii8KjD?=
- =?us-ascii?Q?2nRTGyESGDXjdl/3W1I16DrpcN4=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?zjMa1wRzrOlqccyvMScbRtFm0WZxBqFB92K9EIa0N4xNvsp29fDIh9ByyOX8?=
+ =?us-ascii?Q?x7hud2/BKjgGCMBCgS/2kzTNYdWLr8mKm8mIqKt3vBQAEeXMbX9WHoDvZCPs?=
+ =?us-ascii?Q?ckeX7i9AJhU4qWre3QvozF6NS4eU9/2PweY4RoMBG9hPUI45vh5kDQuXWEF5?=
+ =?us-ascii?Q?tsFP/zo73/C9ZYGfDfVAbFg2gd5iaNzKCcvXTB/XoADIfmW5cpG7C486ajuB?=
+ =?us-ascii?Q?bt16uuo01lq5eSw7RfXRzWNDjegYjSL8RdMNwcqrk9/qWnIw0F6yqfcaUOf5?=
+ =?us-ascii?Q?btOjbRdQxHhPi80CA7kTdALO4Z4cXn1RNPhQcrcPe4CO1z/8Xt3NqQtExBxs?=
+ =?us-ascii?Q?QFOIf1sAHCk62MSqk5KG76d6pIUKTNsM9PdvCske7YVqwK7AzSt6ZEfT1Y+R?=
+ =?us-ascii?Q?I+bK/mYE2wkwNDEl92wgMINa2r+GxMXz7PC5hZ5zXdLfyryjXclv4IYVaVZn?=
+ =?us-ascii?Q?J7DP8/dyLWO/sLI2KXqWjS+CsRv2YTWi/P8vPlINbA7+/cKcjOYTjK8S+IiK?=
+ =?us-ascii?Q?9/2wEjqawyLnC1xFrxtfXRdheGfYPk2VHHlOU3LbTnPlrqvoG+j56eeb9Cd0?=
+ =?us-ascii?Q?PqKPbylDVP4HUGXeZSjjMLviYGBzzsqXqwS4JysXaVEIyGhqgJQ3BPCvonFF?=
+ =?us-ascii?Q?gORkKlpiQ6ZAgTKpWJmXnhWi0mOE4mQJLOmvmhdjS8W7CuFI9/jVOHdRAQST?=
+ =?us-ascii?Q?hIkXqK2ub7bMImc9WSHrbSlsDfv0hJ71UEmbTbv9aB5308dSf/oIQrewAp7Z?=
+ =?us-ascii?Q?RDVxoP5xsV/ZDzzXgbbWvFFWGCZJw5WxgjRieYv+1VOj/mAT2HzsTJim7/Wp?=
+ =?us-ascii?Q?geNu1rULTm46ugCsaB6V2FiMK1XmJbhgd1FjpIdg7w2aaTOp01Ihz5EpmWQu?=
+ =?us-ascii?Q?8cPyJ97HlhG5yOQD2yGuAzj9GRzCrvsZLhB1yM+4YkHdczmJCUWM7WuoikKu?=
+ =?us-ascii?Q?xOza1D7jlZSTlrSZbCUUPQmqF6Qh8EMtPBAtdrEzhqDYx8arho2sf2ld3NV1?=
+ =?us-ascii?Q?NQeSClJiQKv/T5aFbl1Afl7R190+WL36JDu8aUiNZaTDIz9RUCHomKshfwLA?=
+ =?us-ascii?Q?JeuSWMUaGtUmQZi6jAINTfYPrOQxFCEi2j4Jzih/OS4kkPoQWV51/j46cpd1?=
+ =?us-ascii?Q?vAupDsKJYS/UeKTzl+Bq6OpG6jtDqQb6f4W0OzBZ1FkyJ3cWD1zVxLixTToA?=
+ =?us-ascii?Q?19lEF3ykxzqDAeTIRnSc1VvBiuUHrmtPxAVJ+F+OXrnlmsLmZro37aBsCbMn?=
+ =?us-ascii?Q?xpG69PxfdqVebVHE1LIiTGOflaQvS3Eurtntu95Sz+DBKgyK1CqUVQk58LI5?=
+ =?us-ascii?Q?5mZ2lwVYCRiw6z0/QLoUUnSLhKJEnQSrMDjMMV5UgoxWTxWeLGij/o85VlvD?=
+ =?us-ascii?Q?NbVlCeBUXt359G2//RTL9O9Uf6JzABWTgxGbeHcqS0fmyfyqFKBisWPcN0Wt?=
+ =?us-ascii?Q?94mRvPSXWSnm1YCW/NwixkwXfUhVq1EOkLzxRZoRR8UUz0hFrvVY6RVnPQG9?=
+ =?us-ascii?Q?RadODjy/3qrwJRoOYqkbM8Lwwcd9+B+Rgu9NQIAJ7dzjfrPJg9aJ3r8Wb6FX?=
+ =?us-ascii?Q?vkSWYQuFd4ZB3KGXdv+FwK9MUDKXrdtz/nmuYupx/rGdxiM2VAAkL7DFAu/P?=
+ =?us-ascii?Q?JivlCo+HA91ZjtbvVRcL5/auPJIVW1kRIgpGiwkJPSPsymC6/qj2WnG4WWRA?=
+ =?us-ascii?Q?rTHFckNfdeEgJeGipHuCAtJQcLY=3D?=
 X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3847ec84-fd62-4489-7295-08d9fdc94986
+X-MS-Exchange-CrossTenant-Network-Message-Id: 05246ad2-e341-4105-bdf9-08d9fdc94b20
 X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2022 10:25:21.6561
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2022 10:25:24.1576
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LhhmmWUn/R6yvnasrmk253G7zh3fmtFhgSGcFDx7sSMIyk6dwEje+e7YHtTVM4zJS496KZN4yiyuwj19NvgXRO8sV6nrtNOyi/29Ktq2Fns=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR1001MB1222
+X-MS-Exchange-CrossTenant-UserPrincipalName: WLqg/DhclFlXiXwQaV6Tg26rD6h9gvrw9vT6AMRWRpbgVtCt6/LOL9//9l99THa+oTJ3+ssN1UB9+R/LhelWRJ5tkJxDR85EHoMSHufBM3g=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR10MB2572
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Checking if signing was successful will now accept '[GNUPG]:
-SIG_CREATED' on the beginning of the first or any subsequent line. Not
-just explictly the second one anymore.
+From: Todd Zullinger <tmz@pobox.com>
 
-Gpgsm v2.3 changed its output when listing keys from `fingerprint` to
-`sha1/2 fpr`. This leads to the gpgsm tests silently not being executed
-because of a failed prerequisite.
-Switch to gpg's `--with-colons` output format when evaluating test
-prerequisites to make parsing more robust. This also allows us to
-combine the existing grep/cut/tr/echo pipe for writing the trustlist.txt
-into a single awk expression.
+The gpg-agent is one of several processes that newer releases of GnuPG
+start automatically.  Issue a kill to each of them to ensure they do not
+affect separate tests.  (Yes, the separate GNUPGHOME should do that
+already. If we find that is case, we could drop the --kill entirely.)
 
-Adjust error message checking in test for v2.3 specific output changes.
+In terms of compatibility, the 'all' keyword was added to the --kill &
+--reload options in GnuPG 2.1.18.  Debian and RHEL are often used as
+indicators of how a change might affect older systems we often try to
+support.
 
-Helped-By: Junio C Hamano <gitster@pobox.com>
-Helped-By: Todd Zullinger <tmz@pobox.com>
+    - Debian Strech (old old stable), which has limited security support
+      until June 2022, has GnuPG 2.1.18 (or 2.2.x in backports).
+
+    - CentOS/RHEL 7, which is supported until June 2024, has GnuPG
+      2.0.22, which lacks the --kill option, so the change won't have
+      any impact.
+
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
 ---
- gpg-interface.c | 9 ++++++++-
- t/lib-gpg.sh    | 8 +++-----
- t/t4202-log.sh  | 3 ++-
- 3 files changed, 13 insertions(+), 7 deletions(-)
+ t/lib-gpg.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index aa50224e67..280f1fa1a5 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -934,6 +934,7 @@ static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
- 	struct child_process gpg = CHILD_PROCESS_INIT;
- 	int ret;
- 	size_t bottom;
-+	const char *cp;
- 	struct strbuf gpg_status = STRBUF_INIT;
- 
- 	strvec_pushl(&gpg.args,
-@@ -953,7 +954,13 @@ static int sign_buffer_gpg(struct strbuf *buffer, struct strbuf *signature,
- 			   signature, 1024, &gpg_status, 0);
- 	sigchain_pop(SIGPIPE);
- 
--	ret |= !strstr(gpg_status.buf, "\n[GNUPG:] SIG_CREATED ");
-+	for (cp = gpg_status.buf;
-+	     cp && (cp = strstr(cp, "[GNUPG:] SIG_CREATED "));
-+	     cp++) {
-+		if (cp == gpg_status.buf || cp[-1] == '\n')
-+			break; /* found */
-+	}
-+	ret |= !cp;
- 	strbuf_release(&gpg_status);
- 	if (ret)
- 		return error(_("gpg failed to sign the data"));
 diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index 3e7ee1386a..6bc083ca77 100644
+index 38e2c0f4fb..114785586a 100644
 --- a/t/lib-gpg.sh
 +++ b/t/lib-gpg.sh
-@@ -72,12 +72,10 @@ test_lazy_prereq GPGSM '
- 		--passphrase-fd 0 --pinentry-mode loopback \
- 		--import "$TEST_DIRECTORY"/lib-gpg/gpgsm_cert.p12 &&
- 
--	gpgsm --homedir "${GNUPGHOME}" -K |
--	grep fingerprint: |
--	cut -d" " -f4 |
--	tr -d "\\n" >"${GNUPGHOME}/trustlist.txt" &&
-+	gpgsm --homedir "${GNUPGHOME}" -K --with-colons |
-+	awk -F ":" "/^fpr:/ {printf \"%s S relax\\n\", \$10}" \
-+		>"${GNUPGHOME}/trustlist.txt" &&
- 
--	echo " S relax" >>"${GNUPGHOME}/trustlist.txt" &&
- 	echo hello | gpgsm --homedir "${GNUPGHOME}" >/dev/null \
- 	       -u committer@example.com -o /dev/null --sign -
- '
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 55fac64446..6306e2cbe5 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -2037,7 +2037,8 @@ test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 miss
- 	git merge --no-ff -m msg signed_tag_x509_nokey &&
- 	GNUPGHOME=. git log --graph --show-signature -n1 plain-x509-nokey >actual &&
- 	grep "^|\\\  merged tag" actual &&
--	grep "^| | gpgsm: certificate not found" actual
-+	grep -e "^| | gpgsm: certificate not found" \
-+	     -e "^| | gpgsm: failed to find the certificate: Not found" actual
- '
- 
- test_expect_success GPGSM 'log --graph --show-signature for merged tag x509 bad signature' '
+@@ -40,7 +40,7 @@ test_lazy_prereq GPG '
+ 		#		> lib-gpg/ownertrust
+ 		mkdir "$GNUPGHOME" &&
+ 		chmod 0700 "$GNUPGHOME" &&
+-		(gpgconf --kill gpg-agent || : ) &&
++		(gpgconf --kill all || : ) &&
+ 		gpg --homedir "${GNUPGHOME}" --import \
+ 			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+ 		gpg --homedir "${GNUPGHOME}" --import-ownertrust \
 -- 
 2.35.1
 
