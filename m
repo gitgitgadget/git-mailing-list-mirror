@@ -2,88 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E10AC433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 05:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8957CC433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 06:59:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238006AbiCDFRZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 00:17:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34902 "EHLO
+        id S238594AbiCDHAA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 02:00:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235887AbiCDFRY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 00:17:24 -0500
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75981793A2
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 21:16:37 -0800 (PST)
-Received: by mail-il1-x12d.google.com with SMTP id k7so5736800ilo.8
-        for <git@vger.kernel.org>; Thu, 03 Mar 2022 21:16:37 -0800 (PST)
+        with ESMTP id S234065AbiCDG77 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 01:59:59 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE0A592D3A
+        for <git@vger.kernel.org>; Thu,  3 Mar 2022 22:59:12 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id qa43so15432062ejc.12
+        for <git@vger.kernel.org>; Thu, 03 Mar 2022 22:59:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:from:to:subject:references
-         :in-reply-to:content-transfer-encoding;
-        bh=+xC8RFb5R+2vEzHaGM+cIz9NgDyAKodJAKQAd1VIx2M=;
-        b=iYOlXGazHAm9AHqdYS/+1MJ/1vc/of5m+zggxoFEqWrZrA0KCsj18PJEBTPNdR0pn3
-         xuAabAKT2LEDkDZDecsHv4NIMuC+qa87swwbBhtI6+4rHqiF8h3q2u9DxIwVSiyPR4O3
-         793Cg4Y7X27lAeqm8shewjvi4Er5bQBuHZ8IUD5wzNXBUrLz5faxdxtjwvXxENy7usB/
-         E4qGW8uQZgLILJqHWDDjcbzHcT2BNGQd2ejr/VNbLJczOr4A4WIq5os1WGNHwpXmbOTj
-         IrDboyCL3Hm5oUxrGCQXxqtA7eUlu3E+ZZ7k3X3MAh/ax0FQ5G32si9GYDMRpPiguaDi
-         vGYQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=fTOM7xNJ5VImLxOju0kC/GIoSSme2bt6MDK3fa2dCxQ=;
+        b=pnkD1VSd0L9YtnmteuDH18Emey9HG8DTYGZA+UzAqPNXZNnW5bZFHWmKAN3rpBVbrM
+         eMPi0VBdmq2XxBrRhikBj+H3kTKdj3+iO7K4mxdomNQy1ciwPUnP0T2SD4GwSetplbK2
+         6ekD2wbjgTxZ1A29iCOCR7X+VJRCIY+dBSQnEV2w2X1IjzhCRKLsLIMYOTvYPMB13mvI
+         aH2Ew6VFeT5jkke4K5QonMR63yMnGJVzLfGfLydHgf4j18X4Kt+BrS01i0BzduWAjQjE
+         Q3qVzgDYX1dXSOX/PNLH3EdDwYM6PCzRSdN4e9nU17YSNapz4ycE36v3ZllAi75RSDi4
+         n4sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:from:to
-         :subject:references:in-reply-to:content-transfer-encoding;
-        bh=+xC8RFb5R+2vEzHaGM+cIz9NgDyAKodJAKQAd1VIx2M=;
-        b=vj2l3M59ajxpsR1oj43ABQwgeELTgKzGVYsn4DSMzmibyREnkvFXz+GFxR7s5IfMFY
-         OG7yRbVK0BsE5sQhnK94D7dBM1TLcpXtDIHET0Ilk/+syPLhugGaEDAujwEIglWrQ+a1
-         xwQVSUVcAir0SXCVRXtVl/YR/WZVjcm+0h8OZbFGbCW88EzSFcrRASdbgkceGf2qkOnO
-         mfeUPaYTd0/1ggc29MwtiTKQWl/Ky2q/asE8zO0hiU6u949V+kx0Q6WMZjHltLZGrvCc
-         BbbgKytnQljogYEFsgHNuq3CcMUKv62pEkdTNfLv4TfksCBQG0JstLk3pQ7MIt3FY4zk
-         ZAUA==
-X-Gm-Message-State: AOAM5303qaN5kppsYcwOvNqlNu/SuFO6oDlQSO98yOKt9OyqDo7a4ORq
-        H2fevRJW8Vme5JIwl7JT4FvCbjUN5v8bFg==
-X-Google-Smtp-Source: ABdhPJw+GvcFR87t/PEPZUddTSRjscW7Z/XOVFkjTna7FqJHw/aMGd8afRPVRedY9uaEFR+bnHS+cw==
-X-Received: by 2002:a05:6e02:1547:b0:2c1:e881:47b6 with SMTP id j7-20020a056e02154700b002c1e88147b6mr34019233ilu.105.1646370996788;
-        Thu, 03 Mar 2022 21:16:36 -0800 (PST)
-Received: from ?IPV6:2405:201:a800:4df9:5194:c9b1:2d1f:598e? ([2405:201:a800:4df9:5194:c9b1:2d1f:598e])
-        by smtp.gmail.com with ESMTPSA id k5-20020a5d97c5000000b006412c791f90sm3527873ios.31.2022.03.03.21.16.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Mar 2022 21:16:36 -0800 (PST)
-Message-ID: <d38d18f5-f430-1f66-dff8-92b4a349b165@gmail.com>
-Date:   Fri, 4 Mar 2022 10:46:30 +0530
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=fTOM7xNJ5VImLxOju0kC/GIoSSme2bt6MDK3fa2dCxQ=;
+        b=hjCwcro3bO7hVydCTutp0BWIuWYc1HuKyMDkUMm2dd4P2pYkG0hx37p+ow67d/0yD0
+         tC/KqV+1PmTysEFkuiK7RPVpoAbo7OW3ntWNTvnyiOJAYlnboe/mqfKRXkP4GOb8r3Ig
+         TXDm8N8q4xbdjX6VEffoLdM+hmHfBY/S+N3SHwirX4KaVQTczEmj44oU3uqTMmfzFbSD
+         0fcEqXC0ML2rqbg8M+yjDw+7oc1kXrtZB6F2MBAIwRbpUr/2vo/8qRNrRGi1SNk5kFPo
+         fj5UmoDnkDNH1EgGvJkaVS7AwTy6zHXNUrmyiyfweqccwM0h12HkGlwQ+EUsd2zcvl0k
+         3xhg==
+X-Gm-Message-State: AOAM533f1XZAdw5UG6/F0A9EOYdwCB9vFAkdWP6MKJhuPf+R2E+qpItA
+        p3wBLRyt+LG9bTyFbHwLpf4=
+X-Google-Smtp-Source: ABdhPJzuQa1nyfZGfhpjt6u7nfUUa+RgMgl4GcXKQHm8HARTVHgyHarCIqAzS1gUF1eX7F+ujiddRQ==
+X-Received: by 2002:a17:906:69d1:b0:6ce:7201:ec26 with SMTP id g17-20020a17090669d100b006ce7201ec26mr30330172ejs.105.1646377151254;
+        Thu, 03 Mar 2022 22:59:11 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id kv9-20020a17090778c900b006da693d5e91sm1393509ejc.122.2022.03.03.22.59.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Mar 2022 22:59:10 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nQ1u8-0006Ot-8I;
+        Fri, 04 Mar 2022 07:59:08 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     phillip.wood@dunelm.org.uk,
+        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        Shubham Mishra <shivam828787@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 00/15] tests: don't ignore "git" exit codes
+Date:   Fri, 04 Mar 2022 07:57:43 +0100
+References: <cover-00.15-00000000000-20220302T171755Z-avarab@gmail.com>
+ <76a1ff22-3eb0-08fb-5aa9-e612ee5b522f@github.com>
+ <e3090436-4479-bbc2-3b62-00473f6f530e@gmail.com>
+ <220303.864k4f3uqe.gmgdl@evledraar.gmail.com> <xmqqlexq4et6.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqqlexq4et6.fsf@gitster.g>
+Message-ID: <220304.86zgm6fbk3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-From:   jaydeepjd.8914@gmail.com
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] userdiff: add builtin diff driver for Kotlin language.
-References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
- <20220303181517.70682-1-jaydeepjd.8914@gmail.com>
- <xmqqee3i4eso.fsf@gitster.g>
-In-Reply-To: <xmqqee3i4eso.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Thu, Mar 03 2022, Junio C Hamano wrote:
 
-On 3/4/22 8:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jaydeep P Das <jaydeepjd.8914@gmail.com> writes:
-> 
-> > Subject: Re: [PATCH] userdiff: add builtin diff driver for Kotlin language.
-> 
-> "git format-patch --help" and look for "-v <n>", perhaps.  This is
-> the fourth iteration, so [PATCH v4], I guess?
-> 
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> Yes, it returns the correct status code, but that doesn't help with
+>> (pseudo)code like:
+>>
+>> 	if (run_command("foo")) /* exits with e.g. 123 */
+>> 		die("oh no, foo failed"); /* exits with 128 */
+>>
+>> I should have said "code using run-command.c does not do that...",
+>> sorry.
+>
+> Yeah, but even if callers of run_command() can tell "foo"
+> segfaulted, I do not think it is sensible to exit as if we
+> segfaulted (or, we _could_ actually die by segfaulting ourselves,
+> which is worse).
 
+I should have made it clear that I'm thinking about this as a test-only
+mode, so hidden behind some GIT_TEST_* variable, i.e. as a means to an
+end in getting the test suite to spot the failure in the sub-process.
 
-Yes. I think I forgot to fill in the subject so it was sent with the default.
-I didn't know format-patch allows to specify version numbers. I will check it out.
-Also, In the next patch, should I do it as v4 or v5?
-
-Thanks,
-Jaydeep
-
-
-
-
+It's not the only way to do it, but it's the simplest and most reliable
+given how our tests are run.
