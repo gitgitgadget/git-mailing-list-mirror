@@ -2,222 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4F7BC433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 23:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B23DC433EF
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 23:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbiCDXgY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 18:36:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32826 "EHLO
+        id S229520AbiCDXlV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 18:41:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiCDXgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 18:36:23 -0500
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F417D1C7EB4
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 15:35:33 -0800 (PST)
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F3F05112EC2;
-        Fri,  4 Mar 2022 18:35:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ns0CFZsiWKh4sdGUOD6BmqbH3zWX4gsdRMkT4q
-        41fSk=; b=pTtq46JotDV/b4cVsKyJ0v24DjTgk4uatlrnTfogwh949QcSH2X0tg
-        5TsqFNruFcigIEjKdEvTk2FDKxHJR3h+1JClVjtS9Q10UQchvfwQw/Tp/Om4FONU
-        R3whDulIFLZs0aZUh+uqN2RQhQRfH5FZ9H8yf/oLqPKbWVBAbAOl0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EC38E112EC1;
-        Fri,  4 Mar 2022 18:35:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.230.65.123])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        with ESMTP id S229471AbiCDXlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 18:41:19 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2A466D4C9
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 15:40:30 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id AB6DF3F4815;
+        Fri,  4 Mar 2022 18:40:29 -0500 (EST)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 60F8F112EC0;
-        Fri,  4 Mar 2022 18:35:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        by siwi.pair.com (Postfix) with ESMTPSA id 716D93F482D;
+        Fri,  4 Mar 2022 18:40:29 -0500 (EST)
+Subject: Re: [PATCH 02/23] t7527: test FS event reporing on macOS WRT case and
+ Unicode
+To:     Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 10/11] bundle: create filtered bundles
-References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
-        <5393e74708dfd38e5596d9e877a491e6ed8dda24.1645638911.git.gitgitgadget@gmail.com>
-Date:   Fri, 04 Mar 2022 15:35:31 -0800
-In-Reply-To: <5393e74708dfd38e5596d9e877a491e6ed8dda24.1645638911.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Wed, 23 Feb 2022
-        17:55:10 +0000")
-Message-ID: <xmqq5yotxpdo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
+ <ad8cf6d9a47b61d9fe41a961466122be16e4f041.1644940773.git.gitgitgadget@gmail.com>
+ <c7ee2394-cda0-a997-3b9d-fb8c3d65b312@github.com>
+ <20220224173305.gbr2waw77xpuieub@tb-raspi4>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <8a32ed13-ed53-3605-ca78-83dac2be1e28@jeffhostetler.com>
+Date:   Fri, 4 Mar 2022 18:40:27 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C8853318-9C13-11EC-8C7F-CB998F0A682E-77302942!pb-smtp2.pobox.com
+In-Reply-To: <20220224173305.gbr2waw77xpuieub@tb-raspi4>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Derrick Stolee <derrickstolee@github.com>
->
-> A previous change allowed Git to parse bundles with the 'filter'
-> capability. Now, teach Git to create bundles with this option.
->
-> Some rearranging of code is required to get the option parsing in the
-> correct spot. There are now two reasons why we might need capabilities
-> (a new hash algorithm or an object filter) so that is pulled out into a
-> place where we can check both at the same time.
->
-> The --filter option is parsed as part of setup_revisions(), but it
-> expected the --objects flag, too. That flag is somewhat implied by 'git
-> bundle' because it creates a pack-file walking objects, but there is
-> also a walk that walks the revision range expecting only commits. Make
-> this parsing work by setting 'revs.tree_objects' and 'revs.blob_objects'
-> before the call to setup_revisions().
->
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
 
-Now, the gem of the series ;-)
+On 2/24/22 12:33 PM, Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= wrote:
+> On Thu, Feb 24, 2022 at 09:52:28AM -0500, Derrick Stolee wrote:
+>> On 2/15/2022 10:59 AM, Jeff Hostetler via GitGitGadget wrote:
+>>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>>
+>>> Confirm that macOS FS events are reported with a normalized spelling.
+>>>
+>>> APFS (and/or HFS+) is case-insensitive.  This means that case-independent
+> 
+> This is not true, strictly speaking.
+> You can format a disk with "case sensitive" or "case-insenstive, case preserving".
+> Both APFS and HFS+  can be formated that way.
+> The default, which is what you get when you get a new machine,
+> is "case-insenstive, case preserving".
+> And I assume, that more 99% of all disks are formated that way.
+> The "core.ignorecase" is used in the same way as it is used under NTFS,
+> FAT or all other case-insenstive file systems.
+> (and even ext4 can be formated case-insensitive these days.)
+> 
+> An interesting article can be found here:
+> https://lwn.net/Articles/784041/
+> 
+> And to be technically correct, I think that even NTFS can be
+> "configured to be case insensitive in an empty directory".
+> 
+> In that sense, I would like to avoid this statement, which
+> file system is case insensitive, and which is not.
+> Git assumes that after probing the FS in "git init" we have
+> a valid configuration in core.ignorecase.
 
-> @@ -334,6 +334,9 @@ static int write_pack_data(int bundle_fd, struct rev_info *revs, struct strvec *
->  		     "--stdout", "--thin", "--delta-base-offset",
->  		     NULL);
->  	strvec_pushv(&pack_objects.args, pack_options->v);
-> +	if (revs->filter)
-> +		strvec_pushf(&pack_objects.args, "--filter=%s",
-> +			     list_objects_filter_spec(revs->filter));
->  	pack_objects.in = -1;
->  	pack_objects.out = bundle_fd;
->  	pack_objects.git_cmd = 1;
+You're right. I was incorrectly glossing over the differences
+between APFS and HFS+ -- and conflating case and nfc/nfd
+issues.
 
-Quite expected.
+[...]
+>>
+>>> NEEDSWORK: I was only able to test case.  It would be nice to add tests
+>>
+>> "I was only able test the APFS case."?
 
-> @@ -507,10 +510,38 @@ int create_bundle(struct repository *r, const char *path,
->  	int bundle_to_stdout;
->  	int ref_count = 0;
->  	struct rev_info revs, revs_copy;
-> -	int min_version = the_hash_algo == &hash_algos[GIT_HASH_SHA1] ? 2 : 3;
-> +	int min_version = 2;
->  	struct bundle_prerequisites_info bpi;
->  	int i;
->  
-> +	/* init revs to list objects for pack-objects later */
-> +	save_commit_buffer = 0;
-> +	repo_init_revisions(r, &revs, NULL);
-> +
-> +	/*
-> +	 * Pre-initialize the '--objects' flag so we can parse a
-> +	 * --filter option successfully.
-> +	 */
-> +	revs.tree_objects = revs.blob_objects = 1;
+I'm going to completely redo this commit in the next version.
+I now have both APFS and HFS+ partitions on my machine and
+can compare the differences in behaviors and will have a new
+set of tests to cover this.
 
-Tricky, but true.
+>>
+>>> that use different Unicode spellings/normalizations and understand the
+>>> differences between APFS and HFS+ in this area.  We should confirm that
+>>> the spelling of the workdir paths that the daemon sends to clients are
+>>> always properly normalized.
+>>
+>> Are there any macOS experts out there who can help us find the answers
+>> to these questions?
+> 
+> There is a difference between HFS+ and APFS.
+> HFS+  is "unicode decomposing" when you call readdir() - file names
+> are stored decomposed on disk once created.
+> However, opening  file in precompsed form succeds.
+> In that sense I would strongly suspect, that any monitors are "sending"
+> the decomposed form (on HFS+).
+> 
+> APFS does not manipulate file names in that way, it is
+> "unicode normalization preserving and ignoring".
 
-> +	argc = setup_revisions(argc, argv, &revs, NULL);
-> +
-> +	/*
-> +	 * Reasons to require version 3:
-> +	 *
-> +	 * 1. @object-format is required because our hash algorithm is not
-> +	 *    SHA1.
-> +	 * 2. @filter is required because we parsed an object filter.
-> +	 */
+It took a few hours of poking to figure out what Apple is doing,
+but yes on HFS+ they convert to NFD and use that as the on-disk
+format.  And they do collision detection as they always have in
+NFD-space.
 
-OK.
+Whereas on APFS, they preserve the NFC/NFD as given when the file
+is created, but always do the same collision detection in NFD-space.
+The net result is similar, but subtlety different.
 
-> +	if (the_hash_algo != &hash_algos[GIT_HASH_SHA1] ||
-> +	    revs.filter)
+FS Events from MacOS are sent using the on-disk format (NFD on HFS+
+and whichever on APFS) and my FSMonitor daemon is sending them to
+the client as received.
 
-Did we need to wrap?  With these on a single line, the line is way
-shorter than the line with "because our hash algorithm is not" on
-it.
+I'm not sure whether or not the daemon should respect the
+`core.precompseUnicode` setting and when watching an HFS+
+volume do the NFD-->NFC conversion for the client.  I'm not
+sure whether that would be any more or less correct than just
+reporting the paths as received.  I'm going to leave this as a
+question for the future.
 
-> +		min_version = 3;
-> +
-> +	if (argc > 1) {
-> +		error(_("unrecognized argument: %s"), argv[1]);
-> +		goto err;
-> +	}
-> +
 
-OK.  We are moving original logic around correctly and there is not
-much to see here ;-)
+Thanks for all of your background information on this topic.
+Jeff
 
-> @@ -533,17 +564,14 @@ int create_bundle(struct repository *r, const char *path,
->  		write_or_die(bundle_fd, capability, strlen(capability));
->  		write_or_die(bundle_fd, the_hash_algo->name, strlen(the_hash_algo->name));
->  		write_or_die(bundle_fd, "\n", 1);
-> ...
-> +		if (revs.filter) {
-> +			const char *value = expand_list_objects_filter_spec(revs.filter);
-> +			capability = "@filter=";
-> +			write_or_die(bundle_fd, capability, strlen(capability));
-> +			write_or_die(bundle_fd, value, strlen(value));
-> +			write_or_die(bundle_fd, "\n", 1);
-> +		}
 
-This block is added at the end of the code to write the v3 preamble
-and it adds the @filter= capability.  Looking good.
-
-> @@ -566,6 +594,12 @@ int create_bundle(struct repository *r, const char *path,
->  	bpi.fd = bundle_fd;
->  	bpi.pending = &revs_copy.pending;
->  
-> +	/*
-> +	 * Nullify the filter here, and any object walking. We only care
-> +	 * about commits and tags here. The revs_copy has the right
-> +	 * instances of these values.
-> +	 */
-> +	revs.filter = NULL;
->  	revs.blob_objects = revs.tree_objects = 0;
->  	traverse_commit_list(&revs, write_bundle_prerequisites, ignore_object, &bpi);
->  	object_array_remove_duplicates(&revs_copy.pending);
-
-OK.  We prepare revs, and we save it to revs_copy, because we
-perform two traversals, one to determine which bottom commits are
-required to unbundle the bundle (which is done with the instance
-"revs"), and then later to actually enumerate the objects to place
-in the bundle (using "revs_copy").  Is there a reason why we need to
-remove .filter in order to perform the first traversal?
-
-This is a tangent, but I wish we could reliably determine when we
-can optimize the first traversal away, by inspecting revs.  If there
-are any pending objects with UNINTERESTING bit, or members like
-max_count, max_age, min_age are set, we'd end up traversing down to
-all roots and the prerequisites list would be empty.
-
-> +	test_expect_success 'filtered bundle: $filter' '
-> +		test_when_finished rm -rf .git/objects/pack &&
-> +		git bundle create partial.bdl \
-> +			--all \
-> +			--filter=$filter &&
-> +
-> +		git bundle verify partial.bdl >unfiltered &&
-> +		make_user_friendly_and_stable_output <unfiltered >actual &&
-> +
-> +		cat >expect <<-EOF &&
-> +		The bundle contains these 10 refs:
-> +		<COMMIT-P> refs/heads/main
-> +		<COMMIT-N> refs/heads/release
-> +		<COMMIT-D> refs/heads/topic/1
-> +		<COMMIT-H> refs/heads/topic/2
-> +		<COMMIT-D> refs/pull/1/head
-> +		<COMMIT-G> refs/pull/2/head
-> +		<TAG-1> refs/tags/v1
-> +		<TAG-2> refs/tags/v2
-> +		<TAG-3> refs/tags/v3
-> +		<COMMIT-P> HEAD
-> +		The bundle uses this filter: $filter
-> +		The bundle records a complete history.
-> +		EOF
-> +		test_cmp expect actual
-> +	'
-
-OK.
-
-It is somewhat curious why our bundle tests do not unbundle and
-check the resulting contents of the repository we unbundle it in.
-
-> +done
-> +
->  test_done
