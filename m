@@ -2,102 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70814C433F5
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 18:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8008C433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 18:36:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241722AbiCDSeh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 13:34:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54588 "EHLO
+        id S240485AbiCDSho (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 13:37:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241788AbiCDSeT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 13:34:19 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D8F3158797
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 10:33:31 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id d10so19192677eje.10
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:33:31 -0800 (PST)
+        with ESMTP id S233098AbiCDShn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 13:37:43 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0731D63AE
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 10:36:54 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id gj15-20020a17090b108f00b001bef86c67c1so8579169pjb.3
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 10:36:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:references:user-agent:in-reply-to
-         :message-id:mime-version;
-        bh=p0ODyujQdO0xe6Y/OOjQgmd+nxa9RxhEGHe4q4hNGxs=;
-        b=TuHPf6mKAwCw8U+0tAD0rKX8aqjxj6hzJbhNqiel5VRaZlnrvKHBuW6XyOkivDAxSB
-         PTnlZBP810RcXpBjaeSw1bi9tZGAsb4YHGsaUcDYTWmePncDYQgs5aPVulfWlLwUj2YI
-         KS1jhH3dSsfRiNSYrE7t6tQbaAKEEhbHp1UutB8UJ45MPIfIRUD2mVtPTQn36lBDgqMA
-         wJG/Hgiaq3xgd8iiJzYGOedJekF5eRglW56/w/KjIIIcwI+GCWKyrNMZUqtdffq7Mtws
-         1denLDwiM97Sgc+TJxPKQnmh+eTGCdyhvykIAHG1pG7juK12fnvejJSK/sLqpee8smA3
-         S3+A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=TH2Mzlst4I5DPOlZB0tBWwJ8wEWvzi559I/8Gi1CbgY=;
+        b=LalyaaSieBftoK6pK06z6LAm0VWfSrsRX+Cn+eDIzhiyudsLzvG8dmX/X/FWGlmeB7
+         bed7Bt/eWSNS4E64jeK3iISh8UKO5KE22+3JzJQOi6nK2OlU7AMv9wNQmDmUpRmTJuoG
+         y+eJP+BjKge3J+zFk3JVopI91L06wiY6Cpei3fUOVMeqroZFRGUrND7TAZE5abYLPJG5
+         Iqk04g20+bF5lOwKXMqDMNxXm+geCmk/NYKnitvd7wC4Bde+7bRbqpikizuH73ut5GhG
+         4LB+b1dO+dX4Os8sa5wdyLkHFCE1exUAzLkYgHrL+pji20fPAZOHS3zQet36iGM30iNF
+         9RsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
-         :in-reply-to:message-id:mime-version;
-        bh=p0ODyujQdO0xe6Y/OOjQgmd+nxa9RxhEGHe4q4hNGxs=;
-        b=YOlL7EgyLbxHOoyMH+f0TXxh8yFbTT0Exglpjunx7XvNcH24Dq0DjG+cOtuSU0f+Y7
-         tBBNUaQC5Oa1SEUhiHboj81zl54joUiAE4rkUuoNok97rWlRTd3R1UWjZPI/Akw9tGrM
-         gNkKSy3E5Nex9Lz1y/RbeNNrA/Gteqpin1UUpsl7nuaKMMIGCejuD5brS/9hlwLaGwIn
-         10aRuGhj0eH6LKuKUPAKRpMd7e0t3Ab9etgCQM1OFWQ0t5gufsS/JE/Y9W9sbQIrctwb
-         fGLxjmaqekzUTAzimXIfdIJoVkApHDm/dKtjJOCa8wlhxBCtGhsC+nWbbS+f0gdWt7xV
-         a8FA==
-X-Gm-Message-State: AOAM532CM9AWcBGWeezIJd8SiyQhq3V8mMkE/spZXbbC+e29HYD+HLsS
-        dL6dC8Y8mmFH0EnEIxXAJi+g+hArXLkDpA==
-X-Google-Smtp-Source: ABdhPJzLvNbXzqDFY6zE3L/lNU/I/w03n7ykn9hotFJtsk5HQy2Sb81I8KbSdrv9j2IgJNROu6TxHQ==
-X-Received: by 2002:a17:907:9485:b0:6da:aa54:a88 with SMTP id dm5-20020a170907948500b006daaa540a88mr17071ejc.427.1646418809526;
-        Fri, 04 Mar 2022 10:33:29 -0800 (PST)
-Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id bo14-20020a170906d04e00b006ce98d9c3e3sm2020500ejb.194.2022.03.04.10.33.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 10:33:28 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.95)
-        (envelope-from <avarab@gmail.com>)
-        id 1nQCk3-000UI3-S0;
-        Fri, 04 Mar 2022 19:33:27 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: ab/plug-random-leaks (was Re: What's cooking in git.git (Mar
- 2022, #01; Thu, 3))
-Date:   Fri, 04 Mar 2022 19:33:05 +0100
-References: <xmqqv8wu2vag.fsf@gitster.g>
- <5f8740bd-c0b7-a8e1-4d73-b79b40cc02e9@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <5f8740bd-c0b7-a8e1-4d73-b79b40cc02e9@github.com>
-Message-ID: <220304.861qzhftzc.gmgdl@evledraar.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=TH2Mzlst4I5DPOlZB0tBWwJ8wEWvzi559I/8Gi1CbgY=;
+        b=UFpv8Dfy/s+Iw+w95IgL36Nxt9J+G4dZbiX8kA54eGaxca5vXWcDfkD1xl8H5ElRUG
+         TL4LOO3o892hjAoOiE8TodnG1ahlxYD/ZUkbvawUJv5PaXPhjtU7SqKqWP6G/MsirvAc
+         gNLXXyO/XBXDhKtNzrAHzxa47ZaH8nJErxW4Ee0LtPfE4oZcORXZBjhuTUEkgwdjuI1v
+         +KxUg4DezlCpsCZf3w3YUN1p8iPY51QHTMVuGQC4JuUTIvszzNoDWvLt2qgSA82Ccsce
+         OX5In3D9p31/GM6x3o4tk+hI2s0/sW5ID6p7CM30nMPO8f8g2sY6zojRJvhmMdTRaKTb
+         wo7Q==
+X-Gm-Message-State: AOAM533awIEO8Bfda6/iYhl45t/n/14IieHiYr5aN+N73S+sh98GYOEd
+        1dYHn5HbEN7oq007RwuM7jk=
+X-Google-Smtp-Source: ABdhPJzpXnQBO6CD4XgFWR89cgNgWavcSG1HCsbSX/D1BMcByhvc4ek+AfLX+L6bb9ZykfsOaG3raQ==
+X-Received: by 2002:a17:90a:d145:b0:1bd:5400:cba9 with SMTP id t5-20020a17090ad14500b001bd5400cba9mr12088190pjw.232.1646419014179;
+        Fri, 04 Mar 2022 10:36:54 -0800 (PST)
+Received: from [192.168.1.11] ([171.78.134.145])
+        by smtp.gmail.com with ESMTPSA id rm4-20020a17090b3ec400b001bf2f7e86b1sm1512643pjb.4.2022.03.04.10.36.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Mar 2022 10:36:53 -0800 (PST)
+Subject: Re: Git in GSoC 2022?
+To:     Christian Couder <christian.couder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Cc:     Git Community <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com>
+ <YfGpjm8mCkWIPM6V@nand.local>
+ <742c7455-8f74-ac03-350a-7c3851f2b792@gmail.com>
+ <CAP8UFD1bEjg20Twn0pjVqxmgCU7Nhzkg16O2t6gacSsqCYfXng@mail.gmail.com>
+ <CA+ARAtrwt-Ov=b13s2g8AGuATS8fNfk_ohNQPscSjAs3n0y=0w@mail.gmail.com>
+ <CAP8UFD1WMn=-6Ais10xpJR70BR28UzEtbTeGSx3uNfkNt2kJ3Q@mail.gmail.com>
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Message-ID: <3849de1a-ef47-1615-128b-b0053cb2f4bf@gmail.com>
+Date:   Sat, 5 Mar 2022 00:04:40 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CAP8UFD1WMn=-6Ais10xpJR70BR28UzEtbTeGSx3uNfkNt2kJ3Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 01/03/22 7:21 pm, Christian Couder wrote:
+> On Mon, Feb 28, 2022 at 7:02 PM Kaartic Sivaraam
+> <kaartic.sivaraam@gmail.com> wrote:
+> 
+>> On Mon, Feb 28, 2022 at 4:33 PM Christian Couder
+>> <christian.couder@gmail.com> wrote:
+>>> On Sat, Feb 26, 2022 at 9:30 PM Kaartic Sivaraam
+>>> <kaartic.sivaraam@gmail.com> wrote:
+>>>
+>>>> Thanks for adding the ideas to the SoC-2022-Ideas[1] list! I noticed that
+>>>> you're the only one mentioned as mentor for the idea there. It's usually
+>>>> good to have at least 2 mentors per project. Is anyone else interested
+>>>> in co-mentoring with Taylor for the idea?
+>>>
+>>> If no one else wants to co-mentor with Taylor, I am happy with it.
+>>
+>> If it's fine, I would be willing to co-mentor with Taylor. In case
+>> there are other
+>> potential mentors who are willing to volunteer, do chime in :-)
+> 
+> Great! As I already co-mentor another project, I will let you
+> co-mentor this one with Taylor.
+> 
 
-On Fri, Mar 04 2022, Derrick Stolee wrote:
+Nice. Thanks for the opportunity! I've mentioned myself as a
+co-mentor for the bitmap improvements project [1].
 
-> On 3/3/2022 11:31 PM, Junio C Hamano wrote:
->
->> * ab/plug-random-leaks (2022-03-02) 14 commits
->>  - repository.c: free the "path cache" in repo_clear()
->>  - range-diff: plug memory leak in read_patches()
->>  - range-diff: plug memory leak in common invocation
->>  - lockfile API users: simplify and don't leak "path"
->>  - commit-graph: stop fill_oids_from_packs() progress on error and free()
->>  - commit-graph: fix memory leak in misused string_list API
->>  - submodule--helper: fix trivial leak in module_add()
->>  - transport: stop needlessly copying bundle header references
->>  - bundle: call strvec_clear() on allocated strvec
->>  - remote-curl.c: free memory in cmd_main()
->>  - urlmatch.c: add and use a *_release() function
->>  - diff.c: free "buf" in diff_words_flush()
->>  - merge-base: free() allocated "struct commit **" list
->>  - index-pack: fix memory leaks
->> 
->>  Plug random memory leaks.
->> 
->>  Will merge to 'next'.
->>  source: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
->
-> This series needs a re-roll before it gets merged. There is
-> a correctness issue in this patch:
->
->>  - transport: stop needlessly copying bundle header references
+Taylor, do let me know in case you have any concerns about this.
 
-Thanks. I just sent in that re-roll at:
-https://lore.kernel.org/git/cover-v2-00.14-00000000000-20220304T182902Z-avarab@gmail.com/
+[1]: https://git.github.io/SoC-2022-Ideas/
+
+-- 
+Sivaraam
