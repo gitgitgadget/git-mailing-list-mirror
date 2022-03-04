@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1561C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 15:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C9BBC433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 15:05:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240063AbiCDPFw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 10:05:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44722 "EHLO
+        id S240023AbiCDPFz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 10:05:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240043AbiCDPFa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 10:05:30 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FBED15B9B7
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 07:04:42 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id bk29so13133961wrb.4
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 07:04:42 -0800 (PST)
+        with ESMTP id S240049AbiCDPFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 10:05:32 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50BAB15C19B
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 07:04:43 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id e24so122730wrc.10
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 07:04:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=d2lQjiwQo/d2+l3J+KrjN/UX3KHYu6mnvr6cgsfzWJw=;
-        b=h4scN1PkQrUIo9FYCI8hiWNLgTnZtbx9w5yR9QM1t2AJl0SKAO8FksqZfPy25OZW1Z
-         WZlYetulT/VyHPYCiCwRmMOEk+vEEO6mJXn4DNPSN+7kYMJsxBujeM2W12U2otkcgNNy
-         /ib5ltrck4Ey//8s2q/IRs4brF20KG8pVt+imPCgkVaFk1OURsGbzHo/3ECoZJv1CFNO
-         ORFU302L3ibzM/sE80MmMYVzQeOsKLRNoOhtFBLUTJpp8vlSEOxQTjIcxrhLkPj3AuMG
-         LZf/XGDIOoDZRoey5C+tRmaHLSXTjLZ9AawOtXnRQmV/0+TGefIPxPc6JTRItxNW3mNE
-         mjaA==
+        bh=eBFeyhJa1Ak/vERr0x00+QihR4ge9lNHluT1R3qiP3M=;
+        b=qNlFcfrYymPfuThVo6d488pPDQXL4PRJAVu6zjj4UoZip+0s+oFHEZKf4qaGWeJb6x
+         +zsXfwONJlW3yhn8EBTqOHCo3LzG+8Ir8iBfMeyS2qeNYjaqEQYVFahdvYB59QFuURnF
+         sZTzOHwyrIO8g7I/g4GfbtB4mT2bqVocp7eutHzbY4DQmqfoMvNohZW4+H1JDKkYk/x2
+         AG3mMANX1eL0BMM8reJXFiXqxD69eTe9N9fbzWCSF6X8C3PHhuNTuhXHwgBUYXoiSGSG
+         BCXhusabJ4wdC2+lTbnX3VZ7IsqlqJux8+/hu9Es08akNZrorMv6RuXHg6udC7U+6/Hd
+         KuWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=d2lQjiwQo/d2+l3J+KrjN/UX3KHYu6mnvr6cgsfzWJw=;
-        b=fW9YXDBd9It9Kce6GcqJdrK1v3ji7SlYalDr9d6MJAvS/s5bWxEWuLecaPh4grT7hF
-         QIN4wY/F+o8QnYSKeJYECAYhAKWoL1AJff22vMsW/qH3hAW8BQ06KxfU4hFglwiYJMof
-         Kkpax4tvwahR3s1fGqwaYmmy7A9agUUQxAGFFflKEIONaz69DiP2w3y6y/YIQin1Pob/
-         MrshksBQ3xOuojyJ8LENCIUwk/YDrCPojZRIx9TLv/GTerZgG0pe7SY1W7w49G3YtoPK
-         6lCWUX19Fdp75+S3LhG8CfpHOc9RDEarguOHiiiSPAAOgo4/GyvmQitxaZizMF7+c4fu
-         j3bw==
-X-Gm-Message-State: AOAM533rs0ZY3mJ1odsR2RniH75v5U0/a644usP4u1ZXjghv6n1GgY8e
-        JDvI8PDYK+saSYUrOqtNGpJ4QhPbUbU=
-X-Google-Smtp-Source: ABdhPJzrLrDE213y8NWvuxIHnNUYgSAUzkObRQ5vU1nX7zeoqF2phBNBK6C5YOWuQIWUBd3pMku4vQ==
-X-Received: by 2002:adf:eb4d:0:b0:1ed:c1f7:a951 with SMTP id u13-20020adfeb4d000000b001edc1f7a951mr29437881wrn.454.1646406280595;
-        Fri, 04 Mar 2022 07:04:40 -0800 (PST)
+        bh=eBFeyhJa1Ak/vERr0x00+QihR4ge9lNHluT1R3qiP3M=;
+        b=1lNaiPxlRsj3dPCUWlskrmVJqqbVz4AJxs4PybVCQcHIvl74ktCnj8cL1KRUBiH5+K
+         NQPbcMNRQ9k6fGu0+iQBv2zzRJJgfJvQqk6JoLFj1joZJm+CEauhIUTwMUvRmXfzuKYZ
+         fNr19LJvyRdXfr4Og23s3WYZNjM9j3yzjUUuP+sFx90hep+5D0We8sqhwZyIrNVon3z8
+         wSEDAcQi4qPelpkeBvXMG1mgp8J7wpDNkkIAj7FVYS4pytK8Z8aDN66XxFJwl0B2FrOv
+         x2y6gvrZ17ORilwuHj0B93Asfw41fERWWYGWlaMYVyt8BxYYN3i3lEb4wVmWjBxWz9tJ
+         p87A==
+X-Gm-Message-State: AOAM532LKct3IAsSjrlVcqVkgUdbgOhH7kK2iTpnwn4TuHXpQv/x76+O
+        EHskJBN4Ggx8t8izo/HCQeXzvHIaffw=
+X-Google-Smtp-Source: ABdhPJwszzGeHWS4hDzpnWGbmQw5Yypt9n+Vff2enguWEV9C/1+XrrKae7VaQfKgf6NNQ1q6iKtGKQ==
+X-Received: by 2002:a5d:6d4e:0:b0:1e3:3636:b104 with SMTP id k14-20020a5d6d4e000000b001e33636b104mr30854981wri.605.1646406281558;
+        Fri, 04 Mar 2022 07:04:41 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h36-20020a05600c49a400b00382aa0b1619sm4729902wmp.45.2022.03.04.07.04.40
+        by smtp.gmail.com with ESMTPSA id y4-20020adff144000000b001f022290737sm4668525wro.6.2022.03.04.07.04.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 07:04:40 -0800 (PST)
-Message-Id: <01f22e784a527f11c34703241bdb63b3d99f6fe8.1646406275.git.gitgitgadget@gmail.com>
+        Fri, 04 Mar 2022 07:04:41 -0800 (PST)
+Message-Id: <310466259878bcd32e09092b8de1db0b3e500c2a.1646406275.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1138.v3.git.1646406274.gitgitgadget@gmail.com>
 References: <pull.1138.v2.git.1645719218.gitgitgadget@gmail.com>
         <pull.1138.v3.git.1646406274.gitgitgadget@gmail.com>
 From:   "Robert Coup via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 04 Mar 2022 15:04:32 +0000
-Subject: [PATCH v3 5/7] t5615-partial-clone: add test for fetch --refetch
+Date:   Fri, 04 Mar 2022 15:04:33 +0000
+Subject: [PATCH v3 6/7] fetch: after refetch, encourage auto gc repacking
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,84 +73,107 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Robert Coup <robert@coup.net.nz>
 
-Add a test for doing a refetch to apply a changed partial clone filter
-under protocol v0 and v2.
+After invoking `fetch --refetch`, the object db will likely contain many
+duplicate objects. If auto-maintenance is enabled, invoke it with
+appropriate settings to encourage repacking/consolidation.
+
+* gc.autoPackLimit: unless this is set to 0 (disabled), override the
+  value to 1 to force pack consolidation.
+* maintenance.incremental-repack.auto: unless this is set to 0, override
+  the value to -1 to force incremental repacking.
 
 Signed-off-by: Robert Coup <robert@coup.net.nz>
 ---
- t/t5616-partial-clone.sh | 52 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 51 insertions(+), 1 deletion(-)
+ Documentation/fetch-options.txt |  3 ++-
+ builtin/fetch.c                 | 19 ++++++++++++++++++-
+ t/t5616-partial-clone.sh        | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 21a247abfa4..49ae48dca32 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -169,7 +169,8 @@ ifndef::git-pull[]
+ 	associated objects that are already present locally, this option fetches
+ 	all objects as a fresh clone would. Use this to reapply a partial clone
+ 	filter from configuration or using `--filter=` when the filter
+-	definition has changed.
++	definition has changed. Automatic post-fetch maintenance will perform
++	object database pack consolidation to remove any duplicate objects.
+ endif::git-pull[]
+ 
+ --refmap=<refspec>::
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index f7bcf6fa64d..1557e8d57c5 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2226,8 +2226,25 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 					     NULL);
+ 	}
+ 
+-	if (enable_auto_gc)
++	if (enable_auto_gc) {
++		if (refetch) {
++			/*
++			 * Hint auto-maintenance strongly to encourage repacking,
++			 * but respect config settings disabling it.
++			 */
++			int opt_val;
++			if (git_config_get_int("gc.autopacklimit", &opt_val))
++				opt_val = -1;
++			if (opt_val != 0)
++				git_config_push_parameter("gc.autoPackLimit=1");
++
++			if (git_config_get_int("maintenance.incremental-repack.auto", &opt_val))
++				opt_val = -1;
++			if (opt_val != 0)
++				git_config_push_parameter("maintenance.incremental-repack.auto=-1");
++		}
+ 		run_auto_maintenance(verbosity < 0);
++	}
+ 
+  cleanup:
+ 	string_list_clear(&list, 0);
 diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 34469b6ac10..87ebf4b0b1c 100755
+index 87ebf4b0b1c..4a3778d04a8 100755
 --- a/t/t5616-partial-clone.sh
 +++ b/t/t5616-partial-clone.sh
-@@ -166,6 +166,56 @@ test_expect_success 'manual prefetch of missing objects' '
- 	test_line_count = 0 observed.oids
+@@ -216,6 +216,35 @@ test_expect_success 'fetch --refetch works with a shallow clone' '
+ 	test_line_count = 6 observed
  '
  
-+# create new commits in "src" repo to establish a history on file.4.txt
-+# and push to "srv.bare".
-+test_expect_success 'push new commits to server for file.4.txt' '
-+	for x in a b c d e f
-+	do
-+		echo "Mod file.4.txt $x" >src/file.4.txt &&
-+		if list_contains "a,b" "$x"; then
-+			printf "%10000s" X >>src/file.4.txt
-+		fi &&
-+		if list_contains "c,d" "$x"; then
-+			printf "%20000s" X >>src/file.4.txt
-+		fi &&
-+		git -C src add file.4.txt &&
-+		git -C src commit -m "mod $x" || return 1
-+	done &&
-+	git -C src push -u srv main
-+'
++test_expect_success 'fetch --refetch triggers repacking' '
++	GIT_TRACE2_CONFIG_PARAMS=gc.autoPackLimit,maintenance.incremental-repack.auto &&
++	export GIT_TRACE2_CONFIG_PARAMS &&
 +
-+# Do partial fetch to fetch smaller files; then verify that without --refetch
-+# applying a new filter does not refetch missing large objects. Then use
-+# --refetch to apply the new filter on existing commits. Test it under both
-+# protocol v2 & v0.
-+test_expect_success 'apply a different filter using --refetch' '
-+	git -C pc1 fetch --filter=blob:limit=999 origin &&
-+	git -C pc1 rev-list --quiet --objects --missing=print \
-+		main..origin/main >observed &&
-+	test_line_count = 4 observed &&
++	GIT_TRACE2_EVENT="$PWD/trace1.event" \
++	git -C pc1 fetch --refetch origin &&
++	test_subcommand git maintenance run --auto --no-quiet <trace1.event &&
++	grep \"param\":\"gc.autopacklimit\",\"value\":\"1\" trace1.event &&
++	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"-1\" trace1.event &&
 +
-+	git -C pc1 fetch --filter=blob:limit=19999 --refetch origin &&
-+	git -C pc1 rev-list --quiet --objects --missing=print \
-+		main..origin/main >observed &&
-+	test_line_count = 2 observed &&
++	GIT_TRACE2_EVENT="$PWD/trace2.event" \
++	git -c protocol.version=0 \
++		-c gc.autoPackLimit=0 \
++		-c maintenance.incremental-repack.auto=1234 \
++		-C pc1 fetch --refetch origin &&
++	test_subcommand git maintenance run --auto --no-quiet <trace2.event &&
++	grep \"param\":\"gc.autopacklimit\",\"value\":\"0\" trace2.event &&
++	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"-1\" trace2.event &&
 +
-+	git -c protocol.version=0 -C pc1 fetch --filter=blob:limit=29999 \
-+		--refetch origin &&
-+	git -C pc1 rev-list --quiet --objects --missing=print \
-+		main..origin/main >observed &&
-+	test_line_count = 0 observed
-+'
-+
-+test_expect_success 'fetch --refetch works with a shallow clone' '
-+	git clone --no-checkout --depth=1 --filter=blob:none "file://$(pwd)/srv.bare" pc1s &&
-+	git -C pc1s rev-list --objects --missing=print HEAD >observed &&
-+	test_line_count = 6 observed &&
-+
-+	GIT_TRACE=1 git -C pc1s fetch --filter=blob:limit=999 --refetch origin &&
-+	git -C pc1s rev-list --objects --missing=print HEAD >observed &&
-+	test_line_count = 6 observed
++	GIT_TRACE2_EVENT="$PWD/trace3.event" \
++	git -c protocol.version=0 \
++		-c gc.autoPackLimit=1234 \
++		-c maintenance.incremental-repack.auto=0 \
++		-C pc1 fetch --refetch origin &&
++	test_subcommand git maintenance run --auto --no-quiet <trace3.event &&
++	grep \"param\":\"gc.autopacklimit\",\"value\":\"1\" trace3.event &&
++	grep \"param\":\"maintenance.incremental-repack.auto\",\"value\":\"0\" trace3.event
 +'
 +
  test_expect_success 'partial clone with transfer.fsckobjects=1 works with submodules' '
  	test_create_repo submodule &&
  	test_commit -C submodule mycommit &&
-@@ -225,7 +275,7 @@ test_expect_success 'use fsck before and after manually fetching a missing subtr
- 
- 	# Auto-fetch all remaining trees and blobs with --missing=error
- 	git -C dst rev-list --missing=error --objects main >fetched_objects &&
--	test_line_count = 70 fetched_objects &&
-+	test_line_count = 88 fetched_objects &&
- 
- 	awk -f print_1.awk fetched_objects |
- 	xargs -n1 git -C dst cat-file -t >fetched_types &&
 -- 
 gitgitgadget
 
