@@ -2,259 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BF0FC433F5
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 13:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BAF0C433FE
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 13:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236876AbiCDNMb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 08:12:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60676 "EHLO
+        id S235746AbiCDN0r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 08:26:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234833AbiCDNMX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 08:12:23 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79C0F1B45C0
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 05:11:35 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id c192so4978716wma.4
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 05:11:35 -0800 (PST)
+        with ESMTP id S234834AbiCDN0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 08:26:45 -0500
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 729BC5B8A2
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 05:25:58 -0800 (PST)
+Received: by mail-oo1-xc29.google.com with SMTP id w3-20020a4ac183000000b0031d806bbd7eso9342348oop.13
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 05:25:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references:reply-to
-         :mime-version:content-transfer-encoding;
-        bh=NPEMsN0F3SCoBPcIhcH21JDnWJgXiVPVbr0+v7/Cc9c=;
-        b=ZMSUzqEiUPQj4l8OsBfQjeO52JYo/6qANPeEkMUDWH9sOosM2mbkspckkaOcnSwDkd
-         fhVmCJk7aOvkfeVCxDpJbksppanWe8TRw8+C1vgaso8NtoEPH9ApnjqhGvxQWiW5+iQx
-         p7QKlu8WTKEJWFuhK3rt31Bajy5QocrirYr5tZxl9KT1X1XAqZrK3zr5ko2mxSdZI+JV
-         +Mv9rV86ybZANGbDnu9K4JK3xtCgvBJh/KryP4A5Tc7MQwUnaBgccjVByT/C4SeEpqtx
-         jslJ5NJln+S5LAUE6maDnX7Bc3UYCjnSvwNwQy87OrV0GJC/iyE72arfJPf8k41EDcWY
-         YuRg==
+        d=github.com; s=google;
+        h=message-id:date:mime-version:user-agent:subject:content-language:to
+         :references:from:in-reply-to:content-transfer-encoding;
+        bh=iGFy4h94WIfNUhq1Cbk2x/eXMYzPR12ZX1T2DOXzoVI=;
+        b=F+EuDQV8DDSGn2lKF099Sw9g4QaZ832CgyQYhQvpAh4RnXsZi8MITRPebY1zy+xWnL
+         yVxbdd5Lh09jh4AU1NXU0hhh6jVM3pPtwZvwkDDonxMItowEn1yWuwXap8+PpehHBGaQ
+         BVe9JFNIhTibkEwyKvQ12wI6t61XQ6hfg0bc6twGaRmebGD0WRl5Ve7v4kVj/LvOSov3
+         d5J/Obi+yhmWIo3wAItEjZPB/+vAGR+kQVgeE2vyutwhAogXBoB/leLiwqCtG7s/qbEh
+         LmR2NtU1XBkbSUtuWd+/glGznWY3g2heErmKSu4SAxLsJCyiUlqqxJOcRNR0AYUZmBc7
+         7NBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:reply-to:mime-version:content-transfer-encoding;
-        bh=NPEMsN0F3SCoBPcIhcH21JDnWJgXiVPVbr0+v7/Cc9c=;
-        b=4wH7Ajpl5ixBs31ymd0dxcsC3CuMqcWlqWslRa8VbTpR/6cKwW/12qQsvd9eYSaBBb
-         LfIKX8y3xL79s9JwL8oWOPo6j6og7lmelcjfih60h8Fd/Hn+O/g2sZ2tuXnF1sFZKcGW
-         jcSSpzl2DLi2mKuotmHG7Ff9G0LHpXsgkZ6G58+Icy/qRVBXwnCBRJzGWhrHrHGkR+Mx
-         6yF5YTrgUOh/juzo3tTvYa3WxAYyNuzj2+MgK77yeBQyer83OJAoHTV2pfA8zjsbUnq2
-         l1zEL73BphjXUK8cLQGocWuvs8yF+JK1/9P9W2apNcmMktaQOhmDlwbOLL0f2JtclotG
-         vfSQ==
-X-Gm-Message-State: AOAM531LFHUK51otk/0mOjxigGnoaRCcr5wsyuj+HdrQ4+n3RbMQ/dkv
-        r1GtaVqUSZSCftl0JYl71x0XDk5kDkI=
-X-Google-Smtp-Source: ABdhPJwl3+Ja0/1ddJyabSGmx1O/kWRXVGDZwIdC1lFF1ifae5hVWYXN0EcOEA4nFperA0+LiNO0gw==
-X-Received: by 2002:a1c:6a14:0:b0:383:a58c:3635 with SMTP id f20-20020a1c6a14000000b00383a58c3635mr7535416wmc.129.1646399493976;
-        Fri, 04 Mar 2022 05:11:33 -0800 (PST)
-Received: from localhost.localdomain (230.2.7.51.dyn.plus.net. [51.7.2.230])
-        by smtp.gmail.com with ESMTPSA id c4-20020adffb04000000b001f0494de239sm4634042wrr.21.2022.03.04.05.11.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 05:11:33 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     carenas@gmail.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 4/4] terminal: restore settings on SIGTSTP
-Date:   Fri,  4 Mar 2022 13:11:26 +0000
-Message-Id: <20220304131126.8293-5-phillip.wood123@gmail.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220304131126.8293-1-phillip.wood123@gmail.com>
-References: <20220304131126.8293-1-phillip.wood123@gmail.com>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+         :content-language:to:references:from:in-reply-to
+         :content-transfer-encoding;
+        bh=iGFy4h94WIfNUhq1Cbk2x/eXMYzPR12ZX1T2DOXzoVI=;
+        b=olbpg8m21aABhCPT3xKUTCBNP33Z1eYs8pH/QVQbXey4LUHM4j6eL+tTLWuTr6Fowe
+         i0Xg7M1HH5LWCR3OSZBi4DsTT2FuBbrEFEKmObf1diAE8XIIyOHmrmvQzZ8u4WKwyMdP
+         2f7tYYTQIIS3gZenmLHJZBDtb62M6O4gU4fyQ3FNiPWqvWFcy6TK+x5/id3lnlaEWtYn
+         y4YGrxnpzkHfK3mv207y2SjqLgwqGxP/4do/AQpJcSF0NrkCQE8jpSLKNUSQphxpQLzg
+         Fj5jo2A9PZf7b3K9MA93WwL7MKuLNb1wpSp6Ya23ceqq7bbkxeDcpgNK+AACbKUSRyqc
+         7g4Q==
+X-Gm-Message-State: AOAM531aE36oek1NlMipZbjWjRNvpt1CaWZBP6ibHUlDmvrl/0vlUPrx
+        MlcSru4B3sOylraUSiQ5Mor5
+X-Google-Smtp-Source: ABdhPJw/GvNL1Atk2+f/E9VlilIfPONpNUtXYWpRiKE3dv3yIqQJqB/Pb8Wif5WX1UNsE2wHVQzN3g==
+X-Received: by 2002:a4a:c719:0:b0:2eb:c34a:2ba7 with SMTP id n25-20020a4ac719000000b002ebc34a2ba7mr21636899ooq.98.1646400357739;
+        Fri, 04 Mar 2022 05:25:57 -0800 (PST)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id t11-20020a4ae40b000000b0031cc933b418sm2275817oov.40.2022.03.04.05.25.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 04 Mar 2022 05:25:57 -0800 (PST)
+Message-ID: <5f8740bd-c0b7-a8e1-4d73-b79b40cc02e9@github.com>
+Date:   Fri, 4 Mar 2022 08:25:56 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Subject: ab/plug-random-leaks (was Re: What's cooking in git.git (Mar 2022,
+ #01; Thu, 3))
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <xmqqv8wu2vag.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqv8wu2vag.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 3/3/2022 11:31 PM, Junio C Hamano wrote:
 
-If the user suspends git while it is waiting for a keypress reset the
-terminal before stopping and restore the settings when git resumes. If
-the user tries to resume in the background print an error
-message (taking care to use async safe functions) before stopping
-again. Ideally we would reprint the prompt for the user when git
-resumes but this patch just restarts the read().
+> * ab/plug-random-leaks (2022-03-02) 14 commits
+>  - repository.c: free the "path cache" in repo_clear()
+>  - range-diff: plug memory leak in read_patches()
+>  - range-diff: plug memory leak in common invocation
+>  - lockfile API users: simplify and don't leak "path"
+>  - commit-graph: stop fill_oids_from_packs() progress on error and free()
+>  - commit-graph: fix memory leak in misused string_list API
+>  - submodule--helper: fix trivial leak in module_add()
+>  - transport: stop needlessly copying bundle header references
+>  - bundle: call strvec_clear() on allocated strvec
+>  - remote-curl.c: free memory in cmd_main()
+>  - urlmatch.c: add and use a *_release() function
+>  - diff.c: free "buf" in diff_words_flush()
+>  - merge-base: free() allocated "struct commit **" list
+>  - index-pack: fix memory leaks
+> 
+>  Plug random memory leaks.
+> 
+>  Will merge to 'next'.
+>  source: <cover-00.14-00000000000-20220302T170718Z-avarab@gmail.com>
 
-The signal handler is established with sigaction() rather than using
-sigchain_push() as this allows us to control the signal mask when the
-handler is invoked and ensure SA_RESTART is used to restart the
-read() when resuming.
+This series needs a re-roll before it gets merged. There is
+a correctness issue in this patch:
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- compat/terminal.c | 124 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 120 insertions(+), 4 deletions(-)
+>  - transport: stop needlessly copying bundle header references
 
-diff --git a/compat/terminal.c b/compat/terminal.c
-index 5d516ff546..79ab54c2f8 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -1,4 +1,4 @@
--#include "git-compat-util.h"
-+#include "cache.h"
- #include "compat/terminal.h"
- #include "sigchain.h"
- #include "strbuf.h"
-@@ -23,6 +23,89 @@ static void restore_term_on_signal(int sig)
- static int term_fd = -1;
- static struct termios old_term;
- 
-+static char *background_resume_msg;
-+static char *restore_error_msg;
-+static volatile sig_atomic_t ttou_received;
-+
-+static void write_msg(const char *msg)
-+{
-+	write_in_full(2, msg, strlen(msg));
-+	write_in_full(2, "\n", 1);
-+}
-+
-+static void print_background_resume_msg(int signo)
-+{
-+	int saved_errno = errno;
-+	sigset_t mask;
-+	struct sigaction old_sa;
-+	struct sigaction sa = { .sa_handler = SIG_DFL };
-+
-+	ttou_received = 1;
-+	write_msg(background_resume_msg);
-+	sigaction(signo, &sa, &old_sa);
-+	raise(signo);
-+	sigemptyset(&mask);
-+	sigaddset(&mask, signo);
-+	sigprocmask(SIG_UNBLOCK, &mask, NULL);
-+	/* Stopped here */
-+	sigprocmask(SIG_BLOCK, &mask, NULL);
-+	sigaction(signo, &old_sa, NULL);
-+	errno = saved_errno;
-+}
-+
-+static void restore_terminal_on_suspend(int signo)
-+{
-+	int saved_errno = errno;
-+	int res;
-+	struct termios t;
-+	sigset_t mask;
-+	struct sigaction old_sa;
-+	struct sigaction sa = { .sa_handler = SIG_DFL };
-+	int can_restore = 1;
-+
-+	if (tcgetattr(term_fd, &t) < 0)
-+		can_restore = 0;
-+
-+	if (tcsetattr(term_fd, TCSAFLUSH, &old_term) < 0)
-+		write_msg(restore_error_msg);
-+
-+	sigaction(signo, &sa, &old_sa);
-+	raise(signo);
-+	sigemptyset(&mask);
-+	sigaddset(&mask, signo);
-+	sigprocmask(SIG_UNBLOCK, &mask, NULL);
-+	/* Stopped here */
-+	sigprocmask(SIG_BLOCK, &mask, NULL);
-+	sigaction(signo, &old_sa, NULL);
-+	if (!can_restore) {
-+		write_msg(restore_error_msg);
-+		goto out;
-+	}
-+	/*
-+	 * If we resume in the background then we receive SIGTTOU when calling
-+	 * tcsetattr() below. Set up a handler to print an error message in that
-+	 * case.
-+	 */
-+	sigemptyset(&mask);
-+	sigaddset(&mask, SIGTTOU);
-+	sa.sa_mask = old_sa.sa_mask;
-+	sa.sa_handler = print_background_resume_msg;
-+	sa.sa_flags = SA_RESTART;
-+	sigaction(SIGTTOU, &sa, &old_sa);
-+ again:
-+	ttou_received = 0;
-+	sigprocmask(SIG_UNBLOCK, &mask, NULL);
-+	res = tcsetattr(term_fd, TCSAFLUSH, &t);
-+	sigprocmask(SIG_BLOCK, &mask, NULL);
-+	if (ttou_received)
-+		goto again;
-+	else if (res < 0)
-+		write_msg(restore_error_msg);
-+	sigaction(SIGTTOU, &old_sa, NULL);
-+ out:
-+	errno = saved_errno;
-+}
-+
- void restore_term(void)
- {
- 	if (term_fd < 0)
-@@ -32,10 +115,19 @@ void restore_term(void)
- 	close(term_fd);
- 	term_fd = -1;
- 	sigchain_pop_common();
-+	if (restore_error_msg) {
-+		signal(SIGTTIN, SIG_DFL);
-+		signal(SIGTTOU, SIG_DFL);
-+		signal(SIGTSTP, SIG_DFL);
-+		FREE_AND_NULL(restore_error_msg);
-+		FREE_AND_NULL(background_resume_msg);
-+	}
- }
- 
- int save_term(unsigned flags)
- {
-+	struct sigaction sa;
-+
- 	if (term_fd < 0)
- 		term_fd = (flags & SAVE_TERM_STDIN) ? 0
- 						    : open("/dev/tty", O_RDWR);
-@@ -44,6 +136,26 @@ int save_term(unsigned flags)
- 	if (tcgetattr(term_fd, &old_term) < 0)
- 		return -1;
- 	sigchain_push_common(restore_term_on_signal);
-+	/*
-+	 * If job control is disabled then the shell will have set the
-+	 * disposition of SIGTSTP to SIG_IGN.
-+	 */
-+	sigaction(SIGTSTP, NULL, &sa);
-+	if (sa.sa_handler == SIG_IGN)
-+		return 0;
-+
-+	/* avoid calling gettext() from signal handler */
-+	background_resume_msg = xstrdup(_("error: cannot resume in the background"));
-+	restore_error_msg = xstrdup(_("error: cannot restore terminal settings"));
-+	sa.sa_handler = restore_terminal_on_suspend;
-+	sa.sa_flags = SA_RESTART;
-+	sigemptyset(&sa.sa_mask);
-+	sigaddset(&sa.sa_mask, SIGTSTP);
-+	sigaddset(&sa.sa_mask, SIGTTIN);
-+	sigaddset(&sa.sa_mask, SIGTTOU);
-+	sigaction(SIGTSTP, &sa, NULL);
-+	sigaction(SIGTTIN, &sa, NULL);
-+	sigaction(SIGTTOU, &sa, NULL);
- 
- 	return 0;
- }
-@@ -93,6 +205,7 @@ static int getchar_with_timeout(int timeout)
- 	fd_set readfds;
- 	int res;
- 
-+ again:
- 	if (timeout >= 0) {
- 		tv.tv_sec = timeout / 1000;
- 		tv.tv_usec = (timeout % 1000) * 1000;
-@@ -102,9 +215,12 @@ static int getchar_with_timeout(int timeout)
- 	FD_ZERO(&readfds);
- 	FD_SET(0, &readfds);
- 	res = select(1, &readfds, NULL, NULL, tvp);
--	if (res < 0)
--		return EOF;
--
-+	if (res < 0) {
-+		if (errno == EINTR)
-+			goto again;
-+		else
-+			return EOF;
-+	}
- 	return getchar();
- }
- 
--- 
-2.35.1
-
+Thanks,
+-Stolee
