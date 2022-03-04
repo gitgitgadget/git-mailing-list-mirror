@@ -2,145 +2,195 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89DAAC433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 10:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06717C433EF
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 10:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234051AbiCDK0T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 05:26:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37664 "EHLO
+        id S235936AbiCDKjb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 05:39:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233682AbiCDK0N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 05:26:13 -0500
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2076.outbound.protection.outlook.com [40.107.21.76])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAAD2194AB9
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 02:25:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TfNAc2w6GAXM1OezgTUu/L39iVYsli6PgZkVk2elMYkigQd7PwaXlSTKTO/tGw11ph0bhlQqz2LA9UPGQNC1J21W6VTZ18tt5adJjIZvSCmV4taUySKew6rdeR7NGlrbYKa6XMWt41xA+FqJ0v0lU6cm0/+rzcOCC9nwt8yMyzLRGvO+DIeBHNV4CSQD2KZpN/ZooZUDHuqKh0Oa0LGkFWp9D+GIoUWVxIJLH88DqXKavE895asijrh+cUXIac47MYYK/N1cCtNHa+Z6+EvCHP21EZqzQJSGZ07tDqihjsVXK7oLJzloDXVTuezby626qbHUK0IMxVeOzTVwsJxSVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0gzEmdB7TOjJdgm5yNk4kfNj0jcmrRCgK//WSqqvDLg=;
- b=M6LGEZWIJhF3Xzld04mJPMSnum4c6+nuYOpswTzs5b66n1ZpEy9+mW009qxgwEluDiKQgO6+CwOPaTuSifJS0faQvBBw3/Te032mSqkQTwuHNT/kynKinlzDKl2vvfS+TXF07CIs5ZhwvIGcLbTI/Hjr2bcxu9YDxvJ22vzno8J0e3quYEQplP4C+HVUGMZmUZ2FS+7UeoyEwCE3D0pfsjLBpTlqFzzS4JYBHQRlh6q0IvW8OGhx3wHI+qd8tf00PzsLBIr8CCyw8P/143jBLdqDXeLou4jZVO2xuU+MbMhvCE9bSnL3CBnRJARcoVjyaJq6nPSwM3WYS8+y72C4qA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=gigacodes.de; dmarc=pass action=none header.from=gigacodes.de;
- dkim=pass header.d=gigacodes.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gigacodes.de;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0gzEmdB7TOjJdgm5yNk4kfNj0jcmrRCgK//WSqqvDLg=;
- b=gno70pZlLywOetymrsIVuFHAqbzmGjSTUElj/HfJmDFseyoKM0Wv1c3EpVT8SiNnOKDK6rfSMZbHmb6Asvt/2OONS0XLVShTVr/g+Ryl13J8X8mARnylu+XocCg+IvdJhzGSooIPSXdcVxatcaorQgBdcrdeC5rKW72G4C8djPA=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=gigacodes.de;
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:102:12e::15)
- by DB6PR1001MB1222.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:4:b2::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5017.26; Fri, 4 Mar
- 2022 10:25:23 +0000
-Received: from PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::116e:6242:98da:22ba]) by PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- ([fe80::116e:6242:98da:22ba%8]) with mapi id 15.20.5038.017; Fri, 4 Mar 2022
- 10:25:23 +0000
-From:   Fabian Stelzer <fs@gigacodes.de>
-To:     git@vger.kernel.org
-Cc:     Todd Zullinger <tmz@pobox.com>,
-        Henning Schild <henning.schild@siemens.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Hans Jerry Illikainen <hji@dyntopia.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 2/3] t/lib-gpg: reload gpg components after updating trustlist
-Date:   Fri,  4 Mar 2022 11:25:18 +0100
-Message-Id: <20220304102519.623896-2-fs@gigacodes.de>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220302090250.590450-1-fs@gigacodes.de>
-References: <20220302090250.590450-1-fs@gigacodes.de>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: FR0P281CA0037.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:48::19) To PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:102:12e::15)
+        with ESMTP id S234208AbiCDKja (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 05:39:30 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F093B150409
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 02:38:42 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id x5so10161187edd.11
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 02:38:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version;
+        bh=GB4KfTICJ7jc441sWZXoCSuH9nQkHwk9yO7aziwT0Eg=;
+        b=awc1p1c/xNcFAOs5Ote5nfDryqhP8Hqb2gGtGNaq9mEy+uCl7raF0UXhKcdG1lsMfu
+         I8EkEcOfc7s6hwYnrd/MII9spHodtDNhS/c+bWg2wqs6NQUFZrVl/s2Gw9eW32GC5U9s
+         HCBL/86ynjaDY9aGiRjXRehFJditzPBDM4niPILxsidhpBUf7XXpENLEeZFS44CEQXsK
+         ZMKwR8ZYGNyny/PM5ZqCBPmK3lPw/joX92Hdn/WMrVoWCDCJu13WXIjE0wN3zsAtQqBo
+         PAT34Acnif5HVTrx7lHXDlBJEmsR7UHN+YuYnj2WP9rIH2HO9B3pwWfpf+BnOnWgRPqj
+         ksXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version;
+        bh=GB4KfTICJ7jc441sWZXoCSuH9nQkHwk9yO7aziwT0Eg=;
+        b=wqYFVxbB8ZT1xoLBKyxlF2tL9VdS2I0lLs3c8zJHy+ZFXS/vH0V3vPncWdMwe72EJ6
+         wzCjfcnovpiT1lgVyqy7VAn5po+IcKhJHSB6zgwPrNxmxKTswRksnAYMisUVvejIQk3P
+         8Qzc2iFs5nEeIZip9IoqqTCLlOFsJK+kfLwsVwh33UZxPSeEOfAo58Kt81WfaqVWvIT4
+         wSMuxyLvI8L4ISxScf07ncKL3YdNHqK6YhQtEuMyzBAKYgtlVTzfxFs8crmJBiEKvLAw
+         liGQM1A5eyRD2XhPGtSs+nc3bERzHwJAf8nB1vHlgrekoGw5fsed/TF0pCjWTGf8QMpX
+         Qnfw==
+X-Gm-Message-State: AOAM533FJ7J74lmMFpPO0fMyA7lLjHY/lhKnEdo4BrYw58XvOSfNxKCC
+        I6WsDTdTsrvjXV+loLqMT1kZF6ukhELV0w==
+X-Google-Smtp-Source: ABdhPJw9kWNshdUe2isvdBh8IjIdpvfYyLniCzQx9ybRvdd70srh2JKprHMnfayjsmpC+Ql8P9ZXOA==
+X-Received: by 2002:a05:6402:1507:b0:415:f3c7:60fe with SMTP id f7-20020a056402150700b00415f3c760femr3362189edw.350.1646390321212;
+        Fri, 04 Mar 2022 02:38:41 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id u3-20020a17090657c300b006d01de78926sm1631442ejr.22.2022.03.04.02.38.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Mar 2022 02:38:40 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nQ5KZ-000ECQ-QW;
+        Fri, 04 Mar 2022 11:38:39 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: log messages > comments (was: [PATCH v3 3/3] SubmittingPatches:
+ explain why we care about log messages)
+Date:   Fri, 04 Mar 2022 10:52:01 +0100
+References: <20220126234205.2923388-1-gitster@pobox.com>
+ <20220127190259.2470753-4-gitster@pobox.com> <YiFY693P6E/eVS3k@google.com>
+ <xmqqr17i5zlu.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <xmqqr17i5zlu.fsf@gitster.g>
+Message-ID: <220304.86ilsuf1e8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 664b820e-d155-4418-6271-08d9fdc94a6b
-X-MS-TrafficTypeDiagnostic: DB6PR1001MB1222:EE_
-X-Microsoft-Antispam-PRVS: <DB6PR1001MB1222F80E756FF6BC7F452DE5B6059@DB6PR1001MB1222.EURPRD10.PROD.OUTLOOK.COM>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: UVNucGMT4GDuwqB8veEwr5pueMq9x1IxDvY6lER1vfo/kgg6nJCzJvTKuC+9+luNCPjMgx5Y5o32O4M2ok368HtGJVwjIUH2lSen+wDeHQi6/aoB/FajRbPHTC9WHUraph8VSCG7n8YjF8+vqpwQK+oFW5vXA2IIplPe7TiQNQJbSu9Nh7P8x8749eCNw9L4fKOhexoxKwaRjLig+P8L8ZAPKQpyeZYG/DDU1lDD21YC9gNuVFHtS/UWiyqZf3JqrlW5L74j6NIwLxVmKX5OflxqtwMkpnBSninwzcb/N4yO2pIKbyukZDdD8pzIXfpCmoJS/86x7KN7kVh6nlPbIl9f+2UJi/gAVQjQrTx+QkPZ0bE2mNUM92McwEOFrAuZKk0qPAcecMINyRVXWY8zD/dFQ7C9u6atu6GoCDoBPtuvn1YNaH2ADHPiCIX4fzcmISjiTaUEG52wyEYDReSFQznrQ/IQHE6f6rr+mpWLxlx7/1lVSFOFizSrxbK8gdLEohv1NcUk82zpLU8lJOX/4V1naKUWKenWBVB9FKhvWQt1ttcwX9zsZOD7095McI3KLJCqDwbkhfJhfIaiEa8QlvaOXdYaQJm0Jl0UcufBm5Mu83jL6wBVykC729uj1BzMzGOAL1YV8mU8rKjNKvUSSg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230001)(4636009)(39830400003)(376002)(346002)(136003)(366004)(396003)(6666004)(54906003)(6916009)(38100700002)(186003)(1076003)(6506007)(6512007)(2906002)(36756003)(508600001)(6486002)(2616005)(4326008)(66946007)(8676002)(66556008)(66476007)(26005)(5660300002)(8936002)(316002)(86362001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?A6lBMdNQKsNd9uEg8Kvvu2A2ygvqdNPMIfjv4FEKh9K/9laplHT+Jfyjb1LJ?=
- =?us-ascii?Q?d+r3gyszIZI4uILUtp3m+U5BsW9clYKyew55uQrxBr9q1LqXNd8mQ9lWE//U?=
- =?us-ascii?Q?dVgASp4H/PS9VlIHkqzTD3FT1fMcmUPWE8W1TivxdavIZaTzsVsENKnhRHVw?=
- =?us-ascii?Q?37nYD9sNYNEeIhvon0OUIWr6ONplg3WiQvYZ08D8K8l86mjlzrFoL6D1zlft?=
- =?us-ascii?Q?borJO7EKJb4SJ2tWAAOeIlwW+++Ocgig/nALsF3lMsRW5zinLAgMzrPooiqP?=
- =?us-ascii?Q?cxl/Mh7R2F3aEiM6Sc4M9mpJVitjvQXyZK1rF/H+po36tuiXDAr1dy9zDr0Z?=
- =?us-ascii?Q?rEJFxYvUZGcW0iFiJphs7AeDD1ok5kJs/1AjeqpDLnU8CnfTi9/13yoOdepA?=
- =?us-ascii?Q?yxHPx13j8x3z9cPGe7Y7P1MvHTkvfJFyZa1+Ud5JHAE1F4LxtMP3VcJJUKf0?=
- =?us-ascii?Q?/QEmbbtwEWYKMsSYK66JhNvZMtE3vr+f08o7Y6B2Ms5d2B3X4HMCEqIwBORk?=
- =?us-ascii?Q?08x7freZ5JAhKTcv7fkHkhHwKu6N/X9J7UPvwxg3+8Cbvdnj5CCkS57V/J16?=
- =?us-ascii?Q?Wcq86jOTMSkDvY3Q9QD40OTg5BW2qXEUBM7H9upXBVCrEhcrv+ocEcySiq8b?=
- =?us-ascii?Q?Ut7IffPVwWCd1jxIE5wT18eRoGTACB6MW1EyuDMSXhKGCw4RUrajJseBeaR/?=
- =?us-ascii?Q?D2uFkvzUtY4xkOWZ9rdQ5clnoifEdeXKX4E5Q5OEvALrzhb50jD6xlovKxgN?=
- =?us-ascii?Q?VSI+YHaE3kdicnwrJNyqRCbaTTsstD1RBuYUW7uDfetEuF+ry4CJn7JRW7Xk?=
- =?us-ascii?Q?2wdNB8TECK94y/KydMqp3dMcVYTOF0EGQ3UYmRCT5XA6/6C7BaZbXWQwWSB1?=
- =?us-ascii?Q?VoeDamPhHlrSmoHGG2KIKwlj9TU8vudZU+TBsLmWaVWMx7iV3JKNYyDLDcNs?=
- =?us-ascii?Q?Lf1/EQ5zGsuHzm6HFc7kL8kKVIn6D1DIn4zdS8uLX40zoGD40aZYES3aUjJx?=
- =?us-ascii?Q?Y6lGuF+9dcr51IkRXqmXwCz0ihl2Jtmgdnm+yhPYSwak/BbXrCDz8xKYIbrb?=
- =?us-ascii?Q?SVnrfqx3RajtgkBKaPfgjQhdN+x91nM86F6Cv7MS5PnBia+PgGSPUj+pnnh9?=
- =?us-ascii?Q?XlFcfdhEH2fiwtDh90B/bf6h4jC1NtgjN1hyE3nYx7FpZdRGV+MH/zQuLLp0?=
- =?us-ascii?Q?rcPm61XrKutWzNiJkbe5QfN6rF73/UHhQVQWHFG970X0NGUR0UhcOFMnYIr2?=
- =?us-ascii?Q?u0ZqyE5/uHl+bzB4jQMgU2wyuOmi2CiwyEBc4AHyNWoHT2EkX/PfIfGx7Bal?=
- =?us-ascii?Q?hk3owWC9CpeewDnjNnvmbPlerOxPLOp+YniYUg/beQcHilUhJUDjqxveklBk?=
- =?us-ascii?Q?dXvgJUPURkNuku6wwvsfjC65/Jwv+0H3re+fZwZKvVEPjborE+xO5QT2YB8/?=
- =?us-ascii?Q?m80KVEh7n3f6KYExkGCS+MgbRE535GrMSwgqzCn8qIPrb1v1XAtV5EZG8S5e?=
- =?us-ascii?Q?NukQYdD5t5HOh3BGc4HuhS7lyDd4cjnO90gb20AQ6rwrAGpk8xeLLd8Oy2QA?=
- =?us-ascii?Q?qz7enhDif7k6JnWO9pZRPgK2wPLnaaDY68x57ZWeFP93A/X2V0IOmHqErpny?=
- =?us-ascii?Q?mOUWgMder2I1CVp+YOz/T3EGUE0mXxSJreSHsVNAAMSxWpL4N68Xmg2G2ZGW?=
- =?us-ascii?Q?7lQRaUWCN7528wfFDKwmftBslEE=3D?=
-X-OriginatorOrg: gigacodes.de
-X-MS-Exchange-CrossTenant-Network-Message-Id: 664b820e-d155-4418-6271-08d9fdc94a6b
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR10MB4734.EURPRD10.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2022 10:25:22.9378
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 80e41b3b-ea1f-4dbc-91eb-225a572951fb
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TRBQ2ctpIaAG6VEVMo+SedEYv2eqqMZLBOTMKlJ4Qpv1mT/NhpBC3wLEAYL7Vs28/b/WghSNGBtCskRJUVC0X+deomvxUj/gjGGYnDamA3U=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR1001MB1222
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Todd Zullinger <tmz@pobox.com>
 
-With gpgsm from gnupg-2.3, the changes to the trustlist.txt do not
-appear to be picked up without refreshing the gpg-agent.  Use the 'all'
-keyword to reload all of the gpg components.  The scdaemon is started as
-a child of gpg-agent, for example.
+On Thu, Mar 03 2022, Junio C Hamano wrote:
 
-We used to have a --kill at this spot, but I removed it in 2e285e7803
-(t/lib-gpg: drop redundant killing of gpg-agent, 2019-02-07).  It seems
-like it might be necessary (again) for 2.3.
+> Emily Shaffer <emilyshaffer@google.com> writes:
+>
+>>> +The goal of your log message is to convey the _why_ behind your
+>>> +change to help future developers.
+>>> +
+>>
+>> This is pretty compelling. Is it clear enough why we care about this in
+>> the commit message, as opposed to in the patch description (cover letter
+>> or post-"---" blurb)? Is it too obvious to explicitly mention that the
+>> commit message is the first thing we try to make sense of during a 'git
+>> blame' or 'git bisect'?
+>
+> Again, patches welcome ;-)
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
- t/lib-gpg.sh | 1 +
- 1 file changed, 1 insertion(+)
+I think for something that's a stylistic preference I'd see why Emily
+would try to see how you feel about it first.
 
-diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-index 6bc083ca77..38e2c0f4fb 100644
---- a/t/lib-gpg.sh
-+++ b/t/lib-gpg.sh
-@@ -75,6 +75,7 @@ test_lazy_prereq GPGSM '
- 	gpgsm --homedir "${GNUPGHOME}" -K --with-colons |
- 	awk -F ":" "/^fpr:/ {printf \"%s S relax\\n\", \$10}" \
- 		>"${GNUPGHOME}/trustlist.txt" &&
-+	(gpgconf --reload all || : ) &&
- 
- 	echo hello | gpgsm --homedir "${GNUPGHOME}" >/dev/null \
- 	       -u committer@example.com -o /dev/null --sign -
--- 
-2.35.1
+I.e. in this project it's ultimately up to you to decide on those
+things, so for coding guidelines you've just updated I'd probably do the
+same.
+
+Don't take that as a complaint on the end result b.t.w., I think the
+overall excellent state of the codebase in this project speaks for
+itself on that front.
+
+I just see why other contributors would be gun shy about pulling the
+trigger on a patch submission on this particular front :)
+
+> Having to say "this may be better in the in-code comment rather than
+> the log message" to some patch recently (I do not remember), I tend
+> to agree that some guidance would help people decide between the two
+> (or writing both).
+
+[A somewhat sneaky $subject change :)]
+
+I think you're referring to this comment on (some admittedly tricky)
+code I wrote[1].
+
+First, given the above I'll adjust that to your preferences on a
+re-submission. So don't take this as some argument on *that* specific
+point. I'll add a comment in a re-roll.
+
+But on reflection I still wouldn't put a comment on that code if it were
+purely up to me. Why?
+
+First, I think all programmers go through a phase of learning where they
+feel more compelled to comment on the "how" v.s. "why" early on.
+
+At the most extremes beginner programmers explaining how say a common
+standard library function works in code that's relatively
+straightforward.
+
+But that's really not the case in [1], that code really is doing
+something odd and worth explaining. So why not add a comment?
+
+Because access to ubiquitous and *local* source control from git changed
+a lot of people's habits on this front, including mine. For this code I
+*would* definitely add a comment there if it was the pre-DVCS[2] days.
+
+But I'd say that today my criteria for adding a comment is closer to:
+
+    Is this so essential to note for the understanding of the rest of
+    this code that nobody who's skimming past this line or reading this
+    part *wouldn't* want this information?
+
+    Or rather, they might not absolutely want to know, but it might be
+    useful, *and* there's nothing odd about the pattern itself that
+    makes you go "hrm?" enough to run "git blame/log" on it.
+
+In this case it's clearly pretty weird that we run the exact "test-tool
+regex" command twice. But I think that "hrm?" applies. To elaborate:
+
+ A. It's setting up a self-contained prereq, so it's not essential
+    to understand that implementation detail to read the rest of the
+    code.
+
+ B. Anyone who does want to see why that odd case is the way it is can
+    run some version "git blame" or say:
+
+        git log -p -L14,21:t/t7812-grep-icase-non-ascii.sh
+
+ C. Each comment you add, even within a function or other scope dilutes
+    the value of other more important comments. It trains people not to
+    read them, as they're probably not that important.
+
+ D. Comments that are "frozen in time" by adding them to the code
+    itself are almost always in danger of drifting in accuracy from the
+    rest of the implementation and its assumptions.
+
+    Even in well-curated codebases like git.git they're *much more*
+    likely to drift away from the "ground truth" than code is.
+
+ E. Even if "D" isn't true, commit messages (in this case my [3]) are
+    almost always at an advantage over comments in that they accompany
+    a change to the pre-image.
+
+    So e.g. that commit message doesn't need to waste time explaining
+    what pattern we'd prefer not to have here instead of the post-image,
+    you get that context for free.
+
+Due to a combination of "D" and "E" I almost never read comments in
+their current context, unless it's painfully obvious that they *must*
+still apply to the current code. I'll usually run some variant of "git
+blame" or say:
+
+    git log -p -L:relevant_function:file
+
+And then see how the code looked when that comment was added, and page
+through what's changed since then.
+
+1. https://lore.kernel.org/git/xmqqsfryah42.fsf@gitster.g/
+2. To those who'd nitpick DVCS v.s. VCS: Yes nothing changed in theory from CVS/SVN
+   etc. on this front, but in practice it did.
+   
+   Access to version control didn't tend to be ubiquitous, and even if it was
+   accessible many people browsing or contributing to your code would probably
+   do so via a downloaded tarball than trying to get CVS or whatever to work.
+   So the "D" in DVCS really did change this.
+3. https://lore.kernel.org/git/patch-12.15-f3cc5bc7eb9-20220302T171755Z-avarab@gmail.com/
+
+
 
