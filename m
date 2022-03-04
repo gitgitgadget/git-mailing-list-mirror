@@ -2,90 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 395C1C433EF
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 07:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7F6EC433FE
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 08:38:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235773AbiCDHqP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 02:46:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38470 "EHLO
+        id S232530AbiCDIjd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 03:39:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230479AbiCDHqP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 02:46:15 -0500
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48077192E14
-        for <git@vger.kernel.org>; Thu,  3 Mar 2022 23:45:28 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 76D8D10BB6B;
-        Fri,  4 Mar 2022 02:45:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Huy3Qb7ne81a+lYQoy2R0LOE8VS4rFJ9NCkXhZ
-        SISv8=; b=AgoSi63UMBQsN9Fq318WoJKwIp0KCb7QHCNlKoPSil/fePDv6OqSBp
-        ZfP6IGk19VDCEZlzUWuDrbqB/45BrQvHulkQ+BIu89HZ12gvMUU3OXXvEHvd1DMK
-        NMm8E5opzkO1apHrbtMDLXRgvlRCCYHKneDVOhrbEuUJB0NYy1mFg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DA8E10BB69;
-        Fri,  4 Mar 2022 02:45:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.230.65.123])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DA17710BB68;
-        Fri,  4 Mar 2022 02:45:26 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Matheus Felipe via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Matheus Felipe <matheusfelipeog@protonmail.com>
-Subject: Re: [PATCH v2] fix: include the type flag in the cli docs
-References: <pull.1220.git.git.1645853661519.gitgitgadget@gmail.com>
-        <pull.1220.v2.git.git.1646368313714.gitgitgadget@gmail.com>
-Date:   Thu, 03 Mar 2022 23:45:25 -0800
-In-Reply-To: <pull.1220.v2.git.git.1646368313714.gitgitgadget@gmail.com>
-        (Matheus Felipe via GitGitGadget's message of "Fri, 04 Mar 2022
-        04:31:53 +0000")
-Message-ID: <xmqq8rtq2may.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S234307AbiCDIjS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 03:39:18 -0500
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68D0F19CCCF
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 00:38:04 -0800 (PST)
+Received: by mail-il1-f177.google.com with SMTP id f2so6046339ilq.1
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 00:38:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fZOzAmyZ8wwy1nEnhnRG1pNNf/Y9M0vXBjZZrJoCBDY=;
+        b=RRxFQa62ymYtxztbtg0Z7q1amfR17aqSJ/5AFlPHuoTcmzidpBN3DUoJHm87Hr03wr
+         zdFj16OLAf3/NJyW30U24+zJgH2oXO/Glqu+4KKEOjjGPm0bJ4cQYPox8iD305dHBZj4
+         NDLdCiaEvRTFa3kTFDhoUKaxns/5I79YG7xhcAqPvwrZI80SeZXWIQKDlHIwN66xYPUz
+         s32jsGS2BinU4RWQK+WUoSjBcICe4As5A3RH3CJ4YM1AlgvMl+v66g10wni4KAXWljbA
+         OTwYvi+0lY172QHm5KuDcExce/Zi1a2qVyqSOmNgZjEBgi2FJwJa22a3zZbaj44iQG9Y
+         8oug==
+X-Gm-Message-State: AOAM532I8HWGWe2YWi9/T9mkqRnyvauB7PnQMJ4DRGmlM5/g4EfWR1KM
+        feV5fBCPRikff62QEdN4VnI0tJhQjrGYYsYP5GC263XofKY=
+X-Google-Smtp-Source: ABdhPJw2GWomkqhGx7OUe0hNneO8M8BgJYEzklAJXXJXhpoSYj2zr8JtOZfQU9Q/K8E5XyXCwFCXjZPADBbcpRNXD5E=
+X-Received: by 2002:a05:6e02:2168:b0:2c1:a436:d18c with SMTP id
+ s8-20020a056e02216800b002c1a436d18cmr34133735ilv.49.1646383084027; Fri, 04
+ Mar 2022 00:38:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0E97CE9A-9B8F-11EC-9608-5E84C8D8090B-77302942!pb-smtp1.pobox.com
+References: <87fso0qphj.fsf@vps.thesusis.net>
+In-Reply-To: <87fso0qphj.fsf@vps.thesusis.net>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Fri, 4 Mar 2022 09:37:28 +0100
+Message-ID: <CA+JQ7M8SF2cmZ7jagH-VdrZeR9Kfcw0GV=A1fpDeDubwJS1B8g@mail.gmail.com>
+Subject: Re: gitk external diff on Windows
+To:     phill@thesusis.net
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Matheus Felipe via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> Subject: Re: [PATCH v2] fix: include the type flag in the cli docs
-
-One more (hopefully final) nit.  By reading the above alone (which
-is what people will see in "git shortlog --no-merges" output), you
-can not even guess which subcommand the "fix" is about, or if it is
-even a fix to the code, or just a documentation update.
-
-I'd retitle it to
-
-	config: correct "--type" option in "git config -h" output
-
-> From: Matheus Felipe <matheusfelipeog@protonmail.com>
+On Wed, Mar 2, 2022 at 11:32 PM Phillip Susi <phill@thesusis.net> wrote:
 >
-> The usage help for --type option of `git config` is missing `type`
-> in the argument placeholder (`<>`). Add it.
+> I'm running git version 2.28.0.windows.1 on Windows and trying to set it
+> up to run winmerge as the external diff tool.
 
-Good.
+This is really a Git for Windows specific issue and more appropriately
+asked here
+https://groups.google.com/g/git-for-windows
 
-> diff --git a/builtin/config.c b/builtin/config.c
-> index 542d8d02b2b..2aea465466b 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -151,7 +151,7 @@ static struct option builtin_config_options[] = {
->  	OPT_BIT(0, "get-color", &actions, N_("find the color configured: slot [default]"), ACTION_GET_COLOR),
->  	OPT_BIT(0, "get-colorbool", &actions, N_("find the color setting: slot [stdout-is-tty]"), ACTION_GET_COLORBOOL),
->  	OPT_GROUP(N_("Type")),
-> -	OPT_CALLBACK('t', "type", &type, "", N_("value is given this type"), option_parse_type),
-> +	OPT_CALLBACK('t', "type", &type, N_("type"), N_("value is given this type"), option_parse_type),
+But I'll give a quick response here.
 
-Good again.
+> contains "cmd /c" so I tried prefixing the path to the batch file with
+> that, and instead I get an error that says:
+>
+> cmd /c C:/Program Files/WinMerge/winmerge.bat: command failed: couldn't
+> execute "cmd \c C:\Program Files\WinMerge\winmerge.bat": no such file or
+> directory.
 
-Thanks.  Will queue.
+I'm guessing you're running this from git bash, in which case try
+cmd //c C:/Program Files/WinMerge/winmerge.bat
+See
+https://stackoverflow.com/a/21907301
+
+Basically a song and dance has to be done to work with Windows quirks.
+
+If you're still having issues, it's best to follow up in the Git for
+Windows discussion group
+https://groups.google.com/g/git-for-windows
