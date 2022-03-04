@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43D52C433F5
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 23:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FF7FC433F5
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 23:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230035AbiCDXyV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 18:54:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48428 "EHLO
+        id S230087AbiCDX4y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 18:56:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229717AbiCDXyU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 18:54:20 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C04141E1139
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 15:53:31 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id 1-20020a630c41000000b00378d9d6bd91so5275991pgm.17
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 15:53:31 -0800 (PST)
+        with ESMTP id S229861AbiCDX4w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 18:56:52 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 572AC27B910
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 15:56:03 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id a21-20020a1709027d9500b00151cc484688so363697plm.20
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 15:56:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=wZGyVLq5VYZzRdgnlgI8uTzTTH9xRq4GDC8TaaoUBQc=;
-        b=GrnOI2iZwHYPEm6HJzG7OdUHZXwpmM9AEOpYIbIdJAAQystX6qMniBhjTZcmMuyba4
-         MNeL25/0sEqOmAMLbxl1yXsO/em070reeRLkKiwe+GzjejuXEk2MZ38kdCrR/ZfTB0CQ
-         Mglyl6hBDLYIe0O3TEriJv6wPKCVjublyRGO3MWOgWs1q8Kt9MHNhoZGhcAUJj+Wf9kb
-         7RpRotcWeMH2JJF4Xeea7fVWNcV/Axefy6DFGh5hzYunOVM3GnNZD+1e54JWEj/R2HiT
-         FKaTD08UWVV+4/fgCp0UpGWXIMd8XHZ012PFxoNXxs7D+vHXbfduPIemBz0a52RaNw6j
-         vtOQ==
+        bh=yWrSpUE2GOUHpChG4THBU7iVLtDYyeIw7a9EkpmIKs0=;
+        b=h2QS4zDFbIKCyblPS4ptEtWi4Cguzuwit3f9DHxP6xfA4Dh9u78bCWo4ESN+KT5Rjp
+         MovuyNlgAeYPCyYpMklm28UZFIQ41TNtwBds3uxS0Gm2UfcXSgmnevJM9Zv+TFlNw0Fe
+         KB4PMDq2ke/bdhA8D+lqqYs/w2B3PBJIfNxDbyxNNE7Di5h7utO0ieKDWFcAT8AuzSMJ
+         s5nI7LoZmDfTaEbxp5eawLWPra6BUS7X2kkCRK3msJZI2vByxIYvPJEKv/BqBBSn0Imp
+         fBVltKNxWmLTOqOo8+znSU4b4R0u9RKsgrIUcXG7UZXr6OCJ6RxduJq8W0O0x8bqO9C3
+         MVAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
          :from:to:cc;
-        bh=wZGyVLq5VYZzRdgnlgI8uTzTTH9xRq4GDC8TaaoUBQc=;
-        b=x8w8sGEuRzOwiWkrGnZC/o4BGDp8DGj9zMD/CKXj5w08W/LEldSCg+MFw2H5tnqHoJ
-         zwHoSbmM1WgTc0znHU32iXlCE4QunLB7FIxWJv7o2B0Y0ygoTQRgDmZohPyeBBkmFyrA
-         OJBKa3uQvbhzmfpypR/jr5+XEDIYb2+PJbUqP/aBs5NfH9gwlGO24bVDj9wBD7llowy+
-         86NJR+pjZzNpkpddW3ePWQ3lnLUwGTKrZE64BjzBvSB07Vc8wUqE+qs4psghnLnV5GC4
-         RPgGCXtnzeh9LqPpI6dHvD3qPJ3hZpPvWKt+pEhflqR12jVspPlhZ+0ARgeJxBz0MaCd
-         xj9Q==
-X-Gm-Message-State: AOAM533G3B4o9b0cZCrf+gI56QR12qJkXfpsgSE3+bblFCg61zFzRBso
-        iC/OKCkV8FOyLVntIGMDP4bHBxLWza4WFqDWUDnA
-X-Google-Smtp-Source: ABdhPJwqvC9BydiJjGnznajzF1JGxE++v3Oya1OxoL4wYBUv3yDOHxyDUH6d0TZ7azL56gZBXQc6O4SqAu+UJatFHvp2
+        bh=yWrSpUE2GOUHpChG4THBU7iVLtDYyeIw7a9EkpmIKs0=;
+        b=TOhUojIv1JHMbAyKhAwQW6Lk8+1QIIbO8TigQDzdecifdEWsftttrlE780MoGzXU3P
+         XgZUbpvoM6EVDuovL8DYzv1ePYPOckajFIV876FOXz0ZQACUc7XzxiNhRSc2m4svoFtY
+         X+hJM2XsAFlVb2bUremAtgRm/2/ITHJRxpFKK7zNAVmIHd676uRW9sH3xWR2xlQrkSw5
+         VbTbBCwnHpqN3Sp+d4/VJtGpfKcHfICyhYS1/oqIXd9tzm8QdK+4gV+zj2Dp3rEU8X9Q
+         EI/pZ/lTMG4sfzBEuj+OXJeZMXn0r8BgmNSAIQyOchWVfUwU89FxhxGEVYM+CpX4EwEa
+         CFIw==
+X-Gm-Message-State: AOAM533hf2sDmedYSSPKAz2iM1z+/mIebza5Vq4S1sqQ47R3+EtQ10Bg
+        w1+Qnmc/9KFv0yyj7uX17Abas/IgA/Kmy0THgNJQ
+X-Google-Smtp-Source: ABdhPJwXPl0c5hUaBUTVC6/pNkceDJrN4QrI5pQVW2MK/0XprP71YszylHDGAe+t/QSY54AuWJ4DTg5DbuR533EsPAGL
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:218d:b0:4f6:4127:df4f with
- SMTP id h13-20020a056a00218d00b004f64127df4fmr903484pfi.73.1646438011089;
- Fri, 04 Mar 2022 15:53:31 -0800 (PST)
-Date:   Fri,  4 Mar 2022 15:53:28 -0800
-In-Reply-To: <kl6l5yp34nif.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-Id: <20220304235328.649768-1-jonathantanmy@google.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:24c7:b0:4e1:cb76:32d1 with
+ SMTP id d7-20020a056a0024c700b004e1cb7632d1mr1218012pfv.36.1646438162866;
+ Fri, 04 Mar 2022 15:56:02 -0800 (PST)
+Date:   Fri,  4 Mar 2022 15:56:00 -0800
+In-Reply-To: <20220304005757.70107-10-chooglen@google.com>
+Message-Id: <20220304235600.650580-1-jonathantanmy@google.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.35.1.616.g0bdcbb4464-goog
-Subject: Re: [PATCH v3 09/10] fetch: fetch unpopulated, changed submodules
+Subject: Re: [PATCH v4 09/10] fetch: fetch unpopulated, changed submodules
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Glen Choo <chooglen@google.com>
 Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
@@ -62,51 +62,40 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Glen Choo <chooglen@google.com> writes:
-> >> +# In downstream, init "submodule2", but do not check it out while
-> >> +# fetching. This lets us assert that unpopulated submodules can be
-> >> +# fetched.
-> >> +test_expect_success 'setup downstream branch with other submodule' '
-> >> +	mkdir submodule2 &&
-> >> +	(
-> >> +		cd submodule2 &&
-> >> +		git init &&
-> >> +		echo sub2content >sub2file &&
-> >> +		git add sub2file &&
-> >> +		git commit -a -m new &&
-> >> +		git branch -M sub2
-> >> +	) &&
-> >> +	git checkout -b super-sub2-only &&
-> >> +	git submodule add "$pwd/submodule2" submodule2 &&
-> >> +	git commit -m "add sub2" &&
-> >> +	git checkout super &&
-> >> +	(
-> >> +		cd downstream &&
-> >> +		git fetch --recurse-submodules origin &&
-> >> +		git checkout super-sub2-only &&
-> >> +		# Explicitly run "git submodule update" because sub2 is new
-> >> +		# and has not been cloned.
-> >> +		git submodule update --init &&
-> >> +		git checkout --recurse-submodules super
-> >> +	)
-> >> +'
-> >
-> > Hmm...what is the difference between this and the original case in which
-> > the index has no submodules? Both assert that unpopulated submodules
-> > (submodules that cannot be found by iterating the index, as described in
-> > your commit message) can be fetched.
-> 
-> In the previous test, the index has no submodules (it's completely empty
-> in fact, so we don't iterate the index at all), but in this test, it
-> does. This lets us check that there aren't any buggy interactions when
-> both changed and index submodules are present.
-> 
-> I think such mistakes are pretty easy to introduce on accident - I made
-> one pre-v1 where I reused .count between both iterators (instead
-> of having .index_count and .changed_count). It passed the previous test
-> because we didn't care about the index, but it obviously wouldn't pass
-> this one.
+> +		/*
+> +		 * NEEDSWORK: Submodules set/unset a value for
+> +		 * core.worktree when they are populated/unpopulated by
+> +		 * "git checkout" (and similar commands, see
+> +		 * submodule_move_head() and
+> +		 * connect_work_tree_and_git_dir()), but if the
+> +		 * submodule is unpopulated in another way (e.g. "git
+> +		 * rm", "rm -r"), core.worktree will still be set even
+> +		 * though the directory doesn't exist, and the child
+> +		 * process will crash while trying to chdir into the
+> +		 * nonexistent directory.
+> +		 *
+> +		 * In this case, we know that the submodule has no
+> +		 * working tree, so we can work around this by
+> +		 * setting "--work-tree=." (--bare does not work because
+> +		 * worktree settings take precedence over bare-ness).
+> +		 * However, this is not necessarily true in other cases,
+> +		 * so a generalized solution is still necessary.
+> +		 *
+> +		 * Possible solutions:
+> +		 * - teach "git [add|rm]" to unset core.worktree and
+> +		 *   discourage users from removing submodules without
+> +		 *   using a Git command.
+> +		 * - teach submodule child processes to ignore stale
+> +		 *   core.worktree values.
+> +		 */
+> +		strvec_push(&task->git_args, "--work-tree=.");
+> +		return task;
 
-In that case, describe this difference (one has no submodules in index,
-one has other submodules in index) and maybe position this so that both
-test cases (the no-submodule-in-index one and the
-other-submodule-in-index one) are next to each other.
+Thanks - this is a good comment.
+
+I've also written other comments on this patch that are easier to
+describe in the context of an earlier conversation, so I've written
+these as replies to an earlier email:
+
+https://lore.kernel.org/git/20220304234622.647776-1-jonathantanmy@google.com/
+https://lore.kernel.org/git/20220304235328.649768-1-jonathantanmy@google.com/
