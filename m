@@ -2,91 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0319CC433F5
-	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 23:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F801C433EF
+	for <git@archiver.kernel.org>; Fri,  4 Mar 2022 23:43:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229937AbiCDXmj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 18:42:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45516 "EHLO
+        id S229532AbiCDXo1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 18:44:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbiCDXmh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 18:42:37 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14A7D224501
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 15:41:48 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id z12-20020a17090ad78c00b001bf022b69d6so8158768pju.2
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 15:41:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3DCcJiCHsFah34bkUjLMSYDpVXVyitGR6ZvBYBPDiy8=;
-        b=feWc5MQPoRfN2WQgDFfug2gbZrfA7oZRjsfbD6bVopo/yTH1/wx9htmB84WlYoxoja
-         VG1rSv0iOyxntPhHVuE/VNFSxQwsjnCgEgNCMd5lt2HLojIYClX3SMy5FXD/69Kkdorp
-         2rbHgoWUMh6e1QZXREHYW9TQvYr+hQdmi1ruxTkooJK06TgPbuCaxO75DV/4Ln0YwOLq
-         wLx1aOjOvFF4EE9oVOQTnekEerOhxsY9CEgpKHnvuRUZYqKMCi4OmjyNDkL7OexQUu2s
-         85fGJUh4IMu2Kjn+wgdVuZv8h7bjOhzYlPEDzAK8t/ckkfh/1uxRECQv0ZEnLV+djvtS
-         L39Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=3DCcJiCHsFah34bkUjLMSYDpVXVyitGR6ZvBYBPDiy8=;
-        b=qVomoaAU/c/WquHWqGEVrix8CRDerG8caIDYWYhhwL7AKOq2kt725HGS35xabYZCtq
-         cOFOp9pZyovxCMkVQdsIm0hWfYcBWMa8li7fq9tLzR5njMSUMwBGKrgp8iKYV5elBAos
-         WBgD03SxQIyxYp+IYOQqnKF/4uQldg3fHQ0+IO6w2auRh1frrQJVmZLtVRCpWx4zQmt9
-         HYxbdHmqZYrRkaAqXNxa2FVUXe8LsIMur1NzR7kwwVM5YxHvI2qb24VSSgttvjWxd2QL
-         S1z9DFyy3AzQ+qGVYMNokHkeKg8K9M39ZA+oOXZJOFoMOtjDN778jfdGBIUXHKiw/7o1
-         5ZyQ==
-X-Gm-Message-State: AOAM5324QM1EGhds5EWWqgwXIPQn/129dW3SBzjHG1nePbEhlLeU5iiq
-        6n7N5rfJYNozJ23q1KQqrrX8cnR++RNc/A==
-X-Google-Smtp-Source: ABdhPJwOyJfaqFkKuORPn5peapSKRytj6Snk9h91lJ4nSC2sn1pfcKT4Xmn1vXlTS1ueomX3jOB9BQ==
-X-Received: by 2002:a17:90a:ab08:b0:1bc:3ece:bdc with SMTP id m8-20020a17090aab0800b001bc3ece0bdcmr1092555pjq.32.1646437307307;
-        Fri, 04 Mar 2022 15:41:47 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:e381:a3f4:ceac:8c28])
-        by smtp.gmail.com with ESMTPSA id lw12-20020a17090b180c00b001b8a61a0ea5sm5664111pjb.38.2022.03.04.15.41.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Mar 2022 15:41:46 -0800 (PST)
-Date:   Fri, 4 Mar 2022 15:41:41 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] SubmittingPatches: write problem statement in the
- log in the present tense
-Message-ID: <YiKjtcHSBXWky7Ze@google.com>
-References: <20220126234205.2923388-1-gitster@pobox.com>
- <20220127190259.2470753-2-gitster@pobox.com>
- <YiFWZal+k6ixnYPU@google.com>
- <xmqqzgm65zvy.fsf@gitster.g>
+        with ESMTP id S229471AbiCDXoZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 18:44:25 -0500
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45C1124F1D
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 15:43:37 -0800 (PST)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DE7A517A612;
+        Fri,  4 Mar 2022 18:43:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/sWRFMsFdwxgvnscswS2p7KwHU/D8Vrdy+kvEC
+        KCMeE=; b=hwJawyT8VoQh17Q/AZrZ4oRPWqdtOnltGbS4dc4RiCebDXmFcRe+i6
+        5N0SpUts6kCmBDyO54JJJJQvm9ybsDCulv3WJmHyp2xIutnsSDuGqvkCnwuBj3B6
+        OpjYTKtYZVGVLV0qOdVQ42Of6TfLwBbW1sFGPAdjhRLkvZjrFhJ2s=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D66BE17A611;
+        Fri,  4 Mar 2022 18:43:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.230.65.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5E7EA17A60B;
+        Fri,  4 Mar 2022 18:43:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 11/11] bundle: unbundle promisor packs
+References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
+        <ec51d0a50e6e64ae37795d77f7d33204b9b71ecd.1645638911.git.gitgitgadget@gmail.com>
+Date:   Fri, 04 Mar 2022 15:43:33 -0800
+In-Reply-To: <ec51d0a50e6e64ae37795d77f7d33204b9b71ecd.1645638911.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Wed, 23 Feb 2022
+        17:55:11 +0000")
+Message-ID: <xmqqzgm5wafu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqzgm65zvy.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID: E7CF845C-9C14-11EC-904F-C85A9F429DF0-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 03, 2022 at 04:23:45PM -0800, Junio C Hamano wrote:
-> 
-> Emily Shaffer <emilyshaffer@google.com> writes:
-> 
-> > As for the norm itself, I think it is a good one, and I've seen it
-> > pointed out in code reviews frequently. Thanks.
-> >
-> > Reviewed-by: Emily Shaffer <emilyshaffer@google.com>
-> 
-> Thanks.
-> 
-> Was this meant to be sent long after the topic was merged to
-> 'master' at 83760938 (Merge branch 'jc/doc-log-messages',
-> 2022-02-11)?
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-As mentioned in
-https://lore.kernel.org/git/YiFZicz69mDyFzXB%40google.com - no, it
-wasn't. In fact, in conversation at $dayjob someone said "whatever
-happened to Junio planning to write updates to SubmittingPatches?" and
-someone else said "it didn't really get any review" - so I said "okay, I
-will do review" instead of checking whether you merged anyway. So mostly
-useless noise :)
+> From: Derrick Stolee <derrickstolee@github.com>
+>
+> In order to have a valid pack-file after unbundling a bundle that has
+> the 'filter' capability, we need to generate a .promisor file. The
+> bundle does not promise _where_ the objects can be found, but we can
+> expect that these bundles will be unbundled in repositories with
+> appropriate promisor remotes that can find those missing objects.
 
- - Emily
+That sounds like a lot of wishful thinking, but I do not think of a
+better way to phrase the idea.  Taking a bundle out of a repository
+and unbundling it elsewhere is "git fetch" that could be done to
+send objects from the former to the latter repository, so I am OK
+with the assumption that the original repository will stay available
+for such users who took its contents over sneaker-net instead of
+over the wire.
+
+> Use the 'git index-pack --promisor=<message>' option to create this
+> .promisor file. Add "from-bundle" as the message to help anyone diagnose
+> issues with these promisor packs.
+>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  bundle.c               | 4 ++++
+>  t/t6020-bundle-misc.sh | 8 +++++++-
+>  2 files changed, 11 insertions(+), 1 deletion(-)
+>
+> diff --git a/bundle.c b/bundle.c
+> index e284ef63062..3d97de40ef0 100644
+> --- a/bundle.c
+> +++ b/bundle.c
+> @@ -631,6 +631,10 @@ int unbundle(struct repository *r, struct bundle_header *header,
+>  	struct child_process ip = CHILD_PROCESS_INIT;
+>  	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
+>  
+> +	/* If there is a filter, then we need to create the promisor pack. */
+> +	if (header->filter)
+> +		strvec_push(&ip.args, "--promisor=from-bundle");
+> +
+>  	if (extra_index_pack_args) {
+>  		strvec_pushv(&ip.args, extra_index_pack_args->v);
+>  		strvec_clear(extra_index_pack_args);
+> diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+> index 39cfefafb65..344af34db1e 100755
+> --- a/t/t6020-bundle-misc.sh
+> +++ b/t/t6020-bundle-misc.sh
+> @@ -513,7 +513,13 @@ do
+>  		The bundle uses this filter: $filter
+>  		The bundle records a complete history.
+>  		EOF
+> -		test_cmp expect actual
+> +		test_cmp expect actual &&
+> +
+> +		# This creates the first pack-file in the
+> +		# .git/objects/pack directory. Look for a .promisor.
+> +		git bundle unbundle partial.bdl &&
+> +		ls .git/objects/pack/pack-*.promisor >promisor &&
+> +		test_line_count = 1 promisor
+
+OK.  Do we also want to inspect the contents of the resulting
+repository to make sure that the bundle had the right contents?
+
+One idea to do so would probably be
+
+ - prepare a test repository (you already have it)
+ - prepare a partial.bdl (you already do this)
+
+ - clone the test repository into a new repository, with the same
+   filter
+ - create an empty repository, unbundle the partial.bdl
+
+ - take "for-each-ref" and list of objects available in these two
+   "partial copies" from the test repository, and compare
+
