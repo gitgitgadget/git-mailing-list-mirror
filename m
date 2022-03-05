@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F830C433EF
-	for <git@archiver.kernel.org>; Sat,  5 Mar 2022 00:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26086C433F5
+	for <git@archiver.kernel.org>; Sat,  5 Mar 2022 00:38:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230182AbiCEA0w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Mar 2022 19:26:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54414 "EHLO
+        id S230053AbiCEAip (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Mar 2022 19:38:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbiCEA0r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Mar 2022 19:26:47 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2269B12CC20
-        for <git@vger.kernel.org>; Fri,  4 Mar 2022 16:25:59 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id 1-20020a630c41000000b00378d9d6bd91so5309671pgm.17
-        for <git@vger.kernel.org>; Fri, 04 Mar 2022 16:25:59 -0800 (PST)
+        with ESMTP id S230298AbiCEAio (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Mar 2022 19:38:44 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDFEC4161A
+        for <git@vger.kernel.org>; Fri,  4 Mar 2022 16:37:53 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id d4-20020a170902f14400b001518350e5c7so5412765plb.13
+        for <git@vger.kernel.org>; Fri, 04 Mar 2022 16:37:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=f73uy4WMgvLS3ix15n9iTsCf87dEHyjqS5j/upBqwDs=;
-        b=d7ZQyrIyxF52/KSDnPiS2DOGEUsF9ANeKH38x6mJNCC2P9BeMf0nywzK3mK7+imoeU
-         BgUZPffqg36lWsdnrcNgRY5bObSPS7NC6hF7w5xJogyKRYYp/BXgJ9gf8J45RHEJzhgZ
-         a0OaWGWzUwK92wmdpuyJDFEhn0ZeZadJv3/+zCzcYjam+7l5vLCFx7GRYmJ6z4vETpqE
-         l2hbscC3vqaduiB1tjlVzGOUHkEGdiES5HQ4L4QU4KxVJT7GMaUtCkN83L91nPONYTWC
-         gusa0v53csDxsND88cIgGnxYJhZ70eDcz3dMG7NEidV7rUEKtPR0DqBlgcXKSvc9Mdgg
-         lklA==
+        bh=hfWEUOsrZC28dVFIzwRg43dUXBEML7un1hROPl4N8h8=;
+        b=EoKuZZD6nPhrwFY6iH87Yl1t5VudNhYjP/ZQSUW+SKyzrDYxeaK+RLE1CrBsT41Exl
+         UO1E4xF55A6zLp0rTI8nFhdOgdpVak6+KHNFAa4Re0uYOvo56WA5DlUZ3MZjaDeVmN/h
+         97sL+Sl7Nevk0jzF+o2c0JCG2+yKLgw/ri1GzBddxbM8HC+DDCIEp5Zlu1JcRKhXpPvN
+         1BWRx1IV0/F2f/Q4DzimS0J9y+HioNOqTDo/p715ycn/ZARBMS+YZy3LjGYOLXLbE4BL
+         XL2f4FLhHx97x7pTpndyMovkvatBYydLZsVY6pr0YJM6qIZeYV/GYSZGVJ72FIEiYwR6
+         ObaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=f73uy4WMgvLS3ix15n9iTsCf87dEHyjqS5j/upBqwDs=;
-        b=uHBIXxCzVSkjHkOAhYrl63/goMgXDololPRvf8x+MKeprayFoLwWmJVkPxbOxjE/e6
-         BT7wMg49JT10J5rMtBsVH4kITCeNc2AAwoAsqkHiyVQbtt2iXEVziwv8VfW3kchSYqWp
-         r38CmF9ruzoMCjG77VO5qdpDXEW7UpXG/ktyCE9ZINHZQb+yuBnwLnaOVhmTm0BL2cMQ
-         wzS92dczRxJBZquiD0b3/g/o+zD6CXFU8VroLE4VSfShMuE2V5+VVMQZkaLpM1FjlIDb
-         1cYDtWLacBZBEx/O82aM86JI0GKJ8tN4eXwzX3p8iE2aHTpyjjfaR5pN5tzxEVpj7ppk
-         ygHg==
-X-Gm-Message-State: AOAM530QNEYC+9KXHqwKdXOBXXPaLvKE7tzdrvXeE7n5wExLpIlF/w4B
-        XnODzWBtYfSk3cKCoJnHJiOV8hOHBZeUpw==
-X-Google-Smtp-Source: ABdhPJzFbc/ynF4U43yiZJ0ZAkp/NKWSLS19BwHUnyGPEm+ycqvzGAZovdZduhzVVUJvjC5pzgPPgB5RMCG7Hw==
+        bh=hfWEUOsrZC28dVFIzwRg43dUXBEML7un1hROPl4N8h8=;
+        b=0LwUyy1Y5sOhDFbWAeScuKkUrt28YKaXeIcvSJEvXudWPUVriTTZSLVvGuBXlaeSHi
+         2C9YZX/DUpnmje/2K2sWxhOBgNIrCtwlMOEC/2FBHeTXTklTCaVt0g0m1iiWClRWeneP
+         1Fk4uI2S3Rm7xotD5X/GmvvaFSTrpnwERVOqzUSlluPOBy4VJgrQUIPdrRjS12avIakq
+         GL5HBgh5VW+R7j+f2sExmiA2LovgqolaKC5OmorI1rgUf85olj/CrhP8ZgufvepxNWKa
+         ztV6rDZGh5bIMECsbOwqXrQj5fHuQcyLY3MDqr3uYLfIBbGDrurBeznL1WgF3RCAF8oh
+         L3jQ==
+X-Gm-Message-State: AOAM5335cjMaj/uIhCdfCXhfJOH2DrFzau6iO5L0Q+D33DNoOhpQ01QK
+        H6SW6dpLRKFC1cEVLXr9Kho2Cu/gFGgksg==
+X-Google-Smtp-Source: ABdhPJycgzXbMMCxeMXpDD6IEty128/BYEHqcV2D/mPMVWiq9dG3VfzffScGJKEpwe5W3Dq1kDXkl84/y7G3tw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:7805:b0:151:b8ec:202b with SMTP
- id p5-20020a170902780500b00151b8ec202bmr900794pll.111.1646439958614; Fri, 04
- Mar 2022 16:25:58 -0800 (PST)
-Date:   Fri, 04 Mar 2022 16:25:56 -0800
-In-Reply-To: <xmqqv8wtwa6u.fsf@gitster.g>
-Message-Id: <kl6l1qzh454b.fsf@chooglen-macbookpro.roam.corp.google.com>
+ (user=chooglen job=sendgmr) by 2002:aa7:8318:0:b0:4f6:ba8c:17d6 with SMTP id
+ bk24-20020aa78318000000b004f6ba8c17d6mr1376537pfb.56.1646440673263; Fri, 04
+ Mar 2022 16:37:53 -0800 (PST)
+Date:   Fri, 04 Mar 2022 16:37:51 -0800
+In-Reply-To: <xmqqk0d9w91r.fsf@gitster.g>
+Message-Id: <kl6ly21p2q00.fsf@chooglen-macbookpro.roam.corp.google.com>
 Mime-Version: 1.0
-References: <20220304224156.637697-1-jonathantanmy@google.com> <xmqqv8wtwa6u.fsf@gitster.g>
-Subject: Re: [PATCH v4 02/10] t5526: stop asserting on stderr literally
+References: <20220224100842.95827-1-chooglen@google.com> <20220304005757.70107-1-chooglen@google.com>
+ <20220304005757.70107-10-chooglen@google.com> <xmqqsfry4f3z.fsf@gitster.g>
+ <kl6l7d99494p.fsf@chooglen-macbookpro.roam.corp.google.com> <xmqqk0d9w91r.fsf@gitster.g>
+Subject: Re: [PATCH v4 09/10] fetch: fetch unpopulated, changed submodules
 From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
         "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
@@ -63,18 +64,65 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
+> Glen Choo <chooglen@google.com> writes:
 >
->> The check_ names still aren't changed (as I suggested in [1]) but
->> perhaps it's fine to leave it. It doesn't seem to bother the other
->> reviewers, and changing it would slightly disrupt the review in that
->> there will be extra changes in the range-diff.
+>> And now that you've pointed this out, I realize that we could do away
+>> with (.super_oid, .path) altogether if we had a variant of
+>> repo_submodule_init() that takes the submodule name instead of (path,
+>> treeish_name). (We have a similar submodule_from_name(), but that only
+>> reads the submodule config, not a struct repository.) I would prefer not
+>> to introduce such a function so late into the review cycle, but I could
+>> clean this up later.
 >
-> At least, please do not count my not mentioning it as such a vote.
-> I didn't mention it because I saw you did.
+> I am puzzled.  What do you exactly mean by "late into the review
+> cycle"?
 
-Oh! Sorry, I intended to do this - I missed this and another suggestion
-that you made re: test assertions [1]. Will incorporate this into the
-next round.
+I mean that reviewers have already seen several iterations of this, and
+I'm afraid that a refactor might introduce unnecessary cognitive
+overhead.
 
-[1] 20220304234622.647776-1-jonathantanmy@google.com
+But of course, we might decide that the refactor is a good enough idea
+that we want to do it anyway :)
+
+>> - The changed_submodules string_list is basically a map that tells us,
+>>   for a given submodule _name_, which commits we need to fetch and where
+>>   repo_submodule_init() can read the submodule name from.
+>> - We only use cs_data as a string_list_item.util, and the
+>>   string_list_item.string is the submodule name itself.
+>> - .new_commits tells us which commits to fetch.
+>> - .super_oid and .path tells repo_submodule_init() how to get the name
+>>   of the submodule.
+>>
+>> So we don't need to make this a 3-tuple.
+>
+> OK.  We need to learn in which local repository houses the submodule
+> we discover in cs_data resides.  It may or may not have a checkout
+> in the current checkout of the superorject commit.  And just one
+> <.super_oid, .path> tuple should be sufficient to tell us that,
+> because the mapping from submodule name to path may change as "git
+> mv" moves it around, but the mapping from submodule name to where
+> the submodule repository is stored in the .git/ directory of the
+> superproject should not change.  Am I following you so far
+> correctly?
+
+Yes, that's correct.
+
+> I am wondering if we need even one <.super_oid, .path> tuple.
+> Looking at the implementation of repo_submodule_init(), I have a
+> feeling that a version of "initialize named submodule in a given
+> tree-ish in the superproject" would be rather trivial.  We already
+> have submodule name, so submodule_name_to_gitdir() would be all we
+> need, no?  After all, we are only interested in fetching objects to
+> fill missing commits (and possibly update the remote tracking
+> branches) and do not care about touching its working tree.  And once
+> we learn that .git/modules/<name>/ directory, we can fetch the
+> necessary commits into it, right?
+>
+> Or am I oversimplifying the problem?
+
+I don't think you are oversimplifying. Now that I look at it again, it
+really _does_ seem trivial. Doing this refactor saves me the headache of
+explaining why we need a single <.super_oid, .path> tuple, and saves
+readers the headache of figuring out if I'm right.
+
+I'll try it and see if it really makes things simpler or not.
