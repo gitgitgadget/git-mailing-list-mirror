@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1880DC433F5
-	for <git@archiver.kernel.org>; Sat,  5 Mar 2022 14:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93648C433F5
+	for <git@archiver.kernel.org>; Sat,  5 Mar 2022 14:04:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231674AbiCEODG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Mar 2022 09:03:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44384 "EHLO
+        id S231795AbiCEOFX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Mar 2022 09:05:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbiCEODF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Mar 2022 09:03:05 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B4D580CD
-        for <git@vger.kernel.org>; Sat,  5 Mar 2022 06:02:15 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id o1so13083394edc.3
-        for <git@vger.kernel.org>; Sat, 05 Mar 2022 06:02:14 -0800 (PST)
+        with ESMTP id S231791AbiCEOFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Mar 2022 09:05:19 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9296E1E6EA7
+        for <git@vger.kernel.org>; Sat,  5 Mar 2022 06:04:29 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id r13so23039600ejd.5
+        for <git@vger.kernel.org>; Sat, 05 Mar 2022 06:04:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=enVzkIPO361F00Yz8I+oL9yM0rGtGL0ikvLIhrC+s08=;
-        b=pZACBGQqOqiItPsLa4Q9FPCE+ps7XQDqK9QysPIl128P5zhqkgvE1/kZsXcR+JAHrf
-         d00jEobH1D2Tu3czVHIiupJRekU0+lIbykBWVISFg2pPaI67GJld2DKVDd7p7g+m1UWZ
-         ubz8SK7s1jF7VfMObYJlUlVX8Awgxg4oYRymsXovLpSB8uNv+D94C4aj6S/EcTYH00qF
-         j88J22Eu0sGQM275HezHqhc5rMIgDpAuYooONEMm3o7rTsdaSaccvZw3QHe6yfWM2ET2
-         lqzcigATs3MjvJ8NK47jQFrBnxHmLCbkZTyMs16V3aF64iqgUZHp/aFW7S1EN3QLvWY7
-         6E7A==
+        bh=rDi7O7nvl5HHV24B9iTOd+QZF1YJSP4lAAS9eRn1+QE=;
+        b=kW+KFexlqYFXWcC5rsDN1h6t1Nafra4pAzvPqHu5c+zielgeAd9G3osthbk8bZvML+
+         6da4BVHTclIyKks06Hl5QITH+ZAnbEuTvzZHRanJHZ+GKmFLTKBYDJKmjsBnbstFtikD
+         DsSqNobCNeFNbRtwdwzB3IMJGXYWlPjsCsUXokrpf64/EhHWoOsmCnKW1XGHB3e8ahWH
+         5CujnOeQCOlvep0mAUezq29G0Rt7m1E54d7OANwVdAgsX4S9ssQXmCStcBofZCC2MvyX
+         EcETfOsb9JFiVFTdsdLKJGRo9ndicZ3BSBR2DombKVcnm0gqYe2GfumAlqCoWASS3xdz
+         g47w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=enVzkIPO361F00Yz8I+oL9yM0rGtGL0ikvLIhrC+s08=;
-        b=OTUNcsDJ3u6fzhGOGvqGdM09l78yzCEsy/0R1LZiFpmyjQ5gOSDqfLjw5v4tMMxXJZ
-         PsQv7vOCmWUmCsGbe4GQ5VU17kLJgcF7VpvsMaGnX4RcpdLrZFB5kuAohX1NZznQ/czM
-         cJlrwIsvMj87nL1bEH/AdRzC7XcGwewr6sDkouoTvD+wsXvWaY864DnTPlq6rmZr0Qxa
-         OPMlZIaRUPKZZgEnqXbj16jOiFP+roRn1VGItm2D2ZZt3fJYGJgGe0IDd03kA7S39rbJ
-         vcNhLurORMLChrBhviBZbTPA48N33ZJ5CHWO7RN3ZJVjtcAg4vy8PaptHJa/vjuwDP73
-         r34g==
-X-Gm-Message-State: AOAM533+hYb2iAO1+zCCu1vmp6+OrtL2epwI+LIJikyyE8FuEgrXiiup
-        rj/c6Men2+nw5A4sA3xNoaI=
-X-Google-Smtp-Source: ABdhPJx0uRtJ4x1yDOhBKM7T1h5ECltmsF4azKynIbeOXUOhhxfJ49oUhcimIWFwGgD5aU6BcdAB4w==
-X-Received: by 2002:a05:6402:492:b0:404:c4bf:8b7e with SMTP id k18-20020a056402049200b00404c4bf8b7emr3031170edv.318.1646488933273;
-        Sat, 05 Mar 2022 06:02:13 -0800 (PST)
+        bh=rDi7O7nvl5HHV24B9iTOd+QZF1YJSP4lAAS9eRn1+QE=;
+        b=AqEfQKEGf3pdI3F/IYRbRVjeCNGz6GsXBR0wuYng5eaz9sEgsbttFn9r85hyLZZ29o
+         GyZObeVCYArif+oY/2X/ARgxoXzZGOYTpk5hXbZozbJ7OE7EM/bqeCZrXjMpVxm+psjC
+         q0LDppkyiIAQIdX1bdoIz5Jlu4dzhy7A8WCOB3kaXS87Da4ccOByqu4NRQ3BmzwEsrry
+         a2Mxz5pmKSCw3ihX6yo8Z/liOOwQt5EqvzCmz1IDjvAvoqEb8qp9eqrUcwBLzReS/xss
+         twpsQiO+z5b+HFBO2mFSHRxNmR74TNm8mTW9xyRkLBRl8I9LxaSS5/bs9hebGvh7nxpr
+         BvLg==
+X-Gm-Message-State: AOAM533fXAXvhAxuLyVZJ7Ut9/GMnbHNbKhg+lTSdE/Gr/s1qHOs+vW9
+        4+Euyb7wyUu8HxAVEHMngjax9DyAbDxvZw==
+X-Google-Smtp-Source: ABdhPJwUJClv2bTpJmU/i2v3UDlEdnfOgKHcQSa7ehyi9sNcLICh3DMGy12diI+gYTrt0JInuGj1dQ==
+X-Received: by 2002:a17:906:6a01:b0:6da:8143:11e7 with SMTP id qw1-20020a1709066a0100b006da814311e7mr2946211ejc.296.1646489067880;
+        Sat, 05 Mar 2022 06:04:27 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id l20-20020a1709066b9400b006dabdbc8350sm1634770ejr.30.2022.03.05.06.02.12
+        by smtp.gmail.com with ESMTPSA id l4-20020a170907914400b006d9e0b46fabsm2886176ejs.193.2022.03.05.06.04.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Mar 2022 06:02:12 -0800 (PST)
+        Sat, 05 Mar 2022 06:04:27 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nQUz5-000WI1-V7;
-        Sat, 05 Mar 2022 15:02:11 +0100
+        id 1nQV1H-000WOQ-82;
+        Sat, 05 Mar 2022 15:04:27 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Phillip Wood <phillip.wood@dunelm.org.uk>
 Cc:     Git Mailing List <git@vger.kernel.org>, carenas@gmail.com,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] terminal: restore settings on SIGTSTP
-Date:   Sat, 05 Mar 2022 14:59:33 +0100
+Subject: Re: [PATCH 1/4] terminal: use flags for save_term()
+Date:   Sat, 05 Mar 2022 15:02:56 +0100
 References: <20220304131126.8293-1-phillip.wood123@gmail.com>
- <20220304131126.8293-5-phillip.wood123@gmail.com>
+ <20220304131126.8293-2-phillip.wood123@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <20220304131126.8293-5-phillip.wood123@gmail.com>
-Message-ID: <220305.86bkyk4hwc.gmgdl@evledraar.gmail.com>
+In-reply-to: <20220304131126.8293-2-phillip.wood123@gmail.com>
+Message-ID: <220305.867d984hsk.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -73,173 +73,46 @@ On Fri, Mar 04 2022, Phillip Wood wrote:
 
 > From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> If the user suspends git while it is waiting for a keypress reset the
-> terminal before stopping and restore the settings when git resumes. If
-> the user tries to resume in the background print an error
-> message (taking care to use async safe functions) before stopping
-> again. Ideally we would reprint the prompt for the user when git
-> resumes but this patch just restarts the read().
->
-> The signal handler is established with sigaction() rather than using
-> sigchain_push() as this allows us to control the signal mask when the
-> handler is invoked and ensure SA_RESTART is used to restart the
-> read() when resuming.
+> The next commit will add another flag in addition to the existing
+> full_duplex so change the function signature to take an unsigned flags
+> argument. Also alter the functions that call save_term() so that they
+> can pass flags down to it.
 >
 > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 > ---
->  compat/terminal.c | 124 ++++++++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 120 insertions(+), 4 deletions(-)
+>  compat/terminal.c | 41 +++++++++++++++++++++--------------------
+>  compat/terminal.h |  5 ++++-
+>  2 files changed, 25 insertions(+), 21 deletions(-)
 >
 > diff --git a/compat/terminal.c b/compat/terminal.c
-> index 5d516ff546..79ab54c2f8 100644
+> index d882dfa06e..bad8e04cd8 100644
 > --- a/compat/terminal.c
 > +++ b/compat/terminal.c
-> @@ -1,4 +1,4 @@
-> -#include "git-compat-util.h"
-> +#include "cache.h"
->  #include "compat/terminal.h"
->  #include "sigchain.h"
->  #include "strbuf.h"
-> @@ -23,6 +23,89 @@ static void restore_term_on_signal(int sig)
->  static int term_fd = -1;
->  static struct termios old_term;
->  
-> +static char *background_resume_msg;
-> +static char *restore_error_msg;
-> +static volatile sig_atomic_t ttou_received;
-> +
-> +static void write_msg(const char *msg)
-> +{
-> +	write_in_full(2, msg, strlen(msg));
-> +	write_in_full(2, "\n", 1);
-> +}
-> +
-> +static void print_background_resume_msg(int signo)
-> +{
-> +	int saved_errno = errno;
-> +	sigset_t mask;
-> +	struct sigaction old_sa;
-> +	struct sigaction sa = { .sa_handler = SIG_DFL };
-> +
-> +	ttou_received = 1;
-> +	write_msg(background_resume_msg);
-> +	sigaction(signo, &sa, &old_sa);
-> +	raise(signo);
-> +	sigemptyset(&mask);
-> +	sigaddset(&mask, signo);
-> +	sigprocmask(SIG_UNBLOCK, &mask, NULL);
-> +	/* Stopped here */
-> +	sigprocmask(SIG_BLOCK, &mask, NULL);
-> +	sigaction(signo, &old_sa, NULL);
-> +	errno = saved_errno;
-> +}
-> +
-> +static void restore_terminal_on_suspend(int signo)
-> +{
-> +	int saved_errno = errno;
-> +	int res;
-> +	struct termios t;
-> +	sigset_t mask;
-> +	struct sigaction old_sa;
-> +	struct sigaction sa = { .sa_handler = SIG_DFL };
-> +	int can_restore = 1;
-> +
-> +	if (tcgetattr(term_fd, &t) < 0)
-> +		can_restore = 0;
-> +
-> +	if (tcsetattr(term_fd, TCSAFLUSH, &old_term) < 0)
-> +		write_msg(restore_error_msg);
-> +
-> +	sigaction(signo, &sa, &old_sa);
-> +	raise(signo);
-> +	sigemptyset(&mask);
-> +	sigaddset(&mask, signo);
-> +	sigprocmask(SIG_UNBLOCK, &mask, NULL);
-> +	/* Stopped here */
-> +	sigprocmask(SIG_BLOCK, &mask, NULL);
-> +	sigaction(signo, &old_sa, NULL);
-> +	if (!can_restore) {
-> +		write_msg(restore_error_msg);
-> +		goto out;
-> +	}
-> +	/*
-> +	 * If we resume in the background then we receive SIGTTOU when calling
-> +	 * tcsetattr() below. Set up a handler to print an error message in that
-> +	 * case.
-> +	 */
-> +	sigemptyset(&mask);
-> +	sigaddset(&mask, SIGTTOU);
-> +	sa.sa_mask = old_sa.sa_mask;
-> +	sa.sa_handler = print_background_resume_msg;
-> +	sa.sa_flags = SA_RESTART;
-> +	sigaction(SIGTTOU, &sa, &old_sa);
-> + again:
-> +	ttou_received = 0;
-> +	sigprocmask(SIG_UNBLOCK, &mask, NULL);
-> +	res = tcsetattr(term_fd, TCSAFLUSH, &t);
-> +	sigprocmask(SIG_BLOCK, &mask, NULL);
-> +	if (ttou_received)
-> +		goto again;
-> +	else if (res < 0)
-> +		write_msg(restore_error_msg);
-> +	sigaction(SIGTTOU, &old_sa, NULL);
-> + out:
-> +	errno = saved_errno;
-> +}
-> +
->  void restore_term(void)
->  {
->  	if (term_fd < 0)
-> @@ -32,10 +115,19 @@ void restore_term(void)
->  	close(term_fd);
->  	term_fd = -1;
+> @@ -34,7 +34,7 @@ void restore_term(void)
 >  	sigchain_pop_common();
-> +	if (restore_error_msg) {
-> +		signal(SIGTTIN, SIG_DFL);
-> +		signal(SIGTTOU, SIG_DFL);
-> +		signal(SIGTSTP, SIG_DFL);
-> +		FREE_AND_NULL(restore_error_msg);
-> +		FREE_AND_NULL(background_resume_msg);
-> +	}
 >  }
 >  
->  int save_term(unsigned flags)
->  {
-> +	struct sigaction sa;
-> +
->  	if (term_fd < 0)
->  		term_fd = (flags & SAVE_TERM_STDIN) ? 0
->  						    : open("/dev/tty", O_RDWR);
-> @@ -44,6 +136,26 @@ int save_term(unsigned flags)
->  	if (tcgetattr(term_fd, &old_term) < 0)
->  		return -1;
->  	sigchain_push_common(restore_term_on_signal);
-> +	/*
-> +	 * If job control is disabled then the shell will have set the
-> +	 * disposition of SIGTSTP to SIG_IGN.
-> +	 */
-> +	sigaction(SIGTSTP, NULL, &sa);
-> +	if (sa.sa_handler == SIG_IGN)
-> +		return 0;
-> +
-> +	/* avoid calling gettext() from signal handler */
-> +	background_resume_msg = xstrdup(_("error: cannot resume in the background"));
-> +	restore_error_msg = xstrdup(_("error: cannot restore terminal settings"));
+> -int save_term(int full_duplex)
+> +int save_term(unsigned flags)
 
-You don't need to xstrdup() the return values of gettext() (here _()),
-you'll get a pointer to static storage that's safe to hold on to for the
-duration of the program.
+Doing e.g.  ...
 
-In this case I think it would make sense to skip "error: " from the
-message itself.
-
-Eventually we'll get to making usage.c have that prefix translated, and
-can have some utility function exposed there (I have WIP patches for
-this already since a while ago).
-
-To translators it'll look like the same thing, and avoid churn when we
-make the "error: " prefix translatable.
-
-Aside: If you do keep the xstrdup() (perhaps an xstrfmt() with the above
-advice...) doesn't it make sense to add the "\n" here, so you'll have
-one write_in_full() above?
+>  void restore_term(void)
+> diff --git a/compat/terminal.h b/compat/terminal.h
+> index 0fb9fa147c..f24b91390d 100644
+> --- a/compat/terminal.h
+> +++ b/compat/terminal.h
+> @@ -1,14 +1,17 @@
+>  #ifndef COMPAT_TERMINAL_H
+>  #define COMPAT_TERMINAL_H
+>  
+> +/* Save input and output settings */
+> +#define SAVE_TERM_DUPLEX (1u << 0)
+	
+	enum save_terminal_flags {
+		SAVE_TERMINAL_FLAGS = 1 << 0,
+	};
+	
+Here would be better IMO. See 3f9ab7ccdea (parse-options.[ch]:
+consistently use "enum parse_opt_flags", 2021-10-08) for how it makes
+debugging better.
