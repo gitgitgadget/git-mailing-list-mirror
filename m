@@ -2,68 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23921C433F5
-	for <git@archiver.kernel.org>; Sat,  5 Mar 2022 10:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0785C433EF
+	for <git@archiver.kernel.org>; Sat,  5 Mar 2022 13:41:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230429AbiCEKRr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Mar 2022 05:17:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53282 "EHLO
+        id S231761AbiCENmd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Mar 2022 08:42:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230134AbiCEKRp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Mar 2022 05:17:45 -0500
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 607CF457B0
-        for <git@vger.kernel.org>; Sat,  5 Mar 2022 02:16:54 -0800 (PST)
+        with ESMTP id S229575AbiCENmc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Mar 2022 08:42:32 -0500
+Received: from bsmtp3.bon.at (bsmtp3.bon.at [213.33.87.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B24E2396BC
+        for <git@vger.kernel.org>; Sat,  5 Mar 2022 05:41:42 -0800 (PST)
 Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4K9gcg4T4mz5tlB;
-        Sat,  5 Mar 2022 11:16:51 +0100 (CET)
-Message-ID: <79bd770e-74f1-edf8-884b-c0f916732ce0@kdbg.org>
-Date:   Sat, 5 Mar 2022 11:16:46 +0100
+        by bsmtp3.bon.at (Postfix) with ESMTPSA id 4K9m8z5GFgz5tlC;
+        Sat,  5 Mar 2022 14:41:39 +0100 (CET)
+Message-ID: <f8812e54-e8de-634a-a04f-0995afce6ef4@kdbg.org>
+Date:   Sat, 5 Mar 2022 14:41:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.1
-Subject: Re: [GSoC][PATCH 1/1] Add a diff driver for JavaScript languages.
+Subject: Re: [GSoC][PATCH 0/1] userdiff: add buildin diff driver for
+ JavaScript language
 Content-Language: en-US
 To:     xing zhi jiang <a97410985new@gmail.com>
 References: <20220304130854.857746-1-a97410985new@gmail.com>
- <20220304130854.857746-2-a97410985new@gmail.com>
 Cc:     git@vger.kernel.org
 From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20220304130854.857746-2-a97410985new@gmail.com>
+In-Reply-To: <20220304130854.857746-1-a97410985new@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for your contribution!
-
 Am 04.03.22 um 14:08 schrieb xing zhi jiang:
-> In the xfunction part that matches normal functions,
-> a variable declaration with an assignment of function, the function declaration
-> in the class, and also the function is object literal's property.
-
-On the first read, I stumbled over the last half-sentence. Is this
-JavaScript-lingo for the construct
-
-   x = { foo: function() { ... } }
-
-A parenthetical note in this regard would be helpful.
-
-> And in the word regex part, that matches numbers, punctuations, and also the
-> JavaScript identifier.
-> This part heavily references the formal ECMA sepcification[1].
+> I have already searched the git public-inbox don't find any active patch about
+> userdiff build-in driver for JavaScript(there is an unfinished patch about 
+> three years ago). So I pick this as my GSoC micro project.
 > 
-> [1]https://262.ecma-international.org/12.0/#sec-ecmascript-language-lexical-grammar
+> Below are typical function patterns from JavaScript, and 
+> also has an example that matches the corresponding pattern. 
+> These examples come from many popular JavaScript projects. 
+> Because I want to make sure the hunk header would work well 
+> on real-world projects.
 
-After having seen the regex, to follow the syntax specification is
-unnecessarily tight. If you follow my suggestions, the note should
-probably be rewritten, but keeping the link to the language reference is
-certainly helpful.
+Thank you for the thorough research. I've already responded to the patch
+about the technical solution. Here are some general thoughts.
 
 > 
-> Signed-off-by: xing zhi jiang <a97410985new@gmail.com>
-> ---
+> Common function's pattern for JavaScript
+> 1. normal function
+>   `^[\t ]*((export[\t ]+)?((async|get|set)[\t ]+)?function[\t ]*([\t ]*\\*[\t ]*|[\t ]*)?[$_[:alpha:]][$_[:alnum:]]*[\t ]*\\(.*)`
+>   example: 
+>   1. https://github.com/mozilla/pdf.js/blob/85ff7b117e04471c550914b7a13193ab7f7ecc6a/src/display/canvas.js#L648
+>   2. https://github.com/mozilla/pdf.js/blob/ad4b2ce021277ff7cea8ec7e32775c65d74ee673/test/unit/evaluator_spec.js#L40
+> 2. JavaScript variable declaration with a lambda expression
+>   `^^[\t ]*((const|let|var)[\t ]*[$_[:alpha:]][$_[:alnum:]]*[\t ]*=[\t ]*"
+> 	 "(\\(.*\\)|[$_[:alpha:]][$_[:alnum:]]*[\t ])[\t ]*=>[\t ]*\\{?)`
+>    example:
+>    1. https://github.com/webpack/webpack/blob/2279c5a2105ea1498b83a4854919aefe1a28c553/lib/ChunkGraph.js#L91
+>    2. https://github.com/webpack/webpack/blob/2279c5a2105ea1498b83a4854919aefe1a28c553/lib/ChunkGraph.js#L122
+>     
+>    I found sometimes would define function on this way. But this should only match the top level? Because 
+>    it may match inside the function, and the below code would match the wrong function[1].
+
+Functions nested in other functions in general lead to surprising
+results with a stateless parser. There is not much you can do if the
+nesting level cannot be determined. Using the indentation as a proxy may
+work, but it depends on that the indentation width is agreed on in the
+community.
+
+Note that the function header patterns are used for these tasks:
+
+1. For hunk headers in patch text
+2. To find the context in diff and grep --function-context
+3. To find the lines of interest in log -L:function_name:file.name
+
+For the first, mismatching the function is secondary because it is (IMO)
+just a hint for the reader about where the hunk should apply.
+
+For the others, finding the actual beginning and end of a function would
+be desirable. This does not work as intended when patterns match nested
+function headers. But a general solution to this problem basically means
+to implement a parser for the language.
+
+> 
+> 3. exports methods by assigning an anonymous function
+>   `^[\t ]*(exports\\.[$_[:alpha:]][$_[:alnum:]]*[\t ]*=[\t ]*(\\(.*\\)|[$_[:alpha:]][$_[:alnum:]]*)[\t ]*=>.*)`
+>    example:
+>    1. https://github.com/webpack/webpack/blob/c181294865dca01b28e6e316636fef5f2aad4eb6/lib/dependencies/DynamicExports.js#L17
+>    2. https://github.com/ajaxorg/ace/blob/d95725983b363a616c584237013dfd36eaadbba4/lib/ace/lib/dom.js#L37
+> 4. expression about assign function to LHS
+>   `^(.*=[\t ]*function[\t ]*([$_[:alpha:]][$_[:alnum:]]*)?[\t ]*\\(.*)`
+>    example:
+>    1. https://github.com/ajaxorg/ace/blob/94422a4a892495564c56089af85019a8f8f24673/lib/ace/anchor.js#L102
+>    2. https://github.com/ajaxorg/ace/blob/d95725983b363a616c584237013dfd36eaadbba4/lib/ace/lib/dom.js#L37
+>    3. https://github.com/ajaxorg/ace/blob/4257621787b4253d6d493611f4ec5a37829da323/lib/ace/search.js#L350
+>    4. https://github.com/mozilla/pdf.js/blob/85ff7b117e04471c550914b7a13193ab7f7ecc6a/src/display/canvas.js#L299
+>    
+>    Maybe this should only match on the 0,1,2 indent level? Because JavaScript may match the function assignment in another function.
+> 5. normal function in object literal
+>   `^[\t ]*([$_[:alpha:]][$_[:alnum:]]*[\t ]*:[\t ]*function[\t ].*)`
+>     1. https://github.com/jquery/jquery/blob/de5398a6ad088dc006b46c6a870a2a053f4cd663/src/core.js#L201
+>     2. https://github.com/mozilla/pdf.js/blob/85ff7b117e04471c550914b7a13193ab7f7ecc6a/src/display/canvas.js#L242
+> 6. function in class
+>   `^[\t ]*((static[\t ]+)?((async|get|set)[\t ]+)?[$_[:alpha:]][$_[:alnum:]]*[\t ]*\\(.*)`
+>     
+>    This regex is tricky because the class's function is no function keyword in JavaScript. 
+>    If you write the regex to match them, it will match many non-function declaration things!!! 
+>    Like examples below:
+>    1. the non-function matches
+>      1. https://github.com/ajaxorg/ace/blob/94422a4a892495564c56089af85019a8f8f24673/lib/ace/anchor.js#L58
+>      2. https://github.com/ajaxorg/ace/blob/d95725983b363a616c584237013dfd36eaadbba4/lib/ace/lib/dom.js#L132
+>    2. the function in class
+>      1. https://github.com/mozilla/pdf.js/blob/85ff7b117e04471c550914b7a13193ab7f7ecc6a/src/display/canvas.js#L1929
+>      2. https://github.com/webpack/webpack/blob/ccecc17c01af96edddb931a76e7a3b21ef2969d8/lib/Chunk.js#L179
+>      3. https://github.com/webpack/webpack/blob/612de998f186a9bb2fe8769a91678df689a0541e/lib/Module.js#L242
+>      4. https://github.com/mozilla/pdf.js/blob/5cf116a958548f6596674bf8d5ca0fe64aa2df3c/web/view_history.js#L75
+>      5. https://github.com/mozilla/pdf.js/blob/5cf116a958548f6596674bf8d5ca0fe64aa2df3c/web/view_history.js#L89
+>    
+>     My solution is to add some negation rules, and one rule is skipping the keywords that may have characters immediately 
+>     following them in the parenthesis, rule is `!^[ \t]*(if|do|while|for|with|switch|catch|import|return)`.
+>     Another negation rule is only before this 「function in class」 regex, that skips the line's indent level more than 
+>     one because most of the function in class has one indent level(the class is on top-level). The negation rule is 
+>     `!^(\t{2,}|[ ]{5,})`.
+>     
+>     But this is not enough, because maybe has function call on one indent level. So need an negation rule for skipping 
+>     statement. The negation rule is `!^.*;[ \t]*`. But the bad news is JavaScript's statement can end without a semicolon. 
+>     So it still has an opportunity to recognize function call as the function declaration if the code's statement does not 
+>     end with semicolons.
+
+The patterns need not be perfect, but "only" reasonably useful, i.e.,
+suitable for the majority of the actual codebase. If it turns out that
+too many lines match in practice, the patterns can be tweaked.
+
+> 
+> Word's pattern for JavaScript
+> In this part, I reference the formal ECMA specification heavily[2].
+> JavaScript has some special syntax, such as numbers can be separated with an underscore for readability[3]. 
+> And has BigInt literal, which is number end with a 「n」 character. So the number-related regex would be some 
+> differences with another language.
+> 
+> In the last, I had a fork git project on Github. And has the CI's result, the all test cases pass[4].
+> 
+> [1] https://github.com/webpack/webpack/blob/2279c5a2105ea1498b83a4854919aefe1a28c553/lib/ChunkGraph.js#L279
+> [2] https://262.ecma-international.org/12.0/#sec-ecmascript-language-lexical-grammar
+> [3] https://v8.dev/features/numeric-separators
+> [4] https://github.com/a97410985/git/actions/runs/1933091300
+> 
+> xing zhi jiang (1):
+>   Add a diff driver for JavaScript languages.
+> 
 >  .gitignore                                    |  1 +
 >  Documentation/gitattributes.txt               |  2 +
 >  ...avascript-assignment-of-anonymous-function |  4 ++
@@ -120,653 +210,7 @@ certainly helpful.
 >  create mode 100644 t/t4034/javascript/post
 >  create mode 100644 t/t4034/javascript/pre
 > 
-> diff --git a/.gitignore b/.gitignore
-> index f817c509ec..de628c53f8 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -244,3 +244,4 @@ Release/
->  /git.VC.db
->  *.dSYM
->  /contrib/buildsystems/out
-> +/.cache
-> \ No newline at end of file
-
-Do not include this change. It does not belong to this commit.
-
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> index 60984a4682..f6554a4651 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -828,6 +828,8 @@ patterns are available:
->  
->  - `java` suitable for source code in the Java language.
->  
-> +- `javascript suitable for source code in the JavaScript language.
-
-Please do not forget the closing quote.
-
-> +
->  - `markdown` suitable for Markdown documents.
->  
->  - `matlab` suitable for source code in the MATLAB and Octave languages.
-> diff --git a/t/t4018/javascript-assignment-of-anonymous-function b/t/t4018/javascript-assignment-of-anonymous-function
-> new file mode 100644
-> index 0000000000..5d4701e84c
-> --- /dev/null
-> +++ b/t/t4018/javascript-assignment-of-anonymous-function
-> @@ -0,0 +1,4 @@
-> +const RIGHT = function (a, b) {
-> +	
-> +    return a + b; // ChangeMe
-> +};
-> \ No newline at end of file
-
-Notice this "No newline at end of file". Please complete the last line
-of the file, i.e. do add the last line break. Same for all other new
-files introduced in this patch.
-
-> diff --git a/t/t4018/javascript-assignment-of-arrow-function b/t/t4018/javascript-assignment-of-arrow-function
-> new file mode 100644
-> index 0000000000..6ab73ccb7a
-> --- /dev/null
-> +++ b/t/t4018/javascript-assignment-of-arrow-function
-> @@ -0,0 +1,4 @@
-> +const RIGHT = (a, b) => {
-> +	
-> +    return a + b; // ChangeMe
-> +};
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-assignment-of-named-function b/t/t4018/javascript-assignment-of-named-function
-> new file mode 100644
-> index 0000000000..85d43123a6
-> --- /dev/null
-> +++ b/t/t4018/javascript-assignment-of-named-function
-> @@ -0,0 +1,4 @@
-> +const RIGHT = function test (a, b) {
-> +	
-> +    return a + b; // ChangeMe
-> +};
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-async-function b/t/t4018/javascript-async-function
-> new file mode 100644
-> index 0000000000..ebc7c8c05b
-> --- /dev/null
-> +++ b/t/t4018/javascript-async-function
-> @@ -0,0 +1,4 @@
-> +async function RIGHT(a, b) {
-> +  
-> +  return a + b; // ChangeMe
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-export-async-function b/t/t4018/javascript-export-async-function
-> new file mode 100644
-> index 0000000000..3cd60b7980
-> --- /dev/null
-> +++ b/t/t4018/javascript-export-async-function
-> @@ -0,0 +1,4 @@
-> +export async function RIGHT(a, b) {
-> +  
-> +  return a + b; // ChangeMe
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-export-function b/t/t4018/javascript-export-function
-> new file mode 100644
-> index 0000000000..177ddec779
-> --- /dev/null
-> +++ b/t/t4018/javascript-export-function
-> @@ -0,0 +1,4 @@
-> +export function RIGHT(a, b) {
-> +  
-> +  return a + b; // ChangeMe
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-exports-anomyous-function b/t/t4018/javascript-exports-anomyous-function
-> new file mode 100644
-> index 0000000000..45b0ecd659
-> --- /dev/null
-> +++ b/t/t4018/javascript-exports-anomyous-function
-> @@ -0,0 +1,4 @@
-> +exports.setFlagged = RIGHT => {
-> +	
-> +    return ChangeMe;
-> +};
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-exports-anomyous-function-2 b/t/t4018/javascript-exports-anomyous-function-2
-> new file mode 100644
-> index 0000000000..0c572bfde3
-> --- /dev/null
-> +++ b/t/t4018/javascript-exports-anomyous-function-2
-> @@ -0,0 +1,4 @@
-> +exports.RIGHT = (a, b, runtime) => {
-> +	
-> +    return ChangeMe;
-> +};
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-exports-function b/t/t4018/javascript-exports-function
-> new file mode 100644
-> index 0000000000..f1587fddac
-> --- /dev/null
-> +++ b/t/t4018/javascript-exports-function
-> @@ -0,0 +1,4 @@
-> +exports.RIGHT = function(document) {
-> +    
-> +    return ChangeMe
-> +}
-
-Not a particularly important point, but the correct syntax requires a
-semicolon here, I guess.
-
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-function b/t/t4018/javascript-function
-> new file mode 100644
-> index 0000000000..dd8ab54c9b
-> --- /dev/null
-> +++ b/t/t4018/javascript-function
-> @@ -0,0 +1,4 @@
-> +function RIGHT(a, b) {
-> +
-> +  return a + b; // ChangeMe
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-function-2 b/t/t4018/javascript-function-2
-> new file mode 100644
-> index 0000000000..d72063cdf0
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-2
-> @@ -0,0 +1,10 @@
-> +function test(a, b) {
-> +  return {
-> +			RIGHT: function () {
-> +				currentUpdateRemovedChunks.forEach(function (chunkId) {
-
-This line is a decoy that is not picked up. Nice.
-
-> +					delete $installedChunks$[chunkId];
-> +				});
-> +				currentUpdateRemovedChunks = ChangeMe;
-> +   }
-> +  }
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-function-belong-to-IIFE b/t/t4018/javascript-function-belong-to-IIFE
-> new file mode 100644
-> index 0000000000..6a80118e8a
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-belong-to-IIFE
-> @@ -0,0 +1,6 @@
-> +(function () {
-> +  this.$RIGHT = function (needle, modifier) {
-> +      let a = 5;
-> +      return ChangeMe;
-> +  };
-> +}).call(aaaa.prototype);
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-function-in-class b/t/t4018/javascript-function-in-class
-> new file mode 100644
-> index 0000000000..4b2f9c37e0
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-in-class
-> @@ -0,0 +1,6 @@
-> +class Test {
-> +  RIGHT() {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-function-in-class-2 b/t/t4018/javascript-function-in-class-2
-> new file mode 100644
-> index 0000000000..402c4aecc3
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-in-class-2
-> @@ -0,0 +1,11 @@
-> +class Test {
-> +  RIGHT(
-> +      aaaaaaaaaa,
-> +      bbbbbbbbbb,
-> +      cccccccccc,
-> +      dddddddddd
-> +  ) {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-> \ No newline at end of file
-
-In the above two, we see class member functions. Is there a test case
-where the function parameter is on the same line as the function name or
-is that one of the difficult cases?
-
-> diff --git a/t/t4018/javascript-function-in-object-literal b/t/t4018/javascript-function-in-object-literal
-> new file mode 100644
-> index 0000000000..37f7ef72ee
-> --- /dev/null
-> +++ b/t/t4018/javascript-function-in-object-literal
-> @@ -0,0 +1,7 @@
-> +const obj = {
-> +    RIGHT: function (elems, callback, arg) {
-> +        var length, value;
-> +        // ...
-> +        return ChangeMe
-> +    }
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-generator-function b/t/t4018/javascript-generator-function
-> new file mode 100644
-> index 0000000000..caf0b9f04f
-> --- /dev/null
-> +++ b/t/t4018/javascript-generator-function
-> @@ -0,0 +1,4 @@
-> +function* RIGHT(a, b) {
-> +  
-> +  return a + b; // ChangeMe
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-generator-function-2 b/t/t4018/javascript-generator-function-2
-> new file mode 100644
-> index 0000000000..6fc3b74a0d
-> --- /dev/null
-> +++ b/t/t4018/javascript-generator-function-2
-> @@ -0,0 +1,4 @@
-> +function *RIGHT(a, b) {
-> +  
-> +  return a + b; // ChangeMe
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-getter-function-in-class b/t/t4018/javascript-getter-function-in-class
-> new file mode 100644
-> index 0000000000..0159541be7
-> --- /dev/null
-> +++ b/t/t4018/javascript-getter-function-in-class
-> @@ -0,0 +1,6 @@
-> +class Test {
-> +  get RIGHT() {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-setter-function-in-class b/t/t4018/javascript-setter-function-in-class
-> new file mode 100644
-> index 0000000000..3e17f47aa2
-> --- /dev/null
-> +++ b/t/t4018/javascript-setter-function-in-class
-> @@ -0,0 +1,6 @@
-> +class Test {
-> +  set RIGHT() {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-skip-function-call-statement b/t/t4018/javascript-skip-function-call-statement
-> new file mode 100644
-> index 0000000000..84b51514d2
-> --- /dev/null
-> +++ b/t/t4018/javascript-skip-function-call-statement
-> @@ -0,0 +1,7 @@
-> +class Test {
-> +  static RIGHT() {
-> +    haha();
-> +    haha2()
-> +    let b = ChangeMe;
-> +  }
-> +}
-
-Good call to include this test case!
-
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-skip-keywords b/t/t4018/javascript-skip-keywords
-> new file mode 100644
-> index 0000000000..1ed56c08de
-> --- /dev/null
-> +++ b/t/t4018/javascript-skip-keywords
-> @@ -0,0 +1,34 @@
-> +function RIGHT(a, b) {
-> +  import("./async1")
-> +  if (a > 1) {
-> +    // ...
-> +  }
-> +  do {
-> +    // ...
-> +  } while (i < 5);
-> +  for (const element of array1) {
-> +    console.log(element)
-> +  }
-> +  with(o) {
-> +    console.log(x)
-> +  }
-> +  switch (expr) {
-> +    case 'a':
-> +      // ...
-> +      break;
-> +    case 'b':
-> +      // ...
-> +      break;
-> +    default:
-> +      // ...
-> +  }
-> +  try {
-> +    // ...
-> +    return (a + c)
-> +  } 
-> +  catch (error) {
-> +    // ...
-> +  }
-> +
-> +  return a + b; // ChangeMe
-> +}
-
-Very well!
-
-> \ No newline at end of file
-> diff --git a/t/t4018/javascript-static-function-in-class b/t/t4018/javascript-static-function-in-class
-> new file mode 100644
-> index 0000000000..efbccaf113
-> --- /dev/null
-> +++ b/t/t4018/javascript-static-function-in-class
-> @@ -0,0 +1,6 @@
-> +class Test {
-> +  static RIGHT() {
-> +    let a = 4;
-> +    let b = ChangeMe;
-> +  }
-> +}
-> \ No newline at end of file
-> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-> index d5abcf4b4c..33073edeca 100755
-> --- a/t/t4034-diff-words.sh
-> +++ b/t/t4034-diff-words.sh
-> @@ -324,6 +324,7 @@ test_language_driver dts
->  test_language_driver fortran
->  test_language_driver html
->  test_language_driver java
-> +test_language_driver javascript
->  test_language_driver matlab
->  test_language_driver objc
->  test_language_driver pascal
-> diff --git a/t/t4034/javascript/expect b/t/t4034/javascript/expect
-> new file mode 100644
-> index 0000000000..602513c651
-> --- /dev/null
-> +++ b/t/t4034/javascript/expect
-> @@ -0,0 +1,52 @@
-> +<BOLD>diff --git a/pre b/post<RESET>
-> +<BOLD>index b72238f..8bc3e3a 100644<RESET>
-> +<BOLD>--- a/pre<RESET>
-> +<BOLD>+++ b/post<RESET>
-> +<CYAN>@@ -1,32 +1,32 @@<RESET>
-> +// DecimalLiteral<RESET>
-> +<RED>123<RESET>
-> +<RED>0.123<RESET>
-> +<RED>0.123e+5<RESET>
-> +<RED>0.123E+5<RESET>
-> +<RED>0.123e5<RESET>
-> +<RED>1222222222222222223334444n<RESET><GREEN>124<RESET>
-> +<GREEN>0.124<RESET>
-> +<GREEN>0.123e-5<RESET>
-> +<GREEN>0.123E-5<RESET>
-> +<GREEN>0.123E5<RESET>
-> +<GREEN>12222222222222222233344445n<RESET>
-> +// HexIntegerLiteral<RESET>
-> +<RED>0x10<RESET>
-> +<RED>0X6Fa1<RESET>
-> +<RED>0x123_456<RESET>
-> +<RED>0x1234182989812f1289an<RESET><GREEN>0x11<RESET>
-> +<GREEN>0X5Fa1<RESET>
-> +<GREEN>0x123_756<RESET>
-> +<GREEN>0x1234182989812f1289bn<RESET>
-> +// OctalIntegerLiteral<RESET>
-> +<RED>05<RESET>
-> +<RED>0o6<RESET>
-> +<RED>0O7<RESET>
-> +<RED>0512_567<RESET>
-> +<RED>0o424242424242424242424242424242666666n<RESET><GREEN>06<RESET>
-> +<GREEN>0o5<RESET>
-> +<GREEN>0O4<RESET>
-> +<GREEN>0511_567<RESET>
-> +<GREEN>0o424242424242424242424242424242666667n<RESET>
-> +// BinaryIntegerLiteral<RESET>
-> +<RED>0b1001<RESET>
-> +<RED>0B0110<RESET>
-> +<RED>0b0001_1001_0011<RESET>
-> +<RED>0b1111111111111111111111111111111111111n<RESET><GREEN>0b1101<RESET>
-> +<GREEN>0B0010<RESET>
-> +<GREEN>0b0001_1101_0011<RESET>
-> +<GREEN>0b11111111111111000011111111111111111n<RESET>
-> +// punctuations<RESET>
-> +{<RED>a<RESET><GREEN>b<RESET>} (<RED>a<RESET><GREEN>b<RESET>)
-> +<RED>a<RESET><GREEN>b<RESET>;
-> +[<RED>1,<RESET>2<GREEN>,3<RESET>]
-> +[<RED>1, 2,<RESET> ...<RED>params<RESET><GREEN>params_v2<RESET> ]
-> +a<RED><=<RESET><GREEN>=<RESET>2 a<RED>>=<RESET><GREEN>=<RESET>2 a<RED>==<RESET><GREEN>=<RESET>2 a<RED>!=<RESET><GREEN>=<RESET>2 a<RED>===<RESET><GREEN>=<RESET>2 a<RED>!==<RESET><GREEN>=<RESET>2 a<RED>^=<RESET><GREEN>=<RESET>2 a<RED>=><RESET><GREEN>=<RESET>2
-> +a<RED>+=<RESET><GREEN>-=<RESET>b a<RED>*=<RESET><GREEN>%=<RESET>b a<RED>**=<RESET><GREEN>&&=<RESET>b a<RED>||=<RESET><GREEN>|=<RESET>b
-> +b<RED>+<RESET><GREEN>-<RESET>c a<RED>--<RESET><GREEN>++<RESET> a<RED>>><RESET><GREEN><<<RESET>b a<RED>>>><RESET><GREEN>>>>=<RESET>b a<RED>>>=<RESET><GREEN><<=<RESET>b
-> +a<RED>&&<RESET><GREEN>&<RESET>b a<RED>||<RESET><GREEN>|<RESET>b a<RED>&&=<RESET><GREEN>??=<RESET>b
-
-This looks good! I see many changes in operators being tested.
-
-> diff --git a/t/t4034/javascript/post b/t/t4034/javascript/post
-> new file mode 100644
-> index 0000000000..8bc3e3af12
-> --- /dev/null
-> +++ b/t/t4034/javascript/post
-> @@ -0,0 +1,32 @@
-> +// DecimalLiteral
-> +124
-> +0.124
-> +0.123e-5
-> +0.123E-5
-> +0.123E5
-> +12222222222222222233344445n
-> +// HexIntegerLiteral
-> +0x11
-> +0X5Fa1
-> +0x123_756
-> +0x1234182989812f1289bn
-> +// OctalIntegerLiteral
-> +06
-> +0o5
-> +0O4
-> +0511_567
-> +0o424242424242424242424242424242666667n
-> +// BinaryIntegerLiteral
-> +0b1101
-> +0B0010
-> +0b0001_1101_0011
-> +0b11111111111111000011111111111111111n
-> +// punctuations
-> +{b} (b)
-> +b;
-> +[2,3]
-> +[ ...params_v2 ]
-> +a=2 a=2 a=2 a=2 a=2 a=2 a=2 a=2
-> +a-=b a%=b a&&=b a|=b
-> +b-c a++ a<<b a>>>=b a<<=b
-> +a&b a|b a??=b
-> \ No newline at end of file
-> diff --git a/t/t4034/javascript/pre b/t/t4034/javascript/pre
-> new file mode 100644
-> index 0000000000..b72238f779
-> --- /dev/null
-> +++ b/t/t4034/javascript/pre
-> @@ -0,0 +1,32 @@
-> +// DecimalLiteral
-> +123
-> +0.123
-> +0.123e+5
-> +0.123E+5
-> +0.123e5
-> +1222222222222222223334444n
-> +// HexIntegerLiteral
-> +0x10
-> +0X6Fa1
-> +0x123_456
-> +0x1234182989812f1289an
-> +// OctalIntegerLiteral
-> +05
-> +0o6
-> +0O7
-> +0512_567
-> +0o424242424242424242424242424242666666n
-> +// BinaryIntegerLiteral
-> +0b1001
-> +0B0110
-> +0b0001_1001_0011
-> +0b1111111111111111111111111111111111111n
-> +// punctuations
-> +{a} (a)
-> +a;
-> +[1,2]
-> +[ 1, 2, ...params ]
-> +a<=2 a>=2 a==2 a!=2 a===2 a!==2 a^=2 a=>2
-> +a+=b a*=b a**=b a||=b
-> +b+c a-- a>>b a>>>b a>>=b
-> +a&&b a||b a&&=b
-> \ No newline at end of file
-> diff --git a/userdiff.c b/userdiff.c
-> index 8578cb0d12..a6a341e3c1 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -168,6 +168,44 @@ PATTERNS("java",
->  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
->  	 "|[-+*/<>%&^|=!]="
->  	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
-> +
-> +PATTERNS("javascript",
-> +	 /* don't match the expression may contain parenthesis, because it is not a function declaration */
-> +	 "!^[ \t]*(if|do|while|for|with|switch|catch|import|return)\n"
-
-These will not match
-
-	}while (expr)
-
-note the absent blank before the keyword, but that is an acceptable
-trade-off to keep things simple. Good.
-
-> +	 /* don't match statement */
-> +	 "!^.*;[ \t]*\n"
-
-This regexp can be reduced to
-
-	"!;\n"
-
-no?
-
-> +	 /* match normal function */
-> +	 "^[\t ]*((export[\t ]+)?(async[\t ]+)?function[\t ]*([\t ]*\\*[\t ]*|[\t ]*)?[$_[:alpha:]][$_[:alnum:]]*[\t ]*\\(.*)\n"
-
-Good. One note though: keyword "function" can optionally be followed by
-an asterisk '*'. You can probably simplify the middle part to
-
-	...function[\t *]*...identifier...
-
-> +	 /* match JavaScript variable declaration with a lambda expression */
-> +	 "^[\t ]*((const|let|var)[\t ]*[$_[:alpha:]][$_[:alnum:]]*[\t ]*=[\t ]*"
-> +	 "(\\(.*\\)|[$_[:alpha:]][$_[:alnum:]]*[\t ])[\t ]*=>[\t ]*\\{?)\n"
-
-Let's break this down:
-
-	"^[\t ]*"
-	    "("
-	        "(const|let|var)[\t ]*"
-	        "[$_[:alpha:]][$_[:alnum:]]*[\t ]*"
-	        "=[\t ]*"
-	        "("
-	            "\\(.*\\)"
-	            "|"
-	            "[$_[:alpha:]][$_[:alnum:]]*[\t ]"
-	        ")[\t ]*"
-	        "=>[\t ]*"
-	        "\\{?"
-	    ")\n"
-
-Can you not have
-
-	var f = foo=>{
-
-because I see that whitespace is required between the identifier and "=>"?
-
-> +	 /* match exports for anonymous fucntion */
-> +	 "^[\t ]*(exports\\.[$_[:alpha:]][$_[:alnum:]]*[\t ]*=[\t ]*(\\(.*\\)|[$_[:alpha:]][$_[:alnum:]]*)[\t ]*=>.*)\n"
-
-Here, whitespace is not required. Is the above an oversight?
-
-BTW, can keyword "exports" be used for something other than functions?
-
-> +	 /* match assign function to LHS */
-> +	 "^(.*=[\t ]*function[\t ]*([$_[:alpha:]][$_[:alnum:]]*)?[\t ]*\\(.*)\n"
-
-This makes me think that whenever keyword "function" appears, then we
-see the beginning of a function. This would allow a simple pattern
-upfront that picks out all functions defined with this keyword, and all
-other patterns need only be concerned with the exceptional cases.
-
-	/* "function" is first non-space token */
-	"^[\t ]*function[\t ].*)\n"
-	/* "function" is not first token */
-	"^.*[^$_[:alnum:]]function[\t ].*\n"
-
-> +	 /* match normal function in object literal */
-> +	 "^[\t ]*([$_[:alpha:]][$_[:alnum:]]*[\t ]*:[\t ]*function[\t ].*)\n"
-> +	 /* don't match the function in class, which has more than one ident level */
-> +	 "!^(\t{2,}|[ ]{5,})\n"
-
-For some, hopefully universally agreed upon in the JavaScript community,
-definition of indentation level. Ok...
-
-> +	 /* match function in class */
-> +	 "^[\t ]*((static[\t ]+)?((async|get|set)[\t ]+)?[$_[:alpha:]][$_[:alnum:]]*[\t ]*\\(.*)",
-
-Aren't "get" and "set" as universal identifiers of functions or can they
-occur on other contexts? Thinking of it, they can occur in comments
-everywhere, so they would pick up too many matches if treated like my
-"function" proposal above.
-
-> +	 /* word regex */
-> +	 /* hexIntegerLiteral and bigHexIntegerLiteral*/
-> +	 "0[xX][0-9a-fA-F][_0-9a-fA-F]*n?|"
-> +	 /* octalIntegerLiteral and bigOctalIntegerLiteral */
-> +	 "0[oO]?[0-7][_0-7]*n?|"
-> +	 /* binaryIntegerLiteral and bigBinaryIntegerLiteral */
-> +	 "(0[bB][01][_01]*n?)|"
-> +	 /* decimalLiteral */
-> +	 "(0|[1-9][_0-9]*)?\\.?[0-9][_0-9]*([eE][+-]?[_0-9]+)?|"
-> +	 /* bigDecimalLiteral */
-> +	 "(0|[1-9][_0-9]*)n|"
-
-You do not have to make the word-regex so tight that it excludes
-incorrect literals because you can assume that incorrect literals will
-not occur. In particular integers beginning with a 0 need not be treated
-specially. You can fold the octal and decimal integers into a single
-expression:
-
-	"[0-9][oO]?[_0-9.]*)([eE][+-]?[_0-9]+)?n?"
-
-Are floatingpoint literals beginning with a decimal point like .5 not
-permitted?
-
-Please follow the custom to place the alternation character "|" at the
-beginning of the next line, not at the end of the previous.
-
-> +	 /* punctuations */
-> +	 "\\{|\\}|\\(|\\)|\\.|\\.{3}|;|,|<|>|<=|>=|==|!=|={3}|!==|\\+|-|\\*|/|%|\\*{2}|"
-> +	 "\\+{2}|--|<<|>>|>>>|&|\\||\\^|!|~|&&|\\|{2}|\\?{1,2}|:|=|\\+=|-=|\\*=|%=|\\*{2}=|"
-> +	 "<<=|>>=|>>>=|&=|\\|=|\\^=|&&=|\\|{2}=|\\?{2}=|=>|"
-
-You could collaps many of the operators into single alternatives, but if
-you prefer it this way, it is fine, too. One example:
-
-	">{1,3}="
-
-But please remove the single-character operators from the list, because
-there is an implicit single-character alternative that is not visible in
-the code here.
-
-> +	 /* identifiers */
-> +	 "[$_[:alpha:]][$_[:alnum:]]*"),
->  PATTERNS("markdown",
->  	 "^ {0,3}#{1,6}[ \t].*",
->  	 /* -- */
+> 
+> base-commit: e6ebfd0e8cbbd10878070c8a356b5ad1b3ca464e
 
 -- Hannes
