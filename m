@@ -2,64 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8699DC433EF
-	for <git@archiver.kernel.org>; Sat,  5 Mar 2022 14:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9AFEC433EF
+	for <git@archiver.kernel.org>; Sat,  5 Mar 2022 14:30:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230455AbiCEO11 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Mar 2022 09:27:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60516 "EHLO
+        id S231837AbiCEObJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Mar 2022 09:31:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbiCEO1Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Mar 2022 09:27:25 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DA80A94FB
-        for <git@vger.kernel.org>; Sat,  5 Mar 2022 06:26:35 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id a8so23066016ejc.8
-        for <git@vger.kernel.org>; Sat, 05 Mar 2022 06:26:35 -0800 (PST)
+        with ESMTP id S229456AbiCEObJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Mar 2022 09:31:09 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C4D030F79
+        for <git@vger.kernel.org>; Sat,  5 Mar 2022 06:30:19 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id yy13so14248139ejb.2
+        for <git@vger.kernel.org>; Sat, 05 Mar 2022 06:30:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:references:user-agent:in-reply-to
          :message-id:mime-version;
-        bh=jT2PVNPWRjO1thEVZf/zk6cz2MJm1v8chlXhVtuavgk=;
-        b=FnDrAKCpgrPpCNwZ7I0Tp14AJQChz/r7fBzLBL/zb3ReZI0MBTg+P36g8NbpKciTzM
-         Fgcno5xEQqi3Mt0ePVWXKPRXfFbJig0ymBvN3syooOt7ZNZ/WOtNexpRHVeenZDXFQBU
-         w+nF1a6g1h/mo9D1Dl+pcQpzOklAum+fRixphEoi2bXHBz1kxkyltG5Tj0CUdMRiRh7E
-         yJKIKWGitTfo6jbRXITix/JZ4NfSX7qS03tEVlipJTlAJtnOM5aHZ0glb5Kczjc83KQE
-         nmho3FKoNOjt01OjBowgJmF+jLM4HTWO2epBAHeuS5m9qviY4yKirQyegDzNKvRhnU7Y
-         vC7g==
+        bh=5XhRULwAABdkPLAkZXabZw1pOMlmbip2x0tfmaILsFU=;
+        b=GZ4pf2OnqgCg0vG25UglHIqh+fD8uDDwjIbB9m9ppgrlWtjRxBBN1UpwE9KH/SrwaX
+         uBJpkm1f28uYeBC8jWNwVZX9bpCpR+PutmsuJKXaLnJHr5HFCsaZuKMLTWDa5VawThxk
+         NX1JtR/n4drVAvgYitj1hEpnV4CSeXf+VRLfYq4zffqsmkLHvP88Oj34ClpmxyQQMlmg
+         65OGiq5PAwGI9wQh71zTxxCPSjNCYIjyLw05CVoTzIM2bU+XyXgSYtVd+SsaaJA4ZTeB
+         hMCovkLLBy8xTehfy9xbkcnOcs1zLqqJY8s5TI2OfRkainXFJ5Ebs+6qEg4T7wix13T/
+         zLoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
          :in-reply-to:message-id:mime-version;
-        bh=jT2PVNPWRjO1thEVZf/zk6cz2MJm1v8chlXhVtuavgk=;
-        b=lkBoyimf5T54PiLqCEzN5BGqSmMR/paBKe6diAwYudT4DiTW2695vMJY5tupFCeXrE
-         cSNdTUdipZd4yw6/0UhMJx3nuiWJ2THtnQbjK/25+jzY28WurlJp3LVPxy8BucJZhpEg
-         PSrkx674EEiRS3rAr8aPvuCkBENPp5JKUamcptkU4//ZLdH5fDpgXFo2tGM76irLW9Ic
-         CpGRXWgJj9WSR2DJRP7nCC8JQ8JnUhYwRMS1Ia8BCuC+LMNURQXnCrzX8qQLUe+HAISr
-         ZZdH4ooO1LABJhdufOFw5ywUi1Pc29cH9kBHyR70eSmPjzrsyzK+4lSgCMjJSmObEXQU
-         uN6A==
-X-Gm-Message-State: AOAM532EKrmDe/1DlEitaxYtGq7mo+WQb9pxKcf8/ARPsmTj8gOYAlsp
-        maY0keL9riZMWKMANzYfC7i04jcKOUGH4g==
-X-Google-Smtp-Source: ABdhPJxF15TCJ84yfCvCj3q+we2yh+nZIDi4dY1+nryDkBY5Zu34/dCmqj7wfNVvz35G69Nhh0ppqQ==
-X-Received: by 2002:a17:906:6547:b0:6bd:e2ad:8c82 with SMTP id u7-20020a170906654700b006bde2ad8c82mr2900183ejn.693.1646490393799;
-        Sat, 05 Mar 2022 06:26:33 -0800 (PST)
+        bh=5XhRULwAABdkPLAkZXabZw1pOMlmbip2x0tfmaILsFU=;
+        b=08U+2TXPgjm80bp36H7wTR+RJk35llY+Te90Wj1CHGKnYnyJxoKNM5M02ZohMKD/aw
+         /+Vo0ntl30jaAfMmG04UdBFfST6F2wzqVf3mr+QTChFcPaFpaPmxiwp3nDuIF+d2TUFR
+         /NPQjmcjwKaeQwyfLk8XGrq2z5ndn/eF9NowYoJXiubDrSCiUaHRv9pSABSQuUCkpTTi
+         xzphNhCCev9LQ8G1/a0TJubkkGCWXBwrVlcvdQZoCcVzrucK8U35ZDtirZSnEP6CT/un
+         XaZFZ/i3KqQr/MeHXe6FlnQBiy4VR0oDjGvIH8XxwivcTdFTBenAeu/69SipDTfvaKRI
+         haYQ==
+X-Gm-Message-State: AOAM530hhqv2e1cg0LojoMuTEkSqYJU2m8D90p7KU145WH9n7Iw5lrpB
+        0oCSAY/qCDK1MX08y+nz6NbQ/i6t6Qpanw==
+X-Google-Smtp-Source: ABdhPJza+DlBQGykikti85UJIxGoVxoeaUr4/8colEOEKAziECe/YoJgZUexx+rka0KU09HcEcU+FQ==
+X-Received: by 2002:a17:906:c14e:b0:6da:970b:cc33 with SMTP id dp14-20020a170906c14e00b006da970bcc33mr2865688ejc.307.1646490617663;
+        Sat, 05 Mar 2022 06:30:17 -0800 (PST)
 Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
-        by smtp.gmail.com with ESMTPSA id e9-20020a170906c00900b006d4a45869basm2954151ejz.199.2022.03.05.06.26.32
+        by smtp.gmail.com with ESMTPSA id h30-20020a056402095e00b00412b81dd96esm3483785edz.29.2022.03.05.06.30.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Mar 2022 06:26:33 -0800 (PST)
+        Sat, 05 Mar 2022 06:30:16 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.95)
         (envelope-from <avarab@gmail.com>)
-        id 1nQVMe-000XD1-Hs;
-        Sat, 05 Mar 2022 15:26:32 +0100
+        id 1nQVQG-000XMm-DW;
+        Sat, 05 Mar 2022 15:30:16 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: jc/stash-drop (was: What's cooking in git.git (Mar 2022, #01; Thu, 3))
-Date:   Sat, 05 Mar 2022 15:25:19 +0100
-References: <xmqqv8wu2vag.fsf@gitster.g>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        derrickstolee@github.com, gitster@pobox.com
+Subject: Re: [PATCH v3 1/2] builtin/remote.c: parse options in 'rename'
+Date:   Sat, 05 Mar 2022 15:28:31 +0100
+References: <70a0325ca8ab0492a9b0873ee3fba576c5ab90b9.1646173186.git.me@ttaylorr.com>
+ <cover.1646346286.git.me@ttaylorr.com>
+ <b76da50b549d71b3e61f74c6250fea595ee2b2c1.1646346287.git.me@ttaylorr.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
-In-reply-to: <xmqqv8wu2vag.fsf@gitster.g>
-Message-ID: <220305.86y21o327b.gmgdl@evledraar.gmail.com>
+In-reply-to: <b76da50b549d71b3e61f74c6250fea595ee2b2c1.1646346287.git.me@ttaylorr.com>
+Message-ID: <220305.86tucc3213.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -67,21 +70,16 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Mar 03 2022, Junio C Hamano wrote:
+On Thu, Mar 03 2022, Taylor Blau wrote:
 
-> * jc/stash-drop (2022-03-02) 3 commits
->  - stash: call reflog_delete() in reflog.c
->  - reflog: libify delete reflog function and helpers
->  - stash: add tests to ensure reflog --rewrite --updatref behavior
->
->  "git stash drop" is reimplemented as an internal call to
->  reflog_delete() function, instead of invoking "git reflog delete"
->  via run_command() API.
->
->  Will merge to 'next'?
->  source: <pull.1218.v4.git.git.1646260044.gitgitgadget@gmail.com>
+> The 'git remote rename' command doesn't currently take any command-line
+> arguments besides the existing and new name of a remote, and so has no
+> need to call parse_options().
 
-I've been reviewing this closely & it looks good to me, all feedback has
-been addressed, and there's nothing outstanding (there's one sub-thread
-on v4 answering a question from Phillip Wood asking if the new test
-needs REFFILES, it does).
+I think nothing needs to change here in the body of the test, but just a
+correction: We do in fact use parse_options() here in the pre-image. I.e.:
+
+    git remote -h
+    git remote rename -h
+
+I.e. we'll detect "-h", emit the appropriate usage etc.
