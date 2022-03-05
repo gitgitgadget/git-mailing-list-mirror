@@ -2,193 +2,365 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12989C433F5
-	for <git@archiver.kernel.org>; Sat,  5 Mar 2022 08:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63623C433EF
+	for <git@archiver.kernel.org>; Sat,  5 Mar 2022 09:40:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229891AbiCEJAP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Mar 2022 04:00:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57714 "EHLO
+        id S230480AbiCEJlF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Mar 2022 04:41:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbiCEJAO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Mar 2022 04:00:14 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B204D506F1
-        for <git@vger.kernel.org>; Sat,  5 Mar 2022 00:59:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1646470757;
-        bh=ffCZm+4PXyVq0i18F9UpKmwB+7/sO5ZYAmFjlDpzCI8=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=WN+1YgwFwau8ErieRAJIrzju4XOgWoIGJZ7IXDGCP0K2BPq1zF4fP6r9E9q2rpeVP
-         wZH2R/2UBvHqK9NS+DXZIaXAXO0OkF+HP+cOrLysjlmn/zDrrsiDWn70iCIVPJyGmU
-         KC7Nox6Jv3Ft9rKPXi4h5rjhtHCLLRbLPYVM7Vdo=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MD5o3-1nHJZM1e2D-009JTX; Sat, 05
- Mar 2022 09:59:17 +0100
-Date:   Sat, 5 Mar 2022 09:59:16 +0100
-From:   Torsten =?unknown-8bit?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 02/23] t7527: test FS event reporing on macOS WRT case
- and Unicode
-Message-ID: <20220305085916.7rn6lhmbjkebrm5n@tb-raspi4>
-References: <pull.1143.git.1644940773.gitgitgadget@gmail.com>
- <ad8cf6d9a47b61d9fe41a961466122be16e4f041.1644940773.git.gitgitgadget@gmail.com>
- <c7ee2394-cda0-a997-3b9d-fb8c3d65b312@github.com>
- <20220224173305.gbr2waw77xpuieub@tb-raspi4>
- <8a32ed13-ed53-3605-ca78-83dac2be1e28@jeffhostetler.com>
+        with ESMTP id S229853AbiCEJlE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Mar 2022 04:41:04 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBE9723EE45
+        for <git@vger.kernel.org>; Sat,  5 Mar 2022 01:40:14 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id w37so9516760pga.7
+        for <git@vger.kernel.org>; Sat, 05 Mar 2022 01:40:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=OUpJZQ8vhQtW39IHeVQ049ODlSg/ExUgyH7+wWanaXc=;
+        b=QJGEL0Zv5uIDl8N2Og9ufUwugkPojN8vzlOTv/ol38N4pbU0ENLmEe7yEktdRQ4QLL
+         Decz/1bmppsHbkhRrYplG5CZ5rBiS6iVqeMg3KNGuB754gfvrUsxCOb7mulNG48mMxR6
+         bd4uZfah5yOsKQtJdqCybUzXvu0Mx4q9sIgm1msfJN2Dz1oqGsVGlpciJGiVAzGqGPPS
+         QF9NOG8HwnhwFF4vLsd/QLk3nP6oPDHIzZkG1c00A4P2SWRPBMAN8QMLW1CdBjccRsYK
+         75NCPI3htXAqNGmDT5HHDVfAuVXl/R3Gf+2efXRnFcohw1W2YSL99OtMj/2yNxxtVEQ5
+         BzcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=OUpJZQ8vhQtW39IHeVQ049ODlSg/ExUgyH7+wWanaXc=;
+        b=wL7vWOBJJt4XztU0NayDSwbsL4rXpekzUaHLNu7WJSxg1kX/e78q/nghEWwe958Nq+
+         heLjj+r7/lyObFZ97ffcndCUVyymIuGF3Ejts5fVaHrQjvhLZCdOINlIosIDTdyN4oby
+         qvM2pPlhPC3TufSukqjjxHy8DLDhsKFhLePbSfTalzINiDvvA9e6BSbLuDx5bHkalHQu
+         mYSm8R2Ra0eOvy8yg2A0gPu3KvNzpnAHBcaGsPgWv2aUxRmvBuntHNliKYd3tb3cn3Ti
+         X5zE3pXoRqCxdKu4l45zQ+mA/CdRn2CU+uRQS4RCMX2XypcJqYOgdEqchzh/dwiDBXXj
+         2gIw==
+X-Gm-Message-State: AOAM530d0dimHKUriudnPYBkV7YOAQn9bHnsJiIUGFHYhvxTwJGE191i
+        3mkhazrJ4m2cW7ZWXnwJ6jKvzxA13ZWjhA==
+X-Google-Smtp-Source: ABdhPJwESvh21C5ITAT0r9/JnW19q6w2kfdiOGfq6lFnuJbS4vGQ4MGpU+hd/BDquhH19p8C2M3msg==
+X-Received: by 2002:a63:dc58:0:b0:373:a20a:29c2 with SMTP id f24-20020a63dc58000000b00373a20a29c2mr2133903pgj.212.1646473214026;
+        Sat, 05 Mar 2022 01:40:14 -0800 (PST)
+Received: from localhost.localdomain ([2405:201:a800:4df9:5194:c9b1:2d1f:598e])
+        by smtp.gmail.com with ESMTPSA id q10-20020a056a00084a00b004f26d3f5d8fsm8367176pfk.25.2022.03.05.01.40.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Mar 2022 01:40:13 -0800 (PST)
+From:   Jaydeep P Das <jaydeepjd.8914@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jaydeep P Das <jaydeepjd.8914@gmail.com>
+Subject: [PATCH v4] userdiff: add builtin diff driver for Kotlin language.
+Date:   Sat,  5 Mar 2022 15:10:04 +0530
+Message-Id: <20220305094004.250570-1-jaydeepjd.8914@gmail.com>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
+References: <20220301070226.2477769-1-jaydeepjd.8914@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8a32ed13-ed53-3605-ca78-83dac2be1e28@jeffhostetler.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Provags-ID: V03:K1:WwPqjYj4p8Gt0EOkPIZu5wvozCjK9rc1X9ZkDgw52Jd/8RRpE4w
- kanLSiebMdLX+WjJdc4uyDIhQklWBdhLk1K5wCYX6vv8cR/4k4Q6dvv93KWJjuD65tAHBqL
- qdYUl/BhU8PoETRMupp5NC1tsDfsPl94RqI4oEgeNZ8uQJso1hklnvnFVh27cU49VF4E6pU
- bLG2f2HYhtg/6HklgWWnw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:SOtiP9wOorE=:l2ysBDrZ8zj6L451C0SKr6
- VbSZX+CwpnAiNnrIPXN72++Oa+sJULXj8SFU869dGhWgjxSektcNOrAWnEDd+vZtgrbGxKKZf
- pIwcMO8bMrxnaj5giRCbm9xP66cSkfLoIICI2QZgtAfiG/Wjqc4a36p6sdtcdzzIC8MGF7SsG
- hF75WdYKFIy4J+xP6UiXLxmieMEhY0hpLmGjhIy0FQGH2w3TsstD4/sLVou7eGMCPb1L74wy6
- 3rA4qxjS5UDoY79w5ly2e9ek2xMLfmdx3/vjonDih7BKtMxPgU/aCyCnT+k7CP2iGhOvgdzK6
- zl1ZU9OCdYe7uljefS4Wq+BYcaFYRWvThmkp0fK0YBvIhQHuFNCcGFEHyQ3obx3qWXGvBQD8T
- NztWE7jq42to/GW4lrLCXUhkDyrULqOznDligDPtOH+yVfl5IiBwAmCmf9bftkBN26blKQELh
- 4HTGtChVAPzsfADRjo9MEk1NGpxqaws04GO+7pce+2d15Jrin3oc30t9QQsG6otHG8mNL0AzP
- U1QiVOK+kvSFzO9xtUa8mHc1TodlaVTtVOzdweqbpmZkMDbDejm6KdmaY9AA78REUtICpP6Mp
- EZYyqL7gxEgEQkSRZYFojz+n5xxzgMnyJtsP/h2H9VDCRuc2ZTWjJw30TCbMbuMZEFWXb/UGA
- KKqU4IKJU9FjSLHVTLtDRrfG/2pTM4otQAqeNwfAWrkHUg0wyi/6ucSxhdnL8KR7IP7ZzbPnB
- ci4L3ijFS8cKGUHmnCcVY4rZFANkyYXLEG33SEVdNLU3IF2nmKWDzBjBh91mbPPVl8idEX7vD
- dymiw1mmtWtQ1f+X5z9PzcMNagTGjdNhjf5hjgnq5pFSdDUJ9OysAJDzpHYvd/NOIZ2dJhSk2
- gX79dcag0R0ykNrQnUXZRRZMD5b5DxcXcIQ7hMXm8hy2iaRVIDtvQ5vbZMU7QiTkr2fN5NiX9
- dR87vQOwTHEp8FCixoOW2A0reDFaFbFjHIHt4yd8UnrtoRxEFtOGKDwC/aZUSTDWj5r+xrSD6
- gmmaQO+jTylmjDzTpUBTUyrf7JE1fP6OppILrmJvot+AcSLB1vzH6Jc6ax4kSHY97rmc3A9WP
- X+otHm2gAtotsc=
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 04, 2022 at 06:40:27PM -0500, Jeff Hostetler wrote:
->
->
-> On 2/24/22 12:33 PM, Torsten =3D?unknown-8bit?Q?B=3DC3=3DB6gershausen?=
-=3D wrote:
-> > On Thu, Feb 24, 2022 at 09:52:28AM -0500, Derrick Stolee wrote:
-> > > On 2/15/2022 10:59 AM, Jeff Hostetler via GitGitGadget wrote:
-> > > > From: Jeff Hostetler <jeffhost@microsoft.com>
-> > > >
-> > > > Confirm that macOS FS events are reported with a normalized spelli=
-ng.
-> > > >
-> > > > APFS (and/or HFS+) is case-insensitive.  This means that case-inde=
-pendent
-> >
-> > This is not true, strictly speaking.
-> > You can format a disk with "case sensitive" or "case-insenstive, case =
-preserving".
-> > Both APFS and HFS+  can be formated that way.
-> > The default, which is what you get when you get a new machine,
-> > is "case-insenstive, case preserving".
-> > And I assume, that more 99% of all disks are formated that way.
-> > The "core.ignorecase" is used in the same way as it is used under NTFS=
-,
-> > FAT or all other case-insenstive file systems.
-> > (and even ext4 can be formated case-insensitive these days.)
-> >
-> > An interesting article can be found here:
-> > https://lwn.net/Articles/784041/
-> >
-> > And to be technically correct, I think that even NTFS can be
-> > "configured to be case insensitive in an empty directory".
-> >
-> > In that sense, I would like to avoid this statement, which
-> > file system is case insensitive, and which is not.
-> > Git assumes that after probing the FS in "git init" we have
-> > a valid configuration in core.ignorecase.
->
-> You're right. I was incorrectly glossing over the differences
-> between APFS and HFS+ -- and conflating case and nfc/nfd
-> issues.
->
-> [...]
-> > >
-> > > > NEEDSWORK: I was only able to test case.  It would be nice to add =
-tests
-> > >
-> > > "I was only able test the APFS case."?
->
-> I'm going to completely redo this commit in the next version.
-> I now have both APFS and HFS+ partitions on my machine and
-> can compare the differences in behaviors and will have a new
-> set of tests to cover this.
->
-> > >
-> > > > that use different Unicode spellings/normalizations and understand=
- the
-> > > > differences between APFS and HFS+ in this area.  We should confirm=
- that
-> > > > the spelling of the workdir paths that the daemon sends to clients=
- are
-> > > > always properly normalized.
-> > >
-> > > Are there any macOS experts out there who can help us find the answe=
-rs
-> > > to these questions?
-> >
-> > There is a difference between HFS+ and APFS.
-> > HFS+  is "unicode decomposing" when you call readdir() - file names
-> > are stored decomposed on disk once created.
-> > However, opening  file in precompsed form succeds.
-> > In that sense I would strongly suspect, that any monitors are "sending=
-"
-> > the decomposed form (on HFS+).
-> >
-> > APFS does not manipulate file names in that way, it is
-> > "unicode normalization preserving and ignoring".
->
-> It took a few hours of poking to figure out what Apple is doing,
-> but yes on HFS+ they convert to NFD and use that as the on-disk
-> format.  And they do collision detection as they always have in
-> NFD-space.
->
-> Whereas on APFS, they preserve the NFC/NFD as given when the file
-> is created, but always do the same collision detection in NFD-space.
-> The net result is similar, but subtlety different.
+The xfuncname pattern finds func/class declarations
+in diffs to display as a hunk header. The word_regex
+pattern finds individual tokens in Kotlin code to generate
+appropriate diffs.
 
-That depends what you mean with "net result".
-What Git sees after calling precompose_utf8_readdir() with
-core.precomposeunicode=3Dtrue ?
+This patch adds xfuncname regex and word_regex for Kotlin
+language.
 
+Signed-off-by: Jaydeep P Das <jaydeepjd.8914@gmail.com>
+---
+ Documentation/gitattributes.txt |  2 ++
+ t/t4018/kotlin-class            |  5 +++++
+ t/t4018/kotlin-enum-class       |  5 +++++
+ t/t4018/kotlin-fun              |  5 +++++
+ t/t4018/kotlin-inheritace-class |  5 +++++
+ t/t4018/kotlin-inline-class     |  5 +++++
+ t/t4018/kotlin-interface        |  5 +++++
+ t/t4018/kotlin-nested-fun       |  9 ++++++++
+ t/t4018/kotlin-public-class     |  5 +++++
+ t/t4018/kotlin-sealed-class     |  5 +++++
+ t/t4034-diff-words.sh           |  1 +
+ t/t4034/kotlin/expect           | 39 +++++++++++++++++++++++++++++++++
+ t/t4034/kotlin/post             | 26 ++++++++++++++++++++++
+ t/t4034/kotlin/pre              | 26 ++++++++++++++++++++++
+ userdiff.c                      | 12 ++++++++++
+ 15 files changed, 155 insertions(+)
+ create mode 100644 t/t4018/kotlin-class
+ create mode 100644 t/t4018/kotlin-enum-class
+ create mode 100644 t/t4018/kotlin-fun
+ create mode 100644 t/t4018/kotlin-inheritace-class
+ create mode 100644 t/t4018/kotlin-inline-class
+ create mode 100644 t/t4018/kotlin-interface
+ create mode 100644 t/t4018/kotlin-nested-fun
+ create mode 100644 t/t4018/kotlin-public-class
+ create mode 100644 t/t4018/kotlin-sealed-class
+ create mode 100644 t/t4034/kotlin/expect
+ create mode 100644 t/t4034/kotlin/post
+ create mode 100644 t/t4034/kotlin/pre
 
->
-> FS Events from MacOS are sent using the on-disk format (NFD on HFS+
-> and whichever on APFS) and my FSMonitor daemon is sending them to
-> the client as received.
->
-> I'm not sure whether or not the daemon should respect the
-> `core.precompseUnicode` setting and when watching an HFS+
-> volume do the NFD-->NFC conversion for the client.  I'm not
-> sure whether that would be any more or less correct than just
-> reporting the paths as received.  I'm going to leave this as a
-> question for the future.
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index a71dad2674..4b36d51beb 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -829,6 +829,8 @@ patterns are available:
+ 
+ - `java` suitable for source code in the Java language.
+ 
++- `kotlin` suitable for source code in the Kotlin language.
++
+ - `markdown` suitable for Markdown documents.
+ 
+ - `matlab` suitable for source code in the MATLAB and Octave languages.
+diff --git a/t/t4018/kotlin-class b/t/t4018/kotlin-class
+new file mode 100644
+index 0000000000..bb864f22e6
+--- /dev/null
++++ b/t/t4018/kotlin-class
+@@ -0,0 +1,5 @@
++class RIGHT {
++	//comment
++	//comment
++	return ChangeMe
++}
+diff --git a/t/t4018/kotlin-enum-class b/t/t4018/kotlin-enum-class
+new file mode 100644
+index 0000000000..8885f908fd
+--- /dev/null
++++ b/t/t4018/kotlin-enum-class
+@@ -0,0 +1,5 @@
++enum class RIGHT{
++	// Left
++	// a comment
++	ChangeMe
++}
+diff --git a/t/t4018/kotlin-fun b/t/t4018/kotlin-fun
+new file mode 100644
+index 0000000000..2a60280256
+--- /dev/null
++++ b/t/t4018/kotlin-fun
+@@ -0,0 +1,5 @@
++fun RIGHT(){
++	//a comment
++	//b comment
++    return ChangeMe()
++}
+diff --git a/t/t4018/kotlin-inheritace-class b/t/t4018/kotlin-inheritace-class
+new file mode 100644
+index 0000000000..77376c1f05
+--- /dev/null
++++ b/t/t4018/kotlin-inheritace-class
+@@ -0,0 +1,5 @@
++open class RIGHT{
++	// a comment
++	// b comment
++	// ChangeMe
++}
+diff --git a/t/t4018/kotlin-inline-class b/t/t4018/kotlin-inline-class
+new file mode 100644
+index 0000000000..7bf46dd8d4
+--- /dev/null
++++ b/t/t4018/kotlin-inline-class
+@@ -0,0 +1,5 @@
++value class RIGHT(Args){
++	// a comment
++	// b comment
++	ChangeMe
++}
+diff --git a/t/t4018/kotlin-interface b/t/t4018/kotlin-interface
+new file mode 100644
+index 0000000000..f686ba7770
+--- /dev/null
++++ b/t/t4018/kotlin-interface
+@@ -0,0 +1,5 @@
++interface RIGHT{
++	//another comment
++	//another comment
++	//ChangeMe
++}
+diff --git a/t/t4018/kotlin-nested-fun b/t/t4018/kotlin-nested-fun
+new file mode 100644
+index 0000000000..12186858cb
+--- /dev/null
++++ b/t/t4018/kotlin-nested-fun
+@@ -0,0 +1,9 @@
++class LEFT{
++	class CENTER{
++		fun RIGHT(  a:Int){
++			//comment
++			//comment
++			ChangeMe
++		}
++	}
++}
+diff --git a/t/t4018/kotlin-public-class b/t/t4018/kotlin-public-class
+new file mode 100644
+index 0000000000..9433fcc226
+--- /dev/null
++++ b/t/t4018/kotlin-public-class
+@@ -0,0 +1,5 @@
++public class RIGHT{
++	//comment1
++	//comment2
++	ChangeMe
++}
+diff --git a/t/t4018/kotlin-sealed-class b/t/t4018/kotlin-sealed-class
+new file mode 100644
+index 0000000000..0efa4a4eaf
+--- /dev/null
++++ b/t/t4018/kotlin-sealed-class
+@@ -0,0 +1,5 @@
++sealed class RIGHT {
++	// a comment
++	// b comment
++	ChangeMe
++}
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index d5abcf4b4c..15764ee9ac 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -324,6 +324,7 @@ test_language_driver dts
+ test_language_driver fortran
+ test_language_driver html
+ test_language_driver java
++test_language_driver kotlin
+ test_language_driver matlab
+ test_language_driver objc
+ test_language_driver pascal
+diff --git a/t/t4034/kotlin/expect b/t/t4034/kotlin/expect
+new file mode 100644
+index 0000000000..228da3e95e
+--- /dev/null
++++ b/t/t4034/kotlin/expect
+@@ -0,0 +1,39 @@
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 0c2a5a8..a9e7b41 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
++<CYAN>@@ -1,26 +1,26 @@<RESET>
++println("Hello World<RED>!\n<RESET><GREEN>?<RESET>")
++<GREEN>(<RESET>1<GREEN>) (<RESET>-1e10<GREEN>) (<RESET>0xabcdef<GREEN>)<RESET> '<RED>x<RESET><GREEN>y<RESET>'
++[<RED>a<RESET><GREEN>x<RESET>] <RED>a<RESET><GREEN>x<RESET>-><RED>b a.b<RESET><GREEN>y x.y<RESET>
++!<RED>a a<RESET><GREEN>x x<RESET>.inv() <RED>a<RESET><GREEN>x<RESET>*<RED>b a<RESET><GREEN>y x<RESET>&<RED>b<RESET>
++<RED>a<RESET><GREEN>y<RESET>
++<GREEN>x<RESET>*<RED>b a<RESET><GREEN>y x<RESET>/<RED>b a<RESET><GREEN>y x<RESET>%<RED>b<RESET>
++<RED>a<RESET><GREEN>y<RESET>
++<GREEN>x<RESET>+<RED>b a<RESET><GREEN>y x<RESET>-<RED>b<RESET><GREEN>y<RESET>
++a <RED>shr<RESET><GREEN>shl<RESET> b
++<RED>a<RESET><GREEN>x<RESET><<RED>b a<RESET><GREEN>y x<RESET><=<RED>b a<RESET><GREEN>y x<RESET>><RED>b a<RESET><GREEN>y x<RESET>>=<RED>b<RESET>
++<RED>a<RESET><GREEN>y<RESET>
++<GREEN>x<RESET>==<RED>b a<RESET><GREEN>y x<RESET>!=<RED>b a<RESET><GREEN>y x<RESET>===<RED>b<RESET>
++<RED>a<RESET><GREEN>y<RESET>
++<GREEN>x<RESET> and <RED>b<RESET>
++<RED>a<RESET><GREEN>y<RESET>
++<GREEN>x<RESET>^<RED>b<RESET>
++<RED>a<RESET><GREEN>y<RESET>
++<GREEN>x<RESET> or <RED>b<RESET>
++<RED>a<RESET><GREEN>y<RESET>
++<GREEN>x<RESET>&&<RED>b a<RESET><GREEN>y x<RESET>||<RED>b<RESET>
++<RED>a<RESET><GREEN>y<RESET>
++<GREEN>x<RESET>=<RED>b a<RESET><GREEN>y x<RESET>+=<RED>b a<RESET><GREEN>y x<RESET>-=<RED>b a<RESET><GREEN>y x<RESET>*=<RED>b a<RESET><GREEN>y x<RESET>/=<RED>b a<RESET><GREEN>y x<RESET>%=<RED>b a<RESET><GREEN>y x<RESET><<=<RED>b a<RESET><GREEN>y x<RESET>>>=<RED>b a<RESET><GREEN>y x<RESET>&=<RED>b a<RESET><GREEN>y x<RESET>^=<RED>b a<RESET><GREEN>y x<RESET>|=<RED>b<RESET><GREEN>y<RESET>
++a<RED>=<RESET><GREEN>+=<RESET>b c<RED>+=<RESET><GREEN>=<RESET>d e<RED>-=<RESET><GREEN><=<RESET>f g<RED>*=<RESET><GREEN>>=<RESET>h i<RED>/=<RESET><GREEN>/<RESET>j k<RED>%=<RESET><GREEN>%<RESET>l m<RED><<=<RESET><GREEN><<<RESET>n o<RED>>>=<RESET><GREEN>>><RESET>p q<RED>&=<RESET><GREEN>&<RESET>r s<RED>^=<RESET><GREEN>^<RESET>t u<RED>|=<RESET><GREEN>|<RESET>v
++a<RED><<=<RESET><GREEN><=<RESET>b
++a<RED>||<RESET><GREEN>|<RESET>b a<RED>&&<RESET><GREEN>&<RESET>b
++<RED>a<RESET><GREEN>x<RESET>,y
++--a<RED>==<RESET><GREEN>!=<RESET>--b
++a++<RED>==<RESET><GREEN>!=<RESET>++b
++<RED>0xFF_EC_DE_5E 0b100_000 100_000<RESET><GREEN>0xFF_E1_DE_5E 0b100_100 200_000<RESET>
++a<RED>==<RESET><GREEN>===<RESET>b
++<RED>_32<RESET><GREEN>_33<RESET>.find(arr)
++X<RED>.fill()<RESET><GREEN>.find()<RESET>
++X<RED>.u<RESET><GREEN>.f<RESET>+1
++X.u<RED>-<RESET><GREEN>+<RESET>2
+diff --git a/t/t4034/kotlin/post b/t/t4034/kotlin/post
+new file mode 100644
+index 0000000000..a9e7b41631
+--- /dev/null
++++ b/t/t4034/kotlin/post
+@@ -0,0 +1,26 @@
++println("Hello World?")
++(1) (-1e10) (0xabcdef) 'y'
++[x] x->y x.y
++!x x.inv() x*y x&y
++x*y x/y x%y
++x+y x-y
++a shl b
++x<y x<=y x>y x>=y
++x==y x!=y x===y
++x and y
++x^y
++x or y
++x&&y x||y
++x=y x+=y x-=y x*=y x/=y x%=y x<<=y x>>=y x&=y x^=y x|=y
++a+=b c=d e<=f g>=h i/j k%l m<<n o>>p q&r s^t u|v
++a<=b
++a|b a&b
++x,y
++--a!=--b
++a++!=++b
++0xFF_E1_DE_5E 0b100_100 200_000
++a===b
++_33.find(arr)
++X.find()
++X.f+1
++X.u+2
+diff --git a/t/t4034/kotlin/pre b/t/t4034/kotlin/pre
+new file mode 100644
+index 0000000000..0c2a5a82b3
+--- /dev/null
++++ b/t/t4034/kotlin/pre
+@@ -0,0 +1,26 @@
++println("Hello World!\n")
++1 -1e10 0xabcdef 'x'
++[a] a->b a.b
++!a a.inv() a*b a&b
++a*b a/b a%b
++a+b a-b
++a shr b
++a<b a<=b a>b a>=b
++a==b a!=b a===b
++a and b
++a^b
++a or b
++a&&b a||b
++a=b a+=b a-=b a*=b a/=b a%=b a<<=b a>>=b a&=b a^=b a|=b
++a=b c+=d e-=f g*=h i/=j k%=l m<<=n o>>=p q&=r s^=t u|=v
++a<<=b
++a||b a&&b
++a,y
++--a==--b
++a++==++b
++0xFF_EC_DE_5E 0b100_000 100_000
++a==b
++_32.find(arr)
++X.fill()
++X.u+1
++X.u-2
+diff --git a/userdiff.c b/userdiff.c
+index 8578cb0d12..24821a0f69 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -168,6 +168,18 @@ PATTERNS("java",
+ 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+ 	 "|[-+*/<>%&^|=!]="
+ 	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
++PATTERNS("kotlin",
++	 "^[ \t]*(([a-z]+[ \t]+)*(fun|class|interface)[ \t]+.*)$",
++	 /* -- */
++	 "[a-zA-Z_][a-zA-Z0-9_]*"
++	 /* hexadecimal and binary numbers */
++	 "|0[xXbB][0-9a-fA-F_]+[lLuU]*"
++	 /* integers and floats */
++	 "|[0-9][0-9_.]*([Ee][-+]?[0-9]+)?[fFlL]*"
++	 /* method calls */
++	 "|[.][a-zA-Z()0-9]+"
++	 /* unary and binary operators */
++	 "|[-+*/<>%&^|=!]?=(=)?|--|\\+\\+|<<?=?|>>?=?|&&?|[|]?\\||\\|->\\*?|\\.\\*"),
+ PATTERNS("markdown",
+ 	 "^ {0,3}#{1,6}[ \t].*",
+ 	 /* -- */
+-- 
+2.35.1
 
-I think that I have a suggestion for an answer:
-We still have HFS+ systems around, and we still have an NFD feature
-in MacOs for USB sticks with FAT or SAMBA mounted network volumes.
-Both return NFD in readdir().
-Even if NFC is on disk for FAT or going over the wire for SAMBA.
-Having a precompose() function in the FSMonitor would help to make
-things consistent.
-And the answer is yes.
-
->
->
-> Thanks for all of your background information on this topic.
-> Jeff
->
-
-The pleasure is on my side.
-Please feel free to cc me for the next round, so that I don't miss
-to review them.
