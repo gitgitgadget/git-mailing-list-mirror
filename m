@@ -2,76 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E738AC433EF
-	for <git@archiver.kernel.org>; Sun,  6 Mar 2022 11:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDAF7C433F5
+	for <git@archiver.kernel.org>; Sun,  6 Mar 2022 19:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233127AbiCFLXJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 6 Mar 2022 06:23:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53858 "EHLO
+        id S232842AbiCFTrA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Mar 2022 14:47:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232959AbiCFLXI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Mar 2022 06:23:08 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1AE46C964
-        for <git@vger.kernel.org>; Sun,  6 Mar 2022 03:22:16 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id bx5so10897689pjb.3
-        for <git@vger.kernel.org>; Sun, 06 Mar 2022 03:22:16 -0800 (PST)
+        with ESMTP id S229737AbiCFTq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Mar 2022 14:46:59 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40EBC205E4
+        for <git@vger.kernel.org>; Sun,  6 Mar 2022 11:46:03 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id qt6so27733332ejb.11
+        for <git@vger.kernel.org>; Sun, 06 Mar 2022 11:46:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:subject:content-language
-         :from:to:references:in-reply-to:content-transfer-encoding;
-        bh=ZmqPELmkfE3Yc/sxmc8kdqm/vDzIpvTek6QcV9UayR8=;
-        b=pgV0HHvbX4SyGOYY3pMtv+kLkxdxqHkhBJ5vP3VAwB1cP5BZcydLxraCKnwNfy5ObQ
-         MnHP2lzOpEP/RzDZhtVzThCt1IKC6f809QOoc4aAm2nGgwn8JgUUl+NY+pUGYwmwrkJ9
-         TQ8bW70gfZDpcOX/7zRhJ5n5gYA4YHH5mjdI4wEM76d3P2OW3sYnc42hibERQNhSVqz3
-         FQWE3ThCNwS2Fz9cDrfvdHECpCCqZRUxtILcng0SPh8+55TyWnzd4R8Dqn/N7MFkMa9E
-         SJzv7gnk7wiKuY2hyRht2A/HID27L8zKVWQo4FSpKTuwaqHs5JtespXDNabuAdpnSUEC
-         QBRQ==
+        h=from:to:cc:subject:date:references:user-agent:in-reply-to
+         :message-id:mime-version:content-transfer-encoding;
+        bh=oduu2CMnQ3wiEa6+iUspgH7J1e4/cd9ehyQqvAnms+g=;
+        b=XXgurmNOvK+BZobK4PkpNVWwQDAfgzKtwVQzhA+9TNbm4NAg8FAcq5J4a8gIehPNu0
+         lJ9betY5Pe3MhMYRikY/UA3qefNY9pa1AaJdtwN0+G4vinnAGDWjkBwGDeCmJkCH7DiN
+         aIOS9VRtlIj6a5OcwBM1Z5x0+1AazW6GVB01QBLSCTKxjvIJ5uWbXOK31SrbynOffJ+u
+         1M2TYNL/rttmkAxkFvKPQCW0H1Tpk6CDXWRX5bo2inLHoia6wsefYXy6Q4MhbiOPWGiM
+         /+xzW3qmkgf8XGX9D2oJv7PyR5EwD0hOJAm7YUKE7PSoPOqjmkv7L5U3oweTLW+4sFaY
+         BRBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:from:to:references:in-reply-to
-         :content-transfer-encoding;
-        bh=ZmqPELmkfE3Yc/sxmc8kdqm/vDzIpvTek6QcV9UayR8=;
-        b=5SVQm0YfEARMZSHoHmPFuKucqxxJVKRziLdC9QKJwsE6zq4neOfvYmI31T+Ed/O9eJ
-         BJ5imD1KnJrwak0JrfOPXq3lcrjGAFAYCQCQRuzONol7dQZaRUpwSNYMygBTqSRROpBF
-         /UsVl/yphKA4D99cGjWUB8xnW1oqkjHNCCFj2s2nxjhRUXEPI39trkWRgfecbjKNVWnW
-         ESc1Aod4yaVMdexS//33yNFUp5hYWrRiAHsM5E3Ne7wuWGqrxEIRaMT6MDZ0vDsAml0A
-         xIAVZgZKWiWQiyhIn9ZjnTuGg8boBnUnoflRmwK9HWsk9ZpZvwmUb6nT8vQARacFLbOI
-         ug5A==
-X-Gm-Message-State: AOAM5302vxK/5yopXUZ6t2wy7rYjQNuoFl4L8UmPSz7dzcwdkowhFYoU
-        AGG0T8GrepsYP+rm0kFFmE5XLx/BCzpNfSt3
-X-Google-Smtp-Source: ABdhPJyMh8OuAh4Et+LS6uunjpSUndyp/eas1EuXlvO76fl2+BBcbXGMDZZCn3EN7CwJbeeN98GsBg==
-X-Received: by 2002:a17:90a:8405:b0:1bc:d521:b2c9 with SMTP id j5-20020a17090a840500b001bcd521b2c9mr19714461pjn.119.1646565736125;
-        Sun, 06 Mar 2022 03:22:16 -0800 (PST)
-Received: from ?IPV6:2405:201:a800:4df9:5194:c9b1:2d1f:598e? ([2405:201:a800:4df9:5194:c9b1:2d1f:598e])
-        by smtp.gmail.com with ESMTPSA id u9-20020a17090a450900b001b9b5ca299esm15519371pjg.54.2022.03.06.03.22.14
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 06 Mar 2022 03:22:15 -0800 (PST)
-Message-ID: <bb69a6f4-56ca-2f36-49a7-af4b6ac3990e@gmail.com>
-Date:   Sun, 6 Mar 2022 16:52:12 +0530
+        h=x-gm-message-state:from:to:cc:subject:date:references:user-agent
+         :in-reply-to:message-id:mime-version:content-transfer-encoding;
+        bh=oduu2CMnQ3wiEa6+iUspgH7J1e4/cd9ehyQqvAnms+g=;
+        b=wnzAHoS5wN3mEjUKS5dk+uTo//li/qj5tZ3MMgh9ft07NVKSqYCSfIvhmsS6YjH8iS
+         fqcQ8Nz7io1Xm/8ptkRNqRJ7JB177+03mFCGmZVTp32YVsT0BgMkK9MKc2UIrb9y5ZSN
+         0J/gQ4OaV+Zoxqtu95W0nMhuxZDfD6HFFOmLuCA4P6iV279Hoq69B3KIq2Ifm3AvTtdj
+         RLNNtf1i8BNQJyzCHZIPaK9AuZfI8YX/WZSzNNdaZg/LvFuEn9u9kZouruqm49kYQHIK
+         U2m8c4+wkgdK7t0rmH4SAt76ymX7z3QNT1iJeBbEFvn5Cav6ChkinkOw6piEZJumKi4p
+         m8RQ==
+X-Gm-Message-State: AOAM532V6uSfE49oOTHtbiZeQJo+1fNOVMH7cRdPI7nstBwruyEUAqdY
+        an1ynSQnZXbNawRDuG4+MUU=
+X-Google-Smtp-Source: ABdhPJxu/IXwf6zxY34ROmu0IevIm21UoOrxLFy2sSzzuVslSMS9s3EfDIk26jnt3Zjh0keYYSlk6Q==
+X-Received: by 2002:a17:907:720a:b0:6da:e533:6440 with SMTP id dr10-20020a170907720a00b006dae5336440mr6948147ejc.679.1646595961480;
+        Sun, 06 Mar 2022 11:46:01 -0800 (PST)
+Received: from gmgdl (j120189.upc-j.chello.nl. [24.132.120.189])
+        by smtp.gmail.com with ESMTPSA id u19-20020aa7d893000000b00415a0f25f33sm5145658edq.34.2022.03.06.11.46.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Mar 2022 11:46:00 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.95)
+        (envelope-from <avarab@gmail.com>)
+        id 1nQwpM-001KTN-3o;
+        Sun, 06 Mar 2022 20:46:00 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Tao Klerks <tao@klerks.biz>, git <git@vger.kernel.org>,
+        Josh Steadmon <steadmon@google.com>
+Subject: Re: What does it mean to have multiple upstream tracking branches?
+Date:   Sun, 06 Mar 2022 20:42:35 +0100
+References: <CAPMMpoiTJAuadBEOPWOVa-kguSXMDvAhvD22B63QwYpu=H7xEw@mail.gmail.com>
+ <220303.868rtr42mg.gmgdl@evledraar.gmail.com>
+ <kl6l4k4ek73o.fsf@chooglen-macbookpro.roam.corp.google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.6.10
+In-reply-to: <kl6l4k4ek73o.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <220306.86lexm3lvr.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re:
-Content-Language: en-US
-From:   Jaydeep Das <jaydeepjd.8914@gmail.com>
-To:     git@vger.kernel.org
-References: <20220301070226.2477769-1-jaydeepjd.8914>
- <20220306111031.335489-1-jaydeepjd.8914@gmail.com>
-In-Reply-To: <20220306111031.335489-1-jaydeepjd.8914@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Please ignore this patch. I think I made some mistake
-when copy-pasting the In-reply-to code.
 
-Sorry for the trouble. I have sent this same patch on
-the appropriate thread.
+On Thu, Mar 03 2022, Glen Choo wrote:
 
-Thanks,
-Jaydeep.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> On Thu, Mar 03 2022, Tao Klerks wrote:
+>>
+>>>  Hi,
+>>>
+>>> In my recent attempt to create a "simple" branch.autosetupmerge
+>>> option, I have repeatedly been confused by the enforced rules around
+>>> what is and isn't valid for the branch.<name>.merge and
+>>> branch.<name>.remote configs.
+>>>
+>>> Until Josh Steadman's recent work on --track=3Dinherit, the "automatic"
+>>> addition of branch.<name>.merge could only ever result in a single
+>>> entry.
+>>>
+>>> Now we support multiple entries being added as a perpetuation of an
+>>> existing branch's setup - but what does it *mean*? I could understand
+>>> if the idea was to have transparent tracking across multiple remotes
+>>> that are supposed to have the same content (eg a single server set up
+>>> over multiple protocols), but that does not appear to be possible -
+>>> branch.<name>.remote can only have one value.
+>>>
+>>> Is there any documentation (or could someone provide pointers) as to
+>>> when multiple branch.<name>.merge values can make sense and what that
+>>> means / what it does?
+>>
+>> Can you point out some existing tests where we end up with multiple
+>> *.merge values? I looked a bit and couldn't find any.
+>>
+>> Or maybe it's only possible to get into that state with some command we
+>> have a test blind spot for?
+>
+> Based on the discussion on that thread you mentioned, I don't think we
+> have any such tests. I think the only way to get into this state is to
+> manually modify the config.
+>
+> The only docs I could find on 'multiple values' are from
+> Documentation/config/branch.txt:
+>
+>   branch.<name>.merge::
+>     [...]
+>     Specify multiple values to get an octopus merge.
+>
+> So I'd imagine a use case would be something like:
+>
+> - I'm preparing a feature on the branch 'topic'
+> - It will get merged into 'origin/master'
+> - The feature also depends on 'origin/other-topic'
+>
+> I'd have entries like:
+>
+> branch.topic.remote =3D origin
+> branch.topic.merge =3D master
+> branch.topic.merge =3D other-topic
+>
+> That way, if either 'origin/master' or 'origin/other-topic' changes, I
+> can pull updates into 'topic' with "git pull".
+>
+> Not that I would ever _recommend_ someone to work like this though.
+> Junio also wondered whether anyone uses this [1].
+>
+> [1] https://lore.kernel.org/git/xmqqbl2hw10h.fsf@gitster.g
+
+Sure, maybe we should use it for something, maybe not, and maybe we
+should use our (keep using?) default "last config set wins" rule here,
+and maybe not.
+
+What I'm asking about is that Tao Klerks notes upthread:
+
+    Now we support multiple entries being added as a perpetuation of an
+    existing branch's setup - but what does it *mean*?
+
+As far as I can tell this isn't the case, but I only dug into it a bit
+(I instrumented the relevant tests to start dying if there were multiple
+"merge" entries).
+
+So I couldn't find what if anything changed here recently, but I'm not
+saying it didn't, just asking for a clarification. I.e. I didn't find
+how "what should we do with this config, if any" had to do with "Josh
+Steadman's[sic] recent work on --track=3Dinherit" (re "[sic]": it's
+"Steadmon" :).
