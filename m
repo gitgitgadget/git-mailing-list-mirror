@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72171C433EF
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 21:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45AFCC433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 21:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237462AbiCGVwA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 16:52:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52222 "EHLO
+        id S241331AbiCGVwC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 16:52:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236882AbiCGVvt (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233854AbiCGVvt (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 7 Mar 2022 16:51:49 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2700C75C1A
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 13:50:50 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id j26so15096203wrb.1
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 13:50:49 -0800 (PST)
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EDBD75C30
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 13:50:54 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id b5so25499379wrr.2
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 13:50:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=xlbCeNQWNBhbYdiaiIQr3UoMhNTyMmz1qIDgXuvHmzk=;
-        b=D1/6d1e70WQiMcaUC5g2iIlw6GsLCzvSYreK7Y8DDEkefRkQJinmMYiF0Ie+HiRKoj
-         M62mKh/P5Z7UAKXrw1MY94AcYFWanBNfiIzytQ8YB4vUinP0PhM/fLdnPM8/Lduwneua
-         yws3eyZ6WP5oEk7qUo7cMGzoePD2YGmM5BElxLFTwaKj8Io5zMUMgvy20E2SBbQ4Tdcj
-         0IKRLj4yVi4ACI/vXHkC17b2rfqkhunhBt3riGeRTCZ68/tB7xotwK6TTZmALkbaIYeb
-         hOdJyLL+2WNPorov226CXEXCr/tMc/3m/3ulUaFwhiuC2MWLJimw+6mOxvL1uB9FaySH
-         ljng==
+        bh=TVwkN544sv82j7JOsIATEa66ElwtGHw060RsRtxHm/A=;
+        b=mvWDJo9v4B4y3CXWiVSZy9mlvEmgu+AyFihLJ+rWp39Rngc5iVdf6hYyf2SwJSlHHl
+         VmveQiNVtfopN8xtUGZb/iqEubqFjuZIsvSraNoT/F5RUXVZTJlE1GXrcYF+5hP1Mh0Q
+         dsF94SJbG+X04APr6IcXzN3qs5Lez9T0ROj9GIduI1nKaNlUgUvh/hNazleWUzhDr+Mf
+         i7fOoLvhW0LiE8fLThyKGwBnc58Pe2BmySoE4c7cIHca9EJZRI3VvEIkJEh1lZbdDKwe
+         DFaK8u3n4Fa8wfHSB58SJ8RJHCKouy6WXnTbGP/UUjVojAi0yBdIKO5nVe38ZxjZbY7M
+         jQEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=xlbCeNQWNBhbYdiaiIQr3UoMhNTyMmz1qIDgXuvHmzk=;
-        b=LUllJ006mDPWFchVKMPGMZitDVzL73gFw7VGor022JglPx3Og8Rt4UgxZoaQCBFOCi
-         xvVmXfnoEMoKMpHHxTxHXs712ALSrnVSvo+52gpr+VPmvMqxoK0HS/vrMmBBnnF7wYtw
-         w9KmlGeQ+ZXfXDbIZHjUMbgwxjvKnnPVBy/icxZA26//CXndCZpssAD174hQxAZXppwR
-         rhHdTyLNlYS3NAX0ifkHVSmNycQTqK4/faU2QYx3O8ybbfrpkz7mN9maJDJZPtN2nLMh
-         RcP8b+gDXh0RtkosVLTRWT1+crtJK+B5fHNtIEroVjSuzB8Gg81UftA7LTyIGC5ZUVtw
-         vMcQ==
-X-Gm-Message-State: AOAM530f+Xl3dD9PohMkzbzru9gL252YclpYNsGyyx3YghxRt48YcxBD
-        Fx+8ZmVlv18dv86iBkous7BwjS1N9cE=
-X-Google-Smtp-Source: ABdhPJytRjw2zbapdgRvlUl6dxyMBRz47irB32NUuWT3gRFBz/gvrkQUO6t9VybmDWWkHMczLhWdhQ==
-X-Received: by 2002:a5d:59a5:0:b0:1f0:bf:64c9 with SMTP id p5-20020a5d59a5000000b001f000bf64c9mr9785032wrr.352.1646689848412;
-        Mon, 07 Mar 2022 13:50:48 -0800 (PST)
+        bh=TVwkN544sv82j7JOsIATEa66ElwtGHw060RsRtxHm/A=;
+        b=yQIO3agJux06cmubZN88rNKYqRYo+gWaEgKYW118Qpg3+n+yqk6s5sYdOcWaik31NW
+         s1Y3eeQH1Bo9Jm1aqUTOW7E/6YB4TwcQ3/MbKa+iH6Uq1dscez3U/cWrg0gFWAzWCCvY
+         MjdWBdDzbVaGsnkCq7+kltjDrMquGJAI93XhL6yeuT8xcZYJfn+boulAqoLok/U2Ogfv
+         uyXmqXg2h6Jov9ARybam6S4h9cn1ZNG8FJtV7ddXxMtS8SDF+nPg9+Rl15eI0SVQWoph
+         O/Qdo0H3P7S4eW0nc0s+Fu6MIzXCzaEkJ0cps+nSz1GngnTQGYj9BfuaYjKI7n6XjZEb
+         S6Tw==
+X-Gm-Message-State: AOAM5309dVbd4PaQ+6hGDbEdPWju2cbKYNvu588kY+4rU3kKQu2/zCkq
+        /6hzTTrTy5KKsuqz0IXbY+BUvsccrZw=
+X-Google-Smtp-Source: ABdhPJwy2wsDmC2TuzoHPC4ZCId64Ex9r6346bf+0QxWgumxXNSy0iy84X0AWWKbxweQ8TEOg9ieOQ==
+X-Received: by 2002:a5d:6e8e:0:b0:1e6:754b:47de with SMTP id k14-20020a5d6e8e000000b001e6754b47demr9791402wrz.208.1646689852817;
+        Mon, 07 Mar 2022 13:50:52 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j17-20020a5d4651000000b001f1f307d080sm4374530wrs.29.2022.03.07.13.50.47
+        by smtp.gmail.com with ESMTPSA id p5-20020a05600c358500b0038167e239a2sm472387wmq.19.2022.03.07.13.50.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Mar 2022 13:50:48 -0800 (PST)
-Message-Id: <19694d5b255227f2314456118c2c7fc986ae52a0.1646689840.git.gitgitgadget@gmail.com>
+        Mon, 07 Mar 2022 13:50:52 -0800 (PST)
+Message-Id: <382b9502f6b250784e42f996c6c1f8eca4d820bf.1646689840.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
 References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
         <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Mar 2022 21:50:35 +0000
-Subject: [PATCH v2 07/12] bundle: safely handle --objects option
+Date:   Mon, 07 Mar 2022 21:50:40 +0000
+Subject: [PATCH v2 12/12] clone: fail gracefully when cloning filtered bundle
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,77 +70,92 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Since 'git bundle' uses setup_revisions() to specify the object walk,
-some options do not make sense to include during the pack-objects child
-process. Further, these options are used for a call to
-traverse_commit_list() which would then require a callback which is
-currently NULL.
+Users can create a new repository using 'git clone <bundle-file>'. The
+new "@filter" capability for bundles means that we can generate a bundle
+that does not contain all reachable objects, even if the header has no
+negative commit OIDs.
 
-By populating the callback we prevent a segfault in the case of adding
-the --objects flag. This is really a redundant statement because the
-command is constructing a pack-file containing all objects in the
-discovered commit range.
+It is feasible to think that we could make a filtered bundle work with
+the command
 
-Adding --objects to a 'git bundle' command might cause a slower command,
-but at least it will not have a hard failure when the user supplies this
-option. We can also disable walking trees and blobs in advance of this
-walk.
+  git clone --filter=$filter --bare <bundle-file>
+
+or possibly replacing --bare with --no-checkout. However, this requires
+having some repository-global config that specifies the specified object
+filter and notifies Git about the existence of promisor pack-files.
+Without a remote, that is currently impossible.
+
+As a stop-gap, parse the bundle header during 'git clone' and die() with
+a helpful error message instead of the current behavior of failing due
+to "missing objects".
+
+Most of the existing logic for handling bundle clones actually happens
+in fetch-pack.c, but that logic is the same as if the user specified
+'git fetch <bundle>', so we want to avoid failing to fetch a filtered
+bundle when in an existing repository that has the proper config set up
+for at least one remote.
+
+Carefully comment around the test that this is not the desired long-term
+behavior of 'git clone' in this case, but instead that we need to do
+more work before that is possible.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle.c               | 10 +++++++++-
+ builtin/clone.c        | 13 +++++++++++++
  t/t6020-bundle-misc.sh | 12 ++++++++++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
+ 2 files changed, 25 insertions(+)
 
-diff --git a/bundle.c b/bundle.c
-index a0bb687b0f4..dc56db9a50a 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -451,6 +451,12 @@ struct bundle_prerequisites_info {
- 	int fd;
- };
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 9c29093b352..1c4a3143802 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -33,6 +33,7 @@
+ #include "packfile.h"
+ #include "list-objects-filter-options.h"
+ #include "hook.h"
++#include "bundle.h"
  
-+
-+static void ignore_object(struct object *obj, const char *v, void *data)
-+{
-+	/* Do nothing. */
-+}
-+
- static void write_bundle_prerequisites(struct commit *commit, void *data)
- {
- 	struct bundle_prerequisites_info *bpi = data;
-@@ -544,7 +550,9 @@ int create_bundle(struct repository *r, const char *path,
- 		die("revision walk setup failed");
- 	bpi.fd = bundle_fd;
- 	bpi.pending = &revs_copy.pending;
--	traverse_commit_list(&revs, write_bundle_prerequisites, NULL, &bpi);
-+
-+	revs.blob_objects = revs.tree_objects = 0;
-+	traverse_commit_list(&revs, write_bundle_prerequisites, ignore_object, &bpi);
- 	object_array_remove_duplicates(&revs_copy.pending);
+ /*
+  * Overall FIXMEs:
+@@ -1138,6 +1139,18 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		warning(_("--local is ignored"));
+ 	transport->cloning = 1;
  
- 	/* write bundle refs */
++	if (is_bundle) {
++		struct bundle_header header = { 0 };
++		int fd = read_bundle_header(path, &header);
++		int has_filter = !!header.filter;
++
++		if (fd > 0)
++			close(fd);
++		bundle_header_release(&header);
++		if (has_filter)
++			die(_("cannot clone from filtered bundle"));
++	}
++
+ 	transport_set_option(transport, TRANS_OPT_KEEP, "yes");
+ 
+ 	if (reject_shallow)
 diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index b13e8a52a93..6522401617d 100755
+index 42e8cf2eb29..5160cb0a75c 100755
 --- a/t/t6020-bundle-misc.sh
 +++ b/t/t6020-bundle-misc.sh
-@@ -475,4 +475,16 @@ test_expect_success 'clone from bundle' '
- 	test_cmp expect actual
- '
+@@ -537,4 +537,16 @@ do
+ 	'
+ done
  
-+test_expect_success 'unfiltered bundle with --objects' '
-+	git bundle create all-objects.bdl \
-+		--all --objects &&
-+	git bundle create all.bdl \
-+		--all &&
-+
-+	# Compare the headers of these files.
-+	head -11 all.bdl >expect &&
-+	head -11 all-objects.bdl >actual &&
-+	test_cmp expect actual
++# NEEDSWORK: 'git clone --bare' should be able to clone from a filtered
++# bundle, but that requires a change to promisor/filter config options.
++# For now, we fail gracefully with a helpful error. This behavior can be
++# changed in the future to succeed as much as possible.
++test_expect_success 'cloning from filtered bundle has useful error' '
++	git bundle create partial.bdl \
++		--all \
++		--filter=blob:none &&
++	test_must_fail git clone --bare partial.bdl partial 2>err &&
++	grep "cannot clone from filtered bundle" err
 +'
 +
  test_done
 -- 
 gitgitgadget
-
