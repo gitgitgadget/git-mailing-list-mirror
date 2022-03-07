@@ -2,102 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8979FC433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 20:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 305A4C433EF
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 20:23:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240498AbiCGUVW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 15:21:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55270 "EHLO
+        id S240573AbiCGUYF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 15:24:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235730AbiCGUVU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 15:21:20 -0500
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72EC250E34
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 12:20:25 -0800 (PST)
-Received: by mail-oo1-xc35.google.com with SMTP id s203-20020a4a3bd4000000b003191c2dcbe8so19266897oos.9
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 12:20:25 -0800 (PST)
+        with ESMTP id S237651AbiCGUYD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 15:24:03 -0500
+Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B1F36E30
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 12:23:08 -0800 (PST)
+Received: by mail-ua1-x92d.google.com with SMTP id z10so7039202uaa.3
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 12:23:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=PCOtIyZh6lj25FCVI0mtmLmPgGcH7XD30+MqmyikG20=;
-        b=OAkk4axRE7nFbZL0pHFVeMCe+tOOgmHvFX+l/mjavaNlAe/oiBphCnMnTPTQjH5eOx
-         6nSHXVjAEONfMDWyl9jH6M2/KNXS3aSB10wnOk5UvsG3dysOTAX64YTVC376IvW2YSOm
-         jT357LXcvOmUlpHO7S+AAu03PvmwRTAvxYL46VlIiyvyO5KOZn7muGAbQdonWQ1wvS84
-         mRWJ5bSPPuTLRb/pUgtcLHH1SrL2M/jixC9KjfnXCCwI/BF6kVFBtZ07H0E7kqeBr+xy
-         fTqiQtzcqpQY++iE4z70jDMgfRzXn/XUwOGYho2+yxItxydRDdESiKoSbf9A7kvP8AE+
-         nGfw==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rexzKpIBezLdNZw5McdxKoJRuEoNJbihh42NLa3Z12U=;
+        b=llgHE5W1lRI2tb+JsEgkLA/d+rP86kcXrSSr0o6ej+Z3sXuBqpOMky8oZs/V0u3tpn
+         6MeYY3r6Jeb4zUb7QQlBoRMRqaYHcOSdQOMXWgI/ZJflvBXMlxa7o9XNbO/pbI+7oRvQ
+         WEBVpt+KV5TL20nRN/t/72AUSh1wrh0/XSpAi/XebCZZ82CSIyn9QRxVrDOhZzNXqBsU
+         LPWmXhsniLhm/3d5YgoRQRXwq2nr22fGHgUnFDE851KdFcJp3AJQpygkGzKrlFRcvhxs
+         dYok+tgR9W3g7ZwJTQMJris4U2TrvqbV1ZDDkQTqxr6+17sUrf+NrXV8Rtd5JVma9qc8
+         fWtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
-         :content-transfer-encoding;
-        bh=PCOtIyZh6lj25FCVI0mtmLmPgGcH7XD30+MqmyikG20=;
-        b=P98HENZVVTBWUQ5z+lIW3KC9po5/a3yhwTgF708w82uVOTnplV/VFEw3Em0bgIElOv
-         Q/kuNjxIstICFpARsPswuYJg0OWByM9rEz3h44D35fCxpkeA+YCrs8k10IKSWLYeMxXX
-         wTHHSneYQy6mqhrCS3tYn/z4hpwTgySwQwUL4vyP1Tn4e3Nk63OzlAvP3XDMJ/2U5dFO
-         fhOPofvSDKdSddoLl7qnMAI2NiWliidAZkf3nC8KnPU8kSPgl/6mT6y2oUDUjvXFhkuy
-         nWOXrPAVwsg8QvZ+RIC+R7Kd/R8pSOzQ6r0x6YZjVSOzsPEa3QHs1g4KAqWprK3ZR91M
-         bdNg==
-X-Gm-Message-State: AOAM531SBrEPFDXWQDrlksO/Y587+9Io5BsbiKYVepNi8oKX+atV/Gab
-        OB6Cv/R4JUwbg7MJ03EFYQrO
-X-Google-Smtp-Source: ABdhPJyRpbjb/L2jRM3LnOZrRPAl5yeSq5+1VdcozCCw04CPWIsyciy+vFlpKkwQqbxxiMRVnsgDUg==
-X-Received: by 2002:a05:6870:ec8c:b0:da:249c:1807 with SMTP id eo12-20020a056870ec8c00b000da249c1807mr465455oab.148.1646684424846;
-        Mon, 07 Mar 2022 12:20:24 -0800 (PST)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id l6-20020a056870d3c600b000d75713938csm5957708oag.7.2022.03.07.12.20.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Mar 2022 12:20:24 -0800 (PST)
-Message-ID: <24c277cc-5649-2de6-854a-8d87bbfd7b91@github.com>
-Date:   Mon, 7 Mar 2022 15:20:21 -0500
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rexzKpIBezLdNZw5McdxKoJRuEoNJbihh42NLa3Z12U=;
+        b=HCD84TNdp4sygnX8SDhHvMk+I/OzgJ9VGf7FSIrQyn49gf8iZSUaRxhRZp+t8s59Wy
+         Dh4fGtkZ7PjxNioDiE0dAX+/XGfFUYYjB2reET3aszyVJbAneS0Xy87QxU4XyXHA1Vbq
+         m5KRsUZ3Jq/BVHtFzfW9KsdcfoYgipxCBCDMmyPRHPPaTfM99OT3mjonxLPzfj6uCeXN
+         ujZca3yIQJ4urjT5/PFipILDmikeZkUma8An/1CFLAlVsLNGDOBNGiXEQ3xlUQyJXkDB
+         r22mkr5HmoaRhyu7hLpszG+jrjVC2BOgkMLfQJ8GgBlDY5H9HumQfNB9tBYyIuE5Dlh5
+         6nKQ==
+X-Gm-Message-State: AOAM531KjWYx/ThLDm+UHBfIyeWU5yF6DhLY/HjcxXm/ViZ9DIf/ZF1b
+        NDWWWp84dp00R2lz+SSb8sriQdbgSdQD4T90+Xk=
+X-Google-Smtp-Source: ABdhPJxYOylFRlrDEKJia+TswhAOrKC+Rf42QV+DGq+cHfEv9e2kBt9N0ZvfUlzglmeLPWMvClrprSVwCo9VNXHPPLY=
+X-Received: by 2002:ab0:7a66:0:b0:34b:7604:b052 with SMTP id
+ c6-20020ab07a66000000b0034b7604b052mr4048173uat.7.1646684586605; Mon, 07 Mar
+ 2022 12:23:06 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH 11/11] bundle: unbundle promisor packs
-Content-Language: en-US
+References: <20220228215025.325904-1-jacob.e.keller@intel.com>
+ <20220228215025.325904-3-jacob.e.keller@intel.com> <xmqqpmn6wg98.fsf@gitster.g>
+ <CA+P7+xoECs-rXb4vpRrw40Q-oRvfu97kMig9zu0rEE6KagAyiw@mail.gmail.com>
+ <xmqqfso2t9cu.fsf@gitster.g> <6b00c67b-01c9-bf22-a8e6-904f47fa7acf@github.com>
+ <f5ca62f4-eb3d-eeb7-e7c8-7fb800f3d6cd@intel.com> <3c3e6063-7eb4-7ff4-3a1b-a07db1fe969f@github.com>
+ <xmqqfso1pgmv.fsf@gitster.g> <CO1PR11MB5089DC997DB42023324F1BF0D6029@CO1PR11MB5089.namprd11.prod.outlook.com>
+ <xmqqilsvet82.fsf@gitster.g>
+In-Reply-To: <xmqqilsvet82.fsf@gitster.g>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 7 Mar 2022 12:22:55 -0800
+Message-ID: <CA+P7+xo=UwUQ422o36_8XGNWoYjROGi5wBT4=jy4ThJBs_z=Xw@mail.gmail.com>
+Subject: Re: [PATCH] name-rev: use generation numbers if available
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com
-References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
- <ec51d0a50e6e64ae37795d77f7d33204b9b71ecd.1645638911.git.gitgitgadget@gmail.com>
- <xmqqzgm5wafu.fsf@gitster.g>
- <ee6c7a5b-63e8-af1c-fdb7-75dca9cd798d@github.com>
- <xmqqv8wpu2fq.fsf@gitster.g>
- <85d434f8-0eb1-c6f7-dfd4-99bffbfbba57@github.com>
- <xmqq8rtlsg9h.fsf@gitster.g>
- <51fabaef-4849-2d9f-285a-3f442f803717@github.com>
- <xmqq35jtsfm9.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqq35jtsfm9.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc:     "Keller, Jacob E" <jacob.e.keller@intel.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/7/2022 2:54 PM, Junio C Hamano wrote:
-> Derrick Stolee <derrickstolee@github.com> writes:
-> 
->> I've been trying this:
->>
->>  git clone --no-local --filter=$filter "file://$(pwd)" cloned &&
->>
->> which "succeeds" with this in the stderr:
->>
->>  warning: filtering not recognized by server, ignoring
-> 
-> Hmph, and we won't see it when going over ssh to the same
-> repository?  That is puzzling.
+On Wed, Mar 2, 2022 at 5:10 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Keller, Jacob E" <jacob.e.keller@intel.com> writes:
+>
+> > Let's clarify. There are two versions of the test in this version:
+> >
+> > 1) test which enables commit graph and tests that it does the right behavior.
+> >
+> > 2) test which removes commit graph and tests that it behaves the old way.
+> >
+> >
+> > test (1) checks the flow with the commit graph enabled, and verifies that with a commit graph the new behavior is used. This test will fail if you revert the name-rev commit-graph support.
+> >
+> > test (2) always performs the way we don't like. (since we disable the commit graph and the new flow doesn't kick in) This is the test I think I will eliminate in the next revision.
+> >
+> >
+> > I will remove the 2nd test, since the first test covers the change
+> > in behavior just fine, and I think I agree we don't need to set
+> > in-stone the implementation without commit graph.
+> >
+> > I will also look at adding a test which performs a count of which
+> > revisions get inspected and makes sure that we actually are doing
+> > the optimization.
+>
+> Sounds like a sensible thing to do.
+>
+> In any case, in the current patch, #2 is not working in
+> linux-TEST-vars job at CI.  You can visit this URL
+>
+> https://github.com/git/git/runs/5400048732?check_suite_focus=true#step:4:68062
+>
+> while logged into your GitHub account for details.
 
-Of course, it's not an issue with file://, but an issue with the
-defaults. In order to test partial clones, I need to enable these
-config options in the server repo:
+Looks like this job sets all the TEST variables including
+GIT_TEST_COMMIT_GRAPH=1? The negative test passes because the commit
+graph is enforced on and we then succeed even though we were trying to
+test the negative case.
 
-		test_config uploadpack.allowfilter 1 &&
-		test_config uploadpack.allowanysha1inwant 1 &&
-
-Sorry for taking so long to realize this.
+I'm going to remove that test in v3 anyways, so I don't think it is a
+big deal. However, I wonder is there some way to mark a test as
+explicitely "don't run if GIT_TEST_COMMIT_GRAPH is set"?
 
 Thanks,
--Stolee
+Jake
