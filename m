@@ -2,66 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFC90C433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 22:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 252D7C433EF
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 22:25:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240377AbiCGWMv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 17:12:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46576 "EHLO
+        id S1343739AbiCGW0Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 17:26:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231548AbiCGWMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 17:12:50 -0500
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA5928B6F9
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 14:11:54 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3CF9C192D20;
-        Mon,  7 Mar 2022 17:11:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=z6UiTZZZmYLRxPyRoHKADAA17fjjgb77kepDMf
-        XlKwY=; b=sE+uS56K7j55G+7g6usAEsiIRIzomNCurvUjIgmK4kMLkg5kTM8J1+
-        n8/3pmFWL7fiPcERss0bPXhArOY0hzEzAA5xnYO+XKqzUrqkM1ctz7INZs4keRVV
-        +zYryMEh1gn7DlP1npM5FRfjSjwH+TNgHBxCZTFFABkdJtIg5lgV4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 35130192D1F;
-        Mon,  7 Mar 2022 17:11:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.230.65.123])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A217C192D1E;
-        Mon,  7 Mar 2022 17:11:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
-        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 00/12] Partial bundles
-References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
-        <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com>
-Date:   Mon, 07 Mar 2022 14:11:50 -0800
-In-Reply-To: <pull.1159.v2.git.1646689840.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Mon, 07 Mar 2022 21:50:28
-        +0000")
-Message-ID: <xmqqh789quop.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.2 (gnu/linux)
+        with ESMTP id S236293AbiCGW0Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 17:26:24 -0500
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E72A66FA20
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 14:25:28 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id 25so8971326ljv.10
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 14:25:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1CDWLXQMz2ixu1mbgLwxJ2X+BlcjKdum3AhyokQAxS0=;
+        b=KmMRcB9MILESeLsDHOgH9x3r3J6ZfSKawHyhBfzA+/8S/pB2sVAlRashUDer4fsrTh
+         2XJfMGgGJB3x+ZYIztoL1cLhVSWME3ak+zReoXcESY61Rky+pjdcQCHz2kLrRei0wkLk
+         cPPsqfNHAnbzziqayPF6dGTeriqVZYdrUN+6hSHw5KXKS1MBF0qA1xa0FR/5wCNyuqe+
+         GYWWIahwxcWaSMUpfVOeCLduSu4G1KgOpwydsm+7jVdyHBkC52HWgrlxl6rok9WZ1hn2
+         rfQCLsuz0fTAa1gRm0yk5/xu/GgDr+BcvoXkBMAPuho6rVXYsxrraUOjgrTIauAaMhJP
+         wqoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1CDWLXQMz2ixu1mbgLwxJ2X+BlcjKdum3AhyokQAxS0=;
+        b=IiZcUK1xX9I5JVtBZQ2hYklMtmdI3XyVWOuTVdyBCzMjftrPIn+dugXpxktsBN1EAH
+         +Qo/tawgpMFcILcqwncBE2OGOxrCmUaS7jHtpjYTbPtbU7qKkbT/938J5fwZrKCz3KY7
+         on+fQTb+bJjpJkhmW8simkJ3a4QFK64OzTRBoS6Hpg+0+flMtJkn18E+10VOxsavqqFv
+         Dzy8PydWBN3BRvD1wVv+RqaYhKOt5/CXtEwbTkFgB1j2ltY+mo8Uv9Ty81RNMjmUig+r
+         azKBHzVydV9NoTaftrHZMqo/YbYb6XfDSm8Gm9IlpwVkRQORvQFIVrkEZmlQhQGfVaNn
+         GGAQ==
+X-Gm-Message-State: AOAM530FnY67SCp3Q40Ji+6AXipglhr3EXQVmRQs+fWLDq8JfRy/6/cK
+        XXvvACfewLLR8powZrynZCciGi0H8QZaEkeliIw9K0yJsNA=
+X-Google-Smtp-Source: ABdhPJwiV2OUgRZqluMYeRxyzh0+Upc/TP0V1NRsMCA/3RjKXCwEeaVk9G+xrXR5AGB9Ct4JxeEcYFee38BOiQreO/U=
+X-Received: by 2002:a05:651c:140a:b0:247:df30:2bcc with SMTP id
+ u10-20020a05651c140a00b00247df302bccmr6740994lje.429.1646691927098; Mon, 07
+ Mar 2022 14:25:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 972BAEB2-9E63-11EC-A5C1-C85A9F429DF0-77302942!pb-smtp20.pobox.com
+References: <439ebfba-d493-2cff-434a-b1073e755688@gmail.com> <CA+ARAtquQOtcDtc0nCWkxyP2enb_QbxyoK9b3HWf-2JzbaKbkQ@mail.gmail.com>
+In-Reply-To: <CA+ARAtquQOtcDtc0nCWkxyP2enb_QbxyoK9b3HWf-2JzbaKbkQ@mail.gmail.com>
+From:   Hariom verma <hariom18599@gmail.com>
+Date:   Tue, 8 Mar 2022 03:55:15 +0530
+Message-ID: <CA+CkUQ93Z7e0iTFMOpiY+a-UyrfQhmvdQXQ-SoDBVUu+GsKshA@mail.gmail.com>
+Subject: Re: Git in GSoC 2022?
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     Git Community <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Atharva Raykar <raykar.ath@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Philip Oakley <philipoakley@iee.email>,
+        Bagas Sanjaya <bagasdotme@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Mar 8, 2022 at 1:08 AM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+>
+> I'm glad to share the news that Git has been accepted as a mentoring
+> organization [1] for GSoC!
+>
+> Since it is possible to invite mentors now, I've invited the mentors who
+> have suggested ideas[2] so far. I've used the e-mail mentioned in the
+> ideas page to send the invite.
 
-> While discussing bundle-URIs [1], it came to my attention that bundles have
-> no way to specify an object filter, so bundles cannot be used with partial
-> clones.
+Great. I have accepted the invitation.
 
-Looking good.  Will replace and queue.
-
-Thanks.
+Thanks,
+Hariom
