@@ -2,101 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 808C1C433F5
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 15:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FA65C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 15:51:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243917AbiCGPuH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 10:50:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60862 "EHLO
+        id S231712AbiCGPwN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 10:52:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243994AbiCGPt7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 10:49:59 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68A66657BB
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 07:48:51 -0800 (PST)
+        with ESMTP id S232830AbiCGPwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 10:52:08 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CE5A92D26
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 07:51:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1646668126;
-        bh=8BrrfrA93WxJwp7+KSeczsgsUUHUOc97XtUQmpX3Zxs=;
+        s=badeba3b8450; t=1646668268;
+        bh=fcZoZbiohSTpYBwbbglBt7VsDCjqlfxU2Pllinhxkw8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=fCd6ejMQz1ow8tn4Pl6D5vjf+QZUMMTtyIi4iCP5ziXQodADwNwKTBtnExb9AWyAL
-         BGy+2Xb6/0f7lgnsNjwtGVhwMvXJcGUqvC5T3Mz/z5+kBgOWqsrUmKgSvv2UEzlYn0
-         vlOj0HpZns1/2EmcUBn43bw4LEuVOw4m74w2AeDI=
+        b=BZ0m2Foe6tSfFhwOEiEtGflDSdO0G5g9Y0J4djrCQCNpvtBYfXoxh6J0JGvkaHlNt
+         F/PMsh3bTDlD6418ax43dTIUv6XsuYjSkoDsOIpfWc+lq2uRGwF7rEtjw0uFl+QGEW
+         5LthfKfV2twA4cnQDf6Lf80zOGivHdlqjRpj7rXw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [172.28.129.168] ([89.1.214.47]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MeU4s-1nzUUM1sVo-00aTUp; Mon, 07
- Mar 2022 16:48:46 +0100
-Date:   Mon, 7 Mar 2022 16:48:44 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGyxN-1nMYnv2s9z-00E2he; Mon, 07
+ Mar 2022 16:51:08 +0100
+Date:   Mon, 7 Mar 2022 16:51:07 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jacob Keller <jacob.keller@gmail.com>
 Subject: Re: win+VS environment has "cut" but not "paste"?
-In-Reply-To: <xmqqee3i2mlw.fsf_-_@gitster.g>
-Message-ID: <nycvar.QRO.7.76.6.2203071646500.11118@tvgsbejvaqbjf.bet>
+In-Reply-To: <220304.86mti6f4ny.gmgdl@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2203071649100.11118@tvgsbejvaqbjf.bet>
 References: <pull.1117.git.1643050574.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.2202200043590.26495@tvgsbejvaqbjf.bet> <220220.86bkz1d7hm.gmgdl@evledraar.gmail.com> <nycvar.QRO.7.76.6.2202221126450.4418@tvgsbejvaqbjf.bet> <220222.86tucr6kz5.gmgdl@evledraar.gmail.com>
- <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com> <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet> <xmqqv8x2dd7j.fsf@gitster.g> <xmqqee3i2mlw.fsf_-_@gitster.g>
+ <505afc19-25bd-7ccb-7fb2-26bcc9d47119@gmail.com> <nycvar.QRO.7.76.6.2202251440330.11118@tvgsbejvaqbjf.bet> <xmqqv8x2dd7j.fsf@gitster.g> <xmqqee3i2mlw.fsf_-_@gitster.g> <220304.86mti6f4ny.gmgdl@evledraar.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:lRlW1AprUn9mUCz8rP+23WTXYpiNO39EJOzSeSL5WqNU+6hnm8E
- Sn2kEzLIF/n0pMbUjdagESgbD3umJ32hNxD9Vtlio/tow8T22/tEVfdQb/jRV5sx09vrTOo
- xlWDGp/6gwyfyeuJ3QF+2KCt6s6pmhL/+J8k/4RdXZQD9ey2VYPiMQzyn48Q3uiOtxPuU8i
- 6FxIkRbs5662Occ3pNM3Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:qkC9YQoU0fM=:lNm/USckLRIohuuPaXnTYa
- HGhgQCwDvAEkGn5fATKSQ2fRlpEEewa7QoPx/GXiVm9wtAYMJCG5beYAwE0vLjV++rHnRjR5h
- JczbV6t7dfOGQM4PGBELIwkLEWPLramJ3EWTQq1s0uQzQe75zK6+R7dbuTwL/MF2Zqe1dhxt+
- bQ5fKeX6ThDCYNg0iAOE/owfRUkAkI2X1zT4Ko7nfWN5DS/n+mw+LVEKhEuGnjDUIQytR0TUi
- fZ6XGNqw5ew3fUbZKs79Cngs2gffDnHM1NWGtTBn3W/2nf+zR/kJRA9B263zw8poMPwGLMrr+
- qjLj2xhW7Tbqsx5xiGB1oLTZ/VVvRNWcGmxGwkfoU0s1ZBUr0fCEu7t4ABiK16Ammwj+6uj2l
- 7KGRnUudGWrjH+E56DcCSmIJW0FCTk20ZdA869hRNqzHKhcN+GlYEvykBIsROS3OZvHrq3WhT
- B39hEcX8wma8XxYtJO1Qe6VCbeCtkyEaZOa4iGrjo1SKq+LCcCPN81NuGsA2lr4nHTlQmQSUr
- kyhHScE1eT64Fx4ab3jZF+HGQv8HmgZEnMo6hYZUS5mTNXelciicAvovaesL2mRjo5gs305oj
- 35ssJP29bTO5WFjIPp08qzf2mvvfcv723n3UquE48hj1xy+phK94JlYxHjA8DhwiYpDjCUqJc
- MBQYoPZa+xtNfaHHf67I897NTZpXjpzmihSV1+sNsTlTeQ0p+bVopiEqRxKE3Cla2AG/rh7WN
- /q/W01XUmSlLU3CmEZwCmhLIvyJLe707JZvt1kamwYlQMHlB66QAcsJPYdIaM3OflntHWmvjz
- jNiuNNTYvlA8gD5glFwiCoXpgqnTKOuUJj1KGgPBBW6Tezs+I64xaKnmhTUBobUqcweOi+NGi
- uyF05gRcaq2f0D9ZuiyGeAlSqQN7MmN6CBBUIC3bZ13tDLAT664Q9SGjPkzMi0VSQl3/BPong
- syEpf48AlwM/H67GwBValIubywExzk0t8s5CO8Ni6kMgR+++vVhxIIgNnimw7PEkcagu2tn7F
- +nGNu9lAkOfSXUNeIuetU0Ta6osiPZ9VJ1izTGEI3laLcklNT0BhFpwkH5WfhfJGaGRMR7voA
- lioLRJTDQ4Rdd4=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-841954124-1646668268=:11118"
+X-Provags-ID: V03:K1:Lu20OToQ5/Qy4qH1oWlqwIDEkMYSsG8+9YTqoMi1OYStqWNheg5
+ nAo8KCFzbnpCgS+ti8Rq6BLmJcAfxuDgCG5EqLbESkkblXOrrDy6CoHY5olbQMzuNSaZHop
+ gnPohKKDrXhgxcyFSXRvqCyDEy5LRF5S32k4/lIZHBvBBttcSvggAgByp706kUPRfzzMl29
+ +VR5suJoReXKEiXCN+S+Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CS4sU9/xdFM=:qpVzqxa8pWdUWavP1YKPWm
+ BY2t95BrvbRGSdPd+4ny7gsrBAxvOFKUxE1EB6KbMryALlYhFdMEMcltfAuggKuPY9bctYXAg
+ DqEE8oZUetMho268E603PgsTTaiK2/8i9ZqZEbS0iJJsvTA4EtRDuxrIR1QaqnUb4bWLr1LNQ
+ GP3g0KY+clvoFvD1tTwUMqvZUfWxth2e377Xu8Q7de78X75oSC9H1if7eedcRcIr/1H77TK98
+ d1naDbD539zeUHAgALQmCHQjbIJ4QLgMOowTpnKfTci+g0OxgWWQnHkBT1ojnpX262qcOGhm2
+ HiK7o4q+qpY4NxkSlO1VovfQ1jQcswdyXxL3OuVCc5csEbobmnJ5Whm4h6TMzaRqYS/4R4gcy
+ 4C2vpWAGzIRXlyatxoJMwl4rwFPa65VrY6BctM1fHrj8+2p/4WT0k4RRLvw10VLj0/X3YP1AV
+ U3irRsqTXqEz3kH020QYkvmrKC/cCMcDEE9iwtl143M6Mokec6xH/4re5XMjJn32ioDSW4Z9M
+ ukJgEWjP7Xh9nZRNJoS3ZjIs0iFK+WuBrwSooV8/3xOsIMdAdJaaxzBgy14WosWzyFZ/XARj+
+ E7Jv9n5fdi2TDzawGrtKZrMjjIV62Bg/DuDFC7oNbz5WqMm2n/zW4BZ8Iw19TQAa/x4cOSvti
+ nxZvK6CYzdZQnk/oLarlVXk+xWsfj9ny86NafKyY3XKozks/8wn8QVQ4m/xGbW8w+jU96Dw6i
+ IQXZcakYAs4LObmKhQR1pBIorfzo5v3hVaBA9+RxkjpIucSl5CJTLZxFVpK3ZPWcf4mBBIFm2
+ b6t+GtZ5k+DT6QdHRoCOq/DSQulW3Wu/7ukNNzZr2FKglWssGg5i5JcbK8Eb6xRJxUALc+OR9
+ ngcX5bLWGPcKKPUuh5iWP0CU8Xs8/J72cS8qJQhEKcwBQ03Q7z64DISIuIka9Puc/dvs0HndM
+ JIz8d2KsvYDBejRlkyO2jVvzNm1Nw/kY7ZLdEDJKnUARGdxwrwSpJIwj8xxzVYQ2u8CutefaY
+ U5TJ09VZsiR4mGljlDt6zSt2a0XqQu21kNu7MNE9XNdi4cdNtEY4+QKDNwl8CId8vsIf7SQYc
+ uoTJqpGhiBONeI=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 3 Mar 2022, Junio C Hamano wrote:
+--8323328-841954124-1646668268=:11118
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> GitHub CI seems to fail due to lack of "paste" for win+VS job.  This
-> was somewhat unexpected, as our test scripts seem to make liberal
-> use of "cut" that goes together with it.
->
->     https://github.com/git/git/runs/5415486631?check_suite_focus=3Dtrue#=
-step:5:6199
->
-> The particular failure at the URL comes from the use of "paste" in
-> 5ea4f3a5 (name-rev: use generation numbers if available,
-> 2022-02-28), but it hardly is the first use of the command.  There
-> is one use of it in t/aggregate-results.sh in 'master/main' already.
->
-> We could rewrite the tests that use "paste" but looking at the use
-> of the tool in the test (and the aggregate thing), rewriting them
-> due to lack of a tool, whose source should be freely available from
-> where "cut" was taken from, does not sound like too attractive a
-> direction to go in, but I do not know how much work is involved in
-> adding it (and in general, any basic tool with similar complexity
-> that we may find missing in the future) to the win+VS environment.
+Hi =C3=86var,
 
-I added it:
-https://github.com/git-for-windows/git-sdk-64/commit/e3ade7eef2503149dfefe=
-630037c2fd6d24f2c14
+On Fri, 4 Mar 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-It will take ~35 minutes (at time of writing) for
-https://dev.azure.com/Git-for-Windows/git/_build/results?buildId=3D95542&v=
-iew=3Dresults
-to make the corresponding artifact available to the
-`setup-git-for-windows-sdk` Action we use.
+> I really don't think it's a reasonable claim to say that only "veterans"
+> of git development[3] are likely to find the workflow of seeing a CI
+> failure right away useful, or wanting to browse through the N different
+> "job" failures without having to pre-open them, go find something else
+> to do, then come back to it etc.
+
+I said that the current output is only useful to veterans. The output that
+hides the detailed log, under a separate job that is marked as
+non-failing.
+
+That's still as true as when I said it. :-)
 
 Ciao,
-Dscho
+Johannes
+
+--8323328-841954124-1646668268=:11118--
