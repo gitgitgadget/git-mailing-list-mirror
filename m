@@ -2,122 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36CF6C433FE
-	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 18:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5A09C433F5
+	for <git@archiver.kernel.org>; Mon,  7 Mar 2022 18:58:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240306AbiCGSdT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Mar 2022 13:33:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40728 "EHLO
+        id S244905AbiCGS66 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Mar 2022 13:58:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240208AbiCGSdS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Mar 2022 13:33:18 -0500
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7612265801
-        for <git@vger.kernel.org>; Mon,  7 Mar 2022 10:32:23 -0800 (PST)
-Received: by mail-oi1-x22e.google.com with SMTP id w127so5772011oig.10
-        for <git@vger.kernel.org>; Mon, 07 Mar 2022 10:32:23 -0800 (PST)
+        with ESMTP id S244906AbiCGS65 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Mar 2022 13:58:57 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67C374160C
+        for <git@vger.kernel.org>; Mon,  7 Mar 2022 10:58:01 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id x193so16290894oix.0
+        for <git@vger.kernel.org>; Mon, 07 Mar 2022 10:58:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=message-id:date:mime-version:user-agent:subject:content-language:to
          :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=Afxph1CaiJQuRJTd+V/XysAfJghksEd5SGOgTWZ5ewo=;
-        b=crH//rgfC9vY+aF2pH8wNCZftzsdD/GyPS5nNYJkMKieho0sqo/0gJ4iTtCKfEW+KP
-         HpIH+5cHdMpoARAjdZ/SITorKDbIBrVeQpWMQy0Z3eju6w6b+IvWNnTul/mtY+w+GWis
-         j7r+CewhUd1MdUWhON15YmoCMJANAU05t0PBIeD2eMgJntv4oekrmDHvm5ZtFjwmI0p+
-         8GkYrG9VSRAz+dk31Y3TpZAp1dTbP8wm3Kz7NWDL7SCNPdnOAK02/RBFP2VVq5Q/ZUXX
-         r3i4q8P7iyPvgp1dd3vnKyFLkWXp4iVlGIhHbdRCcLPcCnry9SR4PN8YWeijVgeRa+hq
-         1KZg==
+        bh=Ul8+fr/RnuUE5bLTYf571tdCAX4RFTjBHjI3GOnB77s=;
+        b=YnoFsxhyNO44Lp1o7E21uGsy0olz6YK6dU9fECqBntTnYkfjm3f9bayfUDFSRRRWTs
+         3ThROp83SQMUOYjnK5yN/+2t6FdI2oZqdVlAmaHGIuBbhAnbJWKERIK4pI5reJZ9SI96
+         VEsJtIVs10GMk0hpFfWcFTE/yHkXXpq4HutNsGSaCOGNX6m4mzhTjt81JY3E21r4eaGG
+         QXv5gj+uw7kYVCL5pSDsotas+46FDsBrdBPRvQBHCbvEaZ2pHOKYbrb7Gq3VrBLYtnEj
+         65sMyW44iOa5xWUhHbsEvRDPZTG44nP9Y/g6+6tvVG709wUeV8LEUZV7JJitpSSlFHdf
+         /+yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
          :content-language:to:cc:references:from:in-reply-to
          :content-transfer-encoding;
-        bh=Afxph1CaiJQuRJTd+V/XysAfJghksEd5SGOgTWZ5ewo=;
-        b=fQOfQwc+tQvpre5LzZqwVtUR8SCV/qPB4vxoX2hIr/UbgQ6tAA54NiFxJ2+4kDoAOj
-         K6nx1B1qGmJo1paRaQHrKBL9iPAb5TAxjPCWrkfb/xWGWLRl0WUvz/qEqUb9gYA0tbz8
-         5bZ6GiU4StH1x81K38EZlR3+1+6LnpCkJaF0sE4QTF47loevIHHtkV4H8SU/pdIvpV1w
-         Xk/pknahGQG+bEKkbzVRNRCgSV0/G5ABXjlzynIVNTlvh2O5c6UbsAu0DXCGZ2X7FP4c
-         inR7WlB7TozoWPW7nTY4lCDjGSiWtDl5bFO6K2qUmw/WsqO5B8rxvsYZT1M2DR7cX7AD
-         cSEQ==
-X-Gm-Message-State: AOAM532dW9iPbs27a4e/kZf4dOLZarNUtH94S1tOHCMhdcOH+Y3OnODo
-        DQbQq3DfOisPDR6jp/kZmjE7
-X-Google-Smtp-Source: ABdhPJxxK7+NP7lznOnB4w7O+wTsHCvjajFR+KumS9cd43gjEHSLAzOqjP14CljVhCKUOfgGePepvw==
-X-Received: by 2002:a05:6808:1914:b0:2d9:a01a:48bb with SMTP id bf20-20020a056808191400b002d9a01a48bbmr178569oib.262.1646677942813;
-        Mon, 07 Mar 2022 10:32:22 -0800 (PST)
+        bh=Ul8+fr/RnuUE5bLTYf571tdCAX4RFTjBHjI3GOnB77s=;
+        b=LoZmdvQShi6SsWii/JLjS3zq46KHTAjXrIeS3p+XynqBXmZPjcHKVNLmYtsZe6bcF6
+         eo43cEaYi1zoOCxtuJT8mBdWm3SiCngzFO9nXbCZTL4lg36Faw2veWF5dnNgNqN2xVXG
+         CeHdyXJOgOCzu9iFwjYCEOnSQpH0N1PyK9TdCMshiY4b4ovzWBZwvbq+owntqEoLJXbO
+         QuUFwyg6fvuardT1WCQd1Vg2d0kU70Elkt7cSyrsIXipPn0CnNxw2oKua5KH7KcMG6tH
+         G7lCGc4LfmKxgdjYVMtxlg6yIxzWh+xWi2GmtfOo7a0/6zRzbpFZJZP8jlEnS6jFH8TY
+         Debg==
+X-Gm-Message-State: AOAM530hQkTqO4F3cHyxWrHX38JUHbPQrgk7RrsbsKbWXe3DwGYOXxoJ
+        jAZDzsvqnyGC+KrzPvOt//UV
+X-Google-Smtp-Source: ABdhPJwa7THZREvlU6V2MuMmUoZtHTWrNFSzW/QeJ7kgT0VR5Fzk75ThSTfIfgzjVSbbER3zduEORg==
+X-Received: by 2002:a05:6808:238a:b0:2d7:1878:9623 with SMTP id bp10-20020a056808238a00b002d718789623mr231212oib.1.1646679480697;
+        Mon, 07 Mar 2022 10:58:00 -0800 (PST)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id bp8-20020a056808238800b002c6b56d99bcsm7058922oib.13.2022.03.07.10.32.21
+        by smtp.gmail.com with ESMTPSA id n110-20020a9d2077000000b005b229876a11sm3146613ota.66.2022.03.07.10.57.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Mar 2022 10:32:22 -0800 (PST)
-Message-ID: <ebfac323-7567-6327-f5e6-0fd9e0356550@github.com>
-Date:   Mon, 7 Mar 2022 13:32:19 -0500
+        Mon, 07 Mar 2022 10:58:00 -0800 (PST)
+Message-ID: <85d434f8-0eb1-c6f7-dfd4-99bffbfbba57@github.com>
+Date:   Mon, 7 Mar 2022 13:57:57 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.6.2
-Subject: Re: tb/cruft-packs (was Re: What's cooking in git.git (Mar 2022, #01;
- Thu, 3))
+Subject: Re: [PATCH 11/11] bundle: unbundle promisor packs
 Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <xmqqv8wu2vag.fsf@gitster.g>
- <0870b8f0-976a-cf2f-f34f-7e966b9c426f@github.com>
- <YiZJiPVMZwPXbfrK@google.com> <YiZMhuI/DdpvQ/ED@nand.local>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
+        zhiyou.jx@alibaba-inc.com, jonathantanmy@google.com
+References: <pull.1159.git.1645638911.gitgitgadget@gmail.com>
+ <ec51d0a50e6e64ae37795d77f7d33204b9b71ecd.1645638911.git.gitgitgadget@gmail.com>
+ <xmqqzgm5wafu.fsf@gitster.g>
+ <ee6c7a5b-63e8-af1c-fdb7-75dca9cd798d@github.com>
+ <xmqqv8wpu2fq.fsf@gitster.g>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <YiZMhuI/DdpvQ/ED@nand.local>
+In-Reply-To: <xmqqv8wpu2fq.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/7/2022 1:18 PM, Taylor Blau wrote:
-> On Mon, Mar 07, 2022 at 10:06:00AM -0800, Jonathan Nieder wrote:
->> I'm excited about this work!  I just sent a quick review to the
->> design doc.
+On 3/7/2022 11:56 AM, Junio C Hamano wrote:
+> Derrick Stolee <derrickstolee@github.com> writes:
 > 
-> Thanks! I haven't had a chance to look at the design doc, but let me
-> respond quickly to this message:
+>> Of course, looking closer at it... "git bundle unbundle" doesn't
+>> actually store the refs directly in the refspace, but instead only
+>> outputs the refs that it used.
 > 
->> Before merging to 'next', I'd be interested in two things:
+> True.  I was more thinking about equivalence between
+> 
+>     cd src_repo
+>     git clone --no-local --filter=... . ../partial.network.cloned
+>     git bundle create --filter=... partial.bndl
+>     git clone partial.bndl ../partial.bundle.cloned
+> 
+> The two resulting repositories should look very similar except for
+> that the remote.origin.* of the former would expect that it pushes
+> back to where it was cloned from, while the latter would not.
+
+Makes sense.
+
+The one downside is that you list cloning form a partial bundle,
+but that currently does not work, even if we avoid a checkout.
+It fails because the clone command is not parsing the filter
+and properly setting repo-global promisor information. (Again,
+this is a bigger change to make this possible.)
+
+I also had some struggles getting this to work since local clones
+were actually ignoring the filter. I didn't think it was worth
+setting up an HTTP or SSH server just for this test. See
+workaround below.
+ 
+>> +		git init unbundled &&
+>> +		(
+>> +			cd unbundled &&
+>> +			# This creates the first pack-file in the
+>> +			# .git/objects/pack directory. Look for a .promisor.
+>> +			git bundle unbundle ../partial.bdl >ref-list.txt &&
+>> +			ls .git/objects/pack/pack-*.promisor >promisor &&
+>> +			test_line_count = 1 promisor
+> 
+> And can we enumerate the objects we have in .git/objects, both loose
+> and packed?
+
+I can enumerate using 'git rev-list --objects' to compare the
+unbundled set to the full clone (adding --filter=$filter to the
+full clone's run and --missing=allow-any to the unbundled one).
+
+>> +		) &&
+>> +
+>> +		git clone --filter=blob:none --mirror "file://$(pwd)" cloned &&
+>> +		git -C cloned for-each-ref \
+>> +			--format="%(objectname) %(refname)" >cloned-refs.txt &&
+>> +		echo "$(git -C cloned rev-parse HEAD) HEAD" >>cloned-refs.txt &&
+>> +		test_cmp cloned-refs.txt unbundled/ref-list.txt
+> 
+> Likewise here?  I think the two should match, and that was what I
+> was wondering if we should enforce.
+> 
+>>  	'
+>>  done
+>>  
+>> --- >8 ---
 >>
->>  1. Marking the feature as experimental so we can learn from experience.
->>     Clarifying what aspects we consider to be stable / set in stone and
->>     what are subject to modification.
+>> I also attempted doing a "git clone --bare partial.bdl unbundled.git" to
+>> get the 'git clone' command to actually place the refs. However, 'git clone'
+>> does not set up the repository filter based on the bundle, so it reports
+>> missing blobs (even though there is no checkout).
 > 
-> I'm not sure there is much practical benefit to marking this feature as
-> experimental. The only new file format here is the .mtimes one, which
-> should make it easy for us to modify the format in a
-> backwards-compatible way.
-> 
-> If there are other benefits you had in mind, I'm curious to hear them.
-> But I think we should be fine to "lock in" the first version of the
-> .mtimes format since we have an easy-ish mechanism to change it in the
-> future.
+> Understandable, as cloning from a bundle, if I recall correctly, was
+> done as yet another special case in "git clone", differently from
+> the main "over the network" code path.  And from end-user's point of
+> view, I think updating it is part of introducing the filtered
+> bundle.
 
-I feel similarly to Taylor here.
-
->>  2. Marking this as a repository format extension so it doesn't interact
->>     poorly with Git implementations (including older versions of Git
->>     itself) that are not aware of the new feature
-> 
-> The design of cruft packs was done intentionally to avoid needing a
-> format extension. The cruft pack is "just a pack" to any older version
-> of Git. The only thing an older version of Git wouldn't understand is
-> how to interpret the .mtimes file. But that's no different than the
-> current behavior without cruft packs, where any unreachable object
-> inherits the mtime of its containing pack.
-> 
-> So an older version of Git might prune a different set of objects than a
-> version that understands cruft packs depending on the contents of the
-> .mtimes file, the mtime of the cruft pack, and the width of the grace
-> period. But I think by downgrading you are more or less buying into the
-> existing behavior. So I don't think there is a compelling reason to
-> introduce a format extension here.
-
-In particular, older versions would first explode unreachable objects
-out of the cruft pack and into loose objects before expiring any of
-them based on the loose object mtime. There is no risk here of causing
-problems with older versions of Git and does not need an extension.
+The reason I did not include that here is because of the lack of
+repository-global promisor/filter config. I do want to loop back
+and make those updates, but perhaps for this series we should add
+an error condition into 'git clone' to say "Cannot currently clone
+from a filtered bundle" to help users understand the issue?
 
 Thanks,
 -Stolee
